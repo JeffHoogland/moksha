@@ -596,20 +596,17 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    evas_object_raise(face->screen);
 
    /* Add windows to the desk */
-   wins = desk->clients;
-   while (wins)
+   for (wins = desk->zone->container->clients; wins; wins = wins->next)
      {
 	win = wins->data;
 	if (win->new_client)
-	  {
-	     wins = wins->next;
-	     continue;
-	  }
+	  continue;
+	if (win->desk != desk)
+	  continue;
+
 	pw = _pager_window_new(pd, win);
 	if (pw)
 	  pd->wins = evas_list_append(pd->wins, pw);
-
-	wins = wins->next;
      }
    return pd;
 }
