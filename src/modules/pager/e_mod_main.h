@@ -67,6 +67,7 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_border_unstick;
    Ecore_Event_Handler *ev_handler_border_desk_set;
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
+   Ecore_Event_Handler *ev_handler_desk_show;
 };
 
 struct _Pager_Desk

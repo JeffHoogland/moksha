@@ -6,6 +6,7 @@
 
 /* TODO
  * which options should be in main menu, and which in face menu?
+ * check if a new desk is in the current zone
  */
 
 /* module private routines */
@@ -44,6 +45,7 @@ static int         _pager_face_cb_event_border_stick(void *data, int type, void 
 static int         _pager_face_cb_event_border_unstick(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_desk_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event);
+static int         _pager_face_cb_event_desk_show(void *data, int type, void *event);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_scale(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_resize_none(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -316,6 +318,9 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_zone_desk_count_set =
       ecore_event_handler_add(E_EVENT_ZONE_DESK_COUNT_SET,
 			      _pager_face_cb_event_zone_desk_count_set, face);
+   face->ev_handler_desk_show =
+      ecore_event_handler_add(E_EVENT_DESK_SHOW,
+			      _pager_face_cb_event_desk_show, face);
 
    _pager_face_zone_set(face, zone);
 
@@ -358,6 +363,7 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_unstick);
    ecore_event_handler_del(face->ev_handler_border_desk_set);
    ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
+   ecore_event_handler_del(face->ev_handler_desk_show);
 
    e_object_del(E_OBJECT(face->menu));
 
@@ -760,9 +766,6 @@ _pager_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	       {
 		  desk->current = 1;
 		  e_desk_show(desk->desk);
-		  evas_object_move(face->screen,
-				   face->fx + xpos * face->fw,
-				   face->fy + ypos * face->fh);
 	       }
 	     else
 	       {
@@ -878,6 +881,10 @@ _pager_face_cb_event_border_resize(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -905,6 +912,10 @@ _pager_face_cb_event_border_move(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -931,6 +942,10 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
 #if 0
    if (_pager_window_find(face, ev->border))
      {
@@ -962,6 +977,10 @@ _pager_face_cb_event_border_remove(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -990,6 +1009,10 @@ _pager_face_cb_event_border_hide(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -1019,6 +1042,10 @@ _pager_face_cb_event_border_show(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -1049,6 +1076,10 @@ _pager_face_cb_event_border_stick(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    for (desks = face->desks; desks; desks = desks->next)
      {
 	desk = desks->data;
@@ -1073,6 +1104,10 @@ _pager_face_cb_event_border_unstick(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
 
    for (desks = face->desks; desks; desks = desks->next)
      {
@@ -1105,6 +1140,10 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   /* Only care about windows in our zone */
+   if (face->zone != ev->border->zone)
+     return 1;
+
    if (ev->border->sticky)
      return 1;
 
@@ -1223,6 +1262,36 @@ _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event)
      }
    else
      _pager_face_draw(face);
+   return 1;
+}
+
+static int
+_pager_face_cb_event_desk_show(void *data, int type, void *event)
+{
+   Pager_Face        *face;
+   Pager_Desk        *desk;
+   E_Event_Desk_Show *ev;
+   Evas_List         *desks;
+
+   face = data;
+   ev = event;
+   /* Only care if this desk is in our zone */
+   if (face->zone != ev->desk->zone)
+     return 1;
+
+   for (desks = face->desks; desks; desks = desks->next)
+     {
+	desk = desks->data;
+	if (desk->desk == ev->desk)
+	  {
+	     desk->current = 1;
+	     evas_object_move(face->screen,
+			      face->fx + (face->fw * desk->xpos),
+			      face->fy + (face->fh * desk->ypos));
+	  }
+	else
+	  desk->current = 0;
+     }
    return 1;
 }
 
