@@ -58,6 +58,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* click to focus
 * make e17 re-locatable (ues environment var, or find out by hunting path argv[0] if its not a full path or munge the full path to the exe in argv[0])
 * java apps seem to have a hard time if we dont pretend to be kwin (see e_hints.c) - get this stuff upstream to sun and get things fixed in java.
 * dropshadow is not optimal and has extreme edge-case bugs
