@@ -1347,6 +1347,10 @@ e_border_new(void)
    
    e_window_raise(b->win.input);
    e_window_raise(b->win.container);
+   e_window_raise(b->win.l);
+   e_window_raise(b->win.r);
+   e_window_raise(b->win.t);
+   e_window_raise(b->win.b);
    
    evases = evas_list_append(evases, b->evas.l);
    evases = evas_list_append(evases, b->evas.r);
@@ -1835,71 +1839,143 @@ e_border_update(E_Border *b)
 	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
 	e_window_move_resize(b->win.input, 
 			     0, 0, b->current.w, b->current.h);
-	e_window_move_resize(b->win.main, 
-			     b->current.x, b->current.y,
-			     b->current.w, b->current.h);
-	if (b->current.shaded == b->client.h)
+	if (smaller)
 	  {
-	     e_window_move_resize(b->win.client, 
-				  0, - b->current.shaded,
-				  b->client.w,
-				  b->client.h);
-	     e_window_move_resize(b->win.container,
-				  b->current.w + 1, 
-				  b->current.h + 1,
-				  320, 
-				  320);
+	     if (b->current.shaded == b->client.h)
+	       {
+		  e_window_move_resize(b->win.client, 
+				       0, - b->current.shaded,
+				       b->client.w,
+				       b->client.h);
+		  e_window_move_resize(b->win.container,
+				       b->current.w + 1, 
+				       b->current.h + 1,
+				       320, 
+				       320);
+	       }
+	     else
+	       {
+		  e_window_move_resize(b->win.client, 
+				       0, - b->current.shaded,
+				       b->client.w,
+				       b->client.h);
+		  e_window_move_resize(b->win.container, 
+				       pl, 
+				       pt,
+				       b->current.w - pl - pr, 
+				       b->current.h - pt - pb);
+	       }
+	     e_window_move_resize(b->win.main, 
+				  b->current.x, b->current.y,
+				  b->current.w, b->current.h);
+	     x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.l);
+	     else 
+	       {
+		  e_window_show(b->win.l);
+		  e_window_move_resize(b->win.l, x, y, w, h);
+		  evas_set_output_size(b->evas.l, w, h);
+		  evas_set_output_viewport(b->evas.l, x, y, w, h);
+	       }
+	     
+	     x = 0, y = 0, w = b->current.w, h = pt;
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.t);
+	     else 
+	       {
+		  e_window_show(b->win.t);
+		  e_window_move_resize(b->win.t, x, y, w, h);
+		  evas_set_output_size(b->evas.t, w, h);
+		  evas_set_output_viewport(b->evas.t, x, y, w, h);
+	       }
+	     
+	     x = b->current.w - pr, y = pt, w = pr, h = (b->current.h - pt - pb);
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.r);
+	     else 
+	       {
+		  e_window_show(b->win.r);
+		  e_window_move_resize(b->win.r, x, y, w, h);
+		  evas_set_output_size(b->evas.r, w, h);
+		  evas_set_output_viewport(b->evas.r, x, y, w, h);
+	       }
+	     
+	     x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.b);
+	     else 
+	       {
+		  e_window_show(b->win.b);
+		  e_window_move_resize(b->win.b, x, y, w, h);
+		  evas_set_output_size(b->evas.b, w, h);
+		  evas_set_output_viewport(b->evas.b, x, y, w, h);
+	       }
 	  }
 	else
 	  {
-	     e_window_move_resize(b->win.client, 
-				  0, - b->current.shaded,
-				  b->client.w,
-				  b->client.h);
-	     e_window_move_resize(b->win.container, 
-				  pl, 
-				  pt,
-				  b->current.w - pl - pr, 
-				  b->current.h - pt - pb);
-	  }
-	x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
-	if ((w <1) || (h < 1)) e_window_hide(b->win.l);
-	else 
-	  {
-	     e_window_show(b->win.l);
-	     e_window_move_resize(b->win.l, x, y, w, h);
-	     evas_set_output_size(b->evas.l, w, h);
-	     evas_set_output_viewport(b->evas.l, x, y, w, h);
-	  }
-	
-	x = 0, y = 0, w = b->current.w, h = pt;
-	if ((w <1) || (h < 1)) e_window_hide(b->win.t);
-	else 
-	  {
-	     e_window_show(b->win.t);
-	     e_window_move_resize(b->win.t, x, y, w, h);
-	     evas_set_output_size(b->evas.t, w, h);
-	     evas_set_output_viewport(b->evas.t, x, y, w, h);
-	  }
-	
-	x = b->current.w - pr, y = pt, w = pr, h = (b->current.h - pt - pb);
-	if ((w <1) || (h < 1)) e_window_hide(b->win.r);
-	else 
-	  {
-	     e_window_show(b->win.r);
-	     e_window_move_resize(b->win.r, x, y, w, h);
-	     evas_set_output_size(b->evas.r, w, h);
-	     evas_set_output_viewport(b->evas.r, x, y, w, h);
-	  }
-	
-	x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
-	if ((w <1) || (h < 1)) e_window_hide(b->win.b);
-	else 
-	  {
-	     e_window_show(b->win.b);
-	     e_window_move_resize(b->win.b, x, y, w, h);
-	     evas_set_output_size(b->evas.b, w, h);
-	     evas_set_output_viewport(b->evas.b, x, y, w, h);
+	     e_window_move_resize(b->win.main, 
+				  b->current.x, b->current.y,
+				  b->current.w, b->current.h);
+	     x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.l);
+	     else 
+	       {
+		  e_window_show(b->win.l);
+		  e_window_move_resize(b->win.l, x, y, w, h);
+		  evas_set_output_size(b->evas.l, w, h);
+		  evas_set_output_viewport(b->evas.l, x, y, w, h);
+	       }
+	     
+	     x = 0, y = 0, w = b->current.w, h = pt;
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.t);
+	     else 
+	       {
+		  e_window_show(b->win.t);
+		  e_window_move_resize(b->win.t, x, y, w, h);
+		  evas_set_output_size(b->evas.t, w, h);
+		  evas_set_output_viewport(b->evas.t, x, y, w, h);
+	       }
+	     
+	     x = b->current.w - pr, y = pt, w = pr, h = (b->current.h - pt - pb);
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.r);
+	     else 
+	       {
+		  e_window_show(b->win.r);
+		  e_window_move_resize(b->win.r, x, y, w, h);
+		  evas_set_output_size(b->evas.r, w, h);
+		  evas_set_output_viewport(b->evas.r, x, y, w, h);
+	       }
+	     
+	     x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
+	     if ((w <1) || (h < 1)) e_window_hide(b->win.b);
+	     else 
+	       {
+		  e_window_show(b->win.b);
+		  e_window_move_resize(b->win.b, x, y, w, h);
+		  evas_set_output_size(b->evas.b, w, h);
+		  evas_set_output_viewport(b->evas.b, x, y, w, h);
+	       }
+	     if (b->current.shaded == b->client.h)
+	       {
+		  e_window_move_resize(b->win.container,
+				       b->current.w + 1, 
+				       b->current.h + 1,
+				       320, 
+				       320);
+		  e_window_move_resize(b->win.client, 
+				       0, - b->current.shaded,
+				       b->client.w,
+				       b->client.h);
+	       }
+	     else
+	       {
+		  e_window_move_resize(b->win.container, 
+				       pl, 
+				       pt,
+				       b->current.w - pl - pr, 
+				       b->current.h - pt - pb);
+		  e_window_move_resize(b->win.client, 
+				       0, - b->current.shaded,
+				       b->client.w,
+				       b->client.h);
+	       }
 	  }
 	     
 	if (b->bits.l) ebits_resize(b->bits.l, b->current.w, b->current.h);

@@ -561,20 +561,29 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   /* 0 | 1 */
+   e_window_gravity_set(b->win.client, StaticGravity);
+   e_window_gravity_set(b->win.l, NorthWestGravity);
+   e_window_gravity_set(b->win.r, SouthEastGravity);
+   e_window_gravity_set(b->win.t, NorthWestGravity);
+   e_window_gravity_set(b->win.b, SouthEastGravity);
+   e_window_gravity_set(b->win.input, NorthWestGravity);
+   e_window_gravity_set(b->win.container, NorthWestGravity);
+   /* 1 | 2 */
    /* --+-- */
-   /* 2 | 3 */
+   /* 3 | 4 */
    if (x > (b->current.w / 2)) 
      {
 	if (y > (b->current.h / 2)) 
 	  {
 	     b->mode.resize = 4;
-	     SET_BORDER_GRAVITY(b, NorthWestGravity);
+/*	     SET_BORDER_GRAVITY(b, NorthWestGravity);*/
+/*	     e_window_gravity_set(b->win.container, SouthEastGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 2;
-	     SET_BORDER_GRAVITY(b, SouthWestGravity);
+/*	     SET_BORDER_GRAVITY(b, SouthWestGravity);*/
+/*	     e_window_gravity_set(b->win.container, NorthEastGravity);*/
 	  }
      }
    else
@@ -582,12 +591,14 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	if (y > (b->current.h / 2)) 
 	  {
 	     b->mode.resize = 3;
-	     SET_BORDER_GRAVITY(b, NorthEastGravity);
+/*	     SET_BORDER_GRAVITY(b, NorthEastGravity);*/
+/*	     e_window_gravity_set(b->win.container, SouthWestGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 1;
-	     SET_BORDER_GRAVITY(b, SouthEastGravity);
+/*	     SET_BORDER_GRAVITY(b, SouthEastGravity);*/
+/*	     e_window_gravity_set(b->win.container, NorthWestGravity); */
 	  }
      }
    return;
@@ -613,6 +624,8 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b->mode.resize = 0;
    b->changed = 1;
    e_border_adjust_limits(b);
+   e_window_gravity_set(b->win.client, NorthWestGravity);
+   SET_BORDER_GRAVITY(b, NorthWestGravity);
    return;
    UN(a);
    UN(data);
@@ -676,16 +689,23 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   /* 4 | 5 */
+   e_window_gravity_set(b->win.client, StaticGravity);
+   e_window_gravity_set(b->win.l, NorthWestGravity);
+   e_window_gravity_set(b->win.r, SouthEastGravity);
+   e_window_gravity_set(b->win.t, NorthWestGravity);
+   e_window_gravity_set(b->win.b, SouthEastGravity);
+   e_window_gravity_set(b->win.input, NorthWestGravity);
+   e_window_gravity_set(b->win.container, NorthWestGravity);
+   /* 5 | 6 */
    if (x > (b->current.w / 2)) 
      {
 	b->mode.resize = 6;
-	SET_BORDER_GRAVITY(b, NorthWestGravity);
+/*	SET_BORDER_GRAVITY(b, NorthWestGravity);*/
      }
    else 
      {
 	b->mode.resize = 5;
-	SET_BORDER_GRAVITY(b, NorthEastGravity);
+/*	SET_BORDER_GRAVITY(b, NorthEastGravity);*/
      }
    return;
    UN(a);
@@ -711,6 +731,8 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->mode.resize = 0;
    b->changed = 1;
    e_border_adjust_limits(b);
+   e_window_gravity_set(b->win.client, NorthWestGravity);
+   SET_BORDER_GRAVITY(b, NorthWestGravity);
    return;
    UN(a);
    UN(data);
@@ -760,18 +782,25 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   /* 6 */
-   /* - */
+   e_window_gravity_set(b->win.client, StaticGravity);
+   e_window_gravity_set(b->win.l, NorthWestGravity);
+   e_window_gravity_set(b->win.r, SouthEastGravity);
+   e_window_gravity_set(b->win.t, NorthWestGravity);
+   e_window_gravity_set(b->win.b, SouthEastGravity);
+   e_window_gravity_set(b->win.input, NorthWestGravity);
+   e_window_gravity_set(b->win.container, NorthWestGravity);
    /* 7 */
+   /* - */
+   /* 8 */
    if (y > (b->current.h / 2)) 
      {
 	b->mode.resize = 8;
-	SET_BORDER_GRAVITY(b, NorthWestGravity);
+/*	SET_BORDER_GRAVITY(b, NorthWestGravity);*/
      }
    else 
      {
 	b->mode.resize = 7;
-	SET_BORDER_GRAVITY(b, SouthWestGravity);
+/*	SET_BORDER_GRAVITY(b, SouthWestGravity);*/
      }
    return;
    UN(a);
@@ -796,6 +825,8 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->current.requested.h = b->current.h;
    b->mode.resize = 0;
    e_border_adjust_limits(b);
+   e_window_gravity_set(b->win.client, NorthWestGravity);
+   SET_BORDER_GRAVITY(b, NorthWestGravity);
    b->changed = 1;
    return;
    UN(a);
