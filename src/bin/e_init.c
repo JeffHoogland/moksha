@@ -3,7 +3,7 @@
  */
 #include "e.h"
 
-EAPI void _e_init_icons_del(void);
+static void _e_init_icons_del(void);
 
 /* local subsystem globals */
 static Ecore_X_Window  _e_init_win = 0;
@@ -13,8 +13,8 @@ static Evas_Object    *_e_init_object = NULL;
 static Evas_Object    *_e_init_icon_box = NULL;
 
 /* startup icons */
-static Evas_Coord _e_init_icon_size;
-static Evas_List *_e_init_icon_list;
+static Evas_Coord _e_init_icon_size = 0;
+static Evas_List *_e_init_icon_list = NULL;
 
 /* externally accessible functions */
 int
@@ -191,7 +191,7 @@ e_init_icons_app_add(E_App *app)
    _e_init_icon_list = evas_list_append(_e_init_icon_list, o);
 }
 
-void
+static void
 _e_init_icons_del(void)
 {
    Evas_Object *next;
