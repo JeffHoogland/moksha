@@ -325,7 +325,7 @@ _pager_refresh(Pager *e)
 	    {
 	       Evas_Coord winx, winy, winw, winh;
 	       border = (E_Border *) clients->data;
-	       if (!border->visible)
+	       if (border->iconic)
 		 {
 		    clients = clients->next;
 		    continue;
