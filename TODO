@@ -29,12 +29,17 @@ Current freeze issues are:
 
 ISSUES:
 
+* clock module needs fixing to have right click menu per face
+* clock module should only make 1 clock per container and allow u to enable/disable that clock on that container 
+* same for ibar, temperature and battery modules ad for clock
+* pager needs 1 pager face per zone by default (optionally able to be turned off)
+* pager needs to be able to split off each desk in a zone it a different gadget
 * initial placement of pager and clock seems wrong (overlap deny code?)
-* gadman resize if dear an edge may allow the gadget to go partially off screen
 * gadman overlay deny doesnt work for edge only gadgets
 * gadman gadget menu needs icons :)
 * add a menu item to each gadman client menu to edge editing mode
 * pager needs an overhaul
+* virtual desktops need an overhaul. hacked int waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * all modules need to respect zones
 * dropshadow is not optimal and has extreme edge-case bugs
@@ -43,7 +48,6 @@ ISSUES:
 * border show/hide needs to show from top down and hide from bottom up
 * restart loses window properties (stickyness)
 * restart loses zone and container info
-* virtual desktops need an overhaul. hacked int waay too quickly.
 
 <add more issues as they are found>
 

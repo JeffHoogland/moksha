@@ -18,6 +18,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    int resist = 1;
    int desk_resist = 32;
    int win_resist = 12;
+   int gad_resist = 32;
    int dx, dy, d, pd;
    int resist_x = 0, resist_y = 0;
    Evas_List *l, *ll, *rects = NULL;
@@ -63,7 +64,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    
    for (l = con->clients; l; l = l->next)
      {
-        E_Border           *bd;
+        E_Border *bd;
 	
 	bd = l->data;
 	if (bd->visible)
@@ -81,16 +82,16 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	       }
 	     if (ok)
 	       {
-		  r = E_NEW(E_Resist_Rect, 1);
-		  
-		  r->x = bd->x;
-		  r->y = bd->y;
-		  r->w = bd->w;
-		  r->h = bd->h;
-		  r->v1 = win_resist;
-		  rects = evas_list_append(rects, r);
+		  OBSTACLE(bd->x, bd->y, bd->w, bd->h, win_resist);
 	       }
 	  }
+     }
+   for (l = con->gadman->clients; l; l = l->next)
+     {
+        E_Gadman_Client *gmc;
+	
+	gmc = l->data;
+	OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, gad_resist);
      }
    
    for (l = rects; l; l = l->next)

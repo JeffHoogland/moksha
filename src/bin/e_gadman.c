@@ -65,6 +65,8 @@ static void _e_gadman_cb_full_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_auto_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi);
+
 static E_Config_DD *gadman_config_edd = NULL;
 
 /* externally accessible functions */
@@ -530,6 +532,11 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 				  "center_vert");
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_vert, gmc);
      }
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "End Edit Mode");
+   e_menu_item_callback_set(mi, _e_gadman_cb_end_edit_mode, gmc);
    
    return m;
 }
@@ -1132,6 +1139,14 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 	  }
      }
    _e_gadman_client_aspect_enforce(gmc, 1.0, 0.5, 1);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
@@ -1197,6 +1212,14 @@ _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
 	  }
      }
    _e_gadman_client_aspect_enforce(gmc, 0.0, 0.5, 1);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
@@ -1266,6 +1289,14 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
 	  }
      }
    _e_gadman_client_aspect_enforce(gmc, 0.5, 1.0, 0);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
@@ -1331,6 +1362,14 @@ _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emi
 	  }
      }
    _e_gadman_client_aspect_enforce(gmc, 0.5, 0.0, 0);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
@@ -1360,6 +1399,14 @@ _e_gadman_cb_half_width(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    gmc->use_autow = 0;
    _e_gadman_client_aspect_enforce(gmc, 0.0, 0.5, 1);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
@@ -1381,6 +1428,14 @@ _e_gadman_cb_full_width(void *data, E_Menu *m, E_Menu_Item *mi)
    gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) / 2);
    gmc->use_autow = 0;
    _e_gadman_client_aspect_enforce(gmc, 0.0, 0.5, 1);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
@@ -1437,6 +1492,14 @@ _e_gadman_cb_half_height(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    gmc->use_autoh = 0;
    _e_gadman_client_aspect_enforce(gmc, 0.5, 0.0, 0);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
@@ -1458,6 +1521,14 @@ _e_gadman_cb_full_height(void *data, E_Menu *m, E_Menu_Item *mi)
    gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) / 2);
    gmc->use_autoh = 0;
    _e_gadman_client_aspect_enforce(gmc, 0.5, 0.0, 0);
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
@@ -1501,3 +1572,11 @@ _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
+static void
+_e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadman_Client *gmc;
+
+   gmc = data;
+   e_gadman_mode_set(gmc->gadman, E_GADMAN_MODE_NORMAL);
+}
