@@ -39,7 +39,6 @@ ISSUES:
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
 * window menu needs icons :)
-* java apps seem to have a hard time (cgoban for example, and batik)
 * ibar right click context menu needs config items in it as in the module config menu
 * any known segv's must go
 
@@ -68,6 +67,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* java apps seem to have a hard time if we dont pretend to be kwin (see e_hints.c) - get this stuff upstream to sun and get things fixed in java.
 * dropshadow is not optimal and has extreme edge-case bugs
 * gadget containers (shelves)
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
