@@ -2290,7 +2290,6 @@ e_view_realize(E_View *v)
    v->win.main = evas_get_window(v->evas);
    e_cursors_display_in_window(v->win.main, "View");
    evas_event_move(v->evas, -999999, -999999);
-   e_add_child(v->win.base, v->win.main);   
    e_window_set_events(v->win.base,
 		       XEV_VISIBILITY | XEV_CONFIGURE | 
 		       XEV_PROPERTY | XEV_FOCUS);

@@ -1355,7 +1355,6 @@ e_border_new(void)
 			    image_cache,
 			    font_dir);
    b->win.l = evas_get_window(b->evas.l);
-   e_add_child(b->win.main, b->win.l);
    b->evas.r = evas_new_all(e_display_get(),
 			    b->win.main,
 			    0, 0, 1, 1,
@@ -1365,7 +1364,6 @@ e_border_new(void)
 			    image_cache,
 			    font_dir);
    b->win.r = evas_get_window(b->evas.r);
-   e_add_child(b->win.main, b->win.r);
    b->evas.t = evas_new_all(e_display_get(),
 			    b->win.main,
 			    0, 0, 1, 1,
@@ -1375,7 +1373,6 @@ e_border_new(void)
 			    image_cache,
 			    font_dir);
    b->win.t = evas_get_window(b->evas.t);
-   e_add_child(b->win.main, b->win.t);
    b->evas.b = evas_new_all(e_display_get(),
 			    b->win.main,
 			    0, 0, 1, 1,
@@ -1385,7 +1382,6 @@ e_border_new(void)
 			    image_cache,
 			    font_dir);
    b->win.b = evas_get_window(b->evas.b); 
-   e_add_child(b->win.main, b->win.b);
    e_cursors_display_in_window(b->win.l, "Default");
    e_cursors_display_in_window(b->win.r, "Default");
    e_cursors_display_in_window(b->win.t, "Default");

@@ -936,7 +936,6 @@ e_menu_new(void)
    e_window_set_events(m->win.evas, XEV_EXPOSE | XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
    e_window_set_events(m->win.main, XEV_IN_OUT | XEV_KEY);
    e_window_show(m->win.evas);
-   e_add_child(m->win.main, m->win.evas);
    
    e_menu_set_background(m);
    
