@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* TODO List:
- * 
+ *
  * * edjify error dialogs if edje data can be found for them
  * * current gui dialg needs to resize to fit contents if they are bigger
  */
@@ -16,7 +16,7 @@ static void _e_error_cb_ok_down(void *data, Evas *e, Evas_Object *obj, void *eve
 static void _e_error_cb_ok_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_error_edje_cb_ok_up(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_error_cb_job_ecore_evas_free(void *data);
-    
+
 /* local subsystem globals */
 static int error_gui = 0;
 
@@ -27,7 +27,7 @@ e_error_message_show_internal(char *txt)
    printf("_______                     _______\n"
 	  "|:::::| Enlightenment Error |:::::|\n"
 	  "~~~~~~~                     ~~~~~~~\n"
-	  "%s\n", 
+	  "%s\n",
 	  txt);
    if (error_gui) _e_error_message_show_x(txt);
 }
@@ -59,20 +59,20 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    int          error_w, error_h;
    Evas_List   *l, *shapelist = NULL;
    Evas_Coord   maxw, maxh;
-   
+
    error_w = 400;
    error_h = 200;
-   ee = ecore_evas_software_x11_new(NULL, man->win, 
+   ee = ecore_evas_software_x11_new(NULL, man->win,
 				    (man->w - error_w) / 2, (man->h - error_h) / 2,
 				    error_w, error_h);
    ecore_evas_software_x11_direct_resize_set(ee, 1);
    e_canvas_add(ee);
-   
+
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");
    e = ecore_evas_get(ee);
    e_pointer_ecore_evas_set(ee);
-   
+
    o = edje_object_add(e);
    if (!edje_object_file_set(o,
 			     /* FIXME: "default.eet" needs to come from conf */
@@ -82,13 +82,13 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
      {
 	Evas_Coord tw, th;
 	char *newstr;
-	
+
 	if (o)
 	  evas_object_del(o);
 
 	maxw = 0;
 	maxh = 0;
-	
+
 	o = evas_object_image_add(e);
 	evas_object_image_file_set(o, e_path_find(path_images, "e.png"), NULL);
 	evas_object_move(o, 16, 16);
@@ -96,18 +96,18 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_image_fill_set(o, 0, 0, 64, 64);
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
-	
+
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 255, 255, 255, 128);
 	evas_object_text_font_set(o, "Vera-Bold", 12);
 	evas_object_text_text_set(o, title);
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
-	evas_object_move(o, 
+	evas_object_move(o,
 			 (16 + 64 + 16) + 1,
 			 (16 + ((64 - th) / 2)) + 1);
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
-	
+
 	maxw = 16 + 64 + 16 + tw + 16;
 	maxh = 16 + 64;
 
@@ -116,7 +116,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_text_font_set(o, "Vera-Bold", 12);
 	evas_object_text_text_set(o, title);
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
-	evas_object_move(o, 
+	evas_object_move(o,
 			 16 + 64 + 16,
 			 16 + ((64 - th) / 2));
 	evas_object_pass_events_set(o, 1);
@@ -168,7 +168,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	if (error_w > man->w) error_w = man->w;
 	if (error_h > man->h) error_h = man->h;
-	
+
 	o = evas_object_image_add(e);
 	evas_object_image_file_set(o, e_path_find(path_images, "button_out.png"), NULL);
 	evas_object_move(o, (error_w - 64) / 2, error_h - 16 - 32);
@@ -178,7 +178,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_error_cb_ok_down, ee);
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_error_cb_ok_up, ee);
 	evas_object_show(o);
-	
+
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 255, 255, 255, 128);
 	evas_object_text_font_set(o, "Vera-Bold", 12);
@@ -187,7 +187,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_move(o, ((error_w - tw) / 2) + 1, (error_h - 16 - 32 + ((32 - th) / 2)) + 1);
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
-	
+
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 0, 0, 0, 255);
 	evas_object_text_font_set(o, "Vera-Bold", 12);
@@ -209,12 +209,12 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	ecore_evas_move(ee, (man->w - error_w) / 2, (man->h - error_h) / 2);
 	ecore_evas_resize(ee, error_w, error_h);
-	
+
 	for (l = man->containers; l; l = l->next)
 	  {
 	     E_Container *con;
 	     E_Container_Shape *es;
-	     
+
 	     con = l->data;
 	     es = e_container_shape_add(con);
 	     e_container_shape_move(es, (man->w - error_w) / 2, (man->h - error_h) / 2);
@@ -223,7 +223,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	     shapelist = evas_list_append(shapelist, es);
 	  }
 	ecore_evas_data_set(ee, "shapes", shapelist);
-	
+
 	o = evas_object_rectangle_add(e);
 	evas_object_name_set(o, "allocated");
      }
@@ -281,12 +281,12 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	ecore_evas_move(ee, (man->w - error_w) / 2, (man->h - error_h) / 2);
 	ecore_evas_resize(ee, error_w, error_h);
-	
+
 	for (l = man->containers; l; l = l->next)
 	  {
 	     E_Container *con;
 	     E_Container_Shape *es;
-	     
+
 	     con = l->data;
 	     es = e_container_shape_add(con);
 	     e_container_shape_move(es, (man->w - error_w) / 2, (man->h - error_h) / 2);
@@ -295,7 +295,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	     shapelist = evas_list_append(shapelist, es);
 	  }
 	ecore_evas_data_set(ee, "shapes", shapelist);
-	
+
 	o = evas_object_rectangle_add(e);
 	evas_object_name_set(o, "allocated");
      }
@@ -329,7 +329,7 @@ _e_error_cb_ok_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Ecore_Evas *ee;
-   
+
    ev = event_info;
    if (ev->button != 1) return;
    ee = data;
@@ -342,7 +342,7 @@ _e_error_cb_ok_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Up *ev;
    Ecore_Evas *ee;
    Evas_Object *o;
-   
+
    ev = event_info;
    if (ev->button != 1) return;
    ee = data;
@@ -360,7 +360,7 @@ _e_error_edje_cb_ok_up(void *data, Evas_Object *obj, const char *emission, const
 {
    Ecore_Evas *ee;
    Evas_Object *o;
-   
+
    ee = data;
    o = evas_object_name_find(ecore_evas_get(ee), "allocated");
    if (o)
@@ -375,7 +375,7 @@ _e_error_cb_job_ecore_evas_free(void *data)
 {
    Ecore_Evas *ee;
    Evas_List *shapelist, *l;
-   
+
    ee = data;
    shapelist = ecore_evas_data_get(ee, "shapes");
    for (l = shapelist; l; l = l->next)
