@@ -99,7 +99,6 @@ e_icon_place_grid(E_Icon *icon)
 	x += (icon->view->options.arrange.grid.w - icon->current.w) / 2;
 	y += (icon->view->options.arrange.grid.h - icon->current.h);
 	e_icon_set_xy(icon, x, y);
-	printf("GRID PLACE at %i %i\n", x, y);
 	icon->view->options.arrange.grid.next_pos++;
      }
    else /* v */
@@ -113,7 +112,6 @@ e_icon_pre_show(E_Icon *icon)
    int x, y;
    
    if (icon->info.ready) return;
-   printf("*********!!!!!!!!!!!!!!!********* update from e_icon_pre_show()\n");
    e_icon_update(icon);
    icon->info.ready = 1;
    if (icon->info.coord.have)
@@ -291,7 +289,6 @@ e_icon_update(E_Icon *icon)
    int obj_new = 0;
    
    if (!icon->changed) return;
-   printf("icon (%s).. update\n", icon->file);
    if (icon->current.state.clicked)
      {
 	if (icon->info.icon.clicked)
@@ -417,5 +414,4 @@ e_icon_update(E_Icon *icon)
    icon->previous = icon->current;
    icon->previous.icon = strdup(icon->current.icon);
    icon->changed = 0;
-   printf("... done\n");
 }

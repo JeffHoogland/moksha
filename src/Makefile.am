@@ -18,6 +18,7 @@ fs.c \
 icccm.c \
 icons.c \
 ipc.c \
+keys.c \
 main.c \
 menu.c \
 menudb.c \
@@ -28,5 +29,5 @@ util.c \
 view.c \
 e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm $(INTLLIBS) $(LDADD_FLAGS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm $(INTLLIBS)
 

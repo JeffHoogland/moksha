@@ -16,6 +16,7 @@ MOD_SHIFT=1
 MOD_CTRL=2
 MOD_ALT=4
 MOD_WIN=8
+MOD_CTRL_ALT=$[ $MOD_CTRL + $MOD_ALT ];
 
 FOCUS_POINTER=0
 FOCUS_SLOPPY=1
@@ -151,6 +152,30 @@ edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_MOUSE_CLICKED
 edb_ed $DB add "/actions/"$NUM"/button"    int 1
 edb_ed $DB add "/actions/"$NUM"/key"       str ""
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_NONE
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Restart"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "End"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Exit"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "Delete"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Max_Size"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "m"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/count"       int $NUM
 

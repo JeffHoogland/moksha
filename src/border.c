@@ -385,6 +385,7 @@ e_focus_in(Eevent * ev)
 	if (b)
 	  {
 	     b->current.selected = 1;
+	     if (e->key_grab) b->current.select_lost_from_grab = 0;
 	     b->changed = 1;
 	  }
      }
@@ -413,6 +414,7 @@ e_focus_out(Eevent * ev)
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
 	     b->current.selected = 0;
+	     if (e->key_grab) b->current.select_lost_from_grab = 1;
 	     /* settings - click to focus would affect grabs */
 	     if (!b->current.selected)
 	       {
@@ -2104,4 +2106,26 @@ e_border_adopt_children(Window win)
 	  }
 	free(wins);
      }
+}
+
+E_Border *
+e_border_current_focused(void)
+{
+   Evas_List l;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *b;
+	
+	b = l->data;
+	if (b->current.selected) return b;
+     }
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *b;
+	
+	b = l->data;
+	if (b->current.select_lost_from_grab) return b;
+     }
+   return NULL;
 }

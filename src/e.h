@@ -191,6 +191,7 @@ struct _E_Border
       int   x, y, w, h;
       int   visible;
       int   selected;
+      int   select_lost_from_grab;
       int   shaded;
       int   has_shape;
       int   shape_changes;
@@ -267,6 +268,7 @@ struct _E_Action
    E_Action_Proto *action_proto;
    void           *object;
    int             started;
+   int             grabbed;
 };
 
 struct _E_Action_Proto
@@ -713,7 +715,8 @@ void e_border_raise_above(E_Border *b, E_Border *above);
 void e_border_lower_below(E_Border *b, E_Border *below);
 void e_border_init(void);
 void e_border_adopt_children(Window win);
-    
+E_Border *e_border_current_focused(void);
+
 void e_icccm_move_resize(Window win, int x, int y, int w, int h);
 void e_icccm_delete(Window win);
 void e_icccm_state_mapped(Window win);
