@@ -332,6 +332,12 @@ struct _E_View
       } arrange;
    } options;
    
+   struct {
+      struct {
+	 int left, right, top, bottom;
+      } inset, icon, spacing;
+   } spacing;
+   
    Evas                   evas;
    struct {
       Window              base;

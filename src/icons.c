@@ -31,8 +31,28 @@ static void
 e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *icon;
+   Ev_Mouse_Down          *ev;
+   Eevent                 *event;
    
+   event = e_view_get_current_event();
+   ev = event->event;
    icon = _data;
+   if (ev->triple_click)
+     {
+	printf("triple\n");
+     }
+   else if (ev->double_click)
+     {
+	printf("double\n");
+     }
+   else
+     {
+	printf("up\n");
+     }
+   if (icon->current.state.selected)
+     icon->current.state.selected = 0;
+   else
+     icon->current.state.selected = 1;
    icon->current.state.clicked = 1;
    icon->changed = 1;
    icon->view->changed = 1;
@@ -42,13 +62,13 @@ static void
 e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *icon;
+   Ev_Mouse_Up            *ev;
+   Eevent                 *event;
    
+   event = e_view_get_current_event();
+   ev = event->event;   
    icon = _data;
    icon->current.state.clicked = 0;
-   if (icon->current.state.selected)
-     icon->current.state.selected = 0;
-   else
-     icon->current.state.selected = 1;
    icon->changed = 1;
    icon->view->changed = 1;
 }
@@ -81,6 +101,84 @@ e_icon_new(void)
 }
 
 void
+e_icon_apply_mime(E_Icon *icon, char *mime)
+{
+   char m1[4096], m2[4096], *p;
+   
+   strcpy(m1, mime);
+   p = strchr(m1, '/');
+   if (p) *p = 0;
+   p = strchr(mime, '/');
+   if (p) strcpy(m2, &(p[1]));
+   else m2[0] = 0;
+   IF_FREE(icon->info.mime.base);
+   IF_FREE(icon->info.mime.type);
+   icon->info.mime.base = strdup(m1);
+   icon->info.mime.type = strdup(m2);
+}
+
+void
+e_icon_get_icon(E_Icon *icon)
+{
+   char m1[4096], m2[4096], *p;
+   int found = 0;
+   
+   /* errr.. hmm do something useful if its a symlink */
+   if (icon->info.link)
+     {
+     }
+   sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
+	   icon->info.mime.base, 
+	   icon->info.mime.type);
+   if (e_file_exists(m1)) found = 1;
+   if (!found)
+     {
+	strcpy(m2, icon->info.mime.type);
+	p = strrchr(m2, '-');
+	while (p)
+	  {
+	     p[0] = 0;
+	     sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
+		     icon->info.mime.base, m2);
+	     if (e_file_exists(m1))
+	       {
+		  found = 1;
+		  break;
+	       }
+	     p = strrchr(m2, '-');
+	  }
+     }
+   if (!found)
+     {
+	sprintf(m1, "%s/data/icons/%s/default.db",PACKAGE_DATA_DIR,
+		icon->info.mime.base);
+	if (e_file_exists(m1)) found = 1;
+     }
+   if (!found)
+     {
+	sprintf(m1, "%s/data/icons/unknown/unknown.db",PACKAGE_DATA_DIR);
+	if (e_file_exists(m1)) found = 1;
+     }
+   if (!found)
+     {
+	sprintf(m1, "%s/data/icons/unknown/default.db",PACKAGE_DATA_DIR);
+	found = 1;
+     }
+   printf("%s/%s: %s\n", icon->info.mime.base, icon->info.mime.type, m1);
+   IF_FREE(icon->info.icon.normal);
+   IF_FREE(icon->info.icon.selected);
+   IF_FREE(icon->info.icon.clicked);
+   sprintf(m2, "%s:/icon/normal", m1);
+   icon->info.icon.normal = strdup(m2);
+   sprintf(m2, "%s:/icon/selected", m1);
+   icon->info.icon.selected = strdup(m2);
+   sprintf(m2, "%s:/icon/clicked", m1);
+   icon->info.icon.clicked = strdup(m2);
+   icon->changed = 1;
+   icon->view->changed = 1;
+}
+
+void
 e_icon_place_grid(E_Icon *icon)
 {
    int x, y;
@@ -88,16 +186,46 @@ e_icon_place_grid(E_Icon *icon)
    if (icon->view->options.arrange.grid.dir == 0) /* h */
      {
 	int gw;
+	int iw, ih;
 	
+	iw = icon->current.w + 
+	  icon->view->spacing.icon.left +
+	  icon->view->spacing.icon.right +
+	  icon->view->spacing.spacing.left +
+	  icon->view->spacing.spacing.right;
+	ih = icon->current.h + 
+	  icon->view->spacing.icon.top +
+	  icon->view->spacing.icon.bottom +
+	  icon->view->spacing.spacing.top +
+	  icon->view->spacing.spacing.bottom;
 	if (icon->view->options.arrange.grid.w > 0)
-	  gw = icon->view->size.w / icon->view->options.arrange.grid.w;
+	  gw = (icon->view->size.w - 
+		icon->view->spacing.inset.left - 
+		icon->view->spacing.inset.right) / 
+	  icon->view->options.arrange.grid.w;
 	else gw = 1;
 	y = icon->view->options.arrange.grid.next_pos / gw;
 	x = icon->view->options.arrange.grid.next_pos - (y * gw);
 	x *= icon->view->options.arrange.grid.w;
 	y *= icon->view->options.arrange.grid.h;
-	x += (icon->view->options.arrange.grid.w - icon->current.w) / 2;
-	y += (icon->view->options.arrange.grid.h - icon->current.h);
+	x += (icon->view->options.arrange.grid.w - 
+	      icon->view->spacing.icon.left -
+	      icon->view->spacing.icon.right -
+	      icon->view->spacing.spacing.left -
+	      icon->view->spacing.spacing.right - 
+	      icon->current.w) / 2;
+	y += (icon->view->options.arrange.grid.h - 
+	      icon->view->spacing.icon.top -
+	      icon->view->spacing.icon.bottom -
+	      icon->view->spacing.spacing.top -
+	      icon->view->spacing.spacing.bottom - 
+	      icon->current.h);
+	x -= icon->view->viewport.x;
+	y -= icon->view->viewport.y;
+	x += icon->view->spacing.inset.left;
+	y += icon->view->spacing.inset.top;
+	x += icon->view->spacing.icon.left + icon->view->spacing.spacing.left;
+	y += icon->view->spacing.icon.top + icon->view->spacing.spacing.top;
 	e_icon_set_xy(icon, x, y);
 	icon->view->options.arrange.grid.next_pos++;
      }
@@ -124,15 +252,27 @@ e_icon_pre_show(E_Icon *icon)
      {
 	if (icon->view->options.arrange.method == 0) /* grid */
 	  {
-	     /* need to redo whole grid... */
-	     if ((icon->current.w > icon->view->options.arrange.grid.w) ||
-		 (icon->current.h > icon->view->options.arrange.grid.h))
+	     int iw, ih;
+	     
+	     iw = icon->current.w + 
+	       icon->view->spacing.icon.left +
+	       icon->view->spacing.icon.right +
+	       icon->view->spacing.spacing.left +
+	       icon->view->spacing.spacing.right;
+	     ih = icon->current.h + 
+	       icon->view->spacing.icon.top +
+	       icon->view->spacing.icon.bottom +
+	       icon->view->spacing.spacing.top +
+	       icon->view->spacing.spacing.bottom;
+	     /* need to redo whole grid... ??? */
+	     if ((iw > icon->view->options.arrange.grid.w) ||
+		 (ih > icon->view->options.arrange.grid.h))
 	       {		  
 		  Evas_List l;
 		  
 		  icon->view->options.arrange.grid.next_pos = 0;
-		  icon->view->options.arrange.grid.w = icon->current.w;
-		  icon->view->options.arrange.grid.h = icon->current.h;
+		  icon->view->options.arrange.grid.w = iw;
+		  icon->view->options.arrange.grid.h = ih;
 		  for (l = icon->view->icons; l; l = l->next)
 		    {
 		       E_Icon *ic;

@@ -359,6 +359,12 @@ e_window_expose(Eevent * ev)
      }
 }
 
+Eevent *
+e_view_get_current_event(void)
+{
+   return current_ev;
+}
+
 int
 e_view_filter_file(E_View *v, char *file)
 {
@@ -559,7 +565,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	     break;
 	   case EFSD_CMD_CHMOD:
 	     break;
-	   case EFSD_CMD_GETMIME:
+	   case EFSD_CMD_GETFILE:
 /*	     printf("Getmime event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);
 */	     if (ev->efsd_reply_event.status == SUCCESS)
@@ -569,76 +575,10 @@ e_view_handle_fs(EfsdEvent *ev)
 		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
 		  if (icon)
 		    {
-		       char m1[4096], m2[4096], *p;
-		       
 		       /* figure out icons to use */
-		       strcpy(m1, (char*)ev->efsd_reply_event.data);
-		       p = strchr(m1, '/');
-		       if (p) *p = 0;
-		       p = strchr((char*)ev->efsd_reply_event.data, '/');
-		       if (p) strcpy(m2, &(p[1]));
-		       else m2[0] = 0;
-		       icon->info.mime.base = strdup(m1);
-		       icon->info.mime.type = strdup(m2);
-		       
-		       printf("%s: %s/%s\n", icon->file, icon->info.mime.base, icon->info.mime.type);
-		       sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
-			       icon->info.mime.base, 
-			       icon->info.mime.type);
-		       if (!e_file_exists(m1))
-			 {
-			    int found;
-			    
-			    printf("fallback 0\n");
-			    strcpy(m2, icon->info.mime.type);
-			    p = strrchr(m2, '-');
-			    found = 0;
-			    while (p)
-			      {
-				 p[0] = 0;
-				 sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
-					 icon->info.mime.base, m2);
-				 printf("try %s\n", m1);
-				 if (e_file_exists(m1))
-				   {
-				      found = 1;
-				      break;
-				   }
-				 p = strrchr(m2, '-');
-			      }
-			    if (!found)
-			      {
-				 printf("fallback 1\n");
-				 sprintf(m1, "%s/data/icons/%s/default.db",PACKAGE_DATA_DIR,
-					 icon->info.mime.base);
-				 if (!e_file_exists(m1))
-				   {
-				      printf("fallback 2\n");
-				      sprintf(m1, "%s/data/icons/unknown/unknown.db",PACKAGE_DATA_DIR);
-				      if (!e_file_exists(m1))
-					{
-					   printf("fallback 3\n");
-					   sprintf(m1, "%s/data/icons/unknown/default.db",PACKAGE_DATA_DIR);
-					}
-				   }
-			      }
-			 }
-		       IF_FREE(icon->info.icon.normal);
-		       IF_FREE(icon->info.icon.selected);
-		       IF_FREE(icon->info.icon.clicked);
-		       sprintf(m2, "%s:/icon/normal", m1);
-		       icon->info.icon.normal = strdup(m2);
-		       sprintf(m2, "%s:/icon/selected", m1);
-		       icon->info.icon.selected = strdup(m2);
-		       sprintf(m2, "%s:/icon/clicked", m1);
-		       icon->info.icon.clicked = strdup(m2);
-		       if (icon->info.link)
-			 {
-/*			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
-*/			 }
-		        e_icon_pre_show(icon);
+		       e_icon_apply_mime(icon, (char*)ev->efsd_reply_event.data);
+		       e_icon_get_icon(icon);
+		       e_icon_pre_show(icon);
 		    }
 	       }
 	     break;
@@ -677,7 +617,8 @@ e_view_handle_fs(EfsdEvent *ev)
 			    icon->info.link_get_id = 
 			      efsd_readlink(e_fs_get_connection(), f);
 			 }
-		       icon->info.is_exe = e_file_can_exec(st);
+		       if ((!icon->info.link_get_id) && (!icon->info.is_dir))
+			 icon->info.is_exe = e_file_can_exec(st);
 		       icon->changed = 1;
 		       icon->view->changed = 1;
 /*		       if (!icon->info.link_get_id) 
@@ -789,6 +730,30 @@ e_view_new(void)
    v->options.back_pixmap = 0;
 #endif   
 #endif
+     {
+	Ebits_Object obj;
+	int pl, pr, pt, pb;
+	
+	pl = pr = pt = pb = 0;
+	v->spacing.inset.left   = 2;
+	v->spacing.inset.right  = 2;
+	v->spacing.inset.top    = 2;
+	v->spacing.inset.bottom = 2;
+	obj = ebits_load(PACKAGE_DATA_DIR"/data/config/appearance/default/selections/file.bits.db");
+	if (obj) 
+	  {
+	     ebits_get_insets(obj, &pl, &pr, &pt, &pb);
+	     ebits_free(obj);
+	  }
+	v->spacing.icon.left   = pl;
+	v->spacing.icon.right  = pr;
+	v->spacing.icon.top    = pt;
+	v->spacing.icon.bottom = pb;
+	v->spacing.spacing.left   = 1;
+	v->spacing.spacing.right  = 1;
+	v->spacing.spacing.top    = 1;
+	v->spacing.spacing.bottom = 1;
+     }
    views = evas_list_append(views, v);
 
    /*
@@ -824,7 +789,7 @@ e_view_set_dir(E_View *v, char *dir)
    /* v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir); */
    v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
 				      2, efsd_op_get_stat(), 
-				      efsd_op_get_mimetype());
+				      efsd_op_get_filetype());
    v->is_listing = 1;
    v->changed = 1;
 }
@@ -834,6 +799,8 @@ e_view_scroll(E_View *v, int dx, int dy)
 {
    Evas_List l;
    
+   v->viewport.x -= dx;
+   v->viewport.y -= dy;
    for (l = v->icons; l; l = l->next)
      {
 	E_Icon *icon;
@@ -844,6 +811,12 @@ e_view_scroll(E_View *v, int dx, int dy)
 	e_icon_set_xy(icon, x + dx, y + dy);
      }
    v->changed = 1;
+}
+
+void
+e_view_scroll_to(E_View *v, int x, int y)
+{
+   e_view_scroll(v, v->viewport.x - x, v->viewport.y - y);
 }
 
 void
