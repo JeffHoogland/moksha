@@ -25,7 +25,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_menu_bg.png";
-	       border: 3 3 3 3;
+	       border: 2 2 2 2;
 	    }
 	 }
       }
