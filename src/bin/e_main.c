@@ -63,7 +63,8 @@ main(int argc, char **argv)
    int nowelcome = 0;
    int after_restart = 0; 
    char buf[1024];
-
+   char *s;
+   
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
    
@@ -89,7 +90,30 @@ main(int argc, char **argv)
 	     putenv(buf);
 	  }
      }
-  
+
+   /* fix up DISPLAY to be :N.0 if no .screen is in it */
+   s = getenv("DISPLAY");
+   if (s)
+     {
+	char *p;
+	
+	p = strrchr(s, ':');
+	if (!p)
+	  {
+	     snprintf(buf, sizeof(buf), "DISPLAY=%s:0.0", s);
+	     putenv(buf);
+	  }
+	else
+	  {
+	     p = strrchr(p, '.');
+	     if (!p)
+	       {
+		  snprintf(buf, sizeof(buf), "DISPLAY=%s.0", s);
+		  putenv(buf);
+	       }
+	  }
+     }
+   
    /* init edje and set it up in frozen mode */
    edje_init();
    edje_freeze();

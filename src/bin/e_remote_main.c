@@ -53,6 +53,30 @@ int
 main(int argc, char **argv)
 {
    int i;
+   char *s, buf[1024];
+   
+   /* fix up DISPLAY to be :N.0 if no .screen is in it */
+   s = getenv("DISPLAY");
+   if (s)
+     {
+	char *p;
+	
+	p = strrchr(s, ':');
+	if (!p)
+	  {
+	     snprintf(buf, sizeof(buf), "DISPLAY=%s:0.0", s);
+	     putenv(buf);
+	  }
+	else
+	  {
+	     p = strrchr(p, '.');
+	     if (!p)
+	       {
+		  snprintf(buf, sizeof(buf), "DISPLAY=%s.0", s);
+		  putenv(buf);
+	       }
+	  }
+     }
    
    /* handle some command-line parameters */
    display_name = (const char *)getenv("DISPLAY");
@@ -100,7 +124,7 @@ main(int argc, char **argv)
    if (!_e_ipc_init())
      {
 	printf("ERROR: Enlightenment_remote cannot set up the IPC socket.\n"
-	       "Maybe try the '-display :0' option?\n");
+	       "Maybe try the '-display :0.0' option?\n");
 	exit(-1);
      }
 
