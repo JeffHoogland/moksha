@@ -1575,8 +1575,15 @@ _e_border_eval(E_Border *bd)
 		  int new_x, new_y;
 		  
 		  printf("AUTO POS!\n");
-		  new_x = rand() % (bd->container->w - bd->w);
-		  new_y = rand() % (bd->container->h - bd->h);
+		  if (bd->container->w > bd->w)
+		  	new_x = rand() % (bd->container->w - bd->w);
+		  else
+			new_x = 0;
+		  if (bd->container->h > bd->h)
+		  	new_y = rand() % (bd->container->h - bd->h);
+		  else
+			new_y = 0;
+
 		  skiplist = evas_list_append(skiplist, bd);
 		  e_place_container_region_smart(bd->container, skiplist,
 						 bd->x, bd->y, bd->w, bd->h,
