@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
@@ -6,17 +9,21 @@ typedef struct _IBar        IBar;
 typedef struct _IBar_Bar    IBar_Bar;
 typedef struct _IBar_Icon   IBar_Icon;
 
+#define IBAR_WIDTH_AUTO -1
+
 struct _Config
 {
    char         *appdir;
+   int           edge;
    double        follow_speed;
    double        autoscroll_speed;
-   int           width;
    int           iconsize;
-   int           edge;
+   int           width;
+   /*
    double        anchor;
    double        handle;
    char          autohide;
+   */
 };
 
 struct _IBar
@@ -25,7 +32,6 @@ struct _IBar
    Evas_List   *bars;
    E_Menu      *config_menu;
    
-   E_Config_DD *conf_edd;
    Config      *conf;
 };
 
@@ -42,8 +48,6 @@ struct _IBar_Bar
    
    Evas_List   *icons;
    
-   Evas_Coord   minsize, maxsize;
-   
    double          align, align_req;
    double          follow, follow_req;
    Ecore_Timer    *timer;
@@ -51,13 +55,7 @@ struct _IBar_Bar
    
    Evas_Coord      x, y, w, h;
    
-   unsigned char   move : 1;
-   unsigned char   resize1 : 1;
-   unsigned char   resize2 : 1;
-   Evas_Coord      start_x, start_y;
-   Evas_Coord      start_bx, start_by, start_bw, start_bh;
-   
-   Ecore_Event_Handler *ev_handler_container_resize;
+   E_Gadman_Client *gmc;
 };
 
 struct _IBar_Icon
@@ -72,11 +70,6 @@ struct _IBar_Icon
    
    unsigned char  raise_on_hilight : 1;
 };
-
-#define EDGE_BOTTOM 0
-#define EDGE_TOP    1
-#define EDGE_LEFT   2
-#define EDGE_RIGHT  3
 
 EAPI void *init     (E_Module *m);
 EAPI int   shutdown (E_Module *m);
