@@ -1458,90 +1458,98 @@ e_border_adjust_limits(E_Border *b)
      }
    
    b->current.w = b->current.requested.w;
-   b->current.h = b->current.requested.h;
-      
-   pl = pr = pt = pb = 0;
-   if (b->current.w < 1) b->current.w = 1;
-   if (b->current.h < 1) b->current.h = 1;
-	
-   if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-
-   if (b->current.w < (pl + pr + 1)) b->current.w = pl + pr + 1;
-   if (b->current.h < (pt + pb + 1)) b->current.h = pt + pb + 1;
+   b->current.h = b->current.requested.h - b->current.shaded;
    
-   w = b->current.w - pl - pr;
-   h = b->current.h - pt - pb;
-   
-   mx = my = 1;
-   if (b->bits.t) ebits_get_min_size(b->bits.t, &mx, &my);	
-   if (b->current.w < mx) b->current.w = mx;
-   if (b->current.h < my) b->current.h = my;
-   mx = my = 999999;
-   if (b->bits.t) ebits_get_max_size(b->bits.t, &mx, &my);	
-   if (b->current.w > mx) b->current.w = mx;
-   if (b->current.h > my) b->current.h = my;
-
-   if (w < b->client.min.w) w = b->client.min.w;
-   if (h < b->client.min.h) h = b->client.min.h;
-   if (w > b->client.max.w) w = b->client.max.w;
-   if (h > b->client.max.h) h = b->client.max.h;
-   if ((w > 0) && (h > 0))
+   if (!b->current.shaded)
      {
-	w -= b->client.base.w;
-	h -= b->client.base.h;
+	if (b->current.w < 1) b->current.w = 1;
+	if (b->current.h < 1) b->current.h = 1;
+   
+	pl = pr = pt = pb = 0;
+	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	
+	if (b->current.w < (pl + pr + 1)) b->current.w = pl + pr + 1;
+	if (b->current.h < (pt + pb + 1)) b->current.h = pt + pb + 1;
+	
+	w = b->current.w - pl - pr;
+	h = b->current.h - pt - pb + b->current.shaded;
+
+	mx = my = 1;
+	if (b->bits.t) ebits_get_min_size(b->bits.t, &mx, &my);	
+	if (b->current.w < mx) b->current.w = mx;
+	if (b->current.h < my) b->current.h = my;
+	mx = my = 999999;
+	if (b->bits.t) ebits_get_max_size(b->bits.t, &mx, &my);	
+	if (b->current.w > mx) b->current.w = mx;
+	if (b->current.h > my) b->current.h = my;
+	
+	if (w < b->client.min.w) w = b->client.min.w;
+	if (h < b->client.min.h) h = b->client.min.h;
+	if (w > b->client.max.w) w = b->client.max.w;
+	if (h > b->client.max.h) h = b->client.max.h;
 	if ((w > 0) && (h > 0))
 	  {
-	     int i, j;
-	     double aspect;
-	     
-	     aspect = ((double)w) / ((double)h);
-	     if ((b->mode.resize == 4) || (b->mode.resize == 5))
+	     w -= b->client.base.w;
+	     h -= b->client.base.h;
+	     if ((w > 0) && (h > 0))
 	       {
-		  if (aspect < b->client.min.aspect)
-		    h = (int)((double)w / b->client.min.aspect);
-		  if (aspect > b->client.max.aspect)
-		    h = (int)((double)w / b->client.max.aspect);
+		  int i, j;
+		  double aspect;
+		  
+		  aspect = ((double)w) / ((double)h);
+		  if ((b->mode.resize == 4) || (b->mode.resize == 5))
+		    {
+		       if (aspect < b->client.min.aspect)
+			 h = (int)((double)w / b->client.min.aspect);
+		       if (aspect > b->client.max.aspect)
+			 h = (int)((double)w / b->client.max.aspect);
+		    }
+		  else if ((b->mode.resize == 6) || (b->mode.resize == 7))
+		    {
+		       if (aspect < b->client.min.aspect)
+			 w = (int)((double)h * b->client.min.aspect);
+		       if (aspect > b->client.max.aspect)
+			 w = (int)((double)h * b->client.max.aspect);
+		    }
+		  else
+		    {
+		       if (aspect < b->client.min.aspect)
+			 w = (int)((double)h * b->client.min.aspect);
+		       if (aspect > b->client.max.aspect)
+			 h = (int)((double)w / b->client.max.aspect);
+		    }
+		  i = w / b->client.step.w;
+		  j = h / b->client.step.h;
+		  w = i * b->client.step.w;
+		  h = j * b->client.step.h;
 	       }
-	     else if ((b->mode.resize == 6) || (b->mode.resize == 7))
-	       {
-		  if (aspect < b->client.min.aspect)
-		    w = (int)((double)h * b->client.min.aspect);
-		  if (aspect > b->client.max.aspect)
-		    w = (int)((double)h * b->client.max.aspect);
-	       }
-	     else
-	       {
-		  if (aspect < b->client.min.aspect)
-		    w = (int)((double)h * b->client.min.aspect);
-		  if (aspect > b->client.max.aspect)
-		    h = (int)((double)w / b->client.max.aspect);
-	       }
-	     i = w / b->client.step.w;
-	     j = h / b->client.step.h;
-	     w = i * b->client.step.w;
-	     h = j * b->client.step.h;
+	     w += b->client.base.w;
+	     h += b->client.base.h;
 	  }
-	w += b->client.base.w;
-	h += b->client.base.h;
+	b->client.w = w;
+	b->client.h = h;
+	b->current.w = w + pl + pr;
+	b->current.h = h + pt + pb;
      }
-   b->current.w = w + pl + pr;
-   b->current.h = h + pt + pb;
-   
-   if ((b->mode.resize == 3) || (b->mode.resize == 5) || (b->mode.resize == 7))
+
+   if (b->current.shaded == 0)
      {
-     }
-   else if ((b->mode.resize == 0) || (b->mode.resize == 4))
-     {
-	b->current.x += (b->current.requested.w - b->current.w);
-	b->current.y += (b->current.requested.h - b->current.h);
-     }
-   else if ((b->mode.resize == 1) || (b->mode.resize == 6))
-     {
-	b->current.y += (b->current.requested.h - b->current.h);
-     }
-   else if ((b->mode.resize == 2))
-     {
-	b->current.x += (b->current.requested.w - b->current.w);
+	if ((b->mode.resize == 3) || (b->mode.resize == 5) || (b->mode.resize == 7))
+	  {
+	  }
+	else if ((b->mode.resize == 0) || (b->mode.resize == 4))
+	  {
+	     b->current.x += (b->current.requested.w - b->current.w);
+	     b->current.y += (b->current.requested.h - b->current.h);
+	  }
+	else if ((b->mode.resize == 1) || (b->mode.resize == 6))
+	  {
+	     b->current.y += (b->current.requested.h - b->current.h);
+	  }
+	else if ((b->mode.resize == 2))
+	  {
+	     b->current.x += (b->current.requested.w - b->current.w);
+	  }
      }
 }
 
@@ -1595,8 +1603,10 @@ e_border_update(E_Border *b)
 	pl = pr = pt = pb = 0;
 	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
 	e_icccm_move_resize(b->win.client, 
-			    b->current.x + pl, b->current.y + pt, 
-			    b->current.w - pl - pr, b->current.h - pt - pb);
+			    b->current.x + pl, 
+			    b->current.y + pt, 
+			    b->client.w,
+			    b->client.h);
 	e_cb_border_move_resize(b);
      }
    else if (size_changed)
@@ -1609,16 +1619,37 @@ e_border_update(E_Border *b)
 	   smaller = 1;
 	pl = pr = pt = pb = 0;
 	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-	e_window_resize(b->win.client, b->current.w - pl - pr, b->current.h - pt - pb);
 	e_window_move_resize(b->win.input, 
 			     0, 0, b->current.w, b->current.h);
 	e_window_move_resize(b->win.main, 
 			     b->current.x, b->current.y,
 			     b->current.w, b->current.h);
-	e_window_move_resize(b->win.container, pl, pt,
-			     b->current.w - pl - pr, b->current.h - pt -pb);
+	if (b->current.shaded == b->client.h)
+	  {
+	     e_window_move_resize(b->win.client, 
+				  0, - b->current.shaded,
+				  b->client.w,
+				  b->client.h);
+	     e_window_move_resize(b->win.container,
+				  b->current.w + 1, 
+				  b->current.h + 1,
+				  1, 
+				  1);
+	  }
+	else
+	  {
+	     e_window_move_resize(b->win.client, 
+				  0, - b->current.shaded,
+				  b->client.w,
+				  b->client.h);
+	     e_window_move_resize(b->win.container, 
+				  pl, 
+				  pt,
+				  b->current.w - pl - pr, 
+				  b->current.h - pt - pb);
+	  }
 	x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
-	if ((w <1) && (h < 1)) e_window_hide(b->win.l);
+	if ((w <1) || (h < 1)) e_window_hide(b->win.l);
 	else 
 	  {
 	     e_window_show(b->win.l);
@@ -1628,7 +1659,7 @@ e_border_update(E_Border *b)
 	  }
 	
 	x = 0, y = 0, w = b->current.w, h = pt;
-	if ((w <1) && (h < 1)) e_window_hide(b->win.t);
+	if ((w <1) || (h < 1)) e_window_hide(b->win.t);
 	else 
 	  {
 	     e_window_show(b->win.t);
@@ -1638,7 +1669,7 @@ e_border_update(E_Border *b)
 	  }
 	
 	x = b->current.w - pr, y = pt, w = pr, h = (b->current.h - pt - pb);
-	if ((w <1) && (h < 1)) e_window_hide(b->win.r);
+	if ((w <1) || (h < 1)) e_window_hide(b->win.r);
 	else 
 	  {
 	     e_window_show(b->win.r);
@@ -1648,7 +1679,7 @@ e_border_update(E_Border *b)
 	  }
 	
 	x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
-	if ((w <1) && (h < 1)) e_window_hide(b->win.b);
+	if ((w <1) || (h < 1)) e_window_hide(b->win.b);
 	else 
 	  {
 	     e_window_show(b->win.b);
@@ -1663,8 +1694,8 @@ e_border_update(E_Border *b)
 	if (b->bits.b) ebits_resize(b->bits.b, b->current.w, b->current.h);
 	
 	e_icccm_move_resize(b->win.client, 
-			    b->current.x + pl, b->current.y + pt, 
-			    b->current.w - pl - pr, b->current.h - pt - pb);
+			    b->current.x + pl, b->current.y + pt - b->current.shaded, 
+			    b->client.w, b->client.h);
 	e_cb_border_move_resize(b);
      }
    if (visibility_changed)

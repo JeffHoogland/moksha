@@ -165,6 +165,7 @@ struct _E_Border
       int   x, y, w, h;
       int   visible;
       int   selected;
+      int   shaded;
    } current, previous;
    
    struct {
@@ -184,7 +185,6 @@ struct _E_Border
       Colormap colormap;
       int fixed;
       int arrange_ignore;
-      int shaded;
       int hidden;
       int iconified;
       int borderless;

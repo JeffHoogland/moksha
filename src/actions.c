@@ -732,30 +732,20 @@ e_act_cb_shade(int val, void *data)
    static double t = 0.0;
    double dif;
    int si;
-   int pl, pr, pt, pb;
-   int pix_per_sec = 200;
+   int pix_per_sec = 1600;
    
    b = data;
-   if (b->client.shaded >= 0) 
-     {
-	t = e_get_time();
-	b->client.shaded = -1;
-     }
+   if (val == 0) t = e_get_time();
    
    dif = e_get_time() - t;   
-   pl = pr = pt = pb = 0;
-   if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
    
-   si = val - (int)(dif * (double)pix_per_sec);
-   
-   if (si <= (pt + pb)) si = pt + pb;
-   b->current.requested.h = si;
+   si = (int)(dif * (double)pix_per_sec);
+   if (si > b->client.h) si = b->client.h;
+   b->current.shaded = si;
    b->changed = 1;
    e_border_adjust_limits(b);
-   if (si != (pt + pb))
-     e_add_event_timer("e_act_cb_shade()", 0.02, e_act_cb_shade, val, data);
-   else
-     b->client.shaded = 1;
+   if (si < b->client.h) 
+     e_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
 }
 
 static void e_act_cb_unshade(int val, void *data);
@@ -766,30 +756,20 @@ e_act_cb_unshade(int val, void *data)
    static double t = 0.0;
    double dif;
    int si;
-   int pl, pr, pt, pb;
-   int pix_per_sec = 200;
+   int pix_per_sec = 1600;
    
    b = data;
-   if (b->client.shaded >= 0) 
-     {
-	t = e_get_time();
-	b->client.shaded = -1;
-     }
+   if (val == 0) t = e_get_time();
    
    dif = e_get_time() - t;   
-   pl = pr = pt = pb = 0;
-   if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
    
-   si = val - (int)(dif * (double)pix_per_sec);
-   
-   if (si <= (pt + pb)) si = pt + pb;
-   b->current.requested.h = si;
+   si = b->client.h - (int)(dif * (double)pix_per_sec);
+   if (si < 0) si = 0;
+   b->current.shaded = si;
    b->changed = 1;
    e_border_adjust_limits(b);
-   if (si != (pt + pb))
-     e_add_event_timer("e_act_cb_shade()", 0.02, e_act_cb_shade, val, data);
-   else
-     b->client.shaded = 1;
+   if (si > 0) 
+     e_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
 }
 
 static void 
@@ -798,12 +778,8 @@ e_act_shade_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    E_Border *b;
    
    b = o;
-   /* in the process of being shaded - abort */
-   if (b->client.shaded < 0) return;
-   if (b->client.shaded == 0)
-     e_act_cb_shade(b->client.h, b);
-   else
-     e_act_cb_unshade(b->client.h, b);
+   if (b->current.shaded == 0) e_act_cb_shade(0, b);
+   else e_act_cb_unshade(0, b);
    return;
    UN(a);
    UN(data);
