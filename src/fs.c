@@ -112,23 +112,10 @@ e_fs_init(void)
      {
 	/* start efsd */
 	e_exec_run("efsd");   
-	for (i = 0; (!ec); i++)
+	for (i = 0; (!ec) && (i < 4); i++)
 	  {
-	     ec = efsd_open();
-	     sleep(1);
-	     /* > than 4 seconds later efsd isnt there... try forced start */
-	     if (i > 4)
-	       {
-		  e_exec_run("efsd --forcestart");
-		  for (i = 0; (!ec); i++)
-		    {
-		       ec = efsd_open();
-		       sleep(1);
-		       /* > 4 seconds later forced efsd not alive - give up */
-		       if (i > 4) break;
-		    }
-		  break;
-	       }
+	    sleep(1);
+	    ec = efsd_open();
 	  }
      }
    /* after several atempts to talk to efsd - lets give up */
@@ -137,7 +124,7 @@ e_fs_init(void)
 	fprintf(stderr, "efsd is not running - please run efsd.\n");
 	exit(-1);
      }
-   e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
+   e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle_a_la_cK);
 }
 
 EfsdConnection *
