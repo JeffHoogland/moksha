@@ -906,13 +906,17 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 
    pager = data;
    ev = event;
-   e_zone_desk_count_get(ev->zone, &desks_x, &desks_y);
 
-   max_x = MAX(pager->xnum, desks_x);
-   max_y = MAX(pager->ynum, desks_y);
+   if (pager->zone != ev->zone)
+     return 1;
+
+   e_zone_desk_count_get(ev->zone, &desks_x, &desks_y);
 
    if ((pager->xnum == desks_x) && (pager->ynum == desks_y))
      return 1;
+
+   max_x = MAX(pager->xnum, desks_x);
+   max_y = MAX(pager->ynum, desks_y);
 
    pager->fw = (pager->fw * pager->xnum) / desks_x;
    pager->fh = (pager->fh * pager->ynum) / desks_y;
