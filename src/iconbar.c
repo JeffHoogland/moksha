@@ -325,6 +325,13 @@ e_iconbar_icon_cleanup (E_Iconbar_Icon * ic)
   /* if we have an imageobject. nuke it */
   if (ic->image)
     evas_del_object (ic->iconbar->view->evas, ic->image);
+  /* cleanup the imlib_image */
+  if (ic->imlib_image)
+  {
+     imlib_context_set_image(ic->imlib_image);
+     imlib_free_image();
+  }
+     
   /* free strings ... if they exist */
   IF_FREE (ic->image_path);
   IF_FREE (ic->exec);
