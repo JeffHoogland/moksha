@@ -967,7 +967,7 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
-/*   ecore_pointer_grab(b->win.main, CurrentTime);*/
+   ecore_pointer_grab(b->win.main, CurrentTime);
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    if (border_mouse_buttons) return;
@@ -998,7 +998,7 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 		       printf("ungrab %s\n", b->client.title);
 		       ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
 		       ecore_window_button_grab_auto_replay_set(b->win.main, 0);
-/*		       e_pointer_ungrab(((Ev_Mouse_Up *)(e->event))->time);*/
+		       ecore_pointer_ungrab(((Ecore_Event_Mouse_Up *)(e->event))->time);
 		       free(g);
 		       b->grabs = evas_list_remove(b->grabs, g);
 		       goto again;

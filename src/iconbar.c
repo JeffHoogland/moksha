@@ -189,7 +189,7 @@ int
 e_iconbar_config(E_Iconbar *ib)
 {
   E_DB_File *db;
-  char buf[4096], *userdir;
+  char buf[PATH_MAX], *userdir;
   
   /*	userdir = e_config_user_dir(); */
   /*	sprintf(buf, "%sbehavior/iconbar.db", userdir); */
@@ -264,7 +264,7 @@ e_iconbar_config(E_Iconbar *ib)
 	
 	for ( i = 0; i < num; i++)
 	  {
-	    char *icon, *exec, buf[4096];
+	    char *icon, *exec, buf[PATH_MAX];
 	    
 	    sprintf(buf, "/ib/%i/icon", i);
 	    /* printf("reading #%i's icon...\n", i); */
@@ -294,7 +294,7 @@ e_iconbar_fix_icons(E_Iconbar *ib)
   Evas_List l;
   double cur, spacer;
   
-  spacer = 20.0;
+  spacer = 8.0;
   
   if (!ib->geom.horizontal)
     {

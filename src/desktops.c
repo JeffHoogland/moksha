@@ -183,7 +183,13 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
    /* e_strdup(v->dir, "/dev"); */
-   e_strdup(v->dir, e_file_home());
+   /* e_strdup(v->dir, e_file_home()); */
+     {
+	char buf[PATH_MAX];
+	
+	sprintf(buf, "%s/desktop/default", e_config_user_dir());
+	e_strdup(v->dir, buf);
+     }
    
    /* FIXME: load bg here */
    {

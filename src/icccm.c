@@ -309,7 +309,11 @@ e_icccm_get_title(Window win, E_Border *b)
 
    if (b->client.title) 
      {
-	if ((title) && (!strcmp(title, b->client.title))) return;
+	if ((title) && (!strcmp(title, b->client.title))) 
+	  {
+	     FREE(title);
+	     return;
+	  }
 	b->changed = 1;
 	FREE(b->client.title);
      }
