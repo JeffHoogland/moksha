@@ -202,13 +202,11 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	  {
 	     E_Container *con;
 	     E_Container_Shape *es;
-	     int x, y, w, h;
 	     
 	     con = l->data;
-	     ecore_evas_geometry_get(ee, &x, &y, &w, &h);
 	     es = e_container_shape_add(con);
-	     e_container_shape_move(es, x, y);
-	     e_container_shape_resize(es, w, h);
+	     e_container_shape_move(es, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	     e_container_shape_resize(es, error_w, error_h);
 	     e_container_shape_show(es);
 	     shapelist = evas_list_append(shapelist, es);
 	  }
