@@ -26,7 +26,7 @@ e_idle(void *data)
 	desk = l->data;
 	e_desktops_update(desk);
      }
-   e_db_runtime_flush();
+   e_db_flush();
    return;
    UN(data);
 }
@@ -132,112 +132,22 @@ e_mouse_down(Eevent * ev)
 		  evas_event_button_down(evas, x, y, e->button);
 		  if (e->button == 1)
 		    {
-		       int count;
 		       static E_Menu *menu = NULL;
-		       char buf[4096];
+		       static E_Build_Menu *buildmenu = NULL;
 		       
-		       if (!menu)
+		       if (!buildmenu)
 			 {
-			    menu = e_menu_new();
-			    menu->pad.icon = 2;
-			    menu->pad.state = 2;
-			    for (count = 1; count <= 16; count++)
-			      {
-				 int count2;
-				 E_Menu *menu2;
-				 E_Menu_Item *menuitem;
-				 char *icons[] = 
-				   {
-				      "cd.png",
-				      "drawer_closed.png",
-				      "drawer_cube_closed.png",
-				      "drawer_cube_open.png",
-				      "drawer_cube_open_socks.png",
-				      "drawer_image_closed.png",
-				      "drawer_image_open.png",
-				      "drawer_image_open_socks.png",
-				      "drawer_light_closed.png",
-				      "drawer_light_open.png",
-				      "drawer_light_open_socks.png",
-				      "drawer_open.png",
-				      "drawer_open_socks.png",
-				      "drawer_palette_closed.png",
-				      "drawer_palette_open.png",
-				      "drawer_palette_open_socks.png",
-				      "drawer_style_closed.png",
-				      "drawer_style_open.png",
-				      "drawer_style_open_socks.png",
-				      "drawer_text_closed.png",
-				      "drawer_text_open.png",
-				      "drawer_text_open_socks.png",
-				      "palette.png",
-				      "quake3.png",
-				      "trash_closed.png",
-				      "trash_full_closed.png",
-				      "trash_full_open.png",
-				      "trash_open.png",
-				      "watch.png"
-				   };
-				 
-				 sprintf(buf, "Menu item %i", count);
-				 menuitem = e_menu_item_new(buf);
-				 sprintf(buf, "/home/raster/icons/%s", icons[rand() % 29]);
-				 menuitem->icon = strdup(buf);
-				 menuitem->scale_icon = 1;
-				 menuitem->radio = rand() & 0x1;
-				 menuitem->check = rand() & 0x1;
-				 menuitem->on = rand() & 0x1;
-				 if (count < 10)
-				   {
-				      menu2 = e_menu_new();
-				      menu2->pad.icon = 2;
-				      menu2->pad.state = 2;
-				      menuitem->submenu = menu2;
-				   }
-				 e_menu_add_item(menu, menuitem);
-				 if (count < 10)
-				   {
-				      for (count2 = 1; count2 <= 14; count2++)
-					{
-					   E_Menu_Item *menuitem2;
-					   E_Menu *menu3;
-					   int count3;
-					   
-					   sprintf(buf, "Submenu item %i", count2);
-					   if (!(rand()%3)) menuitem2 = e_menu_item_new(buf);
-					   else menuitem2 = e_menu_item_new("");
-					   menu3 = e_menu_new();
-					   menu3->pad.icon = 2;
-					   menu3->pad.state = 2;
-					   menuitem2->submenu = menu3;
-					   sprintf(buf, "/home/raster/icons/%s", icons[rand() % 29]);
-					   if (!(rand()%3)) menuitem2->icon = strdup(buf);
-					   menuitem2->scale_icon = 1;
-					   menuitem2->radio = rand() & 0x1;
-					   menuitem2->check = rand() & 0x1;
-					   menuitem2->on = rand() & 0x1;
-					   if (!(rand()%3)) menuitem2->separator = 1;
-					   e_menu_add_item(menu2, menuitem2);
-					   for (count3 = 1; count3 <= 12; count3++)
-					     {
-						E_Menu_Item *menuitem3;
-						
-						sprintf(buf, "Submenu item %i", count3);
-						menuitem3 = e_menu_item_new(NULL);
-						sprintf(buf, "/home/raster/icons/%s", icons[rand() % 29]);
-						menuitem3->icon = strdup(buf);
-						menuitem3->scale_icon = 1;
-						menuitem3->radio = rand() & 0x1;
-						menuitem3->check = rand() & 0x1;
-						menuitem3->on = rand() & 0x1;
-						if (!(rand()%3)) menuitem3->separator = 1;
-						e_menu_add_item(menu3, menuitem3);
-					     }
-					}
-				   }
-			      }
+			    char *apps_menu_db;
+			    
+			    apps_menu_db = e_config_get("apps_menu");
+			    if (apps_menu_db) buildmenu = e_build_menu_new_from_db(apps_menu_db);
 			 }
-		       e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
+		       if (buildmenu)
+			 {
+			    menu = buildmenu->menu;
+			    if (menu)
+			      e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
+			 }
 		    }
 		  if (e->button == 3)
 		    e_exec_restart();

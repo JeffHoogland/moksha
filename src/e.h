@@ -132,6 +132,7 @@ typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
+typedef struct _E_Build_Menu          E_Build_Menu;
 
 struct _E_Object
 {
@@ -382,6 +383,19 @@ struct _E_Menu_Item
    void         *func_select_data;
 };
 
+struct _E_Build_Menu
+{
+   OBJ_PROPERTIES;
+
+   char      *file;
+   time_t     mod_time;
+   
+   E_Menu    *menu;
+   
+   Evas_List  menus;
+   Evas_List  commands;
+};
+
 void e_action_add_proto(char *action,
 			void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
 			void (*func_stop)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
@@ -513,3 +527,9 @@ void e_menu_update_finish(E_Menu *m);
 void e_menu_update_shows(E_Menu *m);
 void e_menu_update_hides(E_Menu *m);
 void e_menu_update(E_Menu *m);
+
+void          e_build_menu_unbuild(E_Build_Menu *bm);
+E_Menu       *e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num);
+void          e_build_menu_build(E_Build_Menu *bm);
+void          e_build_menu_free(E_Build_Menu *bm);
+E_Build_Menu *e_build_menu_new_from_db(char *file);

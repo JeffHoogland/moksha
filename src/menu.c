@@ -171,7 +171,7 @@ e_idle(void *data)
 	if (m->first_expose)
 	  evas_render(m->evas);
      }
-   e_db_runtime_flush();
+   e_db_flush();
    return;
    UN(data);
 }

@@ -75,7 +75,7 @@ e_idle(void *data)
 	     evas_render(b->evas.b);
 	  }
      }
-   e_db_runtime_flush();
+   e_db_flush();
    return;
    UN(data);
 }
