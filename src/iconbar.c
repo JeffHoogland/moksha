@@ -384,8 +384,7 @@ ib_timeout(int val, void *data)
 	nh = h * ((tt / speed) + 1.0);
 	/* move the hilite icon to a good spot */
 	evas_move(ic->iconbar->view->evas, ic->hi.image,
-		  (x + (w / 2)) - (nw / 2), 
-		  (y + (h / 2)) - (nh / 2));
+		  x + ((w - nw) / 2), y + ((h - nh) / 2));
 	/* resize it */
 	evas_resize(ic->iconbar->view->evas, ic->hi.image, nw, nh);
 	/* reset its fill so ti fills its space */
