@@ -6,7 +6,7 @@
 
 /* TODO List:
  *
- * * Create seperate config for each bar
+ * * Create separate config for each bar
  * * Fix menu
  * * How should the bar resize? Allow fixed width, or just autoresize.
  *
@@ -77,8 +77,6 @@ static void    _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, voi
 static void    _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
 #if 0
 static void    _ibar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before);
-static void    _ibar_bar_cb_width_fixed(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _ibar_bar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi);
 #endif
 static void    _ibar_bar_iconsize_change(IBar_Bar *ibb);
 static void    _ibar_bar_cb_iconsize_microscopic(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -325,7 +323,6 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
    Evas_List *l, *ll;
 
    ib = data;
-
    for (l = ib->bars; l; l = l->next)
      {
 	IBar_Bar *ibb;
@@ -334,7 +331,7 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	switch (ch)
 	  {
 	   case E_APP_ADD:
-	     if (a->parent == ib->apps)
+	     if (e_app_is_parent(ib->apps, a))
 	       {
 		  IBar_Icon *ic;
 
@@ -356,7 +353,7 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	       }
 	     break;
 	   case E_APP_DEL:
-	     if (a->parent == ib->apps)
+	     if (e_app_is_parent(ib->apps, a))
 	       {
 		  IBar_Icon *ic;
 
@@ -366,7 +363,7 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	       }
 	     break;
 	   case E_APP_CHANGE:
-	     if (a->parent == ib->apps)
+	     if (e_app_is_parent(ib->apps, a))
 	       {
 		  IBar_Icon *ic;
 
@@ -508,6 +505,10 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    e_gadman_client_load(ibb->gmc);
 
    evas_event_thaw(ibb->evas);
+
+   /* We need to resize, if the width is auto and the number
+    * of apps has changed since last startup */
+   _ibar_bar_frame_resize(ibb);
 
    /*
    edje_object_signal_emit(ibb->bar_object, "passive", "");
@@ -893,9 +894,6 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    e_box_freeze(ibb->box_object);
 
    e_box_min_size_get(ibb->box_object, &w, &h);
-   edje_extern_object_min_size_set(ibb->box_object, w, h);
-   edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
-   edje_object_size_min_calc(ibb->bar_object, &w, &h);
 
    if (ibb->ibar->conf->width == IBAR_WIDTH_AUTO)
      {
