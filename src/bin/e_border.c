@@ -635,6 +635,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->client.icccm.accepts_focus) return;
+//   printf("flag focus to %i\n", focus);
    if ((focus) && (!bd->focused))
      edje_object_signal_emit(bd->bg_object, "active", "");
    else if ((!focus) && (bd->focused))
@@ -642,6 +643,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    bd->focused = focus;
    if (set)
      {
+//	printf("send focus to %i\n", focus);
 	if (bd->focused)
 	  {
 	     if ((focused != bd) && (focused))
@@ -671,7 +673,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * 
  * now the focus is on Y where it should be on X
  */
-//		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
 		  e_hints_active_window_set(bd->container->manager, bd->client.win);
 		  ecore_x_window_focus(bd->client.win);
 	       }
@@ -1524,7 +1526,8 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
 	t = time(NULL);
 	ct = ctime(&t);
 	ct[strlen(ct) - 1] = 0;
-	printf("FF ->IN 0x%x %s md=%s dt=%s\n",
+	printf("FF ->IN %i 0x%x %s md=%s dt=%s\n",
+	       e->time,
 	       e->win,
 	       ct,
 	       modes[e->mode],
@@ -1568,7 +1571,8 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	t = time(NULL);
 	ct = ctime(&t);
 	ct[strlen(ct) - 1] = 0;
-	printf("FF <-OUT 0x%x %s md=%s dt=%s\n",
+	printf("FF <-OUT %i 0x%x %s md=%s dt=%s\n",
+	       e->time,
 	       e->win,
 	       ct,
 	       modes[e->mode],
@@ -1578,6 +1582,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
      {
 	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_GRAB)
      {
@@ -1587,16 +1592,11 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
      }
    else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
      {
-	/* 1. enter moz window
-	 * 2. activate menu
-	 * 3. leave moz window
-	 * 4. click
+	/* for firefox/thunderbird (xul) menu walking */
 	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
-	*/
      }
    else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
      {
-	/* FIXME: If window is grabbed, shouldn't we always return 1? */
 	if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
@@ -1871,8 +1871,18 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
-//   if (ev->mode == ECORE_X_EVENT_MODE_GRAB) return 1;
-//   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
+/*   
+   if ((ev->mode == ECORE_X_EVENT_MODE_GRAB) &&
+       (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) &&
+       (ev->win == bd->event_win) &&
+       (ev->event_win == bd->win))
+     return 1;
+   else if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
+       (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) &&
+       (ev->win == bd->event_win) &&
+       (ev->event_win == bd->win))
+     return 1;
+ */
    if (ev->event_win == bd->win)
      {
 	/* FIXME: this would normally put focus on the client on pointer */
@@ -2683,40 +2693,50 @@ _e_border_eval(E_Border *bd)
    if ((bd->changes.shading))
      {
 	/*  show at start of unshade (but don't hide until end of shade) */
-	if (bd->shaded) ecore_x_window_show(bd->client.shell_win);
+	if (bd->shaded)
+//	  ecore_x_window_show(bd->client.shell_win);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shading = 0;
      }
    if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
      {
 	if (bd->shaded)
-	  ecore_x_window_hide(bd->client.shell_win);
+//	  ecore_x_window_hide(bd->client.shell_win);
+	  ecore_x_window_lower(bd->client.shell_win);
 	else
-	  ecore_x_window_show(bd->client.shell_win);
+//	  ecore_x_window_show(bd->client.shell_win);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
      }
    else if ((bd->changes.shaded) && (bd->changes.pos))
      {
 	if (bd->shaded)
-	  ecore_x_window_hide(bd->client.shell_win);
+//	  ecore_x_window_hide(bd->client.shell_win);
+	  ecore_x_window_lower(bd->client.shell_win);
 	else
-	  ecore_x_window_show(bd->client.shell_win);
+//	  ecore_x_window_show(bd->client.shell_win);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }
    else if ((bd->changes.shaded) && (bd->changes.size))
      {
 	if (bd->shaded)
-	  ecore_x_window_hide(bd->client.shell_win);
+//	  ecore_x_window_hide(bd->client.shell_win);
+	  ecore_x_window_lower(bd->client.shell_win);
 	else
-	  ecore_x_window_show(bd->client.shell_win);
+//	  ecore_x_window_show(bd->client.shell_win);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
      }
    else if (bd->changes.shaded)
      {
 	if (bd->shaded)
-	  ecore_x_window_hide(bd->client.shell_win);
+//	  ecore_x_window_hide(bd->client.shell_win);
+	  ecore_x_window_lower(bd->client.shell_win);
 	else
-	  ecore_x_window_show(bd->client.shell_win);
+//	  ecore_x_window_show(bd->client.shell_win);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }
