@@ -131,9 +131,14 @@ main(int argc, char **argv)
    /* Init window manager hints */
    e_hints_init();
    
-   /* setup menu handlers etc. FIXME: check return value */
-   e_menu_init();
-   
+   /* setup menu handlers etc. */
+   if (!e_menu_init())
+     {
+	e_error_message_show("Enlightenment cannot initialize the menu system.\n"
+			     "Perhaps you are out of memory?");
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_menu_shutdown);
    /* init generic communications */
    if (!ecore_con_init())
      {
@@ -210,7 +215,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_atoms_shutdown);
-   /* init border system */
+   /* init focus system */
    if (!e_focus_init())
      {
 	e_error_message_show("Enlightenment cannot set up its focus system.");
