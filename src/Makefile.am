@@ -11,8 +11,6 @@ INCLUDES = \
 	-I$(top_srcdir)/intl \
 	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
 
-bin_PROGRAMS = enlightenment e_ferite_gen_e.c
-
 EXTRA_DIST = e_ferite.fec
 
 if USE_FERITE
@@ -41,7 +39,11 @@ e_ferite_gen_e.c: e_ferite.fec
 	rm -f e_ferite_gen_*
 	$(FEBUILDER) -m e_ferite_gen -i e_ferite_register -d -c e_ferite.fec
 
+E_FERITE_GEN_E_C = e_ferite_gen_e.c
+
 endif
+
+bin_PROGRAMS = enlightenment $(E_FERITE_GEN_E_C)
 
 enlightenment_SOURCES = \
 	actions.h actions.c \

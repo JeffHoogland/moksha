@@ -1,7 +1,20 @@
 #ifndef E_FERITE_H
 #define E_FERITE_H
 
+#ifdef USE_FERITE
+
 #include <ferite.h>
+
+#else
+
+#define FeriteScript void
+#define FeriteNamespace void
+#define FeriteVariable void
+#define FeriteFunction void
+#define FeriteObject void
+#define FeriteNamespaceBucket void
+
+#endif
 
 void e_ferite_init(void);
 void e_ferite_deinit(void);

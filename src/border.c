@@ -2824,7 +2824,7 @@ e_border_raise_next(void)
 
    /* Now find the next viewable border on the same desktop */
    current = (E_Border *)next->data;
-   while (next && !e_border_viewable(current))
+   while (next && (!e_border_viewable(current) || current->client.is_desktop))
      {
 	next = next->next;
 	if (!next)

@@ -29,6 +29,7 @@ e_epplet_load_from_layout (E_View * v)
 
   D_ENTER;
 
+#ifdef USE_FERITE   
   snprintf (buf, PATH_MAX, "%s/.e_epplets.bits.db", v->dir);
   v->epplet_layout = ebits_load (buf);
   if (!v->epplet_layout)
@@ -69,7 +70,8 @@ e_epplet_load_from_layout (E_View * v)
       else
 	D ("Error: Can't find epplet `%s'\n", buf);
     }
-
+#endif
+   
   D_RETURN;
 }
 
@@ -84,6 +86,7 @@ e_epplet_get_context_from_script (FeriteScript * script)
 
   D ("script address: %p\n", script);
 
+#ifdef USE_FERITE   
   for (l = views; l; l = l->next)
     {
       E_View *v;
@@ -102,6 +105,7 @@ e_epplet_get_context_from_script (FeriteScript * script)
 	    D_RETURN_ (context);
 	}
     }
+#endif
 
   D_RETURN_ (NULL);
 }
@@ -114,6 +118,7 @@ e_epplet_script_load (E_Epplet_Context * context, char *path)
 
   D_ENTER;
 
+#ifdef USE_FERITE   
   D ("Ferite: Compiling epplet script `%s'\n", path);
   script = ferite_script_compile (path);
 
@@ -131,6 +136,7 @@ e_epplet_script_load (E_Epplet_Context * context, char *path)
   ferite_script_execute (script);
   D ("Ferite: epplet executed.\n");
   /*ferite_script_delete(script); */
+#endif
 
   D_RETURN;
 }
@@ -140,6 +146,7 @@ e_epplet_set_common_callbacks (E_Epplet * epp)
 {
   D ("setting callbacks\n");
 
+#ifdef USE_FERITE   
   if (!epp->bits)
     {
       D ("Error: no bits to set callbacks on\n");
@@ -183,6 +190,7 @@ e_epplet_set_common_callbacks (E_Epplet * epp)
 				  CALLBACK_MOUSE_MOVE, e_epplet_mouse_move_cb,
 				  epp);
 
+#endif
 
   D ("callbacks set\n");
 }
@@ -196,6 +204,7 @@ e_epplet_mouse_down_cb (void *_data, Ebits_Object _o,
 
   D_ENTER;
 
+#ifdef USE_FERITE   
   epp = _data;
 
   if (!strcmp (_c, "Title_Bar"))
@@ -257,7 +266,8 @@ e_epplet_mouse_down_cb (void *_data, Ebits_Object _o,
 	  epp->offset.y = epp->current.y + epp->current.h - _y;
 	}
     }
-
+#endif
+   
   D_RETURN;
 }
 
@@ -272,6 +282,7 @@ e_epplet_mouse_up_cb (void *_data, Ebits_Object _o,
 
   D_ENTER;
 
+#ifdef USE_FERITE   
   epp = _data;
 
   if (!strcmp (_c, "Title_Bar"))
@@ -286,6 +297,7 @@ e_epplet_mouse_up_cb (void *_data, Ebits_Object _o,
       epp->state.resizing.left = 0;
       epp->state.resizing.right = 0;
     }
+#endif
   D_RETURN;
 }
 
@@ -299,6 +311,7 @@ e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
 
   D_ENTER;
 
+#ifdef USE_FERITE   
   epp = _data;
 
   if (epp->state.moving)
@@ -391,6 +404,7 @@ e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
       ebits_move (epp->bits, epp->current.x, epp->current.y);
 
     }
+#endif
 
   D_RETURN;
 }
@@ -404,6 +418,7 @@ e_epplet_cb_new( FeriteScript *script, char *func_name, FeriteObject *data, Feri
   
   D_ENTER;
   
+#ifdef USE_FERITE   
   cb = NEW(E_Epplet_CB_Info, 1);
   ZERO(cb, E_Epplet_CB_Info, 1);
 
@@ -423,6 +438,7 @@ e_epplet_cb_new( FeriteScript *script, char *func_name, FeriteObject *data, Feri
      }
      cb->script = script;
   } 
+#endif
 
   D_RETURN_(cb);
 }
@@ -430,6 +446,7 @@ e_epplet_cb_new( FeriteScript *script, char *func_name, FeriteObject *data, Feri
 void
 e_epplet_cb_cleanup(E_Epplet_CB_Info *cb)
 {
+#ifdef USE_FERITE
    if (cb->data)
    {
       cb->data->refcount--;
@@ -440,8 +457,8 @@ e_epplet_cb_cleanup(E_Epplet_CB_Info *cb)
       cb->data2->refcount--;
       cb->data2 = NULL;
    }
-
    free(cb);
+#endif
 }
 
 void
@@ -454,6 +471,7 @@ e_epplet_bits_cb (void *_data, Ebits_Object _o,
   
   D_ENTER;
 
+#ifdef USE_FERITE   
   cb = _data;
 
   if (cb->script) {
@@ -469,6 +487,7 @@ e_epplet_bits_cb (void *_data, Ebits_Object _o,
      D("ERROR: script does not exist\n");
   }
  /* e_epplet_cb_cleanup(cb); */
+#endif
   D_RETURN; 
 }
 
@@ -482,6 +501,7 @@ e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
   
   D_ENTER;
 
+#ifdef USE_FERITE   
   cb = _data;
 
   D("d1: %s, d2: %s\n", cb->data->name, cb->data2->name);
@@ -500,6 +520,7 @@ e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
      D("ERROR: script does not exist\n");
   }
 /*  e_epplet_cb_cleanup(cb); */
+#endif
   D_RETURN; 
 }
 
@@ -510,17 +531,19 @@ e_epplet_timer_func(int val, void *data)
   FeriteVariable **params;
   
   D_ENTER;
-//  D("in timer func\n");  
+
+#ifdef USE_FERITE   
+/*  D("in timer func\n"); */
   cb = data;
 
   if (cb->script) {
-//    D("creating params\n");
+/*    D("creating params\n"); */
     params = __ferite_create_parameter_list_from_data( cb->script, "on",
        cb->data, (float)val );
-//    D("calling func\n");
+/*    D("calling func\n"); */
      __ferite_variable_destroy( cb->script, __ferite_call_function( cb->script, cb->func, params));
      __ferite_delete_parameter_list( cb->script, params );
-//    D("func called, params deleted\n");
+/*    D("func called, params deleted\n"); */
   }
   else
   {
@@ -528,17 +551,19 @@ e_epplet_timer_func(int val, void *data)
   }
   
 /*  e_epplet_cb_cleanup(cb); */
+#endif
   D_RETURN;
 }
 
 E_Epplet_Observer *
 e_epplet_observer_new(FeriteScript *script, char *func_name, FeriteObject *data, char *event_type)
 {
-   E_Epplet_Observer *obs;
+   E_Epplet_Observer *obs = NULL;
    FeriteNamespaceBucket *nsb;
 
    D_ENTER;
    
+#ifdef USE_FERITE   
    obs = NEW(E_Epplet_Observer, 1);
    memset(obs, 0, sizeof(E_Epplet_Observer));
 
@@ -573,13 +598,16 @@ e_epplet_observer_new(FeriteScript *script, char *func_name, FeriteObject *data,
       }
    } 
    D("returning, event: %i\n", E_OBSERVER(obs)->event);
+#endif
    D_RETURN_(obs); 
 }
 
 static void
 e_epplet_observer_cleanup(E_Object *o)
 {
+#ifdef USE_FERITE   
    /*FIXME: we need something here!!! Leeeeaky! */
+#endif   
 }
 
 void
@@ -588,6 +616,7 @@ e_epplet_observer_register_desktops(E_Epplet_Observer *obs)
    Evas_List l;
 
    D_ENTER;
+#ifdef USE_FERITE   
    D("odeskregister, bserver func: %s\n", obs->func->name); 
    D("register each desktop in list\n");
    for (l = e_desktops_get_desktops_list(); l; l = l->next)
@@ -597,6 +626,7 @@ e_epplet_observer_register_desktops(E_Epplet_Observer *obs)
       e_observer_register_observee(E_OBSERVER(obs), E_OBSERVEE(d));
       D("desktop registered\n")
    }
+#endif
    D_RETURN;
 }
 #if 0
@@ -606,6 +636,7 @@ e_epplet_observer_register_borders(E_Epplet_Observer *obs)
    Evas_List l;
 
    D_ENTER;
+#ifdef USE_FERITE   
    for (l = e_border_get_borders_list(); l; l = l->next)
    { 
       E_Border *b = l->data;
@@ -613,6 +644,7 @@ e_epplet_observer_register_borders(E_Epplet_Observer *obs)
       e_observer_register_observee(E_OBSERVER(obs), E_OBSERVEE(b));
       D("desktop registered\n")
    }
+#endif
    D_RETURN;
 }
 #endif
@@ -626,6 +658,7 @@ e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee, E_Eve
    
    D_ENTER;
 
+#ifdef USE_FERITE   
    obs = (E_Epplet_Observer *)observer;
    desk = (E_Desktop *)observee;
    
@@ -648,6 +681,7 @@ e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee, E_Eve
    {
       D("ERROR: script does not exist\n");
    }
+#endif
    D_RETURN;
 }
 
@@ -661,6 +695,7 @@ e_epplet_border_observer_func(E_Observer *observer, E_Observee *observee)
    
    D_ENTER;
 
+#ifdef USE_FERITE   
    obs = (E_Epplet_Observer *)observer;
    b = (E_Border *)observee;
    
@@ -683,6 +718,7 @@ e_epplet_border_observer_func(E_Observer *observer, E_Observee *observee)
    {
       D("ERROR: script does not exist\n");
    }
+#endif
    D_RETURN;
 }
 #endif
