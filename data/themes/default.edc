@@ -256,6 +256,18 @@ images {
    image: "e17_clock_minutes_57.png" COMP;
    image: "e17_clock_minutes_58.png" COMP;
    image: "e17_clock_minutes_59.png" COMP;
+
+   image: "e17_battery_000.png" COMP;
+   image: "e17_battery_010.png" COMP;
+   image: "e17_battery_020.png" COMP;
+   image: "e17_battery_030.png" COMP;
+   image: "e17_battery_040.png" COMP;
+   image: "e17_battery_050.png" COMP;
+   image: "e17_battery_060.png" COMP;
+   image: "e17_battery_070.png" COMP;
+   image: "e17_battery_080.png" COMP;
+   image: "e17_battery_090.png" COMP;
+   image: "e17_battery_100.png" COMP;
 }
 
 collections {
@@ -5189,4 +5201,123 @@ collections {
 	 }
       }
    } 
+   group { 
+      name: "modules/battery/main"; 
+      max:  128 128;
+      parts {
+	 part {
+	    name: "battery";
+	    description {
+	       state: "default" 0.0;
+	       aspect: 0.669291339 0.669291339;
+	       align: 0.0 0.5;
+	       max: 85 127;
+	       rel1 {
+		  relative: 0.0 0.0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+	       }
+	       image {
+		  normal: "e17_battery_000.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.1;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_010.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.2;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_020.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.3;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_030.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.4;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_040.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.5;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_050.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.6;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_060.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.7;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_070.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.8;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_080.png";
+	       }
+	    }
+	    description {
+	       state: "default" 0.9;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_090.png";
+	       }
+	    }
+	    description {
+	       state: "default" 1.0;
+	       inherit: "default" 0.0;
+	       image {
+		  normal: "e17_battery_100.png";
+	       }
+	    }
+	 }
+	 part {
+	    name:           "reading";
+	    type:           TEXT;
+            effect:         SOFT_SHADOW;
+	    description {
+	       state: "default" 0.0;
+	       align: 1.0 0.0;
+	       rel1 {
+		  relative: 1.0  0.0;
+		  to_x:     "battery";
+	       }
+	       rel2 {
+		  relative: 1.0  1.0;
+	       }
+               color: 255 255 255 255;
+	       color3: 0 0 0 32;
+	       text {
+		  text:     "100%";
+		  font:     "Edje Vera";
+		  size:     7;
+		  min:      1 1;
+		  align:    0.0 0.0;
+	       }
+	    }
+	 }
+      }
+   }
 }

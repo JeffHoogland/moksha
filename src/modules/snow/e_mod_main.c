@@ -29,7 +29,7 @@ init(E_Module *m)
    if (m->api->version < E_MODULE_API_VERSION)
      {
 	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: dropshadow\n"
+			    "Error initializing Module: Snow\n"
 			    "It requires a minimum module API version of: %i.\n"
 			    "The module API advertized by Enlightenment is: %i.\n"
 			    "Aborting module.",

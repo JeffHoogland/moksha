@@ -231,4 +231,15 @@ e17_clock_seconds_55.png \
 e17_clock_seconds_56.png \
 e17_clock_seconds_57.png \
 e17_clock_seconds_58.png \
-e17_clock_seconds_59.png
+e17_clock_seconds_59.png \
+e17_battery_000.png \
+e17_battery_010.png \
+e17_battery_020.png \
+e17_battery_030.png \
+e17_battery_040.png \
+e17_battery_050.png \
+e17_battery_060.png \
+e17_battery_070.png \
+e17_battery_080.png \
+e17_battery_090.png \
+e17_battery_100.png
