@@ -343,12 +343,19 @@ _e_module_free(E_Module *m)
 	     e_config->modules = evas_list_remove(e_config->modules, em);
 	     E_FREE(em->name);
 	     E_FREE(em);
+	     /* This is crap, a job is added, but doesn't run because
+	      * main loop has quit!
 	     e_config_save_queue();
+	     */
 	     break;
 	  }
      }
    
-   if (m->enabled) m->func.shutdown(m);
+   if (m->enabled)
+     {
+	m->func.save(m);
+	m->func.shutdown(m);
+     }
    if (m->name) free(m->name);
    if (m->dir) free(m->dir);
    dlclose(m->handle);
