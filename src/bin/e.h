@@ -59,6 +59,7 @@ extern E_Path *path_images;
 extern E_Path *path_fonts;
 extern E_Path *path_themes;
 extern E_Path *path_init;
+extern int     restart;
 
 /* convenience macro to compress code and avoid typos */
 #define E_FN_DEL(_fn, _h) \

@@ -11,6 +11,7 @@ struct _About_Data
 /* local subsystem functions */
 static void _e_int_menus_about_end     (void *data, E_Menu *m);
 static void _e_int_menus_about_about   (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_about_restart (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_about_exit    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan     (E_Menu *m);
 static void _e_int_menus_apps_start    (void *data, E_Menu *m);
@@ -46,6 +47,10 @@ e_int_menus_about_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Restart Enlightement");
+   e_menu_item_callback_set(mi, _e_int_menus_about_restart, NULL);
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Exit Enlightement");
    e_menu_item_callback_set(mi, _e_int_menus_about_exit, NULL);
@@ -93,6 +98,14 @@ _e_int_menus_about_about(void *data, E_Menu *m, E_Menu_Item *mi)
 		       "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 		       "Please think of the aardvarks. They need some love too."
 		       );
+}
+
+static void
+_e_int_menus_about_restart(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   printf("RESTART ON!\n");
+   restart = 1;
+   ecore_main_loop_quit();
 }
 
 static void

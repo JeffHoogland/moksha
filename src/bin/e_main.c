@@ -35,6 +35,7 @@ E_Path *path_images  = NULL;
 E_Path *path_fonts   = NULL;
 E_Path *path_themes  = NULL;
 E_Path *path_init    = NULL;
+int     restart      = 0;
 
 /* local subsystem functions */
 #define MAX_LEVEL 32
@@ -273,6 +274,15 @@ main(int argc, char **argv)
 
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
+   
+   /* if we were flagged to restart, then  restart. */
+   if (restart)
+     {
+	printf("Restart...\n");
+	ecore_app_restart();
+	printf("eh? restart failed!\n");
+     }
+   
    /* just return 0 to keep the compiler quiet */
    return 0;
 }
@@ -334,7 +344,7 @@ _e_main_shutdown(int errorcode)
      }
    for (i = _e_main_level - 1; i >= 0; i--)
      (*_e_main_shutdown_func[i])();
-   exit(errorcode);
+   if (errorcode < 0) exit(errorcode);
 }
 
 static int
