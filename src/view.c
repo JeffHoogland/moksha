@@ -971,14 +971,14 @@ e_configure(Ecore_Event * ev)
 
 		     if (e_view_layout_get_element_geometry(v->layout,
 							    "Scrollbar_H",
-							    &x, &y, &w, &h));
+							    &x, &y, &w, &h))
 		     {
 			e_scrollbar_move(v->scrollbar.h, x, y);
 			e_scrollbar_resize(v->scrollbar.h, w, h);
 		     }
 		     if (e_view_layout_get_element_geometry(v->layout,
 							    "Scrollbar_V",
-							    &x, &y, &w, &h));
+							    &x, &y, &w, &h))
 		     {
 			e_scrollbar_move(v->scrollbar.v, x, y);
 			e_scrollbar_resize(v->scrollbar.v, w, h);
@@ -1809,7 +1809,7 @@ e_view_realize(E_View * v)
       double              x, y, w, h;
 
       if (e_view_layout_get_element_geometry(v->layout, "Icons",
-					     &x, &y, &w, &h));
+					     &x, &y, &w, &h))
       v->spacing.window.l = x;
       v->spacing.window.r = v->size.w - (x + w);
       v->spacing.window.t = y;
@@ -1838,14 +1838,14 @@ e_view_realize(E_View * v)
       double              x, y, w, h;
 
       if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_H",
-					     &x, &y, &w, &h));
+					     &x, &y, &w, &h))
       {
 	 e_scrollbar_move(v->scrollbar.h, x, y);
 	 e_scrollbar_resize(v->scrollbar.h, w, h);
       }
 
       if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_V",
-					     &x, &y, &w, &h));
+					     &x, &y, &w, &h))
       {
 	 e_scrollbar_move(v->scrollbar.v, x, y);
 	 e_scrollbar_resize(v->scrollbar.v, w, h);
