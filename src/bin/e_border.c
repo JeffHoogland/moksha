@@ -156,6 +156,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.step_h = 1;
    bd->client.icccm.min_aspect = 0.0;
    bd->client.icccm.max_aspect = 0.0;
+   bd->client.icccm.accepts_focus = 1;
    
    bd->client.icccm.fetch.title = 1;
    bd->client.icccm.fetch.name_class = 1;
@@ -1120,35 +1121,41 @@ _e_border_eval(E_Border *bd)
 	int is_urgent = 0;
 	
 	bd->client.icccm.initial_state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
-	ecore_x_icccm_hints_get(bd->client.win,
-				&accepts_focus,
-				&bd->client.icccm.initial_state,
-				&bd->client.icccm.icon_pixmap,
-				&bd->client.icccm.icon_mask,
-				&bd->client.icccm.icon_window,
-				&bd->client.icccm.window_group,
-				&is_urgent);
-	bd->client.icccm.accepts_focus = accepts_focus;
-	bd->client.icccm.urgent = is_urgent;
+	if (ecore_x_icccm_hints_get(bd->client.win,
+				    &accepts_focus,
+				    &bd->client.icccm.initial_state,
+				    &bd->client.icccm.icon_pixmap,
+				    &bd->client.icccm.icon_mask,
+				    &bd->client.icccm.icon_window,
+				    &bd->client.icccm.window_group,
+				    &is_urgent))
+	  {
+	     bd->client.icccm.accepts_focus = accepts_focus;
+	     bd->client.icccm.urgent = is_urgent;
+	  }
 	bd->client.icccm.fetch.hints = 0;
      }
    if (bd->client.icccm.fetch.size_pos_hints)
      {
 	int request_pos = 0;
 	
-	if (!ecore_x_icccm_size_pos_hints_get(bd->client.win,
-					      &request_pos,
-					      &bd->client.icccm.gravity,
-					      &bd->client.icccm.min_w,
-					      &bd->client.icccm.min_h,
-					      &bd->client.icccm.max_w,
-					      &bd->client.icccm.max_h,
-					      &bd->client.icccm.base_w,
-					      &bd->client.icccm.base_h,
-					      &bd->client.icccm.step_w,
-					      &bd->client.icccm.step_h,
-					      &bd->client.icccm.min_aspect,
-					      &bd->client.icccm.max_aspect))
+	if (ecore_x_icccm_size_pos_hints_get(bd->client.win,
+					     &request_pos,
+					     &bd->client.icccm.gravity,
+					     &bd->client.icccm.min_w,
+					     &bd->client.icccm.min_h,
+					     &bd->client.icccm.max_w,
+					     &bd->client.icccm.max_h,
+					     &bd->client.icccm.base_w,
+					     &bd->client.icccm.base_h,
+					     &bd->client.icccm.step_w,
+					     &bd->client.icccm.step_h,
+					     &bd->client.icccm.min_aspect,
+					     &bd->client.icccm.max_aspect))
+	  {
+	     bd->client.icccm.request_pos = request_pos;
+	  }
+	else
 	  {
 	     printf("NO SIZE HINTS!\n");
 	  }
@@ -1158,7 +1165,6 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.max_h > 32767) bd->client.icccm.max_h = 32767;
 	if (bd->client.icccm.base_w > 32767) bd->client.icccm.base_w = 32767;
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
-	bd->client.icccm.request_pos = request_pos;
 	bd->client.icccm.fetch.size_pos_hints = 0;
      }
    if (bd->client.icccm.fetch.protocol)
