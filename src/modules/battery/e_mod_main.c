@@ -240,7 +240,7 @@ _battery_face_init(Battery_Face *ef)
 static void
 _battery_face_free(Battery_Face *ef)
 {
-   ecore_timer_derl(ef->battery_check_timer);
+   ecore_timer_del(ef->battery_check_timer);
    ecore_event_handler_del(ef->ev_handler_container_resize);
    evas_object_del(ef->bat_object);
    evas_object_del(ef->event_object);
