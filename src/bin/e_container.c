@@ -42,7 +42,6 @@ e_container_new(E_Manager *man)
    E_Zone *zone;
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
-   memset(con, 0, sizeof(E_Container));
    if (!con) return NULL;
    con->manager = man;
    e_object_ref(E_OBJECT(con->manager));

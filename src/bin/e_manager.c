@@ -181,15 +181,11 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
    e = ev;
    if (e->parent != man->root) return 1; /* try other handlers for this */
    
-   /* handle map request here */
-   printf("REQ for map %x\n", e->win);
-   
-   /*ecore_x_window_show(e->win); */
      {
 	E_Container *con;
 	E_Border *bd;
 	
-   con = man->containers->data;
+	con = man->containers->data;
 	if (!e_border_find_by_client_window(e->win))
 	  {
 	     bd = e_border_new(con, e->win, 0);
