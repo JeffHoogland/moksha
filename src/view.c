@@ -2815,12 +2815,14 @@ e_dnd_drop_request_free(void)
 static void
 e_dnd_handle_drop( E_View *v, E_dnd_enum dnd_pending_mode )
 {
+  E_Icon *ic;
   char hostname[PATH_MAX];
   int in, out;
   char *filename;
 
   D_ENTER;
    
+  e_view_deselect_all();
   /* Need hostname for URL (file://hostname/...) */
   if(gethostname( hostname, PATH_MAX))
     {
