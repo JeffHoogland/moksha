@@ -549,7 +549,7 @@ _e_main_screens_init(void)
 			 }
 		    }
 	       }
-
+	     ecore_x_netwm_desk_roots_set(man->root, 1, &(con->win));
 	     e_container_show(con);
 	  }
 	else

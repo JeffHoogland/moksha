@@ -2087,6 +2087,7 @@ _e_border_eval(E_Border *bd)
 	bd->client_inset.r = r;
 	bd->client_inset.t = t;
 	bd->client_inset.b = b;
+	ecore_x_netwm_frame_size_set(bd->client.win, l, r, t, b);
 	bd->w += (bd->client_inset.l + bd->client_inset.r);
 	bd->h += (bd->client_inset.t + bd->client_inset.b);
 	bd->changes.size = 1;
