@@ -180,6 +180,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    Ecore_X_Window_Attributes *att;
    Evas_List *list;
    E_Config_Binding *eb;
+   Ecore_X_Window mwin;
    unsigned int managed, desk[2];
    int deskx, desky;
 
@@ -192,6 +193,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
+   mwin = e_menu_grab_window_get();
+   if (!mwin) mwin = e_init_window_get();
+   if (mwin)
+     ecore_x_window_configure(bd->win,
+			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			      0, 0, 0, 0, 0,
+			      mwin, ECORE_X_WINDOW_STACK_BELOW);
    /* Bindings */
    for (list = e_config->bindings; list; list = list->next)
      {
@@ -568,6 +577,7 @@ e_border_raise(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
    mwin = e_menu_grab_window_get();
+   if (!mwin) mwin = e_init_window_get();
    if (!mwin)
      ecore_x_window_raise(bd->win);
    else
@@ -584,7 +594,11 @@ e_border_lower(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_before(bd, NULL);
-   ecore_x_window_lower(bd->win);
+   ecore_x_window_configure(bd->win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    bd->container->bg_win, ECORE_X_WINDOW_STACK_ABOVE);
 }
 
 void

@@ -52,16 +52,36 @@ e_container_new(E_Manager *man)
    con->manager->containers = evas_list_append(con->manager->containers, con);
    con->w = con->manager->w;
    con->h = con->manager->h;
-   con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
-   ecore_x_icccm_title_set(con->win, "Enlightenment Container");
+   if (e_config->use_virtual_roots)
+     {
+        Ecore_X_Window mwin;
+	
+	con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
+	ecore_x_icccm_title_set(con->win, "Enlightenment Container");
+	mwin = e_menu_grab_window_get();
+	if (!mwin) mwin = e_init_window_get();
+	if (!mwin)
+	  ecore_x_window_raise(con->win);
+	else
+	  ecore_x_window_configure(con->win,
+				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+				   0, 0, 0, 0, 0,
+				   mwin, ECORE_X_WINDOW_STACK_BELOW);
+     }
+   else
+     {
+	con->win = con->manager->win;
+     }
    con->bg_ecore_evas = ecore_evas_software_x11_new(NULL, con->win, 0, 0, con->w, con->h);
+   ecore_evas_override_set(con->bg_ecore_evas, 1);
    e_canvas_add(con->bg_ecore_evas);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    con->bg_win = ecore_evas_software_x11_window_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
    ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");
    ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
-   ecore_evas_show(con->bg_ecore_evas);
+   ecore_x_window_lower(con->bg_win);
 
    ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
    
@@ -97,11 +117,13 @@ e_container_new(E_Manager *man)
 void
 e_container_show(E_Container *con)
 {
-   printf("Container show!\n");
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if (con->visible) return;
-   ecore_x_window_show(con->win);
+   ecore_evas_show(con->bg_ecore_evas);
+   ecore_x_window_lower(con->bg_win);
+   if (con->win != con->manager->win)
+     ecore_x_window_show(con->win);
    con->visible = 1;
 }
         
@@ -111,7 +133,9 @@ e_container_hide(E_Container *con)
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if (!con->visible) return;
-   ecore_x_window_hide(con->win);
+   ecore_evas_hide(con->bg_ecore_evas);
+   if (con->win != con->manager->win)
+     ecore_x_window_hide(con->win);
    con->visible = 0;
 }
 
@@ -139,7 +163,8 @@ e_container_move(E_Container *con, int x, int y)
    if ((x == con->x) && (y == con->y)) return;
    con->x = x;
    con->y = y;
-   ecore_x_window_move(con->win, con->x, con->y);
+   if (con->win != con->manager->win)
+     ecore_x_window_move(con->win, con->x, con->y);
    evas_object_move(con->bg_blank_object, con->x, con->y);
 }
         
@@ -151,7 +176,8 @@ e_container_resize(E_Container *con, int w, int h)
    if ((w == con->w) && (h == con->h)) return;
    con->w = w;
    con->h = h;
-   ecore_x_window_resize(con->win, con->w, con->h);
+   if (con->win != con->manager->win)
+     ecore_x_window_resize(con->win, con->w, con->h);
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
 }
@@ -166,7 +192,8 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
    con->y = y;
    con->w = w;
    con->h = h;
-   ecore_x_window_move_resize(con->win, con->x, con->y, con->w, con->h);
+   if (con->win != con->manager->win)
+     ecore_x_window_move_resize(con->win, con->x, con->y, con->w, con->h);
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_move(con->bg_blank_object, con->x, con->y);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
@@ -177,7 +204,14 @@ e_container_raise(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   ecore_x_window_raise(con->win);
+   if (con->win != con->manager->win)
+     {
+	ecore_x_window_raise(con->win);
+     }
+   else
+     {
+	ecore_x_window_lower(con->bg_win);
+     }
 }
 
 void
@@ -185,7 +219,12 @@ e_container_lower(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   ecore_x_window_lower(con->win);
+   if (con->win != con->manager->win)
+     ecore_x_window_lower(con->win);
+   else
+     {
+	ecore_x_window_lower(con->bg_win);
+     }
 }
 
 Evas_List *
@@ -372,6 +411,7 @@ static void
 _e_container_free(E_Container *con)
 {
    Evas_List *l, *tmp;
+   
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
@@ -390,7 +430,10 @@ _e_container_free(E_Container *con)
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
-   ecore_x_window_del(con->win);
+   if (con->manager->win != con->win)
+     {
+	ecore_x_window_del(con->win);
+     }
    free(con);
 }
    

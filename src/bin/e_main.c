@@ -533,7 +533,10 @@ _e_main_screens_init(void)
 	if (con)
 	  {
 	     e_manager_manage_windows(man);
-	     ecore_x_netwm_desk_roots_set(man->root, 1, &(con->win));
+	     if (e_config->use_virtual_roots)
+	       {
+		  ecore_x_netwm_desk_roots_set(man->root, 1, &(con->win));
+	       }
 	     e_container_show(con);
 	  }
 	else

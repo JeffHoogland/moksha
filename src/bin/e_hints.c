@@ -221,7 +221,10 @@ e_hints_desktop_config_set(void)
      {
 	m = ml->data;
 	ecore_x_netwm_desk_count_set(m->root, num);
-	ecore_x_netwm_desk_roots_set(m->root, num, vroots);
+	if (e_config->use_virtual_roots)
+	  {
+	     ecore_x_netwm_desk_roots_set(m->root, num, vroots);
+	  }
 	ecore_x_netwm_desk_workareas_set(m->root, num, areas);
      }
    free(vroots);

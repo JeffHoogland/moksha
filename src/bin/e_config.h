@@ -61,6 +61,7 @@ struct _E_Config
    int         font_cache;
    int         zone_desks_x_count;
    int         zone_desks_y_count;
+   int         use_virtual_roots;
    Evas_List  *modules;
    Evas_List  *bindings;
 };

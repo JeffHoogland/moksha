@@ -86,6 +86,7 @@ e_config_init(void)
 	e_config->font_cache = 512;
 	e_config->zone_desks_x_count = 1;
 	e_config->zone_desks_y_count = 1;
+	e_config->use_virtual_roots = 0;
 	  {
 	     E_Config_Module *em;
 
