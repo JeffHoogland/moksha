@@ -885,11 +885,12 @@ _e_border_free(E_Border *bd)
 				ECORE_X_MODIFIER_ALT,
 				0);
    ecore_x_window_del(bd->win);
+   
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   borders = evas_list_remove(borders, bd);
-
    bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+   borders = evas_list_remove(borders, bd);
+   
    free(bd);
 }
 
