@@ -211,7 +211,7 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 		       "This is Enlightenment "VERSION".\n"
 		       "Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
 		       "\n"
-		       "We hope you enjoy using this software as much as we enjoyed writing it.\n"
+		       "We hope you enjoy using this software as much as we enjoyed writing it.\n\n"
 		       "Please think of the aardvarks. They need some love too."
 		       );
 }
