@@ -158,6 +158,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    if (!bd) return NULL;
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
    
+   bd->container = con;
    printf("##- NEW CLIENT 0x%x\n", win);
    bd->w = 1;
    bd->h = 1;
@@ -269,7 +270,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->new_client = 1;
    bd->changed = 1;
    
-   bd->container = con;
    bd->zone = e_zone_current_get(con);
    bd->zone->clients = evas_list_append(bd->zone->clients, bd);
    bd->desk = e_desk_current_get(bd->zone);
