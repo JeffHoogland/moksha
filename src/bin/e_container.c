@@ -227,14 +227,6 @@ e_container_lower(E_Container *con)
      }
 }
 
-Evas_List *
-e_container_clients_list_get(E_Container *con)
-{
-   E_OBJECT_CHECK_RETURN(con, NULL);
-   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-   return con->clients;
-}
-   
 E_Zone *
 e_container_zone_at_point_get(E_Container *con, int x, int y)
 {

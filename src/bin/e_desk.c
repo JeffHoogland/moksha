@@ -43,7 +43,6 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk = E_OBJECT_ALLOC(E_Desk, E_DESK_TYPE, _e_desk_free);
    if (!desk) return NULL;
 
-   desk->clients = NULL;
    desk->zone = zone;
    desk->num = ++desk_count;
    snprintf(name, sizeof(name), "Desktop %d, %d", x, y);
@@ -237,7 +236,6 @@ static void
 _e_desk_free(E_Desk *desk)
 {
    E_FREE(desk->name);
-   evas_list_free(desk->clients);
    free(desk);
 }
 

@@ -306,7 +306,7 @@ EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);
 
-EAPI void      e_border_iconified_list(void);
+EAPI Evas_List *e_border_clients_get();
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;

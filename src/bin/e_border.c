@@ -310,9 +310,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->changed = 1;
 
    bd->zone = e_zone_current_get(con);
-   bd->zone->clients = evas_list_append(bd->zone->clients, bd);
    bd->desk = e_desk_current_get(bd->zone);
-   bd->desk->clients = evas_list_append(bd->desk->clients, bd);
    con->clients = evas_list_append(con->clients, bd);
    borders = evas_list_append(borders, bd);
 
@@ -338,8 +336,6 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    if (bd->zone == zone) return;
-   bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-   zone->clients = evas_list_append(zone->clients, bd);
    bd->zone = zone;
 
    if (bd->desk->zone != bd->zone)
@@ -377,8 +373,6 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (bd->desk == desk) return;
-   bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
-   desk->clients = evas_list_append(desk->clients, bd);
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
@@ -947,9 +941,6 @@ e_border_uniconify(E_Border *bd)
 	e_border_desk_set(bd, desk);
 	bd->iconic = 0;
 	e_border_show(bd);
-	/* FIXME: DEPRECATED?
-	e_iconify_border_remove(bd);
-	*/
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
    iconic = 0;
@@ -1055,6 +1046,11 @@ e_border_idler_before(void)
      }
 }
 
+Evas_List *
+e_border_clients_get()
+{
+   return borders;
+}
 
 /* local subsystem functions */
 static void
@@ -1111,8 +1107,6 @@ _e_border_free(E_Border *bd)
    ecore_x_window_del(bd->win);
 
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-   bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    borders = evas_list_remove(borders, bd);
 
    free(bd);
@@ -3503,10 +3497,6 @@ _e_border_reorder_after(E_Border *bd, E_Border *after)
      {
 	bd->container->clients = evas_list_remove(bd->container->clients, bd);
 	bd->container->clients = evas_list_append_relative(bd->container->clients, bd, after);
-	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-	bd->zone->clients = evas_list_append_relative(bd->zone->clients, bd, after);
-	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
-	bd->desk->clients = evas_list_append_relative(bd->desk->clients, bd, after);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_append_relative(borders, bd, after);
      }
@@ -3514,10 +3504,6 @@ _e_border_reorder_after(E_Border *bd, E_Border *after)
      {
 	bd->container->clients = evas_list_remove(bd->container->clients, bd);
 	bd->container->clients = evas_list_append(bd->container->clients, bd);
-	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-	bd->zone->clients = evas_list_append(bd->zone->clients, bd);
-	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
-	bd->desk->clients = evas_list_append(bd->desk->clients, bd);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_append(borders, bd);
      }
@@ -3530,10 +3516,6 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
      {
 	bd->container->clients = evas_list_remove(bd->container->clients, bd);
 	bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, before);
-	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-	bd->zone->clients = evas_list_prepend_relative(bd->zone->clients, bd, before);
-	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
-	bd->desk->clients = evas_list_prepend_relative(bd->desk->clients, bd, before);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_prepend_relative(borders, bd, before);
      }
@@ -3541,10 +3523,6 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
      {
 	bd->container->clients = evas_list_remove(bd->container->clients, bd);
 	bd->container->clients = evas_list_prepend(bd->container->clients, bd);
-	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
-	bd->zone->clients = evas_list_prepend(bd->zone->clients, bd);
-	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
-	bd->desk->clients = evas_list_prepend(bd->desk->clients, bd);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_prepend(borders, bd);
      }

@@ -271,15 +271,6 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_module_shutdown);
    
-   /* setup iconification */
-   if (!e_iconify_init())
-     {
-	e_error_message_show("Enlightenment cannot setup its iconify system.");
-	_e_main_shutdown(-1);	
-     }
-   else
-     _e_main_shutdown_push(e_iconify_shutdown);
-
    if (!nowelcome)
      {
 	/* explicitly show a gui dialog */

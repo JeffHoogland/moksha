@@ -22,8 +22,6 @@ struct _E_Desk
    char                 visible : 1;
 
    Evas_Object         *bg_object;
-
-   Evas_List           *clients;
 };
 
 struct _E_Event_Desk_Show

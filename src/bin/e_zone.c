@@ -209,15 +209,6 @@ e_zone_bg_reconfigure(E_Zone *zone)
    evas_object_show(o);
 }
 
-Evas_List *
-e_zone_clients_list_get(E_Zone *zone)
-{
-   E_OBJECT_CHECK_RETURN(zone, NULL);
-   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
-   return zone->clients;
-}
-   
-
 static void
 _e_zone_free(E_Zone *zone)
 {
@@ -315,7 +306,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    E_Desk   **new_desks;
    E_Desk    *desk, *new_desk;
    int        x, y, xx, yy, moved;
-   Evas_List *client;
+   Evas_List *l;
    E_Border  *bd;
    E_Event_Zone_Desk_Count_Set *ev;
    
@@ -332,7 +323,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
      for(y = 0; y < yy; y++)
        {
 	  if (x < zone->desk_x_count && y < zone->desk_y_count)
-	    desk = (E_Desk *) zone->desks[x + (y * zone->desk_x_count)];
+	    desk = zone->desks[x + (y * zone->desk_x_count)];
 	  else
 	    desk = e_desk_new(zone, x, y);
 	  new_desks[x + (y * xx)] = desk;
@@ -342,20 +333,16 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    if (xx < zone->desk_x_count)
      for (y = 0; y < zone->desk_y_count; y++)
        {
-	  new_desk = (E_Desk *)
-	     zone->desks[xx - 1 + (y * zone->desk_x_count)];
+	  new_desk = zone->desks[xx - 1 + (y * zone->desk_x_count)];
 	  for (x = xx; x < zone->desk_x_count; x++)
 	    {
-	       desk = (E_Desk *)
-		  zone->desks[x + (y * zone->desk_x_count)];
+	       desk = zone->desks[x + (y * zone->desk_x_count)];
 
-	       /* Here desk->clients is removed from the list on desk_set
-		* so we want to iterate whilst it is not NULL */
-	       while (desk->clients)
+	       for (l = zone->container->clients; l; l = l->next)
 		 {
-		    bd = (E_Border *) desk->clients->data;
-
-		    e_border_desk_set(bd, new_desk);
+		    bd = l->data;
+		    if (bd->desk == desk)
+		      e_border_desk_set(bd, new_desk);
 		 }
 	       e_object_del(E_OBJECT(desk));
 	    }
@@ -363,19 +350,16 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    if (yy < zone->desk_y_count)
      for (x = 0; x < zone->desk_x_count; x++)
        {
-	  new_desk = (E_Desk *)
-	     zone->desks[x + ((yy - 1) * zone->desk_x_count)];
+	  new_desk = zone->desks[x + ((yy - 1) * zone->desk_x_count)];
 	  for (y = yy; y < zone->desk_y_count; y++)
 	    {
-	       desk = (E_Desk *)
-		  zone->desks[x + (y * zone->desk_x_count)];
+	       desk = zone->desks[x + (y * zone->desk_x_count)];
 
-	       /* again, list shrinking as we iterate */
-	       while (desk->clients)
+	       for (l = zone->container->clients; l; l = l->next)
 		 {
-		    bd = (E_Border *) desk->clients->data;
-
-		    e_border_desk_set(bd, new_desk);
+		    bd = l->data;
+		    if (bd->desk == desk)
+		      e_border_desk_set(bd, new_desk);
 		 }
 	       e_object_del(E_OBJECT(desk));
 	    }

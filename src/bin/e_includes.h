@@ -27,7 +27,6 @@
 #include "e_place.h"
 #include "e_resist.h"
 #include "e_startup.h"
-#include "e_iconify.h"
 #include "e_hints.h"
 #include "e_gadman.h"
 #include "e_signals.h"

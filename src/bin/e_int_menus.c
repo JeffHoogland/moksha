@@ -421,23 +421,22 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    E_Menu_Item *mi;
    Evas_List *l, *borders = NULL;
    E_Menu *root;
+   E_Zone *zone;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
-   /* get the current containers clients */
-   if ((root) && (root->zone))
+   /* get the current clients */
+   if (root)
+     zone = root->zone;
+   for (l = e_border_clients_get(); l; l = l->next)
      {
-	for (l = e_zone_clients_list_get(root->zone); l; l = l->next)
-	  borders = evas_list_append(borders, l->data);
+	E_Border *border;
+
+	border = l->data;
+	if ((border->zone == zone) || (border->iconic))
+	  borders = evas_list_append(borders, border);
      }
 
-   /* get the iconified clients from other containers */
-   for (l = e_iconify_clients_list_get(); l; l = l->next)
-     {
-	if (!evas_list_find(borders, l->data))
-	  borders = evas_list_append(borders, l->data);
-     }
-   
    if (!borders)
      { 
 	/* FIXME here we want nothing, but that crashes!!! */
