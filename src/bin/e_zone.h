@@ -15,7 +15,9 @@ struct _E_Zone
    Evas_Object         *bg_object;
    Evas_Object         *bg_event_object;
    
-   Evas_List           *desks;
+   int                  desk_x_count, desk_y_count;
+   int                  desk_x_current, desk_y_current;
+   E_Object           **desks; /* FIXME: why can this not be E_Desk? */
    Evas_List           *clients;
 
 };

@@ -25,7 +25,7 @@ e_desk_shutdown(void)
 }
 
 E_Desk *
-e_desk_new(E_Zone *zone)
+e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk      *desk;
    char		name[40];
@@ -38,11 +38,11 @@ e_desk_new(E_Zone *zone)
    desk->clients = NULL;
    desk->zone = zone;
    desk->num = ++desk_count;
-   snprintf(name, sizeof(name), "Desktop %d", desk->num);
+   snprintf(name, sizeof(name), "Desktop %d, %d", x, y);
    desk->name = strdup(name);
    e_object_ref(E_OBJECT(zone));
-   zone->desks = evas_list_append(zone->desks, desk);
 
+   zone->desks[x + (y * zone->desk_x_count)] = (E_Object *) desk;
    return desk;
 }
 
@@ -59,6 +59,7 @@ void
 e_desk_show(E_Desk *desk)
 {
    Evas_List   *l;
+   int          x, y;
    
    E_OBJECT_CHECK(desk);
    if (desk->visible) return;
@@ -80,14 +81,49 @@ e_desk_show(E_Desk *desk)
 	  }
      }
    
-   for (l = desk->zone->desks; l; l = l->next)
+   for (x = 0; x < desk->zone->desk_x_count; x++)
      {
-	E_Desk *d = l->data;
-	d->visible = 0;
+	for (y = 0; y < desk->zone->desk_y_count; y++)
+	  {
+	     E_Desk *next;
+	     next =
+		(E_Desk *)desk->zone->desks[x + (y * desk->zone->desk_x_count)];
+	     next->visible = 0;
+	     if (next == desk)
+	       {
+		  desk->zone->desk_x_current = x;
+		  desk->zone->desk_y_current = y;
+	       }
+	  }
      }
    desk->visible = 1;
 }
 
+/* FIXME replace e_desk_remove etc with these row / col operations */
+void
+e_desk_row_add(E_Zone *zone)
+{
+
+}
+
+void
+e_desk_row_remove(E_Zone *zone)
+{
+
+}
+
+void
+e_desk_col_add(E_Zone *zone)
+{
+
+}
+
+void
+e_desk_col_remove(E_Zone *zone)
+{
+
+}
+/*
 void
 e_desk_remove(E_Desk *desk)
 {
@@ -114,22 +150,15 @@ e_desk_remove(E_Desk *desk)
    evas_list_free(desk->clients);
    e_object_del(E_OBJECT(desk));
 }
-
+*/
 E_Desk *
 e_desk_current_get(E_Zone *zone)
 {
    Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
-   
-   for (l = zone->desks; l; l = l->next)
-     {
-	E_Desk *desk = l->data;
-	if (desk->visible)
-	  return desk;
-     }
-
-   return NULL;   
+  
+   return (E_Desk *)zone->desks[zone->desk_x_current + (zone->desk_y_current * zone->desk_x_count)];
 }
 
 void
@@ -137,23 +166,26 @@ e_desk_next(E_Zone *zone)
 {
    Evas_List   *l;
    E_Desk      *desk;
+   int          x, y;
 
    E_OBJECT_CHECK(zone);
    
-   if (evas_list_count(zone->desks) < 2)
+   if (zone->desk_x_count < 2 && zone->desk_y_count < 2)
       return;
    
-   /* Locate the position of the current desktop in the list */
-   desk = e_desk_current_get(zone);
-   l = evas_list_find_list(zone->desks, desk);
-   if (!l) return; /* Couldn't help putting this here */
-   
-   l = l->next;
-   if (!l) l = zone->desks; /* Wraparound */
+   x = zone->desk_x_current;
+   y = zone->desk_y_current;
 
-   /* Show the desktop */
-   desk = l->data;
-   e_desk_show(desk);
+   x++;
+   if (x == zone->desk_x_count)
+     {
+	x = 0;
+	y++;
+	if (y == zone->desk_y_count)
+	  y = 0;
+     }
+   
+   e_desk_show((E_Desk *)zone->desks[x + (y * zone->desk_x_count)]);
 }
 
 void
@@ -161,23 +193,27 @@ e_desk_prev(E_Zone *zone)
 {
    Evas_List   *l;
    E_Desk      *desk;
+   int          x, y;
 
    E_OBJECT_CHECK(zone);
-   
-   if (evas_list_count(zone->desks) < 2)
-      return;
-   
-   /* Locate the position of the current desktop in the list */
-   desk = e_desk_current_get(zone);
-   l = evas_list_find_list(zone->desks, desk);
-   if (!l) return; /* Couldn't help putting this here */
-   
-   l = l->prev;
-   if (!l) l = evas_list_last(zone->desks); /* Wraparound */
 
-   /* Show the desktop */
-   desk = l->data;
-   e_desk_show(desk);
+   if (zone->desk_x_count < 2 && zone->desk_y_count < 2)
+     return;
+
+   x = zone->desk_x_current;
+   y = zone->desk_y_current;
+
+   x--;
+   if (x < 0)
+     {
+	x = zone->desk_x_count - 1;
+	y--;
+	if (y < 0)
+	  y = zone->desk_y_count - 1;
+	
+     }
+
+   e_desk_show((E_Desk *)zone->desks[x + (y * zone->desk_x_count)]);
 }
 
 static void
@@ -186,7 +222,7 @@ _e_desk_free(E_Desk *desk)
    E_Zone *zone = desk->zone;
    if (desk->name)
      free(desk->name);
-   zone->desks = evas_list_remove(zone->desks, desk);
+//   zone->desks = evas_list_remove(zone->desks, desk);
    e_object_unref(E_OBJECT(desk->zone));
    free(desk);
 }

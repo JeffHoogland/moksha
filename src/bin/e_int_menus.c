@@ -26,8 +26,10 @@ static void _e_int_menus_clients_pre_cb  (void *data, E_Menu *m);
 static void _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_row_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_row_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_col_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -303,28 +305,17 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    evas_list_free(m->items);
    m->items = NULL;
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "New Desktop");
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_add_cb, NULL);
-   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Remove This Desktop");
-   e_menu_item_callback_set(mi, _e_int_menus_desktops_del_cb, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
    root = e_menu_root_get(m);
    /* Get the desktop list for this zone */
    /* FIXME: Menu code needs to determine what zone menu was clicked in */
    if (root && root->con)
      {
+	int i;
 	E_Zone *zone = e_zone_current_get(root->con);
 	
-	for (l = zone->desks; l; l = l->next)
+	for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
 	  {
-	     E_Desk *desk = l->data;
-	     desks = evas_list_append(desks, desk);
+	     desks = evas_list_append(desks, zone->desks[i]);
 	  }
 	
 	for (l = desks; l; l = l->next)
@@ -340,46 +331,82 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	  }
      }
 
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "New Row of Desktops");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_row_add_cb, NULL);
+	       
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Remove Row of Desktops");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_row_del_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "New Column of Desktops");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_col_add_cb, NULL);
+	       
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Remove Colum of Desktops");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_col_del_cb, NULL);
+		     
+		     
    evas_list_free(desks);
 }
 
 /* FIXME: Use the zone the menu was clicked in */
 static void
-_e_int_menus_desktops_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_desktops_row_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *root = e_menu_root_get(m);
 
    if (root && root->con)
      {
-	E_Desk *desk;
 	E_Zone *zone = e_zone_current_get(root->con);
-	desk = e_desk_new(zone);
-	e_desk_show(desk);
+	e_desk_row_add(zone);
+//	e_desk_show(desk);
      }
 }
 
 static void
-_e_int_menus_desktops_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_desktops_row_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *root = e_menu_root_get(m);
 
    if (root && root->con)
      {
 	E_Zone *zone;
-	E_Desk *desk;
 	
 	zone = e_zone_current_get(root->con);
-	desk = e_desk_current_get(zone);
-	
-	if (evas_list_count(zone->desks) > 1)
-	  {
-	     e_desk_remove(desk);
-	  }
-	else
-	  {
-	     e_error_dialog_show("Enlightenment", "You cannot remove the last desktop.");
-	  }
+	e_desk_row_remove(zone);
      }
+}
+
+static void
+_e_int_menus_desktops_col_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *root = e_menu_root_get(m);
+
+   if (root && root->con)
+     {
+	E_Zone *zone = e_zone_current_get(root->con);
+	e_desk_row_add(zone);
+	//      e_desk_show(desk);
+     }
+}
+
+static void
+_e_int_menus_desktops_col_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *root = e_menu_root_get(m);
+         
+   if (root && root->con)
+     {
+	E_Zone *zone;
+
+	zone = e_zone_current_get(root->con);
+	e_desk_row_remove(zone);
+     }  
 }
 
 static void

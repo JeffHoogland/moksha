@@ -32,6 +32,7 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 {
    E_Zone      *zone;
    E_Desk      *desk;
+   int          i;
 
    zone = E_OBJECT_ALLOC(E_Zone, _e_zone_free);
    if (!zone) return NULL;
@@ -77,10 +78,19 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move, zone);
      }
 
-   /* Start off with a single desktop */
-   desk = e_desk_new(zone);
-   e_desk_show(desk);
+   /* Start off with 4 desktops (2x2) */
+   zone->desk_x_count = 2;
+   zone->desk_y_count = 2;
 
+   zone->desks =
+      malloc(zone->desk_x_count * zone->desk_y_count * sizeof(E_Desk *));
+
+   int xx, yy;
+   for (xx = 1; xx >= 0; xx--)
+     for(yy = 1; yy >= 0; yy--)
+       desk = e_desk_new(zone, xx, yy);
+
+   e_desk_show(desk);
    return zone;
 }
 

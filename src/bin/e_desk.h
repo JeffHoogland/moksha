@@ -19,13 +19,16 @@ struct _E_Desk
 
 EAPI int          e_desk_init(void);
 EAPI int          e_desk_shutdown(void);
-EAPI E_Desk      *e_desk_new(E_Zone *zone);
+EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
 EAPI void         e_desk_show(E_Desk *desk);
 EAPI E_Desk      *e_desk_current_get(E_Zone *zone);
 EAPI void         e_desk_next(E_Zone *zone);
 EAPI void         e_desk_prev(E_Zone *zone);
-EAPI void         e_desk_remove(E_Desk *desk);
+EAPI void         e_desk_row_add(E_Zone *zone);
+EAPI void         e_desk_row_remove(E_Zone *zone);
+EAPI void         e_desk_col_add(E_Zone *zone);
+EAPI void         e_desk_col_remove(E_Zone *zone);
 
 #endif
 
