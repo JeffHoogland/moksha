@@ -6,6 +6,7 @@ static E_Config_Base_Type *cf_iconbar_icon = NULL;
 
 /* internal func (iconbar use only) prototypes */
 
+static void ib_reload_timeout(int val, void *data);
 static void ib_timeout(int val, void *data);
 
 static void ib_bits_show(void *data);
@@ -100,7 +101,7 @@ e_iconbar_new(E_View *v)
    if (!ib->bit)
      {
 	/* unref the iconbar (and thus it will get freed and all icons in it */
-	OBJ_UNREF(ib);
+	OBJ_DO_FREE(ib);
 	/* return NULL - no iconbar worth doing here if we don't know where */
 	/* to put it */
 	return NULL;
@@ -114,6 +115,8 @@ e_iconbar_new(E_View *v)
 void
 e_iconbar_free(E_Iconbar *ib)
 {
+   char buf[PATH_MAX];
+
    /* tell the view we attached to that somehting in it changed. this way */
    /* the view will now it needs to redraw */
    ib->view->changed = 1;
@@ -130,11 +133,14 @@ e_iconbar_free(E_Iconbar *ib)
 	     E_Iconbar_Icon *ic;
 	     
 	     ic = l->data;
-	     OBJ_UNREF(ic);
+	     OBJ_DO_FREE(ic);
 	  }
 	/* free the list itself */
 	evas_list_free(ib->icons);
      }
+   /* delete any timers intended to work on  this iconbar */
+   sprintf(buf, "iconbar_reload:%s", ib->view->dir);
+   ecore_del_event_timer(buf);
    /* free the iconbar struct */
    FREE(ib);
 }
@@ -309,8 +315,59 @@ e_iconbar_fix(E_Iconbar *ib)
      }
 }
 
+/* this function is called from the view code whenever a file is added to a */
+/* view. the iconbar code here determines if the file add is of interest */
+/* and if it is, in 0.5 secs will do a "reload */
+void
+e_iconbar_file_add(E_View *v, char *file)
+{
+   /* is the file of interest ? */
+   if ((!strcmp(".e_iconbar.db", file)) ||
+       (!strcmp(".e_iconbar.bits.db", file)))
+     {
+	char buf[PATH_MAX];
+	
+	/* unique timer name */
+	sprintf(buf, "iconbar_reload:%s", v->dir);
+	/* in 0.5 secs call our timout handler */
+	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
+     }
+}
 
+/* caled whenever a file is deleted from a view */
+void
+e_iconbar_file_delete(E_View *v, char *file)
+{
+   /* is the file of interest */
+   if ((!strcmp(".e_iconbar.db", file)) ||
+       (!strcmp(".e_iconbar.bits.db", file)))
+     {
+	/* if we have an iconbar.. delete it - because its files have been */
+	/* nuked. no need to keep it around. */
+	if (v->iconbar) 
+	  {
+	     OBJ_DO_FREE(v->iconbar);
+	     v->iconbar = NULL;
+	  }
+     }
+}
 
+/* called whenever a file changes in a view */
+void
+e_iconbar_file_change(E_View *v, char *file)
+{
+   /* is the file that changed of interest */
+   if ((!strcmp(".e_iconbar.db", file)) ||
+       (!strcmp(".e_iconbar.bits.db", file)))
+     {
+	char buf[PATH_MAX];
+	
+	/* unique timer name */
+	sprintf(buf, "iconbar_reload:%s", v->dir);
+	/* in 0.5 secsm call the realod timeout */
+	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
+     }
+}
 
 
 
@@ -319,6 +376,25 @@ e_iconbar_fix(E_Iconbar *ib)
 
 
 /* static (internal to iconbar use only) callbacks */
+
+/* reload timeout. called whenevr iconbar special files changed/added to */
+/* a view */
+static void
+ib_reload_timeout(int val, void *data)
+{
+   E_View *v;
+
+   /* get our view pointer */
+   v = (E_View *)data;
+   /* if we have an iconbar.. well nuke it */
+   if (v->iconbar) OBJ_DO_FREE(v->iconbar);
+   v->iconbar = NULL;
+   /* try load a new iconbar */
+   if (!v->iconbar) v->iconbar = e_iconbar_new(v);
+   /* if the iconbar loaded and theres an evas - we're realized */
+   /* so realize the iconbar */
+   if ((v->iconbar) && (v->evas)) e_iconbar_realize(v->iconbar);   
+}
 
 /* this timeout is responsible for doing the mouse over animation */
 static void
@@ -607,7 +683,7 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	char buf[PATH_MAX];
 	
 	/* come up with a unique name for it */
-	sprintf(buf, "%s/%s", ic->iconbar->view->dir, ic->image_path);
+	sprintf(buf, "iconbar:%s/%s", ic->iconbar->view->dir, ic->image_path);
 	e_strdup(ic->hi.timer, buf);
 	/* call the timeout */
 	ib_timeout(0, ic);

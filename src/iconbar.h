@@ -55,5 +55,8 @@ void            e_iconbar_free(E_Iconbar *ib);
 void            e_iconbar_icon_free(E_Iconbar_Icon *);
 void            e_iconbar_realize(E_Iconbar *ib);
 void            e_iconbar_fix(E_Iconbar *ib);
+void            e_iconbar_file_add(E_View *v, char *file);
+void            e_iconbar_file_delete(E_View *v, char *file);
+void            e_iconbar_file_change(E_View *v, char *file);
 
 #endif

@@ -1644,7 +1644,10 @@ e_view_handle_fs_restart(void *data)
 	  {
 	     EfsdOptions *ops;
 	     
-	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
+	     ops = efsd_ops(3, 
+			    efsd_op_get_stat(), 
+			    efsd_op_get_filetype(),
+			    efsd_op_list_all());
 	     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
 						ops, TRUE);
 
@@ -2081,6 +2084,7 @@ e_view_file_added(int id, char *file)
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
+   e_iconbar_file_add(v, file);
    /* filter files here */
    if (!e_view_filter_file(v, file)) return;
    if (!e_view_find_icon_by_file(v, file))
@@ -2106,8 +2110,8 @@ e_view_file_deleted(int id, char *file)
    if (!file) return;
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
-   if (!v) return;
-   
+   e_iconbar_file_delete(v, file);
+   if (!v) return;   
      {
 	E_Icon *ic;
 	
@@ -2115,7 +2119,7 @@ e_view_file_deleted(int id, char *file)
 	if (ic)
 	  {
 	     e_view_icon_hide(ic);
-	     OBJ_UNREF(ic);
+	     OBJ_DO_FREE(ic);
 	     v->icons = evas_list_remove(v->icons, ic);
 	     v->changed = 1;
 	     v->extents.valid = 0;
@@ -2132,6 +2136,7 @@ e_view_file_changed(int id, char *file)
    if (!file) return;
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
+   e_iconbar_file_change(v, file);
    if (!v) return;
 
      {
@@ -2186,7 +2191,7 @@ e_view_free(E_View *v)
 {
    char name[PATH_MAX];
    
-   if (v->iconbar) OBJ_UNREF(v->iconbar);
+   if (v->iconbar) OBJ_DO_FREE(v->iconbar);
    
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);
@@ -2293,7 +2298,10 @@ e_view_set_dir(E_View *v, char *dir)
 	  {
 	     EfsdOptions *ops;
 	     
-	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
+	     ops = efsd_ops(3, 
+			    efsd_op_get_stat(), 
+			    efsd_op_get_filetype(),
+			    efsd_op_list_all());
 	     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
 						ops, TRUE);
 	  }
@@ -2392,7 +2400,7 @@ e_view_realize(E_View *v)
 	IF_FREE(dir);
      }
 
-   v->iconbar = e_iconbar_new(v);
+   if (!v->iconbar) v->iconbar = e_iconbar_new(v);
    if (v->iconbar) e_iconbar_realize(v->iconbar); 
    
    v->changed = 1;
