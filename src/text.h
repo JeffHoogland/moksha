@@ -27,7 +27,7 @@ struct _E_Text
 
 E_Text *e_text_new(Evas evas, char *text, char *class);
 void    e_text_free(E_Text *t);
-void    e_text_set_text(E_Text *t);
+void    e_text_set_text(E_Text *t, char *text);
 void    e_text_set_layer(E_Text *t, int l);
 void    e_text_set_clip(E_Text *t, Evas_Object clip);
 void    e_text_unset_clip(E_Text *t);
@@ -42,5 +42,6 @@ void    e_text_get_geometry(E_Text *t, double *x, double *y, double *w, double *
 void    e_text_get_min_size(E_Text *t, double *w, double *h);
 void    e_text_get_max_size(E_Text *t, double *w, double *h);
 void    e_text_set_state(E_Text *t, char *state);
-
+void    e_text_set_class(E_Text *t, char *class);
+void    e_text_update_class(E_Text *t);
 #endif

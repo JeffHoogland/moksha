@@ -12,7 +12,7 @@ install-data-local:
 	if test -d $(srcdir)/data; then \
 	  $(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/data; \
 	  for d in $(srcdir)/data/*; do \
-	      cp -dpRf $$d $(DESTDIR)$(pkgdatadir)/data; \
+	      cp @CP_OPTIONS@ -f $$d $(DESTDIR)$(pkgdatadir)/data; \
 	  done \
 	fi
 
@@ -20,7 +20,7 @@ dist-hook:
 	if test -d data; then \
 	  mkdir $(distdir)/data; \
 	  for d in data/*; do \
-	      cp -dpR $$d $(distdir)/data; \
+	      cp @CP_OPTIONS@ $$d $(distdir)/data; \
 	  done \
 	fi
 

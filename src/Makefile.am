@@ -11,12 +11,12 @@ enlightenment_SOURCES = \
 	background.h background.c \
 	border.h border.c \
 	config.h config.c \
-	destops.h desktops.c \
+	desktops.h desktops.c \
 	entry.h entry.c \
 	exec.h exec.c \
 	fs.h fs.c \
 	icccm.h icccm.c \
-	icons.h icons.c \
+	icons.c \
 	ipc.h ipc.c \
 	keys.h keys.c \
 	main.c \
