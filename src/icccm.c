@@ -353,7 +353,6 @@ e_icccm_get_mwm_hints(Window win, E_Border *b)
 	     if (mwmhints->decorations & MWM_DECOR_BORDER) b->client.border = 1;
 	     if (mwmhints->decorations & MWM_DECOR_RESIZEH)  b->client.handles = 1;
 	     if (mwmhints->decorations & MWM_DECOR_TITLE) b->client.titlebar = 1;
-	     e_border_apply_border(b);
 	  }
 	FREE(mwmhints);
      }

@@ -50,10 +50,13 @@ e_view_write_icon_xy_timeout(int val, void *data)
    E_View *v;
    Evas_List l;
    E_Icon *ic;
+   double t_in;
 
    D_ENTER;
    
    v = data;
+   /* FIXME: this is a problem if we have 1000's of icons */
+   t_in = ecore_get_time();
    for (l = v->icons; l; l = l->next)
      {
 	ic = l->data;
@@ -71,6 +74,14 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	     efsd_set_metadata_int(e_fs_get_connection(),
 				   "/pos/y", buf,
 				   ic->geom.y);
+	  }
+	if ((ecore_get_time() - t_in) > 0.10)
+	  {
+	     char name[PATH_MAX];
+	     
+	     sprintf(name, "icon_xy_record.%s", v->dir);
+	     ecore_add_event_timer(name, 0.01, e_view_write_icon_xy_timeout, 0, v);
+	     D_RETURN;
 	  }
      }
 
@@ -758,6 +769,7 @@ e_view_geometry_record(E_View *v)
      {
 	int left, top;
 	
+	D("Record geom for view\n");
 	ecore_window_get_frame_size(v->win.base, &left, NULL,
 				&top, NULL);
 	efsd_set_metadata_int(e_fs_get_connection(),
@@ -841,6 +853,7 @@ e_configure(Ecore_Event * ev)
 		  D("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
 		  if ((e->x != v->location.x) || (e->y != v->location.y))
 		    {
+		       D("new spot!\n");
 		       v->location.x = e->x;
 		       v->location.y = e->y;
 		       e_view_queue_geometry_record(v);
@@ -1320,8 +1333,9 @@ e_view_handle_fs_restart(void *data)
 					       "/view/w", v->dir, EFSD_INT);
 	     v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					       "/view/h", v->dir, EFSD_INT);
-         v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
-      }
+	     v->getbg = efsd_get_metadata(e_fs_get_connection(), 
+					  "/view/background", v->dir, EFSD_STRING);
+	  }
 	  {
 	     EfsdOptions *ops;
 	     
@@ -1758,8 +1772,9 @@ e_view_set_dir(E_View *v, char *dir)
 					  "/view/w", v->dir, EFSD_INT);
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					  "/view/h", v->dir, EFSD_INT);
+	v->getbg = efsd_get_metadata(e_fs_get_connection(), 
+				     "/view/background", v->dir, EFSD_STRING);
 	v->geom_get.busy = 1;
-	v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
 	  {
 	     EfsdOptions *ops;
 	     

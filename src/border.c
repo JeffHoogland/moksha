@@ -200,9 +200,6 @@ e_configure_request(Ecore_Event * ev)
 		       if (b->current.shaded < 1)
 			 b->current.shaded = 1;
 		    }
-/*		  b->client.w = e->w;
-		  b->client.h = e->h;
-*/		  
 		  b->current.requested.w = e->w + pl + pr;
 		  b->current.requested.h = e->h + pt + pb;
 	       }
@@ -271,6 +268,7 @@ e_property(Ecore_Event * ev)
 	if (b)
 	  {
 	     e_icccm_handle_property_change(e->atom, b);
+	     e_border_apply_border(b);
 	  }
      }
    current_ev = NULL;
@@ -462,23 +460,6 @@ e_focus_in(Ecore_Event * ev)
 		  b->click_grab = NULL;
 	       }
 	  }
-	/* FUCKED UP: 
-	 * look at this debug output:
-	 * f in 800003
-	 *   to: Fukeneh!
-	 *     ungrab ctf buttons
-	 * f out 400003
-	 *   from: F..... Oath!
-	 *     grab dem buttonz!
-	 * f in 400003
-	 *   to: F..... Oath!
-	 *     ungrab ctf buttons
-	 * 
-	 * first the focus automatically reverts to Fukeneh (the window)
-	 * now i click on F...... Oath - but i get aofocus out event from
-	 * F..... Oath - it had no focus... but i get a focus out.. i should 
-	 * be getting a focus out for fukeneh!
-	 */
      }
    current_ev = NULL;
 
@@ -590,9 +571,7 @@ e_mouse_down(Ecore_Event * ev)
 	       {
 		  Evas evas;
 		  int x, y;
-
-		  
-		  
+		  	
 		  evas = b->evas.l;
 		  ecore_window_get_root_relative_location(evas_get_window(evas), 
 						      &x, &y);
@@ -702,6 +681,7 @@ e_mouse_move(Ecore_Event * ev)
 	mouse_x = e->rx;
 	mouse_y = e->ry;
 	b = e_border_find_by_window(e->win);
+/*	D("motion... %3.8f\n", ecore_get_time());*/
 	if (b)
 	  {
 	     if (e->win == b->win.main) e_cb_border_mouse_move(b, ev);
@@ -1133,10 +1113,14 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 		      x, y, border_mouse_x, border_mouse_y);
 	if (!e_action_start(class, act, bt, NULL, mods, E_OBJECT(b), NULL,
 			   x, y, border_mouse_x, border_mouse_y))
-	  ecore_pointer_ungrab(((Ecore_Event_Mouse_Down *)(e->event))->time);
+	  {
+	     ecore_pointer_ungrab(((Ecore_Event_Mouse_Down *)(e->event))->time);
+	  }
 	else
-	  ecore_pointer_grab(((Ecore_Event_Mouse_Down *)(e->event))->win,
-			     ((Ecore_Event_Mouse_Down *)(e->event))->time);
+	  {
+	     ecore_pointer_grab(((Ecore_Event_Mouse_Down *)(e->event))->win,
+				((Ecore_Event_Mouse_Down *)(e->event))->time);
+	  }
      }
 
    D_RETURN;
@@ -1295,17 +1279,20 @@ e_border_apply_border(E_Border *b)
    if ((!b->client.titlebar) && (!b->client.border)) style = "borderless";
    if (b->border_style) style = b->border_style;
    
-   if (b->current.selected)              prop_selected = 1;
-   if (b->current.shaded == b->client.h) prop_shaded = 1;
-   if (b->client.sticky)                 prop_sticky = 1;
+   if (b->current.selected)                prop_selected = 1;
+   if ((b->current.shaded > 0) && 
+       (b->current.shaded == b->client.h)) prop_shaded = 1;
+   if (b->client.sticky)                   prop_sticky = 1;
    
    sprintf(border, "selected-%i.sticky-%i.shaded-%i.bits.db", 
 	   prop_selected, prop_sticky, prop_shaded);
 
    borders = e_config_get("borders");
    sprintf(buf, "%s%s/%s", borders, style, border);
+   
    /* if it's not changed - abort and dont do anything */
    if ((b->border_file) && (!strcmp(buf, b->border_file))) D_RETURN;
+   
    IF_FREE(b->border_file);
    e_strdup(b->border_file, buf);
    
@@ -2180,18 +2167,8 @@ e_border_update(E_Border *b)
      size_changed = 1;
    if ((size_changed) && (b->current.has_shape))
      shape_changed = 1;
-   if (b->bits.new)
-     {
-	ecore_window_gravity_set(b->win.container, StaticGravity);
-	border_changed = 1;
-     }
-   if ((border_changed) && (b->current.has_shape))
-     shape_changed = 1;
-   if (b->current.visible != b->previous.visible)
-     visibility_changed = 1;
    if (b->current.selected != b->previous.selected)
       state_changed = 1;
-   
    if (state_changed)
      {
 	e_border_apply_border(b);
@@ -2202,6 +2179,16 @@ e_border_update(E_Border *b)
 	     size_changed = 1;
 	  }
      }
+   if (b->bits.new)
+     {
+	ecore_window_gravity_set(b->win.container, StaticGravity);
+	border_changed = 1;
+     }
+   if ((border_changed) && (b->current.has_shape))
+     shape_changed = 1;
+   if (b->current.visible != b->previous.visible)
+     visibility_changed = 1;
+   
    if ((location_changed) && (!size_changed))
      {
 	int pl, pr, pt, pb;
