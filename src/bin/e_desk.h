@@ -23,6 +23,7 @@ EAPI void         e_desk_show(E_Desk *desk);
 EAPI E_Desk      *e_desk_current_get(E_Zone *zone);
 EAPI void         e_desk_next(E_Zone *zone);
 EAPI void         e_desk_prev(E_Zone *zone);
+EAPI void         e_desk_remove(E_Desk *desk);
 
 #endif
 

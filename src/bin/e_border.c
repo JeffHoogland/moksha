@@ -552,8 +552,6 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 void
 e_border_maximize(E_Border *bd)
 {
-   E_Zone *zone;
-
    E_OBJECT_CHECK(bd);
    
    if ((bd->shaded) || (bd->shading)) return;

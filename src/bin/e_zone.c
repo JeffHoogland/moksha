@@ -140,7 +140,7 @@ e_zone_current_get(E_Container *con)
 {
    Evas_List *l;
 
-   E_OBJECT_CHECK(con);
+   E_OBJECT_CHECK_RETURN(con, NULL);
    l = con->zones;
    /* FIXME: Should return the zone the pointer is currently in */
    return (E_Zone *)l->data;
@@ -164,7 +164,7 @@ e_zone_bg_reconfigure(E_Zone *zone)
 Evas_List *
 e_zone_clients_list_get(E_Zone *zone)
 {
-    E_OBJECT_CHECK(zone);
+    E_OBJECT_CHECK_RETURN(zone, NULL);
     return zone->clients;
 }
    

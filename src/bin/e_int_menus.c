@@ -124,7 +124,6 @@ E_Menu *
 e_int_menus_desktops_new(void)
 {
    E_Menu *m;
-   E_Menu_Item *mi;
 
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_desktops_pre_cb, NULL);
