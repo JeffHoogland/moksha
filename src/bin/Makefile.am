@@ -43,7 +43,8 @@ e_gadman.h \
 e_signals.h \
 e_xinerama.h \
 e_table.h \
-e_layout.h
+e_layout.h \
+e_test.h
 
 
 enlightenment_SOURCES = \
@@ -81,6 +82,7 @@ e_signals.c \
 e_xinerama.c \
 e_table.c \
 e_layout.c \
+e_test.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@

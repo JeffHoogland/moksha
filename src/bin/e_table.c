@@ -119,7 +119,7 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
    sd = evas_object_smart_data_get(obj);
    _e_table_smart_adopt(sd, child);
    sd->items = evas_list_append(sd->items, child);
-   ti = evas_object_data_get(obj, "e_table_data");
+   ti = evas_object_data_get(child, "e_table_data");
    if (ti)
      {
 	ti->col = col;

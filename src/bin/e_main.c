@@ -329,6 +329,9 @@ main(int argc, char **argv)
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
      }
    
+   /* run any testing code now we are set up */
+   e_test();
+   
    /* start our main loop */
    ecore_main_loop_begin();
    
