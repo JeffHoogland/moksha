@@ -610,7 +610,7 @@ static E_Menu      *
 e_build_menu_iconified_borders_build(E_Build_Menu * bm)
 {
    E_Menu             *menu = NULL;
-   Evas_List           l, entries = NULL;
+   Evas_List           l;
 
    D_ENTER;
 

@@ -2166,7 +2166,6 @@ e_dnd_data_request(Ecore_Event * ev)
     *    Atom                destination_atom;
     *  } Ecore_Event_Dnd_Data_Request;
     */
-   Evas_List           l;
    E_View             *v;
    Evas_List           ll;
    char               *data = NULL;

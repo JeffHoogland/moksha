@@ -25,7 +25,6 @@ struct _E_Scrollbar
    double              range;
 
    E_View             *view;
-   char               *dir;
    Evas                evas;
 
    Ebits_Object        bar;

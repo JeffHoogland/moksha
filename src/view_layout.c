@@ -3,13 +3,12 @@
 #include "util.h"
 
 static void e_view_layout_cleanup(E_View_Layout *layout);
+static int e_view_layout_add_element(E_View_Layout *layout, char *name);
 
 E_View_Layout *
 e_view_layout_new(E_View *v)
 {
    E_View_Layout *layout;
-   Ebits_Object bits;
-   char buf[PATH_MAX];
 
    D_ENTER;
 
@@ -116,7 +115,7 @@ e_view_layout_realize(E_View_Layout *layout)
    D_RETURN;
 }
    
-int
+static int
 e_view_layout_add_element(E_View_Layout *layout, char *name)
 {
    E_View_Layout_Element *el;

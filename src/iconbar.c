@@ -382,7 +382,6 @@ void
 e_iconbar_realize(E_Iconbar * ib)
 {
    Evas_List           l;
-   double              x, y, w, h;
 
    D_ENTER;
    D("realize iconbar\n");
@@ -521,7 +520,7 @@ e_iconbar_fix(E_Iconbar * ib)
 					   &x, &y, &w, &h))
      {
 	D("Error: no geometry for iconbar, must not exist, clean it up.\n");
-	e_object_unref(ib);
+	e_object_unref(E_OBJECT (ib));
 	D_RETURN;
      }
 
