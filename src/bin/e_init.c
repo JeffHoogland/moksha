@@ -40,6 +40,7 @@ e_init_init(void)
    ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
    ecore_evas_override_set(_e_init_ecore_evas, 1);
+   ecore_evas_software_x11_direct_resize_set(_e_init_ecore_evas, 1);
    e_canvas_add(_e_init_ecore_evas);
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
    _e_init_win = ecore_evas_software_x11_window_get(_e_init_ecore_evas);
