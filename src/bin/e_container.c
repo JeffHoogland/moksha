@@ -351,112 +351,12 @@ _e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *ev
      }
    else if (ev->button == 2)
      {
-	static E_Menu *m = NULL;
-	static E_Menu *m1 = NULL;
-	static E_Menu *m2 = NULL;
-	
-	if (!m)
-	  {
-	     E_Menu_Item *mi;
-	     
-	     m1 = e_menu_new();
-	     mi = e_menu_item_new(m1);
-	     e_menu_item_label_set(mi, "Submenu 1 Item 1");
-	     mi = e_menu_item_new(m1);
-	     e_menu_item_label_set(mi, "Submenu 1 Item 2");
-	     mi = e_menu_item_new(m1);
-	     e_menu_item_label_set(mi, "Submenu 1 Item 3");
-	     
-	     m2 = e_menu_new();
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "Flimstix");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "Shub Shub");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "Gah I thought I'd just make this long");
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "And more");
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "Getting stenchy");
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "Ich bin ein Fisch");
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "PONG");
-	     mi = e_menu_item_new(m2);
-	     e_menu_item_label_set(mi, "The last word");
+	E_Menu *m;
 
-	     m = e_menu_new();
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "First Menu Item");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "Short");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "A very long menu item is here to test with");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "There is no spoon!");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "Icon: Pants On.");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "First Submenu");
-	     e_menu_item_submenu_set(mi, m1);
-	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "Other side of a separator");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "A Submenu");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     e_menu_item_submenu_set(mi, m2);
-	     mi = e_menu_item_new(m);
-	     e_menu_item_check_set(mi, 1);
-	     e_menu_item_label_set(mi, "Check 1");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m);
-	     e_menu_item_check_set(mi, 1);
-	     e_menu_item_label_set(mi, "Check 2");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_check_set(mi, 1);
-	     e_menu_item_label_set(mi, "Check 3");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-	     mi = e_menu_item_new(m);
-	     e_menu_item_radio_set(mi, 1);
-	     e_menu_item_radio_group_set(mi, 1);
-	     e_menu_item_label_set(mi, "Radio 1 Group 1");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_radio_set(mi, 1);
-	     e_menu_item_radio_group_set(mi, 1);
-	     e_menu_item_label_set(mi, "Radio 2 Group 1");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_radio_set(mi, 1);
-	     e_menu_item_radio_group_set(mi, 1);
-	     e_menu_item_label_set(mi, "Radio 3 Group 1");
-	     e_menu_item_icon_file_set(mi, 
-				       e_path_find(path_images, "e.png"));
-	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-	     mi = e_menu_item_new(m);
-	     e_menu_item_radio_set(mi, 1);
-	     e_menu_item_radio_group_set(mi, 2);
-	     e_menu_item_label_set(mi, "Radio 1 Group 2");
-	     mi = e_menu_item_new(m);
-	     e_menu_item_radio_set(mi, 1);
-	     e_menu_item_radio_group_set(mi, 2);
-	     e_menu_item_label_set(mi, "Radio 2 Group 2");
-	  }
-	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1, 
+	m = e_int_menus_clients_new();
+	m->con = con;
+	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
-	/* fake the up event as we will now grab the mouse to the menu */
 	e_util_container_fake_mouse_up_all_later(con);
      }
    else if (ev->button == 3)

@@ -49,12 +49,6 @@ e_int_menus_about_new(void)
    e_menu_item_label_set(mi, "Modules");
    e_menu_item_submenu_set(mi, subm);
   
-   subm = e_menu_new();
-   e_menu_pre_activate_callback_set(subm, _e_int_menus_clients_pre_cb, NULL);
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Clients");
-   e_menu_item_submenu_set(mi, subm);
-
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
@@ -88,13 +82,15 @@ e_int_menus_apps_new(char *dir, int top)
 }
 
 E_Menu *
-e_int_menus_clients_new(char *dir, int top)
+e_int_menus_clients_new()
 {
    E_Menu *m;
    E_Menu_Item *mi;
 
    m = e_menu_new();
-		  
+   e_menu_pre_activate_callback_set(m, _e_int_menus_clients_pre_cb, NULL);
+   
+   return m;
 }
 
 /* local subsystem functions */
@@ -230,9 +226,9 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      }
 
    /* get the current containers clients */
-   if (m->parent_item && m->parent_item->menu && m->parent_item->menu->con)
+   if (m->con)
      {
-	for (l = e_container_clients_list_get(m->parent_item->menu->con); l; l = l->next)
+	for (l = e_container_clients_list_get(m->con); l; l = l->next)
 	  {
 	     borders = evas_list_append(borders, l->data);
 	  }
@@ -244,7 +240,13 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	if (!evas_list_find(borders, l->data))
 	  borders = evas_list_append(borders, l->data);
      }
-
+   
+   if (!borders)
+     { /* FIXME here we want nothing, but that crashes!!! */
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, "empty"); 
+	return;
+     }
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd = l->data;
