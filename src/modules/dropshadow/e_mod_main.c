@@ -103,11 +103,6 @@ save(E_Module *m)
    
    ds = m->data;
    if (!ds) return;
-   printf("SAVE: %i %i, %i, %3.3f\n", 
-	 ds->conf->shadow_x,
-	 ds->conf->shadow_y,
-	 ds->conf->blur_size,
-	 ds->conf->shadow_darkness);
    e_config_domain_save("module.dropshadow", ds->conf_edd, ds->conf);
    return 1;
 }
