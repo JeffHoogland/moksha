@@ -61,7 +61,7 @@ e_background_load(char *file)
    for (i = 0; i < num; i++)
      {
 	E_Background_Layer *bl;
-	char buf[4096];
+	char buf[PATH_MAX];
 	
 	bl = NEW(E_Background_Layer, 1);
 	ZERO(bl, E_Background_Layer, 1);

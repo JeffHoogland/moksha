@@ -12,7 +12,7 @@ e_file_modified_time(char *file)
 void
 e_set_env(char *variable, char *content)
 {
-   char env[4096];
+   char env[PATH_MAX];
    
    sprintf(env, "%s=%s", variable, content);
    putenv(env);
@@ -62,7 +62,7 @@ int
 e_file_cp(char *src, char *dst)
 {
    FILE *f1, *f2;
-   char buf[4096];
+   char buf[PATH_MAX];
    size_t num;
    
    f1 = fopen(src, "rb");
@@ -73,7 +73,7 @@ e_file_cp(char *src, char *dst)
 	fclose(f1);
 	return 0;
      }
-   while ((num = fread(buf, 1, 4096, f1)) > 0) fwrite(buf, 1, num, f2);
+   while ((num = fread(buf, 1, PATH_MAX, f1)) > 0) fwrite(buf, 1, num, f2);
    fclose(f1);
    fclose(f2);
    return 1;
@@ -82,7 +82,7 @@ e_file_cp(char *src, char *dst)
 char *
 e_file_real(char *file)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    char *f;
    
    if (!realpath(file, buf)) return strdup("");
@@ -111,7 +111,7 @@ e_file_get_dir(char *file)
 {
    char *p;
    char *f;
-   char buf[4096];
+   char buf[PATH_MAX];
    
    strcpy(buf, file);
    p = strrchr(buf, '/');
@@ -174,7 +174,7 @@ e_file_can_exec(struct stat *st)
 char *
 e_file_link(char *link)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    char *f;
    int count;
    

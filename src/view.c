@@ -64,7 +64,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	ic = l->data;
 	if (ic->q.write_xy)
 	  {
-	     char buf[4096];
+	     char buf[PATH_MAX];
 	     
 	     ic->q.write_xy = 0;
 	     sprintf(buf, "%s/%s", ic->view->dir, ic->file);
@@ -451,7 +451,7 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 void
 e_view_icon_update_state(E_Icon *ic)
 {
-   char icon[4096];
+   char icon[PATH_MAX];
    int iw, ih;
    int gw, gh;
    
@@ -476,7 +476,7 @@ e_view_icon_update_state(E_Icon *ic)
        (!ic->obj.sel.under.icon) && 
        (!ic->obj.sel.over.icon))
      {
-	char file[4096];
+	char file[PATH_MAX];
 
 /*	
 	sprintf(file, "%s/file.bits.db", e_config_get("selections"));
@@ -609,7 +609,7 @@ e_view_icon_exec(E_Icon *ic)
    if (!strcmp(ic->info.mime.base, "dir"))
      {
 	E_View *v;
-	char buf[4096];
+	char buf[PATH_MAX];
 	
 	v = e_view_new();
 	v->size.w = 400;
@@ -617,7 +617,7 @@ e_view_icon_exec(E_Icon *ic)
 	v->options.back_pixmap = 0;
 	/* Load default bg then handle bg in metadata */
 	  {
-	     char buf[4096];
+	     char buf[PATH_MAX];
 	     
 	     sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
 	     v->bg = e_background_load(buf);
@@ -1051,7 +1051,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 				      double ix, iy;
 				      int icx, icy;
 				      Imlib_Image im2;
-				      char icon[4096];
+				      char icon[PATH_MAX];
 				      
 				      evas_get_geometry(ic->view->evas,
 							ic->obj.icon,
@@ -1189,7 +1189,7 @@ e_view_geometry_record_timeout(int val, void *data)
 void
 e_view_queue_geometry_record(E_View *v)
 {
-   char name[4096];
+   char name[PATH_MAX];
    
    sprintf(name, "geometry_record.%s", v->dir);
    e_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
@@ -1198,7 +1198,7 @@ e_view_queue_geometry_record(E_View *v)
 void
 e_view_queue_icon_xy_record(E_View *v)
 {
-   char name[4096];
+   char name[PATH_MAX];
    
    sprintf(name, "icon_xy_record.%s", v->dir);
    e_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
@@ -1944,7 +1944,7 @@ e_view_resort_timeout(int val, void *data)
 void
 e_view_queue_resort(E_View *v)
 {
-   char name[4096];
+   char name[PATH_MAX];
    
    if (v->have_resort_queued) return;
    v->have_resort_queued = 1;
@@ -2013,8 +2013,8 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
      }
    /* find an icon */
      {
-	char icon[4096];
-	char type[4096];	
+	char icon[PATH_MAX];
+	char type[PATH_MAX];	
 	char *p;
 	int done = 0;
 	
@@ -2185,7 +2185,7 @@ e_view_find_by_monitor_id(int id)
 void
 e_view_free(E_View *v)
 {
-   char name[4096];
+   char name[PATH_MAX];
    
    sprintf(name, "resort_timer.%s", v->dir);
    e_del_event_timer(name);
@@ -2534,7 +2534,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			   (ev->efsd_reply_event.data))
 			 {
 			    char *m, *p;
-			    char mime[4096], base[4096];
+			    char mime[PATH_MAX], base[PATH_MAX];
 			    
 			    m = ev->efsd_reply_event.data;
 			    p = strchr(m, '/');

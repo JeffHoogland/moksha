@@ -151,7 +151,7 @@ e_guides_update(void)
    if ((guides.win.display) && (redraw))
      {
 	int dx, dy, dw, dh, sw, sh, mw, mh;
-	char file[4096];
+	char file[PATH_MAX];
 	
 	if (!guides.disp.text)
 	  {

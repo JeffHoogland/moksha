@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
@@ -24,6 +25,10 @@
 #include <Ebits.h>
 #include <Ecore.h>
 #include <Edb.h>
+
+#ifndef PATH_MAX
+#define PATH_MAX     4095
+#endif
 
 #if 0
 #include <execinfo.h>

@@ -13,21 +13,21 @@ static char cfg_root[] = "";
     } \
 }
 
-static char cfg_grabs_db[4096] = "";
-static char cfg_settings_db[4096] = "";
-static char cfg_actions_db[4096] = "";
-static char cfg_borders_db[4096] = "";
-static char cfg_apps_menu_db[4096] = "";
-static char cfg_menus_dir[4096] = "";
-static char cfg_entries_dir[4096] = "";
-static char cfg_selections_dir[4096] = "";
-static char cfg_scrollbars_dir[4096] = "";
-static char cfg_guides_dir[4096] = "";
-static char cfg_user_dir[4096] = "";
-static char cfg_images_dir[4096] = "";
-static char cfg_cursors_dir[4096] = "";
-static char cfg_backgrounds_dir[4096] = "";
-static char cfg_fonts_dir[4096] = "";
+static char cfg_grabs_db[PATH_MAX] = "";
+static char cfg_settings_db[PATH_MAX] = "";
+static char cfg_actions_db[PATH_MAX] = "";
+static char cfg_borders_db[PATH_MAX] = "";
+static char cfg_apps_menu_db[PATH_MAX] = "";
+static char cfg_menus_dir[PATH_MAX] = "";
+static char cfg_entries_dir[PATH_MAX] = "";
+static char cfg_selections_dir[PATH_MAX] = "";
+static char cfg_scrollbars_dir[PATH_MAX] = "";
+static char cfg_guides_dir[PATH_MAX] = "";
+static char cfg_user_dir[PATH_MAX] = "";
+static char cfg_images_dir[PATH_MAX] = "";
+static char cfg_cursors_dir[PATH_MAX] = "";
+static char cfg_backgrounds_dir[PATH_MAX] = "";
+static char cfg_fonts_dir[PATH_MAX] = "";
 
 char *
 e_config_get(char *type)
@@ -81,7 +81,7 @@ e_config_get(char *type)
 void
 e_config_init(void)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
 
 #if 1 /* for now don't do this. i think a cp -r will be needed later anyway */
    if (!e_file_is_dir(e_config_user_dir())) e_file_mkdir(e_config_user_dir());
@@ -179,7 +179,7 @@ void *
 e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 {
    E_DB_File *db;
-   char buf[4096];
+   char buf[PATH_MAX];
    Evas_List l;
    char *data;
    

@@ -16,7 +16,7 @@ void
 e_exec_restart(void)
 {
    int i, num;
-   char exe[4096];
+   char exe[PATH_MAX];
 
    printf("e_exec_restart()\n");
    /* unset events on root */
@@ -75,8 +75,8 @@ pid_t
 e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path)
 {
    static int launch_id = 0;
-   char preload_paths[4096];
-   char preload[4096];
+   char preload_paths[PATH_MAX];
+   char preload[PATH_MAX];
    char *exe2;
    pid_t               pid;
    

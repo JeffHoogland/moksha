@@ -57,7 +57,7 @@ e_scrollbar_recalc(E_Scrollbar *sb)
 static void
 e_scrollbar_setup_bits(E_Scrollbar *sb)
 {
-   char buf[4096];
+   char buf[PATH_MAX];
    
    if (sb->direction == 1)
      {

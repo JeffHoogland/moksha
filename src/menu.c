@@ -712,7 +712,7 @@ void
 e_menu_set_background(E_Menu *m)
 {
    char *menus;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *style = "default";
    char *part;
    int pl, pr, pt, pb;
@@ -752,7 +752,7 @@ void
 e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *style = "default";
    int pl, pr, pt, pb;
    int has_sub = 0;
@@ -796,7 +796,7 @@ void
 e_menu_set_sep(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *style = "default";
    int pl, pr, pt, pb, minx, miny;
    
@@ -831,7 +831,7 @@ void
 e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *style = "default";
    int   on;
    int pl, pr, pt, pb, minx, miny;

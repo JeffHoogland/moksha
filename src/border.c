@@ -46,11 +46,16 @@ static void e_mouse_in(Eevent * ev);
 static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
 
-static void e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
-static void e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
-static void e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
-static void e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
-static void e_cb_mouse_move(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt,
+			  int x, int y, int ox, int oy, int ow, int oh);
+static void e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt,
+			   int x, int y, int ox, int oy, int ow, int oh);
+static void e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt,
+			    int x, int y, int ox, int oy, int ow, int oh);
+static void e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt,
+			  int x, int y, int ox, int oy, int ow, int oh);
+static void e_cb_mouse_move(void *data, Ebits_Object o, char *class, int bt,
+			    int x, int y, int ox, int oy, int ow, int oh);
 
 static void e_cb_border_mouse_in(E_Border *b, Eevent *e);
 static void e_cb_border_mouse_out(E_Border *b, Eevent *e);
@@ -428,7 +433,7 @@ e_focus_out(Eevent * ev)
 	     /* char *settings_db; */
 	     /* E_DB_File *db; */
 	     int focus_mode;
-	     /* char buf[4096]; */
+	     /* char buf[PATH_MAX]; */
 	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
@@ -448,7 +453,8 @@ e_focus_out(Eevent * ev)
 		       g->any_mod = 1;
 		       g->remove_after = 1;
 		       b->grabs = evas_list_append(b->grabs, g);
-		       e_button_grab(b->win.main, 0, XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
+		       e_button_grab(b->win.main, 0,
+				     XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
 		    }
 	       }
 	     b->changed = 1;
@@ -751,7 +757,8 @@ e_window_expose(Eevent * ev)
 /* what to do with border events */
 
 static void
-e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+e_cb_mouse_in(void *data, Ebits_Object o, char *class,
+	      int bt, int x, int y, int ox, int oy, int ow, int oh)
 {
    E_Border *b;
    
@@ -762,8 +769,11 @@ e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
    if (class) e_cursors_display_in_window(b->win.main, class);
    else e_cursors_display_in_window(b->win.main, "Default");     
    if (!current_ev) return;
-   e_action_stop(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
-   e_action_start(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+   e_action_stop(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+   e_action_start(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE,
+		  b, NULL, x, y, border_mouse_x, border_mouse_y);
    return;
    UN(o);
    UN(bt);
@@ -774,7 +784,8 @@ e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
 }
 
 static void
-e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+e_cb_mouse_out(void *data, Ebits_Object o, char *class,
+	       int bt, int x, int y, int ox, int oy, int ow, int oh)
 {
    E_Border *b;
    
@@ -784,8 +795,10 @@ e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt, int x, int y, in
    border_mouse_y = mouse_y;
    if (!current_ev) return;
    e_cursors_display_in_window(b->win.main, "Default");
-   e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
-   e_action_start(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
+   e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+   e_action_start(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE,
+		  b, NULL, x, y, border_mouse_x, border_mouse_y);
    return;
    UN(o);
    UN(bt);
@@ -796,7 +809,8 @@ e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt, int x, int y, in
 }
 
 static void
-e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+e_cb_mouse_down(void *data, Ebits_Object o, char *class,
+		int bt, int x, int y, int ox, int oy, int ow, int oh)
 {
    E_Border *b;
    
@@ -811,10 +825,16 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
 	
 	mods = ((Ev_Mouse_Down *)(current_ev->event))->mods;
 	act = ACT_MOUSE_CLICK;
-	if (((Ev_Mouse_Down *)(current_ev->event))->double_click) act = ACT_MOUSE_DOUBLE;
-	else if (((Ev_Mouse_Down *)(current_ev->event))->triple_click) act = ACT_MOUSE_TRIPLE;
-	e_action_stop(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+	if (((Ev_Mouse_Down *)(current_ev->event))->double_click)
+	  act = ACT_MOUSE_DOUBLE;
+	else if (((Ev_Mouse_Down *)(current_ev->event))->triple_click)
+	  act = ACT_MOUSE_TRIPLE;
+
+	e_action_stop(class, act, bt, NULL, mods, b,
+		      NULL, x, y, border_mouse_x, border_mouse_y);
+	e_action_start(class, act, bt, NULL, mods, b,
+		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
    return;
    UN(o);
@@ -825,7 +845,8 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
 }
 
 static void
-e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+e_cb_mouse_up(void *data, Ebits_Object o, char *class,
+	      int bt, int x, int y, int ox, int oy, int ow, int oh)
 {
    E_Border *b;
    
@@ -840,17 +861,22 @@ e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
 	
 	mods = ((Ev_Mouse_Up *)(current_ev->event))->mods;
 	act = ACT_MOUSE_UP;
+
 	if ((x >= ox) && (x < (ox + ow)) && (y >= oy) && (y < (oy + oh)))
 	  act = ACT_MOUSE_CLICKED;
-	e_action_stop(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+	e_action_stop(class, act, bt, NULL, mods, b,
+		      NULL, x, y, border_mouse_x, border_mouse_y);
+	e_action_start(class, act, bt, NULL, mods, b,
+		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
    return;
    UN(o);
 }
 
 static void
-e_cb_mouse_move(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+e_cb_mouse_move(void *data, Ebits_Object o, char *class,
+		int bt, int x, int y, int ox, int oy, int ow, int oh)
 {
    E_Border *b;
    int dx, dy;
@@ -860,8 +886,13 @@ e_cb_mouse_move(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
    dy = mouse_y - border_mouse_y;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-   if (!current_ev) return;
-   e_action_go(class, ACT_MOUSE_MOVE, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+
+   if (!current_ev)
+     return;
+
+   e_action_cont(class, ACT_MOUSE_MOVE, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+
    return;
    UN(o);
    UN(bt);
@@ -886,10 +917,14 @@ e_cb_border_mouse_in(E_Border *b, Eevent *e)
    border_mouse_y = mouse_y;
    border_mouse_buttons = mouse_buttons;
    if (!current_ev) return;
+
    x = ((Ev_Window_Enter *)(e->event))->x;
    y = ((Ev_Window_Enter *)(e->event))->y;
-   e_action_stop(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
-   e_action_start(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+   e_action_stop(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+   e_action_start(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE,
+		  b, NULL, x, y, border_mouse_x, border_mouse_y);
 }
 
 static void
@@ -908,8 +943,11 @@ e_cb_border_mouse_out(E_Border *b, Eevent *e)
    border_mouse_y = mouse_y;
    border_mouse_buttons = mouse_buttons;
    if (!current_ev) return;
-   e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
-   e_action_start(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+   e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+   e_action_start(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE,
+		  b, NULL, x, y, border_mouse_x, border_mouse_y);
    return;
    UN(e);
 }
@@ -961,10 +999,16 @@ e_cb_border_mouse_down(E_Border *b, Eevent *e)
 	
 	mods = ((Ev_Mouse_Down *)(current_ev->event))->mods;
 	act = ACT_MOUSE_CLICK;
-	if (((Ev_Mouse_Down *)(current_ev->event))->double_click) act = ACT_MOUSE_DOUBLE;
-	else if (((Ev_Mouse_Down *)(current_ev->event))->triple_click) act = ACT_MOUSE_TRIPLE;
-	e_action_stop(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
+
+	if (((Ev_Mouse_Down *)(current_ev->event))->double_click)
+	  act = ACT_MOUSE_DOUBLE;
+	else if (((Ev_Mouse_Down *)(current_ev->event))->triple_click)
+	  act = ACT_MOUSE_TRIPLE;
+
+	e_action_stop(class, act, bt, NULL, mods, b, NULL,
+		      x, y, border_mouse_x, border_mouse_y);
+	e_action_start(class, act, bt, NULL, mods, b, NULL,
+		       x, y, border_mouse_x, border_mouse_y);
      }
 /*
  * e_pointer_ungrab(((Ev_Mouse_Up *)(e->event))->time);
@@ -992,8 +1036,10 @@ e_cb_border_mouse_up(E_Border *b, Eevent *e)
 	
 	mods = ((Ev_Mouse_Up *)(current_ev->event))->mods;
 	act = ACT_MOUSE_UP;
-	e_action_stop(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b, NULL, x, y, border_mouse_x, border_mouse_y);
+	e_action_stop(class, act, bt, NULL, mods, b,
+		      NULL, x, y, border_mouse_x, border_mouse_y);
+	e_action_start(class, act, bt, NULL, mods, b,
+		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
 }
 
@@ -1011,7 +1057,8 @@ e_cb_border_mouse_move(E_Border *b, Eevent *e)
    if (!current_ev) return;
    x = ((Ev_Mouse_Move *)(e->event))->x;
    y = ((Ev_Mouse_Move *)(e->event))->y;
-   e_action_go(class, ACT_MOUSE_MOVE, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+   e_action_cont(class, ACT_MOUSE_MOVE, 0, NULL, EV_KEY_MODIFIER_NONE,
+		 b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
 }
 
 static void
@@ -1041,7 +1088,7 @@ void
 e_border_apply_border(E_Border *b)
 {
    int pl, pr, pt, pb;
-   char *borders, buf[4096], border[4096], *style = NULL, *match_style;
+   char *borders, buf[PATH_MAX], border[PATH_MAX], *style = NULL, *match_style;
    int prop_selected = 0, prop_sticky = 0, prop_shaded = 0;
    
    style = "default"; 
@@ -1080,15 +1127,18 @@ e_border_reshape(E_Border *b)
        (b->current.has_shape == b->previous.has_shape) && 
        (!b->shape_changed))
      return;
+
    if (!shape_win) shape_win = e_window_override_new(0, 0, 0, 1, 1);
    pl = pr = pt = pb = 0;
    if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
    b->shape_changed = 0;
+
    if ((!b->current.shaped_client) && (!b->current.has_shape))
      {
 	e_window_set_shape_mask(b->win.main, 0);
 	return;
      }
+
    if ((b->current.shaped_client) && (!b->current.has_shape))
      {
 	XRectangle rects[4];
@@ -1104,15 +1154,20 @@ e_border_reshape(E_Border *b)
 	
         e_window_resize(shape_win, b->current.w, b->current.h);
 	e_window_set_shape_window(shape_win, b->win.client, pl, pt - b->current.shaded);
-	e_window_clip_shape_by_rectangle(shape_win, pl, pt, b->current.w - pl - pr, b->current.h - pt - pb);
+	e_window_clip_shape_by_rectangle(shape_win, pl, pt,
+					 b->current.w - pl - pr, b->current.h - pt - pb);
 	e_window_add_shape_rectangles(shape_win, rects, 4);
 	e_window_set_shape_window(b->win.main, shape_win, 0, 0);
+
 	return;
      }
+
    if ((!b->current.shaped_client) && (b->current.has_shape))
      {
         e_window_resize(shape_win, b->current.w, b->current.h);
-	e_window_set_shape_rectangle(shape_win, pl, pt - b->current.shaded, b->current.w - pl - pr, b->current.h - pt - pb);
+	e_window_set_shape_rectangle(shape_win, pl, pt - b->current.shaded,
+				     b->current.w - pl - pr, b->current.h - pt - pb);
+
 	/* FIXME: later when i actually generate shape masks for borders */
 	  {
 	     XRectangle rects[4];
@@ -1134,7 +1189,9 @@ e_border_reshape(E_Border *b)
      {
         e_window_resize(shape_win, b->current.w, b->current.h);
 	e_window_set_shape_window(shape_win, b->win.client, pl, pt - b->current.shaded);
-	e_window_clip_shape_by_rectangle(shape_win, pl, pt, b->current.w - pl - pr, b->current.h - pt - pb);
+	e_window_clip_shape_by_rectangle(shape_win, pl, pt,
+					 b->current.w - pl - pr, b->current.h - pt - pb);
+
 	/* FIXME: later when i actually generate shape masks for borders */
 	  {
 	     XRectangle rects[4];
@@ -1149,6 +1206,7 @@ e_border_reshape(E_Border *b)
 	     rects[3].width = b->current.w; rects[3].height = pb;
 	     e_window_add_shape_rectangles(shape_win, rects, 4);
 	  }
+
 	e_window_set_shape_window(b->win.main, shape_win, 0, 0);
 	return;
      }
@@ -1544,7 +1602,7 @@ e_border_attach_mouse_grabs(E_Border *b)
    char *grabs_db;
    E_DB_File *db;
    int focus_mode;
-   char buf[4096];
+   char buf[PATH_MAX];
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);

@@ -187,7 +187,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    
    /* FIXME: load bg here */
    {
-      char buf[4096];
+      char buf[PATH_MAX];
       
       sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
       v->bg = e_background_load(buf);

@@ -138,7 +138,7 @@ static E_Menu *
 e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 {
    E_Menu *menu;
-   char    buf[4096];
+   char    buf[PATH_MAX];
    int     num2, i2;
    
    sprintf(buf, "/menu/%i/count", num);
@@ -229,7 +229,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
    /* build the order of things to scan ...*/
      {
 	FILE *f;
-	char buf[4096];
+	char buf[PATH_MAX];
 	Evas_List dirlist = NULL;
 	
 	/* read .order file */
@@ -237,7 +237,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	f = fopen(buf, "rb");
 	if (f)
 	  {
-	     while (fgets(buf, 4096, f))
+	     while (fgets(buf, PATH_MAX, f))
 	       {
 		  int buf_len;
 		  
@@ -284,7 +284,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
    for (l = entries; l; l = l->next)
      {
 	char *s;
-	char buf[4096];
+	char buf[PATH_MAX];
 	E_Menu_Item *menuitem;
 	char *icon, *name, *exe;
 	E_Menu *sub;
@@ -316,7 +316,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	else continue;
 	if (f)
 	  {
-	     while (fgets(buf, 4096, f))
+	     while (fgets(buf, PATH_MAX, f))
 	       {
 		  int buf_len;
 		  
@@ -345,7 +345,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			    eq = strchr(buf, '=');
 			    if (eq)
 			      {
-				 char buf2[4096];
+				 char buf2[PATH_MAX];
 				 
 				 sprintf(buf2, "/usr/share/pixmaps/%s", eq +1);
 				 icon = strdup(buf2);

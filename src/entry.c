@@ -201,7 +201,7 @@ static void
 e_entry_realize(E_Entry *entry)
 {
    char *entries;
-   char buf[4096];
+   char buf[PATH_MAX];
    
    entries = e_config_get("entries");
    sprintf(buf, "%s/%s", entries, "base.bits.db");

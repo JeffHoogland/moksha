@@ -61,7 +61,7 @@ e_cursors_find(char *type)
 	c = l->data;
 	if (!strcmp(c->type, type)) 
 	  {
-	     char buf[4096];
+	     char buf[PATH_MAX];
 	     
 	     sprintf(buf, "%s/%s.db", e_config_get("cursors"), type);
 	     if (e_file_modified_time(buf) > c->mod)
@@ -93,7 +93,7 @@ e_cursors_display_in_window(Window win, char *type)
 	int br = 0, bg = 0, bb = 0;
 	int w = 32, h = 32;
 	int ok;
-	char buf[4096];
+	char buf[PATH_MAX];
 	Imlib_Image im;
 	
 	c = NEW(E_Cursor, 1);
