@@ -58,55 +58,50 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* add cmd-line options to fake xinerama screens
+* make e17 re-locatable (ues environment var, or find out by hunting path argv[0] if its not a full path or munge the full path to the exe in argv[0])
 * java apps seem to have a hard time if we dont pretend to be kwin (see e_hints.c) - get this stuff upstream to sun and get things fixed in java.
 * dropshadow is not optimal and has extreme edge-case bugs
 * gadget containers (shelves)
-* fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
 * track mouse location on a border/desktop level
 * add key input focus control for desktop modules
 * finish off icccm support
-* optimize clock theme (speed/cpu)
+* optimize clock theme (speed/cpu) (rotation in edje???)
 * add general actions to be hooked to button/key bindings
 * add "icon box"
 * add netwm support
 * different cursors for different parts of the screen
 * alt+tab status list of windows
-* add a "taskbar"
+* add a "taskbar" module
 * add cpu module
 * add cpu speedstep module
 * make root menus configurable (what mouse/key brings up what)
-* add favorites apps menu items for editing (at the bottom or such)
 * add a way to access all apps
 * list window properties then only fetch the ones that exist on window map
 * non opaque move/resize
-* optimize dropshadow module to blure faster/more efficiently
-* change evas and ecore_evas to create shape rect lists directly
+* support shaped border themes & menus
 * support shaped clients borders etc.
 * ibar need to support label pop-ups
+* ibar shoudl support subdirs with pop-up icons...
+* support dnd for ibar etc.
 * borders need to be able to change border on the fly
-* add push-away move
-* add window move/resize snap/resist to adjacent window
 * add window glueing
-* add window tabs (multiple clients)
+* add window tabs (multiple clients in 1 border)
 * add setup/install wizard to seed eapp files etc. etc.
 * make ipc try open on other ports numbers if current is taken
-* fix error dialogs to also have a themed/edje one with proper text layout
+* make ipc try re-open if connection dies
 * add clientinfo pane/popdown for borders
 * add a button area expansion for borders
 * add template button for expanded buttons
 * add a status area expansion for borders
 * add a status module template for borders
-* allow desktop modules to define no-cover zones
 * support text and color classes
 * add tooltips
 * add fullscreen support (e16 xvidmode or xrandr style)
-* add screen rotation info to managers
+* add screen rotation info to managers (from xrandr)
 * make xrandr support get rotation
 * add rotation to containers
 * fix multihead support (executing with DISPLAY=:0.1 on screen 1 for example)
 * maybe add systray module/support?
-* fix all loose ends
 * allow object paranoia to be a runtime option too
 * add sliders, radio and check buttons for clientinfo pane
 * display coords while moving
@@ -114,5 +109,17 @@ These are in no particular order:
 * add "osd" subsystem for things like volume controls on keybboards, etc. that overlay the screen
 * add really nice "about" box with theme, authors credits list etc etc.
 * init splash needs te be able to be signalled "end of init" and it can respond with a "splash end" signal
-* "immortali" windows (e will not allow that window to be closed or will refuse to exit as long as the immortal flags is set until it is unset to stop users from doing silly things like logging out while important stuff is happening in that window -a menu option for this woudl be nice)
+* "immortal" windows (e will not allow that window to be closed or will refuse to exit as long as the immortal flags is set until it is unset to stop users from doing silly things like logging out while important stuff is happening in that window -a menu option for this woudl be nice)
 * ibar lamp needs shrot timer on mouse out for hide before hiding (and del the time on mouse in)
+* need to be able to remember client positons/etc.
+* key binding support in general
+* file icons on the desktop (people ask for it) - xdnd for these
+* gui config tools for bg's, keybndingins, etc. etc. etc.
+* go through e16 features we dont have and implement the most useful ones (or re-design and implement)
+* libehack from old e17 wrapper for executing apps
+* use libehack stuff to track launches of apps etc.
+* make it possible to disdable border buttons/actions (tell theme what is disabled)
+* make status modules (like cpu meter per window) use ehack to get pid to monitor it's cpu load
+* modules need config executables with proper widgets (sliders, check boxes, radio etc. not massive menus)
+* module control panel app
+* ipc needs to be massively useful and give all sorts of info and control
