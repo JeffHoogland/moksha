@@ -123,7 +123,7 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	
 	ppos = entry->cursor_pos;
 	evas_get_geometry(entry->evas, entry->text, NULL, &ty, NULL, NULL);
-	pos = evas_text_at_position(_e, entry->text, _x + entry->scroll_pos, ty,
+	pos = evas_text_at_position(_e, entry->text, _x, ty,
 				    NULL, NULL, NULL, NULL);
 	if (pos < 0)
 	  {
