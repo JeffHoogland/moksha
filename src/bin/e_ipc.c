@@ -199,6 +199,20 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 	       }
 	     e_config_save_queue();
           }
+	break;
+      case E_IPC_OP_BG_GET:
+	  {
+	     char *bg;
+	     bg = e_config->desktop_default_background;
+	     if (!bg)
+	       bg = "";
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_BG_GET_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   bg, strlen(bg));
+ 	  }
+	break;
       default:
 	break;
      }
