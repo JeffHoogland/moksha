@@ -2,6 +2,8 @@
 
 typedef struct _E_Zone     E_Zone;
 
+typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
+
 #else
 #ifndef E_ZONE_H
 #define E_ZONE_H
@@ -25,6 +27,11 @@ struct _E_Zone
 
 };
 
+struct _E_Event_Zone_Desk_Count_Set
+{
+   E_Zone *zone;
+};
+
 EAPI int        e_zone_init(void);
 EAPI int        e_zone_shutdown(void);
 EAPI E_Zone    *e_zone_new(E_Container *con, int x, int y, int w, int h);
@@ -36,6 +43,8 @@ EAPI void       e_zone_bg_reconfigure(E_Zone *zone);
 EAPI Evas_List *e_zone_clients_list_get(E_Zone *zone);
 EAPI void       e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count);
 EAPI void       e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count);
+
+extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 
 #endif
 #endif

@@ -12,13 +12,18 @@ static void _e_zone_cb_menu_end(void *data, E_Menu *m);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 
 static int zone_count;
+
+int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 
 int
 e_zone_init(void)
 {
    zone_count = 0;
+   E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
+   
    return 1;
 }
 
@@ -284,6 +289,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    int        x, y, xx, yy, moved;
    Evas_List *client;
    E_Border  *bd;
+   E_Event_Zone_Desk_Count_Set *ev;
    
    xx = x_count;
    if (xx < 1)
@@ -378,6 +384,12 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    e_config->zone_desks_x_count = xx;
    e_config->zone_desks_y_count = yy;
    e_config_save_queue();
+
+   ev = E_NEW(E_Event_Zone_Desk_Count_Set, 1);
+   if (!ev) return;
+   ev->zone = zone;
+   e_object_ref(E_OBJECT(zone));
+   ecore_event_add(E_EVENT_ZONE_DESK_COUNT_SET, ev, _e_zone_event_zone_desk_count_set_free, NULL);
 }
 
 void
@@ -386,3 +398,14 @@ e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
    *x_count = zone->desk_x_count;
    *y_count = zone->desk_y_count;
 }
+
+static void
+_e_zone_event_zone_desk_count_set_free(void *data, void *ev)
+{
+   E_Event_Zone_Desk_Count_Set *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->zone));
+   free(e);
+}
+

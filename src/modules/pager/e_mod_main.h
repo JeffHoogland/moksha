@@ -33,6 +33,7 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_border_hide;
    Ecore_Event_Handler *ev_handler_border_show;
    Ecore_Event_Handler *ev_handler_border_desk_set;
+   Ecore_Event_Handler *ev_handler_zone_desk_count_set;
 
    Evas_Coord    fx, fy, fw, fh, tw, th;
    Evas_Coord    xx, yy;

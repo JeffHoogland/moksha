@@ -42,6 +42,7 @@ static int         _pager_cb_event_border_remove(void *data, int type, void *eve
 static int         _pager_cb_event_border_hide(void *data, int type, void *event);
 static int         _pager_cb_event_border_show(void *data, int type, void *event);
 static int         _pager_cb_event_border_desk_set(void *data, int type, void *event);
+static int         _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 
 static void        _pager_reconfigure(Pager *e);
 
@@ -213,6 +214,9 @@ _pager_init(E_Module *m)
    e->ev_handler_border_desk_set =
    ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
 			   _pager_cb_event_border_desk_set, e);
+   e->ev_handler_zone_desk_count_set =
+   ecore_event_handler_add(E_EVENT_ZONE_DESK_COUNT_SET,
+			   _pager_cb_event_zone_desk_count_set, e);
  
    _pager_zone_set(e, e_zone_current_get(e->con));
    _pager_reconfigure(e);
@@ -248,6 +252,7 @@ _pager_shutdown(Pager *e)
    ecore_event_handler_del(e->ev_handler_border_hide);
    ecore_event_handler_del(e->ev_handler_border_show);
    ecore_event_handler_del(e->ev_handler_border_desk_set);
+   ecore_event_handler_del(e->ev_handler_zone_desk_count_set);
 
    free(e);
 }
@@ -872,6 +877,17 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
    
    e = data;
    ev = event;
+   return 1;
+}
+
+static int
+_pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
+{
+   Pager *e;
+   E_Event_Zone_Desk_Count_Set *ev;
+
+   e = data;
+   _pager_reconfigure(e);
    return 1;
 }
 
