@@ -309,7 +309,6 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    newy = (double)p->fy / (double)(hh - p->fy);
    if (p->move && (p->conf->x == newx) && (p->conf->y == newy))
      {
-printf("clicked\n");
 	int     x, y, w, h, xcount, ycount, cx, cy;
 	E_Zone *zone;
 	E_Desk *desk;
@@ -323,16 +322,14 @@ printf("clicked\n");
 	for (x = 0; x < xcount; x++)
 	  for (y = 0; y < ycount; y++)
 	    {
-printf("test %d, %d\n", x, y);
 	       int left, right, top, bottom;
 	       left = p->fx + x * w;
 	       right = left + w;
 	       top = p->fy + y * h;
 	       bottom = top + h;
-printf("l %d r %d t %d b %d = %d, %d\n", left, right, top, bottom, cx, cy);
+
 	       if (left <= cx && cx < right && top <= cy && cy < bottom)
 		 {
-printf("matched %d, %d\n", x, y);
 		    desk = e_desk_at_xy_get(zone, x, y);
 		    e_desk_show(desk);
 		    evas_object_move(p->screen, left, top);
