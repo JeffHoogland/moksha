@@ -29,7 +29,6 @@ Current freeze issues are:
 
 ISSUES:
 
-* ibar doesnt handle autoscroll when it starts up (only after a gadman resize)
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
