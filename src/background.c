@@ -1,4 +1,5 @@
 #include "background.h"
+#include "util.h"
 
 void
 e_background_free(E_Background *bg)
@@ -56,7 +57,7 @@ e_background_load(char *file)
    e_db_int_get(db, "/layers/count", &num);
    
    bg = e_background_new();
-   bg->file = strdup(file);
+   e_strdup(bg->file, file);
    for (i = 0; i < num; i++)
      {
 	E_Background_Layer *bl;
@@ -71,7 +72,7 @@ e_background_load(char *file)
 	sprintf(buf, "/layers/%i/color_class", i); bl->color_class = e_db_str_get(db, buf);
 	if (bl->inlined)
 	  {
-	     sprintf(buf, "%s:/layers/%i/image", file, i); bl->file = strdup(buf);
+	     sprintf(buf, "%s:/layers/%i/image", file, i); e_strdup(bl->file, buf);
 	  }
 	else
 	  {

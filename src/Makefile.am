@@ -31,5 +31,5 @@ enlightenment_SOURCES = \
 	view.h view.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm -lc $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm -lc -ldl $(INTLLIBS)
 

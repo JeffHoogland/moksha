@@ -19,4 +19,12 @@ int        e_file_can_exec(struct stat *st);
 char      *e_file_link(char *link);
 Evas_List  e_file_list_dir(char *dir);
 
+#define e_strdup(__dest, __var) \
+{ \
+if (!__var) __dest = NULL; \
+else { \
+__dest = malloc(strlen(__var) + 1); \
+if (__dest) strcpy(__dest, __var); \
+} }
+
 #endif

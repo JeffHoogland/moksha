@@ -98,16 +98,6 @@ e_config_init(void)
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/apps_menu.db", buf);
    sprintf(buf, "%sappearance/borders/border.bits.db",  e_config_user_dir());
-   /* do it for data... ut not all of it for now.. i'm considering if */
-   /* this is a godo idea. config data - YES. but raw theme data? */
-   if (!e_file_exists(buf))
-     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db", buf);
-   sprintf(buf, "%sappearance/borders/border2.bits.db",  e_config_user_dir());
-   if (!e_file_exists(buf))
-     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border2.bits.db", buf);
-   sprintf(buf, "%sappearance/borders/borderless.bits.db",  e_config_user_dir());
-   if (!e_file_exists(buf))
-     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db", buf);
 #endif
 }
 

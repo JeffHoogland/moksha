@@ -1039,7 +1039,7 @@ e_border_apply_border(E_Border *b)
    /* if it's not changed - abort and dont do anything */
    if ((b->border_file) && (!strcmp(buf, b->border_file))) return;
    IF_FREE(b->border_file);
-   b->border_file = strdup(buf);
+   e_strdup(b->border_file, buf);
    
    e_border_set_bits(b, buf);
    
@@ -1138,8 +1138,10 @@ e_border_adopt(Window win, int use_client_pos)
 {
    E_Border *b;
    int bw;
+   static int bd_count = 0;
    
    /* create the struct */
+   printf("new bd %i\n", bd_count++);
    b = e_border_new();
    /* set the right event on the client */
    e_window_set_events(win, 
@@ -1368,7 +1370,7 @@ e_border_new(void)
 			    font_dir);
    b->win.b = evas_get_window(b->evas.b); 
    e_add_child(b->win.main, b->win.b);
-   
+
    b->obj.title.l = evas_add_text(b->evas.l, "borzoib", 8, "");
    b->obj.title.r = evas_add_text(b->evas.r, "borzoib", 8, "");
    b->obj.title.t = evas_add_text(b->evas.t, "borzoib", 8, "");
@@ -1417,6 +1419,7 @@ e_border_new(void)
    e_window_raise(b->win.t);
    e_window_raise(b->win.b);
 */   
+
    evases = evas_list_append(evases, b->evas.l);
    evases = evas_list_append(evases, b->evas.r);
    evases = evas_list_append(evases, b->evas.t);
@@ -1433,7 +1436,7 @@ e_border_new(void)
    e_window_show(b->win.b);
    
    e_border_attach_mouse_grabs(b);
-   
+
    borders = evas_list_prepend(borders, b);
    
    return b;
@@ -1462,6 +1465,11 @@ e_border_free(E_Border *b)
    e_window_destroy(b->win.main);
    borders = evas_list_remove(borders, b);
    
+   IF_FREE(b->client.title);
+   IF_FREE(b->client.name);
+   IF_FREE(b->client.class);
+   IF_FREE(b->border_file);
+   
    if (b->grabs)
      {
 	for (l = b->grabs; l; l = l->next)
@@ -1471,7 +1479,7 @@ e_border_free(E_Border *b)
 	evas_list_free(b->grabs);
      }
    
-   free(b);
+   FREE(b);
 }
 
 void
@@ -1663,7 +1671,6 @@ e_border_set_bits(E_Border *b, char *file)
    b->bits.r = ebits_load(file);
    b->bits.t = ebits_load(file);
    b->bits.b = ebits_load(file);
-   
    b->bits.new = 1;
    b->changed = 1;
 

@@ -183,7 +183,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
    /* desk->view->dir = strdup("/dev");  */
-   desk->view->dir = strdup(e_file_home()); 
+   e_strdup(desk->view->dir, e_file_home()); 
    e_view_realize(desk->view);
 
    if (desk->view->options.back_pixmap)

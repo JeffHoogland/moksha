@@ -6,6 +6,7 @@
 #include "icccm.h"
 #include "keys.h"
 #include "view.h"
+#include "util.h"
 
 static Evas_List action_protos = NULL;
 static Evas_List current_actions = NULL;
@@ -191,12 +192,12 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 		  
 		  OBJ_INIT(aa, _e_action_free);
 		  
-		  aa->name = strdup(a->name);
-		  aa->action = strdup(a->action);
-		  if (a->params) aa->params = strdup(a->params);
+		  e_strdup(aa->name, a->name);
+		  e_strdup(aa->action, a->action);
+		  e_strdup(aa->params, a->params);
 		  aa->event = a->event;
 		  aa->button = a->button;
-		  if (a->key) aa->key = strdup(a->key);
+		  e_strdup(aa->key, a->key);
 		  aa->modifiers = a->modifiers;
 		  aa->action_proto = ap;
 		  aa->object = o;
@@ -396,7 +397,7 @@ e_action_add_proto(char *action,
    
    OBJ_INIT(ap, NULL);
    
-   ap->action = strdup(action);
+   e_strdup(ap->action, action);
    ap->func_start = func_start;
    ap->func_stop = func_stop;
    ap->func_go = func_go;
@@ -435,7 +436,7 @@ e_action_add_timer(void *o, char *name)
    
    at = NEW(E_Active_Action_Timer, 1);
    at->object = o;
-   at->name = strdup(name);
+   e_strdup(at->name, name);
    current_timers = evas_list_append(current_timers, at);
 }
 

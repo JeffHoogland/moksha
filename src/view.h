@@ -29,6 +29,7 @@ struct _E_View
    Pixmap                 pmap;
    struct {
       int                 w, h;
+      int                 force;
    } size;
    struct {
       int                 x, y;

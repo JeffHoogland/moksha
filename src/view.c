@@ -341,6 +341,10 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	  }
+	else if (_b == 2)
+	  {
+	     exit(0);
+	  }
 	else if (_b == 3)
 	  {
 	     static E_Build_Menu *buildmenu = NULL;
@@ -1142,8 +1146,9 @@ e_configure(Eevent * ev)
 		    }
 	       }
 	     printf("size %ix%i\n", e->w, e->h);
-	     if ((e->w != v->size.w) || (e->h != v->size.h))
+	     if ((e->w != v->size.w) || (e->h != v->size.h) || (v->size.force))
 	       {
+		  v->size.force = 0;
 		  printf("... a new size!\n");
 		  v->size.w = e->w;
 		  v->size.h = e->h;
@@ -1773,7 +1778,8 @@ e_view_arrange(E_View *v)
 	E_Icon *ic;
 	
 	ic = l->data;
-	if ((x != v->spacing.window.l) && ((x + ic->geom.w) > v->size.w))
+	if ((x != v->spacing.window.l) && 
+	    ((x + ic->geom.w) > v->size.w - v->spacing.window.r))
 	  {
 	     x = v->spacing.window.l;
 	     y += ic->geom.h + v->spacing.icon.b;
@@ -2542,9 +2548,12 @@ e_view_handle_fs(EfsdEvent *ev)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.w)))
-					e_window_resize(v->win.base,
-							v->size.w,
-							v->size.h);
+					{
+					   e_window_resize(v->win.base,
+							   v->size.w,
+							   v->size.h);
+					   v->size.force = 1;
+					}
 				   }
 			      }
 			    ok = 1;
@@ -2558,9 +2567,12 @@ e_view_handle_fs(EfsdEvent *ev)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.h)))
-					e_window_resize(v->win.base,
-							v->size.w,
-							v->size.h);
+					{
+					   e_window_resize(v->win.base,
+							   v->size.w,
+							   v->size.h);
+					   v->size.force = 1;
+					}
 				   }
 			      }
 			    ok = 1;

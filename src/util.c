@@ -83,33 +83,46 @@ char *
 e_file_real(char *file)
 {
    char buf[4096];
+   char *f;
    
    if (!realpath(file, buf)) return strdup("");
-   return strdup(buf);
+   e_strdup(f, buf);
+   return f;
 }
 
 char *
 e_file_get_file(char *file)
 {
    char *p;
-   /* char buf[4096]; */
+   char *f;
    
    p = strrchr(file, '/');
-   if (!p) return strdup(file);
-   return strdup(&(p[1]));
+   if (!p) 
+     {
+	e_strdup(f, file);
+	return f;
+     }
+   e_strdup(f, &(p[1]));
+   return f;
 }
 
 char *
 e_file_get_dir(char *file)
 {
    char *p;
+   char *f;
    char buf[4096];
    
    strcpy(buf, file);
    p = strrchr(buf, '/');
-   if (!p) return strdup(file);
+   if (!p) 
+     {
+	e_strdup(f, file);
+	return f;
+     }
    *p = 0;
-   return strdup(buf);
+   e_strdup(f, buf);
+   return f;
 }
 
 void *
@@ -162,11 +175,13 @@ char *
 e_file_link(char *link)
 {
    char buf[4096];
+   char *f;
    int count;
    
    if ((count = readlink(link, buf, sizeof(buf))) < 0) return NULL;
    buf[count] = 0;
-   return strdup(buf);
+   e_strdup(f, buf);
+   return f;
 }
 
 Evas_List 
@@ -185,18 +200,21 @@ e_file_list_dir(char *dir)
 	    (strcmp(dp->d_name, "..")))
 	  {
 	     Evas_List l;
+	     char *f;
 	     
 	     /* insertion sort */
 	     for (l = list; l; l = l->next)
 	       {
 		  if (strcmp(l->data, dp->d_name) > 0)
 		    {
-		       list = evas_list_prepend_relative(list, strdup(dp->d_name), l->data);		       
+		       e_strdup(f, dp->d_name);
+		       list = evas_list_prepend_relative(list, f, l->data);
 		       break;
 		    }
 	       }
 	     /* nowhwre to go? just append it */
-	     if (!l) list = evas_list_append(list, strdup(dp->d_name));
+	     e_strdup(f, dp->d_name);
+	     if (!l) list = evas_list_append(list, f);
 	  }
      }
    closedir(dirp);

@@ -25,6 +25,16 @@
 #include <Ecore.h>
 #include <Edb.h>
 
+#if 0
+#include <execinfo.h>
+#define BT \
+{ \
+void *__BT_array[250]; \
+int __BT_n = backtrace(__BT_array,250); \
+backtrace_symbols_fd(__BT_array, __BT_n, fileno(stdout)); \
+}
+#endif
+
 /* macros for allowing sections of code to be runtime profiled */
 #define E_PROF 1
 #ifdef E_PROF

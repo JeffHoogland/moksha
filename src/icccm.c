@@ -1,6 +1,7 @@
 #include "e.h"
 #include "border.h"
 #include "icccm.h"
+#include "util.h"
 
 /* Motif window hints */
 #define MWM_HINTS_FUNCTIONS           (1L << 0)
@@ -314,7 +315,7 @@ e_icccm_get_title(Window win, E_Border *b)
      }
    b->client.title = NULL;
    if (title) b->client.title = title;
-   else b->client.title = strdup("No Title");
+   else e_strdup(b->client.title, "No Title");
 }
 
 void
