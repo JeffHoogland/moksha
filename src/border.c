@@ -69,7 +69,7 @@ static void e_cb_border_move_resize(E_Border *b);
 static void e_cb_border_visibility(E_Border *b);
 
 static void e_border_poll(int val, void *data);
-static void e_border_free(E_Border *b);
+static void e_border_cleanup(E_Border *b);
 
 static int e_border_replay_query(Ecore_Event_Mouse_Down *ev)
 {
@@ -600,6 +600,8 @@ e_mouse_down(Ecore_Event * ev)
 	       {
 		  Evas evas;
 		  int x, y;
+
+		  
 		  
 		  evas = b->evas.l;
 		  ecore_window_get_root_relative_location(evas_get_window(evas), 
@@ -1233,7 +1235,7 @@ e_border_poll(int val, void *data)
 }
 
 static void
-e_border_free(E_Border *b)
+e_border_cleanup(E_Border *b)
 {
    Evas_List l;
 
@@ -1275,6 +1277,7 @@ e_border_free(E_Border *b)
 	evas_list_free(b->grabs);
      }
    
+   /* Cleanup superclass. */
    e_object_cleanup(E_OBJECT(b));
 
    D_RETURN;
@@ -1600,10 +1603,12 @@ e_border_new(void)
    b = NEW(E_Border, 1);
    ZERO(b, E_Border, 1);
 
-   e_object_init(E_OBJECT(b), (E_Cleanup_Func) e_border_free);
+   e_object_init(E_OBJECT(b), (E_Cleanup_Func) e_border_cleanup);
    e_observer_register_observee(E_OBSERVER(delayed_window_raise),
 				E_OBSERVEE(b));
    
+   D("BORDER CREATED AT %p\n", b);
+
    b->current.requested.w = 1;
    b->current.requested.h = 1;
    b->client.min.w = 1;

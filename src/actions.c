@@ -248,8 +248,13 @@ e_action_find(char *action, E_Action_Type act, int button,
 		  aa->button = a->button;
 		  e_strdup(aa->key, a->key);
 		  aa->modifiers = a->modifiers;
+
 		  aa->action_impl = ap;
+		  e_object_ref(E_OBJECT(ap));
+
 		  aa->object = object;
+		  e_object_ref(object);
+
 		  aa->started = 0;
 		  current_actions = evas_list_append(current_actions, aa);
 	       }
@@ -274,11 +279,29 @@ e_action_cleanup(E_Action *a)
 	  e_keys_ungrab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
      }
 
+   /* Clean up the strings by simply freeing them ... */
    IF_FREE(a->name);
    IF_FREE(a->action);
    IF_FREE(a->params);
    IF_FREE(a->key);
 
+   /* Cleanup action implementations and objects. These
+      we don't free directly, but just decrement their use counts.
+   */
+
+   if (a->action_impl)
+     {
+       e_object_unref(E_OBJECT(a->action_impl));
+       a->action_impl = NULL;
+     }
+
+   if (a->object)
+     {
+       e_object_unref(a->object);
+       a->object = NULL;
+     }
+
+   /* Cleanup superclass. */
    e_object_cleanup(E_OBJECT(a));
 
    D_RETURN;
@@ -310,14 +333,6 @@ e_action_start(char *action, E_Action_Type act, int button,
 	       }
 	     if (a->action_impl->func_start)
 	       {
-		  E_Object *obj;
-		  
-		  if (a->object)
-		    {
-		       obj = a->object;
-		       if (a->started)
-			 e_object_ref(obj);
-		    }
 		  a->action_impl->func_start(a->object, a, data, x, y, rx, ry);
 	       }
 	  }
@@ -379,21 +394,13 @@ e_action_stop(char *action, E_Action_Type act, int button,
 	       ok = 1;
 	     if (ok)
 	       {
-		  E_Object *obj;
-		  
-		  if (a->object)
-		    {
-		       obj = a->object;
-		       e_object_unref(obj);
-		    }
 		  a->action_impl->func_stop(a->object, a, data, x, y, rx, ry);
 		  a->started = 0;
 	       }
 	  }
 	if (!a->started)
 	  {
-	     current_actions = evas_list_remove(current_actions, a);
-	     
+	     current_actions = evas_list_remove(current_actions, a);	     
 	     e_object_unref(E_OBJECT(a));
 	     goto again;
 	  }
@@ -437,7 +444,10 @@ e_action_stop_by_object(E_Object *object, void *data, int x, int y, int rx, int 
 {
    Evas_List l;
 
+   D_ENTER;
+
    e_action_del_timer_object(object);
+
    again:
    for (l = current_actions; l; l = l->next)
      {
@@ -446,18 +456,14 @@ e_action_stop_by_object(E_Object *object, void *data, int x, int y, int rx, int 
 	a = l->data;
 	if ((a->started) && (object == a->object))
 	  {
-	     E_Object *obj;
-	     
-	     if (a->object)
-	       {
-		  obj = a->object;
-		  e_object_unref(obj);
-	       }
 	     if (a->action_impl->func_stop)
 	       a->action_impl->func_stop(a->object, a, data, x, y, rx, ry);
+
 	     a->started = 0;
+
 	     current_actions = evas_list_remove(current_actions, a);
 	     e_object_unref(E_OBJECT(a));
+
 	     goto again;
 	  }
      }
@@ -480,13 +486,6 @@ e_action_stop_by_type(char *action)
 	if ((a->started) && (a->action_impl->func_stop) && 
 	    (action) && (!strcmp(action, a->name)))
 	  {
-	     E_Object *obj;
-	     
-	     if (a->object)
-	       {
-		  obj = a->object;
-		  e_object_unref(obj);
-	       }
 	     a->action_impl->func_stop(a->object, a, NULL, 0, 0, 0, 0);
 	     a->started = 0;
 	  }
@@ -548,6 +547,7 @@ e_action_del_timer(E_Object *object, char *name)
 	    (at->name) && 
 	    (!strcmp(at->name, name)))
 	  {
+	     e_object_unref(at->object);
 	     ecore_del_event_timer(at->name);
 	     current_timers = evas_list_remove(current_timers, at);
 	     IF_FREE(at->name);
@@ -568,6 +568,7 @@ e_action_add_timer(E_Object *object, char *name)
 
    at = NEW(E_Active_Action_Timer, 1);
    at->object = object;
+   e_object_ref(object);
    e_strdup(at->name, name);
    current_timers = evas_list_append(current_timers, at);
 
@@ -589,6 +590,7 @@ e_action_del_timer_object(E_Object *object)
 	at = l->data;
 	if (at->object == object)
 	  {
+	     e_object_unref(at->object);
 	     ecore_del_event_timer(at->name);
 	     current_timers = evas_list_remove(current_timers, at);
 	     IF_FREE(at->name);
@@ -667,10 +669,18 @@ e_act_move_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
    E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
+
    b = (E_Border*) object;
-   if (!b) b = e_border_current_focused();
-   if (!b) D_RETURN;
-   if (b->client.fixed) D_RETURN;
+
+   if (!b)
+     b = e_border_current_focused();
+
+   if (!b)
+     D_RETURN;
+
+   if (b->client.fixed)
+     D_RETURN;
+
    if (move_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    b->mode.move = 1;
@@ -678,6 +688,7 @@ e_act_move_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    b->current.requested.dy = 0;
    b->previous.requested.dx = 0;
    b->previous.requested.dy = 0;
+
      {
 	char buf[PATH_MAX];
 	
@@ -710,9 +721,16 @@ e_act_move_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int r
    D_ENTER;
 
    b = (E_Border*) object;
-   if (!b) b = e_border_current_focused();
-   if (!b) D_RETURN;
-   if (b->client.fixed) D_RETURN;
+
+   if (!b)
+     b = e_border_current_focused();
+
+   if (!b)
+     D_RETURN;
+
+   if (b->client.fixed)
+     D_RETURN;
+
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -746,9 +764,16 @@ e_act_move_cont  (E_Object *object, E_Action *a, void *data, int x, int y, int r
    D_ENTER;
    
    b = (E_Border*) object;
-   if (!b) b = e_border_current_focused();
-   if (!b) D_RETURN;
-   if (b->client.fixed) D_RETURN;
+
+   if (!b)
+     b = e_border_current_focused();
+
+   if (!b)
+     D_RETURN;
+
+   if (b->client.fixed)
+     D_RETURN;
+
    b->current.requested.x += dx;
    b->current.requested.y += dy;
    if (dx != 0) b->current.requested.dx = dx;
@@ -1301,10 +1326,11 @@ e_act_cb_shade(int val, void *data)
    b = data;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
-   if (b->client.is_desktop) D_RETURN;
+   if (b->client.is_desktop)
+     D_RETURN;
+
    if (val == 0) 
      {
-        e_object_ref(E_OBJECT(b));
 	t = ecore_get_time();
 	ecore_window_gravity_set(b->win.client, SouthWestGravity);
 	e_action_del_timer(E_OBJECT(b), "shader");
@@ -1325,7 +1351,6 @@ e_act_cb_shade(int val, void *data)
      {
 	e_action_del_timer(E_OBJECT(b), "shader");
 	ecore_window_gravity_reset(b->win.client);
-	e_object_ref(E_OBJECT(b));
      }
 
    D_RETURN;
@@ -1349,7 +1374,6 @@ e_act_cb_unshade(int val, void *data)
    if (b->client.is_desktop) D_RETURN;
    if (val == 0) 
      {
-        e_object_ref(E_OBJECT(b));
 	t = ecore_get_time();
 	ecore_window_gravity_set(b->win.client, SouthWestGravity);
 	e_action_del_timer(E_OBJECT(b), "shader");
@@ -1371,7 +1395,6 @@ e_act_cb_unshade(int val, void *data)
      {
 	e_action_del_timer(E_OBJECT(b), "shader");
 	ecore_window_gravity_reset(b->win.client);
-	e_object_ref(E_OBJECT(b));
      }
 
    D_RETURN;
@@ -1387,9 +1410,14 @@ e_act_shade_start (E_Object *object, E_Action *a, void *data, int x, int y, int 
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
-   if (b->client.is_desktop) D_RETURN;
-   if (b->current.shaded == 0) e_act_cb_shade(0, b);
-   else e_act_cb_unshade(0, b);
+
+   if (b->client.is_desktop)
+     D_RETURN;
+
+   if (b->current.shaded == 0)
+     e_act_cb_shade(0, b);
+   else
+     e_act_cb_unshade(0, b);
 
    D_RETURN;
    UN(a);
