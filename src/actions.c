@@ -575,6 +575,7 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
@@ -666,6 +667,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
@@ -745,6 +747,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
