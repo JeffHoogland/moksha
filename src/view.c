@@ -2,6 +2,7 @@
 
 #include "view.h"
 #include "background.h"
+#include "desktops.h"
 #include "config.h"
 #include "border.h"
 #include "menu.h"
@@ -552,7 +553,7 @@ e_view_icon_exec(E_Icon *ic)
 	  {
 	     char buf[4096];
 	     
-	     sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	     sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
 	     v->bg = e_background_load(buf);
 	  }
 	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
@@ -2308,8 +2309,10 @@ e_view_handle_fs(EfsdEvent *ev)
 		       
 		       ok = 0;
 		       v = l->data;
+		       if (v->is_desktop) continue;
 		       if (v->geom_get.x == cmd)
 			 {
+			    printf("Got X\n");
 			    v->geom_get.x = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2317,18 +2320,22 @@ e_view_handle_fs(EfsdEvent *ev)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.x)))
-					e_window_move(v->win.base,
-						      v->location.x,
-						      v->location.y);
-					e_window_set_xy_hints(v->win.base,
-							      v->location.x,
-							      v->location.y);
+					{
+					   printf("mov x\n");
+					   e_window_move(v->win.base,
+							 v->location.x,
+							 v->location.y);
+					   e_window_set_xy_hints(v->win.base,
+								 v->location.x,
+								 v->location.y);
+					}
 				   }
 			      }
 			    ok = 1;
 			 }
 		       else if (v->geom_get.y == cmd)
 			 {
+			    printf("Got Y\n");
 			    v->geom_get.y = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2336,18 +2343,22 @@ e_view_handle_fs(EfsdEvent *ev)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.y)))
-					e_window_move(v->win.base,
-						      v->location.x,
-						      v->location.y);
-					e_window_set_xy_hints(v->win.base,
-							      v->location.x,
-							      v->location.y);
+					{
+					   printf("mov y\n");
+					   e_window_move(v->win.base,
+							 v->location.x,
+							 v->location.y);
+					   e_window_set_xy_hints(v->win.base,
+								 v->location.x,
+								 v->location.y);
+					}
 				   }
 			      }
 			    ok = 1;
 			 }
 		       else if (v->geom_get.w == cmd)
 			 {
+			    printf("Got W\n");
 			    v->geom_get.w = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2364,6 +2375,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       else if (v->geom_get.h == cmd)
 			 {
+			    printf("Got H\n");
 			    v->geom_get.h = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2389,6 +2401,10 @@ e_view_handle_fs(EfsdEvent *ev)
 				 E_Border *b;
 				 
 				 v->geom_get.busy = 0;
+				 printf("ok.. adopt!\n");
+				 printf("at %i %i, %ix%i\n", 
+					v->location.x, v->location.y,
+					v->size.w, v->size.h);
 				 if (v->options.back_pixmap) e_view_update(v);
 				 b = e_border_adopt(v->win.base, 1);
 			      }

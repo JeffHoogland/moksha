@@ -178,7 +178,6 @@ e_desktops_init_file_display(E_Desktop *desk)
      
      sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
      desk->view->bg = e_background_load(buf);
-     printf("**** load %s = %p\n", buf, desk->view->bg);
    }
 
    /* fixme: later */
@@ -207,6 +206,7 @@ e_desktops_new(void)
    
    desk->win.main = e_window_override_new(e_base_win, 0, 0, screen_w, screen_h);
    desk->win.container = e_window_override_new(desk->win.main, 0, 0, screen_w, screen_h);
+   e_window_lower(desk->win.container);
    
    e_window_show(desk->win.container);
 
