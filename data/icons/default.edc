@@ -7,6 +7,10 @@ images {
    
    image: "reset_button_0.png" LOSSY 90;
    image: "reset_button_glow_0.png" LOSSY 90;
+
+   image: "windows.png" LOSSY 90;
+   
+   image: "module.png" LOSSY 90;
 }
 
 collections {
@@ -187,6 +191,42 @@ collections {
 	    action:     STATE_SET "default" 0.0;
 	    transition: LINEAR 0.5;
 	    target:     "reset_button_glow";
+	 }
+      }
+   }
+   group {
+      name: "windows";
+      max:  64 64;
+      parts {
+	 part {
+	    name:          "icon";
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+	       aspect:   1.0 1.0;
+	       max:      64 64;
+	       image {
+		  normal: "windows.png";
+	       }
+	    }
+	 }
+      }
+   }
+   group {
+      name: "module";
+      max:  64 64;
+      parts {
+	 part {
+	    name:          "icon";
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+	       aspect:   1.0 1.0;
+	       max:      64 64;
+	       image {
+		  normal: "module.png";
+	       }
+	    }
 	 }
       }
    }

@@ -53,11 +53,15 @@ e_int_menus_main_new(void)
    dat->modules = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Modules");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "module");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Windows");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "windows");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);

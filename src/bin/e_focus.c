@@ -56,10 +56,20 @@ _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
    };
    
    e = ev;
-   printf("FI 0x%x md=%s dt=%s\n", 
-	  e->win,
-	  modes[e->mode],
-	  details[e->detail]);
+   if (e_border_find_by_client_window(e->win))
+     {
+	printf("BI 0x%x md=%s dt=%s\n", 
+	       e->win,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
+   else
+     {
+	printf("FI 0x%x md=%s dt=%s\n", 
+	       e->win,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
    return 1;
 }
 
@@ -85,9 +95,19 @@ _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
    };
    
    e = ev;
-   printf("FO 0x%x md=%s dt=%s\n", 
-	  e->win,
-	  modes[e->mode],
-	  details[e->detail]);
+   if (e_border_find_by_client_window(e->win))
+     {
+	printf("BO 0x%x md=%s dt=%s\n", 
+	       e->win,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
+   else
+     {
+	printf("FO 0x%x md=%s dt=%s\n", 
+	       e->win,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
    return 1;
 }
