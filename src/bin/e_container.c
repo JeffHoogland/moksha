@@ -44,6 +44,7 @@ e_container_new(E_Manager *man)
    E_Zone *zone;
    Evas_Object *o;
    char name[40];
+   int i, n;
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
    if (!con) return NULL;
@@ -66,15 +67,15 @@ e_container_new(E_Manager *man)
 
    ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
    
-	o = evas_object_rectangle_add(con->bg_evas);
-	con->bg_blank_object = o;
-	evas_object_layer_set(o, -100);
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, con->w, con->h);
-	evas_object_color_set(o, 255, 255, 255, 255);
+   o = evas_object_rectangle_add(con->bg_evas);
+   con->bg_blank_object = o;
+   evas_object_layer_set(o, -100);
+   evas_object_move(o, 0, 0);
+   evas_object_resize(o, con->w, con->h);
+   evas_object_color_set(o, 255, 255, 255, 255);
    evas_object_name_set(o, "desktop/background");
    evas_object_data_set(o, "e_container", con);
-	evas_object_show(o);
+   evas_object_show(o);
    
    e_pointer_container_set(con);
 
@@ -82,9 +83,19 @@ e_container_new(E_Manager *man)
    snprintf(name, sizeof(name), "Container %d", con->num);
    con->name = strdup(name);
 
-   /* FIXME: Add ecore code to fetch xinerama screens for zones */
-   zone = e_zone_new(con, 0, 0, con->w, con->h);
-   
+   n = ecore_x_xinerama_screen_count_get();
+   if (n == 0)
+     zone = e_zone_new(con, 0, 0, con->w, con->h);
+   else
+     {
+	for (i = 0; i < n; i++)
+	  {
+	     int zx, zy, zw, zh;
+	     
+	     if (ecore_x_xinerama_screen_geometry_get(i, &zx, &zy, &zw, &zh))
+	       zone = e_zone_new(con, zx, zy, zw, zh);
+	  }
+     }
    return con;
 }
         

@@ -5,7 +5,8 @@ typedef struct _E_Resist_Rect E_Resist_Rect;
 struct _E_Resist_Rect
 {
    int x, y, w, h;
-   int v1, v2, v3, v4;
+   int v1;
+   int resist_out;
 };
 
 int
@@ -32,13 +33,26 @@ e_resist_container_position(E_Container *con, Evas_List *skiplist,
      }
    dx = x - px;
    dy = y - py;
-     /* edges of screen */
+   
+   /* FIXME: need to make resist obscales where it resists being moved OUT */
+   /* of the box */
+   
+   /* edges of screen */
 #define OBSTACLE(_x, _y, _w, _h, _resist) \
    { \
       r = E_NEW(E_Resist_Rect, 1); \
       r->x = _x; r->y = _y; r->w = _w; r->h = _h; r->v1 = _resist; \
+      r->resist_out = 0; \
       rects = evas_list_append(rects, r); \
    }
+#define HOLDER(_x, _y, _w, _h, _resist) \
+   { \
+      r = E_NEW(E_Resist_Rect, 1); \
+      r->x = _x; r->y = _y; r->w = _w; r->h = _h; r->v1 = _resist; \
+      r->resist_out = 1; \
+      rects = evas_list_append(rects, r); \
+   }
+#if 0 /* dont need this anymore */   
    OBSTACLE(-1000000, -1000000, 2000000 + con->w, 1000000,
 	    desk_resist);
    OBSTACLE(-1000000, -1000000, 1000000, 2000000 + con->h,
@@ -47,6 +61,14 @@ e_resist_container_position(E_Container *con, Evas_List *skiplist,
 	    desk_resist);
    OBSTACLE(con->w, -1000000, 1000000, 2000000 + con->h,
 	    desk_resist);
+#endif
+   for (l = con->zones; l; l = l->next)
+     {
+	E_Zone *zone;
+	
+	zone = l->data;
+	HOLDER(zone->x, zone->y, zone->w, zone->h, desk_resist);
+     }
    /* FIXME: need to add resist or complete BLOCKS for things like ibar */
    /* can add code here to add more fake obstacles with custom resist values */
    /* here if need be - ie xinerama middle between screens and panels etc. */
@@ -90,24 +112,54 @@ e_resist_container_position(E_Container *con, Evas_List *skiplist,
 	  {
 	     if (dx > 0)
 	       {
-		  /* moving right - check left edge of windows against right */
-		  d = r->x - (x + w);
-		  pd = r->x - (px + pw);
-		  if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+		  /* moving right */
+		  if (r->resist_out)
 		    {
-		       if (resist_x > d)
-			 resist_x = d;
+		       /* check right edge of windows against left */
+		       d = x + w - (r->x + r->w);
+		       pd = px + pw - (r->x + r->w);
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (-resist_x < d)
+			      resist_x = -d;
+			 }
+		    }
+		  else
+		    {
+		       /* check left edge of windows against right */
+		       d = r->x - (x + w);
+		       pd = r->x - (px + pw);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (resist_x > d)
+			      resist_x = d;
+			 }
 		    }
 	       }
 	     else if (dx < 0)
 	       {
-		  /* moving left - check right edge of windows against left */
-		  d = x - (r->x + r->w);
-		  pd = px - (r->x + r->w);
-		  if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+		  /* moving left */
+		  if (r->resist_out)
 		    {
-		       if (-resist_x > d)
-			 resist_x = -d;
+		       /* check left edge of windows against right */
+		       d = r->x - x;
+		       pd = r->x - px;
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (resist_x < d)
+			      resist_x = d;
+			 }
+		    }
+		  else
+		    {
+		       /* check right edge of windows against left */
+		       d = x - (r->x + r->w);
+		       pd = px - (r->x + r->w);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (-resist_x > d)
+			      resist_x = -d;
+			 }
 		    }
 	       }
 	  }
@@ -115,24 +167,54 @@ e_resist_container_position(E_Container *con, Evas_List *skiplist,
 	  {
 	     if (dy > 0)
 	       {
-		  /* moving down - check top edge of windows against bottom */
-		  d = r->y - (y + h);
-		  pd = r->y - (py + ph);
-		  if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+		  /* moving down */
+		  if (r->resist_out)
 		    {
-		       if (resist_y > d)
-			 resist_y = d;
+		       /* check bottom edge of windows against top */
+		       d = y + h - (r->y + r->h);
+		       pd = py + ph - (r->y + r->h);
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (-resist_y < d)
+			      resist_y = -d;
+			 }
+		    }
+		  else
+		    {
+		       /* check top edge of windows against bottom */
+		       d = r->y - (y + h);
+		       pd = r->y - (py + ph);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (resist_y > d)
+			      resist_y = d;
+			 }
 		    }
 	       }
 	     else if (dy < 0)
 	       {
-		  /* moving up - check bottom edge of windows against top */
-		  d = y - (r->y + r->h);
-		  pd = py - (r->y + r->h);
-		  if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+		  /* moving up */
+		  if (r->resist_out)
 		    {
-		       if (-resist_y > d)
-			 resist_y = -d;
+		       /* check top edge of windows against bottom */
+		       d = r->y - y;
+		       pd = r->y - py;
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (resist_y < d)
+			      resist_y = d;
+			 }
+		    }
+		  else
+		    {
+		       /* moving up - check bottom edge of windows against top */
+		       d = y - (r->y + r->h);
+		       pd = py - (r->y + r->h);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (-resist_y > d)
+			      resist_y = -d;
+			 }
 		    }
 	       }
 	  }
