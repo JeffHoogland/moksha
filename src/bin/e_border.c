@@ -2540,19 +2540,19 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Shade");
+   e_menu_item_label_set(mi, "Shaded");
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Maximize");
+   e_menu_item_label_set(mi, "Maximized");
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Stick");
+   e_menu_item_label_set(mi, "Sticky");
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
