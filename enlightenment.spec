@@ -58,5 +58,10 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(-, root, root)
 %{_includedir}/enlightenment/*.h
+%{_includedir}/E.h
+%{_libdir}/libe.a
+%{_libdir}/libe.la
+%{_libdir}/libe.so.0.0.0
+
 
 %changelog
