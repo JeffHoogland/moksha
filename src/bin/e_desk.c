@@ -56,8 +56,7 @@ e_desk_name_set(E_Desk *desk, const char *name)
 {
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
-   if (desk->name)
-      free(desk->name);
+   E_FREE(desk->name);
    desk->name = strdup(name);
 }
 
