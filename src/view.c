@@ -385,16 +385,13 @@ e_view_file_added(int id, char *file)
    /* filter files here */
    if (!e_view_filter_file(v, file)) return;
    icon = e_icon_new();
-   icon->file = strdup(file);
-   icon->x = rand()%(v->size.w - 60);
-   icon->y = rand()%(v->size.h - 60);
-   icon->changed = 1;
-   icon->visible = 1;
-   icon->icon = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
+   e_icon_set_filename(icon, file);
+   e_icon_set_xy(icon, rand()%(v->size.w - 60), rand()%(v->size.h - 60));
+   e_icon_show(icon);
+   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
    e_view_add_icon(v, icon);
    sprintf(buf, "%s/%s", v->dir, file);
-   /* errr - efsd dont do stat yet */
-/*   efsd_stat(e_fs_get_connection(), buf); */
+   efsd_stat(e_fs_get_connection(), buf);
    v->changed = 1;
 }
 
@@ -424,6 +421,43 @@ e_view_find_icon_by_file(E_View *v, char *file)
 	icon = l->data;
 	if (!strcmp(file, icon->file)) return icon;
      }
+   return NULL;
+}
+
+E_Icon *
+e_view_find_icon_by_path(char *path)
+{
+   char *dir;
+   char *file;
+   Evas_List l;
+   
+   dir = e_file_get_dir(path);
+   file = e_file_get_file(path);
+   
+   for (l = views; l; l = l->next)
+     {
+	Evas_List ll;
+	
+	E_View *v;
+	v = l->data;
+	if (!strcmp(v->dir, dir))
+	  {
+	     for (ll = v->icons; ll; ll = ll->next)
+	       {
+		  E_Icon *icon;
+		  
+		  icon = ll->data;
+		  if (!strcmp(file, icon->file)) 
+		    {
+		       IF_FREE(dir);
+		       IF_FREE(file);
+		       return icon;
+		    }
+	       }
+	  }
+     }
+   IF_FREE(dir);
+   IF_FREE(file);
    return NULL;
 }
 
@@ -482,8 +516,31 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case CHMOD:
 	     break;
 	   case STAT:
-	     printf("Stat event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);
+	     printf("Stat event %i stating file %s\n",
+		    ev->efsd_reply_event.command.efsd_file_cmd.id,
+		    ev->efsd_reply_event.command.efsd_file_cmd.file);
+	       {
+		  struct stat *st;
+		  E_Icon *icon;
+		  
+		  st = (struct stat*) ev->efsd_reply_event.data;
+		  
+		  if (S_ISREG(st->st_mode))
+		    printf("%s is a regular file.\n",
+			   ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  if (S_ISLNK(st->st_mode))
+		    printf("%s is a symlink.\n",
+			   ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  if (S_ISDIR(st->st_mode))
+		    printf("%s is a directory.\n",
+			   ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  if (icon)
+		    {
+		       if (S_ISDIR(st->st_mode))
+			 e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/normal");
+		    }
+	       }
 	     break;
 	   case CLOSE:
 	     break;
@@ -575,11 +632,11 @@ e_view_scroll(E_View *v, int dx, int dy)
    for (l = v->icons; l; l = l->next)
      {
 	E_Icon *icon;
+	int x, y;
 	
 	icon = l->data;
-	icon->x += dx;
-	icon->y += dy;
-	icon->changed = 1;	
+	e_icon_get_xy(icon, &x, &y);
+	e_icon_set_xy(icon, x + dx, y + dy);
      }
    v->changed = 1;
 }

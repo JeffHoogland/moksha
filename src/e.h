@@ -356,12 +356,22 @@ struct _E_Icon
    
    E_View *view;
    
-   int     x, y, w, h;
    struct {
-      int text_location;
-      int show_text;
-      int show_icon;
-   } options;
+      int     x, y, w, h;
+      struct {
+	 int text_location;
+	 int show_text;
+	 int show_icon;
+      } options;
+      struct {
+	 int  clicked;
+	 int  selected;
+	 int  hilited;
+      } state;
+      char   *icon;
+      int     visible;
+   } current, previous;
+   
    struct {
       Evas_Object   icon;
       Evas_Object   filename;
@@ -371,13 +381,6 @@ struct _E_Icon
       Ebits_Object  base_icon;
       Ebits_Object  base_text;
    } obj;
-   struct {
-      int  clicked;
-      int  selected;
-      int  hilited;
-   } state;
-   char   *icon;
-   int     visible;
    int     changed;   
 };
 

@@ -94,7 +94,7 @@ e_file_get_file(char *file)
    char *p;
    char buf[4096];
    
-   p = strchr(file, '/');
+   p = strrchr(file, '/');
    if (!p) return strdup(file);
    return strdup(&(p[1]));
 }
@@ -106,7 +106,7 @@ e_file_get_dir(char *file)
    char buf[4096];
    
    strcpy(buf, file);
-   p = strchr(buf, '/');
+   p = strrchr(buf, '/');
    if (!p) return strdup(file);
    *p = 0;
    return strdup(buf);
