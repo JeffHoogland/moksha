@@ -53,31 +53,18 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    Evas *e;
    int error_w, error_h;
    Evas_List *l, *shapelist = NULL;
+   Evas_Coord maxw, maxh;
    
    error_w = 400;
    error_h = 200;
    ee = ecore_evas_software_x11_new(NULL, man->win, 
 				    (man->w - error_w) / 2, (man->h - error_h) / 2,
 				    error_w, error_h);
+   ecore_evas_software_x11_direct_resize_set(ee, 1);
    e_canvas_add(ee);
-   for (l = man->containers; l; l = l->next)
-     {
-	E_Container *con;
-	E_Container_Shape *es;
-	int x, y, w, h;
-	
-	con = l->data;
-	ecore_evas_geometry_get(ee, &x, &y, &w, &h);
-	es = e_container_shape_add(con);
-	e_container_shape_move(es, x, y);
-	e_container_shape_resize(es, w, h);
-	e_container_shape_show(es);
-	shapelist = evas_list_append(shapelist, es);
-     }
-   ecore_evas_data_set(ee, "shapes", shapelist);
+   
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");
-   ecore_evas_show(ee);
    e = ecore_evas_get(ee);
    e_path_evas_append(path_fonts, e);
    e_pointer_ecore_evas_set(ee);
@@ -87,14 +74,8 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	Evas_Coord tw, th;
 	char *newstr;
 	
-	o = evas_object_image_add(e);
-	evas_object_image_file_set(o, e_path_find(path_images, "error_bg.png"), NULL);
-	evas_object_move(o, 0, 0);
-	evas_object_image_fill_set(o, 0, 0, error_w, error_h);
-	evas_object_resize(o, error_w, error_h);
-	evas_object_image_border_set(o, 3, 3, 3, 3);
-	evas_object_pass_events_set(o, 1);
-	evas_object_show(o);
+	maxw = 0;
+	maxh = 0;
 	
 	o = evas_object_image_add(e);
 	evas_object_image_file_set(o, e_path_find(path_images, "e.png"), NULL);
@@ -110,10 +91,13 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_text_text_set(o, title);
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 	evas_object_move(o, 
-			 (16 + 64 + 16 + (((400 - (16 + 64 + 16 + 16)) - tw) / 2)) + 1,
+			 (16 + 64 + 16) + 1,
 			 (16 + ((64 - th) / 2)) + 1);
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
+	
+	maxw = 16 + 64 + 16 + tw + 16;
+	maxh = 16 + 64;
 
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 0, 0, 0, 255);
@@ -121,7 +105,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_text_text_set(o, title);
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 	evas_object_move(o, 
-			 16 + 64 + 16 + (((400 - (16 + 64 + 16 + 16)) - tw) / 2), 
+			 16 + 64 + 16,
 			 16 + ((64 - th) / 2));
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
@@ -156,12 +140,22 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 		  evas_object_move(o, 16, y);
 		  evas_object_pass_events_set(o, 1);
 		  evas_object_show(o);
+		  
+		  if ((16 + tw + 16) > maxw) maxw = 16 + tw + 16;
 		  y += th;
 		  if (pp) p = pp + 1;
 		  else p = NULL;
 	       }
 	     free(newstr);
+	     maxh = y;
 	  }
+	
+	maxh += 16 + 32 + 16;
+	error_w = maxw;
+	error_h = maxh;
+	
+	if (error_w > man->w) error_w = man->w;
+	if (error_h > man->h) error_h = man->h;
 	
 	o = evas_object_image_add(e);
 	evas_object_image_file_set(o, e_path_find(path_images, "button_out.png"), NULL);
@@ -190,10 +184,40 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_move(o, (error_w - tw) / 2, error_h - 16 - 32 + ((32 - th) / 2));
 	evas_object_pass_events_set(o, 1);
 	evas_object_show(o);
+
+	o = evas_object_image_add(e);
+	evas_object_image_file_set(o, e_path_find(path_images, "error_bg.png"), NULL);
+	evas_object_move(o, 0, 0);
+	evas_object_image_fill_set(o, 0, 0, error_w, error_h);
+	evas_object_resize(o, error_w, error_h);
+	evas_object_image_border_set(o, 3, 3, 3, 3);
+	evas_object_pass_events_set(o, 1);
+	evas_object_layer_set(o, -10);
+	evas_object_show(o);
+
+	ecore_evas_move(ee, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	ecore_evas_resize(ee, error_w, error_h);
+	
+	for (l = man->containers; l; l = l->next)
+	  {
+	     E_Container *con;
+	     E_Container_Shape *es;
+	     int x, y, w, h;
+	     
+	     con = l->data;
+	     ecore_evas_geometry_get(ee, &x, &y, &w, &h);
+	     es = e_container_shape_add(con);
+	     e_container_shape_move(es, x, y);
+	     e_container_shape_resize(es, w, h);
+	     e_container_shape_show(es);
+	     shapelist = evas_list_append(shapelist, es);
+	  }
+	ecore_evas_data_set(ee, "shapes", shapelist);
 	
 	o = evas_object_rectangle_add(e);
 	evas_object_name_set(o, "allocated");
      }
+   ecore_evas_show(ee);
 }
 
 /* local subsystem functions */

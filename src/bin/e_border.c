@@ -1246,6 +1246,37 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
    
    ev = event;
    bd = data;
+#ifdef INOUTDEBUG   
+     {
+	time_t t;
+	char *ct;
+	
+	const char *modes[] = {   
+	   "MODE_NORMAL",
+	     "MODE_WHILE_GRABBED",
+	     "MODE_GRAB",
+	     "MODE_UNGRAB"
+	};
+	const char *details[] = {
+	   "DETAIL_ANCESTOR",
+	     "DETAIL_VIRTUAL",
+	     "DETAIL_INFERIOR",
+	     "DETAIL_NON_LINEAR",
+	     "DETAIL_NON_LINEAR_VIRTUAL",
+	     "DETAIL_POINTER",
+	     "DETAIL_POINTER_ROOT",
+	     "DETAIL_DETAIL_NONE"
+	};
+	t = time(NULL);
+	ct = ctime(&t);
+	ct[strlen(ct) - 1] = 0;
+	printf("@@ ->IN 0x%x 0x%x %s md=%s dt=%s\n",
+	       ev->win, ev->event_win,
+	       ct,
+	       modes[ev->mode],
+	       details[ev->detail]);
+     }
+#endif   
 //   if (ev->mode == ECORE_X_EVENT_MODE_GRAB) return 1;
 //   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
 //   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
@@ -1271,34 +1302,42 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 
    ev = event;
    bd = data;
+#ifdef INOUTDEBUG   
+     {
+	time_t t;
+	char *ct;
+	
+	const char *modes[] = {   
+	   "MODE_NORMAL",
+	     "MODE_WHILE_GRABBED",
+	     "MODE_GRAB",
+	     "MODE_UNGRAB"
+	};
+	const char *details[] = {
+	   "DETAIL_ANCESTOR",
+	     "DETAIL_VIRTUAL",
+	     "DETAIL_INFERIOR",
+	     "DETAIL_NON_LINEAR",
+	     "DETAIL_NON_LINEAR_VIRTUAL",
+	     "DETAIL_POINTER",
+	     "DETAIL_POINTER_ROOT",
+	     "DETAIL_DETAIL_NONE"
+	};
+	t = time(NULL);
+	ct = ctime(&t);
+	ct[strlen(ct) - 1] = 0;
+	printf("@@ <-OUT 0x%x 0x%x %s md=%s dt=%s\n",
+	       ev->win, ev->event_win,
+	       ct,
+	       modes[ev->mode],
+	       details[ev->detail]);
+     }
+#endif   
    /* FIXME: this would normally take focus away in pointer focus mode */
 //   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
 //   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
      {
-	const char *modes[] = {   
-	   "ECORE_X_EVENT_MODE_NORMAL",
-	     "ECORE_X_EVENT_MODE_WHILE_GRABBED",
-	     "ECORE_X_EVENT_MODE_GRAB",
-	     "ECORE_X_EVENT_MODE_UNGRAB"
-	};
-	const char *details[] = {
-	   "ECORE_X_EVENT_DETAIL_ANCESTOR",
-	     "ECORE_X_EVENT_DETAIL_VIRTUAL",
-	     "ECORE_X_EVENT_DETAIL_INFERIOR",
-	     "ECORE_X_EVENT_DETAIL_NON_LINEAR",
-	     "ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL",
-	     "ECORE_X_EVENT_DETAIL_POINTER",
-	     "ECORE_X_EVENT_DETAIL_POINTER_ROOT",
-	     "ECORE_X_EVENT_DETAIL_DETAIL_NONE"
-	};
-	
-	printf("OUT 0x%x [%s] md=%s dt=%s\n",
-	       ev->win,
-	       bd->client.icccm.title,
-	       modes[ev->mode],
-	       details[ev->detail]);
-
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
