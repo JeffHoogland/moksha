@@ -11,7 +11,7 @@ INCLUDES = \
 	-I$(top_srcdir)/intl \
 	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
 
-bin_PROGRAMS = enlightenment
+bin_PROGRAMS = enlightenment e_ferite_gen_e.c
 
 EXTRA_DIST = e_ferite.fec
 
@@ -24,7 +24,23 @@ ferite_c = e_ferite_gen_core.c \
 	e_ferite_gen_Ebits.c \
 	e_ferite_gen_EvasObject.c \
 	e_ferite.h e_ferite.c
-	
+
+BUILT_SOURCES = e_ferite_gen_core.c \
+	e_ferite_gen_header.h \
+	e_ferite_gen_e.c \
+	e_ferite_gen_window.c \
+	e_ferite_gen_Epplet.c \
+	e_ferite_gen_Ebits.c \
+	e_ferite_gen_EvasObject.c
+
+# Yes, blank because we don't want it to supply
+# it's own build rule.
+e_ferite_gen_e_c_SOURCES =
+
+e_ferite_gen_e.c: e_ferite.fec
+	rm -f e_ferite_gen_*
+	$(FEBUILDER) -m e_ferite_gen -i e_ferite_register -d -c e_ferite.fec
+
 endif
 
 enlightenment_SOURCES = \
