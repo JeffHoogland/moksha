@@ -72,8 +72,10 @@ e_view_model_register_view(E_View_Model *m, E_View *v)
 {
    D_ENTER;
    v->model = m;
-   m->views = evas_list_append(m->views, v);
-   e_object_ref (E_OBJECT(v->model));
+   m->views = evas_list_append(m->views, v); 
+   /* dont ref the first time */
+   if (m->views->next)
+      e_object_ref (E_OBJECT(v->model));
    D_RETURN;   
 }
 

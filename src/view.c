@@ -1678,7 +1678,7 @@ e_view_realize(E_View *v)
    e_scrollbar_resize(v->scrollbar.v, v->scrollbar.v->w, v->size.h - v->scrollbar.h->h);
    e_scrollbar_move(v->scrollbar.h, 0, v->size.h - v->scrollbar.h->h);
    e_scrollbar_resize(v->scrollbar.h, v->size.w - v->scrollbar.v->w, v->scrollbar.h->h);
-
+   
    /* I support dnd */
    ecore_window_dnd_advertise(v->win.base);  
    
@@ -1690,7 +1690,7 @@ e_view_realize(E_View *v)
       e_iconbar_realize(v->iconbar); 
       e_iconbar_set_view_window_spacing(v->iconbar);
    }
-  
+   
    e_view_bg_reload(v);
 /*   e_epplet_load_from_layout(v);*/
    v->changed = 1;
@@ -1763,7 +1763,6 @@ e_view_update(E_View *v)
    if (v->options.back_pixmap)
      {
 	Imlib_Updates up;
-	
 	up = evas_render_updates(v->evas);
 	/* special code to handle if we are double buffering to a pixmap */
 	/* and clear sections of the window if they got updated */
