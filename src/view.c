@@ -320,7 +320,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    if (!(ev->mods & (multi_select_mod | range_select_mod)))
      {
        v->select.last_count = v->select.count;
-       e_view_deselect_all();
+       e_view_deselect_all(v);
      }
 
    if (_b == 1)
@@ -533,53 +533,35 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 
 
 void
-e_view_deselect_all(void)
+e_view_deselect_all(E_View *v)
 {
-   Evas_List ll;
-   
-   D_ENTER;
-   
-   for (ll = VM->views; ll; ll = ll->next)
-     {
-	Evas_List l;
-	E_View *v;
-	
-	v = ll->data;
-	for (l = v->icons; l; l = l->next)
-	  {
-	     E_Icon *ic;
-	     
-	     ic = l->data;
-	     e_icon_deselect(ic);
-	  }
-     }
+   Evas_List l;
 
+   D_ENTER;
+   for (l = v->icons; l; l = l->next)
+   {
+      E_Icon *ic;
+
+      ic = l->data;
+      e_icon_deselect(ic);
+   }
    D_RETURN;
 }
 
 void
 e_view_deselect_all_except(E_Icon *not_ic)
 {
-   Evas_List ll;
-   
-   D_ENTER;
-   
-   for (ll = VM->views; ll; ll = ll->next)
-     {
-	Evas_List l;
-	E_View *v;
-	
-	v = ll->data;
-	for (l = v->icons; l; l = l->next)
-	  {
-	     E_Icon *ic;
-	     
-	     ic = l->data;
-	     if (ic != not_ic)
-	       e_icon_deselect(ic);
-	  }
-     }
+   Evas_List l;
 
+   D_ENTER;
+   for (l = not_ic->view->icons; l; l = l->next)
+   {
+      E_Icon *ic;
+
+      ic = l->data;
+      if (ic != not_ic)
+	 e_icon_deselect(ic);
+   }
    D_RETURN;
 }
 
@@ -1653,7 +1635,6 @@ e_view_new(void)
    v->options.back_pixmap = 0;
 #endif   
 #endif
-   v->select.lock = 0;
    v->select.config.grad_size.l = 8;
    v->select.config.grad_size.r = 8;
    v->select.config.grad_size.t = 8;

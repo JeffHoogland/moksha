@@ -172,238 +172,241 @@ e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
+_paint_selected_icons_onto_drag_window(E_View *v, Imlib_Image im, int wx, int wy)
+{
+   Evas_List l;
+   D_ENTER;
+
+   if (!v || !im || v->select.count <= 0) 
+      D_RETURN;
+   
+   /* paint all selected icons onto the invisible drag window */
+   for (l = v->icons; l; l = l->next)
+   {
+      double ix, iy;
+      int icx, icy;
+      Imlib_Image im2;
+      char icon[PATH_MAX];
+      E_Icon *ic;
+
+      ic = l->data;
+      if (!ic->state.selected)
+	 continue;
+
+      evas_get_geometry(ic->view->evas,
+	    ic->obj.icon,
+	    &ix, &iy, NULL, NULL);
+      icx = ix + v->location.x - wx;
+      icy = iy + v->location.y - wy;
+      if (!ic->file->info.icon)
+      {
+	 D("EEEEEEEEEEK %s has no icon\n", ic->file->file);
+	 D_RETURN;
+      }
+      if (ic->state.clicked)
+      {
+	 snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->file->info.icon);
+      }
+      else if (ic->state.selected)
+      {
+	 snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->file->info.icon);
+      }
+      else
+      {
+	 snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
+      }
+      im2 = imlib_load_image(icon);
+      if (im2)
+      {
+	 int iw, ih;
+
+	 imlib_context_set_image(im2);
+	 iw = imlib_image_get_width();
+	 ih = imlib_image_get_height();
+	 imlib_context_set_image(im);
+	 imlib_blend_image_onto_image(im2, 1,
+	       0, 0, iw, ih,
+	       icx, icy, iw, ih);
+	 imlib_context_set_image(im2);
+	 imlib_free_image();
+	 imlib_context_set_image(im);
+      }
+      else
+      {
+	 D("eek cant load\n");
+      }
+   }
+   D_RETURN;
+}
+
+
+
+static void
+_start_drag(E_View *v, int _x, int _y)
+{
+   Pixmap pmap, mask;
+   Evas_List l;
+   int x, y, xx, yy, rw, rh, downx, downy, wx, wy, ww, wh;
+   int dx, dy;
+
+   if (!v) D_RETURN;
+
+   dx = abs(v->select.down.x - _x);
+   dy = abs(v->select.down.y - _y);
+   /* drag treshold */
+   if ((dx < 3) && (dy < 3))
+      D_RETURN;
+   
+   /* find extents of icons to be dragged */
+   x = y = xx = yy = 999999999;
+
+   D("sel count %i\n", v->select.count);
+   if (v->select.count > 0)
+   {
+      for (l = v->icons; l; l = l->next)
+      {
+	 E_Icon *ic;
+
+	 ic = l->data;
+	 if (ic->state.selected)
+	 {
+	    int ix, iy, iw, ih;
+
+	    ix = ic->view->scroll.x + ic->geom.x + v->location.x;
+	    iy = ic->view->scroll.y + ic->geom.y + v->location.y;
+	    iw = ic->geom.w;
+	    ih = ic->geom.h;
+	    if (ix < x) x = ix;
+	    if (iy < y) y = iy;
+	    if ((ix + iw) > xx) xx = ix + iw;
+	    if ((iy + ih) > yy) yy = iy + ih;
+	 }
+      }
+   }
+   ecore_window_get_geometry(0, NULL, NULL, &rw, &rh);
+   downx = v->select.down.x + v->location.x;
+   downy = v->select.down.y + v->location.y;
+
+   wx = x;
+   ww = xx - x;
+   if (wx < - (rw - downx)) 
+   {
+      wx = - (rw - downx);
+      ww -= (wx - x);
+   }
+   if ((wx + ww) > (rw + downx))
+      ww = (rw + downx) - wx;
+   wy = y;
+   wh = yy - y;
+   if (wy < - (rh - downy)) 
+   {
+      wy = - (rh - downy);
+      wh -= (wy - y);
+   }
+   if ((wy + wh) > (rh + downy))
+      wh = (rh + downy) - wy;
+
+   v->drag.x = wx + v->location.x;
+   v->drag.y = wy + v->location.y;
+   v->drag.offset.x = downx - v->drag.x;
+   v->drag.offset.y = downy - v->drag.y;
+
+   if ((ww < 1) || (wh < 1)) D_RETURN;
+   
+   v->drag.win = ecore_window_override_new(0, wx, wy, ww, wh);
+   pmap = ecore_pixmap_new(v->drag.win, ww, wh, 0);
+   mask = ecore_pixmap_new(v->drag.win, ww, wh, 1);
+   {
+      Imlib_Image im;
+
+      im = imlib_create_image(ww, wh);
+      imlib_context_set_image(im);
+      imlib_image_set_has_alpha(1);
+      imlib_context_set_blend(1);
+      imlib_image_clear();
+      imlib_context_set_color_modifier(NULL);
+      imlib_context_set_cliprect(0, 0, 0, 0);
+      imlib_context_set_angle(0);
+
+      _paint_selected_icons_onto_drag_window(v, im, wx, wy);
+
+      imlib_context_set_image(im);
+      if (ww * wh < (200 * 200)) imlib_context_set_dither_mask(1);
+      else imlib_context_set_dither_mask(0);
+      imlib_context_set_dither(1);
+      imlib_context_set_drawable(pmap);
+      imlib_context_set_mask(mask);
+      imlib_context_set_blend(0);
+      imlib_context_set_color_modifier(NULL);
+      imlib_render_image_on_drawable(0, 0);
+      imlib_free_image();
+   }
+   ecore_window_set_background_pixmap(v->drag.win, pmap);
+   ecore_window_set_shape_mask(v->drag.win, mask);
+   ecore_window_ignore(v->drag.win);
+   ecore_window_raise(v->drag.win);
+   ecore_window_show(v->drag.win);
+   ecore_pixmap_free(pmap);
+   ecore_pixmap_free(mask);
+
+   /* Initiate dnd */
+   ecore_dnd_set_mode_copy();
+   ecore_dnd_set_data(v->win.base);
+
+   ecore_dnd_own_selection(v->win.base);
+
+   v->drag.started = 1;
+}
+
+static void
 e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
    Ecore_Event *ev;
    Ecore_Event_Mouse_Move *e;
    D_ENTER;
-   
-   ev = e_view_get_current_event();
 
+   ev = e_view_get_current_event();
    if (!ev)
-     D_RETURN;
+      D_RETURN;
+   
    e = ev->event;
    ic = _data;
 
    if (!ic->state.clicked)
-     D_RETURN;
+      D_RETURN;
 
    if (!ic->view->drag.started)
-     {
-	int dx, dy;
-	
-	dx = ic->view->select.down.x - _x;
-	dy = ic->view->select.down.y - _y;
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	if ((dx > 3) || (dy > 3))
-	  {
-	     Pixmap pmap, mask;
-	     Evas_List l;
-	     int x, y, xx, yy, rw, rh, downx, downy, wx, wy, ww, wh;
-	     
-	     /* find extents of icons to be dragged */
-	     x = 999999999;
-	     y = 999999999;
-	     xx = -999999999;
-	     yy = -999999999;
-	     for (l = VM->views; l; l = l->next)
-	       {
-		  E_View *v;
-		  Evas_List ll;
-		  
-		  v = l->data;
-		  D("sel count %i\n", v->select.count);
-		  if (v->select.count > 0)
-		    {
-		       for (ll = v->icons; ll; ll = ll->next)
-			 {
-			    E_Icon *ic;
-			    
-			    ic = ll->data;
-			    if (ic->state.selected)
-			      {
-				 int ix, iy, iw, ih;
-				 
-				 ix = ic->view->scroll.x + ic->geom.x + v->location.x;
-				 iy = ic->view->scroll.y + ic->geom.y + v->location.y;
-				 iw = ic->geom.w;
-				 ih = ic->geom.h;
-				 if (ix < x) x = ix;
-				 if (iy < y) y = iy;
-				 if ((ix + iw) > xx) xx = ix + iw;
-				 if ((iy + ih) > yy) yy = iy + ih;
-			      }
-			 }
-		    }
-	       }
-	     ecore_window_get_geometry(0, NULL, NULL, &rw, &rh);
-	     downx = ic->view->select.down.x + ic->view->location.x;
-	     downy = ic->view->select.down.y + ic->view->location.y;
-	     
-	     wx = x;
-	     ww = xx - x;
-	     if (wx < - (rw - downx)) 
-	       {
-		  wx = - (rw - downx);
-		  ww -= (wx - x);
-	       }
-	     if ((wx + ww) > (rw + downx))
-	       ww = (rw + downx) - wx;
-	     wy = y;
-	     wh = yy - y;
-	     if (wy < - (rh - downy)) 
-	       {
-		  wy = - (rh - downy);
-		  wh -= (wy - y);
-	       }
-	     if ((wy + wh) > (rh + downy))
-	       wh = (rh + downy) - wy;
-	     
-	     
-	     ic->view->drag.x = wx + ic->view->location.x;
-	     ic->view->drag.y = wy + ic->view->location.y;
-	     ic->view->drag.offset.x = downx - ic->view->drag.x;
-	     ic->view->drag.offset.y = downy - ic->view->drag.y;
-	     
-	     if ((ww < 1) || (wh < 1)) D_RETURN;
-	     ic->view->drag.win = ecore_window_override_new(0, wx, wy, ww, wh);
-	     pmap = ecore_pixmap_new(ic->view->drag.win, ww, wh, 0);
-	     mask = ecore_pixmap_new(ic->view->drag.win, ww, wh, 1);
-	       {
-		  Imlib_Image im;
-		  
-		  im = imlib_create_image(ww, wh);
-		  imlib_context_set_image(im);
-		  imlib_image_set_has_alpha(1);
-		  imlib_context_set_blend(1);
-		  imlib_image_clear();
-                  imlib_context_set_color_modifier(NULL);
-		  imlib_context_set_cliprect(0, 0, 0, 0);
-		  imlib_context_set_angle(0);
-		  
-		  for (l = VM->views; l; l = l->next)
-		    {
-		       E_View *v;
-		       Evas_List ll;
-		       
-		       v = l->data;
-		       if (v->select.count > 0)
-			 {
-			    for (ll = v->icons; ll; ll = ll->next)			      {
-				 E_Icon *ic;
-				 
-				 ic = ll->data;
-				 if (ic->state.selected)
-				   {
-				      double ix, iy;
-				      int icx, icy;
-				      Imlib_Image im2;
-				      char icon[PATH_MAX];
-				      
-				      evas_get_geometry(ic->view->evas,
-							ic->obj.icon,
-							&ix, &iy, NULL, NULL);
-				      icx = ix + v->location.x - wx;
-				      icy = iy + v->location.y - wy;
-				      if (!ic->file->info.icon)
-					{
-					   D("EEEEEEEEEEK %s has no icon\n", ic->file->file);
-					   D_RETURN;
-					}
-				      if (ic->state.clicked)
-					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->file->info.icon);
-					}
-				      else if (ic->state.selected)
-					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->file->info.icon);
-					}
-				      else
-					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
-					}
-				      im2 = imlib_load_image(icon);
-				      if (im2)
-					{
-					   int iw, ih;
-					   
-					   imlib_context_set_image(im2);
-					   iw = imlib_image_get_width();
-					   ih = imlib_image_get_height();
-					   imlib_context_set_image(im);
-					   imlib_blend_image_onto_image(im2, 1,
-									0, 0, iw, ih,
-									icx, icy, iw, ih);
-					   imlib_context_set_image(im2);
-					   imlib_free_image();
-					   imlib_context_set_image(im);
-					}
-				      else
-					{
-					   D("eek cant load\n");
-					}
-				   }
-			      }
-			 }
-		    }
-		  imlib_context_set_image(im);
-		  if (ww * wh < (200 * 200)) imlib_context_set_dither_mask(1);
-		  else imlib_context_set_dither_mask(0);
-		  imlib_context_set_dither(1);
-		  imlib_context_set_drawable(pmap);
-		  imlib_context_set_mask(mask);
-		  imlib_context_set_blend(0);
-		  imlib_context_set_color_modifier(NULL);
-		  imlib_render_image_on_drawable(0, 0);
-		  imlib_free_image();
-	       }
-	     ecore_window_set_background_pixmap(ic->view->drag.win, pmap);
-	     ecore_window_set_shape_mask(ic->view->drag.win, mask);
-	     ecore_window_ignore(ic->view->drag.win);
-	     ecore_window_raise(ic->view->drag.win);
-	     ecore_window_show(ic->view->drag.win);
-	     ecore_pixmap_free(pmap);
-	     ecore_pixmap_free(mask);
+   {
+      _start_drag(ic->view, _x, _y);
+   }
+   else if (ic->view->drag.started)
+   {
+      int x, y;
 
-	     /* Initiate dnd */
-	     ecore_dnd_set_mode_copy();
-	     ecore_dnd_set_data(ic->view->win.base);
-	     
-	     ecore_dnd_own_selection(ic->view->win.base);
+      x = _x - ic->view->drag.offset.x;
+      y = _y - ic->view->drag.offset.y;
+      ic->view->drag.x = x;
+      ic->view->drag.y = y;
+      ic->view->drag.update = 1;
+      ic->view->changed = 1;
 
-	     ic->view->drag.started = 1;
-	  }
-     }
+      if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
+      {
+	 ecore_dnd_set_mode_copy();
+	 ic->view->drag.drop_mode = E_DND_COPY;
+      }
+      else
+      {
+	 ecore_dnd_set_mode_move();
+	 ic->view->drag.drop_mode = E_DND_MOVE;
+      }
+      ecore_dnd_set_data(ic->view->win.base);
 
-   if (ic->view->drag.started)
-     {
-	int x, y;
-	
-	x = _x - ic->view->drag.offset.x;
-	y = _y - ic->view->drag.offset.y;
-	ic->view->drag.x = x;
-	ic->view->drag.y = y;
-	ic->view->drag.update = 1;
-	ic->view->changed = 1;
-
-	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
-	  {
-	   ecore_dnd_set_mode_copy();
-	   ic->view->drag.drop_mode = E_DND_COPY;
-	  }
-	else
-	  {
-	   ecore_dnd_set_mode_move();
-	   ic->view->drag.drop_mode = E_DND_MOVE;
-	  }
-	ecore_dnd_set_data(ic->view->win.base);
-
-	/* Handle dnd motion - dragging==1 */
-	ecore_pointer_xy_get(&x, &y);
-	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
-     }
+      /* Handle dnd motion - dragging==1 */
+      ecore_pointer_xy_get(&x, &y);
+      ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
+   }
    D_RETURN;
    UN(_e);
    UN(_o);
@@ -829,21 +832,7 @@ e_icon_invert_selection(E_Icon *ic)
 void
 e_icon_select(E_Icon *ic)
 {
-   Evas_List l;
    D_ENTER;
-   if (ic->view->select.lock)
-      D_RETURN;
-   if (ic->view->select.count == 0)
-   {
-      /* lock all other views of our dir */
-      for (l= ic->view->model->views;l;l=l->next)
-      {
-	 E_View *v = (E_View *) l->data;
-	 v->select.lock = 1;
-      }
-      /* unlock ourselves */
-      ic->view->select.lock = 0;
-   }
    
    if (!ic->state.selected)
      {
@@ -858,10 +847,7 @@ e_icon_select(E_Icon *ic)
 void
 e_icon_deselect(E_Icon *ic)
 {
-   Evas_List l;
    D_ENTER;
-   if (ic->view->select.lock)
-      D_RETURN;
    
    if (ic->state.selected)
      {
@@ -869,16 +855,6 @@ e_icon_deselect(E_Icon *ic)
 	ic->view->select.count--;
 	e_icon_update_state(ic);
      }
-   if (ic->view->select.count == 0)
-   {
-      /* we have just unselected the last icon. Unlock all
-       * other views of our model. */
-      for (l= ic->view->model->views;l;l=l->next)
-      {
-	 E_View *v = (E_View *) l->data;
-	 v->select.lock = 0;
-      }
-   } 
    D_RETURN;
 }
 

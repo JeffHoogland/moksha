@@ -94,9 +94,6 @@ struct _E_View
    } spacing;
    struct {
       int on;
-      /* we set this in all other views of our view_model 
-       * when the first icon in a view is selected. */
-      int lock;
       /* The number of selected icons. */
       int count;
       /* The number of icons we selected the last time.
@@ -107,6 +104,7 @@ struct _E_View
       struct {
 	 int x, y;
       } down;
+      
       struct {
 	 struct {
 	    int r, g, b, a;
@@ -131,6 +129,7 @@ struct _E_View
 	 Evas_Object grad_b;
       } obj;
    } select;
+   
    struct {
       int started;
       Window win;
@@ -190,7 +189,7 @@ struct _E_View
 void      e_view_init(void);
 
 void      e_view_selection_update(E_View *v);
-void      e_view_deselect_all(void);
+void      e_view_deselect_all(E_View *v);
 void      e_view_deselect_all_except(E_Icon *not_ic);
 Ecore_Event   *e_view_get_current_event(void);
 int       e_view_filter_file(E_View *v, char *file);
