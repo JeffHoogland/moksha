@@ -18,6 +18,7 @@ static void        _snow_cb_density_sparse(void *data, E_Menu *m, E_Menu_Item *m
 static void        _snow_cb_density_medium(void *data, E_Menu *m, E_Menu_Item *
 i);
 static void        _snow_cb_density_dense(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _snow_cb_show_trees(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
 void *
@@ -108,6 +109,7 @@ _snow_init(E_Module *m)
 #define D snow->conf_edd
    E_CONFIG_VAL(D, T, tree_count, INT);
    E_CONFIG_VAL(D, T, flake_count, INT);
+   E_CONFIG_VAL(D, T, show_trees, INT);
    
    snow->conf = e_config_domain_load("module.snow", snow->conf_edd);
    if (!snow->conf)
@@ -115,6 +117,7 @@ _snow_init(E_Module *m)
 	snow->conf = E_NEW(Config, 1);
 	snow->conf->tree_count = 10;
 	snow->conf->flake_count = 60;
+	snow->conf->show_trees = 1;
      }
    
    managers = e_manager_list();
@@ -134,7 +137,8 @@ _snow_init(E_Module *m)
      }
 
    evas_output_viewport_get(snow->canvas, NULL, NULL, &snow->width, &snow->height);
-   _snow_trees_load(snow);
+
+   if (snow->conf->show_trees) _snow_trees_load(snow);
    _snow_flakes_load('s', snow);
    _snow_flakes_load('m', snow);
    _snow_flakes_load('l', snow);
@@ -220,6 +224,15 @@ _snow_config_menu_new(Snow *snow)
    if (snow->conf->tree_count == 20) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _snow_cb_density_dense, snow);
 	       
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Show Trees");
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, snow->conf->show_trees);
+   e_menu_item_callback_set(mi, _snow_cb_show_trees, snow);
+
    return mn;
 }
 
@@ -229,7 +242,7 @@ _snow_canvas_reset(Snow *snow)
    _snow_trees_free(snow);
    _snow_flakes_free(snow);
 
-   _snow_trees_load(snow);
+   if (snow->conf->show_trees) _snow_trees_load(snow);
    _snow_flakes_load('s', snow); 
    _snow_flakes_load('m', snow);
    _snow_flakes_load('l', snow);	    
@@ -266,6 +279,16 @@ _snow_cb_density_dense(void *data, E_Menu *m, E_Menu_Item *mi)
    snow = data;
    snow->conf->tree_count = 20;
    snow->conf->flake_count = 100;
+   _snow_canvas_reset(snow);
+}
+
+static void
+_snow_cb_show_trees(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Snow *snow;
+
+   snow = data;
+   snow->conf->show_trees = e_menu_item_toggle_get(mi);
    _snow_canvas_reset(snow);
 }
 

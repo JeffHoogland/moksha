@@ -9,6 +9,7 @@ struct _Config
 {
    int tree_count;
    int flake_count;
+   int show_trees;
 };
 
 struct _Snow
