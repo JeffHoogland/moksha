@@ -17,7 +17,7 @@ Requires: evas >= 0.0.2
 Requires: edb >= 1.0.0
 Requires: imlib2 >= 1.0.0
 Requires: ebits >= 0.0.0
-Requires: ecore >= 0.0.1
+Requires: ecore >= 0.0.0
 
 Docdir: %{prefix}/doc
 
