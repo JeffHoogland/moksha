@@ -67,7 +67,7 @@ save(E_Module *m)
    Snow *snow;
    
    snow = m->data;
-   if (!snow) return;
+   if (!snow) return 1;
    e_config_domain_save("module.snow", snow->conf_edd, snow->conf);
    return 1;
 }
@@ -201,7 +201,6 @@ _snow_config_menu_new(Snow *snow)
 {
    E_Menu *mn;
    E_Menu_Item *mi;
-   char buf[4096];
    
    mn = e_menu_new();
      
