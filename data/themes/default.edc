@@ -4419,12 +4419,18 @@ collections {
 	    new v;
 	    
 	    date(year, month, day, yearday, weekday, hour, minute, second);
-	    v = round(second);
-	    timer(1.0 - (second - v), "clock_cb", 1);
+           v = round(second);
+#if E17_PROFILE != HIRES_PDA && E17_PROFILE != LOWRES_PDA && E17_PROFILE != MEDIUMRES_PDA
+           timer(1.0 - (second - v), "clock_cb", 1);
+#else 
+           timer(10.0 - (second - v), "clock_cb", 1);
+#endif
+#if E17_PROFILE != HIRES_PDA && E17_PROFILE != LOWRES_PDA && E17_PROFILE != MEDIUMRES_PDA
 	    buf[0] = 0;
 	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	    else        {snprintf(buf, 10, "%i", v);}
 	    set_state(PART:"seconds", buf, 0.0);
+#endif
 	    v = minute;
 	    buf[0] = 0;
 	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
@@ -4451,6 +4457,7 @@ collections {
 #ifdef IND
 #undef IND
 #endif	 
+#if E17_PROFILE != HIRES_PDA && E17_PROFILE != LOWRES_PDA && E17_PROFILE != MEDIUMRES_PDA
 #define IND "seconds"	 
 	 part {
 	    name: IND;
@@ -4540,6 +4547,7 @@ collections {
 	    HAND("58")
 	    HAND("59")
 	 }
+#endif
 #ifdef IND
 #undef IND
 #endif	 
