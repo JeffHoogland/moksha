@@ -3,25 +3,44 @@ images {
    image: "e17_pager_desk.png" COMP;
    image: "e17_pager_window.png" COMP;
 }
+
+// e17_ibar_over_h.png
+// e17_ibar_bg_h.png
+
 group {
-   name: "modules/pager/screen";
+   name: "modules/pager/main";
    parts {
       part {
 	 name:          "background";
-	 mouse_events:  0;
-	 type:          RECT;
+	 mouse_events:  1;
 	 description {
 	    state:    "default" 0.0;
-	    visible:  0;
-	    min:      18 18;
-	    max:      18 18;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       to:       "overlay";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       to:       "overlay";
+	    }
+	    image {
+	       normal: "e17_ibar_bg_h.png";
+	       border: 6 6 6 6;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "items";
+	 mouse_events:  0;
+	 type:          SWALLOW;
+         description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   4    4;
+	    }
+	    rel2 {
+	       offset:   -5    -5;
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -31,22 +50,18 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
 	    image {
-	       normal: "e17_pager_screen.png";
-	       border: 7 7 7 7;
+	       normal: "e17_ibar_over_h.png";
+	       border: 13 13 13 13;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
       }
    }
 }
+
 group {
    name: "modules/pager/desk";
    parts {
@@ -69,17 +84,32 @@ group {
 	 }
       }
       part {
+	 name:          "items";
+	 mouse_events:  0;
+	 type:          SWALLOW;
+         description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       offset:   2    2;
+	    }
+	    rel2 {
+	       offset:   -3    -3;
+	    }
+	    color: 0 0 0 0;
+	 }
+      }
+      part {
 	 name:          "overlay";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   1    1;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -2   -2;
 	    }
 	    image {
 	       normal: "e17_pager_desk.png";
@@ -89,6 +119,7 @@ group {
       }
    }
 }
+
 group {
    name: "modules/pager/window";
    parts {

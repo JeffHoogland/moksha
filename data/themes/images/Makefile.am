@@ -244,7 +244,6 @@ e17_battery_080.png \
 e17_battery_090.png \
 e17_battery_100.png \
 e17_battery_ac.png \
-e17_pager_screen.png \
 e17_pager_desk.png \
 e17_pager_window.png \
 e17_temperature_base.png \
