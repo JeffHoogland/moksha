@@ -611,6 +611,27 @@ collections {
 	       }
 	    }
 	 }
+         part {	 
+	    name: "icons";
+	    type: SWALLOW;
+	    description {
+	       state: "default" 0.0;
+	       align: 0.5 0.0;
+	       min:   128 32;
+	       max:   1280 32;
+	       rel1 {
+		  to_y:     "status";
+		  relative: 0.0 1.0;
+		  offset:   16   8;
+	       }
+	       rel2 {
+		  to_y:     "status";
+		  relative: 1.0 1.0;
+		  offset:   -17 8;
+	       }
+	       color: 0 0 0 0;
+	    }
+	 }
 	 part {
 	    name: "logo_point";
 	    type: RECT;
