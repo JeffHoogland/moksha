@@ -1,5 +1,7 @@
 #include "e.h"
 
+static char cfg_root[] = "";
+
 #define E_CONF(_key, _var, _args...) \
 { \
   if (!strcmp(type, _key)) \
@@ -30,6 +32,12 @@ e_config_get(char *type)
    /* as well as all data - so the only place to look is there. If you */
    /* have no data it is all copied over for you the first time E is   */
    /* run. It's a design decision.                                     */
+   /* Later when things are a bit mroe stabilised these will look      */
+   /* something like:                                                  */
+   /* E_CONF("grabs", cfg_grabs_db,                                    */
+   /*	  "%sbehavior/default/grabs.db", e_config_user_dir());         */
+   /* notice it would use the user config location instead             */
+   /* but for now i'm keeping it as is for development "ease"          */
    E_CONF("grabs", cfg_grabs_db, 
 	  PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db");
    E_CONF("settings", cfg_settings_db,
@@ -76,10 +84,27 @@ e_config_init(void)
      }
 }
 
+void
+e_config_set_user_dir(char *dir)
+{
+   strcpy(cfg_root, dir);
+   /* reset the cached dir paths */
+   cfg_grabs_db[0]    = 0;
+   cfg_settings_db[0] = 0;
+   cfg_actions_db[0]  = 0;
+   cfg_borders_db[0]  = 0;
+   cfg_user_dir[0]    = 0;
+   cfg_images_dir[0]  = 0;
+   cfg_fonts_dir[0]   = 0;
+   /* init again - if the user hasnt got all the data */
+   e_config_init();
+}
+
 char *
 e_config_user_dir(void)
 {
    if (cfg_user_dir[0]) return cfg_user_dir;
+   if (cfg_root[0]) return cfg_root;
    sprintf(cfg_user_dir, "%s/.e/", e_file_home());
    return cfg_user_dir;
 }

@@ -208,6 +208,8 @@ struct _E_Border
    Evas_List grabs;
    E_Desktop *desk;
    
+   char *border_file;
+   
    int changed;
 };
 
@@ -360,6 +362,7 @@ pid_t e_exec_run(char *exe);
 pid_t e_exec_run_in_dir(char *exe, char *dir);
 pid_t e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path);
     
-void e_config_init(void);
-char *e_config_user_dir(void);
 char *e_config_get(char *type);
+void e_config_init(void);
+void e_config_set_user_dir(char *dir);
+char *e_config_user_dir(void);

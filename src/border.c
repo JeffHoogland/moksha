@@ -987,15 +987,26 @@ void
 e_border_apply_border(E_Border *b)
 {
    int pl, pr, pt, pb;
-   char *borders, buf[4096], *border;
+   char *borders, buf[4096], border[4096], *style = NULL;
+   int prop_selected = 0, prop_sticky = 0, prop_shaded = 0;
    
-   if ((!b->client.titlebar) && 
-       (!b->client.border))      border = "borderless.bits.db";
-   else if (b->current.selected) border = "border.bits.db";
-   else                          border = "border2.bits.db";
+   style = "default"; 
+   if ((!b->client.titlebar) && (!b->client.border)) style = "borderless";
+   
+   if (b->current.selected)              prop_selected = 1;
+   if (b->current.shaded == b->client.h) prop_shaded = 1;
+   if (b->client.sticky)                 prop_sticky = 1;
+   
+   sprintf(border, "selected-%i.sticky-%i.shaded-%i.bits.db", 
+	   prop_selected, prop_sticky, prop_shaded);
 
    borders = e_config_get("borders");
-   sprintf(buf, "%s%s", borders, border);
+   sprintf(buf, "%s%s/%s", borders, style, border);
+   /* if it's not changed - abort and dont do anything */
+   if ((b->border_file) && (!strcmp(buf, b->border_file))) return;
+   IF_FREE(b->border_file);
+   b->border_file = strdup(buf);
+   
    e_border_set_bits(b, buf);
    
    pl = pr = pt = pb = 0;

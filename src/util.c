@@ -70,7 +70,7 @@ e_file_cp(char *src, char *dst)
    f2 = fopen(dst, "wb");
    if (!f2)
      {
-	fclose(f2);
+	fclose(f1);
 	return 0;
      }
    while ((num = fread(buf, 1, 4096, f1)) > 0) fwrite(buf, 1, num, f2);

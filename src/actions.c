@@ -747,6 +747,7 @@ e_act_cb_shade(int val, void *data)
    e_border_adjust_limits(b);
    if (si < b->client.h) 
      e_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
+   e_border_apply_border(b);
 }
 
 static void e_act_cb_unshade(int val, void *data);
@@ -766,11 +767,13 @@ e_act_cb_unshade(int val, void *data)
    
    si = b->client.h - (int)(dif * (double)pix_per_sec);
    if (si < 0) si = 0;
+
    b->current.shaded = si;
    b->changed = 1;
    e_border_adjust_limits(b);
    if (si > 0) 
      e_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
+   e_border_apply_border(b);
 }
 
 static void 
