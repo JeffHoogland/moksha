@@ -927,9 +927,10 @@ e_icon_exec(E_Icon * ic)
 	v->options.back_pixmap = 0;
 	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file->file);
 	D("new dir >%s<\n", buf);
-	e_view_set_dir(v, buf, 0);
+	e_view_set_dir(v, buf);
 	e_view_realize(v);
 	e_view_populate(v);
+	e_view_set_look(v, NULL);
 
 	e_view_bg_reload(v);
 	ecore_window_set_title(v->win.base, ic->file->file);

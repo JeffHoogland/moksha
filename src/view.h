@@ -7,9 +7,11 @@
 #include "fs.h"
 #include "iconbar.h"
 #include "object.h"
+#include "e_view_look.h"
 #include "e_dir.h"
 #include "e_file.h"
 #include "view_layout.h"
+#include "observer.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
@@ -26,8 +28,8 @@ typedef struct _E_Icon E_Icon;
 typedef struct _E_Iconbar E_Iconbar;
 #endif
 
-#ifndef E_VIEW_MODEL_TYPEDEF
-#define E_VIEW_MODEL_TYPEDEF
+#ifndef E_DIR_TYPEDEF
+#define E_DIR_TYPEDEF
 typedef struct _E_Dir E_Dir;
 #endif
 
@@ -41,6 +43,13 @@ typedef struct _E_View_Layout_Element E_View_Layout_Element;
 #define E_SCROLLBAR_TYPEDEF
 typedef struct _E_Scrollbar E_Scrollbar;
 #endif
+
+#ifndef E_VIEW_LOOK_TYPEDEF
+#define E_VIEW_LOOK_TYPEDEF
+typedef struct _E_View_Look E_View_Look;
+typedef struct _E_View_Look_Objects E_View_Look_Objects;
+#endif
+
 
 typedef enum
 {
@@ -57,7 +66,7 @@ E_dnd_enum;
 
 struct _E_View
 {
-   E_Object            o;
+   E_Observer            o;
 
    char               *name;
 
@@ -225,6 +234,8 @@ struct _E_View
 
    Evas_List           epplet_contexts;
    Ebits_Object        epplet_layout;
+
+   E_View_Look         *look;
 };
 
 /**
@@ -272,13 +283,21 @@ E_View             *e_view_new(void);
  * e_view_set_dir - Sets view to a given directory
  * @v          The view for which to set the directory
  * @dir        The directory to set the view to
- * @is_desktop Inidicates wether the view is a desktop  
  *
  * This function sets a view to a directory, loading the
  * view's metadata (view window coordinates etc). If a dir already
  * exists for this dir, it is reused, otherwise a new on is created.
  */
-void                e_view_set_dir(E_View * v, char *dir, int is_desktop);
+void                e_view_set_dir(E_View * v, char *dir);
+
+/**
+ * e_view_set_look - Sets view to a given look
+ * @v          The view for which to set the directory
+ * @dir        The directory that contains the look
+ *
+ * This function sets a directory containing layout information and background
+ * and iconbar dbs for the view. */
+void                e_view_set_look(E_View * v, char *dir);
 
 /**
  * e_view_populate - Draws icons for all files in view
@@ -309,10 +328,12 @@ void                e_view_update(E_View * v);
 
 void                e_view_bg_reload(E_View * v);
 void                e_view_ib_reload(E_View * v);
+void                e_view_layout_reload(E_View * v);
 
 void                e_view_file_add(E_View * v, E_File * file);
 void                e_view_file_changed(E_View * v, E_File * file);
 void                e_view_file_delete(E_View * v, E_File * file);
+void                e_view_file_try_to_show(E_View * v, E_File * file);
 
 void                e_view_close_all(void);
 

@@ -23,9 +23,6 @@ struct _E_View_Layout
 
    E_View      *view;
 
-   char        *file;
-   char        *prev_file;
-
    Ebits_Object bits;
 
    Evas_List    elements;

@@ -205,9 +205,11 @@ e_desktops_init_file_display(E_Desktop * desk)
    /* e_strdup(v->dir, e_file_home()); */
    snprintf(buf, PATH_MAX, "%s/desktop/default", e_config_user_dir());
 
-   e_view_set_dir(v, buf, 1);
+   e_view_set_dir(v, buf);
+   v->is_desktop = 1;
    e_view_realize(v);
    e_view_populate(v);
+   e_view_set_look(v, NULL);
 
    ecore_window_hint_set_borderless(v->win.base);
    ecore_window_hint_set_sticky(v->win.base, 1);
@@ -425,7 +427,7 @@ e_desktops_goto(int d, int ax, int ay)
 	desk->desk.area.y = ay;
 	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
 	e_icccm_set_desk(0, desk->desk.desk);
-	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH);
+	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH, NULL);
      }
 
    D_RETURN;

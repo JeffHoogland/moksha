@@ -17,8 +17,6 @@ static void         e_dir_handle_efsd_event_reply_getfiletype(EfsdEvent * ev);
 static void         e_dir_handle_efsd_event_reply_getmeta(EfsdEvent * ev);
 
 static void         e_dir_cleanup(E_Dir * d);
-static void         e_dir_bg_reload_timeout(int val, void *data);
-static void         e_dir_set_default_background(E_Dir * d);
 
 void
 e_dir_init(void)
@@ -58,58 +56,12 @@ e_dir_new(void)
    d = NEW(E_Dir, 1);
    ZERO(d, E_Dir, 1);
    d->dir = NULL;
-   d->views = NULL;
 
-   e_object_init(E_OBJECT(d), (E_Cleanup_Func) e_dir_cleanup);
+   e_observee_init(E_OBSERVEE(d), 
+	           (E_Cleanup_Func) e_dir_cleanup);
 
    e_view_machine_register_dir(d);
    D_RETURN_(d);
-}
-
-void
-e_dir_register_view(E_Dir * d, E_View * v)
-{
-   D_ENTER;
-   v->dir = d;
-   d->views = evas_list_append(d->views, v);
-/* dont ref the first time */
-   if (d->views->next)
-      e_object_ref(E_OBJECT(v->dir));
-   D_RETURN;
-}
-
-void
-e_dir_unregister_view(E_View * v)
-{
-   D_ENTER;
-   v->dir->views = evas_list_remove(v->dir->views, v);
-   e_object_unref(E_OBJECT(v->dir));
-   D_RETURN;
-}
-
-static void
-e_dir_set_default_background(E_Dir * d)
-{
-   char                buf[PATH_MAX];
-
-   D_ENTER;
-
-   if (!d)
-      D_RETURN;
-
-   IF_FREE(d->bg_file);
-
-   if (d->is_desktop)
-      snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
-   else
-      snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
-
-   e_strdup(d->bg_file, buf);
-   snprintf(buf, PATH_MAX, "background_reload:%s", d->dir);
-
-   ecore_add_event_timer(buf, 0.5, e_dir_bg_reload_timeout, 0, d);
-
-   D_RETURN;
 }
 
 static void
@@ -147,17 +99,16 @@ e_dir_set_dir(E_Dir * d, char *dir)
    if (!d)
       D_RETURN;
 
-/* stop monitoring old dir */
+   /* stop monitoring old dir */
    if ((d->dir) && (d->monitor_id))
      {
 	efsd_stop_monitor(e_fs_get_connection(), d->dir, TRUE);
 	d->monitor_id = 0;
      }
-
    IF_FREE(d->dir);
    d->dir = e_file_realpath(dir);
-
-/* start monitoring new dir */
+   
+   /* start monitoring new dir */
    d->restarter = e_fs_add_restart_handler(e_dir_handle_fs_restart, d);
    if (e_fs_get_connection())
      {
@@ -226,7 +177,6 @@ e_dir_handle_efsd_event_reply_getfiletype(EfsdEvent * ev)
 {
    E_File             *f;
    char               *file = NULL;
-   Evas_List           l;
    E_Dir              *dir;
 
    char               *m, *p;
@@ -245,9 +195,9 @@ e_dir_handle_efsd_event_reply_getfiletype(EfsdEvent * ev)
 	file = e_file_get_file(file);
      }
    dir = e_dir_find_by_monitor_id(efsd_event_id(ev));
-
    f = e_file_get_by_name(dir->files, file);
-/* if its not in the list we care about, its filetype is meaningless */
+
+   /* if its not in the list we care about, its filetype is meaningless */
    if (!f)
       D_RETURN;
 
@@ -266,19 +216,11 @@ e_dir_handle_efsd_event_reply_getfiletype(EfsdEvent * ev)
 	strcpy(mime, "unknown");
      }
    e_file_set_mime(f, base, mime);
-
-   for (l = dir->views; l; l = l->next)
-     {
-	E_View             *v = (E_View *) l->data;
-	E_Icon             *ic = e_icon_find_by_file(v, f->file);
-
-	/* Try to update the GUI.
-	 * It's just a try because we need to have the file's stat
-	 * info as well.  --cK.
-	 */
-	e_icon_update_state(ic);
-	e_icon_initial_show(ic);
-     }
+   /* Try to update the GUI.
+    * It's just a try because we need to have the file's stat
+    * info as well.  --cK.
+    */
+   e_observee_notify_observers(E_OBSERVEE(dir), E_EVENT_FILE_INFO, f);
    D_RETURN;
 }
 
@@ -287,7 +229,6 @@ e_dir_handle_efsd_event_reply_stat(EfsdEvent * ev)
 {
    E_Dir              *d;
    E_File             *f;
-   Evas_List           l;
 
    D_ENTER;
 
@@ -308,15 +249,8 @@ e_dir_handle_efsd_event_reply_stat(EfsdEvent * ev)
     * It's just a try because we need to have received the filetype 
     * info too. --cK.  */
    f->stat = *((struct stat *)efsd_event_data(ev));
-   for (l = d->views; l; l = l->next)
-     {
-	E_View             *v = (E_View *) l->data;
-	E_Icon             *ic = e_icon_find_by_file(v, f->file);
-
-	e_icon_update_state(ic);
-	e_icon_initial_show(ic);
-     }
-
+   e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_INFO, f);
+   
    D_RETURN;
 }
 
@@ -325,7 +259,6 @@ e_dir_handle_efsd_event_reply_readlink(EfsdEvent * ev)
 {
    E_Dir              *d;
    E_File             *f;
-   Evas_List           l;
 
    D_ENTER;
 
@@ -341,14 +274,7 @@ e_dir_handle_efsd_event_reply_readlink(EfsdEvent * ev)
      {
 	e_file_set_link(f, (char *)efsd_event_data(ev));
      }
-   for (l = d->views; l; l = l->next)
-     {
-	E_View             *v = (E_View *) l->data;
-	E_Icon             *ic = e_icon_find_by_file(v, f->file);
-
-	e_icon_update_state(ic);
-	e_icon_initial_show(ic);
-     }
+   e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_INFO, f);
 
    D_RETURN;
 }
@@ -371,7 +297,7 @@ e_dir_handle_efsd_event_reply_getmeta(EfsdEvent * ev)
 
 	v = l->data;
 	/* ignore metadata for desktops */
-	if (v->dir->is_desktop)
+	if (v->is_desktop)
 	   continue;
 	if (v->geom_get.x == cmd)
 	  {
@@ -418,27 +344,6 @@ e_dir_handle_efsd_event_reply_getmeta(EfsdEvent * ev)
 		     v->size.h = 401;
 	       }
 	  }
-	/* FIXME currently, the bg info is not set via metadata */
-/* 
- *       else if (v->getbg == cmd)
- *       {
- * 	 v->getbg = 0;
- * 	 if (efsd_metadata_get_type(ev) == EFSD_STRING)
- * 	 {
- * 	    if (ev->efsd_reply_event.errorcode == 0)
- * 	    {
- * 	       char buf[PATH_MAX];
- * 
- * 	       IF_FREE(v->dir->bg_file);
- * 	       e_strdup(v->dir->bg_file, efsd_metadata_get_str(ev));
- * 	       snprintf(buf, PATH_MAX, "background_reload:%s", v->dir->dir);
- * 	       ecore_add_event_timer(buf, 0.5, e_dir_bg_reload_timeout, 0, v->dir);
- * 	    }
- * 	    else
- * 	       e_dir_set_default_background(v->dir);
- * 	 }
- *       }
- */
 	/* We have received all metadata we need, display the view */
 	if ((!v->geom_get.x) &&
 	    (!v->geom_get.y) &&
@@ -515,52 +420,12 @@ e_dir_handle_efsd_event_reply(EfsdEvent * ev)
      }
    D_RETURN;
 }
-static void
-e_dir_ib_reload_timeout(int val, void *data)
-{
-   Evas_List           l;
-   E_View             *v;
-   E_Dir              *d;
-
-   D_ENTER;
-   d = data;
-
-   for (l = d->views; l; l = l->next)
-     {
-	v = (E_View *) l->data;
-	e_view_ib_reload(v);
-     }
-   D_RETURN;
-   UN(val);
-}
-
-static void
-e_dir_bg_reload_timeout(int val, void *data)
-{
-   Evas_List           l;
-   E_View             *v;
-   E_Dir              *d;
-
-   D_ENTER;
-   d = data;
-
-   for (l = d->views; l; l = l->next)
-     {
-	v = (E_View *) l->data;
-	e_view_bg_reload(v);
-     }
-   D_RETURN;
-   UN(val);
-}
 
 void
 e_dir_file_added(int id, char *file)
 {
-   Evas_List           l;
    E_Dir              *d;
-   E_View             *v;
    E_File             *f;
-   char                buf[PATH_MAX];
 
    D_ENTER;
 
@@ -568,31 +433,12 @@ e_dir_file_added(int id, char *file)
    if (!file || file[0] == '/')
       D_RETURN;
    d = e_dir_find_by_monitor_id(id);
-
-   if (!strcmp(file, ".e_background.bg.db"))
-     {
-	IF_FREE(d->bg_file);
-	snprintf(buf, PATH_MAX, "%s/%s", d->dir, file);
-	e_strdup(d->bg_file, buf);
-	snprintf(buf, PATH_MAX, "background_reload:%s", d->dir);
-	ecore_add_event_timer(buf, 0.5, e_dir_bg_reload_timeout, 0, d);
-     }
-   /*else if ((!strcmp(".e_iconbar.db", file)) ||
-    * (!strcmp(".e_iconbar.bits.db", file)))
-    * {
-    * snprintf(buf, PATH_MAX, "iconbar_reload:%s", m->dir);
-    * ecore_add_event_timer(buf, 0.5, e_dir_ib_reload_timeout, 0, m);
-    * } */
-   else if (file[0] != '.')
+   if (file[0] != '.')
      {
 	f = e_file_new(file);
 	d->files = evas_list_append(d->files, f);
 	/* tell all views for this dir about the new file */
-	for (l = d->views; l; l = l->next)
-	  {
-	     v = l->data;
-	     e_view_file_add(v, f);
-	  }
+	e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_ADD, f);
      }
    D_RETURN;
 }
@@ -600,7 +446,6 @@ e_dir_file_added(int id, char *file)
 void
 e_dir_file_deleted(int id, char *file)
 {
-   Evas_List           l;
    E_File             *f;
    E_Dir              *d;
 
@@ -613,29 +458,9 @@ e_dir_file_deleted(int id, char *file)
    f = e_file_get_by_name(d->files, file);
    d->files = evas_list_remove(d->files, f);
 
-   if (!strcmp(file, ".e_background.bg.db"))
+   if (file[0] != '.')
      {
-	e_dir_set_default_background(d);
-     }
-   /*else if ((!strcmp(".e_iconbar.db", file)) ||
-    * (!strcmp(".e_iconbar.bits.db", file)))
-    * {
-    * for (l = m->views; l; l = l->next)
-    * {
-    * E_View             *v = (E_View *) l->data;
-    * 
-    * e_object_unref(E_OBJECT(v->iconbar));
-    * v->iconbar = NULL;
-    * }
-    * } */
-   else if (file[0] != '.')
-     {
-	for (l = d->views; l; l = l->next)
-	  {
-	     E_View             *v = (E_View *) l->data;
-
-	     e_view_file_delete(v, f);
-	  }
+	e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_DELETE, f);
      }
    D_RETURN;
 }
@@ -643,11 +468,8 @@ e_dir_file_deleted(int id, char *file)
 void
 e_dir_file_changed(int id, char *file)
 {
-   Evas_List           l;
    E_Dir              *d;
    E_File             *f;
-   E_View             *v;
-   char                buf[PATH_MAX];
 
    D_ENTER;
 
@@ -655,27 +477,9 @@ e_dir_file_changed(int id, char *file)
       D_RETURN;
    d = e_dir_find_by_monitor_id(id);
    f = e_file_get_by_name(d->files, file);
-   if (!strcmp(file, ".e_background.bg.db"))
+   if (file[0] != '.')
      {
-	IF_FREE(d->bg_file);
-	snprintf(buf, PATH_MAX, "%s/%s", d->dir, file);
-	e_strdup(d->bg_file, buf);
-	snprintf(buf, PATH_MAX, "background_reload:%s", d->dir);
-	ecore_add_event_timer(buf, 0.5, e_dir_bg_reload_timeout, 0, d);
-     }
-   else if ((!strcmp(".e_iconbar.db", file)) ||
-	    (!strcmp(".e_iconbar.bits.db", file)))
-     {
-	snprintf(buf, PATH_MAX, "iconbar_reload:%s", d->dir);
-	ecore_add_event_timer(buf, 0.5, e_dir_ib_reload_timeout, 0, d);
-     }
-   else if (file[0] != '.')
-     {
-	for (l = d->views; l; l = l->next)
-	  {
-	     v = l->data;
-	     e_view_file_changed(v, f);
-	  }
+	e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_DELETE, f);	
      }
    D_RETURN;
 }
@@ -683,7 +487,6 @@ e_dir_file_changed(int id, char *file)
 void
 e_dir_file_moved(int id, char *file)
 {
-   Evas_List           l;
    E_Dir              *d;
 
    D_ENTER;
@@ -691,16 +494,6 @@ e_dir_file_moved(int id, char *file)
    if (!file || file[0] == '/')
       D_RETURN;
    d = e_dir_find_by_monitor_id(id);
-   for (l = d->views; l; l = l->next)
-     {
-	E_View             *v = (E_View *) l->data;
-	E_Icon             *ic;
-
-	ic = e_icon_find_by_file(v, file);
-	if (ic)
-	  {
-	  }
-     }
    D_RETURN;
 }
 

@@ -913,91 +913,54 @@ e_configure(Ecore_Event * ev)
    D_ENTER;
 
    e = ev->event;
-   if (e && e->win)
-     {
-	v = e_view_machine_get_view_by_base_window(e->win);
-	if (v)
-	  {
-	     /* win, root, x, y, w, h, wm_generated */
-	     D("Configure for view: %s\n", v->name);
-	     if (e->wm_generated)
-	       {
-		  D("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
-		  if ((e->x != v->location.x) || (e->y != v->location.y))
-		    {
-		       D("new spot!\n");
-		       v->location.x = e->x;
-		       v->location.y = e->y;
-		       /* FIXME */
-		       //e_view_queue_geometry_record(v);
-		    }
-	       }
-	     D("size %ix%i\n", e->w, e->h);
-	     if ((e->w != v->size.w) || (e->h != v->size.h) || (v->size.force))
-	       {
-		  v->size.force = 0;
-		  D("... a new size!\n");
-		  v->size.w = e->w;
-		  v->size.h = e->h;
-		  if (v->pmap)
-		     ecore_pixmap_free(v->pmap);
-		  v->pmap = 0;
-		  ecore_window_resize(v->win.main, v->size.w, v->size.h);
-		  if (v->options.back_pixmap)
-		    {
-		       v->pmap =
-			  ecore_pixmap_new(v->win.main, v->size.w, v->size.h,
-					   0);
-		       evas_set_output(v->evas, ecore_display_get(), v->pmap,
-				       evas_get_visual(v->evas),
-				       evas_get_colormap(v->evas));
-		       ecore_window_set_background_pixmap(v->win.main, v->pmap);
-		       ecore_window_clear(v->win.main);
-		    }
-		  if (v->bg)
-		     e_bg_resize(v->bg, v->size.w, v->size.h);
-		  D("evas_set_output_viewpor(%p)\n", v->evas);
-		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
-		  evas_set_output_size(v->evas, v->size.w, v->size.h);
-		  e_view_scroll_to(v, v->scroll.x, v->scroll.y);
-		  e_view_arrange(v);
-		  if (v->layout)
-		     e_view_layout_update(v->layout);
-		  /* FIXME */
-		  //e_view_queue_geometry_record(v);
-
-		  {
-		     double              x, y, w, h;
-
-		     if (e_view_layout_get_element_geometry(v->layout,
-							    "Scrollbar_H",
-							    &x, &y, &w, &h))
-		       {
-			  e_scrollbar_move(v->scrollbar.h, x, y);
-			  e_scrollbar_resize(v->scrollbar.h, w, h);
-		       }
-		     if (e_view_layout_get_element_geometry(v->layout,
-							    "Scrollbar_V",
-							    &x, &y, &w, &h))
-		       {
-			  e_scrollbar_move(v->scrollbar.v, x, y);
-			  e_scrollbar_resize(v->scrollbar.v, w, h);
-		       }
-		  }
-
-		  e_scrollbar_move(v->scrollbar.v,
-				   v->size.w - v->scrollbar.v->w, 0);
-		  e_scrollbar_resize(v->scrollbar.v, v->scrollbar.v->w,
-				     v->size.h - v->scrollbar.h->h);
-		  e_scrollbar_move(v->scrollbar.h, 0,
-				   v->size.h - v->scrollbar.h->h);
-		  e_scrollbar_resize(v->scrollbar.h,
-				     v->size.w - v->scrollbar.v->w,
-				     v->scrollbar.h->h);
-	       }
-	  }
-     }
-
+   if (!e || !e->win)
+      D_RETURN;
+   v = e_view_machine_get_view_by_base_window(e->win);
+   if (!v)
+      D_RETURN;
+   /* win, root, x, y, w, h, wm_generated */
+   D("Configure for view: %s\n", v->name);
+   if (e->wm_generated)
+   {
+      D("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
+      if ((e->x != v->location.x) || (e->y != v->location.y))
+      {
+	 D("new spot!\n");
+	 v->location.x = e->x;
+	 v->location.y = e->y;   
+      }
+   }
+   D("size %ix%i\n", e->w, e->h);
+   if ((e->w != v->size.w) || (e->h != v->size.h) || (v->size.force))
+   {
+      v->size.force = 0;
+      D("... a new size!\n");
+      v->size.w = e->w;
+      v->size.h = e->h;
+      if (v->pmap)
+	 ecore_pixmap_free(v->pmap);
+      v->pmap = 0;
+      ecore_window_resize(v->win.main, v->size.w, v->size.h);
+      if (v->options.back_pixmap)
+      {
+	 v->pmap =
+	    ecore_pixmap_new(v->win.main, v->size.w, v->size.h,
+		  0);
+	 evas_set_output(v->evas, ecore_display_get(), v->pmap,
+	       evas_get_visual(v->evas),
+	       evas_get_colormap(v->evas));
+	 ecore_window_set_background_pixmap(v->win.main, v->pmap);
+	 ecore_window_clear(v->win.main);
+      }
+      if (v->bg)
+	 e_bg_resize(v->bg, v->size.w, v->size.h);
+      D("evas_set_output_viewpor(%p)\n", v->evas);
+      evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
+      evas_set_output_size(v->evas, v->size.w, v->size.h);
+      e_view_scroll_to(v, v->scroll.x, v->scroll.y);
+      e_view_arrange(v);	 
+      e_view_layout_update(v->layout);
+   }
    D_RETURN;
 }
 
@@ -1352,7 +1315,7 @@ e_mouse_in(Ecore_Event * ev)
      {
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     if (v->dir->is_desktop)
+	     if (v->is_desktop)
 	       {
 		  evas_event_enter(v->evas);
 	       }
@@ -1564,6 +1527,39 @@ e_view_resort_timeout(int val, void *data)
    UN(val);
 }
 
+static void
+e_view_layout_reload_timeout(int val, void *data)
+{
+   E_View             *v;
+   D_ENTER;
+   v = data;
+   e_view_layout_reload(v);
+   D_RETURN;
+   UN(val);
+}
+
+static void
+e_view_bg_reload_timeout(int val, void *data)
+{
+   E_View             *v;
+   D_ENTER;
+   v = data;
+   e_view_bg_reload(v);
+   D_RETURN;
+   UN(val);
+}
+
+static void
+e_view_ib_reload_timeout(int val, void *data)
+{
+   E_View             *v;
+   D_ENTER;
+   v = data;
+   e_view_ib_reload(v);
+   D_RETURN;
+   UN(val);
+}
+
 void
 e_view_queue_resort(E_View * v)
 {
@@ -1610,13 +1606,52 @@ e_view_cleanup(E_View * v)
    ecore_del_event_timer(name);
 
    /* unregister with the underlying dir and the global list of views */
-   e_dir_unregister_view(v);
+   e_observer_unregister_observee(E_OBSERVER(v), E_OBSERVEE(v->dir));
+   e_object_unref(E_OBJECT(v->dir));
+   v->dir = NULL;
    e_view_machine_unregister_view(v);
    /* FIXME: clean up the rest!!! this leaks ... */
 
    /* Call the destructor of the base class */
    e_object_cleanup(E_OBJECT(v));
    D_RETURN;
+}
+
+void
+e_view_file_event_handler(E_Observer *obs, E_Observee *o, E_Event_Type event, void *data)
+{
+   E_View *v = (E_View *) obs;
+   E_File *f = (E_File *) data;
+   char buf[PATH_MAX];	
+
+   D_ENTER;
+
+   if (event & E_EVENT_FILE_ADD)
+      e_view_file_add(v, f);
+   else if (event & E_EVENT_FILE_DELETE)
+      e_view_file_delete(v, f);
+   else if (event & E_EVENT_FILE_CHANGE)
+      e_view_file_changed(v, f);
+   else if (event & E_EVENT_FILE_INFO)
+      e_view_file_try_to_show(v, f);
+   else if (event & E_EVENT_BG_CHANGED)
+   {
+      snprintf(buf, PATH_MAX, "background_reload:%s", v->name);
+      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
+   }
+   else if (event & E_EVENT_ICB_CHANGED)
+   {
+      snprintf(buf, PATH_MAX, "iconbar_reload:%s", v->name);
+      ecore_add_event_timer(buf, 0.5, e_view_ib_reload_timeout, 0, v);
+   }
+   else if (event & E_EVENT_LAYOUT_CHANGED)
+   {
+      snprintf(buf, PATH_MAX, "layout_reload:%s", v->name);
+      ecore_add_event_timer(buf, 0.5, e_view_layout_reload_timeout, 0, v);
+   }
+
+   D_RETURN;
+   UN(o);
 }
 
 E_View             *
@@ -1629,8 +1664,14 @@ e_view_new(void)
    v = NEW(E_View, 1);
    ZERO(v, E_View, 1);
 
-   e_object_init(E_OBJECT(v), (E_Cleanup_Func) e_view_cleanup);
+   e_observer_init(E_OBSERVER(v),	           
+	 E_EVENT_FILE_ADD | E_EVENT_FILE_DELETE | E_EVENT_FILE_CHANGE 
+	 | E_EVENT_FILE_INFO | E_EVENT_BG_CHANGED | E_EVENT_ICB_CHANGED 
+	 | E_EVENT_LAYOUT_CHANGED ,
+	 (E_Notify_Func) e_view_file_event_handler,
+	 (E_Cleanup_Func) e_view_cleanup);
 
+  
 #define SOFT_DESK
 /* #define X_DESK */
 /* #define GL_DESK */
@@ -1674,11 +1715,60 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
 
    e_view_machine_register_view(v);
 
+   
    D_RETURN_(v);
 }
 
 void
-e_view_set_dir(E_View * v, char *path, int is_desktop)
+e_view_set_look(E_View * v, char *path)
+{
+   E_View_Look *l = NULL;
+   char buf[PATH_MAX];
+   D_ENTER;
+
+   if (v->look)
+      e_object_unref(E_OBJECT(v->look));
+   
+   if(!path)
+   {
+      /*
+       * no path specified, lets look in the view's dir. If
+       * there is a e_layout dir there, use whats in there.
+       * Otherwise use the default dir.
+       */
+      snprintf(buf, PATH_MAX, "%s/.e_layout", v->dir->dir);
+      if (e_file_exists(buf) && e_file_is_dir(buf))
+	 path = buf;
+      else
+      {
+	 snprintf(buf, PATH_MAX, "%s/appearance", e_config_user_dir());
+	 path = buf;
+      }
+   }
+
+   if ( !(l=e_view_machine_look_lookup(path)) )	 
+   {
+      v->look = e_view_look_new();
+      e_view_look_set_dir (v->look, path);
+   }
+   else 
+   {
+      v->look = l;
+      e_object_ref(E_OBJECT(v->look));
+   }
+   if(v->look)
+   {
+      e_observer_register_observee(E_OBSERVER(v), E_OBSERVEE(v->look->obj));
+
+      e_view_bg_reload(v);
+      e_view_layout_reload(v);
+      e_view_ib_reload(v);
+   }
+   D_RETURN;
+}
+
+void
+e_view_set_dir(E_View * v, char *path)
 {
    E_Dir              *d = NULL;
    char                buf[PATH_MAX];
@@ -1691,34 +1781,18 @@ e_view_set_dir(E_View * v, char *path, int is_desktop)
    if (!(d = e_view_machine_dir_lookup(path)))
      {
 	D("Model for this dir doesn't exist, make a new one\n");
-
 	d = e_dir_new();
 	e_dir_set_dir(d, path);
-
-	snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", d->dir);
-	if (!e_file_exists(buf))
-	  {
-	     if (is_desktop)
-	       {
-		  snprintf(buf, PATH_MAX, "%s/default.bg.db",
-			   e_config_get("backgrounds"));
-	       }
-	     else
-	       {
-		  snprintf(buf, PATH_MAX, "%s/view.bg.db",
-			   e_config_get("backgrounds"));
-	       }
-	  }
-	e_strdup(d->bg_file, buf);
-	d->is_desktop = is_desktop;
      }
+   else
+      e_object_ref(E_OBJECT(d));
 
    if (d)
      {
-	e_dir_register_view(d, v);
+	v->dir = d;
+	e_observer_register_observee(E_OBSERVER(v), E_OBSERVEE(d));   
 	/* FIXME do a real naming scheme here */
-	snprintf(buf, PATH_MAX, "%s:%d", v->dir->dir,
-		 e_object_get_usecount(E_OBJECT(v->dir)));
+	snprintf(buf, PATH_MAX, "%s:%d", v->dir->dir, e_object_get_usecount(E_OBJECT(v->dir)));
 	e_strdup(v->name, buf);
 	D("assigned name to view: %s\n", v->name);
 
@@ -1731,16 +1805,11 @@ e_view_set_dir(E_View * v, char *path, int is_desktop)
 					  "/view/w", v->dir->dir, EFSD_INT);
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(),
 					  "/view/h", v->dir->dir, EFSD_INT);
-	/* FIXME currently, we dont use this anyway */
-	/* 
-	 * *    v->getbg = efsd_get_metadata(e_fs_get_connection(), 
-	 * *       "/view/background", v->dir->dir, EFSD_STRING);
-	 */
 	v->geom_get.busy = 1;
      }
    else
      {
-	/* FIXME error handling */
+	D("Couldnt set dir for view! Bad!");
      }
    D_RETURN;
 }
@@ -1782,40 +1851,6 @@ e_view_realize(E_View * v)
 			evas_get_visual(v->evas), evas_get_colormap(v->evas));
 	ecore_window_set_background_pixmap(v->win.main, v->pmap);
      }
-   if (v->bg)
-     {
-	e_bg_add_to_evas(v->bg, v->evas);
-	e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
-	e_bg_set_layer(v->bg, 100);
-	e_bg_resize(v->bg, v->size.w, v->size.h);
-
-	e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
-	e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
-	e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
-
-	e_bg_show(v->bg);
-     }
-
-   /* load the layout */
-   v->layout = e_view_layout_new(v);
-   if (v->layout)
-      e_view_layout_realize(v->layout);
-
-   /* set the file area spacing, if in layout */
-   /* FIXME: the icon layout should probably be totally redone */
-   {
-      double              x, y, w, h;
-
-      if (e_view_layout_get_element_geometry(v->layout, "Icons",
-					     &x, &y, &w, &h))
-	{
-	   v->spacing.window.l = x;
-	   v->spacing.window.r = v->size.w - (x + w);
-	   v->spacing.window.t = y;
-	   v->spacing.window.b = v->size.h - (y + h);
-	}
-   }
-
    v->scrollbar.v = e_scrollbar_new(v);
    e_scrollbar_set_change_func(v->scrollbar.v, e_view_scrollbar_v_change_cb, v);
    e_scrollbar_set_direction(v->scrollbar.v, 1);
@@ -1834,39 +1869,10 @@ e_view_realize(E_View * v)
    e_scrollbar_set_range(v->scrollbar.h, 1.0);
    e_scrollbar_set_max(v->scrollbar.h, 1.0);
 
-   {
-      double              x, y, w, h;
-
-      if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_H",
-					     &x, &y, &w, &h))
-	{
-	   e_scrollbar_move(v->scrollbar.h, x, y);
-	   e_scrollbar_resize(v->scrollbar.h, w, h);
-	}
-
-      if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_V",
-					     &x, &y, &w, &h))
-	{
-	   e_scrollbar_move(v->scrollbar.v, x, y);
-	   e_scrollbar_resize(v->scrollbar.v, w, h);
-	}
-   }
-
    /* I support dnd */
    ecore_window_dnd_advertise(v->win.base);
-
    ecore_window_show(v->win.main);
 
-   if (!v->iconbar)
-      v->iconbar = e_iconbar_new(v);
-   if (v->iconbar)
-     {
-	e_iconbar_realize(v->iconbar);
-	/*e_iconbar_set_view_window_spacing(v->iconbar); */
-     }
-
-   e_view_bg_reload(v);
-/*   e_epplet_load_from_layout(v);*/
    v->changed = 1;
    D_RETURN;
 }
@@ -1882,18 +1888,12 @@ e_view_populate(E_View * v)
    for (l = v->dir->files; l; l = l->next)
      {
 	E_File             *f = (E_File *) l->data;
-	E_Icon             *ic;
 
 	e_view_file_add(v, f);
 	/* try to show the icons for the file. If this is not the first for
 	 * the dir this will succeed because filetype and stat info have
 	 * already been received. If not, it'll be shown when those arrive. */
-	ic = e_icon_find_by_file(v, f->file);
-	if (ic)
-	  {
-	     e_icon_update_state(ic);
-	     e_icon_initial_show(ic);
-	  }
+	e_view_file_try_to_show(v, f);	     
      }
 }
 
@@ -2001,6 +2001,23 @@ e_view_file_changed(E_View * v, E_File * f)
    ic = e_icon_find_by_file(v, f->file);
    if (ic)
      {
+	e_icon_update_state(ic);
+     }
+   v->changed = 1;
+   D_RETURN;
+}
+
+void
+e_view_file_try_to_show(E_View * v, E_File * f)
+{
+   E_Icon             *ic;
+
+   D_ENTER;
+   ic = e_icon_find_by_file(v, f->file);
+   if (ic)
+     {
+	e_icon_update_state(ic);
+	e_icon_initial_show(ic);
      }
    v->changed = 1;
    D_RETURN;
@@ -2013,14 +2030,12 @@ e_view_file_delete(E_View * v, E_File * f)
 
    D_ENTER;
 
-   e_iconbar_file_delete(v, f->file);
-
    ic = e_icon_find_by_file(v, f->file);
    if (ic)
      {
 	e_icon_hide(ic);
-	e_object_unref(E_OBJECT(ic));
 	v->icons = evas_list_remove(v->icons, ic);
+	e_object_unref(E_OBJECT(ic));
 	v->changed = 1;
 	v->extents.valid = 0;
 	e_view_queue_resort(v);
@@ -2029,22 +2044,43 @@ e_view_file_delete(E_View * v, E_File * f)
 }
 
 void
+e_view_layout_reload(E_View * v)
+{   
+   D_ENTER;
+   if (!v || !v->look)
+      D_RETURN;
+
+   if (e_object_unref(E_OBJECT(v->layout)) == 0)
+      v->layout = NULL;
+
+   /* try load a new layout */   
+   v->layout = e_view_layout_new(v);
+
+   /* if the layout loaded and theres an evas - we're realized */
+   /* so realize the layout */
+   if ((v->layout) && (v->evas))
+      e_view_layout_realize(v->layout);
+
+   e_view_layout_update(v->layout);
+   
+   v->changed = 1;
+   D_RETURN;
+}
+
+
+void
 e_view_ib_reload(E_View * v)
 {
    D_ENTER;
-
-   /*
-    * D ("check if jsut saved:\n");
-    * if (v->iconbar->just_saved)
-    * {
-    * D ("just saved\n");
-    * v->iconbar->just_saved = 0;
-    * D_RETURN;
-    * }
-    */
+   
+  
    /* if we have an iconbar.. well nuke it */
    if (e_object_unref(E_OBJECT(v->iconbar)) == 0)
       v->iconbar = NULL;
+     
+   /* no iconbar in our look */
+   if(!v->look->obj->icb || !v->look->obj->icb_bits)
+      D_RETURN;
 
    /* try load a new iconbar */
    if (!v->iconbar)
@@ -2061,13 +2097,17 @@ e_view_ib_reload(E_View * v)
 void
 e_view_bg_reload(E_View * v)
 {
-   E_Background        bg;
+   E_Background        bg = NULL;
 
    /* This should only be called if the background did really
     * change in the underlying dir. We dont check again
     * here. */
    D_ENTER;
 
+   if (!v || !v->look)
+      D_RETURN;
+  
+   /* nuke the old one */
    if (v->bg)
      {
 	int                 size;
@@ -2075,33 +2115,45 @@ e_view_bg_reload(E_View * v)
 	e_bg_free(v->bg);
 	v->bg = NULL;
 	if (v->evas)
-	  {
-	     size = evas_get_image_cache(v->evas);
-	     evas_set_image_cache(v->evas, 0);
-	     evas_set_image_cache(v->evas, size);
-	  }
+	{
+	   size = evas_get_image_cache(v->evas);
+	   evas_set_image_cache(v->evas, 0);
+	   evas_set_image_cache(v->evas, size);
+	}
 	e_db_flush();
      }
+   if(v->look->obj->bg)
+   {
+      bg = e_bg_load(v->look->obj->bg);
+   }
+   else
+   {
+      /* Our look doesnt provide a bg, falls back */
+      char buf[PATH_MAX];
+      if(v->is_desktop)
+	 snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
+      else
+	 snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
 
-   bg = e_bg_load(v->dir->bg_file);
-
+      bg = e_bg_load(buf);
+   }
    if (bg)
-     {
-	v->bg = bg;
-	if (v->evas)
-	  {
-	     e_bg_add_to_evas(v->bg, v->evas);
-	     e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
-	     e_bg_set_layer(v->bg, 100);
-	     e_bg_resize(v->bg, v->size.w, v->size.h);
+   {
+      v->bg = bg;
+      if (v->evas)
+      {
+	 e_bg_add_to_evas(v->bg, v->evas);
+	 e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	 e_bg_set_layer(v->bg, 100);
+	 e_bg_resize(v->bg, v->size.w, v->size.h);
 
-	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
-	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
-	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
+	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
+	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
+	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
 
-	     e_bg_show(v->bg);
-	  }
-     }
+	 e_bg_show(v->bg);
+      }
+   }
    v->changed = 1;
    D_RETURN;
 }

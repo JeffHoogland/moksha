@@ -1,8 +1,9 @@
-#ifndef E_VIEW_MODEL_H
-#define E_VIEW_MODEL_H
+#ifndef E_DIR_H
+#define E_DIR_H
 
 #include "fs.h"
 #include "iconbar.h"
+#include "observer.h"
 #include <Evas.h>
 
 #ifndef E_VIEW_TYPEDEF
@@ -15,32 +16,31 @@ typedef struct _E_View E_View;
 typedef struct _E_Icon E_Icon;
 #endif
 
-#ifndef E_VIEW_MODEL_TYPEDEF
-#define E_VIEW_MODEL_TYPEDEF
+#ifndef E_DIR_TYPEDEF
+#define E_DIR_TYPEDEF
 typedef struct _E_Dir E_Dir;
 #endif
 
 struct _E_Dir
 {
-   E_Object            o;
+   E_Observee          o;
 
    /* The realpath of the view's directory */
    char               *dir;
 
    Evas_List           files;
 
-   Evas_Object         obj_bg;
-
-   char               *bg_file;
+/* 
+ *    Evas_Object         obj_bg;
+ * 
+ *    char               *bg_file;
+ */
 
    E_FS_Restarter     *restarter;
 
    int                 monitor_id;
 
-   /* A list of all the views for which an E_Dir is sharing data */
-   Evas_List           views;
-
-   int                 is_desktop;
+ //  int                 is_desktop;
 };
 
 /**

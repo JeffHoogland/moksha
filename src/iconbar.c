@@ -236,10 +236,14 @@ e_iconbar_new(E_View * v)
 
    D_ENTER;
 
-   D("new iconbar\n");
+   D("new iconbar for view: %s\n", v->name);
+   if(!v || !v->look || !v->look->obj 
+	 || !v->look->obj->icb || !v->look->obj->icb_bits)
+      D_RETURN_(NULL);
+
    /* first we want to load the iconbar data itself - ie the config info */
    /* for what icons we have and what they execute */
-   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db", v->dir->dir);
+   snprintf(buf, PATH_MAX, "%s", v->look->obj->icb);
    /* use the config system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
    ib = e_config_load(buf, "", cf_iconbar);
@@ -289,7 +293,7 @@ e_iconbar_new(E_View * v)
 
    /* now we need to load up a bits file that tells us where in the view the */
    /* iconbar is meant to go. same place. just a slightly different name */
-   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.bits.db", v->dir->dir);
+   snprintf(buf, PATH_MAX, "%s", ib->view->look->obj->icb_bits);
    ib->bit = ebits_load(buf);
 
    /* we didn't find one? */
@@ -383,6 +387,8 @@ e_iconbar_realize(E_Iconbar * ib)
 {
    Evas_List           l;
 
+   if (!ib) D_RETURN;
+
    D_ENTER;
    D("realize iconbar\n");
    /* create clip object */
@@ -399,8 +405,8 @@ e_iconbar_realize(E_Iconbar * ib)
 	/* the path of the key to the image memebr - that is actually */
 	/* a lump of image data inlined in the iconbar db - so the icons */
 	/* themselves follow the iconbar wherever it goes */
-	snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db:%s",
-		 ib->view->dir->dir, ic->image_path);
+	snprintf(buf, PATH_MAX, "%s:%s",
+		 ib->view->look->obj->icb, ic->image_path);
 	/* add the icon image object */
 	ic->image = evas_add_image_from_file(ib->view->evas, buf);
 	/* add an imlib image so we can save it later */
@@ -514,16 +520,13 @@ e_iconbar_fix(E_Iconbar * ib)
    double              ix, iy, aw, ah;
 
    D_ENTER;
-
+   x = y = w = h = 0;
    /* get geometry from layout */
    if (!e_view_layout_get_element_geometry(ib->view->layout, "Iconbar",
 					   &x, &y, &w, &h))
      {
-	D("Error: no geometry for iconbar, must not exist, clean it up.\n");
-	e_object_unref(E_OBJECT (ib));
 	D_RETURN;
      }
-
    D("iconbar fix: %f, %f, %f, %f\n", x, y, w, h);
    /* move and resize iconbar to geometry specified in layout */
    ebits_move(ib->bit, x, y);
@@ -663,33 +666,6 @@ e_iconbar_fix(E_Iconbar * ib)
 		    ic->current.h);
 	evas_set_image_fill(ic->iconbar->view->evas, ic->image, 0, 0,
 			    ic->current.w, ic->current.h);
-     }
-
-   D_RETURN;
-}
-
-/**
- * e_iconbar_file_delete - Function to remove a file from an iconbox.
- * @v:    The view in which a file is removed
- * @file: Name of the removed file
- *
- * This function is called whenever a file is deleted from a view.
- */
-void
-e_iconbar_file_delete(E_View * v, char *file)
-{
-   D_ENTER;
-
-   /* is the file of interest */
-   if ((!strcmp("iconbar.db", file)) || (!strcmp("iconbar.bits.db", file)))
-     {
-	/* if we have an iconbar.. delete it - because its files have been */
-	/* nuked. no need to keep it around. */
-	if (v->iconbar)
-	  {
-	     e_object_unref(E_OBJECT(v->iconbar));
-	     v->iconbar = NULL;
-	  }
      }
 
    D_RETURN;
@@ -877,12 +853,12 @@ ib_timeout(int val, void *data)
 	ic->hi.start = ecore_get_time();
 	/* no hilite (animation) image */
 	if (!ic->hi.image)
-	  {
-	     char                buf[PATH_MAX];
+	{
+	   char                buf[PATH_MAX];
 
 	     /* figure out its path */
-	     snprintf(buf, PATH_MAX, "%s/.e_iconbar.db:%s",
-		      ic->iconbar->view->dir->dir, ic->image_path);
+	     snprintf(buf, PATH_MAX, "%s:%s",
+		      ic->iconbar->view->look->obj->icb, ic->image_path);
 	     /* add it */
 	     ic->hi.image = evas_add_image_from_file(ic->iconbar->view->evas,
 						     buf);
@@ -1560,8 +1536,6 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
    int                 i;
 
    D_ENTER;
-
-#if 0
    D("add files: %s\n", source->dir->dir);
    for (i = 0; i < num_files; i++)
      {
@@ -1570,8 +1544,8 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 
 	if (ic)
 	  {
-	     D("icon mime.base: %s\n", ic->info.mime.base);
-	     if (!strcmp(ic->info.mime.base, "db"))
+	     D("icon mime.base: %s\n", ic->file->info.mime.base);
+	     if (!strcmp(ic->file->info.mime.base, "db"))
 	       {
 		  /* if its an icon db, set the icon */
 		  D("db!\n");
@@ -1594,7 +1568,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 			      {
 				 D("over icon: %s\n", ibic->exec);
 				 snprintf(buf, PATH_MAX, "%s/%s:/icon/normal",
-					  ic->view->dir->dir, ic->file);
+					  ic->view->dir->dir, ic->file->file);
 				 D("set icon: %s\n", buf);
 
 				 ibic->imlib_image = imlib_load_image(buf);
@@ -1607,7 +1581,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 		    }
 		  break;
 	       }
-	     else if (e_file_can_exec(&ic->stat))
+	     else if (e_file_can_exec(&ic->file->stat))
 	       {
 		  execs = evas_list_append(execs, ic);
 	       }
@@ -1639,13 +1613,13 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	D("x: %f, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x,
 	  v->dir->dir, ibic->iconbar->view->dir->dir);
 
-	if (!ic->info.icon)
+	if (!ic->file->info.icon)
 	   D_RETURN;
-	snprintf(buf, PATH_MAX, "%s:/icon/normal", ic->info.icon);
+	snprintf(buf, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
 	ibic->image = evas_add_image_from_file(v->evas, buf);
 	ibic->imlib_image = imlib_load_image(buf);
-	ibic->image_path = strdup(ic->info.icon);
-	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file);
+	ibic->image_path = strdup(ic->file->info.icon);
+	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file->file);
 	ibic->exec = strdup(buf);
 
 	evas_set_clip(v->evas, ibic->image, v->iconbar->clip);
@@ -1668,8 +1642,6 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	/* this adds the icon to the correct place in the list and saves */
 	e_iconbar_icon_move(ibic, v->iconbar->dnd.x, v->iconbar->dnd.y);
      }
-
-#endif
 }
 
 /* called when child processes exit */
@@ -1719,21 +1691,6 @@ ib_child_handle(Ecore_Event * ev)
      }
 
    D_RETURN;
-}
-
-void
-e_iconbar_update_geometry(E_Iconbar * ib)
-{
-   double              x, y, w, h;
-
-   D_ENTER;
-   if (e_view_layout_get_element_geometry(ib->view->layout, "Iconbar",
-					  &x, &y, &w, &h))
-     {
-	ebits_move(ib->bit, x, y);
-	ebits_resize(ib->bit, w, h);
-     }
-
 }
 
 E_Rect             *

@@ -44,10 +44,6 @@ e_view_layout_cleanup(E_View_Layout *layout)
    
    /* free the bits */
    if (layout->bits) ebits_free(layout->bits);
-
-   IF_FREE(layout->file);
-   IF_FREE(layout->prev_file);
-
    /* cleanup the base object */
    e_object_cleanup(E_OBJECT(layout));
 
@@ -59,32 +55,24 @@ e_view_layout_realize(E_View_Layout *layout)
 {
    Ebits_Object bits;
    Evas_List l;
-   char buf[PATH_MAX];
 
+   if (!layout) D_RETURN;
+   
    D_ENTER;
-  
-   /* check for custom layout bits */
-   snprintf(buf, PATH_MAX, "%s/.e_layout/layout.bits.db",
-	    layout->view->dir->dir);
-   /* keep track of file loaded */ 
-   IF_FREE(layout->file);
-   e_strdup(layout->file, buf);
-   bits = ebits_load(layout->file);
-
-   /* if custom doesn't exist, load default layout */
-   if (!bits)
+   
+   if (layout->view->look->obj->layout)
+      bits = ebits_load(layout->view->look->obj->layout);
+   else 
    {
-      if (layout->view->dir->is_desktop)
-        snprintf(buf, PATH_MAX, "%s/desktop.bits.db", e_config_get("layout"));
+      /* Our look doesnt provide a layout, falls back */
+      char buf[PATH_MAX];
+      if(layout->view->is_desktop)
+	 snprintf(buf, PATH_MAX, "%sdesktop.bits.db", e_config_get("layout"));
       else
-        snprintf(buf, PATH_MAX, "%s/view.bits.db", e_config_get("layout"));
-      /* keep track of which file was loaded */
-      IF_FREE(layout->file);
-      e_strdup(layout->file, buf);
-      bits = ebits_load(layout->file);
+	 snprintf(buf, PATH_MAX, "%sview.bits.db", e_config_get("layout"));
+      
+      bits = ebits_load(buf);
    }
-
-   D("loaded layout: %s\n", layout->file);
    if (bits)
    {
      D("layout bits loaded!\n")
@@ -108,10 +96,6 @@ e_view_layout_realize(E_View_Layout *layout)
    {
       D("ERROR: can't load layout\n");
    }
-
-   IF_FREE(layout->prev_file);
-   e_strdup(layout->prev_file, layout->prev_file);
-
    D_RETURN;
 }
    
@@ -183,37 +167,36 @@ e_view_layout_get_element_geometry(E_View_Layout *layout, char *name,
                                    double *x, double *y, double *w, double *h)
 {
    Evas_List l;
-
    D_ENTER;
-
-   for (l = layout->elements; l; l = l->next)
+   if (layout && name)
    {
-      E_View_Layout_Element *el = l->data;
-
-      if (!strcmp(name, el->name))
+      for (l = layout->elements; l; l = l->next)
       {
+	 E_View_Layout_Element *el = l->data;
 
-	 if (x) *x = el->x;
-	 if (y) *y = el->y;
-	 if (w) *w = el->w;
-         if (h) *h = el->h;
+	 if (!strcmp(name, el->name))
+	 {
 
+	    if (x) *x = el->x;
+	    if (y) *y = el->y;
+	    if (w) *w = el->w;
+	    if (h) *h = el->h;
 
-	 D_RETURN(1);
+	    D_RETURN_(1);
+	 }
       }
    }
-
-   D_RETURN(0);
+   D_RETURN_(0);
 }
 
 void
 e_view_layout_update(E_View_Layout *layout)
 {
    Evas_List l;
-
+   double              x, y, w, h;
    D_ENTER;
-
-   if (!layout->bits)
+   
+   if (!layout || !layout->bits)
      D_RETURN;
    /* move/resize bits */
    ebits_move(layout->bits, 0, 0);
@@ -234,5 +217,30 @@ e_view_layout_update(E_View_Layout *layout)
       el->h = h;
    }
 
+   /* FIXME: the icon layout should probably be totally redone */
+   if (e_view_layout_get_element_geometry(layout, "Icons",
+	    &x, &y, &w, &h))
+   {
+      layout->view->spacing.window.l = x;
+      layout->view->spacing.window.r = layout->view->size.w - (x + w);
+      layout->view->spacing.window.t = y;
+      layout->view->spacing.window.b = layout->view->size.h - (y + h);
+   }
+   if (e_view_layout_get_element_geometry(layout, "Scrollbar_H",
+	    &x, &y, &w, &h))
+   {
+      e_scrollbar_move(layout->view->scrollbar.h, x, y);
+      e_scrollbar_resize(layout->view->scrollbar.h, w, h);
+   }
+
+   if (e_view_layout_get_element_geometry(layout, "Scrollbar_V",
+	    &x, &y, &w, &h))
+   {
+      e_scrollbar_move(layout->view->scrollbar.v, x, y);
+      e_scrollbar_resize(layout->view->scrollbar.v, w, h);
+   }
+
+   if (layout->view->iconbar)
+	e_iconbar_fix(layout->view->iconbar);
    D_RETURN;
 }

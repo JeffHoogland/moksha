@@ -476,7 +476,7 @@ e_focus_in(Ecore_Event * ev)
 	   e_border_focus_grab_ended();
 	   b->current.selected = 1;
 	   b->changed = 1;
-	   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_FOCUS_IN);
+	   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_FOCUS_IN, NULL);
 	   g = b->click_grab;
 	   if (g)
 	     {
@@ -1272,7 +1272,7 @@ e_border_cleanup(E_Border * b)
 
    e_match_save_props(b);
    D("before notify\n");
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_DELETE);
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_DELETE, NULL);
    D("after notify\n");
    while (b->menus)
      {
@@ -1835,7 +1835,7 @@ e_border_new(void)
 
    borders = evas_list_prepend(borders, b);
 
-   e_observee_notify_all_observers(E_OBSERVEE(b), E_EVENT_BORDER_NEW);
+   e_observee_notify_all_observers(E_OBSERVEE(b), E_EVENT_BORDER_NEW, NULL);
 
    D_RETURN_(b);
 }
@@ -1849,7 +1849,7 @@ e_border_iconify(E_Border * b)
    e_icccm_state_iconified(b->win.client);
    b->changed = 1;
    e_border_update(b);
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_ICONIFY);
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_ICONIFY, NULL);
 
    D_RETURN;
 }
@@ -1865,7 +1865,7 @@ e_border_uniconify(E_Border * b)
    e_border_update(b);
    e_border_raise(b);
 
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNICONIFY);
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNICONIFY, NULL);
 }
 
 void

@@ -29,6 +29,15 @@ typedef enum _e_event_type
    E_EVENT_DESKTOP_DELETE = 1 << 11,
    E_EVENT_DESKTOP_SWITCH = 1 << 12,
 
+   E_EVENT_FILE_ADD = 1 << 13,
+   E_EVENT_FILE_CHANGE = 1 << 14,
+   E_EVENT_FILE_DELETE = 1 << 15,
+   E_EVENT_FILE_INFO = 1 << 16,
+   
+   E_EVENT_BG_CHANGED = 1 << 17,
+   E_EVENT_ICB_CHANGED = 1 << 18,
+   E_EVENT_LAYOUT_CHANGED = 1 << 19,
+
    /* meta event types */
    E_EVENT_BORDER_ALL = E_EVENT_BORDER_NEW |
       E_EVENT_BORDER_DELETE | E_EVENT_BORDER_FOCUS_IN |
@@ -44,7 +53,8 @@ E_Event_Type;
 
 typedef void        (*E_Notify_Func) (E_Observer * observer,
 				      E_Observee * observee,
-				      E_Event_Type event);
+				      E_Event_Type event,
+				      void *data);
 
 struct _e_observer
 {
@@ -130,13 +140,16 @@ void                e_observee_cleanup(E_Observee * obs);
  * e_observee_notify_observers - Notify observers of a given Ecore event
  * @o:              The observee which notifies its observers
  * @event:          The event by which to filter the observers
+ * @data:           arbitrary data attached to the event
  *
  * This function scans the registered observers in the observee
  * and calls the notify_func() of the observers that are
  * responsible for the given @event.
  */
 void                e_observee_notify_observers(E_Observee * o,
-						E_Event_Type event);
+						E_Event_Type event,
+						void *data
+						);
 
 /**
  * e_observee_notify_all_observers - Notify all observers of a given E event
@@ -144,6 +157,7 @@ void                e_observee_notify_observers(E_Observee * o,
  * 
  * @o:              The observee which notifies the observers
  * @event:          The event by which to filter the observers
+ * @data:           arbitrary data attached to the event
  *
  * This function scans ALL observers in the observee
  * and calls the notify_func() of the observers that are
@@ -153,5 +167,6 @@ void                e_observee_notify_observers(E_Observee * o,
  * it as a legitimate observee.
  */
 void                e_observee_notify_all_observers(E_Observee * o,
-						    E_Event_Type event);
+						    E_Event_Type event,
+						    void *data);
 #endif

@@ -95,7 +95,7 @@ e_observee_init(E_Observee * obs, E_Cleanup_Func cleanup_func)
 }
 
 void
-e_observee_notify_observers(E_Observee * o, E_Event_Type event)
+e_observee_notify_observers(E_Observee * o, E_Event_Type event, void *data)
 {
    Evas_List           obs_list = NULL;
    E_Observer         *obs = NULL;
@@ -112,7 +112,7 @@ e_observee_notify_observers(E_Observee * o, E_Event_Type event)
 	/* check bit mask */
 	if (obs->event & event)
 	  {
-	     obs->notify_func(obs, o, event);
+	     obs->notify_func(obs, o, event, data);
 	  }
      }
 
@@ -120,7 +120,7 @@ e_observee_notify_observers(E_Observee * o, E_Event_Type event)
 }
 
 void
-e_observee_notify_all_observers(E_Observee * o, E_Event_Type event)
+e_observee_notify_all_observers(E_Observee * o, E_Event_Type event, void *data)
 {
    Evas_List           obs_list = NULL;
    E_Observer         *obs = NULL;
@@ -137,7 +137,7 @@ e_observee_notify_all_observers(E_Observee * o, E_Event_Type event)
 	/* check bit mask */
 	if (obs->event & event)
 	  {
-	     obs->notify_func(obs, o, event);
+	     obs->notify_func(obs, o, event, data);
 	  }
      }
 

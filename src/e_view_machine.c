@@ -1,6 +1,7 @@
 #include <Ecore.h>
 #include "e_view_machine.h"
 #include "e_dir.h"
+#include "e_view_look.h"
 #include "util.h"
 #include "globals.h"
 #include "file.h"
@@ -15,6 +16,7 @@ e_view_machine_init()
 	VM = NEW(E_Dir, 1);
 	VM->views = NULL;
 	VM->dirs = NULL;
+	VM->looks = NULL;
 	e_view_init();
 	e_dir_init();
      }
@@ -51,6 +53,22 @@ e_view_machine_unregister_view(E_View * v)
 {
    D_ENTER;
    VM->views = evas_list_remove(VM->views, v);
+   D_RETURN;
+}
+
+void
+e_view_machine_register_look(E_View_Look * l)
+{
+   D_ENTER;
+   VM->looks = evas_list_append(VM->looks, l);
+   D_RETURN;
+}
+
+void
+e_view_machine_unregister_look(E_View_Look * l)
+{
+   D_ENTER;
+   VM->looks = evas_list_remove(VM->looks, l);
    D_RETURN;
 }
 
@@ -100,6 +118,37 @@ e_view_machine_dir_lookup(char *path)
    D_RETURN_(NULL);
 }
 
+E_View_Look       *
+e_view_machine_look_lookup(char *path)
+{
+   E_View_Look       *vl;
+   Evas_List           l;
+   char               *realpath = NULL;
+
+   D_ENTER;
+
+   if (!path)
+      D_RETURN_(NULL);
+
+   realpath = e_file_realpath(path);
+
+   for (l = VM->looks; l; l = l->next)
+     {
+	vl = l->data;
+	if (!strcmp(vl->dir->dir, realpath))
+	  {
+	     D("E_Dir for this dir already exists\n");
+
+	     IF_FREE(realpath);
+	     D_RETURN_(vl);
+	  }
+     }
+
+   IF_FREE(realpath);
+   D_RETURN_(NULL);
+}
+
+
 E_View             *
 e_view_machine_get_view_by_main_window(Window win)
 {
@@ -131,3 +180,5 @@ e_view_machine_get_view_by_base_window(Window win)
      }
    D_RETURN_(NULL);
 }
+
+

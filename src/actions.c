@@ -1837,7 +1837,7 @@ e_act_max_start(E_Object * object, E_Action * a, void *data, int x, int y,
 	b->current.requested.w = b->current.w;
 	b->current.requested.h = b->current.h;
 
-	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNMAXIMIZE);
+	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNMAXIMIZE, NULL);
      }
    else
      {
@@ -1857,7 +1857,7 @@ e_act_max_start(E_Object * object, E_Action * a, void *data, int x, int y,
 	b->current.requested.w = b->current.w;
 	b->current.requested.h = b->current.h;
 
-	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_MAXIMIZE);
+	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_MAXIMIZE, NULL);
      }
 
    D_RETURN;
