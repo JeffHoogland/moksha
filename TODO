@@ -29,10 +29,12 @@ Current freeze issues are:
 
 ISSUES:
 
-* ibar, temp and battery modules should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
-* pager needs to be able to split off each desk in a zone it a different gadget
+* All objects should be an e_object?
+* focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
+* ibar module should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
+* make ibar a gadman client
+* pager needs to be able to split off each desk in a zone in a different gadget
 * gadman gadget menu needs icons :)
-* add a menu item to each gadman client menu to edge editing mode
 * pager needs an overhaul
 * virtual desktops need an overhaul. hacked int waay too quickly.
 * virtual desktops need fixing to work with zones properly
@@ -40,7 +42,6 @@ ISSUES:
 * dropshadow is not optimal and has extreme edge-case bugs
 * e_apps polling/updates is broken
 * border show/hide needs to show from top down and hide from bottom up
-* restart loses window properties (stickyness)
 * restart loses zone and container info
 
 <add more issues as they are found>
