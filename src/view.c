@@ -1979,18 +1979,16 @@ e_view_realize(E_View *v)
    if (v->bg)
      {
 	e_bg_add_to_evas(v->bg, v->evas);
+	e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	e_bg_set_layer(v->bg, 100);
 	e_bg_resize(v->bg, v->size.w, v->size.h);
+	
+	e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
+	e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
+	e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
+	
 	e_bg_show(v->bg);
      }
-   v->obj_bg = evas_add_rectangle(v->evas);
-   evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
-   evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
-   evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
-   evas_set_layer(v->evas, v->obj_bg, 100);
-   evas_move(v->evas, v->obj_bg, 0, 0);
-   evas_resize(v->evas, v->obj_bg, 999999, 999999);
-   evas_set_color(v->evas, v->obj_bg, 0, 0, 0, 0);
-   evas_show(v->evas, v->obj_bg);
    
    v->scrollbar.v = e_scrollbar_new();
    e_scrollbar_set_change_func(v->scrollbar.v, e_view_scrollbar_v_change_cb, v);
@@ -2503,7 +2501,13 @@ e_view_bg_load(E_View *v)
 	  {
 	     e_bg_add_to_evas(v->bg, v->evas);
 	     e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	     e_bg_set_layer(v->bg, 100);
 	     e_bg_resize(v->bg, v->size.w, v->size.h);
+	
+	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
+	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
+	     e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
+	     
 	     e_bg_show(v->bg);
 	  }
      }
@@ -2538,7 +2542,6 @@ e_view_bg_reload_timeout(int val, void *data)
 	int size;
 	
 	e_bg_free(v->bg);
-	/* e_object_unref(E_OBJECT(v->bg)); */
 	v->bg = NULL;
 	if (v->evas)
 	  {
