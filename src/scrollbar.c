@@ -156,6 +156,11 @@ e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
      }
 
    D_RETURN;
+   UN(o);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 static void
@@ -189,6 +194,13 @@ e_sb_base_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
      }
 
    D_RETURN;
+   UN(o);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 static void
@@ -207,6 +219,14 @@ e_sb_bar_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, 
    sb->mouse_y = y;
 
    D_RETURN;
+   UN(o);
+   UN(class);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 static void
@@ -223,6 +243,14 @@ e_sb_bar_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, in
      D_RETURN;
 
    D_RETURN;
+   UN(o);
+   UN(class);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 static void
@@ -263,6 +291,15 @@ e_sb_bar_move_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, 
      }
 
    D_RETURN;
+   UN(o);
+   UN(class);
+   UN(bt);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 static void
@@ -313,6 +350,9 @@ e_scrollbar_new(void)
 
    sb = NEW(E_Scrollbar, 1);
    ZERO(sb, E_Scrollbar, 1);
+
+   e_object_init(E_OBJECT(sb), (E_Cleanup_Func) e_scrollbar_cleanup);
+
    sb->range = 1.0;
    sb->max = 1.0;
    sb->w = 12;
@@ -322,8 +362,10 @@ e_scrollbar_new(void)
 }
 
 void
-e_scrollbar_free(E_Scrollbar *sb)
+e_scrollbar_cleanup(E_Scrollbar *sb)
 {
+   char name[PATH_MAX];
+   
    D_ENTER;
 
    if (sb->evas)
@@ -331,7 +373,14 @@ e_scrollbar_free(E_Scrollbar *sb)
 	if (sb->base) ebits_free(sb->base);
 	if (sb->bar) ebits_free(sb->bar);
      }
-   FREE(sb);
+   IF_FREE(sb->dir);
+
+   sprintf(name, "scroll_up.%i.%s", sb->direction, sb->dir);
+   ecore_del_event_timer(name);
+   sprintf(name, "scroll_down.%i.%s", sb->direction, sb->dir);
+   ecore_del_event_timer(name);
+
+   e_object_cleanup(E_OBJECT(sb));
 
    D_RETURN;
 }

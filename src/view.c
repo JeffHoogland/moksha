@@ -1770,6 +1770,8 @@ e_view_cleanup(E_View *v)
 	e_iconbar_save_out_final(v->iconbar);
 	e_object_unref(E_OBJECT(v->iconbar));
      }
+   if (v->scrollbar.h) e_object_unref(E_OBJECT(v->scrollbar.h));
+   if (v->scrollbar.v) e_object_unref(E_OBJECT(v->scrollbar.v));
    
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);
