@@ -11,6 +11,8 @@ e_view_machine_init()
    D_ENTER;
    /* FIXME make this a singleton */
    VM= NEW(E_View_Model, 1);
+   VM->views = NULL;
+   VM->models = NULL;
    e_view_init();
    e_view_model_init();
    D_RETURN;

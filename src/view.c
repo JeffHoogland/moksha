@@ -235,6 +235,7 @@ e_view_selection_update(E_View *v)
 	evas_del_object(v->evas, v->select.obj.grad_b);
 	evas_del_object(v->evas, v->select.obj.clip);
 	v->select.obj.middle = NULL;
+	v->changed = 1;
 	D_RETURN;
      }
    if (!v->select.on) D_RETURN;
@@ -272,7 +273,7 @@ e_view_selection_update(E_View *v)
    evas_show(v->evas, v->select.obj.grad_t);
    evas_show(v->evas, v->select.obj.grad_b);
    evas_show(v->evas, v->select.obj.clip);
-
+   v->changed = 1;
    D_RETURN;
 }
 
@@ -1512,6 +1513,7 @@ e_view_arrange(E_View *v)
    if (sr < sm) e_scrollbar_show(v->scrollbar.h);
    else e_scrollbar_hide(v->scrollbar.h);
 
+   v->changed = 1;
    D_RETURN;
 }
 
@@ -1680,16 +1682,6 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
 }
 
 void
-e_view_set_background(E_View *v)
-{
-   D_ENTER;
-   
-   v->changed = 1;
-
-   D_RETURN;
-}
-
-void
 e_view_set_dir(E_View *v, char *dir, int is_desktop)
 {
    D_ENTER;
@@ -1838,11 +1830,8 @@ e_view_update(E_View *v)
    
    D_ENTER;
 
-   /* FIXME find all places where setting the dirty flag is needed */
-/* 
- *    if (!v->changed)
- *       D_RETURN;
- */
+   if (!v->changed)
+      D_RETURN;
         
    if(v->drag.icon_hide)
    {
@@ -1938,6 +1927,7 @@ e_view_file_changed(E_View *v, E_File *f)
    if (ic)
    {
    }
+   v->changed = 1;
    D_RETURN;
 }
 
@@ -2036,6 +2026,7 @@ e_view_bg_reload(E_View *v)
 	 e_bg_show(v->bg);
       }
    }
+   v->changed = 1;
    D_RETURN;
 }
 

@@ -730,7 +730,6 @@ e_icon_update_state(E_Icon *ic)
 {
    char icon[PATH_MAX];
    int iw, ih;
-   int gw, gh;
    D_ENTER;
  
    if (!ic->file->info.icon)
@@ -806,11 +805,11 @@ e_icon_update_state(E_Icon *ic)
    evas_set_image_file(ic->view->evas, ic->obj.icon, icon);
    evas_get_image_size(ic->view->evas, ic->obj.icon, &iw, &ih);   
    e_icon_check_permissions(ic);
-   gw = ic->geom.icon.w;
-   gh = ic->geom.icon.h;
    e_icon_apply_xy(ic);
-   if ((iw == gw) && (ih == gh)) D_RETURN;
-   e_view_queue_resort(ic->view);
+   ic->view->changed = 1;
+
+   if ((iw != ic->geom.icon.w) || (ih != ic->geom.icon.h))
+      e_view_queue_resort(ic->view);
 
    D_RETURN;
 }

@@ -1764,7 +1764,5 @@ e_iconbar_set_view_window_spacing (E_Iconbar * ib)
       else
 	ib->view->spacing.window.b = (ib->view->size.h - y) / 2 + 15;
     }
-
-
   D_RETURN;
 }

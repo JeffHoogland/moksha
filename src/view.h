@@ -215,8 +215,6 @@ E_View   *e_view_find_by_window(Window win);
  */
 E_View   *e_view_new(void);
 
-void      e_view_set_background(E_View *v);
-
 /**
  * e_view_set_dir - Sets view to a given directory
  * @v          The view for which to set the directory

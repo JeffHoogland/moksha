@@ -397,6 +397,7 @@ e_view_model_handle_efsd_event_reply_getmeta(EfsdEvent *ev)
       ecore_window_move(v->win.base, v->location.x, v->location.y);
       ecore_window_resize(v->win.base, v->size.w, v->size.h);	             
       v->size.force = 1;
+      v->changed = 1;
 
       /* We have received all metadata we need, display the view */
       if ((!v->geom_get.x) &&
