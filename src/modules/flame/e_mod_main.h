@@ -9,6 +9,7 @@ typedef struct _Flame_Face Flame_Face;
 
 enum _Flame_Palette_Type
 {
+   DEFAULT_NONE,
    DEFAULT_PALETTE,
      PLASMA_PALETTE
 };

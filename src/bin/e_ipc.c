@@ -172,9 +172,7 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
       case E_IPC_OP_BG_SET:
 	  {
 	     char *file;
-	     char *valstr;
 	     Evas_List *managers, *l;
-	     int cont;
 	     
 	     file = malloc(e->size + 1);
 	     file[e->size] = 0;

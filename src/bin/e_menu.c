@@ -355,7 +355,7 @@ e_menu_item_separator_set(E_Menu_Item *mi, int sep)
 {
    E_OBJECT_CHECK(mi);
    if (((mi->separator) && (sep)) ||
-       (!mi->separator) && (!sep)) return;
+	((!mi->separator) && (!sep))) return;
    mi->separator = sep;
    mi->changed = 1;
    mi->menu->changed = 1;
@@ -366,7 +366,7 @@ e_menu_item_check_set(E_Menu_Item *mi, int chk)
 {
    E_OBJECT_CHECK(mi);
    if (((mi->check) && (chk)) ||
-       (!mi->check) && (!chk)) return;
+       ((!mi->check) && (!chk))) return;
    mi->check = chk;
    mi->changed = 1;
    mi->menu->changed = 1;
@@ -377,7 +377,7 @@ e_menu_item_radio_set(E_Menu_Item *mi, int rad)
 {
    E_OBJECT_CHECK(mi);
    if (((mi->radio) && (rad)) ||
-       (!mi->radio) && (!rad)) return;
+       ((!mi->radio) && (!rad))) return;
    mi->radio = rad;
    mi->changed = 1;
    mi->menu->changed = 1;
@@ -387,7 +387,7 @@ void
 e_menu_item_radio_group_set(E_Menu_Item *mi, int radg)
 {
    E_OBJECT_CHECK(mi);
-   if ((mi->radio_group) == (radg)) return;
+   if (mi->radio_group == radg) return;
    mi->radio_group = radg;
    mi->changed = 1;
    mi->menu->changed = 1;
@@ -998,7 +998,7 @@ static void
 _e_menu_items_layout_update(E_Menu *m)
 {
    Evas_List *l;
-   Evas_Coord bw, bh, mw, mh, ww, hh;
+   Evas_Coord bw, bh, mw, mh;
    int toggles_on = 0;
    int icons_on = 0;
    int labels_on = 0;
@@ -1908,7 +1908,6 @@ static int
 _e_menu_cb_mouse_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Down *ev;
-   Evas_List *l;
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
@@ -1919,7 +1918,6 @@ static int
 _e_menu_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
-   Evas_List *l;
    double t;
    int ret;
    

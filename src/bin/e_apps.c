@@ -160,8 +160,7 @@ e_app_new(char *path, int scan_subdirs)
 void
 e_app_subdir_scan(E_App *a, int scan_subdirs)
 {
-   Evas_List *files, *files2 = NULL;
-   FILE *f;
+   Evas_List *files;
    char buf[4096];
 
    E_OBJECT_CHECK(a);
@@ -514,8 +513,6 @@ _e_app_dir_file_list_get(E_App *a, char *path)
 	     len = strlen(buf);
 	     if (len > 0)
 	       {
-		  int ok = 0;
-		  
 		  if (buf[len - 1] == '\n')
 		    {
 		       buf[len - 1] = 0;
@@ -639,7 +636,6 @@ _e_app_check(void *data)
    while (changes)
      {
 	E_App_Change_Info *ch;
-	Evas_List *l;
 	
 	ch = changes->data;
 	changes = evas_list_remove_list(changes, changes);

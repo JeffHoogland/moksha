@@ -90,7 +90,6 @@ char               *
 e_file_realpath(char *file)
 {
    char  buf[PATH_MAX];
-   char *f;
    struct stat st;
 
    if (!realpath(file, buf) || stat(buf, &st)) return strdup("");
@@ -112,7 +111,6 @@ char               *
 e_file_get_dir(char *file)
 {
    char               *p;
-   char               *f;
    char                buf[PATH_MAX];
 
    strncpy(buf, file, PATH_MAX);
@@ -157,7 +155,6 @@ char               *
 e_file_readlink(char *link)
 {
    char                buf[PATH_MAX];
-   char               *f;
    int                 count;
 
    if ((count = readlink(link, buf, sizeof(buf))) < 0) return NULL;

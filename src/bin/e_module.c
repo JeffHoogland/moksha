@@ -74,7 +74,7 @@ e_module_new(char *name)
 {
    E_Module *m;
    char buf[4096];
-   const char *modpath, *tmp, *p;
+   char *modpath;
    Evas_List *l;
    int in_list = 0;
 
@@ -197,6 +197,7 @@ e_module_enable(E_Module *m)
 	     break;
 	  }
      }
+   return 1;
 }
 
 int
@@ -348,7 +349,7 @@ _e_module_free(E_Module *m)
 static E_Menu *
 _e_module_control_menu_new(E_Module *mod)
 {
-   E_Menu *m, *subm;
+   E_Menu *m;
    E_Menu_Item *mi;
    
    m = e_menu_new();

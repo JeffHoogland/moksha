@@ -188,7 +188,6 @@ _clock_config_menu_del(Clock *e, E_Menu *m)
 static void
 _clock_face_init(Clock_Face *ef)
 {
-   Evas_List *l;
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
@@ -303,7 +302,7 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 { 
    Evas_Event_Mouse_Move *ev;
    Clock_Face *ef;
-   Evas_Coord x, y, w, h, cx, cy, sw, sh;
+   Evas_Coord cx, cy, sw, sh;
    
    evas_pointer_canvas_xy_get(e, &cx, &cy);
    evas_output_viewport_get(e, NULL, NULL, &sw, &sh);

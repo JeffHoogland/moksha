@@ -16,7 +16,7 @@ EAPI E_Path     *e_path_new(void);
 EAPI void        e_path_path_append(E_Path *ep, const char *path);
 EAPI void        e_path_path_prepend(E_Path *ep, const char *path);
 EAPI void        e_path_path_remove(E_Path *ep, const char *path);
-EAPI const char *e_path_find(E_Path *ep, const char *file);
+EAPI char        *e_path_find(E_Path *ep, const char *file); /* for conveience this doesnt return a malloc'd string. it's a static buffer, so a new call will replace this buffer, but thsi means there is no need to free the return */
 
 EAPI void        e_path_evas_append(E_Path *ep, Evas *evas);
 #endif

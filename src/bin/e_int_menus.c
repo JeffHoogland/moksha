@@ -71,7 +71,6 @@ E_Menu *
 e_int_menus_apps_new(char *dir, int top)
 {
    E_Menu *m;
-   E_Menu_Item *mi;
    E_App *a;
    
    m = e_menu_new();
@@ -90,7 +89,6 @@ E_Menu *
 e_int_menus_clients_new(void)
 {
    E_Menu *m;
-   E_Menu_Item *mi;
 
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_clients_pre_cb, NULL);

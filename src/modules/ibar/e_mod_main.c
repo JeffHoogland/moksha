@@ -596,7 +596,7 @@ _ibar_bar_icon_new(IBar_Bar *ibb, E_App *a)
 			  bw, bh /* max */
 			  );
    
-   str = edje_object_data_get(ic->icon_object, "raise_on_hilight");
+   str = (char *)edje_object_data_get(ic->icon_object, "raise_on_hilight");
    if (str)
      {
 	if (atoi(str) == 1) ic->raise_on_hilight = 1;
@@ -801,7 +801,7 @@ static void
 _ibar_bar_init(IBar_Bar *ibb)
 {
    Evas_List *l;
-   Evas_Coord ww, hh, bw, bh;
+   Evas_Coord bw, bh;
    Evas_Object *o;
    
    evas_event_freeze(ibb->evas);
@@ -867,7 +867,6 @@ _ibar_bar_init(IBar_Bar *ibb)
 	  {
 	     E_App *a;
 	     IBar_Icon *ic;
-	     char *str;
 	     
 	     a = l->data;
 	     ic = _ibar_bar_icon_new(ibb, a);
@@ -1294,7 +1293,6 @@ _ibar_cb_bar_timer(void *data)
 {
    IBar_Bar *ibb;
    double dif, dif2;
-   Evas_Coord x, y, w, h, mw, mh;
    double v;
    
    ibb = data;

@@ -122,7 +122,6 @@ E_Border *
 e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 {
    E_Border *bd;
-   Ecore_Event_Handler *h;
    Ecore_X_Window_Attributes *att;
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
@@ -1017,7 +1016,6 @@ static void
 _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Border *bd;
-   int x, y;
    
    bd = data;
    bd->moving = 0;
@@ -1140,7 +1138,6 @@ static void
 _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Border *bd;
-   int x, y;
    
    bd = data;
 
@@ -1682,7 +1679,6 @@ _e_border_eval(E_Border *bd)
    if (bd->client.border.changed)
      {
 	Evas_Object *o;
-	int iw, ih;
 	const char *path;
 	char buf[4096];
 	Evas_Coord cx, cy, cw, ch;

@@ -34,7 +34,6 @@ E_Container *
 e_container_new(E_Manager *man)
 {
    E_Container *con;
-   Ecore_Event_Handler *h;
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
    if (!con) return NULL;

@@ -33,7 +33,7 @@ e_object_alloc(int size, E_Object_Cleanup_Func cleanup_func)
    E_Object *obj;
    
    obj = calloc(1, size);
-   if (!obj) return;
+   if (!obj) return NULL;
    obj->magic = E_OBJECT_MAGIC;
    obj->references   = 1;
    obj->cleanup_func = cleanup_func;
@@ -77,14 +77,19 @@ e_object_ref(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    obj->references++;
+   return obj->references;
 }
 
 int
 e_object_unref(E_Object *obj)
 {
+   int ref;
+   
    E_OBJECT_CHECK(obj);
    obj->references--;
+   ref = obj->references;
    if (obj->references <= 0) e_object_free(obj);
+   return ref;
 }
 
 int

@@ -16,7 +16,7 @@ struct _Config
    int           edge;
    double        anchor;
    double        handle;
-   unsigned char autohide;
+   char          autohide;
 };
 
 struct _IBar

@@ -171,7 +171,7 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 	char *v;
 	int j;
 	
-	for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+	for (j = 0; j < (int)(sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
 	  {
 	     E_IPC_Opt_Handler *handler;
 	     
@@ -249,17 +249,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     char *p;
 	     
 	     p = e->data;
-	     while (p < (e->data + e->size))
+	     while (p < (char *)(e->data + e->size))
 	       {
 		  char *name;
 		  char  enabled;
 		  
 		  name = p;
 		  p += strlen(name);
-		  if (p < (e->data + e->size))
+		  if (p < (char *)(e->data + e->size))
 		    {
 		       p++;
-		       if (p < (e->data + e->size))
+		       if (p < (char *)(e->data + e->size))
 			 {
 			    enabled = *p;
 			    p++;
@@ -290,10 +290,10 @@ _e_help(void)
    int parsize = 0, opsize = 0;
    
    printf("OPTIONS:\n");
-   for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+   for (j = 0; j < (int)(sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
      {
 	handler = &handlers[j];
-	if (strlen(handler->option) > parsize) parsize = strlen(handler->option);
+	if ((int)strlen(handler->option) > parsize) parsize = strlen(handler->option);
 	l = 0;
 	for (k = 0; k < handler->num_params; k++)
 	  {
@@ -302,7 +302,7 @@ _e_help(void)
 	  }
 	if (l > opsize) opsize = l;
      }
-   for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+   for (j = 0; j < (int)(sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
      {
 	handler = &handlers[j];
 	printf("  %s", handler->option);

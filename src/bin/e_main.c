@@ -12,17 +12,17 @@ struct _E_Before_Idler
 };
 
 /* local subsystem functions */
-static void _e_main_shutdown_push(void (*func)(void));
+static void _e_main_shutdown_push(int (*func)(void));
 static void _e_main_shutdown(int errorcode);
 
 static int  _e_main_dirs_init(void);
-static void _e_main_dirs_shutdown(void);
+static int  _e_main_dirs_shutdown(void);
 static int  _e_main_screens_init(void);
-static void _e_main_screens_shutdown(void);
+static int  _e_main_screens_shutdown(void);
 static int  _e_main_path_init(void);
-static void _e_main_path_shutdown(void);
+static int  _e_main_path_shutdown(void);
 static int  _e_main_ipc_init(void);
-static void _e_main_ipc_shutdown(void);
+static int  _e_main_ipc_shutdown(void);
 
 static void _e_main_cb_x_fatal(void *data);
 static int  _e_main_cb_signal_exit(void *data, int ev_type, void *ev);
@@ -42,7 +42,7 @@ int     restart      = 0;
 
 /* local subsystem globals */
 #define MAX_LEVEL 32
-static void (*_e_main_shutdown_func[MAX_LEVEL]) (void);
+static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
 
 static Evas_List *_e_main_idler_before_list = NULL;
@@ -57,7 +57,6 @@ main(int argc, char **argv)
 {
    int ipc_failed = 0;
    int i;
-   char *display_name = NULL;
    int nosplash = 0;
    int nostartup = 0;
    int nowelcome = 0;
@@ -348,7 +347,7 @@ e_main_idler_before_del(E_Before_Idler *eb)
 
 /* local subsystem functions */
 static void
-_e_main_shutdown_push(void (*func) (void))
+_e_main_shutdown_push(int (*func) (void))
 {
    _e_main_level++;
    if (_e_main_level > MAX_LEVEL)
@@ -413,7 +412,7 @@ _e_main_dirs_init(void)
    
    homedir = e_user_homedir_get();
    if (!homedir) return 0;
-   for (i = 0; i < (sizeof(dirs) / sizeof(char *)); i++)
+   for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
 	snprintf(buf, sizeof(buf), dirs[i], homedir);
 	if (!e_file_mkpath(buf))
@@ -443,9 +442,10 @@ _e_main_dirs_init(void)
    return 1;
 }
 
-static void
+static int
 _e_main_dirs_shutdown(void)
 {
+   return 1;
 }
 
 static int
@@ -518,10 +518,11 @@ _e_main_screens_init(void)
    return 1;
 }
 
-static void
+static int
 _e_main_screens_shutdown(void)
 {
    e_manager_shutdown();
+   return 1;
 }
 
 static int
@@ -569,7 +570,7 @@ _e_main_path_init(void)
    return 1;
 }
 
-static void
+static int
 _e_main_path_shutdown(void)
 {
    if (path_data)
@@ -597,6 +598,7 @@ _e_main_path_shutdown(void)
 	e_object_unref(E_OBJECT(path_init));
 	path_init = NULL;
      }
+   return 1;
 }
 
 static int
@@ -610,10 +612,11 @@ _e_main_ipc_init(void)
    return 1;
 }
 
-static void
+static int
 _e_main_ipc_shutdown(void)
 {
    e_ipc_shutdown();
+   return 1;
 }
 
 static void

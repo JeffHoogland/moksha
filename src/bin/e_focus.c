@@ -1,7 +1,6 @@
 #include "e.h"
 
 /* local subsystem functions */
-static int _e_focus_cb_idle(void *data);
 static int _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev);
 static int _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev);
 

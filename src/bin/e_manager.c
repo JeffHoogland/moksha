@@ -4,6 +4,7 @@
 static void _e_manager_free(E_Manager *man);
 
 static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
+#if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev);
@@ -17,6 +18,7 @@ static int _e_manager_cb_window_property(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev);
 static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
+#endif
 
 /* local subsystem globals */
 static Evas_List *managers = NULL;
@@ -176,16 +178,18 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
    return 1;
 }
 
-static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_create(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_gravity(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_stack(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_property(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev){}
-static int _e_manager_cb_client_message(void *data, int ev_type, void *ev){}
+#if 0 /* use later - maybe */
+static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_create(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_gravity(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_stack(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_property(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev){return 1;}
+static int _e_manager_cb_client_message(void *data, int ev_type, void *ev){return 1;}
+#endif

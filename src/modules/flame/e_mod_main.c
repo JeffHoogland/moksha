@@ -152,7 +152,7 @@ _flame_init (E_Module *m)
    E_CONFIG_LIMIT(f->conf->variance, 1, 100);
    E_CONFIG_LIMIT(f->conf->vartrend, 1, 100);
    E_CONFIG_LIMIT(f->conf->residual, 1, 100);
-   E_CONFIG_LIMIT(f->conf->palette_type, 0, 100);
+   E_CONFIG_LIMIT(f->conf->palette_type, DEFAULT_PALETTE, PLASMA_PALETTE);
    
    managers = e_manager_list ();
    for (l = managers; l; l = l->next)
@@ -484,7 +484,6 @@ _flame_base_random_modify (Flame_Face *ff)
 	*ptr += ((rand ()%ff->flame->conf->variance) - ff->flame->conf->vartrend);
 	val = *ptr;
 	if (val > 300) *ptr = 0;
-	if (val < 0)    *ptr = 0;
      }
 }
 

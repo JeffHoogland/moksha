@@ -144,7 +144,7 @@ e_path_path_remove(E_Path *ep, const char *path)
      }
 }
 
-const char *
+char *
 e_path_find(E_Path *ep, const char *file)
 {
    Evas_List *l;
@@ -192,7 +192,7 @@ e_path_evas_append(E_Path *ep, Evas *evas)
    if (!evas) return;
    for (l = ep->dir_list; l; l = l->next)
      {
-	char *p, *rp;
+	char *p;
 	
 	p = l->data;
 	if (p) evas_font_path_append(evas, p);

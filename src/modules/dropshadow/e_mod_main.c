@@ -102,7 +102,6 @@ save(E_Module *m)
    Dropshadow *ds;
    
    ds = m->data;
-   if (!ds) return;
    e_config_domain_save("module.dropshadow", ds->conf_edd, ds->conf);
    return 1;
 }
@@ -1046,7 +1045,7 @@ static void
 _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
-   int i, sum, weight, x1, x2, l, l1, l2, wt, y1, y2;
+   int i, sum, weight, x1, x2, l, l1, l2, wt;
    unsigned char *p1, *p2, *pp;
    int full, usefull;
    
@@ -1118,7 +1117,7 @@ static void
 _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
-   int i, sum, weight, x1, x2, l, l1, l2, wt, y1, y2;
+   int i, sum, weight, l, l1, l2, wt, y1, y2;
    unsigned char *p1, *p2, *pp;
    int full, usefull;
    
