@@ -29,11 +29,8 @@ Current freeze issues are:
 
 ISSUES:
 
-* pager doesnt track window stacking, and desktops properly (eg iconify, go to new desk, uniconify - pager does not move the window)
-* pager needs an overhaul
-* pager edje gfx...
-* pager needs desktop bg thumbnail wrapper/handler and cache system
-* pager needs to support miniature versions of bg object
+* pager doesnt track desktops properly (eg iconify, go to new desk, uniconify - pager does not move the window)
+* ibar doesnt handle autoscroll when it starts up (only after a gadman resize)
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
