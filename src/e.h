@@ -559,6 +559,7 @@ struct _E_Entry
    Evas_Object text;
    Window paste_win;
    Window selection_win;
+   int end_width;
    void (*func_changed) (E_Entry *entry, void *data);
    void *data_changed;
    void (*func_enter) (E_Entry *entry, void *data);
@@ -587,6 +588,15 @@ void e_entry_set_text(E_Entry *entry, const char *text);
 const char *e_entry_get_text(E_Entry *entry);
 void e_entry_set_cursor(E_Entry *entry, int cursor_pos);
 int e_entry_get_curosr(E_Entry *entry);
+void e_entry_set_changed_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
+void e_entry_set_enter_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
+void e_entry_set_focus_in_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
+void e_entry_set_focus_out_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
+void e_entry_insert_text(E_Entry *entry, char *text);
+void e_entry_clear_selection(E_Entry *entry);
+void e_entry_delete_to_left(E_Entry *entry);
+void e_entry_delete_to_right(E_Entry *entry);
+char *e_entry_get_selection(E_Entry *entry);
 
 
 void e_action_add_proto(char *action,

@@ -49,32 +49,11 @@ e_paste_request(Eevent * ev)
 	entry = l->data;
 	if (entry->paste_win == e->win)
 	  {
-	     char *str2;
 	     char *type;
 	     
 	     type = e->string;
-	     if (entry->select.start >= 0)
-	       {
-		  str2 = strdup(e_entry_get_text(entry));
-		  if (entry->select.start + entry->select.length > strlen(entry->buffer))
-		    entry->select.length = strlen(entry->buffer) - entry->select.start;
-		  strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
-		  e_entry_set_text(entry, str2);
-		  free(str2);	     
-		  entry->cursor_pos = entry->select.start;
-		  entry->select.start = -1;
-	       }
-	     str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
-	     str2[0] = 0;
-	     strncat(str2, entry->buffer, entry->cursor_pos);
-	     strcat(str2, type);
-	     strcat(str2, &(entry->buffer[entry->cursor_pos]));
-	     e_entry_set_text(entry, str2);
-	     free(str2);
-	     entry->cursor_pos+=strlen(type);
-	     e_entry_configure(entry);	
-	     if (entry->func_changed) 
-	       entry->func_changed(entry, entry->data_changed);
+	     e_entry_clear_selection(entry);
+	     e_entry_insert_text(entry, type);
 	  }
      }
 }
@@ -193,15 +172,14 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	if (entry->select.start >= 0)
 	  {
 	     char *str2;
-	     int len;
 	     
-	     len = entry->select.length;
-	     if (entry->select.start + entry->select.length >= strlen(entry->buffer))
-	       len = strlen(entry->buffer) - entry->select.start;
-	     str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
-	     str2[len] = 0;
-	     if (entry->selection_win) e_window_destroy(entry->selection_win);
-	     entry->selection_win = e_selection_set(str2);
+	     str2 = e_entry_get_selection(entry);
+	     if (str2)
+	       {
+		  if (entry->selection_win) e_window_destroy(entry->selection_win);
+		  entry->selection_win = e_selection_set(str2);
+		  free(str2);
+	       }
 	  }
 	e_entry_configure(entry);   
      }
@@ -235,6 +213,7 @@ e_entry_unrealize(E_Entry *entry)
    if (entry->cursor) evas_del_object(entry->evas, entry->cursor);
    if (entry->text) evas_del_object(entry->evas, entry->text);
    if (entry->clip_box) evas_del_object(entry->evas, entry->clip_box);
+   if (entry->selection) evas_del_object(entry->evas, entry->selection);
 }
 
 static void 
@@ -260,7 +239,7 @@ e_entry_configure(E_Entry *entry)
 	     entry->cursor_pos = strlen(entry->buffer);
 	     evas_text_at(entry->evas, entry->text, entry->cursor_pos - 1, &tx, &ty, &tw, &th);
 	     tx += tw;
-	     tw = 4;
+	     tw = entry->end_width;
 	  }
 	evas_move(entry->evas, entry->cursor, entry->x + tx, entry->y + ty);
 	evas_resize(entry->evas, entry->cursor, tw, th);
@@ -272,7 +251,7 @@ e_entry_configure(E_Entry *entry)
 	
 	th = evas_get_text_height(entry->evas, entry->text);
 	evas_move(entry->evas, entry->cursor, entry->x, entry->y);
-	evas_resize(entry->evas, entry->cursor, 4, th);
+	evas_resize(entry->evas, entry->cursor, entry->end_width, th);
 	evas_show(entry->evas, entry->cursor);
      }
    else
@@ -289,7 +268,7 @@ e_entry_configure(E_Entry *entry)
 	else
 	  {
 	     evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 2, &x2, NULL, &tw, &th);
-	     tw += 4;
+	     tw += entry->end_width;
 	  }
 	evas_move(entry->evas, entry->selection, entry->x + x1, entry->y + y1);
 	evas_resize(entry->evas, entry->selection, x2 + tw - x1, th);
@@ -312,6 +291,8 @@ void
 e_entry_free(E_Entry *entry)
 {
    entries = evas_list_remove(entries, entry);
+   e_entry_unrealize(entry);
+   IF_FREE(entry->buffer);
    FREE(entry);
 }
 
@@ -324,6 +305,7 @@ e_entry_new(void)
    ZERO(entry, E_Entry, 1);
    entry->buffer=strdup("");
    entry->select.start = -1;
+   entry->end_width = 4;
    entries = evas_list_prepend(entries, entry);
    return entry;
 }
@@ -357,52 +339,15 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      {
 	char *str2;
 	
-	if (entry->select.start >= 0)
-	  {
-	     str2 = strdup(e_entry_get_text(entry));
-	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
-	       entry->select.length = strlen(entry->buffer) - entry->select.start;
-	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
-	     e_entry_set_text(entry, str2);
-	     free(str2);	     
-	     entry->cursor_pos = entry->select.start;
-	     entry->select.start = -1;
-	  }
-	else if (entry->cursor_pos > 0)
-	  {
-	     str2 = strdup(e_entry_get_text(entry));
-	     strcpy(&(str2[entry->cursor_pos - 1]), &(entry->buffer[entry->cursor_pos]));
-	     entry->cursor_pos--;
-	     e_entry_set_text(entry, str2);
-	     free(str2);
-	  }
-	if (entry->func_changed) 
-	  entry->func_changed(entry, entry->data_changed);
+	if (entry->select.start >= 0) e_entry_clear_selection(entry);
+	else if (entry->cursor_pos > 0) e_entry_delete_to_left(entry);
      }
    else if (!strcmp(e->key, "Delete"))
      {
 	char *str2;
 	
-	if (entry->select.start >= 0)
-	  {
-	     str2 = strdup(e_entry_get_text(entry));
-	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
-	       entry->select.length = strlen(entry->buffer) - entry->select.start;
-	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
-	     e_entry_set_text(entry, str2);
-	     free(str2);	     
-	     entry->cursor_pos = entry->select.start;
-	     entry->select.start = -1;
-	  }
-	else if (entry->cursor_pos < strlen(entry->buffer))
-	  {
-	     str2 = strdup(e_entry_get_text(entry));
-	     strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
-	     e_entry_set_text(entry, str2);
-	     free(str2);
-	  }
-	if (entry->func_changed) 
-	  entry->func_changed(entry, entry->data_changed);
+	if (entry->select.start >= 0) e_entry_clear_selection(entry);
+	else if (entry->cursor_pos < strlen(entry->buffer)) e_entry_delete_to_right(entry);
      }
    else if (!strcmp(e->key, "Insert"))
      {
@@ -454,34 +399,11 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 		  str2[entry->cursor_pos] = 0;
 		  e_entry_set_text(entry, str2);
 		  free(str2);		  
-		  if (entry->func_changed) 
-		    entry->func_changed(entry, entry->data_changed);
 	       }
 	     else if (strlen(type) > 0)
 	       {
-		  char *str2;
-	
-		  if (entry->select.start >= 0)
-		    {
-		       str2 = strdup(e_entry_get_text(entry));
-		       if (entry->select.start + entry->select.length > strlen(entry->buffer))
-			 entry->select.length = strlen(entry->buffer) - entry->select.start;
-		       strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
-		       e_entry_set_text(entry, str2);
-		       free(str2);	     
-		       entry->cursor_pos = entry->select.start;
-		       entry->select.start = -1;
-		    }
-		  str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
-		  str2[0] = 0;
-		  strncat(str2, entry->buffer, entry->cursor_pos);
-		  strcat(str2, type);
-		  strcat(str2, &(entry->buffer[entry->cursor_pos]));
-		  e_entry_set_text(entry, str2);
-		  free(str2);
-		  entry->cursor_pos+=strlen(type);
-		  if (entry->func_changed) 
-		    entry->func_changed(entry, entry->data_changed);
+		  e_entry_clear_selection(entry);
+		  e_entry_insert_text(entry, type);
 	       }
 	  }
      }   
@@ -648,4 +570,82 @@ e_entry_set_focus_out_callback(E_Entry *entry, void (*func) (E_Entry *_entry, vo
 {
    entry->func_focus_out = func;
    entry->data_focus_out = data;
+}
+
+void
+e_entry_insert_text(E_Entry *entry, char *text)
+{
+   char *str2;
+   
+   if (!text) return;
+   str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(text));
+   str2[0] = 0;
+   strncat(str2, entry->buffer, entry->cursor_pos);
+   strcat(str2, text);
+   strcat(str2, &(entry->buffer[entry->cursor_pos]));
+   e_entry_set_text(entry, str2);
+   free(str2);
+   entry->cursor_pos+=strlen(text);
+   e_entry_configure(entry);
+}
+
+void
+e_entry_clear_selection(E_Entry *entry)
+{
+   char *str2;
+   
+   if (entry->select.start >= 0)
+     {
+	str2 = strdup(e_entry_get_text(entry));
+	if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	  entry->select.length = strlen(entry->buffer) - entry->select.start;
+	strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+	e_entry_set_text(entry, str2);
+	free(str2);	     
+	entry->cursor_pos = entry->select.start;
+	entry->select.start = -1;
+     }
+   e_entry_configure(entry);
+}
+
+void
+e_entry_delete_to_left(E_Entry *entry)
+{
+   char *str2;
+   
+   str2 = strdup(e_entry_get_text(entry));
+   strcpy(&(str2[entry->cursor_pos - 1]), &(entry->buffer[entry->cursor_pos]));
+   entry->cursor_pos--;
+   e_entry_set_text(entry, str2);
+   e_entry_configure(entry);
+}
+
+void
+e_entry_delete_to_right(E_Entry *entry)
+{
+   char *str2;
+   
+   str2 = strdup(e_entry_get_text(entry));
+   strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
+   e_entry_set_text(entry, str2);
+   free(str2);
+   e_entry_configure(entry);
+}
+
+char *
+e_entry_get_selection(E_Entry *entry)
+{
+   if (entry->select.start >= 0)
+     {
+	char *str2;
+	int len;
+	
+	len = entry->select.length;
+	if (entry->select.start + entry->select.length >= strlen(entry->buffer))
+	  len = strlen(entry->buffer) - entry->select.start;
+	str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
+	str2[len] = 0;
+	return str2;
+     }
+   return NULL;
 }
