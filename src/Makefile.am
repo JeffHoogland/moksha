@@ -16,10 +16,11 @@ enlightenment_SOURCES = \
 	desktops.h desktops.c \
 	entry.h entry.c \
 	exec.h exec.c \
-	e_ferite.h e_ferite.c \
-	e_ferite_gen_header.h e_ferite_gen_core.c \
+	e_ferite_gen_core.c \
+	e_ferite_gen_header.h \
 	e_ferite_gen_e.c \
 	e_ferite_gen_Window.c \
+	e_ferite.h e_ferite.c \
 	fs.h fs.c \
 	icccm.h icccm.c \
 	icons.c \
