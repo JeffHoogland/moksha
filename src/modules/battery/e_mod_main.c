@@ -19,6 +19,10 @@ static void     _battery_cb_face_down(void *data, Evas *e, Evas_Object *obj, voi
 static void     _battery_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void     _battery_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int      _battery_cb_event_container_resize(void *data, int type, void *event);
+static int      _battery_cb_check(void *data);
+static int      _battery_linux_acpi_check(Battery_Face *ef);
+static int      _battery_linux_apm_check(Battery_Face *ef);
+static void     _battery_level_set(Battery_Face *ef, double level);
 
 /* public module routines. all modules must have these */
 void *
@@ -222,6 +226,14 @@ _battery_face_init(Battery_Face *ef)
 
    _battery_face_reconfigure(ef);
    
+   ef->battery_check_mode = CHECK_NONE;
+   ef->battery_prev_drain = 1;
+   ef->battery_prev_ac = -1;
+   ef->battery_prev_battery = -1;
+   ef->battery_check_timer = ecore_timer_add(5.0, _battery_cb_check, ef);
+   
+   _battery_cb_check(ef);
+   
    evas_event_thaw(ef->evas);
 }
 
@@ -346,4 +358,319 @@ _battery_cb_event_container_resize(void *data, int type, void *event)
    ef = data;
    _battery_face_reconfigure(ef);
    return 1;
+}
+
+static int
+_battery_cb_check(void *data)
+{
+   Battery_Face *ef;
+   int ret = 0;
+   
+   ef = data;
+   if (ef->battery_check_mode == 0)
+     {
+	if (e_file_is_dir("/proc/acpi"))
+	  ef->battery_check_mode = CHECK_LINUX_ACPI;
+	else if (e_file_is_dir("/proc/apm"))
+	  ef->battery_check_mode = CHECK_LINUX_APM;
+     }
+   switch (ef->battery_check_mode)
+     {
+      case CHECK_LINUX_ACPI:
+	ret = _battery_linux_acpi_check(ef);
+	break;
+      case CHECK_LINUX_APM:
+	ret = _battery_linux_acpi_check(ef);
+	break;
+      default:
+	break;
+     }
+   if (!ret)
+     {
+	if (ef->battery_prev_battery != -2)
+	  {
+	     edje_object_signal_emit(ef->bat_object, "unknown", "");
+	     ef->battery_prev_battery = -2;
+	  }
+	edje_object_part_text_set(ef->bat_object, "reading", "NO INFO");
+	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	ef->battery_check_mode = CHECK_NONE;
+	_battery_level_set(ef, (double)(rand() & 0xff) / 255.0);
+     }
+   return 1;
+}
+
+static int
+_battery_linux_acpi_check(Battery_Face *ef)
+{
+   Evas_List *bats;
+   char buf[4096], buf2[4096];
+   
+   int bat_max = 0;
+   int bat_filled = 0;
+   int bat_level = 0;
+   int bat_drain = 1;
+   
+   int bat_val = 0;
+   
+   char current_status[256];
+   int discharging = 0;
+   int charging = 0;
+   int battery = 0;
+   
+   int design_cap_unknown = 0;
+   int last_full_unknown = 0;
+   int rate_unknown = 0;
+   int level_unknown = 0;
+   
+   int hours, minutes;
+   
+   /* Read some information on first run. */
+   bats = e_file_ls("/proc/acpi/battery");
+   if (!bats) return 0;
+   while (bats) 
+     {
+	FILE *f;
+	char *name;
+	
+	name = bats->data;
+	if ((!strcmp(name, ".")) || (!strcmp(name, "..")))
+	  {
+	     bats = evas_list_remove_list(bats, bats);
+	     free(name);
+	     continue;
+	  }
+	snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
+	f = fopen(buf, "r");
+	if (f)
+	  {
+	     int design_cap = 0;
+	     int last_full = 0;
+	     
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
+	     if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
+	     else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
+	     if (!strcmp(buf, "unknown")) last_full_unknown = 1;
+	     else sscanf(buf2, "%*[^:]: %i %*s", &last_full);
+	     fclose(f);
+	     bat_max += design_cap;
+	     bat_filled += last_full;
+	  }
+	snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
+	f = fopen(buf, "r");
+	if (f)
+	  {
+	     char present[256];
+	     char capacity_state[256];
+	     char charging_state[256];
+	     int rate = 1;
+	     int level = 0;
+	     
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s", present);
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s", capacity_state);
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s", charging_state);
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
+	     if (!strcmp(buf, "unknown")) rate_unknown = 1;
+	     else sscanf(buf2, "%*[^:]: %i %*s", &rate);
+	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
+	     if (!strcmp(buf, "unknown")) level_unknown = 1;
+	     else sscanf(buf2, "%*[^:]: %i %*s", &level);
+	     fclose(f);
+	     if (!strcmp(present, "yes")) battery++;
+	     if (!strcmp(charging_state, "discharging")) discharging++;
+	     if (!strcmp(charging_state, "charging")) charging++;
+	     bat_drain += rate;
+	     bat_level += level;
+	  }
+	bats = evas_list_remove_list(bats, bats);
+	free(name);
+     }
+   if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
+   if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
+   ef->battery_prev_drain = bat_drain;
+   
+   if (bat_filled > 0) bat_val = (100 * bat_level) / bat_filled;
+   else bat_val = 100;
+   
+   if (discharging) minutes = (60 * bat_level) / bat_drain;
+   else
+     {
+	if (bat_filled > 0)
+	  minutes = (60 * (bat_filled - bat_level)) / bat_drain;
+	else
+	  minutes = 0;
+     }
+   hours = minutes / 60;
+   minutes -= (hours * 60);
+   
+   if ((charging) || (discharging))
+     {
+	ef->battery_prev_battery = 1;
+	if ((charging ) && (ef->battery_prev_ac == 0))
+	  {
+	     edje_object_signal_emit(ef->bat_object, "charge", "");
+	     ef->battery_prev_ac = 1;
+	  }
+	else if ((discharging) && (ef->battery_prev_ac == 1))
+	  {
+	     edje_object_signal_emit(ef->bat_object, "discharge", "");
+	     ef->battery_prev_ac = 0;
+	  }
+	if (level_unknown)
+	  {
+	     edje_object_part_text_set(ef->bat_object, "reading", "BAD DIRVER");
+	     edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	     _battery_level_set(ef, 0.0);
+	  }
+	else if (rate_unknown)
+	  {
+	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     edje_object_part_text_set(ef->bat_object, "reading", buf);
+	     edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	     _battery_level_set(ef, (double)bat_val / 100.0);
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     edje_object_part_text_set(ef->bat_object, "reading", buf);
+	     snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	     edje_object_part_text_set(ef->bat_object, "time", buf);
+	     _battery_level_set(ef, (double)bat_val / 100.0);
+	  }
+     }
+   else if (!battery)
+     {
+	if (ef->battery_prev_battery != 0)
+	  {
+	     edje_object_signal_emit(ef->bat_object, "unknown", "");
+	     ef->battery_prev_battery = 0;
+	  }
+	edje_object_part_text_set(ef->bat_object, "reading", "NO BAT");
+	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	_battery_level_set(ef, 1.0);
+     }
+   else
+     {
+	if (ef->battery_prev_battery == 0)
+	  {
+	     edje_object_signal_emit(ef->bat_object, "charge", "");
+	     ef->battery_prev_battery = 1;
+	  }
+	edje_object_part_text_set(ef->bat_object, "reading", "FULL");
+	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	_battery_level_set(ef, 1.0);
+     }
+   return 1;
+}
+
+static int
+_battery_linux_apm_check(Battery_Face *ef)
+{
+   FILE *f;
+   char s[256], s1[32], s2[32], s3[32], buf[4096];
+   int  apm_flags, ac_stat, bat_stat, bat_flags, bat_val, time_val;
+   int  hours, minutes;
+   
+   f = fopen("/proc/apm", "r");
+   if (!f) return 0;
+	     
+   fgets(s, sizeof(s), f); s[sizeof(s) - 1] = 0;
+   if (sscanf(s, "%*s %*s %x %x %x %x %s %s %s", 
+	      &apm_flags, &ac_stat, &bat_stat, &bat_flags, s1, s2, s3) != 7)
+     {
+	fclose(f);
+	return 0;
+     }
+   s1[strlen(s1) - 1] = 0;
+   bat_val = atoi(s1);
+   if (!strcmp(s3, "sec")) time_val = atoi(s2);
+   else if (!strcmp(s3, "min")) time_val = atoi(s2) * 60;
+   fclose(f);
+   
+   if ((bat_flags != 0xff) && (bat_flags & 0x80))
+     {
+	if (ef->battery_prev_battery != 0)
+	  {
+	     edje_object_signal_emit(ef->bat_object, "unknown", "");
+	     ef->battery_prev_battery = 0;
+	  }
+	edje_object_part_text_set(ef->bat_object, "reading", "NO BAT");
+	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+	_battery_level_set(ef, 1.0);
+     }
+   else
+     {
+	ef->battery_prev_battery = 1;
+	if (bat_val > 0)
+	  {
+	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     edje_object_part_text_set(ef->bat_object, "reading", buf);
+	     _battery_level_set(ef, (double)bat_val / 100.0);
+	  }
+	else
+	  {
+	     switch( bat_stat )
+	       {
+		case 0:
+		  edje_object_part_text_set(ef->bat_object, "reading", "High");
+		  _battery_level_set(ef, 1.0);
+		  break;
+		case 1:
+		  edje_object_part_text_set(ef->bat_object, "reading", "Low");
+		  _battery_level_set(ef, 0.50);
+		  break;
+		case 2:
+		  edje_object_part_text_set(ef->bat_object, "reading", "Danger");
+		  _battery_level_set(ef, 0.25);
+		  break;
+		case 3:
+		  edje_object_part_text_set(ef->bat_object, "reading", "Charge");
+		  _battery_level_set(ef, 1.0);
+		  break;
+	       }
+	  }
+     }
+   
+   if (ac_stat == 1)
+     {
+	if ((ac_stat == 1) && (ef->battery_prev_ac == 0))
+	  {
+	     edje_object_signal_emit(ef->bat_object, "charge", "");
+	     ef->battery_prev_ac = 1;
+	  }
+	else if ((ac_stat == 0) && (ef->battery_prev_ac == 1))
+	  {
+	     edje_object_signal_emit(ef->bat_object, "discharge", "");
+	     ef->battery_prev_ac = 0;
+	  }
+	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+     }
+   else
+     {
+	hours = time_val / 3600;
+	minutes = (time_val / 60) % 60;
+	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	edje_object_part_text_set(ef->bat_object, "time", buf);
+     }
+   return 1;
+}
+
+static void
+_battery_level_set(Battery_Face *ef, double level)
+{
+   Edje_Message_Float msg;
+   
+   if (level < 0.0) level = 0.0;
+   else if (level > 1.0) level = 1.0;
+   msg.val = level;
+   edje_object_message_send(ef->bat_object, EDJE_MESSAGE_FLOAT, 1, &msg);
 }

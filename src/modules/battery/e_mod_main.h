@@ -5,6 +5,10 @@ typedef struct _Config       Config;
 typedef struct _Battery      Battery;
 typedef struct _Battery_Face Battery_Face;
 
+#define CHECK_NONE 0
+#define CHECK_LINUX_ACPI 1
+#define CHECK_LINUX_APM 2
+
 struct _Config
 {
    int width;
@@ -35,7 +39,13 @@ struct _Battery_Face
    unsigned char   resize : 1;
    Evas_Coord      xx, yy;
    Evas_Coord      fx, fy, fw;
-
+   
+   int                  battery_check_mode;
+   Ecore_Timer         *battery_check_timer;
+   int                  battery_prev_drain;
+   int                  battery_prev_ac;
+   int                  battery_prev_battery;
+   
    Ecore_Event_Handler *ev_handler_container_resize;
 };
 
