@@ -2,7 +2,7 @@
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
-	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@
 
 bin_PROGRAMS = enlightenment
 
@@ -12,6 +12,7 @@ border.c \
 config.c \
 desktops.c \
 exec.c \
+fs.c \
 icccm.c \
 icons.c \
 main.c \
@@ -22,5 +23,5 @@ util.c \
 view.c \
 e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ -lm $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm $(INTLLIBS)
 

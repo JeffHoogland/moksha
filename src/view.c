@@ -243,27 +243,63 @@ e_view_new(void)
 void
 e_view_set_background(E_View *v)
 {
+   v->changed = 1;
 }
 
 void
 e_view_set_dir(E_View *v, char *dir)
-{ 
+{
+   /* stop monitoring old dir */
+   IF_FREE(v->directory);
+   v->directory = strdup(dir);
+   /* start monitoring new dir */
+   
+     {
+	/* bad hack- lets just add some dummy stuff for testing */
+	int i;
+	char *files[8] = {
+	   "The first file",
+	   "Some more things",
+	   "K is a FISH!",
+	   "Possum Eyes",
+	   "Nasty Bums",
+	   "BLUMFRUB!",
+	   "Oh lookie here now!",
+	   "Last one...."
+	};
+	for (i = 0; i < 8; i++)
+	  {
+	     E_Icon *icon;
+	     
+	     icon = e_icon_new();
+	     icon->file = strdup(files[i]);
+	     e_view_add_icon(v, icon);
+	  }
+     }   
+   v->changed = 1;
 }
 
 void
 e_view_scroll(E_View *v, int dx, int dy)
 {
+   v->changed = 1;
 }
 
 void
 e_view_add_icon(E_View *v, E_Icon *icon)
 {
+   if (icon->view) return;
+   icon->view = v;
+   icon->changed = 1;
    v->changed = 1;
 }
 
 void
 e_view_del_icon(E_View *v, E_Icon *icon)
 {
+   if (!icon->view) return;
+   icon->view = NULL;
+   icon->changed = 1;
    v->changed = 1;
 }
 
@@ -302,6 +338,7 @@ e_view_realize(E_View *v)
 		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
 		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
    e_window_show(v->win.main);
+   e_view_set_dir(v, v->directory);
    v->changed = 1;
 }
 

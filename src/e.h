@@ -1,10 +1,5 @@
 #include "../config.h"
 #include <X11/Xlib.h>
-#include <Imlib2.h>
-#include <Evas.h>
-#include <Ebits.h>
-#include <Ecore.h>
-#include <Edb.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -20,6 +15,12 @@
 #ifdef WITH_DMALLOC
 #include <dmalloc.h>
 #endif
+#include <Imlib2.h>
+#include <Evas.h>
+#include <Ebits.h>
+#include <Ecore.h>
+#include <Edb.h>
+#include <libefsd.h>
 
 #define E_PROF 1
 #ifdef E_PROF
@@ -600,3 +601,6 @@ E_Menu       *e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num
 void          e_build_menu_build(E_Build_Menu *bm);
 void          e_build_menu_free(E_Build_Menu *bm);
 E_Build_Menu *e_build_menu_new_from_db(char *file);
+
+void e_fs_add_event_handler(void (*func) (EfsdEvent *ev));
+void e_fs_init(void);

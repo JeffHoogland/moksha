@@ -20,4 +20,5 @@ e_icon_new(void)
 void
 e_icon_calulcate_geometry(E_Icon *icon)
 {
+   if (!icon->view) return;
 }
