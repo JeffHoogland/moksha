@@ -63,8 +63,11 @@ main(int argc, char **argv)
      {
 	if ((!strcmp(argv[i], "-display")) && (i < (argc - 1)))
 	  {
+	     char buf[1024];
 	     i++;
-	     display_name = argv[i];
+	     
+	     snprintf(buf, sizeof(buf), "DISPLAY=%s", argv[i]);
+	     putenv(buf);
 	  }
      }
   
@@ -94,7 +97,7 @@ main(int argc, char **argv)
    _e_main_idle_enterer_before = ecore_idle_enterer_add(_e_main_cb_idler_before, NULL);
    
    /* init x */
-   if (!ecore_x_init(display_name))
+   if (!ecore_x_init(NULL))
      {
 	e_error_message_show("Enlightenment cannot initialize its X connection.\n"
 			     "Have you set your DISPLAY variable?");

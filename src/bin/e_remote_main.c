@@ -1,5 +1,18 @@
 #include "e.h"
 
+typedef struct _E_IPC_Opt_Handler E_IPC_Opt_Handler;
+
+struct _E_IPC_Opt_Handler
+{
+   char *option;
+   char *desc;
+   int   num_params;
+   int   replies;
+   int   type;
+   int   simple_request_id;
+   void (*func) (char **params);
+};
+
 /* local subsystem functions */
 static int  _e_cb_signal_exit(void *data, int ev_type, void *ev);
 static int  _e_ipc_init(void);
@@ -9,11 +22,31 @@ static int _e_ipc_cb_server_add(void *data, int type, void *event);
 static int _e_ipc_cb_server_del(void *data, int type, void *event);
 static int _e_ipc_cb_server_data(void *data, int type, void *event);
 
+static void _e_help(void);
+
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 static const char *display_name = NULL;
 static int reply_count = 0;
 static int reply_expect = 0;
+
+#define SIMPLE_REQ     0
+#define SIMPLE_STR_REQ 1
+#define FULL_FUNC      2
+
+#define REQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
+#define STR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
+#define FNC(opt, desc, param, fn, rep) {opt, desc, param, rep, SIMPLE_FUNC, 0, fn}
+
+E_IPC_Opt_Handler handlers[] =
+{
+   STR("-module-load", "Load module OPT1 into memory", E_IPC_OP_MODULE_LOAD, 0),
+   STR("-module-unload", "Unload (and disable) module OPT1 from memory", E_IPC_OP_MODULE_UNLOAD, 0),
+   STR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
+   STR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
+   REQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
+   STR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0)
+};
 
 /* externally accessible functions */
 int
@@ -29,6 +62,14 @@ main(int argc, char **argv)
 	  {
 	     i++;
 	     display_name = argv[i];
+	  }
+	else if ((!strcmp(argv[i], "-h")) ||
+		 (!strcmp(argv[i], "-help")) ||
+		 (!strcmp(argv[i], "--h")) ||
+		 (!strcmp(argv[i], "--help")))
+	  {
+	     _e_help();
+	     exit(0);
 	  }
      }
   
@@ -121,73 +162,63 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
    int argc;
    char **argv;
    int i;
+   int process_count = 0;
    
    e = event;
    ecore_app_args_get(&argc, &argv);
    for (i = 1; i < argc; i++)
      {
 	char *v;
+	int j;
+	
+	for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+	  {
+	     E_IPC_Opt_Handler *handler;
 	     
-	if ((!strcmp(argv[i], "-load-module")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     v = argv[i];
-	     ecore_ipc_server_send(_e_ipc_server,
-				   E_IPC_DOMAIN_REQUEST,
-				   E_IPC_OP_MODULE_LOAD,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   v, strlen(v));
+	     handler = &handlers[j];
+	     if (!strcmp(handler->option, argv[i]))
+	       {
+		  if (i >= (argc - handler->num_params))
+		    {
+		       printf("ERROR: option %s expects %i parameters\n",
+			      handler->option, handler->num_params);
+		       exit(-1);
+		    }
+		  else
+		    {
+		       switch (handler->type)
+			 {
+			  case SIMPLE_REQ:
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  NULL, 0);
+			    break;
+			  case SIMPLE_STR_REQ:
+			    v = argv[i + 1];
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  v, strlen(v));
+			    break;
+			  case FULL_FUNC:
+			    handler->func(argv + i + 1);
+			    break;
+			  default:
+			    break;
+			 }
+		       process_count++;
+		       reply_expect += handler->replies;
+		       i += handler->num_params;
+		       break;
+		    }
+	       }
 	  }
-	else if ((!strcmp(argv[i], "-unload-module")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     v = argv[i];
-	     ecore_ipc_server_send(_e_ipc_server,
-				   E_IPC_DOMAIN_REQUEST,
-				   E_IPC_OP_MODULE_UNLOAD,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   v, strlen(v));
-	  }
-	else if ((!strcmp(argv[i], "-enable-module")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     v = argv[i];
-	     ecore_ipc_server_send(_e_ipc_server,
-				   E_IPC_DOMAIN_REQUEST,
-				   E_IPC_OP_MODULE_ENABLE,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   v, strlen(v));
-	  }
-	else if ((!strcmp(argv[i], "-disable-module")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     v = argv[i];
-	     ecore_ipc_server_send(_e_ipc_server,
-				   E_IPC_DOMAIN_REQUEST,
-				   E_IPC_OP_MODULE_DISABLE,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   v, strlen(v));
-	  }
-	else if ((!strcmp(argv[i], "-list-modules")))
-	  {
-	     reply_expect++;
-	     ecore_ipc_server_send(_e_ipc_server,
-				   E_IPC_DOMAIN_REQUEST,
-				   E_IPC_OP_MODULE_LIST,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   NULL, 0);
-	  }
-	else if ((!strcmp(argv[i], "-bg-set")) && (i < (argc - 1)))
-          {
-             i++;
-             v = argv[i];
-             ecore_ipc_server_send(_e_ipc_server,
-                                   E_IPC_DOMAIN_REQUEST,
-                                   E_IPC_OP_BG_SET,
-                                   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-                                   v, strlen(v));
-          }
      }
+   if (process_count <= 0)
+     _e_help();
    if (reply_count >= reply_expect) ecore_main_loop_quit();
    return 1;
 }
@@ -207,6 +238,8 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    Ecore_Ipc_Event_Server_Data *e;
    
    e = event;
+   /* FIXME: should make this function/callback based in a table like the */
+   /* option handlers... */
    printf("REPLY: BEGIN\n");
    switch (e->minor)
      {  
@@ -246,4 +279,47 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    reply_count++;
    if (reply_count >= reply_expect) ecore_main_loop_quit();
    return 1;
+}
+
+static void
+_e_help(void)
+{
+   int j, k, l;
+   E_IPC_Opt_Handler *handler;
+   char buf[128];
+   int parsize = 0, opsize = 0;
+   
+   printf("OPTIONS:\n");
+   for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+     {
+	handler = &handlers[j];
+	if (strlen(handler->option) > parsize) parsize = strlen(handler->option);
+	l = 0;
+	for (k = 0; k < handler->num_params; k++)
+	  {
+	     snprintf(buf, sizeof(buf), " OPT%i", k + 1);
+	     l += strlen(buf);
+	  }
+	if (l > opsize) opsize = l;
+     }
+   for (j = 0; j < (sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
+     {
+	handler = &handlers[j];
+	printf("  %s", handler->option);
+	l = parsize - strlen(handler->option);
+	for (k = 0; k < l; k++) printf(" ");
+	l = 0;
+	for (k = 0; k < handler->num_params; k++)
+	  {
+	     snprintf(buf, sizeof(buf), " OPT%i", k + 1);
+	     printf("%s", buf);
+	     l += strlen(buf);
+	  }
+	while (l < opsize)
+	  {
+	     printf(" ");
+	     l++;
+	  }
+	printf("  - %s\n", handler->desc);
+     }
 }

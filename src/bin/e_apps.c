@@ -2,7 +2,7 @@
 
 /* TODO List:
  * 
- * * if a application .eet file is added in a different location in a monitored app tree but has the same filename as an existing one somewhere else, the existing one gets a changed callback, not an dded callback for the new one
+ * * if a application .eapp file is added in a different location in a monitored app tree but has the same filename as an existing one somewhere else, the existing one gets a changed callback, not an dded callback for the new one
  * * track app execution state, visibility state etc. and call callbacks
  * * calls to execute an app or query its runing/starting state etc.
  */
@@ -80,7 +80,7 @@ e_app_new(char *path, int scan_subdirs)
 	char buf[4096];
 	
 	a->path = strdup(path);
-	snprintf(buf, sizeof(buf), "%s/.directory.eet", path);
+	snprintf(buf, sizeof(buf), "%s/.directory.eapp", path);
 	a->directory_mod_time = e_file_mod_time(buf);
 	if (e_file_exists(buf))
 	  _e_app_fields_fill(a, buf);
@@ -92,7 +92,7 @@ e_app_new(char *path, int scan_subdirs)
      {
 	char *p;
 	
-	/* check if file ends in .eet */
+	/* check if file ends in .eapp */
 	p = strrchr(path, '.');
 	if (!p)
 	  {
@@ -100,7 +100,7 @@ e_app_new(char *path, int scan_subdirs)
 	     return NULL;
 	  }
 	p++;
-	if (strcasecmp(p, "eet"))
+	if (strcasecmp(p, "eapp"))
 	  {
 	     free(a);
 	     return NULL;
@@ -283,45 +283,119 @@ _e_app_free(E_App *a)
 static void
 _e_app_fields_fill(E_App *a, char *path)
 {
+   Eet_File *ef;
    char buf[4096];
-   char *str;
+   char *str, *v;
    char *lang;
+   int size;
    
    /* get our current language */
    lang = getenv("LANG");
    /* if its "C" its the default - so drop it */
    if ((lang) && (!strcmp(lang, "C")))
      lang = NULL;
-   /* get fields (language local preferred) */
-   if (lang)
+   ef = eet_open(a->path, EET_FILE_MODE_READ);
+   if (!ef) return;
+   if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
+   v = eet_read(ef, buf, &size);
+   if (v)
      {
-	snprintf(buf, sizeof(buf), "app/name[%s]", lang);
-	a->name = edje_file_data_get(path, buf);
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->name = str;
+	free(v);
      }
-   if (!a->name) a->name = edje_file_data_get(path, "app/name");
-   if (lang)
+   else
      {
-	snprintf(buf, sizeof(buf), "app/generic[%s]", lang);
-	a->generic = edje_file_data_get(path, buf);
+	v = eet_read(ef, "app/info/name", &size);
+	if (v)
+	  {
+	     str = malloc(size + 1);
+	     memcpy(str, v, size);
+	     str[size] = 0;
+	     a->name = str;
+	     free(v);
+	  }
      }
-   if (!a->generic) a->generic = edje_file_data_get(path, "app/generic");
-   if (lang)
+   if (lang) snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
+   v = eet_read(ef, buf, &size);
+   if (v)
      {
-	snprintf(buf, sizeof(buf), "app/comment[%s]", lang);
-	a->comment = edje_file_data_get(path, buf);
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->generic = str;
+	free(v);
      }
-   if (!a->comment) a->comment = edje_file_data_get(path, "app/comment");
-   
-   a->exe = edje_file_data_get(path, "app/exe");
-   a->win_name = edje_file_data_get(path, "app/window/name");
-   a->win_class = edje_file_data_get(path, "app/window/class");
-   
-   str = edje_file_data_get(path, "app/startup_notify");	
-   if (str)
+   else
      {
-	a->startup_notify = atoi(str);
-	free(str);
+	v = eet_read(ef, "app/info/generic", &size);
+	if (v)
+	  {
+	     str = malloc(size + 1);
+	     memcpy(str, v, size);
+	     str[size] = 0;
+	     a->generic = str;
+	     free(v);
+	  }
      }
+   if (lang) snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
+   v = eet_read(ef, buf, &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->comment = str;
+	free(v);
+     }
+   else
+     {
+	v = eet_read(ef, "app/info/comment", &size);
+	if (v)
+	  {
+	     str = malloc(size + 1);
+	     memcpy(str, v, size);
+	     str[size] = 0;
+	     a->comment = str;
+	     free(v);
+	  }
+     }
+   v = eet_read(ef, "app/info/exe", &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->exe = str;
+	free(v);
+     }
+   v = eet_read(ef, "app/window/name", &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->win_name = str;
+	free(v);
+     }
+   v = eet_read(ef, "app/window/class", &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->win_class = str;
+	free(v);
+     }
+   v = eet_read(ef, "app/info/startup_notify", &size);
+   if (v)
+     {
+	a->startup_notify = *v;
+	free(v);
+     }
+   eet_close(ef);
 }
 
 static void
@@ -567,7 +641,7 @@ _e_app_check_each(Evas_Hash *hash, const char *key, void *data, void *fdata)
 	mod_time = e_file_mod_time(a->path);
 	snprintf(buf, sizeof(buf), "%s/.order", a->path);
 	order_mod_time = e_file_mod_time(buf);
-	snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
+	snprintf(buf, sizeof(buf), "%s/.directory.eapp", a->path);
 	directory_mod_time = e_file_mod_time(buf);
 	if ((mod_time != a->mod_time) ||
 	    (order_mod_time != a->order_mod_time) ||
@@ -594,7 +668,7 @@ _e_app_check_each(Evas_Hash *hash, const char *key, void *data, void *fdata)
 		    }
 		  if (directory_mod_time != a->directory_mod_time)
 		    {
-		       snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
+		       snprintf(buf, sizeof(buf), "%s/.directory.eapp", a->path);
 		       _e_app_fields_empty(a);
 		       _e_app_fields_fill(a, buf);
 		       ch = calloc(1, sizeof(E_App_Change_Info));

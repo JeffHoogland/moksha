@@ -6,7 +6,7 @@ INCLUDES = -I$(includedir) \
 	   @e_cflags@ \
 	   @EDJE_DEF@
 
-bin_PROGRAMS = enlightenment enlightenment_remote
+bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
 
 enlightenment_SOURCES = \
 e.h \
@@ -67,3 +67,9 @@ e.h \
 e_remote_main.c
 
 enlightenment_remote_LDFLAGS = @e_libs@ @dlopen_libs@
+
+enlightenment_eapp_SOURCES = \
+e.h \
+e_eapp_main.c
+
+enlightenment_eapp_LDFLAGS = @e_libs@ @dlopen_libs@
