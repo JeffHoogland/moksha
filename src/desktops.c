@@ -25,6 +25,8 @@ e_idle(void *data)
 	e_desktops_update(desk);
      }
    e_db_runtime_flush();
+   return;
+   UN(data);
 }
 
 /* handling mouse down events */
@@ -54,6 +56,8 @@ e_mouse_down(Eevent * ev)
 		  x = e->rx - x;
 		  y = e->ry - y;
 		  evas_event_button_down(evas, x, y, e->button);
+		  if (e->button == 3)
+		    e_exec_restart();
 		  return;
 	       }
 	  }
@@ -341,7 +345,22 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 void
 e_desktops_free(E_Desktop *desk)
 {
+   while (desk->windows)
+     {
+	E_Border *b;
+	
+	b = desk->windows->data;
+	e_action_stop_by_object(b, NULL, 0, 0, 0, 0);
+	OBJ_UNREF(b);
+	OBJ_IF_FREE(b)
+	  {
+	     e_window_reparent(b->win.client, 0, 0, 0);
+	     e_icccm_release(b->win.client);
+	     OBJ_FREE(b);
+	  }
+     }
    e_window_destroy(desk->win.main);
+   if (desk->evas.pmap) e_pixmap_free(desk->evas.pmap);
    IF_FREE(desk->name);
    IF_FREE(desk->dir);
    FREE(desk);
@@ -443,6 +462,7 @@ e_desktops_delete(E_Desktop *d)
 void
 e_desktops_show(E_Desktop *d)
 {
+   e_desktops_update(d);
    e_window_show(d->win.main);
 }
 
@@ -491,7 +511,6 @@ e_desktops_update(E_Desktop *desk)
      {
 	Imlib_Updates u;
 	
-	printf("rendered desktop\n");
 	for (u = up; u; u = imlib_updates_get_next(u))
 	  {
 	     int x, y, w, h;

@@ -1,6 +1,3 @@
-#ifndef __E_H_
-#define __E_H_
-
 #include "../config.h"
 #include <X11/Xlib.h>
 #include <Imlib2.h>
@@ -20,6 +17,9 @@
 #include <dirent.h>
 #include <errno.h>
 #include <signal.h>
+#ifdef WITH_DMALLOC
+#include <dmalloc.h>
+#endif
 
 #define E_PROF 1
 #ifdef E_PROF
@@ -100,6 +100,7 @@ _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 
 #define SPANS_COMMON(x1, w1, x2, w2) \
   (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
+#define UN(_blah) _blah = 0
 
 #define ACT_MOUSE_IN      0
 #define ACT_MOUSE_OUT     1
@@ -178,16 +179,19 @@ struct _E_Border
       char *class;
       char *command;
       Window group;
+      int takes_focus;
       int sticky;
       Colormap colormap;
       int fixed;
       int arrange_ignore;
       int shaded;
       int hidden;
+      int iconified;
       int borderless;
       int titlebar;
       int border;
       int handles;
+      int w, h;
    } client;
    
    struct {
@@ -198,6 +202,8 @@ struct _E_Border
    int shape_changes;
    
    int ignore_unmap;
+   
+   int placed;
    
    Evas_List grabs;
    E_Desktop *desk;
@@ -299,7 +305,8 @@ void e_border_lower(E_Border *b);
 void e_border_raise_above(E_Border *b, E_Border *above);
 void e_border_lower_below(E_Border *b, E_Border *below);
 void e_border_init(void);
-
+void e_border_adopt_children(Window win);
+    
 void e_icccm_move_resize(Window win, int x, int y, int w, int h);
 void e_icccm_delete(Window win);
 void e_icccm_state_mapped(Window win);
@@ -314,6 +321,8 @@ void e_icccm_set_frame_size(Window win, int l, int r, int t, int b);
 void e_icccm_set_desk_area(Window win, int ax, int ay);
 void e_icccm_set_desk_area_size(Window win, int ax, int ay);
 void e_icccm_set_desk(Window win, int d);
+void e_icccm_handle_property_change(Atom a, E_Border *b);
+void e_icccm_handle_client_message(Ev_Message *e);
 void e_icccm_advertise_e_compat(void);
 void e_icccm_advertise_mwm_compat(void);
 void e_icccm_advertise_gnome_compat(void);
@@ -338,6 +347,11 @@ void e_desktops_update(E_Desktop *desk);
 void e_resist_border(E_Border *b);
     
 time_t e_file_modified_time(char *file);
+void e_set_env(char *variable, char *content);
 
-#endif
+void e_exec_set_args(int argc, char **argv);
+void e_exec_restart(void);
+pid_t e_exec_run(char *exe);
+pid_t e_exec_run_in_dir(char *exe, char *dir);
+pid_t e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path);
     

@@ -7,7 +7,6 @@ Evas_List __e_profiles = NULL;
 static void cb_exit(void);
 static void cb_exit(void)
 {
-   printf("cb_exit\n");
    E_PROF_DUMP;
 }
 
@@ -21,6 +20,8 @@ static void ch_col(int val, void *data)
    desk = e_desktops_get(e_desktops_get_current());
    e_desktops_scroll(desk, (int)(8 * sin(v)), (int)(8 * cos(v)));
    e_add_event_timer("time", 0.02, ch_col, val + 1, NULL);
+   return;
+   UN(data);
 }
 
 void setup(void);
@@ -37,6 +38,8 @@ setup(void)
 int
 main(int argc, char **argv)
 {
+   e_exec_set_args(argc, argv);
+   
    atexit(cb_exit);
    e_display_init(NULL);
    e_ev_signal_init();
@@ -52,4 +55,6 @@ main(int argc, char **argv)
    e_event_loop();
 
    return 0;
+   UN(argc);
+   UN(argv);
 }

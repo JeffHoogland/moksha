@@ -1,30 +1,28 @@
 # Note that this is NOT a relocatable package
-%define ver      1.0
+%define ver      0.17.0
 %define rel      1
 %define prefix   /usr/local
 
-Summary: Enlightenment DR0.17's new "bit" editor
-Name: etcher
+Summary: Enlightenment DR0.17 CVS
+Name: enlightenment
 Version: %ver
 Release: %rel
 Copyright: BSD
 Group: X11/Libraries
-Source: ftp://ftp.enlightenment.org/pub/enlightenment/etcher-%{ver}.tar.gz
-BuildRoot: /var/tmp/etcher-root
-Packager: Term <kempler@utdallas.edu>
+Source: ftp://ftp.enlightenment.org/pub/enlightenment/enlightenment-%{ver}.tar.gz
+BuildRoot: /var/tmp/enlightenment-root
+Packager: The Rasterman <raster@rasterman.com>
 URL: http://www.enlightenment.org/
-Requires: evas >= 0.0.1
+Requires: evas >= 0.0.2
 Requires: edb >= 1.0.0
 Requires: imlib2 >= 1.0.0
+Requires: ebits >= 0.0.0
+Requires: ecore >= 0.0.1
 
 Docdir: %{prefix}/doc
 
 %description
-Etcher is a new application devised to assist would-be theme developers in
-designin "bits", that is, window borders, icons, whatever, for
-Enlightenment. Since Enlightenment DR0.17 uses drag-and-drop instead of
-texual configuration files, this application will become instrumental for
-themeing under the new Enlightenment version.
+Errrrrrr - E17. You go figure.
 
 %prep
 %setup
@@ -54,13 +52,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc README COPYING ChangeLog
-%attr(755,root,root) %{prefix}/bin/etcher
-%{prefix}/share/etcher/*
+%attr(755,root,root) %{prefix}/bin/enlightenment
+%{prefix}/share/enlightenment/*
 
 %doc AUTHORS
 %doc COPYING
 %doc README
 
 %changelog
-* Mon Aug 28 2000 Lyle Kempler <kempler@utdallas.edu>
+* The Rasterman <raster@rasterman.com>
 - Created spec file

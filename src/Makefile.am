@@ -1,21 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
 INCLUDES = \
-  -I$(top_srcdir)/intl \
-  @evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@
+	-I$(top_srcdir)/intl \
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@
 
-bin_PROGRAMS = e
+bin_PROGRAMS = enlightenment
 
-e_SOURCES = \
+enlightenment_SOURCES = \
 actions.c \
 border.c \
 desktops.c \
+exec.c \
 icccm.c \
-icccm.h \
 main.c \
 resist.c \
 util.c \
 e.h
 
-e_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ -lecore -lm $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ -lm $(INTLLIBS)
 

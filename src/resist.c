@@ -6,7 +6,7 @@ e_resist_border(E_Border *b)
    int resist = 1;
    int desk_resist = 32;
    int win_resist = 12;
-   int ok;
+   int ok = 0;
    int dx, dy, d;
    int resist_x = 0, resist_y = 0;
    char *settings_db = "./settings.db";
@@ -112,16 +112,18 @@ rects = evas_list_append(rects, r); \
      }
    if (dx != 0) 
      {
-	if (((b->previous.requested.dx < 0) && (b->current.requested.dx > 0)) ||
-	    ((b->previous.requested.dx > 0) && (b->current.requested.dx < 0)))
+	if ((b->previous.requested.x != b->previous.x) &&
+	    (((b->previous.requested.dx < 0) && (b->current.requested.dx > 0)) ||
+	     ((b->previous.requested.dx > 0) && (b->current.requested.dx < 0))))
 	  b->current.requested.x = b->current.x;
 	else
 	  b->current.x = b->current.requested.x + resist_x;
      }
    if (dy != 0) 
      {
-	if (((b->previous.requested.dy < 0) && (b->current.requested.dy > 0)) ||
-	    ((b->previous.requested.dy > 0) && (b->current.requested.dy < 0)))
+	if ((b->previous.requested.y != b->previous.y) &&
+	    (((b->previous.requested.dy < 0) && (b->current.requested.dy > 0)) ||
+	     ((b->previous.requested.dy > 0) && (b->current.requested.dy < 0))))
 	  b->current.requested.y = b->current.y;
 	else
 	  b->current.y = b->current.requested.y + resist_y;

@@ -8,6 +8,9 @@ AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
+AC_C_CONST
+AM_ENABLE_SHARED
+AM_PROG_LIBTOOL
 
 AM_WITH_DMALLOC
 
@@ -36,12 +39,23 @@ fi
 dnl Set PACKAGE_BIN_DIR in config.h.
 if test "x${datadir}" = 'x${prefix}/bin'; then
   if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${ac_default_prefix}/bin/${PACKAGE}")
+    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${ac_default_prefix}/bin")
   else
-    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${prefix}/bin/${PACKAGE}")
+    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${prefix}/bin")
   fi
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${bindir}/${PACKAGE}")
+  AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${bindir}")
+fi
+
+dnl Set PACKAGE_LIB_DIR in config.h.
+if test "x${datadir}" = 'x${prefix}/lib'; then
+  if test "x${prefix}" = "xNONE"; then
+    AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${ac_default_prefix}/lib")
+  else
+    AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${prefix}/lib")
+  fi
+else
+  AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${libdir}")
 fi
 
 dnl Set PACKAGE_SOURCE_DIR in config.h.
@@ -79,6 +93,7 @@ AC_SUBST(ecore_libs)
 AC_OUTPUT([
 Makefile
 src/Makefile
+lib/Makefile
 intl/Makefile
 po/Makefile.in
 ])

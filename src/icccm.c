@@ -1,5 +1,46 @@
 #include "e.h"
-#include "icccm.h"
+
+/* Motif window hints */
+#define MWM_HINTS_FUNCTIONS           (1L << 0)
+#define MWM_HINTS_DECORATIONS         (1L << 1)
+#define MWM_HINTS_INPUT_MODE          (1L << 2)
+#define MWM_HINTS_STATUS              (1L << 3)
+
+/* bit definitions for MwmHints.functions */
+#define MWM_FUNC_ALL            (1L << 0)
+#define MWM_FUNC_RESIZE         (1L << 1)
+#define MWM_FUNC_MOVE           (1L << 2)
+#define MWM_FUNC_MINIMIZE       (1L << 3)
+#define MWM_FUNC_MAXIMIZE       (1L << 4)
+#define MWM_FUNC_CLOSE          (1L << 5)
+
+/* bit definitions for MwmHints.decorations */
+#define MWM_DECOR_ALL                 (1L << 0)
+#define MWM_DECOR_BORDER              (1L << 1)
+#define MWM_DECOR_RESIZEH             (1L << 2)
+#define MWM_DECOR_TITLE               (1L << 3)
+#define MWM_DECOR_MENU                (1L << 4)
+#define MWM_DECOR_MINIMIZE            (1L << 5)
+#define MWM_DECOR_MAXIMIZE            (1L << 6)
+
+/* bit definitions for MwmHints.inputMode */
+#define MWM_INPUT_MODELESS                  0
+#define MWM_INPUT_PRIMARY_APPLICATION_MODAL 1
+#define MWM_INPUT_SYSTEM_MODAL              2
+#define MWM_INPUT_FULL_APPLICATION_MODAL    3
+
+#define PROP_MWM_HINTS_ELEMENTS             5
+
+/* Motif window hints */
+typedef struct _mwmhints
+{
+   int flags;
+   int functions;
+   int decorations;
+   int inputMode;
+   int status;
+}
+MWMHints;
 
 void
 e_icccm_move_resize(Window win, int x, int y, int w, int h)
@@ -105,8 +146,6 @@ e_icccm_get_size_info(Window win, E_Border *b)
    x = 0; y = 0; w = 0; h = 0;
    e_window_get_geometry(win, &x, &y, &w, &h);
    
-   printf("window at %i %i\n", x, y);
-   
    grav = NorthWestGravity;
    mask = 0;
    min_w = 0;
@@ -121,14 +160,27 @@ e_icccm_get_size_info(Window win, E_Border *b)
    base_h = 0;
    if (e_window_get_wm_size_hints(win, &hint, &mask))
      {
-	if (hint.flags & PWinGravity) grav = hint.win_gravity;
-	if ((hint.flags & USPosition) || ((hint.flags & PPosition)))
+	if (!b->placed)
 	  {
+	     if (hint.flags & PWinGravity) grav = hint.win_gravity;
+	     if ((hint.flags & USPosition) || ((hint.flags & PPosition)))
+	       {
+	       }
+	     else
+	       {
+		  /* get x,y location of client */
+		  x = rand()%640;
+		  y = rand()%480;
+	       }
 	  }
 	else
 	  {
-	     x = rand()%640;
-	     y = rand()%480;	     
+	     int pl, pr, pt, pb;
+	     
+	     pl = pr = pt = pb = 0;
+	     if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	     x = b->current.x + pl;
+	     y = b->current.y + pt;
 	  }
 	if (hint.flags & PMinSize)
 	  {
@@ -171,15 +223,27 @@ e_icccm_get_size_info(Window win, E_Border *b)
      }
    else
      {
-	/* get x,y location of client */
-	x = rand()%640;
-	y = rand()%480;
+        if (!b->placed)
+	  {
+	     /* get x,y location of client */
+	     x = rand()%640;
+	     y = rand()%480;
+	  }
+	else
+	  {
+	     int pl, pr, pt, pb;
+	     
+	     pl = pr = pt = pb = 0;
+	     if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	     x = b->current.x + pl;
+	     y = b->current.y + pt;
+	  }
      }
      {
 	int pl, pr, pt, pb;
 	
 	pl = pr = pt = pb = 0;
-	if (b->bits.l) ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);
+	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
 	b->current.requested.x = x - pl;
 	b->current.requested.y = y - pt;
 	b->current.requested.w = w + pl + pr;
@@ -210,7 +274,7 @@ e_icccm_get_mwm_hints(Window win, E_Border *b)
    mwmhints = e_window_property_get(win, a_motif_wm_hints, a_motif_wm_hints, &size);
    if (mwmhints)
      {
-	int i, num;
+	int num;
 	
 	num = size / sizeof(int);
 	if (num < PROP_MWM_HINTS_ELEMENTS) 
@@ -249,7 +313,7 @@ e_icccm_get_layer(Window win, E_Border *b)
    props = e_window_property_get(win, a_win_layer, XA_CARDINAL, &size);
    if (props)
      {
-	int i, num;
+	int num;
 	
 	num = size / sizeof(int);
 	if (num > 0) b->client.layer = props[0];
@@ -307,6 +371,23 @@ e_icccm_set_desk(Window win, int d)
 }
 
 void
+e_icccm_handle_property_change(Atom a, E_Border *b)
+{
+   static Atom  a_wm_normal_hints = 0;
+   
+   E_ATOM(a_wm_normal_hints, "WM_NORMAL_HINTS");
+   
+   if (a == a_wm_normal_hints) e_icccm_get_size_info(b->win.client, b);
+}
+
+void
+e_icccm_handle_client_message(Ev_Message *e)
+{
+   return;
+   UN(e);
+}
+
+void
 e_icccm_advertise_e_compat(void)
 {
 }
@@ -335,14 +416,14 @@ e_icccm_advertise_gnome_compat(void)
    Window win;
 
    E_ATOM(a_win_protocols, "_WIN_PROTOCOLS");
-   E_ATOM(a_win_protocols, "_WIN_LAYER");
+   E_ATOM(a_win_layer, "_WIN_LAYER");
    props[0] = a_win_protocols;
    e_window_property_set(0, a_win_protocols, XA_ATOM, 32, props, 1);
 
    E_ATOM(a_win_wm_name, "_WIN_WM_NAME");
-   e_window_property_set(win, a_win_wm_name, XA_STRING, 8, "Enlightenment", strlen("Enlightenment"));
+   e_window_property_set(0, a_win_wm_name, XA_STRING, 8, "Enlightenment", strlen("Enlightenment"));
    E_ATOM(a_win_wm_version, "_WIN_WM_VERSION");
-   e_window_property_set(win, a_win_wm_version, XA_STRING, 8, "0.17.0", strlen("0.17.0"));
+   e_window_property_set(0, a_win_wm_version, XA_STRING, 8, "0.17.0", strlen("0.17.0"));
    
    E_ATOM(a_win_supporting_wm_check, "_WIN_SUPPORTING_WM_CHECK");
    win = e_window_override_new(0, 0, 0, 7, 7);

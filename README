@@ -1,3 +1,96 @@
 -------------------------------------------------------------------------------
- Enlightenment 0.17.0 PRE-RELEASE.... 
+                       Enlightenment 0.17.0 CVS Code....
 -------------------------------------------------------------------------------
+       The Rasterman - raster@valinux.com, raster@rasterman.com
+
+*******************************************************************************
+**************** READ THIS! It is of the UTMOST IMPORTANCE! *******************
+*******************************************************************************
+
+This is the source code for Enlightenment 0.17 - If you got this you got it
+from Enlightenment's CVS repository - or from someone who took it out of
+the CVS repository.
+
+The CVS repository is full of code *IN DEVELOPMENT* - that often means it's
+in the middle of being worked on and may install strange things in strange
+places, make a mess, and may not even be compatible with a final release. If
+you at all use this code, you are HEAVILY URGED, when it is finally released,
+to remove all traces of anything this CVS code base has installed on your
+system (it is COMPLETELY up to you to keep track of that - do NOT expect any
+help), and then install the full release on a cleaned system. Don't come
+asking "can I just keep using CVS" oonce things are released - thqat is the
+reason I pu this paragraph here - so you don't ask. The asnwer is the same
+as above - if there is a proper final release use that. CVS is really only
+for those havily hacking on the code.
+
+Now we have that warning over and done with. How to build and install from
+CVS?
+
+$ ./autogen.sh && make
+$ su
+Password:
+<- as root ->
+# make install
+
+You should be able to use the binary of enlightenment as a window manager.
+
+you might be advised for cleanliness to do
+$ ./autogen.sh --prefix=/usr/local/e-17
+
+so it installs relative to the /usr/local/e-17 directory and keeps all the
+e-17 development code and data in that tree so it is easily removed when the
+time codes.
+
+
+
+NOTES: Read these carefully!
+
+Enlightenment does not check for previously running Window Managers right
+now - so you need to make sure no other WM is running - E will not do that
+for you.
+
+Enlightenment has no menus or keybindings or any way of launching
+applications right now - you'll have to figure out an alternative way of
+doing it.
+
+Enlightenment only handles a small subset of ICCCM and thus will have bugs -
+some applications will not behave correctly and may apear in odd spots or
+not resize or place themselves properly etc. Expect this - it's code being
+worked on. Just be happy it does as much as it already does.
+
+Enlightenment RELIES on lots of libraires that have been written. Ecore,
+Ebits, Evas, Edb, Imlib2 just to mention a few. Especially Ebits, Ecore and
+Evas change in CVS often - you will need the absolute latest of these if you
+wish Enlightenment 0.17 code to run properly or compile. If you update
+Enlightenment from CVS update these too to get any changes they have in
+their trees.
+
+If you plan on working on the code... STOP! don't rush in and work on it -
+even if you have CVS commit access - EXPECT me (Raster) to revert any changes
+you make if you do this - regardless of the changes and how much work you
+put into them. First read the code well and LEARN it. If you have questions
+about some of the more obscure hidden program flow - ASK - but don't go
+tampering with it - Enlightenment 0.17's code is much more complex and
+intricate than E 0.16 - but at the same time it's much cleaner and more
+object oriented. Learn it well first. Some parts of E 0.17 are "hacked" with
+hard-coded stuff, just so, for now, it works. They will be virtualized and
+imporved over time. If you have plans - tell me about them first - discuss
+them before you go impliment them. I know I already have a lot of the
+components of E 0.17's code planned in my head - but I won't get to them for
+a while - and if people go impliment or hack bad stuff in, it means I have to
+spend lots of time fixing something that is bad in the first place, or we
+end up doing duplicate work. There *IS* a plan - believe it or not - but to
+be honest - it's more complex and large than I can just write down in a
+README, so talk about your ideas first. I'm going to be ruthless in keeping
+the code neat, clean and free of nasty hacks (except ones I put in as
+temporary stop-gap measures to make the thing work - since I know where
+those are and what I need to do to do it right). If you can't find me or I
+don't reply to your e-mail - don't get impatient - just wait. I currently
+have no network access at home, so I'm doing a chunk of code offline. I'll
+get to your mail and queries as time allows.
+
+If you have problems with the code or bugs to report, kindly forward them to
+/dev/null (the code is in now way or form ready for bug reports - I don't
+want crap filling my mailbox).
+
+I hope that clears things up for now.
