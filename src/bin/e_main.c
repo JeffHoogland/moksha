@@ -557,8 +557,9 @@ _e_main_screens_init(void)
 				      target = e_desk_at_xy_get(bd->zone,
 								deskxy[0],
 								deskxy[1]);
-				      e_border_desk_set(bd, target);
-				      if (target == e_desk_current_get(bd->zone))
+				      if (target)
+					e_border_desk_set(bd, target);
+				      if (!target || target == e_desk_current_get(bd->zone))
 					{
 					   ret = ecore_x_window_prop_card32_get(windows[i],
 										E_ATOM_MAPPED,
