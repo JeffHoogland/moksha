@@ -68,7 +68,7 @@ e_background_load(char *file)
 	ZERO(bl, E_Background_Layer, 1);
 	bg->layers = evas_list_append(bg->layers, bl);
 	
-	sprintf(buf, "/layers/%i/type", i); e_db_int_get(db, buf, &(bl->type));
+	sprintf(buf, "/layers/%i/type", i); e_db_int_get(db, buf, (int*)&(bl->type));
 	sprintf(buf, "/layers/%i/inlined", i); e_db_int_get(db, buf, &(bl->inlined));
 	sprintf(buf, "/layers/%i/color_class", i); bl->color_class = e_db_str_get(db, buf);
 	if (bl->inlined)
@@ -118,7 +118,7 @@ e_background_realize(E_Background *bg, Evas evas)
 	E_Background_Layer *bl;
 	
 	bl = l->data;
-	if (bl->type == 0) /* 0 == image */
+	if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	  {
 	     bl->obj = evas_add_image_from_file(bg->evas, bl->file);
 	     evas_set_layer(bg->evas, bl->obj, 0);
@@ -136,10 +136,10 @@ e_background_realize(E_Background *bg, Evas evas)
 	       }
 #endif
 	  }
-	else if (bl->type == 1) /* 1 == gradient */
+	else if (bl->type == E_BACKGROUND_TYPE_GRADIENT)
 	  {
 	  }
-	else if (bl->type == 2) /* 2 == solid */
+	else if (bl->type == E_BACKGROUND_TYPE_SOLID)
 	  {
 	  }
      }
@@ -165,7 +165,7 @@ e_background_set_scroll(E_Background *bg, int sx, int sy)
 	E_Background_Layer *bl;
 	
 	bl = l->data;
-	if (bl->type == 0) /* 0 == image */
+	if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	  {
 	     evas_set_image_fill(bg->evas, bl->obj, 
 				 (double)bg->geom.sx * bl->scroll.x, 
@@ -213,18 +213,18 @@ e_background_set_size(E_Background *bg, int w, int h)
 	  {
 	     evas_move(bg->evas, bl->obj, bl->x, bl->y);
 	     evas_resize(bg->evas, bl->obj, bl->w, bl->h);
-	     if (bl->type == 0) /* 0 == image */
+	     if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	       {
 		  evas_set_image_fill(bg->evas, bl->obj,
 				      (double)bg->geom.sx * bl->scroll.x,
 				      (double)bg->geom.sy * bl->scroll.y,
 				      bl->fw, bl->fh);
 	       }
-	     else if (bl->type == 1) /* 1 == gradient */
+	     else if (bl->type == E_BACKGROUND_TYPE_GRADIENT)
 	       {
 		  evas_set_angle(bg->evas, bl->obj, bl->angle);
 	       }
-	     else if (bl->type == 2) /* 2 == solid */
+	     else if (bl->type == E_BACKGROUND_TYPE_SOLID)
 	       {
 	       }
 	  }

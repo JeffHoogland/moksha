@@ -4,6 +4,14 @@
 typedef struct _E_Background          E_Background;
 typedef struct _E_Background_Layer    E_Background_Layer;
 
+typedef enum
+{
+  E_BACKGROUND_TYPE_IMAGE     = 0,
+  E_BACKGROUND_TYPE_GRADIENT  = 1,
+  E_BACKGROUND_TYPE_SOLID     = 2
+}
+E_Background_Type;
+
 struct _E_Background
 {
    OBJ_PROPERTIES;
@@ -24,8 +32,7 @@ struct _E_Background
 
 struct _E_Background_Layer
 {
-   int mode;
-   int type;
+   E_Background_Type type;
    int inlined;
    struct {
       float x, y;
