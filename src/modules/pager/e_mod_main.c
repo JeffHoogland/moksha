@@ -450,7 +450,7 @@ _pager_zone_set(Pager *e, E_Zone *zone)
 	       wins = wins->next;
 	    }
        }
-   evas_object_resize(e->base, e->fw * desks_x, e->fy * desks_y);
+   evas_object_resize(e->base, e->fw * desks_x, e->fh * desks_y);
 }
 
 static void
