@@ -139,6 +139,7 @@ typedef struct _E_View                E_View;
 typedef struct _E_Icon                E_Icon;
 typedef struct _E_Shelf               E_Shelf;
 typedef struct _E_Background          E_Background;
+typedef struct _E_Background_Layer    E_Background_Layer;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
@@ -458,6 +459,7 @@ struct _E_Icon
       int disabled;
       int visible;
       int just_selected;
+      int just_executed;
    } state;
    
    struct {
@@ -495,19 +497,50 @@ struct _E_Shelf
    } state;
 };
 
+struct _E_Background_Layer
+{
+   int mode;
+   int type;
+   int inlined;
+   struct {
+      float x, y;
+   } scroll;
+   struct {
+      float x, y;
+   } pos;
+   struct {
+      float w, h;
+      struct {
+	 int w, h;
+      } orig;
+   } size, fill;
+   char *color_class;
+   char *file;
+   double angle;
+   struct {
+      int r, g, b, a;
+   } fg, bg;
+   
+   double x, y, w, h, fw, fh;
+   
+   Evas_Object obj;
+};
+
 struct _E_Background
 {
    OBJ_PROPERTIES;
    
    Evas  evas;
+   char *file;
+   
    struct {
       int sx, sy;
       int w, h;
    } geom;
    
-   /* FIXME: REALLY boring for now - just a scaled image  - temporoary */
-   char *image;
-   Evas_Object obj;
+   Evas_List layers;
+   
+   Evas_Object base_obj;
 };
 
 struct _E_Menu
@@ -1020,28 +1053,13 @@ EfsdConnection *e_fs_get_connection(void);
 void e_keys_grab(char *key, Ev_Key_Modifiers mods, int anymod);
 void e_keys_ungrab(char *key, Ev_Key_Modifiers mods, int anymod);
 void e_keys_init(void);
+
 E_Background *e_background_new(void);
 void e_background_realize(E_Background *bg, Evas evas);
 void e_background_free(E_Background *bg);
+
 void e_view_realize(E_View *v);
 void e_view_update(E_View *v);
-void e_icon_set_xy(E_Icon *icon, int x, int y);
-void e_icon_update(E_Icon *icon);
-void e_icon_show(E_Icon *icon);
-void e_icon_get_xy(E_Icon *icon, int *x, int *y);
-void e_icon_set_xy(E_Icon *icon, int x, int y);
-E_Icon *e_icon_new(void);
-void e_icon_set_filename(E_Icon *icon, char *file);
-void e_icon_pre_show(E_Icon *icon);
-void e_icon_realize(E_Icon *icon);
-void e_icon_unrealize(E_Icon *icon);
-void e_shelf_del_icon(E_Shelf *sh, E_Icon *icon);
-void e_shelf_add_icon(E_Shelf *sh, E_Icon *icon);
-void e_shelf_move_by(E_Shelf *sh, int dx, int dy);
-void e_shelf_resize_by(E_Shelf *sh, int dw, int dh);
-void e_shelf_realize(E_Shelf *sh);
-void e_ipc_init(void);
-void e_pack_object_init(void);
 void e_view_update_selection(E_View *v, int x, int y);
 void e_view_update(E_View *v);
 void e_view_scroll(E_View *v, int dx, int dy);
@@ -1049,3 +1067,7 @@ E_View *e_view_find_by_monitor_id(int id);
 void e_view_add_icon(E_View *v, E_Icon *icon);
 E_Icon *e_view_find_icon_by_file(E_View *v, char *file);
 void e_view_del_icon(E_View *v, E_Icon *icon);
+
+void e_ipc_init(void);
+
+void e_pack_object_init(void);

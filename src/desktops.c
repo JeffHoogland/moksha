@@ -164,9 +164,15 @@ e_desktops_init_file_display(E_Desktop *desk)
    desk->view->size.w = desk->real.w;
    desk->view->size.h = desk->real.h;
    desk->view->is_desktop = 1;
-   desk->view->bg = e_background_new();
-   desk->view->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
-   /* fixme later */
+   /* FIXME: load bg here */
+     {
+	char buf[4096];
+	
+	sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	desk->view->bg = e_background_load(buf);
+	printf("**** load %s = %p\n", buf, desk->view->bg);
+     }
+   /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
 /*   desk->view->dir = strdup("/dev"); */
    desk->view->dir = strdup(e_file_home());

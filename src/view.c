@@ -502,8 +502,13 @@ e_view_icon_exec(E_Icon *ic)
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	v->bg = e_background_new();
-	v->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
+	/* FIXME: load bg here */
+	  {
+	     char buf[4096];
+	     
+	     sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	     v->bg = e_background_load(buf);
+	  }
 	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
 	printf("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
@@ -511,6 +516,7 @@ e_view_icon_exec(E_Icon *ic)
 	if (v->options.back_pixmap) e_view_update(v);
 	b = e_border_adopt(v->win.base, 1);
      }
+   e_view_icon_deselect(ic);
 }
 
 static void
@@ -532,6 +538,7 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	if (e->double_click)
 	  {
 	     e_view_icon_exec(ic);
+	     ic->state.just_executed = 1;
 	  }
 	else
 	  {
@@ -579,16 +586,23 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    if (_b == 1)
      {
-	if ((e->mods & mulit_select_mod))
+	if (ic->state.just_executed)
 	  {
-	     if ((ic->state.selected) && (!ic->state.just_selected))
-	       e_view_icon_deselect(ic);
-/*	     e_view_icon_invert_selection(ic);*/
+	     ic->state.just_executed = 0;
 	  }
 	else
 	  {
-	     e_view_deselect_all_except(ic);
-	     e_view_icon_select(ic);
+	     if ((e->mods & mulit_select_mod))
+	       {
+		  if ((ic->state.selected) && (!ic->state.just_selected))
+		    e_view_icon_deselect(ic);
+/*	     e_view_icon_invert_selection(ic);*/
+	       }
+	     else
+	       {
+		  e_view_deselect_all_except(ic);
+		  e_view_icon_select(ic);
+	       }
 	  }
 	ic->state.just_selected = 0;
      }
@@ -895,13 +909,11 @@ void e_configure(Eevent * ev)
 		    }
 		  if (v->bg)
 		    {
-		       v->bg->geom.w = v->size.w;
-		       v->bg->geom.h = v->size.h;
-		       evas_resize(v->bg->evas, v->bg->obj, v->bg->geom.w, v->bg->geom.h);
-		       evas_set_image_fill(v->bg->evas, v->bg->obj, 0, 0, v->bg->geom.w, v->bg->geom.h);
+		       e_background_set_size(v->bg, v->size.w, v->size.h);
 		    }
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
+		  e_view_arrange(v);
 	       }
 	  }
      }
@@ -1002,7 +1014,6 @@ e_delete(Eevent * ev)
 {
    Ev_Window_Delete *e;
    Evas_List l;
-   Evas_List to_free = NULL;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1012,17 +1023,10 @@ e_delete(Eevent * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	     to_free = evas_list_append(to_free, v);
+	     OBJ_DO_FREE(v);
+	     return;
 	  }
      }
-   for (l = to_free; l; l = l->next)
-     {
-	E_View *v;
-	
-	v = l->data;
-	OBJ_DO_FREE(v);
-     }
-   if (to_free) evas_list_free(to_free);
 }
 
 static void 
@@ -1855,9 +1859,8 @@ e_view_realize(E_View *v)
      }
    if (v->bg)
      {
-	v->bg->geom.w = v->size.w;
-	v->bg->geom.h = v->size.h;
 	e_background_realize(v->bg, v->evas);
+	e_background_set_size(v->bg, v->size.w, v->size.h);
      }
    v->obj_bg = evas_add_rectangle(v->evas);
    evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);

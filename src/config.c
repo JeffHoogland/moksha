@@ -22,6 +22,7 @@ static char cfg_entries_dir[4096] = "";
 static char cfg_selections_dir[4096] = "";
 static char cfg_user_dir[4096] = "";
 static char cfg_images_dir[4096] = "";
+static char cfg_backgrounds_dir[4096] = "";
 static char cfg_fonts_dir[4096] = "";
 
 char *
@@ -60,6 +61,8 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/selections/");
    E_CONF("images", cfg_images_dir,
 	  PACKAGE_DATA_DIR"/data/images/");
+   E_CONF("backgrounds", cfg_backgrounds_dir,
+	  PACKAGE_DATA_DIR"/data/backgrounds/");
    E_CONF("fonts", cfg_fonts_dir,
 	  PACKAGE_DATA_DIR"/data/fonts/");
    return "";
@@ -118,6 +121,7 @@ e_config_set_user_dir(char *dir)
    cfg_entries_dir[0] = 0;
    cfg_user_dir[0]    = 0;
    cfg_images_dir[0]  = 0;
+   cfg_backgrounds_dir[0]  = 0;
    cfg_fonts_dir[0]   = 0;
    /* init again - if the user hasnt got all the data */
    e_config_init();
