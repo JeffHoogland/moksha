@@ -61,6 +61,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* if a window crashes during resize the resize numbers onscreen remain
 * gadget containers (shelves)
 * all modules should have a "enter gadget edit mode" option in their menus
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
