@@ -3,6 +3,10 @@
  */
 #include "e.h"
 
+/* FIXME: display resize handles ONLY if can be resizded in that dir */
+/* FIXME: display move indicator ONLY if it can be moved in either dir */
+/* FIXME: emit signal on mouse in/out to event object */
+
 /* local subsystem functions */
 static void _e_gadman_free(E_Gadman *gm);
 static void _e_gadman_client_free(E_Gadman_Client *gmc);
