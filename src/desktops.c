@@ -6,6 +6,8 @@ static int       screen_w, screen_h;
 static int       current_desk = 0;
 
 static void e_idle(void *data);
+static void e_key_down(Eevent * ev);
+static void e_key_up(Eevent * ev);
 static void e_mouse_down(Eevent * ev);
 static void e_mouse_up(Eevent * ev);
 static void e_mouse_in(Eevent * ev);
@@ -27,6 +29,78 @@ e_idle(void *data)
    e_db_runtime_flush();
    return;
    UN(data);
+}
+
+/* handling key down events */
+static void
+e_key_down(Eevent * ev)
+{
+   Ev_Key_Down          *e;
+
+   e = ev->event;
+     {
+	Evas_List l;
+	
+	for (l = desktops; l; l = l->next)
+	  {
+	     E_Desktop *desk;
+	     
+	     desk = l->data;
+	     
+	     if (desk->win.desk == e->win)
+	       {
+		  if (!strcmp(e->key, "Up"))
+		    {
+		    }
+		  else if (!strcmp(e->key, "Down"))
+		    {
+		    }
+		  else if (!strcmp(e->key, "Left"))
+		    {
+		    }
+		  else if (!strcmp(e->key, "Right"))
+		    {
+		    }
+		  else if (!strcmp(e->key, "Escape"))
+		    {
+		    }
+		  else
+		    {
+		       /* infact we should pass this onto the view handling */
+		       /* this desktop here */
+		       char *type;
+		       
+		       type = e_key_press_translate_into_typeable(e);
+		       if (type)
+			 {
+			 }
+		    }
+	       }
+	  }
+     }
+}
+
+/* handling key up events */
+static void
+e_key_up(Eevent * ev)
+{
+   Ev_Key_Up          *e;
+
+   e = ev->event;
+     {
+	Evas_List l;
+	
+	for (l = desktops; l; l = l->next)
+	  {
+	     E_Desktop *desk;
+	     
+	     desk = l->data;
+	     
+	     if (desk->win.desk == e->win)
+	       {
+	       }
+	  }
+     }
 }
 
 /* handling mouse down events */
@@ -151,6 +225,8 @@ e_mouse_in(Eevent * ev)
 		  Evas evas;
 		  int x, y;
 		  
+		  /* focus handling for desktop */
+		  e_focus_to_window(e->win);
 		  evas = desk->evas.desk;
 		  e_window_get_root_relative_location(evas_get_window(evas),
 						      &x, &y);
@@ -238,6 +314,8 @@ e_desktops_init(void)
    e_event_filter_handler_add(EV_MOUSE_IN,                 e_mouse_in);
    e_event_filter_handler_add(EV_MOUSE_OUT,                e_mouse_out);
    e_event_filter_handler_add(EV_WINDOW_EXPOSE,            e_window_expose);
+   e_event_filter_handler_add(EV_KEY_DOWN,                 e_key_down);
+   e_event_filter_handler_add(EV_KEY_UP,                   e_key_up);
    e_event_filter_idle_handler_add(e_idle, NULL);
  
    e_icccm_advertise_e_compat();
@@ -396,7 +474,7 @@ e_desktops_init_file_display(E_Desktop *desk)
 		   evas_get_visual(desk->evas.desk), evas_get_colormap(desk->evas.desk));
    e_window_set_background_pixmap(desk->win.desk, desk->evas.pmap);
    /* normal stuff */
-   e_window_set_events(desk->win.desk, XEV_EXPOSE | XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT); 
+   e_window_set_events(desk->win.desk, XEV_EXPOSE | XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT | XEV_KEY); 
    e_window_show(desk->win.desk);
      {
 	Evas_Object o;

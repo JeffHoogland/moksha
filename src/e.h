@@ -130,7 +130,9 @@ typedef struct _E_Desktop             E_Desktop;
 typedef struct _E_Rect                E_Rect;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
-  
+typedef struct _E_Menu                E_Menu;
+typedef struct _E_Menu_Item           E_Menu_Item;
+
 struct _E_Object
 {
    OBJ_PROPERTIES;
@@ -285,6 +287,18 @@ struct _E_Active_Action_Timer
 };
 
 struct _E_View
+{
+   OBJ_PROPERTIES;
+};
+
+struct _E_Menu
+{
+   OBJ_PROPERTIES;
+   
+   Window win;
+};
+
+struct _E_Menu_Item
 {
    OBJ_PROPERTIES;
 };

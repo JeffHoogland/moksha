@@ -866,7 +866,7 @@ e_cb_border_mouse_out(E_Border *b, Eevent *e)
 
    if (border_mouse_buttons) return;
    /* pointer focus stuff */
-   e_focus_to_window(0);
+/*   e_focus_to_window(0);*/
 
    x = mouse_x;
    y = mouse_y;

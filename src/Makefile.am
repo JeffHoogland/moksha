@@ -14,6 +14,7 @@ desktops.c \
 exec.c \
 icccm.c \
 main.c \
+menu.c \
 resist.c \
 util.c \
 view.c \
