@@ -1,4 +1,5 @@
 #ifdef E_TYPEDEFS
+
 /* Object safety/debugging checks */
 /* */
 /* OBJECT_PARANOIA_CHECK is paranoid and checkes pointers and traps segv's */
@@ -8,7 +9,7 @@
 /* OBJECT_CHECK is a simple null pointer and magic number check with no */
 /* debug output */
 
-#define OBJECT_PARANOIA_CHECK
+//#define OBJECT_PARANOIA_CHECK
 //#define OBJECT_CHECK
 
 #ifndef __GLIBC__

@@ -358,6 +358,17 @@ e_border_move(E_Border *bd, int x, int y)
    E_Event_Border_Move *ev;
 
    E_OBJECT_CHECK(bd);
+   if (bd->new_client)
+     {
+	E_Border_Pending_Move_Resize  *pnd;
+	
+	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	pnd->move = 1;
+	pnd->x = x;
+	pnd->y = y;
+	bd->pending_move_resize = evas_list_append(bd->pending_move_resize, pnd);
+	return;
+     }
    if ((x == bd->x) && (y == bd->y)) return;
    bd->x = x;
    bd->y = y;
@@ -380,6 +391,17 @@ e_border_resize(E_Border *bd, int w, int h)
 {
    E_Event_Border_Resize *ev;
    E_OBJECT_CHECK(bd);
+   if (bd->new_client)
+     {
+	E_Border_Pending_Move_Resize  *pnd;
+	
+	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	pnd->resize = 1;
+	pnd->w = w;
+	pnd->h = h;
+	bd->pending_move_resize = evas_list_append(bd->pending_move_resize, pnd);
+	return;
+     }
    if ((w == bd->w) && (h == bd->h)) return;
    bd->w = w;
    bd->h = h;
@@ -406,6 +428,20 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    E_Event_Border_Resize	*rev;
    
    E_OBJECT_CHECK(bd);
+   if (bd->new_client)
+     {
+	E_Border_Pending_Move_Resize  *pnd;
+	
+	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	pnd->move = 1;
+	pnd->resize = 1;
+	pnd->x = x;
+	pnd->y = y;
+	pnd->w = w;
+	pnd->h = h;
+	bd->pending_move_resize = evas_list_append(bd->pending_move_resize, pnd);
+	return;
+     }
    if ((x == bd->x) && (y == bd->y) && (w == bd->w) && (h == bd->h)) return;
    bd->x = x;
    bd->y = y;
@@ -809,6 +845,11 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   while (bd->pending_move_resize)
+     {
+	free(bd->pending_move_resize->data);
+	bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
+     }
    if (bd->border_menu)
      {
 	e_object_del(E_OBJECT(bd->border_menu));
@@ -2100,6 +2141,7 @@ _e_border_eval(E_Border *bd)
 
    if (bd->new_client)
      {
+	bd->new_client = 0;
 	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
 	  {
@@ -2180,6 +2222,28 @@ _e_border_eval(E_Border *bd)
 		  bd->y = new_y;
 		  bd->changes.pos = 1;
 	       }
+	  }
+	while (bd->pending_move_resize)
+	  {
+	     E_Border_Pending_Move_Resize *pnd;
+	     
+	     pnd = bd->pending_move_resize->data;
+	     if (pnd->move)
+	       {
+		  bd->x = pnd->x - bd->client_inset.l;
+		  bd->y = pnd->y - bd->client_inset.t;
+		  bd->changes.pos = 1;
+	       }
+	     if (pnd->resize)
+	       {
+		  bd->w = pnd->w + bd->client_inset.l + bd->client_inset.r;
+		  bd->h = pnd->h + bd->client_inset.t + bd->client_inset.b;
+		  bd->client.w = pnd->w;
+		  bd->client.h = pnd->h;
+		  bd->changes.size = 1;
+	       }
+	     free(pnd);
+	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
 	  }
 	ecore_x_icccm_move_resize_send(bd->client.win, 
 				       bd->x + bd->client_inset.l, 
@@ -2352,7 +2416,6 @@ _e_border_eval(E_Border *bd)
 	bd->changes.reset_gravity = 0;
      }
    
-   bd->new_client = 0;
    bd->changed = 0;
    
    bd->changes.stack = 0;

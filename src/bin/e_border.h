@@ -16,14 +16,15 @@ typedef enum _E_Transition
     E_TRANSITION_DECELERATE
 } E_Transition;
 
-typedef struct _E_Border                E_Border;
-typedef struct _E_Event_Border_Resize   E_Event_Border_Resize;
-typedef struct _E_Event_Border_Move     E_Event_Border_Move;
-typedef struct _E_Event_Border_Add      E_Event_Border_Add;
-typedef struct _E_Event_Border_Remove   E_Event_Border_Remove;
-typedef struct _E_Event_Border_Show     E_Event_Border_Show;
-typedef struct _E_Event_Border_Hide     E_Event_Border_Hide;
-typedef struct _E_Event_Border_Desk_Set E_Event_Border_Desk_Set;
+typedef struct _E_Border                     E_Border;
+typedef struct _E_Border_Pending_Move_Resize E_Border_Pending_Move_Resize;
+typedef struct _E_Event_Border_Resize        E_Event_Border_Resize;
+typedef struct _E_Event_Border_Move          E_Event_Border_Move;
+typedef struct _E_Event_Border_Add           E_Event_Border_Add;
+typedef struct _E_Event_Border_Remove        E_Event_Border_Remove;
+typedef struct _E_Event_Border_Show          E_Event_Border_Show;
+typedef struct _E_Event_Border_Hide          E_Event_Border_Hide;
+typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
 
 #else
 #ifndef E_BORDER_H
@@ -178,6 +179,7 @@ struct _E_Border
 
    Evas_List *stick_desks;
    E_Menu *border_menu;
+   Evas_List *pending_move_resize;
 
    struct {
       unsigned int visible : 1;
@@ -190,6 +192,13 @@ struct _E_Border
       unsigned int shading : 1;
       unsigned int shaded : 1;
    } changes;
+};
+
+struct _E_Border_Pending_Move_Resize 
+{
+   int x, y, w, h;
+   unsigned char move : 1;
+   unsigned char resize : 1;
 };
 
 struct _E_Event_Border_Resize
