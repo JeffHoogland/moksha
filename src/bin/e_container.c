@@ -11,8 +11,6 @@
 /* local subsystem functions */
 static void _e_container_free(E_Container *con);
 
-static void _e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee);
-
 static void _e_container_shape_del(E_Container_Shape *es);
 static void _e_container_shape_free(E_Container_Shape *es);
 static void _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change ch);
@@ -84,8 +82,6 @@ e_container_new(E_Manager *man)
    ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
    ecore_x_window_lower(con->bg_win);
 
-   ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
-   
    o = evas_object_rectangle_add(con->bg_evas);
    con->bg_blank_object = o;
    evas_object_layer_set(o, -100);
@@ -181,6 +177,7 @@ e_container_resize(E_Container *con, int w, int h)
      ecore_x_window_resize(con->win, con->w, con->h);
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
+   _e_container_resize_handle(con);
 }
 
 void
@@ -198,6 +195,7 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
    evas_object_move(con->bg_blank_object, con->x, con->y);
    evas_object_resize(con->bg_blank_object, con->w, con->h);
+   _e_container_resize_handle(con);
 }
 
 void
@@ -432,21 +430,6 @@ _e_container_free(E_Container *con)
    free(con);
 }
    
-static void
-_e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee)
-{
-   Evas *evas;
-   Evas_Object *o;
-   E_Container *con;
-   Evas_Coord w, h;
-   
-   evas = ecore_evas_get(ee);
-   evas_output_viewport_get(evas, NULL, NULL, &w, &h);
-   o = evas_object_name_find(evas, "desktop/background");
-   con = evas_object_data_get(o, "e_container");
-   _e_container_resize_handle(con);
-}
-
 static void
 _e_container_shape_del(E_Container_Shape *es)
 {
