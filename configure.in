@@ -2,20 +2,6 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(configure.in)
 
-# BAH - ugly. bloody operating systems. figure out per os options for cp
-# defaults
-CP_OPTIONS="-ar"
-
-AC_CANONICAL_SYSTEM
-case "$build_os" in
-*olaris*)
-  CP_OPTIONS="-ar";
-  ;;
-*bsd*)
-  CP_OPTIONS="-PpR";
-  ;;
-esac
-
 ENLIGHTENMENT_MAJOR=0
 ENLIGHTENMENT_MINOR=17
 ENLIGHTENMENT_MICRO=pre_0

@@ -24,6 +24,7 @@ enlightenment_SOURCES = \
 	menubuild.h menubuild.c \
 	pack.c \
 	resist.h resist.c \
+	scrollbar.h scrollbar.c \
 	shelf.c \
 	text.h text.c \
 	util.h util.c \

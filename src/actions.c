@@ -491,8 +491,17 @@ e_action_init(void)
 /* FIXME: these REALLY need to go into other file(s) but it's not worht it */
 /* yet at this point. it can be done later */
 
-/* Erm is that really true? They're all static, all called through the
-   above functions -- so it's good to have them encapsulated here? --cK */
+/* Erm is that really true? They're all static, all called through the */
+/* above functions -- so it's good to have them encapsulated here? --cK */
+
+/* well i was thinking changing this to be a bunch of: */
+/* #include "action_windows.c" */
+/* #include "action_files.c" */
+/* #include "action_general.c" */
+/* etc. - group actions in files for their logical uses */
+/* kind of evil to inlucde c files.. but it means breaking it up better */
+/* probably moving these includes above the init and having hooks into the */
+/* init func */
 
 static void 
 e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
