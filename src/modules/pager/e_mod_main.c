@@ -849,13 +849,20 @@ _pager_cb_event_border_show(void *data, int type, void *event)
 static int        
 _pager_cb_event_border_desk_set(void *data, int type, void *event)
 {
-   Pager *e;
+   Pager      *e;
+   Pager_Win  *w;
+   Pager_Desk *d;
    E_Event_Border_Desk_Set *ev;
 
-   /* FIXME do something */
-   
    e = data;
    ev = event;
+   w = _pager_window_find(e, ev->border);
+   d = _pager_desk_find(e, ev->border->desk);
+   if (w && d)
+     {
+	w->owner = d;
+	_pager_window_move(e, w);
+     }
    return 1;
 }
 
