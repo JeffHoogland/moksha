@@ -2234,12 +2234,10 @@ e_view_icon_initial_show(E_Icon *ic)
 {
    D_ENTER;
    
-   D("INITIAL SHOWING ICON\n");
    /* check if we have enuf info and we havent been shown yet */
    if (!ic->info.icon) D_RETURN;
    if (ic->state.visible) D_RETURN;
    
-   D("INITIAL SHOWING ICON REALLY\n");
    /* first. lets figure out the size of the icon */
    evas_get_image_size(ic->view->evas, ic->obj.icon, 
 		       &(ic->geom.icon.w), &(ic->geom.icon.h));
@@ -2862,8 +2860,8 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_CHMOD:
 	     break;
 	   case EFSD_CMD_GETFILETYPE:
-	     D("Getmime event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);
+	     /* D("Getmime event %i\n",
+		ev->efsd_reply_event.command.efsd_file_cmd.id); */
 	     if (ev->efsd_reply_event.errorcode == 0)
 	       {
 		  E_Icon *ic;
@@ -2905,23 +2903,22 @@ e_view_handle_fs(EfsdEvent *ev)
 
 			    /* Try to update the GUI according to the file permissions.
 			       It's just a try because we need to have the file's stat
-			       info as well.
+			       info as well.  --cK.
 			    */
 			    e_view_icon_check_permissions(ic);
-			    D("GOT THERE!");
 			    e_view_icon_initial_show(ic);
 			 }
 		    }
 	       }
 	     break;
 	   case EFSD_CMD_STAT:
-	     D("Stat event %i on %s\n",
-	       efsd_reply_id(ev), efsd_reply_filename(ev));
+	     /* D("Stat event %i on %s\n",
+		efsd_reply_id(ev), efsd_reply_filename(ev)); */
 
 	     /* When everything went okay and we can find a view and an icon,
 		set the file stat data for the icon. Then try to check the
 		permissions and possibly update the gui. It's just a try
-		because we need to have received the filetype info too.
+		because we need to have received the filetype info too. --cK.
 	     */
 	     if (ev->efsd_reply_event.errorcode == 0)
 	       {
