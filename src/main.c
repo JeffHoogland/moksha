@@ -50,6 +50,7 @@ main(int argc, char **argv)
    e_desktops_init();
    e_border_init();
    e_actions_init();
+   e_menu_init();
    
    setup();
    

@@ -296,6 +296,7 @@ e_icccm_get_mwm_hints(Window win, E_Border *b)
 	     if (mwmhints->decorations & MWM_DECOR_BORDER) b->client.border = 1;
 	     if (mwmhints->decorations & MWM_DECOR_RESIZEH)  b->client.handles = 1;
 	     if (mwmhints->decorations & MWM_DECOR_TITLE) b->client.titlebar = 1;
+	     e_border_apply_border(b);
 	  }
 	FREE(mwmhints);
      }
@@ -319,6 +320,24 @@ e_icccm_get_layer(Window win, E_Border *b)
 	if (num > 0) b->client.layer = props[0];
 	FREE(props);
      }
+}
+
+void
+e_icccm_get_title(Window win, E_Border *b)
+{
+   char *title;
+   
+   title = e_window_get_title(win);
+
+   if (b->client.title) 
+     {
+	if ((title) && (!strcmp(title, b->client.title))) return;
+	b->changed = 1;
+	FREE(b->client.title);
+     }
+   b->client.title = NULL;
+   if (title) b->client.title = title;
+   else b->client.title = strdup("No Title");
 }
 
 void
@@ -392,10 +411,16 @@ void
 e_icccm_handle_property_change(Atom a, E_Border *b)
 {
    static Atom  a_wm_normal_hints = 0;
+   static Atom  a_motif_wm_hints = 0;
+   static Atom  a_wm_name = 0;
    
    E_ATOM(a_wm_normal_hints, "WM_NORMAL_HINTS");
+   E_ATOM(a_motif_wm_hints, "_MOTIF_WM_HINTS");
+   E_ATOM(a_wm_name, "WM_NAME");
    
    if (a == a_wm_normal_hints) e_icccm_get_size_info(b->win.client, b);
+   else if (a == a_motif_wm_hints) e_icccm_get_mwm_hints(b->win.client, b);
+   else if (a == a_wm_name) e_icccm_get_title(b->win.client, b);
 }
 
 void

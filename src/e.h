@@ -153,6 +153,14 @@ struct _E_Border
       Evas l, r, t, b;
    } evas;
    struct {
+      struct {
+	 Evas_Object l, r, t, b;
+      } title;
+      struct {
+	 Evas_Object l, r, t, b;
+      } title_clip;
+   } obj;   
+   struct {
       Pixmap l, r, t, b;
    } pixmap;
    struct {
@@ -212,6 +220,8 @@ struct _E_Border
    E_Desktop *desk;
    
    char *border_file;
+
+   int first_expose;
    
    int changed;
 };
@@ -295,12 +305,65 @@ struct _E_Menu
 {
    OBJ_PROPERTIES;
    
-   Window win;
+   struct {
+      int       x, y, w, h;
+      int       visible;
+   } current, previous;
+   struct {
+      int l, r, t, b;
+   } border, sel_border;
+   struct {
+      Window       main, evas;
+   } win;
+   Evas         evas;
+   Ebits_Object bg;
+   Evas_List    entries;
+   char        *bg_file;
+   
+   int       first_expose;
+
+   int       recalc_entries;
+   int       redo_sel;
+   int       changed;
+   
+   E_Menu_Item *selected;
+   
+   Time      time;
 };
 
 struct _E_Menu_Item
 {
    OBJ_PROPERTIES;
+   
+   int x, y;
+   struct {
+      struct {
+	 int w, h;
+      } min;
+      int w, h;
+   } size;
+   
+   Ebits_Object bg;
+   char        *bg_file;
+   int          selected;
+
+   Evas_Object  obj_entry;
+   
+   char        *str;
+   Evas_Object  obj_text;
+   
+   char        *icon;
+   Evas_Object  obj_icon;
+   
+   int          radio_group;
+   int          check;
+   int          on;
+   
+   E_Menu *menu;
+   E_Menu *submenu;
+   
+   void (*func_select) (E_Menu *m, E_Menu_Item *mi, void *data);
+   void  *func_select_data;
 };
 
 void e_action_add_proto(char *action,
@@ -349,6 +412,7 @@ void e_icccm_release(Window win);
 void e_icccm_get_size_info(Window win, E_Border *b);
 void e_icccm_get_mwm_hints(Window win, E_Border *b);
 void e_icccm_get_layer(Window win, E_Border *b);
+void e_icccm_get_title(Window win, E_Border *b);
 void e_icccm_set_frame_size(Window win, int l, int r, int t, int b);
 void e_icccm_set_desk_area(Window win, int ax, int ay);
 void e_icccm_set_desk_area_size(Window win, int ax, int ay);

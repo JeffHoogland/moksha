@@ -500,6 +500,7 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    /* 0 | 1 */
    /* --+-- */
    /* 2 | 3 */
@@ -564,6 +565,7 @@ e_act_resize_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    if (b->mode.resize == 0)
      {
 	b->current.requested.w -= dx;
@@ -606,6 +608,7 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    /* 4 | 5 */
    if (x > (b->current.w / 2)) 
      {
@@ -653,6 +656,7 @@ e_act_resize_h_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    if (b->mode.resize == 4)
      {
 	b->current.requested.w -= dx;
@@ -681,6 +685,7 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    /* 6 */
    /* - */
    /* 7 */
@@ -730,6 +735,7 @@ e_act_resize_v_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_Border *b;
    
    b = o;
+   if (b->current.shaded != 0) return;
    if (b->mode.resize == 6)
      {
 	b->current.requested.h -= dy;

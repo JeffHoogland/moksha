@@ -16,6 +16,7 @@ static char cfg_grabs_db[4096] = "";
 static char cfg_settings_db[4096] = "";
 static char cfg_actions_db[4096] = "";
 static char cfg_borders_db[4096] = "";
+static char cfg_menus_db[4096] = "";
 static char cfg_user_dir[4096] = "";
 static char cfg_images_dir[4096] = "";
 static char cfg_fonts_dir[4096] = "";
@@ -46,6 +47,8 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db");
    E_CONF("borders", cfg_borders_db,
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/borders/");
+   E_CONF("menus", cfg_menus_db,
+	  PACKAGE_DATA_DIR"/data/config/appearance/default/menus/");
    E_CONF("images", cfg_images_dir,
 	  PACKAGE_DATA_DIR"/data/images/");
    E_CONF("fonts", cfg_fonts_dir,

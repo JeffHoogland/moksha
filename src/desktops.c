@@ -130,6 +130,56 @@ e_mouse_down(Eevent * ev)
 		  x = e->rx - x;
 		  y = e->ry - y;
 		  evas_event_button_down(evas, x, y, e->button);
+		  if (e->button == 1)
+		    {
+		       int count;
+		       static E_Menu *menu = NULL;
+		       char buf[4096];
+		       
+		       if (!menu)
+			 {
+			    menu = e_menu_new();
+			    for (count = 1; count <= 16; count++)
+			      {
+				 int count2;
+				 E_Menu *menu2;
+				 E_Menu_Item *menuitem;
+				 
+				 sprintf(buf, "Menu item %i", count);
+				 menuitem = e_menu_item_new(buf);
+				 if (count < 10)
+				   {
+				      menu2 = e_menu_new();
+				      menuitem->submenu = menu2;
+				   }
+				 e_menu_add_item(menu, menuitem);
+				 if (count < 10)
+				   {
+				      for (count2 = 1; count2 <= 14; count2++)
+					{
+					   E_Menu_Item *menuitem2;
+					   E_Menu *menu3;
+					   int count3;
+					   
+					   sprintf(buf, "Submenu item %i", count2);
+					   menuitem2 = e_menu_item_new(buf);
+					   menu3 = e_menu_new();
+					   menuitem2->submenu = menu3;
+					   e_menu_add_item(menu2, menuitem2);
+					   for (count3 = 1; count3 <= 12; count3++)
+					     {
+						E_Menu_Item *menuitem3;
+						
+						sprintf(buf, "Submenu item %i", count3);
+						menuitem3 = e_menu_item_new(buf);
+						e_menu_add_item(menu3, menuitem3);
+					     }
+					}
+				   }
+			      }
+			 }
+		       e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
+		    }
 		  if (e->button == 3)
 		    e_exec_restart();
 		  return;

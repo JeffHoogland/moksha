@@ -62,12 +62,18 @@ e_idle(void *data)
 	b = l->data;
 	e_border_update(b);
      }
-   for (l = evases; l; l = l->next)
+   for (l = borders; l; l = l->next)
      {
-	Evas evas;
+	E_Border *b;
 	
-	evas = l->data;
-	evas_render(evas);
+	b = l->data;
+	if (b->first_expose)
+	  {
+	     evas_render(b->evas.l);
+	     evas_render(b->evas.r);
+	     evas_render(b->evas.t);
+	     evas_render(b->evas.b);
+	  }
      }
    e_db_runtime_flush();
    return;
@@ -704,6 +710,7 @@ e_window_expose(Eevent * ev)
    e = ev->event;
      {
 	Evas_List l;
+	E_Border *b;
 	
 	for (l = evases; l; l = l->next)
 	  {
@@ -713,6 +720,8 @@ e_window_expose(Eevent * ev)
 	     if (evas_get_window(evas) == e->win)
 	       evas_update_rect(evas, e->x, e->y, e->w, e->h);
 	  }
+	b = e_border_find_by_window(e->win);
+	if (b) b->first_expose = 1;
      }
    current_ev = NULL;
 }
@@ -1146,6 +1155,7 @@ e_border_adopt(Window win, int use_client_pos)
    e_icccm_get_size_info(win, b);
    e_icccm_get_mwm_hints(win, b);
    e_icccm_get_layer(win, b);
+   e_icccm_get_title(win, b);
    b->current.shaped_client = e_icccm_is_shaped(win);
    /* we have now placed the bugger */
    b->placed = 1;
@@ -1220,7 +1230,10 @@ e_border_new(void)
    b->win.main = e_window_override_new(desk->win.container, 0, 0, 1, 1);
    b->win.input = e_window_input_new(b->win.main, 0, 0, 1, 1);
    b->win.container = e_window_override_new(b->win.main, 0, 0, 1, 1);
-   e_window_set_events(b->win.input, XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT);
+   e_window_set_events_propagate(b->win.input, 1);
+   e_window_set_events(b->win.input, XEV_MOUSE_MOVE | XEV_BUTTON);
+   e_window_set_events(b->win.main, XEV_IN_OUT);
+   e_window_set_events(b->win.container, XEV_IN_OUT);
    e_window_show(b->win.input);
    e_window_show(b->win.container);
 
@@ -1264,7 +1277,47 @@ e_border_new(void)
 			    font_dir);
    b->win.b = evas_get_window(b->evas.b); 
    e_add_child(b->win.main, b->win.b);
+   
+   b->obj.title.l = evas_add_text(b->evas.l, "borzoib", 8, "");
+   b->obj.title.r = evas_add_text(b->evas.r, "borzoib", 8, "");
+   b->obj.title.t = evas_add_text(b->evas.t, "borzoib", 8, "");
+   b->obj.title.b = evas_add_text(b->evas.b, "borzoib", 8, "");
+   
+   b->obj.title_clip.l = evas_add_rectangle(b->evas.l);
+   b->obj.title_clip.r = evas_add_rectangle(b->evas.r);
+   b->obj.title_clip.t = evas_add_rectangle(b->evas.t);
+   b->obj.title_clip.b = evas_add_rectangle(b->evas.b);
 
+   evas_set_color(b->evas.l, b->obj.title_clip.l, 255, 255, 255, 255);
+   evas_set_color(b->evas.r, b->obj.title_clip.r, 255, 255, 255, 255);
+   evas_set_color(b->evas.t, b->obj.title_clip.t, 255, 255, 255, 255);
+   evas_set_color(b->evas.b, b->obj.title_clip.b, 255, 255, 255, 255);
+   
+   evas_set_pass_events(b->evas.l, b->obj.title.l, 1);
+   evas_set_pass_events(b->evas.r, b->obj.title.r, 1);
+   evas_set_pass_events(b->evas.t, b->obj.title.t, 1);
+   evas_set_pass_events(b->evas.b, b->obj.title.b, 1);
+   
+   evas_set_color(b->evas.l, b->obj.title.l, 0, 0, 0, 255);
+   evas_set_color(b->evas.r, b->obj.title.r, 0, 0, 0, 255);
+   evas_set_color(b->evas.t, b->obj.title.t, 0, 0, 0, 255);
+   evas_set_color(b->evas.b, b->obj.title.b, 0, 0, 0, 255);
+
+   evas_show(b->evas.l, b->obj.title.l);
+   evas_show(b->evas.r, b->obj.title.r);
+   evas_show(b->evas.t, b->obj.title.t);
+   evas_show(b->evas.b, b->obj.title.b);
+
+   evas_show(b->evas.l, b->obj.title_clip.l);
+   evas_show(b->evas.r, b->obj.title_clip.r);
+   evas_show(b->evas.t, b->obj.title_clip.t);
+   evas_show(b->evas.b, b->obj.title_clip.b);
+   
+   evas_set_clip(b->evas.l, b->obj.title.l, b->obj.title_clip.l);
+   evas_set_clip(b->evas.l, b->obj.title.r, b->obj.title_clip.r);
+   evas_set_clip(b->evas.l, b->obj.title.t, b->obj.title_clip.t);
+   evas_set_clip(b->evas.l, b->obj.title.b, b->obj.title_clip.b);
+   
    e_window_raise(b->win.input);
    e_window_raise(b->win.container);
    
@@ -1516,11 +1569,11 @@ e_border_set_bits(E_Border *b, char *file)
    b->bits.r = ebits_load(file);
    b->bits.t = ebits_load(file);
    b->bits.b = ebits_load(file);
-
+   
    b->bits.new = 1;
    b->changed = 1;
 
-   if (b->bits.t) ebits_get_insets(b->bits.l, &ppl, &ppr, &ppt, &ppb);
+   if (b->bits.t) ebits_get_insets(b->bits.t, &ppl, &ppr, &ppt, &ppb);
    b->current.requested.w -= (pl + pr) - (ppl + ppr);
    b->current.requested.h -= (pt + pb) - (ppt + ppb);
    b->current.requested.x += (pl - ppl);
@@ -1825,11 +1878,44 @@ e_border_update(E_Border *b)
 	if (b->bits.r) ebits_resize(b->bits.r, b->current.w, b->current.h);
 	if (b->bits.t) ebits_resize(b->bits.t, b->current.w, b->current.h);
 	if (b->bits.b) ebits_resize(b->bits.b, b->current.w, b->current.h);
-	
+
 	e_icccm_move_resize(b->win.client, 
 			    b->current.x + pl, b->current.y + pt - b->current.shaded, 
 			    b->client.w, b->client.h);
 	e_cb_border_move_resize(b);
+     }
+   if ((b->client.title) && (b->bits.t))
+     {
+	double tx, ty, tw, th;
+	
+	ebits_get_bit_geometry(b->bits.l, "Title_Area", &tx, &ty, &tw, &th);
+	evas_set_text(b->evas.l, b->obj.title.l, b->client.title);
+	evas_move(b->evas.l, b->obj.title.l, tx, ty);
+	evas_move(b->evas.l, b->obj.title_clip.l, tx, ty);
+	evas_resize(b->evas.l, b->obj.title_clip.l, tw, th);
+	
+	ebits_get_bit_geometry(b->bits.r, "Title_Area", &tx, &ty, &tw, &th);
+	evas_set_text(b->evas.r, b->obj.title.r, b->client.title);
+	evas_move(b->evas.r, b->obj.title.r, tx, ty);
+	evas_move(b->evas.r, b->obj.title_clip.r, tx, ty);
+	evas_resize(b->evas.r, b->obj.title_clip.r, tw, th);
+	
+	ebits_get_bit_geometry(b->bits.t, "Title_Area", &tx, &ty, &tw, &th);
+	evas_set_text(b->evas.t, b->obj.title.t, b->client.title);
+	evas_move(b->evas.t, b->obj.title.t, tx, ty);
+	evas_move(b->evas.t, b->obj.title_clip.t, tx, ty);
+	evas_resize(b->evas.t, b->obj.title_clip.t, tw, th);
+	
+	ebits_get_bit_geometry(b->bits.b, "Title_Area", &tx, &ty, &tw, &th);
+	evas_set_text(b->evas.b, b->obj.title.b, b->client.title);
+	evas_move(b->evas.b, b->obj.title.b, tx, ty);
+	evas_move(b->evas.b, b->obj.title_clip.b, tx, ty);
+	evas_resize(b->evas.b, b->obj.title_clip.b, tw, th);
+
+	evas_set_layer(b->evas.l, b->obj.title.l, 1);
+	evas_set_layer(b->evas.r, b->obj.title.r, 1);
+	evas_set_layer(b->evas.t, b->obj.title.t, 1);
+	evas_set_layer(b->evas.b, b->obj.title.b, 1);   
      }
    e_border_reshape(b);
    if (visibility_changed)
