@@ -932,6 +932,19 @@ e_menu_event_win_show(void)
      }
    /* raise it */
    if (menu_event_win) ecore_window_raise(menu_event_win);
+   if ((!ecore_grab_window_get()) || (!ecore_keyboard_grab_window_get()))
+     {
+	Evas_List l;
+	
+	for (l = menus; l; l = l->next)
+	  {
+	     E_Menu *m;
+	     
+	     m = l->data;	     
+	     if (m->current.visible) e_menu_hide(m);
+	  }
+	e_menu_event_win_hide();
+     }
 
    D_RETURN;
 }

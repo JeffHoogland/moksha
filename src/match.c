@@ -181,6 +181,6 @@ e_match_save_props(E_Border *b)
      }
    
    e_db_close(db);
-   e_db_flush();
+   e_db_runtime_flush();
    D_RETURN;
 }
