@@ -131,7 +131,7 @@ int
 about(E_Module *module)
 {
    e_error_dialog_show("Enlightenment Pager Module",
-		       "A pager module to navigate E17 desktops.");
+		       "A pager module to navigate virtual desktops.");
    return 1;
 }
 
@@ -929,22 +929,46 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    Pager_Face              *face;
    Pager_Win               *pw;
    Pager_Desk              *pd;
-
+   Evas_List               *l;
+   int                      found = 0;
+   
    face = data;
    ev = event;
    if (face->zone != ev->border->zone) return 1;
    if (ev->border->sticky) return 1;
 
-   pw = _pager_face_border_find(face, ev->border);
-   pd = _pager_face_desk_find(face, ev->border->desk);
-   if ((pw) && (pd))
+   for (l = face->desks; l; l = l->next)
      {
-	pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
-	pw->desk = pd;
-	pd->wins = evas_list_append(pd->wins, pw);
-	e_layout_unpack(pw->window_object);
-	e_layout_pack(pd->layout_object, pw->window_object);
-	_pager_window_move(face, pw);
+	pd = l->data;
+        if (ev->border->desk != pd->desk)
+	  {
+	     pw = _pager_desk_border_find(pd, ev->border);
+	     if (pw)
+	       {
+		  pd->wins = evas_list_remove(pd->wins, pw);
+		  _pager_window_free(pw);
+	       }
+	  }
+	else
+	  {
+	     pw = _pager_desk_border_find(pd, ev->border);
+	     if (pw) found = 1;
+	  }
+     }
+   if (!found)
+     {
+	pw = _pager_face_border_find(face, ev->border);
+	pd = _pager_face_desk_find(face, ev->border->desk);
+	if ((pw) && (pd))
+	  {
+	     pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
+	     e_layout_unpack(pw->window_object);
+	     
+	     pw->desk = pd;
+	     pd->wins = evas_list_append(pd->wins, pw);
+	     e_layout_pack(pd->layout_object, pw->window_object);
+	     _pager_window_move(face, pw);
+	  }
      }
    return 1;
 }
