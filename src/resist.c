@@ -22,9 +22,9 @@ e_resist_border(E_Border *b)
 	b->current.y = b->current.requested.y;
 	return;
      }
-   E_DB_INT_GET(settings_db, "/move/resist/desk", desk_resist, ok);
+   ok = 0; E_DB_INT_GET(settings_db, "/move/resist/desk", desk_resist, ok);
    if (!ok) desk_resist = 32;
-   E_DB_INT_GET(settings_db, "/move/resist/win", win_resist, ok);
+   ok = 0; E_DB_INT_GET(settings_db, "/move/resist/win", win_resist, ok);
    if (!ok) win_resist = 12;
    if (!b->desk) return;
    dx = b->current.requested.x - b->previous.requested.x;
@@ -40,6 +40,8 @@ rects = evas_list_append(rects, r); \
    OBSTACLE(-1000000, -1000000, 1000000, 2000000 + b->desk->real.h, desk_resist); 
    OBSTACLE(-1000000, b->desk->real.h, 2000000 + b->desk->real.w, 1000000, desk_resist); 
    OBSTACLE(b->desk->real.w, -1000000, 1000000, 2000000 + b->desk->real.h, desk_resist); 
+   /* can add code here to add more fake obstacles with custom resist values */
+   /* here if need be - ie xinerama middle between screens and panels etc. */
   
    for (l = b->desk->windows; l; l = l->next)
      {

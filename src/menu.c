@@ -5,6 +5,7 @@ static Evas_List menus = NULL;
 static Window    menu_event_win = 0;
 static int       screen_w, screen_h;
 static int       mouse_x, mouse_y;
+static int       keyboard_nav = 0;
 
 static void e_idle(void *data);
 static void e_key_down(Eevent * ev);
@@ -21,9 +22,16 @@ e_scroller_timer(int val, void *data)
    Evas_List l;
    int ok = 0;
    int resist = 5;
-   int scroll_speed = 16;
-   static double last_time = 0.0, t;
+   int scroll_speed = 12;
+   char *settings_db;
+   static double last_time = 0.0;
+   double t;
    
+   settings_db = e_config_get("settings");
+   ok = 0; E_DB_INT_GET(settings_db, "/menu/scroll/resist", resist, ok);
+   if (!ok) resist = 5;
+   ok = 0; E_DB_INT_GET(settings_db, "/menu/scroll/speed", scroll_speed, ok);
+   if (!ok) scroll_speed = 12;
    t = e_get_time();
    if (val != 0)
      scroll_speed = (int)(((t - last_time) / 0.02) * (double)scroll_speed);
@@ -119,6 +127,7 @@ e_scroller_timer(int val, void *data)
      }
    if (ok)
      e_add_event_timer("menu_scroller", 0.02, e_scroller_timer, val + 1, NULL);   
+   UN(data);
 }
   
 static void
@@ -215,22 +224,27 @@ e_key_down(Eevent * ev)
 	  }
 	if (!strcmp(e->key, "Up"))
 	  {
+	     keyboard_nav = 1;
 	     e_menu_select(0, -1);
 	  }
 	else if (!strcmp(e->key, "Down"))
 	  {
+	     keyboard_nav = 1;
 	     e_menu_select(0, 1);
 	  }
 	else if (!strcmp(e->key, "Left"))
 	  {
+	     keyboard_nav = 1;
 	     e_menu_select(-1, 0);
 	  }
 	else if (!strcmp(e->key, "Right"))
 	  {
+	     keyboard_nav = 1;
 	     e_menu_select(1, 0);
 	  }
 	else if (!strcmp(e->key, "Escape"))
 	  {
+	     keyboard_nav = 1;
 	     for (l = menus; l; l = l->next)
 	       {
 		  m = l->data;
@@ -241,6 +255,7 @@ e_key_down(Eevent * ev)
 	  }
 	else if (!strcmp(e->key, "Return"))
 	  {
+	     keyboard_nav = 1;
 	     if (mi)
 	       {
 		  e_menu_callback_item(m, mi);
@@ -289,6 +304,7 @@ e_mouse_up(Eevent * ev)
    Ev_Mouse_Up      *e;
    
    e = ev->event;
+   keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
 	if (open_menus)
@@ -330,6 +346,7 @@ e_mouse_move(Eevent * ev)
    Ev_Mouse_Move      *e;
    
    e = ev->event;
+   keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
 	Evas_List l;
@@ -373,6 +390,7 @@ e_mouse_in(Eevent * ev)
    Ev_Window_Enter      *e;
    
    e = ev->event;
+   keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
      }
@@ -385,6 +403,7 @@ e_mouse_out(Eevent * ev)
    Ev_Window_Leave      *e;
    
    e = ev->event;
+   keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
      }
@@ -433,7 +452,6 @@ static void
 e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Menu_Item *mi;
-   Evas_List l;
 
    mi = _data;
    mi->menu->selected = mi;
@@ -448,6 +466,11 @@ e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       mi->menu->current.y + mi->y - mi->menu->border.t);
 	e_menu_show(mi->submenu);
      }
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 static void 
@@ -460,6 +483,11 @@ e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    mi->selected = 0;
    mi->menu->redo_sel = 1;
    mi->menu->changed = 1;
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 void
@@ -724,23 +752,27 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
    char *menus;
    char buf[4096];
    char *style = "default";
-   char *part;
    int pl, pr, pt, pb;
    int has_sub = 0;
    int selected = 0;
    
    menus = e_config_get("menus");   
-   selected = mi->selected;
-   if (mi->submenu) has_sub = 1;
-   sprintf(buf, "%s%s/selected-%i.submenu-%i.bits.db", menus, style, 
-	   selected, has_sub);
-   if ((mi->bg_file) && (!strcmp(mi->bg_file, buf))) return;
-   
+   if (!mi->separator)
+     {
+	selected = mi->selected;
+	if (mi->submenu) has_sub = 1;
+	sprintf(buf, "%s%s/selected-%i.submenu-%i.bits.db", menus, style, 
+		selected, has_sub);
+	if ((mi->bg_file) && (!strcmp(mi->bg_file, buf))) return;
+     }
    IF_FREE(mi->bg_file);
-   mi->bg_file = strdup(buf);
-   
+   if (!mi->separator)
+     mi->bg_file = strdup(buf);
+   else
+     mi->bg_file = NULL;
    if (mi->bg) ebits_free(mi->bg);
-   mi->bg = ebits_load(mi->bg_file);
+   if (mi->bg_file)
+     mi->bg = ebits_load(mi->bg_file);
    if (mi->bg) ebits_set_color_class(mi->bg, "Menu BG", 100, 200, 255, 255);
    
    pl = pr = pt = pb = 0;
@@ -759,8 +791,102 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
 }
 
 void
+e_menu_set_sep(E_Menu *m, E_Menu_Item *mi)
+{
+   char *menus;
+   char buf[4096];
+   char *style = "default";
+   int pl, pr, pt, pb, minx, miny;
+   
+   menus = e_config_get("menus");   
+   sprintf(buf, "%s%s/separator.bits.db", menus, style);
+   if ((mi->sep_file) && (!strcmp(mi->sep_file, buf))) return;
+   
+   IF_FREE(mi->sep_file);
+   mi->sep_file = strdup(buf);
+   
+   if (mi->sep) ebits_free(mi->sep);
+   mi->sep = ebits_load(mi->sep_file);
+   if (mi->sep) ebits_set_color_class(mi->sep, "Menu BG", 100, 200, 255, 255);
+   
+   pl = pr = pt = pb = 0;
+   minx = 0;
+   miny = 0;
+   if (mi->sep) 
+     {
+	ebits_get_insets(mi->sep, &pl, &pr, &pt, &pb);
+	ebits_add_to_evas(mi->sep, m->evas);
+	ebits_set_layer(mi->sep, 1);
+	ebits_get_min_size(mi->sep, &minx, &miny);
+     }
+   if (mi->size.min.w < minx) mi->size.min.w = minx;
+   if (mi->size.min.h < miny) mi->size.min.h = miny;
+   m->redo_sel = 1;
+   m->changed = 1;
+}
+
+void
+e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
+{
+   char *menus;
+   char buf[4096];
+   char *style = "default";
+   int   on;
+   int pl, pr, pt, pb, minx, miny;
+   
+   menus = e_config_get("menus");   
+   on = mi->on;
+   if (mi->check)
+     sprintf(buf, "%s%s/check-%i.bits.db", menus, style, on);
+   else
+     sprintf(buf, "%s%s/radio-%i.bits.db", menus, style, on);
+   if ((mi->state_file) && (!strcmp(mi->state_file, buf))) return;
+   
+   IF_FREE(mi->state_file);
+   mi->state_file = strdup(buf);
+   
+   if (mi->state) ebits_free(mi->state);
+   mi->state = ebits_load(mi->state_file);
+   if (mi->state) ebits_set_color_class(mi->state, "Menu BG", 100, 200, 255, 255);
+   
+   pl = pr = pt = pb = 0;
+   minx = 0;
+   miny = 0;
+   if (mi->state) 
+     {
+	ebits_get_insets(mi->state, &pl, &pr, &pt, &pb);
+	ebits_add_to_evas(mi->state, m->evas);
+	ebits_set_layer(mi->state, 2);
+	ebits_get_min_size(mi->state, &minx, &miny);
+     }
+   if (mi->size.min.w < minx) mi->size.min.w = minx;
+   if (mi->size.min.h < miny) mi->size.min.h = miny;
+   m->redo_sel = 1;
+   m->changed = 1;
+}
+
+void
 e_menu_free(E_Menu *m)
 {
+   Evas_List l;
+   
+   for (l = m->entries; l; l = l->next)
+     {
+	E_Menu_Item *mi;
+	
+	mi = l->data;
+	e_menu_item_unrealize(m, mi);
+	IF_FREE(mi->str);
+	IF_FREE(mi->icon);
+	free(mi);
+     }
+   evas_list_free(m->entries);
+   IF_FREE(m->bg_file);
+   evas_free(m->evas);
+   e_window_destroy(m->win.main);
+   menus = evas_list_remove(menus, m);
+   open_menus = evas_list_remove(open_menus, m);
+   free(m);
 }
 
 E_Menu *
@@ -869,41 +995,152 @@ e_menu_del_item(E_Menu *m, E_Menu_Item *mi)
    m->recalc_entries = 1;
    m->changed = 1;
    e_menu_item_unrealize(m, mi);
+   IF_FREE(mi->str);
+   IF_FREE(mi->icon);
+   if (mi->menu->selected == mi) mi->menu->selected = NULL;
+   free(mi);
    mi->menu = NULL;
 }
 
 void
 e_menu_item_update(E_Menu *m, E_Menu_Item *mi)
 {
-   evas_move(m->evas, mi->obj_text, mi->x + m->sel_border.l, mi->y + m->sel_border.t);
-   evas_move(m->evas, mi->obj_entry, mi->x, mi->y);
-   evas_resize(m->evas, mi->obj_entry, mi->size.w + m->sel_border.l + m->sel_border.r, mi->size.h + m->sel_border.t + m->sel_border.b);
+   int tx, ty, tw, th, ix, iy, iw, ih, rx, ry, rw, rh;
+   double dtw, dth;
+   
+   if (mi->sep)
+     {
+	ebits_move(mi->sep, mi->x, mi->y);
+	ebits_resize(mi->sep, mi->size.w + m->sel_border.l + m->sel_border.r, mi->size.h);
+	ebits_show(mi->sep);
+     }
+   else
+     {
+	rx = 0; ry = 0; rh = 0;
+	rw = m->size.state;
+	if (mi->state) 
+	  {
+	     ebits_get_min_size(mi->state, &rw, &rh);
+	     rx = 0;
+	     ry = ((mi->size.h - rh) / 2);
+	     ebits_move(mi->state, m->sel_border.l + mi->x + rx, m->sel_border.t + mi->y + ry);
+	     ebits_resize(mi->state, rw, rh);
+	  }
+	
+	tx = 0; ty = 0; tw = 0; th = 0;
+	if (mi->obj_text) 
+	  {
+	     evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &dtw, &dth);
+	     tw = (int)dtw; th = (int)dth;
+	  }
+	
+	ix = 0; iy = 0; iw = 0; ih = 0;
+	if (mi->obj_icon) 
+	  {
+	     int sh;
+	     
+	     evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+	     sh = th;
+	     if (rh > th) sh = rh;
+	     if ((mi->scale_icon) && (ih > sh) && (mi->str))
+	       {
+		  iw = (iw * sh) / ih;
+		  ih = sh;
+	       }
+	     if (m->size.state) ix = rx + m->size.state + m->pad.state;
+	     ix += ((m->size.icon - iw) / 2);
+	     iy = ((mi->size.h - ih) / 2);
+	     evas_move(m->evas, mi->obj_icon, m->sel_border.l + mi->x + ix, m->sel_border.t + mi->y + iy);
+	     evas_resize(m->evas, mi->obj_icon, iw, ih);
+	     evas_set_image_fill(m->evas, mi->obj_icon, 0, 0, iw, ih);
+	  }
+	
+	if (mi->obj_text) 
+	  {
+	     if (m->size.state) tx = rx + m->size.state + m->pad.state;	     
+	     if (m->size.icon) tx += m->size.icon + m->pad.icon;	     
+	     ty = ((mi->size.h - th) / 2);
+	     evas_move(m->evas, mi->obj_text, m->sel_border.l + mi->x + tx, m->sel_border.t + mi->y + ty);
+	  }
+	
+	if (mi->obj_entry)
+	  {
+	     evas_move(m->evas, mi->obj_entry, mi->x, mi->y);
+	     evas_resize(m->evas, mi->obj_entry, mi->size.w + m->sel_border.l + m->sel_border.r, mi->size.h + m->sel_border.t + m->sel_border.b);
+	  }
+	if (mi->state)
+	  {
+	     ebits_show(mi->state);
+	  }
+     }
 }
 
 void
 e_menu_item_unrealize(E_Menu *m, E_Menu_Item *mi)
 {
+   if (mi->bg) ebits_free(mi->bg);
+   mi->bg = NULL;
+   IF_FREE(mi->bg_file);
+   mi->bg_file = NULL;
+   if (mi->obj_entry) evas_del_object(m->evas, mi->obj_text);
+   mi->obj_entry = NULL;
+   if (mi->obj_icon) evas_del_object(m->evas, mi->obj_icon);
+   mi->obj_icon = NULL;
+   if (mi->state) ebits_free(mi->state);
+   mi->state = NULL;
+   IF_FREE(mi->state_file);
+   mi->state_file = NULL;
+   if (mi->sep) ebits_free(mi->sep);
+   mi->sep = NULL;
+   IF_FREE(mi->sep_file);
+   mi->sep_file = NULL;
 }
 
 void
 e_menu_item_realize(E_Menu *m, E_Menu_Item *mi)
 {
    double tw, th;
+   int iw, ih, rw, rh;
 
-   mi->obj_text = evas_add_text(m->evas, "borzoib", 8, mi->str);
-   mi->obj_entry = evas_add_rectangle(m->evas);
-   evas_set_color(m->evas, mi->obj_text, 0, 0, 0, 255);
-   evas_set_color(m->evas, mi->obj_entry, 0, 0, 0, 0);
-   evas_show(m->evas, mi->obj_text);
-   evas_show(m->evas, mi->obj_entry);
-   evas_set_layer(m->evas, mi->obj_text, 10);
-   evas_set_layer(m->evas, mi->obj_entry, 11);
-   evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &tw, &th);
-   mi->size.min.w = tw;
-   mi->size.min.h = th;   
-   evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_IN, e_menu_item_in_cb, mi);
-   evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_OUT, e_menu_item_out_cb, mi);
-   e_menu_set_sel(m, mi);
+   if (mi->separator)
+     {
+	e_menu_set_sep(m, mi);
+     }
+   else
+     {
+	if (mi->str) 
+	  {
+	     mi->obj_text = evas_add_text(m->evas, "borzoib", 8, mi->str);
+	     evas_set_color(m->evas, mi->obj_text, 0, 0, 0, 255);
+	     evas_show(m->evas, mi->obj_text);
+	     evas_set_layer(m->evas, mi->obj_text, 10);
+	  }
+	if (mi->icon)
+	  {
+	     mi->obj_icon = evas_add_image_from_file(m->evas, mi->icon);
+	     evas_show(m->evas, mi->obj_icon);
+	     evas_set_layer(m->evas, mi->obj_icon, 10);
+	  }	
+	mi->obj_entry = evas_add_rectangle(m->evas);
+	evas_set_layer(m->evas, mi->obj_entry, 11);
+	evas_set_color(m->evas, mi->obj_entry, 0, 0, 0, 0);
+	evas_show(m->evas, mi->obj_entry);
+	tw = 0; th = 0;
+	if (mi->obj_text) evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &tw, &th);
+	iw = 0; ih = 0;
+	if (mi->obj_icon) evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+	rw = 0; rh = 0;
+	if (mi->state) ebits_get_min_size(mi->state, &rw, &rh);
+	mi->size.min.w = (int)tw + rw;
+	if (rh > th) th = (double)rh;
+	if (((!mi->scale_icon) && (ih > th)) ||
+	    ((!mi->str) && (ih > th))) th = (double)ih;
+	mi->size.min.h = (int)th;
+	evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_IN, e_menu_item_in_cb, mi);
+	evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_OUT, e_menu_item_out_cb, mi);
+	e_menu_set_sel(m, mi);
+	if ((mi->radio) || (mi->check)) e_menu_set_state(m, mi);
+     }
 }
 
 E_Menu_Item *
@@ -913,8 +1150,8 @@ e_menu_item_new(char *str)
    
    mi = NEW(E_Menu_Item, 1);
    ZERO(mi, E_Menu_Item, 1);
-   
-   mi->str = strdup(str);
+
+   if (str) mi->str = strdup(str);
    
    return mi;
 }
@@ -959,14 +1196,17 @@ e_menu_scroll_all_by(int dx, int dy)
 	     m->changed = 1;
 	  }
      }
-   for (l = open_menus; l; l = l->next)
+   if (!keyboard_nav)
      {
-	E_Menu *m;
-	
-	m = l->data;
-	evas_event_move(m->evas, 
-			mouse_x - m->current.x, 
-			mouse_y - m->current.y);
+	for (l = open_menus; l; l = l->next)
+	  {
+	     E_Menu *m;
+	     
+	     m = l->data;
+	     evas_event_move(m->evas, 
+			     mouse_x - m->current.x, 
+			     mouse_y - m->current.y);
+	  }
      }
 }
 
@@ -1014,35 +1254,76 @@ e_menu_update_base(E_Menu *m)
      {
 	Evas_List l;
 	int max_w, max_h;
-	int i, count;
+	int i;
 	
 	max_w = 0;
 	max_h = 0;
-	count = 0;
 	for (l = m->entries; l; l = l->next)
 	  {
 	     E_Menu_Item *mi;
 	     
 	     mi = l->data;
-	     if (mi->size.min.w > max_w) max_w = mi->size.min.w;
 	     if (mi->size.min.h > max_h) max_h = mi->size.min.h;
-	     count++;
 	  }
-	m->current.w = m->border.l + m->border.r + max_w + m->sel_border.l + m->sel_border.r;
-	m->current.h = m->border.b + m->border.t + ((max_h + m->sel_border.t + m->sel_border.b) * count);
-	i = 0;
+	m->size.state = 0;
+	m->size.icon = 0;
+	m->size.text = 0;
+	for (l = m->entries; l; l = l->next)
+	  {
+	     E_Menu_Item *mi;
+	     int iw, ih, rw, rh;
+	     double tw, th;
+	     
+	     mi = l->data;
+	     if (!mi->separator)
+	       {
+		  tw = 0; th = 0;
+		  if (mi->obj_text) evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &tw, &th);
+		  iw = 0; ih = 0;
+		  if (mi->obj_icon) evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+		  rw = 0; rh = 0;
+		  if (mi->state) ebits_get_min_size(mi->state, &rw, &rh);
+		  if (m->size.text < tw) m->size.text = tw;
+		  if (m->size.state < rw) m->size.state = rw;
+		  if ((mi->scale_icon) && (iw > 0) && (ih > 0) && (mi->str))
+		    {
+		       int iiw;
+		       
+		       iiw = iw;
+		       if (ih > (int)th) iiw = (iw * (int)th) / ih;
+		       if (m->size.icon < iiw) m->size.icon = iiw;
+		    }
+		  else if (m->size.icon < iw) m->size.icon = iw;	
+	       }
+	  }
+	max_w = m->size.state;
+	if (m->size.state) max_w += m->pad.state;
+	max_w += m->size.icon;
+	if (m->size.icon) max_w += m->pad.icon;
+	max_w += m->size.text;
+		
+	i = m->border.t;
 	for (l = m->entries; l; l = l->next)
 	  {
 	     E_Menu_Item *mi;
 	     
 	     mi = l->data;
 	     mi->size.w = max_w;
-	     mi->size.h = max_h;
+	     if (mi->separator) mi->size.h = mi->size.min.h;
+	     else               mi->size.h = max_h;
 	     mi->x = m->border.l;
-	     mi->y = m->border.t + (i * (max_h + m->sel_border.t + m->sel_border.b));
+	     mi->y = i;
+	     if (!mi->separator)
+	       i += m->sel_border.t + m->sel_border.b;
+	     if (mi->separator)
+	       i += mi->size.h;
+	     else
+	       i += max_h;
 	     e_menu_item_update(m, mi);
-	     i++;
 	  }
+	m->current.w = m->border.l + m->border.r + max_w + m->sel_border.l + m->sel_border.r;
+	m->current.h = m->border.b + i;
+	
 	m->recalc_entries = 0;
      }
    if (m->redo_sel)
@@ -1119,6 +1400,7 @@ e_menu_update_shows(E_Menu *m)
 	     e_window_raise(m->win.main);
 	     e_menu_event_win_show();
 	     e_window_show(m->win.main);
+	     if (!open_menus) keyboard_nav = 0;
 	     open_menus = evas_list_append(open_menus, m);
 	  }
      }

@@ -15,6 +15,7 @@ exec.c \
 icccm.c \
 main.c \
 menu.c \
+menudb.c \
 resist.c \
 util.c \
 view.c \

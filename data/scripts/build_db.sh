@@ -156,10 +156,12 @@ edb_ed $DB add "/actions/count"       int $NUM
 
 # basic settings
 DB="./settings.db"
-edb_ed $DB add "/move/resist"      int 1
-edb_ed $DB add "/move/resist/desk" int 24
-edb_ed $DB add "/move/resist/win"  int 12
-edb_ed $DB add "/focus/mode   "    int $FOCUS_POINTER
+edb_ed $DB add "/focus/mode   "      int $FOCUS_POINTER
+edb_ed $DB add "/move/resist"        int 1
+edb_ed $DB add "/move/resist/desk"   int 24
+edb_ed $DB add "/move/resist/win"    int 12
+edb_ed $DB add "/menu/scroll/resist" int 5
+edb_ed $DB add "/menu/scroll/speed"  int 12
 
 # what events on windows are "grabbed" by the window manager
 DB="./grabs.db"

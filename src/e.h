@@ -326,6 +326,13 @@ struct _E_Menu
    int       redo_sel;
    int       changed;
    
+   struct {
+      int state, icon, text;
+   } size;
+   struct {
+      int icon, state;
+   } pad;
+   
    E_Menu_Item *selected;
    
    Time      time;
@@ -343,27 +350,36 @@ struct _E_Menu_Item
       int w, h;
    } size;
    
-   Ebits_Object bg;
-   char        *bg_file;
-   int          selected;
+   Ebits_Object  bg;
+   char         *bg_file;
+   int           selected;
 
-   Evas_Object  obj_entry;
+   Evas_Object   obj_entry;
    
-   char        *str;
-   Evas_Object  obj_text;
+   char         *str;
+   Evas_Object   obj_text;
    
-   char        *icon;
-   Evas_Object  obj_icon;
+   char         *icon;
+   Evas_Object   obj_icon;
+   int           scale_icon;
    
-   int          radio_group;
-   int          check;
-   int          on;
+   Ebits_Object  state;
+   char         *state_file;
    
-   E_Menu *menu;
-   E_Menu *submenu;
+   Ebits_Object  sep;
+   char         *sep_file;
    
-   void (*func_select) (E_Menu *m, E_Menu_Item *mi, void *data);
-   void  *func_select_data;
+   int           separator;
+   int           radio_group;
+   int           radio;
+   int           check;
+   int           on;
+   
+   E_Menu       *menu;
+   E_Menu       *submenu;
+   
+   void        (*func_select) (E_Menu *m, E_Menu_Item *mi, void *data);
+   void         *func_select_data;
 };
 
 void e_action_add_proto(char *action,
@@ -465,3 +481,35 @@ char *e_config_user_dir(void);
 void e_view_free(E_View *v);
 E_View *e_view_new(void);
 void e_view_init(void);
+
+void e_menu_callback_item(E_Menu *m, E_Menu_Item *mi);
+void e_menu_item_set_callback(E_Menu_Item *mi, void (*func) (E_Menu *m, E_Menu_Item *mi, void *data), void *data);
+void e_menu_hide_submenus(E_Menu *menus_after);
+void e_menu_select(int dx, int dy);
+void e_menu_init(void);
+void e_menu_event_win_show(void);
+void e_menu_event_win_hide(void);
+void e_menu_set_background(E_Menu *m);
+void e_menu_set_sel(E_Menu *m, E_Menu_Item *mi);
+void e_menu_set_sep(E_Menu *m, E_Menu_Item *mi);
+void e_menu_set_state(E_Menu *m, E_Menu_Item *mi);
+void e_menu_free(E_Menu *m);
+E_Menu *e_menu_new(void);
+void e_menu_hide(E_Menu *m);
+void e_menu_show(E_Menu *m);
+void e_menu_move_to(E_Menu *m, int x, int y);
+void e_menu_show_at_mouse(E_Menu *m, int x, int y, Time t);
+void e_menu_add_item(E_Menu *m, E_Menu_Item *mi);
+void e_menu_del_item(E_Menu *m, E_Menu_Item *mi);
+void e_menu_item_update(E_Menu *m, E_Menu_Item *mi);
+void e_menu_item_unrealize(E_Menu *m, E_Menu_Item *mi);
+void e_menu_item_realize(E_Menu *m, E_Menu_Item *mi);
+E_Menu_Item *e_menu_item_new(char *str);
+void e_menu_obscure_outside_screen(E_Menu *m);
+void e_menu_scroll_all_by(int dx, int dy);
+void e_menu_update_visibility(E_Menu *m);
+void e_menu_update_base(E_Menu *m);
+void e_menu_update_finish(E_Menu *m);
+void e_menu_update_shows(E_Menu *m);
+void e_menu_update_hides(E_Menu *m);
+void e_menu_update(E_Menu *m);
