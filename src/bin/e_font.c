@@ -9,8 +9,8 @@
  * - use e_path to search for available fonts
  */
 
-static Evas_List *_e_font_defaults;	/* MRU <E_Font_Default> */
-static Evas_List *_e_font_fallbacks;	/* <E_Font_Fallback> */
+static Evas_List *_e_font_defaults = NULL;	/* MRU <E_Font_Default> */
+static Evas_List *_e_font_fallbacks = NULL;	/* <E_Font_Fallback> */
 
 static Evas_List *_e_font_font_dir_available_get (Evas_List * available_fonts, const char *font_dir);
 
@@ -50,7 +50,8 @@ e_font_apply(void)
      {
 	edje_fontset_append_set(NULL);
      }
-   
+
+   buf[0] = 0;
    while (next)
      {
 	eff = evas_list_data(next);
@@ -58,7 +59,8 @@ e_font_apply(void)
 	strcat(buf, eff->name);
 	next = evas_list_next(next);
      }
-   edje_fontset_append_set(buf);
+   if (buf[0] != 0)
+     edje_fontset_append_set(buf);
    
    /* setup edje text classes */
    next = _e_font_defaults;
