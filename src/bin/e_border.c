@@ -1778,9 +1778,11 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
    E_Config_Binding *eb;
    int x, y, w, h;
    char source[16];
+   int modifiers;
 
    ev = event;
    bd = data;
+   modifiers = ev->modifiers;
    if (ev->event_win == bd->win)
      {
 	if ((ev->button >= 1) && (ev->button <= 3))
@@ -1796,11 +1798,11 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	bd->mouse.current.my = ev->root.y;
 	/* Bindings */
 	/* Remove LOCK keys */
-	ev->modifiers &= ~(ECORE_X_LOCK_SCROLL|ECORE_X_LOCK_NUM|ECORE_X_LOCK_CAPS);
+	modifiers &= ~(ECORE_X_LOCK_SCROLL|ECORE_X_LOCK_NUM|ECORE_X_LOCK_CAPS);
 	for (list = e_config->bindings; list; list = list->next)
 	  {
 	     eb = list->data;
-	     if ((ev->button == eb->button) && (ev->modifiers == eb->modifiers))
+	     if ((ev->button == eb->button) && (modifiers == eb->modifiers))
 	       {
 		  snprintf(source, sizeof(source) - 1, "mouse,%d", eb->button);
 		  switch (eb->action)
