@@ -169,9 +169,9 @@ _e_int_menus_main_end(void *data, E_Menu *m)
    Main_Data *dat;
    
    dat = data;
-   e_object_unref(E_OBJECT(dat->apps));
-   e_object_unref(E_OBJECT(dat->modules));
-   e_object_unref(E_OBJECT(m));
+   e_object_del(E_OBJECT(dat->apps));
+   e_object_del(E_OBJECT(dat->modules));
+   e_object_del(E_OBJECT(m));
    free(dat);
 }
 
@@ -260,7 +260,7 @@ _e_int_menus_apps_end(void *data, E_Menu *m)
 	if (mi->submenu)
 	  _e_int_menus_apps_end(NULL, mi->submenu);
      }
-   e_object_unref(E_OBJECT(m));
+   e_object_del(E_OBJECT(m));
 }
 
 static void
