@@ -489,33 +489,33 @@ e_view_handle_fs(EfsdEvent *ev)
 {
    switch (ev->type)
      {
-      case FILECHANGE:
-	switch (ev->efsd_filechange_event.changecode)
+      case EFSD_EVENT_FILECHANGE:
+	switch (ev->efsd_filechange_event.changetype)
 	  {
-	   case FAMCreated:
+	   case EFSD_CHANGE_CREATED:
 	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
-	   case FAMExists:
+	   case EFSD_CHANGE_EXISTS:
 	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
-	   case FAMDeleted:
+	   case EFSD_CHANGE_DELETED:
 	     e_view_file_deleted(ev->efsd_filechange_event.id, 
 				 ev->efsd_filechange_event.file);
 	     break;
-	   case FAMChanged:
-	     printf("FAMChanged: %i %s\n",
+	   case EFSD_CHANGE_CHANGED:
+	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 	     break;
-	   case FAMMoved:
-	     printf("FAMMoved: %i %s\n",
+	   case EFSD_CHANGE_MOVED:
+	     printf("EFSD_CHANGE_MOVED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 	     break;
-	   case FAMEndExist:
-	     printf("FAMEndExist: %i %s\n",
+	   case EFSD_CHANGE_END_EXISTS:
+	     printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 	     break;
@@ -523,22 +523,22 @@ e_view_handle_fs(EfsdEvent *ev)
 	     break;
 	  }
 	break;
-      case REPLY:
+      case EFSD_EVENT_REPLY:
 	switch (ev->efsd_reply_event.command.type)
 	  {
-	   case REMOVE:
+	   case EFSD_CMD_REMOVE:
 	     break;
-	   case MOVE:
+	   case EFSD_CMD_MOVE:
 	     break;
-	   case SYMLINK:
+	   case EFSD_CMD_SYMLINK:
 	     break;
-	   case LISTDIR:
+	   case EFSD_CMD_LISTDIR:
 	     break;
-	   case MAKEDIR:
+	   case EFSD_CMD_MAKEDIR:
 	     break;
-	   case CHMOD:
+	   case EFSD_CMD_CHMOD:
 	     break;
-	   case STAT:
+	   case EFSD_CMD_STAT:
 	     printf("Stat event %i stating file %s\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id,
 		    ev->efsd_reply_event.command.efsd_file_cmd.file);
@@ -601,17 +601,17 @@ e_view_handle_fs(EfsdEvent *ev)
 		    }
 	       }
 	     break;
-	   case CLOSE:
+	   case EFSD_CMD_CLOSE:
 	     break;
-	   case SETMETA:
+	   case EFSD_CMD_SETMETA:
 	     break;
-	   case GETMETA:
+	   case EFSD_CMD_GETMETA:
 	     break;
-	   case STARTMON:
+	   case EFSD_CMD_STARTMON:
 	     printf("Startmon event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
 	     break;
-	   case STOPMON:
+	   case EFSD_CMD_STOPMON:
 	     break;
 	   default:
 	     break;
