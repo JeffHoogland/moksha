@@ -1,20 +1,19 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V3.1//EN" [
-<!ENTITY efsd "<function>efsd</function>">
+<!ENTITY e17 "<productname>Enlightenment 0.17</productname>">
 ]>
 
 
 <book id="efsd-documentation-howto">
   <bookinfo>
-    <title>Enlightenment Documentation Howto</title>
+    <title>The Enlightenment 0.17 Manual</title>
     
     <authorgroup>
       <author>
-	<firstname>FIRSTNAME</firstname>
-	<othername>OTHER</othername>
-	<surname>LASTNAME</surname>
+	<firstname>Christian</firstname>
+	<surname>Kreibich</surname>
 	<affiliation>
 	  <address>
-	    <email>EMAIL</email>
+	    <email>cK@whoop.org</email>
 	  </address>
 	</affiliation>
       </author>
@@ -61,223 +60,73 @@
   <chapter id="introduction">
     <title>Introduction</title>
     <para>
-      This is some sample documentation for you project. You'll need to be
-      familiar with <ulink url="http://docbook.org">DocBook</ulink>
-      to make best use of Enlightenment's documentation scheme.
-    </para>
-    <para>
-      See <link linkend="files" endterm="files.title"></link>
-      for an explanation of the documentation setup in you project.
-    </para>
-    <para>
-      <link linkend="comments" endterm="comments.title"></link> explains
-      the way you have to structure your comments so that they can be
-      extracted.
-    </para>
-    <para>
-      <link linkend="samples" endterm="samples.title"></link> contains a few
-      layout and markup examples to get you up to speed quickly.
+      This document explains the &e17; release, for both users and
+      developers.
     </para>
   </chapter>
 
-  <chapter id="files">
-    <title id="files.title">Documentation File Structure</title>
+  <chapter id="using">
+    <title>Using &e17;</title>
     <para>
-      The entire documentation setup lives in the <filename>doc</filename>
-      directory. The file you need to edit is called <filename>manual.raw</filename>.
-      When you enter <command>make docs</command> in the toplevel directory,
-      it gets translated into a standard SGML file using a Perl script.
-      The script scans the file for any lines starting directly with the
-      string <command>!I&lt;filename&gt;</command>. Here,
-      <filename>filename</filename> is the name of a code
-      file in which you have put extractable comments. The Perl script will
-      then analyze the file and generate SGML DocBook statements for those
-      comments right into the output file. 
+      Here's how you use &e17;.
     </para>
-    <para>
-      The resulting file of that step is called <filename>$PACKAGE-manual-$VERSION.sgml</filename>
-      where PACKAGE and VERSION are automatically set during the build process.
-      This sgml file can be postprocessed with any SGML processor to generate
-      for example HTML, TeX or PDF output.
-    </para>
-    <para>
-      Suppport for HTML generation is included already through the
-      <command>make html-docs</command> target. In order to be able to use
-      that, you'll need to have <command>jade</command> installed, and appropriate
-      DocBook stylesheets. If the <command>configure</command> script doesn't automatically find
-      you stylesheets (on a Debian system it should), you can specify them when
-      calling <command>configure</command> or <command>autogen.sh</command> using
-      the <command>--with-dbsheets=DIR</command> option.
-    </para>
-    <para>
-      If everything worked out fine, you'll get a tarball of the HTML version
-      of your documentation and the extracted version in the docs directory,
-      named similarly to the SGML file.
-    </para>
- 
+
+    <section id="wm">
+      <title id="wm.title">The Window Manager</title>
+      <para>
+      </para>
+    </section>
+    
+    <section id="fm">
+      <title id="fm.title">The File Manager</title>
+      <para>
+      </para>
+    </section>
   </chapter>
 
-  <chapter id="comments">
-    <title id="comments.title">Writing Extractable Comments</title>
+  <chapter id="inside">
+    <title>Inside &e17;</title>
     <para>
-      I'll simply give an example of a commented function here:
-
-	  <programlisting>
-
-/** 
- * efsd_wait_event - blocking wait for next Efsd event.
- * @ec: The Efsd connection
- * @ev: Pointer to an allocated EfsdEvent.
- *
- * Blocks until an efsd event arrives, then returns it by filling
- * in the @ev structure. Returns -1 when there was an error,
- * >= 0 otherwise.
- */
-int            efsd_wait_event(EfsdConnection *ec, EfsdEvent *ev);
-	  </programlisting>
-      As you can see, it's not hard -- just use two asterisks
-      to signal the start of an extractable comment. In the first
-      line, begin with the function name and a one-liner description.
-      Then, put each parameter in the following lines. Add an empty
-      line, and then a more verbose description. That's basically
-      it, you can also markup items differently as follows:
-
-	<itemizedlist mark="opencircle">
-	  <listitem>
-	    <para><command>funcname()</command> for function names</para>
-          </listitem>
-	  <listitem>
-	    <para><command>$ENVVAR</command> for environment variables</para>
-          </listitem>
-	  <listitem>
-	    <para><command>&amp;struct_name</command> for structures</para>
-          </listitem>
-	  <listitem>
-	    <para><command>%CONST</command> for constants/para>
-          </listitem>
-	</itemizedlist>
+      This chapter explains the inner workings of &e17;.
     </para>
-  </chapter>
-
-  <chapter id="samples">
-    <title id="samples.title">DocBook Examples</title>
-    <section>
-      <title>Lists</title>
-      <para>
-	<itemizedlist mark="opencircle">
-	  <listitem>
-	    <para>This</para>
-          </listitem>
-	  <listitem>
-	    <para>is</para>
-          </listitem>
-	  <listitem>
-	    <para>a</para>
-          </listitem>
-	  <listitem>
-	    <para>list</para>
-          </listitem>
-	</itemizedlist>
-      </para>
+    <section id="architecture">
+      <title id="architecture.title">&e17; Architecture</title>
+      <section id="overall">
+	<title id="overall.title">Overview</title>
+	<para>
+	</para>
+      </section>
+      <section id="modules">
+	<title id="modules.title">Modules</title>
+	<para>
+	</para>
+      </section>
     </section>
-    <section>
-      <title>Code</title>
-      <para>
-	  <programlisting>
-
-EfsdConnection *ec;
-
-if ( (ec = efsd_open()) == NULL)
-  {
-     /* Oops. Couldn't establish connection.
-      * Is Efsd really running ? 
-      */
-  }
-
-/* ... various efsd commands ... */
-
-if (efsd_close(ec) < 0)
-  {
-     /* Ouch. Error when closing connection. */
-  }
-	  </programlisting>
-      </para>
+    
+    <section id="concepts">
+      <title id="concepts.title">Themeing</title>
+      <section id="overview">
+	<title id="overview.title">Overview</title>
+	<para>
+	</para>
+      </section>
+      <section id="system">
+	<title id="system.title">System Settings</title>
+	<para>
+	</para>
+      </section>
+      <section id="user">
+	<title id="user.title">User Settings</title>
+	<para>
+	</para>
+      </section>
     </section>
-    <section>
-      <title>Images</title>
-      <para>
-
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="figures/sampleimage.eps" format="eps">
-          </imageobject>
-          <imageobject>
-            <imagedata fileref="figures/sampleimage.gif" format="gif">
-          </imageobject>
-          <textobject>
-            <phrase>Sample image</phrase>
-          </textobject>
-          <caption>
-            <para>This is how you display images.</para>
-          </caption>
-        </mediaobject>
-
-      </para>
-    </section>
-    <section>
-      <title>Warnings, Notes</title>
-      <para>
-	<note>
-	  <title>This is an example of a note.</title>
-	  <para>
-            It's really simple to use.
-	  </para>
-	</note
-      </para>
-      <para>
-	<caution>
-          <title>This is a warning.</title>
-          <para>
-	    It's used just like a note.
-          </para>
-	</caution>
-      </para>
+    
+    <section id="code">
+      <title>Code Documentation</title>
+!Isrc/iconbar.c
     </section>
   </chapter>
   
-  <bibliography>
-
-    <biblioentry id="bib-unp">
-      <bookbiblio>
-	<author>	  
-	  <firstname>W. R.</firstname>
-	  <surname>Stevens</surname>
-	</author>
-	<title>UNIX Network Programming</title>
-	<edition>Second Edition</edition>
-	<volumenum>Volume 1</volumenum>
-	<publisher>
-	  <publishername>Prentice-Hall</publishername>
-	</publisher>
-	<date>1998</date>
-      </bookbiblio>
-    </biblioentry>	
-      
-    <biblioentry id="bib-apue">
-      <bookbiblio>
-	<author>
-	  <firstname>W. R.</firstname>
-	  <surname>Stevens</surname>
-	</author>
-	<title>Advanced Programming in the UNIX Environment</title>
-	<publisher>
-	  <publishername>Addison-Wesley</publishername>
-	</publisher>
-	<date>1992</date>
-      </bookbiblio>
-    </biblioentry>	
-
-  </bibliography>
-      
 </book>
 

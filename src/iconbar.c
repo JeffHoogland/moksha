@@ -32,7 +32,11 @@ static void ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int
 /* please feel free to add to them to make them easier to read and be more */
 /* helpful. */
 
-/* init function - initialised the iconbar system */
+/**
+ * e_iconbar_init - Init function
+ *
+ * Initialises the iconbar system
+ */
 void
 e_iconbar_init()
 {
@@ -57,7 +61,10 @@ e_iconbar_init()
    E_CONFIG_NODE(cf_iconbar, "icons", E_CFG_TYPE_LIST, cf_iconbar_icon, E_Iconbar, icons, 0, 0, NULL);
 }
 
-/* how do we crate a new iconbar? well... like this! */
+/**
+ * e_iconbar_new - Iconbar constructor
+ * @v:  The view for which an iconbar is to be constructed
+ */
 E_Iconbar *
 e_iconbar_new(E_View *v)
 {
@@ -111,7 +118,12 @@ e_iconbar_new(E_View *v)
    return ib;
 }
 
-/* our free method for iconbars. how do we free these pesky little urchins */
+/**
+ * e_iconbar_free - Iconbar destructor.
+ * @ib: The iconbar to be freed
+ *
+ * How do we free these pesky little urchins...
+ */
 void
 e_iconbar_free(E_Iconbar *ib)
 {
@@ -145,7 +157,10 @@ e_iconbar_free(E_Iconbar *ib)
    FREE(ib);
 }
 
-/* how do we free an iconbar icon... well like this */
+/**
+ * e_iconbar_icon_free -- Iconbar icon destructor
+ * @ic: The icon that is to be freed
+ */
 void
 e_iconbar_icon_free(E_Iconbar_Icon *ic)
 {
@@ -165,8 +180,14 @@ e_iconbar_icon_free(E_Iconbar_Icon *ic)
    FREE(ic);
 }
 
- /* turn our iconbar into more than a structure of config data. actually */
- /* crate evas objcts we can do something visual with */
+/**
+ * e_iconbar_realize - Iconbar initialization.
+ * @ib: The iconbar to initalize
+ *
+ * Turns an iconbar into more than a
+ * structure of config data -- actually create evas objcts
+ * we can do something visual with
+ */
 void
 e_iconbar_realize(E_Iconbar *ib)
 {
@@ -200,7 +221,7 @@ e_iconbar_realize(E_Iconbar *ib)
    ebits_add_to_evas(ib->bit, ib->view->evas);
    /* aaaaaaaaah. the magic of being able to replace a named bit in an ebit */
    /* (in this case we expect a bit called "Icons" to exist - the user will */
-   /* have added a bti called this into the ebit to indicate where he/she */
+   /* have added a bit called this into the ebit to indicate where he/she */
    /* wants icons to go. we basically replace this bit with a virtual set */
    /* of callbacks that ebits will call if this bit is to be moved, resized */
    /* shown, hidden, raised, lowered etc. we provide the callbacks. */
@@ -225,7 +246,13 @@ e_iconbar_realize(E_Iconbar *ib)
    e_iconbar_fix(ib);
 }
 
-/* fix up the geometry and visibility of the iconbar gfx and icons */
+/**
+ * e_iconbar_fix - iconbar geometry update
+ * @ib: The iconbar for which to fix the geometry
+ * 
+ * This function corrects the geometry and visibility
+ * of the iconbar gfx and icons
+ */
 void
 e_iconbar_fix(E_Iconbar *ib)
 {
@@ -315,9 +342,16 @@ e_iconbar_fix(E_Iconbar *ib)
      }
 }
 
-/* this function is called from the view code whenever a file is added to a */
-/* view. the iconbar code here determines if the file add is of interest */
-/* and if it is, in 0.5 secs will do a "reload */
+/**
+ * e_iconbar_file_add - Adds a file to a view
+ * @v:    The view in which a file is added
+ * @file: Name of the added file
+ *
+ * This function is called from the
+ * view code whenever a file is added to a view. The iconbar code here
+ * determines if the file add is of interest
+ * and if it is, in 0.5 secs will do a "reload
+ */
 void
 e_iconbar_file_add(E_View *v, char *file)
 {
@@ -334,7 +368,13 @@ e_iconbar_file_add(E_View *v, char *file)
      }
 }
 
-/* caled whenever a file is deleted from a view */
+/**
+ * e_iconbar_file_delete - Function to remove a file from an iconbox.
+ * @v:    The view in which a file is removed
+ * @file: Name of the removed file
+ *
+ * This function is called whenever a file is deleted from a view.
+ */
 void
 e_iconbar_file_delete(E_View *v, char *file)
 {
@@ -352,7 +392,13 @@ e_iconbar_file_delete(E_View *v, char *file)
      }
 }
 
-/* called whenever a file changes in a view */
+/**
+ * e_iconbar_file_change - File change update function
+ * @v:    The view in which a file changes
+ * @file: Name of the changed file
+ *
+ * This function gets called whenever a file changes in a view
+ */
 void
 e_iconbar_file_change(E_View *v, char *file)
 {
@@ -368,10 +414,6 @@ e_iconbar_file_change(E_View *v, char *file)
 	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
      }
 }
-
-
-
-
 
 
 
