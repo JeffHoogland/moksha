@@ -11,7 +11,7 @@
  *
  * augment IPC calls and add wrappers for them - i.e.:
  *   e restart/shutdown
- *   desktops add/remove/list etc
+ *   desktops add/remove/list/currentset/bgset etc
  *   windows shade[get/set]/maximise[get/set]/iconify[get/set]/list
  *
  * add ability to e to set theme, so we can have a theme_set call :)
@@ -31,6 +31,10 @@ static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 int E_RESPONSE_MODULE_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
 
+/*
+ * initialise connection to the current E running on "display".
+ * If parameter is null try to use DISPLAY env var.
+ */
 int
 e_init(const char* display)
 {
