@@ -62,9 +62,9 @@ worked on. Just be happy it does as much as it already does.
 
 Enlightenment RELIES on lots of libraires that have been written. Ecore,
 Ebits, Evas, Edb, Imlib2, Efsd just to mention a few. Especially Ebits,
-Ecore, Efsd and Evas change in CVS often - you will need the absolute latest 
-of these if you wish Enlightenment 0.17 code to run properly or compile. If 
-you update Enlightenment from CVS update these too to get any changes they 
+Ecore, Efsd ferite, and Evas change in CVS often - you will need the absolute 
+latest of these if you wish Enlightenment 0.17 code to run properly or compile. 
+If you update Enlightenment from CVS update these too to get any changes they 
 have in their trees.
 
 If you plan on working on the code... STOP! don't rush in and work on it -

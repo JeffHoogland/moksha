@@ -154,6 +154,22 @@ AC_PATH_GENERIC(efsd,, [
 efsd_libs=`efsd-config --libs`
 efsd_cflags=`efsd-config --cflags`
 
+dnl Check for ferite.
+AC_ARG_WITH(ferite,
+        [  --with-ferite=DIR          use ferite in <DIR>],
+        [CFLAGS="$CFLAGS -I$withval/include"
+         LIBS="-L$withval/lib $LIBS"])
+
+AC_PATH_GENERIC(ferite,, [
+    AC_SUBST(ferite_libs)
+    AC_SUBST(ferite_cflags)],
+    AC_MSG_ERROR(Cannot find ferite: Is ferite-config in path?))
+ferite_libs=`ferite-config --libs`
+ferite_cflags=`ferite-config --cflags`
+
+AC_PATH_PROG(FEBUILDER, builder,,)
+AC_SUBST(FEBUILDER)
+
 AC_SUBST(CP_OPTIONS)
 
 AC_OUTPUT([

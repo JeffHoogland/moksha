@@ -1,8 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
+CLEANFILES = e_ferite_gen_*
+
 INCLUDES = \
 	-I$(top_srcdir)/intl \
-	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@
 
 bin_PROGRAMS = enlightenment
 
@@ -14,6 +16,10 @@ enlightenment_SOURCES = \
 	desktops.h desktops.c \
 	entry.h entry.c \
 	exec.h exec.c \
+	e_ferite.h e_ferite.c \
+	e_ferite_gen_header.h e_ferite_gen_core.c \
+	e_ferite_gen_e.c \
+	e_ferite_gen_Window.c \
 	fs.h fs.c \
 	icccm.h icccm.c \
 	icons.c \
@@ -31,5 +37,11 @@ enlightenment_SOURCES = \
 	view.h view.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm -lc -ldl $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc -ldl $(INTLLIBS)
 
+e_ferite_gen_core.c: e_ferite.fec
+	rm -f e_ferite_gen_* ; \
+	@FEBUILDER@ -m e_ferite_gen e_ferite.fec ; \
+	mv e_ferite_gen_core.c e_ferite_gen_core.c.old ; \
+	cat e_ferite_gen_core.c.old |  sed -e "s/module_init/e_ferite_register/g" > e_ferite_gen_core.c ; \
+	rm e_ferite_gen_core.c.old

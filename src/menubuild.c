@@ -2,6 +2,7 @@
 #include "menubuild.h"
 #include "exec.h"
 #include "util.h"
+#include "e_ferite.h"
 
 Evas_List build_menus = NULL;
 
@@ -23,6 +24,18 @@ e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data)
    
    exe = data;
    e_exec_run(exe);
+   return;
+   UN(m);
+   UN(mi);
+}
+
+static void 
+e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
+{
+   char *script;
+   
+   script = data;
+   e_ferite_run(script);
    return;
    UN(m);
    UN(mi);
@@ -126,7 +139,7 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
    for (i2 = 0; i2 < num2; i2++)
      {
 	E_Menu_Item *menuitem;
-	char        *text, *icon, *exe;
+	char        *text, *icon, *exe, *script;
 	int          ok, sub, sep;
 	
 	sprintf(buf, "/menu/%i/%i/text", num, i2);
@@ -135,6 +148,8 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	icon = e_db_str_get(db, buf);
 	sprintf(buf, "/menu/%i/%i/command", num, i2);
 	exe = e_db_str_get(db, buf);
+	sprintf(buf, "/menu/%i/%i/script", num, i2);
+	script = e_db_str_get(db, buf);
 	sprintf(buf, "/menu/%i/%i/submenu", num, i2);
 	ok = e_db_int_get(db, buf, &sub);
 	sep = 0;
@@ -161,6 +176,11 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	     e_menu_item_set_callback(menuitem, e_build_menu_cb_exec, exe);
 	     bm->commands = evas_list_prepend(bm->commands, exe);
 	  }
+		if( script )
+		{
+		   e_menu_item_set_callback(menuitem, e_build_menu_cb_script, script);
+		   bm->commands = evas_list_prepend(bm->commands, script);		   
+		}
 	e_menu_add_item(menu, menuitem);
      }
    bm->menus = evas_list_prepend(bm->menus, menu);

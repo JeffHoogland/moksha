@@ -65,9 +65,13 @@ entry ()
     
   else if [ $1 = "separator" ]; then
     edb_ed $DB add "/menu/"$MENUNUM"/"$ENTRYNUM"/separator" int 1
+	
+	
+  else if [ $1 = "script" ]; then
+    edb_ed $DB add "/menu/"$MENUNUM"/"$ENTRYNUM"/text"      str "$2"
+	edb_ed $DB add "/menu/"$MENUNUM"/"$ENTRYNUM"/script"    str "$3"
     
-    
-  fi; fi; fi; fi
+  fi; fi; fi; fi; fi
   ENTRYNUM=$[ $ENTRYNUM + 1 ];
 }
 
@@ -95,6 +99,7 @@ entry both 'XMag' '/usr/share/pixmaps/gnome-applets.png' 'xmag'
 entry separator
 entry text 'Network' 'sub' 1
 entry text 'System' 'sub' 2
+entry script 'Exit' 'e.shutdown();'
 end_menu
 
 menu 1
@@ -106,5 +111,6 @@ menu 2
 entry text 'Shut Down' 'sudo -S /sbin/shutdown -h now'
 entry text 'Reboot' 'sudo -S /sbin/shutdown -r now'
 end_menu
+
 
 finish

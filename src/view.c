@@ -273,7 +273,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	e_view_selection_update(v);
      }
    if( _b == 2 && ev->double_click )
-	 exit(0);
+	 e_event_loop_quit();
    
    UN(_e);
    UN(_o);

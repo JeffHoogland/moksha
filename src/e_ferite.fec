@@ -1,0 +1,54 @@
+%{
+   
+   #include "Ecore.h"
+   
+%}
+
+class Window {
+   
+   function getName();
+   function getTitle();
+   function getClass();
+   function getX();
+   function getY();
+   function getWidth();
+   function getHeight();
+   
+   function move( number x, number y );
+   function resize( number width, number height );
+
+   function show();
+   function hide();
+   function isVisible();
+   
+   function shade();
+   function unshade();
+   function isShaded();
+   
+   function iconify();
+   function uniconify();
+   function isIconic();
+
+   function isMapped();
+   function isTransient();
+   function isShaped();
+   
+   function delete();
+   function kill();
+   
+}
+
+namespace e {
+   
+   function flipToDesktop( number desk );
+   function getDesktopCount();
+   
+   function getWidth();
+   function getHeight();
+
+   // shutdown enlightenment
+   function shutdown()
+   %{
+	  e_event_loop_quit();  
+   %}
+}

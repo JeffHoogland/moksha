@@ -7,3 +7,4 @@ Makefile
 enlightenment
 .libs
 .deps
+e_ferite_gen_*
