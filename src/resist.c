@@ -53,15 +53,18 @@ rects = evas_list_append(rects, r); \
 	E_Border *bd;
 	
 	bd = l->data;
-	if (bd != b)
+	if (bd->current.visible)
 	  {
-	     r = NEW(struct _E_Rect, 1);
-	     r->x = bd->current.x;
-	     r->y = bd->current.y;
-	     r->w = bd->current.w;
-	     r->h = bd->current.h;
-	     r->v1 = win_resist;
-	     rects = evas_list_append(rects, r);
+	     if (bd != b)
+	       {
+		  r = NEW(struct _E_Rect, 1);
+		  r->x = bd->current.x;
+		  r->y = bd->current.y;
+		  r->w = bd->current.w;
+		  r->h = bd->current.h;
+		  r->v1 = win_resist;
+		  rects = evas_list_append(rects, r);
+	       }
 	  }
      }
    for (l = rects; l; l = l->next)
