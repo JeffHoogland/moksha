@@ -3,6 +3,8 @@
 
 typedef struct _Config     Config;
 typedef struct _Pager      Pager;
+typedef struct _Pager_Desk Pager_Desk;
+typedef struct _Pager_Win  Pager_Win;
 
 struct _Config
 {
@@ -15,7 +17,7 @@ struct _Pager
    E_Menu       *config_menu;
    Evas         *evas;
    Evas_Object  *base, *screen;
-   Evas_List    *desks, *wins;
+   Evas_List    *desks;
    
    E_Container  *con;
    E_Config_DD  *conf_edd;
@@ -37,6 +39,25 @@ struct _Pager
 
    /* FIXME: want to fix click detection once leftdrag is not used */
    Evas_Coord    clickhackx, clickhacky;
+};
+
+struct _Pager_Desk
+{
+   Evas_List   *wins;
+   Evas_Object *obj;
+   int          xpos, ypos;
+
+   E_Desk      *desk;
+   int          current:1;
+};
+
+struct _Pager_Win
+{
+   Evas_Object *obj;
+   Evas_Object *icon;
+   
+   Pager_Desk  *owner;
+   E_Border    *border;
 };
 
 EAPI void *init     (E_Module *m);
