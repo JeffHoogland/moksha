@@ -573,7 +573,7 @@ _e_main_screens_init(void)
 				  i);
 	     return 0;
 	  }
-	/* FIXME: testing... */
+	/*
 	  {
 	     E_Gadman_Client *gmc;
 	     
@@ -593,6 +593,8 @@ _e_main_screens_init(void)
 	     e_gadman_client_auto_size_set(gmc, 50, 200);
 	     e_gadman_client_align_set(gmc, 0.0, 0.5);
 	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
+	     e_gadman_client_domain_set(gmc, "test", 0);
+	     e_gadman_client_load(gmc);
 
 	     gmc = e_gadman_client_new(con->gadman);
 	     gmc->x = 0;
@@ -610,6 +612,8 @@ _e_main_screens_init(void)
 	     e_gadman_client_auto_size_set(gmc, 50, 200);
 	     e_gadman_client_align_set(gmc, 0.0, 0.5);
 	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
+	     e_gadman_client_domain_set(gmc, "test", 1);
+	     e_gadman_client_load(gmc);
 
 	     gmc = e_gadman_client_new(con->gadman);
 	     gmc->x = 0;
@@ -627,7 +631,10 @@ _e_main_screens_init(void)
 	     e_gadman_client_auto_size_set(gmc, 50, 200);
 	     e_gadman_client_align_set(gmc, 0.0, 0.5);
 	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
+	     e_gadman_client_domain_set(gmc, "test", 2);
+	     e_gadman_client_load(gmc);
 	  }
+	 */
      }
    free(roots);
    ecore_x_sync();

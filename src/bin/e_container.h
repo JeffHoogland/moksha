@@ -80,6 +80,7 @@ EAPI void         e_container_lower(E_Container *con);
 
 EAPI Evas_List   *e_container_clients_list_get(E_Container *con);
 EAPI E_Zone      *e_container_zone_at_point_get(E_Container *con, int x, int y);
+EAPI E_Zone      *e_container_zone_number_get(E_Container *con, int num);
     
 EAPI E_Container_Shape *e_container_shape_add(E_Container *con);
 EAPI void               e_container_shape_show(E_Container_Shape *es);

@@ -41,6 +41,7 @@ ISSUES:
 * border show/hide needs to show from top down and hide from bottom up
 * restart loses window properties (stickyness)
 * restart loses zone and container info
+* xrandr root window resize needs to propagate from con to zones and gadman
 
 <add more issues as they are found>
 

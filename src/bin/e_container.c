@@ -212,6 +212,23 @@ e_container_zone_at_point_get(E_Container *con, int x, int y)
    return NULL;
 }
 
+E_Zone *
+e_container_zone_number_get(E_Container *con, int num)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK_RETURN(con, NULL);
+   for (l = con->zones; l; l = l->next)
+     {
+	E_Zone *zone;
+	
+	zone = l->data;
+	if (zone->num == num)
+	  return zone;
+     }
+   return NULL;
+}
+
 E_Container_Shape *
 e_container_shape_add(E_Container *con)
 {

@@ -233,7 +233,7 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 				   int *rx, int *ry)
 {
    int resist = 1;
-   int gad_resist = 4800;
+   int gad_resist = 32;
    int dx, dy, d, pd;
    int resist_x = 0, resist_y = 0;
    Evas_List *l, *ll, *rects = NULL;

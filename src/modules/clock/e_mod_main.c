@@ -14,11 +14,8 @@ static E_Menu *_clock_config_menu_new(Clock *e);
 static void    _clock_config_menu_del(Clock *e, E_Menu *m);
 static void    _clock_face_init(Clock_Face *ef);
 static void    _clock_face_free(Clock_Face *ef);
-static void    _clock_face_reconfigure(Clock_Face *ef);
+static void    _clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void    _clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void    _clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void    _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int     _clock_cb_event_container_resize(void *data, int type, void *event);
 
 /* public module routines. all modules must have these */
 void *
@@ -68,7 +65,7 @@ save(E_Module *m)
    Clock *e;
 
    e = m->data;
-   e_config_domain_save("module.clock", e->conf_edd, e->conf);
+/*   e_config_domain_save("module.clock", e->conf_edd, e->conf);*/
    return 1;
 }
 
@@ -100,28 +97,16 @@ _clock_init(E_Module *m)
    
    e = calloc(1, sizeof(Clock));
    if (!e) return NULL;
-   
-   e->conf_edd = E_CONFIG_DD_NEW("Clock_Config", Config);
-#undef T
-#undef D
-#define T Config
-#define D e->conf_edd   
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, x, DOUBLE);
-   E_CONFIG_VAL(D, T, y, DOUBLE);
 
-   e->conf = e_config_domain_load("module.clock", e->conf_edd);
-   if (!e->conf)
-     {
-	e->conf = E_NEW(Config, 1);
-	e->conf->width = 64;
-	e->conf->x = 0.0;
-	e->conf->y = 1.0;
-     }
-   E_CONFIG_LIMIT(e->conf->width, 2, 256);
-   E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
-   E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
-   
+   /*
+    e->conf_edd = E_CONFIG_DD_NEW("Clock_Config", Config);
+    * 
+    e->conf = e_config_domain_load("module.clock", e->conf_edd);
+    if (!e->conf)
+    {
+    e->conf = E_NEW(Config, 1);
+    }
+    */
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
@@ -152,8 +137,7 @@ static void
 _clock_shutdown(Clock *e)
 {
    free(e->conf);
-   E_CONFIG_DD_FREE(e->conf_edd);
-   
+/*   E_CONFIG_DD_FREE(e->conf_edd);*/
    _clock_face_free(e->face);
    free(e);
 }
@@ -187,14 +171,6 @@ _clock_face_init(Clock_Face *ef)
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
-   ef->ev_handler_container_resize =
-     ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
-			     _clock_cb_event_container_resize,
-			     ef);
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->fx = ef->clock->conf->x * (ww - ef->clock->conf->width);
-   ef->fy = ef->clock->conf->y * (hh - ef->clock->conf->width);
-      
    evas_event_freeze(ef->evas);
    o = edje_object_add(ef->evas);
    ef->clock_object = o;
@@ -210,48 +186,56 @@ _clock_face_init(Clock_Face *ef)
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
-
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _clock_cb_face_down, ef);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _clock_cb_face_up, ef);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _clock_cb_face_move, ef);
    evas_object_show(o);
    
-   edje_object_size_min_calc(ef->clock_object, &bw, &bh);
-   ef->minsize = bh;
-   ef->minsize = bw;
-
-   _clock_face_reconfigure(ef);
-   
+   ef->gmc = e_gadman_client_new(ef->con->gadman);
+   e_gadman_client_domain_set(ef->gmc, "module.clock", 0);
+   e_gadman_client_policy_set(ef->gmc,
+			      E_GADMAN_POLICY_ANYWHERE |
+			      E_GADMAN_POLICY_HMOVE |
+			      E_GADMAN_POLICY_VMOVE |
+			      E_GADMAN_POLICY_HSIZE |
+			      E_GADMAN_POLICY_VSIZE);
+   e_gadman_client_min_size_set(ef->gmc, 4, 4);
+   e_gadman_client_max_size_set(ef->gmc, 128, 128);
+   e_gadman_client_auto_size_set(ef->gmc, 64, 64);
+   e_gadman_client_align_set(ef->gmc, 0.0, 1.0);
+   e_gadman_client_resize(ef->gmc, 64, 64);
+   e_gadman_client_change_func_set(ef->gmc, _clock_cb_gmc_change, ef);
+   e_gadman_client_load(ef->gmc);
    evas_event_thaw(ef->evas);
 }
 
 static void
 _clock_face_free(Clock_Face *ef)
 {
-   ecore_event_handler_del(ef->ev_handler_container_resize);
+   e_object_del(E_OBJECT(ef->gmc));
    evas_object_del(ef->clock_object);
    evas_object_del(ef->event_object);
    free(ef);
 }
 
 static void
-_clock_face_reconfigure(Clock_Face *ef)
+_clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
-   Evas_Coord minw, minh, maxw, maxh, ww, hh;
+   Clock_Face *ef;
+   Evas_Coord x, y, w, h;
 
-   edje_object_size_min_calc(ef->clock_object, &minw, &maxh);
-   edje_object_size_max_get(ef->clock_object, &maxw, &minh);
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->fx = ef->clock->conf->x * (ww - ef->clock->conf->width);
-   ef->fy = ef->clock->conf->y * (hh - ef->clock->conf->width);
-   ef->fw = ef->clock->conf->width;
-   ef->minsize = minw;
-   ef->maxsize = maxw;
-
-   evas_object_move(ef->clock_object, ef->fx, ef->fy);
-   evas_object_resize(ef->clock_object, ef->clock->conf->width, ef->clock->conf->width);
-   evas_object_move(ef->event_object, ef->fx, ef->fy);
-   evas_object_resize(ef->event_object, ef->clock->conf->width, ef->clock->conf->width);
+   ef = data;
+   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+     {
+	e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
+	evas_object_move(ef->clock_object, x, y);
+	evas_object_move(ef->event_object, x, y);
+	evas_object_resize(ef->clock_object, w, h);
+	evas_object_resize(ef->event_object, w, h);
+     }
+   else if (change == E_GADMAN_CHANGE_RAISE)
+     {
+	evas_object_raise(ef->clock_object);
+	evas_object_raise(ef->event_object);
+     }
 }
 
 static void
@@ -269,81 +253,4 @@ _clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(ef->con);
      }
-   else if (ev->button == 2)
-     {
-	ef->resize = 1;
-     }
-   else if (ev->button == 1)
-     {
-	ef->move = 1;
-     }
-   evas_pointer_canvas_xy_get(e, &ef->xx, &ef->yy);
-}
-
-static void
-_clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Up *ev;
-   Clock_Face *ef;
-   Evas_Coord ww, hh;
-   
-   ev = event_info;
-   ef = data;
-   ef->move = 0;
-   ef->resize = 0;
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->clock->conf->width = ef->fw;
-   ef->clock->conf->x = (double)ef->fx / (double)(ww - ef->clock->conf->width);
-   ef->clock->conf->y = (double)ef->fy / (double)(hh - ef->clock->conf->width);
-   e_config_save_queue();
-}
-
-static void
-_clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{ 
-   Evas_Event_Mouse_Move *ev;
-   Clock_Face *ef;
-   Evas_Coord cx, cy, sw, sh;
-   
-   evas_pointer_canvas_xy_get(e, &cx, &cy);
-   evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
-
-   ev = event_info;
-   ef = data;
-   if (ef->move)
-     {
-	ef->fx += cx - ef->xx;
-	ef->fy += cy - ef->yy;
-	if (ef->fx < 0) ef->fx = 0;
-	if (ef->fy < 0) ef->fy = 0;
-	if (ef->fx + ef->fw > sw) ef->fx = sw - ef->fw;
-	if (ef->fy + ef->fw > sh) ef->fy = sh - ef->fw;
-	evas_object_move(ef->clock_object, ef->fx, ef->fy);
-	evas_object_move(ef->event_object, ef->fx, ef->fy);
-     }
-   else if (ef->resize)
-     {
-	Evas_Coord d;
-
-	d = cx - ef->xx;
-	ef->fw += d;
-	if (ef->fw < ef->minsize) ef->fw = ef->minsize;
-	if (ef->fw > ef->maxsize) ef->fw = ef->maxsize;
-	if (ef->fx + ef->fw > sw) ef->fw = sw - ef->fx;
-	if (ef->fy + ef->fw > sh) ef->fw = sh - ef->fy;
-	evas_object_resize(ef->clock_object, ef->fw, ef->fw);
-	evas_object_resize(ef->event_object, ef->fw, ef->fw);
-   }
-   ef->xx = ev->cur.canvas.x;
-   ef->yy = ev->cur.canvas.y;
-}  
-
-static int
-_clock_cb_event_container_resize(void *data, int type, void *event)
-{
-   Clock_Face *ef;
-   
-   ef = data;
-   _clock_face_reconfigure(ef);
-   return 1;
 }

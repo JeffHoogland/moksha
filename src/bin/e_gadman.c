@@ -7,15 +7,26 @@
 /*        re-enter edit mode (cant access root menu) */
 /* FIXME: resist can still jump on top of other gads... */
 
-/* FIXME: handle save */
-/* FIXME: handle load */
 /* FIXME: handle resize resist */
 
 /* local subsystem functions */
+
+typedef struct _Gadman_Client_Config Gadman_Client_Config;
+
+struct _Gadman_Client_Config
+{
+   double ax, ay;
+   int w, h;
+   int edge;
+   int zone;
+   int use_autow, use_autoh;
+};
+
 static void _e_gadman_free(E_Gadman *gm);
 static void _e_gadman_client_free(E_Gadman_Client *gmc);
 static void _e_gadman_client_edit_begin(E_Gadman_Client *gmc);
 static void _e_gadman_client_edit_end(E_Gadman_Client *gmc);
+static void _e_gadman_client_overlap_deny(E_Gadman_Client *gmc);
 static void _e_gadman_client_down_store(E_Gadman_Client *gmc);
 static int  _e_gadman_client_is_being_modified(E_Gadman_Client *gmc);
 static void _e_gadman_client_geometry_to_align(E_Gadman_Client *gmc);
@@ -56,16 +67,33 @@ static void _e_gadman_cb_full_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_auto_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static E_Config_DD *gadman_config_edd = NULL;
+
 /* externally accessible functions */
 int
 e_gadman_init(void)
 {
+   gadman_config_edd = E_CONFIG_DD_NEW("Gadman_Client_Config", Gadman_Client_Config);
+#undef T
+#undef D
+#define T Gadman_Client_Config
+#define D gadman_config_edd
+   E_CONFIG_VAL(D, T, ax, DOUBLE);
+   E_CONFIG_VAL(D, T, ay, DOUBLE);
+   E_CONFIG_VAL(D, T, w, INT);
+   E_CONFIG_VAL(D, T, h, INT);
+   E_CONFIG_VAL(D, T, edge, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
+   E_CONFIG_VAL(D, T, use_autow, INT);
+   E_CONFIG_VAL(D, T, use_autoh, INT);
    return 1;
 }
 
 int
 e_gadman_shutdown(void)
 {
+   E_CONFIG_DD_FREE(gadman_config_edd);
+   gadman_config_edd = NULL;
    return 1;
 }
 
@@ -118,13 +146,13 @@ e_gadman_client_new(E_Gadman *gm)
    gmc->gadman = gm;
    gmc->policy = E_GADMAN_POLICY_ANYWHERE | E_GADMAN_POLICY_HSIZE | E_GADMAN_POLICY_VSIZE | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
    gmc->zone = e_zone_current_get(gm->container);
-   gmc->edge = E_GADMAN_EDGE_BOTTOM;
+   gmc->edge = E_GADMAN_EDGE_TOP;
    gmc->minw = 1;
    gmc->minh = 1;
    gmc->maxw = 0;
    gmc->maxh = 0;
    gmc->ax = 0.0;
-   gmc->ay = 1.0;
+   gmc->ay = 0.0;
    gmc->mina = 0.0;
    gmc->maxa = 9999999.0;
    gm->clients = evas_list_append(gm->clients, gmc);
@@ -134,8 +162,21 @@ e_gadman_client_new(E_Gadman *gm)
 void
 e_gadman_client_save(E_Gadman_Client *gmc)
 {
+   Gadman_Client_Config cf;
+   char buf[1024];
+   
    E_OBJECT_CHECK(gmc);
    /* save all values */
+   cf.ax = gmc->ax;
+   cf.ay = gmc->ay;
+   cf.w = gmc->w;
+   cf.h = gmc->h;
+   cf.edge = gmc->edge;
+   cf.zone = gmc->zone->num;
+   cf.use_autow = gmc->use_autow;
+   cf.use_autoh = gmc->use_autoh;
+   snprintf(buf, sizeof(buf), "gadman.%s.%i", gmc->domain, gmc->instance);
+   e_config_domain_save(buf, gadman_config_edd, &cf);
 }
 
 void
@@ -148,9 +189,55 @@ e_client_gadman_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
 void
 e_gadman_client_load(E_Gadman_Client *gmc)
 {
+   Gadman_Client_Config *cf;
+   char buf[1024];
+   
    E_OBJECT_CHECK(gmc);
-   /* load all the vales */
-   /* implement all the values */
+   snprintf(buf, sizeof(buf), "gadman.%s.%i", gmc->domain, gmc->instance);
+   cf = e_config_domain_load(buf, gadman_config_edd);
+   if (cf)
+     {
+	E_Zone *zone;
+	
+	E_CONFIG_LIMIT(cf->ax, 0.0, 1.0);
+	E_CONFIG_LIMIT(cf->ay, 0.0, 1.0);
+	E_CONFIG_LIMIT(cf->w, 0, 10000);
+	E_CONFIG_LIMIT(cf->h, 0, 10000);
+	E_CONFIG_LIMIT(cf->edge, E_GADMAN_EDGE_LEFT, E_GADMAN_EDGE_BOTTOM);
+	gmc->ax = cf->ax;
+	gmc->ay = cf->ay;
+	gmc->w = cf->w;
+	gmc->h = cf->h;
+	gmc->edge = cf->edge;
+	gmc->use_autow = cf->use_autow;
+	gmc->use_autoh = cf->use_autoh;
+	zone = e_container_zone_number_get(gmc->zone->container, cf->zone);
+	if (zone) gmc->zone = zone;
+	if (gmc->use_autow)
+	  {
+	     gmc->w = gmc->autow;
+	     gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+	  }
+	if (gmc->use_autoh)
+	  {
+	     gmc->h = gmc->autoh;
+	     gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+	  }
+	if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
+	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
+	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+	free(cf);
+     }
+   _e_gadman_client_overlap_deny(gmc);
+   e_object_ref(E_OBJECT(gmc));
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_EDGE);
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+   e_object_unref(E_OBJECT(gmc));
 }
 
 void
@@ -166,7 +253,16 @@ void
 e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone)
 {
    E_OBJECT_CHECK(gmc);
+   if (zone == gmc->zone) return;
    gmc->zone = zone;
+   gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+   gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+   e_object_ref(E_OBJECT(gmc));
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+   e_object_unref(E_OBJECT(gmc));
 }
 
 void
@@ -180,24 +276,52 @@ void
 e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Coord minw, Evas_Coord minh)
 {
    E_OBJECT_CHECK(gmc);
+   if ((gmc->minw == minw) && (gmc->minh == minh)) return;
    gmc->minw = minw;
    gmc->minh = minh;
+   if (gmc->minw > gmc->w)
+     {
+	gmc->w = gmc->minw;
+	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+     }
+   if (gmc->minh > gmc->h)
+     {
+	gmc->h = gmc->minh;
+	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+     }
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 void
 e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh)
 {
    E_OBJECT_CHECK(gmc);
+   if ((gmc->maxw == maxw) && (gmc->maxh == maxh)) return;
    gmc->maxw = maxw;
    gmc->maxh = maxh;
+   if (gmc->maxw < gmc->w)
+     {
+	gmc->w = gmc->maxw;
+	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+     }
+   if (gmc->maxh < gmc->h)
+     {
+	gmc->h = gmc->maxh;
+	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+     }
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 void
 e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign)
 {
    E_OBJECT_CHECK(gmc);
+   if ((gmc->ax == xalign) && (gmc->ay == yalign)) return;
    gmc->ax = xalign;
    gmc->ay = yalign;
+   gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+   gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 void
@@ -214,6 +338,31 @@ e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord
    E_OBJECT_CHECK(gmc);
    gmc->autow = autow;
    gmc->autoh = autoh;
+   if (gmc->use_autow)
+     {
+	gmc->w = gmc->autow;
+	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+     }
+   if (gmc->use_autoh)
+     {
+	gmc->h = gmc->autoh;
+	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+     }
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+}
+
+void
+e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
+{
+   E_OBJECT_CHECK(gmc);
+   gmc->edge = edge;
+}
+
+E_Gadman_Edge
+e_gadman_client_edge_get(E_Gadman_Client *gmc)
+{
+   E_OBJECT_CHECK_RETURN(gmc, E_GADMAN_EDGE_TOP);
+   return gmc->edge;
 }
 
 void
@@ -224,6 +373,20 @@ e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y,
    if (y) *y = gmc->y;
    if (w) *w = gmc->w;
    if (h) *h = gmc->h;
+}
+
+void
+e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
+{
+   E_OBJECT_CHECK(gmc);
+   if ((gmc->w == w) && (gmc->h == h)) return;
+   gmc->w = w;
+   if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
+   gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+   gmc->h = h;
+   if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
+   gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 void
@@ -419,6 +582,93 @@ _e_gadman_client_edit_end(E_Gadman_Client *gmc)
    gmc->control_object = NULL;
    evas_object_del(gmc->event_object);
    gmc->event_object = NULL;
+}
+
+static void
+_e_gadman_client_overlap_deny(E_Gadman_Client *gmc)
+{
+   Evas_List *l;
+   Evas_Coord ox, oy;
+   int ok = 0;
+   int iterate = 0;
+   
+   ox = gmc->x;
+   oy = gmc->y;
+   ok = 0;
+   while ((!ok) && (iterate < 1000))
+     {
+	for (l = gmc->zone->container->gadman->clients; l; l = l->next)
+	  {
+	     E_Gadman_Client *gmc2;
+	     
+	     gmc2 = l->data;
+	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	       {
+		  gmc->x = gmc2->x + gmc2->w;
+	       }
+	  }
+	if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+	  gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+	ok = 1;
+	for (l = gmc->zone->container->gadman->clients; l; l = l->next)
+	  {
+	     E_Gadman_Client *gmc2;
+	     
+	     gmc2 = l->data;
+	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	       ok = 0;
+	  }
+	if (ok) break;
+	for (l = gmc->zone->container->gadman->clients; l; l = l->next)
+	  {
+	     E_Gadman_Client *gmc2;
+	     
+	     gmc2 = l->data;
+	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	       {
+		  gmc->x = gmc2->x - gmc->w;
+	       }
+	  }
+	if (gmc->x < gmc->zone->x)
+	  gmc->x = gmc->zone->x;
+	ok = 1;
+	for (l = gmc->zone->container->gadman->clients; l; l = l->next)
+	  {
+	     E_Gadman_Client *gmc2;
+	     
+	     gmc2 = l->data;
+	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	       ok = 0;
+	  }
+	if (ok) break;
+	if (gmc->y > (gmc->zone->y + (gmc->zone->h / 2)))
+	  gmc->y -= 8;
+	else
+	  gmc->y += 8;
+	if (oy < (gmc->zone->y + (gmc->zone->h / 2)))
+	  {
+	     if ((gmc->y - oy) > (gmc->zone->h / 3))
+	       {
+		  gmc->x = ox;
+		  gmc->y = oy;
+		  break;
+	       }
+	  }
+	else
+	  {
+	     if ((oy - gmc->y) > (gmc->zone->h / 3))
+	       {
+		  gmc->x = ox;
+		  gmc->y = oy;
+		  break;
+	       }
+	  }
+	iterate++;
+     }
 }
 
 static void
@@ -808,7 +1058,7 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    /* limit to max size */
    if (gmc->maxw > 0)
      {
-	if (gmc->w > gmc->minw)
+	if (gmc->w > gmc->maxw)
 	  {
 	     gmc->x -= (gmc->maxw - gmc->w);
 	     gmc->w = gmc->maxw;
@@ -942,7 +1192,7 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
    /* limit to max size */
    if (gmc->maxh > 0)
      {
-	if (gmc->h > gmc->minh)
+	if (gmc->h > gmc->maxh)
 	  {
 	     gmc->y -= (gmc->maxh - gmc->h);
 	     gmc->h = gmc->maxh;
