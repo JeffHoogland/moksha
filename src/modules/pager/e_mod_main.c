@@ -46,6 +46,7 @@ static int         _pager_face_cb_event_border_unstick(void *data, int type, voi
 static int         _pager_face_cb_event_border_desk_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_raise(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_lower(void *data, int type, void *event);
+static int         _pager_face_cb_event_border_icon_change(void *data, int type, void *event);
 static int         _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_desk_show(void *data, int type, void *event);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -311,6 +312,9 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_border_desk_set =
       ecore_event_handler_add(E_EVENT_BORDER_LOWER,
 			      _pager_face_cb_event_border_lower, face);
+   face->ev_handler_border_icon_change =
+      ecore_event_handler_add(E_EVENT_BORDER_ICON_CHANGE,
+			      _pager_face_cb_event_border_icon_change, face);
    face->ev_handler_zone_desk_count_set =
       ecore_event_handler_add(E_EVENT_ZONE_DESK_COUNT_SET,
 			      _pager_face_cb_event_zone_desk_count_set, face);
@@ -374,6 +378,9 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_stick);
    ecore_event_handler_del(face->ev_handler_border_unstick);
    ecore_event_handler_del(face->ev_handler_border_desk_set);
+   ecore_event_handler_del(face->ev_handler_border_raise);
+   ecore_event_handler_del(face->ev_handler_border_lower);
+   ecore_event_handler_del(face->ev_handler_border_icon_change);
    ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
    ecore_event_handler_del(face->ev_handler_desk_show);
 
@@ -589,7 +596,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 	o = edje_object_add(pd->face->evas);
 	pw->icon_object = o;
 	edje_object_file_set(o, app->path, "icon");
-	if (visible) evas_object_show(o);
+	evas_object_show(o);
 	edje_object_part_swallow(pw->window_object, "icon", o);
      }
 
@@ -851,8 +858,11 @@ _pager_face_cb_event_border_hide(void *data, int type, void *event)
 	pw = _pager_desk_border_find(pd, ev->border);
 	if (pw)
 	  {
-	     if (ev->border->desk->visible)
-	       evas_object_hide(pw->window_object);
+             if (ev->border->desk->visible)
+	       {
+		  pd->wins = evas_list_remove(pd->wins, pw);
+		  _pager_window_free(pw);
+	       }
 	  }
      }
    return 1;
@@ -879,6 +889,27 @@ _pager_face_cb_event_border_show(void *data, int type, void *event)
 	  {
 	     if (ev->border->desk->visible)
 	       evas_object_show(pw->window_object);
+	  }
+	else
+	  {
+	     if (ev->border->sticky)
+	       {
+		  /* create it and add it */
+		  pw = _pager_window_new(pd, ev->border);
+		  if (pw)
+		    pd->wins = evas_list_append(pd->wins, pw);
+	       }
+	     else
+	       {
+		  if (ev->border->desk == pd->desk)
+		    {
+		       Pager_Win          *pw;
+		       
+		       pw = _pager_window_new(pd, ev->border);
+		       if (pw)
+			 pd->wins = evas_list_append(pd->wins, pw);
+		    }
+	       }
 	  }
      }
    return 1;
@@ -1116,6 +1147,49 @@ _pager_face_cb_event_border_lower(void *data, int type, void *event)
 	       e_layout_child_lower_below(pw->window_object, pw2->window_object);
 	     else
 	       e_layout_child_lower(pw->window_object);
+	  }
+     }
+   return 1;
+}
+
+static int
+_pager_face_cb_event_border_icon_change(void *data, int type, void *event)
+{
+   E_Event_Border_Icon_Change  *ev;
+   Pager_Face                  *face;
+   Evas_List                   *l;
+
+   face = data;
+   ev = event;
+   if (face->zone != ev->border->zone) return 1;
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	Pager_Win *pw, *pw2 = NULL;
+	
+	pd = l->data;
+	pw = _pager_desk_border_find(pd, ev->border);
+	if (pw)
+	  {
+	     E_App *app;
+	     
+	     if (pw->icon_object)
+	       {
+		  evas_object_del(pw->icon_object);
+		  pw->icon_object = NULL;
+	       }
+	     app = e_app_window_name_class_find(ev->border->client.icccm.name,
+						ev->border->client.icccm.class);
+	     if (app)
+	       {
+		  Evas_Object *o;
+		  
+		  o = edje_object_add(pd->face->evas);
+		  pw->icon_object = o;
+		  edje_object_file_set(o, app->path, "icon");
+		  evas_object_show(o);
+		  edje_object_part_swallow(pw->window_object, "icon", o);
+	       }
 	  }
      }
    return 1;

@@ -79,6 +79,7 @@ static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
 static void _e_border_event_border_raise_free(void *data, void *ev);
 static void _e_border_event_border_lower_free(void *data, void *ev);
+static void _e_border_event_border_icon_change_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
@@ -120,6 +121,7 @@ int E_EVENT_BORDER_STICK = 0;
 int E_EVENT_BORDER_UNSTICK = 0;
 int E_EVENT_BORDER_RAISE = 0;
 int E_EVENT_BORDER_LOWER = 0;
+int E_EVENT_BORDER_ICON_CHANGE = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -163,6 +165,7 @@ e_border_init(void)
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
    E_EVENT_BORDER_RAISE = ecore_event_type_new();
    E_EVENT_BORDER_LOWER = ecore_event_type_new();
+   E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
    return 1;
 }
@@ -2343,6 +2346,14 @@ _e_border_eval(E_Border *bd)
 			 }
 		    }
 	       }
+	       {
+		  E_Event_Border_Icon_Change *ev;
+		  
+		  ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
+		  ev->border = bd;
+		  e_object_ref(E_OBJECT(bd));
+		  ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev, _e_border_event_border_icon_change_free, NULL);
+	       }
 	  }
 	bd->client.icccm.fetch.name_class = 0;
      }
@@ -3474,6 +3485,16 @@ _e_border_event_border_lower_free(void *data, void *ev)
    e = ev;
    e_object_unref(E_OBJECT(e->border));
    if (e->below) e_object_unref(E_OBJECT(e->below));
+   free(e);
+}
+
+static void
+_e_border_event_border_icon_change_free(void *data, void *ev)
+{
+   E_Event_Border_Icon_Change *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
