@@ -228,6 +228,7 @@ _battery_shutdown(Battery *e)
 
    ecore_timer_del(e->battery_check_timer);
 
+   evas_list_free(e->conf->faces);
    free(e->conf);
    free(e);
 }
@@ -586,18 +587,25 @@ _battery_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change ch
    Evas_Coord x, y, w, h;
 
    ef = data;
-   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+   switch (change)
      {
-	e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
-	evas_object_move(ef->bat_object, x, y);
-	evas_object_move(ef->event_object, x, y);
-	evas_object_resize(ef->bat_object, w, h);
-	evas_object_resize(ef->event_object, w, h);
-     }
-   else if (change == E_GADMAN_CHANGE_RAISE)
-     {
-	evas_object_raise(ef->bat_object);
-	evas_object_raise(ef->event_object);
+      case E_GADMAN_CHANGE_MOVE_RESIZE:
+	 e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
+	 evas_object_move(ef->bat_object, x, y);
+	 evas_object_move(ef->event_object, x, y);
+	 evas_object_resize(ef->bat_object, w, h);
+	 evas_object_resize(ef->event_object, w, h);
+	 break;
+      case E_GADMAN_CHANGE_RAISE:
+	 evas_object_raise(ef->bat_object);
+	 evas_object_raise(ef->event_object);
+	 break;
+      case E_GADMAN_CHANGE_EDGE:
+      case E_GADMAN_CHANGE_ZONE:
+	 /* FIXME
+	  * Must we do something here?
+	  */
+	 break;
      }
 }
 

@@ -193,6 +193,7 @@ _clock_shutdown(Clock *clock)
 
    e_object_del(E_OBJECT(clock->config_menu));
 
+   evas_list_free(clock->conf->faces);
    free(clock->conf);
    free(clock);
 }
@@ -316,18 +317,25 @@ _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    Evas_Coord x, y, w, h;
 
    face = data;
-   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+   switch (change)
      {
-	e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
-	evas_object_move(face->clock_object, x, y);
-	evas_object_move(face->event_object, x, y);
-	evas_object_resize(face->clock_object, w, h);
-	evas_object_resize(face->event_object, w, h);
-     }
-   else if (change == E_GADMAN_CHANGE_RAISE)
-     {
-	evas_object_raise(face->clock_object);
-	evas_object_raise(face->event_object);
+      case E_GADMAN_CHANGE_MOVE_RESIZE:
+	 e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
+	 evas_object_move(face->clock_object, x, y);
+	 evas_object_move(face->event_object, x, y);
+	 evas_object_resize(face->clock_object, w, h);
+	 evas_object_resize(face->event_object, w, h);
+	 break;
+      case E_GADMAN_CHANGE_RAISE:
+	 evas_object_raise(face->clock_object);
+	 evas_object_raise(face->event_object);
+	 break;
+      case E_GADMAN_CHANGE_EDGE:
+      case E_GADMAN_CHANGE_ZONE:
+	 /* FIXME
+	  * Must we do something here?
+	  */
+	 break;
      }
 }
 
