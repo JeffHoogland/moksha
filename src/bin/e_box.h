@@ -10,6 +10,7 @@ EAPI Evas_Object *e_box_add               (Evas *evas);
 EAPI int          e_box_freeze            (Evas_Object *obj);
 EAPI int          e_box_thaw              (Evas_Object *obj);
 EAPI void         e_box_orientation_set   (Evas_Object *obj, int horizontal);
+EAPI int          e_box_orientation_get   (Evas_Object *obj);
 EAPI void         e_box_homogenous_set    (Evas_Object *obj, int homogenous);
 EAPI int          e_box_pack_start        (Evas_Object *obj, Evas_Object *child);
 EAPI int          e_box_pack_end          (Evas_Object *obj, Evas_Object *child);

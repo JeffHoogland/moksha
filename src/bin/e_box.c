@@ -107,6 +107,15 @@ e_box_orientation_set(Evas_Object *obj, int horizontal)
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
 }
 
+int
+e_box_orientation_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   return sd->horizontal;
+}
+
 void
 e_box_homogenous_set(Evas_Object *obj, int homogenous)
 {
