@@ -46,9 +46,14 @@ e_view_machine_unregister_view(E_View *v)
 void
 e_view_machine_close_all_views(void)
 {
-   Evas_List l;
+   Evas_List l,ll;
    D_ENTER;
+   /* Copy the list of views and unregister them */
    for (l=VM->views;l;l=l->next)
+   {
+      ll = evas_list_append(ll, l->data);
+   }
+   for (l=ll;l;l=l->next)
    {
       E_View *v = l->data;
       e_view_machine_unregister_view(v);
