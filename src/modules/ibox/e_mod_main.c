@@ -81,6 +81,10 @@ init(E_Module *m)
 {
    IBox *ib;
    
+   e_error_dialog_show("IBox Disabled",
+		       "The IBox module is diabled for now during\n"
+		       "the mini freeze period. Come back later.\n");
+   return NULL;
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
