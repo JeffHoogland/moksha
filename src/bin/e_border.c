@@ -2297,7 +2297,6 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Close");
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-   e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
    mi = e_menu_item_new(m);
    if (bd->shaded)
      e_menu_item_label_set(mi, "Un-Shade");
