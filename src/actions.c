@@ -140,9 +140,9 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 	if ((a->key) && (strlen(a->key) > 0))
 	  {
 	     if (a->modifiers == -1)
-	       ecore_keys_grab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
+	       e_keys_grab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
 	     else
-	       ecore_keys_grab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
+	       e_keys_grab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
 	     a->grabbed = 1;
 	  }
      }
@@ -210,9 +210,9 @@ e_action_free(E_Action *a)
    if ((a->key) && (strlen(a->key) > 0) && (a->grabbed))
      {
 	if (a->modifiers == -1)
-	  ecore_keys_ungrab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
+	  e_keys_ungrab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
 	else
-	  ecore_keys_ungrab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
+	  e_keys_ungrab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
      }
    IF_FREE(a->name);
    IF_FREE(a->action);

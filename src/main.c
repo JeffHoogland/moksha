@@ -125,7 +125,7 @@ main(int argc, char **argv)
    e_menu_init();
    e_view_init();
    e_entry_init();
-   ecore_keys_init();
+   e_keys_init();
    e_guides_init();
    e_place_init();
    e_cursors_init();
