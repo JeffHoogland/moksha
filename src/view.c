@@ -632,6 +632,7 @@ e_view_icons_apply_xy(E_View *v)
 	ic = l->data;
 	e_icon_apply_xy(ic);
      }
+   v->changed = 1;
 
    D_RETURN;
 }
