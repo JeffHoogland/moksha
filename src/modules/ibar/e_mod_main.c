@@ -18,7 +18,6 @@
  * * use overlay object and repeat events for doing auto hide/show
  * * emit signals on hide/show due to autohide/show
  * * virtualise autoshow/hide to later allow for key bindings, mouse events elsewhere, ipc and other singals to show/hide
- * * save and load config
  *
  * BONUS Features (maybe do this later):
  *
@@ -28,6 +27,7 @@
 
 static int bar_count;
 static E_Config_DD *conf_edd;
+static E_Config_DD *conf_bar_edd;
 
 /* const strings */
 static const char *_ibar_main_orientation[] =
@@ -41,8 +41,12 @@ static void    _ibar_config_menu_new(IBar *ib);
 
 static IBar_Bar *_ibar_bar_new(IBar *ib, E_Container *con);
 static void    _ibar_bar_free(IBar_Bar *ibb);
+static void    _ibar_bar_menu_new(IBar_Bar *ibb);
+static void    _ibar_bar_enable(IBar_Bar *ibb);
+static void    _ibar_bar_disable(IBar_Bar *ibb);
 static void    _ibar_bar_frame_resize(IBar_Bar *ibb);
 static void    _ibar_bar_edge_change(IBar_Bar *ibb, int edge);
+static void    _ibar_bar_update_policy(IBar_Bar *ibb);
 static void    _ibar_bar_motion_handle(IBar_Bar *ibb, Evas_Coord mx, Evas_Coord my);
 static void    _ibar_bar_timer_handle(IBar_Bar *ibb);
 static void    _ibar_bar_follower_reset(IBar_Bar *ibb);
@@ -70,14 +74,16 @@ static void    _ibar_icon_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, vo
 static void    _ibar_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
+static void    _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
 #if 0
 static void    _ibar_icon_resize(IBar_Icon *ic);
 static void    _ibar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before);
 static void    _ibar_bar_iconsize_change(IBar_Bar *ibb);
 static void    _ibar_bar_cb_width_fixed(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_bar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi);
 #endif
+static void    _ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
 void *
@@ -155,23 +161,30 @@ _ibar_new()
 {
    IBar *ib;
    char buf[4096];
-   Evas_List *managers, *l, *l2;
+   Evas_List *managers, *l, *l2, *cl;
 
    bar_count = 0;
    ib = E_NEW(IBar, 1);
    if (!ib) return NULL;
 
-   conf_edd = E_CONFIG_DD_NEW("Ibar_Config", Config);
+   conf_bar_edd = E_CONFIG_DD_NEW("IBar_Config_Bar", Config_Bar);
+#undef T
+#undef D
+#define T Config_Bar
+#define D conf_bar_edd
+   E_CONFIG_VAL(D, T, enabled, INT);
+
+   conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
 #undef D
 #define T Config
 #define D conf_edd
    E_CONFIG_VAL(D, T, appdir, STR);
-   E_CONFIG_VAL(D, T, edge, INT);
    E_CONFIG_VAL(D, T, follow_speed, DOUBLE);
    E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, iconsize, INT);
    E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_LIST(D, T, bars, conf_bar_edd);
    /*
    E_CONFIG_VAL(D, T, anchor, DOUBLE);
    E_CONFIG_VAL(D, T, handle, DOUBLE);
@@ -196,7 +209,7 @@ _ibar_new()
    E_CONFIG_LIMIT(ib->conf->follow_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->autoscroll_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->iconsize, 2, 400);
-   E_CONFIG_LIMIT(ib->conf->width, -1, 4000);
+   E_CONFIG_LIMIT(ib->conf->width, -2, -1);
    /*
    E_CONFIG_LIMIT(ib->conf->anchor, 0.0, 1.0);
    E_CONFIG_LIMIT(ib->conf->handle, 0.0, 1.0);
@@ -224,6 +237,7 @@ _ibar_new()
    e_app_change_callback_add(_ibar_app_change, ib);
 
    managers = e_manager_list();
+   cl = ib->conf->bars;
    for (l = managers; l; l = l->next)
      {
 	E_Manager *man;
@@ -233,9 +247,43 @@ _ibar_new()
 	  {
 	     E_Container *con;
 	     IBar_Bar *ibb;
-
+	     /* Config */
 	     con = l2->data;
 	     ibb = _ibar_bar_new(ib, con);
+	     if (ibb)
+	       {
+		  E_Menu_Item *mi;
+
+		  if (!cl)
+		    {
+		       ibb->conf = E_NEW(Config_Bar, 1);
+		       ibb->conf->enabled = 1;
+		       ib->conf->bars = evas_list_append(ib->conf->bars, ibb->conf);
+		    }
+		  else
+		    {
+		       ibb->conf = cl->data;
+		       cl = cl->next;
+		    }
+		  /* Menu */
+		  _ibar_bar_menu_new(ibb);
+
+		  /* Add main menu to bar menu */
+		  /*
+		  mi = e_menu_item_new(ibb->menu);
+		  e_menu_item_label_set(mi, "Auto fit icons");
+		  e_menu_item_submenu_set(mi, ib->config_menu_FIXME);
+		  */
+
+		  mi = e_menu_item_new(ib->config_menu);
+		  e_menu_item_label_set(mi, con->name);
+		  e_menu_item_submenu_set(mi, ibb->menu);
+
+		  /* Setup */
+		  if (!ibb->conf->enabled)
+		    _ibar_bar_disable(ibb);
+
+	       }
 	  }
      }
    return ib;
@@ -244,17 +292,18 @@ _ibar_new()
 static void
 _ibar_free(IBar *ib)
 {
-   E_FREE(ib->conf->appdir);
-
    E_CONFIG_DD_FREE(conf_edd);
-   free(ib->conf);
+   E_CONFIG_DD_FREE(conf_bar_edd);
 
-   e_object_del(E_OBJECT(ib->config_menu));
-
-   e_app_change_callback_del(_ibar_app_change, ib);
    while (ib->bars)
      _ibar_bar_free(ib->bars->data);
    e_object_unref(E_OBJECT(ib->apps));
+
+   E_FREE(ib->conf->appdir);
+   e_app_change_callback_del(_ibar_app_change, ib);
+   e_object_del(E_OBJECT(ib->config_menu));
+   evas_list_free(ib->conf->bars);
+   free(ib->conf);
    free(ib);
 }
 
@@ -365,6 +414,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    IBar_Bar *ibb;
    Evas_List *l;
    Evas_Object *o;
+   E_Gadman_Policy policy;
 
    ibb = E_NEW(IBar_Bar, 1);
    if (!ibb) return NULL;
@@ -374,6 +424,8 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    ibb->con = con;
    e_object_ref(E_OBJECT(con));
    ibb->evas = con->bg_evas;
+
+   ibb->x = ibb->y = ibb->w = ibb->h = -1;
 
    evas_event_freeze(ibb->evas);
    o = edje_object_add(ibb->evas);
@@ -431,15 +483,14 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    e_box_thaw(ibb->box_object);
 
    ibb->gmc = e_gadman_client_new(ibb->con->gadman);
-   e_gadman_client_domain_set(ibb->gmc, "module.bar", bar_count++);
-   e_gadman_client_policy_set(ibb->gmc,
-			      E_GADMAN_POLICY_EDGES |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE);
+   e_gadman_client_domain_set(ibb->gmc, "module.ibar", bar_count++);
+   policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
+   if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
+     policy |= E_GADMAN_POLICY_HSIZE;
+   e_gadman_client_policy_set(ibb->gmc, policy);
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
    e_gadman_client_max_size_set(ibb->gmc, 800, 136);
-   e_gadman_client_auto_size_set(ibb->gmc, 400, 40);
+   e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
    e_gadman_client_align_set(ibb->gmc, 0.5, 1.0);
    e_gadman_client_resize(ibb->gmc, 400, 40);
    e_gadman_client_change_func_set(ibb->gmc, _ibar_bar_cb_gmc_change, ibb);
@@ -460,6 +511,8 @@ _ibar_bar_free(IBar_Bar *ibb)
 {
    e_object_unref(E_OBJECT(ibb->con));
 
+   e_object_del(E_OBJECT(ibb->menu));
+
    while (ibb->icons)
      _ibar_icon_free(ibb->icons->data);
 
@@ -475,8 +528,53 @@ _ibar_bar_free(IBar_Bar *ibb)
 
    ibb->ibar->bars = evas_list_remove(ibb->ibar->bars, ibb);
 
+   free(ibb->conf);
    free(ibb);
    bar_count--;
+}
+
+static void
+_ibar_bar_menu_new(IBar_Bar *ibb)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   mn = e_menu_new();
+   ibb->menu = mn;
+
+   /* Enabled */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_check_set(mi, 1);
+   if (ibb->conf->enabled) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_bar_cb_menu_enabled, ibb);
+
+   /* Edit */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_callback_set(mi, _ibar_bar_cb_menu_edit, ibb);
+}
+
+static void
+_ibar_bar_enable(IBar_Bar *ibb)
+{
+   ibb->conf->enabled = 1;
+   evas_object_show(ibb->bar_object);
+   evas_object_show(ibb->overlay_object);
+   evas_object_show(ibb->box_object);
+   evas_object_show(ibb->event_object);
+   e_config_save_queue();
+}
+
+static void
+_ibar_bar_disable(IBar_Bar *ibb)
+{
+   ibb->conf->enabled = 0;
+   evas_object_hide(ibb->bar_object);
+   evas_object_hide(ibb->overlay_object);
+   evas_object_hide(ibb->box_object);
+   evas_object_hide(ibb->event_object);
+   e_config_save_queue();
 }
 
 static IBar_Icon *
@@ -608,28 +706,13 @@ _ibar_config_menu_new(IBar *ib)
    /* FIXME: hook callbacks to each menu item */
    mn = e_menu_new();
 
-#if 0
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Fixed width");
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ib->conf->width > 0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ibar_bar_cb_width_fixed, ib);
-
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto fit icons");
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ib->conf->width < 0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_check_set(mi, 1);
+   if (ib->conf->width == IBAR_WIDTH_AUTO) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_width_auto, ib);
 
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Fill edge");
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ib->conf->width == 0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ibar_bar_cb_width_fill, ib);
-
+#if 0
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);
 
@@ -723,8 +806,6 @@ _ibar_config_menu_new(IBar *ib)
    e_menu_item_label_set(mi, "More Options...");
 */
 #endif
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "(Unused)");
 
    ib->config_menu = mn;
 }
@@ -839,6 +920,12 @@ static void
 _ibar_bar_frame_resize(IBar_Bar *ibb)
 {
    Evas_Coord w, h;
+   /* Not finished loading config yet! */
+   if ((ibb->x == -1)
+       || (ibb->y == -1)
+       || (ibb->w == -1)
+       || (ibb->h == -1))
+     return;
 
    evas_event_freeze(ibb->evas);
    e_box_freeze(ibb->box_object);
@@ -848,8 +935,6 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
    edje_object_size_min_calc(ibb->bar_object, &w, &h);
 
-   e_gadman_client_resize(ibb->gmc, w, h);
-#if 0
    if (ibb->ibar->conf->width == IBAR_WIDTH_AUTO)
      {
 	e_gadman_client_resize(ibb->gmc, w, h);
@@ -860,20 +945,127 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
 	    || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
 	  {
 	     /* h is the width of the bar */
-	     e_gadman_client_resize(ibb->gmc, w, ibb->ibar->conf->width);
+	     e_gadman_client_resize(ibb->gmc, w, ibb->h);
 	  }
 	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP)
 		 || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
 	  {
 	     /* w is the width of the bar */
-	     e_gadman_client_resize(ibb->gmc, ibb->ibar->conf->width, h);
+	     e_gadman_client_resize(ibb->gmc, ibb->w, h);
 	  }
      }
-#endif
 
    e_box_thaw(ibb->box_object);
 
    evas_event_thaw(ibb->evas);
+}
+
+static void
+_ibar_bar_edge_change(IBar_Bar *ibb, int edge)
+{
+   Evas_List *l;
+   Evas_Coord bw, bh, tmp;
+   Evas_Object *o;
+   E_Gadman_Policy policy;
+   int changed;
+
+   evas_event_freeze(ibb->evas);
+   o = ibb->bar_object;
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
+   edje_object_message_signal_process(o);
+
+   o = ibb->overlay_object;
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
+   edje_object_message_signal_process(o);
+
+   e_box_freeze(ibb->box_object);
+
+   for (l = ibb->icons; l; l = l->next)
+     {
+	IBar_Icon *ic;
+
+	ic = l->data;
+	o = ic->bg_object;
+	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
+	edje_object_message_signal_process(o);
+	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
+
+	o = ic->overlay_object;
+	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
+	edje_object_message_signal_process(o);
+
+	e_box_pack_options_set(ic->bg_object,
+			       1, 1, /* fill */
+			       0, 0, /* expand */
+			       0.5, 0.5, /* align */
+			       bw, bh, /* min */
+			       bw, bh /* max */
+			       );
+     }
+
+   ibb->align_req = 0.5;
+   ibb->align = 0.5;
+   e_box_align_set(ibb->box_object, 0.5, 0.5);
+
+   policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
+   if ((edge == E_GADMAN_EDGE_BOTTOM) ||
+       (edge == E_GADMAN_EDGE_TOP))
+     {
+	changed = (e_box_orientation_get(ibb->box_object) != 1);
+	if (changed)
+	  {
+	     e_box_orientation_set(ibb->box_object, 1);
+	     if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
+	       policy |= E_GADMAN_POLICY_HSIZE;
+	     e_gadman_client_policy_set(ibb->gmc, policy);
+	     tmp = ibb->w;
+	     ibb->w = ibb->h;
+	     ibb->h = tmp;
+	  }
+     }
+   else if ((edge == E_GADMAN_EDGE_LEFT) ||
+	    (edge == E_GADMAN_EDGE_RIGHT))
+     {
+	changed = (e_box_orientation_get(ibb->box_object) != 0);
+	if (changed)
+	  {
+	     e_box_orientation_set(ibb->box_object, 0);
+	     if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
+	       policy |= E_GADMAN_POLICY_VSIZE;
+	     e_gadman_client_policy_set(ibb->gmc, policy);
+	     tmp = ibb->w;
+	     ibb->w = ibb->h;
+	     ibb->h = tmp;
+	  }
+     }
+
+   _ibar_bar_frame_resize(ibb);
+
+   e_box_thaw(ibb->box_object);
+
+   evas_event_thaw(ibb->evas);
+}
+
+static void
+_ibar_bar_update_policy(IBar_Bar *ibb)
+{
+   E_Gadman_Policy policy;
+
+   policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
+   if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
+       (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
+     {
+	if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
+	  policy |= E_GADMAN_POLICY_HSIZE;
+	e_gadman_client_policy_set(ibb->gmc, policy);
+     }
+   else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
+	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
+     {
+	if (ibb->ibar->conf->width == IBAR_WIDTH_FIXED)
+	  policy |= E_GADMAN_POLICY_VSIZE;
+	e_gadman_client_policy_set(ibb->gmc, policy);
+     }
 }
 
 static void
@@ -944,80 +1136,6 @@ _ibar_bar_follower_reset(IBar_Bar *ibb)
 	       ibb->follow_req = 1.0 + ((double)(d2 + (mh * 4)) / (double)bh);
 	  }
      }
-}
-
-static void
-_ibar_bar_edge_change(IBar_Bar *ibb, int edge)
-{
-   Evas_List *l;
-   Evas_Coord bw, bh;
-   Evas_Object *o;
-
-
-   evas_event_freeze(ibb->evas);
-   o = ibb->bar_object;
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
-   edje_object_message_signal_process(o);
-
-   o = ibb->overlay_object;
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
-   edje_object_message_signal_process(o);
-
-   e_box_freeze(ibb->box_object);
-
-   for (l = ibb->icons; l; l = l->next)
-     {
-	IBar_Icon *ic;
-
-	ic = l->data;
-	o = ic->bg_object;
-	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
-	edje_object_message_signal_process(o);
-	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
-
-	o = ic->overlay_object;
-	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
-	edje_object_message_signal_process(o);
-
-	e_box_pack_options_set(ic->bg_object,
-			       1, 1, /* fill */
-			       0, 0, /* expand */
-			       0.5, 0.5, /* align */
-			       bw, bh, /* min */
-			       bw, bh /* max */
-			       );
-     }
-
-   ibb->align_req = 0.5;
-   ibb->align = 0.5;
-   e_box_align_set(ibb->box_object, 0.5, 0.5);
-
-   if ((edge == E_GADMAN_EDGE_BOTTOM) ||
-       (edge == E_GADMAN_EDGE_TOP))
-     {
-	e_box_orientation_set(ibb->box_object, 1);
-	e_gadman_client_policy_set(ibb->gmc,
-				   E_GADMAN_POLICY_EDGES |
-				   E_GADMAN_POLICY_HMOVE |
-				   E_GADMAN_POLICY_VMOVE |
-				   E_GADMAN_POLICY_HSIZE);
-     }
-   else if ((edge == E_GADMAN_EDGE_LEFT) ||
-	    (edge == E_GADMAN_EDGE_RIGHT))
-     {
-	e_box_orientation_set(ibb->box_object, 0);
-	e_gadman_client_policy_set(ibb->gmc,
-				   E_GADMAN_POLICY_EDGES |
-				   E_GADMAN_POLICY_HMOVE |
-				   E_GADMAN_POLICY_VMOVE |
-				   E_GADMAN_POLICY_VSIZE);
-     }
-
-   _ibar_bar_frame_resize(ibb);
-
-   e_box_thaw(ibb->box_object);
-
-   evas_event_thaw(ibb->evas);
 }
 
 static void
@@ -1163,7 +1281,7 @@ _ibar_bar_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ibb = data;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(ibb->ibar->config_menu, e_zone_current_get(ibb->con),
+	e_menu_activate_mouse(ibb->menu, e_zone_current_get(ibb->con),
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(ibb->con);
@@ -1260,105 +1378,59 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
    IBar_Bar *ibb;
 
    ibb = data;
-   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+   switch (change)
      {
-	e_gadman_client_geometry_get(ibb->gmc, &ibb->x, &ibb->y, &ibb->w, &ibb->h);
-	evas_object_move(ibb->bar_object, ibb->x, ibb->y);
-	evas_object_resize(ibb->bar_object, ibb->w, ibb->h);
-	/*
-	if (ibb->ibar->conf->width >= 0) {
-	     if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT)
-		 || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
-	       ibb->ibar->conf->width = ibb->w;
-	     else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP)
-		      || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
-	       ibb->ibar->conf->width = ibb->h;
-	}
-	*/
-	_ibar_bar_follower_reset(ibb);
-	_ibar_bar_timer_handle(ibb);
+      case E_GADMAN_CHANGE_MOVE_RESIZE:
+	 e_gadman_client_geometry_get(ibb->gmc, &ibb->x, &ibb->y, &ibb->w, &ibb->h);
+	 evas_object_move(ibb->bar_object, ibb->x, ibb->y);
+	 evas_object_resize(ibb->bar_object, ibb->w, ibb->h);
+	 _ibar_bar_follower_reset(ibb);
+	 _ibar_bar_timer_handle(ibb);
+	 break;
+      case E_GADMAN_CHANGE_EDGE:
+	 _ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));
+	 break;
+      case E_GADMAN_CHANGE_RAISE:
+      case E_GADMAN_CHANGE_ZONE:
+	 /* FIXME
+	  * Must we do something here?
+	  */
+	 break;
      }
-   else if (change == E_GADMAN_CHANGE_RAISE)
-     {
-	/* FIXME
-	 * Must we do something here?
-	 */
-     }
-   else if (change == E_GADMAN_CHANGE_EDGE)
-     {
-	_ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));
-     }
-}
-
-#if 0
-static void
-_ibar_bar_cb_width_fixed(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   IBar *ib;
-
-   ib = data;
-   if (ib->conf->width <= 0)
-     {
-	Evas_List *l;
-
-	ib->conf->width = 400;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     IBar_Bar *ibb;
-
-	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf->edge);
-	  }
-     }
-   e_config_save_queue();
 }
 
 static void
 _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   IBar *ib;
+   IBar          *ib;
+   IBar_Bar      *ibb;
+   unsigned char  enabled;
+   Evas_List     *l;
 
    ib = data;
-   if (ib->conf->width >= 0)
+   enabled = e_menu_item_toggle_get(mi);
+   if ((enabled) && (ib->conf->width == IBAR_WIDTH_FIXED))
      {
-	Evas_List *l;
-
-	ib->conf->width = -1;
+	ib->conf->width = IBAR_WIDTH_AUTO;
 	for (l = ib->bars; l; l = l->next)
 	  {
-	     IBar_Bar *ibb;
-
 	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf->edge);
+	     _ibar_bar_update_policy(ibb);
+	     _ibar_bar_frame_resize(ibb);
+	  }
+     }
+   else if (!(enabled) && (ib->conf->width == IBAR_WIDTH_AUTO))
+     {
+	ib->conf->width = IBAR_WIDTH_FIXED;
+	for (l = ib->bars; l; l = l->next)
+	  {
+	     ibb = l->data;
+	     _ibar_bar_update_policy(ibb);
+	     _ibar_bar_frame_resize(ibb);
 	  }
      }
    e_config_save_queue();
 }
-
-static void
-_ibar_bar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   IBar *ib;
-
-   ib = data;
-   if (ib->conf->width != 0)
-     {
-	Evas_List *l;
-
-	ib->conf->width = 0;
-	ib->conf->anchor = 0.5;
-	ib->conf->handle = 0.5;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     IBar_Bar *ibb;
-
-	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf->edge);
-	  }
-     }
-   e_config_save_queue();
-}
-#endif
 
 #if 0
 static void
@@ -1571,3 +1643,29 @@ _ibar_bar_cb_iconsize_gigantic(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 #endif
 
+static void
+_ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar_Bar *ibb;
+   unsigned char enabled;
+
+   ibb = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((ibb->conf->enabled) && (!enabled))
+     {  
+	_ibar_bar_disable(ibb);
+     }
+   else if ((!ibb->conf->enabled) && (enabled))
+     { 
+	_ibar_bar_enable(ibb);
+     }
+}
+
+static void
+_ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar_Bar *ibb;
+
+   ibb = data;
+   e_gadman_mode_set(ibb->gmc->gadman, E_GADMAN_MODE_EDIT);
+}

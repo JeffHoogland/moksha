@@ -5,25 +5,32 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config      Config;
+typedef struct _Config_Bar  Config_Bar;
 typedef struct _IBar        IBar;
 typedef struct _IBar_Bar    IBar_Bar;
 typedef struct _IBar_Icon   IBar_Icon;
 
 #define IBAR_WIDTH_AUTO -1
+#define IBAR_WIDTH_FIXED -2
 
 struct _Config
 {
    char         *appdir;
-   int           edge;
    double        follow_speed;
    double        autoscroll_speed;
    int           iconsize;
    int           width;
+   Evas_List    *bars;
    /*
    double        anchor;
    double        handle;
    char          autohide;
    */
+};
+
+struct _Config_Bar
+{
+   unsigned char enabled;
 };
 
 struct _IBar
@@ -40,6 +47,7 @@ struct _IBar_Bar
    IBar        *ibar;
    E_Container *con;
    Evas        *evas;
+   E_Menu      *menu;
    
    Evas_Object *bar_object;
    Evas_Object *overlay_object;
@@ -56,6 +64,8 @@ struct _IBar_Bar
    Evas_Coord      x, y, w, h;
    
    E_Gadman_Client *gmc;
+
+   Config_Bar     *conf;
 };
 
 struct _IBar_Icon
