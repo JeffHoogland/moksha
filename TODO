@@ -15,6 +15,7 @@ These are in no particular order:
 * add keybindings
 * add general actions to be hooked to button/key bindings
 * add "icon box"
+* add iconify (minimize)
 * add pagers
 * add netwm support
 * full colour+alpha cursors
@@ -29,7 +30,7 @@ These are in no particular order:
 * add a way to access all apps
 * list window properties then only fetch the ones that exist on window map
 * non opaque move/resize
-* optimize dropshadow module
+* optimize dropshadow module to blure faster/more efficiently
 * change evas and ecore_evas to create shape rect lists directly
 * support shaped clients borders etc.
 * ibar need to support label pop-ups
@@ -62,3 +63,5 @@ These are in no particular order:
 * add sliders, radio and check buttons for clientinfo pane
 * display coords while moving/resizing
 * add separate app menu bars at top of screen support
+* add "osd" subsystem for things like volume controls on keybboards, etc. that overlay the screen
+* add really nice "about" box with theme, authors credits list etc etc.
