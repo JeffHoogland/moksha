@@ -8,7 +8,6 @@
  *
  * * Create separate config for each bar
  * * Fix menu
- * * How should the bar resize? Allow fixed width, or just autoresize.
  *
  * * icon labels & label tooltips supported for the name of the app
  * * use part list to know how many icons & where to put in the overlay of an icon
@@ -998,11 +997,10 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
 	  }
      }
 
-   _ibar_bar_frame_resize(ibb);
-
    e_box_thaw(ibb->box_object);
-
    evas_event_thaw(ibb->evas);
+
+   _ibar_bar_frame_resize(ibb);
 }
 
 static void
