@@ -397,6 +397,7 @@ void
 e_border_shade(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if (bd->maximized) return;
    if (!bd->shaded)
      {
 	printf("SHADE!\n");
@@ -428,6 +429,7 @@ void
 e_border_unshade(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if (bd->maximized) return;
    if (bd->shaded)
      {
 	printf("UNSHADE!\n");
@@ -460,6 +462,7 @@ void
 e_border_maximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if ((bd->shaded) || (bd->shading)) return;
    if (!bd->maximized)
      {
 	printf("MAXIMIZE!!\n");
@@ -483,6 +486,7 @@ void
 e_border_unmaximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if ((bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
      {
 	printf("UNMAXIMIZE!!\n");
@@ -501,6 +505,7 @@ void
 e_border_minimize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if ((bd->shading)) return;
    if (!bd->minimized)
      {
 	printf("MINIMIZE!!\n");
@@ -518,6 +523,7 @@ void
 e_border_unminimize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   if ((bd->shading)) return;
    if (bd->minimized)
      {
 	printf("UNMINIMIZE!!\n");
@@ -956,7 +962,7 @@ _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_TL;
    _e_border_moveinfo_gather(bd, source);
@@ -970,7 +976,7 @@ _e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_T;
    _e_border_moveinfo_gather(bd, source);
@@ -985,7 +991,7 @@ _e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_TR;
    _e_border_moveinfo_gather(bd, source);
@@ -999,7 +1005,7 @@ _e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_R;
    _e_border_moveinfo_gather(bd, source);
@@ -1013,7 +1019,7 @@ _e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_BR;
    _e_border_moveinfo_gather(bd, source);
@@ -1027,7 +1033,7 @@ _e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_B;
    _e_border_moveinfo_gather(bd, source);
@@ -1041,7 +1047,7 @@ _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_BL;
    _e_border_moveinfo_gather(bd, source);
@@ -1055,7 +1061,7 @@ _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    bd->resize_mode = RESIZE_L;
    _e_border_moveinfo_gather(bd, source);
@@ -1070,7 +1076,7 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
    
    bd = data;
 
-   if (bd->shaded || bd->maximized) return;
+   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
