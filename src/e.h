@@ -752,6 +752,16 @@ void e_menu_update_finish(E_Menu *m);
 void e_menu_update_shows(E_Menu *m);
 void e_menu_update_hides(E_Menu *m);
 void e_menu_update(E_Menu *m);
+void e_menu_item_set_icon(E_Menu_Item *mi, char *icon);
+void e_menu_item_set_text(E_Menu_Item *mi, char *text);
+void e_menu_item_set_separator(E_Menu_Item *mi, int sep);
+void e_menu_item_set_radio(E_Menu_Item *mi, int radio);
+void e_menu_item_set_check(E_Menu_Item *mi, int check);
+void e_menu_item_set_state(E_Menu_Item *mi, int state);
+void e_menu_item_set_submenu(E_Menu_Item *mi, E_Menu *submenu);
+void e_menu_item_set_scale_icon(E_Menu_Item *mi, int scale);
+void e_menu_set_padding_icon(E_Menu *m, int pad);
+void e_menu_set_padding_state(E_Menu *m, int pad);
 
 void          e_build_menu_unbuild(E_Build_Menu *bm);
 E_Menu       *e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num);

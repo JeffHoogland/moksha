@@ -81,8 +81,8 @@ e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
    sprintf(buf, "/menu/%i/count", num);
    if (!e_db_int_get(db, buf, &num2)) return NULL;
    menu = e_menu_new();
-   menu->pad.icon = 2;
-   menu->pad.state = 2;
+   e_menu_set_padding_icon(menu, 2);
+   e_menu_set_padding_state(menu, 2);
    for (i2 = 0; i2 < num2; i2++)
      {
 	E_Menu_Item *menuitem;
@@ -101,10 +101,11 @@ e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	sprintf(buf, "/menu/%i/%i/separator", num, i2);
 	e_db_int_get(db, buf, &sep);
 	menuitem = e_menu_item_new(text);
-	menuitem->icon = icon;
-	if ((icon) && (text)) menuitem->scale_icon = 1;
-	if (sep)
-	  menuitem->separator = 1;
+	IF_FREE(text);
+	e_menu_item_set_icon(menuitem, icon);
+	IF_FREE(icon);
+	if ((icon) && (text)) e_menu_item_set_scale_icon(menuitem, 1);
+	if (sep) e_menu_item_set_separator(menuitem, 1);
 	else
 	  {
 	     if (ok)
@@ -112,7 +113,7 @@ e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 		  E_Menu *menu2;
 		  
 		  menu2 = e_build_menu_build_number(bm, db, sub);
-		  menuitem->submenu = menu2;
+		  e_menu_item_set_submenu(menuitem, menu2);
 	       }
 	  }
 	if (exe)

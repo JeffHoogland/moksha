@@ -1452,3 +1452,114 @@ e_menu_update(E_Menu *m)
    e_menu_update_hides(m);
    e_menu_update_finish(m);
 }
+
+void
+e_menu_item_set_icon(E_Menu_Item *mi, char *icon)
+{
+   IF_FREE(mi->icon);
+   mi->icon = NULL;
+   if (icon) mi->icon = strdup(icon);
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_text(E_Menu_Item *mi, char *text)
+{
+   IF_FREE(mi->str);
+   mi->str = NULL;
+   if (text) mi->str = strdup(text);
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_separator(E_Menu_Item *mi, int sep)
+{
+   mi->separator = sep;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_radio(E_Menu_Item *mi, int radio)
+{
+   mi->radio = radio;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_check(E_Menu_Item *mi, int check)
+{
+   mi->check = check;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_state(E_Menu_Item *mi, int state)
+{
+   mi->on = state;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->redo_sel = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_submenu(E_Menu_Item *mi, E_Menu *submenu)
+{
+   if (mi->submenu) e_menu_hide(mi->submenu);
+   mi->submenu = submenu;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->redo_sel = 1;
+	mi->menu->changed = 1;
+     }
+}
+
+void
+e_menu_item_set_scale_icon(E_Menu_Item *mi, int scale)
+{
+   mi->scale_icon = scale;
+   if (mi->menu) 
+     {
+	mi->menu->recalc_entries = 1;
+	mi->menu->changed = 1;
+     }   
+}
+
+void
+e_menu_set_padding_icon(E_Menu *m, int pad)
+{
+   m->pad.icon = pad;
+   m->recalc_entries = 1;
+   m->changed = 1;
+}
+
+void
+e_menu_set_padding_state(E_Menu *m, int pad)
+{
+   m->pad.state = pad;
+   m->recalc_entries = 1;
+   m->changed = 1;
+}
