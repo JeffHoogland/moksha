@@ -10,11 +10,12 @@ static Evas_Object    *_e_init_object = NULL;
 int
 e_init_init(void)
 {
-   int w, h;
+   int x, y, w, h;
    Ecore_X_Window root;
    Ecore_X_Window *roots;
    int num, i;
    Evas_Object *o;
+   int n;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -25,7 +26,7 @@ e_init_init(void)
 	return 0;
      }
    root = roots[0];
-   ecore_x_window_size_get(root, &w, &h);   
+   ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
    e_canvas_add(_e_init_ecore_evas);
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
@@ -38,19 +39,51 @@ e_init_init(void)
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
    
-   o = edje_object_add(_e_init_evas);
-   edje_object_file_set(o,
-			/* FIXME: "init.eet" needs to come from config */
-			e_path_find(path_init, "init.eet"),
-			"init/splash");
-   evas_object_move(o, 0, 0);
-   evas_object_resize(o, w, h);
-   evas_object_show(o);
-   _e_init_object = o;
-   
-   for (i = 1; i < num; i++)
+   n = ecore_x_xinerama_screen_count_get();
+   if (n == 0)
      {
-	/* FIXME: do something for other screens other than screen 0 */
+	o = edje_object_add(_e_init_evas);
+	edje_object_file_set(o,
+			     /* FIXME: "init.eet" needs to come from config */
+			     e_path_find(path_init, "init.eet"),
+			     "init/splash");
+	evas_object_move(o, x, y);
+	evas_object_resize(o, w, h);
+	evas_object_show(o);
+	_e_init_object = o;
+     }
+   else
+     {
+	int i;
+	
+	for (i = 0; i < n; i++)
+	  {
+	     ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h);
+	     printf("$$$ INIT scr %i, %i %i, %ix%i\n", i, x, y, w, h);
+	     if (i == 0)
+	       {
+		  o = edje_object_add(_e_init_evas);
+		  edje_object_file_set(o,
+				       /* FIXME: "init.eet" needs to come from config */
+				       e_path_find(path_init, "init.eet"),
+				       "init/splash");
+		  evas_object_move(o, x, y);
+		  evas_object_resize(o, w, h);
+		  evas_object_show(o);
+		  _e_init_object = o;
+	       }
+	     else
+	       {
+		  o = edje_object_add(_e_init_evas);
+		  edje_object_file_set(o,
+				       /* FIXME: "init.eet" needs to come from config */
+				       e_path_find(path_init, "init.eet"),
+				       "init/splash");
+		  evas_object_move(o, x, y);
+		  evas_object_resize(o, w, h);
+		  evas_object_show(o);
+	       }
+	  }
      }
    
    free(roots);
