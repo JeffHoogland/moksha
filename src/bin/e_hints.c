@@ -444,21 +444,20 @@ e_hints_root_cde_pretend(Ecore_X_Window root)
    static Ecore_X_Atom _XA_DT_SM_STATE_INFO = 0;
    Ecore_X_Window data[2], info_win;
    
-   if (_XA_DT_SM_WINDOW_INFO == 0)
-     _XA_DT_SM_WINDOW_INFO = ecore_x_atom_get("_DT_SM_WINDOW_INFO");
-   if (_XA_DT_SM_STATE_INFO == 0)
-     _XA_DT_SM_STATE_INFO = ecore_x_atom_get("_DT_SM_STATE_INFO");
+   info_win = ecore_x_window_override_new(root, -99, -99, 1, 1);   
    
    data[0] = 0;
-   data[1] = 0;
-   info_win = ecore_x_window_override_new(root, -99, -99, 1, 1);
+   if (_XA_DT_SM_STATE_INFO == 0)
+     _XA_DT_SM_STATE_INFO = ecore_x_atom_get("_DT_SM_STATE_INFO");
    ecore_x_window_prop_property_set(info_win, 
 				    _XA_DT_SM_STATE_INFO,
 				    _XA_DT_SM_STATE_INFO,
 				    32, data, 1);
    
-   data[0] = 0;
+   data[0] = info_win;
    data[1] = info_win;
+   if (_XA_DT_SM_WINDOW_INFO == 0)
+     _XA_DT_SM_WINDOW_INFO = ecore_x_atom_get("_DT_SM_WINDOW_INFO");
    ecore_x_window_prop_property_set(root,
 				    _XA_DT_SM_WINDOW_INFO,
 				    _XA_DT_SM_WINDOW_INFO,
