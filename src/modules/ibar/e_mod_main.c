@@ -923,7 +923,6 @@ _ibar_bar_follower_reset(IBar_Bar *ibb)
      {
 	d1 = bx;
 	d2 = ww - (bx + bw);
-	printf("d1: %d, d2: %d\n", d1, d2);
 	if (bw > 0)
 	  {
 	     if (d1 < d2)
