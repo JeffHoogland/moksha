@@ -86,6 +86,7 @@ save(E_Module *m)
    ecore_config_int_set("e.module.clock.x", e->face->fx);
    ecore_config_int_set("e.module.clock.y", e->face->fy);
    ecore_config_int_set("e.module.clock.width", e->face->fw);
+   e_config_save_queue();
    return 1;
 }
 
