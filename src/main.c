@@ -127,6 +127,7 @@ main(int argc, char **argv)
    e_view_init();
    e_entry_init();
    e_keys_init();
+   e_guides_init();
    
 #ifdef USE_FERITE
    e_ferite_init();

@@ -1699,11 +1699,11 @@ e_border_set_bits(E_Border *b, char *file)
 	e_border_set_color_class(b, "Title BG", 100, 200, 255, 255);
 
 #define HOOK_CB(_class)	\
-ebits_set_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_IN, e_cb_mouse_in, b); \
-ebits_set_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_OUT, e_cb_mouse_out, b); \
-ebits_set_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_DOWN, e_cb_mouse_down, b); \
-ebits_set_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_UP, e_cb_mouse_up, b); \
-ebits_set_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_MOVE, e_cb_mouse_move, b);
+ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_IN, e_cb_mouse_in, b); \
+ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_OUT, e_cb_mouse_out, b); \
+ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_DOWN, e_cb_mouse_down, b); \
+ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_UP, e_cb_mouse_up, b); \
+ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_MOVE, e_cb_mouse_move, b);
 	HOOK_CB("Title_Bar");
 	HOOK_CB("Resize");
 	HOOK_CB("Resize_Horizontal");
@@ -2062,25 +2062,25 @@ e_border_update(E_Border *b)
      {
 	double tx, ty, tw, th;
 	
-	ebits_get_bit_geometry(b->bits.l, "Title_Area", &tx, &ty, &tw, &th);
+	ebits_get_named_bit_geometry(b->bits.l, "Title_Area", &tx, &ty, &tw, &th);
 	evas_set_text(b->evas.l, b->obj.title.l, b->client.title);
 	evas_move(b->evas.l, b->obj.title.l, tx, ty);
 	evas_move(b->evas.l, b->obj.title_clip.l, tx, ty);
 	evas_resize(b->evas.l, b->obj.title_clip.l, tw, th);
 	
-	ebits_get_bit_geometry(b->bits.r, "Title_Area", &tx, &ty, &tw, &th);
+	ebits_get_named_bit_geometry(b->bits.r, "Title_Area", &tx, &ty, &tw, &th);
 	evas_set_text(b->evas.r, b->obj.title.r, b->client.title);
 	evas_move(b->evas.r, b->obj.title.r, tx, ty);
 	evas_move(b->evas.r, b->obj.title_clip.r, tx, ty);
 	evas_resize(b->evas.r, b->obj.title_clip.r, tw, th);
 	
-	ebits_get_bit_geometry(b->bits.t, "Title_Area", &tx, &ty, &tw, &th);
+	ebits_get_named_bit_geometry(b->bits.t, "Title_Area", &tx, &ty, &tw, &th);
 	evas_set_text(b->evas.t, b->obj.title.t, b->client.title);
 	evas_move(b->evas.t, b->obj.title.t, tx, ty);
 	evas_move(b->evas.t, b->obj.title_clip.t, tx, ty);
 	evas_resize(b->evas.t, b->obj.title_clip.t, tw, th);
 	
-	ebits_get_bit_geometry(b->bits.b, "Title_Area", &tx, &ty, &tw, &th);
+	ebits_get_named_bit_geometry(b->bits.b, "Title_Area", &tx, &ty, &tw, &th);
 	evas_set_text(b->evas.b, b->obj.title.b, b->client.title);
 	evas_move(b->evas.b, b->obj.title.b, tx, ty);
 	evas_move(b->evas.b, b->obj.title_clip.b, tx, ty);

@@ -17,7 +17,7 @@ e_scrollbar_recalc(E_Scrollbar *sb)
      {
 	double x, y, w, h;
 	
-	ebits_get_bit_geometry(sb->base, "Trough_Area",
+	ebits_get_named_bit_geometry(sb->base, "Trough_Area",
 			       &x, &y, &w, &h);
 	sb->bar_area.x = x + sb->x;
 	sb->bar_area.y = y + sb->y;
@@ -76,19 +76,19 @@ e_scrollbar_setup_bits(E_Scrollbar *sb)
    if (sb->base)
      {
 	ebits_add_to_evas(sb->base, sb->evas);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
-	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
      }
    if (sb->bar)
      {
 	ebits_add_to_evas(sb->bar, sb->evas);
-	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_DOWN, e_sb_bar_down_cb, sb);
-	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_UP, e_sb_bar_up_cb, sb);
-	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_MOVE, e_sb_bar_move_cb, sb);
+	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_DOWN, e_sb_bar_down_cb, sb);
+	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_UP, e_sb_bar_up_cb, sb);
+	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_MOVE, e_sb_bar_move_cb, sb);
      }
 }
 

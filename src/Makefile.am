@@ -26,6 +26,7 @@ enlightenment_SOURCES = \
 	exec.h exec.c \
 	fs.h fs.c \
 	$(ferite_c) \
+	guides.h guides.c \
 	icccm.h icccm.c \
 	icons.c \
 	ipc.h ipc.c \
@@ -42,7 +43,7 @@ enlightenment_SOURCES = \
 	view.h view.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc -ldl $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)
 
 e_ferite_gen_core.c: e_ferite.fec
 	rm -f e_ferite_gen_* ; \

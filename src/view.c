@@ -1728,11 +1728,30 @@ e_view_icon_apply_xy(E_Icon *ic)
 		     ic->geom.text.w + pl  + pr, ic->geom.text.h + pt + pb);
 	ebits_show(ic->obj.sel.over.text);
      }
+   if ((ic->geom.x != ic->prev_geom.x) || (ic->geom.y != ic->prev_geom.y))
+     {
+	char buf[4096];
+	
+	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
+	printf("write meta xy for icon for file %s\n", ic->file);
+/*	
+        efsd_set_metadata_int(e_fs_get_connection(),
+			      "/pos/x", buf,
+			      ic->geom.x);
+	efsd_set_metadata_int(e_fs_get_connection(),
+			      "/pos/y", buf,
+			      ic->geom.y);
+*/     }
    if (ic->geom.x != ic->prev_geom.x) ic->view->extents.valid = 0;
    else if (ic->geom.y != ic->prev_geom.y) ic->view->extents.valid = 0;
    else if (ic->geom.w != ic->prev_geom.w) ic->view->extents.valid = 0;
    else if (ic->geom.h != ic->prev_geom.h) ic->view->extents.valid = 0;
+   
    ic->prev_geom = ic->geom;
+   ic->prev_geom.x = ic->geom.x;
+   ic->prev_geom.y = ic->geom.y;
+   ic->prev_geom.w = ic->geom.w;
+   ic->prev_geom.h = ic->geom.h;
 }
 
 static int
