@@ -250,11 +250,15 @@ e_border_hide(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    if (!bd->visible) return;
+
    ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
-   /* FIXME: might be iconic too - need to do this elsewhere */
-   ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
-   /* ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_ICONIC); */
+
+   if (bd->iconic)
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+   else
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+
    bd->visible = 0;
    bd->changed = 1;
    bd->changes.visible = 1;
@@ -571,15 +575,10 @@ e_border_iconify(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    if ((bd->shading)) return;
-   if (!bd->iconified)
+   if (!bd->iconic)
      {
-	printf("ICONIFY!!\n");
-
-	/* FIXME add to list of iconified windows */
+	bd->iconic = 1;
 	e_border_hide(bd);
-
-	bd->iconified = 1;
-
 	edje_object_signal_emit(bd->bg_object, "iconify", "");
      }
 }
@@ -589,18 +588,14 @@ e_border_uniconify(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    if ((bd->shading)) return;
-   if (bd->iconified)
+   if (bd->iconic)
      {
-	printf("UNICONIFY!!\n");
-	/* FIXME remove from list of iconified windows */
+	bd->iconic = 0;
 	e_border_show(bd);
-
-	bd->iconified = 1;
-
+	e_iconify_border_remove(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
 }
-
 
 E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
@@ -699,7 +694,8 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
-   
+  
+   printf("in hide cb\n");
    bd = data;
    e = ev;
    bd = e_border_find_by_client_window(e->win);
@@ -709,7 +705,8 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	bd->ignore_first_unmap--;
 	return 1;
      }
-   e_object_del(E_OBJECT(bd));
+   if (!(bd->iconic)) e_object_del(E_OBJECT(bd));
+
    return 1;
 }
 
@@ -1195,7 +1192,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
      }
    else if (!strcmp(source, "iconify"))
      {
-	if (bd->iconified) e_border_uniconify(bd);
+	if (bd->iconic) e_border_uniconify(bd);
 	else e_border_iconify(bd);
      }
    
@@ -1914,14 +1911,9 @@ _e_border_eval(E_Border *bd)
 	printf("border move resize\n");
 	if (bd->shaded && !bd->shading)
 	  {
-	     printf("******** move resize, shaded!\n");
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
 	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	     /* FIXME: this assumes shading upwards */
-	     /* the client is hidden, why move it? --rephorm */
-/*	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
-					bd->client.w, bd->client.h);*/
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
@@ -1940,8 +1932,25 @@ _e_border_eval(E_Border *bd)
 					bd->client_inset.l, bd->client_inset.t,
 					bd->w - (bd->client_inset.l + bd->client_inset.r),
 					bd->h - (bd->client_inset.t + bd->client_inset.b));
-	     ecore_x_window_move_resize(bd->client.win, 0, 0,
-					bd->client.w, bd->client.h);
+	     if (bd->shading)
+	       {
+		  if (bd->shade.dir == E_DIRECTION_UP)
+		    ecore_x_window_move_resize(bd->client.win, 0,
+		       bd->h - (bd->client_inset.t + bd->client_inset.b) -
+		       bd->client.h,
+		       bd->client.w, bd->client.h);
+		  else if (bd->shade.dir == E_DIRECTION_LEFT)
+		    ecore_x_window_move_resize(bd->client.win,
+		       bd->w - (bd->client_inset.l + bd->client_inset.r) -
+		       bd->client.h,
+		       0, bd->client.w, bd->client.h);
+		  else
+		    ecore_x_window_move_resize(bd->client.win, 0, 0,
+					       bd->client.w, bd->client.h);
+	       }
+	     else
+	       ecore_x_window_move_resize(bd->client.win, 0, 0,
+					  bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
@@ -1962,14 +1971,9 @@ _e_border_eval(E_Border *bd)
 	printf("border move resize\n");
 	if (bd->shaded && !bd->shading)
 	  {
-	     printf("******** resize, shaded!\n");
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
 	     ecore_x_window_resize(bd->win, bd->w, bd->h);
-	     /* FIXME: this assumes shading upwards */
-	     /* the client is hidden, why move it? --rephorm */
-/*	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
-					bd->client.w, bd->client.h);*/
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);
@@ -1986,8 +1990,25 @@ _e_border_eval(E_Border *bd)
 					bd->client_inset.l, bd->client_inset.t,
 					bd->w - (bd->client_inset.l + bd->client_inset.r),
 					bd->h - (bd->client_inset.t + bd->client_inset.b));
-	     ecore_x_window_move_resize(bd->client.win, 0, 0,
-					bd->client.w, bd->client.h);
+	     if (bd->shading)
+	       {
+		  if (bd->shade.dir == E_DIRECTION_UP)
+		    ecore_x_window_move_resize(bd->client.win, 0,
+		       bd->h - (bd->client_inset.t + bd->client_inset.b) -
+		       bd->client.h,
+		       bd->client.w, bd->client.h);
+		  else if (bd->shade.dir == E_DIRECTION_LEFT)
+		    ecore_x_window_move_resize(bd->client.win,
+		       bd->w - (bd->client_inset.l + bd->client_inset.r) -
+		       bd->client.h,
+		       0, bd->client.w, bd->client.h);
+		  else
+		    ecore_x_window_move_resize(bd->client.win, 0, 0,
+					       bd->client.w, bd->client.h);
+	       }
+	     else
+	       ecore_x_window_move_resize(bd->client.win, 0, 0,
+					  bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     e_container_shape_resize(bd->shape, bd->w, bd->h);

@@ -66,6 +66,8 @@ EAPI void         e_container_raise(E_Container *con);
 EAPI void         e_container_lower(E_Container *con);
 EAPI void         e_container_bg_reconfigure(E_Container *con);
 
+EAPI Evas_List   *e_container_clients_list_get(E_Container *con);
+
 EAPI E_Container_Shape *e_container_shape_add(E_Container *con);
 EAPI void               e_container_shape_show(E_Container_Shape *es);
 EAPI void               e_container_shape_hide(E_Container_Shape *es);

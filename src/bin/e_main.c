@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 struct _E_Before_Idler
@@ -242,6 +245,14 @@ main(int argc, char **argv)
 
    /* setup module loading etc. FIXME: check return value */
    e_module_init();
+
+   if (!e_iconify_init())
+     {
+	e_error_message_show("Enlightenment cannot setup its iconify system.");
+	_e_main_shutdown(-1);	
+     }
+   else
+     _e_main_shutdown_push(e_iconify_shutdown);
 
    if (!nowelcome)
      {

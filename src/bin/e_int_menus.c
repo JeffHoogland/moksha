@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 typedef struct _About_Data About_Data;
@@ -18,6 +21,8 @@ static void _e_int_menus_apps_start    (void *data, E_Menu *m);
 static void _e_int_menus_apps_end      (void *data, E_Menu *m);
 static void _e_int_menus_apps_free_hook(void *obj);
 static void _e_int_menus_apps_run      (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_clients_pre_cb(void *data, E_Menu *m);
+static void _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -43,7 +48,13 @@ e_int_menus_about_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Modules");
    e_menu_item_submenu_set(mi, subm);
-   
+  
+   subm = e_menu_new();
+   e_menu_pre_activate_callback_set(subm, _e_int_menus_clients_pre_cb, NULL);
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Clients");
+   e_menu_item_submenu_set(mi, subm);
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
@@ -74,6 +85,16 @@ e_int_menus_apps_new(char *dir, int top)
 	e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook);
      }
    return m;
+}
+
+E_Menu *
+e_int_menus_clients_new(char *dir, int top)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+
+   m = e_menu_new();
+		  
 }
 
 /* local subsystem functions */
@@ -186,4 +207,72 @@ _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
    
    a = data;
    e_app_exec(a);
+}
+
+static void
+_e_int_menus_clients_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   Evas_List *l, *borders = NULL;
+
+   if (m->realized) return;
+
+   /* clear the list */
+   if (m->items)
+     {
+	Evas_List *l;
+	for (l = m->items; l; l = l->next)
+	  {
+	     E_Menu_Item *mi = l->data;
+	     e_object_free(E_OBJECT(mi));
+	  }
+	
+     }
+
+   /* get the current containers clients */
+   if (m->parent_item && m->parent_item->menu && m->parent_item->menu->con)
+     {
+	for (l = e_container_clients_list_get(m->parent_item->menu->con); l; l = l->next)
+	  {
+	     borders = evas_list_append(borders, l->data);
+	  }
+     }
+
+   /* get the iconified clients from other containers */
+   for (l = e_iconify_clients_list_get(); l; l = l->next)
+     {
+	if (!evas_list_find(borders, l->data))
+	  borders = evas_list_append(borders, l->data);
+     }
+
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd = l->data;
+	E_App *a;
+
+	mi = e_menu_item_new(m);
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_label_set(mi, bd->client.icccm.title);
+	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
+	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
+	
+	a = e_app_window_name_class_find(bd->client.icccm.name,
+					 bd->client.icccm.class);
+	if (a)
+	  {
+	     e_menu_item_icon_edje_set(mi, a->path, "icon");
+	  }
+     }
+   evas_list_free(borders);
+}
+
+static void 
+_e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd = data;
+
+   if (bd->iconic) e_border_uniconify(bd);
+
+   e_border_raise(bd);
+   e_border_focus_set(bd, 1, 1);
 }

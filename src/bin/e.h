@@ -68,6 +68,7 @@
 #include "e_place.h"
 #include "e_resist.h"
 #include "e_startup.h"
+#include "e_iconify.h"
 
 typedef struct _E_Before_Idler E_Before_Idler;
 

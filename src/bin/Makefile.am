@@ -35,7 +35,9 @@ e_canvas.h \
 e_focus.h \
 e_place.h \
 e_resist.h \
-e_startup.h
+e_startup.h \
+e_iconify.h
+
 
 enlightenment_SOURCES = \
 e_file.c \
@@ -65,6 +67,7 @@ e_focus.c \
 e_place.c \
 e_resist.c \
 e_startup.c \
+e_iconify.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@
@@ -83,3 +86,4 @@ enlightenment_eapp_LDFLAGS = @e_libs@ @dlopen_libs@
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
+
