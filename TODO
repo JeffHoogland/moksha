@@ -52,15 +52,15 @@ These are in no particular order:
 * fix eapps to properly follow on disk changes
 * support text and color classes
 * add tooltips
-* add fullscreen support (xvidmode style)
+* add fullscreen support (e16 xvidmode or xrandr style)
 * add screen rotation info to managers
 * make xrandr support get rotation
 * add rotation to containers
-* fix multihead support
+* fix multihead support (executing with DISPLAY=:0.1 on screen 1 for example)
 * xinerama support
 * maybe add systray module/support?
 * fix all loose ends
-* allow object paranoia to be a runtim option too
+* allow object paranoia to be a runtime option too
 * detect segv and report it (maybe turn on obj paranoia)
 * add sliders, radio and check buttons for clientinfo pane
 * display coords while moving/resizing
