@@ -39,11 +39,11 @@ while test $# -gt 0; do
       echo @VERSION@
       ;;
     --cflags)
-      includes=-I@includedir@/enlightenment
+      includes="-I@includedir@ -I@includedir@/enlightenment"
       echo $includes
       ;;
     --libs)
-      libdirs=-L@libdir@
+      libdirs="-L@libdir@ -le"
       echo $libdirs
       ;;
     *)
