@@ -259,6 +259,7 @@ group {
 	       text_source:   "title_text";
 	       source:        "title_text";
 	       min:           0 1;
+	       text_class:    "title_bar";
 	    }
 	 }
       }
@@ -633,6 +634,7 @@ group {
 	       size:     10;
 	       min:      0 1;
 	       align:    0.0 0.5;
+	       text_class: "title_bar";
 	    }
 	 }
       }
