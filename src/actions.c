@@ -1533,7 +1533,7 @@ e_act_menu_start(E_Object * object, E_Action * a, void *data, int x, int y,
 
    if (e_block_is_active("menus"))
       D_RETURN;
-   b = (E_Border *) object;
+   b = (E_Border *) object; 
    if (!b)
       b = e_border_current_focused();
    if (!b)

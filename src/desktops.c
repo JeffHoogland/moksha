@@ -756,7 +756,6 @@ e_desktops_goto(int d, int ax, int ay)
 	Evas_List          *l;
 	E_Border           *b;
 
-
 	if ((d == current_desk->desk.desk))
 	   D_RETURN;
 
@@ -773,6 +772,14 @@ e_desktops_goto(int d, int ax, int ay)
 		       b->current.requested.visible = 0;
 		       b->changed = 1;
 		    }
+	       }
+	     else if ((!b->client.iconified) && (b->mode.move))
+	       {
+		 e_desktops_del_border(current_desk, b);
+		 b->client.desk = desk;
+		 e_desktops_add_border(desk, b);
+		 b->current.requested.visible = 1;
+		 b->changed = 1;
 	       }
 	  }
 

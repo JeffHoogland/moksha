@@ -897,7 +897,7 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class,
 	 act = ACT_MOUSE_DOUBLE;
       else if (((Ecore_Event_Mouse_Down *) (current_ev->event))->triple_click)
 	 act = ACT_MOUSE_TRIPLE;
-
+      
       e_action_stop(class, act, bt, NULL, mods, E_OBJECT(b),
 		    NULL, x, y, border_mouse_x, border_mouse_y);
       e_action_start(class, act, bt, NULL, mods, E_OBJECT(b),
@@ -1407,11 +1407,14 @@ e_border_adopt(Window win, int use_client_pos)
    E_Border           *b;
    int                 bw;
    int                 show = 1;
+   E_Desktop          *initial_desktop;
 
    D_ENTER;
 
    /* create the struct */
    b = e_border_new();
+   initial_desktop = b->desk;
+
    /* set the right event on the client */
    ecore_window_set_events(win,
 			   XEV_VISIBILITY |
@@ -1546,7 +1549,7 @@ e_border_adopt(Window win, int use_client_pos)
 	  }
 	else
 	  {
-	     show = e_place_border(b, b->desk, &x, &y,
+	    show = e_place_border(b, initial_desktop, &x, &y,
 			           config_data->window->place_mode);
 	     x += pl;
 	     y += pt;
@@ -2878,7 +2881,7 @@ e_border_shuffle_last(E_Border *b)
        D_RETURN_(NULL);
      }
 
-   if(b)
+   if(b && !b->client.sticky && (b->desk == current_desk))
      current = b;
    else
      current = evas_list_last(current_desk->windows)->data;

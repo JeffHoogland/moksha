@@ -7,6 +7,7 @@
 #include "bordermenu.h"
 
 static E_Menu      *bordermenu = NULL;
+static E_Border    *borderformenu = NULL;
 
 static void         e_bordermenu_cb_close(E_Menu * m, E_Menu_Item * mi,
 					  void *data);
@@ -346,13 +347,16 @@ e_bordermenu_cb_to_desktop(E_Menu * m, E_Menu_Item * mi, void *data)
    if (b->client.sticky)
       D_RETURN;
 
-   e_desktops_del_border(b->desk, b);
-
    sscanf(mi->str, "Desktop %d", &d);
    desk = e_desktops_get(d);
    if (!desk)
       desk = e_desktops_get(e_desktops_get_current());
-   D("Sending border %p to desk %d\n", b, d);
+
+   if (e_desktops_get(b->desk) == desk )
+     D_RETURN;
+   
+   D("Sending border %p to desk %d from %d\n", b, d, b->desk);
+   e_desktops_del_border(b->desk, b);
 
    e_desktops_add_border(desk, b);
    b->client.desk = d;
@@ -360,6 +364,8 @@ e_bordermenu_cb_to_desktop(E_Menu * m, E_Menu_Item * mi, void *data)
    b->current.requested.visible = 0;
    b->changed = 1;
    e_border_update_borders();
+
+   e_border_shuffle_last(b);
 
    D_RETURN;
    UN(m);
@@ -376,7 +382,7 @@ e_bordermenu_do(E_Border * b)
 
    D_ENTER;
 
-   if (!bordermenu)
+   if (borderformenu != b) 
      {
 	menu = e_menu_new();
 	e_menu_set_padding_icon(menu, 2);
@@ -485,6 +491,7 @@ e_bordermenu_do(E_Border * b)
 	e_menu_add_item(menu, menuitem);
 
 	bordermenu = menu;
+	borderformenu = b;
      }
 
    {
@@ -520,4 +527,5 @@ e_bordermenu_hide(void)
 {
    if (bordermenu)
       e_menu_hide(bordermenu);
+   borderformenu = 0;
 }
