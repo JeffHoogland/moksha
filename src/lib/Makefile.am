@@ -1,7 +1,6 @@
 MAINTAINERCLEANFILES	= Makefile.in
-INCLUDES		= -I/usr/local/include \
-			  -I$(includedir) \
-			  -I../bin/
+INCLUDES		= -I$(includedir) \
+			  -I$(top_srcdir)/src/bin
 			  @ecore_cflags@
 
 lib_LTLIBRARIES		= libe.la
