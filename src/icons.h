@@ -1,6 +1,7 @@
 #ifndef E_ICONS_H
 #define E_ICONS_H
 
+#include "e_file.h"
 #include "view.h"
 #include "text.h"
 
@@ -17,21 +18,9 @@ typedef struct _E_View    E_View;
 struct _E_Icon
 {
    E_Object o;
-   
-   char        *file;
-   struct stat  stat;
-   
+
+   E_File *file;
    E_View *view;
-   
-   struct {
-      char *icon;
-      char *custom_icon;
-      char *link;
-      struct {
-	 char *base;
-	 char *type;
-      } mime;
-   } info;
    
    struct {
       Evas_Object  icon;

@@ -1,6 +1,5 @@
 #include "debug.h"
 #include "epplet.h"
-#include "globals.h"
 #include "file.h"
 #include "observer.h"
 #include "desktops.h"

@@ -281,7 +281,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
    for (l = type->nodes; l; l = l->next)
      {
 	E_Config_Node *node;
-	
+
 	node = l->data;
 	
 	switch (node->type)

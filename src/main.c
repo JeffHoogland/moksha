@@ -15,6 +15,7 @@
 #include "place.h"
 #include "iconbar.h"
 #include "util.h"
+#include "e_view_machine.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"
@@ -140,12 +141,13 @@ main(int argc, char **argv)
    ecore_ungrab();
 
    /* Initialization for the various modules: */
+
    e_fs_init();
    e_desktops_init();
    e_border_init();
    e_action_init();
    e_menu_init();
-   e_view_init();
+   e_view_machine_init();
    e_entry_init();
    e_keys_init();
    e_guides_init();

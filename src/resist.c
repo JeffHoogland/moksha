@@ -49,7 +49,6 @@ rects = evas_list_append(rects, r); \
    /* here if need be - ie xinerama middle between screens and panels etc. */
 
    {
-      E_View *v;
       if (b->desk->view->iconbar)
          evas_list_append(rects, e_iconbar_get_resist_rect(b->desk->view->iconbar));
    }

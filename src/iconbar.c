@@ -18,7 +18,6 @@ static void e_ib_bit_down_cb (void *data, Ebits_Object o, char *class, int bt,
 static void e_ib_bit_up_cb (void *data, Ebits_Object o, char *class, int bt,
 			    int x, int y, int ox, int oy, int ow, int oh);
 
-static void ib_reload_timeout (int val, void *data);
 static void ib_scroll_timeout (int val, void *data);
 static void ib_timeout (int val, void *data);
 static void ib_cancel_launch_timeout (int val, void *data);
@@ -165,9 +164,9 @@ e_iconbar_cleanup (E_Iconbar * ib)
   if ((ib->view) && (ib->view->evas) && (ib->clip))
     evas_del_object (ib->view->evas, ib->clip);
   /* delete any timers intended to work on  this iconbar */
-  snprintf (buf, PATH_MAX, "iconbar_reload:%s", ib->view->dir);
+  snprintf (buf, PATH_MAX, "iconbar_reload:%s", ib->view->name);
   ecore_del_event_timer (buf);
-  snprintf (buf, PATH_MAX, "iconbar_scroll:%s", ib->view->dir);
+  snprintf (buf, PATH_MAX, "iconbar_scroll:%s", ib->view->name);
   ecore_del_event_timer (buf);
 
   /* call the destructor of the base class */
@@ -237,7 +236,7 @@ e_iconbar_new (E_View * v)
 
   /* first we want to load the iconbar data itself - ie the config info */
   /* for what icons we have and what they execute */
-  snprintf (buf, PATH_MAX, "%s/.e_iconbar.db", v->dir);
+  snprintf (buf, PATH_MAX, "%s/.e_iconbar.db", v->model->dir);
   /* use the config system to simply load up the db and start making */
   /* structs and lists and stuff for us... we told it how to in init */
   ib = e_config_load (buf, "", cf_iconbar);
@@ -284,7 +283,7 @@ e_iconbar_new (E_View * v)
 
   /* now we need to load up a bits file that tells us where in the view the */
   /* iconbar is meant to go. same place. just a slightly different name */
-  snprintf (buf, PATH_MAX, "%s/.e_iconbar.bits.db", v->dir);
+  snprintf (buf, PATH_MAX, "%s/.e_iconbar.bits.db", v->model->dir);
   ib->bit = ebits_load (buf);
   /* we didn't find one? */
   if (!ib->bit)
@@ -392,7 +391,7 @@ e_iconbar_realize (E_Iconbar * ib)
       /* the path of the key to the image memebr - that is actually */
       /* a lump of image data inlined in the iconbar db - so the icons */
       /* themselves follow the iconbar wherever it goes */
-      snprintf (buf, PATH_MAX, "%s/.e_iconbar.db:%s", ib->view->dir,
+      snprintf (buf, PATH_MAX, "%s/.e_iconbar.db:%s", ib->view->model->dir,
 		ic->image_path);
       /* add the icon image object */
       ic->image = evas_add_image_from_file (ib->view->evas, buf);
@@ -655,43 +654,6 @@ e_iconbar_fix (E_Iconbar * ib)
 }
 
 /**
- * e_iconbar_file_add - Adds a file to a view
- * @v:    The view in which a file is added
- * @file: Name of the added file
- *
- * This function is called from the
- * view code whenever a file is added to a view. The iconbar code here
- * determines if the file add is of interest
- * and if it is, in 0.5 secs will do a "reload
- */
-void
-e_iconbar_file_add (E_View * v, char *file)
-{
-  D_ENTER;
-
-  /* is the file of interest ? */
-  if ((!strcmp (".e_iconbar.db", file)) ||
-      (!strcmp (".e_iconbar.bits.db", file)))
-    {
-      char buf[PATH_MAX];
-
-      /* unique timer name */
-      snprintf (buf, PATH_MAX, "iconbar_reload:%s", v->dir);
-      /* if we've scrolled or changed icons since. save */
-      if (v->iconbar
-	  && (v->iconbar->has_been_scrolled || v->iconbar->changed))
-	{
-	  e_iconbar_save_out_final (v->iconbar);
-	}
-
-      /* in 0.5 secs call our timout handler */
-      ecore_add_event_timer (buf, 0.5, ib_reload_timeout, 0, v);
-    }
-
-  D_RETURN;
-}
-
-/**
  * e_iconbar_file_delete - Function to remove a file from an iconbox.
  * @v:    The view in which a file is removed
  * @file: Name of the removed file
@@ -720,37 +682,6 @@ e_iconbar_file_delete (E_View * v, char *file)
 }
 
 /**
- * e_iconbar_file_change - File change update function
- * @v:    The view in which a file changes
- * @file: Name of the changed file
- *
- * This function gets called whenever a file changes in a view
- */
-void
-e_iconbar_file_change (E_View * v, char *file)
-{
-  D_ENTER;
-
-  /* is the file that changed of interest */
-  if ((!strcmp (".e_iconbar.db", file)) ||
-      (!strcmp (".e_iconbar.bits.db", file)))
-    {
-      char buf[PATH_MAX];
-
-      /* unique timer name */
-      snprintf (buf, PATH_MAX, "iconbar_reload:%s", v->dir);
-      /* if we've scrolled since. save */
-      if (v->iconbar
-	  && (v->iconbar->has_been_scrolled || v->iconbar->changed))
-	e_iconbar_save_out_final (v->iconbar);
-      /* in 0.5 secs call the realod timeout */
-      ecore_add_event_timer (buf, 0.5, ib_reload_timeout, 0, v);
-    }
-
-  D_RETURN;
-}
-
-/**
  * e_iconbar_save_out_final - save out final state of iconbar back to disk
  * @ib:   The iconbar
  *
@@ -766,11 +697,10 @@ e_iconbar_save_out_final (E_Iconbar * ib)
   if (ib->view)
     {
       E_DB_File *edb;
-      Imlib_Image im;
       Evas_List l;
       int i;
 
-      snprintf (buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->dir);
+      snprintf (buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->model->dir);
       D ("%s\n", buf);
 
       if (ib->changed)
@@ -801,7 +731,7 @@ e_iconbar_save_out_final (E_Iconbar * ib)
 
 			  snprintf (buf2, PATH_MAX,
 				    "%s/.e_iconbar.db:/icons/%i/image",
-				    ib->view->dir, i);
+				    ib->view->model->dir, i);
 			  D ("save image\n");
 			  imlib_save_image (buf2);
 			}
@@ -866,43 +796,6 @@ e_iconbar_handle_launch_id (Window win, void *data)
 
 /* static (internal to iconbar use only) callbacks */
 
-/* reload timeout. called whenevr iconbar special files changed/added to */
-/* a view */
-static void
-ib_reload_timeout (int val, void *data)
-{
-  E_View *v;
-
-  D_ENTER;
-
-  /* get our view pointer */
-  v = (E_View *) data;
-/*
-  D ("check if jsut saved:\n");
-  if (v->iconbar->just_saved)
-    {
-      D ("just saved\n");
-      v->iconbar->just_saved = 0;
-      D_RETURN;
-    }
-    */
-  /* if we have an iconbar.. well nuke it */
-  if (e_object_unref (E_OBJECT (v->iconbar)) == 0)
-    v->iconbar = NULL;
-
-  /* try load a new iconbar */
-  if (!v->iconbar)
-    v->iconbar = e_iconbar_new (v);
-
-  /* if the iconbar loaded and theres an evas - we're realized */
-  /* so realize the iconbar */
-  if ((v->iconbar) && (v->evas))
-    e_iconbar_realize (v->iconbar);
-
-  D_RETURN;
-  UN (val);
-}
-
 /* scroll timeout. called to continuously scroll when arrow button down */
 static void
 ib_scroll_timeout (int val, void *data)
@@ -915,7 +808,7 @@ ib_scroll_timeout (int val, void *data)
   /* get our iconbar pointer */
   ib = (E_Iconbar *) data;
 
-  snprintf (buf, PATH_MAX, "iconbar_scroll:%s", ib->view->dir);
+  snprintf (buf, PATH_MAX, "iconbar_scroll:%s", ib->view->name);
   if (val == 0)
     ecore_del_event_timer (buf);
   else
@@ -975,7 +868,7 @@ ib_timeout (int val, void *data)
 
 	  /* figure out its path */
 	  snprintf (buf, PATH_MAX, "%s/.e_iconbar.db:%s",
-		    ic->iconbar->view->dir, ic->image_path);
+		    ic->iconbar->view->model->dir, ic->image_path);
 	  /* add it */
 	  ic->hi.image = evas_add_image_from_file (ic->iconbar->view->evas,
 						   buf);
@@ -989,7 +882,7 @@ ib_timeout (int val, void *data)
       /* start at 0 */
       val = 0;
     }
-  /* what tame is it ? */
+  /* what time is it ? */
   t = ecore_get_time ();
   if (ic->launch_id)
     {
@@ -1312,7 +1205,7 @@ ib_mouse_in (void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
       char buf[PATH_MAX];
 
       /* come up with a unique name for it */
-      snprintf (buf, PATH_MAX, "iconbar:%s/%s", ic->iconbar->view->dir,
+      snprintf (buf, PATH_MAX, "iconbar:%s/%s", ic->iconbar->view->name,
 		ic->image_path);
       e_strdup (ic->hi.timer, buf);
       /* call the timeout */
@@ -1650,7 +1543,7 @@ e_iconbar_icon_move (E_Iconbar_Icon *ic, int x, int y)
       ic->iconbar->changed = 1;
       e_iconbar_save_out_final(ic->iconbar); 
 /*      ic->iconbar->just_saved = 0;*/
-      ib_reload_timeout(0, ic->iconbar->view);
+      e_view_ib_reload(ic->iconbar->view);
 
     }
   D_RETURN;
@@ -1669,7 +1562,8 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
 
   D_ENTER;
 
-  D("add files: %s\n", source->dir);
+#if 0
+  D("add files: %s\n", source->model->dir);
   for (i = 0; i < num_files; i++)
     {
        char *file = e_file_get_file(strdup(dnd_files[i]));
@@ -1681,7 +1575,6 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
 	 if (!strcmp(ic->info.mime.base, "db"))
 	 {
 	    /* if its an icon db, set the icon */
-#if 0
 	   D("db!\n");
 	   for (l = v->iconbar->icons; l; l = l->next)
 	   {
@@ -1699,7 +1592,7 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
 		    v->iconbar->dnd.y < ibic->current.y + ibic->current.h )
 	        {
 		  D("over icon: %s\n", ibic->exec);
-                  snprintf(buf, PATH_MAX, "%s/%s:/icon/normal", ic->view->dir, ic->file);
+                  snprintf(buf, PATH_MAX, "%s/%s:/icon/normal", ic->view->model->dir, ic->file);
 		  D("set icon: %s\n", buf);
 
                   ibic->imlib_image = imlib_load_image(buf);
@@ -1711,7 +1604,6 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
   	      }
 	   }
 	   break;
-#endif
 	 }
 	 else if (e_file_can_exec (&ic->stat))
 	 {
@@ -1743,14 +1635,14 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
       else
 	 D("EEEEEEEEEEEEK: how the hell did this happen?");
 
-      D("x: %i, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x, v->dir,  ibic->iconbar->view->dir);
+      D("x: %f, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x, v->model->dir,  ibic->iconbar->view->model->dir);
        
-      if (!ic->info.icon) D_RETURN_(NULL);
+      if (!ic->info.icon) D_RETURN;
       snprintf(buf, PATH_MAX, "%s:/icon/normal", ic->info.icon);
       ibic->image = evas_add_image_from_file (v->evas, buf);
       ibic->imlib_image = imlib_load_image (buf);
       ibic->image_path = strdup (ic->info.icon);
-      snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir, ic->file);
+      snprintf(buf, PATH_MAX, "%s/%s", ic->view->model->dir, ic->file);
       ibic->exec = strdup(buf);
 
       evas_set_clip (v->evas, ibic->image, v->iconbar->clip);
@@ -1774,6 +1666,7 @@ e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
       e_iconbar_icon_move(ibic, v->iconbar->dnd.x, v->iconbar->dnd.y);
     }
 
+#endif
 }
 
 

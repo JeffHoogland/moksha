@@ -7,6 +7,8 @@
 #include "fs.h"
 #include "iconbar.h"
 #include "object.h"
+#include "e_view_model.h"
+#include "e_file.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
@@ -23,6 +25,12 @@ typedef struct _E_Icon    E_Icon;
 typedef struct _E_Iconbar E_Iconbar;
 #endif
 
+#ifndef E_VIEW_MODEL_TYPEDEF
+#define E_VIEW_MODEL_TYPEDEF
+typedef struct _E_View_Model E_View_Model;
+#endif
+
+
 typedef enum {
   E_DND_NONE,
   E_DND_COPY,
@@ -37,8 +45,10 @@ typedef enum {
 struct _E_View
 {
    E_Object               o;
+
+   char *                 name;
    
-   char                  *dir;
+   E_View_Model          *model;
    
    struct {
       Evas_Render_Method  render_method;
@@ -135,37 +145,31 @@ struct _E_View
       int valid;
       double x1, x2, y1, y2;
    } extents;
-   
+    
+   E_Background          bg;
+
+
    struct {
       EfsdCmdId x, y, w, h;
       int       busy;
    } geom_get;
-   EfsdCmdId getbg;   
-   
-   Evas_Object            obj_bg;
-   
-   char                  *bg_file;
-   char                  *prev_bg_file;
-   time_t                 bg_mod;
-   E_Background          bg;
+ 
+   EfsdCmdId              getbg;   
+
    
    struct {      
       E_Scrollbar        *h, *v;
    } scrollbar;
    
    int                    is_listing;
-   int                    monitor_id;
-   
-   E_FS_Restarter        *restarter;
+  
+   E_Iconbar             *iconbar;
    
    Evas_List              icons;
    
-   int                    is_desktop;
    int                    have_resort_queued;
 
    int                    changed;
-
-   E_Iconbar              *iconbar;
 
    Evas_List              epplet_contexts;
    Ebits_Object           epplet_layout;
@@ -198,15 +202,9 @@ void      e_view_get_position_percentage(E_View *v, double *vx, double *vy);
 void      e_view_resort_alphabetical(E_View *v);
 void      e_view_arrange(E_View *v);
 void      e_view_resort(E_View *v);
-void      e_view_geometry_record(E_View *v);    
 void      e_view_queue_geometry_record(E_View *v);
 void      e_view_queue_icon_xy_record(E_View *v);
 void      e_view_queue_resort(E_View *v);
-void      e_view_file_added(int id, char *file);
-void      e_view_file_deleted(int id, char *file);
-void      e_view_file_changed(int id, char *file);
-void      e_view_file_moved(int id, char *file);
-E_View   *e_view_find_by_monitor_id(int id);
 E_View   *e_view_find_by_window(Window win);
 
 /**
@@ -229,7 +227,14 @@ void      e_view_set_background(E_View *v);
  * directory, it also requests monitoring of the files in
  * the directory @dir from efsd.
  */
-void      e_view_set_dir(E_View *v, char *dir);
+void      e_view_set_dir(E_View *v, char *dir, int is_desktop);
+
+/**
+ * e_view_populate - Draws icons for all files in view
+ * @v     The view to populate
+ */
+
+void      e_view_populate(E_View *v);
 
 /**
  * e_view_realize - Initializes a view's graphics and content
@@ -243,11 +248,12 @@ void      e_view_realize(E_View *v);
 
 void      e_view_update(E_View *v);
 
-void      e_view_bg_load(E_View *v);
+void      e_view_bg_reload(E_View *v);
+void      e_view_ib_reload(E_View *v);
 
-void      e_view_bg_change(E_View *v, char *file);
-void      e_view_bg_add(E_View *v, char *file);
-void      e_view_bg_del(E_View *v, char *file);
+void      e_view_file_add(E_View *v, E_File *file);
+void      e_view_file_changed(E_View *v, E_File *file);
+void      e_view_file_delete(E_View *v, E_File *file);
 
 void      e_view_close_all(void);
 

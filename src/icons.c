@@ -1,10 +1,13 @@
 #include "view.h"
 #include "icons.h"
 #include "debug.h"
-#include "globals.h"
 #include "cursors.h"
 #include "file.h" 
 #include "util.h"
+#include "e_view_model.h"
+#include "e_file.h"
+#include "e_view_machine.h"
+#include "globals.h"
 
 static void e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
@@ -174,14 +177,13 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *ic;
    Ecore_Event *ev;
    Ecore_Event_Mouse_Move *e;
-   
+#if 0 
    D_ENTER;
    
    ev = e_view_get_current_event();
 
    if (!ev)
      D_RETURN;
-
    e = ev->event;
    ic = _data;
 
@@ -207,7 +209,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     y = 999999999;
 	     xx = -999999999;
 	     yy = -999999999;
-	     for (l = views; l; l = l->next)
+	     for (l = VM->views; l; l = l->next)
 	       {
 		  E_View *v;
 		  Evas_List ll;
@@ -282,7 +284,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  imlib_context_set_cliprect(0, 0, 0, 0);
 		  imlib_context_set_angle(0);
 		  
-		  for (l = views; l; l = l->next)
+		  for (l = VM->views; l; l = l->next)
 		    {
 		       E_View *v;
 		       Evas_List ll;
@@ -403,7 +405,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ecore_pointer_xy_get(&x, &y);
 	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
      }
-
+#endif
    D_RETURN;
    UN(_e);
    UN(_o);
@@ -464,8 +466,8 @@ e_icon_find_by_file(E_View *view, char *file)
 	E_Icon *ic;
 	
 	ic = l->data;
-	if ((ic) && (ic->file) && (file) && (!strcmp(ic->file, file)))
-	  D_RETURN_(ic);
+	if ((ic) && (ic->file->file) && (file) && (!strcmp(ic->file->file, file)))
+	   D_RETURN_(ic);
      }
    D_RETURN_(NULL);
 }
@@ -475,7 +477,6 @@ e_icon_show(E_Icon *ic)
 {
    D_ENTER;
 
-   
    if (ic->state.visible) D_RETURN;
    ic->state.visible = 1;
    if (!ic->obj.event1)
@@ -577,7 +578,7 @@ e_icon_apply_xy(E_Icon *ic)
 {
    D_ENTER;
    
-   /* threse calc icon extents for: */
+   /* these calc icon extents for: */
    /*  [I]  */
    /*  Ig   */
    /* [txt] */
@@ -653,7 +654,8 @@ e_icon_apply_xy(E_Icon *ic)
    if ((ic->geom.x != ic->prev_geom.x) || (ic->geom.y != ic->prev_geom.y))
      {
 	ic->q.write_xy = 1;
-	e_view_queue_icon_xy_record(ic->view);
+	/* FIXME */
+	//e_view_queue_icon_xy_record(ic->view);
      }
    if (ic->geom.x != ic->prev_geom.x) ic->view->extents.valid = 0;
    else if (ic->geom.y != ic->prev_geom.y) ic->view->extents.valid = 0;
@@ -675,12 +677,12 @@ e_icon_check_permissions(E_Icon *ic)
 {
   D_ENTER;
 
-  if (!ic || !ic->info.mime.base || ic->stat.st_ino == 0)
+  if (!ic || !ic->file->info.mime.base || ic->file->stat.st_ino == 0)
     D_RETURN;
 
-  if (!strcmp(ic->info.mime.base, "dir"))
+  if (!strcmp(ic->file->info.mime.base, "dir"))
     {
-      if (e_file_can_exec(&ic->stat))
+      if (e_file_can_exec(&ic->file->stat))
 	evas_set_color(ic->view->evas, ic->obj.icon, 255, 255, 255, 255);
       else
 	evas_set_color(ic->view->evas, ic->obj.icon, 128, 128, 128, 128);
@@ -694,11 +696,12 @@ void
 e_icon_initial_show(E_Icon *ic)
 {
    D_ENTER;
-   
+  
    /* check if we have enuf info and we havent been shown yet */
-   if (!ic->info.icon) D_RETURN;
-   if (ic->state.visible) D_RETURN;
-   
+   if ( !ic->file->info.icon || !ic->obj.icon 
+      || ic->state.visible) 
+      D_RETURN;
+
    /* first. lets figure out the size of the icon */
    evas_get_image_size(ic->view->evas, ic->obj.icon, 
 		       &(ic->geom.icon.w), &(ic->geom.icon.h));
@@ -725,129 +728,29 @@ e_icon_initial_show(E_Icon *ic)
 }
 
 void
-e_icon_set_mime(E_Icon *ic, char *base, char *mime)
-{
-   int diff = 0;
-   
-   D_ENTER;
-   
-   if (!ic->info.mime.base) diff = 1;
-   if (!ic->info.mime.type) diff = 1;
-   if ((ic->info.mime.base) && (strcmp(ic->info.mime.base, base))) diff = 1;
-   if ((ic->info.mime.type) && (strcmp(ic->info.mime.base, mime))) diff = 1;
-   if (!diff) D_RETURN;
-   if (ic->info.mime.base) free(ic->info.mime.base);
-   if (ic->info.mime.type) free(ic->info.mime.type);
-   ic->info.mime.base = NULL;
-   ic->info.mime.type = NULL;
-   ic->info.mime.base = strdup(base);
-   ic->info.mime.type = strdup(mime);
-   
-   D("%40s: %s/%s\n", ic->file, base, mime);
-   
-   /* effect changes here */
-   if (ic->info.custom_icon) 
-     {
-	if (ic->info.icon) free(ic->info.icon);
-	ic->info.icon = NULL;
-	ic->info.icon = strdup(ic->info.custom_icon);
-	evas_set_image_file(ic->view->evas, ic->obj.icon, ic->info.custom_icon);
-	e_view_queue_resort(ic->view);	
-	D_RETURN;
-     }
-   /* find an icon */
-     {
-	char icon[PATH_MAX];
-	char type[PATH_MAX];	
-	char *p;
-	int done = 0;
-	
-	strcpy(type, ic->info.mime.type);
-	for (p = type; *p; p++) 
-	  {
-	     if (*p == '/') *p = '-';
-	  }
-	do 
-	  {
-	     snprintf(icon, PATH_MAX, "%s/data/icons/%s/%s.db", PACKAGE_DATA_DIR,
-		     ic->info.mime.base, type);
-	     if (e_file_exists(icon))
-	       {
-		  done = 1;
-		  break;
-	       }
-	     p = strrchr(type, '-');
-	     if (p) *p = 0;
-	  }
-	while (p);
-	if (!done)
-	  {
-	     if (!e_file_exists(icon))
-	       {
-		  snprintf(icon, PATH_MAX, "%s/data/icons/%s/default.db", PACKAGE_DATA_DIR,
-			  ic->info.mime.base);
-		  if (!e_file_exists(icon))
-		    snprintf(icon, PATH_MAX, "%s/data/icons/unknown/default.db", PACKAGE_DATA_DIR);
-	       }
-	  }
-	ic->info.icon = strdup(icon);
-     }
-
-   e_icon_update_state(ic);
-
-   D_RETURN;
-}
-
-void
-e_icon_set_link(E_Icon *ic, char *link)
-{
-   D_ENTER;
-   
-   if ((!link) && (ic->info.link))
-     {
-	free(ic->info.link);
-	ic->info.link = NULL;
-	/* effect changes here */
-     }
-   else if (link)
-     {
-	if ((ic->info.link) && (!strcmp(ic->info.link, link)))
-	  {
-	     free(ic->info.link);
-	     ic->info.link = strdup(link);
-	     /* effect changes here */
-	  }
-     }
-
-   D_RETURN;
-}
-
-
-void
 e_icon_update_state(E_Icon *ic)
 {
    char icon[PATH_MAX];
    int iw, ih;
    int gw, gh;
-   
    D_ENTER;
-   
-   if (!ic->info.icon)
+ 
+   if (!ic->file->info.icon)
      {
-	D("EEEEEEEEEEK %s has no icon\n", ic->file);
+	D("EEEEEEEEEEK %s has no icon\n", ic->file->file);
 	D_RETURN;
      }
    if (ic->state.clicked)
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->file->info.icon);
      }
    else if (ic->state.selected)
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->file->info.icon);
      }
    else
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
      }
    if ((ic->state.selected) && 
        (!ic->obj.sel.under.icon) && 
@@ -899,8 +802,12 @@ e_icon_update_state(E_Icon *ic)
 	ic->obj.sel.over.icon = NULL;
 	ic->obj.sel.over.text = NULL;
      }
+   /* This relies on the obj.icon having been allocated in view_file_add. 
+    * Maybe it would be better to allocate here, the first
+    * time the icon is set? -- till */
    evas_set_image_file(ic->view->evas, ic->obj.icon, icon);
-   evas_get_image_size(ic->view->evas, ic->obj.icon, &iw, &ih);
+   evas_get_image_size(ic->view->evas, ic->obj.icon, &iw, &ih);   
+   e_icon_check_permissions(ic);
    gw = ic->geom.icon.w;
    gh = ic->geom.icon.h;
    e_icon_apply_xy(ic);
@@ -956,27 +863,29 @@ void
 e_icon_exec(E_Icon *ic)
 {
    D_ENTER;
-   
-   if (!strcmp(ic->info.mime.base, "dir") &&
-       e_file_can_exec(&ic->stat))
+ 
+   if (!strcmp(ic->file->info.mime.base, "dir") &&
+       e_file_can_exec(&ic->file->stat))
      {
 	E_View *v;
+	E_Border *b;
 	char buf[PATH_MAX];
-	
+
 	v = e_view_new();
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir, ic->file);
+	snprintf(buf, PATH_MAX, "%s/%s", ic->view->model->dir, ic->file->file);
 	D("new dir >%s<\n", buf);
-	v->dir = strdup(buf);
-	e_view_bg_load(v);
+	e_view_set_dir(v, buf, 0);
 	e_view_realize(v);
-	ecore_window_set_title(v->win.base, ic->file);
+	e_view_populate(v);
+	
+	e_view_bg_reload(v);
+	ecore_window_set_title(v->win.base, ic->file->file);
 	ecore_window_set_name_class(v->win.base, "FileView", "E");
 	ecore_window_set_min_size(v->win.base, 8, 8);
      }
-
    e_icon_deselect(ic);
 
    D_RETURN;

@@ -7,6 +7,7 @@
 #include "icccm.h"
 #include "util.h"
 #include "object.h"
+#include "e_view_machine.h"
 
 static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
@@ -196,7 +197,6 @@ e_desktops_init_file_display(E_Desktop *desk)
    v->size.w = desk->real.w;
    v->size.h = desk->real.h;
    v->options.back_pixmap = 1;
-   v->is_desktop = 1;
 
    desk->view = v;
    /* fixme: later */
@@ -204,11 +204,10 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* e_strdup(v->dir, "/dev"); */
    /* e_strdup(v->dir, e_file_home()); */
    snprintf(buf, PATH_MAX, "%s/desktop/default", e_config_user_dir());
-   e_strdup(v->dir, buf);
-   
-   e_view_bg_load(v);
-   
+
+   e_view_set_dir(v, buf, 1);
    e_view_realize(v);
+   e_view_populate(v);
 
    ecore_window_hint_set_borderless(v->win.base);
    ecore_window_hint_set_sticky(v->win.base, 1);

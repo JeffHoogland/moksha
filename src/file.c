@@ -104,7 +104,7 @@ e_file_get_file(char *path)
     result++;
   else
     result = path;
-  
+ 
   D_RETURN_(result);
 }
 

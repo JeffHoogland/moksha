@@ -1,5 +1,8 @@
 #ifndef E_FILE_H
 #define E_FILE_H
+#include <sys/time.h>
+#include <sys/stat.h>
+#include <Evas.h>
 
 time_t     e_file_mod_time(char *file);
 int        e_file_exists(char *file);
