@@ -99,6 +99,7 @@ entry both 'XMag' '/usr/share/pixmaps/gnome-applets.png' 'xmag'
 entry separator
 entry text 'Network' 'sub' 1
 entry text 'System' 'sub' 2
+entry text 'Desktop' 'sub' 3
 entry script 'Exit' 'e.shutdown();'
 end_menu
 
@@ -112,5 +113,11 @@ entry text 'Shut Down' 'sudo -S /sbin/shutdown -h now'
 entry text 'Reboot' 'sudo -S /sbin/shutdown -r now'
 end_menu
 
+menu 3
+entry script 'Goto Desktop 1' 'e.flipToDesktop(1);'
+entry script 'Goto Desktop 2' 'e.flipToDesktop(2);'
+entry script 'Goto Desktop 3' 'e.flipToDesktop(3);'
+entry script 'Goto Desktop 4' 'e.flipToDesktop(4);'
+end_menu
 
 finish

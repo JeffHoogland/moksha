@@ -1,6 +1,7 @@
 %{
    
    #include "Ecore.h"
+   #include "desktops.h"
    
 %}
 
@@ -40,8 +41,22 @@ class Window {
 
 namespace e {
    
-   function flipToDesktop( number desk );
-   function getDesktopCount();
+   function flipToDesktop( number desk )
+   %{
+      e_desktops_goto( (long)desk );	  	  
+   %}
+   
+   function getCurrentDesktop()
+   %{
+	  int retval = e_desktops_get_current();
+	  FE_RETURN_INT( retval );
+   %}	 
+   
+   function getDesktopCount()
+   %{
+	  int retval = e_desktops_get_num();
+	  FE_RETURN_INT( retval );
+   %}
    
    function getWidth();
    function getHeight();
