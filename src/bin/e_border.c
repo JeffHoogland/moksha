@@ -163,7 +163,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.fetch.hints = 1;
    bd->client.icccm.fetch.size_pos_hints = 1;
    bd->client.icccm.fetch.protocol = 1;
-   bd->client.mwm.fetch.borderless = 1;
+   bd->client.mwm.fetch.hints = 1;
    bd->client.netwm.fetch.pid = 1;
    bd->client.netwm.fetch.desktop = 1;
    bd->client.border.changed = 1;
@@ -607,7 +607,7 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    bd->client.icccm.fetch.hints = 1;
    bd->client.icccm.fetch.size_pos_hints = 1;
    bd->client.icccm.fetch.protocol = 1;
-   bd->client.mwm.fetch.borderless = 1;
+   bd->client.mwm.fetch.hints = 1;
    bd->client.netwm.fetch.pid = 1;
    bd->client.netwm.fetch.desktop = 1;
 //   bd->client.border.changed = 1;
@@ -1114,13 +1114,27 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->client.icccm.fetch.protocol = 0;
      }
-   if (bd->client.mwm.fetch.borderless)
+   if (bd->client.mwm.fetch.hints)
      {
 	int pb;
 	
+	bd->client.mwm.exists = 
+	  ecore_x_mwm_hints_get(bd->client.win,
+				&bd->client.mwm.func,
+				&bd->client.mwm.decor,
+				&bd->client.mwm.input);
 	pb = bd->client.mwm.borderless;
-	bd->client.mwm.borderless = ecore_x_window_prop_borderless_get(bd->client.win);
-	bd->client.mwm.fetch.borderless = 0;
+	bd->client.mwm.borderless = 0;
+	if (bd->client.mwm.exists)
+	  {
+	     printf("MWM hints!\n");
+	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) && 
+		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
+		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
+	       {
+		  bd->client.mwm.borderless = 1;
+	       }
+	  }
 	if (bd->client.mwm.borderless != pb)
 	  {
 	     if (bd->client.border.name) free(bd->client.border.name);
@@ -1128,8 +1142,11 @@ _e_border_eval(E_Border *bd)
 	       bd->client.border.name = strdup("borderless");
 	     else
 	       bd->client.border.name = strdup("default");
+	     if (bd->client.mwm.borderless)
+	       printf("client %s borderless\n", bd->client.icccm.title);
 	     bd->client.border.changed = 1;
 	  }
+	bd->client.mwm.fetch.hints = 0;
      }
    if (bd->client.netwm.fetch.pid)
      {

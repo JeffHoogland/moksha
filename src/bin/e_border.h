@@ -85,9 +85,13 @@ struct _E_Border
 	 } fetch;
       } icccm;
       struct {
+	 Ecore_X_MWM_Hint_Func func;
+	 Ecore_X_MWM_Hint_Decor decor;
+	 Ecore_X_MWM_Hint_Input input;
+	 unsigned char exists : 1;
 	 unsigned char borderless : 1;
 	 struct {
-	    unsigned int borderless : 1;
+	    unsigned int hints : 1;
 	 } fetch;
       } mwm;
       struct {
