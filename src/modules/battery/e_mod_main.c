@@ -845,6 +845,7 @@ _battery_linux_acpi_check(Battery *ef)
 	     if (!strcmp(present, "yes")) battery++;
 	     if (!strcmp(charging_state, "discharging")) discharging++;
 	     if (!strcmp(charging_state, "charging")) charging++;
+	     if (!strcmp(charging_state, "charged")) rate_unknown = 0;
 	     bat_drain += rate;
 	     bat_level += level;
 	  }
