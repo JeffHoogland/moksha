@@ -14,15 +14,19 @@ struct _Config
    int width;
    double x, y;
    double poll_time;
+   int alarm;
 };
 
 struct _Battery
 {
-   E_Menu       *config_menu;
+   E_Menu       *config_menu; 
+   E_Menu       *config_menu_alarm;
+   E_Menu       *config_menu_poll;
    Battery_Face *face;
    
    E_Config_DD *conf_edd;
    Config      *conf;
+   int alarm_triggered;
 };
 
 struct _Battery_Face

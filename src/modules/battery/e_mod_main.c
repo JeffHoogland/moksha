@@ -58,6 +58,8 @@ shutdown(E_Module *m)
      {
 	if (m->config_menu)
 	  {
+	     _battery_config_menu_del(e, e->config_menu_alarm);
+	     _battery_config_menu_del(e, e->config_menu_poll);
 	     _battery_config_menu_del(e, m->config_menu);
 	     m->config_menu = NULL;
 	  }
@@ -117,20 +119,23 @@ _battery_init(E_Module *m)
    E_CONFIG_VAL(D, T, x, DOUBLE);
    E_CONFIG_VAL(D, T, y, DOUBLE);
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
+   E_CONFIG_VAL(D, T, alarm, INT);
    
    e->conf = e_config_domain_load("module.battery", e->conf_edd);
    if (!e->conf)
      {
-	e->conf = E_NEW(Config, 1);
-	e->conf->width = 64;
-	e->conf->x = 1.0;
-	e->conf->y = 1.0;
-        e->conf->poll_time = 30.0;
+       e->conf = E_NEW(Config, 1);
+       e->conf->width = 64;
+       e->conf->x = 1.0;
+       e->conf->y = 1.0;
+       e->conf->poll_time = 30.0;
+       e->conf->alarm = 30;
      }
    E_CONFIG_LIMIT(e->conf->width, 2, 256);
    E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
    E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
+   E_CONFIG_LIMIT(e->conf->alarm, 0, 60);
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
@@ -166,6 +171,69 @@ _battery_shutdown(Battery *e)
    
    _battery_face_free(e->face);
    free(e);
+}
+
+static void
+_battery_menu_alarm_10(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 10;
+}
+
+static void
+_battery_menu_alarm_20(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 20;
+}
+
+static void
+_battery_menu_alarm_30(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 30;
+}
+
+static void
+_battery_menu_alarm_40(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 40;
+}
+
+static void
+_battery_menu_alarm_50(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 50;
+}
+
+static void
+_battery_menu_alarm_60(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 60;
+}
+
+static void
+_battery_menu_alarm_disable(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->alarm = 0;
 }
 
 static void
@@ -237,6 +305,59 @@ _battery_config_menu_new(Battery *e)
    mn = e_menu_new();
    
    mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Disable");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_disable, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "10 mins");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 10) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_10, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "20 mins");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 20) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_20, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "30 mins");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 30) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_30, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "40 mins");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 40) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_40, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "50 mins");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 50) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_50, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "1 hour");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->alarm == 60) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_alarm_60, e);
+   
+   e->config_menu_alarm = mn;
+   
+   mn = e_menu_new();
+   
+   mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Check Fast (1 sec)");
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
@@ -271,6 +392,18 @@ _battery_config_menu_new(Battery *e)
    if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_very_slow, e);
 
+   e->config_menu_poll = mn;
+   
+   mn = e_menu_new();
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Set Poll Time");
+   e_menu_item_submenu_set(mi, e->config_menu_poll);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Set Alarm");
+   e_menu_item_submenu_set(mi, e->config_menu_alarm);
+   
    e->config_menu = mn;
    
    return mn;
@@ -443,7 +576,7 @@ _battery_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (ef->fy + ef->fw > sh) ef->fw = sh - ef->fy;
 	evas_object_resize(ef->bat_object, ef->fw, ef->fw);
 	evas_object_resize(ef->event_object, ef->fw, ef->fw);
-   }
+     }
    ef->xx = ev->cur.canvas.x;
    ef->yy = ev->cur.canvas.y;
 }  
@@ -614,38 +747,54 @@ _battery_linux_acpi_check(Battery_Face *ef)
    
    if ((charging) || (discharging))
      {
-	ef->battery_prev_battery = 1;
-	if ((charging ) && (ef->battery_prev_ac != 1))
-	  {
-	     edje_object_signal_emit(ef->bat_object, "charge", "");
-	     ef->battery_prev_ac = 1;
-	  }
-	else if ((discharging) && (ef->battery_prev_ac != 0))
-	  {
-	     edje_object_signal_emit(ef->bat_object, "discharge", "");
-	     ef->battery_prev_ac = 0;
-	  }
+        ef->battery_prev_battery = 1;
+        if ((charging ) && (ef->battery_prev_ac != 1))
+          {
+             edje_object_signal_emit(ef->bat_object, "charge", "");
+             ef->battery_prev_ac = 1;
+	     edje_object_signal_emit(ef->bat_object, "pulsestop", "");
+	     ef->bat->alarm_triggered = 0;
+          }
+	else if (discharging)
+          {
+             if (ef->battery_prev_ac != 0)
+	       {
+		  edje_object_signal_emit(ef->bat_object, "discharge", "");
+		  ef->battery_prev_ac = 0;
+	       }
+	     if (((hours * 60) + minutes) <= ef->bat->conf->alarm)
+	       {
+		  if (!ef->bat->alarm_triggered)
+		    {
+		       e_error_dialog_show("Battery Running Low",
+					   "Your battery is running low.\n"
+					   "You may wish to switch to an AC source.");
+		    }
+		  edje_object_signal_emit(ef->bat_object, "pulse", "");
+		  ef->bat->alarm_triggered = 1;
+	       }
+          }
 	if (level_unknown)
-	  {
-	     edje_object_part_text_set(ef->bat_object, "reading", "BAD DIRVER");
-	     edje_object_part_text_set(ef->bat_object, "time", "--:--");
-	     _battery_level_set(ef, 0.0);
-	  }
+          {
+             edje_object_part_text_set(ef->bat_object, "reading", "BAD DIRVER");
+             edje_object_part_text_set(ef->bat_object, "time", "--:--");
+             _battery_level_set(ef, 0.0);
+          }
 	else if (rate_unknown)
-	  {
-	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
-	     edje_object_part_text_set(ef->bat_object, "reading", buf);
-	     edje_object_part_text_set(ef->bat_object, "time", "--:--");
-	     _battery_level_set(ef, (double)bat_val / 100.0);
-	  }
+          {
+             snprintf(buf, sizeof(buf), "%i%%", bat_val);
+             edje_object_part_text_set(ef->bat_object, "reading", buf);
+             edje_object_part_text_set(ef->bat_object, "time", "--:--");
+             _battery_level_set(ef, (double)bat_val / 100.0);
+          }
 	else
-	  {
-	     snprintf(buf, sizeof(buf), "%i%%", bat_val);
-	     edje_object_part_text_set(ef->bat_object, "reading", buf);
-	     snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
-	     edje_object_part_text_set(ef->bat_object, "time", buf);
-	     _battery_level_set(ef, (double)bat_val / 100.0);
-	  }
+          {
+             snprintf(buf, sizeof(buf), "%i%%", bat_val);
+             edje_object_part_text_set(ef->bat_object, "reading", buf);
+             snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+             edje_object_part_text_set(ef->bat_object, "time", buf);
+             _battery_level_set(ef, (double)bat_val / 100.0);
+          }	  
      }
    else if (!battery)
      {
@@ -723,7 +872,7 @@ _battery_linux_apm_check(Battery_Face *ef)
 	  }
 	else
 	  {
-	     switch( bat_stat )
+	     switch (bat_stat)
 	       {
 		case 0:
 		  edje_object_part_text_set(ef->bat_object, "reading", "High");
@@ -747,25 +896,42 @@ _battery_linux_apm_check(Battery_Face *ef)
    
    if (ac_stat == 1)
      {
-	if ((ac_stat == 1) && (ef->battery_prev_ac == 0))
-	  {
-	     edje_object_signal_emit(ef->bat_object, "charge", "");
-	     ef->battery_prev_ac = 1;
-	  }
-	else if ((ac_stat == 0) && (ef->battery_prev_ac == 1))
-	  {
-	     edje_object_signal_emit(ef->bat_object, "discharge", "");
-	     ef->battery_prev_ac = 0;
-	  }
-	edje_object_part_text_set(ef->bat_object, "time", "--:--");
+        if ((ac_stat == 1) && (ef->battery_prev_ac == 0))  
+          {
+              edje_object_signal_emit(ef->bat_object, "charge", "");
+              ef->battery_prev_ac = 1;
+          }
+        else if ((ac_stat == 0) && (ef->battery_prev_ac == 1)) 
+          {
+              edje_object_signal_emit(ef->bat_object, "discharge", "");
+              ef->battery_prev_ac = 0;
+          }
+        edje_object_part_text_set(ef->bat_object, "time", "--:--");
      }
    else
      {
-	hours = time_val / 3600;
-	minutes = (time_val / 60) % 60;
-	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
-	edje_object_part_text_set(ef->bat_object, "time", buf);
-     }
+        hours = time_val / 3600;
+        minutes = (time_val / 60) % 60;
+        snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+        edje_object_part_text_set(ef->bat_object, "time", buf);
+	
+        if (((hours * 60) + minutes) <= ef->bat->conf->alarm)
+          {
+	     if (!ef->bat->alarm_triggered)
+	       {
+                  e_error_dialog_show("Battery Running Low",
+				      "Your battery is running low.\n"
+				      "You may wish to switch to an AC source.");
+	       }
+	     edje_object_signal_emit(ef->bat_object, "pulse", "");
+	     ef->bat->alarm_triggered = 1;
+          }
+        else
+          {
+	     edje_object_signal_emit(ef->bat_object, "pulsestop", "");
+	     ef->bat->alarm_triggered = 0;	  	
+          }
+     }    
    return 1;
 }
 
