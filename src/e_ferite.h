@@ -1,6 +1,7 @@
 #ifndef E_FERITE_H
 #define E_FERITE_H
 
+#include <config.h>
 #ifdef USE_FERITE
 
 #include <ferite.h>
