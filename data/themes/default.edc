@@ -4430,7 +4430,7 @@ collections {
 	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	    else        {snprintf(buf, 10, "%i", v);}
 	    set_state(PART:"minutes", buf, 0.0);
-	    v = hour % 12;
+	    v = ((hour % 12) * 5) + ((minute * 5) / 60);
 	    buf[0] = 0;
 	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	    else        {snprintf(buf, 10, "%i", v);}
