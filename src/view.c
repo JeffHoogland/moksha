@@ -1737,6 +1737,7 @@ e_view_free(E_View *v)
    e_del_event_timer(name);
    
    views = evas_list_remove(views, v);
+   efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
    if (v->restarter)
      e_fs_del_restart_handler(v->restarter);
    v->restarter = NULL;
@@ -1806,10 +1807,10 @@ void
 e_view_set_dir(E_View *v, char *dir)
 {
    /* stop monitoring old dir */
+   if (v->dir) efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
    IF_FREE(v->dir);
    v->dir = e_file_real(dir);
    /* start monitoring new dir */
-
    v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
    if (e_fs_get_connection())
      {

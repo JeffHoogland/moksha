@@ -23,6 +23,7 @@
 #include <Edb.h>
 #include <libefsd.h>
 
+/* macros for allowing sections of code to be runtime profiled */
 #define E_PROF 1
 #ifdef E_PROF
 extern Evas_List __e_profiles;
@@ -79,7 +80,7 @@ printf("%3.3f : %s()\n", __p->total, __p->func); \
 #define E_PROF_DUMP
 #endif
 
-
+/* object macros */
 #define OBJ_REF(_e_obj) _e_obj->references++
 #define OBJ_UNREF(_e_obj) _e_obj->references--
 #define OBJ_IF_FREE(_e_obj) if (_e_obj->references == 0)
@@ -90,7 +91,6 @@ OBJ_IF_FREE(_e_obj) \
 { \
 OBJ_FREE(_e_obj); \
 }
-
 #define OBJ_PROPERTIES \
 int references; \
 void (*e_obj_free) (void *e_obj);
@@ -99,15 +99,8 @@ void (*e_obj_free) (void *e_obj);
 _e_obj->references = 1; \
 _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 }
-#define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
-((x < (xx + ww)) && \
-(y < (yy + hh)) && \
-((x + w) > xx) && \
-((y + h) > yy))
-#define SPANS_COMMON(x1, w1, x2, w2) \
-(!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
-#define UN(_blah) _blah = 0
 
+/* action type macros */
 #define ACT_MOUSE_IN      0
 #define ACT_MOUSE_OUT     1
 #define ACT_MOUSE_CLICK   2
@@ -119,6 +112,117 @@ _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 #define ACT_KEY_DOWN      8
 #define ACT_KEY_UP        9
 
+/* config macros */
+/* something to check validity of config files where we get data from */
+/* for now its just a 5 second timout so it will only invalidate */
+/* if we havent looked for 5 seconds... BUT later when efsd is more solid */
+/* we should use that to tell us when its invalid */
+#define E_CFG_FILE(_var, _src) \
+static E_Config_File _var = {_src, 0.0}
+#define E_CONFIG_CHECK_VALIDITY(_var, _src) \
+{ \
+double __time; \
+__time = e_get_time(); \
+if (_var.last_fetch < (__time - 5.0)) { \
+_var.last_fetch = __time;
+#define E_CONFIG_CHECK_VALIDITY_END \
+} \
+}
+#define E_CFG_INT_T   123
+#define E_CFG_FLOAT_T 1234
+#define E_CFG_STR_T   12345
+#define E_CFG_DATA_T  123456
+#define E_CFG_INT(_var, _src, _key, _default) \
+static E_Config_Element _var = { _src, _key, 0.0, E_CFG_INT_T, \
+_default, 0.0, NULL, NULL, 0, \
+0, 0.0, NULL, NULL, 0, \
+}
+#define E_CFG_FLOAT(_var, _src, _key, _default) \
+static E_Config_Element _var = { _src, _key, 0.0, E_CFG_FLOAT_T, \
+0, _default, NULL, NULL, 0, \
+0, 0.0, NULL, NULL, 0, \
+}
+#define E_CFG_STR(_var, _src, _key, _default) \
+static E_Config_Element _var = { _src, _key, 0.0, E_CFG_STR_T, \
+0, 0.0, _default, NULL, 0, \
+0, 0.0, NULL, NULL, 0, \
+}
+#define E_CFG_DATA(_var, _src, _key, _default, _default_size) \
+static E_Config_Element _var = { _src, _key, 0.0, E_CFG_DATAT_T, \
+0, 0.0, NULL, _default, _default_size, \
+0, 0.0, NULL, NULL, 0, \
+}
+/* yes for now it only fetches them every 5 seconds - in the end i need a */
+/* validity flag for the database file to know if it changed and only then */
+/* get the value again. this is waiting for efsd to become more solid */
+#define E_CFG_VALIDITY_CHECK(_var) \
+{ \
+double __time; \
+__time = e_get_time(); \
+if (_var.last_fetch < (__time - 5.0)) { \
+int __cfg_ok = 0; \
+_var.last_fetch = __time;
+#define E_CFG_END_VALIDITY_CHECK \
+} \
+}
+#define E_CONFIG_INT_GET(_var, _val) \
+{{ \
+E_CFG_VALIDITY_CHECK(_var) \
+E_DB_INT_GET(e_config_get(_var.src), _var.key, _var.cur_int_val, __cfg_ok); \
+if (!__cfg_ok) _var.cur_int_val = _var.def_int_val; \
+E_CFG_END_VALIDITY_CHECK \
+} \
+_val = _var.cur_int_val;}
+#define E_CONFIG_FLOAT_GET(_var, _val) \
+{{ \
+E_CFG_VALIDITY_CHECK(_var) \
+E_DB_FLOAT_GET(e_config_get(_var.src), _var.key, _var.cur_float_val, __cfg_ok); \
+if (!__cfg_ok) _var.cur_float_val = _var.def_float_val; \
+E_CFG_END_VALIDITY_CHECK \
+} \
+_val = _var.cur_float_val;}
+#define E_CONFIG_STR_GET(_var, _val) \
+{{ \
+E_CFG_VALIDITY_CHECK(_var) \
+if (_var.cur_str_val) free(_var.cur_str_val); \
+_var.cur_str_val = NULL; \
+E_DB_STR_GET(e_config_get(_var.src), _var.key, _var.cur_str_val, __cfg_ok); \
+if (!__cfg_ok) _var.cur_str_val = _var.def_str_val \
+E_CFG_END_VALIDITY_CHECK \
+} \
+_val = _var.cur_str_val;}
+#define E_CONFIG_DATA_GET(_var, _val, _size) \
+{{ \
+E_CFG_VALIDITY_CHECK(_var) \
+if (_var.cur_data_val) free(_var.cur_data_val); \
+_var.cur_data_val = NULL; \
+_var.cur_data_size = 0; \
+{ E_DB_File *__db; \
+__db = e_db_open_read(e_config_get(_var.src)); \
+if (__db) { \
+_var.cur_data_val = e_db_data_get(__db, _var.key, &(_var.cur_data_size)); \
+if (_var.cur_data_val) __cfg_ok = 1; \
+e_db_close(__db); \
+} \
+} \
+if (!__cfg_ok) { \
+_var.cur_data_val = e_memdup(_var.def_data_val, _var.def_data_size); \
+_var.cur_data_size = _var.def_data_size; \
+} \
+E_CFG_END_VALIDITY_CHECK \
+} \
+_val = _var.cur_data_val; \
+_size = _var.cur_data_size;}
+
+/* misc util macros */
+#define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
+((x < (xx + ww)) && \
+(y < (yy + hh)) && \
+((x + w) > xx) && \
+((y + h) > yy))
+#define SPANS_COMMON(x1, w1, x2, w2) \
+(!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
+#define UN(_blah) _blah = 0
 #define SET_BORDER_GRAVITY(_b, _grav) \
 e_window_gravity_set(_b->win.container, _grav); \
 e_window_gravity_set(_b->win.input, _grav); \
@@ -127,6 +231,7 @@ e_window_gravity_set(_b->win.r, _grav); \
 e_window_gravity_set(_b->win.t, _grav); \
 e_window_gravity_set(_b->win.b, _grav);
 
+/* data types */
 typedef struct _E_Object              E_Object;
 typedef struct _E_Border              E_Border;
 typedef struct _E_Grab                E_Grab;
@@ -137,17 +242,17 @@ typedef struct _E_Rect                E_Rect;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
 typedef struct _E_Icon                E_Icon;
-typedef struct _E_Shelf               E_Shelf;
 typedef struct _E_Background          E_Background;
 typedef struct _E_Background_Layer    E_Background_Layer;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
 typedef struct _E_Entry               E_Entry;
-typedef struct _E_Pack_Object_Class   E_Pack_Object_Class;
-typedef struct _E_Pack_Object         E_Pack_Object;
 typedef struct _E_FS_Restarter        E_FS_Restarter;
+typedef struct _E_Config_File E_Config_File;
+typedef struct _E_Config_Element E_Config_Element;
 
+/* actual fdata struct members */
 struct _E_Object
 {
    OBJ_PROPERTIES;
@@ -475,28 +580,6 @@ struct _E_Icon
    int     changed;   
 };
 
-struct _E_Shelf
-{
-   OBJ_PROPERTIES;
-   
-   char *name;
-   E_View *view;
-   
-   int x, y, w, h;
-   struct {
-      Ebits_Object border;
-   } bit;
-   struct {
-      Evas_Object clipper;
-   } obj;
-   int visible;
-   int icon_count;
-   struct {
-      int moving;
-      int resizing;
-   } state;
-};
-
 struct _E_Background_Layer
 {
    int mode;
@@ -670,61 +753,35 @@ struct _E_Entry
    void *data_focus_out;
 };
 
-struct _E_Pack_Object_Class
-{
-   void * (*new)         (void);
-   void   (*free)        (void *object);
-   void   (*show)        (void *object);
-   void   (*hide)        (void *object);
-   void   (*raise)       (void *object);
-   void   (*lower)       (void *object);
-   void   (*layer)       (void *object, int l);
-   void   (*evas)        (void *object, Evas e);
-   void   (*clip)        (void *object, Evas_Object clip);
-   void   (*unclip)      (void *object);
-   void   (*move)        (void *object, int x, int y);
-   void   (*resize)      (void *object, int w, int h);
-   void   (*min)         (void *object, int *w, int *h);
-   void   (*max)         (void *object, int *w, int *h);
-   void   (*size)        (void *object, int x, int y);
-};
-
-#define PACK_HBOX   0
-#define PACK_VBOX   1
-#define PACK_TABLE  2
-#define PACK_ENTRY  3
-#define PACK_LABEL  4
-#define PACK_BUTTON 5
-#define PACK_RADIO  6
-#define PACK_CHECK  7
-
-#define PACK_MAX    8
-
-struct _E_Pack_Object
-{
-   int                  type;
-   E_Pack_Object_Class  class;
-   struct {
-      Evas              evas;
-      Evas_Object       clip;
-      int               layer;
-      int               visible;
-      int               x, y, w, h;
-      void             *object;
-   } data;
-   int                  references;
-   E_Pack_Object       *parent;
-   Evas_List            children;
-};
-
 struct _E_FS_Restarter
 {
    void (*func) (void *data);
    void *data;
 };
 
-#define DO(_object, _method, _args...) \
-{ if (_object->class._method) _object->class._method(_object->data.object, ## _args); }
+struct _E_Config_File
+{
+   char   *src;
+   double  last_fetch;
+};
+
+struct _E_Config_Element 
+{
+   char   *src;
+   char   *key;
+   double  last_fetch;
+   int     type;
+   int     def_int_val;
+   float   def_float_val;
+   char   *def_str_val;
+   void   *def_data_val;
+   int     def_data_val_size;
+   int     cur_int_val;
+   float   cur_float_val;
+   char   *cur_str_val;
+   void   *cur_data_val;
+   int     cur_data_val_size;
+};
 
 void e_entry_init(void);
 void e_entry_free(E_Entry *entry);
@@ -862,133 +919,6 @@ pid_t e_exec_run(char *exe);
 pid_t e_exec_run_in_dir(char *exe, char *dir);
 pid_t e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path);
 
-/* something to check validity of config files where we get data from */
-/* for now its just a 5 second timout so it will only invalidate */
-/* if we havent looked for 5 seconds... BUT later when efsd is more solid */
-/* we should use that to tell us when its invalid */
-typedef struct _e_config_file E_Config_File;
-struct _e_config_file
-{
-   char   *src;
-   double  last_fetch;
-};
-#define E_CFG_FILE(_var, _src) \
-static E_Config_File _var = {_src, 0.0}
-#define E_CONFIG_CHECK_VALIDITY(_var, _src) \
-{ \
-double __time; \
-__time = e_get_time(); \
-if (_var.last_fetch < (__time - 5.0)) { \
-_var.last_fetch = __time;
-#define E_CONFIG_CHECK_VALIDITY_END \
-} \
-}
-
-typedef struct _e_config_element E_Config_Element;
-struct _e_config_element 
-{
-   char   *src;
-   char   *key;
-   double  last_fetch;
-   int     type;
-   int     def_int_val;
-   float   def_float_val;
-   char   *def_str_val;
-   void   *def_data_val;
-   int     def_data_val_size;
-   int     cur_int_val;
-   float   cur_float_val;
-   char   *cur_str_val;
-   void   *cur_data_val;
-   int     cur_data_val_size;
-};
-#define E_CFG_INT_T   123
-#define E_CFG_FLOAT_T 1234
-#define E_CFG_STR_T   12345
-#define E_CFG_DATA_T  123456
-#define E_CFG_INT(_var, _src, _key, _default) \
-static E_Config_Element _var = { _src, _key, 0.0, E_CFG_INT_T, \
-_default, 0.0, NULL, NULL, 0, \
-0, 0.0, NULL, NULL, 0, \
-}
-#define E_CFG_FLOAT(_var, _src, _key, _default) \
-static E_Config_Element _var = { _src, _key, 0.0, E_CFG_FLOAT_T, \
-0, _default, NULL, NULL, 0, \
-0, 0.0, NULL, NULL, 0, \
-}
-#define E_CFG_STR(_var, _src, _key, _default) \
-static E_Config_Element _var = { _src, _key, 0.0, E_CFG_STR_T, \
-0, 0.0, _default, NULL, 0, \
-0, 0.0, NULL, NULL, 0, \
-}
-#define E_CFG_DATA(_var, _src, _key, _default, _default_size) \
-static E_Config_Element _var = { _src, _key, 0.0, E_CFG_DATAT_T, \
-0, 0.0, NULL, _default, _default_size, \
-0, 0.0, NULL, NULL, 0, \
-}
-/* yes for now it only fetches them every 5 seconds - in the end i need a */
-/* validity flag for the database file to know if it changed and only then */
-/* get the value again. this is waiting for efsd to become more solid */
-#define E_CFG_VALIDITY_CHECK(_var) \
-{ \
-double __time; \
-__time = e_get_time(); \
-if (_var.last_fetch < (__time - 5.0)) { \
-int __cfg_ok = 0; \
-_var.last_fetch = __time;
-#define E_CFG_END_VALIDITY_CHECK \
-} \
-}
-
-#define E_CONFIG_INT_GET(_var, _val) \
-{{ \
-E_CFG_VALIDITY_CHECK(_var) \
-E_DB_INT_GET(e_config_get(_var.src), _var.key, _var.cur_int_val, __cfg_ok); \
-if (!__cfg_ok) _var.cur_int_val = _var.def_int_val; \
-E_CFG_END_VALIDITY_CHECK \
-} \
-_val = _var.cur_int_val;}
-#define E_CONFIG_FLOAT_GET(_var, _val) \
-{{ \
-E_CFG_VALIDITY_CHECK(_var) \
-E_DB_FLOAT_GET(e_config_get(_var.src), _var.key, _var.cur_float_val, __cfg_ok); \
-if (!__cfg_ok) _var.cur_float_val = _var.def_float_val; \
-E_CFG_END_VALIDITY_CHECK \
-} \
-_val = _var.cur_float_val;}
-#define E_CONFIG_STR_GET(_var, _val) \
-{{ \
-E_CFG_VALIDITY_CHECK(_var) \
-if (_var.cur_str_val) free(_var.cur_str_val); \
-_var.cur_str_val = NULL; \
-E_DB_STR_GET(e_config_get(_var.src), _var.key, _var.cur_str_val, __cfg_ok); \
-if (!__cfg_ok) _var.cur_str_val = _var.def_str_val \
-E_CFG_END_VALIDITY_CHECK \
-} \
-_val = _var.cur_str_val;}
-#define E_CONFIG_DATA_GET(_var, _val, _size) \
-{{ \
-E_CFG_VALIDITY_CHECK(_var) \
-if (_var.cur_data_val) free(_var.cur_data_val); \
-_var.cur_data_val = NULL; \
-_var.cur_data_size = 0; \
-{ E_DB_File *__db; \
-__db = e_db_open_read(e_config_get(_var.src)); \
-if (__db) { \
-_var.cur_data_val = e_db_data_get(__db, _var.key, &(_var.cur_data_size)); \
-if (_var.cur_data_val) __cfg_ok = 1; \
-e_db_close(__db); \
-} \
-} \
-if (!__cfg_ok) { \
-_var.cur_data_val = e_memdup(_var.def_data_val, _var.def_data_size); \
-_var.cur_data_size = _var.def_data_size; \
-} \
-E_CFG_END_VALIDITY_CHECK \
-} \
-_val = _var.cur_data_val; \
-_size = _var.cur_data_size;}
-
 char *e_config_get(char *type);
 void  e_config_init(void);
 void  e_config_set_user_dir(char *dir);
@@ -1069,5 +999,3 @@ E_Icon *e_view_find_icon_by_file(E_View *v, char *file);
 void e_view_del_icon(E_View *v, E_Icon *icon);
 
 void e_ipc_init(void);
-
-void e_pack_object_init(void);

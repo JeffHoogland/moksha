@@ -15,13 +15,11 @@ e_fs_child_handle(Eevent *ev)
    Ev_Child *e;
    
    e = ev->event;
-   printf("child exit code %i pid %i, efsd pid = %i\n", e->exit_code, e->pid, efsd_pid);
    if (e->pid == efsd_pid)
      {
 	efsd_close(ec);
 	efsd_pid = 0;
 	ec = NULL;
-	printf("efsd exited.\n");
 	_e_fs_restarter(0, NULL);
      }
 }
@@ -31,7 +29,6 @@ _e_fs_fd_handle(int fd)
 {
    double start, current;
    
-/*   printf("############## fs event...\n"); */
    start = e_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
@@ -57,11 +54,9 @@ _e_fs_fd_handle(int fd)
 	     ec = NULL;
 	     if (efsd_pid == -2)
 	       _e_fs_restarter(0, NULL);
-/*	     efsd_pid = 0;*/
 	     /* FIXME: need to queue a popup dialog here saying */
 	     /* efsd went wonky */
-	     printf("EEEEEEEEEEK efsd went wonky\n");
-/*	     _e_fs_restarter(0, NULL);*/
+	     printf("EEEEEEEEEEK efsd went wonky. Bye bye efsd.\n");
 	  }
 	
 	/* spent more thna 1/20th of a second here.. get out */
@@ -72,26 +67,21 @@ _e_fs_fd_handle(int fd)
 	     break;
 	  }
     }
-/*   printf("############## fs done\n"); */
 }
 
 static void
 _e_fs_restarter(int val, void *data)
 {
    if (ec) return;
-   printf("_e_fs_restarter %i\n", efsd_pid);
    if (val > 0)    
      {
-	if (efsd_pid <= 0)
-	  efsd_pid = e_exec_run("efsd -f");
-	if (efsd_pid > 0)
-	  ec = efsd_open();
+	if (efsd_pid <= 0) efsd_pid = e_exec_run("efsd -f");
+	if (efsd_pid > 0) ec = efsd_open();
      }
    if (ec)
      {
 	Evas_List l;
 	
-	printf("connect!\n");
 	e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
 	for (l = fs_restart_handlers; l; l = l->next)
 	  {
@@ -146,36 +136,7 @@ e_fs_init(void)
    int i;
 
    e_event_filter_handler_add(EV_CHILD, e_fs_child_handle);   
-   /* already have an efsd around? */
-   printf("try efsd initial open...\n");
-   ec = efsd_open();
-   /* no - efsd around */
-   if (!ec)
-     {
-	/* start efsd */
-	printf("start efsd...\n");
-	efsd_pid = e_exec_run("efsd -f");
-	if (efsd_pid > 0)
-	  {
-	     ec = efsd_open();
-	     for (i = 0; (!ec) && (i < 15); i++)
-	       {
-		  sleep(1);
-		  printf("try efsd open %i...\n", i, ec);
-		  ec = efsd_open();
-		  printf("(connection ptr: %p)\n", ec);
-	       }
-	  }
-     }
-   else
-     efsd_pid = -2;
-   /* after several atempts to talk to efsd - lets give up */
-   if (!ec)
-     {
-	fprintf(stderr, "efsd is not running !!!\n");
-     }
-   if (ec)
-     e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
+   _e_fs_restarter(0, NULL);
 }
 
 EfsdConnection *

@@ -72,7 +72,6 @@ main(int argc, char **argv)
    e_reset_error_handler();
    e_ungrab();
 
-   e_pack_object_init();
    e_fs_init();
    e_desktops_init();
    e_border_init();
