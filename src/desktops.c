@@ -608,6 +608,21 @@ e_desktops_add_sticky(E_Border *b)
    D_RETURN;
 }
 
+
+void
+e_desktops_rm_sticky(E_Border *b)
+{
+   D_ENTER;
+
+   e_desktops_add_border(current_desk, b);
+
+   if (evas_list_find(sticky_list, b))
+      sticky_list = evas_list_remove(sticky_list, b);
+
+   D_RETURN;
+}
+
+
 void
 e_desktops_del_border(E_Desktop * d, E_Border * b)
 {

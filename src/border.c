@@ -1250,6 +1250,10 @@ e_border_apply_border(E_Border * b)
         prop_sticky = 1;
 	e_desktops_add_sticky(b);
      }
+   else
+     {
+       e_desktops_rm_sticky(b);
+     }
 
    snprintf(border, PATH_MAX, "selected-%i.sticky-%i.shaded-%i.bits.db",
 	    prop_selected, prop_sticky, prop_shaded);

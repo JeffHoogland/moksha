@@ -76,6 +76,7 @@ void                e_desktops_free(E_Desktop * desk);
 E_Desktop          *e_desktops_new(int i);
 void                e_desktops_add_border(E_Desktop * d, E_Border * b);
 void                e_desktops_add_sticky(E_Border *b);
+void                e_desktops_rm_sticky(E_Border *b);
 void                e_desktops_del_border(E_Desktop * d, E_Border * b);
 void                e_desktops_delete(E_Desktop * d);
 void                e_desktops_show(E_Desktop * d);
