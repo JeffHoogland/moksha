@@ -459,7 +459,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     
 	     if (!buildmenu)
 	       {		  
-		  buildmenu = e_build_menu_new_from_gnome_apps("/opt/gnome/share/gnome/apps");
+		  buildmenu = e_build_menu_new_from_gnome_apps("/usr/share/gnome/apps");
 	       }
 	     if (buildmenu)
 	       {
