@@ -926,9 +926,10 @@ e_border_unstick(E_Border *bd)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   /* Set the desk before we unstick the border */
+   e_border_desk_set(bd, e_desk_current_get(bd->zone));
    bd->sticky = 0;
    e_hints_window_sticky_set(bd->client.win, 0);
-   e_border_desk_set(bd, e_desk_current_get(bd->zone));
 
    ev = E_NEW(E_Event_Border_Unstick, 1);
    ev->border = bd;
