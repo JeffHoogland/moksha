@@ -1434,6 +1434,12 @@ collections {
 	    action:  SIGNAL_EMIT "action" "close";
 	 }
 	 program {
+	    name:    "maximize_action";
+	    signal:  "mouse,clicked,1";
+	    source:  "button_1";
+	    action:  SIGNAL_EMIT "action" "maximize";
+	 }
+	 program {
 	    name:    "shade_action";
 	    signal:  "mouse,down,1,double";
 	    source:  "title";
