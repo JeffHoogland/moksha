@@ -1631,6 +1631,6 @@ _ds_shstore_object_set(Shstore *st, Evas_Object *o)
 static void
 _ds_object_unset(Evas_Object *o)
 {
-   evas_object_image_size_set(o, 0, 0);
    evas_object_image_data_set(o, NULL);
+   evas_object_image_size_set(o, 0, 0);
 }

@@ -117,7 +117,7 @@ _temperature_new()
 #undef D
 #define T Config_Face
 #define D conf_face_edd
-   E_CONFIG_VAL(D, T, enabled, INT);
+   E_CONFIG_VAL(D, T, enabled, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("Temperature_Config", Config);
 #undef T

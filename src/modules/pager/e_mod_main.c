@@ -160,9 +160,9 @@ _pager_new()
 #undef D
 #define T Config_Face
 #define D _conf_face_edd
-   E_CONFIG_VAL(D, T, enabled, INT);
-   E_CONFIG_VAL(D, T, scale, INT);
-   E_CONFIG_VAL(D, T, resize, INT);
+   E_CONFIG_VAL(D, T, enabled, UCHAR);
+   E_CONFIG_VAL(D, T, scale, UCHAR);
+   E_CONFIG_VAL(D, T, resize, UCHAR);
 
    _conf_edd = E_CONFIG_DD_NEW("Pager_Config", Config);
 #undef T

@@ -180,7 +180,7 @@ _ibar_new()
 #undef D
 #define T Config_Bar
 #define D conf_bar_edd
-   E_CONFIG_VAL(D, T, enabled, INT);
+   E_CONFIG_VAL(D, T, enabled, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T

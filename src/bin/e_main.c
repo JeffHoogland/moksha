@@ -59,12 +59,15 @@ main(int argc, char **argv)
    int after_restart = 0; 
    char buf[1024];
    char *s;
+#if 0   
    /* install the signal handlers. */ 
    struct sigaction sigsegv_action;
-   sigsegv_action.sa_sigaction=&e_sigseg_act;
-   sigsegv_action.sa_flags=0;
+   
+   sigsegv_action.sa_sigaction = &e_sigseg_act;
+   sigsegv_action.sa_flags = 0;
+   sigemptyset(&sigsegv_action.sa_mask);
    sigaction(SIGSEGV, &sigsegv_action, NULL);
-
+#endif
 
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
