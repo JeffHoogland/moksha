@@ -48,7 +48,7 @@ e_view_look_cleanup(E_View_Look *l)
    D_ENTER;
    e_view_machine_unregister_look(l);
    e_object_unref(E_OBJECT(l->obj));
-   e_object_cleanup(E_OBJECT(l));
+   e_observer_cleanup(E_OBSERVER(l));
    D_RETURN;
 }
 
@@ -60,7 +60,7 @@ e_view_look_objects_cleanup(E_View_Look_Objects *l)
    IF_FREE(l->icb);
    IF_FREE(l->icb_bits);
    IF_FREE(l->layout);
-   e_object_cleanup(E_OBJECT(l));
+   e_observee_cleanup(E_OBSERVEE(l));
    D_RETURN;
 }
 

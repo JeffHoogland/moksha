@@ -1613,7 +1613,7 @@ e_view_cleanup(E_View * v)
    /* FIXME: clean up the rest!!! this leaks ... */
 
    /* Call the destructor of the base class */
-   e_object_cleanup(E_OBJECT(v));
+   e_observer_cleanup(E_OBSERVER(v));
    D_RETURN;
 }
 
