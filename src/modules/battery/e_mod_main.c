@@ -230,7 +230,7 @@ _battery_face_init(Battery_Face *ef)
    ef->battery_prev_drain = 1;
    ef->battery_prev_ac = -1;
    ef->battery_prev_battery = -1;
-   ef->battery_check_timer = ecore_timer_add(5.0, _battery_cb_check, ef);
+   ef->battery_check_timer = ecore_timer_add(1.0, _battery_cb_check, ef);
    
    _battery_cb_check(ef);
    
@@ -424,10 +424,9 @@ _battery_linux_acpi_check(Battery_Face *ef)
    int level_unknown = 0;
    
    int hours, minutes;
-   
+
    /* Read some information on first run. */
    bats = e_file_ls("/proc/acpi/battery");
-   if (!bats) return 0;
    while (bats) 
      {
 	FILE *f;
@@ -494,6 +493,7 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	bats = evas_list_remove_list(bats, bats);
 	free(name);
      }
+   
    if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
    if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
    ef->battery_prev_drain = bat_drain;
@@ -512,15 +512,18 @@ _battery_linux_acpi_check(Battery_Face *ef)
    hours = minutes / 60;
    minutes -= (hours * 60);
    
+   if (hours < 0) hours = 0;
+   if (minutes < 0) minutes = 0;
+   
    if ((charging) || (discharging))
      {
 	ef->battery_prev_battery = 1;
-	if ((charging ) && (ef->battery_prev_ac == 0))
+	if ((charging ) && (ef->battery_prev_ac != 1))
 	  {
 	     edje_object_signal_emit(ef->bat_object, "charge", "");
 	     ef->battery_prev_ac = 1;
 	  }
-	else if ((discharging) && (ef->battery_prev_ac == 1))
+	else if ((discharging) && (ef->battery_prev_ac != 0))
 	  {
 	     edje_object_signal_emit(ef->bat_object, "discharge", "");
 	     ef->battery_prev_ac = 0;
@@ -564,6 +567,11 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	  {
 	     edje_object_signal_emit(ef->bat_object, "charge", "");
 	     ef->battery_prev_battery = 1;
+	  }
+	if (ef->battery_prev_ac != 1)
+	  {
+	     edje_object_signal_emit(ef->bat_object, "charge", "");
+	     ef->battery_prev_ac = 1;
 	  }
 	edje_object_part_text_set(ef->bat_object, "reading", "FULL");
 	edje_object_part_text_set(ef->bat_object, "time", "--:--");
