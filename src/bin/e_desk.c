@@ -237,8 +237,8 @@ e_desk_prev(E_Zone *zone)
 static void
 _e_desk_free(E_Desk *desk)
 {
-   if (desk->name)
-     free(desk->name);
+   E_FREE(desk->name);
+   evas_list_free(desk->clients);
    free(desk);
 }
 

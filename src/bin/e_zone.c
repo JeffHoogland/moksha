@@ -349,16 +349,14 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       desk = (E_Desk *)
 		  zone->desks[x + (y * zone->desk_x_count)];
 
-	       client = desk->clients;
-	       while (client)
+	       for (client = desk->clients; client; client = client->next)
 		 {
 		    bd = (E_Border *) client->data;
 
 		    new_desk->clients = evas_list_append(new_desk->clients, bd);
 		    e_border_desk_set(bd, new_desk);
-		    client = client->next;
 		 }
-	       evas_list_free(desk->clients);
+	       e_object_del(E_OBJECT(desk));
 	    }
        }  
    if (yy < zone->desk_y_count)
@@ -371,16 +369,14 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       desk = (E_Desk *)
 		  zone->desks[x + (y * zone->desk_x_count)];
 
-	       client = desk->clients;
-	       while (client)
+	       for (client = desk->clients; client; client = client->next)
 		 {
 		    bd = (E_Border *) client->data;
 
 		    new_desk->clients = evas_list_append(new_desk->clients, bd);
 		    e_border_desk_set(bd, new_desk);
-		    client = client->next;
 		 }
-	       evas_list_free(desk->clients);
+	       e_object_del(E_OBJECT(desk));
 	    }
        }	
 
