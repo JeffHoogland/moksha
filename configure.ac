@@ -34,7 +34,6 @@ AM_WITH_DMALLOC
 
 dnl Add the languages which your application supports here.
 ALL_LINGUAS=""
-AM_GNU_GETTEXT
 
 dnl Set PACKAGE_LOCALE_DIR in config.h.
 if test "x${prefix}" = "xNONE"; then
@@ -234,7 +233,6 @@ Makefile
 src/Makefile
 lib/Makefile
 client/Makefile
-po/Makefile.in
 tools/Makefile
 doc/Makefile
 doc/kernel-doc

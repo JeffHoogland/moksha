@@ -6,7 +6,6 @@
 DEBUGFLAGS = -W -Wall -g -DDEBUG #-DDEBUG_NEST
 
 INCLUDES = \
-	-I$(top_srcdir)/intl \
 	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ebg_cflags@ $(DEBUGFLAGS)
 
 bin_PROGRAMS = enlightenment
@@ -56,4 +55,4 @@ enlightenment_SOURCES = \
         e_view_look.h e_view_look.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ -lm $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ -lm 
