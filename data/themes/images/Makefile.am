@@ -249,5 +249,7 @@ e17_pager_desk.png \
 e17_pager_window.png \
 e17_temperature_base.png \
 e17_temperature_mid.png \
-e17_temperature_overlay.png
+e17_temperature_overlay.png \
+e17_gadman_indicator.png \
+e17_gadman_overlay.png
 

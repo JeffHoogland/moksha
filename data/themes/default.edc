@@ -24,12 +24,13 @@ fonts {
 
 collections {
 #include "default_background.edc"
-#include "default_border.edc"
-#include "default_menu.edc"
-#include "default_ibar.edc"
-#include "default_clock.edc"
 #include "default_battery.edc"
-#include "default_temperature.edc"
+#include "default_border.edc"
+#include "default_clock.edc"
+#include "default_gadman.edc"
+#include "default_ibar.edc"
+#include "default_menu.edc"
 #include "default_pager.edc"
+#include "default_temperature.edc"
 }
 

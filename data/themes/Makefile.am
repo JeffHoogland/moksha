@@ -18,6 +18,7 @@ default_background.edc \
 default_battery.edc \
 default_border.edc \
 default_clock.edc \
+default_gadman.edc \
 default_ibar.edc \
 default_menu.edc \
 default_pager.edc \
