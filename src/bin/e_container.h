@@ -28,6 +28,7 @@ struct _E_Container
    int                  x, y, w, h;
    char                 visible : 1;
    E_Manager           *manager;
+   E_Gadman            *gadman;
    
    int                  num;
    char                *name;

@@ -27,3 +27,4 @@
 #include "e_startup.h"
 #include "e_iconify.h"
 #include "e_hints.h"
+#include "e_gadman.h"

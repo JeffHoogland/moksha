@@ -231,16 +231,8 @@ _pager_shutdown(Pager *e)
    free(e->conf);
    E_CONFIG_DD_FREE(e->conf_edd);
 
-   if (e->base)
-     {
-	evas_object_del(e->base);
-	evas_object_free(e->base);
-     }
-   if (e->screen)
-     {
-	evas_object_del(e->screen);
-	evas_object_free(e->screen);
-     }
+   if (e->base) evas_object_del(e->base);
+   if (e->screen) evas_object_del(e->screen);
 
    _pager_zone_leave(e);
    ecore_event_handler_del(e->ev_handler_container_resize);
@@ -325,12 +317,7 @@ _pager_desk_create(Pager *e, E_Desk *desk)
 static void        
 _pager_desk_destroy(Pager_Desk *d)
 {
-   if (d->obj)
-     {
-	evas_object_del(d->obj);
-	evas_object_free(d->obj);
-     }
-
+   if (d->obj) evas_object_del(d->obj);
    e_object_unref(E_OBJECT(d->desk));
 
    while (d->wins)
@@ -405,16 +392,8 @@ _pager_window_create(Pager *e, E_Border *border, Pager_Desk *owner)
 static void        
 _pager_window_destroy(Pager_Win *w)
 {
-   if (w->obj)
-     {
-	evas_object_del(w->obj);
-	evas_object_free(w->obj);
-     }
-   if (w->icon)
-     {
-	evas_object_del(w->icon);
-	evas_object_free(w->icon);
-     }
+   if (w->obj) evas_object_del(w->obj);
+   if (w->icon) evas_object_del(w->icon);
    
    e_object_unref(E_OBJECT(w->border));
    E_FREE(w);

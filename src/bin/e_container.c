@@ -95,6 +95,9 @@ e_container_new(E_Manager *man)
 	       zone = e_zone_new(con, zx, zy, zw, zh);
 	  }
      }
+   
+   con->gadman = e_gadman_new(con);
+   
    return con;
 }
         
@@ -320,6 +323,7 @@ e_container_shape_rects_get(E_Container_Shape *es)
 static void
 _e_container_free(E_Container *con)
 {
+   if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    while (con->clients) e_object_free(E_OBJECT(con->clients->data));
    while (con->zones) e_object_free(E_OBJECT(con->zones->data));
    con->manager->containers = evas_list_remove(con->manager->containers, con);
