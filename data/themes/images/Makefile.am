@@ -251,5 +251,9 @@ e17_temperature_base.png \
 e17_temperature_mid.png \
 e17_temperature_overlay.png \
 e17_gadman_indicator.png \
-e17_gadman_overlay.png
+e17_gadman_overlay.png \
+button_in.png \
+button_out.png \
+e.png \
+error_bg.png
 

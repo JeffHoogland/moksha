@@ -23,7 +23,8 @@ default_ibar.edc \
 default_menu.edc \
 default_pager.edc \
 default_resize.edc \
-default_temperature.edc
+default_temperature.edc \
+default_error.edc
 
 default.eet: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

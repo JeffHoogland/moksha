@@ -19,7 +19,7 @@
 fonts {
    font: "Vera.ttf"   "Edje Vera";
    //   font: "kochi-gothic.ttf"   "Edje Vera";
-   //   font: "VeraBd.ttf" "Edje Vera Bold";
+   font: "VeraBd.ttf" "Edje Vera Bold";
 }
 
 collections {
@@ -33,5 +33,6 @@ collections {
 #include "default_pager.edc"
 #include "default_resize.edc"
 #include "default_temperature.edc"
+#include "default_error.edc"
 }
 
