@@ -58,6 +58,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* module api needs to change entry calls, move label and icon to data file, not api
 * gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)
 * edit mode keybindings :)
 * "start button" module to pop up the e menu (left mouse right now)

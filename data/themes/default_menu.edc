@@ -1,6 +1,7 @@
-images {
+mages {
    image: "e17_menu_arrow.png" COMP;
    image: "e17_menu_bg.png" COMP;
+   image: "e17_menu_bg_border.png" COMP;
    image: "e17_menu_check1.png" COMP;
    image: "e17_menu_check2.png" COMP;
    image: "e17_menu_radio1.png" COMP;
@@ -13,6 +14,47 @@ group {
       part {
 	 name:          "base";
 	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    0;
+	       to_y:     "base2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max:      99999 48;
+	    align:    0.5   0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
@@ -24,8 +66,12 @@ group {
 	       offset:   -1   -1;
 	    }
 	    image {
-	       normal: "e17_menu_bg.png";
-	       border: 2 2 2 2;
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
       }
@@ -354,6 +400,7 @@ group {
 	    image {
 	       normal: "e17_titlebar_outline.png";
 	       border: 8 8 8 8;
+	       middle: 0;
 	    }
 	    color: 255 255 255 255;
 	 }
@@ -372,6 +419,7 @@ group {
 	    image {
 	       normal: "e17_titlebar_outline.png";
 	       border: 8 8 8 8;
+	       middle: 0;
 	    }
 	    color: 255 255 255 0;
 	 }

@@ -19,6 +19,7 @@ e17_button_detail_shade.png \
 e17_button_detail_stick.png \
 e17_menu_arrow.png \
 e17_menu_bg.png \
+e17_menu_bg_border.png \
 e17_menu_check1.png \
 e17_menu_check2.png \
 e17_menu_radio1.png \

@@ -893,8 +893,11 @@ _battery_linux_acpi_check(Battery *ef)
 	else if (discharging)
 	  {
 	     stat->state = BATTERY_STATE_DISCHARGING;
-	     if (((hours * 60) + minutes) <= ef->conf->alarm)
-	       stat->alarm = 1;
+	     if (stat->level < 0.1)
+	       {
+		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		    stat->alarm = 1;
+	       }
 	  }
 	if (level_unknown)
           {
@@ -966,11 +969,13 @@ _battery_linux_apm_check(Battery *ef)
 	stat->level = 1.0;
 	return stat;
      }
-
+   
+   
    ef->battery_prev_battery = 1;
    stat->has_battery = 1;
-   if (bat_val > 0)
+   if (bat_val >= 0)
      {
+	if (bat_val > 100) bat_val = 100;
 	snprintf(buf, sizeof(buf), "%i%%", bat_val);
 	stat->reading = strdup(buf);
 	stat->level = (double)bat_val / 100.0;
@@ -1012,9 +1017,11 @@ _battery_linux_apm_check(Battery *ef)
 	minutes = (time_val / 60) % 60;
 	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
 	stat->time = strdup(buf);
-
-	if (((hours * 60) + minutes) <= ef->conf->alarm)
-	  stat->alarm = 1;
+	if (stat->level < 0.1)
+	  {
+	     if (((hours * 60) + minutes) <= ef->conf->alarm)
+	       stat->alarm = 1;
+	  }
      }
 
    return stat;

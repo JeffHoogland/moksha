@@ -456,6 +456,7 @@ group {
 	    image {
 	       normal: "e17_titlebar_outline.png";
 	       border: 8 8 8 8;
+	       middle: 0;
 	    }
 	    color: 255 255 255 255;
 	 }
@@ -478,6 +479,7 @@ group {
 	    image {
 	       normal: "e17_titlebar_outline.png";
 	       border: 8 8 8 8;
+	       middle: 0;
 	    }
 	    color: 255 255 255 0;
 	 }

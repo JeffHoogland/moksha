@@ -170,6 +170,42 @@ _cb_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 	break;
      }
 }
+#elif 0
+static int
+_e_test_timer(void *data)
+{
+   E_Menu *m;
+   Evas_List *managers, *l;
+   
+   m = data;
+   if (m)
+     {
+	e_menu_deactivate(m);
+	e_object_del(E_OBJECT(m));
+	ecore_timer_add(0.1, _e_test_timer, NULL);
+	return 0;
+     }
+   managers = e_manager_list();
+   for (l = managers; l; l = l->next)
+     {
+	E_Manager *man;
+	
+	man = l->data;
+	m = e_int_menus_main_new();
+	e_menu_activate_mouse(m,
+			      e_container_zone_number_get(e_manager_container_current_get(man), 0),
+			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+	ecore_timer_add(0.1, _e_test_timer, m);
+	return 0;
+     }
+   return 0;
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   _e_test_timer(NULL);
+}
 #else
 static void
 _e_test_internal(E_Container *con)
