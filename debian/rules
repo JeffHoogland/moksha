@@ -5,15 +5,17 @@
 export DH_COMPAT=2
 
 pwd:=$(shell pwd)
-cfg:=--prefix=/usr
+cfg:=--prefix=/usr --datadir=/usr/share/e17 PACKAGE=e17 DESTDIR=/usr
 INSTALL=/usr/bin/install
 package=e17
 
 build: build-stamp
 build-stamp:
 	dh_testdir
+	test -e configure.ac && sed <configure.ac "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.ac1 && mv -f configure.ac1 configure.ac
+	test -e configure.in && sed <configure.in "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.in1 && mv -f configure.in1 configure.in
 	test -x autogen.sh && ./autogen.sh $(cfg) || ./configure $(cfg)
-	$(MAKE)
+	$(MAKE) PACKAGE=e17
 	touch build-stamp
 clean:
 	dh_testdir
