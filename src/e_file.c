@@ -97,7 +97,7 @@ e_file_set_mime(E_File * f, char *base, char *mime)
  *    if (f->info.custom_icon) 
  *      {
  * 	if (f->info.icon) 
- * 	   free(f->info.icon);
+ * 	   FREE(f->info.icon);
  * 	f->info.icon = strdup(f->info.custom_icon);
  * 	evas_set_image_file(f->view->evas, f->obj.icon, f->info.custom_icon);
  * 	e_view_queue_resort(f->view);	
@@ -150,7 +150,7 @@ e_file_set_link(E_File * f, char *link)
      {
 	if ((f->info.link) && (!strcmp(f->info.link, link)))
 	  {
-	     free(f->info.link);
+	     FREE(f->info.link);
 	     f->info.link = strdup(link);
 	     /* effect changes here */
 	  }

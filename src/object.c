@@ -24,7 +24,7 @@ e_object_cleanup(E_Object * obj)
    if (!obj)
       D_RETURN;
 
-   free(obj);
+   FREE(obj);
 
    D_RETURN;
 }

@@ -482,7 +482,7 @@ e_focus_in(Ecore_Event * ev)
 	     {
 		ecore_button_ungrab(b->win.container, g->button, g->mods,
 				    g->any_mod);
-		free(g);
+		FREE(g);
 		b->click_grab = NULL;
 	     }
 	}
@@ -1142,7 +1142,7 @@ e_cb_border_mouse_down(E_Border * b, Ecore_Event * e)
 					 g->any_mod);
 		     ecore_window_button_grab_auto_replay_set(b->win.main,
 							      NULL);
-		     free(g);
+		     FREE(g);
 		     b->grabs = evas_list_remove(b->grabs, g);
 		     goto again;
 		  }
@@ -2862,7 +2862,7 @@ e_border_adopt_children(Window win)
 		  b->ignore_unmap = 2;
 	       }
 	  }
-	free(wins);
+	FREE(wins);
      }
 
    D_RETURN;

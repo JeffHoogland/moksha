@@ -1371,7 +1371,7 @@ e_menu_del_item(E_Menu * m, E_Menu_Item * mi)
    IF_FREE(mi->icon);
    if (mi->menu->selected == mi)
       mi->menu->selected = NULL;
-   free(mi);
+   FREE(mi);
    mi->menu = NULL;
 
    D_RETURN;

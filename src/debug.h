@@ -28,13 +28,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <stdio.h>
 
-/*
-#undef DEBUG
-*/
+
+#define DEBUG
+
 
 #ifdef DEBUG
 
-#define D(fmt, args...) printf(fmt, ## args);
+#define D(fmt, args...) printf(fmt, ## args); fflush(stdout);
 #else
 #define D(msg, args...)
 #endif

@@ -215,7 +215,7 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  if (entry->selection_win)
 		     ecore_window_destroy(entry->selection_win);
 		  entry->selection_win = ecore_selection_set(str2);
-		  free(str2);
+		  FREE(str2);
 	       }
 	  }
 	e_entry_configure(entry);
@@ -571,7 +571,7 @@ e_entry_handle_keypress(E_Entry * entry, Ecore_Event_Key_Down * e)
 		  e_strdup(str2, e_entry_get_text(entry));
 		  str2[entry->cursor_pos] = 0;
 		  e_entry_set_text(entry, str2);
-		  free(str2);
+		  FREE(str2);
 	       }
 	     else if ((strlen(type) == 1) && (type[0] == 0x06))	/* ctrl+f */
 	       {
@@ -993,7 +993,7 @@ e_entry_insert_text(E_Entry * entry, char *text)
    strcat(str2, text);
    strcat(str2, &(entry->buffer[entry->cursor_pos]));
    e_entry_set_text(entry, str2);
-   free(str2);
+   FREE(str2);
    entry->cursor_pos += strlen(text);
    e_entry_configure(entry);
 
@@ -1016,7 +1016,7 @@ e_entry_clear_selection(E_Entry * entry)
 	strcpy(&(str2[entry->select.start]),
 	       &(entry->buffer[entry->select.start + entry->select.length]));
 	e_entry_set_text(entry, str2);
-	free(str2);
+	FREE(str2);
 	entry->cursor_pos = entry->select.start;
 	entry->select.start = -1;
      }
@@ -1051,7 +1051,7 @@ e_entry_delete_to_right(E_Entry * entry)
    e_strdup(str2, e_entry_get_text(entry));
    strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
    e_entry_set_text(entry, str2);
-   free(str2);
+   FREE(str2);
    e_entry_configure(entry);
 
    D_RETURN;

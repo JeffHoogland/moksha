@@ -1429,7 +1429,7 @@ e_view_resort_alphabetical(E_View * v)
    qsort(array, count, sizeof(E_Icon *), e_view_restart_alphabetical_qsort_cb);
    for (i = 0; i < count; i++)
       icons = evas_list_append(icons, array[i]);
-   free(array);
+   FREE(array);
 
    evas_list_free(v->icons);
    v->icons = icons;

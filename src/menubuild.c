@@ -339,7 +339,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu * bm, char *dir)
 		if (!have_it)
 		   entries = evas_list_append(entries, strdup(s));
 	     }
-	   free(s);
+	   FREE(s);
 	}
       if (dirlist)
 	 evas_list_free(dirlist);

@@ -536,7 +536,7 @@ e_epplet_cb_cleanup(E_Epplet_CB_Info * cb)
 	cb->data2->refcount--;
 	cb->data2 = NULL;
      }
-   free(cb);
+   FREE(cb);
 #endif
 }
 
