@@ -263,18 +263,14 @@ static void
 _e_error_cb_job_ecore_evas_free(void *data)
 {
    Ecore_Evas *ee;
-   Evas_List *shapelist;
+   Evas_List *shapelist, *l;
    
    ee = data;
    shapelist = ecore_evas_data_get(ee, "shapes");
-   while (shapelist)
-     {
-	E_Container_Shape *es;
-	
-	es = shapelist->data;
-	shapelist = evas_list_remove_list(shapelist, shapelist);
-	e_object_del(E_OBJECT(es));
-     }
+   for (l = shapelist; l; l = l->next)
+     e_object_del(E_OBJECT(l->data));
+   evas_list_free(shapelist);
+
    e_canvas_del(ee);
    ecore_evas_free(ee);
 }
