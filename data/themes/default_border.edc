@@ -1,4 +1,7 @@
 #define BORDER_BUTTON(NAME, TYPE, REL1X, REL1Y, OFF1X, OFF1Y, TO1, REL2X, REL2Y, OFF2X, OFF2Y, TO2) \
+BORDER_BUTTON_ADV(NAME, TYPE, REL1X, REL1Y, OFF1X, OFF1Y, TO1, TO1, REL2X, REL2Y, OFF2X, OFF2Y, TO2, TO2)
+
+#define BORDER_BUTTON_ADV(NAME, TYPE, REL1X, REL1Y, OFF1X, OFF1Y, TO1X, TO1Y, REL2X, REL2Y, OFF2X, OFF2Y, TO2X, TO2Y) \
       part { \
 	 name:          NAME"_shadow2"; \
 	 mouse_events:  0; \
@@ -153,12 +156,14 @@
 	    rel1 { \
 	       relative: REL1X REL1Y; \
 	       offset:   OFF1X OFF1Y; \
-	       to:       TO1; \
+	       to_x:     TO1X; \
+	       to_y:     TO1Y; \
 	    } \
 	    rel2 { \
 	       relative: REL2X REL2Y; \
 	       offset:   OFF2X OFF2Y; \
-	       to:       TO2; \
+	       to_x:     TO2X; \
+	       to_y:     TO2Y; \
 	    } \
 	    color: 0 0 0 0; \
 	 } \
@@ -906,7 +911,7 @@ group {
 	 }
       }
 
-      BORDER_BUTTON("button_0","close",0.0,0.0, 0,0,"whole",1.0,0.0,-1,23,"whole")
+      BORDER_BUTTON_ADV("button_0","close",0.0,0.0, 0,0,"whole", "whole",1.0,1.0,-1,5,"whole", "title2")
       BORDER_BUTTON("button_1","maximize",0.0,0.0,3,0,"button_0",0.0,1.0,3,-1,"button_0")
       BORDER_BUTTON("button_2","minimize",0.0,0.0,3,0,"button_1",0.0,1.0,3,-1,"button_1")
 
