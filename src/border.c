@@ -15,6 +15,13 @@ static int border_mouse_buttons = 0;
 
 static Eevent *current_ev = NULL;
 
+/*protos to shut up the compiler :) */
+static void e_cb_border_mouse_down(E_Border *b, Eevent *e);
+static void e_cb_border_mouse_up(E_Border *b, Eevent *e);
+static void e_cb_border_mouse_move(E_Border *b, Eevent *e);
+static void e_cb_border_mouse_in(E_Border *b, Eevent *e);
+static void e_cb_border_mouse_out(E_Border *b, Eevent *e);
+
 /* what to dowhen we're idle */
 static void
 e_idle(void *data)
@@ -49,7 +56,7 @@ e_map_request(Eevent * ev)
      {
 	E_Border *b;
 	
-	printf("map request %x\n", e->win);
+	printf("map request %x\n", (int) e->win);
 	b = e_border_find_by_window(e->win);
 	if (!b)
 	  {
@@ -176,7 +183,7 @@ e_unmap(Eevent * ev)
 		  if (b->ignore_unmap > 0) b->ignore_unmap--;
 		  else
 		    {
-		       printf("unmap %x\n", e->win);
+		       printf("unmap %x\n",(int) e->win);
 		       e_action_stop_by_object(b, NULL, 
 					       mouse_win_x, mouse_win_y, 
 					       border_mouse_x, border_mouse_y);
@@ -209,7 +216,7 @@ e_destroy(Eevent * ev)
 	b = e_border_find_by_window(e->win);
 	if (b)
 	  {
-	     printf("destroy %x\n", e->win);
+	     printf("destroy %x\n", (int) e->win);
 	     if (b->win.client == e->win)
 	       {
 		  e_action_stop_by_object(b, NULL, 
@@ -936,7 +943,7 @@ e_border_adopt(Window win, int use_client_pos)
 {
    E_Border *b;
    
-   printf("adopt %x\n", win);
+   printf("adopt %x\n", (int) win);
    /* create the struct */
    b = e_border_new();
    /* set the right event on the client */
@@ -1748,7 +1755,7 @@ e_border_adopt_children(Window win)
 	       {
 		  E_Border *b;
 		  
-		  printf("manage %x\n", wins[i]);
+		  printf("manage %x\n", (int) wins[i]);
 		  b = e_border_adopt(wins[i], 1);
 		    {
 		       int pl, pr, pt, pb;
