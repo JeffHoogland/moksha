@@ -191,12 +191,9 @@ AC_SUBST(CP_OPTIONS)
 
 if test "x$ferite" = "xyes"; then
   pushd $packagesrcdir/src >& /dev/null
-    echo "... building ferite binding c code ...";
+    echo -n "... building ferite binding c code ... ";
     rm -f e_ferite_gen_*;
-    $FEBUILDER -m e_ferite_gen e_ferite.fec;
-    mv e_ferite_gen_core.c e_ferite_gen_core.c.old;
-    cat e_ferite_gen_core.c.old | sed -e "s/module_init/e_ferite_register/g" > e_ferite_gen_core.c;
-    rm e_ferite_gen_core.c.old;
+    $FEBUILDER -m e_ferite_gen -i e_ferite_register -d e_ferite.fec;
     echo "done.";
   popd >& /dev/null
 fi
