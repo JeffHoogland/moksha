@@ -1268,12 +1268,13 @@ e_view_handle_fs_restart(void *data)
 	evas_list_free(icons);
      }
    if (e_fs_get_connection())
-     v->monitor_id = efsd_start_monitor_dir(e_fs_get_connection(), v->dir,
-					    efsd_ops(2, 
-						     efsd_op_get_stat(), 
-						     efsd_op_get_filetype()
-						     )
-					);
+     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					efsd_ops(3, 
+						 efsd_op_get_stat(), 
+						 efsd_op_get_filetype(),
+						  efsd_op_sort()
+						 ),
+					TRUE);
    printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
    v->is_listing = 1;
 }
@@ -1812,12 +1813,14 @@ e_view_set_dir(E_View *v, char *dir)
    v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
    if (e_fs_get_connection())
      {
-	v->monitor_id = efsd_start_monitor_dir(e_fs_get_connection(), v->dir,
-					       efsd_ops(2, 
-							efsd_op_get_stat(), 
-							efsd_op_get_filetype()
-							)
-					       );
+       v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					  efsd_ops(3, 
+						   efsd_op_get_stat(), 
+						   efsd_op_get_filetype(),
+						   efsd_op_sort()
+						   ),
+					  TRUE
+					  );
 	printf("monitor id for %s = %i\n", v->dir, v->monitor_id);
 	v->is_listing = 1;
 	v->changed = 1;
@@ -2106,7 +2109,9 @@ e_view_handle_fs(EfsdEvent *ev)
 /*	     printf("Startmon file event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
 */	     break;
-	   case EFSD_CMD_STOPMON:
+	   case EFSD_CMD_STOPMON_DIR:
+	     break;
+	   case EFSD_CMD_STOPMON_FILE:
 	     break;
 	   default:
 	     break;
