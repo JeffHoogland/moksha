@@ -6,7 +6,7 @@ export DH_COMPAT=3
 
 INSTALL = /usr/bin/install
 package = e17
-pwd:=$(shell pwd)
+pwd:=$(CURDIR)
 cfg:=--prefix=/usr --datadir=/usr/share/e17
 INSTALL=/usr/bin/install
 
@@ -30,7 +30,7 @@ install: build
 	dh_installdirs
 
 	# change enlightenment to e17 to co-exist with e16
-	$(MAKE) install DESTDIR=$(pwd)/debian/e17
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/e17
 	mv debian/e17/usr/bin/enlightenment debian/e17/usr/bin/e17
 
 binary-indep: build install
