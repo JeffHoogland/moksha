@@ -49,6 +49,8 @@ e_module.h \
 e_module.c \
 e_apps.h \
 e_apps.c \
+e_atoms.h \
+e_atoms.c \
 e_utils.h \
 e_utils.c \
 e_canvas.h \

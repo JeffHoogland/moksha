@@ -61,6 +61,7 @@
 #include "e_int_menus.h"
 #include "e_module.h"
 #include "e_apps.h"
+#include "e_atoms.h"
 #include "e_utils.h"
 #include "e_canvas.h"
 #include "e_focus.h"

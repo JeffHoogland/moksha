@@ -640,24 +640,62 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    if (!bd) return 1;
      {
 	char *name;
-	
+
 	name = XGetAtomName(ecore_x_display_get(), e->atom);
 	printf("property for %0x [%s]\n", e->win, name);
 	XFree(name);
      }
-   /* FIXME: only flag the property to fetch based on the atom of the change */
-   bd->client.icccm.fetch.title = 1;
-   bd->client.icccm.fetch.name_class = 1;
-   bd->client.icccm.fetch.icon_name = 1;
-   bd->client.icccm.fetch.machine = 1;
-   bd->client.icccm.fetch.hints = 1;
-   bd->client.icccm.fetch.size_pos_hints = 1;
-   bd->client.icccm.fetch.protocol = 1;
-   bd->client.mwm.fetch.hints = 1;
-   bd->client.netwm.fetch.pid = 1;
-   bd->client.netwm.fetch.desktop = 1;
+   if (e->atom == _e_atom_wm_name)
+     {
+	bd->client.icccm.fetch.title = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_class)
+     {
+	bd->client.icccm.fetch.name_class = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_icon_name)
+     {
+	bd->client.icccm.fetch.icon_name = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_client_machine)
+     {
+	bd->client.icccm.fetch.machine = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_protocols)
+     {
+	bd->client.icccm.fetch.protocol = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_hints)
+     {
+	bd->client.icccm.fetch.hints = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_size_hints)
+     {
+	bd->client.icccm.fetch.size_pos_hints = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_wm_hints)
+     {
+	bd->client.mwm.fetch.hints = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_netwm_pid)
+     {
+	bd->client.netwm.fetch.pid = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == _e_atom_netwm_desktop)
+     {
+	bd->client.netwm.fetch.desktop = 1;
+	bd->changed = 1;
+     }
 //   bd->client.border.changed = 1;
-   bd->changed = 1;
    return 1;
 }
 

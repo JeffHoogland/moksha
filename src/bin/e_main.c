@@ -181,6 +181,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_screens_shutdown);
+   /* init global atoms */
+   if (!e_atoms_init())
+     {
+	e_error_message_show("Enlightenment cannot set up atoms system.");
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_atoms_shutdown);
    /* init border system */
    if (!e_focus_init())
      {
