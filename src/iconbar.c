@@ -78,6 +78,16 @@ e_iconbar_new(E_View *v)
    /* use the config system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
    ib = e_config_load(buf, "", cf_iconbar);
+   /* flush image cache */
+     {
+	int size;
+	
+	size = imlib_get_cache_size();
+	imlib_set_cache_size(0);
+	imlib_set_cache_size(size);
+     }
+   /* flush edb cached handled */
+   e_db_flush();
    /* no iconbar config loaded ? return NULL */
    if (!ib) return NULL;
    
