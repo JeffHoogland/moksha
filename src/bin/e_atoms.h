@@ -10,6 +10,8 @@
 extern EAPI Ecore_X_Atom E_ATOM_MANAGED;
 
 /* basic window properties */
+extern EAPI Ecore_X_Atom E_ATOM_CONTAINER;
+extern EAPI Ecore_X_Atom E_ATOM_ZONE;
 extern EAPI Ecore_X_Atom E_ATOM_DESK;
 extern EAPI Ecore_X_Atom E_ATOM_ICONIC;
 extern EAPI Ecore_X_Atom E_ATOM_MAPPED;
