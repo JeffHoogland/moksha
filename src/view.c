@@ -431,6 +431,8 @@ e_view_file_added(int id, char *file)
    icon = e_icon_new();
    e_icon_set_filename(icon, file);
    e_view_add_icon(v, icon);
+
+   /*
    sprintf(buf, "%s/%s", v->dir, file);
    if (efsd_ready(e_fs_get_connection()))
      {
@@ -441,6 +443,8 @@ e_view_file_added(int id, char *file)
      {
        printf("*********** EEEEEEEEEEEEEEEEEK Efsd not ready.\n");
      }
+   */
+
    v->changed = 1;
 }
 
@@ -771,7 +775,10 @@ e_view_set_dir(E_View *v, char *dir)
    IF_FREE(v->dir);
    v->dir = e_file_real(dir);
    /* start monitoring new dir */
-   v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir);
+
+   /* v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir); */
+   v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+				      1, efsd_op_get_stat());
    v->is_listing = 1;
    v->changed = 1;
 }
