@@ -14,7 +14,6 @@ static E_Menu  *_temperature_config_menu_new(Temperature *e);
 static void     _temperature_config_menu_del(Temperature *e, E_Menu *m);
 static void     _temperature_face_init(Temperature_Face *ef);
 static void     _temperature_face_free(Temperature_Face *ef);
-static void     _temperature_face_reconfigure(Temperature_Face *ef);
 static void     _temperature_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void     _temperature_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static int      _temperature_cb_check(void *data);
@@ -556,7 +555,6 @@ _temperature_config_menu_del(Temperature *e, E_Menu *m)
 static void
 _temperature_face_init(Temperature_Face *ef)
 {
-   Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
    evas_event_freeze(ef->evas);

@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
@@ -12,8 +15,7 @@ struct _Config
 
 struct _Clock
 {
-   E_Menu      *config_menu;
-   Clock_Face *face;
+   Evas_List   *faces;
    
 /*   E_Config_DD *conf_edd;*/
    Config      *conf;
@@ -24,18 +26,19 @@ struct _Clock_Face
    Clock       *clock;
    E_Container *con;
    Evas        *evas;
+   E_Menu      *menu;
    
    Evas_Object *clock_object;
    Evas_Object *event_object;
    
    E_Gadman_Client *gmc;
-/*   Ecore_Event_Handler *ev_handler_container_resize;*/
+   unsigned char    enabled : 1;
 };
 
-EAPI void *init     (E_Module *m);
-EAPI int   shutdown (E_Module *m);
-EAPI int   save     (E_Module *m);
-EAPI int   info     (E_Module *m);
-EAPI int   about    (E_Module *m);
+EAPI void *init     (E_Module *module);
+EAPI int   shutdown (E_Module *module);
+EAPI int   save     (E_Module *module);
+EAPI int   info     (E_Module *module);
+EAPI int   about    (E_Module *module);
 
 #endif

@@ -16,7 +16,6 @@ static void     _battery_face_init(Battery_Face *ef);
 static void     _battery_face_free(Battery_Face *ef);
 static void     _battery_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void     _battery_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int      _battery_cb_event_container_resize(void *data, int type, void *event);
 static int      _battery_cb_check(void *data);
 static int      _battery_linux_acpi_check(Battery_Face *ef);
 static int      _battery_linux_apm_check(Battery_Face *ef);
@@ -407,7 +406,6 @@ _battery_config_menu_del(Battery *e, E_Menu *m)
 static void
 _battery_face_init(Battery_Face *ef)
 {
-   Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
    evas_event_freeze(ef->evas);
@@ -458,7 +456,7 @@ static void
 _battery_face_free(Battery_Face *ef)
 {
    ecore_timer_del(ef->battery_check_timer);
-   e_object_del(ef->gmc);
+   e_object_del(E_OBJECT(ef->gmc));
    evas_object_del(ef->bat_object);
    evas_object_del(ef->event_object);
    free(ef);
@@ -691,7 +689,7 @@ _battery_linux_acpi_check(Battery_Face *ef)
           }
 	if (level_unknown)
           {
-             edje_object_part_text_set(ef->bat_object, "reading", "BAD DIRVER");
+             edje_object_part_text_set(ef->bat_object, "reading", "BAD DRIVER");
              edje_object_part_text_set(ef->bat_object, "time", "--:--");
              _battery_level_set(ef, 0.0);
           }

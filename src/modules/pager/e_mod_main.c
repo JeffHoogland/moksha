@@ -1,26 +1,30 @@
 /*
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
-
 #include "e.h"
 #include "e_mod_main.h"
 
 /* TODO List:
  *
+ * * Get E_EVENT_BORDER_ADD when a window is moved from one desk to another by the wm
  */
 
 /* module private routines */
-static Evas_List   *_pager_init(E_Module *m);
+static Evas_List   *_pager_init(E_Module *module);
 static void        _pager_shutdown(Evas_List *pagers);
 static E_Menu     *_pager_config_menu_new();
 static void        _pager_config_menu_del(E_Menu *menu);
 
 static Pager      *_pager_new(E_Zone *zone);
 static void        _pager_destroy(Pager *pager);
+static void        _pager_menu_new(Pager *pager);
+static void        _pager_menu_del(E_Menu *menu);
+static void        _pager_enable(Pager *pager);
+static void        _pager_disable(Pager *pager);
 static void        _pager_zone_set(Pager *pager, E_Zone *zone);
 static void        _pager_zone_leave(Pager *pager);
 
-static Pager_Desk *_pager_desk_new(Pager *pager, E_Desk *desk);
+static Pager_Desk *_pager_desk_new(Pager *pager, E_Desk *desk, int x, int y);
 static void        _pager_desk_destroy(Pager_Desk *d);
 static Pager_Win  *_pager_window_new(Pager_Desk *owner, E_Border *border);
 static void        _pager_window_destroy(Pager_Win *win);
@@ -41,14 +45,14 @@ static int         _pager_cb_event_border_hide(void *data, int type, void *event
 static int         _pager_cb_event_border_show(void *data, int type, void *event);
 static int         _pager_cb_event_border_desk_set(void *data, int type, void *event);
 static int         _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
+static void         _pager_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int         _pager_count;
 /* public module routines. all modules must have these */
 void *
 init(E_Module *module)
 {
-   Evas_List *pagers = NULL, *l;
-   Pager *pager;
+   Evas_List *pagers = NULL;
 
    /* check module api version */
    if (module->api->version < E_MODULE_API_VERSION)
@@ -63,13 +67,9 @@ init(E_Module *module)
 	return NULL;
      }
    /* actually init pager */
-   pagers = _pager_init(module);
    module->config_menu = _pager_config_menu_new();
+   pagers = _pager_init(module);
 
-   for (l = pagers; l; l = l->next) {
-	pager = l->data;
-	pager->config_menu = module->config_menu;
-   }
    return pagers;
 }
 
@@ -114,7 +114,7 @@ info(E_Module *module)
 }
 
 int
-about(E_Module *m)
+about(E_Module *module)
 {
    e_error_dialog_show("Enlightenment Pager Module",
 		       "A pager module to navigate E17 desktops.");
@@ -123,7 +123,7 @@ about(E_Module *m)
 
 /* module private routines */
 static Evas_List *
-_pager_init(E_Module *m)
+_pager_init(E_Module *module)
 {
    Evas_List   *pagers = NULL;
    Evas_List   *managers, *l, *l2, *l3;
@@ -131,8 +131,11 @@ _pager_init(E_Module *m)
    E_Container *con;
    E_Zone      *zone;
    Pager       *pager;
+   E_Menu      *mn;
+   E_Menu_Item *mi;
 
    _pager_count = 0;
+
 /*   e->conf_edd = E_CONFIG_DD_NEW("Pager_Config", Config);
 #undef T
 #undef D
@@ -154,13 +157,29 @@ _pager_init(E_Module *m)
 	  {
 	     con = l2->data;
 
+	     mi = e_menu_item_new(module->config_menu);
+	     e_menu_item_label_set(mi, con->name);
+
+	     mn = e_menu_new();
+	     e_menu_item_submenu_set(mi, mn);
+
 	     for (l3 = con->zones; l3; l3 = l3->next)
 	       {
 		  zone = l3->data;
 
 		  pager = _pager_new(zone);
 		  if (pager)
-		    pagers = evas_list_append(pagers, pager);
+		    {
+		       /* FIXME : config */
+		       pager->enabled = 1;
+		       pagers = evas_list_append(pagers, pager);
+
+		       _pager_menu_new(pager);
+
+		       mi = e_menu_item_new(mn);
+		       e_menu_item_label_set(mi, zone->name);
+		       e_menu_item_submenu_set(mi, pager->menu);
+		    }
 	       }
 	  }
      }
@@ -175,9 +194,7 @@ _pager_shutdown(Evas_List *pagers)
 /*   E_CONFIG_DD_FREE(e->conf_edd);*/
 
    for (list = pagers; list; list = list->next)
-     {
-	_pager_destroy(list->data);
-     }
+     _pager_destroy(list->data);
    evas_list_free(pagers);
 }
 
@@ -185,12 +202,8 @@ static E_Menu *
 _pager_config_menu_new()
 {
    E_Menu *mn;
-   E_Menu_Item *mi;
 
    mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "(Unused)");
 
    return mn;
 }
@@ -292,7 +305,90 @@ _pager_destroy(Pager *pager)
    ecore_event_handler_del(pager->ev_handler_border_desk_set);
    ecore_event_handler_del(pager->ev_handler_zone_desk_count_set);
 
+   _pager_menu_del(pager->menu);
+
    E_FREE(pager);
+}
+
+static void
+_pager_menu_new(Pager *pager)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   mn = e_menu_new();
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_check_set(mi, 1);
+   if (pager->enabled) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_cb_menu_enabled, pager);
+
+   pager->menu = mn;
+}
+
+static void
+_pager_menu_del(E_Menu *menu)
+{
+   e_object_del(E_OBJECT(menu));
+}
+
+static void
+_pager_enable(Pager *pager)
+{
+   Evas_List  *desks, *wins;
+   Pager_Desk *pd;
+   Pager_Win  *pw;
+
+   pager->enabled = 1;
+
+   evas_object_show(pager->base);
+   evas_object_show(pager->screen);
+   for (desks = pager->desks; desks; desks = desks->next)
+     {
+	pd = desks->data;
+	evas_object_show(pd->obj);
+
+	for (wins = pd->wins; wins; wins = wins->next)
+	  {
+	     pw = wins->data;
+	     if (!pw->border->iconic)
+	       {
+		  evas_object_show(pw->obj);
+		  if (pw->icon)
+		    evas_object_show(pw->icon);
+	       }
+	  }
+     }
+}
+
+static void
+_pager_disable(Pager *pager)
+{
+   Evas_List  *desks, *wins;
+   Pager_Desk *pd;
+   Pager_Win  *pw;
+
+   pager->enabled = 0;
+
+   evas_object_hide(pager->base);
+   evas_object_hide(pager->screen);
+   for (desks = pager->desks; desks; desks = desks->next)
+     {
+	pd = desks->data;
+	evas_object_hide(pd->obj);
+
+	for (wins = pd->wins; wins; wins = wins->next)
+	  {
+	     pw = wins->data;
+	     if (!pw->border->iconic)
+	       {
+		  evas_object_hide(pw->obj);
+		  if (pw->icon)
+		    evas_object_hide(pw->icon);
+	       }
+	  }
+     }
 }
 
 static void
@@ -315,7 +411,7 @@ _pager_zone_set(Pager *pager, E_Zone *zone)
 	  E_Desk     *desk;
 
 	  desk = e_desk_at_xy_get(zone, x, y);
-	  pd = _pager_desk_new(pager, desk);
+	  pd = _pager_desk_new(pager, desk, x, y);
 	  pager->desks = evas_list_append(pager->desks, pd);
        }
    evas_object_resize(pager->base, pager->fw * desks_x, pager->fh * desks_y);
@@ -328,14 +424,12 @@ _pager_zone_leave(Pager *pager)
    e_object_unref(E_OBJECT(pager->zone));
 
    for (list = pager->desks; list; list = list->next)
-     {
-	_pager_desk_destroy(list->data);
-     }
+     _pager_desk_destroy(list->data);
    evas_list_free(pager->desks);
 }
 
 static Pager_Desk *
-_pager_desk_new(Pager *pager, E_Desk *desk)
+_pager_desk_new(Pager *pager, E_Desk *desk, int xpos, int ypos)
 {
    Pager_Desk  *pd;
    Pager_Win   *pw;
@@ -344,20 +438,10 @@ _pager_desk_new(Pager *pager, E_Desk *desk)
 
    Evas_Object *o;
    Evas_List   *wins;
-   int          xpos, ypos, xcount, ycount;
 
    pd = E_NEW(Pager_Desk, 1);
-   e_zone_desk_count_get(desk->zone, &xcount, &ycount);
-   for (xpos = 0; xpos < xcount; xpos++)
-     for (ypos = 0; ypos < ycount; ypos++)
-       {
-	  if (desk == e_desk_at_xy_get(desk->zone, xpos, ypos))
-	    {
-	       pd->xpos = xpos;
-	       pd->ypos = ypos;
-	       break;
-	    }
-       }
+   pd->xpos = xpos;
+   pd->ypos = ypos;
    if (desk == e_desk_current_get(desk->zone))
      {
 	pd->current = 1;
@@ -408,9 +492,7 @@ _pager_desk_destroy(Pager_Desk *desk)
    e_object_unref(E_OBJECT(desk->desk));
 
    for (list = desk->wins; list; list = list->next)
-     {
-	_pager_window_destroy(list->data);
-     }
+     _pager_window_destroy(list->data);
    evas_list_free(desk->wins);
    E_FREE(desk);
 }
@@ -527,7 +609,7 @@ _pager_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    pager = data;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(pager->config_menu, pager->zone,
+	e_menu_activate_mouse(pager->menu, pager->zone,
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(pager->zone->container);
@@ -842,7 +924,7 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 	    {
 	       /* Add desk */
 	       desk = e_desk_at_xy_get(ev->zone, x, y);
-	       pd = _pager_desk_new(pager, desk);
+	       pd = _pager_desk_new(pager, desk, x, y);
 	       pager->desks = evas_list_append(pager->desks, pd);
 	    }
 	  else if ((x >= desks_x) || (y >= desks_y))
@@ -870,4 +952,23 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 
    _pager_draw(pager);
    return 1;
+}
+
+static void
+_pager_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   unsigned char enabled;
+
+   pager = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((pager->enabled) && (!enabled))
+     {  
+	_pager_disable(pager);
+     }
+   else if ((!pager->enabled) && (enabled))
+     { 
+	_pager_enable(pager);
+     }
+   e_menu_item_toggle_set(mi, pager->enabled);
 }

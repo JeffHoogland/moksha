@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 #include "e_mod_main.h"
 
@@ -8,23 +11,28 @@
  */
 
 /* module private routines */
-static Clock *_clock_init(E_Module *m);
-static void    _clock_shutdown(Clock *e);
-static E_Menu *_clock_config_menu_new(Clock *e);
-static void    _clock_config_menu_del(Clock *e, E_Menu *m);
-static void    _clock_face_init(Clock_Face *ef);
-static void    _clock_face_free(Clock_Face *ef);
+static Clock  *_clock_init(E_Module *module);
+static void    _clock_shutdown(Clock *clock);
+static E_Menu *_clock_config_menu_new();
+static void    _clock_config_menu_del(E_Menu *menu);
+static void    _clock_face_init(Clock_Face *face);
+static void    _clock_face_free(Clock_Face *face);
+static void    _clock_face_enable(Clock_Face *face);
+static void    _clock_face_disable(Clock_Face *face);
+static void    _clock_face_menu_new(Clock_Face *face);
+static void    _clock_face_menu_del(E_Menu *menu);
 static void    _clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void    _clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
 void *
-init(E_Module *m)
+init(E_Module *module)
 {
-   Clock *e;
+   Clock *clock;
    
    /* check module api version */
-   if (m->api->version < E_MODULE_API_VERSION)
+   if (module->api->version < E_MODULE_API_VERSION)
      {
 	e_error_dialog_show("Module API Error",
 			    "Error initializing Module: Clock\n"
@@ -32,56 +40,56 @@ init(E_Module *m)
 			    "The module API advertized by Enlightenment is: %i.\n"
 			    "Aborting module.",
 			    E_MODULE_API_VERSION,
-			    m->api->version);
+			    module->api->version);
 	return NULL;
      }
    /* actually init clock */
-   e = _clock_init(m);
-   m->config_menu = _clock_config_menu_new(e);
-   return e;
+   module->config_menu = _clock_config_menu_new();
+   clock = _clock_init(module);
+   return clock;
 }
 
 int
-shutdown(E_Module *m)
+shutdown(E_Module *module)
 {
-   Clock *e;
+   Clock *clock;
    
-   e = m->data;
-   if (e)
+   clock = module->data;
+   if (clock)
      {
-	if (m->config_menu)
+	if (module->config_menu)
 	  {
-	     _clock_config_menu_del(e, m->config_menu);
-	     m->config_menu = NULL;
+	     _clock_config_menu_del(module->config_menu);
+	     module->config_menu = NULL;
 	  }
-	_clock_shutdown(e);
+	_clock_shutdown(clock);
      }
    return 1;
 }
 
 int
-save(E_Module *m)
+save(E_Module *module)
 {
-   Clock *e;
+   Clock *clock;
 
-   e = m->data;
+   clock = module->data;
 /*   e_config_domain_save("module.clock", e->conf_edd, e->conf);*/
    return 1;
 }
 
 int
-info(E_Module *m)
+info(E_Module *module)
 {
    char buf[4096];
    
-   m->label = strdup("Clock");
-   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
-   m->icon_file = strdup(buf);
+   module->label = strdup("Clock");
+   snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
+   module->icon_file = strdup(buf);
    return 1;
 }
 
 int
-about(E_Module *m)
+about(E_Module *module)
 {
    e_error_dialog_show("Enlightenment Clock Module",
 		       "A simple module to give E17 a clock.");
@@ -90,13 +98,14 @@ about(E_Module *m)
 
 /* module private routines */
 static Clock *
-_clock_init(E_Module *m)
+_clock_init(E_Module *module)
 {
-   Clock *e;
+   Clock *clock;
    Evas_List *managers, *l, *l2;
+   E_Menu_Item *mi;
    
-   e = calloc(1, sizeof(Clock));
-   if (!e) return NULL;
+   clock = E_NEW(Clock, 1);
+   if (!clock) return NULL;
 
    /*
     e->conf_edd = E_CONFIG_DD_NEW("Clock_Config", Config);
@@ -116,64 +125,69 @@ _clock_init(E_Module *m)
 	for (l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
-	     Clock_Face *ef;
+	     Clock_Face *face;
 	     
 	     con = l2->data;
-	     ef = calloc(1, sizeof(Clock_Face));
-	     if (ef)
+	     face = E_NEW(Clock_Face, 1);
+	     if (face)
 	       {
-		  ef->clock = e;
-		  ef->con = con;
-		  ef->evas = con->bg_evas;
-		  _clock_face_init(ef);
-		  e->face = ef;
+		  /* FIXME : config */
+		  face->enabled = 1;
+		  face->clock = clock;
+		  face->con = con;
+		  e_object_ref(E_OBJECT(con));
+		  face->evas = con->bg_evas;
+		  _clock_face_init(face);
+		  clock->faces = evas_list_append(clock->faces, face);
+
+		  mi = e_menu_item_new(module->config_menu);
+		  e_menu_item_label_set(mi, con->name);
+
+		  e_menu_item_submenu_set(mi, face->menu);
 	       }
 	  }
      }
-   return e;
+   return clock;
 }
 
 static void
-_clock_shutdown(Clock *e)
+_clock_shutdown(Clock *clock)
 {
-   free(e->conf);
+   Evas_List *list;
+
+   free(clock->conf);
 /*   E_CONFIG_DD_FREE(e->conf_edd);*/
-   _clock_face_free(e->face);
-   free(e);
+
+   for (list = clock->faces; list; list = list->next)
+     _clock_face_free(list->data);
+   evas_list_free(clock->faces);
+   free(clock);
 }
 
 static E_Menu *
-_clock_config_menu_new(Clock *e)
+_clock_config_menu_new()
 {
    E_Menu *mn;
-   E_Menu_Item *mi;
 
-   /* FIXME: hook callbacks to each menu item */
    mn = e_menu_new();
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "(Unused)");
-/*   e_menu_item_callback_set(mi, _clock_cb_time_set, e);*/
-   e->config_menu = mn;
-   
+
    return mn;
 }
 
 static void
-_clock_config_menu_del(Clock *e, E_Menu *m)
+_clock_config_menu_del(E_Menu *menu)
 {
-   e_object_del(E_OBJECT(m));
+   e_object_del(E_OBJECT(menu));
 }
 
 static void
-_clock_face_init(Clock_Face *ef)
+_clock_face_init(Clock_Face *face)
 {
-   Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
-   evas_event_freeze(ef->evas);
-   o = edje_object_add(ef->evas);
-   ef->clock_object = o;
+   evas_event_freeze(face->evas);
+   o = edje_object_add(face->evas);
+   face->clock_object = o;
 
    edje_object_file_set(o,
 			/* FIXME: "default.eet" needs to come from conf */
@@ -181,77 +195,141 @@ _clock_face_init(Clock_Face *ef)
 			"modules/clock/main");
    evas_object_show(o);
    
-   o = evas_object_rectangle_add(ef->evas);
-   ef->event_object = o;
+   o = evas_object_rectangle_add(face->evas);
+   face->event_object = o;
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _clock_cb_face_down, ef);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _clock_face_cb_mouse_down, face);
    evas_object_show(o);
-   
-   ef->gmc = e_gadman_client_new(ef->con->gadman);
-   e_gadman_client_domain_set(ef->gmc, "module.clock", 0);
-   e_gadman_client_policy_set(ef->gmc,
+
+   face->gmc = e_gadman_client_new(face->con->gadman);
+   e_gadman_client_domain_set(face->gmc, "module.clock", 0);
+   e_gadman_client_policy_set(face->gmc,
 			      E_GADMAN_POLICY_ANYWHERE |
 			      E_GADMAN_POLICY_HMOVE |
 			      E_GADMAN_POLICY_VMOVE |
 			      E_GADMAN_POLICY_HSIZE |
 			      E_GADMAN_POLICY_VSIZE);
-   e_gadman_client_min_size_set(ef->gmc, 4, 4);
-   e_gadman_client_max_size_set(ef->gmc, 512, 512);
-   e_gadman_client_auto_size_set(ef->gmc, 64, 64);
-   e_gadman_client_align_set(ef->gmc, 0.0, 1.0);
-   e_gadman_client_aspect_set(ef->gmc, 1.0, 1.0);
-   e_gadman_client_resize(ef->gmc, 64, 64);
-   e_gadman_client_change_func_set(ef->gmc, _clock_cb_gmc_change, ef);
-   e_gadman_client_load(ef->gmc);
-   evas_event_thaw(ef->evas);
+   e_gadman_client_min_size_set(face->gmc, 4, 4);
+   e_gadman_client_max_size_set(face->gmc, 512, 512);
+   e_gadman_client_auto_size_set(face->gmc, 64, 64);
+   e_gadman_client_align_set(face->gmc, 0.0, 1.0);
+   e_gadman_client_aspect_set(face->gmc, 1.0, 1.0);
+   e_gadman_client_resize(face->gmc, 64, 64);
+   e_gadman_client_change_func_set(face->gmc, _clock_cb_gmc_change, face);
+   e_gadman_client_load(face->gmc);
+
+   _clock_face_menu_new(face);
+   
+   evas_event_thaw(face->evas);
 }
 
 static void
-_clock_face_free(Clock_Face *ef)
+_clock_face_free(Clock_Face *face)
 {
-   e_object_del(E_OBJECT(ef->gmc));
-   evas_object_del(ef->clock_object);
-   evas_object_del(ef->event_object);
-   free(ef);
+   e_object_del(E_OBJECT(face->gmc));
+   evas_object_del(face->clock_object);
+   evas_object_del(face->event_object);
+   _clock_face_menu_del(face->menu);
+   e_object_unref(E_OBJECT(face->con));
+   free(face);
+}
+
+static void
+_clock_face_enable(Clock_Face *face)
+{
+   face->enabled = 1;
+   evas_object_show(face->clock_object);
+   evas_object_show(face->event_object);
+}
+
+static void
+_clock_face_disable(Clock_Face *face)
+{
+   face->enabled = 0;
+   evas_object_hide(face->clock_object);
+   evas_object_hide(face->event_object);
+}
+
+static void
+_clock_face_menu_new(Clock_Face *face)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   /* FIXME: hook callbacks to each menu item */
+   mn = e_menu_new();
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_check_set(mi, 1);
+   if (face->enabled) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _clock_face_cb_menu_enabled, face);
+
+   face->menu = mn;
+}
+
+static void
+_clock_face_menu_del(E_Menu *menu)
+{
+   e_object_del(E_OBJECT(menu));
 }
 
 static void
 _clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
-   Clock_Face *ef;
+   Clock_Face *face;
    Evas_Coord x, y, w, h;
 
-   ef = data;
+   face = data;
    if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
      {
-	e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
-	evas_object_move(ef->clock_object, x, y);
-	evas_object_move(ef->event_object, x, y);
-	evas_object_resize(ef->clock_object, w, h);
-	evas_object_resize(ef->event_object, w, h);
+	e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
+	evas_object_move(face->clock_object, x, y);
+	evas_object_move(face->event_object, x, y);
+	evas_object_resize(face->clock_object, w, h);
+	evas_object_resize(face->event_object, w, h);
      }
    else if (change == E_GADMAN_CHANGE_RAISE)
      {
-	evas_object_raise(ef->clock_object);
-	evas_object_raise(ef->event_object);
+	evas_object_raise(face->clock_object);
+	evas_object_raise(face->event_object);
      }
 }
 
 static void
-_clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
+   Clock_Face *face;
    Evas_Event_Mouse_Down *ev;
-   Clock_Face *ef;
    
+   face = data;
    ev = event_info;
-   ef = data;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(ef->clock->config_menu, e_zone_current_get(ef->con),
+	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con),
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(ef->con);
+	e_util_container_fake_mouse_up_all_later(face->con);
      }
+}
+
+static void
+_clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Clock_Face *face;
+   unsigned char enabled;
+
+   face = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((face->enabled) && (!enabled))
+     {  
+	_clock_face_disable(face);
+     }
+   else if ((!face->enabled) && (enabled))
+     { 
+	_clock_face_enable(face);
+     }
+   e_menu_item_toggle_set(mi, face->enabled);
 }
