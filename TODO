@@ -104,7 +104,6 @@ These are in no particular order:
 * add a status area expansion for borders
 * add a status module template for borders
 * allow desktop modules to define no-cover zones
-* fix eapps to properly follow on disk changes
 * support text and color classes
 * add tooltips
 * add fullscreen support (e16 xvidmode or xrandr style)
@@ -115,7 +114,6 @@ These are in no particular order:
 * maybe add systray module/support?
 * fix all loose ends
 * allow object paranoia to be a runtime option too
-* detect segv and report it (maybe turn on obj paranoia)
 * add sliders, radio and check buttons for clientinfo pane
 * display coords while moving
 * add separate app menu bars at top of screen support
