@@ -222,6 +222,7 @@ static void
 _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
+   int x, y;
    
    con = zone->container;
    if (zone->name) free(zone->name);
@@ -229,6 +230,12 @@ _e_zone_free(E_Zone *zone)
    evas_object_del(zone->bg_event_object);
    evas_object_del(zone->bg_clip_object);
    evas_object_del(zone->bg_object);
+   /* free desks */
+   for (x = 0; x < zone->desk_x_count; x++)
+     for(y = 0; y < zone->desk_y_count; y++)
+       e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
+   free(zone->desks);
+
    free(zone);
 }
 
@@ -251,7 +258,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
    if (ev->button == 1)
      {
 	E_Menu *m;
-	
+
 	m = e_int_menus_main_new();
 	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
 	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
@@ -273,7 +280,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
    else if (ev->button == 3)
      {
 	E_Menu *m;
-	
+
 	m = e_int_menus_favorite_apps_new();
 	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
 	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
