@@ -110,6 +110,9 @@ e_init(const char* display)
    return 1;
 }
 
+/* 
+ * close our connection to E
+ */
 int
 e_shutdown(void)
 {
@@ -118,6 +121,18 @@ e_shutdown(void)
    ecore_shutdown();
 
    return 1;
+}
+
+/* actual IPC calls */
+void
+e_restart(void)
+{
+   E_Ipc_Op type;
+
+   type = E_IPC_OP_RESTART;
+   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST, type, 0/*ref*/,
+			 0/*ref_to*/, 0/*response*/, NULL, 0);
+    
 }
 
 void

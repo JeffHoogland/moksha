@@ -39,11 +39,19 @@ extern EAPI int E_RESPONSE_BACKGROUND_GET;
 extern "C" {
 #endif
 
+   /* library startup and shutdown */
    EAPI int          e_init                       (const char *display);
    EAPI int          e_shutdown                   (void);
+
+   /* E startup and shutdown */
+   EAPI void         e_restart                    (void);
+
+   /* E module manipulation */
    EAPI void         e_module_enabled_set         (const char *module, int enable);
    EAPI void         e_module_loaded_set          (const char *module, int load);
    EAPI void         e_module_list                (void);
+
+   /* E desktop manipulation */
    EAPI void         e_background_set             (const char *bgfile);
    EAPI void         e_background_get             (void);
    
