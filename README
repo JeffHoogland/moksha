@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
-                       Enlightenment 0.17.0 CVS Code....
+                       Enlightenment 0.17.pre CVS Code....
 -------------------------------------------------------------------------------
        The Rasterman - raster@valinux.com, raster@rasterman.com
 
@@ -18,10 +18,11 @@ you at all use this code, you are HEAVILY URGED, when it is finally released,
 to remove all traces of anything this CVS code base has installed on your
 system (it is COMPLETELY up to you to keep track of that - do NOT expect any
 help), and then install the full release on a cleaned system. Don't come
-asking "can I just keep using CVS" oonce things are released - thqat is the
-reason I pu this paragraph here - so you don't ask. The asnwer is the same
+asking "can I just keep using CVS" once things are released - that is the
+reason I put this paragraph here - so you don't ask. The asnwer is the same
 as above - if there is a proper final release use that. CVS is really only
-for those havily hacking on the code.
+for those havily hacking on the code, or whose curiosity is too much to resist
+not giving it a look and try.
 
 Now we have that warning over and done with. How to build and install from
 CVS?
@@ -49,21 +50,22 @@ Enlightenment does not check for previously running Window Managers right
 now - so you need to make sure no other WM is running - E will not do that
 for you.
 
-Enlightenment has no menus or keybindings or any way of launching
-applications right now - you'll have to figure out an alternative way of
-doing it.
+Enlightenment has no keybindings right now, but does have a primitve menu for
+launching some applications. It is configurable - it's in a database file
+and tere is a script that builds this menu - you could build a new one after
+editing the script or do whatever your like.
 
 Enlightenment only handles a small subset of ICCCM and thus will have bugs -
-some applications will not behave correctly and may apear in odd spots or
+some applications will not behave correctly and may appear in odd spots or
 not resize or place themselves properly etc. Expect this - it's code being
 worked on. Just be happy it does as much as it already does.
 
 Enlightenment RELIES on lots of libraires that have been written. Ecore,
-Ebits, Evas, Edb, Imlib2 just to mention a few. Especially Ebits, Ecore and
-Evas change in CVS often - you will need the absolute latest of these if you
-wish Enlightenment 0.17 code to run properly or compile. If you update
-Enlightenment from CVS update these too to get any changes they have in
-their trees.
+Ebits, Evas, Edb, Imlib2, Efsd just to mention a few. Especially Ebits,
+Ecore, Efsd and Evas change in CVS often - you will need the absolute latest 
+of these if you wish Enlightenment 0.17 code to run properly or compile. If 
+you update Enlightenment from CVS update these too to get any changes they 
+have in their trees.
 
 If you plan on working on the code... STOP! don't rush in and work on it -
 even if you have CVS commit access - EXPECT me (Raster) to revert any changes
@@ -75,22 +77,27 @@ intricate than E 0.16 - but at the same time it's much cleaner and more
 object oriented. Learn it well first. Some parts of E 0.17 are "hacked" with
 hard-coded stuff, just so, for now, it works. They will be virtualized and
 imporved over time. If you have plans - tell me about them first - discuss
-them before you go impliment them. I know I already have a lot of the
-components of E 0.17's code planned in my head - but I won't get to them for
-a while - and if people go impliment or hack bad stuff in, it means I have to
-spend lots of time fixing something that is bad in the first place, or we
-end up doing duplicate work. There *IS* a plan - believe it or not - but to
-be honest - it's more complex and large than I can just write down in a
-README, so talk about your ideas first. I'm going to be ruthless in keeping
-the code neat, clean and free of nasty hacks (except ones I put in as
-temporary stop-gap measures to make the thing work - since I know where
-those are and what I need to do to do it right). If you can't find me or I
-don't reply to your e-mail - don't get impatient - just wait. I currently
+them before you go impliment them - once you've discussed them and we all
+aree on how it should be done, you can go ahead and do it. I know I already 
+have a lot of the components of E 0.17's code planned in my head - but I 
+won't get to them for a while - and if people go impliment or hack bad stuff 
+in, it means I have to spend lots of time fixing something that is bad in the 
+first place, or we end up doing duplicate work. There *IS* a plan - believe 
+it or not - but to be honest - it's more complex and large than I can just 
+write down in a README, so talk about your ideas first. I'm going to be 
+ruthless in keeping the code neat, clean and free of nasty hacks (except ones 
+I put in as temporary stop-gap measures to make the thing work - since I know 
+where those are and what I need to do to do it right). If you can't find me 
+or I don't reply to your e-mail - don't get impatient - just wait. I currently
 have no network access at home, so I'm doing a chunk of code offline. I'll
 get to your mail and queries as time allows.
 
 If you have problems with the code or bugs to report, kindly forward them to
 /dev/null (the code is in now way or form ready for bug reports - I don't
-want crap filling my mailbox).
+want crap filling my mailbox), unless its a patch hat fixes a silly bug
+somewhere. Only experienced people should in any way consider sending a bug
+report as I need useful reports, not junk cluttering my mailbox.
 
 I hope that clears things up for now.
+
+In the meantime - have fun.

@@ -132,6 +132,7 @@ typedef struct _E_Rect                E_Rect;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
 typedef struct _E_Icon                E_Icon;
+typedef struct _E_Background          E_Background;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
@@ -279,10 +280,7 @@ struct _E_Desktop
       Window container;
       Window desk;
    } win;
-   struct {
-      Pixmap pmap;
-      Evas desk;
-   } evas;
+   E_View *view;
    int x, y;
    struct {
       int w, h;
@@ -307,7 +305,7 @@ struct _E_View
 {
    OBJ_PROPERTIES;
    
-   char                  *directory;
+   char                  *dir;
    
    struct {
       Evas_Render_Method  render_method;
@@ -330,9 +328,20 @@ struct _E_View
       int                 x, y;
    } location;
    struct {
+      Evas_Object         obj_rect;
+      Evas_Object         obj_l1;
+      Evas_Object         obj_l2;
+      Evas_Object         obj_l3;
+      Evas_Object         obj_l4;
       int                 on;
+      int                 start_x, start_y;
       int                 x, y, w, h;
    } selection;
+   
+   E_Background          *bg;
+   
+   int                    is_listing;
+   int                    monitor_id;
    
    Evas_List              icons;
    
@@ -344,9 +353,9 @@ struct _E_Icon
    OBJ_PROPERTIES;
    
    char   *file;
-   char   *dir;
    
    E_View *view;
+   
    int     x, y, w, h;
    struct {
       int text_location;
@@ -363,11 +372,28 @@ struct _E_Icon
       Ebits_Object  base_text;
    } obj;
    struct {
-      int clicked;
-      int selected;
-      int hilited;
+      int  clicked;
+      int  selected;
+      int  hilited;
    } state;
+   char   *icon;
+   int     visible;
    int     changed;   
+};
+
+struct _E_Background
+{
+   OBJ_PROPERTIES;
+   
+   Evas  evas;
+   struct {
+      int sx, sy;
+      int w, h;
+   } geom;
+   
+   /* FIXME: REALLY boring for now - just a scaled image  - temporoary */
+   char *image;
+   Evas_Object obj;
 };
 
 struct _E_Menu
@@ -548,7 +574,10 @@ int e_file_is_dir(char *file);
 char *e_file_home(void);
 int e_file_mkdir(char *dir);
 int e_file_cp(char *src, char *dst);
-
+char *e_file_real(char *file);
+char *e_file_get_file(char *file);
+char *e_file_get_dir(char *file);
+    
 void e_exec_set_args(int argc, char **argv);
 void e_exec_restart(void);
 pid_t e_exec_run(char *exe);
@@ -604,3 +633,5 @@ E_Build_Menu *e_build_menu_new_from_db(char *file);
 
 void e_fs_add_event_handler(void (*func) (EfsdEvent *ev));
 void e_fs_init(void);
+EfsdConnection *e_fs_get_connection(void);
+    

@@ -6,313 +6,13 @@ static int       screen_w, screen_h;
 static int       current_desk = 0;
 
 static void e_idle(void *data);
-static void e_key_down(Eevent * ev);
-static void e_key_up(Eevent * ev);
-static void e_mouse_down(Eevent * ev);
-static void e_mouse_up(Eevent * ev);
-static void e_mouse_in(Eevent * ev);
-static void e_mouse_out(Eevent * ev);
-static void e_window_expose(Eevent * ev);
 
 static void
 e_idle(void *data)
 {
-   Evas_List l;
-   
-   for (l = desktops; l; l = l->next)
-     {
-	E_Desktop *desk;
-	
-	desk = l->data;
-	e_desktops_update(desk);
-     }
    e_db_flush();
    return;
    UN(data);
-}
-
-/* handling key down events */
-static void
-e_key_down(Eevent * ev)
-{
-   Ev_Key_Down          *e;
-
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  if (!strcmp(e->key, "Up"))
-		    {
-		    }
-		  else if (!strcmp(e->key, "Down"))
-		    {
-		    }
-		  else if (!strcmp(e->key, "Left"))
-		    {
-		    }
-		  else if (!strcmp(e->key, "Right"))
-		    {
-		    }
-		  else if (!strcmp(e->key, "Escape"))
-		    {
-		    }
-		  else
-		    {
-		       /* infact we should pass this onto the view handling */
-		       /* this desktop here */
-		       char *type;
-		       
-		       type = e_key_press_translate_into_typeable(e);
-		       if (type)
-			 {
-			 }
-		    }
-	       }
-	  }
-     }
-}
-
-/* handling key up events */
-static void
-e_key_up(Eevent * ev)
-{
-   Ev_Key_Up          *e;
-
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-	       }
-	  }
-     }
-}
-
-/* handling mouse down events */
-static void 
-e_mouse_down(Eevent * ev)
-{
-   Ev_Mouse_Down      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  Evas evas;
-		  int x, y;
-		  
-		  evas = desk->evas.desk;
-		  e_window_get_root_relative_location(evas_get_window(evas),
-						      &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_button_down(evas, x, y, e->button);
-		  if (e->button == 1)
-		    {
-		       static E_Build_Menu *buildmenu = NULL;
-		       
-		       if (!buildmenu)
-			 {
-			    char *apps_menu_db;
-			    
-			    apps_menu_db = e_config_get("apps_menu");
-			    if (apps_menu_db) buildmenu = e_build_menu_new_from_db(apps_menu_db);
-			 }
-		       if (buildmenu)
-			 {
-			    static E_Menu *menu = NULL;
-			    menu = buildmenu->menu;
-			    if (menu)
-			      e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
-			 }
-		    }
-		  return;
-	       }
-	  }
-     }
-}
-
-/* handling mouse up events */
-static void
-e_mouse_up(Eevent * ev)
-{
-   Ev_Mouse_Up      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  Evas evas;
-		  int x, y;
-		  
-		  evas = desk->evas.desk;
-		  e_window_get_root_relative_location(evas_get_window(evas),
-						      &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_button_up(evas, x, y, e->button);
-		  return;
-	       }
-	  }
-     }
-}
-
-/* handling mouse move events */
-static void
-e_mouse_move(Eevent * ev)
-{
-   Ev_Mouse_Move      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  Evas evas;
-		  int x, y;
-		  
-		  evas = desk->evas.desk;
-		  e_window_get_root_relative_location(evas_get_window(evas),
-						      &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  return;
-	       }
-	  }
-     }
-}
-
-/* handling mouse enter events */
-static void
-e_mouse_in(Eevent * ev)
-{
-   Ev_Window_Enter      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  Evas evas;
-		  int x, y;
-		  
-		  /* focus handling for desktop */
-		  e_focus_to_window(e->win);
-		  evas = desk->evas.desk;
-		  e_window_get_root_relative_location(evas_get_window(evas),
-						      &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_enter(evas);
-		  return;
-	       }
-	  }
-     }
-}
-
-/* handling mouse leave events */
-static void
-e_mouse_out(Eevent * ev)
-{
-   Ev_Window_Leave      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     
-	     if (desk->win.desk == e->win)
-	       {
-		  Evas evas;
-		  int x, y;
-		  
-		  evas = desk->evas.desk;
-		  e_window_get_root_relative_location(evas_get_window(evas),
-						      &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_leave(evas);
-		  return;
-	       }
-	  }
-     }
-}
-
-/* handling expose events */
-static void
-e_window_expose(Eevent * ev)
-{
-   Ev_Window_Expose      *e;
-   
-   e = ev->event;
-     {
-	Evas_List l;
-	
-	for (l = desktops; l; l = l->next)
-	  {
-	     E_Desktop *desk;
-	     
-	     desk = l->data;
-	     if (!desk->evas.pmap)
-	       {
-		  if (evas_get_window(desk->evas.desk) == e->win)
-		    evas_update_rect(desk->evas.desk, e->x, e->y, e->w, e->h);
-	       }
-	  }
-     }
 }
 
 void
@@ -325,14 +25,6 @@ e_desktops_init(void)
    e_window_show(e_base_win);
    desk = e_desktops_new();
    e_desktops_show(desk);
-   e_event_filter_handler_add(EV_MOUSE_DOWN,               e_mouse_down);
-   e_event_filter_handler_add(EV_MOUSE_UP,                 e_mouse_up);
-   e_event_filter_handler_add(EV_MOUSE_MOVE,               e_mouse_move);
-   e_event_filter_handler_add(EV_MOUSE_IN,                 e_mouse_in);
-   e_event_filter_handler_add(EV_MOUSE_OUT,                e_mouse_out);
-   e_event_filter_handler_add(EV_WINDOW_EXPOSE,            e_window_expose);
-   e_event_filter_handler_add(EV_KEY_DOWN,                 e_key_down);
-   e_event_filter_handler_add(EV_KEY_UP,                   e_key_up);
    e_event_filter_idle_handler_add(e_idle, NULL);
  
    e_icccm_advertise_e_compat();
@@ -459,7 +151,6 @@ e_desktops_free(E_Desktop *desk)
 	  }
      }
    e_window_destroy(desk->win.main);
-   if (desk->evas.pmap) e_pixmap_free(desk->evas.pmap);
    IF_FREE(desk->name);
    IF_FREE(desk->dir);
    FREE(desk);
@@ -468,47 +159,20 @@ e_desktops_free(E_Desktop *desk)
 void
 e_desktops_init_file_display(E_Desktop *desk)
 {
-   int max_colors = 216;
-   int font_cache = 1024 * 1024;
-   int image_cache = 8192 * 1024;
-   char *font_dir;
-   
-   font_dir = e_config_get("fonts");
-   /* software */
-   desk->evas.desk = evas_new_all(e_display_get(),
-				  desk->win.container,
-				  0, 0, screen_w, screen_h,
-				  RENDER_METHOD_ALPHA_SOFTWARE,
-				  max_colors,
-				  font_cache,
-				  image_cache,
-				  font_dir);
-   desk->win.desk = evas_get_window(desk->evas.desk);
-   e_add_child(desk->win.container, desk->win.desk);
-   /* pixmap backing for desktop */
-   desk->evas.pmap = e_pixmap_new(desk->win.desk, screen_w, screen_h, 0);
-   evas_set_output(desk->evas.desk, e_display_get(), desk->evas.pmap, 
-		   evas_get_visual(desk->evas.desk), evas_get_colormap(desk->evas.desk));
-   e_window_set_background_pixmap(desk->win.desk, desk->evas.pmap);
-   /* normal stuff */
-   e_window_set_events(desk->win.desk, XEV_EXPOSE | XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT | XEV_KEY); 
+   desk->view = e_view_new();
+   desk->view->size.w = desk->real.w;
+   desk->view->size.h = desk->real.h;
+   desk->view->bg = e_background_new();
+   desk->view->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
+   /* fixme later */
+   /* uncomment this and comment out the next line for some tress testing */
+/*   desk->view->dir = strdup("/dev");*/
+   desk->view->dir = strdup(e_file_home());
+   e_view_realize(desk->view);
+   if (desk->view->options.back_pixmap) e_view_update(desk->view);
+   desk->win.desk = desk->view->win.base;
+   e_window_reparent(desk->win.desk, desk->win.container, 0, 0);
    e_window_show(desk->win.desk);
-     {
-	Evas_Object o;
-	Evas e;
-	char buf[4096];
-	
-	e = desk->evas.desk;
-	sprintf(buf, "%sbg.png", e_config_get("images"));
-	o = evas_add_image_from_file(e, buf);
-	evas_move(e, o, 0, 0);
-	evas_resize(e, o, screen_w, screen_h);
-	evas_show(e, o);
-	sprintf(buf, "%se_logo.png", e_config_get("images"));
-	o = evas_add_image_from_file(e, buf);
-	evas_move(e, o, 0, 0);
-	evas_show(e, o);
-     }   
 }
 
 E_Desktop *
@@ -565,13 +229,13 @@ e_desktops_delete(E_Desktop *d)
 void
 e_desktops_show(E_Desktop *d)
 {
-   e_desktops_update(d);
    e_window_show(d->win.main);
 }
 
 void
 e_desktops_hide(E_Desktop *d)
 {
+   if (d->view->options.back_pixmap) e_view_update(d->view);
    e_window_hide(d->win.main);
 }
 
@@ -602,29 +266,4 @@ int
 e_desktops_get_current(void)
 {
    return current_desk;
-}
-
-void
-e_desktops_update(E_Desktop *desk)
-{
-   Imlib_Updates up;
-   
-   up = evas_render_updates(desk->evas.desk);
-   if (up)
-     {
-	Imlib_Updates u;
-	
-	for (u = up; u; u = imlib_updates_get_next(u))
-	  {
-	     int x, y, w, h;
-	     
-	     imlib_updates_get_coordinates(u, &x, &y, &w, &h);
-	     e_window_clear_area(desk->win.desk, x, y, w, h);
-	  }
-	imlib_updates_free(up);
-     }
-   if (desk->changed)
-     {
-	desk->changed = 0;
-     }
 }

@@ -78,3 +78,36 @@ e_file_cp(char *src, char *dst)
    fclose(f2);
    return 1;
 }
+
+char *
+e_file_real(char *file)
+{
+   char buf[4096];
+   
+   if (!realpath(file, buf)) return strdup("");
+   return strdup(buf);
+}
+
+char *
+e_file_get_file(char *file)
+{
+   char *p;
+   char buf[4096];
+   
+   p = strchr(file, '/');
+   if (!p) return strdup(file);
+   return strdup(&(p[1]));
+}
+
+char *
+e_file_get_dir(char *file)
+{
+   char *p;
+   char buf[4096];
+   
+   strcpy(buf, file);
+   p = strchr(buf, '/');
+   if (!p) return strdup(file);
+   *p = 0;
+   return strdup(buf);
+}

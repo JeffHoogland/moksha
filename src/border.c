@@ -123,7 +123,9 @@ e_configure_request(Eevent * ev)
 	     if (e->mask & EV_VALUE_Y)
 		b->current.requested.y = e->y;
 	     if (e->mask & EV_VALUE_W)
-		b->current.requested.w = e->w + pl + pr;
+	       {
+		  b->current.requested.w = e->w + pl + pr;
+	       }
 	     if (e->mask & EV_VALUE_H)
 	       {
 		  if (b->current.shaded == b->client.h)
@@ -1188,6 +1190,8 @@ e_border_adopt(Window win, int use_client_pos)
    /* fix size so it matches the hints a client asks for */
    b->changed = 1;
    e_border_adjust_limits(b);
+   b->current.requested.h = b->current.h;
+   b->current.requested.w = b->current.w;
    e_border_raise(b);
    e_window_show(win);
    return b;
@@ -1632,7 +1636,10 @@ e_border_adjust_limits(E_Border *b)
 {
    int w, h, pl, pr, pt, pb, mx, my;
 
-   if (b->mode.move) e_resist_border(b);
+   if (b->mode.move) 
+     {
+	e_resist_border(b);
+     }
    else
      {
         b->current.x = b->current.requested.x;
@@ -1642,8 +1649,8 @@ e_border_adjust_limits(E_Border *b)
    b->current.w = b->current.requested.w;
    b->current.h = b->current.requested.h - b->current.shaded;
    
-   if (!b->current.shaded)
-     {
+   if ((!b->current.shaded) && (!b->mode.move))
+     { 
 	if (b->current.w < 1) b->current.w = 1;
 	if (b->current.h < 1) b->current.h = 1;
    

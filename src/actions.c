@@ -426,7 +426,8 @@ e_actions_init(void)
 
 
 
-
+/* FIXME: these REALLY need to go into other file(s) but it's not worht it */
+/* yet at this point. it can be done later */
 
 static void 
 e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)

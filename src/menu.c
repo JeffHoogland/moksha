@@ -39,6 +39,7 @@ e_scroller_timer(int val, void *data)
      scroll_speed = (int)(((t - last_time) / 0.02) * (double)scroll_speed);
    last_time = t;
    
+   ok = 0;   
    if (mouse_x >= (screen_w - resist))
      {
 	int scroll = 0;
@@ -49,10 +50,7 @@ e_scroller_timer(int val, void *data)
 	     
 	     m = l->data;
 	     if ((m->current.x + m->current.w) > screen_w)
-	       {
-		  scroll = m->current.x + m->current.w - screen_w;
-		  break;
-	       }
+	       scroll = m->current.x + m->current.w - screen_w;
 	  }
 	if (scroll)
 	  {
@@ -71,10 +69,7 @@ e_scroller_timer(int val, void *data)
 	     
 	     m = l->data;
 	     if (m->current.x < 0)
-	       {
-		  scroll = -m->current.x;
-		  break;
-	       }
+	       scroll = -m->current.x;
 	  }
 	if (scroll)
 	  {
@@ -93,10 +88,7 @@ e_scroller_timer(int val, void *data)
 	     
 	     m = l->data;
 	     if ((m->current.y + m->current.h) > screen_h)
-	       {
-		  scroll = m->current.y + m->current.h - screen_h;
-		  break;
-	       }
+	       scroll = m->current.y + m->current.h - screen_h;
 	  }
 	if (scroll)
 	  {
@@ -115,10 +107,7 @@ e_scroller_timer(int val, void *data)
 	     
 	     m = l->data;
 	     if (m->current.y < 0)
-	       {
-		  scroll = -m->current.y;
-		  break;
-	       }
+	       scroll = -m->current.y;
 	  }
 	if (scroll)
 	  {
@@ -127,7 +116,7 @@ e_scroller_timer(int val, void *data)
 	     ok = 1;
 	  }
      }
-   if (ok)
+   if ((ok) && (open_menus))
      e_add_event_timer("menu_scroller", 0.02, e_scroller_timer, val + 1, NULL);   
    return;
    UN(data);
@@ -208,7 +197,11 @@ e_key_down(Eevent * ev)
 	     E_Menu *m;
 	     
 	     m = l->data;
-	     if ((e->win == m->win.main) || (e->win == m->win.evas)) ok = 1;
+	     if ((e->win == m->win.main) || (e->win == m->win.evas)) 
+	       {
+		  ok = 1;
+		  break;
+	       }
 	  }
      }
    if (ok)
@@ -223,6 +216,7 @@ e_key_down(Eevent * ev)
 	     if (m->selected)
 	       {
 		  mi = m->selected;
+		  break;
 	       }
 	  }
 	if (!strcmp(e->key, "Up"))
@@ -446,6 +440,7 @@ e_window_expose(Eevent * ev)
 	       {
 		  m->first_expose = 1;
 		  evas_update_rect(m->evas, e->x, e->y, e->w, e->h);
+		  break;
 	       }
 	  }
      }
