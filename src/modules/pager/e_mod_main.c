@@ -1159,7 +1159,7 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    desk = _pager_desk_find(face, ev->border->desk);
    if (win && desk)
      {
-	evas_list_remove(win->desk->wins, win);
+	win->desk->wins = evas_list_remove(win->desk->wins, win);
 	win->desk = desk;
 	desk->wins = evas_list_append(desk->wins, win);
 	_pager_window_move(face, win);
