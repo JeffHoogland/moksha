@@ -56,6 +56,7 @@ _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
    };
    
    e = ev;
+#if 0   
    if (e_border_find_by_client_window(e->win))
      {
 	printf("BI 0x%x md=%s dt=%s\n", 
@@ -70,6 +71,7 @@ _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
 	       modes[e->mode],
 	       details[e->detail]);
      }
+#endif   
    return 1;
 }
 
@@ -95,6 +97,7 @@ _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
    };
    
    e = ev;
+#if 0   
    if (e_border_find_by_client_window(e->win))
      {
 	printf("BO 0x%x md=%s dt=%s\n", 
@@ -109,5 +112,6 @@ _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
 	       modes[e->mode],
 	       details[e->detail]);
      }
+#endif
    return 1;
 }
