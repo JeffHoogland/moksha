@@ -55,7 +55,7 @@ _e_util_container_fake_mouse_up_cb(void *data)
    info = data;
    if (info)
      {
-	evas_event_feed_mouse_up(info->con->bg_evas, info->button);
+	evas_event_feed_mouse_up(info->con->bg_evas, info->button, EVAS_BUTTON_NONE, NULL);
 	e_object_unref(E_OBJECT(info->con));
 	free(info);
      }

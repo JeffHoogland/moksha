@@ -982,8 +982,8 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
-   evas_event_feed_mouse_in(bd->bg_evas);
+   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+   evas_event_feed_mouse_in(bd->bg_evas, NULL);
    return 1;
 }
 
@@ -1033,8 +1033,8 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
-   evas_event_feed_mouse_out(bd->bg_evas);
+   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+   evas_event_feed_mouse_out(bd->bg_evas, NULL);
    return 1;
 }
 
@@ -1088,8 +1088,12 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
      }
    else
      {
-	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
-	evas_event_feed_mouse_down(bd->bg_evas, ev->button);
+	Evas_Button_Flags flags = EVAS_BUTTON_NONE;
+	
+	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
+	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, NULL);
      }
    return 1;
 }
@@ -1133,8 +1137,8 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
      }
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
-   evas_event_feed_mouse_up(bd->bg_evas, ev->button);
+   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+   evas_event_feed_mouse_up(bd->bg_evas, ev->button, EVAS_BUTTON_NONE, NULL);
    return 1;
 }
 
@@ -1189,7 +1193,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
      }
    else
      {
-	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
+	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
      }
    return 1;
 }
@@ -1205,8 +1209,8 @@ _e_border_cb_mouse_wheel(void *data, int type, void *event)
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
-   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z);
+   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, NULL);
    return 1;
 }
 

@@ -936,8 +936,8 @@ _e_menu_realize(E_Menu *m)
    ecore_evas_callback_resize_set(m->ecore_evas, _e_menu_cb_ecore_evas_resize);
    m->evas = ecore_evas_get(m->ecore_evas);
    /* move cursor out to avoid event cycles during setup */
-   evas_event_feed_mouse_in(m->evas);
-   evas_event_feed_mouse_move(m->evas, -1000000, -1000000);
+   evas_event_feed_mouse_in(m->evas, NULL);
+   evas_event_feed_mouse_move(m->evas, -1000000, -1000000, NULL);
    m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
@@ -1974,7 +1974,8 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 	       }
 	     evas_event_feed_mouse_move(m->evas,
 					ev->x - m->cur.x,
-					ev->y - m->cur.y);
+					ev->y - m->cur.y,
+					NULL);
 	  }
      }
    while (tmp)
