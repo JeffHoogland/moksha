@@ -1958,9 +1958,9 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.window.r = 3;
    v->spacing.window.t = 3;
    v->spacing.window.b = 3;
-   v->spacing.icon.s = 5;
-   v->spacing.icon.g = 5;
-   v->spacing.icon.b = 5;
+   v->spacing.icon.s = 7;
+   v->spacing.icon.g = 7;
+   v->spacing.icon.b = 7;
    views = evas_list_append(views, v);
    return v;   
 }
