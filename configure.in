@@ -186,6 +186,7 @@ src/bin/Makefile
 src/modules/Makefile
 src/modules/test/Makefile
 src/modules/ibar/Makefile
+src/modules/ibox/Makefile
 src/modules/dropshadow/Makefile
 src/modules/clock/Makefile
 src/modules/pager/Makefile
