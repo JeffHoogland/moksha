@@ -33,6 +33,7 @@ ISSUES:
 * pager edje gfx...
 * pager needs desktop bg thumbnail wrapper/handler and cache system
 * pager needs to support miniature versions of bg object
+* in firefox if you scan over the menu bar selecting menus sometimes focus will flicker in/out of ffox
 * on shade window loses focus (bad... but ok) but on unshade it doesnt get it back
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * virtual desktops need an overhaul. hacked in waay too quickly.
