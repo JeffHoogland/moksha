@@ -47,7 +47,7 @@ group {
       }
    }
 }
-group {
+//group {
    name: "modules/pager/desk";
    parts {
       part {

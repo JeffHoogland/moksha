@@ -1,4 +1,4 @@
-MINI FREEZE:
+\MINI FREEZE:
 
 Status: ON
 
@@ -29,14 +29,17 @@ Current freeze issues are:
 
 ISSUES:
 
+* need to impliment simple sable smart object (for pager)
+* need to impliment simple scaled fixed layout smart object (for pager)
+* need desktop bg thumbnail wrapper/handler and cache system (for pager)
+* pager edje gfx...
+* pager needs an overhaul
+* pager needs to support miniature versions of bg object
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
 * focus issues in general
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
-* pager edje gfx...
-* pager needs an overhaul
-* pager needs to be able to split off each desk in a zone in a different gadget
 * gadman gadget menu needs icons :)
 * window menu needs icons :)
 * java apps seem to have a hard time (cgoban for example)

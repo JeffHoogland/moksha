@@ -275,7 +275,7 @@ _pager_face_new(E_Zone *zone)
 
    o = evas_object_rectangle_add(face->evas);
    face->base = o;
-   evas_object_color_set(o, 128, 128, 128, 0);
+   evas_object_color_set(o, 128, 128, 128//, 0);
    evas_object_pass_events_set(o, 0);
    evas_object_repeat_events_set(o, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _pager_face_cb_mouse_down, face);
