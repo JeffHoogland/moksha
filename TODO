@@ -29,6 +29,7 @@ Current freeze issues are:
 
 ISSUES:
 
+* pager doesnt track window stacking, and desktops properly (eg iconify, go to new desk, uniconify - pager does not move the window)
 * pager needs an overhaul
 * pager edje gfx...
 * pager needs desktop bg thumbnail wrapper/handler and cache system
