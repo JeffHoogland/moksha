@@ -1227,6 +1227,7 @@ _ibar_bar_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ibb = data;
    edje_object_signal_emit(ibb->overlay_object, "passive", "");
    _ibar_bar_follower_reset(ibb);
+   _ibar_bar_timer_handle(ibb);
 }
 
 static void
@@ -1327,7 +1328,6 @@ _ibar_bar_cb_animator(void *data)
      }
    if (ibb->timer) return 1;
    ibb->animator = NULL;
-   _ibar_bar_follower_reset(ibb);
    return 0;
 }
 
