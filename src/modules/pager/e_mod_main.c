@@ -36,10 +36,7 @@ static Pager_Win  *_pager_window_find(Pager *e, E_Border *border);
 static E_Manager  *_pager_manager_current_get(Pager *e);
 
 static void        _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void        _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void        _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int         _pager_cb_event_container_resize(void *data, int type, void *event);
-
+static void        _pager_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static int         _pager_cb_event_border_resize(void *data, int type, void *event);
 static int         _pager_cb_event_border_move(void *data, int type, void *event);
 static int         _pager_cb_event_border_add(void *data, int type, void *event);
@@ -48,11 +45,6 @@ static int         _pager_cb_event_border_hide(void *data, int type, void *event
 static int         _pager_cb_event_border_show(void *data, int type, void *event);
 static int         _pager_cb_event_border_desk_set(void *data, int type, void *event);
 static int         _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
-
-static void        _pager_reconfigure(Pager *e);
-
-#define         PAGER_MIN_W 10
-#define         PAGER_MIN_H 7
 
 /* public module routines. all modules must have these */
 void *
@@ -102,7 +94,7 @@ save(E_Module *m)
    Pager *e;
 
    e = m->data;
-   e_config_domain_save("module.pager", e->conf_edd, e->conf);
+/*   e_config_domain_save("module.pager", e->conf_edd, e->conf); */
    return 1;
 }
 
@@ -136,29 +128,17 @@ _pager_init(E_Module *m)
    e = calloc(1, sizeof(Pager));
    if (!e) return NULL;
    
-   e->conf_edd = E_CONFIG_DD_NEW("Pager_Config", Config);
+/*   e->conf_edd = E_CONFIG_DD_NEW("Pager_Config", Config);
 #undef T
 #undef D
 #define T Config
-#define D e->conf_edd   
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
-   E_CONFIG_VAL(D, T, x, DOUBLE);
-   E_CONFIG_VAL(D, T, y, DOUBLE);
+#define D e->conf_edd   */
 
-   e->conf = e_config_domain_load("module.pager", e->conf_edd);
+/*   e->conf = e_config_domain_load("module.pager", e->conf_edd);
    if (!e->conf)
      {
 	e->conf = E_NEW(Config, 1);
-	e->conf->width = 50;
-	e->conf->height = 30;
-	e->conf->x = 0.0;
-	e->conf->y = 0.0;
-     }
-   E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
-   E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
-   E_CONFIG_LIMIT(e->conf->width, PAGER_MIN_W, 1000);
-   E_CONFIG_LIMIT(e->conf->height, PAGER_MIN_H, 1000);
+     } */
 
    managers = e_manager_list();
    e->managers = managers;
@@ -173,6 +153,7 @@ _pager_init(E_Module *m)
 	     
 	     con = l2->data;
 	     e->evas = con->bg_evas;
+	     e->con = con;
 	  }
      }
 
@@ -182,8 +163,6 @@ _pager_init(E_Module *m)
    evas_object_pass_events_set(o, 0);
    evas_object_repeat_events_set(o, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _pager_cb_down, e);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _pager_cb_up, e);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _pager_cb_move, e);
    evas_object_show(o);
 
    o = edje_object_add(e->evas);
@@ -194,10 +173,6 @@ _pager_init(E_Module *m)
                         "modules/pager/screen");
    evas_object_show(o);
    
-   e->ev_handler_container_resize =
-   ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
-                           _pager_cb_event_container_resize, e);
-
    e->ev_handler_border_resize =
    ecore_event_handler_add(E_EVENT_BORDER_RESIZE,
 			   _pager_cb_event_border_resize, e);
@@ -224,9 +199,22 @@ _pager_init(E_Module *m)
 			   _pager_cb_event_zone_desk_count_set, e);
 
    _pager_container_set(e);
-   _pager_reconfigure(e);
-   evas_object_resize(e->screen, e->fw, e->fh);
-   evas_object_move(e->base, e->fx, e->fy);
+
+   e->gmc = e_gadman_client_new(e->con->gadman);
+   e_gadman_client_domain_set(e->gmc, "module.pager", 0);
+   e_gadman_client_policy_set(e->gmc,
+			      E_GADMAN_POLICY_ANYWHERE |
+			      E_GADMAN_POLICY_HMOVE |
+			      E_GADMAN_POLICY_VMOVE |
+			      E_GADMAN_POLICY_HSIZE |
+			      E_GADMAN_POLICY_VSIZE);
+   e_gadman_client_min_size_set(e->gmc, 8, 8);
+   e_gadman_client_max_size_set(e->gmc, 256, 256);
+   e_gadman_client_auto_size_set(e->gmc, 64, 64);
+   e_gadman_client_align_set(e->gmc, 0.0, 0.5);
+   e_gadman_client_resize(e->gmc, 80, 60);
+   e_gadman_client_change_func_set(e->gmc, _pager_cb_gmc_change, e);
+   e_gadman_client_load(e->gmc);
    return e;
 }
 
@@ -234,14 +222,13 @@ static void
 _pager_shutdown(Pager *e)
 {
    free(e->conf);
-   E_CONFIG_DD_FREE(e->conf_edd);
+/*   E_CONFIG_DD_FREE(e->conf_edd);*/
 
    if (e->base) evas_object_del(e->base);
    if (e->screen) evas_object_del(e->screen);
+   e_object_del(E_OBJECT(e->gmc));
 
    _pager_zone_leave(e);
-   ecore_event_handler_del(e->ev_handler_container_resize);
-
    ecore_event_handler_del(e->ev_handler_border_resize);
    ecore_event_handler_del(e->ev_handler_border_move);
    ecore_event_handler_del(e->ev_handler_border_add);
@@ -379,7 +366,6 @@ _pager_window_create(Pager *e, E_Border *border, Pager_Desk *owner)
      evas_object_show(o);
    app = e_app_window_name_class_find(border->client.icccm.name,
 				      border->client.icccm.class);
-   /* FIXME: here we do not get the info, the app has not populated the icccm */
    if (app)
      {
 	o = edje_object_add(e->evas);
@@ -548,28 +534,6 @@ _pager_desk_set(Pager *p, E_Desk *desk)
 }
 
 static void
-_pager_reconfigure(Pager *e)
-{
-   Evas_Coord ww, hh;
-   E_Zone    *zone;
-   int        xcount, ycount;
-
-   evas_output_viewport_get(e->evas, NULL, NULL, &ww, &hh);
-   e->fx = e->conf->x * (ww - e->conf->width);
-   e->fy = e->conf->y * (hh - e->conf->height);
-   e->fw = e->conf->width;
-   e->fh = e->conf->height;
-
-   zone = e_zone_current_get(e_container_current_get(_pager_manager_current_get(e)));
-   e_zone_desk_count_get(zone, &xcount, &ycount);
-   e->tw = e->fw * xcount;
-   e->th = e->fh * ycount;
-
-   _pager_container_leave(e);
-   _pager_container_set(e);
-}
-
-static void
 _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -586,17 +550,44 @@ _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(con);
      }
-   else if (ev->button == 2)
-     {
-	p->resize = 1;
-     }
    else if (ev->button == 1)
      {
-	p->move = 1;
+	int          xcount, ycount;
+	Evas_Coord   xx, yy, x, y;
+	E_Zone      *zone;
+	E_Desk      *desk;
+	E_Container *con;
+
+	con = e_container_current_get(_pager_manager_current_get(p));
+	zone = e_zone_current_get(con);
+	e_zone_desk_count_get(zone, &xcount, &ycount);
+	evas_pointer_canvas_xy_get(p->evas, &xx, &yy);
+
+	for (x = 0; x < xcount; x++)
+	  for (y = 0; y < ycount; y++)
+	    {
+	       int left, right, top, bottom;
+	       left = p->fx + x * p->fw;
+	       right = left + p->fw;
+	       top = p->fy + y * p->fh;
+	       bottom = top + p->fh;
+
+	       if (left <= xx && xx < right && top <= yy && yy < bottom)
+		 {
+		    desk = e_desk_at_xy_get(zone, x, y);
+		    if (desk)
+		      {
+			 e_desk_show(desk);
+			 _pager_desk_set(p, desk);
+		      }
+		    else
+		      {
+			 printf("PAGER ERROR - %d, %d seems to be out of bounds\n", x, y);
+		      }
+		 }
+	    }
+
      }
-   evas_pointer_canvas_xy_get(con->bg_evas, &p->xx, &p->yy);
-   p->clickhackx = p->xx;
-   p->clickhacky = p->yy;
 }
 
 static Pager_Desk *
@@ -678,71 +669,11 @@ _pager_window_find(Pager *e, E_Border *border)
 }
 
 static void
-_pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Up *ev;
-   Pager     *p;
-   Evas_Coord xx, yy, ww, hh;
-   E_Container *con = NULL;
-
-   ev = event_info;
-   p = data;
-   
-   con = e_container_current_get(_pager_manager_current_get(p));
-   evas_output_viewport_get(con->bg_evas, NULL, NULL, &ww, &hh);
-   /* if we clicked, not moved - FIXME, this is a hack */
-   if (p->move && (p->xx == p->clickhackx) && (p->yy == p->clickhacky))
-     {
-	int     x, y, w, h, xcount, ycount;
-	E_Zone *zone;
-	E_Desk *desk;
-
-	zone = e_zone_current_get(con);
-	e_zone_desk_count_get(zone, &xcount, &ycount);
-
-	w = p->fw;
-	h = p->fh;
-	for (x = 0; x < xcount; x++)
-	  for (y = 0; y < ycount; y++)
-	    {
-	       int left, right, top, bottom;
-	       left = p->fx + x * w;
-	       right = left + w;
-	       top = p->fy + y * h;
-	       bottom = top + h;
-
-	       if (left <= p->xx && p->xx < right && top <= p->yy && p->yy < bottom)
-		 {
-		    desk = e_desk_at_xy_get(zone, x, y);
-		    if (desk)
-		      {
-			 e_desk_show(desk);
-			 _pager_desk_set(p, desk);
-		      }
-		    else
-		      {
-			 printf("PAGER ERROR - %d, %d seems to be out of bounds\n", x, y);
-		      }
-		 }
-	    }
-     }
-   p->move = 0;
-   p->resize = 0;
-
-   p->conf->width = p->fw;
-   p->conf->height = p->fh;
-   p->conf->x = (double)p->fx / (double)(ww - p->fw);
-   p->conf->y = (double)p->fy / (double)(hh - p->fh);
-   e_config_save_queue();
-
-}
-
-static void
-_pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_pager_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 { 
-   Evas_Event_Mouse_Move *ev;
    Pager      *p;
-   Evas_Coord  cx, cy, sw, sh, tw, th, dx, dy, xx, yy, ww, hh;
+   Evas_Coord  x, y, w, h;
+   Evas_Coord  xx, yy, ww, hh, deskw, deskh;
    E_Zone     *zone;
    int         xcount, ycount;
    Evas_List  *desks, *wins;
@@ -750,89 +681,35 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Pager_Win  *win;
    E_Container *con;
 
-   evas_pointer_canvas_xy_get(e, &cx, &cy);
-   evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
-
-   ev = event_info;
    p = data;
-   
    con = e_container_current_get(_pager_manager_current_get(p));
    zone = e_zone_current_get(con);
    e_zone_desk_count_get(zone, &xcount, &ycount);
-   /* note that these are not the same as p->tw, as that could be slightly
-      larger (rounding etc) these will vie exactly the right result */
-   tw = p->fw * xcount;
-   th = p->fh * ycount;
-   dx = cx - p->xx;
-   dy = cy - p->yy;
-   if (p->move)
-     {
-	if (p->fx + dx < 0) dx = 0 - p->fx;
-	if (p->fx + dx + tw > sw) dx = sw - (p->fx + tw);
-	if (p->fy + dy < 0) dy = 0 - p->fy;
-	if (p->fy + dy + th > sh) dy = sh - (p->fy + th);
-	p->fx += dx;
-	p->fy += dy;
 
-	evas_object_move(p->base, p->fx, p->fy);
+   e_gadman_client_geometry_get(p->gmc, &x, &y, &w, &h);
+   deskw = w / xcount;
+   deskh = h / ycount;
+
+   p->fx = x;
+   p->fy = y;
+   p->fw = deskw;
+   p->fh = deskh;
+   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+     {
+	evas_object_move(p->base, x, y);
+	evas_object_resize(p->base, w, h);
+	evas_object_resize(p->screen, deskw, deskh);
 	      
 	desks = p->desks;
 	while (desks)
 	  {
 	     desk = desks->data;
-
-	     evas_object_geometry_get(desk->obj, &xx, &yy, &ww, &hh);
-	     evas_object_move(desk->obj, xx + dx, yy + dy);
-
-	     wins = desk->wins;
-	     while (wins)
-	       {
-		  win = wins->data;
-
-		  evas_object_geometry_get(win->obj, &xx, &yy, &ww, &hh);
-		  evas_object_move(win->obj, xx + dx, yy + dy);
-
-		  wins = wins->next;
-	       }
-
-	     desks = desks->next;
-	  }
-	
-	evas_object_geometry_get(p->screen, &xx, &yy, &ww, &hh);
-	evas_object_move(p->screen, xx + dx, yy + dy);
-     }
-   else if (p->resize)
-     {
-	p->tw += dx;
-	p->th += dy;
-	p->fw = p->tw / xcount;
-	p->fh = p->th / ycount;
-	if (p->fw < PAGER_MIN_W) p->fw = PAGER_MIN_W;
-	if (p->fh < PAGER_MIN_H) p->fh = PAGER_MIN_H;
-	if (p->fx + p->tw > sw)
-	  {
-	     p->tw = sw - p->fx;
-	     p->fw = p->tw / xcount;
-	  }
-	if (p->fy + p->th > sh)
-	  {
-	     p->th = sh - p->fy;
-	     p->fh = p->th / ycount;
-	  }
-
-	evas_object_resize(p->base, p->fw * xcount, p->fh * ycount);
-	evas_object_resize(p->screen, p->fw, p->fh);
-	      
-	desks = p->desks;
-	while (desks)
-	  {
-	     desk = desks->data;
-	     evas_object_resize(desk->obj, p->fw, p->fh);
-	     evas_object_move(desk->obj, p->fx + (desk->xpos * p->fw),
-			      p->fy + (desk->ypos * p->fh));
+	     evas_object_resize(desk->obj, deskw, deskh);
+	     evas_object_move(desk->obj, x + (deskw * desk->xpos),
+			      y + (deskh * desk->ypos));
 	     if (desk->current)
-	       evas_object_move(p->screen, p->fx + (p->fw * desk->xpos),
-				 p->fy + (p->fh * desk->ypos));
+	       evas_object_move(p->screen, x + (deskw * desk->xpos),
+				 y + (deskh * desk->ypos));
 	     
 	     wins = desk->wins;
 	     while (wins)
@@ -842,24 +719,33 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
 		  wins = wins->next;
 	       }
+	     desks = desks->next;
+	  }
+     }
+   else if (change == E_GADMAN_CHANGE_RAISE)
+     {
+	evas_object_raise(p->base);
+	      
+	desks = p->desks;
+	while (desks)
+	  {
+	     desk = desks->data;
+	     evas_object_raise(desk->obj);
+	     
+	     wins = desk->wins;
+	     while (wins)
+	       {
+		  win = wins->data;
+		  evas_object_raise(win->obj);
 
+		  wins = wins->next;
+	       }
 	     desks = desks->next;
 	  }
 
-   }
-   p->xx = ev->cur.canvas.x;
-   p->yy = ev->cur.canvas.y;
+	evas_object_raise(p->screen);
+     }
 }  
-
-static int
-_pager_cb_event_container_resize(void *data, int type, void *event)
-{
-   Pager     *e;
-   
-   e = data;
-   _pager_reconfigure(e);
-   return 1;
-}
 
 static int        
 _pager_cb_event_border_resize(void *data, int type, void *event)
@@ -1022,7 +908,7 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
    E_Event_Zone_Desk_Count_Set *ev;
 
    e = data;
-   _pager_reconfigure(e);
+   // FIXME need to update display with sizes etc
    return 1;
 }
 

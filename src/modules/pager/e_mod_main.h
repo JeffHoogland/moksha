@@ -8,23 +8,23 @@ typedef struct _Pager_Win  Pager_Win;
 
 struct _Config
 {
-   int    width, height;
-   double x, y;
+   int dummy; /* space holder */
 };
 
 struct _Pager
 {
    Evas_List    *managers;
    E_Menu       *config_menu;
+   E_Container  *con;
    Evas         *evas;
    Evas_Object  *base, *screen;
    Evas_List    *desks;
    
-   E_Config_DD  *conf_edd;
+/*   E_Config_DD  *conf_edd;*/
    Config       *conf;
-   unsigned char move : 1;
-   unsigned char resize : 1;
-   Ecore_Event_Handler *ev_handler_container_resize;
+
+   Evas_Coord    fx, fy, fw, fh;
+   E_Gadman_Client *gmc;
    
    Ecore_Event_Handler *ev_handler_border_resize;
    Ecore_Event_Handler *ev_handler_border_move;
@@ -34,12 +34,6 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_border_show;
    Ecore_Event_Handler *ev_handler_border_desk_set;
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
-
-   Evas_Coord    fx, fy, fw, fh, tw, th;
-   Evas_Coord    xx, yy;
-
-   /* FIXME: want to fix click detection once leftdrag is not used */
-   Evas_Coord    clickhackx, clickhacky;
 };
 
 struct _Pager_Desk
