@@ -60,7 +60,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README
 
 %changelog
-* Sat Jan 6 2001 Lyle Kempler <term@kempler.net>
+* Sat Jan 6 2001 Lyle Kempler <term@twistedpath.org>
 - Fixed spec file. :)
 * Sat Dec 11 2000 The Rasterman <raster@rasterman.com>
 - Created spec file
