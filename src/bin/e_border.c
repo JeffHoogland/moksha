@@ -2083,9 +2083,9 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 				       GRAV_SET(bd, ECORE_X_GRAVITY_NW);
 				    }
 			       }
-			     _e_border_resize_begin(bd);
 			     _e_border_moveinfo_gather(bd, source);
 			     e_border_raise(bd);
+			     _e_border_resize_begin(bd);
 			  }
 		    }
 		  /* We only want one action */
@@ -2330,6 +2330,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
 	       {
+		  printf("name: %s, class: %s\n", bd->client.icccm.name, bd->client.icccm.class);
 		  a = e_app_window_name_class_find(bd->client.icccm.name,
 						   bd->client.icccm.class);
 		  if (a)
