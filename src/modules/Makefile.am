@@ -3,4 +3,5 @@ SUBDIRS = \
 test \
 ibar \
 clock \
+flame \
 dropshadow
