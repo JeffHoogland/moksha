@@ -266,9 +266,9 @@ e_border_hide(E_Border *bd)
    e_container_shape_hide(bd->shape);
 
    if (bd->iconic)
-	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
    else
-	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
 
    bd->visible = 0;
    bd->changed = 1;
