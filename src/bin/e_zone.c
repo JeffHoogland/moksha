@@ -349,11 +349,12 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       desk = (E_Desk *)
 		  zone->desks[x + (y * zone->desk_x_count)];
 
-	       for (client = desk->clients; client; client = client->next)
+	       /* Here desk->clients is removed from the list on desk_set
+		* so we want to iterate whilst it is not NULL */
+	       while (desk->clients)
 		 {
-		    bd = (E_Border *) client->data;
+		    bd = (E_Border *) desk->clients->data;
 
-		    new_desk->clients = evas_list_append(new_desk->clients, bd);
 		    e_border_desk_set(bd, new_desk);
 		 }
 	       e_object_del(E_OBJECT(desk));
@@ -369,11 +370,11 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       desk = (E_Desk *)
 		  zone->desks[x + (y * zone->desk_x_count)];
 
-	       for (client = desk->clients; client; client = client->next)
+	       /* again, list shrinking as we iterate */
+	       while (desk->clients)
 		 {
-		    bd = (E_Border *) client->data;
+		    bd = (E_Border *) desk->clients->data;
 
-		    new_desk->clients = evas_list_append(new_desk->clients, bd);
 		    e_border_desk_set(bd, new_desk);
 		 }
 	       e_object_del(E_OBJECT(desk));
