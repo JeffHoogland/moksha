@@ -1,3 +1,7 @@
+/*
+ *  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+
 #include "e.h"
 #include <Ecore_X_Atoms.h>
 
@@ -55,7 +59,9 @@ static void _e_border_eval(E_Border *bd);
 static void _e_border_resize_limit(E_Border *bd, int *w, int *h);
 static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
 static void _e_border_resize_handle(E_Border *bd);
-    
+
+static int  _e_border_shade_animator(void *data);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -384,13 +390,20 @@ e_border_shade(E_Border *bd)
    if (!bd->shaded)
      {
 	printf("SHADE!\n");
+	/*
 	bd->h = bd->client_inset.t + bd->client_inset.b;
 	bd->changes.size = 1;
 	bd->shaded = 1;
 	bd->changes.shaded = 1;
 	bd->changed = 1;
+	*/
+	bd->shade.start = ecore_time_get();
+	bd->shading = 1;
+	bd->changes.shading = 1;
+	bd->changed = 1;
 
-	edje_object_signal_emit(bd->bg_object, "shade", "");
+	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	edje_object_signal_emit(bd->bg_object, "shading", "");
      }
 }
 
@@ -401,13 +414,20 @@ e_border_unshade(E_Border *bd)
    if (bd->shaded)
      {
 	printf("UNSHADE!\n");
+	/*
 	bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
 	bd->changes.size = 1;
 	bd->shaded = 0;
 	bd->changes.shaded = 1;
 	bd->changed = 1;
+	*/
+	bd->shade.start = ecore_time_get();
+	bd->shading = 1;
+	bd->changes.shading = 1;
+	bd->changed = 1;
 
-	edje_object_signal_emit(bd->bg_object, "unshade", "");
+	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	edje_object_signal_emit(bd->bg_object, "unshading", "");
      }
 }
 
@@ -424,8 +444,8 @@ e_border_maximize(E_Border *bd)
 	bd->saved.h = bd->h;
 
 	/* FIXME maximize intelligently */
-    e_border_move_resize(bd, 0, 0, bd->container->w, bd->container->h);
-    bd->maximized = 1;
+	e_border_move_resize(bd, 0, 0, bd->container->w, bd->container->h);
+	bd->maximized = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
 	bd->changed = 1;
@@ -441,9 +461,9 @@ e_border_unmaximize(E_Border *bd)
    if (bd->maximized)
      {
 	printf("UNMAXIMIZE!!\n");
-    e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
-    bd->maximized = 0;
+	bd->maximized = 0;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
 	bd->changed = 1;
@@ -921,7 +941,7 @@ _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_TL;
    _e_border_moveinfo_gather(bd, source);
@@ -935,7 +955,7 @@ _e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_T;
    _e_border_moveinfo_gather(bd, source);
@@ -950,7 +970,7 @@ _e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_TR;
    _e_border_moveinfo_gather(bd, source);
@@ -964,7 +984,7 @@ _e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_R;
    _e_border_moveinfo_gather(bd, source);
@@ -978,7 +998,7 @@ _e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_BR;
    _e_border_moveinfo_gather(bd, source);
@@ -992,7 +1012,7 @@ _e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_B;
    _e_border_moveinfo_gather(bd, source);
@@ -1006,7 +1026,7 @@ _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *em
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_BL;
    _e_border_moveinfo_gather(bd, source);
@@ -1020,7 +1040,7 @@ _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emi
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    bd->resize_mode = RESIZE_L;
    _e_border_moveinfo_gather(bd, source);
@@ -1035,7 +1055,7 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
    
    bd = data;
 
-   if (bd->shaded) return;
+   if (bd->shaded || bd->maximized) return;
 
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
@@ -1750,6 +1770,15 @@ _e_border_eval(E_Border *bd)
 	bd->changes.visible = 0;
      }
 
+   if ((bd->changes.shading))
+     {
+       /* FIXME support other directions */
+	bd->changes.shading = 0;
+	bd->changes.size = 1;
+
+	/*  show at start of unshade (but don't hide until end of shade) */
+	if (bd->shaded) ecore_x_window_show(bd->client.shell_win);
+     }
    if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
      {
 	if (bd->shaded)
@@ -1788,7 +1817,29 @@ _e_border_eval(E_Border *bd)
    if ((bd->changes.pos) && (bd->changes.size))
      {
 	printf("border move resize\n");
-	if (bd->shaded)
+	if (bd->shading)
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     evas_obscured_rectangle_add(bd->bg_evas,
+					 bd->client_inset.l, bd->client_inset.t,
+					 bd->w - (bd->client_inset.l + bd->client_inset.r),
+					 bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_resize(bd->win, bd->w, bd->h);
+	     /* make sure the shell win doesn't cover up the borders */
+	     /* FIXME could we just do this normally? */
+	     ecore_x_window_move_resize(bd->client.shell_win, 
+					bd->client_inset.l, bd->client_inset.t,
+					bd->w - (bd->client_inset.l + bd->client_inset.r),
+					bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	     e_container_shape_move(bd->shape, bd->x, bd->y);
+	  }
+	else if (bd->shaded)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
@@ -1832,7 +1883,27 @@ _e_border_eval(E_Border *bd)
    else if (bd->changes.size)
      {
 	printf("border move resize\n");
-	if (bd->shaded)
+	if (bd->shading)
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     evas_obscured_rectangle_add(bd->bg_evas,
+					 bd->client_inset.l, bd->client_inset.t,
+					 bd->w - (bd->client_inset.l + bd->client_inset.r), bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_resize(bd->win, bd->w, bd->h);
+	     /* make sure the shell win doesn't cover up the borders */
+	     /* FIXME could we just do this normally? */
+	     ecore_x_window_move_resize(bd->client.shell_win, 
+					bd->client_inset.l, bd->client_inset.t,
+					bd->w - (bd->client_inset.l + bd->client_inset.r),
+					bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	  }
+	else if (bd->shaded)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
@@ -2005,3 +2076,55 @@ _e_border_resize_handle(E_Border *bd)
 	  
    e_border_move_resize(bd, x, y, w, h);
 }
+
+static int
+_e_border_shade_animator(void *data)
+{
+   E_Border *bd = data;
+   double dt;
+   double dur = 0.15; /* FIXME make this configurable */
+
+   dt = ecore_time_get() - bd->shade.start;
+
+   if (bd->shaded)
+     bd->shade.val = dt / dur; /* unshading */
+   else
+     bd->shade.val = 1 - (dt / dur); /* shading */
+
+   if (bd->shade.val < 0.0) bd->shade.val = 0.0;
+   else if (bd->shade.val > 1.0) bd->shade.val = 1.0;
+
+
+   /* FIXME support other directions */
+   bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
+   
+   bd->changes.size = 1;
+   bd->changed = 1;
+
+   if ( (bd->shaded && (bd->shade.val == 1)) ||
+        (!(bd->shaded) && (bd->shade.val == 0)) )
+     {
+	bd->shading = 0;
+	bd->shaded = !(bd->shaded);
+	printf("shaded: %d\n", bd->shaded);
+	bd->changes.size = 1;
+	bd->changes.shaded = 1;
+	bd->changes.shading = 1;
+	bd->changed = 1;
+
+	if (bd->shaded)
+	  {
+	     bd->h = bd->client_inset.t + bd->client_inset.b;
+	     edje_object_signal_emit(bd->bg_object, "shaded", "");
+	  }
+	else
+	  {
+	     bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
+	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
+	  }
+	return 0;
+     }
+
+   return 1;
+}
+

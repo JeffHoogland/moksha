@@ -113,6 +113,7 @@ struct _E_Border
    unsigned char   focused : 1;
    unsigned char   new_client : 1;
    unsigned char   re_manage : 1;
+   unsigned char   shading : 1;
    unsigned char   shaded : 1;
    unsigned char   maximized : 1;
    unsigned char   minimized : 1;
@@ -127,6 +128,12 @@ struct _E_Border
    } saved;
 
    struct {
+      double start;
+      double val;
+      Ecore_Animator *anim;
+   } shade;
+
+   struct {
       unsigned int visible : 1;
       unsigned int pos : 1;
       unsigned int size : 1;
@@ -134,6 +141,7 @@ struct _E_Border
       unsigned int prop : 1;
       unsigned int border : 1;
       unsigned int reset_gravity : 1;
+      unsigned int shading : 1;
       unsigned int shaded : 1;
    } changes;
 };
