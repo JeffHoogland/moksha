@@ -84,6 +84,15 @@ e_app_shutdown(void)
 	ecore_event_handler_del(_e_apps_exit_handler);
 	_e_apps_exit_handler = NULL;
      }
+     {
+	Evas_List *l;
+	for (l = _e_apps_list; l; l = l->next)
+	  {
+	     E_App *a;
+	     a = l->data;
+	     printf("BUG: %d %s\n", E_OBJECT(a)->references, a->path);
+	  }
+     }
    return 1;
 }
 
@@ -349,9 +358,16 @@ _e_app_free(E_App *a)
 	
 	a2 = a->subapps->data;
 	a->subapps = evas_list_remove_list(a->subapps, a->subapps);
-	/* Only remove the parent if it is us. */
 	if (a2->parent == a)
-	  a2->parent = NULL;
+	  {
+	     /* If we are the parent, remove us */
+	     a2->parent = NULL;
+	  }
+	else
+	  {
+	     /* We have a reference */
+	     a2->references = evas_list_remove(a2->references, a);
+	  }
 	e_object_unref(E_OBJECT(a2));
      }
    for (l = a->references; l; l = l->next)
@@ -359,7 +375,8 @@ _e_app_free(E_App *a)
 	E_App *a2;
 
 	a2 = l->data;
-	a2->subapps = evas_list_remove(a2->subapps, a);
+	if (a2)
+	  a2->subapps = evas_list_remove(a2->subapps, a);
      }
    evas_list_free(a->references);
 
@@ -719,6 +736,8 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	   case ECORE_FILE_EVENT_CREATED:
 	      /* If a file is created, wait for the directory change to update
 	       * the eapp. */
+	      /* FIXME: If in a main repository, check if someone else wants this
+	       * file! */
 	      break;
 	   case ECORE_FILE_EVENT_DELETED:
 	      /* If something is deleted, mark it as deleted
@@ -782,6 +801,8 @@ _e_app_subdir_rescan(E_App *app)
 	if (!a2)
 	  {
 	     /* Do we have a reference? */
+	     /* FIXME: Keep the reference, or check if a file
+	      * has appeared locally? */
 	     Evas_List *pl;
 
 	     pl = _e_apps_repositories;
@@ -795,6 +816,7 @@ _e_app_subdir_rescan(E_App *app)
 	if (!a2)
 	  {
 	     /* If we still haven't found it, it is new! */
+	     snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
 	     a2 = e_app_new(buf, 1);
 	     if (a2)
 	       {
@@ -857,6 +879,7 @@ _e_app_subdir_rescan(E_App *app)
 	     changes = evas_list_append(changes, ch);
 	  }
      }
+   /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);
    app->subapps = subapps;
    ch = calloc(1, sizeof(E_App_Change_Info));
