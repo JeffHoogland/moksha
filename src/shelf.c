@@ -50,6 +50,30 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
 	mv_prev_y = y;
 	sh->state.moving = 1;
      }
+   if (!strcmp(class, "Resize"))
+     {
+	mv_prev_x = x;
+	mv_prev_y = y;
+	sh->state.resizing = 1;
+     }
+   if (!strcmp(class, "Resize_Horizontal"))
+     {
+	mv_prev_x = x;
+	mv_prev_y = y;
+	sh->state.resizing = 1;
+     }
+   if (!strcmp(class, "Resize_Vertical"))
+     {
+	mv_prev_x = x;
+	mv_prev_y = y;
+	sh->state.resizing = 1;
+     }
+   if (!strcmp(class, "Menu"))
+     {
+     }
+   if (!strcmp(class, "Close"))
+     {
+     }
    return;
    UN(o);
    UN(bt);
@@ -66,6 +90,7 @@ e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
    
    sh = data;
    if (sh->state.moving) sh->state.moving = 0;
+   if (sh->state.resizing) sh->state.resizing = 0;
    return;
    UN(o);
    UN(bt);
@@ -86,6 +111,15 @@ e_cb_mouse_move(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
 	e_shelf_move_by(sh, x - mv_prev_x, y - mv_prev_y);
 	mv_prev_x = x;
 	mv_prev_y = y;
+     }
+   if (sh->state.resizing)
+     {
+	if (sh->state.resizing == 1)
+	  {
+	     e_shelf_resize_by(sh, x - mv_prev_x, y - mv_prev_y);
+	     mv_prev_x = x;
+	     mv_prev_y = y;	     
+	  }
      }
    return;
    UN(o);
