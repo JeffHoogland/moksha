@@ -14,7 +14,8 @@ setup ()
 
 finish ()
 {
-  edb_ed $DB add "/menu/count" int $MENUNUM
+  N=$[ $MENUNUM + 1 ];
+  edb_ed $DB add "/menu/count" int $N
 }
 
 menu ()

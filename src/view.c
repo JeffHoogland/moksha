@@ -52,7 +52,7 @@ e_view_selection_update(E_View *v)
      {
 	Evas_Gradient grad;
 	
-	/*create select objects */
+	/* create select objects */
 	v->select.obj.middle = evas_add_rectangle(v->evas);	
 	evas_set_color(v->evas, v->select.obj.middle,
 		       v->select.config.middle.r,
@@ -581,8 +581,8 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
      {
 	if (min_x) *min_x = 0;
 	if (min_y) *min_y = 0;
-	if (max_x) *max_x = 0;
-	if (max_y) *max_y = 0;
+	if (max_x) *max_x = 1;
+	if (max_y) *max_y = 1;
 	return;
      }
    for (l = v->icons; l; l = l->next)
@@ -595,6 +595,8 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
 	if (ic->geom.x + ic->geom.w > x2) x2 = ic->geom.x + ic->geom.w;
 	if (ic->geom.y + ic->geom.h > y2) y2 = ic->geom.y + ic->geom.h;
      }
+   if (x1 > 0) x1 = 0;
+   if (y1 > 0) y1 = 0;
    if (min_x) *min_x = x1;
    if (min_y) *min_y = y1;
    if (max_x) *max_x = x2 - 1;
@@ -640,6 +642,86 @@ void
 e_view_scroll_by(E_View *v, int sx, int sy)
 {
    e_view_scroll_to(v, v->scroll.x + sx, v->scroll.y + sy);
+}
+
+void
+e_view_scroll_to_percent(E_View *v, double psx, double psy)
+{
+   int min_x, min_y, max_x, max_y;
+   int sx, sy;
+   
+   e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
+   sx = (psx * ((double)max_x - (double)min_x)) - min_x;
+   sy = (psy * ((double)max_y - (double)min_y)) - min_y;
+   if (sx < v->size.w - v->spacing.window.r - max_x)
+     sx = v->size.w - v->spacing.window.r - max_x;
+   if (sx > v->spacing.window.l - min_x)
+     sx = v->spacing.window.l - min_x;
+   if (sy < v->size.h - v->spacing.window.b - max_y)
+     sy = v->size.h - v->spacing.window.b - max_y;
+   if (sy > v->spacing.window.t - min_y)
+     sy = v->spacing.window.t - min_y;
+   if ((sx == v->scroll.x) && (v->scroll.y == sy)) return;
+   v->scroll.x = sx;
+   v->scroll.y = sy;
+   e_view_icons_apply_xy(v);
+   if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+}
+
+void
+e_view_get_viewable_percentage(E_View *v, double *vw, double *vh)
+{
+   int min_x, min_y, max_x, max_y;
+   double p;
+   
+   e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
+   if (min_x == max_x)
+     {
+	if (vw) *vw = 0;
+     }
+   else
+     {
+	p = ((double)(v->size.w - v->spacing.window.l - v->spacing.window.r)) /
+	  ((double)(max_x - min_x));
+	if (vw) *vw = p;
+     }
+   if (min_y == max_y)
+     {
+	if (vh) *vh = 0;
+     }
+   else
+     {
+	p = ((double)(v->size.h - v->spacing.window.t - v->spacing.window.b)) /
+	  ((double)(max_y - min_y));
+	if (vh) *vh = p;
+     }
+}
+
+void
+e_view_get_position_percentage(E_View *v, double *vx, double *vy)
+{
+   int min_x, min_y, max_x, max_y;
+   double p;
+   
+   e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
+   if (min_x == max_x)
+     {
+	if (vx) *vx = 0;
+     }
+   else
+     {
+	p = ((double)(v->scroll.x - min_x)) / ((double)(max_x - min_x));
+	if (vx) *vx = p;
+     }
+   if (min_y == max_y)
+     {
+	if (vy) *vy = 0;
+     }
+   else
+     {
+	p = ((double)(v->scroll.y - min_y)) / ((double)(max_y - min_y));
+	if (vy) *vy = p;
+     }
 }
 
 static void
@@ -1045,6 +1127,7 @@ e_configure(Eevent * ev)
 		    }
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
+		  e_view_scroll_to(v, v->scroll.x, v->scroll.y);
 		  e_view_arrange(v);
 		  e_view_queue_geometry_record(v);
 	       }
@@ -1209,7 +1292,7 @@ e_key_down(Eevent * ev)
 	       }
 	     else if (!strcmp(e->key, "Right"))
 	       {
-		  e_view_scroll_by(v, 0, 8);
+		  e_view_scroll_by(v, -8, 0);
 	       }
 	     else if (!strcmp(e->key, "Escape"))
 	       {

@@ -183,6 +183,9 @@ void      e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x
 void      e_view_icons_apply_xy(E_View *v);
 void      e_view_scroll_to(E_View *v, int sx, int sy);
 void      e_view_scroll_by(E_View *v, int sx, int sy);
+void      e_view_scroll_to_percent(E_View *v, double psx, double psy);
+void      e_view_get_viewable_percentage(E_View *v, double *vw, double *vh);
+void      e_view_get_position_percentage(E_View *v, double *vx, double *vy);
 void      e_view_icon_update_state(E_Icon *ic);
 void      e_view_icon_invert_selection(E_Icon *ic);
 void      e_view_icon_select(E_Icon *ic);
