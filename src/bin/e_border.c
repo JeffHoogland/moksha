@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+//#define INOUTDEBUG 1
+
 #define RESIZE_NONE 0
 #define RESIZE_TL   1
 #define RESIZE_T    2
@@ -647,7 +649,29 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if (bd->client.icccm.take_focus)
 	       {
 //		  printf("take focus!\n");
-		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+/* this is a problem - basically we ASK the client to TAKE the focus itself
+ * BUT if a whole stream of events is happening, the client may take the focus
+ * LATER after we have gone and reset it back to somewhere else, thus it steals
+ * the focus away from where it should be (due to x being async etc.). no matter
+ * how nice and ICCCM this is - it's a major design flaw (imho) in ICCCM as it
+ * becomes nigh impossible for the wm then to re-serialise events and get the
+ * focus back to where it should be.
+ * 
+ * example scenario of the bug:
+ * 
+ * mouse enter window X
+ * wm set focus to X
+ * mouse leaves window X
+ * remove focus from window X
+ * mouse enters window Y
+ * wm asks client Y to "take the focus"
+ * mouse instantly moves back to window X
+ * wm sets focus on X
+ * suddenly focus is stolen by client Y as it finally recieved the request and took the focus
+ * 
+ * now the focus is on Y where it should be on X
+ */
+//		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
 		  e_hints_active_window_set(bd->container->manager, bd->client.win);
 		  ecore_x_window_focus(bd->client.win);
 	       }
@@ -1476,7 +1500,37 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-//   printf("f IN  %i | %i\n", e->mode, e->detail);
+#ifdef INOUTDEBUG   
+     {
+	time_t t;
+	char *ct;
+
+	const char *modes[] = {
+	     "MODE_NORMAL",
+	     "MODE_WHILE_GRABBED",
+	     "MODE_GRAB",
+	     "MODE_UNGRAB"
+	};
+	const char *details[] = {
+	     "DETAIL_ANCESTOR",
+	     "DETAIL_VIRTUAL",
+	     "DETAIL_INFERIOR",
+	     "DETAIL_NON_LINEAR",
+	     "DETAIL_NON_LINEAR_VIRTUAL",
+	     "DETAIL_POINTER",
+	     "DETAIL_POINTER_ROOT",
+	     "DETAIL_DETAIL_NONE"
+	};
+	t = time(NULL);
+	ct = ctime(&t);
+	ct[strlen(ct) - 1] = 0;
+	printf("FF ->IN 0x%x %s md=%s dt=%s\n",
+	       e->win,
+	       ct,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
+#endif   
    e_border_focus_set(bd, 1, 0);
    return 1;
 }
@@ -1490,6 +1544,37 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+#ifdef INOUTDEBUG   
+     {
+	time_t t;
+	char *ct;
+
+	const char *modes[] = {
+	     "MODE_NORMAL",
+	     "MODE_WHILE_GRABBED",
+	     "MODE_GRAB",
+	     "MODE_UNGRAB"
+	};
+	const char *details[] = {
+	     "DETAIL_ANCESTOR",
+	     "DETAIL_VIRTUAL",
+	     "DETAIL_INFERIOR",
+	     "DETAIL_NON_LINEAR",
+	     "DETAIL_NON_LINEAR_VIRTUAL",
+	     "DETAIL_POINTER",
+	     "DETAIL_POINTER_ROOT",
+	     "DETAIL_DETAIL_NONE"
+	};
+	t = time(NULL);
+	ct = ctime(&t);
+	ct[strlen(ct) - 1] = 0;
+	printf("FF <-OUT 0x%x %s md=%s dt=%s\n",
+	       e->win,
+	       ct,
+	       modes[e->mode],
+	       details[e->detail]);
+     }
+#endif   
    if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
      {
 	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
@@ -1515,7 +1600,6 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
-//   printf("f OUT %i | %i\n", e->mode, e->detail);
    e_border_focus_set(bd, 0, 0);
    return 1;
 }
@@ -1855,6 +1939,9 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	  return 1;
  */
 	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
+	  return 1;
+	if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
+	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
 	e_border_focus_set(bd, 0, 1);
      }
