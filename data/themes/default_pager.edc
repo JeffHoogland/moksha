@@ -50,6 +50,7 @@ group {
 	    image {
 	       normal: "e17_ibar_over_h.png";
 	       border: 13 13 13 13;
+	       middle: 0;
 	    }
 	    fill {
 	       smooth: 0;
@@ -120,6 +121,10 @@ group {
 	    image {
 	       normal: "e17_pager_desk.png";
 	       border: 2 2 2 2;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	    color: 255 255 255 64;
 	 }
@@ -185,6 +190,9 @@ group {
 	       normal: "e17_titlebar_glint1.png";
 	       border: 5 0 5 0;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
 	 description {
 	    state:    "active" 0.0;
@@ -216,6 +224,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_glint2.png";
 	       border: 0 0 5 5;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
 	 description {
@@ -292,6 +303,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_glint3.png";
 	       border: 0 5 0 5;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
 	 description {

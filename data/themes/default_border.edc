@@ -22,6 +22,9 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	       normal: "e17_mini_button_shadow2.png"; \
 	       border: 8 8 8 8; \
 	    } \
+	    fill { \
+	       smooth: 0; \
+	    } \
 	    color: 255 255 255 255; \
 	 } \
 	 description { \
@@ -40,6 +43,9 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	    image { \
 	       normal: "e17_mini_button_shadow2.png"; \
 	       border: 8 8 8 8; \
+	    } \
+	    fill { \
+	       smooth: 0; \
 	    } \
 	    color: 255 255 255 0; \
 	 } \
@@ -64,6 +70,9 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	       normal: "e17_mini_button_shadow1.png"; \
 	       border: 8 8 8 8; \
 	    } \
+	    fill { \
+	       smooth: 0; \
+	    } \
 	    color:  255 255 255 255; \
 	 } \
 	 description { \
@@ -82,6 +91,9 @@ BORDER_BUTTON_ADV(NAME,TYPE,REL1X,REL1Y,OFF1X,OFF1Y,TO1,TO1,REL2X,REL2Y,OFF2X,OF
 	    image { \
 	       normal: "e17_mini_button_shadow1.png"; \
 	       border: 8 8 8 8; \
+	    } \
+	    fill { \
+	       smooth: 0; \
 	    } \
 	    color:  255 255 255 0; \
 	 } \
@@ -284,6 +296,9 @@ group {
 	       normal: "e17_border1.png";
 	       border: 6 2 3 3;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
       }
       part {
@@ -306,6 +321,9 @@ group {
 	       normal: "e17_border2.png";
 	       border: 2 2 3 3;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
       }
       part {
@@ -326,6 +344,9 @@ group {
 	    image {
 	       normal: "e17_border3.png";
 	       border: 3 6 3 3;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
       }
@@ -368,6 +389,9 @@ group {
 	    image {
 	       normal: "e17_border5.png";
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
       }
       part {
@@ -408,6 +432,9 @@ group {
 	    }
 	    image {
 	       normal: "e17_border7.png";
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
       }
@@ -510,6 +537,9 @@ group {
 	       normal: "e17_titlebar_shadow2.png";
 	       border: 8 8 8 8;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	    color: 255 255 255 0;
 	 }
 	 description {
@@ -528,6 +558,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_shadow2.png";
 	       border: 8 8 8 8;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	    color: 255 255 255 255;
 	 }
@@ -552,6 +585,9 @@ group {
 	       normal: "e17_titlebar_shadow1.png";
 	       border: 8 8 8 8;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	    color: 255 255 255 0;
 	 }
 	 description {
@@ -570,6 +606,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_shadow1.png";
 	       border: 8 8 8 8;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	    color: 255 255 255 255;
 	 }
@@ -686,6 +725,9 @@ group {
 	       normal: "e17_titlebar_glint1.png";
 	       border: 5 0 5 0;
 	    }
+	    fill {
+	       smooth: 0;
+	    }
 	 }
 	 description {
 	    state:    "active" 0.0;
@@ -717,6 +759,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_glint2.png";
 	       border: 0 0 5 5;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
 	 description {
@@ -793,6 +838,9 @@ group {
 	    image {
 	       normal: "e17_titlebar_glint3.png";
 	       border: 0 5 0 5;
+	    }
+	    fill {
+	       smooth: 0;
 	    }
 	 }
 	 description {
