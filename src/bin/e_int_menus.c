@@ -301,6 +301,8 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	     e_object_free(E_OBJECT(mi));
 	  }
      }
+   evas_list_free(m->items);
+   m->items = NULL;
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Add New Desktop");
@@ -387,18 +389,6 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    E_Menu *root;
 
    if (m->realized) return;
-
-   /* clear the list */
-   if (m->items)
-     {
-	Evas_List *l;
-	for (l = m->items; l; l = l->next)
-	  {
-	     E_Menu_Item *mi = l->data;
-	     e_object_free(E_OBJECT(mi));
-	  }
-	
-     }
 
    root = e_menu_root_get(m);
    /* get the current containers clients */
