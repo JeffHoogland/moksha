@@ -714,8 +714,15 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       if (left <= p->xx && p->xx < right && top <= p->yy && p->yy < bottom)
 		 {
 		    desk = e_desk_at_xy_get(zone, x, y);
-		    e_desk_show(desk);
-		    _pager_desk_set(p, desk);
+		    if (desk)
+		      {
+			 e_desk_show(desk);
+			 _pager_desk_set(p, desk);
+		      }
+		    else
+		      {
+			 printf("PAGER ERROR - %d, %d seems to be out of bounds\n", x, y);
+		      }
 		 }
 	    }
      }
