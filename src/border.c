@@ -1347,11 +1347,12 @@ e_border_new(void)
    
    e_window_raise(b->win.input);
    e_window_raise(b->win.container);
+/*   
    e_window_raise(b->win.l);
    e_window_raise(b->win.r);
    e_window_raise(b->win.t);
    e_window_raise(b->win.b);
-   
+*/   
    evases = evas_list_append(evases, b->evas.l);
    evases = evas_list_append(evases, b->evas.r);
    evases = evas_list_append(evases, b->evas.t);
