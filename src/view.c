@@ -472,6 +472,7 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     v->select.h = _y - v->select.down.y + 1;
 	  }
 	e_view_selection_update(v);
+
      }
 
    D_RETURN;
@@ -1883,6 +1884,8 @@ e_view_icon_cleanup(E_Icon *ic)
 {
    D_ENTER;
    
+   /* FIXME: free stuff here! this leaks ...
+
    e_object_cleanup(E_OBJECT(ic));
 
    D_RETURN;
@@ -2329,6 +2332,7 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
 	  }
 	ic->info.icon = strdup(icon);
      }
+
    e_view_icon_update_state(ic);
 
    D_RETURN;
@@ -2515,6 +2519,8 @@ e_view_cleanup(E_View *v)
    v->restarter = NULL;
    ecore_window_destroy(v->win.base);
    
+   /* FIXME: clean up the rest!!! this leaks ... */
+
    /* Call the destructor of the base class */
    e_object_cleanup(E_OBJECT(v));
 
