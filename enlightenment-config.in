@@ -39,9 +39,7 @@ while test $# -gt 0; do
       echo @VERSION@
       ;;
     --cflags)
-      if test @includedir@ != /usr/include ; then
-        includes=-I@includedir@
-      fi
+      includes=-I@includedir@/enlightenment
       echo $includes
       ;;
     --libs)
