@@ -58,6 +58,10 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)
+* edit mode keybindings :)
+* "start button" module to pop up the e menu (left mouse right now)
+* edge flip for vd's
 * click to focus
 * gettext support/wrapper
 * language selector wrapper
