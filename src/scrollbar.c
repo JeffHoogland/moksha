@@ -353,6 +353,7 @@ e_scrollbar_set_value(E_Scrollbar *sb, double val)
 {
    if (sb->val == val) return;
    if (val > sb->max - sb->range) val = sb->max - sb->range;
+   if (val < 0 ) val = 0;
    sb->val = val;
    e_scrollbar_recalc(sb);
    if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);

@@ -343,7 +343,9 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       static E_Menu *menu = NULL;
 		       menu = buildmenu->menu;
 		       if (menu)
-			 e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+			 {
+			    e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+			 }		       
 		    }
 	       }
 	  }

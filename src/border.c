@@ -1220,6 +1220,7 @@ e_border_adopt(Window win, int use_client_pos)
         int pl, pr, pt, pb;
 	
 	pl = pr = pt = pb = 0;
+	x = y = 0;
 	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
 	bw *= 2;
 	if (b->client.pos.requested)
