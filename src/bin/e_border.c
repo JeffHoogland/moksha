@@ -230,7 +230,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
-   ecore_evas_show(bd->bg_ecore_evas);
    bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
    ecore_x_window_container_manage(bd->client.shell_win);
    ecore_x_window_client_manage(win);
@@ -1074,6 +1073,7 @@ e_border_idler_before(void)
 	bd = l->data;
 	if ((bd->changes.visible) && (bd->visible))
 	  {
+	     ecore_evas_show(bd->bg_ecore_evas);
 	     ecore_x_window_show(bd->win);
 	     bd->changes.visible = 0;
 	  }
@@ -1087,6 +1087,7 @@ e_border_idler_before(void)
 	if ((bd->changes.visible) && (!bd->visible))
 	  {
 	     ecore_x_window_hide(bd->win);
+	     ecore_evas_hide(bd->bg_ecore_evas);
 	     bd->changes.visible = 0;
 	  }
 	if (bd->changed) _e_border_eval(bd);
@@ -3537,6 +3538,9 @@ _e_border_resize_begin(E_Border *bd)
    if (resize_ee) ecore_evas_free(resize_ee);
    resize_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
 					     0, 0, 10, 10);
+   ecore_evas_override_set(resize_ee, 1);
+   ecore_evas_software_x11_direct_resize_set(resize_ee, 1);
+   e_canvas_add(resize_ee);
    ecore_evas_borderless_set(resize_ee, 1);
    ecore_evas_layer_set(resize_ee, 999);
    ecore_evas_show(resize_ee);

@@ -67,11 +67,13 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    x = (man->w - error_w) / 2;
    y = (man->h - error_h) / 2;
    ee = ecore_evas_software_x11_new(NULL, man->win, x, y, error_w, error_h);
+   ecore_evas_override_set(ee, 1);
    ecore_evas_software_x11_direct_resize_set(ee, 1);
    e_canvas_add(ee);
 
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");
+//   ecore_evas_avoid_damage_set(ee, 1);
    e = ecore_evas_get(ee);
    e_pointer_ecore_evas_set(ee);
 

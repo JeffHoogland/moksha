@@ -987,6 +987,7 @@ _e_menu_realize(E_Menu *m)
    m->ecore_evas = ecore_evas_software_x11_new(NULL, m->zone->container->win, 
 					       m->cur.x, m->cur.y, 
 					       m->cur.w, m->cur.h);
+   ecore_evas_software_x11_direct_resize_set(m->ecore_evas, 1);
    e_canvas_add(m->ecore_evas);
    m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);
@@ -1000,7 +1001,6 @@ _e_menu_realize(E_Menu *m)
    m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
-   ecore_evas_show(m->ecore_evas);
    
    o = edje_object_add(m->evas);
    m->bg_object = o;
