@@ -1138,10 +1138,8 @@ e_border_adopt(Window win, int use_client_pos)
 {
    E_Border *b;
    int bw;
-   static int bd_count = 0;
    
    /* create the struct */
-   printf("new bd %i\n", bd_count++);
    b = e_border_new();
    /* set the right event on the client */
    e_window_set_events(win, 
