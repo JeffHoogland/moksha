@@ -2165,7 +2165,6 @@ e_view_free(E_View *v)
    if (v->restarter)
      e_fs_del_restart_handler(v->restarter);
    v->restarter = NULL;
-   e_del_child(v->win.base, v->win.main);   
    e_window_destroy(v->win.base);
    FREE(v);
 }

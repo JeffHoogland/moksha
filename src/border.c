@@ -1480,10 +1480,6 @@ e_border_free(E_Border *b)
    evas_free(b->evas.r);
    evas_free(b->evas.t);
    evas_free(b->evas.b);
-   e_del_child(b->win.main, b->win.l);
-   e_del_child(b->win.main, b->win.r);
-   e_del_child(b->win.main, b->win.t);
-   e_del_child(b->win.main, b->win.b);
    e_window_destroy(b->win.container);
    e_window_destroy(b->win.input);
    e_window_destroy(b->win.main);
