@@ -27,6 +27,9 @@ e_file_new(char *file)
    E_File *f;
    D_ENTER;
 
+   if (!file || *file == 0)
+     D_RETURN_(NULL);
+
    f = NEW(E_File, 1);
    
    e_object_init(E_OBJECT(f), 
@@ -47,8 +50,13 @@ e_file_get_by_name(Evas_List l, char *file)
 {
    Evas_List ll;
    E_File *f;
+
    D_ENTER;
-   for (ll=l;ll;ll=ll->next)
+
+   if (!l || !file || *file == 0)
+     D_RETURN_(NULL);
+
+   for (ll=l; ll; ll=ll->next)
    {
       f = (E_File*) ll->data;
 
@@ -57,6 +65,7 @@ e_file_get_by_name(Evas_List l, char *file)
 	 D_RETURN_(f);
       }
    }
+
    D_RETURN_(NULL);
 }
 
@@ -68,15 +77,20 @@ e_file_set_mime(E_File *f, char *base, char *mime)
    char *p;
 
    D_ENTER;
+
+   if (!f || !base || !mime)
+     D_RETURN;
+
    D("Setting mime: %40s: %s/%s\n", f->file, base, mime);
+
+
    if ( ((f->info.mime.base) && !(strcmp(f->info.mime.base, base)))
-      &&((f->info.mime.type) && !(strcmp(f->info.mime.type, mime))))
-      D_RETURN;
+	&&((f->info.mime.type) && !(strcmp(f->info.mime.type, mime))))
+     D_RETURN;
+
+   IF_FREE(f->info.mime.base);
+   IF_FREE(f->info.mime.type);
    
-   if (f->info.mime.base) 
-      free(f->info.mime.base);
-   if (f->info.mime.type) 
-      free(f->info.mime.type);
    f->info.mime.base = strdup(base);
    f->info.mime.type = strdup(mime);
    
@@ -125,6 +139,9 @@ e_file_set_link(E_File *f, char *link)
 {
    D_ENTER;
 
+   if (!f)
+     D_RETURN;
+
    if ((!link) && (f->info.link))
      {
 	free(f->info.link);
@@ -140,5 +157,6 @@ e_file_set_link(E_File *f, char *link)
 	     /* effect changes here */
 	  }
      }
+
    D_RETURN;
 }

@@ -9,12 +9,16 @@ void
 e_view_machine_init()
 {
    D_ENTER;
-   /* FIXME make this a singleton */
-   VM= NEW(E_View_Model, 1);
-   VM->views = NULL;
-   VM->models = NULL;
-   e_view_init();
-   e_view_model_init();
+   
+   if (VM == NULL)
+     {
+       VM = NEW(E_View_Model, 1);
+       VM->views = NULL;
+       VM->models = NULL;
+       e_view_init();
+       e_view_model_init();
+     }
+
    D_RETURN;
 }
 
@@ -41,44 +45,58 @@ e_view_machine_unregister_view(E_View *v)
 
 
 static E_View_Model *
-get_model_from_realpath(char *path)   
+view_model_lookup(char *path)
 {
    E_View_Model *m;
    Evas_List l;
+   char      *realpath = NULL;
 
    D_ENTER;
-   if (path)
-   {
-      for (l=VM->models; l; l = l->next)
-      {
-	 m = l->data;
-	 if (!strcmp(m->dir, path))
+
+   if (!path)
+     D_RETURN_(NULL);
+     
+   realpath = e_file_realpath(path);
+
+   for (l=VM->models; l; l = l->next)
+     {
+       m = l->data;
+       if (!strcmp(m->dir, realpath))
 	 {
-	    D("Model for this dir already exists\n");
-	    e_object_ref (E_OBJECT(m));
-	    D_RETURN_(m);
+	   D("Model for this dir already exists\n");
+
+	   IF_FREE(realpath);
+
+	   e_object_ref (E_OBJECT(m));	   
+	   D_RETURN_(m);
 	 }
-      }
-   }
+     }
+
+   IF_FREE(realpath);
    D_RETURN_(NULL);
 }
+
 
 void
 e_view_machine_get_model(E_View *v, char *path, int is_desktop)
 {
    E_View_Model *m = NULL;
-   char *realpath;
    char buf[PATH_MAX];
 
    D_ENTER;
-   realpath = e_file_realpath(path);
-   if (!(m = get_model_from_realpath(realpath)))
+
+   if (!v || !path || *path == 0)
+     D_RETURN;
+
+   if (!(m = view_model_lookup(path)))
    {
-      D("Model for this dir doesnt exist, make a new one\n");
+      D("Model for this dir doesn't exist, make a new one\n");
+
       m = e_view_model_new();
       VM->models = evas_list_append(VM->models, m);
       e_view_model_set_dir(m, path);
-      snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", realpath);
+
+      snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", m->dir);
       if (!e_file_exists(buf))
       {
 	 if (is_desktop)
@@ -93,6 +111,7 @@ e_view_machine_get_model(E_View *v, char *path, int is_desktop)
       e_strdup(m->bg_file, buf);
       m->is_desktop = is_desktop;
    }
+
    if (m)
    {
       v->model = m;   
@@ -106,5 +125,6 @@ e_view_machine_get_model(E_View *v, char *path, int is_desktop)
    {
       /* FIXME error handling */
    }  
+
    D_RETURN;
 }

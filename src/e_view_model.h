@@ -23,7 +23,10 @@ typedef struct _E_View_Model E_View_Model;
 struct _E_View_Model
 {
    E_Object               o;
+
+   /* The realpath of the view's directory */
    char                  *dir;
+
    Evas_List              files;
 
    Evas_Object            obj_bg;
@@ -34,7 +37,9 @@ struct _E_View_Model
    
    int                    monitor_id;
 
+   /* A list of all the views for which a model is sharing data */
    Evas_List              views;
+
    int                    is_desktop;
 };
 
@@ -47,8 +52,8 @@ struct _E_View_Model
  */
 void e_view_model_set_dir(E_View_Model *m, char *dir);
 
-E_View_Model * e_view_model_new();
-void e_view_model_init();
+E_View_Model * e_view_model_new(void);
+void e_view_model_init(void);
 
 E_View_Model * e_view_model_find_by_monitor_id(int id);
 

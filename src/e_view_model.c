@@ -22,7 +22,7 @@ static void e_view_model_set_default_background(E_View_Model *m);
 static void e_view_model_redraw_views(E_View_Model *m);
 
 void
-e_view_model_init()
+e_view_model_init(void)
 {
    D_ENTER;
    e_fs_add_event_handler(e_view_model_handle_fs);
@@ -33,6 +33,9 @@ static void
 e_view_model_cleanup(E_View_Model *m)
 {
    D_ENTER;
+   
+   if (!m)
+     D_RETURN;
 
    efsd_stop_monitor(e_fs_get_connection(), m->dir, TRUE);
    if (m->restarter)
@@ -47,7 +50,7 @@ e_view_model_cleanup(E_View_Model *m)
 }
 
 E_View_Model *
-e_view_model_new ()
+e_view_model_new (void)
 {
    E_View_Model *m;
    
@@ -71,13 +74,17 @@ e_view_model_redraw_views(E_View_Model *m)
    E_View *v;
    D_ENTER;
 
+   if (!m)
+     D_RETURN;
+
    /* set the dirty flag of all views. the next time the idle
     * handler calls update_views, they'll be redrawn */
-   for (l=m->views;l;l=l->next)
+   for (l = m->views; l; l=l->next)
    {
       v = l->data;
       v->changed = 1;
    }
+
    D_RETURN;
 }
 
@@ -86,15 +93,23 @@ e_view_model_set_default_background(E_View_Model *m)
 {
    char buf[PATH_MAX];
    D_ENTER;
+
+   if (!m)
+     D_RETURN;
+
    IF_FREE(m->bg_file);
+
    if (m->is_desktop)
       snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
    else
       snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
+
    e_strdup(m->bg_file, buf);
    snprintf(buf, PATH_MAX, "background_reload:%s", m->dir);
+
    ecore_add_event_timer(buf, 0.5, 
-	 e_view_model_bg_reload_timeout, 0, m);
+			 e_view_model_bg_reload_timeout, 0, m);
+
    D_RETURN;
 }
 
@@ -129,12 +144,16 @@ e_view_model_set_dir(E_View_Model *m, char *dir)
 {
    D_ENTER;
 
+   if (!m)
+     D_RETURN;
+
    /* stop monitoring old dir */
    if ((m->dir) && (m->monitor_id))
      {
 	efsd_stop_monitor(e_fs_get_connection(), m->dir, TRUE);
 	m->monitor_id = 0;
      }
+
    IF_FREE(m->dir);
    m->dir = e_file_realpath(dir);
 
@@ -159,6 +178,9 @@ static void
 e_view_model_handle_fs(EfsdEvent *ev)
 {
    D_ENTER;
+
+   if (!ev)
+     D_RETURN;
 
    switch (ev->type)
      {
@@ -205,7 +227,7 @@ static void
 e_view_model_handle_efsd_event_reply_getfiletype(EfsdEvent *ev)
 {
    E_File *f;
-   char *file;
+   char *file = NULL;
    Evas_List l;
    E_View_Model *model;
 
@@ -213,10 +235,12 @@ e_view_model_handle_efsd_event_reply_getfiletype(EfsdEvent *ev)
    char mime[PATH_MAX], base[PATH_MAX];
    D_ENTER;
 
-   if (!ev->efsd_reply_event.errorcode == 0)
-      D_RETURN;
+   if (!ev)
+     D_RETURN;
 
-   file = NULL;
+   if (!ev->efsd_reply_event.errorcode == 0)
+     D_RETURN;
+
    if ( (file = efsd_event_filename(ev)) )
    {
       file = e_file_get_file(file);
@@ -264,9 +288,14 @@ e_view_model_handle_efsd_event_reply_stat(EfsdEvent *ev)
    E_View_Model *m;
    E_File *f;
    Evas_List l;
+
    D_ENTER;
+
+   if (!ev)
+     D_RETURN;
+
    if (!ev->efsd_reply_event.errorcode == 0)
-      D_RETURN;
+     D_RETURN;
 
    m = e_view_model_find_by_monitor_id(efsd_event_id(ev));
    f = e_file_get_by_name(m->files, e_file_get_file(efsd_event_filename(ev)));
@@ -286,6 +315,8 @@ e_view_model_handle_efsd_event_reply_stat(EfsdEvent *ev)
       e_icon_update_state(ic);
       e_icon_initial_show(ic);
    }	    
+
+   D_RETURN;
 }
 
 static void
@@ -295,9 +326,12 @@ e_view_model_handle_efsd_event_reply_readlink(EfsdEvent *ev)
    E_File *f;
    Evas_List l;
    D_ENTER;
+
+   if (!ev)
+     D_RETURN;
    
    if (!ev->efsd_reply_event.errorcode == 0)
-      D_RETURN;
+     D_RETURN;
       
    m = e_view_model_find_by_monitor_id(efsd_event_id(ev));
    f = e_file_get_by_name(m->files, e_file_get_file(efsd_event_filename(ev)));
@@ -312,6 +346,8 @@ e_view_model_handle_efsd_event_reply_readlink(EfsdEvent *ev)
       e_icon_update_state(ic);
       e_icon_initial_show(ic);
    }
+
+   D_RETURN;
 }
 
 static void
@@ -320,6 +356,9 @@ e_view_model_handle_efsd_event_reply_getmeta(EfsdEvent *ev)
    Evas_List l;
    EfsdCmdId cmd;
    D_ENTER;
+
+   if (!ev)
+     D_RETURN;
     
    cmd = efsd_event_id(ev);
    for (l=VM->views;l;l=l->next)
@@ -417,12 +456,18 @@ e_view_model_handle_efsd_event_reply_getmeta(EfsdEvent *ev)
 	 e_border_remove_click_grab(b);
       }
    }
+
+   D_RETURN;
 }
 
 static void
 e_view_model_handle_efsd_event_reply(EfsdEvent *ev)
 {
    D_ENTER;
+
+   if (!ev)
+     D_RETURN;
+
    switch (ev->efsd_reply_event.command.type)
    {
       case EFSD_CMD_REMOVE:
@@ -557,10 +602,13 @@ e_view_model_file_deleted(int id, char *file)
    E_View_Model *m;
    D_ENTER;
 
-   if (!file || file[0] == '/') D_RETURN;
+   if (!file || file[0] == '/')
+     D_RETURN;
+
    m = e_view_model_find_by_monitor_id(id);
    f = e_file_get_by_name(m->files, file);
    m->files = evas_list_remove(m->files, f);
+
    if (!strcmp(file, ".e_background.bg.db"))
    {
       e_view_model_set_default_background(m);      

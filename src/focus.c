@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "focus.h"
+#include "icccm.h"
 #include "e.h"
 #include "util.h"
 
