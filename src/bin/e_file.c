@@ -4,6 +4,7 @@
 #include "e.h"
 #include <dirent.h>
 
+#if 0
 /* externally accessible functions */
 time_t
 e_file_mod_time(char *file)
@@ -202,3 +203,4 @@ e_file_ls(char *dir)
 
    return list;
 }
+#endif

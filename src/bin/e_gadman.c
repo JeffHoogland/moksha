@@ -445,6 +445,7 @@ e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
    gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    _e_gadman_client_geometry_apply(gmc);
+   _e_gadman_client_geometry_to_align(gmc);
 }
 
 void

@@ -128,7 +128,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_shutdown);
    /* setup my args */
-   ecore_app_args_set((int)argc, (const char **)argv);
+   ecore_app_args_set(argc, (const char **)argv);
    /* setup a handler for when e is asked to exit via a system signal */
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT, _e_main_cb_signal_exit, NULL))
      {
@@ -443,7 +443,7 @@ _e_main_dirs_init(void)
    for (i = 0; i < (int)(sizeof(dirs) / sizeof(char *)); i++)
      {
 	snprintf(buf, sizeof(buf), dirs[i], homedir);
-	if (!e_file_mkpath(buf))
+	if (!ecore_file_mkpath(buf))
 	  {
 	     e_error_message_show("Error creating directory:\n"
 				  "%s",
@@ -458,7 +458,7 @@ _e_main_dirs_init(void)
    /* outside e's main source to populate these directories from gnome/kde */
    /* app menu data etc. */
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eapp", homedir);
-   if (!e_file_exists(buf))
+   if (!ecore_file_exists(buf))
      {
 	printf("GETTING YOU STARTED!\n");
 	snprintf(buf, sizeof(buf), 

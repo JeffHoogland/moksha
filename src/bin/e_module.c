@@ -140,10 +140,10 @@ e_module_new(char *name)
      }
    _e_modules = evas_list_append(_e_modules, m);
    m->name = strdup(name);
-   s = e_file_get_dir(modpath);
+   s = ecore_file_get_dir(modpath);
    if (s)
      {
-	m->dir = e_file_get_dir(s);
+	m->dir = ecore_file_get_dir(s);
 	free(s);
      }
    m->func.info(m);

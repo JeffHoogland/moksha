@@ -20,8 +20,7 @@ struct _E_Zone
    int                  x, y, w, h;
    char                *name;
    /* num matches the id of the xinerama screen
-    * this zone belongs to.
-    */
+    * this zone belongs to. */
    int                  num;
    E_Container         *container;
 

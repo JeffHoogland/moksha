@@ -6,6 +6,7 @@
 #ifndef E_FILE_H
 #define E_FILE_H
 
+#if 0
 EAPI time_t     e_file_mod_time(char *file);
 EAPI int        e_file_exists(char *file);
 EAPI int        e_file_is_dir(char *file);
@@ -19,6 +20,7 @@ EAPI char      *e_file_get_dir(char *path);
 EAPI int        e_file_can_exec(struct stat *st);
 EAPI char      *e_file_readlink(char *link);
 EAPI Evas_List *e_file_ls(char *dir);
+#endif
 
 #endif
 #endif

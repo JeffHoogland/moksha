@@ -174,7 +174,7 @@ e_path_find(E_Path *ep, const char *file)
 	if (p)
 	  {
 	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", p, file);
-	     rp = e_file_realpath(_e_path_buf);
+	     rp = ecore_file_realpath(_e_path_buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
 		  strcpy(_e_path_buf, rp);

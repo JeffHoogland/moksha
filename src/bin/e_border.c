@@ -272,8 +272,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    /* FIXME: if first_map is 1 then we should ignore the first hide event
     * or ensure the window is alreayd hidden and events flushed before we
-    * create a border for it
-    */
+    * create a border for it */
    if (first_map)
      {
 	printf("##- FIRST MAP\n");

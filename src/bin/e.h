@@ -23,6 +23,7 @@
 #include <Ecore_Job.h>
 #include <Ecore_Txt.h>
 #include <Ecore_Config.h>
+#include <Ecore_File.h>
 #include <Ecore_X_Atoms.h>
 #include <Eet.h>
 #include <Edje.h>
