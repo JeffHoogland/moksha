@@ -2213,17 +2213,10 @@ e_view_handle_fs(EfsdEvent *ev)
 			      {
 				 if (ev->efsd_reply_event.errorcode == 0)
 				   {
-				      struct stat st;
-				      if (stat(efsd_metadata_get_str(ev), &st) != -1 )
-					{
-					   D("Attempted to set background for: %s\n", v->dir);
-					   v->bg = e_background_load(efsd_metadata_get_str(ev));
-					   if ((v->bg) && (v->evas))
-					     {
-						e_background_realize(v->bg, v->evas);
-						e_background_set_size(v->bg, v->size.w, v->size.h);
-					     }
-					}
+				      char buf[PATH_MAX];
+				      
+				      sprintf(buf, "background_reload:%s", v->dir);
+				      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 				   }
 			      }
 			 }
