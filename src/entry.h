@@ -39,7 +39,14 @@ struct _E_Entry
 };
 
 
+/**
+ * e_entry_init - Text entry widget event handler initialization.
+ *
+ * This function initalizes the entry widget code, it registers
+ * the event handlers needed for managing a text entry widget.
+ */
 void        e_entry_init(void);
+
 void        e_entry_free(E_Entry *entry);
 E_Entry    *e_entry_new(void);
 void        e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e);

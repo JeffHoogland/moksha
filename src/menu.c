@@ -8,16 +8,16 @@ static int       screen_w, screen_h;        /* Screen width and height */
 static int       mouse_x, mouse_y;          /* Mouse coordinates */
 static int       keyboard_nav = 0;          /* If non-zero, navigating with keyboard */
 
-static void ecore_idle(void *data);
+static void e_idle(void *data);
 static void e_wheel(Ecore_Event * ev);
-static void ecore_key_down(Ecore_Event * ev);
-static void ecore_key_up(Ecore_Event * ev);
+static void e_key_down(Ecore_Event * ev);
+static void e_key_up(Ecore_Event * ev);
 static void e_mouse_down(Ecore_Event * ev);
 static void e_mouse_up(Ecore_Event * ev);
 static void e_mouse_move(Ecore_Event * ev);
 static void e_mouse_in(Ecore_Event * ev);
 static void e_mouse_out(Ecore_Event * ev);
-static void ecore_window_expose(Ecore_Event * ev);
+static void e_window_expose(Ecore_Event * ev);
 
 static void 
 e_scroller_timer(int val, void *data)

@@ -16,6 +16,8 @@ static void ecore_idle(void *data);
 static void
 ecore_idle(void *data)
 {
+   /* FIXME -- Raster, how is this related to the desktop code? */
+
    e_db_flush();
    return;
    UN(data);

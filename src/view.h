@@ -204,6 +204,15 @@ struct _E_Icon
 };
 
 
+/**
+ * e_view_init - View event handlers initialization.
+ *
+ * This function registers event handlers for the views.
+ * Views are the windows in which e as a desktop shell
+ * displays file icons.
+ */
+void      e_view_init(void);
+
 void      e_view_selection_update(E_View *v);
 void      e_view_deselect_all(void);
 void      e_view_deselect_all_except(E_Icon *not_ic);
@@ -247,6 +256,5 @@ void      e_view_set_background(E_View *v);
 void      e_view_set_dir(E_View *v, char *dir);
 void      e_view_realize(E_View *v);
 void      e_view_update(E_View *v);
-void      e_view_init(void);
 
 #endif

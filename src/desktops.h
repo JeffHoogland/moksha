@@ -34,7 +34,16 @@ struct _E_Desktop
    int changed;
 };
 
+/**
+ * e_desktops_init - Initializes desktop handling.
+ *
+ * This function creates the necessary windows for desktop handling,
+ * and makes sure they're visible and lowered. It does not handle
+ * the loading of background graphics information. It also makes
+ * sure E rregisters itself as being compatible to GNOME, KDE etc.
+ */
 void         e_desktops_init(void);
+
 void         e_desktops_scroll(E_Desktop *desk, int dx, int dy);
 void         e_desktops_free(E_Desktop *desk);
 void         e_desktops_init_file_display(E_Desktop *desk);

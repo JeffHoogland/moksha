@@ -26,12 +26,14 @@ Evas_List __e_profiles = NULL;
 #endif
 
 static void cb_exit(void);
+static void wm_running_error(Display * d, XErrorEvent * ev);
+static void setup(void);
+
 static void cb_exit(void)
 {
    E_PROF_DUMP;
 }
 
-static void wm_running_error(Display * d, XErrorEvent * ev);
 
 static void 
 wm_running_error(Display * d, XErrorEvent * ev)
@@ -39,20 +41,23 @@ wm_running_error(Display * d, XErrorEvent * ev)
    if ((ev->request_code == X_ChangeWindowAttributes) && 
        (ev->error_code == BadAccess))
      {
-	fprintf(stderr, "A window manager is already running. No point running now is there?\n");
+	fprintf(stderr, "A window manager is already running.\n");
 	fprintf(stderr, "Exiting Enlightenment. Error.\n");
 	exit(-2);
      }   
    UN(d);
 }
 
-void setup(void);
-void
+static void
 setup(void)
 {
    ecore_grab();
    ecore_sync();
+
+   /* Start to manage all those windows that
+      we're interested in ... */
    e_border_adopt_children(0);
+
    ecore_ungrab();
 }
 
@@ -105,6 +110,8 @@ main(int argc, char **argv)
 	exit(-1);
      }
 
+   /* Initialize signal handlers, clear ecore event handlers
+    * and hook in ecore's X event handler. */
    ecore_event_signal_init();
    ecore_event_filter_init();
    ecore_event_x_init();
@@ -117,7 +124,8 @@ main(int argc, char **argv)
    ecore_sync();
    ecore_reset_error_handler();
    ecore_ungrab();
-   
+
+   /* Initialization for the various modules: */
    e_fs_init();
    e_desktops_init();
    e_border_init();
@@ -144,7 +152,6 @@ main(int argc, char **argv)
 #ifdef USE_FERITE
    e_ferite_deinit();
 #endif
-
 
    return 0;
 }

@@ -28,7 +28,7 @@ static Ecore_Event *current_ev = NULL;
 /* Global delayed window raise action */
 E_Delayed_Action *delayed_window_raise = NULL;
 
-static void ecore_idle(void *data);
+static void e_idle(void *data);
 static void e_map_request(Ecore_Event * ev);
 static void e_configure_request(Ecore_Event * ev);
 static void e_property(Ecore_Event * ev);
@@ -37,14 +37,14 @@ static void e_destroy(Ecore_Event * ev);
 static void e_circulate_request(Ecore_Event * ev);
 static void e_reparent(Ecore_Event * ev);
 static void e_shape(Ecore_Event * ev);
-static void ecore_focus_in(Ecore_Event * ev);
-static void ecore_focus_out(Ecore_Event * ev);
+static void e_focus_in(Ecore_Event * ev);
+static void e_focus_out(Ecore_Event * ev);
 static void e_colormap(Ecore_Event * ev);
 static void e_mouse_down(Ecore_Event * ev);
 static void e_mouse_up(Ecore_Event * ev);
 static void e_mouse_in(Ecore_Event * ev);
 static void e_mouse_out(Ecore_Event * ev);
-static void ecore_window_expose(Ecore_Event * ev);
+static void e_window_expose(Ecore_Event * ev);
 
 static void e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt,
 			  int x, int y, int ox, int oy, int ow, int oh);
@@ -116,7 +116,7 @@ e_border_update_borders(void)
 }
 
 static void
-ecore_idle(void *data)
+e_idle(void *data)
 {
    e_border_update_borders();
    return;
@@ -413,7 +413,7 @@ e_shape(Ecore_Event * ev)
 
 /* */
 static void
-ecore_focus_in(Ecore_Event * ev)
+e_focus_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_In   *e;
    
@@ -434,7 +434,6 @@ ecore_focus_in(Ecore_Event * ev)
 	       {
 		  Evas_List l;
 		  
-		  again:
 		  for (l = b->grabs; l; l = l->next)
 		    {
 		       E_Grab *g;
@@ -461,7 +460,7 @@ ecore_focus_in(Ecore_Event * ev)
 
 /* */
 static void
-ecore_focus_out(Ecore_Event * ev)
+e_focus_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_Out      *e;
    
@@ -779,7 +778,7 @@ e_mouse_out(Ecore_Event * ev)
 
 /* handling expose events */
 static void
-ecore_window_expose(Ecore_Event * ev)
+e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose      *e;
    
@@ -1143,7 +1142,8 @@ e_cb_border_visibility(E_Border *b)
    UN(b);
 }
 
-static void e_border_poll(int val, void *data)
+static void
+e_border_poll(int val, void *data)
 {
    ecore_add_event_timer("e_border_poll()", 1.00, e_border_poll, val + 1, NULL);
    return;
@@ -2430,7 +2430,7 @@ e_border_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_IN,                 e_mouse_in);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_OUT,                e_mouse_out);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            ecore_window_expose);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            e_window_expose);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_MAP_REQUEST,       e_map_request);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_CONFIGURE_REQUEST, e_configure_request);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_PROPERTY,          e_property);
@@ -2439,11 +2439,11 @@ e_border_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_CIRCULATE_REQUEST, e_circulate_request);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_REPARENT,          e_reparent);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_SHAPE,             e_shape);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_IN,          ecore_focus_in);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT,         ecore_focus_out);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_IN,          e_focus_in);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT,         e_focus_out);
    ecore_event_filter_handler_add(ECORE_EVENT_MESSAGE,                  e_client_message);
    ecore_event_filter_handler_add(ECORE_EVENT_COLORMAP,                 e_colormap);
-   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
+   ecore_event_filter_idle_handler_add(e_idle, NULL);
 
    delayed_window_raise = NEW(E_Delayed_Action, 1);
    E_DELAYED_ACT_INIT(delayed_window_raise, ECORE_EVENT_WINDOW_FOCUS_IN, raise_delay, e_border_raise_delayed);

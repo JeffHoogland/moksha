@@ -133,11 +133,19 @@ struct _E_Border
    int changed;
 };
 
+/**
+ * e_border_init - Border handling initialization.
+ *
+ * This function registers the border event handlers
+ * against ecore.
+ */
+void      e_border_init(void);
 
 void      e_border_update_borders(void);
 void      e_border_apply_border(E_Border *b);
 void      e_border_reshape(E_Border *b);
 E_Border *e_border_adopt(Window win, int use_client_pos);
+void      e_border_adopt_children(Window win);
 E_Border *e_border_new(void);
 void      e_border_free(E_Border *b);
 void      e_border_remove_mouse_grabs(E_Border *b);
@@ -156,8 +164,6 @@ void      e_border_raise(E_Border *b);
 void      e_border_lower(E_Border *b);
 void      e_border_raise_above(E_Border *b, E_Border *above);
 void      e_border_lower_below(E_Border *b, E_Border *below);
-void      e_border_init(void);
-void      e_border_adopt_children(Window win);
 E_Border *e_border_current_focused(void);
 void      e_border_focus_grab_ended(void);
 void      e_border_raise_next(void);

@@ -98,8 +98,9 @@ static void
 _e_fs_restarter(int val, void *data)
 {
    if (ec) return;
+
    ec = efsd_open();
-   printf("restart efsd...\n");
+
    if ((!ec) && (val > 0))
      {
 	if (efsd_pid <= 0) 
@@ -167,7 +168,18 @@ e_fs_add_event_handler(void (*func) (EfsdEvent *ev))
 void
 e_fs_init(void)
 {
+   /* Hook in an fs handler that gets called whenever
+      a child of this process exits.
+   */
    ecore_event_filter_handler_add(ECORE_EVENT_CHILD, e_fs_child_handle);   
+
+   /* Also hook in an idle handler to flush efsd's
+      write queue.
+      
+      FIXME: This should be handled by letting ecore
+      report when Efsd's file descriptor becomes
+      writeable, and then calling efsd_flush().
+   */
    ecore_event_filter_idle_handler_add(e_fs_idle, NULL);   
    _e_fs_restarter(0, NULL);
 }

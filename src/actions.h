@@ -56,6 +56,14 @@ struct _E_Action_Impl
 };
 
 
+/**
+ * e_action_init - Actions implementation initializer
+ *
+ * This function registers the various action implementations,
+ * i.e. the way E performs actions.
+ */
+void e_action_init(void);
+
 int  e_action_start(char *action, E_Action_Type act, int button, char *key,
 		    Ecore_Event_Key_Modifiers mods, void *o, void *data,
 		    int x, int y, int rx, int ry);
@@ -74,6 +82,5 @@ void e_action_add_proto(char *action,
 void e_action_del_timer(void *o, char *name);
 void e_action_add_timer(void *o, char *name);
 void e_action_del_timer_object(void *o);
-void e_action_init(void);
 
 #endif

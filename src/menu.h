@@ -87,11 +87,19 @@ struct _E_Menu_Item
    void         *func_select_data;
 };
 
+
+/**
+ * e_menu_init - Menu event handling initalization.
+ *
+ * This function hooks in the necessary event handlers for
+ * menu handling.
+ */
+void         e_menu_init(void );
+
 void         e_menu_callback_item(E_Menu *m, E_Menu_Item *mi);
 void         e_menu_item_set_callback(E_Menu_Item *mi, void  (*func) (E_Menu *m, E_Menu_Item *mi, void  *data), void  *data);
 void         e_menu_hide_submenus(E_Menu *menus_after);
 void         e_menu_select(int dx, int dy);
-void         e_menu_init(void );
 void         e_menu_event_win_show(void );
 void         e_menu_event_win_hide(void );
 void         e_menu_set_background(E_Menu *m);

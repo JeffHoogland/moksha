@@ -25,22 +25,22 @@ static void e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, i
 static void e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
-static void ecore_idle(void *data);
+static void e_idle(void *data);
 static void e_wheel(Ecore_Event * ev);
-static void ecore_key_down(Ecore_Event * ev);
-static void ecore_key_up(Ecore_Event * ev);
+static void e_key_down(Ecore_Event * ev);
+static void e_key_up(Ecore_Event * ev);
 static void e_mouse_down(Ecore_Event * ev);
 static void e_mouse_up(Ecore_Event * ev);
 static void e_mouse_move(Ecore_Event * ev);
 static void e_mouse_in(Ecore_Event * ev);
 static void e_mouse_out(Ecore_Event * ev);
-static void ecore_window_expose(Ecore_Event * ev);
+static void e_window_expose(Ecore_Event * ev);
 static void e_configure(Ecore_Event * ev);
 static void e_property(Ecore_Event * ev);
 static void e_unmap(Ecore_Event * ev);
 static void e_visibility(Ecore_Event * ev);
-static void ecore_focus_in(Ecore_Event * ev);
-static void ecore_focus_out(Ecore_Event * ev);
+static void e_focus_in(Ecore_Event * ev);
+static void e_focus_out(Ecore_Event * ev);
 static void e_delete(Ecore_Event * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
@@ -1138,7 +1138,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-ecore_idle(void *data)
+e_idle(void *data)
 {
    Evas_List l;
 
@@ -1326,7 +1326,7 @@ e_visibility(Ecore_Event * ev)
 }
 
 static void
-ecore_focus_in(Ecore_Event * ev)
+e_focus_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_In *e;
    Evas_List l;
@@ -1344,7 +1344,7 @@ ecore_focus_in(Ecore_Event * ev)
 }
 
 static void
-ecore_focus_out(Ecore_Event * ev)
+e_focus_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_Out *e;
    Evas_List l;
@@ -1400,7 +1400,7 @@ e_wheel(Ecore_Event * ev)
 }
 
 static void
-ecore_key_down(Ecore_Event * ev)
+e_key_down(Ecore_Event * ev)
 {
    Ecore_Event_Key_Down          *e;
    Evas_List l;
@@ -1448,7 +1448,7 @@ ecore_key_down(Ecore_Event * ev)
 }
 
 static void
-ecore_key_up(Ecore_Event * ev)
+e_key_up(Ecore_Event * ev)
 {
    Ecore_Event_Key_Up          *e;
    Evas_List l;
@@ -1588,7 +1588,7 @@ e_mouse_out(Ecore_Event * ev)
 }
 
 static void
-ecore_window_expose(Ecore_Event * ev)
+e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose          *e;
    Evas_List l;
@@ -2783,17 +2783,17 @@ e_view_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_IN,                 e_mouse_in);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_OUT,                e_mouse_out);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            ecore_window_expose);
-   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,                 ecore_key_down);
-   ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   ecore_key_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            e_window_expose);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,                 e_key_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   e_key_up);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_WHEEL,              e_wheel);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_CONFIGURE,         e_configure);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_PROPERTY,          e_property);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_UNMAP,             e_unmap);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_VISIBILITY,        e_visibility);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_IN,          ecore_focus_in);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT,         ecore_focus_out);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_IN,          e_focus_in);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT,         e_focus_out);
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_DELETE,            e_delete);
-   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
+   ecore_event_filter_idle_handler_add(e_idle, NULL);
    e_fs_add_event_handler(e_view_handle_fs);
 }
