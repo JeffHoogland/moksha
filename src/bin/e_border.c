@@ -79,6 +79,8 @@ static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
 static void _e_border_event_border_hide_free(void *data, void *ev);
+static void _e_border_event_border_iconify_free(void *data, void *ev);
+static void _e_border_event_border_uniconify_free(void *data, void *ev);
 static void _e_border_event_border_stick_free(void *data, void *ev);
 static void _e_border_event_border_unstick_free(void *data, void *ev);
 
@@ -108,6 +110,8 @@ int E_EVENT_BORDER_RESIZE = 0;
 int E_EVENT_BORDER_MOVE = 0;
 int E_EVENT_BORDER_SHOW = 0;
 int E_EVENT_BORDER_HIDE = 0;
+int E_EVENT_BORDER_ICONIFY = 0;
+int E_EVENT_BORDER_UNICONIFY = 0;
 int E_EVENT_BORDER_STICK = 0;
 int E_EVENT_BORDER_UNSTICK = 0;
 
@@ -147,6 +151,8 @@ e_border_init(void)
    E_EVENT_BORDER_MOVE = ecore_event_type_new();
    E_EVENT_BORDER_SHOW = ecore_event_type_new();
    E_EVENT_BORDER_HIDE = ecore_event_type_new();
+   E_EVENT_BORDER_ICONIFY = ecore_event_type_new();
+   E_EVENT_BORDER_UNICONIFY = ecore_event_type_new();
    E_EVENT_BORDER_STICK = ecore_event_type_new();
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
 
@@ -864,6 +870,8 @@ e_border_unmaximize(E_Border *bd)
 void
 e_border_iconify(E_Border *bd)
 {
+   E_Event_Border_Iconify *ev;
+
    unsigned int iconic;
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -877,12 +885,18 @@ e_border_iconify(E_Border *bd)
    iconic = 1;
    e_hints_window_iconic_set(bd->client.win);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
+
+   ev = E_NEW(E_Event_Border_Iconify, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_ICONIFY, ev, _e_border_event_border_iconify_free, NULL);
 }
 
 void
 e_border_uniconify(E_Border *bd)
 {
    E_Desk *desk;
+   E_Event_Border_Uniconify *ev;
    unsigned int iconic;
 
    E_OBJECT_CHECK(bd);
@@ -901,6 +915,12 @@ e_border_uniconify(E_Border *bd)
      }
    iconic = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
+
+   ev = E_NEW(E_Event_Border_Uniconify, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_UNICONIFY, ev, _e_border_event_border_uniconify_free, NULL);
+
 }
 
 void
@@ -3202,6 +3222,26 @@ static void
 _e_border_event_border_hide_free(void *data, void *ev)
 {
    E_Event_Border_Hide *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_iconify_free(void *data, void *ev)
+{
+   E_Event_Border_Iconify *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_uniconify_free(void *data, void *ev)
+{
+   E_Event_Border_Uniconify *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
