@@ -66,6 +66,15 @@ e_ib_bit_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, 
      }
    
    D_RETURN;
+   UN(o);
+   UN(bt);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
+      
 }
 
 /* static internal - called when iconbar bit has a mouse button released */
@@ -88,6 +97,14 @@ e_ib_bit_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, in
      }
    
    D_RETURN;
+   UN(o);
+   UN(bt);
+   UN(x);
+   UN(y);
+   UN(ox);
+   UN(oy);
+   UN(ow);
+   UN(oh);
 }
 
 /**
@@ -745,6 +762,7 @@ ib_reload_timeout(int val, void *data)
    if ((v->iconbar) && (v->evas)) e_iconbar_realize(v->iconbar);   
 
    D_RETURN;
+   UN(val);
 }
 
 /* scroll timeout. called to continuously scroll when arrow button down */
@@ -776,6 +794,8 @@ static void
 ib_cancel_launch_timeout(int val, void *data)
 {
    E_Iconbar_Icon *ic;
+  
+   D_ENTER;
    
    ic = (E_Iconbar_Icon *)data;
 
@@ -790,6 +810,8 @@ ib_cancel_launch_timeout(int val, void *data)
 	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
 	ic->iconbar->view->changed = 1;
      }
+   D_RETURN;
+   UN(val);
 }
 
 /* this timeout is responsible for doing the mouse over animation */
@@ -806,8 +828,6 @@ ib_timeout(int val, void *data)
    /* val <= 0 AND we're hilited ? first call as a timeout handler. */
    if ((val <= 0) && (ic->hilited))
      {
-	char *n;
-	
 	/* note the "start" time */
 	ic->hi.start = ecore_get_time();
 	/* no hilite (animation) image */
@@ -979,6 +999,7 @@ ib_bits_move(void *data, double x, double y)
    ib->icon_area.y = y;
 
    D_RETURN;
+   UN(l);
 }
 
 /* called when an ebit object bit needs to resize */
@@ -996,6 +1017,7 @@ ib_bits_resize(void *data, double w, double h)
    ib->icon_area.h = h;
 
    D_RETURN;
+   UN(l);
 }
 
 /* called when the ebits object bit needs to be raised */
@@ -1073,6 +1095,8 @@ ib_bits_set_clip(void *data, Evas_Object clip)
 
 
    D_RETURN;
+   UN(data);
+   UN(clip);
 }
 
 /* we arent going to recolor our icons here according to color class */
@@ -1083,6 +1107,12 @@ ib_bits_set_color_class(void *data, char *cc, int r, int g, int b, int a)
 
 
    D_RETURN;
+   UN(data);
+   UN(cc);
+   UN(r);
+   UN(g);
+   UN(b);
+   UN(a);
 }
 
 /* our minimum size for icon space is 0x0 */
@@ -1095,6 +1125,7 @@ ib_bits_get_min_size(void *data, double *w, double *h)
    *h = 0;
 
    D_RETURN;
+   UN(data);
 }
 
 /* our maximum is huge */
@@ -1107,6 +1138,7 @@ ib_bits_get_max_size(void *data, double *w, double *h)
    *h = 999999;
 
    D_RETURN;
+   UN(data);
 }
 
 
@@ -1146,6 +1178,11 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	   
 
    D_RETURN;
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 /* called when a mouse goes out of an icon object */
@@ -1165,6 +1202,11 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    ic->iconbar->view->changed = 1;
 
    D_RETURN;
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 /* called when the mouse goes down on an icon object */
@@ -1224,6 +1266,11 @@ ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
 
    D_RETURN;
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 /* called when the mouse goes up on an icon object */
@@ -1233,6 +1280,12 @@ ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_ENTER;
 
    D_RETURN;
+   UN(data);
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
 }
 
 /* called when child processes exit */
@@ -1302,3 +1355,33 @@ e_iconbar_get_resist_rect(E_Iconbar *ib)
 
    D_RETURN_(r);
 }
+
+void
+e_iconbar_set_view_window_spacing(E_Iconbar *ib)
+{
+   double x, y, w, h;
+   
+   D_ENTER;
+
+   ebits_get_named_bit_geometry(ib->bit, "Resist", &x, &y, &w, &h);
+
+/* FIXME Why do the v->spacing.window.?'s need to be / 2? */  
+   if (h > w) /* vertical */
+   {
+      if (x < ib->view->size.w / 2) /* left */
+	 ib->view->spacing.window.l = (x + w) / 2 + 3; 
+      else /* right */
+	 ib->view->spacing.window.r = (ib->view->size.w - x) / 2 + 15;
+   }
+   else /* horizontal */
+   {
+     if (y < ib->view->size.h / 2) /* top */
+	ib->view->spacing.window.t = (y + h) / 2 + 3;
+     else
+	ib->view->spacing.window.b = (ib->view->size.h - y) / 2 + 15;
+   }
+
+   
+   D_RETURN;
+}
+

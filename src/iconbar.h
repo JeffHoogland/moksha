@@ -74,5 +74,5 @@ void            e_iconbar_file_delete(E_View *v, char *file);
 void            e_iconbar_file_change(E_View *v, char *file);
 void            e_iconbar_save_out_final(E_Iconbar *ib);
 E_Rect *	e_iconbar_get_resist_rect(E_Iconbar *ib);
-   
+void		e_iconbar_set_view_window_spacing(E_Iconbar *ib);   
 #endif

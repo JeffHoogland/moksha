@@ -1840,6 +1840,7 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.icon.s = 7;
    v->spacing.icon.g = 7;
    v->spacing.icon.b = 7;
+
    
    views = evas_list_append(views, v);
    D_RETURN_(v);   
@@ -1995,8 +1996,12 @@ e_view_realize(E_View *v)
      }
 
    if (!v->iconbar) v->iconbar = e_iconbar_new(v);
-   if (v->iconbar) e_iconbar_realize(v->iconbar); 
-   
+   if (v->iconbar)
+   {
+      e_iconbar_realize(v->iconbar); 
+      e_iconbar_set_view_window_spacing(v->iconbar);
+   }
+
    v->changed = 1;
 
    D_RETURN;
