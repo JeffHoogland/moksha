@@ -26,6 +26,7 @@ e_init_init(void)
 	return 0;
      }
    root = roots[0];
+   
    ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
    e_canvas_add(_e_init_ecore_evas);
@@ -47,7 +48,7 @@ e_init_init(void)
 			     /* FIXME: "init.eet" needs to come from config */
 			     e_path_find(path_init, "init.eet"),
 			     "init/splash");
-	evas_object_move(o, x, y);
+	evas_object_move(o, 0, 0);
 	evas_object_resize(o, w, h);
 	evas_object_show(o);
 	_e_init_object = o;
