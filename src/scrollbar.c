@@ -11,6 +11,7 @@ static void e_sb_bar_down_cb(void *data, Ebits_Object o, char *class, int bt, in
 static void e_sb_bar_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
 static void e_sb_bar_move_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
 static void e_sb_scroll_timer(int val, void *data);
+static void e_scrollbar_cleanup(E_Scrollbar *sb);
 
 
 static void
@@ -361,7 +362,7 @@ e_scrollbar_new(void)
    D_RETURN_(sb);
 }
 
-void
+static void
 e_scrollbar_cleanup(E_Scrollbar *sb)
 {
    char name[PATH_MAX];

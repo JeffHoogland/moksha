@@ -41,7 +41,6 @@ struct _E_Scrollbar
 };
 
 E_Scrollbar *e_scrollbar_new(void);
-void         e_scrollbar_cleanup(E_Scrollbar *sb); 
 void         e_scrollbar_add_to_evas(E_Scrollbar *sb, Evas evas);
 void         e_scrollbar_show(E_Scrollbar *sb); 
 void         e_scrollbar_hide(E_Scrollbar *sb); 
