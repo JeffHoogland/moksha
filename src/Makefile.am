@@ -20,6 +20,7 @@ main.c \
 menu.c \
 menudb.c \
 resist.c \
+shelf.c \
 util.c \
 view.c \
 e.h

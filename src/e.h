@@ -132,6 +132,7 @@ typedef struct _E_Rect                E_Rect;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
 typedef struct _E_Icon                E_Icon;
+typedef struct _E_Shelf               E_Shelf;
 typedef struct _E_Background          E_Background;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
@@ -344,6 +345,7 @@ struct _E_View
    int                    monitor_id;
    
    Evas_List              icons;
+   Evas_List              shelves;
    
    int                    changed;
 };
@@ -355,6 +357,9 @@ struct _E_Icon
    char   *file;
    
    E_View *view;
+   
+   char    *shelf_name;
+   E_Shelf *shelf;
    
    struct {
       int     x, y, w, h;
@@ -382,6 +387,15 @@ struct _E_Icon
       Ebits_Object  base_text;
    } obj;
    int     changed;   
+};
+
+struct _E_Shelf
+{
+   OBJ_PROPERTIES;
+   
+   char *name;
+   
+   int x, int y, int w, int h;
 };
 
 struct _E_Background
