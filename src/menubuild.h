@@ -22,6 +22,6 @@ struct _E_Build_Menu
 
 E_Build_Menu *e_build_menu_new_from_db(char *file);
 E_Build_Menu *e_build_menu_new_from_gnome_apps(char *dir);
-E_Build_Menu *e_build_menu_new_from_iconified_windows();
+E_Build_Menu *e_build_menu_new_from_iconified_borders();
 
 #endif
