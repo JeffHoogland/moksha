@@ -65,3 +65,5 @@ enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@
 enlightenment_remote_SOURCES = \
 e.h \
 e_remote_main.c
+
+enlightenment_remote_LDFLAGS = @e_libs@ @dlopen_libs@

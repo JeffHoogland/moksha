@@ -8,7 +8,7 @@ struct _E_Before_Idler
    unsigned char  delete_me : 1;
 };
 
-/* local subsystem globals */
+/* local subsystem functions */
 static void _e_main_shutdown_push(void (*func)(void));
 static void _e_main_shutdown(int errorcode);
 
@@ -37,7 +37,7 @@ E_Path *path_themes  = NULL;
 E_Path *path_init    = NULL;
 int     restart      = 0;
 
-/* local subsystem functions */
+/* local subsystem globals */
 #define MAX_LEVEL 32
 static void (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
