@@ -32,7 +32,7 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
-* segv on restart in ~/.e/e/applications/* files change
+* segv on restart if ~/.e/e/applications dir is deleted/moved/added etc.
 
 <add more issues as they are found>
 
