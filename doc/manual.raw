@@ -89,6 +89,7 @@
     <para>
       This chapter explains the inner workings of &e17;.
     </para>
+
     <section id="architecture">
       <title id="architecture.title">&e17; Architecture</title>
       <section id="overall">
@@ -119,6 +120,147 @@
       </section>
     </section>
     
+    <section id="build">
+      <title id="build.title">Building &e17;</title>
+	<para>
+	This chapter explains how to build &e17; manually. The Enlightenment
+	Project is hosted by <ulink url="http://www.sourceforge.net">Sourceforge</ulink>,
+	the project website is therefore
+	<ulink url="http://www.sourceforge.net/projects/enlightenment">http://www.sf.net/projects/enlightenment</ulink>.
+	Since you're reading this document, your probably know this already.
+	CVS is used for version control, refer to the Sourceforge documentation
+	for details about using CVS.
+      </para>
+      <para>
+	<caution>
+	  <title>Make sure you know what you're doing!</title>
+	  <para>
+	    Building e17 from CVS code is not trivial. Expect problems.
+	    You're using development code, so do not expect the software
+	    to work. Things can and with all likelihood will break.
+	    Be sure you know how to handle the tools you need for the
+	    build.
+	  </para>
+	  <para>
+	    Experience from the mailing lists shows that way too many
+	    people try using CVS without the proper skills. We will try
+	    to give help, but by explaining how to build &e17; we lose
+	    time we'd otherwise spend coding, so try to solve issues
+	    yourselves first.
+	  </para>
+	</caution>
+      </para>
+      <para>
+	An incomplete tree of the current CVS contents is shown below.
+
+	  <programlisting>
+e17
+ | \
+ |  apps
+ |   |___ e              * Enlightenment 0.17, the main program.
+ |   |
+ |   |___ ebindings        A keybingings and menu contents editor.
+ |   |
+ |   |___ ebony            A background editor.
+ |   |
+ |   |___ efsd           * The Enlightenment File System Daemon.
+ |   |
+ |   |___ entice           An image viewer.
+ |   |
+ |   |___ etcher           A GUI editor for window borders and more.
+ |   |
+ |   ...
+ |   
+  \
+   libs
+     |___ ebits          * A library for "bits", graphical layout structures.
+     |
+     |___ edb            * A database library based on Berkeley DB.
+     |
+     |___ etox             A text layout engine.
+     |
+     |___ evas           * A graphical canvas engine.
+     |
+     |___ ewl              A widget library using evas.
+     |
+     |___ ewd              A container library for hashes, lists etc.
+     |
+     |___ imlib2         * An image loading and manipulation library.
+     |
+     |___ imlib2_loaders * A set of loaders for imlib2, separated due to licensing issues.
+	  </programlisting>
+	
+	The modules you absolutely need to get &e17; running are marked
+	with an asterisk. The next thing you need to know is the build
+	sequence. A working sequence is the following:
+
+	<orderedlist>
+	  <listitem>
+	    <para>Imlib2</para>
+	  </listitem>
+	  <listitem>
+	    <para>Imlib2 Loaders</para>
+	  </listitem>
+	  <listitem>
+	    <para>Evas</para>
+	  </listitem>
+	  <listitem>
+	    <para>Ebits</para>
+	  </listitem>
+	  <listitem>
+	    <para>Edb</para>
+	  </listitem>
+	  <listitem>
+	    <para>Efsd</para>
+	  </listitem>
+	  <listitem>
+	    <para>E 17</para>
+	  </listitem>
+	</orderedlist>
+	    
+	Some of the modules have other dependencies, you need:
+
+	<itemizedlist mark="opencircle">
+	  <listitem>
+	    <para>For Imlib2, you need a few graphics libraries. [FIXME]</para>
+	  </listitem>
+	  <listitem>
+	    <para>For Efsd, you need libxml2 from
+	      (<ulink url="http://xmlsoft.org/">XMLSoft</ulink>) and fam from
+	      (<ulink url="http://prdownloads.sourceforge.net/enlightenment/fam-oss-2.6.4-NULL-fix.tar.gz">Version 2.6.4</ulink> or a later version)
+	    </para>
+	  </listitem>
+	</itemizedlist>
+
+	There's no real reason to build those from source, it's a lot easier
+	to just install the packages of your distribution. Do not forget to
+	install the development packages as well, or necessary C header files
+	won't be available during the build.
+      </para>
+      <para>
+	To build, you need recent versions of the following GNU tools:
+
+	<itemizedlist mark="opencircle">
+	  <listitem>
+	    <para><command>autoconf</command> 2.13 and <command>automake</command> 1.4 <emphasis>OR</emphasis></para>
+	  </listitem>
+	  <listitem>
+	    <para><command>autoconf</command> 2.50+ and <command>automake</command> 1.5</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>gettext</command> 0.10.39 or newer</para>
+	  </listitem>
+	  <listitem>
+	    <para><command>libtool</command> 1.4 or newer</para>
+	  </listitem>
+	</itemizedlist>
+
+	Other combinations of <command>automake</command> and
+	<command>autoconf</command> may work, but are more
+	prone to errors.
+      </para>
+    </section>
+
     <section id="concepts">
       <title id="concepts.title">Themeing</title>
       <section id="overview">
