@@ -215,7 +215,7 @@ _e_path_free(E_Path *ep)
    while (ep->dir_list)
      {
 	free(ep->dir_list->data);
-	ep->dir_list = evas_list_remove(ep->dir_list, ep->dir_list->data);
+	ep->dir_list = evas_list_remove_list(ep->dir_list, ep->dir_list);
      }
    free(ep);
 }

@@ -288,7 +288,7 @@ _e_manager_free(E_Manager *man)
 	Ecore_Event_Handler *h;
    
 	h = man->handlers->data;
-	man->handlers = evas_list_remove(man->handlers, h);
+	man->handlers = evas_list_remove_list(man->handlers, man->handlers);
 	ecore_event_handler_del(h);
      }
    while (man->containers)
