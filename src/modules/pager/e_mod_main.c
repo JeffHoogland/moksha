@@ -775,14 +775,33 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
    if ((face->zone != ev->border->zone) ||
        (_pager_face_border_find(face, ev->border)))
      return 1;
-   pd = _pager_face_desk_find(face, ev->border->desk);
-   if (pd)
+   if (ev->border->sticky)
      {
-	Pager_Win          *pw;
+	Evas_List             *l;
 	
-	pw = _pager_window_new(pd, ev->border);
-	if (pw)
-	  pd->wins = evas_list_append(pd->wins, pw);
+	/* go through all desks */
+	for (l = face->desks; l; l = l->next)
+	  {
+	     Pager_Win          *pw;
+	     
+	     pd = l->data;
+	     /* create it and add it */
+	     pw = _pager_window_new(pd, ev->border);
+	     if (pw)
+	       pd->wins = evas_list_append(pd->wins, pw);
+	  }
+     }
+   else
+     {
+	pd = _pager_face_desk_find(face, ev->border->desk);
+	if (pd)
+	  {
+	     Pager_Win          *pw;
+	     
+	     pw = _pager_window_new(pd, ev->border);
+	     if (pw)
+	       pd->wins = evas_list_append(pd->wins, pw);
+	  }
      }
    return 1;
 }
@@ -1014,14 +1033,29 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    /* the border isnt in this pager at all - it must have moved zones */
    else
      {
-	/* find the pager desk it needs to go to */
-	pd = _pager_face_desk_find(face, ev->border->desk);
-	if (pd)
+	if (!ev->border->sticky)
 	  {
-	     /* create it and add it */
-	     pw = _pager_window_new(pd, ev->border);
-	     if (pw)
-	       pd->wins = evas_list_append(pd->wins, pw);
+	     /* find the pager desk it needs to go to */
+	     pd = _pager_face_desk_find(face, ev->border->desk);
+	     if (pd)
+	       {
+		  /* create it and add it */
+		  pw = _pager_window_new(pd, ev->border);
+		  if (pw)
+		    pd->wins = evas_list_append(pd->wins, pw);
+	       }
+	  }
+	else
+	  {
+	     /* go through all desks */
+	     for (l = face->desks; l; l = l->next)
+	       {
+		  pd = l->data;
+		  /* create it and add it */
+		  pw = _pager_window_new(pd, ev->border);
+		  if (pw)
+		    pd->wins = evas_list_append(pd->wins, pw);
+	       }
 	  }
      }
    return 1;
