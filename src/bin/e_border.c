@@ -638,14 +638,16 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	     bd->changes.shaded = 1;
 	     bd->changed = 1;
 	     edje_object_signal_emit(bd->bg_object, "shaded", "");
+	     ev = calloc(1, sizeof(E_Event_Border_Resize));
+	     ev->border = bd;
+	     /* SUSPICION: does the unref for this actually sometimes not get */
+	     /*   called? coudl this be the dangling borders issue? */
+	     /* The resize is added in the animator when animation complete */
+	     /* For non-animated, we add it immediately with the new size */
+	     e_object_ref(E_OBJECT(bd));
+	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	  }
 
-	ev = calloc(1, sizeof(E_Event_Border_Resize));
-	ev->border = bd;
-	/* SUSPICION: does the unref for this actually sometimes not get */
-	/*   called? coudl this be the dangling borders issue? */
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 }
 
@@ -716,14 +718,16 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	     bd->changes.shaded = 1;
 	     bd->changed = 1;
 	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
+	     ev = calloc(1, sizeof(E_Event_Border_Resize));
+	     ev->border = bd;
+	     /* SUSPICION: does the unref for this actually sometimes not get */
+	     /*   called? coudl this be the dangling borders issue? */
+	     /* The resize is added in the animator when animation complete */
+	     /* For non-animated, we add it immediately with the new size */
+	     e_object_ref(E_OBJECT(bd));
+	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	  }
 
-	ev = calloc(1, sizeof(E_Event_Border_Resize));
-	ev->border = bd;
-	/* SUSPICION: does the unref for this actually sometimes not get */
-	/*   called? coudl this be the dangling borders issue? */
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 }
 
@@ -2654,6 +2658,8 @@ _e_border_shade_animator(void *data)
    if ( (bd->shaded && (bd->shade.val == 1)) ||
         (!(bd->shaded) && (bd->shade.val == 0)) )
      {
+	E_Event_Border_Resize *ev;
+
 	bd->shading = 0;
 	bd->shaded = !(bd->shaded);
 	bd->changes.size = 1;
@@ -2670,6 +2676,10 @@ _e_border_shade_animator(void *data)
 	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
 	  }
 	ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_NW);
+	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	return 0;
      }
 
