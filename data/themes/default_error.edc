@@ -1,9 +1,9 @@
 images {
-   image: "e.png" COMP;
-   image: "button_in.png" COMP;
-   image: "button_out.png" COMP;
-   image: "error_bg.png" COMP;
+   image: "e17_logo.png" COMP;
+   image: "e17_button2.png" COMP;
+   image: "e17_button.png" COMP;
 }
+
 group {
    name: "error/main";
    min: 400 200;
@@ -24,7 +24,7 @@ group {
 	       offset:   -1   -1;
 	    }
 	    image {
-	       normal: "error_bg.png";
+	       normal: "e17_menu_bg.png";
 	       border: 3 3 3 3;
 	    }
 	 }
@@ -44,7 +44,7 @@ group {
 	       offset:   80   80;
 	    }
 	    image {
-	       normal: "e.png";
+	       normal: "e17_logo.png";
 	    }
 	 }
       }
@@ -112,7 +112,7 @@ group {
 	       offset:   -1   -17;
 	    }
 	    image {
-	       normal: "button_out.png";
+	       normal: "e17_button.png";
 	       border: 8 8 8 8;
 	    }
 	 }
@@ -129,7 +129,7 @@ group {
 	       offset:   -1   -17;
 	    }
 	    image {
-	       normal: "button_in.png";
+	       normal: "e17_button2.png";
 	       border: 8 8 8 8;
 	    }
 	 }
