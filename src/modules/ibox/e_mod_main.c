@@ -755,8 +755,8 @@ _ibox_box_icon_new(IBox_Box *ibb, E_App *a, E_Border *bd)
    evas_object_intercept_move_callback_add(o, _ibox_cb_intercept_icon_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibox_cb_intercept_icon_resize, ic);
    edje_object_file_set(o,
-			/* FIXME: "default.eet" needs to come from conf */
-			e_path_find(path_themes, "default.eet"),
+			/* FIXME: "default.edj" needs to come from conf */
+			e_path_find(path_themes, "default.edj"),
 			"modules/ibar/icon");
    edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[ibb->ibox->conf->edge]);
    edje_object_message_signal_process(o);
@@ -776,8 +776,8 @@ _ibox_box_icon_new(IBox_Box *ibb, E_App *a, E_Border *bd)
    evas_object_intercept_move_callback_add(o, _ibox_cb_intercept_icon_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibox_cb_intercept_icon_resize, ic);
    edje_object_file_set(o,
-			/* FIXME: "default.eet" needs to come from conf */
-			e_path_find(path_themes, "default.eet"),
+			/* FIXME: "default.edj" needs to come from conf */
+			e_path_find(path_themes, "default.edj"),
 			"modules/ibar/icon_overlay");
    edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[ibb->ibox->conf->edge]);
    edje_object_message_signal_process(o);
@@ -1041,8 +1041,8 @@ _ibox_box_init(IBox_Box *ibb)
    o = edje_object_add(ibb->evas);
    ibb->box_object = o;
    edje_object_file_set(o,
-			/* FIXME: "default.eet" needs to come from conf */
-			e_path_find(path_themes, "default.eet"),
+			/* FIXME: "default.edj" needs to come from conf */
+			e_path_find(path_themes, "default.edj"),
 			"modules/ibar/main");
    edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[ibb->ibox->conf->edge]);
    edje_object_message_signal_process(o);
@@ -1059,8 +1059,8 @@ _ibox_box_init(IBox_Box *ibb)
    ibb->overlay_object = o;
    evas_object_layer_set(o, 1);
    edje_object_file_set(o,
-			/* FIXME: "default.eet" needs to come from conf */
-			e_path_find(path_themes, "default.eet"),
+			/* FIXME: "default.edj" needs to come from conf */
+			e_path_find(path_themes, "default.edj"),
 			"modules/ibar/follower");
    edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[ibb->ibox->conf->edge]);
    edje_object_message_signal_process(o);

@@ -10,15 +10,15 @@ EDJE_FLAGS = \
 
 filesdir = $(datadir)/enlightenment/data/init
 files_DATA = \
-init.eet
+init.edj
 
 EXTRA_DIST = init.edc
 
-init.eet: Makefile init.edc
+init.edj: Makefile init.edc
 	$(EDJE_CC) $(EDJE_FLAGS) \
 	$(top_srcdir)/data/init/init.edc \
-	$(top_builddir)/data/init/init.eet
+	$(top_builddir)/data/init/init.edj
 
 clean-local:
-	rm -f *.eet
+	rm -f *.edj
 	

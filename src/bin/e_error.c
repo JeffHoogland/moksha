@@ -77,8 +77,8 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
    o = edje_object_add(e);
    if (!edje_object_file_set(o,
-			     /* FIXME: "default.eet" needs to come from conf */
-			     e_path_find(path_themes, "default.eet"),
+			     /* FIXME: "default.edj" needs to come from conf */
+			     e_path_find(path_themes, "default.edj"),
 			     "error/main"))
 
      {
@@ -257,7 +257,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	snprintf(format, sizeof(format), 
 		 "source='%s' font='%s' size=%d wrap=word",
-		 e_path_find(path_themes, "default.eet"),
+		 e_path_find(path_themes, "default.edj"),
 		 "fonts/Edje Vera", 10);
 	text = evas_object_textblock_add(e);
 	evas_object_color_set(text, 0, 0, 0, 255);

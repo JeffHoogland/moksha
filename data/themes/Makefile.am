@@ -10,7 +10,7 @@ EDJE_FLAGS = \
 
 filesdir = $(datadir)/enlightenment/data/themes
 files_DATA = \
-default.eet
+default.edj
 
 EXTRA_DIST = \
 default.edc \
@@ -26,10 +26,10 @@ default_resize.edc \
 default_temperature.edc \
 default_error.edc
 
-default.eet: Makefile $(EXTRA_DIST)
+default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
 	$(top_srcdir)/data/themes/default.edc \
-	$(top_builddir)/data/themes/default.eet
+	$(top_builddir)/data/themes/default.edj
 
 clean-local:
-	rm -f *.eet
+	rm -f *.edj

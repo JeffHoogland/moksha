@@ -74,7 +74,7 @@ e_config_init(void)
      {
 	/* DEFAULT CONFIG */
 	e_config = E_NEW(E_Config, 1);
-	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.eet");
+	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.edj");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_thresthold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;

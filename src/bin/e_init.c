@@ -60,16 +60,16 @@ e_init_init(void)
 	if (l == screens)
 	  {
 	     edje_object_file_set(o,
-				  /* FIXME: "init.eet" needs to come from config */
-				  e_path_find(path_init, "init.eet"),
+				  /* FIXME: "init.edj" needs to come from config */
+				  e_path_find(path_init, "init.edj"),
 				  "init/splash");
 	     _e_init_object = o;
 	  }
 	/* other screens */
 	else
 	  edje_object_file_set(o,
-			       /* FIXME: "init.eet" needs to come from config */
-			       e_path_find(path_init, "init.eet"),
+			       /* FIXME: "init.edj" needs to come from config */
+			       e_path_find(path_init, "init.edj"),
 			       "init/extra_screen");
 	evas_object_move(o, scr->x, scr->y);
 	evas_object_resize(o, scr->w, scr->h);

@@ -10,15 +10,15 @@ EDJE_FLAGS = \
 
 filesdir = $(datadir)/enlightenment/data/icons
 files_DATA = \
-default.eet
+default.edj
 
 EXTRA_DIST = default.edc
 
-default.eet: Makefile default.edc
+default.edj: Makefile default.edc
 	$(EDJE_CC) $(EDJE_FLAGS) \
 	$(top_srcdir)/data/icons/default.edc \
-	$(top_builddir)/data/icons/default.eet
+	$(top_builddir)/data/icons/default.edj
 
 clean-local:
-	rm -f *.eet
+	rm -f *.edj
 	
