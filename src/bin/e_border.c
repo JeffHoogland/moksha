@@ -48,6 +48,7 @@ static int  _e_border_cb_mouse_down(void *data, int type, void *event);
 static int  _e_border_cb_mouse_up(void *data, int type, void *event);
 static int  _e_border_cb_mouse_move(void *data, int type, void *event);
 static int  _e_border_cb_mouse_wheel(void *data, int type, void *event);
+static int  _e_border_cb_grab_replay(void *data, int type, void *event);
 
 static void _e_border_eval(E_Border *bd);
 static void _e_border_resize_limit(E_Border *bd, int *w, int *h);
@@ -76,6 +77,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
+   ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
    return 1;
 }
 
@@ -106,6 +108,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
+   /* FIXME: use config list of bindings */
+   ecore_x_window_button_grab(bd->win,
+			      1, 
+			      ECORE_X_EVENT_MASK_MOUSE_DOWN |
+			      ECORE_X_EVENT_MASK_MOUSE_UP |
+			      ECORE_X_EVENT_MASK_MOUSE_MOVE,
+			      ECORE_X_MODIFIER_ALT,
+			      0);
    bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win, 0, 0, bd->w, bd->h);
    ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
    e_canvas_add(bd->bg_ecore_evas);
@@ -423,6 +433,11 @@ _e_border_free(E_Border *bd)
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
    ecore_x_window_del(bd->client.shell_win);
+   /* FIXME: use config list of bindings */
+   ecore_x_window_button_ungrab(bd->win,
+				1,
+				ECORE_X_MODIFIER_ALT,
+				0);
    ecore_x_window_del(bd->win);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    borders = evas_list_remove(borders, bd);
@@ -1002,6 +1017,31 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
    
    ev = event;
    bd = data;
+   if (ev->event_win == bd->win)
+     {
+	printf("GRABPRESS!\n");
+	if ((ev->button >= 1) && (ev->button <= 3))
+	  {
+	     bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
+	     bd->mouse.last_down[ev->button - 1].my = ev->root.y;
+	     bd->mouse.last_down[ev->button - 1].x = bd->x;
+	     bd->mouse.last_down[ev->button - 1].y = bd->y;
+	     bd->mouse.last_down[ev->button - 1].w = bd->w;
+	     bd->mouse.last_down[ev->button - 1].h = bd->h;
+	  }
+	bd->mouse.current.mx = ev->root.x;
+	bd->mouse.current.my = ev->root.y;
+	/* FIXME: decide that this is a button binding and what to do */
+	if (ev->button == 1)
+	  {
+	     if (!bd->moving)
+	       {
+		  bd->moving = 1;
+		  _e_border_moveinfo_gather(bd, "mouse,1");
+		  e_border_raise(bd);
+	       }
+	  }
+     }
    if (ev->win != bd->event_win) return 1;
    if ((ev->button >= 1) && (ev->button <= 3))
      {
@@ -1033,6 +1073,27 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
    
    ev = event;
    bd = data;
+   if (ev->event_win == bd->win)
+     {
+	printf("GRABRELEASE!\n");
+	if ((ev->button >= 1) && (ev->button <= 3))
+	  {
+	     bd->mouse.last_up[ev->button - 1].mx = ev->root.x;
+	     bd->mouse.last_up[ev->button - 1].my = ev->root.y;
+	     bd->mouse.last_up[ev->button - 1].x = bd->x;
+	     bd->mouse.last_up[ev->button - 1].y = bd->y;
+	  }
+	bd->mouse.current.mx = ev->root.x;
+	bd->mouse.current.my = ev->root.y;
+	/* FIXME: decide that this is a button binding and what to do */
+	if (ev->button == 1)
+	  {
+	     if (bd->moving)
+	       {
+		  bd->moving = 0;
+	       }
+	  }
+     }
    if (ev->win != bd->event_win) return 1;
    if ((ev->button >= 1) && (ev->button <= 3))
      {
@@ -1056,7 +1117,12 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
    
    ev = event;
    bd = data;
-   if (ev->win != bd->event_win) return 1;
+   if (ev->event_win == bd->win)
+     {
+	printf("GRABMOVE2!\n");
+     }
+   if ((ev->win != bd->event_win) &&
+       (ev->event_win != bd->win)) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    if (bd->moving)
@@ -1113,6 +1179,22 @@ _e_border_cb_mouse_wheel(void *data, int type, void *event)
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y);
    evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z);
    return 1;
+}
+
+static int 
+_e_border_cb_grab_replay(void *data, int type, void *event)
+{
+   if (type == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
+     {
+	Ecore_X_Event_Mouse_Button_Down *e;
+	E_Border *bd;
+	
+	e = event;
+	bd = e_border_find_by_client_window(e->win);
+	if (!bd) bd = e_border_find_by_client_window(e->event_win);
+	/* FIXME: return 1 if we pass this click on... */
+     }
+   return 0;
 }
 
 static void
