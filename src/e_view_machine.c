@@ -44,8 +44,8 @@ e_view_machine_unregister_view(E_View *v)
 }
 
 
-static E_View_Model *
-view_model_lookup(char *path)
+E_View_Model *
+e_view_machine_model_lookup(char *path)
 {
    E_View_Model *m;
    Evas_List l;
@@ -77,54 +77,4 @@ view_model_lookup(char *path)
 }
 
 
-void
-e_view_machine_get_model(E_View *v, char *path, int is_desktop)
-{
-   E_View_Model *m = NULL;
-   char buf[PATH_MAX];
 
-   D_ENTER;
-
-   if (!v || !path || *path == 0)
-     D_RETURN;
-
-   if (!(m = view_model_lookup(path)))
-   {
-      D("Model for this dir doesn't exist, make a new one\n");
-
-      m = e_view_model_new();
-      VM->models = evas_list_append(VM->models, m);
-      e_view_model_set_dir(m, path);
-
-      snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", m->dir);
-      if (!e_file_exists(buf))
-      {
-	 if (is_desktop)
-	 {
-	    snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
-	 }
-	 else
-	 {
-	    snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
-	 }
-      }
-      e_strdup(m->bg_file, buf);
-      m->is_desktop = is_desktop;
-   }
-
-   if (m)
-   {
-      v->model = m;   
-      v->model->views = evas_list_append(v->model->views, v);
-      /* FIXME do a real naming scheme here */
-      snprintf(buf, PATH_MAX, "%s:%d", v->model->dir, e_object_get_usecount(E_OBJECT(v->model))); 
-      e_strdup(v->name, buf);
-      D("assigned name to view: %s\n",v->name);    
-   }  
-   else
-   {
-      /* FIXME error handling */
-   }  
-
-   D_RETURN;
-}

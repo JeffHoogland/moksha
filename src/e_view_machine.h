@@ -12,5 +12,5 @@ typedef struct _e_view_machine E_View_Machine;
 void e_view_machine_init(void);
 void e_view_machine_register_view(E_View *v);
 void e_view_machine_unregister_view(E_View *v);
-void e_view_machine_get_model(E_View *v, char *path, int is_desktop);
+E_View_Model *e_view_machine_model_lookup(char *path);
 #endif

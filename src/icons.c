@@ -891,7 +891,6 @@ e_icon_exec(E_Icon *ic)
        e_file_can_exec(&ic->file->stat))
      {
 	E_View *v;
-	E_Border *b;
 	char buf[PATH_MAX];
 
 	v = e_view_new();
@@ -910,6 +909,6 @@ e_icon_exec(E_Icon *ic)
 	ecore_window_set_min_size(v->win.base, 8, 8);
      }
    e_icon_deselect(ic);
-
+   
    D_RETURN;
 }

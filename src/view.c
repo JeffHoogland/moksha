@@ -1683,25 +1683,69 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
 }
 
 void
-e_view_set_dir(E_View *v, char *dir, int is_desktop)
+e_view_set_dir(E_View *v, char *path, int is_desktop)
 {
+   E_View_Model *m = NULL;
+   char buf[PATH_MAX];
+
    D_ENTER;
-   e_view_machine_get_model(v, dir, is_desktop);   
-   /* Request metadata via efsd */
-   v->geom_get.x = efsd_get_metadata(e_fs_get_connection(), 
-	 "/view/x", v->model->dir, EFSD_INT);
-   v->geom_get.y = efsd_get_metadata(e_fs_get_connection(), 
-	 "/view/y", v->model->dir, EFSD_INT);
-   v->geom_get.w = efsd_get_metadata(e_fs_get_connection(), 
-	 "/view/w", v->model->dir, EFSD_INT);
-   v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
-	 "/view/h", v->model->dir, EFSD_INT);
-   /* FIXME currently, we dont use this anyway */
-/* 
- *    v->getbg = efsd_get_metadata(e_fs_get_connection(), 
- * 	 "/view/background", v->model->dir, EFSD_STRING);
- */
-   v->geom_get.busy = 1;
+
+   if (!v || !path || *path == 0)
+     D_RETURN;
+
+   if (!(m = e_view_machine_model_lookup(path)))
+   {
+      D("Model for this dir doesn't exist, make a new one\n");
+
+      m = e_view_model_new();
+      VM->models = evas_list_append(VM->models, m);
+      e_view_model_set_dir(m, path);
+
+      snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", m->dir);
+      if (!e_file_exists(buf))
+      {
+	 if (is_desktop)
+	 {
+	    snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
+	 }
+	 else
+	 {
+	    snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
+	 }
+      }
+      e_strdup(m->bg_file, buf);
+      m->is_desktop = is_desktop;
+   }
+
+   if (m)
+   {
+      v->model = m;   
+      v->model->views = evas_list_append(v->model->views, v);
+      /* FIXME do a real naming scheme here */
+      snprintf(buf, PATH_MAX, "%s:%d", v->model->dir, e_object_get_usecount(E_OBJECT(v->model))); 
+      e_strdup(v->name, buf);
+      D("assigned name to view: %s\n",v->name);    
+
+      /* Request metadata via efsd */
+      v->geom_get.x = efsd_get_metadata(e_fs_get_connection(), 
+	    "/view/x", v->model->dir, EFSD_INT);
+      v->geom_get.y = efsd_get_metadata(e_fs_get_connection(), 
+	    "/view/y", v->model->dir, EFSD_INT);
+      v->geom_get.w = efsd_get_metadata(e_fs_get_connection(), 
+	    "/view/w", v->model->dir, EFSD_INT);
+      v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
+	    "/view/h", v->model->dir, EFSD_INT);
+      /* FIXME currently, we dont use this anyway */
+      /* 
+      *    v->getbg = efsd_get_metadata(e_fs_get_connection(), 
+      * 	 "/view/background", v->model->dir, EFSD_STRING);
+      */
+      v->geom_get.busy = 1;
+   }  
+   else
+   {
+      /* FIXME error handling */
+   }    
    D_RETURN;
 }
 

@@ -728,56 +728,51 @@ e_mouse_move(Ecore_Event * ev)
 static void
 e_mouse_in(Ecore_Event * ev)
 {
-   Ecore_Event_Window_Enter      *e;
-   
-   D_ENTER;
+   Ecore_Event_Window_Enter      *e;	
+   E_Border *b;
 
+   D_ENTER;
    current_ev = ev;
    e = ev->event;
-     {
-	E_Border *b;
-	
-	b = e_border_find_by_window(e->win);
-	if (b)
-	  {
-	     if (e->win == b->win.main) e_cb_border_mouse_in(b, ev);
-	     if (e->win == b->win.input)
-	       {
-		  int x, y;
-		  Evas evas;
-		  
-		  evas = b->evas.l;
-		  ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_enter(evas);
-		  
-		  evas = b->evas.r;
-		  ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_enter(evas);
-		  
-		  evas = b->evas.t;
-		  ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_enter(evas);
-		  
-		  evas = b->evas.b;
-		  ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
-		  x = e->rx - x;
-		  y = e->ry - y;
-		  evas_event_move(evas, x, y);
-		  evas_event_enter(evas);
-	       }
-	  }
-     }
-   current_ev = NULL;
+   if ( (b = e_border_find_by_window(e->win)) )
+   {
+      if (e->win == b->win.main) 
+	 e_cb_border_mouse_in(b, ev);
+      else if (e->win == b->win.input)
+      {
+	 int x, y;
+	 Evas evas;
 
+	 evas = b->evas.l;
+	 ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
+	 x = e->rx - x;
+	 y = e->ry - y;
+	 evas_event_move(evas, x, y);
+	 evas_event_enter(evas);
+
+	 evas = b->evas.r;
+	 ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
+	 x = e->rx - x;
+	 y = e->ry - y;
+	 evas_event_move(evas, x, y);
+	 evas_event_enter(evas);
+
+	 evas = b->evas.t;
+	 ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
+	 x = e->rx - x;
+	 y = e->ry - y;
+	 evas_event_move(evas, x, y);
+	 evas_event_enter(evas);
+
+	 evas = b->evas.b;
+	 ecore_window_get_root_relative_location(evas_get_window(evas), &x, &y);
+	 x = e->rx - x;
+	 y = e->ry - y;
+	 evas_event_move(evas, x, y);
+	 evas_event_enter(evas);
+      }
+   }
+   current_ev = NULL;
    D_RETURN;
 }
 
@@ -808,7 +803,6 @@ e_mouse_out(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
-   current_ev = NULL;
 
    D_RETURN;
 }
@@ -818,15 +812,14 @@ static void
 e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose      *e;
-   
+ 
    D_ENTER;
 
    current_ev = ev;
    e = ev->event;
      {
 	Evas_List l;
-	E_Border *b;
-	
+	E_Border *b;             
 	for (l = evases; l; l = l->next)
 	  {
 	     Evas evas;
