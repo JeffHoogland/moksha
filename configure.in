@@ -112,7 +112,7 @@ AC_ARG_WITH(evas,
 AC_PATH_GENERIC(evas,, [
     AC_SUBST(evas_libs)
     AC_SUBST(evas_cflags)],
-    AC_MSG_ERROR(Cannot find edb: Is edb-config in path?))
+    AC_MSG_ERROR(Cannot find evas: Is evas-config in path?))
 evas_libs=`evas-config --libs`
 evas_cflags=`evas-config --cflags`
 
