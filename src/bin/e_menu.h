@@ -119,6 +119,8 @@ EAPI void         e_menu_icon_file_set(E_Menu *m, char *icon);
 EAPI void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 EAPI void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 
+EAPI E_Menu      *e_menu_root_get(E_Menu *m);
+
 EAPI E_Menu_Item *e_menu_item_new(E_Menu *m);
 EAPI E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
 EAPI int          e_menu_item_num_get(E_Menu_Item *mi);

@@ -49,6 +49,11 @@ e_int_menus_about_new(void)
    e_menu_item_label_set(mi, "Modules");
    e_menu_item_submenu_set(mi, subm);
   
+   subm = e_int_menus_clients_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Clients");
+   e_menu_item_submenu_set(mi, subm);
+  
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
@@ -210,6 +215,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    Evas_List *l, *borders = NULL;
+   E_Menu *root;
 
    if (m->realized) return;
 
@@ -225,10 +231,11 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	
      }
 
+   root = e_menu_root_get(m);
    /* get the current containers clients */
-   if (m->con)
+   if (root && root->con)
      {
-	for (l = e_container_clients_list_get(m->con); l; l = l->next)
+	for (l = e_container_clients_list_get(root->con); l; l = l->next)
 	  {
 	     borders = evas_list_append(borders, l->data);
 	  }

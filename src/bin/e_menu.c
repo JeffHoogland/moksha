@@ -240,6 +240,20 @@ e_menu_post_deactivate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu 
    m->post_deactivate_cb.data = data;
 }
 
+E_Menu      *
+e_menu_root_get(E_Menu *m)
+{
+   E_Menu *ret;
+
+   E_OBJECT_CHECK_RETURN(m, NULL);
+   ret = m;
+   while (ret->parent_item && ret->parent_item->menu)
+     {
+	ret = ret->parent_item->menu;
+     }
+
+   return ret;
+}
 
 E_Menu_Item *
 e_menu_item_new(E_Menu *m)
