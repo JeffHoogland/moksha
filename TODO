@@ -31,17 +31,13 @@ ISSUES:
 
 * virtual desktops need fixing to work with zones properly
 * all modules need to respect zones
-* container resize needs to re-evalute zone geometry
-* zone geometry change needs to propagate to modules
-* need desktop module geometry managing system (central)
-* dropshadow is not optimal and has extreme edge bugs
+* dropshadow is not optimal and has extreme edge-case bugs
 * e_apps polling/updates is broken
 * objects need object types to check the right obj type is passed
-* check on delete all app files/dirs then add all back then pop up menu (segv)
 * border show/hide needs to show from top down and hide from bottom up
 * restart loses window properties (stickyness)
 * restart loses zone and container info
-* xrandr root window resize needs to propagate from con to zones and gadman
+* virtual desktops need an overhaul. hacked int waay too quickly.
 
 <add more issues as they are found>
 
@@ -60,6 +56,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* resize resist
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
 * track mouse location on a border/desktop level
 * add desktop object/element management interface (sanitise module hell there)
