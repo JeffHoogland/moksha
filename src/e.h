@@ -558,6 +558,7 @@ struct _E_Entry
    Evas_Object selection;
    Evas_Object text;
    Window paste_win;
+   Window selection_win;
 };
 
 void e_entry_init(void);

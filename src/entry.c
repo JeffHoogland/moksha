@@ -26,7 +26,6 @@ e_paste_request(Eevent * ev)
 	     char *str2;
 	     char *type;
 	     
-	     printf("destined for this entry!\n");
 	     type = e->string;
 	     if (entry->select.start >= 0)
 	       {
@@ -163,7 +162,20 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  entry->select.length = entry->cursor_pos - entry->select.down + 1;
 	       }
 	  }
-	printf("%i %i\n", entry->select.start, entry->select.length);
+	if (entry->select.start >= 0)
+	  {
+	     char *str2;
+	     int len;
+	     
+	     len = entry->select.length;
+	     if (entry->select.start + entry->select.length >= strlen(entry->buffer))
+	       len = strlen(entry->buffer) - entry->select.start;
+	     str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
+	     str2[len] = 0;
+	     printf(">%s<\n", str2);
+	     if (entry->selection_win) e_window_destroy(entry->selection_win);
+	     entry->paste_win = e_selection_set(str2);
+	  }
 	e_entry_configure(entry);   
      }
 }
