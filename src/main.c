@@ -44,6 +44,7 @@ wm_running_error(Display * d, XErrorEvent * ev)
 	fprintf(stderr, "A WM is alreayd running. no point running now is there?\n");
 	exit(1);
      }   
+   UN(d);
 }
 
 void setup(void);
@@ -60,7 +61,7 @@ setup(void)
 int
 main(int argc, char **argv)
 {
-   char *display = "0:0";
+   char *display = NULL;
    int   i;
 
    atexit(cb_exit);

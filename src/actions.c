@@ -1297,6 +1297,7 @@ e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    if (a->params) desk = atoi(a->params);
    e_desktops_goto(desk);
    return;
+   UN(o);
    UN(a);
    UN(data);
    UN(x);
