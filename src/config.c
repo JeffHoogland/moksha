@@ -63,15 +63,15 @@ e_config_get(char *type)
    E_CONF("borders", cfg_borders_db,
 	  PACKAGE_DATA_DIR"/data/borders/");
    E_CONF("menus", cfg_menus_dir,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/menus/");
+	  PACKAGE_DATA_DIR"/data/menus/");
    E_CONF("entries", cfg_entries_dir,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/entries/");
+	  PACKAGE_DATA_DIR"/data/entries/");
    E_CONF("selections", cfg_selections_dir,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/selections/");
+	  PACKAGE_DATA_DIR"/data/selections/");
    E_CONF("scrollbars", cfg_scrollbars_dir,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/scrollbars/");
+	  PACKAGE_DATA_DIR"/data/scrollbars/");
    E_CONF("guides", cfg_guides_dir,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/guides/");
+	  PACKAGE_DATA_DIR"/data/guides/");
    E_CONF("images", cfg_images_dir,
 	  PACKAGE_DATA_DIR"/data/images/");
    E_CONF("cursors", cfg_cursors_dir,

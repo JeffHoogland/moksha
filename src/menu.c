@@ -944,7 +944,6 @@ e_menu_set_background(E_Menu *m)
 {
    char *menus;
    char buf[PATH_MAX];
-   char *style = "default";
    char *part;
    int pl, pr, pt, pb;
    
@@ -953,7 +952,7 @@ e_menu_set_background(E_Menu *m)
    menus = e_config_get("menus");   
    
    part = "base.bits.db";
-   sprintf(buf, "%s%s/%s", menus, style, part);
+   sprintf(buf, "%s%s", menus, part);
    if ((m->bg_file) && (!strcmp(m->bg_file, buf))) D_RETURN;
    
    IF_FREE(m->bg_file);
@@ -988,7 +987,6 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
    char buf[PATH_MAX];
-   char *style = "default";
    int pl, pr, pt, pb;
    int has_sub = 0;
    int selected = 0;
@@ -1000,7 +998,7 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
      {
 	selected = mi->selected;
 	if (mi->submenu) has_sub = 1;
-	sprintf(buf, "%s%s/selected-%i.submenu-%i.bits.db", menus, style, 
+	sprintf(buf, "%sselected-%i.submenu-%i.bits.db", menus,
 		selected, has_sub);
 	if ((mi->bg_file) && (!strcmp(mi->bg_file, buf))) D_RETURN;
      }
@@ -1036,13 +1034,12 @@ e_menu_set_sep(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
    char buf[PATH_MAX];
-   char *style = "default";
    int pl, pr, pt, pb, minx, miny;
    
    D_ENTER;
 
    menus = e_config_get("menus");   
-   sprintf(buf, "%s%s/separator.bits.db", menus, style);
+   sprintf(buf, "%sseparator.bits.db", menus);
    if ((mi->sep_file) && (!strcmp(mi->sep_file, buf))) D_RETURN;
    
    IF_FREE(mi->sep_file);
@@ -1075,7 +1072,6 @@ e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
 {
    char *menus;
    char buf[PATH_MAX];
-   char *style = "default";
    int   on;
    int pl, pr, pt, pb, minx, miny;
    
@@ -1084,9 +1080,9 @@ e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
    menus = e_config_get("menus");   
    on = mi->on;
    if (mi->check)
-     sprintf(buf, "%s%s/check-%i.bits.db", menus, style, on);
+     sprintf(buf, "%scheck-%i.bits.db", menus, on);
    else
-     sprintf(buf, "%s%s/radio-%i.bits.db", menus, style, on);
+     sprintf(buf, "%sradio-%i.bits.db", menus, on);
    if ((mi->state_file) && (!strcmp(mi->state_file, buf))) D_RETURN;
    
    IF_FREE(mi->state_file);
