@@ -920,11 +920,11 @@ static void
 _e_gadman_client_geometry_to_align(E_Gadman_Client *gmc)
 {
    if (gmc->w != gmc->zone->w)
-     gmc->ax = (double)gmc->x / (double)(gmc->zone->w - gmc->w);
+     gmc->ax = (double)(gmc->x - gmc->zone->x) / (double)(gmc->zone->w - gmc->w);
    else
      gmc->ax = 0.0;
    if (gmc->h != gmc->zone->h)
-     gmc->ay = (double)gmc->y / (double)(gmc->zone->h - gmc->h);
+     gmc->ay = (double)(gmc->y - gmc->zone->y) / (double)(gmc->zone->h - gmc->h);
    else
      gmc->ay = 0.0;
 }

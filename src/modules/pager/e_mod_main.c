@@ -49,6 +49,7 @@ static int         _pager_face_cb_event_border_lower(void *data, int type, void 
 static int         _pager_face_cb_event_border_icon_change(void *data, int type, void *event);
 static int         _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_desk_show(void *data, int type, void *event);
+static int         _pager_face_cb_event_container_resize(void *data, int type, void *event);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -321,6 +322,9 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_desk_show =
       ecore_event_handler_add(E_EVENT_DESK_SHOW,
 			      _pager_face_cb_event_desk_show, face);
+   face->ev_handler_container_resize =
+      ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
+			      _pager_face_cb_event_container_resize, face);
 
    /* the bg */
    o = edje_object_add(face->evas);
@@ -337,9 +341,9 @@ _pager_face_new(E_Zone *zone)
    edje_object_part_swallow(face->pager_object, "items", face->table_object);
    evas_object_show(o);
    
+   face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
    
-   face->gmc = e_gadman_client_new(face->zone->container->gadman);
    e_gadman_client_domain_set(face->gmc, "module.pager", _pager_count++);
    e_gadman_client_zone_set(face->gmc, face->zone);
    e_gadman_client_policy_set(face->gmc,
@@ -383,6 +387,7 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_icon_change);
    ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
    ecore_event_handler_del(face->ev_handler_desk_show);
+   ecore_event_handler_del(face->ev_handler_container_resize);
 
    e_object_del(E_OBJECT(face->menu));
 
@@ -401,12 +406,13 @@ _pager_face_menu_new(Pager_Face *face)
    mn = e_menu_new();
    face->menu = mn;
 
+   /*
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Enabled");
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _pager_face_cb_menu_enabled, face);
-
+    */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Edit Mode");
    e_menu_item_callback_set(mi, _pager_face_cb_menu_edit, face);
@@ -470,6 +476,9 @@ _pager_face_zone_set(Pager_Face *face, E_Zone *zone)
 	     if (pd) face->desks = evas_list_append(face->desks, pd);
 	  }
      }
+//   e_gadman_client_aspect_set(face->gmc, 
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h),
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h));
 }
 
 static void
@@ -1187,6 +1196,9 @@ _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event)
    
    face->xnum = desks_x;
    face->ynum = desks_y;
+//   e_gadman_client_aspect_set(face->gmc, 
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h),
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h));
    e_gadman_client_resize(face->gmc, face->fw + dw, face->fh + dh);
    return 1;
 }
@@ -1203,6 +1215,40 @@ _pager_face_cb_event_desk_show(void *data, int type, void *event)
    if (face->zone != ev->desk->zone) return 1;
    desk = _pager_face_desk_find(face, ev->desk);
    if (desk) _pager_face_desk_select(desk);
+   return 1;
+}
+
+static int
+_pager_face_cb_event_container_resize(void *data, int type, void *event)
+{
+   Pager_Face               *face;
+   E_Event_Container_Resize *ev;
+   Evas_List                *l;
+   Evas_Coord                w, h, lw, lh;
+   
+   face = data;
+   ev = event;
+   if (face->zone->container != ev->container) return 1;
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	
+	pd = l->data;
+	e_layout_virtual_size_set(pd->layout_object, 
+				  face->zone->w,
+				  face->zone->h);
+     }
+//   e_gadman_client_aspect_set(face->gmc, 
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h),
+//			      (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h));
+   w = face->fw;
+   h = face->fh;
+   evas_object_geometry_get(face->table_object, NULL, NULL, &lw, &lh);
+   if ((face->xnum * face->zone->w) > (face->ynum * face->zone->h))
+     w = face->xnum * ((face->zone->w * lh) / face->zone->h);
+   else
+     h = face->ynum * ((face->zone->h * lw) / face->zone->w);
+   e_gadman_client_resize(face->gmc, w, h);
    return 1;
 }
 

@@ -711,12 +711,13 @@ _temperature_face_menu_new(Temperature_Face *face)
    face->menu = mn;
 
    /* Enabled */
+   /*
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Enabled");
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_face_cb_menu_enabled, face);
-
+    */
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Edit Mode");

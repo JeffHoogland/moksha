@@ -545,12 +545,14 @@ _ibar_bar_menu_new(IBar_Bar *ibb)
    ibb->menu = mn;
 
    /* Enabled */
+   /*
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Enabled");
    e_menu_item_check_set(mi, 1);
    if (ibb->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_menu_enabled, ibb);
-
+    */
+   
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Edit Mode");

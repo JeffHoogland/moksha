@@ -133,7 +133,9 @@ e_manager_manage_windows(E_Manager *man)
 		    con = e_manager_container_number_get(man, id);
 		  else
 		    con = e_manager_container_current_get(man);
-
+		  if (!con)
+		    e_container_current_get(man);
+		  
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_ZONE,
 						       &id, 1);
@@ -141,7 +143,8 @@ e_manager_manage_windows(E_Manager *man)
 		    zone = e_container_zone_number_get(con, id);
 		  else
 		    zone = e_zone_current_get(con);
-
+		  if (!zone)
+		    zone = e_zone_current_get(con);
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_DESK,
 						       deskxy, 2);
