@@ -59,12 +59,14 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    int          error_w, error_h;
    Evas_List   *l, *shapelist = NULL;
    Evas_Coord   maxw, maxh;
+   E_Container *con;
+   int          x, y;
 
    error_w = 400;
    error_h = 200;
-   ee = ecore_evas_software_x11_new(NULL, man->win,
-				    (man->w - error_w) / 2, (man->h - error_h) / 2,
-				    error_w, error_h);
+   x = (man->w - error_w) / 2;
+   y = (man->h - error_h) / 2;
+   ee = ecore_evas_software_x11_new(NULL, man->win, x, y, error_w, error_h);
    ecore_evas_software_x11_direct_resize_set(ee, 1);
    e_canvas_add(ee);
 
@@ -83,8 +85,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	Evas_Coord tw, th;
 	char *newstr;
 
-	if (o)
-	  evas_object_del(o);
+	if (o) evas_object_del(o);
 
 	maxw = 0;
 	maxh = 0;
@@ -207,17 +208,30 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_layer_set(o, -10);
 	evas_object_show(o);
 
-	ecore_evas_move(ee, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	x = (man->w - error_w) / 2;
+	y = (man->h - error_h) / 2;
+	con = e_manager_container_current_get(man);
+	if (con)
+	  {
+	     E_Zone *zone;
+	     
+	     zone = e_container_zone_number_get(con, 0);
+	     if (zone)
+	       {
+		  x = zone->x + ((zone->w - error_w) / 2);
+		  y = zone->y + ((zone->h - error_h) / 2);
+	       }
+	  }
+	ecore_evas_move(ee, x, y);
 	ecore_evas_resize(ee, error_w, error_h);
 
 	for (l = man->containers; l; l = l->next)
 	  {
-	     E_Container *con;
 	     E_Container_Shape *es;
 
 	     con = l->data;
 	     es = e_container_shape_add(con);
-	     e_container_shape_move(es, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	     e_container_shape_move(es, x, y);
 	     e_container_shape_resize(es, error_w, error_h);
 	     e_container_shape_show(es);
 	     shapelist = evas_list_append(shapelist, es);
@@ -279,7 +293,21 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_resize(o, error_w, error_h);
 	evas_object_show(o);
 
-	ecore_evas_move(ee, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	x = (man->w - error_w) / 2;
+	y = (man->h - error_h) / 2;
+	con = e_manager_container_current_get(man);
+	if (con)
+	  {
+	     E_Zone *zone;
+	     
+	     zone = e_container_zone_number_get(con, 0);
+	     if (zone)
+	       {
+		  x = zone->x + ((zone->w - error_w) / 2);
+		  y = zone->y + ((zone->h - error_h) / 2);
+	       }
+	  }
+	ecore_evas_move(ee, x, y);
 	ecore_evas_resize(ee, error_w, error_h);
 
 	for (l = man->containers; l; l = l->next)
@@ -289,7 +317,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	     con = l->data;
 	     es = e_container_shape_add(con);
-	     e_container_shape_move(es, (man->w - error_w) / 2, (man->h - error_h) / 2);
+	     e_container_shape_move(es, x, y);
 	     e_container_shape_resize(es, error_w, error_h);
 	     e_container_shape_show(es);
 	     shapelist = evas_list_append(shapelist, es);

@@ -935,41 +935,93 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    
    face = data;
    ev = event;
-   if (face->zone != ev->border->zone) return 1;
-   if (ev->border->sticky) return 1;
-
-   for (l = face->desks; l; l = l->next)
+   /* if this pager is not for the zone of the border */
+   if (face->zone != ev->border->zone)
      {
-	pd = l->data;
-        if (ev->border->desk != pd->desk)
+	/* look at all desks in the pager */
+	for (l = face->desks; l; l = l->next)
 	  {
+	     pd = l->data;
+	     /* find this border in this desk */
 	     pw = _pager_desk_border_find(pd, ev->border);
 	     if (pw)
 	       {
+		  /* if it is found - remove it. it does not belong in this
+		   * pager as it probably moves zones */
 		  pd->wins = evas_list_remove(pd->wins, pw);
 		  _pager_window_free(pw);
 	       }
 	  }
-	else
+	return 1;
+     }
+   /* and this pager zone is for this border */
+   /* see if the window is in this pager at all */
+   pw = _pager_face_border_find(face, ev->border);
+   /* is it sticky */
+   if (ev->border->sticky)
+     {
+	/* if its sticky and in this pager - its already everywhere, so abort
+	 * doing anything else */
+	if (pw) return 1;
+     }
+   
+   /* its not sticky but its in the pager */
+   if (pw)
+     {
+	for (l = face->desks; l; l = l->next)
 	  {
+	     pd = l->data;
+	     /* if the border is not meant to be on this desk - remove */
 	     pw = _pager_desk_border_find(pd, ev->border);
-	     if (pw) found = 1;
+	     if (ev->border->desk != pd->desk)
+	       {
+		  if (pw)
+		    {
+		       pd->wins = evas_list_remove(pd->wins, pw);
+		       _pager_window_free(pw);
+		    }
+	       }
+	     /* it is meant to be here */
+	     else
+	       {
+		  /* mark it as found */
+		  if (pw) found = 1;
+	       }
+	  }
+	/* if the border was not found on the appropriate desk, we have
+	 * to move it to the right desk */
+	if (!found)
+	  {
+	     /* find the window */
+	     pw = _pager_face_border_find(face, ev->border);
+	     /* find the pager desk of the target desk */
+	     pd = _pager_face_desk_find(face, ev->border->desk);
+	     if ((pw) && (pd))
+	       {
+		  /* remove it from whatever desk it was on */
+		  pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
+		  e_layout_unpack(pw->window_object);
+		  
+		  /* add it to the one its MEANT to be on */
+		  pw->desk = pd;
+		  pd->wins = evas_list_append(pd->wins, pw);
+		  e_layout_pack(pd->layout_object, pw->window_object);
+		  e_layout_child_raise(pw->window_object);
+		  _pager_window_move(face, pw);
+	       }
 	  }
      }
-   if (!found)
+   /* the border isnt in this pager at all - it must have moved zones */
+   else
      {
-	pw = _pager_face_border_find(face, ev->border);
+	/* find the pager desk it needs to go to */
 	pd = _pager_face_desk_find(face, ev->border->desk);
-	if ((pw) && (pd))
+	if (pd)
 	  {
-	     pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
-	     e_layout_unpack(pw->window_object);
-	     
-	     pw->desk = pd;
-	     pd->wins = evas_list_append(pd->wins, pw);
-	     e_layout_pack(pd->layout_object, pw->window_object);
-	     e_layout_child_raise(pw->window_object);
-	     _pager_window_move(face, pw);
+	     /* create it and add it */
+	     pw = _pager_window_new(pd, ev->border);
+	     if (pw)
+	       pd->wins = evas_list_append(pd->wins, pw);
 	  }
      }
    return 1;

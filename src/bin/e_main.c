@@ -90,6 +90,33 @@ main(int argc, char **argv)
 	     snprintf(buf, sizeof(buf), "DISPLAY=%s", argv[i]);
 	     putenv(buf);
 	  }
+	else if ((!strcmp(argv[i], "-fake-xinerama-screen")) && (i < (argc - 1)))
+	  {
+	     int x, y, w, h;
+	     
+	     i++;
+	     /* WWxHH+XX+YY */
+	     if (sscanf(argv[i], "%ix%i+%i+%i", &w, &h, &x, &y) == 4)
+	       e_xinerama_fake_screen_add(x, y, w, h);
+	  }
+	else if ((!strcmp(argv[i], "-h")) ||
+		 (!strcmp(argv[i], "-help")) ||
+		 (!strcmp(argv[i], "--help")))
+	  {
+	     printf
+	       ("Options:\n"
+		"\t-display DISPLAY\n"
+		"\t\tConnect to display named DISPLAY.\n"
+		"\t\tEG: -display :1.0\n"
+		"\t-fake-xinerama-screen WxH+X+Y\n"
+		"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+		"\t\tgiven the geometry. Add as many as you like. They all\n"
+		"\t\treplace the real xinerama screens, if any. This can\n"
+		"\t\tbe used to simulate xinerama.\n"
+		"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+		);
+	     exit(0);
+	  }
      }
 
    /* fix up DISPLAY to be :N.0 if no .screen is in it */

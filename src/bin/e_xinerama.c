@@ -8,6 +8,7 @@ static void _e_xinerama_update(void);
 
 static Evas_List *all_screens = NULL;
 static Evas_List *chosen_screens = NULL;
+static Evas_List *fake_screens = NULL;
 
 int
 e_xinerama_init(void)
@@ -33,13 +34,29 @@ e_xinerama_update(void)
 const Evas_List *
 e_xinerama_screens_get(void)
 {
+   if (fake_screens) return fake_screens;
    return chosen_screens;
 }
 
 const Evas_List *
 e_xinerama_screens_all_get(void)
 {
+   if (fake_screens) return fake_screens;
    return all_screens;
+}
+
+void
+e_xinerama_fake_screen_add(int x, int y, int w, int h)
+{
+   E_Screen *scr;
+
+   scr = calloc(1, sizeof(E_Screen));
+   scr->screen = evas_list_count(fake_screens);
+   scr->x = x;
+   scr->y = y;
+   scr->w = w;
+   scr->h = h;
+   fake_screens = evas_list_append(fake_screens, scr);
 }
 
 /* local subsystem functions */
