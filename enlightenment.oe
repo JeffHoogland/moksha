@@ -4,7 +4,7 @@ MAINTAINER = "Carsten Haitzler (Rasterman) <raster@rasterman.com>"
 SECTION = "e/windowmanager"
 PRIORITY = "optional"
 DEPENDS = "ecore edje eet embryo evas imlib2 embryo-native edje-native imlib2-native"
-PV = "0.17.0_pre5"
+PV = "0.17.0_pre10"
 PR = "1"
 
 do_prepsources () {

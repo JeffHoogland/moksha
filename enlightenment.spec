@@ -1,7 +1,7 @@
 # Note that this is NOT a relocatable package
-%define ver      0.17.0_pre5
+%define ver      0.17.0_pre10
 %define rel      NOT_RELEASE_1
-%define prefix   /usr
+%define prefix   /usr/local
 
 Summary: enlightenment
 Name: enlightenment
@@ -16,9 +16,13 @@ URL: http://www.enlightenment.org/
 BuildRequires: evas-devel
 BuildRequires: edje-devel
 BuildRequires: ecore-devel
+BuildRequires: embryo-devel
+BuildRequires: eet-devel
 Requires: edje
 Requires: evas
 Requires: ecore
+Requires: embryo
+Requires: eet
 
 Docdir: %{prefix}/doc
 

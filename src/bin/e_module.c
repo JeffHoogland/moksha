@@ -46,12 +46,12 @@ e_module_init(void)
      {
 	E_Module *m;
 	
-	if (m = e_module_new("test"))
-	  e_module_enable(m);
-	if (m = e_module_new("ibar"))
-	  e_module_enable(m);
-	if (m = e_module_new("dropshadow"))
-	  e_module_enable(m);
+	m = e_module_new("test");
+	if (m) e_module_enable(m);
+	m = e_module_new("ibar");
+	if (m) e_module_enable(m);
+	m = e_module_new("dropshadow");
+	if (m) e_module_enable(m);
      }
    
    return 1;
