@@ -11,7 +11,6 @@ bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
 ENLIGHTENMENTHEADERS = \
 e.h \
 e_includes.h \
-e_file.h \
 e_user.h \
 e_manager.h \
 e_path.h \
@@ -46,7 +45,6 @@ e_xinerama.h
 
 
 enlightenment_SOURCES = \
-e_file.c \
 e_main.c \
 e_user.c \
 e_manager.c \
