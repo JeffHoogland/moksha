@@ -122,3 +122,10 @@ e_memdup(void *data, int size)
    memcpy(data_dup, data, size);
    return data_dup;
 }
+
+int
+e_glob_matches(char *str, char *glob)
+{
+   if (!fnmatch(glob, str, 0)) return 1;
+   return 0;
+}

@@ -12,6 +12,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <signal.h>
+#include <fnmatch.h>
 #ifdef WITH_DMALLOC
 #include <dmalloc.h>
 #endif
@@ -610,6 +611,7 @@ char *e_file_real(char *file);
 char *e_file_get_file(char *file);
 char *e_file_get_dir(char *file);
 void *e_memdup(void *data, int size);
+int e_glob_matches(char *str, char *glob);
     
 void e_exec_set_args(int argc, char **argv);
 void e_exec_restart(void);

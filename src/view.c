@@ -686,12 +686,14 @@ e_view_add_icon(E_View *v, E_Icon *icon)
    e_icon_realize(icon);
    v->changed = 1;
    v->icons = evas_list_append(v->icons, icon);
+   e_shelf_add_icon(v->shelves->data, icon);
 }
 
 void
 e_view_del_icon(E_View *v, E_Icon *icon)
 {
    if (!icon->view) return;
+   e_shelf_del_icon(v->shelves->data, icon);
    e_icon_unrealize(icon);
    OBJ_UNREF(icon);
    icon->view = NULL;

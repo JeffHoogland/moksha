@@ -245,8 +245,8 @@ e_shelf_move_by(E_Shelf *sh, int dx, int dy)
 	pl = pr = pt = pb = 0;
 	if (sh->bit.border) ebits_get_insets(sh->bit.border, &pl, &pr, &pt, &pb);
 	evas_move(sh->view->evas, sh->obj.clipper, sh->x + pl, sh->y + pt);
+	printf("move to %i %i\n", sh->x + pl, sh->y + pt);
      }
-   return;
    for (l = sh->view->icons; l; l = l->next)
      {
 	E_Icon *icon;
@@ -274,6 +274,7 @@ e_shelf_resize(E_Shelf *sh, int w, int h)
 	pl = pr = pt = pb = 0;
 	if (sh->bit.border) ebits_get_insets(sh->bit.border, &pl, &pr, &pt, &pb);
 	evas_resize(sh->view->evas, sh->obj.clipper, sh->w - pl - pr, sh->h - pt - pb);
+	printf("resize to %i %i\n", sh->w - pl - pr, sh->h - pt - pb);
      }   
 }
 

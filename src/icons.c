@@ -160,6 +160,8 @@ e_icon_set_filename(E_Icon *icon, char *file)
 void
 e_icon_update(E_Icon *icon)
 {
+   int obj_new = 0;
+   
    if (!icon->changed) return;
    if (((icon->current.icon) && (icon->previous.icon) &&
        (strcmp(icon->current.icon, icon->previous.icon))) ||
@@ -176,6 +178,7 @@ e_icon_update(E_Icon *icon)
 	evas_set_layer(icon->view->evas, icon->obj.filename, 10);
 	icon->previous.x = icon->current.x - 1;
 	icon->previous.visible = icon->current.visible - 1;
+	obj_new = 1;
      }
    if (!icon->obj.icon)
      {
@@ -183,6 +186,18 @@ e_icon_update(E_Icon *icon)
 	evas_set_layer(icon->view->evas, icon->obj.icon, 10);
 	icon->previous.x = icon->current.x - 1;
 	icon->previous.visible = icon->current.visible - 1;
+	obj_new = 1;
+     }
+   if (obj_new)
+     {
+	if (icon->shelf)
+	  {
+	     E_Shelf *sh;
+	     
+	     sh = icon->shelf;
+	     e_shelf_del_icon(sh, icon);
+	     e_shelf_add_icon(sh, icon);
+	  }
      }
    if ((icon->previous.x != icon->current.x) ||
        (icon->previous.y != icon->current.y))
