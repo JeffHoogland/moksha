@@ -128,6 +128,13 @@ e_border_update_borders(void)
 	     e_border_reshape(b);
 	  }
      }
+
+   /* Check for a focused border, else focus the desktop */
+   if( !e_border_current_focused())
+     {
+       if( !e_desktop_raise_next_border())
+	 e_icccm_send_focus_to( e_desktop_window(), 1);
+     }
    e_db_runtime_flush();
 
    D_RETURN;
@@ -2635,6 +2642,10 @@ E_Border           *
 e_border_current_focused(void)
 {
    Evas_List *           l;
+   E_Desktop *        desk;
+
+   /* Only check for borders on the current desktop */
+   desk = e_desktops_get(e_desktops_get_current());
 
    D_ENTER;
    for (l = borders; l; l = l->next)
@@ -2642,7 +2653,9 @@ e_border_current_focused(void)
 	E_Border           *b;
 
 	b = l->data;
-	if (b->current.selected)
+	if (b->current.selected && 
+	    b->desk == desk
+	    )
 	   D_RETURN_(b);
      }
    for (l = borders; l; l = l->next)
@@ -2650,7 +2663,9 @@ e_border_current_focused(void)
 	E_Border           *b;
 
 	b = l->data;
-	if (b->current.select_lost_from_grab)
+	if (b->current.select_lost_from_grab && 
+	    b->desk == desk
+	    )
 	   D_RETURN_(b);
      }
 
