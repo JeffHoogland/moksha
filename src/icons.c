@@ -860,7 +860,7 @@ e_icon_deselect(E_Icon *ic)
 
 void
 e_icon_exec(E_Icon *ic)
-{
+{	
    D_ENTER;
  
    if (!strcmp(ic->file->info.mime.base, "dir") &&
@@ -884,7 +884,7 @@ e_icon_exec(E_Icon *ic)
 	ecore_window_set_name_class(v->win.base, "FileView", "E");
 	ecore_window_set_min_size(v->win.base, 8, 8);
      }
-   e_icon_deselect(ic);
+     e_icon_deselect(ic);
    
    D_RETURN;
 }

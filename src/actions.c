@@ -7,6 +7,7 @@
 #include "icccm.h"
 #include "keys.h"
 #include "view.h"
+#include "e_view_machine.h"
 #include "util.h"
 #include "guides.h"
 #include "bordermenu.h"
@@ -1566,7 +1567,7 @@ e_act_exit_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
 {
    D_ENTER;
 
-   e_view_close_all();
+   e_view_machine_close_all_views();
    
    ecore_focus_mode_reset();
    ecore_sync();
@@ -1591,7 +1592,7 @@ e_act_restart_start (E_Object *object, E_Action *a, void *data, int x, int y, in
 {
    D_ENTER;
 
-   e_view_close_all();
+   e_view_machine_close_all_views();
      
    ecore_focus_mode_reset();
    ecore_sync();

@@ -207,7 +207,6 @@ void      e_view_resort(E_View *v);
 void      e_view_queue_geometry_record(E_View *v);
 void      e_view_queue_icon_xy_record(E_View *v);
 void      e_view_queue_resort(E_View *v);
-E_View   *e_view_find_by_window(Window win);
 
 /**
  * e_view_new - Creates a new view object

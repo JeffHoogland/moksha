@@ -43,6 +43,18 @@ e_view_machine_unregister_view(E_View *v)
    D_RETURN;
 }
 
+void
+e_view_machine_close_all_views(void)
+{
+   Evas_List l;
+   D_ENTER;
+   for (l=VM->views;l;l=l->next)
+   {
+      E_View *v = l->data;
+      e_view_machine_unregister_view(v);
+   }
+   D_RETURN;
+}
 
 E_View_Model *
 e_view_machine_model_lookup(char *path)
@@ -76,5 +88,30 @@ e_view_machine_model_lookup(char *path)
    D_RETURN_(NULL);
 }
 
+E_View *
+e_view_machine_get_view_by_main_window(Window win)
+{
+   Evas_List l;
+   D_ENTER;
+   for (l = VM->views; l; l = l->next)
+     {
+	E_View *v = l->data;
+	if (v && win == v->win.main)
+	   D_RETURN_(v);
+     }	
+   D_RETURN_(NULL);
+}
 
-
+E_View *
+e_view_machine_get_view_by_base_window(Window win)
+{
+   Evas_List l;
+   D_ENTER;
+   for (l = VM->views; l; l = l->next)
+     {
+	E_View *v = l->data;
+	if (v && win == v->win.base)
+	   D_RETURN_(v);
+     }	
+   D_RETURN_(NULL);
+}
