@@ -10,6 +10,7 @@ struct _E_Smart_Data
 { 
    Evas_Coord       x, y, w, h;
    Evas_Object     *obj;
+   Evas_Object     *clip;
    int              frozen;
    unsigned char    changed : 1;
    unsigned char    horizontal : 1;
@@ -330,12 +331,14 @@ _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    bi->min.h = 0;
    bi->max.w = 0;
    bi->max.h = 0;
-   evas_object_clip_set(obj, evas_object_clip_get(sd->obj));
+   evas_object_clip_set(obj, sd->clip);
    evas_object_stack_above(obj, sd->obj);
    evas_object_smart_member_add(bi->sd->obj, obj);
    evas_object_data_set(obj, "e_box_data", bi);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_box_smart_item_del_hook, NULL);
+   if (!evas_object_visible_get(sd->clip))
+     evas_object_show(sd->clip);
    return bi;
 }
 
@@ -346,10 +349,16 @@ _e_box_smart_disown(Evas_Object *obj)
    
    bi = evas_object_data_get(obj, "e_box_data");
    if (!bi) return;
+   if (!bi->sd->items)
+     {
+	if (evas_object_visible_get(bi->sd->clip))
+	  evas_object_hide(bi->sd->clip);
+     }
    evas_object_event_callback_del(obj,
 				  EVAS_CALLBACK_FREE,
 				  _e_box_smart_item_del_hook);
    evas_object_smart_member_del(bi->sd->obj);
+   evas_object_clip_unset(obj);
    evas_object_data_del(obj, "e_box_data");
    free(bi);
 }
@@ -512,13 +521,13 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
    sd->changed = 0;
 }
 
-/* FIXME: need to have min/max size calc routines */
 static void
 _e_box_smart_extents_calcuate(E_Smart_Data *sd)
 {
    Evas_List *l;
    int minw, minh;
-   
+
+   /* FIXME: need to calc max */
    sd->max.w = -1; /* max < 0 == unlimited */
    sd->max.h = -1;
    
@@ -612,6 +621,11 @@ _e_box_smart_add(Evas_Object *obj)
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
+   sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
+   evas_object_smart_member_add(obj, sd->clip);
+   evas_object_move(sd->clip, -100000, -100000);
+   evas_object_resize(sd->clip, 200000, 200000);
+   evas_object_color_set(sd->clip, 255, 255, 255, 255);
    evas_object_smart_data_set(obj, sd);
 }
    
@@ -629,6 +643,7 @@ _e_box_smart_del(Evas_Object *obj)
 	child = sd->items->data;
 	e_box_unpack(child);
      }
+   evas_object_del(sd->clip);
    free(sd);
 }
    
@@ -730,10 +745,22 @@ _e_box_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
+     {
+	Evas_List *l;
+	Evas_Coord dx, dy;
+	
+	dx = x - sd->x;
+	dy = y - sd->y;
+	for (l = sd->items; l; l = l->next)
+	  {
+	     Evas_Coord ox, oy;
+	     
+	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
+	     evas_object_move(l->data, ox + dx, oy + dy);
+	  }
+     }
    sd->x = x;
    sd->y = y;
-   sd->changed = 1;
-   _e_box_smart_reconfigure(sd);
 }
 
 static void
@@ -757,6 +784,7 @@ _e_box_smart_show(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->items) evas_object_show(sd->clip);
 }
 
 static void
@@ -766,6 +794,7 @@ _e_box_smart_hide(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   evas_object_hide(sd->clip);
 }
 
 static void
@@ -775,6 +804,7 @@ _e_box_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;   
+   evas_object_color_set(sd->clip, r, g, b, a);
 }
 
 static void
@@ -784,15 +814,7 @@ _e_box_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
-     {
-	Evas_List *l;
-	
-	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_clip_set(l->data, clip);
-	  }
-     }
+   evas_object_clip_set(sd->clip, clip);
 }
 
 static void
@@ -802,13 +824,5 @@ _e_box_smart_clip_unset(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
-     {
-	Evas_List *l;
-	
-	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_clip_unset(l->data);
-	  }
-     }
+   evas_object_clip_unset(sd->clip);
 }  
