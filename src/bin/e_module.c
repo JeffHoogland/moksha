@@ -7,7 +7,7 @@
 /* TODO List:
  * 
  * * add module types/classes
- * * add list of exclusions that a mdoule cant work with
+ * * add list of exclusions that a module cant work with
  * 
  */
 
@@ -66,9 +66,9 @@ e_module_shutdown(void)
 	E_Module *m;
 	
 	m = _e_modules->data;
-	e_object_unref(E_OBJECT(m));
+	e_object_del(E_OBJECT(m));
      }
-   e_object_unref(E_OBJECT(_e_path_modules));
+   e_object_del(E_OBJECT(_e_path_modules));
    _e_path_modules = NULL;
    return 1;
 }

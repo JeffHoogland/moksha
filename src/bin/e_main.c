@@ -738,32 +738,32 @@ _e_main_path_shutdown(void)
 {
    if (path_data)
      {
-	e_object_unref(E_OBJECT(path_data));
+	e_object_del(E_OBJECT(path_data));
 	path_data = NULL;
      }
    if (path_images)
      {
-	e_object_unref(E_OBJECT(path_images));
+	e_object_del(E_OBJECT(path_images));
 	path_images = NULL;
      }
    if (path_fonts)
      {
-	e_object_unref(E_OBJECT(path_fonts));
+	e_object_del(E_OBJECT(path_fonts));
 	path_fonts = NULL;
      }
    if (path_themes)
      {
-	e_object_unref(E_OBJECT(path_themes));
+	e_object_del(E_OBJECT(path_themes));
 	path_themes = NULL;
      }
    if (path_icons)
      {
-	e_object_unref(E_OBJECT(path_icons));
+	e_object_del(E_OBJECT(path_icons));
 	path_icons = NULL;
      }
    if (path_init)
      {
-	e_object_unref(E_OBJECT(path_init));
+	e_object_del(E_OBJECT(path_init));
 	path_init = NULL;
      }
    return 1;
