@@ -1,7 +1,26 @@
 #ifndef E_BORDER_H
 #define E_BORDER_H
 
+typedef enum _E_Direction E_Direction;
+typedef enum _E_Transition E_Transition;
 typedef struct _E_Border E_Border;
+
+enum _E_Direction
+{
+    E_DIRECTION_UP,
+    E_DIRECTION_DOWN,
+    E_DIRECTION_LEFT,
+    E_DIRECTION_RIGHT
+};
+
+enum _E_Transition
+{
+    E_TRANSITION_LINEAR,
+    E_TRANSITION_SINUSOIDAL,
+    E_TRANSITION_ACCELERATE,
+    E_TRANSITION_DECELERATE
+};
+
 
 struct _E_Border
 {
@@ -116,7 +135,7 @@ struct _E_Border
    unsigned char   shading : 1;
    unsigned char   shaded : 1;
    unsigned char   maximized : 1;
-   unsigned char   minimized : 1;
+   unsigned char   iconified : 1;
 
    unsigned char   changed : 1;
 
@@ -130,6 +149,8 @@ struct _E_Border
    struct {
       double start;
       double val;
+      int x, y;
+      E_Direction dir;
       Ecore_Animator *anim;
    } shade;
 
@@ -163,12 +184,12 @@ EAPI void      e_border_lower(E_Border *bd);
 EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
 EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
-EAPI void      e_border_shade(E_Border *bd);
-EAPI void      e_border_unshade(E_Border *bd);
+EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
+EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_maximize(E_Border *bd);
 EAPI void      e_border_unmaximize(E_Border *bd);
-EAPI void      e_border_minimize(E_Border *bd);
-EAPI void      e_border_unminimize(E_Border *bd);
+EAPI void      e_border_iconify(E_Border *bd);
+EAPI void      e_border_uniconify(E_Border *bd);
     
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 
