@@ -27,6 +27,7 @@ void e_icccm_set_desk_area(Window win, int ax, int ay);
 void e_icccm_set_desk_area_size(Window win, int ax, int ay);
 void e_icccm_set_desk(Window win, int d);
 int  e_icccm_is_shaped(Window win);
+void e_icccm_get_e_hack_launch_id(Window win, E_Border *b);
 void e_icccm_handle_property_change(Atom a, E_Border *b);
 void e_icccm_handle_client_message(Ecore_Event_Message *e);
 void e_icccm_advertise_e_compat(void);

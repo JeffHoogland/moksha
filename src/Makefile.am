@@ -26,6 +26,7 @@ endif
 enlightenment_SOURCES = \
 	actions.h actions.c \
 	background.h background.c \
+	block.c block.h \
 	border.h border.c \
 	bordermenu.h bordermenu.c \
 	config.h config.c \

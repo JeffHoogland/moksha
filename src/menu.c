@@ -189,7 +189,7 @@ e_idle(void *data)
 	  }
      }
    
-   e_db_flush();
+   e_db_runtime_flush();
 
    D_RETURN;
    UN(data);
@@ -957,6 +957,7 @@ e_menu_event_win_hide(void)
    /* destroy it */
    if (menu_event_win)
      {
+	ecore_ungrab_mouse();
 	ecore_keyboard_ungrab();
 	ecore_window_destroy(menu_event_win);
 	menu_event_win = 0;

@@ -13,6 +13,7 @@
 #include "match.h"
 #include "focus.h"
 #include "menu.h"
+#include "exec.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -122,7 +123,7 @@ e_border_update_borders(void)
 	     evas_render(b->evas.b);
 	  }
      }
-   e_db_flush();
+   e_db_runtime_flush();
 
    D_RETURN;
 }
@@ -1482,6 +1483,7 @@ e_border_adopt(Window win, int use_client_pos)
    e_icccm_get_machine(win, b);
    e_icccm_get_command(win, b);
    e_icccm_get_icon_name(win, b);
+   e_icccm_get_e_hack_launch_id(win, b);
    b->current.shaped_client = e_icccm_is_shaped(win);
    /* we have now placed the bugger */
    b->placed = 1;
@@ -1594,6 +1596,9 @@ e_border_adopt(Window win, int use_client_pos)
    e_border_raise(b);
    ecore_window_show(win);
 
+   if (b->client.e.launch_id)
+     e_exec_broadcast_e_hack_found(b->win.client);
+   
    D_RETURN_(b);
 }
 

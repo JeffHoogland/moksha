@@ -98,6 +98,12 @@ struct _E_Border
       int w, h;
       int no_place;
       struct {
+	 int launch_id;
+	 pid_t pid;
+	 pid_t ppid;
+	 uid_t user;
+      } e;
+      struct {
 	 int requested;
 	 int x, y;
 	 int gravity;

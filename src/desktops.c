@@ -21,7 +21,7 @@ ecore_idle(void *data)
    D_ENTER;
    /* FIXME -- Raster, how is this related to the desktop code? */
 
-   e_db_flush();
+   e_db_runtime_flush();
    D_RETURN;
    UN(data);
 }

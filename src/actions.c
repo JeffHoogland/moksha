@@ -10,6 +10,7 @@
 #include "util.h"
 #include "guides.h"
 #include "bordermenu.h"
+#include "block.h"
 
 static Evas_List action_impls = NULL;
 static Evas_List current_actions = NULL;
@@ -665,6 +666,8 @@ e_act_move_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
    D_ENTER;
+   
+   e_block_start("menus");
 
    E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
@@ -723,6 +726,8 @@ e_act_move_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int r
 
    b = (E_Border*) object;
 
+   e_block_stop("menus");
+   
    if (!b)
      b = e_border_current_focused();
 
@@ -814,6 +819,8 @@ e_act_resize_start (E_Object *object, E_Action *a, void *data, int x, int y, int
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
 
    D_ENTER;
+
+   e_block_start("menus");
    
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
@@ -895,6 +902,8 @@ e_act_resize_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int
    E_Border *b;
    
    D_ENTER;
+
+   e_block_stop("menus");
 
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
@@ -995,6 +1004,8 @@ e_act_resize_h_start (E_Object *object, E_Action *a, void *data, int x, int y, i
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
 
    D_ENTER;
+
+   e_block_start("menus");
    
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
@@ -1053,9 +1064,10 @@ e_act_resize_h_stop  (E_Object *object, E_Action *a, void *data, int x, int y, i
 {
    E_Border *b;
 
-
    D_ENTER;
 
+   e_block_stop("menus");
+   
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
@@ -1138,7 +1150,9 @@ e_act_resize_v_start (E_Object *object, E_Action *a, void *data, int x, int y, i
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
    D_ENTER;
-
+ 
+   e_block_start("menus");
+  
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
@@ -1199,6 +1213,8 @@ e_act_resize_v_stop  (E_Object *object, E_Action *a, void *data, int x, int y, i
    
    D_ENTER;
 
+   e_block_stop("menus");
+   
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
@@ -1527,6 +1543,7 @@ e_act_menu_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    
    D_ENTER;
 
+   if (e_block_is_active("menus")) D_RETURN;
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
@@ -1554,7 +1571,7 @@ e_act_exit_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    ecore_focus_mode_reset();
    ecore_sync();
 
-   e_db_flush();
+   e_db_runtime_flush();
 
    exit(0);
 
@@ -1579,7 +1596,7 @@ e_act_restart_start (E_Object *object, E_Action *a, void *data, int x, int y, in
    ecore_focus_mode_reset();
    ecore_sync();
 
-   e_db_flush();
+   e_db_runtime_flush();
    
    e_exec_restart();
 

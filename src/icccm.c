@@ -578,6 +578,35 @@ e_icccm_is_shaped(Window win)
 }
 
 void
+e_icccm_get_e_hack_launch_id(Window win, E_Border *b)
+{
+   static Atom  a_e_hack_launch_id = 0;
+   int         *props;
+   int          size;
+
+   D_ENTER;
+
+   ECORE_ATOM(a_e_hack_launch_id, "_E_HACK_LAUNCH_ID");
+   
+   props = ecore_window_property_get(win, a_e_hack_launch_id, XA_STRING, &size);
+   if (props)
+     {
+	char *str;
+	
+	str = NEW(char, size + 1);
+	ZERO(str, char, size + 1);
+	memcpy(str, props, size);
+	b->client.e.launch_id = atoi(str);
+	FREE(str);
+	FREE(props);
+     }
+   else
+     b->client.e.launch_id = 0;
+
+   D_RETURN;
+}
+
+void
 e_icccm_handle_property_change(Atom a, E_Border *b)
 {
    static Atom  a_wm_normal_hints = 0;
@@ -589,6 +618,7 @@ e_icccm_handle_property_change(Atom a, E_Border *b)
    static Atom  a_wm_command = 0;
    static Atom  a_wm_icon_name = 0;
    static Atom  a_wm_state = 0;
+   static Atom  a_e_hack_launch_id = 0;
    
    D_ENTER;
 
@@ -601,7 +631,8 @@ e_icccm_handle_property_change(Atom a, E_Border *b)
    ECORE_ATOM(a_wm_command, "WM_COMMAND"); 
    ECORE_ATOM(a_wm_icon_name, "WM_ICON_NAME"); 
    ECORE_ATOM(a_wm_state, "WM_STATE"); 
-  
+   ECORE_ATOM(a_e_hack_launch_id, "_E_HACK_LAUNCH_ID");
+   
    if (a == a_wm_normal_hints) e_icccm_get_size_info(b->win.client, b);
    else if (a == a_motif_wm_hints) e_icccm_get_mwm_hints(b->win.client, b);
    else if (a == a_wm_name) e_icccm_get_title(b->win.client, b);
@@ -611,7 +642,8 @@ e_icccm_handle_property_change(Atom a, E_Border *b)
    else if (a == a_wm_command) e_icccm_get_command(b->win.client, b);
    else if (a == a_wm_icon_name) e_icccm_get_icon_name(b->win.client, b);
    else if (a == a_wm_state) e_icccm_get_state(b->win.client, b);
-
+   else if (a == a_e_hack_launch_id) e_icccm_get_e_hack_launch_id(b->win.client, b);
+   
    D_RETURN;
 }
 

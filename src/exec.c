@@ -6,6 +6,69 @@
 static int e_argc = 0;
 static char **e_argv = NULL;
 
+typedef struct _e_hack_found_cb E_Hack_Found_CB;
+
+struct _e_hack_found_cb
+{
+   int dirty;
+   void (*func) (Window win, void *data);
+   void *func_data;
+};
+
+static Evas_List hack_found_cb = NULL;
+
+void *
+e_exec_broadcast_cb_add(void (*func) (Window win, void *_data), void *data)
+{
+   E_Hack_Found_CB *cb;
+   
+   cb = NEW(E_Hack_Found_CB, 1);
+   ZERO(cb, E_Hack_Found_CB, 1);
+   cb->func = func;
+   cb->func_data = data;
+   hack_found_cb = evas_list_append(hack_found_cb, cb);
+   return cb;
+}
+
+void
+e_exec_broadcast_cb_del(void *cbp)
+{
+   E_Hack_Found_CB *cb;
+   
+   cb = (E_Hack_Found_CB *)cbp;
+   cb->dirty = 1;
+}
+
+void
+e_exec_broadcast_e_hack_found(Window win)
+{
+   Evas_List l;
+   
+   for (l = hack_found_cb; l; l = l->next)
+     {
+	E_Hack_Found_CB *cb;
+	
+	cb = l->data;
+	if (!cb->dirty)
+	  {
+	     if (cb->func)
+	       cb->func(win, cb->func_data);
+	  }
+     }
+   again:
+   for (l = hack_found_cb; l; l = l->next)
+     {
+	E_Hack_Found_CB *cb;
+	
+	cb = l->data;
+	if (cb->dirty)
+	  {
+	     hack_found_cb = evas_list_remove(hack_found_cb, cb);
+	     goto again;
+	  }
+     }
+}
+
 void
 e_exec_set_args(int argc, char **argv)
 {

@@ -76,16 +76,16 @@ e_guides_update(void)
 	  {
 	     if (!guides.win.display)
 	       {
-		  guides.win.display = ecore_window_override_new(0, 0, 0, 1, 1);
 		  guides.win.l = ecore_window_override_new(0, 0, 0, 1, 1);
 		  guides.win.r = ecore_window_override_new(0, 0, 0, 1, 1);
 		  guides.win.t = ecore_window_override_new(0, 0, 0, 1, 1);
 		  guides.win.b = ecore_window_override_new(0, 0, 0, 1, 1);
-		  ecore_window_save_under(guides.win.display);
+		  guides.win.display = ecore_window_override_new(0, 0, 0, 1, 1);
 		  ecore_window_save_under(guides.win.l);
 		  ecore_window_save_under(guides.win.r);
 		  ecore_window_save_under(guides.win.t);
 		  ecore_window_save_under(guides.win.b);
+		  ecore_window_save_under(guides.win.display);
 		  redraw = 1;
 	       }
 	     if (!guides.disp.evas)
@@ -463,14 +463,19 @@ e_guides_update(void)
      {
 	if (guides.current.mode == E_GUIDES_BOX)
 	  {
-	     ecore_window_raise(guides.win.l);
-	     ecore_window_show(guides.win.l);
-	     ecore_window_raise(guides.win.r);
-	     ecore_window_show(guides.win.r);
-	     ecore_window_raise(guides.win.t);
-	     ecore_window_show(guides.win.t);
-	     ecore_window_raise(guides.win.b);
-	     ecore_window_show(guides.win.b);
+	     if (guides.current.visible)
+	       {
+		  ecore_window_raise(guides.win.l);
+		  ecore_window_show(guides.win.l);
+		  ecore_window_raise(guides.win.r);
+		  ecore_window_show(guides.win.r);
+		  ecore_window_raise(guides.win.t);
+		  ecore_window_show(guides.win.t);
+		  ecore_window_raise(guides.win.b);
+		  ecore_window_show(guides.win.b);
+		  ecore_window_raise(guides.win.display);
+		  ecore_window_show(guides.win.display);
+	       }
 	  }
 	else if (guides.prev.mode == E_GUIDES_OPAQUE)
 	  {

@@ -53,6 +53,13 @@ struct _E_Iconbar_Icon
       char        *timer;
       double       start;
    } hi;
+   
+   int         wait;
+   float       wait_timeout;
+   
+   pid_t       launch_pid;
+   int         launch_id;
+   void       *launch_id_cb;
 };
 
 void            e_iconbar_init(void);

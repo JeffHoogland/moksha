@@ -1,9 +1,13 @@
 #include "debug.h"
 #include "iconbar.h"
 #include "util.h"
+#include "desktops.h"
+#include "border.h"
 
 static E_Config_Base_Type *cf_iconbar      = NULL;
 static E_Config_Base_Type *cf_iconbar_icon = NULL;
+
+static Evas_List           iconbars = NULL;
 
 /* internal func (iconbar use only) prototypes */
 
@@ -13,6 +17,7 @@ static void e_ib_bit_up_cb(void *data, Ebits_Object o, char *class, int bt, int 
 static void ib_reload_timeout(int val, void *data);
 static void ib_scroll_timeout(int val, void *data);
 static void ib_timeout(int val, void *data);
+static void ib_cancel_launch_timeout(int val, void *data);
 
 static void ib_bits_show(void *data);
 static void ib_bits_hide(void *data);
@@ -32,6 +37,8 @@ static void ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, i
 static void ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 
 static void  e_iconbar_icon_cleanup(E_Iconbar_Icon *ic);
+
+static void ib_child_handle(Ecore_Event *ev);
 
 /* NB: comments here for illustration & helping people understand E's code */
 /* This is a start of the comments. if you feel they are not quite good */
@@ -95,6 +102,9 @@ e_iconbar_cleanup(E_Iconbar *ib)
    char buf[PATH_MAX];
 
    D_ENTER;
+
+   /* remove from our list */
+   iconbars = evas_list_remove(iconbars, ib);
    
    /* save scroll position */
    /* tell the view we attached to that somehting in it changed. this way */
@@ -154,6 +164,8 @@ e_iconbar_init()
    /* the struct memebr is exec. the default value is "". see the config.h */
    /* header for more info */
    E_CONFIG_NODE(cf_iconbar_icon, "exec",  E_CFG_TYPE_STR, NULL, E_Iconbar_Icon, exec, 0, 0, "");
+   E_CONFIG_NODE(cf_iconbar_icon, "wait",  E_CFG_TYPE_INT, NULL, E_Iconbar_Icon, wait, 0, 0, "");
+   E_CONFIG_NODE(cf_iconbar_icon, "wait_timeout",  E_CFG_TYPE_FLOAT, NULL, E_Iconbar_Icon, wait_timeout, 0, 0, "");
    /* this memebr will be replaced by the relative key path in the db as a */
    /* string */
    E_CONFIG_NODE(cf_iconbar_icon, "image", E_CFG_TYPE_KEY, NULL, E_Iconbar_Icon, image_path, 0, 0, "");
@@ -165,6 +177,8 @@ e_iconbar_init()
    E_CONFIG_NODE(cf_iconbar, "icons", E_CFG_TYPE_LIST, cf_iconbar_icon, E_Iconbar, icons, 0, 0, NULL);
    E_CONFIG_NODE(cf_iconbar, "scroll", E_CFG_TYPE_FLOAT, NULL, E_Iconbar, scroll, 0, 0, NULL);
 
+   ecore_event_filter_handler_add(ECORE_EVENT_CHILD, ib_child_handle);
+   
    D_RETURN;
 }
 
@@ -245,6 +259,9 @@ e_iconbar_new(E_View *v)
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2", CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2", CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
    
+   /* add to our list of iconbars */
+   iconbars = evas_list_append(iconbars, ib);
+   
    /* aaah. our nicely constructed iconbar data struct with all the goodies */
    /* we need. return it. she's ready for use. */
    D_RETURN_(ib);
@@ -273,6 +290,19 @@ e_iconbar_icon_cleanup(E_Iconbar_Icon *ic)
      }
    if (ic->hi.image) evas_del_object(ic->iconbar->view->evas, ic->hi.image);
 
+   if (ic->launch_id_cb)
+     {
+	e_exec_broadcast_cb_del(ic->launch_id_cb);
+	ic->launch_id_cb = NULL;
+     }
+   if (ic->launch_id)
+     {
+	char buf[PATH_MAX];
+	
+	sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+	ecore_del_event_timer(buf);
+	ic->launch_id = 0;
+     }
    /* Call the destructor of the base class */
    e_object_cleanup(E_OBJECT(ic));
 
@@ -657,6 +687,31 @@ e_iconbar_save_out_final(E_Iconbar *ib)
      }
 }
 
+void
+e_iconbar_handle_launch_id(Window win, void *data)
+{
+   E_Iconbar_Icon *ic;
+   E_Border *b;
+   
+   ic = (E_Iconbar_Icon *)data;
+   b = e_border_find_by_window(win);
+   if (!b) return;
+   if ((ic->launch_id) && (b->client.e.launch_id))
+     {
+	if (b->client.e.launch_id == ic->launch_id)
+	  {
+	     ic->launch_id = 0;
+	     if (ic->launch_id_cb)
+	       {
+		  e_exec_broadcast_cb_del(ic->launch_id_cb);
+		  ic->launch_id_cb = NULL;
+	       }
+	     evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
+	     ic->iconbar->view->changed = 1;
+	  }
+     }
+}
+
 /* static (internal to iconbar use only) callbacks */
 
 /* reload timeout. called whenevr iconbar special files changed/added to */
@@ -710,6 +765,26 @@ ib_scroll_timeout(int val, void *data)
    D_RETURN;
 }
 
+static void
+ib_cancel_launch_timeout(int val, void *data)
+{
+   E_Iconbar_Icon *ic;
+   
+   ic = (E_Iconbar_Icon *)data;
+
+   if (ic->launch_id)
+     {
+	ic->launch_id = 0;
+	if (ic->launch_id_cb)
+	  {
+	     e_exec_broadcast_cb_del(ic->launch_id_cb);
+	     ic->launch_id_cb = NULL;
+	  }
+	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
+	ic->iconbar->view->changed = 1;
+     }
+}
+
 /* this timeout is responsible for doing the mouse over animation */
 static void
 ib_timeout(int val, void *data)
@@ -751,8 +826,14 @@ ib_timeout(int val, void *data)
      }
    /* what tame is it ? */
    t = ecore_get_time();
+   if (ic->launch_id)
+     {
+	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 50);
+	if (ic->hi.image)
+	  evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, 0);
+     }
    /* if the icon is hilited */
-   if (ic->hilited)
+   else if (ic->hilited)
      {
 	double x, y, w, h;
 	double nw, nh, tt;
@@ -1089,8 +1170,44 @@ ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
+   /* if we're busy launching something.. dont run anything */
+   if (ic->launch_id) D_RETURN;
    /* run something! */
-   if (ic->exec) e_exec_run(ic->exec);
+   if (ic->exec) 
+     {
+	if (!ic->wait)
+	  {
+	     if (e_exec_run(ic->exec) < 0)
+	       {
+		  /* FIXME: display error */
+	       }
+	  }
+	else
+	  {
+	     int id_ret = 0;
+	
+	     ic->launch_pid = e_exec_in_dir_with_env(ic->exec, e_util_get_user_home(), &id_ret, NULL, NULL);
+	     if (ic->launch_pid >= 0)
+	       {
+		  ic->launch_id = id_ret;
+		  if (id_ret)
+		    {
+		       char buf[PATH_MAX];
+		       
+		       ic->launch_id_cb = 
+			 e_exec_broadcast_cb_add(e_iconbar_handle_launch_id, ic);
+		       sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		       if (ic->wait_timeout > 0.0)
+			 ecore_add_event_timer(buf, ic->wait_timeout, ib_cancel_launch_timeout, ic->launch_id, ic);
+		       else
+			 ecore_add_event_timer(buf, 15, ib_cancel_launch_timeout, ic->launch_id, ic);
+		       evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 50);
+		       if (ic->hi.image)
+			 evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, 0);
+		    }
+	       }
+	  }
+     }
 
    D_RETURN;
 }
@@ -1100,6 +1217,46 @@ static void
 ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    D_ENTER;
+
+   D_RETURN;
+}
+
+/* called when child processes exit */
+static void
+ib_child_handle(Ecore_Event *ev)
+{
+   Ecore_Event_Child *e;
+   Evas_List l;
+
+   D_ENTER;
+   
+   e = ev->event;
+   for (l = iconbars; l; l = l->next)
+     {
+	E_Iconbar *ib;
+	Evas_List ll;
+	
+	ib = l->data;
+	for (ll = ib->icons; ll; ll = ll->next)
+	  {
+	     E_Iconbar_Icon *ic;
+	     
+	     ic = ll->data;
+	     if (ic->launch_pid == e->pid)
+	       {
+		  ic->launch_pid = 0;
+		  ic->launch_id = 0;
+		  if (ic->launch_id_cb)
+		    {
+		       e_exec_broadcast_cb_del(ic->launch_id_cb);
+		       ic->launch_id_cb = NULL;
+		    }
+		  evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
+		  ic->iconbar->view->changed = 1;
+		  D_RETURN;
+	       }
+	  }
+     }
 
    D_RETURN;
 }
