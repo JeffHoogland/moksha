@@ -79,7 +79,7 @@ E_App *
 e_app_new(char *path, int scan_subdirs)
 {
    E_App *a;
-   
+
    a = evas_hash_find(_e_apps, path);
    if (a)
      {
@@ -479,17 +479,24 @@ _e_app_dir_file_list_get(E_App *a, char *path)
 	       {
 		  int ok = 0;
 		  
-		  if (buf[len - 1] == '\n') buf[len - 1] = 0;
-		  for (l = files; l; l = l->next)
+		  if (buf[len - 1] == '\n')
 		    {
-		       if (!strcmp(buf, l->data))
-			 {
-			    free(l->data);
-			    files = evas_list_remove_list(files, l);
-			    break;
-			 }
+		       buf[len - 1] = 0;
+		       len--;
 		    }
-		  files2 = evas_list_append(files2, strdup(buf));
+		  if (len > 0)
+		    {
+		       for (l = files; l; l = l->next)
+			 {
+			    if (!strcmp(buf, l->data))
+			      {
+				 free(l->data);
+				 files = evas_list_remove_list(files, l);
+				 break;
+			      }
+			 }
+		       files2 = evas_list_append(files2, strdup(buf));
+		    }
 	       }
 	  }
 	fclose(f);

@@ -386,16 +386,17 @@ _e_main_dirs_init(void)
 	     return 0;
 	  }
      }
+   
    /* FIXME: THIS is a hack to get people started!!! */
-/*   
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/favorite/eterm.eet", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eet", homedir);
    if (!e_file_exists(buf))
-     snprintf(buf, sizeof(buf), "tar -C %s/.e/e/applications/favorite/ zxvf %s/data/other/favorite_apps.tar.gz", homedir, PACKAGE_DATA_DIR);
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/", homedir);
-   if (!e_file_exists(buf))
-     snprintf(buf, sizeof(buf), "tar -C %s/.e/e/applications/bar/ zxvf %s/data/other/favorite_apps.tar.gz", homedir, PACKAGE_DATA_DIR);
+     snprintf(buf, sizeof(buf), 
+	      "gzip -d -c < %s/data/other/applications.tar.gz |"
+	      "(cd %s/.e/e/ ; tar -xf -)", 
+	      PACKAGE_DATA_DIR,
+	      homedir);
    free(homedir);
- */
+   
    return 1;
 }
 
