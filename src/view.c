@@ -1478,6 +1478,12 @@ e_mouse_down(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.main)
 	  {
+	     int focus_mode;
+	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
+	     
+	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
+             if (focus_mode == 2)
+	       ecore_focus_to_window(v->win.base);
 	     evas_event_button_down(v->evas, e->x, e->y, e->button);
 	     current_ev = NULL;
 	     return;
@@ -2738,6 +2744,8 @@ e_view_handle_fs(EfsdEvent *ev)
 				 e_background_set_size(v->bg, v->size.w, v->size.h);
 				 if (v->options.back_pixmap) e_view_update(v);
 				 b = e_border_adopt(v->win.base, 1);
+				 b->client.internal = 1;
+				 e_border_remove_click_grab(b);
 			      }
 			    return;
 			 }

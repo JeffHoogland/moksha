@@ -221,10 +221,11 @@ e_action_free(E_Action *a)
    FREE(a);
 }
 
-void
+int
 e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
+   int started_long_action = 0;
    
    e_action_find(action, act, button, key, mods, o);
    again:
@@ -236,7 +237,10 @@ e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Eve
 	if (!a->started)
 	  {
 	     if (a->action_impl->func_stop)
-	       a->started = 1;
+	       {
+		  a->started = 1;
+		  started_long_action = 1;
+	       }
 	     if (a->action_impl->func_start)
 	       {
 		  E_Object *obj;
@@ -257,6 +261,7 @@ e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Eve
 	     goto again;
 	  }
      }
+   return started_long_action;
 }
 
 void

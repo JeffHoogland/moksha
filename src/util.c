@@ -62,7 +62,7 @@ int
 e_file_cp(char *src, char *dst)
 {
    FILE *f1, *f2;
-   char buf[PATH_MAX];
+   char buf[16384];
    size_t num;
    
    f1 = fopen(src, "rb");
@@ -73,7 +73,7 @@ e_file_cp(char *src, char *dst)
 	fclose(f1);
 	return 0;
      }
-   while ((num = fread(buf, 1, PATH_MAX, f1)) > 0) fwrite(buf, 1, num, f2);
+   while ((num = fread(buf, 1, 16384, f1)) > 0) fwrite(buf, 1, num, f2);
    fclose(f1);
    fclose(f2);
    return 1;
@@ -91,7 +91,7 @@ e_file_real(char *file)
 }
 
 char *
-e_filecore_get_file(char *file)
+e_file_get_file(char *file)
 {
    char *p;
    char *f;
@@ -107,7 +107,7 @@ e_filecore_get_file(char *file)
 }
 
 char *
-e_filecore_get_dir(char *file)
+e_file_get_dir(char *file)
 {
    char *p;
    char *f;

@@ -27,7 +27,7 @@
 #include <Edb.h>
 
 #ifndef PATH_MAX
-#define PATH_MAX     4095
+#define PATH_MAX     4096
 #endif
 
 #if 0

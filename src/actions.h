@@ -56,7 +56,7 @@ struct _E_Action_Impl
 };
 
 
-void e_action_start(char *action, E_Action_Type act, int button, char *key,
+int  e_action_start(char *action, E_Action_Type act, int button, char *key,
 		    Ecore_Event_Key_Modifiers mods, void *o, void *data,
 		    int x, int y, int rx, int ry);
 void e_action_stop(char *action, E_Action_Type act, int button, char *key,

@@ -204,6 +204,8 @@ e_desktops_init_file_display(E_Desktop *desk)
    ecore_window_set_min_size(v->win.base, desk->real.w, desk->real.h);
    ecore_window_set_max_size(v->win.base, desk->real.w, desk->real.h);
    b = e_border_adopt(v->win.base, 1);
+   b->client.internal = 1;
+   e_border_remove_click_grab(b);
    b->client.sticky = 1;
    b->client.fixed = 1;
    b->client.is_desktop = 1;

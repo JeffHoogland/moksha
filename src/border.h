@@ -103,6 +103,7 @@ struct _E_Border
       struct {
 	 int x, y;
       } area;
+      int internal;
    } client;
    
    struct {
@@ -119,6 +120,7 @@ struct _E_Border
    int placed;
    
    Evas_List grabs;
+   E_Grab   *click_grab;
    E_Desktop *desk;
    
    char *border_style;
@@ -139,6 +141,7 @@ E_Border *e_border_adopt(Window win, int use_client_pos);
 E_Border *e_border_new(void);
 void      e_border_free(E_Border *b);
 void      e_border_remove_mouse_grabs(E_Border *b);
+void      e_border_remove_click_grab(E_Border *b);
 void      e_border_attach_mouse_grabs(E_Border *b);
 void      e_border_remove_all_mouse_grabs(void);
 void      e_border_attach_all_mouse_grabs(void);
