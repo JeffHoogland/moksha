@@ -2495,7 +2495,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	e_menu_item_label_set(mi, "Edit Icon");
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
      }
-   else
+   else if (bd->client.icccm.class) /* icons with no class useless to borders */
      {
 	static char buf[PATH_MAX + 50];
 	char *name, *homedir;
@@ -2508,7 +2508,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	l = strlen(name);
 	for (i = 0; i < l; i++)
 	  {
-	      if (name[i] == ' ') name[i] = '_';
+	     if (name[i] == ' ') name[i] = '_';
 	  }
 	/* previously this could be null, but it will exist now */
 	homedir = e_user_homedir_get();
@@ -2516,8 +2516,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	snprintf(buf, sizeof(buf),
 		 "--win-class %s %s/.e/e/applications/all/%s.eapp",
 		 bd->client.icccm.class, homedir, name);
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, "Create Icon");
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, "Create Icon");
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
      }
 
