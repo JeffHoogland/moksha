@@ -11,7 +11,7 @@ case "$build_os" in
 *olaris*)
   CP_OPTIONS="-ar";
   ;;
-*BSD*)
+*bsd*)
   CP_OPTIONS="-PpR";
   ;;
 esac
