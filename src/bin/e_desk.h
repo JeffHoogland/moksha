@@ -4,6 +4,7 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Desk E_Desk;
+typedef struct _E_Event_Desk_Show E_Event_Desk_Show;
 
 #else
 #ifndef E_DESK_H
@@ -25,6 +26,11 @@ struct _E_Desk
    Evas_List           *clients;
 };
 
+struct _E_Event_Desk_Show
+{
+   E_Desk   *desk;
+};
+
 EAPI int          e_desk_init(void);
 EAPI int          e_desk_shutdown(void);
 EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
@@ -39,6 +45,8 @@ EAPI void         e_desk_row_add(E_Zone *zone);
 EAPI void         e_desk_row_remove(E_Zone *zone);
 EAPI void         e_desk_col_add(E_Zone *zone);
 EAPI void         e_desk_col_remove(E_Zone *zone);
+
+extern EAPI int E_EVENT_DESK_SHOW;
 
 #endif
 #endif

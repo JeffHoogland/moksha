@@ -88,6 +88,9 @@ static void _e_border_resize_begin(E_Border *bd);
 static void _e_border_resize_end(E_Border *bd);
 static void _e_border_resize_update(E_Border *bd);
 
+static void _e_border_reorder_after(E_Border *bd, E_Border *after);
+static void _e_border_reorder_before(E_Border *bd, E_Border *before);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -96,8 +99,6 @@ static E_Border  *focused = NULL;
 static E_Border    *resize = NULL;
 static Ecore_Evas  *resize_ee = NULL;
 static Evas_Object *resize_obj = NULL;
-
-extern int          _e_desk_current_changing;
 
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
@@ -322,6 +323,8 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    if (bd->zone == zone) return;
+   bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+   zone->clients = evas_list_append(zone->clients, bd);
    bd->zone = zone;
 
    if (bd->desk->zone != bd->zone)
@@ -367,8 +370,6 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
 
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
@@ -391,9 +392,8 @@ e_border_show(E_Border *bd)
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
    ecore_x_window_show(bd->client.win);
-   ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
+   e_hints_window_visible_set(bd->client.win);
    bd->visible = 1;
-   bd->changed = 1;
    bd->changes.visible = 1;
 
    visible = 1;
@@ -402,14 +402,12 @@ e_border_show(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_SHOW, ev, _e_border_event_border_show_free, NULL);
 }
 
 void
-e_border_hide(E_Border *bd)
+e_border_hide(E_Border *bd, int manage)
 {
    E_Event_Border_Hide *ev;
    unsigned int visible;
@@ -420,25 +418,19 @@ e_border_hide(E_Border *bd)
 
    ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
-
-   if (bd->iconic)
-     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
-   else
-     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+   if (!bd->iconic)
+     e_hints_window_hidden_set(bd->client.win);
 
    bd->visible = 0;
-   bd->changed = 1;
    bd->changes.visible = 1;
 
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
-   if (!_e_desk_current_changing)
+   if (!manage)
      ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
 
    ev = calloc(1, sizeof(E_Event_Border_Hide));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
 }
@@ -474,8 +466,6 @@ e_border_move(E_Border *bd, int x, int y)
    _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
@@ -512,8 +502,6 @@ e_border_resize(E_Border *bd, int w, int h)
    _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
@@ -559,20 +547,15 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    _e_border_zone_update(bd);
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
 
    rev = calloc(1, sizeof(E_Event_Border_Resize));
    rev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
 }
 
-/* FIXME: Zone client list is not altered. This affects desktop show function */
 void
 e_border_raise(E_Border *bd)
 {
@@ -580,8 +563,7 @@ e_border_raise(E_Border *bd)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   bd->container->clients = evas_list_append(bd->container->clients, bd);
+   _e_border_reorder_after(bd, NULL);
    mwin = e_menu_grab_window_get();
    if (!mwin)
      ecore_x_window_raise(bd->win);
@@ -598,8 +580,7 @@ e_border_lower(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   bd->container->clients = evas_list_prepend(bd->container->clients, bd);
+   _e_border_reorder_before(bd, NULL);
    ecore_x_window_lower(bd->win);
 }
 
@@ -608,8 +589,7 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   bd->container->clients = evas_list_append_relative(bd->container->clients, bd, above);
+   _e_border_reorder_after(bd, above);
    ecore_x_window_configure(bd->win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -622,8 +602,7 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   bd->container->clients = evas_list_remove(bd->container->clients, bd);
-   bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, below);
+   _e_border_reorder_before(bd, below);
    ecore_x_window_configure(bd->win,
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -694,6 +673,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	bd->shade.dir = dir;
 
 	e_hints_window_shaded_set(bd->client.win, 1);
+	e_hints_window_shade_direction_set(bd->client.win, dir);
 
 	if (e_config->border_shade_animate)
 	  {
@@ -741,8 +721,6 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	     edje_object_signal_emit(bd->bg_object, "shaded", "");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
-	     /* SUSPICION: does the unref for this actually sometimes not get */
-	     /*   called? coudl this be the dangling borders issue? */
 	     /* The resize is added in the animator when animation complete */
 	     /* For non-animated, we add it immediately with the new size */
 	     e_object_ref(E_OBJECT(bd));
@@ -767,6 +745,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	bd->shade.dir = dir;
 
 	e_hints_window_shaded_set(bd->client.win, 0);
+	e_hints_window_shade_direction_set(bd->client.win, dir);
 
 	if (bd->shade.dir == E_DIRECTION_UP ||
 	    bd->shade.dir == E_DIRECTION_LEFT)
@@ -824,8 +803,6 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
-	     /* SUSPICION: does the unref for this actually sometimes not get */
-	     /*   called? coudl this be the dangling borders issue? */
 	     /* The resize is added in the animator when animation complete */
 	     /* For non-animated, we add it immediately with the new size */
 	     e_object_ref(E_OBJECT(bd));
@@ -896,11 +873,11 @@ e_border_iconify(E_Border *bd)
    if (!bd->iconic)
      {
 	bd->iconic = 1;
-	e_border_hide(bd);
+	e_border_hide(bd, 1);
 	edje_object_signal_emit(bd->bg_object, "iconify", "");
      }
    iconic = 1;
-   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
+   e_hints_window_iconic_set(bd->client.win);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
 }
 
@@ -920,11 +897,12 @@ e_border_uniconify(E_Border *bd)
 	  e_border_desk_set(bd, desk);
 	bd->iconic = 0;
 	e_border_show(bd);
+	/* FIXME: DEPRECATED?
 	e_iconify_border_remove(bd);
+	*/
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
    iconic = 0;
-   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
 }
 
@@ -987,11 +965,35 @@ e_border_idler_before(void)
 {
    Evas_List *l;
 
+   if (!borders)
+     return;
+
+   /* We need to loop two times through the borders.
+    * 1. show windows
+    * 2. hide windows and evaluate rest
+    */
+   for (l = borders->last; l; l = l->prev)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	if (bd->changes.visible && bd->visible)
+	  {
+	     ecore_x_window_show(bd->win);
+	     bd->changes.visible = 0;
+	  }
+     }
+
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd;
 
 	bd = l->data;
+	if (bd->changes.visible && !bd->visible)
+	  {
+	     ecore_x_window_hide(bd->win);
+	     bd->changes.visible = 0;
+	  }
 	if (bd->changed) _e_border_eval(bd);
      }
 }
@@ -1066,8 +1068,8 @@ _e_border_del(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
+   /* FIXME Don't ref this during shutdown. And the event is pointless
+    * during shutdown.. */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
 }
@@ -1092,7 +1094,7 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   e_border_hide(bd);
+   e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
 }
@@ -1117,8 +1119,15 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    /* Don't delete hidden or iconified windows */
    was_iconic = bd->iconic;
    was_visible = bd->visible;
-   e_border_hide(bd);
-   if (!(was_iconic) && (was_visible)) e_object_del(E_OBJECT(bd));
+   if (!(was_iconic) && (was_visible))
+     {
+	e_border_hide(bd, 0);
+	e_object_del(E_OBJECT(bd));
+     }
+   else
+     {
+	e_border_hide(bd, 1);
+     }
    return 1;
 }
 
@@ -1133,7 +1142,7 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    if (e->parent == bd->client.shell_win) return 1;
-   e_border_hide(bd);
+   e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
 }
@@ -1450,18 +1459,31 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_NORMAL) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR)) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL)) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
-   if ((e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) &&
-       (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR)) return 1;
+   if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
+     {
+	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+     }
+   else if (e->mode == ECORE_X_EVENT_MODE_GRAB)
+     {
+	if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) return 1;
+     }
+   else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
+     {
+	/* 1. enter moz window
+	 * 2. activate menu
+	 * 3. leave moz window
+	 * 4. click
+	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	*/
+     }
+   else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
+     {
+	/* FIXME: If window is grabbed, shouldn't we always return 1? */
+	if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+     }
 //   printf("f OUT %i | %i\n", e->mode, e->detail);
    e_border_focus_set(bd, 0, 0);
    return 1;
@@ -1651,7 +1673,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	     ecore_x_kill(bd->client.win);
 	     ecore_x_sync();
 //	     ecore_x_window_del(bd->client.win);
-	     e_border_hide(bd);
+	     e_border_hide(bd, 0);
 	     e_object_del(E_OBJECT(bd));
 	  }
      }
@@ -1709,13 +1731,13 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 	char *ct;
 
 	const char *modes[] = {
-	   "MODE_NORMAL",
+	     "MODE_NORMAL",
 	     "MODE_WHILE_GRABBED",
 	     "MODE_GRAB",
 	     "MODE_UNGRAB"
 	};
 	const char *details[] = {
-	   "DETAIL_ANCESTOR",
+	     "DETAIL_ANCESTOR",
 	     "DETAIL_VIRTUAL",
 	     "DETAIL_INFERIOR",
 	     "DETAIL_NON_LINEAR",
@@ -1736,7 +1758,6 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 #endif
 //   if (ev->mode == ECORE_X_EVENT_MODE_GRAB) return 1;
 //   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
-//   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
      {
 	/* FIXME: this would normally put focus on the client on pointer */
@@ -1765,13 +1786,13 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	char *ct;
 
 	const char *modes[] = {
-	   "MODE_NORMAL",
+	     "MODE_NORMAL",
 	     "MODE_WHILE_GRABBED",
 	     "MODE_GRAB",
 	     "MODE_UNGRAB"
 	};
 	const char *details[] = {
-	   "DETAIL_ANCESTOR",
+	     "DETAIL_ANCESTOR",
 	     "DETAIL_VIRTUAL",
 	     "DETAIL_INFERIOR",
 	     "DETAIL_NON_LINEAR",
@@ -1792,7 +1813,6 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 #endif
    /* FIXME: this would normally take focus away in pointer focus mode */
 //   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
-//   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
      {
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
@@ -2094,7 +2114,7 @@ _e_border_eval(E_Border *bd)
    if (bd->client.icccm.fetch.title)
      {
 	if (bd->client.icccm.title) free(bd->client.icccm.title);
-	bd->client.icccm.title = ecore_x_icccm_title_get(bd->client.win);
+	bd->client.icccm.title = e_hints_window_name_get(bd->client.win);
 	bd->client.icccm.fetch.title = 0;
 	if (bd->bg_object)
 	  {
@@ -2189,6 +2209,11 @@ _e_border_eval(E_Border *bd)
 	  {
 	     bd->client.icccm.accepts_focus = accepts_focus;
 	     bd->client.icccm.urgent = is_urgent;
+
+	     /* If this is a new window, set the state as requested. */
+	     if ((bd->new_client
+		 && (bd->client.icccm.initial_state == ECORE_X_WINDOW_STATE_HINT_ICONIC)))
+	       e_border_iconify(bd);
 	  }
 	bd->client.icccm.fetch.hints = 0;
      }
@@ -2511,11 +2536,17 @@ _e_border_eval(E_Border *bd)
 	/* Recreate state */
 	if (e_hints_window_sticky_isset(bd->client.win))
 	  e_border_stick(bd);
-	/* FIXME: use right shade direction! */
 	if (e_hints_window_shaded_isset(bd->client.win))
-	  e_border_shade(bd, E_DIRECTION_UP);
+	  e_border_shade(bd, e_hints_window_shade_direction_get(bd->client.win));
 	if (e_hints_window_maximized_isset(bd->client.win))
 	  e_border_maximize(bd);
+	if (e_hints_window_iconic_isset(bd->client.win))
+	  e_border_iconify(bd);
+	/* If a window isn't iconic, and is one the current desk,
+	 * show it! */
+	else if (bd->desk == e_desk_current_get(bd->zone))
+	  e_border_show(bd);
+
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->client_inset.l,
 				       bd->y + bd->client_inset.t,
@@ -2525,20 +2556,11 @@ _e_border_eval(E_Border *bd)
 
 	ev = calloc(1, sizeof(E_Event_Border_Add));
 	ev->border = bd;
-	/* SUSPICION: does the unref for this actually sometimes not get */
-	/*   called? coudl this be the dangling borders issue? */
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
      }
 
    /* effect changes to the window border itself */
-   if (bd->changes.visible)
-     {
-	if (bd->visible) ecore_x_window_show(bd->win);
-	else ecore_x_window_hide(bd->win);
-	bd->changes.visible = 0;
-     }
-
    if ((bd->changes.shading))
      {
 	/*  show at start of unshade (but don't hide until end of shade) */
@@ -3062,7 +3084,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
 	ecore_x_kill(bd->client.win);
 	ecore_x_sync();
 //         ecore_x_window_del(bd->client.win);
-	e_border_hide(bd);
+	e_border_hide(bd, 0);
 	e_object_del(E_OBJECT(bd));
      }
 }
@@ -3308,4 +3330,58 @@ _e_border_resize_update(E_Border *bd)
 	    (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
 	    (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
    edje_object_part_text_set(resize_obj, "text", buf);
+}
+
+static void
+_e_border_reorder_after(E_Border *bd, E_Border *after)
+{
+   if (after)
+     {
+	bd->container->clients = evas_list_remove(bd->container->clients, bd);
+	bd->container->clients = evas_list_append_relative(bd->container->clients, bd, after);
+	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+	bd->zone->clients = evas_list_append_relative(bd->zone->clients, bd, after);
+	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+	bd->desk->clients = evas_list_append_relative(bd->desk->clients, bd, after);
+	borders = evas_list_remove(borders, bd);
+	borders = evas_list_append_relative(borders, bd, after);
+     }
+   else
+     {
+	bd->container->clients = evas_list_remove(bd->container->clients, bd);
+	bd->container->clients = evas_list_append(bd->container->clients, bd);
+	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+	bd->zone->clients = evas_list_append(bd->zone->clients, bd);
+	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+	bd->desk->clients = evas_list_append(bd->desk->clients, bd);
+	borders = evas_list_remove(borders, bd);
+	borders = evas_list_append(borders, bd);
+     }
+}
+
+static void
+_e_border_reorder_before(E_Border *bd, E_Border *before)
+{
+   if (before)
+     {
+	bd->container->clients = evas_list_remove(bd->container->clients, bd);
+	bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, before);
+	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+	bd->zone->clients = evas_list_prepend_relative(bd->zone->clients, bd, before);
+	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+	bd->desk->clients = evas_list_prepend_relative(bd->desk->clients, bd, before);
+	borders = evas_list_remove(borders, bd);
+	borders = evas_list_prepend_relative(borders, bd, before);
+     }
+   else
+     {
+	bd->container->clients = evas_list_remove(bd->container->clients, bd);
+	bd->container->clients = evas_list_prepend(bd->container->clients, bd);
+	bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+	bd->zone->clients = evas_list_prepend(bd->zone->clients, bd);
+	bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+	bd->desk->clients = evas_list_prepend(bd->desk->clients, bd);
+	borders = evas_list_remove(borders, bd);
+	borders = evas_list_prepend(borders, bd);
+     }
 }

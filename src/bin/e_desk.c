@@ -9,14 +9,19 @@
  */
 
 static void _e_desk_free(E_Desk *desk);
-int _e_desk_current_changing;
+static void _e_border_event_desk_show_free(void *data, void *ev);
+
 static int desk_count;
+
+int E_EVENT_DESK_SHOW = 0;
 
 int
 e_desk_init(void)
 {
-   _e_desk_current_changing = 0;
    desk_count = 0;
+
+   E_EVENT_DESK_SHOW = ecore_event_type_new();
+
    return 1;
 }
 
@@ -61,12 +66,12 @@ e_desk_show(E_Desk *desk)
 {
    Evas_List   *l;
    int          x, y;
+   E_Event_Desk_Show *ev;
    
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
    
-   _e_desk_current_changing = 1;
    for (l = desk->zone->container->clients; l; l = l->next)
      {
 	E_Border *bd = l->data;
@@ -79,7 +84,7 @@ e_desk_show(E_Desk *desk)
 	       }
 	     else
 	       {
-		  e_border_hide(bd);
+		  e_border_hide(bd, 1);
 	       }
 	  }
      }
@@ -99,7 +104,11 @@ e_desk_show(E_Desk *desk)
 	  }
      }
    desk->visible = 1;
-   _e_desk_current_changing = 0;
+
+   ev = E_NEW(E_Event_Desk_Show, 1);
+   ev->desk = desk;
+   e_object_ref(E_OBJECT(desk));
+   ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
 }
 
 void
@@ -228,10 +237,18 @@ e_desk_prev(E_Zone *zone)
 static void
 _e_desk_free(E_Desk *desk)
 {
-   E_Zone *zone = desk->zone;
    if (desk->name)
      free(desk->name);
-//   zone->desks = evas_list_remove(zone->desks, desk);
    free(desk);
+}
+
+static void
+_e_border_event_desk_show_free(void *data, void *event)
+{
+   E_Event_Desk_Show *ev;
+
+   ev = event;
+   e_object_unref(E_OBJECT(ev->desk));
+   free(ev);
 }
 

@@ -271,7 +271,7 @@ EAPI void      e_border_unref(E_Border *bd);
 EAPI void      e_border_zone_set(E_Border *bd, E_Zone *zone);
 EAPI void      e_border_desk_set(E_Border *bd, E_Desk *desk);
 EAPI void      e_border_show(E_Border *bd);
-EAPI void      e_border_hide(E_Border *bd);
+EAPI void      e_border_hide(E_Border *bd, int manage);
 EAPI void      e_border_move(E_Border *bd, int x, int y);
 EAPI void      e_border_resize(E_Border *bd, int w, int h);
 EAPI void      e_border_move_resize(E_Border *bd, int x, int y, int w, int h);

@@ -158,6 +158,19 @@ e_hints_window_name_set(Ecore_X_Window win, const char *name)
    ecore_x_netwm_name_set(win, name);
 }
 
+char *
+e_hints_window_name_get(Ecore_X_Window win)
+{
+   char		*name;
+
+   name = ecore_x_netwm_name_get(win);
+   if (!name)
+     name = ecore_x_icccm_title_get(win);
+   if (!name)
+     name = strdup("No name!!");
+   return name;
+}
+
 void
 e_hints_desktop_config_set(void)
 {
@@ -257,12 +270,76 @@ e_hints_window_state_set(Ecore_X_Window win)
 }
 
 void
-e_hints_window_visible_set(Ecore_X_Window win, int on)
+e_hints_window_state_get(Ecore_X_Window win)
 {
-   int hidden;
+   E_Border	*bd;
+   int		 above, below;
 
-   hidden = on ? 0 : 1;
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, hidden);
+   bd = e_border_find_by_client_window(win);
+   
+   bd->client.netwm.state.modal = 
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MODAL);
+   bd->sticky = 
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_STICKY);
+   bd->client.netwm.state.maximized_v = 
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT);
+   bd->client.netwm.state.maximized_h = 
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ);
+   bd->shaded =
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SHADED);
+   bd->client.netwm.state.skip_taskbar =
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR);
+   bd->client.netwm.state.skip_pager =
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SKIP_PAGER);
+   bd->visible =
+      !ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_HIDDEN);
+   bd->client.netwm.state.fullscreen =
+      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_FULLSCREEN);
+   
+   above = ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_ABOVE);
+   below = ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_BELOW);
+   bd->client.netwm.state.stacking = (above << 0) + (below << 1);
+}
+
+void
+e_hints_window_visible_set(Ecore_X_Window win)
+{
+   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 0);
+}
+
+int
+e_hints_window_visible_isset(Ecore_X_Window win)
+{
+   return !ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_HIDDEN)
+	  || (ecore_x_icccm_state_get(win) == ECORE_X_WINDOW_STATE_HINT_NORMAL);
+}
+
+void
+e_hints_window_iconic_set(Ecore_X_Window win)
+{
+   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+}
+
+int
+e_hints_window_iconic_isset(Ecore_X_Window win)
+{
+   return (ecore_x_icccm_state_get(win) == ECORE_X_WINDOW_STATE_HINT_ICONIC);
+}
+
+void
+e_hints_window_hidden_set(Ecore_X_Window win)
+{
+   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+}
+
+int
+e_hints_window_hidden_isset(Ecore_X_Window win)
+{
+   return ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_HIDDEN)
+	  || (ecore_x_icccm_state_get(win) != ECORE_X_WINDOW_STATE_HINT_NORMAL);
 }
 
 void
@@ -275,6 +352,27 @@ int
 e_hints_window_shaded_isset(Ecore_X_Window win)
 {
    return ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SHADED);
+}
+
+void
+e_hints_window_shade_direction_set(Ecore_X_Window win, E_Direction dir)
+{
+   ecore_x_window_prop_card32_set(win, E_ATOM_SHADE_DIRECTION, &dir, 1);
+}
+
+E_Direction
+e_hints_window_shade_direction_get(Ecore_X_Window win)
+{
+   int ret;
+   E_Direction dir;
+
+   ret = ecore_x_window_prop_card32_get(win,
+					E_ATOM_SHADE_DIRECTION,
+				       	&dir, 1);
+   if (ret == 1)
+     return dir;
+
+   return E_DIRECTION_UP;
 }
 
 void
@@ -311,52 +409,6 @@ ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_FULLSCREEN, on);
 ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_ABOVE, on);
 ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_BELOW, on);
 */
-
-void
-e_hints_window_state_get(Ecore_X_Window win)
-{
-   E_Border	*bd;
-   int		 above, below;
-
-   bd = e_border_find_by_client_window(win);
-   
-   bd->client.netwm.state.modal = 
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MODAL);
-   bd->sticky = 
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_STICKY);
-   bd->client.netwm.state.maximized_v = 
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT);
-   bd->client.netwm.state.maximized_h = 
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ);
-   bd->shaded =
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SHADED);
-   bd->client.netwm.state.skip_taskbar =
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR);
-   bd->client.netwm.state.skip_pager =
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_SKIP_PAGER);
-   bd->visible =
-      !ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_HIDDEN);
-   bd->client.netwm.state.fullscreen =
-      ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_FULLSCREEN);
-   
-   above = ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_ABOVE);
-   below = ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_BELOW);
-   bd->client.netwm.state.stacking = (above << 0) + (below << 1);
-}
-
-void
-e_hints_window_name_get(Ecore_X_Window win)
-{
-   E_Border	*bd;
-   char		*name;
-
-   name = ecore_x_netwm_name_get(win);
-   bd = e_border_find_by_client_window(win);
-   if (bd->client.icccm.name)
-     free(bd->client.icccm.name);
-   bd->client.icccm.name = name;
-   bd->changed = 1;
-}
 
 void
 e_hints_window_icon_name_get(Ecore_X_Window win)

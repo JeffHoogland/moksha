@@ -8,8 +8,8 @@ Ecore_X_Atom E_ATOM_MANAGED = 0;
 Ecore_X_Atom E_ATOM_CONTAINER = 0;
 Ecore_X_Atom E_ATOM_ZONE = 0;
 Ecore_X_Atom E_ATOM_DESK = 0;
-Ecore_X_Atom E_ATOM_ICONIC = 0;
 Ecore_X_Atom E_ATOM_MAPPED = 0;
+Ecore_X_Atom E_ATOM_SHADE_DIRECTION = 0;
 
 /* externally accessible functions */
 int
@@ -19,8 +19,8 @@ e_atoms_init(void)
    E_ATOM_CONTAINER = ecore_x_atom_get("__E_WINDOW_CONTAINER");
    E_ATOM_ZONE = ecore_x_atom_get("__E_WINDOW_ZONE");
    E_ATOM_DESK = ecore_x_atom_get("__E_WINDOW_DESK");
-   E_ATOM_ICONIC = ecore_x_atom_get("__E_WINDOW_ICONIC");
    E_ATOM_MAPPED = ecore_x_atom_get("__E_WINDOW_MAPPED");
+   E_ATOM_SHADE_DIRECTION = ecore_x_atom_get("__E_WINDOW_SHADE_DIRECTION");
    return 1;
 }
 
