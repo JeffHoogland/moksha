@@ -453,7 +453,7 @@ e_focus_in(Ecore_Event * ev)
 	     e_border_focus_grab_ended();
 	     b->current.selected = 1;
 	     b->changed = 1;
-	     e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_FOCUS_IN);
+	     e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_FOCUS_IN);
 	     g = b->click_grab;
 	     if (g)
 	       {
@@ -1619,7 +1619,7 @@ e_border_new(void)
    b = NEW(E_Border, 1);
    ZERO(b, E_Border, 1);
 
-   e_object_init(E_OBJECT(b), (E_Cleanup_Func) e_border_cleanup);
+   e_observee_init(E_OBSERVEE(b), (E_Cleanup_Func) e_border_cleanup);
    e_observer_register_observee(E_OBSERVER(delayed_window_raise),
 				E_OBSERVEE(b));
    
@@ -1746,6 +1746,8 @@ e_border_new(void)
    e_border_attach_mouse_grabs(b);
 
    borders = evas_list_prepend(borders, b);
+
+   e_observee_notify_all_observers(E_OBSERVEE(b), E_EVENT_BORDER_NEW);
    
    D_RETURN_(b);
 }
@@ -1754,14 +1756,12 @@ void
 e_border_iconify(E_Border *b)
 {
    D_ENTER;
-   D("iconfy window!\n");
    b->client.iconified = 1;
    b->current.requested.visible = 0;
    e_icccm_state_iconified(b->win.client);
    b->changed = 1;
    e_border_update(b);
-   D("notify observers of iconification\n");
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_ICONIFY);
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_ICONIFY);
    
    D_RETURN;
 }
@@ -1771,11 +1771,12 @@ e_border_uniconify(E_Border *b)
 {
    b->client.iconified = 0;
    b->current.requested.visible = 1;
+   b->client.desk = e_desktops_get_current();
    e_icccm_state_mapped(b->win.client);
    b->changed = 1;
    e_border_update(b);
    /* should be UNICONIFY */
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_ICONIFY); 
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_ICONIFY); 
 }
 
 void
@@ -2674,7 +2675,7 @@ e_border_init(void)
    ecore_event_filter_idle_handler_add(e_idle, NULL);
 
    delayed_window_raise =
-     e_delayed_action_new(E_EVENT_WINDOW_FOCUS_IN,
+     e_delayed_action_new(E_EVENT_BORDER_FOCUS_IN,
 			  raise_delay, e_border_raise_delayed); 
    
    ecore_add_event_timer("e_border_poll()", 1.00, e_border_poll, 0, NULL);

@@ -36,7 +36,7 @@ e_delayed_action_new(E_Event_Type event,
 
 
 void
-e_delayed_action_start(E_Observer *obs, E_Observee *obj)
+e_delayed_action_start(E_Observer *obs, E_Observee *obj, E_Event_Type event)
 {
    char event_name[PATH_MAX];
    E_Delayed_Action *eda = (E_Delayed_Action*) obs;

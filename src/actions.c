@@ -1658,7 +1658,7 @@ e_act_iconify_start (E_Object *object, E_Action *a, void *data, int x, int y, in
    E_Border *b;
    
    D_ENTER;
-#if 0
+#if 1
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
@@ -1707,6 +1707,8 @@ e_act_max_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx
 	b->current.requested.y = b->current.y;
 	b->current.requested.w = b->current.w;
 	b->current.requested.h = b->current.h;
+
+	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNMAXIMIZE);
      }
    else
      {
@@ -1725,6 +1727,8 @@ e_act_max_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx
 	b->current.requested.y = b->current.y;
 	b->current.requested.w = b->current.w;
 	b->current.requested.h = b->current.h;
+	
+	e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_MAXIMIZE);
      }
 
    D_RETURN;

@@ -92,7 +92,7 @@ void e_epplet_timer_func(int val, void *data);
 E_Epplet_Observer *e_epplet_observer_new( FeriteScript *script,
                    char *func_name, FeriteObject *data, char *event_type);
 void e_epplet_observer_register_desktops(E_Epplet_Observer *obs);
-void e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee);
+void e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee, E_Event_Type event);
 /*void e_epplet_border_observer_func(E_Observer *observer, E_Observee *observee);*/
 
 #endif

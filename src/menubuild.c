@@ -26,7 +26,7 @@ static void e_build_menu_gnome_apps_poll(int val, void *data);
 static void e_build_menu_gnome_apps_build(E_Build_Menu *bm);
 
 static E_Menu *e_build_menu_iconified_borders_build(E_Build_Menu *bm);
-static void e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee);
+static void e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee, E_Event_Type event);
 
 
 /* ------------ various callbacks ---------------------- */
@@ -524,7 +524,7 @@ e_build_menu_new_from_iconified_borders()
    bm = NEW(E_Build_Menu, 1);
    ZERO(bm, E_Build_Menu, 1);
 
-   e_observer_init(E_OBSERVER(bm), E_EVENT_WINDOW_ICONIFY, e_build_menu_iconified_borders_rebuild, (E_Cleanup_Func) e_build_menu_cleanup);
+   e_observer_init(E_OBSERVER(bm), E_EVENT_BORDER_ICONIFY | E_EVENT_BORDER_UNICONIFY | E_EVENT_BORDER_NEW, e_build_menu_iconified_borders_rebuild, (E_Cleanup_Func) e_build_menu_cleanup);
 
    for (l = e_border_get_borders_list(); l; l = l->next)
    {
@@ -539,16 +539,27 @@ e_build_menu_new_from_iconified_borders()
 }
 
 static void
-e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee)
+e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee, E_Event_Type event)
 {
    E_Build_Menu *bm;
    
    D_ENTER;
-   D("catch iconify, rebuild menu");
-   bm = (E_Build_Menu *)observer;
+
+   if (event & E_EVENT_BORDER_NEW)
+   {
+      D("catch new border, register it\n");
+      e_observer_register_observee(E_OBSERVER(observer), E_OBSERVEE(observee));
+   }
+
+   if (event & (E_EVENT_BORDER_ICONIFY | E_EVENT_BORDER_UNICONIFY))
+   {
+      D("catch iconify, rebuild menu\n");
+      bm = (E_Build_Menu *)observer;
    
-   e_build_menu_unbuild(bm);
-   bm->menu = e_build_menu_iconified_borders_build(bm);
+      e_build_menu_unbuild(bm);
+      bm->menu = e_build_menu_iconified_borders_build(bm);
+   }
+
    D_RETURN;
 }
 

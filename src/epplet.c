@@ -548,11 +548,11 @@ e_epplet_observer_new(FeriteScript *script, char *func_name, FeriteObject *data,
 		      (E_Cleanup_Func)e_epplet_observer_cleanup);
 #if 0
    else if (!strcmp(event_type, "ICONIFY"))
-      e_observer_init(E_OBSERVER(obs), E_EVENT_WINDOW_ICONIFY, 
+      e_observer_init(E_OBSERVER(obs), E_EVENT_BORDER_ICONIFY, 
 	              e_epplet_border_observer_func,
 		      (E_Cleanup_Func)e_epplet_observer_cleanup);
    else if (!strcmp(event_type, "UNICONIFY"))
-      e_observer_init(E_OBSERVER(obs), E_EVENT_WINDOW_UNICONIFY, 
+      e_observer_init(E_OBSERVER(obs), E_EVENT_BORDER_UNICONIFY, 
 	              e_epplet_border_observer_func,
 		      (E_Cleanup_Func)e_epplet_observer_cleanup);
    else
@@ -618,7 +618,7 @@ e_epplet_observer_register_borders(E_Epplet_Observer *obs)
 #endif
 
 void
-e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee)
+e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee, E_Event_Type event)
 {
    E_Epplet_Observer *obs;
    E_Desktop *desk;

@@ -12,17 +12,23 @@
 typedef struct _e_observer E_Observer;
 typedef struct _e_observee E_Observee;
 
-typedef void(*E_Notify_Func)(E_Observer *observer, E_Observee *observee);
-
 typedef enum _e_event_type
 {
-   E_EVENT_WINDOW_FOCUS_IN,
-   E_EVENT_WINDOW_ICONIFY,
-   E_EVENT_WINDOW_UNICONIFY,
-   E_EVENT_WINDOW_MAXIMIZE,
-   E_EVENT_DESKTOP_SWITCH,
-   E_EVENT_MAX
+   E_EVENT_BORDER_NEW          = 1 << 0,
+   E_EVENT_BORDER_RELEASE      = 1 << 1,
+   E_EVENT_BORDER_FOCUS_IN     = 1 << 2,
+   E_EVENT_BORDER_ICONIFY      = 1 << 3,
+   E_EVENT_BORDER_UNICONIFY    = 1 << 4,
+   E_EVENT_BORDER_MAXIMIZE     = 1 << 5,
+   E_EVENT_BORDER_UNMAXIMIZE   = 1 << 6,
+   
+   E_EVENT_DESKTOP_SWITCH      = 1 << 10,
+
+
+   E_EVENT_MAX                 = 0xFFFFFFFF 
 } E_Event_Type;
+
+typedef void(*E_Notify_Func)(E_Observer *observer, E_Observee *observee, E_Event_Type event);
 
 struct _e_observer
 {
@@ -114,4 +120,19 @@ void    e_observee_cleanup(E_Observee *obs);
 void    e_observee_notify_observers(E_Observee *o, E_Event_Type event);
 
 
+/**
+ * e_observee_notify_all_observers - Notify all observers of a given E event
+ * regardless of whether they are registered or not.
+ * 
+ * @o:              The observee which notifies the observers
+ * @event:          The event by which to filter the observers
+ *
+ * This function scans ALL observers in the observee
+ * and calls the notify_func() of the observers that are
+ * responsible for the given @event. Useful for situations where the observee
+ * is just being created and you want to notify observers of its existence.
+ * If they are looking for this type of NEW event, then they can register
+ * it as a legitimate observee.
+ */
+void    e_observee_notify_all_observers(E_Observee *o, E_Event_Type event);
 #endif

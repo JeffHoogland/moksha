@@ -432,7 +432,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	else if (_b == 2)
 	  {
-#if 0
+#if 1
 	     static E_Build_Menu *buildmenu = NULL;
 
 	     if (!buildmenu)

@@ -3,6 +3,8 @@
 #include "debug.h"
 #include "observer.h"
 
+static Evas_List observers;
+
 void
 e_observer_init(E_Observer *obs, E_Event_Type event,
 		E_Notify_Func notify_func,
@@ -20,6 +22,8 @@ e_observer_init(E_Observer *obs, E_Event_Type event,
   obs->notify_func = notify_func;
 
   e_object_init(E_OBJECT(obs), cleanup_func);
+
+  observers = evas_list_append(observers, obs);
 
   D_RETURN;
 }
@@ -40,6 +44,7 @@ e_observer_cleanup(E_Observer *obs)
       e_observer_unregister_observee(obs, o);			     
     }
 
+  evas_list_remove(observers, obs);
   /* Call the destructor of the base class */
   e_object_cleanup(E_OBJECT(obs));
 
@@ -107,16 +112,40 @@ e_observee_notify_observers(E_Observee *o, E_Event_Type event)
     {
       obs = E_OBSERVER(obs_list->data);
 
-      if (obs->event == E_EVENT_MAX ||
-	  obs->event == event)
+      /* check bit mask */
+      if (obs->event & event)
 	{
-	  obs->notify_func(obs, o);
+	  obs->notify_func(obs, o, event);
 	}
     }
 
   D_RETURN;
 }
 
+void
+e_observee_notify_all_observers(E_Observee *o, E_Event_Type event)
+{
+  Evas_List  obs_list = NULL;
+  E_Observer *obs     = NULL;
+
+  D_ENTER;
+
+  if (!o)
+    D_RETURN;
+
+  for (obs_list = observers; obs_list; obs_list = obs_list->next)
+    {
+      obs = E_OBSERVER(obs_list->data);
+
+      /* check bit mask */
+      if (obs->event & event)
+	{
+	  obs->notify_func(obs, o, event);
+	}
+    }
+
+  D_RETURN;
+}
 
 void
 e_observee_cleanup(E_Observee *obs)

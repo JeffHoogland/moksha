@@ -19,7 +19,7 @@ typedef struct _e_delayed_action
 E_Delayed_Action *e_delayed_action_new(E_Event_Type event,
 				       double delay, E_Delay_Func delay_func);
 
-void e_delayed_action_start(E_Observer *obs, E_Observee *obj);
+void e_delayed_action_start(E_Observer *obs, E_Observee *obj, E_Event_Type event);
 void e_delayed_action_cancel(E_Delayed_Action *eda);
 
 #endif
