@@ -72,6 +72,8 @@ static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
+static void _e_border_event_border_add_free(void *data, void *ev);
+static void _e_border_event_border_remove_free(void *data, void *ev);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -80,6 +82,8 @@ static E_Border  *focused = NULL;
 
 int E_EVENT_BORDER_RESIZE = 0;
 int E_EVENT_BORDER_MOVE = 0;
+int E_EVENT_BORDER_ADD = 0;
+int E_EVENT_BORDER_REMOVE = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -111,6 +115,8 @@ e_border_init(void)
 
    E_EVENT_BORDER_RESIZE = ecore_event_type_new();
    E_EVENT_BORDER_MOVE = ecore_event_type_new();
+   E_EVENT_BORDER_ADD = ecore_event_type_new();
+   E_EVENT_BORDER_REMOVE = ecore_event_type_new();
    
    return 1;
 }
@@ -134,6 +140,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 {
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
+   E_Event_Border_Add *ev;
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
@@ -259,6 +266,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    con->clients = evas_list_append(con->clients, bd);
    borders = evas_list_append(borders, bd);
 
+   ev = calloc(1, sizeof(E_Event_Border_Add));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
    return bd;
 }
 
@@ -308,6 +319,8 @@ e_border_hide(E_Border *bd)
 void
 e_border_move(E_Border *bd, int x, int y)
 {
+   E_Event_Border_Move *ev;
+
    E_OBJECT_CHECK(bd);
    if ((x == bd->x) && (y == bd->y)) return;
    bd->x = x;
@@ -319,11 +332,17 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
+
+   ev = calloc(1, sizeof(E_Event_Border_Resize));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
 
 void
 e_border_resize(E_Border *bd, int w, int h)
 {
+   E_Event_Border_Resize *ev;
    E_OBJECT_CHECK(bd);
    if ((w == bd->w) && (h == bd->h)) return;
    bd->w = w;
@@ -337,6 +356,11 @@ e_border_resize(E_Border *bd, int w, int h)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
+
+   ev = calloc(1, sizeof(E_Event_Border_Resize));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
 
 void
@@ -716,6 +740,16 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   E_Event_Border_Remove *ev;
+
+   /* FIXME - can the bd is getting freed no matter so the event gets NULL :(
+    * any ideas?
+   ev = calloc(1, sizeof(E_Event_Border_Remove));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+   */
+
    if (focused == bd) focused = NULL;
    while (bd->handlers)
      {
@@ -773,6 +807,7 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+
    e_object_del(E_OBJECT(bd));
    return 1;
 }
@@ -1604,7 +1639,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
    bd->mouse.current.my = ev->root.y;
    if (bd->moving)
      {
-	E_Event_Border_Move *pass;
 	int x, y, new_x, new_y;
 	Evas_List *skiplist = NULL;
 	
@@ -1632,19 +1666,10 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	evas_list_free(skiplist);
 	e_border_move(bd, new_x, new_y);
 
-	pass = calloc(1, sizeof(E_Event_Border_Move));
-	pass->border = bd; 
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_MOVE, pass, _e_border_event_border_move_free, NULL);
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
-	E_Event_Border_Resize *pass;
 	_e_border_resize_handle(bd);
-	pass = calloc(1, sizeof(E_Event_Border_Resize));
-	pass->border = bd; 
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_RESIZE, pass, _e_border_event_border_resize_free, NULL);	    
      }
    else
      {
@@ -2663,6 +2688,26 @@ _e_border_event_border_resize_free(void *data, void *ev)
 
 static void
 _e_border_event_border_move_free(void *data, void *ev)
+{
+   E_Event_Border_Resize *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_add_free(void *data, void *ev)
+{
+   E_Event_Border_Add *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_remove_free(void *data, void *ev)
 {
    E_Event_Border_Resize *e;
 

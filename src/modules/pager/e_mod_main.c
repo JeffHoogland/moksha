@@ -177,6 +177,10 @@ _pager_init(E_Module *m)
 			   _pager_cb_event_border_events, e);
    ecore_event_handler_add(E_EVENT_BORDER_MOVE,
 			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_ADD,
+			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
+			   _pager_cb_event_border_events, e);
    
    _pager_reconfigure(e);
    return e;
