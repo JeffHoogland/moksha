@@ -519,7 +519,7 @@ e_focus_out(Ecore_Event * ev)
 		  g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
 		  g->any_mod = 0;
 		  g->remove_after = 0;
-		  ecore_button_grab(b->win.container, 1, XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
+		  ecore_button_grab(b->win.container, g->button, XEV_BUTTON_PRESS, g->mods, g->any_mod);
 		  ecore_window_button_grab_auto_replay_set(b->win.container, e_border_replay_query);
 		  b->click_grab = g;
 	       }
@@ -1083,7 +1083,7 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
    D_ENTER;
 
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
-   ecore_pointer_grab(b->win.main, CurrentTime);
+   ecore_pointer_grab(((Ecore_Event_Mouse_Down *)(e->event))->win, CurrentTime);
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    if (!current_ev) D_RETURN;
@@ -1811,7 +1811,7 @@ e_border_attach_mouse_grabs(E_Border *b)
 	g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
 	g->any_mod = 0;
 	g->remove_after = 0;
-	ecore_button_grab(b->win.container, 0, XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
+	ecore_button_grab(b->win.container, g->button, XEV_BUTTON_PRESS, g->mods, g->any_mod);
 	ecore_window_button_grab_auto_replay_set(b->win.container, e_border_replay_query);
 	b->click_grab = g;
      }
