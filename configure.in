@@ -199,7 +199,6 @@ src/modules/dropshadow/Makefile
 src/modules/clock/Makefile
 src/modules/pager/Makefile
 src/modules/flame/Makefile
-src/modules/snow/Makefile
 src/modules/battery/Makefile
 src/modules/temperature/Makefile
 data/Makefile

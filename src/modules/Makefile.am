@@ -7,6 +7,5 @@ dropshadow \
 clock \
 pager \
 flame \
-snow \
 battery \
 temperature
