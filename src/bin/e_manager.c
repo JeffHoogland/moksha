@@ -96,6 +96,7 @@ e_manager_manage_windows(E_Manager *man)
 	       {
 		  E_Container *con = NULL;
 		  E_Zone      *zone = NULL;
+		  E_Desk      *desk = NULL;
 		  E_Border    *bd = NULL;
 		  int          id;
 
@@ -114,47 +115,29 @@ e_manager_manage_windows(E_Manager *man)
 						       &id, 1);
 		  if (ret == 1)
 		    zone = e_container_zone_number_get(con, id);
-		  /* FIXME
-		   * This is the default behaviour, should it be
-		   * done here?
 		  else
 		    zone = e_zone_current_get(con);
-		  */
 
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_DESK,
 						       deskxy, 2);
+		  if (ret == 2)
+		    desk = e_desk_at_xy_get(zone,
+					    deskxy[0],
+					    deskxy[1]);
 
 		  bd = e_border_new(con, windows[i], 1);
 		  if (bd)
 		    {
+		       /* FIXME:
+			* It's enough to set the desk, the zone will
+			* be set according to the desk */
 		       if (zone)
 			 e_border_zone_set(bd, zone);
 
-		       if (ret == 2)
-			 {
-			    E_Desk *target;
-			    target = e_desk_at_xy_get(bd->zone,
-						      deskxy[0],
-						      deskxy[1]);
-			    if (target)
-			      e_border_desk_set(bd, target);
-			    if (!target || target == e_desk_current_get(bd->zone))
-			      {
-				 ret = ecore_x_window_prop_card32_get(windows[i],
-								      E_ATOM_MAPPED,
-								      &ret_val, 1);
-				 if ((ret > -1) && ret_val)
-				   e_border_show(bd);
-			      }
-			 }
+		       if (desk)
+			 e_border_desk_set(bd, desk);
 		    }
-		  /* FIXME: Shouldn't be here! */
-		  ret = ecore_x_window_prop_card32_get(windows[i],
-						       E_ATOM_ICONIC,
-						       &ret_val, 1);
-		  if ((ret > -1) && ret_val)
-		    e_border_iconify(bd);
 	       }
 	     else if ((att.visible) && (!att.override) &&
 		      (!att.input_only))
