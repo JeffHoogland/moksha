@@ -120,8 +120,8 @@ e_config_init(void)
 	     eb = E_NEW(E_Config_Binding, 1);
 	     eb->button = 1;
 	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN |
-		ECORE_X_EVENT_MASK_MOUSE_UP |
-		ECORE_X_EVENT_MASK_MOUSE_MOVE;
+			ECORE_X_EVENT_MASK_MOUSE_UP |
+			ECORE_X_EVENT_MASK_MOUSE_MOVE;
 	     eb->modifiers = ECORE_X_MODIFIER_ALT;
 	     eb->action = E_BINDING_ACTION_MOVE;
 	     e_config->bindings = evas_list_append(e_config->bindings, eb);
