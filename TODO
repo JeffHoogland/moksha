@@ -1,3 +1,57 @@
+MINI FREEZE:
+
+Status: ON
+
+What is this:
+
+We will have lots more of these during e17 devel for serveral reasons. A mini
+freeze is a call to STOP adding new features and funkiness. It means people
+need to stop and go BACK over their code and fix FIXME's. All those bits of
+code where things are string together with sticky tape and chewing gum need
+to be fixed PROPERLY. This may mean pooling code into a common subsystem
+(this is not a new feature. it is fixing loose ends with design). This may
+mean adding api calls to make implementation cleaner or remove hacks. it may
+mean more debugging tools in things like e_object and more checks for sanity.
+
+This means testing stuff so it doesnt crash. or make things unusable or leak
+memory. check leaks (use valgrind or whatever tools) to check for leaks, and
+for stability issues. double check you return the correct values from
+functions or use return values. Check callbacks. Compile with -W -Wall to
+help find obvious bugs waiting to happen. Modules need to clean up on
+shutdown. Code needs to use the appropriate subsystem that is available for
+what it wants OR a subsystem needs writing if it will be a shared/common
+feature.
+
+This issues list must be brought to 0 size before E17 features can move
+further.
+
+Current freeze issues are:
+
+ISSUES:
+
+* left mouse menu segv's at times
+* pager module doesnt shut down properly (disable and create window - segv)
+* pager module doesnt handle window deletes
+* pager module causes window resizes to be slower than normal
+* virtual desktops need fixign to work with zones properly
+* all modules need to respect zones
+* container resize needs to re-evalute zone geometry
+* zone geometyr change needs to propagate to modules
+* need desktop module geometry managing system (central)
+* dropshadow is not optimal and has extreme edge bugs
+* e_apps polling/updates is broken
+
+<add more issues as they are found>
+
+
+
+
+
+
+
+
+
+
 Some of the things (in very short form) that need to be done to E17...
 
 Also look at all the .c files - they have their own localized TODO lists
