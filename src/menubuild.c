@@ -3,6 +3,7 @@
 #include "menubuild.h"
 #include "exec.h"
 #include "util.h"
+#include "file.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"
@@ -47,7 +48,7 @@ e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
    script = data;
    e_ferite_run(script);
 #else
-   printf( "No cookies for you. You will have to install ferite.\n" );
+   D("No cookies for you. You will have to install ferite.\n");
 #endif
    
    D_RETURN;
@@ -106,7 +107,7 @@ e_build_menu_db_poll(int val, void *data)
    D_ENTER;
    
    bm = data;
-   mod = e_file_modified_time(bm->file);
+   mod = e_file_mod_time(bm->file);
    if (mod <= bm->mod_time) 
      {
 	ecore_add_event_timer(bm->file, 1.0, e_build_menu_db_poll, 0, data);
@@ -133,7 +134,7 @@ e_build_menu_gnome_apps_poll(int val, void *data)
    D_ENTER;
    
    bm = data;
-   mod = e_file_modified_time(bm->file);
+   mod = e_file_mod_time(bm->file);
    if (mod <= bm->mod_time) 
      {
 	ecore_add_event_timer(bm->file, 1.0, e_build_menu_gnome_apps_poll, 0, data);
@@ -278,7 +279,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	     fclose(f);
 	  }
 	/* read dir listing in alphabetical order and use that to suppliment */
-	dirlist = e_file_list_dir(dir);
+	dirlist = e_file_ls(dir);
 	for (l = dirlist; l; l = l->next)
 	  {
 	     char *s;
@@ -353,8 +354,8 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			 buf[buf_len - 1] = 0;
 		       /* look for Name= */
 		       if ((!name) &&
-			   (((e_glob_matches(buf, "Name[en]=*")) ||
-			     (e_glob_matches(buf, "Name=*")))))
+			   (((e_util_glob_matches(buf, "Name[en]=*")) ||
+			     (e_util_glob_matches(buf, "Name=*")))))
 			 {
 			    char *eq;
 			    
@@ -364,7 +365,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			 }
 		       /* look for Icon= */
 		       else if ((!icon) &&
-				((e_glob_matches(buf, "Icon=*"))))
+				((e_util_glob_matches(buf, "Icon=*"))))
 			 {
 			    char *eq;
 			    
@@ -379,7 +380,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			 }
 		       /* look for Icon= */
 		       else if ((!exe) &&
-				((e_glob_matches(buf, "Exec=*"))))
+				((e_util_glob_matches(buf, "Exec=*"))))
 			 {
 			    char *eq;
 			    

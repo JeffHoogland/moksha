@@ -25,7 +25,7 @@ e_exec_restart(void)
 
    D_ENTER;
 
-   printf("e_exec_restart()\n");
+   D("e_exec_restart()\n");
    /* unset events on root */
    ecore_window_set_events(0, XEV_NONE);
    /* destroy all desktops */
@@ -107,14 +107,14 @@ e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, cha
      {
 	while (*env)
 	  {
-	     e_set_env(env[0], env[1]);
+	     e_util_set_env(env[0], env[1]);
 	     env += 2;
 	  }
      }
    /* launch Id hack - if it's an X program the windows popped up should */
    /* have this launch Id number set on them - as well as process ID */
    /* machine name, and user name */
-   if (launch_path) e_set_env("E_HACK_LAUNCH_PATH", launch_path);
+   if (launch_path) e_util_set_env("E_HACK_LAUNCH_PATH", launch_path);
    sprintf(preload_paths, "E_HACK_LAUNCH_ID=%i LD_PRELOAD_PATH='%s'", 
 	   launch_id, PACKAGE_LIB_DIR);
    sprintf(preload, "LD_PRELOAD='libehack.so libX11.so libdl.so'");

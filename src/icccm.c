@@ -180,7 +180,7 @@ e_icccm_get_pos_info(Window win, E_Border *b)
 	  {
 	     int x, y, w, h;
 	     
-	     printf("%li %li\n", hint.flags & USPosition, hint.flags & PPosition);
+	     D("%li %li\n", hint.flags & USPosition, hint.flags & PPosition);
 	     b->client.pos.requested = 1;
 	     b->client.pos.gravity = NorthWestGravity;
 	     if (hint.flags & PWinGravity) 

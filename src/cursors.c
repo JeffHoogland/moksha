@@ -2,6 +2,7 @@
 #include "cursors.h"
 #include "config.h"
 #include "util.h"
+#include "file.h"
 
 typedef struct _e_cursor E_Cursor;
 
@@ -73,7 +74,7 @@ e_cursors_find(char *type)
 	     char buf[PATH_MAX];
 	     
 	     sprintf(buf, "%s/%s.db", e_config_get("cursors"), type);
-	     if (e_file_modified_time(buf) > c->mod)
+	     if (e_file_mod_time(buf) > c->mod)
 	       {
 		  cursors = evas_list_remove(cursors, c);
 		  IF_FREE(c->type);
@@ -113,7 +114,7 @@ e_cursors_display_in_window(Window win, char *type)
 	e_strdup(c->type, type);
 	
 	sprintf(buf, "%s/%s.db", e_config_get("cursors"), type);
-	c->mod = e_file_modified_time(buf);
+	c->mod = e_file_mod_time(buf);
 	E_DB_INT_GET(buf, "/cursor/x", hx, ok);
 	E_DB_INT_GET(buf, "/cursor/y", hy, ok);
 	sprintf(buf, "%s/%s.db:/cursor/image", e_config_get("cursors"), type);
@@ -247,7 +248,6 @@ e_cursors_display(char *type)
 
    IF_FREE(cur_cursor);
    e_strdup(cur_cursor, type);
-   printf("%s\n", type);
    cursor_change = 1;
 
    D_RETURN;

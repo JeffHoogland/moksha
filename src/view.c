@@ -10,6 +10,7 @@
 #include "menu.h"
 #include "menubuild.h"
 #include "fs.h"
+#include "file.h"
 #include "util.h"
 
 static Evas_List views = NULL;
@@ -72,7 +73,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	     ic->q.write_xy = 0;
 	     sprintf(buf, "%s/%s", ic->view->dir, ic->file);
 	     
-	     printf("write meta xy for icon for file %s\n", ic->file);	     
+	     D("write meta xy for icon for file %s\n", ic->file);	     
 	     efsd_set_metadata_int(e_fs_get_connection(),
 				   "/pos/x", buf,
 				   ic->geom.x);
@@ -83,6 +84,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
      }
 
    D_RETURN;
+   UN(val);
 }
 
 void
@@ -489,7 +491,7 @@ e_view_icon_update_state(E_Icon *ic)
    
    if (!ic->info.icon)
      {
-	printf("EEEEEEEEEEK %s has no icon\n", ic->file);
+	D("EEEEEEEEEEK %s has no icon\n", ic->file);
 	D_RETURN;
      }
    if (ic->state.clicked)
@@ -662,7 +664,8 @@ e_view_icon_exec(E_Icon *ic)
 {
    D_ENTER;
    
-   if (!strcmp(ic->info.mime.base, "dir"))
+   if (!strcmp(ic->info.mime.base, "dir") &&
+       e_file_can_exec(&ic->stat))
      {
 	E_View *v;
 	char buf[PATH_MAX];
@@ -680,7 +683,7 @@ e_view_icon_exec(E_Icon *ic)
 	     v->bg = e_background_load(buf);
 	  }
 	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
-	printf("new dir >%s<\n", buf);
+	D("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
 	e_view_realize(v);
 	ecore_window_set_title(v->win.base, ic->file);
@@ -1068,7 +1071,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  Evas_List ll;
 		  
 		  v = l->data;
-		  printf("sel count %i\n", v->sel_count);
+		  D("sel count %i\n", v->sel_count);
 		  if (v->sel_count > 0)
 		    {
 		       for (ll = v->icons; ll; ll = ll->next)
@@ -1163,7 +1166,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 				      icy = iy + v->location.y - wy;
 				      if (!ic->info.icon)
 					{
-					   printf("EEEEEEEEEEK %s has no icon\n", ic->file);
+					   D("EEEEEEEEEEK %s has no icon\n", ic->file);
 					   D_RETURN;
 					}
 				      if (ic->state.clicked)
@@ -1196,7 +1199,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 					}
 				      else
 					{
-					   printf("eek cant load\n");
+					   D("eek cant load\n");
 					}
 				   }
 			      }
@@ -1346,10 +1349,10 @@ e_configure(Ecore_Event * ev)
 	if (e->win == v->win.base)
 	  {
 	     /* win, root, x, y, w, h, wm_generated */
-	     printf("configure for view %s\n", v->dir);
+	     D("configure for view %s\n", v->dir);
 	     if (e->wm_generated)
 	       {
-		  printf("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
+		  D("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
 		  if ((e->x != v->location.x) || (e->y != v->location.y))
 		    {
 		       v->location.x = e->x;
@@ -1357,11 +1360,11 @@ e_configure(Ecore_Event * ev)
 		       e_view_queue_geometry_record(v);
 		    }
 	       }
-	     printf("size %ix%i\n", e->w, e->h);
+	     D("size %ix%i\n", e->w, e->h);
 	     if ((e->w != v->size.w) || (e->h != v->size.h) || (v->size.force))
 	       {
 		  v->size.force = 0;
-		  printf("... a new size!\n");
+		  D("... a new size!\n");
 		  v->size.w = e->w;
 		  v->size.h = e->h;
 		  if (v->pmap) ecore_pixmap_free(v->pmap);
@@ -1380,7 +1383,7 @@ e_configure(Ecore_Event * ev)
 		    {
 		       e_background_set_size(v->bg, v->size.w, v->size.h);
 		    }
-		  printf("evas_set_output_viewpor(%p)\n", v->evas);
+		  D("evas_set_output_viewpor(%p)\n", v->evas);
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
 		  e_view_scroll_to(v, v->scroll.x, v->scroll.y);
@@ -1806,7 +1809,7 @@ e_view_handle_fs_restart(void *data)
    
    v = data;
    
-   printf("e_view_handle_fs_restart\n");
+   D("e_view_handle_fs_restart\n");
    for (l = v->icons; l; l = l->next)
      {
 	icons = evas_list_prepend(icons, l->data);
@@ -1849,7 +1852,7 @@ e_view_handle_fs_restart(void *data)
 	  }
 	v->is_listing = 1;
      }
-   printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
+   D("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
    v->is_listing = 1;
 
    D_RETURN;
@@ -1922,8 +1925,11 @@ void
 e_view_icon_show(E_Icon *ic)
 {
    D_ENTER;
+
+   D("SHOWING ICON\n");
    
    if (ic->state.visible) D_RETURN;
+   D("SHOWING ICON REALLY\n");
    ic->state.visible = 1;
    if (!ic->obj.event1)
      {
@@ -2067,6 +2073,27 @@ e_view_icon_apply_xy(E_Icon *ic)
    D_RETURN;
 }
 
+
+void      
+e_view_icon_check_permissions(E_Icon *ic)
+{
+  D_ENTER;
+
+  if (!ic || !ic->info.mime.base || ic->stat.st_ino == 0)
+    D_RETURN;
+
+  if (!strcmp(ic->info.mime.base, "dir"))
+    {
+      if (e_file_can_exec(&ic->stat))
+	evas_set_color(ic->view->evas, ic->obj.icon, 255, 255, 255, 255);
+      else
+	evas_set_color(ic->view->evas, ic->obj.icon, 128, 128, 128, 128);
+    } 
+
+  D_RETURN;
+}
+
+
 static int
 e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2)
 {
@@ -2093,7 +2120,7 @@ e_view_resort_alphabetical(E_View *v)
    for (count = 0, l = v->icons; l; l = l->next) count++;
    array = malloc(sizeof(E_Icon *) * count);
    for (i = 0, l = v->icons; l; l = l->next) array[i++] = l->data;
-   printf("qsort %i elements...\n", count);
+   D("qsort %i elements...\n", count);
    qsort(array, count, sizeof(E_Icon *), 
 	 e_view_restart_alphabetical_qsort_cb);
    for (i = 0; i < count; i++) icons = evas_list_append(icons, array[i]);
@@ -2102,7 +2129,7 @@ e_view_resort_alphabetical(E_View *v)
    evas_list_free(v->icons);
    v->icons = icons;
    
-   printf("done...\n");
+   D("done...\n");
 
    D_RETURN;
 }
@@ -2207,10 +2234,12 @@ e_view_icon_initial_show(E_Icon *ic)
 {
    D_ENTER;
    
+   D("INITIAL SHOWING ICON\n");
    /* check if we have enuf info and we havent been shown yet */
    if (!ic->info.icon) D_RETURN;
    if (ic->state.visible) D_RETURN;
    
+   D("INITIAL SHOWING ICON REALLY\n");
    /* first. lets figure out the size of the icon */
    evas_get_image_size(ic->view->evas, ic->obj.icon, 
 		       &(ic->geom.icon.w), &(ic->geom.icon.h));
@@ -2255,7 +2284,7 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
    ic->info.mime.base = strdup(base);
    ic->info.mime.type = strdup(mime);
    
-   printf("%40s: %s/%s\n", ic->file, base, mime);
+   D("%40s: %s/%s\n", ic->file, base, mime);
    
    /* effect changes here */
    if (ic->info.custom_icon) 
@@ -2340,9 +2369,9 @@ e_view_file_added(int id, char *file)
 
    D_ENTER;
    
-   /* if we get a path - ignore it - its not a file in the a dir */
+   /* if we get a path - ignore it - its not a file in the dir */
    if (!file) D_RETURN;
-/*   printf("FILE ADD: %s\n", file);*/
+   /* D("FILE ADD: %s\n", file);*/
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;
@@ -2430,7 +2459,7 @@ e_view_file_moved(int id, char *file)
    
    /* never gets called ? */
    if (!file) D_RETURN;
-   printf(".!WOW!. e_view_file_moved(%i, %s);\n", id, file);
+   D(".!WOW!. e_view_file_moved(%i, %s);\n", id, file);
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;
@@ -2575,7 +2604,7 @@ e_view_set_dir(E_View *v, char *dir)
 	v->monitor_id = 0;
      }
    IF_FREE(v->dir);
-   v->dir = e_file_real(dir);
+   v->dir = e_file_realpath(dir);
    /* start monitoring new dir */
    v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
    if (e_fs_get_connection())
@@ -2600,7 +2629,7 @@ e_view_set_dir(E_View *v, char *dir)
 	     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
 						ops, TRUE);
 	  }
-	printf("monitor id for %s = %i\n", v->dir, v->monitor_id);
+	D("monitor id for %s = %i\n", v->dir, v->monitor_id);
 	v->is_listing = 1;
 	v->changed = 1;
      }
@@ -2768,35 +2797,35 @@ e_view_handle_fs(EfsdEvent *ev)
 	switch (ev->efsd_filechange_event.changetype)
 	  {
 	   case EFSD_FILE_CREATED:
-/*	     printf("EFSD_FILE_CREATED: %i %s\n",
+/*	     D("EFSD_FILE_CREATED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
 	   case EFSD_FILE_EXISTS:
-/*	     printf("EFSD_FILE_EXISTS: %i %s\n",
+	     /*	     D("EFSD_FILE_EXISTS: %i %s\n",
 		    ev->efsd_filechange_event.id,
-		    ev->efsd_filechange_event.file);	     
-*/	     e_view_file_added(ev->efsd_filechange_event.id, 
+		    ev->efsd_filechange_event.file);	     */
+	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
 	   case EFSD_FILE_DELETED:
-/*	     printf("EFSD_FILE_DELETED: %i %s\n",
+/*	     D("EFSD_FILE_DELETED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     e_view_file_deleted(ev->efsd_filechange_event.id, 
 				 ev->efsd_filechange_event.file);
 	     break;
 	   case EFSD_FILE_CHANGED:
-/*	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
+/*	     D("EFSD_CHANGE_CHANGED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     e_view_file_changed(ev->efsd_filechange_event.id, 
 				 ev->efsd_filechange_event.file);
 	     break;
 	   case EFSD_FILE_MOVED:
-/*	     printf("EFSD_CHANGE_MOVED: %i %s\n",
+/*	     D("EFSD_CHANGE_MOVED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     e_view_file_moved(ev->efsd_filechange_event.id, 
@@ -2806,9 +2835,9 @@ e_view_handle_fs(EfsdEvent *ev)
 	       {
 		  E_View *v;
 		  
-		  v = e_view_find_by_monitor_id(ev->efsd_filechange_event.id);
+		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
 		  if (v) v->is_listing = 0;
-/*		  printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
+/*		  D("EFSD_CHANGE_END_EXISTS: %i %s\n",
 			 ev->efsd_filechange_event.id,
 			 ev->efsd_filechange_event.file);	     
 */	       }
@@ -2833,23 +2862,21 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_CHMOD:
 	     break;
 	   case EFSD_CMD_GETFILETYPE:
-/*	     printf("Getmime event %i\n",
+	     D("Getmime event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);
-*/	     if (ev->efsd_reply_event.errorcode == 0)
+	     if (ev->efsd_reply_event.errorcode == 0)
 	       {
 		  E_Icon *ic;
 		  E_View *v;
-		  char *file, *file2;
+		  char *file;
 		  
 		  file = NULL;
-		  if (ev->efsd_reply_event.command.efsd_file_cmd.files)
-		    file = ev->efsd_reply_event.command.efsd_file_cmd.files[0];
-		  if (file) 
+		  if ( (file = efsd_reply_filename(ev)) )
 		    {
-		       file2 = strrchr(file, '/');
-		       if (file2) file = file2 + 1;
+ 		       file = e_file_get_file(file);
 		    }
-		  v = e_view_find_by_monitor_id(ev->efsd_reply_event.command.efsd_file_cmd.id);
+		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+
 		  if ((v) && (file))
 		    {
 		       ic = e_view_find_icon_by_file(v, file);
@@ -2873,17 +2900,46 @@ e_view_handle_fs(EfsdEvent *ev)
 				 strcpy(base, m);
 				 strcpy(mime, "unknown");
 			      }
-/*			    printf("MIME: %s\n", m);
+/*			    D("MIME: %s\n", m);
 */			    e_view_icon_set_mime(ic, base, mime);
+
+			    /* Try to update the GUI according to the file permissions.
+			       It's just a try because we need to have the file's stat
+			       info as well.
+			    */
+			    e_view_icon_check_permissions(ic);
+			    D("GOT THERE!");
 			    e_view_icon_initial_show(ic);
 			 }
 		    }
 	       }
 	     break;
 	   case EFSD_CMD_STAT:
-/*	     printf("Stat event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);
-*/	       {
+	     D("Stat event %i on %s\n",
+	       efsd_reply_id(ev), efsd_reply_filename(ev));
+
+	     /* When everything went okay and we can find a view and an icon,
+		set the file stat data for the icon. Then try to check the
+		permissions and possibly update the gui. It's just a try
+		because we need to have received the filetype info too.
+	     */
+	     if (ev->efsd_reply_event.errorcode == 0)
+	       {
+		  E_Icon *ic;
+		  E_View *v;
+
+		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+
+		  if (v)
+		    {
+		      ic = e_view_find_icon_by_file(v, e_file_get_file(efsd_reply_filename(ev)));
+
+		      if (ic)
+			{
+			  ic->stat = *((struct stat*)efsd_reply_data(ev));
+			  e_view_icon_check_permissions(ic);
+			}			
+		    }
 	       }
 	     break;
 	   case EFSD_CMD_READLINK:
@@ -2892,23 +2948,20 @@ e_view_handle_fs(EfsdEvent *ev)
 		  E_Icon *ic;
 		  E_View *v;
 		  
-		  char *file, *file2;
+		  char *file;
 		  
 		  file = NULL;
-		  if (ev->efsd_reply_event.command.efsd_file_cmd.files)
-		    file = ev->efsd_reply_event.command.efsd_file_cmd.files[0];
-		  if (file) 
+		  if ( (file = efsd_reply_filename(ev)) ) 
 		    {
-		       file2 = strrchr(file, '/');
-		       if (file2) file = file2 + 1;
+		       file = e_file_get_file(file);
 		    }
-		  v = e_view_find_by_monitor_id(ev->efsd_reply_event.command.efsd_file_cmd.id);
+		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
 		  if ((v) && (file))
 		    {
 		       ic = e_view_find_icon_by_file(v, file);
 		       if ((ic) &&
 			   (ev->efsd_reply_event.data))
-			 e_view_icon_set_link(ic, (char*)ev->efsd_reply_event.data);
+			 e_view_icon_set_link(ic, (char*)efsd_reply_data(ev));
 		       e_view_icon_initial_show(ic);
 		    }
 	       }
@@ -2918,13 +2971,13 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_SETMETA:
 	     break;
 	   case EFSD_CMD_GETMETA:
-	     printf("Getmeta event %i\n",
-		    ev->efsd_reply_event.command.efsd_get_metadata_cmd.id);
+	     /*	     D("Getmeta event %i\n",
+		     efsd_reply_id(ev));*/
 	       {
 		  Evas_List l;
 		  EfsdCmdId cmd;
 		  
-		  cmd = ev->efsd_reply_event.command.efsd_get_metadata_cmd.id;
+		  cmd = efsd_reply_id(ev);
 		  for (l = views; l; l = l->next)
 		    {
 		       E_View *v;
@@ -3023,7 +3076,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				      struct stat st;
 				      if (stat(efsd_metadata_get_str(ev), &st) != -1 )
 					{
-                       printf("Attempted to set background for: %s\n", v->dir);
+                       D("Attempted to set background for: %s\n", v->dir);
                        v->bg = e_background_load(efsd_metadata_get_str(ev));
                        e_background_realize(v->bg, v->evas);
                        e_background_set_size(v->bg, v->size.w, v->size.h);
@@ -3052,15 +3105,13 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		    }
 	       }
-	     /*	
-	      */
 	     break;
 	   case EFSD_CMD_STARTMON_DIR:
-/*	     printf("Startmon event %i\n",
+/*	     D("Startmon event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
 */	     break;
 	   case EFSD_CMD_STARTMON_FILE:
-/*	     printf("Startmon file event %i\n",
+/*	     D("Startmon file event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
 */	     break;
 	   case EFSD_CMD_STOPMON_DIR:

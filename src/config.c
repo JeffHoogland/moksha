@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "config.h"
+#include "file.h"
 #include "util.h"
 
 static char cfg_root[] = "";
@@ -154,7 +155,7 @@ e_config_user_dir(void)
    if (cfg_user_dir[0]) D_RETURN_(cfg_user_dir);
    if (cfg_root[0]) D_RETURN_(cfg_root);
 #if 1 /* disabled for now - use system ones only */
-   sprintf(cfg_user_dir, "%s/.e/", e_file_home());
+   sprintf(cfg_user_dir, "%s/.e/", e_util_get_user_home());
 #else   
    sprintf(cfg_user_dir, PACKAGE_DATA_DIR"/data/config/");
 #endif   
@@ -288,8 +289,6 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 	     break;
 	   case E_CFG_TYPE_KEY:
 	       {
-		  char *val;
-		  
 		  sprintf(buf, "%s/%s", prefix, node->prefix);
 		  (*((char **)(&(data[node->offset])))) = strdup(buf);
 	       }
@@ -346,7 +345,7 @@ void ts(void)
 	/* no data file? */
 	if (!cfg_data)
 	  {
-	     printf("no load!\n");
+	     D("no load!\n");
 	  }
 	/* got data */
 	else
@@ -357,11 +356,11 @@ void ts(void)
 	       {
 		  List_Element *cfg_element;
 		  
-		  printf("element\n");
+		  D("element\n");
 		  cfg_element = l->data;
-		  printf("... name %s\n", cfg_element->name);
-		  printf("... size %i\n", cfg_element->size);
-		  printf("... perc %3.3f\n", cfg_element->perc);
+		  D("... name %s\n", cfg_element->name);
+		  D("... size %i\n", cfg_element->size);
+		  D("... perc %3.3f\n", cfg_element->perc);
 	       }
 	  }
 	exit(0);

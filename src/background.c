@@ -139,7 +139,7 @@ e_background_realize(E_Background *bg, Evas evas)
 #if 0 /* dont need this... do we? */
 	     if (evas_get_image_alpha(bg->evas, bl->obj))
 	       {
-		  printf("Adding rectangle to bg!\n");
+		  D("Adding rectangle to bg!\n");
 		  bg->base_obj = evas_add_rectangle(bg->evas);
 		  evas_lower(bg->evas, bg->base_obj);
 		  evas_move(bg->evas, bg->base_obj, 0, 0);

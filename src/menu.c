@@ -1207,7 +1207,7 @@ e_menu_hide(E_Menu *m)
 {
    D_ENTER;
 
-   printf("Menu hide!\n");
+   D("Menu hide!\n");
 
    if (m->selected)
      {

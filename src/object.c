@@ -39,7 +39,7 @@ e_object_ref(E_Object *obj)
     D_RETURN;
 
   obj->references++;
-  printf("++ refcount on %p, now %i\n", obj, obj->references);
+  D("++ refcount on %p, now %i\n", obj, obj->references);
 
   D_RETURN;
 }
@@ -54,11 +54,11 @@ e_object_unref(E_Object *obj)
 
   obj->references--;
 
-  printf("-- refcount on %p, now %i\n", obj, obj->references);
+  D("-- refcount on %p, now %i\n", obj, obj->references);
 
   if (obj->references == 0 && obj->cleanup_func)
     {
-      printf("Refcount is zero, freeing.\n");
+      D("Refcount is zero, freeing.\n");
       obj->cleanup_func(obj);
       D_RETURN_(0);
     }

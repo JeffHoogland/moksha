@@ -49,7 +49,7 @@ void        e_entry_init(void);
 
 void        e_entry_free(E_Entry *entry);
 E_Entry    *e_entry_new(void);
-void        e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e);
+void        e_entry_handle_keypress(E_Entry *entry, Ecore_Event_Key_Down *e);
 void        e_entry_set_evas(E_Entry *entry, Evas evas);
 void        e_entry_show(E_Entry *entry);
 void        e_entry_hide(E_Entry *entry);

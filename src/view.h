@@ -149,7 +149,8 @@ struct _E_Icon
 {
    E_Object o;
    
-   char   *file;
+   char        *file;
+   struct stat  stat;
    
    E_View *view;
    
@@ -230,7 +231,16 @@ void      e_view_icon_update_state(E_Icon *ic);
 void      e_view_icon_invert_selection(E_Icon *ic);
 void      e_view_icon_select(E_Icon *ic);
 void      e_view_icon_deselect(E_Icon *ic);
+
+/**
+ * e_view_icon_exec - handles execution paths when user activates an icon
+ * @ic:   The activated icon
+ *
+ * This function takes care of opening views when the user activates a
+ * directory, launching commands when an executable is activated etc.
+ */
 void      e_view_icon_exec(E_Icon *ic);
+
 void      e_view_icon_initial_show(E_Icon *ic);
 void      e_view_icon_set_mime(E_Icon *ic, char *base, char *mime);
 void      e_view_icon_set_link(E_Icon *ic, char *link);
@@ -239,6 +249,7 @@ E_Icon   *e_view_find_icon_by_file(E_View *view, char *file);
 void      e_view_icon_show(E_Icon *ic);
 void      e_view_icon_hide(E_Icon *ic);
 void      e_view_icon_apply_xy(E_Icon *ic);
+void      e_view_icon_check_permissions(E_Icon *ic);
 void      e_view_resort_alphabetical(E_View *v);
 void      e_view_arrange(E_View *v);
 void      e_view_resort(E_View *v);
@@ -250,10 +261,39 @@ void      e_view_file_deleted(int id, char *file);
 void      e_view_file_changed(int id, char *file);
 void      e_view_file_moved(int id, char *file);
 E_View   *e_view_find_by_monitor_id(int id);
+
+/**
+ * e_view_new - Creates a new view object
+ * 
+ * This function creates a new view and sets default
+ * properties on it, such as colors and icon spacings.
+ */
 E_View   *e_view_new(void);
+
 void      e_view_set_background(E_View *v);
+
+/**
+ * e_view_set_dir - Sets view to a given directory
+ * @v     The view for which to set the directory
+ * @dir   The directory to set the view to
+ *
+ * This function sets a view to a directory, loading the
+ * view's metadata (view window coordinates etc) from that
+ * directory, it also requests monitoring of the files in
+ * the directory @dir from efsd.
+ */
 void      e_view_set_dir(E_View *v, char *dir);
+
+/**
+ * e_view_realize - Initializes a view's graphics and content
+ * @v:    The view to initialize
+ *
+ * This function initializes a created view by loading
+ * all the graphics, and sets the view to a given directory
+ * by calling e_view_set_dir().
+ */
 void      e_view_realize(E_View *v);
+
 void      e_view_update(E_View *v);
 
 #endif

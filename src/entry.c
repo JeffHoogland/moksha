@@ -431,7 +431,7 @@ e_entry_new(void)
 }
 
 void
-e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
+e_entry_handle_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
 {
    D_ENTER;
    
@@ -506,7 +506,7 @@ e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
 	type = ecore_keypress_translate_into_typeable(e);
 	if (type)
 	  {
-	     printf("%0x\n", type[0]);
+	     D("Keypress: %0x\n", type[0]);
 	     if ((strlen(type) == 1) && (type[0] == 0x01)) /* ctrl+a */
 	       {
 		  entry->cursor_pos = 0;
@@ -970,7 +970,7 @@ e_entry_get_selection(E_Entry *entry)
 	len = entry->select.length;
 	if (entry->select.start + entry->select.length >= (int)strlen(entry->buffer))
 	  len = strlen(entry->buffer) - entry->select.start;
-	str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
+	str2 = e_util_memdup(&(entry->buffer[entry->select.start]), len + 1);
 	str2[len] = 0;
 	D_RETURN_(str2);
      }

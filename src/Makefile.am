@@ -5,7 +5,7 @@ DISTCLEANFILES = e_ferite_gen_*
 ## Enable -DDEBUG for debugging messages, -DDEBUG_NEST
 ## for call tracing. Caution -- this will produce a *lot*
 ## of output!
-DEBUGFLAGS = -g -DDEBUG #-DDEBUG_NEST
+DEBUGFLAGS = -W -Wall -g -DDEBUG #-DDEBUG_NEST
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
@@ -35,6 +35,7 @@ enlightenment_SOURCES = \
 	embed.c embed.h \
 	entry.h entry.c \
 	exec.h exec.c \
+	file.h file.c \
 	fs.h fs.c \
 	$(ferite_c) \
 	guides.h guides.c \

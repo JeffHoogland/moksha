@@ -1473,7 +1473,6 @@ e_act_exec_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
 
    exe = (char *) a->params;
    if(!exe) D_RETURN;
-   /* printf("exe: %s\n",exe); */
    e_exec_run(exe);
 
    D_RETURN;
