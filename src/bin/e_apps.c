@@ -362,13 +362,15 @@ _e_app_fields_fill(E_App *a, char *path)
      lang = NULL;
    ef = eet_open(a->path, EET_FILE_MODE_READ);
    if (!ef) return;
+
    if (lang)
      {
 	snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
 	v = eet_read(ef, buf, &size);
      }
    else
-     v = NULL;
+     v = eet_read(ef, "app/info/name", &size);
+
    if (v)
      {
 	str = malloc(size + 1);
@@ -377,25 +379,15 @@ _e_app_fields_fill(E_App *a, char *path)
 	a->name = str;
 	free(v);
      }
-   else
-     {
-	v = eet_read(ef, "app/info/name", &size);
-	if (v)
-	  {
-	     str = malloc(size + 1);
-	     memcpy(str, v, size);
-	     str[size] = 0;
-	     a->name = str;
-	     free(v);
-	  }
-     }
+
    if (lang)
      {
 	snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
 	v = eet_read(ef, buf, &size);
      }
    else
-     v = NULL;
+     v = eet_read(ef, "app/info/generic", &size);
+
    if (v)
      {
 	str = malloc(size + 1);
@@ -404,25 +396,15 @@ _e_app_fields_fill(E_App *a, char *path)
 	a->generic = str;
 	free(v);
      }
-   else
-     {
-	v = eet_read(ef, "app/info/generic", &size);
-	if (v)
-	  {
-	     str = malloc(size + 1);
-	     memcpy(str, v, size);
-	     str[size] = 0;
-	     a->generic = str;
-	     free(v);
-	  }
-     }
+
    if (lang)
      {
 	snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
 	v = eet_read(ef, buf, &size);
      }
    else
-     v = NULL;
+     v = eet_read(ef, "app/info/comment", &size);
+
    if (v)
      {
 	str = malloc(size + 1);
@@ -431,18 +413,7 @@ _e_app_fields_fill(E_App *a, char *path)
 	a->comment = str;
 	free(v);
      }
-   else
-     {
-	v = eet_read(ef, "app/info/comment", &size);
-	if (v)
-	  {
-	     str = malloc(size + 1);
-	     memcpy(str, v, size);
-	     str[size] = 0;
-	     a->comment = str;
-	     free(v);
-	  }
-     }
+
    v = eet_read(ef, "app/info/exe", &size);
    if (v)
      {
