@@ -131,6 +131,7 @@ struct _E_View
    Evas_Object            obj_bg;
    
    char                  *bg_file;
+   char                  *prev_bg_file;
    E_Background          *bg;
    
    struct {      

@@ -2275,26 +2275,40 @@ e_view_bg_load(E_View *v)
    char buf[PATH_MAX];
    
    D_ENTER;
-   
+
+   if (!v->prev_bg_file)
+     {
+	e_strdup(v->prev_bg_file, "/");
+     }
    if (!v->bg_file) 
      {
 	e_strdup(v->bg_file, "");
      }
+   else
+     {
+	/* relative path for bg_file ? */
+	if ((v->bg_file[0] != '/'))
+	  {
+	     sprintf(buf, "%s/%s", v->dir, v->bg_file);
+	     FREE(v->bg_file);
+	     e_strdup(v->bg_file, buf);	     
+	  }
+     }
    bg = e_background_load(v->bg_file);
    if (!bg)
      {
-	FREE(v->bg_file);
 	sprintf(buf, "%s/.e_background.bg.db", v->dir);
-	e_strdup(v->bg, buf); 
+	FREE(v->bg_file);
+	e_strdup(v->bg_file, buf); 
 	bg = e_background_load(v->bg_file);
 	if (!bg)
 	  {
-	     FREE(v->bg_file);
 	     if (v->is_desktop)
 	       sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
 	     else
 	       sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
-	     e_strdup(v->bg, buf); 
+	     FREE(v->bg_file);
+	     e_strdup(v->bg_file, buf); 
 	     bg = e_background_load(v->bg_file);
 	  }
      }
@@ -2309,6 +2323,9 @@ e_view_bg_load(E_View *v)
 	  }
      }
    
+   IF_FREE(v->prev_bg_file);
+   e_strdup(v->prev_bg_file, v->bg_file);
+   
    D_RETURN;
 }
 
@@ -2320,6 +2337,11 @@ e_view_bg_reload_timeout(int val, void *data)
    D_ENTER;
    
    v = data;
+   if (!strcmp(v->prev_bg_file, v->bg_file)) 
+     {
+	D("abort bg reload - same damn file\n");
+	D_RETURN;
+     }
    if (v->bg) 
      {
 	int size;
@@ -2334,6 +2356,8 @@ e_view_bg_reload_timeout(int val, void *data)
 	  }
 	e_db_flush();
      }
+   
+   e_view_bg_load(v);
 
    D_RETURN;
 }
