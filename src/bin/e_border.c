@@ -1009,9 +1009,9 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
 		    bd->client.win, x, y);
 	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
-	       x = e->x - bd->client_inset.l;
+	       x = e->x;
 	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y)
-	       y = e->y - bd->client_inset.t;
+	       y = e->y;
 	     if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
 		 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
 	       {
@@ -1046,9 +1046,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	     printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%iH%i] %i,%i\n", 
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-		    
-		    
-		    
 		    bd->client.win, e->w, e->h);
 	     e_border_resize(bd, w, h);
 	  }
@@ -2230,8 +2227,8 @@ _e_border_eval(E_Border *bd)
 	     pnd = bd->pending_move_resize->data;
 	     if (pnd->move)
 	       {
-		  bd->x = pnd->x - bd->client_inset.l;
-		  bd->y = pnd->y - bd->client_inset.t;
+		  bd->x = pnd->x;
+		  bd->y = pnd->y;
 		  bd->changes.pos = 1;
 	       }
 	     if (pnd->resize)
