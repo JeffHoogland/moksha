@@ -336,6 +336,10 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    if (!bd->client.icccm.accepts_focus) return;
+   if ((focus) && (!bd->focused))
+     edje_object_signal_emit(bd->bg_object, "active", "");
+   else if ((!focus) && (bd->focused))
+     edje_object_signal_emit(bd->bg_object, "passive", "");
    bd->focused = focus;
    if (set)
      {
@@ -359,10 +363,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      focused = NULL;
 
    printf("F %x %i\n", bd->client.win, bd->focused);
-   if (bd->focused)
-     edje_object_signal_emit(bd->bg_object, "active", "");
-   else
-     edje_object_signal_emit(bd->bg_object, "passive", "");
 }
 
 E_Border *
