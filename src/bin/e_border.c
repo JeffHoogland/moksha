@@ -385,12 +385,20 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if ((focused != bd) && (focused))
 	       e_border_focus_set(focused, 0, 0);
 	     if (bd->client.icccm.take_focus)
-	       ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+	       {
+		  printf("take focus!\n");
+		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+		  ecore_x_window_focus(bd->client.win);
+	       }
 	     else
-	       ecore_x_window_focus(bd->client.win);
+	       {
+		  printf("set focus\n");
+		  ecore_x_window_focus(bd->client.win);
+	       }
 	  }
 	else
 	  {
+	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->container->manager->win);
 	  }
      }
@@ -983,6 +991,18 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_NORMAL) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR)) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_GRAB) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL)) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)) return 1;
+   if ((e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) &&
+       (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR)) return 1;
    printf("f OUT %i | %i\n", e->mode, e->detail);
    e_border_focus_set(bd, 0, 0);
    return 1;
@@ -1267,13 +1287,16 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	       bd->client.icccm.title,
 	       modes[ev->mode],
 	       details[ev->detail]);
-	
-	if (ev->mode != ECORE_X_EVENT_MODE_GRAB)
-	  e_border_focus_set(bd, 0, 1);
-	else
-	  {
-	     printf("OUT GRAB!\n");
-	  }
+
+	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
+	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
+	  return 1;
+	if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
+	    (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL))
+	  return 1;
+	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
+	  return 1;
+	e_border_focus_set(bd, 0, 1);
      }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
