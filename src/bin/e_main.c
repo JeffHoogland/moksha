@@ -63,7 +63,10 @@ main(int argc, char **argv)
    int nowelcome = 0;
    int after_restart = 0; 
    char buf[1024];
-  
+
+   /* for debugging by redirecting stdout of e to a log file to tail */
+   setvbuf(stdout, NULL, _IONBF, 0);
+   
    if (getenv("NOSPLASH")) nosplash = 1;
    if (getenv("NOSTARTUP")) nostartup = 1;
    if (getenv("NOWELCOME")) nowelcome = 1;
