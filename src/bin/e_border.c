@@ -2664,7 +2664,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
      }
 
-   e_menu_activate_mouse(m, bd->container, x, y, 1, 1,
+   e_menu_activate_mouse(m, bd->zone, x, y, 1, 1,
 			 E_MENU_POP_DIRECTION_DOWN);
 
 }

@@ -308,11 +308,12 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    root = e_menu_root_get(m);
    /* Get the desktop list for this zone */
    /* FIXME: Menu code needs to determine what zone menu was clicked in */
-   if (root && root->con)
+   if (root && root->zone)
      {
 	int i;
-	E_Zone *zone = e_zone_current_get(root->con);
+	E_Zone *zone;
 	
+	zone = root->zone;
 	for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
 	  {
 	     desks = evas_list_append(desks, zone->desks[i]);
@@ -358,55 +359,41 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_desktops_row_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Menu *root = e_menu_root_get(m);
-
-   if (root && root->con)
-     {
-	E_Zone *zone = e_zone_current_get(root->con);
-	e_desk_row_add(zone);
-//	e_desk_show(desk);
-     }
+   E_Menu *root;
+     
+   root = e_menu_root_get(m);
+   if (root)
+     e_desk_row_add(root->zone);
 }
 
 static void
 _e_int_menus_desktops_row_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Menu *root = e_menu_root_get(m);
-
-   if (root && root->con)
-     {
-	E_Zone *zone;
-	
-	zone = e_zone_current_get(root->con);
-	e_desk_row_remove(zone);
-     }
+   E_Menu *root;
+     
+   root = e_menu_root_get(m);
+   if (root)
+     e_desk_row_remove(root->zone);
 }
 
 static void
 _e_int_menus_desktops_col_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Menu *root = e_menu_root_get(m);
-
-   if (root && root->con)
-     {
-	E_Zone *zone = e_zone_current_get(root->con);
-	e_desk_col_add(zone);
-//      e_desk_show(desk);
-     }
+   E_Menu *root;
+     
+   root = e_menu_root_get(m);
+   if (root)
+     e_desk_col_add(root->zone);
 }
 
 static void
 _e_int_menus_desktops_col_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Menu *root = e_menu_root_get(m);
-         
-   if (root && root->con)
-     {
-	E_Zone *zone;
-
-	zone = e_zone_current_get(root->con);
-	e_desk_col_remove(zone);
-     }  
+   E_Menu *root;
+     
+   root = e_menu_root_get(m);
+   if (root)
+     e_desk_col_remove(root->zone);
 }
 
 static void
@@ -429,9 +416,9 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    
    root = e_menu_root_get(m);
    /* get the current containers clients */
-   if (root && root->con)
+   if (root && root->zone)
      {
-	for (l = e_container_clients_list_get(root->con); l; l = l->next)
+	for (l = e_zone_clients_list_get(root->zone); l; l = l->next)
 	  {
 	     borders = evas_list_append(borders, l->data);
 	  }

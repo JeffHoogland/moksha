@@ -24,7 +24,7 @@ struct _E_Menu
    Evas_List           *items;
 
    /* the zone it belongs to */
-   E_Container         *con;
+   E_Zone              *zone;
    
    /* if a menu item spawned this menu, what item is it? */
    E_Menu_Item         *parent_item;
@@ -108,9 +108,9 @@ EAPI int          e_menu_init(void);
 EAPI int          e_menu_shutdown(void);
 
 EAPI E_Menu      *e_menu_new(void);
-EAPI void         e_menu_activate_key(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
-EAPI void         e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
-EAPI void         e_menu_activate(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
 EAPI void         e_menu_deactivate(E_Menu *m);
 EAPI int          e_menu_freeze(E_Menu *m);
 EAPI int          e_menu_thaw(E_Menu *m);

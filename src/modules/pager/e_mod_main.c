@@ -393,7 +393,7 @@ _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    p = data;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(p->config_menu, p->con,
+	e_menu_activate_mouse(p->config_menu, e_zone_current_get(p->con),
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(p->con);

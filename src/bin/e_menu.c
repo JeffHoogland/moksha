@@ -30,7 +30,7 @@ static void _e_menu_realize                       (E_Menu *m);
 static void _e_menu_items_layout_update           (E_Menu *m);
 static void _e_menu_item_unrealize               (E_Menu_Item *mi);
 static void _e_menu_unrealize                     (E_Menu *m);
-static void _e_menu_activate_internal             (E_Menu *m, E_Container *con);
+static void _e_menu_activate_internal             (E_Menu *m, E_Zone *zone);
 static void _e_menu_deactivate_all                (void);
 static void _e_menu_deactivate_above              (E_Menu *m);
 static void _e_menu_submenu_activate              (E_Menu_Item *mi);
@@ -131,26 +131,26 @@ e_menu_new(void)
 }
 
 void
-e_menu_activate_key(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir)
+e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_OBJECT_CHECK(m);
-   E_OBJECT_CHECK(con);
+   E_OBJECT_CHECK(zone);
    _e_menu_activate_time = 0.0;
-   _e_menu_activate_internal(m, con);
+   _e_menu_activate_internal(m, zone);
    m->cur.x = 200;
    m->cur.y = 200;
    _e_menu_activate_first();
 }
 
 void
-e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir)
+e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_Menu_Item *pmi;
    
    E_OBJECT_CHECK(m);
-   E_OBJECT_CHECK(con);
+   E_OBJECT_CHECK(zone);
    _e_menu_activate_time = ecore_time_get();
-   _e_menu_activate_internal(m, con);
+   _e_menu_activate_internal(m, zone);
    m->cur.x = x;
    m->cur.y = y;
 	
@@ -159,14 +159,14 @@ e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, i
 }
 
 void
-e_menu_activate(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir)
+e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_Menu_Item *pmi;
 
    E_OBJECT_CHECK(m);
-   E_OBJECT_CHECK(con);
+   E_OBJECT_CHECK(zone);
    _e_menu_activate_time = 0.0;
-   _e_menu_activate_internal(m, con);
+   _e_menu_activate_internal(m, zone);
    m->cur.x = x;
    m->cur.y = y;
    pmi = _e_menu_item_active_get();
@@ -949,11 +949,11 @@ _e_menu_realize(E_Menu *m)
    
    if (m->realized) return;
    m->realized = 1;
-   m->ecore_evas = ecore_evas_software_x11_new(NULL, m->con->win, 
+   m->ecore_evas = ecore_evas_software_x11_new(NULL, m->zone->container->win, 
 					       m->cur.x, m->cur.y, 
 					       m->cur.w, m->cur.h);
    e_canvas_add(m->ecore_evas);
-   m->shape = e_container_shape_add(m->con);
+   m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);
    e_container_shape_resize(m->shape, m->cur.w, m->cur.h);
    
@@ -1250,7 +1250,7 @@ _e_menu_unrealize(E_Menu *m)
    m->cur.visible = 0;
    m->prev.visible = 0;
    m->realized = 0;
-   m->con = NULL;
+   m->zone = NULL;
    e_canvas_del(m->ecore_evas);
    ecore_evas_free(m->ecore_evas);
    m->ecore_evas = NULL;
@@ -1259,7 +1259,7 @@ _e_menu_unrealize(E_Menu *m)
 }
 
 static void
-_e_menu_activate_internal(E_Menu *m, E_Container *con)
+_e_menu_activate_internal(E_Menu *m, E_Zone *zone)
 {
    if (m->pre_activate_cb.func)
      m->pre_activate_cb.func(m->pre_activate_cb.data, m);
@@ -1267,13 +1267,15 @@ _e_menu_activate_internal(E_Menu *m, E_Container *con)
    m->pending_new_submenu = 0;
    if (!_e_menu_win)
      {
-	_e_menu_win = ecore_x_window_input_new(con->win, 0, 0, con->w, con->h);
+	_e_menu_win = ecore_x_window_input_new(zone->container->win, 
+					       zone->x, zone->y,
+					       zone->w, zone->h);
 	ecore_x_window_show(_e_menu_win);
 	/* need menu event win (input win) and grab to that */
-	ecore_x_pointer_grab(_e_menu_win);
+	ecore_x_pointer_confine_grab(_e_menu_win);
 	ecore_x_keyboard_grab(_e_menu_win);
      }
-   if ((m->con) && (m->con != con))
+   if ((m->zone) && (m->zone->container != zone->container))
      {
 	printf("FIXME: cannot move menus between containers yet\n");
 	return;
@@ -1294,7 +1296,7 @@ _e_menu_activate_internal(E_Menu *m, E_Container *con)
 	e_object_ref(E_OBJECT(m));
      }
    m->cur.visible = 1;
-   m->con = con;
+   m->zone = zone;
 }
 
 static void
@@ -1364,7 +1366,7 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
 	m = mi->submenu;
 	e_object_ref(E_OBJECT(m));
 	m->parent_item = mi;
-	_e_menu_activate_internal(m, mi->menu->con);
+	_e_menu_activate_internal(m, mi->menu->zone);
 	_e_menu_reposition(m);
 	e_object_unref(E_OBJECT(m));
      }
@@ -1701,24 +1703,24 @@ _e_menu_outside_bounds_get(int xdir, int ydir)
 	E_Menu *m;
 
 	m = l->data;
-	if (m->cur.x < 0)
+	if (m->cur.x < m->zone->x)
 	  {
-	     i = -m->cur.x;
+	     i = m->zone->x - m->cur.x;
 	     if (i > outl) outl = i;
 	  }
-	if (m->cur.y < 0)
+	if (m->cur.y < m->zone->y)
 	  {
-	     i = -m->cur.y;
+	     i = m->zone->y - m->cur.y;
 	     if (i > outt) outt = i;
 	  }
-	if ((m->cur.x + m->cur.w) > (m->con->w))
+	if ((m->cur.x + m->cur.w) > (m->zone->w))
 	  {
-	     i = m->cur.x + m->cur.w - m->con->w;
+	     i = m->cur.x + m->cur.w - (m->zone->x + m->zone->w);
 	     if (i > outr) outr = i;
 	  }
-	if ((m->cur.y + m->cur.h) > (m->con->h))
+	if ((m->cur.y + m->cur.h) > (m->zone->h))
 	  {
-	     i = m->cur.y + m->cur.h - m->con->h;
+	     i = m->cur.y + m->cur.h - (m->zone->y + m->zone->h);
 	     if (i > outb) outb = i;
 	  }
      }
@@ -1777,11 +1779,11 @@ _e_menu_mouse_autoscroll_check(void)
 	     E_Menu *m;
 	     
 	     m = _e_active_menus->data;
-	     if (_e_menu_x == (m->con->w - 1))
+	     if (_e_menu_x == (m->zone->w - 1))
 	       {
 		  if (_e_menu_outside_bounds_get(1, 0)) autoscroll_x = 1;
 	       }
-	     if (_e_menu_y == (m->con->h - 1))
+	     if (_e_menu_y == (m->zone->h - 1))
 	       {
 		  if (_e_menu_outside_bounds_get(0, 1)) autoscroll_y = 1;
 	       }
@@ -1808,8 +1810,10 @@ _e_menu_item_ensure_onscreen(E_Menu_Item *mi)
    h = mi->h;
    dx = 0;
    dy = 0;
-   if ((x + w) > mi->menu->con->w) dx = mi->menu->con->w - (x + w);
-   if ((y + h) > mi->menu->con->h) dy = mi->menu->con->h - (y + h);
+   if ((x + w) > (mi->menu->zone->x + mi->menu->zone->w))
+     dx = (mi->menu->zone->x + mi->menu->zone->w) - (x + w);
+   if ((y + h) > (mi->menu->zone->y + mi->menu->zone->h))
+     dy = (mi->menu->zone->y + mi->menu->zone->h) - (y + h);
    if (x < 0) dx = x;
    if (y < 0) dy = y;
    if ((dx != 0) || (dy != 0))
@@ -1995,8 +1999,8 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 		    }
 	       }
 	     evas_event_feed_mouse_move(m->evas,
-					ev->x - m->cur.x,
-					ev->y - m->cur.y,
+					ev->x - m->cur.x + m->zone->x,
+					ev->y - m->cur.y + m->zone->y,
 					NULL);
 	  }
      }
