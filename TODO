@@ -66,3 +66,4 @@ These are in no particular order:
 * detect segv and report it (maybe turn on obj paranoia)
 * add sliders, radio and check buttons for clientinfo pane
 * display coords while moving/resizing
+* add separate app menu bars at top of screen support
