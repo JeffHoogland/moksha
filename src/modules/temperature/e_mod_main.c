@@ -602,6 +602,8 @@ _temperature_face_init(Temperature_Face *ef)
    edje_object_size_min_calc(ef->temp_object, &bw, &bh);
    ef->minsize = bh;
    ef->minsize = bw;
+   
+   ef->have_temp = -1;
 
    _temperature_face_reconfigure(ef);
    
@@ -747,10 +749,22 @@ _temperature_cb_check(void *data)
    therms = e_file_ls("/proc/acpi/thermal_zone");
    if (!therms)
      {
-	/* disable therm object */
+	if (ef->have_temp != 0)
+	  {
+	     /* disable therm object */
+	     edje_object_signal_emit(ef->temp_object, "unknown", "");
+	     edje_object_part_text_set(ef->temp_object, "reading", "NO TEMP");
+	     ef->have_temp = 0;
+	  }
      }
    else
      {
+	if (ef->have_temp != 1)
+	  {
+	     /* disable therm object */
+	     edje_object_signal_emit(ef->temp_object, "known", "");
+	     ef->have_temp = 1;
+	  }
 	while (therms)
 	  {
 	     char buf[4096], units[32];

@@ -5596,15 +5596,15 @@ collections {
       }
       programs {
 	 program {
-	    name: "on";
-	    signal: "enable";
+	    name: "known";
+	    signal: "known";
 	    source: "";
 	    action: STATE_SET "default" 0.0;
 	    target: "fade_clip";
 	 }
 	 program {
-	    name: "off";
-	    signal: "disable";
+	    name: "unknown";
+	    signal: "unknown";
 	    source: "";
 	    action: STATE_SET "faded" 0.0;
 	    target: "fade_clip";

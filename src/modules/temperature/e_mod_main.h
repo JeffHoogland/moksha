@@ -41,6 +41,8 @@ struct _Temperature_Face
    Evas_Coord      xx, yy;
    Evas_Coord      fx, fy, fw;
    
+   int             have_temp;
+   
    Ecore_Timer         *temperature_check_timer;
    
    Ecore_Event_Handler *ev_handler_container_resize;
