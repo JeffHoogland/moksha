@@ -175,6 +175,11 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 			      ECORE_X_EVENT_MASK_MOUSE_MOVE,
 			      ECORE_X_MODIFIER_ALT,
 			      0);
+    ecore_x_window_button_grab(bd->win,
+			       3,
+			       ECORE_X_EVENT_MASK_MOUSE_DOWN,
+			       ECORE_X_MODIFIER_ALT,
+			       0);
    bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win, 0, 0, bd->w, bd->h);
    ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
    e_canvas_add(bd->bg_ecore_evas);
@@ -953,6 +958,10 @@ _e_border_free(E_Border *bd)
    /* FIXME: use config list of bindings */
    ecore_x_window_button_ungrab(bd->win,
 				1,
+				ECORE_X_MODIFIER_ALT,
+				0);
+   ecore_x_window_button_ungrab(bd->win,
+				3,
 				ECORE_X_MODIFIER_ALT,
 				0);
    ecore_x_window_del(bd->win);
@@ -1742,6 +1751,10 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 		  _e_border_moveinfo_gather(bd, "mouse,1");
 		  e_border_raise(bd);
 	       }
+	  }
+	else if(ev->button == 3)
+	  {
+	     _e_border_menu_show(bd, bd->x + ev->x, bd->y + ev->y);
 	  }
      }
    if (ev->win != bd->event_win) return 1;
