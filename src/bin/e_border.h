@@ -23,6 +23,8 @@ typedef enum _E_Transition E_Transition;
 
 typedef struct _E_Event_Border_Resize E_Event_Border_Resize;
 typedef struct _E_Event_Border_Move   E_Event_Border_Move;
+typedef struct _E_Event_Border_Add    E_Event_Border_Add;
+typedef struct _E_Event_Border_Remove E_Event_Border_Remove;
 
 struct _E_Border
 {
@@ -196,6 +198,16 @@ struct _E_Event_Border_Move
    E_Border *border;
 };
 
+struct _E_Event_Border_Add
+{
+   E_Border *border;
+};
+
+struct _E_Event_Border_Remove
+{
+   E_Border *border;
+};
+
 EAPI int       e_border_init(void);
 EAPI int       e_border_shutdown(void);
 
@@ -231,5 +243,7 @@ EAPI void      e_border_iconified_list(void);
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
+extern EAPI int E_EVENT_BORDER_ADD;
+extern EAPI int E_EVENT_BORDER_REMOVE;
 
 #endif
