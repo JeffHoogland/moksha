@@ -3,11 +3,18 @@
  */
 #include "e.h"
 
+EAPI void _e_init_icons_del(void);
+
 /* local subsystem globals */
 static Ecore_X_Window  _e_init_win = 0;
 static Ecore_Evas     *_e_init_ecore_evas = NULL;
 static Evas           *_e_init_evas = NULL;
 static Evas_Object    *_e_init_object = NULL;
+
+/* startup icons */
+static Evas_Coord _e_init_icon_x, _e_init_icon_y;
+static int        _e_init_icon_size, _e_init_icon_wrap;
+static Evas_List *_e_init_icon_list;
 
 /* externally accessible functions */
 int
@@ -42,6 +49,11 @@ e_init_init(void)
    e_pointer_ecore_evas_set(_e_init_ecore_evas);
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
+   
+   _e_init_icon_size = 64;
+   _e_init_icon_wrap = w;
+   _e_init_icon_x = 0;
+   _e_init_icon_y = h - _e_init_icon_size;
    
    n = ecore_x_xinerama_screen_count_get();
    if (n == 0)
@@ -123,6 +135,8 @@ e_init_hide(void)
    _e_init_evas = NULL;
    _e_init_win = 0;
    _e_init_object = NULL;
+
+   _e_init_icons_del();
 }
 
 void
@@ -150,4 +164,43 @@ Ecore_X_Window
 e_init_window_get(void)
 {
    return _e_init_win;
+}
+
+/* code for displaying startup icons */
+
+void
+e_init_icons_app_add(E_App *app)
+{
+   Evas_Object *o;
+
+   E_OBJECT_CHECK(app);
+   E_OBJECT_TYPE_CHECK(app, E_APP_TYPE);
+	 
+   o = edje_object_add(_e_init_evas);
+   edje_object_file_set(o,app->path, "icon");
+   evas_object_resize(o, _e_init_icon_size, _e_init_icon_size);
+   evas_object_move(o, _e_init_icon_x, _e_init_icon_y);
+   evas_object_show(o);
+   _e_init_icon_list = evas_list_append(_e_init_icon_list, o);
+
+   _e_init_icon_x += _e_init_icon_size;
+   if (_e_init_icon_x + _e_init_icon_size > _e_init_icon_wrap)
+     {
+	_e_init_icon_x = 0;
+	_e_init_icon_y -= _e_init_icon_size;
+     }
+}
+
+void
+_e_init_icons_del(void)
+{
+   Evas_Object *next;
+
+   while(_e_init_icon_list)
+     {
+	next = _e_init_icon_list->data;
+	evas_object_del(next);
+	_e_init_icon_list = evas_list_remove(_e_init_icon_list, next);
+     }
+
 }

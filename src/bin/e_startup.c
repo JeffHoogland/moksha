@@ -63,6 +63,7 @@ _e_startup(void)
    e_app_exec(a);
    snprintf(buf, sizeof(buf), "Starting %s", a->name);
    e_init_status_set((const char *)buf);   
+   e_init_icons_app_add(a);
    if (a->wait_exit)
      {
 	timeout_timer = ecore_timer_add(10.0, _e_startup_timeout_cb, NULL);
