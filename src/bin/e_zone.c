@@ -249,43 +249,101 @@ void
 e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 {
    E_Object **new_desks; /* match the bug in e_zone.h */
-   E_Desk    *desk;
-   int        x, y, reshow;
+   E_Desk    *desk, *new_desk;
+   int        x, y, xx, yy, moved;
+   Evas_List *client;
+   E_Border  *bd;
    
-   new_desks =
-      malloc(x_count * y_count * sizeof(E_Desk *));
+   xx = x_count;
+   if (xx < 1)
+     xx = 1;
+   yy = y_count;
+   if (yy < 1)
+     yy = 1;
 
-   for (x = 0; x < x_count; x++)
-     for(y = 0; y < y_count; y++)
+   new_desks = malloc(xx * yy * sizeof(E_Desk *));
+
+   for (x = 0; x < xx; x++)
+     for(y = 0; y < yy; y++)
        {
 	  if (x < zone->desk_x_count && y < zone->desk_y_count)
 	    desk = (E_Desk *) zone->desks[x + (y * zone->desk_x_count)];
 	  else
 	    desk = e_desk_new(zone, x, y);
-	  new_desks[x + (y * x_count)] = (E_Object *) desk;
+	  new_desks[x + (y * xx)] = (E_Object *) desk;
        }
 
-/* FIXME catch thigns that have fallen off the end if we got smaller */
+   /* catch windoes that have fallen off the end if we got smaller */
+   if (xx < zone->desk_x_count)
+     for (y = 0; y < zone->desk_y_count; y++)
+       {
+	  new_desk = (E_Desk *)
+	     zone->desks[xx - 1 + (y * zone->desk_x_count)];
+	  for (x = xx; x < zone->desk_x_count; x++)
+	    {
+	       desk = (E_Desk *)
+		  zone->desks[x + (y * zone->desk_x_count)];
+
+	       client = desk->clients;
+	       while (client)
+		 {
+		    bd = (E_Border *) client->data;
+
+		    new_desk->clients = evas_list_append(new_desk->clients, bd);
+		    bd->desk = new_desk;
+		    client = client->next;
+		 }
+	       evas_list_free(desk->clients);
+	    }
+       }  
+   if (yy < zone->desk_y_count)
+     for (x = 0; x < zone->desk_x_count; x++)
+       {
+	  new_desk = (E_Desk *)
+	     zone->desks[x + ((yy - 1) * zone->desk_x_count)];
+	  for (y = yy; y < zone->desk_y_count; y++)
+	    {
+	       desk = (E_Desk *)
+		  zone->desks[x + (y * zone->desk_x_count)];
+
+	       client = desk->clients;
+	       while (client)
+		 {
+		    bd = (E_Border *) client->data;
+
+		    new_desk->clients = evas_list_append(new_desk->clients, bd);
+		    bd->desk = new_desk;
+		    client = client->next;
+		 }
+	       evas_list_free(desk->clients);
+	    }
+       }	
 
    if (zone->desks)
      free(zone->desks);
    zone->desks = new_desks;
    
-   zone->desk_x_count = x_count;
-   zone->desk_y_count = y_count;
+   zone->desk_x_count = xx;
+   zone->desk_y_count = yy;
 
-   reshow = 0;
-   if (zone->desk_x_current >= x_count)
+   moved = 0;
+   if (zone->desk_x_current >= xx)
      {
-	zone->desk_x_current = x_count - 1;
-	reshow = 1;
+	zone->desk_x_current = xx - 1;
+	moved = 1;
      }
-   if (zone->desk_y_current >= y_count)
+   if (zone->desk_y_current >= yy)
      {
-	zone->desk_y_current = y_count - 1;
-	reshow = 1;
+	zone->desk_y_current = yy - 1;
+	moved = 1;
      }
-   if (reshow)
-     e_desk_show(e_desk_at_xy_get(zone, x_count - 1, y_count - 1));
+   if (moved)
+     e_desk_show(e_desk_at_xy_get(zone, xx - 1, yy - 1));
+   else
+     {
+	desk = e_desk_current_get(zone);
+	desk->visible = 0;
+	e_desk_show(desk);
+     }
 }
 

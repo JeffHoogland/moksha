@@ -97,7 +97,6 @@ e_desk_show(E_Desk *desk)
    desk->visible = 1;
 }
 
-/* FIXME replace e_desk_remove etc with these row / col operations */
 void
 e_desk_row_add(E_Zone *zone)
 {
@@ -107,8 +106,6 @@ e_desk_row_add(E_Zone *zone)
 void
 e_desk_row_remove(E_Zone *zone)
 {
-   if (zone->desk_y_count < 2)
-     return;
    e_zone_desk_count_set(zone, zone->desk_x_count, zone->desk_y_count - 1);
 }
 
@@ -121,8 +118,6 @@ e_desk_col_add(E_Zone *zone)
 void
 e_desk_col_remove(E_Zone *zone)
 {
-   if (zone->desk_x_count < 2)
-     return;
    e_zone_desk_count_set(zone, zone->desk_x_count - 1, zone->desk_y_count);
 }
 
