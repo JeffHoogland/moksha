@@ -343,7 +343,8 @@ _e_module_free(E_Module *m)
 	     e_config->modules = evas_list_remove(e_config->modules, em);
 	     E_FREE(em->name);
 	     E_FREE(em);
-	     /* This is crap, a job is added, but doesn't run because
+	     /* FIXME
+	      * This is crap, a job is added, but doesn't run because
 	      * main loop has quit!
 	     e_config_save_queue();
 	     */
