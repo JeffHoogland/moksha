@@ -395,7 +395,10 @@ struct _E_Shelf
    
    char *name;
    
-   int x, int y, int w, int h;
+   int x, y, w, h;
+   struct {
+      Ebits_Object border;
+   } bit;
 };
 
 struct _E_Background
