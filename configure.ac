@@ -193,7 +193,7 @@ if test "x$ferite" = "xyes"; then
   pushd $packagesrcdir/src >& /dev/null
     echo -n "... building ferite binding c code ... ";
     rm -f e_ferite_gen_*;
-    $FEBUILDER -m e_ferite_gen -i e_ferite_register -d e_ferite.fec;
+    $FEBUILDER -m e_ferite_gen -i e_ferite_register -d -c e_ferite.fec;
     echo "done.";
   popd >& /dev/null
 fi
