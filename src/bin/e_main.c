@@ -154,6 +154,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_x_shutdown);
+   if (!e_xinerama_init())
+     {
+	e_error_message_show("Enlightenment cannot setup xinerama wrapping.\n"
+			     "This should not happen.");
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_xinerama_shutdown);
    
    ecore_x_grab();
    
@@ -490,7 +497,6 @@ _e_main_screens_init(void)
    Ecore_X_Window *roots;
    int num, i;
 
-   if (!e_xinerama_init()) return 0;
    if (!e_atoms_init()) return 0;
    if (!e_manager_init()) return 0;
    if (!e_container_init()) return 0;
@@ -554,7 +560,6 @@ _e_main_screens_shutdown(void)
    e_container_shutdown();
    e_manager_shutdown();
    e_atoms_shutdown();
-   e_xinerama_shutdown();
    return 1;
 }
 

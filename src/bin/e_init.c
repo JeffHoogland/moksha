@@ -49,38 +49,32 @@ e_init_init(void)
    e_pointer_ecore_evas_set(_e_init_ecore_evas);
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
-   
+
    screens = (Evas_List *)e_xinerama_screens_get();
    for (l = screens; l; l = l->next)
      {
 	E_Screen *scr;
 	
 	scr = l->data;
+	o = edje_object_add(_e_init_evas);
 	/* first screen */
 	if (l == screens)
 	  {
-	     o = edje_object_add(_e_init_evas);
 	     edje_object_file_set(o,
 				  /* FIXME: "init.eet" needs to come from config */
 				  e_path_find(path_init, "init.eet"),
 				  "init/splash");
-	     evas_object_move(o, scr->x, scr->y);
-	     evas_object_resize(o, scr->w, scr->h);
-	     evas_object_show(o);
 	     _e_init_object = o;
 	  }
 	/* other screens */
 	else
-	  {
-	     o = edje_object_add(_e_init_evas);
-	     edje_object_file_set(o,
-				  /* FIXME: "init.eet" needs to come from config */
-				  e_path_find(path_init, "init.eet"),
-				  "init/extra_screen");
-	     evas_object_move(o, scr->x, scr->y);
-	     evas_object_resize(o, scr->w, scr->h);
-	     evas_object_show(o);
-	  }
+	  edje_object_file_set(o,
+			       /* FIXME: "init.eet" needs to come from config */
+			       e_path_find(path_init, "init.eet"),
+			       "init/extra_screen");
+	evas_object_move(o, scr->x, scr->y);
+	evas_object_resize(o, scr->w, scr->h);
+	evas_object_show(o);
      }
    
    free(roots);

@@ -242,9 +242,10 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	edje_object_part_text_set(o, "title", title);
 
-	snprintf(format, sizeof(format), "source='%s' font='%s' size=%d wrap=word",
-					 e_path_find(path_themes, "default.eet"),
-					 "fonts/Edje Vera", 10);
+	snprintf(format, sizeof(format), 
+		 "source='%s' font='%s' size=%d wrap=word",
+		 e_path_find(path_themes, "default.eet"),
+		 "fonts/Edje Vera", 10);
 	text = evas_object_textblock_add(e);
 	evas_object_color_set(text, 0, 0, 0, 255);
 	evas_object_textblock_format_insert(text, format);
