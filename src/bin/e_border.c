@@ -1,4 +1,5 @@
 #include "e.h"
+#include <Ecore_X_Atoms.h>
 
 #define RESIZE_NONE 0
 #define RESIZE_TL   1
@@ -661,52 +662,52 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	printf("property for %0x [%s]\n", e->win, name);
 	XFree(name);
      }
-   if (e->atom == _e_atom_wm_name)
+   if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
 	bd->client.icccm.fetch.title = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_class)
+   else if (e->atom == ECORE_X_ATOM_WM_CLASS)
      {
 	bd->client.icccm.fetch.name_class = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_icon_name)
+   else if (e->atom == ECORE_X_ATOM_WM_ICON_NAME)
      {
 	bd->client.icccm.fetch.icon_name = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_client_machine)
+   else if (e->atom == ECORE_X_ATOM_WM_CLIENT_MACHINE)
      {
 	bd->client.icccm.fetch.machine = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_protocols)
+   else if (e->atom == ECORE_X_ATOM_WM_PROTOCOLS)
      {
 	bd->client.icccm.fetch.protocol = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_hints)
+   else if (e->atom == ECORE_X_ATOM_WM_HINTS)
      {
 	bd->client.icccm.fetch.hints = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_size_hints)
+   else if (e->atom == ECORE_X_ATOM_WM_NORMAL_HINTS)
      {
 	bd->client.icccm.fetch.size_pos_hints = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_wm_hints)
+   else if (e->atom == ECORE_X_ATOM_MOTIF_WM_HINTS)
      {
 	bd->client.mwm.fetch.hints = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_netwm_pid)
+   else if (e->atom == ECORE_X_ATOM_NET_WM_PID)
      {
 	bd->client.netwm.fetch.pid = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == _e_atom_netwm_desktop)
+   else if (e->atom == ECORE_X_ATOM_NET_WM_DESKTOP)
      {
 	bd->client.netwm.fetch.desktop = 1;
 	bd->changed = 1;
