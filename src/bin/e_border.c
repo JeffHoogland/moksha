@@ -161,7 +161,7 @@ e_border_shutdown(void)
 	Ecore_Event_Handler *h;
 
 	h = handlers->data;
-	handlers = evas_list_remove(handlers, h);
+	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
    return 1;
@@ -1025,7 +1025,7 @@ _e_border_free(E_Border *bd)
 	Ecore_Event_Handler *h;
 
 	h = bd->handlers->data;
-	bd->handlers = evas_list_remove(bd->handlers, h);
+	bd->handlers = evas_list_remove_list(bd->handlers, bd->handlers);
 	ecore_event_handler_del(h);
      }
    ecore_x_window_reparent(bd->client.win, bd->container->manager->root, bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
