@@ -337,6 +337,7 @@ e_border_show(E_Border *bd)
 
    visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
    
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
@@ -370,6 +371,7 @@ e_border_hide(E_Border *bd)
 
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
    
    ev = calloc(1, sizeof(E_Event_Border_Hide));
    ev->border = bd;
