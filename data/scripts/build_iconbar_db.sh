@@ -1,7 +1,7 @@
 #!/bin/sh
 
-DB=$1"/.e_iconbar.db"
-BIT=$1"/.e_iconbar.bits.db"
+DB=$1"/iconbar.db"
+BIT=$1"/iconbar.bits.db"
 
 setup ()
 {
