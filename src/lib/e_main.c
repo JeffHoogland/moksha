@@ -19,7 +19,6 @@
 
 #include "E.h"
 #include "e_private.h"
-
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 

@@ -1,5 +1,4 @@
-#ifndef E_APPS_H
-#define E_APPS_H
+#ifdef E_TYPEDEFS
 
 typedef enum _E_App_Change
 {
@@ -13,6 +12,10 @@ typedef enum _E_App_Change
 } E_App_Change;
 
 typedef struct _E_App          E_App;
+
+#else
+#ifndef E_APPS_H
+#define E_APPS_H
 
 struct _E_App
 {
@@ -58,4 +61,5 @@ EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_
 
 EAPI E_App *e_app_window_name_class_find(char *name, char *class);
 
+#endif
 #endif

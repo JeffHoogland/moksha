@@ -1,7 +1,10 @@
-#ifndef E_MANAGER_H
-#define E_MANAGER_H
+#ifdef E_TYPEDEFS
 
 typedef struct _E_Manager E_Manager;
+
+#else
+#ifndef E_MANAGER_H
+#define E_MANAGER_H
 
 struct _E_Manager
 {
@@ -28,4 +31,5 @@ EAPI void            e_manager_move_resize(E_Manager *man, int x, int y, int w, 
 EAPI void            e_manager_raise(E_Manager *man);
 EAPI void            e_manager_lower(E_Manager *man);
 
+#endif
 #endif

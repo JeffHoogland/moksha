@@ -1,3 +1,5 @@
+#ifdef E_TYPEDEFS
+#else
 #ifndef E_HINTS_H
 #define E_HINTS_H
 
@@ -11,4 +13,5 @@ EAPI void e_hints_window_state_set(Ecore_X_Window win);
 EAPI void e_hints_window_name_get(Ecore_X_Window win);
 EAPI void e_hints_window_icon_name_get(Ecore_X_Window win);
 
+#endif
 #endif

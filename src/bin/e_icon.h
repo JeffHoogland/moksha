@@ -1,3 +1,5 @@
+#ifdef E_TYPEDEFS
+#else
 #ifndef E_ICON_H
 #define E_ICON_H
 
@@ -10,4 +12,5 @@ EAPI void         e_icon_size_get         (Evas_Object *obj, int *w, int *h);
 EAPI int          e_icon_fill_inside_get  (Evas_Object *obj);
 EAPI void         e_icon_fill_inside_set  (Evas_Object *obj, int fill_inside);
 
+#endif
 #endif

@@ -29,14 +29,13 @@ Current freeze issues are:
 
 ISSUES:
 
-* left mouse menu segv's at times
 * pager module doesnt shut down properly (disable and create window - segv)
 * pager module doesnt handle window deletes
 * pager module causes window resizes to be slower than normal
-* virtual desktops need fixign to work with zones properly
+* virtual desktops need fixing to work with zones properly
 * all modules need to respect zones
 * container resize needs to re-evalute zone geometry
-* zone geometyr change needs to propagate to modules
+* zone geometry change needs to propagate to modules
 * need desktop module geometry managing system (central)
 * dropshadow is not optimal and has extreme edge bugs
 * e_apps polling/updates is broken

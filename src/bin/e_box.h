@@ -1,8 +1,9 @@
+#ifdef E_TYPEDEFS
+#else
 #ifndef E_BOX_H
 #define E_BOX_H
 
 EAPI Evas_Object *e_box_add               (Evas *evas);
-
 EAPI int          e_box_freeze            (Evas_Object *obj);
 EAPI int          e_box_thaw              (Evas_Object *obj);
 EAPI void         e_box_orientation_set   (Evas_Object *obj, int horizontal);
@@ -22,4 +23,5 @@ EAPI void         e_box_max_size_get      (Evas_Object *obj, Evas_Coord *maxw, E
 EAPI void         e_box_align_get         (Evas_Object *obj, double *ax, double *ay);
 EAPI void         e_box_align_set         (Evas_Object *obj, double ax, double ay);
 
+#endif
 #endif

@@ -1,25 +1,33 @@
-#ifndef E_BORDER_H
-#define E_BORDER_H
+#ifdef E_TYPEDEFS
 
-typedef struct _E_Border E_Border;
-
-enum _E_Direction
+typedef enum _E_Direction
 {
     E_DIRECTION_UP,
     E_DIRECTION_DOWN,
     E_DIRECTION_LEFT,
     E_DIRECTION_RIGHT
-};
-typedef enum _E_Direction E_Direction;
+} E_Direction;
 
-enum _E_Transition
+typedef enum _E_Transition
 {
     E_TRANSITION_LINEAR,
     E_TRANSITION_SINUSOIDAL,
     E_TRANSITION_ACCELERATE,
     E_TRANSITION_DECELERATE
-};
-typedef enum _E_Transition E_Transition;
+} E_Transition;
+
+typedef struct _E_Border                E_Border;
+typedef struct _E_Event_Border_Resize   E_Event_Border_Resize;
+typedef struct _E_Event_Border_Move     E_Event_Border_Move;
+typedef struct _E_Event_Border_Add      E_Event_Border_Add;
+typedef struct _E_Event_Border_Remove   E_Event_Border_Remove;
+typedef struct _E_Event_Border_Show     E_Event_Border_Show;
+typedef struct _E_Event_Border_Hide     E_Event_Border_Hide;
+typedef struct _E_Event_Border_Desk_Set E_Event_Border_Desk_Set;
+
+#else
+#ifndef E_BORDER_H
+#define E_BORDER_H
 
 struct _E_Border
 {
@@ -169,7 +177,7 @@ struct _E_Border
    } shade;
 
    Evas_List *stick_desks;
-   E_Object *border_menu;
+   E_Menu *border_menu;
 
    struct {
       unsigned int visible : 1;
@@ -183,14 +191,6 @@ struct _E_Border
       unsigned int shaded : 1;
    } changes;
 };
-
-typedef struct _E_Event_Border_Resize   E_Event_Border_Resize;
-typedef struct _E_Event_Border_Move     E_Event_Border_Move;
-typedef struct _E_Event_Border_Add      E_Event_Border_Add;
-typedef struct _E_Event_Border_Remove   E_Event_Border_Remove;
-typedef struct _E_Event_Border_Show     E_Event_Border_Show;
-typedef struct _E_Event_Border_Hide     E_Event_Border_Hide;
-typedef struct _E_Event_Border_Desk_Set E_Event_Border_Desk_Set;
 
 struct _E_Event_Border_Resize
 {
@@ -270,4 +270,5 @@ extern EAPI int E_EVENT_BORDER_HIDE;
 extern EAPI int E_EVENT_BORDER_REMOVE;
 extern EAPI int E_EVENT_BORDER_DESK_SET;
 
+#endif
 #endif

@@ -65,6 +65,13 @@ e_object_del_func_set(E_Object *obj, E_Object_Cleanup_Func del_func)
 }
 
 void
+e_object_type_set(E_Object *obj, int type)
+{
+   E_OBJECT_CHECK(obj);
+   obj->type = type;
+}
+
+void
 e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);

@@ -1,8 +1,19 @@
-#ifndef E_MENU_H
-#define E_MENU_H
+#ifdef E_TYPEDEFS
+
+#define E_MENU_POP_DIRECTION_NONE  0
+#define E_MENU_POP_DIRECTION_LEFT  1
+#define E_MENU_POP_DIRECTION_RIGHT 2
+#define E_MENU_POP_DIRECTION_UP    3
+#define E_MENU_POP_DIRECTION_DOWN  4
+#define E_MENU_POP_DIRECTION_AUTO  5
+#define E_MENU_POP_DIRECTION_LAST  6
 
 typedef struct _E_Menu         E_Menu;
 typedef struct _E_Menu_Item    E_Menu_Item;
+
+#else
+#ifndef E_MENU_H
+#define E_MENU_H
 
 struct _E_Menu
 {
@@ -96,14 +107,6 @@ struct _E_Menu_Item
    unsigned char  active : 1;
 };
 
-#define E_MENU_POP_DIRECTION_NONE  0
-#define E_MENU_POP_DIRECTION_LEFT  1
-#define E_MENU_POP_DIRECTION_RIGHT 2
-#define E_MENU_POP_DIRECTION_UP    3
-#define E_MENU_POP_DIRECTION_DOWN  4
-#define E_MENU_POP_DIRECTION_AUTO  5
-#define E_MENU_POP_DIRECTION_LAST  6
-
 EAPI int          e_menu_init(void);
 EAPI int          e_menu_shutdown(void);
 
@@ -140,4 +143,6 @@ EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 EAPI void         e_menu_idler_before(void);
 
 EAPI Ecore_X_Window e_menu_grab_window_get(void);
+
+#endif
 #endif

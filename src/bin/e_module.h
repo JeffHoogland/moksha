@@ -1,10 +1,13 @@
-#ifndef E_MODULE_H
-#define E_MODULE_H
+#ifdef E_TYPEDEFS
 
 #define E_MODULE_API_VERSION 1
 
 typedef struct _E_Module     E_Module;
 typedef struct _E_Module_Api E_Module_Api;
+
+#else
+#ifndef E_MODULE_H
+#define E_MODULE_H
 
 struct _E_Module
 {
@@ -58,4 +61,5 @@ EAPI E_Module    *e_module_find(char *name);
 EAPI Evas_List   *e_module_list(void);
 EAPI E_Menu      *e_module_menu_new(void);
 
+#endif
 #endif

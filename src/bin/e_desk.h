@@ -1,7 +1,10 @@
-#ifndef E_DESK_H
-#define E_DESK_H
+#ifdef E_TYPEDEFS
 
 typedef struct _E_Desk E_Desk;
+
+#else
+#ifndef E_DESK_H
+#define E_DESK_H
 
 struct _E_Desk
 {
@@ -32,4 +35,4 @@ EAPI void         e_desk_col_add(E_Zone *zone);
 EAPI void         e_desk_col_remove(E_Zone *zone);
 
 #endif
-
+#endif

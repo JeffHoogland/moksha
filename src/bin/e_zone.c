@@ -280,7 +280,7 @@ _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_i
 void
 e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 {
-   E_Object **new_desks; /* match the bug in e_zone.h */
+   E_Desk   **new_desks;
    E_Desk    *desk, *new_desk;
    int        x, y, xx, yy, moved;
    Evas_List *client;
@@ -302,7 +302,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	    desk = (E_Desk *) zone->desks[x + (y * zone->desk_x_count)];
 	  else
 	    desk = e_desk_new(zone, x, y);
-	  new_desks[x + (y * xx)] = (E_Object *) desk;
+	  new_desks[x + (y * xx)] = desk;
        }
 
    /* catch windoes that have fallen off the end if we got smaller */
@@ -351,8 +351,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	    }
        }	
 
-   if (zone->desks)
-     free(zone->desks);
+   if (zone->desks) free(zone->desks);
    zone->desks = new_desks;
    
    zone->desk_x_count = xx;

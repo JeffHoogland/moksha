@@ -1,5 +1,4 @@
-#ifndef E_IPC_H
-#define E_IPC_H
+#ifdef E_TYPEDEFS
 
 typedef enum _E_Ipc_Domain {
    E_IPC_DOMAIN_NONE,
@@ -24,7 +23,12 @@ typedef enum _E_Ipc_Op {
    E_IPC_OP_LAST
 } E_Ipc_Op;
 
+#else
+#ifndef E_IPC_H
+#define E_IPC_H
+
 EAPI int  e_ipc_init(void);
 EAPI void e_ipc_shutdown(void);
 
+#endif
 #endif

@@ -2606,7 +2606,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    
    m = e_menu_new();
    e_object_data_set(E_OBJECT(m), bd);
-   bd->border_menu = E_OBJECT(m);
+   bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
    
    mi = e_menu_item_new(m);

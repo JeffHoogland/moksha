@@ -1,7 +1,10 @@
-#ifndef E_ZONE_H
-#define E_ZONE_H
+#ifdef E_TYPEDEFS
 
 typedef struct _E_Zone     E_Zone;
+
+#else
+#ifndef E_ZONE_H
+#define E_ZONE_H
 
 struct _E_Zone
 {
@@ -17,7 +20,7 @@ struct _E_Zone
    
    int                  desk_x_count, desk_y_count;
    int                  desk_x_current, desk_y_current;
-   E_Object           **desks; /* FIXME: why can this not be E_Desk? */
+   E_Desk             **desks;
    Evas_List           *clients;
 
 };
@@ -35,4 +38,4 @@ EAPI void       e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count);
 EAPI void       e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count);
 
 #endif
-
+#endif

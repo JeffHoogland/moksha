@@ -1,5 +1,4 @@
-#ifndef E_CONTAINER_H
-#define E_CONTAINER_H
+#ifdef E_TYPEDEFS
 
 typedef enum _E_Container_Shape_Change
 {
@@ -16,6 +15,10 @@ typedef struct _E_Container                E_Container;
 typedef struct _E_Container_Shape          E_Container_Shape;
 typedef struct _E_Container_Shape_Callback E_Container_Shape_Callback;
 typedef struct _E_Event_Container_Resize   E_Event_Container_Resize;
+
+#else
+#ifndef E_CONTAINER_H
+#define E_CONTAINER_H
 
 struct _E_Container
 {
@@ -90,4 +93,5 @@ EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
 
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 
+#endif
 #endif

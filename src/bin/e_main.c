@@ -3,14 +3,6 @@
  */
 #include "e.h"
 
-struct _E_Before_Idler
-{
-   int          (*func) (void *data);
-   void          *data;
-   unsigned char  once : 1;
-   unsigned char  delete_me : 1;
-};
-
 /* local subsystem functions */
 static void _e_main_shutdown_push(int (*func)(void));
 static void _e_main_shutdown(int errorcode);

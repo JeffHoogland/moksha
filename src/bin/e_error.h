@@ -1,5 +1,4 @@
-#ifndef E_ERROR_H
-#define E_ERROR_H
+#ifdef E_TYPEDEFS
 
 #define print0(x, args...)      x ,print1(## args)
 #define e_error_message_show(args...) \
@@ -18,10 +17,15 @@
    e_error_dialog_show_internal(title, __tmpbuf); \
 }
 
+#else
+#ifndef E_ERROR_H
+#define E_ERROR_H
+
 EAPI void e_error_message_show_internal(char *txt);
 EAPI void e_error_dialog_show_internal(char *title, char *txt);
 
 EAPI void e_error_gui_set(int on);
 EAPI void e_error_message_manager_show(E_Manager *man, char *title, char *txt);
     
+#endif
 #endif
