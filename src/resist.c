@@ -47,7 +47,13 @@ rects = evas_list_append(rects, r); \
    OBSTACLE(b->desk->real.w, -1000000, 1000000, 2000000 + b->desk->real.h, desk_resist); 
    /* can add code here to add more fake obstacles with custom resist values */
    /* here if need be - ie xinerama middle between screens and panels etc. */
-  
+
+   {
+      E_View *v;
+      if (b->desk->view->iconbar)
+         evas_list_append(rects, e_iconbar_get_resist_rect(b->desk->view->iconbar));
+   }
+
    for (l = b->desk->windows; l; l = l->next)
      {
 	E_Border *bd;
