@@ -11,7 +11,6 @@
 #include "file.h"
 #include "util.h"
 #include "icons.h"
-#include "epplet.h"
 #include "e_view_model.h"
 #include "e_view_machine.h"
 #include "e_file.h"
@@ -1803,7 +1802,7 @@ e_view_realize(E_View *v)
    }
   
    e_view_bg_reload(v);
-   e_epplet_load_from_layout(v);
+/*   e_epplet_load_from_layout(v);*/
    v->changed = 1;
    D_RETURN;
 }
