@@ -370,9 +370,18 @@ typedef struct _text_zone Text_Zone;
 struct _text_zone
 {
    double x, y;
+
+   Evas_Object clip;
+   Ebits_Object *bg;
    
-   Evas_Object bg;
+   struct {
+      double x, y, w, h;
+   } l;
    
+   struct {
+      double dx, dy;
+      int go;
+   } move;
    Evas_List lines;
 };
 
@@ -510,13 +519,13 @@ setup(void)
 	evas_move(evas, o, (root_w - w) / 2, -32);
 	evas_set_layer(evas, o, 20);
 	evas_show(evas, o);
+	evas_set_pass_events(evas, o, 1);
      }
      {
 	Text_Zone *txz;
 	
 	txz = txz_new
 	  ((root_w - 512) / 2, 200,
-	   "5c \n"
 	   "9c Enlightenment\n"
 	   "5c \n"
 	   "5c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
@@ -539,9 +548,224 @@ setup(void)
 	evas_set_layer(evas, o, 30);
 	evas_show(evas, o);
 	animate_logo(0, o);
+	evas_set_pass_events(evas, o, 1);
      }
    scr_w = root_w;
    scr_h = root_h;
+}
+
+static void
+_txz_cb_show(void *data)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     evas_show(evas, l->data);
+	  }
+	evas_show(evas, txz->clip);
+     }
+}
+
+static void
+_txz_cb_hide(void *data)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     evas_hide(evas, l->data);
+	  }
+	evas_hide(evas, txz->clip);
+     }
+}
+
+static void
+_txz_cb_move(void *data, double x, double y)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   txz->l.x = x;
+   txz->l.y = y;
+   txz_adjust_txt(txz);
+}
+
+static void
+_txz_cb_resize(void *data, double w, double h)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   txz->l.w = w;
+   txz->l.h = h;
+   txz_adjust_txt(txz);
+}
+
+static void
+_txz_cb_raise(void *data)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     evas_raise(evas, l->data);
+	  }
+     }
+}
+
+static void
+_txz_cb_lower(void *data)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     evas_lower(evas, l->data);
+	  }
+     }
+}
+
+static void
+_txz_cb_set_layer(void *data, int lay)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     evas_set_layer(evas, l->data, lay);
+	  }
+     }
+}
+
+static void
+_txz_cb_get_min_size(void *data, double *minw, double *minh)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   *minw = 0;
+   *minh = 0;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     double w, h;
+	     
+	     evas_get_geometry(evas, l->data, NULL, NULL, &w, &h);
+	     if (w > *minw) *minw = w;
+	     *minh += h;
+	  }
+     }
+}
+
+static void
+_txz_cb_get_max_size(void *data, double *maxw, double *maxh)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   *maxw = 0;
+   *maxh = 0;
+     {
+	Evas_List l;
+	
+	for (l = txz->lines; l; l = l->next)
+	  {
+	     double w, h;
+	     
+	     evas_get_geometry(evas, l->data, NULL, NULL, &w, &h);
+	     if (w > *maxw) *maxw = w;
+	     *maxh += h;
+	  }
+     }
+}
+
+static void
+_txz_cb_title_down(void *_data, Ebits_Object _o,
+		   char *_c, int _b, int _x, int _y,
+		   int _ox, int _oy, int _ow, int _oh)
+{
+   Text_Zone *txz;
+   
+   txz = _data;
+   txz->move.go = 1;
+   txz->move.dx = _x - txz->x;
+   txz->move.dy = _y - txz->y;
+}
+
+static void
+_txz_cb_title_up(void *_data, Ebits_Object _o,
+		   char *_c, int _b, int _x, int _y,
+		   int _ox, int _oy, int _ow, int _oh)
+{
+   Text_Zone *txz;
+   
+   txz = _data;
+   txz->move.go = 0;
+}
+
+static void
+_txz_cb_title_move(void *_data, Ebits_Object _o,
+		   char *_c, int _b, int _x, int _y,
+		   int _ox, int _oy, int _ow, int _oh)
+{
+   Text_Zone *txz;
+   
+   txz = _data;
+   if (txz->move.go)
+     {
+	txz_move(txz, _x - txz->move.dx, _y - txz->move.dy);
+     }
+}
+
+void
+txz_adjust_txt(Text_Zone *txz)
+{
+   Evas_List l;
+   double ypos;
+   
+   ypos = txz->l.y + 4;
+   evas_move(evas, txz->clip, txz->l.x, txz->l.y);
+   evas_resize(evas, txz->clip, txz->l.w, txz->l.h);
+   for (l = txz->lines; l; l = l->next)
+     {  
+	Evas_Object o;
+        double tw, th;
+	double x;
+	char align;
+	
+	o = l->data;
+	align = (char)evas_get_data(evas, o, "align");
+	x = txz->l.x + 4;
+        tw = evas_get_text_width(evas, o);
+	th = evas_get_text_height(evas, o);
+	if (align == 'c') x = txz->l.x + 4 + ((txz->l.w - 8 - tw) / 2);
+	else if (align == 'r') x = txz->l.x + 4 + (txz->l.w - 8 - tw);
+	evas_move(evas, o, x, ypos);
+	ypos += th;
+     }
 }
 
 Text_Zone *
@@ -554,9 +778,40 @@ txz_new(double x, double y, char *text)
    
    txz->x = 0;
    txz->y = 0;
-   
-   txz->bg = evas_add_image_from_file(evas, PACKAGE_DATA_DIR"/data/setup/textzonebg.png");
-   evas_set_layer(evas, txz->bg, 9);
+
+   txz->clip = evas_add_rectangle(evas);
+   evas_set_color(evas, txz->clip, 255, 255, 255, 255);
+   txz->bg = ebits_load(PACKAGE_DATA_DIR"/data/setup/textzone.bits.db");
+   if (txz->bg)
+     {
+	ebits_add_to_evas(txz->bg, evas);
+	ebits_set_layer(txz->bg, 9);
+	ebits_set_named_bit_replace(txz->bg, "Contents",
+				    _txz_cb_show,
+				    _txz_cb_hide,
+				    _txz_cb_move,
+				    _txz_cb_resize,
+				    _txz_cb_raise,
+				    _txz_cb_lower,
+				    _txz_cb_set_layer,
+				    NULL,
+				    NULL,
+				    _txz_cb_get_min_size,
+				    _txz_cb_get_max_size,
+				    txz);
+	ebits_set_classed_bit_callback(txz->bg, "Title_Bar",
+				       CALLBACK_MOUSE_DOWN, 
+				       _txz_cb_title_down,
+				       txz);
+	ebits_set_classed_bit_callback(txz->bg, "Title_Bar",
+				       CALLBACK_MOUSE_UP, 
+				       _txz_cb_title_up,
+				       txz);
+	ebits_set_classed_bit_callback(txz->bg, "Title_Bar",
+				       CALLBACK_MOUSE_MOVE, 
+				       _txz_cb_title_move,
+				       txz);
+     }
    
    txz_text(txz, text);
    txz_move(txz, x, y);
@@ -569,7 +824,9 @@ txz_free(Text_Zone *txz)
 {
    Evas_List l;
    
-   evas_del_object(evas, txz->bg);
+   if (txz->bg)
+     ebits_free(txz->bg);
+   evas_del_object(evas, txz->clip);
    for (l = txz->lines; l; l = l->next)
      evas_del_object(evas, (Evas_Object)l->data);
    if (txz->lines) evas_list_free(txz->lines);
@@ -581,7 +838,8 @@ txz_show(Text_Zone *txz)
 {
    Evas_List l;
    
-   evas_show(evas, txz->bg);
+   if (txz->bg) 
+     ebits_show(txz->bg);
    for (l = txz->lines; l; l = l->next)
      evas_show(evas, (Evas_Object)l->data);
 }
@@ -591,7 +849,8 @@ txz_hide(Text_Zone *txz)
 {
    Evas_List l;
    
-   evas_hide(evas, txz->bg);
+   if (txz->bg)
+     ebits_hide(txz->bg);
    for (l = txz->lines; l; l = l->next)
      evas_hide(evas, (Evas_Object)l->data);
 }
@@ -600,20 +859,12 @@ void
 txz_move(Text_Zone *txz, double x, double y)
 {
    Evas_List l;
-   double dx, dy;
    
-   dx = x - txz->x;
-   dy = y - txz->y;
    txz->x = x;
    txz->y = y;
-   evas_move(evas, txz->bg, txz->x, txz->y);
-   for (l = txz->lines; l; l = l->next)
-     {
-	Evas_Object o;
-	
-	o = (Evas_Object)l->data;
-	evas_get_geometry(evas, o, &x, &y, NULL, NULL);
-	evas_move(evas, o, x + dx, y + dy);
+   if (txz->bg)
+     {	
+	ebits_move(txz->bg, txz->x, txz->y);
      }
 }
 
@@ -649,7 +900,7 @@ txz_text(Text_Zone *txz, char *text)
 	sz = atoi(size);
 	sz = 4 + (sz * 2);
 	o = evas_add_text(evas, "nationff", sz, str);
-	evas_set_layer(evas, o, 10);
+	evas_set_layer(evas, o, 9);
 	evas_set_color(evas, o, 0, 0, 0, 255);
 	txz->lines = evas_list_append(txz->lines, o);
 	tw = evas_get_text_width(evas, o);
@@ -661,9 +912,22 @@ txz_text(Text_Zone *txz, char *text)
 	  evas_move(evas, o, txz->x + 512 - tw, ypos);
 	else
 	  evas_move(evas, o, txz->x + ((512 - tw) / 2), ypos);
-	ypos += vadv;
+	evas_set_clip(evas, o, txz->clip);
+	evas_put_data(evas, o, "align", (void *)align[0]);
+	ypos += th;
 	
 	p = tok + 1;
+     }
+   if (txz->bg)
+     {
+	int minw, minh;
+	
+	ebits_get_real_min_size(txz->bg, &minw, &minh);	
+	ebits_resize(txz->bg, minw + 8, minh + 8);
+	ebits_hide(txz->bg);
+	ebits_show(txz->bg);
+	ebits_set_layer(txz->bg, 0);
+	ebits_set_layer(txz->bg, 9);
      }
 }
 
@@ -679,7 +943,7 @@ animate_logo(int v, void *data)
    o = (Evas_Object)data;
    if (v == 0) start_t = ecore_get_time();
    t = ecore_get_time() - start_t;
-   frame = (int)(t * 15);
+   frame = (int)(t * 25);
    frame = frame % 120;
    frame++;
    if      (frame < 10)   sprintf(buf, PACKAGE_DATA_DIR"/data/setup/anim/e00%i.png", frame);

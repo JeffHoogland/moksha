@@ -32,6 +32,7 @@ icon $SYSIC"/netscape.png" "netscape"
 icon $USRIC"/mozilla.png" "mozilla"
 icon $SYSIC"/gnome-irc.png" "xchat"
 icon $SYSIC"/gnome-gimp.png" "gimp"
+icon $SYSIC"/gnome-mixer.png" "/home/raster/.desktop/FixMix"
 icon $SYSIC"/mc/gnome-audio.png" "xmms"
 icon $USRIC"star_office.png" "/home/raster/.desktop/Office"
 
