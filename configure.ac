@@ -181,38 +181,6 @@ AC_PATH_GENERIC(ebg,, [
 ebg_libs=`ebg-config --libs`
 ebg_cflags=`ebg-config --cflags`
 
-dnl Check for ferite.
-AC_ARG_WITH(ferite,
-        [  --with-ferite=DIR          use ferite in <DIR>],
-        [CFLAGS="$CFLAGS -I$withval/include"
-         LIBS="-L$withval/lib $LIBS"])
-
-AC_PATH_GENERIC(ferite,, [
-    AC_SUBST(ferite_libs)
-	AC_SUBST(ferite_cflags)
-	AC_DEFINE(USE_FERITE)
-    ferite_libs=`ferite-config --libs`
-    ferite_cflags=`ferite-config --cflags`
-    AC_PATH_PROG(FEBUILDER, builder,,)
-    AC_SUBST(FEBUILDER)
-	ferite=yes],[
-	echo "Not building ferite support"
-	ferite=no])
-  
-AM_CONDITIONAL(USE_FERITE, test "x$ferite" = "xyes")
-
-AC_SUBST(CP_OPTIONS)
-
-if test "x$ferite" = "xyes"; then
-  save_dir=`pwd`
-  cd $packagesrcdir/src
-    echo -n "... building ferite binding c code ... ";
-    rm -f e_ferite_gen_*;
-    $FEBUILDER -m e_ferite_gen -i e_ferite_register -d -c e_ferite.fec;
-    echo "done.";
-  cd $save_dir
-fi
-
 CFLAGS=$imlib2_cflags
 LIBS=$imlib2_libs
 dnl Check for db loader.

@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-DISTCLEANFILES = e_ferite_gen_*
-
 ## Enable -DDEBUG for debugging messages, -DDEBUG_NEST
 ## for call tracing. Caution -- this will produce a *lot*
 ## of output!
@@ -9,35 +7,9 @@ DEBUGFLAGS = -W -Wall -g -DDEBUG #-DDEBUG_NEST
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
-	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ebg_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ebg_cflags@ $(DEBUGFLAGS)
 
-EXTRA_DIST = e_ferite.fec
-
-if USE_FERITE
-ferite_c = e_ferite_gen_core.c \
-	e_ferite_gen_header.h \
-	e_ferite_gen_e.c \
-	e_ferite_gen_Border.c \
-	e_ferite.h e_ferite.c
-
-BUILT_SOURCES = e_ferite_gen_core.c \
-	e_ferite_gen_header.h \
-	e_ferite_gen_e.c \
-	e_ferite_gen_Border.c 
-
-# Yes, blank because we don't want it to supply
-# it's own build rule.
-e_ferite_gen_e_c_SOURCES =
-
-e_ferite_gen_e.c: e_ferite.fec
-	rm -f e_ferite_gen_*
-	$(FEBUILDER) -m e_ferite_gen -i e_ferite_register -d -c e_ferite.fec
-
-E_FERITE_GEN_E_C = e_ferite_gen_e.c
-
-endif
-
-bin_PROGRAMS = enlightenment $(E_FERITE_GEN_E_C)
+bin_PROGRAMS = enlightenment 
 
 enlightenment_SOURCES = \
 	actions.h actions.c \
@@ -55,7 +27,6 @@ enlightenment_SOURCES = \
 	focus.h focus.c \
 	file.h file.c \
 	fs.h fs.c \
-	$(ferite_c) \
 	guides.h guides.c \
 	globals.h globals.c \
 	icccm.h icccm.c \
@@ -84,4 +55,4 @@ enlightenment_SOURCES = \
 	e_view_look.h e_view_look.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ -lm -lc $(INTLLIBS)
