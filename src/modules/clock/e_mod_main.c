@@ -48,7 +48,6 @@ init(E_Module *module)
      }
    /* actually init clock */
    clock = _clock_init(module);
-   module->config_menu = clock->config_menu;
    return clock;
 }
 
@@ -119,6 +118,7 @@ _clock_init(E_Module *module)
     */
 
    _clock_config_menu_new(clock);
+   module->config_menu = clock->config_menu;
 
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
