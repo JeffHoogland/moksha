@@ -65,6 +65,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* add cmd-line options to fake xinerama screens
 * java apps seem to have a hard time if we dont pretend to be kwin (see e_hints.c) - get this stuff upstream to sun and get things fixed in java.
 * dropshadow is not optimal and has extreme edge-case bugs
 * gadget containers (shelves)

@@ -42,15 +42,17 @@ struct _Pager
 
 struct _Pager_Face
 {
-   E_Zone       *zone;
-   Evas_List    *desks;
-   
-   E_Menu       *menu;
-   Evas         *evas;
-   Evas_Object  *base, *screen;
-
-   Evas_Coord    fx, fy, fw, fh;
    E_Gadman_Client *gmc;
+   E_Menu          *menu;
+   Evas            *evas;
+   
+   E_Zone          *zone;
+   Evas_List       *desks;
+   
+   Evas_Object  *pager_object;
+   Evas_Object  *table_object;
+   
+   Evas_Coord    fx, fy, fw, fh;
 
    /* Current nr. of desktops */
    int           xnum, ynum;
@@ -76,7 +78,9 @@ struct _Pager_Desk
    Pager_Face  *face;
    Evas_List   *wins;
 
-   Evas_Object *obj;
+   Evas_Object *desk_object;
+   Evas_Object *layout_object;
+   Evas_Object *event_object;
    int          xpos, ypos;
 
    int          current : 1;
