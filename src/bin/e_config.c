@@ -82,7 +82,7 @@ e_config_init(void)
 	e_config->border_shade_transition = E_TRANSITION_DECELERATE;
 	e_config->border_shade_speed = 3000.0;
 	e_config->framerate = 30.0;
-	e_config->image_cache = 2048;
+	e_config->image_cache = 4096;
 	e_config->font_cache = 512;
 	e_config->zone_desks_x_count = 4;
 	e_config->zone_desks_y_count = 1;
