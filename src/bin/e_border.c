@@ -1231,6 +1231,7 @@ _e_border_eval(E_Border *bd)
 	char buf[4096];
 	Evas_Coord cx, cy, cw, ch;
 	int l, r, t, b;
+	int ok;
 
 	if (!bd->client.border.name)
 	  {
@@ -1253,17 +1254,27 @@ _e_border_eval(E_Border *bd)
 	path = e_path_find(path_themes, "default.eet");
 	snprintf(buf, sizeof(buf), "widgets/border/%s/border", 
 		 bd->client.border.name);
-        edje_object_file_set(o, path, buf);
-	edje_object_part_text_set(o, "title_text", 
-				  bd->client.icccm.title);
-	printf("SET TITLE2 %s\n", bd->client.icccm.title);
-	evas_object_resize(o, 1000, 1000);
-	edje_object_calc_force(o);
-	edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
-	l = cx;
-	r = 1000 - (cx + cw);
-	t = cy;
-	b = 1000 - (cy + ch);
+        ok = edje_object_file_set(o, path, buf);
+	if (ok)
+	  {
+	     edje_object_part_text_set(o, "title_text", 
+				       bd->client.icccm.title);
+	     printf("SET TITLE2 %s\n", bd->client.icccm.title);
+	     evas_object_resize(o, 1000, 1000);
+	     edje_object_calc_force(o);
+	     edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
+	     l = cx;
+	     r = 1000 - (cx + cw);
+	     t = cy;
+	     b = 1000 - (cy + ch);
+	  }
+	else
+	  {
+	     l = 0;
+	     r = 0;
+	     t = 0;
+	     b = 0;
+	  }
 	bd->client_inset.l = l;
 	bd->client_inset.r = r;
 	bd->client_inset.t = t;
