@@ -1,9 +1,15 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
 typedef struct _Config       Config;
+typedef struct _Config_Face  Config_Face;
 typedef struct _Battery      Battery;
 typedef struct _Battery_Face Battery_Face;
+
+typedef struct _Status       Status;
 
 #define CHECK_NONE 0
 #define CHECK_LINUX_ACPI 1
@@ -13,18 +19,27 @@ struct _Config
 {
    double poll_time;
    int alarm;
+   Evas_List *faces;
+};
+
+struct _Config_Face
+{
+   unsigned char enabled;
 };
 
 struct _Battery
 {
-   E_Menu       *config_menu; 
-   E_Menu       *config_menu_alarm;
-   E_Menu       *config_menu_poll;
-   Battery_Face *face;
-   
-   E_Config_DD *conf_edd;
+   E_Menu       *config_menu;
+   Evas_List *faces;
+
    Config      *conf;
    int alarm_triggered;
+
+   int                  battery_check_mode;
+   Ecore_Timer         *battery_check_timer;
+   int                  battery_prev_drain;
+   int                  battery_prev_ac;
+   int                  battery_prev_battery;
 };
 
 struct _Battery_Face
@@ -32,17 +47,38 @@ struct _Battery_Face
    Battery     *bat;
    E_Container *con;
    Evas        *evas;
-   
+
    Evas_Object *bat_object;
    Evas_Object *event_object;
-   
-   int                  battery_check_mode;
-   Ecore_Timer         *battery_check_timer;
-   int                  battery_prev_drain;
-   int                  battery_prev_ac;
-   int                  battery_prev_battery;
-   
+
    E_Gadman_Client *gmc;
+};
+
+#define BATTERY_STATE_NONE 0
+#define BATTERY_STATE_CHARGING 1
+#define BATTERY_STATE_DISCHARGING 2
+
+struct _Status
+{
+   /* Low battery */
+   unsigned char alarm;
+   /* Is there a battery? */
+   unsigned char has_battery;
+   /* charging, discharging, none */
+   unsigned char state;
+   /* Battery level */
+   double level;
+   /* Text */
+   /* reading == % left */
+   char *reading;
+   /* time == time left to empty / full */
+   char *time;
+   /* Signals */
+   /* charge == (ac == on), (fade_clip == default) */
+   /* pulsestop == (pulse_clip == default) */
+   /* discharge == (ac == off), (fade_clip == default) */
+   /* pulse == (pulse_clip == faded), .... */
+   /* unknown == (fade_clip == faded) */
 };
 
 EAPI void *init     (E_Module *m);
