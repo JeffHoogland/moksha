@@ -125,7 +125,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_pager_window.png";
-	       border: 4 4 4 4;
+	       border: 4 7 4 1;
 	    }
 	 }
       }

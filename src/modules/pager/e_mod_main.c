@@ -1,3 +1,7 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+
 #include "e.h"
 #include "e_mod_main.h"
 
@@ -16,6 +20,8 @@ static void    _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event
 static void    _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int     _pager_cb_event_container_resize(void *data, int type, void *event);
+
+static int     _pager_cb_event_border_events(void *data, int type, void *event);
 
 static void    _pager_reconfigure(Pager *e);
 static void    _pager_refresh(Pager *e);
@@ -166,6 +172,11 @@ _pager_init(E_Module *m)
    e->ev_handler_container_resize =
    ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
                            _pager_cb_event_container_resize, e);
+
+   ecore_event_handler_add(E_EVENT_BORDER_RESIZE,
+			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_MOVE,
+			   _pager_cb_event_border_events, e);
    
    _pager_reconfigure(e);
    return e;
@@ -297,6 +308,11 @@ _pager_refresh(Pager *e)
 	    {
 	       Evas_Coord winx, winy, winw, winh;
 	       border = (E_Border *) clients->data;
+	       if (border->iconic)
+		 {
+		    clients = clients->next;
+		    continue;
+		 }
 	       winx = (Evas_Coord) ((double) border->x) * scalex;
 	       winy = (Evas_Coord) ((double) border->y) * scaley;
 	       winw = (Evas_Coord) ((double) border->w) * scalex;
@@ -480,5 +496,15 @@ _pager_cb_event_container_resize(void *data, int type, void *event)
    
    e = data;
    _pager_reconfigure(e);
+   return 1;
+}
+
+static int
+_pager_cb_event_border_events(void *data, int type, void *event)
+{
+   Pager *e;
+
+   e = data;
+   _pager_refresh(e);
    return 1;
 }
