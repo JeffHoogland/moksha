@@ -361,7 +361,7 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_output_viewport_get(p->evas, NULL, NULL, &ww, &hh);
    /* if we clicked, not moved - FIXME, this is a hack */
    newx = (double)p->fx / (double)(ww - p->fw);
-   newy = (double)p->fy / (double)(hh - p->fy);
+   newy = (double)p->fy / (double)(hh - p->fh);
 printf("saving %g, %g\n", newx, newy);
    if (p->move && (p->conf->x == newx) && (p->conf->y == newy))
      {
