@@ -754,6 +754,7 @@ void e_desktops_hide(E_Desktop *d);
 int e_desktops_get_num(void);
 E_Desktop * e_desktops_get(int d);
 int e_desktops_get_current(void);
+void e_desktops_goto(int num);
 void e_desktops_update(E_Desktop *desk);
 
 void e_resist_border(E_Border *b);

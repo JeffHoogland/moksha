@@ -4,6 +4,7 @@ static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
 static int       screen_w, screen_h;
 static int       current_desk = 0;
+static int       current_desk_x = 0;
 
 static void e_idle(void *data);
 
@@ -266,4 +267,19 @@ int
 e_desktops_get_current(void)
 {
    return current_desk;
+}
+
+void
+e_desktops_goto(int d)
+{
+   int dx;
+   E_Desktop *desk;
+   
+   dx = d - current_desk_x;
+   desk = e_desktops_get(0);
+   if (desk)
+     {
+	e_desktops_scroll(desk, -(dx * desk->real.w), 0);
+     }
+   current_desk_x = d;
 }

@@ -177,6 +177,70 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 0
 edb_ed $DB add "/actions/"$NUM"/key"       str "m"
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "0"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F1"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "1"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F2"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "2"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F3"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "3"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F4"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "4"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F5"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "5"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F6"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "6"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F7"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop"
+edb_ed $DB add "/actions/"$NUM"/params"    str "7"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "F8"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/count"       int $NUM
 
 # basic settings

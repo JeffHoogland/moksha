@@ -55,6 +55,8 @@ static void e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, in
 
 static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
+static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+
 static void
 _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o)
 {
@@ -467,6 +469,7 @@ e_actions_init(void)
    e_action_add_proto("Window_Max_Size", e_act_max_start, NULL, NULL);
    e_action_add_proto("Winodw_Snap", e_act_snap_start, NULL, NULL);
    e_action_add_proto("Window_Zoom", e_act_zoom_start, NULL, NULL);
+   e_action_add_proto("Desktop", e_act_desk_start, NULL, NULL);
 }
 
 
@@ -1231,6 +1234,23 @@ e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   return;
+   UN(a);
+   UN(data);
+   UN(x);
+   UN(y);
+   UN(rx);
+   UN(ry);
+}
+
+
+static void 
+e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+{
+   int desk = 0;
+   
+   if (a->params) desk = atoi(a->params);
+   e_desktops_goto(desk);
    return;
    UN(a);
    UN(data);
