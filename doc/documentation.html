@@ -159,7 +159,7 @@ screen displayed while Enlightenment starts up.</FONT></FONT></P>
 <P CLASS="western" STYLE="margin-left: 4.73pc"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">The
 src directory contains 3 main repositories of code. They are bin, lib
 and modules. The bin directory contains all the source code for the
-WM itself and any primary executables it uses curing execution. The
+WM itself and any primary executables it uses during execution. The
 modules directory contains all plug-in modules that E17 can load and
 unload dynamically at runtime, allowing the WM to be extended even
 after it has been compiled and installed by users, other developers
@@ -195,7 +195,7 @@ root window, which is not normally possible to do with the real root
 window.</FONT></FONT></P>
 <P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Managers</B></FONT></FONT></P>
 <P CLASS="western" STYLE="margin-left: 4.73pc"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Managers
-are the basic unit of window management. One Manager object is create
+are the basic unit of window management. One Manager object is created
 per root window to manage. For more people, even if they run Xinerama
 across multiple screens, there is only 1 root window, and thus E17
 will only ever have 1 Manager object. If the user runs traditional
@@ -232,9 +232,9 @@ wallpaper scale, align, where and how, if they tile, overlay,
 underlay each other, and how.</FONT></FONT></P>
 <P CLASS="western" STYLE="margin-left: 4.73pc"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">Currently
 the Container only responds to configuration change events to change
-the background, which needs to be a path to a Edje .eet file that
+the background, which needs to be a path to an Edje .eet file that
 contains a Edje group of the key &ldquo;desktop/background&rdquo;. It
-will load this group, if present in the file as the background. What
+will load this group, if present in the file, as the background. What
 it needs is a configuration tool that can browse the filing system
 and directories for .eet files that are like this, display thumbnails
 and previews, allow a user to select a new background and maybe
@@ -409,11 +409,11 @@ is not implemented yet.</FONT></FONT></P>
 Dialogs</B></FONT></FONT></P>
 <P CLASS="western" STYLE="margin-left: 4.73pc"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
 displays very basic error dialogs right now, either as text in the
-console inf E17 isn't ready to run graphically yet, This needs to be
-made more robust, so it can display errors if it cannot find the font
-and images for the basic error dialog. It should also be expanded to
-support fully themed dialogs if the theme loads properly and properly
-supports theming of dialogs, so dialogs look good.</FONT></FONT></P>
+console if E17 isn't ready to run graphically yet, or as text in a graphical
+dialog box.  This needs to be made more robust, so it can display errors if it
+cannot find the font and images for the basic error dialog. It should also be
+expanded to support fully themed dialogs if the theme loads properly and
+properly supports theming of dialogs, so dialogs look good.</FONT></FONT></P>
 <P CLASS="western"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt"><B>Initialization
 Splash Screen</B></FONT></FONT></P>
 <P CLASS="western" STYLE="margin-left: 4.73pc"><FONT FACE="Bitstream Vera Sans"><FONT SIZE=1 STYLE="font-size: 8pt">This
