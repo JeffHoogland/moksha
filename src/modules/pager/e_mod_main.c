@@ -755,8 +755,14 @@ _pager_cb_event_border_resize(void *data, int type, void *event)
    
    e = data;
    ev = event;
-   win = _pager_window_find(e, ev->border);
-   _pager_window_move(e, win);
+   if((win = _pager_window_find(e, ev->border)))
+     {
+	_pager_window_move(e, win);
+     }
+   else
+     {
+	printf("ERROR: event_border_resize %p:%p\n",event, ev->border);
+     }
    return 1;
 }
 
@@ -769,8 +775,14 @@ _pager_cb_event_border_move(void *data, int type, void *event)
 
    e = data;
    ev = event;
-   win = _pager_window_find(e, ev->border);
-   _pager_window_move(e, win);
+   if((win = _pager_window_find(e, ev->border)))
+     {
+	_pager_window_move(e, win);
+     }
+   else
+     {
+	printf("ERROR: event_border_move %p:%p\n",event, ev->border);
+     }
    return 1;
 }
 
