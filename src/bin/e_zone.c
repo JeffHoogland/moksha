@@ -8,6 +8,7 @@
  */
 
 static void _e_zone_free(E_Zone *zone);
+static void _e_zone_cb_menu_end(void *data, E_Menu *m);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -207,6 +208,12 @@ _e_zone_free(E_Zone *zone)
 }
 
 static void
+_e_zone_cb_menu_end(void *data, E_Menu *m)
+{
+   e_object_del(E_OBJECT(m));
+}
+
+static void
 _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Zone *zone;
@@ -221,6 +228,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 	E_Menu *m;
 	
 	m = e_int_menus_main_new();
+	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
 	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(zone->container);
@@ -232,6 +240,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 	m = e_int_menus_clients_new();
 	/* FIXME: this is a bit of a hack... setting m->con - bad hack */
 	m->zone = zone;
+	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
 	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(zone->container);
@@ -240,7 +249,8 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
      {
 	E_Menu *m;
 	
-	m = e_int_menus_favorite_apps_new(1);
+	m = e_int_menus_favorite_apps_new();
+	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
 	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(zone->container);

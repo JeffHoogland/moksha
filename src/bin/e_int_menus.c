@@ -15,13 +15,13 @@ struct _Main_Data
 };
 
 /* local subsystem functions */
-static void _e_int_menus_main_end            (void *data, E_Menu *m);
+static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan           (E_Menu *m);
 static void _e_int_menus_apps_start          (void *data, E_Menu *m);
-static void _e_int_menus_apps_end            (void *data, E_Menu *m);
+static void _e_int_menus_apps_del_hook       (void *obj);
 static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
@@ -45,10 +45,10 @@ e_int_menus_main_new(void)
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
    dat->menu = m;
+   e_object_data_set(E_OBJECT(m), dat);   
+   e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);
    
-   e_menu_post_deactivate_callback_set(m, _e_int_menus_main_end, dat);
-   
-   subm = e_int_menus_favorite_apps_new(0);
+   subm = e_int_menus_favorite_apps_new();
    dat->apps = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Favorite Applications");
@@ -110,7 +110,7 @@ e_int_menus_main_new(void)
 }
 
 E_Menu *
-e_int_menus_apps_new(char *dir, int top)
+e_int_menus_apps_new(char *dir)
 {
    E_Menu *m;
    E_App *a;
@@ -119,11 +119,8 @@ e_int_menus_apps_new(char *dir, int top)
    a = e_app_new(dir, 0);
    e_object_data_set(E_OBJECT(m), a);
    e_menu_pre_activate_callback_set(m, _e_int_menus_apps_start, NULL);
-   if (top)
-     {
-	e_menu_post_deactivate_callback_set(m, _e_int_menus_apps_end, NULL);
-	e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook);
-     }
+   e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_apps_del_hook);
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_apps_free_hook);
    return m;
 }
 
@@ -139,7 +136,7 @@ e_int_menus_desktops_new(void)
    
 
 E_Menu *
-e_int_menus_favorite_apps_new(int top)
+e_int_menus_favorite_apps_new(void)
 {
    E_Menu *m;
    char buf[4096];
@@ -149,7 +146,7 @@ e_int_menus_favorite_apps_new(int top)
    if (homedir)
      {
 	snprintf(buf, sizeof(buf), "%s/.e/e/applications/favorite", homedir);
-	m = e_int_menus_apps_new(buf, top);
+	m = e_int_menus_apps_new(buf);
 	free(homedir);
 	return m;
      }
@@ -168,17 +165,21 @@ e_int_menus_clients_new(void)
 
 /* local subsystem functions */
 static void
-_e_int_menus_main_end(void *data, E_Menu *m)
+_e_int_menus_main_del_hook(void *obj)
 {
    Main_Data *dat;
+   E_Menu *m;
    
-   dat = data;
-   e_object_del(E_OBJECT(dat->apps));
-   e_object_del(E_OBJECT(dat->modules));
-   e_object_del(E_OBJECT(dat->desktops));
-   e_object_del(E_OBJECT(dat->clients));
-   e_object_del(E_OBJECT(m));
-   free(dat);
+   m = obj;
+   dat = e_object_data_get(E_OBJECT(obj));
+   if (dat)
+     {
+	e_object_del(E_OBJECT(dat->apps));
+	e_object_del(E_OBJECT(dat->modules));
+	e_object_del(E_OBJECT(dat->desktops));
+	e_object_del(E_OBJECT(dat->clients));
+	free(dat);
+     }
 }
 
 static void
@@ -235,7 +236,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	     
 	     snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
 	     e_menu_item_icon_edje_set(mi, buf, "icon");
-	     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path, 0));
+	     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
 	     app_count++;
 	  }
      }
@@ -254,19 +255,19 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
 }
 
 static void
-_e_int_menus_apps_end(void *data, E_Menu *m)
+_e_int_menus_apps_del_hook(void *obj)
 {
+   E_Menu *m;
    Evas_List *l;
    
+   m = obj;
    for (l = m->items; l; l = l->next)
      {
 	E_Menu_Item *mi;
 	
 	mi = l->data;
-	if (mi->submenu)
-	  _e_int_menus_apps_end(NULL, mi->submenu);
+	if (mi->submenu) e_object_del(mi->submenu);
      }
-   e_object_del(E_OBJECT(m));
 }
 
 static void

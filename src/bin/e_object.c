@@ -45,6 +45,7 @@ e_object_del(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    obj->deleted = 1;
+   if (obj->del_att_func) obj->del_att_func(obj);
    if (obj->del_func) obj->del_func(obj);
    e_object_unref(obj);
 }
@@ -67,7 +68,7 @@ void
 e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
-   if (obj->func) obj->func(obj);
+   if (obj->free_att_func) obj->free_att_func(obj);
    obj->magic = E_OBJECT_MAGIC_FREED;
    obj->cleanup_func(obj);
 }
@@ -217,7 +218,14 @@ void
 e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj))
 {
    E_OBJECT_CHECK(obj);
-   obj->func = func;
+   obj->free_att_func = func;
+}
+
+void
+e_object_del_attach_func_set(E_Object *obj, void (*func) (void *obj))
+{
+   E_OBJECT_CHECK(obj);
+   obj->del_att_func = func;
 }
 
 #ifdef OBJECT_PARANOIA_CHECK
