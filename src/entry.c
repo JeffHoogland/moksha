@@ -2,12 +2,38 @@
 
 static Evas_List entries;
 
+static void e_clear_selection(Eevent * ev);
+static void e_paste_request(Eevent * ev);
+
 static void e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_realize(E_Entry *entry);
 static void e_entry_unrealize(E_Entry *entry);
 static void e_entry_configure(E_Entry *entry);
+
+static void
+e_clear_selection(Eevent * ev)
+{
+   Ev_Clear_Selection *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = entries; l; l = l->next)
+     {
+	E_Entry *entry;
+	
+	entry = l->data;
+	if (entry->selection_win == e->win)
+	  {
+	     e_window_destroy(entry->selection_win);
+	     entry->selection_win = 0;
+	     entry->select.start = -1;
+	     entry->select.length = 0;
+	     e_entry_configure(entry);	     
+	  }
+     }
+}
 
 static void
 e_paste_request(Eevent * ev)
@@ -174,7 +200,7 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     str2[len] = 0;
 	     printf(">%s<\n", str2);
 	     if (entry->selection_win) e_window_destroy(entry->selection_win);
-	     entry->paste_win = e_selection_set(str2);
+	     entry->selection_win = e_selection_set(str2);
 	  }
 	e_entry_configure(entry);   
      }
@@ -278,6 +304,7 @@ void
 e_entry_init(void)
 {
    e_event_filter_handler_add(EV_PASTE_REQUEST,               e_paste_request);
+   e_event_filter_handler_add(EV_CLEAR_SELECTION,             e_clear_selection);
 }
 
 void
@@ -546,7 +573,6 @@ e_entry_set_text(E_Entry *entry, const char *text)
    IF_FREE(entry->buffer);
    entry->buffer = strdup(text);
    evas_set_text(entry->evas, entry->text, entry->buffer);
-   printf("%i %i (%s)\n", entry->cursor_pos, strlen(entry->buffer), entry->buffer);
    if (entry->cursor_pos > strlen(entry->buffer))
      entry->cursor_pos = strlen(entry->buffer);
    e_entry_configure(entry);
