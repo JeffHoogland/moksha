@@ -1,4 +1,5 @@
 #include "e.h"
+#include "config.h"
 
 /* TODO List:
  * 

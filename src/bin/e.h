@@ -24,8 +24,6 @@
 #include <Eet.h>
 #include <Edje.h>
 
-#include "config.h"
-
 #ifdef EAPI
 #undef EAPI
 #endif
