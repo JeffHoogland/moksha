@@ -440,11 +440,17 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		D("building iconified windows menu\n");
 		buildmenu = e_build_menu_new_from_iconified_borders();
 	     }
+  	     if (buildmenu && buildmenu->changed)
+	     {
+     		D("buildmenu changed! rebuild!\n");
+		e_build_menu_iconified_borders_rebuild(buildmenu);
+	     }
 	     if (buildmenu)
 	     {
 		static E_Menu *menu = NULL;
 		menu = buildmenu->menu;
-		
+
+
 		if (menu)
 		{
 		   D("showing iconified window menu\n");

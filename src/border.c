@@ -1218,7 +1218,9 @@ e_border_cleanup(E_Border *b)
    D_ENTER;
 
    e_match_save_props(b);
-   
+   D("before notify\n"); 
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_DELETE);
+   D("after notify\n");
    while (b->menus)
      {
 	E_Menu *m;
