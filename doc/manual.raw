@@ -175,6 +175,8 @@ e17
    libs
      |___ ebits          * A library for "bits", graphical layout structures.
      |
+     |___ ecore          * An X Windows wrapper and event loop library.
+     |
      |___ edb            * A database library based on Berkeley DB.
      |
      |___ etox             A text layout engine.
@@ -209,6 +211,9 @@ e17
 	  </listitem>
 	  <listitem>
 	    <para>Edb</para>
+	  </listitem>
+	  <listitem>
+	    <para>Ecore</para>
 	  </listitem>
 	  <listitem>
 	    <para>Efsd</para>
