@@ -36,8 +36,13 @@ e_manager_init(void)
 int
 e_manager_shutdown(void)
 {
-   while (managers)
-     e_object_del(E_OBJECT(managers->data));
+   Evas_List *l, *tmp;
+   for (l = managers; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
    return 1;
 }
 
@@ -283,6 +288,8 @@ e_manager_container_number_get(E_Manager *man, int num)
 static void
 _e_manager_free(E_Manager *man)
 {
+   Evas_List *l, *tmp;
+
    while (man->handlers)
      {
 	Ecore_Event_Handler *h;
@@ -291,8 +298,12 @@ _e_manager_free(E_Manager *man)
 	man->handlers = evas_list_remove_list(man->handlers, man->handlers);
 	ecore_event_handler_del(h);
      }
-   while (man->containers)
-     e_object_del(E_OBJECT(man->containers->data));
+   for (l = man->containers; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
    ecore_x_window_del(man->win);
    managers = evas_list_remove(managers, man);   
    free(man);
