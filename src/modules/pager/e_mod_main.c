@@ -23,9 +23,6 @@ static void    _pager_refresh(Pager *e);
 #define         PAGER_MIN_W 10
 #define         PAGER_MIN_H 7
 
-
-Evas_List     *_pager_desks;
-
 /* public module routines. all modules must have these */
 void *
 init(E_Module *m)
@@ -180,6 +177,23 @@ _pager_shutdown(Pager *e)
    free(e->conf);
    E_CONFIG_DD_FREE(e->conf_edd);
 
+   evas_object_free(e->base);
+   evas_object_free(e->screen);
+
+   while(e->desks)
+     {
+	evas_object_hide(e->desks->data);
+        evas_object_free(e->desks->data);
+        e->desks = evas_list_remove_list(e->desks, e->desks);
+     }
+
+   while(e->wins)
+     {
+	evas_object_hide(e->wins->data);
+        evas_object_free(e->wins->data);
+        e->wins = evas_list_remove_list(e->wins, e->wins);
+     }
+
    ecore_event_handler_del(e->ev_handler_container_resize);   
    free(e);
 }
@@ -225,9 +239,13 @@ _pager_refresh(Pager *e)
 {
    E_Zone      *zone;
    E_Desk      *desk, *current;
-   Evas_Object *desk_obj;
+   E_Border     *border;
+   Evas_List   *clients;
+
+   Evas_Object *desk_obj, *win_obj;
    int          desks_x, desks_y, x, y;
-   Evas_Coord   px, py, pw, ph;
+   Evas_Coord   px, py, pw, ph, ww, hh;
+   double       scalex, scaley;
 
    evas_object_resize(e->base, e->fw, e->fh);
    evas_object_move(e->base, e->fx, e->fy);
@@ -237,13 +255,22 @@ _pager_refresh(Pager *e)
    pw = e->fw / (double) desks_x;
    ph = e->fh / (double) desks_y;
 
+   evas_output_viewport_get(e->evas, NULL, NULL, &ww, &hh);
+   scalex = (double) pw / ww;
+   scaley = (double) ph / hh;
    evas_object_resize(e->screen, pw, ph);
 
-   while(_pager_desks)
+   while(e->desks)
      {
-	evas_object_hide(_pager_desks->data);
-	evas_object_free(_pager_desks->data);
-	_pager_desks = evas_list_remove_list(_pager_desks, _pager_desks);
+	evas_object_hide(e->desks->data);
+	evas_object_free(e->desks->data);
+	e->desks = evas_list_remove_list(e->desks, e->desks);
+     }
+   while(e->wins)
+     {
+	evas_object_hide(e->wins->data);
+        evas_object_free(e->wins->data);
+        e->wins = evas_list_remove_list(e->wins, e->wins);
      }
 
    current = e_desk_current_get(zone);
@@ -251,8 +278,10 @@ _pager_refresh(Pager *e)
      for (y = 0; y < desks_y; y++)
        {
 	  desk = e_desk_at_xy_get(zone, x, y);
+	  px = e->fx + (x * pw);
+	  py = e->fy + (y * ph);
 	  if (desk == current)
-	    evas_object_move(e->screen, e->fx + (x * pw), e->fy + (y * ph));
+	    evas_object_move(e->screen, px, py);
 	  desk_obj = edje_object_add(e->evas);
 	  edje_object_file_set(desk_obj,
 			       /* FIXME: "default.eet" needs to come from conf */
@@ -260,10 +289,35 @@ _pager_refresh(Pager *e)
 			       "modules/pager/desk");
 	  evas_object_pass_events_set(desk_obj, 1);
 	  evas_object_resize(desk_obj, pw, ph);
-	  evas_object_move(desk_obj, e->fx + (x * pw), e->fy + (y * ph));
+	  evas_object_move(desk_obj, px, py);
 
 	  evas_object_show(desk_obj);
-	  _pager_desks = evas_list_append(_pager_desks, desk_obj);
+	  e->desks = evas_list_append(e->desks, desk_obj);
+
+	  clients = desk->clients;
+	  while (clients)
+	    {
+	       Evas_Coord winx, winy, winw, winh;
+	       border = (E_Border *) clients->data;
+
+	       winx = (Evas_Coord) ((double) border->x) * scalex;
+	       winy = (Evas_Coord) ((double) border->y) * scaley;
+	       winw = (Evas_Coord) ((double) border->w) * scalex;
+	       winh = (Evas_Coord) ((double) border->h) * scaley;
+	       win_obj = edje_object_add(e->evas);
+	       edje_object_file_set(win_obj,
+				    /* FIXME: "default.eet" needs to come from conf */
+				    e_path_find(path_themes, "default.eet"),
+				    "modules/pager/window");
+	       evas_object_pass_events_set(win_obj, 1);
+	       evas_object_resize(win_obj, winw, winh);
+	       evas_object_move(win_obj, px + winx, py + winy);
+
+	       evas_object_show(win_obj);
+	       e->wins = evas_list_append(e->wins, win_obj);
+
+	       clients = clients->next;
+	    }
        }
 }
 
@@ -304,9 +358,11 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    p = data;
 
+   evas_output_viewport_get(p->evas, NULL, NULL, &ww, &hh);
    /* if we clicked, not moved - FIXME, this is a hack */
    newx = (double)p->fx / (double)(ww - p->fw);
    newy = (double)p->fy / (double)(hh - p->fy);
+printf("saving %g, %g\n", newx, newy);
    if (p->move && (p->conf->x == newx) && (p->conf->y == newy))
      {
 	int     x, y, w, h, xcount, ycount, cx, cy;
@@ -339,7 +395,6 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    p->move = 0;
    p->resize = 0;
 
-   evas_output_viewport_get(p->evas, NULL, NULL, &ww, &hh);
    p->conf->width = p->fw;
    p->conf->height = p->fh;
    p->conf->x = newx;
