@@ -225,7 +225,6 @@ e_entry_configure(E_Entry *entry)
    evas_resize(entry->evas, entry->clip_box, entry->w, entry->h);
    evas_move(entry->evas, entry->event_box, entry->x, entry->y);
    evas_resize(entry->evas, entry->event_box, entry->w, entry->h);
-   evas_move(entry->evas, entry->text, entry->x, entry->y);
    if ((entry->buffer) && (entry->buffer[0] != 0) && (entry->focused))
      {
 	int tx, ty, tw, th;
@@ -241,16 +240,23 @@ e_entry_configure(E_Entry *entry)
 	     tx += tw;
 	     tw = entry->end_width;
 	  }
-	evas_move(entry->evas, entry->cursor, entry->x + tx, entry->y + ty);
+	if (tx + tw + entry->scroll_pos > entry->w)
+	  entry->scroll_pos = entry->w - tx - tw;
+	else if (tx + entry->scroll_pos < 0)
+	  entry->scroll_pos = -tx;
+	evas_move(entry->evas, entry->cursor, entry->x + tx + entry->scroll_pos, entry->y + ty);
 	evas_resize(entry->evas, entry->cursor, tw, th);
 	evas_show(entry->evas, entry->cursor);
      }
    else if (entry->focused)
      {
-	int th;
+	int tx, tw, th;
 	
+	entry->scroll_pos = 0;
+	tw = 4;
+	tx = 0;
 	th = evas_get_text_height(entry->evas, entry->text);
-	evas_move(entry->evas, entry->cursor, entry->x, entry->y);
+	evas_move(entry->evas, entry->cursor, entry->x + tx + entry->scroll_pos, entry->y);
 	evas_resize(entry->evas, entry->cursor, entry->end_width, th);
 	evas_show(entry->evas, entry->cursor);
      }
@@ -258,6 +264,7 @@ e_entry_configure(E_Entry *entry)
      {
 	evas_hide(entry->evas, entry->cursor);
      }
+   evas_move(entry->evas, entry->text, entry->x + entry->scroll_pos, entry->y);
    if (entry->select.start >= 0)
      {
 	int x1, y1, x2, tw, th;
@@ -270,7 +277,7 @@ e_entry_configure(E_Entry *entry)
 	     evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 2, &x2, NULL, &tw, &th);
 	     tw += entry->end_width;
 	  }
-	evas_move(entry->evas, entry->selection, entry->x + x1, entry->y + y1);
+	evas_move(entry->evas, entry->selection, entry->x + x1 + entry->scroll_pos, entry->y + y1);
 	evas_resize(entry->evas, entry->selection, x2 + tw - x1, th);
 	evas_show(entry->evas, entry->selection);
      }
