@@ -469,7 +469,7 @@ _battery_cb_check(void *data)
      {
 	if (e_file_is_dir("/proc/acpi"))
 	  ef->battery_check_mode = CHECK_LINUX_ACPI;
-	else if (e_file_is_dir("/proc/apm"))
+	else if (e_file_exists("/proc/apm"))
 	  ef->battery_check_mode = CHECK_LINUX_APM;
      }
    switch (ef->battery_check_mode)
