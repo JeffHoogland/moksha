@@ -1,6 +1,7 @@
 #include "debug.h"
 #include "fs.h"
 #include "exec.h"
+#include "util.h"
 
 static EfsdConnection     *ec = NULL;
 static Evas_List           fs_handlers = NULL;

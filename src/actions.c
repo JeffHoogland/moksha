@@ -108,6 +108,10 @@ static void e_act_desk_start (E_Object *object, E_Action *a, void *data,
 static void e_act_raise_next_start (E_Object *object, E_Action *a, void *data,
 				    int x, int y, int rx, int ry);
 
+static void e_act_desk_rel_start (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry);
+
+
 static void
 e_action_find(char *action, E_Action_Type act, int button,
 	      char *key, Ecore_Event_Key_Modifiers mods, E_Object *object)
@@ -622,6 +626,7 @@ e_action_init(void)
    e_action_add_impl("Winodw_Snap", e_act_snap_start, NULL, NULL);
    e_action_add_impl("Window_Zoom", e_act_zoom_start, NULL, NULL);
    e_action_add_impl("Desktop", e_act_desk_start, NULL, NULL);
+   e_action_add_impl("Desktop_Relative", e_act_desk_rel_start, NULL, NULL);
    e_action_add_impl("Window_Next", e_act_raise_next_start, NULL, NULL);
 
    D_RETURN;
@@ -1723,6 +1728,35 @@ e_act_desk_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
 
    if (a->params)
      desk = atoi(a->params);
+
+   e_desktops_goto_desk(desk);
+
+   D_RETURN;
+   UN(object);
+   UN(a);
+   UN(data);
+   UN(x);
+   UN(y);
+   UN(rx);
+   UN(ry);
+}
+
+
+static void
+e_act_desk_rel_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
+{
+   int desk = 0;
+   int desk_max = e_desktops_get_num () - 1;
+
+   D_ENTER;
+   
+   if (a->params)
+     desk = atoi(a->params) + e_desktops_get_current();
+
+   if (desk < 0)
+     desk = desk_max;
+   else if (desk > desk_max)
+     desk = 0;
 
    e_desktops_goto_desk(desk);
 

@@ -2,7 +2,6 @@
 #define E_FS_H
 
 #include <libefsd.h>
-#include "e.h"
 
 typedef struct _E_FS_Restarter        E_FS_Restarter;
 

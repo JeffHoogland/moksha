@@ -1,8 +1,6 @@
 #ifndef E_GUIDES_H
 #define E_GUIDES_H
 
-#include "e.h"
-
 typedef enum e_guides_mode
   {
     E_GUIDES_OPAQUE,    /* configure window border & client */

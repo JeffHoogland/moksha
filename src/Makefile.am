@@ -39,9 +39,10 @@ enlightenment_SOURCES = \
 	fs.h fs.c \
 	$(ferite_c) \
 	guides.h guides.c \
+	globals.h globals.c \
 	icccm.h icccm.c \
 	iconbar.h iconbar.c\
-	icons.c \
+	icons.h icons.c\
 	ipc.h ipc.c \
 	keys.h keys.c \
 	main.c \

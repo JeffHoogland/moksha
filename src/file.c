@@ -1,3 +1,4 @@
+#include "e.h"
 #include "debug.h"
 #include "file.h"
 #include "util.h"

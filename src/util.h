@@ -16,4 +16,14 @@ __dest = malloc(strlen(__var) + 1); \
 if (__dest) strcpy(__dest, __var); \
 } }
 
+/* misc util macros */
+#define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
+(((x) < ((xx) + (ww))) && \
+((y) < ((yy) + (hh))) && \
+(((x) + (w)) > (xx)) && \
+(((y) + (h)) > (yy)))
+#define SPANS_COMMON(x1, w1, x2, w2) \
+(!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
+#define UN(_blah) _blah = 0
+
 #endif

@@ -14,6 +14,7 @@
 #include "view.h"
 #include "place.h"
 #include "iconbar.h"
+#include "util.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"

@@ -2,6 +2,7 @@
 #include "resist.h"
 #include "config.h"
 #include "desktops.h"
+#include "util.h"
 
 void
 e_resist_border(E_Border *b)

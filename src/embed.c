@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "embed.h"
+#include "util.h"
 
 typedef struct _Embed Embed_Private;
 

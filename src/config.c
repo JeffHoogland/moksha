@@ -5,16 +5,6 @@
 
 static char cfg_root[] = "";
 
-#define E_CONF(_key, _var, _args...) \
-{ \
-  if (!strcmp(type, _key)) \
-    { \
-      if ((_var)[0]) D_RETURN_(_var); \
-      sprintf((_var), ## _args); \
-      D_RETURN_(_var); \
-    } \
-}
-
 static char cfg_grabs_db[PATH_MAX] = "";
 static char cfg_settings_db[PATH_MAX] = "";
 static char cfg_actions_db[PATH_MAX] = "";
@@ -51,6 +41,17 @@ e_config_get(char *type)
    /*	  "%sbehavior/default/grabs.db", e_config_user_dir());         */
    /* notice it would use the user config location instead             */
    /* but for now i'm keeping it as is for development "ease"          */
+
+#define E_CONF(_key, _var, _args...) \
+{ \
+  if (!strcmp(type, _key)) \
+    { \
+      if ((_var)[0]) D_RETURN_(_var); \
+      sprintf((_var), ## _args); \
+      D_RETURN_(_var); \
+    } \
+}
+
    E_CONF("grabs", cfg_grabs_db, 
 	  "%s/behavior/grabs.db", e_config_user_dir());
    E_CONF("settings", cfg_settings_db,

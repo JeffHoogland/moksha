@@ -5,22 +5,24 @@
 #include "background.h"
 #include "scrollbar.h"
 #include "fs.h"
-#include "text.h"
 #include "iconbar.h"
 #include "object.h"
+#include "icons.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
-typedef struct _E_View                E_View;
+typedef struct _E_View    E_View;
 #endif
 
-typedef struct _E_Icon                E_Icon;
+#ifndef E_ICON_TYPEDEF
+#define E_ICON_TYPEDEF
+typedef struct _E_Icon    E_Icon;
+#endif
 
 #ifndef E_ICONBAR_TYPEDEF
 #define E_ICONBAR_TYPEDEF
 typedef struct _E_Iconbar E_Iconbar;
 #endif
-
 
 
 struct _E_View
@@ -145,66 +147,6 @@ struct _E_View
 };
 
 
-struct _E_Icon
-{
-   E_Object o;
-   
-   char        *file;
-   struct stat  stat;
-   
-   E_View *view;
-   
-   struct {
-      char *icon;
-      char *custom_icon;
-      char *link;
-      struct {
-	 char *base;
-	 char *type;
-      } mime;
-   } info;
-   
-   struct {
-      Evas_Object  icon;
-      Evas_Object  event1;
-      Evas_Object  event2;
-      E_Text      *text;
-      struct {
-	 struct {
-	    Ebits_Object icon;
-	    Ebits_Object text;
-	 } over, under;
-      } sel;
-   } obj;
-   
-   struct {
-      int hilited;
-      int clicked;
-      int selected;
-      int running;
-      int disabled;
-      int visible;
-      int just_selected;
-      int just_executed;
-   } state;
-   
-   struct {
-      int x, y, w, h;
-      struct {
-	 int w, h;
-      } icon;
-      struct {
-	 int w, h;
-      } text;
-   } geom, prev_geom;      
-   
-   struct {
-      int write_xy;
-   } q;
-   
-   int     changed;   
-};
-
 
 /**
  * e_view_init - View event handlers initialization.
@@ -227,34 +169,13 @@ void      e_view_scroll_by(E_View *v, int sx, int sy);
 void      e_view_scroll_to_percent(E_View *v, double psx, double psy);
 void      e_view_get_viewable_percentage(E_View *v, double *vw, double *vh);
 void      e_view_get_position_percentage(E_View *v, double *vx, double *vy);
-void      e_view_icon_update_state(E_Icon *ic);
-void      e_view_icon_invert_selection(E_Icon *ic);
-void      e_view_icon_select(E_Icon *ic);
-void      e_view_icon_deselect(E_Icon *ic);
 
-/**
- * e_view_icon_exec - handles execution paths when user activates an icon
- * @ic:   The activated icon
- *
- * This function takes care of opening views when the user activates a
- * directory, launching commands when an executable is activated etc.
- */
-void      e_view_icon_exec(E_Icon *ic);
-
-void      e_view_icon_initial_show(E_Icon *ic);
-void      e_view_icon_set_mime(E_Icon *ic, char *base, char *mime);
-void      e_view_icon_set_link(E_Icon *ic, char *link);
-E_Icon   *e_view_icon_new(void);
-E_Icon   *e_view_find_icon_by_file(E_View *view, char *file);
-void      e_view_icon_show(E_Icon *ic);
-void      e_view_icon_hide(E_Icon *ic);
-void      e_view_icon_apply_xy(E_Icon *ic);
-void      e_view_icon_check_permissions(E_Icon *ic);
 void      e_view_resort_alphabetical(E_View *v);
 void      e_view_arrange(E_View *v);
 void      e_view_resort(E_View *v);
-void      e_view_queue_geometry_record(E_View *v);
 void      e_view_geometry_record(E_View *v);    
+void      e_view_queue_geometry_record(E_View *v);
+void      e_view_queue_icon_xy_record(E_View *v);
 void      e_view_queue_resort(E_View *v);
 void      e_view_file_added(int id, char *file);
 void      e_view_file_deleted(int id, char *file);

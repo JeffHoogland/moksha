@@ -3,6 +3,7 @@
 #include "place.h"
 #include "actions.h"
 #include "guides.h"
+#include "util.h"
 
 static void e_mouse_down(Ecore_Event * ev);
 static void e_mouse_up(Ecore_Event * ev);

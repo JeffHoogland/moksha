@@ -1,6 +1,7 @@
 #include "debug.h"
 #include "menu.h"
 #include "config.h"
+#include "util.h"
 
 static Evas_List open_menus = NULL;         /* List of all open menus */
 static Evas_List menus = NULL;

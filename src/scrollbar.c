@@ -1,6 +1,7 @@
 #include "debug.h"
 #include "scrollbar.h"
 #include "config.h"
+#include "util.h"
 
 static void e_scrollbar_recalc(E_Scrollbar *sb);
 static void e_scrollbar_setup_bits(E_Scrollbar *sb);

@@ -1,8 +1,6 @@
 #ifndef E_FILE_H
 #define E_FILE_H
 
-#include "e.h"
-
 time_t     e_file_mod_time(char *file);
 int        e_file_exists(char *file);
 int        e_file_is_dir(char *file);

@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "text.h"
+#include "util.h"
 
 E_Text *
 e_text_new(Evas evas, char *text, char *class)

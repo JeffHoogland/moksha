@@ -1,7 +1,6 @@
 #ifndef E_ACTIONS_H
 #define E_ACTIONS_H
 
-#include "e.h"
 #include "object.h"
 
 typedef struct _E_Action              E_Action;

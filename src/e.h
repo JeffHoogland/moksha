@@ -97,15 +97,4 @@ printf("%3.3f : %s()\n", __p->total, __p->func); \
 #define E_PROF_DUMP
 #endif
 
-
-/* misc util macros */
-#define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
-(((x) < ((xx) + (ww))) && \
-((y) < ((yy) + (hh))) && \
-(((x) + (w)) > (xx)) && \
-(((y) + (h)) > (yy)))
-#define SPANS_COMMON(x1, w1, x2, w2) \
-(!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
-#define UN(_blah) _blah = 0
-
 #endif

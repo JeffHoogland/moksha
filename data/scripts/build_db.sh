@@ -305,6 +305,22 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 0
 edb_ed $DB add "/actions/"$NUM"/key"       str "F8"
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
 NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str Key_Binding
+edb_ed $DB add "/actions/"$NUM"/action"    str Desktop_Relative
+edb_ed $DB add "/actions/"$NUM"/params"    str 1
+edb_ed $DB add "/actions/"$NUM"/event"     int 8
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str Right 
+edb_ed $DB add "/actions/"$NUM"/modifiers" int 6
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str Key_Binding
+edb_ed $DB add "/actions/"$NUM"/action"    str Desktop_Relative
+edb_ed $DB add "/actions/"$NUM"/params"    str -1
+edb_ed $DB add "/actions/"$NUM"/event"     int 8
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str Left
+edb_ed $DB add "/actions/"$NUM"/modifiers" int 6
+NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/count"       int $NUM
 
 # basic settings
