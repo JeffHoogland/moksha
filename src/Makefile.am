@@ -5,7 +5,7 @@ DISTCLEANFILES = e_ferite_gen_*
 ## Enable -DDEBUG for debugging messages, -DDEBUG_NEST
 ## for call tracing. Caution -- this will produce a *lot*
 ## of output!
-DEBUGFLAGS = -g -DDEBUG -DDEBUG_NEST
+DEBUGFLAGS = -g -DDEBUG #-DDEBUG_NEST
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
