@@ -68,6 +68,8 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_border_stick;
    Ecore_Event_Handler *ev_handler_border_unstick;
    Ecore_Event_Handler *ev_handler_border_desk_set;
+   Ecore_Event_Handler *ev_handler_border_raise;
+   Ecore_Event_Handler *ev_handler_border_lower;
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
    Ecore_Event_Handler *ev_handler_desk_show;
 };
@@ -91,8 +93,8 @@ struct _Pager_Win
    E_Border    *border;
    Pager_Desk  *desk;
 
-   Evas_Object *obj;
-   Evas_Object *icon;
+   Evas_Object *window_object;
+   Evas_Object *icon_object;
 };
 
 EAPI void *init     (E_Module *module);

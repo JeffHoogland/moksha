@@ -33,6 +33,8 @@ typedef struct _E_Event_Border_Stick         E_Event_Border_Stick;
 typedef struct _E_Event_Border_Unstick       E_Event_Border_Unstick;
 typedef struct _E_Event_Border_Zone_Set      E_Event_Border_Zone_Set;
 typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
+typedef struct _E_Event_Border_Raise         E_Event_Border_Raise;
+typedef struct _E_Event_Border_Lower         E_Event_Border_Lower;
 
 #else
 #ifndef E_BORDER_H
@@ -273,6 +275,16 @@ struct _E_Event_Border_Desk_Set
    E_Desk   *desk;
 };
 
+struct _E_Event_Border_Raise
+{
+   E_Border *border, *above;
+};
+
+struct _E_Event_Border_Lower
+{
+   E_Border *border, *below;
+};
+
 EAPI int       e_border_init(void);
 EAPI int       e_border_shutdown(void);
 
@@ -320,6 +332,8 @@ extern EAPI int E_EVENT_BORDER_STICK;
 extern EAPI int E_EVENT_BORDER_UNSTICK;
 extern EAPI int E_EVENT_BORDER_ZONE_SET;
 extern EAPI int E_EVENT_BORDER_DESK_SET;
+extern EAPI int E_EVENT_BORDER_RAISE;
+extern EAPI int E_EVENT_BORDER_LOWER;
 
 #endif
 #endif

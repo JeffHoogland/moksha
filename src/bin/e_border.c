@@ -77,6 +77,8 @@ static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
 static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
+static void _e_border_event_border_raise_free(void *data, void *ev);
+static void _e_border_event_border_lower_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
@@ -116,6 +118,8 @@ int E_EVENT_BORDER_ICONIFY = 0;
 int E_EVENT_BORDER_UNICONIFY = 0;
 int E_EVENT_BORDER_STICK = 0;
 int E_EVENT_BORDER_UNSTICK = 0;
+int E_EVENT_BORDER_RAISE = 0;
+int E_EVENT_BORDER_LOWER = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -157,6 +161,8 @@ e_border_init(void)
    E_EVENT_BORDER_UNICONIFY = ecore_event_type_new();
    E_EVENT_BORDER_STICK = ecore_event_type_new();
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
+   E_EVENT_BORDER_RAISE = ecore_event_type_new();
+   E_EVENT_BORDER_LOWER = ecore_event_type_new();
 
    return 1;
 }
@@ -582,6 +588,15 @@ e_border_raise(E_Border *bd)
 			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			      0, 0, 0, 0, 0,
 			      mwin, ECORE_X_WINDOW_STACK_BELOW);
+     {
+	E_Event_Border_Raise *ev;
+	
+	ev = calloc(1, sizeof(E_Event_Border_Raise));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->above = NULL;
+	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
+     }
 }
 
 void
@@ -595,6 +610,15 @@ e_border_lower(E_Border *bd)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
 			    bd->container->bg_win, ECORE_X_WINDOW_STACK_ABOVE);
+     {
+	E_Event_Border_Lower *ev;
+	
+	ev = calloc(1, sizeof(E_Event_Border_Lower));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->below = NULL;
+	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
+     }
 }
 
 void
@@ -608,6 +632,16 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
 			    above->win, ECORE_X_WINDOW_STACK_ABOVE);
+     {
+	E_Event_Border_Raise *ev;
+	
+	ev = calloc(1, sizeof(E_Event_Border_Raise));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->above = above;
+	e_object_ref(E_OBJECT(above));
+	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
+     }
 }
 
 void
@@ -621,6 +655,16 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
 			    below->win, ECORE_X_WINDOW_STACK_BELOW);
+     {
+	E_Event_Border_Lower *ev;
+	
+	ev = calloc(1, sizeof(E_Event_Border_Lower));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->below = below;
+	e_object_ref(E_OBJECT(below));
+	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
+     }
 }
 
 void
@@ -3410,6 +3454,29 @@ _e_border_event_border_desk_set_free(void *data, void *ev)
    e_object_unref(E_OBJECT(e->desk));
    free(e);
 }
+
+static void
+_e_border_event_border_raise_free(void *data, void *ev)
+{
+   E_Event_Border_Raise *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   if (e->above) e_object_unref(E_OBJECT(e->above));
+   free(e);
+}
+
+static void
+_e_border_event_border_lower_free(void *data, void *ev)
+{
+   E_Event_Border_Lower *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   if (e->below) e_object_unref(E_OBJECT(e->below));
+   free(e);
+}
+
 
 static void
 _e_border_zone_update(E_Border *bd)

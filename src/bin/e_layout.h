@@ -17,7 +17,7 @@ EAPI void         e_layout_child_resize      (Evas_Object *obj, Evas_Coord w, Ev
 EAPI void         e_layout_child_raise       (Evas_Object *obj);
 EAPI void         e_layout_child_lower       (Evas_Object *obj);
 EAPI void         e_layout_child_raise_above (Evas_Object *obj, Evas_Object *above);
-EAPI void         e_layout_child_raise_below (Evas_Object *obj, Evas_Object *below);
+EAPI void         e_layout_child_lower_below (Evas_Object *obj, Evas_Object *below);
 EAPI void         e_layout_unpack            (Evas_Object *obj);
 
 #endif

@@ -3,6 +3,9 @@
  */
 #include "e.h"
 
+/* FIXME: something is weird here - i had to reverse all stacking logic to make
+ * it work... */
+
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Layout_Item E_Layout_Item;
 
@@ -112,7 +115,7 @@ e_layout_pack(Evas_Object *obj, Evas_Object *child)
    
    sd = evas_object_smart_data_get(obj);
    _e_layout_smart_adopt(sd, child);
-   sd->items = evas_list_append(sd->items, child);
+   sd->items = evas_list_prepend(sd->items, child);
    li = evas_object_data_get(child, "e_layout_data");
    _e_layout_smart_move_resize_item(li);
 }
@@ -146,7 +149,7 @@ e_layout_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 void
-e_layout_child_raise(Evas_Object *obj)
+e_layout_child_lower(Evas_Object *obj)
 {
    E_Layout_Item *li;
    
@@ -154,12 +157,14 @@ e_layout_child_raise(Evas_Object *obj)
    if (!li) return;
    li->sd->items = evas_list_remove(li->sd->items, obj);
    if (li->sd->items)
-     evas_object_stack_above(obj, evas_list_data(evas_list_last(li->sd->items)));
+     {
+	evas_object_stack_above(obj, evas_list_data(evas_list_last(li->sd->items)));
+     }
    li->sd->items = evas_list_append(li->sd->items, obj);
 }
 
 void
-e_layout_child_lower(Evas_Object *obj)
+e_layout_child_raise(Evas_Object *obj)
 {
    E_Layout_Item *li;
    
@@ -172,6 +177,19 @@ e_layout_child_lower(Evas_Object *obj)
 }
 
 void
+e_layout_child_lower_below(Evas_Object *obj, Evas_Object *below)
+{
+   E_Layout_Item *li;
+   
+   li = evas_object_data_get(obj, "e_layout_data");
+   if (!li) return;
+   li->sd->items = evas_list_remove(li->sd->items, obj);
+   if (li->sd->items)
+     evas_object_stack_above(obj, below);
+   li->sd->items = evas_list_append_relative(li->sd->items, obj, below);
+}
+
+void
 e_layout_child_raise_above(Evas_Object *obj, Evas_Object *above)
 {
    E_Layout_Item *li;
@@ -180,21 +198,8 @@ e_layout_child_raise_above(Evas_Object *obj, Evas_Object *above)
    if (!li) return;
    li->sd->items = evas_list_remove(li->sd->items, obj);
    if (li->sd->items)
-     evas_object_stack_above(obj, above);
-   li->sd->items = evas_list_append_relative(li->sd->items, obj, above);
-}
-
-void
-e_layout_child_raise_below(Evas_Object *obj, Evas_Object *below)
-{
-   E_Layout_Item *li;
-   
-   li = evas_object_data_get(obj, "e_layout_data");
-   if (!li) return;
-   li->sd->items = evas_list_remove(li->sd->items, obj);
-   if (li->sd->items)
-     evas_object_stack_below(obj, below);
-   li->sd->items = evas_list_prepend_relative(li->sd->items, obj, below);
+     evas_object_stack_below(obj, above);
+   li->sd->items = evas_list_prepend_relative(li->sd->items, obj, above);
 }
 
 void
@@ -226,13 +231,12 @@ _e_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    li->w = 0;
    li->h = 0;
    evas_object_clip_set(obj, sd->clip);
-   evas_object_stack_above(obj, sd->obj);
    evas_object_smart_member_add(li->sd->obj, obj);
    evas_object_data_set(obj, "e_layout_data", li);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_layout_smart_item_del_hook, NULL);
    if (li->sd->items)
-     evas_object_stack_above(obj, evas_list_data(evas_list_last(li->sd->items)));
+     evas_object_stack_below(obj, evas_list_data(li->sd->items));
    else
      evas_object_stack_above(obj, sd->obj);
    if (!evas_object_visible_get(sd->clip))
@@ -389,7 +393,6 @@ _e_layout_smart_raise(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
      {
 	Evas_List *l;
 	
@@ -407,7 +410,6 @@ _e_layout_smart_lower(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; 
-   
      {
 	Evas_List *l;
 	
@@ -425,7 +427,6 @@ _e_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
      {
 	Evas_List *l;
 	
@@ -443,7 +444,6 @@ _e_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below)
       
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-
      {
 	Evas_List *l;
 	
