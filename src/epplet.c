@@ -2,6 +2,8 @@
 #include "epplet.h"
 #include "globals.h"
 #include "file.h"
+#include "observer.h"
+#include "desktops.h"
 
 #include "e_ferite.h"
 
@@ -17,6 +19,7 @@ static void e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
 				    char *_c, int _b, int _x, int _y,
 				    int _ox, int _oy, int _ow, int _oh);
 
+static void e_epplet_observer_cleanup(E_Object *o);
 
 void
 e_epplet_load_from_layout (E_View * v)
@@ -26,7 +29,7 @@ e_epplet_load_from_layout (E_View * v)
 
   D_ENTER;
 
-  sprintf (buf, "%s/.e_epplets.bits.db", v->dir);
+  snprintf (buf, PATH_MAX, "%s/.e_epplets.bits.db", v->dir);
   v->epplet_layout = ebits_load (buf);
   if (!v->epplet_layout)
     D_RETURN;
@@ -59,7 +62,7 @@ e_epplet_load_from_layout (E_View * v)
 
       v->epplet_contexts = evas_list_append (v->epplet_contexts, context);
 
-      sprintf (buf, "%s%s/%s.fe", e_config_get ("epplets"), context->name,
+      snprintf (buf, PATH_MAX,  "%s%s/%s.fe", e_config_get ("epplets"), context->name,
 	       context->name);
       if (e_file_exists (buf))
 	e_epplet_script_load (context, buf);
@@ -404,32 +407,14 @@ e_epplet_cb_new( FeriteScript *script, char *func_name, FeriteObject *data, Feri
   cb = NEW(E_Epplet_CB_Info, 1);
   ZERO(cb, E_Epplet_CB_Info, 1);
 
-  if (data && data2)
-  { D("d1: %s, d2: %s\n", data->name, data2->name);}
-    
   nsb = __ferite_find_namespace( script, script->mainns, func_name, FENS_FNC);
   if (nsb != NULL)
   {
-     D("setting cb info\n");
      cb->func = nsb->data;
      if (data)
      {
 	cb->data = data;
 	data->refcount++;
-/*	cb->data = fmalloc(sizeof(FeriteObject));
-	memset(cb->data, 0, sizeof(FeriteObject));
-	
-	cb->data->name = data->name;
-	cb->data->oid = data->oid;
-	cb->data->odata = data->odata;
-	cb->data->refcount = data->refcount;
-	cb->data-> = data->;
-	cb->data-> = data->;
-	cb->data-> = data->;
-	cb->data-> = data->;
-	cb->data-> = data->;
-	cb->data-> = data->;
-*/
      }
      if (data2)
      {
@@ -437,10 +422,26 @@ e_epplet_cb_new( FeriteScript *script, char *func_name, FeriteObject *data, Feri
        data2->refcount++;
      }
      cb->script = script;
-     D("cb info set\n");
   } 
 
   D_RETURN_(cb);
+}
+
+void
+e_epplet_cb_cleanup(E_Epplet_CB_Info *cb)
+{
+   if (cb->data)
+   {
+      cb->data->refcount--;
+      cb->data = NULL;
+   }
+   if (cb->data2)
+   {
+      cb->data2->refcount--;
+      cb->data2 = NULL;
+   }
+
+   free(cb);
 }
 
 void
@@ -467,6 +468,7 @@ e_epplet_bits_cb (void *_data, Ebits_Object _o,
   {
      D("ERROR: script does not exist\n");
   }
+ /* e_epplet_cb_cleanup(cb); */
   D_RETURN; 
 }
 
@@ -488,7 +490,7 @@ e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
     D("creating params\n");
     params = __ferite_create_parameter_list_from_data( cb->script, "oonnn",
        cb->data, cb->data2, (double)_b, (double)_x, (double)_y );
-    D("calling func\n");
+    D("calling func: %s\n", cb->func->name);
      __ferite_variable_destroy( cb->script, __ferite_call_function( cb->script, cb->func, params));
      __ferite_delete_parameter_list( cb->script, params );
     D("func called, params deleted\n");
@@ -497,6 +499,124 @@ e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
   {
      D("ERROR: script does not exist\n");
   }
+/*  e_epplet_cb_cleanup(cb); */
   D_RETURN; 
+}
+
+/* somthing is wrong here. segfault when calling ferite function */
+void
+e_epplet_timer_func(int val, void *data)
+{
+  E_Epplet_CB_Info *cb;
+  FeriteVariable **params;
+  
+  D_ENTER;
+  D("in timer func\n");  
+  cb = data;
+
+  if (cb->script) {
+    D("creating params\n");
+    params = __ferite_create_parameter_list_from_data( cb->script, "on",
+       cb->data, (float)val );
+    D("calling func\n");
+     __ferite_variable_destroy( cb->script, __ferite_call_function( cb->script, cb->func, params));
+     __ferite_delete_parameter_list( cb->script, params );
+    D("func called, params deleted\n");
+  }
+  else
+  {
+     D("ERROR: script does not exist\n");
+  }
+  
+/*  e_epplet_cb_cleanup(cb); */
+  D_RETURN;
+}
+
+E_Epplet_Observer *
+e_epplet_observer_new(FeriteScript *script, char *func_name, FeriteObject *data)
+{
+   E_Epplet_Observer *obs;
+   FeriteNamespaceBucket *nsb;
+
+   D_ENTER;
+   
+   obs = NEW(E_Epplet_Observer, 1);
+   memset(obs, 0, sizeof(E_Epplet_Observer));
+
+
+   nsb = __ferite_find_namespace( script, script->mainns, func_name, FENS_FNC);
+   if (nsb != NULL)
+   {
+      e_observer_init(E_OBSERVER(obs), E_EVENT_DESKTOP_SWITCH,
+	    e_epplet_desktop_observer_func, (E_Cleanup_Func)e_epplet_observer_cleanup);
+      D("initted, event: %i\n", E_OBSERVER(obs)->event);
+
+      obs->script = script;
+      obs->func = nsb->data;
+      if (data)
+      {
+	 ((E_Epplet_Observer *)obs)->data = data;
+	 data->refcount++;
+      }
+   } 
+   D("returning, event: %i\n", E_OBSERVER(obs)->event);
+   D_RETURN_(obs); 
+}
+
+static void
+e_epplet_observer_cleanup(E_Object *o)
+{
+}
+
+void
+e_epplet_observer_register_desktops(E_Epplet_Observer *obs)
+{
+   Evas_List l;
+
+   D_ENTER;
+   D("odeskregister, bserver func: %s\n", obs->func->name); 
+   D("register each desktop in list\n");
+   for (l = e_desktops_get_desktops_list(); l; l = l->next)
+   { 
+      E_Desktop *d = l->data;
+      D("registering desktop...\n")
+      e_observer_register_observee(E_OBSERVER(obs), E_OBSERVEE(d));
+      D("desktop registered\n")
+   }
+   D_RETURN;
+}
+
+void
+e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee)
+{
+   E_Epplet_Observer *obs;
+   E_Desktop *desk;
+   FeriteVariable **params;
+   
+   D_ENTER;
+
+   obs = (E_Epplet_Observer *)observer;
+   desk = (E_Desktop *)observee;
+   
+   D("desktop: %i\n", desk->desk.desk);
+   D("current: %i\n", e_desktops_get_current());
+   if (obs->script)
+   {
+      D("creating params\n");
+       
+      params = __ferite_create_parameter_list_from_data( obs->script, "on",
+               obs->data, (float)(desk->desk.desk) );
+      D("calling func: %s\n", obs->func->name);
+      __ferite_variable_destroy( obs->script, __ferite_call_function(
+	                          obs->script, obs->func, params));
+      D("function called\n");
+       __ferite_delete_parameter_list( obs->script, params );
+      D("func called, params deleted\n");
+   }
+   else 
+   {
+      D("ERROR: script does not exist\n");
+   }
+   D_RETURN;
 }
 

@@ -13,7 +13,7 @@ typedef struct _E_Desktop             E_Desktop;
 
 struct _E_Desktop
 {
-   E_Object o;
+   E_Observee obs;
    
    char *name;
    char *dir;
@@ -83,5 +83,6 @@ E_Desktop   *e_desktops_get(int d);
 int          e_desktops_get_current(void);
 void         e_desktops_goto_desk(int d);
 void         e_desktops_goto(int d, int ax, int ay);
+Evas_List    e_desktops_get_desktops_list();
 
 #endif

@@ -453,7 +453,7 @@ e_focus_in(Ecore_Event * ev)
 	     e_border_focus_grab_ended();
 	     b->current.selected = 1;
 	     b->changed = 1;
-	     e_observee_notify_observers(E_OBSERVEE(b), ECORE_EVENT_WINDOW_FOCUS_IN);
+	     e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_FOCUS_IN);
 	     g = b->click_grab;
 	     if (g)
 	       {
@@ -2646,7 +2646,7 @@ e_border_init(void)
    ecore_event_filter_idle_handler_add(e_idle, NULL);
 
    delayed_window_raise =
-     e_delayed_action_new(ECORE_EVENT_WINDOW_FOCUS_IN,
+     e_delayed_action_new(E_EVENT_WINDOW_FOCUS_IN,
 			  raise_delay, e_border_raise_delayed); 
    
    ecore_add_event_timer("e_border_poll()", 1.00, e_border_poll, 0, NULL);

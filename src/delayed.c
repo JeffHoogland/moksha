@@ -15,7 +15,7 @@ e_delayed_action_cleanup(E_Delayed_Action *eda)
 
 
 E_Delayed_Action *
-e_delayed_action_new(Ecore_Event_Type event,
+e_delayed_action_new(E_Event_Type event,
 		     double delay, E_Delay_Func delay_func)
 {
   E_Delayed_Action *eda = NULL;

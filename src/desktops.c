@@ -240,7 +240,7 @@ e_desktops_new(void)
    desk = NEW(E_Desktop, 1);
    ZERO(desk, E_Desktop, 1);
    
-   e_object_init(E_OBJECT(desk), (E_Cleanup_Func) e_desktops_cleanup);
+   e_observee_init(E_OBSERVEE(desk), (E_Cleanup_Func) e_desktops_cleanup);
    
    desk->win.main = ecore_window_override_new(e_base_win, 0, 0, screen_w, screen_h);
    desk->win.container = ecore_window_override_new(desk->win.main, 0, 0, screen_w, screen_h);
@@ -361,6 +361,7 @@ e_desktops_goto_desk(int d)
    D_ENTER;
 
    e_desktops_goto(d, 0, 0);
+   
 
    D_RETURN;
 }
@@ -421,7 +422,16 @@ e_desktops_goto(int d, int ax, int ay)
 	desk->desk.area.y = ay;
 	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
 	e_icccm_set_desk(0, desk->desk.desk);
+	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH);
     }
 
    D_RETURN;
 }
+
+Evas_List
+e_desktops_get_desktops_list()
+{
+   D_ENTER;
+   D_RETURN_(desktops);
+}
+

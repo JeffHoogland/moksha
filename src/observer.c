@@ -4,7 +4,7 @@
 #include "observer.h"
 
 void
-e_observer_init(E_Observer *obs, Ecore_Event_Type event,
+e_observer_init(E_Observer *obs, E_Event_Type event,
 		E_Notify_Func notify_func,
 		E_Cleanup_Func cleanup_func)
 {
@@ -56,7 +56,6 @@ e_observer_register_observee(E_Observer *observer, E_Observee *observee)
 
   observee->observers = evas_list_append(observee->observers, observer);
   observer->watched = evas_list_append(observer->watched, observee);
-
   D_RETURN;
 }
 
@@ -94,7 +93,7 @@ e_observee_init(E_Observee *obs, E_Cleanup_Func cleanup_func)
 
 
 void
-e_observee_notify_observers(E_Observee *o, Ecore_Event_Type event)
+e_observee_notify_observers(E_Observee *o, E_Event_Type event)
 {
   Evas_List  obs_list = NULL;
   E_Observer *obs     = NULL;

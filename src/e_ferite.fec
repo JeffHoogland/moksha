@@ -8,7 +8,8 @@ header %{
    #include "epplet.h"
    #include "debug.h"
    #include "globals.h"
-   
+   #include "observer.h"
+
    #define BitsObj ((Ebits_Object)self->odata)
    #define EppObj ((E_Epplet *)(self->odata))
    #define EvasObj ((Evas_Object_Wrapper *)(self->odata))
@@ -77,6 +78,7 @@ namespace e {
    %{
 	  ecore_event_loop_quit();  
    %}
+
 }
 
 class EvasObject
@@ -232,8 +234,6 @@ class EvasObject
   %{
     E_Epplet_CB_Info *cb;
 
-    D("create cb\n");
-
     cb = e_epplet_cb_new(script, func, data, self);
 
     D("check for callback type\n");    
@@ -258,7 +258,7 @@ class EvasObject
                         e_epplet_evas_cb, cb);
     }
 
-//    ffree(func);
+    ffree(func);
     ffree(type);
   %}
 
@@ -472,7 +472,6 @@ class Epplet
     {
       D("adding bits for epplet `%s'\n", EppObj->context->name);
       D("x: %f, y: %f, w: %f, h: %f\n", EppObj->context->geom.x, EppObj->context->geom.y, EppObj->context->geom.w, EppObj->context->geom.h);
-//      ebits_add_to_evas(EppObj->bits, EppObj->view->evas);
       ebits_show(EppObj->bits);
 
       if ((EppObj->context->geom.w) && (EppObj->context->geom.h))
@@ -538,5 +537,38 @@ class Epplet
     FE_RETURN_STR(retval, 0);
   %}
 
+/* This doesn't work Yet */
+/*
+   function addTimer(string name, number time, string func, number val, object data)
+   %{
+      char *buf;
+      E_Epplet_CB_Info *cb;
+
+      cb = e_epplet_cb_new(script, func, data, NULL);
+      D("got cb info\n")
+      sprintf(buf, "%s:%s", EppObj->name, name);
+      D("add timer: %s, time: %f\n", buf, time);
+      ecore_add_event_timer(buf, time, e_epplet_timer_func, val, cb);
+      D("timer added\n");
+     ffree(func);
+   %}
+      
+   function delTimer(string name)
+   %{
+      char *buf;
+
+      sprintf(buf, "%s:%s", EppObj->name, name);
+      ecore_del_event_timer(buf);
+      ffree(name);
+   %}
+*/
+   function addDesktopObserver(string func_name, object data)
+   %{
+     E_Epplet_Observer *obs;
+
+     obs = e_epplet_observer_new(script, func_name, data);
+     e_epplet_observer_register_desktops(obs);
+     ffree(func_name);
+   %}
 }
 

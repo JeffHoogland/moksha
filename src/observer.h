@@ -14,12 +14,18 @@ typedef struct _e_observee E_Observee;
 
 typedef void(*E_Notify_Func)(E_Observer *observer, E_Observee *observee);
 
+typedef enum _e_event_type
+{
+   E_EVENT_WINDOW_FOCUS_IN,
+   E_EVENT_DESKTOP_SWITCH
+} E_Event_Type;
+
 struct _e_observer
 {
   E_Object               obj;
 
   Evas_List              watched;      /* list<E_Observee> */
-  Ecore_Event_Type       event;
+  E_Event_Type       event;
   E_Notify_Func          notify_func;
 };
 
@@ -43,7 +49,7 @@ struct _e_observee
  * e_observee_notify_observers() call. Observers are derived from
  * E_Objects, therefore, this function also handles E_Object initalization.
  */
-void    e_observer_init(E_Observer *obs, Ecore_Event_Type event,
+void    e_observer_init(E_Observer *obs, E_Event_Type event,
 			E_Notify_Func notify_func,
 			E_Cleanup_Func cleanup_func);
 
@@ -101,7 +107,7 @@ void    e_observee_cleanup(E_Observee *obs);
  * and calls the notify_func() of the observers that are
  * responsible for the given @event.
  */
-void    e_observee_notify_observers(E_Observee *o, Ecore_Event_Type event);
+void    e_observee_notify_observers(E_Observee *o, E_Event_Type event);
 
 
 #endif
