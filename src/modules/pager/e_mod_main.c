@@ -1319,7 +1319,6 @@ _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
      { 
 	_pager_face_enable(face);
      }
-   e_menu_item_toggle_set(mi, face->conf->enabled);
 }
 
 static void
@@ -1330,7 +1329,6 @@ _pager_face_cb_menu_scale(void *data, E_Menu *m, E_Menu_Item *mi)
    face = data;
 
    face->conf->scale = e_menu_item_toggle_get(mi);
-   e_menu_item_toggle_set(mi, face->conf->scale);
    e_config_save_queue();
 }
 

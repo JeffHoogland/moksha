@@ -365,8 +365,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    desk->clients = evas_list_append(desk->clients, bd);
    bd->desk = desk;
-   if (bd->zone != desk->zone)
-     e_border_zone_set(bd, desk->zone);
+   e_border_zone_set(bd, desk->zone);
 
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
@@ -893,8 +892,7 @@ e_border_uniconify(E_Border *bd)
    if (bd->iconic)
      {
 	desk = e_desk_current_get(bd->desk->zone);
-	if (desk != bd->desk)
-	  e_border_desk_set(bd, desk);
+	e_border_desk_set(bd, desk);
 	bd->iconic = 0;
 	e_border_show(bd);
 	/* FIXME: DEPRECATED?
