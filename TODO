@@ -32,7 +32,6 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
-* general ecore/edje/efl bug - if u change system clock - especially BACKWARDS timers in ecore and edje get fucked
 * if container/zone changes size pager does not change/adjust to match
 * if u disable moduels by right click->enabled (select to uncheck) the gadman objects for thsoe moduels dont go away
 * pager on other xinerama heads doesnt save position/size etc.
