@@ -131,7 +131,7 @@ about(E_Module *m)
 {
    e_error_dialog_show("Enlightenment Dropshadow Module",
 		       "This is the dropshadow module that allows dropshadows to be cast\n"
-		       "on the desktop background - without an special X-Server extensions\n"
+		       "on the desktop background - without special X-Server extensions\n"
 		       "or hardware acceleration.");
    return 1;
 }
