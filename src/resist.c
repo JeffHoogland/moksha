@@ -9,10 +9,11 @@ e_resist_border(E_Border *b)
    int ok = 0;
    int dx, dy, d;
    int resist_x = 0, resist_y = 0;
-   char *settings_db = "./settings.db";
+   char *settings_db;
    Evas_List l, rects = NULL;
    E_Rect *r;
 
+   settings_db = e_config_get("settings");
    E_DB_INT_GET(settings_db, "/move/resist", resist, ok);
    if (!ok) resist = 1;
    if (!resist)

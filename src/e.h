@@ -286,7 +286,7 @@ struct _E_Active_Action_Timer
 
 struct _E_View
 {
-   OBJ_PROPERTIES
+   OBJ_PROPERTIES;
 };
 
 void e_action_add_proto(char *action,
@@ -383,3 +383,7 @@ char *e_config_get(char *type);
 void e_config_init(void);
 void e_config_set_user_dir(char *dir);
 char *e_config_user_dir(void);
+
+void e_view_free(E_View *v);
+E_View *e_view_new(void);
+void e_view_init(void);
