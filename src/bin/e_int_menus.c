@@ -9,23 +9,26 @@ struct _Main_Data
 {
    E_Menu *menu;
    E_Menu *apps;
+   E_Menu *desktops;
+   E_Menu *clients;
    E_Menu *modules;
 };
 
 /* local subsystem functions */
-static void _e_int_menus_main_end        (void *data, E_Menu *m);
-static void _e_int_menus_main_about     (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_main_restart   (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_main_exit      (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_apps_scan       (E_Menu *m);
-static void _e_int_menus_apps_start      (void *data, E_Menu *m);
-static void _e_int_menus_apps_end        (void *data, E_Menu *m);
-static void _e_int_menus_apps_free_hook  (void *obj);
-static void _e_int_menus_apps_run        (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_clients_pre_cb  (void *data, E_Menu *m);
-static void _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_desktops_pre_cb (void *data, E_Menu *m);
-static void _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_end            (void *data, E_Menu *m);
+static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_apps_scan           (E_Menu *m);
+static void _e_int_menus_apps_start          (void *data, E_Menu *m);
+static void _e_int_menus_apps_end            (void *data, E_Menu *m);
+static void _e_int_menus_apps_free_hook      (void *obj);
+static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
+static void _e_int_menus_clients_free_hook   (void *obj);
+static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
+static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_row_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_row_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -65,6 +68,7 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
 
    subm = e_int_menus_desktops_new();
+   dat->desktops = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Desktops");
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
@@ -72,6 +76,7 @@ e_int_menus_main_new(void)
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();
+   dat->clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Windows");
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
@@ -170,6 +175,8 @@ _e_int_menus_main_end(void *data, E_Menu *m)
    dat = data;
    e_object_del(E_OBJECT(dat->apps));
    e_object_del(E_OBJECT(dat->modules));
+   e_object_del(E_OBJECT(dat->desktops));
+   e_object_del(E_OBJECT(dat->clients));
    e_object_del(E_OBJECT(m));
    free(dat);
 }
@@ -290,34 +297,18 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *desks = NULL;
    E_Menu *root;
 
-   if (m->realized) return;
-
-   /* clear list */
-   if (m->items)
-     {
-	Evas_List *l;
-	for (l = m->items; l; l = l->next)
-	  {
-	     E_Menu_Item *mi = l->data;
-	     e_object_free(E_OBJECT(mi));
-	  }
-     }
-   evas_list_free(m->items);
-   m->items = NULL;
-
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
    /* Get the desktop list for this zone */
    /* FIXME: Menu code needs to determine what zone menu was clicked in */
-   if (root && root->zone)
+   if ((root) && (root->zone))
      {
 	int i;
 	E_Zone *zone;
 	
 	zone = root->zone;
 	for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
-	  {
-	     desks = evas_list_append(desks, zone->desks[i]);
-	  }
+	  desks = evas_list_append(desks, zone->desks[i]);
 	
 	for (l = desks; l; l = l->next)
 	  {
@@ -411,17 +402,13 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *borders = NULL;
    E_Menu *root;
 
-   if (m->realized) return;
-   if (m->items) return;
-   
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
    /* get the current containers clients */
-   if (root && root->zone)
+   if ((root) && (root->zone))
      {
 	for (l = e_zone_clients_list_get(root->zone); l; l = l->next)
-	  {
-	     borders = evas_list_append(borders, l->data);
-	  }
+	  borders = evas_list_append(borders, l->data);
      }
 
    /* get the iconified clients from other containers */
@@ -432,7 +419,8 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      }
    
    if (!borders)
-     { /* FIXME here we want nothing, but that crashes!!! */
+     { 
+	/* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, "(No Windows)");
 	return;
@@ -445,28 +433,44 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_check_set(mi, 1);
 	e_menu_item_label_set(mi, bd->client.icccm.title);
+	/* ref the border as we implicitly ref it in the callback */
+	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
 	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
-	
 	a = e_app_window_name_class_find(bd->client.icccm.name,
 					 bd->client.icccm.class);
-	if (a)
-	  {
-	     e_menu_item_icon_edje_set(mi, a->path, "icon");
-	  }
+	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
-   evas_list_free(borders);
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
+   e_object_data_set(E_OBJECT(m), borders);
 }
 
+static void
+_e_int_menus_clients_free_hook(void *obj)
+{
+   E_Menu *m;
+   Evas_List *borders;
+   
+   m = obj;
+   borders = e_object_data_get(E_OBJECT(m));
+   while (borders)
+     {
+	E_Border *bd;
+	
+	bd = borders->data;
+	borders = evas_list_remove_list(borders, borders);
+	e_object_unref(E_OBJECT(bd));
+     }
+}
+
+
 static void 
-_e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd = data;
 
    E_OBJECT_CHECK(bd);
-
    if (bd->iconic) e_border_uniconify(bd);
-
    e_desk_show(bd->desk);
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
