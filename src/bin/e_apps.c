@@ -33,10 +33,10 @@ static void      _e_app_free               (E_App *a);
 static void      _e_app_fields_fill        (E_App *a, const char *path);
 static void      _e_app_fields_empty       (E_App *a);
 static Evas_List *_e_app_dir_file_list_get (E_App *a);
-static E_App     *_e_app_subapp_path_find  (E_App *a, const char *subpath);
+static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static void      _e_app_change             (E_App *a, E_App_Change ch);
 static int       _e_apps_cb_exit           (void *data, int type, void *event);
-static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Type type, Ecore_File_Event event, const char *path);
+static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
 
@@ -106,7 +106,10 @@ e_app_new(const char *path, int scan_subdirs)
    if (a)
      {
 	if (a->deleted)
-	  return NULL;
+	  {
+	     printf("BUG E_App: Deleted flag shouldn't be needed: %s\n", a->path);
+	     return NULL;
+	  }
 	e_object_ref(E_OBJECT(a));
 	return a;
      }
@@ -225,6 +228,10 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	     if (a2)
 	       {
 		  a2->references = evas_list_append(a2->references, a);
+		  /* Don't add an extra ref when referencing,
+		   * else the object won't be deleted after deleting from
+		   * disk */
+		  e_object_unref(E_OBJECT(a2));
 		  a->subapps = evas_list_append(a->subapps, a2);
 	       }
 	  }
@@ -363,13 +370,14 @@ _e_app_free(E_App *a)
 	  {
 	     /* If we are the parent, remove us */
 	     a2->parent = NULL;
+	     /* unref the child so it will be deleted too */
+	     e_object_unref(E_OBJECT(a2));
 	  }
 	else
 	  {
 	     /* We have a reference */
 	     a2->references = evas_list_remove(a2->references, a);
 	  }
-	e_object_unref(E_OBJECT(a2));
      }
    for (l = a->references; l; l = l->next)
      {
@@ -603,7 +611,7 @@ _e_app_dir_file_list_get(E_App *a)
 }
 
 static E_App *
-_e_app_subapp_path_find(E_App *a, const char *subpath)
+_e_app_subapp_file_find(E_App *a, const char *file)
 {
    Evas_List *l;
    
@@ -612,7 +620,7 @@ _e_app_subapp_path_find(E_App *a, const char *subpath)
 	E_App *a2;
 	
 	a2 = l->data;
-	if ((!strcmp(a2->path, subpath)) && (!a2->deleted)) return a2;
+	if ((!strcmp(ecore_file_get_file(a2->path), file)) && (!a2->deleted)) return a2;
      }
    return NULL;
 }
@@ -623,6 +631,7 @@ _e_app_change(E_App *a, E_App_Change ch)
    Evas_List *l;
    
    _e_apps_callbacks_walking = 1;
+   printf("Change: %d %s\n", ch, a->path);
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
 	E_App_Callback *cb;
@@ -675,19 +684,13 @@ _e_apps_cb_exit(void *data, int type, void *event)
 
 static void
 _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
-		  Ecore_File_Type type, Ecore_File_Event event, const char *path)
+		  Ecore_File_Event event, const char *path)
 {
    E_App     *app;
-   Evas_List *l;
    char      *file;
    
    app = data;
-
-   if (ecore_file_monitor_type_get(em) != ECORE_FILE_TYPE_DIRECTORY)
-     {
-	printf("BUG: E_App should only monitor directories!\n");
-	return;
-     }
+   printf("Event: %d %s %s\n", event, path, app->path);
 
    /* If this dir isn't scanned yet, no need to report changes! */
    if (!app->scanned)
@@ -696,90 +699,74 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    file = ecore_file_get_file((char *)path);
    if (!strcmp(file, ".order"))
      {
-	switch (event)
+	if ((event == ECORE_FILE_EVENT_CREATED_FILE)
+	    || (event == ECORE_FILE_EVENT_DELETED_FILE)
+	    || (event == ECORE_FILE_EVENT_MODIFIED))
 	  {
-	   case ECORE_FILE_EVENT_NONE:
-	   case ECORE_FILE_EVENT_EXISTS:
-	      break;
-	   case ECORE_FILE_EVENT_CREATED:
-	   case ECORE_FILE_EVENT_DELETED:
-	   case ECORE_FILE_EVENT_CHANGED:
 	      _e_app_subdir_rescan(app);
-	      break;
 	  }
      }
    else if (!strcmp(file, ".directory.eapp"))
      {
-	switch (event)
+	if ((event == ECORE_FILE_EVENT_CREATED_FILE)
+	    || (event == ECORE_FILE_EVENT_MODIFIED))
 	  {
-	   case ECORE_FILE_EVENT_NONE:
-	   case ECORE_FILE_EVENT_EXISTS:
-	      break;
-	   case ECORE_FILE_EVENT_CREATED:
-	   case ECORE_FILE_EVENT_CHANGED:
-	      _e_app_fields_empty(app);
-	      _e_app_fields_fill(app, path);
-	      _e_app_change(app, E_APP_CHANGE);
-	      break;
-	   case ECORE_FILE_EVENT_DELETED:
-	      _e_app_fields_empty(app);
-	      app->name = strdup(ecore_file_get_file(app->path));
-	      break;
+	     _e_app_fields_empty(app);
+	     _e_app_fields_fill(app, path);
+	     _e_app_change(app, E_APP_CHANGE);
+	  }
+	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
+	  {
+	     _e_app_fields_empty(app);
+	     app->name = strdup(ecore_file_get_file(app->path));
 	  }
      }
    else
      {
-	E_App *a2;
-
-	switch (event)
+	if (event == ECORE_FILE_EVENT_MODIFIED)
 	  {
-	   case ECORE_FILE_EVENT_NONE:
-	   case ECORE_FILE_EVENT_EXISTS:
-	      break;
-	   case ECORE_FILE_EVENT_CREATED:
-	      /* If a file is created, wait for the directory change to update
-	       * the eapp. */
-	      /* FIXME: If in a main repository, check if someone else wants this
-	       * file! */
-	      break;
-	   case ECORE_FILE_EVENT_DELETED:
-	      /* If something is deleted, mark it as deleted
-	       * and wait for the directory change to update
-	       * the client. */
-	      a2 = _e_app_subapp_path_find(app, path);
-	      if (a2)
-		{
-		   a2->deleted = 1;
-		   /* If this app is in a main repository, tell all referencing
-		    * apps to rescan. */
-		   for (l = a2->references; l; l = l->next)
-		     {
-			E_App *app;
+	     E_App *a2;
 
-			app = l->data;
-			_e_app_subdir_rescan(app);
-		     }
-		}
-	      break;
-	   case ECORE_FILE_EVENT_CHANGED:
-	      if (type == ECORE_FILE_TYPE_FILE)
-		{
-		   a2 = _e_app_subapp_path_find(app, path);
-		   if (a2)
-		     {
-			_e_app_fields_empty(a2);
-			_e_app_fields_fill(a2, path);
-			_e_app_change(a2, E_APP_CHANGE);
-		     }
-		}
-	      /* If the current directory has changed, we must rescan
-	       * to check which files are here. */
-	      if ((type == ECORE_FILE_TYPE_DIRECTORY) && !strcmp(path, app->path))
-		{
-		   /* We don't know why it's changed, better rescan... */
-		   _e_app_subdir_rescan(app);
-		}
-	      break;
+	     a2 = _e_app_subapp_file_find(app, file);
+	     if (a2)
+	       {
+		  _e_app_fields_empty(a2);
+		  _e_app_fields_fill(a2, path);
+		  _e_app_change(a2, E_APP_CHANGE);
+	       }
+	  }
+	else if ((event == ECORE_FILE_EVENT_CREATED_FILE)
+		 || (event == ECORE_FILE_EVENT_CREATED_DIRECTORY))
+	  {
+	     /* FIXME: Check if someone wants a reference to this
+	      * app */
+	     _e_app_subdir_rescan(app);
+	  }
+	else if ((event == ECORE_FILE_EVENT_DELETED_FILE)
+		 || (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
+	  {
+	     E_App *a;
+
+	     a = _e_app_subapp_file_find(app, file);
+	     if (a)
+	       {
+		  a->deleted = 1;
+		  _e_app_subdir_rescan(app);
+	       }
+	  }
+	else if (event == ECORE_FILE_EVENT_DELETED_SELF)
+	  {
+	     Evas_List *l;
+
+	     app->deleted = 1;
+	     for (l = app->references; l; l = l->next)
+	       {
+		  E_App *a2;
+
+		  a2 = l->data;
+		  _e_app_subdir_rescan(a2);
+	       }
+	     _e_app_change(app, E_APP_DEL);
 	  }
      }
 }
@@ -799,23 +786,7 @@ _e_app_subdir_rescan(E_App *app)
 	char *s;
 
 	s = l->data;
-	snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
-	a2 = _e_app_subapp_path_find(app, buf);
-	if (!a2)
-	  {
-	     /* Do we have a reference? */
-	     /* FIXME: Keep the reference, or check if a file
-	      * has appeared locally? */
-	     Evas_List *pl;
-
-	     pl = _e_apps_repositories;
-	     while ((!a2) && (pl))
-	       {
-		  snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
-		  a2 = _e_app_subapp_path_find(app, buf);
-		  pl = pl->next;
-	       }
-	  }
+	a2 = _e_app_subapp_file_find(app, s);
 	if (!a2)
 	  {
 	     /* If we still haven't found it, it is new! */
@@ -848,7 +819,9 @@ _e_app_subdir_rescan(E_App *app)
 		       ch = calloc(1, sizeof(E_App_Change_Info));
 		       ch->app = a2;
 		       ch->change = E_APP_ADD;
+		       /* Don't add an extra ref, already added by e_app_new
 		       e_object_ref(E_OBJECT(ch->app));
+		       */
 		       changes = evas_list_append(changes, ch);
 		    }
 	       }
@@ -872,6 +845,7 @@ _e_app_subdir_rescan(E_App *app)
 	    }
 	if (a2)
 	  {
+	     a2->deleted = 1;
 	     ch = calloc(1, sizeof(E_App_Change_Info));
 	     ch->app = a2;
 	     ch->change = E_APP_DEL;
@@ -885,6 +859,12 @@ _e_app_subdir_rescan(E_App *app)
    /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);
    app->subapps = subapps;
+   for (l = subapps; l; l = l->next)
+     {
+	E_App *a;
+	a = l->data;
+	printf("subapps: %s\n", a->path);
+     }
    ch = calloc(1, sizeof(E_App_Change_Info));
    ch->app = app;
    ch->change = E_APP_ORDER;
