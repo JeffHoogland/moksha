@@ -75,6 +75,7 @@ e_container_new(E_Manager *man)
      }
    con->bg_ecore_evas = ecore_evas_software_x11_new(NULL, con->win, 0, 0, con->w, con->h);
    ecore_evas_override_set(con->bg_ecore_evas, 1);
+   ecore_evas_software_x11_direct_resize_set(con->bg_ecore_evas, 1);
    e_canvas_add(con->bg_ecore_evas);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    con->bg_win = ecore_evas_software_x11_window_get(con->bg_ecore_evas);
