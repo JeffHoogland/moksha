@@ -17,6 +17,7 @@ exec.c \
 fs.c \
 icccm.c \
 icons.c \
+ipc.c \
 main.c \
 menu.c \
 menudb.c \
