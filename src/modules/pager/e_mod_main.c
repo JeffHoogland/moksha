@@ -273,21 +273,19 @@ _pager_refresh(Pager *e)
 
    Evas_Object *desk_obj, *win_obj;
    int          desks_x, desks_y, x, y, top, toptmp;
-   Evas_Coord   px, py, pw, ph, ww, hh;
+   Evas_Coord   px, py, ww, hh;
    double       scalex, scaley;
 
    zone = e_zone_current_get(e->con);
    e_zone_desk_count_get(zone, &desks_x, &desks_y);
-   pw = e->fw;
-   ph = e->fh;
 
    evas_object_resize(e->base, e->fw * desks_x, e->fh * desks_y);
    evas_object_move(e->base, e->fx, e->fy);
 
    evas_output_viewport_get(e->evas, NULL, NULL, &ww, &hh);
-   scalex = (double) pw / ww;
-   scaley = (double) ph / hh;
-   evas_object_resize(e->screen, pw, ph);
+   scalex = (double) e->fw / ww;
+   scaley = (double) e->fh / hh;
+   evas_object_resize(e->screen, e->fw, e->fh);
 
    desks = e->desks;
    wins = e->wins;
@@ -296,8 +294,8 @@ _pager_refresh(Pager *e)
      for (y = 0; y < desks_y; y++)
        {
 	  desk = e_desk_at_xy_get(zone, x, y);
-	  px = e->fx + (x * pw);
-	  py = e->fy + (y * ph);
+	  px = e->fx + (x * e->fw);
+	  py = e->fy + (y * e->fh);
 
 	  if (desks)
 	    {
@@ -314,7 +312,7 @@ _pager_refresh(Pager *e)
 	       evas_object_pass_events_set(desk_obj, 1);
 	       e->desks = evas_list_append(e->desks, desk_obj);
 	     }
-	  evas_object_resize(desk_obj, pw, ph);
+	  evas_object_resize(desk_obj, e->fw, e->fh);
 	  evas_object_move(desk_obj, px, py);
 	  evas_object_show(desk_obj);
 
@@ -511,14 +509,12 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	p->fh = p->th / ycount;
 	if (p->fw < PAGER_MIN_W) p->fw = PAGER_MIN_W;
 	if (p->fh < PAGER_MIN_H) p->fh = PAGER_MIN_H;
-//	if (p->fw < p->minsize) p->fw = p->minsize;
-//	if (p->fw > p->maxsize) p->fw = p->maxsize;
-	if (p->fx + tw > sw)
+	if (p->fx + p->tw > sw)
 	  {
 	     p->tw = sw - p->fx;
 	     p->fw = p->tw / xcount;
 	  }
-	if (p->fy + th > sh)
+	if (p->fy + p->th > sh)
 	  {
 	     p->th = sh - p->fy;
 	     p->fh = p->th / ycount;
