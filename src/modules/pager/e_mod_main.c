@@ -796,7 +796,7 @@ _pager_cb_event_border_add(void *data, int type, void *event)
    e = data;
    ev = event;
    desk = _pager_desk_find(e, ((E_Border *) ev->border)->desk);
-   
+   if (_pager_window_find(e, ev->border)) return 1;
    if (desk)
      {
 	new = _pager_window_create(data, ev->border, desk);
