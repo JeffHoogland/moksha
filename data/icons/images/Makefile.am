@@ -9,4 +9,5 @@ reset_button_glow_0.png \
 windows.png \
 module.png \
 favorites.png \
-desktop.png
+desktop.png \
+gadget.png
