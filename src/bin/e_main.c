@@ -543,7 +543,13 @@ _e_main_screens_init(void)
 								deskxy[1]);
 				      e_border_desk_set(bd, target);
 				      if (target == e_desk_current_get(bd->zone))
-					e_border_show(bd);
+					{
+					   ret = ecore_x_window_prop_card32_get(windows[i],
+										E_ATOM_MAPPED,
+										&ret_val, 1);
+					   if ((ret > -1) && ret_val)
+					     e_border_show(bd);
+					}
 				   }
 			      }
 			    ret = ecore_x_window_prop_card32_get(windows[i],

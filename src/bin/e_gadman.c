@@ -135,6 +135,36 @@ e_gadman_mode_get(E_Gadman *gm)
    return gm->mode;
 }
 
+void
+e_gadman_container_resize(E_Gadman *gm)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK(gm);
+   for (l = gm->clients; l; l = l->next)
+     {
+	E_Gadman_Client *gmc;
+	
+	gmc = l->data;
+	if (gmc->use_autow)
+	  {
+	     gmc->w = gmc->autow;
+	     gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+	  }
+	if (gmc->use_autoh)
+	  {
+	     gmc->h = gmc->autoh;
+	     gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+	  }
+	if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
+	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
+	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+	_e_gadman_client_overlap_deny(gmc);
+	_e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+     }
+}
+
 E_Gadman_Client *
 e_gadman_client_new(E_Gadman *gm)
 {
@@ -669,6 +699,7 @@ _e_gadman_client_overlap_deny(E_Gadman_Client *gmc)
 	  }
 	iterate++;
      }
+   _e_gadman_client_geometry_to_align(gmc);
 }
 
 static void

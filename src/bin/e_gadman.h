@@ -86,6 +86,7 @@ EAPI int              e_gadman_shutdown(void);
 EAPI E_Gadman        *e_gadman_new(E_Container *con);
 EAPI void             e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode);
 EAPI E_Gadman_Mode    e_gadman_mode_get(E_Gadman *gm);
+EAPI void             e_gadman_container_resize(E_Gadman *gm);
 EAPI E_Gadman_Client *e_gadman_client_new(E_Gadman *gm);
 EAPI void             e_gadman_client_save(E_Gadman_Client *gmc);
 EAPI void             e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge);

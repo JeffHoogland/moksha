@@ -362,7 +362,8 @@ _e_app_fields_fill(E_App *a, char *path)
    /* if its "C" its the default - so drop it */
    if ((lang) && (!strcmp(lang, "C")))
      lang = NULL;
-   ef = eet_open(a->path, EET_FILE_MODE_READ);
+   if (!path) path = a->path;
+   ef = eet_open(path, EET_FILE_MODE_READ);
    if (!ef) return;
 
    if (lang)
@@ -373,7 +374,6 @@ _e_app_fields_fill(E_App *a, char *path)
      }
    else
      v = eet_read(ef, "app/info/name", &size);
-
    if (v)
      {
 	str = malloc(size + 1);

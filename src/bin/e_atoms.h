@@ -9,6 +9,7 @@ extern EAPI Ecore_X_Atom E_ATOM_MANAGED;
 /* basic window properties */
 extern EAPI Ecore_X_Atom E_ATOM_DESK;
 extern EAPI Ecore_X_Atom E_ATOM_ICONIC;
+extern EAPI Ecore_X_Atom E_ATOM_MAPPED;
 
 EAPI int    e_atoms_init(void);
 EAPI int    e_atoms_shutdown(void);

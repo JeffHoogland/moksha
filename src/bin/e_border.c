@@ -322,6 +322,7 @@ void
 e_border_show(E_Border *bd)
 {
    E_Event_Border_Show *ev;
+   unsigned int visible;
    
    E_OBJECT_CHECK(bd);
    if (bd->visible) return;
@@ -332,6 +333,9 @@ e_border_show(E_Border *bd)
    bd->changed = 1;
    bd->changes.visible = 1;
 
+   visible = 1;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
+   
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
    /* SUSPICION: does the unref for this actually sometimes not get */
@@ -344,6 +348,7 @@ void
 e_border_hide(E_Border *bd)
 {
    E_Event_Border_Hide *ev;
+   unsigned int visible;
    
    E_OBJECT_CHECK(bd);
    if (!bd->visible) return;
@@ -360,6 +365,9 @@ e_border_hide(E_Border *bd)
    bd->changed = 1;
    bd->changes.visible = 1;
 
+   visible = 0;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
+   
    ev = calloc(1, sizeof(E_Event_Border_Hide));
    ev->border = bd;
    /* SUSPICION: does the unref for this actually sometimes not get */
@@ -804,6 +812,7 @@ e_border_iconify(E_Border *bd)
      }
    iconic = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
 }
 
 void
@@ -826,6 +835,7 @@ e_border_uniconify(E_Border *bd)
      }
    iconic = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
 }
 
 void
@@ -883,9 +893,6 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
-   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_MANAGED);
-   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_DESK);
-   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_ICONIC);
    while (bd->pending_move_resize)
      {
 	free(bd->pending_move_resize->data);

@@ -378,11 +378,6 @@ _e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee)
    evas_output_viewport_get(evas, NULL, NULL, &w, &h);
    o = evas_object_name_find(evas, "desktop/background");
    con = evas_object_data_get(o, "e_container");
-   /* FIXME: Handle resizing of zones if container is resized */
-#if 0
-   evas_object_resize(con->bg_object, w, h);
-   evas_object_resize(con->bg_event_object, w, h);
-#endif
    _e_container_resize_handle(con);
 }
 
@@ -426,22 +421,60 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Evas_List *l;
+   int n, i;
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
+   /* FIXME: Handle resizing of zones if container is resized */
+   n = ecore_x_xinerama_screen_count_get();
+   if (n == 0)
+     {
+	if (con->zones)
+	  {
+	     E_Zone *zone;
+	     
+	     zone = con->zones->data;
+	     e_zone_move(zone, 0, 0);
+	     e_zone_resize(zone, con->w, con->h);
+	  }
+     }
+   else
+     {
+	for (i = 0; i < n; i++)
+	  {
+	     int zx, zy, zw, zh;
+	     
+	     if (ecore_x_xinerama_screen_geometry_get(i, &zx, &zy, &zw, &zh))
+	       {
+		  E_Zone *zone;
+		  
+		  zone = e_container_zone_number_get(con, i);
+		  if (zone)
+		    {
+		       e_zone_move(zone, zx, zy);
+		       e_zone_resize(zone, zw, zh);
+		    }
+	       }
+	  }
+     }
+   e_gadman_container_resize(con->gadman);
    e_object_ref(E_OBJECT(con));
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
    for (l = con->clients; l; l = l->next)
      {
-	E_Border *b;
+	E_Border *bd;
 	
-	b = l->data;
+	bd = l->data;
 	
-	if ((b->x + b->w) > con->w) e_border_move(b, con->w - b->w, b->y);
-	if (b->w > con->w) e_border_resize(b, con->w, b->h);
-	
-	if ((b->y + b->h) > con->h) e_border_move(b, b->x, con->h - b->h);
-	if (b->h > con->h) e_border_resize(b, b->w, con->h);
+	if (bd->w > bd->zone->w)
+	  e_border_resize(bd, bd->zone->w, bd->h);
+	if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
+	  e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
+	    
+	if (bd->h > bd->zone->h)
+	  e_border_resize(bd, bd->w, bd->zone->h);
+	if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
+	  e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
      }
 }
 
