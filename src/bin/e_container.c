@@ -90,9 +90,25 @@ e_container_new(E_Manager *man)
 	for (i = 0; i < n; i++)
 	  {
 	     int zx, zy, zw, zh;
+	     int skip;
+	     Evas_List *l;
 	     
 	     if (ecore_x_xinerama_screen_geometry_get(i, &zx, &zy, &zw, &zh))
-	       zone = e_zone_new(con, zx, zy, zw, zh);
+	       {
+		  skip = 0;
+		  for (l = con->zones; l; l = l->next)
+		    {
+		       zone = l->data;
+		       if (E_INTERSECTS(zone->x, zone->y, zone->w, zone->h,
+					zx, zy, zw, zh))
+			 {
+			    skip = 1;
+			    break;
+			 }
+		    }
+		  if (!skip)
+		    zone = e_zone_new(con, zx, zy, zw, zh);
+	       }
 	  }
      }
    
