@@ -348,6 +348,11 @@ void e_resist_border(E_Border *b);
     
 time_t e_file_modified_time(char *file);
 void e_set_env(char *variable, char *content);
+int e_file_exists(char *file);
+int e_file_is_dir(char *file);
+char *e_file_home(void);
+int e_file_mkdir(char *dir);
+int e_file_cp(char *src, char *dst);
 
 void e_exec_set_args(int argc, char **argv);
 void e_exec_restart(void);
@@ -355,4 +360,6 @@ pid_t e_exec_run(char *exe);
 pid_t e_exec_run_in_dir(char *exe, char *dir);
 pid_t e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path);
     
+void e_config_init(void);
+char *e_config_user_dir(void);
 char *e_config_get(char *type);

@@ -38,9 +38,10 @@ setup(void)
 int
 main(int argc, char **argv)
 {
+   atexit(cb_exit);
    e_exec_set_args(argc, argv);
    
-   atexit(cb_exit);
+   e_config_init();
    e_display_init(NULL);
    e_ev_signal_init();
    e_event_filter_init();
