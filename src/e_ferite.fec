@@ -64,6 +64,6 @@ namespace e {
    // shutdown enlightenment
    function shutdown()
    %{
-	  e_event_loop_quit();  
+	  ecore_event_loop_quit();  
    %}
 }
