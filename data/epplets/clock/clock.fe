@@ -37,13 +37,14 @@ object clock;
 epp = new Epplet();
 
 /* move the epplet to desired position*/
-epp.move(epp.getViewW() - 200, 0);
+epp.move(epp.getViewW() - 250, 0);
 epp.resize(100, 30); 
 
 /* create text object for clock display */
 clock = new EvasObject(epp);
-clock.addText("borzoib",13,"");
-clock.move(epp.getX(), epp.getY());
+/* clock.addText("borzoib",15,""); */
+clock.addText("plank",15,"");
+clock.move(epp.getX()+2, epp.getY()+2);
 clock.setLayer(9999);
 clock.setColor(0,0,0,140);
 clock.show();
