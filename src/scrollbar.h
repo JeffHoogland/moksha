@@ -19,6 +19,10 @@ struct _E_Scrollbar
    int    direction;
    double x, y, w, h;
    
+   int    mouse_down;
+   int    down_x, down_y;
+   int    mouse_x, mouse_y;
+   
    struct {
       double x, y, w, h;      
    } bar_area;

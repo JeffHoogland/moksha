@@ -3,10 +3,54 @@
 
 static void e_scrollbar_recalc(E_Scrollbar *sb);
 static void e_scrollbar_setup_bits(E_Scrollbar *sb);
+static void e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_sb_base_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_sb_bar_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_sb_bar_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_sb_bar_move_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+
 
 static void
 e_scrollbar_recalc(E_Scrollbar *sb)
 {
+   if (sb->base)
+     {
+	double x, y, w, h;
+	
+	ebits_get_bit_geometry(sb->base, "Trough_Area",
+			       &x, &y, &w, &h);
+	sb->bar_area.x = x + sb->x;
+	sb->bar_area.y = y + sb->y;
+	sb->bar_area.w = w;
+	sb->bar_area.h = h;
+	if (sb->direction)
+	  {
+	     sb->bar_pos.w = sb->bar_area.w;
+	     sb->bar_pos.h = (sb->bar_area.h * sb->range) / sb->max;
+	     sb->bar_pos.x = sb->bar_area.x;
+	     sb->bar_pos.y = sb->bar_area.y + 
+	       ((sb->bar_area.h * sb->val) / (sb->max - 1));
+	  }
+	else
+	  {
+	     sb->bar_pos.w = (sb->bar_area.w * sb->range) / sb->max;
+	     sb->bar_pos.h = sb->bar_area.h;
+	     sb->bar_pos.x = sb->bar_area.x + 
+	       ((sb->bar_area.w * sb->val) / (sb->max - 1));
+	     sb->bar_pos.y = sb->bar_area.y;
+	  }
+     }
+   else
+     {   
+	sb->bar_area.x = sb->x;
+	sb->bar_area.y = sb->y;
+	sb->bar_area.w = sb->w;
+	sb->bar_area.h = sb->h;
+	sb->bar_pos.x = sb->bar_area.x;
+	sb->bar_pos.y = sb->bar_area.y;
+	sb->bar_pos.w = sb->bar_area.w;
+	sb->bar_pos.h = sb->bar_area.h;
+     }
    UN(sb);
 }
 
@@ -28,6 +72,137 @@ e_scrollbar_setup_bits(E_Scrollbar *sb)
 	sb->base = ebits_load(buf);
 	sprintf(buf, "%s/scroll_bar_h.bits.db", e_config_get("scrollbars"));
 	sb->bar = ebits_load(buf);
+     }
+   if (sb->base)
+     {
+	ebits_add_to_evas(sb->base, sb->evas);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Trough", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow1", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_DOWN, e_sb_base_down_cb, sb);
+	ebits_set_bit_callback(sb->base, "Scrollbar_Arrow2", CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+     }
+   if (sb->bar)
+     {
+	ebits_add_to_evas(sb->bar, sb->evas);
+	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_DOWN, e_sb_bar_down_cb, sb);
+	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_UP, e_sb_bar_up_cb, sb);
+	ebits_set_bit_callback(sb->bar, "Scrollbar_Bar", CALLBACK_MOUSE_MOVE, e_sb_bar_move_cb, sb);
+     }
+}
+
+static void
+e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Scrollbar *sb;
+   double prev;
+   
+   sb = data;
+   if (sb->mouse_down) return;
+   sb->mouse_down = bt;
+   if (!class) return;
+   prev = sb->val;
+   if (!strcmp(class, "Scrollbar_Arrow1"))
+     {
+	sb->val -= 16;
+	if (sb->val < 0) sb->val = 0;
+     }
+   else if (!strcmp(class, "Scrollbar_Arrow2"))
+     {
+	sb->val += 16;
+	if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+     }
+   else if (!strcmp(class, "Scrollbar_Trough"))
+     {
+     }
+   e_scrollbar_recalc(sb);
+   if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);
+   if (sb->bar) ebits_resize(sb->bar, sb->bar_pos.w, sb->bar_pos.h);
+   if (prev != sb->val)
+     {
+	if (sb->func_change) sb->func_change(sb->func_data, sb, sb->val);
+     }
+}
+
+static void
+e_sb_base_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Scrollbar *sb;
+   
+   sb = data;
+   if (bt == sb->mouse_down) sb->mouse_down = 0;
+   else return;
+   if (!class) return;
+   if (!strcmp(class, "Scrollbar_Arrow1"))
+     {
+     }
+   else if (!strcmp(class, "Scrollbar_Arrow2"))
+     {
+     }
+   else if (!strcmp(class, "Scrollbar_Trough"))
+     {
+     }
+}
+
+static void
+e_sb_bar_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Scrollbar *sb;
+   
+   sb = data;
+   if (sb->mouse_down) return;
+   sb->mouse_down = bt;
+   sb->down_x = x;
+   sb->down_y = y;
+   sb->mouse_x = x;
+   sb->mouse_y = y;
+}
+
+static void
+e_sb_bar_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Scrollbar *sb;
+   
+   sb = data;
+   if (bt == sb->mouse_down) sb->mouse_down = 0;
+   else return;
+}
+
+static void
+e_sb_bar_move_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Scrollbar *sb;
+   int dx, dy;   
+   double prev;
+   
+   sb = data;
+   if (!sb->mouse_down) return;
+   dx = x - sb->mouse_x;
+   dy = y - sb->mouse_y;
+   sb->mouse_x = x;
+   sb->mouse_y = y;
+   prev = sb->val;
+   if (sb->direction)
+     {
+	if (sb->bar_area.h > sb->bar_pos.h) sb->val += 
+	  ((double)dy * sb->max) / sb->bar_area.h;
+	else sb->val = 0;
+     }
+   else
+     {
+	if (sb->bar_area.w > sb->bar_pos.w) sb->val +=
+	  ((double)dx * sb->max) / sb->bar_area.w;
+	else sb->val = 0;
+     }
+   if (sb->val < 0) sb->val = 0;
+   if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+   if (prev != sb->val)
+     {
+	e_scrollbar_recalc(sb);
+	if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);
+	if (sb->bar) ebits_resize(sb->bar, sb->bar_pos.w, sb->bar_pos.h);   
+	if (sb->func_change) sb->func_change(sb->func_data, sb, sb->val);
      }
 }
 
@@ -128,6 +303,7 @@ void
 e_scrollbar_set_direction(E_Scrollbar *sb, int d)
 {
    if (d == sb->direction) return;
+   sb->direction = d;
    if (sb->evas)
      {
 	Evas evas;
@@ -176,6 +352,7 @@ void
 e_scrollbar_set_value(E_Scrollbar *sb, double val)
 {
    if (sb->val == val) return;
+   if (val > sb->max - sb->range) val = sb->max - sb->range;
    sb->val = val;
    e_scrollbar_recalc(sb);
    if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);

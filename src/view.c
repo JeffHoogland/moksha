@@ -44,6 +44,8 @@ static void e_view_handle_fs_restart(void *data);
 static void e_view_resort_timeout(int val, void *data);
 static int  e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2);
 static void e_view_geometry_record_timeout(int val, void *data);
+static void e_view_scrollbar_v_change_cb(void *_data, E_Scrollbar *sb, double val);
+static void e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val);
 
 void
 e_view_selection_update(E_View *v)
@@ -211,6 +213,26 @@ e_view_selection_update(E_View *v)
    evas_show(v->evas, v->select.obj.grad_t);
    evas_show(v->evas, v->select.obj.grad_b);
    evas_show(v->evas, v->select.obj.clip);
+}
+
+static void
+e_view_scrollbar_v_change_cb(void *_data, E_Scrollbar *sb, double val)
+{
+   E_View *v;
+   
+   v = _data;
+   e_view_scroll_to(v, v->scroll.x, v->spacing.window.t - sb->val);
+   UN(val);
+}
+
+static void
+e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val)
+{
+   E_View *v;
+   
+   v = _data;
+   e_view_scroll_to(v, v->spacing.window.l - sb->val, v->scroll.y);
+   UN(val);
 }
 
 static void
@@ -573,28 +595,40 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
    Evas_List l;
    int x1, x2, y1, y2;
    
-   x1 = 999999999;
-   x2 = -999999999;
-   y1 = 999999999;
-   y2 = -999999999;
-   if (!v->icons)
+   x1 = v->extents.x1;
+   x2 = v->extents.x2;
+   y1 = v->extents.y1;
+   y2 = v->extents.y2;
+   if (!v->extents.valid)
      {
-	if (min_x) *min_x = 0;
-	if (min_y) *min_y = 0;
-	if (max_x) *max_x = 1;
-	if (max_y) *max_y = 1;
-	return;
+	x1 = 999999999;
+	x2 = -999999999;
+	y1 = 999999999;
+	y2 = -999999999;
+	if (!v->icons)
+	  {
+	     if (min_x) *min_x = 0;
+	     if (min_y) *min_y = 0;
+	     if (max_x) *max_x = 1;
+	     if (max_y) *max_y = 1;
+	     return;
+	  }
+	for (l = v->icons; l; l = l->next)
+	  {
+	     E_Icon *ic;
+	     
+	     ic = l->data;
+	     if (ic->geom.x < x1) x1 = ic->geom.x;
+	     if (ic->geom.y < y1) y1 = ic->geom.y;
+	     if (ic->geom.x + ic->geom.w > x2) x2 = ic->geom.x + ic->geom.w;
+	     if (ic->geom.y + ic->geom.h > y2) y2 = ic->geom.y + ic->geom.h;
+	  }
+	v->extents.x1 = x1;
+	v->extents.y1 = y1;
+	v->extents.x2 = x2;
+	v->extents.y2 = y2;
      }
-   for (l = v->icons; l; l = l->next)
-     {
-	E_Icon *ic;
-	
-	ic = l->data;
-	if (ic->geom.x < x1) x1 = ic->geom.x;
-	if (ic->geom.y < y1) y1 = ic->geom.y;
-	if (ic->geom.x + ic->geom.w > x2) x2 = ic->geom.x + ic->geom.w;
-	if (ic->geom.y + ic->geom.h > y2) y2 = ic->geom.y + ic->geom.h;
-     }
+   v->extents.valid = 1;
    if (x1 > 0) x1 = 0;
    if (y1 > 0) y1 = 0;
    if (min_x) *min_x = x1;
@@ -1096,8 +1130,10 @@ e_configure(Eevent * ev)
 	if (e->win == v->win.base)
 	  {
 	     /* win, root, x, y, w, h, wm_generated */
+	     printf("configure for view %s\n", v->dir);
 	     if (e->wm_generated)
 	       {
+		  printf("wm generated %i %i, %ix%i\n", e->x, e->y, e->w, e->h);
 		  if ((e->x != v->location.x) || (e->y != v->location.y))
 		    {
 		       v->location.x = e->x;
@@ -1105,8 +1141,10 @@ e_configure(Eevent * ev)
 		       e_view_queue_geometry_record(v);
 		    }
 	       }
+	     printf("size %ix%i\n", e->w, e->h);
 	     if ((e->w != v->size.w) || (e->h != v->size.h))
 	       {
+		  printf("... a new size!\n");
 		  v->size.w = e->w;
 		  v->size.h = e->h;
 		  if (v->pmap) e_pixmap_free(v->pmap);
@@ -1125,11 +1163,16 @@ e_configure(Eevent * ev)
 		    {
 		       e_background_set_size(v->bg, v->size.w, v->size.h);
 		    }
+		  printf("evas_set_output_viewpor(%p)\n", v->evas);
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
 		  e_view_scroll_to(v, v->scroll.x, v->scroll.y);
 		  e_view_arrange(v);
 		  e_view_queue_geometry_record(v);
+		  e_scrollbar_move(v->scrollbar.v, v->size.w - 12, 0);
+		  e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
+		  e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
+		  e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
 	       }
 	  }
      }
@@ -1280,19 +1323,19 @@ e_key_down(Eevent * ev)
 	  {
 	     if (!strcmp(e->key, "Up"))
 	       {
-		  e_view_scroll_by(v, 0, 8);
+		  e_scrollbar_set_value(v->scrollbar.v, v->scrollbar.v->val - 8);
 	       }
 	     else if (!strcmp(e->key, "Down"))
 	       {
-		  e_view_scroll_by(v, 0, -8);
+		  e_scrollbar_set_value(v->scrollbar.v, v->scrollbar.v->val + 8);
 	       }
 	     else if (!strcmp(e->key, "Left"))
 	       {
-		  e_view_scroll_by(v, 8, 0);
+		  e_scrollbar_set_value(v->scrollbar.h, v->scrollbar.h->val - 8);
 	       }
 	     else if (!strcmp(e->key, "Right"))
 	       {
-		  e_view_scroll_by(v, -8, 0);
+		  e_scrollbar_set_value(v->scrollbar.h, v->scrollbar.h->val + 8);
 	       }
 	     else if (!strcmp(e->key, "Escape"))
 	       {
@@ -1606,6 +1649,7 @@ e_view_icon_apply_xy(E_Icon *ic)
    /*  [I]  */
    /*  Ig   */
    /* [txt] */
+   
    if (ic->geom.text.w > ic->geom.icon.w) ic->geom.w = ic->geom.text.w;
    else ic->geom.w = ic->geom.icon.w;
    ic->geom.h = ic->geom.icon.h + ic->geom.text.h + ic->view->spacing.icon.g;
@@ -1674,6 +1718,11 @@ e_view_icon_apply_xy(E_Icon *ic)
 		     ic->geom.text.w + pl  + pr, ic->geom.text.h + pt + pb);
 	ebits_show(ic->obj.sel.over.text);
      }
+   if (ic->geom.x != ic->prev_geom.x) ic->view->extents.valid = 0;
+   else if (ic->geom.y != ic->prev_geom.y) ic->view->extents.valid = 0;
+   else if (ic->geom.w != ic->prev_geom.w) ic->view->extents.valid = 0;
+   else if (ic->geom.h != ic->prev_geom.h) ic->view->extents.valid = 0;
+   ic->prev_geom = ic->geom;
 }
 
 static int
@@ -1714,6 +1763,8 @@ e_view_arrange(E_View *v)
 {
    Evas_List l;
    int x, y;
+   int x1, x2, y1, y2;
+   double sv, sr, sm;
    
    x = v->spacing.window.l;
    y = v->spacing.window.t;
@@ -1732,6 +1783,24 @@ e_view_arrange(E_View *v)
 	e_view_icon_apply_xy(ic);
 	x += ic->geom.w + v->spacing.icon.s;
      }
+   
+   e_view_icons_get_extents(v, &x1, &y1, &x2, &y2);
+
+   sv =  - (v->scroll.y - v->spacing.window.t);
+   sr = v->size.h - v->spacing.window.t - v->spacing.window.b;
+   sm = y2 - y1;
+   if (sr > sm) sr = sm;
+   e_scrollbar_set_value(v->scrollbar.v, sv);
+   e_scrollbar_set_range(v->scrollbar.v, sr);
+   e_scrollbar_set_max(v->scrollbar.v, sm);   
+
+   sv =  - (v->scroll.x - v->spacing.window.l);
+   sr = v->size.w - v->spacing.window.l - v->spacing.window.r;
+   sm = x2 - x1;
+   if (sr > sm) sr = sm;
+   e_scrollbar_set_value(v->scrollbar.h, sv);
+   e_scrollbar_set_range(v->scrollbar.h, sr);
+   e_scrollbar_set_max(v->scrollbar.h, sm);   
 }
 
 void
@@ -1906,6 +1975,7 @@ e_view_file_added(int id, char *file)
 	ic->obj.icon = evas_add_image_from_file(ic->view->evas, NULL);
 	ic->obj.text = e_text_new(ic->view->evas, ic->file, "filename");
 	v->icons = evas_list_append(v->icons, ic);
+	v->extents.valid = 0;
      }
 }
 
@@ -1929,6 +1999,7 @@ e_view_file_deleted(int id, char *file)
 	     OBJ_UNREF(ic);
 	     v->icons = evas_list_remove(v->icons, ic);
 	     v->changed = 1;
+	     v->extents.valid = 0;
 	     e_view_queue_resort(v);
 	  }
      }
@@ -2052,9 +2123,9 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    SETCOL(v->select.config.grad_b, 255, 255, 255, 100);
 
    v->spacing.window.l = 3;
-   v->spacing.window.r = 3;
+   v->spacing.window.r = 15;
    v->spacing.window.t = 3;
-   v->spacing.window.b = 3;
+   v->spacing.window.b = 15;
    v->spacing.icon.s = 7;
    v->spacing.icon.g = 7;
    v->spacing.icon.b = 7;
@@ -2130,6 +2201,12 @@ e_view_realize(E_View *v)
    v->win.main = evas_get_window(v->evas);
    evas_event_move(v->evas, -999999, -999999);
    e_add_child(v->win.base, v->win.main);   
+   e_window_set_events(v->win.base,
+		       XEV_VISIBILITY | XEV_CONFIGURE | 
+		       XEV_PROPERTY | XEV_FOCUS);
+   e_window_set_events(v->win.main, 
+		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
+		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
    if (v->options.back_pixmap)
      {
 	v->pmap = e_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
@@ -2153,12 +2230,32 @@ e_view_realize(E_View *v)
    evas_set_color(v->evas, v->obj_bg, 0, 0, 0, 0);
    evas_show(v->evas, v->obj_bg);
    
-   e_window_set_events(v->win.base,
-		       XEV_VISIBILITY | XEV_CONFIGURE | 
-		       XEV_PROPERTY | XEV_FOCUS);
-   e_window_set_events(v->win.main, 
-		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
-		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
+   v->scrollbar.v = e_scrollbar_new();
+   e_scrollbar_set_change_func(v->scrollbar.v, e_view_scrollbar_v_change_cb, v);
+   e_scrollbar_set_direction(v->scrollbar.v, 1);
+   e_scrollbar_add_to_evas(v->scrollbar.v, v->evas);
+   e_scrollbar_set_layer(v->scrollbar.v, 2000);
+   e_scrollbar_set_value(v->scrollbar.v, 0.0);
+   e_scrollbar_set_range(v->scrollbar.v, 1.0);
+   e_scrollbar_set_max(v->scrollbar.v, 1.0);
+
+   v->scrollbar.h = e_scrollbar_new();
+   e_scrollbar_set_change_func(v->scrollbar.h, e_view_scrollbar_h_change_cb, v);
+   e_scrollbar_set_direction(v->scrollbar.h, 0);
+   e_scrollbar_add_to_evas(v->scrollbar.h, v->evas);
+   e_scrollbar_set_layer(v->scrollbar.h, 2000);
+   e_scrollbar_set_value(v->scrollbar.h, 0.0);
+   e_scrollbar_set_range(v->scrollbar.h, 1.0);
+   e_scrollbar_set_max(v->scrollbar.h, 1.0);
+   
+   e_scrollbar_move(v->scrollbar.v, v->size.w - 12, 0);
+   e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
+   e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
+   e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
+   
+   e_scrollbar_show(v->scrollbar.v);
+   e_scrollbar_show(v->scrollbar.h);
+   
    e_window_show(v->win.main);
    
      {

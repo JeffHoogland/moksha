@@ -3,6 +3,7 @@
 
 #include "e.h"
 #include "background.h"
+#include "scrollbar.h"
 #include "fs.h"
 #include "text.h"
 
@@ -98,10 +99,18 @@ struct _E_View
       } offset;
       int update;
    } drag;
+   struct {
+      int valid;
+      double x1, x2, y1, y2;
+   } extents;
    
    Evas_Object            obj_bg;
    
    E_Background          *bg;
+   
+   struct {      
+      E_Scrollbar           *h, *v;
+   } scrollbar;
    
    int                    is_listing;
    int                    monitor_id;
@@ -168,7 +177,7 @@ struct _E_Icon
       struct {
 	 int w, h;
       } text;
-   } geom;
+   } geom, prev_geom;      
    
    int     changed;   
 };
