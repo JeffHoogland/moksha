@@ -409,13 +409,12 @@ e_focus_out(Eevent * ev)
 	     E_DB_File *db;
 	     int focus_mode;
 	     char buf[4096];
-   
-	     settings_db = e_config_get("settings");
+	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
+	     
+	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
 	     b->current.selected = 0;
 	     /* settings - click to focus would affect grabs */
-	     db = e_db_open_read(settings_db);   
-	     sprintf(buf, "/focus/mode");
-	     if ((db) && (e_db_int_get(db, buf, &focus_mode)) && (!b->current.selected))
+	     if (!b->current.selected)
 	       {
 		  if (focus_mode == 2) /* click to focus */
 		    {
@@ -430,7 +429,6 @@ e_focus_out(Eevent * ev)
 		       b->grabs = evas_list_append(b->grabs, g);
 		       e_button_grab(b->win.main, 0, XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
 		    }
-		  e_db_close(db);
 	       }
 	     b->changed = 1;
 	  }
@@ -1406,17 +1404,16 @@ void
 e_border_attach_mouse_grabs(E_Border *b)
 {
    char *grabs_db;
-   char *settings_db;
    E_DB_File *db;
    int focus_mode;
    char buf[4096];
+   E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
+   
+   E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
    
    grabs_db = e_config_get("grabs");
-   settings_db = e_config_get("settings");
    /* settings - click to focus would affect grabs */
-   db = e_db_open_read(settings_db);   
-   sprintf(buf, "/focus/mode");
-   if ((db) && (e_db_int_get(db, buf, &focus_mode)) && (!b->current.selected))
+   if ((!b->current.selected))
      {
 	if (focus_mode == 2) /* click to focus */
 	  {
@@ -1430,7 +1427,6 @@ e_border_attach_mouse_grabs(E_Border *b)
 	     g->remove_after = 1;
 	     b->grabs = evas_list_append(b->grabs, g);
 	     e_button_grab(b->win.main, 0, XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
-	     e_db_close(db);
 	  }
      }
    

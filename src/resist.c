@@ -9,23 +9,21 @@ e_resist_border(E_Border *b)
    int ok = 0;
    int dx, dy, d;
    int resist_x = 0, resist_y = 0;
-   char *settings_db;
    Evas_List l, rects = NULL;
    E_Rect *r;
-
-   settings_db = e_config_get("settings");
-   E_DB_INT_GET(settings_db, "/move/resist", resist, ok);
-   if (!ok) resist = 1;
+   E_CFG_INT(cfg_resist, "settings", "/move/resist", 1);
+   E_CFG_INT(cfg_desk_resist, "settings", "/move/resist/desk", 32);
+   E_CFG_INT(cfg_win_resist, "settings", "/move/resist/win", 12);
+   
+   E_CONFIG_INT_GET(cfg_resist, resist);
+   E_CONFIG_INT_GET(cfg_desk_resist, desk_resist);
+   E_CONFIG_INT_GET(cfg_win_resist, win_resist);
    if (!resist)
      {
 	b->current.x = b->current.requested.x;
 	b->current.y = b->current.requested.y;
 	return;
      }
-   ok = 0; E_DB_INT_GET(settings_db, "/move/resist/desk", desk_resist, ok);
-   if (!ok) desk_resist = 32;
-   ok = 0; E_DB_INT_GET(settings_db, "/move/resist/win", win_resist, ok);
-   if (!ok) win_resist = 12;
    if (!b->desk) return;
    dx = b->current.requested.x - b->previous.requested.x;
    dy = b->current.requested.y - b->previous.requested.y;
