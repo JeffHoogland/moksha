@@ -565,7 +565,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	     break;
 	   case EFSD_CMD_CHMOD:
 	     break;
-	   case EFSD_CMD_GETFILE:
+	   case EFSD_CMD_GETFILETYPE:
 /*	     printf("Getmime event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);
 */	     if (ev->efsd_reply_event.status == SUCCESS)
