@@ -869,7 +869,7 @@ e_border_unstick(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->sticky = 0;
-   bd->desk = e_desk_current_get(bd->zone);
+   e_border_desk_set(bd, e_desk_current_get(bd->zone));
 }
 
 E_Border *

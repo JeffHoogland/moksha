@@ -810,6 +810,12 @@ _pager_cb_event_border_add(void *data, int type, void *event)
 	printf("event_border_add, window created :) :) :)\n");
 #endif
      }
+/*
+ * Correct me if I am wrong, but will the desk not previously been found above,
+ * as _pager_desk find iterates all available, so if it has not matched we are
+ * "out of zone" - if I am right we can remove _pager_border_find
+ *
+ * FIXME decide
    else if ((desk = _pager_border_find(e, ((E_Border *) ev->border))))
      {
 	new = _pager_window_create(data, ev->border, desk);
@@ -817,7 +823,7 @@ _pager_cb_event_border_add(void *data, int type, void *event)
 #if 0
 	printf("event_border_add, window created from zone :) :) :)\n");
 #endif
-     }
+     }*/
    else
      {
 	printf("event_border_add, desk not found :'(\n");
