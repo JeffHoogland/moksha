@@ -377,6 +377,36 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    printf("F %x %i\n", bd->client.win, bd->focused);
 }
 
+void
+e_border_shade(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (!bd->shaded)
+     {
+	printf("SHADE!\n");
+	bd->h = bd->client_inset.t + bd->client_inset.b;
+	bd->changes.size = 1;
+	bd->shaded = 1;
+	bd->changes.shaded = 1;
+	bd->changed = 1;
+     }
+}
+
+void
+e_border_unshade(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (bd->shaded)
+     {
+	printf("UNSHADE!\n");
+	bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
+	bd->changes.size = 1;
+	bd->shaded = 0;
+	bd->changes.shaded = 1;
+	bd->changed = 1;
+     }
+}
+
 E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
 {
@@ -927,18 +957,8 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
      }
    else if (!strcmp(source, "shade"))
      {
-	if (bd->shaded)
-	  {
-	     bd->shaded = 0;
-	     bd->changes.shaded = 1;
-	     bd->changed = 1;
-	  }
-	else
-	  {
-	     bd->shaded = 1;
-	     bd->changes.shaded = 1;
-	     bd->changed = 1;
-	  }
+	if (bd->shaded) e_border_unshade(bd);
+	else e_border_shade(bd);
      }
 }
 
@@ -1576,14 +1596,14 @@ _e_border_eval(E_Border *bd)
 		  
 		  printf("AUTO POS!\n");
 		  if (bd->container->w > bd->w)
-		  	new_x = rand() % (bd->container->w - bd->w);
+		    new_x = rand() % (bd->container->w - bd->w);
 		  else
-			new_x = 0;
+		    new_x = 0;
 		  if (bd->container->h > bd->h)
-		  	new_y = rand() % (bd->container->h - bd->h);
+		    new_y = rand() % (bd->container->h - bd->h);
 		  else
-			new_y = 0;
-
+		    new_y = 0;
+		  
 		  skiplist = evas_list_append(skiplist, bd);
 		  e_place_container_region_smart(bd->container, skiplist,
 						 bd->x, bd->y, bd->w, bd->h,
@@ -1603,26 +1623,76 @@ _e_border_eval(E_Border *bd)
 	else ecore_x_window_hide(bd->win);
 	bd->changes.visible = 0;
      }
-   /* FIXME: handle shaded flag */
+
+   if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
+     {
+	if (bd->shaded)
+	  ecore_x_window_hide(bd->client.shell_win);
+	else
+	  ecore_x_window_show(bd->client.shell_win);
+	bd->changes.shaded = 0;
+     }
+   else if ((bd->changes.shaded) && (bd->changes.pos))
+     {
+	if (bd->shaded)
+	  ecore_x_window_hide(bd->client.shell_win);
+	else
+	  ecore_x_window_show(bd->client.shell_win);
+	bd->changes.size = 1;
+	bd->changes.shaded = 0;
+     }
+   else if ((bd->changes.shaded) && (bd->changes.size))
+     {
+	if (bd->shaded)
+	  ecore_x_window_hide(bd->client.shell_win);
+	else
+	  ecore_x_window_show(bd->client.shell_win);
+	bd->changes.shaded = 0;
+     }
+   else if (bd->changes.shaded)
+     {
+	if (bd->shaded)
+	  ecore_x_window_hide(bd->client.shell_win);
+	else
+	  ecore_x_window_show(bd->client.shell_win);
+	bd->changes.size = 1;
+	bd->changes.shaded = 0;
+     }
+   
    if ((bd->changes.pos) && (bd->changes.size))
      {
 	printf("border move resize\n");
-	evas_obscured_clear(bd->bg_evas);
-	evas_obscured_rectangle_add(bd->bg_evas,
-				    bd->client_inset.l, bd->client_inset.t,
-				    bd->w - (bd->client_inset.l + bd->client_inset.r),
-				    bd->h - (bd->client_inset.t + bd->client_inset.b));
-	ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
-	ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	ecore_x_window_move_resize(bd->client.shell_win, 
-				   bd->client_inset.l, bd->client_inset.t,
-				   bd->client.w, bd->client.h);
-	ecore_x_window_move_resize(bd->client.win, 0, 0,
-				   bd->client.w, bd->client.h);
-	ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	evas_object_resize(bd->bg_object, bd->w, bd->h);
-	e_container_shape_resize(bd->shape, bd->w, bd->h);
-	e_container_shape_move(bd->shape, bd->x, bd->y);
+	if (bd->shaded)
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	     e_container_shape_move(bd->shape, bd->x, bd->y);
+	  }
+	else
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     evas_obscured_rectangle_add(bd->bg_evas,
+					 bd->client_inset.l, bd->client_inset.t,
+					 bd->w - (bd->client_inset.l + bd->client_inset.r),
+					 bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->client.shell_win, 
+					bd->client_inset.l, bd->client_inset.t,
+					bd->client.w, bd->client.h);
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	     e_container_shape_move(bd->shape, bd->x, bd->y);
+	  }
 	bd->changes.pos = 0;
 	bd->changes.size = 0;
 	printf("border move resize done\n");
@@ -1636,20 +1706,34 @@ _e_border_eval(E_Border *bd)
    else if (bd->changes.size)
      {
 	printf("border move resize\n");
-	evas_obscured_clear(bd->bg_evas);
-	evas_obscured_rectangle_add(bd->bg_evas,
-				    bd->client_inset.l, bd->client_inset.t,
-				    bd->w - (bd->client_inset.l + bd->client_inset.r), bd->h - (bd->client_inset.t + bd->client_inset.b));
-	ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
-	ecore_x_window_resize(bd->win, bd->w, bd->h);
-	ecore_x_window_move_resize(bd->client.shell_win, 
-				   bd->client_inset.l, bd->client_inset.t,
-				   bd->client.w, bd->client.h);
-	ecore_x_window_move_resize(bd->client.win, 0, 0,
-				   bd->client.w, bd->client.h);
-	ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
-	evas_object_resize(bd->bg_object, bd->w, bd->h);
-	e_container_shape_resize(bd->shape, bd->w, bd->h);
+	if (bd->shaded)
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_resize(bd->win, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	  }
+	else
+	  {
+	     evas_obscured_clear(bd->bg_evas);
+	     evas_obscured_rectangle_add(bd->bg_evas,
+					 bd->client_inset.l, bd->client_inset.t,
+					 bd->w - (bd->client_inset.l + bd->client_inset.r), bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     ecore_x_window_resize(bd->win, bd->w, bd->h);
+	     ecore_x_window_move_resize(bd->client.shell_win, 
+					bd->client_inset.l, bd->client_inset.t,
+					bd->client.w, bd->client.h);
+	     ecore_x_window_move_resize(bd->client.win, 0, 0,
+					bd->client.w, bd->client.h);
+	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     e_container_shape_resize(bd->shape, bd->w, bd->h);
+	  }
 	printf("border move resize done\n");
 	bd->changes.size = 0;
      }

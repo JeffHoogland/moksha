@@ -56,10 +56,15 @@ main(int argc, char **argv)
    int i;
    char *display_name = NULL;
    int nosplash = 0;
+   int nostartup = 0;
+   int nowelcome = 0;
    int after_restart = 0; 
    char buf[1024];
   
    if (getenv("NOSPLASH")) nosplash = 1;
+   if (getenv("NOSTARTUP")) nostartup = 1;
+   if (getenv("NOWELCOME")) nowelcome = 1;
+   
    if (getenv("RESTART"))
      {
 	printf("after restart!!!\n");
@@ -237,14 +242,17 @@ main(int argc, char **argv)
 
    /* setup module loading etc. FIXME: check return value */
    e_module_init();
-   
-   /* explicitly show a gui dialog */
-   e_error_dialog_show("Welcome to Enlightenment 0.17",
-		       "This is program has barely been started on, so it is not complete by a long\n"
-		       "shot. Please do NOT expect anything to work properly at this stage. It's\n"
-		       "being worked on.\n"
-		       "\n"
-		       "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17.");
+
+   if (!nowelcome)
+     {
+	/* explicitly show a gui dialog */
+	e_error_dialog_show("Welcome to Enlightenment 0.17",
+			    "This is program has barely been started on, so it is not complete by a long\n"
+			    "shot. Please do NOT expect anything to work properly at this stage. It's\n"
+			    "being worked on.\n"
+			    "\n"
+			    "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17.");
+     }
    
    if (ipc_failed)
      e_error_dialog_show("Enlightenment IPC setup error!",
@@ -266,8 +274,11 @@ main(int argc, char **argv)
    e_init_version_set(VERSION);
    e_init_status_set("Enlightenment Starting. Please wait.");
    
-   if (after_restart) e_startup(E_STARTUP_RESTART);
-   else e_startup(E_STARTUP_START);
+   if (!nostartup)
+     {
+	if (after_restart) e_startup(E_STARTUP_RESTART);
+	else e_startup(E_STARTUP_START);
+     }
    
    if ((nosplash) || (after_restart))
      {

@@ -1435,7 +1435,7 @@ collections {
 	 }
 	 program {
 	    name:    "shade_action";
-	    signal:  "mouse,clicked,1,double";
+	    signal:  "mouse,down,1,double";
 	    source:  "title";
 	    action:  SIGNAL_EMIT "action" "shade";
 	 }

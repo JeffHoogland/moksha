@@ -367,6 +367,7 @@ _e_app_fields_fill(E_App *a, char *path)
      {
 	snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
 	v = eet_read(ef, buf, &size);
+	if (!v) v = eet_read(ef, "app/info/name", &size);
      }
    else
      v = eet_read(ef, "app/info/name", &size);
@@ -384,6 +385,7 @@ _e_app_fields_fill(E_App *a, char *path)
      {
 	snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
 	v = eet_read(ef, buf, &size);
+	if (!v) v = eet_read(ef, "app/info/generic", &size);
      }
    else
      v = eet_read(ef, "app/info/generic", &size);
@@ -401,6 +403,7 @@ _e_app_fields_fill(E_App *a, char *path)
      {
 	snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
 	v = eet_read(ef, buf, &size);
+	if (!v) v = eet_read(ef, "app/info/comment", &size);
      }
    else
      v = eet_read(ef, "app/info/comment", &size);

@@ -149,7 +149,9 @@ EAPI void      e_border_lower(E_Border *bd);
 EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
 EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
-
+EAPI void      e_border_shade(E_Border *bd);
+EAPI void      e_border_unshade(E_Border *bd);
+    
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 
 EAPI void      e_border_idler_before(void);
