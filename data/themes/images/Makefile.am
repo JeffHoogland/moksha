@@ -15,6 +15,8 @@ e17_button2.png \
 e17_button_detail_close.png \
 e17_button_detail_maximize.png \
 e17_button_detail_minimize.png \
+e17_button_detail_shade.png \
+e17_button_detail_stick.png \
 e17_menu_arrow.png \
 e17_menu_bg.png \
 e17_menu_check1.png \
