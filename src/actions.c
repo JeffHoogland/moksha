@@ -1546,6 +1546,13 @@ e_act_exit_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
 {
    D_ENTER;
 
+   e_view_close_all();
+   
+   ecore_focus_mode_reset();
+   ecore_sync();
+
+   e_db_flush();
+   
    exit(0);
 
    D_RETURN;
@@ -1564,6 +1571,13 @@ e_act_restart_start (E_Object *object, E_Action *a, void *data, int x, int y, in
 {
    D_ENTER;
 
+   e_view_close_all();
+     
+   ecore_focus_mode_reset();
+   ecore_sync();
+
+   e_db_flush();
+   
    e_exec_restart();
 
    D_RETURN;

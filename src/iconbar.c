@@ -7,7 +7,11 @@ static E_Config_Base_Type *cf_iconbar_icon = NULL;
 
 /* internal func (iconbar use only) prototypes */
 
+static void e_ib_bit_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+static void e_ib_bit_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh);
+
 static void ib_reload_timeout(int val, void *data);
+static void ib_scroll_timeout(int val, void *data);
 static void ib_timeout(int val, void *data);
 
 static void ib_bits_show(void *data);
@@ -35,6 +39,50 @@ static void  e_iconbar_icon_cleanup(E_Iconbar_Icon *ic);
 /* please feel free to add to them to make them easier to read and be more */
 /* helpful. */
 
+/* static internal - called when iconbar bit has a mouse button pressed */
+/* on it */
+static void
+e_ib_bit_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Iconbar *ib;
+   
+   D_ENTER;
+   
+   ib = (E_Iconbar *)data;
+   if (!class) D_RETURN;
+   if (!strcmp(class, "Scrollbar_Arrow1"))
+     ib_scroll_timeout(8, ib);
+   else if (!strcmp(class, "Scrollbar_Arrow2"))
+     ib_scroll_timeout(-8, ib);
+   else if (!strcmp(class, "Scrollbar_Trough"))
+     {
+     }
+   
+   D_RETURN;
+}
+
+/* static internal - called when iconbar bit has a mouse button released */
+/* on it */
+static void
+e_ib_bit_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, int ox, int oy, int ow, int oh)
+{
+   E_Iconbar *ib;
+   
+   D_ENTER;
+   
+   ib = (E_Iconbar *)data;
+   if (!class) D_RETURN;
+   if (!strcmp(class, "Scrollbar_Arrow1"))
+     ib_scroll_timeout(0, ib);
+   else if (!strcmp(class, "Scrollbar_Arrow2"))
+     ib_scroll_timeout(0, ib);
+   else if (!strcmp(class, "Scrollbar_Trough"))
+     {
+     }
+   
+   D_RETURN;
+}
+
 /**
  * e_iconbar_cleanup - Iconbar destructor.
  * @ib: The iconbar to be cleaned up.
@@ -47,7 +95,8 @@ e_iconbar_cleanup(E_Iconbar *ib)
    char buf[PATH_MAX];
 
    D_ENTER;
-
+   
+   /* save scroll position */
    /* tell the view we attached to that somehting in it changed. this way */
    /* the view will now it needs to redraw */
    ib->view->changed = 1;
@@ -69,10 +118,15 @@ e_iconbar_cleanup(E_Iconbar *ib)
 	/* free the list itself */
 	evas_list_free(ib->icons);
      }
+   /* cleaup the clip object */
+   if ((ib->view) && (ib->view->evas) && (ib->clip))
+     evas_del_object(ib->view->evas, ib->clip);   
    /* delete any timers intended to work on  this iconbar */
    sprintf(buf, "iconbar_reload:%s", ib->view->dir);
    ecore_del_event_timer(buf);
-
+   sprintf(buf, "iconbar_scroll:%s", ib->view->dir);
+   ecore_del_event_timer(buf);
+   
    /* call the destructor of the base class */
    e_object_cleanup(E_OBJECT(ib));
 
@@ -109,6 +163,7 @@ e_iconbar_init()
    /* the list */
    cf_iconbar = e_config_type_new();
    E_CONFIG_NODE(cf_iconbar, "icons", E_CFG_TYPE_LIST, cf_iconbar_icon, E_Iconbar, icons, 0, 0, NULL);
+   E_CONFIG_NODE(cf_iconbar, "scroll", E_CFG_TYPE_FLOAT, NULL, E_Iconbar, scroll, 0, 0, NULL);
 
    D_RETURN;
 }
@@ -154,6 +209,10 @@ e_iconbar_new(E_View *v)
    
    /* the iconbar needs to know what view it's in */
    ib->view = v;
+   /* clip object = NULL */
+   ib->clip = NULL;
+   /* reset has been scrolled flag */
+   ib->has_been_scrolled = 0;
    
    /* now go thru all the icons that were loaded */
    for (l = ib->icons; l; l = l->next)
@@ -164,7 +223,7 @@ e_iconbar_new(E_View *v)
 	/* and init the iocnbar icon object */
 	e_object_init(E_OBJECT(ic), (E_Cleanup_Func) e_iconbar_icon_cleanup);
 
-	/* and have the iconbar icon knwo what iconbar it belongs to */
+	/* and have the iconbar icon know what iconbar it belongs to */
 	ic->iconbar = ib;
      }
    
@@ -181,6 +240,11 @@ e_iconbar_new(E_View *v)
 	/* to put it */
 	D_RETURN_(NULL);
      }
+   ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow1", CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
+   ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow1", CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
+   ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2", CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
+   ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2", CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
+   
    /* aaah. our nicely constructed iconbar data struct with all the goodies */
    /* we need. return it. she's ready for use. */
    D_RETURN_(ib);
@@ -230,6 +294,9 @@ e_iconbar_realize(E_Iconbar *ib)
 
    D_ENTER;
 
+   /* create clip object */
+   ib->clip = evas_add_rectangle(ib->view->evas);
+   evas_set_color(ib->view->evas, ib->clip, 255, 255, 255, 255);
    /* go thru every icon in the iconbar */
    for (l = ib->icons; l; l = l->next)
      {
@@ -244,6 +311,8 @@ e_iconbar_realize(E_Iconbar *ib)
 	sprintf(buf, "%s/.e_iconbar.db:%s", ib->view->dir, ic->image_path);
 	/* add the icon image object */
 	ic->image = evas_add_image_from_file(ib->view->evas, buf);
+	/* clip the icon */
+	evas_set_clip(ib->view->evas, ic->image, ib->clip);
 	/* set it to be semi-transparent */
 	evas_set_color(ib->view->evas, ic->image, 255, 255, 255, 128);
 	/* set up callbacks on events - so the ib_* functions will be */
@@ -286,6 +355,53 @@ e_iconbar_realize(E_Iconbar *ib)
 }
 
 /**
+ * e_iconbar_get_length - get lenght of the icons in the iconbar
+ * @ib: The iconbar for which to fix the geometry
+ * 
+ * This functionc alculates the length of the iconbar (either horizontal)
+ * or vertical - and returns that.
+ * 
+ */
+double
+e_iconbar_get_length(E_Iconbar *ib)
+{
+   double ix, iy, aw, ah;
+   double len;
+   Evas_List l;
+   
+   D_ENTER;
+
+   /* init len */
+   len = 0;
+   /* find icon area geometry */
+   ix = ib->icon_area.x;
+   iy = ib->icon_area.y;
+   aw = ib->icon_area.w;
+   ah = ib->icon_area.h;
+   
+   /* loop throught icons */
+   for (l = ib->icons; l; l = l->next)
+     {
+	E_Iconbar_Icon *ic;
+	int iw, ih;
+	
+	ic = l->data;
+	/* find out the original image size (of the image file) */
+	evas_get_image_size(ic->iconbar->view->evas, ic->image, &iw, &ih);
+	if (aw > ah) /* horizontal */
+	  {
+	     len += iw;
+	  }
+	else /* vertical */
+	  {
+	     len += ih;
+	  }
+     }
+   /* return length */
+   D_RETURN_(len);
+}
+
+/**
  * e_iconbar_fix - iconbar geometry update
  * @ib: The iconbar for which to fix the geometry
  * 
@@ -318,14 +434,57 @@ e_iconbar_fix(E_Iconbar *ib)
    aw = ib->icon_area.w;
    ah = ib->icon_area.h;
 
-   /* not used yet... */
+   /* if we have icons- show the clipper that will clip them */
+   if (ib->icons) evas_show(ib->view->evas, ib->clip);
+   /* no icons - hide the clipper as it will be a real object */
+   else           evas_hide(ib->view->evas, ib->clip);
+   /* move the clip object to fill the icon area */
+   evas_move(ib->view->evas, ib->clip, ix, iy);
+   evas_resize(ib->view->evas, ib->clip, aw, ah);   
+   
    if (aw > ah) /* horizontal */
      {
+	double len;
+	
+	len = e_iconbar_get_length(ib);
+	if (aw > len)
+	  {
+	     if ((ib->scroll + len) > aw)
+	       ib->scroll = aw - len;
+	     else if (ib->scroll < 0)
+	       ib->scroll = 0;
+	  }
+	else
+	  {
+	     if ((ib->scroll + len) > aw)
+	       ib->scroll = aw - len;
+	     else if (ib->scroll > 0)
+	       ib->scroll = 0;
+	  }
+	ix += ib->scroll;
      }
    else /* vertical */
      {
+	double len;
+	
+	len = e_iconbar_get_length(ib);
+	if (ah > len)
+	  {
+	     if ((ib->scroll + len) > ah)
+	       ib->scroll = ah - len;
+	     else if (ib->scroll < 0)
+	       ib->scroll = 0;
+	  }
+	else
+	  {
+	     if ((ib->scroll + len) < ah)
+	       ib->scroll = ah - len;
+	     else if (ib->scroll > 0)
+	       ib->scroll = 0;
+	  }
+	iy += ib->scroll;
      }
-
+   
    /* now go thru all the icons... */
    for (l = ib->icons; l; l = l->next)
      {
@@ -410,6 +569,10 @@ e_iconbar_file_add(E_View *v, char *file)
 	
 	/* unique timer name */
 	sprintf(buf, "iconbar_reload:%s", v->dir);
+	/* if we've scrolled since. save */
+	if ((v->iconbar) &&
+	    (v->iconbar->has_been_scrolled)) 
+	  e_iconbar_save_out_final(v->iconbar);
 	/* in 0.5 secs call our timout handler */
 	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
      }
@@ -465,14 +628,34 @@ e_iconbar_file_change(E_View *v, char *file)
 	
 	/* unique timer name */
 	sprintf(buf, "iconbar_reload:%s", v->dir);
-	/* in 0.5 secsm call the realod timeout */
+	/* if we've scrolled since. save */
+	if ((v->iconbar) &&
+	    (v->iconbar->has_been_scrolled)) 
+	  e_iconbar_save_out_final(v->iconbar);
+	/* in 0.5 secs call the realod timeout */
 	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
      }
 
    D_RETURN;
 }
 
-
+/**
+ * e_iconbar_save_out_final - save out final state of iconbar back to disk
+ * @ib:   The iconbar
+ *
+ * This function saves the state of the iconbar to the db it comes from
+ */
+void
+e_iconbar_save_out_final(E_Iconbar *ib)
+{
+   char buf[PATH_MAX];
+   
+   if (ib->view)
+     {
+	sprintf(buf, "%s/.e_iconbar.db", ib->view->dir);
+	E_DB_FLOAT_SET(buf, "/scroll", ib->scroll);
+     }
+}
 
 /* static (internal to iconbar use only) callbacks */
 
@@ -499,6 +682,31 @@ ib_reload_timeout(int val, void *data)
    /* so realize the iconbar */
    if ((v->iconbar) && (v->evas)) e_iconbar_realize(v->iconbar);   
 
+   D_RETURN;
+}
+
+/* scroll timeout. called to continuously scroll when arrow button down */
+static void
+ib_scroll_timeout(int val, void *data)
+{
+   E_Iconbar *ib;
+   char buf[PATH_MAX];
+
+   D_ENTER;
+
+   /* get our iconbar pointer */
+   ib = (E_Iconbar *)data;
+   
+   sprintf(buf, "iconbar_scroll:%s", ib->view->dir);
+   if (val == 0)
+     ecore_del_event_timer(buf);
+   else
+     {
+	ib->has_been_scrolled = 1;
+	ib->scroll += val;
+	e_iconbar_fix(ib);
+	ecore_add_event_timer(buf, 0.02, ib_scroll_timeout, val, ib);
+     }
    D_RETURN;
 }
 

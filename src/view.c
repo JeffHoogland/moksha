@@ -1648,6 +1648,18 @@ e_view_find_by_monitor_id(int id)
    D_RETURN_(NULL);
 }
 
+void
+e_view_close_all(void)
+{
+   while (views)
+     {
+	E_View *v;
+	
+	v = views->data;
+	e_object_unref(E_OBJECT(v));
+     }
+}
+
 static void
 e_view_cleanup(E_View *v)
 {
@@ -1656,7 +1668,10 @@ e_view_cleanup(E_View *v)
    D_ENTER;
    
    if (v->iconbar)
-     e_object_unref(E_OBJECT(v->iconbar));
+     {
+	e_iconbar_save_out_final(v->iconbar);
+	e_object_unref(E_OBJECT(v->iconbar));
+     }
    
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);

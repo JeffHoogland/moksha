@@ -28,6 +28,8 @@ e_exec_restart(void)
    D("e_exec_restart()\n");
    /* unset events on root */
    ecore_window_set_events(0, XEV_NONE);
+   /* reset focus mode to default pointer root */
+   ecore_focus_mode_reset();
    /* destroy all desktops */
    num = e_desktops_get_num();
    for (i = 0; i < num; i++)

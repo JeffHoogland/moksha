@@ -62,12 +62,11 @@ static void
 setup(void)
 {
    D_ENTER;
-
+      
    ecore_grab();
    ecore_sync();
 
-   /* Start to manage all those windows that
-      we're interested in ... */
+   /* Start to manage all those windows that we're interested in ... */
    e_border_adopt_children(0);
 
    ecore_ungrab();

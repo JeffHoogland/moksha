@@ -24,6 +24,11 @@ struct _E_Iconbar
 
    E_View       *view;
    Evas_List     icons;
+   
+   Evas_Object   clip;
+   
+   int           has_been_scrolled;
+   float         scroll;
   
    Ebits_Object *bit;
    struct {
@@ -55,8 +60,10 @@ E_Iconbar      *e_iconbar_new(E_View *v);
 void            e_iconbar_icon_free(E_Iconbar_Icon *);
 void            e_iconbar_realize(E_Iconbar *ib);
 void            e_iconbar_fix(E_Iconbar *ib);
+double          e_iconbar_get_length(E_Iconbar *ib);
 void            e_iconbar_file_add(E_View *v, char *file);
 void            e_iconbar_file_delete(E_View *v, char *file);
 void            e_iconbar_file_change(E_View *v, char *file);
+void            e_iconbar_save_out_final(E_Iconbar *ib);
 
 #endif
