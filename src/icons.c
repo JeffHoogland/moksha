@@ -383,10 +383,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->view->drag.y = y;
 	ic->view->drag.update = 1;
 	ic->view->changed = 1;
-	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
-	  ic->view->drag.drop_mode = E_DND_COPY;
-	else
-	  ic->view->drag.drop_mode = E_DND_MOVE;
 
 	/* Handle dnd motion - dragging==1 */
 	ecore_pointer_xy_get(&x, &y);

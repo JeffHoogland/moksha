@@ -2600,19 +2600,16 @@ e_dnd_data_request(Ecore_Event * ev)
 	E_View *v;
 	Evas_List ll;
 	char *data = NULL;
-	int size = 3;
-	int idx = 0;
 
 	/* Me, my null, and an extra for the end '/r/n'... */
-	data = NEW(char, size);
-	*data = 0;
+	e_strdup(data, "");
 
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
 	    if (e->uri_list)
 	       {
-		 /* int first = 1;*/
+		 int first = 1;
 		  
 		  for (ll = v->icons; ll; ll = ll->next)
 		    {
@@ -2621,33 +2618,21 @@ e_dnd_data_request(Ecore_Event * ev)
 		       ic = ll->data;
 		       if (ic->state.selected)
 			 {
-			    int ic_size;
+			    char buf[PATH_MAX];
 			    
-			    ic_size = 5 + strlen(v->dir) + 1 + strlen(ic->file) + 2;
-			    size += ic_size;
-			    
-			    REALLOC(data, char, size);
-			    /*
-			     * What's this for?  It ends up double terminating
-			     * the second and further files, plus the length
-			     * needs to be adjusted for both cases...
-			     * (And the wrong length breaks multi-file drops.)
-
 			    if (first)
 			      {
-			    */
-				 sprintf(data + idx, "file:%s/%s\r\n", v->dir, ic->file);
-#if 0
+				 sprintf(buf, "file:%s/%s", v->dir, ic->file);
 				 first = 0;
 			      }
 			    else
-			      sprintf(data + idx, "\r\nfile:%s/%s\r\n", v->dir, ic->file);
-#endif
-			    idx += ic_size;
+			      sprintf(buf, "\r\nfile:%s/%s", v->dir, ic->file);
+			    REALLOC(data, char, strlen(data) + strlen(buf) + 1);
+			    strcat(data, buf);
 			 }
 		    }
 		  ecore_dnd_send_data(e->source_win, e->win,
-				      data, strlen(data),
+				      data, strlen(data) + 1,
 				      e->destination_atom,
 				      DND_TYPE_URI_LIST);
 	       }
@@ -2663,23 +2648,21 @@ e_dnd_data_request(Ecore_Event * ev)
 		       if (ic->state.selected)
 			 {
 			    int ic_size;
+			    char buf[PATH_MAX];
 			    
-			    ic_size = strlen(v->dir) + 1 + strlen(ic->file) + 1;
-			    size += ic_size;
-			    
-			    REALLOC(data, char, size);
 			    if (first)
 			      {
-				 sprintf(data + idx, "%s/%s", v->dir, ic->file);
+				 sprintf(buf, "%s/%s\n", v->dir, ic->file);
 				 first = 0;
 			      }
 			    else
-				 sprintf(data + idx, "\n%s/%s", v->dir, ic->file);
-			    idx += ic_size;
+			      sprintf(buf, "\n%s/%s", v->dir, ic->file);
+			    REALLOC(data, char, strlen(data) + strlen(buf) + 1);
+			    strcat(data, buf);
 			 }
 		    }
 		  ecore_dnd_send_data(e->source_win, e->win,
-				      data, strlen(data),
+				      data, strlen(data) + 1,
 				      e->destination_atom,
 				      DND_TYPE_PLAIN_TEXT);
 	       }	     
@@ -2699,14 +2682,13 @@ e_dnd_data_request(Ecore_Event * ev)
 			    
 			    sprintf(buf, "file:%s/%s", v->dir, ic->file);
 			    data = strdup(buf);
-			    size = strlen(data);
 			    break;
 			 }
 		    }
 		  if (data)
 		    {
 		       ecore_dnd_send_data(e->source_win, e->win, 
-					   data, size,
+					   data, strlen(data) + 1,
 					   e->destination_atom,
 					   DND_TYPE_NETSCAPE_URL);
 		    }
