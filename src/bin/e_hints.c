@@ -3,25 +3,23 @@
  */
 #include "e.h"
 
-static Ecore_X_Window root;
-
 void
 e_hints_init(void)
 {
-   Ecore_X_Window win;
    Ecore_X_Window *roots = NULL;
    int num;
 
    roots = ecore_x_window_root_list(&num);
-
-   win = ecore_x_window_new(0, -200, -200, 5, 5);
-
    if (roots)
      {
-        if (num > 0)
+	int i;
+	
+	for (i = 0; i < num; i++)
 	  {
-	     root = roots[0];
-	     ecore_x_netwm_wm_identify(root, win, "Enlightenment");
+	     Ecore_X_Window win;
+	     
+	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
+	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
 	  }
         free(roots);
      }
@@ -30,7 +28,7 @@ e_hints_init(void)
 void
 e_hints_client_list_set(void)
 {
-   Evas_List *mlist = NULL, *clist = NULL, *blist = NULL;
+   Evas_List *ml = NULL, *cl = NULL, *bl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;
@@ -38,12 +36,12 @@ e_hints_client_list_set(void)
    Ecore_X_Window *clients = NULL;
 
    /* Get client count by adding client lists on all containers */
-   for (mlist = e_manager_list(); mlist; mlist = mlist->next)
+   for (ml = e_manager_list(); ml; ml = ml->next)
      {
-	m = mlist->data;
-	for (clist = m->containers; clist; clist = clist->next)
+	m = ml->data;
+	for (cl = m->containers; cl; cl = cl->next)
 	  {
-	     c = clist->data;
+	     c = cl->data;
 	     num += evas_list_count(c->clients);
 	  }
      }
@@ -55,27 +53,34 @@ e_hints_client_list_set(void)
    /* Fetch window IDs and add to array */
    if (num > 0)
      {
-	for (mlist = e_manager_list(); mlist; mlist = mlist->next)
+	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
-	     m = mlist->data;
-	     for (clist = m->containers; clist; clist = clist->next)
+	     m = ml->data;
+	     for (cl = m->containers; cl; cl = cl->next)
 	       {
-		  c = clist->data;
-		  for (blist = c->clients; blist; blist = blist->next)
+		  c = cl->data;
+		  for (bl = c->clients; bl; bl = bl->next)
 		    {
-		       b = blist->data;
+		       b = bl->data;
 		       clients[i++] = b->win;
 		    }
 	       }
 	  }
-	
-	ecore_x_netwm_client_list_set(root, num, clients);
-	ecore_x_netwm_client_list_stacking_set(root, num, clients);
+	for (ml = e_manager_list(); ml; ml = ml->next)
+	  {
+	     m = ml->data;
+	     ecore_x_netwm_client_list_set(m->root, num, clients);
+	     ecore_x_netwm_client_list_stacking_set(m->root, num, clients);
+	  }
      }
    else
      {
-	ecore_x_netwm_client_list_set(root, 0, NULL);
-	ecore_x_netwm_client_list_stacking_set(root, 0, NULL);
+	for (ml = e_manager_list(); ml; ml = ml->next)
+	  {
+	     m = ml->data;
+	     ecore_x_netwm_client_list_set(m->root, 0, NULL);
+	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
+	  }
      }
 
 }
@@ -85,7 +90,7 @@ e_hints_client_list_set(void)
 void
 e_hints_client_stacking_set(void)
 {
-   Evas_List *mlist = NULL, *clist = NULL, *blist = NULL;
+   Evas_List *ml = NULL, *cl = NULL, *bl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;
@@ -93,12 +98,12 @@ e_hints_client_stacking_set(void)
    Ecore_X_Window *clients = NULL;
 
    /* Get client count */
-   for (mlist = e_manager_list(); mlist; mlist = mlist->next)
+   for (ml = e_manager_list(); ml; ml = ml->next)
      {
-	m = mlist->data;
-	for (clist = m->containers; clist; clist = clist->next)
+	m = ml->data;
+	for (cl = m->containers; cl; cl = cl->next)
 	  {
-	     c = clist->data;
+	     c = cl->data;
 	     num += evas_list_count(c->clients);
 	  }
      }
@@ -109,25 +114,32 @@ e_hints_client_stacking_set(void)
 
    if (num > 0)
      {
-	for (mlist = e_manager_list(); mlist; mlist = mlist->next)
+	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
-	     m = mlist->data;
-	     for (clist = m->containers; clist; clist = clist->next)
+	     m = ml->data;
+	     for (cl = m->containers; cl; cl = cl->next)
 	       {
-		  c = clist->data;
-		  for (blist = c->clients; blist; blist = blist->next)
+		  c = cl->data;
+		  for (bl = c->clients; bl; bl = bl->next)
 		    {
-		       b = blist->data;
+		       b = bl->data;
 		       clients[i++] = b->win;
 		    }
 	       }
 	  }
-	
-	ecore_x_netwm_client_list_stacking_set(root, num, clients);
+	for (ml = e_manager_list(); ml; ml = ml->next)
+	  {
+	     m = ml->data;
+	     ecore_x_netwm_client_list_stacking_set(m->root, num, clients);
+	  }
      }
    else
      {
-	ecore_x_netwm_client_list_stacking_set(root, 0, NULL);
+	for (ml = e_manager_list(); ml; ml = ml->next)
+	  {
+	     m = ml->data;
+	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
+	  }
      }
 
 }
@@ -135,7 +147,15 @@ e_hints_client_stacking_set(void)
 void
 e_hints_active_window_set(Ecore_X_Window win)
 {
-   ecore_x_netwm_client_active_set(root, win);
+   Evas_List *ml;
+   
+   for (ml = e_manager_list(); ml; ml = ml->next)
+     {
+	E_Manager *m;
+	
+	m = ml->data;
+	ecore_x_netwm_client_active_set(m->root, win);
+     }
 }
 
 void
@@ -191,9 +211,13 @@ e_hints_desktop_config_set(void)
 	  }
      }
    
-   ecore_x_netwm_desk_count_set(root, num);
-   ecore_x_netwm_desk_roots_set(root, num, vroots);
-   ecore_x_netwm_desk_workareas_set(root, num, areas);
+   for (ml = e_manager_list(); ml; ml = ml->next)
+     {
+	m = ml->data;
+	ecore_x_netwm_desk_count_set(m->root, num);
+	ecore_x_netwm_desk_roots_set(m->root, num, vroots);
+	ecore_x_netwm_desk_workareas_set(m->root, num, areas);
+     }
    free(vroots);
    free(areas);
 }
