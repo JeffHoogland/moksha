@@ -164,7 +164,7 @@ AC_ARG_WITH(ferite,
 AC_PATH_GENERIC(ferite,, [
     AC_SUBST(ferite_libs)
     AC_SUBST(ferite_cflags)],
-    AC_MSG_ERROR(Cannot find ferite: Is ferite-config in path?))
+    AC_MSG_ERROR(Cannot find ferite: Is ferite-config in path? ferite can be obtained from http://www.ferite.org))
 ferite_libs=`ferite-config --libs`
 ferite_cflags=`ferite-config --cflags`
 
