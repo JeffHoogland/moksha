@@ -49,6 +49,36 @@ static int  e_view_restart_alphabetical_qsort_cb(const void *data1, const void *
 static void e_view_geometry_record_timeout(int val, void *data);
 static void e_view_scrollbar_v_change_cb(void *_data, E_Scrollbar *sb, double val);
 static void e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val);
+static void e_view_write_icon_xy_timeout(int val, void *data);
+
+static void
+e_view_write_icon_xy_timeout(int val, void *data)
+{
+   E_View *v;
+   Evas_List l;
+   E_Icon *ic;
+   
+   v = data;
+   for (l = v->icons; l; l = l->next)
+     {
+	ic = l->data;
+	if (ic->q.write_xy)
+	  {
+	     char buf[4096];
+	     
+	     ic->q.write_xy = 0;
+	     sprintf(buf, "%s/%s", ic->view->dir, ic->file);
+	     
+	     printf("write meta xy for icon for file %s\n", ic->file);	     
+	     efsd_set_metadata_int(e_fs_get_connection(),
+				   "/pos/x", buf,
+				   ic->geom.x);
+	     efsd_set_metadata_int(e_fs_get_connection(),
+				   "/pos/y", buf,
+				   ic->geom.y);
+	  }
+     }
+}
 
 void
 e_view_selection_update(E_View *v)
@@ -1165,6 +1195,16 @@ e_view_queue_geometry_record(E_View *v)
    e_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
 }
 
+void
+e_view_queue_icon_xy_record(E_View *v)
+{
+   char name[4096];
+   
+   sprintf(name, "icon_xy_record.%s", v->dir);
+   e_add_event_timer(name, 2.00, e_view_write_icon_xy_timeout, 0, v);
+}
+
+
 static void
 e_configure(Eevent * ev)
 {
@@ -1785,17 +1825,8 @@ e_view_icon_apply_xy(E_Icon *ic)
      }
    if ((ic->geom.x != ic->prev_geom.x) || (ic->geom.y != ic->prev_geom.y))
      {
-	char buf[4096];
-	
-	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
-	printf("write meta xy for icon for file %s\n", ic->file);
-
-        efsd_set_metadata_int(e_fs_get_connection(),
-			      "/pos/x", buf,
-			      ic->geom.x);
-	efsd_set_metadata_int(e_fs_get_connection(),
-			      "/pos/y", buf,
-			      ic->geom.y);
+	ic->q.write_xy = 1;
+	e_view_queue_icon_xy_record(ic->view);
      }
    if (ic->geom.x != ic->prev_geom.x) ic->view->extents.valid = 0;
    else if (ic->geom.y != ic->prev_geom.y) ic->view->extents.valid = 0;
@@ -2159,6 +2190,8 @@ e_view_free(E_View *v)
    sprintf(name, "resort_timer.%s", v->dir);
    e_del_event_timer(name);
    sprintf(name, "geometry_record.%s", v->dir);
+   e_del_event_timer(name);
+   sprintf(name, "icon_xy_record.%s", v->dir);
    e_del_event_timer(name);
    
    views = evas_list_remove(views, v);

@@ -9,6 +9,29 @@ static pid_t               efsd_pid = 0;
 static void e_fs_child_handle(Eevent *ev);
 static void _e_fs_fd_handle(int fd);
 static void _e_fs_restarter(int val, void *data);
+static void e_fs_idle(void *data);
+static void e_fs_flush_timeout(int val, void *data);
+
+static void
+e_fs_flush_timeout(int val, void *data)
+{
+   if (!ec) return;
+   if (efsd_commands_pending(ec) > 0)
+     {
+	if (efsd_flush(ec) > 0)
+	  e_add_event_timer("e_fs_flush_timeout()", 
+			    0.05, e_fs_flush_timeout, 0, NULL);	
+     }
+   UN(data);
+   UN(val);
+}
+
+static void
+e_fs_idle(void *data)
+{
+   e_fs_flush_timeout(0, NULL);
+   UN(data);
+}
 
 static void
 e_fs_child_handle(Eevent *ev)

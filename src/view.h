@@ -182,6 +182,10 @@ struct _E_Icon
       } text;
    } geom, prev_geom;      
    
+   struct {
+      int write_xy;
+   } q;
+   
    int     changed;   
 };
 
