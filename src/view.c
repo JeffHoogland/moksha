@@ -2400,6 +2400,8 @@ e_view_bg_change(E_View *v, char *file)
    D_ENTER;
 
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
+   IF_FREE(v->prev_bg_file);
+   e_strdup(v->prev_bg_file, "");
    sprintf(buf, "background_reload:%s", v->dir);  
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 
