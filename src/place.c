@@ -1,3 +1,4 @@
+#include "config.h"
 #include "place.h"
 #include "actions.h"
 #include "guides.h"
