@@ -1423,11 +1423,16 @@ e_border_release(E_Border *b)
 {
    int pl, pr, pt, pb;
    
+   D_ENTER;
+
    pl = pr = pt = pb = 0;
    if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
    ecore_window_reparent(b->win.client, 0, b->current.x + pl, b->current.y + pt);
    e_icccm_release(b->win.client);   
+
+   D_RETURN;
 }
+
 
 E_Border * 
 e_border_adopt(Window win, int use_client_pos)
