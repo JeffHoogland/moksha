@@ -8,33 +8,34 @@ static void _e_fs_fd_handle(int fd);
 static void
 _e_fs_fd_handle_a_la_cK(int fd)
 {
-  EfsdEvent ev;
-  Evas_List l;
-
-  while (efsd_events_pending(ec))
-    {		  
-      bzero(&ev, sizeof(EfsdEvent));
-
-      if (efsd_next_event(ec, &ev) >= 0)
-	{
-	  for (l = fs_handlers; l; l = l->next)
-	    {
-	      void (*func) (EfsdEvent *ev);
-	      
-	      func = l->data;
-	      func(&ev);
-	    }
-	}
-      else
-	{
-	  efsd_close(ec);
-	  e_del_event_fd(fd);
-	  /* FIXME: need to queue a popup dialog here saying */
-	  /* efsd went wonky */
-	  printf("EEEEEEEEEEK efsd went wonky\n");
-	}
-
-      efsd_cleanup_event(&ev);
+   EfsdEvent ev;
+   Evas_List l;
+   
+   while ((ec) && efsd_events_pending(ec))
+     {		  
+	ZERO(&ev, EfsdEvent, 1);
+	
+	if (efsd_next_event(ec, &ev) >= 0)
+	  {
+	     for (l = fs_handlers; l; l = l->next)
+	       {
+		  void (*func) (EfsdEvent *ev);
+		  
+		  func = l->data;
+		  func(&ev);
+	       }
+	  }
+	else
+	  {
+	     efsd_close(ec);
+	     e_del_event_fd(fd);
+	     ec = NULL;
+	     /* FIXME: need to queue a popup dialog here saying */
+	     /* efsd went wonky */
+	     printf("EEEEEEEEEEK efsd went wonky\n");
+	  }
+	
+	efsd_cleanup_event(&ev);
     }
 }
 
