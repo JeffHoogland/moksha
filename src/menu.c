@@ -885,6 +885,7 @@ e_menu_free(E_Menu *m)
    evas_list_free(m->entries);
    IF_FREE(m->bg_file);
    evas_free(m->evas);
+   e_del_child(m->win.main, m->win.evas);
    e_window_destroy(m->win.main);
    menus = evas_list_remove(menus, m);
    open_menus = evas_list_remove(open_menus, m);
