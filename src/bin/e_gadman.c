@@ -461,6 +461,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 {
    E_Menu *m;
    E_Menu_Item *mi;
+   int disallow, seperator;
    
    E_OBJECT_CHECK_RETURN(gmc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gmc, E_GADMAN_CLIENT_TYPE, NULL);
@@ -468,8 +469,10 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
    
    gmc->menu = m;
 
+   seperator = 0;
    if (gmc->policy & E_GADMAN_POLICY_HSIZE)
      {
+	seperator = 1;
 	if (gmc->autow > 0)
 	  {
 	     mi = e_menu_item_new(m);
@@ -493,24 +496,26 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 				  "full_width");
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_width, gmc);
      }
-   if (gmc->policy & E_GADMAN_POLICY_HMOVE)
+   disallow = (gmc->policy & E_GADMAN_POLICY_EDGES)
+	      && ((gmc->edge == E_GADMAN_EDGE_LEFT) || (gmc->edge == E_GADMAN_EDGE_RIGHT));
+   if ((gmc->policy & E_GADMAN_POLICY_HMOVE) && !(disallow))
      {
+	seperator = 1;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, "Center Horizontally");
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
 				  "center_horiz");
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_horiz, gmc);
      }
-   if (((gmc->policy & E_GADMAN_POLICY_HSIZE) ||
-	(gmc->policy & E_GADMAN_POLICY_HMOVE)) &&
-       ((gmc->policy & E_GADMAN_POLICY_VSIZE) ||
-	(gmc->policy & E_GADMAN_POLICY_VMOVE)))
+   if (seperator)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
      }
+   seperator = 0;
    if (gmc->policy & E_GADMAN_POLICY_VSIZE)
      {
+	seperator = 1;
 	if (gmc->autoh > 0)
 	  {
 	     mi = e_menu_item_new(m);
@@ -534,16 +539,22 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 				  "full_height");
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_height, gmc);
      }
-   if (gmc->policy & E_GADMAN_POLICY_VMOVE)
+   disallow = (gmc->policy & E_GADMAN_POLICY_EDGES)
+	      && ((gmc->edge == E_GADMAN_EDGE_TOP) || (gmc->edge == E_GADMAN_EDGE_BOTTOM));
+   if ((gmc->policy & E_GADMAN_POLICY_VMOVE) && !(disallow))
      {
+	seperator = 1;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, "Center Vertically");
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
 				  "center_vert");
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_vert, gmc);
      }
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   if (seperator)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "End Edit Mode");
    e_menu_item_callback_set(mi, _e_gadman_cb_end_edit_mode, gmc);
