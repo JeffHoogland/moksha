@@ -305,7 +305,8 @@ _ibar_free(IBar *ib)
 
    while (ib->bars)
      _ibar_bar_free(ib->bars->data);
-   e_object_unref(E_OBJECT(ib->apps));
+   if (ib->apps)
+     e_object_unref(E_OBJECT(ib->apps));
 
    E_FREE(ib->conf->appdir);
    e_app_change_callback_del(_ibar_app_change, ib);
