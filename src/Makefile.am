@@ -28,7 +28,7 @@ ferite_c = e_ferite_gen_core.c \
 BUILT_SOURCES = e_ferite_gen_core.c \
 	e_ferite_gen_header.h \
 	e_ferite_gen_e.c \
-	e_ferite_gen_window.c \
+	e_ferite_gen_Border.c \
 	e_ferite_gen_Epplet.c \
 	e_ferite_gen_Ebits.c \
 	e_ferite_gen_EvasObject.c
