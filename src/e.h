@@ -146,6 +146,7 @@ typedef struct _E_Build_Menu          E_Build_Menu;
 typedef struct _E_Entry               E_Entry;
 typedef struct _E_Pack_Object_Class   E_Pack_Object_Class;
 typedef struct _E_Pack_Object         E_Pack_Object;
+typedef struct _E_FS_Restarter        E_FS_Restarter;
 
 struct _E_Object
 {
@@ -375,6 +376,8 @@ struct _E_View
    
    int                    is_listing;
    int                    monitor_id;
+   
+   E_FS_Restarter        *restarter;
    
    Evas_List              icons;
    Evas_List              shelves;
@@ -652,6 +655,12 @@ struct _E_Pack_Object
    int                  references;
    E_Pack_Object       *parent;
    Evas_List            children;
+};
+
+struct _E_FS_Restarter
+{
+   void (*func) (void *data);
+   void *data;
 };
 
 #define DO(_object, _method, _args...) \
@@ -975,6 +984,8 @@ void          e_build_menu_free(E_Build_Menu *bm);
 E_Build_Menu *e_build_menu_new_from_db(char *file);
 E_Build_Menu *e_build_menu_new_from_gnome_apps(char *dir);
 
+E_FS_Restarter *e_fs_add_restart_handler(void (*func) (void *data), void *data);
+void e_fs_del_restart_handler(E_FS_Restarter *rs);
 void e_fs_add_event_handler(void (*func) (EfsdEvent *ev));
 void e_fs_init(void);
 EfsdConnection *e_fs_get_connection(void);

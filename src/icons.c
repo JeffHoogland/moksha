@@ -134,7 +134,7 @@ e_icon_get_icon(E_Icon *icon)
    if (!found)
      {
 	strcpy(m2, icon->info.mime.type);
-	p = strrchr(m2, '-');
+	p = strrchr(m2, '/');
 	while (p)
 	  {
 	     p[0] = 0;
@@ -145,7 +145,7 @@ e_icon_get_icon(E_Icon *icon)
 		  found = 1;
 		  break;
 	       }
-	     p = strrchr(m2, '-');
+	     p = strrchr(m2, '/');
 	  }
      }
    if (!found)

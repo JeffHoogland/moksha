@@ -16,6 +16,7 @@ static void e_mouse_in(Eevent * ev);
 static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
+static void e_view_handle_fs_restart(void *data);
 
 /* FIXME: hack to test entry boxes */
 static E_Entry *entry = NULL;	
@@ -359,6 +360,41 @@ e_window_expose(Eevent * ev)
      }
 }
 
+static void
+e_view_handle_fs_restart(void *data)
+{
+   E_View *v;
+   Evas_List icons = NULL, l;
+   
+   v = data;
+   
+   printf("e_view_handle_fs_restart\n");
+   for (l = v->icons; l; l = l->next)
+     {
+	icons = evas_list_prepend(icons, l->data);
+     }
+   if (icons)
+     {
+	for (l = icons; l; l = l->next)
+	  {
+	     E_Icon *i;
+	     
+	     i = l->data;
+	     e_view_file_deleted(v->monitor_id, i->file);
+	  }
+	evas_list_free(icons);
+     }
+   if (e_fs_get_connection())
+     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					efsd_ops(2, 
+						 efsd_op_get_stat(), 
+						 efsd_op_get_filetype()
+						 )
+					);
+   printf("restarted monior id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
+   v->is_listing = 1;
+}
+
 Eevent *
 e_view_get_current_event(void)
 {
@@ -452,6 +488,7 @@ e_view_file_deleted(int id, char *file)
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
    icon = e_view_find_icon_by_file(v, file);
+   printf("%p %s\n", icon, file);
    if (icon) 
      {
 	e_view_del_icon(v, icon);
@@ -542,9 +579,15 @@ e_view_handle_fs(EfsdEvent *ev)
 		    ev->efsd_filechange_event.file);	     
 */	     break;
 	   case EFSD_CHANGE_END_EXISTS:
-	     printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
-		    ev->efsd_filechange_event.id,
-		    ev->efsd_filechange_event.file);	     
+	       {
+		  E_View *v;
+		  
+		  v = e_view_find_by_monitor_id(ev->efsd_filechange_event.id);
+		  if (v) v->is_listing = 0;
+		  printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
+			 ev->efsd_filechange_event.id,
+			 ev->efsd_filechange_event.file);	     
+	       }
 	     break;
 	   default:
 	     break;
@@ -702,6 +745,9 @@ void
 e_view_free(E_View *v)
 {
    views = evas_list_remove(views, v);
+   if (v->restarter)
+     e_fs_del_restart_handler(v->restarter);
+   v->restarter = NULL;
    FREE(v);
 }
 
@@ -786,15 +832,18 @@ e_view_set_dir(E_View *v, char *dir)
    v->dir = e_file_real(dir);
    /* start monitoring new dir */
 
-   /* v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir); */
-   v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-				      efsd_ops(2, 
-					       efsd_op_get_stat(), 
-					       efsd_op_get_filetype()
-					       )
-				      );
-   v->is_listing = 1;
-   v->changed = 1;
+   v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
+   if (e_fs_get_connection())
+     {
+	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					   efsd_ops(2, 
+						    efsd_op_get_stat(), 
+						    efsd_op_get_filetype()
+						    )
+					   );
+	v->is_listing = 1;
+	v->changed = 1;
+     }
 }
 
 void
@@ -920,6 +969,7 @@ e_view_realize(E_View *v)
      }
    
   /* FIXME: hack to test entry boxes */
+/*   
      {
 	entry = e_entry_new();
 	e_entry_set_evas(entry, v->evas);
@@ -936,7 +986,7 @@ e_view_realize(E_View *v)
 	     e_entry_resize(entry, ew, eh);
 	  }
      }
-   
+*/   
    v->changed = 1;
 }
 
