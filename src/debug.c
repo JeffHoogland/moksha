@@ -72,7 +72,7 @@ e_debug_enter(const char *file, const char *func)
 
 
 void
-e_debug_D_RETURN(const char *file, const char *func)
+e_debug_return(const char *file, const char *func)
 {
   printf("RETURN ");
   debug_print_info();

@@ -40,17 +40,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 void e_debug_enter(const char *file, const char *func);
 void e_debug_return(const char *file, const char *func);
 
-#define D_ENTER efsd_debug_enter(__FILE__, __FUNCTION__)
+#define D_ENTER e_debug_enter(__FILE__, __FUNCTION__)
 
 #define D_RETURN \
 { \
-  efsd_debug_return(__FILE__, __FUNCTION__); \
+  e_debug_return(__FILE__, __FUNCTION__); \
   return; \
 }
 
 #define D_RETURN_(x) \
 { \
-  efsd_debug_return(__FILE__, __FUNCTION__); \
+  e_debug_return(__FILE__, __FUNCTION__); \
 \
   return x; \
 }
