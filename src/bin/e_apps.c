@@ -754,6 +754,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  _e_app_subdir_rescan(app);
 	       }
 	  }
+	/*
 	else if (event == ECORE_FILE_EVENT_DELETED_SELF)
 	  {
 	     Evas_List *l;
@@ -768,6 +769,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	       }
 	     _e_app_change(app, E_APP_DEL);
 	  }
+	*/
      }
 }
 
