@@ -138,6 +138,7 @@ typedef struct _E_Background          E_Background;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
+typedef struct _E_Entry               E_Entry;
 
 struct _E_Object
 {
@@ -538,6 +539,43 @@ struct _E_Build_Menu
    Evas_List  menus;
    Evas_List  commands;
 };
+
+struct _E_Entry
+{
+   Evas  evas;
+   char *buffer;
+   int   cursor_pos;
+   struct {
+      int start, length;
+   } select;
+   int   visible;
+   int   focused;
+   int   x, y, w, h;
+   Evas_Object event_box;
+   Evas_Object clip_box;
+   Evas_Object cursor;
+   Evas_Object text;
+};
+
+void e_entry_init(void);
+void e_entry_free(E_Entry *entry);
+E_Entry *e_entry_new(void);
+void e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e);
+void e_entry_set_evas(E_Entry *entry, Evas evas);
+void e_entry_show(E_Entry *entry);
+void e_entry_hide(E_Entry *entry);
+void e_entry_set_layer(E_Entry *entry, int l);
+void e_entry_set_clip(E_Entry *entry, Evas_Object clip);
+void e_entry_unset_clip(E_Entry *entry);
+void e_entry_move(E_Entry *entry, int x, int y);
+void e_entry_resize(E_Entry *entry, int w, int h);
+void e_entry_query_max_size(E_Entry *entry, int *w, int *h);
+void e_entry_set_focus(E_Entry *entry, int focused);
+void e_entry_set_text(E_Entry *entry, const char *text);
+const char *e_entry_get_text(E_Entry *entry);
+void e_entry_set_cursor(E_Entry *entry, int cursor_pos);
+int e_entry_get_curosr(E_Entry *entry);
+
 
 void e_action_add_proto(char *action,
 			void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),

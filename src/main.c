@@ -53,6 +53,7 @@ main(int argc, char **argv)
    e_actions_init();
    e_menu_init();
    e_view_init();
+   e_entry_init();
    
    setup();
    

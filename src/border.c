@@ -2066,6 +2066,7 @@ e_border_init(void)
    e_event_filter_handler_add(EV_WINDOW_SHAPE,             e_shape);
    e_event_filter_handler_add(EV_WINDOW_FOCUS_IN,          e_focus_in);
    e_event_filter_handler_add(EV_WINDOW_FOCUS_OUT,         e_focus_out);
+   e_event_filter_handler_add(EV_MESSAGE,                  e_client_message);
    e_event_filter_handler_add(EV_COLORMAP,                 e_colormap);
    e_event_filter_idle_handler_add(e_idle, NULL);
 

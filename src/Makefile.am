@@ -12,6 +12,7 @@ background.c \
 border.c \
 config.c \
 desktops.c \
+entry.c \
 exec.c \
 fs.c \
 icccm.c \

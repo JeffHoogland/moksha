@@ -17,6 +17,9 @@ static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
 
+/* FIXME: hack to test entry boxes */
+static E_Entry *entry = NULL;	
+
 static void
 e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
@@ -161,6 +164,8 @@ e_key_down(Eevent * ev)
 	if ((e->win == v->win.base) ||
 	    (e->win == v->win.main))
 	  {
+	     /* FIXME: hack to test enty boxes */
+	     if (entry) e_entry_handle_keypress(entry, e);
 	     if (!strcmp(e->key, "Up"))
 	       {
 	       }
@@ -703,9 +708,9 @@ e_view_new(void)
    v = NEW(E_View, 1);
    ZERO(v, E_View, 1);
    OBJ_INIT(v, e_view_free);
-/* #define SOFT_DESK */
+#define SOFT_DESK
 /* #define X_DESK */
-#define GL_DESK
+/* #define GL_DESK */
    
 #ifdef SOFT_DESK
    /* ONLY alpha software can be "backing stored" */
@@ -867,6 +872,19 @@ e_view_realize(E_View *v)
 	     e_shelf_realize(sh);
 	  }
      }
+   
+  /* FIXME: hack to test entry boxes */
+     {
+	entry = e_entry_new();
+	e_entry_set_evas(entry, v->evas);
+	e_entry_set_layer(entry, 100);
+	e_entry_move(entry, 100, 100);
+	e_entry_resize(entry, 100, 24);
+	e_entry_set_focus(entry, 1);
+	e_entry_show(entry);
+	e_entry_set_text(entry, "Some Entry Text");
+     }
+   
    v->changed = 1;
 }
 
