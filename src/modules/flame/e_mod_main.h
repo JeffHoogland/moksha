@@ -10,7 +10,8 @@ typedef struct _Flame_Face Flame_Face;
 enum _Flame_Palette_Type
 {
    DEFAULT_NONE,
-   DEFAULT_PALETTE,
+     GOLD_PALETTE,
+     FIRE_PALETTE,
      PLASMA_PALETTE
 };
 
@@ -52,6 +53,8 @@ struct _Flame_Face
    /* the flame arrays */
    int           ws;
    unsigned int *f_array1, *f_array2;
+   
+   Ecore_Event_Handler *ev_handler_container_resize;
 };
 
 EAPI void *init     (E_Module *m);

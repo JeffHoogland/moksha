@@ -76,9 +76,7 @@ static E_Border  *focused = NULL;
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
-ecore_x_window_pixel_gravity_set(bd->bg_win, grav); \
 ecore_x_window_gravity_set(bd->client.shell_win, grav); \
-ecore_x_window_pixel_gravity_set(bd->client.shell_win, grav); \
 ecore_x_window_gravity_set(bd->client.win, grav); \
 ecore_x_window_gravity_set(ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas), grav); \
 ecore_x_window_pixel_gravity_set(ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas), grav);
@@ -2345,16 +2343,16 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
      {
 	static char buf[PATH_MAX + 50];
 	char *name, *homedir;
-	int i;
+	int i, l;
 
 	buf[0] = '\0';
 	/* generate a reasonable file name from the window class */
 	/* FIXME - I think there could be duplicates - how better to do this? */
 	name = strdup(bd->client.icccm.class);
-	for (i = 0; i < strlen(name); i++)
+	l = strlen(name);
+	for (i = 0; i < l; i++)
 	  {
-	      if (name[i] == ' ')
-	        name[i] = '_';
+	      if (name[i] == ' ') name[i] = '_';
 	  }
 	/* previously this could be null, but it will exist now */
 	homedir = e_user_homedir_get();

@@ -14,7 +14,6 @@ struct _Main_Data
 
 /* local subsystem functions */
 static void _e_int_menus_main_end        (void *data, E_Menu *m);
-static void _e_int_menus_about_end       (void *data, E_Menu *m);
 static void _e_int_menus_main_about     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_restart   (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -96,7 +95,6 @@ E_Menu *
 e_int_menus_apps_new(char *dir, int top)
 {
    E_Menu *m;
-   E_Menu_Item *mi;
    E_App *a;
    
    m = e_menu_new();
@@ -115,7 +113,6 @@ E_Menu *
 e_int_menus_favorite_apps_new(int top)
 {
    E_Menu *m;
-   E_App *a;
    char buf[4096];
    char *homedir;
    
