@@ -8,9 +8,6 @@
 /* local subsystem functions */
 static void _e_container_free(E_Container *con);
 
-static void _e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_container_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_container_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee);
 
 static void _e_container_shape_del(E_Container_Shape *es);
@@ -59,6 +56,8 @@ e_container_new(E_Manager *man)
    ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
    ecore_evas_show(con->bg_ecore_evas);
    e_path_evas_append(path_fonts, con->bg_evas);
+
+   ecore_evas_callback_resize_set(con->bg_evas, _e_container_cb_bg_ecore_evas_resize);
    
    e_pointer_container_set(con);
 
@@ -138,7 +137,7 @@ e_container_lower(E_Container *con)
 Evas_List *
 e_container_clients_list_get(E_Container *con)
 {
-    E_OBJECT_CHECK(con);
+    E_OBJECT_CHECK_RETURN(con, NULL);
     return con->clients;
 }
    
