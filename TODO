@@ -33,12 +33,11 @@ ISSUES:
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
 * focus issues in general
-* virtual desktops need an overhaul. hacked int waay too quickly.
+* virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * pager edje gfx...
 * pager needs an overhaul
 * pager needs to be able to split off each desk in a zone in a different gadget
-* e_apps polling/updates is broken
 * border show/hide needs to show from top down and hide from bottom up
 * gadman gadget menu needs icons :)
 * any known segv's must go
@@ -59,6 +58,7 @@ FIXME: group these TODO items into:
 3. cleanups
 4. optimisations
 5. nice to have features
+
 
 
 Some of the things (in very short form) that need to be done to E17...
