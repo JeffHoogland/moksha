@@ -19,6 +19,7 @@ function time_update(object data, number val){
   string date = Time.ctime(Time.time());
   string month = String.copySection(date,4,7);
   string day = String.copySection(date,8,10);
+  string year = String.copySection(date,20,24);
   string time = String.copySection(date,11,20);
   number hour = String.toLong(String.copySection(time,0,2));
   string min = String.copySection(time,3,5);
@@ -70,11 +71,11 @@ function time_update(object data, number val){
       month = "December";
       break;
     }
-    dateObj.setText(month+" "+day+", 2002");
+    dateObj.setText("$month $day, $year");
   }
 
 
-  data.setText(""+hour+" "+min+" "+seconds+" "+timeofday);
+  data.setText("$hour $min $seconds $timeofday");
   epp.addTimer("clockTimer",0.5,"time_update",0,data);
 }
 

@@ -27,7 +27,7 @@ function clock_update(object data, number val){
   }
   if(hour==0) hour = 12;
 
-  data.setText(""+hour+" "+min+" "+seconds+" "+timeofday);
+  data.setText("$hour $min $seconds $timeofday");
   epp.addTimer("clockTimer",0.5,"clock_update",0,data);
 }
 
