@@ -52,8 +52,10 @@ e_module_init(void)
 	if (m) e_module_enable(m);
 	m = e_module_new("dropshadow");
 	if (m) e_module_enable(m);
-/*	m = e_module_new("clock");
-	if (m) e_module_enable(m);*/
+#if 1	
+	m = e_module_new("clock");
+	if (m) e_module_enable(m);
+#endif	
      }
    
    return 1;

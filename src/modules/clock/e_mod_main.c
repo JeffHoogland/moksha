@@ -216,10 +216,8 @@ _clock_face_init(Clock_Face *ef)
    snprintf(buf, sizeof(buf), "%s/default.eet", _clock_module_dir);
    edje_object_file_set(o,
 			/* FIXME: "default.eet" needs to come from conf */
-			/*e_path_find(path_themes, "default.eet"),
-			"modules/ibar/main");*/
-			/* FIXME - hard coded, bad */
-			buf, "Main");
+			e_path_find(path_themes, "default.eet"),
+			"modules/clock/main");
    evas_object_show(o);
    
    o = evas_object_rectangle_add(ef->evas);
