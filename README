@@ -40,7 +40,7 @@ $ ./autogen.sh --prefix=/usr/local/e-17
 
 so it installs relative to the /usr/local/e-17 directory and keeps all the
 e-17 development code and data in that tree so it is easily removed when the
-time codes.
+time comes.
 
 
 
