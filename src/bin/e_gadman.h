@@ -50,6 +50,8 @@ struct _E_Gadman_Client
    E_Gadman            *gadman;
    
    Evas_Object         *control_object;
+   Evas_Object         *event_object;
+   E_Menu              *menu;
    Evas_Coord           down_x, down_y;
    Evas_Coord           down_store_x, down_store_y, down_store_w, down_store_h;
    unsigned char        moving : 1;
@@ -86,6 +88,7 @@ EAPI void             e_gadman_client_align_set(E_Gadman_Client *gmc, double xal
 EAPI void             e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa);
 EAPI void             e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 EAPI void             e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change), void *data);
+EAPI E_Menu          *e_gadman_client_menu_new(E_Gadman_Client *gmc);
 
 #endif
 #endif
