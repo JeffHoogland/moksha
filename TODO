@@ -29,7 +29,6 @@ Current freeze issues are:
 
 ISSUES:
 
-* pager module doesnt shut down properly (disable and create window - segv)
 * pager module doesnt handle window deletes
 * pager module causes window resizes to be slower than normal
 * virtual desktops need fixing to work with zones properly
