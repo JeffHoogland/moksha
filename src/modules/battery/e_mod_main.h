@@ -29,8 +29,9 @@ struct _Config_Face
 
 struct _Battery
 {
-   E_Menu       *config_menu;
-   Evas_List *faces;
+   E_Menu      *config_menu;
+   Evas_List   *menus;
+   Evas_List   *faces;
 
    Config      *conf;
    int alarm_triggered;
@@ -44,9 +45,10 @@ struct _Battery
 
 struct _Battery_Face
 {
-   Battery     *bat;
    E_Container *con;
-   Evas        *evas;
+
+   E_Menu      *menu;
+   Config_Face *conf;
 
    Evas_Object *bat_object;
    Evas_Object *event_object;
@@ -73,12 +75,6 @@ struct _Status
    char *reading;
    /* time == time left to empty / full */
    char *time;
-   /* Signals */
-   /* charge == (ac == on), (fade_clip == default) */
-   /* pulsestop == (pulse_clip == default) */
-   /* discharge == (ac == off), (fade_clip == default) */
-   /* pulse == (pulse_clip == faded), .... */
-   /* unknown == (fade_clip == faded) */
 };
 
 EAPI void *init     (E_Module *m);

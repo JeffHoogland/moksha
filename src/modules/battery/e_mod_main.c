@@ -6,27 +6,31 @@
 
 /* TODO List:
  *
- * fix menu pr. face
- * separate face from battery
- *
+ * which options should be in main menu, and which in face menu?
  */
 
 /* module private routines */
-static Battery *_battery_init(E_Module *m);
-static void     _battery_shutdown(Battery *e);
-static void     _battery_config_menu_new(Battery *e);
-static int      _battery_cb_check(void *data);
-static Status  *_battery_linux_acpi_check(Battery *ef);
-static Status  *_battery_linux_apm_check(Battery *ef);
+static Battery      *_battery_new();
+static void          _battery_shutdown(Battery *e);
+static void          _battery_config_menu_new(Battery *e);
+static int           _battery_cb_check(void *data);
+static Status       *_battery_linux_acpi_check(Battery *ef);
+static Status       *_battery_linux_apm_check(Battery *ef);
 
-static void     _battery_face_init(Battery_Face *ef);
-static void     _battery_face_free(Battery_Face *ef);
-static void     _battery_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void     _battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void     _battery_face_level_set(Battery_Face *ef, double level);
+static Battery_Face *_battery_face_new(E_Container *con);
+static void          _battery_face_free(Battery_Face *ef);
+static void          _battery_face_menu_new(Battery_Face *face);
+static void          _battery_face_enable(Battery_Face *face);
+static void          _battery_face_disable(Battery_Face *face);
+static void          _battery_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
+static void          _battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void          _battery_face_level_set(Battery_Face *ef, double level);
+static void          _battery_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
+
+static int battery_count;
 
 /* public module routines. all modules must have these */
 void *
@@ -47,7 +51,7 @@ init(E_Module *m)
 	return NULL;
      }
    /* actually init battery */
-   e = _battery_init(m);
+   e = _battery_new();
    m->config_menu = e->config_menu;
    return e;
 }
@@ -100,11 +104,14 @@ about(E_Module *m)
 
 /* module private routines */
 static Battery *
-_battery_init(E_Module *m)
+_battery_new()
 {
    Battery *e;
    Evas_List *managers, *l, *l2, *cl;
 
+   E_Menu_Item *mi;
+
+   battery_count = 0;
    e = E_NEW(Battery, 1);
    if (!e) return NULL;
 
@@ -143,6 +150,7 @@ _battery_init(E_Module *m)
    e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
 
    managers = e_manager_list();
+   cl = e->conf->faces;
    for (l = managers; l; l = l->next)
      {
 	E_Manager *man;
@@ -154,14 +162,46 @@ _battery_init(E_Module *m)
 	     Battery_Face *ef;
 
 	     con = l2->data;
-	     ef = E_NEW(Battery_Face, 1);
+	     ef = _battery_face_new(con);
 	     if (ef)
 	       {
-		  ef->bat = e;
-		  ef->con = con;
-		  ef->evas = con->bg_evas;
-		  _battery_face_init(ef);
 		  e->faces = evas_list_append(e->faces, ef);
+
+		  /* Config */
+		  if (!cl)
+		    {
+		       ef->conf = E_NEW(Config_Face, 1);
+		       ef->conf->enabled = 1;
+		       e->conf->faces = evas_list_append(e->conf->faces, ef->conf);
+		    }
+		  else
+		    {
+		       ef->conf = cl->data;
+		       cl = cl->next;
+		    }
+
+		  /* Menu */
+		  /* This menu must be initialized after conf */
+		  _battery_face_menu_new(ef);
+
+		  /* Add main menu to face menu */
+		  /*
+		  for (ml = e->menus; ml; ml = ml->next)
+		    {
+		       mn = ml->data;
+		       mi = e_menu_item_new(ef->menu);
+		       e_menu_item_label_set(mi, "????");
+		       e_menu_item_submenu_set(mi, mn);
+		    }
+		  */
+
+		  mi = e_menu_item_new(e->config_menu);
+		  e_menu_item_label_set(mi, con->name);
+		  e_menu_item_submenu_set(mi, ef->menu);
+
+		  /* Setup */
+		  if (!ef->conf->enabled)
+		    _battery_face_disable(ef);
 	       }
 	  }
      }
@@ -176,7 +216,6 @@ _battery_shutdown(Battery *e)
 {
    Evas_List *l;
 
-   free(e->conf);
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(conf_face_edd);
 
@@ -184,8 +223,14 @@ _battery_shutdown(Battery *e)
      _battery_face_free(l->data);
    evas_list_free(e->faces);
 
-   ecore_timer_del(e->battery_check_timer);
+   for (l = e->menus; l; l = l->next)
+     e_object_del(E_OBJECT(l->data));
+   evas_list_free(e->menus);
    e_object_del(E_OBJECT(e->config_menu));
+
+   ecore_timer_del(e->battery_check_timer);
+
+   free(e->conf);
    free(e);
 }
 
@@ -196,6 +241,7 @@ _battery_menu_alarm_10(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 10;
+   e_config_save_queue();
 }
 
 static void
@@ -205,6 +251,7 @@ _battery_menu_alarm_20(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 20;
+   e_config_save_queue();
 }
 
 static void
@@ -214,6 +261,7 @@ _battery_menu_alarm_30(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 30;
+   e_config_save_queue();
 }
 
 static void
@@ -223,6 +271,7 @@ _battery_menu_alarm_40(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 40;
+   e_config_save_queue();
 }
 
 static void
@@ -232,6 +281,7 @@ _battery_menu_alarm_50(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 50;
+   e_config_save_queue();
 }
 
 static void
@@ -241,6 +291,7 @@ _battery_menu_alarm_60(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 60;
+   e_config_save_queue();
 }
 
 static void
@@ -250,6 +301,7 @@ _battery_menu_alarm_disable(void *data, E_Menu *m, E_Menu_Item *mi)
 
    e = data;
    e->conf->alarm = 0;
+   e_config_save_queue();
 }
 
 static void
@@ -318,6 +370,7 @@ _battery_config_menu_new(Battery *e)
    E_Menu *mn, *config_menu_alarm, *config_menu_poll;
    E_Menu_Item *mi;
 
+   /* Alarm */
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
@@ -371,6 +424,7 @@ _battery_config_menu_new(Battery *e)
 
    config_menu_alarm = mn;
 
+   /* Check interval */
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
@@ -421,15 +475,24 @@ _battery_config_menu_new(Battery *e)
    e_menu_item_submenu_set(mi, config_menu_alarm);
 
    e->config_menu = mn;
+   e->menus = evas_list_append(e->menus, config_menu_poll);
+   e->menus = evas_list_append(e->menus, config_menu_alarm);
 }
 
-static void
-_battery_face_init(Battery_Face *ef)
+static Battery_Face *
+_battery_face_new(E_Container *con)
 {
    Evas_Object *o;
+   Battery_Face *ef;
 
-   evas_event_freeze(ef->evas);
-   o = edje_object_add(ef->evas);
+   ef = E_NEW(Battery_Face, 1);
+   if (!ef) return NULL;
+
+   ef->con = con;
+   e_object_ref(E_OBJECT(con));
+
+   evas_event_freeze(con->bg_evas);
+   o = edje_object_add(con->bg_evas);
    ef->bat_object = o;
 
    edje_object_file_set(o,
@@ -438,7 +501,7 @@ _battery_face_init(Battery_Face *ef)
 			"modules/battery/main");
    evas_object_show(o);
 
-   o = evas_object_rectangle_add(ef->evas);
+   o = evas_object_rectangle_add(con->bg_evas);
    ef->event_object = o;
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
@@ -446,8 +509,8 @@ _battery_face_init(Battery_Face *ef)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _battery_face_cb_mouse_down, ef);
    evas_object_show(o);
 
-   ef->gmc = e_gadman_client_new(ef->con->gadman);
-   e_gadman_client_domain_set(ef->gmc, "module.battery", 0);
+   ef->gmc = e_gadman_client_new(con->gadman);
+   e_gadman_client_domain_set(ef->gmc, "module.battery", battery_count++);
    e_gadman_client_policy_set(ef->gmc,
 			      E_GADMAN_POLICY_ANYWHERE |
 			      E_GADMAN_POLICY_HMOVE |
@@ -461,16 +524,58 @@ _battery_face_init(Battery_Face *ef)
    e_gadman_client_resize(ef->gmc, 64, 64);
    e_gadman_client_change_func_set(ef->gmc, _battery_face_cb_gmc_change, ef);
    e_gadman_client_load(ef->gmc);
-   evas_event_thaw(ef->evas);
+   evas_event_thaw(con->bg_evas);
+
+   return ef;
 }
 
 static void
 _battery_face_free(Battery_Face *ef)
 {
+   e_object_unref(E_OBJECT(ef->con));
    e_object_del(E_OBJECT(ef->gmc));
+   e_object_del(E_OBJECT(ef->menu));
    evas_object_del(ef->bat_object);
    evas_object_del(ef->event_object);
+
+   free(ef->conf);
    free(ef);
+   battery_count--;
+}
+
+static void
+_battery_face_menu_new(Battery_Face *face)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   mn = e_menu_new();
+   face->menu = mn;
+
+   /* Enabled */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_check_set(mi, 1);
+   if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_face_cb_menu_enabled, face);
+}
+
+static void
+_battery_face_enable(Battery_Face *face)
+{
+   face->conf->enabled = 1;
+   evas_object_show(face->bat_object);
+   evas_object_show(face->event_object);
+   e_config_save_queue();
+}
+
+static void
+_battery_face_disable(Battery_Face *face)
+{
+   face->conf->enabled = 0;
+   evas_object_hide(face->bat_object);
+   evas_object_hide(face->event_object);
+   e_config_save_queue();
 }
 
 static void
@@ -505,7 +610,7 @@ _battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    ef = data;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(ef->bat->config_menu, e_zone_current_get(ef->con),
+	e_menu_activate_mouse(ef->menu, e_zone_current_get(ef->con),
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(ef->con);
@@ -654,7 +759,6 @@ _battery_linux_acpi_check(Battery *ef)
 
    int bat_val = 0;
 
-   char current_status[256];
    int discharging = 0;
    int charging = 0;
    int battery = 0;
@@ -878,7 +982,7 @@ _battery_linux_apm_check(Battery *ef)
 	      stat->level = 0.25;
 	      break;
 	   case 3:
-	      stat->reading = strdup("Charge");
+	      stat->reading = strdup("Charging");
 	      stat->level = 1.0;
 	      break;
 	  }
@@ -915,4 +1019,23 @@ _battery_face_level_set(Battery_Face *ef, double level)
    else if (level > 1.0) level = 1.0;
    msg.val = level;
    edje_object_message_send(ef->bat_object, EDJE_MESSAGE_FLOAT, 1, &msg);
+}
+
+static void
+_battery_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery_Face *face;
+   unsigned char enabled;
+
+   face = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((face->conf->enabled) && (!enabled))
+     {  
+	_battery_face_disable(face);
+     }
+   else if ((!face->conf->enabled) && (enabled))
+     { 
+	_battery_face_enable(face);
+     }
+   e_menu_item_toggle_set(mi, face->conf->enabled);
 }
