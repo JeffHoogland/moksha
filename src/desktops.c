@@ -800,6 +800,8 @@ e_desktops_goto(int d, int ax, int ay)
 	e_desktops_show(desk);
 	current_desk = desk;
 
+	e_border_check_select();
+
 	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
 	e_icccm_set_desk(0, desk->desk.desk);
 	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH, NULL);

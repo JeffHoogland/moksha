@@ -79,6 +79,8 @@ static void         e_cb_border_visibility(E_Border * b);
 
 static void         e_border_poll(int val, void *data);
 static void         e_border_cleanup(E_Border * b);
+E_Border           *e_border_shuffle_last(E_Border *b);
+E_Border           *e_border_current_select(void);
 
 static int
 e_border_replay_query(Ecore_Event_Mouse_Down * ev)
@@ -129,15 +131,30 @@ e_border_update_borders(void)
 	  }
      }
 
-   /* Check for a focused border, else focus the desktop */
-   if( !e_border_current_focused())
-     {
-       if( !e_desktop_raise_next_border())
-	 e_icccm_send_focus_to( e_desktop_window(), 1);
-     }
    e_db_runtime_flush();
 
    D_RETURN;
+}
+
+void
+e_border_check_select( void )
+{
+   E_Border             *b;
+   E_Desktop            *current_desk;
+
+   current_desk = e_desktops_get(e_desktops_get_current());
+
+   /* If no borders exist on present desktop */
+   if (!current_desk || !current_desk->windows)
+     {
+       e_icccm_send_focus_to( e_desktop_window(), 1);
+       D_RETURN_(NULL);
+     }
+
+   if((b = e_border_current_focused()))
+       e_icccm_send_focus_to( b->win.client, 1);
+   else
+       e_border_shuffle_last(b);
 }
 
 static void
@@ -348,7 +365,10 @@ e_unmap(Ecore_Event * ev)
 					     border_mouse_x, border_mouse_y);
 
 		     if (e_object_get_usecount(E_OBJECT(b)) == 1)
-			e_border_release(b);
+		       {
+			 e_border_release(b);
+			 e_border_shuffle_last(b);
+		       }
 		     e_object_unref(E_OBJECT(b));
 		  }
 	     }
@@ -382,7 +402,10 @@ e_destroy(Ecore_Event * ev)
 					border_mouse_x, border_mouse_y);
 
 		if (e_object_get_usecount(E_OBJECT(b)) == 1)
+		  {
 		   e_border_release(b);
+		   e_border_shuffle_last(b);
+		  }
 		e_object_unref(E_OBJECT(b));
 	     }
 	}
@@ -1373,7 +1396,8 @@ e_border_release(E_Border * b)
    ecore_window_reparent(b->win.client, 0, b->current.x + pl,
 			 b->current.y + pt);
    e_icccm_release(b->win.client);
-
+   e_icccm_send_focus_to( e_desktop_window(), 1);
+   
    D_RETURN;
 }
 
@@ -1624,6 +1648,8 @@ e_border_new(void)
    ecore_window_show(b->win.b);
 
    e_border_attach_mouse_grabs(b);
+
+   /*   e_icccm_send_focus_to(b->win.client, 1);*/
 
    borders = evas_list_prepend(borders, b);
 
@@ -2638,6 +2664,30 @@ e_border_adopt_children(Window win)
    D_RETURN;
 }
 
+
+E_Border           *
+e_border_current_select(void)
+{
+   Evas_List *           l;
+   E_Desktop *        desk;
+
+   /* Only check for borders on the current desktop */
+   desk = e_desktops_get(e_desktops_get_current());
+
+   D_ENTER;
+   for (l = borders; l; l = l->next)
+     {
+	E_Border           *b;
+
+	b = l->data;
+	if (b->current.selected && b->desk == desk)
+	   D_RETURN_(b);
+     }
+
+   D_RETURN_(NULL);
+}
+
+
 E_Border           *
 e_border_current_focused(void)
 {
@@ -2653,9 +2703,7 @@ e_border_current_focused(void)
 	E_Border           *b;
 
 	b = l->data;
-	if (b->current.selected && 
-	    b->desk == desk
-	    )
+	if (b->current.selected && b->desk == desk)
 	   D_RETURN_(b);
      }
    for (l = borders; l; l = l->next)
@@ -2663,9 +2711,7 @@ e_border_current_focused(void)
 	E_Border           *b;
 
 	b = l->data;
-	if (b->current.select_lost_from_grab && 
-	    b->desk == desk
-	    )
+	if (b->current.select_lost_from_grab && b->desk == desk)
 	   D_RETURN_(b);
      }
 
@@ -2676,17 +2722,24 @@ void
 e_border_focus_grab_ended(void)
 {
    Evas_List *           l;
+   E_Desktop *desk;
 
    D_ENTER;
+
+   desk = e_desktops_get(e_desktops_get_current());
 
    for (l = borders; l; l = l->next)
      {
 	E_Border           *b;
 
 	b = l->data;
-	b->current.select_lost_from_grab = 0;
-	b->current.selected = 0;
-	b->changed = 1;
+	/* Only change selection of items on present desktop */
+	if(b->desk == desk)
+	  {
+	    b->current.select_lost_from_grab = 0;
+	    b->current.selected = 0;
+	    b->changed = 1;
+	  }
      }
 
    D_RETURN;
@@ -2804,4 +2857,42 @@ e_borders_scroll_list(Evas_List *borders, int dx, int dy)
 	     b->changed = 1;
 	  }
      }
+}
+
+
+E_Border *
+e_border_shuffle_last(E_Border *b)
+{
+   Evas_List *           next;
+   E_Border           *start;
+   E_Border           *current = NULL;
+   E_Desktop    *current_desk;
+
+   D_ENTER;
+
+   current_desk = e_desktops_get(e_desktops_get_current());
+
+   if (!current_desk || !current_desk->windows)
+     {
+       e_icccm_send_focus_to( e_desktop_window(), 1);
+       D_RETURN_(NULL);
+     }
+
+   if(b)
+     current = b;
+   else
+     current = evas_list_last(current_desk->windows)->data;
+
+   /* Find the current border on the list of borders */
+   for (next = current_desk->windows; next && next->data != current; next = next->next);
+
+   /* Step to the next border, wrap around the queue if the end is reached */
+   if (next && next->prev)
+      current = next->prev->data;
+   else
+      current = evas_list_last(next)->data;
+
+   e_icccm_send_focus_to(current->win.client, current->client.takes_focus);
+
+   D_RETURN_(current);
 }

@@ -258,4 +258,6 @@ void                e_border_set_gravity(E_Border * b, int gravity);
 Evas_List          *e_border_get_borders_list();
 void                e_borders_scroll_list(Evas_List *borders,
 		                          int dx, int dy);
+void                e_border_check_select( void );
+
 #endif
