@@ -7,7 +7,9 @@
  * * add alpha-pixel only pixel space to image objects in evas and make use of it to save cpu and ram
  * * when blurring ALSO cut out the overlayed rect frrom the blur algorithm
  * * handle shaped windows efficiently (as possible).
- * 
+ * * share shadow pixels between shadow objects for square shapes if big enough to be split into 1 stretched images
+ * * look into mmx for the blur function...
+ * * handle other shadow pos cases where we cant use 4 objects (3 or 2).
  */
 
 /* module private routines */
@@ -55,6 +57,7 @@ static Shpix      *_ds_shpix_new(int w, int h);
 static Shpix      *_ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
 static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
+static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
     
 /* public module routines. all modules must have these */
 void *
