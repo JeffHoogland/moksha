@@ -140,9 +140,9 @@ e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
    else if (!strcmp(class, "Scrollbar_Trough"))
      {
 	if (sb->direction)
-	   sb->val = ( y - sb->bar_area.y );
+	   sb->val = ( y - sb->bar_area.y) * sb->max / sb->bar_area.h - sb->bar_area.h / 2;
 	else
-	   sb->val = ( x - sb->bar_area.x );
+	   sb->val = ( x - sb->bar_area.x) * sb->max / sb->bar_area.w - sb->bar_area.w / 2;
 
 	if (sb->val < 0) sb->val = 0;
 	if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
