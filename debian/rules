@@ -2,12 +2,13 @@
 # Sample debian/rules that uses debhelper.
 # GNU copyright 1997 to 1999 by Joey Hess.
 
-export DH_COMPAT=2
+export DH_COMPAT=3
 
+INSTALL = /usr/bin/install
+package = e17
 pwd:=$(shell pwd)
 cfg:=--prefix=/usr --datadir=/usr/share/e17 PACKAGE=e17 DESTDIR=/usr
 INSTALL=/usr/bin/install
-package=e17
 
 build: build-stamp
 build-stamp:
@@ -15,11 +16,11 @@ build-stamp:
 	test -e configure.ac && sed <configure.ac "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.ac1 && mv -f configure.ac1 configure.ac
 	test -e configure.in && sed <configure.in "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.in1 && mv -f configure.in1 configure.in
 	test -x autogen.sh && ./autogen.sh $(cfg) || ./configure $(cfg)
-	$(MAKE) PACKAGE=e17
-	touch build-stamp
+	$(MAKE)
+	touch $@
+
 clean:
 	dh_testdir
-	dh_testroot
 	rm -f build-stamp
 	-$(MAKE) distclean
 	dh_clean
@@ -40,7 +41,7 @@ install: build
 binary-indep: build install
 
 binary-arch: build install
-	dh_testversion 2.0
+	dh_testversion 3
 	dh_testdir
 	dh_testroot
 	dh_installdocs AUTHORS README
