@@ -671,6 +671,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	     e_window_get_geometry(0, NULL, NULL, &rw, &rh);
+	     printf("%i %i\n", ic->view->location.x, ic->view->location.y);
 	     downx = ic->view->select.down.x + ic->view->location.x;
 	     downy = ic->view->select.down.y + ic->view->location.y;
 
@@ -693,10 +694,11 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     if ((wy + wh) > (rh + downy))
 	       wh = (rh + downy) - wy;
 	     
-	     ic->view->drag.x = wx;
-	     ic->view->drag.y = wy;
-	     ic->view->drag.offset.x = downx - wx;
-	     ic->view->drag.offset.y = downy - wy;
+	     
+	     ic->view->drag.x = wx + ic->view->location.x;
+	     ic->view->drag.y = wy + ic->view->location.y;
+	     ic->view->drag.offset.x = downx - ic->view->drag.x;
+	     ic->view->drag.offset.y = downy - ic->view->drag.y;
 	     
 	     if ((ww < 1) || (wh < 1)) return;
 	     ic->view->drag.win = e_window_override_new(0, wx, wy, ww, wh);
@@ -728,8 +730,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       v = l->data;
 		       if (v->sel_count > 0)
 			 {
-			    for (ll = v->icons; ll; ll = ll->next)
-			      {
+			    for (ll = v->icons; ll; ll = ll->next)			      {
 				 E_Icon *ic;
 				 
 				 ic = ll->data;
@@ -1269,10 +1270,9 @@ e_view_handle_fs_restart(void *data)
      }
    if (e_fs_get_connection())
      v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					efsd_ops(3, 
+					efsd_ops(2, 
 						 efsd_op_get_stat(), 
-						 efsd_op_get_filetype(),
-						  efsd_op_sort()
+						 efsd_op_get_filetype()
 						 ),
 					TRUE);
    printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
@@ -1814,10 +1814,9 @@ e_view_set_dir(E_View *v, char *dir)
    if (e_fs_get_connection())
      {
        v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					  efsd_ops(3, 
+					  efsd_ops(2, 
 						   efsd_op_get_stat(), 
-						   efsd_op_get_filetype(),
-						   efsd_op_sort()
+						   efsd_op_get_filetype()
 						   ),
 					  TRUE
 					  );
