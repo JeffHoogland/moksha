@@ -25,6 +25,9 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_container_resize;
    Evas_Coord    fx, fy, fw, fh;
    Evas_Coord    xx, yy;
+
+   /* FIXME: want to fix click detection once leftdrag is not used */
+   Evas_Coord    clickhackx, clickhacky;
 };
 
 EAPI void *init     (E_Module *m);

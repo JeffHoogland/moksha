@@ -177,7 +177,9 @@ _pager_shutdown(Pager *e)
    free(e->conf);
    E_CONFIG_DD_FREE(e->conf_edd);
 
+   evas_object_hide(e->base);
    evas_object_free(e->base);
+   evas_object_hide(e->screen);
    evas_object_free(e->screen);
 
    while(e->desks)
@@ -208,7 +210,6 @@ _pager_config_menu_new(Pager *e)
    
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "(Unused)");
-/*   e_menu_item_callback_set(mi, _pager_cb_scale, e);*/
    e->config_menu = mn;
    
    return mn;
@@ -243,7 +244,7 @@ _pager_refresh(Pager *e)
    Evas_List   *clients;
 
    Evas_Object *desk_obj, *win_obj;
-   int          desks_x, desks_y, x, y;
+   int          desks_x, desks_y, x, y, top, toptmp;
    Evas_Coord   px, py, pw, ph, ww, hh;
    double       scalex, scaley;
 
@@ -280,8 +281,6 @@ _pager_refresh(Pager *e)
 	  desk = e_desk_at_xy_get(zone, x, y);
 	  px = e->fx + (x * pw);
 	  py = e->fy + (y * ph);
-	  if (desk == current)
-	    evas_object_move(e->screen, px, py);
 	  desk_obj = edje_object_add(e->evas);
 	  edje_object_file_set(desk_obj,
 			       /* FIXME: "default.eet" needs to come from conf */
@@ -292,6 +291,7 @@ _pager_refresh(Pager *e)
 	  evas_object_move(desk_obj, px, py);
 
 	  evas_object_show(desk_obj);
+	  top = evas_object_layer_get(desk_obj);
 	  e->desks = evas_list_append(e->desks, desk_obj);
 
 	  clients = desk->clients;
@@ -314,9 +314,17 @@ _pager_refresh(Pager *e)
 	       evas_object_move(win_obj, px + winx, py + winy);
 
 	       evas_object_show(win_obj);
+	       toptmp = evas_object_layer_get(win_obj);
+	       if (toptmp > top)
+		 top = toptmp;
 	       e->wins = evas_list_append(e->wins, win_obj);
 
 	       clients = clients->next;
+	    }
+	  if (desk == current)
+	    {
+	       evas_object_move(e->screen, px, py);
+	       evas_object_layer_set(e->screen, top + 1);
 	    }
        }
 }
@@ -345,6 +353,8 @@ _pager_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	p->move = 1;
      }
    evas_pointer_canvas_xy_get(p->evas, &p->xx, &p->yy);
+   p->clickhackx = p->xx;
+   p->clickhacky = p->yy;
 }
 
 static void
@@ -352,18 +362,14 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    Pager     *p;
-   Evas_Coord ww, hh;
-   double     newx, newy;
+   Evas_Coord xx, yy, ww, hh;
    
    ev = event_info;
    p = data;
 
    evas_output_viewport_get(p->evas, NULL, NULL, &ww, &hh);
    /* if we clicked, not moved - FIXME, this is a hack */
-   newx = (double)p->fx / (double)(ww - p->fw);
-   newy = (double)p->fy / (double)(hh - p->fh);
-printf("saving %g, %g\n", newx, newy);
-   if (p->move && (p->conf->x == newx) && (p->conf->y == newy))
+   if (p->move && (p->xx == p->clickhackx) && (p->yy == p->clickhacky))
      {
 	int     x, y, w, h, xcount, ycount, cx, cy;
 	E_Zone *zone;
@@ -397,8 +403,8 @@ printf("saving %g, %g\n", newx, newy);
 
    p->conf->width = p->fw;
    p->conf->height = p->fh;
-   p->conf->x = newx;
-   p->conf->y = newy;
+   p->conf->x = (double)p->fx / (double)(ww - p->fw);
+   p->conf->y = (double)p->fy / (double)(hh - p->fh);
    e_config_save_queue();
 
 }
