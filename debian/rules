@@ -7,7 +7,7 @@ export DH_COMPAT=3
 INSTALL = /usr/bin/install
 package = e17
 pwd:=$(shell pwd)
-cfg:=--prefix=/usr --datadir=/usr/share/e17 PACKAGE=e17 DESTDIR=/usr
+cfg:=--prefix=/usr --datadir=/usr/share/e17
 INSTALL=/usr/bin/install
 
 build: build-stamp
@@ -16,6 +16,7 @@ build-stamp:
 	test -e configure.ac && sed <configure.ac "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.ac1 && mv -f configure.ac1 configure.ac
 	test -e configure.in && sed <configure.in "s/AC_INIT_AUTOMAKE(enlightenment/AC_INIT_AUTOMAKE(e17/" >configure.in1 && mv -f configure.in1 configure.in
 	test -x autogen.sh && ./autogen.sh $(cfg) || ./configure $(cfg)
+#	perl -e 's/enlightenment$$/e17/' Makefile src/Makefile
 	$(MAKE)
 	touch $@
 
@@ -32,10 +33,7 @@ install: build
 	dh_installdirs
 
 	# change enlightenment to e17 to co-exist with e16
-	$(MAKE) install \
-	  DESTDIR=$(pwd)/debian/e17 \
-	  PACKAGE=e17\
-	  pkgdatadir=/usr/share/e17
+	$(MAKE) install DESTDIR=$(pwd)/debian/e17
 	mv debian/e17/usr/bin/enlightenment debian/e17/usr/bin/e17
 
 binary-indep: build install
