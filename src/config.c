@@ -49,7 +49,7 @@ e_config_get(char *type)
   if (!strcmp(type, _key)) \
     { \
       if ((_var)[0]) D_RETURN_(_var); \
-      sprintf((_var), ## _args); \
+      snprintf((_var), PATH_MAX, ## _args); \
       D_RETURN_(_var); \
     } \
 }
@@ -100,25 +100,25 @@ e_config_init(void)
 
 #if 1 /* for now don't do this. i think a cp -r will be needed later anyway */
    if (!e_file_is_dir(e_config_user_dir())) e_file_mkdir(e_config_user_dir());
-   sprintf(buf, "%sappearance",           e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sappearance",           e_config_user_dir());
    if (!e_file_is_dir(buf)) e_file_mkdir(buf);
-   sprintf(buf, "%sappearance/borders",   e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sappearance/borders",   e_config_user_dir());
    if (!e_file_is_dir(buf)) e_file_mkdir(buf);
-   sprintf(buf, "%sbehavior",             e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sbehavior",             e_config_user_dir());
    if (!e_file_is_dir(buf)) e_file_mkdir(buf);
-   sprintf(buf, "%sbehavior/grabs.db",    e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sbehavior/grabs.db",    e_config_user_dir());
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db", buf);
-   sprintf(buf, "%sbehavior/settings.db", e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sbehavior/settings.db", e_config_user_dir());
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db", buf);
-   sprintf(buf, "%sbehavior/actions.db",  e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sbehavior/actions.db",  e_config_user_dir());
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db", buf);
-   sprintf(buf, "%sbehavior/apps_menu.db",  e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sbehavior/apps_menu.db",  e_config_user_dir());
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/apps_menu.db", buf);
-   sprintf(buf, "%sappearance/borders/border.bits.db",  e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%sappearance/borders/border.bits.db",  e_config_user_dir());
 #endif
 #if 0   
    ts();
@@ -164,9 +164,9 @@ e_config_user_dir(void)
    if (cfg_user_dir[0]) D_RETURN_(cfg_user_dir);
    if (cfg_root[0]) D_RETURN_(cfg_root);
 #if 1 /* disabled for now - use system ones only */
-   sprintf(cfg_user_dir, "%s/.e/", e_util_get_user_home());
+   snprintf(cfg_user_dir, PATH_MAX, "%s/.e/", e_util_get_user_home());
 #else   
-   sprintf(cfg_user_dir, PACKAGE_DATA_DIR"/data/config/");
+   snprintf(cfg_user_dir, PATH_MAX, PACKAGE_DATA_DIR"/data/config/");
 #endif   
 
    D_RETURN_(cfg_user_dir);
@@ -291,7 +291,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  int val;
 		  
 		  val = 0;
-		  sprintf(buf, "%s/%s", prefix, node->prefix);
+		  snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
 		  if (e_db_int_get(db, buf, &val))
 		    (*((int *)(&(data[node->offset])))) = val;
 		  else
@@ -302,7 +302,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 	       {
 		  char *val;
 		  
-		  sprintf(buf, "%s/%s", prefix, node->prefix);
+		  snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
 		  if ((val = e_db_str_get(db, buf)))
 		    (*((char **)(&(data[node->offset])))) = val;
 		  else
@@ -314,7 +314,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  float val;
 		  
 		  val = 0;
-		  sprintf(buf, "%s/%s", prefix, node->prefix);
+		  snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
 		  if (e_db_float_get(db, buf, &val))
 		    (*((float *)(&(data[node->offset])))) = val;
 		  else
@@ -327,14 +327,14 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  int i, count;
 		  
 		  l2 = NULL;
-		  sprintf(buf, "%s/%s/count", prefix, node->prefix);
+		  snprintf(buf, PATH_MAX, "%s/%s/count", prefix, node->prefix);
 		  count = 0;		  
 		  e_db_int_get(db, buf, &count);
 		  for (i = 0; i < count; i++)
 		    {
 		       void *data2;
 		       
-		       sprintf(buf, "%s/%s/%i", prefix, node->prefix, i);
+		       snprintf(buf, PATH_MAX, "%s/%s/%i", prefix, node->prefix, i);
 		       data2 = e_config_load(file, buf, node->sub_type);
 		       l2 = evas_list_append(l2, data2);
 		    }
@@ -343,7 +343,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 	     break;
 	   case E_CFG_TYPE_KEY:
 	       {
-		  sprintf(buf, "%s/%s", prefix, node->prefix);
+		  snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
 		  (*((char **)(&(data[node->offset])))) = strdup(buf);
 	       }
 	     break;

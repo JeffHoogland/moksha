@@ -80,7 +80,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	     char buf[PATH_MAX];
 	     
 	     ic->q.write_xy = 0;
-	     sprintf(buf, "%s/%s", ic->view->dir, ic->file);
+	     snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir, ic->file);
 	     
 	     D("write meta xy for icon for file %s\n", ic->file);	     
 	     efsd_set_metadata_int(e_fs_get_connection(),
@@ -94,7 +94,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	  {
 	     char name[PATH_MAX];
 	     
-	     sprintf(name, "icon_xy_record.%s", v->dir);
+	     snprintf(name, PATH_MAX, "icon_xy_record.%s", v->dir);
 	     ecore_add_event_timer(name, 0.01, e_view_write_icon_xy_timeout, 0, v);
 	     D_RETURN;
 	  }
@@ -848,7 +848,7 @@ e_view_queue_geometry_record(E_View *v)
    
    D_ENTER;
    
-   sprintf(name, "geometry_record.%s", v->dir);
+   snprintf(name, PATH_MAX, "geometry_record.%s", v->dir);
    ecore_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
 
    D_RETURN;
@@ -861,7 +861,7 @@ e_view_queue_icon_xy_record(E_View *v)
    
    D_ENTER;
    
-   sprintf(name, "icon_xy_record.%s", v->dir);
+   snprintf(name, PATH_MAX, "icon_xy_record.%s", v->dir);
    ecore_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
 
    D_RETURN;
@@ -1601,7 +1601,7 @@ e_view_queue_resort(E_View *v)
    
    if (v->have_resort_queued) D_RETURN;
    v->have_resort_queued = 1;
-   sprintf(name, "resort_timer.%s", v->dir);
+   snprintf(name, PATH_MAX, "resort_timer.%s", v->dir);
    ecore_add_event_timer(name, 1.0, e_view_resort_timeout, 0, v);
 
    D_RETURN;
@@ -1793,11 +1793,11 @@ e_view_cleanup(E_View *v)
    if (v->scrollbar.h) e_object_unref(E_OBJECT(v->scrollbar.h));
    if (v->scrollbar.v) e_object_unref(E_OBJECT(v->scrollbar.v));
    
-   sprintf(name, "resort_timer.%s", v->dir);
+   snprintf(name, PATH_MAX, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);
-   sprintf(name, "geometry_record.%s", v->dir);
+   snprintf(name, PATH_MAX, "geometry_record.%s", v->dir);
    ecore_del_event_timer(name);
-   sprintf(name, "icon_xy_record.%s", v->dir);
+   snprintf(name, PATH_MAX, "icon_xy_record.%s", v->dir);
    ecore_del_event_timer(name);
    
    views = evas_list_remove(views, v);
@@ -2393,7 +2393,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				      
 				      IF_FREE(v->bg_file);
 				      e_strdup(v->bg_file, efsd_metadata_get_str(ev));
-				      sprintf(buf, "background_reload:%s", v->dir);
+				      snprintf(buf, PATH_MAX, "background_reload:%s", v->dir);
 				      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 				   }
 			      }
@@ -2465,7 +2465,7 @@ e_view_bg_load(E_View *v)
 	/* relative path for bg_file ? */
 	if ((v->bg_file[0] != '/'))
 	  {
-	     sprintf(buf, "%s/%s", v->dir, v->bg_file);
+	     snprintf(buf, PATH_MAX, "%s/%s", v->dir, v->bg_file);
 	     FREE(v->bg_file);
 	     e_strdup(v->bg_file, buf);	     
 	  }
@@ -2473,16 +2473,16 @@ e_view_bg_load(E_View *v)
    bg = e_background_load(v->bg_file);
    if (!bg)
      {
-	sprintf(buf, "%s/.e_background.bg.db", v->dir);
+	snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", v->dir);
 	FREE(v->bg_file);
 	e_strdup(v->bg_file, buf); 
 	bg = e_background_load(v->bg_file);
 	if (!bg)
 	  {
 	     if (v->is_desktop)
-	       sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	       snprintf(buf, PATH_MAX, "%s/default.bg.db", e_config_get("backgrounds"));
 	     else
-	       sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
+	       snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
 	     FREE(v->bg_file);
 	     e_strdup(v->bg_file, buf); 
 	     bg = e_background_load(v->bg_file);
@@ -2554,7 +2554,7 @@ e_view_bg_change(E_View *v, char *file)
    D_ENTER;
 
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
-   sprintf(buf, "background_reload:%s", v->dir);
+   snprintf(buf, PATH_MAX, "background_reload:%s", v->dir);
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 
    D_RETURN;
@@ -2568,11 +2568,11 @@ e_view_bg_add(E_View *v, char *file)
    D_ENTER;
 
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
-   sprintf(buf, "%s/%s", v->dir, file);
+   snprintf(buf, PATH_MAX, "%s/%s", v->dir, file);
    if (!strcmp(buf, v->bg_file)) D_RETURN;
    IF_FREE(v->bg_file);
    e_strdup(v->bg_file, "");
-   sprintf(buf, "background_reload:%s", v->dir);
+   snprintf(buf, PATH_MAX, "background_reload:%s", v->dir);
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 
    D_RETURN;
@@ -2694,11 +2694,11 @@ e_dnd_data_request(Ecore_Event * ev)
 			    
 			    if (first)
 			      {
-				 sprintf(buf, "file:%s/%s", v->dir, ic->file);
+				 snprintf(buf, PATH_MAX, "file:%s/%s", v->dir, ic->file);
 				 first = 0;
 			      }
 			    else
-			      sprintf(buf, "\r\nfile:%s/%s", v->dir, ic->file);
+			      snprintf(buf, PATH_MAX, "\r\nfile:%s/%s", v->dir, ic->file);
 			    REALLOC(data, char, strlen(data) + strlen(buf) + 1);
 			    strcat(data, buf);
 			 }
@@ -2723,11 +2723,11 @@ e_dnd_data_request(Ecore_Event * ev)
 			    
 			    if (first)
 			      {
-				 sprintf(buf, "%s/%s\n", v->dir, ic->file);
+				 snprintf(buf, PATH_MAX, "%s/%s\n", v->dir, ic->file);
 				 first = 0;
 			      }
 			    else
-			      sprintf(buf, "\n%s/%s", v->dir, ic->file);
+			      snprintf(buf, PATH_MAX, "\n%s/%s", v->dir, ic->file);
 			    REALLOC(data, char, strlen(data) + strlen(buf) + 1);
 			    strcat(data, buf);
 			 }
@@ -2751,7 +2751,7 @@ e_dnd_data_request(Ecore_Event * ev)
 			 {
 			    char buf[16384];
 			    
-			    sprintf(buf, "file:%s/%s", v->dir, ic->file);
+			    snprintf(buf, PATH_MAX, "file:%s/%s", v->dir, ic->file);
 			    data = strdup(buf);
 			    break;
 			 }

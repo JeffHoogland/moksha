@@ -13,35 +13,35 @@ e_match_set_props(E_Border *b)
  
    if ((!b->client.name) || (!b->client.class)) D_RETURN;
    db = e_db_open(e_config_get("match"));
-   sprintf(buf, "match/%s/%s/match", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/match", b->client.name, b->client.class);
    ok = e_db_int_get(db, buf, &(b->client.matched.matched));
    if (!ok)
      {
 	e_db_close(db);
 	D_RETURN;
      }
-   sprintf(buf, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
    b->client.matched.prog_location.matched = e_db_int_get(db, buf, &(b->client.matched.prog_location.ignore));
-   sprintf(buf, "match/%s/%s/border/border", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/border/border", b->client.name, b->client.class);
    b->client.matched.border.style = e_db_str_get(db, buf);
    b->client.matched.border.matched = (int)b->client.matched.border.style;
-   sprintf(buf, "match/%s/%s/location/x", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/location/x", b->client.name, b->client.class);
    b->client.matched.location.matched = e_db_int_get(db, buf, &(b->client.matched.location.x));
-   sprintf(buf, "match/%s/%s/location/y", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/location/y", b->client.name, b->client.class);
    b->client.matched.location.matched = e_db_int_get(db, buf, &(b->client.matched.location.y));
-   sprintf(buf, "match/%s/%s/desk_area/x", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/desk_area/x", b->client.name, b->client.class);
    b->client.matched.desk_area.matched = e_db_int_get(db, buf, &(b->client.matched.desk_area.x));
-   sprintf(buf, "match/%s/%s/desk_area/y", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/desk_area/y", b->client.name, b->client.class);
    b->client.matched.desk_area.matched = e_db_int_get(db, buf, &(b->client.matched.desk_area.y));
-   sprintf(buf, "match/%s/%s/size/w", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/size/w", b->client.name, b->client.class);
    b->client.matched.size.matched = e_db_int_get(db, buf, &(b->client.matched.size.w));
-   sprintf(buf, "match/%s/%s/size/h", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/size/h", b->client.name, b->client.class);
    b->client.matched.size.matched = e_db_int_get(db, buf, &(b->client.matched.size.h));
-   sprintf(buf, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
    b->client.matched.desktop.matched = e_db_int_get(db, buf, &(b->client.matched.desktop.desk));
-   sprintf(buf, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
    b->client.matched.sticky.matched = e_db_int_get(db, buf, &(b->client.matched.sticky.sticky));
-   sprintf(buf, "match/%s/%s/layer/layer", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/layer/layer", b->client.name, b->client.class);
    b->client.matched.layer.matched = e_db_int_get(db, buf, &(b->client.matched.layer.layer));
    
    if (b->client.matched.prog_location.matched)
@@ -108,23 +108,23 @@ e_match_save_props(E_Border *b)
    db = e_db_open(e_config_get("match"));
    if (!db) D_RETURN;
    
-   sprintf(buf, "match/%s/%s/match", b->client.name, b->client.class);
+   snprintf(buf, PATH_MAX, "match/%s/%s/match", b->client.name, b->client.class);
    e_db_int_set(db, buf, b->client.matched.matched);
 
   if (b->client.matched.location.matched)
      {
 	b->client.matched.location.x = b->current.x;
 	b->client.matched.location.y = b->current.y;
-	sprintf(buf, "match/%s/%s/location/x", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/location/x", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.location.x);	
-	sprintf(buf, "match/%s/%s/location/y", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/location/y", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.location.y);	
      }
    else
      {
-	sprintf(buf, "match/%s/%s/location/x", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/location/x", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
-	sprintf(buf, "match/%s/%s/location/y", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/location/y", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
 
@@ -132,51 +132,51 @@ e_match_save_props(E_Border *b)
      {
 	b->client.matched.size.w = b->client.w;
 	b->client.matched.size.h = b->client.h;
-	sprintf(buf, "match/%s/%s/size/w", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/size/w", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.size.w);	
-	sprintf(buf, "match/%s/%s/size/h", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/size/h", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.size.h);	
      }
    else
      {
-	sprintf(buf, "match/%s/%s/size/w", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/size/w", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
-	sprintf(buf, "match/%s/%s/size/h", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/size/h", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
    
   if (b->client.matched.desktop.matched)
      {
 	b->client.matched.desktop.desk = b->client.desk;
-	sprintf(buf, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.desktop.desk);	
      }
    else
      {
-	sprintf(buf, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
    
   if (b->client.matched.sticky.matched)
      {
 	b->client.matched.sticky.sticky = b->client.sticky;
-	sprintf(buf, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.sticky.sticky);	
      }
    else
      {
-	sprintf(buf, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
    
   if (b->client.matched.prog_location.matched)
      {
-	sprintf(buf, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
 	e_db_int_set(db, buf, b->client.matched.prog_location.ignore);	
      }
    else
      {
-	sprintf(buf, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
+	snprintf(buf, PATH_MAX, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
    

@@ -8,7 +8,7 @@ e_util_set_env(char *variable, char *content)
    
    D_ENTER;
    
-   sprintf(env, "%s=%s", variable, content);
+   snprintf(env, PATH_MAX, "%s=%s", variable, content);
    putenv(env);
 
    D_RETURN;

@@ -71,16 +71,16 @@ e_scrollbar_setup_bits(E_Scrollbar *sb)
 
    if (sb->direction == 1)
      {
-	sprintf(buf, "%s/scroll_base_v.bits.db", e_config_get("scrollbars"));
+	snprintf(buf, PATH_MAX, "%s/scroll_base_v.bits.db", e_config_get("scrollbars"));
 	sb->base = ebits_load(buf);
-	sprintf(buf, "%s/scroll_bar_v.bits.db", e_config_get("scrollbars"));
+	snprintf(buf, PATH_MAX, "%s/scroll_bar_v.bits.db", e_config_get("scrollbars"));
 	sb->bar = ebits_load(buf);
      }
    else
      {
-	sprintf(buf, "%s/scroll_base_h.bits.db", e_config_get("scrollbars"));
+	snprintf(buf, PATH_MAX, "%s/scroll_base_h.bits.db", e_config_get("scrollbars"));
 	sb->base = ebits_load(buf);
-	sprintf(buf, "%s/scroll_bar_h.bits.db", e_config_get("scrollbars"));
+	snprintf(buf, PATH_MAX, "%s/scroll_bar_h.bits.db", e_config_get("scrollbars"));
 	sb->bar = ebits_load(buf);
      }
    if (sb->base)
@@ -128,14 +128,14 @@ e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
      {
 	sb->scrolling_up = 1;
 
-	sprintf(name, "scroll_up.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
 	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
      }
    else if (!strcmp(class, "Scrollbar_Arrow2"))
      {
 	sb->scrolling_down = 1;
 	
-	sprintf(name, "scroll_down.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
 	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
      }
    else if (!strcmp(class, "Scrollbar_Trough"))
@@ -180,14 +180,14 @@ e_sb_base_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
      {
 	sb->scrolling_up = 0;
 
-	sprintf(name, "scroll_up.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
 	ecore_del_event_timer(name);
      }
    else if (!strcmp(class, "Scrollbar_Arrow2"))
      {
 	sb->scrolling_down = 0;
 
-	sprintf(name, "scroll_down.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
 	ecore_del_event_timer(name);
      }
    else if (!strcmp(class, "Scrollbar_Trough"))
@@ -318,7 +318,7 @@ e_sb_scroll_timer(int val, void *data)
 	sb->val -= 16;
 	if (sb->val < 0) sb->val = 0;
 	
-	sprintf(name, "scroll_up.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
 	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
    }
 
@@ -327,7 +327,7 @@ e_sb_scroll_timer(int val, void *data)
 	sb->val += 16;
 	if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
 	
-	sprintf(name, "scroll_down.%i.%s", sb->direction, sb->dir);
+	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
 	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
    }
    
@@ -376,9 +376,9 @@ e_scrollbar_cleanup(E_Scrollbar *sb)
      }
    IF_FREE(sb->dir);
 
-   sprintf(name, "scroll_up.%i.%s", sb->direction, sb->dir);
+   snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
    ecore_del_event_timer(name);
-   sprintf(name, "scroll_down.%i.%s", sb->direction, sb->dir);
+   snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
    ecore_del_event_timer(name);
 
    e_object_cleanup(E_OBJECT(sb));

@@ -162,19 +162,19 @@ e_action_find(char *action, E_Action_Type act, int button,
      {
 	char buf[PATH_MAX];
 	
-	sprintf(buf, "/actions/%i/name", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/name", i);
 	a_name = e_db_str_get(db, buf);
-	sprintf(buf, "/actions/%i/action", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/action", i);
 	a_action = e_db_str_get(db, buf);
-	sprintf(buf, "/actions/%i/params", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/params", i);
 	a_params = e_db_str_get(db, buf);
-	sprintf(buf, "/actions/%i/event", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/event", i);
 	e_db_int_get(db, buf, &a_event);
-	sprintf(buf, "/actions/%i/button", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/button", i);
 	e_db_int_get(db, buf, &a_button);
-	sprintf(buf, "/actions/%i/key", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/key", i);
 	a_key = e_db_str_get(db, buf);
-	sprintf(buf, "/actions/%i/modifiers", i);
+	snprintf(buf, PATH_MAX, "/actions/%i/modifiers", i);
 	e_db_int_get(db, buf, &a_modifiers);
 	
 	a = NEW(E_Action, 1);
@@ -701,7 +701,7 @@ e_act_move_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
 	e_guides_set_mode(move_mode);
 	e_guides_set_display_location(display_loc);
 	e_guides_display_text(buf);	
-	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	snprintf(buf, PATH_MAX, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
 	e_guides_display_icon(buf);
 	e_guides_move(b->current.x, b->current.y);
 	e_guides_resize(b->current.w, b->current.h);
@@ -882,7 +882,7 @@ e_act_resize_start (E_Object *object, E_Action *a, void *data, int x, int y, int
 	e_guides_set_mode(resize_mode);
 	e_guides_set_display_location(display_loc);
 	e_guides_display_text(buf);	
-	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	snprintf(buf, PATH_MAX, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
 	e_guides_display_icon(buf);
 	e_guides_move(b->current.x, b->current.y);
 	e_guides_resize(b->current.w, b->current.h);
@@ -1044,7 +1044,7 @@ e_act_resize_h_start (E_Object *object, E_Action *a, void *data, int x, int y, i
 	e_guides_set_mode(resize_mode);
 	e_guides_set_display_location(display_loc);
 	e_guides_display_text(buf);	
-	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	snprintf(buf, PATH_MAX, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
 	e_guides_display_icon(buf);
 	e_guides_move(b->current.x, b->current.y);
 	e_guides_resize(b->current.w, b->current.h);
@@ -1192,7 +1192,7 @@ e_act_resize_v_start (E_Object *object, E_Action *a, void *data, int x, int y, i
 	e_guides_set_mode(resize_mode);
 	e_guides_set_display_location(display_loc);
 	e_guides_display_text(buf);	
-	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	snprintf(buf, PATH_MAX, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
 	e_guides_display_icon(buf);
 	e_guides_move(b->current.x, b->current.y);
 	e_guides_resize(b->current.w, b->current.h);

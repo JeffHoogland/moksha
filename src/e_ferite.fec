@@ -627,7 +627,7 @@ class Epplet
     char buf[PATH_MAX], *retval;
     
     printf("getting dir:\n");
-    sprintf(buf, "%s%s/", e_config_get("epplets"), EppObj->name);
+    snprintf(buf, PATH_MAX, "%s%s/", e_config_get("epplets"), EppObj->name);
     printf("%s\n", buf);
     retval = (char *)buf;
     FE_RETURN_STR(retval, 0);

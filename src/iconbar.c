@@ -149,9 +149,9 @@ e_iconbar_cleanup(E_Iconbar *ib)
    if ((ib->view) && (ib->view->evas) && (ib->clip))
      evas_del_object(ib->view->evas, ib->clip);   
    /* delete any timers intended to work on  this iconbar */
-   sprintf(buf, "iconbar_reload:%s", ib->view->dir);
+   snprintf(buf, PATH_MAX, "iconbar_reload:%s", ib->view->dir);
    ecore_del_event_timer(buf);
-   sprintf(buf, "iconbar_scroll:%s", ib->view->dir);
+   snprintf(buf, PATH_MAX, "iconbar_scroll:%s", ib->view->dir);
    ecore_del_event_timer(buf);
    
    /* call the destructor of the base class */
@@ -214,7 +214,7 @@ e_iconbar_new(E_View *v)
 
    /* first we want to load the iconbar data itself - ie the config info */
    /* for what icons we have and what they execute */
-   sprintf(buf, "%s/.e_iconbar.db", v->dir);   
+   snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", v->dir);   
    /* use the config system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
    ib = e_config_load(buf, "", cf_iconbar);
@@ -260,7 +260,7 @@ e_iconbar_new(E_View *v)
    
    /* now we need to load up a bits file that tells us where in the view the */
    /* iconbar is meant to go. same place. just a slightly different name */
-   sprintf(buf, "%s/.e_iconbar.bits.db", v->dir);   
+   snprintf(buf, PATH_MAX, "%s/.e_iconbar.bits.db", v->dir);   
    ib->bit = ebits_load(buf);
    /* we didn't find one? */
    if (!ib->bit)
@@ -316,7 +316,7 @@ e_iconbar_icon_cleanup(E_Iconbar_Icon *ic)
      {
 	char buf[PATH_MAX];
 	
-	sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+	snprintf(buf, PATH_MAX, "iconbar_launch_wait:%i", ic->launch_id);
 	ecore_del_event_timer(buf);
 	ic->launch_id = 0;
      }
@@ -355,7 +355,7 @@ e_iconbar_realize(E_Iconbar *ib)
 	/* the path of the key to the image memebr - that is actually */
 	/* a lump of image data inlined in the iconbar db - so the icons */
 	/* themselves follow the iconbar wherever it goes */
-	sprintf(buf, "%s/.e_iconbar.db:%s", ib->view->dir, ic->image_path);
+	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db:%s", ib->view->dir, ic->image_path);
 	/* add the icon image object */
 	ic->image = evas_add_image_from_file(ib->view->evas, buf);
 	/* clip the icon */
@@ -615,7 +615,7 @@ e_iconbar_file_add(E_View *v, char *file)
 	char buf[PATH_MAX];
 	
 	/* unique timer name */
-	sprintf(buf, "iconbar_reload:%s", v->dir);
+	snprintf(buf, PATH_MAX, "iconbar_reload:%s", v->dir);
 	/* if we've scrolled since. save */
 	if ((v->iconbar) &&
 	    (v->iconbar->has_been_scrolled)) 
@@ -674,7 +674,7 @@ e_iconbar_file_change(E_View *v, char *file)
 	char buf[PATH_MAX];
 	
 	/* unique timer name */
-	sprintf(buf, "iconbar_reload:%s", v->dir);
+	snprintf(buf, PATH_MAX, "iconbar_reload:%s", v->dir);
 	/* if we've scrolled since. save */
 	if ((v->iconbar) &&
 	    (v->iconbar->has_been_scrolled)) 
@@ -699,7 +699,7 @@ e_iconbar_save_out_final(E_Iconbar *ib)
    
    if (ib->view)
      {
-	sprintf(buf, "%s/.e_iconbar.db", ib->view->dir);
+	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->dir);
 	E_DB_FLOAT_SET(buf, "/scroll", ib->scroll);
      }
 }
@@ -721,7 +721,7 @@ e_iconbar_handle_launch_id(Window win, void *data)
 	       {
 		  char buf[PATH_MAX];
 		  
-		  sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		  snprintf(buf, PATH_MAX, "iconbar_launch_wait:%i", ic->launch_id);
 		  ecore_del_event_timer(buf);
 	       }
 	     ic->launch_id = 0;
@@ -777,7 +777,7 @@ ib_scroll_timeout(int val, void *data)
    /* get our iconbar pointer */
    ib = (E_Iconbar *)data;
    
-   sprintf(buf, "iconbar_scroll:%s", ib->view->dir);
+   snprintf(buf, PATH_MAX, "iconbar_scroll:%s", ib->view->dir);
    if (val == 0)
      ecore_del_event_timer(buf);
    else
@@ -836,7 +836,7 @@ ib_timeout(int val, void *data)
 	     char buf[PATH_MAX];
 	     
 	     /* figure out its path */
-	     sprintf(buf, "%s/.e_iconbar.db:%s", 
+	     snprintf(buf, PATH_MAX, "%s/.e_iconbar.db:%s", 
 		     ic->iconbar->view->dir, ic->image_path);
 	     /* add it */
 	     ic->hi.image = evas_add_image_from_file(ic->iconbar->view->evas, 
@@ -1167,7 +1167,7 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	char buf[PATH_MAX];
 	
 	/* come up with a unique name for it */
-	sprintf(buf, "iconbar:%s/%s", ic->iconbar->view->dir, ic->image_path);
+	snprintf(buf, PATH_MAX, "iconbar:%s/%s", ic->iconbar->view->dir, ic->image_path);
 	e_strdup(ic->hi.timer, buf);
 	/* call the timeout */
 	ib_timeout(0, ic);
@@ -1246,7 +1246,7 @@ ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       ic->launch_id_cb = 
 			 e_exec_broadcast_cb_add(e_iconbar_handle_launch_id, 
 						 ic);
-		       sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		       snprintf(buf, PATH_MAX, "iconbar_launch_wait:%i", ic->launch_id);
 		       if (ic->wait_timeout > 0.0)
 			 ecore_add_event_timer(buf, ic->wait_timeout, 
 					       ib_cancel_launch_timeout, 
@@ -1316,7 +1316,7 @@ ib_child_handle(Ecore_Event *ev)
 		    {
 		       char buf[PATH_MAX];
 		       
-		       sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		       snprintf(buf, PATH_MAX, "iconbar_launch_wait:%i", ic->launch_id);
 		       ecore_del_event_timer(buf);
 		    }
 		  ic->launch_id = 0;

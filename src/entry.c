@@ -227,21 +227,21 @@ e_entry_realize(E_Entry *entry)
    D_ENTER;
    
    entries = e_config_get("entries");
-   sprintf(buf, "%s/%s", entries, "base.bits.db");
+   snprintf(buf, PATH_MAX, "%s/%s", entries, "base.bits.db");
    entry->obj_base = ebits_load(buf); 
    if (entry->obj_base) 
     {
 	ebits_add_to_evas(entry->obj_base, entry->evas);
 /*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
      }   
-   sprintf(buf, "%s/%s", entries, "cursor.bits.db");
+   snprintf(buf, PATH_MAX, "%s/%s", entries, "cursor.bits.db");
    entry->obj_cursor = ebits_load(buf); 
    if (entry->obj_cursor) 
     {
 	ebits_add_to_evas(entry->obj_cursor, entry->evas);
 /*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
      }   
-   sprintf(buf, "%s/%s", entries, "selection.bits.db");
+   snprintf(buf, PATH_MAX, "%s/%s", entries, "selection.bits.db");
    entry->obj_selection = ebits_load(buf); 
    if (entry->obj_selection) 
     {

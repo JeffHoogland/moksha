@@ -180,13 +180,13 @@ e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, cha
    /* have this launch Id number set on them - as well as process ID */
    /* machine name, and user name */
    if (launch_path) e_util_set_env("E_HACK_LAUNCH_PATH", launch_path);
-   sprintf(preload_paths, "E_HACK_LAUNCH_ID=%i LD_PRELOAD_PATH='%s'", 
+   snprintf(preload_paths, PATH_MAX, "E_HACK_LAUNCH_ID=%i LD_PRELOAD_PATH='%s'", 
 	   launch_id, PACKAGE_LIB_DIR);
-   sprintf(preload, "LD_PRELOAD='libehack.so libX11.so libdl.so'");
+   snprintf(preload, PATH_MAX, "LD_PRELOAD='libehack.so libX11.so libdl.so'");
    exe2 = malloc(strlen(exe) + 1 + 
 		 strlen(preload_paths) + 1 + 
 		 strlen(preload) + 1);
-   sprintf(exe2, "%s %s %s", preload_paths, preload, exe);
+   snprintf(exe2, PATH_MAX, "%s %s %s", preload_paths, preload, exe);
 
    execl("/bin/sh", "/bin/sh", "-c", exe2, NULL);
    exit(0);

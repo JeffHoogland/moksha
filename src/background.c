@@ -79,38 +79,38 @@ e_background_load(char *file)
 	ZERO(bl, E_Background_Layer, 1);
 	bg->layers = evas_list_append(bg->layers, bl);
 	
-	sprintf(buf, "/layers/%i/type", i); e_db_int_get(db, buf, (int*)&(bl->type));
-	sprintf(buf, "/layers/%i/inlined", i); e_db_int_get(db, buf, &(bl->inlined));
-	sprintf(buf, "/layers/%i/color_class", i); bl->color_class = e_db_str_get(db, buf);
+	snprintf(buf, PATH_MAX, "/layers/%i/type", i); e_db_int_get(db, buf, (int*)&(bl->type));
+	snprintf(buf, PATH_MAX, "/layers/%i/inlined", i); e_db_int_get(db, buf, &(bl->inlined));
+	snprintf(buf, PATH_MAX, "/layers/%i/color_class", i); bl->color_class = e_db_str_get(db, buf);
 	if (bl->inlined)
 	  {
-	     sprintf(buf, "%s:/layers/%i/image", file, i); e_strdup(bl->file, buf);
+	     snprintf(buf, PATH_MAX, "%s:/layers/%i/image", file, i); e_strdup(bl->file, buf);
 	  }
 	else
 	  {
-	     sprintf(buf, "/layers/%i/file", i); bl->file = e_db_str_get(db, buf);
+	     snprintf(buf, PATH_MAX, "/layers/%i/file", i); bl->file = e_db_str_get(db, buf);
 	  }
-	sprintf(buf, "/layers/%i/scroll.x", i); e_db_float_get(db, buf, &(bl->scroll.x));
-	sprintf(buf, "/layers/%i/scroll.y", i); e_db_float_get(db, buf, &(bl->scroll.y));
-	sprintf(buf, "/layers/%i/pos.x", i); e_db_float_get(db, buf, &(bl->pos.x));
-	sprintf(buf, "/layers/%i/pos.y", i); e_db_float_get(db, buf, &(bl->pos.y));
-	sprintf(buf, "/layers/%i/size.w", i); e_db_float_get(db, buf, &(bl->size.w));
-	sprintf(buf, "/layers/%i/size.h", i); e_db_float_get(db, buf, &(bl->size.h));
-	sprintf(buf, "/layers/%i/size.orig.w", i); e_db_int_get(db, buf, &(bl->size.orig.w));
-	sprintf(buf, "/layers/%i/size.orig.h", i); e_db_int_get(db, buf, &(bl->size.orig.h));
-	sprintf(buf, "/layers/%i/fill.w", i);  e_db_float_get(db, buf, &(bl->fill.w));
-	sprintf(buf, "/layers/%i/fill.h", i);  e_db_float_get(db, buf, &(bl->fill.h));
-	sprintf(buf, "/layers/%i/fill.orig.w", i); e_db_int_get(db, buf, &(bl->fill.orig.w));
-	sprintf(buf, "/layers/%i/fill.orig.h", i); e_db_int_get(db, buf, &(bl->fill.orig.h));
-	sprintf(buf, "/layers/%i/angle", i);  e_db_float_get(db, buf, (float*)&(bl->angle));
-	sprintf(buf, "/layers/%i/fg.r", i); e_db_int_get(db, buf, &(bl->fg.r));
-	sprintf(buf, "/layers/%i/fg.g", i); e_db_int_get(db, buf, &(bl->fg.g));
-	sprintf(buf, "/layers/%i/fg.b", i); e_db_int_get(db, buf, &(bl->fg.b));
-	sprintf(buf, "/layers/%i/fg.a", i); e_db_int_get(db, buf, &(bl->fg.a));
-	sprintf(buf, "/layers/%i/bg.r", i); e_db_int_get(db, buf, &(bl->bg.r));
-	sprintf(buf, "/layers/%i/bg.g", i); e_db_int_get(db, buf, &(bl->bg.g));
-	sprintf(buf, "/layers/%i/bg.b", i); e_db_int_get(db, buf, &(bl->bg.b));
-	sprintf(buf, "/layers/%i/bg.a", i); e_db_int_get(db, buf, &(bl->bg.a));
+	snprintf(buf, PATH_MAX, "/layers/%i/scroll.x", i); e_db_float_get(db, buf, &(bl->scroll.x));
+	snprintf(buf, PATH_MAX, "/layers/%i/scroll.y", i); e_db_float_get(db, buf, &(bl->scroll.y));
+	snprintf(buf, PATH_MAX, "/layers/%i/pos.x", i); e_db_float_get(db, buf, &(bl->pos.x));
+	snprintf(buf, PATH_MAX, "/layers/%i/pos.y", i); e_db_float_get(db, buf, &(bl->pos.y));
+	snprintf(buf, PATH_MAX, "/layers/%i/size.w", i); e_db_float_get(db, buf, &(bl->size.w));
+	snprintf(buf, PATH_MAX, "/layers/%i/size.h", i); e_db_float_get(db, buf, &(bl->size.h));
+	snprintf(buf, PATH_MAX, "/layers/%i/size.orig.w", i); e_db_int_get(db, buf, &(bl->size.orig.w));
+	snprintf(buf, PATH_MAX, "/layers/%i/size.orig.h", i); e_db_int_get(db, buf, &(bl->size.orig.h));
+	snprintf(buf, PATH_MAX, "/layers/%i/fill.w", i);  e_db_float_get(db, buf, &(bl->fill.w));
+	snprintf(buf, PATH_MAX, "/layers/%i/fill.h", i);  e_db_float_get(db, buf, &(bl->fill.h));
+	snprintf(buf, PATH_MAX, "/layers/%i/fill.orig.w", i); e_db_int_get(db, buf, &(bl->fill.orig.w));
+	snprintf(buf, PATH_MAX, "/layers/%i/fill.orig.h", i); e_db_int_get(db, buf, &(bl->fill.orig.h));
+	snprintf(buf, PATH_MAX, "/layers/%i/angle", i);  e_db_float_get(db, buf, (float*)&(bl->angle));
+	snprintf(buf, PATH_MAX, "/layers/%i/fg.r", i); e_db_int_get(db, buf, &(bl->fg.r));
+	snprintf(buf, PATH_MAX, "/layers/%i/fg.g", i); e_db_int_get(db, buf, &(bl->fg.g));
+	snprintf(buf, PATH_MAX, "/layers/%i/fg.b", i); e_db_int_get(db, buf, &(bl->fg.b));
+	snprintf(buf, PATH_MAX, "/layers/%i/fg.a", i); e_db_int_get(db, buf, &(bl->fg.a));
+	snprintf(buf, PATH_MAX, "/layers/%i/bg.r", i); e_db_int_get(db, buf, &(bl->bg.r));
+	snprintf(buf, PATH_MAX, "/layers/%i/bg.g", i); e_db_int_get(db, buf, &(bl->bg.g));
+	snprintf(buf, PATH_MAX, "/layers/%i/bg.b", i); e_db_int_get(db, buf, &(bl->bg.b));
+	snprintf(buf, PATH_MAX, "/layers/%i/bg.a", i); e_db_int_get(db, buf, &(bl->bg.a));
      }
    e_db_close(db);
    D_RETURN_(bg);

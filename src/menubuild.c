@@ -186,7 +186,7 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
    
    D_ENTER;
    
-   sprintf(buf, "/menu/%i/count", num);
+   snprintf(buf, PATH_MAX, "/menu/%i/count", num);
    if (!e_db_int_get(db, buf, &num2)) D_RETURN_(NULL);
    menu = e_menu_new();
    e_menu_set_padding_icon(menu, 2);
@@ -197,18 +197,18 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	char        *text, *icon, *exe, *script;
 	int          ok, sub, sep;
 	
-	sprintf(buf, "/menu/%i/%i/text", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/text", num, i2);
 	text = e_db_str_get(db, buf);
-	sprintf(buf, "/menu/%i/%i/icon", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/icon", num, i2);
 	icon = e_db_str_get(db, buf);
-	sprintf(buf, "/menu/%i/%i/command", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/command", num, i2);
 	exe = e_db_str_get(db, buf);
-	sprintf(buf, "/menu/%i/%i/script", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/script", num, i2);
 	script = e_db_str_get(db, buf);
-	sprintf(buf, "/menu/%i/%i/submenu", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/submenu", num, i2);
 	ok = e_db_int_get(db, buf, &sub);
 	sep = 0;
-	sprintf(buf, "/menu/%i/%i/separator", num, i2);
+	snprintf(buf, PATH_MAX, "/menu/%i/%i/separator", num, i2);
 	e_db_int_get(db, buf, &sep);
 	menuitem = e_menu_item_new(text);
 	e_menu_item_set_icon(menuitem, icon);
@@ -285,7 +285,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	Evas_List dirlist = NULL;
 	
 	/* read .order file */
-	sprintf(buf, "%s/.order", dir);
+	snprintf(buf, PATH_MAX, "%s/.order", dir);
 	f = fopen(buf, "rb");
 	if (f)
 	  {
@@ -348,19 +348,19 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	name = NULL;
 	sub = NULL;
 	s = l->data;
-	sprintf(buf, "%s/%s", dir, s);
+	snprintf(buf, PATH_MAX, "%s/%s", dir, s);
 	/* if its a subdir... */
 	if (e_file_is_dir(buf))
 	  {
 	     sub = e_build_menu_gnome_apps_build_dir(bm, buf);
-	     sprintf(buf, "%s/%s/.directory", dir, s);
+	     snprintf(buf, PATH_MAX, "%s/%s/.directory", dir, s);
 	     
 	     f = fopen(buf, "rb");
 	  }
 	/* regular file */
 	else if (e_file_exists(buf))
 	  {
-	     sprintf(buf, "%s/%s", dir, s);
+	     snprintf(buf, PATH_MAX, "%s/%s", dir, s);
 	     
 	     f = fopen(buf, "rb");
 	  }
@@ -399,7 +399,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			      {
 				 char buf2[PATH_MAX];
 				 
-				 sprintf(buf2, "/usr/share/pixmaps/%s", eq +1);
+				 snprintf(buf, PATH_MAX, "/usr/share/pixmaps/%s", eq +1);
 				 icon = strdup(buf2);
 			      }
 			 }

@@ -204,7 +204,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* uncomment this and comment out the next line for some tress testing */
    /* e_strdup(v->dir, "/dev"); */
    /* e_strdup(v->dir, e_file_home()); */
-   sprintf(buf, "%s/desktop/default", e_config_user_dir());
+   snprintf(buf, PATH_MAX, "%s/desktop/default", e_config_user_dir());
    e_strdup(v->dir, buf);
    
    e_view_bg_load(v);

@@ -1297,11 +1297,11 @@ e_border_apply_border(E_Border *b)
        (b->current.shaded == b->client.h)) prop_shaded = 1;
    if (b->client.sticky)                   prop_sticky = 1;
    
-   sprintf(border, "selected-%i.sticky-%i.shaded-%i.bits.db", 
+   snprintf(border, PATH_MAX, "selected-%i.sticky-%i.shaded-%i.bits.db", 
 	   prop_selected, prop_sticky, prop_shaded);
 
    borders = e_config_get("borders");
-   sprintf(buf, "%s%s/%s", borders, style, border);
+   snprintf(buf, PATH_MAX, "%s%s/%s", borders, style, border);
    
    /* if it's not changed - abort and dont do anything */
    if ((b->border_file) && (!strcmp(buf, b->border_file))) D_RETURN;
@@ -1859,7 +1859,7 @@ e_border_attach_mouse_grabs(E_Border *b)
      {
 	int i, num;
 	
-	sprintf(buf, "/grabs/count");
+	snprintf(buf, PATH_MAX, "/grabs/count");
 	if (!e_db_int_get(db, buf, &num))
 	  {
 	     e_db_close(db);
@@ -1873,9 +1873,9 @@ e_border_attach_mouse_grabs(E_Border *b)
 	     button = -1;
 	     mods = ECORE_EVENT_KEY_MODIFIER_NONE;
 	     any_mod = 0;
-	     sprintf(buf, "/grabs/%i/button", i);
+	     snprintf(buf, PATH_MAX, "/grabs/%i/button", i);
 	     if (!e_db_int_get(db, buf, &button)) continue;
-	     sprintf(buf, "/grabs/%i/modifiers", i);
+	     snprintf(buf, PATH_MAX, "/grabs/%i/modifiers", i);
 	     if (!e_db_int_get(db, buf, &mod)) continue;
 	     if (mod == -1) any_mod = 1;
 	     mods = (Ecore_Event_Key_Modifiers)mod;
@@ -2843,7 +2843,7 @@ e_border_print_pos(char *buf, E_Border *b)
 {
    D_ENTER;
 
-   sprintf(buf, "%i, %i",
+   snprintf(buf, PATH_MAX, "%i, %i",
 	   b->current.x, b->current.y);
 
    D_RETURN;
@@ -2856,13 +2856,13 @@ e_border_print_size(char *buf, E_Border *b)
 
    if ((b->client.step.w > 1) || (b->client.step.h > 1))
      {
-	sprintf(buf, "%i x %i",
+	snprintf(buf, PATH_MAX, "%i x %i",
 		(b->client.w - b->client.base.w) / b->client.step.w,
 		(b->client.h - b->client.base.h) / b->client.step.h);
      }
    else
      {
-	sprintf(buf, "%i x %i", 
+	snprintf(buf, PATH_MAX, "%i x %i", 
 		b->client.w, 
 		b->client.h);
      }

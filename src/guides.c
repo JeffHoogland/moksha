@@ -184,7 +184,7 @@ e_guides_update(void)
 	     char *dir;
 	     
 	     dir = e_config_get("guides");
-	     sprintf(file, "%s/display.bits.db", dir);
+	     snprintf(file, PATH_MAX, "%s/display.bits.db", dir);
 	     guides.disp.bg = ebits_load(file);
 	     if (guides.disp.bg) 
 	       {

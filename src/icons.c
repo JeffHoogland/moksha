@@ -313,15 +313,15 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 					}
 				      if (ic->state.clicked)
 					{
-					   sprintf(icon, "%s:/icon/clicked", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->info.icon);
 					}
 				      else if (ic->state.selected)
 					{
-					   sprintf(icon, "%s:/icon/selected", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->info.icon);
 					}
 				      else
 					{
-					   sprintf(icon, "%s:/icon/normal", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->info.icon);
 					}
 				      im2 = imlib_load_image(icon);
 				      if (im2)
@@ -769,7 +769,7 @@ e_icon_set_mime(E_Icon *ic, char *base, char *mime)
 	  }
 	do 
 	  {
-	     sprintf(icon, "%s/data/icons/%s/%s.db", PACKAGE_DATA_DIR,
+	     snprintf(icon, PATH_MAX, "%s/data/icons/%s/%s.db", PACKAGE_DATA_DIR,
 		     ic->info.mime.base, type);
 	     if (e_file_exists(icon))
 	       {
@@ -784,10 +784,10 @@ e_icon_set_mime(E_Icon *ic, char *base, char *mime)
 	  {
 	     if (!e_file_exists(icon))
 	       {
-		  sprintf(icon, "%s/data/icons/%s/default.db", PACKAGE_DATA_DIR,
+		  snprintf(icon, PATH_MAX, "%s/data/icons/%s/default.db", PACKAGE_DATA_DIR,
 			  ic->info.mime.base);
 		  if (!e_file_exists(icon))
-		    sprintf(icon, "%s/data/icons/unknown/default.db", PACKAGE_DATA_DIR);
+		    snprintf(icon, PATH_MAX, "%s/data/icons/unknown/default.db", PACKAGE_DATA_DIR);
 	       }
 	  }
 	ic->info.icon = strdup(icon);
@@ -839,15 +839,15 @@ e_icon_update_state(E_Icon *ic)
      }
    if (ic->state.clicked)
      {
-	sprintf(icon, "%s:/icon/clicked", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->info.icon);
      }
    else if (ic->state.selected)
      {
-	sprintf(icon, "%s:/icon/selected", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->info.icon);
      }
    else
      {
-	sprintf(icon, "%s:/icon/normal", ic->info.icon);
+	snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->info.icon);
      }
    if ((ic->state.selected) && 
        (!ic->obj.sel.under.icon) && 
@@ -856,14 +856,14 @@ e_icon_update_state(E_Icon *ic)
 	char file[PATH_MAX];
 
 /*	
-	sprintf(file, "%s/file.bits.db", e_config_get("selections"));
+	snprintf(file, PATH_MAX, "%s/file.bits.db", e_config_get("selections"));
 	ic->obj.sel.over.icon = ebits_load(file);
-	sprintf(file, "%s/text.bits.db", e_config_get("selections"));
+	snprintf(file, PATH_MAX, "%s/text.bits.db", e_config_get("selections"));
 	ic->obj.sel.over.text = ebits_load(file);
  */
-	sprintf(file, "%s/file.bits.db", e_config_get("selections"));
+	snprintf(file, PATH_MAX, "%s/file.bits.db", e_config_get("selections"));
 	ic->obj.sel.under.icon = ebits_load(file);
-	sprintf(file, "%s/text.bits.db", e_config_get("selections"));
+	snprintf(file, PATH_MAX, "%s/text.bits.db", e_config_get("selections"));
 	ic->obj.sel.under.text = ebits_load(file);
 	if (ic->obj.sel.under.icon) 
 	  {
@@ -967,7 +967,7 @@ e_icon_exec(E_Icon *ic)
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
+	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir, ic->file);
 	D("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
 	e_view_bg_load(v);

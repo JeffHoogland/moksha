@@ -38,12 +38,12 @@ e_delayed_action_new(E_Event_Type event,
 void
 e_delayed_action_start(E_Observer *obs, E_Observee *obj)
 {
-   char event_name[1024];
+   char event_name[PATH_MAX];
    E_Delayed_Action *eda = (E_Delayed_Action*) obs;
 
    D_ENTER;
 
-   snprintf(event_name, 1024, "_e_delayed_action_notify(%d)", obs->event);
+   snprintf(event_name, PATH_MAX, "_e_delayed_action_notify(%d)", obs->event);
    ecore_add_event_timer(event_name, eda->delay, eda->delay_func, 0, obj);
 
    D_RETURN;
@@ -53,11 +53,11 @@ e_delayed_action_start(E_Observer *obs, E_Observee *obj)
 void
 e_delayed_action_cancel(E_Delayed_Action *eda)
 {
-   char event_name[1024];
+   char event_name[PATH_MAX];
 
    D_ENTER;
 
-   snprintf(event_name, 1024, "_e_delayed_action_notify(%d)", E_OBSERVER(eda)->event);
+   snprintf(event_name, PATH_MAX, "_e_delayed_action_notify(%d)", E_OBSERVER(eda)->event);
    ecore_del_event_timer(event_name);
 
    D_RETURN;
