@@ -1,5 +1,4 @@
 images {
-   image: "e17_pager_screen.png" COMP;
    image: "e17_pager_desk.png" COMP;
    image: "e17_pager_window.png" COMP;
 }
