@@ -16,6 +16,8 @@ e_desk_new(E_Zone *zone)
    E_Desk      *desk;
    char		name[40];
    
+   E_OBJECT_CHECK_RETURN(zone, NULL);
+   
    desk = E_OBJECT_ALLOC(E_Desk, _e_desk_free);
    if (!desk) return NULL;
 
