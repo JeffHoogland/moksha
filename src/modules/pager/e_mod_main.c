@@ -309,7 +309,7 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_border_raise =
       ecore_event_handler_add(E_EVENT_BORDER_RAISE,
 			      _pager_face_cb_event_border_raise, face);
-   face->ev_handler_border_desk_set =
+   face->ev_handler_border_lower =
       ecore_event_handler_add(E_EVENT_BORDER_LOWER,
 			      _pager_face_cb_event_border_lower, face);
    face->ev_handler_border_icon_change =
@@ -627,7 +627,7 @@ _pager_window_move(Pager_Face *face, Pager_Win *pw)
 static Pager_Win *
 _pager_face_border_find(Pager_Face *face, E_Border *border)
 {
-   Evas_List  *l, *ll;
+   Evas_List  *l;
    
    for (l = face->desks; l; l = l->next)
      {
@@ -779,9 +779,14 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
 
    face = data;
    ev = event;
-   if ((face->zone != ev->border->zone) ||
-       (_pager_face_border_find(face, ev->border)))
-     return 1;
+   if ((face->zone != ev->border->zone))
+    return 1;
+  if (_pager_face_border_find(face, ev->border))
+    {
+       printf("BUG: _pager_face_cb_event_border_add()\n");
+       printf("     An already existing border shouldn't be added again\n");
+       return 1;
+    }
 
    pd = _pager_face_desk_find(face, ev->border->desk);
    if (pd)
@@ -841,10 +846,7 @@ _pager_face_cb_event_border_hide(void *data, int type, void *event)
 	if (pw)
 	  {
              if (ev->border->desk->visible)
-	       {
-		  pd->wins = evas_list_remove(pd->wins, pw);
-		  _pager_window_free(pw);
-	       }
+	       evas_object_hide(pw->window_object);
 	  }
      }
    return 1;
@@ -871,27 +873,6 @@ _pager_face_cb_event_border_show(void *data, int type, void *event)
 	  {
 	     if (ev->border->desk->visible)
 	       evas_object_show(pw->window_object);
-	  }
-	else
-	  {
-	     if (ev->border->sticky)
-	       {
-		  /* create it and add it */
-		  pw = _pager_window_new(pd, ev->border);
-		  if (pw)
-		    pd->wins = evas_list_append(pd->wins, pw);
-	       }
-	     else
-	       {
-		  if (ev->border->desk == pd->desk)
-		    {
-		       Pager_Win          *pw;
-		       
-		       pw = _pager_window_new(pd, ev->border);
-		       if (pw)
-			 pd->wins = evas_list_append(pd->wins, pw);
-		    }
-	       }
 	  }
      }
    return 1;
@@ -998,51 +979,24 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
      }
    
    /* its not sticky but its in the pager */
+   /* move it to the right desk */
    if (pw)
      {
-	for (l = face->desks; l; l = l->next)
+	/* move it to the right desk */
+	/* find the pager desk of the target desk */
+	pd = _pager_face_desk_find(face, ev->border->desk);
+	if (pd)
 	  {
-	     pd = l->data;
-	     /* if the border is not meant to be on this desk - remove */
-	     pw = _pager_desk_border_find(pd, ev->border);
-	     if (ev->border->desk != pd->desk)
-	       {
-		  if (pw)
-		    {
-		       pd->wins = evas_list_remove(pd->wins, pw);
-		       _pager_window_free(pw);
-		    }
-	       }
-	     /* it is meant to be here */
-	     else
-	       {
-		  /* mark it as found */
-		  if (pw) found = 1;
-	       }
-	  }
-	/* if the border was not found on the appropriate desk, we have
-	 * to move it to the right desk */
-	if (!found)
-	  {
-	     /* find the window */
-	     /* FIXME: pw will always be NULL, because we have removed
-	      * this border from the other desks... */
-	     pw = _pager_face_border_find(face, ev->border);
-	     /* find the pager desk of the target desk */
-	     pd = _pager_face_desk_find(face, ev->border->desk);
-	     if ((pw) && (pd))
-	       {
-		  /* remove it from whatever desk it was on */
-		  pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
-		  e_layout_unpack(pw->window_object);
-		  
-		  /* add it to the one its MEANT to be on */
-		  pw->desk = pd;
-		  pd->wins = evas_list_append(pd->wins, pw);
-		  e_layout_pack(pd->layout_object, pw->window_object);
-		  e_layout_child_raise(pw->window_object);
-		  _pager_window_move(face, pw);
-	       }
+	     /* remove it from whatever desk it was on */
+	     pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
+	     e_layout_unpack(pw->window_object);
+
+	     /* add it to the one its MEANT to be on */
+	     pw->desk = pd;
+	     pd->wins = evas_list_append(pd->wins, pw);
+	     e_layout_pack(pd->layout_object, pw->window_object);
+	     e_layout_child_raise(pw->window_object);
+	     _pager_window_move(face, pw);
 	  }
      }
    /* the border isnt in this pager at all - it must have moved zones */
@@ -1149,7 +1103,7 @@ _pager_face_cb_event_border_icon_change(void *data, int type, void *event)
    for (l = face->desks; l; l = l->next)
      {
 	Pager_Desk *pd;
-	Pager_Win *pw, *pw2 = NULL;
+	Pager_Win *pw;
 	
 	pd = l->data;
 	pw = _pager_desk_border_find(pd, ev->border);
@@ -1254,7 +1208,6 @@ _pager_face_cb_event_desk_show(void *data, int type, void *event)
    Pager_Face        *face;
    Pager_Desk        *desk;
    E_Event_Desk_Show *ev;
-   Evas_List         *desks;
 
    face = data;
    ev = event;
