@@ -7,3 +7,5 @@ Mon Feb 25 18:56:35 2002  Till Adam  <till@adam-lilienthal.de>
      View_Models
    * seperation of icon and file concepts
    * various small fixes and cleanups
+Thu Feb 28 18:45:12 CST 2002 Corey Donohoe <atmos@atmos.org>
+   * Free bgs in e_view_cleanup, it might still be leaking elsewhere though  

@@ -1609,6 +1609,7 @@ e_view_cleanup(E_View *v)
       e_iconbar_save_out_final(v->iconbar);
       e_object_unref(E_OBJECT(v->iconbar));
    }
+   if (v->bg) e_bg_free(v->bg);
    if (v->scrollbar.h) e_object_unref(E_OBJECT(v->scrollbar.h));
    if (v->scrollbar.v) e_object_unref(E_OBJECT(v->scrollbar.v));
    ecore_window_destroy(v->win.base);
