@@ -1,0 +1,74 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(configure.in)
+AM_INIT_AUTOMAKE(enlightenment, 0.17.0)
+AM_CONFIG_HEADER(config.h)
+
+AC_ISC_POSIX
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_HEADER_STDC
+
+AM_WITH_DMALLOC
+
+dnl Add the languages which your application supports here.
+ALL_LINGUAS=""
+AM_GNU_GETTEXT
+
+dnl Set PACKAGE_LOCALE_DIR in config.h.
+if test "x${prefix}" = "xNONE"; then
+  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${ac_default_prefix}/${DATADIRNAME}/locale")
+else
+  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale")
+fi
+
+dnl Set PACKAGE_DATA_DIR in config.h.
+if test "x${datadir}" = 'x${prefix}/share'; then
+  if test "x${prefix}" = "xNONE"; then
+    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}")
+  else
+    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}")
+  fi
+else
+  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}")
+fi
+
+dnl Set PACKAGE_SOURCE_DIR in config.h.
+packagesrcdir=`cd $srcdir && pwd`
+AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}")
+
+dnl Use -Wall if we have gcc.
+changequote(,)dnl
+if test "x$GCC" = "xyes"; then
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+fi
+changequote([,])dnl
+
+evas_cflags=`evas-config --cflags`
+evas_libs=`evas-config --libs`
+edb_cflags=`edb-config --cflags`
+edb_libs=`edb-config --libs`
+ebits_cflags=`ebits-config --cflags`
+ebits_libs=`ebits-config --libs`
+ecore_cflags=`ecore-config --cflags`
+ecore_libs=`ecore-config --libs`
+
+AC_SUBST(evas_cflags)
+AC_SUBST(evas_libs)
+AC_SUBST(edb_cflags)
+AC_SUBST(edb_libs)
+AC_SUBST(ebits_cflags)
+AC_SUBST(ebits_libs)
+AC_SUBST(ecore_cflags)
+AC_SUBST(ecore_libs)
+
+AC_OUTPUT([
+Makefile
+src/Makefile
+intl/Makefile
+po/Makefile.in
+])
+
