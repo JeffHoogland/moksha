@@ -2198,7 +2198,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_GETFILETYPE:
 /*	     printf("Getmime event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);
-*/	     if (ev->efsd_reply_event.status == SUCCESS)
+*/	     if (ev->efsd_reply_event.errorcode == 0)
 	       {
 		  E_Icon *ic;
 		  E_View *v;
@@ -2250,7 +2250,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	       }
 	     break;
 	   case EFSD_CMD_READLINK:
-	     if (ev->efsd_reply_event.status == SUCCESS)
+	     if (ev->efsd_reply_event.errorcode == 0)
 	       {
 		  E_Icon *ic;
 		  E_View *v;
@@ -2301,7 +2301,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			    v->geom_get.x = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
-				 if (ev->efsd_reply_event.status == SUCCESS)
+				 if (ev->efsd_reply_event.errorcode == 0)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.x)))
@@ -2322,7 +2322,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			    v->geom_get.y = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
-				 if (ev->efsd_reply_event.status == SUCCESS)
+				 if (ev->efsd_reply_event.errorcode == 0)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.y)))
@@ -2343,7 +2343,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			    v->geom_get.w = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
-				 if (ev->efsd_reply_event.status == SUCCESS)
+				 if (ev->efsd_reply_event.errorcode == 0)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.w)))
@@ -2359,7 +2359,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			    v->geom_get.h = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
-				 if (ev->efsd_reply_event.status == SUCCESS)
+				 if (ev->efsd_reply_event.errorcode == 0)
 				   {
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.h)))
