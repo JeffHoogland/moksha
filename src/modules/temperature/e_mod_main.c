@@ -744,17 +744,22 @@ _temperature_cb_check(void *data)
    Temperature_Face *ef;
    int ret = 0;
    Evas_List *therms;
+   int temp = 0;
+   char buf[4096];
    
    ef = data;
    therms = e_file_ls("/proc/acpi/thermal_zone");
    if (!therms)
      {
-	if (ef->have_temp != 0)
+	FILE *f;
+	
+	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
+	if (f)
 	  {
-	     /* disable therm object */
-	     edje_object_signal_emit(ef->temp_object, "unknown", "");
-	     edje_object_part_text_set(ef->temp_object, "reading", "NO TEMP");
-	     ef->have_temp = 0;
+	     fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	     if (sscanf(buf, "%i", &temp) == 1)
+	       ret = 1;
+	     fclose(f);
 	  }
      }
    else
@@ -767,10 +772,9 @@ _temperature_cb_check(void *data)
 	  }
 	while (therms)
 	  {
-	     char buf[4096], units[32];
+	     char units[32];
 	     char *name;
 	     FILE *f;
-	     int temp = 0;
 	     
 	     name = therms->data;
 	     therms = evas_list_remove_list(therms, therms);
@@ -781,19 +785,36 @@ _temperature_cb_check(void *data)
 		  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
 		  units[0] = 0;
 		  if (sscanf(buf, "%*[^:]: %i %20s", &temp, units) == 2)
-		    {
-		       /* temp == temperature as a double */
-		       /* units = string ("C" == celcius, "F" = farenheight) */
-		       _temperature_level_set(ef, ((double)temp - ef->temp->conf->low) / ef->temp->conf->high);
-		       snprintf(buf, sizeof(buf), "%i°C", temp, units);
-		       edje_object_part_text_set(ef->temp_object, "reading", buf);
-		    }
+		    ret = 1;
 		  fclose(f);
 	       }
 	     free(name);
 	  }
      }
-   return 1;
+   if (ret)
+     {
+	if (ef->have_temp == 0)
+	  {
+	     /* enable therm object */
+	     edje_object_signal_emit(ef->temp_object, "known", "");
+	     ef->have_temp = 1;
+	  }
+	_temperature_level_set(ef, ((double)temp - ef->temp->conf->low) / ef->temp->conf->high);
+	snprintf(buf, sizeof(buf), "%i°C", temp);
+	edje_object_part_text_set(ef->temp_object, "reading", buf);
+     }
+   else
+     {
+	if (ef->have_temp != 0)
+	  {
+	     /* disable therm object */
+	     edje_object_signal_emit(ef->temp_object, "unknown", "");
+	     edje_object_part_text_set(ef->temp_object, "reading", "NO TEMP");
+	     _temperature_level_set(ef, 0.5);
+	     ef->have_temp = 0;
+	  }
+     }
+   return ret;
 }
 
 static void
