@@ -4,4 +4,5 @@ test \
 ibar \
 clock \
 flame \
+snow \
 dropshadow
