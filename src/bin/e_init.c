@@ -71,12 +71,19 @@ e_init_init(void)
    else
      {
 	int i;
+	int mx, my, mw, mh;
 	
 	for (i = 0; i < n; i++)
 	  {
 	     ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h);
 	     if (i == 0)
 	       {
+		  /* Remeber the size and placement of the first window */
+		  mx = x;
+		  my = y;
+		  mw = w;
+		  mh = h;
+		  /* Init splash */
 		  o = edje_object_add(_e_init_evas);
 		  edje_object_file_set(o,
 				       /* FIXME: "init.eet" needs to come from config */
@@ -87,7 +94,11 @@ e_init_init(void)
 		  evas_object_show(o);
 		  _e_init_object = o;
 	       }
-	     else
+	     /* Only add extra screen if it doesn't overlap with the main screen */
+	     /* FIXME: What if extra screens overlap? Maybe zones should be
+	      * initialized before we come here? */
+	     else if (!E_INTERSECTS(x, y, w, h,
+				    mx, my, mw, mh))
 	       {
 		  o = edje_object_add(_e_init_evas);
 		  edje_object_file_set(o,
