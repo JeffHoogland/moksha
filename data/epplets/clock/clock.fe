@@ -1,0 +1,57 @@
+/*-------------------------------------------------------*
+ * Simple clock epplet                                   *
+ * by Brendon Davidson                                   *
+ * Thanks to Brian Mattern for helping me understand     *
+ * how epplets work.                                     *
+ *-------------------------------------------------------*/
+
+uses String, Time;
+
+/* global vars */
+global {
+  object epp;
+}
+
+/* function to update clock display */
+function clock_update(object data, number val){
+  string time = String.copySection(Time.ctime(Time.time()),11,20);
+  number hour = String.toLong(String.copySection(time,0,2));
+  string min = String.copySection(time,3,5);
+  string seconds = String.copySection(time,6,8);
+  string timeofday = "AM";
+
+  if(hour>12){
+    timeofday = "PM";
+    hour = hour - 12;
+  }
+  data.setText(""+hour+":"+min+":"+seconds+" "+timeofday);
+  epp.addTimer("clockTimer",0.5,"clock_update",0,data);
+}
+
+/* main function */
+
+/* declare vars */
+object clock;
+
+/* create a new epplet */
+epp = new Epplet();
+
+/* move the epplet to desired position*/
+epp.move(epp.getViewW() - 200, 0);
+epp.resize(100, 30); 
+
+/* create text object for clock display */
+clock = new EvasObject(epp);
+clock.addText("borzoib",13,"");
+clock.move(epp.getX(), epp.getY());
+clock.setLayer(9999);
+clock.setColor(0,0,0,140);
+clock.show();
+
+/* add timer to update clock display */
+epp.addTimer("clockTimer", 0.5, "clock_update", 0, clock);
+
+
+
+
+
