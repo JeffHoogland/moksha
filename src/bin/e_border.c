@@ -994,7 +994,7 @@ e_border_idler_before(void)
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->changes.visible && bd->visible)
+	if ((bd->changes.visible) && (bd->visible))
 	  {
 	     ecore_x_window_show(bd->win);
 	     bd->changes.visible = 0;
@@ -1006,7 +1006,7 @@ e_border_idler_before(void)
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->changes.visible && !bd->visible)
+	if ((bd->changes.visible) && (!bd->visible))
 	  {
 	     ecore_x_window_hide(bd->win);
 	     bd->changes.visible = 0;
