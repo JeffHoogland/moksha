@@ -390,7 +390,8 @@ e_mouse_up(Ecore_Event * ev)
 			 {
 			    if (INTERSECTS(m->selected->x + m->current.x,
 					   m->selected->y + m->current.y,
-					   m->selected->size.w, m->selected->size.h,
+					   m->selected->size.w,
+					   m->selected->size.h + m->sel_border.b,
 					   mouse_x, mouse_y, 0, 0))
 			      {
 				 e_menu_callback_item(m, m->selected);
