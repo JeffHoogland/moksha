@@ -161,9 +161,10 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 void
 e_desktops_cleanup(E_Desktop *desk)
 {
+   Evas_List l;
    D_ENTER;
 
-   while (desk->windows)
+   for (l = desk->windows; l; l = l->next)
      {
 	E_Border *b;
 	
