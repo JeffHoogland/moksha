@@ -51,7 +51,7 @@ main(int argc, char **argv)
    e_border_init();
    e_actions_init();
    e_menu_init();
-   e_fs_init();
+   /* e_fs_init(); */
    e_view_init();
    
    setup();
