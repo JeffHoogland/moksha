@@ -883,7 +883,8 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    edje_extern_object_min_size_set(ibb->box_object, w, h);
    edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
    edje_object_size_min_calc(ibb->bar_object, &bw, &bh);
-   /* _calc */
+   edje_extern_object_min_size_set(ibb->box_object, 0, 0);
+   edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
 
    if (ibb->ibar->conf->width == IBAR_WIDTH_AUTO)
      {
@@ -1332,7 +1333,7 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
       case E_GADMAN_CHANGE_MOVE_RESIZE:
 	 e_gadman_client_geometry_get(ibb->gmc, &ibb->x, &ibb->y, &ibb->w, &ibb->h);
 
-	 edje_extern_object_min_size_set(ibb->box_object, ibb->w, ibb->h);
+	 edje_extern_object_min_size_set(ibb->box_object, 0, 0);
 	 edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
 
 	 evas_object_move(ibb->bar_object, ibb->x, ibb->y);
