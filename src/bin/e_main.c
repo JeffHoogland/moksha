@@ -542,7 +542,41 @@ _e_main_screens_init(void)
 	     gmc->x = 0;
 	     gmc->y = 300;
 	     gmc->w = 100;
-	     gmc->h = 200;
+	     gmc->h = 100;
+	     e_gadman_client_policy_set(gmc, 
+//					E_GADMAN_POLICY_EDGES | 
+					E_GADMAN_POLICY_ANYWHERE |
+					E_GADMAN_POLICY_HMOVE | 
+					E_GADMAN_POLICY_VMOVE |
+					E_GADMAN_POLICY_HSIZE | 
+					E_GADMAN_POLICY_VSIZE);
+	     e_gadman_client_min_size_set(gmc, 20, 20);
+	     e_gadman_client_auto_size_set(gmc, 50, 200);
+	     e_gadman_client_align_set(gmc, 0.0, 0.5);
+	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
+
+	     gmc = e_gadman_client_new(con->gadman);
+	     gmc->x = 0;
+	     gmc->y = 400;
+	     gmc->w = 100;
+	     gmc->h = 100;
+	     e_gadman_client_policy_set(gmc, 
+//					E_GADMAN_POLICY_EDGES | 
+					E_GADMAN_POLICY_ANYWHERE |
+					E_GADMAN_POLICY_HMOVE | 
+					E_GADMAN_POLICY_VMOVE |
+					E_GADMAN_POLICY_HSIZE | 
+					E_GADMAN_POLICY_VSIZE);
+	     e_gadman_client_min_size_set(gmc, 20, 20);
+	     e_gadman_client_auto_size_set(gmc, 50, 200);
+	     e_gadman_client_align_set(gmc, 0.0, 0.5);
+	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
+
+	     gmc = e_gadman_client_new(con->gadman);
+	     gmc->x = 0;
+	     gmc->y = 500;
+	     gmc->w = 100;
+	     gmc->h = 100;
 	     e_gadman_client_policy_set(gmc, 
 //					E_GADMAN_POLICY_EDGES | 
 					E_GADMAN_POLICY_ANYWHERE |

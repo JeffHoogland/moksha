@@ -15,10 +15,10 @@ typedef enum _E_Gadman_Policy
 
 typedef enum _E_Gadman_Change
 {
-   E_GADMAN_CHANGE_MOVE,
-   E_GADMAN_CHANGE_RESIZE,
+   E_GADMAN_CHANGE_MOVE_RESIZE,
    E_GADMAN_CHANGE_EDGE,
-   E_GADMAN_CHANGE_ZONE
+   E_GADMAN_CHANGE_ZONE,
+   E_GADMAN_CHANGE_RAISE
 } E_Gadman_Change;
 
 typedef enum _E_Gadman_Edge

@@ -1797,10 +1797,10 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	new_x = x;
 	new_y = y;
 	skiplist = evas_list_append(skiplist, bd);
-	e_resist_container_position(bd->container, skiplist,
-				    bd->x, bd->y, bd->w, bd->h,
-				    x, y, bd->w, bd->h,
-				    &new_x, &new_y);
+	e_resist_container_border_position(bd->container, skiplist,
+					   bd->x, bd->y, bd->w, bd->h,
+					   x, y, bd->w, bd->h,
+					   &new_x, &new_y);
 	evas_list_free(skiplist);
 	e_border_move(bd, new_x, new_y);
 

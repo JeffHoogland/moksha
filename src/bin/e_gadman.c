@@ -5,13 +5,10 @@
 
 /* FIXME: corner case if module is sized to full screen... cant stop edit or */
 /*        re-enter edit mode (cant access root menu) */
+/* FIXME: resist can still jump on top of other gads... */
 
-/* FIXME: evas_clip to the zone - make a zone clip for gadman obj's */
-/* FIXME: actully call callbacks */
 /* FIXME: handle save */
 /* FIXME: handle load */
-/* FIXME: if u set align, or minmax size or edge then figure out new-coords */
-/* FIXME: handle move resist */
 /* FIXME: handle resize resist */
 
 /* local subsystem functions */
@@ -24,6 +21,7 @@ static int  _e_gadman_client_is_being_modified(E_Gadman_Client *gmc);
 static void _e_gadman_client_geometry_to_align(E_Gadman_Client *gmc);
 static void _e_gadman_client_aspect_enforce(E_Gadman_Client *gmc, double cx, double cy, int use_horiz);
 static void _e_gadman_client_geometry_apply(E_Gadman_Client *gmc);
+static void _e_gadman_client_callback_call(E_Gadman_Client *gmc, E_Gadman_Change change);
 
 static void _e_gadman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_gadman_cb_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -408,6 +406,8 @@ _e_gadman_client_edit_begin(E_Gadman_Client *gmc)
    else
      edje_object_signal_emit(gmc->control_object, "move", "off");
    
+   evas_object_clip_set(gmc->event_object, gmc->zone->bg_clip_object);
+   evas_object_clip_set(gmc->control_object, gmc->zone->bg_clip_object);
    evas_object_show(gmc->event_object);
    evas_object_show(gmc->control_object);
 }
@@ -502,6 +502,12 @@ _e_gadman_client_geometry_apply(E_Gadman_Client *gmc)
 }
 
 static void
+_e_gadman_client_callback_call(E_Gadman_Client *gmc, E_Gadman_Change change)
+{
+   if (gmc->func) gmc->func(gmc->data, gmc, change);
+}
+
+static void
 _e_gadman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
@@ -573,7 +579,7 @@ _e_gadman_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    gmc->moving = 1;
    evas_object_raise(gmc->control_object);
    evas_object_raise(gmc->event_object);
-   /* FIXME: call callback to raise */
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_RAISE);
 }
 
 static void
@@ -593,11 +599,23 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    E_Gadman_Client *gmc;
    Evas_Coord x, y;
    int new_edge = 0;
+   int nx, ny, nxx, nyy;
    int new_zone = 0;
+   Evas_List *skiplist = NULL;
    
    gmc = data;
    if (!gmc->moving) return;
    evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   nxx = nx = gmc->down_store_x + (x - gmc->down_x);
+   nyy = ny = gmc->down_store_y + (y - gmc->down_y);
+   skiplist = evas_list_append(skiplist, gmc);
+   e_resist_container_gadman_position(gmc->zone->container, skiplist, 
+				      gmc->x, gmc->y, gmc->w, gmc->h,
+				      nx, ny, gmc->w, gmc->h,
+				      &nxx, &nyy);
+   evas_list_free(skiplist);
+   x += (nxx - nx);
+   y += (nyy - ny);
    if ((gmc->policy & 0xff) == E_GADMAN_POLICY_EDGES)
      {
 	double xr, yr;
@@ -614,6 +632,8 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	       {
 		  gmc->zone = nz;
 		  new_zone = 1;
+		  evas_object_clip_set(gmc->event_object, gmc->zone->bg_clip_object);
+		  evas_object_clip_set(gmc->control_object, gmc->zone->bg_clip_object);
 	       }
 	  }
 	
@@ -640,6 +660,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  {
 	     gmc->x = gmc->zone->x;
 	     gmc->y = gmc->down_store_y + (y - gmc->down_y);
+	     if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
 	     if (gmc->y < gmc->zone->y)
 	       gmc->y = gmc->zone->y;
 	     else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
@@ -649,6 +670,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  {
 	     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
 	     gmc->y = gmc->down_store_y + (y - gmc->down_y);
+	     if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
 	     if (gmc->y < gmc->zone->y)
 	       gmc->y = gmc->zone->y;
 	     else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
@@ -658,6 +680,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  {
 	     gmc->x = gmc->down_store_x + (x - gmc->down_x);
 	     gmc->y = gmc->zone->y;
+	     if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
 	     if (gmc->x < gmc->zone->x)
 	       gmc->x = gmc->zone->x;
 	     else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -667,6 +690,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  {
 	     gmc->x = gmc->down_store_x + (x - gmc->down_x);
 	     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
+	     if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
 	     if (gmc->x < gmc->zone->x)
 	       gmc->x = gmc->zone->x;
 	     else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -696,6 +720,8 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 		  new_zone = 1;
 	       }
 	  }
+	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
+	if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
 	if (gmc->x < gmc->zone->x)
 	  gmc->x = gmc->zone->x;
 	else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -706,15 +732,21 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
      }
    _e_gadman_client_geometry_to_align(gmc);
-   if (new_zone)
-     {
-	/* FIXME: callback for zone change */
-     }
-   if (new_edge)
-     {
-	/* FIXME: callback for edge change */
-     }
    _e_gadman_client_geometry_apply(gmc);
+   e_object_ref(E_OBJECT(gmc));
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     {
+	if (new_zone)
+	  _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
+     }
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     {
+	if (new_edge)
+	  _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_EDGE);
+     }
+   if (!e_object_del_get(E_OBJECT(gmc)))
+     _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+   e_object_unref(E_OBJECT(gmc));
 }
 
 static void
@@ -783,6 +815,7 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_aspect_enforce(gmc, 1.0, 0.5, 1);
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -847,6 +880,7 @@ _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    _e_gadman_client_aspect_enforce(gmc, 0.0, 0.5, 1);
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -915,6 +949,7 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
    _e_gadman_client_aspect_enforce(gmc, 0.5, 1.0, 0);
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -979,6 +1014,7 @@ _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_aspect_enforce(gmc, 0.5, 0.0, 0);
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1008,6 +1044,7 @@ _e_gadman_cb_half_width(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1028,6 +1065,7 @@ _e_gadman_cb_full_width(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1050,6 +1088,7 @@ _e_gadman_cb_auto_width(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1062,6 +1101,7 @@ _e_gadman_cb_center_horiz(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1081,6 +1121,7 @@ _e_gadman_cb_half_height(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1101,6 +1142,7 @@ _e_gadman_cb_full_height(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 static void
@@ -1123,6 +1165,7 @@ _e_gadman_cb_auto_height(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 
@@ -1136,5 +1179,6 @@ _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi)
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 

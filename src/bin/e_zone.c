@@ -58,6 +58,13 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 	char name[40];
 	Evas_Object *o;
 
+	o = evas_object_rectangle_add(con->bg_evas);
+	zone->bg_clip_object = o;
+	evas_object_move(o, x, y);
+	evas_object_resize(o, w, h);
+	evas_object_color_set(o, 255, 255, 255, 255);
+	evas_object_show(o);
+	
 	o = edje_object_add(con->bg_evas);
 	zone->bg_object = o;
 	evas_object_layer_set(o, -1);
@@ -69,10 +76,12 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 	edje_object_file_set(o,
 			     e_config->desktop_default_background,
 			     "desktop/background");
+	evas_object_clip_set(o, zone->bg_clip_object);
 	evas_object_show(o);
 
 	o = evas_object_rectangle_add(con->bg_evas);
 	zone->bg_event_object = o;
+	evas_object_clip_set(o, zone->bg_clip_object);
 	evas_object_move(o, x, y);
 	evas_object_resize(o, w, h);
 	evas_object_color_set(o, 255, 255, 255, 0);
@@ -111,6 +120,7 @@ e_zone_move(E_Zone *zone, int x, int y)
    zone->y = y;
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
+   evas_object_move(zone->bg_clip_object, x, y);
 }
 
 void
@@ -123,6 +133,7 @@ e_zone_resize(E_Zone *zone, int w, int h)
    zone->h = h;
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
+   evas_object_resize(zone->bg_clip_object, w, h);
 }
 
 void
@@ -140,8 +151,10 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
+   evas_object_move(zone->bg_clip_object, x, y);
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
+   evas_object_resize(zone->bg_clip_object, w, h);
 } 
 
 E_Zone *
@@ -207,6 +220,9 @@ _e_zone_free(E_Zone *zone)
    con = zone->container;
    if (zone->name) free(zone->name);
    con->zones = evas_list_remove(con->zones, zone);
+   evas_object_del(zone->bg_event_object);
+   evas_object_del(zone->bg_clip_object);
+   evas_object_del(zone->bg_object);
    free(zone);
 }
 
