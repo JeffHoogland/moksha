@@ -219,7 +219,8 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    
    ev = current_ev->event;
    v = _data;
-   e_view_deselect_all();
+   if (!(ev->mods & (mulit_select_mod | range_select_mod)))
+     e_view_deselect_all();
    if (_b == 1)
      {
 	v->select.down.x = _x;
@@ -282,7 +283,8 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     
 	     ic = l->data;
 	     if (INTERSECTS(v->select.x, v->select.y, v->select.w, v->select.h,
-			    ic->geom.x, ic->geom.y, ic->geom.w, ic->geom.h))
+			    v->scroll.x + ic->geom.x, 
+			    v->scroll.y + ic->geom.y, ic->geom.w, ic->geom.h))
 	       {
 		  if (ic->state.visible)
 		    {
@@ -403,14 +405,32 @@ e_view_icon_update_state(E_Icon *ic)
      {
 	sprintf(icon, "%s:/icon/normal", ic->info.icon);
      }
-   if ((ic->state.selected) && (!ic->obj.sel.over.icon))
+   if ((ic->state.selected) && 
+       (!ic->obj.sel.under.icon) && 
+       (!ic->obj.sel.over.icon))
      {
 	char file[4096];
-	
+
+/*	
 	sprintf(file, "%s/file.bits.db", e_config_get("selections"));
 	ic->obj.sel.over.icon = ebits_load(file);
 	sprintf(file, "%s/text.bits.db", e_config_get("selections"));
 	ic->obj.sel.over.text = ebits_load(file);
+ */
+	sprintf(file, "%s/file.bits.db", e_config_get("selections"));
+	ic->obj.sel.under.icon = ebits_load(file);
+	sprintf(file, "%s/text.bits.db", e_config_get("selections"));
+	ic->obj.sel.under.text = ebits_load(file);
+	if (ic->obj.sel.under.icon) 
+	  {
+	     ebits_add_to_evas(ic->obj.sel.under.icon, ic->view->evas);
+	     ebits_set_layer(ic->obj.sel.under.icon, 195);
+	  }
+	if (ic->obj.sel.under.text)
+	  {
+	     ebits_add_to_evas(ic->obj.sel.under.text, ic->view->evas);
+	     ebits_set_layer(ic->obj.sel.under.text, 195);
+	  }
 	if (ic->obj.sel.over.icon) 
 	  {
 	     ebits_add_to_evas(ic->obj.sel.over.icon, ic->view->evas);
@@ -422,10 +442,16 @@ e_view_icon_update_state(E_Icon *ic)
 	     ebits_set_layer(ic->obj.sel.over.text, 205);
 	  }
      }
-   else if ((!ic->state.selected) && (ic->obj.sel.over.icon))
+   else if ((!ic->state.selected) && 
+	    ((ic->obj.sel.under.icon) ||
+	     (ic->obj.sel.over.icon)))
      {
+	if (ic->obj.sel.under.icon) ebits_free(ic->obj.sel.under.icon);
+	if (ic->obj.sel.under.text) ebits_free(ic->obj.sel.under.text);
 	if (ic->obj.sel.over.icon) ebits_free(ic->obj.sel.over.icon);
 	if (ic->obj.sel.over.text) ebits_free(ic->obj.sel.over.text);
+	ic->obj.sel.under.icon = NULL;
+	ic->obj.sel.under.text = NULL;
 	ic->obj.sel.over.icon = NULL;
 	ic->obj.sel.over.text = NULL;
      }
@@ -516,7 +542,6 @@ e_view_icon_exec(E_Icon *ic)
    if (!strcmp(ic->info.mime.base, "dir"))
      {
 	E_View *v;
-	E_Border *b;
 	char buf[4096];
 	
 	v = e_view_new();
@@ -534,10 +559,86 @@ e_view_icon_exec(E_Icon *ic)
 	printf("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
 	e_view_realize(v);
-	if (v->options.back_pixmap) e_view_update(v);
-	b = e_border_adopt(v->win.base, 1);
+	e_window_set_title(v->win.base, ic->file);
+	e_window_set_name_class(v->win.base, "FileView", "E");
+	e_window_set_min_size(v->win.base, 8, 8);
      }
    e_view_icon_deselect(ic);
+}
+
+void
+e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max_y)
+{
+   Evas_List l;
+   int x1, x2, y1, y2;
+   
+   x1 = 999999999;
+   x2 = -999999999;
+   y1 = 999999999;
+   y2 = -999999999;
+   if (!v->icons)
+     {
+	if (min_x) *min_x = 0;
+	if (min_y) *min_y = 0;
+	if (max_x) *max_x = 0;
+	if (max_y) *max_y = 0;
+	return;
+     }
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon *ic;
+	
+	ic = l->data;
+	if (ic->geom.x < x1) x1 = ic->geom.x;
+	if (ic->geom.y < y1) y1 = ic->geom.y;
+	if (ic->geom.x + ic->geom.w > x2) x2 = ic->geom.x + ic->geom.w;
+	if (ic->geom.y + ic->geom.h > y2) y2 = ic->geom.y + ic->geom.h;
+     }
+   if (min_x) *min_x = x1;
+   if (min_y) *min_y = y1;
+   if (max_x) *max_x = x2 - 1;
+   if (max_y) *max_y = y2 - 1;
+}
+
+void
+e_view_icons_apply_xy(E_View *v)
+{
+   Evas_List l;
+   
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon *ic;
+	
+	ic = l->data;
+	e_view_icon_apply_xy(ic);
+     }
+}
+
+void
+e_view_scroll_to(E_View *v, int sx, int sy)
+{
+   int min_x, min_y, max_x, max_y;
+   
+   e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
+   if (sx < v->size.w - v->spacing.window.r - max_x)
+     sx = v->size.w - v->spacing.window.r - max_x;
+   if (sx > v->spacing.window.l - min_x)
+     sx = v->spacing.window.l - min_x;
+   if (sy < v->size.h - v->spacing.window.b - max_y)
+     sy = v->size.h - v->spacing.window.b - max_y;
+   if (sy > v->spacing.window.t - min_y)
+     sy = v->spacing.window.t - min_y;
+   if ((sx == v->scroll.x) && (v->scroll.y == sy)) return;
+   v->scroll.x = sx;
+   v->scroll.y = sy;
+   e_view_icons_apply_xy(v);
+   if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+}
+
+void
+e_view_scroll_by(E_View *v, int sx, int sy)
+{
+   e_view_scroll_to(v, v->scroll.x + sx, v->scroll.y + sy);
 }
 
 static void
@@ -685,8 +786,8 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 			      {
 				 int ix, iy, iw, ih;
 				 
-				 ix = ic->geom.x + v->location.x;
-				 iy = ic->geom.y + v->location.y;
+				 ix = ic->view->scroll.x + ic->geom.x + v->location.x;
+				 iy = ic->view->scroll.y + ic->geom.y + v->location.y;
 				 iw = ic->geom.w;
 				 ih = ic->geom.h;
 				 if (ix < x) x = ix;
@@ -701,7 +802,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     printf("%i %i\n", ic->view->location.x, ic->view->location.y);
 	     downx = ic->view->select.down.x + ic->view->location.x;
 	     downy = ic->view->select.down.y + ic->view->location.y;
-
+	     
 	     wx = x;
 	     ww = xx - x;
 	     if (wx < - (rw - downx)) 
@@ -920,6 +1021,19 @@ void e_configure(Eevent * ev)
 		    {
 		       v->location.x = e->x;
 		       v->location.y = e->y;
+		       if (e_fs_get_connection())
+			 {
+			    int left, top;
+			    
+			    e_window_get_frame_size(v->win.base, &left, NULL,
+						    &top, NULL);
+			    efsd_set_metadata_int(e_fs_get_connection(),
+						  "/view/x", v->dir, 
+						  v->location.x - left);
+			    efsd_set_metadata_int(e_fs_get_connection(),
+						  "/view/y", v->dir, 
+						  v->location.y - top);
+			 }
 		    }
 	       }
 	     if ((e->w != v->size.w) || (e->h != v->size.h))
@@ -945,6 +1059,15 @@ void e_configure(Eevent * ev)
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
 		  e_view_arrange(v);
+		  if (e_fs_get_connection())
+		    {
+		       efsd_set_metadata_int(e_fs_get_connection(),
+					     "/view/w", v->dir, 
+					     v->size.w);
+		       efsd_set_metadata_int(e_fs_get_connection(),
+					     "/view/h", v->dir, 
+					     v->size.h);
+		    }
 	       }
 	  }
      }
@@ -1095,9 +1218,11 @@ e_key_down(Eevent * ev)
 	  {
 	     if (!strcmp(e->key, "Up"))
 	       {
+		  e_view_scroll_by(v, 0, 8);
 	       }
 	     else if (!strcmp(e->key, "Down"))
 	       {
+		  e_view_scroll_by(v, 0, -8);
 	       }
 	     else if (!strcmp(e->key, "Left"))
 	       {
@@ -1412,25 +1537,49 @@ e_view_icon_apply_xy(E_Icon *ic)
    evas_resize(ic->view->evas, ic->obj.event2, 
 	       ic->geom.text.w, ic->geom.text.h);
    evas_move(ic->view->evas, ic->obj.event1,
-	     ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2),
-	                  ic->geom.y);
+	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2),
+	     ic->view->scroll.y + ic->geom.y);
    evas_move(ic->view->evas, ic->obj.event2,
-	     ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2),
-	     ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);	     
+	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2),
+	     ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);	     
    evas_move(ic->view->evas, ic->obj.icon, 
-	     ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2), 
-	     ic->geom.y);
+	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2), 
+	     ic->view->scroll.y + ic->geom.y);
    evas_move(ic->view->evas, ic->obj.text,
-	     ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2), 
-	     ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);
+	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2), 
+	     ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);
+   if (ic->obj.sel.under.icon)
+     {
+	int pl, pr, pt, pb;
+	
+	ebits_get_insets(ic->obj.sel.under.icon, &pl, &pr, &pt, &pb);
+	ebits_move(ic->obj.sel.under.icon, 
+		   ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2) - pl,
+		   ic->view->scroll.y + ic->geom.y - pt);
+	ebits_resize(ic->obj.sel.under.icon,
+		     ic->geom.icon.w + pl + pr, ic->geom.icon.h + pt + pb);
+	ebits_show(ic->obj.sel.under.icon);
+     }
+   if (ic->obj.sel.under.text)
+     {
+	int pl, pr, pt, pb;
+	
+	ebits_get_insets(ic->obj.sel.under.text, &pl, &pr, &pt, &pb);
+	ebits_move(ic->obj.sel.under.text, 
+		   ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2) - pl, 
+		   ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g - pt);
+	ebits_resize(ic->obj.sel.under.text,
+		     ic->geom.text.w + pl  + pr, ic->geom.text.h + pt + pb);
+	ebits_show(ic->obj.sel.under.text);
+     }
    if (ic->obj.sel.over.icon)
      {
 	int pl, pr, pt, pb;
 	
 	ebits_get_insets(ic->obj.sel.over.icon, &pl, &pr, &pt, &pb);
 	ebits_move(ic->obj.sel.over.icon, 
-		   ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2) - pl,
-		   ic->geom.y - pt);
+		   ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2) - pl,
+		   ic->view->scroll.y + ic->geom.y - pt);
 	ebits_resize(ic->obj.sel.over.icon,
 		     ic->geom.icon.w + pl + pr, ic->geom.icon.h + pt + pb);
 	ebits_show(ic->obj.sel.over.icon);
@@ -1441,8 +1590,8 @@ e_view_icon_apply_xy(E_Icon *ic)
 	
 	ebits_get_insets(ic->obj.sel.over.text, &pl, &pr, &pt, &pb);
 	ebits_move(ic->obj.sel.over.text, 
-		   ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2) - pl, 
-		   ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g - pt);
+		   ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2) - pl, 
+		   ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g - pt);
 	ebits_resize(ic->obj.sel.over.text,
 		     ic->geom.text.w + pl  + pr, ic->geom.text.h + pt + pb);
 	ebits_show(ic->obj.sel.over.text);
@@ -1657,7 +1806,7 @@ e_view_file_added(int id, char *file)
 
    /* if we get a path - ignore it - its not a file in the a dir */
    if (!file) return;
-   printf("FILE ADD: %s\n", file);
+/*   printf("FILE ADD: %s\n", file);*/
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
@@ -1839,20 +1988,33 @@ void
 e_view_set_dir(E_View *v, char *dir)
 {
    /* stop monitoring old dir */
-   if (v->dir) efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
+   if ((v->dir) && (v->monitor_id))
+     {
+	efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
+	v->monitor_id = 0;
+     }
    IF_FREE(v->dir);
    v->dir = e_file_real(dir);
    /* start monitoring new dir */
    v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
    if (e_fs_get_connection())
      {
-       v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					  efsd_ops(2, 
-						   efsd_op_get_stat(), 
-						   efsd_op_get_filetype()
-						   ),
-					  TRUE
-					  );
+	v->geom_get.x = efsd_get_metadata(e_fs_get_connection(), 
+					  "/view/x", v->dir, EFSD_INT);
+	v->geom_get.y = efsd_get_metadata(e_fs_get_connection(), 
+					  "/view/y", v->dir, EFSD_INT);
+	v->geom_get.w = efsd_get_metadata(e_fs_get_connection(), 
+					  "/view/w", v->dir, EFSD_INT);
+	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
+					  "/view/h", v->dir, EFSD_INT);
+	v->geom_get.busy = 1;
+	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					   efsd_ops(2, 
+						    efsd_op_get_stat(), 
+						    efsd_op_get_filetype()
+						    ),
+					   TRUE
+					   );
 	printf("monitor id for %s = %i\n", v->dir, v->monitor_id);
 	v->is_listing = 1;
 	v->changed = 1;
@@ -2132,6 +2294,110 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_SETMETA:
 	     break;
 	   case EFSD_CMD_GETMETA:
+	     printf("Getmeta event %i\n",
+		    ev->efsd_reply_event.command.efsd_get_metadata_cmd.id);
+	       {
+		  Evas_List l;
+		  EfsdCmdId cmd;
+		  
+		  cmd = ev->efsd_reply_event.command.efsd_get_metadata_cmd.id;
+		  for (l = views; l; l = l->next)
+		    {
+		       E_View *v;
+		       int ok;
+		       
+		       ok = 0;
+		       v = l->data;
+		       if (v->geom_get.x == cmd)
+			 {
+			    v->geom_get.x = 0;
+			    if (efsd_metadata_get_type(ev) == EFSD_INT)
+			      {
+				 if (ev->efsd_reply_event.status == SUCCESS)
+				   {
+				      if (efsd_metadata_get_int(ev, 
+								&(v->location.x)))
+					e_window_move(v->win.base,
+						      v->location.x,
+						      v->location.y);
+					e_window_set_xy_hints(v->win.base,
+							      v->location.x,
+							      v->location.y);
+				   }
+			      }
+			    ok = 1;
+			 }
+		       else if (v->geom_get.y == cmd)
+			 {
+			    v->geom_get.y = 0;
+			    if (efsd_metadata_get_type(ev) == EFSD_INT)
+			      {
+				 if (ev->efsd_reply_event.status == SUCCESS)
+				   {
+				      if (efsd_metadata_get_int(ev, 
+								&(v->location.y)))
+					e_window_move(v->win.base,
+						      v->location.x,
+						      v->location.y);
+					e_window_set_xy_hints(v->win.base,
+							      v->location.x,
+							      v->location.y);
+				   }
+			      }
+			    ok = 1;
+			 }
+		       else if (v->geom_get.w == cmd)
+			 {
+			    v->geom_get.w = 0;
+			    if (efsd_metadata_get_type(ev) == EFSD_INT)
+			      {
+				 if (ev->efsd_reply_event.status == SUCCESS)
+				   {
+				      if (efsd_metadata_get_int(ev, 
+								&(v->size.w)))
+					e_window_resize(v->win.base,
+							v->size.w,
+							v->size.h);
+				   }
+			      }
+			    ok = 1;
+			 }
+		       else if (v->geom_get.h == cmd)
+			 {
+			    v->geom_get.h = 0;
+			    if (efsd_metadata_get_type(ev) == EFSD_INT)
+			      {
+				 if (ev->efsd_reply_event.status == SUCCESS)
+				   {
+				      if (efsd_metadata_get_int(ev, 
+								&(v->size.h)))
+					e_window_resize(v->win.base,
+							v->size.w,
+							v->size.h);
+				   }
+			      }
+			    ok = 1;
+			 }
+		       if (ok) 
+			 {
+			    if ((!v->geom_get.x) &&
+				(!v->geom_get.y) &&
+				(!v->geom_get.w) &&
+				(!v->geom_get.h) &&
+				(v->geom_get.busy))
+			      {
+				 E_Border *b;
+				 
+				 v->geom_get.busy = 0;
+				 if (v->options.back_pixmap) e_view_update(v);
+				 b = e_border_adopt(v->win.base, 1);
+			      }
+			    return;
+			 }
+		    }
+	       }
+	     /*	
+	      */
 	     break;
 	   case EFSD_CMD_STARTMON_DIR:
 /*	     printf("Startmon event %i\n",
