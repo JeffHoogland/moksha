@@ -5,7 +5,7 @@ BIT=$1"/.e_iconbar.bits.db"
 
 setup ()
 {
-  PREFIX="/usr/local"
+  PREFIX="/usr/local/e17"
   SYSIC="/usr/share/pixmaps"
   USRIC=$HOME"/stuff/icons"
   NUM=0

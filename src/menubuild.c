@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "menu.h"
 #include "menubuild.h"
 #include "exec.h"
@@ -24,10 +25,13 @@ static void
 e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data)
 {
    char *exe;
+
+   D_ENTER;
    
    exe = data;
    e_exec_run(exe);
-   return;
+
+   D_RETURN;
    UN(m);
    UN(mi);
 }
@@ -37,6 +41,8 @@ e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
 {
    char *script;
 
+   D_ENTER;
+   
 #ifdef USE_FERITE
    script = data;
    e_ferite_run(script);
@@ -44,7 +50,7 @@ e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
    printf( "No cookies for you. You will have to install ferite.\n" );
 #endif
    
-   return;
+   D_RETURN;
    UN(m);
    UN(mi);
    UN(script);
@@ -55,6 +61,8 @@ static void
 e_build_menu_unbuild(E_Build_Menu *bm)
 {
    Evas_List l;
+   
+   D_ENTER;
    
    bm->menu = NULL;
    if (bm->menus)
@@ -68,7 +76,8 @@ e_build_menu_unbuild(E_Build_Menu *bm)
 	     e_menu_update_shows(m);
 	     e_menu_update_hides(m);
 	     e_menu_update_finish(m);
-	     OBJ_DO_FREE(m);
+
+	     e_object_unref(E_OBJECT(m));
 	  }
 	bm->menus = evas_list_free(bm->menus);
      }
@@ -80,6 +89,8 @@ e_build_menu_unbuild(E_Build_Menu *bm)
 	  }
 	bm->commands = evas_list_free(bm->commands);
      }
+
+   D_RETURN;
 }
 
 
@@ -92,12 +103,14 @@ e_build_menu_db_poll(int val, void *data)
    time_t mod;
    E_Build_Menu *bm;
    
+   D_ENTER;
+   
    bm = data;
    mod = e_file_modified_time(bm->file);
    if (mod <= bm->mod_time) 
      {
 	ecore_add_event_timer(bm->file, 1.0, e_build_menu_db_poll, 0, data);
-	return;
+	D_RETURN;
      }
    bm->mod_time = mod;
    
@@ -106,7 +119,8 @@ e_build_menu_db_poll(int val, void *data)
    if (!bm->menu) bm->mod_time = 0;
    
    ecore_add_event_timer(bm->file, 1.0, e_build_menu_db_poll, 0, data);
-   return;
+
+   D_RETURN;
    UN(val);
 }
 
@@ -116,12 +130,14 @@ e_build_menu_gnome_apps_poll(int val, void *data)
    time_t mod;
    E_Build_Menu *bm;
    
+   D_ENTER;
+   
    bm = data;
    mod = e_file_modified_time(bm->file);
    if (mod <= bm->mod_time) 
      {
 	ecore_add_event_timer(bm->file, 1.0, e_build_menu_gnome_apps_poll, 0, data);
-	return;
+	D_RETURN;
      }
    bm->mod_time = mod;
    
@@ -130,7 +146,8 @@ e_build_menu_gnome_apps_poll(int val, void *data)
    if (!bm->menu) bm->mod_time = 0;
    
    ecore_add_event_timer(bm->file, 1.0, e_build_menu_gnome_apps_poll, 0, data);
-   return;
+
+   D_RETURN;
    UN(val);
 }
 
@@ -141,8 +158,10 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
    char    buf[PATH_MAX];
    int     num2, i2;
    
+   D_ENTER;
+   
    sprintf(buf, "/menu/%i/count", num);
-   if (!e_db_int_get(db, buf, &num2)) return NULL;
+   if (!e_db_int_get(db, buf, &num2)) D_RETURN_(NULL);
    menu = e_menu_new();
    e_menu_set_padding_icon(menu, 2);
    e_menu_set_padding_state(menu, 2);
@@ -194,7 +213,8 @@ e_build_menu_db_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	e_menu_add_item(menu, menuitem);
      }
    bm->menus = evas_list_prepend(bm->menus, menu);
-   return menu;
+
+   D_RETURN_(menu);
 }
 
 static void
@@ -203,14 +223,18 @@ e_build_menu_db_build(E_Build_Menu *bm)
    E_DB_File *db;
    int num;
    
+   D_ENTER;
+   
    e_db_flush();
    db = e_db_open_read(bm->file);
-   if (!db) return;
+   if (!db) D_RETURN;
    
    if (!e_db_int_get(db, "/menu/count", &num)) goto error;
    if (num > 0) bm->menu = e_build_menu_db_build_number(bm, db, 0);
    error:
    e_db_close(db);
+
+   D_RETURN;
 }
 
 
@@ -222,6 +246,8 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 {
    E_Menu *menu = NULL;
    Evas_List l, entries = NULL;
+   
+   D_ENTER;
    
    menu = e_menu_new();
    e_menu_set_padding_icon(menu, 2);
@@ -384,7 +410,8 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
      }
    if (entries) evas_list_free(entries);
    bm->menus = evas_list_prepend(bm->menus, menu);	
-   return menu;
+
+   D_RETURN_(menu);
 }
 
 static void
@@ -392,18 +419,28 @@ e_build_menu_gnome_apps_build(E_Build_Menu *bm)
 {
    E_Menu *menu;
    
+   D_ENTER;
+   
    menu = e_build_menu_gnome_apps_build_dir(bm, bm->file);
    bm->menu = menu;
+
+   D_RETURN;
 }
 
-void
-e_build_menu_free(E_Build_Menu *bm)
+static void
+e_build_menu_cleanup(E_Build_Menu *bm)
 {
+   D_ENTER;
+   
    ecore_del_event_timer(bm->file);
    e_build_menu_unbuild(bm);
    IF_FREE(bm->file);
    build_menus = evas_list_remove(build_menus, bm);   
-   FREE(bm);
+
+   /* Call the destructor of the base class */
+   e_object_cleanup(E_OBJECT(bm));
+
+   D_RETURN;
 }
 
 E_Build_Menu *
@@ -411,16 +448,20 @@ e_build_menu_new_from_db(char *file)
 {
    E_Build_Menu *bm;
    
-   if (!file) return NULL;
+   D_ENTER;
+   
+   if (!file) D_RETURN_(NULL);
    bm = NEW(E_Build_Menu, 1);
    ZERO(bm, E_Build_Menu, 1);
-   OBJ_INIT(bm, e_build_menu_free);
+
+   e_object_init(E_OBJECT(bm), (E_Cleanup_Func) e_build_menu_cleanup);
    
    bm->file = strdup(file);
    
    build_menus = evas_list_prepend(build_menus, bm);   
    e_build_menu_db_poll(0, bm);   
-   return bm;
+
+   D_RETURN_(bm);
 }
 
 E_Build_Menu *
@@ -428,14 +469,18 @@ e_build_menu_new_from_gnome_apps(char *dir)
 {
    E_Build_Menu *bm;
    
-   if (!dir) return NULL;
+   D_ENTER;
+   
+   if (!dir) D_RETURN_(NULL);
    bm = NEW(E_Build_Menu, 1);
    ZERO(bm, E_Build_Menu, 1);
-   OBJ_INIT(bm, e_build_menu_free);
-   
+
+   e_object_init(E_OBJECT(bm), (E_Cleanup_Func) e_build_menu_cleanup);
+
    bm->file = strdup(dir);
    
    build_menus = evas_list_prepend(build_menus, bm);
    e_build_menu_gnome_apps_poll(0, bm);
-   return bm;   
+
+   D_RETURN_(bm);
 }

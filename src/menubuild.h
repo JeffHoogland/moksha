@@ -2,12 +2,13 @@
 #define E_MENU_BUILD_H
 
 #include "e.h"
+#include "object.h"
 
 typedef struct _E_Build_Menu          E_Build_Menu;
 
 struct _E_Build_Menu
 {
-   OBJ_PROPERTIES;
+   E_Object   o;
 
    char      *file;
    time_t     mod_time;
@@ -18,7 +19,6 @@ struct _E_Build_Menu
    Evas_List  commands;
 };
 
-void          e_build_menu_free(E_Build_Menu *bm);
 E_Build_Menu *e_build_menu_new_from_db(char *file);
 E_Build_Menu *e_build_menu_new_from_gnome_apps(char *dir);
 

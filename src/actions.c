@@ -1,5 +1,6 @@
 #include "actions.h"
 #include "config.h"
+#include "debug.h"
 #include "border.h"
 #include "desktops.h"
 #include "exec.h"
@@ -13,62 +14,103 @@ static Evas_List action_impls = NULL;
 static Evas_List current_actions = NULL;
 static Evas_List current_timers = NULL;
 
-static void e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o);
-static void e_action_free(E_Action *a);
+static void e_action_find(char *action, E_Action_Type act, int button, char *key,
+			  Ecore_Event_Key_Modifiers mods, E_Object *object);
+static void e_action_cleanup(E_Action *a);
 
-static void e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_move_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy);
+static void e_act_move_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
 
-static void e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy);
+static void e_act_move_stop  (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
 
-static void e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_h_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy);
+static void e_act_move_cont  (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry, int dx, int dy);
 
-static void e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_resize_v_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy);
+static void e_act_resize_start (E_Object *object, E_Action *a, void *data,
+				int x, int y, int rx, int ry);
 
-static void e_act_close_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_stop  (E_Object *object, E_Action *a, void *data,
+				int x, int y, int rx, int ry);
 
-static void e_act_kill_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_cont  (E_Object *object, E_Action *a, void *data,
+				int x, int y, int rx, int ry, int dx, int dy);
 
-static void e_act_shade_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_h_start (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry);
 
-static void e_act_raise_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_h_stop  (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry);
 
-static void e_act_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_h_cont  (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry, int dx, int dy);
 
-static void e_act_raise_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_v_start (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry);
 
-static void e_act_exec_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_v_stop  (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry);
 
-static void e_act_menu_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_resize_v_cont  (E_Object *object, E_Action *a, void *data,
+				  int x, int y, int rx, int ry, int dx, int dy);
 
-static void e_act_exit_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_close_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
 
-static void e_act_restart_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_kill_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
 
-static void e_act_stick_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_shade_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
 
-static void e_act_sound_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_raise_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
 
-static void e_act_iconify_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_lower_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
 
-static void e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_raise_lower_start (E_Object *object, E_Action *a,
+				     void *data, int x, int y, int rx, int ry);
 
-static void e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_exec_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
 
-static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_menu_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
 
-static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
-static void e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_exit_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
+
+static void e_act_restart_start (E_Object *object, E_Action *a, void *data,
+				 int x, int y, int rx, int ry);
+
+static void e_act_stick_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
+
+static void e_act_sound_start (E_Object *object, E_Action *a, void *data,
+			       int x, int y, int rx, int ry);
+
+static void e_act_iconify_start (E_Object *object, E_Action *a, void *data,
+				 int x, int y, int rx, int ry);
+
+static void e_act_max_start (E_Object *object, E_Action *a, void *data,
+			     int x, int y, int rx, int ry);
+
+static void e_act_snap_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
+
+static void e_act_zoom_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
+
+static void e_act_desk_start (E_Object *object, E_Action *a, void *data,
+			      int x, int y, int rx, int ry);
+
+static void e_act_raise_next_start (E_Object *object, E_Action *a, void *data,
+				    int x, int y, int rx, int ry);
 
 static void
-e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o)
+e_action_find(char *action, E_Action_Type act, int button,
+	      char *key, Ecore_Event_Key_Modifiers mods, E_Object *object)
 {
    char *actions_db;
    E_DB_File *db;
@@ -85,21 +127,30 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Even
    static Evas_List actions = NULL;
    E_CFG_FILE(cfg_actions, "actions");
 
+   D_ENTER;
+
    E_CONFIG_CHECK_VALIDITY(cfg_actions, "actions");
+
    /* if we had a previous list - nuke it */
+
+   /* FIXME: this has potential to segfault if reference
+      counting is actually used and those actions are
+      referenced in more than one place --cK.
+   */
+
    if (actions)
      {
 	for (l = actions; l; l = l->next)
 	  {
 	     a = l->data;
-	     if (a) e_action_free(a);
+	     if (a) e_action_cleanup(a);
 	  }
 	actions = evas_list_free(actions);
      }
    /* now build the list again */
    actions_db = e_config_get("actions");
    db = e_db_open_read(actions_db);
-   if (!db) return;
+   if (!db) D_RETURN;
    if (!e_db_int_get(db, "/actions/count", &num)) goto error;
    for (i = 0; i < num; i++)
      {
@@ -123,7 +174,7 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 	a = NEW(E_Action, 1);
 	ZERO(a, E_Action, 1);
 	
-	OBJ_INIT(a, e_action_free);
+	e_object_init(E_OBJECT(a), (E_Cleanup_Func) e_action_cleanup);
 	
 	a->name = a_name;
 	a->action = a_action;
@@ -184,7 +235,7 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 		  aa = NEW(E_Action, 1);
 		  ZERO(aa, E_Action, 1);
 		  
-		  OBJ_INIT(aa, e_action_free);
+		  e_object_init(E_OBJECT(aa), (E_Cleanup_Func) e_action_cleanup);
 		  
 		  e_strdup(aa->name, a->name);
 		  e_strdup(aa->action, a->action);
@@ -194,18 +245,22 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 		  e_strdup(aa->key, a->key);
 		  aa->modifiers = a->modifiers;
 		  aa->action_impl = ap;
-		  aa->object = o;
+		  aa->object = object;
 		  aa->started = 0;
 		  current_actions = evas_list_append(current_actions, aa);
 	       }
 	  }
 	next:
      }
+
+   D_RETURN;
 }
 
 static void
-e_action_free(E_Action *a)
+e_action_cleanup(E_Action *a)
 {
+   D_ENTER;
+
    /* it's a key? lets ungrab it! */
    if ((a->key) && (strlen(a->key) > 0) && (a->grabbed))
      {
@@ -214,20 +269,28 @@ e_action_free(E_Action *a)
 	else
 	  e_keys_ungrab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
      }
+
    IF_FREE(a->name);
    IF_FREE(a->action);
    IF_FREE(a->params);
    IF_FREE(a->key);
-   FREE(a);
+
+   e_object_cleanup(E_OBJECT(a));
+
+   D_RETURN;
 }
 
 int
-e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_start(char *action, E_Action_Type act, int button,
+	       char *key, Ecore_Event_Key_Modifiers mods,
+	       E_Object *object, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
    int started_long_action = 0;
    
-   e_action_find(action, act, button, key, mods, o);
+   D_ENTER;
+
+   e_action_find(action, act, button, key, mods, object);
    again:
    for (l = current_actions; l; l = l->next)
      {
@@ -249,7 +312,7 @@ e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Eve
 		    {
 		       obj = a->object;
 		       if (a->started)
-			 OBJ_REF(obj);
+			 e_object_ref(obj);
 		    }
 		  a->action_impl->func_start(a->object, a, data, x, y, rx, ry);
 	       }
@@ -257,17 +320,22 @@ e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Eve
 	if (!a->started)
 	  {
 	     current_actions = evas_list_remove(current_actions, a);
-	     OBJ_DO_FREE(a);
+	     e_object_unref(E_OBJECT(a));
 	     goto again;
 	  }
      }
-   return started_long_action;
+
+   D_RETURN_(started_long_action);
 }
 
 void
-e_action_stop(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_stop(char *action, E_Action_Type act, int button,
+	      char *key, Ecore_Event_Key_Modifiers mods, E_Object *object,
+	      void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
+
+   D_ENTER;
 
    again:
    for (l = current_actions; l; l = l->next)
@@ -312,7 +380,7 @@ e_action_stop(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 		  if (a->object)
 		    {
 		       obj = a->object;
-		       OBJ_UNREF(obj);
+		       e_object_unref(obj);
 		    }
 		  a->action_impl->func_stop(a->object, a, data, x, y, rx, ry);
 		  a->started = 0;
@@ -321,21 +389,26 @@ e_action_stop(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 	if (!a->started)
 	  {
 	     current_actions = evas_list_remove(current_actions, a);
-	     OBJ_DO_FREE(a);
+	     
+	     e_object_unref(E_OBJECT(a));
 	     goto again;
 	  }
      }
-   return;
+
+   D_RETURN;
    UN(action);
    UN(mods);
-   UN(o);
+   UN(object);
 }
 
 void
-e_action_cont(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods,
-	      void *o, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_action_cont(char *action, E_Action_Type act, int button, char *key,
+	      Ecore_Event_Key_Modifiers mods, E_Object *object, void *data,
+	      int x, int y, int rx, int ry, int dx, int dy)
 {
    Evas_List l;
+
+   D_ENTER;
 
    for (l = current_actions; l; l = l->next)
      {
@@ -345,50 +418,55 @@ e_action_cont(char *action, E_Action_Type act, int button, char *key, Ecore_Even
 	if ((a->started) && (a->action_impl->func_cont))
 	  a->action_impl->func_cont(a->object, a, data, x, y, rx, ry, dx, dy);
      }
-   return;
+
+   D_RETURN;
    UN(action);
    UN(act);
    UN(button);
    UN(key);
    UN(mods);
-   UN(o);
+   UN(object);
 }
 
 void
-e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry)
+e_action_stop_by_object(E_Object *object, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
 
-   e_action_del_timer_object(o);
+   e_action_del_timer_object(object);
    again:
    for (l = current_actions; l; l = l->next)
      {
 	E_Action *a;
 	
 	a = l->data;
-	if ((a->started) && (o == a->object))
+	if ((a->started) && (object == a->object))
 	  {
 	     E_Object *obj;
 	     
 	     if (a->object)
 	       {
 		  obj = a->object;
-		  OBJ_UNREF(obj);
+		  e_object_unref(obj);
 	       }
 	     if (a->action_impl->func_stop)
 	       a->action_impl->func_stop(a->object, a, data, x, y, rx, ry);
 	     a->started = 0;
 	     current_actions = evas_list_remove(current_actions, a);
-	     OBJ_DO_FREE(a);
+	     e_object_unref(E_OBJECT(a));
 	     goto again;
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_action_stop_by_type(char *action)
 {
    Evas_List l;
+
+   D_ENTER;
 
    for (l = current_actions; l; l = l->next)
      {
@@ -403,38 +481,57 @@ e_action_stop_by_type(char *action)
 	     if (a->object)
 	       {
 		  obj = a->object;
-		  OBJ_UNREF(obj);
+		  e_object_unref(obj);
 	       }
 	     a->action_impl->func_stop(a->object, a, NULL, 0, 0, 0, 0);
 	     a->started = 0;
 	  }
      }
+
+   D_RETURN;
+}
+
+
+static void
+e_action_impl_cleanup(E_Action_Impl *eai)
+{
+   D_ENTER;
+
+   e_object_cleanup(E_OBJECT(eai));
+
+   D_RETURN;
 }
 
 
 void
-e_action_add_proto(char *action, 
-		   void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
-		   void (*func_cont)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy),
-		   void (*func_stop)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry))
+e_action_add_impl(char *action,  E_Action_Start_Func func_start,
+		  E_Action_Cont_Func func_cont, E_Action_Stop_Func func_stop)
 {
    E_Action_Impl *ap;
    
+   D_ENTER;
+
    ap = NEW(E_Action_Impl, 1);
-   
-   OBJ_INIT(ap, NULL);
+   ZERO(ap, E_Action_Impl, 1); 
+
+   e_object_init(E_OBJECT(ap), (E_Cleanup_Func) e_action_impl_cleanup);
    
    e_strdup(ap->action, action);
    ap->func_start = func_start;
    ap->func_cont = func_cont;
    ap->func_stop = func_stop;
    action_impls = evas_list_append(action_impls, ap);
+
+   D_RETURN;
 }
 
+
 void
-e_action_del_timer(void *o, char *name)
+e_action_del_timer(E_Object *object, char *name)
 {
    Evas_List l;
+
+   D_ENTER;
    
    again:
    for (l = current_timers; l; l = l->next)
@@ -442,7 +539,7 @@ e_action_del_timer(void *o, char *name)
 	E_Active_Action_Timer *at;
 	
 	at = l->data;
-	if ((at->object == o) && 
+	if ((at->object == object) && 
 	    (name) && 
 	    (at->name) && 
 	    (!strcmp(at->name, name)))
@@ -454,31 +551,39 @@ e_action_del_timer(void *o, char *name)
 	     goto again;
 	  }
      }
+
+   D_RETURN;
 }
 
 void
-e_action_add_timer(void *o, char *name)
+e_action_add_timer(E_Object *object, char *name)
 {
    E_Active_Action_Timer *at;
    
+   D_ENTER;
+
    at = NEW(E_Active_Action_Timer, 1);
-   at->object = o;
+   at->object = object;
    e_strdup(at->name, name);
    current_timers = evas_list_append(current_timers, at);
+
+   D_RETURN;
 }
 
 void
-e_action_del_timer_object(void *o)
+e_action_del_timer_object(E_Object *object)
 {
    Evas_List l;
    
+   D_ENTER;
+
    again:
    for (l = current_timers; l; l = l->next)
      {
 	E_Active_Action_Timer *at;
 	
 	at = l->data;
-	if (at->object == o)
+	if (at->object == object)
 	  {
 	     ecore_del_event_timer(at->name);
 	     current_timers = evas_list_remove(current_timers, at);
@@ -487,33 +592,39 @@ e_action_del_timer_object(void *o)
 	     goto again;
 	  }
      }
+   
+   D_RETURN;
 }
 
 void
 e_action_init(void)
 {
-   e_action_add_proto("Window_Move", e_act_move_start, e_act_move_cont, e_act_move_stop);
-   e_action_add_proto("Window_Resize", e_act_resize_start, e_act_resize_cont, e_act_resize_stop);
-   e_action_add_proto("Window_Resize_Horizontal", e_act_resize_h_start, e_act_resize_h_cont, e_act_resize_h_stop);
-   e_action_add_proto("Window_Resize_Vertical", e_act_resize_v_start, e_act_resize_v_cont, e_act_resize_v_stop);
-   e_action_add_proto("Window_Close", e_act_close_start, NULL, NULL);
-   e_action_add_proto("Window_Kill", e_act_kill_start, NULL, NULL);
-   e_action_add_proto("Window_Shade", e_act_shade_start, NULL, NULL);
-   e_action_add_proto("Window_Raise", e_act_raise_start, NULL, NULL);
-   e_action_add_proto("Window_Lower", e_act_lower_start, NULL, NULL);
-   e_action_add_proto("Window_Raise_Lower", e_act_raise_lower_start, NULL, NULL);
-   e_action_add_proto("Execute", e_act_exec_start, NULL, NULL);
-   e_action_add_proto("Menu", e_act_menu_start, NULL, NULL);
-   e_action_add_proto("Exit", e_act_exit_start, NULL, NULL);
-   e_action_add_proto("Restart", e_act_restart_start, NULL, NULL);
-   e_action_add_proto("Window_Stick", e_act_stick_start, NULL, NULL);
-   e_action_add_proto("Sound", e_act_sound_start, NULL, NULL);
-   e_action_add_proto("Window_Iconify", e_act_iconify_start, NULL, NULL);
-   e_action_add_proto("Window_Max_Size", e_act_max_start, NULL, NULL);
-   e_action_add_proto("Winodw_Snap", e_act_snap_start, NULL, NULL);
-   e_action_add_proto("Window_Zoom", e_act_zoom_start, NULL, NULL);
-   e_action_add_proto("Desktop", e_act_desk_start, NULL, NULL);
-   e_action_add_proto("Window_Next", e_act_raise_next_start, NULL, NULL);
+   D_ENTER;
+
+   e_action_add_impl("Window_Move", e_act_move_start, e_act_move_cont, e_act_move_stop);
+   e_action_add_impl("Window_Resize", e_act_resize_start, e_act_resize_cont, e_act_resize_stop);
+   e_action_add_impl("Window_Resize_Horizontal", e_act_resize_h_start, e_act_resize_h_cont, e_act_resize_h_stop);
+   e_action_add_impl("Window_Resize_Vertical", e_act_resize_v_start, e_act_resize_v_cont, e_act_resize_v_stop);
+   e_action_add_impl("Window_Close", e_act_close_start, NULL, NULL);
+   e_action_add_impl("Window_Kill", e_act_kill_start, NULL, NULL);
+   e_action_add_impl("Window_Shade", e_act_shade_start, NULL, NULL);
+   e_action_add_impl("Window_Raise", e_act_raise_start, NULL, NULL);
+   e_action_add_impl("Window_Lower", e_act_lower_start, NULL, NULL);
+   e_action_add_impl("Window_Raise_Lower", e_act_raise_lower_start, NULL, NULL);
+   e_action_add_impl("Execute", e_act_exec_start, NULL, NULL);
+   e_action_add_impl("Menu", e_act_menu_start, NULL, NULL);
+   e_action_add_impl("Exit", e_act_exit_start, NULL, NULL);
+   e_action_add_impl("Restart", e_act_restart_start, NULL, NULL);
+   e_action_add_impl("Window_Stick", e_act_stick_start, NULL, NULL);
+   e_action_add_impl("Sound", e_act_sound_start, NULL, NULL);
+   e_action_add_impl("Window_Iconify", e_act_iconify_start, NULL, NULL);
+   e_action_add_impl("Window_Max_Size", e_act_max_start, NULL, NULL);
+   e_action_add_impl("Winodw_Snap", e_act_snap_start, NULL, NULL);
+   e_action_add_impl("Window_Zoom", e_act_zoom_start, NULL, NULL);
+   e_action_add_impl("Desktop", e_act_desk_start, NULL, NULL);
+   e_action_add_impl("Window_Next", e_act_raise_next_start, NULL, NULL);
+
+   D_RETURN;
 }
 
 
@@ -533,7 +644,7 @@ e_action_init(void)
 /* init func */
 
 static void 
-e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_move_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    E_Guides_Mode move_mode = E_GUIDES_BOX;
@@ -545,14 +656,16 @@ e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
    E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.fixed) return;
+   if (!b) D_RETURN;
+   if (b->client.fixed) D_RETURN;
    if (move_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    b->mode.move = 1;
@@ -574,7 +687,8 @@ e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_show();
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -584,14 +698,16 @@ e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 }
 
 static void
-e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_move_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   
-   b = o;
+
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.fixed) return;
+   if (!b) D_RETURN;
+   if (b->client.fixed) D_RETURN;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -607,7 +723,8 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    e_border_adjust_limits(b);
    e_guides_hide();
    e_desktops_add_border(b->desk, b);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -617,14 +734,16 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 }
 
 static void
-e_act_move_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_act_move_cont  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    E_Border *b;
+
+   D_ENTER;
    
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.fixed) return;
+   if (!b) D_RETURN;
+   if (b->client.fixed) D_RETURN;
    b->current.requested.x += dx;
    b->current.requested.y += dy;
    if (dx != 0) b->current.requested.dx = dx;
@@ -639,7 +758,8 @@ e_act_move_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_display_text(buf);
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -650,7 +770,7 @@ e_act_move_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    E_Guides_Mode resize_mode = E_GUIDES_BOX;
@@ -661,17 +781,19 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
+
+   D_ENTER;
    
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
    E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -728,7 +850,8 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_show();
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(rx);
@@ -736,16 +859,18 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 }
 
 static void
-e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -757,7 +882,8 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    ecore_window_gravity_set(b->win.client, NorthWestGravity);
    e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -767,16 +893,18 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 }
 
 static void
-e_act_resize_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_act_resize_cont  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    E_Border *b;
+
+   D_ENTER;
    
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (b->mode.resize == 1)
      {
 	b->current.requested.w -= dx;
@@ -811,7 +939,8 @@ e_act_resize_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_display_text(buf);
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -822,7 +951,7 @@ e_act_resize_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 
 
 static void 
-e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_h_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    E_Guides_Mode resize_mode = E_GUIDES_BOX;
@@ -833,16 +962,18 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
+
+   D_ENTER;
    
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
    E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -877,7 +1008,8 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_show();
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(y);
@@ -886,15 +1018,18 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 }
 
 static void
-e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_h_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   
-   b = o;
+
+
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -906,7 +1041,8 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    ecore_window_gravity_set(b->win.client, NorthWestGravity);
    e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -916,15 +1052,17 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 }
 
 static void
-e_act_resize_h_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_act_resize_h_cont  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.w == b->client.max.w) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.w == b->client.max.w) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (b->mode.resize == 5)
      {
 	b->current.requested.w -= dx;
@@ -944,7 +1082,7 @@ e_act_resize_h_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_display_text(buf);
      }
-   return;
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -956,7 +1094,7 @@ e_act_resize_h_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 
 
 static void 
-e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_v_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    E_Guides_Mode resize_mode = E_GUIDES_BOX;
@@ -968,15 +1106,17 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
    E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
    E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
    E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
    E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
-   b = o;
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -1013,7 +1153,7 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_show();
      }
-   return;
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1022,15 +1162,17 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 }
 
 static void
-e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_resize_v_stop  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -1042,7 +1184,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    e_border_set_gravity(b, NorthWestGravity);
    b->changed = 1;
    e_guides_hide();
-   return;
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1052,15 +1194,17 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 }
 
 static void
-e_act_resize_v_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_act_resize_v_cont  (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.min.h == b->client.max.h) return;
-   if (b->current.shaded != 0) return;
+   if (!b) D_RETURN;
+   if (b->client.min.h == b->client.max.h) D_RETURN;
+   if (b->current.shaded != 0) D_RETURN;
    if (b->mode.resize == 7)
      {
 	b->current.requested.h -= dy;
@@ -1080,7 +1224,7 @@ e_act_resize_v_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	e_guides_resize(b->current.w, b->current.h);
 	e_guides_display_text(buf);
      }
-   return;
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1092,16 +1236,20 @@ e_act_resize_v_cont  (void *o, E_Action *a, void *data, int x, int y, int rx, in
 
 
 static void 
-e_act_close_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_close_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (b->win.client) e_icccm_delete(b->win.client);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1112,16 +1260,19 @@ e_act_close_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_kill_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_kill_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (b->win.client) ecore_window_kill_client(b->win.client);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1140,17 +1291,19 @@ e_act_cb_shade(int val, void *data)
    int si;
    int pix_per_sec = 3200;
    
+   D_ENTER;
+
    b = data;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (val == 0) 
      {
-	OBJ_REF(b);
+        e_object_ref(E_OBJECT(b));
 	t = ecore_get_time();
 	ecore_window_gravity_set(b->win.client, SouthWestGravity);
-	e_action_del_timer(b, "shader");
-	e_action_add_timer(b, "shader");
+	e_action_del_timer(E_OBJECT(b), "shader");
+	e_action_add_timer(E_OBJECT(b), "shader");
      }
    
    dif = ecore_get_time() - t;   
@@ -1165,10 +1318,12 @@ e_act_cb_shade(int val, void *data)
      ecore_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
    else
      {
-	e_action_del_timer(b, "shader");
+	e_action_del_timer(E_OBJECT(b), "shader");
 	ecore_window_gravity_reset(b->win.client);
-	OBJ_UNREF(b);
+	e_object_ref(E_OBJECT(b));
      }
+
+   D_RETURN;
 }
 
 static void e_act_cb_unshade(int val, void *data);
@@ -1181,17 +1336,19 @@ e_act_cb_unshade(int val, void *data)
    int si;
    int pix_per_sec = 3200;
    
+   D_ENTER;
+
    b = data;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (val == 0) 
      {
-	OBJ_REF(b);
+        e_object_ref(E_OBJECT(b));
 	t = ecore_get_time();
 	ecore_window_gravity_set(b->win.client, SouthWestGravity);
-	e_action_del_timer(b, "shader");
-	e_action_add_timer(b, "shader");
+	e_action_del_timer(E_OBJECT(b), "shader");
+	e_action_add_timer(E_OBJECT(b), "shader");
      }
    
    dif = ecore_get_time() - t;   
@@ -1207,24 +1364,29 @@ e_act_cb_unshade(int val, void *data)
      ecore_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
    else
      {
-	e_action_del_timer(b, "shader");
+	e_action_del_timer(E_OBJECT(b), "shader");
 	ecore_window_gravity_reset(b->win.client);
-	OBJ_UNREF(b);
+	e_object_ref(E_OBJECT(b));
      }
+
+   D_RETURN;
 }
 
 static void 
-e_act_shade_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_shade_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (b->current.shaded == 0) e_act_cb_shade(0, b);
    else e_act_cb_unshade(0, b);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1235,16 +1397,19 @@ e_act_shade_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_raise_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_raise_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    e_border_raise(b);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1255,16 +1420,19 @@ e_act_raise_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_lower_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    e_border_lower(b);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1275,15 +1443,18 @@ e_act_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_raise_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_raise_lower_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
-   return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1294,35 +1465,41 @@ e_act_raise_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx,
 
 
 static void 
-e_act_exec_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_exec_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    char *exe;
    
+   D_ENTER;
+
    exe = (char *) a->params;
-   if(!exe) return;
+   if(!exe) D_RETURN;
    /* printf("exe: %s\n",exe); */
    e_exec_run(exe);
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
    UN(y);
    UN(rx);
    UN(ry);
-   UN(o);
+   UN(object);
 }
 
 
 static void 
-e_act_menu_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_menu_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
-   return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1333,10 +1510,14 @@ e_act_menu_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_exit_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_exit_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
+   D_ENTER;
+
    exit(0);
-   return;
+
+   D_RETURN;
+   UN(object);
    UN(a);
    UN(data);
    UN(x);
@@ -1347,10 +1528,14 @@ e_act_exit_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_restart_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_restart_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
+   D_ENTER;
+
    e_exec_restart();
-   return;
+
+   D_RETURN;
+   UN(object);
    UN(a);
    UN(data);
    UN(x);
@@ -1361,18 +1546,21 @@ e_act_restart_start (void *o, E_Action *a, void *data, int x, int y, int rx, int
 
 
 static void 
-e_act_stick_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_stick_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
    if (b->client.sticky) b->client.sticky = 0;
    else b->client.sticky = 1;
    b->changed = 1;
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1383,9 +1571,12 @@ e_act_stick_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_sound_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_sound_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
-   return;
+   D_ENTER;
+
+   D_RETURN;
+   UN(object);
    UN(a);
    UN(data);
    UN(x);
@@ -1396,35 +1587,40 @@ e_act_sound_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 
 
 static void 
-e_act_iconify_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
-{
-   E_Border *b;
-   
-   b = o;
-   if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
-   return;
-   UN(a);
-   UN(data);
-   UN(x);
-   UN(y);
-   UN(rx);
-   UN(ry);
-}
-
-
-static void 
-e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_iconify_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
+   D_ENTER;
+
+   b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
-   if (!b) return;
-   if (b->client.is_desktop) return;
-   if (b->current.shaded > 0) return;
-   if ((b->mode.move) || (b->mode.resize)) return;
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
+   D_RETURN;
+   UN(object);
+   UN(a);
+   UN(data);
+   UN(x);
+   UN(y);
+   UN(rx);
+   UN(ry);
+}
+
+
+static void 
+e_act_max_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
+{
+   E_Border *b;
+   
+   D_ENTER;
+
+   b = (E_Border*) object;
+   if (!b) b = e_border_current_focused();
+   if (!b) D_RETURN;
+   if (b->client.is_desktop) D_RETURN;
+   if (b->current.shaded > 0) D_RETURN;
+   if ((b->mode.move) || (b->mode.resize)) D_RETURN;
    b->mode.move = 0;
    b->mode.resize = 0;
    if (b->max.is)
@@ -1459,7 +1655,8 @@ e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 	b->current.requested.w = b->current.w;
 	b->current.requested.h = b->current.h;
      }
-   return;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1470,14 +1667,20 @@ e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 
 
 static void 
-e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_snap_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
-   if (!b) b = e_border_current_focused();
-   if (!b) return;
-   return;
+   D_ENTER;
+
+   b = (E_Border*) object;
+
+   if (!b)
+     b = e_border_current_focused();
+   if (!b)
+     D_RETURN;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1488,14 +1691,21 @@ e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_zoom_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
    
-   b = o;
-   if (!b) b = e_border_current_focused();
-   if (!b) return;
-   return;
+   D_ENTER;
+
+   b = (E_Border*) object;
+
+   if (!b)
+     b = e_border_current_focused();
+
+   if (!b)
+     D_RETURN;
+
+   D_RETURN;
    UN(a);
    UN(data);
    UN(x);
@@ -1506,14 +1716,19 @@ e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_desk_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    int desk = 0;
    
-   if (a->params) desk = atoi(a->params);
+   D_ENTER;
+
+   if (a->params)
+     desk = atoi(a->params);
+
    e_desktops_goto_desk(desk);
-   return;
-   UN(o);
+
+   D_RETURN;
+   UN(object);
    UN(a);
    UN(data);
    UN(x);
@@ -1524,11 +1739,14 @@ e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 
 
 static void 
-e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+e_act_raise_next_start (E_Object *object, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
+   D_ENTER;
+
    e_border_raise_next();
-   return;
-   UN(o);
+
+   D_RETURN;
+   UN(object);
    UN(a);
    UN(data);
    UN(x);

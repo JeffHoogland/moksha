@@ -1,6 +1,7 @@
 #include "cursors.h"
 #include "border.h"
 #include "config.h"
+#include "debug.h"
 #include "actions.h"
 #include "delayed.h"
 #include "desktops.h"
@@ -66,10 +67,13 @@ static void e_cb_border_move_resize(E_Border *b);
 static void e_cb_border_visibility(E_Border *b);
 
 static void e_border_poll(int val, void *data);
+static void e_border_free(E_Border *b);
 
 static int e_border_replay_query(Ecore_Event_Mouse_Down *ev)
 {
    E_Border *b;
+   
+   D_ENTER;
    
    b = e_border_find_by_window(ev->win);
    if (b)
@@ -80,9 +84,10 @@ static int e_border_replay_query(Ecore_Event_Mouse_Down *ev)
 	E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
 	if ((focus_mode == 2) && (ev->mods == ECORE_EVENT_KEY_MODIFIER_NONE))
 	  /* FIXME: also if pass click always set */
-	  return 1;
+	  D_RETURN_(1);
      }
-   return 0;
+
+   D_RETURN_(0);
 }
 
 /* what to dowhen we're idle */
@@ -91,6 +96,8 @@ void
 e_border_update_borders(void)
 {
    Evas_List l;
+
+   D_ENTER;
 
    for (l = borders; l; l = l->next)
      {
@@ -113,13 +120,18 @@ e_border_update_borders(void)
 	  }
      }
    e_db_flush();
+
+   D_RETURN;
 }
 
 static void
 e_idle(void *data)
 {
+   D_ENTER;
+
    e_border_update_borders();
-   return;
+
+   D_RETURN;
    UN(data);
 }
 
@@ -129,6 +141,8 @@ e_map_request(Ecore_Event * ev)
 {
    Ecore_Event_Window_Map_Request      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -142,6 +156,8 @@ e_map_request(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -150,6 +166,8 @@ e_configure_request(Ecore_Event * ev)
 {
    Ecore_Event_Window_Configure_Request      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -230,6 +248,8 @@ e_configure_request(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -238,6 +258,8 @@ e_property(Ecore_Event * ev)
 {
    Ecore_Event_Window_Property      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -250,6 +272,8 @@ e_property(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -258,12 +282,16 @@ e_client_message(Ecore_Event * ev)
 {
    Ecore_Event_Message      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
    
    e_icccm_handle_client_message(e);
 
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -272,6 +300,8 @@ e_unmap(Ecore_Event * ev)
 {
    Ecore_Event_Window_Unmap      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -285,21 +315,24 @@ e_unmap(Ecore_Event * ev)
 		  if (b->ignore_unmap > 0) b->ignore_unmap--;
 		  else
 		    {
-		       e_action_stop_by_object(b, NULL, 
+		       e_action_stop_by_object(E_OBJECT(b), NULL, 
 					       mouse_win_x, mouse_win_y, 
 					       border_mouse_x, border_mouse_y);
-		       OBJ_UNREF(b);
-		       OBJ_IF_FREE(b)
+
+		       if (e_object_get_usecount(E_OBJECT(b)) == 1)
 			 {
 			    ecore_window_reparent(e->win, 0, 0, 0);
 			    e_icccm_release(e->win);
-			    OBJ_FREE(b);
 			 }
+
+		       e_object_unref(E_OBJECT(b));
 		    }
 	       }
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -308,6 +341,8 @@ e_destroy(Ecore_Event * ev)
 {
    Ecore_Event_Window_Destroy      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -318,20 +353,23 @@ e_destroy(Ecore_Event * ev)
 	  {
 	     if (b->win.client == e->win)
 	       {
-		  e_action_stop_by_object(b, NULL, 
+		  e_action_stop_by_object(E_OBJECT(b), NULL, 
 					  mouse_win_x, mouse_win_y, 
 					  border_mouse_x, border_mouse_y);
-		  OBJ_UNREF(b);
-		  OBJ_IF_FREE(b)
+
+		  if (e_object_get_usecount(E_OBJECT(b)) == 1)
 		    {
-		       ecore_window_reparent(e->win, 0, 0, 0);
-		       e_icccm_release(e->win);
-		       OBJ_FREE(b);
+		      ecore_window_reparent(e->win, 0, 0, 0);
+		      e_icccm_release(e->win);
 		    }
+
+		  e_object_unref(E_OBJECT(b));
 	       }
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -340,6 +378,8 @@ e_circulate_request(Ecore_Event * ev)
 {
    Ecore_Event_Window_Circulate_Request      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -353,6 +393,8 @@ e_circulate_request(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -361,6 +403,8 @@ e_reparent(Ecore_Event * ev)
 {
    Ecore_Event_Window_Reparent      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -387,6 +431,8 @@ e_reparent(Ecore_Event * ev)
 #endif	
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -395,6 +441,8 @@ e_shape(Ecore_Event * ev)
 {
    Ecore_Event_Window_Shape      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -409,6 +457,8 @@ e_shape(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -417,6 +467,8 @@ e_focus_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_In   *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
    printf("focus in event\n");
@@ -430,7 +482,9 @@ e_focus_in(Ecore_Event * ev)
 	     e_border_focus_grab_ended();
 	     b->current.selected = 1;
 	     b->changed = 1;
-	     OBS_NOTIFY(b, ECORE_EVENT_WINDOW_FOCUS_IN);
+
+	     e_observee_notify_observers(E_OBSERVEE(b), ECORE_EVENT_WINDOW_FOCUS_IN);
+
 	       {
 		  Evas_List l;
 		  
@@ -456,6 +510,8 @@ e_focus_in(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -464,6 +520,8 @@ e_focus_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_Out      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
    printf("focus out event\n");
@@ -502,6 +560,8 @@ e_focus_out(Ecore_Event * ev)
 	e_delayed_action_cancel(delayed_window_raise);
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* */
@@ -510,6 +570,8 @@ e_colormap(Ecore_Event * ev)
 {
    Ecore_Event_Colormap      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -521,6 +583,8 @@ e_colormap(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling mouse down events */
@@ -529,6 +593,8 @@ e_mouse_down(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Down      *e;
   
+   D_ENTER;
+
    printf("doooown\n");
    current_ev = ev;
    e = ev->event;
@@ -584,6 +650,8 @@ e_mouse_down(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling mouse up events */
@@ -592,6 +660,8 @@ e_mouse_up(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Up      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -639,6 +709,8 @@ e_mouse_up(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling mouse move events */
@@ -646,6 +718,8 @@ static void
 e_mouse_move(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Move      *e;
+
+   D_ENTER;
 
    current_ev = ev;
    e = ev->event;
@@ -693,6 +767,8 @@ e_mouse_move(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling mouse enter events */
@@ -701,6 +777,8 @@ e_mouse_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Enter      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -746,6 +824,8 @@ e_mouse_in(Ecore_Event * ev)
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling mouse leave events */
@@ -754,6 +834,8 @@ e_mouse_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Leave      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -774,6 +856,8 @@ e_mouse_out(Ecore_Event * ev)
      }
    current_ev = NULL;
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* handling expose events */
@@ -782,6 +866,8 @@ e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose      *e;
    
+   D_ENTER;
+
    current_ev = ev;
    e = ev->event;
      {
@@ -800,6 +886,8 @@ e_window_expose(Ecore_Event * ev)
 	if (b) b->first_expose = 1;
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 /* what to do with border events */
@@ -810,19 +898,22 @@ e_cb_mouse_in(void *data, Ebits_Object o, char *class,
 {
    E_Border *b;
    
+   D_ENTER;
+
    b = data;
-   if (border_mouse_buttons) return;
+   if (border_mouse_buttons) D_RETURN;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    if (class) e_cursors_display_in_window(b->win.main, class);
    else e_cursors_display_in_window(b->win.main, "Default");     
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
 
    e_action_stop(class, ACT_MOUSE_IN, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_IN, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		  b, NULL, x, y, border_mouse_x, border_mouse_y);
-   return;
+		  E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
+
+   D_RETURN;
    UN(o);
    UN(bt);
    UN(ox);
@@ -837,17 +928,19 @@ e_cb_mouse_out(void *data, Ebits_Object o, char *class,
 {
    E_Border *b;
    
+   D_ENTER;
+
    b = data;
-   if (border_mouse_buttons) return;
+   if (border_mouse_buttons) D_RETURN;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
    e_cursors_display_in_window(b->win.main, "Default");
    e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_OUT, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		  b, NULL, x, y, border_mouse_x, border_mouse_y);
-   return;
+		  E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
+   D_RETURN;
    UN(o);
    UN(bt);
    UN(ox);
@@ -862,11 +955,13 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class,
 {
    E_Border *b;
    
+   D_ENTER;
+
    b = data;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    border_mouse_buttons = mouse_buttons;
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
      {
 	E_Action_Type act;
 	Ecore_Event_Key_Modifiers mods;
@@ -879,12 +974,12 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class,
 	else if (((Ecore_Event_Mouse_Down *)(current_ev->event))->triple_click)
 	  act = ACT_MOUSE_TRIPLE;
 
-	e_action_stop(class, act, bt, NULL, mods, b,
+	e_action_stop(class, act, bt, NULL, mods, E_OBJECT(b),
 		      NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b,
+	e_action_start(class, act, bt, NULL, mods, E_OBJECT(b),
 		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
-   return;
+   D_RETURN;
    UN(o);
    UN(ox);
    UN(oy);
@@ -898,11 +993,13 @@ e_cb_mouse_up(void *data, Ebits_Object o, char *class,
 {
    E_Border *b;
    
+   D_ENTER;
+
    b = data;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    border_mouse_buttons = mouse_buttons;
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
      {
 	E_Action_Type act;
 	Ecore_Event_Key_Modifiers mods;
@@ -913,12 +1010,12 @@ e_cb_mouse_up(void *data, Ebits_Object o, char *class,
 	if ((x >= ox) && (x < (ox + ow)) && (y >= oy) && (y < (oy + oh)))
 	  act = ACT_MOUSE_CLICKED;
 
-	e_action_stop(class, act, bt, NULL, mods, b,
+	e_action_stop(class, act, bt, NULL, mods, E_OBJECT(b),
 		      NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b,
+	e_action_start(class, act, bt, NULL, mods, E_OBJECT(b),
 		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
-   return;
+   D_RETURN;
    UN(o);
 }
 
@@ -929,6 +1026,8 @@ e_cb_mouse_move(void *data, Ebits_Object o, char *class,
    E_Border *b;
    int dx, dy;
    
+   D_ENTER;
+
    b = data;
    dx = mouse_x - border_mouse_x;
    dy = mouse_y - border_mouse_y;
@@ -936,12 +1035,12 @@ e_cb_mouse_move(void *data, Ebits_Object o, char *class,
    border_mouse_y = mouse_y;
 
    if (!current_ev)
-     return;
+     D_RETURN;
 
    e_action_cont(class, ACT_MOUSE_MOVE, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
 
-   return;
+   D_RETURN;
    UN(o);
    UN(bt);
    UN(ox);
@@ -959,7 +1058,9 @@ e_cb_border_mouse_in(E_Border *b, Ecore_Event *e)
    int focus_mode;
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
-/*   if (border_mouse_buttons) return;*/
+   D_ENTER;
+
+/*   if (border_mouse_buttons) D_RETURN;*/
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);   
    /* pointer focus stuff */
    if (focus_mode == 0)
@@ -970,15 +1071,17 @@ e_cb_border_mouse_in(E_Border *b, Ecore_Event *e)
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
 /*   border_mouse_buttons = mouse_buttons;*/
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
 
    x = ((Ecore_Event_Window_Enter *)(e->event))->x;
    y = ((Ecore_Event_Window_Enter *)(e->event))->y;
 
    e_action_stop(class, ACT_MOUSE_IN, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_IN, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		  b, NULL, x, y, border_mouse_x, border_mouse_y);
+		  E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
+
+   D_RETURN;
 }
 
 static void
@@ -987,22 +1090,24 @@ e_cb_border_mouse_out(E_Border *b, Ecore_Event *e)
    int x, y;
    char *class = "Window_Grab";
 
-/*   if (border_mouse_buttons) return; */
+/*   if (border_mouse_buttons) D_RETURN; */
    /* pointer focus stuff */
 /*   ecore_focus_to_window(0);*/
+
+   D_ENTER;
 
    x = mouse_x;
    y = mouse_y;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
 /*   border_mouse_buttons = mouse_buttons; */
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
 
    e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_OUT, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		  b, NULL, x, y, border_mouse_x, border_mouse_y);
-   return;
+		  E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y);
+   D_RETURN;
    UN(e);
 }
 
@@ -1014,15 +1119,17 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
    int focus_mode;
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
    ecore_pointer_grab(b->win.main, CurrentTime);
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    printf("%i\n", border_mouse_buttons);
-/*   if (border_mouse_buttons) return; */
+/*   if (border_mouse_buttons) D_RETURN; */
 /*   border_mouse_buttons = mouse_buttons; */
    printf("%p\n", current_ev);
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
    x = ((Ecore_Event_Mouse_Down *)(e->event))->x;
    y = ((Ecore_Event_Mouse_Down *)(e->event))->y;
    bt = ((Ecore_Event_Mouse_Down *)(e->event))->button;
@@ -1068,9 +1175,9 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 	else if (((Ecore_Event_Mouse_Down *)(current_ev->event))->triple_click)
 	  act = ACT_MOUSE_TRIPLE;
 
-	e_action_stop(class, act, bt, NULL, mods, b, NULL,
+	e_action_stop(class, act, bt, NULL, mods, E_OBJECT(b), NULL,
 		      x, y, border_mouse_x, border_mouse_y);
-	if (!e_action_start(class, act, bt, NULL, mods, b, NULL,
+	if (!e_action_start(class, act, bt, NULL, mods, E_OBJECT(b), NULL,
 			   x, y, border_mouse_x, border_mouse_y))
 	  {
 	     ecore_pointer_ungrab(((Ecore_Event_Mouse_Down *)(e->event))->time);
@@ -1081,6 +1188,8 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 				((Ecore_Event_Mouse_Down *)(e->event))->time);
 	  }	  
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1089,11 +1198,13 @@ e_cb_border_mouse_up(E_Border *b, Ecore_Event *e)
    int x, y, bt;
    char *class = "Window_Grab";
    
+   D_ENTER;
+
    ecore_pointer_ungrab(CurrentTime);   
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
 /*   border_mouse_buttons = mouse_buttons; */
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
    x = ((Ecore_Event_Mouse_Up *)(e->event))->x;
    y = ((Ecore_Event_Mouse_Up *)(e->event))->y;
    bt = ((Ecore_Event_Mouse_Up *)(e->event))->button;
@@ -1103,11 +1214,13 @@ e_cb_border_mouse_up(E_Border *b, Ecore_Event *e)
 	
 	mods = ((Ecore_Event_Mouse_Up *)(current_ev->event))->mods;
 	act = ACT_MOUSE_UP;
-	e_action_stop(class, act, bt, NULL, mods, b,
+	e_action_stop(class, act, bt, NULL, mods, E_OBJECT(b),
 		      NULL, x, y, border_mouse_x, border_mouse_y);
-	e_action_start(class, act, bt, NULL, mods, b,
+	e_action_start(class, act, bt, NULL, mods, E_OBJECT(b),
 		       NULL, x, y, border_mouse_x, border_mouse_y);
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1117,38 +1230,97 @@ e_cb_border_mouse_move(E_Border *b, Ecore_Event *e)
    int x, y;
    char *class = "Window_Grab";
    
+   D_ENTER;
+
    dx = mouse_x - border_mouse_x;
    dy = mouse_y - border_mouse_y;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-   if (!current_ev) return;
+   if (!current_ev) D_RETURN;
    x = ((Ecore_Event_Mouse_Move *)(e->event))->x;
    y = ((Ecore_Event_Mouse_Move *)(e->event))->y;
    e_action_cont(class, ACT_MOUSE_MOVE, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
-		 b, NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+		 E_OBJECT(b), NULL, x, y, border_mouse_x, border_mouse_y, dx, dy);
+
+   D_RETURN;
 }
 
 static void
 e_cb_border_move_resize(E_Border *b)
 {
-   return;
+   D_ENTER;
+
+   D_RETURN;
    UN(b);
 }
 
 static void
 e_cb_border_visibility(E_Border *b)
 {
-   return;
+   D_ENTER;
+
+   D_RETURN;
    UN(b);
 }
 
 static void
 e_border_poll(int val, void *data)
 {
+   D_ENTER;
+
    ecore_add_event_timer("e_border_poll()", 1.00, e_border_poll, val + 1, NULL);
-   return;
+   D_RETURN;
    UN(data);
 }
+
+static void
+e_border_free(E_Border *b)
+{
+   Evas_List l;
+
+   D_ENTER;
+
+   e_desktops_del_border(b->desk, b);
+   if (b->bits.l) ebits_free(b->bits.l);
+   if (b->bits.r) ebits_free(b->bits.r);
+   if (b->bits.t) ebits_free(b->bits.t);
+   if (b->bits.b) ebits_free(b->bits.b);
+   evases = evas_list_remove(evases, b->evas.l);
+   evases = evas_list_remove(evases, b->evas.r);
+   evases = evas_list_remove(evases, b->evas.t);
+   evases = evas_list_remove(evases, b->evas.b);
+   evas_free(b->evas.l);
+   evas_free(b->evas.r);
+   evas_free(b->evas.t);
+   evas_free(b->evas.b);
+   ecore_window_destroy(b->win.container);
+   ecore_window_destroy(b->win.input);
+   ecore_window_destroy(b->win.main);
+   borders = evas_list_remove(borders, b);
+   
+   IF_FREE(b->client.title);
+   IF_FREE(b->client.name);
+   IF_FREE(b->client.class);
+   IF_FREE(b->client.command);
+   IF_FREE(b->client.machine);
+   IF_FREE(b->client.icon_name);
+   IF_FREE(b->border_style);
+   IF_FREE(b->border_file);
+
+   if (b->grabs)
+     {
+	for (l = b->grabs; l; l = l->next)
+	  {
+	     FREE(l->data);
+	  }
+	evas_list_free(b->grabs);
+     }
+   
+   e_object_cleanup(E_OBJECT(b));
+
+   D_RETURN;
+}
+
 
 /* border creation, deletion, modification and general queries */
 
@@ -1156,9 +1328,11 @@ void
 e_border_apply_border(E_Border *b)
 {
    int pl, pr, pt, pb;
-   char *borders, buf[PATH_MAX], border[PATH_MAX], *style = NULL, *match_style;
+   char *borders, buf[PATH_MAX], border[PATH_MAX], *style = NULL;
    int prop_selected = 0, prop_sticky = 0, prop_shaded = 0;
    
+   D_ENTER;
+
    style = "default"; 
    if ((!b->client.titlebar) && (!b->client.border)) style = "borderless";
    if (b->border_style) style = b->border_style;
@@ -1173,7 +1347,7 @@ e_border_apply_border(E_Border *b)
    borders = e_config_get("borders");
    sprintf(buf, "%s%s/%s", borders, style, border);
    /* if it's not changed - abort and dont do anything */
-   if ((b->border_file) && (!strcmp(buf, b->border_file))) return;
+   if ((b->border_file) && (!strcmp(buf, b->border_file))) D_RETURN;
    IF_FREE(b->border_file);
    e_strdup(b->border_file, buf);
    
@@ -1182,6 +1356,8 @@ e_border_apply_border(E_Border *b)
    pl = pr = pt = pb = 0;
    if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);   
    e_icccm_set_frame_size(b->win.client, pl, pr, pt, pb);
+
+   D_RETURN;
 }
 
 void
@@ -1190,11 +1366,13 @@ e_border_reshape(E_Border *b)
    static Window shape_win = 0;
    int pl, pr, pt, pb;
    
+   D_ENTER;
+
    if ((b->current.shaped_client == b->previous.shaped_client) &&
        (b->current.shape_changes == b->previous.shape_changes) &&
        (b->current.has_shape == b->previous.has_shape) && 
        (!b->shape_changed))
-     return;
+     D_RETURN;
 
    if (!shape_win) shape_win = ecore_window_override_new(0, 0, 0, 1, 1);
    pl = pr = pt = pb = 0;
@@ -1204,7 +1382,7 @@ e_border_reshape(E_Border *b)
    if ((!b->current.shaped_client) && (!b->current.has_shape))
      {
 	ecore_window_set_shape_mask(b->win.main, 0);
-	return;
+	D_RETURN;
      }
 
    if ((b->current.shaped_client) && (!b->current.has_shape))
@@ -1227,7 +1405,7 @@ e_border_reshape(E_Border *b)
 	ecore_window_add_shape_rectangles(shape_win, rects, 4);
 	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
 
-	return;
+	D_RETURN;
      }
 
    if ((!b->current.shaped_client) && (b->current.has_shape))
@@ -1251,7 +1429,7 @@ e_border_reshape(E_Border *b)
 	     ecore_window_add_shape_rectangles(shape_win, rects, 4);
 	  }
 	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
-	return;
+	D_RETURN;
      }
    if ((b->current.shaped_client) && (b->current.has_shape))
      {
@@ -1276,8 +1454,10 @@ e_border_reshape(E_Border *b)
 	  }
 
 	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
-	return;
+	D_RETURN;
      }
+
+   D_RETURN;
 }
 
 E_Border * 
@@ -1287,6 +1467,8 @@ e_border_adopt(Window win, int use_client_pos)
    int bw;
    int show = 1;
    
+   D_ENTER;
+
    /* create the struct */
    b = e_border_new();
    /* set the right event on the client */
@@ -1438,7 +1620,8 @@ e_border_adopt(Window win, int use_client_pos)
    b->current.requested.w = b->current.w;
    e_border_raise(b);
    ecore_window_show(win);
-   return b;
+
+   D_RETURN_(b);
 }
 
 E_Border *
@@ -1452,12 +1635,15 @@ e_border_new(void)
    char *font_dir;
    E_Desktop *desk;
    
+   D_ENTER;
+
    font_dir = e_config_get("fonts");
    b = NEW(E_Border, 1);
    ZERO(b, E_Border, 1);
-   
-   OBJ_INIT(b, e_border_free);
-   OBS_REGISTER(delayed_window_raise, b);
+
+   e_object_init(E_OBJECT(b), (E_Cleanup_Func) e_border_free);
+   e_observer_register_observee(E_OBSERVER(delayed_window_raise),
+				E_OBSERVEE(b));
    
    b->current.requested.w = 1;
    b->current.requested.h = 1;
@@ -1597,58 +1783,17 @@ e_border_new(void)
 
    borders = evas_list_prepend(borders, b);
    
-   return b;
+   D_RETURN_(b);
 }
 
-void
-e_border_free(E_Border *b)
-{
-   Evas_List l;
-
-   e_desktops_del_border(b->desk, b);
-   if (b->bits.l) ebits_free(b->bits.l);
-   if (b->bits.r) ebits_free(b->bits.r);
-   if (b->bits.t) ebits_free(b->bits.t);
-   if (b->bits.b) ebits_free(b->bits.b);
-   evases = evas_list_remove(evases, b->evas.l);
-   evases = evas_list_remove(evases, b->evas.r);
-   evases = evas_list_remove(evases, b->evas.t);
-   evases = evas_list_remove(evases, b->evas.b);
-   evas_free(b->evas.l);
-   evas_free(b->evas.r);
-   evas_free(b->evas.t);
-   evas_free(b->evas.b);
-   ecore_window_destroy(b->win.container);
-   ecore_window_destroy(b->win.input);
-   ecore_window_destroy(b->win.main);
-   borders = evas_list_remove(borders, b);
-   
-   IF_FREE(b->client.title);
-   IF_FREE(b->client.name);
-   IF_FREE(b->client.class);
-   IF_FREE(b->client.command);
-   IF_FREE(b->client.machine);
-   IF_FREE(b->client.icon_name);
-   IF_FREE(b->border_style);
-   IF_FREE(b->border_file);
-
-   if (b->grabs)
-     {
-	for (l = b->grabs; l; l = l->next)
-	  {
-	     FREE(l->data);
-	  }
-	evas_list_free(b->grabs);
-     }
-   
-   FREE(b);
-}
 
 void
 e_border_remove_mouse_grabs(E_Border *b)
 {
    Evas_List l;
    
+   D_ENTER;
+
    if (b->grabs)
      {
 	for (l = b->grabs; l; l = l->next)
@@ -1663,11 +1808,15 @@ e_border_remove_mouse_grabs(E_Border *b)
 	evas_list_free(b->grabs);
 	b->grabs = NULL;
      }
+
+   D_RETURN;
 }
 
 void
 e_border_remove_click_grab(E_Border *b)
 {
+   D_ENTER;
+
    if (b->click_grab)
      {
 	E_Grab *g;
@@ -1679,6 +1828,8 @@ e_border_remove_click_grab(E_Border *b)
 	b->click_grab = NULL;
 	FREE(g);
      }
+
+   D_RETURN;
 }
 
 void
@@ -1690,6 +1841,8 @@ e_border_attach_mouse_grabs(E_Border *b)
    char buf[PATH_MAX];
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
    
    grabs_db = e_config_get("grabs");
@@ -1724,7 +1877,7 @@ e_border_attach_mouse_grabs(E_Border *b)
 	if (!e_db_int_get(db, buf, &num))
 	  {
 	     e_db_close(db);
-	     return;
+	     D_RETURN;
 	  }
 	for (i = 0; i < num; i++)
 	  {
@@ -1757,6 +1910,8 @@ e_border_attach_mouse_grabs(E_Border *b)
 	  }
 	e_db_close(db);
      }
+
+   D_RETURN;
 }
 
 void
@@ -1764,8 +1919,12 @@ e_border_remove_all_mouse_grabs(void)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = borders; l; l = l->next)
       e_border_remove_mouse_grabs((E_Border *)l->data);
+
+   D_RETURN;
 }
 
 void
@@ -1773,8 +1932,12 @@ e_border_attach_all_mouse_grabs(void)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = borders; l; l = l->next)
       e_border_attach_mouse_grabs((E_Border *)l->data);
+
+   D_RETURN;
 }
 
 void
@@ -1788,6 +1951,8 @@ e_border_redo_grabs(void)
    int changed = 0;
    Evas_List l;
    
+   D_ENTER;
+
    grabs_db = e_config_get("grabs");
    settings_db = e_config_get("settings");
    mod = e_file_modified_time(grabs_db);
@@ -1799,7 +1964,7 @@ e_border_redo_grabs(void)
 	if (mod != mod_date_settings) changed = 1;
 	mod_date_settings = mod;
      }
-   if (!changed) return;
+   if (!changed) D_RETURN;
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
@@ -1808,6 +1973,8 @@ e_border_redo_grabs(void)
 	e_border_remove_mouse_grabs(b);
 	e_border_attach_mouse_grabs(b);
      }
+
+   D_RETURN;
 }
 
 E_Border *
@@ -1815,6 +1982,8 @@ e_border_find_by_window(Window win)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
@@ -1829,9 +1998,10 @@ e_border_find_by_window(Window win)
 	    (win == b->win.r) ||
 	    (win == b->win.t) ||
 	    (win == b->win.b))
-	  return b;
+	  D_RETURN_(b);
      }
-   return NULL;
+
+   D_RETURN_(NULL);
 }
 
 void
@@ -1839,6 +2009,8 @@ e_border_set_bits(E_Border *b, char *file)
 {
    int pl, pr, pt, pb, ppl, ppr, ppt, ppb;
       
+   D_ENTER;
+
    pl = pr = pt = pb = 0;
    ppl = ppr = ppt = ppb = 0;
    
@@ -1899,21 +2071,29 @@ ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_MOVE, e_cb_mous
 	
 	e_border_adjust_limits(b);
      }
+
+   D_RETURN;
 }
 
 void
 e_border_set_color_class(E_Border *b, char *class, int rr, int gg, int bb, int aa)
 {
+   D_ENTER;
+
    ebits_set_color_class(b->bits.l, class, rr, gg, bb, aa);
    ebits_set_color_class(b->bits.r, class, rr, gg, bb, aa);
    ebits_set_color_class(b->bits.t, class, rr, gg, bb, aa);
    ebits_set_color_class(b->bits.b, class, rr, gg, bb, aa);
+
+   D_RETURN;
 }
 
 void
 e_border_adjust_limits(E_Border *b)
 {
    int w, h, pl, pr, pt, pb, mx, my;
+
+   D_ENTER;
 
    if (b->mode.move) 
      {
@@ -2019,6 +2199,8 @@ e_border_adjust_limits(E_Border *b)
 	     b->current.x += (b->current.requested.w - b->current.w);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -2031,8 +2213,10 @@ e_border_update(E_Border *b)
    int visibility_changed = 0;
    int state_changed = 0;
    
-   if (b->hold_changes) return;
-   if (!b->changed) return;
+   D_ENTER;
+
+   if (b->hold_changes) D_RETURN;
+   if (!b->changed) D_RETURN;
    
    b->current.visible = b->current.requested.visible;
    
@@ -2291,6 +2475,8 @@ e_border_update(E_Border *b)
    b->bits.new = 0;   
    b->previous = b->current;   
    b->changed = 0;
+
+   D_RETURN;
 }
 
 void
@@ -2298,11 +2484,15 @@ e_border_set_layer(E_Border *b, int layer)
 {
    int dl;
    
-   if (b->client.layer == layer) return;
+   D_ENTER;
+
+   if (b->client.layer == layer) D_RETURN;
    dl = layer - b->client.layer;
    b->client.layer = layer;
    if (dl > 0) e_border_lower(b);
    else  e_border_raise(b);
+
+   D_RETURN;
 }
 
 static void
@@ -2311,11 +2501,13 @@ e_border_raise_delayed(int val, void *b)
    int auto_raise = 0;
    E_CFG_INT(cfg_auto_raise, "settings", "/window/raise/auto", 0);
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_auto_raise, auto_raise);
    if (auto_raise)
      e_border_raise((E_Border *)b);
 
-   return;
+   D_RETURN;
    UN(val);
 }
 
@@ -2325,12 +2517,14 @@ e_border_raise(E_Border *b)
    Evas_List l;
    E_Border *rel;
    
+   D_ENTER;
+
    if (!b->desk->windows)
      {
 	b->desk->windows = evas_list_append(b->desk->windows, b);
 	b->desk->changed = 1;
 	ecore_window_raise(b->win.main);
-	return;
+	D_RETURN;
      }
    for (l = b->desk->windows; l; l = l->next)
      {
@@ -2341,7 +2535,7 @@ e_border_raise(E_Border *b)
 	     b->desk->windows = evas_list_prepend_relative(b->desk->windows, b, rel);
 	     b->desk->changed = 1;
 	     ecore_window_stack_below(b->win.main, rel->win.main);
-	     return;
+	     D_RETURN;
 	  }
 	if ((!l->next) && (l->data != b))
 	  {
@@ -2349,9 +2543,11 @@ e_border_raise(E_Border *b)
 	     b->desk->windows = evas_list_append(b->desk->windows, b);
 	     b->desk->changed = 1;
 	     ecore_window_raise(b->win.main);
-	     return;
+	     D_RETURN;
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -2360,61 +2556,73 @@ e_border_lower(E_Border *b)
    Evas_List l;
    E_Border *rel;
    
+   D_ENTER;
+
    if (!b->desk->windows)
      {
 	b->desk->windows = evas_list_append(b->desk->windows, b);
 	b->desk->changed = 1;
 	ecore_window_raise(b->win.main);
-	return;
+	D_RETURN;
      }
    for (l = b->desk->windows; l; l = l->next)
      {
 	rel = l->data;
 	if (rel->client.layer == b->client.layer)
 	  {
-	     if (b == rel) return;
+	     if (b == rel) D_RETURN;
 	     b->desk->windows = evas_list_remove(b->desk->windows, b);
 	     b->desk->windows = evas_list_prepend_relative(b->desk->windows, b, rel);
 	     b->desk->changed = 1;
 	     ecore_window_stack_below(b->win.main, rel->win.main);
-	     return;
+	     D_RETURN;
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_border_raise_above(E_Border *b, E_Border *above)
 {
+   D_ENTER;
+
    if (!b->desk->windows)
      {
 	b->desk->windows = evas_list_append(b->desk->windows, b);
 	b->desk->changed = 1;
 	ecore_window_raise(b->win.main);
-	return;
+	D_RETURN;
      }
-   if (!evas_list_find(b->desk->windows, above)) return;
+   if (!evas_list_find(b->desk->windows, above)) D_RETURN;
    if (b->client.layer < above->client.layer) b->client.layer = above->client.layer;
    b->desk->windows = evas_list_remove(b->desk->windows, b);
    b->desk->windows = evas_list_append_relative(b->desk->windows, b, above);
    b->desk->changed = 1;
    ecore_window_stack_above(b->win.main, above->win.main);
+
+   D_RETURN;
 }
 
 void
 e_border_lower_below(E_Border *b, E_Border *below)
 {
+   D_ENTER;
+
    if (!b->desk->windows)
      {
 	b->desk->windows = evas_list_append(b->desk->windows, b);
 	b->desk->changed = 1;
-	return;
+	D_RETURN;
      }
-   if (!evas_list_find(b->desk->windows, below)) return;
+   if (!evas_list_find(b->desk->windows, below)) D_RETURN;
    if (b->client.layer > below->client.layer) b->client.layer = below->client.layer;
    b->desk->windows = evas_list_remove(b->desk->windows, b);
    b->desk->windows = evas_list_prepend_relative(b->desk->windows, b, below);
    b->desk->changed = 1;
    ecore_window_stack_below(b->win.main, below->win.main);
+
+   D_RETURN;
 }
 
 void
@@ -2423,6 +2631,8 @@ e_border_init(void)
    double raise_delay = 0.5;
    E_CFG_FLOAT(cfg_raise_delay, "settings", "/window/raise/delay", 0.5);
    
+   D_ENTER;
+
    E_CONFIG_FLOAT_GET(cfg_raise_delay, raise_delay);
    
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
@@ -2445,10 +2655,13 @@ e_border_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_COLORMAP,                 e_colormap);
    ecore_event_filter_idle_handler_add(e_idle, NULL);
 
-   delayed_window_raise = NEW(E_Delayed_Action, 1);
-   E_DELAYED_ACT_INIT(delayed_window_raise, ECORE_EVENT_WINDOW_FOCUS_IN, raise_delay, e_border_raise_delayed);
+   delayed_window_raise =
+     e_delayed_action_new(ECORE_EVENT_WINDOW_FOCUS_IN,
+			  raise_delay, e_border_raise_delayed); 
    
    ecore_add_event_timer("e_border_poll()", 1.00, e_border_poll, 0, NULL);
+
+   D_RETURN;
 }
 
 void
@@ -2456,6 +2669,8 @@ e_border_adopt_children(Window win)
 {
    Window *wins;
    int i, num;
+
+   D_ENTER;
 
    wins = ecore_window_get_children(win, &num);
    if (wins)
@@ -2482,6 +2697,8 @@ e_border_adopt_children(Window win)
 	  }
 	free(wins);
      }
+
+   D_RETURN;
 }
 
 E_Border *
@@ -2489,6 +2706,8 @@ e_border_current_focused(void)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
@@ -2502,22 +2721,26 @@ e_border_current_focused(void)
 	E_Border *b;
 	
 	b = l->data;
-	if (b->current.selected) return b;
+	if (b->current.selected) D_RETURN_(b);
      }
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
 	
 	b = l->data;
-	if (b->current.select_lost_from_grab) return b;
+	if (b->current.select_lost_from_grab) D_RETURN_(b);
      }
-   return NULL;
+
+   D_RETURN_(NULL);
 }
 
 void
 e_border_focus_grab_ended(void)
 {
    Evas_List l;
+
+   D_ENTER;
+
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
@@ -2527,36 +2750,44 @@ e_border_focus_grab_ended(void)
 	b->current.selected = 0;
 	b->changed = 1;
      }
+
+   D_RETURN;
 }
 
 int
 e_border_viewable(E_Border *b)
 {
+   D_ENTER;
+
    if (b->desk != e_desktops_get(0))
-     return 0;
+     D_RETURN_(0);
 
    if (b->current.x + b->current.w <= 0)
-     return 0;
+     D_RETURN_(0);
 
    if (b->current.x >= b->desk->real.w)
-     return 0;
+     D_RETURN_(0);
 
    if (b->current.y + b->current.h <= 0)
-     return 0;
+     D_RETURN_(0);
 
    if (b->current.y >= b->desk->real.h)
-     return 0;
+     D_RETURN_(0);
    
    if (!b->current.visible)
-     return 0;
+     D_RETURN_(0);
 
-   return 1;
+   D_RETURN_(1);
 }
 
 void
 e_border_send_pointer(E_Border *b)
 {
+   D_ENTER;
+
    XWarpPointer(ecore_display_get(), None, b->win.main, 0, 0, 0, 0, b->current.w / 2, b->current.h / 2);
+
+   D_RETURN;
 }
 
 void
@@ -2565,8 +2796,10 @@ e_border_raise_next(void)
    Evas_List next;
    E_Border *current;
 
+   D_ENTER;
+
    if (!borders)
-	return;
+	D_RETURN;
 
    current = e_border_current_focused();
 
@@ -2597,18 +2830,26 @@ e_border_raise_next(void)
 
    e_border_raise(current);
    e_border_send_pointer(current);
+
+   D_RETURN;
 }
 
 void
 e_border_print_pos(char *buf, E_Border *b)
 {
+   D_ENTER;
+
    sprintf(buf, "%i, %i",
 	   b->current.x, b->current.y);
+
+   D_RETURN;
 }
 
 void
 e_border_print_size(char *buf, E_Border *b)
 {
+   D_ENTER;
+
    if ((b->client.step.w > 1) || (b->client.step.h > 1))
      {
 	sprintf(buf, "%i x %i",
@@ -2621,20 +2862,26 @@ e_border_print_size(char *buf, E_Border *b)
 		b->client.w, 
 		b->client.h);
      }
+
+   D_RETURN;
 }
 
 
 void      
 e_border_set_gravity(E_Border *b, int gravity)
 {
-  if (!b)
-    return;
+   D_ENTER;
 
-  ecore_window_gravity_set(b->win.container, gravity);
-  ecore_window_gravity_set(b->win.input, gravity);
-  ecore_window_gravity_set(b->win.l, gravity);
-  ecore_window_gravity_set(b->win.r, gravity);
-  ecore_window_gravity_set(b->win.t, gravity);
-  ecore_window_gravity_set(b->win.b, gravity);
+   if (!b)
+     D_RETURN;
+
+   ecore_window_gravity_set(b->win.container, gravity);
+   ecore_window_gravity_set(b->win.input, gravity);
+   ecore_window_gravity_set(b->win.l, gravity);
+   ecore_window_gravity_set(b->win.r, gravity);
+   ecore_window_gravity_set(b->win.t, gravity);
+   ecore_window_gravity_set(b->win.b, gravity);
+
+   D_RETURN;
 }
 

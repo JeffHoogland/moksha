@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "desktops.h"
 #include "config.h"
 #include "actions.h"
@@ -6,6 +7,7 @@
 #include "view.h"
 #include "icccm.h"
 #include "util.h"
+#include "object.h"
 
 static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
@@ -16,10 +18,11 @@ static void ecore_idle(void *data);
 static void
 ecore_idle(void *data)
 {
+   D_ENTER;
    /* FIXME -- Raster, how is this related to the desktop code? */
 
    e_db_flush();
-   return;
+   D_RETURN;
    UN(data);
 }
 
@@ -27,7 +30,9 @@ void
 e_desktops_init(void)
 {
    E_Desktop *desk;
-   
+  
+   D_ENTER;
+
    ecore_window_get_geometry(0, NULL, NULL, &screen_w, &screen_h);
    e_base_win = ecore_window_override_new(0, 0, 0, screen_w, screen_h);
    ecore_window_show(e_base_win);
@@ -44,6 +49,8 @@ e_desktops_init(void)
    e_icccm_set_desk_area_size(0, 1, 1);
    e_icccm_set_desk_area(0, 0, 0);
    e_icccm_set_desk(0, 0);
+
+   D_RETURN;
 }
 
 void
@@ -53,8 +60,10 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
    int xd, yd, wd, hd;
    int grav, grav_stick;   
    
+   D_ENTER;
+
    /* set grav */
-   if ((dx ==0) && (dy == 0)) return;
+   if ((dx ==0) && (dy == 0)) D_RETURN;
    desk->x -= dx;
    desk->y -= dy;
    xd = yd = wd = hd = 0;
@@ -145,29 +154,36 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	     b->changed = 1;
 	  }
      }
+
+   D_RETURN;
 }
 
 void
-e_desktops_free(E_Desktop *desk)
+e_desktops_cleanup(E_Desktop *desk)
 {
+   D_ENTER;
+
    while (desk->windows)
      {
 	E_Border *b;
 	
 	b = desk->windows->data;
-	e_action_stop_by_object(b, NULL, 0, 0, 0, 0);
-	OBJ_UNREF(b);
-	OBJ_IF_FREE(b)
+	e_action_stop_by_object(E_OBJECT(b), NULL, 0, 0, 0, 0);
+
+	if (e_object_get_usecount(E_OBJECT(b)) == 1)
 	  {
-	     ecore_window_reparent(b->win.client, 0, 0, 0);
-	     e_icccm_release(b->win.client);
-	     OBJ_FREE(b);
+	    ecore_window_reparent(b->win.client, 0, 0, 0);
+	    e_icccm_release(b->win.client);
 	  }
      }
+
    ecore_window_destroy(desk->win.main);
    IF_FREE(desk->name);
    IF_FREE(desk->dir);
-   FREE(desk);
+   
+   e_object_cleanup(E_OBJECT(desk));
+
+   D_RETURN;
 }
 
 void
@@ -176,7 +192,9 @@ e_desktops_init_file_display(E_Desktop *desk)
    E_View *v;
    E_Border *b;
    char buf[PATH_MAX];
-   
+
+   D_ENTER;
+
    v = e_view_new();
    v->size.w = desk->real.w;
    v->size.h = desk->real.h;
@@ -213,6 +231,8 @@ e_desktops_init_file_display(E_Desktop *desk)
    b->client.is_desktop = 1;
 
    if (v->options.back_pixmap) e_view_update(v);
+
+   D_RETURN;
 }
 
 E_Desktop *
@@ -220,10 +240,12 @@ e_desktops_new(void)
 {
    E_Desktop *desk;
    
+   D_ENTER;
+   
    desk = NEW(E_Desktop, 1);
    ZERO(desk, E_Desktop, 1);
    
-   OBJ_INIT(desk, e_desktops_free);
+   e_object_init(E_OBJECT(desk), (E_Cleanup_Func) e_desktops_cleanup);
    
    desk->win.main = ecore_window_override_new(e_base_win, 0, 0, screen_w, screen_h);
    desk->win.container = ecore_window_override_new(desk->win.main, 0, 0, screen_w, screen_h);
@@ -240,50 +262,71 @@ e_desktops_new(void)
    
    desktops = evas_list_append(desktops, desk);
    
-   return desk;
+   D_RETURN_(desk);
 }
 
 void
 e_desktops_add_border(E_Desktop *d, E_Border *b)
 {
-   if ((!d) || (!b)) return;
+   D_ENTER;
+
+   if ((!d) || (!b)) D_RETURN;
    b->desk = d;
    b->client.desk = d->desk.desk;
    b->client.area.x = d->desk.area.x;
    b->client.area.y = d->desk.area.y;
    e_border_raise(b);
+
+   D_RETURN;
 }
 
 void
 e_desktops_del_border(E_Desktop *d, E_Border *b)
 {
-   if ((!d) || (!b)) return;
+   D_ENTER;
+
+   if ((!d) || (!b)) D_RETURN;
    d->windows = evas_list_remove(d->windows, b);
    b->desk = NULL;
+
+   D_RETURN;
 }
 
 void
 e_desktops_delete(E_Desktop *d)
 {
-   OBJ_DO_FREE(d);
+   D_ENTER;
+
+   e_object_unref(E_OBJECT(d));
+
+   D_RETURN;
 }
 
 void
 e_desktops_show(E_Desktop *d)
 {
+   D_ENTER;
+
    ecore_window_show(d->win.main);
+
+   D_RETURN;
 }
 
 void
 e_desktops_hide(E_Desktop *d)
 {
+   D_ENTER;
+
    ecore_window_hide(d->win.main);
+
+   D_RETURN;
 }
 
 int
 e_desktops_get_num(void)
 {
-   return 8;
+   D_ENTER;
+   D_RETURN_(8);
 }
 
 E_Desktop *
@@ -292,28 +335,39 @@ e_desktops_get(int d)
    Evas_List l;
    int i;
    
+   D_ENTER;
+
    for (i = 0, l = desktops; l; l = l->next, i++)
      {
-	if (i == d) return (E_Desktop *)l->data;
+       if (i == d)
+	 D_RETURN_((E_Desktop *)l->data);
      }
-   return NULL;
+
+   D_RETURN_(NULL);
 }
 
 int
 e_desktops_get_current(void)
 {
    E_Desktop *desk;
-   
+
+   D_ENTER;
+
    desk = e_desktops_get(0);
    if (desk)
-     return desk->desk.desk;
-   return 0;
+     D_RETURN_(desk->desk.desk);
+
+   D_RETURN_(0);
 }
 
 void
 e_desktops_goto_desk(int d)
 {
+   D_ENTER;
+
    e_desktops_goto(d, 0, 0);
+
+   D_RETURN;
 }
 
 void
@@ -321,6 +375,8 @@ e_desktops_goto(int d, int ax, int ay)
 {
    E_Desktop *desk;
    
+   D_ENTER;
+
    desk = e_desktops_get(0);
    if (desk)
      {
@@ -329,7 +385,7 @@ e_desktops_goto(int d, int ax, int ay)
 	
 	if ((d == desk->desk.desk) &&
 	    (ax == desk->desk.area.x) &&
-	    (ay == desk->desk.area.y)) return;
+	    (ay == desk->desk.area.y)) D_RETURN;
 	
 	dx = ax - desk->desk.area.x;
 	dy = ay - desk->desk.area.y;
@@ -371,4 +427,6 @@ e_desktops_goto(int d, int ax, int ay)
 	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
 	e_icccm_set_desk(0, desk->desk.desk);
     }
+
+   D_RETURN;
 }

@@ -1,6 +1,8 @@
 #ifndef E_BACKGROUND_H
 #define E_BACKGROUND_H
 
+#include "object.h"
+
 typedef struct _E_Background          E_Background;
 typedef struct _E_Background_Layer    E_Background_Layer;
 
@@ -14,7 +16,7 @@ E_Background_Type;
 
 struct _E_Background
 {
-   OBJ_PROPERTIES;
+   E_Object          o;
    
    Evas  evas;
    char *file;
@@ -24,9 +26,9 @@ struct _E_Background
       int w, h;
    } geom;
    
-   Evas_List layers;
+   Evas_List         layers;
    
-   Evas_Object base_obj;
+   Evas_Object       base_obj;
 };
 
 
@@ -59,9 +61,9 @@ struct _E_Background_Layer
 };
 
 
-void           e_background_free(E_Background *bg);
 E_Background  *e_background_new(void);
 E_Background  *e_background_load(char *file);
+
 void           e_background_realize(E_Background *bg, Evas evas);
 void           e_background_set_scroll(E_Background *bg, int sx, int sy);
 void           e_background_set_size(E_Background *bg, int w, int h);

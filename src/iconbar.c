@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "iconbar.h"
 #include "util.h"
 
@@ -26,11 +27,58 @@ static void ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, in
 static void ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 
+static void  e_iconbar_icon_cleanup(E_Iconbar_Icon *ic);
+
 /* NB: comments here for illustration & helping people understand E's code */
 /* This is a start of the comments. if you feel they are not quite good */
 /* as you figure things out and if you think they could be more helpful */
 /* please feel free to add to them to make them easier to read and be more */
 /* helpful. */
+
+/**
+ * e_iconbar_cleanup - Iconbar destructor.
+ * @ib: The iconbar to be cleaned up.
+ *
+ * How do we free these pesky little urchins...
+ */
+static void
+e_iconbar_cleanup(E_Iconbar *ib)
+{
+   char buf[PATH_MAX];
+
+   D_ENTER;
+
+   /* tell the view we attached to that somehting in it changed. this way */
+   /* the view will now it needs to redraw */
+   ib->view->changed = 1;
+   /* free up our ebits */
+   if (ib->bit) ebits_free(ib->bit);
+   /* if we have any icons... */
+   if (ib->icons)
+     {
+	Evas_List l;
+  
+	/* go thru the list of icon and unref each one.. ie - free it */
+	for (l = ib->icons; l; l = l->next)
+	  {
+	     E_Iconbar_Icon *ic;
+	     
+	     ic = l->data;
+	     e_object_unref(E_OBJECT(ic));
+	  }
+	/* free the list itself */
+	evas_list_free(ib->icons);
+     }
+   /* delete any timers intended to work on  this iconbar */
+   sprintf(buf, "iconbar_reload:%s", ib->view->dir);
+   ecore_del_event_timer(buf);
+
+   /* call the destructor of the base class */
+   e_object_cleanup(E_OBJECT(ib));
+
+   D_RETURN;
+}
+
 
 /**
  * e_iconbar_init - Init function
@@ -40,6 +88,8 @@ static void ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int
 void
 e_iconbar_init()
 {
+   D_ENTER;
+
    /* we set up config structure and types so the config system can just */
    /* read a db and dump it right into memory - including lists of stuff */
    
@@ -59,6 +109,8 @@ e_iconbar_init()
    /* the list */
    cf_iconbar = e_config_type_new();
    E_CONFIG_NODE(cf_iconbar, "icons", E_CFG_TYPE_LIST, cf_iconbar_icon, E_Iconbar, icons, 0, 0, NULL);
+
+   D_RETURN;
 }
 
 /**
@@ -72,6 +124,8 @@ e_iconbar_new(E_View *v)
    char buf[PATH_MAX];
    E_Iconbar *ib;
    
+   D_ENTER;
+
    /* first we want to load the iconbar data itself - ie the config info */
    /* for what icons we have and what they execute */
    sprintf(buf, "%s/.e_iconbar.db", v->dir);   
@@ -89,11 +143,11 @@ e_iconbar_new(E_View *v)
    /* flush edb cached handled */
    e_db_flush();
    /* no iconbar config loaded ? return NULL */
-   if (!ib) return NULL;
+   if (!ib) D_RETURN_(NULL);
    
    /* now that the config system has doe the loading. we need to init the */
    /* object and set up ref counts and free method */
-   OBJ_INIT(ib, e_iconbar_free);
+   e_object_init(E_OBJECT(ib), (E_Cleanup_Func) e_iconbar_cleanup);
    
    /* the iconbar needs to know what view it's in */
    ib->view = v;
@@ -105,7 +159,8 @@ e_iconbar_new(E_View *v)
 	
 	ic = l->data;
 	/* and init the iocnbar icon object */
-	OBJ_INIT(ic, e_iconbar_icon_free);
+	e_object_init(E_OBJECT(ic), (E_Cleanup_Func) e_iconbar_icon_cleanup);
+
 	/* and have the iconbar icon knwo what iconbar it belongs to */
 	ic->iconbar = ib;
      }
@@ -118,62 +173,26 @@ e_iconbar_new(E_View *v)
    if (!ib->bit)
      {
 	/* unref the iconbar (and thus it will get freed and all icons in it */
-	OBJ_DO_FREE(ib);
+        e_object_unref(E_OBJECT(ib));
 	/* return NULL - no iconbar worth doing here if we don't know where */
 	/* to put it */
-	return NULL;
+	D_RETURN_(NULL);
      }
    /* aaah. our nicely constructed iconbar data struct with all the goodies */
    /* we need. return it. she's ready for use. */
-   return ib;
+   D_RETURN_(ib);
 }
 
-/**
- * e_iconbar_free - Iconbar destructor.
- * @ib: The iconbar to be freed
- *
- * How do we free these pesky little urchins...
- */
-void
-e_iconbar_free(E_Iconbar *ib)
-{
-   char buf[PATH_MAX];
-
-   /* tell the view we attached to that somehting in it changed. this way */
-   /* the view will now it needs to redraw */
-   ib->view->changed = 1;
-   /* free up our ebits */
-   if (ib->bit) ebits_free(ib->bit);
-   /* if we have any icons... */
-   if (ib->icons)
-     {
-	Evas_List l;
-  
-	/* go thru the list of icon and unref each one.. ie - free it */
-	for (l = ib->icons; l; l = l->next)
-	  {
-	     E_Iconbar_Icon *ic;
-	     
-	     ic = l->data;
-	     OBJ_DO_FREE(ic);
-	  }
-	/* free the list itself */
-	evas_list_free(ib->icons);
-     }
-   /* delete any timers intended to work on  this iconbar */
-   sprintf(buf, "iconbar_reload:%s", ib->view->dir);
-   ecore_del_event_timer(buf);
-   /* free the iconbar struct */
-   FREE(ib);
-}
 
 /**
- * e_iconbar_icon_free -- Iconbar icon destructor
+ * e_iconbar_icon_cleanup -- Iconbar icon destructor
  * @ic: The icon that is to be freed
  */
-void
-e_iconbar_icon_free(E_Iconbar_Icon *ic)
+static void
+e_iconbar_icon_cleanup(E_Iconbar_Icon *ic)
 {
+   D_ENTER;
+
    /* if we have an imageobject. nuke it */
    if (ic->image) evas_del_object(ic->iconbar->view->evas, ic->image);
    /* free strings ... if they exist */
@@ -186,8 +205,11 @@ e_iconbar_icon_free(E_Iconbar_Icon *ic)
 	FREE(ic->hi.timer);
      }
    if (ic->hi.image) evas_del_object(ic->iconbar->view->evas, ic->hi.image);
-   /* nuke that struct */
-   FREE(ic);
+
+   /* Call the destructor of the base class */
+   e_object_cleanup(E_OBJECT(ic));
+
+   D_RETURN;
 }
 
 /**
@@ -202,6 +224,8 @@ void
 e_iconbar_realize(E_Iconbar *ib)
 {
    Evas_List l;
+
+   D_ENTER;
 
    /* go thru every icon in the iconbar */
    for (l = ib->icons; l; l = l->next)
@@ -254,6 +278,8 @@ e_iconbar_realize(E_Iconbar *ib)
    /* but fixes the iconbar so its the size of the view, in the right */
    /* place and arranges the icons in their right spots */
    e_iconbar_fix(ib);
+
+   D_RETURN;
 }
 
 /**
@@ -268,6 +294,8 @@ e_iconbar_fix(E_Iconbar *ib)
 {
    Evas_List l;
    double ix, iy, aw, ah;
+
+   D_ENTER;
 
    /* move the ebit to 0,0 */
    ebits_move(ib->bit, 0, 0);
@@ -350,6 +378,8 @@ e_iconbar_fix(E_Iconbar *ib)
 	     iy += h;
 	  }
      }
+
+   D_RETURN;
 }
 
 /**
@@ -365,6 +395,8 @@ e_iconbar_fix(E_Iconbar *ib)
 void
 e_iconbar_file_add(E_View *v, char *file)
 {
+   D_ENTER;
+
    /* is the file of interest ? */
    if ((!strcmp(".e_iconbar.db", file)) ||
        (!strcmp(".e_iconbar.bits.db", file)))
@@ -376,6 +408,8 @@ e_iconbar_file_add(E_View *v, char *file)
 	/* in 0.5 secs call our timout handler */
 	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
      }
+
+   D_RETURN;
 }
 
 /**
@@ -388,6 +422,8 @@ e_iconbar_file_add(E_View *v, char *file)
 void
 e_iconbar_file_delete(E_View *v, char *file)
 {
+   D_ENTER;
+
    /* is the file of interest */
    if ((!strcmp(".e_iconbar.db", file)) ||
        (!strcmp(".e_iconbar.bits.db", file)))
@@ -396,10 +432,12 @@ e_iconbar_file_delete(E_View *v, char *file)
 	/* nuked. no need to keep it around. */
 	if (v->iconbar) 
 	  {
-	     OBJ_DO_FREE(v->iconbar);
+	     e_object_unref(E_OBJECT(v->iconbar));
 	     v->iconbar = NULL;
 	  }
      }
+
+   D_RETURN;
 }
 
 /**
@@ -412,6 +450,8 @@ e_iconbar_file_delete(E_View *v, char *file)
 void
 e_iconbar_file_change(E_View *v, char *file)
 {
+   D_ENTER;
+
    /* is the file that changed of interest */
    if ((!strcmp(".e_iconbar.db", file)) ||
        (!strcmp(".e_iconbar.bits.db", file)))
@@ -423,6 +463,8 @@ e_iconbar_file_change(E_View *v, char *file)
 	/* in 0.5 secsm call the realod timeout */
 	ecore_add_event_timer(buf, 0.5, ib_reload_timeout, 0, v);
      }
+
+   D_RETURN;
 }
 
 
@@ -436,16 +478,23 @@ ib_reload_timeout(int val, void *data)
 {
    E_View *v;
 
+   D_ENTER;
+
    /* get our view pointer */
    v = (E_View *)data;
+
    /* if we have an iconbar.. well nuke it */
-   if (v->iconbar) OBJ_DO_FREE(v->iconbar);
-   v->iconbar = NULL;
+   if (e_object_unref(E_OBJECT(v->iconbar)) == 0)
+     v->iconbar = NULL;
+
    /* try load a new iconbar */
    if (!v->iconbar) v->iconbar = e_iconbar_new(v);
+
    /* if the iconbar loaded and theres an evas - we're realized */
    /* so realize the iconbar */
    if ((v->iconbar) && (v->evas)) e_iconbar_realize(v->iconbar);   
+
+   D_RETURN;
 }
 
 /* this timeout is responsible for doing the mouse over animation */
@@ -455,6 +504,8 @@ ib_timeout(int val, void *data)
    E_Iconbar_Icon *ic;
    double t;
    
+   D_ENTER;
+
    /* get the iconbar icon we are dealign with */
    ic = (E_Iconbar_Icon *)data;
    /* val <= 0 AND we're hilited ? first call as a timeout handler. */
@@ -564,6 +615,8 @@ ib_timeout(int val, void *data)
      ecore_add_event_timer(ic->hi.timer, 0.05, ib_timeout, val, data);
    /* flag the view that we changed */
    ic->iconbar->view->changed = 1;
+
+   D_RETURN;
 }
 
 /* called when an ebits object bit needs to be shown */
@@ -573,6 +626,8 @@ ib_bits_show(void *data)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* show all the icons */
    for (l = ib->icons; l; l = l->next)
@@ -582,6 +637,8 @@ ib_bits_show(void *data)
 	ic = l->data;
 	evas_show(ic->iconbar->view->evas, ic->image);
      }
+
+   D_RETURN;
 }
 
 /* called when an ebit object bit needs to hide */
@@ -591,6 +648,8 @@ ib_bits_hide(void *data)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* hide all the icons */
    for (l = ib->icons; l; l = l->next)
@@ -600,6 +659,8 @@ ib_bits_hide(void *data)
 	ic = l->data;
 	evas_hide(ic->iconbar->view->evas, ic->image);
      }
+
+   D_RETURN;
 }
 
 /* called when an ebit objetc bit needs to move */
@@ -609,10 +670,14 @@ ib_bits_move(void *data, double x, double y)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* dont do anything.. just record the geometry. we'll deal with it later */
    ib->icon_area.x = x;
    ib->icon_area.y = y;
+
+   D_RETURN;
 }
 
 /* called when an ebit object bit needs to resize */
@@ -622,10 +687,14 @@ ib_bits_resize(void *data, double w, double h)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* dont do anything.. just record the geometry. we'll deal with it later */
    ib->icon_area.w = w;
    ib->icon_area.h = h;
+
+   D_RETURN;
 }
 
 /* called when the ebits object bit needs to be raised */
@@ -635,6 +704,8 @@ ib_bits_raise(void *data)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* raise all the icons */
    for (l = ib->icons; l; l = l->next)
@@ -644,6 +715,8 @@ ib_bits_raise(void *data)
 	ic = l->data;
 	evas_raise(ic->iconbar->view->evas, ic->image);
      }
+
+   D_RETURN;
 }
 
 /* called when the ebits object bit needs to be lowered */
@@ -653,6 +726,8 @@ ib_bits_lower(void *data)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* lower all the icons */
    for (l = ib->icons; l; l = l->next)
@@ -662,6 +737,8 @@ ib_bits_lower(void *data)
 	ic = l->data;
 	evas_lower(ic->iconbar->view->evas, ic->image);
      }
+
+   D_RETURN;
 }
 
 /* called when the ebits object bit needs to change layers */
@@ -671,6 +748,8 @@ ib_bits_set_layer(void *data, int lay)
    E_Iconbar *ib;
    Evas_List l;
    
+   D_ENTER;
+
    ib = (E_Iconbar *)data;
    /* set the layer for all the icons */
    for (l = ib->icons; l; l = l->next)
@@ -680,6 +759,8 @@ ib_bits_set_layer(void *data, int lay)
 	ic = l->data;
 	evas_set_layer(ic->iconbar->view->evas, ic->image, lay);
      }
+
+   D_RETURN;
 }
 
 /* not used... err.. ebits clips for us to the maximum allowed space of */
@@ -687,28 +768,44 @@ ib_bits_set_layer(void *data, int lay)
 static void
 ib_bits_set_clip(void *data, Evas_Object clip)
 {
+   D_ENTER;
+
+
+   D_RETURN;
 }
 
 /* we arent going to recolor our icons here according to color class */
 static void
 ib_bits_set_color_class(void *data, char *cc, int r, int g, int b, int a)
 {
+   D_ENTER;
+
+
+   D_RETURN;
 }
 
 /* our minimum size for icon space is 0x0 */
 static void
 ib_bits_get_min_size(void *data, double *w, double *h)
 {
+   D_ENTER;
+
    *w = 0;
    *h = 0;
+
+   D_RETURN;
 }
 
 /* our maximum is huge */
 static void
 ib_bits_get_max_size(void *data, double *w, double *h)
 {
+   D_ENTER;
+
    *w = 999999;
    *h = 999999;
+
+   D_RETURN;
 }
 
 
@@ -722,6 +819,8 @@ static void
 ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Iconbar_Icon *ic;
+
+   D_ENTER;
 
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
@@ -744,6 +843,8 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    /* a redraw is needed */
    ic->iconbar->view->changed = 1;
 	   
+
+   D_RETURN;
 }
 
 /* called when a mouse goes out of an icon object */
@@ -752,6 +853,8 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Iconbar_Icon *ic;
    
+   D_ENTER;
+
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
    /* unset hilited flag */
@@ -759,6 +862,8 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    /* tell the view the iconbar is in.. something changed that might mean */
    /* a redraw is needed */
    ic->iconbar->view->changed = 1;
+
+   D_RETURN;
 }
 
 /* called when the mouse goes down on an icon object */
@@ -767,14 +872,21 @@ ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Iconbar_Icon *ic;
    
+   D_ENTER;
+
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
    /* run something! */
    if (ic->exec) e_exec_run(ic->exec);
+
+   D_RETURN;
 }
 
 /* called when the mouse goes up on an icon object */
 static void
 ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
+   D_ENTER;
+
+   D_RETURN;
 }

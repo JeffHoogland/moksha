@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "embed.h"
 
 typedef struct _Embed Embed_Private;
@@ -17,9 +18,13 @@ e_embed_text_func_show(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_show(em->evas, em->clip_obj);
    e_text_show(em->text_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -27,9 +32,13 @@ e_embed_text_func_hide(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_hide(em->evas, em->clip_obj);
    e_text_hide(em->text_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -37,9 +46,13 @@ e_embed_text_func_move(void *_data, double x, double y)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_move(em->evas, em->clip_obj, x, y);
    e_text_move(em->text_obj, x, y);
+
+   D_RETURN;
 }
 
 static void
@@ -47,9 +60,13 @@ e_embed_text_func_resize(void *_data, double w, double h)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_resize(em->evas, em->clip_obj, w, h);
    e_text_resize(em->text_obj, w, h);
+
+   D_RETURN;
 }
 
 static void
@@ -57,9 +74,13 @@ e_embed_text_func_raise(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_raise(em->evas, em->clip_obj);
    e_text_raise(em->text_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -67,9 +88,13 @@ e_embed_text_func_lower(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_lower(em->evas, em->clip_obj);
    e_text_lower(em->text_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -77,9 +102,13 @@ e_embed_text_func_set_layer(void *_data, int l)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj) evas_set_layer(em->evas, em->clip_obj, l);
    e_text_set_layer(em->text_obj, l);
+
+   D_RETURN;
 }
 
 static void
@@ -87,6 +116,8 @@ e_embed_text_func_set_clip(void *_data, Evas_Object clip)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (em->clip_obj)
      {
@@ -102,11 +133,17 @@ e_embed_text_func_set_clip(void *_data, Evas_Object clip)
 	else
 	  e_text_unset_clip(em->text_obj);
      }
+
+   D_RETURN;
 }
 
 static void
 e_embed_text_func_set_color_class(void *_data, char *cc, int r, int g, int b, int a)
 {
+   D_ENTER;
+
+   D_RETURN;
+
    UN(_data);
    UN(cc);
    UN(r);
@@ -120,10 +157,14 @@ e_embed_text_func_get_min_size(void *_data, double *w, double *h)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    e_text_get_min_size(em->text_obj, w, h);
    if (em->clip_x) *w = 0;
    if (em->clip_y) *h = 0;
+
+   D_RETURN;
 }
 
 static void
@@ -131,10 +172,14 @@ e_embed_text_func_get_max_size(void *_data, double *w, double *h)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    e_text_get_max_size(em->text_obj, w, h);
    if (em->clip_x) *w = 999999999;
    if (em->clip_y) *h = 999999999;
+
+   D_RETURN;
 }
 
 /***/
@@ -144,6 +189,8 @@ e_embed_text(Ebits_Object o, char *bit_name, Evas evas, E_Text *text_obj, int cl
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = NEW(Embed_Private, 1);
    ZERO(em, Embed_Private, 1);
    em->o = o;
@@ -171,7 +218,7 @@ e_embed_text(Ebits_Object o, char *bit_name, Evas evas, E_Text *text_obj, int cl
 			       e_embed_text_func_get_min_size,
 			       e_embed_text_func_get_max_size,
 			       em);   
-   return em;
+   D_RETURN_(em);
 }
 
 /*****************************************************************************/
@@ -181,8 +228,12 @@ e_embed_image_func_show(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_show(em->evas, em->image_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -190,8 +241,12 @@ e_embed_image_func_hide(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_hide(em->evas, em->image_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -199,8 +254,12 @@ e_embed_image_func_move(void *_data, double x, double y)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_move(em->evas, em->image_obj, x, y);
+
+   D_RETURN;
 }
 
 static void
@@ -208,9 +267,13 @@ e_embed_image_func_resize(void *_data, double w, double h)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_resize(em->evas, em->image_obj, w, h);
    evas_set_image_fill(em->evas, em->image_obj, 0, 0, w, h);
+
+   D_RETURN;
 }
 
 static void
@@ -218,8 +281,12 @@ e_embed_image_func_raise(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_raise(em->evas, em->image_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -227,8 +294,12 @@ e_embed_image_func_lower(void *_data)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_lower(em->evas, em->image_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -236,8 +307,12 @@ e_embed_image_func_set_layer(void *_data, int l)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    evas_set_layer(em->evas, em->image_obj, l);
+
+   D_RETURN;
 }
 
 static void
@@ -245,11 +320,15 @@ e_embed_image_func_set_clip(void *_data, Evas_Object clip)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if (clip)
      evas_set_clip(em->evas, em->image_obj, clip);
    else
      evas_unset_clip(em->evas, em->image_obj);
+
+   D_RETURN;
 }
 
 static void
@@ -257,9 +336,13 @@ e_embed_image_func_set_color_class(void *_data, char *cc, int r, int g, int b, i
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = _data;
    if ((cc) && (!strcmp(cc, "icon")))
      evas_set_color(em->evas, em->image_obj, r, g, b, a);
+
+   D_RETURN;
 }
 
 static void
@@ -268,12 +351,16 @@ e_embed_image_func_get_min_size(void *_data, double *w, double *h)
    Embed_Private *em;
    int iw, ih;
    
+   D_ENTER;
+
    em = _data;
    iw = 0;
    ih = 0;
    evas_get_image_size(em->evas, em->image_obj, &iw, &ih);
    if (w) *w = iw;
    if (h) *h = ih;
+
+   D_RETURN;
 }
 
 static void
@@ -282,10 +369,14 @@ e_embed_image_func_get_max_size(void *_data, double *w, double *h)
    Embed_Private *em;
    int iw, ih;
    
+   D_ENTER;
+
    em = _data;
    evas_get_image_size(em->evas, em->image_obj, &iw, &ih);
    if (w) *w = iw;
    if (h) *h = ih;
+
+   D_RETURN;
 }
 
 /***/
@@ -295,6 +386,8 @@ e_embed_image_object(Ebits_Object o, char *bit_name, Evas evas, Evas_Object imag
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = NEW(Embed_Private, 1);
    ZERO(em, Embed_Private, 1);
    em->o = o;
@@ -313,7 +406,7 @@ e_embed_image_object(Ebits_Object o, char *bit_name, Evas evas, Evas_Object imag
 			       e_embed_image_func_get_min_size,
 			       e_embed_image_func_get_max_size,
 			       em);
-   return em;
+   D_RETURN_(em);
 }
 
 /*****/
@@ -323,7 +416,11 @@ e_embed_free(Embed emb)
 {
    Embed_Private *em;
    
+   D_ENTER;
+
    em = emb;
    if (em->clip_obj) evas_del_object(em->evas, em->clip_obj);
    FREE(em);
+
+   D_RETURN;
 }

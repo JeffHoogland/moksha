@@ -7,6 +7,7 @@
 #include "fs.h"
 #include "text.h"
 #include "iconbar.h"
+#include "object.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
@@ -24,7 +25,7 @@ typedef struct _E_Iconbar E_Iconbar;
 
 struct _E_View
 {
-   OBJ_PROPERTIES;
+   E_Object               o;
    
    char                  *dir;
    
@@ -146,7 +147,7 @@ struct _E_View
 
 struct _E_Icon
 {
-   OBJ_PROPERTIES;
+   E_Object o;
    
    char   *file;
    
@@ -230,7 +231,6 @@ void      e_view_icon_invert_selection(E_Icon *ic);
 void      e_view_icon_select(E_Icon *ic);
 void      e_view_icon_deselect(E_Icon *ic);
 void      e_view_icon_exec(E_Icon *ic);
-void      e_view_icon_free(E_Icon *ic);
 void      e_view_icon_initial_show(E_Icon *ic);
 void      e_view_icon_set_mime(E_Icon *ic, char *base, char *mime);
 void      e_view_icon_set_link(E_Icon *ic, char *link);
@@ -250,7 +250,6 @@ void      e_view_file_deleted(int id, char *file);
 void      e_view_file_changed(int id, char *file);
 void      e_view_file_moved(int id, char *file);
 E_View   *e_view_find_by_monitor_id(int id);
-void      e_view_free(E_View *v);
 E_View   *e_view_new(void);
 void      e_view_set_background(E_View *v);
 void      e_view_set_dir(E_View *v, char *dir);

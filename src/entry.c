@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "entry.h"
 #include "config.h"
 #include "util.h"
@@ -19,6 +20,8 @@ e_clear_selection(Ecore_Event * ev)
 {
    Ecore_Event_Clear_Selection *e;
    Evas_List l;
+
+   D_ENTER;
    
    e = ev->event;
    for (l = entries; l; l = l->next)
@@ -35,6 +38,8 @@ e_clear_selection(Ecore_Event * ev)
 	     e_entry_configure(entry);	     
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -42,6 +47,8 @@ e_paste_request(Ecore_Event * ev)
 {
    Ecore_Event_Paste_Request *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    for (l = entries; l; l = l->next)
@@ -58,6 +65,8 @@ e_paste_request(Ecore_Event * ev)
 	     e_entry_insert_text(entry, type);
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -65,6 +74,8 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Entry *entry;
    int pos;
+   
+   D_ENTER;
    
    entry = _data;
    if ((_b == 2) && (!entry->mouse_down))       
@@ -99,6 +110,8 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	entry->select.start = -1;
 	e_entry_configure(entry);
      }
+
+   D_RETURN;
    UN(_o);
 }
 
@@ -108,9 +121,13 @@ e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Entry *entry;
    /* int pos; */
    
+   D_ENTER;
+   
    entry = _data;
    if (_b == entry->mouse_down) entry->mouse_down = 0;
    e_entry_configure(entry);
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_x);
@@ -121,6 +138,8 @@ static void
 e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Entry *entry;
+   
+   D_ENTER;
    
    entry = _data;
    if (entry->mouse_down > 0)
@@ -192,6 +211,8 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_entry_configure(entry);   
      }
+
+   D_RETURN;
    UN(_o);
    UN(_b);
    UN(_y);
@@ -202,6 +223,8 @@ e_entry_realize(E_Entry *entry)
 {
    char *entries;
    char buf[PATH_MAX];
+   
+   D_ENTER;
    
    entries = e_config_get("entries");
    sprintf(buf, "%s/%s", entries, "base.bits.db");
@@ -241,11 +264,15 @@ e_entry_realize(E_Entry *entry)
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_DOWN, e_entry_down_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_UP, e_entry_up_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_MOVE, e_entry_move_cb, entry);
+
+   D_RETURN;
 }
 
 static void 
 e_entry_unrealize(E_Entry *entry)
 {
+   D_ENTER;
+   
    if (entry->event_box) evas_del_object(entry->evas, entry->event_box);
    if (entry->text) evas_del_object(entry->evas, entry->text);
    if (entry->clip_box) evas_del_object(entry->evas, entry->clip_box);
@@ -258,6 +285,8 @@ e_entry_unrealize(E_Entry *entry)
    entry->obj_base = NULL;
    entry->obj_cursor = NULL;
    entry->obj_selection = NULL;
+
+   D_RETURN;
 }
 
 static void 
@@ -266,8 +295,10 @@ e_entry_configure(E_Entry *entry)
    int p1l, p1r, p1t, p1b;
    int p2l, p2r, p2t, p2b;
    
-   if (!entry->evas) return;
-   if (!entry->event_box) return;
+   D_ENTER;
+   
+   if (!entry->evas) D_RETURN;
+   if (!entry->event_box) D_RETURN;
    p1l = p1r = p1t = p1b = 0;
    if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
    p2l = p2r = p2t = p2b = 0;
@@ -354,22 +385,32 @@ e_entry_configure(E_Entry *entry)
 	if (entry->obj_selection)
 	  ebits_hide(entry->obj_selection);
      }
+
+   D_RETURN;
 }
 
 void
 e_entry_init(void)
 {
+   D_ENTER;
+   
    ecore_event_filter_handler_add(ECORE_EVENT_PASTE_REQUEST,   e_paste_request);
    ecore_event_filter_handler_add(ECORE_EVENT_CLEAR_SELECTION, e_clear_selection);
+
+   D_RETURN;
 }
 
 void
 e_entry_free(E_Entry *entry)
 {
+   D_ENTER;
+   
    entries = evas_list_remove(entries, entry);
    e_entry_unrealize(entry);
    IF_FREE(entry->buffer);
    FREE(entry);
+
+   D_RETURN;
 }
 
 E_Entry *
@@ -377,19 +418,24 @@ e_entry_new(void)
 {
    E_Entry *entry;
    
+   D_ENTER;
+   
    entry = NEW(E_Entry, 1);
    ZERO(entry, E_Entry, 1);
    e_strdup(entry->buffer, "");
    entry->select.start = -1;
    entry->end_width = 4;
    entries = evas_list_prepend(entries, entry);
-   return entry;
+
+   D_RETURN_(entry);
 }
 
 void
 e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
 {
-   if (!entry->focused) return;
+   D_ENTER;
+   
+   if (!entry->focused) D_RETURN;
    if (!strcmp(e->key, "Up"))
      {
      }
@@ -497,11 +543,15 @@ e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
 	  }
      }   
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
 e_entry_set_evas(E_Entry *entry, Evas evas)
 {
+   D_ENTER;
+   
    if (entry->evas) e_entry_unrealize(entry);
    entry->evas = evas;
    e_entry_realize(entry);
@@ -511,99 +561,137 @@ e_entry_set_evas(E_Entry *entry, Evas evas)
 	entry->visible = 0;
 	e_entry_show(entry);
      }
+
+   D_RETURN;
 }
 
 void
 e_entry_show(E_Entry *entry)
 {
-   if (entry->visible) return;
+   D_ENTER;
+   
+   if (entry->visible) D_RETURN;
    entry->visible = 1;
-   if (!entry->evas) return;
+   if (!entry->evas) D_RETURN;
    if (entry->obj_base) ebits_show(entry->obj_base);
    if (entry->obj_cursor) ebits_show(entry->obj_cursor);
    if (entry->obj_selection) ebits_show(entry->obj_selection);
    evas_show(entry->evas, entry->event_box);
    evas_show(entry->evas, entry->clip_box);
    evas_show(entry->evas, entry->text);
+
+   D_RETURN;
 }
 
 void
 e_entry_hide(E_Entry *entry)
 {
-   if (!entry->visible) return;
+   D_ENTER;
+   
+   if (!entry->visible) D_RETURN;
    entry->visible = 0;
-   if (!entry->evas) return;
+   if (!entry->evas) D_RETURN;
    if (entry->obj_base) ebits_hide(entry->obj_base);
    if (entry->obj_cursor) ebits_hide(entry->obj_cursor);
    if (entry->obj_selection) ebits_hide(entry->obj_selection);
    evas_hide(entry->evas, entry->event_box);
    evas_hide(entry->evas, entry->clip_box);
    evas_hide(entry->evas, entry->text);
+
+   D_RETURN;
 }
 
 void
 e_entry_raise(E_Entry *entry)
 {
+   D_ENTER;
+   
    if (entry->obj_base) ebits_raise(entry->obj_base);
    evas_raise(entry->evas, entry->clip_box);
    evas_raise(entry->evas, entry->text);
    if (entry->obj_selection) ebits_raise(entry->obj_selection);
    if (entry->obj_cursor) ebits_raise(entry->obj_cursor);
    evas_raise(entry->evas, entry->event_box);
+
+   D_RETURN;
 }
 
 void
 e_entry_lower(E_Entry *entry)
 {
+   D_ENTER;
+   
    evas_lower(entry->evas, entry->event_box);
    if (entry->obj_cursor) ebits_lower(entry->obj_cursor);
    if (entry->obj_selection) ebits_lower(entry->obj_selection);
    evas_lower(entry->evas, entry->text);
    evas_lower(entry->evas, entry->clip_box);
    if (entry->obj_base) ebits_lower(entry->obj_base);
+
+   D_RETURN;
 }
 
 void
 e_entry_set_layer(E_Entry *entry, int l)
 {
+   D_ENTER;
+   
    if (entry->obj_base) ebits_set_layer(entry->obj_base, l);
    evas_set_layer(entry->evas, entry->clip_box, l);
    evas_set_layer(entry->evas, entry->text, l);
    if (entry->obj_selection) ebits_set_layer(entry->obj_selection, l);
    if (entry->obj_cursor) ebits_set_layer(entry->obj_cursor, l);
    evas_set_layer(entry->evas, entry->event_box, l);
+
+   D_RETURN;
 }
 
 void
 e_entry_set_clip(E_Entry *entry, Evas_Object clip)
 {
+   D_ENTER;
+   
    evas_set_clip(entry->evas, entry->clip_box, clip);
    if (entry->obj_base) 
      ebits_set_clip(entry->obj_base, clip);
+
+   D_RETURN;
 }
 
 void
 e_entry_unset_clip(E_Entry *entry)
 {
+   D_ENTER;
+   
    evas_unset_clip(entry->evas, entry->clip_box);
    if (entry->obj_base) 
      ebits_unset_clip(entry->obj_base);
+
+   D_RETURN;
 }
 
 void
 e_entry_move(E_Entry *entry, int x, int y)
 {
+   D_ENTER;
+   
    entry->x = x;
    entry->y = y;
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
 e_entry_resize(E_Entry *entry, int w, int h)
 {
+   D_ENTER;
+   
    entry->w = w;
    entry->h = h;
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
@@ -612,6 +700,8 @@ e_entry_query_max_size(E_Entry *entry, int *w, int *h)
    int p1l, p1r, p1t, p1b;
    int p2l, p2r, p2t, p2b;
    
+   D_ENTER;
+   
    p1l = p1r = p1t = p1b = 0;
    if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
    p2l = p2r = p2t = p2b = 0;
@@ -619,6 +709,8 @@ e_entry_query_max_size(E_Entry *entry, int *w, int *h)
    
    if (w) *w = evas_get_text_width(entry->evas, entry->text) + p1l + p1r + p2l + p2r;
    if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+
+   D_RETURN;
 }
 
 void
@@ -627,12 +719,16 @@ e_entry_max_size(E_Entry *entry, int *w, int *h)
    int p1l, p1r, p1t, p1b;
    int p2l, p2r, p2t, p2b;
    
+   D_ENTER;
+   
    p1l = p1r = p1t = p1b = 0;
    if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
    p2l = p2r = p2t = p2b = 0;
    if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
    if (w) *w = 8000;
    if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+
+   D_RETURN;
 }
 
 void
@@ -641,12 +737,16 @@ e_entry_min_size(E_Entry *entry, int *w, int *h)
    int p1l, p1r, p1t, p1b;
    int p2l, p2r, p2t, p2b;
    
+   D_ENTER;
+   
    p1l = p1r = p1t = p1b = 0;
    if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
    p2l = p2r = p2t = p2b = 0;
    if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
    if (w) *w = p1l + p1r + p2l + p2r + entry->min_size;
    if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+
+   D_RETURN;
 }
 
 void
@@ -654,6 +754,8 @@ e_entry_set_size(E_Entry *entry, int w, int h)
 {
    int p1l, p1r, p1t, p1b;
    int p2l, p2r, p2t, p2b;
+   
+   D_ENTER;
    
    p1l = p1r = p1t = p1b = 0;
    if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
@@ -664,13 +766,17 @@ e_entry_set_size(E_Entry *entry, int w, int h)
 	entry->min_size = w;
 	e_entry_configure(entry);
      }
+
+   D_RETURN;
    UN(h);
 }
 
 void
 e_entry_set_focus(E_Entry *entry, int focused)
 {
-   if (entry->focused == focused) return;
+   D_ENTER;
+   
+   if (entry->focused == focused) D_RETURN;
    entry->focused = focused;
    e_entry_configure(entry);
    if (entry->focused)
@@ -683,11 +789,15 @@ e_entry_set_focus(E_Entry *entry, int focused)
 	if (entry->func_focus_out) 
 	  entry->func_focus_out(entry, entry->data_focus_out);
      }
+
+   D_RETURN;
 }
 
 void
 e_entry_set_text(E_Entry *entry, const char *text)
 {
+   D_ENTER;
+   
    IF_FREE(entry->buffer);
    e_strdup(entry->buffer, text);
    evas_set_text(entry->evas, entry->text, entry->buffer);
@@ -696,53 +806,79 @@ e_entry_set_text(E_Entry *entry, const char *text)
    e_entry_configure(entry);
    if (entry->func_changed) 
      entry->func_changed(entry, entry->data_changed);
+
+   D_RETURN;
 }
 
 const char *
 e_entry_get_text(E_Entry *entry)
 {
-   return entry->buffer;
+   D_ENTER;
+   
+   D_RETURN_(entry->buffer);
 }
 
 void
 e_entry_set_cursor(E_Entry *entry, int cursor_pos)
 {
+   D_ENTER;
+   
    entry->cursor_pos = cursor_pos;
    e_entry_configure(entry);   
+
+   D_RETURN;
 }
 
 int
 e_entry_get_cursor(E_Entry *entry)
 {
-   return entry->cursor_pos;
+   D_ENTER;
+   
+   D_RETURN_(entry->cursor_pos);
 }
 
 void
 e_entry_set_changed_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
 {
+   D_ENTER;
+   
    entry->func_changed = func;
    entry->data_changed = data;
+
+   D_RETURN;
 }
 
 void
 e_entry_set_enter_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
 {
+   D_ENTER;
+   
    entry->func_enter = func;
    entry->data_enter = data;
+
+   D_RETURN;
 }
 
 void
 e_entry_set_focus_in_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
 {
+   D_ENTER;
+   
    entry->func_focus_in = func;
    entry->data_focus_in = data;
+
+   D_RETURN;
 }
 
 void
 e_entry_set_focus_out_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
 {
+   D_ENTER;
+   
    entry->func_focus_out = func;
    entry->data_focus_out = data;
+
+   D_RETURN;
 }
 
 void
@@ -750,7 +886,9 @@ e_entry_insert_text(E_Entry *entry, char *text)
 {
    char *str2;
    
-   if (!text) return;
+   D_ENTER;
+   
+   if (!text) D_RETURN;
    str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(text));
    str2[0] = 0;
    strncat(str2, entry->buffer, entry->cursor_pos);
@@ -760,12 +898,16 @@ e_entry_insert_text(E_Entry *entry, char *text)
    free(str2);
    entry->cursor_pos+=strlen(text);
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
 e_entry_clear_selection(E_Entry *entry)
 {
    char *str2;
+   
+   D_ENTER;
    
    if (entry->select.start >= 0)
      {
@@ -779,6 +921,8 @@ e_entry_clear_selection(E_Entry *entry)
 	entry->select.start = -1;
      }
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
@@ -786,11 +930,15 @@ e_entry_delete_to_left(E_Entry *entry)
 {
    char *str2;
    
+   D_ENTER;
+   
    e_strdup(str2, e_entry_get_text(entry));
    strcpy(&(str2[entry->cursor_pos - 1]), &(entry->buffer[entry->cursor_pos]));
    entry->cursor_pos--;
    e_entry_set_text(entry, str2);
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 void
@@ -798,16 +946,22 @@ e_entry_delete_to_right(E_Entry *entry)
 {
    char *str2;
    
+   D_ENTER;
+   
    e_strdup(str2, e_entry_get_text(entry));
    strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
    e_entry_set_text(entry, str2);
    free(str2);
    e_entry_configure(entry);
+
+   D_RETURN;
 }
 
 char *
 e_entry_get_selection(E_Entry *entry)
 {
+   D_ENTER;
+   
    if (entry->select.start >= 0)
      {
 	char *str2;
@@ -818,7 +972,8 @@ e_entry_get_selection(E_Entry *entry)
 	  len = strlen(entry->buffer) - entry->select.start;
 	str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
 	str2[len] = 0;
-	return str2;
+	D_RETURN_(str2);
      }
-   return NULL;
+
+   D_RETURN_(NULL);
 }

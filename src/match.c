@@ -1,8 +1,11 @@
+#include "debug.h"
 #include "match.h"
 
 void
 e_match_set_props(E_Border *b)
 {
+   D_ENTER;
+ 
 #if 0   
    /* if we have a match that says to ignore prog coords: */
    b->client.pos.requested = 0;
@@ -34,4 +37,6 @@ e_match_set_props(E_Border *b)
    /* if we have a match specifying layer */
    b->client.layer = match_layer;
 #endif   
+
+   D_RETURN;
 }

@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "config.h"
 #include "util.h"
 
@@ -7,9 +8,9 @@ static char cfg_root[] = "";
 { \
   if (!strcmp(type, _key)) \
     { \
-      if ((_var)[0]) return (_var); \
+      if ((_var)[0]) D_RETURN_(_var); \
       sprintf((_var), ## _args); \
-      return (_var); \
+      D_RETURN_(_var); \
     } \
 }
 
@@ -32,6 +33,8 @@ static char cfg_fonts_dir[PATH_MAX] = "";
 char *
 e_config_get(char *type)
 {
+   D_ENTER;
+
    /* for now use the system defaults and not the user copied settings */
    /* so if i chnage stuff i dont have to rm my personaly settings and */
    /* have e re-install them. yes this is different from e16 - the     */
@@ -75,13 +78,16 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/backgrounds/");
    E_CONF("fonts", cfg_fonts_dir,
 	  PACKAGE_DATA_DIR"/data/fonts/");
-   return "";
+
+   D_RETURN_("");
 }
 
 void
 e_config_init(void)
 {
    char buf[PATH_MAX];
+
+   D_ENTER;
 
 #if 1 /* for now don't do this. i think a cp -r will be needed later anyway */
    if (!e_file_is_dir(e_config_user_dir())) e_file_mkdir(e_config_user_dir());
@@ -108,11 +114,15 @@ e_config_init(void)
 #if 0   
    ts();
 #endif
+
+   D_RETURN;
 }
 
 void
 e_config_set_user_dir(char *dir)
 {
+   D_ENTER;
+
    strcpy(cfg_root, dir);
    /* reset the cached dir paths */
    cfg_grabs_db[0]    = 0;
@@ -132,19 +142,24 @@ e_config_set_user_dir(char *dir)
    cfg_fonts_dir[0]   = 0;
    /* init again - if the user hasnt got all the data */
    e_config_init();
+
+   D_RETURN;
 }
 
 char *
 e_config_user_dir(void)
 {
-   if (cfg_user_dir[0]) return cfg_user_dir;
-   if (cfg_root[0]) return cfg_root;
+   D_ENTER;
+
+   if (cfg_user_dir[0]) D_RETURN_(cfg_user_dir);
+   if (cfg_root[0]) D_RETURN_(cfg_root);
 #if 1 /* disabled for now - use system ones only */
    sprintf(cfg_user_dir, "%s/.e/", e_file_home());
 #else   
    sprintf(cfg_user_dir, PACKAGE_DATA_DIR"/data/config/");
 #endif   
-   return cfg_user_dir;
+
+   D_RETURN_(cfg_user_dir);
 }
 
 void
@@ -157,6 +172,8 @@ e_config_type_add_node(E_Config_Base_Type *base, char *prefix,
 {
    E_Config_Node *cfg_node;
    
+   D_ENTER;
+
    cfg_node = NEW(E_Config_Node, 1);
    ZERO(cfg_node, E_Config_Node, 1);
    
@@ -171,6 +188,8 @@ e_config_type_add_node(E_Config_Base_Type *base, char *prefix,
 	e_strdup(cfg_node->def_str, def_str);
      }
    base->nodes = evas_list_append(base->nodes, cfg_node);
+
+   D_RETURN;
 }
 
 E_Config_Base_Type *
@@ -178,9 +197,12 @@ e_config_type_new(void)
 {
    E_Config_Base_Type *t;
    
+   D_ENTER;
+
    t = NEW(E_Config_Base_Type, 1);
    ZERO(t, E_Config_Base_Type, 1);
-   return t;
+
+   D_RETURN_(t);
 }
 
 void *
@@ -191,9 +213,14 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
    Evas_List l;
    char *data;
    
-   if (!e_file_exists(file)) return NULL;
+   D_ENTER;
+
+   if (!e_file_exists(file)) D_RETURN_(NULL);
    db = e_db_open_read(file);
-   if (!db) return NULL;
+
+   if (!db)
+     D_RETURN_(NULL);
+
    data = NEW(char, type->size);
    ZERO(data, char , type->size);
    for (l = type->nodes; l; l = l->next)
@@ -272,7 +299,8 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 	  }
      }
    e_db_close(db);
-   return data;
+
+   D_RETURN_(data);
 }
 
 
@@ -299,6 +327,8 @@ void ts(void)
    E_Config_Base_Type *cf_list;
    E_Config_Base_Type *cf_element;
    
+   D_ENTER;
+
    cf_element = e_config_type_new();
    E_CONFIG_NODE(cf_element, "name", E_CFG_TYPE_STR, NULL,   List_Element, name, 0, 0, "DEFAULT_NAME"); 
    E_CONFIG_NODE(cf_element, "size", E_CFG_TYPE_INT, NULL,   List_Element, size, 777, 0, NULL); 
@@ -336,6 +366,8 @@ void ts(void)
 	  }
 	exit(0);
      }
+
+   D_RETURN;
 }
 
 #endif

@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "fs.h"
 #include "exec.h"
 
@@ -15,13 +16,17 @@ static void e_fs_flush_timeout(int val, void *data);
 static void
 e_fs_flush_timeout(int val, void *data)
 {
-   if (!ec) return;
+   D_ENTER;
+
+   if (!ec) D_RETURN;
    if (efsd_commands_pending(ec) > 0)
      {
 	if (efsd_flush(ec) > 0)
 	  ecore_add_event_timer("e_fs_flush_timeout()", 
 			    0.00, e_fs_flush_timeout, 0, NULL);	
      }
+
+   D_RETURN;
    UN(data);
    UN(val);
 }
@@ -29,7 +34,11 @@ e_fs_flush_timeout(int val, void *data)
 static void
 e_fs_idle(void *data)
 {
+   D_ENTER;
+
    e_fs_flush_timeout(0, NULL);
+
+   D_RETURN;
    UN(data);
 }
 
@@ -38,6 +47,8 @@ e_fs_child_handle(Ecore_Event *ev)
 {
    Ecore_Event_Child *e;
    
+   D_ENTER;
+
    e = ev->event;
    printf("pid went splat! (%i)\n", e->pid);
    if (e->pid == efsd_pid)
@@ -48,6 +59,8 @@ e_fs_child_handle(Ecore_Event *ev)
 	efsd_pid = 0;
 	_e_fs_restarter(1, NULL);
      }
+
+   D_RETURN;
 }
 
 static void
@@ -55,6 +68,8 @@ _e_fs_fd_handle(int fd)
 {
    double start, current;
    
+   D_ENTER;
+
    start = ecore_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
@@ -92,12 +107,16 @@ _e_fs_fd_handle(int fd)
 	     break;
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
 _e_fs_restarter(int val, void *data)
 {
-   if (ec) return;
+   D_ENTER;
+
+   if (ec) D_RETURN;
 
    ec = efsd_open();
 
@@ -131,6 +150,8 @@ _e_fs_restarter(int val, void *data)
 	if (gap > 10.0) gap = 10.0;
 	ecore_add_event_timer("e_fs_restarter", gap, _e_fs_restarter, val + 1, NULL);
      }
+
+   D_RETURN;
    UN(data);
 }
 
@@ -139,35 +160,47 @@ e_fs_add_restart_handler(void (*func) (void *data), void *data)
 {
    E_FS_Restarter *rs;
    
+   D_ENTER;
+
    rs = NEW(E_FS_Restarter, 1);
    ZERO(rs, E_FS_Restarter, 1);
    rs->func = func;
    rs->data = data;
    fs_restart_handlers = evas_list_append(fs_restart_handlers, rs);
 
-   return rs;
+   D_RETURN_(rs);
 }
 
 void
 e_fs_del_restart_handler(E_FS_Restarter *rs)
 {
+   D_ENTER;
+
    if (evas_list_find(fs_restart_handlers, rs))
      {
 	fs_restart_handlers = evas_list_remove(fs_restart_handlers, rs);
 	FREE(rs);	
      }
+
+   D_RETURN;
 }
 
 void
 e_fs_add_event_handler(void (*func) (EfsdEvent *ev))
 {
-   if (!func) return;
+   D_ENTER;
+
+   if (!func) D_RETURN;
    fs_handlers = evas_list_append(fs_handlers, func);
+
+   D_RETURN;
 }
 
 void
 e_fs_init(void)
 {
+   D_ENTER;
+
    /* Hook in an fs handler that gets called whenever
       a child of this process exits.
    */
@@ -182,10 +215,14 @@ e_fs_init(void)
    */
    ecore_event_filter_idle_handler_add(e_fs_idle, NULL);   
    _e_fs_restarter(0, NULL);
+
+   D_RETURN;
 }
 
 EfsdConnection *
 e_fs_get_connection(void)
 {
-   return ec;
+   D_ENTER;
+
+   D_RETURN_(ec);
 }

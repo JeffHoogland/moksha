@@ -133,6 +133,9 @@
 !Isrc/iconbar.c
 !Isrc/menu.h
 !Isrc/menu.c
+!Isrc/object.h
+!Isrc/observer.h
+!Isrc/place.h
 !Isrc/view.h
 
     </section>

@@ -97,82 +97,6 @@ printf("%3.3f : %s()\n", __p->total, __p->func); \
 #define E_PROF_DUMP
 #endif
 
-/* Observer macros */
-#define OBS_PROPERTIES \
-Evas_List watched; \
-Ecore_Event_Type e_event; \
-void (*e_obs_notify)(void *_e_obs, void *_e_obj); \
-void (*e_obs_free)(void *_e_obs);
-#define OBS_INIT(_e_obs, _e_event, _e_obs_notify, _e_obs_free) \
-{ \
-    _e_obs->watched = NULL; \
-    _e_obs->e_event = _e_event; \
-    _e_obs->e_obs_notify = _e_obs_notify; \
-    _e_obs->e_obs_free = _e_obs_free; \
-}
-#define OBS_REGISTER(_e_obs, _e_obj) \
-{ \
-    _e_obj->observers = evas_list_append(_e_obj->observers, _e_obs); \
-    _e_obs->watched = evas_list_append(_e_obs->watched, _e_obj); \
-}
-#define OBS_UNREGISTER(_e_obj, _e_obs) \
-{ \
-    _e_obj->observers = evas_list_remove(_e_obj->observers, _e_obs); \
-    _e_obs->watched = evas_list_remove(_e_obs->watched, _e_obj); \
-}
-#define OBS_NOTIFY(_e_obj, _e_event) \
-{ \
-    Evas_List obs; \
-    obs = _e_obj->observers; \
-    while (obs) { \
-	if (((E_Observer *)obs->data)->e_event == ECORE_EVENT_MAX || \
-	    ((E_Observer *)obs->data)->e_event == _e_event) \
-	  ((E_Observer *)obs->data)->e_obs_notify(obs->data, _e_obj); \
-	obs = obs->next; \
-    } \
-}
-#define OBS_FREE(_e_obs) \
-{ \
-    E_Object *_e_obj; \
-    E_Observer *_notify; \
-    while (_e_obs->watched) { \
-	_e_obj = _e_obj->watched->data; \
-	OBS_UNREGISTER(_e_obj, _e_obs); \
-	_e_obs->e_obs_free(_notify); \
-    } \
-}
-
-/* object macros */
-#define OBJ_REF(_e_obj) _e_obj->references++
-#define OBJ_UNREF(_e_obj) _e_obj->references--
-#define OBJ_IF_FREE(_e_obj) if (_e_obj->references == 0)
-#define OBJ_FREE(_e_obj) \
-{ \
-    E_Observer *act; \
-    while (_e_obj->observers) { \
-	act = _e_obj->observers->data; \
-	OBS_UNREGISTER(_e_obj, act); \
-    } \
-    _e_obj->e_obj_free(_e_obj); \
-}
-#define OBJ_DO_FREE(_e_obj) \
-{ \
-  OBJ_UNREF(_e_obj); \
-  OBJ_IF_FREE(_e_obj) \
-    { \
-      OBJ_FREE(_e_obj); \
-    } \
-}
-#define OBJ_PROPERTIES \
-int references; \
-void (*e_obj_free) (void *e_obj); \
-Evas_List observers;
-#define OBJ_INIT(_e_obj, _e_obj_free_func) \
-{ \
-  _e_obj->references = 1; \
-  _e_obj->e_obj_free = (void *) _e_obj_free_func; \
-  _e_obj->observers = NULL; \
-}
 
 /* misc util macros */
 #define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
@@ -183,20 +107,5 @@ Evas_List observers;
 #define SPANS_COMMON(x1, w1, x2, w2) \
 (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
 #define UN(_blah) _blah = 0
-
-/* data type prototypes... not actually used */
-typedef struct _E_Object              E_Object;
-typedef struct _E_Observer	      E_Observer;
-
-/* actual data struct members */
-struct _E_Object
-{
-   OBJ_PROPERTIES;
-};
-
-struct _E_Observer
-{
-   OBS_PROPERTIES;
-};
 
 #endif

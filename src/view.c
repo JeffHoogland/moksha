@@ -1,5 +1,6 @@
 #include <libefsd.h>
 
+#include "debug.h"
 #include "view.h"
 #include "cursors.h"
 #include "background.h"
@@ -57,6 +58,8 @@ e_view_write_icon_xy_timeout(int val, void *data)
    E_View *v;
    Evas_List l;
    E_Icon *ic;
+
+   D_ENTER;
    
    v = data;
    for (l = v->icons; l; l = l->next)
@@ -78,11 +81,15 @@ e_view_write_icon_xy_timeout(int val, void *data)
 				   ic->geom.y);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_view_selection_update(E_View *v)
 {
+   D_ENTER;
+   
    if ((v->select.on) && (!v->select.obj.middle))
      {
 	Evas_Gradient grad;
@@ -209,9 +216,9 @@ e_view_selection_update(E_View *v)
 	evas_del_object(v->evas, v->select.obj.grad_b);
 	evas_del_object(v->evas, v->select.obj.clip);
 	v->select.obj.middle = NULL;
-	return;
+	D_RETURN;
      }
-   if (!v->select.on) return;
+   if (!v->select.on) D_RETURN;
    /* move & resize select objects */
      {
 	evas_move(v->evas, v->select.obj.edge_l, v->select.x, v->select.y + 1);
@@ -246,6 +253,8 @@ e_view_selection_update(E_View *v)
    evas_show(v->evas, v->select.obj.grad_t);
    evas_show(v->evas, v->select.obj.grad_b);
    evas_show(v->evas, v->select.obj.clip);
+
+   D_RETURN;
 }
 
 static void
@@ -253,8 +262,12 @@ e_view_scrollbar_v_change_cb(void *_data, E_Scrollbar *sb, double val)
 {
    E_View *v;
    
+   D_ENTER;
+   
    v = _data;
    e_view_scroll_to(v, v->scroll.x, v->spacing.window.t - sb->val);
+
+   D_RETURN;
    UN(val);
 }
 
@@ -263,8 +276,12 @@ e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val)
 {
    E_View *v;
    
+   D_ENTER;
+   
    v = _data;
    e_view_scroll_to(v, v->spacing.window.l - sb->val, v->scroll.y);
+
+   D_RETURN;
    UN(val);
 }
 
@@ -274,7 +291,9 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ecore_Event_Mouse_Down          *ev;
    E_View *v;
    
-   if (!current_ev) return;
+   D_ENTER;
+   
+   if (!current_ev) D_RETURN;
    ev = current_ev->event;
    v = _data;
    if (!(ev->mods & (mulit_select_mod | range_select_mod)))
@@ -306,8 +325,11 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_view_selection_update(v);
      }
+
    if( _b == 2 && ev->double_click )
 	 ecore_event_loop_quit();
+
+   D_RETURN;
    UN(_e);
    UN(_o);
 }
@@ -319,7 +341,9 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_View *v;
    int dx, dy;
    
-   if (!current_ev) return;
+   D_ENTER;
+   
+   if (!current_ev) D_RETURN;
    ev = current_ev->event;
    v = _data;
    dx = 0;
@@ -406,6 +430,8 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	v->select.x = _x;
 	v->select.y = _y;
      }
+
+   D_RETURN;
    UN(_e);
    UN(_o);
 }
@@ -416,7 +442,9 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ecore_Event_Mouse_Down          *ev;
    E_View *v;
    
-   if (!current_ev) return;
+   D_ENTER;
+   
+   if (!current_ev) D_RETURN;
    ev = current_ev->event;
    v = _data;
    if (v->select.on)
@@ -443,6 +471,8 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_view_selection_update(v);
      }
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -455,10 +485,12 @@ e_view_icon_update_state(E_Icon *ic)
    int iw, ih;
    int gw, gh;
    
+   D_ENTER;
+   
    if (!ic->info.icon)
      {
 	printf("EEEEEEEEEEK %s has no icon\n", ic->file);
-	return;
+	D_RETURN;
      }
    if (ic->state.clicked)
      {
@@ -527,14 +559,18 @@ e_view_icon_update_state(E_Icon *ic)
    gw = ic->geom.icon.w;
    gh = ic->geom.icon.h;
    e_view_icon_apply_xy(ic);
-   if ((iw == gw) && (ih == gh)) return;
+   if ((iw == gw) && (ih == gh)) D_RETURN;
    e_view_queue_resort(ic->view);
+
+   D_RETURN;
 }
 
 void
 e_view_deselect_all(void)
 {
    Evas_List ll;
+   
+   D_ENTER;
    
    for (ll = views; ll; ll = ll->next)
      {
@@ -550,12 +586,16 @@ e_view_deselect_all(void)
 	     e_view_icon_deselect(ic);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_view_deselect_all_except(E_Icon *not_ic)
 {
    Evas_List ll;
+   
+   D_ENTER;
    
    for (ll = views; ll; ll = ll->next)
      {
@@ -572,40 +612,56 @@ e_view_deselect_all_except(E_Icon *not_ic)
 	       e_view_icon_deselect(ic);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_view_icon_invert_selection(E_Icon *ic)
 {
+   D_ENTER;
+   
    if (ic->state.selected) e_view_icon_deselect(ic);
    else e_view_icon_select(ic);
+
+   D_RETURN;
 }
 
 void
 e_view_icon_select(E_Icon *ic)
 {
+   D_ENTER;
+   
    if (!ic->state.selected)
      {
 	ic->state.selected = 1;
 	ic->view->sel_count++;
 	e_view_icon_update_state(ic);
      }
+
+   D_RETURN;
 }
 
 void
 e_view_icon_deselect(E_Icon *ic)
 {
+   D_ENTER;
+   
    if (ic->state.selected)
      {
 	ic->state.selected = 0;
 	ic->view->sel_count--;
 	e_view_icon_update_state(ic);
      }
+
+   D_RETURN;
 }
 
 void
 e_view_icon_exec(E_Icon *ic)
 {
+   D_ENTER;
+   
    if (!strcmp(ic->info.mime.base, "dir"))
      {
 	E_View *v;
@@ -632,6 +688,8 @@ e_view_icon_exec(E_Icon *ic)
 	ecore_window_set_min_size(v->win.base, 8, 8);
      }
    e_view_icon_deselect(ic);
+
+   D_RETURN;
 }
 
 void
@@ -639,6 +697,8 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
 {
    Evas_List l;
    int x1, x2, y1, y2;
+   
+   D_ENTER;
    
    x1 = v->extents.x1;
    x2 = v->extents.x2;
@@ -656,7 +716,7 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
 	     if (min_y) *min_y = 0;
 	     if (max_x) *max_x = 1;
 	     if (max_y) *max_y = 1;
-	     return;
+	     D_RETURN;
 	  }
 	for (l = v->icons; l; l = l->next)
 	  {
@@ -680,12 +740,16 @@ e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max
    if (min_y) *min_y = y1;
    if (max_x) *max_x = x2 - 1;
    if (max_y) *max_y = y2 - 1;
+
+   D_RETURN;
 }
 
 void
 e_view_icons_apply_xy(E_View *v)
 {
    Evas_List l;
+   
+   D_ENTER;
    
    for (l = v->icons; l; l = l->next)
      {
@@ -694,12 +758,16 @@ e_view_icons_apply_xy(E_View *v)
 	ic = l->data;
 	e_view_icon_apply_xy(ic);
      }
+
+   D_RETURN;
 }
 
 void
 e_view_scroll_to(E_View *v, int sx, int sy)
 {
    int min_x, min_y, max_x, max_y;
+   
+   D_ENTER;
    
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
    if (sx < v->size.w - v->spacing.window.r - max_x)
@@ -710,17 +778,23 @@ e_view_scroll_to(E_View *v, int sx, int sy)
      sy = v->size.h - v->spacing.window.b - max_y;
    if (sy > v->spacing.window.t - min_y)
      sy = v->spacing.window.t - min_y;
-   if ((sx == v->scroll.x) && (v->scroll.y == sy)) return;
+   if ((sx == v->scroll.x) && (v->scroll.y == sy)) D_RETURN;
    v->scroll.x = sx;
    v->scroll.y = sy;
    e_view_icons_apply_xy(v);
    if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+
+   D_RETURN;
 }
 
 void
 e_view_scroll_by(E_View *v, int sx, int sy)
 {
+   D_ENTER;
+   
    e_view_scroll_to(v, v->scroll.x + sx, v->scroll.y + sy);
+
+   D_RETURN;
 }
 
 void
@@ -728,6 +802,8 @@ e_view_scroll_to_percent(E_View *v, double psx, double psy)
 {
    int min_x, min_y, max_x, max_y;
    int sx, sy;
+   
+   D_ENTER;
    
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
    sx = (psx * ((double)max_x - (double)min_x)) - min_x;
@@ -740,11 +816,13 @@ e_view_scroll_to_percent(E_View *v, double psx, double psy)
      sy = v->size.h - v->spacing.window.b - max_y;
    if (sy > v->spacing.window.t - min_y)
      sy = v->spacing.window.t - min_y;
-   if ((sx == v->scroll.x) && (v->scroll.y == sy)) return;
+   if ((sx == v->scroll.x) && (v->scroll.y == sy)) D_RETURN;
    v->scroll.x = sx;
    v->scroll.y = sy;
    e_view_icons_apply_xy(v);
    if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+
+   D_RETURN;
 }
 
 void
@@ -752,6 +830,8 @@ e_view_get_viewable_percentage(E_View *v, double *vw, double *vh)
 {
    int min_x, min_y, max_x, max_y;
    double p;
+   
+   D_ENTER;
    
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
    if (min_x == max_x)
@@ -774,6 +854,8 @@ e_view_get_viewable_percentage(E_View *v, double *vw, double *vh)
 	  ((double)(max_y - min_y));
 	if (vh) *vh = p;
      }
+
+   D_RETURN;
 }
 
 void
@@ -781,6 +863,8 @@ e_view_get_position_percentage(E_View *v, double *vx, double *vy)
 {
    int min_x, min_y, max_x, max_y;
    double p;
+   
+   D_ENTER;
    
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
    if (min_x == max_x)
@@ -801,6 +885,8 @@ e_view_get_position_percentage(E_View *v, double *vx, double *vy)
 	p = ((double)(v->scroll.y - min_y)) / ((double)(max_y - min_y));
 	if (vy) *vy = p;
      }
+
+   D_RETURN;
 }
 
 static void
@@ -810,8 +896,10 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ecore_Event *ev;
    Ecore_Event_Mouse_Down *e;
    
+   D_ENTER;
+   
    ev = e_view_get_current_event();
-   if (!ev) return;
+   if (!ev) D_RETURN;
    e = ev->event;
    ic = _data;
    ic->view->select.down.x = _x;
@@ -848,6 +936,8 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    else if (_b == 3)
      {
      }
+
+   D_RETURN;
    UN(_e);
    UN(_o);
 }
@@ -859,8 +949,10 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ecore_Event *ev;
    Ecore_Event_Mouse_Up *e;
    
+   D_ENTER;
+   
    ev = e_view_get_current_event();
-   if (!ev) return;
+   if (!ev) D_RETURN;
    e = ev->event;
    ic = _data;
    if (ic->view->drag.started)
@@ -870,7 +962,7 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	e_view_icon_update_state(ic);
 	ecore_window_destroy(ic->view->drag.win);
 	ic->view->drag.started = 0;
-	return;	
+	D_RETURN;	
      }
    if (_b == 1)
      {
@@ -895,6 +987,8 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    ic->state.clicked = 0;
    e_view_icon_update_state(ic);
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_x);
@@ -906,8 +1000,12 @@ e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
    
+   D_ENTER;
+   
    ic = _data;
    e_cursors_display_in_window(ic->view->win.main, "View_Icon");
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -922,6 +1020,8 @@ e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    
    ic = _data;
    e_cursors_display_in_window(ic->view->win.main, "View");
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -936,11 +1036,13 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ecore_Event *ev;
    Ecore_Event_Mouse_Move *e;
    
+   D_ENTER;
+   
    ev = e_view_get_current_event();
-   if (!ev) return;
+   if (!ev) D_RETURN;
    e = ev->event;
    ic = _data;
-   if (!ic->state.clicked) return;
+   if (!ic->state.clicked) D_RETURN;
    if (!ic->view->drag.started)
      {
 	int dx, dy;
@@ -1019,7 +1121,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ic->view->drag.offset.x = downx - ic->view->drag.x;
 	     ic->view->drag.offset.y = downy - ic->view->drag.y;
 	     
-	     if ((ww < 1) || (wh < 1)) return;
+	     if ((ww < 1) || (wh < 1)) D_RETURN;
 	     ic->view->drag.win = ecore_window_override_new(0, wx, wy, ww, wh);
 	     pmap = ecore_pixmap_new(ic->view->drag.win, ww, wh, 0);
 	     mask = ecore_pixmap_new(ic->view->drag.win, ww, wh, 1);
@@ -1062,7 +1164,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 				      if (!ic->info.icon)
 					{
 					   printf("EEEEEEEEEEK %s has no icon\n", ic->file);
-					   return;
+					   D_RETURN;
 					}
 				      if (ic->state.clicked)
 					{
@@ -1132,6 +1234,8 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->view->drag.update = 1;
 	ic->view->changed = 1;
      }
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -1142,6 +1246,8 @@ e_idle(void *data)
 {
    Evas_List l;
 
+   D_ENTER;
+   
    for (l = views; l; l = l->next)
      {
 	E_View *v;
@@ -1149,13 +1255,16 @@ e_idle(void *data)
 	v = l->data;
 	e_view_update(v);
      }
-   return;
+
+   D_RETURN;
    UN(data);
 }
 
 void
 e_view_geometry_record(E_View *v)
 {
+   D_ENTER;
+   
    if (e_fs_get_connection())
      {
 	int left, top;
@@ -1175,6 +1284,8 @@ e_view_geometry_record(E_View *v)
 			      "/view/h", v->dir, 
 			      v->size.h);
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1182,8 +1293,12 @@ e_view_geometry_record_timeout(int val, void *data)
 {
    E_View *v;
    
+   D_ENTER;
+   
    v = data;
    e_view_geometry_record(v);
+
+   D_RETURN;
    UN(val);
 }
 
@@ -1192,8 +1307,12 @@ e_view_queue_geometry_record(E_View *v)
 {
    char name[PATH_MAX];
    
+   D_ENTER;
+   
    sprintf(name, "geometry_record.%s", v->dir);
    ecore_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
+
+   D_RETURN;
 }
 
 void
@@ -1201,8 +1320,12 @@ e_view_queue_icon_xy_record(E_View *v)
 {
    char name[PATH_MAX];
    
+   D_ENTER;
+   
    sprintf(name, "icon_xy_record.%s", v->dir);
    ecore_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
+
+   D_RETURN;
 }
 
 
@@ -1211,6 +1334,8 @@ e_configure(Ecore_Event * ev)
 {
    Ecore_Event_Window_Configure *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1269,6 +1394,8 @@ e_configure(Ecore_Event * ev)
 	       }
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1277,6 +1404,8 @@ e_property(Ecore_Event * ev)
    Ecore_Event_Window_Configure *e;
    Evas_List l;
    
+   D_ENTER;
+   
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -1287,6 +1416,8 @@ e_property(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1295,6 +1426,8 @@ e_unmap(Ecore_Event * ev)
    Ecore_Event_Window_Unmap *e;
    Evas_List l;
    
+   D_ENTER;
+   
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -1305,6 +1438,8 @@ e_unmap(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1313,6 +1448,8 @@ e_visibility(Ecore_Event * ev)
    Ecore_Event_Window_Unmap *e;
    Evas_List l;
    
+   D_ENTER;
+   
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -1323,6 +1460,8 @@ e_visibility(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1331,6 +1470,8 @@ e_focus_in(Ecore_Event * ev)
    Ecore_Event_Window_Focus_In *e;
    Evas_List l;
    
+   D_ENTER;
+   
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -1341,6 +1482,8 @@ e_focus_in(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1349,23 +1492,7 @@ e_focus_out(Ecore_Event * ev)
    Ecore_Event_Window_Focus_Out *e;
    Evas_List l;
    
-   e = ev->event;
-   for (l = views; l; l = l->next)
-     {
-	E_View *v;
-	
-	v = l->data;
-	if (e->win == v->win.base)
-	  {
-	  }
-     }
-}
-
-static void
-e_delete(Ecore_Event * ev)
-{
-   Ecore_Event_Window_Delete *e;
-   Evas_List l;
+   D_ENTER;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1375,10 +1502,34 @@ e_delete(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	     OBJ_DO_FREE(v);
-	     return;
 	  }
      }
+
+   D_RETURN;
+}
+
+static void
+e_delete(Ecore_Event * ev)
+{
+   Ecore_Event_Window_Delete *e;
+   Evas_List l;
+   
+   D_ENTER;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	     e_object_unref(E_OBJECT(v));
+	     D_RETURN;
+	  }
+     }
+
+   D_RETURN;
 }
 
 static void 
@@ -1386,6 +1537,8 @@ e_wheel(Ecore_Event * ev)
 {
    Ecore_Event_Wheel           *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1397,6 +1550,8 @@ e_wheel(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1404,6 +1559,8 @@ e_key_down(Ecore_Event * ev)
 {
    Ecore_Event_Key_Down          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1442,9 +1599,11 @@ e_key_down(Ecore_Event * ev)
 		    {
 		    }
 	       }
-	     return;
+	     D_RETURN;
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1453,14 +1612,18 @@ e_key_up(Ecore_Event * ev)
    Ecore_Event_Key_Up          *e;
    Evas_List l;
    
+   D_ENTER;
+   
    e = ev->event;
-   return;
+   D_RETURN;
    for (l = views; l; l = l->next)
      {
 	E_View *v;
 	
 	v = l->data;
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1468,6 +1631,8 @@ e_mouse_down(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Down          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    current_ev = ev;
@@ -1486,10 +1651,12 @@ e_mouse_down(Ecore_Event * ev)
 	       ecore_focus_to_window(v->win.base);
 	     evas_event_button_down(v->evas, e->x, e->y, e->button);
 	     current_ev = NULL;
-	     return;
+	     D_RETURN;
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 static void
@@ -1497,6 +1664,8 @@ e_mouse_up(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Up          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    current_ev = ev;
@@ -1509,10 +1678,12 @@ e_mouse_up(Ecore_Event * ev)
 	  {
 	     evas_event_button_up(v->evas, e->x, e->y, e->button);
 	     current_ev = NULL;
-	     return;
+	     D_RETURN;
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 static void
@@ -1520,6 +1691,8 @@ e_mouse_move(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Move          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    current_ev = ev;
@@ -1532,10 +1705,12 @@ e_mouse_move(Ecore_Event * ev)
 	  {
 	     evas_event_move(v->evas, e->x, e->y);
 	     current_ev = NULL;
-	     return;
+	     D_RETURN;
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 static void
@@ -1543,6 +1718,8 @@ e_mouse_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Enter          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    current_ev = ev;
@@ -1558,10 +1735,12 @@ e_mouse_in(Ecore_Event * ev)
 		  evas_event_enter(v->evas);
 	       }
 	     current_ev = NULL;
-	     return;
+	     D_RETURN;
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 static void
@@ -1569,6 +1748,8 @@ e_mouse_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Leave          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    current_ev = ev;
@@ -1581,10 +1762,12 @@ e_mouse_out(Ecore_Event * ev)
 	  {
 	     evas_event_leave(v->evas);
 	     current_ev = NULL;
-	     return;
+	     D_RETURN;
 	  }
      }
    current_ev = NULL;
+
+   D_RETURN;
 }
 
 static void
@@ -1592,6 +1775,8 @@ e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose          *e;
    Evas_List l;
+   
+   D_ENTER;
    
    e = ev->event;
    for (l = views; l; l = l->next)
@@ -1604,9 +1789,11 @@ e_window_expose(Ecore_Event * ev)
 	     if (!(v->pmap))
 	       evas_update_rect(v->evas, e->x, e->y, e->w, e->h);
 	     v->changed = 1;
-	     return;
+	     D_RETURN;
 	  }
      }
+
+   D_RETURN;
 }
 
 static void
@@ -1614,6 +1801,8 @@ e_view_handle_fs_restart(void *data)
 {
    E_View *v;
    Evas_List icons = NULL, l;
+   
+   D_ENTER;
    
    v = data;
    
@@ -1662,26 +1851,38 @@ e_view_handle_fs_restart(void *data)
      }
    printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
    v->is_listing = 1;
+
+   D_RETURN;
 }
 
 Ecore_Event *
 e_view_get_current_event(void)
 {
-   return current_ev;
+   D_ENTER;
+   
+   D_RETURN_(current_ev);
 }
 
 int
 e_view_filter_file(E_View *v, char *file)
 {
-   if (file[0] == '.') return 0;
-   return 1;
+   D_ENTER;
+   
+   if (file[0] == '.')
+     D_RETURN_(0);
+
+   D_RETURN_(1);
    UN(v);
 }
 
-void
-e_view_icon_free(E_Icon *ic)
+static void
+e_view_icon_cleanup(E_Icon *ic)
 {
-   FREE(ic);
+   D_ENTER;
+   
+   e_object_cleanup(E_OBJECT(ic));
+
+   D_RETURN;
 }
 
 E_Icon *
@@ -1689,10 +1890,14 @@ e_view_icon_new(void)
 {
    E_Icon *ic;
    
+   D_ENTER;
+   
    ic = NEW(E_Icon, 1);
    ZERO(ic, E_Icon, 1);
-   OBJ_INIT(ic, e_view_icon_free);
-   return ic;
+   
+   e_object_init(E_OBJECT(ic), (E_Cleanup_Func) e_view_icon_cleanup);
+
+   D_RETURN_(ic);
 }
 
 E_Icon *
@@ -1700,21 +1905,25 @@ e_view_find_icon_by_file(E_View *view, char *file)
 {
    Evas_List l;
    
+   D_ENTER;
+   
    for (l = view->icons; l; l = l->next)
      {
 	E_Icon *ic;
 	
 	ic = l->data;
 	if ((ic) && (ic->file) && (file) && (!strcmp(ic->file, file)))
-	  return ic;
+	  D_RETURN_(ic);
      }
-   return NULL;
+   D_RETURN_(NULL);
 }
 
 void
 e_view_icon_show(E_Icon *ic)
 {
-   if (ic->state.visible) return;
+   D_ENTER;
+   
+   if (ic->state.visible) D_RETURN;
    ic->state.visible = 1;
    if (!ic->obj.event1)
      {
@@ -1742,22 +1951,30 @@ e_view_icon_show(E_Icon *ic)
    e_text_show(ic->obj.text);
    evas_show(ic->view->evas, ic->obj.event1);
    evas_show(ic->view->evas, ic->obj.event2);
+
+   D_RETURN;
 }
 
 void
 e_view_icon_hide(E_Icon *ic)
 {
-   if (!ic->state.visible) return;
+   D_ENTER;
+   
+   if (!ic->state.visible) D_RETURN;
    ic->state.visible = 0;
    evas_hide(ic->view->evas, ic->obj.icon);
    e_text_hide(ic->obj.text);
    evas_hide(ic->view->evas, ic->obj.event1);
    evas_hide(ic->view->evas, ic->obj.event2);
+
+   D_RETURN;
 }
 
 void
 e_view_icon_apply_xy(E_Icon *ic)
 {
+   D_ENTER;
+   
    /* threse calc icon extents for: */
    /*  [I]  */
    /*  Ig   */
@@ -1846,6 +2063,8 @@ e_view_icon_apply_xy(E_Icon *ic)
    ic->prev_geom.y = ic->geom.y;
    ic->prev_geom.w = ic->geom.w;
    ic->prev_geom.h = ic->geom.h;
+
+   D_RETURN;
 }
 
 static int
@@ -1853,9 +2072,12 @@ e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2)
 {
    E_Icon *ic, *ic2;
    
+   D_ENTER;
+   
    ic = *((E_Icon **)data1);
    ic2 = *((E_Icon **)data2);
-   return (strcmp(ic->file, ic2->file));
+
+   D_RETURN_(strcmp(ic->file, ic2->file));
 }
 
 void
@@ -1865,7 +2087,9 @@ e_view_resort_alphabetical(E_View *v)
    E_Icon **array;
    int i, count;
    
-   if (!v->icons) return;
+   D_ENTER;
+   
+   if (!v->icons) D_RETURN;
    for (count = 0, l = v->icons; l; l = l->next) count++;
    array = malloc(sizeof(E_Icon *) * count);
    for (i = 0, l = v->icons; l; l = l->next) array[i++] = l->data;
@@ -1879,6 +2103,8 @@ e_view_resort_alphabetical(E_View *v)
    v->icons = icons;
    
    printf("done...\n");
+
+   D_RETURN;
 }
 
 void
@@ -1888,6 +2114,8 @@ e_view_arrange(E_View *v)
    int x, y;
    int x1, x2, y1, y2;
    double sv, sr, sm;
+   
+   D_ENTER;
    
    x = v->spacing.window.l;
    y = v->spacing.window.t;
@@ -1929,13 +2157,19 @@ e_view_arrange(E_View *v)
    e_scrollbar_set_max(v->scrollbar.h, sm);   
    if (sr < sm) e_scrollbar_show(v->scrollbar.h);
    else e_scrollbar_hide(v->scrollbar.h);
+
+   D_RETURN;
 }
 
 void
 e_view_resort(E_View *v)
 {
+   D_ENTER;
+   
    e_view_resort_alphabetical(v);
    e_view_arrange(v);
+
+   D_RETURN;
 }
 
 static void
@@ -1943,9 +2177,13 @@ e_view_resort_timeout(int val, void *data)
 {
    E_View *v;
    
+   D_ENTER;
+   
    v = data;
    e_view_resort(v);
    v->have_resort_queued = 0;
+
+   D_RETURN;
    UN(val);
 }
 
@@ -1954,18 +2192,24 @@ e_view_queue_resort(E_View *v)
 {
    char name[PATH_MAX];
    
-   if (v->have_resort_queued) return;
+   D_ENTER;
+   
+   if (v->have_resort_queued) D_RETURN;
    v->have_resort_queued = 1;
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_add_event_timer(name, 1.0, e_view_resort_timeout, 0, v);
+
+   D_RETURN;
 }
 
 void
 e_view_icon_initial_show(E_Icon *ic)
 {
+   D_ENTER;
+   
    /* check if we have enuf info and we havent been shown yet */
-   if (!ic->info.icon) return;
-   if (ic->state.visible) return;
+   if (!ic->info.icon) D_RETURN;
+   if (ic->state.visible) D_RETURN;
    
    /* first. lets figure out the size of the icon */
    evas_get_image_size(ic->view->evas, ic->obj.icon, 
@@ -1988,6 +2232,8 @@ e_view_icon_initial_show(E_Icon *ic)
    /* actually show the icon */
    e_view_icon_apply_xy(ic);
    e_view_icon_show(ic);
+
+   D_RETURN;
 }
 
 void
@@ -1995,11 +2241,13 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
 {
    int diff = 0;
    
+   D_ENTER;
+   
    if (!ic->info.mime.base) diff = 1;
    if (!ic->info.mime.type) diff = 1;
    if ((ic->info.mime.base) && (strcmp(ic->info.mime.base, base))) diff = 1;
    if ((ic->info.mime.type) && (strcmp(ic->info.mime.base, mime))) diff = 1;
-   if (!diff) return;
+   if (!diff) D_RETURN;
    if (ic->info.mime.base) free(ic->info.mime.base);
    if (ic->info.mime.type) free(ic->info.mime.type);
    ic->info.mime.base = NULL;
@@ -2017,7 +2265,7 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
 	ic->info.icon = strdup(ic->info.custom_icon);
 	evas_set_image_file(ic->view->evas, ic->obj.icon, ic->info.custom_icon);
 	e_view_queue_resort(ic->view);	
-	return;
+	D_RETURN;
      }
    /* find an icon */
      {
@@ -2057,11 +2305,15 @@ e_view_icon_set_mime(E_Icon *ic, char *base, char *mime)
 	ic->info.icon = strdup(icon);
      }
    e_view_icon_update_state(ic);
+
+   D_RETURN;
 }
 
 void
 e_view_icon_set_link(E_Icon *ic, char *link)
 {
+   D_ENTER;
+   
    if ((!link) && (ic->info.link))
      {
 	free(ic->info.link);
@@ -2077,6 +2329,8 @@ e_view_icon_set_link(E_Icon *ic, char *link)
 	     /* effect changes here */
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -2084,15 +2338,17 @@ e_view_file_added(int id, char *file)
 {
    E_View *v;
 
+   D_ENTER;
+   
    /* if we get a path - ignore it - its not a file in the a dir */
-   if (!file) return;
+   if (!file) D_RETURN;
 /*   printf("FILE ADD: %s\n", file);*/
-   if (file[0] == '/') return;
+   if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
-   if (!v) return;
+   if (!v) D_RETURN;
    e_iconbar_file_add(v, file);
    /* filter files here */
-   if (!e_view_filter_file(v, file)) return;
+   if (!e_view_filter_file(v, file)) D_RETURN;
    if (!e_view_find_icon_by_file(v, file))
      {
 	E_Icon *ic;
@@ -2106,6 +2362,8 @@ e_view_file_added(int id, char *file)
 	v->icons = evas_list_append(v->icons, ic);
 	v->extents.valid = 0;
      }
+
+   D_RETURN;
 }
 
 void
@@ -2113,11 +2371,13 @@ e_view_file_deleted(int id, char *file)
 {
    E_View *v;
 
-   if (!file) return;
-   if (file[0] == '/') return;
+   D_ENTER;
+   
+   if (!file) D_RETURN;
+   if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
    e_iconbar_file_delete(v, file);
-   if (!v) return;   
+   if (!v) D_RETURN;   
      {
 	E_Icon *ic;
 	
@@ -2125,13 +2385,15 @@ e_view_file_deleted(int id, char *file)
 	if (ic)
 	  {
 	     e_view_icon_hide(ic);
-	     OBJ_DO_FREE(ic);
+	     e_object_unref(E_OBJECT(ic));
 	     v->icons = evas_list_remove(v->icons, ic);
 	     v->changed = 1;
 	     v->extents.valid = 0;
 	     e_view_queue_resort(v);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -2139,11 +2401,13 @@ e_view_file_changed(int id, char *file)
 {
    E_View *v;
 
-   if (!file) return;
-   if (file[0] == '/') return;
+   D_ENTER;
+   
+   if (!file) D_RETURN;
+   if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
    e_iconbar_file_change(v, file);
-   if (!v) return;
+   if (!v) D_RETURN;
 
      {
 	E_Icon *ic;
@@ -2153,6 +2417,8 @@ e_view_file_changed(int id, char *file)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -2160,12 +2426,14 @@ e_view_file_moved(int id, char *file)
 {
    E_View *v;
 
+   D_ENTER;
+   
    /* never gets called ? */
-   if (!file) return;
+   if (!file) D_RETURN;
    printf(".!WOW!. e_view_file_moved(%i, %s);\n", id, file);
-   if (file[0] == '/') return;
+   if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
-   if (!v) return;
+   if (!v) D_RETURN;
    
      {
 	E_Icon *ic;
@@ -2175,6 +2443,8 @@ e_view_file_moved(int id, char *file)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
 E_View *
@@ -2182,22 +2452,29 @@ e_view_find_by_monitor_id(int id)
 {
    Evas_List l;
    
+   D_ENTER;
+   
    for (l = views; l; l = l->next)
      {
 	E_View *v;
 	
 	v = l->data;
-	if (v->monitor_id == id) return v;
+	if (v->monitor_id == id)
+	  D_RETURN_(v);
      }
-   return NULL;
+
+   D_RETURN_(NULL);
 }
 
-void
-e_view_free(E_View *v)
+static void
+e_view_cleanup(E_View *v)
 {
    char name[PATH_MAX];
    
-   if (v->iconbar) OBJ_DO_FREE(v->iconbar);
+   D_ENTER;
+   
+   if (v->iconbar)
+     e_object_unref(E_OBJECT(v->iconbar));
    
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);
@@ -2213,8 +2490,10 @@ e_view_free(E_View *v)
    v->restarter = NULL;
    ecore_window_destroy(v->win.base);
    
+   /* Call the destructor of the base class */
+   e_object_cleanup(E_OBJECT(v));
 
-   FREE(v);
+   D_RETURN;
 }
 
 E_View *
@@ -2222,9 +2501,13 @@ e_view_new(void)
 {
    E_View *v;
    
+   D_ENTER;
+   
    v = NEW(E_View, 1);
    ZERO(v, E_View, 1);
-   OBJ_INIT(v, e_view_free);
+
+   e_object_init(E_OBJECT(v), (E_Cleanup_Func) e_view_cleanup);
+
 #define SOFT_DESK
 /* #define X_DESK */
 /* #define GL_DESK */
@@ -2267,18 +2550,24 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.icon.b = 7;
    
    views = evas_list_append(views, v);
-   return v;   
+   D_RETURN_(v);   
 }
 
 void
 e_view_set_background(E_View *v)
 {
+   D_ENTER;
+   
    v->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_view_set_dir(E_View *v, char *dir)
 {
+   D_ENTER;
+   
    /* stop monitoring old dir */
    if ((v->dir) && (v->monitor_id))
      {
@@ -2315,6 +2604,8 @@ e_view_set_dir(E_View *v, char *dir)
 	v->is_listing = 1;
 	v->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
@@ -2325,7 +2616,9 @@ e_view_realize(E_View *v)
    int image_cache = 8192 * 1024;
    char *font_dir;
    
-   if (v->evas) return;
+   D_ENTER;
+   
+   if (v->evas) D_RETURN;
    v->win.base = ecore_window_new(0, 
 			      v->location.x, v->location.y, 
 			      v->size.w, v->size.h);   
@@ -2410,12 +2703,16 @@ e_view_realize(E_View *v)
    if (v->iconbar) e_iconbar_realize(v->iconbar); 
    
    v->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_view_update(E_View *v)
 {
    Evas_List l;
+   
+   D_ENTER;
    
    if (v->changed)
      {
@@ -2455,12 +2752,16 @@ e_view_update(E_View *v)
    else
      evas_render(v->evas);
    v->changed = 0;
+
+   D_RETURN;
 }
 
 
 static void
 e_view_handle_fs(EfsdEvent *ev)
 {
+   D_ENTER;
+   
    switch (ev->type)
      {
       case EFSD_EVENT_FILECHANGE:
@@ -2747,7 +3048,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				 b->client.internal = 1;
 				 e_border_remove_click_grab(b);
 			      }
-			    return;
+			    D_RETURN;
 			 }
 		    }
 	       }
@@ -2773,11 +3074,15 @@ e_view_handle_fs(EfsdEvent *ev)
       default:
 	break;
      }
+
+   D_RETURN;
 }
 
 void
 e_view_init(void)
 {
+   D_ENTER;
+   
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,                 e_mouse_up);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
@@ -2796,4 +3101,6 @@ e_view_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_DELETE,            e_delete);
    ecore_event_filter_idle_handler_add(e_idle, NULL);
    e_fs_add_event_handler(e_view_handle_fs);
+
+   D_RETURN;
 }

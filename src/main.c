@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "actions.h"
 #include "guides.h"
 #include "cursors.h"
@@ -31,13 +32,19 @@ static void setup(void);
 
 static void cb_exit(void)
 {
+   D_ENTER;
+
    E_PROF_DUMP;
+   
+   D_RETURN;
 }
 
 
 static void 
 wm_running_error(Display * d, XErrorEvent * ev)
 {
+   D_ENTER;
+
    if ((ev->request_code == X_ChangeWindowAttributes) && 
        (ev->error_code == BadAccess))
      {
@@ -45,12 +52,16 @@ wm_running_error(Display * d, XErrorEvent * ev)
 	fprintf(stderr, "Exiting Enlightenment. Error.\n");
 	exit(-2);
      }   
+
+   D_RETURN;
    UN(d);
 }
 
 static void
 setup(void)
 {
+   D_ENTER;
+
    ecore_grab();
    ecore_sync();
 
@@ -59,6 +70,8 @@ setup(void)
    e_border_adopt_children(0);
 
    ecore_ungrab();
+
+   D_RETURN;
 }
 
 int

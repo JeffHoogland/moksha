@@ -2,6 +2,7 @@
 #define E_BORDER_H
 
 #include "e.h"
+#include "observer.h"
 
 #ifndef E_DESKTOPS_TYPEDEF
 #define E_DESKTOPS_TYPEDEF
@@ -22,7 +23,7 @@ struct _E_Grab
 
 struct _E_Border
 {
-   OBJ_PROPERTIES;
+   E_Observee obs;
 
    struct {
       Window main;
@@ -141,13 +142,13 @@ struct _E_Border
  */
 void      e_border_init(void);
 
+E_Border *e_border_new(void);
+
 void      e_border_update_borders(void);
 void      e_border_apply_border(E_Border *b);
 void      e_border_reshape(E_Border *b);
 E_Border *e_border_adopt(Window win, int use_client_pos);
 void      e_border_adopt_children(Window win);
-E_Border *e_border_new(void);
-void      e_border_free(E_Border *b);
 void      e_border_remove_mouse_grabs(E_Border *b);
 void      e_border_remove_click_grab(E_Border *b);
 void      e_border_attach_mouse_grabs(E_Border *b);

@@ -2,9 +2,14 @@
 
 DISTCLEANFILES = e_ferite_gen_*
 
+## Enable -DDEBUG for debugging messages, -DDEBUG_NEST
+## for call tracing. Caution -- this will produce a *lot*
+## of output!
+DEBUGFLAGS = -g -DDEBUG -DDEBUG_NEST
+
 INCLUDES = \
 	-I$(top_srcdir)/intl \
-	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
 
 bin_PROGRAMS = enlightenment
 
@@ -24,6 +29,7 @@ enlightenment_SOURCES = \
 	border.h border.c \
 	config.h config.c \
 	cursors.c cursors.h \
+	debug.c debug.h \
 	delayed.h delayed.c \
 	desktops.h desktops.c \
 	embed.c embed.h \
@@ -33,6 +39,7 @@ enlightenment_SOURCES = \
 	$(ferite_c) \
 	guides.h guides.c \
 	icccm.h icccm.c \
+	iconbar.h iconbar.c\
 	icons.c \
 	ipc.h ipc.c \
 	keys.h keys.c \
@@ -40,6 +47,8 @@ enlightenment_SOURCES = \
 	match.c match.h \
 	menu.h menu.c \
 	menubuild.h menubuild.c \
+	object.h object.c \
+	observer.h observer.c\
 	pack.c \
 	place.c place.h \
 	resist.h resist.c \
@@ -48,7 +57,6 @@ enlightenment_SOURCES = \
 	text.h text.c \
 	util.h util.c \
 	view.h view.c \
-	e.h \
-	iconbar.c
+	e.h
 
 enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)

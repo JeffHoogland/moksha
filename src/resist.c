@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "resist.h"
 #include "config.h"
 #include "desktops.h"
@@ -16,6 +17,9 @@ e_resist_border(E_Border *b)
    E_CFG_INT(cfg_resist, "settings", "/move/resist", 1);
    E_CFG_INT(cfg_desk_resist, "settings", "/move/resist/desk", 32);
    E_CFG_INT(cfg_win_resist, "settings", "/move/resist/win", 12);
+
+   
+   D_ENTER;
    
    E_CONFIG_INT_GET(cfg_resist, resist);
    E_CONFIG_INT_GET(cfg_desk_resist, desk_resist);
@@ -24,9 +28,9 @@ e_resist_border(E_Border *b)
      {
 	b->current.x = b->current.requested.x;
 	b->current.y = b->current.requested.y;
-	return;
+	D_RETURN;
      }
-   if (!b->desk) return;
+   if (!b->desk) D_RETURN;
    dx = b->current.requested.x - b->previous.requested.x;
    dy = b->current.requested.y - b->previous.requested.y;
    /* edges of screen */
@@ -131,4 +135,6 @@ rects = evas_list_append(rects, r); \
 	else
 	  b->current.y = b->current.requested.y + resist_y;
      }
+
+   D_RETURN;
 }

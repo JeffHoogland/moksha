@@ -4,6 +4,7 @@
 #include "e.h"
 #include "view.h"
 #include "border.h"
+#include "object.h"
 
 #ifndef E_DESKTOPS_TYPEDEF
 #define E_DESKTOPS_TYPEDEF
@@ -12,7 +13,7 @@ typedef struct _E_Desktop             E_Desktop;
 
 struct _E_Desktop
 {
-   OBJ_PROPERTIES;
+   E_Object o;
    
    char *name;
    char *dir;

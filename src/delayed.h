@@ -2,26 +2,25 @@
 #define E_DELAYED_H
 
 #include "e.h"
+#include "observer.h"
 
-typedef struct _E_Delayed_Action E_Delayed_Action;
+typedef void (*E_Delay_Func)(int val, void *obj);
 
-struct _E_Delayed_Action {
-	OBS_PROPERTIES;
+typedef struct _e_delayed_action
+{
+  E_Observer    obs;
 
-	double delay;
-	void (*delay_func)(int val, void *obj);
-};
+  double        delay;
+  E_Delay_Func  delay_func;
 
-#define E_DELAYED_ACT_INIT(_e_da, _e_act, _e_delay, _e_act_cb) \
-{ \
-    OBS_INIT(_e_da, _e_act, e_delayed_action_start, e_delayed_action_free); \
-    _e_da->delay = _e_delay; \
-    _e_da->delay_func = _e_act_cb; \
-}
+} E_Delayed_Action;
 
-void e_delayed_action_start(void *obs, void *obj);
-void e_delayed_action_cancel(void *obs);
-void e_delayed_action_free(void *obs);
+
+E_Delayed_Action *e_delayed_action_new(Ecore_Event_Type event,
+				       double delay, E_Delay_Func delay_func);
+
+void e_delayed_action_start(E_Observer *obs, E_Observee *obj);
+void e_delayed_action_cancel(E_Delayed_Action *eda);
 
 #endif
 

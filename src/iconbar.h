@@ -5,6 +5,7 @@
 #include "config.h"
 #include "exec.h"
 #include "view.h"
+#include "object.h"
 
 typedef struct _E_Iconbar_Icon E_Iconbar_Icon;
 #ifndef E_ICONBAR_TYPEDEF
@@ -19,7 +20,7 @@ typedef struct _E_View                E_View;
 
 struct _E_Iconbar
 {
-   OBJ_PROPERTIES;
+   E_Object      o;    
 
    E_View       *view;
    Evas_List     icons;
@@ -32,7 +33,7 @@ struct _E_Iconbar
 
 struct _E_Iconbar_Icon
 {
-   OBJ_PROPERTIES;
+   E_Object      o;    
 
    E_Iconbar   *iconbar;
    
@@ -51,7 +52,6 @@ struct _E_Iconbar_Icon
 
 void            e_iconbar_init(void);
 E_Iconbar      *e_iconbar_new(E_View *v);
-void            e_iconbar_free(E_Iconbar *ib);
 void            e_iconbar_icon_free(E_Iconbar_Icon *);
 void            e_iconbar_realize(E_Iconbar *ib);
 void            e_iconbar_fix(E_Iconbar *ib);

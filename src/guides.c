@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "guides.h"
 #include "text.h"
 #include "config.h"
@@ -48,7 +49,11 @@ static void e_guides_update(void);
 static void
 e_guides_idle(void *data)
 {
+   D_ENTER;
+
    e_guides_update();
+
+   D_RETURN;
    UN(data);
 }
 
@@ -60,7 +65,9 @@ e_guides_update(void)
    char *font_dir;
    int redraw;
    
-   if (!guides.changed) return;
+   D_ENTER;
+
+   if (!guides.changed) D_RETURN;
 
    redraw = 0;
    if (guides.prev.visible != guides.current.visible)
@@ -474,96 +481,136 @@ e_guides_update(void)
 	  }
      }
    guides.prev = guides.current;
+
+   D_RETURN;
 }
 
 void
 e_guides_show(void)
 {
-   if (guides.current.visible) return;
+   D_ENTER;
+
+   if (guides.current.visible) D_RETURN;
    guides.changed = 1;
    guides.current.visible = 1;
+
+   D_RETURN;
 }
 
 void
 e_guides_hide(void)
 {
-   if (!guides.current.visible) return;
+   D_ENTER;
+
+   if (!guides.current.visible) D_RETURN;
    guides.changed = 1;
    guides.current.visible = 0;
+
+   D_RETURN;
 }
 
 void
 e_guides_move(int x, int y)
 {
+   D_ENTER;
+
    if ((guides.current.x == x) &&
-       (guides.current.y == y)) return;
+       (guides.current.y == y)) D_RETURN;
    guides.changed = 1;
    guides.current.x = x;
    guides.current.y = y;
+
+   D_RETURN;
 }
 
 void
 e_guides_resize(int w, int h)
 {
+   D_ENTER;
+
    if ((guides.current.w == w) &&
-       (guides.current.h == h)) return;
+       (guides.current.h == h)) D_RETURN;
    guides.changed = 1;
    guides.current.w = w;
    guides.current.h = h;
+
+   D_RETURN;
 }
 
 void
 e_guides_display_text(char *text)
 {
+   D_ENTER;
+
    if ((guides.current.display.text) && (text) &&
-       (!strcmp(guides.current.display.text, text))) return;
+       (!strcmp(guides.current.display.text, text))) D_RETURN;
    guides.changed = 1;
    IF_FREE(guides.current.display.text);
    guides.current.display.text = NULL;
    guides.prev.display.text = (char *)1;
    e_strdup(guides.current.display.text, text);
+
+   D_RETURN;
 }
 
 void
 e_guides_display_icon(char *icon)
 {
+   D_ENTER;
+
    if ((guides.current.display.icon) && (icon) &&
-       (!strcmp(guides.current.display.icon, icon))) return;
+       (!strcmp(guides.current.display.icon, icon))) D_RETURN;
    guides.changed = 1;
    IF_FREE(guides.current.display.icon);
    guides.current.display.icon = NULL;
    guides.prev.display.icon = (char *)1;
    e_strdup(guides.current.display.icon, icon);
+
+   D_RETURN;
 }
 
 void
 e_guides_set_display_location(E_Guides_Location loc)
 {
-   if (guides.current.display.loc == loc) return;
+   D_ENTER;
+
+   if (guides.current.display.loc == loc) D_RETURN;
    guides.changed = 1;
    guides.current.display.loc = loc;
+
+   D_RETURN;
 }
 
 void
 e_guides_set_display_alignment(double x, double y)
 {
+   D_ENTER;
+
    if ((guides.current.display.align.x == x) &&
-       (guides.current.display.align.y == y)) return;
+       (guides.current.display.align.y == y)) D_RETURN;
    guides.changed = 1;
    guides.current.display.align.x = x;
    guides.current.display.align.y = y;
+
+   D_RETURN;
 }
 
 void
 e_guides_set_mode(E_Guides_Mode mode)
 {
-   if (guides.current.mode == mode) return;
+   D_ENTER;
+
+   if (guides.current.mode == mode) D_RETURN;
    guides.changed = 1;
    guides.current.mode = mode;
+
+   D_RETURN;
 }
 
 void e_guides_init(void)
 {
+   D_ENTER;
+
    guides.changed = 0;
    
    guides.current.display.loc = E_GUIDES_DISPLAY_LOCATION_SCREEN_MIDDLE;
@@ -593,4 +640,6 @@ void e_guides_init(void)
    guides.disp.image = NULL;
    
    ecore_event_filter_idle_handler_add(e_guides_idle, NULL);
+
+   D_RETURN;
 }

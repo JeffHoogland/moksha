@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "exec.h"
 #include "desktops.h"
 #include "util.h"
@@ -8,8 +9,12 @@ static char **e_argv = NULL;
 void
 e_exec_set_args(int argc, char **argv)
 {
+   D_ENTER;
+
    e_argc = argc;
    e_argv = argv;
+
+   D_RETURN;
 }
 
 void
@@ -17,6 +22,8 @@ e_exec_restart(void)
 {
    int i, num;
    char exe[PATH_MAX];
+
+   D_ENTER;
 
    printf("e_exec_restart()\n");
    /* unset events on root */
@@ -40,6 +47,8 @@ e_exec_restart(void)
 	strcat(exe, " ");
      }
    execl("/bin/sh", "/bin/sh", "-c", exe, NULL);   
+
+   D_RETURN;
 }
 
 pid_t
@@ -47,13 +56,16 @@ e_exec_run(char *exe)
 {
    pid_t               pid;
    
+   D_ENTER;
+
    pid = fork();
    if (pid)
-     return pid;
+     D_RETURN_(pid);
    setsid();
    execl("/bin/sh", "/bin/sh", "-c", exe, NULL);
    exit(0);
-   return 0;
+
+   D_RETURN_(0);
 }
 
 pid_t
@@ -61,14 +73,17 @@ e_exec_run_in_dir(char *exe, char *dir)
 {
    pid_t               pid;
    
+   D_ENTER;
+
    pid = fork();
    if (pid)
-     return pid;
+     D_RETURN_(pid);
    chdir(dir);
    setsid();
    execl("/bin/sh", "/bin/sh", "-c", exe, NULL);
    exit(0);
-   return 0;
+
+   D_RETURN_(0);
 }
 
 pid_t
@@ -80,10 +95,12 @@ e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, cha
    char *exe2;
    pid_t               pid;
    
+   D_ENTER;
+
    launch_id++;
    if (launch_id_ret) *launch_id_ret = launch_id;
    pid = fork();
-   if (pid) return pid;
+   if (pid) D_RETURN_(pid);
    chdir(dir);
    setsid();
    if (env)
@@ -108,5 +125,6 @@ e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, cha
 
    execl("/bin/sh", "/bin/sh", "-c", exe2, NULL);
    exit(0);
-   return 0;
+
+   D_RETURN_(0);
 }

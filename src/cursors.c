@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "cursors.h"
 #include "config.h"
 #include "util.h"
@@ -24,8 +25,10 @@ static void
 e_cursors_idle(void *data)
 {
    int change = 0;
+
+   D_ENTER;
    
-   if (!cursor_change) return;
+   if (!cursor_change) D_RETURN;
    if ((prev_cursor) && (cur_cursor) && (strcmp(prev_cursor, cur_cursor)))
      change = 1;
    if ((prev_cursor) && (!cur_cursor))
@@ -39,14 +42,18 @@ e_cursors_idle(void *data)
    cur_cursor = NULL;
    cursor_change = 0;
 
-   return;
+   D_RETURN;
    UN(data);
 }
 
 static void
 e_cursors_set(char *type)
 {
+   D_ENTER;
+
    e_cursors_display_in_window(0, type);
+
+   D_RETURN;
 }
 
 static E_Cursor *
@@ -54,6 +61,8 @@ e_cursors_find(char *type)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = cursors; l; l = l->next)
      {
 	E_Cursor *c;
@@ -70,18 +79,20 @@ e_cursors_find(char *type)
 		  IF_FREE(c->type);
 		  ecore_cursor_free(c->cursor);
 		  FREE(c);
-		  return NULL;
+		  D_RETURN_(NULL);
 	       }
-	     return c;
+	     D_RETURN_(c);
 	  }
      }
-   return NULL;
+   D_RETURN_(NULL);
 }
 
 void
 e_cursors_display_in_window(Window win, char *type)
 {
    E_Cursor *c;
+
+   D_ENTER;
 
    if (!type) type = "Default";
    c = e_cursors_find(type);
@@ -222,23 +233,33 @@ e_cursors_display_in_window(Window win, char *type)
      ecore_cursor_set(win, c->cursor);
    else
      {
-	if (!strcmp(type, "Default")) return;
+	if (!strcmp(type, "Default")) D_RETURN;
 	e_cursors_display_in_window(win, "Default");
      }
+
+   D_RETURN;
 }
 
 void
 e_cursors_display(char *type)
 {
+   D_ENTER;
+
    IF_FREE(cur_cursor);
    e_strdup(cur_cursor, type);
    printf("%s\n", type);
    cursor_change = 1;
+
+   D_RETURN;
 }
 
 void
 e_cursors_init(void)
 {
+   D_ENTER;
+
    ecore_event_filter_idle_handler_add(e_cursors_idle, NULL);
    e_cursors_set("Default");
+
+   D_RETURN;
 }

@@ -1,8 +1,10 @@
+#include "debug.h"
 #include "menu.h"
 #include "config.h"
 
 static Evas_List open_menus = NULL;         /* List of all open menus */
 static Evas_List menus = NULL;
+static E_Menu_Item *curr_selected_item = NULL; /* Currently selected item */
 static Window    menu_event_win = 0;        /* Window which originated event */
 static int       screen_w, screen_h;        /* Screen width and height */
 static int       mouse_x, mouse_y;          /* Mouse coordinates */
@@ -18,6 +20,8 @@ static void e_mouse_move(Ecore_Event * ev);
 static void e_mouse_in(Ecore_Event * ev);
 static void e_mouse_out(Ecore_Event * ev);
 static void e_window_expose(Ecore_Event * ev);
+static void e_menu_item_select (E_Menu_Item *mi);
+static void e_menu_item_unselect (E_Menu_Item *mi);
 
 static void 
 e_scroller_timer(int val, void *data)
@@ -28,10 +32,13 @@ e_scroller_timer(int val, void *data)
    int scroll_speed = 12;
    static double last_time = 0.0;
    double t;
+   
    /* these two lines... */
    E_CFG_INT(cfg_resist, "settings", "/menu/scroll/resist", 5);
    E_CFG_INT(cfg_scroll_speed, "settings", "/menu/scroll/speed", 12);
    
+   D_ENTER;
+
    /* and these 2 should do exactly what tom wants - see e.h */
    E_CONFIG_INT_GET(cfg_resist, resist);
    E_CONFIG_INT_GET(cfg_scroll_speed, scroll_speed);
@@ -120,7 +127,8 @@ e_scroller_timer(int val, void *data)
      }
    if ((ok) && (open_menus))
      ecore_add_event_timer("menu_scroller", 0.02, e_scroller_timer, val + 1, NULL);   
-   return;
+
+   D_RETURN;
    UN(data);
 }
   
@@ -129,6 +137,8 @@ e_idle(void *data)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = menus; l; l = l->next)
      {
 	E_Menu *m;
@@ -166,27 +176,44 @@ e_idle(void *data)
 	  evas_render(m->evas);
      }
    e_db_flush();
-   return;
+
+   D_RETURN;
    UN(data);
 }
 
+/**
+ * e_wheel - Handle mouse wheel events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_wheel(Ecore_Event * ev)
 {
    Ecore_Event_Wheel           *e;
    
+   D_ENTER;
+
    e = ev->event;
    if (e->win == menu_event_win)
      {
      }
+
+   D_RETURN;
 }
 
+/**
+ * e_key_down - Handle key down events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_key_down(Ecore_Event * ev)
 {
    Ecore_Event_Key_Down          *e;
    int ok;
    
+   D_ENTER;
+
    e = ev->event;
    ok = 0;
    if (e->win == menu_event_win) ok = 1;
@@ -273,35 +300,60 @@ e_key_down(Ecore_Event * ev)
 	  {
 	  }
      }
+
+   D_RETURN;
 }
 
+/**
+ * e_key_up - Handle key up events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_key_up(Ecore_Event * ev)
 {
    Ecore_Event_Key_Up          *e;
    
+   D_ENTER;
+
    e = ev->event;
      {
      }
+
+   D_RETURN;
 }
 
-/* handling mouse down events */
+/**
+ * e_mouse_down - Handle mouse down events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_mouse_down(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Down      *e;
    
+   D_ENTER;
+
    e = ev->event;
      {
      }
+
+   D_RETURN;
 }
 
-/* handling mouse up events */
+/**
+ * e_mouse_up - Handle mouse up events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_mouse_up(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Up      *e;
    
+   D_ENTER;
+
    e = ev->event;
    keyboard_nav = 0;
    if (e->win == menu_event_win)
@@ -318,11 +370,18 @@ e_mouse_up(Ecore_Event * ev)
 		  for (l = open_menus; l; l = l->next)
 		    {
 		       m = l->data;
+		       /* Ensure that the item is actually selected and
+			  that the mouse pointer really is over it: */
 		       if (m->selected)
 			 {
-			    e_menu_callback_item(m, m->selected);
-			    m->selected->selected = 0;
-			    m->selected = NULL;
+			    if (INTERSECTS(m->selected->x + m->current.x,
+					   m->selected->y + m->current.y,
+					   m->selected->size.w, m->selected->size.h,
+					   mouse_x, mouse_y, 0, 0))
+			      {
+				 e_menu_callback_item(m, m->selected);
+			      }
+			    e_menu_item_unselect(m->selected);
 			    break;
 			 }
 		    }
@@ -336,14 +395,22 @@ e_mouse_up(Ecore_Event * ev)
 	       }
 	  }
      }
+
+   D_RETURN;
 }
 
-/* handling mouse move events */
+/**
+ * e_mouse_move - Handle mouse move events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_mouse_move(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Move      *e;
    
+   D_ENTER;
+
    e = ev->event;
    keyboard_nav = 0;
    if (e->win == menu_event_win)
@@ -380,27 +447,43 @@ e_mouse_move(Ecore_Event * ev)
 	  }
      }
    e_scroller_timer(0, NULL);
+
+   D_RETURN;
 }
 
-/* handling mouse enter events */
+/**
+ * e_mouse_in - Handle mouse enter events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_mouse_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Enter      *e;
    
+   D_ENTER;
+
    e = ev->event;
    keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
      }
+
+   D_RETURN;
 }
 
-/* handling mouse leave events */
+/**
+ * e_mouse_out - Handle mouse leave events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_mouse_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Leave      *e;
    
+   D_ENTER;
+
    e = ev->event;
    keyboard_nav = 0;
    if (e->win == menu_event_win)
@@ -421,14 +504,22 @@ e_mouse_out(Ecore_Event * ev)
 	       }
 	  }
      }
+
+   D_RETURN;
 }
 
-/* handling expose events */
+/**
+ * e_window_expose - Handle window expose events
+ *
+ * @ev: Pointer to event.
+ */
 static void
 e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose      *e;
    
+   D_ENTER;
+
    e = ev->event;
      {
 	Evas_List l;
@@ -446,27 +537,86 @@ e_window_expose(Ecore_Event * ev)
 	       }
 	  }
      }
+
+   D_RETURN;
 }
 
+/**
+ * e_menu_item_unselect - Unselect a menu item.
+ *
+ * @mi: Pointer to the menu item to be unselected.
+ */
+static void
+e_menu_item_unselect (E_Menu_Item *mi)
+{
+   D_ENTER;
+
+   if ((mi) && (mi->menu->selected == mi))
+     {
+        mi->menu->selected = NULL;
+	mi->selected = 0;
+	mi->menu->redo_sel = 1;
+	mi->menu->changed = 1;
+     }
+
+   D_RETURN;
+}
+
+/**
+ * e_menu_item_select - Select a menu item.
+ *   NOTE - Assumes only one item can be selected at once,
+ *          and unselects any previously selected menu item.
+ *
+ * @mi: Pointer to the menu item to be selected.
+ */
+static void
+e_menu_item_select (E_Menu_Item *mi)
+{
+   D_ENTER;
+
+   e_menu_item_unselect(curr_selected_item);
+   if (mi)
+     {
+        mi->menu->selected = mi;
+	mi->selected = 1;
+	mi->menu->redo_sel = 1;
+	mi->menu->changed = 1;
+	curr_selected_item = mi;
+     }
+
+   D_RETURN;
+}
+
+/**
+ * e_menu_item_in_cb - Callback for when mouse enters a specific menu item.
+ *   Attached by e_item_realize().  Selects menu item.
+ *
+ * @_data: Pointer to actual menu item structure.
+ * @_e: Evas
+ * @_o: Evas object
+ * @_b: ?????
+ * @x: ?????
+ * @y: ?????
+ */
 static void 
 e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Menu_Item *mi;
 
+   D_ENTER;
+
    mi = _data;
-   mi->menu->selected = mi;
-   mi->selected = 1;
-   mi->menu->redo_sel = 1;
-   mi->menu->changed = 1;
+   e_menu_item_select(mi);
    e_menu_hide_submenus(mi->menu);
-   if (mi->submenu)
+   if (mi->submenu && mi->submenu->entries)
      {
 	e_menu_move_to(mi->submenu, 
 		       mi->menu->current.x + mi->menu->current.w,
 		       mi->menu->current.y + mi->y - mi->menu->border.t);
 	e_menu_show(mi->submenu);
      }
-   return;
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -474,17 +624,28 @@ e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    UN(_y);
 }
 
+/**
+ * e_menu_item_out_cb - Callback for when mouse leaves a specific menu item.
+ *   Attached by e_item_realize().  Unselects menu item.
+ *
+ * @_data: Pointer to actual menu item structure.
+ * @_e: Evas
+ * @_o: Evas object
+ * @_b: ?????
+ * @x: ?????
+ * @y: ?????
+ */
 static void 
 e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Menu_Item *mi;
    
+   D_ENTER;
+
    mi = _data;
-   if (mi->menu->selected == mi) mi->menu->selected = NULL;
-   mi->selected = 0;
-   mi->menu->redo_sel = 1;
-   mi->menu->changed = 1;
-   return;
+   e_menu_item_unselect(mi);
+
+   D_RETURN;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -495,14 +656,22 @@ e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 void
 e_menu_callback_item(E_Menu *m, E_Menu_Item *mi)
 {
+   D_ENTER;
+
    if (mi->func_select) mi->func_select(m, mi, mi->func_select_data);
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_callback(E_Menu_Item *mi, void (*func) (E_Menu *m, E_Menu_Item *mi, void *data), void *data)
 {
+   D_ENTER;
+
    mi->func_select = func;
    mi->func_select_data = data;
+
+   D_RETURN;
 }
 
 /**
@@ -516,6 +685,8 @@ void
 e_menu_hide_submenus(E_Menu *menus_after)
 {
    Evas_List l;
+
+   D_ENTER;
 
    /* Loop thru all open menus: */
    for (l = open_menus; l; l = l->next)
@@ -534,6 +705,8 @@ e_menu_hide_submenus(E_Menu *menus_after)
 	     break;
 	  }
      }
+
+   D_RETURN;
 }
 
 /**
@@ -548,6 +721,8 @@ e_menu_select(int dx, int dy)
 {
    Evas_List l, ll;
    int done = 0;
+
+   D_ENTER;
 
    /* Loop through all open menus, tile done or reached end */
    for (l = open_menus; (l) && (!done); l = l->next)
@@ -601,23 +776,13 @@ e_menu_select(int dx, int dy)
 
 			    if (ok)
 			      {
-				 /* Unselect the old selected entry: */
-				 if (m->selected)
-				   {
-				      m->selected->selected = 0;
-				      m->redo_sel = 1;
-				      m->changed = 1;
-				      m->selected = NULL;
-				   }
-
-				 /* Select the new entry: */
-				 m->selected = mi;
-				 mi->selected = 1;
-				 mi->menu->redo_sel = 1;
-				 mi->menu->changed = 1;
+				 /* Unselect old and select new item: */
+				 e_menu_item_unselect(m->selected);
+				 e_menu_item_select(mi);
 				 e_menu_hide_submenus(mi->menu);
+
 				 /* If submenu, display it: */
-				 if (mi->submenu)
+				 if (mi->submenu && mi->submenu->entries)
 				   {
 				      e_menu_move_to(mi->submenu,
 						     mi->menu->current.x + mi->menu->current.w,
@@ -665,22 +830,13 @@ e_menu_select(int dx, int dy)
 			 }
 		       if (mi)
 			 {
-			    /* Unselect old selected entry: */
-			    if (m->selected)
-			      {
-				 m->selected->selected = 0;
-				 m->redo_sel = 1;
-				 m->changed = 1;
-				 m->selected = NULL;
-			      }
-			    /* Select new entry: */
-			    mm->selected = mi;
-			    mi->selected = 1;
-			    mi->menu->redo_sel = 1;
-			    mi->menu->changed = 1;
+			    /* Unselect old and select new item: */
+			    e_menu_item_unselect(m->selected);
+			    e_menu_item_select(mi);
 			    e_menu_hide_submenus(mi->menu);
+
 			    /* If new entry is a submenu, display it: */
-			    if (mi->submenu)
+			    if (mi->submenu && mi->submenu->entries)
 			      {
 				 e_menu_move_to(mi->submenu,
 						mi->menu->current.x + mi->menu->current.w,
@@ -705,11 +861,8 @@ e_menu_select(int dx, int dy)
 	     
 	     m = open_menus->data;
 	     mi = m->entries->data;
-	     m->selected = mi;
-	     mi->selected = 1;
-	     mi->menu->redo_sel = 1;
-	     mi->menu->changed = 1;	     
-	     if (mi->submenu)
+	     e_menu_item_select(mi);
+	     if (mi->submenu && mi->submenu->entries)
 	       {
 		  e_menu_move_to(mi->submenu,
 				 mi->menu->current.x + mi->menu->current.w,
@@ -718,11 +871,19 @@ e_menu_select(int dx, int dy)
 	       }
 	  }
      }
+
+   D_RETURN;
 }
 
+/**
+ * e_menu_init - Initialise the menu, adding the required
+ *   event handlers.
+ */
 void
 e_menu_init(void)
 {
+   D_ENTER;
+
    ecore_window_get_geometry(0, NULL, NULL, &screen_w, &screen_h);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,                 e_mouse_up);
@@ -734,11 +895,15 @@ e_menu_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   e_key_up);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_WHEEL,              e_wheel);
    ecore_event_filter_idle_handler_add(e_idle, NULL);
+
+   D_RETURN;
 }
 
 void
 e_menu_event_win_show(void)
 {
+   D_ENTER;
+
    /* create it */
    if (!menu_event_win)
      {
@@ -750,11 +915,15 @@ e_menu_event_win_show(void)
      }
    /* raise it */
    if (menu_event_win) ecore_window_raise(menu_event_win);
+
+   D_RETURN;
 }
 
 void
 e_menu_event_win_hide(void)
 {
+   D_ENTER;
+
    /* destroy it */
    if (menu_event_win)
      {
@@ -762,8 +931,17 @@ e_menu_event_win_hide(void)
 	ecore_window_destroy(menu_event_win);
 	menu_event_win = 0;
      }
+
+   D_RETURN;
 }
 
+/**
+ * e_menu_set_background - Sets the background of menu @m
+ *   Sets background of menu using the default theme background,
+ *   base.bits.db
+ *
+ * @m: Menu to set background on.
+ */
 void
 e_menu_set_background(E_Menu *m)
 {
@@ -773,11 +951,13 @@ e_menu_set_background(E_Menu *m)
    char *part;
    int pl, pr, pt, pb;
    
+   D_ENTER;
+
    menus = e_config_get("menus");   
    
    part = "base.bits.db";
    sprintf(buf, "%s%s/%s", menus, style, part);
-   if ((m->bg_file) && (!strcmp(m->bg_file, buf))) return;
+   if ((m->bg_file) && (!strcmp(m->bg_file, buf))) D_RETURN;
    
    IF_FREE(m->bg_file);
    m->bg_file = strdup(buf);
@@ -802,6 +982,8 @@ e_menu_set_background(E_Menu *m)
    m->border.t = pt;
    m->border.b = pb;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
@@ -814,6 +996,8 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
    int has_sub = 0;
    int selected = 0;
    
+   D_ENTER;
+
    menus = e_config_get("menus");   
    if (!mi->separator)
      {
@@ -821,7 +1005,7 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
 	if (mi->submenu) has_sub = 1;
 	sprintf(buf, "%s%s/selected-%i.submenu-%i.bits.db", menus, style, 
 		selected, has_sub);
-	if ((mi->bg_file) && (!strcmp(mi->bg_file, buf))) return;
+	if ((mi->bg_file) && (!strcmp(mi->bg_file, buf))) D_RETURN;
      }
    IF_FREE(mi->bg_file);
    if (!mi->separator)
@@ -846,6 +1030,8 @@ e_menu_set_sel(E_Menu *m, E_Menu_Item *mi)
    if (m->sel_border.b < pb) {m->sel_border.b = pb; m->recalc_entries = 1;}
    m->redo_sel = 1;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
@@ -856,9 +1042,11 @@ e_menu_set_sep(E_Menu *m, E_Menu_Item *mi)
    char *style = "default";
    int pl, pr, pt, pb, minx, miny;
    
+   D_ENTER;
+
    menus = e_config_get("menus");   
    sprintf(buf, "%s%s/separator.bits.db", menus, style);
-   if ((mi->sep_file) && (!strcmp(mi->sep_file, buf))) return;
+   if ((mi->sep_file) && (!strcmp(mi->sep_file, buf))) D_RETURN;
    
    IF_FREE(mi->sep_file);
    mi->sep_file = strdup(buf);
@@ -881,6 +1069,8 @@ e_menu_set_sep(E_Menu *m, E_Menu_Item *mi)
    if (mi->size.min.h < miny) mi->size.min.h = miny;
    m->redo_sel = 1;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
@@ -892,13 +1082,15 @@ e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
    int   on;
    int pl, pr, pt, pb, minx, miny;
    
+   D_ENTER;
+
    menus = e_config_get("menus");   
    on = mi->on;
    if (mi->check)
      sprintf(buf, "%s%s/check-%i.bits.db", menus, style, on);
    else
      sprintf(buf, "%s%s/radio-%i.bits.db", menus, style, on);
-   if ((mi->state_file) && (!strcmp(mi->state_file, buf))) return;
+   if ((mi->state_file) && (!strcmp(mi->state_file, buf))) D_RETURN;
    
    IF_FREE(mi->state_file);
    mi->state_file = strdup(buf);
@@ -921,13 +1113,17 @@ e_menu_set_state(E_Menu *m, E_Menu_Item *mi)
    if (mi->size.min.h < miny) mi->size.min.h = miny;
    m->redo_sel = 1;
    m->changed = 1;
+
+   D_RETURN;
 }
 
-void
-e_menu_free(E_Menu *m)
+static void
+e_menu_cleanup(E_Menu *m)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = m->entries; l; l = l->next)
      {
 	E_Menu_Item *mi;
@@ -944,7 +1140,11 @@ e_menu_free(E_Menu *m)
    ecore_window_destroy(m->win.main);
    menus = evas_list_remove(menus, m);
    open_menus = evas_list_remove(open_menus, m);
-   free(m);
+
+   /* Call the destructor of the base class */
+   e_object_cleanup(E_OBJECT(m));
+
+   D_RETURN;
 }
 
 E_Menu *
@@ -956,12 +1156,14 @@ e_menu_new(void)
    int image_cache = 8192 * 1024;
    char *font_dir;
    
+   D_ENTER;
+
    font_dir = e_config_get("fonts");
    
    m = NEW(E_Menu, 1);
    ZERO(m, E_Menu, 1);
    
-   OBJ_INIT(m, e_menu_free);
+   e_object_init(E_OBJECT(m), (E_Cleanup_Func) e_menu_cleanup);
    
    m->win.main = ecore_window_override_new(0, 0, 0, 1, 1);
    m->evas = evas_new_all(ecore_display_get(),
@@ -1001,53 +1203,83 @@ e_menu_new(void)
    
    menus = evas_list_prepend(menus, m);
    
-   return m;
+   D_RETURN_(m);
 }
 
 void
 e_menu_hide(E_Menu *m)
 {
+   D_ENTER;
+
+   printf("Menu hide!\n");
+
+   if (m->selected)
+     {
+        m->selected->selected = 0;
+     }
+   m->selected = NULL;
+   m->redo_sel = 1;
    m->current.visible = 0;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_menu_show(E_Menu *m)
 {
+   D_ENTER;
+
    m->current.visible = 1;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_menu_move_to(E_Menu *m, int x, int y)
 {
+   D_ENTER;
+
    m->current.x = x;
    m->current.y = y;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_menu_show_at_mouse(E_Menu *m, int x, int y, Time t)
 {
+   D_ENTER;
+
    m->current.x = x;
    m->current.y = y;
    m->time = t;
    e_menu_show(m);
+
+   D_RETURN;
 }
 
 void
 e_menu_add_item(E_Menu *m, E_Menu_Item *mi)
 {
+   D_ENTER;
+
    m->entries = evas_list_append(m->entries, mi);
    m->recalc_entries = 1;
    m->changed = 1;
    mi->menu = m;
    e_menu_item_realize(m, mi);
+
+   D_RETURN;
 }
 
 void
 e_menu_del_item(E_Menu *m, E_Menu_Item *mi)
 {
+   D_ENTER;
+
    m->entries = evas_list_remove(m->entries, mi);
    m->recalc_entries = 1;
    m->changed = 1;
@@ -1057,6 +1289,8 @@ e_menu_del_item(E_Menu *m, E_Menu_Item *mi)
    if (mi->menu->selected == mi) mi->menu->selected = NULL;
    free(mi);
    mi->menu = NULL;
+
+   D_RETURN;
 }
 
 void
@@ -1065,6 +1299,8 @@ e_menu_item_update(E_Menu *m, E_Menu_Item *mi)
    int tx, ty, tw, th, ix, iy, iw, ih, rx, ry, rw, rh;
    double dtw, dth;
    
+   D_ENTER;
+
    if (mi->sep)
      {
 	ebits_move(mi->sep, mi->x, mi->y);
@@ -1130,11 +1366,15 @@ e_menu_item_update(E_Menu *m, E_Menu_Item *mi)
 	     ebits_show(mi->state);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_unrealize(E_Menu *m, E_Menu_Item *mi)
 {
+   D_ENTER;
+
    if (mi->bg) ebits_free(mi->bg);
    mi->bg = NULL;
    IF_FREE(mi->bg_file);
@@ -1151,6 +1391,8 @@ e_menu_item_unrealize(E_Menu *m, E_Menu_Item *mi)
    mi->sep = NULL;
    IF_FREE(mi->sep_file);
    mi->sep_file = NULL;
+
+   D_RETURN;
 }
 
 void
@@ -1158,6 +1400,8 @@ e_menu_item_realize(E_Menu *m, E_Menu_Item *mi)
 {
    double tw, th;
    int iw, ih, rw, rh;
+
+   D_ENTER;
 
    if (mi->separator)
      {
@@ -1198,6 +1442,8 @@ e_menu_item_realize(E_Menu *m, E_Menu_Item *mi)
 	e_menu_set_sel(m, mi);
 	if ((mi->radio) || (mi->check)) e_menu_set_state(m, mi);
      }
+
+   D_RETURN;
 }
 
 E_Menu_Item *
@@ -1205,17 +1451,21 @@ e_menu_item_new(char *str)
 {
    E_Menu_Item *mi;
    
+   D_ENTER;
+
    mi = NEW(E_Menu_Item, 1);
    ZERO(mi, E_Menu_Item, 1);
 
    if (str) mi->str = strdup(str);
    
-   return mi;
+   D_RETURN_(mi);
 }
 
 void
 e_menu_obscure_outside_screen(E_Menu *m)
 {
+   D_ENTER;
+
    /* obscure stuff outside the screen boundaries - optimizes rendering */
    evas_clear_obscured_rects(m->evas);
    evas_add_obscured_rect(m->evas, 
@@ -1234,6 +1484,8 @@ e_menu_obscure_outside_screen(E_Menu *m)
 			  screen_w - m->current.x,
 			  -m->current.y - 100000,
 			  100000, 200000 + screen_h);
+
+   D_RETURN;
 }
 
 void
@@ -1241,6 +1493,8 @@ e_menu_scroll_all_by(int dx, int dy)
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = menus; l; l = l->next)
      {
 	E_Menu *m;
@@ -1265,6 +1519,8 @@ e_menu_scroll_all_by(int dx, int dy)
 			     mouse_y - m->current.y);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -1272,6 +1528,8 @@ e_menu_update_visibility(E_Menu *m)
 {
    E_Menu_Item *mi;
 	
+   D_ENTER;
+
    mi = m->selected;
    if (mi)
      {
@@ -1297,6 +1555,8 @@ e_menu_update_visibility(E_Menu *m)
 	       e_menu_scroll_all_by(0, -(screen_h / 4));
 	  }
      }
+
+   D_RETURN;
 }
 
 void
@@ -1305,7 +1565,9 @@ e_menu_update_base(E_Menu *m)
    int size_changed = 0;
    int location_changed = 0;
 
-   if (!m->changed) return;
+   D_ENTER;
+
+   if (!m->changed) D_RETURN;
    
    if (m->recalc_entries)
      {
@@ -1436,20 +1698,28 @@ e_menu_update_base(E_Menu *m)
 	evas_set_output_viewport(m->evas, 0, 0, m->current.w, m->current.h);
 	if (m->bg) ebits_resize(m->bg, m->current.w, m->current.h);
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_update_finish(E_Menu *m)
 {
-   if (!m->changed) return;
+   D_ENTER;
+
+   if (!m->changed) D_RETURN;
    m->previous = m->current;
    m->changed = 0;
+
+   D_RETURN;
 }
 
 void
 e_menu_update_shows(E_Menu *m)
 {
-   if (!m->changed) return;
+   D_ENTER;
+
+   if (!m->changed) D_RETURN;
    if (m->current.visible != m->previous.visible)
      {
 	if (m->current.visible) 
@@ -1461,12 +1731,16 @@ e_menu_update_shows(E_Menu *m)
 	     open_menus = evas_list_append(open_menus, m);
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_update_hides(E_Menu *m)
 {
-   if (!m->changed) return;
+   D_ENTER;
+
+   if (!m->changed) D_RETURN;
    if (m->current.visible != m->previous.visible)
      {
 	if (!m->current.visible)
@@ -1498,20 +1772,28 @@ e_menu_update_hides(E_Menu *m)
 	     if (!open_menus) e_menu_event_win_hide();
 	  }
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_update(E_Menu *m)
 {
+   D_ENTER;
+
    e_menu_update_base(m);
    e_menu_update_shows(m);
    e_menu_update_hides(m);
    e_menu_update_finish(m);
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_icon(E_Menu_Item *mi, char *icon)
 {
+   D_ENTER;
+
    IF_FREE(mi->icon);
    mi->icon = NULL;
    if (icon) mi->icon = strdup(icon);
@@ -1520,11 +1802,15 @@ e_menu_item_set_icon(E_Menu_Item *mi, char *icon)
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_text(E_Menu_Item *mi, char *text)
 {
+   D_ENTER;
+
    IF_FREE(mi->str);
    mi->str = NULL;
    if (text) mi->str = strdup(text);
@@ -1533,44 +1819,60 @@ e_menu_item_set_text(E_Menu_Item *mi, char *text)
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_separator(E_Menu_Item *mi, int sep)
 {
+   D_ENTER;
+
    mi->separator = sep;
    if (mi->menu) 
      {
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_radio(E_Menu_Item *mi, int radio)
 {
+   D_ENTER;
+
    mi->radio = radio;
    if (mi->menu) 
      {
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_check(E_Menu_Item *mi, int check)
 {
+   D_ENTER;
+
    mi->check = check;
    if (mi->menu) 
      {
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_state(E_Menu_Item *mi, int state)
 {
+   D_ENTER;
+
    mi->on = state;
    if (mi->menu) 
      {
@@ -1578,11 +1880,15 @@ e_menu_item_set_state(E_Menu_Item *mi, int state)
 	mi->menu->redo_sel = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_submenu(E_Menu_Item *mi, E_Menu *submenu)
 {
+   D_ENTER;
+
    if (mi->submenu) e_menu_hide(mi->submenu);
    mi->submenu = submenu;
    if (mi->menu) 
@@ -1591,31 +1897,45 @@ e_menu_item_set_submenu(E_Menu_Item *mi, E_Menu *submenu)
 	mi->menu->redo_sel = 1;
 	mi->menu->changed = 1;
      }
+
+   D_RETURN;
 }
 
 void
 e_menu_item_set_scale_icon(E_Menu_Item *mi, int scale)
 {
+   D_ENTER;
+
    mi->scale_icon = scale;
    if (mi->menu) 
      {
 	mi->menu->recalc_entries = 1;
 	mi->menu->changed = 1;
      }   
+
+   D_RETURN;
 }
 
 void
 e_menu_set_padding_icon(E_Menu *m, int pad)
 {
+   D_ENTER;
+
    m->pad.icon = pad;
    m->recalc_entries = 1;
    m->changed = 1;
+
+   D_RETURN;
 }
 
 void
 e_menu_set_padding_state(E_Menu *m, int pad)
 {
+   D_ENTER;
+
    m->pad.state = pad;
    m->recalc_entries = 1;
    m->changed = 1;
+
+   D_RETURN;
 }

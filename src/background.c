@@ -1,12 +1,15 @@
 #include "e.h"
+#include "debug.h"
 #include "background.h"
 #include "util.h"
 
-void
-e_background_free(E_Background *bg)
+static void
+e_background_cleanup(E_Background *bg)
 {
    Evas_List l;
-   
+
+   D_ENTER;
+
    if (bg->layers)
      {
 	for (l = bg->layers; l; l = l->next)
@@ -23,7 +26,10 @@ e_background_free(E_Background *bg)
      }
    if (bg->file) FREE (bg->file);
    if (bg->base_obj) evas_del_object(bg->evas, bg->base_obj);
-   FREE(bg);   
+
+   e_object_cleanup(E_OBJECT(bg));
+
+   D_RETURN;
 }
 
 E_Background *
@@ -31,11 +37,14 @@ e_background_new(void)
 {
    E_Background *bg;
    
+   D_ENTER;
+
    bg = NEW(E_Background, 1);
    ZERO(bg, E_Background, 1);
-   OBJ_INIT(bg, e_background_free);
+
+   e_object_init(E_OBJECT(bg), (E_Cleanup_Func) e_background_cleanup);
    
-   return bg;
+   D_RETURN_(bg);
 }
 
 E_Background *
@@ -45,15 +54,17 @@ e_background_load(char *file)
    E_DB_File *db;
    int i, num;
    
+   D_ENTER;
+
    db = e_db_open_read(file);
-   if (!db) return NULL;
+   if (!db) D_RETURN_(NULL);
    num = 0;
    e_db_int_get(db, "/type/bg", &num);
    if (num != 1)
      {
 	e_db_close(db);
 	e_db_flush();
-	return NULL;
+	D_RETURN_(NULL);
      }
    e_db_int_get(db, "/layers/count", &num);
    
@@ -101,7 +112,7 @@ e_background_load(char *file)
 	sprintf(buf, "/layers/%i/bg.b", i); e_db_int_get(db, buf, &(bl->bg.b));
 	sprintf(buf, "/layers/%i/bg.a", i); e_db_int_get(db, buf, &(bl->bg.a));
      }
-   return bg;
+   D_RETURN_(bg);
 }
 
 void
@@ -110,9 +121,11 @@ e_background_realize(E_Background *bg, Evas evas)
    Evas_List l;
    int ww, hh, count;
 
-   if (bg->evas) return;
+   D_ENTER;
+
+   if (bg->evas) D_RETURN;
    bg->evas = evas;
-   if (!bg->evas) return;
+   if (!bg->evas) D_RETURN;
    for (count = 0, l = bg->layers; l; l = l->next, count++)
      {
 	E_Background_Layer *bl;
@@ -149,6 +162,7 @@ e_background_realize(E_Background *bg, Evas evas)
    bg->geom.h = 0;
    e_background_set_size(bg, ww, hh);
 
+   D_RETURN;
 }
 
 void
@@ -156,10 +170,12 @@ e_background_set_scroll(E_Background *bg, int sx, int sy)
 {
    Evas_List l;
    
-   if ((bg->geom.sx == sx) && (bg->geom.sy == sy)) return;
+   D_ENTER;
+
+   if ((bg->geom.sx == sx) && (bg->geom.sy == sy)) D_RETURN;
    bg->geom.sx = sx;
    bg->geom.sy = sy;
-   if (!bg->evas) return;
+   if (!bg->evas) D_RETURN;
    for (l = bg->layers; l; l = l->next)
      {
 	E_Background_Layer *bl;
@@ -173,6 +189,7 @@ e_background_set_scroll(E_Background *bg, int sx, int sy)
 				 bl->fw, bl->fh);
 	  }
      }
+   D_RETURN;
 }
 
 void
@@ -180,7 +197,9 @@ e_background_set_size(E_Background *bg, int w, int h)
 {
    Evas_List l;
    
-   if ((bg->geom.w == w) && (bg->geom.h == h)) return;
+   D_ENTER;
+
+   if ((bg->geom.w == w) && (bg->geom.h == h)) D_RETURN;
    bg->geom.w = w;
    bg->geom.h = h;
    for (l = bg->layers; l; l = l->next)
@@ -229,6 +248,7 @@ e_background_set_size(E_Background *bg, int w, int h)
 	       }
 	  }
      }
+   D_RETURN;
 }
 
 void
@@ -236,6 +256,8 @@ e_background_set_color_class(E_Background *bg, char *cc, int r, int g, int b, in
 {
    Evas_List l;
    
+   D_ENTER;
+
    for (l = bg->layers; l; l = l->next)
      {
 	E_Background_Layer *bl;
@@ -252,4 +274,6 @@ e_background_set_color_class(E_Background *bg, char *cc, int r, int g, int b, in
 	       }
 	  }
      }
+
+   D_RETURN;
 }

@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "config.h"
 #include "place.h"
 #include "actions.h"
@@ -15,8 +16,12 @@ e_mouse_down(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Down          *e;
 
+   D_ENTER;
+
    e = ev->event;
-   if (!win_place) return;
+   if (!win_place) D_RETURN;
+
+   D_RETURN;
 }
 
 static void
@@ -24,13 +29,16 @@ e_mouse_up(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Up          *e;
 
+   D_ENTER;
+
    e = ev->event;
-   if (!win_place) return;
+   if (!win_place) D_RETURN;
    e_action_stop("Window_Place", ACT_MOUSE_UP, 1,  NULL, 
 		 ECORE_EVENT_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry);
    ecore_window_destroy(win_place);
    win_place = 0;
-   return;
+
+   D_RETURN;
 }
 
 static void
@@ -38,13 +46,17 @@ e_mouse_move(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Move          *e;
 
+   D_ENTER;
+
    e = ev->event;
-   if (!win_place) return;
+   if (!win_place) D_RETURN;
    e_action_cont("Window_Place", ACT_MOUSE_MOVE, 1,  NULL, 
 		 ECORE_EVENT_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry,
 		 e->rx - prx, e->ry - pry);
    prx = e->rx;
    pry = e->ry;
+
+   D_RETURN;
 }
 
 static int
@@ -55,6 +67,8 @@ e_place_manual(E_Border *b, E_Desktop *desk, int *x, int *y)
    int move_mode = E_GUIDES_BOX;
    E_CFG_INT(cfg_window_move_mode, "settings", "/window/move/mode", E_GUIDES_BOX);   
    
+   D_ENTER;
+
    E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
    w = b->current.requested.w;
    h = b->current.requested.h;
@@ -87,10 +101,10 @@ e_place_manual(E_Border *b, E_Desktop *desk, int *x, int *y)
    /* start a move mode */
    e_action_stop_by_type("Window_Place");
    e_action_start("Window_Place", ACT_MOUSE_CLICK, 1,  NULL, 
-		  ECORE_EVENT_KEY_MODIFIER_NONE, b, NULL, mx, my, rx, ry);
+		  ECORE_EVENT_KEY_MODIFIER_NONE, E_OBJECT(b), NULL, mx, my, rx, ry);
    
-   if (move_mode != E_GUIDES_OPAQUE) return 0;
-   return 1;
+   if (move_mode != E_GUIDES_OPAQUE) D_RETURN_(0);
+   D_RETURN_(1);
 }
 
 static int
@@ -101,6 +115,8 @@ e_place_smart(E_Border *b, E_Desktop *desk, int *x, int *y)
    int *a_x = NULL, *a_y = NULL;
    Evas_List l;
    
+   D_ENTER;
+
    w = b->current.requested.w;
    h = b->current.requested.h;
    a_w = 2;
@@ -411,7 +427,8 @@ e_place_smart(E_Border *b, E_Desktop *desk, int *x, int *y)
    done:
    FREE(a_x);
    FREE(a_y);
-   return 1;
+
+   D_RETURN_(1);
 }
 
 static int
@@ -419,11 +436,14 @@ e_place_middle(E_Border *b, E_Desktop *desk, int *x, int *y)
 {
    int w, h;
    
+   D_ENTER;
+
    w = b->current.requested.w;
    h = b->current.requested.h;
    *x = (desk->real.w - w) / 2;
    *y = (desk->real.h - h) / 2;
-   return 1;
+
+   D_RETURN_(1);
 }
 
 static int
@@ -434,6 +454,8 @@ e_place_cascade(E_Border *b, E_Desktop *desk, int *x, int *y)
    static int count_y = 0;
    int pl, pr, pt, pb;
    
+   D_ENTER;
+
    pl = pr = pt = pb = 0;
    if (b->bits.l) ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);   
    w = b->current.requested.w;
@@ -444,7 +466,8 @@ e_place_cascade(E_Border *b, E_Desktop *desk, int *x, int *y)
    *y = count_y;
    count_x += pl;
    count_y += pt;
-   return 1;
+
+   D_RETURN_(1);
 }
 
 static int
@@ -452,6 +475,8 @@ e_place_random(E_Border *b, E_Desktop *desk, int *x, int *y)
 {
    int w, h;
    
+   D_ENTER;
+
    w = b->current.requested.w;
    h = b->current.requested.h;
 
@@ -465,28 +490,45 @@ e_place_random(E_Border *b, E_Desktop *desk, int *x, int *y)
    else
      *y = 0;
 
-   return 1;
+   D_RETURN_(1);
 }
 
 int
 e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mode)
 {
+   int result = 1;
+
+   D_ENTER;
+
    if (b->client.no_place)
-     return 1;
+     D_RETURN_(1);
 
-   if (mode == E_PLACE_MANUAL)  return e_place_manual (b, desk, x, y);
-   if (mode == E_PLACE_SMART)   return e_place_smart  (b, desk, x, y);
-   if (mode == E_PLACE_MIDDLE)  return e_place_middle (b, desk, x, y);
-   if (mode == E_PLACE_CASCADE) return e_place_cascade(b, desk, x, y);
-   if (mode == E_PLACE_RANDOM)  return e_place_random (b, desk, x, y);
+   switch (mode)
+     {
+     case E_PLACE_MANUAL:
+       result = e_place_manual (b, desk, x, y);
+     case E_PLACE_SMART:
+       result = e_place_smart  (b, desk, x, y);
+     case E_PLACE_MIDDLE:
+       result = e_place_middle (b, desk, x, y);
+     case E_PLACE_CASCADE:
+       result = e_place_cascade(b, desk, x, y);
+     case E_PLACE_RANDOM:
+       result = e_place_random (b, desk, x, y);
+     default:
+     }
 
-   return 1;
+   D_RETURN_(result);
 }
 
 void
 e_place_init(void)
 {
+   D_ENTER;
+
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,                 e_mouse_up);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
+
+   D_RETURN;
 }
