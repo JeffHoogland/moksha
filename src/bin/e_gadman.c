@@ -214,14 +214,6 @@ e_gadman_client_save(E_Gadman_Client *gmc)
 }
 
 void
-e_client_gadman_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
-{
-   E_OBJECT_CHECK(gmc);
-   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
-   gmc->edge = edge;
-}
-
-void
 e_gadman_client_load(E_Gadman_Client *gmc)
 {
    Gadman_Client_Config *cf;
@@ -309,6 +301,23 @@ e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol)
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->policy = pol;
+
+   if (gmc->control_object)
+     {
+	if (gmc->policy & E_GADMAN_POLICY_HSIZE)
+	  edje_object_signal_emit(gmc->control_object, "hsize", "on");
+	else
+	  edje_object_signal_emit(gmc->control_object, "hsize", "off");
+	if (gmc->policy & E_GADMAN_POLICY_VSIZE)
+	  edje_object_signal_emit(gmc->control_object, "vsize", "on");
+	else
+	  edje_object_signal_emit(gmc->control_object, "vsize", "off");
+	if (gmc->policy & (E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE))
+	  edje_object_signal_emit(gmc->control_object, "move", "on");
+	else
+	  edje_object_signal_emit(gmc->control_object, "move", "off");
+     }
+   
 }
 
 void
