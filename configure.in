@@ -191,6 +191,8 @@ data/init/Makefile
 data/init/images/Makefile
 data/themes/Makefile
 data/themes/images/Makefile
+data/icons/Makefile
+data/icons/images/Makefile
 data/other/Makefile
 doc/Makefile
 enlightenment-config

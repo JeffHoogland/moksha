@@ -485,6 +485,8 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	  edje_object_signal_emit(mi->submenu_object, "active", "");
 	if (mi->toggle_object)
 	  edje_object_signal_emit(mi->toggle_object, "active", "");
+	if (mi->icon_key)
+	  edje_object_signal_emit(mi->icon_object, "active", "");
 	edje_object_signal_emit(mi->menu->bg_object, "active", "");
 	_e_menu_submenu_activate(mi);
      }
@@ -501,6 +503,8 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	  edje_object_signal_emit(mi->submenu_object, "passive", "");
 	if (mi->toggle_object)
 	  edje_object_signal_emit(mi->toggle_object, "passive", "");
+	if (mi->icon_key)
+	  edje_object_signal_emit(mi->icon_object, "passive", "");
 	edje_object_signal_emit(mi->menu->bg_object, "passive", "");
      }
 }

@@ -79,6 +79,7 @@ extern EAPI E_Path *path_data;
 extern EAPI E_Path *path_images;
 extern EAPI E_Path *path_fonts;
 extern EAPI E_Path *path_themes;
+extern EAPI E_Path *path_icons;
 extern EAPI E_Path *path_init;
 extern EAPI int     restart;
 

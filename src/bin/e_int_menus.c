@@ -65,8 +65,8 @@ e_int_menus_main_new(void)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "About Enlightenment");   
-   e_menu_item_icon_file_set(mi,
-			     e_path_find(path_images, "e.png"));
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
    
    mi = e_menu_item_new(m);
@@ -74,10 +74,14 @@ e_int_menus_main_new(void)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Restart Enlightement");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "reset");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Exit Enlightement");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "power");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
    return m;
 }

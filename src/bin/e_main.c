@@ -38,6 +38,7 @@ E_Path *path_images  = NULL;
 E_Path *path_fonts   = NULL;
 E_Path *path_themes  = NULL;
 E_Path *path_init    = NULL;
+E_Path *path_icons   = NULL;
 int     restart      = 0;
 
 /* local subsystem globals */
@@ -398,6 +399,7 @@ _e_main_dirs_init(void)
 	"%s/.e/e/fonts",
 	"%s/.e/e/themes",
 	"%s/.e/e/init",
+	"%s/.e/e/icons",
 	"%s/.e/e/backgrounds",
 	"%s/.e/e/applications",
 	"%s/.e/e/applications/all",
@@ -559,6 +561,14 @@ _e_main_path_init(void)
      }
    e_path_path_append(path_themes, "~/.e/e/themes");
    e_path_path_append(path_themes, PACKAGE_DATA_DIR"/data/themes");
+   path_icons = e_path_new();
+   if (!path_icons)
+     {
+	e_error_message_show("Cannot allocate path for path_icons\n");
+	return 0;
+     }
+   e_path_path_append(path_icons, "~/.e/e/icons");
+   e_path_path_append(path_icons, PACKAGE_DATA_DIR"/data/icons");
    path_init = e_path_new();
    if (!path_init)
      {
@@ -592,6 +602,11 @@ _e_main_path_shutdown(void)
      {
 	e_object_unref(E_OBJECT(path_themes));
 	path_themes = NULL;
+     }
+   if (path_icons)
+     {
+	e_object_unref(E_OBJECT(path_icons));
+	path_icons = NULL;
      }
    if (path_init)
      {
