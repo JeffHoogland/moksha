@@ -755,18 +755,18 @@ setup(void)
 	
 	txz = txz_new
 	  ((root_w - 512) / 2, 130,
-	   "9c Enlightenment\n"
-	   "5c \n"
-	   "5c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
-	   "5c program. It will help you get a base configuration initialised\n"
-	   "5c for your user and do some initial tweaks and system queries.\n"
-	   "5c \n"
-	   "5c Please be patient and read the dialogs carefully, as your answers\n"
-	   "5c to questions posed will affect your initial setup of Enlightenment,\n"
-	   "5c and so your initial impressions.\n"
-	   "5c \n"
-	   "5c N.B. - during pre-release stages, this setup program may come up\n"
-	   "5c more than just once, as new setups need to be installed\n"
+	   "6c Enlightenment\n"
+	   "3c \n"
+	   "3c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
+	   "3c program. It will help you get a base configuration initialised\n"
+	   "3c for your user and do some initial tweaks and system queries.\n"
+	   "3c \n"
+	   "3c Please be patient and read the dialogs carefully, as your answers\n"
+	   "3c to questions posed will affect your initial setup of Enlightenment,\n"
+	   "3c and so your initial impressions.\n"
+	   "3c \n"
+	   "3c N.B. - during pre-release stages, this setup program may come up\n"
+	   "3c more than just once, as new setups need to be installed\n"
 	   );
      }
      {

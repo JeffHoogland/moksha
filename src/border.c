@@ -11,6 +11,7 @@
 #include "util.h"
 #include "place.h"
 #include "match.h"
+#include "focus.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -408,29 +409,6 @@ e_reparent(Ecore_Event * ev)
 
    current_ev = ev;
    e = ev->event;
-     {
-	E_Border *b;
-
-	b = e_border_find_by_window(e->win);
-#if 0	
-	if ((b) && (e->parent_from == b->win.container))
-	  {
-	     if (b)
-	       {
-		  e_action_stop_by_object(b, NULL, 
-					  mouse_win_x, mouse_win_y, 
-					  border_mouse_x, border_mouse_y);
-		  OBJ_UNREF(b);
-		  OBJ_IF_FREE(b)
-		    {
-		       ecore_window_reparent(e->win, 0, 0, 0);
-		       e_icccm_release(e->win);
-		       OBJ_FREE(b);
-		    }
-	       }
-	  }
-#endif	
-     }
    current_ev = NULL;
 
    D_RETURN;
@@ -472,43 +450,44 @@ e_focus_in(Ecore_Event * ev)
 
    current_ev = ev;
    e = ev->event;
-   D("focus in event\n");
      {
 	E_Border *b;
 	
 	b = e_border_find_by_window(e->win);
 	if ((b) && (b->win.client == e->win))
 	  {
-	D("focus in %s\n", b->client.title);
+	     E_Grab *g;
+	     
 	     e_border_focus_grab_ended();
 	     b->current.selected = 1;
 	     b->changed = 1;
-
 	     e_observee_notify_observers(E_OBSERVEE(b), ECORE_EVENT_WINDOW_FOCUS_IN);
-
+	     g = b->click_grab;
+	     if (g)
 	       {
-		  Evas_List l;
-		  
-		  for (l = b->grabs; l; l = l->next)
-		    {
-		       E_Grab *g;
-		       
-		       g = l->data;
-		       /* find a grab that triggered this */
-		       if (b->click_grab == g) 
-			 {
-			    D("ungrab %s\n", b->client.title);
-/*			    ecore_pointer_ungrab(e->time);*/
-			    ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
-/*			    ecore_window_button_grab_auto_replay_set(b->win.main, 0);*/
-			    free(g);
-			    b->grabs = evas_list_remove(b->grabs, g);
-			    b->click_grab = NULL;
-			    break;
-			 }
-		    }
+		  /* find a grab that triggered this */
+		  ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
+		  free(g);
+		  b->click_grab = NULL;
 	       }
 	  }
+	/* FUCKED UP: 
+	 * look at this debug output:
+	 * f in 800003
+	 *   to: Fukeneh!
+	 *     ungrab ctf buttons
+	 * f out 400003
+	 *   from: F..... Oath!
+	 *     grab dem buttonz!
+	 * f in 400003
+	 *   to: F..... Oath!
+	 *     ungrab ctf buttons
+	 * 
+	 * first the focus automatically reverts to Fukeneh (the window)
+	 * now i click on F...... Oath - but i get aofocus out event from
+	 * F..... Oath - it had no focus... but i get a focus out.. i should 
+	 * be getting a focus out for fukeneh!
+	 */
      }
    current_ev = NULL;
 
@@ -525,7 +504,6 @@ e_focus_out(Ecore_Event * ev)
 
    current_ev = ev;
    e = ev->event;
-   D("focus out event\n");
      {
 	E_Border *b;
 	
@@ -536,11 +514,12 @@ e_focus_out(Ecore_Event * ev)
 	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
-	D("focus out %s\n", b->client.title);
 	     b->current.selected = 0;
 	     if (e->key_grab) b->current.select_lost_from_grab = 1;	     
 	     /* settings - click to focus would affect grabs */
-	     if ((!b->client.internal) && (focus_mode == 2)) /* click to focus */
+	     if ((!b->client.internal) && 
+		 (focus_mode == 2) &&
+		 (e_focus_can_focus(b)))
 	       {
 		  E_Grab *g;
 		  
@@ -550,9 +529,7 @@ e_focus_out(Ecore_Event * ev)
 		  g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
 		  g->any_mod = 0;
 		  g->remove_after = 1;
-		  b->grabs = evas_list_append(b->grabs, g);
-		  D("grab me baaaybe %8x | %s\n", b->win.client, b->client.title);
-		  ecore_button_grab(b->win.main, 0, XEV_BUTTON_PRESS | XEV_BUTTON_RELEASE, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
+		  ecore_button_grab(b->win.main, 0, XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
 		  ecore_window_button_grab_auto_replay_set(b->win.main, e_border_replay_query);
 		  b->click_grab = g;
 	       }
@@ -595,8 +572,6 @@ e_mouse_down(Ecore_Event * ev)
    Ecore_Event_Mouse_Down      *e;
   
    D_ENTER;
-
-   D("doooown\n");
    current_ev = ev;
    e = ev->event;
      {
@@ -608,7 +583,6 @@ e_mouse_down(Ecore_Event * ev)
 	mouse_y = e->ry;
 	mouse_buttons |= (1 << e->button);
 	b = e_border_find_by_window(e->win);
-	D("%p (%x)\n", b, e->win);
 	if (b)
 	  {
 	     int focus_mode;
@@ -616,7 +590,11 @@ e_mouse_down(Ecore_Event * ev)
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
 	     if (focus_mode == 2)
-	       ecore_focus_to_window(b->win.client);	     
+	       {
+		  e_focus_set_focus(b);
+		  /* FIXME: if (raise on click to focus) ... */
+		  e_border_raise(b);
+	       }
 	     if (e->win == b->win.main) e_cb_border_mouse_down(b, ev);
 	     else
 	       {
@@ -1060,18 +1038,13 @@ e_cb_border_mouse_in(E_Border *b, Ecore_Event *e)
    E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
    D_ENTER;
-
-/*   if (border_mouse_buttons) D_RETURN;*/
    E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);   
    /* pointer focus stuff */
    if (focus_mode == 0)
-     {
-	if (b->client.takes_focus) ecore_focus_to_window(b->win.client);
-     }
+     e_focus_set_focus(b);
 
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-/*   border_mouse_buttons = mouse_buttons;*/
    if (!current_ev) D_RETURN;
 
    x = ((Ecore_Event_Window_Enter *)(e->event))->x;
@@ -1090,18 +1063,13 @@ e_cb_border_mouse_out(E_Border *b, Ecore_Event *e)
 {
    int x, y;
    char *class = "Window_Grab";
-
-/*   if (border_mouse_buttons) D_RETURN; */
-   /* pointer focus stuff */
-/*   ecore_focus_to_window(0);*/
-
+   
    D_ENTER;
-
+   
    x = mouse_x;
    y = mouse_y;
    border_mouse_x = mouse_x;
-   border_mouse_y = mouse_y;
-/*   border_mouse_buttons = mouse_buttons; */
+   border_mouse_y = mouse_y;   
    if (!current_ev) D_RETURN;
 
    e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, ECORE_EVENT_KEY_MODIFIER_NONE,
@@ -1126,11 +1094,8 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
    ecore_pointer_grab(b->win.main, CurrentTime);
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-   D("%i\n", border_mouse_buttons);
-/*   if (border_mouse_buttons) D_RETURN; */
-/*   border_mouse_buttons = mouse_buttons; */
-   D("%p\n", current_ev);
    if (!current_ev) D_RETURN;
+   
    x = ((Ecore_Event_Mouse_Down *)(e->event))->x;
    y = ((Ecore_Event_Mouse_Down *)(e->event))->y;
    bt = ((Ecore_Event_Mouse_Down *)(e->event))->button;
@@ -1149,13 +1114,10 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 		 ((g->any_mod) ||
 		  (((Ecore_Event_Mouse_Down *)(e->event))->mods == g->mods)))
 	       {
-		  if (b->click_grab == g) b->click_grab = NULL;
 		  if (g->remove_after)
 		    {
-		       D("pfft ungrab %s\n", b->client.title);
 		       ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
 		       ecore_window_button_grab_auto_replay_set(b->win.main, NULL);
-		       ecore_pointer_ungrab(((Ecore_Event_Mouse_Up *)(e->event))->time);
 		       free(g);
 		       b->grabs = evas_list_remove(b->grabs, g);
 		       goto again;
@@ -1163,7 +1125,6 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 	       }
 	  }
      }
-   D("(...e_cb_border_mouse_down...)\n");
      {
 	E_Action_Type act;
 	Ecore_Event_Key_Modifiers mods;
@@ -1180,14 +1141,10 @@ e_cb_border_mouse_down(E_Border *b, Ecore_Event *e)
 		      x, y, border_mouse_x, border_mouse_y);
 	if (!e_action_start(class, act, bt, NULL, mods, E_OBJECT(b), NULL,
 			   x, y, border_mouse_x, border_mouse_y))
-	  {
-	     ecore_pointer_ungrab(((Ecore_Event_Mouse_Down *)(e->event))->time);
-	  }
+	  ecore_pointer_ungrab(((Ecore_Event_Mouse_Down *)(e->event))->time);
 	else
-	  {
-	     ecore_pointer_grab(((Ecore_Event_Mouse_Down *)(e->event))->win,
-				((Ecore_Event_Mouse_Down *)(e->event))->time);
-	  }	  
+	  ecore_pointer_grab(((Ecore_Event_Mouse_Down *)(e->event))->win,
+			     ((Ecore_Event_Mouse_Down *)(e->event))->time);
      }
 
    D_RETURN;
@@ -1201,11 +1158,12 @@ e_cb_border_mouse_up(E_Border *b, Ecore_Event *e)
    
    D_ENTER;
 
-   ecore_pointer_ungrab(CurrentTime);   
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
-/*   border_mouse_buttons = mouse_buttons; */
+   
    if (!current_ev) D_RETURN;
+   ecore_pointer_ungrab(((Ecore_Event_Mouse_Up *)(e->event))->time);
+   
    x = ((Ecore_Event_Mouse_Up *)(e->event))->x;
    y = ((Ecore_Event_Mouse_Up *)(e->event))->y;
    bt = ((Ecore_Event_Mouse_Up *)(e->event))->button;
@@ -1758,12 +1716,6 @@ e_border_new(void)
    
    ecore_window_raise(b->win.input);
    ecore_window_raise(b->win.container);
-/*   
-   ecore_window_raise(b->win.l);
-   ecore_window_raise(b->win.r);
-   ecore_window_raise(b->win.t);
-   ecore_window_raise(b->win.b);
-*/   
 
    evases = evas_list_append(evases, b->evas.l);
    evases = evas_list_append(evases, b->evas.r);
@@ -1787,7 +1739,6 @@ e_border_new(void)
    D_RETURN_(b);
 }
 
-
 void
 e_border_remove_mouse_grabs(E_Border *b)
 {
@@ -1802,13 +1753,13 @@ e_border_remove_mouse_grabs(E_Border *b)
 	     E_Grab *g;
 	     
 	     g = l->data;
-	     D("nooo grabs\n");
 	     ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
 	     FREE(g);
 	  }
 	evas_list_free(b->grabs);
 	b->grabs = NULL;
      }
+   b->click_grab = NULL;
 
    D_RETURN;
 }
@@ -1823,7 +1774,6 @@ e_border_remove_click_grab(E_Border *b)
 	E_Grab *g;
 	
 	g = b->click_grab;
-	b->grabs = evas_list_remove(b->grabs, b->click_grab);
 	ecore_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
 	ecore_window_button_grab_auto_replay_set(b->win.main, NULL);
 	b->click_grab = NULL;
@@ -1848,24 +1798,21 @@ e_border_attach_mouse_grabs(E_Border *b)
    
    grabs_db = e_config_get("grabs");
    /* settings - click to focus would affect grabs */
-   if ((!b->current.selected))
+   if ((!b->current.selected) && 
+       (e_focus_can_focus(b)) &&
+       (focus_mode == 2))
      {
-	if (focus_mode == 2) /* click to focus */
-	  {
-	     E_Grab *g;
-	     
-	     g = NEW(E_Grab, 1);
-	     ZERO(g, E_Grab, 1);
-	     g->button = 0;
-	     g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
-	     g->any_mod = 0;
-	     g->remove_after = 1;
-	     b->grabs = evas_list_append(b->grabs, g);
-	     D("attach... grab me baaaybe %8x | %s\n", b->win.client, b->client.title);
-	     ecore_button_grab(b->win.main, 0, XEV_BUTTON_PRESS | XEV_BUTTON_RELEASE, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
-	     ecore_window_button_grab_auto_replay_set(b->win.main, e_border_replay_query);
-	     b->click_grab = g;
-	  }
+	E_Grab *g;
+	
+	g = NEW(E_Grab, 1);
+	ZERO(g, E_Grab, 1);
+	g->button = 0;
+	g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
+	g->any_mod = 0;
+	g->remove_after = 1;
+	ecore_button_grab(b->win.main, 0, XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 0);
+	ecore_window_button_grab_auto_replay_set(b->win.main, e_border_replay_query);
+	b->click_grab = g;
      }
    
    /* other grabs - liek alt+left to move */
@@ -2708,15 +2655,6 @@ e_border_current_focused(void)
    Evas_List l;
    
    D_ENTER;
-
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *b;
-	
-	b = l->data;
-	D("%s: %i | %i\n", b->client.title,
-	       b->current.selected, b->current.select_lost_from_grab);
-     }
    for (l = borders; l; l = l->next)
      {
 	E_Border *b;
@@ -2823,11 +2761,6 @@ e_border_raise_next(void)
 
 	current = (E_Border *)next->data;
      }
-
-   D("current desk coords %d, %d, real dim %d, %d\n", current->desk->x,
-		   current->desk->y, current->desk->real.w, current->desk->real.h);
-   D("current coords %d, %d\n", current->current.x,
-		   current->current.y);
 
    e_border_raise(current);
    e_border_send_pointer(current);

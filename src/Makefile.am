@@ -35,6 +35,7 @@ enlightenment_SOURCES = \
 	embed.c embed.h \
 	entry.h entry.c \
 	exec.h exec.c \
+	focus.h focus.c \
 	file.h file.c \
 	fs.h fs.c \
 	$(ferite_c) \
