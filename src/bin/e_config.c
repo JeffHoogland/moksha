@@ -90,14 +90,6 @@ e_config_init(void)
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	     em = E_NEW(E_Config_Module, 1);
-	     em->name = strdup("snow");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
-	     em->name = strdup("flame");
-	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
 	     em->name = strdup("battery");
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
