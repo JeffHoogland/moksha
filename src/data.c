@@ -189,8 +189,11 @@ e_data_free(E_Data_Base_Type * type, char *data)
 
 		     data2 = l2->data;
 		     l2 = evas_list_remove(l2, data2);
-		     e_data_free(node->sub_type, (char *)data2);
-		     FREE(data2);
+		     if(data2)
+		       {
+			 e_data_free(node->sub_type, (char *)data2);
+			 FREE(data2);
+		       }
 		  }
 	     }
 	     break;

@@ -296,10 +296,23 @@ e_cursors_display_in_window(Window win, char *type)
 
 	if (c)
 	  {
-	     c->cursor =
-		ecore_cursor_new(pmap, mask, hx, hy, fr, fg, fb, br, bg, bb);
-	     ecore_pixmap_free(pmap);
-	     ecore_pixmap_free(mask);
+	    /* If behavior.db has /desktops/cursors/native == 1, then use */
+	    /* images installed */
+	    /* by E, else use X cursors by cursorfont id. */
+	    /* Use E's pixmap? */
+	    if(config_data->desktops->e_native_cursors)
+	      {
+		c->cursor =
+		  ecore_cursor_new(pmap, mask, hx, hy, fr, fg, fb, br, bg, bb);
+		ecore_pixmap_free(pmap);
+		ecore_pixmap_free(mask);
+	      }
+	    else
+	      {
+		/* No, use X cursors */
+		c->cursor = 
+		  XCreateFontCursor(ecore_display_get(), c->x_cursor_id);
+	      }
 	     cursors = evas_list_append(cursors, c);
 	  }
 #if 0
@@ -308,17 +321,7 @@ e_cursors_display_in_window(Window win, char *type)
      }
    if (c)
      {
-       /* If behavior.db has /desktops/cursors/native == 1, then use */
-       /* images installed */
-       /* by E, else use X cursors by cursorfont id. */
-       if(config_data->desktops->e_native_cursors)
-	 ecore_cursor_set(win, c->cursor);
-       else
-	 {
-	   Cursor x_cursor;
-	   x_cursor = XCreateFontCursor(ecore_display_get(), c->x_cursor_id);
-	   ecore_cursor_set(win, x_cursor);
-	 }
+       ecore_cursor_set(win, c->cursor);
      }
    else
      {

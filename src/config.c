@@ -311,6 +311,15 @@ e_config_behavior_changed(E_Observer * observer, E_Observee * observee,
 
    if (config_data)
      {
+       for (l = config_data->actions; l; l = l->next)
+	 {
+	   E_Action           *a;
+
+	   a = l->data;
+	   e_object_unref((E_Object *)a);
+	   l->data = NULL;
+	 }
+
 	e_data_free(cfg_config, (char *)config_data);
 	FREE(config_data);
      }
