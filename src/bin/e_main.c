@@ -454,7 +454,9 @@ _e_main_dirs_init(void)
      }
    
    /* FIXME: THIS is a hack to get people started!!! */
-   /*
+   /* err dont just disable it - replace it with a proper wizard tool */
+   /* outside e's main source to populate these directories from gnome/kde */
+   /* app menu data etc. */
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eapp", homedir);
    if (!e_file_exists(buf))
      {
@@ -466,7 +468,6 @@ _e_main_dirs_init(void)
 		 homedir);
 	system(buf);
      }
-   */
    free(homedir);
    
    return 1;
