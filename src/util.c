@@ -96,6 +96,5 @@ e_util_de_url_and_verify(const char *fi)
    if ( !wk )
      D_RETURN_(NULL);
    
-   printf("returning %s\n", wk);
    D_RETURN_(wk);
 }
