@@ -225,7 +225,7 @@ e_hints_window_state_set(Ecore_X_Window win)
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MODAL, 
 				  bd->client.netwm.state.modal);
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_STICKY,
-				  (evas_list_count(bd->stick_desks) > 1));
+				  bd->sticky);
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT,
 				  bd->client.netwm.state.maximized_v);
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ,

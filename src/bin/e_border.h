@@ -149,6 +149,7 @@ struct _E_Border
    unsigned char   shaded : 1;
    unsigned char   maximized : 1;
    unsigned char   iconic : 1;
+   unsigned char   sticky : 1;
 
    unsigned char   changed : 1;
 
@@ -206,7 +207,9 @@ EAPI void      e_border_maximize(E_Border *bd);
 EAPI void      e_border_unmaximize(E_Border *bd);
 EAPI void      e_border_iconify(E_Border *bd);
 EAPI void      e_border_uniconify(E_Border *bd);
-    
+EAPI void      e_border_stick(E_Border *bd);
+EAPI void      e_border_unstick(E_Border *bd);
+
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 
 EAPI void      e_border_idler_before(void);

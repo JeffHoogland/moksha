@@ -68,6 +68,7 @@ static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -654,6 +655,21 @@ e_border_uniconify(E_Border *bd)
 	e_iconify_border_remove(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
+}
+
+void
+e_border_stick(E_Border *bd)
+{
+    E_OBJECT_CHECK(bd);
+    bd->sticky = 1;
+}
+
+void
+e_border_unstick(E_Border *bd)
+{
+    E_OBJECT_CHECK(bd);
+    bd->sticky = 0;
+    bd->desk = e_desk_current_get(bd->zone);
 }
 
 E_Border *
@@ -2484,6 +2500,13 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
 
    mi = e_menu_item_new(m);
+   if (bd->sticky)
+     e_menu_item_label_set(mi, "Un-Stick");
+   else
+     e_menu_item_label_set(mi, "Stick");
+   e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
+
+   mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    a = e_app_window_name_class_find(bd->client.icccm.name,
@@ -2592,4 +2615,14 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
      e_error_dialog_show("Icon Edit Error", "Error starting icon editor\n\n \
 			 please install e_util_eapp_edit\n \
 			 or make sure it is in your PATH\n");
+}
+
+static void
+_e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (bd->sticky) e_border_unstick(bd);
+   else e_border_stick(bd);
 }
