@@ -525,7 +525,7 @@ setup(void)
 	Text_Zone *txz;
 	
 	txz = txz_new
-	  ((root_w - 512) / 2, 200,
+	  ((root_w - 512) / 2, 130,
 	   "9c Enlightenment\n"
 	   "5c \n"
 	   "5c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
