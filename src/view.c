@@ -1543,8 +1543,9 @@ e_view_file_deleted(int id, char *file)
    if (!file) D_RETURN;
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
+   if (!v) D_RETURN;      
    e_iconbar_file_delete(v, file);
-   if (!v) D_RETURN;   
+   e_view_bg_change(v, file);   
      {
 	E_Icon *ic;
 	
@@ -1574,10 +1575,8 @@ e_view_file_changed(int id, char *file)
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;
-   
    e_iconbar_file_change(v, file);
    e_view_bg_change(v, file);
-
      {
 	E_Icon *ic;
 	
