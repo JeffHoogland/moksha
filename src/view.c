@@ -1264,6 +1264,7 @@ e_configure(Ecore_Event * ev)
 		  e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
 		  e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
 		  e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
+		  if (v->iconbar) e_iconbar_fix(v->iconbar);
 	       }
 	  }
      }
@@ -2184,6 +2185,7 @@ e_view_free(E_View *v)
 {
    char name[PATH_MAX];
    
+   if (v->iconbar) OBJ_UNREF(v->iconbar);
    
    sprintf(name, "resort_timer.%s", v->dir);
    ecore_del_event_timer(name);
@@ -2199,7 +2201,6 @@ e_view_free(E_View *v)
    v->restarter = NULL;
    ecore_window_destroy(v->win.base);
    
-   if (v->iconbar) e_iconbar_free(v->iconbar);
 
    FREE(v);
 }
@@ -2252,7 +2253,6 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.icon.s = 7;
    v->spacing.icon.g = 7;
    v->spacing.icon.b = 7;
-//   v->iconbar = e_iconbar_new(v);
    
    views = evas_list_append(views, v);
    return v;   
@@ -2288,8 +2288,8 @@ e_view_set_dir(E_View *v, char *dir)
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					  "/view/h", v->dir, EFSD_INT);
 	v->geom_get.busy = 1;
-    v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
-      {
+	v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
+	  {
 	     EfsdOptions *ops;
 	     
 	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
@@ -2392,8 +2392,7 @@ e_view_realize(E_View *v)
      }
 
    v->iconbar = e_iconbar_new(v);
-
-   if(v->iconbar) e_iconbar_realize(v->iconbar); 
+   if (v->iconbar) e_iconbar_realize(v->iconbar); 
    
    v->changed = 1;
 }

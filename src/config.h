@@ -162,7 +162,8 @@ enum _e_config_datatype
    E_CFG_TYPE_INT,
    E_CFG_TYPE_STR,
    E_CFG_TYPE_FLOAT,
-   E_CFG_TYPE_LIST
+   E_CFG_TYPE_LIST,
+   E_CFG_TYPE_KEY
 };
 
 struct _e_config_base_type

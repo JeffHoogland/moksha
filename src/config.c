@@ -259,6 +259,14 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  (*((Evas_List *)(&(data[node->offset])))) = l2;
 	       }
 	     break;
+	   case E_CFG_TYPE_KEY:
+	       {
+		  char *val;
+		  
+		  sprintf(buf, "%s/%s", prefix, node->prefix);
+		  (*((char **)(&(data[node->offset])))) = strdup(buf);
+	       }
+	     break;
 	   default:
 	     break;
 	  }
