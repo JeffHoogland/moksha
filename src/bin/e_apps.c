@@ -791,12 +791,9 @@ _e_app_check_each(Evas_Hash *hash, const char *key, void *data, void *fdata)
 				 a->subapps = evas_list_remove(a->subapps, a2);
 				 a->subapps = evas_list_append(a->subapps, a2);
 			      }
+			    free(s);
 			 }
-		       while (files)
-			 {
-			    free(files->data);
-			    files = evas_list_remove_list(files, files);
-			 }
+		       evas_list_free(files);
 		    }
 	       }
 	  }
