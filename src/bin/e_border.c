@@ -1587,7 +1587,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
      {
 	/* for firefox/thunderbird (xul) menu walking */
-	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+//	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
      {
