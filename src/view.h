@@ -53,15 +53,6 @@ struct _E_View
       int                 x, y;
    } location;
 
-   /* This part stores the Efsd command
-      IDs for requested metadata. */
-   struct {
-      struct {
-	 EfsdCmdId x, y, w, h, bg;
-      } id;
-      int       busy;
-   } metadata;
-
    struct {
       /* +-----------------+
        * |        Wt       |
