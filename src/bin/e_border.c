@@ -151,7 +151,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
-   /* ecore_evas_avoid_damage_set(bd->bg_ecore_evas, 1); */
+   ecore_evas_avoid_damage_set(bd->bg_ecore_evas, 1);
    ecore_evas_show(bd->bg_ecore_evas);
    evas_font_path_append(bd->bg_evas, e_path_find(path_data, "fonts"));
    bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
@@ -239,6 +239,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    
    con->clients = evas_list_append(con->clients, bd);
    borders = evas_list_append(borders, bd);
+
    return bd;
 }
 

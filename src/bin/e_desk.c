@@ -19,6 +19,7 @@ e_desk_new(E_Zone *zone)
    desk = E_OBJECT_ALLOC(E_Desk, _e_desk_free);
    if (!desk) return NULL;
 
+   desk->clients = NULL;
    desk->zone = zone;
    desk->num = evas_list_count(zone->desks) + 1;
    snprintf(name, sizeof(name), "Desktop %d", desk->num);
@@ -44,12 +45,13 @@ e_desk_show(E_Desk *desk)
    Evas_List   *l;
    
    E_OBJECT_CHECK(desk);
-
+   if (desk->visible) return;
+   
    for (l = desk->zone->clients; l; l = l->next)
      {
 	E_Border *bd = l->data;
 
-	if (desk->clients && evas_list_find(desk->clients, bd))
+	if (bd->desk == desk)
 	  e_border_show(bd);
 	else
 	  e_border_hide(bd);

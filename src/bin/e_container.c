@@ -37,6 +37,7 @@ e_container_new(E_Manager *man)
 {
    E_Container *con;
    E_Zone *zone;
+   Evas_Object *o;
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
    if (!con) return NULL;
@@ -58,6 +59,16 @@ e_container_new(E_Manager *man)
    e_path_evas_append(path_fonts, con->bg_evas);
 
    ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
+   
+	o = evas_object_rectangle_add(con->bg_evas);
+	con->bg_blank_object = o;
+	evas_object_layer_set(o, -100);
+	evas_object_move(o, 0, 0);
+	evas_object_resize(o, con->w, con->h);
+	evas_object_color_set(o, 255, 255, 255, 255);
+   evas_object_name_set(o, "desktop/background");
+   evas_object_data_set(o, "e_container", con);
+	evas_object_show(o);
    
    e_pointer_container_set(con);
 
@@ -94,6 +105,7 @@ e_container_move(E_Container *con, int x, int y)
    con->x = x;
    con->y = y;
    ecore_x_window_move(con->win, con->x, con->y);
+   evas_object_move(con->bg_blank_object, con->x, con->y);
 }
         
 void
@@ -105,6 +117,7 @@ e_container_resize(E_Container *con, int w, int h)
    con->h = h;
    ecore_x_window_resize(con->win, con->w, con->h);
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
+   evas_object_resize(con->bg_blank_object, con->w, con->h);
 }
 
 void
@@ -118,6 +131,8 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
    con->h = h;
    ecore_x_window_move_resize(con->win, con->x, con->y, con->w, con->h);
    ecore_evas_resize(con->bg_ecore_evas, con->w, con->h);
+   evas_object_move(con->bg_blank_object, con->x, con->y);
+   evas_object_resize(con->bg_blank_object, con->w, con->h);
 }
 
 void

@@ -40,14 +40,6 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 	char name[40];
 	Evas_Object *o;
 
-	o = evas_object_rectangle_add(con->bg_evas);
-	zone->bg_blank_object = o;
-	evas_object_layer_set(o, -100);
-	evas_object_move(o, x, y);
-	evas_object_resize(o, w, h);
-	evas_object_color_set(o, 255, 255, 255, 255);
-	evas_object_show(o);
-
 	o = edje_object_add(con->bg_evas);
 	zone->bg_object = o;
 	evas_object_layer_set(o, -1);
@@ -96,7 +88,6 @@ e_zone_move(E_Zone *zone, int x, int y)
    if ((x == zone->x) && (y == zone->y)) return;
    zone->x = x;
    zone->y = y;
-   evas_object_move(zone->bg_blank_object, x, y);
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
 }
@@ -109,7 +100,6 @@ e_zone_resize(E_Zone *zone, int w, int h)
    if ((w == zone->w) && (h == zone->h)) return;
    zone->w = w;
    zone->h = h;
-   evas_object_resize(zone->bg_blank_object, w, h);
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
 }
@@ -127,10 +117,8 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    zone->w = w;
    zone->h = h;
    
-   evas_object_move(zone->bg_blank_object, x, y);
    evas_object_move(zone->bg_object, x, y);
    evas_object_move(zone->bg_event_object, x, y);
-   evas_object_resize(zone->bg_blank_object, w, h);
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
 } 
