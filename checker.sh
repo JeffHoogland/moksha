@@ -49,7 +49,7 @@ fi
 if [ -n "$AUTOCONF" ]
 then
   echo -n "autoconf: "
-  $AUTOCONF --version | grep version
+  $AUTOCONF --version | grep utoconf
 else
   echo "No autoconf found! This is a requirement for building Enlightenment 0.17."
   # Information on where to get it goes here.
