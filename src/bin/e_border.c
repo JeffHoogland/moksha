@@ -1904,6 +1904,8 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 			     _e_border_resize_end(bd);
 			  }
 			break;
+		     default:
+			break;
 		    }
 	       }
 	  }
@@ -2070,9 +2072,6 @@ _e_border_eval(E_Border *bd)
 	       {
 		  a = e_app_window_name_class_find(bd->client.icccm.name,
 						   bd->client.icccm.class);
-		  fprintf(stderr, "client: name = %s, class = %s\n",
-			  bd->client.icccm.name,
-			  bd->client.icccm.class);
 		  if (a)
 		    {
 		       bd->icon_object = edje_object_add(bd->bg_evas);
@@ -2441,6 +2440,7 @@ _e_border_eval(E_Border *bd)
 	/* Recreate state */
 	if (e_hints_window_sticky_isset(bd->client.win))
 	  e_border_stick(bd);
+	/* FIXME: use right shade direction! */
 	if (e_hints_window_shaded_isset(bd->client.win))
 	  e_border_shade(bd, E_DIRECTION_UP);
 	if (e_hints_window_maximized_isset(bd->client.win))
@@ -3146,7 +3146,7 @@ _e_border_zone_update(E_Border *bd)
 static void
 _e_border_resize_begin(E_Border *bd)
 {
-   int w, h;
+   Evas_Coord w, h;
    char buf[40];
 
    resize_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
