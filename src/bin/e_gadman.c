@@ -7,8 +7,6 @@
 /*        re-enter edit mode (cant access root menu) */
 /* FIXME: resist can still jump on top of other gads... */
 
-/* FIXME: handle resize resist */
-
 /* local subsystem functions */
 
 typedef struct _Gadman_Client_Config Gadman_Client_Config;

@@ -29,6 +29,9 @@ Current freeze issues are:
 
 ISSUES:
 
+* gadman overlay deny doesnt work for edge only gadgets
+* add a menu item to each gadman client menu to edge editing mode
+* pager needs an overhaul
 * virtual desktops need fixing to work with zones properly
 * all modules need to respect zones
 * dropshadow is not optimal and has extreme edge-case bugs
@@ -56,6 +59,9 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* gadget resize resist
+* gadget containers (shelves)
+* all modules should have a "enter gadget edit mode" option in their menus
 * resize resist
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
 * track mouse location on a border/desktop level
