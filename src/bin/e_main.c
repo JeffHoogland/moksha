@@ -539,13 +539,18 @@ _e_main_screens_init(void)
 	     E_Gadman_Client *gmc;
 	     
 	     gmc = e_gadman_client_new(con->gadman);
-	     gmc->x = 100;
-	     gmc->y = 100;
-	     gmc->w = 150;
-	     gmc->h = 150;
+	     gmc->x = 20;
+	     gmc->y = 0;
+	     gmc->w = 200;
+	     gmc->h = 100;
+	     e_gadman_client_policy_set(gmc, 
+					E_GADMAN_POLICY_EDGES | 
+					E_GADMAN_POLICY_HSIZE | 
+					E_GADMAN_POLICY_VSIZE);
 	     e_gadman_client_min_size_set(gmc, 20, 20);
 	     e_gadman_client_auto_size_set(gmc, 200, 50);
-	     e_gadman_client_aspect_set(gmc, 4.0, 4.0);
+	     e_gadman_client_align_set(gmc, 0.5, 0.0);
+	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_TOP);
 	  }
      }
    free(roots);
