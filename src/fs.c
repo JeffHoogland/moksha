@@ -35,7 +35,7 @@ _e_fs_fd_handle_a_la_cK(int fd)
 	     printf("EEEEEEEEEEK efsd went wonky\n");
 	  }
 	
-	efsd_cleanup_event(&ev);
+	efsd_event_cleanup(&ev);
     }
 }
 
@@ -86,7 +86,7 @@ _e_fs_fd_handle(int fd)
 		       func = l->data;
 		       func(&ev);
 		    }
-		  efsd_cleanup_event(&ev);
+		  efsd_event_cleanup(&ev);
 	       }
 	  }
 	else

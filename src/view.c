@@ -414,7 +414,15 @@ e_view_file_added(int id, char *file)
    e_icon_show(icon);
    e_view_add_icon(v, icon);
    sprintf(buf, "%s/%s", v->dir, file);
-   efsd_stat(e_fs_get_connection(), buf);
+   if (efsd_ready(e_fs_get_connection()))
+     {
+       printf("Stating %s\n", buf);
+       efsd_stat(e_fs_get_connection(), buf);
+     }
+   else
+     {
+       printf("Efsd not ready.\n");
+     }
    v->changed = 1;
 }
 
