@@ -268,7 +268,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    ev = calloc(1, sizeof(E_Event_Border_Add));
    ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
    return bd;
 }
@@ -335,8 +334,7 @@ e_border_move(E_Border *bd, int x, int y)
 
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
-   ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
+   ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
 
 void
@@ -359,13 +357,15 @@ e_border_resize(E_Border *bd, int w, int h)
 
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
 
 void
 e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 {
+   E_Event_Border_Move		*mev;
+   E_Event_Border_Resize	*rev;
+   
    E_OBJECT_CHECK(bd);
    if ((x == bd->x) && (y == bd->y) && (w == bd->w) && (h == bd->h)) return;
    bd->x = x;
@@ -382,6 +382,14 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
+   
+   mev = calloc(1, sizeof(E_Event_Border_Move));
+   mev->border = bd;
+   ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
+
+   rev = calloc(1, sizeof(E_Event_Border_Resize));
+   rev->border = bd;
+   ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
 }
 
 /* FIXME: Zone client list is not altered. This affects desktop show function */
@@ -742,13 +750,9 @@ _e_border_free(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
-   /* FIXME - can the bd is getting freed no matter so the event gets NULL :(
-    * any ideas?
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
-   */
 
    if (focused == bd) focused = NULL;
    while (bd->handlers)
@@ -2684,7 +2688,6 @@ _e_border_event_border_resize_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
-   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2694,7 +2697,6 @@ _e_border_event_border_move_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
-   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2704,7 +2706,6 @@ _e_border_event_border_add_free(void *data, void *ev)
    E_Event_Border_Add *e;
 
    e = ev;
-   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2714,7 +2715,6 @@ _e_border_event_border_remove_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
-   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
