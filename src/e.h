@@ -551,6 +551,7 @@ struct _E_Entry
    int   mouse_down;
    int   visible;
    int   focused;
+   int   scroll_pos;
    int   x, y, w, h;
    Evas_Object event_box;
    Evas_Object clip_box;

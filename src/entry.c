@@ -383,6 +383,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	type = e_key_press_translate_into_typeable(e);
 	if (type)
 	  {
+	     printf("%0x\n", type[0]);
 	     if ((strlen(type) == 1) && (type[0] == 0x01)) /* ctrl+a */
 	       {
 		  entry->cursor_pos = 0;
@@ -399,6 +400,17 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 		  str2[entry->cursor_pos] = 0;
 		  e_entry_set_text(entry, str2);
 		  free(str2);		  
+	       }
+	     else if ((strlen(type) == 1) && (type[0] == 0x06)) /* ctrl+f */
+	       {
+		  entry->cursor_pos++;
+		  if (entry->cursor_pos > strlen(entry->buffer))
+		    entry->cursor_pos = strlen(entry->buffer);
+	       }
+	     else if ((strlen(type) == 1) && (type[0] == 0x02)) /* ctrl+b */
+	       {
+		  entry->cursor_pos--;
+		  if (entry->cursor_pos < 0) entry->cursor_pos = 0;
 	       }
 	     else if (strlen(type) > 0)
 	       {
