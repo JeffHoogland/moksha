@@ -44,7 +44,7 @@ e_container_new(E_Manager *man)
    E_Zone *zone;
    Evas_Object *o;
    char name[40];
-   int i, n;
+   Evas_List *l, *screens;
    
    con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
@@ -82,36 +82,14 @@ e_container_new(E_Manager *man)
    snprintf(name, sizeof(name), "Container %d", con->num);
    con->name = strdup(name);
 
-   n = ecore_x_xinerama_screen_count_get();
-   if (n == 0)
-     zone = e_zone_new(con, 0, 0, 0, con->w, con->h);
-   else
+   screens = (Evas_List *)e_xinerama_screens_get();
+   for (l = screens; l; l = l->next)
      {
-	for (i = 0; i < n; i++)
-	  {
-	     int zx, zy, zw, zh;
-	     int skip;
-	     Evas_List *l;
-	     
-	     if (ecore_x_xinerama_screen_geometry_get(i, &zx, &zy, &zw, &zh))
-	       {
-		  skip = 0;
-		  for (l = con->zones; l; l = l->next)
-		    {
-		       zone = l->data;
-		       if (E_INTERSECTS(zone->x, zone->y, zone->w, zone->h,
-					zx, zy, zw, zh))
-			 {
-			    skip = 1;
-			    break;
-			 }
-		    }
-		  if (!skip)
-		    zone = e_zone_new(con, i, zx, zy, zw, zh);
-	       }
-	  }
+	E_Screen *scr;
+	
+	scr = l->data;
+	zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
      }
-   
    con->gadman = e_gadman_new(con);
    
    return con;
@@ -468,43 +446,35 @@ static void
 _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
-   Evas_List *l;
-   int n, i;
+   Evas_List *l, *screens;
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
-   /* FIXME: Handle resizing of zones if container is resized */
-   n = ecore_x_xinerama_screen_count_get();
-   if (n == 0)
+
+   e_xinerama_update();
+   
+   screens = (Evas_List *)e_xinerama_screens_get();
+   for (l = screens; l; l = l->next)
      {
-	if (con->zones)
+	E_Screen *scr;
+	E_Zone *zone;
+	
+	scr = l->data;
+	zone = e_container_zone_number_get(con, scr->screen);
+	if (zone)
 	  {
-	     E_Zone *zone;
-	     
-	     zone = con->zones->data;
-	     e_zone_move(zone, 0, 0);
-	     e_zone_resize(zone, con->w, con->h);
+	     e_zone_move(zone, scr->x, scr->y);
+	     e_zone_resize(zone, scr->w, scr->h);
 	  }
-     }
-   else
-     {
-	for (i = 0; i < n; i++)
+	else
 	  {
-	     int zx, zy, zw, zh;
-	     
-	     if (ecore_x_xinerama_screen_geometry_get(i, &zx, &zy, &zw, &zh))
-	       {
-		  E_Zone *zone;
-		  
-		  zone = e_container_zone_number_get(con, i);
-		  if (zone)
-		    {
-		       e_zone_move(zone, zx, zy);
-		       e_zone_resize(zone, zw, zh);
-		    }
-	       }
+	     zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
 	  }
+	/* FIXME: what if a zone exists for a screen that doesn't exist?
+	 *        not sure this will ever happen...
+	 */
      }
+   
    e_gadman_container_resize(con->gadman);
    e_object_ref(E_OBJECT(con));
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);

@@ -25,7 +25,7 @@ e_init_init(void)
    Ecore_X_Window *roots;
    int num;
    Evas_Object *o;
-   int n;
+   Evas_List *l, *screens;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -50,60 +50,36 @@ e_init_init(void)
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
    
-   n = ecore_x_xinerama_screen_count_get();
-   if (n == 0)
+   screens = (Evas_List *)e_xinerama_screens_get();
+   for (l = screens; l; l = l->next)
      {
-	o = edje_object_add(_e_init_evas);
-	edje_object_file_set(o,
-			     /* FIXME: "init.eet" needs to come from config */
-			     e_path_find(path_init, "init.eet"),
-			     "init/splash");
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, w, h);
-	evas_object_show(o);
-	_e_init_object = o;
-     }
-   else
-     {
-	int i;
-	int mx, my, mw, mh;
+	E_Screen *scr;
 	
-	for (i = 0; i < n; i++)
+	scr = l->data;
+	/* first screen */
+	if (l == screens)
 	  {
-	     ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h);
-	     if (i == 0)
-	       {
-		  /* Remeber the size and placement of the first window */
-		  mx = x;
-		  my = y;
-		  mw = w;
-		  mh = h;
-		  /* Init splash */
-		  o = edje_object_add(_e_init_evas);
-		  edje_object_file_set(o,
-				       /* FIXME: "init.eet" needs to come from config */
-				       e_path_find(path_init, "init.eet"),
-				       "init/splash");
-		  evas_object_move(o, x, y);
-		  evas_object_resize(o, w, h);
-		  evas_object_show(o);
-		  _e_init_object = o;
-	       }
-	     /* Only add extra screen if it doesn't overlap with the main screen */
-	     /* FIXME: What if extra screens overlap? Maybe zones should be
-	      * initialized before we come here? */
-	     else if (!E_INTERSECTS(x, y, w, h,
-				    mx, my, mw, mh))
-	       {
-		  o = edje_object_add(_e_init_evas);
-		  edje_object_file_set(o,
-				       /* FIXME: "init.eet" needs to come from config */
-				       e_path_find(path_init, "init.eet"),
-				       "init/extra_screen");
-		  evas_object_move(o, x, y);
-		  evas_object_resize(o, w, h);
-		  evas_object_show(o);
-	       }
+	     o = edje_object_add(_e_init_evas);
+	     edje_object_file_set(o,
+				  /* FIXME: "init.eet" needs to come from config */
+				  e_path_find(path_init, "init.eet"),
+				  "init/splash");
+	     evas_object_move(o, scr->x, scr->y);
+	     evas_object_resize(o, scr->w, scr->h);
+	     evas_object_show(o);
+	     _e_init_object = o;
+	  }
+	/* other screens */
+	else
+	  {
+	     o = edje_object_add(_e_init_evas);
+	     edje_object_file_set(o,
+				  /* FIXME: "init.eet" needs to come from config */
+				  e_path_find(path_init, "init.eet"),
+				  "init/extra_screen");
+	     evas_object_move(o, scr->x, scr->y);
+	     evas_object_resize(o, scr->w, scr->h);
+	     evas_object_show(o);
 	  }
      }
    
