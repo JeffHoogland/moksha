@@ -1,4 +1,4 @@
-MINI FREEZE:
+\MINI FREEZE:
 
 Status: ON
 
@@ -33,7 +33,8 @@ ISSUES:
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
 * if container/zone changes size pager does not change/adjust to match
-* if u disable moduels by right click->enabled (select to uncheck) the gadman objects for thsoe moduels dont go away
+* if u disable modules by right click->enabled (select to uncheck) the gadman objects for thsoe moduels dont go away
+* if u disable a module by right clicking on it all sorts of bad things happen (cant re-enable from menu - still thinks its enabled)
 * pager on other xinerama heads doesnt save position/size etc.
 * restart with multiple zones is... buggy with vd'as and pager
 * rm -rf or mv ~/.e/e/applications and things go bad...
