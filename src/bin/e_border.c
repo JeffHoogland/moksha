@@ -2748,6 +2748,7 @@ _e_border_resize_handle(E_Border *bd)
 
    tw = bd->w;
    th = bd->h;
+   _e_border_resize_limit(bd, &w, &h);
 
    if ((bd->resize_mode == RESIZE_TL) ||
        (bd->resize_mode == RESIZE_L) ||
@@ -2765,7 +2766,6 @@ _e_border_resize_handle(E_Border *bd)
 	 &new_x, &new_y, &new_w, &new_h);
    evas_list_free(skiplist);
 
-   _e_border_resize_limit(bd, &new_w, &new_h);
    e_border_move_resize(bd, new_x, new_y, new_w, new_h);
 }
 
