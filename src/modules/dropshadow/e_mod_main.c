@@ -35,6 +35,7 @@ static void        _ds_container_shapes_add(Dropshadow *ds, E_Container *con);
 static void        _ds_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch);
 static Shadow     *_ds_shadow_find(Dropshadow *ds, E_Container_Shape *es);
 static Shadow     *_ds_shadow_add(Dropshadow *ds, E_Container_Shape *es);
+static void        _ds_shadow_obj_clear(Shadow *sh);
 static void        _ds_shadow_obj_init(Shadow *sh);
 static void        _ds_shadow_obj_shutdown(Shadow *sh);
 static void        _ds_shadow_del(Shadow *sh);
@@ -628,6 +629,24 @@ _ds_shadow_obj_init(Shadow *sh)
 }
 
 static void
+_ds_shadow_obj_clear(Shadow *sh)
+{
+   int i;
+   
+   for (i = 0; i < 4; i++)
+     {
+	if (sh->object[i])
+	  _ds_object_unset(sh->object[i]);
+     }
+   if (sh->use_shared)
+     {
+	_ds_shared_unuse(sh->ds);
+	sh->use_shared = 0;
+     }
+}
+
+
+static void
 _ds_shadow_obj_shutdown(Shadow *sh)
 {
    int i;
@@ -1047,6 +1066,7 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 	Shadow *sh;
 
 	sh = l->data;
+	_ds_shadow_obj_clear(sh);
 	_ds_shadow_shaperects(sh);
      }
    e_config_save_queue();
@@ -1065,13 +1085,14 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
    if (ds->conf->shadow_y >= ds->conf->blur_size)
      ds->conf->shadow_y = ds->conf->blur_size - 1;
-   
+
    _ds_blur_init(ds);
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
 	
 	sh = l->data;
+	_ds_shadow_obj_clear(sh);
 	_ds_shadow_shaperects(sh);
      }
    e_config_save_queue();
