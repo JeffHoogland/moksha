@@ -210,7 +210,7 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_BG_GET_REPLY,
 				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   bg, strlen(bg));
+				   bg, strlen(bg) + 1);
  	  }
 	break;
       default:
