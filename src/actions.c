@@ -1092,7 +1092,7 @@ e_act_exec_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    
    exe = (char *) a->params;
    if(!exe) return;
-   printf("exe: %s\n",exe);
+   /* printf("exe: %s\n",exe); */
    e_exec_run(exe);
    return;
    UN(a);
