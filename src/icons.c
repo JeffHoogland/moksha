@@ -4,7 +4,7 @@
 #include "cursors.h"
 #include "file.h"
 #include "util.h"
-#include "e_view_model.h"
+#include "e_dir.h"
 #include "e_file.h"
 #include "e_view_machine.h"
 #include "globals.h"
@@ -925,7 +925,7 @@ e_icon_exec(E_Icon * ic)
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	snprintf(buf, PATH_MAX, "%s/%s", ic->view->model->dir, ic->file->file);
+	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file->file);
 	D("new dir >%s<\n", buf);
 	e_view_set_dir(v, buf, 0);
 	e_view_realize(v);

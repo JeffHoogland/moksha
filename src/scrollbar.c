@@ -82,7 +82,7 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
      {
 	/* load from the current dir's layout */
 	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_base_v.bits.db",
-		 sb->view->model->dir);
+		 sb->view->dir->dir);
 	sb->base = ebits_load(buf);
 
 	/* if not loaded, load defaults */
@@ -95,7 +95,7 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
 
 	/* load from current dir's layout */
 	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_bar_v.bits.db",
-		 sb->view->model->dir);
+		 sb->view->dir->dir);
 	sb->bar = ebits_load(buf);
 
 	/* if not loaded, load defaults */
@@ -110,7 +110,7 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
      {
 	/* load from the current dir's layout */
 	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_base_h.bits.db",
-		 sb->view->model->dir);
+		 sb->view->dir->dir);
 	sb->base = ebits_load(buf);
 
 	/* if not loaded, load defaults */
@@ -123,7 +123,7 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
 
 	/* load from current dir's layout */
 	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_bar_h.bits.db",
-		 sb->view->model->dir);
+		 sb->view->dir->dir);
 	sb->bar = ebits_load(buf);
 
 	/* if not loaded, load defaults */

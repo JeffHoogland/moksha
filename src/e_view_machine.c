@@ -1,6 +1,6 @@
 #include <Ecore.h>
 #include "e_view_machine.h"
-#include "e_view_model.h"
+#include "e_dir.h"
 #include "util.h"
 #include "globals.h"
 #include "file.h"
@@ -12,29 +12,29 @@ e_view_machine_init()
 
    if (VM == NULL)
      {
-	VM = NEW(E_View_Model, 1);
+	VM = NEW(E_Dir, 1);
 	VM->views = NULL;
-	VM->models = NULL;
+	VM->dirs = NULL;
 	e_view_init();
-	e_view_model_init();
+	e_dir_init();
      }
 
    D_RETURN;
 }
 
 void
-e_view_machine_register_view_model(E_View_Model * m)
+e_view_machine_register_dir(E_Dir * d)
 {
    D_ENTER;
-   VM->models = evas_list_append(VM->models, m);
+   VM->dirs = evas_list_append(VM->dirs, d);
    D_RETURN;
 }
 
 void
-e_view_machine_unregister_view_model(E_View_Model * m)
+e_view_machine_unregister_dir(E_Dir * d)
 {
    D_ENTER;
-   VM->models = evas_list_remove(VM->models, m);
+   VM->dirs = evas_list_remove(VM->dirs, d);
    D_RETURN;
 }
 
@@ -65,15 +65,15 @@ e_view_machine_close_all_views(void)
      {
 	E_View             *v = l->data;
 
-	e_object_unref(E_OBJECT(v->model));
+	e_object_unref(E_OBJECT(v->dir));
      }
    D_RETURN;
 }
 
-E_View_Model       *
-e_view_machine_model_lookup(char *path)
+E_Dir       *
+e_view_machine_dir_lookup(char *path)
 {
-   E_View_Model       *m;
+   E_Dir       *d;
    Evas_List           l;
    char               *realpath = NULL;
 
@@ -84,15 +84,15 @@ e_view_machine_model_lookup(char *path)
 
    realpath = e_file_realpath(path);
 
-   for (l = VM->models; l; l = l->next)
+   for (l = VM->dirs; l; l = l->next)
      {
-	m = l->data;
-	if (!strcmp(m->dir, realpath))
+	d = l->data;
+	if (!strcmp(d->dir, realpath))
 	  {
-	     D("Model for this dir already exists\n");
+	     D("E_Dir for this dir already exists\n");
 
 	     IF_FREE(realpath);
-	     D_RETURN_(m);
+	     D_RETURN_(d);
 	  }
      }
 

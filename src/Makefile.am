@@ -78,7 +78,7 @@ enlightenment_SOURCES = \
 	util.h util.c \
 	view.h view.c \
 	e_file.h e_file.c \
-	e_view_model.h e_view_model.c \
+	e_dir.h e_dir.c \
 	e_view_machine.h e_view_machine.c \
 	view_layout.h view_layout.c \
 	e.h

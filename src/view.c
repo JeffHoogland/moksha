@@ -11,7 +11,7 @@
 #include "file.h"
 #include "util.h"
 #include "icons.h"
-#include "e_view_model.h"
+#include "e_dir.h"
 #include "e_view_machine.h"
 #include "e_file.h"
 #include "globals.h"
@@ -86,7 +86,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 
 	     ic->q.write_xy = 0;
 	     /* FIXME */
-	     snprintf(buf, PATH_MAX, "%s/%s", ic->view->model->dir,
+	     snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir,
 		      ic->file->file);
 
 	     D("write meta xy for icon for file %s\n", ic->file->file);
@@ -99,7 +99,7 @@ e_view_write_icon_xy_timeout(int val, void *data)
 	  {
 	     char                name[PATH_MAX];
 
-	     snprintf(name, PATH_MAX, "icon_xy_record.%s", v->model->dir);
+	     snprintf(name, PATH_MAX, "icon_xy_record.%s", v->dir->dir);
 	     ecore_add_event_timer(name, 0.01, e_view_write_icon_xy_timeout, 0,
 				   v);
 	     D_RETURN;
@@ -852,13 +852,13 @@ e_view_geometry_record(E_View * v)
 	D("Record geom for view\n");
 	ecore_window_get_frame_size(v->win.base, &left, NULL, &top, NULL);
 	efsd_set_metadata_int(e_fs_get_connection(),
-			      "/view/x", v->model->dir, v->location.x - left);
+			      "/view/x", v->dir->dir, v->location.x - left);
 	efsd_set_metadata_int(e_fs_get_connection(),
-			      "/view/y", v->model->dir, v->location.y - top);
+			      "/view/y", v->dir->dir, v->location.y - top);
 	efsd_set_metadata_int(e_fs_get_connection(),
-			      "/view/w", v->model->dir, v->size.w);
+			      "/view/w", v->dir->dir, v->size.w);
 	efsd_set_metadata_int(e_fs_get_connection(),
-			      "/view/h", v->model->dir, v->size.h);
+			      "/view/h", v->dir->dir, v->size.h);
      }
 
    D_RETURN;
@@ -885,7 +885,7 @@ e_view_queue_geometry_record(E_View * v)
 
    D_ENTER;
 
-   snprintf(name, PATH_MAX, "geometry_record.%s", v->model->dir);
+   snprintf(name, PATH_MAX, "geometry_record.%s", v->dir->dir);
    ecore_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
 
    D_RETURN;
@@ -898,7 +898,7 @@ e_view_queue_icon_xy_record(E_View * v)
 
    D_ENTER;
 
-   snprintf(name, PATH_MAX, "icon_xy_record.%s", v->model->dir);
+   snprintf(name, PATH_MAX, "icon_xy_record.%s", v->dir->dir);
    ecore_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
 
    D_RETURN;
@@ -1352,7 +1352,7 @@ e_mouse_in(Ecore_Event * ev)
      {
        if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     if (v->model->is_desktop)
+	     if (v->dir->is_desktop)
 	       {
 		  evas_event_enter(v->evas);
 	       }
@@ -1611,8 +1611,8 @@ e_view_cleanup(E_View * v)
    snprintf(name, PATH_MAX, "resort_timer.%s", v->name);
    ecore_del_event_timer(name);
 
-   /* unregister with the underlying model and the global list of views */
-   e_view_model_unregister_view(v);
+   /* unregister with the underlying dir and the global list of views */
+   e_dir_unregister_view(v);
    e_view_machine_unregister_view(v);
    /* FIXME: clean up the rest!!! this leaks ... */
 
@@ -1682,7 +1682,7 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
 void
 e_view_set_dir(E_View * v, char *path, int is_desktop)
 {
-   E_View_Model       *m = NULL;
+   E_Dir              *d = NULL;
    char                buf[PATH_MAX];
 
    D_ENTER;
@@ -1690,14 +1690,14 @@ e_view_set_dir(E_View * v, char *path, int is_desktop)
    if (!v || !path || *path == 0)
       D_RETURN;
 
-   if (!(m = e_view_machine_model_lookup(path)))
+   if (!(d = e_view_machine_dir_lookup(path)))
      {
 	D("Model for this dir doesn't exist, make a new one\n");
 
-	m = e_view_model_new();
-	e_view_model_set_dir(m, path);
+	d = e_dir_new();
+	e_dir_set_dir(d, path);
 
-	snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", m->dir);
+	snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", d->dir);
 	if (!e_file_exists(buf))
 	  {
 	     if (is_desktop)
@@ -1711,32 +1711,32 @@ e_view_set_dir(E_View * v, char *path, int is_desktop)
 			   e_config_get("backgrounds"));
 	       }
 	  }
-	e_strdup(m->bg_file, buf);
-	m->is_desktop = is_desktop;
+	e_strdup(d->bg_file, buf);
+	d->is_desktop = is_desktop;
      }
 
-   if (m)
+   if (d)
      {
-       e_view_model_register_view(m, v);
+       e_dir_register_view(d, v);
 	/* FIXME do a real naming scheme here */
-	snprintf(buf, PATH_MAX, "%s:%d", v->model->dir,
-		 e_object_get_usecount(E_OBJECT(v->model)));
+	snprintf(buf, PATH_MAX, "%s:%d", v->dir->dir,
+		 e_object_get_usecount(E_OBJECT(v->dir)));
 	e_strdup(v->name, buf);
 	D("assigned name to view: %s\n", v->name);
 
 	/* Request metadata via efsd */
 	v->geom_get.x = efsd_get_metadata(e_fs_get_connection(),
-					  "/view/x", v->model->dir, EFSD_INT);
+					  "/view/x", v->dir->dir, EFSD_INT);
 	v->geom_get.y = efsd_get_metadata(e_fs_get_connection(),
-					  "/view/y", v->model->dir, EFSD_INT);
+					  "/view/y", v->dir->dir, EFSD_INT);
 	v->geom_get.w = efsd_get_metadata(e_fs_get_connection(),
-					  "/view/w", v->model->dir, EFSD_INT);
+					  "/view/w", v->dir->dir, EFSD_INT);
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(),
-					  "/view/h", v->model->dir, EFSD_INT);
+					  "/view/h", v->dir->dir, EFSD_INT);
 	/* FIXME currently, we dont use this anyway */
 	/* 
 	 * *    v->getbg = efsd_get_metadata(e_fs_get_connection(), 
-	 * *       "/view/background", v->model->dir, EFSD_STRING);
+	 * *       "/view/background", v->dir->dir, EFSD_STRING);
 	 */
 	v->geom_get.busy = 1;
      }
@@ -1881,7 +1881,7 @@ e_view_populate(E_View * v)
    /* populate with icons for all files in the dir we are monitoring. 
     * This has to be called _after_ view_realize because
     * view_add_file needs the evas to be intialized */
-   for (l = v->model->files; l; l = l->next)
+   for (l = v->dir->files; l; l = l->next)
      {
 	E_File             *f = (E_File *) l->data;
 	E_Icon             *ic;
@@ -2066,7 +2066,7 @@ e_view_bg_reload(E_View * v)
    E_Background        bg;
 
    /* This should only be called if the background did really
-    * change in the underlying model. We dont check again
+    * change in the underlying dir. We dont check again
     * here. */
    D_ENTER;
 
@@ -2085,7 +2085,7 @@ e_view_bg_reload(E_View * v)
 	e_db_flush();
      }
 
-   bg = e_bg_load(v->model->bg_file);
+   bg = e_bg_load(v->dir->bg_file);
 
    if (bg)
      {
@@ -2213,13 +2213,13 @@ e_dnd_data_request(Ecore_Event * ev)
 		  if (first)
 		    {
 		       /*FIXME */
-		       snprintf(buf, PATH_MAX, "file:%s/%s", v->model->dir,
+		       snprintf(buf, PATH_MAX, "file:%s/%s", v->dir->dir,
 				ic->file->file);
 		       first = 0;
 		    }
 		  else
 		     /* FIXME */
-		     snprintf(buf, PATH_MAX, "\r\nfile:%s/%s", v->model->dir,
+		     snprintf(buf, PATH_MAX, "\r\nfile:%s/%s", v->dir->dir,
 			      ic->file->file);
 		  REALLOC(data, char, strlen(data) + strlen(buf) + 1);
 
@@ -2246,13 +2246,13 @@ e_dnd_data_request(Ecore_Event * ev)
 		  if (first)
 		    {
 		       /*FIXME */
-		       snprintf(buf, PATH_MAX, "%s/%s\n", v->model->dir,
+		       snprintf(buf, PATH_MAX, "%s/%s\n", v->dir->dir,
 				ic->file->file);
 		       first = 0;
 		    }
 		  else
 		     /*FIXME */
-		     snprintf(buf, PATH_MAX, "\n%s/%s", v->model->dir,
+		     snprintf(buf, PATH_MAX, "\n%s/%s", v->dir->dir,
 			      ic->file->file);
 		  REALLOC(data, char, strlen(data) + strlen(buf) + 1);
 
@@ -2278,7 +2278,7 @@ e_dnd_data_request(Ecore_Event * ev)
 		  char                buf[16384];
 
 		  /* FIXME */
-		  snprintf(buf, PATH_MAX, "file:%s/%s", v->model->dir,
+		  snprintf(buf, PATH_MAX, "file:%s/%s", v->dir->dir,
 			   ic->file->file);
 		  data = strdup(buf);
 		  break;
@@ -2411,7 +2411,7 @@ e_dnd_drop(Ecore_Event * ev)
 	  {
 	     /* Dropped!  Handle data */
 	     /* Same view or same underlying dir?  Mark to skip action */
-	     if (e->win == e->source_win || v->model == v_dnd_source->model)
+	     if (e->win == e->source_win || v->dir == v_dnd_source->dir)
 		v_dnd_source->drag.matching_drop_attempt = 1;
 	     /* Perform the action... */
 	     e_dnd_handle_drop(v);
@@ -2529,7 +2529,7 @@ e_dnd_handle_drop(E_View * v)
    if (dnd_files[out])
       FREE(dnd_files[out]);
 
-   dnd_files[out++] = strdup(v->model->dir);
+   dnd_files[out++] = strdup(v->dir->dir);
 
    switch (dnd_pending_mode)
      {

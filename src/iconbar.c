@@ -239,7 +239,7 @@ e_iconbar_new(E_View * v)
    D("new iconbar\n");
    /* first we want to load the iconbar data itself - ie the config info */
    /* for what icons we have and what they execute */
-   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db", v->model->dir);
+   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db", v->dir->dir);
    /* use the config system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
    ib = e_config_load(buf, "", cf_iconbar);
@@ -289,7 +289,7 @@ e_iconbar_new(E_View * v)
 
    /* now we need to load up a bits file that tells us where in the view the */
    /* iconbar is meant to go. same place. just a slightly different name */
-   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.bits.db", v->model->dir);
+   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.bits.db", v->dir->dir);
    ib->bit = ebits_load(buf);
 
    /* we didn't find one? */
@@ -400,7 +400,7 @@ e_iconbar_realize(E_Iconbar * ib)
 	/* a lump of image data inlined in the iconbar db - so the icons */
 	/* themselves follow the iconbar wherever it goes */
 	snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db:%s",
-		 ib->view->model->dir, ic->image_path);
+		 ib->view->dir->dir, ic->image_path);
 	/* add the icon image object */
 	ic->image = evas_add_image_from_file(ib->view->evas, buf);
 	/* add an imlib image so we can save it later */
@@ -714,7 +714,7 @@ e_iconbar_save_out_final(E_Iconbar * ib)
 	Evas_List           l;
 	int                 i;
 
-	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->model->dir);
+	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->dir->dir);
 	D("%s\n", buf);
 
 	if (ib->changed)
@@ -745,7 +745,7 @@ e_iconbar_save_out_final(E_Iconbar * ib)
 
 				 snprintf(buf2, PATH_MAX,
 					  "%s/.e_iconbar.db:/icons/%i/image",
-					  ib->view->model->dir, i);
+					  ib->view->dir->dir, i);
 				 D("save image\n");
 				 imlib_save_image(buf2);
 			      }
@@ -882,7 +882,7 @@ ib_timeout(int val, void *data)
 
 	     /* figure out its path */
 	     snprintf(buf, PATH_MAX, "%s/.e_iconbar.db:%s",
-		      ic->iconbar->view->model->dir, ic->image_path);
+		      ic->iconbar->view->dir->dir, ic->image_path);
 	     /* add it */
 	     ic->hi.image = evas_add_image_from_file(ic->iconbar->view->evas,
 						     buf);
@@ -1562,7 +1562,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
    D_ENTER;
 
 #if 0
-   D("add files: %s\n", source->model->dir);
+   D("add files: %s\n", source->dir->dir);
    for (i = 0; i < num_files; i++)
      {
 	char               *file = e_file_get_file(strdup(dnd_files[i]));
@@ -1594,7 +1594,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 			      {
 				 D("over icon: %s\n", ibic->exec);
 				 snprintf(buf, PATH_MAX, "%s/%s:/icon/normal",
-					  ic->view->model->dir, ic->file);
+					  ic->view->dir->dir, ic->file);
 				 D("set icon: %s\n", buf);
 
 				 ibic->imlib_image = imlib_load_image(buf);
@@ -1637,7 +1637,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	   D("EEEEEEEEEEEEK: how the hell did this happen?");
 
 	D("x: %f, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x,
-	  v->model->dir, ibic->iconbar->view->model->dir);
+	  v->dir->dir, ibic->iconbar->view->dir->dir);
 
 	if (!ic->info.icon)
 	   D_RETURN;
@@ -1645,7 +1645,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	ibic->image = evas_add_image_from_file(v->evas, buf);
 	ibic->imlib_image = imlib_load_image(buf);
 	ibic->image_path = strdup(ic->info.icon);
-	snprintf(buf, PATH_MAX, "%s/%s", ic->view->model->dir, ic->file);
+	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file);
 	ibic->exec = strdup(buf);
 
 	evas_set_clip(v->evas, ibic->image, v->iconbar->clip);

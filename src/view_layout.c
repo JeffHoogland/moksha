@@ -65,7 +65,7 @@ e_view_layout_realize(E_View_Layout *layout)
   
    /* check for custom layout bits */
    snprintf(buf, PATH_MAX, "%s/.e_layout/layout.bits.db",
-	    layout->view->model->dir);
+	    layout->view->dir->dir);
    /* keep track of file loaded */ 
    IF_FREE(layout->file);
    e_strdup(layout->file, buf);
@@ -74,7 +74,7 @@ e_view_layout_realize(E_View_Layout *layout)
    /* if custom doesn't exist, load default layout */
    if (!bits)
    {
-      if (layout->view->model->is_desktop)
+      if (layout->view->dir->is_desktop)
         snprintf(buf, PATH_MAX, "%s/desktop.bits.db", e_config_get("layout"));
       else
         snprintf(buf, PATH_MAX, "%s/view.bits.db", e_config_get("layout"));

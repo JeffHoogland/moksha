@@ -7,7 +7,7 @@
 #include "fs.h"
 #include "iconbar.h"
 #include "object.h"
-#include "e_view_model.h"
+#include "e_dir.h"
 #include "e_file.h"
 #include "view_layout.h"
 
@@ -28,7 +28,7 @@ typedef struct _E_Iconbar E_Iconbar;
 
 #ifndef E_VIEW_MODEL_TYPEDEF
 #define E_VIEW_MODEL_TYPEDEF
-typedef struct _E_View_Model E_View_Model;
+typedef struct _E_Dir E_Dir;
 #endif
 
 #ifndef E_VIEW_LAYOUT_TYPEDEF
@@ -61,7 +61,7 @@ struct _E_View
 
    char               *name;
 
-   E_View_Model       *model;
+   E_Dir              *dir;
 
    struct
    {
@@ -273,7 +273,7 @@ E_View             *e_view_new(void);
  * @is_desktop Inidicates wether the view is a desktop  
  *
  * This function sets a view to a directory, loading the
- * view's metadata (view window coordinates etc). If a view_model already
+ * view's metadata (view window coordinates etc). If a dir already
  * exists for this dir, it is reused, otherwise a new on is created.
  */
 void                e_view_set_dir(E_View * v, char *dir, int is_desktop);
@@ -282,7 +282,7 @@ void                e_view_set_dir(E_View * v, char *dir, int is_desktop);
  * e_view_populate - Draws icons for all files in view
  * @v     The view to populate
  *
- * Goes through the list of files in the underlying view_model and calls
+ * Goes through the list of files in the underlying dir and calls
  * view_add_file for each one. This results in icons being created for each
  * file.
  */
