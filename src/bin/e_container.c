@@ -62,7 +62,6 @@ e_container_new(E_Manager *man)
    ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");
    ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
    ecore_evas_show(con->bg_ecore_evas);
-   e_path_evas_append(path_fonts, con->bg_evas);
 
    ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
    

@@ -1002,8 +1002,6 @@ _e_menu_realize(E_Menu *m)
    ecore_evas_title_set(m->ecore_evas, "E Menu");
    ecore_evas_show(m->ecore_evas);
    
-   e_path_evas_append(path_fonts, m->evas);
-
    o = edje_object_add(m->evas);
    m->bg_object = o;
    evas_object_name_set(o, "menu/background");

@@ -18,6 +18,7 @@ e_canvas_add(Ecore_Evas *ee)
    e = ecore_evas_get(ee);
    evas_image_cache_set(e, e_config->image_cache * 1024);
    evas_font_cache_set(e, e_config->font_cache * 1024);
+   e_path_evas_append(path_fonts, e);
 //   evas_image_cache_flush(e);
 //   evas_image_cache_reload(e);
 }

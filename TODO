@@ -29,8 +29,9 @@ Current freeze issues are:
 
 ISSUES:
 
-* borders raise/lower stack doesnt modify any list to track stacking
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
+* borders raise/lower stack doesnt modify any list to track stacking
+* border show/hide needs to show from top down and hide from bottom up
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
 * focus issues in general
 * virtual desktops need an overhaul. hacked in waay too quickly.
@@ -38,7 +39,6 @@ ISSUES:
 * pager edje gfx...
 * pager needs an overhaul
 * pager needs to be able to split off each desk in a zone in a different gadget
-* border show/hide needs to show from top down and hide from bottom up
 * gadman gadget menu needs icons :)
 * any known segv's must go
 

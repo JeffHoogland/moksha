@@ -71,7 +71,6 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");
    e = ecore_evas_get(ee);
-   e_path_evas_append(path_fonts, e);
    e_pointer_ecore_evas_set(ee);
    
    o = edje_object_add(e);
