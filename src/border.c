@@ -401,14 +401,16 @@ ecore_focus_in(Ecore_Event * ev)
    
    current_ev = ev;
    e = ev->event;
+   printf("focus in event\n");
      {
 	E_Border *b;
 	
 	b = e_border_find_by_window(e->win);
 	if ((b) && (b->win.client == e->win))
 	  {
-	     b->current.selected = 1;
+	printf("focus in %s\n", b->client.title);
 	     e_border_focus_grab_ended();
+	     b->current.selected = 1;
 	     b->changed = 1;
 	     OBS_NOTIFY(b, ECORE_EVENT_WINDOW_FOCUS_IN);
 	  }
@@ -424,6 +426,7 @@ ecore_focus_out(Ecore_Event * ev)
    
    current_ev = ev;
    e = ev->event;
+   printf("focus out event\n");
      {
 	E_Border *b;
 	
@@ -434,28 +437,25 @@ ecore_focus_out(Ecore_Event * ev)
 	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
+	printf("focus out %s\n", b->client.title);
 	     b->current.selected = 0;
 	     if (e->key_grab) b->current.select_lost_from_grab = 1;	     
 	     /* settings - click to focus would affect grabs */
-	     if ((e->key_grab) &&
-		 (!b->current.selected))
+	     if (focus_mode == 2) /* click to focus */
 	       {
-		  if (focus_mode == 2) /* click to focus */
-		    {
-		       E_Grab *g;
-		       
-		       g = NEW(E_Grab, 1);
-		       ZERO(g, E_Grab, 1);
-		       g->button = 0;
-		       g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
-		       g->any_mod = 1;
-		       g->remove_after = 1;
-		       b->grabs = evas_list_append(b->grabs, g);
-		       printf("grab me baaaybe %s\n", b->client.title);
-		       ecore_button_grab(b->win.main, 0,
-				     XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
-		       ecore_window_button_grab_auto_replay_set(b->win.main, 1);
-		    }
+		  E_Grab *g;
+		  
+		  g = NEW(E_Grab, 1);
+		  ZERO(g, E_Grab, 1);
+		  g->button = 0;
+		  g->mods = ECORE_EVENT_KEY_MODIFIER_NONE;
+		  g->any_mod = 1;
+		  g->remove_after = 1;
+		  b->grabs = evas_list_append(b->grabs, g);
+		  printf("grab me baaaybe %s\n", b->client.title);
+		  ecore_button_grab(b->win.main, 0,
+				    XEV_BUTTON_PRESS, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
+		  ecore_window_button_grab_auto_replay_set(b->win.main, 1);
 	       }
 	     b->changed = 1;
 	  }
@@ -2422,6 +2422,14 @@ e_border_current_focused(void)
 	E_Border *b;
 	
 	b = l->data;
+	printf("%s: %i | %i\n", b->client.title,
+	       b->current.selected, b->current.select_lost_from_grab);
+     }
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *b;
+	
+	b = l->data;
 	if (b->current.selected) return b;
      }
    for (l = borders; l; l = l->next)
@@ -2444,6 +2452,8 @@ e_border_focus_grab_ended(void)
 	
 	b = l->data;
 	b->current.select_lost_from_grab = 0;
+	b->current.selected = 0;
+	b->changed = 1;
      }
 }
 
