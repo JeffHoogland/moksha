@@ -520,75 +520,7 @@ _e_main_screens_init(void)
 	con = e_container_new(man);
 	if (con)
 	  {
-	     /* FIXME: move this to an actual function to start managing */
-	     Ecore_X_Window *windows;
-	     int wnum;
-	     
-	     windows = ecore_x_window_children_get(con->manager->root, &wnum);
-	     if (windows)
-	       {
-		  int i;
-		  
-		  for (i = 0; i < wnum; i++)
-		    {
-		       Ecore_X_Window_Attributes att;
-		       unsigned int ret_val, deskxy[2];
-		       int ret;
-		       
-		       ecore_x_window_attributes_get(windows[i], &att);
-		       ret = ecore_x_window_prop_card32_get(windows[i],
-							    E_ATOM_MANAGED,
-							    &ret_val, 1);
-		       
-		       /* we have seen this window before */
-		       if ((ret > -1) && (ret_val == 1))
-			 {
-			    E_Border *bd;
-			    
-			    /* get all information from window before it is 
-			     * reset by e_border_new */
-			    ret = ecore_x_window_prop_card32_get(windows[i],
-								 E_ATOM_DESK,
-								 deskxy, 2);
-			    bd = e_border_new(con, windows[i], 1);
-			    if (bd)
-			      {
-				 if (ret == 2)
-				   {
-				      E_Desk *target;
-				      target = e_desk_at_xy_get(bd->zone,
-								deskxy[0],
-								deskxy[1]);
-				      if (target)
-					e_border_desk_set(bd, target);
-				      if (!target || target == e_desk_current_get(bd->zone))
-					{
-					   ret = ecore_x_window_prop_card32_get(windows[i],
-										E_ATOM_MAPPED,
-										&ret_val, 1);
-					   if ((ret > -1) && ret_val)
-					     e_border_show(bd);
-					}
-				   }
-			      }
-			    ret = ecore_x_window_prop_card32_get(windows[i],
-								 E_ATOM_ICONIC,
-								 &ret_val, 1);
-			    if ((ret > -1) && ret_val)
-			      e_border_iconify(bd);
-			 }
-		       else if ((att.visible) && (!att.override) &&
-				(!att.input_only))
-			 {
-			    /* We have not seen this window, and X tells us it
-			     * should be seen */
-			    E_Border *bd;
-			    bd = e_border_new(con, windows[i], 1);
-			    if (bd)
-			      e_border_show(bd);
-			 }
-		    }
-	       }
+	     e_manager_manage_windows(man);
 	     ecore_x_netwm_desk_roots_set(man->root, 1, &(con->win));
 	     e_container_show(con);
 	  }
@@ -598,7 +530,8 @@ _e_main_screens_init(void)
 				  i);
 	     return 0;
 	  }
-	/*
+	/* FIXME
+	 * This should be removed!
 	  {
 	     E_Gadman_Client *gmc;
 	     

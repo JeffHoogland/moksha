@@ -37,7 +37,7 @@ int
 e_manager_shutdown(void)
 {
    while (managers)
-     _e_manager_free((E_Manager *)(managers->data));
+     e_object_del(E_OBJECT(managers->data));
    return 1;
 }
 
@@ -66,6 +66,110 @@ e_manager_new(Ecore_X_Window root)
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    return man;
+}
+
+void
+e_manager_manage_windows(E_Manager *man)
+{
+   /* FIXME: move this to an actual function to start managing */
+   Ecore_X_Window *windows;
+   int wnum;
+
+   windows = ecore_x_window_children_get(man->root, &wnum);
+   if (windows)
+     {
+	int i;
+
+	for (i = 0; i < wnum; i++)
+	  {
+	     Ecore_X_Window_Attributes att;
+	     unsigned int ret_val, deskxy[2];
+	     int ret;
+
+	     ecore_x_window_attributes_get(windows[i], &att);
+	     ret = ecore_x_window_prop_card32_get(windows[i],
+						  E_ATOM_MANAGED,
+						  &ret_val, 1);
+
+	     /* we have seen this window before */
+	     if ((ret > -1) && (ret_val == 1))
+	       {
+		  E_Container *con = NULL;
+		  E_Zone      *zone = NULL;
+		  E_Border    *bd = NULL;
+		  int          id;
+
+		  /* get all information from window before it is 
+		   * reset by e_border_new */
+		  ret = ecore_x_window_prop_card32_get(windows[i],
+						       E_ATOM_CONTAINER,
+						       &id, 1);
+		  if (ret == 1)
+		    con = e_manager_container_number_get(man, id);
+		  else
+		    con = e_manager_container_current_get(man);
+
+		  ret = ecore_x_window_prop_card32_get(windows[i],
+						       E_ATOM_ZONE,
+						       &id, 1);
+		  if (ret == 1)
+		    zone = e_container_zone_number_get(con, id);
+		  /* FIXME
+		   * This is the default behaviour, should it be
+		   * done here?
+		  else
+		    zone = e_zone_current_get(con);
+		  */
+
+		  ret = ecore_x_window_prop_card32_get(windows[i],
+						       E_ATOM_DESK,
+						       deskxy, 2);
+
+		  bd = e_border_new(con, windows[i], 1);
+		  if (bd)
+		    {
+		       if (zone)
+			 e_border_zone_set(bd, zone);
+
+		       if (ret == 2)
+			 {
+			    E_Desk *target;
+			    target = e_desk_at_xy_get(bd->zone,
+						      deskxy[0],
+						      deskxy[1]);
+			    if (target)
+			      e_border_desk_set(bd, target);
+			    if (!target || target == e_desk_current_get(bd->zone))
+			      {
+				 ret = ecore_x_window_prop_card32_get(windows[i],
+								      E_ATOM_MAPPED,
+								      &ret_val, 1);
+				 if ((ret > -1) && ret_val)
+				   e_border_show(bd);
+			      }
+			 }
+		    }
+		  /* FIXME: Shouldn't be here! */
+		  ret = ecore_x_window_prop_card32_get(windows[i],
+						       E_ATOM_ICONIC,
+						       &ret_val, 1);
+		  if ((ret > -1) && ret_val)
+		    e_border_iconify(bd);
+	       }
+	     else if ((att.visible) && (!att.override) &&
+		      (!att.input_only))
+	       {
+		  /* We have not seen this window, and X tells us it
+		   * should be seen */
+		  E_Container *con;
+		  E_Border *bd;
+		  con = e_manager_container_current_get(man);
+		  bd = e_border_new(con, windows[i], 1);
+		  if (bd)
+		    e_border_show(bd);
+	       }
+	  }
+     }
 }
 
 void
@@ -162,6 +266,36 @@ e_manager_lower(E_Manager *man)
    ecore_x_window_lower(man->win);
 }
 
+E_Container *
+e_manager_container_current_get(E_Manager *man)
+{
+   /* FIXME
+    * Currently only one container, but...
+    */
+   E_OBJECT_CHECK_RETURN(man, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
+
+   return (E_Container *)man->containers->data;
+}
+
+E_Container *
+e_manager_container_number_get(E_Manager *man, int num)
+{
+   Evas_List *l;
+
+   E_OBJECT_CHECK_RETURN(man, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
+   for (l = man->containers; l; l = l->next)
+     {
+	E_Container *con;
+	
+	con = l->data;
+	if (con->num == num)
+	  return con;
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_manager_free(E_Manager *man)
@@ -175,7 +309,7 @@ _e_manager_free(E_Manager *man)
 	ecore_event_handler_del(h);
      }
    while (man->containers)
-     e_object_free(E_OBJECT(man->containers->data));
+     e_object_del(E_OBJECT(man->containers->data));
    ecore_x_window_del(man->win);
    managers = evas_list_remove(managers, man);   
    free(man);
