@@ -5,6 +5,8 @@
  * to add backtrace support.
  */
 #include "e.h"
+
+#ifdef OBJECT_PARANOIA_CHECK   
 #include <execinfo.h>
 
 /* a tricky little devil, requires e and it's libs to be built
@@ -20,6 +22,11 @@ void e_sigseg_act(int x, siginfo_t *info, void *data){
   backtrace_symbols_fd(array, size, 2);
   exit(-11); 
 }
-
+#else
+void e_sigseg_act(int x, siginfo_t *info, void *data){
+  write(2, "**** SEGMENTATION FAULT ****\n", 29);
+  write(2, "**** Backtrace disabled... *****\n\n", 34);
+}
+#endif
 
      
