@@ -183,6 +183,7 @@ _e_int_menus_apps_scan(E_Menu *m)
    E_Menu_Item *mi;
    E_App *a;
    Evas_List *l;
+   int app_count = 0;
    
    a = e_object_data_get(E_OBJECT(m));
    e_app_subdir_scan(a, 0);
@@ -196,6 +197,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	  {
 	     e_menu_item_icon_edje_set(mi, a->path, "icon");
 	     e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
+	     app_count++;
 	  }
 	else
 	  {
@@ -204,7 +206,13 @@ _e_int_menus_apps_scan(E_Menu *m)
 	     snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
 	     e_menu_item_icon_edje_set(mi, buf, "icon");
 	     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path, 0));
+	     app_count++;
 	  }
+     }
+   if (app_count == 0)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, "(No Applications)");
      }
 }
 
@@ -292,7 +300,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    if (!borders)
      { /* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "empty"); 
+	e_menu_item_label_set(mi, "(No Windows)");
 	return;
      }
    for (l = borders; l; l = l->next)
