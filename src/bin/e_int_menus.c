@@ -390,8 +390,8 @@ _e_int_menus_desktops_col_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    if (root && root->con)
      {
 	E_Zone *zone = e_zone_current_get(root->con);
-	e_desk_row_add(zone);
-	//      e_desk_show(desk);
+	e_desk_col_add(zone);
+//      e_desk_show(desk);
      }
 }
 
@@ -405,7 +405,7 @@ _e_int_menus_desktops_col_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	E_Zone *zone;
 
 	zone = e_zone_current_get(root->con);
-	e_desk_row_remove(zone);
+	e_desk_col_remove(zone);
      }  
 }
 

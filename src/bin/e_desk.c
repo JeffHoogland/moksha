@@ -42,7 +42,6 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->name = strdup(name);
    e_object_ref(E_OBJECT(zone));
 
-   zone->desks[x + (y * zone->desk_x_count)] = (E_Object *) desk;
    return desk;
 }
 
@@ -86,8 +85,7 @@ e_desk_show(E_Desk *desk)
 	for (y = 0; y < desk->zone->desk_y_count; y++)
 	  {
 	     E_Desk *next;
-	     next =
-		(E_Desk *)desk->zone->desks[x + (y * desk->zone->desk_x_count)];
+	     next = e_desk_at_xy_get(desk->zone,x, y);
 	     next->visible = 0;
 	     if (next == desk)
 	       {
@@ -103,62 +101,45 @@ e_desk_show(E_Desk *desk)
 void
 e_desk_row_add(E_Zone *zone)
 {
-
+   e_zone_desk_count_set(zone, zone->desk_x_count, zone->desk_y_count + 1);
 }
 
 void
 e_desk_row_remove(E_Zone *zone)
 {
-
+   if (zone->desk_y_count < 2)
+     return;
+   e_zone_desk_count_set(zone, zone->desk_x_count, zone->desk_y_count - 1);
 }
 
 void
 e_desk_col_add(E_Zone *zone)
 {
-
+   e_zone_desk_count_set(zone, zone->desk_x_count + 1, zone->desk_y_count);
 }
 
 void
 e_desk_col_remove(E_Zone *zone)
 {
-
-}
-/*
-void
-e_desk_remove(E_Desk *desk)
-{
-   Evas_List *l;
-   E_Desk *previous;
-   
-   E_OBJECT_CHECK(desk);
-   if (evas_list_count(desk->zone->desks) < 2)
+   if (zone->desk_x_count < 2)
      return;
-   l = evas_list_find_list(desk->zone->desks, desk);
-   l = l->prev;
-   if (!l) l = evas_list_last(desk->zone->desks);
-   previous = l->data;
-
-   for (l = desk->clients; l; l = l->next)
-     {
-	E_Border *bd = l->data;
-	e_border_desk_set(bd, previous);
-     }
-   desk->zone->desks = evas_list_remove(desk->zone->desks, desk);
-   if (desk->visible)
-     e_desk_show(previous);
-   
-   evas_list_free(desk->clients);
-   e_object_del(E_OBJECT(desk));
+   e_zone_desk_count_set(zone, zone->desk_x_count - 1, zone->desk_y_count);
 }
-*/
+
 E_Desk *
 e_desk_current_get(E_Zone *zone)
 {
-   Evas_List *l;
-   
    E_OBJECT_CHECK_RETURN(zone, NULL);
   
-   return (E_Desk *)zone->desks[zone->desk_x_current + (zone->desk_y_current * zone->desk_x_count)];
+   return e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
+}
+
+E_Desk *
+e_desk_at_xy_get(E_Zone *zone, int x, int y)
+{
+   E_OBJECT_CHECK_RETURN(zone, NULL);
+
+   return (E_Desk *) zone->desks[x + (y * zone->desk_x_count)];
 }
 
 void
@@ -185,7 +166,7 @@ e_desk_next(E_Zone *zone)
 	  y = 0;
      }
    
-   e_desk_show((E_Desk *)zone->desks[x + (y * zone->desk_x_count)]);
+   e_desk_show(e_desk_at_xy_get(zone, x, y));
 }
 
 void
@@ -213,7 +194,7 @@ e_desk_prev(E_Zone *zone)
 	
      }
 
-   e_desk_show((E_Desk *)zone->desks[x + (y * zone->desk_x_count)]);
+   e_desk_show(e_desk_at_xy_get(zone, x, y));
 }
 
 static void

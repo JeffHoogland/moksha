@@ -31,7 +31,6 @@ E_Zone *
 e_zone_new(E_Container *con, int x, int y, int w, int h)
 {
    E_Zone      *zone;
-   E_Desk      *desk;
    int          i;
 
    zone = E_OBJECT_ALLOC(E_Zone, _e_zone_free);
@@ -79,18 +78,12 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
      }
 
    /* Start off with 4 desktops (2x2) */
-   zone->desk_x_count = 2;
-   zone->desk_y_count = 2;
+   zone->desk_x_count = 0;
+   zone->desk_y_count = 0;
+   zone->desk_x_current = 0;
+   zone->desk_y_current = 0;
+   e_zone_desk_count_set(zone, 2, 2);
 
-   zone->desks =
-      malloc(zone->desk_x_count * zone->desk_y_count * sizeof(E_Desk *));
-
-   int xx, yy;
-   for (xx = 1; xx >= 0; xx--)
-     for(yy = 1; yy >= 0; yy--)
-       desk = e_desk_new(zone, xx, yy);
-
-   e_desk_show(desk);
    return zone;
 }
 
@@ -250,5 +243,49 @@ _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_i
    
    ev = (Evas_Event_Mouse_Move *)event_info;   
    zone = data;
+}
+
+void
+e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
+{
+   E_Object **new_desks; /* match the bug in e_zone.h */
+   E_Desk    *desk;
+   int        x, y, reshow;
+   
+   new_desks =
+      malloc(x_count * y_count * sizeof(E_Desk *));
+
+   for (x = 0; x < x_count; x++)
+     for(y = 0; y < y_count; y++)
+       {
+	  if (x < zone->desk_x_count && y < zone->desk_y_count)
+	    desk = (E_Desk *) zone->desks[x + (y * zone->desk_x_count)];
+	  else
+	    desk = e_desk_new(zone, x, y);
+	  new_desks[x + (y * x_count)] = (E_Object *) desk;
+       }
+
+/* FIXME catch thigns that have fallen off the end if we got smaller */
+
+   if (zone->desks)
+     free(zone->desks);
+   zone->desks = new_desks;
+   
+   zone->desk_x_count = x_count;
+   zone->desk_y_count = y_count;
+
+   reshow = 0;
+   if (zone->desk_x_current >= x_count)
+     {
+	zone->desk_x_current = x_count - 1;
+	reshow = 1;
+     }
+   if (zone->desk_y_current >= y_count)
+     {
+	zone->desk_y_current = y_count - 1;
+	reshow = 1;
+     }
+   if (reshow)
+     e_desk_show(e_desk_at_xy_get(zone, x_count - 1, y_count - 1));
 }
 

@@ -23,6 +23,7 @@ EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
 EAPI void         e_desk_show(E_Desk *desk);
 EAPI E_Desk      *e_desk_current_get(E_Zone *zone);
+EAPI E_Desk      *e_desk_at_xy_get(E_Zone *zone, int x, int y);
 EAPI void         e_desk_next(E_Zone *zone);
 EAPI void         e_desk_prev(E_Zone *zone);
 EAPI void         e_desk_row_add(E_Zone *zone);
