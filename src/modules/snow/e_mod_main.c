@@ -119,6 +119,8 @@ _snow_init(E_Module *m)
 	snow->conf->flake_count = 60;
 	snow->conf->show_trees = 1;
      }
+
+   E_CONFIG_LIMIT(snow->conf->show_trees, 0, 1);
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
