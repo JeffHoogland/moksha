@@ -302,7 +302,7 @@ _pager_desk_create(Pager *e, E_Desk *desk)
    evas_object_resize(o, e->fw, e->fh);
    evas_object_move(o, e->fx + (new->xpos * e->fw), e->fy + (new->ypos * e->fh));
    evas_object_show(o);
-  
+   evas_object_raise(e->screen);
    return new;
 }
 
@@ -364,6 +364,7 @@ _pager_window_create(Pager *e, E_Border *border, Pager_Desk *owner)
    evas_object_pass_events_set(o, 1);
    if (visible)
      evas_object_show(o);
+   evas_object_raise(e->screen);
    app = e_app_window_name_class_find(border->client.icccm.name,
 				      border->client.icccm.class);
    if (app)
@@ -883,6 +884,8 @@ _pager_cb_event_border_show(void *data, int type, void *event)
      {
 	evas_object_show(win->obj);
 	evas_object_show(win->icon);
+
+	evas_object_raise(e->screen);
      }
    return 1;
 }
