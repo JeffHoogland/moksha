@@ -1607,6 +1607,12 @@ collections {
 	    action:  SIGNAL_EMIT "action" "maximize";
 	 }
 	 program {
+	    name:    "iconify_action";
+	    signal:  "mouse,clicked,1";
+	    source:  "button_2";
+	    action:  SIGNAL_EMIT "action" "iconify";
+	 }
+	 program {
 	    name:    "shade_action";
 	    signal:  "mouse,down,1,double";
 	    source:  "title";
