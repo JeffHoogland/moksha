@@ -29,11 +29,9 @@ Current freeze issues are:
 
 ISSUES:
 
-* need to impliment simple sable smart object (for pager)
-* need to impliment simple scaled fixed layout smart object (for pager)
-* need desktop bg thumbnail wrapper/handler and cache system (for pager)
-* pager edje gfx...
 * pager needs an overhaul
+* pager edje gfx...
+* pager needs desktop bg thumbnail wrapper/handler and cache system
 * pager needs to support miniature versions of bg object
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
