@@ -1548,12 +1548,16 @@ e_view_handle_fs_restart(void *data)
 	     v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					       "/view/h", v->dir, EFSD_INT);
 	  }
-	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					   efsd_ops(2, 
-						    efsd_op_get_stat(), 
-						    efsd_op_get_filetype()
-						    ),
-					   TRUE);
+	  {
+	     EfsdOptions *ops;
+	     
+	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
+	     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+						ops, TRUE);
+	     /* FIXME: efsd leaks the ops created by efsd_ops(). */
+	     /* efsd either need to internally free them or provide a free */
+	     /* function so the caller app can free them */
+	  }
 	v->is_listing = 1;
      }
    printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
@@ -2173,13 +2177,16 @@ e_view_set_dir(E_View *v, char *dir)
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					  "/view/h", v->dir, EFSD_INT);
 	v->geom_get.busy = 1;
-	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					   efsd_ops(2, 
-						    efsd_op_get_stat(), 
-						    efsd_op_get_filetype()
-						    ),
-					   TRUE
-					   );
+	  {
+	     EfsdOptions *ops;
+	     
+	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
+	     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+						ops, TRUE);
+	     /* FIXME: efsd leaks the ops created by efsd_ops(). */
+	     /* efsd either need to internally free them or provide a free */
+	     /* function so the caller app can free them */
+	  }
 	printf("monitor id for %s = %i\n", v->dir, v->monitor_id);
 	v->is_listing = 1;
 	v->changed = 1;
