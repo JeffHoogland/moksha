@@ -521,8 +521,9 @@ _e_main_screens_init(void)
 		       ret = ecore_x_window_prop_card32_get(windows[i],
 							    E_ATOM_MANAGED,
 							    &ret_val, 1);
-		       if (((att.visible) && (!att.override) && 
-			   (!att.input_only)) || (ret > -1 && ret_val == 1))
+		       
+		       /* we have seen this window before */
+		       if (ret > -1 && ret_val == 1)
 			 {
 			    E_Border *bd;
 
@@ -550,6 +551,16 @@ _e_main_screens_init(void)
 								 &ret_val, 1);
 			    if ((ret > -1) && ret_val)
 			      e_border_iconify(bd);
+			 }
+		       else if ((att.visible) && (!att.override) &&
+				(!att.input_only))
+			 {
+			    /* We have not seen this window, and X tells us it
+			     * should be seen */
+			    E_Border *bd;
+			    bd = e_border_new(con, windows[i], 1);
+			    if (bd)
+			      e_border_show(bd);
 			 }
 		    }
 	       }
