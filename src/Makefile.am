@@ -80,6 +80,7 @@ enlightenment_SOURCES = \
 	e_file.h e_file.c \
 	e_view_model.h e_view_model.c \
 	e_view_machine.h e_view_machine.c \
+	view_layout.h view_layout.c \
 	e.h
 
 enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)

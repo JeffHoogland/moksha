@@ -9,6 +9,7 @@
 #include "object.h"
 #include "e_view_model.h"
 #include "e_file.h"
+#include "view_layout.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
@@ -28,6 +29,17 @@ typedef struct _E_Iconbar E_Iconbar;
 #ifndef E_VIEW_MODEL_TYPEDEF
 #define E_VIEW_MODEL_TYPEDEF
 typedef struct _E_View_Model E_View_Model;
+#endif
+
+#ifndef E_VIEW_LAYOUT_TYPEDEF
+#define E_VIEW_LAYOUT_TYPEDEF
+typedef struct _E_View_Layout E_View_Layout;
+typedef struct _E_View_Layout_Element E_View_Layout_Element;
+#endif
+
+#ifndef E_SCROLLBAR_TYPEDEF
+#define E_SCROLLBAR_TYPEDEF
+typedef struct _E_Scrollbar E_Scrollbar;
 #endif
 
 typedef enum
@@ -112,6 +124,9 @@ struct _E_View
    struct
    {
       int                 on;
+      /* we set this in all other views of our view_model 
+       * when the first icon in a view is selected. */
+      int                 lock;
       /* The number of selected icons. */
       int                 count;
       /* The number of icons we selected the last time.
@@ -124,7 +139,6 @@ struct _E_View
 	 int                 x, y;
       }
       down;
-
       struct
       {
 	 struct
@@ -156,7 +170,6 @@ struct _E_View
       obj;
    }
    select;
-
    struct
    {
       int                 started;
@@ -182,6 +195,7 @@ struct _E_View
    extents;
 
    E_Background        bg;
+   E_View_Layout      *layout;
 
    struct
    {
@@ -222,7 +236,7 @@ struct _E_View
 void                e_view_init(void);
 
 void                e_view_selection_update(E_View * v);
-void                e_view_deselect_all(E_View * v);
+void                e_view_deselect_all(void);
 void                e_view_deselect_all_except(E_Icon * not_ic);
 Ecore_Event        *e_view_get_current_event(void);
 int                 e_view_filter_file(E_View * v, char *file);
@@ -244,6 +258,7 @@ void                e_view_resort(E_View * v);
 void                e_view_queue_geometry_record(E_View * v);
 void                e_view_queue_icon_xy_record(E_View * v);
 void                e_view_queue_resort(E_View * v);
+E_View             *e_view_find_by_window(Window win);
 
 /**
  * e_view_new - Creates a new view object

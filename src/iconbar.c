@@ -5,6 +5,7 @@
 #include "border.h"
 #include "file.h"
 #include "icons.h"
+#include "view_layout.h"
 
 static E_Config_Base_Type *cf_iconbar = NULL;
 static E_Config_Base_Type *cf_iconbar_icon = NULL;
@@ -146,6 +147,7 @@ e_iconbar_cleanup(E_Iconbar * ib)
    /* free up our ebits */
    if (ib->bit)
       ebits_free(ib->bit);
+
    /* if we have any icons... */
    if (ib->icons)
      {
@@ -234,9 +236,10 @@ e_iconbar_new(E_View * v)
 
    D_ENTER;
 
+   D("new iconbar\n");
    /* first we want to load the iconbar data itself - ie the config info */
    /* for what icons we have and what they execute */
-   snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", v->model->dir);
+   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db", v->model->dir);
    /* use the config system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
    ib = e_config_load(buf, "", cf_iconbar);
@@ -255,7 +258,10 @@ e_iconbar_new(E_View * v)
    e_db_flush();
    /* no iconbar config loaded ? return NULL */
    if (!ib)
-      D_RETURN_(NULL);
+     {
+	D("no config loaded, return null\n");
+	D_RETURN_(NULL);
+     }
 
    /* now that the config system has doe the loading. we need to init the */
    /* object and set up ref counts and free method */
@@ -283,11 +289,13 @@ e_iconbar_new(E_View * v)
 
    /* now we need to load up a bits file that tells us where in the view the */
    /* iconbar is meant to go. same place. just a slightly different name */
-   snprintf(buf, PATH_MAX, "%s/.e_iconbar.bits.db", v->model->dir);
+   snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.bits.db", v->model->dir);
    ib->bit = ebits_load(buf);
+
    /* we didn't find one? */
    if (!ib->bit)
      {
+	D("bits not loaded, cleanup and return null\n");
 	/* unref the iconbar (and thus it will get freed and all icons in it */
 	e_object_unref(E_OBJECT(ib));
 	/* return NULL - no iconbar worth doing here if we don't know where */
@@ -308,6 +316,7 @@ e_iconbar_new(E_View * v)
 
    /* aaah. our nicely constructed iconbar data struct with all the goodies */
    /* we need. return it. she's ready for use. */
+   D("iconbar created!\n");
    D_RETURN_(ib);
 }
 
@@ -373,9 +382,10 @@ void
 e_iconbar_realize(E_Iconbar * ib)
 {
    Evas_List           l;
+   double              x, y, w, h;
 
    D_ENTER;
-
+   D("realize iconbar\n");
    /* create clip object */
    ib->clip = evas_add_rectangle(ib->view->evas);
    evas_set_color(ib->view->evas, ib->clip, 255, 255, 255, 255);
@@ -390,8 +400,8 @@ e_iconbar_realize(E_Iconbar * ib)
 	/* the path of the key to the image memebr - that is actually */
 	/* a lump of image data inlined in the iconbar db - so the icons */
 	/* themselves follow the iconbar wherever it goes */
-	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db:%s", ib->view->model->dir,
-		 ic->image_path);
+	snprintf(buf, PATH_MAX, "%s/.e_layout/iconbar.db:%s",
+		 ib->view->model->dir, ic->image_path);
 	/* add the icon image object */
 	ic->image = evas_add_image_from_file(ib->view->evas, buf);
 	/* add an imlib image so we can save it later */
@@ -439,7 +449,7 @@ e_iconbar_realize(E_Iconbar * ib)
    /* but fixes the iconbar so its the size of the view, in the right */
    /* place and arranges the icons in their right spots */
    e_iconbar_fix(ib);
-
+   D("realized!\n");
    D_RETURN;
 }
 
@@ -501,16 +511,24 @@ void
 e_iconbar_fix(E_Iconbar * ib)
 {
    Evas_List           l;
+   double              x, y, w, h;
    double              ix, iy, aw, ah;
 
    D_ENTER;
 
-   /* move the ebit to 0,0 */
-   ebits_move(ib->bit, 0, 0);
-   /* resize it to fill the whole view. the internal geometry of the */
-   /* ebit itself will determine where things woudl go. we just tell */
-   /* the ebit where in the canvas its allowed to exist */
-   ebits_resize(ib->bit, ib->view->size.w, ib->view->size.h);
+   /* get geometry from layout */
+   if (!e_view_layout_get_element_geometry(ib->view->layout, "Iconbar",
+					   &x, &y, &w, &h))
+     {
+	D("Error: no geometry for iconbar, must not exist, clean it up.\n");
+	e_object_unref(ib);
+	D_RETURN;
+     }
+
+   D("iconbar fix: %f, %f, %f, %f\n", x, y, w, h);
+   /* move and resize iconbar to geometry specified in layout */
+   ebits_move(ib->bit, x, y);
+   ebits_resize(ib->bit, w, h);
    /* show it. harmless to do this all the time */
    ebits_show(ib->bit);
    /* tell the view we belong to something may have changed so it can draw */
@@ -664,8 +682,7 @@ e_iconbar_file_delete(E_View * v, char *file)
    D_ENTER;
 
    /* is the file of interest */
-   if ((!strcmp(".e_iconbar.db", file)) ||
-       (!strcmp(".e_iconbar.bits.db", file)))
+   if ((!strcmp("iconbar.db", file)) || (!strcmp("iconbar.bits.db", file)))
      {
 	/* if we have an iconbar.. delete it - because its files have been */
 	/* nuked. no need to keep it around. */
@@ -1703,6 +1720,21 @@ ib_child_handle(Ecore_Event * ev)
      }
 
    D_RETURN;
+}
+
+void
+e_iconbar_update_geometry(E_Iconbar * ib)
+{
+   double              x, y, w, h;
+
+   D_ENTER;
+   if (e_view_layout_get_element_geometry(ib->view->layout, "Iconbar",
+					  &x, &y, &w, &h))
+     {
+	ebits_move(ib->bit, x, y);
+	ebits_resize(ib->bit, w, h);
+     }
+
 }
 
 E_Rect             *

@@ -22,6 +22,7 @@ static char         cfg_cursors_dir[PATH_MAX] = "";
 static char         cfg_backgrounds_dir[PATH_MAX] = "";
 static char         cfg_fonts_dir[PATH_MAX] = "";
 static char         cfg_epplets_dir[PATH_MAX] = "";
+static char         cfg_layout_dir[PATH_MAX] = "";
 
 char               *
 e_config_get(char *type)
@@ -73,9 +74,13 @@ e_config_get(char *type)
    E_CONF("images", cfg_images_dir, PACKAGE_DATA_DIR "/data/images/");
    E_CONF("cursors", cfg_cursors_dir, PACKAGE_DATA_DIR "/data/cursors/");
    E_CONF("backgrounds", cfg_backgrounds_dir,
-	  PACKAGE_DATA_DIR "/data/backgrounds/");
-   E_CONF("fonts", cfg_fonts_dir, PACKAGE_DATA_DIR "/data/fonts/");
-   E_CONF("epplets", cfg_epplets_dir, PACKAGE_DATA_DIR "/data/epplets/");
+	  PACKAGE_DATA_DIR"/data/backgrounds/");
+   E_CONF("fonts", cfg_fonts_dir,
+	  PACKAGE_DATA_DIR"/data/fonts/");
+   E_CONF("epplets", cfg_epplets_dir,
+          PACKAGE_DATA_DIR"/data/epplets/");
+   E_CONF("layout", cfg_layout_dir,
+          PACKAGE_DATA_DIR"/data/layout/");
 
    D_RETURN_("");
 }

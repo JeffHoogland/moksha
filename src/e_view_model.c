@@ -580,12 +580,12 @@ e_view_model_file_added(int id, char *file)
 	snprintf(buf, PATH_MAX, "background_reload:%s", m->dir);
 	ecore_add_event_timer(buf, 0.5, e_view_model_bg_reload_timeout, 0, m);
      }
-   else if ((!strcmp(".e_iconbar.db", file)) ||
+   /*else if ((!strcmp(".e_iconbar.db", file)) ||
 	    (!strcmp(".e_iconbar.bits.db", file)))
      {
 	snprintf(buf, PATH_MAX, "iconbar_reload:%s", m->dir);
 	ecore_add_event_timer(buf, 0.5, e_view_model_ib_reload_timeout, 0, m);
-     }
+     }*/
    else if (file[0] != '.')
      {
 	f = e_file_new(file);
@@ -620,7 +620,7 @@ e_view_model_file_deleted(int id, char *file)
      {
 	e_view_model_set_default_background(m);
      }
-   else if ((!strcmp(".e_iconbar.db", file)) ||
+     /*else if ((!strcmp(".e_iconbar.db", file)) ||
 	    (!strcmp(".e_iconbar.bits.db", file)))
      {
 	for (l = m->views; l; l = l->next)
@@ -630,7 +630,7 @@ e_view_model_file_deleted(int id, char *file)
 	     e_object_unref(E_OBJECT(v->iconbar));
 	     v->iconbar = NULL;
 	  }
-     }
+     }*/
    else if (file[0] != '.')
      {
 	for (l = m->views; l; l = l->next)

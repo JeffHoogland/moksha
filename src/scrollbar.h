@@ -1,7 +1,19 @@
+#ifndef E_SCROLLBAR_H
+#define E_SCROLLBAR_H
+
 #include "e.h"
 #include "object.h"
+#include  "view.h"
 
+#ifndef E_SCROLLBAR_TYPEDEF
+#define E_SCROLLBAR_TYPEDEF
 typedef struct _E_Scrollbar E_Scrollbar;
+#endif
+
+#ifndef E_VIEW_TYPEDEF
+#define E_VIEW_TYPEDEF
+typedef struct _E_View E_View;
+#endif
 
 struct _E_Scrollbar
 {
@@ -12,8 +24,8 @@ struct _E_Scrollbar
    double              max;
    double              range;
 
+   E_View             *view;
    char               *dir;
-
    Evas                evas;
 
    Ebits_Object        bar;
@@ -47,7 +59,7 @@ struct _E_Scrollbar
    void               *func_data;
 };
 
-E_Scrollbar        *e_scrollbar_new(void);
+E_Scrollbar        *e_scrollbar_new(E_View * v);
 void                e_scrollbar_add_to_evas(E_Scrollbar * sb, Evas evas);
 void                e_scrollbar_show(E_Scrollbar * sb);
 void                e_scrollbar_hide(E_Scrollbar * sb);
@@ -73,3 +85,5 @@ double              e_scrollbar_get_range(E_Scrollbar * sb);
 double              e_scrollbar_get_max(E_Scrollbar * sb);
 void                e_scrollbar_get_geometry(E_Scrollbar * sb, double *x,
 					     double *y, double *w, double *h);
+
+#endif

@@ -2,6 +2,7 @@
 #include "scrollbar.h"
 #include "config.h"
 #include "util.h"
+#include "view.h"
 
 static void         e_scrollbar_recalc(E_Scrollbar * sb);
 static void         e_scrollbar_setup_bits(E_Scrollbar * sb);
@@ -79,21 +80,55 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
 
    if (sb->direction == 1)
      {
-	snprintf(buf, PATH_MAX, "%s/scroll_base_v.bits.db",
-		 e_config_get("scrollbars"));
+	/* load from the current dir's layout */
+	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_base_v.bits.db", sb->dir);
 	sb->base = ebits_load(buf);
-	snprintf(buf, PATH_MAX, "%s/scroll_bar_v.bits.db",
-		 e_config_get("scrollbars"));
+
+	/* if not loaded, load defaults */
+	if (!sb->base)
+	  {
+	     snprintf(buf, PATH_MAX, "%s/scroll_base_v.bits.db",
+		      e_config_get("scrollbars"));
+	     sb->base = ebits_load(buf);
+	  }
+
+	/* load from current dir's layout */
+	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_bar_v.bits.db", sb->dir);
 	sb->bar = ebits_load(buf);
+
+	/* if not loaded, load defaults */
+	if (!sb->bar)
+	  {
+	     snprintf(buf, PATH_MAX, "%s/scroll_bar_v.bits.db",
+		      e_config_get("scrollbars"));
+	     sb->bar = ebits_load(buf);
+	  }
      }
    else
      {
-	snprintf(buf, PATH_MAX, "%s/scroll_base_h.bits.db",
-		 e_config_get("scrollbars"));
+	/* load from the current dir's layout */
+	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_base_h.bits.db", sb->dir);
 	sb->base = ebits_load(buf);
-	snprintf(buf, PATH_MAX, "%s/scroll_bar_h.bits.db",
-		 e_config_get("scrollbars"));
+
+	/* if not loaded, load defaults */
+	if (!sb->base)
+	  {
+	     snprintf(buf, PATH_MAX, "%s/scroll_base_h.bits.db",
+		      e_config_get("scrollbars"));
+	     sb->base = ebits_load(buf);
+	  }
+
+	/* load from current dir's layout */
+	snprintf(buf, PATH_MAX, "%s/.e_layout/scroll_bar_h.bits.db", sb->dir);
 	sb->bar = ebits_load(buf);
+
+	/* if not loaded, load defaults */
+	if (!sb->bar)
+	  {
+	     snprintf(buf, PATH_MAX, "%s/scroll_bar_h.bits.db",
+		      e_config_get("scrollbars"));
+	     sb->bar = ebits_load(buf);
+	  }
      }
    if (sb->base)
      {
@@ -335,6 +370,7 @@ e_sb_bar_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
    sb->down_y = y;
    sb->mouse_x = x;
    sb->mouse_y = y;
+   sb->view->changed = 1;
 
    D_RETURN;
    UN(o);
@@ -360,6 +396,8 @@ e_sb_bar_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
       sb->mouse_down = 0;
    else
       D_RETURN;
+   
+   sb->view->changed = 1;
 
    D_RETURN;
    UN(o);
@@ -473,7 +511,7 @@ e_sb_scroll_timer(int val, void *data)
 }
 
 E_Scrollbar        *
-e_scrollbar_new(void)
+e_scrollbar_new(E_View * v)
 {
    E_Scrollbar        *sb;
 
@@ -483,6 +521,9 @@ e_scrollbar_new(void)
    ZERO(sb, E_Scrollbar, 1);
 
    e_object_init(E_OBJECT(sb), (E_Cleanup_Func) e_scrollbar_cleanup);
+
+   sb->view = v;
+   e_strdup(sb->dir, v->model->dir);
 
    sb->range = 1.0;
    sb->max = 1.0;
