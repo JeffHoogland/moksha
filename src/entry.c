@@ -73,6 +73,8 @@ e_paste_request(Eevent * ev)
 	     free(str2);
 	     entry->cursor_pos+=strlen(type);
 	     e_entry_configure(entry);	
+	     if (entry->func_changed) 
+	       entry->func_changed(entry, entry->data_changed);
 	  }
      }
 }
@@ -198,7 +200,6 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       len = strlen(entry->buffer) - entry->select.start;
 	     str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
 	     str2[len] = 0;
-	     printf(">%s<\n", str2);
 	     if (entry->selection_win) e_window_destroy(entry->selection_win);
 	     entry->selection_win = e_selection_set(str2);
 	  }
@@ -375,6 +376,8 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	     e_entry_set_text(entry, str2);
 	     free(str2);
 	  }
+	if (entry->func_changed) 
+	  entry->func_changed(entry, entry->data_changed);
      }
    else if (!strcmp(e->key, "Delete"))
      {
@@ -398,6 +401,8 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	     e_entry_set_text(entry, str2);
 	     free(str2);
 	  }
+	if (entry->func_changed) 
+	  entry->func_changed(entry, entry->data_changed);
      }
    else if (!strcmp(e->key, "Insert"))
      {
@@ -423,12 +428,13 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
    else if (!strcmp(e->key, "Return"))
      {
 	entry->focused = 0;
+	if (entry->func_enter) 
+	  entry->func_enter(entry, entry->data_enter);
      }
    else
      {
 	char *type;
 	
-	printf("%s\n", e->key);
 	type = e_key_press_translate_into_typeable(e);
 	if (type)
 	  {
@@ -448,6 +454,8 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 		  str2[entry->cursor_pos] = 0;
 		  e_entry_set_text(entry, str2);
 		  free(str2);		  
+		  if (entry->func_changed) 
+		    entry->func_changed(entry, entry->data_changed);
 	       }
 	     else if (strlen(type) > 0)
 	       {
@@ -472,6 +480,8 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 		  e_entry_set_text(entry, str2);
 		  free(str2);
 		  entry->cursor_pos+=strlen(type);
+		  if (entry->func_changed) 
+		    entry->func_changed(entry, entry->data_changed);
 	       }
 	  }
      }   
@@ -558,13 +568,26 @@ e_entry_resize(E_Entry *entry, int w, int h)
 void
 e_entry_query_max_size(E_Entry *entry, int *w, int *h)
 {
+   if (w) *w = evas_get_text_width(entry->evas, entry->text);
+   if (h) *h = evas_get_text_height(entry->evas, entry->text);
 }
 
 void
 e_entry_set_focus(E_Entry *entry, int focused)
 {
+   if (entry->focused == focused) return;
    entry->focused = focused;
    e_entry_configure(entry);
+   if (entry->focused)
+     {
+	if (entry->func_focus_in) 
+	  entry->func_focus_in(entry, entry->data_focus_in);
+     }
+   else
+     {
+	if (entry->func_focus_out) 
+	  entry->func_focus_out(entry, entry->data_focus_out);
+     }
 }
 
 void
@@ -576,6 +599,8 @@ e_entry_set_text(E_Entry *entry, const char *text)
    if (entry->cursor_pos > strlen(entry->buffer))
      entry->cursor_pos = strlen(entry->buffer);
    e_entry_configure(entry);
+   if (entry->func_changed) 
+     entry->func_changed(entry, entry->data_changed);
 }
 
 const char *
@@ -595,4 +620,32 @@ int
 e_entry_get_curosr(E_Entry *entry)
 {
    return entry->cursor_pos;
+}
+
+void
+e_entry_set_changed_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
+{
+   entry->func_changed = func;
+   entry->data_changed = data;
+}
+
+void
+e_entry_set_enter_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
+{
+   entry->func_enter = func;
+   entry->data_enter = data;
+}
+
+void
+e_entry_set_focus_in_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
+{
+   entry->func_focus_in = func;
+   entry->data_focus_in = data;
+}
+
+void
+e_entry_set_focus_out_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data)
+{
+   entry->func_focus_out = func;
+   entry->data_focus_out = data;
 }

@@ -559,6 +559,14 @@ struct _E_Entry
    Evas_Object text;
    Window paste_win;
    Window selection_win;
+   void (*func_changed) (E_Entry *entry, void *data);
+   void *data_changed;
+   void (*func_enter) (E_Entry *entry, void *data);
+   void *data_enter;
+   void (*func_focus_in) (E_Entry *entry, void *data);
+   void *data_focus_in;
+   void (*func_focus_out) (E_Entry *entry, void *data);
+   void *data_focus_out;
 };
 
 void e_entry_init(void);
