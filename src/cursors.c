@@ -221,7 +221,10 @@ e_cursors_display_in_window(Window win, char *type)
    if (c)
      e_cursor_set(win, c->cursor);
    else
-     e_cursors_display_in_window(win, "Default");
+     {
+	if (!strcmp(type, "Default")) return;
+	e_cursors_display_in_window(win, "Default");
+     }
 }
 
 void
