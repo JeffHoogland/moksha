@@ -12,7 +12,7 @@ install-data-local:
 	if test -d $(srcdir)/data; then \
 	  $(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/data; \
 	  for d in $(srcdir)/data/*; do \
-	      cp -ar $$d $(DESTDIR)$(pkgdatadir)/data; \
+	      cp -afr $$d $(DESTDIR)$(pkgdatadir)/data; \
 	  done \
 	fi
 
