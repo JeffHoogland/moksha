@@ -60,7 +60,6 @@ e_init_init(void)
 	for (i = 0; i < n; i++)
 	  {
 	     ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h);
-	     printf("$$$ INIT scr %i, %i %i, %ix%i\n", i, x, y, w, h);
 	     if (i == 0)
 	       {
 		  o = edje_object_add(_e_init_evas);
@@ -79,7 +78,7 @@ e_init_init(void)
 		  edje_object_file_set(o,
 				       /* FIXME: "init.eet" needs to come from config */
 				       e_path_find(path_init, "init.eet"),
-				       "init/splash");
+				       "init/extra_screen");
 		  evas_object_move(o, x, y);
 		  evas_object_resize(o, w, h);
 		  evas_object_show(o);

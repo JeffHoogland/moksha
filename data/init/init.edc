@@ -1168,4 +1168,41 @@ collections {
 	 }
       }
    }
+   group {
+      name: "init/extra_screen";
+      parts {
+	 part {
+	    name: "background";
+	    type: RECT;
+	    description {
+	       state: "default" 0.0;
+	       color: 255 255 255 255;
+	    }
+	 }
+	 part {
+	    name: "background_image";
+	    description {
+	       state: "default" 0.0;
+	       image {
+		  normal: "brushed.png";
+	       }
+               fill {
+		  size {
+		     relative: 0 0;
+		     offset:   400 300;
+		  }
+	       }
+	    }
+	 }
+	 part {
+	    name: "reflection_overlay";
+	    description {
+	       state: "default" 0.0;
+	       image {
+		  normal: SM"reflection_overlay.png";
+	       }
+	    }
+	 }
+      }
+   }
 }
