@@ -99,6 +99,11 @@ void (*e_obj_free) (void *e_obj);
 _e_obj->references = 1; \
 _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 }
+#define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
+((x < (xx + ww)) && \
+(y < (yy + hh)) && \
+((x + w) > xx) && \
+((y + h) > yy))
 
 #define SPANS_COMMON(x1, w1, x2, w2) \
   (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
@@ -410,6 +415,7 @@ struct _E_Icon
       } state;
       char   *icon;
       int     visible;
+      int     viewable;
    } current, previous;
    
    struct {

@@ -907,7 +907,6 @@ e_view_update(E_View *v)
 {
    Evas_List l;
    
-   printf("view update\n");
    if (v->changed)
      {
 	for (l = v->icons; l; l = l->next)
@@ -918,7 +917,6 @@ e_view_update(E_View *v)
 	     e_icon_update(icon);
 	  }
      }
-   printf("done\n");
    if (v->options.back_pixmap)
      {
 	Imlib_Updates up;

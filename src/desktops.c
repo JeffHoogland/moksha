@@ -10,7 +10,6 @@ static void e_idle(void *data);
 static void
 e_idle(void *data)
 {
-   printf("idle...\n");
    e_db_flush();
    return;
    UN(data);

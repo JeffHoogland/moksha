@@ -11,7 +11,7 @@ _e_fs_fd_handle(int fd)
    Evas_List events = NULL;
    double start, current;
    
-   printf("############## fs event...\n");
+/*   printf("############## fs event...\n");*/
    start = e_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
@@ -65,7 +65,7 @@ _e_fs_fd_handle(int fd)
 	  }
 	evas_list_free(events);
      }
-   printf("############## fs done\n");
+/*   printf("############## fs done\n");*/
 }
 
 void
