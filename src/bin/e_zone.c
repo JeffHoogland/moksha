@@ -189,6 +189,8 @@ e_zone_current_get(E_Container *con)
 	       return zone;
 	  }
      }
+   if (!con->zones)
+     return NULL;
    l = con->zones;
    return (E_Zone *)l->data;
 }

@@ -249,7 +249,7 @@ main(int argc, char **argv)
    edje_frametime_set(1.0 / e_config->framerate);
    /* FIXME: this is just appending Kochi if Vera doesnt have it. We need
     * a full config support subsystem for this */
-   edje_fontset_append_set("Kochi,Bandal");
+   edje_fontset_append_set("Kochi-Gothic,Baekmuk-Dotum");
    e_canvas_recache();
    
    /* setup init status window/screen */

@@ -1,8 +1,7 @@
 MAINTAINERCLEANFILES = Makefile.in
 filesdir = $(datadir)/enlightenment/data/fonts
 files_DATA = \
-Bandal.ttf \
-Kochi.ttf \
+Vera.COPYING \
 Vera.ttf \
 VeraBI.ttf \
 VeraBd.ttf \
@@ -13,7 +12,11 @@ VeraMoIt.ttf \
 VeraMono.ttf \
 VeraSe.ttf \
 VeraSeBd.ttf \
+baekmuk.COPYING \
+dotum.ttf \
 fonts.alias \
-fonts.dir
+fonts.dir \
+kochi-gothic.ttf \
+kochi.COPYING
 
 EXTRA_DIST = $(files_DATA)
