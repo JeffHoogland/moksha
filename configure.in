@@ -12,7 +12,7 @@ case "$build_os" in
   CP_OPTIONS="-ar";
   ;;
 *BSD*)
-  CP_OPTIONS="-dpR";
+  CP_OPTIONS="-PpR";
   ;;
 esac
 
