@@ -131,3 +131,4 @@ These are in no particular order:
 * module control panel app
 * ipc needs to be massively useful and give all sorts of info and control
 * tip/hint/suggestion dialog app (textblock etc.)
+* segv/restart handler like e16.
