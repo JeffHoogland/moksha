@@ -4,17 +4,42 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-typedef struct _Config     Config;
-typedef struct _Pager      Pager;
-typedef struct _Pager_Desk Pager_Desk;
-typedef struct _Pager_Win  Pager_Win;
+typedef struct _Config      Config;
+typedef struct _Config_Face Config_Face;
+typedef struct _Pager       Pager;
+typedef struct _Pager_Face  Pager_Face;
+typedef struct _Pager_Desk  Pager_Desk;
+typedef struct _Pager_Win   Pager_Win;
+
+#define PAGER_RESIZE_NONE 0
+#define PAGER_RESIZE_HORZ 1
+#define PAGER_RESIZE_VERT 2
+#define PAGER_RESIZE_BOTH 3
 
 struct _Config
 {
-   int dummy; /* space holder */
+   Evas_List *faces;
+};
+
+struct _Config_Face
+{
+   /* Show face */
+   unsigned char enabled;
+   /* Keep scale of desktops */
+   unsigned char scale;
+   /* Resize pager when adding/removing desktops */
+   unsigned char resize;
 };
 
 struct _Pager
+{
+   Evas_List   *faces;
+   E_Menu      *config_menu;
+
+   Config      *conf;
+};
+
+struct _Pager_Face
 {
    E_Zone       *zone;
    Evas_List    *desks;
@@ -23,16 +48,13 @@ struct _Pager
    Evas         *evas;
    Evas_Object  *base, *screen;
 
-/*   E_Config_DD  *conf_edd;*/
-   Config       *conf;
-
    Evas_Coord    fx, fy, fw, fh;
    E_Gadman_Client *gmc;
 
    /* Current nr. of desktops */
    int           xnum, ynum;
 
-   unsigned char enabled : 1;
+   Config_Face  *conf;
    
    Ecore_Event_Handler *ev_handler_border_resize;
    Ecore_Event_Handler *ev_handler_border_move;
@@ -47,7 +69,7 @@ struct _Pager
 struct _Pager_Desk
 {
    E_Desk      *desk;
-   Pager       *owner;
+   Pager_Face  *face;
    Evas_List   *wins;
 
    Evas_Object *obj;
@@ -59,7 +81,7 @@ struct _Pager_Desk
 struct _Pager_Win
 {
    E_Border    *border;
-   Pager_Desk  *owner;
+   Pager_Desk  *desk;
 
    Evas_Object *obj;
    Evas_Object *icon;
