@@ -184,7 +184,7 @@ group { \
 	    } \
 	 } \
       } \
-      BORDER_BUTTON("button", TYPE, 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole") \
+      BORDER_BUTTON("button",TYPE,0.0,0.0,-3,-3,"whole",1.0,1.0,2,2,"whole") \
    } \
 }
 
@@ -906,9 +906,9 @@ group {
 	 }
       }
 
-      BORDER_BUTTON("button_0", "close", 0.0, 0.0, 0, 0, "whole", 1.0, 0.0, -1, 23, "whole")
-      BORDER_BUTTON("button_1", "maximize", 0.0, 0.0, 3, 0, "button_0", 0.0, 1.0, 3, -1, "button_0")
-      BORDER_BUTTON("button_2", "minimize", 0.0, 0.0, 3, 0, "button_1", 0.0, 1.0, 3, -1, "button_1")
+      BORDER_BUTTON("button_0","close",0.0,0.0, 0,0,"whole",1.0,0.0,-1,23,"whole")
+      BORDER_BUTTON("button_1","maximize",0.0,0.0,3,0,"button_0",0.0,1.0,3,-1,"button_0")
+      BORDER_BUTTON("button_2","minimize",0.0,0.0,3,0,"button_1",0.0,1.0,3,-1,"button_1")
 
       part {
 	 name:          "icon";
