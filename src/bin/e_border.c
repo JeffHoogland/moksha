@@ -1,5 +1,5 @@
 /*
- *  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 
 #include "e.h"
@@ -390,20 +390,25 @@ e_border_shade(E_Border *bd)
    if (!bd->shaded)
      {
 	printf("SHADE!\n");
-	/*
-	bd->h = bd->client_inset.t + bd->client_inset.b;
-	bd->changes.size = 1;
-	bd->shaded = 1;
-	bd->changes.shaded = 1;
-	bd->changed = 1;
-	*/
-	bd->shade.start = ecore_time_get();
-	bd->shading = 1;
-	bd->changes.shading = 1;
-	bd->changed = 1;
+	if (!(e_config->border_shade_animate))
+	  {
+	     bd->h = bd->client_inset.t + bd->client_inset.b;
+	     bd->changes.size = 1;
+	     bd->shaded = 1;
+	     bd->changes.shaded = 1;
+	     bd->changed = 1;
+	     edje_object_signal_emit(bd->bg_object, "shaded", "");
+	  }
+	else
+	  {
+	     bd->shade.start = ecore_time_get();
+	     bd->shading = 1;
+	     bd->changes.shading = 1;
+	     bd->changed = 1;
 
-	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	edje_object_signal_emit(bd->bg_object, "shading", "");
+	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	     edje_object_signal_emit(bd->bg_object, "shading", "");
+	  }
      }
 }
 
@@ -414,20 +419,26 @@ e_border_unshade(E_Border *bd)
    if (bd->shaded)
      {
 	printf("UNSHADE!\n");
-	/*
-	bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
-	bd->changes.size = 1;
-	bd->shaded = 0;
-	bd->changes.shaded = 1;
-	bd->changed = 1;
-	*/
-	bd->shade.start = ecore_time_get();
-	bd->shading = 1;
-	bd->changes.shading = 1;
-	bd->changed = 1;
 
-	bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
-	edje_object_signal_emit(bd->bg_object, "unshading", "");
+	if (!(e_config->border_shade_animate))
+	  {
+	     bd->h = bd->client_inset.t + bd->client.h + bd->client_inset.b;
+	     bd->changes.size = 1;
+	     bd->shaded = 0;
+	     bd->changes.shaded = 1;
+	     bd->changed = 1;
+	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
+	  }
+	else
+	  {
+	     bd->shade.start = ecore_time_get();
+	     bd->shading = 1;
+	     bd->changes.shading = 1;
+	     bd->changed = 1;
+
+	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
+	     edje_object_signal_emit(bd->bg_object, "unshading", "");
+	  }
      }
 }
 
@@ -2081,19 +2092,21 @@ static int
 _e_border_shade_animator(void *data)
 {
    E_Border *bd = data;
-   double dt;
-   double dur = 0.15; /* FIXME make this configurable */
+   double dt, val;
+   double dur = bd->client.h / e_config->border_shade_speed;
 
    dt = ecore_time_get() - bd->shade.start;
 
+   val = dt / dur; /* unshading */
+
+   if (val < 0.0) val = 0.0;
+   else if (val > 1.0) val = 1.0;
+
+   /* FIXME support other tween types (this is decel) */
    if (bd->shaded)
-     bd->shade.val = dt / dur; /* unshading */
+     bd->shade.val = sin(val * M_PI / 2.0);
    else
-     bd->shade.val = 1 - (dt / dur); /* shading */
-
-   if (bd->shade.val < 0.0) bd->shade.val = 0.0;
-   else if (bd->shade.val > 1.0) bd->shade.val = 1.0;
-
+     bd->shade.val = 1 - sin(val * M_PI / 2.0);
 
    /* FIXME support other directions */
    bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
@@ -2101,6 +2114,7 @@ _e_border_shade_animator(void *data)
    bd->changes.size = 1;
    bd->changed = 1;
 
+   /* we're done */
    if ( (bd->shaded && (bd->shade.val == 1)) ||
         (!(bd->shaded) && (bd->shade.val == 0)) )
      {

@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* TODO List
@@ -43,6 +46,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_thresthold, DOUBLE);
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, border_shade_animate, INT);
+   E_CONFIG_VAL(D, T, border_shade_speed, DOUBLE);
    E_CONFIG_VAL(D, T, framerate, DOUBLE);
    E_CONFIG_VAL(D, T, image_cache, INT);
    E_CONFIG_VAL(D, T, font_cache, INT);
@@ -57,6 +62,8 @@ e_config_init(void)
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_thresthold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
+	e_config->border_shade_animate = 1;
+	e_config->border_shade_speed = 1000.0;
 	e_config->framerate = 30.0;
 	e_config->image_cache = 2048;
 	e_config->font_cache = 512;
@@ -84,6 +91,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
+   E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
+   E_CONFIG_LIMIT(e_config->border_shade_speed, 1, 20000.0);
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);

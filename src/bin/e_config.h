@@ -12,6 +12,8 @@ struct _E_Config
    double      menus_scroll_speed;
    double      menus_fast_mouse_move_thresthold;
    double      menus_click_drag_timeout;
+   int         border_shade_animate;
+   double      border_shade_speed;
    double      framerate;
    int         image_cache;
    int         font_cache;
