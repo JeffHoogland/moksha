@@ -1,23 +1,9 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* NOTE:
- *
- * currently the edje data to display the clock is not in CVS, to use the clock
- * you must:
- * a) set up expedition to get mouse events - in parts/bg.edc set part "bg"'s 
- *      mouse_events to 1
- * b) build expedition.eet with this change
- * c) copy your "expedition.eet" to 
- *      $PREFIX/lib/enlightenment/modules/clock/default.eet
- * d) in src/bin/e_module.c uncomment the lines:
- *       m = e_module_new("clock");
- *       e_module_enable(m);
- */	 
-
 /* TODO List:
  *
- * Add checking for screen edges - do not want to drag off screen
+ * fix up a better default x and y
  * 
  */
 
@@ -310,8 +296,9 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 { 
    Evas_Event_Mouse_Move *ev;
    Clock_Face *ef;
-   Evas_Coord x, y, w, h, cx, cy;
+   Evas_Coord x, y, w, h, cx, cy, sw, sh;
    evas_pointer_canvas_xy_get(e, &cx, &cy);
+   evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
 
    ev = event_info;
    ef = data;
@@ -319,6 +306,10 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	ef->fx += cx - ef->xx;
 	ef->fy += cy - ef->yy;
+	if (ef->fx < 0) ef->fx = 0;
+	if (ef->fy < 0) ef->fy = 0;
+	if (ef->fx + ef->fw > sw) ef->fx = sw - ef->fw;
+	if (ef->fy + ef->fw > sh) ef->fy = sh - ef->fw;
 	evas_object_move(ef->clock_object, ef->fx, ef->fy);
 	evas_object_move(ef->event_object, ef->fx, ef->fy);
      }
@@ -330,6 +321,8 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	ef->fw += d;
 	if (ef->fw < ef->minsize) ef->fw = ef->minsize;
 	if (ef->fw > ef->maxsize) ef->fw = ef->maxsize;
+	if (ef->fx + ef->fw > sw) ef->fw = sw - ef->fx;
+	if (ef->fy + ef->fw > sh) ef->fw = sh - ef->fy;
 	evas_object_resize(ef->clock_object, ef->fw, ef->fw);
 	evas_object_resize(ef->event_object, ef->fw, ef->fw);
    }
