@@ -24,6 +24,10 @@ static void _e_int_menus_apps_free_hook  (void *obj);
 static void _e_int_menus_apps_run        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb  (void *data, E_Menu *m);
 static void _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_pre_cb (void *data, E_Menu *m);
+static void _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_desktops_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -56,6 +60,13 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, "Modules");
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
 			     "module");
+   e_menu_item_submenu_set(mi, subm);
+
+   subm = e_int_menus_desktops_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Desktops");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "windows");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();
@@ -108,6 +119,19 @@ e_int_menus_apps_new(char *dir, int top)
      }
    return m;
 }
+
+E_Menu *
+e_int_menus_desktops_new(void)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_desktops_pre_cb, NULL);
+
+   return m;
+}
+   
 
 E_Menu *
 e_int_menus_favorite_apps_new(int top)
@@ -257,6 +281,105 @@ _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi)
    
    a = data;
    e_app_exec(a);
+}
+
+static void
+_e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   Evas_List *l, *desks = NULL;
+   E_Menu *root;
+
+   if (m->realized) return;
+
+   /* clear list */
+   if (m->items)
+     {
+	Evas_List *l;
+	for (l = m->items; l; l = l->next)
+	  {
+	     E_Menu_Item *mi = l->data;
+	     e_object_free(E_OBJECT(mi));
+	  }
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Add New Desktop");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_add_cb, NULL);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Remove This Desktop");
+   e_menu_item_callback_set(mi, _e_int_menus_desktops_del_cb, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   root = e_menu_root_get(m);
+   /* Get the desktop list for this zone */
+   /* FIXME: Menu code needs to determine what zone menu was clicked in */
+   if (root && root->con)
+     {
+	E_Zone *zone = e_zone_current_get(root->con);
+	
+	for (l = zone->desks; l; l = l->next)
+	  {
+	     E_Desk *desk = l->data;
+	     desks = evas_list_append(desks, desk);
+	  }
+	
+	for (l = desks; l; l = l->next)
+	  {
+	     E_Desk *desk = l->data;
+	     mi = e_menu_item_new(m);
+	     e_menu_item_check_set(mi, 1);
+	     e_menu_item_label_set(mi, desk->name);
+	     e_menu_item_callback_set(mi, _e_int_menus_desktops_item_cb, desk);
+	     if (desk == e_desk_current_get(zone))
+	       e_menu_item_toggle_set(mi, 1);
+	     e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+		                       "desktop");
+	  }
+     }
+
+   evas_list_free(desks);
+}
+
+/* FIXME: Use the zone the menu was clicked in */
+static void
+_e_int_menus_desktops_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *root = e_menu_root_get(m);
+
+   if (root && root->con)
+     {
+	E_Desk *desk;
+	E_Zone *zone = e_zone_current_get(root->con);
+	desk = e_desk_new(zone);
+     }
+}
+
+static void
+_e_int_menus_desktops_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *root = e_menu_root_get(m);
+
+   if (root && root->con)
+     {
+	E_Zone *zone;
+	E_Desk *desk;
+	
+	zone = e_zone_current_get(root->con);
+	desk = e_desk_current_get(zone);
+	e_desk_remove(desk);
+     }
+}
+
+static void
+_e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Desk *desk = data;
+
+   e_desk_show(desk);
 }
 
 static void

@@ -29,12 +29,10 @@ struct _E_Container
    Ecore_Evas          *bg_ecore_evas;
    Evas                *bg_evas;
    Ecore_X_Window       bg_win;
-   Evas_Object         *bg_blank_object;
-   Evas_Object         *bg_object;
-   Evas_Object         *bg_event_object;
    
    Evas_List           *shapes;
    Evas_List           *shape_change_cb;
+   Evas_List           *zones;
    Evas_List           *clients;
 };
 
@@ -70,7 +68,6 @@ EAPI void         e_container_resize(E_Container *con, int w, int h);
 EAPI void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);
 EAPI void         e_container_raise(E_Container *con);
 EAPI void         e_container_lower(E_Container *con);
-EAPI void         e_container_bg_reconfigure(E_Container *con);
 
 EAPI Evas_List   *e_container_clients_list_get(E_Container *con);
 

@@ -23,7 +23,7 @@ struct _E_Menu
    
    Evas_List           *items;
 
-   /* the container it belongs to */
+   /* the zone it belongs to */
    E_Container         *con;
    
    /* if a menu item spawned this menu, what item is it? */

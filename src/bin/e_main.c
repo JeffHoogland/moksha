@@ -513,11 +513,12 @@ _e_main_screens_init(void)
 			 }
 		    }
 	       }
+
 	     e_container_show(con);
 	  }
 	else
 	  {
-	     e_error_message_show("Cannot create container object for manager on screen %i\n", 
+	     e_error_message_show("Cannot create desktop object for manager on screen %i\n", 
 				  i);
 	     return 0;
 	  }

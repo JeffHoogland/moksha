@@ -39,8 +39,10 @@ E_Container *
 e_container_new(E_Manager *man)
 {
    E_Container *con;
+   E_Zone *zone;
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
+   memset(con, 0, sizeof(E_Container));
    if (!con) return NULL;
    con->manager = man;
    e_object_ref(E_OBJECT(con->manager));
@@ -60,49 +62,17 @@ e_container_new(E_Manager *man)
    e_path_evas_append(path_fonts, con->bg_evas);
    
    e_pointer_container_set(con);
-   
-   if (1) /* for now ALWAYS on - but later maybe a config option */
-     {
-	Evas_Object *o;
 
-	o = evas_object_rectangle_add(con->bg_evas);
-	con->bg_blank_object = 0;
-	evas_object_layer_set(o, -100);
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, con->w, con->h);
-	evas_object_color_set(o, 255, 255, 255, 255);
-	evas_object_show(o);
-	
-	o = edje_object_add(con->bg_evas);
-	con->bg_object = o;
-	evas_object_layer_set(o, -1);
-	evas_object_name_set(o, "desktop/background");
-	evas_object_data_set(o, "e_container", con);
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, con->w, con->h);
-	edje_object_file_set(o,
-			     e_config->desktop_default_background,
-			     "desktop/background");
-	evas_object_show(o);
-	
-	o = evas_object_rectangle_add(con->bg_evas);
-	con->bg_event_object = 0;
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, con->w, con->h);
-	evas_object_color_set(o, 255, 255, 255, 0);
-	evas_object_show(o);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_container_cb_bg_mouse_down, con);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,   _e_container_cb_bg_mouse_up,   con);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_container_cb_bg_mouse_move, con);
-	
-	ecore_evas_callback_resize_set(con->bg_ecore_evas, _e_container_cb_bg_ecore_evas_resize);
-     }
+   /* FIXME: Add ecore code to fetch xinerama screens for zones */
+   zone = e_zone_new(con, 0, 0, con->w, con->h);
+   
    return con;
 }
         
 void
 e_container_show(E_Container *con)
 {
+   printf("Container show!\n");
    E_OBJECT_CHECK(con);
    if (con->visible) return;
    ecore_x_window_show(con->win);
@@ -165,22 +135,6 @@ e_container_lower(E_Container *con)
    E_OBJECT_CHECK(con);
    ecore_x_window_lower(con->win);
 }
-
-void
-e_container_bg_reconfigure(E_Container *con)
-{
-   Evas_Object *o;
-   
-   E_OBJECT_CHECK(con);
-   o = con->bg_object;
-   evas_object_hide(o);
-   edje_object_file_set(o,
-			e_config->desktop_default_background,
-			"desktop/background");
-   evas_object_layer_set(o, -1);
-   evas_object_show(o);
-}
-
 
 Evas_List *
 e_container_clients_list_get(E_Container *con)
@@ -328,68 +282,6 @@ _e_container_free(E_Container *con)
 }
    
 static void
-_e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Container *con;
-   Evas_Event_Mouse_Down *ev;
-   
-   ev = (Evas_Event_Mouse_Down *)event_info;
-   con = data;
-   if (e_menu_grab_window_get()) return;
-    
-   if (ev->button == 1)
-     {
-	E_Menu *m;
-	
-	m = e_int_menus_main_new();
-	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(con);
-     }
-   else if (ev->button == 2)
-     {
-	E_Menu *m;
-
-	m = e_int_menus_clients_new();
-	/* FIXME: this is a bit of a hack... setting m->con - bad hack */
-	m->con = con;
-	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(con);
-     }
-   else if (ev->button == 3)
-     {
-	E_Menu *m;
-	
-	m = e_int_menus_favorite_apps_new(1);
-	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(con);
-     }
-}
-
-static void
-_e_container_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Container *con;
-   Evas_Event_Mouse_Up *ev;
-   
-   ev = (Evas_Event_Mouse_Up *)event_info;      
-   con = data;
-}
-
-static void
-_e_container_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Container *con;
-   Evas_Event_Mouse_Move *ev;
-   
-   ev = (Evas_Event_Mouse_Move *)event_info;   
-   con = data;
-/*   printf("move %i %i\n", ev->cur.output.x, ev->cur.output.y); */
-}
-
-static void
 _e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee)
 {
    Evas *evas;
@@ -401,8 +293,11 @@ _e_container_cb_bg_ecore_evas_resize(Ecore_Evas *ee)
    evas_output_viewport_get(evas, NULL, NULL, &w, &h);
    o = evas_object_name_find(evas, "desktop/background");
    con = evas_object_data_get(o, "e_container");
+   /* FIXME: Handle resizing of zones if container is resized */
+#if 0
    evas_object_resize(con->bg_object, w, h);
    evas_object_resize(con->bg_event_object, w, h);
+#endif
    _e_container_resize_handle(con);
 }
 

@@ -190,9 +190,11 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 		  for (ll = man->containers; ll; ll = ll->next)
 		    {
 		       E_Container *con;
+             E_Zone *zone;
 		       
 		       con = ll->data;
-		       e_container_bg_reconfigure(con);
+             zone = e_zone_current_get(con);
+		       e_zone_bg_reconfigure(zone);
 		    }
 	       }
 	     e_config_save_queue();

@@ -50,6 +50,7 @@
 #include "e_ipc.h"
 #include "e_error.h"
 #include "e_container.h"
+#include "e_zone.h"
 #include "e_desk.h"
 #include "e_border.h"
 #include "e_pointer.h"
@@ -69,6 +70,7 @@
 #include "e_resist.h"
 #include "e_startup.h"
 #include "e_iconify.h"
+#include "e_hints.h"
 
 typedef struct _E_Before_Idler E_Before_Idler;
 

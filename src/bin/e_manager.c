@@ -189,7 +189,7 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
 	E_Container *con;
 	E_Border *bd;
 	
-	con = man->containers->data;
+   con = man->containers->data;
 	if (!e_border_find_by_client_window(e->win))
 	  {
 	     bd = e_border_new(con, e->win, 0);

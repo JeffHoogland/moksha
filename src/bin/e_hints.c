@@ -145,17 +145,10 @@ e_hints_client_stacking_set(void)
 }
 
 void
-e_hints_active_window_set(Ecore_X_Window win)
+e_hints_active_window_set(E_Manager *man, Ecore_X_Window win)
 {
-   Evas_List *ml;
-   
-   for (ml = e_manager_list(); ml; ml = ml->next)
-     {
-	E_Manager *m;
-	
-	m = ml->data;
-	ecore_x_netwm_client_active_set(m->root, win);
-     }
+   E_OBJECT_CHECK(man);
+   ecore_x_netwm_client_active_set(man->root, win);
 }
 
 void
@@ -232,7 +225,7 @@ e_hints_window_state_set(Ecore_X_Window win)
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MODAL, 
 				  bd->client.netwm.state.modal);
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_STICKY,
-				  bd->sticky);
+				  (evas_list_count(bd->stick_desks) > 1));
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT,
 				  bd->client.netwm.state.maximized_v);
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ,

@@ -124,7 +124,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
+   
    bd->container = con;
+   bd->zone = e_zone_current_get(con);
+   bd->zone->clients = evas_list_append(bd->zone->clients, bd);
+
+   bd->desk = e_desk_current_get(bd->zone);
+   bd->desk->clients = evas_list_append(bd->desk->clients, bd);
+  
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
@@ -322,6 +329,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 				  bd->client.h);
 }
 
+/* FIXME: Zone client list is not altered. This affects desktop show function */
 void
 e_border_raise(E_Border *bd)
 {
@@ -386,21 +394,21 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	       {
 		  printf("take focus!\n");
 		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
-		  e_hints_active_window_set(bd->client.win);
+		  e_hints_active_window_set(bd->container->manager, bd->client.win);
 		  ecore_x_window_focus(bd->client.win);
 	       }
 	     else
 	       {
 		  printf("set focus\n");
 		  ecore_x_window_focus(bd->client.win);
-		  e_hints_active_window_set(bd->client.win);
+		  e_hints_active_window_set(bd->container->manager, bd->client.win);
 	       }
 	  }
 	else
 	  {
 	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->container->manager->win);
-	     e_hints_active_window_set(0);
+	     e_hints_active_window_set(bd->container->manager, 0);
 	  }
      }
    if ((bd->focused) && (focused != bd))
@@ -544,7 +552,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 void
 e_border_maximize(E_Border *bd)
 {
-   E_OBJECT_CHECK(bd);
+   E_Zone *zone;
+   
    if ((bd->shaded) || (bd->shading)) return;
    if (!bd->maximized)
      {
@@ -555,7 +564,7 @@ e_border_maximize(E_Border *bd)
 	bd->saved.h = bd->h;
 
 	/* FIXME maximize intelligently */
-	e_border_move_resize(bd, 0, 0, bd->container->w, bd->container->h);
+	e_border_move_resize(bd, 0, 0, bd->zone->w, bd->zone->h);
 	bd->maximized = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
@@ -1869,12 +1878,12 @@ _e_border_eval(E_Border *bd)
 		  int new_x, new_y;
 		  
 		  printf("AUTO POS!\n");
-		  if (bd->container->w > bd->w)
-		    new_x = rand() % (bd->container->w - bd->w);
+		  if (bd->zone->w > bd->w)
+		    new_x = rand() % (bd->zone->w - bd->w);
 		  else
 		    new_x = 0;
-		  if (bd->container->h > bd->h)
-		    new_y = rand() % (bd->container->h - bd->h);
+		  if (bd->zone->h > bd->h)
+		    new_y = rand() % (bd->zone->h - bd->h);
 		  else
 		    new_y = 0;
 		  

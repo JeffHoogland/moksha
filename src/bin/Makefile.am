@@ -18,6 +18,7 @@ e_init.h \
 e_ipc.h \
 e_error.h \
 e_container.h \
+e_zone.h \
 e_desk.h \
 e_border.h \
 e_pointer.h \
@@ -50,6 +51,7 @@ e_init.c \
 e_ipc.c \
 e_error.c \
 e_container.c \
+e_zone.c \
 e_desk.c \
 e_border.c \
 e_pointer.c \

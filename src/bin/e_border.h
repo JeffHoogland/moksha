@@ -44,6 +44,8 @@ struct _E_Border
    int             x, y, w, h;
    int             ref;
    E_Container    *container;
+   E_Zone         *zone;
+   E_Desk         *desk;
    Evas_List      *handlers;
    
    struct {
@@ -145,7 +147,6 @@ struct _E_Border
    unsigned char   re_manage : 1;
    unsigned char   shading : 1;
    unsigned char   shaded : 1;
-   unsigned char   sticky : 1;
    unsigned char   maximized : 1;
    unsigned char   iconic : 1;
 
@@ -165,6 +166,8 @@ struct _E_Border
       E_Direction dir;
       Ecore_Animator *anim;
    } shade;
+
+   Evas_List *stick_desks;
 
    struct {
       unsigned int visible : 1;
