@@ -219,21 +219,24 @@ void      e_view_set_background(E_View *v);
 
 /**
  * e_view_set_dir - Sets view to a given directory
- * @v     The view for which to set the directory
- * @dir   The directory to set the view to
+ * @v          The view for which to set the directory
+ * @dir        The directory to set the view to
+ * @is_desktop Inidicates wether the view is a desktop  
  *
  * This function sets a view to a directory, loading the
- * view's metadata (view window coordinates etc) from that
- * directory, it also requests monitoring of the files in
- * the directory @dir from efsd.
+ * view's metadata (view window coordinates etc). If a view_model already
+ * exists for this dir, it is reused, otherwise a new on is created.
  */
 void      e_view_set_dir(E_View *v, char *dir, int is_desktop);
 
 /**
  * e_view_populate - Draws icons for all files in view
  * @v     The view to populate
+ *
+ * Goes through the list of files in the underlying view_model and calls
+ * view_add_file for each one. This results in icons being created for each
+ * file.
  */
-
 void      e_view_populate(E_View *v);
 
 /**
@@ -241,12 +244,18 @@ void      e_view_populate(E_View *v);
  * @v:    The view to initialize
  *
  * This function initializes a created view by loading
- * all the graphics, and sets the view to a given directory
- * by calling e_view_set_dir().
+ * all the graphics and creating the evas. 
  */
 void      e_view_realize(E_View *v);
 
+/**
+ * e_view_update - Redraws a view
+ * @v:    The view to redraw
+ *
+ * If the contents of the view have changed, this function redraws it.
+ */
 void      e_view_update(E_View *v);
+
 
 void      e_view_bg_reload(E_View *v);
 void      e_view_ib_reload(E_View *v);

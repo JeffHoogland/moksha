@@ -38,10 +38,21 @@ struct _E_View_Model
    int                    is_desktop;
 };
 
+/**
+ * e_view_model_set_dir - Assigns a directory to a view model
+ * @m:   The view model to set the dir for
+ * @dir: The directory
+ *
+ * Set the directory for a view_model and starts monitoring it via efsd.
+ */
 void e_view_model_set_dir(E_View_Model *m, char *dir);
+
 E_View_Model * e_view_model_new();
 void e_view_model_init();
+
 E_View_Model * e_view_model_find_by_monitor_id(int id);
+
+/* Deal with incoming file events */
 void      e_view_model_file_added(int id, char *file);
 void      e_view_model_file_deleted(int id, char *file);
 void      e_view_model_file_changed(int id, char *file);
