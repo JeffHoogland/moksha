@@ -139,6 +139,31 @@ e_desk_at_xy_get(E_Zone *zone, int x, int y)
 }
 
 void
+e_desk_xy_get(E_Desk *desk, int *x, int *y)
+{
+   int xx, yy;
+
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_CHECK(desk);
+
+   for (xx = 0; xx < desk->zone->desk_x_count; xx++)
+     {
+	for (yy = 0; yy < desk->zone->desk_y_count; yy++)
+	  {
+	     E_Desk *next;
+	     next = e_desk_at_xy_get(desk->zone, xx, yy);
+
+	     if (next == desk)
+	       {
+		  *x = xx;
+		  *y = yy;
+		  return;
+	       }
+	  }
+     }
+}
+
+void
 e_desk_next(E_Zone *zone)
 {
    Evas_List   *l;

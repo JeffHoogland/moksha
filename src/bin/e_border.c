@@ -153,6 +153,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 {
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
+   unsigned int managed, desk[2];
+   int deskx, desky;
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
@@ -277,6 +279,13 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    con->clients = evas_list_append(con->clients, bd);
    borders = evas_list_append(borders, bd);
 
+   managed = 1;
+   ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
+   e_desk_xy_get(bd->desk, &deskx, &desky);
+   desk[0] = deskx;
+   desk[1] = desky;
+   ecore_x_window_prop_card32_set(win, E_ATOM_DESK, desk, 2);
+
    return bd;
 }
 
@@ -284,6 +293,8 @@ void
 e_border_desk_set(E_Border *bd, E_Desk *desk)
 {
    E_Event_Border_Desk_Set *ev;
+   int deskx, desky;
+   unsigned int deskpos[2];
    
    E_OBJECT_CHECK(bd);
    E_OBJECT_CHECK(desk);
@@ -300,6 +311,11 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);   
+   
+   e_desk_xy_get(desk, &deskx, &desky);
+   deskpos[0] = deskx;
+   deskpos[1] = desky;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
 }
 
 void
@@ -777,6 +793,7 @@ e_border_unmaximize(E_Border *bd)
 void
 e_border_iconify(E_Border *bd)
 {
+   unsigned int iconic;
    E_OBJECT_CHECK(bd);
    if ((bd->shading)) return;
    if (!bd->iconic)
@@ -785,12 +802,15 @@ e_border_iconify(E_Border *bd)
 	e_border_hide(bd);
 	edje_object_signal_emit(bd->bg_object, "iconify", "");
      }
+   iconic = 1;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
 }
 
 void
 e_border_uniconify(E_Border *bd)
 {
    E_Desk *desk;
+   unsigned int iconic;
    
    E_OBJECT_CHECK(bd);
    if ((bd->shading)) return;
@@ -804,6 +824,8 @@ e_border_uniconify(E_Border *bd)
 	e_iconify_border_remove(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
+   iconic = 0;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ICONIC, &iconic, 1);
 }
 
 void
