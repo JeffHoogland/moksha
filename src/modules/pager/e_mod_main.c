@@ -39,8 +39,8 @@ static int         _pager_face_cb_event_border_resize(void *data, int type, void
 static int         _pager_face_cb_event_border_move(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_add(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_remove(void *data, int type, void *event);
-static int         _pager_face_cb_event_border_hide(void *data, int type, void *event);
-static int         _pager_face_cb_event_border_show(void *data, int type, void *event);
+static int         _pager_face_cb_event_border_iconify(void *data, int type, void *event);
+static int         _pager_face_cb_event_border_uniconify(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_stick(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_unstick(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_desk_set(void *data, int type, void *event);
@@ -291,12 +291,12 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_border_remove =
       ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
 			      _pager_face_cb_event_border_remove, face);
-   face->ev_handler_border_hide =
-      ecore_event_handler_add(E_EVENT_BORDER_HIDE,
-			      _pager_face_cb_event_border_hide, face);
-   face->ev_handler_border_show =
-      ecore_event_handler_add(E_EVENT_BORDER_SHOW,
-			      _pager_face_cb_event_border_show, face);
+   face->ev_handler_border_iconify =
+      ecore_event_handler_add(E_EVENT_BORDER_ICONIFY,
+			      _pager_face_cb_event_border_iconify, face);
+   face->ev_handler_border_uniconify =
+      ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY,
+			      _pager_face_cb_event_border_uniconify, face);
    face->ev_handler_border_stick =
       ecore_event_handler_add(E_EVENT_BORDER_STICK,
 			      _pager_face_cb_event_border_stick, face);
@@ -373,8 +373,8 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_move);
    ecore_event_handler_del(face->ev_handler_border_add);
    ecore_event_handler_del(face->ev_handler_border_remove);
-   ecore_event_handler_del(face->ev_handler_border_hide);
-   ecore_event_handler_del(face->ev_handler_border_show);
+   ecore_event_handler_del(face->ev_handler_border_iconify);
+   ecore_event_handler_del(face->ev_handler_border_uniconify);
    ecore_event_handler_del(face->ev_handler_border_stick);
    ecore_event_handler_del(face->ev_handler_border_unstick);
    ecore_event_handler_del(face->ev_handler_border_desk_set);
@@ -779,14 +779,13 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
 
    face = data;
    ev = event;
-   if ((face->zone != ev->border->zone))
-    return 1;
-  if (_pager_face_border_find(face, ev->border))
-    {
-       printf("BUG: _pager_face_cb_event_border_add()\n");
-       printf("     An already existing border shouldn't be added again\n");
-       return 1;
-    }
+   if (face->zone != ev->border->zone) return 1;
+   if (_pager_face_border_find(face, ev->border))
+     {
+	printf("BUG: _pager_face_cb_event_border_add()\n");
+	printf("     An already existing border shouldn't be added again\n");
+	return 1;
+     }
 
    pd = _pager_face_desk_find(face, ev->border->desk);
    if (pd)
@@ -827,7 +826,7 @@ _pager_face_cb_event_border_remove(void *data, int type, void *event)
 }
 
 static int
-_pager_face_cb_event_border_hide(void *data, int type, void *event)
+_pager_face_cb_event_border_iconify(void *data, int type, void *event)
 {
    E_Event_Border_Hide   *ev;
    Pager_Face            *face;
@@ -844,16 +843,13 @@ _pager_face_cb_event_border_hide(void *data, int type, void *event)
 	pd = l->data;
 	pw = _pager_desk_border_find(pd, ev->border);
 	if (pw)
-	  {
-             if (ev->border->desk->visible)
-	       evas_object_hide(pw->window_object);
-	  }
+	  evas_object_hide(pw->window_object);
      }
    return 1;
 }
 
 static int
-_pager_face_cb_event_border_show(void *data, int type, void *event)
+_pager_face_cb_event_border_uniconify(void *data, int type, void *event)
 {
    E_Event_Border_Show   *ev;
    Pager_Face            *face;
@@ -870,10 +866,7 @@ _pager_face_cb_event_border_show(void *data, int type, void *event)
 	pd = l->data;
 	pw = _pager_desk_border_find(pd, ev->border);
 	if (pw)
-	  {
-	     if (ev->border->desk->visible)
-	       evas_object_show(pw->window_object);
-	  }
+	  evas_object_show(pw->window_object);
      }
    return 1;
 }

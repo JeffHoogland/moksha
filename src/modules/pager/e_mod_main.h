@@ -63,8 +63,8 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_border_move;
    Ecore_Event_Handler *ev_handler_border_add;
    Ecore_Event_Handler *ev_handler_border_remove;
-   Ecore_Event_Handler *ev_handler_border_hide;
-   Ecore_Event_Handler *ev_handler_border_show;
+   Ecore_Event_Handler *ev_handler_border_iconify;
+   Ecore_Event_Handler *ev_handler_border_uniconify;
    Ecore_Event_Handler *ev_handler_border_stick;
    Ecore_Event_Handler *ev_handler_border_unstick;
    Ecore_Event_Handler *ev_handler_border_desk_set;
