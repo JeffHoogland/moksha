@@ -7,6 +7,7 @@ void       e_util_set_env(char *variable, char *content);
 char      *e_util_get_user_home(void);
 void      *e_util_memdup(void *data, int size);
 int        e_util_glob_matches(char *str, char *glob);
+char      *e_util_de_url_and_verify( const char *fi, const char *hostn );
 
 #define e_strdup(__dest, __var) \
 { \

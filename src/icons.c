@@ -85,6 +85,16 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	e_icon_update_state(ic);
 	ecore_window_destroy(ic->view->drag.win);
 	ic->view->drag.started = 0;
+	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
+	  ic->view->drag.drop_mode = E_DND_COPY;
+	else
+	  ic->view->drag.drop_mode = E_DND_MOVE;
+
+	/* Handle dnd motion(drop) - dragging==0 */
+	ecore_window_dnd_handle_motion( ic->view->win.base, 
+					_x - ic->view->drag.offset.x, 
+					_y - ic->view->drag.offset.y, 
+					0);
 	D_RETURN;	
      }
    if (_b == 1)
@@ -349,6 +359,10 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ecore_window_show(ic->view->drag.win);
 	     ecore_pixmap_free(pmap);
 	     ecore_pixmap_free(mask);
+
+	     /* Initiate dnd */
+	     ecore_dnd_own_selection(ic->view->win.base);
+
 	     ic->view->drag.started = 1;
 	  }
      }
@@ -363,6 +377,13 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->view->drag.y = y;
 	ic->view->drag.update = 1;
 	ic->view->changed = 1;
+	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
+	  ic->view->drag.drop_mode = E_DND_COPY;
+	else
+	  ic->view->drag.drop_mode = E_DND_MOVE;
+
+	/* Handle dnd motion - dragging==1 */
+	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
      }
 
    D_RETURN;
