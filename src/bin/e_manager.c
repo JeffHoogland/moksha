@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* local subsystem functions */
@@ -185,7 +188,7 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
 	E_Container *con;
 	E_Border *bd;
 	
-	con = man->containers->data;
+	con = e_container_current_get(man);
 	if (!e_border_find_by_client_window(e->win))
 	  {
 	     bd = e_border_new(con, e->win, 0);

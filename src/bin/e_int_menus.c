@@ -304,7 +304,7 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    m->items = NULL;
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Add New Desktop");
+   e_menu_item_label_set(mi, "New Desktop");
    e_menu_item_callback_set(mi, _e_int_menus_desktops_add_cb, NULL);
    
    mi = e_menu_item_new(m);

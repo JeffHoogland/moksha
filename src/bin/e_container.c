@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* TODO List:
@@ -38,6 +41,7 @@ e_container_new(E_Manager *man)
    E_Container *con;
    E_Zone *zone;
    Evas_Object *o;
+   char name[40];
    
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
    if (!con) return NULL;
@@ -72,6 +76,10 @@ e_container_new(E_Manager *man)
    
    e_pointer_container_set(con);
 
+   con->num = evas_list_count(con->manager->containers);
+   snprintf(name, sizeof(name), "Container %d", con->num);
+   con->name = strdup(name);
+
    /* FIXME: Add ecore code to fetch xinerama screens for zones */
    zone = e_zone_new(con, 0, 0, con->w, con->h);
    
@@ -95,6 +103,21 @@ e_container_hide(E_Container *con)
    if (!con->visible) return;
    ecore_x_window_hide(con->win);
    con->visible = 0;
+}
+
+E_Container *
+e_container_current_get(E_Manager *man)
+{
+   Evas_List *l;
+   E_OBJECT_CHECK_RETURN(man, NULL);
+
+   for (l = man->containers; l; l = l->next)
+     {
+	E_Container *con = l->data;
+	if (con->visible)
+	  return con;
+     }
+   return NULL;
 }
 
 void

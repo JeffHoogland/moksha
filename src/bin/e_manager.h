@@ -19,13 +19,13 @@ EAPI int        e_manager_init(void);
 EAPI int        e_manager_shutdown(void);
 EAPI Evas_List *e_manager_list(void);
     
-EAPI E_Manager *e_manager_new(Ecore_X_Window root);
-EAPI void       e_manager_show(E_Manager *man);
-EAPI void       e_manager_hide(E_Manager *man);
-EAPI void       e_manager_move(E_Manager *man, int x, int y);
-EAPI void       e_manager_resize(E_Manager *man, int w, int h);
-EAPI void       e_manager_move_resize(E_Manager *man, int x, int y, int w, int h);
-EAPI void       e_manager_raise(E_Manager *man);
-EAPI void       e_manager_lower(E_Manager *man);
+EAPI E_Manager      *e_manager_new(Ecore_X_Window root);
+EAPI void            e_manager_show(E_Manager *man);
+EAPI void            e_manager_hide(E_Manager *man);
+EAPI void            e_manager_move(E_Manager *man, int x, int y);
+EAPI void            e_manager_resize(E_Manager *man, int w, int h);
+EAPI void            e_manager_move_resize(E_Manager *man, int x, int y, int w, int h);
+EAPI void            e_manager_raise(E_Manager *man);
+EAPI void            e_manager_lower(E_Manager *man);
 
 #endif
