@@ -1,4 +1,4 @@
-mages {
+images {
    image: "e17_menu_arrow.png" COMP;
    image: "e17_menu_bg.png" COMP;
    image: "e17_menu_bg_border.png" COMP;
