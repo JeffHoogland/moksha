@@ -1059,6 +1059,42 @@ e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
    E_Border *b;
    
    b = o;
+   if (b->current.shaded > 0) return;
+   if ((b->mode.move) || (b->mode.resize)) return;
+   b->mode.move = 0;
+   b->mode.resize = 0;
+   if (b->max.is)
+     {
+	b->current.requested.x = b->max.x;
+	b->current.requested.y = b->max.y;
+	b->current.requested.w = b->max.w;
+	b->current.requested.h = b->max.h;
+	b->changed = 1;
+	b->max.is = 0;
+	e_border_adjust_limits(b);
+	b->current.requested.x = b->current.x;
+	b->current.requested.y = b->current.y;
+	b->current.requested.w = b->current.w;
+	b->current.requested.h = b->current.h;
+     }
+   else
+     {
+	b->max.x = b->current.x;
+	b->max.y = b->current.y;
+	b->max.w = b->current.w;
+	b->max.h = b->current.h;
+	b->current.requested.x = 0;
+	b->current.requested.y = 0;
+	b->current.requested.w = b->desk->real.w;
+	b->current.requested.h = b->desk->real.h;
+	b->changed = 1;
+	b->max.is = 1;
+	e_border_adjust_limits(b);
+	b->current.requested.x = b->current.x;
+	b->current.requested.y = b->current.y;
+	b->current.requested.w = b->current.w;
+	b->current.requested.h = b->current.h;
+     }
    return;
    UN(a);
    UN(data);

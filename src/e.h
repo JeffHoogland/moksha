@@ -213,6 +213,10 @@ struct _E_Border
       int move, resize;
    } mode;
    
+   struct {
+      int x, y, w, h;
+      int is;
+   } max;
    
    int ignore_unmap;
    int shape_changed;
@@ -338,8 +342,31 @@ struct _E_Icon
 {
    OBJ_PROPERTIES;
    
+   char   *file;
+   char   *dir;
+   
    E_View *view;
-   int     changed;
+   int     x, y, w, h;
+   struct {
+      int text_location;
+      int show_text;
+      int show_icon;
+   } options;
+   struct {
+      Evas_Object   icon;
+      Evas_Object   filename;
+      Evas_Object   sel1, sel2;
+      Ebits_Object  sel_icon;
+      Ebits_Object  sel_text;
+      Ebits_Object  base_icon;
+      Ebits_Object  base_text;
+   } obj;
+   struct {
+      int clicked;
+      int selected;
+      int hilited;
+   } state;
+   int     changed;   
 };
 
 struct _E_Menu

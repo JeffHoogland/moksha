@@ -3,6 +3,7 @@
 void
 e_icon_free(E_Icon *icon)
 {
+   FREE(icon);
 }
 
 E_Icon *
@@ -14,4 +15,9 @@ e_icon_new(void)
    ZERO(icon, E_Icon, 1);
    OBJ_INIT(icon, e_icon_free);
    return icon;
+}
+
+void
+e_icon_calulcate_geometry(E_Icon *icon)
+{
 }

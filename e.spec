@@ -1,5 +1,5 @@
 # Note that this is NOT a relocatable package
-%define ver      0.17.0
+%define ver      0.17.pre_0
 %define rel      1
 %define prefix   /usr/local
 
