@@ -727,7 +727,7 @@ _temperature_cb_check(void *data)
 	     ef->have_temp = 0;
 	  }
      }
-   return ret;
+   return 1;
 }
 
 static void
