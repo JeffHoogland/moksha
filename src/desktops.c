@@ -101,7 +101,7 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	
 	b = l->data;
 	/* if sticky */
-	if (b->client.sticky)
+	if ((b->client.sticky) && (!b->mode.move))	  
 	  e_window_gravity_set(b->win.main, StaticGravity);
 	else
 	  e_window_gravity_set(b->win.main, grav);	
@@ -131,7 +131,7 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	
 	b = l->data;
 	e_window_gravity_reset(b->win.main);
-	if (!b->client.sticky)
+	if ((!b->client.sticky) && (!b->mode.move))	  
 	  {
 	     b->current.requested.x += dx;
 	     b->current.requested.y += dy;
@@ -329,7 +329,7 @@ e_desktops_goto(int d, int ax, int ay)
 	     E_Border *b;
 	     
 	     b = l->data;
-	     if (!b->client.sticky)
+	     if ((!b->client.sticky) && (!b->mode.move))
 	       {
 		  if (b->client.desk != d)
 		    {
@@ -358,5 +358,7 @@ e_desktops_goto(int d, int ax, int ay)
 	desk->desk.desk = d;
 	desk->desk.area.x = ax;
 	desk->desk.area.y = ay;
-     }
+	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
+	e_icccm_set_desk(0, desk->desk.desk);
+    }
 }

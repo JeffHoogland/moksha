@@ -600,6 +600,7 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b->current.visible = 1;
    e_border_adjust_limits(b);
    e_guides_hide();
+   e_desktops_add_border(b->desk, b);
    return;
    UN(a);
    UN(data);

@@ -76,6 +76,9 @@ struct _E_Border
       char *name;
       char *class;
       char *command;
+      char *machine;
+      char *icon_name;
+      int pid;
       Window group;
       int takes_focus;
       int sticky;
@@ -87,6 +90,7 @@ struct _E_Border
       int titlebar;
       int border;
       int handles;
+      int initial_state;
       int is_desktop;
       int w, h;
       struct {

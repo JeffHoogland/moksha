@@ -1194,6 +1194,11 @@ e_border_adopt(Window win, int use_client_pos)
    e_icccm_get_mwm_hints(win, b);
    e_icccm_get_layer(win, b);
    e_icccm_get_title(win, b);
+   e_icccm_get_class(win, b);
+   e_icccm_get_hints(win, b);
+   e_icccm_get_machine(win, b);
+   e_icccm_get_command(win, b);
+   e_icccm_get_icon_name(win, b);
    b->current.shaped_client = e_icccm_is_shaped(win);
    /* we have now placed the bugger */
    b->placed = 1;

@@ -318,6 +318,56 @@ e_icccm_get_title(Window win, E_Border *b)
    else e_strdup(b->client.title, "No Title");
 }
 
+
+void
+e_icccm_get_class(Window win, E_Border *b)
+{
+   IF_FREE(b->client.name);
+   IF_FREE(b->client.class);
+   b->client.name = NULL;
+   b->client.class = NULL;
+   e_window_get_name_class(win, &(b->client.name), &(b->client.class));
+   if (!b->client.name) e_strdup(b->client.name, "Unknown");
+   if (!b->client.class) e_strdup(b->client.class, "Unknown");
+}
+
+void
+e_icccm_get_hints(Window win, E_Border *b)
+{
+   e_window_get_hints(win, &(b->client.takes_focus),
+		      &(b->client.initial_state), NULL, NULL, NULL,
+		      &(b->client.group));
+}
+
+void
+e_icccm_get_machine(Window win, E_Border *b)
+{
+   IF_FREE(b->client.machine);
+   b->client.machine = NULL;
+   b->client.machine = e_window_get_machine(win);
+}
+
+void
+e_icccm_get_command(Window win, E_Border *b)
+{
+   IF_FREE(b->client.command);
+   b->client.command = NULL;
+   b->client.command = e_window_get_command(win);
+}
+
+void
+e_icccm_get_icon_name(Window win, E_Border *b)
+{
+   IF_FREE(b->client.icon_name);
+   b->client.icon_name = NULL;
+   b->client.icon_name = e_window_get_icon_name(win);
+}
+
+void
+e_icccm_get_state(Window win, E_Border *b)
+{
+}
+
 void
 e_icccm_set_frame_size(Window win, int l, int r, int t, int b)
 {
@@ -391,14 +441,32 @@ e_icccm_handle_property_change(Atom a, E_Border *b)
    static Atom  a_wm_normal_hints = 0;
    static Atom  a_motif_wm_hints = 0;
    static Atom  a_wm_name = 0;
+   static Atom  a_wm_class = 0;
+   static Atom  a_wm_hints = 0;
+   static Atom  a_wm_client_machine = 0;
+   static Atom  a_wm_command = 0;
+   static Atom  a_wm_icon_name = 0;
+   static Atom  a_wm_state = 0;
    
    E_ATOM(a_wm_normal_hints, "WM_NORMAL_HINTS");
    E_ATOM(a_motif_wm_hints, "_MOTIF_WM_HINTS");
    E_ATOM(a_wm_name, "WM_NAME");
-   
+   E_ATOM(a_wm_class, "WM_CLASS");
+   E_ATOM(a_wm_hints, "WM_HINTS"); 
+   E_ATOM(a_wm_client_machine, "WM_CLIENT_MACHINE"); 
+   E_ATOM(a_wm_command, "WM_COMMAND"); 
+   E_ATOM(a_wm_icon_name, "WM_ICON_NAME"); 
+   E_ATOM(a_wm_state, "WM_STATE"); 
+  
    if (a == a_wm_normal_hints) e_icccm_get_size_info(b->win.client, b);
    else if (a == a_motif_wm_hints) e_icccm_get_mwm_hints(b->win.client, b);
    else if (a == a_wm_name) e_icccm_get_title(b->win.client, b);
+   else if (a == a_wm_class) e_icccm_get_class(b->win.client, b);
+   else if (a == a_wm_hints) e_icccm_get_hints(b->win.client, b);
+   else if (a == a_wm_client_machine) e_icccm_get_machine(b->win.client, b);
+   else if (a == a_wm_command) e_icccm_get_command(b->win.client, b);
+   else if (a == a_wm_icon_name) e_icccm_get_icon_name(b->win.client, b);
+   else if (a == a_wm_state) e_icccm_get_state(b->win.client, b);
 }
 
 void
