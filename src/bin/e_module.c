@@ -87,7 +87,7 @@ e_module_new(char *name)
    m->api = &_e_module_api;
    if (name[0] != '/')
      {
-	snprintf(buf, sizeof(buf), "%s/%s/module.so", MODULE_ARCH, name);
+	snprintf(buf, sizeof(buf), "%s/%s/module.so", name, MODULE_ARCH);
 	modpath = e_path_find(_e_path_modules, buf);
      }
    else
