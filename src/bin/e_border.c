@@ -2318,10 +2318,28 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
      }
    else
      {
+	static char buf[PATH_MAX + 50];
+	char *name, *homedir;
+	int i;
+
+	buf[0] = '\0';
+	/* generate a reasonable file name from the window class */
+	/* FIXME - I think there could be duplicates - how better to do this? */
+	name = strdup(bd->client.icccm.class);
+	for (i = 0; i < strlen(name); i++)
+	  {
+	      if (name[i] == ' ')
+	        name[i] = '_';
+	  }
+	/* previously this could be null, but it will exist now */
+	homedir = e_user_homedir_get();
+	
+	snprintf(buf, sizeof(buf),
+		 "--win-class %s %s/.e/e/applications/all/%s.eapp",
+		 bd->client.icccm.class, homedir, name);
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, "Create Icon");
-	/* FIXME need to create path for newly created icon */
-	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, "");
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
      }
 
    e_menu_activate_mouse(m, bd->container, x, y, 1, 1,
@@ -2389,7 +2407,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    full = malloc(strlen(file) + strlen(command) + 1);
    strcpy(full, command);
    strcat(full, file);
-   printf("e_util_eapp_edit %s\n", full);
+   printf("EXEC %s\n", full);
    process = ecore_exe_run(full, NULL);
    if (!process || !ecore_exe_pid_get(process))
      e_error_dialog_show("Icon Edit Error", "Error starting icon editor\n\n \
