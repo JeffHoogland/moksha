@@ -151,6 +151,8 @@ e_config_desktops_init()
 	       width, (E_Data_Value) 1);
    E_DATA_NODE(cfg_desktops, "height", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
 	       height, (E_Data_Value) 1);
+   E_DATA_NODE(cfg_desktops, "cursors/e_native", E_DATA_TYPE_INT,
+	       NULL, E_Config_Desktops, e_native_cursors, (E_Data_Value) 1);
 }
 
 void

@@ -3,6 +3,11 @@
 #include "config.h"
 #include "util.h"
 #include "file.h"
+#include <X11/cursorfont.h>
+#if 0
+/* XCursor */
+#include <X11/Xcursor/Xcursor.h>
+#endif
 
 typedef struct _e_cursor E_Cursor;
 
@@ -11,6 +16,7 @@ struct _e_cursor
    char               *type;
    Cursor              cursor;
    time_t              mod;
+   int                 x_cursor_id;
 };
 
 static int          cursor_change = 0;
@@ -120,8 +126,62 @@ e_cursors_display_in_window(Window win, char *type)
 	c->mod = e_file_mod_time(buf);
 	E_DB_INT_GET(buf, "/cursor/x", hx, ok);
 	E_DB_INT_GET(buf, "/cursor/y", hy, ok);
+	/* Handle x_cursor if available */
+	E_DB_INT_GET(buf, "/cursor/x_id", c->x_cursor_id, ok);	
+	if(!ok)
+	  c->x_cursor_id = XC_arrow;
+
+	/* Some sample code to load XCursor data directly. */
+	/* This works, but shading and colorization is different */
+	/* than native XFree86 XCursors.  It appears the xcursorgen */
+	/* program does some preprocessing.  We could do the same. */
+#if 0
+	/* XCursor */
+	if(0)
+	  {
+	    Evas *ic_e;
+	    Evas_Object *e_im;
+	    int *idata;
+	    int wid, hei;
+	    XcursorImage * xcur;
+
+	    snprintf(buf, PATH_MAX, "%s/%s.db",
+		     e_config_get("cursors"), type);
+
+	    ic_e = e_evas_new_all(ecore_display_get(), 0,
+				  0, 0, 200, 200, "");
+	    e_im = evas_object_image_add(ic_e);
+	    evas_object_image_file_set(e_im, buf, "/cursor/image");
+	    idata = evas_object_image_data_get(e_im, 1);
+	    evas_object_image_size_get(e_im, &wid, &hei);
+
+	    /* Make sure width and height are sane, protect ourselves.*/
+	    if(wid > 128) wid=128;
+	    if(hei > 128) hei=128;
+	    
+	    xcur = XcursorImageCreate( wid, hei);
+	    xcur->pixels = /*Xmalloc ? */(int *) malloc(wid * hei * 4);
+	    if(!xcur->pixels)
+		D("Failed alloc!!!!!!!!!!\n");
+	    memcpy(xcur->pixels, idata, wid*hei*4);
+	    xcur->xhot = hx;
+	    xcur->yhot = hy;
+
+	    c->cursor = XcursorImageLoadCursor(ecore_display_get(), xcur);
+
+	    evas_object_del(e_im);
+	  }
+	else
+	  {
+#endif
+
+	    /* Only load images for native cursors */
+	    if(config_data->desktops->e_native_cursors)
+	      {
+
 	snprintf(buf, PATH_MAX, "%s/%s.db:/cursor/image",
 		 e_config_get("cursors"), type);
+
 	im = imlib_load_image(buf);
 	if (im)
 	  {
@@ -228,6 +288,12 @@ e_cursors_display_in_window(Window win, char *type)
 	     FREE(c);
 	     c = NULL;
 	  }
+
+
+	      }
+	    /* end native cursors */
+
+
 	if (c)
 	  {
 	     c->cursor =
@@ -236,9 +302,24 @@ e_cursors_display_in_window(Window win, char *type)
 	     ecore_pixmap_free(mask);
 	     cursors = evas_list_append(cursors, c);
 	  }
+#if 0
+	  } /* XCursor */
+#endif
      }
    if (c)
-      ecore_cursor_set(win, c->cursor);
+     {
+       /* If behavior.db has /desktops/cursors/native == 1, then use */
+       /* images installed */
+       /* by E, else use X cursors by cursorfont id. */
+       if(config_data->desktops->e_native_cursors)
+	 ecore_cursor_set(win, c->cursor);
+       else
+	 {
+	   Cursor x_cursor;
+	   x_cursor = XCreateFontCursor(ecore_display_get(), c->x_cursor_id);
+	   ecore_cursor_set(win, x_cursor);
+	 }
+     }
    else
      {
 	if (!strcmp(type, "Default"))

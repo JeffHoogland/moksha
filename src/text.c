@@ -22,23 +22,23 @@ e_text_new(Evas * evas, char *text, char *class)
       t->text = strdup("");
    t->evas = evas;
    t->obj.o1 = evas_object_text_add(t->evas);
-   evas_object_text_font_set(t->obj.o1, "borzoib", 8);
+   evas_object_text_font_set(t->obj.o1, "text", 8);
    evas_object_text_text_set(t->obj.o1, t->text);
 
    t->obj.o2 = evas_object_text_add(t->evas);
-   evas_object_text_font_set(t->obj.o2, "borzoib", 8);
+   evas_object_text_font_set(t->obj.o2, "text", 8);
    evas_object_text_text_set(t->obj.o2, t->text);
 
    t->obj.o3 = evas_object_text_add(t->evas);
-   evas_object_text_font_set(t->obj.o3, "borzoib", 8);
+   evas_object_text_font_set(t->obj.o3, "text", 8);
    evas_object_text_text_set(t->obj.o3, t->text);
 
    t->obj.o4 = evas_object_text_add(t->evas);
-   evas_object_text_font_set(t->obj.o4, "borzoib", 8);
+   evas_object_text_font_set(t->obj.o4, "text", 8);
    evas_object_text_text_set(t->obj.o4, t->text);
 
    t->obj.text = evas_object_text_add(t->evas);
-   evas_object_text_font_set(t->obj.text, "borzoib", 8);
+   evas_object_text_font_set(t->obj.text, "text", 8);
    evas_object_text_text_set(t->obj.text, t->text);
 
    evas_object_pass_events_set(t->obj.o1, 1);

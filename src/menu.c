@@ -1531,7 +1531,7 @@ e_menu_item_realize(E_Menu * m, E_Menu_Item * mi)
 	if (mi->str)
 	  {
 	     mi->obj_text = evas_object_text_add(m->evas);
-	     evas_object_text_font_set(mi->obj_text, "borzoib", 8);
+	     evas_object_text_font_set(mi->obj_text, "menu", 8);
 	     evas_object_text_text_set(mi->obj_text, mi->str);
 	     evas_object_color_set(mi->obj_text, 0, 0, 0, 255);
 	     evas_object_show(mi->obj_text);

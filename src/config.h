@@ -17,6 +17,7 @@ struct _E_Config_Desktops
    int                 speed;
    int                 width;
    int                 height;
+   int                 e_native_cursors;
 };
 
 typedef struct _E_Config_Guides E_Config_Guides;
