@@ -146,7 +146,7 @@ main(int argc, char **argv)
 	exit(0);
      }
    eet_init();
-   ef = eet_open(file, EET_FILE_MODE_RW);
+   ef = eet_open(file, EET_FILE_MODE_READ_WRITE);
    if (!ef)
      {
 	printf("ERROR: cannot open file %s for READ/WRITE\n", file);
