@@ -4418,9 +4418,9 @@ collections {
 	    new Float:second;
 	    new v;
 	    
-	    timer(1.0, "clock_cb", 1);
 	    date(year, month, day, yearday, weekday, hour, minute, second);
 	    v = round(second);
+	    timer(1.0 - (second - v), "clock_cb", 1);
 	    buf[0] = 0;
 	    if (v < 10) {snprintf(buf, 10, "0%i", v);}
 	    else        {snprintf(buf, 10, "%i", v);}
@@ -4457,6 +4457,7 @@ collections {
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       aspect: 1.0 1.0;
 	       rel1 {
 		  relative: 0.1 0.1;
 	       }
@@ -4548,6 +4549,7 @@ collections {
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       aspect: 1.0 1.0;
 	       rel1 {
 		  relative: 0.1 0.1;
 	       }
@@ -4639,6 +4641,7 @@ collections {
 	    mouse_events: 0;
 	    description {
 	       state: "default" 0.0;
+	       aspect: 1.0 1.0;
 	       rel1 {
 		  relative: 0.2 0.2;
 	       }
