@@ -421,13 +421,18 @@ _pager_zone_set(Pager *e, E_Zone *zone)
 	  sym = _pager_desk_create(e, desk);
 	  e->desks = evas_list_append(e->desks, sym);
 
-          wins = desk->clients;
+	  wins = desk->clients;
 	  while (wins)
 	    {
 	       Pager_Win *win;
 	       E_Border  *bd;
 
 	       bd = wins->data;
+	       if (bd->new_client)
+		 {
+		    wins = wins->next;
+		    continue;
+		 }
 	       win = _pager_window_create(e, bd, sym);
 
 	       sym->wins = evas_list_append(sym->wins, win);
