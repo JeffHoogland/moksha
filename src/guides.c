@@ -106,11 +106,11 @@ e_guides_update(void)
 		  guides.disp.evas = evas_new();
 		  evas_output_method_set(guides.disp.evas, 
 					 evas_render_method_lookup("software_x11"));
-		  evas_object_font_path_append(guides.disp.evas, font_dir);
+		  evas_font_path_append(guides.disp.evas, font_dir);
 		  evas_output_size_set(guides.disp.evas, 1, 1);
 		  evas_output_viewport_set(guides.disp.evas, 0, 0, 1, 1);
-		  evas_object_font_cache_set(guides.disp.evas, font_cache);
-		  evas_object_image_cache_set(guides.disp.evas, image_cache);
+		  evas_font_cache_set(guides.disp.evas, font_cache);
+		  evas_image_cache_set(guides.disp.evas, image_cache);
 
 		  {
 		    Evas_Engine_Info_Software_X11 *einfo;

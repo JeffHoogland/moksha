@@ -2097,9 +2097,9 @@ e_view_bg_reload(E_View * v)
 	v->bg = NULL;
 	if (v->evas)
 	{
-	   size = evas_object_image_cache_get(v->evas);
-	   evas_object_image_cache_flush(v->evas);
-	   evas_object_image_cache_set(v->evas, size);
+	   size = evas_image_cache_get(v->evas);
+	   evas_image_cache_flush(v->evas);
+	   evas_image_cache_set(v->evas, size);
 	}
 	e_db_flush();
      }

@@ -1084,9 +1084,9 @@ e_evas_new_all(Display *disp, Window parent_window,
       evas_engine_info_set(e, (Evas_Engine_Info *) einfo);
    }
 
-   evas_object_image_cache_set(e, 0);
-   evas_object_font_cache_set(e, 0);
-   evas_object_font_path_append(e, font_dir);
+   evas_image_cache_set(e, 0);
+   evas_font_cache_set(e, 0);
+   evas_font_path_append(e, font_dir);
 
    return e;
 }

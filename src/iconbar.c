@@ -254,9 +254,9 @@ e_iconbar_new(E_Desktop * d)
 	{
 	   int                 size;
 
-	   size = evas_object_image_cache_get(d->evas);
-	   evas_object_image_cache_flush(d->evas);
-	   evas_object_image_cache_set(d->evas, size);
+	   size = evas_image_cache_get(d->evas);
+	   evas_image_cache_flush(d->evas);
+	   evas_image_cache_set(d->evas, size);
 	}
    }
    /* flush edb cached handled */
