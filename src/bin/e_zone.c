@@ -36,20 +36,22 @@ e_zone_shutdown(void)
 E_Zone *
 e_zone_new(E_Container *con, int x, int y, int w, int h)
 {
-   E_Zone      *zone;
-   int          i;
+   E_Zone *zone;
+   char    name[40];
 
    zone = E_OBJECT_ALLOC(E_Zone, E_ZONE_TYPE, _e_zone_free);
    if (!zone) return NULL;
 
    zone->container = con;
-   zone->name = NULL;
 
    zone->x = x;
    zone->y = y;
    zone->w = w;
    zone->h = h;
    zone->num = ++zone_count;
+
+   snprintf(name, sizeof(name), "Zone %d", zone->num);
+   zone->name = strdup(name);
 
    con->zones = evas_list_append(con->zones, zone);
    
@@ -312,6 +314,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    Evas_List *client;
    E_Border  *bd;
    E_Event_Zone_Desk_Count_Set *ev;
+   E_Event_Border_Desk_Set *evb;
    
    xx = x_count;
    if (xx < 1)
@@ -349,7 +352,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 		    bd = (E_Border *) client->data;
 
 		    new_desk->clients = evas_list_append(new_desk->clients, bd);
-		    bd->desk = new_desk;
+		    e_border_desk_set(bd, new_desk);
 		    client = client->next;
 		 }
 	       evas_list_free(desk->clients);
@@ -371,7 +374,7 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 		    bd = (E_Border *) client->data;
 
 		    new_desk->clients = evas_list_append(new_desk->clients, bd);
-		    bd->desk = new_desk;
+		    e_border_desk_set(bd, new_desk);
 		    client = client->next;
 		 }
 	       evas_list_free(desk->clients);
