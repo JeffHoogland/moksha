@@ -32,7 +32,6 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
-* any known segv's must go
 
 <add more issues as they are found>
 
