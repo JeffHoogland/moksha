@@ -176,6 +176,7 @@ e_manager_manage_windows(E_Manager *man)
 		    e_border_show(bd);
 	       }
 	  }
+	free(windows);
      }
 }
 
