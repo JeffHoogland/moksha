@@ -212,6 +212,8 @@ struct _E_View
    scrollbar;
 
    int                 is_listing;
+   
+   int                 is_desktop;
 
    E_Iconbar          *iconbar;
 

@@ -554,19 +554,19 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 void
-e_view_deselect_all(E_View *v)
+e_view_deselect_all(E_View * v)
 {
    Evas_List           l;
 
    D_ENTER;
 
-	for (l = v->icons; l; l = l->next)
-	  {
-	     E_Icon             *ic;
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon             *ic;
 
-	     ic = l->data;
-	     e_icon_deselect(ic);
-	  }
+	ic = l->data;
+	e_icon_deselect(ic);
+     }
 
    D_RETURN;
 }
@@ -584,7 +584,7 @@ e_view_deselect_all_except(E_Icon * not_ic)
 
 	ic = l->data;
 	if (ic != not_ic)
-	  e_icon_deselect(ic);
+	   e_icon_deselect(ic);
      }
 
    D_RETURN;
@@ -908,7 +908,7 @@ static void
 e_configure(Ecore_Event * ev)
 {
    Ecore_Event_Window_Configure *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -972,17 +972,17 @@ e_configure(Ecore_Event * ev)
 		     if (e_view_layout_get_element_geometry(v->layout,
 							    "Scrollbar_H",
 							    &x, &y, &w, &h))
-		     {
-			e_scrollbar_move(v->scrollbar.h, x, y);
-			e_scrollbar_resize(v->scrollbar.h, w, h);
-		     }
+		       {
+			  e_scrollbar_move(v->scrollbar.h, x, y);
+			  e_scrollbar_resize(v->scrollbar.h, w, h);
+		       }
 		     if (e_view_layout_get_element_geometry(v->layout,
 							    "Scrollbar_V",
 							    &x, &y, &w, &h))
-		     {
-			e_scrollbar_move(v->scrollbar.v, x, y);
-			e_scrollbar_resize(v->scrollbar.v, w, h);
-		     }
+		       {
+			  e_scrollbar_move(v->scrollbar.v, x, y);
+			  e_scrollbar_resize(v->scrollbar.v, w, h);
+		       }
 		  }
 
 		  e_scrollbar_move(v->scrollbar.v,
@@ -1005,16 +1005,16 @@ static void
 e_property(Ecore_Event * ev)
 {
    Ecore_Event_Window_Configure *e;
-   E_View              *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
-       {
-       }
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	  {
+	  }
      }
 
    D_RETURN;
@@ -1024,15 +1024,15 @@ static void
 e_unmap(Ecore_Event * ev)
 {
    Ecore_Event_Window_Unmap *e;
-   E_View              *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
-       {
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	  {
 	  }
      }
 
@@ -1043,14 +1043,14 @@ static void
 e_visibility(Ecore_Event * ev)
 {
    Ecore_Event_Window_Unmap *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	  }
      }
@@ -1062,14 +1062,14 @@ static void
 e_focus_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_In *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	  }
      }
@@ -1081,14 +1081,14 @@ static void
 e_focus_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Focus_Out *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	  }
      }
@@ -1100,14 +1100,14 @@ static void
 e_delete(Ecore_Event * ev)
 {
    Ecore_Event_Window_Delete *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     e_object_unref(E_OBJECT(v));
 	     D_RETURN;
@@ -1136,14 +1136,14 @@ e_dnd_status(Ecore_Event * ev)
     *    int                 ok;
     *  } Ecore_Event_Dnd_Drop_Status;
     */
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     if (dnd_pending_mode != E_DND_DELETED &&
 		 dnd_pending_mode != E_DND_COPIED)
@@ -1172,14 +1172,14 @@ static void
 e_wheel(Ecore_Event * ev)
 {
    Ecore_Event_Wheel  *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	  }
      }
@@ -1191,15 +1191,15 @@ static void
 e_key_down(Ecore_Event * ev)
 {
    Ecore_Event_Key_Down *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win))
-	   || (v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win))
+	    || (v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     if (!strcmp(e->key, "Up"))
 	       {
@@ -1244,14 +1244,14 @@ static void
 e_key_up(Ecore_Event * ev)
 {
    Ecore_Event_Key_Up *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	  }
      }
@@ -1263,7 +1263,7 @@ static void
 e_mouse_down(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Down *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1271,7 +1271,7 @@ e_mouse_down(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     int                 focus_mode;
 
@@ -1294,7 +1294,7 @@ static void
 e_mouse_up(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Up *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1302,7 +1302,7 @@ e_mouse_up(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     evas_event_button_up(v->evas, e->x, e->y, e->button);
 	     current_ev = NULL;
@@ -1318,7 +1318,7 @@ static void
 e_mouse_move(Ecore_Event * ev)
 {
    Ecore_Event_Mouse_Move *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1326,7 +1326,7 @@ e_mouse_move(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     evas_event_move(v->evas, e->x, e->y);
 	     current_ev = NULL;
@@ -1342,7 +1342,7 @@ static void
 e_mouse_in(Ecore_Event * ev)
 {
    Ecore_Event_Window_Enter *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1350,9 +1350,9 @@ e_mouse_in(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     if (v->dir->is_desktop)
+	     if (v->is_desktop)
 	       {
 		  evas_event_enter(v->evas);
 	       }
@@ -1369,7 +1369,7 @@ static void
 e_mouse_out(Ecore_Event * ev)
 {
    Ecore_Event_Window_Leave *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1377,7 +1377,7 @@ e_mouse_out(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     evas_event_leave(v->evas);
 	     current_ev = NULL;
@@ -1393,7 +1393,7 @@ static void
 e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose *e;
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
@@ -1401,7 +1401,7 @@ e_window_expose(Ecore_Event * ev)
    current_ev = ev;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_main_window(e->win)))
+	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     if (!(v->pmap))
 		evas_update_rect(v->evas, e->x, e->y, e->w, e->h);
@@ -1590,21 +1590,19 @@ e_view_cleanup(E_View * v)
     * not via a timeout, because we will destroy the object after this.*/
    e_view_geometry_record(v);
 
-
    if (v->iconbar)
      {
 	/*e_iconbar_save_out_final(v->iconbar); */
 	e_object_unref(E_OBJECT(v->iconbar));
      }
    if (v->bg)
-       e_bg_free(v->bg);
+      e_bg_free(v->bg);
    if (v->scrollbar.h)
       e_object_unref(E_OBJECT(v->scrollbar.h));
    if (v->scrollbar.v)
       e_object_unref(E_OBJECT(v->scrollbar.v));
    if (v->layout)
       e_object_unref(E_OBJECT(v->layout));
-
 
    ecore_window_destroy(v->win.base);
 
@@ -1717,7 +1715,7 @@ e_view_set_dir(E_View * v, char *path, int is_desktop)
 
    if (d)
      {
-       e_dir_register_view(d, v);
+	e_dir_register_view(d, v);
 	/* FIXME do a real naming scheme here */
 	snprintf(buf, PATH_MAX, "%s:%d", v->dir->dir,
 		 e_object_get_usecount(E_OBJECT(v->dir)));
@@ -1810,12 +1808,12 @@ e_view_realize(E_View * v)
 
       if (e_view_layout_get_element_geometry(v->layout, "Icons",
 					     &x, &y, &w, &h))
-        {
-           v->spacing.window.l = x;
-           v->spacing.window.r = v->size.w - (x + w);
-           v->spacing.window.t = y;
-           v->spacing.window.b = v->size.h - (y + h);
-        }
+	{
+	   v->spacing.window.l = x;
+	   v->spacing.window.r = v->size.w - (x + w);
+	   v->spacing.window.t = y;
+	   v->spacing.window.b = v->size.h - (y + h);
+	}
    }
 
    v->scrollbar.v = e_scrollbar_new(v);
@@ -1841,17 +1839,17 @@ e_view_realize(E_View * v)
 
       if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_H",
 					     &x, &y, &w, &h))
-      {
-	 e_scrollbar_move(v->scrollbar.h, x, y);
-	 e_scrollbar_resize(v->scrollbar.h, w, h);
-      }
+	{
+	   e_scrollbar_move(v->scrollbar.h, x, y);
+	   e_scrollbar_resize(v->scrollbar.h, w, h);
+	}
 
       if (e_view_layout_get_element_geometry(v->layout, "Scrollbar_V",
 					     &x, &y, &w, &h))
-      {
-	 e_scrollbar_move(v->scrollbar.v, x, y);
-	 e_scrollbar_resize(v->scrollbar.v, w, h);
-      }
+	{
+	   e_scrollbar_move(v->scrollbar.v, x, y);
+	   e_scrollbar_resize(v->scrollbar.v, w, h);
+	}
    }
 
    /* I support dnd */
@@ -2195,7 +2193,7 @@ e_dnd_data_request(Ecore_Event * ev)
  */
    e = ev->event;
    if (!(v = e_view_machine_get_view_by_base_window(e->win)))
-     D_RETURN;
+      D_RETURN;
 
    if (e->uri_list)
      {
@@ -2306,14 +2304,14 @@ e_dnd_drop_end(Ecore_Event * ev)
     * *    Window              win, root, source_win;
     * *  } Ecore_Event_Dnd_Drop_End;
     */
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     if (v_dnd_source)
 	       {
@@ -2350,14 +2348,14 @@ e_dnd_drop_position(Ecore_Event * ev)
     *    int                 x, y;
     *  } Ecore_Event_Dnd_Drop_Position;
     */
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     if (v->iconbar)
 	       {
@@ -2400,14 +2398,14 @@ e_dnd_drop(Ecore_Event * ev)
     *    Window              win, root, source_win;
     *  } Ecore_Event_Dnd_Drop;
     */
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     /* Dropped!  Handle data */
 	     /* Same view or same underlying dir?  Mark to skip action */
@@ -2438,14 +2436,14 @@ e_dnd_drop_request(Ecore_Event * ev)
     *    int                 copy, link, move;
     *  } Ecore_Event_Dnd_Drop_Request;
     */
-   E_View           *v;
+   E_View             *v;
 
    D_ENTER;
 
    e = ev->event;
    if (e && e->win)
      {
-       if ((v = e_view_machine_get_view_by_base_window(e->win)))
+	if ((v = e_view_machine_get_view_by_base_window(e->win)))
 	  {
 	     /* if it exists, we already have the data... */
 	     if ((!dnd_files) && (e->num_files > 0))
@@ -2462,7 +2460,7 @@ e_dnd_drop_request(Ecore_Event * ev)
 
 		  /* if the dnd source is e itself then dont use the event mode */
 		  if ((v ==
-			e_view_machine_get_view_by_base_window(e->source_win)))
+		       e_view_machine_get_view_by_base_window(e->source_win)))
 		    {
 		       dnd_pending_mode = v->drag.drop_mode;
 		    }
