@@ -41,13 +41,13 @@ e_config_get(char *type)
    /* notice it would use the user config location instead             */
    /* but for now i'm keeping it as is for development "ease"          */
    E_CONF("grabs", cfg_grabs_db, 
-	  PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db");
+	  "%s/behavior/grabs.db", e_config_user_dir());
    E_CONF("settings", cfg_settings_db,
-	  PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db");
+	  "%s/behavior/settings.db", e_config_user_dir());
    E_CONF("actions", cfg_actions_db,
-	  PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db");
+	  "%s/behavior/actions.db", e_config_user_dir());
    E_CONF("apps_menu", cfg_apps_menu_db,
-	  PACKAGE_DATA_DIR"/data/config/behavior/default/apps_menu.db");
+	  "%s/behavior/apps_menu.db", e_config_user_dir());
    E_CONF("borders", cfg_borders_db,
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/borders/");
    E_CONF("menus", cfg_menus_dir,
@@ -84,6 +84,8 @@ e_config_init(void)
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/apps_menu.db", buf);
    sprintf(buf, "%sappearance/borders/border.bits.db",  e_config_user_dir());
+   /* do it for data... ut not all of it for now.. i'm considering if */
+   /* this is a godo idea. config data - YES. but raw theme data? */
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db", buf);
    sprintf(buf, "%sappearance/borders/border2.bits.db",  e_config_user_dir());
