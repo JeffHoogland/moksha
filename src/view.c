@@ -2865,6 +2865,8 @@ e_dnd_drop_position(Ecore_Event * ev)
 		{
 		   v->iconbar->dnd.x = e->x;
 		   v->iconbar->dnd.y = e->y;
+		   /* for iconbar drops, allow from same view */
+	           v->drag.matching_drop_attempt = 0;
 		   dnd_pending_mode = E_DND_ICONBAR_ADD;
 		}
 	     }
@@ -2911,9 +2913,8 @@ e_dnd_drop(Ecore_Event * ev)
 	    /* Same view?  Mark to skip action */
 	    if( e->win == e->source_win )
 	      v->drag.matching_drop_attempt = 1;
-	    /* Different view?  Perform the action... */
-	    else
-	      e_dnd_handle_drop (v);
+	    /* Perform the action... */
+	     e_dnd_handle_drop (v);
 
 	     ecore_window_dnd_send_finished(v->win.base, e->source_win);
 	     e_dnd_drop_request_free();
