@@ -70,20 +70,26 @@ static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static void _e_border_event_border_resize_free(void *data, void *ev);
-static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
+static void _e_border_event_border_desk_set_free(void *data, void *ev);
+static void _e_border_event_border_resize_free(void *data, void *ev);
+static void _e_border_event_border_move_free(void *data, void *ev);
+static void _e_border_event_border_show_free(void *data, void *ev);
+static void _e_border_event_border_hide_free(void *data, void *ev);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
 static E_Border  *focused = NULL;
 
-int E_EVENT_BORDER_RESIZE = 0;
-int E_EVENT_BORDER_MOVE = 0;
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
+int E_EVENT_BORDER_DESK_SET = 0;
+int E_EVENT_BORDER_RESIZE = 0;
+int E_EVENT_BORDER_MOVE = 0;
+int E_EVENT_BORDER_SHOW = 0;
+int E_EVENT_BORDER_HIDE = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -113,10 +119,12 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
-   E_EVENT_BORDER_RESIZE = ecore_event_type_new();
-   E_EVENT_BORDER_MOVE = ecore_event_type_new();
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
+   E_EVENT_BORDER_RESIZE = ecore_event_type_new();
+   E_EVENT_BORDER_MOVE = ecore_event_type_new();
+   E_EVENT_BORDER_SHOW = ecore_event_type_new();
+   E_EVENT_BORDER_HIDE = ecore_event_type_new();
    
    return 1;
 }
@@ -268,6 +276,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    ev = calloc(1, sizeof(E_Event_Border_Add));
    ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
    return bd;
 }
@@ -275,17 +284,28 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 void
 e_border_desk_set(E_Border *bd, E_Desk *desk)
 {
+   E_Event_Border_Desk_Set *ev;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_CHECK(desk);
    if (bd->desk == desk) return;
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    desk->clients = evas_list_append(desk->clients, bd);
    bd->desk = desk;
+
+   ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
+   e_object_ref(E_OBJECT(bd));
+   e_object_ref(E_OBJECT(desk));
+   ev->border = bd;
+   ev->desk = desk;
+   ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);   
 }
 
 void
 e_border_show(E_Border *bd)
 {
+   E_Event_Border_Show *ev;
+   
    E_OBJECT_CHECK(bd);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
@@ -294,11 +314,18 @@ e_border_show(E_Border *bd)
    bd->visible = 1;
    bd->changed = 1;
    bd->changes.visible = 1;
+
+   ev = calloc(1, sizeof(E_Event_Border_Show));
+   e_object_ref(E_OBJECT(bd));
+   ev->border = bd;
+   ecore_event_add(E_EVENT_BORDER_SHOW, ev, _e_border_event_border_show_free, NULL);
 }
 
 void
 e_border_hide(E_Border *bd)
 {
+   E_Event_Border_Hide *ev;
+   
    E_OBJECT_CHECK(bd);
    if (!bd->visible) return;
 
@@ -313,6 +340,11 @@ e_border_hide(E_Border *bd)
    bd->visible = 0;
    bd->changed = 1;
    bd->changes.visible = 1;
+
+   ev = calloc(1, sizeof(E_Event_Border_Hide));
+   e_object_ref(E_OBJECT(bd));
+   ev->border = bd;
+   ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
 }
 
 void
@@ -332,7 +364,8 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->client.w,
 				  bd->client.h);
 
-   ev = calloc(1, sizeof(E_Event_Border_Resize));
+   ev = calloc(1, sizeof(E_Event_Border_Move));
+   e_object_ref(E_OBJECT(bd));
    ev->border = bd;
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
@@ -356,6 +389,7 @@ e_border_resize(E_Border *bd, int w, int h)
 				  bd->client.h);
 
    ev = calloc(1, sizeof(E_Event_Border_Resize));
+   e_object_ref(E_OBJECT(bd));
    ev->border = bd;
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
@@ -384,10 +418,12 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 				  bd->client.h);
    
    mev = calloc(1, sizeof(E_Event_Border_Move));
+   e_object_ref(E_OBJECT(bd));
    mev->border = bd;
    ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
 
    rev = calloc(1, sizeof(E_Event_Border_Resize));
+   e_object_ref(E_OBJECT(bd));
    rev->border = bd;
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
 }
@@ -495,6 +531,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 void
 e_border_shade(E_Border *bd, E_Direction dir)
 {
+   E_Event_Border_Resize *ev;
+   
    E_OBJECT_CHECK(bd);
    if (bd->maximized) return;
    if (!bd->shaded)
@@ -550,12 +588,19 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	     bd->changed = 1;
 	     edje_object_signal_emit(bd->bg_object, "shaded", "");
 	  }
+
+	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	e_object_ref(E_OBJECT(bd));
+	ev->border = bd;
+	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 }
 
 void
 e_border_unshade(E_Border *bd, E_Direction dir)
 {
+   E_Event_Border_Resize *ev;
+   
    E_OBJECT_CHECK(bd);
    if (bd->maximized) return;
    if (bd->shaded)
@@ -619,6 +664,11 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	     bd->changed = 1;
 	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
 	  }
+
+	ev = calloc(1, sizeof(E_Event_Border_Resize));
+	e_object_ref(E_OBJECT(bd));
+	ev->border = bd;
+	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 }
 
@@ -752,7 +802,7 @@ _e_border_free(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
-   ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+   ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_remove_free, NULL);
 
    if (focused == bd) focused = NULL;
    while (bd->handlers)
@@ -2688,6 +2738,7 @@ _e_border_event_border_resize_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
+   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2697,6 +2748,7 @@ _e_border_event_border_move_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
+   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2706,6 +2758,7 @@ _e_border_event_border_add_free(void *data, void *ev)
    E_Event_Border_Add *e;
 
    e = ev;
+   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
@@ -2715,6 +2768,38 @@ _e_border_event_border_remove_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
+   free(e);
+}
+
+static void
+_e_border_event_border_show_free(void *data, void *ev)
+{
+   E_Event_Border_Show *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_hide_free(void *data, void *ev)
+{
+   E_Event_Border_Show *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+
+static void
+_e_border_event_border_desk_set_free(void *data, void *ev)
+{
+   E_Event_Border_Desk_Set *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   e_object_unref(E_OBJECT(e->desk));
    free(e);
 }
 
