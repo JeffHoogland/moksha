@@ -21,7 +21,7 @@ function clock_update(object data, number val){
   string seconds = String.copySection(time,6,8);
   string timeofday = "AM";
 
-  if(hour > 12 || hour==12){
+  if(hour=>12){
     timeofday = "PM";
     hour -= 12;
   }
@@ -35,7 +35,6 @@ function clock_update(object data, number val){
 
 /* declare vars */
 object clock;
-object ebits;
 
 /* create a new epplet */
 epp = new Epplet();

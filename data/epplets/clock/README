@@ -1,0 +1,12 @@
+This directory contains the following epplets:
+ - clock.fe 
+   - large time-only display
+ - clock2.fe
+   - more graphical clock display with date as well as time
+
+To use these epplets, simply copy this directory to ~/.e/desktop/default/.e_epplets.  This will show clock.fe by default.  In order to use clock2.fe, simply rename clock2.fe to clock.fe.
+
+Thanks to:
+  - Brian Mattern for helping me get started
+  - Thibaud for the clock2 background graphic
+    - The graphic is from his Saona theme (http://www.deviantart.com/deviation.php?id=73252) for HoverDesk
