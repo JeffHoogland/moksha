@@ -1793,6 +1793,8 @@ e_view_arrange(E_View *v)
    e_scrollbar_set_value(v->scrollbar.v, sv);
    e_scrollbar_set_range(v->scrollbar.v, sr);
    e_scrollbar_set_max(v->scrollbar.v, sm);   
+   if (sr < sm) e_scrollbar_show(v->scrollbar.v);
+   else e_scrollbar_hide(v->scrollbar.v);
 
    sv =  - (v->scroll.x - v->spacing.window.l);
    sr = v->size.w - v->spacing.window.l - v->spacing.window.r;
@@ -1801,6 +1803,8 @@ e_view_arrange(E_View *v)
    e_scrollbar_set_value(v->scrollbar.h, sv);
    e_scrollbar_set_range(v->scrollbar.h, sr);
    e_scrollbar_set_max(v->scrollbar.h, sm);   
+   if (sr < sm) e_scrollbar_show(v->scrollbar.h);
+   else e_scrollbar_hide(v->scrollbar.h);
 }
 
 void
@@ -2252,9 +2256,6 @@ e_view_realize(E_View *v)
    e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
    e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
    e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
-   
-   e_scrollbar_show(v->scrollbar.v);
-   e_scrollbar_show(v->scrollbar.h);
    
    e_window_show(v->win.main);
    
