@@ -2438,12 +2438,6 @@ _e_border_eval(E_Border *bd)
 	     free(pnd);
 	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
 	  }
-	ecore_x_icccm_move_resize_send(bd->client.win,
-				       bd->x + bd->client_inset.l,
-				       bd->y + bd->client_inset.t,
-				       bd->client.w,
-				       bd->client.h);
-
 	/* Recreate state */
 	if (e_hints_window_sticky_isset(bd->client.win))
 	  e_border_stick(bd);
@@ -2451,6 +2445,12 @@ _e_border_eval(E_Border *bd)
 	  e_border_shade(bd, E_DIRECTION_UP);
 	if (e_hints_window_maximized_isset(bd->client.win))
 	  e_border_maximize(bd);
+	ecore_x_icccm_move_resize_send(bd->client.win,
+				       bd->x + bd->client_inset.l,
+				       bd->y + bd->client_inset.t,
+				       bd->client.w,
+				       bd->client.h);
+
 
 	ev = calloc(1, sizeof(E_Event_Border_Add));
 	ev->border = bd;
