@@ -28,6 +28,7 @@ struct _E_Container
    
    Ecore_Evas          *bg_ecore_evas;
    Evas                *bg_evas;
+   Evas_Object         *bg_blank_object;
    Ecore_X_Window       bg_win;
    
    Evas_List           *shapes;

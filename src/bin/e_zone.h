@@ -12,7 +12,6 @@ struct _E_Zone
    int                  num;
    E_Container         *container;
 
-   Evas_Object         *bg_blank_object;
    Evas_Object         *bg_object;
    Evas_Object         *bg_event_object;
    
