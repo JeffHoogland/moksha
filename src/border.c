@@ -385,7 +385,7 @@ e_focus_in(Eevent * ev)
 	if (b)
 	  {
 	     b->current.selected = 1;
-	     if (e->key_grab) b->current.select_lost_from_grab = 0;
+	     e_border_focus_grab_ended();
 	     b->changed = 1;
 	  }
      }
@@ -2128,4 +2128,17 @@ e_border_current_focused(void)
 	if (b->current.select_lost_from_grab) return b;
      }
    return NULL;
+}
+
+void
+e_border_focus_grab_ended(void)
+{
+   Evas_List l;
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *b;
+	
+	b = l->data;
+	b->current.select_lost_from_grab = 0;
+     }
 }

@@ -716,6 +716,7 @@ void e_border_lower_below(E_Border *b, E_Border *below);
 void e_border_init(void);
 void e_border_adopt_children(Window win);
 E_Border *e_border_current_focused(void);
+void e_border_focus_grab_ended(void);
 
 void e_icccm_move_resize(Window win, int x, int y, int w, int h);
 void e_icccm_delete(Window win);
