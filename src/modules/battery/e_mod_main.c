@@ -748,10 +748,13 @@ _battery_linux_acpi_check(Battery_Face *ef)
    if ((charging) || (discharging))
      {
         ef->battery_prev_battery = 1;
-        if ((charging ) && (ef->battery_prev_ac != 1))
+        if (charging)
           {
-             edje_object_signal_emit(ef->bat_object, "charge", "");
-             ef->battery_prev_ac = 1;
+             if (ef->battery_prev_ac != 1)
+               {
+                  edje_object_signal_emit(ef->bat_object, "charge", "");
+                  ef->battery_prev_ac = 1;
+               }
 	     edje_object_signal_emit(ef->bat_object, "pulsestop", "");
 	     ef->bat->alarm_triggered = 0;
           }
