@@ -19,6 +19,7 @@ static int  _e_main_ipc_shutdown(void);
 
 static void _e_main_cb_x_fatal(void *data);
 static int  _e_main_cb_signal_exit(void *data, int ev_type, void *ev);
+static int  _e_main_cb_signal_hup(void *data, int ev_type, void *ev);
 static int  _e_main_cb_x_flusher(void *data);
 static int  _e_main_cb_idler_before(void *data);
 static int  _e_main_cb_idler_after(void *data);
@@ -57,10 +58,17 @@ main(int argc, char **argv)
    int after_restart = 0; 
    char buf[1024];
    char *s;
-   
+   /* install the signal handlers. */ 
+   struct sigaction sigsegv_action;
+   struct sigaction sighup_action;
+   sigsegv_action.sa_sigaction=&e_sigseg_act;
+   sigsegv_action.sa_flags=0;
+   sigaction(SIGSEGV, &sigsegv_action, NULL);
+
+
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
-   
+      
    if (getenv("NOSPLASH")) nosplash = 1;
    if (getenv("NOSTARTUP")) nostartup = 1;
    if (getenv("NOWELCOME")) nowelcome = 1;
@@ -126,6 +134,12 @@ main(int argc, char **argv)
      {
 	e_error_message_show("Enlightenment cannot set up an exit signal handler.\n"
 			     "Perhaps you are out of memory?");
+	_e_main_shutdown(-1);
+     }
+   if(!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP, _e_main_cb_signal_hup, NULL))
+     {
+	e_error_message_show("Enlightenment cannot set up a HUP signal handler.\n"
+                             "Perhaps you are out of memory?");
 	_e_main_shutdown(-1);
      }
 
@@ -785,6 +799,14 @@ _e_main_cb_signal_exit(void *data, int ev_type, void *ev)
    ecore_main_loop_quit();
    return 1;
 }
+static int
+_e_main_cb_signal_hup(void *data, int ev_type, void *ev)
+{
+   /* called on SIGHUP to restart Enlightenment */
+   printf("RESTART ON!\n");
+   restart = 1;
+   ecore_main_loop_quit();
+}
 
 static int
 _e_main_cb_x_flusher(void *data)
@@ -851,3 +873,4 @@ _e_main_cb_startup_fake_end(void *data)
    e_init_hide();
    return 0;
 }
+
