@@ -459,9 +459,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	mi = e_menu_item_new(m);
 	e_menu_item_check_set(mi, 1);
 	e_menu_item_label_set(mi, bd->client.icccm.title);
-	/* ref the border as we implicitly ref it in the callback */
-	/* SUSPICION: does the unref for this actually sometimes not get */
-	/*   called? coudl this be the dangling borders issue? */
+	/* ref the border as we implicitly unref it in the callback */
 	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
 	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
