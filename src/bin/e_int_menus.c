@@ -320,7 +320,6 @@ static void
 _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
-   Evas_List *l, *desks = NULL;
    E_Menu *root;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
@@ -334,11 +333,9 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	
 	zone = root->zone;
 	for (i = 0; i < zone->desk_x_count * zone->desk_y_count; i++)
-	  desks = evas_list_append(desks, zone->desks[i]);
-	
-	for (l = desks; l; l = l->next)
 	  {
-	     E_Desk *desk = l->data;
+	     E_Desk *desk = zone->desks[i];
+	
 	     mi = e_menu_item_new(m);
 	     e_menu_item_radio_group_set(mi, 1);
 	     e_menu_item_radio_set(mi, 1);
@@ -367,9 +364,6 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Remove Column of Desktops");
    e_menu_item_callback_set(mi, _e_int_menus_desktops_col_del_cb, NULL);
-		     
-		     
-   evas_list_free(desks);
 }
 
 /* FIXME: Use the zone the menu was clicked in */
