@@ -101,10 +101,10 @@ e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num)
 	sprintf(buf, "/menu/%i/%i/separator", num, i2);
 	e_db_int_get(db, buf, &sep);
 	menuitem = e_menu_item_new(text);
-	IF_FREE(text);
 	e_menu_item_set_icon(menuitem, icon);
-	IF_FREE(icon);
 	if ((icon) && (text)) e_menu_item_set_scale_icon(menuitem, 1);
+	IF_FREE(text);
+	IF_FREE(icon);
 	if (sep) e_menu_item_set_separator(menuitem, 1);
 	else
 	  {
