@@ -368,6 +368,7 @@ struct _E_Icon
       struct {
 	 char *base, *type;
       } mime;
+      EfsdCmdId   link_get_id;
       char *link;
       int   is_exe;
       int   is_dir;
@@ -376,6 +377,7 @@ struct _E_Icon
 	 char *selected;
 	 char *clicked;
       } icon;
+      int ready;
    } info;
    
    struct {

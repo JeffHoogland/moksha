@@ -567,7 +567,11 @@ e_view_handle_fs(EfsdEvent *ev)
 		       /* perhaps this flag should be part of the mime? */
 		       if (S_ISDIR(st->st_mode)) icon->info.is_dir = 1;
 		       /* this should be able to be returned by efsd */
-		       if (S_ISLNK(st->st_mode)) icon->info.link = e_file_link(f);
+		       if (S_ISLNK(st->st_mode)) 
+			 {
+			    icon->info.link_get_id = 
+			      efsd_readlink(e_fs_get_connection(), f);
+			 }
 		       icon->info.is_exe = e_file_can_exec(st);
 		       /* figure out icons to use */
 		       IF_FREE(icon->info.icon.normal);
@@ -599,6 +603,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       icon->changed = 1;
 		       icon->view->changed = 1;
+		       if (!icon->info.link_get_id) icon->info.ready = 1;
 		    }
 	       }
 	     break;
@@ -607,7 +612,36 @@ e_view_handle_fs(EfsdEvent *ev)
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);
 	     if (ev->efsd_reply_event.status == SUCCESS)
 	       {
-		  printf("target is %s\n", (char*)ev->efsd_reply_event.data);
+		  Evas_List l;
+		  
+		  for (l = views; l; l = l->next)
+		    {
+		       E_View *v;
+		       Evas_List ll;
+		       
+		       v = l->data;
+		       for (ll = v->icons; ll; ll = ll->next)
+			 {
+			    E_Icon *icon;
+			    
+			    icon = ll->data;
+			    
+			    if (icon->info.link_get_id == ev->efsd_reply_event.command.efsd_file_cmd.id)
+			      {
+				 IF_FREE(icon->info.link);
+				 icon->info.link = malloc(ev->efsd_reply_event.data_len + 1);
+				 memcpy(icon->info.link, (char*)ev->efsd_reply_event.data, ev->efsd_reply_event.data_len);
+				 icon->info.link[ev->efsd_reply_event.data_len] = 0;
+				 icon->info.link_get_id = 0;
+				 if (!icon->info.link_get_id) icon->info.ready = 1;
+				 icon->changed = 1;
+				 icon->view->changed = 1;
+				 printf("link_to = %s\n", icon->info.link);
+				 goto done_readlink;
+			      }
+			 }
+		    }
+		  done_readlink:
 	       }
 	     break;
 	   case EFSD_CMD_CLOSE:
@@ -661,9 +695,9 @@ e_view_new(void)
    v = NEW(E_View, 1);
    ZERO(v, E_View, 1);
    OBJ_INIT(v, e_view_free);
-#define SOFT_DESK
+/* #define SOFT_DESK */
 /* #define X_DESK */
-/* #define GL_DESK */
+#define GL_DESK
    
 #ifdef SOFT_DESK
    /* ONLY alpha software can be "backing stored" */
