@@ -3,7 +3,7 @@
 ]>
 
 
-<book id="efsd-documentation-howto">
+<book id="e17-manual">
   <bookinfo>
     <title>The Enlightenment 0.17 Manual</title>
     
@@ -124,8 +124,17 @@
     
     <section id="code">
       <title>Code Documentation</title>
+!Isrc/actions.h
+!Isrc/border.h
+!Isrc/desktops.h
+!Isrc/entry.h
+!Isrc/fs.h
+!Isrc/guides.h
 !Isrc/iconbar.c
+!Isrc/menu.h
 !Isrc/menu.c
+!Isrc/view.h
+
     </section>
   </chapter>
   
