@@ -2291,7 +2291,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	      E_Menu_Item *mi = l->data;
 	      e_object_free(E_OBJECT(mi));
 	  }
-
+	evas_list_free(m->items);
+	m->items = NULL;
      }
 									   
    mi = e_menu_item_new(m);
