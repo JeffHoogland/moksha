@@ -1,11 +1,56 @@
 #include "e.h"
 
+static Evas_List entries;
+
 static void e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_realize(E_Entry *entry);
 static void e_entry_unrealize(E_Entry *entry);
 static void e_entry_configure(E_Entry *entry);
+
+static void
+e_paste_request(Eevent * ev)
+{
+   Ev_Paste_Request *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = entries; l; l = l->next)
+     {
+	E_Entry *entry;
+	
+	entry = l->data;
+	if (entry->paste_win == e->win)
+	  {
+	     char *str2;
+	     char *type;
+	     
+	     printf("destined for this entry!\n");
+	     type = e->string;
+	     if (entry->select.start >= 0)
+	       {
+		  str2 = strdup(e_entry_get_text(entry));
+		  if (entry->select.start + entry->select.length > strlen(entry->buffer))
+		    entry->select.length = strlen(entry->buffer) - entry->select.start;
+		  strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+		  e_entry_set_text(entry, str2);
+		  free(str2);	     
+		  entry->cursor_pos = entry->select.start;
+		  entry->select.start = -1;
+	       }
+	     str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
+	     str2[0] = 0;
+	     strncat(str2, entry->buffer, entry->cursor_pos);
+	     strcat(str2, type);
+	     strcat(str2, &(entry->buffer[entry->cursor_pos]));
+	     e_entry_set_text(entry, str2);
+	     free(str2);
+	     entry->cursor_pos+=strlen(type);
+	     e_entry_configure(entry);	
+	  }
+     }
+}
 
 static void
 e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
@@ -19,26 +64,12 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	char *str2;
 	char *type = "Inserted";
 	
-	if (entry->select.start >= 0)
 	  {
-	     str2 = strdup(e_entry_get_text(entry));
-	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
-	       entry->select.length = strlen(entry->buffer) - entry->select.start;
-	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
-	     e_entry_set_text(entry, str2);
-	     free(str2);	     
-	     entry->cursor_pos = entry->select.start;
-	     entry->select.start = -1;
+	     if (entry->paste_win) e_window_destroy(entry->paste_win);
+	     printf("e_selection_request();\n");
+	     entry->paste_win = e_selection_request();
 	  }
-	str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
-	str2[0] = 0;
-	strncat(str2, entry->buffer, entry->cursor_pos);
-	strcat(str2, type);
-	strcat(str2, &(entry->buffer[entry->cursor_pos]));
-	e_entry_set_text(entry, str2);
-	free(str2);
-	entry->cursor_pos+=strlen(type);
-	e_entry_configure(entry);	
+	     
      }
    else if (!entry->mouse_down)
      {
@@ -241,11 +272,14 @@ e_entry_configure(E_Entry *entry)
 void
 e_entry_init(void)
 {
+   e_event_filter_handler_add(EV_PASTE_REQUEST,               e_paste_request);
 }
 
 void
 e_entry_free(E_Entry *entry)
 {
+   entries = evas_list_remove(entries, entry);
+   FREE(entry);
 }
 
 E_Entry *
@@ -257,6 +291,7 @@ e_entry_new(void)
    ZERO(entry, E_Entry, 1);
    entry->buffer=strdup("");
    entry->select.start = -1;
+   entries = evas_list_prepend(entries, entry);
    return entry;
 }
 
