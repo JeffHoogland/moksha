@@ -87,6 +87,8 @@ static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
 static E_Border  *focused = NULL;
 
+extern int          _e_desk_current_changing;
+
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
 int E_EVENT_BORDER_DESK_SET = 0;
@@ -371,7 +373,8 @@ e_border_hide(E_Border *bd)
 
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
-   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
+   if (!_e_desk_current_changing)
+     ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
    
    ev = calloc(1, sizeof(E_Event_Border_Hide));
    ev->border = bd;

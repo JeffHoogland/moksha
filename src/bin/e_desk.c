@@ -9,11 +9,13 @@
  */
 
 static void _e_desk_free(E_Desk *desk);
+int _e_desk_current_changing;
 static int desk_count;
 
 int
 e_desk_init(void)
 {
+   _e_desk_current_changing = 0;
    desk_count = 0;
    return 1;
 }
@@ -64,6 +66,7 @@ e_desk_show(E_Desk *desk)
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
    
+   _e_desk_current_changing = 1;
    for (l = desk->zone->container->clients; l; l = l->next)
      {
 	E_Border *bd = l->data;
@@ -96,6 +99,7 @@ e_desk_show(E_Desk *desk)
 	  }
      }
    desk->visible = 1;
+   _e_desk_current_changing = 0;
 }
 
 void
