@@ -604,6 +604,7 @@ e_file_list_dir_free(Evas_List list)
 /*                                                                           */
 
 typedef struct _text_zone Text_Zone;
+typedef struct _text_zone_button Text_Zone_Button;
 
 struct _text_zone
 {
@@ -615,12 +616,26 @@ struct _text_zone
    struct {
       double x, y, w, h;
    } l;
+   struct {
+      double x, y, w, h;
+   } b;
    
    struct {
       double dx, dy;
       int go;
    } move;
    Evas_List lines;
+   Evas_List buttons;
+};
+
+struct _text_zone_button
+{
+   Evas_Object   label;
+   Ebits_Object  *bg;
+   
+   double        x, y, w, h;
+   void         (*func) (void *data);
+   void          *func_data;
 };
 
 Window win_main;
@@ -644,6 +659,7 @@ void txz_show(Text_Zone *txz);
 void txz_hide(Text_Zone *txz);
 void txz_move(Text_Zone *txz, double x, double y);
 void txz_text(Text_Zone *txz, char *text);
+void txz_button(Text_Zone *txz, char *text, void (*func) (void *data), void *data);
 void txz_adjust_txt(Text_Zone *txz);
 void animate_logo(int v, void *data);
 
@@ -779,19 +795,21 @@ setup(void)
 	
 	txz = txz_new
 	  ((root_w - 512) / 2, 130,
-	   "6c Enlightenment\n"
-	   "3c \n"
-	   "3c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
-	   "3c program. It will help you get a base configuration initialised\n"
-	   "3c for your user and do some initial tweaks and system queries.\n"
-	   "3c \n"
-	   "3c Please be patient and read the dialogs carefully, as your answers\n"
-	   "3c to questions posed will affect your initial setup of Enlightenment,\n"
-	   "3c and so your initial impressions.\n"
-	   "3c \n"
-	   "3c N.B. - during pre-release stages, this setup program may come up\n"
-	   "3c more than just once, as new setups need to be installed\n"
+	   "7c Enlightenment\n"
+	   "4c \n"
+	   "4c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
+	   "4c program. It will help you get a base configuration initialised\n"
+	   "4c for your user and do some initial tweaks and system queries.\n"
+	   "4c \n"
+	   "4c Please be patient and read the dialogs carefully, as your answers\n"
+	   "4c to questions posed will affect your initial setup of Enlightenment,\n"
+	   "4c and so your initial impressions.\n"
+	   "4c \n"
+	   "4c N.B. - during pre-release stages, this setup program may come up\n"
+	   "4c more than just once, as new setups need to be installed\n"
 	   );
+	txz_button(txz, "OK", NULL, NULL);
+	txz_button(txz, "Cancel", NULL, NULL);
      }
      {
 	Evas_Object o;
@@ -849,7 +867,6 @@ _txz_cb_move(void *data, double x, double y)
    txz = (Text_Zone *)data;
    txz->l.x = x;
    txz->l.y = y;
-   txz_adjust_txt(txz);
 }
 
 static void
@@ -860,7 +877,6 @@ _txz_cb_resize(void *data, double w, double h)
    txz = (Text_Zone *)data;
    txz->l.w = w;
    txz->l.h = h;
-   txz_adjust_txt(txz);
 }
 
 static void
@@ -960,6 +976,26 @@ _txz_cb_get_max_size(void *data, double *maxw, double *maxh)
 }
 
 static void
+_txz_cb_tb_move(void *data, double x, double y)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   txz->b.x = x;
+   txz->b.y = y;
+}
+
+static void
+_txz_cb_tb_resize(void *data, double w, double h)
+{
+   Text_Zone *txz;
+   
+   txz = (Text_Zone *)data;
+   txz->b.w = w;
+   txz->b.h = h;
+}
+
+static void
 _txz_cb_title_down(void *_data, Ebits_Object _o,
 		   char *_c, int _b, int _x, int _y,
 		   int _ox, int _oy, int _ow, int _oh)
@@ -1028,6 +1064,19 @@ txz_new(double x, double y, char *text)
 				    _txz_cb_get_min_size,
 				    _txz_cb_get_max_size,
 				    txz);
+	ebits_set_named_bit_replace(txz->bg, "Button_Area",
+				    NULL,
+				    NULL,
+				    _txz_cb_tb_move,
+				    _txz_cb_tb_resize,
+				    NULL,
+				    NULL,
+				    NULL,
+				    NULL,
+				    NULL,
+				    NULL,
+				    NULL,
+				    txz);
 	ebits_set_classed_bit_callback(txz->bg, "Title_Bar",
 				       CALLBACK_MOUSE_DOWN, 
 				       _txz_cb_title_down,
@@ -1071,6 +1120,15 @@ txz_show(Text_Zone *txz)
      ebits_show(txz->bg);
    for (l = txz->lines; l; l = l->next)
      evas_show(evas, (Evas_Object)l->data);
+   for (l = txz->buttons; l; l = l->next)
+     {
+	Text_Zone_Button *tb;
+	
+	tb = l->data;
+	if (tb->bg) ebits_show(tb->bg);
+	evas_show(evas, tb->label);
+     }
+   txz_adjust_txt(txz);
 }
 
 void
@@ -1082,6 +1140,15 @@ txz_hide(Text_Zone *txz)
      ebits_hide(txz->bg);
    for (l = txz->lines; l; l = l->next)
      evas_hide(evas, (Evas_Object)l->data);
+   for (l = txz->buttons; l; l = l->next)
+     {
+	Text_Zone_Button *tb;
+	
+	tb = l->data;
+	if (tb->bg) ebits_hide(tb->bg);
+	evas_hide(evas, tb->label);
+     }
+   txz_adjust_txt(txz);
 }
 
 void
@@ -1095,6 +1162,7 @@ txz_move(Text_Zone *txz, double x, double y)
      {	
 	ebits_move(txz->bg, txz->x, txz->y);
      }
+   txz_adjust_txt(txz);
 }
 
 void
@@ -1153,11 +1221,29 @@ txz_text(Text_Zone *txz, char *text)
 	
 	ebits_get_real_min_size(txz->bg, &minw, &minh);	
 	ebits_resize(txz->bg, minw + 8, minh + 8);
-	ebits_hide(txz->bg);
 	ebits_show(txz->bg);
-	ebits_set_layer(txz->bg, 0);
 	ebits_set_layer(txz->bg, 9);
      }
+   txz_adjust_txt(txz);
+}
+
+void
+txz_button(Text_Zone *txz, char *text, void (*func) (void *data), void *data)
+{
+   Text_Zone_Button *tb;
+   
+   tb = NEW(Text_Zone_Button, 1);
+   ZERO(tb, Text_Zone_Button, 1);
+   
+   txz->buttons = evas_list_append(txz->buttons, tb);
+   tb->label = evas_add_text(evas, "nationff", 12, text);
+   evas_set_pass_events(evas, tb->label, 1);
+   evas_set_color(evas, tb->label, 0, 0, 0, 255);
+   evas_set_layer(evas, tb->label, 12);
+   tb->bg = ebits_load(PACKAGE_DATA_DIR"/data/setup/textzone_button.bits.db");
+   if (tb->bg)
+     ebits_add_to_evas(tb->bg, evas);
+   txz_adjust_txt(txz);
 }
 
 void
@@ -1165,6 +1251,7 @@ txz_adjust_txt(Text_Zone *txz)
 {
    Evas_List l;
    double ypos;
+   double xpos;
    
    ypos = txz->l.y + 4;
    evas_move(evas, txz->clip, txz->l.x, txz->l.y);
@@ -1185,6 +1272,30 @@ txz_adjust_txt(Text_Zone *txz)
 	else if (align == 'r') x = txz->l.x + 4 + (txz->l.w - 8 - tw);
 	evas_move(evas, o, x, ypos);
 	ypos += th;
+     }
+   xpos = 0;
+   for (l = txz->buttons; l; l = l->next)
+     {
+	Text_Zone_Button *tb;
+	double tw, th;
+	
+	tb = l->data;
+	tw = evas_get_text_width(evas, tb->label);
+	th = evas_get_text_height(evas, tb->label);
+	if (tb->bg)
+	  {
+	     int pl, pr, pt, pb;
+	     
+	     pl = pr = pt = pb = 0;
+	     ebits_get_insets(tb->bg, &pl, &pr, &pt, &pb);
+	     ebits_set_layer(tb->bg, 11);	
+	     ebits_show(tb->bg);
+	     ebits_resize(tb->bg, tw + pl + pr, txz->b.h);
+	     ebits_move(tb->bg, txz->b.x + xpos, txz->b.y);
+	     evas_move(evas, tb->label, txz->b.x + pl + xpos, txz->b.y + pt + ((txz->b.h - pt - pb - th) / 2));
+	     evas_show(evas, tb->label);
+	     xpos += tw + pl + pr;
+	  }
      }
 }
 

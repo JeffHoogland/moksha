@@ -229,6 +229,8 @@ void      e_view_update(E_View *v);
 void      e_view_bg_load(E_View *v);
 
 void      e_view_bg_change(E_View *v, char *file);
+void      e_view_bg_add(E_View *v, char *file);
+void      e_view_bg_del(E_View *v, char *file);
 
 void      e_view_close_all(void);
 

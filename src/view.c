@@ -1527,7 +1527,7 @@ e_view_file_added(int id, char *file)
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;
    e_iconbar_file_add(v, file);
-   e_view_bg_change(v, file);
+   e_view_bg_add(v, file);
    /* filter files here */
    if (!e_view_filter_file(v, file)) D_RETURN;
    if (!e_icon_find_by_file(v, file))
@@ -1559,7 +1559,7 @@ e_view_file_deleted(int id, char *file)
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;      
    e_iconbar_file_delete(v, file);
-   e_view_bg_change(v, file);   
+   e_view_bg_del(v, file);   
      {
 	E_Icon *ic;
 	
@@ -2407,9 +2407,39 @@ e_view_bg_change(E_View *v, char *file)
    
    D_ENTER;
 
+   printf("change %s\n", file);
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
-   sprintf(buf, "background_reload:%s", v->dir);  
+   sprintf(buf, "background_reload:%s", v->dir);
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
+
+   D_RETURN;
+}
+
+void
+e_view_bg_add(E_View *v, char *file)
+{
+   char buf[PATH_MAX];
+   
+   D_ENTER;
+
+   printf("change %s\n", file);
+   if (!(!strcmp(file, ".e_background.bg.db"))) return;
+   sprintf(buf, "%s/%s", v->dir, file);
+   if (!strcmp(buf, v->bg_file)) D_RETURN;
+   IF_FREE(v->bg_file);
+   e_strdup(v->bg_file, "");
+   sprintf(buf, "background_reload:%s", v->dir);
+   ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
+
+   D_RETURN;
+}
+
+void
+e_view_bg_del(E_View *v, char *file)
+{
+   D_ENTER;
+
+   e_view_bg_change(v, file);
 
    D_RETURN;
 }
