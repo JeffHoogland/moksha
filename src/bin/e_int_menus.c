@@ -66,7 +66,7 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Desktops");
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
-			     "windows");
+			     "desktops");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();

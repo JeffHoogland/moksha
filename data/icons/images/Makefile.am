@@ -8,4 +8,5 @@ reset_button_0.png \
 reset_button_glow_0.png \
 windows.png \
 module.png \
-favorites.png
+favorites.png \
+desktop.png
