@@ -213,6 +213,12 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 				   bg, strlen(bg) + 1);
  	  }
 	break;
+      case E_IPC_OP_RESTART:
+	  {
+	     restart = 1;
+	     ecore_main_loop_quit();
+ 	  }
+	break;
       default:
 	break;
      }

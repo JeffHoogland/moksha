@@ -48,7 +48,8 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
    OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
    OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
-   OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0)
+   OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
+   OREQ("-restart", "Restart E17", E_IPC_OP_RESTART, 0)
 };
 
 /* externally accessible functions */

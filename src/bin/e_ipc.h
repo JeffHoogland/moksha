@@ -23,6 +23,7 @@ typedef enum _E_Ipc_Op {
    E_IPC_OP_BG_SET,
    E_IPC_OP_BG_GET,
    E_IPC_OP_BG_GET_REPLY,
+   E_IPC_OP_RESTART,
    E_IPC_OP_LAST
 } E_Ipc_Op;
 
