@@ -3,6 +3,9 @@
 
 #include "e.h"
 
+typedef struct _E_Menu                E_Menu;
+typedef struct _E_Menu_Item           E_Menu_Item;
+
 struct _E_Menu
 {
    OBJ_PROPERTIES;

@@ -2,6 +2,11 @@
 #define E_VIEW_H
 
 #include "e.h"
+#include "background.h"
+#include "fs.h"
+
+typedef struct _E_View                E_View;
+typedef struct _E_Icon                E_Icon;
 
 struct _E_View
 {

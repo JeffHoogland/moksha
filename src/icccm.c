@@ -1,5 +1,6 @@
 #include "e.h"
 #include "border.h"
+#include "icccm.h"
 
 /* Motif window hints */
 #define MWM_HINTS_FUNCTIONS           (1L << 0)

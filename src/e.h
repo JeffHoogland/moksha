@@ -102,18 +102,6 @@ _e_obj->references = 1; \
 _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 }
 
-/* action type macros */
-#define ACT_MOUSE_IN      0
-#define ACT_MOUSE_OUT     1
-#define ACT_MOUSE_CLICK   2
-#define ACT_MOUSE_DOUBLE  3
-#define ACT_MOUSE_TRIPLE  4
-#define ACT_MOUSE_UP      5
-#define ACT_MOUSE_CLICKED 6
-#define ACT_MOUSE_MOVE    7
-#define ACT_KEY_DOWN      8
-#define ACT_KEY_UP        9
-
 /* misc util macros */
 #define INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
 ((x < (xx + ww)) && \
@@ -124,27 +112,10 @@ _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
 #define UN(_blah) _blah = 0
 
-/* data types */
-typedef struct _E_Action              E_Action;
-typedef struct _E_Action_Proto        E_Action_Proto;
-typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
-typedef struct _E_Background          E_Background;
-typedef struct _E_Border              E_Border;
-typedef struct _E_Build_Menu          E_Build_Menu;
-typedef struct _E_Config_File         E_Config_File;
-typedef struct _E_Config_Element      E_Config_Element;
-typedef struct _E_Desktop             E_Desktop;
-typedef struct _E_Entry               E_Entry;
-typedef struct _E_FS_Restarter        E_FS_Restarter;
-typedef struct _E_Grab                E_Grab;
-typedef struct _E_Icon                E_Icon;
-typedef struct _E_Menu                E_Menu;
-typedef struct _E_Menu_Item           E_Menu_Item;
+/* data type prototypes... not actually used */
 typedef struct _E_Object              E_Object;
-typedef struct _E_Rect                E_Rect;
-typedef struct _E_View                E_View;
 
-/* actual fdata struct members */
+/* actual data struct members */
 struct _E_Object
 {
    OBJ_PROPERTIES;

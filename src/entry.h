@@ -3,6 +3,8 @@
 
 #include "e.h"
 
+typedef struct _E_Entry               E_Entry;
+
 struct _E_Entry
 {
    Evas  evas;

@@ -1,36 +1,5 @@
 #include "background.h"
 
-typedef struct _E_Background_Layer
-{
-   int mode;
-   int type;
-   int inlined;
-   struct {
-      float x, y;
-   } scroll;
-   struct {
-      float x, y;
-   } pos;
-   struct {
-      float w, h;
-      struct {
-	 int w, h;
-      } orig;
-   } size, fill;
-   char *color_class;
-   char *file;
-   double angle;
-   struct {
-      int r, g, b, a;
-   } fg, bg;
-   
-   double x, y, w, h, fw, fh;
-   
-   Evas_Object obj;
-}
-E_Background_Layer;
-
-
 void
 e_background_free(E_Background *bg)
 {

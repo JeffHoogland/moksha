@@ -247,6 +247,8 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_view_selection_update(v);
      }
+   UN(_e);
+   UN(_o);
 }
 
 static void
@@ -336,6 +338,8 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	v->select.x = _x;
 	v->select.y = _y;
      }
+   UN(_e);
+   UN(_o);
 }
 
 static void
@@ -370,6 +374,9 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_view_selection_update(v);
      }
+   UN(_e);
+   UN(_o);
+   UN(_b);
 }
 
 void
@@ -577,6 +584,8 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    else if (_b == 3)
      {
      }
+   UN(_e);
+   UN(_o);
 }
 
 static void
@@ -622,6 +631,10 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    ic->state.clicked = 0;
    e_view_icon_update_state(ic);
+   UN(_e);
+   UN(_o);
+   UN(_x);
+   UN(_y);
 }
 
 static void
@@ -865,6 +878,9 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->view->drag.update = 1;
 	ic->view->changed = 1;
      }
+   UN(_e);
+   UN(_o);
+   UN(_b);
 }
 
 static void
@@ -1304,6 +1320,7 @@ e_view_filter_file(E_View *v, char *file)
 {
    if (file[0] == '.') return 0;
    return 1;
+   UN(v);
 }
 
 void
@@ -1505,6 +1522,7 @@ e_view_resort_timeout(int val, void *data)
    v = data;
    e_view_resort(v);
    v->have_resort_queued = 0;
+   UN(val);
 }
 
 void

@@ -100,6 +100,7 @@ _e_fs_restarter(int val, void *data)
 	if (gap > 10.0) gap = 10.0;
 	e_add_event_timer("e_fs_restarter", gap, _e_fs_restarter, val + 1, NULL);
      }
+   UN(data);
 }
 
 E_FS_Restarter *

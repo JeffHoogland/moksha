@@ -4,6 +4,8 @@
 #include <libefsd.h>
 #include "e.h"
 
+typedef struct _E_FS_Restarter        E_FS_Restarter;
+
 struct _E_FS_Restarter
 {
    void (*func) (void *data);

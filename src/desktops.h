@@ -2,6 +2,13 @@
 #define E_DESKTOPS_H
 
 #include "e.h"
+#include "view.h"
+#include "border.h"
+
+#ifndef E_DESKTOPS_TYPEDEF
+#define E_DESKTOPS_TYPEDEF
+typedef struct _E_Desktop             E_Desktop;
+#endif
 
 struct _E_Desktop
 {

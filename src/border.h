@@ -3,6 +3,14 @@
 
 #include "e.h"
 
+#ifndef E_DESKTOPS_TYPEDEF
+#define E_DESKTOPS_TYPEDEF
+typedef struct _E_Desktop             E_Desktop;
+#endif
+
+typedef struct _E_Grab                E_Grab;
+typedef struct _E_Border              E_Border;
+
 struct _E_Grab
 {
    int              button;

@@ -1,5 +1,4 @@
 #include "entry.h"
-#include "background.h"
 #include "config.h"
 #include "util.h"
 
@@ -100,6 +99,7 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	entry->select.start = -1;
 	e_entry_configure(entry);
      }
+   UN(_o);
 }
 
 static void
@@ -111,6 +111,10 @@ e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    entry = _data;
    if (_b == entry->mouse_down) entry->mouse_down = 0;
    e_entry_configure(entry);
+   UN(_e);
+   UN(_o);
+   UN(_x);
+   UN(_y);
 }
 
 static void
@@ -188,6 +192,9 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_entry_configure(entry);   
      }
+   UN(_o);
+   UN(_b);
+   UN(_y);
 }
 
 static void 
@@ -278,7 +285,7 @@ e_entry_configure(E_Entry *entry)
      {
 	double tx, ty, tw, th;
 	
-	if (entry->cursor_pos < strlen(entry->buffer))
+	if (entry->cursor_pos < (int)strlen(entry->buffer))
 	  {
 	     evas_text_at(entry->evas, entry->text, entry->cursor_pos, &tx, &ty, &tw, &th);
 	  }
@@ -327,7 +334,7 @@ e_entry_configure(E_Entry *entry)
 	double x1, y1, x2, tw, th;
 	
 	evas_text_at(entry->evas, entry->text, entry->select.start, &x1, &y1, NULL, NULL);
-	if (entry->select.start + entry->select.length <= strlen(entry->buffer))
+	if (entry->select.start + entry->select.length <= (int)strlen(entry->buffer))
 	  evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 1, &x2, NULL, &tw, &th);
 	else
 	  {
@@ -398,7 +405,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
    else if (!strcmp(e->key, "Right"))
      {
 	entry->cursor_pos++;
-	if (entry->cursor_pos > strlen(entry->buffer)) 
+	if (entry->cursor_pos > (int)strlen(entry->buffer)) 
 	  entry->cursor_pos = strlen(entry->buffer);
      }
    else if (!strcmp(e->key, "Escape"))
@@ -417,7 +424,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	/* char *str2; */
 	
 	if (entry->select.start >= 0) e_entry_clear_selection(entry);
-	else if (entry->cursor_pos < strlen(entry->buffer)) e_entry_delete_to_right(entry);
+	else if (entry->cursor_pos < (int)strlen(entry->buffer)) e_entry_delete_to_right(entry);
      }
    else if (!strcmp(e->key, "Insert"))
      {
@@ -474,7 +481,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	     else if ((strlen(type) == 1) && (type[0] == 0x06)) /* ctrl+f */
 	       {
 		  entry->cursor_pos++;
-		  if (entry->cursor_pos > strlen(entry->buffer))
+		  if (entry->cursor_pos > (int)strlen(entry->buffer))
 		    entry->cursor_pos = strlen(entry->buffer);
 	       }
 	     else if ((strlen(type) == 1) && (type[0] == 0x02)) /* ctrl+b */
@@ -657,6 +664,7 @@ e_entry_set_size(E_Entry *entry, int w, int h)
 	entry->min_size = w;
 	e_entry_configure(entry);
      }
+   UN(h);
 }
 
 void
@@ -683,7 +691,7 @@ e_entry_set_text(E_Entry *entry, const char *text)
    IF_FREE(entry->buffer);
    entry->buffer = strdup(text);
    evas_set_text(entry->evas, entry->text, entry->buffer);
-   if (entry->cursor_pos > strlen(entry->buffer))
+   if (entry->cursor_pos > (int)strlen(entry->buffer))
      entry->cursor_pos = strlen(entry->buffer);
    e_entry_configure(entry);
    if (entry->func_changed) 
@@ -762,7 +770,7 @@ e_entry_clear_selection(E_Entry *entry)
    if (entry->select.start >= 0)
      {
 	str2 = strdup(e_entry_get_text(entry));
-	if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	if (entry->select.start + entry->select.length > (int)strlen(entry->buffer))
 	  entry->select.length = strlen(entry->buffer) - entry->select.start;
 	strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
 	e_entry_set_text(entry, str2);
@@ -806,7 +814,7 @@ e_entry_get_selection(E_Entry *entry)
 	int len;
 	
 	len = entry->select.length;
-	if (entry->select.start + entry->select.length >= strlen(entry->buffer))
+	if (entry->select.start + entry->select.length >= (int)strlen(entry->buffer))
 	  len = strlen(entry->buffer) - entry->select.start;
 	str2 = e_memdup(&(entry->buffer[entry->select.start]), len + 1);
 	str2[len] = 0;

@@ -3,6 +3,9 @@
 
 #include "e.h"
 
+typedef struct _E_Config_File         E_Config_File;
+typedef struct _E_Config_Element      E_Config_Element;
+
 /* something to check validity of config files where we get data from */
 /* for now its just a 5 second timout so it will only invalidate */
 /* if we havent looked for 5 seconds... BUT later when efsd is more solid */

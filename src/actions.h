@@ -3,6 +3,10 @@
 
 #include "e.h"
 
+typedef struct _E_Action              E_Action;
+typedef struct _E_Action_Proto        E_Action_Proto;
+typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
+
 struct _E_Active_Action_Timer
 {
    void *object;
@@ -36,6 +40,18 @@ struct _E_Action_Proto
    void (*func_go)    (void *o, E_Action *a, void *data, int x, int y, int rx, int ry, int dx, int dy);
 };
 
+
+/* action type macros */
+#define ACT_MOUSE_IN      0
+#define ACT_MOUSE_OUT     1
+#define ACT_MOUSE_CLICK   2
+#define ACT_MOUSE_DOUBLE  3
+#define ACT_MOUSE_TRIPLE  4
+#define ACT_MOUSE_UP      5
+#define ACT_MOUSE_CLICKED 6
+#define ACT_MOUSE_MOVE    7
+#define ACT_KEY_DOWN      8
+#define ACT_KEY_UP        9
 
 void e_action_start(char *action, int act, int button, char *key,
 		    Ev_Key_Modifiers mods, void *o, void *data,

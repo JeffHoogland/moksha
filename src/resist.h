@@ -4,6 +4,8 @@
 #include "e.h"
 #include "border.h"
 
+typedef struct _E_Rect                E_Rect;
+
 struct _E_Rect
 {
    int x, y, w, h;

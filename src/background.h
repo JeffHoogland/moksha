@@ -3,6 +3,9 @@
 
 #include "e.h"
 
+typedef struct _E_Background          E_Background;
+typedef struct _E_Background_Layer    E_Background_Layer;
+
 struct _E_Background
 {
    OBJ_PROPERTIES;
@@ -19,6 +22,37 @@ struct _E_Background
    
    Evas_Object base_obj;
 };
+
+
+struct _E_Background_Layer
+{
+   int mode;
+   int type;
+   int inlined;
+   struct {
+      float x, y;
+   } scroll;
+   struct {
+      float x, y;
+   } pos;
+   struct {
+      float w, h;
+      struct {
+	 int w, h;
+      } orig;
+   } size, fill;
+   char *color_class;
+   char *file;
+   double angle;
+   struct {
+      int r, g, b, a;
+   } fg, bg;
+   
+   double x, y, w, h, fw, fh;
+   
+   Evas_Object obj;
+};
+
 
 void           e_background_free(E_Background *bg);
 E_Background  *e_background_new(void);
