@@ -1025,6 +1025,8 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
 	if (!found)
 	  {
 	     /* find the window */
+	     /* FIXME: pw will always be NULL, because we have removed
+	      * this border from the other desks... */
 	     pw = _pager_face_border_find(face, ev->border);
 	     /* find the pager desk of the target desk */
 	     pd = _pager_face_desk_find(face, ev->border->desk);
