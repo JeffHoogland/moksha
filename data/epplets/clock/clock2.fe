@@ -94,7 +94,7 @@ epp.resize(100, 30);
 
 /* create background image object for clock */
 backgroundObj = new EvasObject(epp);
-backgroundObj.addImage("clockbg.png");
+backgroundObj.addImage("clock.png");
 backgroundObj.move(epp.getX(),epp.getY());
 backgroundObj.setLayer(9998);
 backgroundObj.show();
