@@ -198,9 +198,10 @@ _clock_face_init(Clock_Face *ef)
 			      E_GADMAN_POLICY_HSIZE |
 			      E_GADMAN_POLICY_VSIZE);
    e_gadman_client_min_size_set(ef->gmc, 4, 4);
-   e_gadman_client_max_size_set(ef->gmc, 128, 128);
+   e_gadman_client_max_size_set(ef->gmc, 512, 512);
    e_gadman_client_auto_size_set(ef->gmc, 64, 64);
    e_gadman_client_align_set(ef->gmc, 0.0, 1.0);
+   e_gadman_client_aspect_set(ef->gmc, 1.0, 1.0);
    e_gadman_client_resize(ef->gmc, 64, 64);
    e_gadman_client_change_func_set(ef->gmc, _clock_cb_gmc_change, ef);
    e_gadman_client_load(ef->gmc);
