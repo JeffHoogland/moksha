@@ -225,27 +225,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_screens_shutdown);
-   /* init global atoms */
-   if (!e_atoms_init())
-     {
-	e_error_message_show("Enlightenment cannot set up atoms system.");
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_atoms_shutdown);
-   /* init focus system */
-   if (!e_focus_init())
-     {
-	e_error_message_show("Enlightenment cannot set up its focus system.");
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_focus_shutdown);
-   /* init border system */
-   if (!e_border_init())
-     {
-	e_error_message_show("Enlightenment cannot set up its border system.");
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_border_shutdown);
    /* init app system */
    if (!e_app_init())
      {
@@ -496,6 +475,7 @@ _e_main_screens_init(void)
    Ecore_X_Window *roots;
    int num, i;
 
+   if (!e_atoms_init()) return 0;
    if (!e_manager_init()) return 0;
    if (!e_container_init()) return 0;
    if (!e_zone_init()) return 0;
@@ -509,6 +489,8 @@ _e_main_screens_init(void)
 			     num);
 	return 0;
      }
+   if (!e_focus_init()) return 0;
+   if (!e_border_init()) return 0;
    for (i = 0; i < num; i++)
      {
 	E_Manager *man;
@@ -567,10 +549,13 @@ _e_main_screens_init(void)
 static int
 _e_main_screens_shutdown(void)
 {
+   e_border_shutdown();
+   e_focus_shutdown();
    e_desk_shutdown();
    e_zone_shutdown();
    e_container_shutdown();
    e_manager_shutdown();
+   e_atoms_shutdown();
    return 1;
 }
 

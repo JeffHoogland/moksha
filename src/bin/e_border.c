@@ -282,6 +282,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    ev = calloc(1, sizeof(E_Event_Border_Add));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
    return bd;
@@ -301,6 +303,8 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
 
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
@@ -323,6 +327,8 @@ e_border_show(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_SHOW, ev, _e_border_event_border_show_free, NULL);
 }
@@ -349,6 +355,8 @@ e_border_hide(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Hide));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
 }
@@ -383,6 +391,8 @@ e_border_move(E_Border *bd, int x, int y)
    _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
@@ -418,6 +428,8 @@ e_border_resize(E_Border *bd, int w, int h)
    _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
@@ -461,11 +473,15 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    _e_border_zone_update(bd);
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
 
    rev = calloc(1, sizeof(E_Event_Border_Resize));
    rev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
 }
@@ -633,6 +649,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
 	ev->border = bd;
+	/* SUSPICION: does the unref for this actually sometimes not get */
+	/*   called? coudl this be the dangling borders issue? */
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
@@ -709,6 +727,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
 	ev->border = bd;
+	/* SUSPICION: does the unref for this actually sometimes not get */
+	/*   called? coudl this be the dangling borders issue? */
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
@@ -901,6 +921,8 @@ _e_border_del(E_Border *bd)
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
+   /* SUSPICION: does the unref for this actually sometimes not get */
+   /*   called? coudl this be the dangling borders issue? */
    e_object_ref(E_OBJECT(bd));
    ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
 }
@@ -2834,7 +2856,7 @@ _e_border_event_border_resize_free(void *data, void *ev)
 static void
 _e_border_event_border_move_free(void *data, void *ev)
 {
-   E_Event_Border_Resize *e;
+   E_Event_Border_Move *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
@@ -2854,7 +2876,7 @@ _e_border_event_border_add_free(void *data, void *ev)
 static void
 _e_border_event_border_remove_free(void *data, void *ev)
 {
-   E_Event_Border_Resize *e;
+   E_Event_Border_Remove *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
@@ -2874,7 +2896,7 @@ _e_border_event_border_show_free(void *data, void *ev)
 static void
 _e_border_event_border_hide_free(void *data, void *ev)
 {
-   E_Event_Border_Show *e;
+   E_Event_Border_Hide *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));
