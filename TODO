@@ -119,3 +119,5 @@ These are in no particular order:
 * add really nice "about" box with theme, authors credits list etc etc.
 * init splash needs to be able to display icons for startup
 * init splash needs te be able to be signalled "end of init" and it can respond with a "splash end" signal
+* "immortali" windows (e will not allow that window to be closed or will refuse to exit as long as the immortal flags is set until it is unset to stop users from doing silly things like logging out while important stuff is happening in that window -a menu option for this woudl be nice)
+* ibar lamp needs shrot timer on mouse out for hide before hiding (and del the time on mouse in)
