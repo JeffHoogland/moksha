@@ -426,6 +426,8 @@ _e_container_free(E_Container *con)
      {
 	ecore_x_window_del(con->win);
      }
+   if (con->name)
+     free(con->name);
    free(con);
 }
    

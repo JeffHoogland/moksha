@@ -148,6 +148,7 @@ e_app_new(const char *path, int scan_subdirs)
 
 error:
    if (a->monitor) ecore_file_monitor_del(a->monitor);
+   if (a->path) free(a->path);
    _e_app_fields_empty(a);
    free(a);
    return NULL;
@@ -387,6 +388,8 @@ _e_app_free(E_App *a)
    _e_apps = evas_hash_del(_e_apps, a->path, a);
    _e_apps_list = evas_list_remove(_e_apps_list, a);
    _e_app_fields_empty(a);
+   if (a->path) 
+     free(a->path);
    free(a);
 }
 
