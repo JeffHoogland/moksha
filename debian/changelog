@@ -1,0 +1,14 @@
+<<<<<<< changelog
+e17 (0.1.0-2000112500) unstable; urgency=low
+=======
+libedb1 (1.0.2-0.2000122401) unstable; urgency=low
+>>>>>>> 1.3
+
+  * a cvs release
+
+ -- Laurence J. Lane <ljlane@debian.org>  Sun, 24 Dec 2000 01:31:57 +0000
+
+Local variables:
+mode: debian-changelog
+add-log-mailing-address: "ljlane@debian.org"
+End:

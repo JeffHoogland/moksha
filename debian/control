@@ -1,0 +1,47 @@
+<<<<<<< control
+Source: e17
+Section: x11
+=======
+Source: libedb1
+Section: libs
+>>>>>>> 1.4
+Priority: optional
+Maintainer: Laurence J. Lane <ljlane@debian.org>
+<<<<<<< control
+Standards-Version: 3.2.0.1
+=======
+Standards-Version: 3.2.1.0
+>>>>>>> 1.4
+
+<<<<<<< control
+Package: e17
+Section: x11
+=======
+Package: libedb1
+Section: libs
+>>>>>>> 1.4
+Architecture: any
+<<<<<<< control
+Depends: ${shlibs:Depends}
+Description: e17 description
+ e17 extended description
+=======
+Conflicts: libedb0, libedba1
+Replaces: libedb0, libedba1
+Provides: libedb0, libedba1
+Depends: ${shlibs:Depends}
+Description: Enlightenment's db convenience wrapper library
+ Enlightenment's db convenience wrapper library
+
+Package: libedb1-dev
+Architecture: any
+Section: devel
+Conflicts: libedb-dev, libedba-dev
+Replaces: libedb-dev, libedba-dev
+Provides: libedb-dev, libedba-dev
+Depends: libedb1 (= ${Source-Version}), libc6-dev
+Description: Enlightenment's db convenience wrapper library.
+ Library and header files for developing programs that use
+ Enlightenment's db convenience wrapper library
+
+>>>>>>> 1.4
