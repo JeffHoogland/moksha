@@ -8,6 +8,8 @@ e_pointer_container_set(E_Container *con)
    int w, h;
    Evas_Object *o;
    int *pix;
+
+   E_OBJECT_CHECK(E_OBJECT(con));
    
    o = evas_object_image_add(con->bg_evas);
    if (ecore_x_cursor_color_supported_get())
