@@ -7,7 +7,6 @@
 #include "fs.h"
 #include "iconbar.h"
 #include "object.h"
-#include "icons.h"
 
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
@@ -24,12 +23,7 @@ typedef struct _E_Icon    E_Icon;
 typedef struct _E_Iconbar E_Iconbar;
 #endif
 
-#ifndef E_DND_TYPEDEF
-#define E_DND_TYPEDEF
-typedef enum _E_dnd_enum  E_dnd_enum;
-#endif
-
-enum _E_dnd_enum {
+typedef enum {
   E_DND_NONE,
   E_DND_COPY,
   E_DND_MOVE,
@@ -37,7 +31,7 @@ enum _E_dnd_enum {
   E_DND_ASK,
   E_DND_DELETED,
   E_DND_COPIED
-} ;
+} E_dnd_enum ;
 
 struct _E_View
 {

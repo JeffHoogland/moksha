@@ -1,3 +1,4 @@
+#include "view.h"
 #include "icons.h"
 #include "debug.h"
 #include "globals.h"

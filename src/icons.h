@@ -14,11 +14,6 @@ typedef struct _E_Icon    E_Icon;
 typedef struct _E_View    E_View;
 #endif
 
-#ifndef E_DND_TYPEDEF
-#define E_DND_TYPEDEF
-typedef enum _E_dnd_enum  E_dnd_enum;
-#endif
-
 struct _E_Icon
 {
    E_Object o;

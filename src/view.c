@@ -11,6 +11,7 @@
 #include "file.h"
 #include "util.h"
 #include "globals.h"
+#include "icons.h"
 
 static Ecore_Event *current_ev = NULL;
 
@@ -2685,7 +2686,6 @@ e_dnd_data_request(Ecore_Event * ev)
 		       ic = ll->data;
 		       if (ic->state.selected)
 			 {
-			    int ic_size;
 			    char buf[PATH_MAX];
 			    
 			    if (first)
