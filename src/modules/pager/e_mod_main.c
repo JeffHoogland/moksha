@@ -937,7 +937,6 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    Pager_Win               *pw;
    Pager_Desk              *pd;
    Evas_List               *l;
-   int                      found = 0;
    
    face = data;
    ev = event;
