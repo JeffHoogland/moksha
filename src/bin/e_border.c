@@ -153,7 +153,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 {
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
-   E_Event_Border_Add *ev;
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
@@ -280,12 +279,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    con->clients = evas_list_append(con->clients, bd);
    borders = evas_list_append(borders, bd);
 
-   ev = calloc(1, sizeof(E_Event_Border_Add));
-   ev->border = bd;
-   /* SUSPICION: does the unref for this actually sometimes not get */
-   /*   called? coudl this be the dangling borders issue? */
-   e_object_ref(E_OBJECT(bd));
-   ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
    return bd;
 }
 
@@ -2162,6 +2155,8 @@ _e_border_eval(E_Border *bd)
 
    if (bd->new_client)
      {
+	E_Event_Border_Add *ev;
+
 	bd->new_client = 0;
 	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
@@ -2271,6 +2266,13 @@ _e_border_eval(E_Border *bd)
 				       bd->y + bd->client_inset.t, 
 				       bd->client.w,
 				       bd->client.h);
+
+	ev = calloc(1, sizeof(E_Event_Border_Add));
+	ev->border = bd;
+	/* SUSPICION: does the unref for this actually sometimes not get */
+	/*   called? coudl this be the dangling borders issue? */
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
      }
    
    /* effect changes to the window border itself */
