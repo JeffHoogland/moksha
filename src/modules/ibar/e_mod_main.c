@@ -777,6 +777,8 @@ static void
 _ibar_bar_iconsize_change(IBar_Bar *ibb)
 {
    Evas_List *l;
+
+   _ibar_bar_frame_resize(ibb);
    
    for (l = ibb->icons; l; l = l->next)
      {
@@ -786,7 +788,6 @@ _ibar_bar_iconsize_change(IBar_Bar *ibb)
 	_ibar_bar_icon_resize(ic);
      }
    _ibar_bar_convert_move_resize_to_config(ibb);
-   _ibar_bar_frame_resize(ibb);
 }
 
 static IBar_Icon *
@@ -922,6 +923,9 @@ _ibar_bar_icon_resize(IBar_Icon *ic)
    e_box_freeze(ic->ibb->box_object);
    o = ic->icon_object;
    edje_extern_object_min_size_set(o, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
+
+   evas_object_resize(o, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
+
    edje_object_part_swallow(ic->bg_object, "item", o);
    edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 
@@ -1486,6 +1490,7 @@ _ibar_cb_intercept_bar_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coo
    IBar_Bar *ibb;
 
    ibb = data;
+
    evas_object_resize(o, w, h);
    evas_object_resize(ibb->event_object, w, h);
 }
