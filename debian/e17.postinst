@@ -1,7 +1,0 @@
-#!/bin/sh -e
-
-if test "$1" = "configure"; then
-  ldconfig
-fi
-
-#DEBHELPER#
