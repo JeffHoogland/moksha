@@ -109,6 +109,8 @@ struct _E_View
    
    E_Background          *bg;
    
+   int getbg;
+
    struct {      
       E_Scrollbar           *h, *v;
    } scrollbar;

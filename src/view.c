@@ -274,7 +274,6 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    if( _b == 2 && ev->double_click )
 	 e_event_loop_quit();
-   
    UN(_e);
    UN(_o);
 }
@@ -578,7 +577,7 @@ e_view_icon_exec(E_Icon *ic)
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	/* FIXME: load bg here */
+	/* Load default bg then handle bg in metadata */
 	  {
 	     char buf[4096];
 	     
@@ -1550,7 +1549,8 @@ e_view_handle_fs_restart(void *data)
 					       "/view/w", v->dir, EFSD_INT);
 	     v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					       "/view/h", v->dir, EFSD_INT);
-	  }
+         v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
+      }
 	  {
 	     EfsdOptions *ops;
 	     
@@ -2178,7 +2178,8 @@ e_view_set_dir(E_View *v, char *dir)
 	v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
 					  "/view/h", v->dir, EFSD_INT);
 	v->geom_get.busy = 1;
-	  {
+    v->getbg = efsd_get_metadata(e_fs_get_connection(), "/view/background", v->dir, EFSD_STRING);
+      {
 	     EfsdOptions *ops;
 	     
 	     ops = efsd_ops(2, efsd_op_get_stat(), efsd_op_get_filetype());
@@ -2581,6 +2582,24 @@ e_view_handle_fs(EfsdEvent *ev)
 				   }
 			      }
 			    ok = 1;
+			 }
+		       else if (v->getbg == cmd)
+			 {
+			    v->getbg = 0;
+			    if (efsd_metadata_get_type(ev) == EFSD_STRING)
+			      {
+				 if (ev->efsd_reply_event.errorcode == 0)
+				   {
+				      struct stat st;
+				      if (stat(efsd_metadata_get_str(ev), &st) != -1 )
+					{
+                       printf("Attempted to set background for: %s\n", v->dir);
+                       v->bg = e_background_load(efsd_metadata_get_str(ev));
+                       e_background_realize(v->bg, v->evas);
+                       e_background_set_size(v->bg, v->size.w, v->size.h);
+                    }
+                   }
+			      }
 			 }
 		       if (ok) 
 			 {
