@@ -46,6 +46,10 @@ while test $# -gt 0; do
       libdirs="-L@libdir@ -le"
       echo $libdirs
       ;;
+    --module-dir)
+      dir="@libdir@/enlightenment/modules_extra"
+      echo $dir
+      ;;
     *)
       echo "${usage}" 1>&2
       exit 1

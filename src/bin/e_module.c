@@ -44,6 +44,7 @@ e_module_init(void)
    if (!_e_path_modules) return 0;
    e_path_path_append(_e_path_modules, "~/.e/e/modules");
    e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
+   e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules_extra");
    
    for (l = e_config->modules; l; l = l->next)
      {
