@@ -394,11 +394,22 @@ e_container_shape_rects_get(E_Container_Shape *es)
 static void
 _e_container_free(E_Container *con)
 {
+   Evas_List *l, *tmp;
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
-   while (con->clients) e_object_free(E_OBJECT(con->clients->data));
-   while (con->zones) e_object_del(E_OBJECT(con->zones->data));
+   for (l = con->clients; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_free(E_OBJECT(tmp->data));
+     }
+   for (l = con->zones; l;)
+     {
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
+     }
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
@@ -430,15 +441,12 @@ _e_container_shape_del(E_Container_Shape *es)
 static void
 _e_container_shape_free(E_Container_Shape *es)
 {
+   Evas_List *l;
+
    es->con->shapes = evas_list_remove(es->con->shapes, es);
-   while (es->shape)
-     {
-	E_Rect *r;
-	
-	r = es->shape->data;
-	es->shape = evas_list_remove_list(es->shape, es->shape);
-	free(r);
-     }
+   for (l = es->shape; l; l = l->next)
+     free(l->data);
+   evas_list_free(es->shape);
    free(es);
 }
 
