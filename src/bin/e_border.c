@@ -416,7 +416,8 @@ e_border_shade(E_Border *bd)
 	     bd->changes.shading = 1;
 	     bd->changed = 1;
 
-	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_S);
+	     /* FIXME: this assumes shading upwards */
+	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
 	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
 	     edje_object_signal_emit(bd->bg_object, "shading", "");
 	  }
@@ -447,7 +448,8 @@ e_border_unshade(E_Border *bd)
 	     bd->changes.shading = 1;
 	     bd->changed = 1;
 
-	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_S);
+	     /* FIXME: this assumes shading upwards */
+	     ecore_x_window_gravity_set(bd->client.win, ECORE_X_GRAVITY_SW);
 	     bd->shade.anim = ecore_animator_add(_e_border_shade_animator, bd);
 	     edje_object_signal_emit(bd->bg_object, "unshading", "");
 	  }
@@ -1845,6 +1847,7 @@ _e_border_eval(E_Border *bd)
 					bd->client_inset.l, bd->client_inset.t,
 					bd->w - (bd->client_inset.l + bd->client_inset.r),
 					bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     /* FIXME: this assumes shading upwards */
 	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
 					bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
@@ -1857,6 +1860,7 @@ _e_border_eval(E_Border *bd)
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
 	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
+	     /* FIXME: this assumes shading upwards */
 	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
 					bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
@@ -1910,6 +1914,7 @@ _e_border_eval(E_Border *bd)
 					bd->client_inset.l, bd->client_inset.t,
 					bd->w - (bd->client_inset.l + bd->client_inset.r),
 					bd->h - (bd->client_inset.t + bd->client_inset.b));
+	     /* FIXME: this assumes shading upwards */
 	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
 					bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);
@@ -1921,6 +1926,7 @@ _e_border_eval(E_Border *bd)
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->event_win, 0, 0, bd->w, bd->h);
 	     ecore_x_window_resize(bd->win, bd->w, bd->h);
+	     /* FIXME: this assumes shading upwards */
 	     ecore_x_window_move_resize(bd->client.win, 0, bd->h - (bd->client_inset.t + bd->client_inset.b) - bd->client.h,
 					bd->client.w, bd->client.h);
 	     ecore_evas_move_resize(bd->bg_ecore_evas, 0, 0, bd->w, bd->h);

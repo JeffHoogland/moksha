@@ -92,7 +92,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
    E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
-   E_CONFIG_LIMIT(e_config->border_shade_speed, 1, 20000.0);
+   E_CONFIG_LIMIT(e_config->border_shade_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
