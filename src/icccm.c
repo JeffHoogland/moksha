@@ -370,6 +370,24 @@ e_icccm_set_desk(Window win, int d)
    e_window_property_set(win, a_win_workspace, XA_CARDINAL, 32, props, 1);
 }
 
+int
+e_icccm_is_shaped(Window win)
+{
+   int w, h, num;
+   int shaped = 1;
+   
+   XRectangle *rect;
+   e_window_get_geometry(win, NULL, NULL, &w, &h);
+   rect = e_window_get_shape_rectangles(win, &num);
+   if (!rect) return 1;
+   if ((num == 1) && 
+       (rect[0].x == 0) && (rect[0].y == 0) &&
+       (rect[0].width == w) && (rect[0].height == h))
+     shaped = 0;
+   XFree(rect);
+   return shaped;
+}
+
 void
 e_icccm_handle_property_change(Atom a, E_Border *b)
 {

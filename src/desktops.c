@@ -63,6 +63,7 @@ e_mouse_down(Eevent * ev)
 	  }
      }
 }
+
 /* handling mouse up events */
 static void
 e_mouse_up(Eevent * ev)
@@ -95,6 +96,7 @@ e_mouse_up(Eevent * ev)
 	  }
      }
 }
+
 /* handling mouse move events */
 static void
 e_mouse_move(Eevent * ev)
@@ -161,6 +163,7 @@ e_mouse_in(Eevent * ev)
 	  }
      }
 }
+
 /* handling mouse leave events */
 static void
 e_mouse_out(Eevent * ev)
@@ -304,7 +307,8 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	
 	b = l->data;
 	/* if sticky */
-/*	e_window_gravity_set(b->win.main, StaticGravity); */
+	if (b->client.sticky)
+	  e_window_gravity_set(b->win.main, StaticGravity);
 	e_window_gravity_set(b->win.main, grav);	
      }
    grav_stick = StaticGravity;

@@ -119,7 +119,24 @@ e_configure_request(Eevent * ev)
 	     if (e->mask & EV_VALUE_W)
 		b->current.requested.w = e->w + pl + pr;
 	     if (e->mask & EV_VALUE_H)
-		b->current.requested.h = e->h + pt + pb;
+	       {
+		  if (b->current.shaded == b->client.h)
+		    {
+		       b->current.shaded = e->h;
+		    }
+		  else if (b->current.shaded != 0)
+		    {
+		       b->current.shaded += b->client.h - e->h;
+		       if (b->current.shaded > b->client.h)
+			 b->current.shaded = b->client.h;
+		       if (b->current.shaded < 1)
+			 b->current.shaded = 1;
+		    }
+		  b->client.w = e->w;
+		  b->client.h = e->h;
+		  
+		  b->current.requested.h = e->h + pt + pb;
+		  }
 	     if ((e->mask & EV_VALUE_SIBLING) && (e->mask & EV_VALUE_STACKING))
 	       {
 		  E_Border *b_rel;
@@ -335,8 +352,11 @@ e_shape(Eevent * ev)
 	E_Border *b;
 	
 	b = e_border_find_by_window(e->win);
-	if (b)
+	if ((b) && (e->win == b->win.client))
 	  {
+	     b->current.shaped_client = e_icccm_is_shaped(e->win);
+	     b->changed = 1;
+	     b->shape_changed = 1;
 	  }
      }
    current_ev = NULL;
@@ -1014,6 +1034,91 @@ e_border_apply_border(E_Border *b)
    e_icccm_set_frame_size(b->win.client, pl, pr, pt, pb);
 }
 
+void
+e_border_reshape(E_Border *b)
+{
+   static Window shape_win = 0;
+   int pl, pr, pt, pb;
+   
+   if ((b->current.shaped_client == b->previous.shaped_client) &&
+       (b->current.shape_changes == b->previous.shape_changes) &&
+       (b->current.has_shape == b->previous.has_shape) && 
+       (!b->shape_changed))
+     return;
+   if (!shape_win) shape_win = e_window_override_new(0, 0, 0, 1, 1);
+   pl = pr = pt = pb = 0;
+   if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+   b->shape_changed = 0;
+   if ((!b->current.shaped_client) && (!b->current.has_shape))
+     {
+	e_window_set_shape_mask(b->win.main, 0);
+	return;
+     }
+   if ((b->current.shaped_client) && (!b->current.has_shape))
+     {
+	XRectangle rects[4];
+	
+	rects[0].x = 0; rects[0].y = 0; 
+	rects[0].width = b->current.w; rects[0].height = pt;
+	rects[1].x = 0; rects[1].y = pt; 
+	rects[1].width = pl; rects[1].height = b->current.h - pt - pb;
+	rects[2].x = b->current.w - pr; rects[2].y = pt; 
+	rects[2].width = pr; rects[2].height = b->current.h - pt - pb;
+	rects[3].x = 0; rects[3].y = b->current.h - pb; 
+	rects[3].width = b->current.w; rects[3].height = pb;
+	
+        e_window_resize(shape_win, b->current.w, b->current.h);
+	e_window_set_shape_window(shape_win, b->win.client, pl, pt - b->current.shaded);
+	e_window_clip_shape_by_rectangle(shape_win, pl, pt, b->current.w - pl - pr, b->current.h - pt - pb);
+	e_window_add_shape_rectangles(shape_win, rects, 4);
+	e_window_set_shape_window(b->win.main, shape_win, 0, 0);
+	return;
+     }
+   if ((!b->current.shaped_client) && (b->current.has_shape))
+     {
+        e_window_resize(shape_win, b->current.w, b->current.h);
+	e_window_set_shape_rectangle(shape_win, pl, pt - b->current.shaded, b->current.w - pl - pr, b->current.h - pt - pb);
+	/* FIXME: later when i actually generate shape masks for borders */
+	  {
+	     XRectangle rects[4];
+	     
+	     rects[0].x = 0; rects[0].y = 0; 
+	     rects[0].width = b->current.w; rects[0].height = pt;
+	     rects[1].x = 0; rects[1].y = pt; 
+	     rects[1].width = pl; rects[1].height = b->current.h - pt - pb;
+	     rects[2].x = b->current.w - pr; rects[2].y = pt; 
+	     rects[2].width = pr; rects[2].height = b->current.h - pt - pb;
+	     rects[3].x = 0; rects[3].y = b->current.h - pb; 
+	     rects[3].width = b->current.w; rects[3].height = pb;
+	     e_window_add_shape_rectangles(shape_win, rects, 4);
+	  }
+	e_window_set_shape_window(b->win.main, shape_win, 0, 0);
+	return;
+     }
+   if ((b->current.shaped_client) && (b->current.has_shape))
+     {
+        e_window_resize(shape_win, b->current.w, b->current.h);
+	e_window_set_shape_window(shape_win, b->win.client, pl, pt - b->current.shaded);
+	e_window_clip_shape_by_rectangle(shape_win, pl, pt, b->current.w - pl - pr, b->current.h - pt - pb);
+	/* FIXME: later when i actually generate shape masks for borders */
+	  {
+	     XRectangle rects[4];
+	     
+	     rects[0].x = 0; rects[0].y = 0; 
+	     rects[0].width = b->current.w; rects[0].height = pt;
+	     rects[1].x = 0; rects[1].y = pt; 
+	     rects[1].width = pl; rects[1].height = b->current.h - pt - pb;
+	     rects[2].x = b->current.w - pr; rects[2].y = pt; 
+	     rects[2].width = pr; rects[2].height = b->current.h - pt - pb;
+	     rects[3].x = 0; rects[3].y = b->current.h - pb; 
+	     rects[3].width = b->current.w; rects[3].height = pb;
+	     e_window_add_shape_rectangles(shape_win, rects, 4);
+	  }
+	e_window_set_shape_window(b->win.main, shape_win, 0, 0);
+	return;
+     }
+}
+
 E_Border * 
 e_border_adopt(Window win, int use_client_pos)
 {
@@ -1029,6 +1134,7 @@ e_border_adopt(Window win, int use_client_pos)
 		       XEV_FOCUS | 
 		       XEV_PROPERTY | 
 		       XEV_COLORMAP);
+   e_window_select_shape_events(win);
    /* parent of the client window listens for these */
    e_window_set_events(b->win.container, XEV_CHILD_CHANGE | XEV_CHILD_REDIRECT);
    /* add to save set & border of 0 */
@@ -1036,10 +1142,11 @@ e_border_adopt(Window win, int use_client_pos)
    e_window_set_border_width(win, 0);
    b->win.client = win;
    b->current.requested.visible = 1;
-   /* get size & location hints */
+   /* get hints */
    e_icccm_get_size_info(win, b);
    e_icccm_get_mwm_hints(win, b);
    e_icccm_get_layer(win, b);
+   b->current.shaped_client = e_icccm_is_shaped(win);
    /* we have now placed the bugger */
    b->placed = 1;
    /* desk area */
@@ -1593,14 +1700,14 @@ e_border_update(E_Border *b)
      location_changed = 1;
    if ((b->current.w != b->previous.w) || (b->current.h != b->previous.h))
      size_changed = 1;
-   if ((size_changed) && (b->has_shape))
+   if ((size_changed) && (b->current.has_shape))
      shape_changed = 1;
    if (b->bits.new)
      {
 	e_window_gravity_set(b->win.container, StaticGravity);
 	border_changed = 1;
      }
-   if ((border_changed) && (b->has_shape))
+   if ((border_changed) && (b->current.has_shape))
      shape_changed = 1;
    if (b->current.visible != b->previous.visible)
      visibility_changed = 1;
@@ -1636,6 +1743,10 @@ e_border_update(E_Border *b)
 	int pl, pr, pt, pb, x, y, w, h;
 	int smaller;
 	
+	if ((b->current.shaped_client) || (b->previous.shaped_client) ||
+	    (b->current.shape_changes) || (b->previous.shape_changes) ||
+	    (b->current.has_shape) || (b->previous.has_shape))
+	  b->shape_changed = 1;
 	smaller = 0;
 	if ((b->current.w < b->previous.w) || (b->current.h < b->previous.h))
 	   smaller = 1;
@@ -1655,8 +1766,8 @@ e_border_update(E_Border *b)
 	     e_window_move_resize(b->win.container,
 				  b->current.w + 1, 
 				  b->current.h + 1,
-				  1, 
-				  1);
+				  320, 
+				  320);
 	  }
 	else
 	  {
@@ -1720,6 +1831,7 @@ e_border_update(E_Border *b)
 			    b->client.w, b->client.h);
 	e_cb_border_move_resize(b);
      }
+   e_border_reshape(b);
    if (visibility_changed)
      {
 	if (b->current.visible)

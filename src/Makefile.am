@@ -16,6 +16,7 @@ icccm.c \
 main.c \
 resist.c \
 util.c \
+view.c \
 e.h
 
 enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ -lm $(INTLLIBS)

@@ -79,7 +79,7 @@ printf("%3.3f : %s()\n", __p->total, __p->func); \
 
 
 #define OBJ_REF(_e_obj) _e_obj->references++
-#define OBJ_UNREF(_e_obj) _e_obj->references--;
+#define OBJ_UNREF(_e_obj) _e_obj->references--
 #define OBJ_IF_FREE(_e_obj) if (_e_obj->references == 0)
 #define OBJ_FREE(_e_obj) _e_obj->e_obj_free(_e_obj)
 #define OBJ_DO_FREE(_e_obj) \
@@ -121,14 +121,16 @@ e_window_gravity_set(_b->win.r, _grav); \
 e_window_gravity_set(_b->win.t, _grav); \
 e_window_gravity_set(_b->win.b, _grav);
 
-typedef struct _E_Object       E_Object;
-typedef struct _E_Border       E_Border;
-typedef struct _E_Grab         E_Grab;
-typedef struct _E_Action       E_Action;
-typedef struct _E_Action_Proto E_Action_Proto;
-typedef struct _E_Desktop      E_Desktop;
-typedef struct _E_Rect          E_Rect;
-
+typedef struct _E_Object              E_Object;
+typedef struct _E_Border              E_Border;
+typedef struct _E_Grab                E_Grab;
+typedef struct _E_Action              E_Action;
+typedef struct _E_Action_Proto        E_Action_Proto;
+typedef struct _E_Desktop             E_Desktop;
+typedef struct _E_Rect                E_Rect;
+typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
+typedef struct _E_View                E_View;
+  
 struct _E_Object
 {
    OBJ_PROPERTIES;
@@ -166,6 +168,9 @@ struct _E_Border
       int   visible;
       int   selected;
       int   shaded;
+      int   has_shape;
+      int   shape_changes;
+      int   shaped_client;
    } current, previous;
    
    struct {
@@ -174,7 +179,6 @@ struct _E_Border
 	 double aspect;
       } base, min, max, step;
       int layer;
-      int shaped;
       char *title;
       char *name;
       char *class;
@@ -187,7 +191,6 @@ struct _E_Border
       int arrange_ignore;
       int hidden;
       int iconified;
-      int borderless;
       int titlebar;
       int border;
       int handles;
@@ -198,11 +201,9 @@ struct _E_Border
       int move, resize;
    } mode;
    
-   int has_shape;
-   int shape_changes;
    
    int ignore_unmap;
-   
+   int shape_changed;
    int placed;
    
    Evas_List grabs;
@@ -277,6 +278,17 @@ struct _E_Rect
    int v1, v2, v3, v4;
 };
 
+struct _E_Active_Action_Timer
+{
+   void *object;
+   char *name;
+};
+
+struct _E_View
+{
+   OBJ_PROPERTIES
+};
+
 void e_action_add_proto(char *action,
 			void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
 			void (*func_stop)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
@@ -286,10 +298,14 @@ void e_action_start(char *action, int act, int button, char *key, Ev_Key_Modifie
 void e_action_stop(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry);
 void e_action_go(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry, int dx, int dy);
 void e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry);
-
+void e_actions_del_timer(void *o, char *name);
+void e_actions_add_timer(void *o, char *name);
+void e_actions_del_timer_object(void *o);
+  
 void e_border_apply_border(E_Border *b);
 E_Border * e_border_new(void);
 E_Border * e_border_adopt(Window win, int use_client_pos);
+void e_border_reshape(E_Border *b);  
 void e_border_free(E_Border *b);
 void e_border_remove_mouse_grabs(E_Border *b);
 void e_border_attach_mouse_grabs(E_Border *b);
@@ -323,6 +339,7 @@ void e_icccm_set_frame_size(Window win, int l, int r, int t, int b);
 void e_icccm_set_desk_area(Window win, int ax, int ay);
 void e_icccm_set_desk_area_size(Window win, int ax, int ay);
 void e_icccm_set_desk(Window win, int d);
+int  e_icccm_is_shaped(Window win);
 void e_icccm_handle_property_change(Atom a, E_Border *b);
 void e_icccm_handle_client_message(Ev_Message *e);
 void e_icccm_advertise_e_compat(void);

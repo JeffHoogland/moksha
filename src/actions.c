@@ -2,6 +2,7 @@
 
 static Evas_List action_protos = NULL;
 static Evas_List current_actions = NULL;
+static Evas_List current_timers = NULL;
 
 static void _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o);
 static void _e_action_free(E_Action *a);
@@ -292,6 +293,7 @@ e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
 
+   e_actions_del_timer_object(o);
    again:
    for (l = current_actions; l; l = l->next)
      {
@@ -334,6 +336,64 @@ e_action_add_proto(char *action,
    ap->func_stop = func_stop;
    ap->func_go = func_go;
    action_protos = evas_list_append(action_protos, ap);
+}
+
+void
+e_actions_del_timer(void *o, char *name)
+{
+   Evas_List l;
+   
+   again:
+   for (l = current_timers; l; l = l->next)
+     {
+	E_Active_Action_Timer *at;
+	
+	at = l->data;
+	if ((at->object == o) && 
+	    (name) && 
+	    (at->name) && 
+	    (!strcmp(at->name, name)))
+	  {
+	     e_del_event_timer(at->name);
+	     current_timers = evas_list_remove(current_timers, at);
+	     IF_FREE(at->name);
+	     FREE(at);
+	     goto again;
+	  }
+     }
+}
+
+void
+e_actions_add_timer(void *o, char *name)
+{
+   E_Active_Action_Timer *at;
+   
+   at = NEW(E_Active_Action_Timer, 1);
+   at->object = o;
+   at->name = strdup(name);
+   current_timers = evas_list_append(current_timers, at);
+}
+
+void
+e_actions_del_timer_object(void *o)
+{
+   Evas_List l;
+   
+   again:
+   for (l = current_timers; l; l = l->next)
+     {
+	E_Active_Action_Timer *at;
+	
+	at = l->data;
+	if (at->object == o)
+	  {
+	     e_del_event_timer(at->name);
+	     current_timers = evas_list_remove(current_timers, at);
+	     IF_FREE(at->name);
+	     FREE(at);
+	     goto again;
+	  }
+     }
 }
 
 void
@@ -733,10 +793,17 @@ e_act_cb_shade(int val, void *data)
    static double t = 0.0;
    double dif;
    int si;
-   int pix_per_sec = 1600;
+   int pix_per_sec = 3200;
    
    b = data;
-   if (val == 0) t = e_get_time();
+   if (val == 0) 
+     {
+	OBJ_REF(b);
+	t = e_get_time();
+	e_window_gravity_set(b->win.client, SouthWestGravity);
+	e_actions_del_timer(b, "shader");
+	e_actions_add_timer(b, "shader");
+     }
    
    dif = e_get_time() - t;   
    
@@ -745,9 +812,15 @@ e_act_cb_shade(int val, void *data)
    b->current.shaded = si;
    b->changed = 1;
    e_border_adjust_limits(b);
+   e_border_apply_border(b);
    if (si < b->client.h) 
      e_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
-   e_border_apply_border(b);
+   else
+     {
+	e_actions_del_timer(b, "shader");
+	e_window_gravity_reset(b->win.client);
+	OBJ_UNREF(b);
+     }
 }
 
 static void e_act_cb_unshade(int val, void *data);
@@ -758,10 +831,17 @@ e_act_cb_unshade(int val, void *data)
    static double t = 0.0;
    double dif;
    int si;
-   int pix_per_sec = 1600;
+   int pix_per_sec = 3200;
    
    b = data;
-   if (val == 0) t = e_get_time();
+   if (val == 0) 
+     {
+	OBJ_REF(b);
+	t = e_get_time();
+	e_window_gravity_set(b->win.client, SouthWestGravity);
+	e_actions_del_timer(b, "shader");
+	e_actions_add_timer(b, "shader");
+     }
    
    dif = e_get_time() - t;   
    
@@ -771,9 +851,15 @@ e_act_cb_unshade(int val, void *data)
    b->current.shaded = si;
    b->changed = 1;
    e_border_adjust_limits(b);
+   e_border_apply_border(b);
    if (si > 0) 
      e_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
-   e_border_apply_border(b);
+   else
+     {
+	e_actions_del_timer(b, "shader");
+	e_window_gravity_reset(b->win.client);
+	OBJ_UNREF(b);
+     }
 }
 
 static void 
