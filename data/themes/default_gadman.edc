@@ -790,7 +790,7 @@ group {
 	 name:    "mv_down";
 	 signal:  "mouse,down,1";
 	 source:  "overlay";
-	 action:  SIGNAL_EMIT "resize_start" "";
+	 action:  SIGNAL_EMIT "move_start" "";
       }
       program {
 	 name:    "mv_up";
@@ -1178,7 +1178,7 @@ group {
 	 name:    "v2_move";
 	 signal:  "mouse,move";
 	 source:  "v2";
-	 action:  SIGNAL_EMIT "resize_go" "";
+	 action:  SIGNAL_EMIT "resize_go" "down";
       }
       program {
 	 name:    "v2_in";

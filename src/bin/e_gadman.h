@@ -50,6 +50,13 @@ struct _E_Gadman_Client
    E_Gadman            *gadman;
    
    Evas_Object         *control_object;
+   Evas_Coord           down_x, down_y;
+   Evas_Coord           down_store_x, down_store_y, down_store_w, down_store_h;
+   unsigned char        moving : 1;
+   unsigned char        resizing_l : 1;
+   unsigned char        resizing_r : 1;
+   unsigned char        resizing_u : 1;
+   unsigned char        resizing_d : 1;
    char                *domain;
    E_Zone              *zone;
    int                  instance;
@@ -68,8 +75,8 @@ EAPI void             e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode);
 EAPI E_Gadman_Mode    e_gadman_mode_get(E_Gadman *gm);
 EAPI E_Gadman        *e_gadman_new(E_Container *con);
 EAPI E_Gadman_Client *e_gadman_client_new(E_Gadman *gm);
-EAPI void             e_gadman_client_save(E_Gadman_Client *gmc, char *domain, int instance);
-EAPI void             e_gadman_client_load(E_Gadman_Client *gmc, char *domain, int instance);
+EAPI void             e_gadman_client_save(E_Gadman_Client *gmc);
+EAPI void             e_gadman_client_load(E_Gadman_Client *gmc);
 EAPI void             e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance);
 EAPI void             e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone);
 EAPI void             e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol);

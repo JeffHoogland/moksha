@@ -101,14 +101,14 @@ e_gadman_mode_get(E_Gadman *gm)
 }
 
 void
-e_gadman_client_save(E_Gadman_Client *gmc, char *domain, int instance)
+e_gadman_client_save(E_Gadman_Client *gmc)
 {
    E_OBJECT_CHECK(gmc);
-   /* cave all values */
+   /* save all values */
 }
 
 void
-e_gadman_client_load(E_Gadman_Client *gmc, char *domain, int instance)
+e_gadman_client_load(E_Gadman_Client *gmc)
 {
    E_OBJECT_CHECK(gmc);
    /* load all the vales */
@@ -214,11 +214,11 @@ _e_gadman_client_edit_begin(E_Gadman_Client *gmc)
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
 			"gadman/control");
-   edje_object_signal_callback_add(gmc->control_object, "move_start", "*",
+   edje_object_signal_callback_add(gmc->control_object, "move_start", "",
 				   _e_gadman_cb_signal_move_start, gmc);
-   edje_object_signal_callback_add(gmc->control_object, "move_stop", "*",
+   edje_object_signal_callback_add(gmc->control_object, "move_stop", "",
 				   _e_gadman_cb_signal_move_stop, gmc);
-   edje_object_signal_callback_add(gmc->control_object, "move_go", "*",
+   edje_object_signal_callback_add(gmc->control_object, "move_go", "",
 				   _e_gadman_cb_signal_move_go, gmc);
    edje_object_signal_callback_add(gmc->control_object, "resize_start", "left",
 				   _e_gadman_cb_signal_resize_left_start, gmc);
@@ -259,6 +259,15 @@ _e_gadman_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    E_Gadman_Client *gmc;
    
    gmc = data;
+   if ((gmc->moving) || 
+       (gmc->resizing_l) || (gmc->resizing_r) || 
+       (gmc->resizing_u) || (gmc->resizing_d)) return;
+   gmc->moving = 1;
+   gmc->down_store_x = gmc->x;
+   gmc->down_store_y = gmc->y;
+   gmc->down_store_w = gmc->w;
+   gmc->down_store_h = gmc->h;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &gmc->down_x, &gmc->down_y);
 }
 
 static void
@@ -267,14 +276,34 @@ _e_gadman_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    E_Gadman_Client *gmc;
    
    gmc = data;
+   gmc->moving = 0;
+   e_gadman_client_save(gmc);
 }
 
 static void
 _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
+   Evas_Coord x, y;
    
    gmc = data;
+   if (!gmc->moving) return;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   printf("%i %i\n", x, y);
+   gmc->x = gmc->down_store_x + (x - gmc->down_x);
+   gmc->y = gmc->down_store_y + (y - gmc->down_y);
+   gmc->w = gmc->down_store_w;
+   gmc->h = gmc->down_store_h;
+   if (gmc->x < gmc->zone->x)
+     gmc->x = gmc->zone->x;
+   else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     gmc->x = gmc->zone->x + gmc->zone->w - gmc->w;
+   if (gmc->y < gmc->zone->y)
+     gmc->y = gmc->zone->y;
+   else if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     gmc->y = gmc->zone->y + gmc->zone->h - gmc->h;
+   evas_object_move(gmc->control_object, gmc->x, gmc->y);
+   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
 
 static void
@@ -283,6 +312,15 @@ _e_gadman_cb_signal_resize_left_start(void *data, Evas_Object *obj, const char *
    E_Gadman_Client *gmc;
    
    gmc = data;
+   if ((gmc->moving) || 
+       (gmc->resizing_l) || (gmc->resizing_r) || 
+       (gmc->resizing_u) || (gmc->resizing_d)) return;
+   gmc->resizing_l = 1;
+   gmc->down_store_x = gmc->x;
+   gmc->down_store_y = gmc->y;
+   gmc->down_store_w = gmc->w;
+   gmc->down_store_h = gmc->h;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &gmc->down_x, &gmc->down_y);
 }
 
 static void
@@ -291,14 +329,25 @@ _e_gadman_cb_signal_resize_left_stop(void *data, Evas_Object *obj, const char *e
    E_Gadman_Client *gmc;
    
    gmc = data;
+   gmc->resizing_l = 0;
+   e_gadman_client_save(gmc);
 }
 
 static void
 _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
+   Evas_Coord x, y;
    
    gmc = data;
+   if (!gmc->resizing_l) return;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   gmc->x = gmc->down_store_x + (x - gmc->down_x);
+   gmc->y = gmc->down_store_y;
+   gmc->w = gmc->down_store_w - (x - gmc->down_x);
+   gmc->h = gmc->down_store_h;
+   evas_object_move(gmc->control_object, gmc->x, gmc->y);
+   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
 
 static void
@@ -307,6 +356,15 @@ _e_gadman_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char 
    E_Gadman_Client *gmc;
    
    gmc = data;
+   if ((gmc->moving) || 
+       (gmc->resizing_l) || (gmc->resizing_r) || 
+       (gmc->resizing_u) || (gmc->resizing_d)) return;
+   gmc->resizing_r = 1;
+   gmc->down_store_x = gmc->x;
+   gmc->down_store_y = gmc->y;
+   gmc->down_store_w = gmc->w;
+   gmc->down_store_h = gmc->h;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &gmc->down_x, &gmc->down_y);
 }
 
 static void
@@ -315,14 +373,25 @@ _e_gadman_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *
    E_Gadman_Client *gmc;
    
    gmc = data;
+   gmc->resizing_r = 0;
+   e_gadman_client_save(gmc);
 }
 
 static void
 _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
+   Evas_Coord x, y;
    
    gmc = data;
+   if (!gmc->resizing_r) return;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   gmc->x = gmc->down_store_x;
+   gmc->y = gmc->down_store_y;
+   gmc->w = gmc->down_store_w + (x - gmc->down_x);
+   gmc->h = gmc->down_store_h;
+   evas_object_move(gmc->control_object, gmc->x, gmc->y);
+   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
 
 static void
@@ -331,6 +400,15 @@ _e_gadman_cb_signal_resize_up_start(void *data, Evas_Object *obj, const char *em
    E_Gadman_Client *gmc;
    
    gmc = data;
+   if ((gmc->moving) || 
+       (gmc->resizing_l) || (gmc->resizing_r) || 
+       (gmc->resizing_u) || (gmc->resizing_d)) return;
+   gmc->resizing_u = 1;
+   gmc->down_store_x = gmc->x;
+   gmc->down_store_y = gmc->y;
+   gmc->down_store_w = gmc->w;
+   gmc->down_store_h = gmc->h;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &gmc->down_x, &gmc->down_y);
 }
 
 static void
@@ -339,14 +417,25 @@ _e_gadman_cb_signal_resize_up_stop(void *data, Evas_Object *obj, const char *emi
    E_Gadman_Client *gmc;
    
    gmc = data;
+   gmc->resizing_u = 0;
+   e_gadman_client_save(gmc);
 }
 
 static void
 _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
+   Evas_Coord x, y;
    
    gmc = data;
+   if (!gmc->resizing_u) return;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   gmc->x = gmc->down_store_x;
+   gmc->y = gmc->down_store_y + (y - gmc->down_y);
+   gmc->w = gmc->down_store_w;
+   gmc->h = gmc->down_store_h - (y - gmc->down_y);
+   evas_object_move(gmc->control_object, gmc->x, gmc->y);
+   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
 
 static void
@@ -355,6 +444,15 @@ _e_gadman_cb_signal_resize_down_start(void *data, Evas_Object *obj, const char *
    E_Gadman_Client *gmc;
    
    gmc = data;
+   if ((gmc->moving) || 
+       (gmc->resizing_l) || (gmc->resizing_r) || 
+       (gmc->resizing_u) || (gmc->resizing_d)) return;
+   gmc->resizing_d = 1;
+   gmc->down_store_x = gmc->x;
+   gmc->down_store_y = gmc->y;
+   gmc->down_store_w = gmc->w;
+   gmc->down_store_h = gmc->h;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &gmc->down_x, &gmc->down_y);
 }
 
 static void
@@ -363,13 +461,24 @@ _e_gadman_cb_signal_resize_down_stop(void *data, Evas_Object *obj, const char *e
    E_Gadman_Client *gmc;
    
    gmc = data;
+   gmc->resizing_d = 0;
+   e_gadman_client_save(gmc);
 }
 
 static void
 _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
+   Evas_Coord x, y;
    
    gmc = data;
+   if (!gmc->resizing_d) return;
+   evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
+   gmc->x = gmc->down_store_x;
+   gmc->y = gmc->down_store_y;
+   gmc->w = gmc->down_store_w;
+   gmc->h = gmc->down_store_h + (y - gmc->down_y);
+   evas_object_move(gmc->control_object, gmc->x, gmc->y);
+   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
 
