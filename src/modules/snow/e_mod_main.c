@@ -96,10 +96,6 @@ _snow_init(E_Module *m)
 {
    Snow *snow;
    Evas_List *managers, *l, *l2;
-   Evas_Object *o;
-   Evas_Coord xx, yy, ww, hh;
-   char buf[4096];
-   int tw, th, i;
    
    snow = calloc(1, sizeof(Snow));
    if (!snow) return  NULL;
@@ -137,6 +133,7 @@ _snow_init(E_Module *m)
 	  }
      }
 
+   evas_output_viewport_get(snow->canvas, NULL, NULL, &snow->width, &snow->height);
    _snow_trees_load(snow);
    _snow_flakes_load('s', snow);
    _snow_flakes_load('m', snow);
@@ -275,11 +272,9 @@ _snow_cb_density_dense(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _snow_trees_load(Snow *snow) {
    Evas_Object *o;
-   Evas_Coord xx, yy, ww, hh;
    char buf[4096];
    int tw, th, i;
 
-   evas_output_viewport_get(snow->canvas, &xx, &yy, &ww, &hh);
    snprintf(buf, sizeof(buf), "%s/tree.png", e_module_dir_get(snow->module));
 
    o = evas_object_image_add(snow->canvas);
@@ -297,8 +292,8 @@ if (i != 0) {
      evas_object_image_alpha_set(o, 1);
      evas_object_image_fill_set(o, 0, 0, tw, th);
 
-     tx = random() % (ww - tw);
-     ty = random() % (hh - th);
+     tx = random() % (snow->width - tw);
+     ty = random() % (snow->height - th);
      evas_object_move(o, tx, ty);
      evas_object_show(o);
      snow->trees = evas_list_append(snow->trees, o);
@@ -376,9 +371,9 @@ _snow_cb_animator(void *data)
 
 	flake = next->data;
 	d = ecore_time_get() - flake->start_time;
-	y = 100 * d * flake->speed;
+	y = 30 * d * flake->speed;
 	evas_object_geometry_get(flake->flake, &x, NULL, NULL, NULL);
-	if (y > 1024) /* FIXME */
+	if (y > snow->height)
 	  flake->start_time = ecore_time_get() + (double) (random() % 100) / (double) 100;
 	evas_object_move(flake->flake, x, y);
 
