@@ -286,6 +286,9 @@ e_app_window_name_class_find(char *name, char *class)
      {
 	E_App *a;
 	
+	if (!name && !class)
+	  return NULL;
+
 	a = l->data;
 	if ((a->win_name) || (a->win_class))
 	  {
@@ -293,10 +296,10 @@ e_app_window_name_class_find(char *name, char *class)
 	     
 //	     printf("%s.%s == %s.%s\n", name, class, a->win_name, a->win_class);
 	     if ((!a->win_name) ||
-		 ((a->win_name) && (!strcmp(a->win_name, name))))
+		 ((a->win_name) && name && (!strcmp(a->win_name, name))))
 	       ok++;
 	     if ((!a->win_class) ||
-		 ((a->win_class) && (!strcmp(a->win_class, class))))
+		 ((a->win_class) && class && (!strcmp(a->win_class, class))))
 	       ok++;
 	     if (ok >= 2)
 	       {
