@@ -15,6 +15,7 @@ struct _E_Before_Idler
 static void _e_main_shutdown_push(int (*func)(void));
 static void _e_main_shutdown(int errorcode);
 
+static int  _e_main_x_shutdown(void);
 static int  _e_main_dirs_init(void);
 static int  _e_main_dirs_shutdown(void);
 static int  _e_main_screens_init(void);
@@ -146,7 +147,7 @@ main(int argc, char **argv)
 			     "Have you set your DISPLAY variable?");
 	_e_main_shutdown(-1);
      }
-   _e_main_shutdown_push(ecore_x_shutdown);
+   _e_main_shutdown_push(_e_main_x_shutdown);
    
    ecore_x_grab();
    
@@ -419,6 +420,18 @@ _e_main_shutdown(int errorcode)
    for (i = _e_main_level - 1; i >= 0; i--)
      (*_e_main_shutdown_func[i])();
    if (errorcode < 0) exit(errorcode);
+}
+
+static int
+_e_main_x_shutdown(void)
+{
+   ecore_x_ungrab();
+   ecore_x_focus_reset();
+   ecore_x_events_allow_all();
+
+   ecore_x_shutdown();
+
+   return 1;
 }
 
 static int
