@@ -331,11 +331,12 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	  {
 	     E_Desk *desk = l->data;
 	     mi = e_menu_item_new(m);
-	     e_menu_item_check_set(mi, 1);
+	     e_menu_item_radio_group_set(mi, 1);
+	     e_menu_item_radio_set(mi, 1);
 	     e_menu_item_label_set(mi, desk->name);
-	     e_menu_item_callback_set(mi, _e_int_menus_desktops_item_cb, desk);
 	     if (desk == e_desk_current_get(zone))
 	       e_menu_item_toggle_set(mi, 1);
+	     e_menu_item_callback_set(mi, _e_int_menus_desktops_item_cb, desk);
 	  }
      }
 
