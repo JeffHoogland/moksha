@@ -17,6 +17,50 @@ group {
    name: "gadman/control";
    parts {
       part {
+	 name:          "hclip";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state: "default" 0.0;
+	    visible : 1;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -80    -80;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   79   79;
+	    }
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible : 0;
+	 }
+      }
+      part {
+	 name:          "vclip";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state: "default" 0.0;
+	    visible : 1;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -80    -80;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   79   79;
+	    }
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible : 0;
+	 }
+      }
+      part {
 	 name:          "indicator";
 	 mouse_events:  0;
 	 description {
@@ -26,6 +70,11 @@ group {
 	    image {
 	       normal: "e17_gadman_indicator.png";
 	    }
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 0;
 	 }
       }
       part {
@@ -556,6 +605,7 @@ group {
       part {
 	 name:          "h1";
 	 mouse_events:  1;
+	 clip_to:       "hclip";
 	 description {
 	    state: "default" 0.0;
 	    align: 1.0 0.5;
@@ -614,6 +664,7 @@ group {
       part {
 	 name:          "h2";
 	 mouse_events:  1;
+	 clip_to:       "hclip";
 	 description {
 	    state: "default" 0.0;
 	    align: 0.0 0.5;
@@ -672,6 +723,7 @@ group {
       part {
 	 name:          "v1";
 	 mouse_events:  1;
+	 clip_to:       "vclip";
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 1.0;
@@ -730,6 +782,7 @@ group {
       part {
 	 name:          "v2";
 	 mouse_events:  1;
+	 clip_to:       "vclip";
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 0.0;
@@ -787,6 +840,60 @@ group {
       }
    }
    programs {
+      program {
+	 name:    "api_hsize_on";
+	 signal:  "hsize";
+	 source:  "on";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "hclip";
+      }
+      program {
+	 name:    "api_hsize_off";
+	 signal:  "hsize";
+	 source:  "off";
+	 action:  STATE_SET "disabled" 0.0;
+	 target:  "hclip";
+      }
+      program {
+	 name:    "api_vsize_on";
+	 signal:  "vsize";
+	 source:  "on";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "vclip";
+      }
+      program {
+	 name:    "api_vsize_off";
+	 signal:  "vsize";
+	 source:  "off";
+	 action:  STATE_SET "disabled" 0.0;
+	 target:  "vclip";
+      }
+      program {
+	 name:    "api_move_on";
+	 signal:  "move";
+	 source:  "on";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "indicator";
+      }
+      program {
+	 name:    "api_move_off";
+	 signal:  "move";
+	 source:  "off";
+	 action:  STATE_SET "disabled" 0.0;
+	 target:  "indicator";
+      }
+/*      
+      program {
+	 name:    "api_active";
+	 signal:  "active";
+	 source:  "";
+      }
+      program {
+	 name:    "api_inactive";
+	 signal:  "inactive";
+	 source:  "";
+      }
+*/      
       program {
 	 name:    "mv_down";
 	 signal:  "mouse,down,1";

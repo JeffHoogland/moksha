@@ -5,10 +5,6 @@ typedef enum _E_Gadman_Policy
    /* type */
    E_GADMAN_POLICY_ANYWHERE = 0, 
    E_GADMAN_POLICY_EDGES = 1, 
-   E_GADMAN_POLICY_LEFT_EDGE = 2, 
-   E_GADMAN_POLICY_RIGHT_EDGE = 3, 
-   E_GADMAN_POLICY_TOP_EDGE = 4, 
-   E_GADMAN_POLICY_BOTTOM_EDGE = 5, 
    /* extra flags */
    E_GADMAN_POLICY_FIXED_ZONE = 1 << 8,
    E_GADMAN_POLICY_HSIZE = 1 << 9,
@@ -20,8 +16,18 @@ typedef enum _E_Gadman_Policy
 typedef enum _E_Gadman_Change
 {
    E_GADMAN_CHANGE_MOVE,
-   E_GADMAN_CHANGE_RESIZE
+   E_GADMAN_CHANGE_RESIZE,
+   E_GADMAN_CHANGE_EDGE,
+   E_GADMAN_CHANGE_ZONE
 } E_Gadman_Change;
+
+typedef enum _E_Gadman_Edge
+{
+   E_GADMAN_EDGE_LEFT,
+   E_GADMAN_EDGE_RIGHT,
+   E_GADMAN_EDGE_TOP,
+   E_GADMAN_EDGE_BOTTOM
+} E_Gadman_Edge;
 
 typedef enum _E_Gadman_Mode
 {
@@ -59,12 +65,16 @@ struct _E_Gadman_Client
    unsigned char        resizing_r : 1;
    unsigned char        resizing_u : 1;
    unsigned char        resizing_d : 1;
+   E_Gadman_Edge        edge;
    char                *domain;
    E_Zone              *zone;
    int                  instance;
    E_Gadman_Policy      policy;
    Evas_Coord           x, y, w, h;
    Evas_Coord           minw, minh, maxw, maxh;
+   unsigned char        use_autow : 1;
+   unsigned char        use_autoh : 1;
+   Evas_Coord           autow, autoh;
    double               ax, ay;
    double               mina, maxa;
    void               (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
@@ -73,11 +83,12 @@ struct _E_Gadman_Client
 
 EAPI int              e_gadman_init(void);
 EAPI int              e_gadman_shutdown(void);
+EAPI E_Gadman        *e_gadman_new(E_Container *con);
 EAPI void             e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode);
 EAPI E_Gadman_Mode    e_gadman_mode_get(E_Gadman *gm);
-EAPI E_Gadman        *e_gadman_new(E_Container *con);
 EAPI E_Gadman_Client *e_gadman_client_new(E_Gadman *gm);
 EAPI void             e_gadman_client_save(E_Gadman_Client *gmc);
+EAPI void             e_gadman_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge);
 EAPI void             e_gadman_client_load(E_Gadman_Client *gmc);
 EAPI void             e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance);
 EAPI void             e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone);
@@ -86,6 +97,7 @@ EAPI void             e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Co
 EAPI void             e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh);
 EAPI void             e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign);
 EAPI void             e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa);
+EAPI void             e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh);
 EAPI void             e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 EAPI void             e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change), void *data);
 EAPI E_Menu          *e_gadman_client_menu_new(E_Gadman_Client *gmc);

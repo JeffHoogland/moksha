@@ -544,6 +544,8 @@ _e_main_screens_init(void)
 	     gmc->w = 150;
 	     gmc->h = 150;
 	     e_gadman_client_min_size_set(gmc, 20, 20);
+	     e_gadman_client_auto_size_set(gmc, 200, 50);
+	     e_gadman_client_aspect_set(gmc, 4.0, 4.0);
 	  }
      }
    free(roots);
