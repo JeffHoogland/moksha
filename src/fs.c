@@ -20,7 +20,7 @@ e_fs_flush_timeout(int val, void *data)
      {
 	if (efsd_flush(ec) > 0)
 	  e_add_event_timer("e_fs_flush_timeout()", 
-			    0.01, e_fs_flush_timeout, 0, NULL);	
+			    0.00, e_fs_flush_timeout, 0, NULL);	
      }
    UN(data);
    UN(val);

@@ -19,14 +19,18 @@ struct _E_Desktop
    struct {
       Window main;
       Window container;
-      Window desk;
    } win;
-   E_View *view;
    int x, y;
    struct {
       int w, h;
    } real, virt;
    Evas_List windows;
+   struct {
+      int desk;
+      struct {
+	 int x, y;
+      } area;
+   } desk;
    int changed;
 };
 
@@ -43,6 +47,7 @@ void         e_desktops_hide(E_Desktop *d);
 int          e_desktops_get_num(void);
 E_Desktop   *e_desktops_get(int d);
 int          e_desktops_get_current(void);
-void         e_desktops_goto(int d);
+void         e_desktops_goto_desk(int d);
+void         e_desktops_goto(int d, int ax, int ay);
 
 #endif

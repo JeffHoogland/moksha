@@ -11,7 +11,6 @@ static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
 static int       screen_w, screen_h;
 static int       current_desk = 0;
-static int       current_desk_x = 0;
 
 static void e_idle(void *data);
 
@@ -108,7 +107,6 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	  e_window_gravity_set(b->win.main, grav);	
      }
    grav_stick = StaticGravity;
-   e_window_gravity_set(desk->win.desk, grav_stick);
    /* scroll */
    e_window_move_resize(desk->win.container, 
 			xd, yd, 
@@ -127,7 +125,6 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 /*	e_window_gravity_set(b->win.main, grav_stick);*/
      }   
    e_window_move_resize(desk->win.container, 0, 0, screen_w, screen_h);
-   e_window_gravity_reset(desk->win.desk);
    for (l = desk->windows; l; l = l->next)
      {
 	E_Border *b;
@@ -175,31 +172,42 @@ e_desktops_free(E_Desktop *desk)
 void
 e_desktops_init_file_display(E_Desktop *desk)
 {
-   desk->view = e_view_new();
-   desk->view->size.w = desk->real.w;
-   desk->view->size.h = desk->real.h;
-   desk->view->is_desktop = 1;
-
-   /* FIXME: load bg here */
-   {
-     char buf[4096];
-     
-     sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
-     desk->view->bg = e_background_load(buf);
-   }
+   E_View *v;
+   E_Border *b;
+   
+   v = e_view_new();
+   v->size.w = desk->real.w;
+   v->size.h = desk->real.h;
+   v->options.back_pixmap = 1;
+   v->is_desktop = 1;
 
    /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
-   /* e_strdup(desk->view->dir, "/dev"); */
-   e_strdup(desk->view->dir, e_file_home());
-   e_view_realize(desk->view);
+   /* e_strdup(v->dir, "/dev"); */
+   e_strdup(v->dir, e_file_home());
+   
+   /* FIXME: load bg here */
+   {
+      char buf[4096];
+      
+      sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+      v->bg = e_background_load(buf);
+   }
+   e_view_realize(v);
 
-   if (desk->view->options.back_pixmap)
-     e_view_update(desk->view);
+   e_window_hint_set_borderless(v->win.base);
+   e_window_hint_set_sticky(v->win.base, 1);
+   e_window_hint_set_layer(v->win.base, 1);
+   e_window_set_title(v->win.base, "Desktop");
+   e_window_set_name_class(v->win.base, "FileView", "Desktop");
+   e_window_set_min_size(v->win.base, desk->real.w, desk->real.h);
+   e_window_set_max_size(v->win.base, desk->real.w, desk->real.h);
+   b = e_border_adopt(v->win.base, 1);
+   b->client.sticky = 1;
+   b->client.fixed = 1;
+   b->client.is_desktop = 1;
 
-   desk->win.desk = desk->view->win.base;
-   e_window_reparent(desk->win.desk, desk->win.container, 0, 0);
-   e_window_show(desk->win.desk);
+   if (v->options.back_pixmap) e_view_update(v);
 }
 
 E_Desktop *
@@ -227,8 +235,6 @@ e_desktops_new(void)
    
    desktops = evas_list_append(desktops, desk);
    
-   e_desktops_init_file_display(desk);
-   
    return desk;
 }
 
@@ -237,6 +243,9 @@ e_desktops_add_border(E_Desktop *d, E_Border *b)
 {
    if ((!d) || (!b)) return;
    b->desk = d;
+   b->client.desk = d->desk.desk;
+   b->client.area.x = d->desk.area.x;
+   b->client.area.y = d->desk.area.y;
    e_border_raise(b);
 }
 
@@ -263,18 +272,13 @@ e_desktops_show(E_Desktop *d)
 void
 e_desktops_hide(E_Desktop *d)
 {
-   if (d->view->options.back_pixmap) e_view_update(d->view);
    e_window_hide(d->win.main);
 }
 
 int
 e_desktops_get_num(void)
 {
-   Evas_List l;
-   int i;
-   
-   for (i = 0, l = desktops; l; l = l->next, i++);
-   return i;
+   return 8;
 }
 
 E_Desktop *
@@ -297,16 +301,62 @@ e_desktops_get_current(void)
 }
 
 void
-e_desktops_goto(int d)
+e_desktops_goto_desk(int d)
 {
-   int dx;
+   e_desktops_goto(d, 0, 0);
+}
+
+void
+e_desktops_goto(int d, int ax, int ay)
+{
    E_Desktop *desk;
    
-   dx = d - current_desk_x;
    desk = e_desktops_get(0);
    if (desk)
      {
-	e_desktops_scroll(desk, -(dx * desk->real.w), 0);
+	int dx, dy;
+	Evas_List l;
+	
+	if ((d == desk->desk.desk) &&
+	    (ax == desk->desk.area.x) &&
+	    (ay == desk->desk.area.y)) return;
+	
+	dx = ax - desk->desk.area.x;
+	dy = ay - desk->desk.area.y;
+	
+	for (l = desk->windows; l; l = l->next)
+	  {
+	     E_Border *b;
+	     
+	     b = l->data;
+	     if (!b->client.sticky)
+	       {
+		  if (b->client.desk != d)
+		    {
+		       if (b->current.requested.visible)
+			 {
+			    b->current.requested.visible = 0;
+			    b->changed = 1;
+			 }
+		    }
+		  else
+		    {
+		       if (!b->current.requested.visible)
+			 {
+			    b->current.requested.visible = 1;
+			    b->changed = 1;
+			 }
+		    }
+	       }
+	  }
+	e_border_update_borders();
+	
+	/* if no scrolling... */
+	e_desktops_scroll(desk, -(dx * desk->real.w), -(dy * desk->real.h));
+	/* if scrolling.. need to setup a timeout etc. */
+	
+	desk->desk.desk = d;
+	desk->desk.area.x = ax;
+	desk->desk.area.y = ay;
      }
-   current_desk_x = d;
 }

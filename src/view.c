@@ -1201,7 +1201,7 @@ e_view_queue_icon_xy_record(E_View *v)
    char name[4096];
    
    sprintf(name, "icon_xy_record.%s", v->dir);
-   e_add_event_timer(name, 2.00, e_view_write_icon_xy_timeout, 0, v);
+   e_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
 }
 
 

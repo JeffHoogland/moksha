@@ -43,7 +43,7 @@ namespace e {
    
    function flip_to_desktop( number desk )
    %{
-      e_desktops_goto( (long)desk );	  	  
+      e_desktops_goto_desk( (long)desk );	  	  
    %}
    
    function get_current_desktop()

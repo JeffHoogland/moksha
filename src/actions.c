@@ -546,6 +546,7 @@ e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.fixed) return;
    if (move_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
    b->mode.move = 1;
@@ -584,6 +585,7 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.fixed) return;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
@@ -615,6 +617,7 @@ e_act_move_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.fixed) return;
    b->current.requested.x += dx;
    b->current.requested.y += dy;
    if (dx != 0) b->current.requested.dx = dx;
@@ -659,6 +662,8 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
@@ -731,6 +736,8 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
@@ -760,6 +767,8 @@ e_act_resize_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    if (b->mode.resize == 1)
      {
@@ -825,6 +834,7 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
@@ -876,6 +886,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
    if (b->current.shaded != 0) return;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
@@ -905,6 +916,7 @@ e_act_resize_h_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.w == b->client.max.w) return;
    if (b->current.shaded != 0) return;
    if (b->mode.resize == 5)
      {
@@ -956,6 +968,7 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
@@ -1009,6 +1022,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
@@ -1038,6 +1052,7 @@ e_act_resize_v_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.min.h == b->client.max.h) return;
    if (b->current.shaded != 0) return;
    if (b->mode.resize == 7)
      {
@@ -1077,6 +1092,7 @@ e_act_close_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (b->win.client) e_icccm_delete(b->win.client);
    return;
    UN(a);
@@ -1096,6 +1112,7 @@ e_act_kill_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (b->win.client) e_window_kill_client(b->win.client);
    return;
    UN(a);
@@ -1119,6 +1136,7 @@ e_act_cb_shade(int val, void *data)
    b = data;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (val == 0) 
      {
 	OBJ_REF(b);
@@ -1159,6 +1177,7 @@ e_act_cb_unshade(int val, void *data)
    b = data;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (val == 0) 
      {
 	OBJ_REF(b);
@@ -1195,6 +1214,7 @@ e_act_shade_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (b->current.shaded == 0) e_act_cb_shade(0, b);
    else e_act_cb_unshade(0, b);
    return;
@@ -1215,6 +1235,7 @@ e_act_raise_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    e_border_raise(b);
    return;
    UN(a);
@@ -1234,6 +1255,7 @@ e_act_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    e_border_lower(b);
    return;
    UN(a);
@@ -1253,6 +1275,7 @@ e_act_raise_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx,
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    return;
    UN(a);
    UN(data);
@@ -1291,6 +1314,7 @@ e_act_menu_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    return;
    UN(a);
    UN(data);
@@ -1304,9 +1328,6 @@ e_act_menu_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 static void 
 e_act_exit_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
-   E_Border *b;
-   
-   b = o;
    exit(0);
    return;
    UN(a);
@@ -1321,9 +1342,6 @@ e_act_exit_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
 static void 
 e_act_restart_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
-   E_Border *b;
-   
-   b = o;
    e_exec_restart();
    return;
    UN(a);
@@ -1343,6 +1361,7 @@ e_act_stick_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (b->client.sticky) b->client.sticky = 0;
    else b->client.sticky = 1;
    b->changed = 1;
@@ -1359,9 +1378,6 @@ e_act_stick_start (void *o, E_Action *a, void *data, int x, int y, int rx, int r
 static void 
 e_act_sound_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
-   E_Border *b;
-   
-   b = o;
    return;
    UN(a);
    UN(data);
@@ -1380,6 +1396,7 @@ e_act_iconify_start (void *o, E_Action *a, void *data, int x, int y, int rx, int
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    return;
    UN(a);
    UN(data);
@@ -1398,6 +1415,7 @@ e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (b->client.is_desktop) return;
    if (b->current.shaded > 0) return;
    if ((b->mode.move) || (b->mode.resize)) return;
    b->mode.move = 0;
@@ -1486,7 +1504,7 @@ e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    int desk = 0;
    
    if (a->params) desk = atoi(a->params);
-   e_desktops_goto(desk);
+   e_desktops_goto_desk(desk);
    return;
    UN(o);
    UN(a);

@@ -131,7 +131,9 @@ main(int argc, char **argv)
 #ifdef USE_FERITE
    e_ferite_init();
 #endif
-   
+
+   e_desktops_init_file_display(e_desktops_get(0));   
+
    setup();
    
    e_event_loop();

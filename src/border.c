@@ -62,8 +62,9 @@ static void e_cb_border_visibility(E_Border *b);
 static void e_border_poll(int val, void *data);
 
 /* what to dowhen we're idle */
-static void
-e_idle(void *data)
+
+void
+e_border_update_borders(void)
 {
    Evas_List l;
 
@@ -88,6 +89,12 @@ e_idle(void *data)
 	  }
      }
    e_db_flush();
+}
+
+static void
+e_idle(void *data)
+{
+   e_border_update_borders();
    return;
    UN(data);
 }
@@ -2370,6 +2377,9 @@ e_border_viewable(E_Border *b)
      return 0;
 
    if (b->current.y >= b->desk->real.h)
+     return 0;
+   
+   if (!b->current.visible)
      return 0;
 
    return 1;

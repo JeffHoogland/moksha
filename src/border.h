@@ -87,12 +87,17 @@ struct _E_Border
       int titlebar;
       int border;
       int handles;
+      int is_desktop;
       int w, h;
       struct {
 	 int requested;
 	 int x, y;
 	 int gravity;
       } pos;
+      int desk;
+      struct {
+	 int x, y;
+      } area;
    } client;
    
    struct {
@@ -121,6 +126,7 @@ struct _E_Border
 };
 
 
+void      e_border_update_borders(void);
 void      e_border_apply_border(E_Border *b);
 void      e_border_reshape(E_Border *b);
 E_Border *e_border_adopt(Window win, int use_client_pos);
