@@ -8,25 +8,29 @@ static void _e_fs_fd_handle(int fd);
 static void
 _e_fs_fd_handle(int fd)
 {
-   Evas_List events = NULL;
    double start, current;
    
-/*   printf("############## fs event...\n");*/
+   printf("############## fs event...\n");
    start = e_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
-	EfsdEvent *ev;
+	EfsdEvent ev;
 	
-	ev = NEW(EfsdEvent, 1);
-	ZERO(ev, EfsdEvent, 1);
-	
-	if (efsd_next_event(ec, ev) >= 0)
+	if (efsd_next_event(ec, &ev) >= 0)
 	  {
-	     events = evas_list_append(events, ev);
+	     Evas_List l;
+	     
+	     for (l = fs_handlers; l; l = l->next)
+	       {
+		  void (*func) (EfsdEvent *ev);
+		  
+		  func = l->data;
+		  func(&ev);
+	       }
+	     efsd_event_cleanup(&ev);
 	  }
 	else
 	  {
-	     FREE(ev);
 	     efsd_close(ec);
 	     e_del_event_fd(fd);
 	     ec = NULL;
@@ -43,29 +47,7 @@ _e_fs_fd_handle(int fd)
 	     break;
 	  }
     }
-   if (events)
-     {
-	Evas_List l;
-	
-	for (l = events; l; l = l->next)
-	  {
-	     Evas_List ll;
-	     EfsdEvent *ev;
-	     
-	     ev = l->data;
-	     for (ll = fs_handlers; ll; ll = ll->next)
-	       {
-		  void (*func) (EfsdEvent *ev);
-		  
-		  func = ll->data;
-		  func(ev);
-	       }
-	     efsd_event_cleanup(ev);
-	     FREE(ev);
-	  }
-	evas_list_free(events);
-     }
-/*   printf("############## fs done\n");*/
+   printf("############## fs done\n");
 }
 
 void
