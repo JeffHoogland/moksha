@@ -71,6 +71,52 @@
       Here's how you use &e17;.
     </para>
 
+    <section id="features">
+      <title id="features.title">Feature List</title>
+      <para>
+	At the moment, &e17; has not been released. The current feature list includes:
+	
+	<orderedlist>
+	  <listitem>
+	    <para>A fully functional and mostly ICCCM-compliant windowmanager.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Multiple desktops (in the version 0.16 sense, so no large,
+	    virtual desktop area yet).</para>
+	  </listitem>
+	  <listitem>
+	    <para>Shading/unshading of windows.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Ability to browse files in your filesystem through view windows,
+	    with recognition of the file types and appropriate icons.</para>
+	  </listitem>
+	  <listitem>
+	    <para>Support for icon bars in each view window. These are
+	    collections of icons for commonly needed applications or documents
+	    in a directory. For example, in a directory with lots of images
+	    you will want to have image viewers ready, in a directory with
+	    MP3 files you'll want music players etc. The icon bars keep
+	    those applications where you need them.</para>
+	  </listitem>
+	</orderedlist>
+
+	This feature list should not imply that &e17; is ready for public use
+	yet. Many more features are in development, but their configuration
+	is currently hard-coded. If you want a fancy windowmanager with
+	full configurability, you best stick to the currently stable 0.16.5
+	release.
+      </para>
+      <para>
+	Please do not come to the mailing lists and ask for release dates etc.
+	&e17; will be released when it has matured to a stable system that is
+	usable also for novices. &e17; will <emphasis>not</emphasis> be as
+	rich in features as the 0.16 series -- we intend to produce a simple,
+	stable desktop shell for that release. Funky features will be considered
+	for the 0.18 release.
+      </para>
+    </section>
+
     <section id="wm">
       <title id="wm.title">The Window Manager</title>
       <para>
@@ -82,6 +128,26 @@
       <para>
       </para>
     </section>
+
+    <section id="concepts">
+      <title id="concepts.title">Themeing</title>
+      <section id="overview">
+	<title id="overview.title">Overview</title>
+	<para>
+	</para>
+      </section>
+      <section id="system">
+	<title id="system.title">System Settings</title>
+	<para>
+	</para>
+      </section>
+      <section id="user">
+	<title id="user.title">User Settings</title>
+	<para>
+	</para>
+      </section>
+    </section>
+
   </chapter>
 
   <chapter id="inside">
@@ -89,36 +155,6 @@
     <para>
       This chapter explains the inner workings of &e17;.
     </para>
-
-    <section id="architecture">
-      <title id="architecture.title">&e17; Architecture</title>
-      <section id="overall">
-	<title id="overall.title">Overview</title>
-	<para>
-	
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="figures/architecture.eps" format="eps">
-          </imageobject>
-          <imageobject>
-            <imagedata fileref="figures/architecture.gif" format="gif">
-          </imageobject>
-          <textobject>
-            <phrase>Image of &e17; Architecture</phrase>
-          </textobject>
-          <caption>
-            <para>&e17; Architecture.</para>
-          </caption>
-        </mediaobject>
-
-	</para>
-      </section>
-      <section id="modules">
-	<title id="modules.title">Modules</title>
-	<para>
-	</para>
-      </section>
-    </section>
     
     <section id="build">
       <title id="build.title">Building &e17;</title>
@@ -152,6 +188,10 @@
       </para>
       <para>
 	An incomplete tree of the current CVS contents is shown below.
+	For details about the modules, please refer to the 
+	<link linkend="modules" endterm="modules.title">Modules</link>
+	section below or the
+	<ulink url="http://www.enlightenment.org/pages/components.html">webpage</ulink>.
 
 	  <programlisting>
 e17
@@ -237,10 +277,15 @@ e17
 	  </listitem>
 	</itemizedlist>
 
-	There's no real reason to build those from source, it's a lot easier
-	to just install the packages of your distribution. Do not forget to
-	install the development packages as well, or necessary C header files
-	won't be available during the build.
+	<note>
+	  <title>There's no real reason to build those packages from source.</title>
+	  <para>
+	    It's a lot easier
+	    to just install the packages of your distribution. Do not forget to
+	    install the development packages as well, or necessary C header files
+	    won't be available during the build.
+	    </para>
+	</note>
       </para>
       <para>
 	To build, you need recent versions of the following GNU tools:
@@ -265,26 +310,138 @@ e17
 	prone to errors.
       </para>
     </section>
+    
+    <section id="architecture">
+      <title id="architecture.title">&e17; Architecture</title>
+      <section id="overall">
+	<title id="overall.title">Overview</title>
+	<para>
+	
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/architecture.eps" format="eps">
+          </imageobject>
+          <imageobject>
+            <imagedata fileref="figures/architecture.gif" format="gif">
+          </imageobject>
+          <textobject>
+            <phrase>Image of &e17; Architecture</phrase>
+          </textobject>
+          <caption>
+            <para>&e17; Architecture.</para>
+          </caption>
+        </mediaobject>
 
-    <section id="concepts">
-      <title id="concepts.title">Themeing</title>
-      <section id="overview">
-	<title id="overview.title">Overview</title>
-	<para>
 	</para>
       </section>
-      <section id="system">
-	<title id="system.title">System Settings</title>
+      <section id="modules">
+	<title id="modules.title">Modules</title>
 	<para>
-	</para>
-      </section>
-      <section id="user">
-	<title id="user.title">User Settings</title>
-	<para>
+	  
+	  <itemizedlist mark="opencircle">
+	    <listitem>
+	      <para><command>e</command></para>
+	      <para>This is the main &e17; applicaton. It handles managing
+		of windows, launching applications, managing icons and files
+		on your desktop and in directories, drag and drop etc.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>ecore</command></para>
+	      <para>Ecore is a convenience library. It handles
+		abstracting X calls so you don't have to pass as many parameters to them. It 
+		wraps lots of other sequences of X calls you want to do often, handles
+		caching local geometry of windows to save extra X traffic, abstracts X's
+		events and adds a timer system to be able to do timeouts, handles the core
+		event loops, abstracts signals into being events in the event queue, and lets
+		you arbitrarily add other file descriptors to the loop to listen on and have
+		handlers be called when they become active, and much much more. Ecore also
+		handles filtering events and calling idle handlers when appropriate. Ecore is
+		just what it says - a very complex CORE subsystem. It is all callback based,
+		and keeps everything abstracted - but does not move away from normal X11
+		primitives like other abstractions (GDK for example), thus keeping 100% 
+		compatibility with normal Xlib stuff. The core innards of E17 rely heavily on
+		Ecore and its ability to not just work, but work well and optimize silently for
+		E17.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>evas</command></para>
+	      <para>Evas is a canvas abstraction that uses Imlib2, as well
+		as OpenGL, and X11. It serves as a canvas accelerator and abstraction and
+		does the job really well. It has made building the rendering parts of
+		&e17; a lot easier.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>ebits</command></para>
+	      <para>Ebits is a higher-level abstraction of image groups
+		built on top of Evas. Basically it's what the old E16 window border logic 
+		was - but on steroids. It can do a lot more and is being used as the
+		basic building block for all widgets in E17. Etcher is a GUI editor that
+		can edit Ebits files - thus letting you have a nice GUI to 
+		design your widgets, window borders etc. in. 
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>edb</command></para>
+	      <para>Edb is a database abstraction layer to Berkeley
+		DB. Edb contains the source for DB 2.7.7, thus freezing the database
+		format on disk, making sure it will never become incompatible (as is a habit
+		of the DB interface in libc). Edb wraps this with a convenience and
+		optimization API layer, making database access easy, fast and consistent. It
+		handles typing of information in the database and much more. Edb is *VERY*
+		fast and all of E17 configuration management is built on top of it -
+		every configuration file is a database - including Ebits files. Also,
+		Efsd stores its metadata information in Edb databases.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>efsd</command></para>
+	      <para>Efsd is the file system abstraction layer. It is a
+		library and a daemon process that the library communicates with for the
+		calling process (in this case E17). It handles all filing system interaction
+		in an asynchronous manner, so E17 isn't ever left blocking on basic IO
+		requests. It handles copying, renaming and deleting of files. Also listing of
+		directories, monitoring for changes in directories, retrieving stat
+		information on files, as well as metadata retrieval and modification for
+		files. All of this is done in an asynchronous request/event system thus
+		keeping E17 free to handle user interaction as much as possible while Efsd
+		does the nasty IO work.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>imlib2</command></para>
+	      <para>Imlib2 is the abstraction layer that handles the
+		raw nasty work of loading images, saving them, rendering them to a drawable
+		or blending and scaling them onto other images, software anti-aliased
+		truetype fonts and other goodies. This one is pretty much done and finished 
+		with. It gets minor updates and fixes as needed, but otherwise is left alone. 
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>imlib2_loaders</command></para>
+	      <para>This is a collection of loaders that are not packaged with Imlib2
+		due to licensing issues or because the loaders are not commonly needed enough.
+		It currently contains a loader for Edb files (where images can be accessed
+		through character string keys) and a loader for Gimp's native XCF image
+		format.</para>
+	    </listitem>
+	  </itemizedlist>
 	</para>
       </section>
     </section>
     
+    <section id="scripting">
+      <title id="scripting.title">Scripting &e17;</title>
+	<para>
+	&e17; provides hooks to allow script interaction with the core systems,
+	using the <ulink url="http://www.ferite.org">Ferite</ulink> scripting
+	language. There basic scripting support is in the code now, but it's
+	too early to think about writing larger scripts.
+	</para>
+    </section>
+
     <section id="code">
       <title>Code Documentation</title>
 !Isrc/actions.h
@@ -301,8 +458,14 @@ e17
 !Isrc/observer.h
 !Isrc/place.h
 !Isrc/view.h
-
     </section>
+
+    <section id="roadmap">
+      <title id="roadmap.title">Roadmap</title>
+      <para>
+      </para>
+    </section>
+
   </chapter>
   
 </book>
