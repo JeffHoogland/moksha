@@ -17,6 +17,7 @@
 
 /* local subsystem functions */
 static void _e_border_free(E_Border *bd);
+static void _e_border_del(E_Border *bd);
 
 /* FIXME: these likely belong in a separate icccm/client handler */
 /* and the border needs to be come a dumb object that just does what its */
@@ -152,7 +153,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
-
+   e_object_del_func_set(bd, _e_border_del);
+   
    printf("##- NEW CLIENT 0x%x\n", win);
    bd->container = con;
    bd->zone = e_zone_current_get(con);
@@ -798,12 +800,6 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
-   E_Event_Border_Remove *ev;
-
-   ev = calloc(1, sizeof(E_Event_Border_Remove));
-   ev->border = bd;
-   ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_remove_free, NULL);
-
    if (focused == bd) focused = NULL;
    while (bd->handlers)
      {
@@ -839,6 +835,17 @@ _e_border_free(E_Border *bd)
    bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    free(bd);
+}
+
+static void
+_e_border_del(E_Border *bd)
+{
+   E_Event_Border_Remove *ev;
+
+   ev = calloc(1, sizeof(E_Event_Border_Remove));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
 }
 
 static int
@@ -2768,6 +2775,7 @@ _e_border_event_border_remove_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
+   e_object_unref(E_OBJECT(e->border));
    free(e);
 }
 
