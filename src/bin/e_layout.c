@@ -115,7 +115,7 @@ e_layout_pack(Evas_Object *obj, Evas_Object *child)
    
    sd = evas_object_smart_data_get(obj);
    _e_layout_smart_adopt(sd, child);
-   sd->items = evas_list_prepend(sd->items, child);
+   sd->items = evas_list_append(sd->items, child);
    li = evas_object_data_get(child, "e_layout_data");
    _e_layout_smart_move_resize_item(li);
 }
@@ -396,7 +396,7 @@ _e_layout_smart_raise(Evas_Object *obj)
      {
 	Evas_List *l;
 	
-	for (l = evas_list_last(sd->items); l; l = l->prev)
+	for (l = sd->items; l; l = l->next)
 	  {
 	     evas_object_raise(l->data);
 	  }
@@ -413,7 +413,7 @@ _e_layout_smart_lower(Evas_Object *obj)
      {
 	Evas_List *l;
 	
-	for (l = sd->items; l; l = l->next)
+	for (l = evas_list_last(sd->items); l; l = l->prev)
 	  {
 	     evas_object_lower(l->data);
 	  }

@@ -581,6 +581,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 			"modules/pager/window");
    if (visible) evas_object_show(o);
    e_layout_pack(pd->layout_object, pw->window_object);
+   e_layout_child_raise(pw->window_object);
    app = e_app_window_name_class_find(border->client.icccm.name,
 				      border->client.icccm.class);
    if (app)
@@ -967,6 +968,7 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
 	     pw->desk = pd;
 	     pd->wins = evas_list_append(pd->wins, pw);
 	     e_layout_pack(pd->layout_object, pw->window_object);
+	     e_layout_child_raise(pw->window_object);
 	     _pager_window_move(face, pw);
 	  }
      }
