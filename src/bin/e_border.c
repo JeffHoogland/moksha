@@ -57,7 +57,8 @@ static void _e_border_resize_handle(E_Border *bd);
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
-  
+static E_Border  *focused = NULL;
+
 /* externally accessible functions */
 int
 e_border_init(void)
@@ -206,6 +207,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 void
 e_border_show(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
    ecore_x_window_show(bd->client.win);
@@ -218,6 +220,7 @@ e_border_show(E_Border *bd)
 void
 e_border_hide(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
    if (!bd->visible) return;
    ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
@@ -232,6 +235,7 @@ e_border_hide(E_Border *bd)
 void
 e_border_move(E_Border *bd, int x, int y)
 {
+   E_OBJECT_CHECK(bd);
    if ((x == bd->x) && (y == bd->y)) return;
    bd->x = x;
    bd->y = y;
@@ -247,6 +251,7 @@ e_border_move(E_Border *bd, int x, int y)
 void
 e_border_resize(E_Border *bd, int w, int h)
 {
+   E_OBJECT_CHECK(bd);
    if ((w == bd->w) && (h == bd->h)) return;
    bd->w = w;
    bd->h = h;
@@ -264,6 +269,7 @@ e_border_resize(E_Border *bd, int w, int h)
 void
 e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 {
+   E_OBJECT_CHECK(bd);
    if ((x == bd->x) && (y == bd->y) && (w == bd->w) && (h == bd->h)) return;
    bd->x = x;
    bd->y = y;
@@ -284,6 +290,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 void
 e_border_raise(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_append(bd->container->clients, bd);
    ecore_x_window_raise(bd->win);
@@ -292,6 +299,7 @@ e_border_raise(E_Border *bd)
 void
 e_border_lower(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_prepend(bd->container->clients, bd);
    ecore_x_window_lower(bd->win);
@@ -300,6 +308,7 @@ e_border_lower(E_Border *bd)
 void
 e_border_stack_above(E_Border *bd, E_Border *above)
 {
+   E_OBJECT_CHECK(bd);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_append_relative(bd->container->clients, bd, above);
    ecore_x_window_configure(bd->win,
@@ -312,6 +321,7 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 void
 e_border_stack_below(E_Border *bd, E_Border *below)
 {
+   E_OBJECT_CHECK(bd);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, below);
    ecore_x_window_configure(bd->win,
@@ -319,6 +329,40 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0, 
 			    below->win, ECORE_X_WINDOW_STACK_BELOW);
+}
+
+void
+e_border_focus_set(E_Border *bd, int focus, int set)
+{
+   E_OBJECT_CHECK(bd);
+   if (!bd->client.icccm.accepts_focus) return;
+   bd->focused = focus;
+   if (set)
+     {
+	if (bd->focused)
+	  {
+	     if ((focused != bd) && (focused))
+	       e_border_focus_set(focused, 0, 0);
+	     if (bd->client.icccm.take_focus)
+	       ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+	     else
+	       ecore_x_window_focus(bd->client.win);
+	  }
+	else
+	  {
+	     ecore_x_window_focus(bd->container->manager->win);
+	  }
+     }
+   if ((bd->focused) && (focused != bd))
+     focused = bd;
+   else if ((!bd->focused) && (focused == bd))
+     focused = NULL;
+
+   printf("F %x %i\n", bd->client.win, bd->focused);
+   if (bd->focused)
+     edje_object_signal_emit(bd->bg_object, "active", "");
+   else
+     edje_object_signal_emit(bd->bg_object, "passive", "");
 }
 
 E_Border *
@@ -355,6 +399,7 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   if (focused == bd) focused = NULL;
    while (bd->handlers)
      {
 	Ecore_Event_Handler *h;
@@ -649,12 +694,7 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    printf("f IN  %i | %i\n", e->mode, e->detail);
-   if (!bd->focused)
-     {
-	printf("FOCUS\n");
-	bd->focused = 1;
-	edje_object_signal_emit(bd->bg_object, "active", "");
-     }
+   e_border_focus_set(bd, 1, 0);
    return 1;
 }
 
@@ -668,12 +708,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    printf("f OUT %i | %i\n", e->mode, e->detail);
-   if (bd->focused)
-     {
-	printf("UNFOCUS\n");
-	bd->focused = 0;
-	edje_object_signal_emit(bd->bg_object, "passive", "");
-     }
+   e_border_focus_set(bd, 0, 0);
    return 1;
 }
 
@@ -852,19 +887,13 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
    ev = event;
    bd = data;
 //   if (ev->mode == ECORE_X_EVENT_MODE_GRAB) return 1;
-   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
+//   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
 //   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
      {
 	/* FIXME: this would normally put focus on the client on pointer */
 	/* focus - but click to focus it wouldnt */
-	if (bd->client.icccm.accepts_focus)
-	  {
-	     if (bd->client.icccm.take_focus)
-	       ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
-	     else
-	       ecore_x_window_focus(bd->client.win);
-	  }
+	e_border_focus_set(bd, 1, 1);
      }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
@@ -911,12 +940,11 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	       details[ev->detail]);
 	
 	if (ev->mode != ECORE_X_EVENT_MODE_GRAB)
-	  ecore_x_window_focus(bd->container->manager->win);
+	  e_border_focus_set(bd, 0, 1);
 	else
 	  {
 	     printf("OUT GRAB!\n");
 	  }
-	
      }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
