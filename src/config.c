@@ -150,18 +150,26 @@ e_config_user_dir(void)
 void
 e_config_type_add_node(E_Config_Base_Type *base, char *prefix, 
 		       E_Config_Datatype type, E_Config_Base_Type *list_type,
-		       int offset)
+		       int offset,
+		       int def_int,
+		       float def_float,
+		       char *def_str)
 {
    E_Config_Node *cfg_node;
    
    cfg_node = NEW(E_Config_Node, 1);
    ZERO(cfg_node, E_Config_Node, 1);
    
-   cfg_node->prefix   = strdup(prefix);
-   cfg_node->type     = type;
-   cfg_node->sub_type = list_type;
-   cfg_node->offset   = offset;
-   
+   cfg_node->prefix    = strdup(prefix);
+   cfg_node->type      = type;
+   cfg_node->sub_type  = list_type;
+   cfg_node->offset    = offset;
+   cfg_node->def_int   = def_int;
+   cfg_node->def_float = def_float;
+   if (cfg_node->def_str) 
+     {
+	e_strdup(cfg_node->def_str, def_str);
+     }
    base->nodes = evas_list_append(base->nodes, cfg_node);
 }
 
@@ -202,17 +210,21 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  
 		  val = 0;
 		  sprintf(buf, "%s/%s", prefix, node->prefix);
-		  e_db_int_get(db, buf, &val);
-		  (*((int *)(&(data[node->offset])))) = val;
+		  if (e_db_int_get(db, buf, &val))
+		    (*((int *)(&(data[node->offset])))) = val;
+		  else
+		    (*((int *)(&(data[node->offset])))) = node->def_int;
 	       }
 	     break;
 	   case E_CFG_TYPE_STR:
 	       {
-		  char * val;
+		  char *val;
 		  
 		  sprintf(buf, "%s/%s", prefix, node->prefix);
-		  val = e_db_str_get(db, buf);
-		  (*((char **)(&(data[node->offset])))) = val;
+		  if ((val = e_db_str_get(db, buf)))
+		    (*((char **)(&(data[node->offset])))) = val;
+		  else
+		    e_strdup((*((char **)(&(data[node->offset])))), node->def_str);
 	       }
 	     break;
 	   case E_CFG_TYPE_FLOAT:
@@ -221,8 +233,10 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
 		  
 		  val = 0;
 		  sprintf(buf, "%s/%s", prefix, node->prefix);
-		  e_db_float_get(db, buf, &val);
-		  (*((float *)(&(data[node->offset])))) = val;
+		  if (e_db_float_get(db, buf, &val))
+		    (*((float *)(&(data[node->offset])))) = val;
+		  else
+		    (*((float *)(&(data[node->offset])))) = node->def_float;
 	       }
 	     break;
 	   case E_CFG_TYPE_LIST:
@@ -253,6 +267,7 @@ e_config_load(char *file, char *prefix, E_Config_Base_Type *type)
    return data;
 }
 
+
 #if 0
 typedef struct _list_base List_Base;
 typedef struct _list_element List_Element;
@@ -271,26 +286,31 @@ struct _list_element
 
 /* eg: */
 void ts(void)
-{   
+{
+   /* define the different config types and structs to the config engine */
    E_Config_Base_Type *cf_list;
    E_Config_Base_Type *cf_element;
    
    cf_element = e_config_type_new();
-   E_CONFIG_NODE(cf_element, "name", E_CFG_TYPE_STR, NULL,   List_Element, name); 
-   E_CONFIG_NODE(cf_element, "size", E_CFG_TYPE_INT, NULL,   List_Element, size); 
-   E_CONFIG_NODE(cf_element, "perc", E_CFG_TYPE_FLOAT, NULL, List_Element, perc); 
+   E_CONFIG_NODE(cf_element, "name", E_CFG_TYPE_STR, NULL,   List_Element, name, 0, 0, "DEFAULT_NAME"); 
+   E_CONFIG_NODE(cf_element, "size", E_CFG_TYPE_INT, NULL,   List_Element, size, 777, 0, NULL); 
+   E_CONFIG_NODE(cf_element, "perc", E_CFG_TYPE_FLOAT, NULL, List_Element, perc, 0, 3.1415, NULL); 
    
    cf_list = e_config_type_new();
-   E_CONFIG_NODE(cf_list, "list", E_CFG_TYPE_LIST, cf_element, List_Base, elements);
-   
+   E_CONFIG_NODE(cf_list, "list", E_CFG_TYPE_LIST, cf_element, List_Base, elements, 0, 0, NULL);
+
+   /* now test it */
      {
 	List_Base *cfg_data;
 	
+	/* load the base data type from the base of the test db file */
 	cfg_data = e_config_load("test.db", "", cf_list);
+	/* no data file? */
 	if (!cfg_data)
 	  {
 	     printf("no load!\n");
 	  }
+	/* got data */
 	else
 	  {
 	     Evas_List l;

@@ -153,8 +153,9 @@ void  e_config_set_user_dir(char *dir);
 char *e_config_user_dir(void);
 
 typedef struct _e_config_base_type E_Config_Base_Type;
-typedef struct _e_config_node E_Config_Node;
-typedef enum _e_config_datatype E_Config_Datatype;
+typedef struct _e_config_node      E_Config_Node;
+typedef struct _e_config_value     E_Config_Value;
+typedef enum   _e_config_datatype  E_Config_Datatype;
 
 enum _e_config_datatype
 {
@@ -176,9 +177,12 @@ struct _e_config_node
    E_Config_Datatype   type;
    int                 offset;
    E_Config_Base_Type *sub_type;
+   int                 def_int;
+   float               def_float;
+   char               *def_str;
 };
 
-#define E_CONFIG_NODE(var, prefix, type, sub, struct_type, struct_member) \
+#define E_CONFIG_NODE(var, prefix, type, sub, struct_type, struct_member, def_int, def_float, def_str) \
 { \
   struct_type _cfg_dummy; \
   char *_cfg_p1, *_cfg_p2; \
@@ -188,14 +192,30 @@ struct _e_config_node
   _cfg_p2 = (char *)(&(_cfg_dummy.struct_member)); \
   _cfg_offset = (int)(_cfg_p2 - _cfg_p1); \
   \
-  e_config_type_add_node(var, prefix, type, sub, _cfg_offset); \
+  e_config_type_add_node(var, prefix, type, sub, _cfg_offset, def_int, def_float, def_str); \
   var->size = sizeof(struct_type); \
 }
 
+E_Config_Value *e_config_value_get_int(E_Config_Value *handle, char *file,
+				       char *prefix, char *key,
+				       int *val_ret, int default_val);
+E_Config_Value *e_config_value_get_str(E_Config_Value *handle, char *file,
+				       char *prefix, char *key,
+				       char **val_ret, char *default_val);
+E_Config_Value *e_config_value_get_float(E_Config_Value *handle, char *file,
+					 char *prefix, char *key,
+					 float *val_ret, float default_val);
 E_Config_Base_Type *e_config_type_new(void);
-void e_config_type_add_node(E_Config_Base_Type *base, char *prefix,
-			    E_Config_Datatype type, E_Config_Base_Type *list_type,
-			    int offset);
-void *e_config_load(char *file, char *prefix, E_Config_Base_Type *type);
+void                e_config_type_add_node(E_Config_Base_Type *base, 
+					   char *prefix,
+					   E_Config_Datatype type, 
+					   E_Config_Base_Type *list_type,
+					   int offset,
+					   int def_int,
+					   float def_float,
+					   char *def_str);
+void               *e_config_load(char *file, 
+				  char *prefix,
+				  E_Config_Base_Type *type);
 
 #endif

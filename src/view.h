@@ -6,9 +6,21 @@
 #include "scrollbar.h"
 #include "fs.h"
 #include "text.h"
+#include "iconbar.h"
 
+#ifndef E_VIEW_TYPEDEF
+#define E_VIEW_TYPEDEF
 typedef struct _E_View                E_View;
+#endif
+
 typedef struct _E_Icon                E_Icon;
+
+#ifndef E_ICONBAR_TYPEDEF
+#define E_ICONBAR_TYPEDEF
+typedef struct _E_Iconbar E_Iconbar;
+#endif
+
+
 
 struct _E_View
 {
@@ -127,6 +139,8 @@ struct _E_View
    int                    sel_count;
    
    int                    changed;
+
+   E_Iconbar              *iconbar;
 };
 
 

@@ -1547,9 +1547,6 @@ e_mouse_in(Eevent * ev)
 	  {
 	     if (v->is_desktop)
 	       {
-		  /* FIXME: temporary for now- should only do this if its a deskop */
-		  /* view and desktops accept focus on mouse. */
-		  e_focus_to_window(e->win);
 		  evas_event_enter(v->evas);
 	       }
 	     current_ev = NULL;
@@ -2187,6 +2184,7 @@ e_view_free(E_View *v)
 {
    char name[PATH_MAX];
    
+   
    sprintf(name, "resort_timer.%s", v->dir);
    e_del_event_timer(name);
    sprintf(name, "geometry_record.%s", v->dir);
@@ -2200,6 +2198,9 @@ e_view_free(E_View *v)
      e_fs_del_restart_handler(v->restarter);
    v->restarter = NULL;
    e_window_destroy(v->win.base);
+   
+   if (v->iconbar) e_ib_free(v->iconbar);
+
    FREE(v);
 }
 
@@ -2251,6 +2252,8 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.icon.s = 7;
    v->spacing.icon.g = 7;
    v->spacing.icon.b = 7;
+//   v->iconbar = e_ib_new(v);
+   
    views = evas_list_append(views, v);
    return v;   
 }
@@ -2375,6 +2378,7 @@ e_view_realize(E_View *v)
    e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
    e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
    e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
+  
    
    e_window_show(v->win.main);
    
@@ -2386,6 +2390,10 @@ e_view_realize(E_View *v)
 	e_view_set_dir(v, dir);
 	IF_FREE(dir);
      }
+
+   v->iconbar = e_ib_new(v);
+
+   if(v->iconbar) e_ib_realize(v->iconbar); 
    
    v->changed = 1;
 }

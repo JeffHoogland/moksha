@@ -405,7 +405,7 @@ e_focus_in(Eevent * ev)
 	E_Border *b;
 	
 	b = e_border_find_by_window(e->win);
-	if (b)
+	if ((b) && (b->win.client == e->win))
 	  {
 	     b->current.selected = 1;
 	     e_border_focus_grab_ended();
@@ -428,19 +428,17 @@ e_focus_out(Eevent * ev)
 	E_Border *b;
 	
 	b = e_border_find_by_window(e->win);
-	if (b)
+	if ((b) && (b->win.client == e->win))
 	  {	
-	     /* char *settings_db; */
-	     /* E_DB_File *db; */
 	     int focus_mode;
-	     /* char buf[PATH_MAX]; */
 	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
 	     b->current.selected = 0;
-	     if (e->key_grab) b->current.select_lost_from_grab = 1;
+	     if (e->key_grab) b->current.select_lost_from_grab = 1;	     
 	     /* settings - click to focus would affect grabs */
-	     if (!b->current.selected)
+	     if ((e->key_grab) &&
+		 (!b->current.selected))
 	       {
 		  if (focus_mode == 2) /* click to focus */
 		    {
@@ -449,12 +447,14 @@ e_focus_out(Eevent * ev)
 		       g = NEW(E_Grab, 1);
 		       ZERO(g, E_Grab, 1);
 		       g->button = 0;
-		       g->mods = 0;
+		       g->mods = EV_KEY_MODIFIER_NONE;
 		       g->any_mod = 1;
 		       g->remove_after = 1;
 		       b->grabs = evas_list_append(b->grabs, g);
+		       printf("grab me baaaybe %s\n", b->client.title);
 		       e_button_grab(b->win.main, 0,
-				     XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
+				     XEV_BUTTON_PRESS, EV_KEY_MODIFIER_NONE, 1);
+		       e_window_button_grab_auto_replay_set(b->win.main, 1);
 		    }
 	       }
 	     b->changed = 1;
@@ -908,10 +908,16 @@ e_cb_border_mouse_in(E_Border *b, Eevent *e)
 {
    int x, y;
    char *class = "Window_Grab";
+   int focus_mode;
+   E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
    if (border_mouse_buttons) return;
+   E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);   
    /* pointer focus stuff */
-   if (b->client.takes_focus) e_focus_to_window(b->win.client);
+   if (focus_mode == 0)
+     {
+	if (b->client.takes_focus) e_focus_to_window(b->win.client);
+     }
 
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
@@ -957,8 +963,11 @@ e_cb_border_mouse_down(E_Border *b, Eevent *e)
 {
    int x, y, bt;
    char *class = "Window_Grab";
+   int focus_mode;
+   E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
    
-   e_pointer_grab(b->win.main, CurrentTime);
+   E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
+/*   e_pointer_grab(b->win.main, CurrentTime);*/
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    if (border_mouse_buttons) return;
@@ -977,15 +986,19 @@ e_cb_border_mouse_down(E_Border *b, Eevent *e)
 	     
 	     g = l->data;
 	     /* find a grab that triggered this */
-	     if ((((Ev_Mouse_Down *)(e->event))->button == g->button) &&
+	     if (((((Ev_Mouse_Down *)(e->event))->button == g->button) ||
+		  (g->button == 0)) &&
 		 ((g->any_mod) ||
 		  (((Ev_Mouse_Down *)(e->event))->mods == g->mods)))
 	       {
-		  if (g->allow)
-		    e_pointer_replay(((Ev_Mouse_Down *)(e->event))->time);
 		  if (g->remove_after)
 		    {
+		       if (focus_mode == 2)
+			 e_focus_to_window(b->win.client);
+		       printf("ungrab %s\n", b->client.title);
 		       e_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
+		       e_window_button_grab_auto_replay_set(b->win.main, 0);
+/*		       e_pointer_ungrab(((Ev_Mouse_Up *)(e->event))->time);*/
 		       free(g);
 		       b->grabs = evas_list_remove(b->grabs, g);
 		       goto again;
@@ -1588,6 +1601,7 @@ e_border_remove_mouse_grabs(E_Border *b)
 	     E_Grab *g;
 	     
 	     g = l->data;
+	     printf("nooo grabs\n");
 	     e_button_ungrab(b->win.main, g->button, g->mods, g->any_mod);
 	     FREE(g);
 	  }
@@ -1618,11 +1632,13 @@ e_border_attach_mouse_grabs(E_Border *b)
 	     g = NEW(E_Grab, 1);
 	     ZERO(g, E_Grab, 1);
 	     g->button = 0;
-	     g->mods = 0;
+	     g->mods = EV_KEY_MODIFIER_NONE;
 	     g->any_mod = 1;
 	     g->remove_after = 1;
 	     b->grabs = evas_list_append(b->grabs, g);
-	     e_button_grab(b->win.main, 0, XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
+	     printf("grab me baaaybe %s\n", b->client.title);
+	     e_button_grab(b->win.main, 0, XEV_BUTTON_PRESS, EV_KEY_MODIFIER_NONE, 1);
+	     e_window_button_grab_auto_replay_set(b->win.main, 1);
 	  }
      }
    
@@ -1664,7 +1680,7 @@ e_border_attach_mouse_grabs(E_Border *b)
 		  g->any_mod = any_mod;
 		  g->remove_after = 0;
 		  b->grabs = evas_list_append(b->grabs, g);
-		  e_button_grab(b->win.main, button, XEV_BUTTON | XEV_MOUSE_MOVE, mods, 0);
+		  e_button_grab(b->win.main, button, XEV_BUTTON_PRESS, mods, 0);
 	       }
 	  }
 	e_db_close(db);

@@ -48,6 +48,7 @@ enlightenment_SOURCES = \
 	text.h text.c \
 	util.h util.c \
 	view.h view.c \
-	e.h
+	e.h \
+	iconbar.c
 
 enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)

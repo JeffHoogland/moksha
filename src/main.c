@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "view.h"
 #include "place.h"
+#include "iconbar.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"
@@ -115,7 +116,7 @@ main(int argc, char **argv)
    e_sync();
    e_reset_error_handler();
    e_ungrab();
-
+   
    e_fs_init();
    e_desktops_init();
    e_border_init();
@@ -127,6 +128,7 @@ main(int argc, char **argv)
    e_guides_init();
    e_place_init();
    e_cursors_init();
+   e_iconbar_init();
    
 #ifdef USE_FERITE
    e_ferite_init();
@@ -141,6 +143,7 @@ main(int argc, char **argv)
 #ifdef USE_FERITE
    e_ferite_deinit();
 #endif
-   
+
+
    return 0;
 }

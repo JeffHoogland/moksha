@@ -568,7 +568,7 @@ void e_guides_init(void)
    
    guides.current.display.loc = E_GUIDES_DISPLAY_LOCATION_SCREEN_MIDDLE;
    guides.current.display.text = NULL;
-   guides.current.display.icon = NULL;
+   guides.current.display.icon = NULL; 
    guides.current.display.align.x = 0.5;
    guides.current.display.align.y = 0.5;
    guides.current.x = 0;

@@ -147,6 +147,7 @@ e_background_realize(E_Background *bg, Evas evas)
    bg->geom.w = 0;
    bg->geom.h = 0;
    e_background_set_size(bg, ww, hh);
+
 }
 
 void
