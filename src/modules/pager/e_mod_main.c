@@ -4,11 +4,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/* TODO List:
- *
- * * Get E_EVENT_BORDER_ADD when a window is moved from one desk to another by the wm
- */
-
 /* module private routines */
 static Evas_List   *_pager_init(E_Module *module);
 static void        _pager_shutdown(Evas_List *pagers);

@@ -29,12 +29,10 @@ Current freeze issues are:
 
 ISSUES:
 
-* clock module needs fixing to have right click menu per face
-* clock module should only make 1 clock per container and allow u to enable/disable that clock on that container 
-* same for ibar, temperature and battery modules
-* pager needs 1 pager face per zone by default (optionally able to be turned off)
+* ibar, temp and battery modules should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
+* pager needs option to turn each face off
 * pager needs to be able to split off each desk in a zone it a different gadget
-* pager right click menu needs to do a lot more (as with clock)
+* pager right click menu needs to do a lot more
 * gadman gadget menu needs icons :)
 * add a menu item to each gadman client menu to edge editing mode
 * pager needs an overhaul
