@@ -12,10 +12,10 @@
 #include "util.h"
 
 static Evas_List views = NULL;
-static Eevent *current_ev = NULL;
+static Ecore_Event *current_ev = NULL;
 
-static Ev_Key_Modifiers mulit_select_mod = EV_KEY_MODIFIER_SHIFT;
-static Ev_Key_Modifiers range_select_mod = EV_KEY_MODIFIER_CTRL;
+static Ecore_Event_Key_Modifiers mulit_select_mod = ECORE_EVENT_KEY_MODIFIER_SHIFT;
+static Ecore_Event_Key_Modifiers range_select_mod = ECORE_EVENT_KEY_MODIFIER_CTRL;
 
 static void e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
@@ -25,23 +25,23 @@ static void e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, i
 static void e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
-static void e_idle(void *data);
-static void e_wheel(Eevent * ev);
-static void e_key_down(Eevent * ev);
-static void e_key_up(Eevent * ev);
-static void e_mouse_down(Eevent * ev);
-static void e_mouse_up(Eevent * ev);
-static void e_mouse_move(Eevent * ev);
-static void e_mouse_in(Eevent * ev);
-static void e_mouse_out(Eevent * ev);
-static void e_window_expose(Eevent * ev);
-static void e_configure(Eevent * ev);
-static void e_property(Eevent * ev);
-static void e_unmap(Eevent * ev);
-static void e_visibility(Eevent * ev);
-static void e_focus_in(Eevent * ev);
-static void e_focus_out(Eevent * ev);
-static void e_delete(Eevent * ev);
+static void ecore_idle(void *data);
+static void e_wheel(Ecore_Event * ev);
+static void ecore_key_down(Ecore_Event * ev);
+static void ecore_key_up(Ecore_Event * ev);
+static void e_mouse_down(Ecore_Event * ev);
+static void e_mouse_up(Ecore_Event * ev);
+static void e_mouse_move(Ecore_Event * ev);
+static void e_mouse_in(Ecore_Event * ev);
+static void e_mouse_out(Ecore_Event * ev);
+static void ecore_window_expose(Ecore_Event * ev);
+static void e_configure(Ecore_Event * ev);
+static void e_property(Ecore_Event * ev);
+static void e_unmap(Ecore_Event * ev);
+static void e_visibility(Ecore_Event * ev);
+static void ecore_focus_in(Ecore_Event * ev);
+static void ecore_focus_out(Ecore_Event * ev);
+static void e_delete(Ecore_Event * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
 static void e_view_resort_timeout(int val, void *data);
@@ -271,7 +271,7 @@ e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val)
 static void
 e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
-   Ev_Mouse_Down          *ev;
+   Ecore_Event_Mouse_Down          *ev;
    E_View *v;
    
    if (!current_ev) return;
@@ -307,7 +307,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	e_view_selection_update(v);
      }
    if( _b == 2 && ev->double_click )
-	 e_event_loop_quit();
+	 ecore_event_loop_quit();
    UN(_e);
    UN(_o);
 }
@@ -315,7 +315,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 static void
 e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {    
-   Ev_Mouse_Up          *ev;
+   Ecore_Event_Mouse_Up          *ev;
    E_View *v;
    int dx, dy;
    
@@ -413,7 +413,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 static void
 e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
-   Ev_Mouse_Down          *ev;
+   Ecore_Event_Mouse_Down          *ev;
    E_View *v;
    
    if (!current_ev) return;
@@ -626,9 +626,9 @@ e_view_icon_exec(E_Icon *ic)
 	printf("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
 	e_view_realize(v);
-	e_window_set_title(v->win.base, ic->file);
-	e_window_set_name_class(v->win.base, "FileView", "E");
-	e_window_set_min_size(v->win.base, 8, 8);
+	ecore_window_set_title(v->win.base, ic->file);
+	ecore_window_set_name_class(v->win.base, "FileView", "E");
+	ecore_window_set_min_size(v->win.base, 8, 8);
      }
    e_view_icon_deselect(ic);
 }
@@ -806,8 +806,8 @@ static void
 e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
-   Eevent *ev;
-   Ev_Mouse_Down *e;
+   Ecore_Event *ev;
+   Ecore_Event_Mouse_Down *e;
    
    ev = e_view_get_current_event();
    if (!ev) return;
@@ -855,8 +855,8 @@ static void
 e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
-   Eevent *ev;
-   Ev_Mouse_Up *e;
+   Ecore_Event *ev;
+   Ecore_Event_Mouse_Up *e;
    
    ev = e_view_get_current_event();
    if (!ev) return;
@@ -867,7 +867,7 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->state.clicked = 0;
 	ic->state.just_selected = 0;
 	e_view_icon_update_state(ic);
-	e_window_destroy(ic->view->drag.win);
+	ecore_window_destroy(ic->view->drag.win);
 	ic->view->drag.started = 0;
 	return;	
      }
@@ -932,8 +932,8 @@ static void
 e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
-   Eevent *ev;
-   Ev_Mouse_Move *e;
+   Ecore_Event *ev;
+   Ecore_Event_Mouse_Move *e;
    
    ev = e_view_get_current_event();
    if (!ev) return;
@@ -989,7 +989,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 			 }
 		    }
 	       }
-	     e_window_get_geometry(0, NULL, NULL, &rw, &rh);
+	     ecore_window_get_geometry(0, NULL, NULL, &rw, &rh);
 	     downx = ic->view->select.down.x + ic->view->location.x;
 	     downy = ic->view->select.down.y + ic->view->location.y;
 	     
@@ -1019,9 +1019,9 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ic->view->drag.offset.y = downy - ic->view->drag.y;
 	     
 	     if ((ww < 1) || (wh < 1)) return;
-	     ic->view->drag.win = e_window_override_new(0, wx, wy, ww, wh);
-	     pmap = e_pixmap_new(ic->view->drag.win, ww, wh, 0);
-	     mask = e_pixmap_new(ic->view->drag.win, ww, wh, 1);
+	     ic->view->drag.win = ecore_window_override_new(0, wx, wy, ww, wh);
+	     pmap = ecore_pixmap_new(ic->view->drag.win, ww, wh, 0);
+	     mask = ecore_pixmap_new(ic->view->drag.win, ww, wh, 1);
 	       {
 		  Imlib_Image im;
 		  
@@ -1110,13 +1110,13 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  imlib_render_image_on_drawable(0, 0);
 		  imlib_free_image();
 	       }
-	     e_window_set_background_pixmap(ic->view->drag.win, pmap);
-	     e_window_set_shape_mask(ic->view->drag.win, mask);
-	     e_window_ignore(ic->view->drag.win);
-	     e_window_raise(ic->view->drag.win);
-	     e_window_show(ic->view->drag.win);
-	     e_pixmap_free(pmap);
-	     e_pixmap_free(mask);
+	     ecore_window_set_background_pixmap(ic->view->drag.win, pmap);
+	     ecore_window_set_shape_mask(ic->view->drag.win, mask);
+	     ecore_window_ignore(ic->view->drag.win);
+	     ecore_window_raise(ic->view->drag.win);
+	     ecore_window_show(ic->view->drag.win);
+	     ecore_pixmap_free(pmap);
+	     ecore_pixmap_free(mask);
 	     ic->view->drag.started = 1;
 	  }
      }
@@ -1137,7 +1137,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-e_idle(void *data)
+ecore_idle(void *data)
 {
    Evas_List l;
 
@@ -1159,7 +1159,7 @@ e_view_geometry_record(E_View *v)
      {
 	int left, top;
 	
-	e_window_get_frame_size(v->win.base, &left, NULL,
+	ecore_window_get_frame_size(v->win.base, &left, NULL,
 				&top, NULL);
 	efsd_set_metadata_int(e_fs_get_connection(),
 			      "/view/x", v->dir, 
@@ -1192,7 +1192,7 @@ e_view_queue_geometry_record(E_View *v)
    char name[PATH_MAX];
    
    sprintf(name, "geometry_record.%s", v->dir);
-   e_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
+   ecore_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
 }
 
 void
@@ -1201,14 +1201,14 @@ e_view_queue_icon_xy_record(E_View *v)
    char name[PATH_MAX];
    
    sprintf(name, "icon_xy_record.%s", v->dir);
-   e_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
+   ecore_add_event_timer(name, 0.10, e_view_write_icon_xy_timeout, 0, v);
 }
 
 
 static void
-e_configure(Eevent * ev)
+e_configure(Ecore_Event * ev)
 {
-   Ev_Window_Configure *e;
+   Ecore_Event_Window_Configure *e;
    Evas_List l;
    
    e = ev->event;
@@ -1238,17 +1238,17 @@ e_configure(Eevent * ev)
 		  printf("... a new size!\n");
 		  v->size.w = e->w;
 		  v->size.h = e->h;
-		  if (v->pmap) e_pixmap_free(v->pmap);
+		  if (v->pmap) ecore_pixmap_free(v->pmap);
 		  v->pmap = 0;
-		  e_window_resize(v->win.main, v->size.w, v->size.h);
+		  ecore_window_resize(v->win.main, v->size.w, v->size.h);
 		  if (v->options.back_pixmap)
 		    {
-		       v->pmap = e_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
-		       evas_set_output(v->evas, e_display_get(), v->pmap,
+		       v->pmap = ecore_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
+		       evas_set_output(v->evas, ecore_display_get(), v->pmap,
 				       evas_get_visual(v->evas),
 				       evas_get_colormap(v->evas));
-		       e_window_set_background_pixmap(v->win.main, v->pmap);
-		       e_window_clear(v->win.main);
+		       ecore_window_set_background_pixmap(v->win.main, v->pmap);
+		       ecore_window_clear(v->win.main);
 		    }
 		  if (v->bg)
 		    {
@@ -1270,9 +1270,9 @@ e_configure(Eevent * ev)
 }
 
 static void
-e_property(Eevent * ev)
+e_property(Ecore_Event * ev)
 {
-   Ev_Window_Configure *e;
+   Ecore_Event_Window_Configure *e;
    Evas_List l;
    
    e = ev->event;
@@ -1288,9 +1288,9 @@ e_property(Eevent * ev)
 }
 
 static void
-e_unmap(Eevent * ev)
+e_unmap(Ecore_Event * ev)
 {
-   Ev_Window_Unmap *e;
+   Ecore_Event_Window_Unmap *e;
    Evas_List l;
    
    e = ev->event;
@@ -1306,9 +1306,9 @@ e_unmap(Eevent * ev)
 }
 
 static void
-e_visibility(Eevent * ev)
+e_visibility(Ecore_Event * ev)
 {
-   Ev_Window_Unmap *e;
+   Ecore_Event_Window_Unmap *e;
    Evas_List l;
    
    e = ev->event;
@@ -1324,9 +1324,9 @@ e_visibility(Eevent * ev)
 }
 
 static void
-e_focus_in(Eevent * ev)
+ecore_focus_in(Ecore_Event * ev)
 {
-   Ev_Window_Focus_In *e;
+   Ecore_Event_Window_Focus_In *e;
    Evas_List l;
    
    e = ev->event;
@@ -1342,9 +1342,9 @@ e_focus_in(Eevent * ev)
 }
 
 static void
-e_focus_out(Eevent * ev)
+ecore_focus_out(Ecore_Event * ev)
 {
-   Ev_Window_Focus_Out *e;
+   Ecore_Event_Window_Focus_Out *e;
    Evas_List l;
    
    e = ev->event;
@@ -1360,9 +1360,9 @@ e_focus_out(Eevent * ev)
 }
 
 static void
-e_delete(Eevent * ev)
+e_delete(Ecore_Event * ev)
 {
-   Ev_Window_Delete *e;
+   Ecore_Event_Window_Delete *e;
    Evas_List l;
    
    e = ev->event;
@@ -1380,9 +1380,9 @@ e_delete(Eevent * ev)
 }
 
 static void 
-e_wheel(Eevent * ev)
+e_wheel(Ecore_Event * ev)
 {
-   Ev_Wheel           *e;
+   Ecore_Event_Wheel           *e;
    Evas_List l;
    
    e = ev->event;
@@ -1398,9 +1398,9 @@ e_wheel(Eevent * ev)
 }
 
 static void
-e_key_down(Eevent * ev)
+ecore_key_down(Ecore_Event * ev)
 {
-   Ev_Key_Down          *e;
+   Ecore_Event_Key_Down          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1435,7 +1435,7 @@ e_key_down(Eevent * ev)
 	       {
 		  char *type;
 		  
-		  type = e_key_press_translate_into_typeable(e);
+		  type = ecore_keypress_translate_into_typeable(e);
 		  if (type)
 		    {
 		    }
@@ -1446,9 +1446,9 @@ e_key_down(Eevent * ev)
 }
 
 static void
-e_key_up(Eevent * ev)
+ecore_key_up(Ecore_Event * ev)
 {
-   Ev_Key_Up          *e;
+   Ecore_Event_Key_Up          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1462,9 +1462,9 @@ e_key_up(Eevent * ev)
 }
 
 static void
-e_mouse_down(Eevent * ev)
+e_mouse_down(Ecore_Event * ev)
 {
-   Ev_Mouse_Down          *e;
+   Ecore_Event_Mouse_Down          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1485,9 +1485,9 @@ e_mouse_down(Eevent * ev)
 }
 
 static void
-e_mouse_up(Eevent * ev)
+e_mouse_up(Ecore_Event * ev)
 {
-   Ev_Mouse_Up          *e;
+   Ecore_Event_Mouse_Up          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1508,9 +1508,9 @@ e_mouse_up(Eevent * ev)
 }
 
 static void
-e_mouse_move(Eevent * ev)
+e_mouse_move(Ecore_Event * ev)
 {
-   Ev_Mouse_Move          *e;
+   Ecore_Event_Mouse_Move          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1531,9 +1531,9 @@ e_mouse_move(Eevent * ev)
 }
 
 static void
-e_mouse_in(Eevent * ev)
+e_mouse_in(Ecore_Event * ev)
 {
-   Ev_Window_Enter          *e;
+   Ecore_Event_Window_Enter          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1557,9 +1557,9 @@ e_mouse_in(Eevent * ev)
 }
 
 static void
-e_mouse_out(Eevent * ev)
+e_mouse_out(Ecore_Event * ev)
 {
-   Ev_Window_Leave          *e;
+   Ecore_Event_Window_Leave          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1580,9 +1580,9 @@ e_mouse_out(Eevent * ev)
 }
 
 static void
-e_window_expose(Eevent * ev)
+ecore_window_expose(Ecore_Event * ev)
 {
-   Ev_Window_Expose          *e;
+   Ecore_Event_Window_Expose          *e;
    Evas_List l;
    
    e = ev->event;
@@ -1653,7 +1653,7 @@ e_view_handle_fs_restart(void *data)
    v->is_listing = 1;
 }
 
-Eevent *
+Ecore_Event *
 e_view_get_current_event(void)
 {
    return current_ev;
@@ -1946,7 +1946,7 @@ e_view_queue_resort(E_View *v)
    if (v->have_resort_queued) return;
    v->have_resort_queued = 1;
    sprintf(name, "resort_timer.%s", v->dir);
-   e_add_event_timer(name, 1.0, e_view_resort_timeout, 0, v);
+   ecore_add_event_timer(name, 1.0, e_view_resort_timeout, 0, v);
 }
 
 void
@@ -2186,20 +2186,20 @@ e_view_free(E_View *v)
    
    
    sprintf(name, "resort_timer.%s", v->dir);
-   e_del_event_timer(name);
+   ecore_del_event_timer(name);
    sprintf(name, "geometry_record.%s", v->dir);
-   e_del_event_timer(name);
+   ecore_del_event_timer(name);
    sprintf(name, "icon_xy_record.%s", v->dir);
-   e_del_event_timer(name);
+   ecore_del_event_timer(name);
    
    views = evas_list_remove(views, v);
    efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
    if (v->restarter)
      e_fs_del_restart_handler(v->restarter);
    v->restarter = NULL;
-   e_window_destroy(v->win.base);
+   ecore_window_destroy(v->win.base);
    
-   if (v->iconbar) e_ib_free(v->iconbar);
+   if (v->iconbar) e_iconbar_free(v->iconbar);
 
    FREE(v);
 }
@@ -2252,7 +2252,7 @@ _member.r = _r; _member.g = _g; _member.b = _b; _member.a = _a;
    v->spacing.icon.s = 7;
    v->spacing.icon.g = 7;
    v->spacing.icon.b = 7;
-//   v->iconbar = e_ib_new(v);
+//   v->iconbar = e_iconbar_new(v);
    
    views = evas_list_append(views, v);
    return v;   
@@ -2311,12 +2311,12 @@ e_view_realize(E_View *v)
    char *font_dir;
    
    if (v->evas) return;
-   v->win.base = e_window_new(0, 
+   v->win.base = ecore_window_new(0, 
 			      v->location.x, v->location.y, 
 			      v->size.w, v->size.h);   
-   e_window_set_delete_inform(v->win.base);
+   ecore_window_set_delete_inform(v->win.base);
    font_dir = e_config_get("fonts");
-   v->evas = evas_new_all(e_display_get(),
+   v->evas = evas_new_all(ecore_display_get(),
 			  v->win.base,
 			  0, 0, v->size.w, v->size.h,
 			  v->options.render_method,
@@ -2327,19 +2327,19 @@ e_view_realize(E_View *v)
    v->win.main = evas_get_window(v->evas);
    e_cursors_display_in_window(v->win.main, "View");
    evas_event_move(v->evas, -999999, -999999);
-   e_window_set_events(v->win.base,
+   ecore_window_set_events(v->win.base,
 		       XEV_VISIBILITY | XEV_CONFIGURE | 
 		       XEV_PROPERTY | XEV_FOCUS);
-   e_window_set_events(v->win.main, 
+   ecore_window_set_events(v->win.main, 
 		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
 		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
    if (v->options.back_pixmap)
      {
-	v->pmap = e_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
-	evas_set_output(v->evas, e_display_get(), v->pmap,
+	v->pmap = ecore_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
+	evas_set_output(v->evas, ecore_display_get(), v->pmap,
 			evas_get_visual(v->evas), 
 			evas_get_colormap(v->evas));
-        e_window_set_background_pixmap(v->win.main, v->pmap);
+        ecore_window_set_background_pixmap(v->win.main, v->pmap);
      }
    if (v->bg)
      {
@@ -2380,7 +2380,7 @@ e_view_realize(E_View *v)
    e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
   
    
-   e_window_show(v->win.main);
+   ecore_window_show(v->win.main);
    
      {
 	char *dir;
@@ -2391,9 +2391,9 @@ e_view_realize(E_View *v)
 	IF_FREE(dir);
      }
 
-   v->iconbar = e_ib_new(v);
+   v->iconbar = e_iconbar_new(v);
 
-   if(v->iconbar) e_ib_realize(v->iconbar); 
+   if(v->iconbar) e_iconbar_realize(v->iconbar); 
    
    v->changed = 1;
 }
@@ -2413,7 +2413,7 @@ e_view_update(E_View *v)
 	  }
 	if (v->drag.update)
 	  {
-	     e_window_move(v->drag.win, v->drag.x, v->drag.y);
+	     ecore_window_move(v->drag.win, v->drag.x, v->drag.y);
 	     v->drag.update = 0;
 	  }
      }
@@ -2433,7 +2433,7 @@ e_view_update(E_View *v)
 		  int x, y, w, h;
 		  
 		  imlib_updates_get_coordinates(u, &x, &y, &w, &h);
-		  e_window_clear_area(v->win.main, x, y, w, h);
+		  ecore_window_clear_area(v->win.main, x, y, w, h);
 	       }
 	     imlib_updates_free(up);
 	  }
@@ -2628,10 +2628,10 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.x)))
 					{
-					   e_window_move(v->win.base,
+					   ecore_window_move(v->win.base,
 							 v->location.x,
 							 v->location.y);
-					   e_window_set_xy_hints(v->win.base,
+					   ecore_window_set_xy_hints(v->win.base,
 								 v->location.x,
 								 v->location.y);
 					}
@@ -2649,10 +2649,10 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.y)))
 					{
-					   e_window_move(v->win.base,
+					   ecore_window_move(v->win.base,
 							 v->location.x,
 							 v->location.y);
-					   e_window_set_xy_hints(v->win.base,
+					   ecore_window_set_xy_hints(v->win.base,
 								 v->location.x,
 								 v->location.y);
 					}
@@ -2670,7 +2670,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.w)))
 					{
-					   e_window_resize(v->win.base,
+					   ecore_window_resize(v->win.base,
 							   v->size.w,
 							   v->size.h);
 					   v->size.force = 1;
@@ -2689,7 +2689,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->size.h)))
 					{
-					   e_window_resize(v->win.base,
+					   ecore_window_resize(v->win.base,
 							   v->size.w,
 							   v->size.h);
 					   v->size.force = 1;
@@ -2762,22 +2762,22 @@ e_view_handle_fs(EfsdEvent *ev)
 void
 e_view_init(void)
 {
-   e_event_filter_handler_add(EV_MOUSE_DOWN,               e_mouse_down);
-   e_event_filter_handler_add(EV_MOUSE_UP,                 e_mouse_up);
-   e_event_filter_handler_add(EV_MOUSE_MOVE,               e_mouse_move);
-   e_event_filter_handler_add(EV_MOUSE_IN,                 e_mouse_in);
-   e_event_filter_handler_add(EV_MOUSE_OUT,                e_mouse_out);
-   e_event_filter_handler_add(EV_WINDOW_EXPOSE,            e_window_expose);
-   e_event_filter_handler_add(EV_KEY_DOWN,                 e_key_down);
-   e_event_filter_handler_add(EV_KEY_UP,                   e_key_up);
-   e_event_filter_handler_add(EV_MOUSE_WHEEL,              e_wheel);
-   e_event_filter_handler_add(EV_WINDOW_CONFIGURE,         e_configure);
-   e_event_filter_handler_add(EV_WINDOW_PROPERTY,          e_property);
-   e_event_filter_handler_add(EV_WINDOW_UNMAP,             e_unmap);
-   e_event_filter_handler_add(EV_WINDOW_VISIBILITY,        e_visibility);
-   e_event_filter_handler_add(EV_WINDOW_FOCUS_IN,          e_focus_in);
-   e_event_filter_handler_add(EV_WINDOW_FOCUS_OUT,         e_focus_out);
-   e_event_filter_handler_add(EV_WINDOW_DELETE,            e_delete);
-   e_event_filter_idle_handler_add(e_idle, NULL);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,                 e_mouse_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_IN,                 e_mouse_in);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_OUT,                e_mouse_out);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            ecore_window_expose);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,                 ecore_key_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   ecore_key_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_WHEEL,              e_wheel);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_CONFIGURE,         e_configure);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_PROPERTY,          e_property);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_UNMAP,             e_unmap);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_VISIBILITY,        e_visibility);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_IN,          ecore_focus_in);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT,         ecore_focus_out);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_DELETE,            e_delete);
+   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
    e_fs_add_event_handler(e_view_handle_fs);
 }

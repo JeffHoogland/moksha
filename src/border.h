@@ -14,7 +14,7 @@ typedef struct _E_Border              E_Border;
 struct _E_Grab
 {
    int              button;
-   Ev_Key_Modifiers mods;
+   Ecore_Event_Key_Modifiers mods;
    int              any_mod;
    int              remove_after;
    int              allow;

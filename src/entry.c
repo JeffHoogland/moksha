@@ -4,8 +4,8 @@
 
 static Evas_List entries;
 
-static void e_clear_selection(Eevent * ev);
-static void e_paste_request(Eevent * ev);
+static void e_clear_selection(Ecore_Event * ev);
+static void e_paste_request(Ecore_Event * ev);
 
 static void e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
@@ -15,9 +15,9 @@ static void e_entry_unrealize(E_Entry *entry);
 static void e_entry_configure(E_Entry *entry);
 
 static void
-e_clear_selection(Eevent * ev)
+e_clear_selection(Ecore_Event * ev)
 {
-   Ev_Clear_Selection *e;
+   Ecore_Event_Clear_Selection *e;
    Evas_List l;
    
    e = ev->event;
@@ -28,7 +28,7 @@ e_clear_selection(Eevent * ev)
 	entry = l->data;
 	if (entry->selection_win == e->win)
 	  {
-	     e_window_destroy(entry->selection_win);
+	     ecore_window_destroy(entry->selection_win);
 	     entry->selection_win = 0;
 	     entry->select.start = -1;
 	     entry->select.length = 0;
@@ -38,9 +38,9 @@ e_clear_selection(Eevent * ev)
 }
 
 static void
-e_paste_request(Eevent * ev)
+e_paste_request(Ecore_Event * ev)
 {
-   Ev_Paste_Request *e;
+   Ecore_Event_Paste_Request *e;
    Evas_List l;
    
    e = ev->event;
@@ -69,8 +69,8 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    entry = _data;
    if ((_b == 2) && (!entry->mouse_down))       
      {
-	if (entry->paste_win) e_window_destroy(entry->paste_win);
-	entry->paste_win = e_selection_request();
+	if (entry->paste_win) ecore_window_destroy(entry->paste_win);
+	entry->paste_win = ecore_selection_request();
      }
    else if (!entry->mouse_down)
      {
@@ -185,8 +185,8 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     str2 = e_entry_get_selection(entry);
 	     if (str2)
 	       {
-		  if (entry->selection_win) e_window_destroy(entry->selection_win);
-		  entry->selection_win = e_selection_set(str2);
+		  if (entry->selection_win) ecore_window_destroy(entry->selection_win);
+		  entry->selection_win = ecore_selection_set(str2);
 		  free(str2);
 	       }
 	  }
@@ -359,8 +359,8 @@ e_entry_configure(E_Entry *entry)
 void
 e_entry_init(void)
 {
-   e_event_filter_handler_add(EV_PASTE_REQUEST,               e_paste_request);
-   e_event_filter_handler_add(EV_CLEAR_SELECTION,             e_clear_selection);
+   ecore_event_filter_handler_add(ECORE_EVENT_PASTE_REQUEST,   e_paste_request);
+   ecore_event_filter_handler_add(ECORE_EVENT_CLEAR_SELECTION, e_clear_selection);
 }
 
 void
@@ -387,7 +387,7 @@ e_entry_new(void)
 }
 
 void
-e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
+e_entry_handlecore_keypress(E_Entry *entry, Ecore_Event_Key_Down *e)
 {
    if (!entry->focused) return;
    if (!strcmp(e->key, "Up"))
@@ -428,8 +428,8 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      }
    else if (!strcmp(e->key, "Insert"))
      {
-	if (entry->paste_win) e_window_destroy(entry->paste_win);
-	entry->paste_win = e_selection_request();
+	if (entry->paste_win) ecore_window_destroy(entry->paste_win);
+	entry->paste_win = ecore_selection_request();
      }
    else if (!strcmp(e->key, "Home"))
      {
@@ -457,7 +457,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      {
 	char *type;
 	
-	type = e_key_press_translate_into_typeable(e);
+	type = ecore_keypress_translate_into_typeable(e);
 	if (type)
 	  {
 	     printf("%0x\n", type[0]);

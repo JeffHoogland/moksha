@@ -57,11 +57,11 @@ E_Prof __p, *__pp; \
 Evas_List __pl; \
 __p.func = _prof_func; \
 __p.total = 0.0; \
-__p.t1 = e_get_time(); \
+__p.t1 = ecore_get_time(); \
 __p.t2 = 0.0;
 
 #define E_PROF_STOP \
-__p.t2 = e_get_time(); \
+__p.t2 = ecore_get_time(); \
 for (__pl = __e_profiles; __pl; __pl = __pl->next) \
 { \
 __pp = __pl->data; \
@@ -100,7 +100,7 @@ printf("%3.3f : %s()\n", __p->total, __p->func); \
 /* Observer macros */
 #define OBS_PROPERTIES \
 Evas_List watched; \
-Eevent_Type e_event; \
+Ecore_Event_Type e_event; \
 void (*e_obs_notify)(void *_e_obs, void *_e_obj); \
 void (*e_obs_free)(void *_e_obs);
 #define OBS_INIT(_e_obs, _e_event, _e_obs_notify, _e_obs_free) \
@@ -125,7 +125,7 @@ void (*e_obs_free)(void *_e_obs);
     Evas_List obs; \
     obs = _e_obj->observers; \
     while (obs) { \
-	if (((E_Observer *)obs->data)->e_event == EV_MAX || \
+	if (((E_Observer *)obs->data)->e_event == ECORE_EVENT_MAX || \
 	    ((E_Observer *)obs->data)->e_event == _e_event) \
 	  ((E_Observer *)obs->data)->e_obs_notify(obs->data, _e_obj); \
 	obs = obs->next; \

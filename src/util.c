@@ -91,7 +91,7 @@ e_file_real(char *file)
 }
 
 char *
-e_file_get_file(char *file)
+e_filecore_get_file(char *file)
 {
    char *p;
    char *f;
@@ -107,7 +107,7 @@ e_file_get_file(char *file)
 }
 
 char *
-e_file_get_dir(char *file)
+e_filecore_get_dir(char *file)
 {
    char *p;
    char *f;

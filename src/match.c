@@ -23,7 +23,7 @@ e_match_set_props(E_Border *b)
    /* if we have a match specifying a size */
    b->current.requested.w = match_w;
    b->current.requested.h = match_h;
-   e_window_resize(b->win.client, match_w, match_h);
+   ecore_window_resize(b->win.client, match_w, match_h);
    /* if we have a match specifying a desktop */
    b->client.desk = match_desk;   
    e_border_raise(b);

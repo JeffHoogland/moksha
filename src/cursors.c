@@ -68,7 +68,7 @@ e_cursors_find(char *type)
 	       {
 		  cursors = evas_list_remove(cursors, c);
 		  IF_FREE(c->type);
-		  e_cursor_free(c->cursor);
+		  ecore_cursor_free(c->cursor);
 		  FREE(c);
 		  return NULL;
 	       }
@@ -117,8 +117,8 @@ e_cursors_display_in_window(Window win, char *type)
 	     imlib_context_set_image(im);
 	     w = imlib_image_get_width();
 	     h = imlib_image_get_height();
-	     pmap = e_pixmap_new(0, w, h, 1);
-	     mask = e_pixmap_new(0, w, h, 1);
+	     pmap = ecore_pixmap_new(0, w, h, 1);
+	     mask = ecore_pixmap_new(0, w, h, 1);
 	     data = imlib_image_get_data_for_reading_only();
 	     
 	     /* figure out fg & bg */
@@ -166,14 +166,14 @@ e_cursors_display_in_window(Window win, char *type)
 	     /* use XImages & XShm */
 	     
 	     /* get some gc's set up */
-	     gcb = e_gc_new(pmap);
-	     gcf = e_gc_new(pmap);
-	     e_gc_set_fg(gcb, 0);
-	     e_gc_set_fg(gcf, 1);
+	     gcb = ecore_gc_new(pmap);
+	     gcf = ecore_gc_new(pmap);
+	     ecore_gc_set_fg(gcb, 0);
+	     ecore_gc_set_fg(gcf, 1);
 	     
 	     /* fill out cursor pixmap with 0's (bg)  */
-	     e_fill_rectangle(pmap, gcb, 0, 0, w, h);
-	     e_fill_rectangle(mask, gcb, 0, 0, w, h);
+	     ecore_fill_rectangle(pmap, gcb, 0, 0, w, h);
+	     ecore_fill_rectangle(mask, gcb, 0, 0, w, h);
 	     if (!data) goto done2;
 	     for (y = 0; y < h; y++)
 	       {
@@ -190,16 +190,16 @@ e_cursors_display_in_window(Window win, char *type)
 		       
 		       if (a > 127) 
 			 {
-			    e_draw_point(mask, gcf, x, y);
+			    ecore_draw_point(mask, gcf, x, y);
 			    if ((r == fr) && (g == fg) && (b == fb))
-			      e_draw_point(pmap, gcf, x, y);
+			      ecore_draw_point(pmap, gcf, x, y);
 			 }
 		    }
 	       }
 	     done2:
 	     /* clean up */
-	     e_gc_free(gcb);
-	     e_gc_free(gcf);
+	     ecore_gc_free(gcb);
+	     ecore_gc_free(gcf);
 	     
 	     imlib_image_put_back_data(data);
 	     imlib_free_image();
@@ -212,14 +212,14 @@ e_cursors_display_in_window(Window win, char *type)
 	  }
 	if (c) 
 	  {
-	     c->cursor = e_cursor_new(pmap, mask, hx, hy, fr, fg, fb, br, bg, bb);
-	     e_pixmap_free(pmap);
-	     e_pixmap_free(mask);
+	     c->cursor = ecore_cursor_new(pmap, mask, hx, hy, fr, fg, fb, br, bg, bb);
+	     ecore_pixmap_free(pmap);
+	     ecore_pixmap_free(mask);
 	     cursors = evas_list_append(cursors, c);
 	  }
      }
    if (c)
-     e_cursor_set(win, c->cursor);
+     ecore_cursor_set(win, c->cursor);
    else
      {
 	if (!strcmp(type, "Default")) return;
@@ -239,6 +239,6 @@ e_cursors_display(char *type)
 void
 e_cursors_init(void)
 {
-   e_event_filter_idle_handler_add(e_cursors_idle, NULL);
+   ecore_event_filter_idle_handler_add(e_cursors_idle, NULL);
    e_cursors_set("Default");
 }

@@ -57,13 +57,13 @@ struct _E_Action_Impl
 
 
 void e_action_start(char *action, E_Action_Type act, int button, char *key,
-		    Ev_Key_Modifiers mods, void *o, void *data,
+		    Ecore_Event_Key_Modifiers mods, void *o, void *data,
 		    int x, int y, int rx, int ry);
 void e_action_stop(char *action, E_Action_Type act, int button, char *key,
-		   Ev_Key_Modifiers mods, void *o, void *data,
+		   Ecore_Event_Key_Modifiers mods, void *o, void *data,
 		   int x, int y, int rx, int ry);
 void e_action_cont(char *action, E_Action_Type act, int button, char *key,
-		   Ev_Key_Modifiers mods, void *o, void *data,
+		   Ecore_Event_Key_Modifiers mods, void *o, void *data,
 		   int x, int y, int rx, int ry, int dx, int dy);
 void e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry);
 void e_action_stop_by_type(char *action);

@@ -20,7 +20,7 @@ e_exec_restart(void)
 
    printf("e_exec_restart()\n");
    /* unset events on root */
-   e_window_set_events(0, XEV_NONE);
+   ecore_window_set_events(0, XEV_NONE);
    /* destroy all desktops */
    num = e_desktops_get_num();
    for (i = 0; i < num; i++)
@@ -31,7 +31,7 @@ e_exec_restart(void)
 	e_desktops_delete(desk);
      }
    /* ensure it's all done */
-   e_sync();
+   ecore_sync();
    /* rerun myself */
    exe[0] = 0;
    for (i = 0; i < e_argc; i++)
@@ -105,6 +105,7 @@ e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, cha
 		 strlen(preload_paths) + 1 + 
 		 strlen(preload) + 1);
    sprintf(exe2, "%s %s %s", preload_paths, preload, exe);
+
    execl("/bin/sh", "/bin/sh", "-c", exe2, NULL);
    exit(0);
    return 0;

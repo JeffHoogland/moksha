@@ -3,45 +3,45 @@
 #include "actions.h"
 #include "guides.h"
 
-static void e_mouse_down(Eevent * ev);
-static void e_mouse_up(Eevent * ev);
-static void e_mouse_move(Eevent * ev);
+static void e_mouse_down(Ecore_Event * ev);
+static void e_mouse_up(Ecore_Event * ev);
+static void e_mouse_move(Ecore_Event * ev);
 
 static int prx, pry;
 static Window win_place = 0;
 
 static void
-e_mouse_down(Eevent * ev)
+e_mouse_down(Ecore_Event * ev)
 {
-   Ev_Mouse_Down          *e;
+   Ecore_Event_Mouse_Down          *e;
 
    e = ev->event;
    if (!win_place) return;
 }
 
 static void
-e_mouse_up(Eevent * ev)
+e_mouse_up(Ecore_Event * ev)
 {
-   Ev_Mouse_Up          *e;
+   Ecore_Event_Mouse_Up          *e;
 
    e = ev->event;
    if (!win_place) return;
    e_action_stop("Window_Place", ACT_MOUSE_UP, 1,  NULL, 
-		 EV_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry);
-   e_window_destroy(win_place);
+		 ECORE_EVENT_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry);
+   ecore_window_destroy(win_place);
    win_place = 0;
    return;
 }
 
 static void
-e_mouse_move(Eevent * ev)
+e_mouse_move(Ecore_Event * ev)
 {
-   Ev_Mouse_Move          *e;
+   Ecore_Event_Mouse_Move          *e;
 
    e = ev->event;
    if (!win_place) return;
    e_action_cont("Window_Place", ACT_MOUSE_MOVE, 1,  NULL, 
-		 EV_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry,
+		 ECORE_EVENT_KEY_MODIFIER_NONE, NULL, NULL, e->x, e->y, e->rx, e->ry,
 		 e->rx - prx, e->ry - pry);
    prx = e->rx;
    pry = e->ry;
@@ -61,10 +61,10 @@ e_place_manual(E_Border *b, E_Desktop *desk, int *x, int *y)
    
    if (!win_place)
      {
-	win_place = e_window_input_new(0, 0, 0, desk->real.w, desk->real.h);
-	e_window_set_events(win_place, XEV_MOUSE_MOVE | XEV_BUTTON);
-	e_window_raise(win_place);
-	e_window_show(win_place);
+	win_place = ecore_window_input_new(0, 0, 0, desk->real.w, desk->real.h);
+	ecore_window_set_events(win_place, XEV_MOUSE_MOVE | XEV_BUTTON);
+	ecore_window_raise(win_place);
+	ecore_window_show(win_place);
      }
    else
      {
@@ -72,14 +72,14 @@ e_place_manual(E_Border *b, E_Desktop *desk, int *x, int *y)
      }
    
    /* get mouse coords */
-   e_pointer_xy(desk->win.main, &mx, &my);
+   ecore_pointer_xy(desk->win.main, &mx, &my);
    rx = mx;
    ry = my;
    prx = rx;
    pry = ry;
    /* grab mouse to desktop */
-   e_pointer_ungrab(CurrentTime);
-   e_pointer_grab(win_place, CurrentTime);
+   ecore_pointer_ungrab(CurrentTime);
+   ecore_pointer_grab(win_place, CurrentTime);
    
    *x = mx - (w / 2);
    *y = my - (h / 2);
@@ -87,7 +87,7 @@ e_place_manual(E_Border *b, E_Desktop *desk, int *x, int *y)
    /* start a move mode */
    e_action_stop_by_type("Window_Place");
    e_action_start("Window_Place", ACT_MOUSE_CLICK, 1,  NULL, 
-		  EV_KEY_MODIFIER_NONE, b, NULL, mx, my, rx, ry);
+		  ECORE_EVENT_KEY_MODIFIER_NONE, b, NULL, mx, my, rx, ry);
    
    if (move_mode != E_GUIDES_OPAQUE) return 0;
    return 1;
@@ -486,7 +486,7 @@ e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mo
 void
 e_place_init(void)
 {
-   e_event_filter_handler_add(EV_MOUSE_DOWN,               e_mouse_down);
-   e_event_filter_handler_add(EV_MOUSE_UP,                 e_mouse_up);
-   e_event_filter_handler_add(EV_MOUSE_MOVE,               e_mouse_move);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,               e_mouse_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,                 e_mouse_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
 }

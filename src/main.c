@@ -32,6 +32,7 @@ static void cb_exit(void)
 }
 
 static void wm_running_error(Display * d, XErrorEvent * ev);
+
 static void 
 wm_running_error(Display * d, XErrorEvent * ev)
 {
@@ -49,10 +50,10 @@ void setup(void);
 void
 setup(void)
 {
-   e_grab();
-   e_sync();
+   ecore_grab();
+   ecore_sync();
    e_border_adopt_children(0);
-   e_ungrab();
+   ecore_ungrab();
 }
 
 int
@@ -97,25 +98,25 @@ main(int argc, char **argv)
 	  }
      }
    
-   if (!e_display_init(display))
+   if (!ecore_display_init(display))
      {
 	fprintf(stderr, "Enlightenment Error: cannot connect to display!\n");
 	fprintf(stderr, "Exiting Enlightenment. Error.\n");
 	exit(-1);
      }
 
-   e_ev_signal_init();
-   e_event_filter_init();
-   e_ev_x_init();
+   ecore_event_signal_init();
+   ecore_event_filter_init();
+   ecore_event_x_init();
    
    /* become a wm */
-   e_grab();
-   e_sync();
-   e_set_error_handler(wm_running_error);
-   e_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP);
-   e_sync();
-   e_reset_error_handler();
-   e_ungrab();
+   ecore_grab();
+   ecore_sync();
+   ecore_set_error_handler(wm_running_error);
+   ecore_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP);
+   ecore_sync();
+   ecore_reset_error_handler();
+   ecore_ungrab();
    
    e_fs_init();
    e_desktops_init();
@@ -124,7 +125,7 @@ main(int argc, char **argv)
    e_menu_init();
    e_view_init();
    e_entry_init();
-   e_keys_init();
+   ecore_keys_init();
    e_guides_init();
    e_place_init();
    e_cursors_init();
@@ -138,7 +139,7 @@ main(int argc, char **argv)
 
    setup();
    
-   e_event_loop();
+   ecore_event_loop();
 
 #ifdef USE_FERITE
    e_ferite_deinit();

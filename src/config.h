@@ -39,7 +39,7 @@ static E_Config_File _var = {_src, 0.0}
 #define E_CONFIG_CHECK_VALIDITY(_var, _src) \
 { \
 double __time; \
-__time = e_get_time(); \
+__time = ecore_get_time(); \
 if (_var.last_fetch < (__time - 5.0)) { \
 _var.last_fetch = __time;
 #define E_CONFIG_CHECK_VALIDITY_END \
@@ -85,7 +85,7 @@ static E_Config_Element _var = { _src, _key, 0.0, E_CFG_DATAT_T, \
 #define E_CFG_VALIDITY_CHECK(_var) \
 { \
 double __time; \
-__time = e_get_time(); \
+__time = ecore_get_time(); \
 if (_var.last_fetch < (__time - 5.0)) { \
 int __cfg_ok = 0; \
 _var.last_fetch = __time;

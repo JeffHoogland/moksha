@@ -207,7 +207,7 @@ struct _E_Icon
 void      e_view_selection_update(E_View *v);
 void      e_view_deselect_all(void);
 void      e_view_deselect_all_except(E_Icon *not_ic);
-Eevent   *e_view_get_current_event(void);
+Ecore_Event   *e_view_get_current_event(void);
 int       e_view_filter_file(E_View *v, char *file);
 void      e_view_icons_get_extents(E_View *v, int *min_x, int *min_y, int *max_x, int *max_y);
 void      e_view_icons_apply_xy(E_View *v);

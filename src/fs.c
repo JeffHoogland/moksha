@@ -6,7 +6,7 @@ static Evas_List           fs_handlers = NULL;
 static Evas_List           fs_restart_handlers = NULL;
 static pid_t               efsd_pid = 0;
 
-static void e_fs_child_handle(Eevent *ev);
+static void e_fs_child_handle(Ecore_Event *ev);
 static void _e_fs_fd_handle(int fd);
 static void _e_fs_restarter(int val, void *data);
 static void e_fs_idle(void *data);
@@ -19,7 +19,7 @@ e_fs_flush_timeout(int val, void *data)
    if (efsd_commands_pending(ec) > 0)
      {
 	if (efsd_flush(ec) > 0)
-	  e_add_event_timer("e_fs_flush_timeout()", 
+	  ecore_add_event_timer("e_fs_flush_timeout()", 
 			    0.00, e_fs_flush_timeout, 0, NULL);	
      }
    UN(data);
@@ -34,9 +34,9 @@ e_fs_idle(void *data)
 }
 
 static void
-e_fs_child_handle(Eevent *ev)
+e_fs_child_handle(Ecore_Event *ev)
 {
-   Ev_Child *e;
+   Ecore_Event_Child *e;
    
    e = ev->event;
    printf("pid went splat! (%i)\n", e->pid);
@@ -55,7 +55,7 @@ _e_fs_fd_handle(int fd)
 {
    double start, current;
    
-   start = e_get_time();
+   start = ecore_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
 	EfsdEvent ev;
@@ -76,7 +76,7 @@ _e_fs_fd_handle(int fd)
 	else
 	  {
 	     efsd_close(ec);
-	     e_del_event_fd(fd);
+	     ecore_del_event_fd(fd);
 	     ec = NULL;
 	     _e_fs_restarter(0, NULL);
 	     /* FIXME: need to queue a popup dialog here saying */
@@ -85,7 +85,7 @@ _e_fs_fd_handle(int fd)
 	  }
 	
 	/* spent more thna 1/20th of a second here.. get out */
-	current = e_get_time();
+	current = ecore_get_time();
 	if ((current - start) > 0.05) 
 	  {
 	     printf("fs... too much time spent..\n");
@@ -113,7 +113,7 @@ _e_fs_restarter(int val, void *data)
      {
 	Evas_List l;
 	
-	e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
+	ecore_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
 	for (l = fs_restart_handlers; l; l = l->next)
 	  {
 	     E_FS_Restarter *rs;
@@ -128,7 +128,7 @@ _e_fs_restarter(int val, void *data)
 	
 	gap = (double)val / 10;
 	if (gap > 10.0) gap = 10.0;
-	e_add_event_timer("e_fs_restarter", gap, _e_fs_restarter, val + 1, NULL);
+	ecore_add_event_timer("e_fs_restarter", gap, _e_fs_restarter, val + 1, NULL);
      }
    UN(data);
 }
@@ -167,8 +167,8 @@ e_fs_add_event_handler(void (*func) (EfsdEvent *ev))
 void
 e_fs_init(void)
 {
-   e_event_filter_handler_add(EV_CHILD, e_fs_child_handle);   
-   e_event_filter_idle_handler_add(e_fs_idle, NULL);   
+   ecore_event_filter_handler_add(ECORE_EVENT_CHILD, e_fs_child_handle);   
+   ecore_event_filter_idle_handler_add(e_fs_idle, NULL);   
    _e_fs_restarter(0, NULL);
 }
 

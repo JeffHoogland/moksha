@@ -11,10 +11,10 @@ static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
 static int       screen_w, screen_h;
 
-static void e_idle(void *data);
+static void ecore_idle(void *data);
 
 static void
-e_idle(void *data)
+ecore_idle(void *data)
 {
    e_db_flush();
    return;
@@ -26,12 +26,12 @@ e_desktops_init(void)
 {
    E_Desktop *desk;
    
-   e_window_get_geometry(0, NULL, NULL, &screen_w, &screen_h);
-   e_base_win = e_window_override_new(0, 0, 0, screen_w, screen_h);
-   e_window_show(e_base_win);
+   ecore_window_get_geometry(0, NULL, NULL, &screen_w, &screen_h);
+   e_base_win = ecore_window_override_new(0, 0, 0, screen_w, screen_h);
+   ecore_window_show(e_base_win);
    desk = e_desktops_new();
    e_desktops_show(desk);
-   e_event_filter_idle_handler_add(e_idle, NULL);
+   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
  
    e_icccm_advertise_e_compat();
    e_icccm_advertise_mwm_compat();
@@ -101,13 +101,13 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	b = l->data;
 	/* if sticky */
 	if ((b->client.sticky) && (!b->mode.move))	  
-	  e_window_gravity_set(b->win.main, StaticGravity);
+	  ecore_window_gravity_set(b->win.main, StaticGravity);
 	else
-	  e_window_gravity_set(b->win.main, grav);	
+	  ecore_window_gravity_set(b->win.main, grav);	
      }
    grav_stick = StaticGravity;
    /* scroll */
-   e_window_move_resize(desk->win.container, 
+   ecore_window_move_resize(desk->win.container, 
 			xd, yd, 
 			screen_w + wd, screen_h + hd);
    /* reset */
@@ -118,18 +118,18 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	b = l->data;
 	/* if sticky */
 	if (b->client.sticky)
-	  e_window_gravity_set(b->win.main, StaticGravity);
+	  ecore_window_gravity_set(b->win.main, StaticGravity);
 	else
-	  e_window_gravity_set(b->win.main, grav_stick);	
-/*	e_window_gravity_set(b->win.main, grav_stick);*/
+	  ecore_window_gravity_set(b->win.main, grav_stick);	
+/*	ecore_window_gravity_set(b->win.main, grav_stick);*/
      }   
-   e_window_move_resize(desk->win.container, 0, 0, screen_w, screen_h);
+   ecore_window_move_resize(desk->win.container, 0, 0, screen_w, screen_h);
    for (l = desk->windows; l; l = l->next)
      {
 	E_Border *b;
 	
 	b = l->data;
-	e_window_gravity_reset(b->win.main);
+	ecore_window_gravity_reset(b->win.main);
 	if ((!b->client.sticky) && (!b->mode.move))	  
 	  {
 	     b->current.requested.x += dx;
@@ -157,12 +157,12 @@ e_desktops_free(E_Desktop *desk)
 	OBJ_UNREF(b);
 	OBJ_IF_FREE(b)
 	  {
-	     e_window_reparent(b->win.client, 0, 0, 0);
+	     ecore_window_reparent(b->win.client, 0, 0, 0);
 	     e_icccm_release(b->win.client);
 	     OBJ_FREE(b);
 	  }
      }
-   e_window_destroy(desk->win.main);
+   ecore_window_destroy(desk->win.main);
    IF_FREE(desk->name);
    IF_FREE(desk->dir);
    FREE(desk);
@@ -194,13 +194,13 @@ e_desktops_init_file_display(E_Desktop *desk)
    }
    e_view_realize(v);
 
-   e_window_hint_set_borderless(v->win.base);
-   e_window_hint_set_sticky(v->win.base, 1);
-   e_window_hint_set_layer(v->win.base, 1);
-   e_window_set_title(v->win.base, "Desktop");
-   e_window_set_name_class(v->win.base, "FileView", "Desktop");
-   e_window_set_min_size(v->win.base, desk->real.w, desk->real.h);
-   e_window_set_max_size(v->win.base, desk->real.w, desk->real.h);
+   ecore_window_hint_set_borderless(v->win.base);
+   ecore_window_hint_set_sticky(v->win.base, 1);
+   ecore_window_hint_set_layer(v->win.base, 1);
+   ecore_window_set_title(v->win.base, "Desktop");
+   ecore_window_set_name_class(v->win.base, "FileView", "Desktop");
+   ecore_window_set_min_size(v->win.base, desk->real.w, desk->real.h);
+   ecore_window_set_max_size(v->win.base, desk->real.w, desk->real.h);
    b = e_border_adopt(v->win.base, 1);
    b->client.sticky = 1;
    b->client.fixed = 1;
@@ -219,11 +219,11 @@ e_desktops_new(void)
    
    OBJ_INIT(desk, e_desktops_free);
    
-   desk->win.main = e_window_override_new(e_base_win, 0, 0, screen_w, screen_h);
-   desk->win.container = e_window_override_new(desk->win.main, 0, 0, screen_w, screen_h);
-   e_window_lower(desk->win.container);
+   desk->win.main = ecore_window_override_new(e_base_win, 0, 0, screen_w, screen_h);
+   desk->win.container = ecore_window_override_new(desk->win.main, 0, 0, screen_w, screen_h);
+   ecore_window_lower(desk->win.container);
    
-   e_window_show(desk->win.container);
+   ecore_window_show(desk->win.container);
 
    desk->x = 0;
    desk->y = 0;
@@ -265,13 +265,13 @@ e_desktops_delete(E_Desktop *d)
 void
 e_desktops_show(E_Desktop *d)
 {
-   e_window_show(d->win.main);
+   ecore_window_show(d->win.main);
 }
 
 void
 e_desktops_hide(E_Desktop *d)
 {
-   e_window_hide(d->win.main);
+   ecore_window_hide(d->win.main);
 }
 
 int

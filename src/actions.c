@@ -13,7 +13,7 @@ static Evas_List action_impls = NULL;
 static Evas_List current_actions = NULL;
 static Evas_List current_timers = NULL;
 
-static void e_action_find(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o);
+static void e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o);
 static void e_action_free(E_Action *a);
 
 static void e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
@@ -68,7 +68,7 @@ static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, in
 static void e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
 static void
-e_action_find(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o)
+e_action_find(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o)
 {
    char *actions_db;
    E_DB_File *db;
@@ -140,9 +140,9 @@ e_action_find(char *action, E_Action_Type act, int button, char *key, Ev_Key_Mod
 	if ((a->key) && (strlen(a->key) > 0))
 	  {
 	     if (a->modifiers == -1)
-	       e_keys_grab(a->key, EV_KEY_MODIFIER_NONE, 1);
+	       ecore_keys_grab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
 	     else
-	       e_keys_grab(a->key, (Ev_Key_Modifiers)a->modifiers, 0);
+	       ecore_keys_grab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
 	     a->grabbed = 1;
 	  }
      }
@@ -210,9 +210,9 @@ e_action_free(E_Action *a)
    if ((a->key) && (strlen(a->key) > 0) && (a->grabbed))
      {
 	if (a->modifiers == -1)
-	  e_keys_ungrab(a->key, EV_KEY_MODIFIER_NONE, 1);
+	  ecore_keys_ungrab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
 	else
-	  e_keys_ungrab(a->key, (Ev_Key_Modifiers)a->modifiers, 0);
+	  ecore_keys_ungrab(a->key, (Ecore_Event_Key_Modifiers)a->modifiers, 0);
      }
    IF_FREE(a->name);
    IF_FREE(a->action);
@@ -222,7 +222,7 @@ e_action_free(E_Action *a)
 }
 
 void
-e_action_start(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_start(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
    
@@ -260,7 +260,7 @@ e_action_start(char *action, E_Action_Type act, int button, char *key, Ev_Key_Mo
 }
 
 void
-e_action_stop(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_stop(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
 
@@ -327,7 +327,7 @@ e_action_stop(char *action, E_Action_Type act, int button, char *key, Ev_Key_Mod
 }
 
 void
-e_action_cont(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods,
+e_action_cont(char *action, E_Action_Type act, int button, char *key, Ecore_Event_Key_Modifiers mods,
 	      void *o, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    Evas_List l;
@@ -442,7 +442,7 @@ e_action_del_timer(void *o, char *name)
 	    (at->name) && 
 	    (!strcmp(at->name, name)))
 	  {
-	     e_del_event_timer(at->name);
+	     ecore_del_event_timer(at->name);
 	     current_timers = evas_list_remove(current_timers, at);
 	     IF_FREE(at->name);
 	     FREE(at);
@@ -475,7 +475,7 @@ e_action_del_timer_object(void *o)
 	at = l->data;
 	if (at->object == o)
 	  {
-	     e_del_event_timer(at->name);
+	     ecore_del_event_timer(at->name);
 	     current_timers = evas_list_remove(current_timers, at);
 	     IF_FREE(at->name);
 	     FREE(at);
@@ -669,13 +669,13 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
-   e_window_gravity_set(b->win.client, StaticGravity);
-   e_window_gravity_set(b->win.l, NorthWestGravity);
-   e_window_gravity_set(b->win.r, SouthEastGravity);
-   e_window_gravity_set(b->win.t, NorthWestGravity);
-   e_window_gravity_set(b->win.b, SouthEastGravity);
-   e_window_gravity_set(b->win.input, NorthWestGravity);
-   e_window_gravity_set(b->win.container, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, StaticGravity);
+   ecore_window_gravity_set(b->win.l, NorthWestGravity);
+   ecore_window_gravity_set(b->win.r, SouthEastGravity);
+   ecore_window_gravity_set(b->win.t, NorthWestGravity);
+   ecore_window_gravity_set(b->win.b, SouthEastGravity);
+   ecore_window_gravity_set(b->win.input, NorthWestGravity);
+   ecore_window_gravity_set(b->win.container, NorthWestGravity);
    /* 1 | 2 */
    /* --+-- */
    /* 3 | 4 */
@@ -685,13 +685,13 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	  {
 	     b->mode.resize = 4;
 	     /*	     e_border_set_gravity(b, NorthWestGravity); */
-	     /*	     e_window_gravity_set(b->win.container, SouthEastGravity);*/
+	     /*	     ecore_window_gravity_set(b->win.container, SouthEastGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 2;
 	     /*	     e_border_set_gravity(b, SouthWestGravity);*/
-	     /*	     e_window_gravity_set(b->win.container, NorthEastGravity);*/
+	     /*	     ecore_window_gravity_set(b->win.container, NorthEastGravity);*/
 	  }
      }
    else
@@ -700,13 +700,13 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	  {
 	     b->mode.resize = 3;
 /*	     e_border_set_gravity(b, NorthEastGravity);*/
-/*	     e_window_gravity_set(b->win.container, SouthWestGravity);*/
+/*	     ecore_window_gravity_set(b->win.container, SouthWestGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 1;
 /*	     e_border_set_gravity(b, SouthEastGravity);*/
-/*	     e_window_gravity_set(b->win.container, NorthWestGravity); */
+/*	     ecore_window_gravity_set(b->win.container, NorthWestGravity); */
 	  }
      }
      {
@@ -749,7 +749,7 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b->mode.resize = 0;
    b->changed = 1;
    e_border_adjust_limits(b);
-   e_window_gravity_set(b->win.client, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, NorthWestGravity);
    e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
    return;
@@ -840,13 +840,13 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
-   e_window_gravity_set(b->win.client, StaticGravity);
-   e_window_gravity_set(b->win.l, NorthWestGravity);
-   e_window_gravity_set(b->win.r, SouthEastGravity);
-   e_window_gravity_set(b->win.t, NorthWestGravity);
-   e_window_gravity_set(b->win.b, SouthEastGravity);
-   e_window_gravity_set(b->win.input, NorthWestGravity);
-   e_window_gravity_set(b->win.container, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, StaticGravity);
+   ecore_window_gravity_set(b->win.l, NorthWestGravity);
+   ecore_window_gravity_set(b->win.r, SouthEastGravity);
+   ecore_window_gravity_set(b->win.t, NorthWestGravity);
+   ecore_window_gravity_set(b->win.b, SouthEastGravity);
+   ecore_window_gravity_set(b->win.input, NorthWestGravity);
+   ecore_window_gravity_set(b->win.container, NorthWestGravity);
    /* 5 | 6 */
    if (x > (b->current.w / 2)) 
      {
@@ -898,7 +898,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->mode.resize = 0;
    b->changed = 1;
    e_border_adjust_limits(b);
-   e_window_gravity_set(b->win.client, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, NorthWestGravity);
    e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
    return;
@@ -974,13 +974,13 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (b->current.shaded != 0) return;
    if (resize_mode >= E_GUIDES_BOX)
      b->hold_changes = 1; /* if non opaque */
-   e_window_gravity_set(b->win.client, StaticGravity);
-   e_window_gravity_set(b->win.l, NorthWestGravity);
-   e_window_gravity_set(b->win.r, SouthEastGravity);
-   e_window_gravity_set(b->win.t, NorthWestGravity);
-   e_window_gravity_set(b->win.b, SouthEastGravity);
-   e_window_gravity_set(b->win.input, NorthWestGravity);
-   e_window_gravity_set(b->win.container, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, StaticGravity);
+   ecore_window_gravity_set(b->win.l, NorthWestGravity);
+   ecore_window_gravity_set(b->win.r, SouthEastGravity);
+   ecore_window_gravity_set(b->win.t, NorthWestGravity);
+   ecore_window_gravity_set(b->win.b, SouthEastGravity);
+   ecore_window_gravity_set(b->win.input, NorthWestGravity);
+   ecore_window_gravity_set(b->win.container, NorthWestGravity);
    /* 7 */
    /* - */
    /* 8 */
@@ -1033,7 +1033,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->current.requested.h = b->current.h;
    b->mode.resize = 0;
    e_border_adjust_limits(b);
-   e_window_gravity_set(b->win.client, NorthWestGravity);
+   ecore_window_gravity_set(b->win.client, NorthWestGravity);
    e_border_set_gravity(b, NorthWestGravity);
    b->changed = 1;
    e_guides_hide();
@@ -1115,7 +1115,7 @@ e_act_kill_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->client.is_desktop) return;
-   if (b->win.client) e_window_kill_client(b->win.client);
+   if (b->win.client) ecore_window_kill_client(b->win.client);
    return;
    UN(a);
    UN(data);
@@ -1142,13 +1142,13 @@ e_act_cb_shade(int val, void *data)
    if (val == 0) 
      {
 	OBJ_REF(b);
-	t = e_get_time();
-	e_window_gravity_set(b->win.client, SouthWestGravity);
+	t = ecore_get_time();
+	ecore_window_gravity_set(b->win.client, SouthWestGravity);
 	e_action_del_timer(b, "shader");
 	e_action_add_timer(b, "shader");
      }
    
-   dif = e_get_time() - t;   
+   dif = ecore_get_time() - t;   
    
    si = (int)(dif * (double)pix_per_sec);
    if (si > b->client.h) si = b->client.h;
@@ -1157,11 +1157,11 @@ e_act_cb_shade(int val, void *data)
    e_border_adjust_limits(b);
    e_border_apply_border(b);
    if (si < b->client.h) 
-     e_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
+     ecore_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
    else
      {
 	e_action_del_timer(b, "shader");
-	e_window_gravity_reset(b->win.client);
+	ecore_window_gravity_reset(b->win.client);
 	OBJ_UNREF(b);
      }
 }
@@ -1183,13 +1183,13 @@ e_act_cb_unshade(int val, void *data)
    if (val == 0) 
      {
 	OBJ_REF(b);
-	t = e_get_time();
-	e_window_gravity_set(b->win.client, SouthWestGravity);
+	t = ecore_get_time();
+	ecore_window_gravity_set(b->win.client, SouthWestGravity);
 	e_action_del_timer(b, "shader");
 	e_action_add_timer(b, "shader");
      }
    
-   dif = e_get_time() - t;   
+   dif = ecore_get_time() - t;   
    
    si = b->client.h - (int)(dif * (double)pix_per_sec);
    if (si < 0) si = 0;
@@ -1199,11 +1199,11 @@ e_act_cb_unshade(int val, void *data)
    e_border_adjust_limits(b);
    e_border_apply_border(b);
    if (si > 0) 
-     e_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
+     ecore_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
    else
      {
 	e_action_del_timer(b, "shader");
-	e_window_gravity_reset(b->win.client);
+	ecore_window_gravity_reset(b->win.client);
 	OBJ_UNREF(b);
      }
 }
