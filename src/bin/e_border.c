@@ -883,6 +883,9 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_MANAGED);
+   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_DESK);
+   ecore_x_window_prop_property_del(bd->client.win, E_ATOM_ICONIC);
    while (bd->pending_move_resize)
      {
 	free(bd->pending_move_resize->data);

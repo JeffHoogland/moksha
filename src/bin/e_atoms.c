@@ -12,7 +12,6 @@ e_atoms_init(void)
    E_ATOM_MANAGED = ecore_x_atom_get("__E_WINDOW_MANAGED");
    E_ATOM_DESK = ecore_x_atom_get("__E_WINDOW_DESK");
    E_ATOM_ICONIC = ecore_x_atom_get("__E_WINDOW_ICONIC");
-
    return 1;
 }
 

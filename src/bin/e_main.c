@@ -523,10 +523,10 @@ _e_main_screens_init(void)
 							    &ret_val, 1);
 		       
 		       /* we have seen this window before */
-		       if (ret > -1 && ret_val == 1)
+		       if ((ret > -1) && (ret_val == 1))
 			 {
 			    E_Border *bd;
-
+			    
 			    /* get all information from window before it is 
 			     * reset by e_border_new */
 			    ret = ecore_x_window_prop_card32_get(windows[i],
@@ -535,16 +535,16 @@ _e_main_screens_init(void)
 			    bd = e_border_new(con, windows[i], 1);
 			    if (bd)
 			      {
-				  if (ret == 2)
-				    {
-					E_Desk *target;
-					target = e_desk_at_xy_get(bd->zone,
-								  deskxy[0],
-								  deskxy[1]);
-					e_border_desk_set(bd, target);
-					if (target == e_desk_current_get(bd->zone))
-					  e_border_show(bd);
-				    }
+				 if (ret == 2)
+				   {
+				      E_Desk *target;
+				      target = e_desk_at_xy_get(bd->zone,
+								deskxy[0],
+								deskxy[1]);
+				      e_border_desk_set(bd, target);
+				      if (target == e_desk_current_get(bd->zone))
+					e_border_show(bd);
+				   }
 			      }
 			    ret = ecore_x_window_prop_card32_get(windows[i],
 								 E_ATOM_ICONIC,
