@@ -2537,7 +2537,8 @@ e_view_bg_reload_timeout(int val, void *data)
      {
 	int size;
 	
-	e_object_unref(E_OBJECT(v->bg));
+	e_bg_free(v->bg);
+	/* e_object_unref(E_OBJECT(v->bg)); */
 	v->bg = NULL;
 	if (v->evas)
 	  {
