@@ -587,17 +587,39 @@ e_view_handle_fs(EfsdEvent *ev)
 			       icon->info.mime.type);
 		       if (!e_file_exists(m1))
 			 {
-			    printf("fallback 1\n");
-			    sprintf(m1, "%s/data/icons/%s/default.db",PACKAGE_DATA_DIR,
-				    icon->info.mime.base);
-			    if (!e_file_exists(m1))
+			    int found;
+			    
+			    printf("fallback 0\n");
+			    strcpy(m2, icon->info.mime.type);
+			    p = strrchr(m2, '-');
+			    found = 0;
+			    while (p)
 			      {
-			    printf("fallback 2\n");
-				 sprintf(m1, "%s/data/icons/unknown/unknown.db",PACKAGE_DATA_DIR);
+				 p[0] = 0;
+				 sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
+					 icon->info.mime.base, m2);
+				 printf("try %s\n", m1);
+				 if (e_file_exists(m1))
+				   {
+				      found = 1;
+				      break;
+				   }
+				 p = strrchr(m2, '-');
+			      }
+			    if (!found)
+			      {
+				 printf("fallback 1\n");
+				 sprintf(m1, "%s/data/icons/%s/default.db",PACKAGE_DATA_DIR,
+					 icon->info.mime.base);
 				 if (!e_file_exists(m1))
 				   {
-			    printf("fallback 3\n");
-				      sprintf(m1, "%s/data/icons/unknown/default.db",PACKAGE_DATA_DIR);
+				      printf("fallback 2\n");
+				      sprintf(m1, "%s/data/icons/unknown/unknown.db",PACKAGE_DATA_DIR);
+				      if (!e_file_exists(m1))
+					{
+					   printf("fallback 3\n");
+					   sprintf(m1, "%s/data/icons/unknown/default.db",PACKAGE_DATA_DIR);
+					}
 				   }
 			      }
 			 }
