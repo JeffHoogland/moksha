@@ -116,6 +116,7 @@ e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
    E_Scrollbar *sb;
    double prev;
    char name[PATH_MAX];
+   int  inc;
    
    D_ENTER;
 
@@ -124,30 +125,78 @@ e_sb_base_down_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y,
    sb->mouse_down = bt;
    if (!class) D_RETURN;
    prev = sb->val;
+
+    D ( "x %d y %d bt %d\n" , x , y  , bt );
+    D ( "val %f range %f max %f\n" , sb->val , sb->range , sb->max );
+    D ( "sb x %f y %f w %f h %f\n" , sb->x, sb->y, sb->w, sb->h );
+    D ( "sb area x %f y %f w %f h %f\n" , sb->bar_area.x, sb->bar_area.y, sb->bar_area.w, sb->bar_area.h );
+    D ( "sb pos x %f y %f w %f h %f\n" , sb->bar_pos.x, sb->bar_pos.y, sb->bar_pos.w, sb->bar_pos.h );
+
    if (!strcmp(class, "Scrollbar_Arrow1"))
      {
-	sb->scrolling_up = 1;
+        sb->scroll_step = -16;
+        sb->scroll_speed = 0.01;
 
 	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
-	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
+	ecore_add_event_timer(name, sb->scroll_speed, e_sb_scroll_timer, 0, sb);
      }
+
    else if (!strcmp(class, "Scrollbar_Arrow2"))
      {
-	sb->scrolling_down = 1;
-	
+        sb->scroll_step = 16;
+        sb->scroll_speed = 0.01;
+
 	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
-	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
+	ecore_add_event_timer(name, sb->scroll_speed, e_sb_scroll_timer, 0, sb);
      }
+
    else if (!strcmp(class, "Scrollbar_Trough"))
      {
-	if (sb->direction)
-	   sb->val = ( y - sb->bar_area.y) * sb->max / sb->bar_area.h - sb->bar_area.h / 2;
-	else
-	   sb->val = ( x - sb->bar_area.x) * sb->max / sb->bar_area.w - sb->bar_area.w / 2;
+        if ( bt == 1 )
+          {
+            if ( sb->direction )        /* vertical */
+              {
+                sb->scroll_step = sb->bar_area.h;
+                inc = y - sb->bar_pos.y;
+              }
+            else                        /* horizontal */
+              {
+                sb->scroll_step = sb->bar_area.w;
+                inc = x - sb->bar_pos.x;
+              }
 
-	if (sb->val < 0) sb->val = 0;
-	if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+            if ( inc < 0 )              /* scroll up (or left) */
+              {
+                sb->scroll_step = -sb->scroll_step;
+                snprintf ( name , PATH_MAX , "scroll_up.%i.%s" , sb->direction , sb->dir );
+              }
+            else                        /* scroll down (or right) */
+              {
+                snprintf ( name , PATH_MAX , "scroll_down.%i.%s" , sb->direction , sb->dir );
+              }
+
+            /* scroll once in the chosen direction */
+            sb->val += sb->scroll_step;
+            if (sb->val < 0) sb->val = 0;
+            if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+
+            /* set a timer to keep on scrolling */
+            sb->scroll_speed = 0.1;
+            ecore_add_event_timer ( name , sb->scroll_speed , e_sb_scroll_timer , 0 , sb );
+          }
+
+        else
+          {
+            if (sb->direction)
+               sb->val = ( y - sb->bar_area.y) * sb->max / sb->bar_area.h - sb->bar_area.h / 2;
+            else
+               sb->val = ( x - sb->bar_area.x) * sb->max / sb->bar_area.w - sb->bar_area.w / 2;
+
+            if (sb->val < 0) sb->val = 0;
+            if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+          }
      }
+
    e_scrollbar_recalc(sb);
    if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);
    if (sb->bar) ebits_resize(sb->bar, sb->bar_pos.w, sb->bar_pos.h);
@@ -176,22 +225,37 @@ e_sb_base_up_cb(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
    if (bt == sb->mouse_down) sb->mouse_down = 0;
    else D_RETURN;
    if (!class) D_RETURN;
+
    if (!strcmp(class, "Scrollbar_Arrow1"))
      {
-	sb->scrolling_up = 0;
+	sb->scroll_step = 0;
 
 	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
 	ecore_del_event_timer(name);
      }
+
    else if (!strcmp(class, "Scrollbar_Arrow2"))
      {
-	sb->scrolling_down = 0;
+	sb->scroll_step = 0;
 
 	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
 	ecore_del_event_timer(name);
      }
+
    else if (!strcmp(class, "Scrollbar_Trough"))
      {
+       if ( sb->scroll_step < 0 )
+         {
+           sb->scroll_step = 0;
+           snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
+           ecore_del_event_timer(name);
+         }
+       else if ( sb->scroll_step > 0 )
+         {
+           sb->scroll_step = 0;
+           snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
+           ecore_del_event_timer(name);
+         }
      }
 
    D_RETURN;
@@ -313,23 +377,23 @@ e_sb_scroll_timer(int val, void *data)
    
    sb = data;
 
-   if (sb->scrolling_up)
-   {
-	sb->val -= 16;
-	if (sb->val < 0) sb->val = 0;
+   if ( sb->scroll_step < 0 )
+     {
+        sb->val += sb->scroll_step;
+        if (sb->val < 0) sb->val = 0;
 	
 	snprintf(name, PATH_MAX, "scroll_up.%i.%s", sb->direction, sb->dir);
-	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
-   }
+	ecore_add_event_timer(name, sb->scroll_speed, e_sb_scroll_timer, 0, sb);
+     }
 
-   else if (sb->scrolling_down)
-   {
-	sb->val += 16;
-	if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
-	
+   else if ( sb->scroll_step > 0 )
+     {
+        sb->val += sb->scroll_step;
+        if ((sb->val + sb->range) > sb->max) sb->val = sb->max - sb->range;
+
 	snprintf(name, PATH_MAX, "scroll_down.%i.%s", sb->direction, sb->dir);
-	ecore_add_event_timer(name, 0.01, e_sb_scroll_timer, 0, sb);
-   }
+	ecore_add_event_timer(name, sb->scroll_speed, e_sb_scroll_timer, 0, sb);
+     }
    
    e_scrollbar_recalc(sb);
    if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);
@@ -548,9 +612,9 @@ e_scrollbar_set_value(E_Scrollbar *sb, double val)
 {
    D_ENTER;
 
-   if (sb->val == val) D_RETURN;
    if (val > sb->max - sb->range) val = sb->max - sb->range;
    if (val < 0 ) val = 0;
+   if (sb->val == val) D_RETURN;
    sb->val = val;
    e_scrollbar_recalc(sb);
    if (sb->bar) ebits_move(sb->bar, sb->bar_pos.x, sb->bar_pos.y);
