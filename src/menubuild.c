@@ -273,12 +273,14 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 	     f = fopen(buf, "rb");
 	  }
 	/* regular file */
-	else
+	else if (e_file_exists(buf))
 	  {
 	     sprintf(buf, "%s/%s", dir, s);
 	     
 	     f = fopen(buf, "rb");
 	  }
+	/* doesnt exist at all? next item */
+	else continue;
 	if (f)
 	  {
 	     while (fgets(buf, 4096, f))
