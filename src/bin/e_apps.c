@@ -5,11 +5,11 @@
 
 /* TODO List:
  * 
- * * if a application .eapp file is added in a different location in a monitored app tree
- *   but has the same filename as an existing one somewhere else, the existing one gets a
- *   changed callback, not an added callback for the new one
- * * track app execution state, visibility state etc. and call callbacks
- * * calls to execute an app or query its runing/starting state etc.
+ * - We assume only .eapp files in 'all', no subdirs
+ * - If a .order file references a non-existing file, and the file
+ *   is added in 'all', it doesn't show!
+ * - track app execution state, visibility state etc. and call callbacks
+ * - calls to execute an app or query its runing/starting state etc.
  */
 
 /* local subsystem functions */
@@ -30,20 +30,19 @@ struct _E_App_Callback
 };
 
 static void      _e_app_free               (E_App *a);
-static void      _e_app_fields_fill        (E_App *a, char *path);
+static void      _e_app_fields_fill        (E_App *a, const char *path);
 static void      _e_app_fields_empty       (E_App *a);
-static Evas_List *_e_app_dir_file_list_get (E_App *a, char *path);
-static E_App     *_e_app_subapp_path_find  (E_App *a, char *subpath);
-static void      _e_app_monitor            (void);
+static Evas_List *_e_app_dir_file_list_get (E_App *a);
+static E_App     *_e_app_subapp_path_find  (E_App *a, const char *subpath);
 static void      _e_app_change             (E_App *a, E_App_Change ch);
-static int       _e_app_check              (void *data);
-static Evas_Bool _e_app_check_each         (Evas_Hash *hash, const char *key, void *data, void *fdata);
 static int       _e_apps_cb_exit           (void *data, int type, void *event);
+static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Type type, Ecore_File_Event event, const char *path);
+static void      _e_app_subdir_rescan      (E_App *app);
+static int       _e_app_is_eapp            (const char *path);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
 static Evas_List   *_e_apps_list = NULL;
-static Ecore_Timer *_e_apps_checker = NULL;
 static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
@@ -56,7 +55,7 @@ int
 e_app_init(void)
 {
    char *home;
-   char buf[4096];
+   char buf[PATH_MAX];
    
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
@@ -89,84 +88,84 @@ e_app_shutdown(void)
 }
 
 E_App *
-e_app_new(char *path, int scan_subdirs)
+e_app_new(const char *path, int scan_subdirs)
 {
    E_App *a;
+   char buf[PATH_MAX];
 
    a = evas_hash_find(_e_apps, path);
-   if (a)
+   if ((a) && (!a->deleted))
      {
 	e_object_ref(E_OBJECT(a));
 	return a;
      }
-   a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
-   a->mod_time = e_file_mod_time(path);
-   if (e_file_is_dir(path))
+
+   if (ecore_file_exists(path))
      {
-	char buf[4096];
-	
-	a->path = strdup(path);
-	snprintf(buf, sizeof(buf), "%s/.directory.eapp", path);
-	a->directory_mod_time = e_file_mod_time(buf);
-	if (e_file_exists(buf))
-	  _e_app_fields_fill(a, buf);
-	else
-	  a->name = strdup(e_file_get_file(path));
-	if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
-     }
-   else if (e_file_exists(path))
-     {
-	char *p;
-	
-	/* check if file ends in .eapp */
-	p = strrchr(path, '.');
-	if (!p)
-	  {
-	     free(a);
-	     return NULL;
-	  }
-	p++;
-	if ((strcasecmp(p, "eapp")))
-	  {
-	     free(a);
-	     return NULL;
-	  }
+	a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 	/* record the path */
 	a->path = strdup(path);
-	
-	/* get the field data */
-	_e_app_fields_fill(a, path);
-	
-	/* no exe field.. not valid. drop it */
-	if (!a->exe)
+
+	if (ecore_file_is_dir(a->path))
 	  {
-	     if (a->name) free(a->name);
-	     if (a->generic) free(a->generic);
-	     if (a->comment) free(a->comment);
-	     if (a->exe) free(a->exe);
-	     if (a->path) free(a->path);
-	     if (a->win_name) free(a->win_name);
-	     if (a->win_class) free(a->win_class);
-	     free(a);
-	     return NULL;
+	     snprintf(buf, sizeof(buf), "%s/.directory.eapp", path);
+	     if (ecore_file_exists(buf))
+	       _e_app_fields_fill(a, buf);
+	     else
+	       a->name = strdup(ecore_file_get_file(path));
+	     if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
+
+	     a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
 	  }
+	else if (_e_app_is_eapp(path))
+	  {
+	     _e_app_fields_fill(a, path);
+
+	     /* no exe field.. not valid. drop it */
+	     if (!a->exe)
+	       goto error;
+	  }
+	else
+	  goto error;
      }
    else
-     {
-	free(a);
-	return NULL;
-     }
+     return NULL;
+
    _e_apps = evas_hash_add(_e_apps, a->path, a);
    _e_apps_list = evas_list_prepend(_e_apps_list, a);
-   _e_app_monitor();
    return a;
+
+error:
+   if (a->monitor) ecore_file_monitor_del(a->monitor);
+   _e_app_fields_empty(a);
+   free(a);
+   return NULL;
+}
+
+int
+e_app_is_parent(E_App *parent, E_App *app)
+{
+   Evas_List *l;
+
+   if (app->parent == parent)
+     return 1;
+
+   for (l = app->references; l; l = l->next)
+     {
+	E_App *a2;
+
+	a2 = l->data;
+	if (a2 == parent)
+	  return 1;
+     }
+   return 0;
 }
 
 void
 e_app_subdir_scan(E_App *a, int scan_subdirs)
 {
-   Evas_List *files;
-   char buf[4096];
+   Evas_List *files, *l;
+   char buf[PATH_MAX];
 
    E_OBJECT_CHECK(a);
    E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
@@ -181,20 +180,29 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	return;
      }
    a->scanned = 1;
-   files = _e_app_dir_file_list_get(a, a->path);
-   while (files)
+   files = _e_app_dir_file_list_get(a);
+   for (l = files; l; l = l->next)
      {
 	E_App *a2;
 	char *s;
-	
-	s = files->data;
+
+	s = l->data;
 	a2 = NULL;
-	if (s[0] != '.')
+
+	snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
+	if (ecore_file_exists(buf))
+	  {
+	     a2 = e_app_new(buf, scan_subdirs);
+	     if (a2)
+	       {
+		  a2->parent = a;
+		  a->subapps = evas_list_append(a->subapps, a2);
+	       }
+	  }
+	else
 	  {
 	     Evas_List *pl;
-			
-	     snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-	     if (e_file_exists(buf)) a2 = e_app_new(buf, scan_subdirs);
+
 	     pl = _e_apps_repositories;
 	     while ((!a2) && (pl))
 	       {
@@ -204,13 +212,13 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	       }
 	     if (a2)
 	       {
+		  a2->references = evas_list_append(a2->references, a);
 		  a->subapps = evas_list_append(a->subapps, a2);
-		  a2->parent = a;
 	       }
-	     free(s);
 	  }
-	files = evas_list_remove_list(files, files);
+	free(s);
      }
+   files = evas_list_free(files);
 }
 
 int
@@ -255,7 +263,6 @@ e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), 
    cb->func = func;
    cb->data = data;
    _e_apps_change_callbacks = evas_list_append(_e_apps_change_callbacks, cb);
-   _e_app_monitor();
 }
 
 void
@@ -279,7 +286,6 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
 	       {
 		  _e_apps_change_callbacks = evas_list_remove_list(_e_apps_change_callbacks, l);
 		  free(cb);
-		  _e_app_monitor();
 	       }
 	     return;
 	  }
@@ -325,6 +331,8 @@ e_app_window_name_class_find(char *name, char *class)
 static void
 _e_app_free(E_App *a)
 {
+   Evas_List *l;
+
    while (a->instances)
      {
 	Ecore_Exe *exe;
@@ -338,30 +346,34 @@ _e_app_free(E_App *a)
 	E_App *a2;
 	
 	a2 = a->subapps->data;
-	a->subapps = evas_list_remove(a->subapps, a2);
+	a->subapps = evas_list_remove_list(a->subapps, a->subapps);
 	a2->parent = NULL;
 	e_object_unref(E_OBJECT(a2));
      }
+   for (l = a->references; l; l = l->next)
+     {
+	E_App *a2;
+
+	a2 = l->data;
+	a2->subapps = evas_list_remove(a2->subapps, a);
+     }
+   evas_list_free(a->references);
+
    if (a->parent)
      a->parent->subapps = evas_list_remove(a->parent->subapps, a);
+   if (a->monitor)
+     ecore_file_monitor_del(a->monitor);
    _e_apps = evas_hash_del(_e_apps, a->path, a);
    _e_apps_list = evas_list_remove(_e_apps_list, a);
-   if (a->name) free(a->name);
-   if (a->generic) free(a->generic);
-   if (a->comment) free(a->comment);
-   if (a->exe) free(a->exe);
-   if (a->path) free(a->path);
-   if (a->win_name) free(a->win_name);
-   if (a->win_class) free(a->win_class);
+   _e_app_fields_empty(a);
    free(a);
-   _e_app_monitor();
 }
 
 static void
-_e_app_fields_fill(E_App *a, char *path)
+_e_app_fields_fill(E_App *a, const char *path)
 {
    Eet_File *ef;
-   char buf[4096];
+   char buf[PATH_MAX];
    char *str, *v;
    char *lang;
    int size;
@@ -506,15 +518,14 @@ _e_app_fields_empty(E_App *a)
 }
 
 static Evas_List *
-_e_app_dir_file_list_get(E_App *a, char *path)
+_e_app_dir_file_list_get(E_App *a)
 {
    Evas_List *files, *files2 = NULL, *l;
    FILE *f;
-   char buf[4096];
+   char buf[PATH_MAX];
    
-   snprintf(buf, sizeof(buf), "%s/.order", path);
-   a->order_mod_time = e_file_mod_time(buf);
-   files = e_file_ls(path);
+   snprintf(buf, sizeof(buf), "%s/.order", a->path);
+   files = ecore_file_ls(a->path);
    f = fopen(buf, "rb");
    if (f)
      {
@@ -568,7 +579,7 @@ _e_app_dir_file_list_get(E_App *a, char *path)
 }
 
 static E_App *
-_e_app_subapp_path_find(E_App *a, char *subpath)
+_e_app_subapp_path_find(E_App *a, const char *subpath)
 {
    Evas_List *l;
    
@@ -577,27 +588,9 @@ _e_app_subapp_path_find(E_App *a, char *subpath)
 	E_App *a2;
 	
 	a2 = l->data;
-	if (!strcmp(a2->path, subpath)) return a2;
+	if ((!strcmp(a2->path, subpath)) && (!a2->deleted)) return a2;
      }
    return NULL;
-}
-
-static void
-_e_app_monitor(void)
-{
-   if ((_e_apps) && (_e_apps_change_callbacks))
-     {
-	if (!_e_apps_checker)
-	  _e_apps_checker = ecore_timer_add(1.0, _e_app_check, NULL);
-     }
-   else
-     {
-	if (_e_apps_checker)
-	  {
-	     ecore_timer_del(_e_apps_checker);
-	     _e_apps_checker = NULL;
-	  }
-     }
 }
 
 static void
@@ -634,173 +627,7 @@ _e_app_change(E_App *a, E_App_Change ch)
 	       }
 	  }
 	_e_apps_callbacks_delete_me = 0;
-	_e_app_monitor();
      }
-}
-
-static int
-_e_app_check(void *data)
-{
-   Evas_List *changes = NULL;
-   
-   evas_hash_foreach(_e_apps, _e_app_check_each, &changes);
-
-   while (changes)
-     {
-	E_App_Change_Info *ch;
-	
-	ch = changes->data;
-	changes = evas_list_remove_list(changes, changes);
-	_e_app_change(ch->app, ch->change);
-	e_object_unref(E_OBJECT(ch->app));
-	free(ch);
-     }
-   if (_e_apps_checker) return 1;
-   return 0;
-}
-
-static Evas_Bool
-_e_app_check_each(Evas_Hash *hash, const char *key, void *data, void *fdata)
-{
-   Evas_List **changes;
-   E_App *a;
-   E_App_Change_Info *ch;
-   
-   changes = fdata;
-   a = data;
-   if (a->exe)
-     {
-	time_t mod_time;
-	
-	mod_time = e_file_mod_time(a->path);
-	if (mod_time != a->mod_time)
-	  {
-	     a->mod_time = mod_time;
-	     if (e_file_exists(a->path))
-	       {
-		  _e_app_fields_empty(a);
-		  _e_app_fields_fill(a, a->path);
-		  if (!a->exe)
-		    {
-		       ch = calloc(1, sizeof(E_App_Change_Info));
-		       ch->app = a;
-		       ch->change = E_APP_DEL;
-		       e_object_ref(E_OBJECT(ch->app));
-		       *changes = evas_list_append(*changes, ch);
-		    }
-		  else
-		    {
-		       ch = calloc(1, sizeof(E_App_Change_Info));
-		       ch->app = a;
-		       ch->change = E_APP_CHANGE;
-		       e_object_ref(E_OBJECT(ch->app));
-		       *changes = evas_list_append(*changes, ch);
-		    }
-	       }
-	     else
-	       {
-		  ch = calloc(1, sizeof(E_App_Change_Info));
-		  ch->app = a;
-		  ch->change = E_APP_DEL;
-		  e_object_ref(E_OBJECT(ch->app));
-		  *changes = evas_list_append(*changes, ch);
-	       }
-	  }
-     }
-   else
-     {
-	time_t mod_time, order_mod_time, directory_mod_time;
-	char buf[4096];
-	
-	mod_time = e_file_mod_time(a->path);
-	snprintf(buf, sizeof(buf), "%s/.order", a->path);
-	order_mod_time = e_file_mod_time(buf);
-	snprintf(buf, sizeof(buf), "%s/.directory.eapp", a->path);
-	directory_mod_time = e_file_mod_time(buf);
-	if ((mod_time != a->mod_time) ||
-	    (order_mod_time != a->order_mod_time) ||
-	    (directory_mod_time != a->directory_mod_time))
-	  {
-	     a->mod_time = mod_time;
-	     if (!e_file_is_dir(a->path))
-	       {
-		  ch = calloc(1, sizeof(E_App_Change_Info));
-		  ch->app = a;
-		  ch->change = E_APP_DEL;
-		  e_object_ref(E_OBJECT(ch->app));
-		  *changes = evas_list_append(*changes, ch);
-	       }
-	     else
-	       {
-		  if (order_mod_time != a->order_mod_time)
-		    {
-		       ch = calloc(1, sizeof(E_App_Change_Info));
-		       ch->app = a;
-		       ch->change = E_APP_ORDER;
-		       e_object_ref(E_OBJECT(ch->app));
-		       *changes = evas_list_append(*changes, ch);
-		    }
-		  if (directory_mod_time != a->directory_mod_time)
-		    {
-		       snprintf(buf, sizeof(buf), "%s/.directory.eapp", a->path);
-		       _e_app_fields_empty(a);
-		       _e_app_fields_fill(a, buf);
-		       ch = calloc(1, sizeof(E_App_Change_Info));
-		       ch->app = a;
-		       ch->change = E_APP_CHANGE;
-		       e_object_ref(E_OBJECT(ch->app));
-		       *changes = evas_list_append(*changes, ch);
-		    }
-		  a->order_mod_time = order_mod_time;
-		  a->directory_mod_time = directory_mod_time;
-		  if (a->scanned)
-		    {
-		       Evas_List *l, *files;
-		       
-		       files = _e_app_dir_file_list_get(a, a->path);
-		       for (l = files; l; l = l->next)
-			 {
-			    E_App *a2;
-			    char *s;
-			    
-			    s = l->data;
-			    snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-			    if (!_e_app_subapp_path_find(a, buf))
-			      {
-				 a2 = e_app_new(buf, 0);
-				 if (a2)
-				   {
-				      a2->parent = a;
-				      a->subapps = evas_list_append(a->subapps, a2);
-				      ch = calloc(1, sizeof(E_App_Change_Info));
-				      ch->app = a2;
-				      ch->change = E_APP_ADD;
-				      e_object_ref(E_OBJECT(ch->app));
-				      *changes = evas_list_append(*changes, ch);
-				   }
-			      }
-			 }
-		       for (l = files; l; l = l->next)
-			 {
-			    E_App *a2;
-			    char *s;
-			    
-			    s = l->data;
-			    snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-			    a2 = _e_app_subapp_path_find(a, buf);
-			    if (a2)
-			      {
-				 a->subapps = evas_list_remove(a->subapps, a2);
-				 a->subapps = evas_list_append(a->subapps, a2);
-			      }
-			    free(s);
-			 }
-		       evas_list_free(files);
-		    }
-	       }
-	  }
-     }
-   return 1;
 }
 
 static int
@@ -821,3 +648,232 @@ _e_apps_cb_exit(void *data, int type, void *event)
      }
    return 1;
 }
+
+static void
+_e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
+		  Ecore_File_Type type, Ecore_File_Event event, const char *path)
+{
+   E_App     *app;
+   Evas_List *l;
+   char      *file;
+   
+   app = data;
+
+   if (em->type != ECORE_FILE_TYPE_DIRECTORY)
+     {
+	printf("BUG: E_App should only monitor directories!\n");
+	return;
+     }
+
+   /* If this dir isn't scanned yet, no need to report changes! */
+   if (!app->scanned)
+     return;
+
+   printf("E_App: %d %d %s\n", type, event, path);
+   file = ecore_file_get_file((char *)path);
+   if (!strcmp(file, ".order"))
+     {
+	switch (event)
+	  {
+	   case ECORE_FILE_EVENT_NONE:
+	   case ECORE_FILE_EVENT_EXISTS:
+	      break;
+	   case ECORE_FILE_EVENT_CREATED:
+	   case ECORE_FILE_EVENT_DELETED:
+	   case ECORE_FILE_EVENT_CHANGED:
+	      _e_app_subdir_rescan(app);
+	      break;
+	  }
+     }
+   else if (!strcmp(file, ".directory.eapp"))
+     {
+	switch (event)
+	  {
+	   case ECORE_FILE_EVENT_NONE:
+	   case ECORE_FILE_EVENT_EXISTS:
+	      break;
+	   case ECORE_FILE_EVENT_CREATED:
+	   case ECORE_FILE_EVENT_CHANGED:
+	      _e_app_fields_empty(app);
+	      _e_app_fields_fill(app, path);
+	      _e_app_change(app, E_APP_CHANGE);
+	      break;
+	   case ECORE_FILE_EVENT_DELETED:
+	      _e_app_fields_empty(app);
+	      app->name = strdup(ecore_file_get_file(app->path));
+	      break;
+	  }
+     }
+   else
+     {
+	E_App *a2;
+
+	switch (event)
+	  {
+	   case ECORE_FILE_EVENT_NONE:
+	   case ECORE_FILE_EVENT_EXISTS:
+	   case ECORE_FILE_EVENT_CREATED:
+	      break;
+	   case ECORE_FILE_EVENT_DELETED:
+	      /* If something is deleted, mark it as deleted
+	       * and wait for the directory change to update
+	       * the client. */
+	      a2 = _e_app_subapp_path_find(app, path);
+	      if (a2)
+		a2->deleted = 1;
+	      break;
+	   case ECORE_FILE_EVENT_CHANGED:
+	      if (type == ECORE_FILE_TYPE_FILE)
+		{
+		   a2 = _e_app_subapp_path_find(app, path);
+		   if (a2)
+		     {
+			_e_app_fields_empty(a2);
+			_e_app_fields_fill(a2, path);
+			_e_app_change(a2, E_APP_CHANGE);
+		     }
+		}
+	      /* If the current directory has changed, we must rescan
+	       * to check which files are here. */
+	      if ((type == ECORE_FILE_TYPE_DIRECTORY) && !strcmp(path, app->path))
+		{
+		   a2 = _e_app_subapp_path_find(app, path);
+
+		   /* If this app is in a main repository, tell all referencing
+		    * apps to rescan. */
+		   if (a2)
+		     {
+			a2->deleted = 1;
+			for (l = a2->references; l; l = l->next)
+			  {
+			     E_App *app;
+
+			     app = l->data;
+			     _e_app_subdir_rescan(app);
+			  }
+		     }
+
+		   /* We don't know why it's deleted, maybe it's move to 'all'?
+		    * Better rescan... */
+		   _e_app_subdir_rescan(app);
+		}
+	      break;
+	  }
+     }
+}
+
+static void
+_e_app_subdir_rescan(E_App *app)
+{
+   Evas_List         *files, *l, *l2;
+   Evas_List         *subapps = NULL, *changes = NULL;
+   E_App_Change_Info *ch;
+   char               buf[PATH_MAX];
+
+   files = _e_app_dir_file_list_get(app);
+   for (l = files; l; l = l->next)
+     {
+	E_App *a2;
+	char *s;
+
+	s = l->data;
+	snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
+	a2 = _e_app_subapp_path_find(app, buf);
+	if (!a2)
+	  {
+	     a2 = e_app_new(buf, 1);
+	     if (a2)
+	       {
+		  a2->parent = app;
+		  ch = calloc(1, sizeof(E_App_Change_Info));
+		  ch->app = a2;
+		  ch->change = E_APP_ADD;
+		  e_object_ref(E_OBJECT(ch->app));
+		  changes = evas_list_append(changes, ch);
+	       }
+	     else
+	       {
+		  /* We ask for a reference! */
+		  Evas_List *pl;
+
+		  pl = _e_apps_repositories;
+		  while ((!a2) && (pl))
+		    {
+		       snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+		       a2 = e_app_new(buf, 1);
+		       pl = pl->next;
+		    }
+		  if (a2)
+		    {
+		       a2->references = evas_list_append(a2->references, app);
+		       ch = calloc(1, sizeof(E_App_Change_Info));
+		       ch->app = a2;
+		       ch->change = E_APP_ADD;
+		       e_object_ref(E_OBJECT(ch->app));
+		       changes = evas_list_append(changes, ch);
+		    }
+	       }
+	  }
+	if (a2)
+	  subapps = evas_list_append(subapps, a2);
+	free(s);
+     }
+   evas_list_free(files);
+   for (l = app->subapps; l; l = l->next)
+     {
+	E_App *a2;
+
+	a2 = l->data;
+	for (l2 = subapps; l2; l2 = l2->next)
+	  if (l->data == l2->data)
+	    {
+	       /* We still have this app */
+	       a2 = NULL;
+	       break;
+	    }
+	if (a2)
+	  {
+	     ch = calloc(1, sizeof(E_App_Change_Info));
+	     ch->app = a2;
+	     ch->change = E_APP_DEL;
+	     /* We don't need to ref this,
+	      * it has an extra ref
+	      e_object_ref(E_OBJECT(ch->app));
+	      */
+	     changes = evas_list_append(changes, ch);
+	  }
+     }
+   evas_list_free(app->subapps);
+   app->subapps = subapps;
+   ch = calloc(1, sizeof(E_App_Change_Info));
+   ch->app = app;
+   ch->change = E_APP_ORDER;
+   e_object_ref(E_OBJECT(ch->app));
+   changes = evas_list_append(changes, ch);
+
+   for (l = changes; l; l = l->next)
+     {
+	ch = l->data;
+	_e_app_change(ch->app, ch->change);
+	e_object_unref(E_OBJECT(ch->app));
+	free(ch);
+     }
+   evas_list_free(changes);
+}
+
+static int
+_e_app_is_eapp(const char *path)
+{
+   char *p;
+
+   p = strrchr(path, '.');
+   if (!p)
+     return 0;
+
+   p++;
+   if ((strcasecmp(p, "eapp")))
+     return 0;
+
+   return 1;
+}
+

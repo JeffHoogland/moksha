@@ -24,38 +24,42 @@ typedef struct _E_App          E_App;
 
 struct _E_App
 {
-   E_Object       e_obj_inherit;
+   E_Object            e_obj_inherit;
    
-   E_App         *parent; /* the parent e_app node */
+   E_App              *parent; /* the parent e_app node */
    
-   char          *name; /* app name */
-   char          *generic; /* generic app name */
-   char          *comment; /* a longer description */
-   char          *exe; /* command to execute, NULL if directory */
-   char          *path; /* path to .eet containing icons etc. etc. */
+   char               *name; /* app name */
+   char               *generic; /* generic app name */
+   char               *comment; /* a longer description */
+   char               *exe; /* command to execute, NULL if directory */
+   char               *path; /* path to .eet containing icons etc. etc. */
 
-   char          *win_name; /* window name */
-   char          *win_class; /* window class */
+   char               *win_name; /* window name */
+   char               *win_class; /* window class */
    
-   Evas_List     *subapps; /* if this a directory, a list of more E_App's */
+   Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    
-   time_t         mod_time; /* last modified time for file or dir */
-   time_t         order_mod_time; /* secondary modified time for .order */
-   time_t         directory_mod_time; /* secondary modified time for .directory.eet */
+   Evas_List          *instances; /* a list of all the exe handles for executions */
 
-   Evas_List     *instances; /* a list of all the exe handles for executions */
-   
-   unsigned char  startup_notify : 1; /* disable while starting etc. */
-   unsigned char  wait_exit : 1; /* wait for app to exit before execing next */
-   unsigned char  starting : 1; /* this app is starting */
+   Evas_List          *references; /* If this app is in a main repository, this would
+				      be a list to other eapp pointing to this */
 
-   unsigned char  scanned : 1; /* have we scanned a subdir app yet */
+   Ecore_File_Monitor *monitor; /* Check for changes and files */
+   
+   unsigned char       startup_notify : 1; /* disable while starting etc. */
+   unsigned char       wait_exit : 1; /* wait for app to exit before execing next */
+   unsigned char       starting : 1; /* this app is starting */
+
+   unsigned char       scanned : 1; /* have we scanned a subdir app yet */
+
+   unsigned char       deleted : 1; /* this app's file is deleted from disk */
 };
 
 EAPI int    e_app_init(void);
 EAPI int    e_app_shutdown(void);
 
-EAPI E_App *e_app_new(char *path, int scan_subdirs);
+EAPI E_App *e_app_new(const char *path, int scan_subdirs);
+EAPI int    e_app_is_parent(E_App *parent, E_App *app);
 EAPI void   e_app_subdir_scan(E_App *a, int scan_subdirs);
 EAPI int    e_app_exec(E_App *a);
 EAPI int    e_app_starting_get(E_App *a);
