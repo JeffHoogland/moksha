@@ -288,7 +288,7 @@ collections {
    group {
       name: "widgets/border/default/border";
       data {
-	 item: "client_inset" "4 4 24 4";
+//	 item: "client_inset" "4 4 24 4";
       }
       parts {
 	 part {
@@ -1122,7 +1122,7 @@ collections {
 	       rel2 {
 		  relative: 0.0  0.0;
 		  offset:   -1   -1;
-		  to:       "t2";
+		  to:       "b2";
 	       }
 	       color: 0 0 0 0;
 	    }

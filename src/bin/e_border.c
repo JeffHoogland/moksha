@@ -1227,8 +1227,10 @@ _e_border_eval(E_Border *bd)
      {
 	Evas_Object *o;
 	int iw, ih;
-	const char *path, *str;
+	const char *path;
 	char buf[4096];
+	Evas_Coord cx, cy, cw, ch;
+	int l, r, t, b;
 
 	if (!bd->client.border.name)
 	  {
@@ -1255,23 +1257,21 @@ _e_border_eval(E_Border *bd)
 	edje_object_part_text_set(o, "title_text", 
 				  bd->client.icccm.title);
 	printf("SET TITLE2 %s\n", bd->client.icccm.title);
-	str = edje_object_data_get(o, "client_inset");
-	if (str)
-	  {
-	     int l, r, t, b;
-	     
-	     if (sscanf(str, "%i %i %i %i", &l, &r, &t, &b) == 4)
-	       {
-		  bd->client_inset.l = l;
-		  bd->client_inset.r = r;
-		  bd->client_inset.t = t;
-		  bd->client_inset.b = b;
-		  bd->w += (bd->client_inset.l + bd->client_inset.r);
-		  bd->h += (bd->client_inset.t + bd->client_inset.b);
-		  bd->changes.size = 1;
-		  ecore_x_window_move(bd->client.shell_win, l, t);
-	       }
-	  }
+	evas_object_resize(o, 1000, 1000);
+	edje_object_calc_force(o);
+	edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);
+	l = cx;
+	r = 1000 - (cx + cw);
+	t = cy;
+	b = 1000 - (cy + ch);
+	bd->client_inset.l = l;
+	bd->client_inset.r = r;
+	bd->client_inset.t = t;
+	bd->client_inset.b = b;
+	bd->w += (bd->client_inset.l + bd->client_inset.r);
+	bd->h += (bd->client_inset.t + bd->client_inset.b);
+	bd->changes.size = 1;
+	ecore_x_window_move(bd->client.shell_win, l, t);
 	edje_object_signal_callback_add(o, "move_start", "*",
 					_e_border_cb_signal_move_start, bd);
 	edje_object_signal_callback_add(o, "move_stop", "*",
