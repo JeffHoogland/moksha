@@ -34,8 +34,42 @@ int E_RESPONSE_BACKGROUND_GET = 0;
 int
 e_init(const char* display)
 {
+   char *disp, *pos;
+   int free_disp;
+
    if (_e_ipc_server)
      return 0;
+
+   free_disp = 0;
+   if (display)
+     disp = (char *) display;
+   else
+     disp = getenv("DISPLAY");
+   
+   if (!disp)
+     fprintf(stderr, "ERROR: No display parameter passed to e_init, and no DISPLAY variable\n");
+
+   pos = strrchr(disp, ':');
+   if (!pos)
+     {
+	char *tmp;
+	tmp = malloc(strlen(disp) + 5);
+	snprintf(tmp, sizeof(tmp), "%s:0.0", disp);
+	disp = tmp;
+	free_disp = 1;
+     }
+   else
+     {
+	pos = strrchr(pos, '.');
+	if (!pos)
+	  {
+	     char *tmp;
+	     tmp = malloc(strlen(disp) + 3);
+	     snprintf(tmp, strlen(tmp), "%s.0", disp);
+	     disp = tmp;
+	     free_disp = 1;
+	  }
+     }
 
    /* basic ecore init */
    if (!ecore_init())
@@ -54,7 +88,7 @@ e_init(const char* display)
      }
 
    /* setup e ipc service */
-   if (!_e_ipc_init(display))
+   if (!_e_ipc_init(disp))
      {
 	fprintf(stderr, "ERROR: Enlightenment cannot set up the IPC socket.\n"
 	       "Did you specify the right display?\n");
@@ -67,6 +101,8 @@ e_init(const char* display)
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
      }
    
+   if (free_disp)
+     free(disp);
    return 1;
 }
 
