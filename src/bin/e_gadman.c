@@ -6,10 +6,10 @@
 /* FIXME: corner case if module is sized to full screen... cant stop edit or */
 /*        re-enter edit mode (cant access root menu) */
 
-/* FIXME: handle drag from zone to zone */
+/* FIXME: evas_clip to the zone - make a zone clip for gadman obj's */
+/* FIXME: actully call callbacks */
 /* FIXME: handle save */
 /* FIXME: handle load */
-/* FIXME: start move - raise and callback */
 /* FIXME: if u set align, or minmax size or edge then figure out new-coords */
 /* FIXME: handle move resist */
 /* FIXME: handle resize resist */
@@ -610,7 +610,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	     E_Zone *nz;
 	     
 	     nz = e_container_zone_at_point_get(gmc->zone->container, x, y);
-	     if (nz != gmc->zone)
+	     if ((nz) && (nz != gmc->zone))
 	       {
 		  gmc->zone = nz;
 		  new_zone = 1;
@@ -690,7 +690,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	     E_Zone *nz;
 	     
 	     nz = e_container_zone_at_point_get(gmc->zone->container, x, y);
-	     if (nz != gmc->zone)
+	     if ((nz) && (nz != gmc->zone))
 	       {
 		  gmc->zone = nz;
 		  new_zone = 1;
