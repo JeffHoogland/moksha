@@ -12,6 +12,7 @@
 #include "util.h"
 #include "globals.h"
 #include "icons.h"
+#include "epplet.h"
 
 static Ecore_Event *current_ev = NULL;
 
@@ -2009,6 +2010,7 @@ e_view_realize(E_View *v)
       e_iconbar_set_view_window_spacing(v->iconbar);
    }
 
+   e_epplet_load_from_layout(v);
    v->changed = 1;
 
    D_RETURN;

@@ -20,7 +20,11 @@ ferite_c = e_ferite_gen_core.c \
 	e_ferite_gen_header.h \
 	e_ferite_gen_e.c \
 	e_ferite_gen_window.c \
+	e_ferite_gen_Epplet.c \
+	e_ferite_gen_Ebits.c \
+	e_ferite_gen_EvasObject.c \
 	e_ferite.h e_ferite.c
+	
 endif
 
 enlightenment_SOURCES = \
@@ -36,6 +40,7 @@ enlightenment_SOURCES = \
 	desktops.h desktops.c \
 	embed.c embed.h \
 	entry.h entry.c \
+	epplet.h epplet.c \
 	exec.h exec.c \
 	focus.h focus.c \
 	file.h file.c \

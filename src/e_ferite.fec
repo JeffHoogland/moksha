@@ -1,8 +1,17 @@
 header %{
    
    #include "Ecore.h"
-   #include "desktops.h"
+   #include "Ebits.h"
    
+   #include "desktops.h"
+   #include "border.h"
+   #include "epplet.h"
+   #include "debug.h"
+   #include "globals.h"
+   
+   #define BitsObj ((Ebits_Object)self->odata)
+   #define EppObj ((E_Epplet *)(self->odata))
+   #define EvasObj ((Evas_Object_Wrapper *)(self->odata))
 %}
 
 class window {
@@ -39,6 +48,7 @@ class window {
    
 }
 
+
 namespace e {
    
    function flip_to_desktop( number desk )
@@ -55,6 +65,7 @@ namespace e {
    function get_desktop_count()
    %{
 	  int retval = e_desktops_get_num();
+          printf("desktop_count: %i\n", retval);
 	  FE_RETURN_LONG( retval );
    %}
    
@@ -67,3 +78,465 @@ namespace e {
 	  ecore_event_loop_quit();  
    %}
 }
+
+class EvasObject
+{
+  function EvasObject(object epp)
+  %{
+    EvasObj = NEW(Evas_Object_Wrapper, 1);
+    ZERO(EvasObj, Evas_Object_Wrapper, 1);
+    
+    EvasObj->evas = ((E_Epplet *)(epp->odata))->view->evas;
+  %}
+  
+  function Destructor()
+  %{
+  %}
+
+  function addImage(string path)
+  %{
+    if (EvasObj->evas)
+      EvasObj->obj = evas_add_image_from_file(EvasObj->evas, path);
+    ffree(path);
+  %}
+
+  function addRectangle()
+  %{
+    if (EvasObj->evas)
+      EvasObj->obj = evas_add_rectangle(EvasObj->evas);
+  %}
+
+  function addText(string font, number size, string text)
+  %{
+    if (EvasObj->evas)
+      EvasObj->obj = evas_add_text(EvasObj->evas, font, (long)size, text);
+    ffree(font);
+    ffree(text);
+  %}
+
+  function setImageFile(string path)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_image_file(EvasObj->evas, EvasObj->obj, path);
+    ffree(path);
+  %}
+
+  function setText(string text)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_text(EvasObj->evas, EvasObj->obj, text);
+    ffree(text);
+  %}
+
+  function move(number x, number y)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_move(EvasObj->evas, EvasObj->obj, x, y);
+  %}
+
+  function resize(number w, number h)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_resize(EvasObj->evas, EvasObj->obj, w, h);
+  %}
+
+  function resizeF(number w, number h)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+    {
+      evas_resize(EvasObj->evas, EvasObj->obj, w, h);
+      evas_set_image_fill(EvasObj->evas, EvasObj->obj, 0, 0, w, h);
+    }
+  %}
+
+  function setLayer(number l)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_layer(EvasObj->evas, EvasObj->obj, l);
+  %}
+  
+  function show()
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_show(EvasObj->evas, EvasObj->obj);
+  %}
+
+  function hide()
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_hide(EvasObj->evas, EvasObj->obj);
+  %}
+
+  function setColor(number r, number g, number b, number a)
+  %{
+    D("in setColor\n");
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_color(EvasObj->evas, EvasObj->obj, (long)r, (long)g, (long)b, (long)a);
+    D("leaving setColor\n");
+  %}
+
+  
+  function setImageFill(number x, number y, number w, number h)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_image_fill(EvasObj->evas, EvasObj->obj, x, y, w, h);
+  %}
+
+  function setImageBorder(number l, number r, number t, number b)
+  %{
+    if (EvasObj->evas && EvasObj->obj)
+      evas_set_image_border(EvasObj->evas, EvasObj->obj, l, r, t, b);
+  %}
+
+  function getX()
+  %{
+    double x;
+    if (EvasObj->evas && EvasObj->obj)
+    {
+      evas_get_geometry(EvasObj->evas, EvasObj->obj, &x, NULL, NULL, NULL);
+      FE_RETURN_DOUBLE(x);
+    }
+  %}
+
+  function getY()
+  %{
+    double y;
+    if (EvasObj->evas && EvasObj->obj)
+    {
+      evas_get_geometry(EvasObj->evas, EvasObj->obj, NULL, &y, NULL, NULL);
+      FE_RETURN_DOUBLE(y);
+    }
+  %}
+
+  function getW()
+  %{
+    double w;
+    if (EvasObj->evas && EvasObj->obj)
+    {
+      evas_get_geometry(EvasObj->evas, EvasObj->obj, NULL, NULL, &w, NULL);
+      FE_RETURN_DOUBLE(w);
+    }
+  %}
+
+  function getH()
+  %{
+    double h;
+    if (EvasObj->evas && EvasObj->obj)
+    {
+      evas_get_geometry(EvasObj->evas, EvasObj->obj, NULL, NULL, NULL, &h);
+      FE_RETURN_DOUBLE(h);
+    }
+  %}
+
+  function setCallback(string type, string func, object data)
+  %{
+    E_Epplet_CB_Info *cb;
+
+    D("create cb\n");
+
+    cb = e_epplet_cb_new(script, func, data, self);
+
+    D("check for callback type\n");    
+    if(!strcmp(type, "CALLBACK_MOUSE_DOWN"))
+    {
+      D("mouse down cb!\n");    
+      evas_callback_add(EvasObj->evas, EvasObj->obj, CALLBACK_MOUSE_DOWN,
+                        e_epplet_evas_cb, cb);
+    }
+
+    else if(!strcmp(type, "CALLBACK_MOUSE_UP"))
+    {
+      D("mouse up cb!\n");    
+      evas_callback_add(EvasObj->evas, EvasObj->obj, CALLBACK_MOUSE_UP,
+                        e_epplet_evas_cb, cb);
+    }
+
+    else if(!strcmp(type, "CALLBACK_MOUSE_MOVE"))
+    {
+      D("mouse move cb!\n");    
+      evas_callback_add(EvasObj->evas, EvasObj->obj, CALLBACK_MOUSE_MOVE,
+                        e_epplet_evas_cb, cb);
+    }
+
+//    ffree(func);
+    ffree(type);
+  %}
+
+}
+  
+class Ebits
+{
+  
+  function Ebits(string path)
+  %{
+    D("in Ebits constructor\n");
+    D("loading bits\n");
+    BitsObj = NULL;
+    BitsObj = ebits_load(path);
+    if (BitsObj)
+       printf("bits loaded\n");
+    else
+       printf("ERROR: bits not found\n");
+
+    ffree(path);
+  %}
+
+  function Destructor()
+  %{
+  /* FIXME: if i leave this in, the bits get freed and removed before you can
+     see them. I guess it just needs to be called when the epplet itself is
+     destroyed */
+  /*  
+     ebits_free(BitsObj);
+  */
+  %}
+
+  function show()
+  %{
+    ebits_show(BitsObj);
+  %}
+
+  function hide()
+  %{
+    ebits_hide(BitsObj);
+  %}
+
+  function raise()
+  %{
+    ebits_raise(BitsObj);
+  %}
+
+  function lower()
+  %{
+    ebits_lower(BitsObj);
+  %}
+
+  function move(number x, number y)
+  %{
+    ebits_move(BitsObj, x, y);
+  %}
+
+  function resize(number w, number h)
+  %{
+    ebits_resize(BitsObj, w, h);
+  %}
+
+  function set_layer(number l)
+  %{
+    ebits_set_layer(BitsObj, l);
+  %}
+
+  function getNamedBitGeometry(string bitName, number x, number y, number w, number h)
+  %{
+    double xx, yy, ww, hh;
+    ebits_get_named_bit_geometry(BitsObj, bitName, &xx, &yy, &ww, &hh);
+
+    x = xx; 
+    y = yy; 
+    w = ww; 
+    h = hh; 
+  %}
+
+  function getNamedBitGeometryX(string bitName)
+  %{
+    double x;
+    ebits_get_named_bit_geometry(BitsObj, bitName, &x, NULL, NULL, NULL);
+    D("%s.x: %i\n", bitName, x);
+    ffree(bitName);
+    FE_RETURN_DOUBLE(x);
+  %}
+  
+  function getNamedBitGeometryY(string bitName)
+  %{
+    double y;
+    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, &y, NULL, NULL);
+    ffree(bitName);
+    FE_RETURN_DOUBLE(y);
+  %}
+  
+  function getNamedBitGeometryW(string bitName)
+  %{
+    double w;
+    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, &w, NULL);
+    ffree(bitName);
+    FE_RETURN_DOUBLE(w);
+  %}
+
+  function getNamedBitGeometryH(string bitName)
+  %{
+    double h;
+    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, NULL, &h);
+    ffree(bitName);
+    FE_RETURN_DOUBLE(h);
+  %}
+  
+  function setCallback(string bitClass, string func, object data)
+  %{
+    E_Epplet_CB_Info *cb;
+    
+    cb = e_epplet_cb_new(script, func, data, NULL);
+    
+    ebits_set_classed_bit_callback(BitsObj, bitClass, CALLBACK_MOUSE_DOWN, e_epplet_bits_cb, cb);
+
+    ffree(bitClass);
+    ffree(func);
+  %}
+}
+
+class Epplet
+{
+
+  object bits;
+  
+  function Epplet()
+  %{
+    EppObj = malloc(sizeof(E_Epplet));
+    memset(EppObj, 0, sizeof(E_Epplet));
+
+    EppObj->context = e_epplet_get_context_from_script(script);
+    EppObj->view = EppObj->context->view;
+    EppObj->name = strdup(EppObj->context->name);
+    EppObj->current.x = EppObj->context->geom.x;
+    EppObj->current.y = EppObj->context->geom.y;
+    EppObj->current.w = EppObj->context->geom.w;
+    EppObj->current.h = EppObj->context->geom.h;
+
+     if (!EppObj->view) { D("Error: no view found for script\n"); }
+     else { D("got view: %s\n", EppObj->view->dir); }
+  %}
+
+  function setBits(object ebits)
+  %{
+    EppObj->bits = ((Ebits_Object)ebits->odata);
+    EppObj->fbits = ebits;
+
+    if(EppObj->bits && EppObj->view)
+    {
+      ebits_add_to_evas(EppObj->bits, EppObj->view->evas);
+      e_epplet_set_common_callbacks(EppObj);
+      D("bits added to view\n");
+      D("view dir: %s\n", EppObj->view->dir);
+    }
+    else
+    {
+      D("ERROR: no bits or no view, can't add bits to view evas\n"); 
+    }
+ 
+  %}
+
+  function move(number x, number y)
+  %{
+    D("in epp.move\n");
+    EppObj->current.x = x;
+    EppObj->current.y = y;
+
+    D("moving epplet: %f, %f\n", x, y);
+ 
+    if (EppObj->bits)
+      ebits_move(EppObj->bits, EppObj->current.x, EppObj->current.y);
+  %}
+
+  function resize(number w, number h)
+  %{
+    EppObj->current.w = w;
+    EppObj->current.h = h;
+    if (EppObj->bits)
+      ebits_resize(EppObj->bits, EppObj->current.w, EppObj->current.h);
+  %}
+
+  function getX()
+  %{
+    FE_RETURN_DOUBLE(EppObj->current.x);
+  %} 
+
+  function getY()
+  %{
+    FE_RETURN_DOUBLE(EppObj->current.y);
+  %} 
+
+  function getW()
+  %{
+    FE_RETURN_DOUBLE(EppObj->current.w);
+  %} 
+
+  function getH()
+  %{
+    FE_RETURN_DOUBLE(EppObj->current.h);
+  %} 
+
+  function display()
+  %{
+    int mw, mh;
+
+    if(EppObj->view && EppObj->bits)
+    {
+      D("adding bits for epplet `%s'\n", EppObj->context->name);
+      D("x: %f, y: %f, w: %f, h: %f\n", EppObj->context->geom.x, EppObj->context->geom.y, EppObj->context->geom.w, EppObj->context->geom.h);
+//      ebits_add_to_evas(EppObj->bits, EppObj->view->evas);
+      ebits_show(EppObj->bits);
+
+      if ((EppObj->context->geom.w) && (EppObj->context->geom.h))
+      {
+        EppObj->current.w = EppObj->context->geom.w;
+        EppObj->current.h = EppObj->context->geom.h;
+
+        ebits_get_min_size(EppObj->bits, &mw, &mh);
+        if ( EppObj->current.w < mw )  EppObj->current.w = mw;
+        if ( EppObj->current.h < mh )  EppObj->current.h = mh;
+      }
+
+      else
+      {
+        ebits_get_min_size(EppObj->bits, &mw, &mh);
+        if (mw == 0 || mh == 0)
+        {
+          mw = mh = 50;
+        }
+        EppObj->current.w = mw;
+        EppObj->current.h = mh;
+      }
+
+      EppObj->current.x = EppObj->context->geom.x;
+      EppObj->current.y = EppObj->context->geom.y;
+
+      ebits_get_min_size(EppObj->bits, &mw, &mh);
+
+      if (EppObj->current.x >  (EppObj->view->size.w - mw))
+      EppObj->current.x =  EppObj->view->size.w - mw;
+      if (EppObj->current.y >  (EppObj->view->size.h - mh))
+      EppObj->current.y =  EppObj->view->size.h - mh;
+
+      ebits_set_layer(EppObj->bits, 12000);
+      ebits_resize(EppObj->bits, EppObj->current.w, EppObj->current.h);
+      ebits_move(EppObj->bits, EppObj->current.x, EppObj->current.y);
+    }
+  %}
+
+  function getBits()
+  %{
+    FE_RETURN_VAR(EppObj->fbits);
+  %}
+
+  function getViewW()
+  %{
+    FE_RETURN_LONG(EppObj->view->size.w);
+  %}
+
+  function getViewH()
+  %{
+    FE_RETURN_LONG(EppObj->view->size.h);
+  %}
+
+  function getEppletDir()
+  %{
+    char buf[PATH_MAX], *retval;
+    
+    printf("getting dir:\n");
+    sprintf(buf, "%s%s/", e_config_get("epplets"), EppObj->name);
+    printf("%s\n", buf);
+    retval = (char *)buf;
+    FE_RETURN_STR(retval, 0);
+  %}
+
+}
+

@@ -21,6 +21,7 @@ static char cfg_images_dir[PATH_MAX] = "";
 static char cfg_cursors_dir[PATH_MAX] = "";
 static char cfg_backgrounds_dir[PATH_MAX] = "";
 static char cfg_fonts_dir[PATH_MAX] = "";
+static char cfg_epplets_dir[PATH_MAX] = "";
 
 char *
 e_config_get(char *type)
@@ -83,6 +84,9 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/backgrounds/");
    E_CONF("fonts", cfg_fonts_dir,
 	  PACKAGE_DATA_DIR"/data/fonts/");
+    E_CONF("epplets", cfg_epplets_dir,
+          PACKAGE_DATA_DIR"/data/epplets/");
+    
 
    D_RETURN_("");
 }

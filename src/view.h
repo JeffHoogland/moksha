@@ -165,6 +165,9 @@ struct _E_View
    int                    changed;
 
    E_Iconbar              *iconbar;
+
+   Evas_List              epplet_contexts;
+   Ebits_Object           epplet_layout;
 };
 
 
