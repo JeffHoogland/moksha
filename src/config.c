@@ -21,6 +21,7 @@ static char cfg_apps_menu_db[4096] = "";
 static char cfg_menus_dir[4096] = "";
 static char cfg_entries_dir[4096] = "";
 static char cfg_selections_dir[4096] = "";
+static char cfg_scrollbars_dir[4096] = "";
 static char cfg_user_dir[4096] = "";
 static char cfg_images_dir[4096] = "";
 static char cfg_backgrounds_dir[4096] = "";
@@ -60,6 +61,8 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/entries/");
    E_CONF("selections", cfg_selections_dir,
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/selections/");
+   E_CONF("scrollbars", cfg_scrollbars_dir,
+	  PACKAGE_DATA_DIR"/data/config/appearance/default/scrollbars/");
    E_CONF("images", cfg_images_dir,
 	  PACKAGE_DATA_DIR"/data/images/");
    E_CONF("backgrounds", cfg_backgrounds_dir,
@@ -120,6 +123,8 @@ e_config_set_user_dir(char *dir)
    cfg_apps_menu_db[0]= 0;
    cfg_menus_dir[0]   = 0;
    cfg_entries_dir[0] = 0;
+   cfg_selections_dir[0] = 0;
+   cfg_scrollbars_dir[0] = 0;
    cfg_user_dir[0]    = 0;
    cfg_images_dir[0]  = 0;
    cfg_backgrounds_dir[0]  = 0;

@@ -16,12 +16,14 @@ e_fs_child_handle(Eevent *ev)
    Ev_Child *e;
    
    e = ev->event;
+   printf("pid went splat! (%i)\n", e->pid);
    if (e->pid == efsd_pid)
      {
-	efsd_close(ec);
-	efsd_pid = 0;
+	printf("it was efsd!\n");
+	if (ec) efsd_close(ec);
 	ec = NULL;
-	_e_fs_restarter(0, NULL);
+	efsd_pid = 0;
+	_e_fs_restarter(1, NULL);
      }
 }
 
@@ -53,8 +55,7 @@ _e_fs_fd_handle(int fd)
 	     efsd_close(ec);
 	     e_del_event_fd(fd);
 	     ec = NULL;
-	     if (efsd_pid == -2)
-	       _e_fs_restarter(0, NULL);
+	     _e_fs_restarter(0, NULL);
 	     /* FIXME: need to queue a popup dialog here saying */
 	     /* efsd went wonky */
 	     printf("EEEEEEEEEEK efsd went wonky. Bye bye efsd.\n");
@@ -67,7 +68,7 @@ _e_fs_fd_handle(int fd)
 	     printf("fs... too much time spent..\n");
 	     break;
 	  }
-    }
+     }
 }
 
 static void
@@ -75,9 +76,14 @@ _e_fs_restarter(int val, void *data)
 {
    if (ec) return;
    ec = efsd_open();
+   printf("restart efsd...\n");
    if ((!ec) && (val > 0))
      {
-	if (efsd_pid <= 0) efsd_pid = e_exec_run("efsd -f");
+	if (efsd_pid <= 0) 
+	  {
+	     efsd_pid = e_exec_run("efsd -f");
+	     printf("launch efsd... %i\n", efsd_pid);
+	  }
 	if (efsd_pid > 0) ec = efsd_open();
      }
    if (ec)

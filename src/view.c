@@ -1488,12 +1488,26 @@ e_view_handle_fs_restart(void *data)
 	evas_list_free(icons);
      }
    if (e_fs_get_connection())
-     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					efsd_ops(2, 
-						 efsd_op_get_stat(), 
-						 efsd_op_get_filetype()
-						 ),
-					TRUE);
+     {
+	if (v->geom_get.busy)
+	  {
+	     v->geom_get.x = efsd_get_metadata(e_fs_get_connection(), 
+					       "/view/x", v->dir, EFSD_INT);
+	     v->geom_get.y = efsd_get_metadata(e_fs_get_connection(), 
+					       "/view/y", v->dir, EFSD_INT);
+	     v->geom_get.w = efsd_get_metadata(e_fs_get_connection(), 
+					       "/view/w", v->dir, EFSD_INT);
+	     v->geom_get.h = efsd_get_metadata(e_fs_get_connection(), 
+					       "/view/h", v->dir, EFSD_INT);
+	  }
+	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
+					   efsd_ops(2, 
+						    efsd_op_get_stat(), 
+						    efsd_op_get_filetype()
+						    ),
+					   TRUE);
+	v->is_listing = 1;
+     }
    printf("restarted monitor id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
    v->is_listing = 1;
 }

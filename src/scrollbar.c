@@ -1,4 +1,5 @@
 #include "scrollbar.h"
+#include "config.h"
 
 static void e_scrollbar_recalc(E_Scrollbar *sb);
 static void e_scrollbar_setup_bits(E_Scrollbar *sb);
@@ -6,15 +7,28 @@ static void e_scrollbar_setup_bits(E_Scrollbar *sb);
 static void
 e_scrollbar_recalc(E_Scrollbar *sb)
 {
-   sb = NULL;
+   UN(sb);
 }
 
 static void
 e_scrollbar_setup_bits(E_Scrollbar *sb)
 {
-/*	sb->base = ebits_load("");*/
-/*	sb->bar = ebits_load("");*/
-   sb = NULL;
+   char buf[4096];
+   
+   if (sb->direction == 1)
+     {
+	sprintf(buf, "%s/scroll_base_v.bits.db", e_config_get("scrollbars"));
+	sb->base = ebits_load(buf);
+	sprintf(buf, "%s/scroll_bar_v.bits.db", e_config_get("scrollbars"));
+	sb->bar = ebits_load(buf);
+     }
+   else
+     {
+	sprintf(buf, "%s/scroll_base_h.bits.db", e_config_get("scrollbars"));
+	sb->base = ebits_load(buf);
+	sprintf(buf, "%s/scroll_bar_h.bits.db", e_config_get("scrollbars"));
+	sb->bar = ebits_load(buf);
+     }
 }
 
 E_Scrollbar *
