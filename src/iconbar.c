@@ -700,6 +700,13 @@ e_iconbar_handle_launch_id(Window win, void *data)
      {
 	if (b->client.e.launch_id == ic->launch_id)
 	  {
+	     if (ic->launch_id)
+	       {
+		  char buf[PATH_MAX];
+		  
+		  sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		  ecore_del_event_timer(buf);
+	       }
 	     ic->launch_id = 0;
 	     if (ic->launch_id_cb)
 	       {
@@ -1190,20 +1197,27 @@ ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     if (ic->launch_pid >= 0)
 	       {
 		  ic->launch_id = id_ret;
-		  if (id_ret)
+		  if (id_ret > 0)
 		    {
 		       char buf[PATH_MAX];
 		       
 		       ic->launch_id_cb = 
-			 e_exec_broadcast_cb_add(e_iconbar_handle_launch_id, ic);
+			 e_exec_broadcast_cb_add(e_iconbar_handle_launch_id, 
+						 ic);
 		       sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
 		       if (ic->wait_timeout > 0.0)
-			 ecore_add_event_timer(buf, ic->wait_timeout, ib_cancel_launch_timeout, ic->launch_id, ic);
+			 ecore_add_event_timer(buf, ic->wait_timeout, 
+					       ib_cancel_launch_timeout, 
+					       ic->launch_id, ic);
 		       else
-			 ecore_add_event_timer(buf, 15, ib_cancel_launch_timeout, ic->launch_id, ic);
-		       evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 50);
+			 ecore_add_event_timer(buf, 15.0, 
+					       ib_cancel_launch_timeout, 
+					       ic->launch_id, ic);
+		       evas_set_color(ic->iconbar->view->evas, ic->image, 
+				      255, 255, 255, 50);
 		       if (ic->hi.image)
-			 evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, 0);
+			 evas_set_color(ic->iconbar->view->evas, ic->hi.image, 
+					255, 255, 255, 0);
 		    }
 	       }
 	  }
@@ -1245,6 +1259,13 @@ ib_child_handle(Ecore_Event *ev)
 	     if (ic->launch_pid == e->pid)
 	       {
 		  ic->launch_pid = 0;
+		  if (ic->launch_id)
+		    {
+		       char buf[PATH_MAX];
+		       
+		       sprintf(buf, "iconbar_launch_wait:%i", ic->launch_id);
+		       ecore_del_event_timer(buf);
+		    }
 		  ic->launch_id = 0;
 		  if (ic->launch_id_cb)
 		    {
