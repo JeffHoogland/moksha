@@ -426,7 +426,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 		  hh = h;
 		  ow = bi->min.w;
 		  if (bi->expand_w) ow = ww;
-		  if ((bi->max.w >= 0) && (bi->max.w < oh)) ow = bi->max.w;
+		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
 		  oh = bi->min.h;
 		  if (bi->expand_h) oh = hh;
 		  if ((bi->max.h >= 0) && (bi->max.h < oh)) oh = bi->max.h;
