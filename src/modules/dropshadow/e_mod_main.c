@@ -58,6 +58,13 @@ static Shpix      *_ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
 static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
 static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
+static void        _ds_shared_free(Dropshadow *ds);
+static void        _ds_shared_use(Dropshadow *ds, Shadow *sh);
+static void        _ds_shared_unuse(Dropshadow *ds);
+static Shstore    *_ds_shstore_new(Shpix *sp, int x, int y, int w, int h);
+static void        _ds_shstore_free(Shstore *st);
+static void        _ds_shstore_object_set(Shstore *st, Evas_Object *o);
+static void        _ds_object_unset(Evas_Object *o);
     
 /* public module routines. all modules must have these */
 void *
@@ -215,6 +222,7 @@ _ds_shutdown(Dropshadow *ds)
      }
    if (ds->idler_before) e_main_idler_before_del(ds->idler_before);
    if (ds->table.gauss) free(ds->table.gauss);
+   _ds_shared_free(ds);
    free(ds);
 }
 
@@ -628,15 +636,26 @@ _ds_shadow_obj_shutdown(Shadow *sh)
      {
 	if (sh->object[i])
 	  {
+	     _ds_object_unset(sh->object[i]);
 	     evas_object_del(sh->object[i]);
 	     sh->object[i] = NULL;
 	  }
+     }
+   if (sh->use_shared)
+     {
+	_ds_shared_unuse(sh->ds);
+	sh->use_shared = 0;
      }
 }
 
 static void
 _ds_shadow_del(Shadow *sh)
 {
+   if (sh->use_shared)
+     {
+	_ds_shared_unuse(sh->ds);
+	sh->use_shared = 0;
+     }
    sh->ds->shadows = evas_list_remove(sh->ds->shadows, sh);
    _ds_shadow_obj_shutdown(sh);
    e_object_unref(E_OBJECT(sh->shape));
@@ -806,6 +825,12 @@ _ds_shadow_recalc(Shadow *sh)
 	shw = sh->w;
 	shh = sh->h;
 	bsz = sh->ds->conf->blur_size;
+
+	if (sh->use_shared)
+	  {
+	     _ds_shared_unuse(sh->ds);
+	     sh->use_shared = 0;
+	  }
 	
 	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
 	if (sp)
@@ -846,9 +871,9 @@ _ds_shadow_recalc(Shadow *sh)
 	     evas_object_image_fill_set(sh->object[0], 0, 0, 
 				sh->w + (bsz * 2),
 				sh->h + (bsz * 2));
-	     evas_object_image_size_set(sh->object[1], 0, 0);
-	     evas_object_image_size_set(sh->object[2], 0, 0);
-	     evas_object_image_size_set(sh->object[3], 0, 0);
+	     _ds_object_unset(sh->object[1]);
+	     _ds_object_unset(sh->object[2]);
+	     _ds_object_unset(sh->object[3]);
 	     _ds_shpix_free(sp);
 	  }
 	
@@ -861,8 +886,6 @@ _ds_shadow_recalc(Shadow *sh)
      }
    else
      {
-	E_Rect *r;
-	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
 	
 	sh->square = 1;
@@ -874,113 +897,105 @@ _ds_shadow_recalc(Shadow *sh)
 	bsz = sh->ds->conf->blur_size;
 	if (shw > ((bsz * 2) + 2)) shw = (bsz * 2) + 2;
 	if (shh > ((bsz * 2) + 2)) shh = (bsz * 2) + 2;
-	
-	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
-	if (sp)
+
+	if (sh->use_shared)
 	  {
-	     _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
-	     _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
-	     _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
-	     _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
-	     _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
-	     
-	     if (shx >= bsz)
+	     printf("EEEK useing shared already!!\n");
+	  }
+	else
+	  {
+	     _ds_shared_use(sh->ds, sh);
+	     sh->use_shared = 1;
+	  }
+	
+	if (shx >= bsz)
+	  {
+	     if (shy >= bsz)
 	       {
-		  if (shy >= bsz)
-		    {
-		       /* Case 4:
-			* X2
-			* 33
-			*/
-		    }
-		  else
-		    {
-		       /* Case 3:
-			* 00
-			* X2
-			* 33
-			*/
-		    }
+		  /* Case 4:
+		   * X2
+		   * 33
+		   */
 	       }
 	     else
 	       {
-		  if (shy >= bsz)
-		    {
-		       /* Case 2:
-			* 1X2
-			* 333
-			*/
-		    }
-		  else
-		    {
-		       /* Case 1:
-			* 000
-			* 1X2
-			* 333
-			*/
-
-		       _ds_shpix_blur(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2),
-				   sh->ds->table.gauss, bsz);
-		       
-		       _ds_shpix_object_set(sp, sh->object[0], 0, 0,
-					 shw + (bsz * 2), bsz - shy);
-		       _ds_shpix_object_set(sp, sh->object[1], 0, bsz - shy,
-					 bsz - shx, shh);
-		       _ds_shpix_object_set(sp, sh->object[2], shw + bsz - shx, bsz - shy,
-					 bsz + shx, shh);
-		       _ds_shpix_object_set(sp, sh->object[3], 0, bsz - shy + shh,
-					 shw + (bsz * 2), bsz + shy);
-		       
-		       evas_object_move(sh->object[0],
-					sh->x + shx - bsz,
-					sh->y + shy - bsz);
-		       evas_object_image_border_set(sh->object[0],
-						    (bsz * 2), (bsz * 2), 0, 0);
-		       evas_object_resize(sh->object[0],
-					  sh->w + (bsz * 2),
-					  bsz - shy);
-		       evas_object_image_fill_set(sh->object[0], 0, 0, 
-						  sh->w + (bsz) * 2,
-						  bsz - shy);
-		       
-		       evas_object_move(sh->object[1],
-					sh->x + shx - bsz,
-					sh->y);
-		       evas_object_image_border_set(sh->object[1],
-						    0, 0, bsz + shy, bsz - shy);
-		       evas_object_resize(sh->object[1],
-					  bsz - shx,
-					  sh->h);
-		       evas_object_image_fill_set(sh->object[1], 0, 0, 
-						  bsz - shx,
-						  sh->h);
-		       
-		       evas_object_move(sh->object[2],
-					sh->x + sh->w, 
-					sh->y);
-		       evas_object_image_border_set(sh->object[2],
-						    0, 0, bsz + shy, bsz - shy);
-		       evas_object_resize(sh->object[2],
-					  bsz + shx,
-					  sh->h);
-		       evas_object_image_fill_set(sh->object[2], 0, 0,
-						  bsz + shx,
-						  sh->h);
-		       
-		       evas_object_move(sh->object[3],
-					sh->x + shx - bsz,
-					sh->y + sh->h);
-		       evas_object_image_border_set(sh->object[3],
-						    (bsz * 2), (bsz * 2), 0, 0);
-		       evas_object_resize(sh->object[3],
-					  sh->w + (bsz * 2),
-					  bsz + shy);
-		       evas_object_image_fill_set(sh->object[3], 0, 0,
-						  sh->w + (bsz * 2),
-						  bsz + shy);
-		    }
+		  /* Case 3:
+		   * 00
+		   * X2
+		   * 33
+		   */
 	       }
-	     _ds_shpix_free(sp);
+	  }
+	else
+	  {
+	     if (shy >= bsz)
+	       {
+		  /* Case 2:
+		   * 1X2
+		   * 333
+		   */
+	       }
+	     else
+	       {
+		  /* Case 1:
+		   * 000
+		   * 1X2
+		   * 333
+		   */
+		  
+		  _ds_shstore_object_set(sh->ds->shared.shadow[0], sh->object[0]);
+		  _ds_shstore_object_set(sh->ds->shared.shadow[1], sh->object[1]);
+		  _ds_shstore_object_set(sh->ds->shared.shadow[2], sh->object[2]);
+		  _ds_shstore_object_set(sh->ds->shared.shadow[3], sh->object[3]);
+		       
+		  evas_object_move(sh->object[0],
+				   sh->x + shx - bsz,
+				   sh->y + shy - bsz);
+		  evas_object_image_border_set(sh->object[0],
+					       (bsz * 2), (bsz * 2), 0, 0);
+		  evas_object_resize(sh->object[0],
+				     sh->w + (bsz * 2),
+				     bsz - shy);
+		  evas_object_image_fill_set(sh->object[0], 0, 0, 
+					     sh->w + (bsz) * 2,
+					     bsz - shy);
+		  
+		  evas_object_move(sh->object[1],
+				   sh->x + shx - bsz,
+				   sh->y);
+		  evas_object_image_border_set(sh->object[1],
+					       0, 0, bsz + shy, bsz - shy);
+		  evas_object_resize(sh->object[1],
+				     bsz - shx,
+				     sh->h);
+		  evas_object_image_fill_set(sh->object[1], 0, 0, 
+					     bsz - shx,
+					     sh->h);
+		  
+		  evas_object_move(sh->object[2],
+				   sh->x + sh->w, 
+				   sh->y);
+		  evas_object_image_border_set(sh->object[2],
+					       0, 0, bsz + shy, bsz - shy);
+		  evas_object_resize(sh->object[2],
+				     bsz + shx,
+				     sh->h);
+		  evas_object_image_fill_set(sh->object[2], 0, 0,
+					     bsz + shx,
+					     sh->h);
+		  
+		  evas_object_move(sh->object[3],
+				   sh->x + shx - bsz,
+				   sh->y + sh->h);
+		  evas_object_image_border_set(sh->object[3],
+					       (bsz * 2), (bsz * 2), 0, 0);
+		  evas_object_resize(sh->object[3],
+				     sh->w + (bsz * 2),
+				     bsz + shy);
+		  evas_object_image_fill_set(sh->object[3], 0, 0,
+					     sh->w + (bsz * 2),
+					     bsz + shy);
+	       }
 	  }
 	
 	if (evas_object_visible_get(sh->object[0]))
@@ -1406,4 +1421,197 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 	evas_object_image_data_set(o, pix2);
 	evas_object_image_data_update_add(o, 0, 0, w, h);
      }
+}
+
+static void
+_ds_shared_free(Dropshadow *ds)
+{
+   int i;
+
+   for (i = 0; i < 4; i++)
+     {
+	if (ds->shared.shadow[i])
+	  {
+	     _ds_shstore_free(ds->shared.shadow[i]);
+	     ds->shared.shadow[i] = NULL;
+	  }
+     }
+   ds->shared.ref = 0;
+}
+
+static void
+_ds_shared_use(Dropshadow *ds, Shadow *sh)
+{
+   if (ds->shared.ref == 0)
+     {
+	Shpix *sp;
+	int shw, shh, bsz, shx, shy;
+	
+	shx = sh->ds->conf->shadow_x;
+	shy = sh->ds->conf->shadow_y;
+	shw = sh->w;
+	shh = sh->h;
+	bsz = sh->ds->conf->blur_size;
+	if (shw > ((bsz * 2) + 2)) shw = (bsz * 2) + 2;
+	if (shh > ((bsz * 2) + 2)) shh = (bsz * 2) + 2;
+	
+	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
+	if (sp)
+	  {
+	     _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
+	     _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
+	     _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
+	     _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
+	     _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
+	     
+	     if (shx >= bsz)
+	       {
+		  if (shy >= bsz)
+		    {
+		       /* Case 4:
+			* X2
+			* 33
+			*/
+		    }
+		  else
+		    {
+		       /* Case 3:
+			* 00
+			* X2
+			* 33
+			*/
+		    }
+	       }
+	     else
+	       {
+		  if (shy >= bsz)
+		    {
+		       /* Case 2:
+			* 1X2
+			* 333
+			*/
+		    }
+		  else
+		    {
+		       /* Case 1:
+			* 000
+			* 1X2
+			* 333
+			*/
+		       _ds_shpix_blur(sp, 0, 0, 
+				      shw + (bsz * 2), shh + (bsz * 2),
+				      ds->table.gauss, bsz);
+
+		       ds->shared.shadow[0] = 
+			 _ds_shstore_new(sp,
+					 0, 0,
+					 shw + (bsz * 2), bsz - shy);
+		       ds->shared.shadow[1] = 
+			 _ds_shstore_new(sp,
+					 0, bsz - shy,
+					 bsz - shx, shh);
+		       ds->shared.shadow[2] = 
+			 _ds_shstore_new(sp,
+					 shw + bsz - shx, bsz - shy,
+					 bsz + shx, shh);
+		       ds->shared.shadow[3] = 
+			 _ds_shstore_new(sp,
+					 0, bsz - shy + shh,
+					 shw + (bsz * 2), bsz + shy);
+		    }
+	       }
+	     _ds_shpix_free(sp);
+	  }
+     }
+   ds->shared.ref++;
+}
+
+static void
+_ds_shared_unuse(Dropshadow *ds)
+{
+   ds->shared.ref--;
+   if (ds->shared.ref == 0)
+     _ds_shared_free(ds);
+}
+
+static Shstore *
+_ds_shstore_new(Shpix *sp, int x, int y, int w, int h)
+{
+   Shstore *st;
+   unsigned char *p;
+   unsigned int *p2;
+   int xx, yy, jump;
+
+   if (!sp) return;
+   
+   if ((w < 1) || (h < 1)) return;
+   
+   if (x < 0)
+     {
+	w += x;
+	x = 0;
+	if (w < 1) return;
+     }
+   if (x >= sp->w) return;
+   if ((x + w) > (sp->w)) w = sp->w - x;
+   
+   if (y < 0)
+     {
+	h += y;
+	y = 0;
+	if (h < 1) return;
+     }
+   if (y >= sp->h) return;
+   if ((y + h) > (sp->h)) h = sp->h - y;
+
+   st = calloc(1, sizeof(Shstore));
+   if (!st) return NULL;
+   st->pix = malloc(w * h * sizeof(unsigned int));
+   if (!st->pix)
+     {
+	free(st);
+	return NULL;
+     }
+   st->w = w;
+   st->h = h;
+   
+   p = sp->pix + (y * sp->w) + x;
+   jump = sp->w - w;
+   p2 = st->pix;
+   for (yy = 0; yy < h; yy++)
+     {
+	for (xx = 0; xx < w; xx++)
+	  {
+	     *p2 = ((*p) << 24);
+	     p2++;
+	     p++;
+	  }
+	p += jump;
+     }
+   return st;
+}
+
+static void
+_ds_shstore_free(Shstore *st)
+{
+   if (!st) return;
+   free(st->pix);
+   free(st);
+}
+
+static void
+_ds_shstore_object_set(Shstore *st, Evas_Object *o)
+{
+   evas_object_image_size_set(o, st->w, st->h);
+   evas_object_image_data_set(o, st->pix);
+   evas_object_image_data_update_add(o, 0, 0, st->w, st->h);
+   evas_object_image_alpha_set(o, 1);
+   evas_object_image_smooth_scale_set(o, 0);
+}
+
+static void
+_ds_object_unset(Evas_Object *o)
+{
+   evas_object_image_size_set(o, 0, 0);
+   evas_object_image_data_set(o, NULL);
 }

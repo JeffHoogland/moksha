@@ -2,9 +2,22 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Shpix      Shpix;
+typedef struct _Shstore    Shstore;
 typedef struct _Config     Config;
 typedef struct _Dropshadow Dropshadow;
 typedef struct _Shadow     Shadow;
+
+struct _Shpix
+{
+   int            w, h;
+   unsigned char *pix;
+};
+
+struct _Shstore
+{
+   int            w, h;
+   unsigned int  *pix;
+};
 
 struct _Config
 {
@@ -27,6 +40,11 @@ struct _Dropshadow
       unsigned char *gauss;
       int            gauss_size;
    } table;
+   
+   struct {
+      Shstore *shadow[4];
+      int      ref;
+   } shared;
 };
 
 struct _Shadow
@@ -40,12 +58,7 @@ struct _Shadow
    unsigned char reshape : 1;
    unsigned char square : 1;
    unsigned char toosmall : 1;
-};
-
-struct _Shpix
-{
-   int            w, h;
-   unsigned char *pix;
+   unsigned char use_shared : 1;
 };
 
 EAPI void *init     (E_Module *m);
