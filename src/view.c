@@ -392,6 +392,9 @@ e_view_file_added(int id, char *file)
    icon->visible = 1;
    icon->icon = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
    e_view_add_icon(v, icon);
+   sprintf(buf, "%s/%s", v->dir, file);
+   /* errr - efsd dont do stat yet */
+/*   efsd_stat(e_fs_get_connection(), buf); */
    v->changed = 1;
 }
 
@@ -479,6 +482,8 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case CHMOD:
 	     break;
 	   case STAT:
+	     printf("Stat event %i\n",
+		    ev->efsd_reply_event.command.efsd_file_cmd.id);
 	     break;
 	   case CLOSE:
 	     break;
