@@ -418,6 +418,7 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
    if (bd->client.icccm.machine) free(bd->client.icccm.machine);
    e_object_del(E_OBJECT(bd->shape));
+   if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
@@ -1134,11 +1135,59 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.icccm.fetch.name_class)
      {
-	if (bd->client.icccm.name) free(bd->client.icccm.name);
+	int nc_change = 0;
+	char *pname, *pclass;
+	
+	pname = bd->client.icccm.name;
+	pclass = bd->client.icccm.class;
 	bd->client.icccm.name = NULL;
-	if (bd->client.icccm.class) free(bd->client.icccm.class);
 	bd->client.icccm.class = NULL;
 	ecore_x_window_prop_name_class_get(bd->client.win, &bd->client.icccm.name, &bd->client.icccm.class);
+	if ((pname) && (bd->client.icccm.name) &&
+	    (pclass) && (bd->client.icccm.class))
+	  {
+	     if (!((!strcmp(bd->client.icccm.name, pname)) &&
+		   (!strcmp(bd->client.icccm.class, pclass))))
+	       nc_change = 1;
+	  }
+	else if (((!pname) || (!pclass)) &&
+		 ((bd->client.icccm.name) || (bd->client.icccm.class)))
+	  nc_change = 1;
+	else if (((bd->client.icccm.name) || (bd->client.icccm.class)) &&
+		 ((!pname) || (!pclass)))
+	  nc_change = 1;
+	if (pname) free(pname);
+	if (pclass) free(pclass);
+	if (nc_change)
+	  {
+	     E_App *a;
+	     
+	     a = NULL;
+	     if (bd->icon_object)
+	       {
+		  evas_object_del(bd->icon_object);
+		  bd->icon_object = NULL;
+	       }
+	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
+	       {
+		  a = e_app_window_name_class_find(bd->client.icccm.name,
+						   bd->client.icccm.class);
+		  if (a)
+		    {
+		       bd->icon_object = edje_object_add(bd->bg_evas);
+		       edje_object_file_set(bd->icon_object, a->path, "icon");
+		       if (bd->bg_object)
+			 {
+			    evas_object_show(bd->icon_object);
+			    edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+			 }
+		       else
+			 {
+			    evas_object_hide(bd->icon_object);
+			 }
+		    }
+	       }
+	  }
 	bd->client.icccm.fetch.name_class = 0;
      }
    if (bd->client.icccm.fetch.icon_name)
@@ -1357,6 +1406,19 @@ _e_border_eval(E_Border *bd)
 	evas_object_resize(o, bd->w, bd->h);
 	evas_object_show(o);
 	bd->client.border.changed = 0;
+	
+	if (bd->icon_object)
+	  {
+	     if (bd->bg_object)
+	       {
+		  evas_object_show(bd->icon_object);
+		  edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	       }
+	     else
+	       {
+		  evas_object_hide(bd->icon_object);
+	       }
+	  }
      }
 
    if (bd->new_client)

@@ -37,12 +37,14 @@ static int       _e_apps_cb_exit           (void *data, int type, void *event);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
+static Evas_List   *_e_apps_list = NULL;
 static Ecore_Timer *_e_apps_checker = NULL;
 static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
 static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
 static Evas_List   *_e_apps_repositories = NULL;
+static E_App       *_e_apps_all = NULL;
 
 /* externally accessible functions */
 int
@@ -53,15 +55,21 @@ e_app_init(void)
    
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
-   E_FREE(home);
+   free(home);
    _e_apps_repositories = evas_list_append(_e_apps_repositories, strdup(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_apps_cb_exit, NULL);
+   _e_apps_all = e_app_new(buf, 1);
    return 1;
 }
 
 int
 e_app_shutdown(void)
 {
+   if (_e_apps_all)
+     {
+	e_object_unref(E_OBJECT(_e_apps_all));
+	_e_apps_all = NULL;
+     }
    while (_e_apps_repositories)
      {
 	free(_e_apps_repositories->data);
@@ -144,6 +152,7 @@ e_app_new(char *path, int scan_subdirs)
 	return NULL;
      }
    _e_apps = evas_hash_add(_e_apps, a->path, a);
+   _e_apps_list = evas_list_prepend(_e_apps_list, a);
    _e_app_monitor();
    return a;
 }
@@ -180,8 +189,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	     Evas_List *pl;
 			
 	     snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-	     if (e_file_exists(buf))
-	       a2 = e_app_new(buf, scan_subdirs);
+	     if (e_file_exists(buf)) a2 = e_app_new(buf, scan_subdirs);
 	     pl = _e_apps_repositories;
 	     while ((!a2) && (pl))
 	       {
@@ -270,6 +278,38 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
      }
 }
 
+E_App *
+e_app_window_name_class_find(char *name, char *class)
+{
+   Evas_List *l;
+   
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if ((a->win_name) || (a->win_class))
+	  {
+	     int ok = 0;
+	     
+//	     printf("%s.%s == %s.%s\n", name, class, a->win_name, a->win_class);
+	     if ((!a->win_name) ||
+		 ((a->win_name) && (!strcmp(a->win_name, name))))
+	       ok++;
+	     if ((!a->win_class) ||
+		 ((a->win_class) && (!strcmp(a->win_class, class))))
+	       ok++;
+	     if (ok >= 2)
+	       {
+		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  return a;
+	       }
+	  }
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_app_free(E_App *a)
@@ -287,12 +327,14 @@ _e_app_free(E_App *a)
 	E_App *a2;
 	
 	a2 = a->subapps->data;
-	e_object_unref(E_OBJECT(a2));
 	a->subapps = evas_list_remove(a->subapps, a2);
+	a2->parent = NULL;
+	e_object_unref(E_OBJECT(a2));
      }
    if (a->parent)
      a->parent->subapps = evas_list_remove(a->parent->subapps, a);
    _e_apps = evas_hash_del(_e_apps, a->path, a);
+   _e_apps_list = evas_list_remove(_e_apps_list, a);
    if (a->name) free(a->name);
    if (a->generic) free(a->generic);
    if (a->comment) free(a->comment);

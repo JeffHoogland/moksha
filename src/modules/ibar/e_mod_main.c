@@ -493,6 +493,7 @@ _ibar_bar_icon_new(IBar_Bar *ibb, E_App *a)
    if (!ic) return NULL;
    ic->ibb = ibb;
    ic->app = a;
+   e_object_ref(E_OBJECT(a));
    ibb->icons = evas_list_append(ibb->icons, ic);
    
    o = evas_object_rectangle_add(ibb->evas);
