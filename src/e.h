@@ -156,10 +156,12 @@ void (*e_obs_free)(void *_e_obs);
     _e_obj->e_obj_free(_e_obj); \
 }
 #define OBJ_DO_FREE(_e_obj) \
-OBJ_UNREF(_e_obj); \
-OBJ_IF_FREE(_e_obj) \
 { \
-OBJ_FREE(_e_obj); \
+  OBJ_UNREF(_e_obj); \
+  OBJ_IF_FREE(_e_obj) \
+    { \
+      OBJ_FREE(_e_obj); \
+    } \
 }
 #define OBJ_PROPERTIES \
 int references; \
@@ -167,8 +169,9 @@ void (*e_obj_free) (void *e_obj); \
 Evas_List observers;
 #define OBJ_INIT(_e_obj, _e_obj_free_func) \
 { \
-_e_obj->references = 1; \
-_e_obj->e_obj_free = (void *) _e_obj_free_func; \
+  _e_obj->references = 1; \
+  _e_obj->e_obj_free = (void *) _e_obj_free_func; \
+  _e_obj->observers = NULL; \
 }
 
 /* misc util macros */

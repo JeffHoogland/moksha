@@ -1,6 +1,101 @@
-#include "e.h"
-#include "background.h"
-#include "util.h"
+#include <Evas.h>
+#include <Ebits.h>
+#include <Ecore.h>
+#include <Edb.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <math.h>
+#include "../config.h"
+
+/* stuff we want from e */
+#define OBJ_PROPERTIES \
+int references; \
+void (*e_obj_free) (void *e_obj);
+#define OBJ_INIT(_e_obj, _e_obj_free_func) \
+{ \
+  _e_obj->references = 1; \
+  _e_obj->e_obj_free = (void *) _e_obj_free_func; \
+}
+#define OBJ_REF(_e_obj) _e_obj->references++
+#define OBJ_UNREF(_e_obj) _e_obj->references--
+#define OBJ_IF_FREE(_e_obj) if (_e_obj->references == 0)
+#define OBJ_FREE(_e_obj) _e_obj->e_obj_free(_e_obj);
+#define OBJ_DO_FREE(_e_obj) \
+{ \
+  OBJ_UNREF(_e_obj); \
+  OBJ_IF_FREE(_e_obj) \
+    { \
+      OBJ_FREE(_e_obj); \
+    } \
+}
+#define e_strdup(__dest, __var) \
+{ \
+if (!__var) __dest = NULL; \
+else { \
+__dest = malloc(strlen(__var) + 1); \
+if (__dest) strcpy(__dest, __var); \
+} }
+
+typedef struct _E_Background          E_Background;
+typedef struct _E_Background_Layer    E_Background_Layer;
+
+struct _E_Background
+{
+   OBJ_PROPERTIES;
+   
+   Evas  evas;
+   char *file;
+   
+   struct {
+      int sx, sy;
+      int w, h;
+   } geom;
+   
+   Evas_List layers;
+   
+   Evas_Object base_obj;
+};
+
+
+struct _E_Background_Layer
+{
+   int mode;
+   int type;
+   int inlined;
+   struct {
+      float x, y;
+   } scroll;
+   struct {
+      float x, y;
+   } pos;
+   struct {
+      float w, h;
+      struct {
+	 int w, h;
+      } orig;
+   } size, fill;
+   char *color_class;
+   char *file;
+   double angle;
+   struct {
+      int r, g, b, a;
+   } fg, bg;
+   
+   double x, y, w, h, fw, fh;
+   
+   Evas_Object obj;
+};
+
+
+void           e_background_free(E_Background *bg);
+E_Background  *e_background_new(void);
+E_Background  *e_background_load(char *file);
+void           e_background_realize(E_Background *bg, Evas evas);
+void           e_background_set_scroll(E_Background *bg, int sx, int sy);
+void           e_background_set_size(E_Background *bg, int w, int h);
+void           e_background_set_color_class(E_Background *bg, char *cc, int r, int g, int b, int a);
 
 void
 e_background_free(E_Background *bg)
@@ -62,7 +157,7 @@ e_background_load(char *file)
    for (i = 0; i < num; i++)
      {
 	E_Background_Layer *bl;
-	char buf[PATH_MAX];
+	char buf[4096];
 	
 	bl = NEW(E_Background_Layer, 1);
 	ZERO(bl, E_Background_Layer, 1);
@@ -252,4 +347,143 @@ e_background_set_color_class(E_Background *bg, char *cc, int r, int g, int b, in
 	       }
 	  }
      }
+}
+
+Window win_main;
+Window win_evas;
+Evas   evas;
+double scr_w, scr_h;
+Evas_Object pointer;
+
+
+
+
+
+/* our stuff */
+void idle(void *data);
+void window_expose(Ecore_Event * ev);
+void mouse_move(Ecore_Event * ev);
+void mouse_down(Ecore_Event * ev);
+void mouse_up(Ecore_Event * ev);
+void key_down(Ecore_Event * ev);
+void setup(void);
+
+void
+idle(void *data)
+{
+   evas_render(evas);
+}
+
+void
+window_expose(Ecore_Event * ev)
+{
+   Ecore_Event_Window_Expose      *e;
+   
+   e = (Ecore_Event_Window_Expose *)ev->event;
+   evas_update_rect(evas, e->x, e->y, e->w, e->h);
+}
+
+void
+mouse_move(Ecore_Event * ev)
+{
+   Ecore_Event_Mouse_Move      *e;
+   
+   e = (Ecore_Event_Mouse_Move *)ev->event;
+   evas_move(evas, pointer,
+	     evas_screen_x_to_world(evas, e->x),
+	     evas_screen_y_to_world(evas, e->y));
+   evas_event_move(evas, e->x, e->y);
+}
+
+void
+mouse_down(Ecore_Event * ev)
+{
+   Ecore_Event_Mouse_Down      *e;
+   
+   e = (Ecore_Event_Mouse_Down *)ev->event;
+   evas_event_button_down(evas, e->x, e->y, e->button);
+}
+
+void
+mouse_up(Ecore_Event * ev)
+{
+   Ecore_Event_Mouse_Up      *e;
+   
+   e = (Ecore_Event_Mouse_Up *)ev->event;
+   evas_event_button_up(evas, e->x, e->y, e->button);
+}
+
+void
+key_down(Ecore_Event * ev)
+{
+   Ecore_Event_Key_Down          *e;
+   
+   e = ev->event;
+   if (!strcmp(e->key, "Escape"))
+     {
+	exit(0);
+     }
+}
+
+void
+setup(void)
+{
+   int root_w, root_h;
+   E_Background *bg;
+
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE, window_expose);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,    mouse_move);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,    mouse_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,      mouse_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,      key_down);
+   
+   ecore_event_filter_idle_handler_add(idle, NULL);
+   
+   ecore_window_get_geometry(0, NULL, NULL, &root_w, &root_h);
+   win_main = ecore_window_override_new(0, 0, 0, root_w, root_h);
+   evas = evas_new_all(ecore_display_get(), 
+		       win_main, 
+		       0, 0, root_w, root_w, 
+		       RENDER_METHOD_ALPHA_SOFTWARE,
+		       216,   1024 * 1024,   8 * 1024 * 1024,
+		       PACKAGE_DATA_DIR"/data/fonts/");
+   
+   bg = e_background_load(PACKAGE_DATA_DIR"/data/backgrounds/default.bg.db");
+   if (!bg)
+     {
+	/* FIXME: must detect this error better and tell user */
+	printf("ERROR: Enlightenment not installed properly\n");
+	exit(-1);
+     }
+   e_background_realize(bg, evas);
+   e_background_set_size(bg, root_w, root_h);
+   
+   pointer = evas_add_image_from_file(evas, PACKAGE_DATA_DIR"/data/setup/pointer.png");
+   evas_set_pass_events(evas, pointer, 1);
+   evas_set_layer(evas, pointer, 1000000);
+   evas_show(evas, pointer);
+      
+   win_evas = evas_get_window(evas);   
+   ecore_window_set_events(win_evas, XEV_EXPOSE | XEV_BUTTON | XEV_MOUSE_MOVE | XEV_KEY);
+   ecore_set_blank_pointer(win_evas);
+   
+   ecore_window_show(win_evas);
+   ecore_window_show(win_main);
+   ecore_keyboard_grab(win_evas);
+   
+   scr_w = root_w;
+   scr_h = root_h;
+}
+
+int
+main(int argc, char **argv)
+{
+   ecore_display_init(NULL);
+   ecore_event_signal_init();
+   ecore_event_filter_init();
+   ecore_event_x_init();
+   
+   setup();
+   
+   ecore_event_loop();   
 }

@@ -1,8 +1,6 @@
 #ifndef E_BACKGROUND_H
 #define E_BACKGROUND_H
 
-#include "e.h"
-
 typedef struct _E_Background          E_Background;
 typedef struct _E_Background_Layer    E_Background_Layer;
 
