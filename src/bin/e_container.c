@@ -395,10 +395,10 @@ static void
 _e_container_free(E_Container *con)
 {
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));
-   while (con->zones) e_object_del(E_OBJECT(con->zones->data));
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
    while (con->clients) e_object_free(E_OBJECT(con->clients->data));
+   while (con->zones) e_object_del(E_OBJECT(con->zones->data));
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
