@@ -80,9 +80,112 @@ e_icon_new(void)
 }
 
 void
+e_icon_place_grid(E_Icon *icon)
+{
+   int x, y;
+   
+   if (icon->view->options.arrange.grid.dir == 0) /* h */
+     {
+	int gw;
+	
+	if (icon->view->options.arrange.grid.w > 0)
+	  gw = icon->view->size.w / icon->view->options.arrange.grid.w;
+	else gw = 1;
+	y = icon->view->options.arrange.grid.next_pos / gw;
+	x = icon->view->options.arrange.grid.next_pos - (y * gw);
+	x *= icon->view->options.arrange.grid.w;
+	y *= icon->view->options.arrange.grid.h;
+	e_icon_set_xy(icon, x, y);
+	printf("GRID PLACE at %i %i\n", x, y);
+	icon->view->options.arrange.grid.next_pos++;
+     }
+   else /* v */
+     {
+     }
+}
+
+void
+e_icon_pre_show(E_Icon *icon)
+{
+   int x, y;
+   
+   if (icon->info.ready) return;
+   printf("*********!!!!!!!!!!!!!!!********* update from e_icon_pre_show()\n");
+   e_icon_update(icon);
+   icon->info.ready = 1;
+   if (icon->info.coord.have)
+     {
+	x = icon->info.coord.x;
+	y = icon->info.coord.y;
+	e_icon_set_xy(icon, x, y);
+     }
+   else
+     {
+	if (icon->view->options.arrange.method == 0) /* grid */
+	  {
+	     /* need to redo whole grid... */
+	     if ((icon->current.w > icon->view->options.arrange.grid.w) ||
+		 (icon->current.h > icon->view->options.arrange.grid.h))
+	       {		  
+		  Evas_List l;
+		  
+		  icon->view->options.arrange.grid.next_pos = 0;
+		  icon->view->options.arrange.grid.w = icon->current.w;
+		  icon->view->options.arrange.grid.h = icon->current.h;
+		  for (l = icon->view->icons; l; l = l->next)
+		    {
+		       E_Icon *ic;
+		       
+		       ic = l->data;
+		       if (ic->info.ready)
+			 e_icon_place_grid(ic);
+		    }
+	       }
+	     else
+	       e_icon_place_grid(icon);
+	  }
+     }
+   e_icon_show(icon);   
+}
+
+void
 e_icon_calulcate_geometry(E_Icon *icon)
 {
+   int iw, ih, tw, th;
+   double dtw, dth;
+   
    if (!icon->view) return;
+   dtw = 0; dth = 0; iw = 0; ih = 0;
+   evas_get_geometry(icon->view->evas, icon->obj.filename, NULL, NULL, &dtw, &dth);
+   tw = (int)dtw; 
+   th = (int)dth;
+   evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
+   if (tw < iw)
+     {
+	icon->current.ix = icon->current.x;
+	icon->current.iy = icon->current.y;
+	icon->current.tx = icon->current.x + ((iw - tw) / 2);
+	icon->current.ty = icon->current.y + ih;
+	icon->current.w = iw;
+	icon->current.h = ih + th;
+	icon->current.iw = iw;
+	icon->current.ih = ih;
+	icon->current.tw = tw;
+	icon->current.th = th;
+     }
+   else
+     {
+	icon->current.ix = icon->current.x + ((tw - iw) / 2);
+	icon->current.iy = icon->current.y;
+	icon->current.tx = icon->current.x;
+	icon->current.ty = icon->current.y + ih;
+	icon->current.w = tw;
+	icon->current.h = ih + th;
+	icon->current.iw = iw;
+	icon->current.ih = ih;
+	icon->current.tw = tw;
+	icon->current.th = th;
+     }
 }
 
 void
@@ -90,10 +193,10 @@ e_icon_realize(E_Icon *icon)
 {
    icon->obj.sel1 = evas_add_rectangle(icon->view->evas);
    icon->obj.sel2 = evas_add_rectangle(icon->view->evas);
-   evas_set_layer(icon->view->evas, icon->obj.sel1, 11);
-   evas_set_layer(icon->view->evas, icon->obj.sel2, 11);
    evas_set_color(icon->view->evas, icon->obj.sel1, 0, 0, 0, 0);
    evas_set_color(icon->view->evas, icon->obj.sel2, 0, 0, 0, 0);
+   evas_set_layer(icon->view->evas, icon->obj.sel1, 11);
+   evas_set_layer(icon->view->evas, icon->obj.sel2, 11);
    evas_callback_add(icon->view->evas, icon->obj.sel1, CALLBACK_MOUSE_IN, e_icon_in_cb, icon);
    evas_callback_add(icon->view->evas, icon->obj.sel1, CALLBACK_MOUSE_OUT, e_icon_out_cb, icon);
    evas_callback_add(icon->view->evas, icon->obj.sel1, CALLBACK_MOUSE_DOWN, e_icon_down_cb, icon);
@@ -169,7 +272,6 @@ void
 e_icon_set_filename(E_Icon *icon, char *file)
 {
    IF_FREE(icon->file);
-   printf("e_icon_set_filename(%s)\n", file);
    icon->file = strdup(file);
    icon->changed = 1;
    if (icon->view) icon->view->changed = 1;
@@ -181,6 +283,7 @@ e_icon_update(E_Icon *icon)
    int obj_new = 0;
    
    if (!icon->changed) return;
+   printf("icon (%s).. update\n", icon->file);
    if (icon->current.state.clicked)
      {
 	if (icon->info.icon.clicked)
@@ -203,15 +306,19 @@ e_icon_update(E_Icon *icon)
      }
    if ((!icon->current.state.selected) && (icon->obj.sel_icon))
      {
-	printf("no\n");
 	ebits_hide(icon->obj.sel_icon);
 	ebits_free(icon->obj.sel_icon);
 	icon->obj.sel_icon = NULL;
      }
-   if (icon->obj.icon) 
+   if ((icon->obj.icon) && 
+       (icon->current.icon) && 
+       ((!icon->previous.icon) ||
+	((icon->previous.icon)  && 
+	 (!strcmp(icon->current.icon, icon->previous.icon)))))
      {
 	int iw, ih;
 	
+	printf("set file etc.\n");
 	evas_set_image_file(icon->view->evas, icon->obj.icon, icon->current.icon);	
 	evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
 	evas_set_image_fill(icon->view->evas, icon->obj.icon, 0, 0, iw, ih);
@@ -257,50 +364,50 @@ e_icon_update(E_Icon *icon)
 	  }
      }
    if ((icon->previous.x != icon->current.x) ||
-       (icon->previous.y != icon->current.y))
+       (icon->previous.y != icon->current.y) ||
+       (icon->current.visible != icon->previous.visible) ||
+       (obj_new))
      {
-	int fx, fy;
-	int iw, ih;
-	double tw, th;
-   
-	evas_get_geometry(icon->view->evas, icon->obj.filename, NULL, NULL, &tw, &th);
-	evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
-	fx = icon->current.x + ((iw - tw) / 2);
-	fy = icon->current.y + ih;
-	evas_move(icon->view->evas, icon->obj.icon, icon->current.x, icon->current.y);
-	evas_move(icon->view->evas, icon->obj.filename, fx, fy);
-	evas_move(icon->view->evas, icon->obj.sel1, icon->current.x, icon->current.y);
-	evas_resize(icon->view->evas, icon->obj.sel1, iw, ih);
-	evas_move(icon->view->evas, icon->obj.sel2, fx, fy);
-	evas_resize(icon->view->evas, icon->obj.sel2, tw, th);
+	e_icon_calulcate_geometry(icon);
+/* HRRRM - must optimize this*/
+	evas_move(icon->view->evas, icon->obj.icon, icon->current.ix, icon->current.iy);
+	evas_move(icon->view->evas, icon->obj.filename, icon->current.tx, icon->current.ty);
+	evas_move(icon->view->evas, icon->obj.sel1, icon->current.ix, icon->current.iy);
+	evas_resize(icon->view->evas, icon->obj.sel1, icon->current.iw, icon->current.ih);
+	evas_move(icon->view->evas, icon->obj.sel2, icon->current.tx, icon->current.ty);
+	evas_resize(icon->view->evas, icon->obj.sel2, icon->current.tw, icon->current.th);
 	evas_set_color(icon->view->evas, icon->obj.filename, 0, 0, 0, 255);
-	if (icon->obj.sel_icon)
+/**/	if (icon->obj.sel_icon)
 	  {
 	     int pl, pr, pt, pb;
 	     
 	     pl = pr = pt = pb = 0;
 	     ebits_get_insets(icon->obj.sel_icon, &pl, &pr, &pt, &pb);
-	     ebits_move(icon->obj.sel_icon, icon->current.x - pl, icon->current.y - pt);
-	     ebits_resize(icon->obj.sel_icon, iw + pl + pr, ih + pt + pb);
+	     ebits_move(icon->obj.sel_icon, icon->current.ix - pl, icon->current.iy - pt);
+	     ebits_resize(icon->obj.sel_icon, icon->current.iw + pl + pr, icon->current.ih + pt + pb);
 	  }
 	
      }
-   if (icon->current.visible)
+   if (icon->current.visible != icon->previous.visible)
      {
-	evas_show(icon->view->evas, icon->obj.icon);
-	evas_show(icon->view->evas, icon->obj.filename);
-	evas_show(icon->view->evas, icon->obj.sel1);
-	evas_show(icon->view->evas, icon->obj.sel2);
-	if (icon->obj.sel_icon) ebits_show(icon->obj.sel_icon);
-     }
-   else
-     {
-	evas_hide(icon->view->evas, icon->obj.icon);
-	evas_hide(icon->view->evas, icon->obj.filename);
-	evas_hide(icon->view->evas, icon->obj.sel1);
-	evas_hide(icon->view->evas, icon->obj.sel2);
-	if (icon->obj.sel_icon) ebits_hide(icon->obj.sel_icon);
+	if (icon->current.visible)
+	  {
+	     evas_show(icon->view->evas, icon->obj.icon);
+	     evas_show(icon->view->evas, icon->obj.filename);
+	     evas_show(icon->view->evas, icon->obj.sel1);
+	     evas_show(icon->view->evas, icon->obj.sel2);
+	     if (icon->obj.sel_icon) ebits_show(icon->obj.sel_icon);
+	  }
+	else
+	  {
+	     evas_hide(icon->view->evas, icon->obj.icon);
+	     evas_hide(icon->view->evas, icon->obj.filename);
+	     evas_hide(icon->view->evas, icon->obj.sel1);
+	     evas_hide(icon->view->evas, icon->obj.sel2);
+	     if (icon->obj.sel_icon) ebits_hide(icon->obj.sel_icon);
+	  }
      }
    icon->previous = icon->current;
    icon->changed = 0;
+   printf("... done\n");
 }

@@ -415,8 +415,6 @@ e_view_file_added(int id, char *file)
    if (!e_view_filter_file(v, file)) return;
    icon = e_icon_new();
    e_icon_set_filename(icon, file);
-   e_icon_set_xy(icon, rand()%(v->size.w - 60), rand()%(v->size.h - 60));
-   e_icon_show(icon);
    e_view_add_icon(v, icon);
    sprintf(buf, "%s/%s", v->dir, file);
    if (efsd_ready(e_fs_get_connection()))
@@ -426,7 +424,7 @@ e_view_file_added(int id, char *file)
      }
    else
      {
-       printf("Efsd not ready.\n");
+       printf("*********** EEEEEEEEEEEEEEEEEK Efsd not ready.\n");
      }
    v->changed = 1;
 }
@@ -616,7 +614,8 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       icon->changed = 1;
 		       icon->view->changed = 1;
-		       if (!icon->info.link_get_id) icon->info.ready = 1;
+		       if (!icon->info.link_get_id) 
+			 e_icon_pre_show(icon);
 		    }
 	       }
 	     break;
@@ -646,7 +645,8 @@ e_view_handle_fs(EfsdEvent *ev)
 				 memcpy(icon->info.link, (char*)ev->efsd_reply_event.data, ev->efsd_reply_event.data_len);
 				 icon->info.link[ev->efsd_reply_event.data_len] = 0;
 				 icon->info.link_get_id = 0;
-				 if (!icon->info.link_get_id) icon->info.ready = 1;
+				 if (!icon->info.link_get_id) 
+				   e_icon_pre_show(icon);
 				 icon->changed = 1;
 				 icon->view->changed = 1;
 				 printf("link_to = %s\n", icon->info.link);
@@ -726,7 +726,8 @@ e_view_new(void)
 #endif   
 #endif
    views = evas_list_append(views, v);
-   
+
+   /*
      {
 	E_Shelf *sh;
 	
@@ -738,7 +739,7 @@ e_view_new(void)
 	e_shelf_resize(sh, 500, 350);
 	v->shelves = evas_list_append(v->shelves, sh);
      }
-   
+   */
    return v;   
 }
 
@@ -785,14 +786,14 @@ e_view_add_icon(E_View *v, E_Icon *icon)
    e_icon_realize(icon);
    v->changed = 1;
    v->icons = evas_list_append(v->icons, icon);
-   e_shelf_add_icon(v->shelves->data, icon);
+/*   e_shelf_add_icon(v->shelves->data, icon); */
 }
 
 void
 e_view_del_icon(E_View *v, E_Icon *icon)
 {
    if (!icon->view) return;
-   e_shelf_del_icon(v->shelves->data, icon);
+/*   e_shelf_del_icon(v->shelves->data, icon); */
    e_icon_unrealize(icon);
    OBJ_UNREF(icon);
    icon->view = NULL;
@@ -823,6 +824,7 @@ e_view_realize(E_View *v)
 			  image_cache,
 			  font_dir);
    v->win.main = evas_get_window(v->evas);
+   evas_event_move(v->evas, -999999, -999999);
    e_add_child(v->win.base, v->win.main);   
    if (v->options.back_pixmap)
      {
@@ -905,6 +907,7 @@ e_view_update(E_View *v)
 {
    Evas_List l;
    
+   printf("view update\n");
    if (v->changed)
      {
 	for (l = v->icons; l; l = l->next)
@@ -915,6 +918,7 @@ e_view_update(E_View *v)
 	     e_icon_update(icon);
 	  }
      }
+   printf("done\n");
    if (v->options.back_pixmap)
      {
 	Imlib_Updates up;

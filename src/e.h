@@ -315,6 +315,14 @@ struct _E_View
    struct {
       Evas_Render_Method  render_method;
       int                 back_pixmap;
+      struct {
+	 int method;
+	 struct {
+	    int dir;
+	    int w, h;
+	    int next_pos;
+	 } grid;
+      } arrange;
    } options;
    
    Evas                   evas;
@@ -380,11 +388,16 @@ struct _E_Icon
 	 char *selected;
 	 char *clicked;
       } icon;
+      struct {
+	 int have;
+	 int x, y;
+      } coord;
       int ready;
    } info;
    
    struct {
-      int     x, y, w, h;
+      int     x, y;
+      int     ix, iy, tx, ty, iw, ih, tw, th, w, h;
       struct {
 	 int text_location;
 	 int show_text;

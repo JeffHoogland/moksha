@@ -10,6 +10,7 @@ static void e_idle(void *data);
 static void
 e_idle(void *data)
 {
+   printf("idle...\n");
    e_db_flush();
    return;
    UN(data);
@@ -166,7 +167,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    desk->view->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
    /* fixme later */
    /* uncomment this and comment out the next line for some tress testing */
-/*   desk->view->dir = strdup("/dev");*/
+/*   desk->view->dir = strdup("/dev"); */
    desk->view->dir = strdup(e_file_home());
    e_view_realize(desk->view);
    if (desk->view->options.back_pixmap) e_view_update(desk->view);

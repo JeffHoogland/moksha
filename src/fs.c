@@ -6,27 +6,27 @@ static Evas_List           fs_handlers = NULL;
 static void _e_fs_fd_handle(int fd);
 
 static void
-_e_fs_fd_handle_a_la_cK(int fd)
+_e_fs_fd_handle(int fd)
 {
-   EfsdEvent ev;
-   Evas_List l;
+   Evas_List events = NULL;
+   double start, current;
    
+   printf("############## fs event...\n");
+   start = e_get_time();
    while ((ec) && efsd_events_pending(ec))
-     {		  
-	ZERO(&ev, EfsdEvent, 1);
+     {
+	EfsdEvent *ev;
 	
-	if (efsd_next_event(ec, &ev) >= 0)
+	ev = NEW(EfsdEvent, 1);
+	ZERO(ev, EfsdEvent, 1);
+	
+	if (efsd_next_event(ec, ev) >= 0)
 	  {
-	     for (l = fs_handlers; l; l = l->next)
-	       {
-		  void (*func) (EfsdEvent *ev);
-		  
-		  func = l->data;
-		  func(&ev);
-	       }
+	     events = evas_list_append(events, ev);
 	  }
 	else
 	  {
+	     FREE(ev);
 	     efsd_close(ec);
 	     e_del_event_fd(fd);
 	     ec = NULL;
@@ -35,63 +35,37 @@ _e_fs_fd_handle_a_la_cK(int fd)
 	     printf("EEEEEEEEEEK efsd went wonky\n");
 	  }
 	
-	efsd_event_cleanup(&ev);
-    }
-}
-
-static void
-_e_fs_fd_handle(int fd)
-{
-   EfsdEvent ev;
-   int i = 1;
-
-   /* VERY nasty - sicne efas has no way of checkign If an event is in the */
-   /* event queue waiting to be picked up - i cant loop and get the events */
-   printf("_e_fs_fd_handle(%i)\n", fd);
-   while (i >= 0)
-     {
-	fd_set    fdset;
-	struct timeval tv;
-	
-	FD_ZERO(&fdset);
-	FD_SET(fd, &fdset);
-	tv.tv_sec = 0;
-	tv.tv_usec = 0;
-	select(fd + 1, &fdset, NULL, NULL, &tv);
-	if (FD_ISSET(fd, &fdset))	  
+	/* spent more thna 1/20th of a second here.. get out */
+	current = e_get_time();
+	if ((current - start) > 0.05) 
 	  {
-	     i = efsd_next_event(ec, &ev);
-	     if (i < 0)
-	       {		  
-		  efsd_close(ec);
-		  e_del_event_fd(fd);
-		  /* FIXME: need to queue a popup dialog here saying */
-		  /* efsd went wonky */
-		  printf("EEEEEEEEEEK efsd went wonky\n");
-/*		  
-		  ec = efsd_open();
-		  if (ec)
-		    e_add_event_fd(efsd_get_connection_fd(ec), 
-				   _e_fs_fd_handle);
-*/
-	       }
-	     if (i >= 0)
-	       {
-		  Evas_List l;
-		  
-		  for (l = fs_handlers; l; l = l->next)
-		    {
-		       void (*func) (EfsdEvent *ev);
-		       
-		       func = l->data;
-		       func(&ev);
-		    }
-		  efsd_event_cleanup(&ev);
-	       }
+	     printf("fs... too much time spent..\n");
+	     break;
 	  }
-	else
-	  i = -1;
+    }
+   if (events)
+     {
+	Evas_List l;
+	
+	for (l = events; l; l = l->next)
+	  {
+	     Evas_List ll;
+	     EfsdEvent *ev;
+	     
+	     ev = l->data;
+	     for (ll = fs_handlers; ll; ll = ll->next)
+	       {
+		  void (*func) (EfsdEvent *ev);
+		  
+		  func = ll->data;
+		  func(ev);
+	       }
+	     efsd_event_cleanup(ev);
+	     FREE(ev);
+	  }
+	evas_list_free(events);
      }
+   printf("############## fs done\n");
 }
 
 void
@@ -125,7 +99,7 @@ e_fs_init(void)
 	fprintf(stderr, "efsd is not running - please run efsd.\n");
 	exit(-1);
      }
-   e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle_a_la_cK);
+   e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
 }
 
 EfsdConnection *

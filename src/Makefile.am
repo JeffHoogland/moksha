@@ -28,5 +28,5 @@ util.c \
 view.c \
 e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ -lm $(INTLLIBS) $(LDADD_FLAGS)
 
