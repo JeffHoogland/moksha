@@ -256,7 +256,8 @@ AC_ARG_WITH(dbsheets,
 AC_SUBST(DB_STYLESHEETS)
 AC_PATH_PROG(JADE, jade)
 AM_CONDITIONAL(HAVE_JADE, test "x$JADE" != "x" && test -d "$DB_STYLESHEETS")
-
+AC_CHECK_LIB(c, dlopen, LIBDL="",[AC_CHECK_LIB(dl, dlopen, LIBDL="-ldl")])
+AC_SUBST(LIBDL)
 
 AC_OUTPUT([
 Makefile

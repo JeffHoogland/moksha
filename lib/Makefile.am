@@ -15,6 +15,6 @@ libehack_la_SOURCES  = \
 e_hack.c \
 e_hack.h
 
-libehack_la_LIBADD       = -lX11 -ldl $(LDFLAGS)
+libehack_la_LIBADD       = -lX11 @LIBDL@ $(LDFLAGS)
 libehack_la_DEPENDENCIES = $(top_builddir)/config.h
 libehack_la_LDFLAGS      = -version-info 0:1:0
