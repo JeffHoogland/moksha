@@ -350,3 +350,9 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    e_config_save_queue();
 }
 
+void
+e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
+{
+   *x_count = zone->desk_x_count;
+   *y_count = zone->desk_y_count;
+}
