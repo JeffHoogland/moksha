@@ -10,6 +10,7 @@ static char cfg_settings_db[PATH_MAX] = "";
 static char cfg_actions_db[PATH_MAX] = "";
 static char cfg_borders_db[PATH_MAX] = "";
 static char cfg_apps_menu_db[PATH_MAX] = "";
+static char cfg_match_db[PATH_MAX] = "";
 static char cfg_menus_dir[PATH_MAX] = "";
 static char cfg_entries_dir[PATH_MAX] = "";
 static char cfg_selections_dir[PATH_MAX] = "";
@@ -60,6 +61,8 @@ e_config_get(char *type)
 	  "%s/behavior/actions.db", e_config_user_dir());
    E_CONF("apps_menu", cfg_apps_menu_db,
 	  "%s/behavior/apps_menu.db", e_config_user_dir());
+   E_CONF("match", cfg_match_db,
+	  "%s/behavior/match.db", e_config_user_dir());
    E_CONF("borders", cfg_borders_db,
 	  PACKAGE_DATA_DIR"/data/borders/");
    E_CONF("menus", cfg_menus_dir,
@@ -132,6 +135,7 @@ e_config_set_user_dir(char *dir)
    cfg_actions_db[0]  = 0;
    cfg_borders_db[0]  = 0;
    cfg_apps_menu_db[0]= 0;
+   cfg_match_db[0]= 0;
    cfg_menus_dir[0]   = 0;
    cfg_entries_dir[0] = 0;
    cfg_selections_dir[0] = 0;

@@ -107,6 +107,41 @@ struct _E_Border
 	 int x, y;
       } area;
       int internal;
+      struct {
+	 int matched;
+	 struct {
+	    int matched;
+	    int ignore;
+	 } prog_location;
+	 struct {
+	    int matched;
+	    char *style;
+	 } border;
+	 struct {
+	    int matched;
+	    int x, y;
+	 } location;
+	 struct {
+	    int matched;
+	    int x, y;
+	 } desk_area;
+	 struct {
+	    int matched;
+	    int w, h;
+	 } size;
+	 struct {
+	    int matched;
+	    int desk;
+	 } desktop;
+	 struct {
+	    int matched;
+	    int sticky;
+	 } sticky;
+	 struct {
+	    int matched;
+	    int layer;
+	 } layer;
+      } matched;
    } client;
    
    struct {
@@ -132,6 +167,8 @@ struct _E_Border
    int first_expose;
    
    int hold_changes;
+   
+   Evas_List menus;
    
    int changed;
 };

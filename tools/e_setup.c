@@ -589,6 +589,15 @@ e_file_list_dir(char *dir)
    return list;
 }
 
+void
+e_file_list_dir_free(Evas_List list)
+{
+   while (list)
+     {
+	FREE(list->data);
+	list = evas_list_remove(list, list->data);
+     }
+}
 
 /*                                                                           */
 /*                                                                           */
@@ -627,6 +636,7 @@ void mouse_move(Ecore_Event * ev);
 void mouse_down(Ecore_Event * ev);
 void mouse_up(Ecore_Event * ev);
 void key_down(Ecore_Event * ev);
+void child_exit(Ecore_Event *ev);
 void setup(void);
 Text_Zone *txz_new(double x, double y, char *text);
 void txz_free(Text_Zone *txz);
@@ -634,6 +644,7 @@ void txz_show(Text_Zone *txz);
 void txz_hide(Text_Zone *txz);
 void txz_move(Text_Zone *txz, double x, double y);
 void txz_text(Text_Zone *txz, char *text);
+void txz_adjust_txt(Text_Zone *txz);
 void animate_logo(int v, void *data);
 
 void
@@ -694,6 +705,18 @@ key_down(Ecore_Event * ev)
 }
 
 void
+child_exit(Ecore_Event *ev)
+{
+   Ecore_Event_Child *e;
+   
+   e = ev->event;
+/*   
+   e->pid;
+   e->exit_code;
+ */
+}
+
+void
 setup(void)
 {
    int root_w, root_h;
@@ -704,6 +727,7 @@ setup(void)
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_DOWN,    mouse_down);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_UP,      mouse_up);
    ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,      key_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_CHILD,         child_exit);
    
    ecore_event_filter_idle_handler_add(idle, NULL);
    
@@ -973,34 +997,6 @@ _txz_cb_title_move(void *_data, Ebits_Object _o,
      }
 }
 
-void
-txz_adjust_txt(Text_Zone *txz)
-{
-   Evas_List l;
-   double ypos;
-   
-   ypos = txz->l.y + 4;
-   evas_move(evas, txz->clip, txz->l.x, txz->l.y);
-   evas_resize(evas, txz->clip, txz->l.w, txz->l.h);
-   for (l = txz->lines; l; l = l->next)
-     {  
-	Evas_Object o;
-        double tw, th;
-	double x;
-	char align;
-	
-	o = l->data;
-	align = (char)evas_get_data(evas, o, "align");
-	x = txz->l.x + 4;
-        tw = evas_get_text_width(evas, o);
-	th = evas_get_text_height(evas, o);
-	if (align == 'c') x = txz->l.x + 4 + ((txz->l.w - 8 - tw) / 2);
-	else if (align == 'r') x = txz->l.x + 4 + (txz->l.w - 8 - tw);
-	evas_move(evas, o, x, ypos);
-	ypos += th;
-     }
-}
-
 Text_Zone *
 txz_new(double x, double y, char *text)
 {
@@ -1146,7 +1142,7 @@ txz_text(Text_Zone *txz, char *text)
 	else
 	  evas_move(evas, o, txz->x + ((512 - tw) / 2), ypos);
 	evas_set_clip(evas, o, txz->clip);
-	evas_put_data(evas, o, "align", (void *)align[0]);
+	evas_put_data(evas, o, "align", (void *)((int)align[0]));
 	ypos += th;
 	
 	p = tok + 1;
@@ -1161,6 +1157,34 @@ txz_text(Text_Zone *txz, char *text)
 	ebits_show(txz->bg);
 	ebits_set_layer(txz->bg, 0);
 	ebits_set_layer(txz->bg, 9);
+     }
+}
+
+void
+txz_adjust_txt(Text_Zone *txz)
+{
+   Evas_List l;
+   double ypos;
+   
+   ypos = txz->l.y + 4;
+   evas_move(evas, txz->clip, txz->l.x, txz->l.y);
+   evas_resize(evas, txz->clip, txz->l.w, txz->l.h);
+   for (l = txz->lines; l; l = l->next)
+     {  
+	Evas_Object o;
+        double tw, th;
+	double x;
+	char align;
+	
+	o = l->data;
+	align = (char)((int)evas_get_data(evas, o, "align"));
+	x = txz->l.x + 4;
+        tw = evas_get_text_width(evas, o);
+	th = evas_get_text_height(evas, o);
+	if (align == 'c') x = txz->l.x + 4 + ((txz->l.w - 8 - tw) / 2);
+	else if (align == 'r') x = txz->l.x + 4 + (txz->l.w - 8 - tw);
+	evas_move(evas, o, x, ypos);
+	ypos += th;
      }
 }
 

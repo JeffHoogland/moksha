@@ -12,6 +12,7 @@
 #include "place.h"
 #include "match.h"
 #include "focus.h"
+#include "menu.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -1215,6 +1216,17 @@ e_border_cleanup(E_Border *b)
 
    D_ENTER;
 
+   e_match_save_props(b);
+   
+   while (b->menus)
+     {
+	E_Menu *m;
+	
+	m = b->menus->data;
+	e_menu_hide(m);
+	e_object_unref(E_OBJECT(m));
+	b->menus = evas_list_remove(b->menus, m);
+     }
    e_desktops_del_border(b->desk, b);
    if (b->bits.l) ebits_free(b->bits.l);
    if (b->bits.r) ebits_free(b->bits.r);

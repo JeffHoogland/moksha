@@ -27,6 +27,7 @@ enlightenment_SOURCES = \
 	actions.h actions.c \
 	background.h background.c \
 	border.h border.c \
+	bordermenu.h bordermenu.c \
 	config.h config.c \
 	cursors.c cursors.h \
 	debug.c debug.h \

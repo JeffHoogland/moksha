@@ -9,6 +9,7 @@
 #include "view.h"
 #include "util.h"
 #include "guides.h"
+#include "bordermenu.h"
 
 static Evas_List action_impls = NULL;
 static Evas_List current_actions = NULL;
@@ -1530,6 +1531,8 @@ e_act_menu_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
    if (b->client.is_desktop) D_RETURN;
+
+   e_bordermenu_do(b);
 
    D_RETURN;
    UN(a);
