@@ -21,6 +21,9 @@ enum _E_Transition
 };
 typedef enum _E_Transition E_Transition;
 
+typedef struct _E_Event_Border_Resize E_Event_Border_Resize;
+typedef struct _E_Event_Border_Move   E_Event_Border_Move;
+
 struct _E_Border
 {
    E_Object             e_obj_inherit;
@@ -183,6 +186,16 @@ struct _E_Border
    } changes;
 };
 
+struct _E_Event_Border_Resize
+{
+   E_Border *border;
+};
+
+struct _E_Event_Border_Move
+{
+   E_Border *border;
+};
+
 EAPI int       e_border_init(void);
 EAPI int       e_border_shutdown(void);
 
@@ -215,5 +228,8 @@ EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 EAPI void      e_border_idler_before(void);
 
 EAPI void      e_border_iconified_list(void);
+
+extern EAPI int E_EVENT_BORDER_RESIZE;
+extern EAPI int E_EVENT_BORDER_MOVE;
 
 #endif

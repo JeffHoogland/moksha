@@ -70,10 +70,16 @@ static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void _e_border_event_border_resize_free(void *data, void *ev);
+static void _e_border_event_border_move_free(void *data, void *ev);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
 static E_Border  *focused = NULL;
+
+int E_EVENT_BORDER_RESIZE = 0;
+int E_EVENT_BORDER_MOVE = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -102,6 +108,10 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
+
+   E_EVENT_BORDER_RESIZE = ecore_event_type_new();
+   E_EVENT_BORDER_MOVE = ecore_event_type_new();
+   
    return 1;
 }
 
@@ -1594,6 +1604,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
    bd->mouse.current.my = ev->root.y;
    if (bd->moving)
      {
+	E_Event_Border_Move *pass;
 	int x, y, new_x, new_y;
 	Evas_List *skiplist = NULL;
 	
@@ -1620,10 +1631,20 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 				    &new_x, &new_y);
 	evas_list_free(skiplist);
 	e_border_move(bd, new_x, new_y);
+
+	pass = calloc(1, sizeof(E_Event_Border_Move));
+	pass->border = bd; 
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_MOVE, pass, _e_border_event_border_move_free, NULL);
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
+	E_Event_Border_Resize *pass;
 	_e_border_resize_handle(bd);
+	pass = calloc(1, sizeof(E_Event_Border_Resize));
+	pass->border = bd; 
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_RESIZE, pass, _e_border_event_border_resize_free, NULL);	    
      }
    else
      {
@@ -2629,3 +2650,24 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
    if (bd->sticky) e_border_unstick(bd);
    else e_border_stick(bd);
 }
+
+static void
+_e_border_event_border_resize_free(void *data, void *ev)
+{
+   E_Event_Border_Resize *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_move_free(void *data, void *ev)
+{
+   E_Event_Border_Resize *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
