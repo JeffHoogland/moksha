@@ -163,6 +163,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    desk->view = e_view_new();
    desk->view->size.w = desk->real.w;
    desk->view->size.h = desk->real.h;
+   desk->view->is_desktop = 1;
    desk->view->bg = e_background_new();
    desk->view->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
    /* fixme later */

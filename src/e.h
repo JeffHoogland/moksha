@@ -412,6 +412,7 @@ struct _E_View
    
    Evas_List              icons;
    
+   int                    is_desktop;
    int                    have_resort_queued;
    int                    sel_count;
    

@@ -19,6 +19,13 @@ static void e_mouse_move(Eevent * ev);
 static void e_mouse_in(Eevent * ev);
 static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
+static void e_configure(Eevent * ev);
+static void e_property(Eevent * ev);
+static void e_unmap(Eevent * ev);
+static void e_visibility(Eevent * ev);
+static void e_focus_in(Eevent * ev);
+static void e_focus_out(Eevent * ev);
+static void e_delete(Eevent * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
 
@@ -198,10 +205,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    
    ev = current_ev->event;
    v = _data;
-   if (!(ev->mods & mulit_select_mod))
-     {
-	e_view_deselect_all();
-     }
+   e_view_deselect_all();
    if (_b == 1)
      {
 	v->select.down.x = _x;
@@ -485,6 +489,30 @@ e_view_icon_deselect(E_Icon *ic)
      }
 }
 
+void
+e_view_icon_exec(E_Icon *ic)
+{
+   if (!strcmp(ic->info.mime.base, "dir"))
+     {
+	E_View *v;
+	E_Border *b;
+	char buf[4096];
+	
+	v = e_view_new();
+	v->size.w = 400;
+	v->size.h = 300;
+	v->options.back_pixmap = 0;
+	v->bg = e_background_new();
+	v->bg->image = strdup(PACKAGE_DATA_DIR"/data/images/bg.jpg");
+	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
+	printf("new dir >%s<\n", buf);
+	v->dir = strdup(buf);
+	e_view_realize(v);
+	if (v->options.back_pixmap) e_view_update(v);
+	b = e_border_adopt(v->win.base, 1);
+     }
+}
+
 static void
 e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
@@ -503,7 +531,7 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      {
 	if (e->double_click)
 	  {
-	     
+	     e_view_icon_exec(ic);
 	  }
 	else
 	  {
@@ -660,6 +688,16 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ic->view->drag.win = e_window_override_new(0, wx, wy, ww, wh);
 	     pmap = e_pixmap_new(ic->view->drag.win, ww, wh, 0);
 	     mask = e_pixmap_new(ic->view->drag.win, ww, wh, 1);
+#if 0	     
+	       {
+		  GC gc;
+		  
+		  gc = e_gc_new(mask);
+		  e_gc_set_fg(gc, 0);
+		  e_fill_rectangle(mask, gc, 0, 0, ww, wh);
+		  e_gc_free(gc);
+	       }
+#endif	     
 	       {
 		  Imlib_Image im;
 		  
@@ -735,12 +773,46 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 			 }
 		    }
 		  imlib_context_set_image(im);
-		  imlib_context_set_dither_mask(0);
+		  if (ww * wh < (200 * 200)) imlib_context_set_dither_mask(1);
+		  else imlib_context_set_dither_mask(0);
 		  imlib_context_set_dither(1);
 		  imlib_context_set_drawable(pmap);
 		  imlib_context_set_mask(mask);
 		  imlib_context_set_blend(0);
 		  imlib_render_image_on_drawable(0, 0);
+#if 0
+		  for (l = views; l; l = l->next)
+		    {
+		       E_View *v;
+		       Evas_List ll;
+		       
+		       v = l->data;
+		       if (v->sel_count > 0)
+			 {
+			    for (ll = v->icons; ll; ll = ll->next)
+			      {
+				 E_Icon *ic;
+				 
+				 ic = ll->data;
+				 if (ic->state.selected)
+				   {
+				      double ix, iy, iw, ih;
+				      int icx, icy, icw, ich;
+				      
+				      evas_get_geometry(ic->view->evas,
+							ic->obj.icon,
+							&ix, &iy, &iw, &ih);
+				      icx = ix + v->location.x - wx;
+				      icy = iy + v->location.y - wy;
+				      icw = iw;
+				      ich = ih;
+				      imlib_render_image_part_on_drawable_at_size(0, 0, icw, ich,
+										  icx, icy, icw, ich);
+				   }
+			      }
+			 }
+		    }
+#endif
 		  imlib_free_image();
 	       }
 	     e_window_set_background_pixmap(ic->view->drag.win, pmap);
@@ -780,6 +852,177 @@ e_idle(void *data)
      }
    return;
    UN(data);
+}
+
+static
+void e_configure(Eevent * ev)
+{
+   Ev_Window_Configure *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	     /* win, root, x, y, w, h, wm_generated */
+	     if (e->wm_generated)
+	       {
+		  if ((e->x != v->location.x) || (e->y != v->location.y))
+		    {
+		       v->location.x = e->x;
+		       v->location.y = e->y;
+		    }
+	       }
+	     if ((e->w != v->size.w) || (e->h != v->size.h))
+	       {
+		  v->size.w = e->w;
+		  v->size.h = e->h;
+		  if (v->pmap) e_pixmap_free(v->pmap);
+		  v->pmap = 0;
+		  e_window_resize(v->win.main, v->size.w, v->size.h);
+		  if (v->options.back_pixmap)
+		    {
+		       v->pmap = e_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
+		       evas_set_output(v->evas, e_display_get(), v->pmap,
+				       evas_get_visual(v->evas),
+				       evas_get_colormap(v->evas));
+		       e_window_set_background_pixmap(v->win.main, v->pmap);
+		       e_window_clear(v->win.main);
+		    }
+		  if (v->bg)
+		    {
+		       v->bg->geom.w = v->size.w;
+		       v->bg->geom.h = v->size.h;
+		       evas_resize(v->bg->evas, v->bg->obj, v->bg->geom.w, v->bg->geom.h);
+		       evas_set_image_fill(v->bg->evas, v->bg->obj, 0, 0, v->bg->geom.w, v->bg->geom.h);
+		    }
+		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
+		  evas_set_output_size(v->evas, v->size.w, v->size.h);
+	       }
+	  }
+     }
+}
+
+static void
+e_property(Eevent * ev)
+{
+   Ev_Window_Configure *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	  }
+     }
+}
+
+static void
+e_unmap(Eevent * ev)
+{
+   Ev_Window_Unmap *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	  }
+     }
+}
+
+static void
+e_visibility(Eevent * ev)
+{
+   Ev_Window_Unmap *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	  }
+     }
+}
+
+static void
+e_focus_in(Eevent * ev)
+{
+   Ev_Window_Focus_In *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	  }
+     }
+}
+
+static void
+e_focus_out(Eevent * ev)
+{
+   Ev_Window_Focus_Out *e;
+   Evas_List l;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	  }
+     }
+}
+
+static void
+e_delete(Eevent * ev)
+{
+   Ev_Window_Delete *e;
+   Evas_List l;
+   Evas_List to_free = NULL;
+   
+   e = ev->event;
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (e->win == v->win.base)
+	  {
+	     to_free = evas_list_append(to_free, v);
+	  }
+     }
+   for (l = to_free; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	OBJ_DO_FREE(v);
+     }
+   if (to_free) evas_list_free(to_free);
 }
 
 static void 
@@ -942,10 +1185,13 @@ e_mouse_in(Eevent * ev)
 	v = l->data;
 	if (e->win == v->win.main)
 	  {
-	     /* FIXME: temporary for now- should only do this if its a deskop */
-	     /* view and desktops accept focus on mouse. */
-	     e_focus_to_window(e->win);
-	     evas_event_enter(v->evas);
+	     if (v->is_desktop)
+	       {
+		  /* FIXME: temporary for now- should only do this if its a deskop */
+		  /* view and desktops accept focus on mouse. */
+		  e_focus_to_window(e->win);
+		  evas_event_enter(v->evas);
+	       }
 	     return;
 	  }
      }
@@ -1374,6 +1620,7 @@ e_view_file_added(int id, char *file)
 
    /* if we get a path - ignore it - its not a file in the a dir */
    if (!file) return;
+   printf("FILE ADD: %s\n", file);
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
@@ -1488,6 +1735,7 @@ e_view_free(E_View *v)
    if (v->restarter)
      e_fs_del_restart_handler(v->restarter);
    v->restarter = NULL;
+   e_window_destroy(v->win.base);
    FREE(v);
 }
 
@@ -1566,6 +1814,7 @@ e_view_set_dir(E_View *v, char *dir)
 							efsd_op_get_filetype()
 							)
 					       );
+	printf("monitor id for %s = %i\n", v->dir, v->monitor_id);
 	v->is_listing = 1;
 	v->changed = 1;
      }
@@ -1580,9 +1829,10 @@ e_view_realize(E_View *v)
    char *font_dir;
    
    if (v->evas) return;
-   v->win.base = e_window_override_new(0, 
-				       v->location.x, v->location.y, 
-				       v->size.w, v->size.h);   
+   v->win.base = e_window_new(0, 
+			      v->location.x, v->location.y, 
+			      v->size.w, v->size.h);   
+   e_window_set_delete_inform(v->win.base);
    font_dir = e_config_get("fonts");
    v->evas = evas_new_all(e_display_get(),
 			  v->win.base,
@@ -1619,6 +1869,9 @@ e_view_realize(E_View *v)
    evas_set_color(v->evas, v->obj_bg, 0, 0, 0, 0);
    evas_show(v->evas, v->obj_bg);
    
+   e_window_set_events(v->win.base,
+		       XEV_VISIBILITY | XEV_CONFIGURE | 
+		       XEV_PROPERTY | XEV_FOCUS);
    e_window_set_events(v->win.main, 
 		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
 		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
@@ -1873,6 +2126,13 @@ e_view_init(void)
    e_event_filter_handler_add(EV_KEY_DOWN,                 e_key_down);
    e_event_filter_handler_add(EV_KEY_UP,                   e_key_up);
    e_event_filter_handler_add(EV_MOUSE_WHEEL,              e_wheel);
+   e_event_filter_handler_add(EV_WINDOW_CONFIGURE,         e_configure);
+   e_event_filter_handler_add(EV_WINDOW_PROPERTY,          e_property);
+   e_event_filter_handler_add(EV_WINDOW_UNMAP,             e_unmap);
+   e_event_filter_handler_add(EV_WINDOW_VISIBILITY,        e_visibility);
+   e_event_filter_handler_add(EV_WINDOW_FOCUS_IN,          e_focus_in);
+   e_event_filter_handler_add(EV_WINDOW_FOCUS_OUT,         e_focus_out);
+   e_event_filter_handler_add(EV_WINDOW_DELETE,            e_delete);
    e_event_filter_idle_handler_add(e_idle, NULL);
    e_fs_add_event_handler(e_view_handle_fs);
 }
