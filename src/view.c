@@ -1481,12 +1481,12 @@ e_view_icon_show(E_Icon *ic)
 	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_MOVE, e_icon_move_cb, ic);
      }
    evas_set_layer(ic->view->evas, ic->obj.icon, 200);
-   evas_set_layer(ic->view->evas, ic->obj.text, 200);
+   e_text_set_layer(ic->obj.text, 200);
    evas_set_layer(ic->view->evas, ic->obj.event1, 210);
    evas_set_layer(ic->view->evas, ic->obj.event2, 210);
    
    evas_show(ic->view->evas, ic->obj.icon);
-   evas_show(ic->view->evas, ic->obj.text);
+   e_text_show(ic->obj.text);
    evas_show(ic->view->evas, ic->obj.event1);
    evas_show(ic->view->evas, ic->obj.event2);
 }
@@ -1497,7 +1497,7 @@ e_view_icon_hide(E_Icon *ic)
    if (!ic->state.visible) return;
    ic->state.visible = 0;
    evas_hide(ic->view->evas, ic->obj.icon);
-   evas_hide(ic->view->evas, ic->obj.text);
+   e_text_hide(ic->obj.text);
    evas_hide(ic->view->evas, ic->obj.event1);
    evas_hide(ic->view->evas, ic->obj.event2);
 }
@@ -1526,9 +1526,9 @@ e_view_icon_apply_xy(E_Icon *ic)
    evas_move(ic->view->evas, ic->obj.icon, 
 	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.icon.w) / 2), 
 	     ic->view->scroll.y + ic->geom.y);
-   evas_move(ic->view->evas, ic->obj.text,
-	     ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2), 
-	     ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);
+   e_text_move(ic->obj.text,
+	       ic->view->scroll.x + ic->geom.x + ((ic->geom.w - ic->geom.text.w) / 2), 
+	       ic->view->scroll.y + ic->geom.y + ic->geom.icon.h + ic->view->spacing.icon.g);
    if (ic->obj.sel.under.icon)
      {
 	int pl, pr, pt, pb;
@@ -1676,8 +1676,13 @@ e_view_icon_initial_show(E_Icon *ic)
    /* first. lets figure out the size of the icon */
    evas_get_image_size(ic->view->evas, ic->obj.icon, 
 		       &(ic->geom.icon.w), &(ic->geom.icon.h));
-   ic->geom.text.w = (int)evas_get_text_width(ic->view->evas, ic->obj.text);
-   ic->geom.text.h = (int)evas_get_text_height(ic->view->evas, ic->obj.text);
+     {
+	double tw, th;
+	
+	e_text_get_geometry(ic->obj.text, NULL, NULL, &tw, &th);
+	ic->geom.text.w = (int)tw;
+	ic->geom.text.h = (int)th;
+     }
    
    /* now lets allocate space for it if we need to */
    ic->geom.x = 999999;
@@ -1802,8 +1807,7 @@ e_view_file_added(int id, char *file)
 	ic->file = strdup(file);
 	ic->changed = 1;
 	ic->obj.icon = evas_add_image_from_file(ic->view->evas, NULL);
-	ic->obj.text = evas_add_text(ic->view->evas, "borzoib", 8, ic->file);
-	evas_set_color(ic->view->evas, ic->obj.text, 0, 0, 0, 255);
+	ic->obj.text = e_text_new(ic->view->evas, ic->file, "filename");
 	v->icons = evas_list_append(v->icons, ic);
      }
 }

@@ -22,7 +22,13 @@ struct _E_Text
    int layer;   
    
    Evas evas;
-   Evas_Object obj;
+   struct {
+      Evas_Object text;
+      Evas_Object o1;
+      Evas_Object o2;
+      Evas_Object o3;
+      Evas_Object o4;
+   } obj;
 };
 
 E_Text *e_text_new(Evas evas, char *text, char *class);

@@ -4,6 +4,7 @@
 #include "e.h"
 #include "background.h"
 #include "fs.h"
+#include "text.h"
 
 typedef struct _E_View                E_View;
 typedef struct _E_Icon                E_Icon;
@@ -136,10 +137,10 @@ struct _E_Icon
    } info;
    
    struct {
-      Evas_Object icon;
-      Evas_Object text;
-      Evas_Object event1;
-      Evas_Object event2;
+      Evas_Object  icon;
+      Evas_Object  event1;
+      Evas_Object  event2;
+      E_Text      *text;
       struct {
 	 struct {
 	    Ebits_Object icon;
