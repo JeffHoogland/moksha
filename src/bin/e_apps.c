@@ -349,7 +349,9 @@ _e_app_free(E_App *a)
 	
 	a2 = a->subapps->data;
 	a->subapps = evas_list_remove_list(a->subapps, a->subapps);
-	a2->parent = NULL;
+	/* Only remove the parent if it is us. */
+	if (a2->parent == a)
+	  a2->parent = NULL;
 	e_object_unref(E_OBJECT(a2));
      }
    for (l = a->references; l; l = l->next)
@@ -713,7 +715,10 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	  {
 	   case ECORE_FILE_EVENT_NONE:
 	   case ECORE_FILE_EVENT_EXISTS:
+	      break;
 	   case ECORE_FILE_EVENT_CREATED:
+	      /* If a file is created, wait for the directory change to update
+	       * the eapp. */
 	      break;
 	   case ECORE_FILE_EVENT_DELETED:
 	      /* If something is deleted, mark it as deleted
