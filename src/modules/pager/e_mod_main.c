@@ -173,18 +173,25 @@ _pager_init(E_Module *m)
    ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
                            _pager_cb_event_container_resize, e);
 
+   e->ev_handler_border_resize =
    ecore_event_handler_add(E_EVENT_BORDER_RESIZE,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_move =
    ecore_event_handler_add(E_EVENT_BORDER_MOVE,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_add =
    ecore_event_handler_add(E_EVENT_BORDER_ADD,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_remove =
    ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_hide =
    ecore_event_handler_add(E_EVENT_BORDER_HIDE,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_show =
    ecore_event_handler_add(E_EVENT_BORDER_SHOW,
 			   _pager_cb_event_border_events, e);
+   e->ev_handler_border_desk_set =
    ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
 			   _pager_cb_event_border_events, e);
    
@@ -217,7 +224,14 @@ _pager_shutdown(Pager *e)
         e->wins = evas_list_remove_list(e->wins, e->wins);
      }
 
-   ecore_event_handler_del(e->ev_handler_container_resize);   
+   ecore_event_handler_del(e->ev_handler_container_resize);
+   ecore_event_handler_del(e->ev_handler_border_move);
+   ecore_event_handler_del(e->ev_handler_border_add);
+   ecore_event_handler_del(e->ev_handler_border_remove);
+   ecore_event_handler_del(e->ev_handler_border_hide);
+   ecore_event_handler_del(e->ev_handler_border_show);
+   ecore_event_handler_del(e->ev_handler_border_desk_set);
+
    free(e);
 }
 

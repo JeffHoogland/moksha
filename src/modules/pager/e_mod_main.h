@@ -23,6 +23,15 @@ struct _Pager
    unsigned char move : 1;
    unsigned char resize : 1;
    Ecore_Event_Handler *ev_handler_container_resize;
+   
+   Ecore_Event_Handler *ev_handler_border_resize;
+   Ecore_Event_Handler *ev_handler_border_move;
+   Ecore_Event_Handler *ev_handler_border_add;
+   Ecore_Event_Handler *ev_handler_border_remove;
+   Ecore_Event_Handler *ev_handler_border_hide;
+   Ecore_Event_Handler *ev_handler_border_show;
+   Ecore_Event_Handler *ev_handler_border_desk_set;
+
    Evas_Coord    fx, fy, fw, fh, tw, th;
    Evas_Coord    xx, yy;
 
