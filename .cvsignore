@@ -13,3 +13,9 @@ Makefile
 stamp-h
 config.h
 po
+stamp-h.in
+ltmain.sh
+ltconfig
+libtool
+config.sub
+config.guess

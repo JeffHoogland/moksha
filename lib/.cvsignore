@@ -1,0 +1,7 @@
+libehack.la
+e_hack.lo
+Makefile.in
+Makefile
+.libs
+.deps
+

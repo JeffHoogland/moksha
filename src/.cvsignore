@@ -4,3 +4,6 @@ e
 core
 Makefile.in
 Makefile
+enlightenment
+.libs
+.deps

@@ -1,0 +1,5 @@
+e_ipc_client
+Makefile.in
+Makefile
+.libs
+.deps
