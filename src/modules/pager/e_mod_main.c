@@ -806,7 +806,7 @@ _pager_window_find(Pager_Face *face, E_Border *border)
 	     win = wins->data;
 	     /* We have to check the desk, wouldn't want
 	      * a sticky copy */
-	     if ((win->border->desk == desk->desk)
+	     if ((!win->border->sticky || (win->border->desk == desk->desk))
 		 && (win->border == border))
 	       return win;
 	     wins = wins->next;
@@ -1113,7 +1113,9 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    desk = _pager_desk_find(face, ev->border->desk);
    if (win && desk)
      {
+	evas_list_remove(win->desk->wins, win);
 	win->desk = desk;
+	evas_list_append(desk->wins, win);
 	_pager_window_move(face, win);
      }
    return 1;
