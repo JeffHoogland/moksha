@@ -35,6 +35,7 @@ static void cb_exit(void)
 {
    D_ENTER;
 
+   e_fs_cleanup();
    E_PROF_DUMP;
    
    D_RETURN;

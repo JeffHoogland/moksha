@@ -52,6 +52,16 @@ struct _E_View
    struct {
       int                 x, y;
    } location;
+
+   /* This part stores the Efsd command
+      IDs for requested metadata. */
+   struct {
+      struct {
+	 EfsdCmdId x, y, w, h, bg;
+      } id;
+      int       busy;
+   } metadata;
+
    struct {
       /* +-----------------+
        * |        Wt       |
@@ -136,7 +146,7 @@ struct _E_View
    E_Background          *bg;
    
    struct {      
-      E_Scrollbar           *h, *v;
+      E_Scrollbar        *h, *v;
    } scrollbar;
    
    int                    is_listing;

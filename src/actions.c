@@ -1555,7 +1555,7 @@ e_act_exit_start (E_Object *object, E_Action *a, void *data, int x, int y, int r
    ecore_sync();
 
    e_db_flush();
-   
+
    exit(0);
 
    D_RETURN;

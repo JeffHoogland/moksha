@@ -220,6 +220,18 @@ e_fs_init(void)
    D_RETURN;
 }
 
+void           
+e_fs_cleanup(void)
+{
+   D_ENTER;
+
+   efsd_close(ec);
+   D("Connection to Efsd closed.\n");
+
+   D_RETURN;
+}
+
+
 EfsdConnection *
 e_fs_get_connection(void)
 {

@@ -2006,7 +2006,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	       {
 		  E_View *v;
 		  
-		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+		  v = e_view_find_by_monitor_id(efsd_event_id(ev));
 		  if (v) v->is_listing = 0;
 /*		  D("EFSD_CHANGE_END_EXISTS: %i %s\n",
 			 ev->efsd_filechange_event.id,
@@ -2042,11 +2042,11 @@ e_view_handle_fs(EfsdEvent *ev)
 		  char *file;
 		  
 		  file = NULL;
-		  if ( (file = efsd_reply_filename(ev)) )
+		  if ( (file = efsd_event_filename(ev)) )
 		    {
  		       file = e_file_get_file(file);
 		    }
-		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+		  v = e_view_find_by_monitor_id(efsd_event_id(ev));
 
 		  if ((v) && (file))
 		    {
@@ -2098,15 +2098,15 @@ e_view_handle_fs(EfsdEvent *ev)
 		  E_Icon *ic;
 		  E_View *v;
 
-		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+		  v = e_view_find_by_monitor_id(efsd_event_id(ev));
 
 		  if (v)
 		    {
-		      ic = e_icon_find_by_file(v, e_file_get_file(efsd_reply_filename(ev)));
+		      ic = e_icon_find_by_file(v, e_file_get_file(efsd_event_filename(ev)));
 
 		      if (ic)
 			{
-			  ic->stat = *((struct stat*)efsd_reply_data(ev));
+			  ic->stat = *((struct stat*)efsd_event_data(ev));
 			  e_icon_check_permissions(ic);
 			}			
 		    }
@@ -2121,17 +2121,17 @@ e_view_handle_fs(EfsdEvent *ev)
 		  char *file;
 		  
 		  file = NULL;
-		  if ( (file = efsd_reply_filename(ev)) ) 
+		  if ( (file = efsd_event_filename(ev)) ) 
 		    {
 		       file = e_file_get_file(file);
 		    }
-		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
+		  v = e_view_find_by_monitor_id(efsd_event_id(ev));
 		  if ((v) && (file))
 		    {
 		       ic = e_icon_find_by_file(v, file);
 		       if ((ic) &&
 			   (ev->efsd_reply_event.data))
-			 e_icon_set_link(ic, (char*)efsd_reply_data(ev));
+			 e_icon_set_link(ic, (char*)efsd_event_data(ev));
 		       e_icon_initial_show(ic);
 		    }
 	       }
@@ -2147,7 +2147,7 @@ e_view_handle_fs(EfsdEvent *ev)
 		  Evas_List l;
 		  EfsdCmdId cmd;
 		  
-		  cmd = efsd_reply_id(ev);
+		  cmd = efsd_event_id(ev);
 		  for (l = views; l; l = l->next)
 		    {
 		       E_View *v;
@@ -2246,7 +2246,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				      char buf[PATH_MAX];
 				      
 				      IF_FREE(v->bg_file);
-				      v->bg_file = efsd_metadata_get_str(ev);
+				      e_strdup(v->bg_file, efsd_metadata_get_str(ev));
 				      sprintf(buf, "background_reload:%s", v->dir);
 				      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 				   }
@@ -2397,6 +2397,7 @@ e_view_bg_reload_timeout(int val, void *data)
    e_view_bg_load(v);
 
    D_RETURN;
+   UN(val);
 }
 
 void
