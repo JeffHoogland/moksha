@@ -2220,7 +2220,7 @@ e_dnd_drop(Ecore_Event * ev)
 	 /* Dropped!  Handle data */
 	 /* Same view or same underlying dir?  Mark to skip action */
 	 if( e->win == e->source_win || v->model == v_dnd_source->model)
-	    v->drag.matching_drop_attempt = 1;
+	    v_dnd_source->drag.matching_drop_attempt = 1;
 	 /* Perform the action... */
 	 e_dnd_handle_drop (v);
 
