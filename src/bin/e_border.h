@@ -114,12 +114,18 @@ struct _E_Border
    unsigned char   new_client : 1;
    unsigned char   re_manage : 1;
    unsigned char   shaded : 1;
+   unsigned char   maximized : 1;
+   unsigned char   minimized : 1;
 
    unsigned char   changed : 1;
 
    unsigned char   ignore_first_unmap;
    unsigned char   resize_mode;
-   
+  
+   struct {
+      int x, y, w, h;
+   } saved;
+
    struct {
       unsigned int visible : 1;
       unsigned int pos : 1;
@@ -151,6 +157,10 @@ EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
 EAPI void      e_border_shade(E_Border *bd);
 EAPI void      e_border_unshade(E_Border *bd);
+EAPI void      e_border_maximize(E_Border *bd);
+EAPI void      e_border_unmaximize(E_Border *bd);
+EAPI void      e_border_minimize(E_Border *bd);
+EAPI void      e_border_unminimize(E_Border *bd);
     
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 

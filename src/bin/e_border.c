@@ -389,6 +389,8 @@ e_border_shade(E_Border *bd)
 	bd->shaded = 1;
 	bd->changes.shaded = 1;
 	bd->changed = 1;
+
+	edje_object_signal_emit(bd->bg_object, "shade", "");
      }
 }
 
@@ -404,8 +406,85 @@ e_border_unshade(E_Border *bd)
 	bd->shaded = 0;
 	bd->changes.shaded = 1;
 	bd->changed = 1;
+
+	edje_object_signal_emit(bd->bg_object, "unshade", "");
      }
 }
+
+void
+e_border_maximize(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (!bd->maximized)
+     {
+	printf("MAXIMIZE!!\n");
+	bd->saved.x = bd->x;
+	bd->saved.y = bd->y;
+	bd->saved.w = bd->w;
+	bd->saved.h = bd->h;
+
+	/* FIXME maximize intelligently */
+    e_border_move_resize(bd, 0, 0, bd->container->w, bd->container->h);
+    bd->maximized = 1;
+	bd->changes.pos = 1;
+	bd->changes.size = 1;
+	bd->changed = 1;
+
+	edje_object_signal_emit(bd->bg_object, "maximize", "");
+     }
+}
+
+void
+e_border_unmaximize(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (bd->maximized)
+     {
+	printf("UNMAXIMIZE!!\n");
+    e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+
+    bd->maximized = 0;
+	bd->changes.pos = 1;
+	bd->changes.size = 1;
+	bd->changed = 1;
+
+	edje_object_signal_emit(bd->bg_object, "unmaximize", "");
+     }
+}
+
+void
+e_border_minimize(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (!bd->minimized)
+     {
+	printf("MINIMIZE!!\n");
+
+	/* FIXME set hints, etc */
+	e_border_hide(bd);
+
+	bd->minimized = 1;
+
+	edje_object_signal_emit(bd->bg_object, "minimize", "");
+     }
+}
+
+void
+e_border_unminimize(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   if (bd->minimized)
+     {
+	printf("UNMINIMIZE!!\n");
+	/* FIXME set hints, etc */
+	e_border_show(bd);
+
+	bd->minimized = 1;
+
+	edje_object_signal_emit(bd->bg_object, "unminimize", "");
+     }
+}
+
 
 E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
@@ -841,6 +920,9 @@ _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *em
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_TL;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_SE);
@@ -852,6 +934,9 @@ _e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emi
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_T;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_S);
@@ -864,6 +949,9 @@ _e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *em
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_TR;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_SW);
@@ -875,6 +963,9 @@ _e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emi
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_R;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_W);
@@ -886,6 +977,9 @@ _e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *em
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_BR;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_NW);
@@ -897,6 +991,9 @@ _e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emi
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_B;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_N);
@@ -908,6 +1005,9 @@ _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *em
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_BL;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_NE);
@@ -919,6 +1019,9 @@ _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emi
    E_Border *bd;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    bd->resize_mode = RESIZE_L;
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_E);
@@ -931,6 +1034,9 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
    int x, y;
    
    bd = data;
+
+   if (bd->shaded) return;
+
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
    bd->changes.reset_gravity = 1;
@@ -956,11 +1062,26 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	     e_object_del(E_OBJECT(bd));
 	  }
      }
+
    else if (!strcmp(source, "shade"))
      {
 	if (bd->shaded) e_border_unshade(bd);
 	else e_border_shade(bd);
      }
+   
+   else if (!strcmp(source, "maximize"))
+     {
+	if (bd->maximized) e_border_unmaximize(bd);
+	else e_border_maximize(bd);
+     }
+   
+   else if (!strcmp(source, "minimize"))
+     {
+	if (bd->minimized) e_border_unminimize(bd);
+	else e_border_minimize(bd);
+     }
+   
+         
 }
 
 static int
