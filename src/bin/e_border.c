@@ -92,7 +92,8 @@ static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
 static E_Border  *focused = NULL;
 
-static Ecore_Evas *resize_ee = NULL;
+static E_Border    *resize = NULL;
+static Ecore_Evas  *resize_ee = NULL;
 static Evas_Object *resize_obj = NULL;
 
 extern int          _e_desk_current_changing;
@@ -960,6 +961,9 @@ _e_border_free(E_Border *bd)
 {
    Evas_List *list;
    E_Config_Binding *eb;
+
+   if (resize == bd)
+     _e_border_resize_end(bd);
 
    while (bd->pending_move_resize)
      {
@@ -3231,6 +3235,7 @@ _e_border_resize_begin(E_Border *bd)
    ecore_evas_resize(resize_ee, w, h);
 
    ecore_evas_show(resize_ee);
+   resize = bd;
 }
 
 static void
@@ -3238,6 +3243,7 @@ _e_border_resize_end(E_Border *bd)
 {
    evas_object_del(resize_obj);
    ecore_evas_free(resize_ee);
+   resize = NULL;
 }
 
 static void
