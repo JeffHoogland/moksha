@@ -1796,7 +1796,7 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	bd->mouse.current.my = ev->root.y;
 	/* Bindings */
 	/* Remove LOCK keys */
-	ev->modifers &= ~(ECORE_X_LOCK_SCROLL|ECORE_X_LOCK_NUM|ECORE_X_LOCK_CAPS);
+	ev->modifiers &= ~(ECORE_X_LOCK_SCROLL|ECORE_X_LOCK_NUM|ECORE_X_LOCK_CAPS);
 	for (list = e_config->bindings; list; list = list->next)
 	  {
 	     eb = list->data;
