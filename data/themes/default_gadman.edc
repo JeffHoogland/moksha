@@ -635,6 +635,7 @@ group {
       part {
 	 name:          "h1th";
 	 mouse_events:  0;
+	 clip_to:       "hclip";
 	 description {
 	    state:    "default" 0.0;
 	    max:      6 16;
@@ -694,6 +695,7 @@ group {
       part {
 	 name:          "h2th";
 	 mouse_events:  0;
+	 clip_to:       "hclip";
 	 description {
 	    state:    "default" 0.0;
 	    max:      6 16;
@@ -753,6 +755,7 @@ group {
       part {
 	 name:          "v1th";
 	 mouse_events:  0;
+	 clip_to:       "vclip";
 	 description {
 	    state:    "default" 0.0;
 	    max:      16 6;
@@ -812,6 +815,7 @@ group {
       part {
 	 name:          "v2th";
 	 mouse_events:  0;
+	 clip_to:       "vclip";
 	 description {
 	    state:    "default" 0.0;
 	    max:      16 6;
