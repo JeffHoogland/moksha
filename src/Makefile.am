@@ -25,6 +25,7 @@ enlightenment_SOURCES = \
 	pack.c \
 	resist.h resist.c \
 	shelf.c \
+	text.h text.c \
 	util.h util.c \
 	view.h view.c \
 	e.h

@@ -43,6 +43,7 @@ static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
 static void e_view_resort_timeout(int val, void *data);
 static int  e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2);
+static void e_view_geometry_record_timeout(int val, void *data);
 
 void
 e_view_selection_update(E_View *v)
@@ -293,7 +294,6 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	  }
-	/* errr. select files in box */
      }
    else
      {
@@ -721,7 +721,6 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       {
 		  if ((ic->state.selected) && (!ic->state.just_selected))
 		    e_view_icon_deselect(ic);
-/*	     e_view_icon_invert_selection(ic);*/
 	       }
 	     else
 	       {
@@ -800,7 +799,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	     e_window_get_geometry(0, NULL, NULL, &rw, &rh);
-	     printf("%i %i\n", ic->view->location.x, ic->view->location.y);
 	     downx = ic->view->select.down.x + ic->view->location.x;
 	     downy = ic->view->select.down.y + ic->view->location.y;
 	     
@@ -833,16 +831,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ic->view->drag.win = e_window_override_new(0, wx, wy, ww, wh);
 	     pmap = e_pixmap_new(ic->view->drag.win, ww, wh, 0);
 	     mask = e_pixmap_new(ic->view->drag.win, ww, wh, 1);
-#if 0	     
-	       {
-		  GC gc;
-		  
-		  gc = e_gc_new(mask);
-		  e_gc_set_fg(gc, 0);
-		  e_fill_rectangle(mask, gc, 0, 0, ww, wh);
-		  e_gc_free(gc);
-	       }
-#endif	     
 	       {
 		  Imlib_Image im;
 		  
@@ -924,39 +912,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  imlib_context_set_mask(mask);
 		  imlib_context_set_blend(0);
 		  imlib_render_image_on_drawable(0, 0);
-#if 0
-		  for (l = views; l; l = l->next)
-		    {
-		       E_View *v;
-		       Evas_List ll;
-		       
-		       v = l->data;
-		       if (v->sel_count > 0)
-			 {
-			    for (ll = v->icons; ll; ll = ll->next)
-			      {
-				 E_Icon *ic;
-				 
-				 ic = ll->data;
-				 if (ic->state.selected)
-				   {
-				      double ix, iy, iw, ih;
-				      int icx, icy, icw, ich;
-				      
-				      evas_get_geometry(ic->view->evas,
-							ic->obj.icon,
-							&ix, &iy, &iw, &ih);
-				      icx = ix + v->location.x - wx;
-				      icy = iy + v->location.y - wy;
-				      icw = iw;
-				      ich = ih;
-				      imlib_render_image_part_on_drawable_at_size(0, 0, icw, ich,
-										  icx, icy, icw, ich);
-				   }
-			      }
-			 }
-		    }
-#endif
 		  imlib_free_image();
 	       }
 	     e_window_set_background_pixmap(ic->view->drag.win, pmap);
@@ -1001,8 +956,51 @@ e_idle(void *data)
    UN(data);
 }
 
-static
-void e_configure(Eevent * ev)
+void
+e_view_geometry_record(E_View *v)
+{
+   if (e_fs_get_connection())
+     {
+	int left, top;
+	
+	e_window_get_frame_size(v->win.base, &left, NULL,
+				&top, NULL);
+	efsd_set_metadata_int(e_fs_get_connection(),
+			      "/view/x", v->dir, 
+			      v->location.x - left);
+	efsd_set_metadata_int(e_fs_get_connection(),
+			      "/view/y", v->dir, 
+			      v->location.y - top);
+	efsd_set_metadata_int(e_fs_get_connection(),
+			      "/view/w", v->dir, 
+			      v->size.w);
+	efsd_set_metadata_int(e_fs_get_connection(),
+			      "/view/h", v->dir, 
+			      v->size.h);
+     }
+}
+
+static void
+e_view_geometry_record_timeout(int val, void *data)
+{
+   E_View *v;
+   
+   v = data;
+   e_view_geometry_record(v);
+   UN(val);
+}
+
+void
+e_view_queue_geometry_record(E_View *v)
+{
+   char name[4096];
+   
+   sprintf(name, "geometry_record.%s", v->dir);
+   e_add_event_timer(name, 0.10, e_view_geometry_record_timeout, 0, v);
+}
+
+static void
+e_configure(Eevent * ev)
 {
    Ev_Window_Configure *e;
    Evas_List l;
@@ -1022,19 +1020,7 @@ void e_configure(Eevent * ev)
 		    {
 		       v->location.x = e->x;
 		       v->location.y = e->y;
-		       if (e_fs_get_connection())
-			 {
-			    int left, top;
-			    
-			    e_window_get_frame_size(v->win.base, &left, NULL,
-						    &top, NULL);
-			    efsd_set_metadata_int(e_fs_get_connection(),
-						  "/view/x", v->dir, 
-						  v->location.x - left);
-			    efsd_set_metadata_int(e_fs_get_connection(),
-						  "/view/y", v->dir, 
-						  v->location.y - top);
-			 }
+		       e_view_queue_geometry_record(v);
 		    }
 	       }
 	     if ((e->w != v->size.w) || (e->h != v->size.h))
@@ -1060,15 +1046,7 @@ void e_configure(Eevent * ev)
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
 		  e_view_arrange(v);
-		  if (e_fs_get_connection())
-		    {
-		       efsd_set_metadata_int(e_fs_get_connection(),
-					     "/view/w", v->dir, 
-					     v->size.w);
-		       efsd_set_metadata_int(e_fs_get_connection(),
-					     "/view/h", v->dir, 
-					     v->size.h);
-		    }
+		  e_view_queue_geometry_record(v);
 	       }
 	  }
      }
@@ -1227,9 +1205,11 @@ e_key_down(Eevent * ev)
 	       }
 	     else if (!strcmp(e->key, "Left"))
 	       {
+		  e_view_scroll_by(v, 8, 0);
 	       }
 	     else if (!strcmp(e->key, "Right"))
 	       {
+		  e_view_scroll_by(v, 0, 8);
 	       }
 	     else if (!strcmp(e->key, "Escape"))
 	       {
@@ -1917,6 +1897,8 @@ e_view_free(E_View *v)
    
    sprintf(name, "resort_timer.%s", v->dir);
    e_del_event_timer(name);
+   sprintf(name, "geometry_record.%s", v->dir);
+   e_del_event_timer(name);
    
    views = evas_list_remove(views, v);
    efsd_stop_monitor(e_fs_get_connection(), v->dir, TRUE);
@@ -2312,7 +2294,6 @@ e_view_handle_fs(EfsdEvent *ev)
 		       if (v->is_desktop) continue;
 		       if (v->geom_get.x == cmd)
 			 {
-			    printf("Got X\n");
 			    v->geom_get.x = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2321,7 +2302,6 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.x)))
 					{
-					   printf("mov x\n");
 					   e_window_move(v->win.base,
 							 v->location.x,
 							 v->location.y);
@@ -2335,7 +2315,6 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       else if (v->geom_get.y == cmd)
 			 {
-			    printf("Got Y\n");
 			    v->geom_get.y = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2344,7 +2323,6 @@ e_view_handle_fs(EfsdEvent *ev)
 				      if (efsd_metadata_get_int(ev, 
 								&(v->location.y)))
 					{
-					   printf("mov y\n");
 					   e_window_move(v->win.base,
 							 v->location.x,
 							 v->location.y);
@@ -2358,7 +2336,6 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       else if (v->geom_get.w == cmd)
 			 {
-			    printf("Got W\n");
 			    v->geom_get.w = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2375,7 +2352,6 @@ e_view_handle_fs(EfsdEvent *ev)
 			 }
 		       else if (v->geom_get.h == cmd)
 			 {
-			    printf("Got H\n");
 			    v->geom_get.h = 0;
 			    if (efsd_metadata_get_type(ev) == EFSD_INT)
 			      {
@@ -2401,10 +2377,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				 E_Border *b;
 				 
 				 v->geom_get.busy = 0;
-				 printf("ok.. adopt!\n");
-				 printf("at %i %i, %ix%i\n", 
-					v->location.x, v->location.y,
-					v->size.w, v->size.h);
+				 e_background_set_size(v->bg, v->size.w, v->size.h);
 				 if (v->options.back_pixmap) e_view_update(v);
 				 b = e_border_adopt(v->win.base, 1);
 			      }

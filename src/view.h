@@ -199,6 +199,8 @@ void      e_view_icon_apply_xy(E_Icon *ic);
 void      e_view_resort_alphabetical(E_View *v);
 void      e_view_arrange(E_View *v);
 void      e_view_resort(E_View *v);
+void      e_view_queue_geometry_record(E_View *v);
+void      e_view_geometry_record(E_View *v);    
 void      e_view_queue_resort(E_View *v);
 void      e_view_file_added(int id, char *file);
 void      e_view_file_deleted(int id, char *file);
