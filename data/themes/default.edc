@@ -1433,6 +1433,12 @@ collections {
 	    source:  "button_0";
 	    action:  SIGNAL_EMIT "action" "close";
 	 }
+	 program {
+	    name:    "shade_action";
+	    signal:  "mouse,clicked,1,double";
+	    source:  "title";
+	    action:  SIGNAL_EMIT "action" "shade";
+	 }
 	 
 	 program {
 	    name:    "go_active_pre";

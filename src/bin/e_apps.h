@@ -38,6 +38,7 @@ struct _E_App
    Evas_List     *instances; /* a list of all the exe handles for executions */
    
    unsigned char  startup_notify : 1; /* disable while starting etc. */
+   unsigned char  wait_exit : 1; /* wait for app to exit before execing next */
    unsigned char  starting : 1; /* this app is starting */
 
    unsigned char  scanned : 1; /* have we scanned a subdir app yet */

@@ -20,6 +20,7 @@ main(int argc, char **argv)
    int del_win_name = 0;
    int del_win_class = 0;
    int del_startup_notify = 0;
+   int del_wait_exit = 0;
    char *file = NULL;
    char *set_name = NULL;
    char *set_generic = NULL;
@@ -28,6 +29,7 @@ main(int argc, char **argv)
    char *set_win_name = NULL;
    char *set_win_class = NULL;
    int   set_startup_notify = -1;
+   int   set_wait_exit = -1;
    
    /* handle some command-line parameters */
    for (i = 1; i < argc; i++)
@@ -77,6 +79,11 @@ main(int argc, char **argv)
 	     i++;
 	     set_startup_notify = atoi(argv[i]);
 	  }
+	else if ((!strcmp(argv[i], "-set-wait-exit")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     set_wait_exit = atoi(argv[i]);
+	  }
 	else if ((!strcmp(argv[i], "-del-all")))
 	  {
 	     del_name = 1;
@@ -113,6 +120,10 @@ main(int argc, char **argv)
 	else if ((!strcmp(argv[i], "-del-startup-notify")))
 	  {
 	     del_startup_notify = 1;
+	  }
+	else if ((!strcmp(argv[i], "-del-wait-exit")))
+	  {
+	     del_wait_exit = 1;
 	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
@@ -172,6 +183,16 @@ main(int argc, char **argv)
 	else
 	  eet_write(ef, "app/info/startup_notify", tmp, 1, 0);
      }
+   if (set_wait_exit >= 0)
+     {
+	unsigned char tmp[1];
+	
+	tmp[0] = set_wait_exit;
+	if (set_wait_exit)
+	  eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
+	else
+	  eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
+     }
    if (del_name)
      {
 	char **matches = NULL;
@@ -216,6 +237,8 @@ main(int argc, char **argv)
      eet_delete(ef, "app/window/class");
    if (del_startup_notify)
      eet_delete(ef, "app/info/startup_notify");
+   if (del_wait_exit)
+     eet_delete(ef, "app/info/wait_exit");
    
    eet_close(ef);
    eet_shutdown();
@@ -235,6 +258,7 @@ _e_help(void)
 	  "  -set-win-name WIN_NAME     Set the application window name\n"
 	  "  -set-win-class WIN_CLASS   Set the application window class\n"
 	  "  -set-startup-notify [1/0]  Set the application startup notify flag to on/off\n"
+	  "  -set-wait-exit [1/0]       Set the application wait exit flag to on/off\n"
 	  "  -del-name                  Delete the application name\n"
 	  "  -del-generic               Delete the application generic name\n"
 	  "  -del-comment               Delete the application comment\n"
@@ -242,5 +266,6 @@ _e_help(void)
 	  "  -del-win-name              Delete the application window name\n"
 	  "  -del-win-class             Delete the application window class\n"
 	  "  -del-startup-notify        Delete the application startup notify flag\n"
+	  "  -del-wait-exit             Delete the application wait exit flag\n"
 	  );
 }

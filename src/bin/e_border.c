@@ -655,13 +655,6 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-     {
-	char *name;
-
-	name = XGetAtomName(ecore_x_display_get(), e->atom);
-	printf("property for %0x [%s]\n", e->win, name);
-	XFree(name);
-     }
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
 	bd->client.icccm.fetch.title = 1;
@@ -930,6 +923,21 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	     ecore_x_killall(bd->client.win);
 //	     ecore_x_window_del(bd->client.win);
 	     e_object_del(E_OBJECT(bd));
+	  }
+     }
+   else if (!strcmp(source, "shade"))
+     {
+	if (bd->shaded)
+	  {
+	     bd->shaded = 0;
+	     bd->changes.shaded = 1;
+	     bd->changed = 1;
+	  }
+	else
+	  {
+	     bd->shaded = 1;
+	     bd->changes.shaded = 1;
+	     bd->changed = 1;
 	  }
      }
 }
@@ -1588,6 +1596,7 @@ _e_border_eval(E_Border *bd)
 	else ecore_x_window_hide(bd->win);
 	bd->changes.visible = 0;
      }
+   /* FIXME: handle shaded flag */
    if ((bd->changes.pos) && (bd->changes.size))
      {
 	printf("border move resize\n");
@@ -1637,6 +1646,7 @@ _e_border_eval(E_Border *bd)
 	printf("border move resize done\n");
 	bd->changes.size = 0;
      }
+
    if (bd->changes.reset_gravity)
      {
 	GRAV_SET(bd, ECORE_X_GRAVITY_NW);

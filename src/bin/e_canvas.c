@@ -5,6 +5,7 @@
 /* local subsystem globals */
 static Evas_List *_e_canvases = NULL;
 
+/* externally accessible functions */
 void
 e_canvas_add(Ecore_Evas *ee)
 {

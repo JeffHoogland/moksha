@@ -66,6 +66,8 @@
 #include "e_canvas.h"
 #include "e_focus.h"
 #include "e_place.h"
+#include "e_resist.h"
+#include "e_startup.h"
 
 typedef struct _E_Before_Idler E_Before_Idler;
 

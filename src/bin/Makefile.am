@@ -60,7 +60,9 @@ e_focus.c \
 e_place.h \
 e_place.c \
 e_resist.h \
-e_resist.c
+e_resist.c \
+e_startup.h \
+e_startup.c
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@
 

@@ -56,14 +56,22 @@ main(int argc, char **argv)
    int i;
    char *display_name = NULL;
    int nosplash = 0;
-   
+   int after_restart = 0; 
+   char buf[1024];
+  
    if (getenv("NOSPLASH")) nosplash = 1;
+   if (getenv("RESTART"))
+     {
+	printf("after restart!!!\n");
+	after_restart = 1;
+     }
+   putenv("RESTART=1");
+   
    /* handle some command-line parameters */
    for (i = 1; i < argc; i++)
      {
 	if ((!strcmp(argv[i], "-display")) && (i < (argc - 1)))
 	  {
-	     char buf[1024];
 	     i++;
 	     
 	     snprintf(buf, sizeof(buf), "DISPLAY=%s", argv[i]);
@@ -257,10 +265,11 @@ main(int argc, char **argv)
    e_init_title_set("Enlightenment");
    e_init_version_set(VERSION);
    e_init_status_set("Enlightenment Starting. Please wait.");
-   /* FIXME: "faking" startup here. normally we would now execute background */
-   /* handlers, panels, initial clients, filemanager etc. and wait till they */
-   /* all have started and are "ready to go". */
-   if (nosplash)
+   
+   if (after_restart) e_startup(E_STARTUP_RESTART);
+   else e_startup(E_STARTUP_START);
+   
+   if ((nosplash) || (after_restart))
      {
 	ecore_timer_add(0.0, _e_main_cb_startup_fake_end, NULL);
      }
@@ -373,6 +382,8 @@ _e_main_dirs_init(void)
 	"%s/.e/e/applications/all",
 	"%s/.e/e/applications/favorite",
 	"%s/.e/e/applications/bar",
+	"%s/.e/e/applications/startup",
+	"%s/.e/e/applications/restart",
 	"%s/.e/e/modules",
 	"%s/.e/e/config"
      };
@@ -403,6 +414,7 @@ _e_main_dirs_init(void)
 		 "(cd %s/.e/e/ ; tar -xf -)", 
 		 PACKAGE_DATA_DIR,
 		 homedir);
+	system(buf);
      }
    free(homedir);
    

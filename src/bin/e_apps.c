@@ -461,6 +461,12 @@ _e_app_fields_fill(E_App *a, char *path)
 	a->startup_notify = *v;
 	free(v);
      }
+   v = eet_read(ef, "app/info/wait_exit", &size);
+   if (v)
+     {
+	a->wait_exit = *v;
+	free(v);
+     }
    eet_close(ef);
 }
 
