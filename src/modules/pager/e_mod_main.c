@@ -181,6 +181,12 @@ _pager_init(E_Module *m)
 			   _pager_cb_event_border_events, e);
    ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
 			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_HIDE,
+			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_SHOW,
+			   _pager_cb_event_border_events, e);
+   ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
+			   _pager_cb_event_border_events, e);
    
    _pager_reconfigure(e);
    return e;
@@ -420,8 +426,8 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	e_zone_desk_count_get(zone, &xcount, &ycount);
 	evas_pointer_canvas_xy_get(e, &cx, &cy);
 
-	w = p->fw / xcount;
-	h = p->fh / ycount;
+	w = p->fw;
+	h = p->fh;
 	for (x = 0; x < xcount; x++)
 	  for (y = 0; y < ycount; y++)
 	    {
