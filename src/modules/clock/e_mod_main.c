@@ -6,7 +6,7 @@
 
 /* TODO List:
  *
- * should support proepr resize and move handles in the edje.
+ * save the visible flag for each face
  * 
  */
 

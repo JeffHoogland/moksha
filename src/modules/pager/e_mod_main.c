@@ -4,6 +4,10 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+/* TODO
+ * save the visible flag for each face
+ */
+
 /* module private routines */
 static Evas_List   *_pager_init(E_Module *module);
 static void        _pager_shutdown(Evas_List *pagers);
