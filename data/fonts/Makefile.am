@@ -1,6 +1,7 @@
 MAINTAINERCLEANFILES = Makefile.in
 filesdir = $(datadir)/enlightenment/data/fonts
 files_DATA = \
+Kochi.ttf \
 Vera.ttf \
 VeraBI.ttf \
 VeraBd.ttf \

@@ -915,7 +915,7 @@ e_border_maximize(E_Border *bd)
 
 	/* FIXME maximize intelligently */
 	e_border_raise(bd);
-	e_border_move_resize(bd, 0, 0, bd->zone->w, bd->zone->h);
+	e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	bd->maximized = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
@@ -2288,6 +2288,7 @@ _e_border_eval(E_Border *bd)
 	if (bd->bg_object)
 	  {
 	     edje_object_part_text_set(bd->bg_object, "title_text",
+//				       "Japanese (hiragana): いろはにほへとちりぬるを");
 				       bd->client.icccm.title);
 //	     printf("SET TITLE %s\n", bd->client.icccm.title);
 	  }
@@ -2531,6 +2532,7 @@ _e_border_eval(E_Border *bd)
 	if (ok)
 	  {
 	     edje_object_part_text_set(o, "title_text",
+//				       "Japanese (hiragana): いろはにほへとちりぬるを");
 				       bd->client.icccm.title);
 //	     printf("SET TITLE2 %s\n", bd->client.icccm.title);
 	     evas_object_resize(o, 1000, 1000);
