@@ -32,6 +32,7 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
+* pager has issues when iconifying sticky windows
 * any known segv's must go
 
 <add more issues as they are found>
