@@ -51,9 +51,10 @@ static void        _ds_blur_init(Dropshadow *ds);
 static double      _ds_gauss_int(double x);
 static void        _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
 static void        _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
-static void        _ds_gauss_fill(unsigned char *pix, int pix_w, int pix_h, unsigned char v, int rx, int ry, int rxx, int ryy);
-static void        _ds_gauss_copy(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, int rx, int ry, int rxx, int ryy);
-static void        _ds_gauss_blur(unsigned char *pix, int pix_w, int pix_h, unsigned char *lut, int blur, int sx, int sy, int sw, int sh);
+static Shpix      *_ds_shpix_new(int w, int h);
+static Shpix      *_ds_shpix_free(Shpix *sp);
+static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
+static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
     
 /* public module routines. all modules must have these */
 void *
@@ -161,6 +162,11 @@ _ds_init(E_Module *m)
    E_CONFIG_LIMIT(ds->conf->shadow_y, -200, 200);
    E_CONFIG_LIMIT(ds->conf->blur_size, 1, 120);
    E_CONFIG_LIMIT(ds->conf->shadow_darkness, 0.0, 1.0);
+   
+   if (ds->conf->shadow_x >= ds->conf->blur_size)
+     ds->conf->shadow_x = ds->conf->blur_size - 1;
+   if (ds->conf->shadow_y >= ds->conf->blur_size)
+     ds->conf->shadow_y = ds->conf->blur_size - 1;
    
    _ds_blur_init(ds);
    
@@ -613,14 +619,16 @@ _ds_shadow_obj_init(Shadow *sh)
 static void
 _ds_shadow_obj_shutdown(Shadow *sh)
 {
-   evas_object_del(sh->object[0]);
-   evas_object_del(sh->object[1]);
-   evas_object_del(sh->object[2]);
-   evas_object_del(sh->object[3]);
-   sh->object[0] = NULL;
-   sh->object[1] = NULL;
-   sh->object[2] = NULL;
-   sh->object[3] = NULL;
+   int i;
+   
+   for (i = 0; i < 4; i++)
+     {
+	if (sh->object[i])
+	  {
+	     evas_object_del(sh->object[i]);
+	     sh->object[i] = NULL;
+	  }
+     }
 }
 
 static void
@@ -637,10 +645,10 @@ _ds_shadow_show(Shadow *sh)
 {
    if (sh->square)
      {
-	evas_object_show(sh->object[0]);
-	evas_object_show(sh->object[1]);
-	evas_object_show(sh->object[2]);
-	evas_object_show(sh->object[3]);
+	int i;
+	
+	for (i = 0; i < 4; i++)
+	  evas_object_show(sh->object[i]);
      }
    else
      {
@@ -653,10 +661,10 @@ _ds_shadow_hide(Shadow *sh)
 {
    if (sh->square)
      {
-	evas_object_hide(sh->object[0]);
-	evas_object_hide(sh->object[1]);
-	evas_object_hide(sh->object[2]);
-	evas_object_hide(sh->object[3]);
+	int i;
+	
+	for (i = 0; i < 4; i++)
+	  evas_object_hide(sh->object[i]);
      }
    else
      {
@@ -669,7 +677,7 @@ _ds_shadow_move(Shadow *sh, int x, int y)
 {
    sh->x = x;
    sh->y = y;
-   if (sh->square)
+   if ((sh->square) && (!sh->toosmall))
      {
 	evas_object_move(sh->object[0],
 			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
@@ -688,21 +696,60 @@ _ds_shadow_move(Shadow *sh, int x, int y)
      {
 	evas_object_move(sh->object[0],
 			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
      }
 }
 
 static void
 _ds_shadow_resize(Shadow *sh, int w, int h)
 {
+   unsigned char toosmall = 0;
+   
+   if ((w < ((sh->ds->conf->blur_size * 2) + 2)) ||
+       (h < ((sh->ds->conf->blur_size * 2) + 2)))
+     toosmall = 1;
    sh->w = w;
    sh->h = h;
-   sh->reshape = 1;
+   if (sh->toosmall != toosmall)
+     sh->reshape = 1;
+   if ((sh->square) && (!sh->toosmall))
+     {
+	evas_object_move(sh->object[0],
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	evas_object_move(sh->object[1],
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y);
+	evas_object_move(sh->object[2],
+			 sh->x + sh->w, 
+			 sh->y);
+	evas_object_move(sh->object[3],
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->h);
+	
+	evas_object_resize(sh->object[0], sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
+	evas_object_image_fill_set(sh->object[0], 0, 0, sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
+	
+	evas_object_resize(sh->object[1], sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
+	evas_object_image_fill_set(sh->object[1], 0, 0, sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
+	
+	evas_object_resize(sh->object[2], sh->ds->conf->shadow_x + sh->ds->conf->blur_size, sh->h);
+	evas_object_image_fill_set(sh->object[2], 0, 0, sh->ds->conf->blur_size + sh->ds->conf->shadow_x, sh->h);
+	
+	evas_object_resize(sh->object[3], sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
+	evas_object_image_fill_set(sh->object[3], 0, 0, sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
+     }
+   else
+     {
+	sh->reshape = 1;
+	sh->toosmall = toosmall;
+     }
 }
 
 static void
 _ds_shadow_shaperects(Shadow *sh)
 {
+   /* the window shape changed - well we have to recalc it */
    sh->reshape = 1;
 }
 
@@ -713,6 +760,7 @@ _ds_shadow_reshape(void *data)
    Evas_List *l;
    
    ds = data;
+   /* in idle time - if something needs a recalc... do it */
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -730,211 +778,214 @@ _ds_shadow_reshape(void *data)
 static void
 _ds_shadow_recalc(Shadow *sh)
 {
-   Evas_List *rects;
-   unsigned char *pix;
-   int pix_w, pix_h;
-   int sx, sy, sxx, syy, ssw, ssh;
+   Evas_List *rects = NULL;
    
    rects = e_container_shape_rects_get(sh->shape);
-   if (rects)
+   if ((sh->w < ((sh->ds->conf->blur_size * 2) + 2)) ||
+       (sh->h < ((sh->ds->conf->blur_size * 2) + 2)))
+     sh->toosmall = 1;
+   else
+     sh->toosmall = 0;
+   if ((rects) || (sh->toosmall))
      {
 	Evas_List *l;
+	E_Rect *r;
+	Shpix *sp;
+	int shw, shh, bsz, shx, shy;
 	
-	sh->square = 0;
-	pix_w = sh->w + (sh->ds->conf->blur_size * 2);
-	pix_h = sh->h + (sh->ds->conf->blur_size * 2);
-	pix = calloc(1, pix_w * pix_h * sizeof(unsigned char));
-
-	/* for every rect in the shape - fill it */
-	for (l = rects; l; l = l->next)
+	if ((!rects) && (sh->toosmall))
+	  sh->square = 1;
+	else
+	  sh->square = 0;
+	  
+	shx = sh->ds->conf->shadow_x;
+	shy = sh->ds->conf->shadow_y;
+	shw = sh->w;
+	shh = sh->h;
+	bsz = sh->ds->conf->blur_size;
+	
+	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
+	if (sp)
 	  {
-	     E_Rect *r;
+	     if (!rects)
+	       {
+		  _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
+		  _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
+		  _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
+		  _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
+		  _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
+	       }
+	     else
+	       {
+		  for (l = rects; l; l = l->next)
+		    {
+		       E_Rect *r;
+		       
+		       r = l->data;
+		       _ds_shpix_fill(sp, bsz + r->x, bsz + r->y, r->w, r->h, 255);
+		    }
+	       }
 	     
-	     r = l->data;
-	     _ds_gauss_fill(pix, pix_w, pix_h, 255, r->x, r->y, r->x + r->w, r->y + r->h);
+	     _ds_shpix_blur(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2),
+			 sh->ds->table.gauss, bsz);
+		       
+	     _ds_shpix_object_set(sp, sh->object[0], 0, 0,
+			       shw + (bsz * 2), shh + (bsz * 2));
+		       
+	     evas_object_move(sh->object[0],
+			      sh->x + shx - bsz,
+			      sh->y + shy - bsz);
+	     evas_object_image_border_set(sh->object[0],
+					  0, 0, 0, 0);
+	     evas_object_resize(sh->object[0],
+				sh->w + (bsz * 2),
+				sh->h + (bsz * 2));
+	     evas_object_image_fill_set(sh->object[0], 0, 0, 
+				sh->w + (bsz * 2),
+				sh->h + (bsz * 2));
+	     evas_object_image_size_set(sh->object[1], 0, 0);
+	     evas_object_image_size_set(sh->object[2], 0, 0);
+	     evas_object_image_size_set(sh->object[3], 0, 0);
+	     _ds_shpix_free(sp);
 	  }
-	/* FIXME: need to find an optimal "inner rect" fromt he above rect list */
-/*	     
-	sx = sh->ds->conf->blur_size;
-	sy = sh->ds->conf->blur_size;
-	sxx = pix_w - sh->ds->conf->blur_size;
-	syy = pix_h - sh->ds->conf->blur_size;
-*/
-	sx = 0;
-	sy = 0;
-	sxx = 0;
-	syy = 0;
-	     
-	_ds_gauss_blur(pix, pix_w, pix_h,
-		       sh->ds->table.gauss, sh->ds->conf->blur_size,
-		       sx, sy, sxx, syy);
-	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
-	sx = 0;
-	sy = 0;
-	ssw = sh->w + (sh->ds->conf->blur_size * 2);
-	ssh = sh->h + (sh->ds->conf->blur_size * 2);
-	_ds_shadow_object_pixels_set(sh->object[0], pix, pix_w, pix_h,
-				     sx, sy, ssw, ssh);
+	
 	if (evas_object_visible_get(sh->object[0]))
 	  {
 	     evas_object_hide(sh->object[1]);
 	     evas_object_hide(sh->object[2]);
 	     evas_object_hide(sh->object[3]);
 	  }
-	free(pix);
      }
    else
      {
+	E_Rect *r;
+	Shpix *sp;
+	int shw, shh, bsz, shx, shy;
+	
 	sh->square = 1;
-	pix_w = sh->w + (sh->ds->conf->blur_size * 2);
-	pix_h = sh->h + (sh->ds->conf->blur_size * 2);
-	pix = calloc(1, pix_w * pix_h * sizeof(unsigned char));
-	sx = sh->ds->conf->blur_size;
-	sy = sh->ds->conf->blur_size;
-	sxx = pix_w - sh->ds->conf->blur_size;
-	syy = pix_h - sh->ds->conf->blur_size;
-	_ds_gauss_fill(pix, pix_w, pix_h, 255, sx, sy, sxx, syy);
-	sx = sh->ds->conf->blur_size * 2;
-	sy = sh->ds->conf->blur_size * 2;
-	ssw = pix_w - (sh->ds->conf->blur_size * 4);
-	ssh = pix_h - (sh->ds->conf->blur_size * 4);
-	_ds_gauss_blur(pix, pix_w, pix_h,
-		       sh->ds->table.gauss, sh->ds->conf->blur_size,
-		       sx, sy, ssw, ssh);
-	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
-	evas_object_move(sh->object[1],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y);
-	evas_object_move(sh->object[2],
-			 sh->x + sh->w, 
-			 sh->y);
-	evas_object_move(sh->object[3],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->h);
-	sx = 0;
-	sy = 0;
-	ssw = sh->w + (sh->ds->conf->blur_size * 2);
-	ssh = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
-	_ds_shadow_object_pixels_set(sh->object[0], pix, pix_w, pix_h,
-				     sx, sy, ssw, ssh);
-	sx = 0;
-	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
-	ssw = sh->ds->conf->blur_size - sh->ds->conf->shadow_x;
-	ssh = sh->h;
-	_ds_shadow_object_pixels_set(sh->object[1], pix, pix_w, pix_h,
-				     sx, sy, ssw, ssh);
-	sx = sh->ds->conf->blur_size - sh->ds->conf->shadow_y + sh->w;
-	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
-	ssw = sh->ds->conf->blur_size + sh->ds->conf->shadow_x;
-	ssh = sh->h;
-	_ds_shadow_object_pixels_set(sh->object[2], pix, pix_w, pix_h,
-				     sx, sy, ssw, ssh);
-	sx = 0;
-	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y + sh->h;
-	ssw = sh->w + (sh->ds->conf->blur_size * 2);
-	ssh = sh->ds->conf->blur_size + sh->ds->conf->shadow_y;
-	_ds_shadow_object_pixels_set(sh->object[3], pix, pix_w, pix_h,
-				     sx, sy, ssw, ssh);
+	
+	shx = sh->ds->conf->shadow_x;
+	shy = sh->ds->conf->shadow_y;
+	shw = sh->w;
+	shh = sh->h;
+	bsz = sh->ds->conf->blur_size;
+	if (shw > ((bsz * 2) + 2)) shw = (bsz * 2) + 2;
+	if (shh > ((bsz * 2) + 2)) shh = (bsz * 2) + 2;
+	
+	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
+	if (sp)
+	  {
+	     _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
+	     _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
+	     _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
+	     _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
+	     _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
+	     
+	     if (shx >= bsz)
+	       {
+		  if (shy >= bsz)
+		    {
+		       /* Case 4:
+			* X2
+			* 33
+			*/
+		    }
+		  else
+		    {
+		       /* Case 3:
+			* 00
+			* X2
+			* 33
+			*/
+		    }
+	       }
+	     else
+	       {
+		  if (shy >= bsz)
+		    {
+		       /* Case 2:
+			* 1X2
+			* 333
+			*/
+		    }
+		  else
+		    {
+		       /* Case 1:
+			* 000
+			* 1X2
+			* 333
+			*/
+
+		       _ds_shpix_blur(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2),
+				   sh->ds->table.gauss, bsz);
+		       
+		       _ds_shpix_object_set(sp, sh->object[0], 0, 0,
+					 shw + (bsz * 2), bsz - shy);
+		       _ds_shpix_object_set(sp, sh->object[1], 0, bsz - shy,
+					 bsz - shx, shh);
+		       _ds_shpix_object_set(sp, sh->object[2], shw + bsz - shx, bsz - shy,
+					 bsz + shx, shh);
+		       _ds_shpix_object_set(sp, sh->object[3], 0, bsz - shy + shh,
+					 shw + (bsz * 2), bsz + shy);
+		       
+		       evas_object_move(sh->object[0],
+					sh->x + shx - bsz,
+					sh->y + shy - bsz);
+		       evas_object_image_border_set(sh->object[0],
+						    (bsz * 2), (bsz * 2), 0, 0);
+		       evas_object_resize(sh->object[0],
+					  sh->w + (bsz * 2),
+					  bsz - shy);
+		       evas_object_image_fill_set(sh->object[0], 0, 0, 
+						  sh->w + (bsz) * 2,
+						  bsz - shy);
+		       
+		       evas_object_move(sh->object[1],
+					sh->x + shx - bsz,
+					sh->y);
+		       evas_object_image_border_set(sh->object[1],
+						    0, 0, bsz + shy, bsz - shy);
+		       evas_object_resize(sh->object[1],
+					  bsz - shx,
+					  sh->h);
+		       evas_object_image_fill_set(sh->object[1], 0, 0, 
+						  bsz - shx,
+						  sh->h);
+		       
+		       evas_object_move(sh->object[2],
+					sh->x + sh->w, 
+					sh->y);
+		       evas_object_image_border_set(sh->object[2],
+						    0, 0, bsz + shy, bsz - shy);
+		       evas_object_resize(sh->object[2],
+					  bsz + shx,
+					  sh->h);
+		       evas_object_image_fill_set(sh->object[2], 0, 0,
+						  bsz + shx,
+						  sh->h);
+		       
+		       evas_object_move(sh->object[3],
+					sh->x + shx - bsz,
+					sh->y + sh->h);
+		       evas_object_image_border_set(sh->object[3],
+						    (bsz * 2), (bsz * 2), 0, 0);
+		       evas_object_resize(sh->object[3],
+					  sh->w + (bsz * 2),
+					  bsz + shy);
+		       evas_object_image_fill_set(sh->object[3], 0, 0,
+						  sh->w + (bsz * 2),
+						  bsz + shy);
+		    }
+	       }
+	     _ds_shpix_free(sp);
+	  }
+	
 	if (evas_object_visible_get(sh->object[0]))
 	  {
 	     evas_object_show(sh->object[1]);
 	     evas_object_show(sh->object[2]);
 	     evas_object_show(sh->object[3]);
 	  }
-	free(pix);
-     }
-}
-
-static void
-_ds_shadow_object_pixels_set(Evas_Object *o, unsigned char *pix, int pix_w, int pix_h, int sx, int sy, int sw, int sh)
-{
-   unsigned char *p;
-   unsigned int *pix2, *p2;
-   int x, y;
-   
-   if (sw < 0) sw = 0;
-   if (sh < 0) sh = 0;
-   evas_object_image_size_set(o, sw, sh);
-   evas_object_resize(o, sw, sh);
-   evas_object_image_fill_set(o, 0, 0, sw, sh);
-   evas_object_image_alpha_set(o, 1);
-   evas_object_image_smooth_scale_set(o, 0);
-   pix2 = evas_object_image_data_get(o, 1);
-   if (pix2)
-     {
-	if ((sy >= 0) && (sx >= 0))
-	  {
-	     p2 = pix2;
-	     for (y = 0; y < sh; y++)
-	       {
-		  p = pix + ((y + sy) * pix_w) + sx;
-		  for (x = 0; x < sw; x++)
-		    {
-		       *p2 = ((*p) << 24);
-		       p2++;
-		       p++;
-		    }
-	       }
-	  }
-	else if (sy < 0)
-	  {
-	     p2 = pix2;
-	     for (y = 0; y < (-sy); y++)
-	       {
-		  for (x = 0; x < sw; x++)
-		    {
-		       *p2 = 0;
-		       p2++;
-		    }
-	       }
-	     sh += sy;
-	     sy = 0;
-	     for (y = 0; y < sh; y++)
-	       {
-		  p = pix + ((y + sy) * pix_w) + sx;
-		  for (x = 0; x < sw; x++)
-		    {
-		       *p2 = ((*p) << 24);
-		       p2++;
-		       p++;
-		    }
-	       }
-	  }
-	else if (sx < 0)
-	  {
-	     int ox;
-	     
-	     ox = 0;
-	     for (y = 0; y < sh; y++)
-	       {
-		  p2 = pix2 + (y * sw);
-		  for (x = 0; x < (-sx); x++)
-		    {
-		       *p2 = 0;
-		       p2++;
-		    }
-	       }
-	     sw += sx;
-	     ox = -sx;
-	     sx = 0;
-	     for (y = 0; y < sh; y++)
-	       {
-		  p2 = pix2 + (y * sw) + ox;
-		  p = pix + ((y + sy) * pix_w) + sx;
-		  for (x = 0; x < sw; x++)
-		    {
-		       *p2 = ((*p) << 24);
-		       p2++;
-		       p++;
-		    }
-	       }
-	  }
-	evas_object_image_data_set(o, pix2);
-	evas_object_image_data_update_add(o, 0, 0, sw, sh);
      }
 }
 
@@ -969,6 +1020,10 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
    if ((ds->conf->shadow_x == x) && (ds->conf->shadow_y == y)) return;
    ds->conf->shadow_x = x;
    ds->conf->shadow_y = y;
+   if (ds->conf->shadow_x >= ds->conf->blur_size)
+     ds->conf->shadow_x = ds->conf->blur_size - 1;
+   if (ds->conf->shadow_y >= ds->conf->blur_size)
+     ds->conf->shadow_y = ds->conf->blur_size - 1;
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -987,6 +1042,11 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
    if (blur < 0) blur = 0;
    if (ds->conf->blur_size == blur) return;
    ds->conf->blur_size = blur;
+   
+   if (ds->conf->shadow_x >= ds->conf->blur_size)
+     ds->conf->shadow_x = ds->conf->blur_size - 1;
+   if (ds->conf->shadow_y >= ds->conf->blur_size)
+     ds->conf->shadow_y = ds->conf->blur_size - 1;
    
    _ds_blur_init(ds);
    for (l = ds->shadows; l; l = l->next)
@@ -1185,79 +1245,162 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
      }
 }
 
-static void
-_ds_gauss_fill(unsigned char *pix, int pix_w, int pix_h, unsigned char v, int rx, int ry, int rxx, int ryy)
+static Shpix *
+_ds_shpix_new(int w, int h)
 {
-   int y;
-   char *p1;
+   Shpix *sp;
    
-   p1 = pix + rx + (ry * pix_w);
-   for (y = ry; y < ryy; y++)
+   sp = calloc(1, sizeof(Shpix));
+   sp->w = w;
+   sp->h = h;
+   sp->pix = malloc(w * h * sizeof(unsigned char));
+   if (!sp->pix)
      {
-	memset(p1, v, (rxx - rx));
-	p1 += pix_w;
+	free(sp);
+	return NULL;
      }
+   return sp;
+}
+
+static Shpix *
+_ds_shpix_free(Shpix *sp)
+{
+   if (!sp) return;
+   if (sp->pix) free(sp->pix);
+   free(sp);
 }
 
 static void
-_ds_gauss_copy(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, int rx, int ry, int rxx, int ryy)
+_ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val)
 {
-   int y;
-   char *p1, *p2;
+   int xx, yy, jump;
+   unsigned char *p;
    
-   p1 = pix + rx + (ry * pix_w);
-   p2 = pix_dst + rx + (ry * pix_w);
-   for (y = ry; y < ryy; y++)
-     {
-	memcpy(p2, p1, (rxx - rx));
-	p2 += pix_w;
-	p1 += pix_w;
-     }
-}
-
-static void
-_ds_gauss_blur(unsigned char *pix, int pix_w, int pix_h, unsigned char *lut, int blur, int sx, int sy, int sw, int sh)
-{
-   unsigned char *pix2;
+   if (!sp) return;
+   if ((w < 1) || (h < 1)) return;
    
-   pix2 = malloc(pix_w * pix_h * sizeof(unsigned char *));
-   if ((sw <= 0) || (sh <= 0))
+   if (x < 0)
      {
-	_ds_gauss_blur_h(pix, pix2, pix_w, pix_h, lut, blur, 0, 0, pix_w, pix_h);
-	_ds_gauss_blur_v(pix2, pix, pix_w, pix_h, lut, blur, 0, 0, pix_w, pix_h);
+	w += x;
+	x = 0;
+	if (w < 1) return;
      }
-   else
+   if (x >= sp->w) return;
+   if ((x + w) > (sp->w)) w = sp->w - x;
+   
+   if (y < 0)
      {
-	int x, y, w, h;
+	h += y;
+	y = 0;
+	if (h < 1) return;
+     }
+   if (y >= sp->h) return;
+   if ((y + h) > (sp->h)) h = sp->h - y;
 	
-	x = 0; y = 0; w = pix_w; h = sy;
-	if (h > 0) _ds_gauss_blur_h(pix, pix2, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = 0; y = sy; w = sx; h = sh;
-	if (w > 0) _ds_gauss_blur_h(pix, pix2, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = sx + sw; y = sy; w = pix_w - x; h = sh;
-	if (w > 0) _ds_gauss_blur_h(pix, pix2, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = 0; y = sy + sh; w = pix_w; h = pix_h - y;
-	if (h > 0) _ds_gauss_blur_h(pix, pix2, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	_ds_gauss_copy(pix, pix2, pix_w, pix_h,
-		       sx, sy, sx + sw, sy + sh);
-	x = 0; y = 0; w = pix_w; h = sy;
-	if (h > 0) _ds_gauss_blur_v(pix2, pix, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = 0; y = sy; w = sx; h = sh;
-	if (w > 0) _ds_gauss_blur_v(pix2, pix, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = sx + sw; y = sy; w = pix_w - x; h = sh;
-	if (w > 0) _ds_gauss_blur_v(pix2, pix, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	x = 0; y = sy + sh; w = pix_w; h = pix_h - y;
-	if (h > 0) _ds_gauss_blur_v(pix2, pix, pix_w, pix_h, lut, blur,
-				    x, y, x + w, y + h);
-	_ds_gauss_copy(pix2, pix, pix_w, pix_h,
-		       sx, sy, sx + sw, sy + sh);
+   p = sp->pix + (y * sp->w) + x;
+   jump = sp->w - w;
+   for (yy = 0; yy < h; yy++)
+     {
+	for (xx = 0; xx < w; xx++)
+	  {
+	     *p = val;
+	     p++;
+	  }
+	p += jump;
      }
-   free(pix2);
+}
+
+static void
+_ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size)
+{
+   Shpix *sp2;
+   
+   if (!sp) return;
+   if (blur_size < 1) return;
+   if ((w < 1) || (h < 1)) return;
+   
+   if (x < 0)
+     {
+	w += x;
+	x = 0;
+	if (w < 1) return;
+     }
+   if (x >= sp->w) return;
+   if ((x + w) > (sp->w)) w = sp->w - x;
+   
+   if (y < 0)
+     {
+	h += y;
+	y = 0;
+	if (h < 1) return;
+     }
+   if (y >= sp->h) return;
+   if ((y + h) > (sp->h)) h = sp->h - y;
+   
+   sp2 = _ds_shpix_new(sp->w, sp->h);
+   if (!sp2) return;
+   /* FIXME: copy the inverse rects from rects list */
+   memcpy(sp2->pix, sp->pix, sp->w * sp->h);
+   _ds_gauss_blur_h(sp->pix, sp2->pix,
+		    sp->w, sp->h,
+		    blur_lut, blur_size,
+		    x, y, x + w, y + h);
+   _ds_gauss_blur_v(sp2->pix, sp->pix,
+		    sp->w, sp->h,
+		    blur_lut, blur_size,
+		    x, y, x + w, y + h);
+   _ds_shpix_free(sp2);
+}
+
+static void
+_ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
+{
+   unsigned char *p;
+   unsigned int *pix2, *p2;
+   int xx, yy, jump;
+
+   if (!sp) return;
+   if (!o) return;
+   if ((w < 1) || (h < 1)) return;
+   
+   if (x < 0)
+     {
+	w += x;
+	x = 0;
+	if (w < 1) return;
+     }
+   if (x >= sp->w) return;
+   if ((x + w) > (sp->w)) w = sp->w - x;
+   
+   if (y < 0)
+     {
+	h += y;
+	y = 0;
+	if (h < 1) return;
+     }
+   if (y >= sp->h) return;
+   if ((y + h) > (sp->h)) h = sp->h - y;
+   
+   evas_object_image_size_set(o, w, h);
+   evas_object_image_alpha_set(o, 1);
+   evas_object_image_smooth_scale_set(o, 0);
+   pix2 = evas_object_image_data_get(o, 1);
+   if (pix2)
+     {
+	p = sp->pix + (y * sp->w) + x;
+	jump = sp->w - w;
+	p2 = pix2;
+	for (yy = 0; yy < h; yy++)
+	  {
+	     for (xx = 0; xx < w; xx++)
+	       {
+		  *p2 = ((*p) << 24);
+		  p2++;
+		  p++;
+	       }
+	     p += jump;
+	  }
+	evas_object_image_data_set(o, pix2);
+	evas_object_image_data_update_add(o, 0, 0, w, h);
+     }
 }

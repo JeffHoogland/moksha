@@ -1,6 +1,7 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+typedef struct _Shpix      Shpix;
 typedef struct _Config     Config;
 typedef struct _Dropshadow Dropshadow;
 typedef struct _Shadow     Shadow;
@@ -38,6 +39,13 @@ struct _Shadow
    
    unsigned char reshape : 1;
    unsigned char square : 1;
+   unsigned char toosmall : 1;
+};
+
+struct _Shpix
+{
+   int            w, h;
+   unsigned char *pix;
 };
 
 EAPI void *init     (E_Module *m);

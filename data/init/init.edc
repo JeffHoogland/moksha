@@ -1224,6 +1224,15 @@ collections {
 	       }
 	    }
 	 }
+	 part {
+	    name: "shadow";
+	    description {
+	       state: "default" 0.0;
+	       image {
+		  normal: SM"shadow.png";
+	       }
+	    }
+	 }
       }
    }
 }
