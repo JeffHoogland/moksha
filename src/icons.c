@@ -232,6 +232,16 @@ e_icon_update(E_Icon *icon)
 	icon->previous.visible = icon->current.visible - 1;
 	obj_new = 1;
      }
+   if (!icon->obj.sel_icon)
+     {
+	icon->obj.sel_icon = ebits_load(PACKAGE_DATA_DIR"/data/config/appearance/default/selections/file.bits.db");
+	if (icon->obj.sel_icon)
+	  {
+	     ebits_add_to_evas(icon->obj.sel_icon, icon->view->evas);	     
+	     ebits_set_layer(icon->obj.sel_icon, 9);
+	     ebits_set_color_class(icon->obj.sel_icon, "Selected BG", 100, 200, 255, 255);
+	  }
+     }
    if (obj_new)
      {
 	if (icon->shelf)
@@ -261,6 +271,16 @@ e_icon_update(E_Icon *icon)
 	evas_move(icon->view->evas, icon->obj.sel2, fx, fy);
 	evas_resize(icon->view->evas, icon->obj.sel2, tw, th);
 	evas_set_color(icon->view->evas, icon->obj.filename, 0, 0, 0, 255);
+	if (icon->obj.sel_icon)
+	  {
+	     int pl, pr, pt, pb;
+	     
+	     pl = pr = pt = pb = 0;
+	     ebits_get_insets(icon->obj.sel_icon, &pl, &pr, &pt, &pb);
+	     ebits_move(icon->obj.sel_icon, icon->current.x - pl, icon->current.y - pt);
+	     ebits_resize(icon->obj.sel_icon, iw + pl + pr, ih + pt + pb);
+	  }
+	
      }
    if (icon->current.visible != icon->previous.visible)
      {
@@ -270,6 +290,7 @@ e_icon_update(E_Icon *icon)
 	     evas_show(icon->view->evas, icon->obj.filename);
 	     evas_show(icon->view->evas, icon->obj.sel1);
 	     evas_show(icon->view->evas, icon->obj.sel2);
+	     ebits_show(icon->obj.sel_icon);
 	  }
 	else
 	  {
@@ -277,6 +298,7 @@ e_icon_update(E_Icon *icon)
 	     evas_hide(icon->view->evas, icon->obj.filename);
 	     evas_hide(icon->view->evas, icon->obj.sel1);
 	     evas_hide(icon->view->evas, icon->obj.sel2);
+	     ebits_hide(icon->obj.sel_icon);
 	  }
      }
    

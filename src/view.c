@@ -579,17 +579,17 @@ e_view_handle_fs(EfsdEvent *ev)
 			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/selected");
 			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/clicked");
 			 }
-		       else if (icon->info.is_exe)
-			 {
-			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/clicked");
-			 }
 		       else if (icon->info.link)
 			 {
 			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
 			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
 			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
+			 }
+		       else if (icon->info.is_exe)
+			 {
+			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/clicked");
 			 }
 		       else
 			 {
@@ -679,7 +679,7 @@ e_view_new(void)
 	e_shelf_set_view(sh, v);
 	e_shelf_show(sh);
 	e_shelf_move(sh, 10, 10);
-	e_shelf_resize(sh, 200, 150);
+	e_shelf_resize(sh, 500, 350);
 	v->shelves = evas_list_append(v->shelves, sh);
      }
    

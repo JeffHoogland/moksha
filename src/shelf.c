@@ -172,7 +172,7 @@ e_shelf_realize(E_Shelf *sh)
 	ebits_add_to_evas(sh->bit.border, sh->view->evas);
 	ebits_move(sh->bit.border, sh->x, sh->y);
 	ebits_resize(sh->bit.border, sh->w, sh->h);
-	ebits_set_layer(sh->bit.border, 9);
+	ebits_set_layer(sh->bit.border, 5);
 	if (sh->visible)
 	  ebits_show(sh->bit.border);
 
@@ -297,6 +297,8 @@ e_shelf_add_icon(E_Shelf *sh, E_Icon *icon)
    evas_set_clip(sh->view->evas, icon->obj.filename, sh->obj.clipper);
    evas_set_clip(sh->view->evas, icon->obj.sel1, sh->obj.clipper);
    evas_set_clip(sh->view->evas, icon->obj.sel2, sh->obj.clipper);
+   if (icon->obj.sel_icon)
+     ebits_set_clip(icon->obj.sel_icon, sh->obj.clipper);
 }
 
 void
@@ -310,4 +312,6 @@ e_shelf_del_icon(E_Shelf *sh, E_Icon *icon)
    evas_unset_clip(sh->view->evas, icon->obj.filename);
    evas_unset_clip(sh->view->evas, icon->obj.sel1);
    evas_unset_clip(sh->view->evas, icon->obj.sel2);
+   if (icon->obj.sel_icon)
+     ebits_unset_clip(icon->obj.sel_icon);
 }
