@@ -2,7 +2,10 @@
 #include "menubuild.h"
 #include "exec.h"
 #include "util.h"
-#include "e_ferite.h"
+
+#ifdef USE_FERITE
+# include "e_ferite.h"
+#endif
 
 Evas_List build_menus = NULL;
 
@@ -33,12 +36,18 @@ static void
 e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
 {
    char *script;
-   
+
+#ifdef USE_FERITE
    script = data;
    e_ferite_run(script);
+#else
+   printf( "No cookies for you. You will have to install ferite.\n" );
+#endif
+   
    return;
    UN(m);
    UN(mi);
+   UN(script);
 }
 
 static void

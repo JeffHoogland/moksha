@@ -8,6 +8,14 @@ INCLUDES = \
 
 bin_PROGRAMS = enlightenment
 
+if USE_FERITE
+ferite_c = e_ferite_gen_core.c \
+	e_ferite_gen_header.h \
+	e_ferite_gen_e.c \
+	e_ferite_gen_Window.c \
+	e_ferite.h e_ferite.c
+endif
+
 enlightenment_SOURCES = \
 	actions.h actions.c \
 	background.h background.c \
@@ -16,12 +24,8 @@ enlightenment_SOURCES = \
 	desktops.h desktops.c \
 	entry.h entry.c \
 	exec.h exec.c \
-	e_ferite_gen_core.c \
-	e_ferite_gen_header.h \
-	e_ferite_gen_e.c \
-	e_ferite_gen_Window.c \
-	e_ferite.h e_ferite.c \
 	fs.h fs.c \
+	$(ferite_c) \
 	icccm.h icccm.c \
 	icons.c \
 	ipc.h ipc.c \

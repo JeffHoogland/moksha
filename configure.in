@@ -162,13 +162,17 @@ AC_ARG_WITH(ferite,
 
 AC_PATH_GENERIC(ferite,, [
     AC_SUBST(ferite_libs)
-    AC_SUBST(ferite_cflags)],
-    AC_MSG_ERROR(Cannot find ferite: Is ferite-config in path? ferite can be obtained from http://www.ferite.org))
-ferite_libs=`ferite-config --libs`
-ferite_cflags=`ferite-config --cflags`
-
-AC_PATH_PROG(FEBUILDER, builder,,)
-AC_SUBST(FEBUILDER)
+	AC_SUBST(ferite_cflags)
+	AC_DEFINE(USE_FERITE)
+    ferite_libs=`ferite-config --libs`
+    ferite_cflags=`ferite-config --cflags`
+    AC_PATH_PROG(FEBUILDER, builder,,)
+    AC_SUBST(FEBUILDER)
+	ferite=yes],[
+	echo "Not building ferite support"
+	ferite=no])
+  
+AM_CONDITIONAL(USE_FERITE, test "x$ferite" = "xyes")
 
 AC_SUBST(CP_OPTIONS)
 

@@ -9,7 +9,11 @@
 #include "ipc.h"
 #include "menu.h"
 #include "view.h"
-#include "e_ferite.h"
+
+#ifdef USE_FERITE
+# include "e_ferite.h"
+#endif
+
 #include <X11/Xproto.h>
 
 #ifdef E_PROF
@@ -123,13 +127,18 @@ main(int argc, char **argv)
    e_view_init();
    e_entry_init();
    e_keys_init();
+   
+#ifdef USE_FERITE
    e_ferite_init();
+#endif
    
    setup();
    
    e_event_loop();
 
+#ifdef USE_FERITE
    e_ferite_deinit();
+#endif
    
    return 0;
    UN(argc);
