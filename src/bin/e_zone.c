@@ -205,7 +205,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 	E_Menu *m;
 
 	m = e_int_menus_clients_new();
-	/* FIXME: this is a bit of a hack... setting m->zone - bad hack */
+	/* FIXME: this is a bit of a hack... setting m->con - bad hack */
 	m->con = zone->container;
 	e_menu_activate_mouse(m, zone->container, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
