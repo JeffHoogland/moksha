@@ -1595,6 +1595,12 @@ collections {
 	    action:  SIGNAL_EMIT "resize_stop" "mouse,1";
 	 }
 	 program {
+	    name:    "menu_action";
+	    signal:  "mouse,clicked,1";
+	    source:  "icon";
+	    action:  SIGNAL_EMIT "action" "menu";
+	 }
+	 program {
 	    name:    "close_action";
 	    signal:  "mouse,clicked,1";
 	    source:  "button_0";

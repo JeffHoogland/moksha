@@ -61,6 +61,12 @@ static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
 static void _e_border_resize_handle(E_Border *bd);
 
 static int  _e_border_shade_animator(void *data);
+static void _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y);
+static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -1163,7 +1169,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	     ecore_x_sync();
 //	     ecore_x_window_del(bd->client.win);
 	     e_object_del(E_OBJECT(bd));
-	  }
+	  }				     
      }
    else if (!strcmp(source, "shade_up") || !strcmp(source, "shade"))
      {
@@ -1195,7 +1201,12 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	if (bd->iconic) e_border_uniconify(bd);
 	else e_border_iconify(bd);
      }
-   
+   else if (!strcmp(source, "menu"))
+     {
+	Evas_Coord x, y;
+	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
+	_e_border_menu_show(bd, x + bd->x, y + bd->y);
+     }
          
 }
 
@@ -2256,5 +2267,144 @@ _e_border_shade_animator(void *data)
      }
 
    return 1;
+}
+
+E_Menu *_e_border_menu;
+
+static void
+_e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+   E_App *a;
+
+   if (!_e_border_menu)
+     _e_border_menu= e_menu_new();
+   m = _e_border_menu;
+
+   /* clear menu */
+   if (m->items)
+     {
+	Evas_List *l;
+	for (l = m->items; l; l = l->next)
+	  {
+	      E_Menu_Item *mi = l->data;
+	      e_object_free(E_OBJECT(mi));
+	  }
+
+     }
+									   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Close");
+   e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
+   e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
+   mi = e_menu_item_new(m);
+   if (bd->shaded)
+     e_menu_item_label_set(mi, "Un-Shade");
+   else 
+     e_menu_item_label_set(mi, "Shade");
+   e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Iconify");
+   e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
+   mi = e_menu_item_new(m);
+   if (bd->maximized)
+     e_menu_item_label_set(mi, "Restore");
+   else
+     e_menu_item_label_set(mi, "Maximise");
+   e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   a = e_app_window_name_class_find(bd->client.icccm.name,
+				    bd->client.icccm.class);
+
+   if (a)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, "Edit Icon");
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
+     }
+   else
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, "Create Icon");
+	/* FIXME need to create path for newly created icon */
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, "");
+     }
+
+   e_menu_activate_mouse(m, bd->container, x, y, 1, 1,
+			 E_MENU_POP_DIRECTION_DOWN);
+
+}
+
+static void
+_e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (bd->client.icccm.delete_request)
+     ecore_x_window_delete_request_send(bd->client.win);
+   else
+     {
+	ecore_x_kill(bd->client.win);
+	ecore_x_sync();
+//         ecore_x_window_del(bd->client.win);
+	e_object_del(E_OBJECT(bd));
+     }
+}
+
+static void
+_e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (bd->maximized) e_border_uniconify(bd);
+   else e_border_iconify(bd);
+}
+
+static void
+_e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (bd->maximized) e_border_unmaximize(bd);
+   else e_border_maximize(bd);
+}
+
+static void
+_e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
+   else e_border_shade(bd, E_DIRECTION_UP);
+}
+
+static void
+_e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   char *file;
+   char *command;
+   char *full;
+   Ecore_Exe *process;
+
+   file = data;
+   command = "e_util_eapp_edit ";
+   full = malloc(strlen(file) + strlen(command) + 1);
+   strcpy(full, command);
+   strcat(full, file);
+   printf("e_util_eapp_edit %s\n", full);
+   process = ecore_exe_run(full, NULL);
+   if (!process || !ecore_exe_pid_get(process))
+     e_error_dialog_show("Icon Edit Error", "Error starting icon editor\n\n \
+			 please install e_util_eapp_edit\n \
+			 or make sure it is in your PATH\n");
 }
 
