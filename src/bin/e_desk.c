@@ -49,14 +49,21 @@ e_desk_show(E_Desk *desk)
    E_OBJECT_CHECK(desk);
    if (desk->visible) return;
    
-   for (l = desk->zone->clients; l; l = l->next)
+   for (l = desk->zone->container->clients; l; l = l->next)
      {
 	E_Border *bd = l->data;
 
-	if (bd->desk == desk)
-	  e_border_show(bd);
-	else
-	  e_border_hide(bd);
+	if (bd->desk->zone == desk->zone)
+	  {
+	     if (bd->desk == desk)
+	       {
+		  e_border_show(bd);
+	       }
+	     else
+	       {
+		  e_border_hide(bd);
+	       }
+	  }
      }
    
    for (l = desk->zone->desks; l; l = l->next)

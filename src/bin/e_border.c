@@ -266,7 +266,7 @@ e_border_hide(E_Border *bd)
    e_container_shape_hide(bd->shape);
 
    if (bd->iconic)
-     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+     ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
    else
      ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
 
@@ -729,7 +729,8 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	bd->ignore_first_unmap--;
 	return 1;
      }
-   if (!(bd->iconic)) e_object_del(E_OBJECT(bd));
+   /* Don't delete hidden or iconified windows */
+   if (!(bd->iconic) && (bd->visible)) e_object_del(E_OBJECT(bd));
 
    return 1;
 }
