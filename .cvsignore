@@ -16,3 +16,4 @@ config.h.in
 mkinstalldirs
 stamp-h
 stamp-h.in
+*.tar.gz
