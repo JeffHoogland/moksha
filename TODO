@@ -130,3 +130,4 @@ These are in no particular order:
 * modules need config executables with proper widgets (sliders, check boxes, radio etc. not massive menus)
 * module control panel app
 * ipc needs to be massively useful and give all sorts of info and control
+* tip/hint/suggestion dialog app (textblock etc.)
