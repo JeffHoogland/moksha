@@ -62,32 +62,36 @@ e_config_get(char *type)
 void
 e_config_init(void)
 {
-   if (!e_file_is_dir(e_config_user_dir()))
-     {
-	char buf[4096];
-	
-	sprintf(buf, "%s",                     e_config_user_dir());
-	e_file_mkdir(buf);
-	sprintf(buf, "%sappearance",           e_config_user_dir());
-	e_file_mkdir(buf);
-	sprintf(buf, "%sappearance/borders",   e_config_user_dir());
-	e_file_mkdir(buf);
-	sprintf(buf, "%sbehavior",             e_config_user_dir());
-	e_file_mkdir(buf);
-	sprintf(buf, "%sbehavior/grabs.db",    e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db", buf);
-	sprintf(buf, "%sbehavior/settings.db", e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db", buf);
-	sprintf(buf, "%sbehavior/actions.db",  e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db", buf);
-
-	sprintf(buf,                                 "%sappearance/borders/border.bits.db",  e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db", buf);
-	sprintf(buf,                                 "%sappearance/borders/border2.bits.db",  e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border2.bits.db", buf);
-	sprintf(buf,                                 "%sappearance/borders/borderless.bits.db",  e_config_user_dir());
-	e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db", buf);
-     }
+   char buf[4096];
+   
+   if (!e_file_is_dir(e_config_user_dir())) e_file_mkdir(e_config_user_dir());
+   sprintf(buf, "%sappearance",           e_config_user_dir());
+   if (!e_file_is_dir(buf)) e_file_mkdir(buf);
+   sprintf(buf, "%sappearance/borders",   e_config_user_dir());
+   if (!e_file_is_dir(buf)) e_file_mkdir(buf);
+   sprintf(buf, "%sbehavior",             e_config_user_dir());
+   if (!e_file_is_dir(buf)) e_file_mkdir(buf);
+   sprintf(buf, "%sbehavior/grabs.db",    e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db", buf);
+   sprintf(buf, "%sbehavior/settings.db", e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db", buf);
+   sprintf(buf, "%sbehavior/actions.db",  e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db", buf);
+   sprintf(buf, "%sbehavior/apps_menu.db",  e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/behavior/default/apps_menu.db", buf);
+   sprintf(buf, "%sappearance/borders/border.bits.db",  e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db", buf);
+   sprintf(buf, "%sappearance/borders/border2.bits.db",  e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border2.bits.db", buf);
+   sprintf(buf, "%sappearance/borders/borderless.bits.db",  e_config_user_dir());
+   if (!e_file_exists(buf))
+     e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db", buf);
 }
 
 void
