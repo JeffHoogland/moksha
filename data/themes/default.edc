@@ -32,3 +32,4 @@ collections {
 #include "default_temperature.edc"
 #include "default_pager.edc"
 }
+
