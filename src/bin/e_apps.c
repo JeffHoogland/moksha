@@ -42,11 +42,19 @@ static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
 static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
+static Evas_List   *_e_apps_repositories = NULL;
 
 /* externally accessible functions */
 int
 e_app_init(void)
 {
+   char *home;
+   char buf[4096];
+   
+   home = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
+   E_FREE(home);
+   _e_apps_repositories = evas_list_append(_e_apps_repositories, strdup(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_apps_cb_exit, NULL);
    return 1;
 }
@@ -54,6 +62,11 @@ e_app_init(void)
 int
 e_app_shutdown(void)
 {
+   while (_e_apps_repositories)
+     {
+	free(_e_apps_repositories->data);
+	_e_apps_repositories = evas_list_remove_list(_e_apps_repositories, _e_apps_repositories);
+     }
    if (_e_apps_exit_handler)
      {
 	ecore_event_handler_del(_e_apps_exit_handler);
@@ -100,7 +113,7 @@ e_app_new(char *path, int scan_subdirs)
 	     return NULL;
 	  }
 	p++;
-	if (strcasecmp(p, "eapp"))
+	if ((strcasecmp(p, "eapp")))
 	  {
 	     free(a);
 	     return NULL;
@@ -161,16 +174,27 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	char *s;
 	
 	s = files->data;
+	a2 = NULL;
 	if (s[0] != '.')
 	  {
+	     Evas_List *pl;
+			
 	     snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-	     free(s);
-	     a2 = e_app_new(buf, scan_subdirs);
+	     if (e_file_exists(buf))
+	       a2 = e_app_new(buf, scan_subdirs);
+	     pl = _e_apps_repositories;
+	     while ((!a2) && (pl))
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+		  a2 = e_app_new(buf, scan_subdirs);
+		  pl = pl->next;
+	       }
 	     if (a2)
 	       {
 		  a->subapps = evas_list_append(a->subapps, a2);
 		  a2->parent = a;
 	       }
+	     free(s);
 	  }
 	files = evas_list_remove_list(files, files);
      }
@@ -462,12 +486,10 @@ _e_app_dir_file_list_get(E_App *a, char *path)
 			 {
 			    free(l->data);
 			    files = evas_list_remove_list(files, l);
-			    ok = 1;
 			    break;
 			 }
 		    }
-		  if (ok)
-		    files2 = evas_list_append(files2, strdup(buf));
+		  files2 = evas_list_append(files2, strdup(buf));
 	       }
 	  }
 	fclose(f);
