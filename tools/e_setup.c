@@ -678,6 +678,8 @@ _txz_cb_get_min_size(void *data, double *minw, double *minh)
 	     *minh += h;
 	  }
      }
+   *minw += 8;
+   *minh += 8;
 }
 
 static void
@@ -700,6 +702,8 @@ _txz_cb_get_max_size(void *data, double *maxw, double *maxh)
 	     *maxh += h;
 	  }
      }
+   *maxw += 8;
+   *maxh += 8;
 }
 
 static void
