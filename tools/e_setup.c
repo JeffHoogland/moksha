@@ -349,15 +349,38 @@ e_background_set_color_class(E_Background *bg, char *cc, int r, int g, int b, in
      }
 }
 
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+/*                                                                           */
+
+
+typedef struct _text_zone Text_Zone;
+
+struct _text_zone
+{
+   double x, y;
+   
+   Evas_Object bg;
+   
+   Evas_List lines;
+};
+
 Window win_main;
 Window win_evas;
 Evas   evas;
 double scr_w, scr_h;
 Evas_Object pointer;
-
-
-
-
 
 /* our stuff */
 void idle(void *data);
@@ -367,6 +390,12 @@ void mouse_down(Ecore_Event * ev);
 void mouse_up(Ecore_Event * ev);
 void key_down(Ecore_Event * ev);
 void setup(void);
+Text_Zone *txz_new(double x, double y, char *text);
+void txz_free(Text_Zone *txz);
+void txz_show(Text_Zone *txz);
+void txz_hide(Text_Zone *txz);
+void txz_move(Text_Zone *txz, double x, double y);
+void txz_text(Text_Zone *txz, char *text);
 
 void
 idle(void *data)
@@ -448,7 +477,7 @@ setup(void)
 		       216,   1024 * 1024,   8 * 1024 * 1024,
 		       PACKAGE_DATA_DIR"/data/fonts/");
    
-   bg = e_background_load(PACKAGE_DATA_DIR"/data/backgrounds/default.bg.db");
+   bg = e_background_load(PACKAGE_DATA_DIR"/data/setup/setup.bg.db");
    if (!bg)
      {
 	/* FIXME: must detect this error better and tell user */
@@ -471,8 +500,162 @@ setup(void)
    ecore_window_show(win_main);
    ecore_keyboard_grab(win_evas);
    
+     {
+	Evas_Object o;
+	int w, h;
+	
+	o = evas_add_image_from_file(evas, PACKAGE_DATA_DIR"/data/setup/logo.png");
+	evas_get_image_size(evas, o, &w, &h);
+	evas_move(evas, o, (root_w - w) / 2, -32);
+	evas_set_layer(evas, o, 20);
+	evas_show(evas, o);
+     }
+     {
+	Text_Zone *txz;
+	
+	txz = txz_new
+	  ((root_w - 512) / 2, 200,
+	   "5c \n"
+	   "9c Enlightenment\n"
+	   "5c \n"
+	   "5c Welcome to Enlightenment 0.17 (pre-release). This is the setup\n"
+	   "5c program. It will help you get a base configuration initialised\n"
+	   "5c for your user and do some initial tweaks and system queries.\n"
+	   "5c \n"
+	   "5c Please be patient and read the dialogs carefully, as your answers\n"
+	   "5c to questions posed will affect your initial setup of Enlightenment,\n"
+	   "5c and so your initial impressions.\n"
+	   "5c \n"
+	   "5c N.B. - during pre-release stages, this setup program may come up\n"
+	   "5c more than just once, as new setups need to be installed\n"
+	   );
+     }
+   
    scr_w = root_w;
    scr_h = root_h;
+}
+
+Text_Zone *
+txz_new(double x, double y, char *text)
+{
+   Text_Zone *txz;
+   
+   txz = NEW(Text_Zone, 1);
+   ZERO(txz, Text_Zone, 1);
+   
+   txz->x = 0;
+   txz->y = 0;
+   
+   txz->bg = evas_add_image_from_file(evas, PACKAGE_DATA_DIR"/data/setup/textzonebg.png");
+   evas_set_layer(evas, txz->bg, 9);
+   
+   txz_text(txz, text);
+   txz_move(txz, x, y);
+   txz_show(txz);
+   return txz;
+}
+
+void
+txz_free(Text_Zone *txz)
+{
+   Evas_List l;
+   
+   evas_del_object(evas, txz->bg);
+   for (l = txz->lines; l; l = l->next)
+     evas_del_object(evas, (Evas_Object)l->data);
+   if (txz->lines) evas_list_free(txz->lines);
+   FREE(txz);
+}
+
+void
+txz_show(Text_Zone *txz)
+{
+   Evas_List l;
+   
+   evas_show(evas, txz->bg);
+   for (l = txz->lines; l; l = l->next)
+     evas_show(evas, (Evas_Object)l->data);
+}
+
+void
+txz_hide(Text_Zone *txz)
+{
+   Evas_List l;
+   
+   evas_hide(evas, txz->bg);
+   for (l = txz->lines; l; l = l->next)
+     evas_hide(evas, (Evas_Object)l->data);
+}
+
+void
+txz_move(Text_Zone *txz, double x, double y)
+{
+   Evas_List l;
+   double dx, dy;
+   
+   dx = x - txz->x;
+   dy = y - txz->y;
+   txz->x = x;
+   txz->y = y;
+   evas_move(evas, txz->bg, txz->x, txz->y);
+   for (l = txz->lines; l; l = l->next)
+     {
+	Evas_Object o;
+	
+	o = (Evas_Object)l->data;
+	evas_get_geometry(evas, o, &x, &y, NULL, NULL);
+	evas_move(evas, o, x + dx, y + dy);
+     }
+}
+
+void
+txz_text(Text_Zone *txz, char *text)
+{
+   char *p, *tok;
+   double ypos;
+   Evas_List l;
+   
+   for (l = txz->lines; l; l = l->next)
+     evas_del_object(evas, (Evas_Object)l->data);
+   if (txz->lines) evas_list_free(txz->lines);
+   txz->lines = NULL;
+   
+   p = text;
+   ypos = txz->y;
+   while ((p[0] != 0) && (tok = strchr(p, '\n')))
+     {
+	char line[4096], size[2], align[2], *str;
+	int sz;
+	double tw, th, hadv, vadv;
+	Evas_Object o;
+	
+	strncpy(line, p, (tok - p));
+	line[tok - p] = 0;
+	size[0] = line[0];
+	size[1] = 0;
+	align[0] = line[1];
+	align[1] = 0;
+	str = &(line[3]);
+	
+	sz = atoi(size);
+	sz = 4 + (sz * 2);
+	o = evas_add_text(evas, "nationff", sz, str);
+	evas_set_layer(evas, o, 10);
+	evas_set_color(evas, o, 0, 0, 0, 255);
+	txz->lines = evas_list_append(txz->lines, o);
+	tw = evas_get_text_width(evas, o);
+	th = evas_get_text_height(evas, o);
+	evas_text_get_advance(evas, o, &hadv, &vadv);
+	if      (align[0] == 'l')
+	  evas_move(evas, o, txz->x, ypos);
+	else if (align[0] == 'r')
+	  evas_move(evas, o, txz->x + 512 - tw, ypos);
+	else
+	  evas_move(evas, o, txz->x + ((512 - tw) / 2), ypos);
+	ypos += vadv;
+	
+	p = tok + 1;
+     }
 }
 
 int
