@@ -40,7 +40,7 @@ e_init(const char* display)
    /* basic ecore init */
    if (!ecore_init())
      {
-	printf("ERROR: Enlightenment cannot Initialize Ecore!\n"
+	fprintf(stderr, "ERROR: Enlightenment cannot Initialize Ecore!\n"
 	       "Perhaps you are out of memory?\n");
 	return 0;
      }
@@ -48,7 +48,7 @@ e_init(const char* display)
    /* init ipc */
    if (!ecore_ipc_init())
      {
-	printf("ERROR: Enlightenment cannot initialize the ipc system.\n"
+	fprintf(stderr, "ERROR: Enlightenment cannot initialize the ipc system.\n"
 	       "Perhaps you are out of memory?\n");
 	return 0;
      }
@@ -56,7 +56,7 @@ e_init(const char* display)
    /* setup e ipc service */
    if (!_e_ipc_init(display))
      {
-	printf("ERROR: Enlightenment cannot set up the IPC socket.\n"
+	fprintf(stderr, "ERROR: Enlightenment cannot set up the IPC socket.\n"
 	       "Did you specify the right display?\n");
 	return 0;
      }
@@ -157,8 +157,8 @@ _e_ipc_init(const char *display)
    /* similar... */
    if (!_e_ipc_server) return 0;
    
-//   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_cb_server_add, NULL);
-//   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_cb_server_del, NULL);
+/*   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_cb_server_add, NULL);*/
+/*   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_cb_server_del, NULL);*/
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _e_cb_server_data, NULL);
    
    return 1;
