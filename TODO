@@ -29,7 +29,6 @@ Current freeze issues are:
 
 ISSUES:
 
-* focus does not leave fixrefox is u click on menu, move mouse outside win, click there to end menu
 * pager needs an overhaul
 * pager edje gfx...
 * pager needs desktop bg thumbnail wrapper/handler and cache system
