@@ -329,8 +329,8 @@ ib_timeout(int val, void *data)
    
    /* get the iconbar icon we are dealign with */
    ic = (E_Iconbar_Icon *)data;
-   /* val == 0 ? first call as a timeout handler. */
-   if (val == 0)
+   /* val <= 0 AND we're hilited ? first call as a timeout handler. */
+   if ((val <= 0) && (ic->hilited))
      {
 	char *n;
 	
@@ -354,6 +354,8 @@ ib_timeout(int val, void *data)
 	     /* show it */
 	     evas_show(ic->iconbar->view->evas, ic->hi.image);
 	  }
+	/* start at 0 */
+	val = 0;
      }
    /* what tame is it ? */
    t = ecore_get_time();
@@ -390,20 +392,49 @@ ib_timeout(int val, void *data)
 	evas_set_image_fill(ic->iconbar->view->evas, ic->hi.image, 0, 0, nw, nh);
 	/* set its fade */
 	evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, a);	
+	/* incirment our count */
+	val++;
      }
    /* if it snot hilited */
    else
      {
+	double tt;
+	int a;
+	double speed;
+	
 	/* delete the animation object */
 	if (ic->hi.image) evas_del_object(ic->iconbar->view->evas, ic->hi.image);
 	ic->hi.image = NULL;
-	/* free the timer name string */
-	IF_FREE(ic->hi.timer);
-	ic->hi.timer = NULL;
+	
+	/* if we were pulsating.. reset start timer */
+	if (val > 0)
+	  {
+	     ic->hi.start = t;
+	     /* val back to 0 */
+	     val = 0;
+	  }
+	/* speed of the ramp */
+	speed = 1.0;
+	/* position on the fade out */
+	tt = (t - ic->hi.start) / speed;
+	if (tt > 1.0) tt = 1.0;
+	/* alpha value caluclated on ramp position */
+	a = (int)((double)((1.0 - tt) * 127.0) + 128.0);
+	/* set alpha value */
+	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, a);
+	/* time is at end of ramp.. kill timer */
+	if (tt == 1.0)
+	  {
+	     /* free the timer name string */
+	     IF_FREE(ic->hi.timer);
+	     ic->hi.timer = NULL;
+	  }
+	/* decrement count */
+	val--;
      }
    /* if we have a timer name.. rerun the timer in 0.05 */
    if (ic->hi.timer)
-     ecore_add_event_timer(ic->hi.timer, 0.05, ib_timeout, val + 1, data);
+     ecore_add_event_timer(ic->hi.timer, 0.05, ib_timeout, val, data);
    /* flag the view that we changed */
    ic->iconbar->view->changed = 1;
 }
@@ -598,8 +629,6 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    ic = (E_Iconbar_Icon *)data;
    /* unset hilited flag */
    ic->hilited = 0;
-   /* make it more transparent */
-   evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
    /* tell the view the iconbar is in.. something changed that might mean */
    /* a redraw is needed */
    ic->iconbar->view->changed = 1;
