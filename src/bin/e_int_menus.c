@@ -239,9 +239,9 @@ _e_int_menus_apps_scan(E_Menu *m)
    int app_count = 0;
    
    a = e_object_data_get(E_OBJECT(m));
-   e_app_subdir_scan(a, 0);
    if (a)
      {
+	e_app_subdir_scan(a, 0);
 	for (l = a->subapps; l; l = l->next)
 	  {
 	     a = l->data;
