@@ -1,9 +1,12 @@
 #include "iconbar.h"
+#include "util.h"
 
 static E_Config_Base_Type *cf_iconbar      = NULL;
 static E_Config_Base_Type *cf_iconbar_icon = NULL;
 
 /* internal func (iconbar use only) prototypes */
+
+static void ib_timeout(int val, void *data);
 
 static void ib_bits_show(void *data);
 static void ib_bits_hide(void *data);
@@ -145,6 +148,13 @@ e_iconbar_icon_free(E_Iconbar_Icon *ic)
    /* free strings ... if they exist */
    IF_FREE(ic->image_path);
    IF_FREE(ic->exec);
+   /* stop the timer for this icon */
+   if (ic->hi.timer)
+     {
+	ecore_del_event_timer(ic->hi.timer);
+	FREE(ic->hi.timer);
+     }
+   if (ic->hi.image) evas_del_object(ic->iconbar->view->evas, ic->hi.image);
    /* nuke that struct */
    FREE(ic);
 }
@@ -310,6 +320,94 @@ e_iconbar_fix(E_Iconbar *ib)
 
 /* static (internal to iconbar use only) callbacks */
 
+/* this timeout is responsible for doing the mouse over animation */
+static void
+ib_timeout(int val, void *data)
+{
+   E_Iconbar_Icon *ic;
+   double t;
+   
+   /* get the iconbar icon we are dealign with */
+   ic = (E_Iconbar_Icon *)data;
+   /* val == 0 ? first call as a timeout handler. */
+   if (val == 0)
+     {
+	char *n;
+	
+	/* note the "start" time */
+	ic->hi.start = ecore_get_time();
+	/* no hilite (animation) image */
+	if (!ic->hi.image)
+	  {
+	     char buf[PATH_MAX];
+	     
+	     /* figure out its path */
+	     sprintf(buf, "%s/.e_iconbar.db:%s", 
+		     ic->iconbar->view->dir, ic->image_path);
+	     /* add it */
+	     ic->hi.image = evas_add_image_from_file(ic->iconbar->view->evas, 
+						     buf);
+	     /* put it high up */
+	     evas_set_layer(ic->iconbar->view->evas, ic->hi.image, 20000);
+	     /* dont allow it to capture any events (enter, leave etc. */
+	     evas_set_pass_events(ic->iconbar->view->evas, ic->hi.image, 1);
+	     /* show it */
+	     evas_show(ic->iconbar->view->evas, ic->hi.image);
+	  }
+     }
+   /* what tame is it ? */
+   t = ecore_get_time();
+   /* if the icon is hilited */
+   if (ic->hilited)
+     {
+	double x, y, w, h;
+	double nw, nh, tt;
+	int a;
+	double speed;
+	
+	/* find out where the original icon image is */
+	evas_get_geometry(ic->iconbar->view->evas, ic->image, &x, &y, &w, &h);
+	/* tt is the time since we started */
+	tt = t - ic->hi.start;
+	/* the speed to run at - the less, the faster (ie a loop is 0.5 sec) */
+	speed = 0.5;
+	/* if we are beyond the time loop.. reset the start time to now */
+	if (tt > speed) ic->hi.start = t;
+	/* limit time to max loop time */
+	if (tt > speed) tt = speed;
+	/* calculate alpha to be invers of time sizne loop start */
+	a = (int)(255.0 * (speed - tt));
+	/* size is icon size + how far in loop we are */
+	nw = w * ((tt / speed) + 1.0);
+	nh = h * ((tt / speed) + 1.0);
+	/* move the hilite icon to a good spot */
+	evas_move(ic->iconbar->view->evas, ic->hi.image,
+		  (x + (w / 2)) - (nw / 2), 
+		  (y + (h / 2)) - (nh / 2));
+	/* resize it */
+	evas_resize(ic->iconbar->view->evas, ic->hi.image, nw, nh);
+	/* reset its fill so ti fills its space */
+	evas_set_image_fill(ic->iconbar->view->evas, ic->hi.image, 0, 0, nw, nh);
+	/* set its fade */
+	evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, a);	
+     }
+   /* if it snot hilited */
+   else
+     {
+	/* delete the animation object */
+	if (ic->hi.image) evas_del_object(ic->iconbar->view->evas, ic->hi.image);
+	ic->hi.image = NULL;
+	/* free the timer name string */
+	IF_FREE(ic->hi.timer);
+	ic->hi.timer = NULL;
+     }
+   /* if we have a timer name.. rerun the timer in 0.05 */
+   if (ic->hi.timer)
+     ecore_add_event_timer(ic->hi.timer, 0.05, ib_timeout, val + 1, data);
+   /* flag the view that we changed */
+   ic->iconbar->view->changed = 1;
+}
+
 /* called when an ebits object bit needs to be shown */
 static void
 ib_bits_show(void *data)
@@ -469,11 +567,25 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
+   /* set hilited flag */
+   ic->hilited = 1;
    /* make it more opaque */
    evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 255);
+   /* if we havent started an animation timer - start one */
+   if (!ic->hi.timer)
+     {
+	char buf[PATH_MAX];
+	
+	/* come up with a unique name for it */
+	sprintf(buf, "%s/%s", ic->iconbar->view->dir, ic->image_path);
+	e_strdup(ic->hi.timer, buf);
+	/* call the timeout */
+	ib_timeout(0, ic);
+     }
    /* tell the view the iconbar is in.. something changed that might mean */
    /* a redraw is needed */
    ic->iconbar->view->changed = 1;
+	   
 }
 
 /* called when a mouse goes out of an icon object */
@@ -484,6 +596,8 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    
    /* get he iconbaricon pointer from the data member */
    ic = (E_Iconbar_Icon *)data;
+   /* unset hilited flag */
+   ic->hilited = 0;
    /* make it more transparent */
    evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
    /* tell the view the iconbar is in.. something changed that might mean */

@@ -41,7 +41,12 @@ struct _E_Iconbar_Icon
    char        *image_path;
    char        *exec;
    
-   int          selected;
+   int          hilited;
+   struct {
+      Evas_Object  image;
+      char        *timer;
+      double       start;
+   } hi;
 };
 
 void            e_iconbar_init(void);
