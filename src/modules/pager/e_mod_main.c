@@ -246,12 +246,19 @@ static void
 _pager_reconfigure(Pager *e)
 {
    Evas_Coord ww, hh;
+   E_Zone    *zone;
+   int        xcount, ycount;
 
    evas_output_viewport_get(e->evas, NULL, NULL, &ww, &hh);
    e->fx = e->conf->x * (ww - e->conf->width);
    e->fy = e->conf->y * (hh - e->conf->height);
    e->fw = e->conf->width;
    e->fh = e->conf->height;
+
+   zone = e_zone_current_get(e->con);
+   e_zone_desk_count_get(zone, &xcount, &ycount);
+   e->tw = e->fw * xcount;
+   e->th = e->fh * ycount;
 
    _pager_refresh(e);
 }
@@ -481,12 +488,18 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    else if (p->resize)
      {
 	Evas_Coord dx, dy;
+	E_Zone    *zone;
+	int        xcount, ycount;
 
+	zone = e_zone_current_get(p->con);
+	e_zone_desk_count_get(zone, &xcount, &ycount);
 	dx = cx - p->xx;
 	dy = cy - p->yy;
 
-	p->fw += dx;
-	p->fh += dy;
+	p->tw += dx;
+	p->th += dy;
+	p->fw = p->tw / xcount;
+	p->fh = p->th / ycount;
 	if (p->fw < PAGER_MIN_W) p->fw = PAGER_MIN_W;
 	if (p->fh < PAGER_MIN_H) p->fh = PAGER_MIN_H;
 //	if (p->fw < p->minsize) p->fw = p->minsize;
