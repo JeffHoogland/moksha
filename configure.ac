@@ -257,6 +257,7 @@ tools/Makefile
 doc/Makefile
 doc/kernel-doc
 doc/html-customizations.dsl
+data/scripts/build_iconbar_db.sh
 ])
 AC_CONFIG_COMMANDS([default],[[
 chmod +x doc/kernel-doc
