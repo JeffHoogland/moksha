@@ -2301,7 +2301,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    if (bd->maximized)
      e_menu_item_label_set(mi, "Restore");
    else
-     e_menu_item_label_set(mi, "Maximise");
+     e_menu_item_label_set(mi, "Maximize");
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
 
    mi = e_menu_item_new(m);
