@@ -90,6 +90,20 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	else if (_b == 3)
 	  {
+	     static E_Build_Menu *buildmenu = NULL;
+	     
+	     if (!buildmenu)
+	       {		  
+		  buildmenu = e_build_menu_new_from_gnome_apps("/usr/share/gnome/apps");
+	       }
+	     if (buildmenu)
+	       {
+		  static E_Menu *menu = NULL;
+		  menu = buildmenu->menu;
+		  if (menu)
+		    e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+	       }
+/*	     
 	     static E_Menu *menu = NULL;
 	     
 	     if (!menu)
@@ -105,6 +119,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       }
 	     if (menu)
 	       e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+ */ 
 	  }
      }
    if (ev->button == 1)

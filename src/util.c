@@ -166,3 +166,38 @@ e_file_link(char *link)
    buf[count] = 0;
    return strdup(buf);
 }
+
+Evas_List 
+e_file_list_dir(char *dir)
+{
+   DIR                *dirp;
+   struct dirent      *dp;
+   Evas_List           list;
+   
+   dirp = opendir(dir);
+   if (!dirp) return NULL;
+   list = NULL;
+   while ((dp = readdir(dirp)))
+     {
+	printf("%s\n", dp->d_name);
+	if ((strcmp(dp->d_name, ".")) &&
+	    (strcmp(dp->d_name, "..")))
+	  {
+	     Evas_List l;
+	     
+	     /* insertion sort */
+	     for (l = list; l; l = l->next)
+	       {
+		  if (strcmp(l->data, dp->d_name) > 0)
+		    {
+		       list = evas_list_prepend_relative(list, strdup(dp->d_name), l->data);		       
+		       break;
+		    }
+	       }
+	     /* nowhwre to go? just append it */
+	     if (!l) list = evas_list_append(list, strdup(dp->d_name));
+	  }
+     }
+   closedir(dirp);
+   return list;
+}

@@ -774,6 +774,7 @@ void *e_memdup(void *data, int size);
 int e_glob_matches(char *str, char *glob);
 int e_file_can_exec(struct stat *st);
 char *e_file_link(char *link);
+Evas_List e_file_list_dir(char *dir);
 
 void e_exec_set_args(int argc, char **argv);
 void e_exec_restart(void);
@@ -959,11 +960,9 @@ void e_menu_item_set_scale_icon(E_Menu_Item *mi, int scale);
 void e_menu_set_padding_icon(E_Menu *m, int pad);
 void e_menu_set_padding_state(E_Menu *m, int pad);
 
-void          e_build_menu_unbuild(E_Build_Menu *bm);
-E_Menu       *e_build_menu_build_number(E_Build_Menu *bm, E_DB_File *db, int num);
-void          e_build_menu_build(E_Build_Menu *bm);
 void          e_build_menu_free(E_Build_Menu *bm);
 E_Build_Menu *e_build_menu_new_from_db(char *file);
+E_Build_Menu *e_build_menu_new_from_gnome_apps(char *dir);
 
 void e_fs_add_event_handler(void (*func) (EfsdEvent *ev));
 void e_fs_init(void);
