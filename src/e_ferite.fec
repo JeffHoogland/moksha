@@ -212,7 +212,10 @@ class EvasObject
   function addText(string font, number size, string text)
   %{
     if (EvasObj->evas)
+    {
+      evas_font_add_path(EvasObj->evas, EvasObj->epp->dir);
       EvasObj->obj = evas_add_text(EvasObj->evas, font, (long)size, text);
+    }
     ffree(font);
     ffree(text);
   %}
