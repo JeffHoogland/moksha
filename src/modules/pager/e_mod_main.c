@@ -240,17 +240,17 @@ _pager_new()
 static void
 _pager_free(Pager *pager)
 {
-   Evas_List *list;
+   Evas_List *l;
 
    E_CONFIG_DD_FREE(_conf_edd);
    E_CONFIG_DD_FREE(_conf_face_edd);
 
-   for (list = pager->faces; list; list = list->next)
-     _pager_face_free(list->data);
+   for (l = pager->faces; l; l = l->next)
+     _pager_face_free(l->data);
    evas_list_free(pager->faces);
 
-   for (list = pager->menus; list; list = list->next)
-     e_object_del(E_OBJECT(list->data));
+   for (l = pager->menus; l; l = l->next)
+     e_object_del(E_OBJECT(l->data));
    evas_list_free(pager->menus);
    e_object_del(E_OBJECT(pager->config_menu));
 
@@ -909,14 +909,11 @@ _pager_face_cb_event_border_unstick(void *data, int type, void *event)
 	pd = l->data;
         if (ev->border->desk != pd->desk)
 	  {
-	     for (ll = pd->wins; ll; ll = ll->next)
-	       {
-		  Pager_Win *pw;
-		  
-		  pw = ll->data;
-		  if (pw->border == ev->border)
-		    pd->wins = evas_list_remove_list(pd->wins, ll);
-	       }
+	     Pager_Win *pw;
+	     
+	     pw = _pager_desk_border_find(pd, ev->border);
+	     if (pw)
+	       pd->wins = evas_list_remove(pd->wins, pw);
 	  }
      }
    return 1;
