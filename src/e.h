@@ -1,3 +1,6 @@
+#ifndef __E_H_
+#define __E_H_
+
 #include "../config.h"
 #include <X11/Xlib.h>
 #include <Imlib2.h>
@@ -335,4 +338,6 @@ void e_desktops_update(E_Desktop *desk);
 void e_resist_border(E_Border *b);
     
 time_t e_file_modified_time(char *file);
+
+#endif
     

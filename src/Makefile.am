@@ -8,9 +8,12 @@ bin_PROGRAMS = e
 
 e_SOURCES = \
 actions.c \
+actions.h \
 border.c \
+border.h \
 desktops.c \
 icccm.c \
+icccm.h \
 main.c \
 resist.c \
 util.c \
