@@ -939,18 +939,7 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
 	return 1;
      }
 #endif
-   if (ev->border->sticky)
-     {
-	/* Put on all desks */
-	for (desks = face->desks; desks; desks = desks->next)
-	  {
-	     desk = desks->data;
-	     win = _pager_window_new(desk, ev->border);
-	     if (win)
-	       desk->wins = evas_list_append(desk->wins, win);
-	  }
-     }
-   else if ((desk = _pager_desk_find(face, ev->border->desk)))
+   if ((desk = _pager_desk_find(face, ev->border->desk)))
      {
 	win = _pager_window_new(desk, ev->border);
 	if (win)
