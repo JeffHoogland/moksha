@@ -2555,7 +2555,9 @@ e_view_init(void)
 /*
  * send the dnd data to the target app
  *
+ * uri-list (http://www.faqs.org/rfcs/rfc2483.html)
  * URL formatting per RFC 1738
+ * (or not. Looks like a lot of apps ignore this. So do we! )
  */
 static void
 e_dnd_data_request(Ecore_Event * ev)
@@ -2610,7 +2612,7 @@ e_dnd_data_request(Ecore_Event * ev)
 	  {
 	    if (e->uri_list)
 	       {
-		  int first = 1;
+		 /* int first = 1;*/
 		  
 		  for (ll = v->icons; ll; ll = ll->next)
 		    {
@@ -2625,13 +2627,22 @@ e_dnd_data_request(Ecore_Event * ev)
 			    size += ic_size;
 			    
 			    REALLOC(data, char, size);
+			    /*
+			     * What's this for?  It ends up double terminating
+			     * the second and further files, plus the length
+			     * needs to be adjusted for both cases...
+			     * (And the wrong length breaks multi-file drops.)
+
 			    if (first)
 			      {
-				 sprintf(data + idx, "file:%s/%s", v->dir, ic->file);
+			    */
+				 sprintf(data + idx, "file:%s/%s\r\n", v->dir, ic->file);
+#if 0
 				 first = 0;
 			      }
 			    else
 			      sprintf(data + idx, "\r\nfile:%s/%s\r\n", v->dir, ic->file);
+#endif
 			    idx += ic_size;
 			 }
 		    }
@@ -2855,8 +2866,6 @@ e_dnd_drop_request(Ecore_Event * ev)
 	      /* if the dnd source is e itself then dont use the event mode */
 	       if (e_view_find_by_window(e->source_win))
 		 {
-		    E_View *vv;
-		    
 		    v = e_view_find_by_window(e->source_win);
 		    dnd_pending_mode = v->drag.drop_mode;
 		 }
