@@ -176,6 +176,19 @@ e_idle(void *data)
 	if (m->first_expose)
 	  evas_render(m->evas);
      }
+   again:
+   for (l = menus; l; l = l->next)
+     {
+	E_Menu *m;
+	
+	m = l->data;
+	if (m->delete_me)
+	  {
+	     e_object_unref(E_OBJECT(m));
+	     goto again;
+	  }
+     }
+   
    e_db_flush();
 
    D_RETURN;
@@ -662,6 +675,13 @@ e_menu_callback_item(E_Menu *m, E_Menu_Item *mi)
    if (mi->func_select) mi->func_select(m, mi, mi->func_select_data);
 
    D_RETURN;
+}
+
+void
+e_menu_hide_callback(E_Menu *m, void  (*func) (E_Menu *m, void  *data), void  *data)
+{
+   m->func_hide = func;
+   m->func_hide_data = data;
 }
 
 void
@@ -1703,11 +1723,11 @@ void
 e_menu_update_finish(E_Menu *m)
 {
    D_ENTER;
-
+   
    if (!m->changed) D_RETURN;
    m->previous = m->current;
    m->changed = 0;
-
+   
    D_RETURN;
 }
 
@@ -1767,6 +1787,8 @@ e_menu_update_hides(E_Menu *m)
 	     open_menus = evas_list_remove(open_menus, m);
 	     ecore_window_hide(m->win.main);
 	     if (!open_menus) e_menu_event_win_hide();
+	     if (m->func_hide)
+	       m->func_hide(m, m->func_hide_data);
 	  }
      }
 

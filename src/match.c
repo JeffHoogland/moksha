@@ -103,6 +103,8 @@ e_match_save_props(E_Border *b)
    
    D_ENTER;
    
+   if ((!b->client.name) || (!b->client.class)) D_RETURN;
+   
    db = e_db_open(e_config_get("match"));
    if (!db) D_RETURN;
    
@@ -111,7 +113,6 @@ e_match_save_props(E_Border *b)
 
   if (b->client.matched.location.matched)
      {
-	printf("write location %i %i\n", b->current.x, b->current.y);
 	b->client.matched.location.x = b->current.x;
 	b->client.matched.location.y = b->current.y;
 	sprintf(buf, "match/%s/%s/location/x", b->client.name, b->client.class);
@@ -126,6 +127,59 @@ e_match_save_props(E_Border *b)
 	sprintf(buf, "match/%s/%s/location/y", b->client.name, b->client.class);
 	e_db_data_del(db, buf);
      }
+
+  if (b->client.matched.size.matched)
+     {
+	b->client.matched.size.w = b->client.w;
+	b->client.matched.size.h = b->client.h;
+	sprintf(buf, "match/%s/%s/size/w", b->client.name, b->client.class);
+	e_db_int_set(db, buf, b->client.matched.size.w);	
+	sprintf(buf, "match/%s/%s/size/h", b->client.name, b->client.class);
+	e_db_int_set(db, buf, b->client.matched.size.h);	
+     }
+   else
+     {
+	sprintf(buf, "match/%s/%s/size/w", b->client.name, b->client.class);
+	e_db_data_del(db, buf);
+	sprintf(buf, "match/%s/%s/size/h", b->client.name, b->client.class);
+	e_db_data_del(db, buf);
+     }
+   
+  if (b->client.matched.desktop.matched)
+     {
+	b->client.matched.desktop.desk = b->client.desk;
+	sprintf(buf, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
+	e_db_int_set(db, buf, b->client.matched.desktop.desk);	
+     }
+   else
+     {
+	sprintf(buf, "match/%s/%s/desktop/desk", b->client.name, b->client.class);
+	e_db_data_del(db, buf);
+     }
+   
+  if (b->client.matched.sticky.matched)
+     {
+	b->client.matched.sticky.sticky = b->client.sticky;
+	sprintf(buf, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
+	e_db_int_set(db, buf, b->client.matched.sticky.sticky);	
+     }
+   else
+     {
+	sprintf(buf, "match/%s/%s/sticky/sticky", b->client.name, b->client.class);
+	e_db_data_del(db, buf);
+     }
+   
+  if (b->client.matched.prog_location.matched)
+     {
+	sprintf(buf, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
+	e_db_int_set(db, buf, b->client.matched.prog_location.ignore);	
+     }
+   else
+     {
+	sprintf(buf, "match/%s/%s/prog_location/ignore", b->client.name, b->client.class);
+	e_db_data_del(db, buf);
+     }
+   
    e_db_close(db);
    e_db_flush();
    D_RETURN;

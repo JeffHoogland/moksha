@@ -105,6 +105,14 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 2
 edb_ed $DB add "/actions/"$NUM"/key"       str ""
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
 NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Window_Grab"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Menu"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_MOUSE_CLICK
+edb_ed $DB add "/actions/"$NUM"/button"    int 3
+edb_ed $DB add "/actions/"$NUM"/key"       str ""
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/"$NUM"/name"      str "Resize"
 edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Move"
 edb_ed $DB add "/actions/"$NUM"/params"    str ""
@@ -305,21 +313,29 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 0
 edb_ed $DB add "/actions/"$NUM"/key"       str "F8"
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
 NUM=$[ $NUM + 1 ];
-edb_ed $DB add "/actions/"$NUM"/name"      str Key_Binding
-edb_ed $DB add "/actions/"$NUM"/action"    str Desktop_Relative
-edb_ed $DB add "/actions/"$NUM"/params"    str 1
-edb_ed $DB add "/actions/"$NUM"/event"     int 8
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop_Relative"
+edb_ed $DB add "/actions/"$NUM"/params"    str "1"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
 edb_ed $DB add "/actions/"$NUM"/button"    int 0
-edb_ed $DB add "/actions/"$NUM"/key"       str Right 
-edb_ed $DB add "/actions/"$NUM"/modifiers" int 6
+edb_ed $DB add "/actions/"$NUM"/key"       str "Right"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
-edb_ed $DB add "/actions/"$NUM"/name"      str Key_Binding
-edb_ed $DB add "/actions/"$NUM"/action"    str Desktop_Relative
-edb_ed $DB add "/actions/"$NUM"/params"    str -1
-edb_ed $DB add "/actions/"$NUM"/event"     int 8
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Desktop_Relative"
+edb_ed $DB add "/actions/"$NUM"/params"    str "-1"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
 edb_ed $DB add "/actions/"$NUM"/button"    int 0
-edb_ed $DB add "/actions/"$NUM"/key"       str Left
-edb_ed $DB add "/actions/"$NUM"/modifiers" int 6
+edb_ed $DB add "/actions/"$NUM"/key"       str "Left"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Execute"
+edb_ed $DB add "/actions/"$NUM"/params"    str "Eterm"
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "Insert"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/count"       int $NUM
 
@@ -333,7 +349,7 @@ edb_ed $DB add "/menu/scroll/resist"      int   5
 edb_ed $DB add "/menu/scroll/speed"       int   12
 edb_ed $DB add "/window/raise/auto"       int    0
 edb_ed $DB add "/window/raise/delay"      float 0.5
-edb_ed $DB add "/window/move/mode"        int   $WINDOW_MODE_BOX
+edb_ed $DB add "/window/move/mode"        int   $WINDOW_MODE_OPAQUE
 edb_ed $DB add "/window/resize/mode"      int   $WINDOW_MODE_BOX
 edb_ed $DB add "/guides/display/x"        float 0.5
 edb_ed $DB add "/guides/display/y"        float 0.5

@@ -32,6 +32,8 @@ struct _E_Menu
    int       redo_sel;
    int       changed;
    
+   int       delete_me;
+   
    struct {
       int state, icon, text;
    } size;
@@ -42,6 +44,9 @@ struct _E_Menu
    E_Menu_Item *selected;
    
    Time      time;
+
+   void  (*func_hide) (E_Menu *m, void  *data);
+   void  *func_hide_data;
 };
 
 struct _E_Menu_Item
@@ -97,6 +102,7 @@ void         e_menu_init(void );
 
 void         e_menu_callback_item(E_Menu *m, E_Menu_Item *mi);
 void         e_menu_item_set_callback(E_Menu_Item *mi, void  (*func) (E_Menu *m, E_Menu_Item *mi, void  *data), void  *data);
+void         e_menu_hide_callback(E_Menu *m, void  (*func) (E_Menu *m, void  *data), void  *data);
 void         e_menu_hide_submenus(E_Menu *menus_after);
 void         e_menu_select(int dx, int dy);
 void         e_menu_event_win_show(void );
