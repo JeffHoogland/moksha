@@ -199,6 +199,7 @@ e_desktops_init_file_display(E_Desktop *desk)
    v->options.back_pixmap = 1;
    v->is_desktop = 1;
 
+   desk->view = v;
    /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
    /* e_strdup(v->dir, "/dev"); */

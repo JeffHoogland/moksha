@@ -1281,3 +1281,24 @@ ib_child_handle(Ecore_Event *ev)
 
    D_RETURN;
 }
+
+E_Rect *
+e_iconbar_get_resist_rect(E_Iconbar *ib)
+{
+   double x, y, w, h;
+   int resist = 32;
+   E_Rect *r;
+   
+   D_ENTER;
+
+   ebits_get_named_bit_geometry(ib->bit, "Resist", &x, &y, &w, &h);
+
+   r = NEW(E_Rect, 1);
+   r->x = x;
+   r->y = y;
+   r->w = w;
+   r->h = h;
+   r->v1 = resist;
+
+   D_RETURN_(r);
+}

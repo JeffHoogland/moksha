@@ -6,6 +6,7 @@
 #include "exec.h"
 #include "view.h"
 #include "object.h"
+#include "resist.h"
 
 typedef struct _E_Iconbar_Icon E_Iconbar_Icon;
 #ifndef E_ICONBAR_TYPEDEF
@@ -72,5 +73,6 @@ void            e_iconbar_file_add(E_View *v, char *file);
 void            e_iconbar_file_delete(E_View *v, char *file);
 void            e_iconbar_file_change(E_View *v, char *file);
 void            e_iconbar_save_out_final(E_Iconbar *ib);
-
+E_Rect *	e_iconbar_get_resist_rect(E_Iconbar *ib);
+   
 #endif

@@ -32,6 +32,7 @@ struct _E_Desktop
 	 int x, y;
       } area;
    } desk;
+   E_View *view;
    int changed;
 };
 
