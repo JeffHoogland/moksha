@@ -410,7 +410,7 @@ _e_module_menu_free(void *obj)
 	
 	subm = dat->submenus->data;
 	dat->submenus = evas_list_remove_list(dat->submenus, dat->submenus);
-	e_object_unref(E_OBJECT(subm));
+	e_object_del(E_OBJECT(subm));
      }
    free(dat);
 }
