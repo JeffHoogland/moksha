@@ -49,7 +49,7 @@ struct _E_View
    char *                 name;
    
    E_View_Model          *model;
-   
+  
    struct {
       Evas_Render_Method  render_method;
       int                 back_pixmap;
@@ -94,6 +94,9 @@ struct _E_View
    } spacing;
    struct {
       int on;
+      /* we set this in all other views of our view_model 
+       * when the first icon in a view is selected. */
+      int lock;
       /* The number of selected icons. */
       int count;
       /* The number of icons we selected the last time.

@@ -829,7 +829,21 @@ e_icon_invert_selection(E_Icon *ic)
 void
 e_icon_select(E_Icon *ic)
 {
+   Evas_List l;
    D_ENTER;
+   if (ic->view->select.lock)
+      D_RETURN;
+   if (ic->view->select.count == 0)
+   {
+      /* lock all other views of our dir */
+      for (l= ic->view->model->views;l;l=l->next)
+      {
+	 E_View *v = (E_View *) l->data;
+	 v->select.lock = 1;
+      }
+      /* unlock ourselves */
+      ic->view->select.lock = 0;
+   }
    
    if (!ic->state.selected)
      {
@@ -844,7 +858,10 @@ e_icon_select(E_Icon *ic)
 void
 e_icon_deselect(E_Icon *ic)
 {
+   Evas_List l;
    D_ENTER;
+   if (ic->view->select.lock)
+      D_RETURN;
    
    if (ic->state.selected)
      {
@@ -852,7 +869,16 @@ e_icon_deselect(E_Icon *ic)
 	ic->view->select.count--;
 	e_icon_update_state(ic);
      }
-
+   if (ic->view->select.count == 0)
+   {
+      /* we have just unselected the last icon. Unlock all
+       * other views of our model. */
+      for (l= ic->view->model->views;l;l=l->next)
+      {
+	 E_View *v = (E_View *) l->data;
+	 v->select.lock = 0;
+      }
+   } 
    D_RETURN;
 }
 

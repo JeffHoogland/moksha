@@ -1652,6 +1652,7 @@ e_view_new(void)
    v->options.back_pixmap = 0;
 #endif   
 #endif
+   v->select.lock = 0;
    v->select.config.grad_size.l = 8;
    v->select.config.grad_size.r = 8;
    v->select.config.grad_size.t = 8;
