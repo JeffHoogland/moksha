@@ -669,7 +669,7 @@ e_view_scroll_to(E_View *v, int sx, int sy)
    v->scroll.x = sx;
    v->scroll.y = sy;
    e_view_icons_apply_xy(v);
-   if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+   if (v->bg) e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
 
    D_RETURN;
 }
@@ -709,7 +709,7 @@ e_view_scroll_to_percent(E_View *v, double psx, double psy)
    v->scroll.x = sx;
    v->scroll.y = sy;
    e_view_icons_apply_xy(v);
-   if (v->bg) e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+   if (v->bg) e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
 
    D_RETURN;
 }
@@ -916,7 +916,7 @@ e_configure(Ecore_Event * ev)
 		       ecore_window_set_background_pixmap(v->win.main, v->pmap);
 		       ecore_window_clear(v->win.main);
 		    }
-		  if (v->bg) e_background_set_size(v->bg, v->size.w, v->size.h);
+		  if (v->bg) e_bg_resize(v->bg, v->size.w, v->size.h);
 		  D("evas_set_output_viewpor(%p)\n", v->evas);
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
@@ -1972,8 +1972,9 @@ e_view_realize(E_View *v)
      }
    if (v->bg)
      {
-	e_background_realize(v->bg, v->evas);
-	e_background_set_size(v->bg, v->size.w, v->size.h);
+	e_bg_add_to_evas(v->bg, v->evas);
+	e_bg_resize(v->bg, v->size.w, v->size.h);
+	e_bg_show(v->bg);
      }
    v->obj_bg = evas_add_rectangle(v->evas);
    evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
@@ -2410,7 +2411,7 @@ e_view_handle_fs(EfsdEvent *ev)
 				 
 				 v->geom_get.busy = 0;
 				 if (v->bg)
-				   e_background_set_size(v->bg, v->size.w, v->size.h);
+				   e_bg_resize(v->bg, v->size.w, v->size.h);
 				 if (v->options.back_pixmap) e_view_update(v);
 				 b = e_border_adopt(v->win.base, 1);
 				 b->client.internal = 1;
@@ -2447,7 +2448,7 @@ e_view_handle_fs(EfsdEvent *ev)
 void
 e_view_bg_load(E_View *v)
 {
-   E_Background *bg;
+   E_Background bg;
    char buf[PATH_MAX];
    
    D_ENTER;
@@ -2470,13 +2471,13 @@ e_view_bg_load(E_View *v)
 	     e_strdup(v->bg_file, buf);	     
 	  }
      }
-   bg = e_background_load(v->bg_file);
+   bg = e_bg_load(v->bg_file);
    if (!bg)
      {
 	snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", v->dir);
 	FREE(v->bg_file);
 	e_strdup(v->bg_file, buf); 
-	bg = e_background_load(v->bg_file);
+	bg = e_bg_load(v->bg_file);
 	if (!bg)
 	  {
 	     if (v->is_desktop)
@@ -2485,7 +2486,7 @@ e_view_bg_load(E_View *v)
 	       snprintf(buf, PATH_MAX, "%s/view.bg.db", e_config_get("backgrounds"));
 	     FREE(v->bg_file);
 	     e_strdup(v->bg_file, buf); 
-	     bg = e_background_load(v->bg_file);
+	     bg = e_bg_load(v->bg_file);
 	  }
      }
    if (bg)
@@ -2494,9 +2495,10 @@ e_view_bg_load(E_View *v)
 	v->bg_mod = e_file_mod_time(v->bg_file);
 	if (v->evas)
 	  {
-	     e_background_realize(v->bg, v->evas);
-	     e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
-	     e_background_set_size(v->bg, v->size.w, v->size.h);
+	     e_bg_add_to_evas(v->bg, v->evas);
+	     e_bg_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	     e_bg_resize(v->bg, v->size.w, v->size.h);
+	     e_bg_show(v->bg);
 	  }
      }
    

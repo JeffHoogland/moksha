@@ -2,7 +2,7 @@
 #define E_VIEW_H
 
 #include "e.h"
-#include "background.h"
+/*#include "background.h"*/
 #include "scrollbar.h"
 #include "fs.h"
 #include "iconbar.h"
@@ -146,7 +146,7 @@ struct _E_View
    char                  *bg_file;
    char                  *prev_bg_file;
    time_t                 bg_mod;
-   E_Background          *bg;
+   E_Background          bg;
    
    struct {      
       E_Scrollbar        *h, *v;

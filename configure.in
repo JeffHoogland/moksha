@@ -167,6 +167,19 @@ AC_PATH_GENERIC(efsd,, [
 efsd_libs=`efsd-config --libs`
 efsd_cflags=`efsd-config --cflags`
 
+dnl Check for Edb.
+AC_ARG_WITH(ebg,
+        [  --with-ebg=DIR          use ebg in <DIR>],
+        [CFLAGS="$CFLAGS -I$withval/include"
+         LIBS="-L$withval/lib $LIBS"])
+
+AC_PATH_GENERIC(ebg,, [
+    AC_SUBST(ebg_libs)
+    AC_SUBST(ebg_cflags)],
+    AC_MSG_ERROR(Cannot find ebg: Is ebg-config in path?))
+ebg_libs=`ebg-config --libs`
+ebg_cflags=`ebg-config --cflags`
+
 dnl Check for ferite.
 AC_ARG_WITH(ferite,
         [  --with-ferite=DIR          use ferite in <DIR>],

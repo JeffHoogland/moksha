@@ -25,6 +25,7 @@
 #include <Ebits.h>
 #include <Ecore.h>
 #include <Edb.h>
+#include <Ebg.h>
 
 #ifndef PATH_MAX
 #define PATH_MAX     4096

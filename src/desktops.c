@@ -3,7 +3,6 @@
 #include "config.h"
 #include "actions.h"
 #include "border.h"
-#include "background.h"
 #include "view.h"
 #include "icccm.h"
 #include "util.h"

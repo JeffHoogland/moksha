@@ -9,7 +9,7 @@ DEBUGFLAGS = -W -Wall -g -DDEBUG #-DDEBUG_NEST
 
 INCLUDES = \
 	-I$(top_srcdir)/intl \
-	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
+	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ebg_cflags@ @ferite_cflags@ $(DEBUGFLAGS)
 
 EXTRA_DIST = e_ferite.fec
 
@@ -47,7 +47,6 @@ bin_PROGRAMS = enlightenment $(E_FERITE_GEN_E_C)
 
 enlightenment_SOURCES = \
 	actions.h actions.c \
-	background.h background.c \
 	block.c block.h \
 	border.h border.c \
 	bordermenu.h bordermenu.c \
@@ -87,4 +86,4 @@ enlightenment_SOURCES = \
 	view.h view.c \
 	e.h
 
-enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)
+enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ @ferite_libs@ -lm -lc $(INTLLIBS)
