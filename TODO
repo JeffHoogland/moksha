@@ -32,6 +32,7 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
+* general ecore/edje/efl bug - if u change system clock - especially BACKWARDS timers in ecore and edje get fucked
 
 <add more issues as they are found>
 

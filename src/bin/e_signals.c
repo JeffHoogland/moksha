@@ -26,6 +26,7 @@ void e_sigseg_act(int x, siginfo_t *info, void *data){
 void e_sigseg_act(int x, siginfo_t *info, void *data){
   write(2, "**** SEGMENTATION FAULT ****\n", 29);
   write(2, "**** Backtrace disabled... *****\n\n", 34);
+  exit(-11);
 }
 #endif
 
