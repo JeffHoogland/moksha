@@ -399,7 +399,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu *bm, char *dir)
 			      {
 				 char buf2[PATH_MAX];
 				 
-				 snprintf(buf, PATH_MAX, "/usr/share/pixmaps/%s", eq +1);
+				 snprintf(buf2, PATH_MAX, "/usr/share/pixmaps/%s", eq +1);
 				 icon = strdup(buf2);
 			      }
 			 }
