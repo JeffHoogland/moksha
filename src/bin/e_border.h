@@ -120,6 +120,18 @@ struct _E_Border
 	    unsigned int pid : 1;
 	    unsigned int desktop : 1;
 	 } fetch;
+    
+    /* NetWM Window state */
+    struct {
+       unsigned char modal : 1;
+       unsigned char maximized_v : 1;
+       unsigned char maximized_h : 1;
+       unsigned char skip_taskbar : 1;
+       unsigned char skip_pager : 1;
+       unsigned char fullscreen : 1;
+       unsigned char stacking : 2; /* 0 = None, 1 = Above, 2 = Below */
+    } state;
+    
       } netwm;
       Ecore_X_Window_Attributes initial_attributes;
    } client;
@@ -133,6 +145,7 @@ struct _E_Border
    unsigned char   re_manage : 1;
    unsigned char   shading : 1;
    unsigned char   shaded : 1;
+   unsigned char   sticky : 1;
    unsigned char   maximized : 1;
    unsigned char   iconic : 1;
 

@@ -112,7 +112,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
 
-   /* an intle enterer to be called before all others */
+   /* an idle enterer to be called before all others */
    _e_main_idle_enterer_before = ecore_idle_enterer_add(_e_main_cb_idler_before, NULL);
    
    /* init x */
@@ -127,6 +127,9 @@ main(int argc, char **argv)
    ecore_x_grab();
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
+
+   /* Init window manager hints */
+   e_hints_init();
    
    /* setup menu handlers etc. FIXME: check return value */
    e_menu_init();
