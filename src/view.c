@@ -2215,6 +2215,8 @@ e_view_handle_fs(EfsdEvent *ev)
 				   {
 				      char buf[PATH_MAX];
 				      
+				      IF_FREE(v->bg_file);
+				      v->bg_file = efsd_metadata_get_str(ev);
 				      sprintf(buf, "background_reload:%s", v->dir);
 				      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 				   }
@@ -2231,7 +2233,8 @@ e_view_handle_fs(EfsdEvent *ev)
 				 E_Border *b;
 				 
 				 v->geom_get.busy = 0;
-				 e_background_set_size(v->bg, v->size.w, v->size.h);
+				 if (v->bg)
+				   e_background_set_size(v->bg, v->size.w, v->size.h);
 				 if (v->options.back_pixmap) e_view_update(v);
 				 b = e_border_adopt(v->win.base, 1);
 				 b->client.internal = 1;
@@ -2265,17 +2268,58 @@ e_view_handle_fs(EfsdEvent *ev)
    D_RETURN;
 }
 
-static void
-e_view_bg_reload_timeout(int val, void *data)
+void
+e_view_bg_load(E_View *v)
 {
-   E_View *v;
    E_Background *bg;
    char buf[PATH_MAX];
    
    D_ENTER;
    
+   if (!v->bg_file) 
+     {
+	e_strdup(v->bg_file, "");
+     }
+   bg = e_background_load(v->bg_file);
+   if (!bg)
+     {
+	FREE(v->bg_file);
+	sprintf(buf, "%s/.e_background.bg.db", v->dir);
+	e_strdup(v->bg, buf); 
+	bg = e_background_load(v->bg_file);
+	if (!bg)
+	  {
+	     FREE(v->bg_file);
+	     if (v->is_desktop)
+	       sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	     else
+	       sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
+	     e_strdup(v->bg, buf); 
+	     bg = e_background_load(v->bg_file);
+	  }
+     }
+   if (bg)
+     {
+	v->bg = bg;
+	if (v->evas)
+	  {
+	     e_background_realize(v->bg, v->evas);
+	     e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	     e_background_set_size(v->bg, v->size.w, v->size.h);
+	  }
+     }
+   
+   D_RETURN;
+}
+
+static void
+e_view_bg_reload_timeout(int val, void *data)
+{
+   E_View *v;
+   
+   D_ENTER;
+   
    v = data;
-   sprintf(buf, "%s/.e_background.bg.db", v->dir);
    if (v->bg) 
      {
 	int size;
@@ -2289,22 +2333,6 @@ e_view_bg_reload_timeout(int val, void *data)
 	     evas_set_image_cache(v->evas, size);
 	  }
 	e_db_flush();
-     }
-   bg = e_background_load(buf);
-   if (!bg)
-     {
-        sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
-	bg = e_background_load(buf);
-     }
-   if (bg)
-     {
-	v->bg = bg;
-	if (v->evas)
-	  {
-	     e_background_realize(v->bg, v->evas);
-	     e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
-	     e_background_set_size(v->bg, v->size.w, v->size.h);
-	  }
      }
 
    D_RETURN;

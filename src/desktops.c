@@ -205,13 +205,9 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* e_strdup(v->dir, e_file_home()); */
    sprintf(buf, "%s/desktop/default", e_config_user_dir());
    e_strdup(v->dir, buf);
-   sprintf(buf, "%s/.e_background.bg.db", v->dir);
-   v->bg = e_background_load(buf);
-   if (!v->bg)
-     {
-	sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
-	v->bg = e_background_load(buf);
-     }
+   
+   e_view_bg_load(v);
+   
    e_view_realize(v);
 
    ecore_window_hint_set_borderless(v->win.base);

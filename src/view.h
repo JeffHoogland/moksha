@@ -53,10 +53,6 @@ struct _E_View
       int                 x, y;
    } location;
    struct {
-      EfsdCmdId x, y, w, h;
-      int       busy;
-   } geom_get;
-   struct {
       /* +-----------------+
        * |        Wt       |
        * |  +-----------+  |
@@ -126,12 +122,17 @@ struct _E_View
       double x1, x2, y1, y2;
    } extents;
    
+   struct {
+      EfsdCmdId x, y, w, h;
+      int       busy;
+   } geom_get;
+   EfsdCmdId getbg;   
+   
    Evas_Object            obj_bg;
    
+   char                  *bg_file;
    E_Background          *bg;
    
-   int getbg;
-
    struct {      
       E_Scrollbar           *h, *v;
    } scrollbar;
@@ -221,6 +222,8 @@ void      e_view_set_dir(E_View *v, char *dir);
 void      e_view_realize(E_View *v);
 
 void      e_view_update(E_View *v);
+
+void      e_view_bg_load(E_View *v);
 
 void      e_view_bg_change(E_View *v, char *file);
 

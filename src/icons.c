@@ -867,17 +867,10 @@ e_icon_exec(E_Icon *ic)
 	v->size.w = 400;
 	v->size.h = 300;
 	v->options.back_pixmap = 0;
-	/* Load default bg then handle bg in metadata */
-	sprintf(buf, "%s/%s/.e_background.bg.db", ic->view->dir, ic->file);
-	v->bg = e_background_load(buf);
-	if (!v->bg)
-	  {
-	     sprintf(buf, "%s/view.bg.db", e_config_get("backgrounds"));
-	     v->bg = e_background_load(buf);
-	  }
 	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
 	D("new dir >%s<\n", buf);
 	v->dir = strdup(buf);
+	e_view_bg_load(v);
 	e_view_realize(v);
 	ecore_window_set_title(v->win.base, ic->file);
 	ecore_window_set_name_class(v->win.base, "FileView", "E");
