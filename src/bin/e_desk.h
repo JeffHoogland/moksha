@@ -6,6 +6,8 @@ typedef struct _E_Desk E_Desk;
 #ifndef E_DESK_H
 #define E_DESK_H
 
+#define E_DESK_TYPE 0xE0b01005
+
 struct _E_Desk
 {
    E_Object             e_obj_inherit;

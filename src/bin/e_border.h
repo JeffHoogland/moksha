@@ -30,6 +30,8 @@ typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
 #ifndef E_BORDER_H
 #define E_BORDER_H
 
+#define E_BORDER_TYPE 0xE0b01002
+
 struct _E_Border
 {
    E_Object             e_obj_inherit;

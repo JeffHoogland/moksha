@@ -8,6 +8,8 @@ typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
 #ifndef E_ZONE_H
 #define E_ZONE_H
 
+#define E_ZONE_TYPE 0xE0b0100d
+
 struct _E_Zone
 {
    E_Object             e_obj_inherit;

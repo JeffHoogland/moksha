@@ -46,7 +46,7 @@ e_container_new(E_Manager *man)
    char name[40];
    int i, n;
    
-   con = E_OBJECT_ALLOC(E_Container, _e_container_free);
+   con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
    con->manager = man;
    con->manager->containers = evas_list_append(con->manager->containers, con);
@@ -106,6 +106,7 @@ e_container_show(E_Container *con)
 {
    printf("Container show!\n");
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if (con->visible) return;
    ecore_x_window_show(con->win);
    con->visible = 1;
@@ -115,6 +116,7 @@ void
 e_container_hide(E_Container *con)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if (!con->visible) return;
    ecore_x_window_hide(con->win);
    con->visible = 0;
@@ -125,6 +127,7 @@ e_container_current_get(E_Manager *man)
 {
    Evas_List *l;
    E_OBJECT_CHECK_RETURN(man, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
 
    for (l = man->containers; l; l = l->next)
      {
@@ -139,6 +142,7 @@ void
 e_container_move(E_Container *con, int x, int y)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if ((x == con->x) && (y == con->y)) return;
    con->x = x;
    con->y = y;
@@ -150,6 +154,7 @@ void
 e_container_resize(E_Container *con, int w, int h)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if ((w == con->w) && (h == con->h)) return;
    con->w = w;
    con->h = h;
@@ -162,6 +167,7 @@ void
 e_container_move_resize(E_Container *con, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if ((x == con->x) && (y == con->y) && (w == con->w) && (h == con->h)) return;
    con->x = x;
    con->y = y;
@@ -177,6 +183,7 @@ void
 e_container_raise(E_Container *con)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    ecore_x_window_raise(con->win);
 }
 
@@ -184,6 +191,7 @@ void
 e_container_lower(E_Container *con)
 {
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    ecore_x_window_lower(con->win);
 }
 
@@ -191,6 +199,7 @@ Evas_List *
 e_container_clients_list_get(E_Container *con)
 {
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    return con->clients;
 }
    
@@ -200,6 +209,7 @@ e_container_zone_at_point_get(E_Container *con, int x, int y)
    Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    for (l = con->zones; l; l = l->next)
      {
 	E_Zone *zone;
@@ -218,6 +228,7 @@ e_container_zone_number_get(E_Container *con, int num)
    Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    for (l = con->zones; l; l = l->next)
      {
 	E_Zone *zone;
@@ -235,8 +246,9 @@ e_container_shape_add(E_Container *con)
    E_Container_Shape *es;
    
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, 0);
    
-   es = E_OBJECT_ALLOC(E_Container_Shape, _e_container_shape_free);
+   es = E_OBJECT_ALLOC(E_Container_Shape, E_CONTAINER_SHAPE_TYPE, _e_container_shape_free);
    E_OBJECT_DEL_SET(es, _e_container_shape_del);
    es->con = con;
    con->shapes = evas_list_append(con->shapes, es);
@@ -248,6 +260,7 @@ void
 e_container_shape_show(E_Container_Shape *es)
 {
    E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (es->visible) return;
    es->visible = 1;
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_SHOW);
@@ -257,6 +270,7 @@ void
 e_container_shape_hide(E_Container_Shape *es)
 {
    E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (!es->visible) return;
    es->visible = 0;
    _e_container_shape_change_call(es, E_CONTAINER_SHAPE_HIDE);
@@ -266,6 +280,7 @@ void
 e_container_shape_move(E_Container_Shape *es, int x, int y)
 {
    E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if ((es->x == x) && (es->y == y)) return;
    es->x = x;
    es->y = y;
@@ -276,6 +291,7 @@ void
 e_container_shape_resize(E_Container_Shape *es, int w, int h)
 {
    E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (w < 1) w = 1;
    if (h < 1) h = 1;
    if ((es->w == w) && (es->h == h)) return;
@@ -288,6 +304,7 @@ Evas_List *
 e_container_shape_list_get(E_Container *con)
 {
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    return con->shapes;
 }
 
@@ -295,6 +312,7 @@ void
 e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, int *h)
 {
    E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
    if (x) *x = es->x;
    if (y) *y = es->y;
    if (w) *w = es->w;
@@ -305,6 +323,7 @@ E_Container *
 e_container_shape_container_get(E_Container_Shape *es)
 {
    E_OBJECT_CHECK_RETURN(es, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(es, E_CONTAINER_SHAPE_TYPE, NULL);
    return es->con;
 }
 
@@ -314,6 +333,7 @@ e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data
    E_Container_Shape_Callback *cb;
    
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    cb = calloc(1, sizeof(E_Container_Shape_Callback));
    if (!cb) return;
    cb->func = func;
@@ -328,6 +348,7 @@ e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data
 
    /* FIXME: if we call this from within a callback we are in trouble */
    E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    for (l = con->shape_change_cb; l; l = l->next)
      {
 	E_Container_Shape_Callback *cb;
@@ -346,6 +367,7 @@ Evas_List *
 e_container_shape_rects_get(E_Container_Shape *es)
 {
    E_OBJECT_CHECK_RETURN(es, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(es, E_CONTAINER_SHAPE_TYPE, NULL);
    return es->shape;
 }
 

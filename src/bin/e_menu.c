@@ -123,7 +123,7 @@ e_menu_new(void)
 {
    E_Menu *m;
    
-   m = E_OBJECT_ALLOC(E_Menu, _e_menu_free);
+   m = E_OBJECT_ALLOC(E_Menu, E_MENU_TYPE, _e_menu_free);
    if (!m) return NULL;
    m->cur.w = 1;
    m->cur.h = 1;
@@ -134,7 +134,9 @@ void
 e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = 0.0;
    _e_menu_activate_internal(m, zone);
    m->cur.x = 200;
@@ -148,7 +150,9 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    E_Menu_Item *pmi;
    
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = ecore_time_get();
    _e_menu_activate_internal(m, zone);
    m->cur.x = x;
@@ -164,7 +168,9 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    E_Menu_Item *pmi;
 
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = 0.0;
    _e_menu_activate_internal(m, zone);
    m->cur.x = x;
@@ -177,6 +183,7 @@ void
 e_menu_deactivate(E_Menu *m)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    m->cur.visible = 0;
    m->active = 0;
    if (m->post_deactivate_cb.func)
@@ -187,6 +194,7 @@ int
 e_menu_freeze(E_Menu *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, 0);
    m->frozen++;
    return m->frozen;
 }
@@ -195,6 +203,7 @@ int
 e_menu_thaw(E_Menu *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, 0);
    m->frozen--;
    if (m->frozen < 0) m->frozen = 0;
    return m->frozen;
@@ -204,6 +213,7 @@ void
 e_menu_title_set(E_Menu *m, char *title)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    /* FIXME: support menu titles */
    if ((m->header.title) && (title) && (!strcmp(m->header.title, title)))
      return;
@@ -221,6 +231,7 @@ void
 e_menu_icon_file_set(E_Menu *m, char *icon)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    /* FIXME: support menu icons */
 }
 
@@ -228,6 +239,7 @@ void
 e_menu_pre_activate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m), void *data)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    m->pre_activate_cb.func = func;
    m->pre_activate_cb.data = data;
 }
@@ -236,6 +248,7 @@ void
 e_menu_post_deactivate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu *m), void *data)
 {
    E_OBJECT_CHECK(m);
+   E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    m->post_deactivate_cb.func = func;
    m->post_deactivate_cb.data = data;
 }
@@ -246,6 +259,7 @@ e_menu_root_get(E_Menu *m)
    E_Menu *ret;
 
    E_OBJECT_CHECK_RETURN(m, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
    ret = m;
    while (ret->parent_item && ret->parent_item->menu)
      {
@@ -261,7 +275,8 @@ e_menu_item_new(E_Menu *m)
    E_Menu_Item *mi;
    
    E_OBJECT_CHECK_RETURN(m, NULL);
-   mi = E_OBJECT_ALLOC(E_Menu_Item, _e_menu_item_free);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
+   mi = E_OBJECT_ALLOC(E_Menu_Item, E_MENU_ITEM_TYPE, _e_menu_item_free);
    mi->menu = m;
    mi->menu->items = evas_list_append(mi->menu->items, mi);
    return mi;
@@ -271,6 +286,7 @@ E_Menu_Item *
 e_menu_item_nth(E_Menu *m, int n)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, NULL);
    return (E_Menu_Item *)evas_list_nth(m->items, n);
 }
 
@@ -281,6 +297,7 @@ e_menu_item_num_get(E_Menu_Item *mi)
    int i;
    
    E_OBJECT_CHECK_RETURN(mi, -1);
+   E_OBJECT_TYPE_CHECK_RETURN(mi, E_MENU_TYPE, -1);
    for (i = 0, l = mi->menu->items; l; l = l->next, i++)
      {
 	E_Menu_Item *mi2;
@@ -295,6 +312,7 @@ void
 e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->icon) && (icon) && (!strcmp(icon, mi->icon))) ||
        ((!mi->icon) && (!icon))) 
      return;
@@ -311,6 +329,7 @@ void
 e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->icon) && (icon) && (!strcmp(icon, mi->icon))) ||
        ((!mi->icon) && (!icon)) || 
        ((key) && (mi->icon_key) && (!strcmp(key, mi->icon_key))))
@@ -329,6 +348,7 @@ void
 e_menu_item_label_set(E_Menu_Item *mi, char *label)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->label) && (label) && (!strcmp(label, mi->label))) ||
        ((!mi->label) && (!label))) 
      return;
@@ -343,6 +363,7 @@ void
 e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->submenu) e_object_unref(E_OBJECT(mi->submenu));
    e_object_ref(E_OBJECT(sub));
    mi->submenu = sub;
@@ -354,6 +375,7 @@ void
 e_menu_item_separator_set(E_Menu_Item *mi, int sep)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->separator) && (sep)) ||
 	((!mi->separator) && (!sep))) return;
    mi->separator = sep;
@@ -365,6 +387,7 @@ void
 e_menu_item_check_set(E_Menu_Item *mi, int chk)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->check) && (chk)) ||
        ((!mi->check) && (!chk))) return;
    mi->check = chk;
@@ -376,6 +399,7 @@ void
 e_menu_item_radio_set(E_Menu_Item *mi, int rad)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->radio) && (rad)) ||
        ((!mi->radio) && (!rad))) return;
    mi->radio = rad;
@@ -387,6 +411,7 @@ void
 e_menu_item_radio_group_set(E_Menu_Item *mi, int radg)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->radio_group == radg) return;
    mi->radio_group = radg;
    mi->changed = 1;
@@ -397,6 +422,7 @@ void
 e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->separator) return;
    if (tog)
      {
@@ -452,6 +478,7 @@ int
 e_menu_item_toggle_get(E_Menu_Item *mi)
 {
    E_OBJECT_CHECK_RETURN(mi, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(mi, E_MENU_ITEM_TYPE, 0);
    return mi->toggle;
 }
 
@@ -459,6 +486,7 @@ void
 e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->cb.func = func;
    mi->cb.data = data;
 }
@@ -467,6 +495,7 @@ void
 e_menu_item_active_set(E_Menu_Item *mi, int active)
 {
    E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->separator) return;
    if (active)
      {

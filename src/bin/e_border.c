@@ -156,7 +156,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    unsigned int managed, desk[2];
    int deskx, desky;
    
-   bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
+   bd = E_OBJECT_ALLOC(E_Border, E_BORDER_TYPE, _e_border_free);
    if (!bd) return NULL;
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
    
@@ -297,7 +297,9 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    unsigned int deskpos[2];
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    E_OBJECT_CHECK(desk);
+   E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (bd->desk == desk) return;
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    desk->clients = evas_list_append(desk->clients, bd);
@@ -325,6 +327,7 @@ e_border_show(E_Border *bd)
    unsigned int visible;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
    ecore_x_window_show(bd->client.win);
@@ -351,6 +354,7 @@ e_border_hide(E_Border *bd)
    unsigned int visible;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
 
    ecore_x_window_hide(bd->client.win);
@@ -382,6 +386,7 @@ e_border_move(E_Border *bd, int x, int y)
    E_Event_Border_Move *ev;
 
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -417,6 +422,7 @@ e_border_resize(E_Border *bd, int w, int h)
 {
    E_Event_Border_Resize *ev;
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -456,6 +462,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    E_Event_Border_Resize	*rev;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -508,6 +515,7 @@ e_border_raise(E_Border *bd)
    Ecore_X_Window mwin;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_append(bd->container->clients, bd);
    mwin = e_menu_grab_window_get();
@@ -525,6 +533,7 @@ void
 e_border_lower(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_prepend(bd->container->clients, bd);
    ecore_x_window_lower(bd->win);
@@ -534,6 +543,7 @@ void
 e_border_stack_above(E_Border *bd, E_Border *above)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_append_relative(bd->container->clients, bd, above);
    ecore_x_window_configure(bd->win,
@@ -547,6 +557,7 @@ void
 e_border_stack_below(E_Border *bd, E_Border *below)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, below);
    ecore_x_window_configure(bd->win,
@@ -560,6 +571,7 @@ void
 e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->client.icccm.accepts_focus) return;
    if ((focus) && (!bd->focused))
      edje_object_signal_emit(bd->bg_object, "active", "");
@@ -607,6 +619,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
    E_Event_Border_Resize *ev;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->maximized) return;
    if (!bd->shaded)
      {
@@ -679,6 +692,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
    E_Event_Border_Resize *ev;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->maximized) return;
    if (bd->shaded)
      {
@@ -757,6 +771,7 @@ void
 e_border_maximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    
    if ((bd->shaded) || (bd->shading)) return;
    if (!bd->maximized)
@@ -783,6 +798,7 @@ void
 e_border_unmaximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
      {
@@ -803,6 +819,7 @@ e_border_iconify(E_Border *bd)
 {
    unsigned int iconic;
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->shading)) return;
    if (!bd->iconic)
      {
@@ -822,6 +839,7 @@ e_border_uniconify(E_Border *bd)
    unsigned int iconic;
    
    E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->shading)) return;
    if (bd->iconic)
      {
@@ -841,16 +859,18 @@ e_border_uniconify(E_Border *bd)
 void
 e_border_stick(E_Border *bd)
 {
-    E_OBJECT_CHECK(bd);
-    bd->sticky = 1;
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   bd->sticky = 1;
 }
 
 void
 e_border_unstick(E_Border *bd)
 {
-    E_OBJECT_CHECK(bd);
-    bd->sticky = 0;
-    bd->desk = e_desk_current_get(bd->zone);
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   bd->sticky = 0;
+   bd->desk = e_desk_current_get(bd->zone);
 }
 
 E_Border *

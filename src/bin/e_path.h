@@ -6,6 +6,8 @@ typedef struct _E_Path E_Path;
 #ifndef E_PATH_H
 #define E_PATH_H
 
+#define E_PATH_TYPE 0xE0b0100c
+
 struct _E_Path
 {
    E_Object   e_obj_inherit;

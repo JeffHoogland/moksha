@@ -15,6 +15,10 @@ typedef struct _E_Menu_Item    E_Menu_Item;
 #ifndef E_MENU_H
 #define E_MENU_H
 
+#define E_MENU_TYPE 0xE0b01009
+
+#define E_MENU_ITEM_TYPE 0xE0b0100a
+
 struct _E_Menu
 {
    E_Object             e_obj_inherit;

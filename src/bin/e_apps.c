@@ -94,7 +94,7 @@ e_app_new(char *path, int scan_subdirs)
 	e_object_ref(E_OBJECT(a));
 	return a;
      }
-   a = E_OBJECT_ALLOC(E_App, _e_app_free);
+   a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->mod_time = e_file_mod_time(path);
    if (e_file_is_dir(path))
      {
@@ -164,6 +164,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
    char buf[4096];
 
    E_OBJECT_CHECK(a);
+   E_OBJECT_TYPE_CHECK(a, E_APP_TYPE);
    if (a->exe) return;
    if (a->scanned)
      {
@@ -213,6 +214,7 @@ e_app_exec(E_App *a)
    Ecore_Exe *exe;
    
    E_OBJECT_CHECK_RETURN(a, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
    if (!a->exe) return 0;
    exe = ecore_exe_run(a->exe, a);
    if (!exe) return 0;
@@ -226,6 +228,7 @@ int
 e_app_starting_get(E_App *a)
 {
    E_OBJECT_CHECK_RETURN(a, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
    return a->starting;
 }
 
@@ -233,6 +236,7 @@ int
 e_app_running_get(E_App *a)
 {
    E_OBJECT_CHECK_RETURN(a, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
    if (a->instances) return 1;
    return 0;
 }

@@ -54,7 +54,7 @@ e_manager_new(Ecore_X_Window root)
    Ecore_Event_Handler *h;
 
    if (!ecore_x_window_manage(root)) return NULL;
-   man = E_OBJECT_ALLOC(E_Manager, _e_manager_free);
+   man = E_OBJECT_ALLOC(E_Manager, E_MANAGER_TYPE, _e_manager_free);
    if (!man) return NULL;
    managers = evas_list_append(managers, man);
    man->root = root;
@@ -72,6 +72,7 @@ void
 e_manager_show(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (man->visible) return;
    ecore_x_window_show(man->win);
    ecore_x_window_focus(man->win);
@@ -83,6 +84,7 @@ void
 e_manager_hide(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (!man->visible) return;
    ecore_x_window_hide(man->win);
    man->visible = 0; 
@@ -92,6 +94,7 @@ void
 e_manager_move(E_Manager *man, int x, int y)
 {
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if ((x == man->x) && (y == man->y)) return;
    man->x = x;
    man->y = y;
@@ -104,6 +107,7 @@ e_manager_resize(E_Manager *man, int w, int h)
    Evas_List *l;
    
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if ((w == man->w) && (h == man->h)) return;
    man->w = w;
    man->h = h;
@@ -124,6 +128,7 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
    Evas_List *l;
    
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if ((x == man->x) && (y == man->y) && (w == man->w) && (h == man->h)) return;
    man->x = x;
    man->y = y;
@@ -144,6 +149,7 @@ void
 e_manager_raise(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    ecore_x_window_raise(man->win);
    e_init_show();
 }
@@ -152,6 +158,7 @@ void
 e_manager_lower(E_Manager *man)
 {
    E_OBJECT_CHECK(man);
+   E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    ecore_x_window_lower(man->win);
 }
 

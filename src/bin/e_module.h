@@ -9,6 +9,8 @@ typedef struct _E_Module_Api E_Module_Api;
 #ifndef E_MODULE_H
 #define E_MODULE_H
 
+#define E_MODULE_TYPE 0xE0b0100b
+
 struct _E_Module
 {
    E_Object             e_obj_inherit;

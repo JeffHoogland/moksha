@@ -39,7 +39,7 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    E_Zone      *zone;
    int          i;
 
-   zone = E_OBJECT_ALLOC(E_Zone, _e_zone_free);
+   zone = E_OBJECT_ALLOC(E_Zone, E_ZONE_TYPE, _e_zone_free);
    if (!zone) return NULL;
 
    zone->container = con;
@@ -105,6 +105,7 @@ void
 e_zone_name_set(E_Zone *zone, const char *name)
 {
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    if (zone->name)
       free(zone->name);
    zone->name = strdup(name);
@@ -114,6 +115,7 @@ void
 e_zone_move(E_Zone *zone, int x, int y)
 {
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
    if ((x == zone->x) && (y == zone->y)) return;
    zone->x = x;
@@ -127,6 +129,7 @@ void
 e_zone_resize(E_Zone *zone, int w, int h)
 {
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
    if ((w == zone->w) && (h == zone->h)) return;
    zone->w = w;
@@ -140,6 +143,7 @@ void
 e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
 
    if ((x == zone->x) && (y == zone->y) && (w == zone->w) && (h == zone->h))
      return;
@@ -164,6 +168,7 @@ e_zone_current_get(E_Container *con)
    E_Border *bd;
    
    E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
    bd = e_border_focused_get();
    if (bd)
      {
@@ -195,6 +200,7 @@ e_zone_bg_reconfigure(E_Zone *zone)
    Evas_Object *o;
    
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    o = zone->bg_object;
    evas_object_hide(o);
    edje_object_file_set(o,
@@ -207,8 +213,9 @@ e_zone_bg_reconfigure(E_Zone *zone)
 Evas_List *
 e_zone_clients_list_get(E_Zone *zone)
 {
-    E_OBJECT_CHECK_RETURN(zone, NULL);
-    return zone->clients;
+   E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
+   return zone->clients;
 }
    
 

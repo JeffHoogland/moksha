@@ -14,7 +14,7 @@ e_path_new(void)
 {
    E_Path *ep;
    
-   ep = E_OBJECT_ALLOC(E_Path, _e_path_free);
+   ep = E_OBJECT_ALLOC(E_Path, E_PATH_TYPE, _e_path_free);
    return ep;
 }
 
@@ -22,6 +22,7 @@ void
 e_path_path_append(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!path) return;
    if (path[0] == '~')
      {
@@ -53,6 +54,7 @@ void
 e_path_path_prepend(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!path) return;
    if (path[0] == '~')
      {
@@ -86,6 +88,7 @@ e_path_path_remove(E_Path *ep, const char *path)
    Evas_List *l;
 
    E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!path) return;
    if (path[0] == '~')
      {
@@ -151,6 +154,7 @@ e_path_find(E_Path *ep, const char *file)
    char *str;
    
    E_OBJECT_CHECK_RETURN(ep, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(ep, E_PATH_TYPE, NULL);
    if (!file) return NULL;
    _e_path_buf[0] = 0;
    str = evas_hash_find(ep->hash, file);
@@ -189,6 +193,7 @@ e_path_evas_append(E_Path *ep, Evas *evas)
    Evas_List *l;
    
    E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!evas) return;
    for (l = ep->dir_list; l; l = l->next)
      {

@@ -102,7 +102,7 @@ e_gadman_new(E_Container *con)
 {
    E_Gadman    *gm;
 
-   gm = E_OBJECT_ALLOC(E_Gadman, _e_gadman_free);
+   gm = E_OBJECT_ALLOC(E_Gadman, E_GADMAN_TYPE, _e_gadman_free);
    if (!gm) return NULL;
    gm->container = con;
    return gm;
@@ -114,6 +114,7 @@ e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode)
    Evas_List *l;
    
    E_OBJECT_CHECK(gm);
+   E_OBJECT_TYPE_CHECK(gm, E_GADMAN_TYPE);
    if (gm->mode == mode) return;
    gm->mode = mode;
    if (gm->mode == E_GADMAN_MODE_EDIT)
@@ -132,6 +133,7 @@ E_Gadman_Mode
 e_gadman_mode_get(E_Gadman *gm)
 {
    E_OBJECT_CHECK_RETURN(gm, E_GADMAN_MODE_NORMAL);
+   E_OBJECT_TYPE_CHECK_RETURN(gm, E_GADMAN_TYPE, E_GADMAN_MODE_NORMAL);
    return gm->mode;
 }
 
@@ -170,8 +172,9 @@ e_gadman_client_new(E_Gadman *gm)
 {
    E_Gadman_Client *gmc;
    E_OBJECT_CHECK_RETURN(gm, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gm, E_GADMAN_TYPE, NULL);
    
-   gmc = E_OBJECT_ALLOC(E_Gadman_Client, _e_gadman_client_free);
+   gmc = E_OBJECT_ALLOC(E_Gadman_Client, E_GADMAN_CLIENT_TYPE, _e_gadman_client_free);
    if (!gmc) return NULL;
    gmc->gadman = gm;
    gmc->policy = E_GADMAN_POLICY_ANYWHERE | E_GADMAN_POLICY_HSIZE | E_GADMAN_POLICY_VSIZE | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
@@ -196,6 +199,7 @@ e_gadman_client_save(E_Gadman_Client *gmc)
    char buf[1024];
    
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    /* save all values */
    cf.ax = gmc->ax;
    cf.ay = gmc->ay;
@@ -213,6 +217,7 @@ void
 e_client_gadman_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->edge = edge;
 }
 
@@ -223,6 +228,7 @@ e_gadman_client_load(E_Gadman_Client *gmc)
    char buf[1024];
    
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    snprintf(buf, sizeof(buf), "gadman.%s.%i", gmc->domain, gmc->instance);
    cf = e_config_domain_load(buf, gadman_config_edd);
    if (cf)
@@ -274,6 +280,7 @@ void
 e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if (gmc->domain) free(gmc->domain);
    gmc->domain = strdup(domain);
    gmc->instance = instance;
@@ -283,6 +290,7 @@ void
 e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if (zone == gmc->zone) return;
    gmc->zone = zone;
    gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
@@ -299,6 +307,7 @@ void
 e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->policy = pol;
 }
 
@@ -306,6 +315,7 @@ void
 e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Coord minw, Evas_Coord minh)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if ((gmc->minw == minw) && (gmc->minh == minh)) return;
    gmc->minw = minw;
    gmc->minh = minh;
@@ -326,6 +336,7 @@ void
 e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if ((gmc->maxw == maxw) && (gmc->maxh == maxh)) return;
    gmc->maxw = maxw;
    gmc->maxh = maxh;
@@ -346,6 +357,7 @@ void
 e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if ((gmc->ax == xalign) && (gmc->ay == yalign)) return;
    gmc->ax = xalign;
    gmc->ay = yalign;
@@ -358,6 +370,7 @@ void
 e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->mina = mina;
    gmc->maxa = maxa;
 }
@@ -366,6 +379,7 @@ void
 e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->autow = autow;
    gmc->autoh = autoh;
    if (gmc->use_autow)
@@ -385,6 +399,7 @@ void
 e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->edge = edge;
 }
 
@@ -392,6 +407,7 @@ E_Gadman_Edge
 e_gadman_client_edge_get(E_Gadman_Client *gmc)
 {
    E_OBJECT_CHECK_RETURN(gmc, E_GADMAN_EDGE_TOP);
+   E_OBJECT_TYPE_CHECK_RETURN(gmc, E_GADMAN_CLIENT_TYPE, E_GADMAN_EDGE_TOP);
    return gmc->edge;
 }
 
@@ -399,6 +415,7 @@ void
 e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if (x) *x = gmc->x;
    if (y) *y = gmc->y;
    if (w) *w = gmc->w;
@@ -409,6 +426,7 @@ void
 e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    if ((gmc->w == w) && (gmc->h == h)) return;
    gmc->w = w;
    if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
@@ -423,6 +441,7 @@ void
 e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change), void *data)
 {
    E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->func = func;
    gmc->data = data;
 }
@@ -434,6 +453,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
    E_Menu_Item *mi;
    
    E_OBJECT_CHECK_RETURN(gmc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gmc, E_GADMAN_CLIENT_TYPE, NULL);
    m = e_menu_new();
    
    gmc->menu = m;

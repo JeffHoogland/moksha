@@ -42,6 +42,9 @@ typedef struct _E_Gadman_Client E_Gadman_Client;
 #ifndef E_GADMAN_H
 #define E_GADMAN_H
 
+#define E_GADMAN_TYPE 0xE0b01006
+#define E_GADMAN_CLIENT_TYPE 0xE0b01007
+
 struct _E_Gadman
 {
    E_Object             e_obj_inherit;

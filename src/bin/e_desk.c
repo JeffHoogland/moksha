@@ -31,8 +31,9 @@ e_desk_new(E_Zone *zone, int x, int y)
    char		name[40];
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
    
-   desk = E_OBJECT_ALLOC(E_Desk, _e_desk_free);
+   desk = E_OBJECT_ALLOC(E_Desk, E_DESK_TYPE, _e_desk_free);
    if (!desk) return NULL;
 
    desk->clients = NULL;
@@ -47,6 +48,7 @@ void
 e_desk_name_set(E_Desk *desk, const char *name)
 {
    E_OBJECT_CHECK(desk);
+   E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->name)
       free(desk->name);
    desk->name = strdup(name);
@@ -59,6 +61,7 @@ e_desk_show(E_Desk *desk)
    int          x, y;
    
    E_OBJECT_CHECK(desk);
+   E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
    
    for (l = desk->zone->container->clients; l; l = l->next)
@@ -123,6 +126,7 @@ E_Desk *
 e_desk_current_get(E_Zone *zone)
 {
    E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
   
    return e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current);
 }
@@ -131,6 +135,7 @@ E_Desk *
 e_desk_at_xy_get(E_Zone *zone, int x, int y)
 {
    E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
 
    if (x >= zone->desk_x_count || y >= zone->desk_y_count)
      return NULL;
@@ -143,8 +148,8 @@ e_desk_xy_get(E_Desk *desk, int *x, int *y)
 {
    int xx, yy;
 
-   E_OBJECT_CHECK(zone);
    E_OBJECT_CHECK(desk);
+   E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
 
    for (xx = 0; xx < desk->zone->desk_x_count; xx++)
      {
@@ -171,6 +176,7 @@ e_desk_next(E_Zone *zone)
    int          x, y;
 
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
    if (zone->desk_x_count < 2 && zone->desk_y_count < 2)
       return;
@@ -198,6 +204,7 @@ e_desk_prev(E_Zone *zone)
    int          x, y;
 
    E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
 
    if (zone->desk_x_count < 2 && zone->desk_y_count < 2)
      return;

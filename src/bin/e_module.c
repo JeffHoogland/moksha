@@ -79,7 +79,7 @@ e_module_new(char *name)
    int in_list = 0;
 
    if (!name) return NULL;
-   m = E_OBJECT_ALLOC(E_Module, _e_module_free);
+   m = E_OBJECT_ALLOC(E_Module, E_MODULE_TYPE, _e_module_free);
    m->api = &_e_module_api;
    if (name[0] != '/')
      {
@@ -166,6 +166,7 @@ int
 e_module_save(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    return m->func.save(m);
 }
 
@@ -173,6 +174,7 @@ const char *
 e_module_dir_get(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    return m->dir;
 }
 
@@ -182,6 +184,7 @@ e_module_enable(E_Module *m)
    Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if (m->enabled) return 0;
    m->data = m->func.init(m);
    if (m->data) m->enabled = 1;
@@ -207,6 +210,7 @@ e_module_disable(E_Module *m)
    int ret;
    
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if (!m->enabled) return 0;
    ret = m->func.shutdown(m);
    m->data = NULL;
@@ -230,6 +234,7 @@ int
 e_module_enabled_get(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    return m->enabled;
 }
 

@@ -20,6 +20,9 @@ typedef struct _E_Event_Container_Resize   E_Event_Container_Resize;
 #ifndef E_CONTAINER_H
 #define E_CONTAINER_H
 
+#define E_CONTAINER_TYPE 0xE0b01003
+#define E_CONTAINER_SHAPE_TYPE 0xE0b01004
+
 struct _E_Container
 {
    E_Object             e_obj_inherit;

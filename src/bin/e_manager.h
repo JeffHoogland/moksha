@@ -6,6 +6,8 @@ typedef struct _E_Manager E_Manager;
 #ifndef E_MANAGER_H
 #define E_MANAGER_H
 
+#define E_MANAGER_TYPE 0xE0b01008
+
 struct _E_Manager
 {
    E_Object             e_obj_inherit;

@@ -28,13 +28,14 @@ static sigjmp_buf _e_object_segv_buf;
 
 /* externally accessible functions */
 void *
-e_object_alloc(int size, E_Object_Cleanup_Func cleanup_func)
+e_object_alloc(int size, int type, E_Object_Cleanup_Func cleanup_func)
 {
    E_Object *obj;
    
    obj = calloc(1, size);
    if (!obj) return NULL;
    obj->magic = E_OBJECT_MAGIC;
+   obj->type = type;
    obj->references   = 1;
    obj->cleanup_func = cleanup_func;
    return obj;

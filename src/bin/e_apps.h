@@ -17,6 +17,8 @@ typedef struct _E_App          E_App;
 #ifndef E_APPS_H
 #define E_APPS_H
 
+#define E_APP_TYPE 0xE0b01001
+
 struct _E_App
 {
    E_Object             e_obj_inherit;
