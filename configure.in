@@ -188,6 +188,7 @@ src/modules/test/Makefile
 src/modules/ibar/Makefile
 src/modules/dropshadow/Makefile
 src/modules/clock/Makefile
+src/modules/pager/Makefile
 src/modules/flame/Makefile
 src/modules/snow/Makefile
 src/modules/battery/Makefile

@@ -4,6 +4,7 @@ test \
 ibar \
 dropshadow \
 clock \
+pager \
 flame \
 snow \
 battery \
