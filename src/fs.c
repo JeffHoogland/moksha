@@ -74,7 +74,8 @@ static void
 _e_fs_restarter(int val, void *data)
 {
    if (ec) return;
-   if (val > 0)    
+   ec = efsd_open();
+   if ((!ec) && (val > 0))
      {
 	if (efsd_pid <= 0) efsd_pid = e_exec_run("efsd -f");
 	if (efsd_pid > 0) ec = efsd_open();
