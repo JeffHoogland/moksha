@@ -94,8 +94,10 @@ e_app_new(const char *path, int scan_subdirs)
    char buf[PATH_MAX];
 
    a = evas_hash_find(_e_apps, path);
-   if ((a) && (!a->deleted))
+   if (a)
      {
+	if (a->deleted)
+	  return NULL;
 	e_object_ref(E_OBJECT(a));
 	return a;
      }
@@ -669,7 +671,6 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    if (!app->scanned)
      return;
 
-   printf("E_App: %d %d %s\n", type, event, path);
    file = ecore_file_get_file((char *)path);
    if (!strcmp(file, ".order"))
      {
@@ -737,6 +738,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	       * to check which files are here. */
 	      if ((type == ECORE_FILE_TYPE_DIRECTORY) && !strcmp(path, app->path))
 		{
+#if 0
 		   a2 = _e_app_subapp_path_find(app, path);
 
 		   /* If this app is in a main repository, tell all referencing
@@ -752,9 +754,9 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 			     _e_app_subdir_rescan(app);
 			  }
 		     }
+#endif
 
-		   /* We don't know why it's deleted, maybe it's move to 'all'?
-		    * Better rescan... */
+		   /* We don't know why it's changed Better rescan... */
 		   _e_app_subdir_rescan(app);
 		}
 	      break;
@@ -781,6 +783,20 @@ _e_app_subdir_rescan(E_App *app)
 	a2 = _e_app_subapp_path_find(app, buf);
 	if (!a2)
 	  {
+	     /* Do we have a reference? */
+	     Evas_List *pl;
+
+	     pl = _e_apps_repositories;
+	     while ((!a2) && (pl))
+	       {
+		  snprintf(buf, sizeof(buf), "%s/%s", (char *)pl->data, s);
+		  a2 = _e_app_subapp_path_find(app, buf);
+		  pl = pl->next;
+	       }
+	  }
+	if (!a2)
+	  {
+	     /* If we still haven't found it, it is new! */
 	     a2 = e_app_new(buf, 1);
 	     if (a2)
 	       {
