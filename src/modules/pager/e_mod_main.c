@@ -928,7 +928,6 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
    Pager_Desk         *desk;
    Pager_Win          *win;
    E_Event_Border_Add *ev;
-   Evas_List          *desks;
 
    face = data;
    ev = event;
