@@ -144,10 +144,31 @@ E_Zone *
 e_zone_current_get(E_Container *con)
 {
    Evas_List *l;
-
+   E_Border *bd;
+   
    E_OBJECT_CHECK_RETURN(con, NULL);
+   bd = e_border_focused_get();
+   if (bd)
+     {
+	/* the current zone is whatever zone has the focused window */
+	return bd->zone;
+     }
+   else
+     {
+	int x, y;
+	
+	ecore_x_pointer_last_xy_get(&x, &y);
+	for (l = con->zones; l; l = l->next)
+	  {
+	     E_Zone *zone;
+	     
+	     zone = l->data;
+	     if (E_INTERSECTS(x, y, 1, 1,
+			      zone->x, zone->y, zone->w, zone->h))
+	       return zone;
+	  }
+     }
    l = con->zones;
-   /* FIXME: Should return the zone the pointer is currently in */
    return (E_Zone *)l->data;
 }
 

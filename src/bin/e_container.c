@@ -410,7 +410,7 @@ _e_container_resize_handle(E_Container *con)
 }
 
 static void
-  _e_container_event_container_resize_free(void *data, void *ev)
+_e_container_event_container_resize_free(void *data, void *ev)
 {
    E_Event_Container_Resize *e;
    

@@ -3,7 +3,6 @@
  */
 
 #include "e.h"
-#include <Ecore_X_Atoms.h>
 
 #define RESIZE_NONE 0
 #define RESIZE_TL   1
@@ -79,6 +78,8 @@ static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
 static void _e_border_event_border_hide_free(void *data, void *ev);
 
+static void _e_border_zone_update(E_Border *bd);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -153,7 +154,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    
    bd = E_OBJECT_ALLOC(E_Border, _e_border_free);
    if (!bd) return NULL;
-   e_object_del_func_set(bd, _e_border_del);
+   e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
    
    printf("##- NEW CLIENT 0x%x\n", win);
    bd->container = con;
@@ -365,7 +366,7 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
-
+   _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -389,7 +390,7 @@ e_border_resize(E_Border *bd, int w, int h)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
-
+   _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -418,7 +419,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 				  bd->y + bd->client_inset.t, 
 				  bd->client.w,
 				  bd->client.h);
-   
+   _e_border_zone_update(bd);
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -779,6 +780,12 @@ e_border_find_by_client_window(Ecore_X_Window win)
 	if (bd->client.win == win) return bd;
      }
    return NULL;
+}
+
+E_Border *
+e_border_focused_get(void)
+{
+   return focused;
 }
 
 void
@@ -2148,18 +2155,18 @@ _e_border_eval(E_Border *bd)
 		  
 		  printf("##- AUTO POS 0x%x\n", bd->client.win);
 		  if (bd->zone->w > bd->w)
-		    new_x = rand() % (bd->zone->w - bd->w);
+		    new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
 		  else
-		    new_x = 0;
+		    new_x = bd->zone->x;
 		  if (bd->zone->h > bd->h)
-		    new_y = rand() % (bd->zone->h - bd->h);
+		    new_y = bd->zone->y + (rand() % (bd->zone->h - bd->h));
 		  else
-		    new_y = 0;
+		    new_y = bd->zone->y;
 		  
 		  skiplist = evas_list_append(skiplist, bd);
-		  e_place_container_region_smart(bd->container, skiplist,
-						 bd->x, bd->y, bd->w, bd->h,
-						 &new_x, &new_y);
+		  e_place_zone_region_smart(bd->zone, skiplist,
+					    bd->x, bd->y, bd->w, bd->h,
+					    &new_x, &new_y);
 		  evas_list_free(skiplist);
 		  bd->x = new_x;
 		  bd->y = new_y;
@@ -2811,3 +2818,28 @@ _e_border_event_border_desk_set_free(void *data, void *ev)
    free(e);
 }
 
+static void
+_e_border_zone_update(E_Border *bd)
+{
+   E_Container *con;
+   Evas_List *l;
+
+   /* still within old zone - leave it there */
+   if (E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
+		    bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h))
+     return;
+   /* find a new zone */
+   con = bd->zone->container;
+   for (l = con->zones; l; l = l->next)
+     {
+	E_Zone *zone;
+	
+	zone = l->data;
+	if (E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
+			 zone->x, zone->y, zone->w, zone->h))
+	  {
+	     bd->zone = zone;
+	     return;
+	  }
+     }
+}

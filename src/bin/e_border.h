@@ -255,6 +255,7 @@ EAPI void      e_border_stick(E_Border *bd);
 EAPI void      e_border_unstick(E_Border *bd);
 
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
+EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);
 
