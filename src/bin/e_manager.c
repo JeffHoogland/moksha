@@ -89,7 +89,6 @@ e_manager_new(Ecore_X_Window root)
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
-   e_hints_root_cde_pretend(man->root);
    return man;
 }
 

@@ -19,7 +19,11 @@ e_hints_init(void)
 	     Ecore_X_Window win;
 	     
 	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
-	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
+//	     I don't FUCKING believe it. if we PRETENT we are Kwin - java is
+//	     happy. why? it expects a double reparenting wm then. java insists
+//	     on finding this out when it shoudl be irrelevant! stupid FUCKS.
+	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");
+//	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
 	  }
         free(roots);
      }
@@ -425,41 +429,4 @@ e_hints_window_icon_name_get(Ecore_X_Window win)
      free(bd->client.icccm.icon_name);
    bd->client.icccm.icon_name = name;
    bd->changed = 1;
-}
-
-/* this SHIT is for e17 to PRETEND it is CDE so java doesnt go all fucked and
- * do the wrong thing. java is NOT porperly writtey to comply with x
- * standards such as icccm. etc. you need to just check it's x code to find
- * out. this caused us a LOT of pain to find out - thanks HandyAnde
- * 
- * BTW - this PARTYL fixes batik - it does not fix cgoban or batik fully.
- * batik still requests its window to be twice the width and height it should be
- * and thinks its half the width and height it is. cgoban wont render its first
- * window because it THINKS it smaller than it is.
- */
-void
-e_hints_root_cde_pretend(Ecore_X_Window root)
-{
-   static Ecore_X_Atom _XA_DT_SM_WINDOW_INFO = 0;
-   static Ecore_X_Atom _XA_DT_SM_STATE_INFO = 0;
-   Ecore_X_Window data[2], info_win;
-   
-   info_win = ecore_x_window_override_new(root, -99, -99, 1, 1);   
-   
-   data[0] = 0;
-   if (_XA_DT_SM_STATE_INFO == 0)
-     _XA_DT_SM_STATE_INFO = ecore_x_atom_get("_DT_SM_STATE_INFO");
-   ecore_x_window_prop_property_set(info_win, 
-				    _XA_DT_SM_STATE_INFO,
-				    _XA_DT_SM_STATE_INFO,
-				    32, data, 1);
-   
-   data[0] = info_win;
-   data[1] = info_win;
-   if (_XA_DT_SM_WINDOW_INFO == 0)
-     _XA_DT_SM_WINDOW_INFO = ecore_x_atom_get("_DT_SM_WINDOW_INFO");
-   ecore_x_window_prop_property_set(root,
-				    _XA_DT_SM_WINDOW_INFO,
-				    _XA_DT_SM_WINDOW_INFO,
-				    32, data, 2);
 }
