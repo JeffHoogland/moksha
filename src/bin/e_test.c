@@ -182,7 +182,7 @@ _e_test_timer(void *data)
      {
 	e_menu_deactivate(m);
 	e_object_del(E_OBJECT(m));
-	ecore_timer_add(0.1, _e_test_timer, NULL);
+	ecore_timer_add(0.5, _e_test_timer, NULL);
 	return 0;
      }
    managers = e_manager_list();
@@ -195,7 +195,7 @@ _e_test_timer(void *data)
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_manager_container_current_get(man), 0),
 			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
-	ecore_timer_add(0.1, _e_test_timer, m);
+	ecore_timer_add(0.5, _e_test_timer, m);
 	return 0;
      }
    return 0;
