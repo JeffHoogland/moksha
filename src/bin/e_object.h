@@ -32,8 +32,8 @@
 # define E_OBJECT_CHECK_RETURN(x, ret)   {if (e_object_error(E_OBJECT(x))) return ret;}
 #else
 # ifdef OBJECT_CHECK
-#  define E_OBJECT_CHECK(x)               {if ((!x) || (x->magic != E_OBJECT_MAGIC)) return;}
-#  define E_OBJECT_CHECK_RETURN(x, ret)   {if ((!x) || (x->magic != E_OBJECT_MAGIC)) return ret;}
+#  define E_OBJECT_CHECK(x)               {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return;}
+#  define E_OBJECT_CHECK_RETURN(x, ret)   {if ((!E_OBJECT(x)) || (E_OBJECT(x)->magic != E_OBJECT_MAGIC)) return ret;}
 # else
 #  define E_OBJECT_CHECK(x)               
 #  define E_OBJECT_CHECK_RETURN(x, ret)   
