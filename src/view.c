@@ -2345,6 +2345,7 @@ e_view_bg_load(E_View *v)
    if (bg)
      {
 	v->bg = bg;
+	v->bg_mod = e_file_mod_time(v->bg_file);
 	if (v->evas)
 	  {
 	     e_background_realize(v->bg, v->evas);
@@ -2369,8 +2370,14 @@ e_view_bg_reload_timeout(int val, void *data)
    v = data;
    if (!strcmp(v->prev_bg_file, v->bg_file)) 
      {
-	D("abort bg reload - same damn file\n");
-	D_RETURN;
+	time_t new_mod;
+	
+	new_mod = e_file_mod_time(v->bg_file);
+	if (new_mod == v->bg_mod)
+	  {
+	     D("abort bg reload - same damn file\n");
+	     D_RETURN;
+	  }
      }
    if (v->bg) 
      {
@@ -2400,8 +2407,6 @@ e_view_bg_change(E_View *v, char *file)
    D_ENTER;
 
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
-   IF_FREE(v->prev_bg_file);
-   e_strdup(v->prev_bg_file, "");
    sprintf(buf, "background_reload:%s", v->dir);  
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 

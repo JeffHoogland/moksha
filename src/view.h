@@ -132,6 +132,7 @@ struct _E_View
    
    char                  *bg_file;
    char                  *prev_bg_file;
+   time_t                 bg_mod;
    E_Background          *bg;
    
    struct {      
