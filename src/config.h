@@ -152,4 +152,50 @@ void  e_config_init(void);
 void  e_config_set_user_dir(char *dir);
 char *e_config_user_dir(void);
 
+typedef struct _e_config_base_type E_Config_Base_Type;
+typedef struct _e_config_node E_Config_Node;
+typedef enum _e_config_datatype E_Config_Datatype;
+
+enum _e_config_datatype
+{
+   E_CFG_TYPE_INT,
+   E_CFG_TYPE_STR,
+   E_CFG_TYPE_FLOAT,
+   E_CFG_TYPE_LIST
+};
+
+struct _e_config_base_type
+{
+   int size;
+   Evas_List nodes;
+};
+
+struct _e_config_node
+{
+   char               *prefix;
+   E_Config_Datatype   type;
+   int                 offset;
+   E_Config_Base_Type *sub_type;
+};
+
+#define E_CONFIG_NODE(var, prefix, type, sub, struct_type, struct_member) \
+{ \
+  struct_type _cfg_dummy; \
+  char *_cfg_p1, *_cfg_p2; \
+  int _cfg_offset; \
+  \
+  _cfg_p1 = (char *)(&(_cfg_dummy)); \
+  _cfg_p2 = (char *)(&(_cfg_dummy.struct_member)); \
+  _cfg_offset = (int)(_cfg_p2 - _cfg_p1); \
+  \
+  e_config_type_add_node(var, prefix, type, sub, _cfg_offset); \
+  var->size = sizeof(struct_type); \
+}
+
+E_Config_Base_Type *e_config_type_new(void);
+void e_config_type_add_node(E_Config_Base_Type *base, char *prefix,
+			    E_Config_Datatype type, E_Config_Base_Type *list_type,
+			    int offset);
+void *e_config_load(char *file, char *prefix, E_Config_Base_Type *type);
+
 #endif

@@ -10,7 +10,6 @@
 static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
 static int       screen_w, screen_h;
-static int       current_desk = 0;
 
 static void e_idle(void *data);
 
@@ -297,7 +296,12 @@ e_desktops_get(int d)
 int
 e_desktops_get_current(void)
 {
-   return current_desk;
+   E_Desktop *desk;
+   
+   desk = e_desktops_get(0);
+   if (desk)
+     return desk->desk.desk;
+   return 0;
 }
 
 void

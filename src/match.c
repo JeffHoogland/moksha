@@ -18,6 +18,8 @@ e_match_set_props(E_Border *b)
    /* if we have a match specifying desk area (only valid with loc match */
    b->client.pos.x += (match_area_x - b->desk->desk.area.x) * b->desk->real.w;
    b->client.pos.y += (match_area_y - b->desk->desk.area.y) * b->desk->real.h;
+   b->client.area.x = match_area_x;
+   b->client.area.y = match_area_y;
    /* if we have a match specifying a size */
    b->current.requested.w = match_w;
    b->current.requested.h = match_h;
@@ -29,5 +31,7 @@ e_match_set_props(E_Border *b)
    b->client.no_place = 1;
    /* if we have a match specifying stickyness */
    b->client.sticky = match_sticky;
+   /* if we have a match specifying layer */
+   b->client.layer = match_layer;
 #endif   
 }

@@ -1205,8 +1205,6 @@ e_border_adopt(Window win, int use_client_pos)
    /* we have now placed the bugger */
    b->placed = 1;
    /* desk area */
-   e_icccm_set_desk_area(win, 0, 0);
-   e_icccm_set_desk(win, e_desktops_get_current());
    if (use_client_pos)
      {
 	int x, y;
@@ -1219,6 +1217,8 @@ e_border_adopt(Window win, int use_client_pos)
    /* reparent the window finally */
    e_window_reparent(win, b->win.container, 0, 0);
    e_match_set_props(b);
+   e_icccm_set_desk_area(win, b->client.area.x, b->client.area.y);
+   e_icccm_set_desk(win, b->client.desk);
    /* figure what border to use */
    e_border_apply_border(b);
      {
