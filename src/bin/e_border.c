@@ -1291,9 +1291,11 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
+/* this is the out for pointer focus 	
 	if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL))
 	  return 1;
+ */
 	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
 	  return 1;
 	e_border_focus_set(bd, 0, 1);
