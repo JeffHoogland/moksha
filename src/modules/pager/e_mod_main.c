@@ -379,14 +379,14 @@ _pager_face_menu_new(Pager_Face *face)
 
    /* Scale */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Keep scale");
+   e_menu_item_label_set(mi, "Keep Scale");
    e_menu_item_check_set(mi, 1);
    if (face->conf->scale) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _pager_face_cb_menu_scale, face);
 
    /* Resize */
    mi = e_menu_item_new(face->menu);
-   e_menu_item_label_set(mi, "Auto resize");
+   e_menu_item_label_set(mi, "Auto Resize");
    mn = e_menu_new();
    e_menu_item_submenu_set(mi, mn);
 
