@@ -198,6 +198,9 @@ e17
 
 	<orderedlist>
 	  <listitem>
+	    <para>Edb</para>
+	  </listitem>
+	  <listitem>
 	    <para>Imlib2</para>
 	  </listitem>
 	  <listitem>
@@ -208,9 +211,6 @@ e17
 	  </listitem>
 	  <listitem>
 	    <para>Ebits</para>
-	  </listitem>
-	  <listitem>
-	    <para>Edb</para>
 	  </listitem>
 	  <listitem>
 	    <para>Ecore</para>
