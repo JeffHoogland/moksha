@@ -10,16 +10,11 @@ These are in no particular order:
 * add key input focus control for desktop modules
 * finish off icccm support
 * optimize clock theme (speed/cpu)
-* make shading animate
 * make shading go in all 4 directions
-* disable resize etc. while shaded
-* emit shading signal, unshading, shaded, unshaded.
 * add virtual desktops
 * add keybindings
 * add general actions to be hooked to button/key bindings
 * add "icon box"
-* make minimize work
-* make maximize work
 * add pagers
 * add netwm support
 * full colour+alpha cursors
