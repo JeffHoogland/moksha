@@ -885,7 +885,6 @@ _temperature_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
      { 
 	_temperature_face_enable(face);
      }
-   e_menu_item_toggle_set(mi, face->conf->enabled);
 }
 
 static void

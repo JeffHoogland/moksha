@@ -372,7 +372,6 @@ _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
      { 
 	_clock_face_enable(face);
      }
-   e_menu_item_toggle_set(mi, face->conf->enabled);
 }
 
 static void
