@@ -353,10 +353,20 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 void
 e_border_raise(E_Border *bd)
 {
+   Ecore_X_Window mwin;
+   
    E_OBJECT_CHECK(bd);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    bd->container->clients = evas_list_append(bd->container->clients, bd);
-   ecore_x_window_raise(bd->win);
+   mwin = e_menu_grab_window_get();
+   if (!mwin)
+     ecore_x_window_raise(bd->win);
+   else
+     ecore_x_window_configure(bd->win,
+			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			      0, 0, 0, 0, 0, 
+			      mwin, ECORE_X_WINDOW_STACK_BELOW);
 }
 
 void
@@ -584,6 +594,7 @@ e_border_maximize(E_Border *bd)
 	bd->saved.h = bd->h;
 
 	/* FIXME maximize intelligently */
+	e_border_raise(bd);
 	e_border_move_resize(bd, 0, 0, bd->zone->w, bd->zone->h);
 	bd->maximized = 1;
 	bd->changes.pos = 1;
