@@ -1,0 +1,140 @@
+#ifndef E_MENU_H
+#define E_MENU_H
+
+typedef struct _E_Menu         E_Menu;
+typedef struct _E_Menu_Item    E_Menu_Item;
+
+struct _E_Menu
+{
+   E_Object             e_obj_inherit;
+   
+   struct {
+      char              visible : 1;
+      int               x, y, w, h;
+   } cur, prev;
+   
+   int                  frozen;
+   
+   struct {
+      char             *title;
+      char             *icon_file;
+      Evas_Object      *icon;
+   } header;
+   
+   Evas_List           *items;
+
+   /* the container it belongs to */
+   E_Container         *con;
+   
+   /* if a menu item spawned this menu, what item is it? */
+   E_Menu_Item         *parent_item;
+   
+   /* only useful if realized != 0 (ie menu is ACTUALLY realized) */
+   Ecore_Evas          *ecore_evas;
+   Evas                *evas;
+   Ecore_X_Window       evas_win;
+   Evas_Object         *bg_object;
+   Evas_Object         *container_object;
+   Evas_Coord           container_x, container_y, container_w, container_h;
+   E_Container_Shape   *shape;
+
+   struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m);
+   } pre_activate_cb, post_deactivate_cb;
+   
+   unsigned char        realized : 1; /* 1 if it is realized */
+   unsigned char        active : 1; /* 1 if it is in active list */
+   unsigned char        changed : 1;
+   unsigned char        fast_mouse : 1;
+   unsigned char        pending_new_submenu : 1;
+   unsigned char        have_submenu : 1;
+   unsigned char        in_active_list : 1;
+};
+
+struct _E_Menu_Item
+{
+   E_Object       e_obj_inherit;
+   E_Menu        *menu;
+   char          *icon;
+   char          *icon_key;
+   char          *label;
+   E_Menu        *submenu;
+   
+   Evas_Object   *separator_object;
+   
+   Evas_Object   *bg_object;
+
+   Evas_Object   *container_object;
+   
+   Evas_Object   *toggle_object;
+   Evas_Object   *icon_bg_object;
+   Evas_Object   *icon_object;
+   Evas_Object   *label_object;
+   Evas_Object   *submenu_object;
+   
+   Evas_Object   *event_object;
+   
+   int            label_w, label_h;
+   int            icon_w, icon_h;
+   int            separator_w, separator_h;
+   int            submenu_w, submenu_h;
+   int            toggle_w, toggle_h;
+   int            radio_group;
+   int            x, y, w, h;
+   
+   struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
+   } cb;
+   
+   unsigned char  separator : 1;
+   unsigned char  radio : 1;
+   unsigned char  check : 1;
+   unsigned char  toggle : 1;
+   unsigned char  changed : 1;
+   unsigned char  active : 1;
+};
+
+#define E_MENU_POP_DIRECTION_NONE  0
+#define E_MENU_POP_DIRECTION_LEFT  1
+#define E_MENU_POP_DIRECTION_RIGHT 2
+#define E_MENU_POP_DIRECTION_UP    3
+#define E_MENU_POP_DIRECTION_DOWN  4
+#define E_MENU_POP_DIRECTION_AUTO  5
+#define E_MENU_POP_DIRECTION_LAST  6
+
+int          e_menu_init(void);
+int          e_menu_shutdown(void);
+
+E_Menu      *e_menu_new(void);
+void         e_menu_activate_key(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+void         e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+void         e_menu_activate(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+void         e_menu_deactivate(E_Menu *m);
+int          e_menu_freeze(E_Menu *m);
+int          e_menu_thaw(E_Menu *m);
+void         e_menu_title_set(E_Menu *m, char *title);
+void         e_menu_icon_file_set(E_Menu *m, char *icon);
+void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
+void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
+
+E_Menu_Item *e_menu_item_new(E_Menu *m);
+E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
+int          e_menu_item_num_get(E_Menu_Item *mi);
+void         e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon);
+void         e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key);
+void         e_menu_item_label_set(E_Menu_Item *mi, char *label);
+void         e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub);
+void         e_menu_item_separator_set(E_Menu_Item *mi, int sep);
+void         e_menu_item_check_set(E_Menu_Item *mi, int chk);
+void         e_menu_item_radio_set(E_Menu_Item *mi, int rad);
+void         e_menu_item_radio_group_set(E_Menu_Item *mi, int radg);
+void         e_menu_item_toggle_set(E_Menu_Item *mi, int tog);
+int          e_menu_item_toggle_get(E_Menu_Item *mi);
+void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+void         e_menu_item_active_set(E_Menu_Item *mi, int active);
+
+void         e_menu_idler_before(void);
+    
+#endif
