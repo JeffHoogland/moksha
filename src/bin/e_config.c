@@ -142,6 +142,7 @@ e_config_init(void)
 	     eb->action = E_BINDING_ACTION_MENU;
 	     e_config->bindings = evas_list_append(e_config->bindings, eb);
 	  }
+	e_config_save_queue();
      }
 
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
@@ -199,6 +200,17 @@ e_config_save(void)
 }
 
 void
+e_config_save_flush(void)
+{
+   if (_e_config_save_job)
+     {
+	ecore_job_del(_e_config_save_job);
+	_e_config_save_job = NULL;
+	e_config_domain_save("e", _e_config_edd, e_config);
+     }
+}
+
+void
 e_config_save_queue(void)
 {
    if (_e_config_save_job) ecore_job_del(_e_config_save_job);
@@ -250,8 +262,8 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 static void
 _e_config_save_cb(void *data)
 {
+   printf("SAVE!!!!\n");
    e_module_save_all();
-
    e_config_domain_save("e", _e_config_edd, e_config);
    _e_config_save_job = NULL;
 }

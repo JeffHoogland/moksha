@@ -320,8 +320,9 @@ main(int argc, char **argv)
    ecore_main_loop_begin();
    
    /* ask all modules to save their config and then shutdown */
-   e_module_save_all();
-   e_config_save();
+   /* NB: no need to do this as config shutdown will flush any saves */
+   /*     and all changed config was already saved before */
+   e_config_save_flush();
    e_module_shutdown();
 
    /* unroll our stack of shutdown functions with exit code of 0 */

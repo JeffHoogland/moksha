@@ -78,7 +78,7 @@ e_module_new(char *name)
 {
    E_Module *m;
    char buf[4096];
-   char *modpath;
+   char *modpath, *s;
    Evas_List *l;
    int in_list = 0;
 
@@ -140,7 +140,12 @@ e_module_new(char *name)
      }
    _e_modules = evas_list_append(_e_modules, m);
    m->name = strdup(name);
-   m->dir = e_file_get_dir(modpath);
+   s = e_file_get_dir(modpath);
+   if (s)
+     {
+	m->dir = e_file_get_dir(s);
+	free(s);
+     }
    m->func.info(m);
    for (l = e_config->modules; l; l = l->next)
      {

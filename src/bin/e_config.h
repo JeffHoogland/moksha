@@ -87,6 +87,7 @@ EAPI void *e_config_domain_load(char *domain, E_Config_DD *edd);
 EAPI int   e_config_domain_save(char *domain, E_Config_DD *edd, void *data);
 
 EAPI int e_config_save(void);
+EAPI void e_config_save_flush(void);
 EAPI void e_config_save_queue(void);
 
 extern EAPI E_Config *e_config;
