@@ -14,12 +14,12 @@ struct _Config
 
 struct _Pager
 {
+   Evas_List    *managers;
    E_Menu       *config_menu;
    Evas         *evas;
    Evas_Object  *base, *screen;
    Evas_List    *desks;
    
-   E_Container  *con;
    E_Config_DD  *conf_edd;
    Config       *conf;
    unsigned char move : 1;
