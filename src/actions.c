@@ -127,7 +127,6 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 	/* it's a key? lets grab it! */
 	if ((a->key) && (strlen(a->key) > 0))
 	  {
-	     printf("grab it! (%s %i)\n", a->key, a->modifiers);
 	     if (a->modifiers == -1)
 	       e_keys_grab(a->key, EV_KEY_MODIFIER_NONE, 1);
 	     else
@@ -198,7 +197,6 @@ _e_action_free(E_Action *a)
    /* it's a key? lets ungrab it! */
    if ((a->key) && (strlen(a->key) > 0) && (a->grabbed))
      {
-	printf("ungrab it! (%s %i)\n", a->key, a->modifiers);
 	if (a->modifiers == -1)
 	  e_keys_ungrab(a->key, EV_KEY_MODIFIER_NONE, 1);
 	else
@@ -1159,7 +1157,6 @@ e_act_max_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
    E_Border *b;
    
    b = o;
-   printf("e_act_max_start\n");
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded > 0) return;
