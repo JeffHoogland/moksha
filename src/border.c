@@ -400,8 +400,8 @@ e_focus_out(Eevent * ev)
 		       g->remove_after = 1;
 		       b->grabs = evas_list_append(b->grabs, g);
 		       e_button_grab(b->win.main, 0, XEV_BUTTON | XEV_MOUSE_MOVE, EV_KEY_MODIFIER_NONE, 1);
-		       e_db_close(db);
 		    }
+		  e_db_close(db);
 	       }
 	     b->changed = 1;
 	  }
