@@ -52,3 +52,25 @@ void
 e_icon_unrealize(E_Icon *icon)
 {
 }
+
+void
+e_icon_update(E_Icon *icon)
+{
+   int fx, fy;
+   int iw, ih;
+   double tw, th;
+   
+   if (!icon->changed) return;
+   evas_get_geometry(icon->view->evas, icon->obj.filename, NULL, NULL, &tw, &th);
+   evas_get_image_size(icon->view->evas, icon->obj.icon, & iw, &ih);
+   fx = icon->x + ((iw - tw) / 2);
+   fy = icon->y + ih;
+   evas_move(icon->view->evas, icon->obj.icon, icon->x, icon->y);
+   evas_move(icon->view->evas, icon->obj.filename, fx, fy);
+   icon->changed = 0;
+   if (icon->view)
+     {
+	icon->view->changed = 1;
+     }
+   icon->changed = 0;
+}

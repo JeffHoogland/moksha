@@ -41,7 +41,11 @@ e_wheel(Eevent * ev)
      {
 	E_View *v;
 	
-	v = l->data;	
+	v = l->data;
+	if (e->win == v->win.main)
+	  {
+	     e_view_scroll(v, 0, - (e->z * 10));
+	  }
      }
 }
 
@@ -537,7 +541,6 @@ e_view_set_dir(E_View *v, char *dir)
    v->dir = e_file_real(dir);
    /* start monitoring new dir */
    v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir);
-   printf("%i %s\n", v->monitor_id, v->dir);
    v->is_listing = 1;
    v->changed = 1;
 }
@@ -545,6 +548,17 @@ e_view_set_dir(E_View *v, char *dir)
 void
 e_view_scroll(E_View *v, int dx, int dy)
 {
+   Evas_List l;
+   
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon *icon;
+	
+	icon = l->data;
+	icon->x += dx;
+	icon->y += dy;
+	icon->changed = 1;	
+     }
    v->changed = 1;
 }
 
@@ -555,6 +569,7 @@ e_view_add_icon(E_View *v, E_Icon *icon)
    icon->view = v;
    e_icon_realize(icon);
    v->changed = 1;
+   v->icons = evas_list_append(v->icons, icon);
 }
 
 void
@@ -565,6 +580,7 @@ e_view_del_icon(E_View *v, E_Icon *icon)
    icon->view = NULL;
    icon->changed = 1;
    v->changed = 1;
+   v->icons = evas_list_remove(v->icons, icon);
 }
 
 void
@@ -628,8 +644,17 @@ e_view_unrealize(E_View *v)
 void
 e_view_update(E_View *v)
 {
+   Evas_List l;
+   
    if (!v->changed) return;
    
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon *icon;
+	
+	icon = l->data;
+	e_icon_update(icon);
+     }
    if (v->options.back_pixmap)
      {
 	Imlib_Updates up;
