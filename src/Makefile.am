@@ -37,6 +37,7 @@ enlightenment_SOURCES = \
 	ipc.h ipc.c \
 	keys.h keys.c \
 	main.c \
+	match.c match.h \
 	menu.h menu.c \
 	menubuild.h menubuild.c \
 	pack.c \

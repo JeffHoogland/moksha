@@ -93,6 +93,7 @@ struct _E_Border
       int initial_state;
       int is_desktop;
       int w, h;
+      int no_place;
       struct {
 	 int requested;
 	 int x, y;
@@ -120,6 +121,7 @@ struct _E_Border
    Evas_List grabs;
    E_Desktop *desk;
    
+   char *border_style;
    char *border_file;
 
    int first_expose;

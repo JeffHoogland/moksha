@@ -8,6 +8,7 @@
 #include "icccm.h"
 #include "util.h"
 #include "place.h"
+#include "match.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -1040,11 +1041,12 @@ void
 e_border_apply_border(E_Border *b)
 {
    int pl, pr, pt, pb;
-   char *borders, buf[4096], border[4096], *style = NULL;
+   char *borders, buf[4096], border[4096], *style = NULL, *match_style;
    int prop_selected = 0, prop_sticky = 0, prop_shaded = 0;
    
    style = "default"; 
    if ((!b->client.titlebar) && (!b->client.border)) style = "borderless";
+   if (b->border_style) style = b->border_style;
    
    if (b->current.selected)              prop_selected = 1;
    if (b->current.shaded == b->client.h) prop_shaded = 1;
@@ -1216,6 +1218,7 @@ e_border_adopt(Window win, int use_client_pos)
      }
    /* reparent the window finally */
    e_window_reparent(win, b->win.container, 0, 0);
+   e_match_set_props(b);
    /* figure what border to use */
    e_border_apply_border(b);
      {
@@ -1497,8 +1500,12 @@ e_border_free(E_Border *b)
    IF_FREE(b->client.title);
    IF_FREE(b->client.name);
    IF_FREE(b->client.class);
+   IF_FREE(b->client.command);
+   IF_FREE(b->client.machine);
+   IF_FREE(b->client.icon_name);
+   IF_FREE(b->border_style);
    IF_FREE(b->border_file);
-   
+
    if (b->grabs)
      {
 	for (l = b->grabs; l; l = l->next)
