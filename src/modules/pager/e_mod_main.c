@@ -10,8 +10,8 @@
  */
 
 /* module private routines */
-static Pager      *_pager_init();
-static void        _pager_shutdown(Pager *pager);
+static Pager      *_pager_new();
+static void        _pager_free(Pager *pager);
 static void        _pager_config_menu_new(Pager *pager);
 
 static Pager_Face *_pager_face_new(E_Zone *zone);
@@ -81,7 +81,7 @@ init(E_Module *module)
 	return NULL;
      }
    /* actually init pager */
-   pager = _pager_init(module);
+   pager = _pager_new(module);
    module->config_menu = pager->config_menu;
 
    return pager;
@@ -97,7 +97,7 @@ shutdown(E_Module *module)
 
    pager = module->data;
    if (pager)
-     _pager_shutdown(pager);
+     _pager_free(pager);
 
    return 1;
 }
@@ -134,7 +134,7 @@ about(E_Module *module)
 
 /* module private routines */
 static Pager *
-_pager_init()
+_pager_new()
 {
    Pager       *pager;
    Pager_Face  *face;
@@ -235,9 +235,12 @@ _pager_init()
 }
 
 static void
-_pager_shutdown(Pager *pager)
+_pager_free(Pager *pager)
 {
    Evas_List *list;
+
+   E_CONFIG_DD_FREE(_conf_edd);
+   E_CONFIG_DD_FREE(_conf_face_edd);
 
    for (list = pager->faces; list; list = list->next)
      _pager_face_free(list->data);
@@ -248,9 +251,7 @@ _pager_shutdown(Pager *pager)
    evas_list_free(pager->menus);
    e_object_del(E_OBJECT(pager->config_menu));
 
-   E_CONFIG_DD_FREE(_conf_edd);
-   E_CONFIG_DD_FREE(_conf_face_edd);
-
+   evas_list_free(pager->conf->faces);
    free(pager->conf);
    free(pager);
 }
@@ -841,32 +842,39 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    face->fy = y;
    face->fw = deskw;
    face->fh = deskh;
-   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+   switch (change)
      {
-	_pager_face_draw(face);
-     }
-   else if (change == E_GADMAN_CHANGE_RAISE)
-     {
-	evas_object_raise(face->base);
+      case E_GADMAN_CHANGE_MOVE_RESIZE:
+	 _pager_face_draw(face);
+	 break;
+      case E_GADMAN_CHANGE_RAISE:
+	 evas_object_raise(face->base);
 
-	desks = face->desks;
-	while (desks)
-	  {
-	     desk = desks->data;
-	     evas_object_raise(desk->obj);
+	 desks = face->desks;
+	 while (desks)
+	   {
+	      desk = desks->data;
+	      evas_object_raise(desk->obj);
 
-	     wins = desk->wins;
-	     while (wins)
-	       {
-		  win = wins->data;
-		  evas_object_raise(win->obj);
+	      wins = desk->wins;
+	      while (wins)
+		{
+		   win = wins->data;
+		   evas_object_raise(win->obj);
 
-		  wins = wins->next;
-	       }
-	     desks = desks->next;
-	  }
+		   wins = wins->next;
+		}
+	      desks = desks->next;
+	   }
 
-	evas_object_raise(face->screen);
+	 evas_object_raise(face->screen);
+	 break;
+      case E_GADMAN_CHANGE_EDGE:
+      case E_GADMAN_CHANGE_ZONE:
+	 /* FIXME
+	  * Must we do something here?
+	  */
+	 break;
      }
 }
 

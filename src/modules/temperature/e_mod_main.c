@@ -11,7 +11,7 @@
 
 /* module private routines */
 static Temperature *_temperature_new();
-static void     _temperature_shutdown(Temperature *e);
+static void     _temperature_free(Temperature *e);
 static void     _temperature_config_menu_new(Temperature *e);
 static int      _temperature_cb_check(void *data);
 
@@ -65,7 +65,7 @@ shutdown(E_Module *m)
 
    e = m->data;
    if (e)
-     _temperature_shutdown(e);
+     _temperature_free(e);
    return 1;
 }
 
@@ -210,7 +210,7 @@ _temperature_new()
 }
 
 static void
-_temperature_shutdown(Temperature *e)
+_temperature_free(Temperature *e)
 {
    Evas_List *l;
 
@@ -228,6 +228,7 @@ _temperature_shutdown(Temperature *e)
 
    ecore_timer_del(e->temperature_check_timer);
 
+   evas_list_free(e->conf->faces);
    free(e->conf);
    free(e);
 }
@@ -729,18 +730,25 @@ _temperature_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Chang
    Evas_Coord x, y, w, h;
 
    ef = data;
-   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+   switch (change)
      {
-	e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
-	evas_object_move(ef->temp_object, x, y);
-	evas_object_move(ef->event_object, x, y);
-	evas_object_resize(ef->temp_object, w, h);
-	evas_object_resize(ef->event_object, w, h);
-     }
-   else if (change == E_GADMAN_CHANGE_RAISE)
-     {
-	evas_object_raise(ef->temp_object);
-	evas_object_raise(ef->event_object);
+      case E_GADMAN_CHANGE_MOVE_RESIZE:
+	 e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
+	 evas_object_move(ef->temp_object, x, y);
+	 evas_object_move(ef->event_object, x, y);
+	 evas_object_resize(ef->temp_object, w, h);
+	 evas_object_resize(ef->event_object, w, h);
+	 break;
+      case E_GADMAN_CHANGE_RAISE:
+	 evas_object_raise(ef->temp_object);
+	 evas_object_raise(ef->event_object);
+	 break;
+      case E_GADMAN_CHANGE_EDGE:
+      case E_GADMAN_CHANGE_ZONE:
+	 /* FIXME
+	  * Must we do something here?
+	  */
+	 break;
      }
 }
 
