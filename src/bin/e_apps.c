@@ -721,7 +721,18 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	       * the client. */
 	      a2 = _e_app_subapp_path_find(app, path);
 	      if (a2)
-		a2->deleted = 1;
+		{
+		   a2->deleted = 1;
+		   /* If this app is in a main repository, tell all referencing
+		    * apps to rescan. */
+		   for (l = a2->references; l; l = l->next)
+		     {
+			E_App *app;
+
+			app = l->data;
+			_e_app_subdir_rescan(app);
+		     }
+		}
 	      break;
 	   case ECORE_FILE_EVENT_CHANGED:
 	      if (type == ECORE_FILE_TYPE_FILE)
