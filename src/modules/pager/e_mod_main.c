@@ -467,22 +467,31 @@ static void
 _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 { 
    Evas_Event_Mouse_Move *ev;
-   Pager *p;
-   Evas_Coord cx, cy, sw, sh;
+   Pager     *p;
+   Evas_Coord cx, cy, sw, sh, tw, th;
+   E_Zone    *zone;
+   int        xcount, ycount;
    
    evas_pointer_canvas_xy_get(e, &cx, &cy);
    evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
 
    ev = event_info;
    p = data;
+
+   zone = e_zone_current_get(p->con);
+   e_zone_desk_count_get(zone, &xcount, &ycount);
+   /* note that these are not the same as p->tw, as that could be slightly
+      larger (rounding etc) these will vie exactly the right result */
+   tw = p->fw * xcount;
+   th = p->fh * ycount;
    if (p->move)
      {
 	p->fx += cx - p->xx;
 	p->fy += cy - p->yy;
 	if (p->fx < 0) p->fx = 0;
 	if (p->fy < 0) p->fy = 0;
-	if (p->fx + p->fw > sw) p->fx = sw - p->fw;
-	if (p->fy + p->fh > sh) p->fy = sh - p->fh;
+	if (p->fx + tw > sw) p->fx = sw - tw;
+	if (p->fy + th > sh) p->fy = sh - th;
 	_pager_refresh(p);
      }
    else if (p->resize)
@@ -504,8 +513,16 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (p->fh < PAGER_MIN_H) p->fh = PAGER_MIN_H;
 //	if (p->fw < p->minsize) p->fw = p->minsize;
 //	if (p->fw > p->maxsize) p->fw = p->maxsize;
-	if (p->fx + p->fw > sw) p->fw = sw - p->fx;
-	if (p->fy + p->fh > sh) p->fh = sh - p->fy;
+	if (p->fx + tw > sw)
+	  {
+	     p->tw = sw - p->fx;
+	     p->fw = p->tw / xcount;
+	  }
+	if (p->fy + th > sh)
+	  {
+	     p->th = sh - p->fy;
+	     p->fh = p->th / ycount;
+	  }
 	_pager_refresh(p);
    }
    p->xx = ev->cur.canvas.x;
