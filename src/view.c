@@ -1352,7 +1352,7 @@ e_mouse_in(Ecore_Event * ev)
      {
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     if (v->is_desktop)
+	     if (v->dir->is_desktop)
 	       {
 		  evas_event_enter(v->evas);
 	       }
