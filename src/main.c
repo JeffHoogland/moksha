@@ -1,4 +1,5 @@
 #include "e.h"
+#include <X11/Xproto.h>
 
 #ifdef E_PROF
 Evas_List __e_profiles = NULL;
@@ -24,12 +25,23 @@ static void ch_col(int val, void *data)
    UN(data);
 }
 
+static void wm_running_error(Display * d, XErrorEvent * ev);
+static void 
+wm_running_error(Display * d, XErrorEvent * ev)
+{
+   if ((ev->request_code == X_ChangeWindowAttributes) && (ev->error_code == BadAccess))
+     {
+	fprintf(stderr, "A WM is alreayd running. no point running now is there?\n");
+	exit(1);
+     }   
+}
+
 void setup(void);
 void
 setup(void)
 {
    e_grab();
-   e_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP);
+   e_sync();
    e_border_adopt_children(0);
    e_ungrab();
 /*   e_add_event_timer("timer", 0.02, ch_col, 0, NULL);*/
@@ -42,10 +54,23 @@ main(int argc, char **argv)
    e_exec_set_args(argc, argv);
    
    e_config_init();
-   e_display_init(NULL);
+   if (!e_display_init(NULL))
+     {
+	fprintf(stderr, "cannot connect to display!\n");
+	exit(1);
+     }
    e_ev_signal_init();
    e_event_filter_init();
    e_ev_x_init();
+   
+   /* become a wm */
+   e_grab();
+   e_sync();
+   e_set_error_handler(wm_running_error);
+   e_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP);
+   e_sync();
+   e_reset_error_handler();
+   e_ungrab();
 
    e_pack_object_init();
    e_fs_init();
