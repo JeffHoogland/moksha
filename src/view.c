@@ -385,11 +385,11 @@ e_view_handle_fs_restart(void *data)
 	evas_list_free(icons);
      }
    if (e_fs_get_connection())
-     v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					efsd_ops(2, 
-						 efsd_op_get_stat(), 
-						 efsd_op_get_filetype()
-						 )
+     v->monitor_id = efsd_start_monitor_dir(e_fs_get_connection(), v->dir,
+					    efsd_ops(2, 
+						     efsd_op_get_stat(), 
+						     efsd_op_get_filetype()
+						     )
 					);
    printf("restarted monior id (connection = %p), %i for %s\n", e_fs_get_connection(), v->monitor_id, v->dir);
    v->is_listing = 1;
@@ -556,29 +556,29 @@ e_view_handle_fs(EfsdEvent *ev)
       case EFSD_EVENT_FILECHANGE:
 	switch (ev->efsd_filechange_event.changetype)
 	  {
-	   case EFSD_CHANGE_CREATED:
+	   case EFSD_FILE_CREATED:
 	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
-	   case EFSD_CHANGE_EXISTS:
+	   case EFSD_FILE_EXISTS:
 	     e_view_file_added(ev->efsd_filechange_event.id, 
 			       ev->efsd_filechange_event.file);
 	     break;
-	   case EFSD_CHANGE_DELETED:
+	   case EFSD_FILE_DELETED:
 	     e_view_file_deleted(ev->efsd_filechange_event.id, 
 				 ev->efsd_filechange_event.file);
 	     break;
-	   case EFSD_CHANGE_CHANGED:
+	   case EFSD_FILE_CHANGED:
 /*	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     break;
-	   case EFSD_CHANGE_MOVED:
+	   case EFSD_FILE_MOVED:
 /*	     printf("EFSD_CHANGE_MOVED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
 */	     break;
-	   case EFSD_CHANGE_END_EXISTS:
+	   case EFSD_FILE_END_EXISTS:
 	       {
 		  E_View *v;
 		  
@@ -615,7 +615,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	       {
 		  E_Icon *icon;
 		  
-		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.files[0]);
 		  if (icon)
 		    {
 		       /* figure out icons to use */
@@ -635,7 +635,7 @@ e_view_handle_fs(EfsdEvent *ev)
 		  
 		  st = (struct stat*) ev->efsd_reply_event.data;
 		  
-		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.files[0]);
 		  if (icon)
 		    {
 		       char f[4096];
@@ -711,8 +711,12 @@ e_view_handle_fs(EfsdEvent *ev)
 	     break;
 	   case EFSD_CMD_GETMETA:
 	     break;
-	   case EFSD_CMD_STARTMON:
+	   case EFSD_CMD_STARTMON_DIR:
 	     printf("Startmon event %i\n",
+		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
+	     break;
+	   case EFSD_CMD_STARTMON_FILE:
+	     printf("Startmon file event %i\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
 	     break;
 	   case EFSD_CMD_STOPMON:
@@ -835,12 +839,12 @@ e_view_set_dir(E_View *v, char *dir)
    v->restarter = e_fs_add_restart_handler(e_view_handle_fs_restart, v);
    if (e_fs_get_connection())
      {
-	v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-					   efsd_ops(2, 
-						    efsd_op_get_stat(), 
-						    efsd_op_get_filetype()
-						    )
-					   );
+	v->monitor_id = efsd_start_monitor_dir(e_fs_get_connection(), v->dir,
+					       efsd_ops(2, 
+							efsd_op_get_stat(), 
+							efsd_op_get_filetype()
+							)
+					       );
 	v->is_listing = 1;
 	v->changed = 1;
      }

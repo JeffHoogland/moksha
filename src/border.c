@@ -1280,6 +1280,7 @@ e_border_adopt(Window win, int use_client_pos)
 E_Border *
 e_border_new(void)
 {
+   /* FIXME: need to set an upper limit on the frame size */
    E_Border *b;
    int max_colors = 216;
    int font_cache = 1024 * 1024;
