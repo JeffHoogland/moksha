@@ -202,6 +202,7 @@ void      e_view_file_deleted(int id, char *file);
 void      e_view_file_changed(int id, char *file);
 void      e_view_file_moved(int id, char *file);
 E_View   *e_view_find_by_monitor_id(int id);
+E_View   *e_view_find_by_window(Window win);
 
 /**
  * e_view_new - Creates a new view object

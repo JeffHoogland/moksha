@@ -80,21 +80,24 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    ic = _data;
    if (ic->view->drag.started)
      {
+	int x, y;
+	
 	ic->state.clicked = 0;
 	ic->state.just_selected = 0;
 	e_icon_update_state(ic);
+	ecore_window_no_ignore(ic->view->drag.win);
 	ecore_window_destroy(ic->view->drag.win);
 	ic->view->drag.started = 0;
 	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
 	  ic->view->drag.drop_mode = E_DND_COPY;
 	else
 	  ic->view->drag.drop_mode = E_DND_MOVE;
+	/* FIXME: if button use is right mouse then do an ask */
 
 	/* Handle dnd motion(drop) - dragging==0 */
-	ecore_window_dnd_handle_motion( ic->view->win.base, 
-					_x - ic->view->drag.offset.x, 
-					_y - ic->view->drag.offset.y, 
-					0);
+	ecore_pointer_xy_get(&x, &y);
+	ecore_window_dnd_handle_motion(ic->view->win.base, x, y, 0);
+	ecore_window_dnd_finished();
 	D_RETURN;	
      }
    if (_b == 1)
@@ -361,6 +364,9 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	     ecore_pixmap_free(mask);
 
 	     /* Initiate dnd */
+	     ecore_dnd_set_mode_copy();
+	     ecore_dnd_set_data(ic->view->win.base);
+	     
 	     ecore_dnd_own_selection(ic->view->win.base);
 
 	     ic->view->drag.started = 1;
@@ -383,6 +389,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  ic->view->drag.drop_mode = E_DND_MOVE;
 
 	/* Handle dnd motion - dragging==1 */
+	ecore_pointer_xy_get(&x, &y);
 	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
      }
 

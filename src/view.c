@@ -1697,9 +1697,30 @@ e_view_find_by_monitor_id(int id)
    D_RETURN_(NULL);
 }
 
+E_View   *
+e_view_find_by_window(Window win)
+{
+   Evas_List l;
+   
+   D_ENTER;
+   
+   for (l = views; l; l = l->next)
+     {
+	E_View *v;
+	
+	v = l->data;
+	if (v->win.base == win)
+	  D_RETURN_(v);
+     }
+   
+   D_RETURN_(NULL);
+}
+
 void
 e_view_close_all(void)
 {
+   D_ENTER;
+   
    while (views)
      {
 	E_View *v;
@@ -1707,6 +1728,8 @@ e_view_close_all(void)
 	v = views->data;
 	e_object_unref(E_OBJECT(v));
      }
+   
+   D_RETURN;
 }
 
 static void
@@ -2458,7 +2481,6 @@ e_view_bg_change(E_View *v, char *file)
    
    D_ENTER;
 
-   printf("change %s\n", file);
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
    sprintf(buf, "background_reload:%s", v->dir);
    ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
@@ -2473,7 +2495,6 @@ e_view_bg_add(E_View *v, char *file)
    
    D_ENTER;
 
-   printf("change %s\n", file);
    if (!(!strcmp(file, ".e_background.bg.db"))) return;
    sprintf(buf, "%s/%s", v->dir, file);
    if (!strcmp(buf, v->bg_file)) D_RETURN;
@@ -2531,9 +2552,6 @@ e_view_init(void)
    D_RETURN;
 }
 
-
-
-
 /*
  * send the dnd data to the target app
  *
@@ -2552,17 +2570,28 @@ e_dnd_data_request(Ecore_Event * ev)
    *  } Ecore_Event_Dnd_Data_Request;
    */
    Evas_List l;
-   char hostname[PATH_MAX];
 
    D_ENTER;
    
    /* Need hostname for URL (file://hostname/...) */
-   if(gethostname( hostname, PATH_MAX))
-     {
-       /* failed... Default to 'localhost' */
-       strcpy( hostname, "localhost");
-     }
+/* nooo nooo noo - never encode host names in url's - 
+ * file:/path/blah is local only - secondly.. why encode 
+ * url's with hosts? e17 only handles local files in the 
+ * fs - so why use url styles at all? NB - in my testing
+ * in efm all the other apps didnt use the file:/host/blah
+ * url formatting... so i think we want to do what everyone
+ * else does here
+ */
 
+/* this is o evil it's not funny - gethostbyname? you know 
+ * your window manager) could get hung here for minutes doing 
+ * this lookup? bad bad bad. 
+ *   
+ *  if(gethostname( hostname, PATH_MAX))
+ *    {
+ *      strcpy( hostname, "localhost");
+ *    }
+ */
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -2579,45 +2608,102 @@ e_dnd_data_request(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	    for (ll = v->icons; ll; ll = ll->next)
-	      {
-		E_Icon *ic;
-		
-		ic = ll->data;
-		if (ic->state.selected)
-		  {
-		    int ic_size;
-
-		    /* Size = 'file://' + 3 strings + host delimiter '/' and '\r\n' end. */
-		    ic_size = 7 + strlen(hostname) + strlen(v->dir) + strlen(ic->file)+3;
-		    size += ic_size;
-
-		    
-		    REALLOC(data, char, size);
-		    
-		    sprintf( data+idx, "file://%s%s/%s\r\n", hostname, v->dir, ic->file);
-		    idx += ic_size;
-		  }
-	      }
-
-	    if(v->drag.drop_mode == E_DND_COPY)
-	      ecore_dnd_set_mode_copy();
-	    else
-	      ecore_dnd_set_mode_move();
-	    ecore_dnd_set_data(e->win);
-
-	    
-	    ecore_dnd_send_data(
-				e->source_win, e->win,
-				data, size,
-				e->destination_atom,
-				/* uri-list, not plain-text */
-				0
-				);
+	    if (e->uri_list)
+	       {
+		  int first = 1;
+		  
+		  for (ll = v->icons; ll; ll = ll->next)
+		    {
+		       E_Icon *ic;
+		       
+		       ic = ll->data;
+		       if (ic->state.selected)
+			 {
+			    int ic_size;
+			    
+			    ic_size = 5 + strlen(v->dir) + 1 + strlen(ic->file) + 2;
+			    size += ic_size;
+			    
+			    REALLOC(data, char, size);
+			    if (first)
+			      {
+				 sprintf(data + idx, "file:%s/%s", v->dir, ic->file);
+				 first = 0;
+			      }
+			    else
+			      sprintf(data + idx, "\r\nfile:%s/%s\r\n", v->dir, ic->file);
+			    idx += ic_size;
+			 }
+		    }
+		  ecore_dnd_send_data(e->source_win, e->win,
+				      data, strlen(data),
+				      e->destination_atom,
+				      DND_TYPE_URI_LIST);
+	       }
+	     else if (e->plain_text)
+	       {
+		  int first = 1;
+		  
+		  for (ll = v->icons; ll; ll = ll->next)
+		    {
+		       E_Icon *ic;
+		       
+		       ic = ll->data;
+		       if (ic->state.selected)
+			 {
+			    int ic_size;
+			    
+			    ic_size = strlen(v->dir) + 1 + strlen(ic->file) + 1;
+			    size += ic_size;
+			    
+			    REALLOC(data, char, size);
+			    if (first)
+			      {
+				 sprintf(data + idx, "%s/%s", v->dir, ic->file);
+				 first = 0;
+			      }
+			    else
+				 sprintf(data + idx, "\n%s/%s", v->dir, ic->file);
+			    idx += ic_size;
+			 }
+		    }
+		  ecore_dnd_send_data(e->source_win, e->win,
+				      data, strlen(data),
+				      e->destination_atom,
+				      DND_TYPE_PLAIN_TEXT);
+	       }	     
+	     else /* if (e->moz_url)*/
+	       {
+		  FREE(data);
+		  data = NULL;
+		  
+		  for (ll = v->icons; ll; ll = ll->next)
+		    {
+		       E_Icon *ic;
+		       
+		       ic = ll->data;
+		       if (ic->state.selected)
+			 {
+			    char buf[16384];
+			    
+			    sprintf(buf, "file:%s/%s", v->dir, ic->file);
+			    data = strdup(buf);
+			    size = strlen(data);
+			    break;
+			 }
+		    }
+		  if (data)
+		    {
+		       ecore_dnd_send_data(e->source_win, e->win, 
+					   data, size,
+					   e->destination_atom,
+					   DND_TYPE_NETSCAPE_URL);
+		    }
+	       }
+	     IF_FREE(data);
+	     D_RETURN;
 	  }
-	FREE(data);
      }
-
    D_RETURN;
 }
 
@@ -2645,14 +2731,13 @@ e_dnd_drop_end(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	    ecore_window_dnd_finished();
-	    e_dnd_drop_request_free();
+	     e_dnd_drop_request_free();
+	     D_RETURN;
 	  }
      }
 
    D_RETURN;
 }
-
 
 
 static void
@@ -2678,23 +2763,22 @@ e_dnd_drop_position(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-
-	    if( e->win != e->source_win )
-	      {
-		/* send XdndStatus */
-		ecore_window_dnd_send_status_ok(v->win.base, e->source_win,
-						v->location.x, v->location.y,
-						v->size.w, v->size.h
-						);
-	      }
-	    /* todo - cache window extents, don't send again within these extents. */
+	     
+	     if( e->win != e->source_win )
+	       {
+		  /* send XdndStatus */
+		  ecore_window_dnd_send_status_ok(v->win.base, e->source_win,
+						  v->location.x, v->location.y,
+						  v->size.w, v->size.h
+						  );
+	       }
+	     /* todo - cache window extents, don't send again within these extents. */
+	     D_RETURN;
 	  }
      }
 
    D_RETURN;
 }
-
-
 
 static void
 e_dnd_drop(Ecore_Event * ev)
@@ -2718,19 +2802,17 @@ e_dnd_drop(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	    /* Dropped!  Handle data */
-	    e_dnd_handle_drop( v, dnd_pending_mode );
-
-	    ecore_window_dnd_finished();
-
-	    e_dnd_drop_request_free();
+	     /* Dropped!  Handle data */
+	     e_dnd_handle_drop (v, dnd_pending_mode);	     
+	     ecore_window_dnd_send_finished(v->win.base, e->source_win);
+	     e_dnd_drop_request_free();
+	     
+	     D_RETURN;
 	  }
      }
 
    D_RETURN;
 }
-
-
 
 static void
 e_dnd_drop_request(Ecore_Event * ev)
@@ -2758,7 +2840,7 @@ e_dnd_drop_request(Ecore_Event * ev)
       if (e->win == v->win.base)
 	{
 	  /* if it exists, we already have the data... */
-	  if( !dnd_files )
+	  if ((!dnd_files ) && (e->num_files > 0))
 	    {
 	      int i;
 
@@ -2770,28 +2852,32 @@ e_dnd_drop_request(Ecore_Event * ev)
 	      
 	      dnd_num_files = e->num_files;
 
-	      if( e->copy )
-		dnd_pending_mode = E_DND_COPY;
-	      else if( e->move )
-		dnd_pending_mode = E_DND_MOVE;
-	      else if( e->link )
-		dnd_pending_mode = E_DND_LINK;
-	      else
-		dnd_pending_mode = E_DND_ASK;
+	      /* if the dnd source is e itself then dont use the event mode */
+	       if (e_view_find_by_window(e->source_win))
+		 {
+		    E_View *vv;
+		    
+		    v = e_view_find_by_window(e->source_win);
+		    dnd_pending_mode = v->drag.drop_mode;
+		 }
+	       else
+		 {		 
+		    if( e->copy )
+		      dnd_pending_mode = E_DND_COPY;
+		    else if( e->move )
+		      dnd_pending_mode = E_DND_MOVE;
+		    else if( e->link )
+		      dnd_pending_mode = E_DND_LINK;
+		    else
+		      dnd_pending_mode = E_DND_ASK;
+		 }
 	    }
-	  /*
-	  printf( "drop-req %d-[c%dm%dl%d]--%s--\n", e->num_files, 
-		  e->copy, e->move, e->link,
-		  e->num_files ?  e->files[0] : "None"
-		  );
-	  */
+	   D_RETURN;
 	}
     }
 
   D_RETURN;
 }
-
-
 
 static void
 e_dnd_drop_request_free(void)
@@ -2812,60 +2898,50 @@ e_dnd_drop_request_free(void)
   D_RETURN;
 }
 
-
-
 static void
 e_dnd_handle_drop( E_View *v, E_dnd_enum dnd_pending_mode )
 {
-  char hostname[PATH_MAX];
-  int in, out;
-  char *filename;
+   int in, out;
+   char *filename;
+   
+   D_ENTER;
+   
+   /* Make space for destination in file list */
+   dnd_num_files++;
+   REALLOC_PTR(dnd_files, dnd_num_files);
+   dnd_files[dnd_num_files-1] = NULL;
 
-  D_ENTER;
-
-  /* Need hostname for URL (file://hostname/...) */
-  if(gethostname( hostname, PATH_MAX))
-    {
-      /* failed... Default to 'localhost' */
-      strcpy( hostname, "localhost");
-    }
-
-  /* Make space for destination in file list */
-  dnd_num_files++;
-  REALLOC_PTR(dnd_files, dnd_num_files);
-  dnd_files[dnd_num_files-1] = NULL;
-
-  /* Verify files are local, convert to non-URL */
-  for( in=0, out=0; in<dnd_num_files-1; in++ )
-    {
-      filename = e_util_de_url_and_verify( dnd_files[in], hostname );
-      /* Need a overlap safe copy here, like memmove() */
-      if( filename )
-	memmove( dnd_files[out++], filename, strlen(filename)+1 );
-    }
-
-  /* Append destination for efsd */
-  if( dnd_files[out] )
-    FREE( dnd_files[out] );
-
-  dnd_files[out++] = strdup( v->dir );
-
-  switch( dnd_pending_mode )
-    {
-    case E_DND_COPY:
-      /* Copy files */
-      efsd_copy( e_fs_get_connection(), out, dnd_files,
-		 efsd_ops(0) );
-      break;
-    case E_DND_MOVE:
-      efsd_move( e_fs_get_connection(), out, dnd_files,
-		 efsd_ops(0) );
-      break;
-    default:
-      /* nothing yet */
-      break;
-    }
-
+   /* Verify files are local, convert to non-URL */
+   for(in = 0, out = 0; in < dnd_num_files - 1; in++)
+     {
+	filename = e_util_de_url_and_verify( dnd_files[in]);
+	/* Need a overlap safe copy here, like memmove() */
+	if( filename )
+	  memmove(dnd_files[out++], filename, strlen(filename) + 1);
+     }
+   
+   /* Append destination for efsd */
+   if ( dnd_files[out] )
+     FREE( dnd_files[out] );
+   
+   dnd_files[out++] = strdup( v->dir );
+   
+   switch( dnd_pending_mode )
+     {
+      case E_DND_COPY:
+	/* Copy files */
+	efsd_copy( e_fs_get_connection(), out, dnd_files,
+		  efsd_ops(0) );
+	break;
+      case E_DND_MOVE:
+	efsd_move( e_fs_get_connection(), out, dnd_files,
+		  efsd_ops(0) );
+	break;
+      default:
+	/* nothing yet */
+	break;
+     }
+   
   D_RETURN;
 }
 
