@@ -718,6 +718,8 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	       {
 		  gmc->zone = nz;
 		  new_zone = 1;
+		  evas_object_clip_set(gmc->event_object, gmc->zone->bg_clip_object);
+		  evas_object_clip_set(gmc->control_object, gmc->zone->bg_clip_object);
 	       }
 	  }
 	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
