@@ -107,17 +107,20 @@ e_menu_shutdown(void)
 
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_move_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_wheel_handler);
-   
-   if (_e_active_menus)
+
+   while (_e_active_menus)
      {
 	E_Menu *m;
 	
 	m = _e_active_menus->data;
 	m->active = 0;
 	_e_menu_unrealize(m);
-	evas_list_free(_e_active_menus);
-	_e_active_menus = NULL;
+	_e_active_menus = evas_list_remove_list(_e_active_menus, _e_active_menus);
+
+	m->in_active_list = 0;
+	e_object_unref(E_OBJECT(m));
      }
+   _e_active_menus = NULL;
    return 1;
 }
 
@@ -665,7 +668,7 @@ _e_menu_free(E_Menu *m)
 	E_Menu_Item *mi;
 	
 	mi = m->items->data;
-	e_object_unref(E_OBJECT(mi));
+	e_object_del(E_OBJECT(mi));
      }
    if (m->in_active_list)
      {
