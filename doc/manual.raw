@@ -94,6 +94,22 @@
       <section id="overall">
 	<title id="overall.title">Overview</title>
 	<para>
+	
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="figures/architecture.eps" format="eps">
+          </imageobject>
+          <imageobject>
+            <imagedata fileref="figures/architecture.gif" format="gif">
+          </imageobject>
+          <textobject>
+            <phrase>Image of &e17; Architecture</phrase>
+          </textobject>
+          <caption>
+            <para>&e17; Architecture.</para>
+          </caption>
+        </mediaobject>
+
 	</para>
       </section>
       <section id="modules">
