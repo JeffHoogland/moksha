@@ -12,6 +12,21 @@ static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, v
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 
+static int zone_count;
+
+int
+e_zone_init(void)
+{
+   zone_count = 0;
+   return 1;
+}
+
+int
+e_zone_shutdown(void)
+{
+   return 1;
+}
+
 E_Zone *
 e_zone_new(E_Container *con, int x, int y, int w, int h)
 {
@@ -21,8 +36,6 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    zone = E_OBJECT_ALLOC(E_Zone, _e_zone_free);
    if (!zone) return NULL;
 
-   printf("NEW ZONE! %d %d %d %d\n", x, y, w, h);
-
    zone->container = con;
    zone->name = NULL;
 
@@ -30,7 +43,7 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    zone->y = y;
    zone->w = w;
    zone->h = h;
-   zone->num = evas_list_count(con->zones) + 1;
+   zone->num = ++zone_count;
 
    e_object_ref(E_OBJECT(con));
    con->zones = evas_list_append(con->zones, zone);

@@ -189,6 +189,7 @@ EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 EAPI void      e_border_free(E_Border *bd);
 EAPI void      e_border_ref(E_Border *bd);
 EAPI void      e_border_unref(E_Border *bd);
+EAPI void      e_border_desk_set(E_Border *bd, E_Desk *desk);
 EAPI void      e_border_show(E_Border *bd);
 EAPI void      e_border_hide(E_Border *bd);
 EAPI void      e_border_move(E_Border *bd, int x, int y);

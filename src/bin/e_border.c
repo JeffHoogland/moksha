@@ -244,6 +244,17 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 }
 
 void
+e_border_desk_set(E_Border *bd, E_Desk *desk)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_CHECK(desk);
+   if (bd->desk == desk) return;
+   bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
+   desk->clients = evas_list_append(desk->clients, bd);
+   bd->desk = desk;
+}
+
+void
 e_border_show(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
@@ -610,10 +621,15 @@ e_border_iconify(E_Border *bd)
 void
 e_border_uniconify(E_Border *bd)
 {
+   E_Desk *desk;
+   
    E_OBJECT_CHECK(bd);
    if ((bd->shading)) return;
    if (bd->iconic)
      {
+	desk = e_desk_current_get(bd->desk->zone);
+	if (desk != bd->desk)
+	  e_border_desk_set(bd, desk);
 	bd->iconic = 0;
 	e_border_show(bd);
 	e_iconify_border_remove(bd);

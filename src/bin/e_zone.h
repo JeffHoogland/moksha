@@ -20,6 +20,8 @@ struct _E_Zone
 
 };
 
+EAPI int        e_zone_init(void);
+EAPI int        e_zone_shutdown(void);
 EAPI E_Zone    *e_zone_new(E_Container *con, int x, int y, int w, int h);
 EAPI void       e_zone_move(E_Zone *zone, int x, int y);
 EAPI void       e_zone_resize(E_Zone *zone, int w, int h);

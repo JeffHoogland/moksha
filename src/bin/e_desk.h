@@ -17,6 +17,8 @@ struct _E_Desk
    Evas_List           *clients;
 };
 
+EAPI int          e_desk_init(void);
+EAPI int          e_desk_shutdown(void);
 EAPI E_Desk      *e_desk_new(E_Zone *zone);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
 EAPI void         e_desk_show(E_Desk *desk);

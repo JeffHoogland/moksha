@@ -353,6 +353,7 @@ _e_int_menus_desktops_add_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	E_Desk *desk;
 	E_Zone *zone = e_zone_current_get(root->con);
 	desk = e_desk_new(zone);
+	e_desk_show(desk);
      }
 }
 
@@ -368,7 +369,15 @@ _e_int_menus_desktops_del_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	
 	zone = e_zone_current_get(root->con);
 	desk = e_desk_current_get(zone);
-	e_desk_remove(desk);
+	
+	if (evas_list_count(zone->desks) > 1)
+	  {
+	     e_desk_remove(desk);
+	  }
+	else
+	  {
+	     e_error_dialog_show("Enlightenment", "You cannot remove the last desktop.");
+	  }
      }
 }
 
@@ -441,6 +450,7 @@ _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi)
 
    if (bd->iconic) e_border_uniconify(bd);
 
+   e_desk_show(bd->desk);
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
 }

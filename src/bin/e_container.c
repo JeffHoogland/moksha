@@ -20,12 +20,14 @@ static void _e_container_resize_handle(E_Container *con);
 static void _e_container_event_container_resize_free(void *data, void *ev);
 
 int E_EVENT_CONTAINER_RESIZE = 0;
+static int container_count;
 
 /* externally accessible functions */
 int
 e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
+   container_count = 0;
    return 1;
 }
 

@@ -9,6 +9,20 @@
  */
 
 static void _e_desk_free(E_Desk *desk);
+static int desk_count;
+
+int
+e_desk_init(void)
+{
+   desk_count = 0;
+   return 1;
+}
+
+int
+e_desk_shutdown(void)
+{
+   return 1;
+}
 
 E_Desk *
 e_desk_new(E_Zone *zone)
@@ -23,7 +37,7 @@ e_desk_new(E_Zone *zone)
 
    desk->clients = NULL;
    desk->zone = zone;
-   desk->num = evas_list_count(zone->desks) + 1;
+   desk->num = ++desk_count;
    snprintf(name, sizeof(name), "Desktop %d", desk->num);
    desk->name = strdup(name);
    e_object_ref(E_OBJECT(zone));
@@ -53,7 +67,7 @@ e_desk_show(E_Desk *desk)
      {
 	E_Border *bd = l->data;
 
-	if (bd->desk->zone == desk->zone)
+	if (bd->desk->zone == desk->zone && !bd->iconic)
 	  {
 	     if (bd->desk == desk)
 	       {
@@ -83,7 +97,7 @@ e_desk_remove(E_Desk *desk)
    E_OBJECT_CHECK(desk);
    if (evas_list_count(desk->zone->desks) < 2)
      return;
-   l = evas_list_find(desk->zone->desks, desk);
+   l = evas_list_find_list(desk->zone->desks, desk);
    l = l->prev;
    if (!l) l = evas_list_last(desk->zone->desks);
    previous = l->data;
@@ -91,10 +105,11 @@ e_desk_remove(E_Desk *desk)
    for (l = desk->clients; l; l = l->next)
      {
 	E_Border *bd = l->data;
-	bd->desk = previous;
+	e_border_desk_set(bd, previous);
      }
    desk->zone->desks = evas_list_remove(desk->zone->desks, desk);
-   e_desk_show(previous);
+   if (desk->visible)
+     e_desk_show(previous);
    
    evas_list_free(desk->clients);
    e_object_del(E_OBJECT(desk));
