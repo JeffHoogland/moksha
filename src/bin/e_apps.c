@@ -738,25 +738,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	       * to check which files are here. */
 	      if ((type == ECORE_FILE_TYPE_DIRECTORY) && !strcmp(path, app->path))
 		{
-#if 0
-		   a2 = _e_app_subapp_path_find(app, path);
-
-		   /* If this app is in a main repository, tell all referencing
-		    * apps to rescan. */
-		   if (a2)
-		     {
-			a2->deleted = 1;
-			for (l = a2->references; l; l = l->next)
-			  {
-			     E_App *app;
-
-			     app = l->data;
-			     _e_app_subdir_rescan(app);
-			  }
-		     }
-#endif
-
-		   /* We don't know why it's changed Better rescan... */
+		   /* We don't know why it's changed, better rescan... */
 		   _e_app_subdir_rescan(app);
 		}
 	      break;
