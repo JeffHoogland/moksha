@@ -1,0 +1,5 @@
+usr/bin/enlightenment
+usr/bin/enlightenment_eapp
+usr/bin/enlightenment_remote
+usr/share/enlightenment/doc/*
+usr/lib/enlightenment/modules/*

@@ -1,0 +1,3 @@
+usr/bin/enlightenment-config
+usr/include/*.h
+usr/include/enlightenment/*.h
