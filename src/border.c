@@ -1,3 +1,4 @@
+#include "cursors.h"
 #include "border.h"
 #include "config.h"
 #include "actions.h"
@@ -797,7 +798,7 @@ e_cb_mouse_down(void *data, Ebits_Object o, char *class, int bt, int x, int y, i
    border_mouse_buttons = mouse_buttons;
    if (!current_ev) return;
      {
-	int act;
+	E_Action_Type act;
 	Ev_Key_Modifiers mods;
 	
 	mods = ((Ev_Mouse_Down *)(current_ev->event))->mods;
@@ -826,7 +827,7 @@ e_cb_mouse_up(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
    border_mouse_buttons = mouse_buttons;
    if (!current_ev) return;
      {
-	int act;
+	E_Action_Type act;
 	Ev_Key_Modifiers mods;
 	
 	mods = ((Ev_Mouse_Up *)(current_ev->event))->mods;
@@ -947,7 +948,7 @@ e_cb_border_mouse_down(E_Border *b, Eevent *e)
 	  }
      }
      {
-	int act;
+	E_Action_Type act;
 	Ev_Key_Modifiers mods;
 	
 	mods = ((Ev_Mouse_Down *)(current_ev->event))->mods;
@@ -978,7 +979,7 @@ e_cb_border_mouse_up(E_Border *b, Eevent *e)
    y = ((Ev_Mouse_Up *)(e->event))->y;
    bt = ((Ev_Mouse_Up *)(e->event))->button;
      {
-	int act;
+	E_Action_Type act;
 	Ev_Key_Modifiers mods;
 	
 	mods = ((Ev_Mouse_Up *)(current_ev->event))->mods;
@@ -2148,6 +2149,9 @@ e_border_raise_delayed(int val, void *b)
    E_CONFIG_INT_GET(cfg_auto_raise, auto_raise);
    if (auto_raise)
      e_border_raise((E_Border *)b);
+
+   return;
+   UN(val);
 }
 
 void
@@ -2440,3 +2444,19 @@ e_border_print_size(char *buf, E_Border *b)
 		b->client.h);
      }
 }
+
+
+void      
+e_border_set_gravity(E_Border *b, int gravity)
+{
+  if (!b)
+    return;
+
+  e_window_gravity_set(b->win.container, gravity);
+  e_window_gravity_set(b->win.input, gravity);
+  e_window_gravity_set(b->win.l, gravity);
+  e_window_gravity_set(b->win.r, gravity);
+  e_window_gravity_set(b->win.t, gravity);
+  e_window_gravity_set(b->win.b, gravity);
+}
+

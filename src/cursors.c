@@ -38,6 +38,9 @@ e_cursors_idle(void *data)
    IF_FREE(cur_cursor);
    cur_cursor = NULL;
    cursor_change = 0;
+
+   return;
+   UN(data);
 }
 
 static void

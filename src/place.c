@@ -461,13 +461,13 @@ e_place_random(E_Border *b, E_Desktop *desk, int *x, int *y)
 }
 
 int
-e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, int method)
+e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mode)
 {
-   if (method == E_PLACE_MANUAL)  return e_place_manual (b, desk, x, y);
-   if (method == E_PLACE_SMART)   return e_place_smart  (b, desk, x, y);
-   if (method == E_PLACE_MIDDLE)  return e_place_middle (b, desk, x, y);
-   if (method == E_PLACE_CASCADE) return e_place_cascade(b, desk, x, y);
-   if (method == E_PLACE_RANDOM)  return e_place_random (b, desk, x, y);
+   if (mode == E_PLACE_MANUAL)  return e_place_manual (b, desk, x, y);
+   if (mode == E_PLACE_SMART)   return e_place_smart  (b, desk, x, y);
+   if (mode == E_PLACE_MIDDLE)  return e_place_middle (b, desk, x, y);
+   if (mode == E_PLACE_CASCADE) return e_place_cascade(b, desk, x, y);
+   if (mode == E_PLACE_RANDOM)  return e_place_random (b, desk, x, y);
    return 1;
 }
 

@@ -150,5 +150,6 @@ void      e_border_send_pointer(E_Border *b);
 int       e_border_viewable(E_Border *b);
 void      e_border_print_pos(char *buf, E_Border *b);
 void      e_border_print_size(char *buf, E_Border *b);
+void      e_border_set_gravity(E_Border *b, int gravity);
 
 #endif

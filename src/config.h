@@ -46,10 +46,14 @@ _var.last_fetch = __time;
 } \
 }
 
-#define E_CFG_INT_T   123
-#define E_CFG_FLOAT_T 1234
-#define E_CFG_STR_T   12345
-#define E_CFG_DATA_T  123456
+typedef enum e_config_type
+  {
+    E_CFG_INT_T,
+    E_CFG_FLOAT_T,
+    E_CFG_STR_T,
+    E_CFG_DATA_T,
+  }
+E_Config_Type;
 
 #define E_CFG_INT(_var, _src, _key, _default) \
 static E_Config_Element _var = { _src, _key, 0.0, E_CFG_INT_T, \

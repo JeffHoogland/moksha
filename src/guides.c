@@ -12,7 +12,7 @@ static struct
      {
 	struct 
 	  {
-	     int loc;
+	     E_Guides_Location loc;
 	     struct 
 	       {
 		  double x, y;
@@ -22,7 +22,7 @@ static struct
 	  } display;
 	int x, y, w, h;
 	int visible;
-	int mode;
+	E_Guides_Mode mode;
      } current, prev;
    
    struct {
@@ -55,7 +55,6 @@ e_guides_idle(void *data)
 static void
 e_guides_update(void)
 {
-   int max_colors = 216;
    int font_cache = 1024 * 1024;
    int image_cache = 8192 * 1024;
    char *font_dir;
@@ -538,7 +537,7 @@ e_guides_display_icon(char *icon)
 }
 
 void
-e_guides_set_display_location(int loc)
+e_guides_set_display_location(E_Guides_Location loc)
 {
    if (guides.current.display.loc == loc) return;
    guides.changed = 1;
@@ -556,7 +555,7 @@ e_guides_set_display_alignment(double x, double y)
 }
 
 void
-e_guides_set_mode(int mode)
+e_guides_set_mode(E_Guides_Mode mode)
 {
    if (guides.current.mode == mode) return;
    guides.changed = 1;

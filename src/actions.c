@@ -13,8 +13,8 @@ static Evas_List action_protos = NULL;
 static Evas_List current_actions = NULL;
 static Evas_List current_timers = NULL;
 
-static void _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o);
-static void _e_action_free(E_Action *a);
+static void e_action_find(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o);
+static void e_action_free(E_Action *a);
 
 static void e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 static void e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
@@ -67,16 +67,8 @@ static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, in
 static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 static void e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
-#define SET_BORDER_GRAVITY(_b, _grav) \
-e_window_gravity_set(_b->win.container, _grav); \
-e_window_gravity_set(_b->win.input, _grav); \
-e_window_gravity_set(_b->win.l, _grav); \
-e_window_gravity_set(_b->win.r, _grav); \
-e_window_gravity_set(_b->win.t, _grav); \
-e_window_gravity_set(_b->win.b, _grav);
-
 static void
-_e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o)
+e_action_find(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o)
 {
    char *actions_db;
    E_DB_File *db;
@@ -100,7 +92,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 	for (l = actions; l; l = l->next)
 	  {
 	     a = l->data;
-	     if (a) _e_action_free(a);
+	     if (a) e_action_free(a);
 	  }
 	actions = evas_list_free(actions);
      }
@@ -131,7 +123,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 	a = NEW(E_Action, 1);
 	ZERO(a, E_Action, 1);
 	
-	OBJ_INIT(a, _e_action_free);
+	OBJ_INIT(a, e_action_free);
 	
 	a->name = a_name;
 	a->action = a_action;
@@ -192,7 +184,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 		  aa = NEW(E_Action, 1);
 		  ZERO(aa, E_Action, 1);
 		  
-		  OBJ_INIT(aa, _e_action_free);
+		  OBJ_INIT(aa, e_action_free);
 		  
 		  e_strdup(aa->name, a->name);
 		  e_strdup(aa->action, a->action);
@@ -212,7 +204,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 }
 
 static void
-_e_action_free(E_Action *a)
+e_action_free(E_Action *a)
 {
    /* it's a key? lets ungrab it! */
    if ((a->key) && (strlen(a->key) > 0) && (a->grabbed))
@@ -230,11 +222,11 @@ _e_action_free(E_Action *a)
 }
 
 void
-e_action_start(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_start(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
    
-   _e_action_find(action, act, button, key, mods, o);
+   e_action_find(action, act, button, key, mods, o);
    again:
    for (l = current_actions; l; l = l->next)
      {
@@ -268,7 +260,7 @@ e_action_start(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 }
 
 void
-e_action_stop(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
+e_action_stop(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
 
@@ -335,7 +327,7 @@ e_action_stop(char *action, int act, int button, char *key, Ev_Key_Modifiers mod
 }
 
 void
-e_action_go(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry, int dx, int dy)
+e_action_go(char *action, E_Action_Type act, int button, char *key, Ev_Key_Modifiers mods, void *o, void *data, int x, int y, int rx, int ry, int dx, int dy)
 {
    Evas_List l;
 
@@ -392,7 +384,6 @@ e_action_stop_by_type(char *action)
 {
    Evas_List l;
 
-   again:
    for (l = current_actions; l; l = l->next)
      {
 	E_Action *a;
@@ -539,10 +530,10 @@ static void
 e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   int move_mode = E_GUIDES_BOX;
+   E_Guides_Mode move_mode = E_GUIDES_BOX;
    double align_x = 0.5;
    double align_y = 0.5;
-   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_Guides_Location display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
    E_CFG_INT(cfg_window_move_mode, "settings", "/window/move/mode", E_GUIDES_BOX);
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
@@ -652,10 +643,10 @@ static void
 e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   int resize_mode = E_GUIDES_BOX;
+   E_Guides_Mode resize_mode = E_GUIDES_BOX;
    double align_x = 0.5;
    double align_y = 0.5;
-   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_Guides_Location display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
    E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
@@ -686,14 +677,14 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	if (y > (b->current.h / 2)) 
 	  {
 	     b->mode.resize = 4;
-/*	     SET_BORDER_GRAVITY(b, NorthWestGravity);*/
-/*	     e_window_gravity_set(b->win.container, SouthEastGravity);*/
+	     /*	     e_border_set_gravity(b, NorthWestGravity); */
+	     /*	     e_window_gravity_set(b->win.container, SouthEastGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 2;
-/*	     SET_BORDER_GRAVITY(b, SouthWestGravity);*/
-/*	     e_window_gravity_set(b->win.container, NorthEastGravity);*/
+	     /*	     e_border_set_gravity(b, SouthWestGravity);*/
+	     /*	     e_window_gravity_set(b->win.container, NorthEastGravity);*/
 	  }
      }
    else
@@ -701,13 +692,13 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 	if (y > (b->current.h / 2)) 
 	  {
 	     b->mode.resize = 3;
-/*	     SET_BORDER_GRAVITY(b, NorthEastGravity);*/
+/*	     e_border_set_gravity(b, NorthEastGravity);*/
 /*	     e_window_gravity_set(b->win.container, SouthWestGravity);*/
 	  }
 	else 
 	  {
 	     b->mode.resize = 1;
-/*	     SET_BORDER_GRAVITY(b, SouthEastGravity);*/
+/*	     e_border_set_gravity(b, SouthEastGravity);*/
 /*	     e_window_gravity_set(b->win.container, NorthWestGravity); */
 	  }
      }
@@ -750,7 +741,7 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    b->changed = 1;
    e_border_adjust_limits(b);
    e_window_gravity_set(b->win.client, NorthWestGravity);
-   SET_BORDER_GRAVITY(b, NorthWestGravity);
+   e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
    return;
    UN(a);
@@ -818,10 +809,10 @@ static void
 e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   int resize_mode = E_GUIDES_BOX;
+   E_Guides_Mode resize_mode = E_GUIDES_BOX;
    double align_x = 0.5;
    double align_y = 0.5;
-   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_Guides_Location display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
    E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
@@ -848,12 +839,12 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (x > (b->current.w / 2)) 
      {
 	b->mode.resize = 6;
-/*	SET_BORDER_GRAVITY(b, NorthWestGravity);*/
+/*	e_border_set_gravity(b, NorthWestGravity);*/
      }
    else 
      {
 	b->mode.resize = 5;
-/*	SET_BORDER_GRAVITY(b, NorthEastGravity);*/
+/*	e_border_set_gravity(b, NorthEastGravity);*/
      }
      {
 	char buf[4096];
@@ -895,7 +886,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->changed = 1;
    e_border_adjust_limits(b);
    e_window_gravity_set(b->win.client, NorthWestGravity);
-   SET_BORDER_GRAVITY(b, NorthWestGravity);
+   e_border_set_gravity(b, NorthWestGravity);
    e_guides_hide();
    return;
    UN(a);
@@ -949,10 +940,10 @@ static void
 e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
-   int resize_mode = E_GUIDES_BOX;
+   E_Guides_Mode resize_mode = E_GUIDES_BOX;
    double align_x = 0.5;
    double align_y = 0.5;
-   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_Guides_Location display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
    E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
    E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
    E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
@@ -981,12 +972,12 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (y > (b->current.h / 2)) 
      {
 	b->mode.resize = 8;
-/*	SET_BORDER_GRAVITY(b, NorthWestGravity);*/
+/*	e_border_set_gravity(b, NorthWestGravity);*/
      }
    else 
      {
 	b->mode.resize = 7;
-/*	SET_BORDER_GRAVITY(b, SouthWestGravity);*/
+/*	e_border_set_gravity(b, SouthWestGravity);*/
      }
      {
 	char buf[4096];
@@ -1027,7 +1018,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    b->mode.resize = 0;
    e_border_adjust_limits(b);
    e_window_gravity_set(b->win.client, NorthWestGravity);
-   SET_BORDER_GRAVITY(b, NorthWestGravity);
+   e_border_set_gravity(b, NorthWestGravity);
    b->changed = 1;
    e_guides_hide();
    return;

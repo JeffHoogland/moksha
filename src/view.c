@@ -1,6 +1,7 @@
 #include <libefsd.h>
 
 #include "view.h"
+#include "cursors.h"
 #include "background.h"
 #include "desktops.h"
 #include "config.h"
@@ -1788,14 +1789,14 @@ e_view_icon_apply_xy(E_Icon *ic)
 	
 	sprintf(buf, "%s/%s", ic->view->dir, ic->file);
 	printf("write meta xy for icon for file %s\n", ic->file);
-/*	
+
         efsd_set_metadata_int(e_fs_get_connection(),
 			      "/pos/x", buf,
 			      ic->geom.x);
 	efsd_set_metadata_int(e_fs_get_connection(),
 			      "/pos/y", buf,
 			      ic->geom.y);
-*/     }
+     }
    if (ic->geom.x != ic->prev_geom.x) ic->view->extents.valid = 0;
    else if (ic->geom.y != ic->prev_geom.y) ic->view->extents.valid = 0;
    else if (ic->geom.w != ic->prev_geom.w) ic->view->extents.valid = 0;

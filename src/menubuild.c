@@ -48,6 +48,7 @@ e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
    UN(m);
    UN(mi);
    UN(script);
+   UN(data);
 }
 
 static void

@@ -7,6 +7,21 @@ typedef struct _E_Action              E_Action;
 typedef struct _E_Action_Proto        E_Action_Proto;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 
+typedef enum e_action_type
+  {
+    ACT_MOUSE_IN,
+    ACT_MOUSE_OUT,
+    ACT_MOUSE_CLICK,
+    ACT_MOUSE_DOUBLE,
+    ACT_MOUSE_TRIPLE,
+    ACT_MOUSE_UP,
+    ACT_MOUSE_CLICKED,
+    ACT_MOUSE_MOVE,
+    ACT_KEY_DOWN,
+    ACT_KEY_UP
+  }
+E_Action_Type;
+
 struct _E_Active_Action_Timer
 {
    void *object;
@@ -20,7 +35,7 @@ struct _E_Action
    char           *name;
    char           *action;
    char           *params;
-   int             event;
+   E_Action_Type   event;
    int             button;
    char           *key;
    int             modifiers;
@@ -41,25 +56,13 @@ struct _E_Action_Proto
 };
 
 
-/* action type macros */
-#define ACT_MOUSE_IN      0
-#define ACT_MOUSE_OUT     1
-#define ACT_MOUSE_CLICK   2
-#define ACT_MOUSE_DOUBLE  3
-#define ACT_MOUSE_TRIPLE  4
-#define ACT_MOUSE_UP      5
-#define ACT_MOUSE_CLICKED 6
-#define ACT_MOUSE_MOVE    7
-#define ACT_KEY_DOWN      8
-#define ACT_KEY_UP        9
-
-void e_action_start(char *action, int act, int button, char *key,
+void e_action_start(char *action, E_Action_Type act, int button, char *key,
 		    Ev_Key_Modifiers mods, void *o, void *data,
 		    int x, int y, int rx, int ry);
-void e_action_stop(char *action, int act, int button, char *key,
+void e_action_stop(char *action, E_Action_Type act, int button, char *key,
 		   Ev_Key_Modifiers mods, void *o, void *data,
 		   int x, int y, int rx, int ry);
-void e_action_go(char *action, int act, int button, char *key,
+void e_action_go(char *action, E_Action_Type act, int button, char *key,
 		 Ev_Key_Modifiers mods, void *o, void *data,
 		 int x, int y, int rx, int ry, int dx, int dy);
 void e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry);

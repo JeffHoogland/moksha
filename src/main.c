@@ -1,4 +1,6 @@
 #include "actions.h"
+#include "guides.h"
+#include "cursors.h"
 #include "border.h"
 #include "config.h"
 #include "desktops.h"
@@ -9,11 +11,13 @@
 #include "ipc.h"
 #include "menu.h"
 #include "view.h"
+#include "place.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"
 #endif
 
+#include <time.h>
 #include <X11/Xproto.h>
 
 #ifdef E_PROF

@@ -5,13 +5,17 @@
 #include "border.h"
 #include "desktops.h"
 
-#define E_PLACE_MANUAL  0
-#define E_PLACE_SMART   1
-#define E_PLACE_MIDDLE  2
-#define E_PLACE_CASCADE 3
-#define E_PLACE_RANDOM  4
+typedef enum e_placement_mode
+{
+  E_PLACE_MANUAL,
+  E_PLACE_SMART,
+  E_PLACE_MIDDLE,
+  E_PLACE_CASCADE,
+  E_PLACE_RANDOM
+}
+E_Placement_Mode;
 
-int  e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, int method);
+int  e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mode);
 void e_place_init(void);
     
 #endif
