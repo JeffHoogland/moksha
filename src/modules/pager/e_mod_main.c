@@ -693,13 +693,12 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    /* if we clicked, not moved - FIXME, this is a hack */
    if (p->move && (p->xx == p->clickhackx) && (p->yy == p->clickhacky))
      {
-	int     x, y, w, h, xcount, ycount, cx, cy;
+	int     x, y, w, h, xcount, ycount;
 	E_Zone *zone;
 	E_Desk *desk;
 
 	zone = e_zone_current_get(con);
 	e_zone_desk_count_get(zone, &xcount, &ycount);
-	evas_pointer_canvas_xy_get(e, &cx, &cy);
 
 	w = p->fw;
 	h = p->fh;
@@ -712,7 +711,7 @@ _pager_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       top = p->fy + y * h;
 	       bottom = top + h;
 
-	       if (left <= cx && cx < right && top <= cy && cy < bottom)
+	       if (left <= p->xx && p->xx < right && top <= p->yy && p->yy < bottom)
 		 {
 		    desk = e_desk_at_xy_get(zone, x, y);
 		    e_desk_show(desk);
