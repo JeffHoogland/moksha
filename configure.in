@@ -97,11 +97,6 @@ AC_SUBST(efsd_cflags)
 AC_SUBST(efsd_libs)
 
 AC_OUTPUT([
-Makefile
-src/Makefile
-lib/Makefile
-client/Makefile
-intl/Makefile
-po/Makefile.in
+Makefile src/Makefile lib/Makefile client/Makefile intl/Makefile po/Makefile.in
 ])
 
