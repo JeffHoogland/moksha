@@ -38,4 +38,4 @@ icon $USRIC"star_office.png" "/home/raster/.desktop/Office"
 
 finish
 
-cp -f $PREFIX"/share/enlightenment/data/iconbar/iconbar_bottom.bits.db" $BIT
+cp -f $PREFIX"/share/enlightenment/data/iconbar/iconbar_left.bits.db" $BIT
