@@ -211,7 +211,7 @@ _pager_init(E_Module *m)
    e_gadman_client_min_size_set(e->gmc, 8, 8);
    e_gadman_client_max_size_set(e->gmc, 256, 256);
    e_gadman_client_auto_size_set(e->gmc, 64, 64);
-   e_gadman_client_align_set(e->gmc, 0.0, 0.5);
+   e_gadman_client_align_set(e->gmc, 0.0, 1.0);
    e_gadman_client_resize(e->gmc, 80, 60);
    e_gadman_client_change_func_set(e->gmc, _pager_cb_gmc_change, e);
    e_gadman_client_load(e->gmc);

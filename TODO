@@ -35,8 +35,6 @@ ISSUES:
 * pager needs 1 pager face per zone by default (optionally able to be turned off)
 * pager needs to be able to split off each desk in a zone it a different gadget
 * pager right click menu needs to do a lot more (as with clock)
-* initial placement of pager and clock seems wrong (overlap deny code?)
-* gadman overlay deny doesnt work for edge only gadgets
 * gadman gadget menu needs icons :)
 * add a menu item to each gadman client menu to edge editing mode
 * pager needs an overhaul
