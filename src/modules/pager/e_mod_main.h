@@ -13,18 +13,21 @@ struct _Config
 
 struct _Pager
 {
-   Evas_List    *managers;
-   E_Menu       *config_menu;
-   E_Container  *con;
-   Evas         *evas;
-   Evas_Object  *base, *screen;
+   E_Zone       *zone;
    Evas_List    *desks;
    
+   E_Menu       *config_menu;
+   Evas         *evas;
+   Evas_Object  *base, *screen;
+
 /*   E_Config_DD  *conf_edd;*/
    Config       *conf;
 
    Evas_Coord    fx, fy, fw, fh;
    E_Gadman_Client *gmc;
+
+   /* Current nr. of desktops */
+   int           xnum, ynum;
    
    Ecore_Event_Handler *ev_handler_border_resize;
    Ecore_Event_Handler *ev_handler_border_move;
@@ -38,27 +41,29 @@ struct _Pager
 
 struct _Pager_Desk
 {
+   E_Desk      *desk;
+   Pager       *owner;
    Evas_List   *wins;
+
    Evas_Object *obj;
    int          xpos, ypos;
 
-   E_Desk      *desk;
-   int          current:1;
+   int          current : 1;
 };
 
 struct _Pager_Win
 {
+   E_Border    *border;
+   Pager_Desk  *owner;
+
    Evas_Object *obj;
    Evas_Object *icon;
-   
-   Pager_Desk  *owner;
-   E_Border    *border;
 };
 
-EAPI void *init     (E_Module *m);
-EAPI int   shutdown (E_Module *m);
-EAPI int   save     (E_Module *m);
-EAPI int   info     (E_Module *m);
-EAPI int   about    (E_Module *m);
+EAPI void *init     (E_Module *module);
+EAPI int   shutdown (E_Module *module);
+EAPI int   save     (E_Module *module);
+EAPI int   info     (E_Module *module);
+EAPI int   about    (E_Module *module);
 
 #endif
