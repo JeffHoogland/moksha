@@ -106,6 +106,8 @@ AC_ARG_WITH(ecore-config,
 ])
 ecore_cflags=`$ECORE_CONFIG --cflags`
 ecore_libs=`$ECORE_CONFIG --libs`
+AC_SUBST(ecore_cflags)
+AC_SUBST(ecore_libs)
 
 AC_ARG_WITH(edje-config,
 [  --with-edje-config=EDJE_CONFIG    use edje-config specified ],
