@@ -26,14 +26,18 @@ typedef struct _E_Iconbar E_Iconbar;
 
 #ifndef E_DND_TYPEDEF
 #define E_DND_TYPEDEF
-typedef enum {
+typedef enum _E_dnd_enum  E_dnd_enum;
+#endif
+
+enum _E_dnd_enum {
   E_DND_NONE,
   E_DND_COPY,
   E_DND_MOVE,
   E_DND_LINK,
-  E_DND_ASK
-} E_dnd_enum;
-#endif
+  E_DND_ASK,
+  E_DND_DELETED,
+  E_DND_COPIED
+} ;
 
 struct _E_View
 {
@@ -128,6 +132,9 @@ struct _E_View
       } offset;
       int update;
       int drop_mode;
+      int icon_hide;
+      int icon_show;
+      int matching_drop_attempt;
    } drag;
    struct {
       int valid;

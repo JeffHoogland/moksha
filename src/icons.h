@@ -14,6 +14,11 @@ typedef struct _E_Icon    E_Icon;
 typedef struct _E_View    E_View;
 #endif
 
+#ifndef E_DND_TYPEDEF
+#define E_DND_TYPEDEF
+typedef enum _E_dnd_enum  E_dnd_enum;
+#endif
+
 struct _E_Icon
 {
    E_Object o;
@@ -55,6 +60,7 @@ struct _E_Icon
       int visible;
       int just_selected;
       int just_executed;
+      int drag_delete;
    } state;
    
    struct {
@@ -96,6 +102,8 @@ void      e_icon_set_link(E_Icon *ic, char *link);
 E_Icon   *e_icon_find_by_file(E_View *view, char *file);
 void      e_icon_show(E_Icon *ic);
 void      e_icon_hide(E_Icon *ic);
+void      e_icon_hide_delete_pending(E_Icon *ic);
+void      e_icon_show_delete_end(E_Icon *ic, E_dnd_enum dnd_pending_mode);
 void      e_icon_apply_xy(E_Icon *ic);
 void      e_icon_check_permissions(E_Icon *ic);
 

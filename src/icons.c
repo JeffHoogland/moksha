@@ -89,9 +89,11 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ecore_window_destroy(ic->view->drag.win);
 	ic->view->drag.started = 0;
 	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
-	  ic->view->drag.drop_mode = E_DND_COPY;
+	  ecore_dnd_set_mode_copy();
 	else
-	  ic->view->drag.drop_mode = E_DND_MOVE;
+	  ecore_dnd_set_mode_move();
+	ecore_dnd_set_data(ic->view->win.base);
+
 	/* FIXME: if button use is right mouse then do an ask */
 
 	/* Handle dnd motion(drop) - dragging==0 */
@@ -384,6 +386,18 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ic->view->drag.update = 1;
 	ic->view->changed = 1;
 
+	if(e->mods & ECORE_EVENT_KEY_MODIFIER_SHIFT)
+	  {
+	   ecore_dnd_set_mode_copy();
+	   ic->view->drag.drop_mode = E_DND_COPY;
+	  }
+	else
+	  {
+	   ecore_dnd_set_mode_move();
+	   ic->view->drag.drop_mode = E_DND_MOVE;
+	  }
+	ecore_dnd_set_data(ic->view->win.base);
+
 	/* Handle dnd motion - dragging==1 */
 	ecore_pointer_xy_get(&x, &y);
 	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
@@ -510,6 +524,49 @@ e_icon_hide(E_Icon *ic)
    if(ic->obj.sel.under.text) ebits_hide(ic->obj.sel.under.text);
    if(ic->obj.sel.over.icon) ebits_hide(ic->obj.sel.over.icon);
    if(ic->obj.sel.over.text) ebits_hide(ic->obj.sel.over.text);
+
+   D_RETURN;
+}
+
+void
+e_icon_hide_delete_pending(E_Icon *ic)
+{
+   D_ENTER;
+   
+   if (!ic->state.visible) D_RETURN;
+   if(ic->state.selected)
+     {
+       if( ic->view->drag.drop_mode == E_DND_MOVE)
+	 {
+	   evas_hide(ic->view->evas, ic->obj.icon);
+	   ic->state.drag_delete = 1;
+	 }
+       else
+	 /* copy... */
+	 {
+	   evas_show(ic->view->evas, ic->obj.icon);
+	   ic->state.drag_delete = 0;
+	 }
+     }
+
+   D_RETURN;
+}
+
+void
+e_icon_show_delete_end(E_Icon *ic, E_dnd_enum dnd_pending_mode)
+{
+   D_ENTER;
+   
+   if (!ic->state.visible) D_RETURN;
+   if(ic->state.drag_delete)
+     {
+       if(dnd_pending_mode==E_DND_DELETED || dnd_pending_mode==E_DND_COPIED)
+       {
+	 ic->state.drag_delete = 0;
+	 if(dnd_pending_mode==E_DND_COPIED)
+	   evas_show(ic->view->evas, ic->obj.icon);
+       }
+     }
 
    D_RETURN;
 }

@@ -17,6 +17,7 @@ static Ecore_Event *current_ev = NULL;
 static char **dnd_files = NULL;
 static int dnd_num_files = 0;
 static E_dnd_enum dnd_pending_mode;
+static E_View *v_dnd_source;
 
 static void e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
@@ -45,7 +46,7 @@ static void e_dnd_drop_position(Ecore_Event * ev);
 static void e_dnd_drop(Ecore_Event * ev);
 static void e_dnd_drop_request(Ecore_Event * ev);
 static void e_dnd_drop_request_free(void);
-static void e_dnd_handle_drop( E_View *v, E_dnd_enum dnd_pending_mode );
+static void e_dnd_handle_drop( E_View *v );
 static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
 static void e_view_resort_timeout(int val, void *data);
@@ -1053,13 +1054,15 @@ e_dnd_status(Ecore_Event * ev)
 {
    Ecore_Event_Dnd_Drop_Status *e;
    /*
-     typedef struct _ecore_event_dnd_drop_status
-     {
-     Window              win, root, source_win;
-     int                 x, y, w, h;
-     int                 ok;
-     } Ecore_Event_Dnd_Drop_Status;
-   */
+    *  typedef struct _ecore_event_dnd_drop_status
+    *  {
+    *    Window              win, root, source_win;
+    *    int                 x, y, w, h;
+    *    int                 copy, link, move, private;
+    *    int                 all_position_msgs;
+    *    int                 ok;
+    *  } Ecore_Event_Dnd_Drop_Status;
+    */
    Evas_List l;
    
    D_ENTER;
@@ -1072,7 +1075,24 @@ e_dnd_status(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
+
+	    if( dnd_pending_mode != E_DND_DELETED &&
+		dnd_pending_mode != E_DND_COPIED )
+	      {
+		if( e->copy )
+		  dnd_pending_mode = E_DND_COPY;
+		else if( e->move )
+		  dnd_pending_mode = E_DND_MOVE;
+		else if( e->link )
+		  dnd_pending_mode = E_DND_LINK;
+		else
+		  dnd_pending_mode = E_DND_ASK;
+	      }
+
 	    ecore_window_dnd_ok(e->ok);
+
+	    v->changed = 1;
+	    v->drag.icon_hide = 1;
 	  }
      }
 
@@ -1990,12 +2010,30 @@ e_view_update(E_View *v)
    
    if (v->changed)
      {
-	for (l = v->icons; l; l = l->next)
-	  {
-	     E_Icon *icon;
+        if(v->drag.icon_hide)
+	 {
+	   for (l = v->icons; l; l = l->next)
+	     {
+	       E_Icon *ic;
 	     
-	     icon = l->data;
-	  }
+	       ic = l->data;
+	       e_icon_hide_delete_pending(ic);
+	     }
+	   v->drag.icon_hide = 0;
+	   v_dnd_source = v;
+	 }
+        if(v->drag.icon_show)
+	 {
+	   for (l = v->icons; l; l = l->next)
+	     {
+	       E_Icon *ic;
+	     
+	       ic = l->data;
+	       e_icon_show_delete_end(ic, dnd_pending_mode);
+	     }
+	   dnd_pending_mode = E_DND_NONE;
+	   v->drag.icon_show = 0;
+	 }
 	if (v->drag.update)
 	  {
 	     ecore_window_move(v->drag.win, v->drag.x, v->drag.y);
@@ -2724,6 +2762,22 @@ e_dnd_drop_end(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
+	    if(v_dnd_source)
+	      {
+		if(dnd_pending_mode != E_DND_DELETED && 
+		   dnd_pending_mode != E_DND_COPIED )
+		  {
+		    dnd_pending_mode = E_DND_COPIED;
+		  }
+		if( v_dnd_source->drag.matching_drop_attempt )
+		  {
+		    v_dnd_source->drag.matching_drop_attempt = 0;
+		    dnd_pending_mode = E_DND_COPIED;
+		  }
+		v_dnd_source->changed = 1;
+		v_dnd_source->drag.icon_show = 1;
+	      }
+
 	     e_dnd_drop_request_free();
 	     D_RETURN;
 	  }
@@ -2756,15 +2810,14 @@ e_dnd_drop_position(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	     
-	     if( e->win != e->source_win )
-	       {
-		  /* send XdndStatus */
-		  ecore_window_dnd_send_status_ok(v->win.base, e->source_win,
-						  v->location.x, v->location.y,
-						  v->size.w, v->size.h
-						  );
-	       }
+	    /* send XdndStatus (even to same view, we'll */
+	    /* ignore actions within the same view later */
+	    /* during the drop action.) */
+	    ecore_window_dnd_send_status_ok(v->win.base, e->source_win,
+					    v->location.x, v->location.y,
+					    v->size.w, v->size.h
+					    );
+
 	     /* todo - cache window extents, don't send again within these extents. */
 	     D_RETURN;
 	  }
@@ -2795,8 +2848,14 @@ e_dnd_drop(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
-	     /* Dropped!  Handle data */
-	     e_dnd_handle_drop (v, dnd_pending_mode);	     
+            /* Dropped!  Handle data */
+	    /* Same view?  Mark to skip action */
+	    if( e->win == e->source_win )
+	      v->drag.matching_drop_attempt = 1;
+	    /* Different view?  Perform the action... */
+	    else
+	      e_dnd_handle_drop (v);
+
 	     ecore_window_dnd_send_finished(v->win.base, e->source_win);
 	     e_dnd_drop_request_free();
 	     
@@ -2852,7 +2911,7 @@ e_dnd_drop_request(Ecore_Event * ev)
 		    dnd_pending_mode = v->drag.drop_mode;
 		 }
 	       else
-		 {		 
+		 {
 		    if( e->copy )
 		      dnd_pending_mode = E_DND_COPY;
 		    else if( e->move )
@@ -2890,7 +2949,7 @@ e_dnd_drop_request_free(void)
 }
 
 static void
-e_dnd_handle_drop( E_View *v, E_dnd_enum dnd_pending_mode )
+e_dnd_handle_drop( E_View *v )
 {
    int in, out;
    char *filename;
@@ -2923,16 +2982,18 @@ e_dnd_handle_drop( E_View *v, E_dnd_enum dnd_pending_mode )
 	/* Copy files */
 	efsd_copy( e_fs_get_connection(), out, dnd_files,
 		  efsd_ops(0) );
+	dnd_pending_mode = E_DND_COPIED;
 	break;
       case E_DND_MOVE:
 	efsd_move( e_fs_get_connection(), out, dnd_files,
 		  efsd_ops(0) );
+	dnd_pending_mode = E_DND_DELETED;
 	break;
       default:
 	/* nothing yet */
 	break;
      }
-   
+
   D_RETURN;
 }
 
