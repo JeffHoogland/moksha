@@ -3,45 +3,51 @@
  */
 #include "e.h"
 
-typedef struct _About_Data About_Data;
+typedef struct _Main_Data Main_Data;
 
-struct _About_Data
+struct _Main_Data
 {
    E_Menu *menu;
+   E_Menu *apps;
    E_Menu *modules;
 };
 
 /* local subsystem functions */
-static void _e_int_menus_about_end     (void *data, E_Menu *m);
-static void _e_int_menus_about_about   (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_about_restart (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_about_exit    (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_apps_scan     (E_Menu *m);
-static void _e_int_menus_apps_start    (void *data, E_Menu *m);
-static void _e_int_menus_apps_end      (void *data, E_Menu *m);
-static void _e_int_menus_apps_free_hook(void *obj);
-static void _e_int_menus_apps_run      (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_clients_pre_cb(void *data, E_Menu *m);
+static void _e_int_menus_main_end        (void *data, E_Menu *m);
+static void _e_int_menus_about_end       (void *data, E_Menu *m);
+static void _e_int_menus_main_about     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_restart   (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_exit      (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_apps_scan       (E_Menu *m);
+static void _e_int_menus_apps_start      (void *data, E_Menu *m);
+static void _e_int_menus_apps_end        (void *data, E_Menu *m);
+static void _e_int_menus_apps_free_hook  (void *obj);
+static void _e_int_menus_apps_run        (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_clients_pre_cb  (void *data, E_Menu *m);
 static void _e_int_menus_clients_item_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
-e_int_menus_about_new(void)
+e_int_menus_main_new(void)
 {
    E_Menu *m, *subm;
    E_Menu_Item *mi;
-   About_Data *dat;
+   Main_Data *dat;
    
-   dat = calloc(1, sizeof(About_Data));
+   dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
    dat->menu = m;
    
-   e_menu_post_deactivate_callback_set(m, _e_int_menus_about_end, dat);
+   e_menu_post_deactivate_callback_set(m, _e_int_menus_main_end, dat);
+   
+   subm = e_int_menus_favorite_apps_new(0);
+   dat->apps = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "About Enlightenment...");   
-   e_menu_item_icon_file_set(mi,
-			     e_path_find(path_images, "e.png"));
-   e_menu_item_callback_set(mi, _e_int_menus_about_about, NULL);
+   e_menu_item_label_set(mi, "Favorite Applications");
+   e_menu_item_submenu_set(mi, subm);
+  
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
    
    subm = e_module_menu_new();
    dat->modules = subm;
@@ -58,12 +64,21 @@ e_int_menus_about_new(void)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "About Enlightenment");   
+   e_menu_item_icon_file_set(mi,
+			     e_path_find(path_images, "e.png"));
+   e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Restart Enlightement");
-   e_menu_item_callback_set(mi, _e_int_menus_about_restart, NULL);
+   e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Exit Enlightement");
-   e_menu_item_callback_set(mi, _e_int_menus_about_exit, NULL);
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
    return m;
 }
 
@@ -71,6 +86,7 @@ E_Menu *
 e_int_menus_apps_new(char *dir, int top)
 {
    E_Menu *m;
+   E_Menu_Item *mi;
    E_App *a;
    
    m = e_menu_new();
@@ -86,6 +102,25 @@ e_int_menus_apps_new(char *dir, int top)
 }
 
 E_Menu *
+e_int_menus_favorite_apps_new(int top)
+{
+   E_Menu *m;
+   E_App *a;
+   char buf[4096];
+   char *homedir;
+   
+   homedir = e_user_homedir_get();
+   if (homedir)
+     {
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/favorite", homedir);
+	m = e_int_menus_apps_new(buf, top);
+	free(homedir);
+	return m;
+     }
+   return NULL;
+}
+
+E_Menu *
 e_int_menus_clients_new(void)
 {
    E_Menu *m;
@@ -98,18 +133,19 @@ e_int_menus_clients_new(void)
 
 /* local subsystem functions */
 static void
-_e_int_menus_about_end(void *data, E_Menu *m)
+_e_int_menus_main_end(void *data, E_Menu *m)
 {
-   About_Data *dat;
+   Main_Data *dat;
    
    dat = data;
+   e_object_unref(E_OBJECT(dat->apps));
    e_object_unref(E_OBJECT(dat->modules));
    e_object_unref(E_OBJECT(m));
    free(dat);
 }
 
 static void
-_e_int_menus_about_about(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_error_dialog_show("About Enlightenment",
 		       "This is Enlightenment "VERSION".\n"
@@ -121,7 +157,7 @@ _e_int_menus_about_about(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_about_restart(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    printf("RESTART ON!\n");
    restart = 1;
@@ -129,7 +165,7 @@ _e_int_menus_about_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_about_exit(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    ecore_main_loop_quit();
 }

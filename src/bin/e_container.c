@@ -332,27 +332,19 @@ _e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *ev
    con = data;
    if (ev->button == 1)
      {
-	char buf[4096];
-	char *homedir;
+	E_Menu *m;
 	
-	homedir = e_user_homedir_get();
-	if (homedir)
-	  {
-	     E_Menu *m;
-	     
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/favorite", homedir);
-	     m = e_int_menus_apps_new(buf, 1);
-	     e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
-				   E_MENU_POP_DIRECTION_DOWN);
-	     e_util_container_fake_mouse_up_all_later(con);
-	     free(homedir);
-	  }
+	m = e_int_menus_main_new();
+	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
+			      E_MENU_POP_DIRECTION_DOWN);
+	e_util_container_fake_mouse_up_all_later(con);
      }
    else if (ev->button == 2)
      {
 	E_Menu *m;
 
 	m = e_int_menus_clients_new();
+	/* FIXME: this is a bit of a hack... setting m->con - bad hack */
 	m->con = con;
 	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
@@ -362,7 +354,7 @@ _e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *ev
      {
 	E_Menu *m;
 	
-	m = e_int_menus_about_new();
+	m = e_int_menus_favorite_apps_new(1);
 	e_menu_activate_mouse(m, con, ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(con);
