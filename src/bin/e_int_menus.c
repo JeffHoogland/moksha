@@ -44,6 +44,8 @@ e_int_menus_main_new(void)
    dat->apps = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Favorite Applications");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "favorites");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
