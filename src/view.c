@@ -1513,6 +1513,7 @@ e_view_file_added(int id, char *file)
    v = e_view_find_by_monitor_id(id);
    if (!v) D_RETURN;
    e_iconbar_file_add(v, file);
+   e_view_bg_change(v, file);
    /* filter files here */
    if (!e_view_filter_file(v, file)) D_RETURN;
    if (!e_icon_find_by_file(v, file))
