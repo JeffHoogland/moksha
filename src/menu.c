@@ -875,10 +875,6 @@ e_menu_select(int dx, int dy)
    D_RETURN;
 }
 
-/**
- * e_menu_init - Initialise the menu, adding the required
- *   event handlers.
- */
 void
 e_menu_init(void)
 {

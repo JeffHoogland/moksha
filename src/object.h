@@ -17,8 +17,8 @@ typedef struct _e_object
 
 /**
  * e_object_init - Initializes an E object
- * @obj           The object to initalize
- * @cleanup_func  The destructor function for this object
+ * @obj:          The object to initalize
+ * @cleanup_func: The destructor function for this object
  *
  * This function initializes an E object. It registers
  * the @cleanup_func that is to be called when the use
@@ -36,7 +36,7 @@ void e_object_init(E_Object *obj, E_Cleanup_Func cleanup_func);
 
 /**
  * e_object_cleanup - Cleanup function for E_Objects
- * @obj     The object to clean up
+ * @obj:     The object to clean up
  *
  * This is the most basic destructor function, the only
  * one which does not call another base class destructor
@@ -47,13 +47,13 @@ void e_object_cleanup(E_Object *obj);
 
 /**
  * e_object_ref - Increment the reference count of this object
- * @obj     The object whose reference count to increase
+ * @obj:     The object whose reference count to increase
  */
 void e_object_ref(E_Object *obj);
 
 /**
  * e_object_unref - Decrememnt the reference count of this object
- * @obj     The object whose reference count to decrease
+ * @obj:     The object whose reference count to decrease
  *
  * This function decreases an object's reference counter. If
  * the counter drops to zero, the objects cleanup_func()
@@ -66,7 +66,7 @@ int  e_object_unref(E_Object *obj);
 
 /**
  * e_object_get_usecount - Returns the current use count
- * @obj   The object whose use count to return
+ * @obj:   The object whose use count to return
  *
  * This function returns the use count of an object. Use this
  * function when you want to perform tasks before an object

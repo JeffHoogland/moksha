@@ -33,10 +33,10 @@ struct _e_observee
 
 /**
  * e_observer_init - Initializes an observer
- * @obs            The observer to initialize
- * @event          The Ecore event for which this observer will be responsible
- * @nofify_func    The function the observer calls when it gets notified
- * @cleanup_func      The destructor function to pass to the E_Object initializer
+ * @obs:            The observer to initialize
+ * @event:          The Ecore event for which this observer will be responsible
+ * @notify_func:    The function the observer calls when it gets notified
+ * @cleanup_func:   The destructor function to pass to the E_Object initializer
  *
  * This function initializes an observer. Observees can register observers,
  * which will call the given @notify_func when an observer issues an
@@ -49,7 +49,7 @@ void    e_observer_init(E_Observer *obs, Ecore_Event_Type event,
 
 /**
  * e_observer_cleanup - Cleans up an observer.
- * @obs            The observer to clean up
+ * @obs:            The observer to clean up
  *
  * This function cleans up an observer by unregistering all observees.
  */
@@ -57,8 +57,8 @@ void    e_observer_cleanup(E_Observer *obs);
 
 /**
  * e_observer_register_observee - Registers an observee
- * @observer       The observer which registers the observee
- * @observee       The observee which registers the observer
+ * @observer:       The observer which registers the observee
+ * @observee:       The observee which registers the observer
  *
  * This function registers the observer in the observee and vice versa.
  */
@@ -66,8 +66,8 @@ void    e_observer_register_observee(E_Observer *observer, E_Observee *observee)
 
 /**
  * e_observer_unregister_observee - Unregisters an observee
- * @observer       The observer which unregisters the observee
- * @observee       The observee which unregisters the observer
+ * @observer:       The observer which unregisters the observee
+ * @observee:       The observee which unregisters the observer
  *
  * This function unregisters the observer in the observee and vice versa.
  */
@@ -75,8 +75,8 @@ void    e_observer_unregister_observee(E_Observer *observer, E_Observee *observe
 
 /**
  * e_observee_init - Initializes an observee.
- * @obs            The observee to initialize
- * @cleanup_func      The destructor function for cleaning this observee up
+ * @obs:            The observee to initialize
+ * @cleanup_func:      The destructor function for cleaning this observee up
  *
  * This function initializes an observee. Observees are derived
  * from E_Objects, which is why this function gets the destructor
@@ -86,7 +86,7 @@ void    e_observee_init(E_Observee *obs, E_Cleanup_Func cleanup_func);
 
 /**
  * e_observee_cleanup - Cleans up an observee.
- * @obs            The observee to clean up
+ * @obs:            The observee to clean up
  *
  * This function cleans up an observee by unregistering it from all observers.
  */
@@ -94,8 +94,8 @@ void    e_observee_cleanup(E_Observee *obs);
 
 /**
  * e_observee_notify_observers - Notify observers of a given Ecore event
- * @o              The observee which notifies its observers
- * @event          The event by which to filter the observers
+ * @o:              The observee which notifies its observers
+ * @event:          The event by which to filter the observers
  *
  * This function scans the registered observers in the observee
  * and calls the notify_func() of the observers that are
