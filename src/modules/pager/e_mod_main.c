@@ -970,18 +970,15 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
    /* and this pager zone is for this border */
    /* see if the window is in this pager at all */
    pw = _pager_face_border_find(face, ev->border);
-   /* is it sticky */
-   if (ev->border->sticky)
-     {
-	/* if its sticky and in this pager - its already everywhere, so abort
-	 * doing anything else */
-	if (pw) return 1;
-     }
-   
-   /* its not sticky but its in the pager */
-   /* move it to the right desk */
    if (pw)
      {
+	/* is it sticky */
+	if (ev->border->sticky)
+	  {
+	     /* if its sticky and in this pager - its already everywhere, so abort
+	      * doing anything else */
+	     return 1;
+	  }
 	/* move it to the right desk */
 	/* find the pager desk of the target desk */
 	pd = _pager_face_desk_find(face, ev->border->desk);
