@@ -218,26 +218,29 @@ _e_int_menus_apps_scan(E_Menu *m)
    
    a = e_object_data_get(E_OBJECT(m));
    e_app_subdir_scan(a, 0);
-   for (l = a->subapps; l; l = l->next)
+   if (a)
      {
-	a = l->data;
-	
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, a->name);
-	if (a->exe)
+	for (l = a->subapps; l; l = l->next)
 	  {
-	     e_menu_item_icon_edje_set(mi, a->path, "icon");
-	     e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
-	     app_count++;
-	  }
-	else
-	  {
-	     char buf[4096];
+	     a = l->data;
 	     
-	     snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
-	     e_menu_item_icon_edje_set(mi, buf, "icon");
-	     e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
-	     app_count++;
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, a->name);
+	     if (a->exe)
+	       {
+		  e_menu_item_icon_edje_set(mi, a->path, "icon");
+		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
+		  app_count++;
+	       }
+	     else
+	       {
+		  char buf[4096];
+		  
+		  snprintf(buf, sizeof(buf), "%s/.directory.eet", a->path);
+		  e_menu_item_icon_edje_set(mi, buf, "icon");
+		  e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
+		  app_count++;
+	       }
 	  }
      }
    if (app_count == 0)
@@ -266,7 +269,7 @@ _e_int_menus_apps_del_hook(void *obj)
 	E_Menu_Item *mi;
 	
 	mi = l->data;
-	if (mi->submenu) e_object_del(mi->submenu);
+	if (mi->submenu) e_object_del(E_OBJECT(mi->submenu));
      }
 }
 

@@ -184,6 +184,18 @@ e_object_error(E_Object *obj)
 			"%s",
 			obj, magic,
 			bt);
+	     else if (obj->references < 0)
+	       snprintf(buf, sizeof(buf),
+			"Object [%p] has negative references (%i).\n"
+			"%s",
+			obj, obj->references,
+			bt);
+	     else if (obj->references > 100)
+	       snprintf(buf, sizeof(buf),
+			"Object [%p] has unusually high reference count (%i).\n"
+			"%s",
+			obj, obj->references,
+			bt);
 	     /* it's all ok! */
 	     else
 	       {
