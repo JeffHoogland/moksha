@@ -112,7 +112,7 @@ e_app_new(const char *path, int scan_subdirs)
 	     if (ecore_file_exists(buf))
 	       _e_app_fields_fill(a, buf);
 	     else
-	       a->name = strdup(ecore_file_get_file(path));
+	       a->name = strdup(ecore_file_get_file(a->path));
 	     if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
 
 	     a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
@@ -659,7 +659,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    
    app = data;
 
-   if (em->type != ECORE_FILE_TYPE_DIRECTORY)
+   if (ecore_file_monitor_type_get(em) != ECORE_FILE_TYPE_DIRECTORY)
      {
 	printf("BUG: E_App should only monitor directories!\n");
 	return;
