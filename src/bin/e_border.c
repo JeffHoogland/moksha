@@ -385,8 +385,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if (bd->client.icccm.take_focus)
 	       {
 		  printf("take focus!\n");
-		  /*
-		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);*/
+		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
 		  e_hints_active_window_set(bd->client.win);
 		  ecore_x_window_focus(bd->client.win);
 	       }
@@ -394,12 +393,14 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	       {
 		  printf("set focus\n");
 		  ecore_x_window_focus(bd->client.win);
+		  e_hints_active_window_set(bd->client.win);
 	       }
 	  }
 	else
 	  {
 	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->container->manager->win);
+	     e_hints_active_window_set(0);
 	  }
      }
    if ((bd->focused) && (focused != bd))

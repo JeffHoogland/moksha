@@ -16,9 +16,6 @@ e_hints_init(void)
 
    win = ecore_x_window_new(0, -200, -200, 5, 5);
 
-   ecore_x_icccm_init();
-   ecore_x_netwm_init();
-   
    if (roots)
      {
         if (num > 0)
@@ -138,7 +135,6 @@ e_hints_client_stacking_set(void)
 void
 e_hints_active_window_set(Ecore_X_Window win)
 {
-   ecore_x_icccm_take_focus_send(win, ECORE_X_CURRENT_TIME);
    ecore_x_netwm_client_active_set(root, win);
 }
 
