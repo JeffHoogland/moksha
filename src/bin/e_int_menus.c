@@ -157,7 +157,6 @@ e_int_menus_clients_new(void)
 
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_clients_pre_cb, NULL);
-   
    return m;
 }
 
@@ -389,7 +388,8 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    E_Menu *root;
 
    if (m->realized) return;
-
+   if (m->items) return;
+   
    root = e_menu_root_get(m);
    /* get the current containers clients */
    if (root && root->con)
