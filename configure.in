@@ -230,7 +230,32 @@ AC_MSG_ERROR(Cannot detect db loader: Have you installed imlib2_loaders?)
 ],
 AC_MSG_ERROR(Sorry. Enlightenment cannot be cross-compiled.))
 
+
+dnl Checking for Perl:
+AC_PATH_PROG(PERL,perl,0)
+AC_SUBST(PERL)
+
+
+dnl Look for jade for sgml translations.
+AC_ARG_WITH(dbsheets,
+       [  --with-dbsheets=DIR     use DIR to specify your DocBook stylesheets installation path.],
+       DB_STYLESHEETS="$withval", DB_STYLESHEETS="/usr/lib/sgml/stylesheet/dsssl/docbook/nwalsh")
+AC_SUBST(DB_STYLESHEETS)
+AC_PATH_PROG(JADE, jade)
+AM_CONDITIONAL(HAVE_JADE, test "x$JADE" != "x" && test -d "$DB_STYLESHEETS")
+
+
 AC_OUTPUT([
-Makefile src/Makefile lib/Makefile client/Makefile intl/Makefile po/Makefile.in
+Makefile
+src/Makefile
+lib/Makefile
+client/Makefile
+intl/Makefile
+po/Makefile.in
+doc/Makefile
+doc/kernel-doc
+doc/html-customizations.dsl
+], [
+chmod +x doc/kernel-doc
 ])
 

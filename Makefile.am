@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = intl po src lib client
+SUBDIRS = intl po src lib client doc
 
 MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
                        config.h.in config.sub configure install-sh \
@@ -20,3 +20,12 @@ dist-hook:
 	fi
 
 EXTRA_DIST = README AUTHORS COPYING e.spec
+
+docs:
+	$(MAKE) -C $(top_srcdir)/doc docs
+
+if HAVE_JADE
+html-docs:
+	$(MAKE) -C $(top_srcdir)/doc html-docs
+endif
+

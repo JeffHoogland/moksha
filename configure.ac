@@ -1,6 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(configure.in)
+AC_INIT
+AC_CONFIG_SRCDIR([configure.in])
 
 ENLIGHTENMENT_MAJOR=0
 ENLIGHTENMENT_MINOR=17
@@ -230,7 +231,34 @@ AC_MSG_ERROR(Cannot detect db loader: Have you installed imlib2_loaders?)
 ],
 AC_MSG_ERROR(Sorry. Enlightenment cannot be cross-compiled.))
 
-AC_OUTPUT([
-Makefile src/Makefile lib/Makefile client/Makefile intl/Makefile po/Makefile.in
+
+dnl Checking for Perl:
+AC_PATH_PROG(PERL,perl,0)
+AC_SUBST(PERL)
+
+
+dnl Look for jade for sgml translations.
+AC_ARG_WITH(dbsheets,
+       [  --with-dbsheets=DIR     use DIR to specify your DocBook stylesheets installation path.],
+       DB_STYLESHEETS="$withval", DB_STYLESHEETS="/usr/lib/sgml/stylesheet/dsssl/docbook/nwalsh")
+AC_SUBST(DB_STYLESHEETS)
+AC_PATH_PROG(JADE, jade)
+AM_CONDITIONAL(HAVE_JADE, test "x$JADE" != "x" && test -d "$DB_STYLESHEETS")
+
+
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+lib/Makefile
+client/Makefile
+intl/Makefile
+po/Makefile.in
+doc/Makefile
+doc/kernel-doc
+doc/html-customizations.dsl
 ])
+AC_CONFIG_COMMANDS([default],[[
+chmod +x doc/kernel-doc
+]],[[]])
+AC_OUTPUT
 
