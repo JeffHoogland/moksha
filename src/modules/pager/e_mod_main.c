@@ -308,6 +308,7 @@ _pager_destroy(Pager *pager)
    _pager_menu_del(pager->menu);
 
    E_FREE(pager);
+   _pager_count--;
 }
 
 static void

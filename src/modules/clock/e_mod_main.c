@@ -25,6 +25,7 @@ static void    _clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_C
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static int _clock_count;
 /* public module routines. all modules must have these */
 void *
 init(E_Module *module)
@@ -103,7 +104,8 @@ _clock_init(E_Module *module)
    Clock *clock;
    Evas_List *managers, *l, *l2;
    E_Menu_Item *mi;
-   
+  
+   _clock_count = 0;
    clock = E_NEW(Clock, 1);
    if (!clock) return NULL;
 
@@ -204,7 +206,7 @@ _clock_face_init(Clock_Face *face)
    evas_object_show(o);
 
    face->gmc = e_gadman_client_new(face->con->gadman);
-   e_gadman_client_domain_set(face->gmc, "module.clock", 0);
+   e_gadman_client_domain_set(face->gmc, "module.clock", _clock_count++);
    e_gadman_client_policy_set(face->gmc,
 			      E_GADMAN_POLICY_ANYWHERE |
 			      E_GADMAN_POLICY_HMOVE |
@@ -234,6 +236,7 @@ _clock_face_free(Clock_Face *face)
    _clock_face_menu_del(face->menu);
    e_object_unref(E_OBJECT(face->con));
    free(face);
+   _clock_count--;
 }
 
 static void
