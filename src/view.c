@@ -635,6 +635,7 @@ e_view_scroll_to(E_View *v, int sx, int sy)
    D_ENTER;
    
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
+
    if (sx < v->size.w - v->spacing.window.r - max_x)
      sx = v->size.w - v->spacing.window.r - max_x;
    if (sx > v->spacing.window.l - min_x)
@@ -643,6 +644,7 @@ e_view_scroll_to(E_View *v, int sx, int sy)
      sy = v->size.h - v->spacing.window.b - max_y;
    if (sy > v->spacing.window.t - min_y)
      sy = v->spacing.window.t - min_y;
+
    if ((sx == v->scroll.x) && (v->scroll.y == sy)) D_RETURN;
    v->scroll.x = sx;
    v->scroll.y = sy;
@@ -673,6 +675,7 @@ e_view_scroll_to_percent(E_View *v, double psx, double psy)
    e_view_icons_get_extents(v, &min_x, &min_y, &max_x, &max_y);
    sx = (psx * ((double)max_x - (double)min_x)) - min_x;
    sy = (psy * ((double)max_y - (double)min_y)) - min_y;
+   
    if (sx < v->size.w - v->spacing.window.r - max_x)
      sx = v->size.w - v->spacing.window.r - max_x;
    if (sx > v->spacing.window.l - min_x)
@@ -681,6 +684,7 @@ e_view_scroll_to_percent(E_View *v, double psx, double psy)
      sy = v->size.h - v->spacing.window.b - max_y;
    if (sy > v->spacing.window.t - min_y)
      sy = v->spacing.window.t - min_y;
+
    if ((sx == v->scroll.x) && (v->scroll.y == sy)) D_RETURN;
    v->scroll.x = sx;
    v->scroll.y = sy;
@@ -899,10 +903,10 @@ e_configure(Ecore_Event * ev)
 		  e_view_scroll_to(v, v->scroll.x, v->scroll.y);
 		  e_view_arrange(v);
 		  e_view_queue_geometry_record(v);
-		  e_scrollbar_move(v->scrollbar.v, v->size.w - 12, 0);
-		  e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
-		  e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
-		  e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
+		  e_scrollbar_move(v->scrollbar.v, v->size.w - v->scrollbar.v->w, 0);
+		  e_scrollbar_resize(v->scrollbar.v, v->scrollbar.v->w, v->size.h - v->scrollbar.h->h);
+		  e_scrollbar_move(v->scrollbar.h, 0, v->size.h - v->scrollbar.h->h);
+		  e_scrollbar_resize(v->scrollbar.h, v->size.w - v->scrollbar.v->w, v->scrollbar.h->h);
 		  if (v->iconbar) e_iconbar_fix(v->iconbar);
 	       }
 	  }
@@ -1499,6 +1503,7 @@ e_view_arrange(E_View *v)
    
    x = v->spacing.window.l;
    y = v->spacing.window.t;
+
    for (l = v->icons; l; l = l->next)
      {
 	E_Icon *ic;
@@ -1976,10 +1981,10 @@ e_view_realize(E_View *v)
    e_scrollbar_set_range(v->scrollbar.h, 1.0);
    e_scrollbar_set_max(v->scrollbar.h, 1.0);
    
-   e_scrollbar_move(v->scrollbar.v, v->size.w - 12, 0);
-   e_scrollbar_resize(v->scrollbar.v, 12, v->size.h - 12);
-   e_scrollbar_move(v->scrollbar.h, 0, v->size.h - 12);
-   e_scrollbar_resize(v->scrollbar.h, v->size.w - 12, 12);
+   e_scrollbar_move(v->scrollbar.v, v->size.w - v->scrollbar.v->w, 0);
+   e_scrollbar_resize(v->scrollbar.v, v->scrollbar.v->w, v->size.h - v->scrollbar.h->h);
+   e_scrollbar_move(v->scrollbar.h, 0, v->size.h - v->scrollbar.h->h);
+   e_scrollbar_resize(v->scrollbar.h, v->size.w - v->scrollbar.v->w, v->scrollbar.h->h);
 
    /* I support dnd */
    ecore_window_dnd_advertise(v->win.base);  
