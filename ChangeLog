@@ -1,0 +1,9 @@
+Mon Feb 25 18:56:35 2002  Till Adam  <till@adam-lilienthal.de>
+   * start of ChangeLog ;)
+   * several views of the same dir are now possible
+   * added class E_File representing a file with stat and icon info
+   * added class E_View_Model representing a dir with list of E_Files
+   * added singleton E_View_Machine holding global lists of Views and
+     View_Models
+   * seperation of icon and file concepts
+   * various small fixes and cleanups
