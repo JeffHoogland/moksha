@@ -184,6 +184,96 @@ e_desktops_cleanup(E_Desktop * desk)
    D_RETURN;
 }
 
+/* 2002/04/23  Azundris  <hacks@azundris.com>  Transparency for legacy apps
+ *
+ * Since we have new fancy ways of drawing stuff, we technically don't
+ * use the root window any more, in the X meaning of the word.  This
+ * results in legacy apps (xchat, xemacs, konsole, ...) failing to find
+ * a root pixmap, thereby breaking pseudo-transparency.  Since we're
+ * using a pixmap below anyway, we may as well export it to unbreak
+ * the legacy thingies.  This code reuses parts of Esetroot (written
+ * by Nat Friedman <ndf@mit.edu> with modifications by Gerald Britton
+ * <gbritton@mit.edu> and Michael Jennings <mej@eterm.org>).  raster
+ * intensely dislikes the pseudo-transparency hacks, so don't go to him
+ * if you need to discuss them. : )
+ *
+ * THIS CODE IS CONSIDERED EXPERIMENTAL (alpha).  
+ * */
+
+static void
+e_desktops_set_fake_root(Pixmap p)
+{
+   Display            *Xdisplay;
+   Screen             *scr;
+   Window              Xroot;
+   int                 screen;
+   Atom                prop_root, prop_esetroot, type;
+   int                 format;
+   unsigned long       length, after;
+   unsigned char      *data_root, *data_esetroot;
+
+   D_ENTER;
+
+   Xdisplay = ecore_display_get();
+
+   screen = DefaultScreen(Xdisplay);
+   Xroot = RootWindow(Xdisplay, screen);
+   scr = ScreenOfDisplay(Xdisplay, screen);
+
+   XGrabServer(Xdisplay);
+
+   prop_root = XInternAtom(Xdisplay, "_XROOTPMAP_ID", True);
+   prop_esetroot = XInternAtom(Xdisplay, "ESETROOT_PMAP_ID", True);
+
+   if (prop_root != None && prop_esetroot != None)
+     {
+	XGetWindowProperty(Xdisplay, Xroot, prop_root, 0L, 1L, False,
+			   AnyPropertyType, &type, &format, &length, &after,
+			   &data_root);
+	if (type == XA_PIXMAP)
+	  {
+	     XGetWindowProperty(Xdisplay, Xroot, prop_esetroot, 0L, 1L, False,
+				AnyPropertyType, &type, &format, &length,
+				&after, &data_esetroot);
+	     if (data_root && data_esetroot)
+	       {
+		  if (type == XA_PIXMAP
+		      && *((Pixmap *) data_root) == *((Pixmap *) data_esetroot))
+		    {
+		       XKillClient(Xdisplay, *((Pixmap *) data_root));
+		    }
+	       }
+	  }
+     }
+
+   /* This will locate the property, creating it if it doesn't exist */
+   prop_root = XInternAtom(Xdisplay, "_XROOTPMAP_ID", False);
+   prop_esetroot = XInternAtom(Xdisplay, "ESETROOT_PMAP_ID", False);
+
+   /* The call above should have created it.  If that failed, we can't 
+    * continue. */
+   if (prop_root == None || prop_esetroot == None)
+     {
+	fprintf(stderr,
+		"E17:  Creation of pixmap property failed in internal Esetroot.\n");
+	D_RETURN;
+     }
+
+   XChangeProperty(Xdisplay, Xroot, prop_root, XA_PIXMAP, 32, PropModeReplace,
+		   (unsigned char *)&p, 1);
+   XChangeProperty(Xdisplay, Xroot, prop_esetroot, XA_PIXMAP, 32,
+		   PropModeReplace, (unsigned char *)&p, 1);
+   XSetCloseDownMode(Xdisplay, RetainPermanent);
+   XFlush(Xdisplay);
+
+   XSetWindowBackgroundPixmap(Xdisplay, Xroot, p);
+   XClearWindow(Xdisplay, Xroot);
+   XUngrabServer(Xdisplay);
+   XFlush(Xdisplay);
+
+   D_RETURN;
+}
+
 void
 e_desktops_init_file_display(E_Desktop * desk)
 {
@@ -226,7 +316,11 @@ e_desktops_init_file_display(E_Desktop * desk)
    b->client.is_desktop = 1;
 
    if (v->options.back_pixmap)
-      e_view_update(v);
+     {
+	e_view_update(v);
+	if (v->pmap)
+	   e_desktops_set_fake_root(v->pmap);
+     }
 
    D_RETURN;
 }
@@ -427,7 +521,8 @@ e_desktops_goto(int d, int ax, int ay)
 	desk->desk.area.y = ay;
 	e_icccm_set_desk_area(0, desk->desk.area.x, desk->desk.area.y);
 	e_icccm_set_desk(0, desk->desk.desk);
-	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH, NULL);
+	e_observee_notify_observers(E_OBSERVEE(desk), E_EVENT_DESKTOP_SWITCH,
+				    NULL);
      }
 
    D_RETURN;
