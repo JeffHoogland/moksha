@@ -75,7 +75,7 @@ e_icon_new(void)
    icon = NEW(E_Icon, 1);
    ZERO(icon, E_Icon, 1);
    OBJ_INIT(icon, e_icon_free);
-   icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");   
+   icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/unknown/default.db:/icon/normal");   
    icon->previous.state.clicked = -1;
    return icon;
 }

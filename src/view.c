@@ -422,29 +422,16 @@ e_view_file_added(int id, char *file)
    /* char buf[4096]; */
 
    /* if we get a path - ignore it - its not a file in the a dir */
-   printf("e_view_file_added(%i, \"%s\");\n", id, file);
    if (!file) return;
    if (file[0] == '/') return;
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
    /* filter files here */
    if (!e_view_filter_file(v, file)) return;
+   printf("e_view_file_added(%i, \"%s\");\n", id, file);
    icon = e_icon_new();
    e_icon_set_filename(icon, file);
    e_view_add_icon(v, icon);
-
-   /*
-   sprintf(buf, "%s/%s", v->dir, file);
-   if (efsd_ready(e_fs_get_connection()))
-     {
-       printf("Stating %s\n", buf);
-       efsd_stat(e_fs_get_connection(), buf);
-     }
-   else
-     {
-       printf("*********** EEEEEEEEEEEEEEEEEK Efsd not ready.\n");
-     }
-   */
 
    v->changed = 1;
 }
@@ -456,11 +443,14 @@ e_view_file_deleted(int id, char *file)
    E_View *v;
    /* char *realfile; */
 
-   printf("e_view_file_deleted(%i, \"%s\");\n", id, file);
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
    icon = e_view_find_icon_by_file(v, file);
-   if (icon) e_view_del_icon(v, icon);
+   if (icon) 
+     {
+	e_view_del_icon(v, icon);
+	printf("e_view_file_deleted(%i, \"%s\");\n", id, file);
+     }
 }
 
 E_Icon *
@@ -536,15 +526,15 @@ e_view_handle_fs(EfsdEvent *ev)
 				 ev->efsd_filechange_event.file);
 	     break;
 	   case EFSD_CHANGE_CHANGED:
-	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
+/*	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
-	     break;
+*/	     break;
 	   case EFSD_CHANGE_MOVED:
-	     printf("EFSD_CHANGE_MOVED: %i %s\n",
+/*	     printf("EFSD_CHANGE_MOVED: %i %s\n",
 		    ev->efsd_filechange_event.id,
 		    ev->efsd_filechange_event.file);	     
-	     break;
+*/	     break;
 	   case EFSD_CHANGE_END_EXISTS:
 	     printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
 		    ev->efsd_filechange_event.id,
@@ -569,16 +559,83 @@ e_view_handle_fs(EfsdEvent *ev)
 	     break;
 	   case EFSD_CMD_CHMOD:
 	     break;
+	   case EFSD_CMD_GETMIME:
+/*	     printf("Getmime event %i\n",
+		    ev->efsd_reply_event.command.efsd_file_cmd.id);
+*/	     if (ev->efsd_reply_event.status == SUCCESS)
+	       {
+		  E_Icon *icon;
+		  
+		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  if (icon)
+		    {
+		       char m1[4096], m2[4096], *p;
+		       
+		       /* figure out icons to use */
+		       strcpy(m1, (char*)ev->efsd_reply_event.data);
+		       p = strchr(m1, '/');
+		       if (p) *p = 0;
+		       p = strchr((char*)ev->efsd_reply_event.data, '/');
+		       if (p) strcpy(m2, &(p[1]));
+		       else m2[0] = 0;
+		       icon->info.mime.base = strdup(m1);
+		       icon->info.mime.type = strdup(m2);
+		       
+		       printf("%s: %s/%s\n", icon->file, icon->info.mime.base, icon->info.mime.type);
+		       sprintf(m1, "%s/data/icons/%s/%s.db",PACKAGE_DATA_DIR,
+			       icon->info.mime.base, 
+			       icon->info.mime.type);
+		       if (!e_file_exists(m1))
+			 {
+			    printf("fallback 1\n");
+			    sprintf(m1, "%s/data/icons/%s/default.db",PACKAGE_DATA_DIR,
+				    icon->info.mime.base);
+			    if (!e_file_exists(m1))
+			      {
+			    printf("fallback 2\n");
+				 sprintf(m1, "%s/data/icons/unknown/unknown.db",PACKAGE_DATA_DIR);
+				 if (!e_file_exists(m1))
+				   {
+			    printf("fallback 3\n");
+				      sprintf(m1, "%s/data/icons/unknown/default.db",PACKAGE_DATA_DIR);
+				   }
+			      }
+			 }
+		       IF_FREE(icon->info.icon.normal);
+		       IF_FREE(icon->info.icon.selected);
+		       IF_FREE(icon->info.icon.clicked);
+		       sprintf(m2, "%s:/icon/normal", m1);
+		       icon->info.icon.normal = strdup(m2);
+		       sprintf(m2, "%s:/icon/selected", m1);
+		       icon->info.icon.selected = strdup(m2);
+		       sprintf(m2, "%s:/icon/clicked", m1);
+		       icon->info.icon.clicked = strdup(m2);
+		       if (icon->info.link)
+			 {
+/*			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
+*/			 }
+		        e_icon_pre_show(icon);
+		    }
+	       }
+	     break;
 	   case EFSD_CMD_STAT:
-	     printf("Stat event %i stating file %s\n",
+/*	     printf("Stat event %i stating file %s\n",
 		    ev->efsd_reply_event.command.efsd_file_cmd.id,
 		    ev->efsd_reply_event.command.efsd_file_cmd.file);
-	       {
+*/	       {
 		  struct stat *st;
 		  E_Icon *icon;
 		  
 		  st = (struct stat*) ev->efsd_reply_event.data;
 		  
+		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
+		  if (icon)
+		    {
+		       char f[4096];
+
+/*		       
 		  if (S_ISREG(st->st_mode))
 		    printf("%s is a regular file.\n",
 			   ev->efsd_reply_event.command.efsd_file_cmd.file);
@@ -588,12 +645,7 @@ e_view_handle_fs(EfsdEvent *ev)
 		  if (S_ISDIR(st->st_mode))
 		    printf("%s is a directory.\n",
 			   ev->efsd_reply_event.command.efsd_file_cmd.file);
-		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
-		  if (icon)
-		    {
-		       char f[4096];
-		       
-		       sprintf(f, "%s/%s", icon->view->dir, icon->file);
+*/		       sprintf(f, "%s/%s", icon->view->dir, icon->file);
 		       /* should get mime type here */
 		       /* perhaps this flag should be part of the mime? */
 		       if (S_ISDIR(st->st_mode)) icon->info.is_dir = 1;
@@ -604,44 +656,14 @@ e_view_handle_fs(EfsdEvent *ev)
 			      efsd_readlink(e_fs_get_connection(), f);
 			 }
 		       icon->info.is_exe = e_file_can_exec(st);
-		       /* figure out icons to use */
-		       IF_FREE(icon->info.icon.normal);
-		       IF_FREE(icon->info.icon.selected);
-		       IF_FREE(icon->info.icon.clicked);
-		       if (icon->info.is_dir)
-			 {
-			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/clicked");
-			 }
-		       else if (icon->info.link)
-			 {
-			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
-			 }
-		       else if (icon->info.is_exe)
-			 {
-			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/clicked");
-			 }
-		       else
-			 {
-			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
-			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
-			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
-			 }
 		       icon->changed = 1;
 		       icon->view->changed = 1;
-		       if (!icon->info.link_get_id) 
-			 e_icon_pre_show(icon);
+/*		       if (!icon->info.link_get_id) 
+			 e_icon_pre_show(icon);*/
 		    }
 	       }
 	     break;
 	   case EFSD_CMD_READLINK:
-	     printf("Readlink event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);
 	     if (ev->efsd_reply_event.status == SUCCESS)
 	       {
 		  Evas_List l;
@@ -779,7 +801,8 @@ e_view_set_dir(E_View *v, char *dir)
 
    /* v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir); */
    v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-				      1, efsd_op_get_stat());
+				      2, efsd_op_get_stat(), 
+				      efsd_op_get_mimetype());
    v->is_listing = 1;
    v->changed = 1;
 }

@@ -10,7 +10,7 @@ _e_fs_fd_handle(int fd)
 {
    double start, current;
    
-   printf("############## fs event...\n");
+/*   printf("############## fs event...\n"); */
    start = e_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
@@ -47,7 +47,7 @@ _e_fs_fd_handle(int fd)
 	     break;
 	  }
     }
-   printf("############## fs done\n");
+/*   printf("############## fs done\n"); */
 }
 
 void
