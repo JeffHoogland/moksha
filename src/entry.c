@@ -197,7 +197,7 @@ e_entry_realize(E_Entry *entry)
    if (entry->obj_base) 
     {
 	ebits_add_to_evas(entry->obj_base, entry->evas);
-	ebits_set_color_class(entry->obj_base, "Base BG", 100, 200, 255, 255);
+/*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
      }   
    
    entry->clip_box = evas_add_rectangle(entry->evas);
