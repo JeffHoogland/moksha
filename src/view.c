@@ -19,7 +19,6 @@ e_idle(void *data)
 {
    Evas_List l;
 
-   printf("view idle.\n");
    for (l = views; l; l = l->next)
      {
 	E_View *v;
