@@ -532,6 +532,28 @@ e_entry_hide(E_Entry *entry)
 }
 
 void
+e_entry_raise(E_Entry *entry)
+{
+   if (entry->obj_base) ebits_raise(entry->obj_base);
+   evas_raise(entry->evas, entry->clip_box);
+   evas_raise(entry->evas, entry->text);
+   if (entry->obj_selection) ebits_raise(entry->obj_selection);
+   if (entry->obj_cursor) ebits_raise(entry->obj_cursor);
+   evas_raise(entry->evas, entry->event_box);
+}
+
+void
+e_entry_lower(E_Entry *entry)
+{
+   evas_lower(entry->evas, entry->event_box);
+   if (entry->obj_cursor) ebits_lower(entry->obj_cursor);
+   if (entry->obj_selection) ebits_lower(entry->obj_selection);
+   evas_lower(entry->evas, entry->text);
+   evas_lower(entry->evas, entry->clip_box);
+   if (entry->obj_base) ebits_lower(entry->obj_base);
+}
+
+void
 e_entry_set_layer(E_Entry *entry, int l)
 {
    if (entry->obj_base) ebits_set_layer(entry->obj_base, l);
@@ -587,6 +609,51 @@ e_entry_query_max_size(E_Entry *entry, int *w, int *h)
    
    if (w) *w = evas_get_text_width(entry->evas, entry->text) + p1l + p1r + p2l + p2r;
    if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+}
+
+void
+e_entry_max_size(E_Entry *entry, int *w, int *h)
+{
+   int p1l, p1r, p1t, p1b;
+   int p2l, p2r, p2t, p2b;
+   
+   p1l = p1r = p1t = p1b = 0;
+   if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
+   p2l = p2r = p2t = p2b = 0;
+   if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
+   if (w) *w = 8000;
+   if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+}
+
+void
+e_entry_min_size(E_Entry *entry, int *w, int *h)
+{
+   int p1l, p1r, p1t, p1b;
+   int p2l, p2r, p2t, p2b;
+   
+   p1l = p1r = p1t = p1b = 0;
+   if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
+   p2l = p2r = p2t = p2b = 0;
+   if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
+   if (w) *w = p1l + p1r + p2l + p2r + entry->min_size;
+   if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+}
+
+void
+e_entry_set_size(E_Entry *entry, int w, int h)
+{
+   int p1l, p1r, p1t, p1b;
+   int p2l, p2r, p2t, p2b;
+   
+   p1l = p1r = p1t = p1b = 0;
+   if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
+   p2l = p2r = p2t = p2b = 0;
+   if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
+   if (p1l + p1r + p2l + p2r + w > entry->w)
+     {
+	entry->min_size = w;
+	e_entry_configure(entry);
+     }
 }
 
 void

@@ -47,6 +47,7 @@ main(int argc, char **argv)
    e_event_filter_init();
    e_ev_x_init();
 
+   e_pack_object_init();
    e_fs_init();
    e_desktops_init();
    e_border_init();
