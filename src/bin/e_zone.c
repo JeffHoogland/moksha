@@ -77,12 +77,12 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
 	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move, zone);
      }
 
-   /* Start off with 4 desktops (2x2) */
    zone->desk_x_count = 0;
    zone->desk_y_count = 0;
    zone->desk_x_current = 0;
    zone->desk_y_current = 0;
-   e_zone_desk_count_set(zone, 2, 2);
+   e_zone_desk_count_set(zone, e_config->zone_desks_x_count,
+	 e_config->zone_desks_y_count);
 
    return zone;
 }
@@ -345,5 +345,8 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	desk->visible = 0;
 	e_desk_show(desk);
      }
+   e_config->zone_desks_x_count = xx;
+   e_config->zone_desks_y_count = yy;
+   e_config_save_queue();
 }
 

@@ -52,6 +52,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, framerate, DOUBLE);
    E_CONFIG_VAL(D, T, image_cache, INT);
    E_CONFIG_VAL(D, T, font_cache, INT);
+   E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
+   E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
@@ -69,6 +71,8 @@ e_config_init(void)
 	e_config->framerate = 30.0;
 	e_config->image_cache = 2048;
 	e_config->font_cache = 512;
+	e_config->zone_desks_x_count = 1;
+	e_config->zone_desks_y_count = 1;
 	  {
 	     E_Config_Module *em;
 	     
