@@ -780,7 +780,7 @@ _temperature_cb_check(void *data)
    char buf[4096];
 
    ef = data;
-   therms = e_file_ls("/proc/acpi/thermal_zone");
+   therms = ecore_file_ls("/proc/acpi/thermal_zone");
    if (!therms)
      {
 	FILE *f;

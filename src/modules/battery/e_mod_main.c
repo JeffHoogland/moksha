@@ -637,9 +637,9 @@ _battery_cb_check(void *data)
    ef = data;
    if (ef->battery_check_mode == 0)
      {
-	if (e_file_is_dir("/proc/acpi"))
+	if (ecore_file_is_dir("/proc/acpi"))
 	  ef->battery_check_mode = CHECK_LINUX_ACPI;
-	else if (e_file_exists("/proc/apm"))
+	else if (ecore_file_exists("/proc/apm"))
 	  ef->battery_check_mode = CHECK_LINUX_APM;
      }
    switch (ef->battery_check_mode)
@@ -784,7 +784,7 @@ _battery_linux_acpi_check(Battery *ef)
    stat = E_NEW(Status, 1);
 
    /* Read some information on first run. */
-   bats = e_file_ls("/proc/acpi/battery");
+   bats = ecore_file_ls("/proc/acpi/battery");
    while (bats)
      {
 	FILE *f;
