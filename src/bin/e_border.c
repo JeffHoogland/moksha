@@ -125,6 +125,7 @@ e_border_init(void)
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
+   E_EVENT_BORDER_DESK_SET = ecore_event_type_new();
    E_EVENT_BORDER_RESIZE = ecore_event_type_new();
    E_EVENT_BORDER_MOVE = ecore_event_type_new();
    E_EVENT_BORDER_SHOW = ecore_event_type_new();
