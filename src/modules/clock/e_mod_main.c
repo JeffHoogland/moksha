@@ -292,6 +292,7 @@ _clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ef->move = 0;
    ef->resize = 0;
    evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
+   ef->clock->conf->width = ef->fw;
    ef->clock->conf->x = (double)ef->fx / (double)(ww - ef->clock->conf->width);
    ef->clock->conf->y = (double)ef->fy / (double)(hh - ef->clock->conf->width);
    e_config_save_queue();
