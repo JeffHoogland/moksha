@@ -336,8 +336,6 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
 	     e_menu_item_callback_set(mi, _e_int_menus_desktops_item_cb, desk);
 	     if (desk == e_desk_current_get(zone))
 	       e_menu_item_toggle_set(mi, 1);
-	     e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
-		                       "desktop");
 	  }
      }
 

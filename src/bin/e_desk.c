@@ -17,7 +17,6 @@ e_desk_new(E_Zone *zone)
    char		name[40];
    
    desk = E_OBJECT_ALLOC(E_Desk, _e_desk_free);
-   memset(desk, 0, sizeof(E_Desk));
    if (!desk) return NULL;
 
    desk->zone = zone;
@@ -50,7 +49,7 @@ e_desk_show(E_Desk *desk)
      {
 	E_Border *bd = l->data;
 
-	if (evas_list_find(desk->clients, bd))
+	if (desk->clients && evas_list_find(desk->clients, bd))
 	  e_border_show(bd);
 	else
 	  e_border_hide(bd);
