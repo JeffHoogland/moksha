@@ -391,7 +391,7 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   return 0;
+   return 1;
 }
 
 static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
@@ -403,7 +403,7 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    e_object_del(E_OBJECT(bd));
-   return 0;
+   return 1;
 }
 
 static int
@@ -422,7 +422,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    e_object_del(E_OBJECT(bd));
-   return 0;
+   return 1;
 }
 
 static int
@@ -437,7 +437,7 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
    if (!bd) return 1;
    if (e->parent == bd->client.shell_win) return 1;
    e_object_del(E_OBJECT(bd));
-   return 0;
+   return 1;
 }
 
 static int
@@ -554,7 +554,7 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       }
 	  }
      }
-   return 0;
+   return 1;
 }
 
 static int
@@ -567,7 +567,7 @@ _e_border_cb_window_gravity(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    printf("gravity for %0x\n", e->win);
-   return 0;
+   return 1;
 }
 
 static int
@@ -580,7 +580,7 @@ _e_border_cb_window_stack_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    printf("stack req for %0x bd %p\n", e->win, bd);
    if (!bd) return 1;
-   return 0;
+   return 1;
 }
 
 static int
@@ -612,7 +612,7 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    bd->client.netwm.fetch.desktop = 1;
 //   bd->client.border.changed = 1;
    bd->changed = 1;
-   return 0;
+   return 1;
 }
 
 static int
@@ -624,7 +624,7 @@ _e_border_cb_window_colormap(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   return 0;
+   return 1;
 }
 
 static int
@@ -636,7 +636,7 @@ _e_border_cb_window_shape(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   return 0;
+   return 1;
 }
 
 static int
@@ -651,10 +651,11 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    printf("f IN  %i | %i\n", e->mode, e->detail);
    if (!bd->focused)
      {
+	printf("FOCUS\n");
 	bd->focused = 1;
 	edje_object_signal_emit(bd->bg_object, "active", "");
      }
-   return 0;
+   return 1;
 }
 
 static int
@@ -669,10 +670,11 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    printf("f OUT %i | %i\n", e->mode, e->detail);
    if (bd->focused)
      {
+	printf("UNFOCUS\n");
 	bd->focused = 0;
 	edje_object_signal_emit(bd->bg_object, "passive", "");
      }
-   return 0;
+   return 1;
 }
 
 static int
@@ -685,7 +687,7 @@ _e_border_cb_client_message(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    printf("client message for %0x\n", e->win);
-   return 0;
+   return 1;
 }
 
 static void
@@ -849,6 +851,9 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
    
    ev = event;
    bd = data;
+//   if (ev->mode == ECORE_X_EVENT_MODE_GRAB) return 1;
+   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
+//   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
      {
 	/* FIXME: this would normally put focus on the client on pointer */
@@ -874,12 +879,45 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Border *bd;
-   
+
    ev = event;
    bd = data;
    /* FIXME: this would normally take focus away in pointer focus mode */
+//   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
+//   if (ev->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED) return 1;
    if (ev->event_win == bd->win)
-     ecore_x_window_focus(bd->container->manager->win);
+     {
+	const char *modes[] = {   
+	   "ECORE_X_EVENT_MODE_NORMAL",
+	     "ECORE_X_EVENT_MODE_WHILE_GRABBED",
+	     "ECORE_X_EVENT_MODE_GRAB",
+	     "ECORE_X_EVENT_MODE_UNGRAB"
+	};
+	const char *details[] = {
+	   "ECORE_X_EVENT_DETAIL_ANCESTOR",
+	     "ECORE_X_EVENT_DETAIL_VIRTUAL",
+	     "ECORE_X_EVENT_DETAIL_INFERIOR",
+	     "ECORE_X_EVENT_DETAIL_NON_LINEAR",
+	     "ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL",
+	     "ECORE_X_EVENT_DETAIL_POINTER",
+	     "ECORE_X_EVENT_DETAIL_POINTER_ROOT",
+	     "ECORE_X_EVENT_DETAIL_DETAIL_NONE"
+	};
+	
+	printf("OUT 0x%x [%s] md=%s dt=%s\n",
+	       ev->win,
+	       bd->client.icccm.title,
+	       modes[ev->mode],
+	       details[ev->detail]);
+	
+	if (ev->mode != ECORE_X_EVENT_MODE_GRAB)
+	  ecore_x_window_focus(bd->container->manager->win);
+	else
+	  {
+	     printf("OUT GRAB!\n");
+	  }
+	
+     }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
@@ -1131,9 +1169,7 @@ _e_border_eval(E_Border *bd)
 	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) && 
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
-	       {
-		  bd->client.mwm.borderless = 1;
-	       }
+	       bd->client.mwm.borderless = 1;
 	  }
 	if (bd->client.mwm.borderless != pb)
 	  {
