@@ -167,7 +167,7 @@ e_config_shutdown(void)
 	     E_Config_Module *em;
 
 	     em = e_config->modules->data;
-	     e_config->modules = evas_list_remove(e_config->modules, em);
+	     e_config->modules = evas_list_remove_list(e_config->modules, e_config->modules);
 	     E_FREE(em->name);
 	     E_FREE(em);
 	  }
@@ -176,7 +176,7 @@ e_config_shutdown(void)
 	     E_Config_Binding *eb;
 
 	     eb = e_config->bindings->data;
-	     e_config->bindings = evas_list_remove(e_config->bindings, eb);
+	     e_config->bindings = evas_list_remove_list(e_config->bindings, e_config->bindings);
 	     E_FREE(eb);
 	  }
 	E_FREE(e_config->desktop_default_background);
