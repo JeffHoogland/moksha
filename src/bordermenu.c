@@ -460,8 +460,8 @@ e_bordermenu_do(E_Border * b)
 
       menu = b->menus->data;
       pl = pr = pt = pb = 0;
-      if (b->bits.t)
-	 ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+      if (b->bits.b)
+	 ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
       crx = b->current.x + pl;
       cry = b->current.y + pt;
       crw = b->client.w;

@@ -124,10 +124,7 @@ e_border_update_borders(void)
 	b = l->data;
 	if (b->first_expose)
 	  {
-	     evas_render(b->evas.l);
-	     evas_render(b->evas.r);
-	     evas_render(b->evas.t);
-	     evas_render(b->evas.b);
+	     evas_render(b->evas);
 	  }
      }
    e_db_runtime_flush();
@@ -190,8 +187,8 @@ e_configure_request(Ecore_Event * ev)
 	   int                 pl, pr, pt, pb;
 
 	   pl = pr = pt = pb = 0;
-	   if (b->bits.t)
-	      ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	   if (b->bits.b)
+	      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 	   if (e->mask & ECORE_EVENT_VALUE_X)
 	      b->current.requested.x = e->x;
 	   if (e->mask & ECORE_EVENT_VALUE_Y)
@@ -476,7 +473,8 @@ e_focus_in(Ecore_Event * ev)
 	   e_border_focus_grab_ended();
 	   b->current.selected = 1;
 	   b->changed = 1;
-	   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_FOCUS_IN, NULL);
+	   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_FOCUS_IN,
+				       NULL);
 	   g = b->click_grab;
 	   if (g)
 	     {
@@ -603,25 +601,7 @@ e_mouse_down(Ecore_Event * ev)
 		Evas                evas;
 		int                 x, y;
 
-		evas = b->evas.l;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_down(evas, x, y, e->button);
-		evas = b->evas.r;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_down(evas, x, y, e->button);
-		evas = b->evas.t;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_down(evas, x, y, e->button);
-		evas = b->evas.b;
+		evas = b->evas;
 		ecore_window_get_root_relative_location(evas_get_window(evas),
 							&x, &y);
 		x = e->rx - x;
@@ -663,25 +643,7 @@ e_mouse_up(Ecore_Event * ev)
 		Evas                evas;
 		int                 x, y;
 
-		evas = b->evas.l;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_up(evas, x, y, e->button);
-		evas = b->evas.r;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_up(evas, x, y, e->button);
-		evas = b->evas.t;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_button_up(evas, x, y, e->button);
-		evas = b->evas.b;
+		evas = b->evas;
 		ecore_window_get_root_relative_location(evas_get_window(evas),
 							&x, &y);
 		x = e->rx - x;
@@ -723,25 +685,7 @@ e_mouse_move(Ecore_Event * ev)
 		Evas                evas;
 		int                 x, y;
 
-		evas = b->evas.l;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_move(evas, x, y);
-		evas = b->evas.r;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_move(evas, x, y);
-		evas = b->evas.t;
-		ecore_window_get_root_relative_location(evas_get_window(evas),
-							&x, &y);
-		x = e->rx - x;
-		y = e->ry - y;
-		evas_event_move(evas, x, y);
-		evas = b->evas.b;
+		evas = b->evas;
 		ecore_window_get_root_relative_location(evas_get_window(evas),
 							&x, &y);
 		x = e->rx - x;
@@ -774,31 +718,7 @@ e_mouse_in(Ecore_Event * ev)
 	     int                 x, y;
 	     Evas                evas;
 
-	     evas = b->evas.l;
-	     ecore_window_get_root_relative_location(evas_get_window(evas), &x,
-						     &y);
-	     x = e->rx - x;
-	     y = e->ry - y;
-	     evas_event_move(evas, x, y);
-	     evas_event_enter(evas);
-
-	     evas = b->evas.r;
-	     ecore_window_get_root_relative_location(evas_get_window(evas), &x,
-						     &y);
-	     x = e->rx - x;
-	     y = e->ry - y;
-	     evas_event_move(evas, x, y);
-	     evas_event_enter(evas);
-
-	     evas = b->evas.t;
-	     ecore_window_get_root_relative_location(evas_get_window(evas), &x,
-						     &y);
-	     x = e->rx - x;
-	     y = e->ry - y;
-	     evas_event_move(evas, x, y);
-	     evas_event_enter(evas);
-
-	     evas = b->evas.b;
+	     evas = b->evas;
 	     ecore_window_get_root_relative_location(evas_get_window(evas), &x,
 						     &y);
 	     x = e->rx - x;
@@ -831,10 +751,7 @@ e_mouse_out(Ecore_Event * ev)
 	      e_cb_border_mouse_out(b, ev);
 	   if (e->win == b->win.input)
 	     {
-		evas_event_leave(b->evas.l);
-		evas_event_leave(b->evas.r);
-		evas_event_leave(b->evas.t);
-		evas_event_leave(b->evas.b);
+		evas_event_leave(b->evas);
 	     }
 	}
    }
@@ -1284,32 +1201,14 @@ e_border_cleanup(E_Border * b)
 	b->menus = evas_list_remove(b->menus, m);
      }
    e_desktops_del_border(b->desk, b);
-   if (b->bits.l)
-      ebits_free(b->bits.l);
-   if (b->bits.r)
-      ebits_free(b->bits.r);
-   if (b->bits.t)
-      ebits_free(b->bits.t);
    if (b->bits.b)
       ebits_free(b->bits.b);
 
-   if (b->obj.title.l)
-      e_text_free(b->obj.title.l);
-   if (b->obj.title.r)
-      e_text_free(b->obj.title.r);
-   if (b->obj.title.t)
-      e_text_free(b->obj.title.t);
-   if (b->obj.title.b)
-      e_text_free(b->obj.title.b);
+   if (b->obj.title)
+      e_text_free(b->obj.title);
 
-   evases = evas_list_remove(evases, b->evas.l);
-   evases = evas_list_remove(evases, b->evas.r);
-   evases = evas_list_remove(evases, b->evas.t);
-   evases = evas_list_remove(evases, b->evas.b);
-   evas_free(b->evas.l);
-   evas_free(b->evas.r);
-   evas_free(b->evas.t);
-   evas_free(b->evas.b);
+   evases = evas_list_remove(evases, b->evas);
+   evas_free(b->evas);
    ecore_window_destroy(b->win.container);
    ecore_window_destroy(b->win.input);
    ecore_window_destroy(b->win.main);
@@ -1352,7 +1251,10 @@ e_border_apply_border(E_Border * b)
 
    style = "default";
    if ((!b->client.titlebar) && (!b->client.border))
-      style = "borderless";
+     {
+	style = "borderless";
+	b->current.has_shape = 0;
+     }
    if (b->border_style)
       style = b->border_style;
 
@@ -1379,8 +1281,8 @@ e_border_apply_border(E_Border * b)
    e_border_set_bits(b, buf);
 
    pl = pr = pt = pb = 0;
-   if (b->bits.t)
-      ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
    e_icccm_set_frame_size(b->win.client, pl, pr, pt, pb);
 
    D_RETURN;
@@ -1390,6 +1292,7 @@ void
 e_border_reshape(E_Border * b)
 {
    static Window       shape_win = 0;
+   static Evas         e = NULL;
    int                 pl, pr, pt, pb;
 
    D_ENTER;
@@ -1402,8 +1305,8 @@ e_border_reshape(E_Border * b)
    if (!shape_win)
       shape_win = ecore_window_override_new(0, 0, 0, 1, 1);
    pl = pr = pt = pb = 0;
-   if (b->bits.t)
-      ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
    b->shape_changed = 0;
 
    if ((!b->current.shaped_client) && (!b->current.has_shape))
@@ -1411,6 +1314,14 @@ e_border_reshape(E_Border * b)
 	ecore_window_set_shape_mask(b->win.main, 0);
 	D_RETURN;
      }
+
+   if (!e)
+     {
+	e = evas_new();
+	evas_set_output_method(e, RENDER_METHOD_IMAGE);
+     }
+
+   ecore_window_resize(shape_win, b->current.w, b->current.h);
 
    if ((b->current.shaped_client) && (!b->current.has_shape))
      {
@@ -1420,98 +1331,105 @@ e_border_reshape(E_Border * b)
 	rects[0].y = 0;
 	rects[0].width = b->current.w;
 	rects[0].height = pt;
+
 	rects[1].x = 0;
 	rects[1].y = pt;
 	rects[1].width = pl;
 	rects[1].height = b->current.h - pt - pb;
+
 	rects[2].x = b->current.w - pr;
 	rects[2].y = pt;
 	rects[2].width = pr;
 	rects[2].height = b->current.h - pt - pb;
+
 	rects[3].x = 0;
 	rects[3].y = b->current.h - pb;
 	rects[3].width = b->current.w;
 	rects[3].height = pb;
 
-	ecore_window_resize(shape_win, b->current.w, b->current.h);
 	ecore_window_set_shape_window(shape_win, b->win.client, pl,
 				      pt - b->current.shaded);
 	ecore_window_clip_shape_by_rectangle(shape_win, pl, pt,
 					     b->current.w - pl - pr,
 					     b->current.h - pt - pb);
+
 	ecore_window_add_shape_rectangles(shape_win, rects, 4);
-	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
 
-	D_RETURN;
      }
-
-   if ((!b->current.shaped_client) && (b->current.has_shape))
+   else
      {
-	ecore_window_resize(shape_win, b->current.w, b->current.h);
-	ecore_window_set_shape_rectangle(shape_win, pl, pt - b->current.shaded,
-					 b->current.w - pl - pr,
-					 b->current.h - pt - pb);
+	if ((!b->current.shaped_client) && (b->current.has_shape))
+	  {
 
-	/* FIXME: later when i actually generate shape masks for borders */
-	{
-	   XRectangle          rects[4];
+	     ecore_window_set_shape_rectangle(shape_win, pl,
+					      pt - b->current.shaded,
+					      b->current.w - pl - pr,
+					      b->current.h - pt - pb);
 
-	   rects[0].x = 0;
-	   rects[0].y = 0;
-	   rects[0].width = b->current.w;
-	   rects[0].height = pt;
-	   rects[1].x = 0;
-	   rects[1].y = pt;
-	   rects[1].width = pl;
-	   rects[1].height = b->current.h - pt - pb;
-	   rects[2].x = b->current.w - pr;
-	   rects[2].y = pt;
-	   rects[2].width = pr;
-	   rects[2].height = b->current.h - pt - pb;
-	   rects[3].x = 0;
-	   rects[3].y = b->current.h - pb;
-	   rects[3].width = b->current.w;
-	   rects[3].height = pb;
-	   ecore_window_add_shape_rectangles(shape_win, rects, 4);
-	}
-	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
-	D_RETURN;
+	  }
+	else
+	  {
+
+	     ecore_window_set_shape_window(shape_win, b->win.client, pl,
+					   pt - b->current.shaded);
+	     ecore_window_clip_shape_by_rectangle(shape_win, pl, pt,
+						  b->current.w - pl - pr,
+						  b->current.h - pt - pb);
+
+	  }
+
+	if (b->bits.file)
+	  {
+	     Imlib_Image         im;
+	     Ebits_Object        bit;
+	     Pixmap              pmap, mask;
+
+	     printf("SHAPE update for border %s\n", b->bits.file);
+	     pmap = ecore_pixmap_new(shape_win, b->current.w, b->current.h, 0);
+	     mask = ecore_pixmap_new(shape_win, b->current.w, b->current.h, 1);
+
+	     im = imlib_create_image(b->current.w, b->current.h);
+	     imlib_context_set_image(im);
+	     imlib_image_set_has_alpha(1);
+	     imlib_image_clear();
+
+	     evas_set_output_image(e, im);
+	     evas_set_output_size(e, b->current.w, b->current.h);
+	     evas_set_output_viewport(e, 0, 0, b->current.w, b->current.h);
+
+	     bit = ebits_load(b->bits.file);
+	     ebits_add_to_evas(bit, e);
+	     ebits_move(bit, 0, 0);
+	     ebits_resize(bit, b->current.w, b->current.h);
+	     ebits_show(bit);
+
+	     evas_update_rect(e, 0, 0, b->current.w, b->current.h);
+	     evas_render(e);
+
+	     ebits_hide(bit);
+	     ebits_free(bit);
+
+	     imlib_context_set_image(im);
+	     imlib_context_set_dither_mask(1);
+	     imlib_context_set_dither(1);
+	     imlib_context_set_drawable(pmap);
+	     imlib_context_set_mask(mask);
+	     imlib_context_set_blend(0);
+	     imlib_context_set_color_modifier(NULL);
+	     imlib_render_image_on_drawable(0, 0);
+	     imlib_free_image();
+
+	     ecore_window_set_background_pixmap(shape_win, pmap);
+	     ecore_window_add_shape_mask(shape_win, mask);
+	     ecore_window_clear(shape_win);
+
+	     ecore_pixmap_free(pmap);
+	     ecore_pixmap_free(mask);
+	  }
+
      }
-   if ((b->current.shaped_client) && (b->current.has_shape))
-     {
-	ecore_window_resize(shape_win, b->current.w, b->current.h);
-	ecore_window_set_shape_window(shape_win, b->win.client, pl,
-				      pt - b->current.shaded);
-	ecore_window_clip_shape_by_rectangle(shape_win, pl, pt,
-					     b->current.w - pl - pr,
-					     b->current.h - pt - pb);
 
-	/* FIXME: later when i actually generate shape masks for borders */
-	{
-	   XRectangle          rects[4];
-
-	   rects[0].x = 0;
-	   rects[0].y = 0;
-	   rects[0].width = b->current.w;
-	   rects[0].height = pt;
-	   rects[1].x = 0;
-	   rects[1].y = pt;
-	   rects[1].width = pl;
-	   rects[1].height = b->current.h - pt - pb;
-	   rects[2].x = b->current.w - pr;
-	   rects[2].y = pt;
-	   rects[2].width = pr;
-	   rects[2].height = b->current.h - pt - pb;
-	   rects[3].x = 0;
-	   rects[3].y = b->current.h - pb;
-	   rects[3].width = b->current.w;
-	   rects[3].height = pb;
-	   ecore_window_add_shape_rectangles(shape_win, rects, 4);
-	}
-
-	ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
-	D_RETURN;
-     }
+   ecore_window_set_shape_window(b->win.main, shape_win, 0, 0);
 
    D_RETURN;
 }
@@ -1524,8 +1442,8 @@ e_border_release(E_Border * b)
    D_ENTER;
 
    pl = pr = pt = pb = 0;
-   if (b->bits.t)
-      ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
    ecore_window_reparent(b->win.client, 0, b->current.x + pl,
 			 b->current.y + pt);
    e_icccm_release(b->win.client);
@@ -1606,8 +1524,8 @@ e_border_adopt(Window win, int use_client_pos)
       int                 pl, pr, pt, pb;
 
       pl = pr = pt = pb = 0;
-      if (b->bits.l)
-	 ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);
+      if (b->bits.b)
+	 ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
       b->current.requested.x += pl;
       b->current.requested.y += pt;
       b->changed = 1;
@@ -1619,8 +1537,8 @@ e_border_adopt(Window win, int use_client_pos)
 
 	pl = pr = pt = pb = 0;
 	x = y = 0;
-	if (b->bits.t)
-	   ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	if (b->bits.b)
+	   ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 	bw *= 2;
 	if (b->client.pos.requested)
 	  {
@@ -1725,6 +1643,8 @@ e_border_new(void)
 
    D("BORDER CREATED AT %p\n", b);
 
+   b->current.has_shape = 1;
+
    b->current.requested.w = 1;
    b->current.requested.h = 1;
    b->client.min.w = 1;
@@ -1754,81 +1674,28 @@ e_border_new(void)
    ecore_window_show(b->win.input);
    ecore_window_show(b->win.container);
 
-   b->evas.l = evas_new_all(ecore_display_get(),
-			    b->win.main,
-			    0, 0, 1, 1,
-			    RENDER_METHOD_ALPHA_SOFTWARE,
-			    max_colors, font_cache, image_cache, font_dir);
-   b->win.l = evas_get_window(b->evas.l);
-   b->evas.r = evas_new_all(ecore_display_get(),
-			    b->win.main,
-			    0, 0, 1, 1,
-			    RENDER_METHOD_ALPHA_SOFTWARE,
-			    max_colors, font_cache, image_cache, font_dir);
-   b->win.r = evas_get_window(b->evas.r);
-   b->evas.t = evas_new_all(ecore_display_get(),
-			    b->win.main,
-			    0, 0, 1, 1,
-			    RENDER_METHOD_ALPHA_SOFTWARE,
-			    max_colors, font_cache, image_cache, font_dir);
-   b->win.t = evas_get_window(b->evas.t);
-   b->evas.b = evas_new_all(ecore_display_get(),
-			    b->win.main,
-			    0, 0, 1, 1,
-			    RENDER_METHOD_ALPHA_SOFTWARE,
-			    max_colors, font_cache, image_cache, font_dir);
-   b->win.b = evas_get_window(b->evas.b);
-   e_cursors_display_in_window(b->win.l, "Default");
-   e_cursors_display_in_window(b->win.r, "Default");
-   e_cursors_display_in_window(b->win.t, "Default");
+   b->evas = evas_new_all(ecore_display_get(),
+			  b->win.main,
+			  0, 0, 1, 1,
+			  RENDER_METHOD_ALPHA_SOFTWARE,
+			  max_colors, font_cache, image_cache, font_dir);
+   b->win.b = evas_get_window(b->evas);
    e_cursors_display_in_window(b->win.b, "Default");
 
-   b->obj.title.l = e_text_new(b->evas.l, "", "title");
-   b->obj.title.r = e_text_new(b->evas.r, "", "title");
-   b->obj.title.t = e_text_new(b->evas.t, "", "title");
-   b->obj.title.b = e_text_new(b->evas.b, "", "title");
-
-   b->obj.title_clip.l = evas_add_rectangle(b->evas.l);
-   b->obj.title_clip.r = evas_add_rectangle(b->evas.r);
-   b->obj.title_clip.t = evas_add_rectangle(b->evas.t);
-   b->obj.title_clip.b = evas_add_rectangle(b->evas.b);
-
-   evas_set_color(b->evas.l, b->obj.title_clip.l, 255, 255, 255, 255);
-   evas_set_color(b->evas.r, b->obj.title_clip.r, 255, 255, 255, 255);
-   evas_set_color(b->evas.t, b->obj.title_clip.t, 255, 255, 255, 255);
-   evas_set_color(b->evas.b, b->obj.title_clip.b, 255, 255, 255, 255);
-
-   e_text_show(b->obj.title.l);
-   e_text_show(b->obj.title.r);
-   e_text_show(b->obj.title.t);
-   e_text_show(b->obj.title.b);
-
-   evas_show(b->evas.l, b->obj.title_clip.l);
-   evas_show(b->evas.r, b->obj.title_clip.r);
-   evas_show(b->evas.t, b->obj.title_clip.t);
-   evas_show(b->evas.b, b->obj.title_clip.b);
-
-   e_text_set_clip(b->obj.title.l, b->obj.title_clip.l);
-   e_text_set_clip(b->obj.title.r, b->obj.title_clip.r);
-   e_text_set_clip(b->obj.title.t, b->obj.title_clip.t);
-   e_text_set_clip(b->obj.title.b, b->obj.title_clip.b);
+   b->obj.title = e_text_new(b->evas, "", "title");
+   b->obj.title_clip = evas_add_rectangle(b->evas);
+   evas_set_color(b->evas, b->obj.title_clip, 255, 255, 255, 255);
+   e_text_show(b->obj.title);
+   evas_show(b->evas, b->obj.title_clip);
+   e_text_set_clip(b->obj.title, b->obj.title_clip);
 
    ecore_window_raise(b->win.input);
    ecore_window_raise(b->win.container);
 
-   evases = evas_list_append(evases, b->evas.l);
-   evases = evas_list_append(evases, b->evas.r);
-   evases = evas_list_append(evases, b->evas.t);
-   evases = evas_list_append(evases, b->evas.b);
+   evases = evas_list_append(evases, b->evas);
 
-   ecore_window_set_events(b->win.l, XEV_EXPOSE);
-   ecore_window_set_events(b->win.r, XEV_EXPOSE);
-   ecore_window_set_events(b->win.t, XEV_EXPOSE);
    ecore_window_set_events(b->win.b, XEV_EXPOSE);
 
-   ecore_window_show(b->win.l);
-   ecore_window_show(b->win.r);
-   ecore_window_show(b->win.t);
    ecore_window_show(b->win.b);
 
    e_border_attach_mouse_grabs(b);
@@ -2078,9 +1945,7 @@ e_border_find_by_window(Window win)
 	if ((win == b->win.main) ||
 	    (win == b->win.client) ||
 	    (win == b->win.container) ||
-	    (win == b->win.input) ||
-	    (win == b->win.l) ||
-	    (win == b->win.r) || (win == b->win.t) || (win == b->win.b))
+	    (win == b->win.input) || (win == b->win.b))
 	   D_RETURN_(b);
      }
 
@@ -2097,58 +1962,42 @@ e_border_set_bits(E_Border * b, char *file)
    pl = pr = pt = pb = 0;
    ppl = ppr = ppt = ppb = 0;
 
-   if (b->bits.t)
-      ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 
-   if (b->bits.l)
-      ebits_free(b->bits.l);
-   if (b->bits.r)
-      ebits_free(b->bits.r);
-   if (b->bits.t)
-      ebits_free(b->bits.t);
    if (b->bits.b)
       ebits_free(b->bits.b);
+   if (b->bits.file)
+      free(b->bits.file);
 
-   b->bits.l = ebits_load(file);
-   b->bits.r = ebits_load(file);
-   b->bits.t = ebits_load(file);
    b->bits.b = ebits_load(file);
+   if (b->bits.b)
+      b->bits.file = strdup(file);
    b->bits.new = 1;
    b->changed = 1;
 
-   if (b->bits.t)
-      ebits_get_insets(b->bits.t, &ppl, &ppr, &ppt, &ppb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &ppl, &ppr, &ppt, &ppb);
    b->current.requested.w -= (pl + pr) - (ppl + ppr);
    b->current.requested.h -= (pt + pb) - (ppt + ppb);
    b->current.requested.x += (pl - ppl);
    b->current.requested.y += (pt - ppt);
 
-   if (b->bits.t)
+   if (b->bits.b)
      {
-	ebits_add_to_evas(b->bits.l, b->evas.l);
-	ebits_move(b->bits.l, 0, 0);
-	ebits_show(b->bits.l);
 
-	ebits_add_to_evas(b->bits.r, b->evas.r);
-	ebits_move(b->bits.r, 0, 0);
-	ebits_show(b->bits.r);
-
-	ebits_add_to_evas(b->bits.t, b->evas.t);
-	ebits_move(b->bits.t, 0, 0);
-	ebits_show(b->bits.t);
-
-	ebits_add_to_evas(b->bits.b, b->evas.b);
+	ebits_add_to_evas(b->bits.b, b->evas);
 	ebits_move(b->bits.b, 0, 0);
 	ebits_show(b->bits.b);
 
 	e_border_set_color_class(b, "Title BG", 100, 200, 255, 255);
 
 #define HOOK_CB(_class)	\
-ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_IN, e_cb_mouse_in, b); \
-ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_OUT, e_cb_mouse_out, b); \
-ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_DOWN, e_cb_mouse_down, b); \
-ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_UP, e_cb_mouse_up, b); \
-ebits_set_classed_bit_callback(b->bits.t, _class, CALLBACK_MOUSE_MOVE, e_cb_mouse_move, b);
+ebits_set_classed_bit_callback(b->bits.b, _class, CALLBACK_MOUSE_IN, e_cb_mouse_in, b); \
+ebits_set_classed_bit_callback(b->bits.b, _class, CALLBACK_MOUSE_OUT, e_cb_mouse_out, b); \
+ebits_set_classed_bit_callback(b->bits.b, _class, CALLBACK_MOUSE_DOWN, e_cb_mouse_down, b); \
+ebits_set_classed_bit_callback(b->bits.b, _class, CALLBACK_MOUSE_UP, e_cb_mouse_up, b); \
+ebits_set_classed_bit_callback(b->bits.b, _class, CALLBACK_MOUSE_MOVE, e_cb_mouse_move, b);
 	HOOK_CB("Title_Bar");
 	HOOK_CB("Resize");
 	HOOK_CB("Resize_Horizontal");
@@ -2170,9 +2019,6 @@ e_border_set_color_class(E_Border * b, char *class, int rr, int gg, int bb,
 {
    D_ENTER;
 
-   ebits_set_color_class(b->bits.l, class, rr, gg, bb, aa);
-   ebits_set_color_class(b->bits.r, class, rr, gg, bb, aa);
-   ebits_set_color_class(b->bits.t, class, rr, gg, bb, aa);
    ebits_set_color_class(b->bits.b, class, rr, gg, bb, aa);
 
    D_RETURN;
@@ -2206,8 +2052,8 @@ e_border_adjust_limits(E_Border * b)
 	   b->current.h = 1;
 
 	pl = pr = pt = pb = 0;
-	if (b->bits.t)
-	   ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	if (b->bits.b)
+	   ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 
 	if (b->current.w < (pl + pr + 1))
 	   b->current.w = pl + pr + 1;
@@ -2218,15 +2064,15 @@ e_border_adjust_limits(E_Border * b)
 	h = b->current.h - pt - pb + b->current.shaded;
 
 	mx = my = 1;
-	if (b->bits.t)
-	   ebits_get_min_size(b->bits.t, &mx, &my);
+	if (b->bits.b)
+	   ebits_get_min_size(b->bits.b, &mx, &my);
 	if (b->current.w < mx)
 	   b->current.w = mx;
 	if (b->current.h < my)
 	   b->current.h = my;
 	mx = my = 999999;
-	if (b->bits.t)
-	   ebits_get_max_size(b->bits.t, &mx, &my);
+	if (b->bits.b)
+	   ebits_get_max_size(b->bits.b, &mx, &my);
 	if (b->current.w > mx)
 	   b->current.w = mx;
 	if (b->current.h > my)
@@ -2362,8 +2208,8 @@ e_border_update(E_Border * b)
 
 	ecore_window_move(b->win.main, b->current.x, b->current.y);
 	pl = pr = pt = pb = 0;
-	if (b->bits.t)
-	   ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	if (b->bits.b)
+	   ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 	e_icccm_move_resize(b->win.client,
 			    b->current.x + pl,
 			    b->current.y + pt, b->client.w, b->client.h);
@@ -2382,8 +2228,8 @@ e_border_update(E_Border * b)
 	if ((b->current.w < b->previous.w) || (b->current.h < b->previous.h))
 	   smaller = 1;
 	pl = pr = pt = pb = 0;
-	if (b->bits.t)
-	   ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	if (b->bits.b)
+	   ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 	ecore_window_move_resize(b->win.input,
 				 0, 0, b->current.w, b->current.h);
 	if (smaller)
@@ -2411,49 +2257,16 @@ e_border_update(E_Border * b)
 	     ecore_window_move_resize(b->win.main,
 				      b->current.x, b->current.y,
 				      b->current.w, b->current.h);
-	     x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.l);
-	     else
-	       {
-		  ecore_window_show(b->win.l);
-		  ecore_window_move_resize(b->win.l, x, y, w, h);
-		  evas_set_output_size(b->evas.l, w, h);
-		  evas_set_output_viewport(b->evas.l, x, y, w, h);
-	       }
 
-	     x = 0, y = 0, w = b->current.w, h = pt;
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.t);
-	     else
-	       {
-		  ecore_window_show(b->win.t);
-		  ecore_window_move_resize(b->win.t, x, y, w, h);
-		  evas_set_output_size(b->evas.t, w, h);
-		  evas_set_output_viewport(b->evas.t, x, y, w, h);
-	       }
-
-	     x = b->current.w - pr, y = pt, w = pr, h =
-		(b->current.h - pt - pb);
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.r);
-	     else
-	       {
-		  ecore_window_show(b->win.r);
-		  ecore_window_move_resize(b->win.r, x, y, w, h);
-		  evas_set_output_size(b->evas.r, w, h);
-		  evas_set_output_viewport(b->evas.r, x, y, w, h);
-	       }
-
-	     x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
+	     x = 0, y = 0, w = b->current.w, h = b->current.h;
 	     if ((w < 1) || (h < 1))
 		ecore_window_hide(b->win.b);
 	     else
 	       {
 		  ecore_window_show(b->win.b);
 		  ecore_window_move_resize(b->win.b, x, y, w, h);
-		  evas_set_output_size(b->evas.b, w, h);
-		  evas_set_output_viewport(b->evas.b, x, y, w, h);
+		  evas_set_output_size(b->evas, w, h);
+		  evas_set_output_viewport(b->evas, x, y, w, h);
 	       }
 	  }
 	else
@@ -2461,50 +2274,17 @@ e_border_update(E_Border * b)
 	     ecore_window_move_resize(b->win.main,
 				      b->current.x, b->current.y,
 				      b->current.w, b->current.h);
-	     x = 0, y = pt, w = pl, h = (b->current.h - pt - pb);
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.l);
-	     else
-	       {
-		  ecore_window_show(b->win.l);
-		  ecore_window_move_resize(b->win.l, x, y, w, h);
-		  evas_set_output_size(b->evas.l, w, h);
-		  evas_set_output_viewport(b->evas.l, x, y, w, h);
-	       }
-
-	     x = 0, y = 0, w = b->current.w, h = pt;
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.t);
-	     else
-	       {
-		  ecore_window_show(b->win.t);
-		  ecore_window_move_resize(b->win.t, x, y, w, h);
-		  evas_set_output_size(b->evas.t, w, h);
-		  evas_set_output_viewport(b->evas.t, x, y, w, h);
-	       }
-
-	     x = b->current.w - pr, y = pt, w = pr, h =
-		(b->current.h - pt - pb);
-	     if ((w < 1) || (h < 1))
-		ecore_window_hide(b->win.r);
-	     else
-	       {
-		  ecore_window_show(b->win.r);
-		  ecore_window_move_resize(b->win.r, x, y, w, h);
-		  evas_set_output_size(b->evas.r, w, h);
-		  evas_set_output_viewport(b->evas.r, x, y, w, h);
-	       }
-
-	     x = 0, y = b->current.h - pb, w = b->current.w, h = pb;
+	     x = 0, y = 0, w = b->current.w, h = b->current.h;
 	     if ((w < 1) || (h < 1))
 		ecore_window_hide(b->win.b);
 	     else
 	       {
 		  ecore_window_show(b->win.b);
 		  ecore_window_move_resize(b->win.b, x, y, w, h);
-		  evas_set_output_size(b->evas.b, w, h);
-		  evas_set_output_viewport(b->evas.b, x, y, w, h);
+		  evas_set_output_size(b->evas, w, h);
+		  evas_set_output_viewport(b->evas, x, y, w, h);
 	       }
+
 	     if (b->current.shaded == b->client.h)
 	       {
 		  ecore_window_move_resize(b->win.container,
@@ -2527,14 +2307,13 @@ e_border_update(E_Border * b)
 	       }
 	  }
 
-	if (b->bits.l)
-	   ebits_resize(b->bits.l, b->current.w, b->current.h);
-	if (b->bits.r)
-	   ebits_resize(b->bits.r, b->current.w, b->current.h);
-	if (b->bits.t)
-	   ebits_resize(b->bits.t, b->current.w, b->current.h);
 	if (b->bits.b)
-	   ebits_resize(b->bits.b, b->current.w, b->current.h);
+	  {
+	     ebits_resize(b->bits.b, b->current.w, b->current.h);
+	     evas_clear_obscured_rects(b->evas);
+	     evas_add_obscured_rect(b->evas, pl, pt, b->current.w - pl - pr,
+				    b->current.h - pt - pb);
+	  }
 
 	e_icccm_move_resize(b->win.client,
 			    b->current.x + pl,
@@ -2542,74 +2321,27 @@ e_border_update(E_Border * b)
 			    b->client.h);
 	e_cb_border_move_resize(b);
      }
-   if ((b->client.title) && (b->bits.t))
+   if ((b->client.title) && (b->bits.b))
      {
 	double              tx, ty, tw, th;
 
-	ebits_get_named_bit_geometry(b->bits.l, "Title_Area", &tx, &ty, &tw,
-				     &th);
-	if (b->obj.title.l)
-	  {
-	     e_text_set_text(b->obj.title.l, b->client.title);
-	     e_text_move(b->obj.title.l, tx, ty);
-	     if (b->current.selected)
-		e_text_set_state(b->obj.title.l, "selected");
-	     else
-		e_text_set_state(b->obj.title.l, "normal");
-	  }
-	evas_move(b->evas.l, b->obj.title_clip.l, tx, ty);
-	evas_resize(b->evas.l, b->obj.title_clip.l, tw, th);
-
-	ebits_get_named_bit_geometry(b->bits.r, "Title_Area", &tx, &ty, &tw,
-				     &th);
-	if (b->obj.title.r)
-	  {
-	     e_text_set_text(b->obj.title.r, b->client.title);
-	     e_text_move(b->obj.title.r, tx, ty);
-	     if (b->current.selected)
-		e_text_set_state(b->obj.title.r, "selected");
-	     else
-		e_text_set_state(b->obj.title.r, "normal");
-	  }
-	evas_move(b->evas.r, b->obj.title_clip.r, tx, ty);
-	evas_resize(b->evas.r, b->obj.title_clip.r, tw, th);
-
-	ebits_get_named_bit_geometry(b->bits.t, "Title_Area", &tx, &ty, &tw,
-				     &th);
-	if (b->obj.title.t)
-	  {
-	     e_text_set_text(b->obj.title.t, b->client.title);
-	     e_text_move(b->obj.title.t, tx, ty);
-	     if (b->current.selected)
-		e_text_set_state(b->obj.title.t, "selected");
-	     else
-		e_text_set_state(b->obj.title.t, "normal");
-	  }
-	evas_move(b->evas.t, b->obj.title_clip.t, tx, ty);
-	evas_resize(b->evas.t, b->obj.title_clip.t, tw, th);
-
 	ebits_get_named_bit_geometry(b->bits.b, "Title_Area", &tx, &ty, &tw,
 				     &th);
-	if (b->obj.title.b)
-	  {
-	     e_text_set_text(b->obj.title.b, b->client.title);
-	     e_text_move(b->obj.title.b, tx, ty);
-	     if (b->current.selected)
-		e_text_set_state(b->obj.title.b, "selected");
-	     else
-		e_text_set_state(b->obj.title.b, "normal");
-	  }
-	evas_move(b->evas.b, b->obj.title_clip.b, tx, ty);
-	evas_resize(b->evas.b, b->obj.title_clip.b, tw, th);
 
-	if (b->obj.title.l)
-	   e_text_set_layer(b->obj.title.l, 1);
-	if (b->obj.title.r)
-	   e_text_set_layer(b->obj.title.r, 1);
-	if (b->obj.title.t)
-	   e_text_set_layer(b->obj.title.t, 1);
-	if (b->obj.title.b)
-	   e_text_set_layer(b->obj.title.b, 1);
+	if (b->obj.title)
+	  {
+	     e_text_set_text(b->obj.title, b->client.title);
+	     e_text_move(b->obj.title, tx, ty);
+	     if (b->current.selected)
+		e_text_set_state(b->obj.title, "selected");
+	     else
+		e_text_set_state(b->obj.title, "normal");
+	  }
+	evas_move(b->evas, b->obj.title_clip, tx, ty);
+	evas_resize(b->evas, b->obj.title_clip, tw, th);
+
+	if (b->obj.title)
+	   e_text_set_layer(b->obj.title, 1);
      }
    e_border_reshape(b);
    if (visibility_changed)
@@ -2852,8 +2584,8 @@ e_border_adopt_children(Window win)
 		     int                 pl, pr, pt, pb;
 
 		     pl = pr = pt = pb = 0;
-		     if (b->bits.l)
-			ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);
+		     if (b->bits.b)
+			ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
 		     b->current.requested.x -= pl;
 		     b->current.requested.y -= pt;
 		     b->changed = 1;
@@ -3029,9 +2761,6 @@ e_border_set_gravity(E_Border * b, int gravity)
 
    ecore_window_gravity_set(b->win.container, gravity);
    ecore_window_gravity_set(b->win.input, gravity);
-   ecore_window_gravity_set(b->win.l, gravity);
-   ecore_window_gravity_set(b->win.r, gravity);
-   ecore_window_gravity_set(b->win.t, gravity);
    ecore_window_gravity_set(b->win.b, gravity);
 
    D_RETURN;

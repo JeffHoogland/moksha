@@ -30,40 +30,25 @@ struct _E_Border
    struct
    {
       Window              main;
-      Window              l, r, t, b;
+      Window              b;
       Window              input;
       Window              container;
       Window              client;
    }
    win;
+   Evas                evas;
    struct
    {
-      Evas                l, r, t, b;
-   }
-   evas;
-   struct
-   {
-      struct
-      {
-	 E_Text             *l, *r, *t, *b;
-      }
-      title;
-      struct
-      {
-	 Evas_Object         l, r, t, b;
-      }
-      title_clip;
+      E_Text             *title;
+      Evas_Object         title_clip;
    }
    obj;
-   struct
-   {
-      Pixmap              l, r, t, b;
-   }
-   pixmap;
+   Pixmap              pixmap;
    struct
    {
       int                 new;
-      Ebits_Object        l, r, t, b;
+      char               *file;
+      Ebits_Object        b;
    }
    bits;
 

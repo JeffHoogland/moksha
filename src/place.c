@@ -495,8 +495,8 @@ e_place_cascade(E_Border * b, E_Desktop * desk, int *x, int *y)
    D_ENTER;
 
    pl = pr = pt = pb = 0;
-   if (b->bits.l)
-      ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);
+   if (b->bits.b)
+      ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
    w = b->current.requested.w;
    h = b->current.requested.h;
    if ((count_x + w) > desk->real.w)
