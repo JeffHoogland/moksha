@@ -168,6 +168,7 @@ void
 e_fs_init(void)
 {
    e_event_filter_handler_add(EV_CHILD, e_fs_child_handle);   
+   e_event_filter_idle_handler_add(e_fs_idle, NULL);   
    _e_fs_restarter(0, NULL);
 }
 

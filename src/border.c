@@ -1334,7 +1334,7 @@ e_border_new(void)
    b->client.titlebar = 1;
    b->client.takes_focus = 1;
    
-   desk = e_desktops_get(e_desktops_get_current());
+   desk = e_desktops_get(0);
    e_desktops_add_border(desk, b);
    b->win.main = e_window_override_new(desk->win.container, 0, 0, 1, 1);
    b->win.input = e_window_input_new(b->win.main, 0, 0, 1, 1);
@@ -2357,7 +2357,7 @@ e_border_focus_grab_ended(void)
 int
 e_border_viewable(E_Border *b)
 {
-   if (b->desk != e_desktops_get(e_desktops_get_current()))
+   if (b->desk != e_desktops_get(0))
      return 0;
 
    if (b->current.x + b->current.w <= 0)
