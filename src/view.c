@@ -598,7 +598,16 @@ e_view_handle_fs(EfsdEvent *ev)
 			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
 			 }
 		       icon->changed = 1;
+		       icon->view->changed = 1;
 		    }
+	       }
+	     break;
+	   case EFSD_CMD_READLINK:
+	     printf("Readlink event %i\n",
+		    ev->efsd_reply_event.command.efsd_file_cmd.id);
+	     if (ev->efsd_reply_event.status == SUCCESS)
+	       {
+		  printf("target is %s\n", (char*)ev->efsd_reply_event.data);
 	       }
 	     break;
 	   case EFSD_CMD_CLOSE:

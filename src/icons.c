@@ -201,20 +201,22 @@ e_icon_update(E_Icon *icon)
      {
 	icon->current.icon = icon->info.icon.normal;	     
      }
-   if (((icon->current.icon) && (icon->previous.icon) &&
-       (strcmp(icon->current.icon, icon->previous.icon))) ||
-	(!icon->current.icon) || (!icon->previous.icon))
+   if ((!icon->current.state.selected) && (icon->obj.sel_icon))
      {
-	if (icon->obj.icon) 
-	  {
-	     int iw, ih;
-	     
-	     evas_set_image_file(icon->view->evas, icon->obj.icon, icon->current.icon);	
-	     evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
-	     evas_set_image_fill(icon->view->evas, icon->obj.icon, 0, 0, iw, ih);
-	     evas_resize(icon->view->evas, icon->obj.icon, iw, ih);
-	     icon->previous.x = icon->current.x - 1;	     
-	  }
+	printf("no\n");
+	ebits_hide(icon->obj.sel_icon);
+	ebits_free(icon->obj.sel_icon);
+	icon->obj.sel_icon = NULL;
+     }
+   if (icon->obj.icon) 
+     {
+	int iw, ih;
+	
+	evas_set_image_file(icon->view->evas, icon->obj.icon, icon->current.icon);	
+	evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
+	evas_set_image_fill(icon->view->evas, icon->obj.icon, 0, 0, iw, ih);
+	evas_resize(icon->view->evas, icon->obj.icon, iw, ih);
+	icon->previous.x = icon->current.x - 1;	     
      }
    if (!icon->obj.filename)
      {
@@ -232,7 +234,7 @@ e_icon_update(E_Icon *icon)
 	icon->previous.visible = icon->current.visible - 1;
 	obj_new = 1;
      }
-   if (!icon->obj.sel_icon)
+   if ((!icon->obj.sel_icon) && (icon->current.state.selected))
      {
 	icon->obj.sel_icon = ebits_load(PACKAGE_DATA_DIR"/data/config/appearance/default/selections/file.bits.db");
 	if (icon->obj.sel_icon)
@@ -240,6 +242,7 @@ e_icon_update(E_Icon *icon)
 	     ebits_add_to_evas(icon->obj.sel_icon, icon->view->evas);	     
 	     ebits_set_layer(icon->obj.sel_icon, 9);
 	     ebits_set_color_class(icon->obj.sel_icon, "Selected BG", 100, 200, 255, 255);
+	     obj_new = 1;
 	  }
      }
    if (obj_new)
@@ -282,25 +285,22 @@ e_icon_update(E_Icon *icon)
 	  }
 	
      }
-   if (icon->current.visible != icon->previous.visible)
+   if (icon->current.visible)
      {
-	if (icon->current.visible)
-	  {
-	     evas_show(icon->view->evas, icon->obj.icon);
-	     evas_show(icon->view->evas, icon->obj.filename);
-	     evas_show(icon->view->evas, icon->obj.sel1);
-	     evas_show(icon->view->evas, icon->obj.sel2);
-	     ebits_show(icon->obj.sel_icon);
-	  }
-	else
-	  {
-	     evas_hide(icon->view->evas, icon->obj.icon);
-	     evas_hide(icon->view->evas, icon->obj.filename);
-	     evas_hide(icon->view->evas, icon->obj.sel1);
-	     evas_hide(icon->view->evas, icon->obj.sel2);
-	     ebits_hide(icon->obj.sel_icon);
-	  }
+	evas_show(icon->view->evas, icon->obj.icon);
+	evas_show(icon->view->evas, icon->obj.filename);
+	evas_show(icon->view->evas, icon->obj.sel1);
+	evas_show(icon->view->evas, icon->obj.sel2);
+	if (icon->obj.sel_icon) ebits_show(icon->obj.sel_icon);
      }
-   
+   else
+     {
+	evas_hide(icon->view->evas, icon->obj.icon);
+	evas_hide(icon->view->evas, icon->obj.filename);
+	evas_hide(icon->view->evas, icon->obj.sel1);
+	evas_hide(icon->view->evas, icon->obj.sel2);
+	if (icon->obj.sel_icon) ebits_hide(icon->obj.sel_icon);
+     }
+   icon->previous = icon->current;
    icon->changed = 0;
 }
