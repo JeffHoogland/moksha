@@ -5,7 +5,6 @@ Also look at all the .c files - they have their own localized TODO lists
 These are in no particular order:
 
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
-* fix focus handling (qt apps, openoffice, etc. etc.)
 * track mouse location on a border/desktop level
 * add desktop object/element management interface (sanitise module hell there)
 * add key input focus control for desktop modules
