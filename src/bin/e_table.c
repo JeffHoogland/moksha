@@ -4,7 +4,7 @@
 #include "e.h"
 
 typedef struct _E_Smart_Data E_Smart_Data;
-typedef struct _E_Table_Item   E_Table_Item;
+typedef struct _E_Table_Item E_Table_Item;
 
 struct _E_Smart_Data
 { 
@@ -110,7 +110,7 @@ e_table_homogenous_set(Evas_Object *obj, int homogenous)
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
 }
 
-int
+void
 e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan, int rowspan)
 {
    E_Smart_Data *sd;
@@ -131,7 +131,6 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
      }
    sd->changed = 1;
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
-   return 0;
 }
 
 void
@@ -257,6 +256,7 @@ _e_table_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_data_set(obj, "e_table_data", ti);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_table_smart_item_del_hook, NULL);
+   evas_object_stack_below(obj, sd->obj);
    if (!evas_object_visible_get(sd->clip))
      evas_object_show(sd->clip);
    return ti;
@@ -420,7 +420,7 @@ static void
 _e_table_smart_init(void)
 {
    if (_e_smart) return;
-   _e_smart = evas_smart_new("e_box",
+   _e_smart = evas_smart_new("e_table",
 			     _e_table_smart_add,
 			     _e_table_smart_del,
 			     _e_table_smart_layer_set,

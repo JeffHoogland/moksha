@@ -337,6 +337,7 @@ _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_data_set(obj, "e_box_data", bi);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_box_smart_item_del_hook, NULL);
+   evas_object_stack_below(obj, sd->obj);
    if (!evas_object_visible_get(sd->clip))
      evas_object_show(sd->clip);
    return bi;

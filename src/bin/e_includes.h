@@ -33,3 +33,4 @@
 #include "e_signals.h"
 #include "e_xinerama.h"
 #include "e_table.h"
+#include "e_layout.h"
