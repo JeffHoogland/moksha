@@ -339,7 +339,7 @@ _flame_face_anim_handle (Flame_Face *ff)
 static void
 _flame_palette_default_set (Flame_Face *ff)
 {
-   int i, r, g, b;
+   int i, r, g, b, a;
    
    for (i = 0 ; i < 300 ; i++)
      {
@@ -353,14 +353,9 @@ _flame_palette_default_set (Flame_Face *ff)
 	if (g > 255) g = 255;
 	if (b < 0)   b = 0;
 	if (b > 255) b = 255;
-	
-	if ((r*r + g*g + b*b) <= 100)
-	  ff->palette[i] = ((r*r + g*g + b*b)                |
-			    (((unsigned char)r) << 16) |
-			    (((unsigned char)g) << 8)  |
-			    ((unsigned char)b));
-	else
-	  ff->palette[i] = ((255 << 24)                |
+	a = (int)((r * 0.299) + (g * 0.587) + (b * 0.114));
+	ff->palette[i] = ((((unsigned char)
+			    a) << 24) |
 			    (((unsigned char)r) << 16) |
 			    (((unsigned char)g) << 8)  |
 			    ((unsigned char)b));
@@ -371,21 +366,15 @@ _flame_palette_default_set (Flame_Face *ff)
 static void
 _flame_palette_plasma_set (Flame_Face *ff)
 {
-   int i, r, g, b;
+   int i, r, g, b, a;
    
    for (i = 0 ; i < 80 ; i++)
      {
 	r = 0;
 	g = 0;
 	b = (i*255) / 80;
-	
-	if ((r*r + g*g + b*b) <= 100)
-	  ff->palette[i] = ((r*r + g*g + b*b)                |
-			    (((unsigned char)r) << 16) |
-			    (((unsigned char)g) << 8)  |
-			    ((unsigned char)b));
-	else
-	  ff->palette[i] = ((255 << 24)        |
+	a = (int)((r * 0.299) + (g * 0.587) + (b * 0.114));
+	ff->palette[i] = ((((unsigned char)a) << 24) |
 			    (((unsigned char)r) << 16) |
 			    (((unsigned char)g) << 8)  |
 			    ((unsigned char)b));
