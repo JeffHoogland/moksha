@@ -397,11 +397,14 @@ _e_main_dirs_init(void)
    /* FIXME: THIS is a hack to get people started!!! */
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eet", homedir);
    if (!e_file_exists(buf))
-     snprintf(buf, sizeof(buf), 
-	      "gzip -d -c < %s/data/other/applications.tar.gz |"
-	      "(cd %s/.e/e/ ; tar -xf -)", 
-	      PACKAGE_DATA_DIR,
-	      homedir);
+     {
+	printf("GETTING YOU STARTED!\n");
+	snprintf(buf, sizeof(buf), 
+		 "gzip -d -c < %s/data/other/applications.tar.gz | "
+		 "(cd %s/.e/e/ ; tar -xf -)", 
+		 PACKAGE_DATA_DIR,
+		 homedir);
+     }
    free(homedir);
    
    return 1;
