@@ -2713,6 +2713,12 @@ _e_border_eval(E_Border *bd)
 	     free(pnd);
 	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
 	  }
+
+	ev = calloc(1, sizeof(E_Event_Border_Add));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
+
 	/* Recreate state */
 	if (e_hints_window_sticky_isset(bd->client.win))
 	  e_border_stick(bd);
@@ -2732,12 +2738,6 @@ _e_border_eval(E_Border *bd)
 				       bd->y + bd->client_inset.t,
 				       bd->client.w,
 				       bd->client.h);
-
-
-	ev = calloc(1, sizeof(E_Event_Border_Add));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
      }
 
    /* effect changes to the window border itself */

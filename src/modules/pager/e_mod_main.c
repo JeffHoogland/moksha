@@ -782,33 +782,15 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
    if ((face->zone != ev->border->zone) ||
        (_pager_face_border_find(face, ev->border)))
      return 1;
-   if (ev->border->sticky)
+
+   pd = _pager_face_desk_find(face, ev->border->desk);
+   if (pd)
      {
-	Evas_List             *l;
-	
-	/* go through all desks */
-	for (l = face->desks; l; l = l->next)
-	  {
-	     Pager_Win          *pw;
-	     
-	     pd = l->data;
-	     /* create it and add it */
-	     pw = _pager_window_new(pd, ev->border);
-	     if (pw)
-	       pd->wins = evas_list_append(pd->wins, pw);
-	  }
-     }
-   else
-     {
-	pd = _pager_face_desk_find(face, ev->border->desk);
-	if (pd)
-	  {
-	     Pager_Win          *pw;
-	     
-	     pw = _pager_window_new(pd, ev->border);
-	     if (pw)
-	       pd->wins = evas_list_append(pd->wins, pw);
-	  }
+	Pager_Win          *pw;
+
+	pw = _pager_window_new(pd, ev->border);
+	if (pw)
+	  pd->wins = evas_list_append(pd->wins, pw);
      }
    return 1;
 }
