@@ -377,7 +377,7 @@ e_focus_out(Eevent * ev)
 	b = e_border_find_by_window(e->win);
 	if (b)
 	  {	
-	     char *settings_db = PACKAGE_DATA_DIR"/data/settings.db";
+	     char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
 	     E_DB_File *db;
 	     int focus_mode;
 	     char buf[4096];
@@ -988,9 +988,9 @@ e_border_apply_border(E_Border *b)
    int pl, pr, pt, pb;
    
    if ((!b->client.titlebar) && 
-       (!b->client.border)) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/borderless.bits.db");
-   else if (b->current.selected) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/border.bits.db");
-   else                     e_border_set_bits(b, PACKAGE_DATA_DIR"/data/border2.bits.db");
+       (!b->client.border)) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db");
+   else if (b->current.selected) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db");
+   else                     e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border2.bits.db");
 
    pl = pr = pt = pb = 0;
    if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);   
@@ -1066,7 +1066,7 @@ e_border_new(void)
    int max_colors = 216;
    int font_cache = 1024 * 1024;
    int image_cache = 8192 * 1024;
-   char *font_dir = PACKAGE_DATA_DIR"/data/fnt";
+   char *font_dir = PACKAGE_DATA_DIR"/data/fonts";
    E_Desktop *desk;
    
    b = NEW(E_Border, 1);
@@ -1223,8 +1223,8 @@ e_border_remove_mouse_grabs(E_Border *b)
 void
 e_border_attach_mouse_grabs(E_Border *b)
 {
-   char *grabs_db = PACKAGE_DATA_DIR"/data/grabs.db";
-   char *settings_db = PACKAGE_DATA_DIR"/data/settings.db";
+   char *grabs_db = PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db";
+   char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
    E_DB_File *db;
    int focus_mode;
    char buf[4096];
@@ -1316,8 +1316,8 @@ e_border_attach_all_mouse_grabs(void)
 void
 e_border_redo_grabs(void)
 {   
-   char *grabs_db = PACKAGE_DATA_DIR"/data/grabs.db";
-   char *settings_db = PACKAGE_DATA_DIR"/data/settings.db";
+   char *grabs_db = PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db";
+   char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
    static time_t mod_date_grabs = 0;
    static time_t mod_date_settings = 0;
    time_t mod;
