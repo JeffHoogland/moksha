@@ -29,6 +29,8 @@ struct _E_Iconbar
    Evas_Object   clip;
    
    int           has_been_scrolled;
+   int           changed;
+   int           just_saved;
    float         scroll;
   
    Ebits_Object *bit;
@@ -44,6 +46,7 @@ struct _E_Iconbar_Icon
    E_Iconbar   *iconbar;
    
    Evas_Object  image;
+   Imlib_Image  imlib_image;
    
    char        *image_path;
    char        *exec;
@@ -54,6 +57,18 @@ struct _E_Iconbar_Icon
       char        *timer;
       double       start;
    } hi;
+   
+   struct {
+      double x, y;
+   } down, mouse;
+   
+   struct {
+     double x, y;
+     double w, h;
+   } current;
+   
+   int mouse_down;
+   int moving;
    
    int         wait;
    float       wait_timeout;
