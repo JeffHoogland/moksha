@@ -11,19 +11,15 @@ These are in no particular order:
 * finish off icccm support
 * optimize clock theme (speed/cpu)
 * make shading go in all 4 directions
-* add virtual desktops
 * add keybindings
 * add general actions to be hooked to button/key bindings
 * add "icon box"
-* add iconify (minimize)
 * add pagers
 * add netwm support
-* full colour+alpha cursors
 * different cursors for different parts of the screen
 * alt+tab status list of windows
 * add a "taskbar"
 * add cpu module
-* add battery module
 * add cpu speedstep module
 * make root menus configurable (what mouse/key brings up what)
 * add favorites apps menu items for editing (at the bottom or such)
