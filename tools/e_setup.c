@@ -396,6 +396,7 @@ void txz_show(Text_Zone *txz);
 void txz_hide(Text_Zone *txz);
 void txz_move(Text_Zone *txz, double x, double y);
 void txz_text(Text_Zone *txz, char *text);
+void animate_logo(int v, void *data);
 
 void
 idle(void *data)
@@ -474,7 +475,7 @@ setup(void)
 		       win_main, 
 		       0, 0, root_w, root_w, 
 		       RENDER_METHOD_ALPHA_SOFTWARE,
-		       216,   1024 * 1024,   8 * 1024 * 1024,
+		       216,   1024 * 1024,   16 * 1024 * 1024,
 		       PACKAGE_DATA_DIR"/data/fonts/");
    
    bg = e_background_load(PACKAGE_DATA_DIR"/data/setup/setup.bg.db");
@@ -530,7 +531,15 @@ setup(void)
 	   "5c more than just once, as new setups need to be installed\n"
 	   );
      }
-   
+     {
+	Evas_Object o;
+	
+	o = evas_add_image_from_file(evas, PACKAGE_DATA_DIR"/data/setup/anim/e001.png");
+	evas_move(evas, o, root_w - 120, -15);
+	evas_set_layer(evas, o, 30);
+	evas_show(evas, o);
+	animate_logo(0, o);
+     }
    scr_w = root_w;
    scr_h = root_h;
 }
@@ -656,6 +665,28 @@ txz_text(Text_Zone *txz, char *text)
 	
 	p = tok + 1;
      }
+}
+
+void
+animate_logo(int v, void *data)
+{
+   Evas_Object o;
+   double t;
+   static double start_t;
+   char buf[4096];
+   int frame;
+   
+   o = (Evas_Object)data;
+   if (v == 0) start_t = ecore_get_time();
+   t = ecore_get_time() - start_t;
+   frame = (int)(t * 15);
+   frame = frame % 120;
+   frame++;
+   if      (frame < 10)   sprintf(buf, PACKAGE_DATA_DIR"/data/setup/anim/e00%i.png", frame);
+   else if (frame < 100)  sprintf(buf, PACKAGE_DATA_DIR"/data/setup/anim/e0%i.png", frame);
+   else if (frame < 1000) sprintf(buf, PACKAGE_DATA_DIR"/data/setup/anim/e%i.png", frame);
+   evas_set_image_file(evas, o, buf);   
+   ecore_add_event_timer("animate_logo", 0.01, animate_logo, 1, data);
 }
 
 int
