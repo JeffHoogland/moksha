@@ -11,6 +11,24 @@ global {
   array desks;
 }
 
+/* set up observer functions */
+function deskSwitchObserver(object data, number desk)
+{
+  number i;
+  Console.println("in deskSwitchObserver: " + desk);
+
+  for(i = 0; i < Array.size(desks); i++)
+  {
+    if (i != desk)
+    {
+      desks[i].obj.setColor(255,255,255,128);
+    }
+  }
+  desks[desk].obj.setColor(255,255,255,255);
+}
+ 
+
+
 /* set up callback function */
 function downCB(object d, object ev, number b, number x, number y)
 {
@@ -95,5 +113,10 @@ for (i = 0; i < 8; i++)
   desks[i].setup();
 }
 
-/* highlight first desktop */
-desks[0].obj.setColor(255, 255, 255, 255); 
+/* add observer, when the desktop is switched, the function "deskSwitchObserver is called, and passed epp along with it (although it isn't used);*/
+
+epp.addDesktopObserver("deskSwitchObserver", epp);
+
+/* start out by highlighting the current desktop */
+desks[e.get_current_desktop()].obj.setColor(255, 255, 255, 255); 
+
