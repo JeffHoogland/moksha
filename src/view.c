@@ -788,8 +788,8 @@ e_view_set_dir(E_View *v, char *dir)
 
    /* v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir); */
    v->monitor_id = efsd_start_monitor(e_fs_get_connection(), v->dir,
-				      2, efsd_op_get_stat(), 
-				      efsd_op_get_filetype());
+				      efsd_ops(2, efsd_op_get_stat(), 
+					       efsd_op_get_filetype()));
    v->is_listing = 1;
    v->changed = 1;
 }
