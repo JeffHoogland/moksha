@@ -54,6 +54,7 @@ main(int argc, char **argv)
    e_menu_init();
    e_view_init();
    e_entry_init();
+   e_ipc_init();
    
    setup();
    
