@@ -37,6 +37,10 @@ struct _E_Iconbar
    struct {
       double x, y, w, h;
    } icon_area;
+
+   struct {
+      int x, y;
+   } dnd;
 };
 
 struct _E_Iconbar_Icon
@@ -90,4 +94,8 @@ void            e_iconbar_file_change(E_View *v, char *file);
 void            e_iconbar_save_out_final(E_Iconbar *ib);
 E_Rect *	e_iconbar_get_resist_rect(E_Iconbar *ib);
 void		e_iconbar_set_view_window_spacing(E_Iconbar *ib);   
+void		e_iconbar_icon_move(E_Iconbar_Icon *ic, int x, int y);
+void		e_iconbar_dnd_add_files (E_View * v, E_View * source,
+      					 int num_files, char **dnd_files);
+
 #endif

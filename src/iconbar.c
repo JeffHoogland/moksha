@@ -3,6 +3,8 @@
 #include "util.h"
 #include "desktops.h"
 #include "border.h"
+#include "file.h"
+#include "icons.h"
 
 static E_Config_Base_Type *cf_iconbar = NULL;
 static E_Config_Base_Type *cf_iconbar_icon = NULL;
@@ -388,7 +390,7 @@ e_iconbar_realize (E_Iconbar * ib)
       /* add the icon image object */
       ic->image = evas_add_image_from_file (ib->view->evas, buf);
       /* add an imlib image so we can save it later */
-      ic->imlib_image = imlib_load_image(buf);
+      ic->imlib_image = imlib_load_image (buf);
       /* clip the icon */
       evas_set_clip (ib->view->evas, ic->image, ib->clip);
       /* set it to be semi-transparent */
@@ -669,12 +671,12 @@ e_iconbar_file_add (E_View * v, char *file)
       /* unique timer name */
       snprintf (buf, PATH_MAX, "iconbar_reload:%s", v->dir);
       /* if we've scrolled or changed icons since. save */
-      if (v->iconbar && (v->iconbar->has_been_scrolled || v->iconbar->changed))
-      {
-	e_iconbar_save_out_final (v->iconbar);
-	v->iconbar->just_saved = 1;
-      }
-        
+      if (v->iconbar
+	  && (v->iconbar->has_been_scrolled || v->iconbar->changed))
+	{
+	  e_iconbar_save_out_final (v->iconbar);
+	}
+
       /* in 0.5 secs call our timout handler */
       ecore_add_event_timer (buf, 0.5, ib_reload_timeout, 0, v);
     }
@@ -731,7 +733,8 @@ e_iconbar_file_change (E_View * v, char *file)
       /* unique timer name */
       snprintf (buf, PATH_MAX, "iconbar_reload:%s", v->dir);
       /* if we've scrolled since. save */
-      if (v->iconbar && (v->iconbar->has_been_scrolled || v->iconbar->changed))
+      if (v->iconbar
+	  && (v->iconbar->has_been_scrolled || v->iconbar->changed))
 	e_iconbar_save_out_final (v->iconbar);
       /* in 0.5 secs call the realod timeout */
       ecore_add_event_timer (buf, 0.5, ib_reload_timeout, 0, v);
@@ -759,61 +762,62 @@ e_iconbar_save_out_final (E_Iconbar * ib)
       Imlib_Image im;
       Evas_List l;
       int i;
-      
+
       snprintf (buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->dir);
-      D("%s\n", buf);
+      D ("%s\n", buf);
 
       if (ib->changed)
-      {
-      D("ib changed\n")
-	
-      edb = e_db_open(buf);
-      if (edb)
-      {
-	 D("got edb\n");
-        for (l = ib->icons, i = 0; l; l = l->next, i++)
-        {
-	   E_Iconbar_Icon *ic = l->data;
-	   char buf2[PATH_MAX];
-           
-	   if (ic)
-	   {
-	   /* save out exec */
-           snprintf(buf2, PATH_MAX, "/icons/%i/exec", i);
-	   D("set exec: %i\n", i);
-	   e_db_str_set(edb, buf2, ic->exec);
-	   
-	   /* save out image */
-	   if (ic->imlib_image)
-	   {
-	      imlib_context_set_image(ic->imlib_image);
-	      imlib_image_attach_data_value("compression", NULL, 9, NULL);
-	      imlib_image_set_format("db");
-	      
-	      snprintf (buf2, PATH_MAX, "%s/.e_iconbar.db:/icons/%i/image", ib->view->dir, i);
-	      D("save image\n");
-	      imlib_save_image(buf2);
-	   }
-	   }
-	}
-        D("set count\n");
-	e_db_int_set (edb, "/icons/count", i);
-	D("set scroll\n");
-        e_db_float_set (edb, "/scroll", ib->scroll);
-	D("close db\n");
-	e_db_close(edb);
+	{
+	  D ("ib changed\n") edb = e_db_open (buf);
+	  if (edb)
+	    {
+	      D ("got edb\n");
+	      for (l = ib->icons, i = 0; l; l = l->next, i++)
+		{
+		  E_Iconbar_Icon *ic = l->data;
+		  char buf2[PATH_MAX];
 
-      }
-      D("set just_saved\n");
-      ib->just_saved = 1;
-      ib->changed = 0;
-      }
-    
+		  if (ic)
+		    {
+		      /* save out exec */
+		      snprintf (buf2, PATH_MAX, "/icons/%i/exec", i);
+		      D ("set exec: %i\n", i);
+		      e_db_str_set (edb, buf2, ic->exec);
+
+		      /* save out image */
+		      if (ic->imlib_image)
+			{
+			  imlib_context_set_image (ic->imlib_image);
+			  imlib_image_attach_data_value ("compression", NULL,
+							 9, NULL);
+			  imlib_image_set_format ("db");
+
+			  snprintf (buf2, PATH_MAX,
+				    "%s/.e_iconbar.db:/icons/%i/image",
+				    ib->view->dir, i);
+			  D ("save image\n");
+			  imlib_save_image (buf2);
+			}
+		    }
+		}
+	      D ("set count\n");
+	      e_db_int_set (edb, "/icons/count", i);
+	      D ("set scroll\n");
+	      e_db_float_set (edb, "/scroll", ib->scroll);
+	      D ("close db\n");
+	      e_db_close (edb);
+
+	    }
+	}
+
       else
-      {
-	 E_DB_FLOAT_SET(buf, "/scroll", ib->scroll);
-      }
-      
+	{
+	  E_DB_FLOAT_SET (buf, "/scroll", ib->scroll);
+	}
+    /*D ("set just_saved\n");
+    ib->just_saved = 1;*/
+    ib->changed = 0;
+
     }
   D_RETURN;
 }
@@ -866,14 +870,15 @@ ib_reload_timeout (int val, void *data)
 
   /* get our view pointer */
   v = (E_View *) data;
-
-  D("check if jsut saved:\n");
+/*
+  D ("check if jsut saved:\n");
   if (v->iconbar->just_saved)
-  {
-     D("just saved\n");
-     v->iconbar->just_saved = 0;
-     D_RETURN;
-  }
+    {
+      D ("just saved\n");
+      v->iconbar->just_saved = 0;
+      D_RETURN;
+    }
+    */
   /* if we have an iconbar.. well nuke it */
   if (e_object_unref (E_OBJECT (v->iconbar)) == 0)
     v->iconbar = NULL;
@@ -1360,136 +1365,7 @@ ib_mouse_up (void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
     {
       ic->moving = 0;
 
-      /* if dragged outside remove from list */
-      if (ic->mouse.x > ic->iconbar->icon_area.x + ic->iconbar->icon_area.w ||
-	  ic->mouse.y > ic->iconbar->icon_area.y + ic->iconbar->icon_area.h)
-	{
-	  evas_list_remove (ic->iconbar->icons, ic);
-	  e_object_unref(E_OBJECT(ic));
-	}
-
-      /* otherwise move to the correct place in list */
-      else
-	{
-	  E_Iconbar_Icon *lic;
-	  Evas_List l;
-
-	  double aw = ic->iconbar->icon_area.w;
-	  double ah = ic->iconbar->icon_area.h;
-
-	  /* before first icon? move to start */
-	  lic = (E_Iconbar_Icon *) ic->iconbar->icons->data;
-	  /* horizontal */
-	  if (aw > ah && ic->mouse.x < lic->current.x)
-	    {
-	      ic->iconbar->icons = evas_list_remove (ic->iconbar->icons, ic);
-	      ic->iconbar->icons =
-		evas_list_prepend_relative (ic->iconbar->icons, ic, lic);
-	    }
-	  /* vertical */
-	  else if (aw < ah && ic->mouse.y < lic->current.y)
-	    {
-	      ic->iconbar->icons = evas_list_remove (ic->iconbar->icons, ic);
-	      ic->iconbar->icons =
-		evas_list_prepend_relative (ic->iconbar->icons, ic, lic);
-	    }
-
-	  /* not before first icon, check place among other icons */
-	  else
-	    {
-	      for (l = ic->iconbar->icons; l; l = l->next)
-		{
-		  lic = (E_Iconbar_Icon *) l->data;
-
-		  /* if in same position, skip */
-		  if (ic == lic) 
-		  {
-		     l = l->next;
-		     if (l) lic = (E_Iconbar_Icon *) l->data;
-		     else break;
-		  }
-		  /* horizontal */
-		  if (aw > ah)
-		    {
-		      /* place before icon */
-		      if (ic->mouse.x > lic->current.x &&
-			  ic->mouse.x < lic->current.x + (lic->current.w / 2))
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_prepend_relative (ic->iconbar->icons,
-							ic, lic);
-			}
-		      /* place after icon */
-		      else if (ic->mouse.x < lic->current.x + lic->current.w
-			       && ic->mouse.x >
-			       lic->current.x + (lic->current.w / 2))
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_append_relative (ic->iconbar->icons, ic,
-						       lic);
-			}
-		      /* after last icon */
-		      else if (ic->mouse.x > lic->current.x + lic->current.w
-			       && l->next == NULL)
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_append_relative (ic->iconbar->icons, ic,
-						       lic);
-			}
-
-
-		    }
-		  /* vertical */
-		  else
-		    {
-		      /* place before icon */
-		      if (ic->mouse.y > lic->current.y &&
-			  ic->mouse.y < lic->current.y + (lic->current.h / 2))
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_prepend_relative (ic->iconbar->icons,
-							ic, lic);
-			}
-		      /* place after icon */
-		      else if (ic->mouse.y < lic->current.y + lic->current.h
-			       && ic->mouse.y >
-			       lic->current.y + (lic->current.h / 2))
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_append_relative (ic->iconbar->icons, ic,
-						       lic);
-			}
-		      /* after last icon */
-		      else if (ic->mouse.y > lic->current.y + lic->current.h
-			       && l->next == NULL)
-			{
-			  ic->iconbar->icons =
-			    evas_list_remove (ic->iconbar->icons, ic);
-			  ic->iconbar->icons =
-			    evas_list_append_relative (ic->iconbar->icons, ic,
-						       lic);
-			}
-		    }
-		}
-	    }
-	}
-
-      /* make the changes */
-      e_iconbar_fix (ic->iconbar);
-      
-      /* set flag and save */
-      ic->iconbar->changed = 1;
-      /*e_iconbar_save_out_final(ic->iconbar);*/
+      e_iconbar_icon_move (ic, _x, _y);
     }
 
   /* Otherwise, not moving so execute, etc */
@@ -1592,7 +1468,7 @@ ib_mouse_move (void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
   if (ic->mouse_down)
     {
       int dx, dy;
-      
+
 
       ic->mouse.x = _x;
       ic->mouse.y = _y;
@@ -1600,14 +1476,16 @@ ib_mouse_move (void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
       dx = ic->down.x - ic->mouse.x;
       dy = ic->down.y - ic->mouse.y;
 
-      
+
       if (dx > 3 || dx < -3 || dy > 3 || dy < -3)
-      {
-        ic->moving = 1;
-  
-  	evas_move(ic->iconbar->view->evas, ic->image, ic->mouse.x - (ic->down.x - ic->current.x), ic->mouse.y - (ic->down.y - ic->current.y));
-      }
-      
+	{
+	  ic->moving = 1;
+
+	  evas_move (ic->iconbar->view->evas, ic->image,
+		     ic->mouse.x - (ic->down.x - ic->current.x),
+		     ic->mouse.y - (ic->down.y - ic->current.y));
+	}
+
     }
 
   D_RETURN;
@@ -1617,6 +1495,278 @@ ib_mouse_move (void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
   UN (_b);
   UN (_x);
   UN (_y);
+}
+
+
+void
+e_iconbar_icon_move (E_Iconbar_Icon *ic, int x, int y)
+{
+   D_ENTER;
+
+   D("in icon move\n");
+  /* if dragged outside remove from list */
+  if (x > ic->iconbar->icon_area.x + ic->iconbar->icon_area.w ||
+      y > ic->iconbar->icon_area.y + ic->iconbar->icon_area.h)
+    {
+      evas_list_remove (ic->iconbar->icons, ic);
+
+      /* make the changes */
+      e_iconbar_fix (ic->iconbar);
+
+      /* set flag and save */
+      ic->iconbar->changed = 1;
+      e_iconbar_save_out_final(ic->iconbar); 
+
+      e_object_unref (E_OBJECT (ic));
+    }
+
+  /* otherwise move to the correct place in list */
+  else
+    {
+      E_Iconbar_Icon *lic;
+      Evas_List l;
+
+      double aw = ic->iconbar->icon_area.w;
+      double ah = ic->iconbar->icon_area.h;
+
+      /* before first icon? move to start */
+      lic = (E_Iconbar_Icon *) ic->iconbar->icons->data;
+      /* horizontal */
+      if (aw > ah && x < lic->current.x)
+	{
+	  ic->iconbar->icons = evas_list_remove (ic->iconbar->icons, ic);
+	  ic->iconbar->icons =
+	    evas_list_prepend_relative (ic->iconbar->icons, ic, lic);
+	}
+      /* vertical */
+      else if (aw < ah && y < lic->current.y)
+	{
+	  ic->iconbar->icons = evas_list_remove (ic->iconbar->icons, ic);
+	  ic->iconbar->icons =
+	    evas_list_prepend_relative (ic->iconbar->icons, ic, lic);
+	}
+
+      /* not before first icon, check place among other icons */
+      else
+	{
+	  for (l = ic->iconbar->icons; l; l = l->next)
+	    {
+	      lic = (E_Iconbar_Icon *) l->data;
+
+	      /* if in same position, skip */
+	      if (ic == lic)
+		{
+		  l = l->next;
+		  if (l)
+		    lic = (E_Iconbar_Icon *) l->data;
+		  else
+		    break;
+		}
+	      /* horizontal */
+	      if (aw > ah)
+		{
+		  /* place before icon */
+		  if (x > lic->current.x &&
+		      x < lic->current.x + (lic->current.w / 2))
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_prepend_relative (ic->iconbar->icons,
+						    ic, lic);
+		    }
+		  /* place after icon */
+		  else if (x < lic->current.x + lic->current.w
+			   && x >
+			   lic->current.x + (lic->current.w / 2))
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_append_relative (ic->iconbar->icons, ic,
+						   lic);
+		    }
+		  /* after last icon */
+		  else if (x > lic->current.x + lic->current.w
+			   && l->next == NULL)
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_append_relative (ic->iconbar->icons, ic,
+						   lic);
+		    }
+
+
+		}
+	      /* vertical */
+	      else
+		{
+		  /* place before icon */
+		  if (y > lic->current.y &&
+		      y < lic->current.y + (lic->current.h / 2))
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_prepend_relative (ic->iconbar->icons,
+						    ic, lic);
+		    }
+		  /* place after icon */
+		  else if (y < lic->current.y + lic->current.h
+			   && y >
+			   lic->current.y + (lic->current.h / 2))
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_append_relative (ic->iconbar->icons, ic,
+						   lic);
+		    }
+		  /* after last icon */
+		  else if (y > lic->current.y + lic->current.h
+			   && l->next == NULL)
+		    {
+		      ic->iconbar->icons =
+			evas_list_remove (ic->iconbar->icons, ic);
+		      ic->iconbar->icons =
+			evas_list_append_relative (ic->iconbar->icons, ic,
+						   lic);
+		    }
+		}
+	    }
+	}
+      /* make the changes */
+      e_iconbar_fix (ic->iconbar);
+
+      /* set flag and save */
+      ic->iconbar->changed = 1;
+      e_iconbar_save_out_final(ic->iconbar); 
+/*      ic->iconbar->just_saved = 0;*/
+      ib_reload_timeout(0, ic->iconbar->view);
+
+    }
+  D_RETURN;
+}
+
+
+/* called when a dnd drop occurs on an iconbar */
+void
+e_iconbar_dnd_add_files (E_View *v, E_View *source, int num_files,
+			 char **dnd_files)
+{
+  Evas_List execs = NULL;
+  Evas_List l;
+
+  int i;
+
+  D_ENTER;
+
+  D("add files: %s\n", source->dir);
+  for (i = 0; i < num_files; i++)
+    {
+       char *file = e_file_get_file(strdup(dnd_files[i]));
+       E_Icon *ic = e_icon_find_by_file(source, file);
+       
+       if (ic)
+       {
+	  D("icon mime.base: %s\n", ic->info.mime.base);
+	 if (!strcmp(ic->info.mime.base, "db"))
+	 {
+	    /* if its an icon db, set the icon */
+#if 0
+	   D("db!\n");
+	   for (l = v->iconbar->icons; l; l = l->next)
+	   {
+	      E_Iconbar_Icon *ibic;
+	      char buf[PATH_MAX];
+
+	      if (l->data)
+		 ibic = (E_Iconbar_Icon *)(l->data);
+
+	      if (ibic)
+	      {
+  	        if (v->iconbar->dnd.x > ibic->current.x &&
+		    v->iconbar->dnd.x < ibic->current.x + ibic->current.w &&
+		    v->iconbar->dnd.y > ibic->current.y &&
+		    v->iconbar->dnd.y < ibic->current.y + ibic->current.h )
+	        {
+		  D("over icon: %s\n", ibic->exec);
+                  snprintf(buf, PATH_MAX, "%s/%s:/icon/normal", ic->view->dir, ic->file);
+		  D("set icon: %s\n", buf);
+
+                  ibic->imlib_image = imlib_load_image(buf);
+	
+		  /* FIXME: this should be cleaner */
+		  ibic->iconbar->changed = 1;
+	          e_iconbar_save_out_final (ibic->iconbar);
+		}
+  	      }
+	   }
+	   break;
+#endif
+	 }
+	 else if (e_file_can_exec (&ic->stat))
+	 {
+	   execs = evas_list_append (execs, ic);
+	 }
+       }
+    }
+  for (l = execs; l; l = l->next)
+    {
+      /* add exec icons */
+      E_Icon *ic;
+      E_Iconbar_Icon *ibic;
+      char buf[PATH_MAX];
+
+      D("now add the icon\n");
+
+      if (l->data)
+        ic = l->data;
+      else
+	D_RETURN;
+
+      ibic = NEW(E_Iconbar_Icon, 1);
+      ZERO(ibic, E_Iconbar_Icon, 1);
+
+      e_object_init (E_OBJECT (ibic),
+		     (E_Cleanup_Func) e_iconbar_icon_cleanup);
+      if (v->iconbar)
+        ibic->iconbar = v->iconbar;
+      else
+	 D("EEEEEEEEEEEEK: how the hell did this happen?");
+
+      D("x: %i, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x, v->dir,  ibic->iconbar->view->dir);
+       
+      if (!ic->info.icon) D_RETURN_(NULL);
+      snprintf(buf, PATH_MAX, "%s:/icon/normal", ic->info.icon);
+      ibic->image = evas_add_image_from_file (v->evas, buf);
+      ibic->imlib_image = imlib_load_image (buf);
+      ibic->image_path = strdup (ic->info.icon);
+      snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir, ic->file);
+      ibic->exec = strdup(buf);
+
+      evas_set_clip (v->evas, ibic->image, v->iconbar->clip);
+      evas_set_color (v->evas, ibic->image, 255, 255, 255, 128);
+      evas_set_layer (v->evas, ibic->image, 11000);
+      evas_show(v->evas, ibic->image);
+      evas_callback_add (v->evas, ibic->image, CALLBACK_MOUSE_IN,
+			 ib_mouse_in, ibic);
+      evas_callback_add (v->evas, ibic->image, CALLBACK_MOUSE_OUT,
+			 ib_mouse_out, ibic);
+      evas_callback_add (v->evas, ibic->image, CALLBACK_MOUSE_DOWN,
+			 ib_mouse_down, ibic);
+      evas_callback_add (v->evas, ibic->image, CALLBACK_MOUSE_UP,
+			 ib_mouse_up, ibic);
+      evas_callback_add (v->evas, ibic->image, CALLBACK_MOUSE_MOVE,
+			 ib_mouse_move, ibic);
+
+      ibic->iconbar->icons = evas_list_append(ibic->iconbar->icons, ibic);
+
+      /* this adds the icon to the correct place in the list and saves */
+      e_iconbar_icon_move(ibic, v->iconbar->dnd.x, v->iconbar->dnd.y);
+    }
+
 }
 
 
@@ -1658,8 +1808,8 @@ ib_child_handle (Ecore_Event * ev)
 		  e_exec_broadcast_cb_del (ic->launch_id_cb);
 		  ic->launch_id_cb = NULL;
 		}
-	      evas_set_color (ic->iconbar->view->evas, ic->image, 255, 255,
-			      255, 128);
+	      evas_set_color (ic->iconbar->view->evas, ic->image, 255,
+			      255, 255, 128);
 	      ic->iconbar->view->changed = 1;
 	      D_RETURN;
 	    }

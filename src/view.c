@@ -1685,7 +1685,8 @@ e_view_file_changed(int id, char *file)
    E_View *v;
 
    D_ENTER;
-   
+  
+   D("file changed!!!\n"); 
    if (!file) D_RETURN;
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
@@ -2846,7 +2847,7 @@ e_dnd_drop_position(Ecore_Event * ev)
    Evas_List l;
    
    D_ENTER;
-   
+  
    e = ev->event;
    for (l = views; l; l = l->next)
      {
@@ -2855,6 +2856,19 @@ e_dnd_drop_position(Ecore_Event * ev)
 	v = l->data;
 	if (e->win == v->win.base)
 	  {
+	     if (v->iconbar)
+	     {
+		if (e->x >= v->iconbar->icon_area.x && 
+		    e->x <= v->iconbar->icon_area.x + v->iconbar->icon_area.w &&
+		    e->y >= v->iconbar->icon_area.y &&
+		    e->y <= v->iconbar->icon_area.y + v->iconbar->icon_area.h)
+		{
+		   v->iconbar->dnd.x = e->x;
+		   v->iconbar->dnd.y = e->y;
+		   dnd_pending_mode = E_DND_ICONBAR_ADD;
+		}
+	     }
+
 	    /* send XdndStatus (even to same view, we'll */
 	    /* ignore actions within the same view later */
 	    /* during the drop action.) */
@@ -3034,6 +3048,10 @@ e_dnd_handle_drop( E_View *v )
 		  efsd_ops(0) );
 	dnd_pending_mode = E_DND_DELETED;
 	break;
+      case E_DND_ICONBAR_ADD:
+	e_iconbar_dnd_add_files(v, v_dnd_source, out, dnd_files );
+        /*FIXME: should this be ICONBAR_ADDED?*/
+	dnd_pending_mode = E_DND_NONE; 
       default:
 	/* nothing yet */
 	break;

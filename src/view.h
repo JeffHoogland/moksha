@@ -30,7 +30,8 @@ typedef enum {
   E_DND_LINK,
   E_DND_ASK,
   E_DND_DELETED,
-  E_DND_COPIED
+  E_DND_COPIED,
+  E_DND_ICONBAR_ADD
 } E_dnd_enum ;
 
 struct _E_View
