@@ -1,71 +1,48 @@
-# Note that this is NOT a relocatable package
-%define ver      0.17.0_pre10
-%define rel      NOT_RELEASE_1
-%define prefix   /usr/local
-
-Summary: enlightenment
+Summary: The Enlightenment window manager
 Name: enlightenment
-Version: %ver
-Release: %rel
-Copyright: BSD
-Group: System Environment/Desktops
-Source: ftp://ftp.enlightenment.org/pub/enlightenment/enlightenment-%{ver}.tar.gz
-BuildRoot: /var/tmp/enlightenment-root
-Packager: The Rasterman <raster@rasterman.com>
+Version: 0.17.0_pre10
+Release: NOT_RELEASE_1.%(date '+%Y%m%d')
+License: BSD
+Group: User Interface/Desktops
 URL: http://www.enlightenment.org/
-BuildRequires: evas-devel
-BuildRequires: edje-devel
-BuildRequires: ecore-devel
-BuildRequires: embryo-devel
-BuildRequires: eet-devel
-Requires: edje
-Requires: evas
-Requires: ecore
-Requires: embryo
-Requires: eet
-
-Docdir: %{prefix}/doc
+Source: ftp://ftp.enlightenment.org/pub/enlightenment/%{name}-%{version}.tar.gz
+Packager: %{?_packager:%{_packager}}%{!?_packager:Michael Jennings <mej@eterm.org>}
+Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project (http://www.enlightenment.org/)}
+Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
+Prefix: %{_prefix}
+#BuildSuggests: xorg-x11-devel
+BuildRequires: libjpeg-devel XFree86-devel eet-devel embryo-devel
+BuildRequires: evas-devel edb-devel edje-devel imlib2-devel ecore-devel
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
-
-Enlightenment is a window manager
+Enlightenment is a window manager.
 
 %prep
-rm -rf $RPM_BUILD_ROOT
-
 %setup -q
 
 %build
-./configure --prefix=%prefix
-
-if [ "$SMP" != "" ]; then
-  (make "MAKE=make -k -j $SMP"; exit 0)
-  make
-else
-  make
-fi
-###########################################################################
+%{configure} --prefix=%{_prefix}
+%{__make} %{?_smp_mflags} %{?mflags}
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+%{__make} %{?mflags_install} DESTDIR=$RPM_BUILD_ROOT install
+test -x `which doxygen` && sh gendoc || :
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 
 %postun
+/sbin/ldconfig
 
 %files
-%defattr(-,root,root)
-%attr(755,root,root) %{prefix}/lib/enlightenment
-%attr(755,root,root) %{prefix}/bin/*
-%attr(755,root,root) %{prefix}/share/enlightenment
-%doc AUTHORS
-%doc COPYING
-%doc COPYING-PLAIN
-%doc README
+%defattr(-, root, root)
+%doc AUTHORS COPYING COPYING-PLAIN README
+%{_bindir}/*
+%{_libdir}/%{name}
+%{_datadir}/%{name}
 
 %changelog
-* Sat Jun 23 2001 The Rasterman <raster@rasterman.com>
-- Created spec file

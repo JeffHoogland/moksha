@@ -15,31 +15,35 @@ AC_C_CONST
 AM_ENABLE_SHARED
 AM_PROG_LIBTOOL
 
-if test "x${exec_prefix}" = "xNONE"; then
-  if test "x${prefix}" = "xNONE"; then
-    bindir="${ac_default_prefix}/bin";
+if test "x${bindir}" = 'x${exec_prefix}/bin'; then
+  if test "x${exec_prefix}" = "xNONE"; then
+    if test "x${prefix}" = "xNONE"; then
+      bindir="${ac_default_prefix}/bin";
+    else
+      bindir="${prefix}/bin";
+    fi
   else
-    bindir="${prefix}/bin";
-  fi
-else
-  if test "x${prefix}" = "xNONE"; then
-    bindir="${ac_default_prefix}/bin";
-  else
-    bindir="${prefix}/bin";
+    if test "x${prefix}" = "xNONE"; then
+      bindir="${ac_default_prefix}/bin";
+    else
+      bindir="${prefix}/bin";
+    fi
   fi
 fi
 
-if test "x${exec_prefix}" = "xNONE"; then
-  if test "x${prefix}" = "xNONE"; then
-    libdir="${ac_default_prefix}/lib";
+if test "x${libdir}" = 'x${exec_prefix}/lib'; then
+  if test "x${exec_prefix}" = "xNONE"; then
+    if test "x${prefix}" = "xNONE"; then
+      libdir="${ac_default_prefix}/lib";
+    else
+      libdir="${prefix}/lib";
+    fi
   else
-    libdir="${prefix}/lib";
-  fi
-else
-  if test "x${prefix}" = "xNONE"; then
-    libdir="${ac_default_prefix}/lib";
-  else
-    libdir="${prefix}/lib";
+    if test "x${prefix}" = "xNONE"; then
+      libdir="${ac_default_prefix}/lib";
+    else
+      libdir="${prefix}/lib";
+    fi
   fi
 fi
 
