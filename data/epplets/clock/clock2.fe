@@ -88,8 +88,6 @@ object backgroundObj;
 /* create a new epplet */
 epp = new Epplet();
 
-/* move the epplet to desired position*/
-epp.move(epp.getViewW() - 250, 2);
 epp.resize(100, 30); 
 
 /* create background image object for clock */
@@ -101,16 +99,16 @@ backgroundObj.show();
 
 /* create text object for clock display */
 timeObj = new EvasObject(epp);
-timeObj.addText("borzoib",6,"Hi");
-timeObj.move(epp.getX()+epp.getW()-40, epp.getY()+4);
+timeObj.addText("borzoib",8,"");
+timeObj.move(epp.getX()+epp.getW()-33, epp.getY()+6);
 timeObj.setLayer(9999);
 timeObj.setColor(0,0,0,140);
 timeObj.show();
 
 /* create text object for date display */
 dateObj = new EvasObject(epp);
-dateObj.addText("borzoib",6,"Hello");
-dateObj.move(epp.getX()+epp.getW()-60,epp.getY()+12);
+dateObj.addText("borzoib",8,"");
+dateObj.move(epp.getX()+epp.getW()-60,epp.getY()+35);
 dateObj.setLayer(9999);
 dateObj.setColor(0,0,0,140);
 dateObj.show();
