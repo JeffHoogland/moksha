@@ -11,125 +11,67 @@
 #define DEF_MENUCLICK 0.25
 #endif
 
-char   *e_config_val_desktop_default_background = NULL;
-double  e_config_val_menus_scroll_speed = 1000.0;
-double  e_config_val_menus_fast_mouse_move_thresthold = 500.0;
-double  e_config_val_menus_click_drag_timeout = DEF_MENUCLICK;
-double  e_config_val_framerate = 30.0;
-int     e_config_val_image_cache = 2048;
-int     e_config_val_font_cache = 512;
+E_Config *e_config = NULL;
 
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
 
-static int _e_config_listener_desktop_default_background(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_menus_scroll_speed(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_menus_fast_mouse_move_threshold(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_menus_click_drag_timeout(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_framerate(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_image_cache(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int _e_config_listener_font_cache(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-
 /* local subsystem globals */
 static Ecore_Job *_e_config_save_job = NULL;
+static E_Config_DD *_e_config_edd = NULL;
 
 /* externally accessible functions */
 int
 e_config_init(void)
 {
-   int ret;
-   
-   ecore_config_init("e");
-   
-   ecore_config_string_create
-     ("e.desktop.default.background",
-      PACKAGE_DATA_DIR"/data/themes/default.eet",
-      'b', "default-background",
-      "The default background for desktops without a custom background");
-   ecore_config_float_create_bound
-     ("e.menus.scroll_speed",
-      1000.0, 1.0, 20000.0, 10.0,
-      0, "menus-scroll-speed",
-      "Pixels per second menus scroll around the screen");
-   ecore_config_float_create_bound
-     ("e.menus.fast_mouse_move_threshold",
-      300.0, 1.0, 2000.0, 1.0,
-      0, "menus-scroll-speed",
-      "Pixels per second menus scroll around the screen");
-   ecore_config_float_create_bound
-     ("e.menus.click_drag_timeout",
-      DEF_MENUCLICK, 0.0, 10.0, 0.01,
-      0, "menus-click-drag-timeout",
-      "Seconds after a mouse press when a release will not hide the menu");
-   ecore_config_float_create_bound
-     ("e.framerate",
-      30.0, 1.0, 200.0, 0.1,
-      0, "framerate",
-      "A hint at the framerate (in frames per second) Enlightenment should try and animate at");
-   ecore_config_int_create_bound
-     ("e.image-cache",
-      2048, 0, 32768, 1,
-      0, "image-cache",
-      "The mount of memory (in Kb) to use as a sepculative image cache");
-   ecore_config_int_create_bound
-     ("e.font-cache",
-      512, 0, 4096, 1,
-      0, "font-cache",
-      "The mount of memory (in Kb) to use as a sepculative font cache");
-   
-   ecore_config_load();
-   ret = ecore_config_args_parse();
-   
-   e_config_val_desktop_default_background = 
-     ecore_config_string_get("e.desktop.default.background");
-   ecore_config_listen("e.desktop.default.background",
-		       "e.desktop.default.background",
-		       _e_config_listener_desktop_default_background,
-		       0, NULL);
-   e_config_val_menus_scroll_speed =
-     ecore_config_float_get("e.menus.scroll_speed");
-   ecore_config_listen("e.menus.scroll_speed",
-		       "e.menus.scroll_speed",
-		       _e_config_listener_menus_scroll_speed,
-		       0, NULL);
-   e_config_val_menus_fast_mouse_move_thresthold =
-     ecore_config_float_get("e.menus.fast_mouse_move_threshold");
-   ecore_config_listen("e.menus.fast_mouse_move_threshold",
-		       "e.menus.fast_mouse_move_threshold",
-		       _e_config_listener_menus_fast_mouse_move_threshold,
-		       0, NULL);
-   e_config_val_menus_click_drag_timeout =
-     ecore_config_float_get("e.menus.click_drag_timeout");
-   ecore_config_listen("e.menus.click_drag_timeout",
-		       "e.menus.click_drag_timeout",
-		       _e_config_listener_menus_click_drag_timeout,
-		       0, NULL);
-   e_config_val_framerate =
-     ecore_config_float_get("e.framerate");
-   if (e_config_val_framerate <= 0.0) e_config_val_framerate = 30.0;
-   ecore_config_listen("e.framerate",
-		       "e.framerate",
-		       _e_config_listener_framerate,
-		       0, NULL);
-   e_config_val_image_cache =
-     ecore_config_int_get("e.image-cache");
-   ecore_config_listen("e.image-cache",
-		       "e.image-cache",
-		       _e_config_listener_image_cache,
-		       0, NULL);
-   e_config_val_font_cache =
-     ecore_config_int_get("e.font-cache");
-   ecore_config_listen("e.font-cache",
-		       "e.font-cache",
-		       _e_config_listener_font_cache,
-		       0, NULL);
+   _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);   
+#undef T
+#undef D
+#define T E_Config
+#define D _e_config_edd
+   E_CONFIG_VAL(D, T, desktop_default_background, STR);
+   E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, menus_fast_mouse_move_thresthold, DOUBLE);
+   E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, framerate, DOUBLE);
+   E_CONFIG_VAL(D, T, image_cache, INT);
+   E_CONFIG_VAL(D, T, font_cache, INT);
+
+   e_config = e_config_domain_load("e", _e_config_edd);
+   if (!e_config) e_config = E_NEW(E_Config, 1);
+   if (e_config)
+     {
+	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.eet");
+	e_config->menus_scroll_speed = 1000.0;
+	e_config->menus_fast_mouse_move_thresthold = 300.0;
+	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
+	e_config->framerate = 30.0;
+	e_config->image_cache = 2048;
+	e_config->font_cache = 512;
+     }
+   else
+     return 0;
+   E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
+   E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
+   E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
+   E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
+   E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
+   E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
    return 1;
 }
 
 int
 e_config_shutdown(void)
 {
-   /* FIXME: unset listeners */
+   if (e_config)
+     {
+	E_FREE(e_config->desktop_default_background);
+	E_FREE(e_config);
+     }
+   if (_e_config_edd)
+     {
+	E_CONFIG_DD_FREE(_e_config_edd);
+     }
    return 1;
 }
 
@@ -141,7 +83,7 @@ e_config_save(void)
 	ecore_job_del(_e_config_save_job);
 	_e_config_save_job = NULL;
      }
-   return ecore_config_save();
+   return e_config_domain_save("e", _e_config_edd, e_config);
 }
 
 void
@@ -151,98 +93,53 @@ e_config_save_queue(void)
    _e_config_save_job = ecore_job_add(_e_config_save_cb, NULL);
 }
 
+void *
+e_config_domain_load(char *domain, E_Config_DD *edd)
+{
+   Eet_File *ef;
+   char buf[4096];
+   char *homedir;
+   void *data = NULL;
+   
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);
+   E_FREE(homedir);
+   ef = eet_open(buf, EET_FILE_MODE_READ);
+   if (ef)
+     {
+	data = eet_data_read(ef, edd, "config");
+	eet_close(ef);
+     }
+   return data;
+}
+
+int
+e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
+{
+   Eet_File *ef;
+   char buf[4096];
+   char *homedir;
+   int ok = 0;
+   
+   /* FIXME: check for other sessions fo E runing */
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);
+   E_FREE(homedir);
+   ef = eet_open(buf, EET_FILE_MODE_WRITE);
+   if (ef)
+     {
+	ok = eet_data_write(ef, edd, "config", data, 0);
+	eet_close(ef);
+     }
+   return ok;
+}
+
 /* local subsystem functions */
 static void
 _e_config_save_cb(void *data)
 {
-   _e_config_save_job = NULL;
    e_module_save_all();
-   e_config_save();
-}
 
-static int
-_e_config_listener_desktop_default_background(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   Evas_List *managers, *l;
-   
-   if (e_config_val_desktop_default_background)
-     free(e_config_val_desktop_default_background);
-   e_config_val_desktop_default_background = 
-     ecore_config_string_get("e.desktop.default.background");
-   managers = e_manager_list();
-   for (l = managers; l; l = l->next)
-     {
-	Evas_List *ll;
-	E_Manager *man;
-	
-	man = l->data;
-	for (ll = man->containers; ll; ll = ll->next)
-	  {
-	     E_Container *con;
-	     
-	     con = ll->data;
-	     e_container_bg_reconfigure(con);
-	  }
-     }
-   return 1;
-}
-
-static int
-_e_config_listener_menus_scroll_speed(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_menus_scroll_speed =
-     ecore_config_float_get("e.menus.scroll_speed");
-   return 1;
-}
-
-static int
-_e_config_listener_menus_fast_mouse_move_threshold(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_menus_fast_mouse_move_thresthold =
-     ecore_config_float_get("e.menus.fast_mouse_move_threshold");
-   return 1;
-}
-
-static int
-_e_config_listener_menus_click_drag_timeout(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_menus_click_drag_timeout =
-     ecore_config_float_get("e.menus.click_drag_timeout");
-   return 1;
-}
-
-static int
-_e_config_listener_framerate(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_framerate =
-     ecore_config_float_get("e.framerate");
-   if (e_config_val_framerate <= 0.0) e_config_val_framerate = 30.0;
-   edje_frametime_set(1.0 / e_config_val_framerate);
-   return 1;
-}
-
-static int
-_e_config_listener_image_cache(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_image_cache =
-     ecore_config_int_get("e.image-cache");
-   ecore_config_listen("e.image-cache",
-		       "e.image-cache",
-		       _e_config_listener_image_cache,
-		       0, NULL);
-   e_canvas_recache();
-   return 1;
-}
-
-static int
-_e_config_listener_font_cache(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   e_config_val_font_cache =
-     ecore_config_int_get("e.font-cache");
-   ecore_config_listen("e.font-cache",
-		       "e.font-cache",
-		       _e_config_listener_font_cache,
-		       0, NULL);
-   e_canvas_recache();
-   return 1;
+   e_config_domain_save("e", _e_config_edd, e_config);
+   _e_config_save_job = NULL;
 }

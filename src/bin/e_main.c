@@ -161,8 +161,8 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_config_shutdown);
    
-   /* setup edje to animate @ e_config_val_framerate frames per sec. */
-   edje_frametime_set(1.0 / e_config_val_framerate);
+   /* setup edje to animate @ e_config->framerate frames per sec. */
+   edje_frametime_set(1.0 / e_config->framerate);
    e_canvas_recache();
    
    /* setup init status window/screen */
@@ -375,7 +375,8 @@ _e_main_dirs_init(void)
 	"%s/.e/e/applications/all",
 	"%s/.e/e/applications/favorite",
 	"%s/.e/e/applications/bar",
-	"%s/.e/e/modules"
+	"%s/.e/e/modules",
+	"%s/.e/e/config"
      };
    int i;
    

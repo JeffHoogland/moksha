@@ -12,8 +12,8 @@ e_canvas_add(Ecore_Evas *ee)
    
    _e_canvases = evas_list_prepend(_e_canvases, ee);
    e = ecore_evas_get(ee);
-   evas_image_cache_set(e, e_config_val_image_cache * 1024);
-   evas_font_cache_set(e, e_config_val_font_cache * 1024);
+   evas_image_cache_set(e, e_config->image_cache * 1024);
+   evas_font_cache_set(e, e_config->font_cache * 1024);
 //   evas_image_cache_flush(e);
 //   evas_image_cache_reload(e);
 }
@@ -36,8 +36,8 @@ e_canvas_recache(void)
 	
 	ee = l->data;
 	e = ecore_evas_get(ee);
-	evas_image_cache_set(e, e_config_val_image_cache * 1024);
-	evas_font_cache_set(e, e_config_val_font_cache * 1024);
+	evas_image_cache_set(e, e_config->image_cache * 1024);
+	evas_font_cache_set(e, e_config->font_cache * 1024);
      }
 }
 

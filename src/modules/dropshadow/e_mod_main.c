@@ -4,7 +4,6 @@
 /* TODO List:
  * 
  * * bug in shadow_x < 0 and shadow_y < 0 needs to be fixed (not urgent though)
- * * bug in ecore_config ? when we change shadow darkness in examine, _ds_config_listen_shadow_darkness does not get called - only when we change other values like x, y, blur and when it gets called we are not getting the value set in examine - always getting 0.5
  * * add alpha-pixel only pixel space to image objects in evas and make use of it to save cpu and ram
  * * when blurring ALSO cut out the overlayed rect frrom the blur algorithm
  * * handle shaped windows efficiently (as possible).
@@ -14,10 +13,6 @@
 /* module private routines */
 static Dropshadow *_ds_init(E_Module *m);
 static void        _ds_shutdown(Dropshadow *ds);
-static int         _ds_config_listen_shadow_x(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int         _ds_config_listen_shadow_y(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int         _ds_config_listen_blur(const char *key, const Ecore_Config_Type type, const int tag, void *data);
-static int         _ds_config_listen_shadow_darkness(const char *key, const Ecore_Config_Type type, const int tag, void *data);
 static E_Menu     *_ds_config_menu_new(Dropshadow *ds);
 static void        _ds_menu_very_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -108,10 +103,12 @@ save(E_Module *m)
    
    ds = m->data;
    if (!ds) return;
-   ecore_config_int_set("e.module.dropshadow.shadow.x", ds->conf.shadow_x);
-   ecore_config_int_set("e.module.dropshadow.shadow.y", ds->conf.shadow_y);
-   ecore_config_int_set("e.module.dropshadow.blur", ds->conf.blur_size);
-   ecore_config_float_set("e.module.dropshadow.shadow.darkness", ds->conf.shadow_darkness);
+   printf("SAVE: %i %i, %i, %3.3f\n", 
+	 ds->conf->shadow_x,
+	 ds->conf->shadow_y,
+	 ds->conf->blur_size,
+	 ds->conf->shadow_darkness);
+   e_config_domain_save("module.dropshadow", ds->conf_edd, ds->conf);
    return 1;
 }
 
@@ -147,49 +144,29 @@ _ds_init(E_Module *m)
    if (!ds) return  NULL;
 
    ds->module = m;
-   ecore_config_int_create_bound
-     ("e.module.dropshadow.shadow.x",
-      4, -200, 200, 1,
-      0, "",
-      "Dropshadow module: Shadow X offset");
-   ecore_config_int_create_bound
-     ("e.module.dropshadow.shadow.y",
-      4, -200, 200, 1,
-      0, "",
-      "Dropshadow module: Shadow Y offset");
-   ecore_config_int_create_bound
-     ("e.module.dropshadow.blur",
-      10, 1, 120, 1,
-      0, "",
-      "Dropshadow module: Shadow blur radius");   
-   ecore_config_float_create_bound
-     ("e.module.dropshadow.shadow.darkness",
-      0.5, 0.0, 1.0, 0.001,
-      0, "",
-      "Dropshadow module: Shadow darkness");
-
-   ecore_config_load();
+   ds->conf_edd = E_CONFIG_DD_NEW("Dropshadow_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D ds->conf_edd
+   E_CONFIG_VAL(D, T, shadow_x, INT);
+   E_CONFIG_VAL(D, T, shadow_y, INT);
+   E_CONFIG_VAL(D, T, blur_size, INT);
+   E_CONFIG_VAL(D, T, shadow_darkness, DOUBLE);
    
-   ds->conf.shadow_x = ecore_config_int_get("e.module.dropshadow.shadow.x");
-   ecore_config_listen("e.module.dropshadow.shadow.x",
-		       "e.module.dropshadow.shadow.x",
-		       _ds_config_listen_shadow_x,
-		       0, ds);
-   ds->conf.shadow_y = ecore_config_int_get("e.module.dropshadow.shadow.y");
-   ecore_config_listen("e.module.dropshadow.shadow.y",
-		       "e.module.dropshadow.shadow.y",
-		       _ds_config_listen_shadow_y,
-		       0, ds);
-   ds->conf.blur_size = ecore_config_int_get("e.module.dropshadow.blur");
-   ecore_config_listen("e.module.dropshadow.blur",
-		       "e.module.dropshadow.blur",
-		       _ds_config_listen_blur,
-		       0, ds);
-   ds->conf.shadow_darkness = ecore_config_float_get("e.module.dropshadow.shadow.darkness");
-   ecore_config_listen("e.module.dropshadow.shadow.darkness",
-		       "e.module.dropshadow.shadow.darkness",
-		       _ds_config_listen_shadow_darkness,
-		       0, ds);
+   ds->conf = e_config_domain_load("module.dropshadow", ds->conf_edd);
+   if (!ds->conf)
+     {
+	ds->conf = E_NEW(Config, 1);
+	ds->conf->shadow_x = 4;
+	ds->conf->shadow_y = 4;
+	ds->conf->blur_size = 10;
+	ds->conf->shadow_darkness = 0.5;
+     }
+   E_CONFIG_LIMIT(ds->conf->shadow_x, -200, 200);
+   E_CONFIG_LIMIT(ds->conf->shadow_y, -200, 200);
+   E_CONFIG_LIMIT(ds->conf->blur_size, 1, 120);
+   E_CONFIG_LIMIT(ds->conf->shadow_darkness, 0.0, 1.0);
    
    _ds_blur_init(ds);
    
@@ -216,18 +193,8 @@ _ds_init(E_Module *m)
 static void
 _ds_shutdown(Dropshadow *ds)
 {
-   ecore_config_deaf("e.module.dropshadow.shadow.x",
-		     "e.module.dropshadow.shadow.x",
-		     _ds_config_listen_shadow_x);
-   ecore_config_deaf("e.module.dropshadow.shadow.y",
-		     "e.module.dropshadow.shadow.y",
-		     _ds_config_listen_shadow_y);
-   ecore_config_deaf("e.module.dropshadow.blur",
-		     "e.module.dropshadow.blur",
-		     _ds_config_listen_blur);
-   ecore_config_deaf("e.module.dropshadow.shadow.darkness",
-		     "e.module.dropshadow.shadow.darkness",
-		     _ds_config_listen_shadow_darkness);
+   free(ds->conf);
+   E_CONFIG_DD_FREE(ds->conf_edd);
    while (ds->cons)
      {
 	E_Container *con;
@@ -248,62 +215,6 @@ _ds_shutdown(Dropshadow *ds)
    free(ds);
 }
 
-static int
-_ds_config_listen_shadow_x(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   Dropshadow *ds;
-   int v;
-   
-   ds = data;
-   v = ecore_config_int_get("e.module.dropshadow.shadow.x");
-   if (v < -200) v = -200;
-   else if (v > 200) v = 200;
-   _ds_config_shadow_xy_set(ds, v, ds->conf.shadow_y);
-   return 1;
-}
-
-static int
-_ds_config_listen_shadow_y(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   Dropshadow *ds;
-   int v;
-   
-   ds = data;
-   v = ecore_config_int_get("e.module.dropshadow.shadow.y");
-   if (v < -200) v = -200;
-   else if (v > 200) v = 200;
-   _ds_config_shadow_xy_set(ds, ds->conf.shadow_x, v);
-   return 1;
-}
-
-static int
-_ds_config_listen_blur(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   Dropshadow *ds;
-   int v;
-   
-   ds = data;
-   v = ecore_config_int_get("e.module.dropshadow.blur");
-   if (v < 1) v = 1;
-   else if (v > 120) v= 120;
-   _ds_config_blur_set(ds, v);
-   return 1;
-}
-
-static int
-_ds_config_listen_shadow_darkness(const char *key, const Ecore_Config_Type type, const int tag, void *data)
-{
-   Dropshadow *ds;
-   double v;
-   
-   ds = data;
-   v = ecore_config_float_get("e.module.dropshadow.shadow.darkness");
-   if (v < 0.0) v = 0.0;
-   else if (v > 1.0) v = 1.0;
-   _ds_config_darkness_set(ds, v);
-   return 1;
-}
-
 static E_Menu *
 _ds_config_menu_new(Dropshadow *ds)
 {
@@ -319,7 +230,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf.blur_size == 80) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->blur_size == 80) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_fuzzy, ds);
 
    mi = e_menu_item_new(mn);
@@ -328,7 +239,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf.blur_size == 40) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->blur_size == 40) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_fuzzy, ds);
 
    mi = e_menu_item_new(mn);
@@ -337,7 +248,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf.blur_size == 20) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->blur_size == 20) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_medium, ds);
    
    mi = e_menu_item_new(mn);
@@ -346,7 +257,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf.blur_size == 10) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->blur_size == 10) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_sharp, ds);
    
    mi = e_menu_item_new(mn);
@@ -355,7 +266,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf.blur_size == 5) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->blur_size == 5) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_sharp, ds);
    
    mi = e_menu_item_new(mn);
@@ -367,7 +278,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf.shadow_darkness == 1.0) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_darkness == 1.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_dark, ds);
 
    mi = e_menu_item_new(mn);
@@ -376,7 +287,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf.shadow_darkness == 0.75) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_darkness == 0.75) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_dark, ds);
 
    mi = e_menu_item_new(mn);
@@ -385,7 +296,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf.shadow_darkness == 0.5) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_darkness == 0.5) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_light, ds);
 
    mi = e_menu_item_new(mn);
@@ -394,7 +305,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf.shadow_darkness == 0.25) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_darkness == 0.25) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_light, ds);
    
    mi = e_menu_item_new(mn);
@@ -406,7 +317,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 32) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 32) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_far, ds);
 
    mi = e_menu_item_new(mn);
@@ -415,7 +326,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 16) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 16) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_far, ds);
 
    mi = e_menu_item_new(mn);
@@ -424,7 +335,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 8) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 8) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_close, ds);
 
    mi = e_menu_item_new(mn);
@@ -433,7 +344,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 4) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 4) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_very_close, ds);
    
    mi = e_menu_item_new(mn);
@@ -442,7 +353,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 2) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 2) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_extremely_close, ds);
    
    mi = e_menu_item_new(mn);
@@ -451,7 +362,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf.shadow_x == 0) e_menu_item_toggle_set(mi, 1);
+   if (ds->conf->shadow_x == 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_under, ds);
    return mn;
 }
@@ -701,7 +612,7 @@ _ds_shadow_obj_init(Shadow *sh)
 	evas_object_resize(sh->object[i], 0, 0);
 	evas_object_color_set(sh->object[i],
 			      255, 255, 255, 
-			      255 * sh->ds->conf.shadow_darkness);
+			      255 * sh->ds->conf->shadow_darkness);
      }
 }
 
@@ -767,23 +678,23 @@ _ds_shadow_move(Shadow *sh, int x, int y)
    if (sh->square)
      {
 	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
-			 sh->y + sh->ds->conf.shadow_y - sh->ds->conf.blur_size);
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
 	evas_object_move(sh->object[1],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
 			 sh->y);
 	evas_object_move(sh->object[2],
 			 sh->x + sh->w, 
 			 sh->y);
 	evas_object_move(sh->object[3],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
 			 sh->y + sh->h);
      }
    else
      {
 	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
-			 sh->y + sh->ds->conf.shadow_y - sh->ds->conf.blur_size); 
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
      }
 }
 
@@ -836,8 +747,8 @@ _ds_shadow_recalc(Shadow *sh)
 	Evas_List *l;
 	
 	sh->square = 0;
-	pix_w = sh->w + (sh->ds->conf.blur_size * 2);
-	pix_h = sh->h + (sh->ds->conf.blur_size * 2);
+	pix_w = sh->w + (sh->ds->conf->blur_size * 2);
+	pix_h = sh->h + (sh->ds->conf->blur_size * 2);
 	pix = calloc(1, pix_w * pix_h * sizeof(unsigned char));
 
 	/* for every rect in the shape - fill it */
@@ -850,10 +761,10 @@ _ds_shadow_recalc(Shadow *sh)
 	  }
 	/* FIXME: need to find an optimal "inner rect" fromt he above rect list */
 /*	     
-	sx = sh->ds->conf.blur_size;
-	sy = sh->ds->conf.blur_size;
-	sxx = pix_w - sh->ds->conf.blur_size;
-	syy = pix_h - sh->ds->conf.blur_size;
+	sx = sh->ds->conf->blur_size;
+	sy = sh->ds->conf->blur_size;
+	sxx = pix_w - sh->ds->conf->blur_size;
+	syy = pix_h - sh->ds->conf->blur_size;
 */
 	sx = 0;
 	sy = 0;
@@ -861,15 +772,15 @@ _ds_shadow_recalc(Shadow *sh)
 	syy = 0;
 	     
 	_ds_gauss_blur(pix, pix_w, pix_h,
-		       sh->ds->table.gauss, sh->ds->conf.blur_size,
+		       sh->ds->table.gauss, sh->ds->conf->blur_size,
 		       sx, sy, sxx, syy);
 	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
-			 sh->y + sh->ds->conf.shadow_y - sh->ds->conf.blur_size); 
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
 	sx = 0;
 	sy = 0;
-	ssw = sh->w + (sh->ds->conf.blur_size * 2);
-	ssh = sh->h + (sh->ds->conf.blur_size * 2);
+	ssw = sh->w + (sh->ds->conf->blur_size * 2);
+	ssh = sh->h + (sh->ds->conf->blur_size * 2);
 	_ds_shadow_object_pixels_set(sh->object[0], pix, pix_w, pix_h,
 				     sx, sy, ssw, ssh);
 	if (evas_object_visible_get(sh->object[0]))
@@ -883,55 +794,55 @@ _ds_shadow_recalc(Shadow *sh)
    else
      {
 	sh->square = 1;
-	pix_w = sh->w + (sh->ds->conf.blur_size * 2);
-	pix_h = sh->h + (sh->ds->conf.blur_size * 2);
+	pix_w = sh->w + (sh->ds->conf->blur_size * 2);
+	pix_h = sh->h + (sh->ds->conf->blur_size * 2);
 	pix = calloc(1, pix_w * pix_h * sizeof(unsigned char));
-	sx = sh->ds->conf.blur_size;
-	sy = sh->ds->conf.blur_size;
-	sxx = pix_w - sh->ds->conf.blur_size;
-	syy = pix_h - sh->ds->conf.blur_size;
+	sx = sh->ds->conf->blur_size;
+	sy = sh->ds->conf->blur_size;
+	sxx = pix_w - sh->ds->conf->blur_size;
+	syy = pix_h - sh->ds->conf->blur_size;
 	_ds_gauss_fill(pix, pix_w, pix_h, 255, sx, sy, sxx, syy);
-	sx = sh->ds->conf.blur_size * 2;
-	sy = sh->ds->conf.blur_size * 2;
-	ssw = pix_w - (sh->ds->conf.blur_size * 4);
-	ssh = pix_h - (sh->ds->conf.blur_size * 4);
+	sx = sh->ds->conf->blur_size * 2;
+	sy = sh->ds->conf->blur_size * 2;
+	ssw = pix_w - (sh->ds->conf->blur_size * 4);
+	ssh = pix_h - (sh->ds->conf->blur_size * 4);
 	_ds_gauss_blur(pix, pix_w, pix_h,
-		       sh->ds->table.gauss, sh->ds->conf.blur_size,
+		       sh->ds->table.gauss, sh->ds->conf->blur_size,
 		       sx, sy, ssw, ssh);
 	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
-			 sh->y + sh->ds->conf.shadow_y - sh->ds->conf.blur_size); 
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size); 
 	evas_object_move(sh->object[1],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
 			 sh->y);
 	evas_object_move(sh->object[2],
 			 sh->x + sh->w, 
 			 sh->y);
 	evas_object_move(sh->object[3],
-			 sh->x + sh->ds->conf.shadow_x - sh->ds->conf.blur_size,
+			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
 			 sh->y + sh->h);
 	sx = 0;
 	sy = 0;
-	ssw = sh->w + (sh->ds->conf.blur_size * 2);
-	ssh = sh->ds->conf.blur_size - sh->ds->conf.shadow_y;
+	ssw = sh->w + (sh->ds->conf->blur_size * 2);
+	ssh = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
 	_ds_shadow_object_pixels_set(sh->object[0], pix, pix_w, pix_h,
 				     sx, sy, ssw, ssh);
 	sx = 0;
-	sy = sh->ds->conf.blur_size - sh->ds->conf.shadow_y;
-	ssw = sh->ds->conf.blur_size - sh->ds->conf.shadow_x;
+	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
+	ssw = sh->ds->conf->blur_size - sh->ds->conf->shadow_x;
 	ssh = sh->h;
 	_ds_shadow_object_pixels_set(sh->object[1], pix, pix_w, pix_h,
 				     sx, sy, ssw, ssh);
-	sx = sh->ds->conf.blur_size - sh->ds->conf.shadow_y + sh->w;
-	sy = sh->ds->conf.blur_size - sh->ds->conf.shadow_y;
-	ssw = sh->ds->conf.blur_size + sh->ds->conf.shadow_x;
+	sx = sh->ds->conf->blur_size - sh->ds->conf->shadow_y + sh->w;
+	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y;
+	ssw = sh->ds->conf->blur_size + sh->ds->conf->shadow_x;
 	ssh = sh->h;
 	_ds_shadow_object_pixels_set(sh->object[2], pix, pix_w, pix_h,
 				     sx, sy, ssw, ssh);
 	sx = 0;
-	sy = sh->ds->conf.blur_size - sh->ds->conf.shadow_y + sh->h;
-	ssw = sh->w + (sh->ds->conf.blur_size * 2);
-	ssh = sh->ds->conf.blur_size + sh->ds->conf.shadow_y;
+	sy = sh->ds->conf->blur_size - sh->ds->conf->shadow_y + sh->h;
+	ssw = sh->w + (sh->ds->conf->blur_size * 2);
+	ssh = sh->ds->conf->blur_size + sh->ds->conf->shadow_y;
 	_ds_shadow_object_pixels_set(sh->object[3], pix, pix_w, pix_h,
 				     sx, sy, ssw, ssh);
 	if (evas_object_visible_get(sh->object[0]))
@@ -1040,8 +951,8 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
    
    if (v < 0.0) v = 0.0;
    else if (v > 1.0) v = 1.0;
-   if (ds->conf.shadow_darkness == v) return;
-   ds->conf.shadow_darkness = v;
+   if (ds->conf->shadow_darkness == v) return;
+   ds->conf->shadow_darkness = v;
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -1051,7 +962,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 	for (i = 0; i < 4; i++)
 	  evas_object_color_set(sh->object[i],
 				255, 255, 255, 
-				255 * ds->conf.shadow_darkness);
+				255 * ds->conf->shadow_darkness);
      }
    e_config_save_queue();
 }
@@ -1061,9 +972,9 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 {
    Evas_List *l;
    
-   if ((ds->conf.shadow_x == x) && (ds->conf.shadow_y == y)) return;
-   ds->conf.shadow_x = x;
-   ds->conf.shadow_y = y;
+   if ((ds->conf->shadow_x == x) && (ds->conf->shadow_y == y)) return;
+   ds->conf->shadow_x = x;
+   ds->conf->shadow_y = y;
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -1080,8 +991,8 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
    Evas_List *l;
    
    if (blur < 0) blur = 0;
-   if (ds->conf.blur_size == blur) return;
-   ds->conf.blur_size = blur;
+   if (ds->conf->blur_size == blur) return;
+   ds->conf->blur_size = blur;
    
    _ds_blur_init(ds);
    for (l = ds->shadows; l; l = l->next)
@@ -1100,17 +1011,17 @@ _ds_blur_init(Dropshadow *ds)
    int i;
 
    if (ds->table.gauss) free(ds->table.gauss);
-   ds->table.gauss_size = (ds->conf.blur_size * 2) - 1;
+   ds->table.gauss_size = (ds->conf->blur_size * 2) - 1;
    ds->table.gauss = calloc(1, ds->table.gauss_size * sizeof(unsigned char));
    
-   ds->table.gauss[ds->conf.blur_size - 1] = 255;
-   for (i = 1; i < (ds->conf.blur_size - 1); i++)
+   ds->table.gauss[ds->conf->blur_size - 1] = 255;
+   for (i = 1; i < (ds->conf->blur_size - 1); i++)
      {
 	double v;
 	
-	v = (double)i / (ds->conf.blur_size - 2);
-	ds->table.gauss[ds->conf.blur_size - 1 + i] =
-	  ds->table.gauss[ds->conf.blur_size - 1 - i] =
+	v = (double)i / (ds->conf->blur_size - 2);
+	ds->table.gauss[ds->conf->blur_size - 1 + i] =
+	  ds->table.gauss[ds->conf->blur_size - 1 - i] =
 	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
 }

@@ -1,8 +1,16 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+typedef struct _Config     Config;
 typedef struct _Dropshadow Dropshadow;
-typedef struct _Shadow Shadow;
+typedef struct _Shadow     Shadow;
+
+struct _Config
+{
+   int shadow_x, shadow_y;
+   int blur_size;
+   double shadow_darkness;
+};
 
 struct _Dropshadow
 {
@@ -10,12 +18,9 @@ struct _Dropshadow
    Evas_List      *shadows;
    Evas_List      *cons;
    E_Before_Idler *idler_before;
-   
-   struct {
-      int shadow_x, shadow_y;
-      int blur_size;
-      double shadow_darkness;
-   } conf;
+
+   E_Config_DD    *conf_edd;
+   Config         *conf;
    
    struct {
       unsigned char *gauss;

@@ -34,18 +34,18 @@ static int reply_expect = 0;
 #define SIMPLE_STR_REQ 1
 #define FULL_FUNC      2
 
-#define REQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
-#define STR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
-#define FNC(opt, desc, param, fn, rep) {opt, desc, param, rep, SIMPLE_FUNC, 0, fn}
+#define OREQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
+#define OSTR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
+#define OFNC(opt, desc, param, fn, rep) {opt, desc, param, rep, SIMPLE_FUNC, 0, fn}
 
 E_IPC_Opt_Handler handlers[] =
 {
-   STR("-module-load", "Load module OPT1 into memory", E_IPC_OP_MODULE_LOAD, 0),
-   STR("-module-unload", "Unload (and disable) module OPT1 from memory", E_IPC_OP_MODULE_UNLOAD, 0),
-   STR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
-   STR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
-   REQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
-   STR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0)
+   OSTR("-module-load", "Load module OPT1 into memory", E_IPC_OP_MODULE_LOAD, 0),
+   OSTR("-module-unload", "Unload (and disable) module OPT1 from memory", E_IPC_OP_MODULE_UNLOAD, 0),
+   OSTR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
+   OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
+   OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
+   OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0)
 };
 
 /* externally accessible functions */

@@ -3,7 +3,7 @@
 
 /* TODO List:
  *
- * fix up a better default x and y
+ * should support proepr resize and move handles in the edje.
  * 
  */
 
@@ -18,8 +18,6 @@ static void    _clock_face_reconfigure(Clock_Face *ef);
 static void    _clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-
-char          *_clock_module_dir;
 
 /* public module routines. all modules must have these */
 void *
@@ -69,10 +67,7 @@ save(E_Module *m)
    Clock *e;
 
    e = m->data;
-   ecore_config_int_set("e.module.clock.x", e->face->fx);
-   ecore_config_int_set("e.module.clock.y", e->face->fy);
-   ecore_config_int_set("e.module.clock.width", e->face->fw);
-   e_config_save_queue();
+   e_config_domain_save("module.clock", e->conf_edd, e->conf);
    return 1;
 }
 
@@ -96,32 +91,35 @@ about(E_Module *m)
 }
 
 /* module private routines */
-static
-Clock *_clock_init(E_Module *m)
+static Clock *
+_clock_init(E_Module *m)
 {
    Clock *e;
-   char buf[4096];
    Evas_List *managers, *l, *l2;
    
    e = calloc(1, sizeof(Clock));
    if (!e) return NULL;
    
-   ecore_config_int_create
-	("e.module.clock.x", 50, 0, "",
-         "Clock module: X start position");
-   ecore_config_int_create
-	("e.module.clock.y", 50, 0, "",
-         "Clock module: Y start position");
-   ecore_config_int_create
-        ("e.module.clock.width", 64, 0, "",
-         "Clock module: Start width");
+   e->conf_edd = E_CONFIG_DD_NEW("Clock_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D e->conf_edd   
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, x, DOUBLE);
+   E_CONFIG_VAL(D, T, y, DOUBLE);
 
-   ecore_config_load();
-
-   e->conf.width = ecore_config_int_get("e.module.clock.width");
-   e->conf.x = ecore_config_int_get("e.module.clock.x");
-   e->conf.y = ecore_config_int_get("e.module.clock.y");
-   _clock_module_dir = e_module_dir_get(m);
+   e->conf = e_config_domain_load("module.clock", e->conf_edd);
+   if (!e->conf)
+     {
+	e->conf = E_NEW(Config, 1);
+	e->conf->width = 64;
+	e->conf->x = 0.0;
+	e->conf->y = 1.0;
+     }
+   E_CONFIG_LIMIT(e->conf->width, 2, 256);
+   E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
+   E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
@@ -152,6 +150,9 @@ Clock *_clock_init(E_Module *m)
 static void
 _clock_shutdown(Clock *e)
 {
+   free(e->conf);
+   E_CONFIG_DD_FREE(e->conf_edd);
+   
    _clock_face_free(e->face);
    free(e);
 }
@@ -190,16 +191,15 @@ _clock_face_init(Clock_Face *ef)
    Evas_List *l;
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
-   char buf[4096];
    
-   ef->fx = ef->clock->conf.x;
-   ef->fy = ef->clock->conf.y;
+   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
+   ef->fx = ef->clock->conf->x * (ww - ef->clock->conf->width);
+   ef->fy = ef->clock->conf->y * (hh - ef->clock->conf->width);
       
    evas_event_freeze(ef->evas);
    o = edje_object_add(ef->evas);
    ef->clock_object = o;
 
-   snprintf(buf, sizeof(buf), "%s/default.eet", _clock_module_dir);
    edje_object_file_set(o,
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
@@ -237,20 +237,21 @@ _clock_face_free(Clock_Face *ef)
 static void
 _clock_face_reconfigure(Clock_Face *ef)
 {
-   Evas_Coord minw, minh, maxw, maxh;
+   Evas_Coord minw, minh, maxw, maxh, ww, hh;
 
    edje_object_size_min_calc(ef->clock_object, &minw, &maxh);
    edje_object_size_max_get(ef->clock_object, &maxw, &minh);
-   ef->fx = ef->clock->conf.x;
-   ef->fy = ef->clock->conf.y;
-   ef->fw = ef->clock->conf.width;
+   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
+   ef->fx = ef->clock->conf->x * (ww - ef->clock->conf->width);
+   ef->fy = ef->clock->conf->y * (hh - ef->clock->conf->width);
+   ef->fw = ef->clock->conf->width;
    ef->minsize = minw;
    ef->maxsize = maxw;
 
-   evas_object_move(ef->clock_object, ef->clock->conf.x, ef->clock->conf.y);
-   evas_object_resize(ef->clock_object, ef->clock->conf.width, ef->clock->conf.width);
-   evas_object_move(ef->event_object, ef->clock->conf.x, ef->clock->conf.y);
-   evas_object_resize(ef->event_object, ef->clock->conf.width, ef->clock->conf.width);
+   evas_object_move(ef->clock_object, ef->fx, ef->fy);
+   evas_object_resize(ef->clock_object, ef->clock->conf->width, ef->clock->conf->width);
+   evas_object_move(ef->event_object, ef->fx, ef->fy);
+   evas_object_resize(ef->event_object, ef->clock->conf->width, ef->clock->conf->width);
 }
 
 static void
@@ -284,11 +285,16 @@ _clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    Clock_Face *ef;
+   Evas_Coord ww, hh;
    
    ev = event_info;
    ef = data;
    ef->move = 0;
    ef->resize = 0;
+   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
+   ef->clock->conf->x = (double)ef->fx / (double)(ww - ef->clock->conf->width);
+   ef->clock->conf->y = (double)ef->fy / (double)(hh - ef->clock->conf->width);
+   e_config_save_queue();
 }
 
 static void
@@ -297,6 +303,7 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    Evas_Event_Mouse_Move *ev;
    Clock_Face *ef;
    Evas_Coord x, y, w, h, cx, cy, sw, sh;
+   
    evas_pointer_canvas_xy_get(e, &cx, &cy);
    evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
 

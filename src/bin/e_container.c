@@ -77,7 +77,7 @@ e_container_new(E_Manager *man)
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, con->w, con->h);
 	edje_object_file_set(o,
-			     e_config_val_desktop_default_background,
+			     e_config->desktop_default_background,
 			     "desktop/background");
 	evas_object_show(o);
 	
@@ -171,7 +171,7 @@ e_container_bg_reconfigure(E_Container *con)
    o = con->bg_object;
    evas_object_hide(o);
    edje_object_file_set(o,
-			e_config_val_desktop_default_background,
+			e_config->desktop_default_background,
 			"desktop/background");
    evas_object_layer_set(o, -1);
    evas_object_show(o);

@@ -1,17 +1,23 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+typedef struct _Config     Config;
 typedef struct _Clock      Clock;
 typedef struct _Clock_Face Clock_Face;
+
+struct _Config
+{
+   int width;
+   double x, y;
+};
 
 struct _Clock
 {
    E_Menu      *config_menu;
    Clock_Face *face;
-   struct {
-      int       width;
-      int       x, y;
-   } conf;
+   
+   E_Config_DD *conf_edd;
+   Config      *conf;
 };
 
 struct _Clock_Face

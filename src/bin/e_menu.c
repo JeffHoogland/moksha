@@ -1913,7 +1913,7 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
    if (ev->win != _e_menu_win) return 1;
    t = ecore_time_get();
    if ((_e_menu_activate_time != 0.0) && 
-       ((t - _e_menu_activate_time) < e_config_val_menus_click_drag_timeout))
+       ((t - _e_menu_activate_time) < e_config->menus_click_drag_timeout))
      return 1;
    ret = _e_menu_active_call();
    if (ret == 1)
@@ -1938,7 +1938,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
-   fast_move_threshold = e_config_val_menus_fast_mouse_move_thresthold;
+   fast_move_threshold = e_config->menus_fast_mouse_move_thresthold;
    dx = ev->x - _e_menu_x;
    dy = ev->y - _e_menu_y;
    d = (dx * dx) + (dy * dy);
@@ -2023,7 +2023,7 @@ _e_menu_cb_scroll_timer(void *data)
    double spd;
    
    t = ecore_time_get();
-   spd = e_config_val_menus_scroll_speed;
+   spd = e_config->menus_scroll_speed;
    dt = t - _e_menu_scroll_start;
    _e_menu_scroll_start = t;
    dx = 0;

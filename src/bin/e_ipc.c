@@ -171,32 +171,33 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 	break;
       case E_IPC_OP_BG_SET:
 	  {
-	    char *file;
-	    char *valstr;
-	    Evas_List *cl;
-	    int cont;
-	              
-
-            file = malloc(e->size + 1);
-            file[e->size] = 0;
-            memcpy(file, e->data, e->size);
-
-	    valstr=strdup("desktop/background");
-	    cl=edje_file_collection_list(file);
-            cont=1;
-	    while(cl && cont)
-             {
-                if(!strcmp(cl->data,valstr))
-		{
-		  cont=0;
-		  ecore_config_string_set("e.desktop.default.background", file);
-		}
-		else
-		 cl++;
-	     }
-	    edje_file_collection_list_free(cl);
-	    free(valstr);
-            free(file);
+	     char *file;
+	     char *valstr;
+	     Evas_List *managers, *l;
+	     int cont;
+	     
+	     file = malloc(e->size + 1);
+	     file[e->size] = 0;
+	     memcpy(file, e->data, e->size);
+	     E_FREE(e_config->desktop_default_background);
+	     e_config->desktop_default_background = file;
+	     
+	     managers = e_manager_list();
+	     for (l = managers; l; l = l->next)
+	       {
+		  Evas_List *ll;
+		  E_Manager *man;
+		  
+		  man = l->data;
+		  for (ll = man->containers; ll; ll = ll->next)
+		    {
+		       E_Container *con;
+		       
+		       con = ll->data;
+		       e_container_bg_reconfigure(con);
+		    }
+	       }
+	     e_config_save_queue();
           }
       default:
 	break;
