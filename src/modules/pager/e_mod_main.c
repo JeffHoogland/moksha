@@ -513,8 +513,8 @@ _pager_window_move(Pager *pager, Pager_Win *win)
 
    evas_object_resize(win->obj, win->border->w * scalex, win->border->h * scaley);
    evas_object_move(win->obj,
-		    pager->fx + (win->owner->xpos * pager->fw) + (win->border->x * scalex),
-		    pager->fy + (win->owner->ypos * pager->fh) + (win->border->y * scaley));
+		    pager->fx + (win->owner->xpos * pager->fw) + ((win->border->x - pager->zone->x) * scalex),
+		    pager->fy + (win->owner->ypos * pager->fh) + ((win->border->y - pager->zone->y) * scaley));
 }
 
 static void
