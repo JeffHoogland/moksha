@@ -652,10 +652,13 @@ _e_gadman_client_overlap_deny(E_Gadman_Client *gmc)
 	     E_Gadman_Client *gmc2;
 	     
 	     gmc2 = l->data;
-	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
-		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	     if (gmc != gmc2)
 	       {
-		  gmc->x = gmc2->x + gmc2->w;
+		  if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		      (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+		    {
+		       gmc->x = gmc2->x + gmc2->w;
+		    }
 	       }
 	  }
 	if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -666,20 +669,29 @@ _e_gadman_client_overlap_deny(E_Gadman_Client *gmc)
 	     E_Gadman_Client *gmc2;
 	     
 	     gmc2 = l->data;
-	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
-		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
-	       ok = 0;
+	     if (gmc != gmc2)
+	       {
+		  if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		      (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+		    {
+		       ok = 0;
+		       break;
+		    }
+	       }
 	  }
 	if (ok) break;
 	for (l = gmc->zone->container->gadman->clients; l; l = l->next)
 	  {
 	     E_Gadman_Client *gmc2;
 	     
-	     gmc2 = l->data;
-	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
-		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+	     if (gmc != gmc2)
 	       {
-		  gmc->x = gmc2->x - gmc->w;
+		  gmc2 = l->data;
+		  if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		      (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+		    {
+		       gmc->x = gmc2->x - gmc->w;
+		    }
 	       }
 	  }
 	if (gmc->x < gmc->zone->x)
@@ -690,9 +702,15 @@ _e_gadman_client_overlap_deny(E_Gadman_Client *gmc)
 	     E_Gadman_Client *gmc2;
 	     
 	     gmc2 = l->data;
-	     if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
-		 (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
-	       ok = 0;
+	     if (gmc != gmc2)
+	       {
+		  if ((E_SPANS_COMMON(gmc->x, gmc->w, gmc2->x, gmc2->w)) &&
+		      (E_SPANS_COMMON(gmc->y, gmc->h, gmc2->y, gmc2->h)))
+		    {
+		       ok = 0;
+		       break;
+		    }
+	       }
 	  }
 	if (ok) break;
 	if (gmc->y > (gmc->zone->y + (gmc->zone->h / 2)))
