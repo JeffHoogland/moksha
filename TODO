@@ -29,7 +29,10 @@ Current freeze issues are:
 
 ISSUES:
 
+* initial placement of pager and clock seems wrong (overlap deny code?)
+* gadman resize if dear an edge may allow the gadget to go partially off screen
 * gadman overlay deny doesnt work for edge only gadgets
+* gadman gadget menu needs icons :)
 * add a menu item to each gadman client menu to edge editing mode
 * pager needs an overhaul
 * virtual desktops need fixing to work with zones properly
