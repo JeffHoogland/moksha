@@ -62,6 +62,8 @@ static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
 static void _e_border_resize_handle(E_Border *bd);
 
 static int  _e_border_shade_animator(void *data);
+
+static void _e_border_cb_border_menu_end(void *data, E_Menu *m);
 static void _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y);
 static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -807,6 +809,11 @@ e_border_idler_before(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   if (bd->border_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_menu));
+	bd->border_menu = NULL;
+     }
    if (focused == bd) focused = NULL;
    while (bd->handlers)
      {
@@ -1460,6 +1467,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
    else if (!strcmp(source, "menu"))
      {
 	Evas_Coord x, y;
+
 	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
 	_e_border_menu_show(bd, x + bd->x, y + bd->y);
      }
@@ -2577,7 +2585,15 @@ _e_border_shade_animator(void *data)
    return 1;
 }
 
-E_Menu *_e_border_menu;
+static void
+_e_border_cb_border_menu_end(void *data, E_Menu *m)
+{
+   E_Border *bd;
+   
+   bd = e_object_data_get(E_OBJECT(m));
+   if (bd) bd->border_menu = NULL;
+   e_object_del(E_OBJECT(m));
+}
 
 static void
 _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
@@ -2586,16 +2602,12 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    E_Menu_Item *mi;
    E_App *a;
 
-   if (e_menu_grab_window_get()) return;
-   if (!_e_border_menu)
-     _e_border_menu = e_menu_new();
-   else
-     {
-	e_object_unref(E_OBJECT(_e_border_menu));
-	_e_border_menu = e_menu_new();
-     }
+   if (bd->border_menu) return;
    
-   m = _e_border_menu;
+   m = e_menu_new();
+   e_object_data_set(E_OBJECT(m), bd);
+   bd->border_menu = E_OBJECT(m);
+   e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Close");

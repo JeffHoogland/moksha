@@ -169,6 +169,7 @@ struct _E_Border
    } shade;
 
    Evas_List *stick_desks;
+   E_Object *border_menu;
 
    struct {
       unsigned int visible : 1;
