@@ -454,8 +454,12 @@ _e_container_resize_handle(E_Container *con)
 	E_Border *b;
 	
 	b = l->data;
+	
 	if ((b->x + b->w) > con->w) e_border_move(b, con->w - b->w, b->y);
+	if (b->w > con->w) e_border_resize(b, con->w, b->h);
+	
 	if ((b->y + b->h) > con->h) e_border_move(b, b->x, con->h - b->h);
+	if (b->h > con->h) e_border_resize(b, b->w, con->h);
      }
 }
 
