@@ -391,7 +391,7 @@ e_desktops_goto(int d, int ax, int ay)
 	     E_Border *b;
 	     
 	     b = l->data;
-	     if ((!b->client.sticky) && (!b->mode.move))
+	     if ((!b->client.sticky) && (!b->mode.move) && (!b->client.iconified))
 	       {
 		  if (b->client.desk != d)
 		    {

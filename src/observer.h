@@ -14,17 +14,30 @@ typedef struct _e_observee E_Observee;
 
 typedef enum _e_event_type
 {
+   /* basic event types */
    E_EVENT_BORDER_NEW          = 1 << 0,
-   E_EVENT_BORDER_RELEASE      = 1 << 1,
+   E_EVENT_BORDER_DELETE       = 1 << 1,
    E_EVENT_BORDER_FOCUS_IN     = 1 << 2,
    E_EVENT_BORDER_ICONIFY      = 1 << 3,
    E_EVENT_BORDER_UNICONIFY    = 1 << 4,
    E_EVENT_BORDER_MAXIMIZE     = 1 << 5,
    E_EVENT_BORDER_UNMAXIMIZE   = 1 << 6,
+   E_EVENT_BORDER_MOVE         = 1 << 7,
+   E_EVENT_BORDER_RESIZE       = 1 << 8,
    
-   E_EVENT_DESKTOP_SWITCH      = 1 << 10,
+   E_EVENT_DESKTOP_NEW         = 1 << 10,
+   E_EVENT_DESKTOP_DELETE      = 1 << 11,
+   E_EVENT_DESKTOP_SWITCH      = 1 << 12,
 
-
+   /* meta event types */
+   E_EVENT_BORDER_ALL          = E_EVENT_BORDER_NEW |
+      E_EVENT_BORDER_DELETE    | E_EVENT_BORDER_FOCUS_IN |
+      E_EVENT_BORDER_ICONIFY   | E_EVENT_BORDER_UNICONIFY |
+      E_EVENT_BORDER_MAXIMIZE  | E_EVENT_BORDER_UNMAXIMIZE,
+   E_EVENT_DESKTOP_ALL         = E_EVENT_DESKTOP_NEW |
+      E_EVENT_DESKTOP_DELETE   | E_EVENT_DESKTOP_SWITCH,
+   
+   /* ALL events */
    E_EVENT_MAX                 = 0xFFFFFFFF 
 } E_Event_Type;
 

@@ -1775,8 +1775,9 @@ e_border_uniconify(E_Border *b)
    e_icccm_state_mapped(b->win.client);
    b->changed = 1;
    e_border_update(b);
-   /* should be UNICONIFY */
-   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_ICONIFY); 
+   e_border_raise(b);
+
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_BORDER_UNICONIFY); 
 }
 
 void
