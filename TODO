@@ -29,18 +29,20 @@ Current freeze issues are:
 
 ISSUES:
 
-* if xinerama screens overlap... dont use the later screen overlapping
+* consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
+* focus issues in general
 * ibar module should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
-* pager needs to be able to split off each desk in a zone in a different gadget
-* gadman gadget menu needs icons :)
-* pager needs an overhaul
 * virtual desktops need an overhaul. hacked int waay too quickly.
 * virtual desktops need fixing to work with zones properly
+* pager edje gfx...
+* pager needs an overhaul
+* pager needs to be able to split off each desk in a zone in a different gadget
 * all modules need to respect zones
-* dropshadow is not optimal and has extreme edge-case bugs
 * e_apps polling/updates is broken
 * border show/hide needs to show from top down and hide from bottom up
+* gadman gadget menu needs icons :)
+* any known segv's must go
 
 <add more issues as they are found>
 
@@ -51,6 +53,13 @@ ISSUES:
 
 
 
+FIXME: group these TODO items into:
+
+1. essential features
+2. fixes
+3. cleanups
+4. optimisations
+5. nice to have features
 
 
 Some of the things (in very short form) that need to be done to E17...
@@ -59,8 +68,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* dropshadow is not optimal and has extreme edge-case bugs
 * gadget containers (shelves)
-* all modules should have a "enter gadget edit mode" option in their menus
 * fix border raise/lower to use certain marker "windows" to not raise above or lower below (menus should always be above the top marker window for example)
 * track mouse location on a border/desktop level
 * add key input focus control for desktop modules
