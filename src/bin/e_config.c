@@ -18,12 +18,22 @@ static void _e_config_save_cb(void *data);
 
 /* local subsystem globals */
 static Ecore_Job *_e_config_save_job = NULL;
+
 static E_Config_DD *_e_config_edd = NULL;
+static E_Config_DD *_e_config_module_edd = NULL;
 
 /* externally accessible functions */
 int
 e_config_init(void)
 {
+   _e_config_module_edd = E_CONFIG_DD_NEW("E_Config", E_Config);   
+#undef T
+#undef D
+#define T E_Config_Module
+#define D _e_config_module_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, enabled, UCHAR);
+   
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);   
 #undef T
 #undef D
@@ -36,11 +46,13 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, framerate, DOUBLE);
    E_CONFIG_VAL(D, T, image_cache, INT);
    E_CONFIG_VAL(D, T, font_cache, INT);
+   E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
-   if (!e_config) e_config = E_NEW(E_Config, 1);
-   if (e_config)
+   if (!e_config)
      {
+	/* DEFAULT CONFIG */
+	e_config = E_NEW(E_Config, 1);
 	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.eet");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_thresthold = 300.0;
@@ -48,9 +60,24 @@ e_config_init(void)
 	e_config->framerate = 30.0;
 	e_config->image_cache = 2048;
 	e_config->font_cache = 512;
+	  {
+	     E_Config_Module *em;
+	     
+	     em = E_NEW(E_Config_Module, 1);
+	     em->name = strdup("ibar");
+	     em->enabled = 1;
+	     e_config->modules = evas_list_append(e_config->modules, em);
+	     em = E_NEW(E_Config_Module, 1);
+	     em->name = strdup("dropshadow");
+	     em->enabled = 1;
+	     e_config->modules = evas_list_append(e_config->modules, em);
+	     em = E_NEW(E_Config_Module, 1);
+	     em->name = strdup("clock");
+	     em->enabled = 1;
+	     e_config->modules = evas_list_append(e_config->modules, em);
+	  }
      }
-   else
-     return 0;
+   
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
@@ -65,13 +92,20 @@ e_config_shutdown(void)
 {
    if (e_config)
      {
+	while (e_config->modules)
+	  {
+	     E_Config_Module *em;
+	     
+	     em = e_config->modules->data;
+	     e_config->modules = evas_list_remove(e_config->modules, em);
+	     E_FREE(em->name);
+	     E_FREE(em);
+	  }
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config);
      }
-   if (_e_config_edd)
-     {
-	E_CONFIG_DD_FREE(_e_config_edd);
-     }
+   E_CONFIG_DD_FREE(_e_config_edd);
+   E_CONFIG_DD_FREE(_e_config_module_edd);
    return 1;
 }
 

@@ -1,18 +1,27 @@
 #ifndef E_CONFIG_H
 #define E_CONFIG_H
 
-typedef struct _E_Config    E_Config;
+typedef struct _E_Config        E_Config;
+typedef struct _E_Config_Module E_Config_Module;
+
 typedef Eet_Data_Descriptor E_Config_DD;
 
 struct _E_Config
 {
-   char    *desktop_default_background;
-   double   menus_scroll_speed;
-   double   menus_fast_mouse_move_thresthold;
-   double   menus_click_drag_timeout;
-   double   framerate;
-   int      image_cache;
-   int      font_cache;
+   char       *desktop_default_background;
+   double      menus_scroll_speed;
+   double      menus_fast_mouse_move_thresthold;
+   double      menus_click_drag_timeout;
+   double      framerate;
+   int         image_cache;
+   int         font_cache;
+   Evas_List  *modules;
+};
+
+struct _E_Config_Module
+{
+   char          *name;
+   unsigned char  enabled;
 };
 
 #define E_CONFIG_DD_NEW(str, typ) \

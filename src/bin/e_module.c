@@ -36,26 +36,21 @@ static E_Module_Api _e_module_api =
 int
 e_module_init(void)
 {
+   Evas_List *l;
+   
    _e_path_modules = e_path_new();
    if (!_e_path_modules) return 0;
    e_path_path_append(_e_path_modules, "~/.e/e/modules");
    e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
    
-   /* FIXME: this is crap. need to have a separate call to load a list of */
-   /* modules that the user wants loaded */
+   for (l = e_config->modules; l; l = l->next)
      {
+	E_Config_Module *em;
 	E_Module *m;
 	
-	m = e_module_new("test");
-	if (m) e_module_enable(m);
-	m = e_module_new("ibar");
-	if (m) e_module_enable(m);
-	m = e_module_new("dropshadow");
-	if (m) e_module_enable(m);
-#if 1	
-	m = e_module_new("clock");
-	if (m) e_module_enable(m);
-#endif	
+	em = l->data;
+	m = e_module_new(em->name);
+	if ((em->enabled) && (m)) e_module_enable(m);
      }
    
    return 1;
@@ -82,6 +77,8 @@ e_module_new(char *name)
    E_Module *m;
    char buf[4096];
    const char *modpath, *tmp, *p;
+   Evas_List *l;
+   int in_list = 0;
 
    if (!name) return NULL;
    m = E_OBJECT_ALLOC(E_Module, _e_module_free);
@@ -143,6 +140,27 @@ e_module_new(char *name)
    m->name = strdup(name);
    m->dir = e_file_get_dir(modpath);
    m->func.info(m);
+   for (l = e_config->modules; l; l = l->next)
+     {
+	E_Config_Module *em;
+	
+	em = l->data;
+	if (!strcmp(em->name, m->name))
+	  {
+	     in_list = 1;
+	     break;
+	  }
+     }
+   if (!in_list)
+     {
+	E_Config_Module *em;
+	
+	em = E_NEW(E_Config_Module, 1);
+	em->name = strdup(m->name);
+	em->enabled = 0;
+	e_config->modules = evas_list_append(e_config->modules, em);
+	e_config_save_queue();
+     }
    return m;
 }
 
@@ -163,15 +181,30 @@ e_module_dir_get(E_Module *m)
 int
 e_module_enable(E_Module *m)
 {
+   Evas_List *l;
+   
    E_OBJECT_CHECK_RETURN(m, 0);
    if (m->enabled) return 0;
    m->data = m->func.init(m);
    if (m->data) m->enabled = 1;
+   for (l = e_config->modules; l; l = l->next)
+     {
+	E_Config_Module *em;
+	
+	em = l->data;
+	if (!strcmp(em->name, m->name))
+	  {
+	     em->enabled = 1;
+	     e_config_save_queue();
+	     break;
+	  }
+     }
 }
 
 int
 e_module_disable(E_Module *m)
 {
+   Evas_List *l;
    int ret;
    
    E_OBJECT_CHECK_RETURN(m, 0);
@@ -179,6 +212,18 @@ e_module_disable(E_Module *m)
    ret = m->func.shutdown(m);
    m->data = NULL;
    m->enabled = 0;
+   for (l = e_config->modules; l; l = l->next)
+     {
+	E_Config_Module *em;
+	
+	em = l->data;
+	if (!strcmp(em->name, m->name))
+	  {
+	     em->enabled = 0;
+	     e_config_save_queue();
+	     break;
+	  }
+     }
    return ret;
 }
 
@@ -273,6 +318,23 @@ e_module_menu_new(void)
 static void
 _e_module_free(E_Module *m)
 {
+   Evas_List *l;
+   
+   for (l = e_config->modules; l; l = l->next)
+     {
+	E_Config_Module *em;
+	
+	em = l->data;
+	if (!strcmp(em->name, m->name))
+	  {
+	     e_config->modules = evas_list_remove(e_config->modules, em);
+	     E_FREE(em->name);
+	     E_FREE(em);
+	     e_config_save_queue();
+	     break;
+	  }
+     }
+   
    if (m->enabled) m->func.shutdown(m);
    if (m->name) free(m->name);
    if (m->dir) free(m->dir);

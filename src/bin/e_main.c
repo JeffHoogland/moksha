@@ -277,10 +277,8 @@ main(int argc, char **argv)
    
    /* ask all modules to save their config and then shutdown */
    e_module_save_all();
-   e_module_shutdown();
-   
-   /* save our config FIXME: check return value */
    e_config_save();
+   e_module_shutdown();
 
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
