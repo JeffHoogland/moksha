@@ -205,10 +205,10 @@ e_mouse_up(Eevent * ev)
 			    E_Menu_Item *menuitem;
 			    
 			    menu = e_menu_new();
-			    menu->pad.icon = 2;
-			    menu->pad.state = 2;
+			    e_menu_set_padding_icon(menu, 8);
+			    e_menu_set_padding_state(menu, 8);
 			    menuitem = e_menu_item_new("Enlightenment "VERSION);
-			    menuitem->icon = strdup(PACKAGE_DATA_DIR"/data/images/e_logo.png");
+			    e_menu_item_set_icon(menuitem, PACKAGE_DATA_DIR"/data/images/e_logo.png");
 			    e_menu_add_item(menu, menuitem);
 			 }
 		       if (menu)
