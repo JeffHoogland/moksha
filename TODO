@@ -36,7 +36,8 @@ ISSUES:
 * if container/zone changes size pager does not change/adjust to match
 * if u disable moduels by right click->enabled (select to uncheck) the gadman objects for thsoe moduels dont go away
 * pager on other xinerama heads doesnt save position/size etc.
-* estart with multiple zones is... buggy with vd'as and pager
+* restart with multiple zones is... buggy with vd'as and pager
+* rm -rf or mv ~/.e/e/applications and things go bad...
 <add more issues as they are found>
 
 
