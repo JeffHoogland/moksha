@@ -29,6 +29,7 @@ Current freeze issues are:
 
 ISSUES:
 
+* xinerama bugs - centralise and fix overlapping screen handling
 * borders raise/lower stack doesnt modify any list to track stacking
 * consoldiate client lists - we have client lists for containers, zones, desks AND e_borders.c consolidate into 1 list that has all borders with their stacking and what desk they belong to (and thus zone and container)
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
