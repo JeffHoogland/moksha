@@ -11,8 +11,6 @@ typedef struct _Battery_Face Battery_Face;
 
 struct _Config
 {
-   int width;
-   double x, y;
    double poll_time;
    int alarm;
 };
@@ -38,20 +36,13 @@ struct _Battery_Face
    Evas_Object *bat_object;
    Evas_Object *event_object;
    
-   Evas_Coord   minsize, maxsize;
-   
-   unsigned char   move : 1;
-   unsigned char   resize : 1;
-   Evas_Coord      xx, yy;
-   Evas_Coord      fx, fy, fw;
-   
    int                  battery_check_mode;
    Ecore_Timer         *battery_check_timer;
    int                  battery_prev_drain;
    int                  battery_prev_ac;
    int                  battery_prev_battery;
    
-   Ecore_Event_Handler *ev_handler_container_resize;
+   E_Gadman_Client *gmc;
 };
 
 EAPI void *init     (E_Module *m);

@@ -7,8 +7,6 @@ typedef struct _Temperature_Face Temperature_Face;
 
 struct _Config
 {
-   int width;
-   double x, y;
    double poll_time;
    int low, high;
 };
@@ -34,18 +32,11 @@ struct _Temperature_Face
    Evas_Object *temp_object;
    Evas_Object *event_object;
    
-   Evas_Coord   minsize, maxsize;
-   
-   unsigned char   move : 1;
-   unsigned char   resize : 1;
-   Evas_Coord      xx, yy;
-   Evas_Coord      fx, fy, fw;
-   
    int             have_temp;
    
    Ecore_Timer         *temperature_check_timer;
    
-   Ecore_Event_Handler *ev_handler_container_resize;
+   E_Gadman_Client *gmc;
 };
 
 EAPI void *init     (E_Module *m);

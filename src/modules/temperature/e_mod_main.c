@@ -16,9 +16,7 @@ static void     _temperature_face_init(Temperature_Face *ef);
 static void     _temperature_face_free(Temperature_Face *ef);
 static void     _temperature_face_reconfigure(Temperature_Face *ef);
 static void     _temperature_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void     _temperature_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void     _temperature_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int      _temperature_cb_event_container_resize(void *data, int type, void *event);
+static void     _temperature_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static int      _temperature_cb_check(void *data);
 static void     _temperature_level_set(Temperature_Face *ef, double level);
 
@@ -113,9 +111,6 @@ _temperature_init(E_Module *m)
 #undef D
 #define T Config
 #define D e->conf_edd   
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, x, DOUBLE);
-   E_CONFIG_VAL(D, T, y, DOUBLE);
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
@@ -124,16 +119,10 @@ _temperature_init(E_Module *m)
    if (!e->conf)
      {
 	e->conf = E_NEW(Config, 1);
-	e->conf->width = 64;
-	e->conf->x = 0.9;
-	e->conf->y = 1.0;
 	e->conf->poll_time = 10.0;
 	e->conf->low = 30;
 	e->conf->high = 80;
      }
-   E_CONFIG_LIMIT(e->conf->width, 2, 256);
-   E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
-   E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->low, 0, 100);
    E_CONFIG_LIMIT(e->conf->high, 0, 200);
@@ -570,14 +559,6 @@ _temperature_face_init(Temperature_Face *ef)
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
-   ef->ev_handler_container_resize =
-     ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
-			     _temperature_cb_event_container_resize,
-			     ef);
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->fx = ef->temp->conf->x * (ww - ef->temp->conf->width);
-   ef->fy = ef->temp->conf->y * (hh - ef->temp->conf->width);
-      
    evas_event_freeze(ef->evas);
    o = edje_object_add(ef->evas);
    ef->temp_object = o;
@@ -593,19 +574,26 @@ _temperature_face_init(Temperature_Face *ef)
    evas_object_layer_set(o, 2);
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
-
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _temperature_cb_face_down, ef);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _temperature_cb_face_up, ef);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _temperature_cb_face_move, ef);
    evas_object_show(o);
-   
-   edje_object_size_min_calc(ef->temp_object, &bw, &bh);
-   ef->minsize = bh;
-   ef->minsize = bw;
    
    ef->have_temp = -1;
 
-   _temperature_face_reconfigure(ef);
+   ef->gmc = e_gadman_client_new(ef->con->gadman);
+   e_gadman_client_domain_set(ef->gmc, "module.temperature", 0);
+   e_gadman_client_policy_set(ef->gmc,
+			      E_GADMAN_POLICY_ANYWHERE |
+			      E_GADMAN_POLICY_HMOVE |
+			      E_GADMAN_POLICY_VMOVE |
+			      E_GADMAN_POLICY_HSIZE |
+			      E_GADMAN_POLICY_VSIZE);
+   e_gadman_client_min_size_set(ef->gmc, 4, 4);
+   e_gadman_client_max_size_set(ef->gmc, 128, 128);
+   e_gadman_client_auto_size_set(ef->gmc, 64, 64);
+   e_gadman_client_align_set(ef->gmc, 0.9, 1.0);
+   e_gadman_client_resize(ef->gmc, 64, 64);
+   e_gadman_client_change_func_set(ef->gmc, _temperature_cb_gmc_change, ef);
+   e_gadman_client_load(ef->gmc);
    
    ef->temperature_check_timer = ecore_timer_add(ef->temp->conf->poll_time, _temperature_cb_check, ef);
    
@@ -618,30 +606,32 @@ static void
 _temperature_face_free(Temperature_Face *ef)
 {
    ecore_timer_del(ef->temperature_check_timer);
-   ecore_event_handler_del(ef->ev_handler_container_resize);
+   e_object_del(E_OBJECT(ef->gmc));
    evas_object_del(ef->temp_object);
    evas_object_del(ef->event_object);
    free(ef);
 }
 
 static void
-_temperature_face_reconfigure(Temperature_Face *ef)
+_temperature_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
-   Evas_Coord minw, minh, maxw, maxh, ww, hh;
+   Temperature_Face *ef;
+   Evas_Coord x, y, w, h;
 
-   edje_object_size_min_calc(ef->temp_object, &minw, &maxh);
-   edje_object_size_max_get(ef->temp_object, &maxw, &minh);
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->fx = ef->temp->conf->x * (ww - ef->temp->conf->width);
-   ef->fy = ef->temp->conf->y * (hh - ef->temp->conf->width);
-   ef->fw = ef->temp->conf->width;
-   ef->minsize = minw;
-   ef->maxsize = maxw;
-
-   evas_object_move(ef->temp_object, ef->fx, ef->fy);
-   evas_object_resize(ef->temp_object, ef->temp->conf->width, ef->temp->conf->width);
-   evas_object_move(ef->event_object, ef->fx, ef->fy);
-   evas_object_resize(ef->event_object, ef->temp->conf->width, ef->temp->conf->width);
+   ef = data;
+   if (change == E_GADMAN_CHANGE_MOVE_RESIZE)
+     {
+	e_gadman_client_geometry_get(ef->gmc, &x, &y, &w, &h);
+	evas_object_move(ef->temp_object, x, y);
+	evas_object_move(ef->event_object, x, y);
+	evas_object_resize(ef->temp_object, w, h);
+	evas_object_resize(ef->event_object, w, h);
+     }
+   else if (change == E_GADMAN_CHANGE_RAISE)
+     {
+	evas_object_raise(ef->temp_object);
+	evas_object_raise(ef->event_object);
+     }
 }
 
 static void
@@ -659,83 +649,6 @@ _temperature_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(ef->con);
      }
-   else if (ev->button == 2)
-     {
-	ef->resize = 1;
-     }
-   else if (ev->button == 1)
-     {
-	ef->move = 1;
-     }
-   evas_pointer_canvas_xy_get(e, &ef->xx, &ef->yy);
-}
-
-static void
-_temperature_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Evas_Event_Mouse_Up *ev;
-   Temperature_Face *ef;
-   Evas_Coord ww, hh;
-   
-   ev = event_info;
-   ef = data;
-   ef->move = 0;
-   ef->resize = 0;
-   evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
-   ef->temp->conf->width = ef->fw;
-   ef->temp->conf->x = (double)ef->fx / (double)(ww - ef->temp->conf->width);
-   ef->temp->conf->y = (double)ef->fy / (double)(hh - ef->temp->conf->width);
-   e_config_save_queue();
-}
-
-static void
-_temperature_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{ 
-   Evas_Event_Mouse_Move *ev;
-   Temperature_Face *ef;
-   Evas_Coord cx, cy, sw, sh;
-   
-   evas_pointer_canvas_xy_get(e, &cx, &cy);
-   evas_output_viewport_get(e, NULL, NULL, &sw, &sh);
-
-   ev = event_info;
-   ef = data;
-   if (ef->move)
-     {
-	ef->fx += cx - ef->xx;
-	ef->fy += cy - ef->yy;
-	if (ef->fx < 0) ef->fx = 0;
-	if (ef->fy < 0) ef->fy = 0;
-	if (ef->fx + ef->fw > sw) ef->fx = sw - ef->fw;
-	if (ef->fy + ef->fw > sh) ef->fy = sh - ef->fw;
-	evas_object_move(ef->temp_object, ef->fx, ef->fy);
-	evas_object_move(ef->event_object, ef->fx, ef->fy);
-     }
-   else if (ef->resize)
-     {
-	Evas_Coord d;
-
-	d = cx - ef->xx;
-	ef->fw += d;
-	if (ef->fw < ef->minsize) ef->fw = ef->minsize;
-	if (ef->fw > ef->maxsize) ef->fw = ef->maxsize;
-	if (ef->fx + ef->fw > sw) ef->fw = sw - ef->fx;
-	if (ef->fy + ef->fw > sh) ef->fw = sh - ef->fy;
-	evas_object_resize(ef->temp_object, ef->fw, ef->fw);
-	evas_object_resize(ef->event_object, ef->fw, ef->fw);
-   }
-   ef->xx = ev->cur.canvas.x;
-   ef->yy = ev->cur.canvas.y;
-}  
-
-static int
-_temperature_cb_event_container_resize(void *data, int type, void *event)
-{
-   Temperature_Face *ef;
-   
-   ef = data;
-   _temperature_face_reconfigure(ef);
-   return 1;
 }
 
 static int
