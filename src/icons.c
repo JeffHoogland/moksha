@@ -177,7 +177,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *ic;
    Ecore_Event *ev;
    Ecore_Event_Mouse_Move *e;
-#if 0 
    D_ENTER;
    
    ev = e_view_get_current_event();
@@ -308,22 +307,22 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 							&ix, &iy, NULL, NULL);
 				      icx = ix + v->location.x - wx;
 				      icy = iy + v->location.y - wy;
-				      if (!ic->info.icon)
+				      if (!ic->file->info.icon)
 					{
-					   D("EEEEEEEEEEK %s has no icon\n", ic->file);
+					   D("EEEEEEEEEEK %s has no icon\n", ic->file->file);
 					   D_RETURN;
 					}
 				      if (ic->state.clicked)
 					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->file->info.icon);
 					}
 				      else if (ic->state.selected)
 					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->file->info.icon);
 					}
 				      else
 					{
-					   snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->info.icon);
+					   snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
 					}
 				      im2 = imlib_load_image(icon);
 				      if (im2)
@@ -405,7 +404,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ecore_pointer_xy_get(&x, &y);
 	ecore_window_dnd_handle_motion( ic->view->win.base, x, y, 1);
      }
-#endif
    D_RETURN;
    UN(_e);
    UN(_o);
