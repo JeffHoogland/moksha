@@ -201,6 +201,7 @@ e_entry_realize(E_Entry *entry)
    evas_set_clip(entry->evas, entry->text, entry->clip_box);
    evas_set_clip(entry->evas, entry->event_box, entry->clip_box);
    evas_set_clip(entry->evas, entry->cursor, entry->clip_box);
+   evas_set_clip(entry->evas, entry->selection, entry->clip_box);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_DOWN, e_entry_down_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_UP, e_entry_up_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_MOVE, e_entry_move_cb, entry);
