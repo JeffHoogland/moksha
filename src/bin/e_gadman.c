@@ -266,6 +266,9 @@ e_gadman_client_load(E_Gadman_Client *gmc)
    if (!e_object_del_get(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    e_object_unref(E_OBJECT(gmc));
+
+   if (gmc->gadman->mode == E_GADMAN_MODE_EDIT)
+     _e_gadman_client_edit_begin(gmc);
 }
 
 void
