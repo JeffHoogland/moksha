@@ -175,8 +175,6 @@ e_desk_xy_get(E_Desk *desk, int *x, int *y)
 void
 e_desk_next(E_Zone *zone)
 {
-   Evas_List   *l;
-   E_Desk      *desk;
    int          x, y;
 
    E_OBJECT_CHECK(zone);
@@ -203,8 +201,6 @@ e_desk_next(E_Zone *zone)
 void
 e_desk_prev(E_Zone *zone)
 {
-   Evas_List   *l;
-   E_Desk      *desk;
    int          x, y;
 
    E_OBJECT_CHECK(zone);

@@ -61,7 +61,6 @@ main(int argc, char **argv)
    char *s;
    /* install the signal handlers. */ 
    struct sigaction sigsegv_action;
-   struct sigaction sighup_action;
    sigsegv_action.sa_sigaction=&e_sigseg_act;
    sigsegv_action.sa_flags=0;
    sigaction(SIGSEGV, &sigsegv_action, NULL);
@@ -454,6 +453,7 @@ _e_main_dirs_init(void)
      }
    
    /* FIXME: THIS is a hack to get people started!!! */
+   /*
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eapp", homedir);
    if (!e_file_exists(buf))
      {
@@ -465,6 +465,7 @@ _e_main_dirs_init(void)
 		 homedir);
 	system(buf);
      }
+   */
    free(homedir);
    
    return 1;
@@ -800,6 +801,7 @@ _e_main_cb_signal_exit(void *data, int ev_type, void *ev)
    ecore_main_loop_quit();
    return 1;
 }
+
 static int
 _e_main_cb_signal_hup(void *data, int ev_type, void *ev)
 {
@@ -807,6 +809,7 @@ _e_main_cb_signal_hup(void *data, int ev_type, void *ev)
    printf("RESTART ON!\n");
    restart = 1;
    ecore_main_loop_quit();
+   return 1;
 }
 
 static int

@@ -5,7 +5,7 @@
 #include "config.h"
 
 /* TODO List
- * 
+ *
  * * setting up a new config value and a listener callback is too long winded - need to have helper funcs and macros do this so it's more like 1 line per new config value or 2
  */
 
@@ -25,6 +25,7 @@ static Ecore_Job *_e_config_save_job = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
+static E_Config_DD *_e_config_binding_edd = NULL;
 
 /* externally accessible functions */
 int
@@ -37,8 +38,18 @@ e_config_init(void)
 #define D _e_config_module_edd
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, enabled, UCHAR);
-   
-   _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);   
+
+   _e_config_binding_edd = E_CONFIG_DD_NEW("E_Config_Binding", E_Config_Binding);
+#undef T
+#undef D
+#define T E_Config_Binding
+#define D _e_config_binding_edd
+   E_CONFIG_VAL(D, T, button, INT);
+   E_CONFIG_VAL(D, T, mask, INT);
+   E_CONFIG_VAL(D, T, modifiers, INT);
+   E_CONFIG_VAL(D, T, action, INT);
+
+   _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
 #define T E_Config
@@ -56,6 +67,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
+   E_CONFIG_LIST(D, T, bindings, _e_config_binding_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (!e_config)
@@ -76,7 +88,7 @@ e_config_init(void)
 	e_config->zone_desks_y_count = 1;
 	  {
 	     E_Config_Module *em;
-	     
+
 	     em = E_NEW(E_Config_Module, 1);
 	     em->name = strdup("ibar");
 	     em->enabled = 1;
@@ -102,8 +114,36 @@ e_config_init(void)
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	  }
+	  {
+	     E_Config_Binding *eb;
+
+	     eb = E_NEW(E_Config_Binding, 1);
+	     eb->button = 1;
+	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN |
+		ECORE_X_EVENT_MASK_MOUSE_UP |
+		ECORE_X_EVENT_MASK_MOUSE_MOVE;
+	     eb->modifiers = ECORE_X_MODIFIER_ALT;
+	     eb->action = E_BINDING_ACTION_MOVE;
+	     e_config->bindings = evas_list_append(e_config->bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding, 1);
+	     eb->button = 3;
+	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN |
+			ECORE_X_EVENT_MASK_MOUSE_UP |
+			ECORE_X_EVENT_MASK_MOUSE_MOVE;
+	     eb->modifiers = ECORE_X_MODIFIER_ALT;
+	     eb->action = E_BINDING_ACTION_RESIZE;
+	     e_config->bindings = evas_list_append(e_config->bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding, 1);
+	     eb->button = 2;
+	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN;
+	     eb->modifiers = ECORE_X_MODIFIER_ALT;
+	     eb->action = E_BINDING_ACTION_MENU;
+	     e_config->bindings = evas_list_append(e_config->bindings, eb);
+	  }
      }
-   
+
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
@@ -124,17 +164,26 @@ e_config_shutdown(void)
 	while (e_config->modules)
 	  {
 	     E_Config_Module *em;
-	     
+
 	     em = e_config->modules->data;
 	     e_config->modules = evas_list_remove(e_config->modules, em);
 	     E_FREE(em->name);
 	     E_FREE(em);
+	  }
+	while (e_config->bindings)
+	  {
+	     E_Config_Binding *eb;
+
+	     eb = e_config->bindings->data;
+	     e_config->bindings = evas_list_remove(e_config->bindings, eb);
+	     E_FREE(eb);
 	  }
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config);
      }
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
+   E_CONFIG_DD_FREE(_e_config_binding_edd);
    return 1;
 }
 
@@ -163,7 +212,7 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
    char buf[4096];
    char *homedir;
    void *data = NULL;
-   
+
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);
    E_FREE(homedir);
@@ -183,7 +232,7 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    char buf[4096];
    char *homedir;
    int ok = 0;
-   
+
    /* FIXME: check for other sessions fo E runing */
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);

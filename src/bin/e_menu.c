@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* TODO List:
@@ -253,7 +256,7 @@ e_menu_post_deactivate_callback_set(E_Menu *m, void (*func) (void *data, E_Menu 
    m->post_deactivate_cb.data = data;
 }
 
-E_Menu      *
+E_Menu *
 e_menu_root_get(E_Menu *m)
 {
    E_Menu *ret;

@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 typedef struct _E_Resist_Rect E_Resist_Rect;
@@ -13,14 +16,15 @@ int
 e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 				   int px, int py, int pw, int ph,
 				   int x, int y, int w, int h,
-				   int *rx, int *ry)
+				   int *rx, int *ry, int *rw, int *rh)
 {
    int resist = 1;
    int desk_resist = 32;
    int win_resist = 12;
    int gad_resist = 32;
-   int dx, dy, d, pd;
+   int dx, dy, dw, dh, d, pd;
    int resist_x = 0, resist_y = 0;
+   int resist_w = 0, resist_h = 0;
    Evas_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
 
@@ -30,10 +34,14 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
      {
 	*rx = x;
 	*ry = y;
+	*rw = w;
+	*rw = h;
 	return 0;
      }
    dx = x - px;
    dy = y - py;
+   dw = w - pw;
+   dh = h - ph;
    
    /* edges of screen */
 #define OBSTACLE(_x, _y, _w, _h, _resist) \
@@ -136,7 +144,10 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
 			 {
 			    if (resist_x < d)
-			      resist_x = d;
+			      {
+				 resist_x = d;
+				 resist_w = -d;
+			      }
 			 }
 		    }
 		  else
@@ -147,7 +158,36 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
 			 {
 			    if (-resist_x > d)
-			      resist_x = -d;
+			    {
+			       resist_x = -d;
+			       resist_w = d;
+			    }
+			 }
+		    }
+	       }
+	     if ((dw > 0) && (dx == 0))
+	       {
+		  /* enlarging window by moving lower corner */
+		  if (r->resist_out)
+		    {
+		       /* check right edge of windows against left */
+		       d = x + w - (r->x + r->w);
+		       pd = px + pw - (r->x + r->w);
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (-resist_w < d)
+			      resist_w = -d;
+			 }
+		    }
+		  else
+		    {
+		       /* check left edge of windows against right */
+		       d = r->x - (x + w);
+		       pd = r->x - (px + pw);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (resist_w > d)
+			      resist_w = d;
 			 }
 		    }
 	       }
@@ -191,7 +231,10 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
 			 {
 			    if (resist_y < d)
-			      resist_y = d;
+			      {
+				 resist_y = d;
+				 resist_h = -d;
+			      }
 			 }
 		    }
 		  else
@@ -202,7 +245,36 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
 			 {
 			    if (-resist_y > d)
-			      resist_y = -d;
+			      {
+				 resist_y = -d;
+				 resist_h = d;
+			      }
+			 }
+		    }
+	       }
+	     if ((dh > 0) && (dy == 0))
+	       {
+		  /* enlarging window by moving lower corner */
+		  if (r->resist_out)
+		    {
+		       /* check bottom edge of windows against top */
+		       d = y + h - (r->y + r->h);
+		       pd = py + ph - (r->y + r->h);
+		       if ((d > 0) && (pd <= 0) && (d <= r->v1))
+			 {
+			    if (-resist_h < d)
+			      resist_h = -d;
+			 }
+		    }
+		  else
+		    {
+		       /* check top edge of windows against bottom */
+		       d = r->y - (y + h);
+		       pd = r->y - (py + ph);
+		       if ((d < 0) && (pd >= 0) && (d >= -r->v1))
+			 {
+			    if (resist_h > d)
+			      resist_h = d;
 			 }
 		    }
 	       }
@@ -224,6 +296,14 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
      *ry = y + resist_y;
    else
      *ry = y;
+   if (dh != 0)
+     *rh = h + resist_h;
+   else
+     *rh = h;
+   if (dw != 0)
+     *rw = w + resist_w;
+   else
+     *rw = w;
    return 1;
 }
 

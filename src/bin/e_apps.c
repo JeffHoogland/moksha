@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* TODO List:
@@ -286,13 +289,13 @@ e_app_window_name_class_find(char *name, char *class)
 {
    Evas_List *l;
    
+   if (!name && !class)
+     return NULL;
+
    for (l = _e_apps_list; l; l = l->next)
      {
 	E_App *a;
 	
-	if (!name && !class)
-	  return NULL;
-
 	a = l->data;
 	if ((a->win_name) || (a->win_class))
 	  {

@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 
 /* local subsystem globals */
@@ -13,7 +16,7 @@ e_init_init(void)
    int x, y, w, h;
    Ecore_X_Window root;
    Ecore_X_Window *roots;
-   int num, i;
+   int num;
    Evas_Object *o;
    int n;
    
