@@ -940,7 +940,7 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-
+   e_border_hide(bd);
    e_object_del(E_OBJECT(bd));
    return 1;
 }
@@ -950,6 +950,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
+   int was_iconic = 0, was_visible = 0;
   
 //   printf("in hide cb\n");
    bd = data;
@@ -962,8 +963,10 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
-   if (!(bd->iconic) && (bd->visible)) e_object_del(E_OBJECT(bd));
-
+   was_iconic = bd->iconic;
+   was_visible = bd->visible;
+   e_border_hide(bd);
+   if (!(was_iconic) && (was_visible)) e_object_del(E_OBJECT(bd));
    return 1;
 }
 
@@ -978,6 +981,7 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    if (e->parent == bd->client.shell_win) return 1;
+   e_border_hide(bd);
    e_object_del(E_OBJECT(bd));
    return 1;
 }
@@ -1485,6 +1489,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	     ecore_x_kill(bd->client.win);
 	     ecore_x_sync();
 //	     ecore_x_window_del(bd->client.win);
+	     e_border_hide(bd);
 	     e_object_del(E_OBJECT(bd));
 	  }				     
      }
@@ -2780,6 +2785,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
 	ecore_x_kill(bd->client.win);
 	ecore_x_sync();
 //         ecore_x_window_del(bd->client.win);
+	e_border_hide(bd);
 	e_object_del(E_OBJECT(bd));
      }
 }
