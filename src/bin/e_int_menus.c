@@ -365,7 +365,7 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    e_menu_item_callback_set(mi, _e_int_menus_desktops_col_add_cb, NULL);
 	       
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Remove Colum of Desktops");
+   e_menu_item_label_set(mi, "Remove Column of Desktops");
    e_menu_item_callback_set(mi, _e_int_menus_desktops_col_del_cb, NULL);
 		     
 		     
