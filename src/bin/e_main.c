@@ -256,9 +256,15 @@ main(int argc, char **argv)
    else
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
-   /* setup module loading etc. FIXME: check return value */
-   e_module_init();
-
+   /* setup module loading etc */
+   if (!e_module_init())
+     {
+	e_error_message_show("Enlightenment cannot set up its module system.");
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_module_shutdown);
+   
+   /* setup iconification */
    if (!e_iconify_init())
      {
 	e_error_message_show("Enlightenment cannot setup its iconify system.");
@@ -289,7 +295,7 @@ main(int argc, char **argv)
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
       
-   /* an intle enterer to be called after all others */
+   /* an idle enterer to be called after all others */
    _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
 
    ecore_x_ungrab();
@@ -323,7 +329,6 @@ main(int argc, char **argv)
    /* NB: no need to do this as config shutdown will flush any saves */
    /*     and all changed config was already saved before */
    e_config_save_flush();
-   e_module_shutdown();
 
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
@@ -340,7 +345,7 @@ main(int argc, char **argv)
    return 0;
 }
 
-/* FIXME: make save to deleet within a callback */
+/* FIXME: make save to delete within a callback */
 E_Before_Idler *
 e_main_idler_before_add(int (*func) (void *data), void *data, int once)
 {
@@ -457,7 +462,7 @@ _e_main_dirs_init(void)
    /* err dont just disable it - replace it with a proper wizard tool */
    /* outside e's main source to populate these directories from gnome/kde */
    /* app menu data etc. */
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eapp", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/.order", homedir);
    if (!ecore_file_exists(buf))
      {
 	printf("GETTING YOU STARTED!\n");
@@ -485,6 +490,7 @@ _e_main_screens_init(void)
    Ecore_X_Window *roots;
    int num, i;
 
+   if (!e_xinerama_init()) return 0;
    if (!e_atoms_init()) return 0;
    if (!e_manager_init()) return 0;
    if (!e_container_init()) return 0;
@@ -530,69 +536,6 @@ _e_main_screens_init(void)
 				  i);
 	     return 0;
 	  }
-	/* FIXME
-	 * This should be removed!
-	  {
-	     E_Gadman_Client *gmc;
-	     
-	     gmc = e_gadman_client_new(con->gadman);
-	     gmc->x = 0;
-	     gmc->y = 300;
-	     gmc->w = 100;
-	     gmc->h = 100;
-	     e_gadman_client_policy_set(gmc, 
-//					E_GADMAN_POLICY_EDGES | 
-					E_GADMAN_POLICY_ANYWHERE |
-					E_GADMAN_POLICY_HMOVE | 
-					E_GADMAN_POLICY_VMOVE |
-					E_GADMAN_POLICY_HSIZE | 
-					E_GADMAN_POLICY_VSIZE);
-	     e_gadman_client_min_size_set(gmc, 20, 20);
-	     e_gadman_client_auto_size_set(gmc, 50, 200);
-	     e_gadman_client_align_set(gmc, 0.0, 0.5);
-	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
-	     e_gadman_client_domain_set(gmc, "test", 0);
-	     e_gadman_client_load(gmc);
-
-	     gmc = e_gadman_client_new(con->gadman);
-	     gmc->x = 0;
-	     gmc->y = 400;
-	     gmc->w = 100;
-	     gmc->h = 100;
-	     e_gadman_client_policy_set(gmc, 
-//					E_GADMAN_POLICY_EDGES | 
-					E_GADMAN_POLICY_ANYWHERE |
-					E_GADMAN_POLICY_HMOVE | 
-					E_GADMAN_POLICY_VMOVE |
-					E_GADMAN_POLICY_HSIZE | 
-					E_GADMAN_POLICY_VSIZE);
-	     e_gadman_client_min_size_set(gmc, 20, 20);
-	     e_gadman_client_auto_size_set(gmc, 50, 200);
-	     e_gadman_client_align_set(gmc, 0.0, 0.5);
-	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
-	     e_gadman_client_domain_set(gmc, "test", 1);
-	     e_gadman_client_load(gmc);
-
-	     gmc = e_gadman_client_new(con->gadman);
-	     gmc->x = 0;
-	     gmc->y = 500;
-	     gmc->w = 100;
-	     gmc->h = 100;
-	     e_gadman_client_policy_set(gmc, 
-//					E_GADMAN_POLICY_EDGES | 
-					E_GADMAN_POLICY_ANYWHERE |
-					E_GADMAN_POLICY_HMOVE | 
-					E_GADMAN_POLICY_VMOVE |
-					E_GADMAN_POLICY_HSIZE | 
-					E_GADMAN_POLICY_VSIZE);
-	     e_gadman_client_min_size_set(gmc, 20, 20);
-	     e_gadman_client_auto_size_set(gmc, 50, 200);
-	     e_gadman_client_align_set(gmc, 0.0, 0.5);
-	     e_client_gadman_edge_set(gmc, E_GADMAN_EDGE_LEFT);
-	     e_gadman_client_domain_set(gmc, "test", 2);
-	     e_gadman_client_load(gmc);
-	  }
-	 */
      }
    free(roots);
    ecore_x_sync();
@@ -611,6 +554,7 @@ _e_main_screens_shutdown(void)
    e_container_shutdown();
    e_manager_shutdown();
    e_atoms_shutdown();
+   e_xinerama_shutdown();
    return 1;
 }
 
@@ -813,4 +757,3 @@ _e_main_cb_startup_fake_end(void *data)
    e_init_hide();
    return 0;
 }
-
