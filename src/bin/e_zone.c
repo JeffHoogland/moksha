@@ -19,7 +19,6 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    E_Desk      *desk;
 
    zone = E_OBJECT_ALLOC(E_Zone, _e_zone_free);
-   memset(zone, 0, sizeof(E_Zone));
    if (!zone) return NULL;
 
    printf("NEW ZONE! %d %d %d %d\n", x, y, w, h);
