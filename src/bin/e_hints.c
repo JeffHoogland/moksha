@@ -90,7 +90,7 @@ e_hints_client_stacking_set(void)
    E_Manager *m;
    E_Container *c;
    E_Border *b;
-   Ecore_X_Window root, *clients = NULL;
+   Ecore_X_Window *clients = NULL;
 
    /* Get client count */
    for (mlist = e_manager_list(); mlist; mlist = mlist->next)
