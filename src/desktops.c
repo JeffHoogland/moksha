@@ -379,11 +379,11 @@ e_desktops_init_file_display(E_Desktop *desk)
 	Evas e;
 	
 	e = desk->evas.desk;
-	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/bg.png");
+	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/data/bg.png");
 	evas_move(e, o, 0, 0);
 	evas_resize(e, o, screen_w, screen_h);
 	evas_show(e, o);
-	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/e_logo.png");
+	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/data/e_logo.png");
 	evas_move(e, o, 0, 0);
 	evas_show(e, o);
      }   

@@ -33,6 +33,17 @@ else
   AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}")
 fi
 
+dnl Set PACKAGE_BIN_DIR in config.h.
+if test "x${datadir}" = 'x${prefix}/bin'; then
+  if test "x${prefix}" = "xNONE"; then
+    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${ac_default_prefix}/bin/${PACKAGE}")
+  else
+    AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${prefix}/bin/${PACKAGE}")
+  fi
+else
+  AC_DEFINE_UNQUOTED(PACKAGE_BIN_DIR, "${bindir}/${PACKAGE}")
+fi
+
 dnl Set PACKAGE_SOURCE_DIR in config.h.
 packagesrcdir=`cd $srcdir && pwd`
 AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}")
