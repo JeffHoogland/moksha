@@ -61,7 +61,7 @@ e_config_get(char *type)
    E_CONF("apps_menu", cfg_apps_menu_db,
 	  "%s/behavior/apps_menu.db", e_config_user_dir());
    E_CONF("borders", cfg_borders_db,
-	  PACKAGE_DATA_DIR"/data/config/appearance/default/borders/");
+	  PACKAGE_DATA_DIR"/data/borders/");
    E_CONF("menus", cfg_menus_dir,
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/menus/");
    E_CONF("entries", cfg_entries_dir,

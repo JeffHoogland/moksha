@@ -148,7 +148,7 @@ else
 fi
 
 
-cd data/config/appearance/default/borders/
+cd data/borders/
 cd borderless
 ln -sf selected-0.sticky-0.shaded-0.bits.db selected-1.sticky-0.shaded-0.bits.db
 ln -sf selected-0.sticky-0.shaded-0.bits.db selected-0.sticky-1.shaded-0.bits.db
