@@ -38,11 +38,11 @@
 /* Motif window hints */
 typedef struct _mwmhints
 {
-   int flags;
-   int functions;
-   int decorations;
-   int inputMode;
-   int status;
+   int                 flags;
+   int                 functions;
+   int                 decorations;
+   int                 inputMode;
+   int                 status;
 }
 MWMHints;
 
@@ -59,35 +59,36 @@ e_icccm_move_resize(Window win, int x, int y, int w, int h)
 void
 e_icccm_send_focus_to(Window win, int takes_focus)
 {
-   static Atom a_wm_take_focus = 0;
-   static Atom a_wm_protocols = 0;
-   int msg_focus = 0;
-   int *props;
-   int size;
+   static Atom         a_wm_take_focus = 0;
+   static Atom         a_wm_protocols = 0;
+   int                 msg_focus = 0;
+   int                *props;
+   int                 size;
 
    D_ENTER;
 
    ECORE_ATOM(a_wm_take_focus, "WM_TAKE_FOCUS");
    ECORE_ATOM(a_wm_protocols, "WM_PROTOCOLS");
-   
+
    props = ecore_window_property_get(win, a_wm_protocols, XA_ATOM, &size);
    if (props)
      {
-	int i, num;
-	
+	int                 i, num;
+
 	num = size / sizeof(int);
 	for (i = 0; i < num; i++)
 	  {
-	     if (props[i] == (int)a_wm_take_focus) msg_focus = 1;
+	     if (props[i] == (int)a_wm_take_focus)
+		msg_focus = 1;
 	  }
 	FREE(props);
      }
    if (takes_focus)
-     ecore_focus_to_window(win);
+      ecore_focus_to_window(win);
    if (msg_focus)
      {
-	unsigned int data[5];
-	
+	unsigned int        data[5];
+
 	data[0] = a_wm_take_focus;
 	data[1] = CurrentTime;
 	ecore_window_send_client_message(win, a_wm_protocols, 32, data);
@@ -99,33 +100,34 @@ e_icccm_send_focus_to(Window win, int takes_focus)
 void
 e_icccm_delete(Window win)
 {
-   static Atom a_wm_delete_window = 0;
-   static Atom a_wm_protocols = 0;
-   int *props;
-   int size;
-   int del_win = 0;
-   
+   static Atom         a_wm_delete_window = 0;
+   static Atom         a_wm_protocols = 0;
+   int                *props;
+   int                 size;
+   int                 del_win = 0;
+
    D_ENTER;
 
    ECORE_ATOM(a_wm_delete_window, "WM_DELETE_WINDOW");
    ECORE_ATOM(a_wm_protocols, "WM_PROTOCOLS");
-   
+
    props = ecore_window_property_get(win, a_wm_protocols, XA_ATOM, &size);
    if (props)
      {
-	int i, num;
-	
+	int                 i, num;
+
 	num = size / sizeof(int);
 	for (i = 0; i < num; i++)
 	  {
-	     if (props[i] == (int)a_wm_delete_window) del_win = 1;
+	     if (props[i] == (int)a_wm_delete_window)
+		del_win = 1;
 	  }
 	FREE(props);
      }
    if (del_win)
      {
-	unsigned int data[5];
-	
+	unsigned int        data[5];
+
 	data[0] = a_wm_delete_window;
 	data[1] = CurrentTime;
 	ecore_window_send_client_message(win, a_wm_protocols, 32, data);
@@ -141,9 +143,9 @@ e_icccm_delete(Window win)
 void
 e_icccm_state_mapped(Window win)
 {
-   static Atom a_wm_state = 0;
-   unsigned int data[2];
-   
+   static Atom         a_wm_state = 0;
+   unsigned int        data[2];
+
    D_ENTER;
 
    ECORE_ATOM(a_wm_state, "WM_STATE");
@@ -157,9 +159,9 @@ e_icccm_state_mapped(Window win)
 void
 e_icccm_state_iconified(Window win)
 {
-   static Atom a_wm_state = 0;
-   unsigned int data[2];
-   
+   static Atom         a_wm_state = 0;
+   unsigned int        data[2];
+
    D_ENTER;
 
    ECORE_ATOM(a_wm_state, "WM_STATE");
@@ -173,9 +175,9 @@ e_icccm_state_iconified(Window win)
 void
 e_icccm_state_withdrawn(Window win)
 {
-   static Atom a_wm_state = 0;
-   unsigned int data[2];
-   
+   static Atom         a_wm_state = 0;
+   unsigned int        data[2];
+
    D_ENTER;
 
    ECORE_ATOM(a_wm_state, "WM_STATE");
@@ -207,24 +209,24 @@ e_icccm_release(Window win)
 }
 
 void
-e_icccm_get_pos_info(Window win, E_Border *b)
+e_icccm_get_pos_info(Window win, E_Border * b)
 {
-   XSizeHints hint;
-   int mask;
-   
+   XSizeHints          hint;
+   int                 mask;
+
    D_ENTER;
 
    if (ecore_window_get_wm_size_hints(win, &hint, &mask))
      {
 	if ((hint.flags & USPosition) || ((hint.flags & PPosition)))
 	  {
-	     int x, y, w, h;
-	     
+	     int                 x, y, w, h;
+
 	     D("%li %li\n", hint.flags & USPosition, hint.flags & PPosition);
 	     b->client.pos.requested = 1;
 	     b->client.pos.gravity = NorthWestGravity;
-	     if (hint.flags & PWinGravity) 
-	       b->client.pos.gravity = hint.win_gravity;
+	     if (hint.flags & PWinGravity)
+		b->client.pos.gravity = hint.win_gravity;
 	     x = y = w = h = 0;
 	     ecore_window_get_geometry(win, &x, &y, &w, &h);
 	     b->client.pos.x = x;
@@ -240,13 +242,14 @@ e_icccm_get_pos_info(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_size_info(Window win, E_Border *b)
+e_icccm_get_size_info(Window win, E_Border * b)
 {
-   int base_w, base_h, min_w, min_h, max_w, max_h, grav, step_w, step_h;
-   double aspect_min, aspect_max;
-   int mask;
-   XSizeHints hint;
-   
+   int                 base_w, base_h, min_w, min_h, max_w, max_h, grav, step_w,
+      step_h;
+   double              aspect_min, aspect_max;
+   int                 mask;
+   XSizeHints          hint;
+
    D_ENTER;
 
    grav = NorthWestGravity;
@@ -268,38 +271,46 @@ e_icccm_get_size_info(Window win, E_Border *b)
 	     min_w = hint.min_width;
 	     min_h = hint.min_height;
 	  }
-        if (hint.flags & PMaxSize)
+	if (hint.flags & PMaxSize)
 	  {
 	     max_w = hint.max_width;
 	     max_h = hint.max_height;
-	     if (max_w < min_w) max_w = min_w;
-	     if (max_h < min_h) max_h = min_h;
+	     if (max_w < min_w)
+		max_w = min_w;
+	     if (max_h < min_h)
+		max_h = min_h;
 	  }
-        if (hint.flags & PResizeInc)
+	if (hint.flags & PResizeInc)
 	  {
 	     step_w = hint.width_inc;
 	     step_h = hint.height_inc;
-	     if (step_w < 1) step_w = 1;
-	     if (step_h < 1) step_h = 1;
+	     if (step_w < 1)
+		step_w = 1;
+	     if (step_h < 1)
+		step_h = 1;
 	  }
-        if (hint.flags & PBaseSize)
+	if (hint.flags & PBaseSize)
 	  {
 	     base_w = hint.base_width;
 	     base_h = hint.base_height;
-	     if (base_w > max_w) max_w = base_w;
-	     if (base_h > max_h) max_h = base_h;
+	     if (base_w > max_w)
+		max_w = base_w;
+	     if (base_h > max_h)
+		max_h = base_h;
 	  }
 	else
 	  {
 	     base_w = min_w;
 	     base_h = min_h;
 	  }
-        if (hint.flags & PAspect)
+	if (hint.flags & PAspect)
 	  {
 	     if (hint.min_aspect.y > 0)
-	       aspect_min = ((double)hint.min_aspect.x) / ((double)hint.min_aspect.y);
+		aspect_min =
+		   ((double)hint.min_aspect.x) / ((double)hint.min_aspect.y);
 	     if (hint.max_aspect.y > 0)
-	       aspect_max = ((double)hint.max_aspect.x) / ((double)hint.max_aspect.y);
+		aspect_max =
+		   ((double)hint.max_aspect.x) / ((double)hint.max_aspect.y);
 	  }
      }
    b->client.min.w = min_w;
@@ -318,23 +329,24 @@ e_icccm_get_size_info(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_mwm_hints(Window win, E_Border *b)
+e_icccm_get_mwm_hints(Window win, E_Border * b)
 {
-   static Atom  a_motif_wm_hints = 0;
-   MWMHints    *mwmhints;
-   int          size;
-   
+   static Atom         a_motif_wm_hints = 0;
+   MWMHints           *mwmhints;
+   int                 size;
+
    D_ENTER;
 
    ECORE_ATOM(a_motif_wm_hints, "_MOTIF_WM_HINTS");
-   
-   mwmhints = ecore_window_property_get(win, a_motif_wm_hints, a_motif_wm_hints, &size);
+
+   mwmhints =
+      ecore_window_property_get(win, a_motif_wm_hints, a_motif_wm_hints, &size);
    if (mwmhints)
      {
-	int num;
-	
+	int                 num;
+
 	num = size / sizeof(int);
-	if (num < PROP_MWM_HINTS_ELEMENTS) 
+	if (num < PROP_MWM_HINTS_ELEMENTS)
 	  {
 	     FREE(mwmhints);
 	     D_RETURN;
@@ -350,9 +362,12 @@ e_icccm_get_mwm_hints(Window win, E_Border *b)
 		  b->client.handles = 1;
 		  b->client.titlebar = 1;
 	       }
-	     if (mwmhints->decorations & MWM_DECOR_BORDER) b->client.border = 1;
-	     if (mwmhints->decorations & MWM_DECOR_RESIZEH)  b->client.handles = 1;
-	     if (mwmhints->decorations & MWM_DECOR_TITLE) b->client.titlebar = 1;
+	     if (mwmhints->decorations & MWM_DECOR_BORDER)
+		b->client.border = 1;
+	     if (mwmhints->decorations & MWM_DECOR_RESIZEH)
+		b->client.handles = 1;
+	     if (mwmhints->decorations & MWM_DECOR_TITLE)
+		b->client.titlebar = 1;
 	  }
 	FREE(mwmhints);
      }
@@ -361,23 +376,24 @@ e_icccm_get_mwm_hints(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_layer(Window win, E_Border *b)
+e_icccm_get_layer(Window win, E_Border * b)
 {
-   static Atom  a_win_layer = 0;
-   int         *props;
-   int          size;
+   static Atom         a_win_layer = 0;
+   int                *props;
+   int                 size;
 
    D_ENTER;
 
    ECORE_ATOM(a_win_layer, "_WIN_LAYER");
-   
+
    props = ecore_window_property_get(win, a_win_layer, XA_CARDINAL, &size);
    if (props)
      {
-	int num;
-	
+	int                 num;
+
 	num = size / sizeof(int);
-	if (num > 0) b->client.layer = props[0];
+	if (num > 0)
+	   b->client.layer = props[0];
 	FREE(props);
      }
 
@@ -385,17 +401,17 @@ e_icccm_get_layer(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_title(Window win, E_Border *b)
+e_icccm_get_title(Window win, E_Border * b)
 {
-   char *title;
-   
+   char               *title;
+
    D_ENTER;
 
    title = ecore_window_get_title(win);
 
-   if (b->client.title) 
+   if (b->client.title)
      {
-	if ((title) && (!strcmp(title, b->client.title))) 
+	if ((title) && (!strcmp(title, b->client.title)))
 	  {
 	     FREE(title);
 	     D_RETURN;
@@ -404,15 +420,16 @@ e_icccm_get_title(Window win, E_Border *b)
 	FREE(b->client.title);
      }
    b->client.title = NULL;
-   if (title) b->client.title = title;
-   else e_strdup(b->client.title, "No Title");
+   if (title)
+      b->client.title = title;
+   else
+      e_strdup(b->client.title, "No Title");
 
    D_RETURN;
 }
 
-
 void
-e_icccm_get_class(Window win, E_Border *b)
+e_icccm_get_class(Window win, E_Border * b)
 {
    D_ENTER;
 
@@ -421,28 +438,29 @@ e_icccm_get_class(Window win, E_Border *b)
    b->client.name = NULL;
    b->client.class = NULL;
    ecore_window_get_name_class(win, &(b->client.name), &(b->client.class));
-   if (!b->client.name) e_strdup(b->client.name, "Unknown");
-   if (!b->client.class) e_strdup(b->client.class, "Unknown");
+   if (!b->client.name)
+      e_strdup(b->client.name, "Unknown");
+   if (!b->client.class)
+      e_strdup(b->client.class, "Unknown");
 
    D_RETURN;
 }
 
 void
-e_icccm_get_hints(Window win, E_Border *b)
+e_icccm_get_hints(Window win, E_Border * b)
 {
    D_ENTER;
 
-   ecore_window_get_hints(win, 
+   ecore_window_get_hints(win,
 			  &(b->client.takes_focus),
-			  &(b->client.initial_state), 
-			  NULL, NULL, NULL,
-			  &(b->client.group));
+			  &(b->client.initial_state),
+			  NULL, NULL, NULL, &(b->client.group));
 
    D_RETURN;
 }
 
 void
-e_icccm_get_machine(Window win, E_Border *b)
+e_icccm_get_machine(Window win, E_Border * b)
 {
    D_ENTER;
 
@@ -454,7 +472,7 @@ e_icccm_get_machine(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_command(Window win, E_Border *b)
+e_icccm_get_command(Window win, E_Border * b)
 {
    D_ENTER;
 
@@ -466,7 +484,7 @@ e_icccm_get_command(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_icon_name(Window win, E_Border *b)
+e_icccm_get_icon_name(Window win, E_Border * b)
 {
    D_ENTER;
 
@@ -478,10 +496,9 @@ e_icccm_get_icon_name(Window win, E_Border *b)
 }
 
 void
-e_icccm_get_state(Window win, E_Border *b)
+e_icccm_get_state(Window win, E_Border * b)
 {
    D_ENTER;
-
 
    D_RETURN;
    UN(win);
@@ -491,8 +508,8 @@ e_icccm_get_state(Window win, E_Border *b)
 void
 e_icccm_set_frame_size(Window win, int l, int r, int t, int b)
 {
-   static Atom  a_e_frame_size = 0;
-   int props[4];
+   static Atom         a_e_frame_size = 0;
+   int                 props[4];
 
    D_ENTER;
 
@@ -509,8 +526,8 @@ e_icccm_set_frame_size(Window win, int l, int r, int t, int b)
 void
 e_icccm_set_desk_area(Window win, int ax, int ay)
 {
-   static Atom  a_win_area = 0;
-   int props[2];
+   static Atom         a_win_area = 0;
+   int                 props[2];
 
    D_ENTER;
 
@@ -525,8 +542,8 @@ e_icccm_set_desk_area(Window win, int ax, int ay)
 void
 e_icccm_set_desk_area_size(Window win, int ax, int ay)
 {
-   static Atom  a_win_area_count = 0;
-   int props[2];
+   static Atom         a_win_area_count = 0;
+   int                 props[2];
 
    D_ENTER;
 
@@ -541,8 +558,8 @@ e_icccm_set_desk_area_size(Window win, int ax, int ay)
 void
 e_icccm_set_desk(Window win, int d)
 {
-   static Atom  a_win_workspace = 0;
-   int props[2];
+   static Atom         a_win_workspace = 0;
+   int                 props[2];
 
    D_ENTER;
 
@@ -556,9 +573,9 @@ e_icccm_set_desk(Window win, int d)
 int
 e_icccm_is_shaped(Window win)
 {
-   int w, h, num;
-   int shaped = 1;
-   XRectangle *rect;
+   int                 w, h, num;
+   int                 shaped = 1;
+   XRectangle         *rect;
 
    D_ENTER;
 
@@ -566,89 +583,100 @@ e_icccm_is_shaped(Window win)
    rect = ecore_window_get_shape_rectangles(win, &num);
 
    if (!rect)
-     D_RETURN_(1);
+      D_RETURN_(1);
 
-   if ((num == 1) && 
+   if ((num == 1) &&
        (rect[0].x == 0) && (rect[0].y == 0) &&
        (rect[0].width == w) && (rect[0].height == h))
-     shaped = 0;
+      shaped = 0;
    XFree(rect);
 
    D_RETURN_(shaped);
 }
 
 void
-e_icccm_get_e_hack_launch_id(Window win, E_Border *b)
+e_icccm_get_e_hack_launch_id(Window win, E_Border * b)
 {
-   static Atom  a_e_hack_launch_id = 0;
-   int         *props;
-   int          size;
+   static Atom         a_e_hack_launch_id = 0;
+   int                *props;
+   int                 size;
 
    D_ENTER;
 
    ECORE_ATOM(a_e_hack_launch_id, "_E_HACK_LAUNCH_ID");
-   
+
    props = ecore_window_property_get(win, a_e_hack_launch_id, XA_STRING, &size);
    if (props)
      {
-	char *str;
-	
+	char               *str;
+
 	str = NEW(char, size + 1);
 	ZERO(str, char, size + 1);
+
 	memcpy(str, props, size);
 	b->client.e.launch_id = atoi(str);
 	FREE(str);
 	FREE(props);
      }
    else
-     b->client.e.launch_id = 0;
+      b->client.e.launch_id = 0;
 
    D_RETURN;
 }
 
 void
-e_icccm_handle_property_change(Atom a, E_Border *b)
+e_icccm_handle_property_change(Atom a, E_Border * b)
 {
-   static Atom  a_wm_normal_hints = 0;
-   static Atom  a_motif_wm_hints = 0;
-   static Atom  a_wm_name = 0;
-   static Atom  a_wm_class = 0;
-   static Atom  a_wm_hints = 0;
-   static Atom  a_wm_client_machine = 0;
-   static Atom  a_wm_command = 0;
-   static Atom  a_wm_icon_name = 0;
-   static Atom  a_wm_state = 0;
-   static Atom  a_e_hack_launch_id = 0;
-   
+   static Atom         a_wm_normal_hints = 0;
+   static Atom         a_motif_wm_hints = 0;
+   static Atom         a_wm_name = 0;
+   static Atom         a_wm_class = 0;
+   static Atom         a_wm_hints = 0;
+   static Atom         a_wm_client_machine = 0;
+   static Atom         a_wm_command = 0;
+   static Atom         a_wm_icon_name = 0;
+   static Atom         a_wm_state = 0;
+   static Atom         a_e_hack_launch_id = 0;
+
    D_ENTER;
 
    ECORE_ATOM(a_wm_normal_hints, "WM_NORMAL_HINTS");
    ECORE_ATOM(a_motif_wm_hints, "_MOTIF_WM_HINTS");
    ECORE_ATOM(a_wm_name, "WM_NAME");
    ECORE_ATOM(a_wm_class, "WM_CLASS");
-   ECORE_ATOM(a_wm_hints, "WM_HINTS"); 
-   ECORE_ATOM(a_wm_client_machine, "WM_CLIENT_MACHINE"); 
-   ECORE_ATOM(a_wm_command, "WM_COMMAND"); 
-   ECORE_ATOM(a_wm_icon_name, "WM_ICON_NAME"); 
-   ECORE_ATOM(a_wm_state, "WM_STATE"); 
+   ECORE_ATOM(a_wm_hints, "WM_HINTS");
+   ECORE_ATOM(a_wm_client_machine, "WM_CLIENT_MACHINE");
+   ECORE_ATOM(a_wm_command, "WM_COMMAND");
+   ECORE_ATOM(a_wm_icon_name, "WM_ICON_NAME");
+   ECORE_ATOM(a_wm_state, "WM_STATE");
    ECORE_ATOM(a_e_hack_launch_id, "_E_HACK_LAUNCH_ID");
-   
-   if (a == a_wm_normal_hints) e_icccm_get_size_info(b->win.client, b);
-   else if (a == a_motif_wm_hints) e_icccm_get_mwm_hints(b->win.client, b);
-   else if (a == a_wm_name) e_icccm_get_title(b->win.client, b);
-   else if (a == a_wm_class) e_icccm_get_class(b->win.client, b);
-   else if (a == a_wm_hints) e_icccm_get_hints(b->win.client, b);
-   else if (a == a_wm_client_machine) e_icccm_get_machine(b->win.client, b);
-   else if (a == a_wm_command) e_icccm_get_command(b->win.client, b);
-   else if (a == a_wm_icon_name) e_icccm_get_icon_name(b->win.client, b);
-   else if (a == a_wm_state) e_icccm_get_state(b->win.client, b);
-   else if (a == a_e_hack_launch_id) e_icccm_get_e_hack_launch_id(b->win.client, b);
-   
+
+   if (a == a_wm_normal_hints)
+      e_icccm_get_size_info(b->win.client, b);
+   else if (a == a_motif_wm_hints)
+      e_icccm_get_mwm_hints(b->win.client, b);
+   else if (a == a_wm_name)
+      e_icccm_get_title(b->win.client, b);
+   else if (a == a_wm_class)
+      e_icccm_get_class(b->win.client, b);
+   else if (a == a_wm_hints)
+      e_icccm_get_hints(b->win.client, b);
+   else if (a == a_wm_client_machine)
+      e_icccm_get_machine(b->win.client, b);
+   else if (a == a_wm_command)
+      e_icccm_get_command(b->win.client, b);
+   else if (a == a_wm_icon_name)
+      e_icccm_get_icon_name(b->win.client, b);
+   else if (a == a_wm_state)
+      e_icccm_get_state(b->win.client, b);
+   else if (a == a_e_hack_launch_id)
+      e_icccm_get_e_hack_launch_id(b->win.client, b);
+
    D_RETURN;
 }
 
 void
-e_icccm_handle_client_message(Ecore_Event_Message *e)
+e_icccm_handle_client_message(Ecore_Event_Message * e)
 {
    D_ENTER;
 
@@ -661,22 +689,21 @@ e_icccm_advertise_e_compat(void)
 {
    D_ENTER;
 
-
    D_RETURN;
 }
 
 void
 e_icccm_advertise_mwm_compat(void)
 {
-   static Atom  a_motif_wm_info = 0;
-   int props[2];
-   
+   static Atom         a_motif_wm_info = 0;
+   int                 props[2];
+
    D_ENTER;
 
    ECORE_ATOM(a_motif_wm_info, "_MOTIF_WM_INFO");
    props[0] = 2;
    props[0] = ecore_window_root();
-   ecore_window_property_set(0, a_motif_wm_info, a_motif_wm_info, 32, props, 2);   
+   ecore_window_property_set(0, a_motif_wm_info, a_motif_wm_info, 32, props, 2);
 
    D_RETURN;
 }
@@ -684,13 +711,13 @@ e_icccm_advertise_mwm_compat(void)
 void
 e_icccm_advertise_gnome_compat(void)
 {
-   static Atom  a_win_supporting_wm_check = 0;
-   static Atom  a_win_protocols = 0;
-   static Atom  a_win_wm_name = 0;
-   static Atom  a_win_wm_version = 0;
-   static Atom  a_win_layer = 0;
-   int props[32];
-   Window win;
+   static Atom         a_win_supporting_wm_check = 0;
+   static Atom         a_win_protocols = 0;
+   static Atom         a_win_wm_name = 0;
+   static Atom         a_win_wm_version = 0;
+   static Atom         a_win_layer = 0;
+   int                 props[32];
+   Window              win;
 
    D_ENTER;
 
@@ -700,15 +727,19 @@ e_icccm_advertise_gnome_compat(void)
    ecore_window_property_set(0, a_win_protocols, XA_ATOM, 32, props, 1);
 
    ECORE_ATOM(a_win_wm_name, "_WIN_WM_NAME");
-   ecore_window_property_set(0, a_win_wm_name, XA_STRING, 8, "Enlightenment", strlen("Enlightenment"));
+   ecore_window_property_set(0, a_win_wm_name, XA_STRING, 8, "Enlightenment",
+			     strlen("Enlightenment"));
    ECORE_ATOM(a_win_wm_version, "_WIN_WM_VERSION");
-   ecore_window_property_set(0, a_win_wm_version, XA_STRING, 8, "0.17.0", strlen("0.17.0"));
-   
+   ecore_window_property_set(0, a_win_wm_version, XA_STRING, 8, "0.17.0",
+			     strlen("0.17.0"));
+
    ECORE_ATOM(a_win_supporting_wm_check, "_WIN_SUPPORTING_WM_CHECK");
    win = ecore_window_override_new(0, 0, 0, 7, 7);
    props[0] = win;
-   ecore_window_property_set(win, a_win_supporting_wm_check, XA_CARDINAL, 32, props, 1); 
-   ecore_window_property_set(0, a_win_supporting_wm_check, XA_CARDINAL, 32, props, 1); 
+   ecore_window_property_set(win, a_win_supporting_wm_check, XA_CARDINAL, 32,
+			     props, 1);
+   ecore_window_property_set(0, a_win_supporting_wm_check, XA_CARDINAL, 32,
+			     props, 1);
 
    D_RETURN;
 }
@@ -718,7 +749,6 @@ e_icccm_advertise_kde_compat(void)
 {
    D_ENTER;
 
-
    D_RETURN;
 }
 
@@ -726,7 +756,6 @@ void
 e_icccm_advertise_net_compat(void)
 {
    D_ENTER;
-
 
    D_RETURN;
 }

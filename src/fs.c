@@ -3,28 +3,29 @@
 #include "exec.h"
 #include "util.h"
 
-static EfsdConnection     *ec = NULL;
-static Evas_List           fs_handlers = NULL;
-static Evas_List           fs_restart_handlers = NULL;
-static pid_t               efsd_pid = 0;
+static EfsdConnection *ec = NULL;
+static Evas_List    fs_handlers = NULL;
+static Evas_List    fs_restart_handlers = NULL;
+static pid_t        efsd_pid = 0;
 
-static void e_fs_child_handle(Ecore_Event *ev);
-static void e_fs_fd_handle(int fd);
-static void e_fs_restarter(int val, void *data);
-static void e_fs_idle(void *data);
-static void e_fs_flush_timeout(int val, void *data);
+static void         e_fs_child_handle(Ecore_Event * ev);
+static void         e_fs_fd_handle(int fd);
+static void         e_fs_restarter(int val, void *data);
+static void         e_fs_idle(void *data);
+static void         e_fs_flush_timeout(int val, void *data);
 
 static void
 e_fs_flush_timeout(int val, void *data)
 {
    D_ENTER;
 
-   if (!ec) D_RETURN;
+   if (!ec)
+      D_RETURN;
    if (efsd_commands_pending(ec) > 0)
      {
 	if (efsd_flush(ec) > 0)
-	  ecore_add_event_timer("e_fs_flush_timeout()", 
-			    0.00, e_fs_flush_timeout, 0, NULL);	
+	   ecore_add_event_timer("e_fs_flush_timeout()",
+				 0.00, e_fs_flush_timeout, 0, NULL);
      }
 
    D_RETURN;
@@ -44,10 +45,10 @@ e_fs_idle(void *data)
 }
 
 static void
-e_fs_child_handle(Ecore_Event *ev)
+e_fs_child_handle(Ecore_Event * ev)
 {
-   Ecore_Event_Child *e;
-   
+   Ecore_Event_Child  *e;
+
    D_ENTER;
 
    e = ev->event;
@@ -55,7 +56,8 @@ e_fs_child_handle(Ecore_Event *ev)
    if (e->pid == efsd_pid)
      {
 	D("it was efsd!\n");
-	if (ec) efsd_close(ec);
+	if (ec)
+	   efsd_close(ec);
 	ec = NULL;
 	efsd_pid = 0;
 	e_fs_restarter(1, NULL);
@@ -67,23 +69,23 @@ e_fs_child_handle(Ecore_Event *ev)
 static void
 e_fs_fd_handle(int fd)
 {
-   double start, current;
-   
+   double              start, current;
+
    D_ENTER;
 
    start = ecore_get_time();
    while ((ec) && efsd_events_pending(ec))
      {
-	EfsdEvent ev;
-	
+	EfsdEvent           ev;
+
 	if (efsd_next_event(ec, &ev) >= 0)
 	  {
-	     Evas_List l;
-	     
+	     Evas_List           l;
+
 	     for (l = fs_handlers; l; l = l->next)
 	       {
-		  void (*func) (EfsdEvent *ev);
-		  
+		  void                (*func) (EfsdEvent * ev);
+
 		  func = l->data;
 		  func(&ev);
 	       }
@@ -99,10 +101,10 @@ e_fs_fd_handle(int fd)
 	     /* efsd went wonky */
 	     D("EEEEEEEEEEK efsd went wonky. Bye bye efsd.\n");
 	  }
-	
+
 	/* spent more thna 1/20th of a second here.. get out */
 	current = ecore_get_time();
-	if ((current - start) > 0.05) 
+	if ((current - start) > 0.05)
 	  {
 	     D("fs... too much time spent..\n");
 	     break;
@@ -117,50 +119,54 @@ e_fs_restarter(int val, void *data)
 {
    D_ENTER;
 
-   if (ec) D_RETURN;
+   if (ec)
+      D_RETURN;
 
    ec = efsd_open();
 
    if ((!ec) && (val > 0))
      {
-	if (efsd_pid <= 0) 
+	if (efsd_pid <= 0)
 	  {
 	     efsd_pid = e_exec_run("efsd -f");
 	     D("launch efsd... %i\n", efsd_pid);
 	  }
-	if (efsd_pid > 0) ec = efsd_open();
+	if (efsd_pid > 0)
+	   ec = efsd_open();
      }
    if (ec)
      {
-	Evas_List l;
-	
+	Evas_List           l;
+
 	ecore_add_event_fd(efsd_get_connection_fd(ec), e_fs_fd_handle);
 	for (l = fs_restart_handlers; l; l = l->next)
 	  {
-	     E_FS_Restarter *rs;
-	     
+	     E_FS_Restarter     *rs;
+
 	     rs = l->data;
 	     rs->func(rs->data);
 	  }
      }
    else
      {
-	double gap;
-	
+	double              gap;
+
 	gap = (double)val / 10;
-	if (gap > 10.0) gap = 10.0;
-	ecore_add_event_timer("e_fs_restarter", gap, e_fs_restarter, val + 1, NULL);
+	if (gap > 10.0)
+	   gap = 10.0;
+	ecore_add_event_timer("e_fs_restarter", gap, e_fs_restarter, val + 1,
+			      NULL);
      }
 
    D_RETURN;
    UN(data);
 }
 
-E_FS_Restarter *
+E_FS_Restarter     *
 e_fs_add_restart_handler(void (*func) (void *data), void *data)
 {
-   E_FS_Restarter *rs;
-   
+   E_FS_Restarter     *rs;
+
    D_ENTER;
 
    rs = NEW(E_FS_Restarter, 1);
@@ -173,25 +179,26 @@ e_fs_add_restart_handler(void (*func) (void *data), void *data)
 }
 
 void
-e_fs_del_restart_handler(E_FS_Restarter *rs)
+e_fs_del_restart_handler(E_FS_Restarter * rs)
 {
    D_ENTER;
 
    if (evas_list_find(fs_restart_handlers, rs))
      {
 	fs_restart_handlers = evas_list_remove(fs_restart_handlers, rs);
-	FREE(rs);	
+	FREE(rs);
      }
 
    D_RETURN;
 }
 
 void
-e_fs_add_event_handler(void (*func) (EfsdEvent *ev))
+e_fs_add_event_handler(void (*func) (EfsdEvent * ev))
 {
    D_ENTER;
 
-   if (!func) D_RETURN;
+   if (!func)
+      D_RETURN;
    fs_handlers = evas_list_append(fs_handlers, func);
 
    D_RETURN;
@@ -203,24 +210,24 @@ e_fs_init(void)
    D_ENTER;
 
    /* Hook in an fs handler that gets called whenever
-      a child of this process exits.
-   */
-   ecore_event_filter_handler_add(ECORE_EVENT_CHILD, e_fs_child_handle);   
+    * a child of this process exits.
+    */
+   ecore_event_filter_handler_add(ECORE_EVENT_CHILD, e_fs_child_handle);
 
    /* Also hook in an idle handler to flush efsd's
-      write queue.
-      
-      FIXME: This should be handled by letting ecore
-      report when Efsd's file descriptor becomes
-      writeable, and then calling efsd_flush().
-   */
-   ecore_event_filter_idle_handler_add(e_fs_idle, NULL);   
+    * write queue.
+    * 
+    * FIXME: This should be handled by letting ecore
+    * report when Efsd's file descriptor becomes
+    * writeable, and then calling efsd_flush().
+    */
+   ecore_event_filter_idle_handler_add(e_fs_idle, NULL);
    e_fs_restarter(0, NULL);
 
    D_RETURN;
 }
 
-void           
+void
 e_fs_cleanup(void)
 {
    D_ENTER;
@@ -231,8 +238,7 @@ e_fs_cleanup(void)
    D_RETURN;
 }
 
-
-EfsdConnection *
+EfsdConnection     *
 e_fs_get_connection(void)
 {
    D_ENTER;

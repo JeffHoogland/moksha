@@ -7,11 +7,11 @@
 
 typedef enum e_placement_mode
 {
-  E_PLACE_MANUAL,
-  E_PLACE_SMART,
-  E_PLACE_MIDDLE,
-  E_PLACE_CASCADE,
-  E_PLACE_RANDOM
+   E_PLACE_MANUAL,
+   E_PLACE_SMART,
+   E_PLACE_MIDDLE,
+   E_PLACE_CASCADE,
+   E_PLACE_RANDOM
 }
 E_Placement_Mode;
 
@@ -21,7 +21,7 @@ E_Placement_Mode;
  * This function registers the event handlers necessary
  * to be able to manage window placement strategies.
  */
-void e_place_init(void);
+void                e_place_init(void);
 
 /**
  * e_place_border - calculates window coordinates with given strategy
@@ -35,7 +35,7 @@ void e_place_init(void);
  * and returns them in the @x and @y pointers. It does not actually
  * place the window.
  */
-int  e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mode);
-    
-#endif
+int                 e_place_border(E_Border * b, E_Desktop * desk, int *x,
+				   int *y, E_Placement_Mode mode);
 
+#endif

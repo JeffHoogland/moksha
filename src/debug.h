@@ -41,8 +41,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifdef DEBUG_NEST
 
-void e_debug_enter(const char *file, const char *func);
-void e_debug_return(const char *file, const char *func);
+void                e_debug_enter(const char *file, const char *func);
+void                e_debug_return(const char *file, const char *func);
 
 #define D_ENTER e_debug_enter(__FILE__, __FUNCTION__)
 
@@ -64,5 +64,4 @@ void e_debug_return(const char *file, const char *func);
 #define D_RETURN_(x)   return (x)
 #endif
 
-#endif 
-
+#endif

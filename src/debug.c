@@ -33,63 +33,56 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "debug.h"
 
+static int          do_print = 0;
+static int          calldepth = 0;
 
-static int do_print = 0;
-static int calldepth = 0;
+static void         debug_whitespace(int calldepth);
+static void         debug_print_info(void);
 
-static void debug_whitespace(int calldepth);
-static void debug_print_info(void);
-
-static void 
+static void
 debug_whitespace(int calldepth)
 {
-  int i;
-  
-  for (i = 0; i < 2*calldepth; i++)
-    printf("-");
+   int                 i;
+
+   for (i = 0; i < 2 * calldepth; i++)
+      printf("-");
 }
 
-
-static void 
+static void
 debug_print_info(void)
 {
-  printf("e17 dbg: ");
+   printf("e17 dbg: ");
 }
-
-
 
 void
 e_debug_enter(const char *file, const char *func)
 {
-  if (do_print)
-    {
-      calldepth++;
-      
-      printf("ENTER  ");
-      debug_print_info();
-      debug_whitespace(calldepth);
-      printf("%s, %s()\n", file, func);
-      fflush(stdout);
-    }
-}
+   if (do_print)
+     {
+	calldepth++;
 
+	printf("ENTER  ");
+	debug_print_info();
+	debug_whitespace(calldepth);
+	printf("%s, %s()\n", file, func);
+	fflush(stdout);
+     }
+}
 
 void
 e_debug_return(const char *file, const char *func)
 {
-  if (do_print)
-    {
-      printf("RETURN ");
-      debug_print_info();
-      debug_whitespace(calldepth);
-      printf("%s, %s()\n", file, func);
-      fflush(stdout);
-      
-      calldepth--;
-      
-      if (calldepth < 0)
-	printf("NEGATIVE!!!\n");
-    }
+   if (do_print)
+     {
+	printf("RETURN ");
+	debug_print_info();
+	debug_whitespace(calldepth);
+	printf("%s, %s()\n", file, func);
+	fflush(stdout);
+
+	calldepth--;
+
+	if (calldepth < 0)
+	   printf("NEGATIVE!!!\n");
+     }
 }
-
-

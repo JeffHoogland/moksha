@@ -44,14 +44,16 @@ backtrace_symbols_fd(__BT_array, __BT_n, fileno(stdout)); \
 /* macros for allowing sections of code to be runtime profiled */
 #define E_PROF 1
 #ifdef E_PROF
-extern Evas_List __e_profiles;
+extern Evas_List    __e_profiles;
 
 typedef struct _e_prof
 {
-   char  *func;
-   double total;
-   double t1, t2;
-} E_Prof;
+   char               *func;
+   double              total;
+   double              t1, t2;
+}
+E_Prof;
+
 #define E_PROF_START(_prof_func) \
 { \
 E_Prof __p, *__pp; \

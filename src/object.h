@@ -6,14 +6,15 @@
 
 #define E_OBJECT(x) ((E_Object*)(x))
 
-typedef void (*E_Cleanup_Func) (void *object);
+typedef void        (*E_Cleanup_Func) (void *object);
 
 typedef struct _e_object
 {
-  int          references;
-  E_Cleanup_Func  cleanup_func;
-  
-} E_Object;
+   int                 references;
+   E_Cleanup_Func      cleanup_func;
+
+}
+E_Object;
 
 /**
  * e_object_init - Initializes an E object
@@ -32,7 +33,7 @@ typedef struct _e_object
  * The final free() call has to happen in the root class,
  * here, it happens in e_object_cleanup().
  */
-void e_object_init(E_Object *obj, E_Cleanup_Func cleanup_func);
+void                e_object_init(E_Object * obj, E_Cleanup_Func cleanup_func);
 
 /**
  * e_object_cleanup - Cleanup function for E_Objects
@@ -43,13 +44,13 @@ void e_object_init(E_Object *obj, E_Cleanup_Func cleanup_func);
  * at the end. This is the place where the final free()
  * call occurs.
  */
-void e_object_cleanup(E_Object *obj);
+void                e_object_cleanup(E_Object * obj);
 
 /**
  * e_object_ref - Increment the reference count of this object
  * @obj:     The object whose reference count to increase
  */
-void e_object_ref(E_Object *obj);
+void                e_object_ref(E_Object * obj);
 
 /**
  * e_object_unref - Decrememnt the reference count of this object
@@ -62,7 +63,7 @@ void e_object_ref(E_Object *obj);
  * and works its way back to the root class's destructor,
  * e_object_cleanup().
  */
-int  e_object_unref(E_Object *obj);
+int                 e_object_unref(E_Object * obj);
 
 /**
  * e_object_get_usecount - Returns the current use count
@@ -73,6 +74,6 @@ int  e_object_unref(E_Object *obj);
  * gets cleaned up by checking if the use count is one,
  * cleaning up, and then calling e_object_unref().
  */
-int  e_object_get_usecount(E_Object *obj);
+int                 e_object_get_usecount(E_Object * obj);
 
 #endif

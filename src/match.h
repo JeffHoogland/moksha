@@ -5,8 +5,7 @@
 #include "border.h"
 #include "desktops.h"
 
-void e_match_set_props(E_Border *b);
-void e_match_save_props(E_Border *b);
+void                e_match_set_props(E_Border * b);
+void                e_match_save_props(E_Border * b);
 
 #endif
-

@@ -15,50 +15,52 @@ typedef struct _e_observee E_Observee;
 typedef enum _e_event_type
 {
    /* basic event types */
-   E_EVENT_BORDER_NEW          = 1 << 0,
-   E_EVENT_BORDER_DELETE       = 1 << 1,
-   E_EVENT_BORDER_FOCUS_IN     = 1 << 2,
-   E_EVENT_BORDER_ICONIFY      = 1 << 3,
-   E_EVENT_BORDER_UNICONIFY    = 1 << 4,
-   E_EVENT_BORDER_MAXIMIZE     = 1 << 5,
-   E_EVENT_BORDER_UNMAXIMIZE   = 1 << 6,
-   E_EVENT_BORDER_MOVE         = 1 << 7,
-   E_EVENT_BORDER_RESIZE       = 1 << 8,
-   
-   E_EVENT_DESKTOP_NEW         = 1 << 10,
-   E_EVENT_DESKTOP_DELETE      = 1 << 11,
-   E_EVENT_DESKTOP_SWITCH      = 1 << 12,
+   E_EVENT_BORDER_NEW = 1 << 0,
+   E_EVENT_BORDER_DELETE = 1 << 1,
+   E_EVENT_BORDER_FOCUS_IN = 1 << 2,
+   E_EVENT_BORDER_ICONIFY = 1 << 3,
+   E_EVENT_BORDER_UNICONIFY = 1 << 4,
+   E_EVENT_BORDER_MAXIMIZE = 1 << 5,
+   E_EVENT_BORDER_UNMAXIMIZE = 1 << 6,
+   E_EVENT_BORDER_MOVE = 1 << 7,
+   E_EVENT_BORDER_RESIZE = 1 << 8,
+
+   E_EVENT_DESKTOP_NEW = 1 << 10,
+   E_EVENT_DESKTOP_DELETE = 1 << 11,
+   E_EVENT_DESKTOP_SWITCH = 1 << 12,
 
    /* meta event types */
-   E_EVENT_BORDER_ALL          = E_EVENT_BORDER_NEW |
-      E_EVENT_BORDER_DELETE    | E_EVENT_BORDER_FOCUS_IN |
-      E_EVENT_BORDER_ICONIFY   | E_EVENT_BORDER_UNICONIFY |
-      E_EVENT_BORDER_MAXIMIZE  | E_EVENT_BORDER_UNMAXIMIZE,
-   E_EVENT_DESKTOP_ALL         = E_EVENT_DESKTOP_NEW |
-      E_EVENT_DESKTOP_DELETE   | E_EVENT_DESKTOP_SWITCH,
-   
-   /* ALL events */
-   E_EVENT_MAX                 = 0xFFFFFFFF 
-} E_Event_Type;
+   E_EVENT_BORDER_ALL = E_EVENT_BORDER_NEW |
+      E_EVENT_BORDER_DELETE | E_EVENT_BORDER_FOCUS_IN |
+      E_EVENT_BORDER_ICONIFY | E_EVENT_BORDER_UNICONIFY |
+      E_EVENT_BORDER_MAXIMIZE | E_EVENT_BORDER_UNMAXIMIZE,
+   E_EVENT_DESKTOP_ALL = E_EVENT_DESKTOP_NEW |
+      E_EVENT_DESKTOP_DELETE | E_EVENT_DESKTOP_SWITCH,
 
-typedef void(*E_Notify_Func)(E_Observer *observer, E_Observee *observee, E_Event_Type event);
+   /* ALL events */
+   E_EVENT_MAX = 0xFFFFFFFF
+}
+E_Event_Type;
+
+typedef void        (*E_Notify_Func) (E_Observer * observer,
+				      E_Observee * observee,
+				      E_Event_Type event);
 
 struct _e_observer
 {
-  E_Object               obj;
+   E_Object            obj;
 
-  Evas_List              watched;      /* list<E_Observee> */
-  E_Event_Type       event;
-  E_Notify_Func          notify_func;
+   Evas_List           watched;	/* list<E_Observee> */
+   E_Event_Type        event;
+   E_Notify_Func       notify_func;
 };
 
 struct _e_observee
 {
-  E_Object               obj;
+   E_Object            obj;
 
-  Evas_List              observers;    /* list<E_Observer> */
+   Evas_List           observers;	/* list<E_Observer> */
 };
-
 
 /**
  * e_observer_init - Initializes an observer
@@ -72,9 +74,9 @@ struct _e_observee
  * e_observee_notify_observers() call. Observers are derived from
  * E_Objects, therefore, this function also handles E_Object initalization.
  */
-void    e_observer_init(E_Observer *obs, E_Event_Type event,
-			E_Notify_Func notify_func,
-			E_Cleanup_Func cleanup_func);
+void                e_observer_init(E_Observer * obs, E_Event_Type event,
+				    E_Notify_Func notify_func,
+				    E_Cleanup_Func cleanup_func);
 
 /**
  * e_observer_cleanup - Cleans up an observer.
@@ -82,7 +84,7 @@ void    e_observer_init(E_Observer *obs, E_Event_Type event,
  *
  * This function cleans up an observer by unregistering all observees.
  */
-void    e_observer_cleanup(E_Observer *obs);
+void                e_observer_cleanup(E_Observer * obs);
 
 /**
  * e_observer_register_observee - Registers an observee
@@ -91,7 +93,8 @@ void    e_observer_cleanup(E_Observer *obs);
  *
  * This function registers the observer in the observee and vice versa.
  */
-void    e_observer_register_observee(E_Observer *observer, E_Observee *observee);
+void                e_observer_register_observee(E_Observer * observer,
+						 E_Observee * observee);
 
 /**
  * e_observer_unregister_observee - Unregisters an observee
@@ -100,7 +103,8 @@ void    e_observer_register_observee(E_Observer *observer, E_Observee *observee)
  *
  * This function unregisters the observer in the observee and vice versa.
  */
-void    e_observer_unregister_observee(E_Observer *observer, E_Observee *observee);
+void                e_observer_unregister_observee(E_Observer * observer,
+						   E_Observee * observee);
 
 /**
  * e_observee_init - Initializes an observee.
@@ -111,7 +115,8 @@ void    e_observer_unregister_observee(E_Observer *observer, E_Observee *observe
  * from E_Objects, which is why this function gets the destructor
  * function as a parameter. It is passed on to e_object_init().
  */
-void    e_observee_init(E_Observee *obs, E_Cleanup_Func cleanup_func);
+void                e_observee_init(E_Observee * obs,
+				    E_Cleanup_Func cleanup_func);
 
 /**
  * e_observee_cleanup - Cleans up an observee.
@@ -119,7 +124,7 @@ void    e_observee_init(E_Observee *obs, E_Cleanup_Func cleanup_func);
  *
  * This function cleans up an observee by unregistering it from all observers.
  */
-void    e_observee_cleanup(E_Observee *obs);
+void                e_observee_cleanup(E_Observee * obs);
 
 /**
  * e_observee_notify_observers - Notify observers of a given Ecore event
@@ -130,8 +135,8 @@ void    e_observee_cleanup(E_Observee *obs);
  * and calls the notify_func() of the observers that are
  * responsible for the given @event.
  */
-void    e_observee_notify_observers(E_Observee *o, E_Event_Type event);
-
+void                e_observee_notify_observers(E_Observee * o,
+						E_Event_Type event);
 
 /**
  * e_observee_notify_all_observers - Notify all observers of a given E event
@@ -147,5 +152,6 @@ void    e_observee_notify_observers(E_Observee *o, E_Event_Type event);
  * If they are looking for this type of NEW event, then they can register
  * it as a legitimate observee.
  */
-void    e_observee_notify_all_observers(E_Observee *o, E_Event_Type event);
+void                e_observee_notify_all_observers(E_Observee * o,
+						    E_Event_Type event);
 #endif

@@ -2,20 +2,24 @@
 #include "text.h"
 #include "util.h"
 
-E_Text *
+E_Text             *
 e_text_new(Evas evas, char *text, char *class)
 {
-   E_Text *t;
-   
+   E_Text             *t;
+
    D_ENTER;
 
    t = NEW(E_Text, 1);
    ZERO(t, E_Text, 1);
    t->state = strdup("normal");
-   if (class) t->class = strdup(class);
-   else t->class = strdup("");
-   if (text) t->text = strdup(text);
-   else t->text = strdup("");
+   if (class)
+      t->class = strdup(class);
+   else
+      t->class = strdup("");
+   if (text)
+      t->text = strdup(text);
+   else
+      t->text = strdup("");
    t->evas = evas;
    t->obj.o1 = evas_add_text(t->evas, "borzoib", 8, t->text);
    t->obj.o2 = evas_add_text(t->evas, "borzoib", 8, t->text);
@@ -52,14 +56,14 @@ e_text_new(Evas evas, char *text, char *class)
 }
 
 void
-e_text_free(E_Text *t)
+e_text_free(E_Text * t)
 {
    D_ENTER;
 
    IF_FREE(t->state);
    IF_FREE(t->class);
    IF_FREE(t->text);
-   
+
    if ((t->evas) && (t->obj.text))
      {
 	evas_del_object(t->evas, t->obj.o1);
@@ -74,12 +78,14 @@ e_text_free(E_Text *t)
 }
 
 void
-e_text_set_text(E_Text *t, char *text)
+e_text_set_text(E_Text * t, char *text)
 {
    D_ENTER;
 
-   if (!text) text = "";
-   if (!strcmp(t->text, text)) D_RETURN;
+   if (!text)
+      text = "";
+   if (!strcmp(t->text, text))
+      D_RETURN;
    FREE(t->text);
    t->text = strdup(text);
    evas_set_text(t->evas, t->obj.o1, t->text);
@@ -98,11 +104,12 @@ e_text_set_text(E_Text *t, char *text)
 }
 
 void
-e_text_set_layer(E_Text *t, int l)
+e_text_set_layer(E_Text * t, int l)
 {
    D_ENTER;
 
-   if (t->layer == l) D_RETURN;
+   if (t->layer == l)
+      D_RETURN;
    t->layer = l;
    evas_set_layer(t->evas, t->obj.o1, t->layer);
    evas_set_layer(t->evas, t->obj.o2, t->layer);
@@ -114,7 +121,7 @@ e_text_set_layer(E_Text *t, int l)
 }
 
 void
-e_text_set_clip(E_Text *t, Evas_Object clip)
+e_text_set_clip(E_Text * t, Evas_Object clip)
 {
    D_ENTER;
 
@@ -128,7 +135,7 @@ e_text_set_clip(E_Text *t, Evas_Object clip)
 }
 
 void
-e_text_unset_clip(E_Text *t)
+e_text_unset_clip(E_Text * t)
 {
    D_ENTER;
 
@@ -142,7 +149,7 @@ e_text_unset_clip(E_Text *t)
 }
 
 void
-e_text_raise(E_Text *t)
+e_text_raise(E_Text * t)
 {
    D_ENTER;
 
@@ -156,7 +163,7 @@ e_text_raise(E_Text *t)
 }
 
 void
-e_text_lower(E_Text *t)
+e_text_lower(E_Text * t)
 {
    D_ENTER;
 
@@ -170,11 +177,12 @@ e_text_lower(E_Text *t)
 }
 
 void
-e_text_show(E_Text *t)
+e_text_show(E_Text * t)
 {
    D_ENTER;
 
-   if (t->visible) D_RETURN;
+   if (t->visible)
+      D_RETURN;
    t->visible = 1;
    evas_show(t->evas, t->obj.o1);
    evas_show(t->evas, t->obj.o2);
@@ -186,11 +194,12 @@ e_text_show(E_Text *t)
 }
 
 void
-e_text_hide(E_Text *t)
+e_text_hide(E_Text * t)
 {
    D_ENTER;
 
-   if (!t->visible) D_RETURN;
+   if (!t->visible)
+      D_RETURN;
    t->visible = 0;
    evas_hide(t->evas, t->obj.o1);
    evas_hide(t->evas, t->obj.o2);
@@ -202,29 +211,30 @@ e_text_hide(E_Text *t)
 }
 
 void
-e_text_set_color(E_Text *t, int r, int g, int b, int a)
+e_text_set_color(E_Text * t, int r, int g, int b, int a)
 {
    D_ENTER;
 
    if ((r == t->color.r) &&
-       (g == t->color.g) &&
-       (b == t->color.b) &&
-       (a == t->color.a)) D_RETURN;
+       (g == t->color.g) && (b == t->color.b) && (a == t->color.a))
+      D_RETURN;
    t->color.r = r;
    t->color.g = g;
    t->color.b = b;
    t->color.a = a;
-   evas_set_color(t->evas, t->obj.text, t->color.r, t->color.g, t->color.b, t->color.a);
+   evas_set_color(t->evas, t->obj.text, t->color.r, t->color.g, t->color.b,
+		  t->color.a);
 
    D_RETURN;
 }
 
 void
-e_text_move(E_Text *t, double x, double y)
+e_text_move(E_Text * t, double x, double y)
 {
    D_ENTER;
 
-   if ((t->x == x) && (t->y == y)) D_RETURN;
+   if ((t->x == x) && (t->y == y))
+      D_RETURN;
    t->x = x;
    t->y = y;
    evas_move(t->evas, t->obj.o1, t->x + 1, t->y);
@@ -237,10 +247,9 @@ e_text_move(E_Text *t, double x, double y)
 }
 
 void
-e_text_resize(E_Text *t, double w, double h)
+e_text_resize(E_Text * t, double w, double h)
 {
    D_ENTER;
-
 
    D_RETURN;
    UN(t);
@@ -249,42 +258,50 @@ e_text_resize(E_Text *t, double w, double h)
 }
 
 void
-e_text_get_geometry(E_Text *t, double *x, double *y, double *w, double *h)
+e_text_get_geometry(E_Text * t, double *x, double *y, double *w, double *h)
 {
    D_ENTER;
 
-   if (x) *x = t->x;
-   if (y) *y = t->y;
-   if (w) *w = t->w;
-   if (h) *h = t->h;
+   if (x)
+      *x = t->x;
+   if (y)
+      *y = t->y;
+   if (w)
+      *w = t->w;
+   if (h)
+      *h = t->h;
 
    D_RETURN;
 }
 
 void
-e_text_get_min_size(E_Text *t, double *w, double *h)
+e_text_get_min_size(E_Text * t, double *w, double *h)
 {
    D_ENTER;
 
-   if (w) *w = t->min.w;
-   if (h) *h = t->min.h;
+   if (w)
+      *w = t->min.w;
+   if (h)
+      *h = t->min.h;
 
    D_RETURN;
 }
 
 void
-e_text_get_max_size(E_Text *t, double *w, double *h)
+e_text_get_max_size(E_Text * t, double *w, double *h)
 {
    D_ENTER;
 
-   if (w) *w = t->max.w;
-   if (h) *h = t->max.h;
+   if (w)
+      *w = t->max.w;
+   if (h)
+      *h = t->max.h;
 
    D_RETURN;
 }
 
 void
-e_text_set_state(E_Text *t, char *state)
+e_text_set_state(E_Text * t, char *state)
 {
    D_ENTER;
 
@@ -295,7 +312,7 @@ e_text_set_state(E_Text *t, char *state)
 }
 
 void
-e_text_set_class(E_Text *t, char *class)
+e_text_set_class(E_Text * t, char *class)
 {
    D_ENTER;
 
@@ -306,10 +323,9 @@ e_text_set_class(E_Text *t, char *class)
 }
 
 void
-e_text_update_class(E_Text *t)
+e_text_update_class(E_Text * t)
 {
    D_ENTER;
-
 
    D_RETURN;
    UN(t);

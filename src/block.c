@@ -6,24 +6,24 @@ typedef struct _e_block E_Block;
 
 struct _e_block
 {
-   char *name;
-   int refs;
+   char               *name;
+   int                 refs;
 };
 
-static Evas_List blocks = NULL;
+static Evas_List    blocks = NULL;
 
-static E_Block *e_block_find(char *name);
+static E_Block     *e_block_find(char *name);
 
-static E_Block *
+static E_Block     *
 e_block_find(char *name)
 {
-   Evas_List l;
-   
+   Evas_List           l;
+
    D_ENTER;
    for (l = blocks; l; l = l->next)
      {
-	E_Block *b;
-	
+	E_Block            *b;
+
 	b = l->data;
 	if (!strcmp(b->name, name))
 	  {
@@ -38,8 +38,8 @@ e_block_find(char *name)
 void
 e_block_start(char *name)
 {
-   E_Block *b;
-   
+   E_Block            *b;
+
    D_ENTER;
    b = e_block_find(name);
    if (b)
@@ -58,8 +58,8 @@ e_block_start(char *name)
 void
 e_block_stop(char *name)
 {
-   E_Block *b;
-   
+   E_Block            *b;
+
    D_ENTER;
    b = e_block_find(name);
    if (b)
@@ -69,7 +69,7 @@ e_block_stop(char *name)
 	  {
 	     blocks = evas_list_remove(blocks, b);
 	     IF_FREE(b->name);
-	     FREE(b);	     
+	     FREE(b);
 	  }
      }
    D_RETURN;
@@ -78,8 +78,8 @@ e_block_stop(char *name)
 int
 e_block_is_active(char *name)
 {
-   E_Block *b;
-   
+   E_Block            *b;
+
    D_ENTER;
    b = e_block_find(name);
    if (b)

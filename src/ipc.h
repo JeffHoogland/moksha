@@ -3,7 +3,6 @@
 
 #include "e.h"
 
-void e_ipc_init(void);
+void                e_ipc_init(void);
 
 #endif
-
