@@ -188,16 +188,30 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 static void 
 e_entry_realize(E_Entry *entry)
 {
+   char *entries;
+   char buf[4096];
+   
+   entries = e_config_get("entries");
+   sprintf(buf, "%s/%s", entries, "base.bits.db");
+   entry->obj_base = ebits_load(buf); 
+   if (entry->obj_base) 
+    {
+	ebits_add_to_evas(entry->obj_base, entry->evas);
+	ebits_set_color_class(entry->obj_base, "Base BG", 100, 200, 255, 255);
+     }   
+   
    entry->clip_box = evas_add_rectangle(entry->evas);
    entry->text = evas_add_text(entry->evas, "borzoib", 8, "");
    entry->selection = evas_add_rectangle(entry->evas);
    entry->cursor = evas_add_rectangle(entry->evas);
    entry->event_box = evas_add_rectangle(entry->evas);
    evas_set_color(entry->evas, entry->clip_box, 255, 255, 255, 255);
-   evas_set_color(entry->evas, entry->event_box, 200, 100, 50, 50);
+   evas_set_color(entry->evas, entry->event_box, 0, 0, 0, 0);
    evas_set_color(entry->evas, entry->text, 0, 0, 0, 255);
    evas_set_color(entry->evas, entry->cursor, 255, 255, 255, 100);
    evas_set_color(entry->evas, entry->selection, 255, 255, 50, 50);
+   if (entry->obj_base) 
+     ebits_set_clip(entry->obj_base, entry->clip_box);
    evas_set_clip(entry->evas, entry->text, entry->clip_box);
    evas_set_clip(entry->evas, entry->event_box, entry->clip_box);
    evas_set_clip(entry->evas, entry->cursor, entry->clip_box);
@@ -222,6 +236,11 @@ e_entry_configure(E_Entry *entry)
 {
    if (!entry->evas) return;
    if (!entry->event_box) return;
+   if (entry->obj_base) 
+     {
+	ebits_move(entry->obj_base, entry->x, entry->y);
+	ebits_resize(entry->obj_base, entry->w, entry->h);
+     }
    evas_move(entry->evas, entry->clip_box, entry->x, entry->y);
    evas_resize(entry->evas, entry->clip_box, entry->w, entry->h);
    evas_move(entry->evas, entry->event_box, entry->x, entry->y);
@@ -450,6 +469,8 @@ e_entry_show(E_Entry *entry)
    if (entry->visible) return;
    entry->visible = 1;
    if (!entry->evas) return;
+   if (entry->obj_base) 
+     ebits_show(entry->obj_base);
    evas_show(entry->evas, entry->event_box);
    evas_show(entry->evas, entry->clip_box);
    if (entry->focused) evas_show(entry->evas, entry->cursor);
@@ -462,6 +483,8 @@ e_entry_hide(E_Entry *entry)
    if (!entry->visible) return;
    entry->visible = 0;
    if (!entry->evas) return;
+   if (entry->obj_base) 
+     ebits_hide(entry->obj_base);
    evas_hide(entry->evas, entry->event_box);
    evas_hide(entry->evas, entry->clip_box);
    evas_hide(entry->evas, entry->cursor);
@@ -472,6 +495,8 @@ e_entry_hide(E_Entry *entry)
 void
 e_entry_set_layer(E_Entry *entry, int l)
 {
+   if (entry->obj_base) 
+     ebits_set_layer(entry->obj_base, l);
    evas_set_layer(entry->evas, entry->clip_box, l);
    evas_set_layer(entry->evas, entry->text, l);
    evas_set_layer(entry->evas, entry->selection, l);

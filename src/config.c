@@ -18,6 +18,7 @@ static char cfg_actions_db[4096] = "";
 static char cfg_borders_db[4096] = "";
 static char cfg_apps_menu_db[4096] = "";
 static char cfg_menus_dir[4096] = "";
+static char cfg_entries_dir[4096] = "";
 static char cfg_user_dir[4096] = "";
 static char cfg_images_dir[4096] = "";
 static char cfg_fonts_dir[4096] = "";
@@ -52,6 +53,8 @@ e_config_get(char *type)
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/borders/");
    E_CONF("menus", cfg_menus_dir,
 	  PACKAGE_DATA_DIR"/data/config/appearance/default/menus/");
+   E_CONF("entries", cfg_entries_dir,
+	  PACKAGE_DATA_DIR"/data/config/appearance/default/entries/");
    E_CONF("images", cfg_images_dir,
 	  PACKAGE_DATA_DIR"/data/images/");
    E_CONF("fonts", cfg_fonts_dir,
@@ -105,6 +108,9 @@ e_config_set_user_dir(char *dir)
    cfg_settings_db[0] = 0;
    cfg_actions_db[0]  = 0;
    cfg_borders_db[0]  = 0;
+   cfg_apps_menu_db[0]= 0;
+   cfg_menus_dir[0]   = 0;
+   cfg_entries_dir[0] = 0;
    cfg_user_dir[0]    = 0;
    cfg_images_dir[0]  = 0;
    cfg_fonts_dir[0]   = 0;

@@ -553,6 +553,7 @@ struct _E_Entry
    int   focused;
    int   scroll_pos;
    int   x, y, w, h;
+   Ebits_Object obj_base;
    Evas_Object event_box;
    Evas_Object clip_box;
    Evas_Object cursor;
