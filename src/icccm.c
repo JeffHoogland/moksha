@@ -137,14 +137,10 @@ e_icccm_release(Window win)
 void
 e_icccm_get_size_info(Window win, E_Border *b)
 {
-   int x, y, w, h;
    int base_w, base_h, min_w, min_h, max_w, max_h, grav, step_w, step_h;
    double aspect_min, aspect_max;
    int mask;
    XSizeHints hint;
-   
-   x = 0; y = 0; w = 0; h = 0;
-   e_window_get_geometry(win, &x, &y, &w, &h);
    
    grav = NorthWestGravity;
    mask = 0;
@@ -160,28 +156,6 @@ e_icccm_get_size_info(Window win, E_Border *b)
    base_h = 0;
    if (e_window_get_wm_size_hints(win, &hint, &mask))
      {
-	if (!b->placed)
-	  {
-	     if (hint.flags & PWinGravity) grav = hint.win_gravity;
-	     if ((hint.flags & USPosition) || ((hint.flags & PPosition)))
-	       {
-	       }
-	     else
-	       {
-		  /* get x,y location of client */
-		  x = rand()%640;
-		  y = rand()%480;
-	       }
-	  }
-	else
-	  {
-	     int pl, pr, pt, pb;
-	     
-	     pl = pr = pt = pb = 0;
-	     if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-	     x = b->current.x + pl;
-	     y = b->current.y + pt;
-	  }
 	if (hint.flags & PMinSize)
 	  {
 	     min_w = hint.min_width;
@@ -221,45 +195,17 @@ e_icccm_get_size_info(Window win, E_Border *b)
 	       aspect_max = ((double)hint.max_aspect.x) / ((double)hint.max_aspect.y);
 	  }
      }
-   else
-     {
-        if (!b->placed)
-	  {
-	     /* get x,y location of client */
-	     x = rand()%640;
-	     y = rand()%480;
-	  }
-	else
-	  {
-	     int pl, pr, pt, pb;
-	     
-	     pl = pr = pt = pb = 0;
-	     if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-	     x = b->current.x + pl;
-	     y = b->current.y + pt;
-	  }
-     }
-     {
-	int pl, pr, pt, pb;
-	
-	pl = pr = pt = pb = 0;
-	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-	b->current.requested.x = x - pl;
-	b->current.requested.y = y - pt;
-	b->current.requested.w = w + pl + pr;
-	b->current.requested.h = h + pt + pb;
-	b->client.min.w = min_w;
-	b->client.min.h = min_h;
-	b->client.max.w = max_w;
-	b->client.max.h = max_h;
-	b->client.base.w = base_w;
-	b->client.base.h = base_h;
-	b->client.step.w = step_w;
-	b->client.step.h = step_h;
-	b->client.min.aspect = aspect_min;
-	b->client.max.aspect = aspect_max;
-	b->changed = 1;
-     }
+   b->client.min.w = min_w;
+   b->client.min.h = min_h;
+   b->client.max.w = max_w;
+   b->client.max.h = max_h;
+   b->client.base.w = base_w;
+   b->client.base.h = base_h;
+   b->client.step.w = step_w;
+   b->client.step.h = step_h;
+   b->client.min.aspect = aspect_min;
+   b->client.max.aspect = aspect_max;
+   b->changed = 1;
 }
 
 void

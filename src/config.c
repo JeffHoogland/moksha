@@ -66,7 +66,8 @@ void
 e_config_init(void)
 {
    char buf[4096];
-   
+
+#if 1 /* for now don't do this. i think a cp -r will be needed later anyway */
    if (!e_file_is_dir(e_config_user_dir())) e_file_mkdir(e_config_user_dir());
    sprintf(buf, "%sappearance",           e_config_user_dir());
    if (!e_file_is_dir(buf)) e_file_mkdir(buf);
@@ -97,6 +98,7 @@ e_config_init(void)
    sprintf(buf, "%sappearance/borders/borderless.bits.db",  e_config_user_dir());
    if (!e_file_exists(buf))
      e_file_cp(PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db", buf);
+#endif
 }
 
 void
@@ -123,6 +125,10 @@ e_config_user_dir(void)
 {
    if (cfg_user_dir[0]) return cfg_user_dir;
    if (cfg_root[0]) return cfg_root;
+#if 1 /* disabled for now - use system ones only */
    sprintf(cfg_user_dir, "%s/.e/", e_file_home());
+#else   
+   sprintf(cfg_user_dir, PACKAGE_DATA_DIR"/data/config/");
+#endif   
    return cfg_user_dir;
 }

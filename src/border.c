@@ -122,11 +122,7 @@ e_configure_request(Eevent * ev)
 		b->current.requested.x = e->x;
 	     if (e->mask & EV_VALUE_Y)
 		b->current.requested.y = e->y;
-	     if (e->mask & EV_VALUE_W)
-	       {
-		  b->current.requested.w = e->w + pl + pr;
-	       }
-	     if (e->mask & EV_VALUE_H)
+	     if ((e->mask & EV_VALUE_W) || (e->mask & EV_VALUE_H))
 	       {
 		  if (b->current.shaded == b->client.h)
 		    {
@@ -140,11 +136,12 @@ e_configure_request(Eevent * ev)
 		       if (b->current.shaded < 1)
 			 b->current.shaded = 1;
 		    }
-		  b->client.w = e->w;
+/*		  b->client.w = e->w;
 		  b->client.h = e->h;
-		  
+*/		  
+		  b->current.requested.w = e->w + pl + pr;
 		  b->current.requested.h = e->h + pt + pb;
-		  }
+	       }
 	     if ((e->mask & EV_VALUE_SIBLING) && (e->mask & EV_VALUE_STACKING))
 	       {
 		  E_Border *b_rel;
@@ -182,7 +179,7 @@ e_configure_request(Eevent * ev)
 	  {
 	     if ((e->mask & EV_VALUE_X) && (e->mask & EV_VALUE_W))
 		e_window_move_resize(e->win, e->x, e->y, e->w, e->h);
-	     else if ((e->mask & EV_VALUE_W))
+	     else if ((e->mask & EV_VALUE_W) || (e->mask & EV_VALUE_H))
 		e_window_resize(e->win, e->w, e->h);
 	     else if ((e->mask & EV_VALUE_X))
 		e_window_move(e->win, e->x, e->y);
@@ -1155,6 +1152,32 @@ e_border_adopt(Window win, int use_client_pos)
    b->current.requested.visible = 1;
    /* get hints */
    e_icccm_get_size_info(win, b);
+     {
+	int x, y, w, h;
+        int pl, pr, pt, pb;
+	
+	x = 0; y = 0; w = 0; h = 0;
+	e_window_get_geometry(win, &x, &y, &w, &h);
+	pl = pr = pt = pb = 0;
+	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	if (!b->placed)
+	  {
+	     /* get x,y location of client */
+	     x = rand()%640;
+	     y = rand()%480;
+	  }
+	else
+	  {
+	     x = b->current.x + pl;
+	     y = b->current.y + pt;
+	  }
+	b->current.requested.x = x - pl;
+	b->current.requested.y = y - pt;
+	b->current.requested.w = w + pl + pr;
+	b->current.requested.h = h + pt + pb;
+	b->changed = 1;
+     }
+	
    e_icccm_get_mwm_hints(win, b);
    e_icccm_get_layer(win, b);
    e_icccm_get_title(win, b);
@@ -1721,19 +1744,19 @@ e_border_adjust_limits(E_Border *b)
 
    if (b->current.shaded == 0)
      {
-	if ((b->mode.resize == 3) || (b->mode.resize == 5) || (b->mode.resize == 7))
+	if ((b->mode.resize == 4) || (b->mode.resize == 6) || (b->mode.resize == 8))
 	  {
 	  }
-	else if ((b->mode.resize == 0) || (b->mode.resize == 4))
+	else if ((b->mode.resize == 1) || (b->mode.resize == 5))
 	  {
 	     b->current.x += (b->current.requested.w - b->current.w);
 	     b->current.y += (b->current.requested.h - b->current.h);
 	  }
-	else if ((b->mode.resize == 1) || (b->mode.resize == 6))
+	else if ((b->mode.resize == 2) || (b->mode.resize == 7))
 	  {
 	     b->current.y += (b->current.requested.h - b->current.h);
 	  }
-	else if ((b->mode.resize == 2))
+	else if ((b->mode.resize == 3))
 	  {
 	     b->current.x += (b->current.requested.w - b->current.w);
 	  }

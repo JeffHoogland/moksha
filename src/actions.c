@@ -568,12 +568,12 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
      {
 	if (y > (b->current.h / 2)) 
 	  {
-	     b->mode.resize = 3;
+	     b->mode.resize = 4;
 	     SET_BORDER_GRAVITY(b, NorthWestGravity);
 	  }
 	else 
 	  {
-	     b->mode.resize = 1;
+	     b->mode.resize = 2;
 	     SET_BORDER_GRAVITY(b, SouthWestGravity);
 	  }
      }
@@ -581,12 +581,12 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
      {
 	if (y > (b->current.h / 2)) 
 	  {
-	     b->mode.resize = 2;
+	     b->mode.resize = 3;
 	     SET_BORDER_GRAVITY(b, NorthEastGravity);
 	  }
 	else 
 	  {
-	     b->mode.resize = 0;
+	     b->mode.resize = 1;
 	     SET_BORDER_GRAVITY(b, SouthEastGravity);
 	  }
      }
@@ -631,26 +631,26 @@ e_act_resize_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   if (b->mode.resize == 0)
+   if (b->mode.resize == 1)
      {
 	b->current.requested.w -= dx;
 	b->current.requested.h -= dy;
 	b->current.requested.x += dx;
 	b->current.requested.y += dy;
      }
-   else if (b->mode.resize == 1)
+   else if (b->mode.resize == 2)
      {
 	b->current.requested.w += dx;
 	b->current.requested.h -= dy;
 	b->current.requested.y += dy;
      }
-   else if (b->mode.resize == 2)
+   else if (b->mode.resize == 3)
      {
 	b->current.requested.w -= dx;
 	b->current.requested.h += dy;
 	b->current.requested.x += dx;
      }
-   else if (b->mode.resize == 3)
+   else if (b->mode.resize == 4)
      {
 	b->current.requested.w += dx;
 	b->current.requested.h += dy;
@@ -679,12 +679,12 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    /* 4 | 5 */
    if (x > (b->current.w / 2)) 
      {
-	b->mode.resize = 5;
+	b->mode.resize = 6;
 	SET_BORDER_GRAVITY(b, NorthWestGravity);
      }
    else 
      {
-	b->mode.resize = 4;
+	b->mode.resize = 5;
 	SET_BORDER_GRAVITY(b, NorthEastGravity);
      }
    return;
@@ -729,12 +729,12 @@ e_act_resize_h_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   if (b->mode.resize == 4)
+   if (b->mode.resize == 5)
      {
 	b->current.requested.w -= dx;
 	b->current.requested.x += dx;
      }
-   else if (b->mode.resize == 5)
+   else if (b->mode.resize == 6)
      {
 	b->current.requested.w += dx;
      }
@@ -765,12 +765,12 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
    /* 7 */
    if (y > (b->current.h / 2)) 
      {
-	b->mode.resize = 7;
+	b->mode.resize = 8;
 	SET_BORDER_GRAVITY(b, NorthWestGravity);
      }
    else 
      {
-	b->mode.resize = 6;
+	b->mode.resize = 7;
 	SET_BORDER_GRAVITY(b, SouthWestGravity);
      }
    return;
@@ -815,12 +815,12 @@ e_act_resize_v_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
-   if (b->mode.resize == 6)
+   if (b->mode.resize == 7)
      {
 	b->current.requested.h -= dy;
 	b->current.requested.y += dy;
      }
-   else if (b->mode.resize == 7)
+   else if (b->mode.resize == 8)
      {
 	b->current.requested.h += dy;
      }

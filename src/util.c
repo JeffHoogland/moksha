@@ -179,7 +179,6 @@ e_file_list_dir(char *dir)
    list = NULL;
    while ((dp = readdir(dirp)))
      {
-	printf("%s\n", dp->d_name);
 	if ((strcmp(dp->d_name, ".")) &&
 	    (strcmp(dp->d_name, "..")))
 	  {
