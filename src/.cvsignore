@@ -1,0 +1,6 @@
+e
+*.o
+*.lo
+core
+Makefile.in
+Makefile
