@@ -80,10 +80,8 @@ ebits_cflags=`ebits-config --cflags`
 ebits_libs=`ebits-config --libs`
 ecore_cflags=`ecore-config --cflags`
 ecore_libs=`ecore-config --libs`
-
-# a hack for now till efsd gets a proper efsd-config
-efsd_cflags='-I/usr/local/include'
-efsd_libs='-L/usr/local/lib -lefsd'
+efsd_cflags=`efsd-config --cflags`
+efsd_libs=`efsd-config --libs`
 
 AC_SUBST(evas_cflags)
 AC_SUBST(evas_libs)
