@@ -35,6 +35,7 @@ struct _Pager
 {
    Evas_List   *faces;
    E_Menu      *config_menu;
+   Evas_List   *menus;
 
    Config      *conf;
 };
