@@ -6,6 +6,8 @@
 #include "icccm.h"
 #include "bordermenu.h"
 
+static E_Menu      *bordermenu = NULL;
+
 static void         e_bordermenu_cb_close(E_Menu * m, E_Menu_Item * mi,
 					  void *data);
 static void         e_bordermenu_cb_kill(E_Menu * m, E_Menu_Item * mi,
@@ -37,7 +39,8 @@ static void         e_bordermenu_cb_remember_prog_location_ignore(E_Menu * m,
 								  E_Menu_Item *
 								  mi,
 								  void *data);
-static void         e_bordermenu_cb_menu_hide(E_Menu * m, void *data);
+static void         e_bordermenu_cb_to_desktop(E_Menu * m, E_Menu_Item * mi,
+		                               void *data);
 
 static void
 e_bordermenu_cb_close(E_Menu * m, E_Menu_Item * mi, void *data)
@@ -331,20 +334,32 @@ e_bordermenu_cb_remember_prog_location_ignore(E_Menu * m, E_Menu_Item * mi,
 }
 
 static void
-e_bordermenu_cb_menu_hide(E_Menu * m, void *data)
+e_bordermenu_cb_to_desktop(E_Menu * m, E_Menu_Item * mi, void *data)
 {
+   int                 d = 0;
    E_Border           *b;
+   E_Desktop          *desk;
 
    D_ENTER;
 
    b = data;
+   if (b->client.sticky)
+      D_RETURN;
 
-   while (b->menus)
-     {
-	m = b->menus->data;
-	m->delete_me = 1;
-	b->menus = evas_list_remove(b->menus, m);
-     }
+   e_desktops_del_border(b->desk, b);
+
+   sscanf(mi->str, "Desktop %d", &d);
+   desk = e_desktops_get(d);
+   if (!desk)
+      desk = e_desktops_get(e_desktops_get_current());
+   D("Sending border %p to desk %d\n", b, d);
+
+   e_desktops_add_border(desk, b);
+   b->client.desk = d;
+
+   b->current.requested.visible = 0;
+   b->changed = 1;
+   e_border_update_borders();
 
    D_RETURN;
    UN(m);
@@ -353,18 +368,19 @@ e_bordermenu_cb_menu_hide(E_Menu * m, void *data)
 void
 e_bordermenu_do(E_Border * b)
 {
+   int                 i;
+   char                label[PATH_MAX];
    E_Menu             *menu;
+   E_Menu             *menu2;
    E_Menu_Item        *menuitem;
 
    D_ENTER;
 
-   if (!b->menus)
+   if (!bordermenu)
      {
 	menu = e_menu_new();
-	b->menus = evas_list_append(b->menus, menu);
 	e_menu_set_padding_icon(menu, 2);
 	e_menu_set_padding_state(menu, 2);
-	e_menu_hide_callback(menu, e_bordermenu_cb_menu_hide, b);
 
 	menuitem = e_menu_item_new("Close");
 	/* e_menu_item_set_icon(menuitem, icon);   */
@@ -451,6 +467,24 @@ e_bordermenu_do(E_Border * b)
 				 b);
 	e_menu_add_item(menu, menuitem);
 	e_menu_set_state(menu, menuitem);
+
+	menu2 = e_menu_new();
+	e_menu_set_padding_icon(menu2, 2);
+	e_menu_set_padding_state(menu2, 2);
+
+	for (i = 0; i < e_desktops_get_num(); i++)
+	  {
+	     snprintf(label, PATH_MAX, "Desktop %d", i);
+	     menuitem = e_menu_item_new(label);
+	     e_menu_item_set_callback(menuitem, e_bordermenu_cb_to_desktop, b);
+	     e_menu_add_item(menu2, menuitem);
+	  }
+
+	menuitem = e_menu_item_new("Goto Desktop...");
+	e_menu_item_set_submenu(menuitem, menu2);
+	e_menu_add_item(menu, menuitem);
+
+	bordermenu = menu;
      }
 
    {
@@ -458,7 +492,7 @@ e_bordermenu_do(E_Border * b)
       int                 crx, cry, crw, crh;
       int                 mx, my;
 
-      menu = b->menus->data;
+      menu = bordermenu;
       pl = pr = pt = pb = 0;
       if (b->bits.b)
 	 ebits_get_insets(b->bits.b, &pl, &pr, &pt, &pb);
@@ -479,4 +513,11 @@ e_bordermenu_do(E_Border * b)
    }
 
    D_RETURN;
+}
+
+void
+e_bordermenu_hide(void)
+{
+   if (bordermenu)
+      e_menu_hide(bordermenu);
 }

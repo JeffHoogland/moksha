@@ -1,6 +1,7 @@
 #include <string.h>
 #include "debug.h"
 #include "delayed.h"
+#include "util.h"
 
 static void
 e_delayed_action_cleanup(E_Delayed_Action * eda)
@@ -14,7 +15,8 @@ e_delayed_action_cleanup(E_Delayed_Action * eda)
 }
 
 E_Delayed_Action   *
-e_delayed_action_new(E_Event_Type event, double delay, E_Delay_Func delay_func)
+e_delayed_action_new(E_Event_Type event, E_Delay_Val delay,
+		     E_Delay_Func delay_func)
 {
    E_Delayed_Action   *eda = NULL;
 
@@ -41,9 +43,11 @@ e_delayed_action_start(E_Observer * obs, E_Observee * obj, E_Event_Type event, v
    D_ENTER;
 
    snprintf(event_name, PATH_MAX, "_e_delayed_action_notify(%d)", obs->event);
-   ecore_add_event_timer(event_name, eda->delay, eda->delay_func, 0, obj);
+   ecore_add_event_timer(event_name, eda->delay(), eda->delay_func, 0, obj);
 
    D_RETURN;
+   UN(event);
+   UN(data);
 }
 
 void

@@ -22,6 +22,7 @@
 #endif
 #include <Imlib2.h>
 #include <Evas.h>
+#include <Evas_Engine_Software_X11.h>
 #include <Ebits.h>
 #include <Ecore.h>
 #include <Edb.h>
@@ -44,7 +45,7 @@ backtrace_symbols_fd(__BT_array, __BT_n, fileno(stdout)); \
 /* macros for allowing sections of code to be runtime profiled */
 #define E_PROF 1
 #ifdef E_PROF
-extern Evas_List    __e_profiles;
+extern Evas_List *    __e_profiles;
 
 typedef struct _e_prof
 {
@@ -57,7 +58,7 @@ E_Prof;
 #define E_PROF_START(_prof_func) \
 { \
 E_Prof __p, *__pp; \
-Evas_List __pl; \
+Evas_List * __pl; \
 __p.func = _prof_func; \
 __p.total = 0.0; \
 __p.t1 = ecore_get_time(); \
@@ -86,7 +87,7 @@ __e_profiles = evas_list_append(__e_profiles, __pp); \
 }
 #define E_PROF_DUMP \
 { \
-Evas_List __pl; \
+Evas_List * __pl; \
 for (__pl = __e_profiles; __pl; __pl = __pl->next) \
 { \
 E_Prof *__p; \

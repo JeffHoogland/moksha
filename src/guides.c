@@ -4,6 +4,7 @@
 #include "config.h"
 #include "embed.h"
 #include "util.h"
+#include <Imlib2.h>
 
 static struct
 {
@@ -37,10 +38,10 @@ static struct
    win;
    struct
    {
-      Evas                evas;
+      Evas *                evas;
       Ebits_Object        bg;
       E_Text             *text;
-      Evas_Object         icon;
+      Evas_Object *         icon;
       Imlib_Image         image;
    }
    disp;
@@ -103,19 +104,49 @@ e_guides_update(void)
 	       {
 		  font_dir = e_config_get("fonts");
 		  guides.disp.evas = evas_new();
-		  evas_set_output_method(guides.disp.evas, RENDER_METHOD_IMAGE);
+		  evas_output_method_set(guides.disp.evas, 
+					 evas_render_method_lookup("software_x11"));
+		  evas_object_font_path_append(guides.disp.evas, font_dir);
+		  evas_output_size_set(guides.disp.evas, 1, 1);
+		  evas_output_viewport_set(guides.disp.evas, 0, 0, 1, 1);
+		  evas_object_font_cache_set(guides.disp.evas, font_cache);
+		  evas_object_image_cache_set(guides.disp.evas, image_cache);
 
-		  guides.disp.image = imlib_create_image(1, 1);
-		  imlib_context_set_image(guides.disp.image);
-		  imlib_image_set_has_alpha(1);
-		  imlib_image_clear();
+		  {
+		    Evas_Engine_Info_Software_X11 *einfo;
+		    XSetWindowAttributes att;
+		    /*Window window;*/
 
-		  evas_set_output_image(guides.disp.evas, guides.disp.image);
-		  evas_font_add_path(guides.disp.evas, font_dir);
-		  evas_set_output_size(guides.disp.evas, 1, 1);
-		  evas_set_output_viewport(guides.disp.evas, 0, 0, 1, 1);
-		  evas_set_font_cache(guides.disp.evas, font_cache);
-		  evas_set_image_cache(guides.disp.evas, image_cache);
+		    Pixmap              pmap, mask;
+
+		    pmap = ecore_pixmap_new(guides.win.display, 100, 100, 0);
+		    mask = ecore_pixmap_new(guides.win.display, 100, 100, 1);
+
+		    einfo = (Evas_Engine_Info_Software_X11 *) evas_engine_info_get(guides.disp.evas);
+
+		    /* the following is specific to the engine */
+		    einfo->info.display = ecore_display_get();
+		    einfo->info.visual = DefaultVisual(einfo->info.display, DefaultScreen(einfo->info.display));
+		    einfo->info.colormap = DefaultColormap(einfo->info.display, DefaultScreen(einfo->info.display));
+
+		    att.background_pixmap = None;
+		    att.colormap = /*colormap*/ DefaultColormap(einfo->info.display, DefaultScreen(einfo->info.display));
+		    att.border_pixel = 0;
+		    att.event_mask = 0;
+		    einfo->info.drawable = pmap;
+		    einfo->info.mask = mask;
+
+		    einfo->info.depth = DefaultDepth(einfo->info.display, DefaultScreen(einfo->info.display));
+		    einfo->info.rotation = 0;
+		    einfo->info.debug = 0;
+		    evas_engine_info_set(guides.disp.evas, (Evas_Engine_Info *) einfo);
+
+		    /* And setup for Imlib2 */
+		    imlib_context_set_display(einfo->info.display);
+		    imlib_context_set_visual(DefaultVisual(einfo->info.display, DefaultScreen(einfo->info.display)));
+		  }
+
+
 	       }
 	  }
 	else
@@ -195,19 +226,20 @@ e_guides_update(void)
 	  }
 	if ((!guides.current.display.icon) && (guides.disp.icon))
 	  {
-	     evas_del_object(guides.disp.evas, guides.disp.icon);
+	     evas_object_del(guides.disp.icon);
 	     guides.disp.icon = NULL;
 	  }
 	if ((guides.current.display.icon) && (!guides.disp.icon))
 	  {
 	     guides.disp.icon =
-		evas_add_image_from_file(guides.disp.evas,
-					 guides.current.display.icon);
-	     evas_show(guides.disp.evas, guides.disp.icon);
+	       evas_object_image_add(guides.disp.evas);
+	     evas_object_image_file_set(guides.disp.icon,
+					guides.current.display.icon, NULL);
+	     evas_object_show(guides.disp.icon);
 	  }
 	if (guides.disp.icon)
-	   evas_set_image_file(guides.disp.evas, guides.disp.icon,
-			       guides.current.display.icon);
+	   evas_object_image_file_set(guides.disp.icon,
+			       guides.current.display.icon, NULL);
 	e_text_set_text(guides.disp.text, guides.current.display.text);
 	if (!guides.disp.bg)
 	  {
@@ -284,37 +316,18 @@ e_guides_update(void)
 	     guides.disp.image = NULL;
 	  }
 
-	guides.disp.image = imlib_create_image(dw, dh);
-	imlib_context_set_image(guides.disp.image);
-	imlib_image_set_has_alpha(1);
-	imlib_image_clear();
-
-	evas_set_output_image(guides.disp.evas, guides.disp.image);
-	evas_set_output_size(guides.disp.evas, dw, dh);
-	evas_set_output_viewport(guides.disp.evas, 0, 0, dw, dh);
-	evas_update_rect(guides.disp.evas, 0, 0, dw, dh);
+	evas_output_size_set(guides.disp.evas, dw, dh);
+	evas_output_viewport_set(guides.disp.evas, 0, 0, dw, dh);
+	evas_damage_rectangle_add(guides.disp.evas, 0, 0, dw, dh);
 	evas_render(guides.disp.evas);
 	{
-	   Pixmap              pmap, mask;
+	   Evas_Engine_Info_Software_X11 *einfo;
+	   einfo = (Evas_Engine_Info_Software_X11 *) evas_engine_info_get(guides.disp.evas);
 
-	   pmap = ecore_pixmap_new(guides.win.display, dw, dh, 0);
-	   mask = ecore_pixmap_new(guides.win.display, dw, dh, 1);
 
-	   imlib_context_set_image(guides.disp.image);
-
-	   imlib_context_set_dither_mask(1);
-	   imlib_context_set_dither(1);
-	   imlib_context_set_drawable(pmap);
-	   imlib_context_set_mask(mask);
-	   imlib_context_set_blend(0);
-	   imlib_context_set_color_modifier(NULL);
-
-	   imlib_render_image_on_drawable(0, 0);
-	   ecore_window_set_background_pixmap(guides.win.display, pmap);
-	   ecore_window_set_shape_mask(guides.win.display, mask);
+	   ecore_window_set_background_pixmap(guides.win.display, einfo->info.drawable);
+	   ecore_window_set_shape_mask(guides.win.display, einfo->info.mask);
 	   ecore_window_clear(guides.win.display);
-	   ecore_pixmap_free(pmap);
-	   ecore_pixmap_free(mask);
 	}
 	ecore_window_move(guides.win.display, dx, dy);
 	ecore_window_resize(guides.win.display, dw, dh);

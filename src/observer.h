@@ -18,25 +18,29 @@ typedef enum _e_event_type
    E_EVENT_BORDER_NEW = 1 << 0,
    E_EVENT_BORDER_DELETE = 1 << 1,
    E_EVENT_BORDER_FOCUS_IN = 1 << 2,
-   E_EVENT_BORDER_ICONIFY = 1 << 3,
-   E_EVENT_BORDER_UNICONIFY = 1 << 4,
-   E_EVENT_BORDER_MAXIMIZE = 1 << 5,
-   E_EVENT_BORDER_UNMAXIMIZE = 1 << 6,
-   E_EVENT_BORDER_MOVE = 1 << 7,
-   E_EVENT_BORDER_RESIZE = 1 << 8,
+   E_EVENT_BORDER_FOCUS_OUT = 1 << 3,
+   E_EVENT_BORDER_ICONIFY = 1 << 4,
+   E_EVENT_BORDER_UNICONIFY = 1 << 5,
+   E_EVENT_BORDER_MAXIMIZE = 1 << 6,
+   E_EVENT_BORDER_UNMAXIMIZE = 1 << 7,
+   E_EVENT_BORDER_MOVE = 1 << 8,
+   E_EVENT_BORDER_RESIZE = 1 << 9,
+   E_EVENT_BORDER_RAISE = 1 << 10,
+   E_EVENT_BORDER_LOWER = 1 << 11,
 
-   E_EVENT_DESKTOP_NEW = 1 << 10,
-   E_EVENT_DESKTOP_DELETE = 1 << 11,
-   E_EVENT_DESKTOP_SWITCH = 1 << 12,
+   E_EVENT_DESKTOP_NEW = 1 << 12,
+   E_EVENT_DESKTOP_DELETE = 1 << 13,
+   E_EVENT_DESKTOP_SWITCH = 1 << 14,
+   E_EVENT_DESKTOP_SCROLL = 1 << 15,
 
-   E_EVENT_FILE_ADD = 1 << 13,
-   E_EVENT_FILE_CHANGE = 1 << 14,
-   E_EVENT_FILE_DELETE = 1 << 15,
-   E_EVENT_FILE_INFO = 1 << 16,
+   E_EVENT_FILE_ADD = 1 << 16,
+   E_EVENT_FILE_CHANGE = 1 << 17,
+   E_EVENT_FILE_DELETE = 1 << 18,
+   E_EVENT_FILE_INFO = 1 << 19,
    
-   E_EVENT_BG_CHANGED = 1 << 17,
-   E_EVENT_ICB_CHANGED = 1 << 18,
-   E_EVENT_LAYOUT_CHANGED = 1 << 19,
+   E_EVENT_BG_CHANGED = 1 << 20,
+   E_EVENT_ICB_CHANGED = 1 << 21,
+   E_EVENT_LAYOUT_CHANGED = 1 << 22,
 
    /* meta event types */
    E_EVENT_BORDER_ALL = E_EVENT_BORDER_NEW |
@@ -60,7 +64,7 @@ struct _e_observer
 {
    E_Object            obj;
 
-   Evas_List           watched;	/* list<E_Observee> */
+   Evas_List *           watched;	/* list<E_Observee> */
    E_Event_Type        event;
    E_Notify_Func       notify_func;
 };
@@ -69,7 +73,7 @@ struct _e_observee
 {
    E_Object            obj;
 
-   Evas_List           observers;	/* list<E_Observer> */
+   Evas_List *           observers;	/* list<E_Observer> */
 };
 
 /**

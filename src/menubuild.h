@@ -4,6 +4,7 @@
 #include "e.h"
 #include "object.h"
 #include "observer.h"
+#include "menu.h"
 
 typedef struct _E_Build_Menu E_Build_Menu;
 
@@ -16,8 +17,8 @@ struct _E_Build_Menu
 
    E_Menu             *menu;
 
-   Evas_List           menus;
-   Evas_List           commands;
+   Evas_List *           menus;
+   Evas_List *           commands;
 
    int                 changed;
 };

@@ -27,11 +27,26 @@ WINDOW_MODE_BORDER=1
 WINDOW_MODE_BOX=2
 WINDOW_MODE_TECHNICAL=3
 
+WINDOW_PLACE_MANUAL=0
+WINDOW_PLACE_SMART=1
+WINDOW_PLACE_MIDDLE=2
+WINDOW_PLACE_CASCADE=3
+WINDOW_PLACE_RANDOM=4
+
+DESKTOP_COUNT=8
+DESKTOP_SCROLL=0
+DESKTOP_SCROLL_STICKY=0
+DESKTOP_RESIST=3
+DESKTOP_SPEED=30
+DESKTOP_WIDTH=2
+DESKTOP_HEIGHT=2
+
 GUIDES_LOC_WIN=0
 GUIDES_LOC_SCR=1
 
+DB="./behavior.db"
+
 # actions defining how to react to things
-DB="./actions.db"
 NUM=0
 edb_ed $DB add "/actions/"$NUM"/name"      str "Title_Bar"
 edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Raise"
@@ -337,26 +352,41 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 0
 edb_ed $DB add "/actions/"$NUM"/key"       str "Insert"
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Next"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "Tab"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/count"       int $NUM
 
+edb_ed $DB add "/desktops/count"           int   $DESKTOP_COUNT
+edb_ed $DB add "/desktops/scroll"          int   $DESKTOP_SCROLL
+edb_ed $DB add "/desktops/scroll_sticky"   int   $DESKTOP_SCROLL_STICKY
+edb_ed $DB add "/desktops/resist"          int   $DESKTOP_RESIST
+edb_ed $DB add "/desktops/speed"           int   $DESKTOP_SPEED
+edb_ed $DB add "/desktops/width"           int   $DESKTOP_WIDTH
+edb_ed $DB add "/desktops/height"          int   $DESKTOP_HEIGHT
+
 # basic settings
-DB="./settings.db"
-edb_ed $DB add "/focus/mode   "           int   $FOCUS_POINTER
 edb_ed $DB add "/move/resist"             int   1
 edb_ed $DB add "/move/resist/desk"        int   24
 edb_ed $DB add "/move/resist/win"         int   12
 edb_ed $DB add "/menu/scroll/resist"      int   5
 edb_ed $DB add "/menu/scroll/speed"       int   12
+edb_ed $DB add "/window/focus/mode"       int   $FOCUS_POINTER
 edb_ed $DB add "/window/raise/auto"       int    0
 edb_ed $DB add "/window/raise/delay"      float 0.5
 edb_ed $DB add "/window/move/mode"        int   $WINDOW_MODE_OPAQUE
 edb_ed $DB add "/window/resize/mode"      int   $WINDOW_MODE_BOX
+edb_ed $DB add "/window/place/mode"       int   $WINDOW_PLACE_SMART
 edb_ed $DB add "/guides/display/x"        float 0.5
 edb_ed $DB add "/guides/display/y"        float 0.5
 edb_ed $DB add "/guides/display/location" int   $GUIDES_LOC_SCR
 
 # what events on windows are "grabbed" by the window manager
-DB="./grabs.db"
 NUM=0
 edb_ed $DB add "/grabs/"$NUM"/button"       int 1
 edb_ed $DB add "/grabs/"$NUM"/modifiers"    int $MOD_ALT

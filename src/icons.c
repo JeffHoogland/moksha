@@ -9,23 +9,19 @@
 #include "e_view_machine.h"
 #include "globals.h"
 
-static void         e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				   int _x, int _y);
-static void         e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				 int _x, int _y);
-static void         e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				 int _x, int _y);
-static void         e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				  int _x, int _y);
-static void         e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				   int _x, int _y);
+static void         e_icon_down_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         e_icon_up_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         e_icon_in_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         e_icon_out_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         e_icon_move_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info);
 
 static void
-e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_icon_down_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Icon             *ic;
    Ecore_Event        *ev;
    Ecore_Event_Mouse_Down *e;
+   Evas_Event_Mouse_Down *ev_info = event_info;
 
    D_ENTER;
 
@@ -34,11 +30,11 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
       D_RETURN;
    e = ev->event;
    ic = _data;
-   ic->view->select.down.x = _x;
-   ic->view->select.down.y = _y;
+   ic->view->select.down.x = ev_info->output.x;
+   ic->view->select.down.y = ev_info->output.y;
    ic->state.clicked = 1;
    e_icon_update_state(ic);
-   if (_b == 1)
+   if (ev_info->button == 1)
      {
 	if (e->double_click)
 	  {
@@ -62,10 +58,10 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       }
 	  }
      }
-   else if (_b == 2)
+   else if (ev_info->button == 2)
      {
      }
-   else if (_b == 3)
+   else if (ev_info->button == 3)
      {
      }
 
@@ -75,11 +71,12 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_icon_up_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Icon             *ic;
    Ecore_Event        *ev;
    Ecore_Event_Mouse_Up *e;
+   Evas_Event_Mouse_Up *ev_info = event_info;
 
    D_ENTER;
 
@@ -112,7 +109,7 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	ecore_window_dnd_finished();
 	D_RETURN;
      }
-   if (_b == 1)
+   if (ev_info->button == 1)
      {
 	if (ic->state.just_executed)
 	  {
@@ -139,12 +136,10 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_x);
-   UN(_y);
 }
 
 static void
-e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_icon_in_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Icon             *ic;
 
@@ -156,13 +151,11 @@ e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 static void
-e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_icon_out_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Icon             *ic;
 
@@ -172,16 +165,14 @@ e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 static void
 _paint_selected_icons_onto_drag_window(E_View * v, Imlib_Image im, int wx,
 				       int wy)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -201,7 +192,7 @@ _paint_selected_icons_onto_drag_window(E_View * v, Imlib_Image im, int wx,
 	if (!ic->state.selected)
 	   continue;
 
-	evas_get_geometry(ic->view->evas, ic->obj.icon, &ix, &iy, NULL, NULL);
+	evas_object_geometry_get(ic->obj.icon, &ix, &iy, NULL, NULL);
 	icx = ix + v->location.x - wx;
 	icy = iy + v->location.y - wy;
 	if (!ic->file->info.icon)
@@ -248,7 +239,7 @@ static void
 _start_drag(E_View * v, int _x, int _y)
 {
    Pixmap              pmap, mask;
-   Evas_List           l;
+   Evas_List *           l;
    int                 x, y, xx, yy, rw, rh, downx, downy, wx, wy, ww, wh;
    int                 dx, dy;
 
@@ -370,11 +361,12 @@ _start_drag(E_View * v, int _x, int _y)
 }
 
 static void
-e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_icon_move_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Icon             *ic;
    Ecore_Event        *ev;
    Ecore_Event_Mouse_Move *e;
+   Evas_Event_Mouse_Move *ev_info = event_info;
 
    D_ENTER;
 
@@ -390,14 +382,14 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 
    if (!ic->view->drag.started)
      {
-	_start_drag(ic->view, _x, _y);
+	_start_drag(ic->view, ev_info->cur.output.x, ev_info->cur.output.y);
      }
    else if (ic->view->drag.started)
      {
 	int                 x, y;
 
-	x = _x - ic->view->drag.offset.x;
-	y = _y - ic->view->drag.offset.y;
+	x = ev_info->cur.output.x - ic->view->drag.offset.x;
+	y = ev_info->cur.output.y - ic->view->drag.offset.y;
 	ic->view->drag.x = x;
 	ic->view->drag.y = y;
 	ic->view->drag.update = 1;
@@ -422,7 +414,6 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
 }
 
 static void
@@ -435,9 +426,15 @@ e_icon_cleanup(E_Icon * ic)
 
    if (ic->obj.event1)
      {
-	evas_del_object(ic->view->evas, ic->obj.event1);
-	evas_del_object(ic->view->evas, ic->obj.event2);
+	evas_object_del(ic->obj.event1);
+	evas_object_del(ic->obj.event2);
      }
+
+   if (ic->obj.icon)
+      evas_object_del(ic->obj.icon);
+
+   if (ic->obj.text)
+      e_text_free(ic->obj.text);
 
    if (ic->obj.sel.under.icon)
       ebits_free(ic->obj.sel.under.icon);
@@ -471,7 +468,7 @@ e_icon_new(void)
 E_Icon             *
 e_icon_find_by_file(E_View * view, char *file)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -495,42 +492,44 @@ e_icon_show(E_Icon * ic)
    if (ic->state.visible)
       D_RETURN;
    ic->state.visible = 1;
+
    if (!ic->obj.event1)
      {
-	ic->obj.event1 = evas_add_rectangle(ic->view->evas);
-	ic->obj.event2 = evas_add_rectangle(ic->view->evas);
-	evas_set_color(ic->view->evas, ic->obj.event1, 0, 0, 0, 0);
-	evas_set_color(ic->view->evas, ic->obj.event2, 0, 0, 0, 0);
-	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_DOWN,
+	ic->obj.event1 = evas_object_rectangle_add(ic->view->evas);
+	ic->obj.event2 = evas_object_rectangle_add(ic->view->evas);
+	evas_object_color_set(ic->obj.event1, 0, 0, 0, 0);
+	evas_object_color_set(ic->obj.event2, 0, 0, 0, 0);
+	evas_object_event_callback_add(ic->obj.event1, EVAS_CALLBACK_MOUSE_DOWN,
 			  e_icon_down_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_UP,
+	evas_object_event_callback_add(ic->obj.event1, EVAS_CALLBACK_MOUSE_UP,
 			  e_icon_up_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_IN,
+	evas_object_event_callback_add(ic->obj.event1, EVAS_CALLBACK_MOUSE_IN,
 			  e_icon_in_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_OUT,
+	evas_object_event_callback_add(ic->obj.event1, EVAS_CALLBACK_MOUSE_OUT,
 			  e_icon_out_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_MOVE,
+	evas_object_event_callback_add(ic->obj.event1, EVAS_CALLBACK_MOUSE_MOVE,
 			  e_icon_move_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_DOWN,
+	evas_object_event_callback_add(ic->obj.event2, EVAS_CALLBACK_MOUSE_DOWN,
 			  e_icon_down_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_UP,
+	evas_object_event_callback_add(ic->obj.event2, EVAS_CALLBACK_MOUSE_UP,
 			  e_icon_up_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_IN,
+	evas_object_event_callback_add(ic->obj.event2, EVAS_CALLBACK_MOUSE_IN,
 			  e_icon_in_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_OUT,
+	evas_object_event_callback_add(ic->obj.event2, EVAS_CALLBACK_MOUSE_OUT,
 			  e_icon_out_cb, ic);
-	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_MOVE,
+	evas_object_event_callback_add(ic->obj.event2, EVAS_CALLBACK_MOUSE_MOVE,
 			  e_icon_move_cb, ic);
-     }
-   evas_set_layer(ic->view->evas, ic->obj.icon, 200);
-   e_text_set_layer(ic->obj.text, 200);
-   evas_set_layer(ic->view->evas, ic->obj.event1, 210);
-   evas_set_layer(ic->view->evas, ic->obj.event2, 210);
 
-   evas_show(ic->view->evas, ic->obj.icon);
+     }
+   evas_object_layer_set(ic->obj.icon, 200);
+   e_text_set_layer(ic->obj.text, 200);
+   evas_object_layer_set(ic->obj.event1, 210);
+   evas_object_layer_set(ic->obj.event2, 210);
+
+   evas_object_show(ic->obj.icon);
    e_text_show(ic->obj.text);
-   evas_show(ic->view->evas, ic->obj.event1);
-   evas_show(ic->view->evas, ic->obj.event2);
+   evas_object_show(ic->obj.event1);
+   evas_object_show(ic->obj.event2);
 
    D_RETURN;
 }
@@ -543,10 +542,10 @@ e_icon_hide(E_Icon * ic)
    if (!ic->state.visible)
       D_RETURN;
    ic->state.visible = 0;
-   evas_hide(ic->view->evas, ic->obj.icon);
+   evas_object_hide(ic->obj.icon);
    e_text_hide(ic->obj.text);
-   evas_hide(ic->view->evas, ic->obj.event1);
-   evas_hide(ic->view->evas, ic->obj.event2);
+   evas_object_hide(ic->obj.event1);
+   evas_object_hide(ic->obj.event2);
 
    /* Hide any selection in the view */
    if (ic->obj.sel.under.icon)
@@ -572,13 +571,13 @@ e_icon_hide_delete_pending(E_Icon * ic)
      {
 	if (ic->view->drag.drop_mode == E_DND_MOVE)
 	  {
-	     evas_hide(ic->view->evas, ic->obj.icon);
+	     evas_object_hide(ic->obj.icon);
 	     ic->state.drag_delete = 1;
 	  }
 	else
 	   /* copy... */
 	  {
-	     evas_show(ic->view->evas, ic->obj.icon);
+	     evas_object_show(ic->obj.icon);
 	     ic->state.drag_delete = 0;
 	  }
      }
@@ -600,7 +599,7 @@ e_icon_show_delete_end(E_Icon * ic, E_dnd_enum dnd_pending_mode)
 	  {
 	     ic->state.drag_delete = 0;
 	     if (dnd_pending_mode == E_DND_COPIED)
-		evas_show(ic->view->evas, ic->obj.icon);
+		evas_object_show(ic->obj.icon);
 	  }
      }
 
@@ -623,20 +622,23 @@ e_icon_apply_xy(E_Icon * ic)
       ic->geom.w = ic->geom.icon.w;
    ic->geom.h = ic->geom.icon.h + ic->geom.text.h + ic->view->spacing.icon.g;
 
-   evas_resize(ic->view->evas, ic->obj.event1,
+   if(ic->obj.event1)
+     {
+   evas_object_resize(ic->obj.event1,
 	       ic->geom.icon.w, ic->geom.icon.h);
-   evas_resize(ic->view->evas, ic->obj.event2,
+   evas_object_resize(ic->obj.event2,
 	       ic->geom.text.w, ic->geom.text.h);
-   evas_move(ic->view->evas, ic->obj.event1,
+   evas_object_move(ic->obj.event1,
 	     ic->view->scroll.x + ic->geom.x +
 	     ((ic->geom.w - ic->geom.icon.w) / 2),
 	     ic->view->scroll.y + ic->geom.y);
-   evas_move(ic->view->evas, ic->obj.event2,
+   evas_object_move(ic->obj.event2,
 	     ic->view->scroll.x + ic->geom.x +
 	     ((ic->geom.w - ic->geom.text.w) / 2),
 	     ic->view->scroll.y + ic->geom.y + ic->geom.icon.h +
 	     ic->view->spacing.icon.g);
-   evas_move(ic->view->evas, ic->obj.icon,
+     }
+   evas_object_move(ic->obj.icon,
 	     ic->view->scroll.x + ic->geom.x +
 	     ((ic->geom.w - ic->geom.icon.w) / 2),
 	     ic->view->scroll.y + ic->geom.y);
@@ -734,9 +736,9 @@ e_icon_check_permissions(E_Icon * ic)
    if (!strcmp(ic->file->info.mime.base, "dir"))
      {
 	if (e_file_can_exec(&ic->file->stat))
-	   evas_set_color(ic->view->evas, ic->obj.icon, 255, 255, 255, 255);
+	   evas_object_color_set(ic->obj.icon, 255, 255, 255, 255);
 	else
-	   evas_set_color(ic->view->evas, ic->obj.icon, 128, 128, 128, 128);
+	   evas_object_color_set(ic->obj.icon, 128, 128, 128, 128);
      }
 
    D_RETURN;
@@ -752,7 +754,7 @@ e_icon_initial_show(E_Icon * ic)
       D_RETURN;
 
    /* first. lets figure out the size of the icon */
-   evas_get_image_size(ic->view->evas, ic->obj.icon,
+   evas_object_image_size_get(ic->obj.icon,
 		       &(ic->geom.icon.w), &(ic->geom.icon.h));
    {
       double              tw, th;
@@ -779,7 +781,7 @@ e_icon_initial_show(E_Icon * ic)
 void
 e_icon_update_state(E_Icon * ic)
 {
-   char                icon[PATH_MAX];
+   char                icon[PATH_MAX], key[PATH_MAX];
    int                 iw, ih;
 
    D_ENTER;
@@ -791,15 +793,18 @@ e_icon_update_state(E_Icon * ic)
      }
    if (ic->state.clicked)
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/clicked", ic->file->info.icon);
+	snprintf(icon, PATH_MAX, "%s", ic->file->info.icon);
+	strcpy(key, "/icon/clicked");
      }
    else if (ic->state.selected)
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/selected", ic->file->info.icon);
+	snprintf(icon, PATH_MAX, "%s", ic->file->info.icon);
+	strcpy(key, "/icon/selected");
      }
    else
      {
-	snprintf(icon, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
+	snprintf(icon, PATH_MAX, "%s", ic->file->info.icon);
+	strcpy(key, "/icon/normal");
      }
    if ((ic->state.selected) &&
        (!ic->obj.sel.under.icon) && (!ic->obj.sel.over.icon))
@@ -856,8 +861,18 @@ e_icon_update_state(E_Icon * ic)
    /* This relies on the obj.icon having been allocated in view_file_add. 
     * Maybe it would be better to allocate here, the first
     * time the icon is set? -- till */
-   evas_set_image_file(ic->view->evas, ic->obj.icon, icon);
-   evas_get_image_size(ic->view->evas, ic->obj.icon, &iw, &ih);
+   evas_object_image_file_set(ic->obj.icon, icon, key);
+   evas_object_image_size_get(ic->obj.icon, &iw, &ih);
+   /* kjb cep */
+   /*   evas_object_image_size_set(ic->obj.icon, 30, 30);
+    */
+   /* Hmm, this shouldn't be needed, should it? */
+   
+   evas_object_resize(ic->obj.icon,
+		      iw, ih);
+   evas_object_image_fill_set(ic->obj.icon,
+			      0, 0, iw, ih);
+
    e_icon_check_permissions(ic);
    e_icon_apply_xy(ic);
    ic->view->changed = 1;

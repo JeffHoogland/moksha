@@ -4,8 +4,8 @@
 #include "util.h"
 #include "math.h"
 
-static Evas_List    open_menus = NULL;	/* List of all open menus */
-static Evas_List    menus = NULL;
+static Evas_List *    open_menus = NULL;	/* List of all open menus */
+static Evas_List *    menus = NULL;
 static E_Menu_Item *curr_selected_item = NULL;	/* Currently selected item */
 static Window       menu_event_win = 0;	/* Window which originated event */
 static int          screen_w, screen_h;	/* Screen width and height */
@@ -28,22 +28,17 @@ static void         e_menu_item_unselect(E_Menu_Item * mi);
 static void
 e_scroller_timer(int val, void *data)
 {
-   Evas_List           l;
+   Evas_List *           l;
    int                 ok = 0;
    int                 resist = 5;
    int                 scroll_speed = 12;
    static double       last_time = 0.0;
    double              t;
 
-   /* these two lines... */
-   E_CFG_INT(cfg_resist, "settings", "/menu/scroll/resist", 5);
-   E_CFG_INT(cfg_scroll_speed, "settings", "/menu/scroll/speed", 12);
-
    D_ENTER;
 
-   /* and these 2 should do exactly what tom wants - see e.h */
-   E_CONFIG_INT_GET(cfg_resist, resist);
-   E_CONFIG_INT_GET(cfg_scroll_speed, scroll_speed);
+   resist = config_data->menu->resist;
+   scroll_speed = config_data->menu->speed;
 
    t = ecore_get_time();
    if (val != 0)
@@ -142,7 +137,7 @@ e_scroller_timer(int val, void *data)
 static void
 e_idle(void *data)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -240,7 +235,7 @@ e_key_down(Ecore_Event * ev)
       ok = 1;
    else
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	for (l = open_menus; l; l = l->next)
 	  {
@@ -256,7 +251,7 @@ e_key_down(Ecore_Event * ev)
      }
    if (ok)
      {
-	Evas_List           l;
+	Evas_List *           l;
 	E_Menu             *m = NULL;
 	E_Menu_Item        *mi = NULL;
 
@@ -386,7 +381,7 @@ e_mouse_up(Ecore_Event * ev)
 	     m = open_menus->data;
 	     if ((e->time - m->time) > 200)
 	       {
-		  Evas_List           l;
+		  Evas_List *           l;
 
 		  for (l = open_menus; l; l = l->next)
 		    {
@@ -398,7 +393,7 @@ e_mouse_up(Ecore_Event * ev)
 				/* Get the dimensions of the selection for use in
 				 * the test */
 				double s_x, s_y, s_w, s_h;
-				evas_get_geometry(m->evas, m->selected->obj_entry, 
+				evas_object_geometry_get(m->selected->obj_entry, 
 						&s_x, &s_y, &s_w, &s_h);
 			    if (INTERSECTS(m->current.x + rint(s_x),
 					   m->current.y + rint(s_y),
@@ -443,7 +438,7 @@ e_mouse_move(Ecore_Event * ev)
    keyboard_nav = 0;
    if (e->win == menu_event_win)
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	mouse_x = e->rx;
 	mouse_y = e->ry;
@@ -452,13 +447,17 @@ e_mouse_move(Ecore_Event * ev)
 	     E_Menu             *m;
 
 	     m = l->data;
-	     evas_event_move(m->evas,
+	     /* checkme
+ 	     evas_event_move(m->evas,
+			     e->rx - m->current.x, e->ry - m->current.y);
+	     */
+ 	     evas_event_feed_mouse_move(m->evas,
 			     e->rx - m->current.x, e->ry - m->current.y);
 	  }
      }
    else
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	mouse_x = e->rx;
 	mouse_y = e->ry;
@@ -468,7 +467,11 @@ e_mouse_move(Ecore_Event * ev)
 
 	     m = l->data;
 
+	     /* checkme
 	     evas_event_move(m->evas,
+			     e->rx - m->current.x, e->ry - m->current.y);
+	     */
+	     evas_event_feed_mouse_move(m->evas,
 			     e->rx - m->current.x, e->ry - m->current.y);
 	  }
      }
@@ -517,7 +520,7 @@ e_mouse_out(Ecore_Event * ev)
      }
    else
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	for (l = open_menus; l; l = l->next)
 	  {
@@ -526,7 +529,7 @@ e_mouse_out(Ecore_Event * ev)
 	     m = l->data;
 	     if ((e->win == m->win.main) || (e->win == m->win.evas))
 	       {
-		  evas_event_move(m->evas, -99999999, -99999999);
+		  evas_event_feed_mouse_move(m->evas, -99999999, -99999999);
 	       }
 	  }
      }
@@ -548,7 +551,7 @@ e_window_expose(Ecore_Event * ev)
 
    e = ev->event;
    {
-      Evas_List           l;
+      Evas_List *           l;
 
       for (l = open_menus; l; l = l->next)
 	{
@@ -558,9 +561,14 @@ e_window_expose(Ecore_Event * ev)
 	   if (e->win == m->win.evas)
 	     {
 		m->first_expose = 1;
+		/* checkme
 		evas_update_rect(m->evas, e->x, e->y, e->w, e->h);
+		*/
+		evas_damage_rectangle_add(m->evas, e->x, e->y, e->w, e->h);
 		break;
 	     }
+
+	   e_menu_update_shape(m);
 	}
    }
 
@@ -625,9 +633,10 @@ e_menu_item_select(E_Menu_Item * mi)
  * @y: ?????
  */
 static void
-e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_menu_item_in_cb(void *_data, Evas * _e, Evas_Object * _o, void *ev_info)
 {
    E_Menu_Item        *mi;
+   Evas_Event_Mouse_In *event_info = ev_info;
 
    D_ENTER;
 
@@ -645,9 +654,7 @@ e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 /**
@@ -662,9 +669,10 @@ e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
  * @y: ?????
  */
 static void
-e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_menu_item_out_cb(void *_data, Evas * _e, Evas_Object * _o, void *ev_info)
 {
    E_Menu_Item        *mi;
+   Evas_Event_Mouse_Out *event_info = ev_info;
 
    D_ENTER;
 
@@ -674,9 +682,7 @@ e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 void
@@ -721,7 +727,7 @@ e_menu_item_set_callback(E_Menu_Item * mi,
 void
 e_menu_hide_submenus(E_Menu * menus_after)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -756,7 +762,7 @@ e_menu_hide_submenus(E_Menu * menus_after)
 void
 e_menu_select(int dx, int dy)
 {
-   Evas_List           l, ll;
+   Evas_List           *l, *ll;
    int                 done = 0;
 
    D_ENTER;
@@ -852,7 +858,7 @@ e_menu_select(int dx, int dy)
 		       /* Moving out of a submenu: */
 		       if (dx < 0)
 			 {
-			    Evas_List           ll;
+			    Evas_List *           ll;
 
 			    mm = l->prev->data;
 			    for (ll = mm->entries; (ll) && (!mi); ll = ll->next)
@@ -962,7 +968,7 @@ e_menu_event_win_show(void)
       ecore_window_raise(menu_event_win);
    if ((!ecore_grab_window_get()) || (!ecore_keyboard_grab_window_get()))
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	for (l = menus; l; l = l->next)
 	  {
@@ -1209,7 +1215,7 @@ e_menu_set_state(E_Menu * m, E_Menu_Item * mi)
 static void
 e_menu_cleanup(E_Menu * m)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1242,9 +1248,6 @@ E_Menu             *
 e_menu_new(void)
 {
    E_Menu             *m;
-   int                 max_colors = 216;
-   int                 font_cache = 1024 * 1024;
-   int                 image_cache = 8192 * 1024;
    char               *font_dir;
 
    D_ENTER;
@@ -1257,11 +1260,9 @@ e_menu_new(void)
    e_object_init(E_OBJECT(m), (E_Cleanup_Func) e_menu_cleanup);
 
    m->win.main = ecore_window_override_new(0, 0, 0, 1, 1);
-   m->evas = evas_new_all(ecore_display_get(),
+   m->evas = e_evas_new_all(ecore_display_get(),
 			  m->win.main,
-			  0, 0, 1, 1,
-			  RENDER_METHOD_ALPHA_SOFTWARE,
-			  max_colors, font_cache, image_cache, font_dir);
+			  0, 0, 1, 1, font_dir);
    /* aaaaaaaaah. this makes building the menu fast - moves the mouse far */
    /* far far far far away so callbacks and events arent triggerd as we */
    /* create objects that ofter hang around 0,0 - the default place for */
@@ -1276,9 +1277,9 @@ e_menu_new(void)
    /* screen - an then re-render it all - but well.. it's an extreme and */
    /* for now i think people will just have to live with a maximum menu size */
    /* of 32768x32768... didums! */
-   evas_event_move(m->evas, -999999999, -99999999);
+   evas_event_feed_mouse_move(m->evas, -999999999, -99999999);
 
-   m->win.evas = evas_get_window(m->evas);
+   m->win.evas = e_evas_get_window(m->evas);
    ecore_window_set_events(m->win.evas,
 			   XEV_EXPOSE | XEV_MOUSE_MOVE | XEV_BUTTON | XEV_IN_OUT
 			   | XEV_KEY);
@@ -1420,7 +1421,7 @@ e_menu_item_update(E_Menu * m, E_Menu_Item * mi)
 	th = 0;
 	if (mi->obj_text)
 	  {
-	     evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &dtw, &dth);
+	     evas_object_geometry_get(mi->obj_text, NULL, NULL, &dtw, &dth);
 	     tw = (int)dtw;
 	     th = (int)dth;
 	  }
@@ -1433,7 +1434,7 @@ e_menu_item_update(E_Menu * m, E_Menu_Item * mi)
 	  {
 	     int                 sh;
 
-	     evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+	     evas_object_image_size_get(mi->obj_icon, &iw, &ih);
 	     sh = th;
 	     if (rh > th)
 		sh = rh;
@@ -1446,10 +1447,10 @@ e_menu_item_update(E_Menu * m, E_Menu_Item * mi)
 		ix = rx + m->size.state + m->pad.state;
 	     ix += ((m->size.icon - iw) / 2);
 	     iy = ((mi->size.h - ih) / 2);
-	     evas_move(m->evas, mi->obj_icon, m->sel_border.l + mi->x + ix,
+	     evas_object_move(mi->obj_icon, m->sel_border.l + mi->x + ix,
 		       m->sel_border.t + mi->y + iy);
-	     evas_resize(m->evas, mi->obj_icon, iw, ih);
-	     evas_set_image_fill(m->evas, mi->obj_icon, 0, 0, iw, ih);
+	     evas_object_resize(mi->obj_icon, iw, ih);
+	     evas_object_image_fill_set(mi->obj_icon, 0, 0, iw, ih);
 	  }
 
 	if (mi->obj_text)
@@ -1459,14 +1460,14 @@ e_menu_item_update(E_Menu * m, E_Menu_Item * mi)
 	     if (m->size.icon)
 		tx += m->size.icon + m->pad.icon;
 	     ty = ((mi->size.h - th) / 2);
-	     evas_move(m->evas, mi->obj_text, m->sel_border.l + mi->x + tx,
+	     evas_object_move(mi->obj_text, m->sel_border.l + mi->x + tx,
 		       m->sel_border.t + mi->y + ty);
 	  }
 
 	if (mi->obj_entry)
 	  {
-	     evas_move(m->evas, mi->obj_entry, mi->x, mi->y);
-	     evas_resize(m->evas, mi->obj_entry,
+	     evas_object_move(mi->obj_entry, mi->x, mi->y);
+	     evas_object_resize(mi->obj_entry,
 			 mi->size.w + m->sel_border.l + m->sel_border.r,
 			 mi->size.h + m->sel_border.t + m->sel_border.b);
 	  }
@@ -1490,13 +1491,13 @@ e_menu_item_unrealize(E_Menu * m, E_Menu_Item * mi)
    IF_FREE(mi->bg_file);
    mi->bg_file = NULL;
    if (mi->obj_entry)
-      evas_del_object(m->evas, mi->obj_entry);
+      evas_object_del(mi->obj_entry);
    mi->obj_entry = NULL;
    if (mi->obj_text)
-      evas_del_object(m->evas, mi->obj_text);
+      evas_object_del(mi->obj_text);
    mi->obj_text = NULL;
    if (mi->obj_icon)
-      evas_del_object(m->evas, mi->obj_icon);
+      evas_object_del(mi->obj_icon);
    mi->obj_icon = NULL;
    if (mi->state)
       ebits_free(mi->state);
@@ -1510,6 +1511,7 @@ e_menu_item_unrealize(E_Menu * m, E_Menu_Item * mi)
    mi->sep_file = NULL;
 
    D_RETURN;
+   UN(m);
 }
 
 void
@@ -1528,29 +1530,32 @@ e_menu_item_realize(E_Menu * m, E_Menu_Item * mi)
      {
 	if (mi->str)
 	  {
-	     mi->obj_text = evas_add_text(m->evas, "borzoib", 8, mi->str);
-	     evas_set_color(m->evas, mi->obj_text, 0, 0, 0, 255);
-	     evas_show(m->evas, mi->obj_text);
-	     evas_set_layer(m->evas, mi->obj_text, 10);
+	     mi->obj_text = evas_object_text_add(m->evas);
+	     evas_object_text_font_set(mi->obj_text, "borzoib", 8);
+	     evas_object_text_text_set(mi->obj_text, mi->str);
+	     evas_object_color_set(mi->obj_text, 0, 0, 0, 255);
+	     evas_object_show(mi->obj_text);
+	     evas_object_layer_set(mi->obj_text, 10);
 	  }
 	if (mi->icon)
 	  {
-	     mi->obj_icon = evas_add_image_from_file(m->evas, mi->icon);
-	     evas_show(m->evas, mi->obj_icon);
-	     evas_set_layer(m->evas, mi->obj_icon, 10);
+	    mi->obj_icon = evas_object_image_add(m->evas);
+	    evas_object_image_file_set(mi->obj_icon, mi->icon, NULL);
+	     evas_object_show(mi->obj_icon);
+	     evas_object_layer_set(mi->obj_icon, 10);
 	  }
-	mi->obj_entry = evas_add_rectangle(m->evas);
-	evas_set_layer(m->evas, mi->obj_entry, 11);
-	evas_set_color(m->evas, mi->obj_entry, 0, 0, 0, 0);
-	evas_show(m->evas, mi->obj_entry);
+	mi->obj_entry = evas_object_rectangle_add(m->evas);
+	evas_object_layer_set(mi->obj_entry, 11);
+	evas_object_color_set(mi->obj_entry, 0, 0, 0, 0);
+	evas_object_show(mi->obj_entry);
 	tw = 0;
 	th = 0;
 	if (mi->obj_text)
-	   evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &tw, &th);
+	   evas_object_geometry_get(mi->obj_text, NULL, NULL, &tw, &th);
 	iw = 0;
 	ih = 0;
 	if (mi->obj_icon)
-	   evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+	   evas_object_image_size_get(mi->obj_icon, &iw, &ih);
 	rw = 0;
 	rh = 0;
 	if (mi->state)
@@ -1561,9 +1566,10 @@ e_menu_item_realize(E_Menu * m, E_Menu_Item * mi)
 	if (((!mi->scale_icon) && (ih > th)) || ((!mi->str) && (ih > th)))
 	   th = (double)ih;
 	mi->size.min.h = (int)th;
-	evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_IN,
+	/* checkme todo */
+	evas_object_event_callback_add(mi->obj_entry, EVAS_CALLBACK_MOUSE_IN,
 			  e_menu_item_in_cb, mi);
-	evas_callback_add(m->evas, mi->obj_entry, CALLBACK_MOUSE_OUT,
+	evas_object_event_callback_add(mi->obj_entry, EVAS_CALLBACK_MOUSE_OUT,
 			  e_menu_item_out_cb, mi);
 	e_menu_set_sel(m, mi);
 	if ((mi->radio) || (mi->check))
@@ -1595,17 +1601,17 @@ e_menu_obscure_outside_screen(E_Menu * m)
    D_ENTER;
 
    /* obscure stuff outside the screen boundaries - optimizes rendering */
-   evas_clear_obscured_rects(m->evas);
-   evas_add_obscured_rect(m->evas,
+   evas_obscured_clear(m->evas);
+   evas_obscured_rectangle_add(m->evas,
 			  -m->current.x - 100000,
 			  -m->current.y - 100000, 200000 + screen_w, 100000);
-   evas_add_obscured_rect(m->evas,
+   evas_obscured_rectangle_add(m->evas,
 			  -m->current.x - 100000,
 			  -m->current.y - 100000, 100000, 200000 + screen_h);
-   evas_add_obscured_rect(m->evas,
+   evas_obscured_rectangle_add(m->evas,
 			  -m->current.x - 100000,
 			  screen_h - m->current.y, 200000 + screen_w, 100000);
-   evas_add_obscured_rect(m->evas,
+   evas_obscured_rectangle_add(m->evas,
 			  screen_w - m->current.x,
 			  -m->current.y - 100000, 100000, 200000 + screen_h);
 
@@ -1615,7 +1621,7 @@ e_menu_obscure_outside_screen(E_Menu * m)
 void
 e_menu_scroll_all_by(int dx, int dy)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1638,7 +1644,7 @@ e_menu_scroll_all_by(int dx, int dy)
 	     E_Menu             *m;
 
 	     m = l->data;
-	     evas_event_move(m->evas,
+	     evas_event_feed_mouse_move(m->evas,
 			     mouse_x - m->current.x, mouse_y - m->current.y);
 	  }
      }
@@ -1696,7 +1702,7 @@ e_menu_update_base(E_Menu * m)
 
    if (m->recalc_entries)
      {
-	Evas_List           l;
+	Evas_List *           l;
 	int                 max_w, max_h;
 	int                 i;
 
@@ -1725,12 +1731,12 @@ e_menu_update_base(E_Menu * m)
 		  tw = 0;
 		  th = 0;
 		  if (mi->obj_text)
-		     evas_get_geometry(m->evas, mi->obj_text, NULL, NULL, &tw,
+		     evas_object_geometry_get(mi->obj_text, NULL, NULL, &tw,
 				       &th);
 		  iw = 0;
 		  ih = 0;
 		  if (mi->obj_icon)
-		     evas_get_image_size(m->evas, mi->obj_icon, &iw, &ih);
+		     evas_object_image_size_get(mi->obj_icon, &iw, &ih);
 		  rw = 0;
 		  rh = 0;
 		  if (mi->state)
@@ -1791,7 +1797,7 @@ e_menu_update_base(E_Menu * m)
      }
    if (m->redo_sel)
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	for (l = m->entries; l; l = l->next)
 	  {
@@ -1839,11 +1845,13 @@ e_menu_update_base(E_Menu * m)
    if (size_changed)
      {
 	ecore_window_resize(m->win.evas, m->current.w, m->current.h);
-	evas_set_output_size(m->evas, m->current.w, m->current.h);
-	evas_set_output_viewport(m->evas, 0, 0, m->current.w, m->current.h);
+	evas_output_size_set(m->evas, m->current.w, m->current.h);
+	evas_output_viewport_set(m->evas, 0, 0, m->current.w, m->current.h);
 	if (m->bg)
 	   ebits_resize(m->bg, m->current.w, m->current.h);
      }
+
+   e_menu_update_shape(m);
 
    D_RETURN;
 }
@@ -1880,6 +1888,8 @@ e_menu_update_shows(E_Menu * m)
 	     open_menus = evas_list_append(open_menus, m);
 	  }
      }
+
+   e_menu_update_shape(m);
 
    D_RETURN;
 }
@@ -1928,7 +1938,30 @@ e_menu_update_hides(E_Menu * m)
 	  }
      }
 
+   e_menu_update_shape(m);
+
    D_RETURN;
+}
+
+void
+e_menu_update_shape(E_Menu *m)
+{
+	Pixmap pmap, mask;
+
+	D_ENTER;
+
+	pmap = ecore_pixmap_new(m->win.main, m->current.w, m->current.h, 0);
+	mask = ecore_pixmap_new(m->win.main, m->current.w, m->current.h, 1);
+
+	e_evas_get_mask(m->evas, pmap, mask);
+	ecore_window_set_background_pixmap(m->win.main, pmap);
+	ecore_window_set_shape_mask(m->win.main, mask);
+	ecore_window_clear(m->win.main);
+
+	ecore_pixmap_free(pmap);
+	ecore_pixmap_free(mask);
+
+	D_RETURN;
 }
 
 void

@@ -27,7 +27,7 @@ struct _E_File
 };
 
 E_File             *e_file_new(char *file);
-E_File             *e_file_get_by_name(Evas_List l, char *file);
+E_File             *e_file_get_by_name(Evas_List * l, char *file);
 void                e_file_set_mime(E_File * f, char *base, char *mime);
 void                e_file_set_link(E_File * f, char *link);
 

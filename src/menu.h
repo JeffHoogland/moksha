@@ -27,9 +27,9 @@ struct _E_Menu
       Window              main, evas;
    }
    win;
-   Evas                evas;
-   Ebits_Object        bg;
-   Evas_List           entries;
+   Evas *                evas;
+   Ebits_Object *        bg;
+   Evas_List *           entries;
    char               *bg_file;
 
    int                 first_expose;
@@ -77,13 +77,13 @@ struct _E_Menu_Item
    char               *bg_file;
    int                 selected;
 
-   Evas_Object         obj_entry;
+   Evas_Object *         obj_entry;
 
    char               *str;
-   Evas_Object         obj_text;
+   Evas_Object *         obj_text;
 
    char               *icon;
-   Evas_Object         obj_icon;
+   Evas_Object *         obj_icon;
    int                 scale_icon;
 
    Ebits_Object        state;
@@ -149,6 +149,7 @@ void                e_menu_update_base(E_Menu * m);
 void                e_menu_update_finish(E_Menu * m);
 void                e_menu_update_shows(E_Menu * m);
 void                e_menu_update_hides(E_Menu * m);
+void                e_menu_update_shape(E_Menu *m);
 void                e_menu_update(E_Menu * m);
 void                e_menu_item_set_icon(E_Menu_Item * mi, char *icon);
 void                e_menu_item_set_text(E_Menu_Item * mi, char *text);

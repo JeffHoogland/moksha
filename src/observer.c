@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "observer.h"
 
-static Evas_List    observers;
+static Evas_List *    observers;
 
 void
 e_observer_init(E_Observer * obs, E_Event_Type event,
@@ -97,18 +97,18 @@ e_observee_init(E_Observee * obs, E_Cleanup_Func cleanup_func)
 void
 e_observee_notify_observers(E_Observee * o, E_Event_Type event, void *data)
 {
-   Evas_List           obs_list = NULL;
+   Evas_List *           obs_list = NULL;
    E_Observer         *obs = NULL;
 
    D_ENTER;
-
+   
    if (!o)
       D_RETURN;
 
    for (obs_list = o->observers; obs_list; obs_list = obs_list->next)
      {
 	obs = E_OBSERVER(obs_list->data);
-
+	
 	/* check bit mask */
 	if (obs->event & event)
 	  {
@@ -122,7 +122,7 @@ e_observee_notify_observers(E_Observee * o, E_Event_Type event, void *data)
 void
 e_observee_notify_all_observers(E_Observee * o, E_Event_Type event, void *data)
 {
-   Evas_List           obs_list = NULL;
+   Evas_List *           obs_list = NULL;
    E_Observer         *obs = NULL;
 
    D_ENTER;

@@ -36,18 +36,17 @@ struct _E_Border
       Window              client;
    }
    win;
-   Evas                evas;
+   Evas               *evas;
    struct
    {
       E_Text             *title;
-      Evas_Object         title_clip;
+      Evas_Object        *title_clip;
    }
    obj;
-   Pixmap              pixmap;
+   Evas_List          *windows;
    struct
    {
       int                 new;
-      char               *file;
       Ebits_Object        b;
    }
    bits;
@@ -198,7 +197,6 @@ struct _E_Border
    int                 shape_changed;
    int                 placed;
 
-   Evas_List           grabs;
    E_Grab             *click_grab;
    E_Desktop          *desk;
 
@@ -208,8 +206,6 @@ struct _E_Border
    int                 first_expose;
 
    int                 hold_changes;
-
-   Evas_List           menus;
 
    int                 changed;
 };
@@ -225,6 +221,9 @@ void                e_border_init(void);
 E_Border           *e_border_new(void);
 
 void                e_border_update_borders(void);
+void                e_border_redraw_region(E_Border *b, int x, int y,
+		                           int w, int h);
+void                e_border_update_render(E_Border * b);
 void                e_border_apply_border(E_Border * b);
 void                e_border_reshape(E_Border * b);
 void                e_border_release(E_Border * b);
@@ -251,11 +250,12 @@ void                e_border_raise_above(E_Border * b, E_Border * above);
 void                e_border_lower_below(E_Border * b, E_Border * below);
 E_Border           *e_border_current_focused(void);
 void                e_border_focus_grab_ended(void);
-void                e_border_raise_next(void);
 void                e_border_send_pointer(E_Border * b);
 int                 e_border_viewable(E_Border * b);
 void                e_border_print_pos(char *buf, E_Border * b);
 void                e_border_print_size(char *buf, E_Border * b);
 void                e_border_set_gravity(E_Border * b, int gravity);
-Evas_List           e_border_get_borders_list();
+Evas_List          *e_border_get_borders_list();
+void                e_borders_scroll_list(Evas_List *borders,
+		                          int dx, int dy);
 #endif

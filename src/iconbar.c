@@ -1,16 +1,20 @@
+#include "e.h"
 #include "debug.h"
+#include "data.h"
+#include "desktops.h"
 #include "iconbar.h"
 #include "util.h"
-#include "desktops.h"
 #include "border.h"
 #include "file.h"
 #include "icons.h"
-#include "view_layout.h"
 
-static E_Config_Base_Type *cf_iconbar = NULL;
-static E_Config_Base_Type *cf_iconbar_icon = NULL;
+#include <assert.h>
+#undef NDEBUG
 
-static Evas_List    iconbars = NULL;
+static E_Data_Base_Type *cf_iconbar = NULL;
+static E_Data_Base_Type *cf_iconbar_icon = NULL;
+
+static Evas_List *    iconbars = NULL;
 
 /* internal func (iconbar use only) prototypes */
 
@@ -32,26 +36,22 @@ static void         ib_bits_resize(void *data, double w, double h);
 static void         ib_bits_raise(void *data);
 static void         ib_bits_lower(void *data);
 static void         ib_bits_set_layer(void *data, int l);
-static void         ib_bits_set_clip(void *data, Evas_Object clip);
+static void         ib_bits_set_clip(void *data, Evas_Object * clip);
 static void         ib_bits_set_color_class(void *data, char *cc, int r, int g,
 					    int b, int a);
 static void         ib_bits_get_min_size(void *data, double *w, double *h);
 static void         ib_bits_get_max_size(void *data, double *w, double *h);
 
-static void         ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b,
-				int _x, int _y);
-static void         ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b,
-				 int _x, int _y);
-static void         ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b,
-				  int _x, int _y);
-static void         ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b,
-				int _x, int _y);
-static void         ib_mouse_move(void *data, Evas _e, Evas_Object _o, int _b,
-				  int _x, int _y);
+static void         ib_mouse_in(void *data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         ib_mouse_out(void *data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         ib_mouse_down(void *data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         ib_mouse_up(void *data, Evas * _e, Evas_Object * _o, void *event_info);
+static void         ib_mouse_move(void *data, Evas * _e, Evas_Object * _o, void *event_info);
 
 static void         e_iconbar_icon_cleanup(E_Iconbar_Icon * ic);
 
 static void         ib_child_handle(Ecore_Event * ev);
+static void         ib_window_mouse_out(Ecore_Event *ev);
 
 /* NB: comments here for illustration & helping people understand E's code */
 /* This is a start of the comments. if you feel they are not quite good */
@@ -143,7 +143,7 @@ e_iconbar_cleanup(E_Iconbar * ib)
    /* save scroll position */
    /* tell the view we attached to that somehting in it changed. this way */
    /* the view will now it needs to redraw */
-   ib->view->changed = 1;
+   /* ib->desktop->changed = 1; */
    /* free up our ebits */
    if (ib->bit)
       ebits_free(ib->bit);
@@ -151,7 +151,7 @@ e_iconbar_cleanup(E_Iconbar * ib)
    /* if we have any icons... */
    if (ib->icons)
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	/* go thru the list of icon and unref each one.. ie - free it */
 	for (l = ib->icons; l; l = l->next)
@@ -165,12 +165,12 @@ e_iconbar_cleanup(E_Iconbar * ib)
 	evas_list_free(ib->icons);
      }
    /* cleaup the clip object */
-   if ((ib->view) && (ib->view->evas) && (ib->clip))
-      evas_del_object(ib->view->evas, ib->clip);
+   if ((ib->desktop) && (ib->desktop->evas) && (ib->clip))
+      evas_object_del(ib->clip);
    /* delete any timers intended to work on  this iconbar */
-   snprintf(buf, PATH_MAX, "iconbar_reload:%s", ib->view->name);
+   snprintf(buf, PATH_MAX, "iconbar_reload:%d", ib->desktop->desk.desk);
    ecore_del_event_timer(buf);
-   snprintf(buf, PATH_MAX, "iconbar_scroll:%s", ib->view->name);
+   snprintf(buf, PATH_MAX, "iconbar_scroll:%d", ib->desktop->desk.desk);
    ecore_del_event_timer(buf);
 
    /* call the destructor of the base class */
@@ -189,36 +189,37 @@ e_iconbar_init()
 {
    D_ENTER;
 
-   /* we set up config structure and types so the config system can just */
+   /* we set up data structure and types so the data system can just */
    /* read a db and dump it right into memory - including lists of stuff */
 
-   /* a new config type - an iconbar icon */
-   cf_iconbar_icon = e_config_type_new();
-   /* this is a member of the iconbar icon struct we want the config system */
+   /* a new data type - an iconbar icon */
+   cf_iconbar_icon = e_data_type_new();
+   /* this is a member of the iconbar icon struct we want the data system */
    /* to get from the db for us. the key is "exec". the type is a string */
-   /* the struct memebr is exec. the default value is "". see the config.h */
+   /* the struct memebr is exec. the default value is "". see the data.h */
    /* header for more info */
-   E_CONFIG_NODE(cf_iconbar_icon, "exec", E_CFG_TYPE_STR, NULL,
-		 E_Iconbar_Icon, exec, 0, 0, "");
-   E_CONFIG_NODE(cf_iconbar_icon, "wait", E_CFG_TYPE_INT, NULL,
-		 E_Iconbar_Icon, wait, 0, 0, "");
-   E_CONFIG_NODE(cf_iconbar_icon, "wait_timeout", E_CFG_TYPE_FLOAT, NULL,
-		 E_Iconbar_Icon, wait_timeout, 0, 0, "");
+   E_DATA_NODE(cf_iconbar_icon, "exec", E_DATA_TYPE_STR, NULL,
+		 E_Iconbar_Icon, exec, (E_Data_Value)"");
+   E_DATA_NODE(cf_iconbar_icon, "wait", E_DATA_TYPE_INT, NULL,
+		 E_Iconbar_Icon, wait, (E_Data_Value)0);
+   E_DATA_NODE(cf_iconbar_icon, "wait_timeout", E_DATA_TYPE_FLOAT, NULL,
+		 E_Iconbar_Icon, wait_timeout, (E_Data_Value)0);
    /* this memebr will be replaced by the relative key path in the db as a */
    /* string */
-   E_CONFIG_NODE(cf_iconbar_icon, "image", E_CFG_TYPE_KEY, NULL,
-		 E_Iconbar_Icon, image_path, 0, 0, "");
+   E_DATA_NODE(cf_iconbar_icon, "image", E_DATA_TYPE_KEY, NULL,
+		 E_Iconbar_Icon, image_path, (E_Data_Value)"");
 
-   /* a new config type - in this case the iconbar istelf. the only thing we */
-   /* want the config system to do it fill it with iconbar icon members in */
+   /* a new data type - in this case the iconbar istelf. the only thing we */
+   /* want the data system to do it fill it with iconbar icon members in */
    /* the list */
-   cf_iconbar = e_config_type_new();
-   E_CONFIG_NODE(cf_iconbar, "icons", E_CFG_TYPE_LIST, cf_iconbar_icon,
-		 E_Iconbar, icons, 0, 0, NULL);
-   E_CONFIG_NODE(cf_iconbar, "scroll", E_CFG_TYPE_FLOAT, NULL, E_Iconbar,
-		 scroll, 0, 0, NULL);
+   cf_iconbar = e_data_type_new();
+   E_DATA_NODE(cf_iconbar, "icons", E_DATA_TYPE_LIST, cf_iconbar_icon,
+		 E_Iconbar, icons, (E_Data_Value)"");
+   E_DATA_NODE(cf_iconbar, "scroll", E_DATA_TYPE_FLOAT, NULL, E_Iconbar,
+		 scroll, (E_Data_Value)0);
 
    ecore_event_filter_handler_add(ECORE_EVENT_CHILD, ib_child_handle);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_FOCUS_OUT, ib_window_mouse_out);
 
    D_RETURN;
 }
@@ -228,51 +229,51 @@ e_iconbar_init()
  * @v:  The view for which an iconbar is to be constructed
  */
 E_Iconbar          *
-e_iconbar_new(E_View * v)
+e_iconbar_new(E_Desktop * d)
 {
-   Evas_List           l;
+   Evas_List          *l;
    char                buf[PATH_MAX];
    E_Iconbar          *ib;
 
    D_ENTER;
 
-   D("new iconbar for view: %s\n", v->name);
-   if(!v || !v->look || !v->look->obj 
-	 || !v->look->obj->icb || !v->look->obj->icb_bits)
+   D("new iconbar for desktop: %d\n", d->desk.desk);
+   if(!d || !d->look || !d->look->obj 
+	 || !d->look->obj->icb || !d->look->obj->icb_bits)
       D_RETURN_(NULL);
 
-   /* first we want to load the iconbar data itself - ie the config info */
+   /* first we want to load the iconbar data itself - ie the data info */
    /* for what icons we have and what they execute */
-   snprintf(buf, PATH_MAX, "%s", v->look->obj->icb);
-   /* use the config system to simply load up the db and start making */
+   snprintf(buf, PATH_MAX, "%s", d->look->obj->icb);
+   /* use the data system to simply load up the db and start making */
    /* structs and lists and stuff for us... we told it how to in init */
-   ib = e_config_load(buf, "", cf_iconbar);
+   ib = e_data_load(buf, "", cf_iconbar);
    /* flush image cache */
    {
-      if (v->evas)
+      if (d->evas)
 	{
 	   int                 size;
 
-	   size = evas_get_image_cache(v->evas);
-	   evas_set_image_cache(v->evas, 0);
-	   evas_set_image_cache(v->evas, size);
+	   size = evas_object_image_cache_get(d->evas);
+	   evas_object_image_cache_flush(d->evas);
+	   evas_object_image_cache_set(d->evas, size);
 	}
    }
    /* flush edb cached handled */
    e_db_flush();
-   /* no iconbar config loaded ? return NULL */
+   /* no iconbar data loaded ? return NULL */
    if (!ib)
      {
-	D("no config loaded, return null\n");
+	D("no data loaded, return null\n");
 	D_RETURN_(NULL);
      }
 
-   /* now that the config system has doe the loading. we need to init the */
+   /* now that the data system has doe the loading. we need to init the */
    /* object and set up ref counts and free method */
    e_object_init(E_OBJECT(ib), (E_Cleanup_Func) e_iconbar_cleanup);
 
    /* the iconbar needs to know what view it's in */
-   ib->view = v;
+   ib->desktop = d;
    /* clip object = NULL */
    ib->clip = NULL;
    /* reset has been scrolled flag */
@@ -284,7 +285,7 @@ e_iconbar_new(E_View * v)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	/* and init the iocnbar icon object */
+	/* and init the iconbar icon object */
 	e_object_init(E_OBJECT(ic), (E_Cleanup_Func) e_iconbar_icon_cleanup);
 
 	/* and have the iconbar icon know what iconbar it belongs to */
@@ -293,7 +294,7 @@ e_iconbar_new(E_View * v)
 
    /* now we need to load up a bits file that tells us where in the view the */
    /* iconbar is meant to go. same place. just a slightly different name */
-   snprintf(buf, PATH_MAX, "%s", ib->view->look->obj->icb_bits);
+   snprintf(buf, PATH_MAX, "%s", ib->desktop->look->obj->icb_bits);
    ib->bit = ebits_load(buf);
 
    /* we didn't find one? */
@@ -307,13 +308,13 @@ e_iconbar_new(E_View * v)
 	D_RETURN_(NULL);
      }
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow1",
-				  CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
+				  EVAS_CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow1",
-				  CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
+				  EVAS_CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2",
-				  CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
+				  EVAS_CALLBACK_MOUSE_DOWN, e_ib_bit_down_cb, ib);
    ebits_set_classed_bit_callback(ib->bit, "Scrollbar_Arrow2",
-				  CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
+				  EVAS_CALLBACK_MOUSE_UP, e_ib_bit_up_cb, ib);
 
    /* add to our list of iconbars */
    iconbars = evas_list_append(iconbars, ib);
@@ -335,7 +336,7 @@ e_iconbar_icon_cleanup(E_Iconbar_Icon * ic)
    D("iconbar icon cleanup\n");
    /* if we have an imageobject. nuke it */
    if (ic->image)
-      evas_del_object(ic->iconbar->view->evas, ic->image);
+      evas_object_del(ic->image);
    /* cleanup the imlib_image */
    if (ic->imlib_image)
      {
@@ -353,7 +354,7 @@ e_iconbar_icon_cleanup(E_Iconbar_Icon * ic)
 	FREE(ic->hi.timer);
      }
    if (ic->hi.image)
-      evas_del_object(ic->iconbar->view->evas, ic->hi.image);
+      evas_object_del(ic->hi.image);
 
    if (ic->launch_id_cb)
      {
@@ -379,58 +380,64 @@ e_iconbar_icon_cleanup(E_Iconbar_Icon * ic)
  * @ib: The iconbar to initalize
  *
  * Turns an iconbar into more than a
- * structure of config data -- actually create evas objcts
+ * structure of data -- actually create evas objcts
  * we can do something visual with
  */
 void
 e_iconbar_realize(E_Iconbar * ib)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    if (!ib) D_RETURN;
 
    D_ENTER;
    D("realize iconbar\n");
    /* create clip object */
-   ib->clip = evas_add_rectangle(ib->view->evas);
-   evas_set_color(ib->view->evas, ib->clip, 255, 255, 255, 255);
+   ib->clip = evas_object_rectangle_add(ib->desktop->evas);
+   evas_object_color_set(ib->clip, 255, 255, 255, 190);
    /* go thru every icon in the iconbar */
    for (l = ib->icons; l; l = l->next)
      {
 	E_Iconbar_Icon     *ic;
 	char                buf[PATH_MAX];
+	int                 err;
 
 	ic = l->data;
 	/* set the path of the image to load to be the iconbar db plus */
 	/* the path of the key to the image memebr - that is actually */
 	/* a lump of image data inlined in the iconbar db - so the icons */
 	/* themselves follow the iconbar wherever it goes */
-	snprintf(buf, PATH_MAX, "%s:%s",
-		 ib->view->look->obj->icb, ic->image_path);
+	snprintf(buf, PATH_MAX, "%s:%s", 
+		 ib->desktop->look->obj->icb, ic->image_path);
 	/* add the icon image object */
-	ic->image = evas_add_image_from_file(ib->view->evas, buf);
+	ic->image = evas_object_image_add(ib->desktop->evas);
+	evas_object_image_file_set(ic->image, ib->desktop->look->obj->icb, 
+				   ic->image_path);
+	err = evas_object_image_load_error_get(ic->image);
+	if(err)
+	  D("Evas icon load error %d !!!\n", err);
 	/* add an imlib image so we can save it later */
 	ic->imlib_image = imlib_load_image(buf);
 	/* clip the icon */
-	evas_set_clip(ib->view->evas, ic->image, ib->clip);
+	evas_object_clip_set(ic->image, ib->clip);
 	/* set it to be semi-transparent */
-	evas_set_color(ib->view->evas, ic->image, 255, 255, 255, 128);
+	evas_object_color_set(ic->image, 255, 255, 255, 128);
 	/* set up callbacks on events - so the ib_* functions will be */
 	/* called when the corresponding event happens to the icon */
-	evas_callback_add(ib->view->evas, ic->image, CALLBACK_MOUSE_IN,
+	evas_object_event_callback_add(ic->image, EVAS_CALLBACK_MOUSE_IN,
 			  ib_mouse_in, ic);
-	evas_callback_add(ib->view->evas, ic->image, CALLBACK_MOUSE_OUT,
+	evas_object_event_callback_add(ic->image, EVAS_CALLBACK_MOUSE_OUT,
 			  ib_mouse_out, ic);
-	evas_callback_add(ib->view->evas, ic->image, CALLBACK_MOUSE_DOWN,
+	evas_object_event_callback_add(ic->image, EVAS_CALLBACK_MOUSE_DOWN,
 			  ib_mouse_down, ic);
-	evas_callback_add(ib->view->evas, ic->image, CALLBACK_MOUSE_UP,
+	evas_object_event_callback_add(ic->image, EVAS_CALLBACK_MOUSE_UP,
 			  ib_mouse_up, ic);
-	evas_callback_add(ib->view->evas, ic->image, CALLBACK_MOUSE_MOVE,
+	evas_object_event_callback_add(ic->image, EVAS_CALLBACK_MOUSE_MOVE,
 			  ib_mouse_move, ic);
      }
    /* add the ebit we loaded to the evas the iconbar exists in - now the */
    /* ebit is more than just structures as well. */
-   ebits_add_to_evas(ib->bit, ib->view->evas);
+   ebits_add_to_evas(ib->bit, ib->desktop->evas);
    /* aaaaaaaaah. the magic of being able to replace a named bit in an ebit */
    /* (in this case we expect a bit called "Icons" to exist - the user will */
    /* have added a bit called this into the ebit to indicate where he/she */
@@ -471,7 +478,7 @@ e_iconbar_get_length(E_Iconbar * ib)
 {
    double              ix, iy, aw, ah;
    double              len;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -491,7 +498,7 @@ e_iconbar_get_length(E_Iconbar * ib)
 
 	ic = l->data;
 	/* find out the original image size (of the image file) */
-	evas_get_image_size(ic->iconbar->view->evas, ic->image, &iw, &ih);
+	evas_object_image_size_get(ic->image, &iw, &ih);
 	if (aw > ah)		/* horizontal */
 	  {
 	     len += iw;
@@ -515,14 +522,14 @@ e_iconbar_get_length(E_Iconbar * ib)
 void
 e_iconbar_fix(E_Iconbar * ib)
 {
-   Evas_List           l;
+   Evas_List *           l;
    double              x, y, w, h;
    double              ix, iy, aw, ah;
 
    D_ENTER;
    x = y = w = h = 0;
    /* get geometry from layout */
-   if (!e_view_layout_get_element_geometry(ib->view->layout, "Iconbar",
+   if (!e_view_layout_get_element_geometry(ib->desktop->layout, "Iconbar",
 					   &x, &y, &w, &h))
      {
 	D_RETURN;
@@ -534,7 +541,7 @@ e_iconbar_fix(E_Iconbar * ib)
    /* show it. harmless to do this all the time */
    ebits_show(ib->bit);
    /* tell the view we belong to something may have changed so it can draw */
-   ib->view->changed = 1;
+   /* ib->desktop->changed = 1; */
 
    /* the callbacks set up in th ebtis replace will set up what area in */
    /* the canvas icons can exist in. lets extract them here */
@@ -545,13 +552,14 @@ e_iconbar_fix(E_Iconbar * ib)
 
    /* if we have icons- show the clipper that will clip them */
    if (ib->icons)
-      evas_show(ib->view->evas, ib->clip);
+      evas_object_show(ib->clip);
    /* no icons - hide the clipper as it will be a real object */
    else
-      evas_hide(ib->view->evas, ib->clip);
+      evas_object_hide(ib->clip);
+
    /* move the clip object to fill the icon area */
-   evas_move(ib->view->evas, ib->clip, ix, iy);
-   evas_resize(ib->view->evas, ib->clip, aw, ah);
+   evas_object_move(ib->clip, ix, iy);
+   evas_object_resize(ib->clip, aw, ah);
 
    if (aw > ah)			/* horizontal */
      {
@@ -606,7 +614,7 @@ e_iconbar_fix(E_Iconbar * ib)
 
 	ic = l->data;
 	/* find out the original image size (of the image file) */
-	evas_get_image_size(ic->iconbar->view->evas, ic->image, &iw, &ih);
+	evas_object_image_size_get(ic->image, &iw, &ih);
 	w = iw;
 	h = ih;
 	ox = 0;
@@ -660,12 +668,18 @@ e_iconbar_fix(E_Iconbar * ib)
 	  }
 
 	/* now move the icona nd resize it */
-	evas_move(ic->iconbar->view->evas, ic->image, ic->current.x,
+	evas_object_move(ic->image, ic->current.x,
 		  ic->current.y);
-	evas_resize(ic->iconbar->view->evas, ic->image, ic->current.w,
+	evas_object_resize(ic->image, ic->current.w,
 		    ic->current.h);
-	evas_set_image_fill(ic->iconbar->view->evas, ic->image, 0, 0,
+	evas_object_image_fill_set(ic->image, 0, 0,
 			    ic->current.w, ic->current.h);
+
+	/* kjb cep - layer ??? */
+	/*
+	printf(" icon!! %f,%f %f,%f\n", ic->current.x, ic->current.y,
+	       ic->current.w, ic->current.h );
+	*/
      }
 
    D_RETURN;
@@ -684,13 +698,13 @@ e_iconbar_save_out_final(E_Iconbar * ib)
 
    D_ENTER;
 
-   if (ib->view)
+   if (ib->desktop)
      {
 	E_DB_File          *edb;
-	Evas_List           l;
+	Evas_List *           l;
 	int                 i;
 
-	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", ib->view->dir->dir);
+	snprintf(buf, PATH_MAX, "%s/.e_iconbar.db", ib->desktop->dir);
 	D("%s\n", buf);
 
 	if (ib->changed)
@@ -721,7 +735,7 @@ e_iconbar_save_out_final(E_Iconbar * ib)
 
 				 snprintf(buf2, PATH_MAX,
 					  "%s/.e_iconbar.db:/icons/%i/image",
-					  ib->view->dir->dir, i);
+					  ib->desktop->dir, i);
 				 D("save image\n");
 				 imlib_save_image(buf2);
 			      }
@@ -777,9 +791,9 @@ e_iconbar_handle_launch_id(Window win, void *data)
 		  e_exec_broadcast_cb_del(ic->launch_id_cb);
 		  ic->launch_id_cb = NULL;
 	       }
-	     evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255,
+	     evas_object_color_set(ic->image, 255, 255, 255,
 			    128);
-	     ic->iconbar->view->changed = 1;
+	     /* ic->iconbar->desktop->changed = 1; */
 	  }
      }
 }
@@ -798,7 +812,7 @@ ib_scroll_timeout(int val, void *data)
    /* get our iconbar pointer */
    ib = (E_Iconbar *) data;
 
-   snprintf(buf, PATH_MAX, "iconbar_scroll:%s", ib->view->name);
+   snprintf(buf, PATH_MAX, "iconbar_scroll:%s", ib->desktop->name);
    if (val == 0)
       ecore_del_event_timer(buf);
    else
@@ -828,8 +842,8 @@ ib_cancel_launch_timeout(int val, void *data)
 	     e_exec_broadcast_cb_del(ic->launch_id_cb);
 	     ic->launch_id_cb = NULL;
 	  }
-	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 128);
-	ic->iconbar->view->changed = 1;
+	evas_object_color_set(ic->image, 255, 255, 255, 128);
+	/* ic->iconbar->desktop->changed = 1; */
      }
    D_RETURN;
    UN(val);
@@ -854,20 +868,17 @@ ib_timeout(int val, void *data)
 	/* no hilite (animation) image */
 	if (!ic->hi.image)
 	{
-	   char                buf[PATH_MAX];
-
-	     /* figure out its path */
-	     snprintf(buf, PATH_MAX, "%s:%s",
-		      ic->iconbar->view->look->obj->icb, ic->image_path);
 	     /* add it */
-	     ic->hi.image = evas_add_image_from_file(ic->iconbar->view->evas,
-						     buf);
+	     ic->hi.image = evas_object_image_add(ic->iconbar->desktop->evas);
+	     evas_object_image_file_set(ic->hi.image, 
+					ic->iconbar->desktop->look->obj->icb, 
+					ic->image_path);
 	     /* put it high up */
-	     evas_set_layer(ic->iconbar->view->evas, ic->hi.image, 20000);
+	     evas_object_layer_set(ic->hi.image, 20000);
 	     /* dont allow it to capture any events (enter, leave etc. */
-	     evas_set_pass_events(ic->iconbar->view->evas, ic->hi.image, 1);
+	     evas_object_pass_events_set(ic->hi.image, 1);
 	     /* show it */
-	     evas_show(ic->iconbar->view->evas, ic->hi.image);
+	     evas_object_show(ic->hi.image);
 	  }
 	/* start at 0 */
 	val = 0;
@@ -876,10 +887,9 @@ ib_timeout(int val, void *data)
    t = ecore_get_time();
    if (ic->launch_id)
      {
-	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 50);
+	evas_object_color_set(ic->image, 255, 255, 255, 50);
 	if (ic->hi.image)
-	   evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255,
-			  0);
+	   evas_object_color_set(ic->hi.image, 255, 255, 255, 0);
      }
    /* if the icon is hilited */
    else if (ic->hilited)
@@ -890,7 +900,7 @@ ib_timeout(int val, void *data)
 	double              speed;
 
 	/* find out where the original icon image is */
-	evas_get_geometry(ic->iconbar->view->evas, ic->image, &x, &y, &w, &h);
+	evas_object_geometry_get(ic->image, &x, &y, &w, &h);
 	/* tt is the time since we started */
 	tt = t - ic->hi.start;
 	/* the speed to run at - the less, the faster (ie a loop is 0.5 sec) */
@@ -907,15 +917,15 @@ ib_timeout(int val, void *data)
 	nw = w * ((tt / speed) + 1.0);
 	nh = h * ((tt / speed) + 1.0);
 	/* move the hilite icon to a good spot */
-	evas_move(ic->iconbar->view->evas, ic->hi.image,
+	evas_object_move(ic->hi.image,
 		  x + ((w - nw) / 2), y + ((h - nh) / 2));
 	/* resize it */
-	evas_resize(ic->iconbar->view->evas, ic->hi.image, nw, nh);
+	evas_object_resize(ic->hi.image, nw, nh);
 	/* reset its fill so ti fills its space */
-	evas_set_image_fill(ic->iconbar->view->evas, ic->hi.image, 0, 0, nw,
+	evas_object_image_fill_set(ic->hi.image, 0, 0, nw,
 			    nh);
 	/* set its fade */
-	evas_set_color(ic->iconbar->view->evas, ic->hi.image, 255, 255, 255, a);
+	evas_object_color_set(ic->hi.image, 255, 255, 255, a);
 	/* incirment our count */
 	val++;
      }
@@ -928,7 +938,7 @@ ib_timeout(int val, void *data)
 
 	/* delete the animation object */
 	if (ic->hi.image)
-	   evas_del_object(ic->iconbar->view->evas, ic->hi.image);
+	   evas_object_del(ic->hi.image);
 	ic->hi.image = NULL;
 
 	/* if we were pulsating.. reset start timer */
@@ -947,7 +957,7 @@ ib_timeout(int val, void *data)
 	/* alpha value caluclated on ramp position */
 	a = (int)((double)((1.0 - tt) * 127.0) + 128.0);
 	/* set alpha value */
-	evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, a);
+	evas_object_color_set(ic->image, 255, 255, 255, a);
 	/* time is at end of ramp.. kill timer */
 	if (tt == 1.0)
 	  {
@@ -962,7 +972,7 @@ ib_timeout(int val, void *data)
    if (ic->hi.timer)
       ecore_add_event_timer(ic->hi.timer, 0.05, ib_timeout, val, data);
    /* flag the view that we changed */
-   ic->iconbar->view->changed = 1;
+   /* ic->iconbar->desktop->changed = 1; */
 
    D_RETURN;
 }
@@ -972,7 +982,7 @@ static void
 ib_bits_show(void *data)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -983,7 +993,7 @@ ib_bits_show(void *data)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	evas_show(ic->iconbar->view->evas, ic->image);
+	evas_object_show(ic->image);
      }
 
    D_RETURN;
@@ -994,7 +1004,7 @@ static void
 ib_bits_hide(void *data)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1005,7 +1015,7 @@ ib_bits_hide(void *data)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	evas_hide(ic->iconbar->view->evas, ic->image);
+	evas_object_hide(ic->image);
      }
 
    D_RETURN;
@@ -1016,7 +1026,7 @@ static void
 ib_bits_move(void *data, double x, double y)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1034,7 +1044,7 @@ static void
 ib_bits_resize(void *data, double w, double h)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1052,7 +1062,7 @@ static void
 ib_bits_raise(void *data)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1063,7 +1073,7 @@ ib_bits_raise(void *data)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	evas_raise(ic->iconbar->view->evas, ic->image);
+	evas_object_raise(ic->image);
      }
 
    D_RETURN;
@@ -1074,7 +1084,7 @@ static void
 ib_bits_lower(void *data)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1085,7 +1095,7 @@ ib_bits_lower(void *data)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	evas_lower(ic->iconbar->view->evas, ic->image);
+	evas_object_lower(ic->image);
      }
 
    D_RETURN;
@@ -1096,7 +1106,7 @@ static void
 ib_bits_set_layer(void *data, int lay)
 {
    E_Iconbar          *ib;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1107,7 +1117,7 @@ ib_bits_set_layer(void *data, int lay)
 	E_Iconbar_Icon     *ic;
 
 	ic = l->data;
-	evas_set_layer(ic->iconbar->view->evas, ic->image, lay);
+	evas_object_layer_set(ic->image, lay);
      }
 
    D_RETURN;
@@ -1116,7 +1126,7 @@ ib_bits_set_layer(void *data, int lay)
 /* not used... err.. ebits clips for us to the maximum allowed space of */
 /* the ebit object bit - dont know why i have this here */
 static void
-ib_bits_set_clip(void *data, Evas_Object clip)
+ib_bits_set_clip(void *data, Evas_Object * clip)
 {
    D_ENTER;
 
@@ -1170,7 +1180,7 @@ ib_bits_get_max_size(void *data, double *w, double *h)
 
 /* called when a mouse goes in on an icon object */
 static void
-ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+ib_mouse_in(void *data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Iconbar_Icon     *ic;
 
@@ -1181,14 +1191,14 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    /* set hilited flag */
    ic->hilited = 1;
    /* make it more opaque */
-   evas_set_color(ic->iconbar->view->evas, ic->image, 255, 255, 255, 255);
+   evas_object_color_set(ic->image, 255, 255, 255, 255);
    /* if we havent started an animation timer - start one */
    if (!ic->hi.timer)
      {
 	char                buf[PATH_MAX];
 
 	/* come up with a unique name for it */
-	snprintf(buf, PATH_MAX, "iconbar:%s/%s", ic->iconbar->view->name,
+	snprintf(buf, PATH_MAX, "iconbar:%s/%s", ic->iconbar->desktop->name,
 		 ic->image_path);
 	e_strdup(ic->hi.timer, buf);
 	/* call the timeout */
@@ -1196,19 +1206,17 @@ ib_mouse_in(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    /* tell the view the iconbar is in.. something changed that might mean */
    /* a redraw is needed */
-   ic->iconbar->view->changed = 1;
+   /* ic->iconbar->desktop->changed = 1; */
 
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 /* called when a mouse goes out of an icon object */
 static void
-ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+ib_mouse_out(void *data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Iconbar_Icon     *ic;
 
@@ -1220,21 +1228,20 @@ ib_mouse_out(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    ic->hilited = 0;
    /* tell the view the iconbar is in.. something changed that might mean */
    /* a redraw is needed */
-   ic->iconbar->view->changed = 1;
+   /* ic->iconbar->desktop->changed = 1; */
 
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
+   UN(event_info);
 }
 
 /* called when the mouse goes up on an icon object */
 static void
-ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+ib_mouse_up(void *data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Iconbar_Icon     *ic;
+   Evas_Event_Mouse_Up *ev = event_info;
 
    D_ENTER;
 
@@ -1247,7 +1254,7 @@ ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      {
 	ic->moving = 0;
 
-	e_iconbar_icon_move(ic, _x, _y);
+	e_iconbar_icon_move(ic, ev->output.x, ev->output.y);
      }
 
    /* Otherwise, not moving so execute, etc */
@@ -1263,7 +1270,7 @@ ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       {
 		  if (e_exec_run(ic->exec) < 0)
 		    {
-		       /* FIXME: display error */
+		       D("Failed to execute: %s\n", ic->exec);
 		    }
 	       }
 	     else
@@ -1293,11 +1300,10 @@ ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 			       ecore_add_event_timer(buf, 15.0,
 						     ib_cancel_launch_timeout,
 						     ic->launch_id, ic);
-			    evas_set_color(ic->iconbar->view->evas, ic->image,
+			    evas_object_color_set(ic->image,
 					   255, 255, 255, 50);
 			    if (ic->hi.image)
-			       evas_set_color(ic->iconbar->view->evas,
-					      ic->hi.image, 255, 255, 255, 0);
+			       evas_object_color_set(ic->hi.image, 255, 255, 255, 0);
 			 }
 		    }
 	       }
@@ -1307,40 +1313,36 @@ ib_mouse_up(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
 }
 
 /* called when the mouse goes down on an icon object */
 static void
-ib_mouse_down(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+ib_mouse_down(void *data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Iconbar_Icon     *ic;
+   Evas_Event_Mouse_Down *ev = event_info;
 
    D_ENTER;
 
    ic = (E_Iconbar_Icon *) data;
 
-   ic->down.x = _x;
-   ic->down.y = _y;
+   ic->down.x = ev->output.x;
+   ic->down.y = ev->output.y;
 
-   ic->mouse_down = _b;
+   ic->mouse_down = ev->button;
 
    D_RETURN;
    UN(data);
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
 }
 
 /* called when a mouse goes out of an icon object */
 static void
-ib_mouse_move(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+ib_mouse_move(void *data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    E_Iconbar_Icon     *ic;
+   Evas_Event_Mouse_Move *ev = event_info;
 
    D_ENTER;
 
@@ -1351,8 +1353,8 @@ ib_mouse_move(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      {
 	int                 dx, dy;
 
-	ic->mouse.x = _x;
-	ic->mouse.y = _y;
+	ic->mouse.x = ev->cur.output.x;
+	ic->mouse.y = ev->cur.output.y;
 
 	dx = ic->down.x - ic->mouse.x;
 	dy = ic->down.y - ic->mouse.y;
@@ -1361,7 +1363,7 @@ ib_mouse_move(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  {
 	     ic->moving = 1;
 
-	     evas_move(ic->iconbar->view->evas, ic->image,
+	     evas_object_move(ic->image,
 		       ic->mouse.x - (ic->down.x - ic->current.x),
 		       ic->mouse.y - (ic->down.y - ic->current.y));
 	  }
@@ -1372,9 +1374,6 @@ ib_mouse_move(void *data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    UN(data);
    UN(_e);
    UN(_o);
-   UN(_b);
-   UN(_x);
-   UN(_y);
 }
 
 void
@@ -1403,7 +1402,7 @@ e_iconbar_icon_move(E_Iconbar_Icon * ic, int x, int y)
    else
      {
 	E_Iconbar_Icon     *lic;
-	Evas_List           l;
+	Evas_List *           l;
 
 	double              aw = ic->iconbar->icon_area.w;
 	double              ah = ic->iconbar->icon_area.h;
@@ -1519,7 +1518,7 @@ e_iconbar_icon_move(E_Iconbar_Icon * ic, int x, int y)
 	ic->iconbar->changed = 1;
 	e_iconbar_save_out_final(ic->iconbar);
 /*      ic->iconbar->just_saved = 0;*/
-	e_view_ib_reload(ic->iconbar->view);
+	e_desktop_ib_reload(ic->iconbar->desktop);
 
      }
    D_RETURN;
@@ -1527,11 +1526,11 @@ e_iconbar_icon_move(E_Iconbar_Icon * ic, int x, int y)
 
 /* called when a dnd drop occurs on an iconbar */
 void
-e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
+e_iconbar_dnd_add_files(E_Desktop * d, E_View * source, int num_files,
 			char **dnd_files)
 {
-   Evas_List           execs = NULL;
-   Evas_List           l;
+   Evas_List *           execs = NULL;
+   Evas_List *           l;
 
    int                 i;
 
@@ -1549,7 +1548,7 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	       {
 		  /* if its an icon db, set the icon */
 		  D("db!\n");
-		  for (l = v->iconbar->icons; l; l = l->next)
+		  for (l = d->iconbar->icons; l; l = l->next)
 		    {
 		       E_Iconbar_Icon     *ibic;
 		       char                buf[PATH_MAX];
@@ -1559,11 +1558,11 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 
 		       if (ibic)
 			 {
-			    if (v->iconbar->dnd.x > ibic->current.x &&
-				v->iconbar->dnd.x <
+			    if (d->iconbar->dnd.x > ibic->current.x &&
+				d->iconbar->dnd.x <
 				ibic->current.x + ibic->current.w
-				&& v->iconbar->dnd.y > ibic->current.y
-				&& v->iconbar->dnd.y <
+				&& d->iconbar->dnd.y > ibic->current.y
+				&& d->iconbar->dnd.y <
 				ibic->current.y + ibic->current.h)
 			      {
 				 D("over icon: %s\n", ibic->exec);
@@ -1605,42 +1604,44 @@ e_iconbar_dnd_add_files(E_View * v, E_View * source, int num_files,
 	ZERO(ibic, E_Iconbar_Icon, 1);
 
 	e_object_init(E_OBJECT(ibic), (E_Cleanup_Func) e_iconbar_icon_cleanup);
-	if (v->iconbar)
-	   ibic->iconbar = v->iconbar;
+	if (d->iconbar)
+	   ibic->iconbar = d->iconbar;
 	else
 	   D("EEEEEEEEEEEEK: how the hell did this happen?");
 
 	D("x: %f, v-dir: %s, ib-dir: %s\n", ibic->iconbar->icon_area.x,
-	  v->dir->dir, ibic->iconbar->view->dir->dir);
+	  d->dir, ibic->iconbar->desktop->dir);
 
 	if (!ic->file->info.icon)
 	   D_RETURN;
 	snprintf(buf, PATH_MAX, "%s:/icon/normal", ic->file->info.icon);
-	ibic->image = evas_add_image_from_file(v->evas, buf);
+	ibic->image = evas_object_image_add(d->evas);
+	evas_object_image_file_set(ibic->image, ic->file->info.icon, 
+				   "/icon/normal");
 	ibic->imlib_image = imlib_load_image(buf);
 	ibic->image_path = strdup(ic->file->info.icon);
 	snprintf(buf, PATH_MAX, "%s/%s", ic->view->dir->dir, ic->file->file);
 	ibic->exec = strdup(buf);
 
-	evas_set_clip(v->evas, ibic->image, v->iconbar->clip);
-	evas_set_color(v->evas, ibic->image, 255, 255, 255, 128);
-	evas_set_layer(v->evas, ibic->image, 11000);
-	evas_show(v->evas, ibic->image);
-	evas_callback_add(v->evas, ibic->image, CALLBACK_MOUSE_IN,
+	evas_object_clip_set(ibic->image, d->iconbar->clip);
+	evas_object_color_set(ibic->image, 255, 255, 255, 128);
+	evas_object_layer_set(ibic->image, 11000);
+	evas_object_show(ibic->image);
+	evas_object_event_callback_add(ibic->image, EVAS_CALLBACK_MOUSE_IN,
 			  ib_mouse_in, ibic);
-	evas_callback_add(v->evas, ibic->image, CALLBACK_MOUSE_OUT,
+	evas_object_event_callback_add(ibic->image, EVAS_CALLBACK_MOUSE_OUT,
 			  ib_mouse_out, ibic);
-	evas_callback_add(v->evas, ibic->image, CALLBACK_MOUSE_DOWN,
+	evas_object_event_callback_add(ibic->image, EVAS_CALLBACK_MOUSE_DOWN,
 			  ib_mouse_down, ibic);
-	evas_callback_add(v->evas, ibic->image, CALLBACK_MOUSE_UP,
+	evas_object_event_callback_add(ibic->image, EVAS_CALLBACK_MOUSE_UP,
 			  ib_mouse_up, ibic);
-	evas_callback_add(v->evas, ibic->image, CALLBACK_MOUSE_MOVE,
+	evas_object_event_callback_add(ibic->image, EVAS_CALLBACK_MOUSE_MOVE,
 			  ib_mouse_move, ibic);
 
 	ibic->iconbar->icons = evas_list_append(ibic->iconbar->icons, ibic);
 
 	/* this adds the icon to the correct place in the list and saves */
-	e_iconbar_icon_move(ibic, v->iconbar->dnd.x, v->iconbar->dnd.y);
+	e_iconbar_icon_move(ibic, d->iconbar->dnd.x, d->iconbar->dnd.y);
      }
 }
 
@@ -1649,7 +1650,7 @@ static void
 ib_child_handle(Ecore_Event * ev)
 {
    Ecore_Event_Child  *e;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1657,7 +1658,7 @@ ib_child_handle(Ecore_Event * ev)
    for (l = iconbars; l; l = l->next)
      {
 	E_Iconbar          *ib;
-	Evas_List           ll;
+	Evas_List *           ll;
 
 	ib = l->data;
 	for (ll = ib->icons; ll; ll = ll->next)
@@ -1682,15 +1683,41 @@ ib_child_handle(Ecore_Event * ev)
 		       e_exec_broadcast_cb_del(ic->launch_id_cb);
 		       ic->launch_id_cb = NULL;
 		    }
-		  evas_set_color(ic->iconbar->view->evas, ic->image, 255,
+
+		  evas_object_color_set(ic->image, 255,
 				 255, 255, 128);
-		  ic->iconbar->view->changed = 1;
+
+		  /* ic->iconbar->desktop->changed = 1; */
 		  D_RETURN;
 	       }
 	  }
      }
 
    D_RETURN;
+}
+
+static void
+ib_window_mouse_out(Ecore_Event * ev)
+{
+   E_Desktop *desk;
+   Ecore_Event_Window_Focus_Out *e;
+   Evas_List *l;
+   
+   D_ENTER;
+
+   e = ev->event;
+   desk = e_desktops_get(e_desktops_get_current());
+   if (desk->iconbar && e->win == e_desktop_window())
+   {
+      for (l = desk->iconbar->icons; l; l = l->next)
+      {
+         E_Iconbar_Icon *ic = l->data;
+
+         ic->hilited = 0;      
+      }
+   }
+   D_RETURN;
+   
 }
 
 E_Rect             *
@@ -1712,31 +1739,4 @@ e_iconbar_get_resist_rect(E_Iconbar * ib)
    r->v1 = resist;
 
    D_RETURN_(r);
-}
-
-void
-e_iconbar_set_view_window_spacing(E_Iconbar * ib)
-{
-   double              x, y, w, h;
-
-   D_ENTER;
-
-   ebits_get_named_bit_geometry(ib->bit, "Resist", &x, &y, &w, &h);
-
-/* FIXME Why do the v->spacing.window.?'s need to be / 2? */
-   if (h > w)			/* vertical */
-     {
-	if (x < ib->view->size.w / 2)	/* left */
-	   ib->view->spacing.window.l = (x + w) / 2 + 3;
-	else			/* right */
-	   ib->view->spacing.window.r = (ib->view->size.w - x) / 2 + 15;
-     }
-   else				/* horizontal */
-     {
-	if (y < ib->view->size.h / 2)	/* top */
-	   ib->view->spacing.window.t = (y + h) / 2 + 3;
-	else
-	   ib->view->spacing.window.b = (ib->view->size.h - y) / 2 + 15;
-     }
-   D_RETURN;
 }

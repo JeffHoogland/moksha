@@ -1,12 +1,12 @@
 #include "e.h"
-#include "view_layout.h"
+#include "desktops.h"
 #include "util.h"
 
 static void e_view_layout_cleanup(E_View_Layout *layout);
 static int e_view_layout_add_element(E_View_Layout *layout, char *name);
 
 E_View_Layout *
-e_view_layout_new(E_View *v)
+e_view_layout_new(E_Desktop *d)
 {
    E_View_Layout *layout;
 
@@ -17,7 +17,7 @@ e_view_layout_new(E_View *v)
 
    e_object_init(E_OBJECT(layout), (E_Cleanup_Func) e_view_layout_cleanup);
 
-   layout->view = v;
+   layout->desktop = d;
 
    D_RETURN_(layout);
 }
@@ -25,7 +25,7 @@ e_view_layout_new(E_View *v)
 static void
 e_view_layout_cleanup(E_View_Layout *layout)
 {
-   Evas_List l;
+   Evas_List * l;
 
    D_ENTER;
 
@@ -54,22 +54,19 @@ void
 e_view_layout_realize(E_View_Layout *layout)
 {
    Ebits_Object bits;
-   Evas_List l;
+   Evas_List * l;
 
    if (!layout) D_RETURN;
    
    D_ENTER;
    
-   if (layout->view->look->obj->layout)
-      bits = ebits_load(layout->view->look->obj->layout);
+   if (layout->desktop->look->obj->layout)
+      bits = ebits_load(layout->desktop->look->obj->layout);
    else 
    {
       /* Our look doesnt provide a layout, falls back */
       char buf[PATH_MAX];
-      if(layout->view->is_desktop)
-	 snprintf(buf, PATH_MAX, "%sdesktop.bits.db", e_config_get("layout"));
-      else
-	 snprintf(buf, PATH_MAX, "%sview.bits.db", e_config_get("layout"));
+      snprintf(buf, PATH_MAX, "%sdesktop.bits.db", e_config_get("layout"));
       
       bits = ebits_load(buf);
    }
@@ -78,12 +75,14 @@ e_view_layout_realize(E_View_Layout *layout)
      D("layout bits loaded!\n")
      layout->bits = bits;
      layout->mod_time = ecore_get_time();
-     if (layout->view->evas)
+     if (layout->desktop->evas)
      {
-	ebits_add_to_evas(layout->bits, layout->view->evas);
+	ebits_add_to_evas(layout->bits, layout->desktop->evas);
 	ebits_move(layout->bits, 0, 0);
-	ebits_resize(layout->bits, layout->view->size.w, layout->view->size.h);
-	D("add layout- w:%i, h:%i\n", layout->view->size.w, layout->view->size.h);
+	ebits_resize(layout->bits, layout->desktop->real.w,
+		     layout->desktop->real.h);
+	D("add layout- w:%i, h:%i\n", layout->desktop->real.w,
+			              layout->desktop->real.h);
 	for (l = ebits_get_bit_names(layout->bits); l; l = l->next)
 	{
 	  char *name = l->data;
@@ -103,7 +102,7 @@ static int
 e_view_layout_add_element(E_View_Layout *layout, char *name)
 {
    E_View_Layout_Element *el;
-   Evas_List l;
+   Evas_List * l;
    double x, y, w, h;
 
    D_ENTER;
@@ -141,7 +140,7 @@ e_view_layout_add_element(E_View_Layout *layout, char *name)
 int
 e_view_layout_delete_element(E_View_Layout *layout, char *name)
 {
-   Evas_List l;
+   Evas_List * l;
 
    D_ENTER;
 
@@ -166,7 +165,7 @@ int
 e_view_layout_get_element_geometry(E_View_Layout *layout, char *name,
                                    double *x, double *y, double *w, double *h)
 {
-   Evas_List l;
+   Evas_List * l;
    D_ENTER;
    if (layout && name)
    {
@@ -192,7 +191,7 @@ e_view_layout_get_element_geometry(E_View_Layout *layout, char *name,
 void
 e_view_layout_update(E_View_Layout *layout)
 {
-   Evas_List l;
+   Evas_List * l;
    double              x, y, w, h;
    D_ENTER;
    
@@ -200,8 +199,9 @@ e_view_layout_update(E_View_Layout *layout)
      D_RETURN;
    /* move/resize bits */
    ebits_move(layout->bits, 0, 0);
-   ebits_resize(layout->bits, layout->view->size.w, layout->view->size.h);
-   D("update layout- w:%i, h:%i\n", layout->view->size.w, layout->view->size.h);
+   ebits_resize(layout->bits, layout->desktop->real.w, layout->desktop->real.h);
+   D("update layout- w:%i, h:%i\n", layout->desktop->real.w,
+		                    layout->desktop->real.h);
 
    /* update elements */
    for (l = layout->elements; l; l = l->next)
@@ -221,26 +221,27 @@ e_view_layout_update(E_View_Layout *layout)
    if (e_view_layout_get_element_geometry(layout, "Icons",
 	    &x, &y, &w, &h))
    {
-      layout->view->spacing.window.l = x;
-      layout->view->spacing.window.r = layout->view->size.w - (x + w);
-      layout->view->spacing.window.t = y;
-      layout->view->spacing.window.b = layout->view->size.h - (y + h);
+      /* layout->desktop->spacing.window.l = x;
+      layout->desktop->spacing.window.r = layout->desktop->size.w - (x + w);
+      layout->desktop->spacing.window.t = y;
+      layout->desktop->spacing.window.b = layout->desktop->size.h - (y + h);
+      */
    }
    if (e_view_layout_get_element_geometry(layout, "Scrollbar_H",
 	    &x, &y, &w, &h))
    {
-      e_scrollbar_move(layout->view->scrollbar.h, x, y);
-      e_scrollbar_resize(layout->view->scrollbar.h, w, h);
+      /* e_scrollbar_move(layout->desktop->scrollbar.h, x, y);
+      e_scrollbar_resize(layout->desktop->scrollbar.h, w, h); */
    }
 
    if (e_view_layout_get_element_geometry(layout, "Scrollbar_V",
 	    &x, &y, &w, &h))
    {
-      e_scrollbar_move(layout->view->scrollbar.v, x, y);
-      e_scrollbar_resize(layout->view->scrollbar.v, w, h);
+      /* e_scrollbar_move(layout->desktop->scrollbar.v, x, y);
+      e_scrollbar_resize(layout->desktop->scrollbar.v, w, h); */
    }
 
-   if (layout->view->iconbar)
-	e_iconbar_fix(layout->view->iconbar);
+   if (layout->desktop->iconbar)
+	e_iconbar_fix(layout->desktop->iconbar);
    D_RETURN;
 }

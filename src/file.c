@@ -126,7 +126,7 @@ e_file_get_dir(char *file)
 
    D_ENTER;
 
-   strcpy(buf, file);
+   STRNCPY(buf, file, PATH_MAX);
    p = strrchr(buf, '/');
    if (!p)
      {
@@ -193,12 +193,12 @@ e_file_readlink(char *link)
    D_RETURN_(f);
 }
 
-Evas_List
+Evas_List *
 e_file_ls(char *dir)
 {
    DIR                *dirp;
    struct dirent      *dp;
-   Evas_List           list;
+   Evas_List *           list;
 
    D_ENTER;
 
@@ -210,7 +210,7 @@ e_file_ls(char *dir)
      {
 	if ((strcmp(dp->d_name, ".")) && (strcmp(dp->d_name, "..")))
 	  {
-	     Evas_List           l;
+	     Evas_List *           l;
 	     char               *f;
 
 	     /* insertion sort */

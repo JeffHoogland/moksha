@@ -4,8 +4,8 @@
 #include "util.h"
 
 static EfsdConnection *ec = NULL;
-static Evas_List    fs_handlers = NULL;
-static Evas_List    fs_restart_handlers = NULL;
+static Evas_List *    fs_handlers = NULL;
+static Evas_List *    fs_restart_handlers = NULL;
 static pid_t        efsd_pid = 0;
 
 static void         e_fs_child_handle(Ecore_Event * ev);
@@ -80,7 +80,7 @@ e_fs_fd_handle(int fd)
 
 	if (efsd_next_event(ec, &ev) >= 0)
 	  {
-	     Evas_List           l;
+	     Evas_List *           l;
 
 	     for (l = fs_handlers; l; l = l->next)
 	       {
@@ -136,7 +136,7 @@ e_fs_restarter(int val, void *data)
      }
    if (ec)
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	ecore_add_event_fd(efsd_get_connection_fd(ec), e_fs_fd_handle);
 	for (l = fs_restart_handlers; l; l = l->next)

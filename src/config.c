@@ -1,6 +1,12 @@
 #include "debug.h"
+#include "actions.h"
+#include "border.h"
 #include "config.h"
+#include "data.h"
+#include "e_dir.h"
 #include "file.h"
+#include "keys.h"
+#include "observer.h"
 #include "util.h"
 
 static char         cfg_root[] = "";
@@ -23,6 +29,24 @@ static char         cfg_backgrounds_dir[PATH_MAX] = "";
 static char         cfg_fonts_dir[PATH_MAX] = "";
 static char         cfg_epplets_dir[PATH_MAX] = "";
 static char         cfg_layout_dir[PATH_MAX] = "";
+
+static E_Observer  *behavior_dir = NULL;
+E_Config           *config_data;
+
+E_Data_Base_Type   *cfg_actions = NULL;
+E_Data_Base_Type   *cfg_config = NULL;
+E_Data_Base_Type   *cfg_desktops = NULL;
+E_Data_Base_Type   *cfg_grabs = NULL;
+E_Data_Base_Type   *cfg_guides = NULL;
+E_Data_Base_Type   *cfg_match = NULL;
+E_Data_Base_Type   *cfg_menu = NULL;
+E_Data_Base_Type   *cfg_move = NULL;
+E_Data_Base_Type   *cfg_window = NULL;
+
+void                e_config_behavior_changed(E_Observer * observer,
+					      E_Observee * observee,
+					      E_Event_Type event, void *data);
+void                e_config_settings_reload(char *buf);
 
 char               *
 e_config_get(char *type)
@@ -74,25 +98,159 @@ e_config_get(char *type)
    E_CONF("images", cfg_images_dir, PACKAGE_DATA_DIR "/data/images/");
    E_CONF("cursors", cfg_cursors_dir, PACKAGE_DATA_DIR "/data/cursors/");
    E_CONF("backgrounds", cfg_backgrounds_dir,
-	  PACKAGE_DATA_DIR"/data/backgrounds/");
-   E_CONF("fonts", cfg_fonts_dir,
-	  PACKAGE_DATA_DIR"/data/fonts/");
-   E_CONF("epplets", cfg_epplets_dir,
-          PACKAGE_DATA_DIR"/data/epplets/");
-   E_CONF("layout", cfg_layout_dir,
-          PACKAGE_DATA_DIR"/data/layout/");
+	  PACKAGE_DATA_DIR "/data/backgrounds/");
+   E_CONF("fonts", cfg_fonts_dir, PACKAGE_DATA_DIR "/data/fonts/");
+   E_CONF("epplets", cfg_epplets_dir, PACKAGE_DATA_DIR "/data/epplets/");
+   E_CONF("layout", cfg_layout_dir, PACKAGE_DATA_DIR "/data/layout/");
 
    D_RETURN_("");
+}
+
+void
+e_config_actions_init()
+{
+   D_ENTER;
+
+   /*
+    * Define the data type for the E_Actions struct.
+    */
+   cfg_actions = e_data_type_new();
+   E_DATA_NODE(cfg_actions, "name", E_DATA_TYPE_STR, NULL, E_Action, name,
+	       (E_Data_Value) "");
+   E_DATA_NODE(cfg_actions, "action", E_DATA_TYPE_STR, NULL, E_Action, action,
+	       (E_Data_Value) "");
+   E_DATA_NODE(cfg_actions, "params", E_DATA_TYPE_STR, NULL, E_Action,
+	       params, (E_Data_Value) "");
+   E_DATA_NODE(cfg_actions, "event", E_DATA_TYPE_INT, NULL, E_Action, event,
+	       (E_Data_Value) 0);
+   E_DATA_NODE(cfg_actions, "button", E_DATA_TYPE_INT, NULL, E_Action, button,
+	       (E_Data_Value) 0);
+   E_DATA_NODE(cfg_actions, "key", E_DATA_TYPE_STR, NULL, E_Action, key,
+	       (E_Data_Value) 0);
+   E_DATA_NODE(cfg_actions, "modifiers", E_DATA_TYPE_INT, NULL, E_Action,
+	       modifiers, (E_Data_Value) 0);
+
+   D_RETURN;
+}
+
+void
+e_config_desktops_init()
+{
+   cfg_desktops = e_data_type_new();
+   E_DATA_NODE(cfg_desktops, "count", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       count, (E_Data_Value) 8);
+   E_DATA_NODE(cfg_desktops, "scroll", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       scroll, (E_Data_Value) 1);
+   E_DATA_NODE(cfg_desktops, "scroll_sticky", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       scroll_sticky, (E_Data_Value) 1);
+   E_DATA_NODE(cfg_desktops, "resist", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       resist, (E_Data_Value) 5);
+   E_DATA_NODE(cfg_desktops, "speed", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       speed, (E_Data_Value) 30);
+   E_DATA_NODE(cfg_desktops, "width", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       width, (E_Data_Value) 1);
+   E_DATA_NODE(cfg_desktops, "height", E_DATA_TYPE_INT, NULL, E_Config_Desktops,
+	       height, (E_Data_Value) 1);
+}
+
+void
+e_config_grabs_init()
+{
+   cfg_grabs = e_data_type_new();
+   E_DATA_NODE(cfg_grabs, "button", E_DATA_TYPE_INT, NULL, E_Grab, button,
+	       (E_Data_Value) 0);
+   E_DATA_NODE(cfg_grabs, "modifiers", E_DATA_TYPE_INT, NULL, E_Grab, mods,
+	       (E_Data_Value) 0);
+}
+
+void
+e_config_guides_init()
+{
+   cfg_guides = e_data_type_new();
+   E_DATA_NODE(cfg_guides, "display/location", E_DATA_TYPE_INT, NULL,
+	       E_Config_Guides, location, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_guides, "display/x", E_DATA_TYPE_FLOAT, NULL,
+	       E_Config_Guides, x, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_guides, "display/y", E_DATA_TYPE_FLOAT, NULL,
+	       E_Config_Guides, y, (E_Data_Value) 0);
+}
+
+void
+e_config_menu_init()
+{
+   cfg_menu = e_data_type_new();
+   E_DATA_NODE(cfg_menu, "scroll/resist", E_DATA_TYPE_INT, NULL,
+	       E_Config_Menu, resist, (E_Data_Value) 5);
+   E_DATA_NODE(cfg_menu, "scroll/speed", E_DATA_TYPE_INT, NULL,
+	       E_Config_Menu, speed, (E_Data_Value) 12);
+}
+
+void
+e_config_move_init()
+{
+   cfg_move = e_data_type_new();
+   E_DATA_NODE(cfg_move, "resist", E_DATA_TYPE_INT, NULL,
+	       E_Config_Move, resist, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_move, "resist/win", E_DATA_TYPE_INT, NULL,
+	       E_Config_Move, win_resist, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_move, "resist/desk", E_DATA_TYPE_INT, NULL,
+	       E_Config_Move, desk_resist, (E_Data_Value) 0);
+}
+
+void
+e_config_window_init()
+{
+   cfg_window = e_data_type_new();
+   E_DATA_NODE(cfg_window, "resize/mode", E_DATA_TYPE_INT, NULL,
+	       E_Config_Window, resize_mode, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_window, "move/mode", E_DATA_TYPE_INT, NULL,
+	       E_Config_Window, move_mode, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_window, "focus/mode", E_DATA_TYPE_INT, NULL, E_Config_Window,
+	       focus_mode, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_window, "raise/auto", E_DATA_TYPE_INT, NULL,
+	       E_Config_Window, auto_raise, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_window, "raise/delay", E_DATA_TYPE_FLOAT, NULL,
+	       E_Config_Window, raise_delay, (E_Data_Value) (float)0.6);
+   E_DATA_NODE(cfg_window, "place/mode", E_DATA_TYPE_INT, NULL,
+	       E_Config_Window, place_mode, (E_Data_Value) 0);
 }
 
 void
 e_config_init(void)
 {
    char                buf[PATH_MAX];
+   E_Dir              *dir;
 
    D_ENTER;
 
-#if 1				/* for now don't do this. i think a cp -r will be needed later anyway */
+   /* Start by initializing the data loading structures */
+   e_config_actions_init();
+   e_config_desktops_init();
+   e_config_grabs_init();
+   e_config_guides_init();
+   e_config_menu_init();
+   e_config_move_init();
+   e_config_window_init();
+
+   /* Then place the data structures within the config description */
+   cfg_config = e_data_type_new();
+   E_DATA_NODE(cfg_config, "actions", E_DATA_TYPE_LIST, cfg_actions,
+	       E_Config, actions, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_config, "grabs", E_DATA_TYPE_LIST, cfg_grabs,
+	       E_Config, grabs, (E_Data_Value) 0);
+
+   E_DATA_NODE(cfg_config, "desktops", E_DATA_TYPE_PTR, cfg_desktops,
+	       E_Config, desktops, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_config, "guides", E_DATA_TYPE_PTR, cfg_guides,
+	       E_Config, guides, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_config, "menu", E_DATA_TYPE_PTR, cfg_menu,
+	       E_Config, menu, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_config, "move", E_DATA_TYPE_PTR, cfg_move,
+	       E_Config, move, (E_Data_Value) 0);
+   E_DATA_NODE(cfg_config, "window", E_DATA_TYPE_PTR, cfg_window,
+	       E_Config, window, (E_Data_Value) 0);
+
+   /* Create directories as needed */
    if (!e_file_is_dir(e_config_user_dir()))
       e_file_mkdir(e_config_user_dir());
    snprintf(buf, PATH_MAX, "%sappearance", e_config_user_dir());
@@ -104,6 +262,8 @@ e_config_init(void)
    snprintf(buf, PATH_MAX, "%sbehavior", e_config_user_dir());
    if (!e_file_is_dir(buf))
       e_file_mkdir(buf);
+
+   /* With the directories created, create files if needed and load config */
    snprintf(buf, PATH_MAX, "%sbehavior/grabs.db", e_config_user_dir());
    if (!e_file_exists(buf))
       e_file_cp(PACKAGE_DATA_DIR "/data/config/behavior/default/grabs.db", buf);
@@ -119,14 +279,66 @@ e_config_init(void)
    if (!e_file_exists(buf))
       e_file_cp(PACKAGE_DATA_DIR "/data/config/behavior/default/apps_menu.db",
 		buf);
-   snprintf(buf, PATH_MAX, "%sappearance/borders/border.bits.db",
-	    e_config_user_dir());
-#endif
-#if 0
-   ts();
-#endif
+   snprintf(buf, PATH_MAX, "%sbehavior/behavior.db", e_config_user_dir());
+   if (!e_file_exists(buf))
+      e_file_cp(PACKAGE_DATA_DIR "/data/config/behavior/default/behavior.db",
+		buf);
+
+   /* Load config data and begin monitoring it with efsd */
+   e_config_behavior_changed(NULL, NULL, 0, NULL);
+
+   snprintf(buf, PATH_MAX, "%sbehavior", e_config_user_dir());
+   dir = e_dir_new();
+   e_dir_set_dir(dir, buf);
+
+   behavior_dir = NEW(E_Observer, 1);
+   ZERO(behavior_dir, sizeof(E_Observer), 1);
+   e_observer_init(behavior_dir, E_EVENT_FILE_CHANGE,
+		   e_config_behavior_changed, free);
+   e_observer_register_observee(behavior_dir, E_OBSERVEE(dir));
 
    D_RETURN;
+}
+
+void
+e_config_behavior_changed(E_Observer * observer, E_Observee * observee,
+			  E_Event_Type event, void *data)
+{
+   char                buf[PATH_MAX];
+   Evas_List          *l;
+
+   if (config_data)
+     {
+	e_data_free(cfg_config, (char *)config_data);
+	FREE(config_data);
+     }
+
+   snprintf(buf, PATH_MAX, "%sbehavior/behavior.db", e_config_user_dir());
+   config_data = e_data_load(buf, "", cfg_config);
+
+   /* FIXME: this should probably be a function in actions.c */
+   for (l = config_data->actions; l; l = l->next)
+     {
+	E_Action           *a;
+
+	a = l->data;
+	e_object_init(E_OBJECT(a), (E_Cleanup_Func) e_action_cleanup);
+	if ((a->key) && (strlen(a->key) > 0))
+	  {
+	     if (a->modifiers == -1)
+		e_keys_grab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
+	     else
+		e_keys_grab(a->key, (Ecore_Event_Key_Modifiers) a->modifiers,
+			    0);
+	     a->grabbed = 1;
+	  }
+     }
+
+   return;
+   UN(observer);
+   UN(observee);
+   UN(event);
+   UN(data);
 }
 
 void
@@ -134,7 +346,7 @@ e_config_set_user_dir(char *dir)
 {
    D_ENTER;
 
-   strcpy(cfg_root, dir);
+   STRNCPY(cfg_root, dir, PATH_MAX);
    /* reset the cached dir paths */
    cfg_grabs_db[0] = 0;
    cfg_settings_db[0] = 0;
@@ -163,272 +375,11 @@ e_config_user_dir(void)
 {
    D_ENTER;
 
+   /* We copy the config files to the user's home dir, no need to fall back */
    if (cfg_user_dir[0])
       D_RETURN_(cfg_user_dir);
-   if (cfg_root[0])
-      D_RETURN_(cfg_root);
-#if 1				/* disabled for now - use system ones only */
+
    snprintf(cfg_user_dir, PATH_MAX, "%s/.e/", e_util_get_user_home());
-#else
-   snprintf(cfg_user_dir, PATH_MAX, PACKAGE_DATA_DIR "/data/config/");
-#endif
 
    D_RETURN_(cfg_user_dir);
 }
-
-typedef struct _e_config_file_entry E_Config_File_Entry;
-
-struct _e_config_file_entry
-{
-   char               *name;
-   struct
-   {
-      char               *path;
-      time_t              last_mod;
-   }
-   user               , system;
-   Evas_List           hash[256];
-};
-
-void
-e_config_add_change_cb(char *file, void (*func) (void *_data), void *data)
-{
-}
-
-void
-e_config_del_change_cb(char *file, void (*func) (void *_data))
-{
-}
-
-int
-e_config_val_int_get(char *file, char *key, int def)
-{
-}
-
-float
-e_config_val_float_get(char *file, char *key, float def)
-{
-}
-
-char               *
-e_config_val_str_get(char *file, char *key, char *def)
-{
-}
-
-char               *
-e_config_val_key_get(char *file, char *key, char *def)
-{
-}
-
-void
-e_config_type_add_node(E_Config_Base_Type * base, char *prefix,
-		       E_Config_Datatype type, E_Config_Base_Type * list_type,
-		       int offset, int def_int, float def_float, char *def_str)
-{
-   E_Config_Node      *cfg_node;
-
-   D_ENTER;
-
-   cfg_node = NEW(E_Config_Node, 1);
-   ZERO(cfg_node, E_Config_Node, 1);
-
-   cfg_node->prefix = strdup(prefix);
-   cfg_node->type = type;
-   cfg_node->sub_type = list_type;
-   cfg_node->offset = offset;
-   cfg_node->def_int = def_int;
-   cfg_node->def_float = def_float;
-   if (cfg_node->def_str)
-     {
-	e_strdup(cfg_node->def_str, def_str);
-     }
-   base->nodes = evas_list_append(base->nodes, cfg_node);
-
-   D_RETURN;
-}
-
-E_Config_Base_Type *
-e_config_type_new(void)
-{
-   E_Config_Base_Type *t;
-
-   D_ENTER;
-
-   t = NEW(E_Config_Base_Type, 1);
-   ZERO(t, E_Config_Base_Type, 1);
-
-   D_RETURN_(t);
-}
-
-void               *
-e_config_load(char *file, char *prefix, E_Config_Base_Type * type)
-{
-   E_DB_File          *db;
-   char                buf[PATH_MAX];
-   Evas_List           l;
-   char               *data;
-
-   D_ENTER;
-
-   if (!e_file_exists(file))
-      D_RETURN_(NULL);
-   db = e_db_open_read(file);
-
-   if (!db)
-      D_RETURN_(NULL);
-
-   data = NEW(char, type->size);
-   ZERO(data, char, type->size);
-
-   for (l = type->nodes; l; l = l->next)
-     {
-	E_Config_Node      *node;
-
-	node = l->data;
-
-	switch (node->type)
-	  {
-	  case E_CFG_TYPE_INT:
-	     {
-		int                 val;
-
-		val = 0;
-		snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
-		if (e_db_int_get(db, buf, &val))
-		   (*((int *)(&(data[node->offset])))) = val;
-		else
-		   (*((int *)(&(data[node->offset])))) = node->def_int;
-	     }
-	     break;
-	  case E_CFG_TYPE_STR:
-	     {
-		char               *val;
-
-		snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
-		if ((val = e_db_str_get(db, buf)))
-		   (*((char **)(&(data[node->offset])))) = val;
-		else
-		   e_strdup((*((char **)(&(data[node->offset])))),
-			    node->def_str);
-	     }
-	     break;
-	  case E_CFG_TYPE_FLOAT:
-	     {
-		float               val;
-
-		val = 0;
-		snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
-		if (e_db_float_get(db, buf, &val))
-		   (*((float *)(&(data[node->offset])))) = val;
-		else
-		   (*((float *)(&(data[node->offset])))) = node->def_float;
-	     }
-	     break;
-	  case E_CFG_TYPE_LIST:
-	     {
-		Evas_List           l2;
-		int                 i, count;
-
-		l2 = NULL;
-		snprintf(buf, PATH_MAX, "%s/%s/count", prefix, node->prefix);
-		count = 0;
-		e_db_int_get(db, buf, &count);
-		for (i = 0; i < count; i++)
-		  {
-		     void               *data2;
-
-		     snprintf(buf, PATH_MAX, "%s/%s/%i", prefix, node->prefix,
-			      i);
-		     data2 = e_config_load(file, buf, node->sub_type);
-		     l2 = evas_list_append(l2, data2);
-		  }
-		(*((Evas_List *) (&(data[node->offset])))) = l2;
-	     }
-	     break;
-	  case E_CFG_TYPE_KEY:
-	     {
-		snprintf(buf, PATH_MAX, "%s/%s", prefix, node->prefix);
-		(*((char **)(&(data[node->offset])))) = strdup(buf);
-	     }
-	     break;
-	  default:
-	     break;
-	  }
-     }
-   e_db_close(db);
-
-   D_RETURN_(data);
-}
-
-#if 0
-typedef struct _list_base List_Base;
-typedef struct _list_element List_Element;
-
-struct _list_base
-{
-   Evas_List           elements;
-};
-
-struct _list_element
-{
-   char               *name;
-   int                 size;
-   float               perc;
-};
-
-/* eg: */
-void
-ts(void)
-{
-   /* define the different config types and structs to the config engine */
-   E_Config_Base_Type *cf_list;
-   E_Config_Base_Type *cf_element;
-
-   D_ENTER;
-
-   cf_element = e_config_type_new();
-   E_CONFIG_NODE(cf_element, "name", E_CFG_TYPE_STR, NULL, List_Element, name,
-		 0, 0, "DEFAULT_NAME");
-   E_CONFIG_NODE(cf_element, "size", E_CFG_TYPE_INT, NULL, List_Element, size,
-		 777, 0, NULL);
-   E_CONFIG_NODE(cf_element, "perc", E_CFG_TYPE_FLOAT, NULL, List_Element, perc,
-		 0, 3.1415, NULL);
-
-   cf_list = e_config_type_new();
-   E_CONFIG_NODE(cf_list, "list", E_CFG_TYPE_LIST, cf_element, List_Base,
-		 elements, 0, 0, NULL);
-
-   /* now test it */
-   {
-      List_Base          *cfg_data;
-
-      /* load the base data type from the base of the test db file */
-      cfg_data = e_config_load("test.db", "", cf_list);
-      /* no data file? */
-      if (!cfg_data)
-	{
-	   D("no load!\n");
-	}
-      /* got data */
-      else
-	{
-	   Evas_List           l;
-
-	   for (l = cfg_data->elements; l; l = l->next)
-	     {
-		List_Element       *cfg_element;
-
-		D("element\n");
-		cfg_element = l->data;
-		D("... name %s\n", cfg_element->name);
-		D("... size %i\n", cfg_element->size);
-		D("... perc %3.3f\n", cfg_element->perc);
-	     }
-	}
-      exit(0);
-   }
-
-   D_RETURN;
-}
-
-#endif

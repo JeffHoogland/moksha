@@ -1,5 +1,6 @@
-#include "e_view_look.h"
 #include "util.h"
+#include "desktops.h"
+#include "e_view_look.h"
 #include "view.h"
 #include "observer.h"
 #include "e_file.h"
@@ -99,7 +100,7 @@ e_view_look_set_dir(E_View_Look *l, char *dir)
    if (d)
      {
 	l->dir = d;
-	e_observer_register_observee(E_OBSERVER(l), E_OBSERVEE(d));   
+	e_observer_register_observee(E_OBSERVER(l), E_OBSERVEE(l->dir));   
      }
    else
      {
@@ -117,25 +118,25 @@ e_view_look_file_change(E_View_Look *l, E_File *f)
    char buf[PATH_MAX];
    D_ENTER; 
    snprintf(buf, PATH_MAX, "%s/%s", l->dir->dir, f->file);
-   if (!strcmp(f->file, "background.db"))	 
+   if (!strncmp(f->file, "background.db", PATH_MAX))	 
    {
       IF_FREE(l->obj->bg);
       l->obj->bg = strdup(buf);
       e_observee_notify_observers(E_OBSERVEE(l->obj), E_EVENT_BG_CHANGED, f);
    }
-   else if (!strcmp(f->file, "iconbar.db"))
+   else if (!strncmp(f->file, "iconbar.db", PATH_MAX))
    {
       IF_FREE(l->obj->icb);
       l->obj->icb = strdup(buf);
       e_observee_notify_observers(E_OBSERVEE(l->obj), E_EVENT_ICB_CHANGED, f);
    }
-   else if (!strcmp(f->file, "iconbar.bits.db"))
+   else if (!strncmp(f->file, "iconbar.bits.db", PATH_MAX))
    {
       IF_FREE(l->obj->icb_bits);
       l->obj->icb_bits = strdup(buf);
       e_observee_notify_observers(E_OBSERVEE(l->obj), E_EVENT_ICB_CHANGED, f);
    }
-   else if (!strcmp(f->file, "layout.db"))	 
+   else if (!strncmp(f->file, "layout.db", PATH_MAX))
    {
       IF_FREE(l->obj->layout);
       l->obj->layout = strdup(buf);
@@ -148,7 +149,7 @@ static void
 e_view_look_file_delete(E_View_Look *l, E_File *f)
 {
    D_ENTER;
-      
+   
    if (!strcmp(f->file, "background.db"))	 
    {
       IF_FREE(l->obj->bg);

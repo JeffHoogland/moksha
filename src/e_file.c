@@ -11,7 +11,8 @@ e_file_cleanup(E_File * f)
    D_ENTER;
 
    IF_FREE(f->info.icon);
-   IF_FREE(f->info.link) IF_FREE(f->info.custom_icon);
+   IF_FREE(f->info.link);
+   IF_FREE(f->info.custom_icon);
    IF_FREE(f->info.mime.base);
    IF_FREE(f->info.mime.type);
    IF_FREE(f->file);
@@ -45,9 +46,9 @@ e_file_new(char *file)
 }
 
 E_File             *
-e_file_get_by_name(Evas_List l, char *file)
+e_file_get_by_name(Evas_List * l, char *file)
 {
-   Evas_List           ll;
+   Evas_List *           ll;
    E_File             *f;
 
    D_ENTER;
@@ -106,7 +107,7 @@ e_file_set_mime(E_File * f, char *base, char *mime)
  */
 
    /* find an icon */
-   strcpy(type, f->info.mime.type);
+   STRNCPY(type, f->info.mime.type, PATH_MAX);
    p = type;
    do
      {

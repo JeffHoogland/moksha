@@ -3,16 +3,16 @@
 #include "config.h"
 #include "util.h"
 
-static Evas_List    entries;
+static Evas_List *    entries;
 
 static void         e_clear_selection(Ecore_Event * ev);
 static void         e_paste_request(Ecore_Event * ev);
 
-static void         e_entry_down_cb(void *_data, Evas _e, Evas_Object _o,
+static void         e_entry_down_cb(void *_data, Evas * _e, Evas_Object * _o,
 				    int _b, int _x, int _y);
-static void         e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b,
+static void         e_entry_up_cb(void *_data, Evas * _e, Evas_Object * _o, int _b,
 				  int _x, int _y);
-static void         e_entry_move_cb(void *_data, Evas _e, Evas_Object _o,
+static void         e_entry_move_cb(void *_data, Evas * _e, Evas_Object * _o,
 				    int _b, int _x, int _y);
 static void         e_entry_realize(E_Entry * entry);
 static void         e_entry_unrealize(E_Entry * entry);
@@ -22,7 +22,7 @@ static void
 e_clear_selection(Ecore_Event * ev)
 {
    Ecore_Event_Clear_Selection *e;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -49,7 +49,7 @@ static void
 e_paste_request(Ecore_Event * ev)
 {
    Ecore_Event_Paste_Request *e;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -73,7 +73,7 @@ e_paste_request(Ecore_Event * ev)
 }
 
 static void
-e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_entry_down_cb(void *_data, Evas *_e, Evas_Object * _o, int _b, int _x, int _y)
 {
    E_Entry            *entry;
    int                 pos;
@@ -90,13 +90,19 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    else if (!entry->mouse_down)
      {
 	entry->focused = 1;
+	/* checkme
 	pos = evas_text_at_position(_e, entry->text, _x, _y,
+				    NULL, NULL, NULL, NULL);
+	*/
+	pos = evas_object_text_char_coords_get(entry->text, _x, _y,
 				    NULL, NULL, NULL, NULL);
 	if (pos < 0)
 	  {
 	     int                 tw;
 
+	     /* checkme todo 
 	     tw = evas_get_text_width(_e, entry->text);
+	     */
 	     if (_x > entry->x + tw)
 	       {
 		  entry->cursor_pos = strlen(entry->buffer);
@@ -116,11 +122,12 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
 
    D_RETURN;
+   UN(_e);
    UN(_o);
 }
 
 static void
-e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_entry_up_cb(void *_data, Evas * _e, Evas_Object * _o, int _b, int _x, int _y)
 {
    E_Entry            *entry;
 
@@ -141,7 +148,7 @@ e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_entry_move_cb(void *_data, Evas * _e, Evas_Object * _o, int _b, int _x, int _y)
 {
    E_Entry            *entry;
 
@@ -154,14 +161,20 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	double              ty;
 
 	ppos = entry->cursor_pos;
-	evas_get_geometry(entry->evas, entry->text, NULL, &ty, NULL, NULL);
+	evas_object_geometry_get(entry->text, NULL, &ty, NULL, NULL);
+	/* checkme
 	pos = evas_text_at_position(_e, entry->text, _x, ty,
+				    NULL, NULL, NULL, NULL);
+	*/
+	pos = evas_object_text_char_coords_get(entry->text, _x, ty,
 				    NULL, NULL, NULL, NULL);
 	if (pos < 0)
 	  {
 	     int                 tw;
 
+	     /* checkme todo
 	     tw = evas_get_text_width(_e, entry->text);
+	     */
 	     if (_x > entry->x + tw)
 	       {
 		  entry->cursor_pos = strlen(entry->buffer);
@@ -222,6 +235,7 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
 
    D_RETURN;
+   UN(_e);
    UN(_o);
    UN(_b);
    UN(_y);
@@ -258,24 +272,27 @@ e_entry_realize(E_Entry * entry)
 /*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
      }
 
-   entry->clip_box = evas_add_rectangle(entry->evas);
-   entry->text = evas_add_text(entry->evas, "borzoib", 8, "");
+   entry->clip_box = evas_object_rectangle_add(entry->evas);
+   entry->text = evas_object_text_add(entry->evas);
+   evas_object_text_font_set(entry->text, "borzoib", 8);
    if (entry->obj_cursor)
       ebits_set_clip(entry->obj_cursor, entry->clip_box);
    if (entry->obj_selection)
       ebits_set_clip(entry->obj_selection, entry->clip_box);
-   entry->event_box = evas_add_rectangle(entry->evas);
-   evas_set_color(entry->evas, entry->clip_box, 255, 255, 255, 255);
-   evas_set_color(entry->evas, entry->event_box, 0, 0, 0, 0);
-   evas_set_color(entry->evas, entry->text, 0, 0, 0, 255);
-   evas_set_clip(entry->evas, entry->text, entry->clip_box);
-   evas_set_clip(entry->evas, entry->event_box, entry->clip_box);
-   evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_DOWN,
+   entry->event_box = evas_object_rectangle_add(entry->evas);
+   evas_object_color_set(entry->clip_box, 255, 255, 255, 255);
+   evas_object_color_set(entry->event_box, 0, 0, 0, 0);
+   evas_object_color_set(entry->text, 0, 0, 0, 255);
+   evas_object_clip_set(entry->text, entry->clip_box);
+   evas_object_clip_set(entry->event_box, entry->clip_box);
+   /* checkme todo
+   evas_object_event_callback_add(entry->event_box, EVAS_CALLBACK_MOUSE_DOWN,
 		     e_entry_down_cb, entry);
-   evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_UP,
+   evas_object_event_callback_add(entry->event_box, EVAS_CALLBACK_MOUSE_UP,
 		     e_entry_up_cb, entry);
-   evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_MOVE,
+   evas_object_event_callback_add(entry->event_box, EVAS_CALLBACK_MOUSE_MOVE,
 		     e_entry_move_cb, entry);
+   */
 
    D_RETURN;
 }
@@ -286,11 +303,11 @@ e_entry_unrealize(E_Entry * entry)
    D_ENTER;
 
    if (entry->event_box)
-      evas_del_object(entry->evas, entry->event_box);
+      evas_object_del(entry->event_box);
    if (entry->text)
-      evas_del_object(entry->evas, entry->text);
+      evas_object_del(entry->text);
    if (entry->clip_box)
-      evas_del_object(entry->evas, entry->clip_box);
+      evas_object_del(entry->clip_box);
    if (entry->obj_base)
       ebits_free(entry->obj_base);
    if (entry->obj_cursor)
@@ -330,12 +347,12 @@ e_entry_configure(E_Entry * entry)
 	ebits_move(entry->obj_base, entry->x, entry->y);
 	ebits_resize(entry->obj_base, entry->w, entry->h);
      }
-   evas_move(entry->evas, entry->clip_box, entry->x + p1l, entry->y + p1t);
-   evas_resize(entry->evas, entry->clip_box, entry->w - p1l - p1r,
+   evas_object_move(entry->clip_box, entry->x + p1l, entry->y + p1t);
+   evas_object_resize(entry->clip_box, entry->w - p1l - p1r,
 	       entry->h - p1t - p1b);
-   evas_move(entry->evas, entry->event_box, entry->x + p1l + p2l,
+   evas_object_move(entry->event_box, entry->x + p1l + p2l,
 	     entry->y + p1t + p2t);
-   evas_resize(entry->evas, entry->event_box, entry->w - p1l - p1r - p2l - p2r,
+   evas_object_resize(entry->event_box, entry->w - p1l - p1r - p2l - p2r,
 	       entry->h - p1t - p1b - p2t - p2b);
    if ((entry->buffer) && (entry->buffer[0] != 0) && (entry->focused))
      {
@@ -343,18 +360,30 @@ e_entry_configure(E_Entry * entry)
 
 	if (entry->cursor_pos < (int)strlen(entry->buffer))
 	  {
+	    /* checkme
 	     evas_text_at(entry->evas, entry->text, entry->cursor_pos, &tx, &ty,
+			  &tw, &th);
+	    */
+	     evas_object_text_char_pos_get(entry->text, entry->cursor_pos, &tx, &ty,
 			  &tw, &th);
 	  }
 	else
 	  {
 	     entry->cursor_pos = strlen(entry->buffer);
+	     /* checkme
 	     evas_text_at(entry->evas, entry->text, entry->cursor_pos - 1, &tx,
+			  &ty, &tw, &th);
+	     */
+	     evas_object_text_char_pos_get(entry->text, entry->cursor_pos - 1, &tx,
 			  &ty, &tw, &th);
 	     tx += tw;
 	     tw = entry->end_width;
 	  }
+	/* check me
 	th = evas_get_text_height(entry->evas, entry->text);
+	*/
+	th = evas_object_text_ascent_get(entry->text)+
+	  evas_object_text_descent_get(entry->text);
 	if (tx + tw + entry->scroll_pos > entry->w - p1l - p1r)
 	   entry->scroll_pos = entry->w - tx - tw - p1l - p1r - p1l - p2l;
 	else if (tx + entry->scroll_pos < p1l)
@@ -375,7 +404,11 @@ e_entry_configure(E_Entry * entry)
 	entry->scroll_pos = 0;
 	tw = 4;
 	tx = 0;
+	/* checkme
 	th = evas_get_text_height(entry->evas, entry->text);
+	*/
+	th = evas_object_text_ascent_get(entry->text)+
+	  evas_object_text_descent_get(entry->text);
 	if (entry->obj_cursor)
 	  {
 	     ebits_move(entry->obj_cursor,
@@ -391,27 +424,45 @@ e_entry_configure(E_Entry * entry)
 	if (entry->obj_cursor)
 	   ebits_hide(entry->obj_cursor);
      }
-   evas_move(entry->evas, entry->text, entry->x + entry->scroll_pos + p1l + p2l,
+   evas_object_move(entry->text, entry->x + entry->scroll_pos + p1l + p2l,
 	     entry->y + p1t + p2t);
    if (entry->select.start >= 0)
      {
 	double              x1, y1, x2, tw, th;
 
+	/* checkme
 	evas_text_at(entry->evas, entry->text, entry->select.start, &x1, &y1,
+		     NULL, NULL);
+	*/
+	evas_object_text_char_pos_get(entry->text, entry->select.start, &x1, &y1,
 		     NULL, NULL);
 	if (entry->select.start + entry->select.length <=
 	    (int)strlen(entry->buffer))
+	  {
+	    /* checkme
 	   evas_text_at(entry->evas, entry->text,
 			entry->select.start + entry->select.length - 1, &x2,
 			NULL, &tw, &th);
+	    */
+	   evas_object_text_char_pos_get(entry->text,
+			entry->select.start + entry->select.length - 1, &x2,
+			NULL, &tw, &th);
+	  }
 	else
 	  {
+	    /* checkme
 	     evas_text_at(entry->evas, entry->text,
+			  entry->select.start + entry->select.length - 2, &x2,
+			  NULL, &tw, &th);
+	    */
+	     evas_object_text_char_pos_get(entry->text,
 			  entry->select.start + entry->select.length - 2, &x2,
 			  NULL, &tw, &th);
 	     tw += entry->end_width;
 	  }
+	/* checkme todo
 	th = evas_get_text_height(entry->evas, entry->text);
+	*/
 	if (entry->obj_selection)
 	  {
 	     ebits_move(entry->obj_selection,
@@ -598,7 +649,7 @@ e_entry_handle_keypress(E_Entry * entry, Ecore_Event_Key_Down * e)
 }
 
 void
-e_entry_set_evas(E_Entry * entry, Evas evas)
+e_entry_set_evas(E_Entry * entry, Evas * evas)
 {
    D_ENTER;
 
@@ -632,9 +683,9 @@ e_entry_show(E_Entry * entry)
       ebits_show(entry->obj_cursor);
    if (entry->obj_selection)
       ebits_show(entry->obj_selection);
-   evas_show(entry->evas, entry->event_box);
-   evas_show(entry->evas, entry->clip_box);
-   evas_show(entry->evas, entry->text);
+   evas_object_show(entry->event_box);
+   evas_object_show(entry->clip_box);
+   evas_object_show(entry->text);
 
    D_RETURN;
 }
@@ -655,9 +706,9 @@ e_entry_hide(E_Entry * entry)
       ebits_hide(entry->obj_cursor);
    if (entry->obj_selection)
       ebits_hide(entry->obj_selection);
-   evas_hide(entry->evas, entry->event_box);
-   evas_hide(entry->evas, entry->clip_box);
-   evas_hide(entry->evas, entry->text);
+   evas_object_hide(entry->event_box);
+   evas_object_hide(entry->clip_box);
+   evas_object_hide(entry->text);
 
    D_RETURN;
 }
@@ -669,13 +720,13 @@ e_entry_raise(E_Entry * entry)
 
    if (entry->obj_base)
       ebits_raise(entry->obj_base);
-   evas_raise(entry->evas, entry->clip_box);
-   evas_raise(entry->evas, entry->text);
+   evas_object_raise(entry->clip_box);
+   evas_object_raise(entry->text);
    if (entry->obj_selection)
       ebits_raise(entry->obj_selection);
    if (entry->obj_cursor)
       ebits_raise(entry->obj_cursor);
-   evas_raise(entry->evas, entry->event_box);
+   evas_object_raise(entry->event_box);
 
    D_RETURN;
 }
@@ -685,13 +736,13 @@ e_entry_lower(E_Entry * entry)
 {
    D_ENTER;
 
-   evas_lower(entry->evas, entry->event_box);
+   evas_object_lower(entry->event_box);
    if (entry->obj_cursor)
       ebits_lower(entry->obj_cursor);
    if (entry->obj_selection)
       ebits_lower(entry->obj_selection);
-   evas_lower(entry->evas, entry->text);
-   evas_lower(entry->evas, entry->clip_box);
+   evas_object_lower(entry->text);
+   evas_object_lower(entry->clip_box);
    if (entry->obj_base)
       ebits_lower(entry->obj_base);
 
@@ -705,23 +756,23 @@ e_entry_set_layer(E_Entry * entry, int l)
 
    if (entry->obj_base)
       ebits_set_layer(entry->obj_base, l);
-   evas_set_layer(entry->evas, entry->clip_box, l);
-   evas_set_layer(entry->evas, entry->text, l);
+   evas_object_layer_set(entry->clip_box, l);
+   evas_object_layer_set(entry->text, l);
    if (entry->obj_selection)
       ebits_set_layer(entry->obj_selection, l);
    if (entry->obj_cursor)
       ebits_set_layer(entry->obj_cursor, l);
-   evas_set_layer(entry->evas, entry->event_box, l);
+   evas_object_layer_set(entry->event_box, l);
 
    D_RETURN;
 }
 
 void
-e_entry_set_clip(E_Entry * entry, Evas_Object clip)
+e_entry_set_clip(E_Entry * entry, Evas_Object * clip)
 {
    D_ENTER;
 
-   evas_set_clip(entry->evas, entry->clip_box, clip);
+   evas_object_clip_set(entry->clip_box, clip);
    if (entry->obj_base)
       ebits_set_clip(entry->obj_base, clip);
 
@@ -733,7 +784,7 @@ e_entry_unset_clip(E_Entry * entry)
 {
    D_ENTER;
 
-   evas_unset_clip(entry->evas, entry->clip_box);
+   evas_object_clip_unset(entry->clip_box);
    if (entry->obj_base)
       ebits_unset_clip(entry->obj_base);
 
@@ -779,14 +830,18 @@ e_entry_query_max_size(E_Entry * entry, int *w, int *h)
    if (entry->obj_cursor)
       ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
 
+   /* checkme todo
    if (w)
       *w =
 	 evas_get_text_width(entry->evas, entry->text) + p1l + p1r + p2l + p2r;
    if (h)
       *h =
 	 evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+   */
 
    D_RETURN;
+   UN(w);
+   UN(h);
 }
 
 void
@@ -805,11 +860,14 @@ e_entry_max_size(E_Entry * entry, int *w, int *h)
       ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
    if (w)
       *w = 8000;
+   /* checkme todo
    if (h)
       *h =
 	 evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+   */
 
    D_RETURN;
+   UN(h);
 }
 
 void
@@ -828,11 +886,14 @@ e_entry_min_size(E_Entry * entry, int *w, int *h)
       ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
    if (w)
       *w = p1l + p1r + p2l + p2r + entry->min_size;
+   /* checkme todo
    if (h)
       *h =
 	 evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
+   */
 
    D_RETURN;
+   UN(h);
 }
 
 void
@@ -889,7 +950,7 @@ e_entry_set_text(E_Entry * entry, const char *text)
 
    IF_FREE(entry->buffer);
    e_strdup(entry->buffer, text);
-   evas_set_text(entry->evas, entry->text, entry->buffer);
+   evas_object_text_text_set(entry->text, entry->buffer);
    if (entry->cursor_pos > (int)strlen(entry->buffer))
       entry->cursor_pos = strlen(entry->buffer);
    e_entry_configure(entry);
@@ -981,17 +1042,19 @@ e_entry_set_focus_out_callback(E_Entry * entry,
 void
 e_entry_insert_text(E_Entry * entry, char *text)
 {
+   int                 size;
    char               *str2;
 
    D_ENTER;
 
    if (!text)
       D_RETURN;
-   str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(text));
+   size = strlen(e_entry_get_text(entry)) + 1 + strlen(text);
+   str2 = malloc(size);
    str2[0] = 0;
    strncat(str2, entry->buffer, entry->cursor_pos);
-   strcat(str2, text);
-   strcat(str2, &(entry->buffer[entry->cursor_pos]));
+   strncat(str2, text, size);
+   strncat(str2, &(entry->buffer[entry->cursor_pos]), size);
    e_entry_set_text(entry, str2);
    FREE(str2);
    entry->cursor_pos += strlen(text);

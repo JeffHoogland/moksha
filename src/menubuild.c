@@ -6,12 +6,9 @@
 #include "file.h"
 #include "border.h"
 #include "observer.h"
+#include "actions.h"
 
-#ifdef USE_FERITE
-# include "e_ferite.h"
-#endif
-
-Evas_List           build_menus = NULL;
+Evas_List *           build_menus = NULL;
 
 static void         e_build_menu_cb_exec(E_Menu * m, E_Menu_Item * mi,
 					 void *data);
@@ -33,7 +30,8 @@ static void         e_build_menu_iconified_borders_changed(E_Observer *
 							   observer,
 							   E_Observee *
 							   observee,
-							   E_Event_Type event);
+							   E_Event_Type event,
+							   void *data);
 
 /* ------------ various callbacks ---------------------- */
 static void
@@ -73,12 +71,13 @@ e_build_menu_cb_script(E_Menu * m, E_Menu_Item * mi, void *data)
 
    D_ENTER;
 
-#ifdef USE_FERITE
    script = data;
-   e_ferite_run(script);
-#else
-   D("No cookies for you. You will have to install ferite.\n");
-#endif
+
+   if(strstr(script, "e.shutdown"))
+     e_act_exit_start(NULL,NULL,NULL,0,0,0,0);
+
+   if(strstr(script, "e.restart"))
+     e_act_restart_start(NULL,NULL,NULL,0,0,0,0);
 
    D_RETURN;
    UN(m);
@@ -92,7 +91,7 @@ e_build_menu_cb_script(E_Menu * m, E_Menu_Item * mi, void *data)
 static void
 e_build_menu_unbuild(E_Build_Menu * bm)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -282,7 +281,7 @@ static E_Menu      *
 e_build_menu_gnome_apps_build_dir(E_Build_Menu * bm, char *dir)
 {
    E_Menu             *menu = NULL;
-   Evas_List           l, entries = NULL;
+   Evas_List          *l, *entries = NULL;
 
    D_ENTER;
 
@@ -293,7 +292,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu * bm, char *dir)
    {
       FILE               *f;
       char                buf[PATH_MAX];
-      Evas_List           dirlist = NULL;
+      Evas_List *           dirlist = NULL;
 
       /* read .order file */
       snprintf(buf, PATH_MAX, "%s/.order", dir);
@@ -324,7 +323,7 @@ e_build_menu_gnome_apps_build_dir(E_Build_Menu * bm, char *dir)
 	   /* if it isnt a "dot" file or dir */
 	   if (s[0] != '.')
 	     {
-		Evas_List           ll;
+		Evas_List *           ll;
 		int                 have_it;
 
 		have_it = 0;
@@ -538,7 +537,7 @@ E_Build_Menu       *
 e_build_menu_new_from_iconified_borders()
 {
    E_Build_Menu       *bm;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -546,9 +545,11 @@ e_build_menu_new_from_iconified_borders()
    ZERO(bm, E_Build_Menu, 1);
 
 /*   e_observer_init(E_OBSERVER(bm), E_EVENT_BORDER_ICONIFY | E_EVENT_BORDER_UNICONIFY | E_EVENT_BORDER_NEW, e_build_menu_iconified_borders_changed, (E_Cleanup_Func) e_build_menu_cleanup);*/
+
    e_observer_init(E_OBSERVER(bm), E_EVENT_BORDER_ALL,
-		   e_build_menu_iconified_borders_changed,
+		   (E_Notify_Func) e_build_menu_iconified_borders_changed,
 		   (E_Cleanup_Func) e_build_menu_cleanup);
+
 
    for (l = e_border_get_borders_list(); l; l = l->next)
      {
@@ -578,7 +579,7 @@ e_build_menu_iconified_borders_rebuild(E_Build_Menu * bm)
 static void
 e_build_menu_iconified_borders_changed(E_Observer * observer,
 				       E_Observee * observee,
-				       E_Event_Type event)
+				       E_Event_Type event, void *data)
 {
    E_Build_Menu       *bm;
 
@@ -604,13 +605,14 @@ e_build_menu_iconified_borders_changed(E_Observer * observer,
 	bm->changed = 1;
      }
    D_RETURN;
+   UN(data);
 }
 
 static E_Menu      *
 e_build_menu_iconified_borders_build(E_Build_Menu * bm)
 {
    E_Menu             *menu = NULL;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 

@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "debug.h"
 
-static int          do_print = 0;
+static int          do_print = 1;
 static int          calldepth = 0;
 
 static void         debug_whitespace(int calldepth);

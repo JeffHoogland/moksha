@@ -15,7 +15,7 @@ struct _e_hack_found_cb
    void               *func_data;
 };
 
-static Evas_List    hack_found_cb = NULL;
+static Evas_List *    hack_found_cb = NULL;
 
 void               *
 e_exec_broadcast_cb_add(void (*func) (Window win, void *_data), void *data)
@@ -42,7 +42,7 @@ e_exec_broadcast_cb_del(void *cbp)
 void
 e_exec_broadcast_e_hack_found(Window win)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    for (l = hack_found_cb; l; l = l->next)
      {
@@ -108,7 +108,7 @@ e_exec_restart(void)
    exe[0] = 0;
    for (i = 0; i < e_argc; i++)
      {
-	strcat(exe, e_argv[i]);
+	strncat(exe, e_argv[i], PATH_MAX);
 	strcat(exe, " ");
      }
    execl("/bin/sh", "/bin/sh", "-c", exe, NULL);

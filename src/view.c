@@ -15,6 +15,7 @@
 #include "e_view_machine.h"
 #include "e_file.h"
 #include "globals.h"
+#include <Ebg.h>
 
 static Ecore_Event *current_ev = NULL;
 
@@ -23,12 +24,12 @@ static int          dnd_num_files = 0;
 static E_dnd_enum   dnd_pending_mode;
 static E_View      *v_dnd_source;
 
-static void         e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				 int _x, int _y);
-static void         e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-			       int _x, int _y);
-static void         e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b,
-				 int _x, int _y);
+static void         e_bg_down_cb(void *_data, Evas * _e, Evas_Object * _o,
+				 void *event_info);
+static void         e_bg_up_cb(void *_data, Evas * _e, Evas_Object * _o,
+			       void *event_info);
+static void         e_bg_move_cb(void *_data, Evas * _e, Evas_Object * _o,
+				 void *event_info);
 static void         e_idle(void *data);
 static void         e_wheel(Ecore_Event * ev);
 static void         e_key_down(Ecore_Event * ev);
@@ -68,7 +69,7 @@ static void
 e_view_write_icon_xy_timeout(int val, void *data)
 {
    E_View             *v;
-   Evas_List           l;
+   Evas_List *           l;
    E_Icon             *ic;
    double              t_in;
 
@@ -117,120 +118,106 @@ e_view_selection_update(E_View * v)
 
    if ((v->select.on) && (!v->select.obj.middle))
      {
-	Evas_Gradient       grad;
-
 	/* create select objects */
-	v->select.obj.middle = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.middle,
+	v->select.obj.middle = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.middle,
 		       v->select.config.middle.r,
 		       v->select.config.middle.g,
 		       v->select.config.middle.b, v->select.config.middle.a);
-	evas_set_layer(v->evas, v->select.obj.middle, 300);
-	v->select.obj.edge_l = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.edge_l,
+	evas_object_layer_set(v->select.obj.middle, 300);
+	v->select.obj.edge_l = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.edge_l,
 		       v->select.config.edge_l.r,
 		       v->select.config.edge_l.g,
 		       v->select.config.edge_l.b, v->select.config.edge_l.a);
-	evas_set_layer(v->evas, v->select.obj.edge_l, 300);
-	v->select.obj.edge_r = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.edge_r,
+	evas_object_layer_set(v->select.obj.edge_l, 300);
+	v->select.obj.edge_r = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.edge_r,
 		       v->select.config.edge_r.r,
 		       v->select.config.edge_r.g,
 		       v->select.config.edge_r.b, v->select.config.edge_r.a);
-	evas_set_layer(v->evas, v->select.obj.edge_r, 300);
-	v->select.obj.edge_t = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.edge_t,
+	evas_object_layer_set(v->select.obj.edge_r, 300);
+	v->select.obj.edge_t = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.edge_t,
 		       v->select.config.edge_t.r,
 		       v->select.config.edge_t.g,
 		       v->select.config.edge_t.b, v->select.config.edge_t.a);
-	evas_set_layer(v->evas, v->select.obj.edge_t, 300);
-	v->select.obj.edge_b = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.edge_b,
+	evas_object_layer_set(v->select.obj.edge_t, 300);
+	v->select.obj.edge_b = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.edge_b,
 		       v->select.config.edge_b.r,
 		       v->select.config.edge_b.g,
 		       v->select.config.edge_b.b, v->select.config.edge_b.a);
-	evas_set_layer(v->evas, v->select.obj.edge_b, 300);
+	evas_object_layer_set(v->select.obj.edge_b, 300);
 
-	v->select.obj.grad_l = evas_add_gradient_box(v->evas);
-	evas_set_angle(v->evas, v->select.obj.grad_l, 270);
-	grad = evas_gradient_new();
-	evas_gradient_add_color(grad,
+	v->select.obj.grad_l = evas_object_gradient_add(v->evas);
+	evas_object_gradient_angle_set(v->select.obj.grad_l, 270);
+	evas_object_gradient_color_add(v->select.obj.grad_l,
 				v->select.config.grad_l.r,
 				v->select.config.grad_l.g,
 				v->select.config.grad_l.b,
 				v->select.config.grad_l.a, 8);
-	evas_gradient_add_color(grad,
+	evas_object_gradient_color_add(v->select.obj.grad_l,
 				v->select.config.grad_l.r,
 				v->select.config.grad_l.g,
 				v->select.config.grad_l.b, 0, 8);
-	evas_set_gradient(v->evas, v->select.obj.grad_l, grad);
-	evas_gradient_free(grad);
-	evas_set_layer(v->evas, v->select.obj.grad_l, 300);
-	v->select.obj.grad_r = evas_add_gradient_box(v->evas);
-	evas_set_angle(v->evas, v->select.obj.grad_r, 90);
-	grad = evas_gradient_new();
-	evas_gradient_add_color(grad,
+	evas_object_layer_set(v->select.obj.grad_l, 300);
+	v->select.obj.grad_r = evas_object_gradient_add(v->evas);
+	evas_object_gradient_angle_set(v->select.obj.grad_r, 90);
+	evas_object_gradient_color_add(v->select.obj.grad_r,
 				v->select.config.grad_r.r,
 				v->select.config.grad_r.g,
 				v->select.config.grad_r.b,
 				v->select.config.grad_r.a, 8);
-	evas_gradient_add_color(grad,
+	evas_object_gradient_color_add(v->select.obj.grad_r,
 				v->select.config.grad_r.r,
 				v->select.config.grad_r.g,
 				v->select.config.grad_r.b, 0, 8);
-	evas_set_gradient(v->evas, v->select.obj.grad_r, grad);
-	evas_gradient_free(grad);
-	evas_set_layer(v->evas, v->select.obj.grad_r, 300);
-	v->select.obj.grad_t = evas_add_gradient_box(v->evas);
-	evas_set_angle(v->evas, v->select.obj.grad_t, 0);
-	grad = evas_gradient_new();
-	evas_gradient_add_color(grad,
+	evas_object_layer_set(v->select.obj.grad_r, 300);
+	v->select.obj.grad_t = evas_object_gradient_add(v->evas);
+	evas_object_gradient_angle_set(v->select.obj.grad_t, 0);
+	evas_object_gradient_color_add(v->select.obj.grad_t,
 				v->select.config.grad_t.r,
 				v->select.config.grad_t.g,
 				v->select.config.grad_t.b,
 				v->select.config.grad_t.a, 8);
-	evas_gradient_add_color(grad,
+	evas_object_gradient_color_add(v->select.obj.grad_t,
 				v->select.config.grad_t.r,
 				v->select.config.grad_t.g,
 				v->select.config.grad_t.b, 0, 8);
-	evas_set_gradient(v->evas, v->select.obj.grad_t, grad);
-	evas_gradient_free(grad);
-	evas_set_layer(v->evas, v->select.obj.grad_t, 300);
-	v->select.obj.grad_b = evas_add_gradient_box(v->evas);
-	evas_set_angle(v->evas, v->select.obj.grad_b, 180);
-	grad = evas_gradient_new();
-	evas_gradient_add_color(grad,
+	evas_object_layer_set(v->select.obj.grad_t, 300);
+	v->select.obj.grad_b = evas_object_gradient_add(v->evas);
+	evas_object_gradient_angle_set(v->select.obj.grad_b, 180);
+	evas_object_gradient_color_add(v->select.obj.grad_b,
 				v->select.config.grad_b.r,
 				v->select.config.grad_b.g,
 				v->select.config.grad_b.b,
 				v->select.config.grad_b.a, 8);
-	evas_gradient_add_color(grad,
+	evas_object_gradient_color_add(v->select.obj.grad_b,
 				v->select.config.grad_b.r,
 				v->select.config.grad_b.g,
 				v->select.config.grad_b.b, 0, 8);
-	evas_set_gradient(v->evas, v->select.obj.grad_b, grad);
-	evas_gradient_free(grad);
-	evas_set_layer(v->evas, v->select.obj.grad_b, 300);
-	v->select.obj.clip = evas_add_rectangle(v->evas);
-	evas_set_color(v->evas, v->select.obj.clip, 255, 255, 255, 255);
-	evas_set_clip(v->evas, v->select.obj.grad_l, v->select.obj.clip);
-	evas_set_clip(v->evas, v->select.obj.grad_r, v->select.obj.clip);
-	evas_set_clip(v->evas, v->select.obj.grad_t, v->select.obj.clip);
-	evas_set_clip(v->evas, v->select.obj.grad_b, v->select.obj.clip);
+	evas_object_layer_set(v->select.obj.grad_b, 300);
+	v->select.obj.clip = evas_object_rectangle_add(v->evas);
+	evas_object_color_set(v->select.obj.clip, 255, 255, 255, 255);
+	evas_object_clip_set(v->select.obj.grad_l, v->select.obj.clip);
+	evas_object_clip_set(v->select.obj.grad_r, v->select.obj.clip);
+	evas_object_clip_set(v->select.obj.grad_t, v->select.obj.clip);
+	evas_object_clip_set(v->select.obj.grad_b, v->select.obj.clip);
      }
    if ((!v->select.on) && (v->select.obj.middle))
      {
 	/* destroy select objects */
-	evas_del_object(v->evas, v->select.obj.middle);
-	evas_del_object(v->evas, v->select.obj.edge_l);
-	evas_del_object(v->evas, v->select.obj.edge_r);
-	evas_del_object(v->evas, v->select.obj.edge_t);
-	evas_del_object(v->evas, v->select.obj.edge_b);
-	evas_del_object(v->evas, v->select.obj.grad_l);
-	evas_del_object(v->evas, v->select.obj.grad_r);
-	evas_del_object(v->evas, v->select.obj.grad_t);
-	evas_del_object(v->evas, v->select.obj.grad_b);
-	evas_del_object(v->evas, v->select.obj.clip);
+	evas_object_del(v->select.obj.middle);
+	evas_object_del(v->select.obj.edge_l);
+	evas_object_del(v->select.obj.edge_r);
+	evas_object_del(v->select.obj.edge_t);
+	evas_object_del(v->select.obj.edge_b);
+	evas_object_del(v->select.obj.grad_l);
+	evas_object_del(v->select.obj.grad_r);
+	evas_object_del(v->select.obj.grad_t);
+	evas_object_del(v->select.obj.grad_b);
+	evas_object_del(v->select.obj.clip);
 	v->select.obj.middle = NULL;
 	v->changed = 1;
 	D_RETURN;
@@ -239,52 +226,52 @@ e_view_selection_update(E_View * v)
       D_RETURN;
    /* move & resize select objects */
    {
-      evas_move(v->evas, v->select.obj.edge_l, v->select.x, v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.edge_l, 1, v->select.h - 1);
-      evas_move(v->evas, v->select.obj.edge_r, v->select.x + v->select.w - 1,
+      evas_object_move(v->select.obj.edge_l, v->select.x, v->select.y + 1);
+      evas_object_resize(v->select.obj.edge_l, 1, v->select.h - 1);
+      evas_object_move(v->select.obj.edge_r, v->select.x + v->select.w - 1,
 		v->select.y);
-      evas_resize(v->evas, v->select.obj.edge_r, 1, v->select.h - 1);
-      evas_move(v->evas, v->select.obj.edge_t, v->select.x, v->select.y);
-      evas_resize(v->evas, v->select.obj.edge_t, v->select.w - 1, 1);
-      evas_move(v->evas, v->select.obj.edge_b, v->select.x + 1,
+      evas_object_resize(v->select.obj.edge_r, 1, v->select.h - 1);
+      evas_object_move(v->select.obj.edge_t, v->select.x, v->select.y);
+      evas_object_resize(v->select.obj.edge_t, v->select.w - 1, 1);
+      evas_object_move(v->select.obj.edge_b, v->select.x + 1,
 		v->select.y + v->select.h - 1);
-      evas_resize(v->evas, v->select.obj.edge_b, v->select.w - 1, 1);
-      evas_move(v->evas, v->select.obj.middle, v->select.x + 1,
+      evas_object_resize(v->select.obj.edge_b, v->select.w - 1, 1);
+      evas_object_move(v->select.obj.middle, v->select.x + 1,
 		v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.middle, v->select.w - 1 - 1,
+      evas_object_resize(v->select.obj.middle, v->select.w - 1 - 1,
 		  v->select.h - 1 - 1);
-      evas_move(v->evas, v->select.obj.grad_l, v->select.x + 1,
+      evas_object_move(v->select.obj.grad_l, v->select.x + 1,
 		v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.grad_l, v->select.config.grad_size.l,
+      evas_object_resize(v->select.obj.grad_l, v->select.config.grad_size.l,
 		  v->select.h - 1 - 1);
-      evas_move(v->evas, v->select.obj.grad_r,
+      evas_object_move(v->select.obj.grad_r,
 		v->select.x + v->select.w - 1 - v->select.config.grad_size.r,
 		v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.grad_r, v->select.config.grad_size.r,
+      evas_object_resize(v->select.obj.grad_r, v->select.config.grad_size.r,
 		  v->select.h - 1 - 1);
-      evas_move(v->evas, v->select.obj.grad_t, v->select.x + 1,
+      evas_object_move(v->select.obj.grad_t, v->select.x + 1,
 		v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.grad_t, v->select.w - 1 - 1,
+      evas_object_resize(v->select.obj.grad_t, v->select.w - 1 - 1,
 		  v->select.config.grad_size.t);
-      evas_move(v->evas, v->select.obj.grad_b, v->select.x + 1,
+      evas_object_move(v->select.obj.grad_b, v->select.x + 1,
 		v->select.y + v->select.h - 1 - v->select.config.grad_size.b);
-      evas_resize(v->evas, v->select.obj.grad_b, v->select.w - 1 - 1,
+      evas_object_resize(v->select.obj.grad_b, v->select.w - 1 - 1,
 		  v->select.config.grad_size.b);
-      evas_move(v->evas, v->select.obj.clip, v->select.x + 1, v->select.y + 1);
-      evas_resize(v->evas, v->select.obj.clip, v->select.w - 1 - 1,
+      evas_object_move(v->select.obj.clip, v->select.x + 1, v->select.y + 1);
+      evas_object_resize(v->select.obj.clip, v->select.w - 1 - 1,
 		  v->select.h - 1 - 1);
    }
 
-   evas_show(v->evas, v->select.obj.middle);
-   evas_show(v->evas, v->select.obj.edge_l);
-   evas_show(v->evas, v->select.obj.edge_r);
-   evas_show(v->evas, v->select.obj.edge_t);
-   evas_show(v->evas, v->select.obj.edge_b);
-   evas_show(v->evas, v->select.obj.grad_l);
-   evas_show(v->evas, v->select.obj.grad_r);
-   evas_show(v->evas, v->select.obj.grad_t);
-   evas_show(v->evas, v->select.obj.grad_b);
-   evas_show(v->evas, v->select.obj.clip);
+   evas_object_show(v->select.obj.middle);
+   evas_object_show(v->select.obj.edge_l);
+   evas_object_show(v->select.obj.edge_r);
+   evas_object_show(v->select.obj.edge_t);
+   evas_object_show(v->select.obj.edge_b);
+   evas_object_show(v->select.obj.grad_l);
+   evas_object_show(v->select.obj.grad_r);
+   evas_object_show(v->select.obj.grad_t);
+   evas_object_show(v->select.obj.grad_b);
+   evas_object_show(v->select.obj.clip);
    v->changed = 1;
    D_RETURN;
 }
@@ -318,10 +305,11 @@ e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar * sb, double val)
 }
 
 static void
-e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_bg_down_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    Ecore_Event_Mouse_Down *ev;
    E_View             *v;
+   Evas_Event_Mouse_Down *ev_info = event_info;
 
    D_ENTER;
 
@@ -336,35 +324,35 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	e_view_deselect_all(v);
      }
 
-   if (_b == 1)
+   if (ev_info->button == 1)
      {
-	v->select.down.x = _x;
-	v->select.down.y = _y;
+	v->select.down.x = ev_info->output.x;
+	v->select.down.y = ev_info->output.y;
 	v->select.on = 1;
-	if (_x < v->select.down.x)
+	if (ev_info->output.x < v->select.down.x)
 	  {
-	     v->select.x = _x;
+	     v->select.x = ev_info->output.x;
 	     v->select.w = v->select.down.x - v->select.x + 1;
 	  }
 	else
 	  {
 	     v->select.x = v->select.down.x;
-	     v->select.w = _x - v->select.down.x + 1;
+	     v->select.w = ev_info->output.x - v->select.down.x + 1;
 	  }
-	if (_y < v->select.down.y)
+	if (ev_info->output.y < v->select.down.y)
 	  {
-	     v->select.y = _y;
+	     v->select.y = ev_info->output.y;
 	     v->select.h = v->select.down.y - v->select.y + 1;
 	  }
 	else
 	  {
 	     v->select.y = v->select.down.y;
-	     v->select.h = _y - v->select.down.y + 1;
+	     v->select.h = ev_info->output.y - v->select.down.y + 1;
 	  }
 	e_view_selection_update(v);
      }
 
-   if (_b == 2 && ev->double_click)
+   if (ev_info->button == 2 && ev->double_click)
       ecore_event_loop_quit();
 
    D_RETURN;
@@ -373,11 +361,12 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_bg_up_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    Ecore_Event_Mouse_Up *ev;
    E_View             *v;
    int                 dx, dy;
+   Evas_Event_Mouse_Up *ev_info = event_info;
 
    D_ENTER;
 
@@ -390,20 +379,20 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 
    if (v->select.on)
      {
-	dx = v->select.down.x - _x;
-	dy = v->select.down.y - _y;
+	dx = v->select.down.x - ev_info->output.x;
+	dy = v->select.down.y - ev_info->output.y;
 	if (dx < 0)
 	   dx = -dx;
 	if (dy < 0)
 	   dy = -dy;
-	if (_b == 1)
+	if (ev_info->button == 1)
 	   v->select.on = 0;
 	e_view_selection_update(v);
      }
 
-   if ((_b == 1) && ((dx > 3) || (dy > 3)))
+   if ((ev_info->button == 1) && ((dx > 3) || (dy > 3)))
      {
-	Evas_List           l;
+	Evas_List *           l;
 
 	for (l = v->icons; l; l = l->next)
 	  {
@@ -423,7 +412,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
      }
    else if (v->select.last_count == 0)
      {
-	if (_b == 1)
+	if (ev_info->button == 1)
 	  {
 	     if (!(ev->mods & (multi_select_mod | range_select_mod)))
 	       {
@@ -450,7 +439,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	  }
-	else if (_b == 2)
+	else if (ev_info->button == 2)
 	  {
 #if 1
 	     static E_Build_Menu *buildmenu = NULL;
@@ -479,7 +468,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       }
 #endif
 	  }
-	else if (_b == 3)
+	else if (ev_info->button == 3)
 	  {
 	     static E_Build_Menu *buildmenu = NULL;
 
@@ -498,10 +487,10 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       }
 	  }
      }
-   if (_b == 1)
+   if (ev_info->button == 1)
      {
-	v->select.x = _x;
-	v->select.y = _y;
+	v->select.x = ev_info->output.x;
+	v->select.y = ev_info->output.y;
      }
 
    D_RETURN;
@@ -510,10 +499,11 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
-e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+e_bg_move_cb(void *_data, Evas * _e, Evas_Object * _o, void *event_info)
 {
    Ecore_Event_Mouse_Down *ev;
    E_View             *v;
+   Evas_Event_Mouse_Move *ev_info = event_info;
 
    D_ENTER;
 
@@ -523,25 +513,25 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    v = _data;
    if (v->select.on)
      {
-	if (_x < v->select.down.x)
+	if (ev_info->cur.output.x < v->select.down.x)
 	  {
-	     v->select.x = _x;
+	     v->select.x = ev_info->cur.output.x;
 	     v->select.w = v->select.down.x - v->select.x + 1;
 	  }
 	else
 	  {
 	     v->select.x = v->select.down.x;
-	     v->select.w = _x - v->select.down.x + 1;
+	     v->select.w = ev_info->cur.output.x - v->select.down.x + 1;
 	  }
-	if (_y < v->select.down.y)
+	if (ev_info->cur.output.y < v->select.down.y)
 	  {
-	     v->select.y = _y;
+	     v->select.y = ev_info->cur.output.y;
 	     v->select.h = v->select.down.y - v->select.y + 1;
 	  }
 	else
 	  {
 	     v->select.y = v->select.down.y;
-	     v->select.h = _y - v->select.down.y + 1;
+	     v->select.h = ev_info->cur.output.y - v->select.down.y + 1;
 	  }
 	e_view_selection_update(v);
 
@@ -550,13 +540,12 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    D_RETURN;
    UN(_e);
    UN(_o);
-   UN(_b);
 }
 
 void
 e_view_deselect_all(E_View * v)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -574,7 +563,7 @@ e_view_deselect_all(E_View * v)
 void
 e_view_deselect_all_except(E_Icon * not_ic)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -594,7 +583,7 @@ void
 e_view_icons_get_extents(E_View * v, int *min_x, int *min_y, int *max_x,
 			 int *max_y)
 {
-   Evas_List           l;
+   Evas_List *           l;
    int                 x1, x2, y1, y2;
 
    D_ENTER;
@@ -660,7 +649,7 @@ e_view_icons_get_extents(E_View * v, int *min_x, int *min_y, int *max_x,
 void
 e_view_icons_apply_xy(E_View * v)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -824,7 +813,7 @@ e_view_get_position_percentage(E_View * v, double *vx, double *vy)
 static void
 e_idle(void *data)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -943,20 +932,22 @@ e_configure(Ecore_Event * ev)
       ecore_window_resize(v->win.main, v->size.w, v->size.h);
       if (v->options.back_pixmap)
       {
+	 Evas_Engine_Info_Software_X11 *info;
+
 	 v->pmap =
 	    ecore_pixmap_new(v->win.main, v->size.w, v->size.h,
 		  0);
-	 evas_set_output(v->evas, ecore_display_get(), v->pmap,
-	       evas_get_visual(v->evas),
-	       evas_get_colormap(v->evas));
+	 info = (Evas_Engine_Info_Software_X11 *)evas_engine_info_get(v->evas);
+	 info->info.drawable = v->pmap;
+	 evas_engine_info_set(v->evas, (Evas_Engine_Info *)info);
 	 ecore_window_set_background_pixmap(v->win.main, v->pmap);
 	 ecore_window_clear(v->win.main);
       }
       if (v->bg)
 	 e_bg_resize(v->bg, v->size.w, v->size.h);
       D("evas_set_output_viewpor(%p)\n", v->evas);
-      evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
-      evas_set_output_size(v->evas, v->size.w, v->size.h);
+      evas_output_viewport_set(v->evas, 0, 0, v->size.w, v->size.h);
+      evas_output_size_set(v->evas, v->size.w, v->size.h);
       e_view_scroll_to(v, v->scroll.x, v->scroll.y);
       e_view_arrange(v);	 
       e_view_layout_update(v->layout);
@@ -1238,12 +1229,10 @@ e_mouse_down(Ecore_Event * ev)
 	  {
 	     int                 focus_mode;
 
-	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
-
-	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);
+	     focus_mode = config_data->window->focus_mode;
 	     if (focus_mode == 2)
 		ecore_focus_to_window(v->win.base);
-	     evas_event_button_down(v->evas, e->x, e->y, e->button);
+	     evas_event_feed_mouse_down(v->evas, e->button);
 	     current_ev = NULL;
 	     D_RETURN;
 	  }
@@ -1267,7 +1256,7 @@ e_mouse_up(Ecore_Event * ev)
      {
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     evas_event_button_up(v->evas, e->x, e->y, e->button);
+	     evas_event_feed_mouse_up(v->evas, e->button);
 	     current_ev = NULL;
 	     D_RETURN;
 	  }
@@ -1291,7 +1280,7 @@ e_mouse_move(Ecore_Event * ev)
      {
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     evas_event_move(v->evas, e->x, e->y);
+	     evas_event_feed_mouse_move(v->evas, e->x, e->y);
 	     current_ev = NULL;
 	     D_RETURN;
 	  }
@@ -1317,7 +1306,7 @@ e_mouse_in(Ecore_Event * ev)
 	  {
 	     if (v->is_desktop)
 	       {
-		  evas_event_enter(v->evas);
+		  evas_event_feed_mouse_in(v->evas);
 	       }
 	     current_ev = NULL;
 	     D_RETURN;
@@ -1342,7 +1331,7 @@ e_mouse_out(Ecore_Event * ev)
      {
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
-	     evas_event_leave(v->evas);
+	     evas_event_feed_mouse_out(v->evas);
 	     current_ev = NULL;
 	     D_RETURN;
 	  }
@@ -1367,7 +1356,7 @@ e_window_expose(Ecore_Event * ev)
 	if ((v = e_view_machine_get_view_by_main_window(e->win)))
 	  {
 	     if (!(v->pmap))
-		evas_update_rect(v->evas, e->x, e->y, e->w, e->h);
+		evas_damage_rectangle_add(v->evas, e->x, e->y, e->w, e->h);
 	     v->changed = 1;
 	     D_RETURN;
 	  }
@@ -1412,7 +1401,7 @@ e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2)
 void
 e_view_resort_alphabetical(E_View * v)
 {
-   Evas_List           icons = NULL, l;
+   Evas_List          *icons = NULL, *l;
    E_Icon            **array;
    int                 i, count;
 
@@ -1442,7 +1431,7 @@ e_view_resort_alphabetical(E_View * v)
 void
 e_view_arrange(E_View * v)
 {
-   Evas_List           l;
+   Evas_List *           l;
    int                 x, y;
    int                 x1, x2, y1, y2;
    double              sv, sr, sm;
@@ -1586,11 +1575,6 @@ e_view_cleanup(E_View * v)
     * not via a timeout, because we will destroy the object after this.*/
    e_view_geometry_record(v);
 
-   if (v->iconbar)
-     {
-	/*e_iconbar_save_out_final(v->iconbar); */
-	e_object_unref(E_OBJECT(v->iconbar));
-     }
    if (v->bg)
       e_bg_free(v->bg);
    if (v->scrollbar.h)
@@ -1637,7 +1621,8 @@ e_view_file_event_handler(E_Observer *obs, E_Observee *o, E_Event_Type event, vo
    else if (event & E_EVENT_BG_CHANGED)
    {
       snprintf(buf, PATH_MAX, "background_reload:%s", v->name);
-      ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
+      e_view_bg_reload(v);
+      //ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
    }
    else if (event & E_EVENT_ICB_CHANGED)
    {
@@ -1678,14 +1663,14 @@ e_view_new(void)
 
 #ifdef SOFT_DESK
    /* ONLY alpha software can be "backing stored" */
-   v->options.render_method = RENDER_METHOD_ALPHA_SOFTWARE;
-   v->options.back_pixmap = 1;
-#else
-#ifdef X_DESK
-   v->options.render_method = RENDER_METHOD_BASIC_HARDWARE;
+   /*v->options.render_method = RENDER_METHOD_ALPHA_SOFTWARE;*/
    v->options.back_pixmap = 0;
 #else
-   v->options.render_method = RENDER_METHOD_3D_HARDWARE;
+#ifdef X_DESK
+   /*v->options.render_method = RENDER_METHOD_BASIC_HARDWARE;*/
+   v->options.back_pixmap = 0;
+#else
+   /*v->options.render_method = RENDER_METHOD_3D_HARDWARE;*/
    v->options.back_pixmap = 0;
 #endif
 #endif
@@ -1817,9 +1802,6 @@ e_view_set_dir(E_View * v, char *path)
 void
 e_view_realize(E_View * v)
 {
-   int                 max_colors = 216;
-   int                 font_cache = 1024 * 1024;
-   int                 image_cache = 8192 * 1024;
    char               *font_dir;
 
    D_ENTER;
@@ -1830,14 +1812,14 @@ e_view_realize(E_View * v)
 				  v->size.w, v->size.h);
    ecore_window_set_delete_inform(v->win.base);
    font_dir = e_config_get("fonts");
-   v->evas = evas_new_all(ecore_display_get(),
+
+   v->evas = e_evas_new_all(ecore_display_get(),
 			  v->win.base,
 			  0, 0, v->size.w, v->size.h,
-			  v->options.render_method,
-			  max_colors, font_cache, image_cache, font_dir);
-   v->win.main = evas_get_window(v->evas);
+			  font_dir);
+   v->win.main = e_evas_get_window(v->evas);
    e_cursors_display_in_window(v->win.main, "View");
-   evas_event_move(v->evas, -999999, -999999);
+   evas_event_feed_mouse_move(v->evas, -999999, -999999);
    ecore_window_set_events(v->win.base,
 			   XEV_VISIBILITY | XEV_CONFIGURE |
 			   XEV_PROPERTY | XEV_FOCUS);
@@ -1846,10 +1828,14 @@ e_view_realize(E_View * v)
 			   XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
    if (v->options.back_pixmap)
      {
+	Evas_Engine_Info_Software_X11 *info;
+
 	v->pmap = ecore_pixmap_new(v->win.main, v->size.w, v->size.h, 0);
-	evas_set_output(v->evas, ecore_display_get(), v->pmap,
-			evas_get_visual(v->evas), evas_get_colormap(v->evas));
+	info = (Evas_Engine_Info_Software_X11 *)evas_engine_info_get(v->evas);
+	info->info.drawable = v->pmap;
+	evas_engine_info_set(v->evas, (Evas_Engine_Info *)info);
 	ecore_window_set_background_pixmap(v->win.main, v->pmap);
+	ecore_window_clear(v->win.main);
      }
    v->scrollbar.v = e_scrollbar_new(v);
    e_scrollbar_set_change_func(v->scrollbar.v, e_view_scrollbar_v_change_cb, v);
@@ -1880,7 +1866,7 @@ e_view_realize(E_View * v)
 void
 e_view_populate(E_View * v)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    /* populate with icons for all files in the dir we are monitoring. 
     * This has to be called _after_ view_realize because
@@ -1900,7 +1886,7 @@ e_view_populate(E_View * v)
 void
 e_view_update(E_View * v)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -1938,24 +1924,19 @@ e_view_update(E_View * v)
      }
    if (v->options.back_pixmap)
      {
-	Imlib_Updates       up;
+	Evas_List           *up, *fp;
+        Evas_Rectangle      *u;
 
-	up = evas_render_updates(v->evas);
+	fp = up = evas_render_updates(v->evas);
 	/* special code to handle if we are double buffering to a pixmap */
 	/* and clear sections of the window if they got updated */
-	if (up)
+	while (up)
 	  {
-	     Imlib_Updates       u;
-
-	     for (u = up; u; u = imlib_updates_get_next(u))
-	       {
-		  int                 x, y, w, h;
-
-		  imlib_updates_get_coordinates(u, &x, &y, &w, &h);
-		  ecore_window_clear_area(v->win.main, x, y, w, h);
-	       }
-	     imlib_updates_free(up);
+	     u = up->data;
+	     ecore_window_clear_area(v->win.main, u->x, u->y, u->w, u->h);
+	     up = evas_list_next(up);
 	  }
+	evas_render_updates_free(fp);
      }
    else
       evas_render(v->evas);
@@ -1980,7 +1961,7 @@ e_view_file_add(E_View * v, E_File * f)
 	ic->changed = 1;
 	/* this basically allocates the obj.icon struct. Its image will be
 	 * set later in icon_update_state */
-	ic->obj.icon = evas_add_image_from_file(ic->view->evas, NULL);
+	ic->obj.icon = evas_object_image_add(ic->view->evas);
 	ic->obj.text = e_text_new(ic->view->evas, f->file, "filename");
 	v->icons = evas_list_append(v->icons, ic);
 	v->extents.valid = 0;
@@ -2116,9 +2097,9 @@ e_view_bg_reload(E_View * v)
 	v->bg = NULL;
 	if (v->evas)
 	{
-	   size = evas_get_image_cache(v->evas);
-	   evas_set_image_cache(v->evas, 0);
-	   evas_set_image_cache(v->evas, size);
+	   size = evas_object_image_cache_get(v->evas);
+	   evas_object_image_cache_flush(v->evas);
+	   evas_object_image_cache_set(v->evas, size);
 	}
 	e_db_flush();
      }
@@ -2147,9 +2128,9 @@ e_view_bg_reload(E_View * v)
 	 e_bg_set_layer(v->bg, 100);
 	 e_bg_resize(v->bg, v->size.w, v->size.h);
 
-	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
-	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
-	 e_bg_callback_add(v->bg, CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
+	 e_bg_callback_add(v->bg, EVAS_CALLBACK_MOUSE_UP, e_bg_up_cb, v);
+	 e_bg_callback_add(v->bg, EVAS_CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
+	 e_bg_callback_add(v->bg, EVAS_CALLBACK_MOUSE_MOVE, e_bg_move_cb, v);
 
 	 e_bg_show(v->bg);
       }
@@ -2217,32 +2198,13 @@ e_dnd_data_request(Ecore_Event * ev)
     *  } Ecore_Event_Dnd_Data_Request;
     */
    E_View             *v;
-   Evas_List           ll;
+   Evas_List *           ll;
    char               *data = NULL;
 
    D_ENTER;
    /* Me, my null, and an extra for the end '/r/n'... */
    e_strdup(data, "");
 
-   /* Need hostname for URL (file://hostname/...) */
-/* nooo nooo noo - never encode host names in url's - 
- * file:/path/blah is local only - secondly.. why encode 
- * url's with hosts? e17 only handles local files in the 
- * fs - so why use url styles at all? NB - in my testing
- * in efm all the other apps didnt use the file:/host/blah
- * url formatting... so i think we want to do what everyone
- * else does here
- */
-
-/* this is o evil it's not funny - gethostbyname? you know 
- * your window manager) could get hung here for minutes doing 
- * this lookup? bad bad bad. 
- *   
- *  if(gethostname( hostname, PATH_MAX))
- *    {
- *      strcpy( hostname, "localhost");
- *    }
- */
    e = ev->event;
    if (!(v = e_view_machine_get_view_by_base_window(e->win)))
       D_RETURN;
@@ -2258,6 +2220,7 @@ e_dnd_data_request(Ecore_Event * ev)
 	     ic = ll->data;
 	     if (ic->state.selected)
 	       {
+		  int                 size;
 		  char                buf[PATH_MAX];
 
 		  if (first)
@@ -2271,9 +2234,10 @@ e_dnd_data_request(Ecore_Event * ev)
 		     /* FIXME */
 		     snprintf(buf, PATH_MAX, "\r\nfile:%s/%s", v->dir->dir,
 			      ic->file->file);
-		  REALLOC(data, char, strlen(data) + strlen(buf) + 1);
+		  size = strlen(data) + strlen(buf) + 1;
+		  REALLOC(data, char, size);
 
-		  strcat(data, buf);
+		  strncat(data, buf, size);
 	       }
 	  }
 	ecore_dnd_send_data(e->source_win, e->win,
@@ -2291,6 +2255,7 @@ e_dnd_data_request(Ecore_Event * ev)
 	     ic = ll->data;
 	     if (ic->state.selected)
 	       {
+		  int                 size;
 		  char                buf[PATH_MAX];
 
 		  if (first)
@@ -2304,9 +2269,10 @@ e_dnd_data_request(Ecore_Event * ev)
 		     /*FIXME */
 		     snprintf(buf, PATH_MAX, "\n%s/%s", v->dir->dir,
 			      ic->file->file);
-		  REALLOC(data, char, strlen(data) + strlen(buf) + 1);
+		  size = strlen(data) + strlen(buf) + 1;
+		  REALLOC(data, char, size);
 
-		  strcat(data, buf);
+		  strncat(data, buf, size);
 	       }
 	  }
 	ecore_dnd_send_data(e->source_win, e->win,

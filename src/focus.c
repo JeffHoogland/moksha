@@ -4,7 +4,7 @@
 #include "e.h"
 #include "util.h"
 
-static Evas_List    focus_list = NULL;
+static Evas_List *    focus_list = NULL;
 
 void
 e_focus_set_focus(E_Border * b)

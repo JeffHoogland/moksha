@@ -24,10 +24,10 @@ struct _E_Iconbar
 {
    E_Object            o;
 
-   E_View             *view;
-   Evas_List           icons;
+   E_Desktop          *desktop;
+   Evas_List          *icons;
 
-   Evas_Object         clip;
+   Evas_Object        *clip;
 
    int                 has_been_scrolled;
    int                 changed;
@@ -54,7 +54,7 @@ struct _E_Iconbar_Icon
 
    E_Iconbar          *iconbar;
 
-   Evas_Object         image;
+   Evas_Object *         image;
    Imlib_Image         imlib_image;
 
    char               *image_path;
@@ -63,7 +63,7 @@ struct _E_Iconbar_Icon
    int                 hilited;
    struct
    {
-      Evas_Object         image;
+      Evas_Object *         image;
       char               *timer;
       double              start;
    }
@@ -94,7 +94,7 @@ struct _E_Iconbar_Icon
 };
 
 void                e_iconbar_init(void);
-E_Iconbar          *e_iconbar_new(E_View * v);
+E_Iconbar          *e_iconbar_new(E_Desktop * d);
 void                e_iconbar_icon_free(E_Iconbar_Icon *);
 void                e_iconbar_realize(E_Iconbar * ib);
 void                e_iconbar_fix(E_Iconbar * ib);
@@ -104,9 +104,8 @@ void                e_iconbar_file_delete(E_View * v, char *file);
 void                e_iconbar_file_change(E_View * v, char *file);
 void                e_iconbar_save_out_final(E_Iconbar * ib);
 E_Rect             *e_iconbar_get_resist_rect(E_Iconbar * ib);
-void                e_iconbar_set_view_window_spacing(E_Iconbar * ib);
 void                e_iconbar_icon_move(E_Iconbar_Icon * ic, int x, int y);
-void                e_iconbar_dnd_add_files(E_View * v, E_View * source,
+void                e_iconbar_dnd_add_files(E_Desktop * d, E_View * source,
 					    int num_files, char **dnd_files);
 
 #endif

@@ -16,7 +16,7 @@ struct _e_cursor
 static int          cursor_change = 0;
 static char        *cur_cursor = NULL;
 static char        *prev_cursor = NULL;
-static Evas_List    cursors = NULL;
+static Evas_List *    cursors = NULL;
 
 static void         e_cursors_idle(void *data);
 static void         e_cursors_set(char *type);
@@ -62,7 +62,7 @@ e_cursors_set(char *type)
 static E_Cursor    *
 e_cursors_find(char *type)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 

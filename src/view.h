@@ -13,6 +13,8 @@
 #include "view_layout.h"
 #include "observer.h"
 
+/*typedef int EVAS_RENDER_METHOD;*/
+
 #ifndef E_VIEW_TYPEDEF
 #define E_VIEW_TYPEDEF
 typedef struct _E_View E_View;
@@ -74,12 +76,12 @@ struct _E_View
 
    struct
    {
-      Evas_Render_Method  render_method;
+     /*      Evas_Render_Method  render_method;*/
       int                 back_pixmap;
    }
    options;
 
-   Evas                evas;
+   Evas *                evas;
    struct
    {
       Window              base;
@@ -163,16 +165,16 @@ struct _E_View
       config;
       struct
       {
-	 Evas_Object         clip;
-	 Evas_Object         edge_l;
-	 Evas_Object         edge_r;
-	 Evas_Object         edge_t;
-	 Evas_Object         edge_b;
-	 Evas_Object         middle;
-	 Evas_Object         grad_l;
-	 Evas_Object         grad_r;
-	 Evas_Object         grad_t;
-	 Evas_Object         grad_b;
+	 Evas_Object *         clip;
+	 Evas_Object *         edge_l;
+	 Evas_Object *         edge_r;
+	 Evas_Object *         edge_t;
+	 Evas_Object *         edge_b;
+	 Evas_Object *         middle;
+	 Evas_Object *         grad_l;
+	 Evas_Object *         grad_r;
+	 Evas_Object *         grad_t;
+	 Evas_Object *         grad_b;
       }
       obj;
    }
@@ -226,13 +228,13 @@ struct _E_View
 
    E_Iconbar          *iconbar;
 
-   Evas_List           icons;
+   Evas_List *           icons;
 
    int                 have_resort_queued;
 
    int                 changed;
 
-   Evas_List           epplet_contexts;
+   Evas_List *           epplet_contexts;
    Ebits_Object        epplet_layout;
 
    E_View_Look         *look;

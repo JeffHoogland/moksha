@@ -144,31 +144,31 @@ e_scrollbar_setup_bits(E_Scrollbar * sb)
 	sb->h = h;
 
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Trough",
-				       CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
+				       EVAS_CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
 				       sb);
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Trough",
-				       CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+				       EVAS_CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow1",
-				       CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
+				       EVAS_CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
 				       sb);
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow1",
-				       CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+				       EVAS_CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow2",
-				       CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
+				       EVAS_CALLBACK_MOUSE_DOWN, e_sb_base_down_cb,
 				       sb);
 	ebits_set_classed_bit_callback(sb->base, "Scrollbar_Arrow2",
-				       CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
+				       EVAS_CALLBACK_MOUSE_UP, e_sb_base_up_cb, sb);
      }
    if (sb->bar)
      {
 	ebits_add_to_evas(sb->bar, sb->evas);
 	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar",
-				       CALLBACK_MOUSE_DOWN, e_sb_bar_down_cb,
+				       EVAS_CALLBACK_MOUSE_DOWN, e_sb_bar_down_cb,
 				       sb);
 	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar",
-				       CALLBACK_MOUSE_UP, e_sb_bar_up_cb, sb);
+				       EVAS_CALLBACK_MOUSE_UP, e_sb_bar_up_cb, sb);
 	ebits_set_classed_bit_callback(sb->bar, "Scrollbar_Bar",
-				       CALLBACK_MOUSE_MOVE, e_sb_bar_move_cb,
+				       EVAS_CALLBACK_MOUSE_MOVE, e_sb_bar_move_cb,
 				       sb);
      }
 
@@ -568,7 +568,7 @@ e_scrollbar_cleanup(E_Scrollbar * sb)
 }
 
 void
-e_scrollbar_add_to_evas(E_Scrollbar * sb, Evas evas)
+e_scrollbar_add_to_evas(E_Scrollbar * sb, Evas * evas)
 {
    D_ENTER;
 
@@ -692,7 +692,7 @@ e_scrollbar_set_direction(E_Scrollbar * sb, int d)
    sb->direction = d;
    if (sb->evas)
      {
-	Evas                evas;
+	Evas *                evas;
 
 	if (sb->base)
 	   ebits_free(sb->base);

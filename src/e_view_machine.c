@@ -75,7 +75,7 @@ e_view_machine_unregister_look(E_View_Look * l)
 void
 e_view_machine_close_all_views(void)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
    /* Copy the list of views and unregister them */
@@ -92,7 +92,7 @@ E_Dir       *
 e_view_machine_dir_lookup(char *path)
 {
    E_Dir       *d;
-   Evas_List           l;
+   Evas_List *           l;
    char               *realpath = NULL;
 
    D_ENTER;
@@ -122,7 +122,7 @@ E_View_Look       *
 e_view_machine_look_lookup(char *path)
 {
    E_View_Look       *vl;
-   Evas_List           l;
+   Evas_List *           l;
    char               *realpath = NULL;
 
    D_ENTER;
@@ -152,7 +152,7 @@ e_view_machine_look_lookup(char *path)
 E_View             *
 e_view_machine_get_view_by_main_window(Window win)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
    for (l = VM->views; l; l = l->next)
@@ -168,7 +168,7 @@ e_view_machine_get_view_by_main_window(Window win)
 E_View             *
 e_view_machine_get_view_by_base_window(Window win)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
    for (l = VM->views; l; l = l->next)
@@ -180,5 +180,3 @@ e_view_machine_get_view_by_base_window(Window win)
      }
    D_RETURN_(NULL);
 }
-
-

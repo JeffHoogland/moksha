@@ -6,7 +6,7 @@
 static void
 e_background_cleanup(E_Background * bg)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -22,7 +22,7 @@ e_background_cleanup(E_Background * bg)
 	     if (bl->file)
 		FREE(bl->file);
 	     if (bl->obj)
-		evas_del_object(bg->evas, bl->obj);
+		evas_object_del(bl->obj);
 	     FREE(bl);
 	  }
 	evas_list_free(bg->layers);
@@ -30,7 +30,7 @@ e_background_cleanup(E_Background * bg)
    if (bg->file)
       FREE(bg->file);
    if (bg->base_obj)
-      evas_del_object(bg->evas, bg->base_obj);
+      evas_object_del(bg->base_obj);
 
    e_object_cleanup(E_OBJECT(bg));
 
@@ -149,9 +149,9 @@ e_background_load(char *file)
 }
 
 void
-e_background_realize(E_Background * bg, Evas evas)
+e_background_realize(E_Background * bg, Evas * evas)
 {
-   Evas_List           l;
+   Evas_List *           l;
    int                 ww, hh, count;
 
    D_ENTER;
@@ -168,9 +168,10 @@ e_background_realize(E_Background * bg, Evas evas)
 	bl = l->data;
 	if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	  {
-	     bl->obj = evas_add_image_from_file(bg->evas, bl->file);
-	     evas_set_layer(bg->evas, bl->obj, 0);
-	     evas_show(bg->evas, bl->obj);
+	     bl->obj = evas_object_image_add(bg->evas);
+	     evas_object_image_file_set(bl->obj, bl->file, NULL);
+	     evas_object_layer_set(bl->obj, 0);
+	     evas_object_show(bl->obj);
 #if 0				/* dont need this... do we? */
 	     if (evas_get_image_alpha(bg->evas, bl->obj))
 	       {
@@ -203,7 +204,7 @@ e_background_realize(E_Background * bg, Evas evas)
 void
 e_background_set_scroll(E_Background * bg, int sx, int sy)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -220,7 +221,7 @@ e_background_set_scroll(E_Background * bg, int sx, int sy)
 	bl = l->data;
 	if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	  {
-	     evas_set_image_fill(bg->evas, bl->obj,
+	     evas_object_image_fill_set(bl->obj,
 				 (double)bg->geom.sx * bl->scroll.x,
 				 (double)bg->geom.sy * bl->scroll.y,
 				 bl->fw, bl->fh);
@@ -232,7 +233,7 @@ e_background_set_scroll(E_Background * bg, int sx, int sy)
 void
 e_background_set_size(E_Background * bg, int w, int h)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -250,7 +251,7 @@ e_background_set_size(E_Background * bg, int w, int h)
 	iw = 0;
 	ih = 0;
 	if (bg->evas)
-	   evas_get_image_size(bg->evas, bl->obj, &iw, &ih);
+	   evas_object_image_size_get(bl->obj, &iw, &ih);
 	w = bl->size.w * (double)bg->geom.w;
 	h = bl->size.h * (double)bg->geom.h;
 	if (bl->size.orig.w)
@@ -277,18 +278,18 @@ e_background_set_size(E_Background * bg, int w, int h)
 	bl->fh = fh;
 	if (bg->evas)
 	  {
-	     evas_move(bg->evas, bl->obj, bl->x, bl->y);
-	     evas_resize(bg->evas, bl->obj, bl->w, bl->h);
+	     evas_object_move(bl->obj, bl->x, bl->y);
+	     evas_object_resize(bl->obj, bl->w, bl->h);
 	     if (bl->type == E_BACKGROUND_TYPE_IMAGE)
 	       {
-		  evas_set_image_fill(bg->evas, bl->obj,
+		  evas_object_image_fill_set(bl->obj,
 				      (double)bg->geom.sx * bl->scroll.x,
 				      (double)bg->geom.sy * bl->scroll.y,
 				      bl->fw, bl->fh);
 	       }
 	     else if (bl->type == E_BACKGROUND_TYPE_GRADIENT)
 	       {
-		  evas_set_angle(bg->evas, bl->obj, bl->angle);
+		  evas_object_angle_set(bl->obj, bl->angle);
 	       }
 	     else if (bl->type == E_BACKGROUND_TYPE_SOLID)
 	       {
@@ -302,7 +303,7 @@ void
 e_background_set_color_class(E_Background * bg, char *cc, int r, int g, int b,
 			     int a)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -316,9 +317,9 @@ e_background_set_color_class(E_Background * bg, char *cc, int r, int g, int b,
 	     if (bg->evas)
 	       {
 		  if ((l == bg->layers) && (bg->base_obj))
-		     evas_set_color(bg->evas, bl->obj, r, g, b, 255);
+		     evas_object_color_set(bl->obj, r, g, b, 255);
 		  else
-		     evas_set_color(bg->evas, bl->obj, r, g, b, a);
+		     evas_object_color_set(bl->obj, r, g, b, a);
 	       }
 	  }
      }

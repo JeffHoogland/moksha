@@ -2,7 +2,7 @@
 #define E_VIEW_LAYOUT_H
 
 #include "e.h"
-#include "view.h"
+#include "e_view_look.h"
 #include "object.h"
 
 #ifndef E_VIEW_LAYOUT_TYPEDEF
@@ -16,16 +16,15 @@ typedef struct _E_View_Layout_Element E_View_Layout_Element;
 typedef struct _E_View    E_View;
 #endif
 
-
 struct _E_View_Layout
 {
    E_Object     o;
 
-   E_View      *view;
+   E_Desktop   *desktop;
 
    Ebits_Object bits;
 
-   Evas_List    elements;
+   Evas_List *    elements;
 
    time_t       mod_time;
 };
@@ -36,7 +35,7 @@ struct _E_View_Layout_Element
    double       x, y, w, h;
 };
 
-E_View_Layout *e_view_layout_new(E_View *v);
+E_View_Layout *e_view_layout_new(E_Desktop *d);
 void e_view_layout_realize(E_View_Layout *layout);
 void e_view_layout_update(E_View_Layout *layout);
 

@@ -17,20 +17,29 @@
 #include "util.h"
 #include "e_view_machine.h"
 
-#ifdef USE_FERITE
-# include "e_ferite.h"
-#endif
-
 #include <time.h>
 #include <X11/Xproto.h>
 
 #ifdef E_PROF
-Evas_List           __e_profiles = NULL;
+Evas_List *           __e_profiles = NULL;
 #endif
 
 static void         cb_exit(void);
 static void         wm_running_error(Display * d, XErrorEvent * ev);
 static void         setup(void);
+
+static void         ecore_idle(void *data);
+
+static void
+ecore_idle(void *data)
+{
+   D_ENTER;
+   /* FIXME -- Raster, how is this related to the desktop code? */
+
+   e_db_runtime_flush();
+   D_RETURN;
+   UN(data);
+}
 
 static void
 cb_exit(void)
@@ -86,8 +95,6 @@ main(int argc, char **argv)
    atexit(cb_exit);
    e_exec_set_args(argc, argv);
 
-   e_config_init();
-
    /* Check command line options here: */
    for (i = 1; i < argc; i++)
      {
@@ -133,39 +140,35 @@ main(int argc, char **argv)
    ecore_grab();
    ecore_sync();
    ecore_set_error_handler(wm_running_error);
-   ecore_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP);
+   ecore_window_set_events(0, XEV_CHILD_REDIRECT | XEV_PROPERTY | XEV_COLORMAP |
+		           XEV_FOCUS | XEV_KEY | XEV_MOUSE_MOVE | XEV_BUTTON |
+			   XEV_IN_OUT);
    ecore_sync();
    ecore_reset_error_handler();
    ecore_ungrab();
 
    /* Initialization for the various modules: */
 
+   e_view_machine_init();
+   e_config_init();
+   e_keys_init();
    e_fs_init();
-   e_desktops_init();
    e_border_init();
+   e_desktops_init();
    e_action_init();
    e_menu_init();
-   e_view_machine_init();
    e_entry_init();
-   e_keys_init();
    e_guides_init();
    e_place_init();
    e_cursors_init();
    e_iconbar_init();
 
-#ifdef USE_FERITE
-   e_ferite_init();
-#endif
-
-   e_desktops_init_file_display(e_desktops_get(0));
+   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
+   e_desktops_show(e_desktops_get(0));
 
    setup();
 
    ecore_event_loop();
-
-#ifdef USE_FERITE
-   e_ferite_deinit();
-#endif
 
    return 0;
 }

@@ -1,3 +1,15 @@
+Additional notes
+
+todo
+  entry.c - check 'todo' entries (although nobody uses entries except for
+                                  me in med, do they?)
+  guides.c - imlib parts that aren't converted yet.
+  text.c
+  menu.c
+  menubuild.c - e_observer_init() call.
+  border.c - use e_evas_new_all in place of the inlined code.  cleanup.
+
+
 +-----------------------------------------------------------------------------+
 |                      Enlightenment 0.17.pre CVS Code....                    |
 +-----------------------------------------------------------------------------+

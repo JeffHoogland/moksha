@@ -73,6 +73,7 @@ struct _E_Action_Impl
  * i.e. the way E performs actions.
  */
 void                e_action_init(void);
+void                e_action_cleanup(E_Action *a);
 
 int                 e_action_start(char *action, E_Action_Type act, int button,
 				   char *key, Ecore_Event_Key_Modifiers mods,
@@ -96,5 +97,11 @@ void                e_action_add_impl(char *action,
 void                e_action_del_timer(E_Object * object, char *name);
 void                e_action_add_timer(E_Object * object, char *name);
 void                e_action_del_timer_object(E_Object * object);
+
+
+void                e_act_exit_start(E_Object * object, E_Action * a, void *data, int x, int y,
+				     int rx, int ry);
+void                e_act_restart_start(E_Object * object, E_Action * a, void *data, int x, int y,
+					int rx, int ry);
 
 #endif

@@ -28,7 +28,7 @@ struct _E_Dir
    /* The realpath of the view's directory */
    char               *dir;
 
-   Evas_List           files;
+   Evas_List *           files;
 
 /* 
  *    Evas_Object         obj_bg;

@@ -35,6 +35,6 @@ char               *e_file_get_dir(char *path);
 
 int                 e_file_can_exec(struct stat *st);
 char               *e_file_readlink(char *link);
-Evas_List           e_file_ls(char *dir);
+Evas_List *           e_file_ls(char *dir);
 
 #endif

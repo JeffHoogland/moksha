@@ -6,21 +6,19 @@
 #include "exec.h"
 #include "icccm.h"
 #include "keys.h"
-#include "view.h"
 #include "e_view_machine.h"
 #include "util.h"
 #include "guides.h"
 #include "bordermenu.h"
 #include "block.h"
 
-static Evas_List    action_impls = NULL;
-static Evas_List    current_actions = NULL;
-static Evas_List    current_timers = NULL;
+static Evas_List *    action_impls = NULL;
+static Evas_List *    current_actions = NULL;
+static Evas_List *    current_timers = NULL;
 
 static void         e_action_find(char *action, E_Action_Type act, int button,
 				  char *key, Ecore_Event_Key_Modifiers mods,
 				  E_Object * object);
-static void         e_action_cleanup(E_Action * a);
 
 static void         e_act_move_start(E_Object * object, E_Action * a,
 				     void *data, int x, int y, int rx, int ry);
@@ -91,14 +89,14 @@ static void         e_act_exec_start(E_Object * object, E_Action * a,
 
 static void         e_act_menu_start(E_Object * object, E_Action * a,
 				     void *data, int x, int y, int rx, int ry);
-
+#if 0
 static void         e_act_exit_start(E_Object * object, E_Action * a,
 				     void *data, int x, int y, int rx, int ry);
 
 static void         e_act_restart_start(E_Object * object, E_Action * a,
 					void *data, int x, int y, int rx,
 					int ry);
-
+#endif
 static void         e_act_stick_start(E_Object * object, E_Action * a,
 				      void *data, int x, int y, int rx, int ry);
 
@@ -133,104 +131,16 @@ static void
 e_action_find(char *action, E_Action_Type act, int button,
 	      char *key, Ecore_Event_Key_Modifiers mods, E_Object * object)
 {
-   char               *actions_db;
-   E_DB_File          *db;
-   int                 i, num;
-   char               *a_name = NULL;
-   char               *a_action = NULL;
-   char               *a_params = NULL;
-   int                 a_event = 0;
-   int                 a_button = 0;
-   char               *a_key = NULL;
-   int                 a_modifiers = 0;
-   Evas_List           l;
+   Evas_List          *l;
    E_Action           *a;
-   static Evas_List    actions = NULL;
-
-   E_CFG_FILE(cfg_actions, "actions");
 
    D_ENTER;
 
-   E_CONFIG_CHECK_VALIDITY(cfg_actions, "actions");
-
-   /* if we had a previous list - nuke it */
-
-   /* FIXME: this has potential to segfault if reference
-    * counting is actually used and those actions are
-    * referenced in more than one place --cK.
-    */
-
-   if (actions)
-     {
-	for (l = actions; l; l = l->next)
-	  {
-	     a = l->data;
-	     if (a)
-		e_action_cleanup(a);
-	  }
-	actions = evas_list_free(actions);
-     }
-   /* now build the list again */
-   actions_db = e_config_get("actions");
-   db = e_db_open_read(actions_db);
-   if (!db)
-      D_RETURN;
-   if (!e_db_int_get(db, "/actions/count", &num))
-      goto error;
-   for (i = 0; i < num; i++)
-     {
-	char                buf[PATH_MAX];
-
-	snprintf(buf, PATH_MAX, "/actions/%i/name", i);
-	a_name = e_db_str_get(db, buf);
-	snprintf(buf, PATH_MAX, "/actions/%i/action", i);
-	a_action = e_db_str_get(db, buf);
-	snprintf(buf, PATH_MAX, "/actions/%i/params", i);
-	a_params = e_db_str_get(db, buf);
-	snprintf(buf, PATH_MAX, "/actions/%i/event", i);
-	e_db_int_get(db, buf, &a_event);
-	snprintf(buf, PATH_MAX, "/actions/%i/button", i);
-	e_db_int_get(db, buf, &a_button);
-	snprintf(buf, PATH_MAX, "/actions/%i/key", i);
-	a_key = e_db_str_get(db, buf);
-	snprintf(buf, PATH_MAX, "/actions/%i/modifiers", i);
-	e_db_int_get(db, buf, &a_modifiers);
-
-	a = NEW(E_Action, 1);
-	ZERO(a, E_Action, 1);
-
-	e_object_init(E_OBJECT(a), (E_Cleanup_Func) e_action_cleanup);
-
-	a->name = a_name;
-	a->action = a_action;
-	a->params = a_params;
-	a->event = a_event;
-	a->button = a_button;
-	a->key = a_key;
-	a->modifiers = a_modifiers;
-	a->action_impl = NULL;
-	a->object = NULL;
-	a->started = 0;
-	actions = evas_list_append(actions, a);
-	/* it's a key? lets grab it! */
-	if ((a->key) && (strlen(a->key) > 0))
-	  {
-	     if (a->modifiers == -1)
-		e_keys_grab(a->key, ECORE_EVENT_KEY_MODIFIER_NONE, 1);
-	     else
-		e_keys_grab(a->key, (Ecore_Event_Key_Modifiers) a->modifiers,
-			    0);
-	     a->grabbed = 1;
-	  }
-     }
- error:
-   e_db_close(db);
-   E_CONFIG_CHECK_VALIDITY_END;
    /* run thru our actions list and match event, state and stuff with an */
    /* and action for it */
-   for (l = actions; l; l = l->next)
+   for (l = config_data->actions; l; l = l->next)
      {
-	Evas_List           ll;
+	Evas_List *           ll;
 
 	a = l->data;
 	if (act != a->event)
@@ -288,7 +198,7 @@ e_action_find(char *action, E_Action_Type act, int button,
    D_RETURN;
 }
 
-static void
+void
 e_action_cleanup(E_Action * a)
 {
    D_ENTER;
@@ -335,7 +245,7 @@ e_action_start(char *action, E_Action_Type act, int button,
 	       char *key, Ecore_Event_Key_Modifiers mods,
 	       E_Object * object, void *data, int x, int y, int rx, int ry)
 {
-   Evas_List           l;
+   Evas_List *           l;
    int                 started_long_action = 0;
 
    D_ENTER;
@@ -375,7 +285,7 @@ e_action_stop(char *action, E_Action_Type act, int button,
 	      char *key, Ecore_Event_Key_Modifiers mods, E_Object * object,
 	      void *data, int x, int y, int rx, int ry)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -435,7 +345,7 @@ e_action_cont(char *action, E_Action_Type act, int button, char *key,
 	      Ecore_Event_Key_Modifiers mods, E_Object * object, void *data,
 	      int x, int y, int rx, int ry, int dx, int dy)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -461,7 +371,7 @@ void
 e_action_stop_by_object(E_Object * object, void *data, int x, int y, int rx,
 			int ry)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -493,7 +403,7 @@ e_action_stop_by_object(E_Object * object, void *data, int x, int y, int rx,
 void
 e_action_stop_by_type(char *action)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -518,6 +428,7 @@ e_action_impl_cleanup(E_Action_Impl * eai)
 {
    D_ENTER;
 
+   IF_FREE(eai->action);
    e_object_cleanup(E_OBJECT(eai));
 
    D_RETURN;
@@ -548,7 +459,7 @@ e_action_add_impl(char *action, E_Action_Start_Func func_start,
 void
 e_action_del_timer(E_Object * object, char *name)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -592,7 +503,7 @@ e_action_add_timer(E_Object * object, char *name)
 void
 e_action_del_timer_object(E_Object * object)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 
@@ -677,22 +588,9 @@ e_act_move_start(E_Object * object, E_Action * a, void *data, int x, int y,
    double              align_y = 0.5;
    E_Guides_Location   display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
 
-   E_CFG_INT(cfg_window_move_mode, "settings", "/window/move/mode",
-	     E_GUIDES_BOX);
-   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
-   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
-   E_CFG_INT(cfg_guides_display_location, "settings",
-	     "/guides/display/location",
-	     E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
-
    D_ENTER;
 
    e_block_start("menus");
-
-   E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
-   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
 
    b = (E_Border *) object;
 
@@ -704,6 +602,11 @@ e_act_move_start(E_Object * object, E_Action * a, void *data, int x, int y,
 
    if (b->client.fixed)
       D_RETURN;
+
+   move_mode = config_data->window->move_mode;
+   display_loc = config_data->guides->location;
+   align_x = config_data->guides->x;
+   align_y = config_data->guides->y;
 
    if (move_mode >= E_GUIDES_BOX)
       b->hold_changes = 1;	/* if non opaque */
@@ -839,22 +742,10 @@ e_act_resize_start(E_Object * object, E_Action * a, void *data, int x, int y,
    double              align_y = 0.5;
    E_Guides_Location   display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
 
-   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode",
-	     E_GUIDES_BOX);
-   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
-   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
-   E_CFG_INT(cfg_guides_display_location, "settings",
-	     "/guides/display/location",
-	     E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
-
    D_ENTER;
 
    e_block_start("menus");
 
-   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
-   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = (E_Border *) object;
    if (!b)
       b = e_border_current_focused();
@@ -866,6 +757,12 @@ e_act_resize_start(E_Object * object, E_Action * a, void *data, int x, int y,
       D_RETURN;
    if (b->current.shaded != 0)
       D_RETURN;
+
+   resize_mode = config_data->window->resize_mode;
+   display_loc = config_data->guides->location;
+   align_x = config_data->guides->x;
+   align_y = config_data->guides->y;
+
    if (resize_mode >= E_GUIDES_BOX)
       b->hold_changes = 1;	/* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -1043,22 +940,10 @@ e_act_resize_h_start(E_Object * object, E_Action * a, void *data, int x, int y,
    double              align_y = 0.5;
    E_Guides_Location   display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
 
-   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode",
-	     E_GUIDES_BOX);
-   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
-   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
-   E_CFG_INT(cfg_guides_display_location, "settings",
-	     "/guides/display/location",
-	     E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
-
    D_ENTER;
 
    e_block_start("menus");
 
-   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
-   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = (E_Border *) object;
    if (!b)
       b = e_border_current_focused();
@@ -1068,6 +953,12 @@ e_act_resize_h_start(E_Object * object, E_Action * a, void *data, int x, int y,
       D_RETURN;
    if (b->current.shaded != 0)
       D_RETURN;
+
+   resize_mode = config_data->window->resize_mode;
+   display_loc = config_data->guides->location;
+   align_x = config_data->guides->x;
+   align_y = config_data->guides->y;
+
    if (resize_mode >= E_GUIDES_BOX)
       b->hold_changes = 1;	/* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -1205,22 +1096,10 @@ e_act_resize_v_start(E_Object * object, E_Action * a, void *data, int x, int y,
    double              align_y = 0.5;
    E_Guides_Location   display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
 
-   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode",
-	     E_GUIDES_BOX);
-   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
-   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
-   E_CFG_INT(cfg_guides_display_location, "settings",
-	     "/guides/display/location",
-	     E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
-
    D_ENTER;
 
    e_block_start("menus");
 
-   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
-   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
-   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = (E_Border *) object;
    if (!b)
       b = e_border_current_focused();
@@ -1230,6 +1109,12 @@ e_act_resize_v_start(E_Object * object, E_Action * a, void *data, int x, int y,
       D_RETURN;
    if (b->current.shaded != 0)
       D_RETURN;
+
+   resize_mode = config_data->window->resize_mode;
+   display_loc = config_data->guides->location;
+   align_x = config_data->guides->x;
+   align_y = config_data->guides->y;
+
    if (resize_mode >= E_GUIDES_BOX)
       b->hold_changes = 1;	/* if non opaque */
    ecore_window_gravity_set(b->win.client, StaticGravity);
@@ -1667,7 +1552,7 @@ e_act_menu_start(E_Object * object, E_Action * a, void *data, int x, int y,
    UN(ry);
 }
 
-static void
+void
 e_act_exit_start(E_Object * object, E_Action * a, void *data, int x, int y,
 		 int rx, int ry)
 {
@@ -1692,7 +1577,7 @@ e_act_exit_start(E_Object * object, E_Action * a, void *data, int x, int y,
    UN(ry);
 }
 
-static void
+void
 e_act_restart_start(E_Object * object, E_Action * a, void *data, int x, int y,
 		    int rx, int ry)
 {
@@ -1967,9 +1852,13 @@ static void
 e_act_raise_next_start(E_Object * object, E_Action * a, void *data, int x,
 		       int y, int rx, int ry)
 {
+   E_Border           *current = NULL;
+
    D_ENTER;
 
-   e_border_raise_next();
+   current = e_desktop_raise_next_border();
+   if (current)
+      e_border_send_pointer(current);
 
    D_RETURN;
    UN(object);

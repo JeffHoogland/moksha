@@ -9,15 +9,18 @@ INCLUDES = \
 	-I$(top_srcdir)/intl \
 	@evas_cflags@ @edb_cflags@ @ebits_cflags@ @ecore_cflags@ @efsd_cflags@ @ebg_cflags@ $(DEBUGFLAGS)
 
-bin_PROGRAMS = enlightenment 
+bin_PROGRAMS = enlightenment
 
 enlightenment_SOURCES = \
 	actions.h actions.c \
 	block.c block.h \
 	border.h border.c \
 	bordermenu.h bordermenu.c \
+	menu.h menu.c \
+	menubuild.h menubuild.c \
 	config.h config.c \
 	cursors.c cursors.h \
+	data.c data.h \
 	debug.c debug.h \
 	delayed.h delayed.c \
 	desktops.h desktops.c \
@@ -30,14 +33,12 @@ enlightenment_SOURCES = \
 	guides.h guides.c \
 	globals.h globals.c \
 	icccm.h icccm.c \
-	iconbar.h iconbar.c\
-	icons.h icons.c\
+	iconbar.h iconbar.c \
+	icons.h icons.c \
 	ipc.h ipc.c \
 	keys.h keys.c \
 	main.c \
 	match.c match.h \
-	menu.h menu.c \
-	menubuild.h menubuild.c \
 	object.h object.c \
 	observer.h observer.c\
 	pack.c \
@@ -52,7 +53,7 @@ enlightenment_SOURCES = \
 	e_dir.h e_dir.c \
 	e_view_machine.h e_view_machine.c \
 	view_layout.h view_layout.c \
-	e_view_look.h e_view_look.c \
+        e_view_look.h e_view_look.c \
 	e.h
 
 enlightenment_LDADD = @evas_libs@ @edb_libs@ @ebits_libs@ @ecore_libs@ @efsd_libs@ @ebg_libs@ -lm $(INTLLIBS)

@@ -10,14 +10,14 @@ struct _e_block
    int                 refs;
 };
 
-static Evas_List    blocks = NULL;
+static Evas_List *    blocks = NULL;
 
 static E_Block     *e_block_find(char *name);
 
 static E_Block     *
 e_block_find(char *name)
 {
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
    for (l = blocks; l; l = l->next)

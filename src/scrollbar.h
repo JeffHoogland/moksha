@@ -25,7 +25,7 @@ struct _E_Scrollbar
    double              range;
 
    E_View             *view;
-   Evas                evas;
+   Evas *                evas;
 
    Ebits_Object        bar;
    Ebits_Object        base;
@@ -59,7 +59,7 @@ struct _E_Scrollbar
 };
 
 E_Scrollbar        *e_scrollbar_new(E_View * v);
-void                e_scrollbar_add_to_evas(E_Scrollbar * sb, Evas evas);
+void                e_scrollbar_add_to_evas(E_Scrollbar * sb, Evas * evas);
 void                e_scrollbar_show(E_Scrollbar * sb);
 void                e_scrollbar_hide(E_Scrollbar * sb);
 void                e_scrollbar_raise(E_Scrollbar * sb);

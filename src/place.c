@@ -71,12 +71,9 @@ e_place_manual(E_Border * b, E_Desktop * desk, int *x, int *y)
    int                 mx, my, rx, ry;
    int                 move_mode = E_GUIDES_BOX;
 
-   E_CFG_INT(cfg_window_move_mode, "settings", "/window/move/mode",
-	     E_GUIDES_BOX);
-
    D_ENTER;
 
-   E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
+   move_mode = config_data->window->move_mode;
    w = b->current.requested.w;
    h = b->current.requested.h;
 
@@ -93,7 +90,8 @@ e_place_manual(E_Border * b, E_Desktop * desk, int *x, int *y)
      }
 
    /* get mouse coords */
-   ecore_pointer_xy(desk->win.main, &mx, &my);
+   /* ecore_pointer_xy(desk->win.main, &mx, &my); */
+   ecore_pointer_xy(0, &mx, &my);
    rx = mx;
    ry = my;
    prx = rx;
@@ -122,7 +120,7 @@ e_place_smart(E_Border * b, E_Desktop * desk, int *x, int *y)
    int                 w, h;
    int                 a_w = 0, a_h = 0;
    int                *a_x = NULL, *a_y = NULL;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 

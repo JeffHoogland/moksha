@@ -3,7 +3,7 @@
 #include "util.h"
 
 E_Text             *
-e_text_new(Evas evas, char *text, char *class)
+e_text_new(Evas * evas, char *text, char *class)
 {
    E_Text             *t;
 
@@ -21,32 +21,49 @@ e_text_new(Evas evas, char *text, char *class)
    else
       t->text = strdup("");
    t->evas = evas;
-   t->obj.o1 = evas_add_text(t->evas, "borzoib", 8, t->text);
-   t->obj.o2 = evas_add_text(t->evas, "borzoib", 8, t->text);
-   t->obj.o3 = evas_add_text(t->evas, "borzoib", 8, t->text);
-   t->obj.o4 = evas_add_text(t->evas, "borzoib", 8, t->text);
-   t->obj.text = evas_add_text(t->evas, "borzoib", 8, t->text);
-   evas_set_pass_events(t->evas, t->obj.o1, 1);
-   evas_set_pass_events(t->evas, t->obj.o2, 1);
-   evas_set_pass_events(t->evas, t->obj.o3, 1);
-   evas_set_pass_events(t->evas, t->obj.o4, 1);
-   evas_set_pass_events(t->evas, t->obj.text, 1);
-   evas_set_color(t->evas, t->obj.o1, 0, 0, 0, 255);
-   evas_set_color(t->evas, t->obj.o2, 0, 0, 0, 255);
-   evas_set_color(t->evas, t->obj.o3, 0, 0, 0, 255);
-   evas_set_color(t->evas, t->obj.o4, 0, 0, 0, 255);
-   evas_set_color(t->evas, t->obj.text, 255, 255, 255, 255);
-   evas_move(t->evas, t->obj.o1, t->x + 1, t->y);
-   evas_move(t->evas, t->obj.o2, t->x, t->y + 1);
-   evas_move(t->evas, t->obj.o3, t->x + 2, t->y + 1);
-   evas_move(t->evas, t->obj.o4, t->x + 1, t->y + 2);
-   evas_move(t->evas, t->obj.text, t->x + 1, t->y + 1);
+   t->obj.o1 = evas_object_text_add(t->evas);
+   evas_object_text_font_set(t->obj.o1, "borzoib", 8);
+   evas_object_text_text_set(t->obj.o1, t->text);
+
+   t->obj.o2 = evas_object_text_add(t->evas);
+   evas_object_text_font_set(t->obj.o2, "borzoib", 8);
+   evas_object_text_text_set(t->obj.o2, t->text);
+
+   t->obj.o3 = evas_object_text_add(t->evas);
+   evas_object_text_font_set(t->obj.o3, "borzoib", 8);
+   evas_object_text_text_set(t->obj.o3, t->text);
+
+   t->obj.o4 = evas_object_text_add(t->evas);
+   evas_object_text_font_set(t->obj.o4, "borzoib", 8);
+   evas_object_text_text_set(t->obj.o4, t->text);
+
+   t->obj.text = evas_object_text_add(t->evas);
+   evas_object_text_font_set(t->obj.text, "borzoib", 8);
+   evas_object_text_text_set(t->obj.text, t->text);
+
+   evas_object_pass_events_set(t->obj.o1, 1);
+   evas_object_pass_events_set(t->obj.o2, 1);
+   evas_object_pass_events_set(t->obj.o3, 1);
+   evas_object_pass_events_set(t->obj.o4, 1);
+   evas_object_pass_events_set(t->obj.text, 1);
+   evas_object_color_set(t->obj.o1, 0, 0, 0, 255);
+   evas_object_color_set(t->obj.o2, 0, 0, 0, 255);
+   evas_object_color_set(t->obj.o3, 0, 0, 0, 255);
+   evas_object_color_set(t->obj.o4, 0, 0, 0, 255);
+   evas_object_color_set(t->obj.text, 255, 255, 255, 255);
+   evas_object_move(t->obj.o1, t->x + 1, t->y);
+   evas_object_move(t->obj.o2, t->x, t->y + 1);
+   evas_object_move(t->obj.o3, t->x + 2, t->y + 1);
+   evas_object_move(t->obj.o4, t->x + 1, t->y + 2);
+   evas_object_move(t->obj.text, t->x + 1, t->y + 1);
    t->color.r = 255;
    t->color.g = 255;
    t->color.b = 255;
    t->color.a = 255;
-   t->w = evas_get_text_width(t->evas, t->obj.text) + 2;
-   t->h = evas_get_text_height(t->evas, t->obj.text) + 2;
+   evas_object_geometry_get(t->obj.text, NULL, NULL, &t->w, &t->h);
+   t->w += 2;
+   t->h += 2;
+
    t->min.w = t->w + 2;
    t->min.h = t->h + 2;
    t->max.w = t->w + 2;
@@ -66,11 +83,11 @@ e_text_free(E_Text * t)
 
    if ((t->evas) && (t->obj.text))
      {
-	evas_del_object(t->evas, t->obj.o1);
-	evas_del_object(t->evas, t->obj.o2);
-	evas_del_object(t->evas, t->obj.o3);
-	evas_del_object(t->evas, t->obj.o4);
-	evas_del_object(t->evas, t->obj.text);
+	evas_object_del(t->obj.o1);
+	evas_object_del(t->obj.o2);
+	evas_object_del(t->obj.o3);
+	evas_object_del(t->obj.o4);
+	evas_object_del(t->obj.text);
      }
    FREE(t);
 
@@ -88,13 +105,15 @@ e_text_set_text(E_Text * t, char *text)
       D_RETURN;
    FREE(t->text);
    t->text = strdup(text);
-   evas_set_text(t->evas, t->obj.o1, t->text);
-   evas_set_text(t->evas, t->obj.o2, t->text);
-   evas_set_text(t->evas, t->obj.o3, t->text);
-   evas_set_text(t->evas, t->obj.o4, t->text);
-   evas_set_text(t->evas, t->obj.text, t->text);
-   t->w = evas_get_text_width(t->evas, t->obj.text) + 2;
-   t->h = evas_get_text_height(t->evas, t->obj.text) + 2;
+   evas_object_text_text_set(t->obj.o1, t->text);
+   evas_object_text_text_set(t->obj.o2, t->text);
+   evas_object_text_text_set(t->obj.o3, t->text);
+   evas_object_text_text_set(t->obj.o4, t->text);
+   evas_object_text_text_set(t->obj.text, t->text);
+   evas_object_geometry_get(t->obj.text, NULL, NULL, &t->w, &t->h);
+   t->w += 2;
+   t->h += 2;
+
    t->min.w = t->w + 2;
    t->min.h = t->h + 2;
    t->max.w = t->w + 2;
@@ -111,25 +130,25 @@ e_text_set_layer(E_Text * t, int l)
    if (t->layer == l)
       D_RETURN;
    t->layer = l;
-   evas_set_layer(t->evas, t->obj.o1, t->layer);
-   evas_set_layer(t->evas, t->obj.o2, t->layer);
-   evas_set_layer(t->evas, t->obj.o3, t->layer);
-   evas_set_layer(t->evas, t->obj.o4, t->layer);
-   evas_set_layer(t->evas, t->obj.text, t->layer);
+   evas_object_layer_set(t->obj.o1, t->layer);
+   evas_object_layer_set(t->obj.o2, t->layer);
+   evas_object_layer_set(t->obj.o3, t->layer);
+   evas_object_layer_set(t->obj.o4, t->layer);
+   evas_object_layer_set(t->obj.text, t->layer);
 
    D_RETURN;
 }
 
 void
-e_text_set_clip(E_Text * t, Evas_Object clip)
+e_text_set_clip(E_Text * t, Evas_Object * clip)
 {
    D_ENTER;
 
-   evas_set_clip(t->evas, t->obj.o1, clip);
-   evas_set_clip(t->evas, t->obj.o2, clip);
-   evas_set_clip(t->evas, t->obj.o3, clip);
-   evas_set_clip(t->evas, t->obj.o4, clip);
-   evas_set_clip(t->evas, t->obj.text, clip);
+   evas_object_clip_set(t->obj.o1, clip);
+   evas_object_clip_set(t->obj.o2, clip);
+   evas_object_clip_set(t->obj.o3, clip);
+   evas_object_clip_set(t->obj.o4, clip);
+   evas_object_clip_set(t->obj.text, clip);
 
    D_RETURN;
 }
@@ -139,11 +158,11 @@ e_text_unset_clip(E_Text * t)
 {
    D_ENTER;
 
-   evas_unset_clip(t->evas, t->obj.o1);
-   evas_unset_clip(t->evas, t->obj.o2);
-   evas_unset_clip(t->evas, t->obj.o3);
-   evas_unset_clip(t->evas, t->obj.o4);
-   evas_unset_clip(t->evas, t->obj.text);
+   evas_object_clip_unset(t->obj.o1);
+   evas_object_clip_unset(t->obj.o2);
+   evas_object_clip_unset(t->obj.o3);
+   evas_object_clip_unset(t->obj.o4);
+   evas_object_clip_unset(t->obj.text);
 
    D_RETURN;
 }
@@ -153,11 +172,11 @@ e_text_raise(E_Text * t)
 {
    D_ENTER;
 
-   evas_raise(t->evas, t->obj.o1);
-   evas_raise(t->evas, t->obj.o2);
-   evas_raise(t->evas, t->obj.o3);
-   evas_raise(t->evas, t->obj.o4);
-   evas_raise(t->evas, t->obj.text);
+   evas_object_raise(t->obj.o1);
+   evas_object_raise(t->obj.o2);
+   evas_object_raise(t->obj.o3);
+   evas_object_raise(t->obj.o4);
+   evas_object_raise(t->obj.text);
 
    D_RETURN;
 }
@@ -167,11 +186,11 @@ e_text_lower(E_Text * t)
 {
    D_ENTER;
 
-   evas_lower(t->evas, t->obj.text);
-   evas_lower(t->evas, t->obj.o4);
-   evas_lower(t->evas, t->obj.o3);
-   evas_lower(t->evas, t->obj.o2);
-   evas_lower(t->evas, t->obj.o1);
+   evas_object_lower(t->obj.text);
+   evas_object_lower(t->obj.o4);
+   evas_object_lower(t->obj.o3);
+   evas_object_lower(t->obj.o2);
+   evas_object_lower(t->obj.o1);
 
    D_RETURN;
 }
@@ -184,11 +203,11 @@ e_text_show(E_Text * t)
    if (t->visible)
       D_RETURN;
    t->visible = 1;
-   evas_show(t->evas, t->obj.o1);
-   evas_show(t->evas, t->obj.o2);
-   evas_show(t->evas, t->obj.o3);
-   evas_show(t->evas, t->obj.o4);
-   evas_show(t->evas, t->obj.text);
+   evas_object_show(t->obj.o1);
+   evas_object_show(t->obj.o2);
+   evas_object_show(t->obj.o3);
+   evas_object_show(t->obj.o4);
+   evas_object_show(t->obj.text);
 
    D_RETURN;
 }
@@ -201,11 +220,11 @@ e_text_hide(E_Text * t)
    if (!t->visible)
       D_RETURN;
    t->visible = 0;
-   evas_hide(t->evas, t->obj.o1);
-   evas_hide(t->evas, t->obj.o2);
-   evas_hide(t->evas, t->obj.o3);
-   evas_hide(t->evas, t->obj.o4);
-   evas_hide(t->evas, t->obj.text);
+   evas_object_hide(t->obj.o1);
+   evas_object_hide(t->obj.o2);
+   evas_object_hide(t->obj.o3);
+   evas_object_hide(t->obj.o4);
+   evas_object_hide(t->obj.text);
 
    D_RETURN;
 }
@@ -222,7 +241,7 @@ e_text_set_color(E_Text * t, int r, int g, int b, int a)
    t->color.g = g;
    t->color.b = b;
    t->color.a = a;
-   evas_set_color(t->evas, t->obj.text, t->color.r, t->color.g, t->color.b,
+   evas_object_color_set(t->obj.text, t->color.r, t->color.g, t->color.b,
 		  t->color.a);
 
    D_RETURN;
@@ -237,11 +256,11 @@ e_text_move(E_Text * t, double x, double y)
       D_RETURN;
    t->x = x;
    t->y = y;
-   evas_move(t->evas, t->obj.o1, t->x + 1, t->y);
-   evas_move(t->evas, t->obj.o2, t->x, t->y + 1);
-   evas_move(t->evas, t->obj.o3, t->x + 2, t->y + 1);
-   evas_move(t->evas, t->obj.o4, t->x + 1, t->y + 2);
-   evas_move(t->evas, t->obj.text, t->x + 1, t->y + 1);
+   evas_object_move(t->obj.o1, t->x + 1, t->y);
+   evas_object_move(t->obj.o2, t->x, t->y + 1);
+   evas_object_move(t->obj.o3, t->x + 2, t->y + 1);
+   evas_object_move(t->obj.o4, t->x + 1, t->y + 2);
+   evas_object_move(t->obj.text, t->x + 1, t->y + 1);
 
    D_RETURN;
 }

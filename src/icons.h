@@ -24,9 +24,9 @@ struct _E_Icon
 
    struct
    {
-      Evas_Object         icon;
-      Evas_Object         event1;
-      Evas_Object         event2;
+      Evas_Object *         icon;
+      Evas_Object *         event1;
+      Evas_Object *         event2;
       E_Text             *text;
       struct
       {

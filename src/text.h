@@ -25,23 +25,23 @@ struct _E_Text
    color;
    int                 layer;
 
-   Evas                evas;
+   Evas *                evas;
    struct
    {
-      Evas_Object         text;
-      Evas_Object         o1;
-      Evas_Object         o2;
-      Evas_Object         o3;
-      Evas_Object         o4;
+      Evas_Object *         text;
+      Evas_Object *         o1;
+      Evas_Object *         o2;
+      Evas_Object *         o3;
+      Evas_Object *         o4;
    }
    obj;
 };
 
-E_Text             *e_text_new(Evas evas, char *text, char *class);
+E_Text             *e_text_new(Evas * evas, char *text, char *class);
 void                e_text_free(E_Text * t);
 void                e_text_set_text(E_Text * t, char *text);
 void                e_text_set_layer(E_Text * t, int l);
-void                e_text_set_clip(E_Text * t, Evas_Object clip);
+void                e_text_set_clip(E_Text * t, Evas_Object * clip);
 void                e_text_unset_clip(E_Text * t);
 void                e_text_raise(E_Text * t);
 void                e_text_lower(E_Text * t);

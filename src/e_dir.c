@@ -1,4 +1,5 @@
 #include "file.h"
+#include "desktops.h"
 #include "e_dir.h"
 #include "e_view_machine.h"
 #include "view.h"
@@ -65,39 +66,47 @@ e_dir_new(void)
 }
 
 static void
-e_dir_handle_fs_restart(void *data)
-{
+e_dir_handle_fs_restart(void *data) {
    E_Dir              *d;
 
    D_ENTER;
-   d = data;
+
    D("e_dir_handle_fs_restart\n");
-   if (e_fs_get_connection())
-     {
-	EfsdOptions        *ops;
 
-	/* FIXME restart with metadata pending for views */
+   if((d = data)) {
+     if(d->dir&&*(d->dir)) {
+       if (e_fs_get_connection()) {
+	 EfsdOptions        *ops;
 
-	ops = efsd_ops(3,
-		       efsd_op_get_stat(),
-		       efsd_op_get_filetype(), efsd_op_list_all());
-	d->monitor_id = efsd_start_monitor(e_fs_get_connection(), d->dir,
-					   ops, TRUE);
+	 /* FIXME restart with metadata pending for views */
 
-     }
-   D("restarted monitor id (connection = %p), %i for %s\n",
-     e_fs_get_connection(), d->monitor_id, d->dir);
+	 ops = efsd_ops(3,
+			efsd_op_get_stat(),
+			efsd_op_get_filetype(), efsd_op_list_all());
+	 if((d->monitor_id=efsd_start_monitor(e_fs_get_connection(), d->dir,
+					      ops, TRUE))<0) {
+	   D("could not restart monitor (connx %p) for \"%s\" => %i\n",
+	     e_fs_get_connection(), d->dir, d->monitor_id); }
+	 else {
+	   D("restarted monitor (connx %p) for \"%s\" => ID %i...\n",
+	     e_fs_get_connection(), d->dir, d->monitor_id); }}
+       else {
+	 D("could not restart, connection refused\n"); }}
+     else {
+	 D("could not restart, no dir given!?\n"); }}
+   else {
+     D("could not restart, no data\n"); }
 
-   D_RETURN;
-}
+   D_RETURN; }
 
 void
 e_dir_set_dir(E_Dir * d, char *dir)
 {
    D_ENTER;
 
-   if (!d)
-      D_RETURN;
+   if (!d) {
+     D("e_dir_set_dir -- no E_Dir!\n");
+     D_RETURN; }
 
    /* stop monitoring old dir */
    if ((d->dir) && (d->monitor_id))
@@ -106,8 +115,29 @@ e_dir_set_dir(E_Dir * d, char *dir)
 	d->monitor_id = 0;
      }
    IF_FREE(d->dir);
+
+   if(!dir||!*dir) {
+     D("e_dir_set_dir -- no dir!\n");
+     D_RETURN; }
+
    d->dir = e_file_realpath(dir);
-   
+
+   if(!d->dir||!*(d->dir)) {
+     /* realpath failed. this would mean that we tried to set a monitor
+        on a non-existent (or inacessible) file.  this may mean that the
+        programmer really meant "...and if it doesn't exist YET, tell me
+        if and when it is created", so rather than failing right here and
+        now, we'll forget about the realpath, stick in the path they
+        requested in the first place, and hope the backend actually supports
+        watching something it cannot determine an inode for...  we'll still
+        throw a warning though, just for good measure.  Azundris 2003/01/11 */
+     D("e_dir_set_dir -- e_file_realpath(\"%s\") failed...\n",dir);
+     if(d->dir)
+       free(d->dir);
+     if(!(d->dir=strdup(dir))) {
+       D("e_dir_set_dir: OOM\n");
+       D_RETURN; }}
+
    /* start monitoring new dir */
    d->restarter = e_fs_add_restart_handler(e_dir_handle_fs_restart, d);
    if (e_fs_get_connection())
@@ -119,7 +149,7 @@ e_dir_set_dir(E_Dir * d, char *dir)
 		       efsd_op_get_filetype(), efsd_op_list_all());
 	d->monitor_id = efsd_start_monitor(e_fs_get_connection(), d->dir,
 					   ops, TRUE);
-	D("monitor id for %s = %i\n", d->dir, d->monitor_id);
+	D("monitor id for \"%s\" = %i\n", d->dir, d->monitor_id);
      }
    D_RETURN;
 }
@@ -205,14 +235,14 @@ e_dir_handle_efsd_event_reply_getfiletype(EfsdEvent * ev)
    p = strchr(m, '/');
    if (p)
      {
-	strcpy(base, m);
-	strcpy(mime, p + 1);
+	STRNCPY(base, m, PATH_MAX);
+	STRNCPY(mime, p + 1, PATH_MAX);
 	p = strchr(base, '/');
 	*p = 0;
      }
    else
      {
-	strcpy(base, m);
+	STRNCPY(base, m, PATH_MAX);
 	strcpy(mime, "unknown");
      }
    e_file_set_mime(f, base, mime);
@@ -282,7 +312,7 @@ e_dir_handle_efsd_event_reply_readlink(EfsdEvent * ev)
 static void
 e_dir_handle_efsd_event_reply_getmeta(EfsdEvent * ev)
 {
-   Evas_List           l;
+   Evas_List *           l;
    EfsdCmdId           cmd;
 
    D_ENTER;
@@ -428,7 +458,7 @@ e_dir_file_added(int id, char *file)
    E_File             *f;
 
    D_ENTER;
-
+   
    /* if we get a path - ignore it - its not a file in the dir */
    if (!file || file[0] == '/')
       D_RETURN;
@@ -479,7 +509,7 @@ e_dir_file_changed(int id, char *file)
    f = e_file_get_by_name(d->files, file);
    if (file[0] != '.')
      {
-	e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_DELETE, f);	
+	e_observee_notify_observers(E_OBSERVEE(d), E_EVENT_FILE_CHANGE, f);	
      }
    D_RETURN;
 }
@@ -501,7 +531,7 @@ E_Dir              *
 e_dir_find_by_monitor_id(int id)
 {
    E_Dir              *d;
-   Evas_List           l;
+   Evas_List *           l;
 
    D_ENTER;
 

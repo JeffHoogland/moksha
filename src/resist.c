@@ -14,18 +14,14 @@ e_resist_border(E_Border * b)
    /* int ok = 0; */
    int                 dx, dy, d;
    int                 resist_x = 0, resist_y = 0;
-   Evas_List           l, rects = NULL;
+   Evas_List           *l, *rects = NULL;
    E_Rect             *r;
-
-   E_CFG_INT(cfg_resist, "settings", "/move/resist", 1);
-   E_CFG_INT(cfg_desk_resist, "settings", "/move/resist/desk", 32);
-   E_CFG_INT(cfg_win_resist, "settings", "/move/resist/win", 12);
 
    D_ENTER;
 
-   E_CONFIG_INT_GET(cfg_resist, resist);
-   E_CONFIG_INT_GET(cfg_desk_resist, desk_resist);
-   E_CONFIG_INT_GET(cfg_win_resist, win_resist);
+   resist = config_data->move->resist;
+   desk_resist = config_data->move->desk_resist;
+   win_resist = config_data->move->win_resist;
    if (!resist)
      {
 	b->current.x = b->current.requested.x;
@@ -55,11 +51,11 @@ rects = evas_list_append(rects, r); \
    /* here if need be - ie xinerama middle between screens and panels etc. */
 
    {
-      if (b->desk->view->iconbar)
-	 evas_list_append(rects,
-			  e_iconbar_get_resist_rect(b->desk->view->iconbar));
+     if (b->desk->iconbar)
+       evas_list_append(rects,
+			e_iconbar_get_resist_rect(b->desk->iconbar));
    }
-
+  
    for (l = b->desk->windows; l; l = l->next)
      {
 	E_Border           *bd;

@@ -4,9 +4,9 @@
 #include "view.h"
 struct _e_view_machine
 {
-   Evas_List           views;
-   Evas_List           dirs;
-   Evas_List           looks;
+   Evas_List *           views;
+   Evas_List *           dirs;
+   Evas_List *           looks;
    
 };
 typedef struct _e_view_machine E_View_Machine;

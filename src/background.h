@@ -18,7 +18,7 @@ struct _E_Background
 {
    E_Object            o;
 
-   Evas                evas;
+   Evas *                evas;
    char               *file;
 
    struct
@@ -28,9 +28,9 @@ struct _E_Background
    }
    geom;
 
-   Evas_List           layers;
+   Evas_List *           layers;
 
-   Evas_Object         base_obj;
+   Evas_Object *         base_obj;
 };
 
 struct _E_Background_Layer
@@ -68,13 +68,13 @@ struct _E_Background_Layer
 
    double              x, y, w, h, fw, fh;
 
-   Evas_Object         obj;
+   Evas_Object *         obj;
 };
 
 E_Background       *e_background_new(void);
 E_Background       *e_background_load(char *file);
 
-void                e_background_realize(E_Background * bg, Evas evas);
+void                e_background_realize(E_Background * bg, Evas * evas);
 void                e_background_set_scroll(E_Background * bg, int sx, int sy);
 void                e_background_set_size(E_Background * bg, int w, int h);
 void                e_background_set_color_class(E_Background * bg, char *cc,
