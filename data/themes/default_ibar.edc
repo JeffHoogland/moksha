@@ -1,16 +1,6 @@
 images {
-   image: "e17_ibar_arrow_d.png" COMP;
-   image: "e17_ibar_arrow_l.png" COMP;
-   image: "e17_ibar_arrow_r.png" COMP;
-   image: "e17_ibar_arrow_u.png" COMP;
    image: "e17_ibar_bg_h.png" COMP;
    image: "e17_ibar_bg_v.png" COMP;
-   image: "e17_ibar_handle_h.png" COMP;
-   image: "e17_ibar_handle_h2.png" COMP;
-   image: "e17_ibar_handle_thumb_h.png" COMP;
-   image: "e17_ibar_handle_thumb_v.png" COMP;
-   image: "e17_ibar_handle_v.png" COMP;
-   image: "e17_ibar_handle_v2.png" COMP;
    image: "e17_ibar_lamp_d.png" COMP;
    image: "e17_ibar_lamp_l.png" COMP;
    image: "e17_ibar_lamp_r.png" COMP;
@@ -93,60 +83,48 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 1.0  1.0;
+	       relative: 0.0  0.0;
 	       offset:   0    0;
-	       to_x:     "h1";
-	       to_y:     "h3";
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
+	       relative: 1.0  1.0;
 	       offset:   -1   -1;
-	       to_x:     "h2";
 	    }
 	    color: 0 0 0 0;
 	 }
 	 description {
 	    state:    "top" 0.0;
 	    rel1 {
-	       relative: 1.0  0.0;
+	       relative: 0.0  0.0;
 	       offset:   0    0;
-	       to_x:     "h1";
 	    }
 	    rel2 {
-	       relative: 0.0  0.0;
+	       relative: 1.0  1.0;
 	       offset:   -1   -1;
-	       to_x:     "h2";
-	       to_y:     "h3";
 	    }
 	    color: 0 0 0 0;
 	 }
 	 description {
 	    state:    "left" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
+	       relative: 0.0  0.0;
 	       offset:   0    0;
-	       to_y:     "h1";
 	    }
 	    rel2 {
-	       relative: 0.0  0.0;
+	       relative: 1.0  1.0;
 	       offset:   -1   -1;
-	       to_y:     "h2";
-	       to_x:     "h3";
 	    }
 	    color: 0 0 0 0;
 	 }
 	 description {
 	    state:    "right" 0.0;
 	    rel1 {
-	       relative: 1.0  1.0;
+	       relative: 0.0  0.0;
 	       offset:   0    0;
-	       to_y:     "h1";
-	       to_x:     "h3";
 	    }
 	    rel2 {
-	       relative: 1.0  0.0;
+	       relative: 1.0  1.0;
 	       offset:   -1   -1;
-	       to_y:     "h2";
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -157,13 +135,12 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   18   0;
-	       to_y:     "h3";
+	       relative: 0.0  0.0;
+	       offset:   0    0;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -19  -1;
+	       offset:   -1   -1;
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
@@ -177,12 +154,11 @@ group {
 	    state:    "top" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   18   0;
+	       offset:   0    0;
 	    }
 	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -19  -1;
-	       to_y:     "h3";
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
@@ -196,12 +172,11 @@ group {
 	    state:    "left" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    18;
+	       offset:   0    o;
 	    }
 	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1   -19;
-	       to_x:     "h3";
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
 	    }
 	    image {
 	       normal: "e17_ibar_over_v.png";
@@ -214,13 +189,12 @@ group {
 	 description {
 	    state:    "right" 0.0;
 	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   0    18;
-	       to_x:     "h3";
+	       relative: 0.0  0.0;
+	       offset:   0    0;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -19;
+	       offset:   -1   -1;
 	    }
 	    image {
 	       normal: "e17_ibar_over_v.png";
@@ -229,965 +203,6 @@ group {
 	    fill {
 	       smooth: 0;
 	    }
-	 }
-      }
-      part {
-	 name:          "h1a1";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    1.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   -1   0;
-	       to: "h1";
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1   -1;
-	       to: "h1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_l.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 1.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    -1;
-	       to: "h1";
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1   -1;
-	       to: "h1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_u.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h1a2";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    1.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   -1   0;
-	       to: "h1a1";
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1   -1;
-	       to: "h1a1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_l.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 1.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    -1;
-	       to: "h1a1";
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1   -1;
-	       to: "h1a1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_u.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h1a3";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    1.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   -1   0;
-	       to: "h1a2";
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1   -1;
-	       to: "h1a2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_l.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 1.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    -1;
-	       to: "h1a2";
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1   -1;
-	       to: "h1a2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_u.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h1a4";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    1.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   -1   0;
-	       to: "h1a3";
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   -1   -1;
-	       to: "h1a3";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_l.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 1.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    -1;
-	       to: "h1a3";
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1   -1;
-	       to: "h1a3";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_u.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h1";
-	 mouse_events:  1;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.0 0.5;
-	    min:      18 36;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	       to_y:     "overlay";
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    align:    0.0 0.5;
-	    min:      18 36;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	       to_y:     "overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "top2" 0.0;
-	    inherit: "top" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    align:    0.5 0.0;
-	    min:      36 18;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1    0;
-	       to_x:     "overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "left2" 0.0;
-	    inherit: "left" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    align:    0.5 0.0;
-	    min:      36 18;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	       to_x:     "overlay";
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1    0;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "right2" 0.0;
-	    inherit: "right" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "h1th";
-	 mouse_events:  0;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    max:      6 16;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h1";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h1";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_h.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    max:      16 6;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h1";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h1";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_v.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit: "vert" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "h2a1";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   0   0;
-	       to: "h2";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   0    -1;
-	       to: "h2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_r.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 0.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    0;
-	       to: "h2";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   0;
-	       to: "h2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_d.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h2a2";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   0    0;
-	       to: "h2a1";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   0    -1;
-	       to: "h2a1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_r.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 0.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    0;
-	       to: "h2a1";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   0;
-	       to: "h2a1";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_d.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h2a3";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   0    0;
-	       to: "h2a2";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   0    -1;
-	       to: "h2a2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_r.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 0.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    0;
-	       to: "h2a2";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   0;
-	       to: "h2a2";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_d.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h2a4";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.0 0.5;
-	    min:      21 29;
-	    max:      21 29;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   0    0;
-	       to: "h2a3";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   0    -1;
-	       to: "h2a3";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_r.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit:  "default" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    align:    0.5 0.0;
-	    min:      29 21;
-	    max:      29 21;
-	    visible:  0;
-	    color:    255 255 255 0;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    0;
-	       to: "h2a3";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   0;
-	       to: "h2a3";
-	    }
-	    image {
-	       normal: "e17_ibar_arrow_d.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit:  "vert" 0.0;
-	    visible:  1;
-	    color:    255 255 255 255;
-	 }
-      }
-      part {
-	 name:          "h2";
-	 mouse_events:  1;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    align:    1.0 0.5;
-	    min:      18 36;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   -1   0;
-	       to_y:     "overlay";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    align:    1.0 0.5;
-	    min:      18 36;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   -1   0;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	       to_y:     "overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "top2" 0.0;
-	    inherit: "top" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    align:    0.5 1.0;
-	    min:      36 18;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	       to_x:     "overlay";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "left2" 0.0;
-	    inherit: "left" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    align:    0.5 1.0;
-	    min:      36 18;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	       to_x:     "overlay";
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "right2" 0.0;
-	    inherit: "right" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "h2th";
-	 mouse_events:  0;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    max:      6 16;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h2";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h2";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_h.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    max:      16 6;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h2";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h2";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_v.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit: "vert" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "h3";
-	 mouse_events:  1;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    align:    0.5 0.0;
-	    min:      36 18;
-	    max:      60 18;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       relative: 1.0  0.0;
-	       offset:   -1    0;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-	 description {
-	    state:    "top" 0.0;
-	    align:    0.5 1.0;
-	    min:      36 18;
-	    max:      60 18;
-	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_v.png";
-	       border: 19 19 0 0;
-	    }
-	 }
-	 description {
-	    state:    "top2" 0.0;
-	    inherit: "top" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_v2.png";
-	    }
-	 }
-	 description {
-	    state:    "left" 0.0;
-	    align:    1.0 0.5;
-	    min:      18 36;
-	    max:      18 60;
-	    rel1 {
-	       relative: 1.0  0.0;
-	       offset:   -1   0;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "left2" 0.0;
-	    inherit: "left" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-	 description {
-	    state:    "right" 0.0;
-	    align:    0.0 0.5;
-	    min:      18 36;
-	    max:      18 60;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       relative: 0.0  1.0;
-	       offset:   0    -1;
-	    }
-	    image {
-	       normal: "e17_ibar_handle_h.png";
-	       border: 0 0 19 19;
-	    }
-	 }
-	 description {
-	    state:    "right2" 0.0;
-	    inherit: "right" 0.0;
-	    image {
-	       normal: "e17_ibar_handle_h2.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "h3th";
-	 mouse_events:  0;
-	 clip_to:       "clp";
-	 description {
-	    state:    "default" 0.0;
-	    max:      16 6;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h3";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h3";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_v.png";
-	    }
-	 }
-	 description {
-	    state:    "default2" 0.0;
-	    inherit: "default" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-	 description {
-	    state:    "vert" 0.0;
-	    max:      6 16;
-	    rel1 {
-	       offset:   -1    -1;
-	       to: "h3";
-	    }
-	    rel2 {
-	       offset:   -2    -2;
-	       to: "h3";
-	    }
-	    image {
-	       normal: "e17_ibar_handle_thumb_h.png";
-	    }
-	 }
-	 description {
-	    state:    "vert2" 0.0;
-	    inherit: "vert" 0.0;
-	    rel1 {
-	       offset:   0    0;
-	    }
-	    rel2 {
-	       offset:   -1   -1;
-	    }
-	 }
-      }
-      part {
-	 name:          "clp";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    visible: 0;
-	    color: 255 255 255 0;
-	 }
-	 description {
-	    state:    "on" 0.0;
-	    visible:  1;
-	    color: 255 255 255 255;
 	 }
       }
       part {
@@ -1212,627 +227,25 @@ group {
 	       set_state(PART:"background", "vert", 0.0);
 	       set_state(PART:"overlay", "left", 0.0);
 	       set_state(PART:"items", "left", 0.0);
-	       set_state(PART:"h1", "left", 0.0);
-	       set_state(PART:"h2", "left", 0.0);
-	       set_state(PART:"h1th", "vert", 0.0);
-	       set_state(PART:"h2th", "vert", 0.0);
-	       set_state(PART:"h1a1", "vert", 0.0);
-	       set_state(PART:"h1a2", "vert", 0.0);
-	       set_state(PART:"h1a3", "vert", 0.0);
-	       set_state(PART:"h1a4", "vert", 0.0);
-	       set_state(PART:"h2a1", "vert", 0.0);
-	       set_state(PART:"h2a2", "vert", 0.0);
-	       set_state(PART:"h2a3", "vert", 0.0);
-	       set_state(PART:"h2a4", "vert", 0.0);
-	       set_state(PART:"h3", "left", 0.0);
-	       set_state(PART:"h3th", "vert", 0.0);
 	    }
 	    else if (!strcmp(src, "right")) {
 	       set_int(orient, 1);
 	       set_state(PART:"background", "vert", 0.0);
 	       set_state(PART:"overlay", "right", 0.0);
 	       set_state(PART:"items", "right", 0.0);
-	       set_state(PART:"h1", "right", 0.0);
-	       set_state(PART:"h2", "right", 0.0);
-	       set_state(PART:"h1th", "vert", 0.0);
-	       set_state(PART:"h2th", "vert", 0.0);
-	       set_state(PART:"h1a1", "vert", 0.0);
-	       set_state(PART:"h1a2", "vert", 0.0);
-	       set_state(PART:"h1a3", "vert", 0.0);
-	       set_state(PART:"h1a4", "vert", 0.0);
-	       set_state(PART:"h2a1", "vert", 0.0);
-	       set_state(PART:"h2a2", "vert", 0.0);
-	       set_state(PART:"h2a3", "vert", 0.0);
-	       set_state(PART:"h2a4", "vert", 0.0);
-	       set_state(PART:"h3", "right", 0.0);
-	       set_state(PART:"h3th", "vert", 0.0);
 	    }
 	    else if (!strcmp(src, "top")) {
 	       set_int(orient, 2);
 	       set_state(PART:"background", "default", 0.0);
 	       set_state(PART:"overlay", "top", 0.0);
 	       set_state(PART:"items", "top", 0.0);
-	       set_state(PART:"h1", "top", 0.0);
-	       set_state(PART:"h2", "top", 0.0);
-	       set_state(PART:"h1th", "default", 0.0);
-	       set_state(PART:"h2th", "default", 0.0);
-	       set_state(PART:"h1a1", "default", 0.0);
-	       set_state(PART:"h1a2", "default", 0.0);
-	       set_state(PART:"h1a3", "default", 0.0);
-	       set_state(PART:"h1a4", "default", 0.0);
-	       set_state(PART:"h2a1", "default", 0.0);
-	       set_state(PART:"h2a2", "default", 0.0);
-	       set_state(PART:"h2a3", "default", 0.0);
-	       set_state(PART:"h2a4", "default", 0.0);
-	       set_state(PART:"h3", "top", 0.0);
-	       set_state(PART:"h3th", "default", 0.0);
 	    }
 	    else if (!strcmp(src, "bottom")) {
 	       set_int(orient, 3);
 	       set_state(PART:"background", "default", 0.0);
 	       set_state(PART:"overlay", "default", 0.0);
 	       set_state(PART:"items", "default", 0.0);
-	       set_state(PART:"h1", "default", 0.0);
-	       set_state(PART:"h2", "default", 0.0);
-	       set_state(PART:"h1th", "default", 0.0);
-	       set_state(PART:"h2th", "default", 0.0);
-	       set_state(PART:"h1a1", "default", 0.0);
-	       set_state(PART:"h1a2", "default", 0.0);
-	       set_state(PART:"h1a3", "default", 0.0);
-	       set_state(PART:"h1a4", "default", 0.0);
-	       set_state(PART:"h2a1", "default", 0.0);
-	       set_state(PART:"h2a2", "default", 0.0);
-	       set_state(PART:"h2a3", "default", 0.0);
-	       set_state(PART:"h2a4", "default", 0.0);
-	       set_state(PART:"h3", "default", 0.0);
-	       set_state(PART:"h3th", "default", 0.0);
 	    }
-	 }
-      }
-
-      program {
-	 name:    "inn_in";
-	 signal:  "mouse,in";
-	 source:  "inn";
-	 action:  STATE_SET "on" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "clp";
-      }
-      program {
-	 name:    "inn_out";
-	 signal:  "mouse,out";
-	 source:  "inn";
-	 action:  STATE_SET "default" 0.0;
-	 transition: SINUSOIDAL 1.0;
-	 target:  "clp";
-      }
-
-      program {
-	 name:    "h1_in";
-	 signal:  "mouse,in";
-	 source:  "h1";
-	 script {
-	    new ori = get_int(orient);
-	    if ((ori == 0) || (ori == 1)) {
-	       emit("h1_v_pulse", "");
-	    }
-	    else {
-	       emit("h1_h_pulse", "");
-	    }
-	 }
-      }
-      program {
-	 name:    "h1_out";
-	 signal:  "mouse,out";
-	 source:  "h1";
-	 action:  ACTION_STOP;
-	 target:  "h1_h_in1a";
-	 target:  "h1_h_in1b";
-	 target:  "h1_h_in2a";
-	 target:  "h1_h_in2b";
-	 target:  "h1_h_in3a";
-	 target:  "h1_h_in3b";
-	 target:  "h1_h_in4a";
-	 target:  "h1_h_in4b";
-	 target:  "h1_v_in1a";
-	 target:  "h1_v_in1b";
-	 target:  "h1_v_in2a";
-	 target:  "h1_v_in2b";
-	 target:  "h1_v_in3a";
-	 target:  "h1_v_in3b";
-	 target:  "h1_v_in4a";
-	 target:  "h1_v_in4b";
-	 after:   "h1_out2";
-      }
-      program {
-	 name:    "h1_out2";
-	 script {
-	    new ori = get_int(orient);
-	    if ((ori == 0) || (ori == 1)) {
-	       set_state(PART:"h1a1", "vert", 0.0);
-	       set_state(PART:"h1a2", "vert", 0.0);
-	       set_state(PART:"h1a3", "vert", 0.0);
-	       set_state(PART:"h1a4", "vert", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h1a1", "default", 0.0);
-	       set_state(PART:"h1a2", "default", 0.0);
-	       set_state(PART:"h1a3", "default", 0.0);
-	       set_state(PART:"h1a4", "default", 0.0);
-	    }
-	 }
-      }
-
-      program {
-	 name: "h1_h_0";
-	 signal: "h1_h_pulse";
-	 source: "";
-	 after:  "h1_h_in1a";
-      }
-      program {
-	 name:    "h1_h_in1a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a1";
-	 after:   "h1_h_in2a";
-	 after:   "h1_h_in2b";
-      }
-      program {
-	 name:    "h1_h_in1b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a4";
-      }
-
-      program {
-	 name:    "h1_h_in2a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a2";
-	 after:   "h1_h_in3a";
-	 after:   "h1_h_in3b";
-      }
-      program {
-	 name:    "h1_h_in2b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a1";
-      }
-
-      program {
-	 name:    "h1_h_in3a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a3";
-	 after:   "h1_h_in4a";
-	 after:   "h1_h_in4b";
-      }
-      program {
-	 name:    "h1_h_in3b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a2";
-      }
-
-      program {
-	 name:    "h1_h_in4a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a4";
-	 after:   "h1_h_in1a";
-	 after:   "h1_h_in1b";
-      }
-      program {
-	 name:    "h1_h_in4b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a3";
-      }
-
-      program {
-	 name: "h1_v_0";
-	 signal: "h1_v_pulse";
-	 source: "";
-	 after:  "h1_v_in1a";
-      }
-      program {
-	 name:    "h1_v_in1a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a1";
-	 after:   "h1_v_in2a";
-	 after:   "h1_v_in2b";
-      }
-      program {
-	 name:    "h1_v_in1b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a4";
-      }
-
-      program {
-	 name:    "h1_v_in2a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a2";
-	 after:   "h1_v_in3a";
-	 after:   "h1_v_in3b";
-      }
-      program {
-	 name:    "h1_v_in2b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a1";
-      }
-
-      program {
-	 name:    "h1_v_in3a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a3";
-	 after:   "h1_v_in4a";
-	 after:   "h1_v_in4b";
-      }
-      program {
-	 name:    "h1_v_in3b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a2";
-      }
-
-      program {
-	 name:    "h1_v_in4a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h1a4";
-	 after:   "h1_v_in1a";
-	 after:   "h1_v_in1b";
-      }
-      program {
-	 name:    "h1_v_in4b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h1a3";
-      }
-
-      program {
-	 name:    "h1_click1";
-	 signal:  "mouse,down,1";
-	 source:  "h1";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h1", "left2", 0.0);
-	       set_state(PART:"h1th", "vert2", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h1", "right2", 0.0);
-	       set_state(PART:"h1th", "vert2", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h1", "top2", 0.0);
-	       set_state(PART:"h1th", "default2", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h1", "default2", 0.0);
-	       set_state(PART:"h1th", "default2", 0.0);
-	    }
-	    emit("resize1_start", "");
-	 }
-      }
-      program {
-	 name:    "h1_click2";
-	 signal:  "mouse,up,1";
-	 source:  "h1";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h1", "left", 0.0);
-	       set_state(PART:"h1th", "vert", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h1", "right", 0.0);
-	       set_state(PART:"h1th", "vert", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h1", "top", 0.0);
-	       set_state(PART:"h1th", "default", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h1", "default", 0.0);
-	       set_state(PART:"h1th", "default", 0.0);
-	    }
-	    emit("resize1_stop", "");
-	 }
-      }
-
-      program {
-	 name:    "h2_in";
-	 signal:  "mouse,in";
-	 source:  "h2";
-	 script {
-	    new ori = get_int(orient);
-	    if ((ori == 0) || (ori == 1)) {
-	       emit("h2_v_pulse", "");
-	    }
-	    else {
-	       emit("h2_h_pulse", "");
-	    }
-	 }
-      }
-      program {
-	 name:    "h2_out";
-	 signal:  "mouse,out";
-	 source:  "h2";
-	 action:  ACTION_STOP;
-	 target:  "h2_h_in1a";
-	 target:  "h2_h_in1b";
-	 target:  "h2_h_in2a";
-	 target:  "h2_h_in2b";
-	 target:  "h2_h_in3a";
-	 target:  "h2_h_in3b";
-	 target:  "h2_h_in4a";
-	 target:  "h2_h_in4b";
-	 target:  "h2_v_in1a";
-	 target:  "h2_v_in1b";
-	 target:  "h2_v_in2a";
-	 target:  "h2_v_in2b";
-	 target:  "h2_v_in3a";
-	 target:  "h2_v_in3b";
-	 target:  "h2_v_in4a";
-	 target:  "h2_v_in4b";
-	 after:   "h2_out2";
-      }
-      program {
-	 name:    "h2_out2";
-	 script {
-	    new ori = get_int(orient);
-	    if ((ori == 0) || (ori == 1)) {
-	       set_state(PART:"h2a1", "vert", 0.0);
-	       set_state(PART:"h2a2", "vert", 0.0);
-	       set_state(PART:"h2a3", "vert", 0.0);
-	       set_state(PART:"h2a4", "vert", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h2a1", "default", 0.0);
-	       set_state(PART:"h2a2", "default", 0.0);
-	       set_state(PART:"h2a3", "default", 0.0);
-	       set_state(PART:"h2a4", "default", 0.0);
-	    }
-	 }
-      }
-
-      program {
-	 name: "h2_h_0";
-	 signal: "h2_h_pulse";
-	 source: "";
-	 after:  "h2_h_in1a";
-      }
-      program {
-	 name:    "h2_h_in1a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a1";
-	 after:   "h2_h_in2a";
-	 after:   "h2_h_in2b";
-      }
-      program {
-	 name:    "h2_h_in1b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a4";
-      }
-
-      program {
-	 name:    "h2_h_in2a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a2";
-	 after:   "h2_h_in3a";
-	 after:   "h2_h_in3b";
-      }
-      program {
-	 name:    "h2_h_in2b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a1";
-      }
-
-      program {
-	 name:    "h2_h_in3a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a3";
-	 after:   "h2_h_in4a";
-	 after:   "h2_h_in4b";
-      }
-      program {
-	 name:    "h2_h_in3b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a2";
-      }
-
-      program {
-	 name:    "h2_h_in4a";
-	 action:  STATE_SET "default2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a4";
-	 after:   "h2_h_in1a";
-	 after:   "h2_h_in1b";
-      }
-      program {
-	 name:    "h2_h_in4b";
-	 action:  STATE_SET "default" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a3";
-      }
-
-      program {
-	 name: "h2_v_0";
-	 signal: "h2_v_pulse";
-	 source: "";
-	 after:  "h2_v_in1a";
-      }
-      program {
-	 name:    "h2_v_in1a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a1";
-	 after:   "h2_v_in2a";
-	 after:   "h2_v_in2b";
-      }
-      program {
-	 name:    "h2_v_in1b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a4";
-      }
-
-      program {
-	 name:    "h2_v_in2a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a2";
-	 after:   "h2_v_in3a";
-	 after:   "h2_v_in3b";
-      }
-      program {
-	 name:    "h2_v_in2b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a1";
-      }
-
-      program {
-	 name:    "h2_v_in3a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a3";
-	 after:   "h2_v_in4a";
-	 after:   "h2_v_in4b";
-      }
-      program {
-	 name:    "h2_v_in3b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a2";
-      }
-
-      program {
-	 name:    "h2_v_in4a";
-	 action:  STATE_SET "vert2" 0.0;
-	 transition: SINUSOIDAL 0.25;
-	 target:  "h2a4";
-	 after:   "h2_v_in1a";
-	 after:   "h2_v_in1b";
-      }
-      program {
-	 name:    "h2_v_in4b";
-	 action:  STATE_SET "vert" 0.0;
-	 transition: DECELERATE 0.75;
-	 target:  "h2a3";
-      }
-
-      program {
-	 name:    "h2_click1";
-	 signal:  "mouse,down,1";
-	 source:  "h2";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h2", "left2", 0.0);
-	       set_state(PART:"h2th", "vert2", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h2", "right2", 0.0);
-	       set_state(PART:"h2th", "vert2", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h2", "top2", 0.0);
-	       set_state(PART:"h2th", "default2", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h2", "default2", 0.0);
-	       set_state(PART:"h2th", "default2", 0.0);
-	    }
-	    emit("resize2_start", "");
-	 }
-      }
-      program {
-	 name:    "h2_click2";
-	 signal:  "mouse,up,1";
-	 source:  "h2";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h2", "left", 0.0);
-	       set_state(PART:"h2th", "vert", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h2", "right", 0.0);
-	       set_state(PART:"h2th", "vert", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h2", "top", 0.0);
-	       set_state(PART:"h2th", "default", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h2", "default", 0.0);
-	       set_state(PART:"h2th", "default", 0.0);
-	    }
-	    emit("resize2_stop", "");
-	 }
-      }
-
-      program {
-	 name:    "h3_click1";
-	 signal:  "mouse,down,1";
-	 source:  "h3";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h3", "left2", 0.0);
-	       set_state(PART:"h3th", "vert2", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h3", "right2", 0.0);
-	       set_state(PART:"h3th", "vert2", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h3", "top2", 0.0);
-	       set_state(PART:"h3th", "default2", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h3", "default2", 0.0);
-	       set_state(PART:"h3th", "default2", 0.0);
-	    }
-	    emit("move_start", "");
-	 }
-      }
-      program {
-	 name:    "h3_click2";
-	 signal:  "mouse,up,1";
-	 source:  "h3";
-	 script {
-	    new ori = get_int(orient);
-	    if (ori == 0) {
-	       set_state(PART:"h3", "left", 0.0);
-	       set_state(PART:"h3th", "vert", 0.0);
-	    }
-	    else if (ori == 1) {
-	       set_state(PART:"h3", "right", 0.0);
-	       set_state(PART:"h3th", "vert", 0.0);
-	    }
-	    else if (ori == 2) {
-	       set_state(PART:"h3", "top", 0.0);
-	       set_state(PART:"h3th", "default", 0.0);
-	    }
-	    else {
-	       set_state(PART:"h3", "default", 0.0);
-	       set_state(PART:"h3th", "default", 0.0);
-	    }
-	    emit("move_stop", "");
 	 }
       }
    }
@@ -1851,11 +264,11 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0   -13;
+	       offset:   0   -18;
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
-	       offset:   -1   27;
+	       offset:   -1   22;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_d.png";
@@ -1865,11 +278,11 @@ group {
 	    state:    "top" 0.0;
 	    rel1 {
 	       relative: 0.0  1.0;
-	       offset:   0   -27;
+	       offset:   0   -22;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   13;
+	       offset:   -1   18;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_u.png";
@@ -1879,11 +292,11 @@ group {
 	    state:    "right" 0.0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   -13 0;
+	       offset:   -18 0;
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
-	       offset:   27 -1;
+	       offset:   22 -1;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_r.png";
@@ -1893,11 +306,11 @@ group {
 	    state:    "left" 0.0;
 	    rel1 {
 	       relative: 1.0 0.0;
-	       offset:   -27  0;
+	       offset:   -22  0;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   13  -1;
+	       offset:   18  -1;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_l.png";
