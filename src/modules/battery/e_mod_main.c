@@ -478,7 +478,7 @@ _battery_cb_check(void *data)
 	ret = _battery_linux_acpi_check(ef);
 	break;
       case CHECK_LINUX_APM:
-	ret = _battery_linux_acpi_check(ef);
+	ret = _battery_linux_apm_check(ef);
 	break;
       default:
 	break;
