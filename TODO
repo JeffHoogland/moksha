@@ -67,3 +67,5 @@ These are in no particular order:
 * add separate app menu bars at top of screen support
 * add "osd" subsystem for things like volume controls on keybboards, etc. that overlay the screen
 * add really nice "about" box with theme, authors credits list etc etc.
+* init splash needs to be able to display icons for startup
+* init splash needs te be able to be signalled "end of init" and it can respond with a "splash end" signal
