@@ -1,12 +1,12 @@
 #include "menu.h"
 #include "config.h"
 
-static Evas_List open_menus = NULL;
+static Evas_List open_menus = NULL;         /* List of all open menus */
 static Evas_List menus = NULL;
-static Window    menu_event_win = 0;
-static int       screen_w, screen_h;
-static int       mouse_x, mouse_y;
-static int       keyboard_nav = 0;
+static Window    menu_event_win = 0;        /* Window which originated event */
+static int       screen_w, screen_h;        /* Screen width and height */
+static int       mouse_x, mouse_y;          /* Mouse coordinates */
+static int       keyboard_nav = 0;          /* If non-zero, navigating with keyboard */
 
 static void ecore_idle(void *data);
 static void e_wheel(Ecore_Event * ev);
@@ -125,7 +125,7 @@ e_scroller_timer(int val, void *data)
 }
   
 static void
-ecore_idle(void *data)
+e_idle(void *data)
 {
    Evas_List l;
    
@@ -182,7 +182,7 @@ e_wheel(Ecore_Event * ev)
 }
 
 static void
-ecore_key_down(Ecore_Event * ev)
+e_key_down(Ecore_Event * ev)
 {
    Ecore_Event_Key_Down          *e;
    int ok;
@@ -276,7 +276,7 @@ ecore_key_down(Ecore_Event * ev)
 }
 
 static void
-ecore_key_up(Ecore_Event * ev)
+e_key_up(Ecore_Event * ev)
 {
    Ecore_Event_Key_Up          *e;
    
@@ -425,7 +425,7 @@ e_mouse_out(Ecore_Event * ev)
 
 /* handling expose events */
 static void
-ecore_window_expose(Ecore_Event * ev)
+e_window_expose(Ecore_Event * ev)
 {
    Ecore_Event_Window_Expose      *e;
    
@@ -505,13 +505,22 @@ e_menu_item_set_callback(E_Menu_Item *mi, void (*func) (E_Menu *m, E_Menu_Item *
    mi->func_select_data = data;
 }
 
+/**
+ * e_menu_hide_submenus - Hide all menus except @menus_after.
+ *   Assumes all menus after @menus_after in the list open_menus
+ *   are submenus of @menus_after.
+ *
+ * @menus_after: All menus after this are hidden.
+ */
 void
 e_menu_hide_submenus(E_Menu *menus_after)
 {
    Evas_List l;
-   
+
+   /* Loop thru all open menus: */
    for (l = open_menus; l; l = l->next)
      {
+        /* Found submenu, so now hide all remaining menus: */
 	if (l->data == menus_after)
 	  {
 	     l = l->next;
@@ -527,34 +536,72 @@ e_menu_hide_submenus(E_Menu *menus_after)
      }
 }
 
+/**
+ * e_menu_select - Attempt to select the menu entry @dx entries across,
+ *   and @dy entries down.
+ *
+ * @dx: Horizontal offset of new menu entry.
+ * @dy: Vertical offset of new menu entry.
+ */
 void
 e_menu_select(int dx, int dy)
 {
    Evas_List l, ll;
    int done = 0;
-   
+
+   /* Loop through all open menus, tile done or reached end */
    for (l = open_menus; (l) && (!done); l = l->next)
      {
 	E_Menu *m;
 	
 	m = l->data;
+	/* If this is the selected menu: */
 	if (m->selected)
 	  {
+	    /* Go through the menu entries: */
 	     for (ll = m->entries; (ll) && (!done); ll = ll->next)
 	       {
 		  E_Menu_Item *mi;
 		  
 		  mi = ll->data;
+		  /* Found the currently selected entry: */
 		  if (mi->selected)
 		    {
+		      /* Vertical movement, up and down menu: */
 		       if (dy != 0)
 			 {
 			    int ok = 0;
 			    
-			    if ((dy < 0) && (ll->prev)) ok = 1;
-			    else if ((dy > 0) && (ll->next)) ok = 1;
+			    /* Only go up or down if entry exists to do so, */
+			    /* and skip over separators: */
+			    if (dy < 0)
+			      {
+				for ( ; ll->prev; ll = ll->prev )
+				  {
+				    mi = ll->prev->data;
+				    if (!mi->separator)
+				      {
+					ok = 1;
+					break;
+				      }
+				  }
+			      }
+			    else if (dy > 0)
+			      {
+				for ( ; ll->next; ll = ll->next )
+				  {
+				    mi = ll->next->data;
+				    if (!mi->separator)
+				      {
+					ok = 1;
+					break;
+				      }
+				  }
+			      }
+
 			    if (ok)
 			      {
+				 /* Unselect the old selected entry: */
 				 if (m->selected)
 				   {
 				      m->selected->selected = 0;
@@ -562,13 +609,14 @@ e_menu_select(int dx, int dy)
 				      m->changed = 1;
 				      m->selected = NULL;
 				   }
-				 if (dy < 0) mi = ll->prev->data;
-				 else mi = ll->next->data;
+
+				 /* Select the new entry: */
 				 m->selected = mi;
 				 mi->selected = 1;
 				 mi->menu->redo_sel = 1;
 				 mi->menu->changed = 1;
 				 e_menu_hide_submenus(mi->menu);
+				 /* If submenu, display it: */
 				 if (mi->submenu)
 				   {
 				      e_menu_move_to(mi->submenu,
@@ -581,10 +629,12 @@ e_menu_select(int dx, int dy)
 		       done = 1;
 		    }
 	       }
+	     /* Horizontal movement, into and out of submenus: */
 	     if (dx != 0)
 	       {
 		  int ok = 0;
-		  
+
+		  /* Only carry on if appropriate submenus exist: */
 		  if ((dx < 0) && (l->prev)) ok = 1;
 		  else if ((dx > 0) && (l->next)) ok = 1;
 		  if (ok)
@@ -592,6 +642,7 @@ e_menu_select(int dx, int dy)
 		       E_Menu_Item *mi = NULL;
 		       E_Menu *mm;
 		       
+		       /* Moving out of a submenu: */
 		       if (dx < 0) 
 			 {
 			    Evas_List ll;
@@ -605,6 +656,7 @@ e_menu_select(int dx, int dy)
 				 if (mmi->submenu == m) mi = mmi;
 			      }
 			 }
+		       /* Moving into a submenu: */
 		       else 
 			 {
 			    mm = l->next->data;
@@ -613,6 +665,7 @@ e_menu_select(int dx, int dy)
 			 }
 		       if (mi)
 			 {
+			    /* Unselect old selected entry: */
 			    if (m->selected)
 			      {
 				 m->selected->selected = 0;
@@ -620,11 +673,13 @@ e_menu_select(int dx, int dy)
 				 m->changed = 1;
 				 m->selected = NULL;
 			      }
+			    /* Select new entry: */
 			    mm->selected = mi;
 			    mi->selected = 1;
 			    mi->menu->redo_sel = 1;
 			    mi->menu->changed = 1;
 			    e_menu_hide_submenus(mi->menu);
+			    /* If new entry is a submenu, display it: */
 			    if (mi->submenu)
 			      {
 				 e_menu_move_to(mi->submenu,
@@ -640,6 +695,7 @@ e_menu_select(int dx, int dy)
 	     e_menu_update_visibility(m);
 	  }
      }
+   /* If opened a new submenu, position it and display it: */
    if (!done)
      {
 	if (open_menus)
@@ -673,11 +729,11 @@ e_menu_init(void)
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_MOVE,               e_mouse_move);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_IN,                 e_mouse_in);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_OUT,                e_mouse_out);
-   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            ecore_window_expose);
-   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,                 ecore_key_down);
-   ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   ecore_key_up);
+   ecore_event_filter_handler_add(ECORE_EVENT_WINDOW_EXPOSE,            e_window_expose);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_DOWN,                 e_key_down);
+   ecore_event_filter_handler_add(ECORE_EVENT_KEY_UP,                   e_key_up);
    ecore_event_filter_handler_add(ECORE_EVENT_MOUSE_WHEEL,              e_wheel);
-   ecore_event_filter_idle_handler_add(ecore_idle, NULL);
+   ecore_event_filter_idle_handler_add(e_idle, NULL);
 }
 
 void
