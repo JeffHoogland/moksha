@@ -78,6 +78,8 @@ static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
 static void _e_border_event_border_show_free(void *data, void *ev);
 static void _e_border_event_border_hide_free(void *data, void *ev);
+static void _e_border_event_border_stick_free(void *data, void *ev);
+static void _e_border_event_border_unstick_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
 
@@ -102,6 +104,8 @@ int E_EVENT_BORDER_RESIZE = 0;
 int E_EVENT_BORDER_MOVE = 0;
 int E_EVENT_BORDER_SHOW = 0;
 int E_EVENT_BORDER_HIDE = 0;
+int E_EVENT_BORDER_STICK = 0;
+int E_EVENT_BORDER_UNSTICK = 0;
 
 #define GRAV_SET(bd, grav) \
 printf("GRAV TO %i\n", grav); \
@@ -138,6 +142,8 @@ e_border_init(void)
    E_EVENT_BORDER_MOVE = ecore_event_type_new();
    E_EVENT_BORDER_SHOW = ecore_event_type_new();
    E_EVENT_BORDER_HIDE = ecore_event_type_new();
+   E_EVENT_BORDER_STICK = ecore_event_type_new();
+   E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
 
    return 1;
 }
@@ -882,20 +888,34 @@ e_border_uniconify(E_Border *bd)
 void
 e_border_stick(E_Border *bd)
 {
+   E_Event_Border_Stick *ev;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->sticky = 1;
    e_hints_window_sticky_set(bd->client.win, 1);
+
+   ev = E_NEW(E_Event_Border_Stick, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_STICK, ev, _e_border_event_border_stick_free, NULL);
 }
 
 void
 e_border_unstick(E_Border *bd)
 {
+   E_Event_Border_Unstick *ev;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->sticky = 0;
    e_hints_window_sticky_set(bd->client.win, 0);
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
+
+   ev = E_NEW(E_Event_Border_Unstick, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ecore_event_add(E_EVENT_BORDER_UNSTICK, ev, _e_border_event_border_unstick_free, NULL);
 }
 
 E_Border *
@@ -3112,6 +3132,26 @@ static void
 _e_border_event_border_hide_free(void *data, void *ev)
 {
    E_Event_Border_Hide *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_stick_free(void *data, void *ev)
+{
+   E_Event_Border_Stick *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   free(e);
+}
+
+static void
+_e_border_event_border_unstick_free(void *data, void *ev)
+{
+   E_Event_Border_Unstick *e;
 
    e = ev;
    e_object_unref(E_OBJECT(e->border));

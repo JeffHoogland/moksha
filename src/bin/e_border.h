@@ -27,6 +27,8 @@ typedef struct _E_Event_Border_Add           E_Event_Border_Add;
 typedef struct _E_Event_Border_Remove        E_Event_Border_Remove;
 typedef struct _E_Event_Border_Show          E_Event_Border_Show;
 typedef struct _E_Event_Border_Hide          E_Event_Border_Hide;
+typedef struct _E_Event_Border_Stick         E_Event_Border_Stick;
+typedef struct _E_Event_Border_Unstick       E_Event_Border_Unstick;
 typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
 
 #else
@@ -236,6 +238,16 @@ struct _E_Event_Border_Hide
    E_Border *border;
 };
 
+struct _E_Event_Border_Stick
+{
+   E_Border *border;
+};
+
+struct _E_Event_Border_Unstick
+{
+   E_Border *border;
+};
+
 struct _E_Event_Border_Desk_Set
 {
    E_Border *border;
@@ -282,6 +294,8 @@ extern EAPI int E_EVENT_BORDER_ADD;
 extern EAPI int E_EVENT_BORDER_SHOW;
 extern EAPI int E_EVENT_BORDER_HIDE;
 extern EAPI int E_EVENT_BORDER_REMOVE;
+extern EAPI int E_EVENT_BORDER_STICK;
+extern EAPI int E_EVENT_BORDER_UNSTICK;
 extern EAPI int E_EVENT_BORDER_DESK_SET;
 
 #endif

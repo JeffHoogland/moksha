@@ -40,6 +40,8 @@ static int         _pager_face_cb_event_border_add(void *data, int type, void *e
 static int         _pager_face_cb_event_border_remove(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_hide(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_show(void *data, int type, void *event);
+static int         _pager_face_cb_event_border_stick(void *data, int type, void *event);
+static int         _pager_face_cb_event_border_unstick(void *data, int type, void *event);
 static int         _pager_face_cb_event_border_desk_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -302,6 +304,12 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_border_show =
       ecore_event_handler_add(E_EVENT_BORDER_SHOW,
 			      _pager_face_cb_event_border_show, face);
+   face->ev_handler_border_stick =
+      ecore_event_handler_add(E_EVENT_BORDER_STICK,
+			      _pager_face_cb_event_border_stick, face);
+   face->ev_handler_border_unstick =
+      ecore_event_handler_add(E_EVENT_BORDER_UNSTICK,
+			      _pager_face_cb_event_border_unstick, face);
    face->ev_handler_border_desk_set =
       ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
 			      _pager_face_cb_event_border_desk_set, face);
@@ -346,6 +354,8 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_remove);
    ecore_event_handler_del(face->ev_handler_border_hide);
    ecore_event_handler_del(face->ev_handler_border_show);
+   ecore_event_handler_del(face->ev_handler_border_stick);
+   ecore_event_handler_del(face->ev_handler_border_unstick);
    ecore_event_handler_del(face->ev_handler_border_desk_set);
    ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
 
@@ -794,7 +804,10 @@ _pager_window_find(Pager_Face *face, E_Border *border)
 	while (wins)
 	  {
 	     win = wins->data;
-	     if (win->border == border)
+	     /* We have to check the desk, wouldn't want
+	      * a sticky copy */
+	     if ((win->border->desk == desk->desk)
+		 && (win->border == border))
 	       return win;
 	     wins = wins->next;
 	  }
@@ -858,18 +871,25 @@ static int
 _pager_face_cb_event_border_resize(void *data, int type, void *event)
 {
    Pager_Face            *face;
+   Pager_Desk            *desk;
    Pager_Win             *win;
    E_Event_Border_Resize *ev;
+   Evas_List             *desks, *wins;
 
    face = data;
    ev = event;
-   if ((win = _pager_window_find(face, ev->border)))
+   for (desks = face->desks; desks; desks = desks->next)
      {
-	_pager_window_move(face, win);
-     }
-   else
-     {
-	printf("ERROR: event_border_resize %p:%p\n", event, ev->border);
+	desk = desks->data;
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if (win->border == ev->border)
+	       {
+		  _pager_window_move(face, win);
+		  break;
+	       }
+	  }
      }
    return 1;
 }
@@ -878,18 +898,25 @@ static int
 _pager_face_cb_event_border_move(void *data, int type, void *event)
 {
    Pager_Face            *face;
+   Pager_Desk            *desk;
    Pager_Win             *win;
-   E_Event_Border_Resize *ev;
+   E_Event_Border_Move   *ev;
+   Evas_List             *desks, *wins;
 
    face = data;
    ev = event;
-   if((win = _pager_window_find(face, ev->border)))
+   for (desks = face->desks; desks; desks = desks->next)
      {
-	_pager_window_move(face, win);
-     }
-   else
-     {
-	printf("ERROR: event_border_move %p:%p\n", event, ev->border);
+	desk = desks->data;
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if (win->border == ev->border)
+	       {
+		  _pager_window_move(face, win);
+		  break;
+	       }
+	  }
      }
    return 1;
 }
@@ -901,15 +928,29 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
    Pager_Desk         *desk;
    Pager_Win          *win;
    E_Event_Border_Add *ev;
+   Evas_List          *desks;
 
    face = data;
    ev = event;
+#if 0
    if (_pager_window_find(face, ev->border))
      {
 	printf("event_border_add, window found :'(\n");
 	return 1;
      }
-   if ((desk = _pager_desk_find(face, ev->border->desk)))
+#endif
+   if (ev->border->sticky)
+     {
+	/* Put on all desks */
+	for (desks = face->desks; desks; desks = desks->next)
+	  {
+	     desk = desks->data;
+	     win = _pager_window_new(desk, ev->border);
+	     if (win)
+	       desk->wins = evas_list_append(desk->wins, win);
+	  }
+     }
+   else if ((desk = _pager_desk_find(face, ev->border->desk)))
      {
 	win = _pager_window_new(desk, ev->border);
 	if (win)
@@ -927,18 +968,25 @@ _pager_face_cb_event_border_remove(void *data, int type, void *event)
 {
    Pager_Face            *face;
    Pager_Desk            *desk;
-   Pager_Win             *old;
+   Pager_Win             *win;
    E_Event_Border_Remove *ev;
+   Evas_List             *desks, *wins;
 
    face = data;
    ev = event;
-
-   old = _pager_window_find(face, ev->border);
-   desk = _pager_desk_find(face, ev->border->desk);
-   if (old && desk)
+   for (desks = face->desks; desks; desks = desks->next)
      {
-	desk->wins = evas_list_remove(desk->wins, old);
-	_pager_window_free(old);
+	desk = desks->data;
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if (win->border == ev->border)
+	       {
+		  desk->wins = evas_list_remove_list(desk->wins, wins);
+		  _pager_window_free(win);
+		  break;
+	       }
+	  }
      }
    return 1;
 }
@@ -947,16 +995,27 @@ static int
 _pager_face_cb_event_border_hide(void *data, int type, void *event)
 {
    Pager_Face          *face;
+   Pager_Desk          *desk;
    Pager_Win           *win;
    E_Event_Border_Hide *ev;
+   Evas_List             *desks, *wins;
 
    face = data;
    ev = event;
-   win = _pager_window_find(face, ev->border);
-   if (win && ev->border->desk->visible)
+   for (desks = face->desks; desks; desks = desks->next)
      {
-	evas_object_hide(win->obj);
-	evas_object_hide(win->icon);
+	desk = desks->data;
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if ((win->border == ev->border)
+		 && (ev->border->desk->visible))
+	       {
+		  evas_object_hide(win->obj);
+		  evas_object_hide(win->icon);
+		  break;
+	       }
+	  }
      }
    return 1;
 }
@@ -965,18 +1024,85 @@ static int
 _pager_face_cb_event_border_show(void *data, int type, void *event)
 {
    Pager_Face          *face;
+   Pager_Desk          *desk;
    Pager_Win           *win;
    E_Event_Border_Show *ev;
+   Evas_List             *desks, *wins;
 
    face = data;
    ev = event;
-   win = _pager_window_find(face, ev->border);
-   if (win)
+   for (desks = face->desks; desks; desks = desks->next)
      {
-	evas_object_show(win->obj);
-	evas_object_show(win->icon);
+	desk = desks->data;
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if ((win->border == ev->border)
+		 && (ev->border->desk->visible))
+	       {
+		  evas_object_show(win->obj);
+		  evas_object_show(win->icon);
+		  break;
+	       }
+	  }
+     }
+   evas_object_raise(face->screen);
+   return 1;
+}
 
-	evas_object_raise(face->screen);
+static int
+_pager_face_cb_event_border_stick(void *data, int type, void *event)
+{
+   Pager_Face           *face;
+   Pager_Desk           *desk;
+   Pager_Win            *win;
+   E_Event_Border_Stick *ev;
+   Evas_List            *desks;
+
+   face = data;
+   ev = event;
+   for (desks = face->desks; desks; desks = desks->next)
+     {
+	desk = desks->data;
+	/* On this desk there should already be a border */
+	if (ev->border->desk == desk->desk)
+	  continue;
+
+	win = _pager_window_new(desk, ev->border);
+	desk->wins = evas_list_append(desk->wins, win);
+     }
+   return 1;
+}
+
+static int
+_pager_face_cb_event_border_unstick(void *data, int type, void *event)
+{
+   Pager_Face           *face;
+   Pager_Desk           *desk;
+   Pager_Win            *win;
+   E_Event_Border_Unstick *ev;
+   Evas_List            *desks, *wins;
+
+   face = data;
+   ev = event;
+
+   for (desks = face->desks; desks; desks = desks->next)
+     {
+	desk = desks->data;
+	/* On this desk there should be a border */
+	if (desk->desk == ev->border->desk)
+	  continue;
+
+	for (wins = desk->wins; wins; wins = wins->next)
+	  {
+	     win = wins->data;
+	     if (win->border == ev->border)
+	       {
+		  desk->wins = evas_list_remove_list(desk->wins, wins);
+		  _pager_window_free(win);
+		  break;
+	       }
+	  }
      }
    return 1;
 }
@@ -991,6 +1117,9 @@ _pager_face_cb_event_border_desk_set(void *data, int type, void *event)
 
    face = data;
    ev = event;
+   if (ev->border->sticky)
+     return 1;
+
    win = _pager_window_find(face, ev->border);
    desk = _pager_desk_find(face, ev->border->desk);
    if (win && desk)
