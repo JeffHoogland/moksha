@@ -129,8 +129,6 @@ ln -sf selected-0.sticky-0.shaded-0.bits.db selected-1.sticky-1.shaded-0.bits.db
 ln -sf selected-0.sticky-0.shaded-0.bits.db selected-1.sticky-0.shaded-1.bits.db
 ln -sf selected-0.sticky-0.shaded-0.bits.db selected-1.sticky-1.shaded-1.bits.db
 ln -sf selected-0.sticky-0.shaded-0.bits.db selected-0.sticky-1.shaded-1.bits.db
-cd ..
-
-cd fonts
+cd ../../fonts
 ln -sf borzoib.ttf menu.ttf
 ln -sf borzoib.ttf text.ttf
