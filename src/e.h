@@ -546,14 +546,16 @@ struct _E_Entry
    char *buffer;
    int   cursor_pos;
    struct {
-      int start, length;
+      int start, length, down;
    } select;
+   int   mouse_down;
    int   visible;
    int   focused;
    int   x, y, w, h;
    Evas_Object event_box;
    Evas_Object clip_box;
    Evas_Object cursor;
+   Evas_Object selection;
    Evas_Object text;
 };
 

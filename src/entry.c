@@ -1,5 +1,12 @@
 #include "e.h"
 
+static void e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_entry_realize(E_Entry *entry);
+static void e_entry_unrealize(E_Entry *entry);
+static void e_entry_configure(E_Entry *entry);
+
 static void
 e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
@@ -7,38 +14,70 @@ e_entry_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    int pos;
    
    entry = _data;
-   printf("%i %i\n", _x, _y);
-   entry->focused = 1;
-   pos = evas_text_at_position(_e, entry->text, _x, _y,
-			       NULL, NULL, NULL, NULL);
-   printf("%i\n", pos);
-   if (pos < 0)
+   if ((_b == 2) && (!entry->mouse_down))       
      {
-	int tw;
+	char *str2;
+	char *type = "Inserted";
 	
-	tw = evas_get_text_width(_e, entry->text);
-	if (_x > entry->x + tw)
+	if (entry->select.start >= 0)
 	  {
-	     entry->cursor_pos = strlen(entry->buffer);
+	     str2 = strdup(e_entry_get_text(entry));
+	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	       entry->select.length = strlen(entry->buffer) - entry->select.start;
+	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+	     e_entry_set_text(entry, str2);
+	     free(str2);	     
+	     entry->cursor_pos = entry->select.start;
+	     entry->select.start = -1;
 	  }
+	str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
+	str2[0] = 0;
+	strncat(str2, entry->buffer, entry->cursor_pos);
+	strcat(str2, type);
+	strcat(str2, &(entry->buffer[entry->cursor_pos]));
+	e_entry_set_text(entry, str2);
+	free(str2);
+	entry->cursor_pos+=strlen(type);
+	e_entry_configure(entry);	
      }
-   else
+   else if (!entry->mouse_down)
      {
-	entry->cursor_pos = pos;
+	entry->focused = 1;
+	pos = evas_text_at_position(_e, entry->text, _x, _y,
+				    NULL, NULL, NULL, NULL);
+	if (pos < 0)
+	  {
+	     int tw;
+	     
+	     tw = evas_get_text_width(_e, entry->text);
+	     if (_x > entry->x + tw)
+	       {
+		  entry->cursor_pos = strlen(entry->buffer);
+	       }
+	     else if (_x < entry->x)
+	       {
+		  entry->cursor_pos = 0;
+	       }
+	  }
+	else
+	  {
+	     entry->cursor_pos = pos;
+	  }
+	entry->mouse_down = _b;
+	entry->select.start = -1;
+	e_entry_configure(entry);
      }
-/*   
-   entry->select.start = entry->cursor_pos;
-   entry->select.length = 1;
-*/
-   e_entry_configure(entry);
 }
 
 static void
 e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Entry *entry;
+   int pos;
    
    entry = _data;
+   if (_b == entry->mouse_down) entry->mouse_down = 0;
+   e_entry_configure(entry);
 }
 
 static void
@@ -47,6 +86,62 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Entry *entry;
    
    entry = _data;
+   if (entry->mouse_down > 0)
+     {
+	int pos, ppos;
+	
+	ppos = entry->cursor_pos;
+	pos = evas_text_at_position(_e, entry->text, _x, entry->y,
+				    NULL, NULL, NULL, NULL);
+	if (pos < 0)
+	  {
+	     int tw;
+	     
+	     tw = evas_get_text_width(_e, entry->text);
+	     if (_x > entry->x + tw)
+	       {
+		  entry->cursor_pos = strlen(entry->buffer);
+	       }
+	     else if (_x < entry->x)
+	       {
+		  entry->cursor_pos = 0;
+	       }
+	  }
+	else
+	  {
+	     entry->cursor_pos = pos;
+	  }
+	if ((entry->select.start < 0) && (ppos != entry->cursor_pos))
+	  {
+	     if (ppos < entry->cursor_pos)
+	       {
+		  entry->select.down = ppos;
+		  entry->select.start = ppos;
+		  entry->select.length = entry->cursor_pos - ppos +1;
+	       }
+	     else
+	       {
+		  entry->select.down = ppos;
+		  entry->select.start = entry->cursor_pos;
+		  entry->select.length = ppos - entry->cursor_pos +1;
+	       }
+	  }
+	else if (entry->select.start >= 0)
+	  {
+	     if (entry->cursor_pos < entry->select.down)
+	       {
+		  entry->select.start = entry->cursor_pos;
+		  entry->select.length = entry->select.down - entry->cursor_pos + 1;
+	       }
+	     else
+	       {
+		  entry->select.start = entry->select.down;
+		  entry->select.length = entry->cursor_pos - entry->select.down + 1;
+	       }
+	  }
+	printf("%i %i\n", entry->select.start, entry->select.length);
+	e_entry_configure(entry);   
+     }
 }
 
 static void 
@@ -54,12 +149,14 @@ e_entry_realize(E_Entry *entry)
 {
    entry->clip_box = evas_add_rectangle(entry->evas);
    entry->text = evas_add_text(entry->evas, "borzoib", 8, "");
+   entry->selection = evas_add_rectangle(entry->evas);
    entry->cursor = evas_add_rectangle(entry->evas);
    entry->event_box = evas_add_rectangle(entry->evas);
    evas_set_color(entry->evas, entry->clip_box, 255, 255, 255, 255);
-   evas_set_color(entry->evas, entry->event_box, 50, 100, 200, 50);
+   evas_set_color(entry->evas, entry->event_box, 200, 100, 50, 50);
    evas_set_color(entry->evas, entry->text, 0, 0, 0, 255);
    evas_set_color(entry->evas, entry->cursor, 255, 255, 255, 100);
+   evas_set_color(entry->evas, entry->selection, 255, 255, 50, 50);
    evas_set_clip(entry->evas, entry->text, entry->clip_box);
    evas_set_clip(entry->evas, entry->event_box, entry->clip_box);
    evas_set_clip(entry->evas, entry->cursor, entry->clip_box);
@@ -119,6 +216,26 @@ e_entry_configure(E_Entry *entry)
      {
 	evas_hide(entry->evas, entry->cursor);
      }
+   if (entry->select.start >= 0)
+     {
+	int x1, y1, x2, tw, th;
+	
+	evas_text_at(entry->evas, entry->text, entry->select.start, &x1, &y1, NULL, NULL);
+	if (entry->select.start + entry->select.length <= strlen(entry->buffer))
+	  evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 1, &x2, NULL, &tw, &th);
+	else
+	  {
+	     evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 2, &x2, NULL, &tw, &th);
+	     tw += 4;
+	  }
+	evas_move(entry->evas, entry->selection, entry->x + x1, entry->y + y1);
+	evas_resize(entry->evas, entry->selection, x2 + tw - x1, th);
+	evas_show(entry->evas, entry->selection);
+     }
+   else
+     {
+	evas_hide(entry->evas, entry->selection);   
+     }
 }
 
 void
@@ -139,6 +256,7 @@ e_entry_new(void)
    entry = NEW(E_Entry, 1);
    ZERO(entry, E_Entry, 1);
    entry->buffer=strdup("");
+   entry->select.start = -1;
    return entry;
 }
 
@@ -171,7 +289,18 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      {
 	char *str2;
 	
-	if (entry->cursor_pos > 0)
+	if (entry->select.start >= 0)
+	  {
+	     str2 = strdup(e_entry_get_text(entry));
+	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	       entry->select.length = strlen(entry->buffer) - entry->select.start;
+	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+	     e_entry_set_text(entry, str2);
+	     free(str2);	     
+	     entry->cursor_pos = entry->select.start;
+	     entry->select.start = -1;
+	  }
+	else if (entry->cursor_pos > 0)
 	  {
 	     str2 = strdup(e_entry_get_text(entry));
 	     strcpy(&(str2[entry->cursor_pos - 1]), &(entry->buffer[entry->cursor_pos]));
@@ -184,7 +313,18 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      {
 	char *str2;
 	
-	if (entry->cursor_pos < strlen(entry->buffer))
+	if (entry->select.start >= 0)
+	  {
+	     str2 = strdup(e_entry_get_text(entry));
+	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	       entry->select.length = strlen(entry->buffer) - entry->select.start;
+	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+	     e_entry_set_text(entry, str2);
+	     free(str2);	     
+	     entry->cursor_pos = entry->select.start;
+	     entry->select.start = -1;
+	  }
+	else if (entry->cursor_pos < strlen(entry->buffer))
 	  {
 	     str2 = strdup(e_entry_get_text(entry));
 	     strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
@@ -194,6 +334,28 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      }
    else if (!strcmp(e->key, "Insert"))
      {
+	char *str2;
+	char *type = "Inserted";
+	
+	if (entry->select.start >= 0)
+	  {
+	     str2 = strdup(e_entry_get_text(entry));
+	     if (entry->select.start + entry->select.length > strlen(entry->buffer))
+	       entry->select.length = strlen(entry->buffer) - entry->select.start;
+	     strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+	     e_entry_set_text(entry, str2);
+	     free(str2);	     
+	     entry->cursor_pos = entry->select.start;
+	     entry->select.start = -1;
+	  }
+	str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
+	str2[0] = 0;
+	strncat(str2, entry->buffer, entry->cursor_pos);
+	strcat(str2, type);
+	strcat(str2, &(entry->buffer[entry->cursor_pos]));
+	e_entry_set_text(entry, str2);
+	free(str2);
+	entry->cursor_pos+=strlen(type);
      }
    else if (!strcmp(e->key, "Home"))
      {
@@ -243,8 +405,18 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	     else if (strlen(type) > 0)
 	       {
 		  char *str2;
-		  
-		  printf("%i: %x\n", strlen(type), (unsigned char)type[0]);
+	
+		  if (entry->select.start >= 0)
+		    {
+		       str2 = strdup(e_entry_get_text(entry));
+		       if (entry->select.start + entry->select.length > strlen(entry->buffer))
+			 entry->select.length = strlen(entry->buffer) - entry->select.start;
+		       strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
+		       e_entry_set_text(entry, str2);
+		       free(str2);	     
+		       entry->cursor_pos = entry->select.start;
+		       entry->select.start = -1;
+		    }
 		  str2 = malloc(strlen(e_entry_get_text(entry)) + 1 + strlen(type));
 		  str2[0] = 0;
 		  strncat(str2, entry->buffer, entry->cursor_pos);
@@ -252,8 +424,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 		  strcat(str2, &(entry->buffer[entry->cursor_pos]));
 		  e_entry_set_text(entry, str2);
 		  free(str2);
-		  entry->cursor_pos++;
-		  printf("type: ->%s<-\n", type);
+		  entry->cursor_pos+=strlen(type);
 	       }
 	  }
      }   
@@ -296,6 +467,7 @@ e_entry_hide(E_Entry *entry)
    evas_hide(entry->evas, entry->clip_box);
    evas_hide(entry->evas, entry->cursor);
    evas_hide(entry->evas, entry->text);
+   evas_hide(entry->evas, entry->selection);
 }
 
 void
@@ -303,6 +475,7 @@ e_entry_set_layer(E_Entry *entry, int l)
 {
    evas_set_layer(entry->evas, entry->clip_box, l);
    evas_set_layer(entry->evas, entry->text, l);
+   evas_set_layer(entry->evas, entry->selection, l);
    evas_set_layer(entry->evas, entry->cursor, l);
    evas_set_layer(entry->evas, entry->event_box, l);
 }
