@@ -30,8 +30,6 @@ Current freeze issues are:
 ISSUES:
 
 * if xinerama screens overlap... dont use the later screen overlapping
-* if window exits while resizing, resize display stays up - fix
-* All objects should be an e_object?
 * focus newly created windows when appropriate (under mouse and focus follows mouse etc.)
 * ibar module should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
 * make ibar a gadman client
