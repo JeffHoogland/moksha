@@ -289,11 +289,12 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    gmc = data;
    if (!gmc->moving) return;
    evas_pointer_canvas_xy_get(gmc->gadman->container->bg_evas, &x, &y);
-   printf("%i %i\n", x, y);
    gmc->x = gmc->down_store_x + (x - gmc->down_x);
    gmc->y = gmc->down_store_y + (y - gmc->down_y);
    gmc->w = gmc->down_store_w;
    gmc->h = gmc->down_store_h;
+   /* FIXME: limit to zone, edge, or handle zone jump */
+   /* limit to the zone */
    if (gmc->x < gmc->zone->x)
      gmc->x = gmc->zone->x;
    else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -346,6 +347,29 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    gmc->y = gmc->down_store_y;
    gmc->w = gmc->down_store_w - (x - gmc->down_x);
    gmc->h = gmc->down_store_h;
+   /* limit to zone left edge */
+   if (gmc->x < gmc->zone->x)
+     {
+	gmc->w = (gmc->down_store_x + gmc->down_store_w) - gmc->zone->x;
+	gmc->x = gmc->zone->x;
+     }
+   /* limit to min size */
+   if (gmc->w < gmc->minw)
+     {
+	gmc->x += (gmc->minw - gmc->w);
+	gmc->w = gmc->minw;
+     }
+   /* limit to max size */
+   if (gmc->maxw > 0)
+     {
+	if (gmc->w > gmc->minw)
+	  {
+	     gmc->x -= (gmc->maxw - gmc->w);
+	     gmc->w = gmc->maxw;
+	  }
+     }
+   /* FIXME: detect that the user ALMOST resized to full zone width/height */
+   /* and jump to it */
    evas_object_move(gmc->control_object, gmc->x, gmc->y);
    evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
@@ -390,6 +414,26 @@ _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    gmc->y = gmc->down_store_y;
    gmc->w = gmc->down_store_w + (x - gmc->down_x);
    gmc->h = gmc->down_store_h;
+   /* limit to zone right edge */
+   if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
+     {
+	gmc->w = (gmc->zone->x + gmc->zone->w) - gmc->x;
+     }
+   /* limit to min size */
+   if (gmc->w < gmc->minw)
+     {
+	gmc->w = gmc->minw;
+     }
+   /* limit to max size */
+   if (gmc->maxw > 0)
+     {
+	if (gmc->w > gmc->maxw)
+	  {
+	     gmc->w = gmc->maxw;
+	  }
+     }
+   /* FIXME: detect that the user ALMOST resized to full zone width/height */
+   /* and jump to it */
    evas_object_move(gmc->control_object, gmc->x, gmc->y);
    evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
@@ -434,6 +478,29 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
    gmc->y = gmc->down_store_y + (y - gmc->down_y);
    gmc->w = gmc->down_store_w;
    gmc->h = gmc->down_store_h - (y - gmc->down_y);
+   /* limit to zone top edge */
+   if (gmc->y < gmc->zone->y)
+     {
+	gmc->h = (gmc->down_store_y + gmc->down_store_h) - gmc->zone->y;
+	gmc->y = gmc->zone->y;
+     }
+   /* limit to min size */
+   if (gmc->h < gmc->minh)
+     {
+	gmc->y += (gmc->minh - gmc->h);
+	gmc->h = gmc->minh;
+     }
+   /* limit to max size */
+   if (gmc->maxh > 0)
+     {
+	if (gmc->h > gmc->minh)
+	  {
+	     gmc->y -= (gmc->maxh - gmc->h);
+	     gmc->h = gmc->maxh;
+	  }
+     }
+   /* FIXME: detect that the user ALMOST resized to full zone width/height */
+   /* and jump to it */
    evas_object_move(gmc->control_object, gmc->x, gmc->y);
    evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
@@ -478,6 +545,26 @@ _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emi
    gmc->y = gmc->down_store_y;
    gmc->w = gmc->down_store_w;
    gmc->h = gmc->down_store_h + (y - gmc->down_y);
+   /* limit to zone right bottom */
+   if ((gmc->y + gmc->h) > (gmc->zone->y + gmc->zone->h))
+     {
+	gmc->h = (gmc->zone->y + gmc->zone->h) - gmc->y;
+     }
+   /* limit to min size */
+   if (gmc->h < gmc->minh)
+     {
+	gmc->h = gmc->minh;
+     }
+   /* limit to max size */
+   if (gmc->maxh > 0)
+     {
+	if (gmc->h > gmc->maxh)
+	  {
+	     gmc->h = gmc->maxh;
+	  }
+     }
+   /* FIXME: detect that the user ALMOST resized to full zone width/height */
+   /* and jump to it */
    evas_object_move(gmc->control_object, gmc->x, gmc->y);
    evas_object_resize(gmc->control_object, gmc->w, gmc->h);
 }
