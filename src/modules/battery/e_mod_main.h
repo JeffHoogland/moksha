@@ -30,7 +30,8 @@ struct _Config_Face
 struct _Battery
 {
    E_Menu      *config_menu;
-   Evas_List   *menus;
+   E_Menu      *config_menu_poll;
+   E_Menu      *config_menu_alarm;
    Evas_List   *faces;
 
    Config      *conf;

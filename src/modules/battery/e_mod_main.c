@@ -186,15 +186,13 @@ _battery_new()
 		  _battery_face_menu_new(ef);
 
 		  /* Add main menu to face menu */
-		  /*
-		  for (ml = e->menus; ml; ml = ml->next)
-		    {
-		       mn = ml->data;
-		       mi = e_menu_item_new(ef->menu);
-		       e_menu_item_label_set(mi, "????");
-		       e_menu_item_submenu_set(mi, mn);
-		    }
-		  */
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, "Set Poll Time");
+		  e_menu_item_submenu_set(mi, e->config_menu_poll);
+
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, "Set Alarm");
+		  e_menu_item_submenu_set(mi, e->config_menu_alarm);
 
 		  mi = e_menu_item_new(e->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -224,10 +222,9 @@ _battery_shutdown(Battery *e)
      _battery_face_free(l->data);
    evas_list_free(e->faces);
 
-   for (l = e->menus; l; l = l->next)
-     e_object_del(E_OBJECT(l->data));
-   evas_list_free(e->menus);
    e_object_del(E_OBJECT(e->config_menu));
+   e_object_del(E_OBJECT(e->config_menu_poll));
+   e_object_del(E_OBJECT(e->config_menu_alarm));
 
    ecore_timer_del(e->battery_check_timer);
 
@@ -368,7 +365,7 @@ _battery_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _battery_config_menu_new(Battery *e)
 {
-   E_Menu *mn, *config_menu_alarm, *config_menu_poll;
+   E_Menu *mn;
    E_Menu_Item *mi;
 
    /* Alarm */
@@ -423,7 +420,7 @@ _battery_config_menu_new(Battery *e)
    if (e->conf->alarm == 60) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_60, e);
 
-   config_menu_alarm = mn;
+   e->config_menu_alarm = mn;
 
    /* Check interval */
    mn = e_menu_new();
@@ -463,21 +460,19 @@ _battery_config_menu_new(Battery *e)
    if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_very_slow, e);
 
-   config_menu_poll = mn;
+   e->config_menu_poll = mn;
 
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Set Poll Time");
-   e_menu_item_submenu_set(mi, config_menu_poll);
+   e_menu_item_submenu_set(mi, e->config_menu_poll);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Set Alarm");
-   e_menu_item_submenu_set(mi, config_menu_alarm);
+   e_menu_item_submenu_set(mi, e->config_menu_alarm);
 
    e->config_menu = mn;
-   e->menus = evas_list_append(e->menus, config_menu_poll);
-   e->menus = evas_list_append(e->menus, config_menu_alarm);
 }
 
 static Battery_Face *
