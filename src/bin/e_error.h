@@ -18,10 +18,10 @@
    e_error_dialog_show_internal(title, __tmpbuf); \
 }
 
-void e_error_message_show_internal(char *txt);
-void e_error_dialog_show_internal(char *title, char *txt);
+EAPI void e_error_message_show_internal(char *txt);
+EAPI void e_error_dialog_show_internal(char *title, char *txt);
 
-void e_error_gui_set(int on);
-void e_error_message_manager_show(E_Manager *man, char *title, char *txt);
+EAPI void e_error_gui_set(int on);
+EAPI void e_error_message_manager_show(E_Manager *man, char *title, char *txt);
     
 #endif

@@ -35,4 +35,10 @@ struct _Shadow
    unsigned char square : 1;
 };
 
+EAPI void *init     (E_Module *m);
+EAPI int   shutdown (E_Module *m);
+EAPI int   save     (E_Module *m);
+EAPI int   info     (E_Module *m);
+EAPI int   about    (E_Module *m);
+
 #endif

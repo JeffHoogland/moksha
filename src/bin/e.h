@@ -25,6 +25,23 @@
 
 #include "config.h"
 
+#ifdef EAPI
+#undef EAPI
+#endif
+#ifdef WIN32
+# ifdef BUILDING_DLL
+#  define EAPI __declspec(dllexport)
+# else
+#  define EAPI __declspec(dllimport)
+# endif
+#else
+# ifdef GCC_HASCLASSVISIBILITY
+#  define EAPI __attribute__ ((visibility("default")))
+# else
+#  define EAPI
+# endif
+#endif
+
 #include "e_object.h"
 #include "e_file.h"
 #include "e_user.h"
@@ -51,15 +68,15 @@
 
 typedef struct _E_Before_Idler E_Before_Idler;
 
-E_Before_Idler *e_main_idler_before_add(int (*func) (void *data), void *data, int once);
-void            e_main_idler_before_del(E_Before_Idler *eb);
+EAPI E_Before_Idler *e_main_idler_before_add(int (*func) (void *data), void *data, int once);
+EAPI void            e_main_idler_before_del(E_Before_Idler *eb);
 
-extern E_Path *path_data;
-extern E_Path *path_images;
-extern E_Path *path_fonts;
-extern E_Path *path_themes;
-extern E_Path *path_init;
-extern int     restart;
+extern EAPI E_Path *path_data;
+extern EAPI E_Path *path_images;
+extern EAPI E_Path *path_fonts;
+extern EAPI E_Path *path_themes;
+extern EAPI E_Path *path_init;
+extern EAPI int     restart;
 
 /* convenience macro to compress code and avoid typos */
 #define E_FN_DEL(_fn, _h) \

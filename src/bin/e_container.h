@@ -53,29 +53,29 @@ struct _E_Container_Shape_Callback
    void *data;
 };
 
-int          e_container_init(void);
-int          e_container_shutdown(void);
+EAPI int          e_container_init(void);
+EAPI int          e_container_shutdown(void);
 
-E_Container *e_container_new(E_Manager *man);
-void         e_container_show(E_Container *con);
-void         e_container_hide(E_Container *con);
-void         e_container_move(E_Container *con, int x, int y);
-void         e_container_resize(E_Container *con, int w, int h);
-void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);
-void         e_container_raise(E_Container *con);
-void         e_container_lower(E_Container *con);
-void         e_container_bg_reconfigure(E_Container *con);
+EAPI E_Container *e_container_new(E_Manager *man);
+EAPI void         e_container_show(E_Container *con);
+EAPI void         e_container_hide(E_Container *con);
+EAPI void         e_container_move(E_Container *con, int x, int y);
+EAPI void         e_container_resize(E_Container *con, int w, int h);
+EAPI void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);
+EAPI void         e_container_raise(E_Container *con);
+EAPI void         e_container_lower(E_Container *con);
+EAPI void         e_container_bg_reconfigure(E_Container *con);
 
-E_Container_Shape *e_container_shape_add(E_Container *con);
-void               e_container_shape_show(E_Container_Shape *es);
-void               e_container_shape_hide(E_Container_Shape *es);
-void               e_container_shape_move(E_Container_Shape *es, int x, int y);
-void               e_container_shape_resize(E_Container_Shape *es, int w, int h);
-Evas_List         *e_container_shape_list_get(E_Container *con);
-void               e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
-E_Container       *e_container_shape_container_get(E_Container_Shape *es);
-void               e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
-void               e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
-Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
+EAPI E_Container_Shape *e_container_shape_add(E_Container *con);
+EAPI void               e_container_shape_show(E_Container_Shape *es);
+EAPI void               e_container_shape_hide(E_Container_Shape *es);
+EAPI void               e_container_shape_move(E_Container_Shape *es, int x, int y);
+EAPI void               e_container_shape_resize(E_Container_Shape *es, int w, int h);
+EAPI Evas_List         *e_container_shape_list_get(E_Container *con);
+EAPI void               e_container_shape_geometry_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
+EAPI E_Container       *e_container_shape_container_get(E_Container_Shape *es);
+EAPI void               e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
+EAPI void               e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
+EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
 
 #endif

@@ -55,17 +55,17 @@ struct _E_Object
    unsigned char           deleted : 1;
 };
 
-void *e_object_alloc               (int size, E_Object_Cleanup_Func cleanup_func);
-void  e_object_del                 (E_Object *obj);
-int   e_object_del_get             (E_Object *obj);
-void  e_object_del_func_set        (E_Object *obj, E_Object_Cleanup_Func del_func);
-void  e_object_free                (E_Object *obj);
-int   e_object_ref                 (E_Object *obj);
-int   e_object_unref               (E_Object *obj);
-int   e_object_ref_get             (E_Object *obj);
-int   e_object_error               (E_Object *obj);
-void  e_object_data_set            (E_Object *obj, void *data);
-void *e_object_data_get            (E_Object *obj);
-void  e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj));
+EAPI void *e_object_alloc               (int size, E_Object_Cleanup_Func cleanup_func);
+EAPI void  e_object_del                 (E_Object *obj);
+EAPI int   e_object_del_get             (E_Object *obj);
+EAPI void  e_object_del_func_set        (E_Object *obj, E_Object_Cleanup_Func del_func);
+EAPI void  e_object_free                (E_Object *obj);
+EAPI int   e_object_ref                 (E_Object *obj);
+EAPI int   e_object_unref               (E_Object *obj);
+EAPI int   e_object_ref_get             (E_Object *obj);
+EAPI int   e_object_error               (E_Object *obj);
+EAPI void  e_object_data_set            (E_Object *obj, void *data);
+EAPI void *e_object_data_get            (E_Object *obj);
+EAPI void  e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj));
 
 #endif

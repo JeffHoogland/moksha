@@ -43,15 +43,15 @@ struct _E_App
    unsigned char  scanned : 1; /* have we scanned a subdir app yet */
 };
 
-int    e_app_init(void);
-int    e_app_shutdown(void);
+EAPI int    e_app_init(void);
+EAPI int    e_app_shutdown(void);
 
-E_App *e_app_new(char *path, int scan_subdirs);
-void   e_app_subdir_scan(E_App *a, int scan_subdirs);
-int    e_app_exec(E_App *a);
-int    e_app_starting_get(E_App *a);
-int    e_app_running_get(E_App *a);
+EAPI E_App *e_app_new(char *path, int scan_subdirs);
+EAPI void   e_app_subdir_scan(E_App *a, int scan_subdirs);
+EAPI int    e_app_exec(E_App *a);
+EAPI int    e_app_starting_get(E_App *a);
+EAPI int    e_app_running_get(E_App *a);
     
-void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
-void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
+EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
+EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 #endif

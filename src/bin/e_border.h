@@ -125,25 +125,25 @@ struct _E_Border
    } changes;
 };
 
-int       e_border_init(void);
-int       e_border_shutdown(void);
+EAPI int       e_border_init(void);
+EAPI int       e_border_shutdown(void);
 
-E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map);
-void      e_border_free(E_Border *bd);
-void      e_border_ref(E_Border *bd);
-void      e_border_unref(E_Border *bd);
-void      e_border_show(E_Border *bd);
-void      e_border_hide(E_Border *bd);
-void      e_border_move(E_Border *bd, int x, int y);
-void      e_border_resize(E_Border *bd, int w, int h);
-void      e_border_move_resize(E_Border *bd, int x, int y, int w, int h);
-void      e_border_raise(E_Border *bd);
-void      e_border_lower(E_Border *bd);
-void      e_border_stack_above(E_Border *bd, E_Border *above);
-void      e_border_stack_below(E_Border *bd, E_Border *below);
+EAPI E_Border *e_border_new(E_Container *con, Ecore_X_Window win, int first_map);
+EAPI void      e_border_free(E_Border *bd);
+EAPI void      e_border_ref(E_Border *bd);
+EAPI void      e_border_unref(E_Border *bd);
+EAPI void      e_border_show(E_Border *bd);
+EAPI void      e_border_hide(E_Border *bd);
+EAPI void      e_border_move(E_Border *bd, int x, int y);
+EAPI void      e_border_resize(E_Border *bd, int w, int h);
+EAPI void      e_border_move_resize(E_Border *bd, int x, int y, int w, int h);
+EAPI void      e_border_raise(E_Border *bd);
+EAPI void      e_border_lower(E_Border *bd);
+EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
+EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 
-E_Border *e_border_find_by_client_window(Ecore_X_Window win);
+EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 
-void      e_border_idler_before(void);
+EAPI void      e_border_idler_before(void);
 
 #endif

@@ -44,18 +44,18 @@ struct _E_Module_Api
    int    version;
 };
 
-int          e_module_init(void);
-int          e_module_shutdown(void);
+EAPI int          e_module_init(void);
+EAPI int          e_module_shutdown(void);
 
-E_Module    *e_module_new(char *name);
-int          e_module_save(E_Module *m);
-const char  *e_module_dir_get(E_Module *m);
-int          e_module_enable(E_Module *m);
-int          e_module_disable(E_Module *m);
-int          e_module_enabled_get(E_Module *m);
-int          e_module_save_all(void);
-E_Module    *e_module_find(char *name);
-Evas_List   *e_module_list(void);
-E_Menu      *e_module_menu_new(void);
+EAPI E_Module    *e_module_new(char *name);
+EAPI int          e_module_save(E_Module *m);
+EAPI const char  *e_module_dir_get(E_Module *m);
+EAPI int          e_module_enable(E_Module *m);
+EAPI int          e_module_disable(E_Module *m);
+EAPI int          e_module_enabled_get(E_Module *m);
+EAPI int          e_module_save_all(void);
+EAPI E_Module    *e_module_find(char *name);
+EAPI Evas_List   *e_module_list(void);
+EAPI E_Menu      *e_module_menu_new(void);
 
 #endif

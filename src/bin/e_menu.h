@@ -104,37 +104,37 @@ struct _E_Menu_Item
 #define E_MENU_POP_DIRECTION_AUTO  5
 #define E_MENU_POP_DIRECTION_LAST  6
 
-int          e_menu_init(void);
-int          e_menu_shutdown(void);
+EAPI int          e_menu_init(void);
+EAPI int          e_menu_shutdown(void);
 
-E_Menu      *e_menu_new(void);
-void         e_menu_activate_key(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
-void         e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
-void         e_menu_activate(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
-void         e_menu_deactivate(E_Menu *m);
-int          e_menu_freeze(E_Menu *m);
-int          e_menu_thaw(E_Menu *m);
-void         e_menu_title_set(E_Menu *m, char *title);
-void         e_menu_icon_file_set(E_Menu *m, char *icon);
-void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
-void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
+EAPI E_Menu      *e_menu_new(void);
+EAPI void         e_menu_activate_key(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate_mouse(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate(E_Menu *m, E_Container *con, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_deactivate(E_Menu *m);
+EAPI int          e_menu_freeze(E_Menu *m);
+EAPI int          e_menu_thaw(E_Menu *m);
+EAPI void         e_menu_title_set(E_Menu *m, char *title);
+EAPI void         e_menu_icon_file_set(E_Menu *m, char *icon);
+EAPI void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
+EAPI void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 
-E_Menu_Item *e_menu_item_new(E_Menu *m);
-E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
-int          e_menu_item_num_get(E_Menu_Item *mi);
-void         e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon);
-void         e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key);
-void         e_menu_item_label_set(E_Menu_Item *mi, char *label);
-void         e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub);
-void         e_menu_item_separator_set(E_Menu_Item *mi, int sep);
-void         e_menu_item_check_set(E_Menu_Item *mi, int chk);
-void         e_menu_item_radio_set(E_Menu_Item *mi, int rad);
-void         e_menu_item_radio_group_set(E_Menu_Item *mi, int radg);
-void         e_menu_item_toggle_set(E_Menu_Item *mi, int tog);
-int          e_menu_item_toggle_get(E_Menu_Item *mi);
-void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
-void         e_menu_item_active_set(E_Menu_Item *mi, int active);
+EAPI E_Menu_Item *e_menu_item_new(E_Menu *m);
+EAPI E_Menu_Item *e_menu_item_nth(E_Menu *m, int n);
+EAPI int          e_menu_item_num_get(E_Menu_Item *mi);
+EAPI void         e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon);
+EAPI void         e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key);
+EAPI void         e_menu_item_label_set(E_Menu_Item *mi, char *label);
+EAPI void         e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub);
+EAPI void         e_menu_item_separator_set(E_Menu_Item *mi, int sep);
+EAPI void         e_menu_item_check_set(E_Menu_Item *mi, int chk);
+EAPI void         e_menu_item_radio_set(E_Menu_Item *mi, int rad);
+EAPI void         e_menu_item_radio_group_set(E_Menu_Item *mi, int radg);
+EAPI void         e_menu_item_toggle_set(E_Menu_Item *mi, int tog);
+EAPI int          e_menu_item_toggle_get(E_Menu_Item *mi);
+EAPI void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 
-void         e_menu_idler_before(void);
+EAPI void         e_menu_idler_before(void);
     
 #endif
