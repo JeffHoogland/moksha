@@ -22,6 +22,7 @@ default_gadman.edc \
 default_ibar.edc \
 default_menu.edc \
 default_pager.edc \
+default_resize.edc \
 default_temperature.edc
 
 default.eet: Makefile $(EXTRA_DIST)

@@ -1,0 +1,53 @@
+images {
+   image: "e17_menu_bg.png" COMP;
+}
+group {
+   name: "widgets/border/default/resize";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	       border: 3 3 3 3;
+	    }
+	 }
+      }
+      part {
+	 name: "text";
+	 type: TEXT;
+         effect: SHADOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 255;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   4   4;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -5  -5;
+	    }
+            color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text: "WIDTHxHEIGHT";
+	       font: "Edje Vera";
+	       size: 10;
+	       align: 0.5 0.5;
+	       min: 1 1;
+	    }
+	 }
+      }
+   }
+}

@@ -31,6 +31,7 @@ collections {
 #include "default_ibar.edc"
 #include "default_menu.edc"
 #include "default_pager.edc"
+#include "default_resize.edc"
 #include "default_temperature.edc"
 }
 

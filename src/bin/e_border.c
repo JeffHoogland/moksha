@@ -2153,6 +2153,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.max_h > 32767) bd->client.icccm.max_h = 32767;
 	if (bd->client.icccm.base_w > 32767) bd->client.icccm.base_w = 32767;
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
+	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
+	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
 	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i\n",
 	       bd->client.win,
 	       bd->client.icccm.min_w, bd->client.icccm.min_h,
@@ -3156,7 +3158,7 @@ _e_border_resize_begin(E_Border *bd)
    resize_obj = edje_object_add(ecore_evas_get(resize_ee));
    edje_object_file_set(resize_obj, e_path_find(path_themes, "default.eet"),
 			"widgets/border/default/resize");
-   snprintf(buf, sizeof(buf) - 1, "%dx%d", bd->w, bd->h);
+   snprintf(buf, sizeof(buf), "9999x9999");
    edje_object_part_text_set(resize_obj, "text", buf);
 
    edje_object_size_min_calc(resize_obj, &w, &h);
@@ -3164,6 +3166,11 @@ _e_border_resize_begin(E_Border *bd)
    evas_object_resize(resize_obj, w, h);
    evas_object_show(resize_obj);
 
+   snprintf(buf, sizeof(buf), "%ix%i",
+	    (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
+	    (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
+   edje_object_part_text_set(resize_obj, "text", buf);
+   
    ecore_evas_move(resize_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);
    ecore_evas_resize(resize_ee, w, h);
 
@@ -3182,6 +3189,8 @@ _e_border_resize_update(E_Border *bd)
 {
    char buf[40];
 
-   snprintf(buf, sizeof(buf) - 1, "%dx%d", bd->w, bd->h);
+   snprintf(buf, sizeof(buf) - 1, "%ix%i",
+	    (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
+	    (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
    edje_object_part_text_set(resize_obj, "text", buf);
 }
