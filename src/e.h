@@ -647,7 +647,7 @@ void e_entry_set_focus(E_Entry *entry, int focused);
 void e_entry_set_text(E_Entry *entry, const char *text);
 const char *e_entry_get_text(E_Entry *entry);
 void e_entry_set_cursor(E_Entry *entry, int cursor_pos);
-int e_entry_get_curosr(E_Entry *entry);
+int e_entry_get_cursor(E_Entry *entry);
 void e_entry_set_changed_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
 void e_entry_set_enter_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);
 void e_entry_set_focus_in_callback(E_Entry *entry, void (*func) (E_Entry *_entry, void *_data), void *data);

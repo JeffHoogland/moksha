@@ -5,7 +5,9 @@ E_Pack_Object_Class classes[PACK_MAX];
 void
 e_pack_object_init(void)
 {
+   /* all nulls */
    ZERO(classes, E_Pack_Object_Class, PACK_MAX);
+   /* set up the entry widget class - we could pack them now */
    classes[PACK_ENTRY] = (E_Pack_Object_Class)
      {
 	e_entry_new,
@@ -35,6 +37,6 @@ e_pack_object_new(int type)
    ZERO(po, E_Pack_Object, 1);
    po->type = type;
    po->class = classes[type];
-   po->data.object = po->class.new();
+   if (po->class.new) po->data.object = po->class.new();
    return po;
 }

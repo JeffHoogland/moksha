@@ -701,7 +701,7 @@ e_entry_set_cursor(E_Entry *entry, int cursor_pos)
 }
 
 int
-e_entry_get_curosr(E_Entry *entry)
+e_entry_get_cursor(E_Entry *entry)
 {
    return entry->cursor_pos;
 }
