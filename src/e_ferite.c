@@ -1,6 +1,14 @@
-#include "debug.h"
+/*#include "debug.h"*/
 #include "e_ferite.h"
 #include "e_ferite_gen_header.h"
+
+#ifdef D /* until ferite doesn't pullte the D(ebug) macro */
+# undef D
+# define D(x,...)
+# define D_ENTER
+# define D_RETURN
+# define D_RETURN_(x)
+#endif
 
 void e_ferite_init(void)
 {
