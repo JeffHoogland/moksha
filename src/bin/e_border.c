@@ -2154,11 +2154,12 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
 	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
 	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
-	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i\n",
+	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i\n",
 	       bd->client.win,
 	       bd->client.icccm.min_w, bd->client.icccm.min_h,
 	       bd->client.icccm.max_w, bd->client.icccm.max_h,
-	       bd->client.icccm.base_w, bd->client.icccm.base_h);
+	       bd->client.icccm.base_w, bd->client.icccm.base_h,
+	       bd->client.icccm.step_w, bd->client.icccm.step_h);
 
 	bd->client.icccm.fetch.size_pos_hints = 0;
      }
@@ -2747,7 +2748,6 @@ _e_border_resize_handle(E_Border *bd)
 
    tw = bd->w;
    th = bd->h;
-   _e_border_resize_limit(bd, &w, &h);
 
    if ((bd->resize_mode == RESIZE_TL) ||
        (bd->resize_mode == RESIZE_L) ||
@@ -2765,6 +2765,7 @@ _e_border_resize_handle(E_Border *bd)
 	 &new_x, &new_y, &new_w, &new_h);
    evas_list_free(skiplist);
 
+   _e_border_resize_limit(bd, &new_w, &new_h);
    e_border_move_resize(bd, new_x, new_y, new_w, new_h);
 }
 
