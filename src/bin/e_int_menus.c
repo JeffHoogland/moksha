@@ -129,7 +129,6 @@ e_int_menus_desktops_new(void)
 
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_desktops_pre_cb, NULL);
-
    return m;
 }
    
@@ -271,6 +270,7 @@ _e_int_menus_apps_free_hook(void *obj)
    
    m = obj;
    a = e_object_data_get(E_OBJECT(m));
+   /* note: app objects are shared so we ALWAYS unref not del! */
    if (a) e_object_unref(E_OBJECT(a));
 }
 
