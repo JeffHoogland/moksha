@@ -32,6 +32,8 @@ ISSUES:
 * virtual desktops need an overhaul. hacked in waay too quickly.
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
+* valgrind e17 and address anything it complains about that is valid
+* valgrind complains of dropshadow (accessing freed data) - i knwo what it is, but it shouldnt be happening. will fix.
 
 <add more issues as they are found>
 
