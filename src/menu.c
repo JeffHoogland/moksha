@@ -1,4 +1,5 @@
-#include "e.h"
+#include "menu.h"
+#include "config.h"
 
 static Evas_List open_menus = NULL;
 static Evas_List menus = NULL;

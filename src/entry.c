@@ -1,4 +1,7 @@
-#include "e.h"
+#include "entry.h"
+#include "background.h"
+#include "config.h"
+#include "util.h"
 
 static Evas_List entries;
 
@@ -273,7 +276,7 @@ e_entry_configure(E_Entry *entry)
    evas_resize(entry->evas, entry->event_box, entry->w - p1l - p1r - p2l - p2r, entry->h - p1t - p1b - p2t - p2b);
    if ((entry->buffer) && (entry->buffer[0] != 0) && (entry->focused))
      {
-	int tx, ty, tw, th;
+	double tx, ty, tw, th;
 	
 	if (entry->cursor_pos < strlen(entry->buffer))
 	  {
@@ -321,7 +324,7 @@ e_entry_configure(E_Entry *entry)
    evas_move(entry->evas, entry->text, entry->x + entry->scroll_pos + p1l + p2l, entry->y + p1t + p2t);
    if (entry->select.start >= 0)
      {
-	int x1, y1, x2, tw, th;
+	double x1, y1, x2, tw, th;
 	
 	evas_text_at(entry->evas, entry->text, entry->select.start, &x1, &y1, NULL, NULL);
 	if (entry->select.start + entry->select.length <= strlen(entry->buffer))

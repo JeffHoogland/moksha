@@ -1,4 +1,13 @@
-#include "e.h"
+#include <libefsd.h>
+
+#include "view.h"
+#include "background.h"
+#include "config.h"
+#include "border.h"
+#include "menu.h"
+#include "menubuild.h"
+#include "fs.h"
+#include "util.h"
 
 static Evas_List views = NULL;
 static Eevent *current_ev = NULL;
@@ -9,6 +18,9 @@ static Ev_Key_Modifiers range_select_mod = EV_KEY_MODIFIER_CTRL;
 static void e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_idle(void *data);
 static void e_wheel(Eevent * ev);
 static void e_key_down(Eevent * ev);
@@ -28,6 +40,8 @@ static void e_focus_out(Eevent * ev);
 static void e_delete(Eevent * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
 static void e_view_handle_fs_restart(void *data);
+static void e_view_resort_timeout(int val, void *data);
+static int  e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2);
 
 void
 e_view_selection_update(E_View *v)
@@ -1419,7 +1433,7 @@ e_view_icon_apply_xy(E_Icon *ic)
 }
 
 static int
-e_view_restart_alphabetical_qsort_cb(void *data1, void *data2)
+e_view_restart_alphabetical_qsort_cb(const void *data1, const void *data2)
 {
    E_Icon *ic, *ic2;
    

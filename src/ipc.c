@@ -1,4 +1,5 @@
-#include "e.h"
+#include "ipc.h"
+#include "config.h"
 
 struct _coords {
   int xid;

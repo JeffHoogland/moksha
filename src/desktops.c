@@ -1,4 +1,11 @@
-#include "e.h"
+#include "desktops.h"
+#include "config.h"
+#include "actions.h"
+#include "border.h"
+#include "background.h"
+#include "view.h"
+#include "icccm.h"
+#include "util.h"
 
 static Evas_List desktops = NULL;
 static Window    e_base_win = 0;
@@ -164,20 +171,25 @@ e_desktops_init_file_display(E_Desktop *desk)
    desk->view->size.w = desk->real.w;
    desk->view->size.h = desk->real.h;
    desk->view->is_desktop = 1;
+
    /* FIXME: load bg here */
-     {
-	char buf[4096];
-	
-	sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
-	desk->view->bg = e_background_load(buf);
-	printf("**** load %s = %p\n", buf, desk->view->bg);
-     }
+   {
+     char buf[4096];
+     
+     sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+     desk->view->bg = e_background_load(buf);
+     printf("**** load %s = %p\n", buf, desk->view->bg);
+   }
+
    /* fixme: later */
    /* uncomment this and comment out the next line for some tress testing */
-/*   desk->view->dir = strdup("/dev"); */
-   desk->view->dir = strdup(e_file_home());
+   /* desk->view->dir = strdup("/dev");  */
+   desk->view->dir = strdup(e_file_home()); 
    e_view_realize(desk->view);
-   if (desk->view->options.back_pixmap) e_view_update(desk->view);
+
+   if (desk->view->options.back_pixmap)
+     e_view_update(desk->view);
+
    desk->win.desk = desk->view->win.base;
    e_window_reparent(desk->win.desk, desk->win.container, 0, 0);
    e_window_show(desk->win.desk);

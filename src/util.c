@@ -1,4 +1,4 @@
-#include "e.h"
+#include "util.h"
 
 time_t
 e_file_modified_time(char *file)

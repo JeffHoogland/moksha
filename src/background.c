@@ -1,4 +1,35 @@
-#include "e.h"
+#include "background.h"
+
+typedef struct _E_Background_Layer
+{
+   int mode;
+   int type;
+   int inlined;
+   struct {
+      float x, y;
+   } scroll;
+   struct {
+      float x, y;
+   } pos;
+   struct {
+      float w, h;
+      struct {
+	 int w, h;
+      } orig;
+   } size, fill;
+   char *color_class;
+   char *file;
+   double angle;
+   struct {
+      int r, g, b, a;
+   } fg, bg;
+   
+   double x, y, w, h, fw, fh;
+   
+   Evas_Object obj;
+}
+E_Background_Layer;
+
 
 void
 e_background_free(E_Background *bg)
@@ -89,7 +120,7 @@ e_background_load(char *file)
 	sprintf(buf, "/layers/%i/fill.h", i);  e_db_float_get(db, buf, &(bl->fill.h));
 	sprintf(buf, "/layers/%i/fill.orig.w", i); e_db_int_get(db, buf, &(bl->fill.orig.w));
 	sprintf(buf, "/layers/%i/fill.orig.h", i); e_db_int_get(db, buf, &(bl->fill.orig.h));
-	sprintf(buf, "/layers/%i/angle", i);  e_db_float_get(db, buf, &(bl->angle));
+	sprintf(buf, "/layers/%i/angle", i);  e_db_float_get(db, buf, (float*)&(bl->angle));
 	sprintf(buf, "/layers/%i/fg.r", i); e_db_int_get(db, buf, &(bl->fg.r));
 	sprintf(buf, "/layers/%i/fg.g", i); e_db_int_get(db, buf, &(bl->fg.g));
 	sprintf(buf, "/layers/%i/fg.b", i); e_db_int_get(db, buf, &(bl->fg.b));

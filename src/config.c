@@ -1,4 +1,5 @@
-#include "e.h"
+#include "config.h"
+#include "util.h"
 
 static char cfg_root[] = "";
 

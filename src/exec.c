@@ -1,4 +1,6 @@
-#include "e.h"
+#include "exec.h"
+#include "desktops.h"
+#include "util.h"
 
 static int e_argc = 0;
 static char **e_argv = NULL;
@@ -70,7 +72,7 @@ e_exec_run_in_dir(char *exe, char *dir)
 }
 
 pid_t
-e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path)
+e_exec_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path)
 {
    static int launch_id = 0;
    char preload_paths[4096];

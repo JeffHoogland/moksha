@@ -1,4 +1,10 @@
-#include "e.h"
+#include "border.h"
+#include "config.h"
+#include "actions.h"
+#include "desktops.h"
+#include "resist.h"
+#include "icccm.h"
+#include "util.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -1196,7 +1202,7 @@ e_border_adopt(Window win, int use_client_pos)
 	b->changed = 1;
      }
      {
-	int x, y, w, h;
+	int x, y;
         int pl, pr, pt, pb;
 	
 	pl = pr = pt = pb = 0;

@@ -1,4 +1,6 @@
-#include "e.h"
+#include "resist.h"
+#include "config.h"
+#include "desktops.h"
 
 void
 e_resist_border(E_Border *b)

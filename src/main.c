@@ -1,4 +1,14 @@
-#include "e.h"
+#include "actions.h"
+#include "border.h"
+#include "config.h"
+#include "desktops.h"
+#include "exec.h"
+#include "fs.h"
+#include "entry.h"
+#include "keys.h"
+#include "ipc.h"
+#include "menu.h"
+#include "view.h"
 #include <X11/Xproto.h>
 
 #ifdef E_PROF
@@ -50,15 +60,46 @@ setup(void)
 int
 main(int argc, char **argv)
 {
+   char *display = "0:0";
+   int   i;
+
    atexit(cb_exit);
    e_exec_set_args(argc, argv);
    
    e_config_init();
-   if (!e_display_init(NULL))
+
+   /* Check command line options here: */
+   for (i = 1; i < argc; i++)
+     {
+       if ((!strcmp("-display", argv[i])) && (argc - i > 1))
+	 {
+	   display = argv[++i];
+	 }
+       else if ((!strcmp("-help", argv[i]))
+		|| (!strcmp("--help", argv[i]))
+		|| (!strcmp("-h", argv[i])) || (!strcmp("-?", argv[i])))
+	 {
+	   printf("enlightenment options:                      \n"
+		  "\t-display display_name                     \n"
+		  "\t[-v | -version | --version]               \n");
+	   exit(0);
+	 }
+       else if ((!strcmp("-v", argv[i]))
+		|| (!strcmp("-version", argv[i]))
+		|| (!strcmp("--version", argv[i]))
+		|| (!strcmp("-v", argv[i])))
+	 {
+	   printf("Enlightenment Version: %s\n", ENLIGHTENMENT_VERSION);
+	   exit(0);
+	 }
+     }
+
+   if (!e_display_init(display))
      {
 	fprintf(stderr, "cannot connect to display!\n");
 	exit(1);
      }
+
    e_ev_signal_init();
    e_event_filter_init();
    e_ev_x_init();
@@ -75,7 +116,7 @@ main(int argc, char **argv)
    e_fs_init();
    e_desktops_init();
    e_border_init();
-   e_actions_init();
+   e_action_init();
    e_menu_init();
    e_view_init();
    e_entry_init();

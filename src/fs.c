@@ -1,4 +1,5 @@
-#include "e.h"
+#include "fs.h"
+#include "exec.h"
 
 static EfsdConnection     *ec = NULL;
 static Evas_List           fs_handlers = NULL;
@@ -111,6 +112,8 @@ e_fs_add_restart_handler(void (*func) (void *data), void *data)
    rs->func = func;
    rs->data = data;
    fs_restart_handlers = evas_list_append(fs_restart_handlers, rs);
+
+   return rs;
 }
 
 void
@@ -133,8 +136,6 @@ e_fs_add_event_handler(void (*func) (EfsdEvent *ev))
 void
 e_fs_init(void)
 {
-   int i;
-
    e_event_filter_handler_add(EV_CHILD, e_fs_child_handle);   
    _e_fs_restarter(0, NULL);
 }

@@ -1,4 +1,5 @@
-#include "e.h"
+#include "keys.h"
+#include "actions.h"
 
 static void e_key_down(Eevent * ev);
 static void e_key_up(Eevent * ev);

@@ -1,4 +1,11 @@
-#include "e.h"
+#include "actions.h"
+#include "config.h"
+#include "border.h"
+#include "desktops.h"
+#include "exec.h"
+#include "icccm.h"
+#include "keys.h"
+#include "view.h"
 
 static Evas_List action_protos = NULL;
 static Evas_List current_actions = NULL;
@@ -56,6 +63,14 @@ static void e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, in
 static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
 static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+
+#define SET_BORDER_GRAVITY(_b, _grav) \
+e_window_gravity_set(_b->win.container, _grav); \
+e_window_gravity_set(_b->win.input, _grav); \
+e_window_gravity_set(_b->win.l, _grav); \
+e_window_gravity_set(_b->win.r, _grav); \
+e_window_gravity_set(_b->win.t, _grav); \
+e_window_gravity_set(_b->win.b, _grav);
 
 static void
 _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o)
@@ -343,7 +358,7 @@ e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry)
 {
    Evas_List l;
 
-   e_actions_del_timer_object(o);
+   e_action_del_timer_object(o);
    again:
    for (l = current_actions; l; l = l->next)
      {
@@ -389,7 +404,7 @@ e_action_add_proto(char *action,
 }
 
 void
-e_actions_del_timer(void *o, char *name)
+e_action_del_timer(void *o, char *name)
 {
    Evas_List l;
    
@@ -414,7 +429,7 @@ e_actions_del_timer(void *o, char *name)
 }
 
 void
-e_actions_add_timer(void *o, char *name)
+e_action_add_timer(void *o, char *name)
 {
    E_Active_Action_Timer *at;
    
@@ -425,7 +440,7 @@ e_actions_add_timer(void *o, char *name)
 }
 
 void
-e_actions_del_timer_object(void *o)
+e_action_del_timer_object(void *o)
 {
    Evas_List l;
    
@@ -447,7 +462,7 @@ e_actions_del_timer_object(void *o)
 }
 
 void
-e_actions_init(void)
+e_action_init(void)
 {
    e_action_add_proto("Window_Move", e_act_move_start, e_act_move_stop, e_act_move_go);
    e_action_add_proto("Window_Resize", e_act_resize_start, e_act_resize_stop, e_act_resize_go);
@@ -473,12 +488,11 @@ e_actions_init(void)
 }
 
 
-
-
-
-
 /* FIXME: these REALLY need to go into other file(s) but it's not worht it */
 /* yet at this point. it can be done later */
+
+/* Erm is that really true? They're all static, all called through the
+   above functions -- so it's good to have them encapsulated here? --cK */
 
 static void 
 e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
@@ -923,8 +937,8 @@ e_act_cb_shade(int val, void *data)
 	OBJ_REF(b);
 	t = e_get_time();
 	e_window_gravity_set(b->win.client, SouthWestGravity);
-	e_actions_del_timer(b, "shader");
-	e_actions_add_timer(b, "shader");
+	e_action_del_timer(b, "shader");
+	e_action_add_timer(b, "shader");
      }
    
    dif = e_get_time() - t;   
@@ -939,7 +953,7 @@ e_act_cb_shade(int val, void *data)
      e_add_event_timer("shader", 0.01, e_act_cb_shade, 1, data);
    else
      {
-	e_actions_del_timer(b, "shader");
+	e_action_del_timer(b, "shader");
 	e_window_gravity_reset(b->win.client);
 	OBJ_UNREF(b);
      }
@@ -963,8 +977,8 @@ e_act_cb_unshade(int val, void *data)
 	OBJ_REF(b);
 	t = e_get_time();
 	e_window_gravity_set(b->win.client, SouthWestGravity);
-	e_actions_del_timer(b, "shader");
-	e_actions_add_timer(b, "shader");
+	e_action_del_timer(b, "shader");
+	e_action_add_timer(b, "shader");
      }
    
    dif = e_get_time() - t;   
@@ -980,7 +994,7 @@ e_act_cb_unshade(int val, void *data)
      e_add_event_timer("shader", 0.01, e_act_cb_unshade, 1, data);
    else
      {
-	e_actions_del_timer(b, "shader");
+	e_action_del_timer(b, "shader");
 	e_window_gravity_reset(b->win.client);
 	OBJ_UNREF(b);
      }

@@ -1,4 +1,7 @@
-#include "e.h"
+#include "menu.h"
+#include "menubuild.h"
+#include "exec.h"
+#include "util.h"
 
 Evas_List build_menus = NULL;
 
