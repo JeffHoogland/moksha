@@ -6,10 +6,11 @@
 /* FIXME: corner case if module is sized to full screen... cant stop edit or */
 /*        re-enter edit mode (cant access root menu) */
 
-/* FIXME: handle edge move/changes */
 /* FIXME: handle drag from zone to zone */
 /* FIXME: handle save */
 /* FIXME: handle load */
+/* FIXME: start move - raise and callback */
+/* FIXME: if u set align, or minmax size or edge then figure out new-coords */
 /* FIXME: handle move resist */
 /* FIXME: handle resize resist */
 
@@ -570,6 +571,9 @@ _e_gadman_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    if (_e_gadman_client_is_being_modified(gmc)) return;
    _e_gadman_client_down_store(gmc);
    gmc->moving = 1;
+   evas_object_raise(gmc->control_object);
+   evas_object_raise(gmc->event_object);
+   /* FIXME: call callback to raise */
 }
 
 static void
@@ -600,6 +604,19 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	E_Gadman_Edge ne;
 	
 	ne = gmc->edge;
+	
+	if (!(gmc->policy & E_GADMAN_POLICY_FIXED_ZONE))
+	  {
+	     E_Zone *nz;
+	     
+	     nz = e_container_zone_at_point_get(gmc->zone->container, x, y);
+	     if (nz != gmc->zone)
+	       {
+		  gmc->zone = nz;
+		  new_zone = 1;
+	       }
+	  }
+	
 	xr = (double)(x - gmc->zone->x) / (double)gmc->zone->w;
 	yr = (double)(y - gmc->zone->y) / (double)gmc->zone->h;
 	
@@ -668,6 +685,17 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
 	  gmc->y = gmc->down_store_y;
 	gmc->w = gmc->down_store_w;
 	gmc->h = gmc->down_store_h;
+	if (!(gmc->policy & E_GADMAN_POLICY_FIXED_ZONE))
+	  {
+	     E_Zone *nz;
+	     
+	     nz = e_container_zone_at_point_get(gmc->zone->container, x, y);
+	     if (nz != gmc->zone)
+	       {
+		  gmc->zone = nz;
+		  new_zone = 1;
+	       }
+	  }
 	if (gmc->x < gmc->zone->x)
 	  gmc->x = gmc->zone->x;
 	else if ((gmc->x + gmc->w) > (gmc->zone->x + gmc->zone->w))
@@ -680,7 +708,7 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    _e_gadman_client_geometry_to_align(gmc);
    if (new_zone)
      {
-	/* FIXME: callback for edge change */
+	/* FIXME: callback for zone change */
      }
    if (new_edge)
      {

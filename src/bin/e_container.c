@@ -190,10 +190,27 @@ e_container_lower(E_Container *con)
 Evas_List *
 e_container_clients_list_get(E_Container *con)
 {
-    E_OBJECT_CHECK_RETURN(con, NULL);
-    return con->clients;
+   E_OBJECT_CHECK_RETURN(con, NULL);
+   return con->clients;
 }
    
+E_Zone *
+e_container_zone_at_point_get(E_Container *con, int x, int y)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK_RETURN(con, NULL);
+   for (l = con->zones; l; l = l->next)
+     {
+	E_Zone *zone;
+	
+	zone = l->data;
+	if ((E_SPANS_COMMON(zone->x, zone->w, x, 1)) &&
+	    (E_SPANS_COMMON(zone->y, zone->h, y, 1)))
+	  return zone;
+     }
+   return NULL;
+}
 
 E_Container_Shape *
 e_container_shape_add(E_Container *con)
@@ -314,7 +331,6 @@ e_container_shape_rects_get(E_Container_Shape *es)
    E_OBJECT_CHECK_RETURN(es, NULL);
    return es->shape;
 }
-
 
 
 
