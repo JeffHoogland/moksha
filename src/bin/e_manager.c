@@ -168,7 +168,7 @@ _e_manager_free(E_Manager *man)
 	ecore_event_handler_del(h);
      }
    while (man->containers)
-     e_object_unref(E_OBJECT(man->containers->data));
+     e_object_free(E_OBJECT(man->containers->data));
    ecore_x_window_del(man->win);
    managers = evas_list_remove(managers, man);   
    free(man);

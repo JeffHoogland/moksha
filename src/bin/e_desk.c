@@ -40,8 +40,6 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->num = ++desk_count;
    snprintf(name, sizeof(name), "Desktop %d, %d", x, y);
    desk->name = strdup(name);
-   e_object_ref(E_OBJECT(zone));
-
    return desk;
 }
 
@@ -199,7 +197,6 @@ _e_desk_free(E_Desk *desk)
    if (desk->name)
      free(desk->name);
 //   zone->desks = evas_list_remove(zone->desks, desk);
-   e_object_unref(E_OBJECT(desk->zone));
    free(desk);
 }
 

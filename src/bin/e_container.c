@@ -49,7 +49,6 @@ e_container_new(E_Manager *man)
    con = E_OBJECT_ALLOC(E_Container, _e_container_free);
    if (!con) return NULL;
    con->manager = man;
-   e_object_ref(E_OBJECT(con->manager));
    con->manager->containers = evas_list_append(con->manager->containers, con);
    con->w = con->manager->w;
    con->h = con->manager->h;
@@ -321,12 +320,12 @@ e_container_shape_rects_get(E_Container_Shape *es)
 static void
 _e_container_free(E_Container *con)
 {
-   while (con->clients) e_object_del(E_OBJECT(con->clients->data));
+   while (con->clients) e_object_free(E_OBJECT(con->clients->data));
+   while (con->zones) e_object_free(E_OBJECT(con->zones->data));
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
    ecore_x_window_del(con->win);
-   e_object_unref(E_OBJECT(con->manager));
    free(con);
 }
    

@@ -899,7 +899,6 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
-   if (e_object_del_get(E_OBJECT(bd))) return;
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));

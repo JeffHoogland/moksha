@@ -46,7 +46,6 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    zone->h = h;
    zone->num = ++zone_count;
 
-   e_object_ref(E_OBJECT(con));
    con->zones = evas_list_append(con->zones, zone);
    
    if (1)
@@ -199,11 +198,11 @@ e_zone_clients_list_get(E_Zone *zone)
 static void
 _e_zone_free(E_Zone *zone)
 {
-   E_Container *con = zone->container;
-   if (zone->name)
-     free(zone->name);
+   E_Container *con;
+   
+   con = zone->container;
+   if (zone->name) free(zone->name);
    con->zones = evas_list_remove(con->zones, zone);
-   e_object_unref(E_OBJECT(zone->container));
    free(zone);
 }
 
