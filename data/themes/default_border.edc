@@ -1,4 +1,4 @@
-#define BUTTON(NAME, TYPE, REL1X, REL1Y, OFF1X, OFF1Y, TO1, REL2X, REL2Y, OFF2X, OFF2Y, TO2) \
+#define BORDER_BUTTON(NAME, TYPE, REL1X, REL1Y, OFF1X, OFF1Y, TO1, REL2X, REL2Y, OFF2X, OFF2Y, TO2) \
       part { \
 	 name:          NAME"_shadow2"; \
 	 mouse_events:  0; \
@@ -163,6 +163,30 @@
 	    color: 0 0 0 0; \
 	 } \
       }
+
+#define FULL_SIZE_BORDER_BUTTON(TYPE) \
+group { \
+   name:  "widgets/border/default/"TYPE; \
+   parts { \
+      part { \
+	 name:           "whole"; \
+	 type:           RECT; \
+	 description { \
+	    state: "default" 0.0; \
+	    visible: 0; \
+	    rel1 { \
+	       relative: 0.0 0.0; \
+	       offset:   0   0; \
+	    } \
+	    rel2 { \
+	       relative: 1.0 1.0; \
+	       offset:   -1  -1; \
+	    } \
+	 } \
+      } \
+      BORDER_BUTTON("button", TYPE, 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole") \
+   } \
+}
 
 images {
    image: "e17_border1.png" COMP;
@@ -882,9 +906,9 @@ group {
 	 }
       }
 
-      BUTTON("button_0", "close", 0.0, 0.0, 0, 0, "whole", 1.0, 0.0, -1, 23, "whole")
-      BUTTON("button_1", "maximize", 0.0, 0.0, 3, 0, "button_0", 0.0, 1.0, 3, -1, "button_0")
-      BUTTON("button_2", "minimize", 0.0, 0.0, 3, 0, "button_1", 0.0, 1.0, 3, -1, "button_1")
+      BORDER_BUTTON("button_0", "close", 0.0, 0.0, 0, 0, "whole", 1.0, 0.0, -1, 23, "whole")
+      BORDER_BUTTON("button_1", "maximize", 0.0, 0.0, 3, 0, "button_0", 0.0, 1.0, 3, -1, "button_0")
+      BORDER_BUTTON("button_2", "minimize", 0.0, 0.0, 3, 0, "button_1", 0.0, 1.0, 3, -1, "button_1")
 
       part {
 	 name:          "icon";
@@ -1382,120 +1406,9 @@ group {
    }
 }
 
-group {
-   name: "widgets/border/default/close";
-   parts {
-      part {
-	 name:           "whole";
-	 type:           RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }
-	 }
-      }
-      BUTTON("button_0", "close", 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole")
-   }
-}
+FULL_SIZE_BORDER_BUTTON("close")
+FULL_SIZE_BORDER_BUTTON("minimize")
+FULL_SIZE_BORDER_BUTTON("maximize")
+FULL_SIZE_BORDER_BUTTON("shade")
+FULL_SIZE_BORDER_BUTTON("stick")
 
-group {
-   name:  "widgets/border/default/iconify";
-   parts {
-      part {
-	 name:           "whole";
-	 type:           RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }
-	 }
-      }
-      BUTTON("button_1", "minimize", 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole")
-   }
-}
-
-group {
-   name:  "widgets/border/default/maximize";
-   parts {
-      part {
-	 name:           "whole";
-	 type:           RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }
-	 }
-      }
-
-      BUTTON("button_2", "maximize", 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole")
-   }
-}
-
-group {
-   name:  "widgets/border/default/shade";
-   parts {
-      part {
-	 name:           "whole";
-	 type:           RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }
-	 }
-      }
-
-      BUTTON("button_3", "shade", 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole")
-   }
-}
-
-group {
-   name:  "widgets/border/default/stick";
-   parts {
-      part {
-	 name:           "whole";
-	 type:           RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0   0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }
-	 }
-      }
-
-      BUTTON("button_2", "stick", 0.0, 0.0, -3, -3, "whole", 1.0, 1.0, 2, 2, "whole")
-   }
-}
