@@ -193,8 +193,13 @@ e_guides_update(void)
 	
 	if (guides.disp.bg)
 	  {
-	     guides.embed.icon = e_embed_image_object(guides.disp.bg, "Icon", guides.disp.evas, guides.disp.icon);
-	     guides.embed.text = e_embed_text(guides.disp.bg, "Text", guides.disp.evas, guides.disp.text, 0, 0);
+	     if (!guides.embed.icon)
+	       {
+		  if (guides.embed.icon) e_embed_free(guides.embed.icon);
+		  if (guides.embed.text) e_embed_free(guides.embed.text);
+		  guides.embed.icon = e_embed_image_object(guides.disp.bg, "Icon", guides.disp.evas, guides.disp.icon);
+		  guides.embed.text = e_embed_text(guides.disp.bg, "Text", guides.disp.evas, guides.disp.text, 0, 0);
+	       }
 	     ebits_get_real_min_size(guides.disp.bg, &mw, &mh);
 	  }
 	
