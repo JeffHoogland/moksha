@@ -3,6 +3,8 @@
 void
 e_icon_free(E_Icon *icon)
 {
+   IF_FREE(icon->file);
+   IF_FREE(icon->icon);
    FREE(icon);
 }
 
@@ -51,6 +53,8 @@ e_icon_realize(E_Icon *icon)
 void
 e_icon_unrealize(E_Icon *icon)
 {
+   if (icon->obj.icon) evas_del_object(icon->view->evas, icon->obj.icon);
+   if (icon->obj.filename) evas_del_object(icon->view->evas, icon->obj.filename);
 }
 
 void

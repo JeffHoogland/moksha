@@ -405,6 +405,23 @@ e_view_file_deleted(int id, char *file)
    printf("e_view_file_deleted(%i, \"%s\");\n", id, file);
    v = e_view_find_by_monitor_id(id);
    if (!v) return;
+   icon = e_view_find_icon_by_file(v, file);
+   if (icon) e_view_del_icon(v, icon);
+}
+
+E_Icon *
+e_view_find_icon_by_file(E_View *v, char *file)
+{
+   Evas_List l;
+   
+   for (l = v->icons; l; l = l->next)
+     {
+	E_Icon *icon;
+	
+	icon = l->data;
+	if (!strcmp(file, icon->file)) return icon;
+     }
+   return NULL;
 }
 
 static void
@@ -577,6 +594,7 @@ e_view_del_icon(E_View *v, E_Icon *icon)
 {
    if (!icon->view) return;
    e_icon_unrealize(icon);
+   OBJ_UNREF(icon);
    icon->view = NULL;
    icon->changed = 1;
    v->changed = 1;
