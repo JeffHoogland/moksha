@@ -5,6 +5,7 @@ button_in.png \
 button_out.png \
 e.png \
 error_bg.png \
-pointer.png
+pointer.png \
+pointer_mono.png
 
 EXTRA_DIST = $(files_DATA)
