@@ -557,16 +557,13 @@ e_view_handle_fs(EfsdEvent *ev)
 	switch (ev->efsd_filechange_event.changetype)
 	  {
 	   case EFSD_FILE_CREATED:
-	     e_view_file_added(ev->efsd_filechange_event.id, 
-			       ev->efsd_filechange_event.file);
+	     e_view_file_added(efsd_reply_id(ev), efsd_reply_filename(ev));
 	     break;
 	   case EFSD_FILE_EXISTS:
-	     e_view_file_added(ev->efsd_filechange_event.id, 
-			       ev->efsd_filechange_event.file);
+	     e_view_file_added(efsd_reply_id(ev), efsd_reply_filename(ev));
 	     break;
 	   case EFSD_FILE_DELETED:
-	     e_view_file_deleted(ev->efsd_filechange_event.id, 
-				 ev->efsd_filechange_event.file);
+	     e_view_file_deleted(efsd_reply_id(ev), efsd_reply_filename(ev));
 	     break;
 	   case EFSD_FILE_CHANGED:
 /*	     printf("EFSD_CHANGE_CHANGED: %i %s\n",
@@ -582,11 +579,10 @@ e_view_handle_fs(EfsdEvent *ev)
 	       {
 		  E_View *v;
 		  
-		  v = e_view_find_by_monitor_id(ev->efsd_filechange_event.id);
+		  v = e_view_find_by_monitor_id(efsd_reply_id(ev));
 		  if (v) v->is_listing = 0;
 		  printf("EFSD_CHANGE_END_EXISTS: %i %s\n",
-			 ev->efsd_filechange_event.id,
-			 ev->efsd_filechange_event.file);	     
+			 efsd_reply_id(ev), efsd_reply_filename(ev));
 	       }
 	     break;
 	   default:
@@ -615,7 +611,7 @@ e_view_handle_fs(EfsdEvent *ev)
 	       {
 		  E_Icon *icon;
 		  
-		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.files[0]);
+		  icon = e_view_find_icon_by_path(efsd_reply_filename(ev));
 		  if (icon)
 		    {
 		       /* figure out icons to use */
@@ -635,7 +631,7 @@ e_view_handle_fs(EfsdEvent *ev)
 		  
 		  st = (struct stat*) ev->efsd_reply_event.data;
 		  
-		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.files[0]);
+		  icon = e_view_find_icon_by_path(efsd_reply_filename(ev));
 		  if (icon)
 		    {
 		       char f[4096];
@@ -686,7 +682,7 @@ e_view_handle_fs(EfsdEvent *ev)
 			    
 			    icon = ll->data;
 			    
-			    if (icon->info.link_get_id == ev->efsd_reply_event.command.efsd_file_cmd.id)
+			    if (icon->info.link_get_id == efsd_reply_id(ev))
 			      {
 				 IF_FREE(icon->info.link);
 				 icon->info.link = malloc(ev->efsd_reply_event.data_len + 1);
@@ -712,12 +708,10 @@ e_view_handle_fs(EfsdEvent *ev)
 	   case EFSD_CMD_GETMETA:
 	     break;
 	   case EFSD_CMD_STARTMON_DIR:
-	     printf("Startmon event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
+	     printf("Startmon event %i\n", efsd_reply_id(ev));
 	     break;
 	   case EFSD_CMD_STARTMON_FILE:
-	     printf("Startmon file event %i\n",
-		    ev->efsd_reply_event.command.efsd_file_cmd.id);	     
+	     printf("Startmon file event %i\n", efsd_reply_id(ev));
 	     break;
 	   case EFSD_CMD_STOPMON:
 	     break;
