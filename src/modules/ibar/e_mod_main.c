@@ -487,6 +487,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    e_gadman_client_align_set(ibb->gmc, 0.5, 1.0);
    e_gadman_client_resize(ibb->gmc, 400, 40);
    e_gadman_client_change_func_set(ibb->gmc, _ibar_bar_cb_gmc_change, ibb);
+   e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_BOTTOM);
    e_gadman_client_load(ibb->gmc);
 
    evas_event_thaw(ibb->evas);
