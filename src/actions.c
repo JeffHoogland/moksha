@@ -1088,9 +1088,12 @@ e_act_raise_lower_start (void *o, E_Action *a, void *data, int x, int y, int rx,
 static void 
 e_act_exec_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
-   E_Border *b;
+   char *exe;
    
-   b = o;
+   exe = (char *) a->params;
+   if(!exe) return;
+   printf("exe: %s\n",exe);
+   e_exec_run(exe);
    return;
    UN(a);
    UN(data);
@@ -1098,6 +1101,7 @@ e_act_exec_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    UN(y);
    UN(rx);
    UN(ry);
+   UN(o);
 }
 
 

@@ -6,6 +6,7 @@ static void e_scrollbar_setup_bits(E_Scrollbar *sb);
 static void
 e_scrollbar_recalc(E_Scrollbar *sb)
 {
+   sb = NULL;
 }
 
 static void
@@ -13,6 +14,7 @@ e_scrollbar_setup_bits(E_Scrollbar *sb)
 {
 /*	sb->base = ebits_load("");*/
 /*	sb->bar = ebits_load("");*/
+   sb = NULL;
 }
 
 E_Scrollbar *
