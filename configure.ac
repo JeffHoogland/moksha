@@ -253,6 +253,7 @@ lib/Makefile
 client/Makefile
 intl/Makefile
 po/Makefile.in
+tools/Makefile
 doc/Makefile
 doc/kernel-doc
 doc/html-customizations.dsl
