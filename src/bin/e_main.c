@@ -405,7 +405,7 @@ _e_main_dirs_init(void)
      }
    
    /* FIXME: THIS is a hack to get people started!!! */
-   snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eet", homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/eterm.eapp", homedir);
    if (!e_file_exists(buf))
      {
 	printf("GETTING YOU STARTED!\n");
