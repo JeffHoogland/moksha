@@ -224,6 +224,9 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_evas_shutdown);
    
+	 
+   /*** Finished loading subsystems, Loading WM Specifics ***/
+	 
    /* setup directories we will be using for configurations sotrage etc. */
    if (!_e_main_dirs_init())
      {
@@ -250,9 +253,15 @@ main(int argc, char **argv)
    
    /* setup edje to animate @ e_config->framerate frames per sec. */
    edje_frametime_set(1.0 / e_config->framerate);
-   /* FIXME: this is just appending Kochi if Vera doesnt have it. We need
-    * a full config support subsystem for this */
-   edje_fontset_append_set("Kochi-Gothic,Baekmuk-Dotum");
+
+   /* init font system */
+   if (!e_font_init())
+     {
+	e_error_message_show("Enlightenment cannot set up its font system.");
+        _e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_font_shutdown);
+   e_font_apply();
    e_canvas_recache();
    
    /* setup init status window/screen */
@@ -379,7 +388,7 @@ main(int argc, char **argv)
    return 0;
 }
 
-/* FIXME: make save to delete within a callback */
+/* FIXME: make safe to delete within a callback */
 E_Before_Idler *
 e_main_idler_before_add(int (*func) (void *data), void *data, int once)
 {

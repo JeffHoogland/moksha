@@ -33,3 +33,4 @@
 #include "e_xinerama.h"
 #include "e_table.h"
 #include "e_layout.h"
+#include "e_font.h"

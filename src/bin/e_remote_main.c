@@ -36,10 +36,12 @@ static int reply_expect = 0;
 #define SIMPLE_REQ     0
 #define SIMPLE_STR_REQ 1
 #define FULL_FUNC      2
+#define MULTI_STR_REQ  3
 
 #define OREQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
 #define OSTR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
 #define OFNC(opt, desc, param, fn, rep) {opt, desc, param, rep, SIMPLE_FUNC, 0, fn}
+#define OMUL(opt, desc, ipc, rep, argc) {opt, desc, argc, rep, MULTI_STR_REQ, ipc, NULL}
 
 E_IPC_Opt_Handler handlers[] =
 {
@@ -49,6 +51,17 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
    OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
    OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
+   OSTR("-font-fallback-remove", "Remove OPT1 from the fontset", E_IPC_OP_FONT_FALLBACK_REMOVE, 0),
+   OSTR("-font-fallback-prepend", "Prepend OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_PREPEND, 0),
+   OSTR("-font-fallback-append", "Append OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_APPEND, 0),
+   OREQ("-font-apply", "Apply changes made to the font system", E_IPC_OP_FONT_APPLY, 0),
+   OREQ("-font-fallback-list", "List the fallback fonts in order", E_IPC_OP_FONT_FALLBACK_LIST, 1),
+   OREQ("-font-available-list", "List available fonts", E_IPC_OP_FONT_AVAILABLE_LIST, 1),
+   OREQ("-font-fallback-clear", "Clear font fallback list", E_IPC_OP_FONT_FALLBACK_CLEAR, 0),
+   OSTR("-font-default-get", "List the default font associated with OPT1", E_IPC_OP_FONT_DEFAULT_GET, 1),
+   OSTR("-font-default-remove", "Remove the default text class OPT1", E_IPC_OP_FONT_DEFAULT_REMOVE, 0),
+   OREQ("-font-default-list", "List all configured text classes", E_IPC_OP_FONT_DEFAULT_LIST, 1),
+   OMUL("-font-default-set", "Set textclass (OPT1) font (OPT2) and size (OPT3)", E_IPC_OP_FONT_DEFAULT_SET, 0, 3),
    OREQ("-restart", "Restart E17", E_IPC_OP_RESTART, 0)
 };
 
@@ -196,8 +209,10 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
    ecore_app_args_get(&argc, &argv);
    for (i = 1; i < argc; i++)
      {
-	char *v;
+	char *v, *p;
 	int j;
+	int k;
+	int data_size;
 	
 	for (j = 0; j < (int)(sizeof(handlers) / sizeof(E_IPC_Opt_Handler)); j++)
 	  {
@@ -231,6 +246,29 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
 						  v, strlen(v));
 			    break;
+			  case MULTI_STR_REQ:
+			    /* pack up the data "<str>0<str>0" */
+			    data_size = 0;
+			    for(k = 0; k < handler->num_params; k++) {
+				data_size += strlen(argv[ i + 1 + k ]);
+				data_size++; /* NULL Pad */
+			    }			     
+			    v = malloc(data_size);
+			    p = v;	    			
+			    for(k = 0; k < handler->num_params; k++) {
+				 strcpy(p, argv[ i + 1 + k]);
+				 p += strlen(argv[ i + 1 + k]);
+				 *p = 0;
+				 p++;
+			    }	
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  v, data_size);
+			    free(v);
+ 
+			    break;
 			  case FULL_FUNC:
 			    handler->func(argv + i + 1);
 			    break;
@@ -257,7 +295,7 @@ _e_ipc_cb_server_del(void *data, int type, void *event)
    Ecore_Ipc_Event_Server_Del *e;
    
    e = event;
-   return 1;
+   return 1; 
 }
 
 static int
@@ -300,6 +338,107 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	else
 	  printf("REPLY: MODULE NONE\n");
 	break;
+      case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
+	if (e->data)
+	  {
+	     char *p;
+	     
+	     p = e->data;
+	     while (p < (char *)(e->data + e->size))
+	       {
+		  char *name;
+		  
+		  name = p;
+		  p += strlen(name);
+		  if (p < (char *)(e->data + e->size))
+		    {
+			printf("REPLY: FALLBACK NAME=\"%s\"\n", name);
+		    }
+		  p++;
+	       }
+	  }
+	else
+	  printf("REPLY: FALLBACK NONE\n");
+	break;
+      case E_IPC_OP_FONT_AVAILABLE_LIST_REPLY:
+        if (e->data)
+          {
+             char *p;
+          
+             p = e->data;
+             while (p < (char *)(e->data + e->size))
+              	{
+              	  char *name;
+              	  name = p;
+ 		  p += strlen(name);
+		  if (p < (char *)(e->data + e->size))
+		    {
+			printf("REPLY: AVAILABLE NAME=\"%s\"\n", name);
+		    }
+		  p++;             	    
+              	}
+          }
+        else
+          printf("REPLY: AVAILABLE NONE\n"); 
+        break;   
+      case E_IPC_OP_FONT_DEFAULT_GET_REPLY:
+        if (e->data)
+          {
+             char *text_class, *name;
+             char *p;
+	     char size;
+	     
+	     p = e->data;
+		  
+	     text_class = p;
+	     p += strlen(text_class) + 1;
+	     if (p < (char *)(e->data + e->size))
+	       {
+		       name = p;
+		       p  += strlen(name) + 1;     
+		       if (p < (char *)(e->data + e->size))
+			 {
+			   	 size = *p;
+			    	 printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%i\n",
+				   text_class, name, (int)size);
+				 p++;
+			  
+			 }
+	       }
+          }
+        else
+          printf("REPLY: DEFAULT NONE\n"); 
+        break;
+      case E_IPC_OP_FONT_DEFAULT_LIST_REPLY:
+        if (e->data)
+          {
+             char *text_class, *name;
+             char *p;
+	     char size;
+	     
+	     p = e->data;
+		
+	while (p < (char *)(e->data + e->size))
+	{  
+	     text_class = p;
+	     p += strlen(text_class) + 1;
+	     if (p < (char *)(e->data + e->size))
+	       {
+		       name = p;
+		       p += strlen(name) + 1;
+		       if (p < (char *)(e->data + e->size))
+			 {
+			   	 size = *p;
+			    	 printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%i\n",
+				   text_class, name, (int)size);
+				 p++;
+			 }
+	       }
+	  }
+          }
+        else
+          printf("REPLY: DEFAULT NONE\n"); 
+        break;	
       default:
 	break;
      }

@@ -213,6 +213,253 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 				   bg, strlen(bg) + 1);
  	  }
 	break;
+      case E_IPC_OP_FONT_AVAILABLE_LIST:
+	  {
+	     Evas_List *fonts_available, *l;
+	     int bytes;
+	     char *font_name, *data, *p;
+		  
+	     bytes = 0;
+	     fonts_available = e_font_available_list();
+	     printf("ipc font av: %d\n", fonts_available);
+	     for (l = fonts_available; l; l = l->next)
+	       {
+		  font_name = evas_list_data(l);
+		  bytes += strlen(font_name) + 1;
+	       }
+
+	     data = malloc(bytes);
+	     p = data;
+	     for (l = fonts_available; l; l = l->next)
+	       {
+		  font_name = evas_list_data(l);
+		  strcpy(p, font_name);
+		  p += strlen(font_name);
+		  *p = 0;
+		  p++;
+	       }
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_FONT_AVAILABLE_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     
+	     e_font_available_list_free(fonts_available);
+	     free(data);
+	  }
+	break;
+      case E_IPC_OP_FONT_APPLY:
+	  {
+	     e_font_apply();
+	  }
+ 	break;
+      case E_IPC_OP_FONT_FALLBACK_CLEAR:
+	  {
+	     e_font_fallback_clear();
+	  }
+	break;
+      case E_IPC_OP_FONT_FALLBACK_APPEND:
+	  {
+	     char * font_name;
+	     font_name = malloc(e->size + 1);
+	     font_name[e->size] = 0;
+	     memcpy(font_name, e->data, e->size);
+	     e_font_fallback_append(font_name);
+	     free(font_name);
+
+	     e_config_save_queue(); 
+	  }
+	break;
+      case E_IPC_OP_FONT_FALLBACK_PREPEND:
+	  {
+	     char * font_name;
+	     font_name = malloc(e->size + 1);
+	     font_name[e->size] = 0;
+	     memcpy(font_name, e->data, e->size);
+	     e_font_fallback_prepend(font_name);
+	     free(font_name);	   
+		
+	     e_config_save_queue();  
+	  }
+	break;
+      case E_IPC_OP_FONT_FALLBACK_LIST:
+	  {
+	     Evas_List *fallbacks, *l;
+	     int bytes;
+	     E_Font_Fallback *eff;
+	     char *data, *p;
+		  
+	     bytes = 0;
+	     fallbacks = e_font_fallback_list();
+	     for (l = fallbacks; l; l = l->next)
+	       {
+		  eff = evas_list_data(l);
+		  bytes += strlen(eff->name) + 1;
+	       }
+	     data = malloc(bytes);
+	     p = data;
+	     for (l = fallbacks; l; l = l->next)
+	       {
+		  eff = evas_list_data(l);
+		  strcpy(p, eff->name);
+		  p += strlen(eff->name);
+		  *p = 0;
+		  p++;
+	       }
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_FONT_FALLBACK_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+
+	  }
+	break;
+      case E_IPC_OP_FONT_FALLBACK_REMOVE:
+	  {
+	     char * font_name;
+	     font_name = malloc(e->size + 1);
+	     font_name[e->size] = 0;
+	     memcpy(font_name, e->data, e->size);
+	     e_font_fallback_remove(font_name);
+	     free(font_name);	     
+
+	     e_config_save_queue();
+	  }
+	break;
+      case E_IPC_OP_FONT_DEFAULT_SET:
+	  {
+	     char * p;
+	     char * font_name;
+	     char * text_class;
+	     int font_size;
+
+	     
+	     p = e->data;
+	     
+	     /* Make sure our data is packed for us <str>0<str>0 */
+	     if( p[e->size - 1] != 0) {
+		break;
+	     }
+
+	     text_class = strdup(p);
+
+	     p += strlen(text_class) + 1;
+	     font_name = strdup(p);
+	
+	     p += strlen(font_name) + 1;
+	     font_size = atoi(p);
+
+	     e_font_default_set(text_class, font_name, font_size);
+
+	     free(font_name);
+	     free(text_class);
+
+	     e_config_save_queue();
+	  }
+	break;
+      case E_IPC_OP_FONT_DEFAULT_GET:
+	  {
+	     int bytes;
+	     E_Font_Default *efd;
+	     char *data, *p, *text_class;
+	     
+	     text_class = malloc(e->size + 1);
+	     text_class[e->size] = 0;
+	     memcpy(text_class, e->data, e->size);
+	     
+	     efd = e_font_default_get (text_class);
+	     
+	     free(text_class);
+		  
+	     bytes = 0;
+	     if (efd) {
+	         bytes += strlen(efd->text_class) + 1;
+	         bytes += strlen(efd->font) + 1;
+	         bytes++; /* efd->size */
+	     }
+	     
+	     data = malloc(bytes);
+	     p = data;
+	     
+	     if (efd) {
+	         strcpy(p, efd->text_class);
+                 p += strlen(efd->text_class);
+                 *p = 0;
+	         p++;
+	     
+	         strcpy(p, efd->font);
+	         p += strlen(efd->font);
+	         *p = 0;
+	         p++;
+		  
+                 /* FIXME: should this be packed like this (int to char) ? */
+	         *p = (char) efd->size;
+	         p++;
+	     }
+
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_FONT_DEFAULT_GET_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+	  }
+	break;
+      case E_IPC_OP_FONT_DEFAULT_REMOVE:
+	  {	  
+	     char * text_class;
+	     text_class = malloc(e->size + 1);
+	     text_class[e->size] = 0;
+	     memcpy(text_class, e->data, e->size);
+	     e_font_default_remove(text_class);
+	     free(text_class);	   
+
+	     e_config_save_queue(); 
+	  }
+	break;
+      case E_IPC_OP_FONT_DEFAULT_LIST:
+	  {
+	     Evas_List *defaults, *l;
+	     int bytes;
+	     E_Font_Default *efd;
+	     char *data, *p;
+		  
+	     bytes = 0;
+	     defaults = e_font_default_list();
+	     for (l = defaults; l; l = l->next)
+	       {
+		  efd = l->data;
+		  bytes += strlen(efd->text_class) + 1;
+		  bytes += strlen(efd->font) + 1;
+		  bytes++; /* efd->size */
+	       }
+	     data = malloc(bytes);
+	     p = data;
+	     for (l =defaults; l; l = l->next)
+	       {
+		  efd = l->data;
+		  strcpy(p, efd->text_class);
+		  p += strlen(efd->text_class);
+		  *p = 0;
+		  p++;
+		  strcpy(p, efd->font);
+		  p += strlen(efd->font);
+		  *p = 0;
+		  p++;
+		  /* FIXME: should this be packed like this (int to char) ? */
+		  *p = (char) efd->size;
+		  p++;
+	       }
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_FONT_DEFAULT_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+
+	  }
+	break;
       case E_IPC_OP_RESTART:
 	  {
 	     restart = 1;

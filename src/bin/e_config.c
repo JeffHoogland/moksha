@@ -26,6 +26,8 @@ static Ecore_Job *_e_config_save_job = NULL;
 static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
 static E_Config_DD *_e_config_binding_edd = NULL;
+static E_Config_DD *_e_config_font_fallback_edd = NULL;
+static E_Config_DD *_e_config_font_default_edd = NULL;
 
 /* externally accessible functions */
 int
@@ -49,6 +51,24 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, modifiers, INT);
    E_CONFIG_VAL(D, T, action, INT);
 
+   _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
+						 E_Font_Default);   
+#undef T
+#undef D
+#define T E_Font_Default
+#define D _e_config_font_default_edd
+   E_CONFIG_VAL(D, T, text_class, STR);
+   E_CONFIG_VAL(D, T, font, STR);
+   E_CONFIG_VAL(D, T, size, INT);
+
+   _e_config_font_fallback_edd = E_CONFIG_DD_NEW("E_Font_Fallback", 
+						  E_Font_Fallback);   
+#undef T
+#undef D
+#define T E_Font_Fallback
+#define D _e_config_font_fallback_edd
+   E_CONFIG_VAL(D, T, name, STR);
+
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -68,6 +88,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
    E_CONFIG_LIST(D, T, bindings, _e_config_binding_edd);
+   E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
+   E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (!e_config)
@@ -143,6 +165,30 @@ e_config_init(void)
 	     eb->action = E_BINDING_ACTION_MENU;
 	     e_config->bindings = evas_list_append(e_config->bindings, eb);
 	  }
+	  {
+	     E_Font_Fallback* eff;
+	     
+	     eff = E_NEW(E_Font_Fallback, 1);
+	     eff->name = strdup("Kochi-Gothic");
+	     e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, 
+							 eff);
+	     
+	     eff = E_NEW(E_Font_Fallback, 1);
+	     eff->name = strdup("Baekmuk-Dotum");
+	     e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, 
+							 eff);
+
+	  }
+	  { 
+	     E_Font_Default* efd;
+	     
+             efd = E_NEW(E_Font_Fallback, 1);
+	     efd->text_class = strdup("title_bar");
+	     efd->font = strdup("Vera");
+	     efd->size = 10;
+             e_config->font_defaults = evas_list_append(e_config->font_defaults, efd); 
+	
+	  }
 	e_config_save_queue();
      }
 
@@ -180,12 +226,34 @@ e_config_shutdown(void)
 	     e_config->bindings = evas_list_remove_list(e_config->bindings, e_config->bindings);
 	     E_FREE(eb);
 	  }
+	while (e_config->font_fallbacks)
+	  {
+	     E_Font_Fallback *eff;
+	     
+	     eff = e_config->font_fallbacks->data;
+	     e_config->font_fallbacks = evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
+	     E_FREE(eff->name);
+	     E_FREE(eff);
+	  }
+	while (e_config->font_defaults)
+	  {
+	     E_Font_Default *efd;
+	     
+	     efd = e_config->font_defaults->data;
+	     e_config->font_defaults = evas_list_remove_list(e_config->font_defaults, e_config->font_defaults);
+	     E_FREE(efd->text_class);
+	     E_FREE(efd->font);
+	     E_FREE(efd);
+	  }
+
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config);
      }
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_binding_edd);
+   E_CONFIG_DD_FREE(_e_config_font_default_edd);
+   E_CONFIG_DD_FREE(_e_config_font_fallback_edd);
    return 1;
 }
 

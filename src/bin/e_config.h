@@ -64,6 +64,8 @@ struct _E_Config
    int         use_virtual_roots;
    Evas_List  *modules;
    Evas_List  *bindings;
+   Evas_List  *font_fallbacks;
+   Evas_List  *font_defaults;
 };
 
 struct _E_Config_Module
