@@ -1810,10 +1810,12 @@ e_view_realize(E_View * v)
 
       if (e_view_layout_get_element_geometry(v->layout, "Icons",
 					     &x, &y, &w, &h))
-      v->spacing.window.l = x;
-      v->spacing.window.r = v->size.w - (x + w);
-      v->spacing.window.t = y;
-      v->spacing.window.b = v->size.h - (y + h);
+        {
+           v->spacing.window.l = x;
+           v->spacing.window.r = v->size.w - (x + w);
+           v->spacing.window.t = y;
+           v->spacing.window.b = v->size.h - (y + h);
+        }
    }
 
    v->scrollbar.v = e_scrollbar_new(v);
