@@ -1884,7 +1884,7 @@ e_view_icon_cleanup(E_Icon *ic)
 {
    D_ENTER;
    
-   /* FIXME: free stuff here! this leaks ...
+   /* FIXME: free stuff here! this leaks ... */
 
    e_object_cleanup(E_OBJECT(ic));
 
