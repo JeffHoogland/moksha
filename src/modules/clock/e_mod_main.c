@@ -244,10 +244,10 @@ _clock_face_new(E_Container *con)
 			      E_GADMAN_POLICY_VSIZE);
    e_gadman_client_min_size_set(face->gmc, 4, 4);
    e_gadman_client_max_size_set(face->gmc, 512, 512);
-   e_gadman_client_auto_size_set(face->gmc, 64, 64);
+   e_gadman_client_auto_size_set(face->gmc, 40, 40);
    e_gadman_client_align_set(face->gmc, 0.0, 1.0);
    e_gadman_client_aspect_set(face->gmc, 1.0, 1.0);
-   e_gadman_client_resize(face->gmc, 64, 64);
+   e_gadman_client_resize(face->gmc, 40, 40);
    e_gadman_client_change_func_set(face->gmc, _clock_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 

@@ -193,11 +193,6 @@ _ibar_new()
    E_CONFIG_VAL(D, T, iconsize, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_LIST(D, T, bars, conf_bar_edd);
-   /*
-   E_CONFIG_VAL(D, T, anchor, DOUBLE);
-   E_CONFIG_VAL(D, T, handle, DOUBLE);
-   E_CONFIG_VAL(D, T, autohide, UCHAR);
-   */
 
    ib->conf = e_config_domain_load("module.ibar", conf_edd);
    if (!ib->conf)
@@ -206,24 +201,14 @@ _ibar_new()
 	ib->conf->appdir = strdup("bar");
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
-	ib->conf->iconsize = 32;
+	ib->conf->iconsize = 24;
 	ib->conf->width = IBAR_WIDTH_AUTO;
-	/*
-	ib->conf->anchor = 0.5;
-	ib->conf->handle = 0.5;
-	ib->conf->autohide = 0;
-	*/
      }
    E_CONFIG_LIMIT(ib->conf->follow_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->autoscroll_speed, 0.01, 1.0);
    E_CONFIG_LIMIT(ib->conf->iconsize, 2, 400);
    E_CONFIG_LIMIT(ib->conf->width, -2, -1);
-   /*
-   E_CONFIG_LIMIT(ib->conf->anchor, 0.0, 1.0);
-   E_CONFIG_LIMIT(ib->conf->handle, 0.0, 1.0);
-   E_CONFIG_LIMIT(ib->conf->autohide, 0, 1);
-   */
-
+   
    _ibar_config_menu_new(ib);
 
    if (ib->conf->appdir[0] != '/')
@@ -497,7 +482,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
      policy |= E_GADMAN_POLICY_HSIZE;
    e_gadman_client_policy_set(ibb->gmc, policy);
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
-   e_gadman_client_max_size_set(ibb->gmc, 800, 136);
+   e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
    e_gadman_client_align_set(ibb->gmc, 0.5, 1.0);
    e_gadman_client_resize(ibb->gmc, 400, 40);

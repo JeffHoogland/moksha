@@ -346,10 +346,10 @@ _pager_face_new(E_Zone *zone)
 			      E_GADMAN_POLICY_VSIZE |
 			      E_GADMAN_POLICY_FIXED_ZONE);
    e_gadman_client_min_size_set(face->gmc, 8, 8);
-   e_gadman_client_max_size_set(face->gmc, 400, 400);
-   e_gadman_client_auto_size_set(face->gmc, 64, 64);
+   e_gadman_client_max_size_set(face->gmc, 600, 600);
+   e_gadman_client_auto_size_set(face->gmc, 186, 40);
    e_gadman_client_align_set(face->gmc, 0.0, 1.0);
-   e_gadman_client_resize(face->gmc, 80, 60);
+   e_gadman_client_resize(face->gmc, 186, 40);
    e_gadman_client_change_func_set(face->gmc, _pager_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 

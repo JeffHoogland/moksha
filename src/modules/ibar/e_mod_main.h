@@ -21,11 +21,6 @@ struct _Config
    int           iconsize;
    int           width;
    Evas_List    *bars;
-   /*
-   double        anchor;
-   double        handle;
-   char          autohide;
-   */
 };
 
 struct _Config_Bar
