@@ -224,17 +224,13 @@ static void
 _e_path_cache_free(E_Path *ep)
 {
    if (!ep->hash) return;
-   while (evas_hash_size(ep->hash) > 0)
-     evas_hash_foreach(ep->hash, _e_path_cache_free_cb, ep);
+   evas_hash_foreach(ep->hash, _e_path_cache_free_cb, NULL);
+   evas_hash_free(ep->hash);
 }
 
 static Evas_Bool
 _e_path_cache_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
-   E_Path *ep;
-   
-   ep = fdata;
    free(data);
-   ep->hash = evas_hash_del(ep->hash, key, data);
    return 0;
 }
