@@ -4,13 +4,13 @@
 static void _e_manager_free(E_Manager *man);
 
 static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
+static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_create(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_gravity(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_stack(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev);
@@ -60,6 +60,8 @@ e_manager_new(Ecore_X_Window root)
    ecore_x_icccm_title_set(man->win, "Enlightenment Manager");
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
    return man;
 }
 
@@ -96,16 +98,28 @@ e_manager_move(E_Manager *man, int x, int y)
 void
 e_manager_resize(E_Manager *man, int w, int h)
 {
+   Evas_List *l;
+   
    E_OBJECT_CHECK(man);
    if ((w == man->w) && (h == man->h)) return;
    man->w = w;
    man->h = h;
    ecore_x_window_resize(man->win, man->w, man->h);
+	
+   for (l = man->containers; l; l = l->next)
+     {
+	E_Container *con;
+	
+	con = l->data;
+	e_container_resize(con, man->w, man->h);
+     }
 }
 
 void
 e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 {
+   Evas_List *l;
+   
    E_OBJECT_CHECK(man);
    if ((x == man->x) && (y == man->y) && (w == man->w) && (h == man->h)) return;
    man->x = x;
@@ -113,6 +127,14 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
    man->w = w;
    man->h = h;
    ecore_x_window_move_resize(man->win, man->x, man->y, man->w, man->h);
+
+   for (l = man->containers; l; l = l->next)
+     {
+	E_Container *con;
+	
+	con = l->data;
+	e_container_resize(con, man->w, man->h);
+     }
 }
 
 void
@@ -175,6 +197,19 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
 	     else ecore_x_window_show(e->win);
 	  }
      }
+   return 1;
+}
+
+static int
+_e_manager_cb_window_configure(void *data, int ev_type, void *ev)
+{
+   E_Manager *man;
+   Ecore_X_Event_Window_Configure *e;
+   
+   man = data;
+   e = ev;
+   if (e->win != man->root) return 1;
+   e_manager_resize(man, e->w, e->h);
    return 1;
 }
 

@@ -53,7 +53,9 @@ These are in no particular order:
 * support text and color classes
 * add tooltips
 * add fullscreen support (xvidmode style)
-* add xrandr support
+* add screen rotation info to managers
+* make xrandr support get rotation
+* add rotation to containers
 * fix multihead support
 * xinerama support
 * maybe add systray module/support?

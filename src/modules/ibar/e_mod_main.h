@@ -56,6 +56,8 @@ struct _IBar_Bar
    unsigned char   resize2 : 1;
    Evas_Coord      start_x, start_y;
    Evas_Coord      start_bx, start_by, start_bw, start_bh;
+   
+   Ecore_Event_Handler *ev_handler_container_resize;
 };
 
 struct _IBar_Icon

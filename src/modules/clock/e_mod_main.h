@@ -35,6 +35,8 @@ struct _Clock_Face
    unsigned char   resize : 1;
    Evas_Coord      xx, yy;
    Evas_Coord      fx, fy, fw;
+
+   Ecore_Event_Handler *ev_handler_container_resize;
 };
 
 EAPI void *init     (E_Module *m);

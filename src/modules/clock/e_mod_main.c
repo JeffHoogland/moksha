@@ -18,6 +18,7 @@ static void    _clock_face_reconfigure(Clock_Face *ef);
 static void    _clock_cb_face_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_cb_face_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static int     _clock_cb_event_container_resize(void *data, int type, void *event);
 
 /* public module routines. all modules must have these */
 void *
@@ -191,6 +192,10 @@ _clock_face_init(Clock_Face *ef)
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
+   ef->ev_handler_container_resize =
+     ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
+			     _clock_cb_event_container_resize,
+			     ef);
    evas_output_viewport_get(ef->evas, NULL, NULL, &ww, &hh);
    ef->fx = ef->clock->conf->x * (ww - ef->clock->conf->width);
    ef->fy = ef->clock->conf->y * (hh - ef->clock->conf->width);
@@ -228,6 +233,7 @@ _clock_face_init(Clock_Face *ef)
 static void
 _clock_face_free(Clock_Face *ef)
 {
+   ecore_event_handler_del(ef->ev_handler_container_resize);
    evas_object_del(ef->clock_object);
    evas_object_del(ef->event_object);
    free(ef);
@@ -321,7 +327,7 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	evas_object_move(ef->event_object, ef->fx, ef->fy);
      }
    else if (ef->resize)
-   {
+     {
 	Evas_Coord d;
 
 	d = cx - ef->xx;
@@ -337,3 +343,12 @@ _clock_cb_face_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ef->yy = ev->cur.canvas.y;
 }  
 
+static int
+_clock_cb_event_container_resize(void *data, int type, void *event)
+{
+   Clock_Face *ef;
+   
+   ef = data;
+   _clock_face_reconfigure(ef);
+   return 1;
+}

@@ -15,6 +15,7 @@ typedef enum _E_Container_Shape_Change
 typedef struct _E_Container                E_Container;
 typedef struct _E_Container_Shape          E_Container_Shape;
 typedef struct _E_Container_Shape_Callback E_Container_Shape_Callback;
+typedef struct _E_Event_Container_Resize   E_Event_Container_Resize;
 
 struct _E_Container
 {
@@ -53,6 +54,11 @@ struct _E_Container_Shape_Callback
    void *data;
 };
 
+struct _E_Event_Container_Resize
+{
+   E_Container *container;
+};
+
 EAPI int          e_container_init(void);
 EAPI int          e_container_shutdown(void);
 
@@ -79,5 +85,7 @@ EAPI E_Container       *e_container_shape_container_get(E_Container_Shape *es);
 EAPI void               e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
 EAPI void               e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
 EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
+
+extern EAPI int E_EVENT_CONTAINER_RESIZE;
 
 #endif

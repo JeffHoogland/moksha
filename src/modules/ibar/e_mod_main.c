@@ -68,6 +68,7 @@ static void    _ibar_cb_bar_resize1_stop(void *data, Evas_Object *obj, const cha
 static void    _ibar_cb_bar_resize2_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void    _ibar_cb_bar_resize2_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void    _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const char *source);
+static int     _ibar_cb_event_container_resize(void *data, int type, void *event);
 
 /* public module routines. all modules must have these */
 void *
@@ -675,7 +676,6 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    e_box_freeze(ibb->box_object);
    
    evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
-   
    o = ibb->bar_object;
    if (ibb->ibar->conf->width < 0)
      {
@@ -803,7 +803,11 @@ _ibar_bar_init(IBar_Bar *ibb)
    Evas_List *l;
    Evas_Coord bw, bh;
    Evas_Object *o;
-   
+
+   ibb->ev_handler_container_resize = 
+     ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, 
+			     _ibar_cb_event_container_resize,
+			     ibb);
    evas_event_freeze(ibb->evas);
    o = edje_object_add(ibb->evas);
    ibb->bar_object = o;
@@ -892,6 +896,7 @@ _ibar_bar_init(IBar_Bar *ibb)
 static void
 _ibar_bar_free(IBar_Bar *ibb)
 {
+   ecore_event_handler_del(ibb->ev_handler_container_resize);
    while (ibb->icons)
      {
 	IBar_Icon *ic;
@@ -1622,4 +1627,14 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 	_ibar_timer_handle(ibb);
 	return;
      }
+}
+
+static int
+_ibar_cb_event_container_resize(void *data, int type, void *event)
+{
+   IBar_Bar *ibb;
+   
+   ibb = data;
+   _ibar_bar_frame_resize(ibb);
+   return 1;
 }

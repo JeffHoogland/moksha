@@ -460,6 +460,7 @@ _e_main_screens_init(void)
    int num, i;
 
    if (!e_manager_init()) return 0;
+   if (!e_container_init()) return 0;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -526,6 +527,7 @@ _e_main_screens_init(void)
 static int
 _e_main_screens_shutdown(void)
 {
+   e_container_shutdown();
    e_manager_shutdown();
    return 1;
 }
