@@ -59,7 +59,7 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
    desk->y -= dy;
    xd = yd = wd = hd = 0;
    grav = NorthWestGravity;
-   grav_stick= SouthEastGravity;
+   grav_stick = SouthEastGravity;
    if ((dx <= 0) && (dy <= 0))
      {
 	grav = NorthWestGravity;
@@ -104,7 +104,8 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	/* if sticky */
 	if (b->client.sticky)
 	  e_window_gravity_set(b->win.main, StaticGravity);
-	e_window_gravity_set(b->win.main, grav);	
+	else
+	  e_window_gravity_set(b->win.main, grav);	
      }
    grav_stick = StaticGravity;
    e_window_gravity_set(desk->win.desk, grav_stick);
@@ -118,7 +119,12 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	E_Border *b;
 	
 	b = l->data;
-	e_window_gravity_set(b->win.main, grav_stick);
+	/* if sticky */
+	if (b->client.sticky)
+	  e_window_gravity_set(b->win.main, StaticGravity);
+	else
+	  e_window_gravity_set(b->win.main, grav_stick);	
+/*	e_window_gravity_set(b->win.main, grav_stick);*/
      }   
    e_window_move_resize(desk->win.container, 0, 0, screen_w, screen_h);
    e_window_gravity_reset(desk->win.desk);
@@ -128,17 +134,19 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 	
 	b = l->data;
 	e_window_gravity_reset(b->win.main);
-	b->current.requested.x += dx;
-	b->current.requested.y += dy;
-	b->current.x = b->current.requested.x;
-	b->current.y = b->current.requested.y;
-	b->previous.requested.x = b->current.requested.x;
-	b->previous.requested.y = b->current.requested.y;
-	b->previous.x = b->current.x;
-	b->previous.y = b->current.y;
-	b->changed = 1;
+	if (!b->client.sticky)
+	  {
+	     b->current.requested.x += dx;
+	     b->current.requested.y += dy;
+	     b->current.x = b->current.requested.x;
+	     b->current.y = b->current.requested.y;
+	     b->previous.requested.x = b->current.requested.x;
+	     b->previous.requested.y = b->current.requested.y;
+	     b->previous.x = b->current.x;
+	     b->previous.y = b->current.y;
+	     b->changed = 1;
+	  }
      }
-   e_sync();
 }
 
 void

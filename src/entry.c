@@ -379,7 +379,7 @@ e_entry_new(void)
    
    entry = NEW(E_Entry, 1);
    ZERO(entry, E_Entry, 1);
-   entry->buffer=strdup("");
+   e_strdup(entry->buffer, "");
    entry->select.start = -1;
    entry->end_width = 4;
    entries = evas_list_prepend(entries, entry);
@@ -473,7 +473,7 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 	       {
 		  char *str2;
 		  
-		  str2 = strdup(e_entry_get_text(entry));
+		  e_strdup(str2, e_entry_get_text(entry));
 		  str2[entry->cursor_pos] = 0;
 		  e_entry_set_text(entry, str2);
 		  free(str2);		  
@@ -689,7 +689,7 @@ void
 e_entry_set_text(E_Entry *entry, const char *text)
 {
    IF_FREE(entry->buffer);
-   entry->buffer = strdup(text);
+   e_strdup(entry->buffer, text);
    evas_set_text(entry->evas, entry->text, entry->buffer);
    if (entry->cursor_pos > (int)strlen(entry->buffer))
      entry->cursor_pos = strlen(entry->buffer);
@@ -769,7 +769,7 @@ e_entry_clear_selection(E_Entry *entry)
    
    if (entry->select.start >= 0)
      {
-	str2 = strdup(e_entry_get_text(entry));
+	e_strdup(str2, e_entry_get_text(entry));
 	if (entry->select.start + entry->select.length > (int)strlen(entry->buffer))
 	  entry->select.length = strlen(entry->buffer) - entry->select.start;
 	strcpy(&(str2[entry->select.start]), &(entry->buffer[entry->select.start + entry->select.length]));
@@ -786,7 +786,7 @@ e_entry_delete_to_left(E_Entry *entry)
 {
    char *str2;
    
-   str2 = strdup(e_entry_get_text(entry));
+   e_strdup(str2, e_entry_get_text(entry));
    strcpy(&(str2[entry->cursor_pos - 1]), &(entry->buffer[entry->cursor_pos]));
    entry->cursor_pos--;
    e_entry_set_text(entry, str2);
@@ -798,7 +798,7 @@ e_entry_delete_to_right(E_Entry *entry)
 {
    char *str2;
    
-   str2 = strdup(e_entry_get_text(entry));
+   e_strdup(str2, e_entry_get_text(entry));
    strcpy(&(str2[entry->cursor_pos]), &(entry->buffer[entry->cursor_pos + 1]));
    e_entry_set_text(entry, str2);
    free(str2);

@@ -89,6 +89,19 @@ if test "x$GCC" = "xyes"; then
 fi
 changequote([,])dnl
 
+dnl Check for Imlib2.
+AC_ARG_WITH(imlib2,
+        [  --with-imlib2=DIR          use imlib2 in <DIR>],
+        [CFLAGS="$CFLAGS -I$withval/include"
+         LIBS="-L$withval/lib $LIBS"])
+
+AC_PATH_GENERIC(imlib2,, [
+    AC_SUBST(imlib2_libs)
+    AC_SUBST(imlib2_cflags)],
+    AC_MSG_ERROR(Cannot find imlib2: Is imlib2-config in path?))
+imlib2_libs=`imlib2-config --libs`
+imlib2_cflags=`imlib2-config --cflags`
+
 dnl Check for Evas.
 AC_ARG_WITH(evas,
         [  --with-evas=DIR          use evas in <DIR>],
@@ -175,6 +188,50 @@ AC_PATH_GENERIC(ferite,, [
 AM_CONDITIONAL(USE_FERITE, test "x$ferite" = "xyes")
 
 AC_SUBST(CP_OPTIONS)
+
+if test "x$ferite" = "xyes"; then
+  pushd $packagesrcdir/src >& /dev/null
+    echo "... building ferite binding c code ...";
+    rm -f e_ferite_gen_*;
+    $FEBUILDER -m e_ferite_gen e_ferite.fec;
+    mv e_ferite_gen_core.c e_ferite_gen_core.c.old;
+    cat e_ferite_gen_core.c.old | sed -e "s/module_init/e_ferite_register/g" > e_ferite_gen_core.c;
+    rm e_ferite_gen_core.c.old;
+    echo "done.";
+  popd >& /dev/null
+fi
+
+CFLAGS=$imlib2_cflags
+LIBS=$imlib2_libs
+dnl Check for db loader.
+AC_TRY_RUN([
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <X11/Xlib.h>
+#include <Imlib2.h>
+
+int main(int argc, char **argv) {
+Imlib_Image im;
+int width;
+
+im = imlib_load_image("$packagesrcdir/data/test/test.db:/test/image");
+if (!im) exit(-1);
+imlib_context_set_image(im);
+width = imlib_image_get_width();
+if (width != 7) exit(-1);
+exit(0);
+return 0;
+argv=NULL;
+argc=0;
+}
+],
+[echo "checking for imlib2 db loader... yes"],
+[
+echo "checking for imlib2 db loader... no"
+AC_MSG_ERROR(Cannot detect db loader: Have you installed imlib2_loaders?)
+],
+AC_MSG_ERROR(Sorry. Enlightenment cannot be cross-compiled.))
 
 AC_OUTPUT([
 Makefile src/Makefile lib/Makefile client/Makefile intl/Makefile po/Makefile.in

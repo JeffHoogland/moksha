@@ -7,6 +7,7 @@
 #include "keys.h"
 #include "view.h"
 #include "util.h"
+#include "guides.h"
 
 static Evas_List action_protos = NULL;
 static Evas_List current_actions = NULL;
@@ -64,6 +65,7 @@ static void e_act_snap_start (void *o, E_Action *a, void *data, int x, int y, in
 static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
 static void e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
+static void e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry);
 
 #define SET_BORDER_GRAVITY(_b, _grav) \
 e_window_gravity_set(_b->win.container, _grav); \
@@ -386,6 +388,34 @@ e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry)
 }
 
 void
+e_action_stop_by_type(char *action)
+{
+   Evas_List l;
+
+   again:
+   for (l = current_actions; l; l = l->next)
+     {
+	E_Action *a;
+	
+	a = l->data;
+	if ((a->started) && (a->action_proto->func_stop) && 
+	    (action) && (!strcmp(action, a->name)))
+	  {
+	     E_Object *obj;
+	     
+	     if (a->object)
+	       {
+		  obj = a->object;
+		  OBJ_UNREF(obj);
+	       }
+	     a->action_proto->func_stop(a->object, a, NULL, 0, 0, 0, 0);
+	     a->started = 0;
+	  }
+     }
+}
+
+
+void
 e_action_add_proto(char *action, 
 		   void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
 		   void (*func_stop)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
@@ -486,6 +516,7 @@ e_action_init(void)
    e_action_add_proto("Winodw_Snap", e_act_snap_start, NULL, NULL);
    e_action_add_proto("Window_Zoom", e_act_zoom_start, NULL, NULL);
    e_action_add_proto("Desktop", e_act_desk_start, NULL, NULL);
+   e_action_add_proto("Window_Next", e_act_raise_next_start, NULL, NULL);
 }
 
 
@@ -508,15 +539,43 @@ static void
 e_act_move_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
+   int move_mode = E_GUIDES_BOX;
+   double align_x = 0.5;
+   double align_y = 0.5;
+   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_CFG_INT(cfg_window_move_mode, "settings", "/window/move/mode", E_GUIDES_BOX);
+   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
+   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
+   E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   E_CONFIG_INT_GET(cfg_window_move_mode, move_mode);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);
+   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   if (move_mode >= E_GUIDES_BOX)
+     b->hold_changes = 1; /* if non opaque */
    b->mode.move = 1;
    b->current.requested.dx = 0;
    b->current.requested.dy = 0;
    b->previous.requested.dx = 0;
    b->previous.requested.dy = 0;
+     {
+	char buf[4096];
+	
+	e_border_print_pos(buf, b);
+	e_guides_set_display_alignment(align_x, align_y);
+	e_guides_set_mode(move_mode);
+	e_guides_set_display_location(display_loc);
+	e_guides_display_text(buf);	
+	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	e_guides_display_icon(buf);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_show();
+     }
    return;
    UN(a);
    UN(data);
@@ -534,6 +593,7 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
+   b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->changed = 1;
@@ -542,7 +602,11 @@ e_act_move_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    b->current.requested.dy = 0;
    b->previous.requested.dx = 0;
    b->previous.requested.dy = 0;
+   b->changed = 1;
+   b->current.requested.visible = 1;
+   b->current.visible = 1;
    e_border_adjust_limits(b);
+   e_guides_hide();
    return;
    UN(a);
    UN(data);
@@ -566,6 +630,14 @@ e_act_move_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    if (dy != 0) b->current.requested.dy = dy;
    b->changed = 1;
    e_border_adjust_limits(b);
+     {
+	char buf[1024];
+	
+	e_border_print_pos(buf, b);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_display_text(buf);
+     }
    return;
    UN(a);
    UN(data);
@@ -580,11 +652,25 @@ static void
 e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
+   int resize_mode = E_GUIDES_BOX;
+   double align_x = 0.5;
+   double align_y = 0.5;
+   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
+   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
+   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
+   E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
+   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   if (resize_mode >= E_GUIDES_BOX)
+     b->hold_changes = 1; /* if non opaque */
    e_window_gravity_set(b->win.client, StaticGravity);
    e_window_gravity_set(b->win.l, NorthWestGravity);
    e_window_gravity_set(b->win.r, SouthEastGravity);
@@ -625,6 +711,20 @@ e_act_resize_start (void *o, E_Action *a, void *data, int x, int y, int rx, int 
 /*	     e_window_gravity_set(b->win.container, NorthWestGravity); */
 	  }
      }
+     {
+	char buf[4096];
+	
+	e_border_print_size(buf, b);
+	e_guides_set_display_alignment(align_x, align_y);
+	e_guides_set_mode(resize_mode);
+	e_guides_set_display_location(display_loc);
+	e_guides_display_text(buf);	
+	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	e_guides_display_icon(buf);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_show();
+     }
    return;
    UN(a);
    UN(data);
@@ -641,6 +741,7 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
@@ -650,6 +751,7 @@ e_act_resize_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, int 
    e_border_adjust_limits(b);
    e_window_gravity_set(b->win.client, NorthWestGravity);
    SET_BORDER_GRAVITY(b, NorthWestGravity);
+   e_guides_hide();
    return;
    UN(a);
    UN(data);
@@ -694,6 +796,14 @@ e_act_resize_go    (void *o, E_Action *a, void *data, int x, int y, int rx, int 
      }
    b->changed = 1;
    e_border_adjust_limits(b);
+     {
+	char buf[1024];
+	
+	e_border_print_size(buf, b);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_display_text(buf);
+     }
    return;
    UN(a);
    UN(data);
@@ -708,11 +818,25 @@ static void
 e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
+   int resize_mode = E_GUIDES_BOX;
+   double align_x = 0.5;
+   double align_y = 0.5;
+   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
+   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
+   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
+   E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
+   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   if (resize_mode >= E_GUIDES_BOX)
+     b->hold_changes = 1; /* if non opaque */
    e_window_gravity_set(b->win.client, StaticGravity);
    e_window_gravity_set(b->win.l, NorthWestGravity);
    e_window_gravity_set(b->win.r, SouthEastGravity);
@@ -731,6 +855,20 @@ e_act_resize_h_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	b->mode.resize = 5;
 /*	SET_BORDER_GRAVITY(b, NorthEastGravity);*/
      }
+     {
+	char buf[4096];
+	
+	e_border_print_size(buf, b);
+	e_guides_set_display_alignment(align_x, align_y);
+	e_guides_set_mode(resize_mode);
+	e_guides_set_display_location(display_loc);
+	e_guides_display_text(buf);	
+	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	e_guides_display_icon(buf);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_show();
+     }
    return;
    UN(a);
    UN(data);
@@ -748,6 +886,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
@@ -757,6 +896,7 @@ e_act_resize_h_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    e_border_adjust_limits(b);
    e_window_gravity_set(b->win.client, NorthWestGravity);
    SET_BORDER_GRAVITY(b, NorthWestGravity);
+   e_guides_hide();
    return;
    UN(a);
    UN(data);
@@ -786,6 +926,14 @@ e_act_resize_h_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
      }
    b->changed = 1;
    e_border_adjust_limits(b);
+     {
+	char buf[1024];
+	
+	e_border_print_size(buf, b);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_display_text(buf);
+     }
    return;
    UN(a);
    UN(data);
@@ -801,11 +949,25 @@ static void
 e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
 {
    E_Border *b;
+   int resize_mode = E_GUIDES_BOX;
+   double align_x = 0.5;
+   double align_y = 0.5;
+   int display_loc = E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE;
+   E_CFG_INT(cfg_window_resize_mode, "settings", "/window/resize/mode", E_GUIDES_BOX);
+   E_CFG_FLOAT(cfg_guides_display_x, "settings", "/guides/display/x", 0.5);
+   E_CFG_FLOAT(cfg_guides_display_y, "settings", "/guides/display/y", 0.5);
+   E_CFG_INT(cfg_guides_display_location, "settings", "/guides/display/location", E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE);
    
+   E_CONFIG_INT_GET(cfg_window_resize_mode, resize_mode);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_x, align_x);
+   E_CONFIG_FLOAT_GET(cfg_guides_display_y, align_y);   
+   E_CONFIG_INT_GET(cfg_guides_display_location, display_loc);
    b = o;
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   if (resize_mode >= E_GUIDES_BOX)
+     b->hold_changes = 1; /* if non opaque */
    e_window_gravity_set(b->win.client, StaticGravity);
    e_window_gravity_set(b->win.l, NorthWestGravity);
    e_window_gravity_set(b->win.r, SouthEastGravity);
@@ -826,6 +988,20 @@ e_act_resize_v_start (void *o, E_Action *a, void *data, int x, int y, int rx, in
 	b->mode.resize = 7;
 /*	SET_BORDER_GRAVITY(b, SouthWestGravity);*/
      }
+     {
+	char buf[4096];
+	
+	e_border_print_size(buf, b);
+	e_guides_set_display_alignment(align_x, align_y);
+	e_guides_set_mode(resize_mode);
+	e_guides_set_display_location(display_loc);
+	e_guides_display_text(buf);	
+	sprintf(buf, "%s/%s", e_config_get("images"), "win_shadow_icon.png");
+	e_guides_display_icon(buf);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_show();
+     }
    return;
    UN(a);
    UN(data);
@@ -843,6 +1019,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    if (!b) b = e_border_current_focused();
    if (!b) return;
    if (b->current.shaded != 0) return;
+   b->hold_changes = 0; /* if non opaque */
    b->current.requested.x = b->current.x;
    b->current.requested.y = b->current.y;
    b->current.requested.w = b->current.w;
@@ -852,6 +1029,7 @@ e_act_resize_v_stop  (void *o, E_Action *a, void *data, int x, int y, int rx, in
    e_window_gravity_set(b->win.client, NorthWestGravity);
    SET_BORDER_GRAVITY(b, NorthWestGravity);
    b->changed = 1;
+   e_guides_hide();
    return;
    UN(a);
    UN(data);
@@ -881,6 +1059,14 @@ e_act_resize_v_go    (void *o, E_Action *a, void *data, int x, int y, int rx, in
      }
    e_border_adjust_limits(b);
    b->changed = 1;
+     {
+	char buf[1024];
+	
+	e_border_print_size(buf, b);
+	e_guides_move(b->current.x, b->current.y);
+	e_guides_resize(b->current.w, b->current.h);
+	e_guides_display_text(buf);
+     }
    return;
    UN(a);
    UN(data);
@@ -1320,3 +1506,17 @@ e_act_desk_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry
    UN(ry);
 }
 
+
+static void 
+e_act_raise_next_start (void *o, E_Action *a, void *data, int x, int y, int rx, int ry)
+{
+   e_border_raise_next();
+   return;
+   UN(o);
+   UN(a);
+   UN(data);
+   UN(x);
+   UN(y);
+   UN(rx);
+   UN(ry);
+}

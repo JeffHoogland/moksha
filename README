@@ -1,15 +1,15 @@
--------------------------------------------------------------------------------
-                       Enlightenment 0.17.pre CVS Code....
--------------------------------------------------------------------------------
-       The Rasterman - raster@valinux.com, raster@rasterman.com
++-----------------------------------------------------------------------------+
+|                      Enlightenment 0.17.pre CVS Code....                    |
++-----------------------------------------------------------------------------+
+                      The Rasterman - raster@rasterman.com
 
 *******************************************************************************
 **************** READ THIS! It is of the UTMOST IMPORTANCE! *******************
 *******************************************************************************
 
 This is the source code for Enlightenment 0.17 - If you got this you got it
-from Enlightenment's CVS repository - or from someone who took it out of
-the CVS repository.
+from Enlightenment's CVS repository - or from someone who took it out of the
+CVS repository.
 
 The CVS repository is full of code *IN DEVELOPMENT* - that often means it's
 in the middle of being worked on and may install strange things in strange
@@ -19,9 +19,9 @@ to remove all traces of anything this CVS code base has installed on your
 system (it is COMPLETELY up to you to keep track of that - do NOT expect any
 help), and then install the full release on a cleaned system. Don't come
 asking "can I just keep using CVS" once things are released - that is the
-reason I put this paragraph here - so you don't ask. The asnwer is the same
+reason I put this paragraph here - so you don't ask. The answer is the same
 as above - if there is a proper final release use that. CVS is really only
-for those havily hacking on the code, or whose curiosity is too much to resist
+for those heavily hacking on the code, or whose curiosity is too much to resist
 not giving it a look and try.
 
 Now we have that warning over and done with. How to build and install from
@@ -42,18 +42,9 @@ so it installs relative to the /usr/local/e-17 directory and keeps all the
 e-17 development code and data in that tree so it is easily removed when the
 time comes.
 
-
+-------------------------------------------------------------------------------
 
 NOTES: Read these carefully!
-
-Enlightenment does not check for previously running Window Managers right
-now - so you need to make sure no other WM is running - E will not do that
-for you.
-
-Enlightenment has no keybindings right now, but does have a primitve menu for
-launching some applications. It is configurable - it's in a database file
-and tere is a script that builds this menu - you could build a new one after
-editing the script or do whatever your like.
 
 Enlightenment only handles a small subset of ICCCM and thus will have bugs -
 some applications will not behave correctly and may appear in odd spots or
@@ -62,42 +53,42 @@ worked on. Just be happy it does as much as it already does.
 
 Enlightenment RELIES on lots of libraires that have been written. Ecore,
 Ebits, Evas, Edb, Imlib2, Efsd just to mention a few. Especially Ebits,
-Ecore, Efsd ferite, and Evas change in CVS often - you will need the absolute 
-latest of these if you wish Enlightenment 0.17 code to run properly or compile. 
+Ecore, Efsd, Ferite, and Evas change in CVS often - you will need the absolute 
+latest of these if you wish Enlightenment 0.17 code to run properly or compile.
 If you update Enlightenment from CVS update these too to get any changes they 
 have in their trees.
 
-If you plan on working on the code... STOP! don't rush in and work on it -
-even if you have CVS commit access - EXPECT me (Raster) to revert any changes
-you make if you do this - regardless of the changes and how much work you
-put into them. First read the code well and LEARN it. If you have questions
-about some of the more obscure hidden program flow - ASK - but don't go
-tampering with it - Enlightenment 0.17's code is much more complex and
-intricate than E 0.16 - but at the same time it's much cleaner and more
-object oriented. Learn it well first. Some parts of E 0.17 are "hacked" with
-hard-coded stuff, just so, for now, it works. They will be virtualized and
-imporved over time. If you have plans - tell me about them first - discuss
-them before you go impliment them - once you've discussed them and we all
-aree on how it should be done, you can go ahead and do it. I know I already 
-have a lot of the components of E 0.17's code planned in my head - but I 
-won't get to them for a while - and if people go impliment or hack bad stuff 
-in, it means I have to spend lots of time fixing something that is bad in the 
-first place, or we end up doing duplicate work. There *IS* a plan - believe 
-it or not - but to be honest - it's more complex and large than I can just 
-write down in a README, so talk about your ideas first. I'm going to be 
-ruthless in keeping the code neat, clean and free of nasty hacks (except ones 
-I put in as temporary stop-gap measures to make the thing work - since I know 
-where those are and what I need to do to do it right). If you can't find me 
-or I don't reply to your e-mail - don't get impatient - just wait. I currently
-have no network access at home, so I'm doing a chunk of code offline. I'll
-get to your mail and queries as time allows.
+If you want to compile & install E 0.17 you probably install the packages 
+Enlightenment needs in this order:
 
-If you have problems with the code or bugs to report, kindly forward them to
-/dev/null (the code is in now way or form ready for bug reports - I don't
-want crap filling my mailbox), unless its a patch hat fixes a silly bug
-somewhere. Only experienced people should in any way consider sending a bug
-report as I need useful reports, not junk cluttering my mailbox.
+  (*) imlib2
+  (*) edb
+  (*) imlib2_loaders
+  (*) evas
+  (*) ebits
+  (*) ecore
+  (*) efsd
+  (*) ferite (optional for now, but recommended)
+  (*) e17
 
-I hope that clears things up for now.
+since you got Enlightenment from CVS (if you didn't you should have) you must
+get all of the above from CVS - because the libraries Enlightenment depends on
+keep being updated as bugs are found and new features needed - and often they
+are not released for a while until things settle down, so make sure you get
+the latest of these from CVS.
 
-In the meantime - have fun.
+before you start installing the some of the above, some of the packages you
+will need - if you don't already have them, are:
+
+  (*) freetype (1.1, 1.2 or 1.3 ... NOT 2.0)
+  (*) libxml2
+  (*) libpcre
+  (*) fam
+
+and possibly ...
+
+  (*) libjpeg
+  (*) libpng
+  (*) zlib
+  (*) libtiff
+  (*) libungif

@@ -114,10 +114,10 @@ entry text 'Reboot' 'sudo -S /sbin/shutdown -r now'
 end_menu
 
 menu 3
-entry script 'Goto Desktop 1' 'e.flipToDesktop(1);'
-entry script 'Goto Desktop 2' 'e.flipToDesktop(2);'
-entry script 'Goto Desktop 3' 'e.flipToDesktop(3);'
-entry script 'Goto Desktop 4' 'e.flipToDesktop(4);'
+entry script 'Goto Desktop 0' 'e.flip_to_desktop(0);'
+entry script 'Goto Desktop 1' 'e.flip_to_desktop(1);'
+entry script 'Goto Desktop 2' 'e.flip_to_desktop(2);'
+entry script 'Goto Desktop 3' 'e.flip_to_desktop(3);'
 end_menu
 
 finish

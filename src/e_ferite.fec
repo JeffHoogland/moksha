@@ -5,34 +5,34 @@
    
 %}
 
-class Window {
+class window {
    
-   function getName();
-   function getTitle();
-   function getClass();
-   function getX();
-   function getY();
-   function getWidth();
-   function getHeight();
+   function get_name();
+   function get_title();
+   function get_class();
+   function get_x();
+   function get_y();
+   function get_width();
+   function get_height();
    
    function move( number x, number y );
    function resize( number width, number height );
 
    function show();
    function hide();
-   function isVisible();
+   function is_visible();
    
    function shade();
    function unshade();
-   function isShaded();
+   function is_shaded();
    
    function iconify();
    function uniconify();
-   function isIconic();
+   function is_iconic();
 
-   function isMapped();
-   function isTransient();
-   function isShaped();
+   function is_mapped();
+   function is_transient();
+   function is_shaped();
    
    function delete();
    function kill();
@@ -41,25 +41,25 @@ class Window {
 
 namespace e {
    
-   function flipToDesktop( number desk )
+   function flip_to_desktop( number desk )
    %{
       e_desktops_goto( (long)desk );	  	  
    %}
    
-   function getCurrentDesktop()
+   function get_current_desktop()
    %{
 	  int retval = e_desktops_get_current();
 	  FE_RETURN_INT( retval );
    %}	 
    
-   function getDesktopCount()
+   function get_desktop_count()
    %{
 	  int retval = e_desktops_get_num();
 	  FE_RETURN_INT( retval );
    %}
    
-   function getWidth();
-   function getHeight();
+   function get_width();
+   function get_height();
 
    // shutdown enlightenment
    function shutdown()

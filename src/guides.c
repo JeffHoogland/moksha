@@ -2,6 +2,7 @@
 #include "text.h"
 #include "config.h"
 #include "embed.h"
+#include "util.h"
 
 static struct 
 {
@@ -35,6 +36,10 @@ static struct
       Evas_Object  icon;
       Imlib_Image  image;
    } disp;
+   struct {
+      Embed icon;
+      Embed text;
+   } embed;
 } guides;
 
 static void e_guides_idle(void *data);
@@ -65,11 +70,16 @@ e_guides_update(void)
 	  {
 	     if (!guides.win.display)
 	       {
-		  guides.win.display = e_window_new(0, 0, 0, 1, 1);
-		  guides.win.l = e_window_new(0, 0, 0, 1, 1);
-		  guides.win.r = e_window_new(0, 0, 0, 1, 1);
-		  guides.win.t = e_window_new(0, 0, 0, 1, 1);
-		  guides.win.b = e_window_new(0, 0, 0, 1, 1);
+		  guides.win.display = e_window_override_new(0, 0, 0, 1, 1);
+		  guides.win.l = e_window_override_new(0, 0, 0, 1, 1);
+		  guides.win.r = e_window_override_new(0, 0, 0, 1, 1);
+		  guides.win.t = e_window_override_new(0, 0, 0, 1, 1);
+		  guides.win.b = e_window_override_new(0, 0, 0, 1, 1);
+		  e_window_save_under(guides.win.display);
+		  e_window_save_under(guides.win.l);
+		  e_window_save_under(guides.win.r);
+		  e_window_save_under(guides.win.t);
+		  e_window_save_under(guides.win.b);
 		  redraw = 1;
 	       }
 	     if (!guides.disp.evas)
@@ -100,9 +110,18 @@ e_guides_update(void)
 		  e_window_destroy(guides.win.r);
 		  e_window_destroy(guides.win.t);
 		  e_window_destroy(guides.win.b);
+		  guides.win.display = 0;
+		  guides.win.l = 0;
+		  guides.win.r = 0;
+		  guides.win.t = 0;
+		  guides.win.b = 0;
 	       }
 	     if (guides.disp.evas)
 	       {
+		  if (guides.embed.icon) e_embed_free(guides.embed.icon);
+		  if (guides.embed.text) e_embed_free(guides.embed.text);
+		  guides.embed.icon = NULL;
+		  guides.embed.text = NULL;
 		  if (guides.disp.bg) ebits_free(guides.disp.bg);
 		  if (guides.disp.text) e_text_free(guides.disp.text);
 		  if (guides.disp.image)
@@ -132,9 +151,7 @@ e_guides_update(void)
    
    if ((guides.win.display) && (redraw))
      {
-	int dx, dy, dw, dh;
-	int iw, ih;
-	double tw, th;
+	int dx, dy, dw, dh, sw, sh, mw, mh;
 	char file[4096];
 	
 	if (!guides.disp.text)
@@ -142,16 +159,6 @@ e_guides_update(void)
 	     guides.disp.text = e_text_new(guides.disp.evas, guides.current.display.text, "guides");
 	     e_text_set_layer(guides.disp.text, 100);
 	     e_text_show(guides.disp.text);
-	  }
-	if (!guides.disp.bg) 
-	  {
-	     guides.disp.bg = ebits_load(file);
-	     if (guides.disp.bg) 
-	       {
-		  ebits_add_to_evas(guides.disp.bg, guides.disp.evas);
-		  ebits_set_layer(guides.disp.bg, 0);
-		  ebits_show(guides.disp.bg);
-	       }
 	  }
 	if ((!guides.current.display.icon) && (guides.disp.icon))
 	  {
@@ -161,18 +168,264 @@ e_guides_update(void)
 	if ((guides.current.display.icon) && (!guides.disp.icon))
 	  {
 	     guides.disp.icon = evas_add_image_from_file(guides.disp.evas, guides.current.display.icon);
+	     evas_show(guides.disp.evas, guides.disp.icon);
 	  }
 	if (guides.disp.icon)
-	  {
-	     evas_set_image_file(guides.disp.evas, guides.disp.icon, guides.current.display.icon);
-	     evas_get_image_size(guides.disp.evas, guides.disp.icon, &iw, &ih);
-	  }
+	  evas_set_image_file(guides.disp.evas, guides.disp.icon, guides.current.display.icon);
 	e_text_set_text(guides.disp.text, guides.current.display.text);
-	e_text_get_min_size(guides.disp.text, &tw, &th);
+	if (!guides.disp.bg) 
+	  {
+	     char *dir;
+	     
+	     dir = e_config_get("guides");
+	     sprintf(file, "%s/display.bits.db", dir);
+	     guides.disp.bg = ebits_load(file);
+	     if (guides.disp.bg) 
+	       {
+		  ebits_add_to_evas(guides.disp.bg, guides.disp.evas);
+		  ebits_set_layer(guides.disp.bg, 0);
+		  ebits_show(guides.disp.bg);
+	       }
+	  }
+	
+	mw = 1;
+	mh = 1;
+	
+	if (guides.disp.bg)
+	  {
+	     guides.embed.icon = e_embed_image_object(guides.disp.bg, "Icon", guides.disp.evas, guides.disp.icon);
+	     guides.embed.text = e_embed_text(guides.disp.bg, "Text", guides.disp.evas, guides.disp.text, 0, 0);
+	     ebits_get_real_min_size(guides.disp.bg, &mw, &mh);
+	  }
+	
+	dw = mw;
+	dh = mh;
+	
+	if (guides.disp.bg) 
+	  {
+	     ebits_move(guides.disp.bg, 0, 0);
+	     ebits_resize(guides.disp.bg, dw, dh);
+	  }
+	if (guides.current.display.loc == E_GUIDES_DISPLAY_LOCATION_SCREEN_MIDDLE)
+	  {
+	     e_window_get_geometry(0, NULL, NULL, &sw, &sh);
+	     dx = (int)(((double)sw - (double)dw) * guides.current.display.align.x);
+	     dy = (int)(((double)sh - (double)dh) * guides.current.display.align.y);
+	  }
+	else if (guides.current.display.loc == E_GUIDES_DISPLAY_LOCATION_WINDOW_MIDDLE)
+	  {
+	     dx = guides.current.x + (int)(((double)guides.current.w - (double)dw) * guides.current.display.align.x);
+	     dy = guides.current.y + (int)(((double)guides.current.h - (double)dh) * guides.current.display.align.y);
+	  }
+	
+	if (guides.disp.image)
+	  {
+	     imlib_context_set_image(guides.disp.image);
+	     imlib_free_image();
+	     guides.disp.image = NULL;
+	  }
+	
+	guides.disp.image = imlib_create_image(dw, dh);
+	imlib_context_set_image(guides.disp.image);
+	imlib_image_set_has_alpha(1);
+	imlib_image_clear();
+
+	evas_set_output_image(guides.disp.evas, guides.disp.image);
+	evas_set_output_size(guides.disp.evas, dw, dh);
+	evas_set_output_viewport(guides.disp.evas, 0, 0, dw, dh);
+	evas_update_rect(guides.disp.evas, 0, 0, dw, dh);
+	evas_render(guides.disp.evas);
+	  {
+	     Pixmap pmap, mask;
+	     
+             pmap = e_pixmap_new(guides.win.display, dw, dh, 0);
+	     mask = e_pixmap_new(guides.win.display, dw, dh, 1);
+	     
+	     imlib_context_set_image(guides.disp.image);
+	     
+	     imlib_context_set_dither_mask(1);
+	     imlib_context_set_dither(1);
+	     imlib_context_set_drawable(pmap);
+	     imlib_context_set_mask(mask);
+	     imlib_context_set_blend(0);
+	     imlib_context_set_color_modifier(NULL);
+	     
+	     imlib_render_image_on_drawable(0, 0);
+	     e_window_set_background_pixmap(guides.win.display, pmap);
+	     e_window_set_shape_mask(guides.win.display, mask);
+	     e_window_clear(guides.win.display);
+	     e_pixmap_free(pmap);
+	     e_pixmap_free(mask);
+	  }	
+	e_window_move(guides.win.display, dx, dy);
+	e_window_resize(guides.win.display, dw, dh);
 	
 	if (guides.current.mode == E_GUIDES_BOX)
 	  {
+	     int fr, fg, fb, fa, br, bg, bb, ba;
+	     int x, y, w, h;
+	     Pixmap pmap, mask;
+	     Imlib_Image image;
 	     
+	     imlib_context_set_dither_mask(1);
+	     imlib_context_set_dither(1);
+	     imlib_context_set_blend(1);
+	     imlib_context_set_color_modifier(NULL);
+	     
+	     fr = 255; fg = 255; fb = 255; fa = 255;
+	     br = 0  ; bg = 0  ; bb = 0  ; ba = 255;
+	     
+	     x = guides.current.x;
+	     y = guides.current.y + 3;
+	     w = 3;
+	     h = guides.current.h - 6;
+	     if ((w > 0) && (h > 0))
+	       {
+		  image = imlib_create_image(w, h);
+		  imlib_context_set_image(image);
+		  imlib_image_set_has_alpha(1);
+		  imlib_image_clear();
+		  
+		  imlib_context_set_color(fr, fg, fb, fa);
+		  imlib_image_draw_line(1, 0, 1, h - 1, 0);
+		  imlib_context_set_color(br, bg, bb, ba);
+		  imlib_image_draw_line(0, 0, 0, h - 1, 0);
+		  imlib_image_draw_line(2, 0, 2, h - 1, 0);
+		  
+		  pmap = e_pixmap_new(guides.win.l, w, h, 0);
+		  mask = e_pixmap_new(guides.win.l, w, h, 1);
+		  imlib_context_set_drawable(pmap);
+		  imlib_context_set_mask(mask);
+		  imlib_render_image_on_drawable(0, 0);
+		  imlib_free_image();
+		  e_window_move(guides.win.l, x, y);
+		  e_window_resize(guides.win.l, w, h);
+		  e_window_set_background_pixmap(guides.win.l, pmap);
+		  e_window_set_shape_mask(guides.win.l, mask);
+		  e_window_clear(guides.win.l);
+		  e_pixmap_free(pmap);
+		  e_pixmap_free(mask);
+	       }
+	     else
+	       {
+		  e_window_resize(guides.win.l, 0, 0);
+	       }
+	     
+	     x = guides.current.x + guides.current.w - 3;
+	     y = guides.current.y + 3;
+	     w = 3;
+	     h = guides.current.h - 6;
+	     if ((w > 0) && (h > 0))
+	       {
+		  image = imlib_create_image(w, h);
+		  imlib_context_set_image(image);
+		  imlib_image_set_has_alpha(1);
+		  imlib_image_clear();
+		  
+		  imlib_context_set_color(fr, fg, fb, fa);
+		  imlib_image_draw_line(1, 0, 1, h - 1, 0);
+		  imlib_context_set_color(br, bg, bb, ba);
+		  imlib_image_draw_line(0, 0, 0, h - 1, 0);
+		  imlib_image_draw_line(2, 0, 2, h - 1, 0);
+		  
+		  pmap = e_pixmap_new(guides.win.r, w, h, 0);
+		  mask = e_pixmap_new(guides.win.r, w, h, 1);
+		  imlib_context_set_drawable(pmap);
+		  imlib_context_set_mask(mask);
+		  imlib_render_image_on_drawable(0, 0);
+		  imlib_free_image();
+		  e_window_move(guides.win.r, x, y);
+		  e_window_resize(guides.win.r, w, h);
+		  e_window_set_background_pixmap(guides.win.r, pmap);
+		  e_window_set_shape_mask(guides.win.r, mask);
+		  e_window_clear(guides.win.r);
+		  e_pixmap_free(pmap);
+		  e_pixmap_free(mask);
+	       }
+	     else
+	       {
+		  e_window_resize(guides.win.r, 0, 0);
+	       }
+	     
+	     x = guides.current.x;
+	     y = guides.current.y;
+	     w = guides.current.w;
+	     h = 3;
+	     if ((w > 0) && (h > 0))
+	       {
+		  image = imlib_create_image(w, h);
+		  imlib_context_set_image(image);
+		  imlib_image_set_has_alpha(1);
+		  imlib_image_clear();
+		  
+		  imlib_context_set_color(br, bg, bb, ba);
+		  imlib_image_draw_line(0, 0, w - 1, 0, 0);
+		  imlib_image_draw_line(2, 2, w - 3, 2, 0);
+		  imlib_image_draw_line(0, 1, 0, 2, 0);
+		  imlib_image_draw_line(w - 1, 1, w - 1, 2, 0);
+		  imlib_context_set_color(fr, fg, fb, fa);
+		  imlib_image_draw_line(1, 1, w - 2, 1, 0);
+		  imlib_image_draw_line(1, 2, 1, 2, 0);
+		  imlib_image_draw_line(w - 2, 2, w - 2, 2, 0);
+		  
+		  pmap = e_pixmap_new(guides.win.t, w, h, 0);
+		  mask = e_pixmap_new(guides.win.t, w, h, 1);
+		  imlib_context_set_drawable(pmap);
+		  imlib_context_set_mask(mask);
+		  imlib_render_image_on_drawable(0, 0);
+		  imlib_free_image();
+		  e_window_move(guides.win.t, x, y);
+		  e_window_resize(guides.win.t, w, h);
+		  e_window_set_background_pixmap(guides.win.t, pmap);
+		  e_window_set_shape_mask(guides.win.t, mask);
+		  e_window_clear(guides.win.t);
+		  e_pixmap_free(pmap);
+		  e_pixmap_free(mask);
+	       }
+	     else
+	       {
+		  e_window_resize(guides.win.t, 0, 0);
+	       }
+	     
+	     x = guides.current.x;
+	     y = guides.current.y + guides.current.h - 3;
+	     w = guides.current.w;
+	     h = 3;
+	     if ((w > 0) && (h > 0))
+	       {
+		  image = imlib_create_image(w, h);
+		  imlib_context_set_image(image);
+		  imlib_image_set_has_alpha(1);
+		  imlib_image_clear();
+		  
+		  imlib_context_set_color(br, bg, bb, ba);
+		  imlib_image_draw_line(0, 2, w - 1, 2, 0);
+		  imlib_image_draw_line(2, 0, w - 3, 0, 0);
+		  imlib_image_draw_line(0, 0, 0, 1, 0);
+		  imlib_image_draw_line(w - 1, 0, w - 1, 1, 0);
+		  imlib_context_set_color(fr, fg, fb, fa);
+		  imlib_image_draw_line(1, 1, w - 2, 1, 0);
+		  imlib_image_draw_line(1, 0, 1, 0, 0);
+		  imlib_image_draw_line(w - 2, 0, w - 2, 0, 0);
+		  
+		  pmap = e_pixmap_new(guides.win.b, w, h, 0);
+		  mask = e_pixmap_new(guides.win.b, w, h, 1);
+		  imlib_context_set_drawable(pmap);
+		  imlib_context_set_mask(mask);
+		  imlib_render_image_on_drawable(0, 0);
+		  imlib_free_image();
+		  e_window_move(guides.win.b, x, y);
+		  e_window_resize(guides.win.b, w, h);
+		  e_window_set_background_pixmap(guides.win.b, pmap);
+		  e_window_set_shape_mask(guides.win.b, mask);
+		  e_window_clear(guides.win.b);
+		  e_pixmap_free(pmap);
+		  e_pixmap_free(mask);
+	       }
+	     else
+	       {
+		  e_window_resize(guides.win.b, 0, 0);
+	       }
 	  }
      }
 	
@@ -180,8 +433,25 @@ e_guides_update(void)
      {
 	if (guides.current.visible)
 	  {
+	     if (guides.current.mode != E_GUIDES_OPAQUE)
+	       {
+		  e_window_raise(guides.win.l);
+		  e_window_show(guides.win.l);
+		  e_window_raise(guides.win.r);
+		  e_window_show(guides.win.r);
+		  e_window_raise(guides.win.t);
+		  e_window_show(guides.win.t);
+		  e_window_raise(guides.win.b);
+		  e_window_show(guides.win.b);
+	       }
 	     e_window_raise(guides.win.display);
 	     e_window_show(guides.win.display);
+	  }
+     }
+   if (guides.current.mode != guides.prev.mode)
+     {
+	if (guides.current.mode == E_GUIDES_BOX)
+	  {
 	     e_window_raise(guides.win.l);
 	     e_window_show(guides.win.l);
 	     e_window_raise(guides.win.r);
@@ -190,6 +460,13 @@ e_guides_update(void)
 	     e_window_show(guides.win.t);
 	     e_window_raise(guides.win.b);
 	     e_window_show(guides.win.b);
+	  }
+	else if (guides.prev.mode == E_GUIDES_OPAQUE)
+	  {
+	     e_window_hide(guides.win.l);
+	     e_window_hide(guides.win.r);
+	     e_window_hide(guides.win.t);
+	     e_window_hide(guides.win.b);
 	  }
      }
    guides.prev = guides.current;
@@ -240,8 +517,7 @@ e_guides_display_text(char *text)
    IF_FREE(guides.current.display.text);
    guides.current.display.text = NULL;
    guides.prev.display.text = (char *)1;
-   if (text)
-     guides.current.display.text = strdup(text);
+   e_strdup(guides.current.display.text, text);
 }
 
 void
@@ -253,8 +529,7 @@ e_guides_display_icon(char *icon)
    IF_FREE(guides.current.display.icon);
    guides.current.display.icon = NULL;
    guides.prev.display.icon = (char *)1;
-   if (icon)
-     guides.current.display.icon = strdup(icon);
+   e_strdup(guides.current.display.icon, icon);
 }
 
 void

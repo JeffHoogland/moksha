@@ -26,28 +26,16 @@ static void cb_exit(void)
    E_PROF_DUMP;
 }
 
-static void ch_col(int val, void *data);
-static void ch_col(int val, void *data)
-{
-   E_Desktop *desk;
-   double v;
-   
-   v = (double)val / 10;
-   desk = e_desktops_get(e_desktops_get_current());
-   e_desktops_scroll(desk, (int)(8 * sin(v)), (int)(8 * cos(v)));
-   e_add_event_timer("time", 0.02, ch_col, val + 1, NULL);
-   return;
-   UN(data);
-}
-
 static void wm_running_error(Display * d, XErrorEvent * ev);
 static void 
 wm_running_error(Display * d, XErrorEvent * ev)
 {
-   if ((ev->request_code == X_ChangeWindowAttributes) && (ev->error_code == BadAccess))
+   if ((ev->request_code == X_ChangeWindowAttributes) && 
+       (ev->error_code == BadAccess))
      {
-	fprintf(stderr, "A WM is alreayd running. no point running now is there?\n");
-	exit(1);
+	fprintf(stderr, "A window manager is already running. No point running now is there?\n");
+	fprintf(stderr, "Exiting Enlightenment. Error.\n");
+	exit(-2);
      }   
    UN(d);
 }
@@ -60,7 +48,6 @@ setup(void)
    e_sync();
    e_border_adopt_children(0);
    e_ungrab();
-/*   e_add_event_timer("timer", 0.02, ch_col, 0, NULL);*/
 }
 
 int
@@ -69,6 +56,7 @@ main(int argc, char **argv)
    char *display = NULL;
    int   i;
 
+   srand(time(NULL));
    atexit(cb_exit);
    e_exec_set_args(argc, argv);
    
@@ -77,33 +65,38 @@ main(int argc, char **argv)
    /* Check command line options here: */
    for (i = 1; i < argc; i++)
      {
-       if ((!strcmp("-display", argv[i])) && (argc - i > 1))
-	 {
-	   display = argv[++i];
-	 }
-       else if ((!strcmp("-help", argv[i]))
-		|| (!strcmp("--help", argv[i]))
-		|| (!strcmp("-h", argv[i])) || (!strcmp("-?", argv[i])))
-	 {
-	   printf("enlightenment options:                      \n"
-		  "\t-display display_name                     \n"
-		  "\t[-v | -version | --version]               \n");
-	   exit(0);
-	 }
-       else if ((!strcmp("-v", argv[i]))
-		|| (!strcmp("-version", argv[i]))
-		|| (!strcmp("--version", argv[i]))
-		|| (!strcmp("-v", argv[i])))
-	 {
-	   printf("Enlightenment Version: %s\n", ENLIGHTENMENT_VERSION);
-	   exit(0);
-	 }
+	if ((   (!strcmp("-d",        argv[i])) 
+	     || (!strcmp("-disp",     argv[i]))
+	     || (!strcmp("-display",  argv[i]))
+	     || (!strcmp("--display", argv[i]))) 
+	    && (argc - i > 1))
+	  {
+	     display = argv[++i];
+	  }
+	else if (   (!strcmp("-h",     argv[i]))
+		 || (!strcmp("-?",     argv[i]))
+		 || (!strcmp("-help",  argv[i]))
+		 || (!strcmp("--help", argv[i])))
+	  {
+	     printf("enlightenment options:                           \n"
+		    "\t[-d | -disp | -display --display] display_name \n"
+		    "\t[-v | -version | --version]                    \n");
+	     exit(0);
+	  }
+	else if (   (!strcmp("-v",        argv[i]))
+		 || (!strcmp("-version",  argv[i]))
+		 || (!strcmp("--version", argv[i])))
+	  {
+	     printf("Enlightenment Version: %s\n", ENLIGHTENMENT_VERSION);
+	     exit(0);
+	  }
      }
-
+   
    if (!e_display_init(display))
      {
-	fprintf(stderr, "cannot connect to display!\n");
-	exit(1);
+	fprintf(stderr, "Enlightenment Error: cannot connect to display!\n");
+	fprintf(stderr, "Exiting Enlightenment. Error.\n");
+	exit(-1);
      }
 
    e_ev_signal_init();
@@ -128,6 +121,8 @@ main(int argc, char **argv)
    e_entry_init();
    e_keys_init();
    e_guides_init();
+   e_place_init();
+   e_cursors_init();
    
 #ifdef USE_FERITE
    e_ferite_init();
@@ -142,6 +137,4 @@ main(int argc, char **argv)
 #endif
    
    return 0;
-   UN(argc);
-   UN(argv);
 }

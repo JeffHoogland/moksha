@@ -1,4 +1,4 @@
-# enumerated variables
+# enumerated variables - don't touch these
 ACT_MOUSE_IN=0
 ACT_MOUSE_OUT=1
 ACT_MOUSE_CLICK=2
@@ -21,6 +21,14 @@ MOD_CTRL_ALT=$[ $MOD_CTRL + $MOD_ALT ];
 FOCUS_POINTER=0
 FOCUS_SLOPPY=1
 FOCUS_CLICK=2
+
+WINDOW_MODE_OPAQUE=0
+WINDOW_MODE_BORDER=1
+WINDOW_MODE_BOX=2
+WINDOW_MODE_TECHNICAL=3
+
+GUIDES_LOC_WIN=0
+GUIDES_LOC_SCR=1
 
 # actions defining how to react to things
 DB="./actions.db"
@@ -161,6 +169,14 @@ edb_ed $DB add "/actions/"$NUM"/button"    int 1
 edb_ed $DB add "/actions/"$NUM"/key"       str ""
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_NONE
 NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Window_Place"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Move"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_MOUSE_CLICK  
+edb_ed $DB add "/actions/"$NUM"/button"    int 1
+edb_ed $DB add "/actions/"$NUM"/key"       str ""
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_NONE
+NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
 edb_ed $DB add "/actions/"$NUM"/action"    str "Restart"
 edb_ed $DB add "/actions/"$NUM"/params"    str ""
@@ -293,12 +309,19 @@ edb_ed $DB add "/actions/count"       int $NUM
 
 # basic settings
 DB="./settings.db"
-edb_ed $DB add "/focus/mode   "      int $FOCUS_POINTER
-edb_ed $DB add "/move/resist"        int 1
-edb_ed $DB add "/move/resist/desk"   int 24
-edb_ed $DB add "/move/resist/win"    int 12
-edb_ed $DB add "/menu/scroll/resist" int 5
-edb_ed $DB add "/menu/scroll/speed"  int 12
+edb_ed $DB add "/focus/mode   "           int   $FOCUS_POINTER
+edb_ed $DB add "/move/resist"             int   1
+edb_ed $DB add "/move/resist/desk"        int   24
+edb_ed $DB add "/move/resist/win"         int   12
+edb_ed $DB add "/menu/scroll/resist"      int   5
+edb_ed $DB add "/menu/scroll/speed"       int   12
+edb_ed $DB add "/window/raise/auto"       int    0
+edb_ed $DB add "/window/raise/delay"      float 0.5
+edb_ed $DB add "/window/move/mode"        int   $WINDOW_MODE_BOX
+edb_ed $DB add "/window/resize/mode"      int   $WINDOW_MODE_BOX
+edb_ed $DB add "/guides/display/x"        float 0.5
+edb_ed $DB add "/guides/display/y"        float 0.5
+edb_ed $DB add "/guides/display/location" int   $GUIDES_LOC_SCR
 
 # what events on windows are "grabbed" by the window manager
 DB="./grabs.db"

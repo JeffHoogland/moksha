@@ -21,6 +21,8 @@ static void e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int
 static void e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_idle(void *data);
 static void e_wheel(Eevent * ev);
@@ -241,6 +243,7 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ev_Mouse_Down          *ev;
    E_View *v;
    
+   if (!current_ev) return;
    ev = current_ev->event;
    v = _data;
    if (!(ev->mods & (mulit_select_mod | range_select_mod)))
@@ -285,6 +288,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_View *v;
    int dx, dy;
    
+   if (!current_ev) return;
    ev = current_ev->event;
    v = _data;
    dx = 0;
@@ -379,6 +383,7 @@ e_bg_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ev_Mouse_Down          *ev;
    E_View *v;
    
+   if (!current_ev) return;
    ev = current_ev->event;
    v = _data;
    if (v->select.on)
@@ -772,6 +777,7 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ev_Mouse_Down *e;
    
    ev = e_view_get_current_event();
+   if (!ev) return;
    e = ev->event;
    ic = _data;
    ic->view->select.down.x = _x;
@@ -820,6 +826,7 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ev_Mouse_Up *e;
    
    ev = e_view_get_current_event();
+   if (!ev) return;
    e = ev->event;
    ic = _data;
    if (ic->view->drag.started)
@@ -861,6 +868,34 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 }
 
 static void
+e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+{
+   E_Icon *ic;
+   
+   ic = _data;
+   e_cursors_display_in_window(ic->view->win.main, "View_Icon");
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
+}
+
+static void
+e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+{
+   E_Icon *ic;
+   
+   ic = _data;
+   e_cursors_display_in_window(ic->view->win.main, "View");
+   UN(_e);
+   UN(_o);
+   UN(_b);
+   UN(_x);
+   UN(_y);
+}
+
+static void
 e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Icon *ic;
@@ -868,6 +903,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    Ev_Mouse_Move *e;
    
    ev = e_view_get_current_event();
+   if (!ev) return;
    e = ev->event;
    ic = _data;
    if (!ic->state.clicked) return;
@@ -961,6 +997,10 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  imlib_image_set_has_alpha(1);
 		  imlib_context_set_blend(1);
 		  imlib_image_clear();
+                  imlib_context_set_color_modifier(NULL);
+		  imlib_context_set_cliprect(0, 0, 0, 0);
+		  imlib_context_set_angle(0);
+		  
 		  for (l = views; l; l = l->next)
 		    {
 		       E_View *v;
@@ -1033,6 +1073,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  imlib_context_set_drawable(pmap);
 		  imlib_context_set_mask(mask);
 		  imlib_context_set_blend(0);
+		  imlib_context_set_color_modifier(NULL);
 		  imlib_render_image_on_drawable(0, 0);
 		  imlib_free_image();
 	       }
@@ -1439,6 +1480,7 @@ e_mouse_move(Eevent * ev)
 	if (e->win == v->win.main)
 	  {
 	     evas_event_move(v->evas, e->x, e->y);
+	     current_ev = NULL;
 	     return;
 	  }
      }
@@ -1452,6 +1494,7 @@ e_mouse_in(Eevent * ev)
    Evas_List l;
    
    e = ev->event;
+   current_ev = ev;
    for (l = views; l; l = l->next)
      {
 	E_View *v;
@@ -1466,9 +1509,11 @@ e_mouse_in(Eevent * ev)
 		  e_focus_to_window(e->win);
 		  evas_event_enter(v->evas);
 	       }
+	     current_ev = NULL;
 	     return;
 	  }
      }
+   current_ev = NULL;
 }
 
 static void
@@ -1478,6 +1523,7 @@ e_mouse_out(Eevent * ev)
    Evas_List l;
    
    e = ev->event;
+   current_ev = ev;
    for (l = views; l; l = l->next)
      {
 	E_View *v;
@@ -1486,9 +1532,11 @@ e_mouse_out(Eevent * ev)
 	if (e->win == v->win.main)
 	  {
 	     evas_event_leave(v->evas);
+	     current_ev = NULL;
 	     return;
 	  }
      }
+   current_ev = NULL;
 }
 
 static void
@@ -1625,9 +1673,13 @@ e_view_icon_show(E_Icon *ic)
 	evas_set_color(ic->view->evas, ic->obj.event2, 0, 0, 0, 0);
 	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_DOWN, e_icon_down_cb, ic);
 	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_UP, e_icon_up_cb, ic);
+	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_IN, e_icon_in_cb, ic);
+	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_OUT, e_icon_out_cb, ic);
 	evas_callback_add(ic->view->evas, ic->obj.event1, CALLBACK_MOUSE_MOVE, e_icon_move_cb, ic);
 	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_DOWN, e_icon_down_cb, ic);
 	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_UP, e_icon_up_cb, ic);
+	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_IN, e_icon_in_cb, ic);
+	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_OUT, e_icon_out_cb, ic);
 	evas_callback_add(ic->view->evas, ic->obj.event2, CALLBACK_MOUSE_MOVE, e_icon_move_cb, ic);
      }
    evas_set_layer(ic->view->evas, ic->obj.icon, 200);
@@ -2234,6 +2286,7 @@ e_view_realize(E_View *v)
 			  image_cache,
 			  font_dir);
    v->win.main = evas_get_window(v->evas);
+   e_cursors_display_in_window(v->win.main, "View");
    evas_event_move(v->evas, -999999, -999999);
    e_add_child(v->win.base, v->win.main);   
    e_window_set_events(v->win.base,

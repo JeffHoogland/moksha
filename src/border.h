@@ -115,6 +115,8 @@ struct _E_Border
 
    int first_expose;
    
+   int hold_changes;
+   
    int changed;
 };
 
@@ -143,6 +145,10 @@ void      e_border_init(void);
 void      e_border_adopt_children(Window win);
 E_Border *e_border_current_focused(void);
 void      e_border_focus_grab_ended(void);
-
+void      e_border_raise_next(void);
+void      e_border_send_pointer(E_Border *b);
+int       e_border_viewable(E_Border *b);
+void      e_border_print_pos(char *buf, E_Border *b);
+void      e_border_print_size(char *buf, E_Border *b);
 
 #endif

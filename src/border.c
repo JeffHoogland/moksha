@@ -1,10 +1,12 @@
 #include "border.h"
 #include "config.h"
 #include "actions.h"
+#include "delayed.h"
 #include "desktops.h"
 #include "resist.h"
 #include "icccm.h"
 #include "util.h"
+#include "place.h"
 
 /* Window border rendering, querying, setting  & modification code */
 
@@ -20,6 +22,9 @@ static int border_mouse_y = 0;
 static int border_mouse_buttons = 0;
 
 static Eevent *current_ev = NULL;
+
+/* Global delayed window raise action */
+E_Delayed_Action *delayed_window_raise = NULL;
 
 static void e_idle(void *data);
 static void e_map_request(Eevent * ev);
@@ -100,7 +105,8 @@ e_map_request(Eevent * ev)
 	b = e_border_find_by_window(e->win);
 	if (!b)
 	  {
-	     b = e_border_adopt(e->win, 0);
+	     if (e_window_exists(e->win))
+	       b = e_border_adopt(e->win, 0);
 	  }
      }
    current_ev = NULL;
@@ -390,6 +396,7 @@ e_focus_in(Eevent * ev)
 	     b->current.selected = 1;
 	     e_border_focus_grab_ended();
 	     b->changed = 1;
+	     OBS_NOTIFY(b, EV_WINDOW_FOCUS_IN);
 	  }
      }
    current_ev = NULL;
@@ -437,6 +444,7 @@ e_focus_out(Eevent * ev)
 	       }
 	     b->changed = 1;
 	  }
+	e_delayed_action_cancel(delayed_window_raise);
      }
    current_ev = NULL;
 }
@@ -742,6 +750,8 @@ e_cb_mouse_in(void *data, Ebits_Object o, char *class, int bt, int x, int y, int
    if (border_mouse_buttons) return;
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
+   if (class) e_cursors_display_in_window(b->win.main, class);
+   else e_cursors_display_in_window(b->win.main, "Default");     
    if (!current_ev) return;
    e_action_stop(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_IN, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
@@ -764,6 +774,7 @@ e_cb_mouse_out(void *data, Ebits_Object o, char *class, int bt, int x, int y, in
    border_mouse_x = mouse_x;
    border_mouse_y = mouse_y;
    if (!current_ev) return;
+   e_cursors_display_in_window(b->win.main, "Default");
    e_action_stop(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
    e_action_start(class, ACT_MOUSE_OUT, 0, NULL, EV_KEY_MODIFIER_NONE, b, NULL, x, y, border_mouse_x, border_mouse_y);
    return;
@@ -1138,6 +1149,7 @@ e_border_adopt(Window win, int use_client_pos)
 {
    E_Border *b;
    int bw;
+   int show = 1;
    
    /* create the struct */
    b = e_border_new();
@@ -1187,6 +1199,7 @@ e_border_adopt(Window win, int use_client_pos)
 	e_window_get_geometry(win, &x, &y, NULL, NULL);
 	b->current.requested.x = x;
 	b->current.requested.y = y;
+	b->changed = 1;
      }
    /* reparent the window finally */
    e_window_reparent(win, b->win.container, 0, 0);
@@ -1201,6 +1214,7 @@ e_border_adopt(Window win, int use_client_pos)
 	b->current.requested.y += pt;
 	b->changed = 1;
      }
+   if (!use_client_pos)
      {
 	int x, y;
         int pl, pr, pt, pb;
@@ -1238,7 +1252,7 @@ e_border_adopt(Window win, int use_client_pos)
 		  break;
 		case SouthWestGravity:
 		  x = b->client.pos.x + pl;
-		  y = b->client.pos.y - pb;
+		  y = b->client.pos.y - pb + bw;
 		  break;
 		case WestGravity:
 		  x = b->client.pos.x + pl;
@@ -1264,8 +1278,9 @@ e_border_adopt(Window win, int use_client_pos)
 	  }
 	else
 	  {
-	     x = rand()%600 + pl;
-	     y = rand()%400 + pt;
+	     show = e_place_border(b, b->desk, &x, &y, E_PLACE_SMART);
+	     x += pl;
+	     y += pt;
 	  }
 	b->current.requested.x = x - pl;
 	b->current.requested.y = y - pt;
@@ -1299,6 +1314,7 @@ e_border_new(void)
    ZERO(b, E_Border, 1);
    
    OBJ_INIT(b, e_border_free);
+   OBS_REGISTER(delayed_window_raise, b);
    
    b->current.requested.w = 1;
    b->current.requested.h = 1;
@@ -1321,6 +1337,7 @@ e_border_new(void)
    b->win.main = e_window_override_new(desk->win.container, 0, 0, 1, 1);
    b->win.input = e_window_input_new(b->win.main, 0, 0, 1, 1);
    b->win.container = e_window_override_new(b->win.main, 0, 0, 1, 1);
+   e_cursors_display_in_window(b->win.container, "Application");
    e_window_set_events_propagate(b->win.input, 1);
    e_window_set_events(b->win.input, XEV_MOUSE_MOVE | XEV_BUTTON);
    e_window_set_events(b->win.main, XEV_IN_OUT);
@@ -1368,6 +1385,10 @@ e_border_new(void)
 			    font_dir);
    b->win.b = evas_get_window(b->evas.b); 
    e_add_child(b->win.main, b->win.b);
+   e_cursors_display_in_window(b->win.l, "Default");
+   e_cursors_display_in_window(b->win.r, "Default");
+   e_cursors_display_in_window(b->win.t, "Default");
+   e_cursors_display_in_window(b->win.b, "Default");
 
    b->obj.title.l = evas_add_text(b->evas.l, "borzoib", 8, "");
    b->obj.title.r = evas_add_text(b->evas.r, "borzoib", 8, "");
@@ -1847,6 +1868,7 @@ e_border_update(E_Border *b)
    int visibility_changed = 0;
    int state_changed = 0;
    
+   if (b->hold_changes) return;
    if (!b->changed) return;
    
    b->current.visible = b->current.requested.visible;
@@ -2120,6 +2142,17 @@ e_border_set_layer(E_Border *b, int layer)
    else  e_border_raise(b);
 }
 
+static void
+e_border_raise_delayed(int val, void *b)
+{
+   int auto_raise = 0;
+   E_CFG_INT(cfg_auto_raise, "settings", "/window/raise/auto", 0);
+   
+   E_CONFIG_INT_GET(cfg_auto_raise, auto_raise);
+   if (auto_raise)
+     e_border_raise((E_Border *)b);
+}
+
 void
 e_border_raise(E_Border *b)
 {
@@ -2221,6 +2254,11 @@ e_border_lower_below(E_Border *b, E_Border *below)
 void
 e_border_init(void)
 {
+   double raise_delay = 0.5;
+   E_CFG_FLOAT(cfg_raise_delay, "settings", "/window/raise/delay", 0.5);
+   
+   E_CONFIG_FLOAT_GET(cfg_raise_delay, raise_delay);
+   
    e_event_filter_handler_add(EV_MOUSE_DOWN,               e_mouse_down);
    e_event_filter_handler_add(EV_MOUSE_UP,                 e_mouse_up);
    e_event_filter_handler_add(EV_MOUSE_MOVE,               e_mouse_move);
@@ -2241,6 +2279,9 @@ e_border_init(void)
    e_event_filter_handler_add(EV_COLORMAP,                 e_colormap);
    e_event_filter_idle_handler_add(e_idle, NULL);
 
+   delayed_window_raise = NEW(E_Delayed_Action, 1);
+   E_DELAYED_ACT_INIT(delayed_window_raise, EV_WINDOW_FOCUS_IN, raise_delay, e_border_raise_delayed);
+   
    e_add_event_timer("e_border_poll()", 1.00, e_border_poll, 0, NULL);
 }
 
@@ -2309,5 +2350,95 @@ e_border_focus_grab_ended(void)
 	
 	b = l->data;
 	b->current.select_lost_from_grab = 0;
+     }
+}
+
+int
+e_border_viewable(E_Border *b)
+{
+   if (b->desk != e_desktops_get(e_desktops_get_current()))
+     return 0;
+
+   if (b->current.x + b->current.w < b->desk->x)
+     return 0;
+
+   if (b->current.x > b->desk->x + b->desk->real.w)
+     return 0;
+
+   if (b->current.y + b->current.h < b->desk->y)
+     return 0;
+
+   if (b->current.y > b->desk->y + b->desk->real.h)
+     return 0;
+
+   return 1;
+}
+
+void
+e_border_send_pointer(E_Border *b)
+{
+   XWarpPointer(e_display_get(), None, b->win.main, 0, 0, 0, 0, b->current.w / 2, b->current.h / 2);
+}
+
+void
+e_border_raise_next(void)
+{
+   Evas_List next;
+   E_Border *current;
+
+   if (!borders)
+	return;
+
+   current = e_border_current_focused();
+
+   /* Find the current border on the list of borders */
+   for (next = borders; next && next->data != current; next = next->next);
+
+   /* Step to the next border, wrap around the queue if the end is reached */
+   if (next && next->next)
+	next = next->next;
+   else
+	next = borders;
+
+   current = (E_Border *)next->data;
+   while (next && !e_border_viewable(current))
+     {
+	next = next->next;
+	if (!next)
+	  next = borders;
+
+	current = (E_Border *)next->data;
+     }
+
+   printf("current desk coords %d, %d, real dim %d, %d\n", current->desk->x,
+		   current->desk->y, current->desk->real.w, current->desk->real.h);
+   printf("current coords %d, %d\n", current->current.x,
+		   current->current.y);
+
+   e_border_raise(current);
+   e_border_send_pointer(current);
+}
+
+void
+e_border_print_pos(char *buf, E_Border *b)
+{
+   sprintf(buf, "%i, %i",
+	   b->current.x, b->current.y);
+}
+
+void
+e_border_print_size(char *buf, E_Border *b)
+{
+   if ((b->client.step.w > 1) || (b->client.step.h > 1))
+     {
+	sprintf(buf, "%i x %i",
+		(b->client.w - b->client.base.w) / b->client.step.w,
+		(b->client.h - b->client.base.h) / b->client.step.h);
+     }
+   else
+     {
+	sprintf(buf, "%i x %i", 
+		b->client.w, 
+		b->client.h);
      }
 }

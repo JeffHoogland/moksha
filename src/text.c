@@ -66,13 +66,17 @@ e_text_set_text(E_Text *t, char *text)
    if (!strcmp(t->text, text)) return;
    IF_FREE(t->text);
    t->text = strdup(text);
+   evas_set_text(t->evas, t->obj.o1, t->text);
+   evas_set_text(t->evas, t->obj.o2, t->text);
+   evas_set_text(t->evas, t->obj.o3, t->text);
+   evas_set_text(t->evas, t->obj.o4, t->text);
    evas_set_text(t->evas, t->obj.text, t->text);
    t->w = evas_get_text_width(t->evas, t->obj.text) + 2;
    t->h = evas_get_text_height(t->evas, t->obj.text) + 2;
-   t->min.w = t->w;
-   t->min.h = t->h;
-   t->max.w = t->w;
-   t->max.h = t->h;
+   t->min.w = t->w + 2;
+   t->min.h = t->h + 2;
+   t->max.w = t->w + 2;
+   t->max.h = t->h + 2;
 }
 
 void

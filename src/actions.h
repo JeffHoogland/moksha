@@ -63,6 +63,7 @@ void e_action_go(char *action, int act, int button, char *key,
 		 Ev_Key_Modifiers mods, void *o, void *data,
 		 int x, int y, int rx, int ry, int dx, int dy);
 void e_action_stop_by_object(void *o, void *data, int x, int y, int rx, int ry);
+void e_action_stop_by_type(char *action);
 void e_action_add_proto(char *action, 
 			void (*func_start) (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),
 			void (*func_stop)  (void *o, E_Action *a, void *data, int x, int y, int rx, int ry),

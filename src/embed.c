@@ -269,6 +269,8 @@ e_embed_image_func_get_min_size(void *_data, double *w, double *h)
    int iw, ih;
    
    em = _data;
+   iw = 0;
+   ih = 0;
    evas_get_image_size(em->evas, em->image_obj, &iw, &ih);
    if (w) *w = iw;
    if (h) *h = ih;
