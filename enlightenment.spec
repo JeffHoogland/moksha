@@ -18,6 +18,16 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-root
 %description
 Enlightenment is a window manager.
 
+%package devel
+Summary: Development headers for Enlightenment. 
+Group: User Interface/Desktops
+Requires: %{name} = %{version}
+Requires: libjpeg-devel XFree86-devel eet-devel embryo-devel
+Requires: evas-devel edb-devel edje-devel imlib2-devel ecore-devel
+
+%description devel
+Development headers for Enlightenment.
+
 %prep
 %setup -q
 
@@ -44,5 +54,9 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 %{_libdir}/%{name}
 %{_datadir}/%{name}
+
+%files devel
+%defattr(-, root, root)
+%{_includedir}/enlightenment/*.h
 
 %changelog
