@@ -554,10 +554,10 @@ struct _E_Entry
    int   scroll_pos;
    int   x, y, w, h;
    Ebits_Object obj_base;
+   Ebits_Object obj_cursor;
+   Ebits_Object obj_selection;
    Evas_Object event_box;
    Evas_Object clip_box;
-   Evas_Object cursor;
-   Evas_Object selection;
    Evas_Object text;
    Window paste_win;
    Window selection_win;

@@ -119,9 +119,11 @@ e_entry_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    if (entry->mouse_down > 0)
      {
 	int pos, ppos;
+	double ty;
 	
 	ppos = entry->cursor_pos;
-	pos = evas_text_at_position(_e, entry->text, _x, entry->y,
+	evas_get_geometry(entry->evas, entry->text, NULL, &ty, NULL, NULL);
+	pos = evas_text_at_position(_e, entry->text, _x + entry->scroll_pos, ty,
 				    NULL, NULL, NULL, NULL);
 	if (pos < 0)
 	  {
@@ -199,23 +201,33 @@ e_entry_realize(E_Entry *entry)
 	ebits_add_to_evas(entry->obj_base, entry->evas);
 /*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
      }   
+   sprintf(buf, "%s/%s", entries, "cursor.bits.db");
+   entry->obj_cursor = ebits_load(buf); 
+   if (entry->obj_cursor) 
+    {
+	ebits_add_to_evas(entry->obj_cursor, entry->evas);
+/*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
+     }   
+   sprintf(buf, "%s/%s", entries, "selection.bits.db");
+   entry->obj_selection = ebits_load(buf); 
+   if (entry->obj_selection) 
+    {
+	ebits_add_to_evas(entry->obj_selection, entry->evas);
+/*	ebits_set_color_class(entry->obj_base, "Base FG", 100, 200, 255, 255);*/
+     }   
    
    entry->clip_box = evas_add_rectangle(entry->evas);
    entry->text = evas_add_text(entry->evas, "borzoib", 8, "");
-   entry->selection = evas_add_rectangle(entry->evas);
-   entry->cursor = evas_add_rectangle(entry->evas);
+   if (entry->obj_cursor) 
+     ebits_set_clip(entry->obj_cursor, entry->clip_box);
+   if (entry->obj_selection) 
+     ebits_set_clip(entry->obj_selection, entry->clip_box);
    entry->event_box = evas_add_rectangle(entry->evas);
    evas_set_color(entry->evas, entry->clip_box, 255, 255, 255, 255);
    evas_set_color(entry->evas, entry->event_box, 0, 0, 0, 0);
    evas_set_color(entry->evas, entry->text, 0, 0, 0, 255);
-   evas_set_color(entry->evas, entry->cursor, 255, 255, 255, 100);
-   evas_set_color(entry->evas, entry->selection, 255, 255, 50, 50);
-   if (entry->obj_base) 
-     ebits_set_clip(entry->obj_base, entry->clip_box);
    evas_set_clip(entry->evas, entry->text, entry->clip_box);
    evas_set_clip(entry->evas, entry->event_box, entry->clip_box);
-   evas_set_clip(entry->evas, entry->cursor, entry->clip_box);
-   evas_set_clip(entry->evas, entry->selection, entry->clip_box);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_DOWN, e_entry_down_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_UP, e_entry_up_cb, entry);
    evas_callback_add(entry->evas, entry->event_box, CALLBACK_MOUSE_MOVE, e_entry_move_cb, entry);
@@ -225,26 +237,40 @@ static void
 e_entry_unrealize(E_Entry *entry)
 {
    if (entry->event_box) evas_del_object(entry->evas, entry->event_box);
-   if (entry->cursor) evas_del_object(entry->evas, entry->cursor);
    if (entry->text) evas_del_object(entry->evas, entry->text);
    if (entry->clip_box) evas_del_object(entry->evas, entry->clip_box);
-   if (entry->selection) evas_del_object(entry->evas, entry->selection);
+   if (entry->obj_base) ebits_free(entry->obj_base);
+   if (entry->obj_cursor) ebits_free(entry->obj_cursor);
+   if (entry->obj_selection) ebits_free(entry->obj_selection);
+   entry->event_box = NULL;
+   entry->text = NULL;
+   entry->clip_box = NULL;
+   entry->obj_base = NULL;
+   entry->obj_cursor = NULL;
+   entry->obj_selection = NULL;
 }
 
 static void 
 e_entry_configure(E_Entry *entry)
 {
+   int p1l, p1r, p1t, p1b;
+   int p2l, p2r, p2t, p2b;
+   
    if (!entry->evas) return;
    if (!entry->event_box) return;
+   p1l = p1r = p1t = p1b = 0;
+   if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
+   p2l = p2r = p2t = p2b = 0;
+   if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
    if (entry->obj_base) 
      {
 	ebits_move(entry->obj_base, entry->x, entry->y);
 	ebits_resize(entry->obj_base, entry->w, entry->h);
      }
-   evas_move(entry->evas, entry->clip_box, entry->x, entry->y);
-   evas_resize(entry->evas, entry->clip_box, entry->w, entry->h);
-   evas_move(entry->evas, entry->event_box, entry->x, entry->y);
-   evas_resize(entry->evas, entry->event_box, entry->w, entry->h);
+   evas_move(entry->evas, entry->clip_box, entry->x + p1l, entry->y + p1t);
+   evas_resize(entry->evas, entry->clip_box, entry->w - p1l - p1r, entry->h - p1t - p1b);
+   evas_move(entry->evas, entry->event_box, entry->x + p1l + p2l, entry->y + p1t + p2t);
+   evas_resize(entry->evas, entry->event_box, entry->w - p1l - p1r - p2l - p2r, entry->h - p1t - p1b - p2t - p2b);
    if ((entry->buffer) && (entry->buffer[0] != 0) && (entry->focused))
      {
 	int tx, ty, tw, th;
@@ -260,13 +286,17 @@ e_entry_configure(E_Entry *entry)
 	     tx += tw;
 	     tw = entry->end_width;
 	  }
-	if (tx + tw + entry->scroll_pos > entry->w)
-	  entry->scroll_pos = entry->w - tx - tw;
-	else if (tx + entry->scroll_pos < 0)
-	  entry->scroll_pos = -tx;
-	evas_move(entry->evas, entry->cursor, entry->x + tx + entry->scroll_pos, entry->y + ty);
-	evas_resize(entry->evas, entry->cursor, tw, th);
-	evas_show(entry->evas, entry->cursor);
+	th = evas_get_text_height(entry->evas, entry->text);
+	if (tx + tw + entry->scroll_pos > entry->w - p1l - p1r)
+	  entry->scroll_pos = entry->w - tx - tw - p1l - p1r - p1l - p2l;
+	else if (tx + entry->scroll_pos < p1l)
+	  entry->scroll_pos = 0 - tx;
+	if (entry->obj_cursor)
+	  {
+	     ebits_move(entry->obj_cursor, entry->x + tx + entry->scroll_pos + p1l, entry->y + ty + p1t);
+	     ebits_resize(entry->obj_cursor, tw + p2l + p2r, th + p2t + p2b);
+	     ebits_show(entry->obj_cursor);
+	  }
      }
    else if (entry->focused)
      {
@@ -276,15 +306,19 @@ e_entry_configure(E_Entry *entry)
 	tw = 4;
 	tx = 0;
 	th = evas_get_text_height(entry->evas, entry->text);
-	evas_move(entry->evas, entry->cursor, entry->x + tx + entry->scroll_pos, entry->y);
-	evas_resize(entry->evas, entry->cursor, entry->end_width, th);
-	evas_show(entry->evas, entry->cursor);
+	if (entry->obj_cursor)
+	  {
+	     ebits_move(entry->obj_cursor, entry->x + tx + entry->scroll_pos + p1l, entry->y + p1t);
+	     ebits_resize(entry->obj_cursor, entry->end_width + p2l + p2r, th + p2t + p2b);
+	     ebits_show(entry->obj_cursor);
+	  }
      }
    else
      {
-	evas_hide(entry->evas, entry->cursor);
+	if (entry->obj_cursor)
+	  ebits_hide(entry->obj_cursor);	
      }
-   evas_move(entry->evas, entry->text, entry->x + entry->scroll_pos, entry->y);
+   evas_move(entry->evas, entry->text, entry->x + entry->scroll_pos + p1l + p2l, entry->y + p1t + p2t);
    if (entry->select.start >= 0)
      {
 	int x1, y1, x2, tw, th;
@@ -297,13 +331,18 @@ e_entry_configure(E_Entry *entry)
 	     evas_text_at(entry->evas, entry->text, entry->select.start + entry->select.length - 2, &x2, NULL, &tw, &th);
 	     tw += entry->end_width;
 	  }
-	evas_move(entry->evas, entry->selection, entry->x + x1 + entry->scroll_pos, entry->y + y1);
-	evas_resize(entry->evas, entry->selection, x2 + tw - x1, th);
-	evas_show(entry->evas, entry->selection);
+	th = evas_get_text_height(entry->evas, entry->text);
+	if (entry->obj_selection)
+	  {
+	     ebits_move(entry->obj_selection, entry->x + x1 + entry->scroll_pos + p1l, entry->y + y1 + p1t);
+	     ebits_resize(entry->obj_selection, x2 + tw - x1 + p2l + p2r, th + p2t + p2b);
+	     ebits_show(entry->obj_selection);
+	  }
      }
    else
      {
-	evas_hide(entry->evas, entry->selection);   
+	if (entry->obj_selection)
+	  ebits_hide(entry->obj_selection);
      }
 }
 
@@ -469,11 +508,11 @@ e_entry_show(E_Entry *entry)
    if (entry->visible) return;
    entry->visible = 1;
    if (!entry->evas) return;
-   if (entry->obj_base) 
-     ebits_show(entry->obj_base);
+   if (entry->obj_base) ebits_show(entry->obj_base);
+   if (entry->obj_cursor) ebits_show(entry->obj_cursor);
+   if (entry->obj_selection) ebits_show(entry->obj_selection);
    evas_show(entry->evas, entry->event_box);
    evas_show(entry->evas, entry->clip_box);
-   if (entry->focused) evas_show(entry->evas, entry->cursor);
    evas_show(entry->evas, entry->text);
 }
 
@@ -483,24 +522,22 @@ e_entry_hide(E_Entry *entry)
    if (!entry->visible) return;
    entry->visible = 0;
    if (!entry->evas) return;
-   if (entry->obj_base) 
-     ebits_hide(entry->obj_base);
+   if (entry->obj_base) ebits_hide(entry->obj_base);
+   if (entry->obj_cursor) ebits_hide(entry->obj_cursor);
+   if (entry->obj_selection) ebits_hide(entry->obj_selection);
    evas_hide(entry->evas, entry->event_box);
    evas_hide(entry->evas, entry->clip_box);
-   evas_hide(entry->evas, entry->cursor);
    evas_hide(entry->evas, entry->text);
-   evas_hide(entry->evas, entry->selection);
 }
 
 void
 e_entry_set_layer(E_Entry *entry, int l)
 {
-   if (entry->obj_base) 
-     ebits_set_layer(entry->obj_base, l);
+   if (entry->obj_base) ebits_set_layer(entry->obj_base, l);
    evas_set_layer(entry->evas, entry->clip_box, l);
    evas_set_layer(entry->evas, entry->text, l);
-   evas_set_layer(entry->evas, entry->selection, l);
-   evas_set_layer(entry->evas, entry->cursor, l);
+   if (entry->obj_selection) ebits_set_layer(entry->obj_selection, l);
+   if (entry->obj_cursor) ebits_set_layer(entry->obj_cursor, l);
    evas_set_layer(entry->evas, entry->event_box, l);
 }
 
@@ -508,12 +545,16 @@ void
 e_entry_set_clip(E_Entry *entry, Evas_Object clip)
 {
    evas_set_clip(entry->evas, entry->clip_box, clip);
+   if (entry->obj_base) 
+     ebits_set_clip(entry->obj_base, clip);
 }
 
 void
 e_entry_unset_clip(E_Entry *entry)
 {
    evas_unset_clip(entry->evas, entry->clip_box);
+   if (entry->obj_base) 
+     ebits_unset_clip(entry->obj_base);
 }
 
 void
@@ -535,8 +576,16 @@ e_entry_resize(E_Entry *entry, int w, int h)
 void
 e_entry_query_max_size(E_Entry *entry, int *w, int *h)
 {
-   if (w) *w = evas_get_text_width(entry->evas, entry->text);
-   if (h) *h = evas_get_text_height(entry->evas, entry->text);
+   int p1l, p1r, p1t, p1b;
+   int p2l, p2r, p2t, p2b;
+   
+   p1l = p1r = p1t = p1b = 0;
+   if (entry->obj_base) ebits_get_insets(entry->obj_base, &p1l, &p1r, &p1t, &p1b);
+   p2l = p2r = p2t = p2b = 0;
+   if (entry->obj_cursor) ebits_get_insets(entry->obj_cursor, &p2l, &p2r, &p2t, &p2b);
+   
+   if (w) *w = evas_get_text_width(entry->evas, entry->text) + p1l + p1r + p2l + p2r;
+   if (h) *h = evas_get_text_height(entry->evas, entry->text) + p1t + p1b + p2t + p2b;
 }
 
 void

@@ -882,7 +882,13 @@ e_view_realize(E_View *v)
 	e_entry_resize(entry, 100, 24);
 	e_entry_set_focus(entry, 1);
 	e_entry_show(entry);
-	e_entry_set_text(entry, "Some Entry Text");
+	e_entry_set_text(entry, "Some Test Entry Text... Play with me!");
+	  {
+	     int ew, eh;
+	     
+	     e_entry_query_max_size(entry, &ew, &eh);
+	     e_entry_resize(entry, ew, eh);
+	  }
      }
    
    v->changed = 1;
