@@ -412,7 +412,6 @@ e_view_file_added(int id, char *file)
    e_icon_set_filename(icon, file);
    e_icon_set_xy(icon, rand()%(v->size.w - 60), rand()%(v->size.h - 60));
    e_icon_show(icon);
-   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
    e_view_add_icon(v, icon);
    sprintf(buf, "%s/%s", v->dir, file);
    efsd_stat(e_fs_get_connection(), buf);
@@ -561,8 +560,44 @@ e_view_handle_fs(EfsdEvent *ev)
 		  icon = e_view_find_icon_by_path(ev->efsd_reply_event.command.efsd_file_cmd.file);
 		  if (icon)
 		    {
-		       if (S_ISDIR(st->st_mode))
-			 e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/normal");
+		       char f[4096];
+		       
+		       sprintf(f, "%s/%s", icon->view->dir, icon->file);
+		       /* should get mime type here */
+		       /* perhaps this flag should be part of the mime? */
+		       if (S_ISDIR(st->st_mode)) icon->info.is_dir = 1;
+		       /* this should be able to be returned by efsd */
+		       if (S_ISLNK(st->st_mode)) icon->info.link = e_file_link(f);
+		       icon->info.is_exe = e_file_can_exec(st);
+		       /* figure out icons to use */
+		       IF_FREE(icon->info.icon.normal);
+		       IF_FREE(icon->info.icon.selected);
+		       IF_FREE(icon->info.icon.clicked);
+		       if (icon->info.is_dir)
+			 {
+			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/clicked");
+			 }
+		       else if (icon->info.is_exe)
+			 {
+			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/executable/default.db:/icon/clicked");
+			 }
+		       else if (icon->info.link)
+			 {
+			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
+			 }
+		       else
+			 {
+			    icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");
+			    icon->info.icon.selected = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/selected");
+			    icon->info.icon.clicked = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/clicked");
+			 }
+		       icon->changed = 1;
 		    }
 	       }
 	     break;
@@ -617,14 +652,22 @@ e_view_new(void)
    v = NEW(E_View, 1);
    ZERO(v, E_View, 1);
    OBJ_INIT(v, e_view_free);
-
-#if 1   
+#define SOFT_DESK
+/* #define X_DESK */
+/* #define GL_DESK */
+   
+#ifdef SOFT_DESK
    /* ONLY alpha software can be "backing stored" */
    v->options.render_method = RENDER_METHOD_ALPHA_SOFTWARE;
    v->options.back_pixmap = 1;
 #else
+#ifdef X_DESK
    v->options.render_method = RENDER_METHOD_BASIC_HARDWARE;
    v->options.back_pixmap = 0;
+#else
+   v->options.render_method = RENDER_METHOD_3D_HARDWARE;
+   v->options.back_pixmap = 0;
+#endif   
 #endif
    views = evas_list_append(views, v);
    

@@ -11,7 +11,9 @@ e_icon_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *icon;
    
    icon = _data;
-   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/selected");
+   icon->current.state.hilited = 1;
+   icon->changed = 1;
+   icon->view->changed = 1;
 }
 
 static void
@@ -20,7 +22,9 @@ e_icon_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *icon;
    
    icon = _data;
-   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/normal");
+   icon->current.state.hilited = 0;
+   icon->changed = 1;
+   icon->view->changed = 1;
 }
 
 static void
@@ -29,7 +33,9 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *icon;
    
    icon = _data;
-   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/clicked");
+   icon->current.state.clicked = 1;
+   icon->changed = 1;
+   icon->view->changed = 1;
 }
 
 static void
@@ -38,15 +44,25 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    E_Icon *icon;
    
    icon = _data;
-   e_icon_set_icon(icon, PACKAGE_DATA_DIR"/data/icons/directory/default.db:/icon/selected");
+   icon->current.state.clicked = 0;
+   if (icon->current.state.selected)
+     icon->current.state.selected = 0;
+   else
+     icon->current.state.selected = 1;
+   icon->changed = 1;
+   icon->view->changed = 1;
 }
 
 void
 e_icon_free(E_Icon *icon)
 {
    IF_FREE(icon->file);
-   IF_FREE(icon->current.icon);
-   IF_FREE(icon->previous.icon);
+   IF_FREE(icon->info.icon.normal);
+   IF_FREE(icon->info.icon.selected);
+   IF_FREE(icon->info.icon.clicked);
+   IF_FREE(icon->info.link);
+   IF_FREE(icon->info.mime.base);
+   IF_FREE(icon->info.mime.type);
    FREE(icon);
 }
 
@@ -58,6 +74,8 @@ e_icon_new(void)
    icon = NEW(E_Icon, 1);
    ZERO(icon, E_Icon, 1);
    OBJ_INIT(icon, e_icon_free);
+   icon->info.icon.normal = strdup(PACKAGE_DATA_DIR"/data/icons/file/default.db:/icon/normal");   
+   icon->previous.state.clicked = -1;
    return icon;
 }
 
@@ -163,14 +181,40 @@ e_icon_update(E_Icon *icon)
    int obj_new = 0;
    
    if (!icon->changed) return;
+   if (icon->current.state.clicked)
+     {
+	if (icon->info.icon.clicked)
+	  icon->current.icon = icon->info.icon.clicked;
+	else if (icon->info.icon.selected)
+	  icon->current.icon = icon->info.icon.selected;
+	else 
+	  icon->current.icon = icon->info.icon.normal;
+     }
+   else if (icon->current.state.selected)
+     {
+	     if (icon->info.icon.selected)
+	  icon->current.icon = icon->info.icon.selected;
+	else 
+	  icon->current.icon = icon->info.icon.normal;
+     }
+   else
+     {
+	icon->current.icon = icon->info.icon.normal;	     
+     }
    if (((icon->current.icon) && (icon->previous.icon) &&
        (strcmp(icon->current.icon, icon->previous.icon))) ||
 	(!icon->current.icon) || (!icon->previous.icon))
      {
-	if (icon->obj.filename) evas_del_object(icon->view->evas, icon->obj.filename);
-	icon->obj.filename = NULL;
-	if (icon->obj.icon) evas_del_object(icon->view->evas, icon->obj.icon);
-	icon->obj.icon = NULL;
+	if (icon->obj.icon) 
+	  {
+	     int iw, ih;
+	     
+	     evas_set_image_file(icon->view->evas, icon->obj.icon, icon->current.icon);	
+	     evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
+	     evas_set_image_fill(icon->view->evas, icon->obj.icon, 0, 0, iw, ih);
+	     evas_resize(icon->view->evas, icon->obj.icon, iw, ih);
+	     icon->previous.x = icon->current.x - 1;	     
+	  }
      }
    if (!icon->obj.filename)
      {
@@ -207,7 +251,7 @@ e_icon_update(E_Icon *icon)
 	double tw, th;
    
 	evas_get_geometry(icon->view->evas, icon->obj.filename, NULL, NULL, &tw, &th);
-	evas_get_image_size(icon->view->evas, icon->obj.icon, & iw, &ih);
+	evas_get_image_size(icon->view->evas, icon->obj.icon, &iw, &ih);
 	fx = icon->current.x + ((iw - tw) / 2);
 	fy = icon->current.y + ih;
 	evas_move(icon->view->evas, icon->obj.icon, icon->current.x, icon->current.y);
@@ -235,10 +279,6 @@ e_icon_update(E_Icon *icon)
 	     evas_hide(icon->view->evas, icon->obj.sel2);
 	  }
      }
-   
-   IF_FREE(icon->previous.icon);
-   icon->previous = icon->current;
-   if (icon->current.icon) icon->previous.icon = strdup(icon->current.icon);
    
    icon->changed = 0;
 }

@@ -365,6 +365,20 @@ struct _E_Icon
    E_Shelf *shelf;
    
    struct {
+      struct {
+	 char *base, *type;
+      } mime;
+      char *link;
+      int   is_exe;
+      int   is_dir;
+      struct {
+	 char *normal;
+	 char *selected;
+	 char *clicked;
+      } icon;
+   } info;
+   
+   struct {
       int     x, y, w, h;
       struct {
 	 int text_location;
@@ -612,7 +626,9 @@ char *e_file_get_file(char *file);
 char *e_file_get_dir(char *file);
 void *e_memdup(void *data, int size);
 int e_glob_matches(char *str, char *glob);
-    
+int e_file_can_exec(struct stat *st);
+char *e_file_link(char *link);
+
 void e_exec_set_args(int argc, char **argv);
 void e_exec_restart(void);
 pid_t e_exec_run(char *exe);

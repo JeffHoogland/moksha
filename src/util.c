@@ -129,3 +129,40 @@ e_glob_matches(char *str, char *glob)
    if (!fnmatch(glob, str, 0)) return 1;
    return 0;
 }
+
+int
+e_file_can_exec(struct stat *st)
+{
+   static uid_t uid = -1;
+   static gid_t gid = -1;
+   int ok;
+   
+   if (!st) return 0;
+   ok = 0;
+   if (uid < 0) uid = getuid();
+   if (gid < 0) gid = getgid();
+   if (st->st_uid == uid)
+     {
+	if (st->st_mode & S_IXUSR) ok = 1;
+     }
+   else if (st->st_gid == gid)
+     {
+	if (st->st_mode & S_IXGRP) ok = 1;
+     }
+   else
+     {
+	if (st->st_mode & S_IXOTH) ok = 1;
+     }
+   return ok;
+}
+
+char *
+e_file_link(char *link)
+{
+   char buf[4096];
+   int count;
+   
+   if ((count = readlink(link, buf, sizeof(buf))) < 0) return NULL;
+   buf[count] = 0;
+   return strdup(buf);
+}
