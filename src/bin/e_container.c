@@ -84,7 +84,7 @@ e_container_new(E_Manager *man)
 
    n = ecore_x_xinerama_screen_count_get();
    if (n == 0)
-     zone = e_zone_new(con, 0, 0, con->w, con->h);
+     zone = e_zone_new(con, 0, 0, 0, con->w, con->h);
    else
      {
 	for (i = 0; i < n; i++)
@@ -107,7 +107,7 @@ e_container_new(E_Manager *man)
 			 }
 		    }
 		  if (!skip)
-		    zone = e_zone_new(con, zx, zy, zw, zh);
+		    zone = e_zone_new(con, i, zx, zy, zw, zh);
 	       }
 	  }
      }

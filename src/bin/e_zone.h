@@ -19,6 +19,9 @@ struct _E_Zone
 
    int                  x, y, w, h;
    char                *name;
+   /* num matches the id of the xinerama screen
+    * this zone belongs to.
+    */
    int                  num;
    E_Container         *container;
 
@@ -40,7 +43,7 @@ struct _E_Event_Zone_Desk_Count_Set
 
 EAPI int        e_zone_init(void);
 EAPI int        e_zone_shutdown(void);
-EAPI E_Zone    *e_zone_new(E_Container *con, int x, int y, int w, int h);
+EAPI E_Zone    *e_zone_new(E_Container *con, int num, int x, int y, int w, int h);
 EAPI void       e_zone_move(E_Zone *zone, int x, int y);
 EAPI void       e_zone_resize(E_Zone *zone, int w, int h);
 EAPI void       e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h);

@@ -14,14 +14,11 @@ static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, voi
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 
-static int zone_count;
-
 int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 
 int
 e_zone_init(void)
 {
-   zone_count = 0;
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
    
    return 1;
@@ -34,7 +31,7 @@ e_zone_shutdown(void)
 }
 
 E_Zone *
-e_zone_new(E_Container *con, int x, int y, int w, int h)
+e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 {
    E_Zone *zone;
    char    name[40];
@@ -48,7 +45,7 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    zone->y = y;
    zone->w = w;
    zone->h = h;
-   zone->num = ++zone_count;
+   zone->num = num;
 
    snprintf(name, sizeof(name), "Zone %d", zone->num);
    zone->name = strdup(name);
@@ -314,7 +311,6 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    Evas_List *client;
    E_Border  *bd;
    E_Event_Zone_Desk_Count_Set *ev;
-   E_Event_Border_Desk_Set *evb;
    
    xx = x_count;
    if (xx < 1)
