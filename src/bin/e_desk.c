@@ -95,7 +95,7 @@ e_desk_current_get(E_Zone *zone)
 {
    Evas_List *l;
    
-   E_OBJECT_CHECK(man);
+   E_OBJECT_CHECK(zone);
    
    for (l = zone->desks; l; l = l->next)
      {
