@@ -78,6 +78,12 @@ struct _E_View
    } spacing;
    struct {
       int on;
+      /* The number of selected icons. */
+      int count;
+      /* The number of icons we selected the last time.
+         If this is > 0, we don't pop up menus when
+         the user clicks in a view. */
+      int last_count;
       int x, y, w, h;
       struct {
 	 int x, y;
@@ -139,8 +145,7 @@ struct _E_View
    
    int                    is_desktop;
    int                    have_resort_queued;
-   int                    sel_count;
-   
+
    int                    changed;
 
    E_Iconbar              *iconbar;

@@ -40,7 +40,7 @@ e_icon_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  {
 	     if (!ic->state.selected)
 	       {
-		  if ((e->mods & mulit_select_mod))
+		  if ((e->mods & multi_select_mod))
 		    { 
 		       e_icon_select(ic);
 		    }
@@ -95,7 +95,7 @@ e_icon_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	else
 	  {
-	     if ((e->mods & mulit_select_mod))
+	     if ((e->mods & multi_select_mod))
 	       {
 		  if ((ic->state.selected) && (!ic->state.just_selected))
 		    e_icon_deselect(ic);
@@ -197,8 +197,8 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		  Evas_List ll;
 		  
 		  v = l->data;
-		  D("sel count %i\n", v->sel_count);
-		  if (v->sel_count > 0)
+		  D("sel count %i\n", v->select.count);
+		  if (v->select.count > 0)
 		    {
 		       for (ll = v->icons; ll; ll = ll->next)
 			 {
@@ -272,7 +272,7 @@ e_icon_move_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       Evas_List ll;
 		       
 		       v = l->data;
-		       if (v->sel_count > 0)
+		       if (v->select.count > 0)
 			 {
 			    for (ll = v->icons; ll; ll = ll->next)			      {
 				 E_Icon *ic;
@@ -830,7 +830,7 @@ e_icon_select(E_Icon *ic)
    if (!ic->state.selected)
      {
 	ic->state.selected = 1;
-	ic->view->sel_count++;
+	ic->view->select.count++;
 	e_icon_update_state(ic);
      }
 
@@ -845,7 +845,7 @@ e_icon_deselect(E_Icon *ic)
    if (ic->state.selected)
      {
 	ic->state.selected = 0;
-	ic->view->sel_count--;
+	ic->view->select.count--;
 	e_icon_update_state(ic);
      }
 

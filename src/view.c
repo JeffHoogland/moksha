@@ -288,8 +288,13 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    if (!current_ev) D_RETURN;
    ev = current_ev->event;
    v = _data;
-   if (!(ev->mods & (mulit_select_mod | range_select_mod)))
-     e_view_deselect_all();
+
+   if (!(ev->mods & (multi_select_mod | range_select_mod)))
+     {
+       v->select.last_count = v->select.count;
+       e_view_deselect_all();
+     }
+
    if (_b == 1)
      {
 	v->select.down.x = _x;
@@ -340,6 +345,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    v = _data;
    dx = 0;
    dy = 0;
+
    if (v->select.on)
      {
 	dx = v->select.down.x - _x;
@@ -350,6 +356,7 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  v->select.on = 0;
 	e_view_selection_update(v);
      }
+
    if ((_b == 1) && ((dx > 3) || (dy > 3)))
      {
 	Evas_List l;
@@ -370,11 +377,11 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	       }
 	  }
      }
-   else
+   else if (v->select.last_count == 0)
      {
 	if (_b == 1)
 	  {
-	     if (!(ev->mods & (mulit_select_mod | range_select_mod)))
+	     if (!(ev->mods & (multi_select_mod | range_select_mod)))
 	       {
 		  static E_Build_Menu *buildmenu = NULL;
 		  
