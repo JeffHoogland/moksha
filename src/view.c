@@ -272,6 +272,9 @@ e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 	  }
 	e_view_selection_update(v);
      }
+   if( _b == 2 && ev->double_click )
+	 exit(0);
+   
    UN(_e);
    UN(_o);
 }
@@ -341,10 +344,10 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	  }
-	else if (_b == 2)
+/*	else if (_b == 2)
 	  {
-	     exit(0);
-	  }
+		 exit(0);
+	  }*/
 	else if (_b == 3)
 	  {
 	     static E_Build_Menu *buildmenu = NULL;
