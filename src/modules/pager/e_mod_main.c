@@ -177,21 +177,21 @@ _pager_shutdown(Pager *e)
    free(e->conf);
    E_CONFIG_DD_FREE(e->conf_edd);
 
-   evas_object_hide(e->base);
+   evas_object_del(e->base);
    evas_object_free(e->base);
-   evas_object_hide(e->screen);
+   evas_object_del(e->screen);
    evas_object_free(e->screen);
 
    while(e->desks)
      {
-	evas_object_hide(e->desks->data);
+	evas_object_del(e->desks->data);
         evas_object_free(e->desks->data);
         e->desks = evas_list_remove_list(e->desks, e->desks);
      }
 
    while(e->wins)
      {
-	evas_object_hide(e->wins->data);
+	evas_object_del(e->wins->data);
         evas_object_free(e->wins->data);
         e->wins = evas_list_remove_list(e->wins, e->wins);
      }
@@ -241,7 +241,7 @@ _pager_refresh(Pager *e)
    E_Zone      *zone;
    E_Desk      *desk, *current;
    E_Border     *border;
-   Evas_List   *clients;
+   Evas_List   *clients, *desks, *wins;
 
    Evas_Object *desk_obj, *win_obj;
    int          desks_x, desks_y, x, y, top, toptmp;
@@ -261,19 +261,8 @@ _pager_refresh(Pager *e)
    scaley = (double) ph / hh;
    evas_object_resize(e->screen, pw, ph);
 
-   while(e->desks)
-     {
-	evas_object_hide(e->desks->data);
-	evas_object_free(e->desks->data);
-	e->desks = evas_list_remove_list(e->desks, e->desks);
-     }
-   while(e->wins)
-     {
-	evas_object_hide(e->wins->data);
-        evas_object_free(e->wins->data);
-        e->wins = evas_list_remove_list(e->wins, e->wins);
-     }
-
+   desks = e->desks;
+   wins = e->wins;
    current = e_desk_current_get(zone);
    for (x = 0; x < desks_x; x++)
      for (y = 0; y < desks_y; y++)
@@ -281,18 +270,25 @@ _pager_refresh(Pager *e)
 	  desk = e_desk_at_xy_get(zone, x, y);
 	  px = e->fx + (x * pw);
 	  py = e->fy + (y * ph);
-	  desk_obj = edje_object_add(e->evas);
-	  edje_object_file_set(desk_obj,
-			       /* FIXME: "default.eet" needs to come from conf */
-			       e_path_find(path_themes, "default.eet"),
-			       "modules/pager/desk");
-	  evas_object_pass_events_set(desk_obj, 1);
+
+	  desk_obj = NULL;
+	  if (desks)
+	    desk_obj = (Evas_Object *) desks->data; /* re-use the objects if possible */
+	  if (!desk_obj)
+	    {
+	       desk_obj = edje_object_add(e->evas);
+	       edje_object_file_set(desk_obj,
+				    /* FIXME: "default.eet" needs to come from conf */
+				    e_path_find(path_themes, "default.eet"),
+				    "modules/pager/desk");
+	       evas_object_pass_events_set(desk_obj, 1);
+	       evas_object_show(desk_obj);
+	       e->desks = evas_list_append(e->desks, desk_obj);
+	     }
 	  evas_object_resize(desk_obj, pw, ph);
 	  evas_object_move(desk_obj, px, py);
 
-	  evas_object_show(desk_obj);
 	  top = evas_object_layer_get(desk_obj);
-	  e->desks = evas_list_append(e->desks, desk_obj);
 
 	  clients = desk->clients;
 	  while (clients)
@@ -304,28 +300,40 @@ _pager_refresh(Pager *e)
 	       winy = (Evas_Coord) ((double) border->y) * scaley;
 	       winw = (Evas_Coord) ((double) border->w) * scalex;
 	       winh = (Evas_Coord) ((double) border->h) * scaley;
-	       win_obj = edje_object_add(e->evas);
-	       edje_object_file_set(win_obj,
-				    /* FIXME: "default.eet" needs to come from conf */
-				    e_path_find(path_themes, "default.eet"),
-				    "modules/pager/window");
-	       evas_object_pass_events_set(win_obj, 1);
+
+	       win_obj = NULL;
+	       if (wins)
+		 win_obj = (Evas_Object *) wins->data;
+	       if (!win_obj)
+		 {
+		    win_obj = edje_object_add(e->evas);
+		    edje_object_file_set(win_obj,
+					 /* FIXME: "default.eet" needs to come from conf */
+					 e_path_find(path_themes, "default.eet"),
+					 "modules/pager/window");
+		    evas_object_pass_events_set(win_obj, 1);
+
+		    evas_object_show(win_obj);
+		    e->wins = evas_list_append(e->wins, win_obj);
+		 }
 	       evas_object_resize(win_obj, winw, winh);
 	       evas_object_move(win_obj, px + winx, py + winy);
 
-	       evas_object_show(win_obj);
 	       toptmp = evas_object_layer_get(win_obj);
 	       if (toptmp > top)
 		 top = toptmp;
-	       e->wins = evas_list_append(e->wins, win_obj);
 
 	       clients = clients->next;
+	       if (wins)
+		 wins = wins->next;
 	    }
 	  if (desk == current)
 	    {
 	       evas_object_move(e->screen, px, py);
 	       evas_object_layer_set(e->screen, top + 1);
 	    }
+	  if (desks)
+	    desks = desks->next;
        }
 }
 
