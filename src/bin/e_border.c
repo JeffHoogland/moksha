@@ -73,6 +73,7 @@ static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
+static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
@@ -100,6 +101,7 @@ extern int          _e_desk_current_changing;
 
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
+int E_EVENT_BORDER_ZONE_SET = 0;
 int E_EVENT_BORDER_DESK_SET = 0;
 int E_EVENT_BORDER_RESIZE = 0;
 int E_EVENT_BORDER_MOVE = 0;
@@ -139,6 +141,7 @@ e_border_init(void)
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
    E_EVENT_BORDER_DESK_SET = ecore_event_type_new();
+   E_EVENT_BORDER_ZONE_SET = ecore_event_type_new();
    E_EVENT_BORDER_RESIZE = ecore_event_type_new();
    E_EVENT_BORDER_MOVE = ecore_event_type_new();
    E_EVENT_BORDER_SHOW = ecore_event_type_new();
@@ -299,12 +302,49 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    managed = 1;
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
+   ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
+   ecore_x_window_prop_card32_set(win, E_ATOM_ZONE, &bd->zone->num, 1);
    e_desk_xy_get(bd->desk, &deskx, &desky);
    desk[0] = deskx;
    desk[1] = desky;
    ecore_x_window_prop_card32_set(win, E_ATOM_DESK, desk, 2);
 
    return bd;
+}
+
+void
+e_border_zone_set(E_Border *bd, E_Zone *zone)
+{
+   E_Event_Border_Zone_Set *ev;
+
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   if (bd->zone == zone) return;
+   bd->zone = zone;
+
+   if (bd->desk->zone != bd->zone)
+     {
+	E_Desk *desk;
+	int x, y;
+
+	e_desk_xy_get(bd->desk, &x, &y);
+	desk = e_desk_at_xy_get(bd->zone, x, y);
+	if (desk)
+	  e_border_desk_set(bd, desk);
+	else
+	  e_border_desk_set(bd, e_desk_current_get(bd->zone));
+     }
+
+   ev = calloc(1, sizeof(E_Event_Border_Zone_Set));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+   ev->zone = zone;
+   e_object_ref(E_OBJECT(zone));
+   ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
+
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE, &bd->zone->num, 1);
 }
 
 void
@@ -322,6 +362,8 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    desk->clients = evas_list_append(desk->clients, bd);
    bd->desk = desk;
+   if (bd->zone != desk->zone)
+     e_border_zone_set(bd, desk->zone);
 
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
@@ -3167,6 +3209,17 @@ _e_border_event_border_unstick_free(void *data, void *ev)
 }
 
 static void
+_e_border_event_border_zone_set_free(void *data, void *ev)
+{
+   E_Event_Border_Zone_Set *e;
+
+   e = ev;
+   e_object_unref(E_OBJECT(e->border));
+   e_object_unref(E_OBJECT(e->zone));
+   free(e);
+}
+
+static void
 _e_border_event_border_desk_set_free(void *data, void *ev)
 {
    E_Event_Border_Desk_Set *e;
@@ -3197,7 +3250,7 @@ _e_border_zone_update(E_Border *bd)
 	if (E_INTERSECTS(bd->x, bd->y, bd->w, bd->h,
 			 zone->x, zone->y, zone->w, zone->h))
 	  {
-	     bd->zone = zone;
+	     e_border_zone_set(bd, zone);
 	     return;
 	  }
      }
