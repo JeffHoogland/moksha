@@ -365,9 +365,6 @@ e_destroy(Ecore_Event * ev)
    {
       E_Border           *b;
 
-      if (!(e_border_current_focused()))
-         e_icccm_send_focus_to(e_desktop_window(), 1);
-
       b = e_border_find_by_window(e->win);
       if (b)
 	{
@@ -1369,7 +1366,6 @@ e_border_release(E_Border * b)
    ecore_window_reparent(b->win.client, 0, b->current.x + pl,
 			 b->current.y + pt);
    e_icccm_release(b->win.client);
-   e_desktop_raise_next_border();
 
    D_RETURN;
 }
