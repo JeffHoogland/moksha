@@ -7,6 +7,6 @@ Standards-Version: 3.2.1.0
 Package: e17
 Section: x11
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, imlib2-loaders
 Description: e17 description
  e17 extended description
