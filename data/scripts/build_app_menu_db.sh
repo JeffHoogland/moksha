@@ -97,8 +97,8 @@ entry text 'System' 'sub' 2
 end_menu
 
 menu 1
-entry text 'Ethernet On' 'sudo -S /sbin/ifup eth0'
-entry text 'Ethernet Off' 'sudo -S /sbin/ifdown eth0'
+entry text 'Ethernet On' '/sbin/ifup eth0'
+entry text 'Ethernet Off' '/sbin/ifdown eth0'
 end_menu
 
 menu 2

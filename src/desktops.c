@@ -132,7 +132,6 @@ e_mouse_down(Eevent * ev)
 		  evas_event_button_down(evas, x, y, e->button);
 		  if (e->button == 1)
 		    {
-		       static E_Menu *menu = NULL;
 		       static E_Build_Menu *buildmenu = NULL;
 		       
 		       if (!buildmenu)
@@ -144,13 +143,12 @@ e_mouse_down(Eevent * ev)
 			 }
 		       if (buildmenu)
 			 {
+			    static E_Menu *menu = NULL;
 			    menu = buildmenu->menu;
 			    if (menu)
 			      e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
 			 }
 		    }
-		  if (e->button == 3)
-		    e_exec_restart();
 		  return;
 	       }
 	  }

@@ -300,6 +300,31 @@ struct _E_Active_Action_Timer
 struct _E_View
 {
    OBJ_PROPERTIES;
+   
+   char                  *directory;
+   
+   struct {
+      Evas_Render_Method  render_method;
+      int                 back_pixmap;
+   } options;
+   
+   Evas                   evas;
+   struct {
+      Window              base;
+      Window              main;
+   } win;
+   Pixmap                 pmap;
+   struct {
+      int                 w, h;
+   } size;
+   struct {
+      int                 x, y;
+   } viewport;
+   struct {
+      int                 x, y;
+   } location;
+   
+   Evas_List              icons;
 };
 
 struct _E_Menu

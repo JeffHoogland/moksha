@@ -24,6 +24,7 @@ e_build_menu_poll(int val, void *data)
    if (!bm->menu) bm->mod_time = 0;
    
    e_add_event_timer(bm->file, 1.0, e_build_menu_poll, 0, data);
+   return;
    UN(val);
 }
 
@@ -34,6 +35,7 @@ e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data)
    
    exe = data;
    e_exec_run(exe);
+   return;
    UN(m);
    UN(mi);
 }

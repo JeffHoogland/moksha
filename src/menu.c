@@ -8,10 +8,12 @@ static int       mouse_x, mouse_y;
 static int       keyboard_nav = 0;
 
 static void e_idle(void *data);
+static void e_wheel(Eevent * ev);
 static void e_key_down(Eevent * ev);
 static void e_key_up(Eevent * ev);
 static void e_mouse_down(Eevent * ev);
 static void e_mouse_up(Eevent * ev);
+static void e_mouse_move(Eevent * ev);
 static void e_mouse_in(Eevent * ev);
 static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
@@ -127,6 +129,7 @@ e_scroller_timer(int val, void *data)
      }
    if (ok)
      e_add_event_timer("menu_scroller", 0.02, e_scroller_timer, val + 1, NULL);   
+   return;
    UN(data);
 }
   
@@ -466,6 +469,7 @@ e_menu_item_in_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		       mi->menu->current.y + mi->y - mi->menu->border.t);
 	e_menu_show(mi->submenu);
      }
+   return;
    UN(_e);
    UN(_o);
    UN(_b);
@@ -483,6 +487,7 @@ e_menu_item_out_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    mi->selected = 0;
    mi->menu->redo_sel = 1;
    mi->menu->changed = 1;
+   return;
    UN(_e);
    UN(_o);
    UN(_b);
