@@ -335,6 +335,8 @@ _e_container_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *ev
    
    ev = (Evas_Event_Mouse_Down *)event_info;
    con = data;
+   if (e_menu_grab_window_get()) return;
+    
    if (ev->button == 1)
      {
 	E_Menu *m;

@@ -6,4 +6,5 @@ dropshadow \
 clock \
 flame \
 snow \
-battery
+battery \
+temperature

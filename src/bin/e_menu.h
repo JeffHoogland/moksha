@@ -138,5 +138,6 @@ EAPI void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void 
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 
 EAPI void         e_menu_idler_before(void);
-    
+
+EAPI Ecore_X_Window e_menu_grab_window_get(void);
 #endif

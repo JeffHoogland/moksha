@@ -1,37 +1,37 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-typedef struct _Config       Config;
-typedef struct _Battery      Battery;
-typedef struct _Battery_Face Battery_Face;
-
-#define CHECK_NONE 0
-#define CHECK_LINUX_ACPI 1
-#define CHECK_LINUX_APM 2
+typedef struct _Config           Config;
+typedef struct _Temperature      Temperature;
+typedef struct _Temperature_Face Temperature_Face;
 
 struct _Config
 {
    int width;
    double x, y;
    double poll_time;
+   int low, high;
 };
 
-struct _Battery
+struct _Temperature
 {
-   E_Menu       *config_menu;
-   Battery_Face *face;
+   E_Menu           *config_menu;
+   E_Menu           *config_menu1;
+   E_Menu           *config_menu2;
+   E_Menu           *config_menu3;
+   Temperature_Face *face;
    
    E_Config_DD *conf_edd;
    Config      *conf;
 };
 
-struct _Battery_Face
+struct _Temperature_Face
 {
-   Battery     *bat;
+   Temperature *temp;
    E_Container *con;
    Evas        *evas;
    
-   Evas_Object *bat_object;
+   Evas_Object *temp_object;
    Evas_Object *event_object;
    
    Evas_Coord   minsize, maxsize;
@@ -41,11 +41,7 @@ struct _Battery_Face
    Evas_Coord      xx, yy;
    Evas_Coord      fx, fy, fw;
    
-   int                  battery_check_mode;
-   Ecore_Timer         *battery_check_timer;
-   int                  battery_prev_drain;
-   int                  battery_prev_ac;
-   int                  battery_prev_battery;
+   Ecore_Timer         *temperature_check_timer;
    
    Ecore_Event_Handler *ev_handler_container_resize;
 };

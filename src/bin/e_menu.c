@@ -617,6 +617,12 @@ e_menu_idler_before(void)
      }
 }
 
+Ecore_X_Window
+e_menu_grab_window_get(void)
+{
+  return _e_menu_win;
+}
+
 /* local subsystem functions */
 static void
 _e_menu_free(E_Menu *m)

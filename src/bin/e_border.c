@@ -2300,6 +2300,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    E_Menu_Item *mi;
    E_App *a;
 
+   if (e_menu_grab_window_get()) return;
    if (!_e_border_menu)
      _e_border_menu = e_menu_new();
    else
@@ -2440,4 +2441,3 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 			 please install e_util_eapp_edit\n \
 			 or make sure it is in your PATH\n");
 }
-

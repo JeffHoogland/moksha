@@ -34,7 +34,7 @@ init(E_Module *m)
    if (m->api->version < E_MODULE_API_VERSION)
      {
 	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: IBar\n"
+			    "Error initializing Module: Battery\n"
 			    "It requires a minimum module API version of: %i.\n"
 			    "The module API advertized by Enlightenment is: %i.\n"
 			    "Aborting module.",
@@ -91,7 +91,10 @@ int
 about(E_Module *m)
 {
    e_error_dialog_show("Enlightenment Battery Module",
-		       "A simple module to give E17 a battery meter.");
+		       "A basic battery meter that uses either ACPI or APM\n"
+		       "on Linux to monitor your battery and AC power adaptor\n"
+		       "status. This will only work under Linux and is only\n"
+		       "as accurate as your BIOS or kernel drivers.");
    return 1;
 }
 
@@ -113,7 +116,8 @@ _battery_init(E_Module *m)
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, x, DOUBLE);
    E_CONFIG_VAL(D, T, y, DOUBLE);
-
+   E_CONFIG_VAL(D, T, poll_time, DOUBLE);
+   
    e->conf = e_config_domain_load("module.battery", e->conf_edd);
    if (!e->conf)
      {
@@ -121,10 +125,12 @@ _battery_init(E_Module *m)
 	e->conf->width = 64;
 	e->conf->x = 1.0;
 	e->conf->y = 1.0;
+        e->conf->poll_time = 30.0;
      }
    E_CONFIG_LIMIT(e->conf->width, 2, 256);
    E_CONFIG_LIMIT(e->conf->x, 0.0, 1.0);
    E_CONFIG_LIMIT(e->conf->y, 0.0, 1.0);
+   E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
@@ -162,18 +168,109 @@ _battery_shutdown(Battery *e)
    free(e);
 }
 
+static void
+_battery_menu_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->poll_time = 1.0;
+   ecore_timer_del(e->face->battery_check_timer);
+   e->face->battery_check_timer = ecore_timer_add(e->face->bat->conf->poll_time, _battery_cb_check, e->face);
+   e_config_save_queue();
+}
+
+static void
+_battery_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->poll_time = 5.0;
+   ecore_timer_del(e->face->battery_check_timer);
+   e->face->battery_check_timer = ecore_timer_add(e->face->bat->conf->poll_time, _battery_cb_check, e->face);
+   e_config_save_queue();
+}
+
+static void
+_battery_menu_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->poll_time = 10.0;
+   ecore_timer_del(e->face->battery_check_timer);
+   e->face->battery_check_timer = ecore_timer_add(e->face->bat->conf->poll_time, _battery_cb_check, e->face);
+   e_config_save_queue();
+}
+
+static void
+_battery_menu_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->poll_time = 30.0;
+   ecore_timer_del(e->face->battery_check_timer);
+   e->face->battery_check_timer = ecore_timer_add(e->face->bat->conf->poll_time, _battery_cb_check, e->face);
+   e_config_save_queue();
+}
+
+static void
+_battery_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery *e;
+   
+   e = data;
+   e->conf->poll_time = 60.0;
+   ecore_timer_del(e->face->battery_check_timer);
+   e->face->battery_check_timer = ecore_timer_add(e->face->bat->conf->poll_time, _battery_cb_check, e->face);
+   e_config_save_queue();
+}
+
 static E_Menu *
 _battery_config_menu_new(Battery *e)
 {
    E_Menu *mn;
    E_Menu_Item *mi;
 
-   /* FIXME: hook callbacks to each menu item */
    mn = e_menu_new();
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "(Unused)");
-/*   e_menu_item_callback_set(mi, _battery_cb_time_set, e);*/
+   e_menu_item_label_set(mi, "Check Fast (1 sec)");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->poll_time == 1.0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_fast, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Check Medium (5 sec)");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->poll_time == 5.0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_medium, e);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Check Normal (10 sec)");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->poll_time == 10.0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_normal, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Check Slow (30 sec)");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->poll_time == 30.0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_slow, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Check Very Slow (60 sec)");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _battery_menu_very_slow, e);
+
    e->config_menu = mn;
    
    return mn;
@@ -230,7 +327,7 @@ _battery_face_init(Battery_Face *ef)
    ef->battery_prev_drain = 1;
    ef->battery_prev_ac = -1;
    ef->battery_prev_battery = -1;
-   ef->battery_check_timer = ecore_timer_add(1.0, _battery_cb_check, ef);
+   ef->battery_check_timer = ecore_timer_add(ef->bat->conf->poll_time, _battery_cb_check, ef);
    
    _battery_cb_check(ef);
    
@@ -434,9 +531,9 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	char *name;
 	
 	name = bats->data;
+	bats = evas_list_remove_list(bats, bats);
 	if ((!strcmp(name, ".")) || (!strcmp(name, "..")))
 	  {
-	     bats = evas_list_remove_list(bats, bats);
 	     free(name);
 	     continue;
 	  }
@@ -447,12 +544,12 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	     int design_cap = 0;
 	     int last_full = 0;
 	     
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) last_full_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &last_full);
@@ -470,17 +567,17 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	     int rate = 1;
 	     int level = 0;
 	     
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", present);
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", capacity_state);
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", charging_state);
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) rate_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &rate);
-	     fgets(buf2, sizeof(buf2), f); buf[sizeof(buf2) - 1] = 0;
+	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) level_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &level);
@@ -491,7 +588,6 @@ _battery_linux_acpi_check(Battery_Face *ef)
 	     bat_drain += rate;
 	     bat_level += level;
 	  }
-	bats = evas_list_remove_list(bats, bats);
 	free(name);
      }
    

@@ -32,9 +32,11 @@ static void    _ibar_config_menu_del(IBar *ib, E_Menu *m);
 static void    _ibar_cb_width_fixed(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _ibar_bar_iconsize_change(IBar_Bar *ibb);
 static IBar_Icon *_ibar_bar_icon_find(IBar_Bar *ibb, E_App *a);
 static void    _ibar_bar_icon_del(IBar_Icon *ic);
 static IBar_Icon *_ibar_bar_icon_new(IBar_Bar *ibb, E_App *a);
+static void    _ibar_bar_icon_resize(IBar_Icon *ic);
 static void    _ibar_bar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before);
 static void    _ibar_bar_icon_reorder_after(IBar_Icon *ic, IBar_Icon *after);
 static void    _ibar_bar_frame_resize(IBar_Bar *ibb);
@@ -360,6 +362,216 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
      }
 }
 
+/* FIXME: none of these work runtime... only on restart */
+static void
+_ibar_cb_iconsize_microscopic(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 8;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_tiny(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 12;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_very_small(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 16;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_small(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 24;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_medium(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 32;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_large(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 40;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_very_large(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 48;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_extremely_large(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 56;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_huge(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 64;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_enormous(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 96;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_cb_iconsize_gigantic(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar *ib;
+   Evas_List *l;
+   
+   ib = data;
+   ib->conf->iconsize = 128;
+   for (l = ib->bars; l; l = l->next)
+     {
+	IBar_Bar *ibb;
+	
+	ibb = l->data;
+	_ibar_bar_iconsize_change(ibb);
+	_ibar_bar_edge_change(ibb, ib->conf->edge);
+     }
+   e_config_save_queue();
+}
+
 static E_Menu *
 _ibar_config_menu_new(IBar *ib)
 {
@@ -372,28 +584,105 @@ _ibar_config_menu_new(IBar *ib)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Fixed width");
    e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_radio_group_set(mi, 1);
    if (ib->conf->width > 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_fixed, ib);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto fit icons");
    e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_radio_group_set(mi, 1);
    if (ib->conf->width < 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_auto, ib);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Fill edge");
    e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_radio_group_set(mi, 1);
    if (ib->conf->width == 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_fill, ib);
    
-/*   
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);
 
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Microscopic");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 8) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_microscopic, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Tiny");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 12) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_tiny, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Very Small");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 16) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_very_small, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Small");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 24) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_small, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Medium");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 32) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_medium, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Large");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 40) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_large, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Very Large");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 48) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_very_large, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Exteremely Large");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 56) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_extremely_large, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Huge");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 64) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_huge, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Enormous");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 96) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_enormous, ib);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Gigantic");
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (ib->conf->iconsize == 128) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_cb_iconsize_gigantic, ib);
+   
+/*   
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto hide");
    e_menu_item_check_set(mi, 1);
@@ -482,6 +771,22 @@ _ibar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi)
 	  }
      }
    e_config_save_queue();
+}
+
+static void
+_ibar_bar_iconsize_change(IBar_Bar *ibb)
+{
+   Evas_List *l;
+   
+   for (l = ibb->icons; l; l = l->next)
+     {
+	IBar_Icon *ic;
+	
+	ic = l->data;
+	_ibar_bar_icon_resize(ic);
+     }
+   _ibar_bar_convert_move_resize_to_config(ibb);
+   _ibar_bar_frame_resize(ibb);
 }
 
 static IBar_Icon *
@@ -606,6 +911,28 @@ _ibar_bar_icon_new(IBar_Bar *ibb, E_App *a)
    edje_object_signal_emit(ic->bg_object, "passive", "");
    edje_object_signal_emit(ic->overlay_object, "passive", "");
    return ic;
+}
+
+static void
+_ibar_bar_icon_resize(IBar_Icon *ic)
+{
+   Evas_Object *o;
+   Evas_Coord bw, bh;
+   
+   e_box_freeze(ic->ibb->box_object);
+   o = ic->icon_object;
+   edje_extern_object_min_size_set(o, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
+   edje_object_part_swallow(ic->bg_object, "item", o);
+   edje_object_size_min_calc(ic->bg_object, &bw, &bh);
+
+   e_box_pack_options_set(ic->bg_object,
+			  1, 1, /* fill */
+			  0, 0, /* expand */
+			  0.5, 0.5, /* align */
+			  bw, bh, /* min */
+			  bw, bh /* max */
+			  );
+   e_box_thaw(ic->ibb->box_object);
 }
 
 static void

@@ -185,6 +185,7 @@ src/modules/clock/Makefile
 src/modules/flame/Makefile
 src/modules/snow/Makefile
 src/modules/battery/Makefile
+src/modules/temperature/Makefile
 data/Makefile
 data/fonts/Makefile
 data/images/Makefile
