@@ -39,6 +39,8 @@ ISSUES:
 * need desktop module geometry managing system (central)
 * dropshadow is not optimal and has extreme edge bugs
 * e_apps polling/updates is broken
+* objects need object types to check the right obj type is passed
+* check on delete all app files/dirs then add all back then pop up menu (segv)
 
 <add more issues as they are found>
 
