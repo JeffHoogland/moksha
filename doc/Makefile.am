@@ -37,10 +37,5 @@ html-docs: docs html-customizations.dsl
 	cp -f stylesheet.css $(FULLNAME)/stylesheet.css
 	tar cfvz $(FULLNAME).tar.gz $(FULLNAME)
 
-html-filetypes: filetypes.xsl
-	$(mkinstalldirs) ./$(FULLNAME)/filetypes
-	cp -fr filetypes-templates/* ./$(FULLNAME)/filetypes
-	./generate-trees.sh ./$(FULLNAME)/filetypes
-
 endif
 
