@@ -1,3 +1,9 @@
+Sun Mar 10 18:13:04 2002  Till Adam  <till@adam-lilienthal.de>
+   * add E_View_Look class
+   * move view <-> dir and view <-> look <-> layout_dir to observer/observee 
+   * re-enable iconbar throbber
+   * fix various small issues 
+
 Wed Mar 06 21:41:07 2002  Till Adam  <till@adam-lilienthal.de>
    * change name of E_View_Model to E_Dir
 
