@@ -534,6 +534,16 @@ _e_main_screens_init(void)
 				  i);
 	     return 0;
 	  }
+	/* FIXME: testing... */
+	  {
+	     E_Gadman_Client *gmc;
+	     
+	     gmc = e_gadman_client_new(con->gadman);
+	     gmc->x = 100;
+	     gmc->y = 100;
+	     gmc->w = 150;
+	     gmc->h = 150;
+	  }
      }
    free(roots);
    ecore_x_sync();

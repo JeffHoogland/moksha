@@ -20,8 +20,14 @@ typedef enum _E_Gadman_Policy
 typedef enum _E_Gadman_Change
 {
    E_GADMAN_CHANGE_MOVE,
-   E_GADMAN_CHANGE_RESIZE,
+   E_GADMAN_CHANGE_RESIZE
 } E_Gadman_Change;
+
+typedef enum _E_Gadman_Mode
+{
+   E_GADMAN_MODE_NORMAL,
+   E_GADMAN_MODE_EDIT
+} E_Gadman_Mode;
 
 typedef struct _E_Gadman        E_Gadman;
 typedef struct _E_Gadman_Client E_Gadman_Client;
@@ -35,6 +41,7 @@ struct _E_Gadman
    E_Object             e_obj_inherit;
    E_Container         *container;
    Evas_List           *clients;
+   E_Gadman_Mode        mode;
 };
 
 struct _E_Gadman_Client
@@ -44,6 +51,7 @@ struct _E_Gadman_Client
    
    Evas_Object         *control_object;
    char                *domain;
+   E_Zone              *zone;
    int                  instance;
    E_Gadman_Policy      policy;
    Evas_Coord           x, y, w, h;
@@ -56,11 +64,14 @@ struct _E_Gadman_Client
 
 EAPI int              e_gadman_init(void);
 EAPI int              e_gadman_shutdown(void);
+EAPI void             e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode);
+EAPI E_Gadman_Mode    e_gadman_mode_get(E_Gadman *gm);
 EAPI E_Gadman        *e_gadman_new(E_Container *con);
 EAPI E_Gadman_Client *e_gadman_client_new(E_Gadman *gm);
-EAPI void             e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance);
 EAPI void             e_gadman_client_save(E_Gadman_Client *gmc, char *domain, int instance);
 EAPI void             e_gadman_client_load(E_Gadman_Client *gmc, char *domain, int instance);
+EAPI void             e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance);
+EAPI void             e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone);
 EAPI void             e_gadman_client_policy_set(E_Gadman_Client *gmc, E_Gadman_Policy pol);
 EAPI void             e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Coord minw, Evas_Coord minh);
 EAPI void             e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh);

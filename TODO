@@ -40,6 +40,7 @@ ISSUES:
 * e_apps polling/updates is broken
 * objects need object types to check the right obj type is passed
 * check on delete all app files/dirs then add all back then pop up menu (segv)
+* border show/hide needs to show from top down and hide from bottom up
 
 <add more issues as they are found>
 

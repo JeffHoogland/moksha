@@ -12,6 +12,7 @@ struct _Main_Data
    E_Menu *desktops;
    E_Menu *clients;
    E_Menu *modules;
+   E_Menu *gadgets;
 };
 
 /* local subsystem functions */
@@ -33,6 +34,8 @@ static void _e_int_menus_desktops_row_add_cb (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_desktops_row_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_col_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
+static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -81,6 +84,14 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, "Windows");
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
 			     "windows");
+   e_menu_item_submenu_set(mi, subm);
+  
+   subm = e_int_menus_gadgets_new();
+   dat->gadgets = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "Gadgets");
+   e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.eet"),
+			     "gadgets");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
@@ -133,7 +144,6 @@ e_int_menus_desktops_new(void)
    e_menu_pre_activate_callback_set(m, _e_int_menus_desktops_pre_cb, NULL);
    return m;
 }
-   
 
 E_Menu *
 e_int_menus_favorite_apps_new(void)
@@ -163,6 +173,16 @@ e_int_menus_clients_new(void)
    return m;
 }
 
+E_Menu *
+e_int_menus_gadgets_new(void)
+{
+   E_Menu *m;
+
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_gadgets_pre_cb, NULL);
+   return m;
+}
+
 /* local subsystem functions */
 static void
 _e_int_menus_main_del_hook(void *obj)
@@ -178,6 +198,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->modules));
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
+	e_object_del(E_OBJECT(dat->gadgets));
 	free(dat);
      }
 }
@@ -480,4 +501,43 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_desk_show(bd->desk);
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
+}
+
+static void
+_e_int_menus_gadgets_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   E_Menu *root;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   root = e_menu_root_get(m);
+   if ((root) && (root->zone))
+     {
+	mi = e_menu_item_new(m);
+	  e_menu_item_check_set(mi, 1);
+	if (e_gadman_mode_get(root->zone->container->gadman) == E_GADMAN_MODE_EDIT)
+	  e_menu_item_toggle_set(mi, 1);
+	else
+	  e_menu_item_toggle_set(mi, 0);
+	e_menu_item_label_set(mi, "Edit Mode");
+	e_menu_item_callback_set(mi, _e_int_menus_gadgets_edit_mode_cb, root->zone->container->gadman);
+     }
+   else
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, "(Unused)");
+	e_menu_item_callback_set(mi, NULL, NULL);
+     }
+}
+
+static void
+_e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Gadman *gm;
+   
+   gm = data;
+   if (e_menu_item_toggle_get(mi))
+     e_gadman_mode_set(gm, E_GADMAN_MODE_EDIT);
+   else
+     e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
 }

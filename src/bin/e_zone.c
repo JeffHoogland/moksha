@@ -89,7 +89,6 @@ e_zone_new(E_Container *con, int x, int y, int w, int h)
    e_zone_desk_count_set(zone,
 			 e_config->zone_desks_x_count,
 			 e_config->zone_desks_y_count);
-
    return zone;
 }
 
