@@ -29,7 +29,6 @@ Current freeze issues are:
 
 ISSUES:
 
-* module needs to handle multiple architectures for modules (eg in ~/.e/e/modules)
 * ibar, temp and battery modules should only make 1 gadget per container and allow u to enable/disable that gadget on that container (like clock)
 * pager needs to be able to split off each desk in a zone it a different gadget
 * gadman gadget menu needs icons :)
