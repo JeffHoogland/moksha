@@ -26,7 +26,7 @@ static E_Config_DD *_e_config_module_edd = NULL;
 int
 e_config_init(void)
 {
-   _e_config_module_edd = E_CONFIG_DD_NEW("E_Config", E_Config);   
+   _e_config_module_edd = E_CONFIG_DD_NEW("E_Config_Module", E_Config_Module);
 #undef T
 #undef D
 #define T E_Config_Module
