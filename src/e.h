@@ -130,6 +130,7 @@ typedef struct _E_Desktop             E_Desktop;
 typedef struct _E_Rect                E_Rect;
 typedef struct _E_Active_Action_Timer E_Active_Action_Timer;
 typedef struct _E_View                E_View;
+typedef struct _E_Icon                E_Icon;
 typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
@@ -323,8 +324,22 @@ struct _E_View
    struct {
       int                 x, y;
    } location;
+   struct {
+      int                 on;
+      int                 x, y, w, h;
+   } selection;
    
    Evas_List              icons;
+   
+   int                    changed;
+};
+
+struct _E_Icon
+{
+   OBJ_PROPERTIES;
+   
+   E_View *view;
+   int     changed;
 };
 
 struct _E_Menu

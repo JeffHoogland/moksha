@@ -13,6 +13,7 @@ config.c \
 desktops.c \
 exec.c \
 icccm.c \
+icons.c \
 main.c \
 menu.c \
 menudb.c \
