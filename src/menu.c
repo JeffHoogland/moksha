@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "config.h"
 #include "util.h"
+#include "math.h"
 
 static Evas_List    open_menus = NULL;	/* List of all open menus */
 static Evas_List    menus = NULL;
@@ -394,11 +395,16 @@ e_mouse_up(Ecore_Event * ev)
 		        * that the mouse pointer really is over it: */
 		       if (m->selected)
 			 {
-			    if (INTERSECTS(m->selected->x + m->current.x,
-					   m->selected->y + m->current.y,
-					   m->selected->size.w,
-					   m->selected->size.h +
-					   m->sel_border.b, mouse_x, mouse_y, 0,
+				/* Get the dimensions of the selection for use in
+				 * the test */
+				double s_x, s_y, s_w, s_h;
+				evas_get_geometry(m->evas, m->selected->obj_entry, 
+						&s_x, &s_y, &s_w, &s_h);
+			    if (INTERSECTS(m->current.x + rint(s_x),
+					   m->current.y + rint(s_y),
+					   rint(s_w),
+					   rint(s_h),
+					   mouse_x, mouse_y, 0,
 					   0))
 			      {
 				 e_menu_callback_item(m, m->selected);
