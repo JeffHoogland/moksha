@@ -114,7 +114,10 @@ shutdown(E_Module *m)
 int
 save(E_Module *m)
 {
-   /* FIXME: save config */
+   IBar *ib;
+   
+   ib = m->data;
+   e_config_domain_save("module.ibar", ib->conf_edd, ib->conf);
    return 1;
 }
 
@@ -141,8 +144,8 @@ about(E_Module *m)
 }
 
 /* module private routines */
-static
-IBar *_ibar_init(E_Module *m)
+static IBar *
+_ibar_init(E_Module *m)
 {
    IBar *ib;
    char buf[4096];
@@ -150,29 +153,58 @@ IBar *_ibar_init(E_Module *m)
    
    ib = calloc(1, sizeof(IBar));
    if (!ib) return NULL;
-   
-   ib->conf.appdir = strdup("bar");
-   ib->conf.width = 400;
-   ib->conf.iconsize = 32;
-   ib->conf.follow_speed = 0.9;
-   ib->conf.autoscroll_speed = 0.95;
-   ib->conf.edge = EDGE_BOTTOM;
-   ib->conf.anchor = 0.5;
-   ib->conf.handle = 0.5;
 
-   if (ib->conf.appdir[0] != '/')
+   ib->conf_edd = E_CONFIG_DD_NEW("Ibar_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D ib->conf_edd
+   E_CONFIG_VAL(D, T, appdir, STR);
+   E_CONFIG_VAL(D, T, follow_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, iconsize, INT);
+   E_CONFIG_VAL(D, T, edge, INT);
+   E_CONFIG_VAL(D, T, anchor, DOUBLE);
+   E_CONFIG_VAL(D, T, handle, DOUBLE);
+   E_CONFIG_VAL(D, T, autohide, UCHAR);
+   
+   ib->conf = e_config_domain_load("module.ibar", ib->conf_edd);
+   if (!ib->conf)
+     {
+	ib->conf = E_NEW(Config, 1);
+	ib->conf->appdir = strdup("bar");
+	ib->conf->follow_speed = 0.9;
+	ib->conf->autoscroll_speed = 0.95;
+	ib->conf->width = 400;
+	ib->conf->iconsize = 32;
+	ib->conf->edge = EDGE_BOTTOM;
+	ib->conf->anchor = 0.5;
+	ib->conf->handle = 0.5;
+	ib->conf->autohide = 0;
+     }
+   E_CONFIG_LIMIT(ib->conf->follow_speed, 0.01, 1.0);
+   E_CONFIG_LIMIT(ib->conf->autoscroll_speed, 0.01, 1.0);
+   E_CONFIG_LIMIT(ib->conf->width, -1, 4000);
+   E_CONFIG_LIMIT(ib->conf->iconsize, 2, 400);
+   E_CONFIG_LIMIT(ib->conf->edge, EDGE_BOTTOM, EDGE_RIGHT);
+   E_CONFIG_LIMIT(ib->conf->anchor, 0.0, 1.0);
+   E_CONFIG_LIMIT(ib->conf->handle, 0.0, 1.0);
+   E_CONFIG_LIMIT(ib->conf->autohide, 0, 1);
+   
+   if (ib->conf->appdir[0] != '/')
      {
 	char *homedir;
 	
 	homedir = e_user_homedir_get();
 	if (homedir)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/%s", homedir, ib->conf.appdir);
+	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/%s", homedir, ib->conf->appdir);
 	     free(homedir);
 	  }
      }
    else
-     strcpy(buf, ib->conf.appdir);
+     strcpy(buf, ib->conf->appdir);
    
    ib->apps = e_app_new(buf, 0);
    if (ib->apps) e_app_subdir_scan(ib->apps, 0);
@@ -207,6 +239,9 @@ IBar *_ibar_init(E_Module *m)
 static void
 _ibar_shutdown(IBar *ib)
 {
+   E_FREE(ib->conf->appdir);
+   free(ib->conf);
+   E_CONFIG_DD_FREE(ib->conf_edd);
    e_app_change_callback_del(_ibar_app_change, ib);
    while (ib->bars)
      {
@@ -217,7 +252,6 @@ _ibar_shutdown(IBar *ib)
 	_ibar_bar_free(ibb);
      }
    e_object_unref(E_OBJECT(ib->apps));
-   if (ib->conf.appdir) free(ib->conf.appdir);
    free(ib);
 }
 
@@ -338,21 +372,21 @@ _ibar_config_menu_new(IBar *ib)
    e_menu_item_label_set(mi, "Fixed width");
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ib->conf.width > 0) e_menu_item_toggle_set(mi, 1);
+   if (ib->conf->width > 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_fixed, ib);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto fit icons");
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ib->conf.width < 0) e_menu_item_toggle_set(mi, 1);
+   if (ib->conf->width < 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_auto, ib);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Fill edge");
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
-   if (ib->conf.width == 0) e_menu_item_toggle_set(mi, 1);
+   if (ib->conf->width == 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_cb_width_fill, ib);
    
 /*   
@@ -362,7 +396,7 @@ _ibar_config_menu_new(IBar *ib)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto hide");
    e_menu_item_check_set(mi, 1);
-   if (ib->conf.autohide == 0) e_menu_item_toggle_set(mi, 1);
+   if (ib->conf->autohide == 0) e_menu_item_toggle_set(mi, 1);
 
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);
@@ -387,19 +421,20 @@ _ibar_cb_width_fixed(void *data, E_Menu *m, E_Menu_Item *mi)
    IBar *ib;
    
    ib = data;
-   if (ib->conf.width <= 0)
+   if (ib->conf->width <= 0)
      {
 	Evas_List *l;
 	
-	ib->conf.width = 400;
+	ib->conf->width = 400;
 	for (l = ib->bars; l; l = l->next)
 	  {
 	     IBar_Bar *ibb;
 	     
 	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf.edge);
+	     _ibar_bar_edge_change(ibb, ib->conf->edge);
 	  }
      }
+   e_config_save_queue();
 }
 
 static void
@@ -408,19 +443,20 @@ _ibar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi)
    IBar *ib;
    
    ib = data;
-   if (ib->conf.width >= 0)
+   if (ib->conf->width >= 0)
      {
 	Evas_List *l;
 	
-	ib->conf.width = -1;
+	ib->conf->width = -1;
 	for (l = ib->bars; l; l = l->next)
 	  {
 	     IBar_Bar *ibb;
 	     
 	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf.edge);
+	     _ibar_bar_edge_change(ibb, ib->conf->edge);
 	  }
      }
+   e_config_save_queue();
 }
 
 static void
@@ -429,21 +465,22 @@ _ibar_cb_width_fill(void *data, E_Menu *m, E_Menu_Item *mi)
    IBar *ib;
    
    ib = data;
-   if (ib->conf.width != 0)
+   if (ib->conf->width != 0)
      {
 	Evas_List *l;
 	
-	ib->conf.width = 0;
-	ib->conf.anchor = 0.5;
-	ib->conf.handle = 0.5;
+	ib->conf->width = 0;
+	ib->conf->anchor = 0.5;
+	ib->conf->handle = 0.5;
 	for (l = ib->bars; l; l = l->next)
 	  {
 	     IBar_Bar *ibb;
 	     
 	     ibb = l->data;
-	     _ibar_bar_edge_change(ibb, ib->conf.edge);
+	     _ibar_bar_edge_change(ibb, ib->conf->edge);
 	  }
      }
+   e_config_save_queue();
 }
 
 static IBar_Icon *
@@ -516,14 +553,14 @@ _ibar_bar_icon_new(IBar_Bar *ibb, E_App *a)
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
 			"modules/ibar/icon");
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    evas_object_show(o);
    
    o = edje_object_add(ibb->evas);
    ic->icon_object = o;
    edje_object_file_set(o, ic->app->path, "icon");
-   edje_extern_object_min_size_set(o, ibb->ibar->conf.iconsize, ibb->ibar->conf.iconsize);
+   edje_extern_object_min_size_set(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
    edje_object_part_swallow(ic->bg_object, "item", o);
    edje_object_size_min_calc(ic->bg_object, &bw, &bh);
    evas_object_pass_events_set(o, 1);
@@ -537,7 +574,7 @@ _ibar_bar_icon_new(IBar_Bar *ibb, E_App *a)
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
 			"modules/ibar/icon_overlay");
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    evas_object_show(o);
    
@@ -640,41 +677,41 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
    
    o = ibb->bar_object;
-   if (ibb->ibar->conf.width < 0)
+   if (ibb->ibar->conf->width < 0)
      {
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  e_box_orientation_set(ibb->box_object, 1);
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  e_box_orientation_set(ibb->box_object, 0);
 	
 	e_box_min_size_get(ibb->box_object, &bw, &bh);
 	edje_extern_object_min_size_set(ibb->box_object, bw, bh);
 	edje_object_part_swallow(o, "items", ibb->box_object);
 	edje_object_size_min_calc(o, &bw, &bh);
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     if (bw > ww) bw = ww;
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     if (bh > hh) bh = hh;
 	  }
      }
-   else if (ibb->ibar->conf.width == 0)
+   else if (ibb->ibar->conf->width == 0)
      {
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     e_box_orientation_set(ibb->box_object, 1);
 	     e_box_min_size_get(ibb->box_object, &bw, &bh);
 	     edje_extern_object_min_size_set(ibb->box_object, ww, bh);
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     e_box_orientation_set(ibb->box_object, 0);
 	     e_box_min_size_get(ibb->box_object, &bw, &bh);
@@ -686,67 +723,67 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
      }
    else
      {
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     e_box_orientation_set(ibb->box_object, 1);
 	     e_box_min_size_get(ibb->box_object, &bw, &bh);
-	     edje_extern_object_min_size_set(ibb->box_object, ibb->ibar->conf.width, bh);
+	     edje_extern_object_min_size_set(ibb->box_object, ibb->ibar->conf->width, bh);
 	     edje_object_part_swallow(o, "items", ibb->box_object);
 	     edje_object_size_min_calc(o, &bw, &bh);
 	     edje_extern_object_min_size_set(ibb->box_object, 0, 0);
 	     edje_object_part_swallow(o, "items", ibb->box_object);
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     e_box_orientation_set(ibb->box_object, 0);
 	     e_box_min_size_get(ibb->box_object, &bw, &bh);
-	     edje_extern_object_min_size_set(ibb->box_object, bw, ibb->ibar->conf.width);
+	     edje_extern_object_min_size_set(ibb->box_object, bw, ibb->ibar->conf->width);
 	     edje_object_part_swallow(o, "items", ibb->box_object);
 	     edje_object_size_min_calc(o, &bw, &bh);
 	     edje_extern_object_min_size_set(ibb->box_object, 0, 0);
 	     edje_object_part_swallow(o, "items", ibb->box_object);
 	  }
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     if (bw > ww) bw = bw;
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     if (bh > hh) bh = hh;
 	  }
      }
    
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      ibb->maxsize = bh;
-   else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-	    (ibb->ibar->conf.edge == EDGE_RIGHT))
+   else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+	    (ibb->ibar->conf->edge == EDGE_RIGHT))
      ibb->maxsize = bw;
 
    ibb->w = bw;
    ibb->h = bh;
-   if (ibb->ibar->conf.edge == EDGE_BOTTOM)
+   if (ibb->ibar->conf->edge == EDGE_BOTTOM)
      {
-	ibb->x = (ww * ibb->ibar->conf.anchor) - (bw * ibb->ibar->conf.handle);
+	ibb->x = (ww * ibb->ibar->conf->anchor) - (bw * ibb->ibar->conf->handle);
 	ibb->y = hh - bh;
      }
-   else if (ibb->ibar->conf.edge == EDGE_TOP)
+   else if (ibb->ibar->conf->edge == EDGE_TOP)
      {
-	ibb->x = (ww * ibb->ibar->conf.anchor) - (bw * ibb->ibar->conf.handle);
+	ibb->x = (ww * ibb->ibar->conf->anchor) - (bw * ibb->ibar->conf->handle);
 	ibb->y = 0;
      }
-   else if (ibb->ibar->conf.edge == EDGE_LEFT)
+   else if (ibb->ibar->conf->edge == EDGE_LEFT)
      {
-	ibb->y = (hh * ibb->ibar->conf.anchor) - (bh * ibb->ibar->conf.handle);
+	ibb->y = (hh * ibb->ibar->conf->anchor) - (bh * ibb->ibar->conf->handle);
 	ibb->x = 0;
      }
-   else if (ibb->ibar->conf.edge == EDGE_RIGHT)
+   else if (ibb->ibar->conf->edge == EDGE_RIGHT)
      {
-	ibb->y = (hh * ibb->ibar->conf.anchor) - (bh * ibb->ibar->conf.handle);
+	ibb->y = (hh * ibb->ibar->conf->anchor) - (bh * ibb->ibar->conf->handle);
 	ibb->x = ww - bw;
      }
 
@@ -774,7 +811,7 @@ _ibar_bar_init(IBar_Bar *ibb)
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
 			"modules/ibar/main");
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    edje_object_signal_callback_add(o, "move_start", "", _ibar_cb_bar_move_start, ibb);
    edje_object_signal_callback_add(o, "move_stop", "", _ibar_cb_bar_move_stop, ibb);
@@ -792,7 +829,7 @@ _ibar_bar_init(IBar_Bar *ibb)
 			/* FIXME: "default.eet" needs to come from conf */
 			e_path_find(path_themes, "default.eet"),
 			"modules/ibar/follower");
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    evas_object_show(o);
    
@@ -817,11 +854,11 @@ _ibar_bar_init(IBar_Bar *ibb)
    evas_object_show(o);
 
    edje_object_size_min_calc(ibb->bar_object, &bw, &bh);
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      ibb->minsize = bh;
-   else if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+   else if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
      ibb->minsize = bw;
 
    if (ibb->ibar->apps)
@@ -883,14 +920,14 @@ _ibar_motion_handle(IBar_Bar *ibb, Evas_Coord mx, Evas_Coord my)
    else relx = 0.0;
    if (h > 0) rely = (double)(my - y) / (double)h;
    else rely = 0.0;
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      {
 	ibb->align_req = 1.0 - relx;
 	ibb->follow_req = relx;
      }
-   else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-	    (ibb->ibar->conf.edge == EDGE_RIGHT))
+   else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+	    (ibb->ibar->conf->edge == EDGE_RIGHT))
      {
 	ibb->align_req = 1.0 - rely;
 	ibb->follow_req = rely;
@@ -922,8 +959,8 @@ _ibar_bar_follower_reset(IBar_Bar *ibb)
    evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
    evas_object_geometry_get(ibb->box_object, &bx, &by, &bw, &bh);
    edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      {
 	d1 = bx;
 	d2 = ww - (bx + bw);
@@ -935,8 +972,8 @@ _ibar_bar_follower_reset(IBar_Bar *ibb)
 	       ibb->follow_req = 1.0 + ((double)(d2 + (mw * 4)) / (double)bw);
 	  }
      }
-   else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-	    (ibb->ibar->conf.edge == EDGE_RIGHT))
+   else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+	    (ibb->ibar->conf->edge == EDGE_RIGHT))
      {
 	d1 = by;
 	d2 = hh - (by + bh);
@@ -959,58 +996,59 @@ _ibar_bar_convert_move_resize_to_config(IBar_Bar *ibb)
    evas_object_geometry_get(ibb->box_object, &bx, &by, &bw, &bh);
    evas_object_geometry_get(ibb->bar_object, &bbx, &bby, &bbw, &bbh);
    
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      {
 	double a = 0.5;
 	
-	if (ibb->ibar->conf.width < 0) /* auto size to fit */
+	if (ibb->ibar->conf->width < 0) /* auto size to fit */
 	  {
 	     if ((ww - ibb->w) != 0)
 	       a = (double)ibb->x / (double)(ww - ibb->w);
 	     else
 	       a = 0.5;
 	  }
-	else if (ibb->ibar->conf.width == 0) /* full width */
+	else if (ibb->ibar->conf->width == 0) /* full width */
 	  {
 	  }
 	else
 	  {
-	     ibb->ibar->conf.width = ibb->w - (bbw - bw);
+	     ibb->ibar->conf->width = ibb->w - (bbw - bw);
 	     if ((ww - ibb->w) != 0)
 	       a = (double)ibb->x / (double)(ww - ibb->w);
 	     else
 	       a = 0.5;
 	  }
-	ibb->ibar->conf.anchor = a;
-	ibb->ibar->conf.handle = a;
+	ibb->ibar->conf->anchor = a;
+	ibb->ibar->conf->handle = a;
      }
-   else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-	    (ibb->ibar->conf.edge == EDGE_RIGHT))
+   else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+	    (ibb->ibar->conf->edge == EDGE_RIGHT))
      {
 	double a = 0.5;
 	
-	if (ibb->ibar->conf.width < 0) /* auto size to fit */
+	if (ibb->ibar->conf->width < 0) /* auto size to fit */
 	  {
 	     if ((hh - ibb->h) != 0)
 	       a = (double)ibb->y / (double)(hh - ibb->h);
 	     else
 	       a = 0.5;
 	  }
-	else if (ibb->ibar->conf.width == 0) /* full width */
+	else if (ibb->ibar->conf->width == 0) /* full width */
 	  {
 	  }
 	else
 	  {
-	     ibb->ibar->conf.width = ibb->h - (bbh - bh);
+	     ibb->ibar->conf->width = ibb->h - (bbh - bh);
 	     if ((hh - ibb->h) != 0)
 	       a = (double)ibb->y / (double)(hh - ibb->h);
 	     else
 	       a = 0.5;
 	  }
-	ibb->ibar->conf.anchor = a;
-	ibb->ibar->conf.handle = a;
+	ibb->ibar->conf->anchor = a;
+	ibb->ibar->conf->handle = a;
      }
+   e_config_save_queue();
 }
 
 static void
@@ -1020,25 +1058,25 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
    Evas_Coord ww, hh, bw, bh;
    Evas_Object *o;
    
-   ibb->ibar->conf.edge = edge;
+   ibb->ibar->conf->edge = edge;
    
    evas_event_freeze(ibb->evas);
    o = ibb->bar_object;
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    
    o = ibb->overlay_object;
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
    edje_object_message_signal_process(o);
    
    e_box_freeze(ibb->box_object);
 
    edje_object_size_min_calc(ibb->bar_object, &bw, &bh);
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      ibb->minsize = bh;
-   else if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+   else if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
      ibb->minsize = bw;
    
    for (l = ibb->icons; l; l = l->next)
@@ -1047,12 +1085,12 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
 	     
 	ic = l->data;
 	o = ic->bg_object;
-	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
 	edje_object_message_signal_process(o);
 	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 		  
 	o = ic->overlay_object;
-	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf.edge]);
+	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[ibb->ibar->conf->edge]);
 	edje_object_message_signal_process(o);
 		  
 	e_box_pack_options_set(ic->bg_object,
@@ -1260,9 +1298,9 @@ _ibar_cb_bar_timer(void *data)
    double v;
    
    ibb = data;
-   v = ibb->ibar->conf.autoscroll_speed;
+   v = ibb->ibar->conf->autoscroll_speed;
    ibb->align = (ibb->align_req * (1.0 - v)) + (ibb->align * v);
-   v = ibb->ibar->conf.follow_speed;
+   v = ibb->ibar->conf->follow_speed;
    ibb->follow = (ibb->follow_req * (1.0 - v)) + (ibb->follow * v);
    
    dif = ibb->align - ibb->align_req;
@@ -1289,8 +1327,8 @@ _ibar_cb_bar_animator(void *data)
    
    ibb = data;
    
-   if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-       (ibb->ibar->conf.edge == EDGE_TOP))
+   if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+       (ibb->ibar->conf->edge == EDGE_TOP))
      {
 	e_box_align_set(ibb->box_object, ibb->align, 0.5);
 	
@@ -1299,8 +1337,8 @@ _ibar_cb_bar_animator(void *data)
 	evas_object_resize(ibb->overlay_object, mw, h);
 	evas_object_move(ibb->overlay_object, x + (w * ibb->follow) - (mw / 2), y);
      }
-   else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-	    (ibb->ibar->conf.edge == EDGE_RIGHT))
+   else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+	    (ibb->ibar->conf->edge == EDGE_RIGHT))
      {
 	e_box_align_set(ibb->box_object, 0.5, ibb->align);
 	
@@ -1320,7 +1358,7 @@ _ibar_cb_bar_move_start(void *data, Evas_Object *obj, const char *emission, cons
    IBar_Bar *ibb;
    
    ibb = data;
-   if (ibb->ibar->conf.width == 0) return;
+   if (ibb->ibar->conf->width == 0) return;
    ibb->move = 1;
    evas_pointer_canvas_xy_get(evas_object_evas_get(obj), &ibb->start_x, &ibb->start_y);
    ibb->start_bx = ibb->x;
@@ -1348,7 +1386,7 @@ _ibar_cb_bar_resize1_start(void *data, Evas_Object *obj, const char *emission, c
    IBar_Bar *ibb;
    
    ibb = data;
-   if (ibb->ibar->conf.width <= 0) return;
+   if (ibb->ibar->conf->width <= 0) return;
    ibb->resize1 = 1;
    evas_pointer_canvas_xy_get(evas_object_evas_get(obj), &ibb->start_x, &ibb->start_y);
    ibb->start_bx = ibb->x;
@@ -1376,7 +1414,7 @@ _ibar_cb_bar_resize2_start(void *data, Evas_Object *obj, const char *emission, c
    IBar_Bar *ibb;
    
    ibb = data;
-   if (ibb->ibar->conf.width <= 0) return;
+   if (ibb->ibar->conf->width <= 0) return;
    ibb->resize2 = 1;
    evas_pointer_canvas_xy_get(evas_object_evas_get(obj), &ibb->start_x, &ibb->start_y);
    ibb->start_bx = ibb->x;
@@ -1416,8 +1454,8 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 	evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
 	evas_object_geometry_get(ibb->bar_object, &bx, &by, &bw, &bh);
 	evas_pointer_canvas_xy_get(ibb->evas, &x, &y);
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     Evas_Coord d;
 	     
@@ -1426,8 +1464,8 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 	     if (ibb->x < 0) ibb->x = 0;
 	     else if ((ibb->x + ibb->w) > ww) ibb->x = ww - ibb->w;
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     Evas_Coord d;
 	     
@@ -1439,7 +1477,7 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 
 	if (!edge_done)
 	  {
-	     edge = ibb->ibar->conf.edge;
+	     edge = ibb->ibar->conf->edge;
 	     xr = (double)x / (double)ww;
 	     yr = (double)y / (double)hh;
 	     if ((xr + yr) <= 1.0) /* top or left */
@@ -1452,7 +1490,7 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 		  if (((1.0 - yr) + xr) <= 1.0) edge = EDGE_BOTTOM;
 		  else edge = EDGE_RIGHT;
 	       }
-	     if (edge != ibb->ibar->conf.edge)
+	     if (edge != ibb->ibar->conf->edge)
 	       {
 		  _ibar_bar_edge_change(ibb, edge);
 		  edge_done = 1;
@@ -1472,18 +1510,18 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 	evas_object_geometry_get(ibb->box_object, &bx, &by, &bw, &bh);
 	evas_object_geometry_get(ibb->bar_object, &bbx, &bby, &bbw, &bbh);
 	evas_pointer_canvas_xy_get(ibb->evas, &x, &y);
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     Evas_Coord d;
 	     
 	     d = x - ibb->start_x;
 	     ibb->x = ibb->start_bx + d;
 	     ibb->w = ibb->start_bw - d;
-	     if (ibb->w < (bbw - bw + ibb->ibar->conf.iconsize))
+	     if (ibb->w < (bbw - bw + ibb->ibar->conf->iconsize))
 	       {
-		  ibb->x += ibb->w - (bbw - bw + ibb->ibar->conf.iconsize);
-		  ibb->w = bbw - bw + ibb->ibar->conf.iconsize;
+		  ibb->x += ibb->w - (bbw - bw + ibb->ibar->conf->iconsize);
+		  ibb->w = bbw - bw + ibb->ibar->conf->iconsize;
 	       }
 	     else if (ibb->w > ww)
 	       {
@@ -1500,18 +1538,18 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 		  ibb->x = ww - ibb->w;
 	       }
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     Evas_Coord d;
 	     
 	     d = y - ibb->start_y;
 	     ibb->y = ibb->start_by + d;
 	     ibb->h = ibb->start_bh - d;
-	     if (ibb->h < (bbh - bh + ibb->ibar->conf.iconsize))
+	     if (ibb->h < (bbh - bh + ibb->ibar->conf->iconsize))
 	       {
-		  ibb->y += ibb->h - (bbh - bh + ibb->ibar->conf.iconsize);
-		  ibb->h = bbh - bh + ibb->ibar->conf.iconsize;
+		  ibb->y += ibb->h - (bbh - bh + ibb->ibar->conf->iconsize);
+		  ibb->h = bbh - bh + ibb->ibar->conf->iconsize;
 	       }
 	     else if (ibb->h > hh)
 	       {
@@ -1541,16 +1579,16 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 	evas_object_geometry_get(ibb->box_object, &bx, &by, &bw, &bh);
 	evas_object_geometry_get(ibb->bar_object, &bbx, &bby, &bbw, &bbh);
 	evas_pointer_canvas_xy_get(ibb->evas, &x, &y);
-	if ((ibb->ibar->conf.edge == EDGE_BOTTOM) ||
-	    (ibb->ibar->conf.edge == EDGE_TOP))
+	if ((ibb->ibar->conf->edge == EDGE_BOTTOM) ||
+	    (ibb->ibar->conf->edge == EDGE_TOP))
 	  {
 	     Evas_Coord d;
 	     
 	     d = x - ibb->start_x;
 	     ibb->w = ibb->start_bw + d;
-	     if (ibb->w < (bbw - bw + ibb->ibar->conf.iconsize))
+	     if (ibb->w < (bbw - bw + ibb->ibar->conf->iconsize))
 	       {
-		  ibb->w = bbw - bw + ibb->ibar->conf.iconsize;
+		  ibb->w = bbw - bw + ibb->ibar->conf->iconsize;
 	       }
 	     else if (ibb->w > ww)
 	       {
@@ -1561,16 +1599,16 @@ _ibar_cb_bar_move_go(void *data, Evas_Object *obj, const char *emission, const c
 		  ibb->w = ww - ibb->x;
 	       }
 	  }
-	else if ((ibb->ibar->conf.edge == EDGE_LEFT) ||
-		 (ibb->ibar->conf.edge == EDGE_RIGHT))
+	else if ((ibb->ibar->conf->edge == EDGE_LEFT) ||
+		 (ibb->ibar->conf->edge == EDGE_RIGHT))
 	  {
 	     Evas_Coord d;
 	     
 	     d = y - ibb->start_y;
 	     ibb->h = ibb->start_bh + d;
-	     if (ibb->h < (bbh - bh + ibb->ibar->conf.iconsize))
+	     if (ibb->h < (bbh - bh + ibb->ibar->conf->iconsize))
 	       {
-		  ibb->h = bbh - bh + ibb->ibar->conf.iconsize;
+		  ibb->h = bbh - bh + ibb->ibar->conf->iconsize;
 	       }
 	     else if (ibb->h > hh)
 	       {

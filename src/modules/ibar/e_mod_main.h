@@ -1,26 +1,32 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+typedef struct _Config      Config;
 typedef struct _IBar        IBar;
 typedef struct _IBar_Bar    IBar_Bar;
 typedef struct _IBar_Icon   IBar_Icon;
+
+struct _Config
+{
+   char         *appdir;
+   double        follow_speed;
+   double        autoscroll_speed;
+   int           width;
+   int           iconsize;
+   int           edge;
+   double        anchor;
+   double        handle;
+   unsigned char autohide;
+};
 
 struct _IBar
 {
    E_App       *apps;
    Evas_List   *bars;
    E_Menu      *config_menu;
-   struct {
-      char     *appdir;
-      double    follow_speed;
-      double    autoscroll_speed;
-      int       width;
-      int       iconsize;
-      int       edge;
-      double    anchor;
-      double    handle;
-      unsigned char autohide : 1;
-   } conf;
+   
+   E_Config_DD *conf_edd;
+   Config      *conf;
 };
 
 struct _IBar_Bar
