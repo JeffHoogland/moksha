@@ -193,10 +193,10 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 		  
 		  aa->name = strdup(a->name);
 		  aa->action = strdup(a->action);
-		  aa->params = strdup(a->params);
+		  if (a->params) aa->params = strdup(a->params);
 		  aa->event = a->event;
 		  aa->button = a->button;
-		  aa->key = strdup(a->key);
+		  if (a->key) aa->key = strdup(a->key);
 		  aa->modifiers = a->modifiers;
 		  aa->action_proto = ap;
 		  aa->object = o;
