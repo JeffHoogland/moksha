@@ -4,6 +4,8 @@
 #include "exec.h"
 #include "util.h"
 #include "file.h"
+#include "border.h"
+#include "observer.h"
 
 #ifdef USE_FERITE
 # include "e_ferite.h"
@@ -11,6 +13,7 @@
 
 Evas_List build_menus = NULL;
 
+static void e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data);
 static void e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data);
 
 static void e_build_menu_unbuild(E_Build_Menu *bm);
@@ -22,6 +25,11 @@ static void e_build_menu_db_build(E_Build_Menu *bm);
 static void e_build_menu_gnome_apps_poll(int val, void *data);
 static void e_build_menu_gnome_apps_build(E_Build_Menu *bm);
 
+static E_Menu *e_build_menu_iconified_borders_build(E_Build_Menu *bm);
+static void e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee);
+
+
+/* ------------ various callbacks ---------------------- */
 static void 
 e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data)
 {
@@ -32,6 +40,21 @@ e_build_menu_cb_exec(E_Menu *m, E_Menu_Item *mi, void *data)
    exe = data;
    e_exec_run(exe);
 
+   D_RETURN;
+   UN(m);
+   UN(mi);
+}
+
+static void 
+e_build_menu_cb_uniconify(E_Menu *m, E_Menu_Item *mi, void *data)
+{
+   E_Border *b;
+
+   D_ENTER;
+   
+   b = data;
+   e_border_uniconify(b);
+   
    D_RETURN;
    UN(m);
    UN(mi);
@@ -57,6 +80,8 @@ e_build_menu_cb_script(E_Menu *m, E_Menu_Item *mi, void *data)
    UN(script);
    UN(data);
 }
+
+/*--------------------------------------------------------*/
 
 static void
 e_build_menu_unbuild(E_Build_Menu *bm)
@@ -484,4 +509,81 @@ e_build_menu_new_from_gnome_apps(char *dir)
    e_build_menu_gnome_apps_poll(0, bm);
 
    D_RETURN_(bm);
+}
+
+/*------------------------- iconified borders menu ----------------*/
+
+E_Build_Menu *
+e_build_menu_new_from_iconified_borders()
+{
+   E_Build_Menu *bm;
+   Evas_List l;
+
+   D_ENTER;
+
+   bm = NEW(E_Build_Menu, 1);
+   ZERO(bm, E_Build_Menu, 1);
+
+   e_observer_init(E_OBSERVER(bm), E_EVENT_WINDOW_ICONIFY, e_build_menu_iconified_borders_rebuild, (E_Cleanup_Func) e_build_menu_cleanup);
+
+   for (l = e_border_get_borders_list(); l; l = l->next)
+   {
+      E_Border *b = l->data;
+      e_observer_register_observee(E_OBSERVER(bm), E_OBSERVEE(b));
+   }
+   bm->menu = e_build_menu_iconified_borders_build(bm);
+   
+   build_menus = evas_list_prepend(build_menus, bm);
+
+   D_RETURN_(bm);
+}
+
+static void
+e_build_menu_iconified_borders_rebuild(E_Observer *observer, E_Observee *observee)
+{
+   E_Build_Menu *bm;
+   
+   D_ENTER;
+   D("catch iconify, rebuild menu");
+   bm = (E_Build_Menu *)observer;
+   
+   e_build_menu_unbuild(bm);
+   bm->menu = e_build_menu_iconified_borders_build(bm);
+   D_RETURN;
+}
+
+static E_Menu *
+e_build_menu_iconified_borders_build(E_Build_Menu *bm)
+{
+   E_Menu *menu = NULL;
+   Evas_List l, entries = NULL;
+   
+   D_ENTER;
+   
+   menu = e_menu_new();
+   e_menu_set_padding_icon(menu, 2);
+   e_menu_set_padding_state(menu, 2);
+  
+   for (l = e_border_get_borders_list(); l; l = l->next)
+   {
+     E_Border *b;
+     char *name = NULL;
+     E_Menu_Item *menuitem;
+
+     b = l->data;
+
+     if (b->client.iconified)
+     {
+       e_strdup(name, b->client.title);
+       D("adding menu item: %s\n", name);
+       menuitem = e_menu_item_new(name);
+       e_menu_item_set_callback(menuitem, e_build_menu_cb_uniconify, b);
+       e_menu_add_item(menu, menuitem);
+
+       IF_FREE(name);
+     }  
+   }
+   bm->menus = evas_list_prepend(bm->menus, menu);	
+
+   D_RETURN_(menu);
 }

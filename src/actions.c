@@ -1658,11 +1658,16 @@ e_act_iconify_start (E_Object *object, E_Action *a, void *data, int x, int y, in
    E_Border *b;
    
    D_ENTER;
-
+#if 0
    b = (E_Border*) object;
    if (!b) b = e_border_current_focused();
    if (!b) D_RETURN;
    if (b->client.is_desktop) D_RETURN;
+
+   D("iconify action start\n");
+   e_border_iconify(b);
+#endif
+   
    D_RETURN;
    UN(object);
    UN(a);

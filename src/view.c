@@ -430,17 +430,36 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 		    }
 	       }
 	  }
-/*	else if (_b == 2)
+	else if (_b == 2)
 	  {
-		 exit(0);
-	  }*/
+#if 0
+	     static E_Build_Menu *buildmenu = NULL;
+
+	     if (!buildmenu)
+	     {
+		D("building iconified windows menu\n");
+		buildmenu = e_build_menu_new_from_iconified_borders();
+	     }
+	     if (buildmenu)
+	     {
+		static E_Menu *menu = NULL;
+		menu = buildmenu->menu;
+		
+		if (menu)
+		{
+		   D("showing iconified window menu\n");
+		   e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+		}
+	     }
+#endif
+	  }
 	else if (_b == 3)
 	  {
 	     static E_Build_Menu *buildmenu = NULL;
 	     
 	     if (!buildmenu)
 	       {		  
-		  buildmenu = e_build_menu_new_from_gnome_apps("/usr/share/gnome/apps");
+		  buildmenu = e_build_menu_new_from_gnome_apps("/opt/gnome/share/gnome/apps");
 	       }
 	     if (buildmenu)
 	       {

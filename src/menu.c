@@ -564,9 +564,10 @@ static void
 e_menu_item_unselect (E_Menu_Item *mi)
 {
    D_ENTER;
-
-   if ((mi) && (mi->menu->selected == mi))
+D("mi unselect\n");
+   if ((mi))// && (mi->menu->selected == mi))
      {
+D("mi && mi->menu->selected == mi\n");
        mi->menu->selected = curr_selected_item = NULL;
 	mi->selected = 0;
 	mi->menu->redo_sel = 1;
@@ -1240,7 +1241,6 @@ e_menu_hide(E_Menu *m)
 {
    D_ENTER;
 
-   D("Menu hide!\n");
 
    if (m->selected)
      {
@@ -1282,9 +1282,11 @@ e_menu_show_at_mouse(E_Menu *m, int x, int y, Time t)
 {
    D_ENTER;
 
+   D("show at mouse\n");
    m->current.x = x;
    m->current.y = y;
    m->time = t;
+   D("show menu\n")
    e_menu_show(m);
 
    D_RETURN;
@@ -1560,7 +1562,6 @@ e_menu_update_visibility(E_Menu *m)
    E_Menu_Item *mi;
 	
    D_ENTER;
-
    mi = m->selected;
    if (mi)
      {
@@ -1597,6 +1598,7 @@ e_menu_update_base(E_Menu *m)
    int location_changed = 0;
 
    D_ENTER;
+   
 
    if (!m->changed) D_RETURN;
    

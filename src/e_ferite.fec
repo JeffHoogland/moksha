@@ -10,40 +10,109 @@ header %{
    #include "globals.h"
    #include "observer.h"
 
+   #define BorderObj ((E_Border *)(self->odata))
    #define BitsObj ((Ebits_Object)self->odata)
    #define EppObj ((E_Epplet *)(self->odata))
    #define EvasObj ((Evas_Object_Wrapper *)(self->odata))
 %}
 
-class window {
+class Border {
    
-   function get_name();
-   function get_title();
-   function get_class();
-   function get_x();
-   function get_y();
-   function get_width();
-   function get_height();
+   function Border()
+   %{
+   %}
+
+   function get_name()
+   %{
+     if(BorderObj)
+       FE_RETURN_STR(BorderObj->client.name, 0);
+   %}
+   
+   function get_title()
+   %{
+     if(BorderObj)
+       FE_RETURN_STR(BorderObj->client.title, 0);
+   %}
+   
+   function get_class()
+   %{
+     if(BorderObj)
+       FE_RETURN_STR(BorderObj->client.class, 0);
+   %}
+   
+   function get_x()
+   %{
+     if(BorderObj)
+       FE_RETURN_LONG(BorderObj->current.x);
+   %}
+   
+   function get_y()
+   %{
+     if(BorderObj)
+       FE_RETURN_LONG(BorderObj->current.y);
+   %}
+   
+   function get_width()
+   %{
+     if(BorderObj)
+       FE_RETURN_LONG(BorderObj->current.w);
+   %}
+   
+   function get_height()
+   %{
+     if(BorderObj)
+       FE_RETURN_LONG(BorderObj->current.h);
+   %}
+   
    
    function move( number x, number y );
    function resize( number width, number height );
 
    function show();
    function hide();
-   function is_visible();
+   function is_visible()
+   %{
+     if(BorderObj)
+     {
+       if (BorderObj->current.visible) { FE_RETURN_TRUE; }
+       else { FE_RETURN_FALSE; }
+     }
+   %}
+
    
    function shade();
    function unshade();
    function is_shaded();
    
-   function iconify();
-   function uniconify();
-   function is_iconic();
+   function iconify()
+   %{
+     e_border_iconify(BorderObj);
+   %}
+
+   function uniconify()
+   %{
+     e_border_uniconify(BorderObj);
+   %}
+
+   function is_iconic()
+   %{
+    if (BorderObj->client.iconified) { FE_RETURN_TRUE }
+    else { FE_RETURN_FALSE }
+   %}
 
    function is_mapped();
    function is_transient();
    function is_shaped();
    
+   function raise()
+   %{
+   %}
+
+   function lower()
+   %{
+   %}
+
+
    function delete();
    function kill();
    
@@ -79,6 +148,21 @@ namespace e {
 	  ecore_event_loop_quit();  
    %}
 
+   function dataCopy(object from, object to)
+   %{
+      to->odata = from->odata;
+   %}
+
+   function dataCmp(object from, object to)
+   %{
+      if (to->odata == from->odata) {FE_RETURN_TRUE;}
+      else {FE_RETURN_FALSE;}
+   %}
+
+   function getTime()
+   %{
+     FE_RETURN_DOUBLE(ecore_get_time());
+   %}
 }
 
 class EvasObject
@@ -291,6 +375,11 @@ class Ebits
   */
   %}
 
+  function free()
+  %{
+    ebits_free(BitsObj);
+  %}
+
   function show()
   %{
     ebits_show(BitsObj);
@@ -321,9 +410,16 @@ class Ebits
     ebits_resize(BitsObj, w, h);
   %}
 
-  function set_layer(number l)
+  function setLayer(number l)
   %{
     ebits_set_layer(BitsObj, l);
+  %}
+
+  function setState(string bitName, string state)
+  %{
+    ebits_set_named_bit_state(BitsObj, bitName, state);
+    ffree(bitName);
+    ffree(state);
   %}
 
   function getNamedBitGeometry(string bitName, number x, number y, number w, number h)
@@ -537,38 +633,53 @@ class Epplet
     FE_RETURN_STR(retval, 0);
   %}
 
-/* This doesn't work Yet */
-/*
    function addTimer(string name, number time, string func, number val, object data)
    %{
-      char *buf;
+      char buf[PATH_MAX];
       E_Epplet_CB_Info *cb;
 
       cb = e_epplet_cb_new(script, func, data, NULL);
-      D("got cb info\n")
-      sprintf(buf, "%s:%s", EppObj->name, name);
-      D("add timer: %s, time: %f\n", buf, time);
-      ecore_add_event_timer(buf, time, e_epplet_timer_func, val, cb);
-      D("timer added\n");
+      snprintf(buf, PATH_MAX, "%s:%s", EppObj->name, name);
+      ecore_add_event_timer(buf, (double)time, e_epplet_timer_func, val, cb);
      ffree(func);
    %}
       
    function delTimer(string name)
    %{
-      char *buf;
+      char buf[PATH_MAX];
 
-      sprintf(buf, "%s:%s", EppObj->name, name);
+      snprintf(buf, PATH_MAX, "%s:%s", EppObj->name, name);
       ecore_del_event_timer(buf);
       ffree(name);
    %}
-*/
+
    function addDesktopObserver(string func_name, object data)
    %{
      E_Epplet_Observer *obs;
 
-     obs = e_epplet_observer_new(script, func_name, data);
+     obs = e_epplet_observer_new(script, func_name, data, "DESKTOP_SWITCH");
      e_epplet_observer_register_desktops(obs);
      ffree(func_name);
    %}
+
+/*
+   function addIconifyObserver(string func_name, object data)
+   %{
+     E_Epplet_Observer *obs;
+
+     obs = e_epplet_observer_new(script, func_name, data, "ICONIFY");
+     e_epplet_observer_register_borders(obs);
+     ffree(func_name);
+   %}
+   
+   function addUnconifyObserver(string func_name, object data)
+   %{
+     E_Epplet_Observer *obs;
+
+     obs = e_epplet_observer_new(script, func_name, data, "UNICONIFY");
+     e_epplet_observer_register_borders(obs);
+     ffree(func_name);
+   %}
+*/ 
 }
 

@@ -1751,6 +1751,34 @@ e_border_new(void)
 }
 
 void
+e_border_iconify(E_Border *b)
+{
+   D_ENTER;
+   D("iconfy window!\n");
+   b->client.iconified = 1;
+   b->current.requested.visible = 0;
+   e_icccm_state_iconified(b->win.client);
+   b->changed = 1;
+   e_border_update(b);
+   D("notify observers of iconification\n");
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_ICONIFY);
+   
+   D_RETURN;
+}
+
+void
+e_border_uniconify(E_Border *b)
+{
+   b->client.iconified = 0;
+   b->current.requested.visible = 1;
+   e_icccm_state_mapped(b->win.client);
+   b->changed = 1;
+   e_border_update(b);
+   /* should be UNICONIFY */
+   e_observee_notify_observers(E_OBSERVEE(b), E_EVENT_WINDOW_ICONIFY); 
+}
+
+void
 e_border_remove_mouse_grabs(E_Border *b)
 {
    Evas_List l;
@@ -2861,3 +2889,9 @@ e_border_set_gravity(E_Border *b, int gravity)
    D_RETURN;
 }
 
+Evas_List
+e_border_get_borders_list()
+{
+   D_ENTER;
+   D_RETURN_(borders);
+}

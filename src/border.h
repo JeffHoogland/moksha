@@ -209,6 +209,8 @@ void      e_border_update(E_Border *b);
 void      e_border_set_layer(E_Border *b, int layer);
 void      e_border_raise(E_Border *b);
 void      e_border_lower(E_Border *b);
+void      e_border_iconify(E_Border *b);
+void      e_border_uniconify(E_Border *b);
 void      e_border_raise_above(E_Border *b, E_Border *above);
 void      e_border_lower_below(E_Border *b, E_Border *below);
 E_Border *e_border_current_focused(void);
@@ -219,5 +221,5 @@ int       e_border_viewable(E_Border *b);
 void      e_border_print_pos(char *buf, E_Border *b);
 void      e_border_print_size(char *buf, E_Border *b);
 void      e_border_set_gravity(E_Border *b, int gravity);
-
+Evas_List e_border_get_borders_list();
 #endif

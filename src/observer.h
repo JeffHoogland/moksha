@@ -17,7 +17,11 @@ typedef void(*E_Notify_Func)(E_Observer *observer, E_Observee *observee);
 typedef enum _e_event_type
 {
    E_EVENT_WINDOW_FOCUS_IN,
-   E_EVENT_DESKTOP_SWITCH
+   E_EVENT_WINDOW_ICONIFY,
+   E_EVENT_WINDOW_UNICONIFY,
+   E_EVENT_WINDOW_MAXIMIZE,
+   E_EVENT_DESKTOP_SWITCH,
+   E_EVENT_MAX
 } E_Event_Type;
 
 struct _e_observer

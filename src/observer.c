@@ -107,7 +107,7 @@ e_observee_notify_observers(E_Observee *o, E_Event_Type event)
     {
       obs = E_OBSERVER(obs_list->data);
 
-      if (obs->event == ECORE_EVENT_MAX ||
+      if (obs->event == E_EVENT_MAX ||
 	  obs->event == event)
 	{
 	  obs->notify_func(obs, o);
