@@ -171,10 +171,7 @@ e_desktops_cleanup(E_Desktop *desk)
 	e_action_stop_by_object(E_OBJECT(b), NULL, 0, 0, 0, 0);
 
 	if (e_object_get_usecount(E_OBJECT(b)) == 1)
-	  {
-	    ecore_window_reparent(b->win.client, 0, 0, 0);
-	    e_icccm_release(b->win.client);
-	  }
+	  e_border_release(b);
 	e_object_unref(E_OBJECT(b));
      }
 

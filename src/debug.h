@@ -28,11 +28,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <unistd.h>
 #include <stdio.h>
 
+/*
+#undef DEBUG
+*/
+
 #ifdef DEBUG
 
 #define D(fmt, args...) printf(fmt, ## args);
 #else
-#define D(msg)
+#define D(msg, args...)
 #endif
 
 #ifdef DEBUG_NEST

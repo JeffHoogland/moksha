@@ -10,7 +10,7 @@ e_focus_set_focus(E_Border *b)
 {
    D_ENTER;
 
-   if (e_focus_can_focus(b)) ecore_focus_to_window(b->win.client);   
+   e_icccm_send_focus_to(b->win.client, e_focus_can_focus(b));   
 
    D_RETURN;
 }

@@ -149,6 +149,7 @@ E_Border *e_border_new(void);
 void      e_border_update_borders(void);
 void      e_border_apply_border(E_Border *b);
 void      e_border_reshape(E_Border *b);
+void      e_border_release(E_Border *b);    
 E_Border *e_border_adopt(Window win, int use_client_pos);
 void      e_border_adopt_children(Window win);
 void      e_border_remove_mouse_grabs(E_Border *b);

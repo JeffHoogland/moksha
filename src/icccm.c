@@ -57,6 +57,46 @@ e_icccm_move_resize(Window win, int x, int y, int w, int h)
 }
 
 void
+e_icccm_send_focus_to(Window win, int takes_focus)
+{
+   static Atom a_wm_take_focus = 0;
+   static Atom a_wm_protocols = 0;
+   int msg_focus = 0;
+   int *props;
+   int size;
+
+   D_ENTER;
+
+   ECORE_ATOM(a_wm_take_focus, "WM_TAKE_FOCUS");
+   ECORE_ATOM(a_wm_protocols, "WM_PROTOCOLS");
+   
+   props = ecore_window_property_get(win, a_wm_protocols, XA_ATOM, &size);
+   if (props)
+     {
+	int i, num;
+	
+	num = size / sizeof(int);
+	for (i = 0; i < num; i++)
+	  {
+	     if (props[i] == (int)a_wm_take_focus) msg_focus = 1;
+	  }
+	FREE(props);
+     }
+   if (takes_focus)
+     ecore_focus_to_window(win);
+   if (msg_focus)
+     {
+	unsigned int data[5];
+	
+	data[0] = a_wm_take_focus;
+	data[1] = CurrentTime;
+	ecore_window_send_client_message(win, a_wm_protocols, 32, data);
+     }
+
+   D_RETURN;
+}
+
+void
 e_icccm_delete(Window win)
 {
    static Atom a_wm_delete_window = 0;
@@ -393,9 +433,11 @@ e_icccm_get_hints(Window win, E_Border *b)
 {
    D_ENTER;
 
-   ecore_window_get_hints(win, &(b->client.takes_focus),
-		      &(b->client.initial_state), NULL, NULL, NULL,
-		      &(b->client.group));
+   ecore_window_get_hints(win, 
+			  &(b->client.takes_focus),
+			  &(b->client.initial_state), 
+			  NULL, NULL, NULL,
+			  &(b->client.group));
 
    D_RETURN;
 }
@@ -443,6 +485,8 @@ e_icccm_get_state(Window win, E_Border *b)
 
 
    D_RETURN;
+   UN(win);
+   UN(b);
 }
 
 void

@@ -4,6 +4,7 @@
 #include "e.h"
 
 void e_icccm_move_resize(Window win, int x, int y, int w, int h);
+void e_icccm_send_focus_to(Window win, int takes_focus);
 void e_icccm_delete(Window win);
 void e_icccm_state_mapped(Window win);
 void e_icccm_state_iconified(Window win);

@@ -503,20 +503,26 @@ e_place_border(E_Border *b, E_Desktop *desk, int *x, int *y, E_Placement_Mode mo
 
    if (b->client.no_place)
      D_RETURN_(1);
-
+   
    switch (mode)
      {
-     case E_PLACE_MANUAL:
-       result = e_place_manual (b, desk, x, y);
-     case E_PLACE_SMART:
-       result = e_place_smart  (b, desk, x, y);
-     case E_PLACE_MIDDLE:
-       result = e_place_middle (b, desk, x, y);
-     case E_PLACE_CASCADE:
-       result = e_place_cascade(b, desk, x, y);
-     case E_PLACE_RANDOM:
-       result = e_place_random (b, desk, x, y);
-     default:
+      case E_PLACE_MANUAL:
+	result = e_place_manual (b, desk, x, y);
+	break;
+      case E_PLACE_SMART:
+	result = e_place_smart  (b, desk, x, y);
+	break;
+      case E_PLACE_MIDDLE:
+	result = e_place_middle (b, desk, x, y);
+	break;
+      case E_PLACE_CASCADE:
+	result = e_place_cascade(b, desk, x, y);
+	break;
+      case E_PLACE_RANDOM:
+	result = e_place_random (b, desk, x, y);
+	break;
+      default:
+	break;
      }
 
    D_RETURN_(result);
