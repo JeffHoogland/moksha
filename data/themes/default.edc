@@ -3518,12 +3518,6 @@ collections {
       }      
       programs {
 	 program {
-	    name:    "load";
-	    signal:  "load";
-	    source:  "";
-	    action:  SIGNAL_EMIT "set_orientation" "bottom";
-	 }
-	 program {
 	    name:    "orient";
 	    signal:  "set_orientation";
 	    source:  "*";
