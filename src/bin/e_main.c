@@ -213,7 +213,7 @@ main(int argc, char **argv)
    if (!_e_main_screens_init())
      {
 	e_error_message_show("Enlightenment set up window management for all the screens on your system\n"
-			     "filed. Perhaps another window manager is running?\n");
+			     "failed. Perhaps another window manager is running?\n");
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_screens_shutdown);
