@@ -180,6 +180,7 @@ src/bin/Makefile
 src/modules/Makefile
 src/modules/test/Makefile
 src/modules/ibar/Makefile
+src/modules/clock/Makefile
 src/modules/dropshadow/Makefile
 data/Makefile
 data/fonts/Makefile
