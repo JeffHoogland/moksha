@@ -111,3 +111,14 @@ e_file_get_dir(char *file)
    *p = 0;
    return strdup(buf);
 }
+
+void *
+e_memdup(void *data, int size)
+{
+   void *data_dup;
+   
+   data_dup = malloc(size);
+   if (!data_dup) return NULL;
+   memcpy(data_dup, data, size);
+   return data_dup;
+}

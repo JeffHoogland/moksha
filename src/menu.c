@@ -25,15 +25,16 @@ e_scroller_timer(int val, void *data)
    int ok = 0;
    int resist = 5;
    int scroll_speed = 12;
-   char *settings_db;
    static double last_time = 0.0;
    double t;
+   /* these two lines... */
+   E_CFG_INT(cfg_resist, "settings", "/menu/scroll/resist", 5);
+   E_CFG_INT(cfg_scroll_speed, "settings", "/menu/scroll/speed", 12);
    
-   settings_db = e_config_get("settings");
-   ok = 0; E_DB_INT_GET(settings_db, "/menu/scroll/resist", resist, ok);
-   if (!ok) resist = 5;
-   ok = 0; E_DB_INT_GET(settings_db, "/menu/scroll/speed", scroll_speed, ok);
-   if (!ok) scroll_speed = 12;
+   /* and these 2 should do exactly what tom wants - see e.h */
+   E_CONFIG_INT_GET(cfg_resist, resist);
+   E_CONFIG_INT_GET(cfg_scroll_speed, scroll_speed);
+   
    t = e_get_time();
    if (val != 0)
      scroll_speed = (int)(((t - last_time) / 0.02) * (double)scroll_speed);
