@@ -46,7 +46,6 @@ static void        _ds_shadow_resize(Shadow *sh, int w, int h);
 static void        _ds_shadow_shaperects(Shadow *sh);
 static int         _ds_shadow_reshape(void *data);
 static void        _ds_shadow_recalc(Shadow *sh);
-static void        _ds_shadow_object_pixels_set(Evas_Object *o, unsigned char *pix, int pix_w, int pix_h, int sx, int sy, int sw, int sh);
 static void        _ds_config_darkness_set(Dropshadow *ds, double v);
 static void        _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y);
 static void        _ds_config_blur_set(Dropshadow *ds, int blur);
@@ -55,7 +54,7 @@ static double      _ds_gauss_int(double x);
 static void        _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
 static void        _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
 static Shpix      *_ds_shpix_new(int w, int h);
-static Shpix      *_ds_shpix_free(Shpix *sp);
+static void        _ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
 static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
 static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
@@ -830,7 +829,6 @@ _ds_shadow_recalc(Shadow *sh)
    if ((rects) || (sh->toosmall))
      {
 	Evas_List *l;
-	E_Rect *r;
 	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
 	
@@ -1301,7 +1299,7 @@ _ds_shpix_new(int w, int h)
    return sp;
 }
 
-static Shpix *
+static void
 _ds_shpix_free(Shpix *sp)
 {
    if (!sp) return;
@@ -1563,26 +1561,26 @@ _ds_shstore_new(Shpix *sp, int x, int y, int w, int h)
    unsigned int *p2;
    int xx, yy, jump;
 
-   if (!sp) return;
+   if (!sp) return NULL;
    
-   if ((w < 1) || (h < 1)) return;
+   if ((w < 1) || (h < 1)) return NULL;
    
    if (x < 0)
      {
 	w += x;
 	x = 0;
-	if (w < 1) return;
+	if (w < 1) return NULL;
      }
-   if (x >= sp->w) return;
+   if (x >= sp->w) return NULL;
    if ((x + w) > (sp->w)) w = sp->w - x;
    
    if (y < 0)
      {
 	h += y;
 	y = 0;
-	if (h < 1) return;
+	if (h < 1) return NULL;
      }
-   if (y >= sp->h) return;
+   if (y >= sp->h) return NULL;
    if ((y + h) > (sp->h)) h = sp->h - y;
 
    st = calloc(1, sizeof(Shstore));
