@@ -139,6 +139,8 @@ typedef struct _E_Menu                E_Menu;
 typedef struct _E_Menu_Item           E_Menu_Item;
 typedef struct _E_Build_Menu          E_Build_Menu;
 typedef struct _E_Entry               E_Entry;
+typedef struct _E_Pack_Object_Class   E_Pack_Object_Class;
+typedef struct _E_Pack_Object         E_Pack_Object;
 
 struct _E_Object
 {
@@ -571,6 +573,44 @@ struct _E_Entry
    void (*func_focus_out) (E_Entry *entry, void *data);
    void *data_focus_out;
 };
+
+struct _E_Pack_Object_Class
+{
+   void * (*new)         (void);
+   void   (*free)        (void *object);
+   void   (*show)        (void *object);
+   void   (*hide)        (void *object);
+   void   (*raise)       (void *object);
+   void   (*lower)       (void *object);
+   void   (*layer)       (void *object, int l);
+   void   (*evas)        (void *object, Evas e);
+   void   (*clip)        (void *object, Evas_Object clip);
+   void   (*unclip)      (void *object);
+   void   (*move)        (void *object, int x, int y);
+   void   (*resize)      (void *object, int w, int h);
+   void   (*min)         (void *object, int *w, int *h);
+   void   (*max)         (void *object, int *w, int *h);
+};
+
+struct _E_Pack_Object
+{
+   int                  type;
+   E_Pack_Object_Class  class;
+   struct {
+      Evas              evas;
+      Evas_Object       clip;
+      int               layer;
+      int               visible;
+      int               x, y, w, h;
+      void             *object;
+   } data;
+   int                  references;
+   E_Pack_Object       *parent;
+   Evas_List            children;
+};
+
+#define DO(_object, _method, _args...) \
+{ if (_object->class._method) _object->class._method(_object, ## _args); }
 
 void e_entry_init(void);
 void e_entry_free(E_Entry *entry);

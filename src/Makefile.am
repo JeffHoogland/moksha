@@ -21,6 +21,7 @@ ipc.c \
 main.c \
 menu.c \
 menudb.c \
+pack.c \
 resist.c \
 shelf.c \
 util.c \

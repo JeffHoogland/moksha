@@ -379,6 +379,7 @@ e_entry_new(void)
 void
 e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
 {
+   if (!entry->focused) return;
    if (!strcmp(e->key, "Up"))
      {
      }
