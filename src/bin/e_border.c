@@ -1460,20 +1460,24 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
    *h -= bd->client_inset.t + bd->client_inset.b;
    if (*h < 1) *h = 1;
    if (*w < 1) *w = 1;
-   a = *w / *h;
+   a = (double)*w / (double)*h;
    if ((bd->client.icccm.min_aspect != 0.0) && 
        (a < bd->client.icccm.min_aspect))
-     *w = *h / bd->client.icccm.min_aspect;
+     *w = *h * bd->client.icccm.min_aspect;
    else if
      ((bd->client.icccm.max_aspect != 0.0) &&
       (a > bd->client.icccm.max_aspect))
-     *h = *w * bd->client.icccm.max_aspect;
+     *h = *w / bd->client.icccm.max_aspect;
    *w = bd->client.icccm.base_w + 
      (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
       bd->client.icccm.step_w);
    *h = bd->client.icccm.base_h + 
      (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
       bd->client.icccm.step_h);
+   
+   if (*h < 1) *h = 1;
+   if (*w < 1) *w = 1;
+   
    if      (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
    else if (*w < bd->client.icccm.min_w) *w = bd->client.icccm.min_w;
    if      (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
