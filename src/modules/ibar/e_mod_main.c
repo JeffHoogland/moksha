@@ -262,11 +262,13 @@ _ibar_new()
 		  _ibar_bar_menu_new(ibb);
 
 		  /* Add main menu to bar menu */
-		  /* FIXME
 		  mi = e_menu_item_new(ibb->menu);
-		  e_menu_item_label_set(mi, "Auto fit icons");
-		  e_menu_item_submenu_set(mi, ib->config_menu_FIXME);
-		  */
+		  e_menu_item_label_set(mi, "Options");
+		  e_menu_item_submenu_set(mi, ib->config_menu_options);
+
+		  mi = e_menu_item_new(ibb->menu);
+		  e_menu_item_label_set(mi, "Size");
+		  e_menu_item_submenu_set(mi, ib->config_menu_size);
 
 		  mi = e_menu_item_new(ib->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -295,6 +297,8 @@ _ibar_free(IBar *ib)
 
    E_FREE(ib->conf->appdir);
    e_app_change_callback_del(_ibar_app_change, ib);
+   e_object_del(E_OBJECT(ib->config_menu_options));
+   e_object_del(E_OBJECT(ib->config_menu_size));
    e_object_del(E_OBJECT(ib->config_menu));
    evas_list_free(ib->conf->bars);
    free(ib->conf);
@@ -702,6 +706,10 @@ _ibar_config_menu_new(IBar *ib)
    E_Menu_Item *mi;
 
    mn = e_menu_new();
+   ib->config_menu = mn;
+
+   mn = e_menu_new();
+   ib->config_menu_options = mn;
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Auto fit icons");
@@ -709,8 +717,8 @@ _ibar_config_menu_new(IBar *ib)
    if (ib->conf->width == IBAR_WIDTH_AUTO) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_width_auto, ib);
 
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
+   mn = e_menu_new();
+   ib->config_menu_size = mn;
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Microscopic");
@@ -789,20 +797,14 @@ _ibar_config_menu_new(IBar *ib)
    if (ib->conf->iconsize == 128) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_gigantic, ib);
 
-/*
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Auto hide");
-   e_menu_item_check_set(mi, 1);
-   if (ib->conf->autohide == 0) e_menu_item_toggle_set(mi, 1);
+   /* Submenus */
+   mi = e_menu_item_new(ib->config_menu);
+   e_menu_item_label_set(mi, "Options");
+   e_menu_item_submenu_set(mi, ib->config_menu_options);
 
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "More Options...");
-*/
-
-   ib->config_menu = mn;
+   mi = e_menu_item_new(ib->config_menu);
+   e_menu_item_label_set(mi, "Size");
+   e_menu_item_submenu_set(mi, ib->config_menu_size);
 }
 
 #if 0
