@@ -173,6 +173,7 @@ e_desktops_init_file_display(E_Desktop *desk)
 {
    E_View *v;
    E_Border *b;
+   char buf[PATH_MAX];
    
    v = e_view_new();
    v->size.w = desk->real.w;
@@ -184,20 +185,15 @@ e_desktops_init_file_display(E_Desktop *desk)
    /* uncomment this and comment out the next line for some tress testing */
    /* e_strdup(v->dir, "/dev"); */
    /* e_strdup(v->dir, e_file_home()); */
+   sprintf(buf, "%s/desktop/default", e_config_user_dir());
+   e_strdup(v->dir, buf);
+   sprintf(buf, "%s/.e_background.bg.db", v->dir);
+   v->bg = e_background_load(buf);
+   if (!v->bg)
      {
-	char buf[PATH_MAX];
-	
-	sprintf(buf, "%s/desktop/default", e_config_user_dir());
-	e_strdup(v->dir, buf);
+	sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	v->bg = e_background_load(buf);
      }
-   
-   /* FIXME: load bg here */
-   {
-      char buf[PATH_MAX];
-      
-      sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
-      v->bg = e_background_load(buf);
-   }
    e_view_realize(v);
 
    ecore_window_hint_set_borderless(v->win.base);
