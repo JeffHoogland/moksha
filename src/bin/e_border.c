@@ -950,7 +950,8 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	  ecore_x_window_delete_request_send(bd->client.win);
 	else
 	  {
-	     ecore_x_killall(bd->client.win);
+	     ecore_x_kill(bd->client.win);
+	     ecore_x_sync();
 //	     ecore_x_window_del(bd->client.win);
 	     e_object_del(E_OBJECT(bd));
 	  }
