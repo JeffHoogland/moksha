@@ -662,13 +662,13 @@ e_menu_grab_window_get(void)
 static void
 _e_menu_free(E_Menu *m)
 {
+   Evas_List *l, *tmp;
    _e_menu_unrealize(m);
-   while (m->items)
+   for (l = m->items; l;)
      {
-	E_Menu_Item *mi;
-	
-	mi = m->items->data;
-	e_object_del(E_OBJECT(mi));
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
      }
    if (m->in_active_list)
      {

@@ -61,12 +61,12 @@ e_module_init(void)
 int
 e_module_shutdown(void)
 {
-   while (_e_modules)
+   Evas_List *l, *tmp;
+   for (l = _e_modules; l;)
      {
-	E_Module *m;
-	
-	m = _e_modules->data;
-	e_object_del(E_OBJECT(m));
+	tmp = l;
+	l = l->next;
+	e_object_del(E_OBJECT(tmp->data));
      }
    e_object_del(E_OBJECT(_e_path_modules));
    _e_path_modules = NULL;
