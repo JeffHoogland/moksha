@@ -42,6 +42,7 @@ static void e_view_geometry_record_timeout(int val, void *data);
 static void e_view_scrollbar_v_change_cb(void *_data, E_Scrollbar *sb, double val);
 static void e_view_scrollbar_h_change_cb(void *_data, E_Scrollbar *sb, double val);
 static void e_view_write_icon_xy_timeout(int val, void *data);
+static void e_view_bg_reload_timeout(int val, void *data);
 
 static void
 e_view_write_icon_xy_timeout(int val, void *data)
@@ -864,10 +865,7 @@ e_configure(Ecore_Event * ev)
 		       ecore_window_set_background_pixmap(v->win.main, v->pmap);
 		       ecore_window_clear(v->win.main);
 		    }
-		  if (v->bg)
-		    {
-		       e_background_set_size(v->bg, v->size.w, v->size.h);
-		    }
+		  if (v->bg) e_background_set_size(v->bg, v->size.w, v->size.h);
 		  D("evas_set_output_viewpor(%p)\n", v->evas);
 		  evas_set_output_viewport(v->evas, 0, 0, v->size.w, v->size.h);
 		  evas_set_output_size(v->evas, v->size.w, v->size.h);
@@ -1574,8 +1572,10 @@ e_view_file_changed(int id, char *file)
    if (!file) D_RETURN;
    if (file[0] == '/') D_RETURN;
    v = e_view_find_by_monitor_id(id);
-   e_iconbar_file_change(v, file);
    if (!v) D_RETURN;
+   
+   e_iconbar_file_change(v, file);
+   e_view_bg_change(v, file);
 
      {
 	E_Icon *ic;
@@ -2216,12 +2216,15 @@ e_view_handle_fs(EfsdEvent *ev)
 				      struct stat st;
 				      if (stat(efsd_metadata_get_str(ev), &st) != -1 )
 					{
-                       D("Attempted to set background for: %s\n", v->dir);
-                       v->bg = e_background_load(efsd_metadata_get_str(ev));
-                       e_background_realize(v->bg, v->evas);
-                       e_background_set_size(v->bg, v->size.w, v->size.h);
-                    }
-                   }
+					   D("Attempted to set background for: %s\n", v->dir);
+					   v->bg = e_background_load(efsd_metadata_get_str(ev));
+					   if ((v->bg) && (v->evas))
+					     {
+						e_background_realize(v->bg, v->evas);
+						e_background_set_size(v->bg, v->size.w, v->size.h);
+					     }
+					}
+				   }
 			      }
 			 }
 		       if (ok) 
@@ -2265,6 +2268,65 @@ e_view_handle_fs(EfsdEvent *ev)
       default:
 	break;
      }
+
+   D_RETURN;
+}
+
+static void
+e_view_bg_reload_timeout(int val, void *data)
+{
+   E_View *v;
+   E_Background *bg;
+   char buf[PATH_MAX];
+   
+   D_ENTER;
+   
+   v = data;
+   sprintf(buf, "%s/.e_background.bg.db", v->dir);
+   if (v->bg) 
+     {
+	int size;
+	
+	e_object_unref(E_OBJECT(v->bg));
+	v->bg = NULL;
+	if (v->evas)
+	  {
+	     size = evas_get_image_cache(v->evas);
+	     evas_set_image_cache(v->evas, 0);
+	     evas_set_image_cache(v->evas, size);
+	  }
+	e_db_flush();
+     }
+   bg = e_background_load(buf);
+   if (!bg)
+     {
+        sprintf(buf, "%s/default.bg.db", e_config_get("backgrounds"));
+	bg = e_background_load(buf);
+     }
+   if (bg)
+     {
+	v->bg = bg;
+	if (v->evas)
+	  {
+	     e_background_realize(v->bg, v->evas);
+	     e_background_set_scroll(v->bg, v->scroll.x, v->scroll.y);
+	     e_background_set_size(v->bg, v->size.w, v->size.h);
+	  }
+     }
+
+   D_RETURN;
+}
+
+void
+e_view_bg_change(E_View *v, char *file)
+{
+   char buf[PATH_MAX];
+   
+   D_ENTER;
+
+   if (!(!strcmp(file, ".e_background.bg.db"))) return;
+   sprintf(buf, "background_reload:%s", v->dir);  
+   ecore_add_event_timer(buf, 0.5, e_view_bg_reload_timeout, 0, v);
 
    D_RETURN;
 }

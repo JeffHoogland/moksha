@@ -222,4 +222,6 @@ void      e_view_realize(E_View *v);
 
 void      e_view_update(E_View *v);
 
+void      e_view_bg_change(E_View *v, char *file);
+
 #endif

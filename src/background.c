@@ -112,6 +112,7 @@ e_background_load(char *file)
 	sprintf(buf, "/layers/%i/bg.b", i); e_db_int_get(db, buf, &(bl->bg.b));
 	sprintf(buf, "/layers/%i/bg.a", i); e_db_int_get(db, buf, &(bl->bg.a));
      }
+   e_db_close(db);
    D_RETURN_(bg);
 }
 

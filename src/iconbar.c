@@ -134,11 +134,14 @@ e_iconbar_new(E_View *v)
    ib = e_config_load(buf, "", cf_iconbar);
    /* flush image cache */
      {
-	int size;
-	
-	size = imlib_get_cache_size();
-	imlib_set_cache_size(0);
-	imlib_set_cache_size(size);
+	if (v->evas)
+	  {
+	     int size;
+	     
+	     size = evas_get_image_cache(v->evas);
+	     evas_set_image_cache(v->evas, 0);
+	     evas_set_image_cache(v->evas, size);
+	  }	
      }
    /* flush edb cached handled */
    e_db_flush();
