@@ -51,7 +51,7 @@ e_int_menus_about_new(void)
   
    subm = e_int_menus_clients_new();
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Clients");
+   e_menu_item_label_set(mi, "Windows");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
@@ -87,7 +87,7 @@ e_int_menus_apps_new(char *dir, int top)
 }
 
 E_Menu *
-e_int_menus_clients_new()
+e_int_menus_clients_new(void)
 {
    E_Menu *m;
    E_Menu_Item *mi;

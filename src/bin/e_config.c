@@ -65,7 +65,7 @@ e_config_init(void)
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
 	e_config->border_shade_animate = 1;
 	e_config->border_shade_transition = E_TRANSITION_DECELERATE;
-	e_config->border_shade_speed = 2000.0;
+	e_config->border_shade_speed = 3000.0;
 	e_config->framerate = 30.0;
 	e_config->image_cache = 2048;
 	e_config->font_cache = 512;

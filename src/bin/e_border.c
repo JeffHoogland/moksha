@@ -2279,22 +2279,15 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    E_App *a;
 
    if (!_e_border_menu)
-     _e_border_menu= e_menu_new();
-   m = _e_border_menu;
-
-   /* clear menu */
-   if (m->items)
+     _e_border_menu = e_menu_new();
+   else
      {
-	Evas_List *l;
-	for (l = m->items; l; l = l->next)
-	  {
-	      E_Menu_Item *mi = l->data;
-	      e_object_free(E_OBJECT(mi));
-	  }
-	evas_list_free(m->items);
-	m->items = NULL;
+	e_object_unref(E_OBJECT(_e_border_menu));
+	_e_border_menu = e_menu_new();
      }
-									   
+   
+   m = _e_border_menu;
+   
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, "Close");
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
