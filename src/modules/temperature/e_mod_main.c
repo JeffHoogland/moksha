@@ -712,7 +712,9 @@ _temperature_cb_check(void *data)
 	     edje_object_signal_emit(ef->temp_object, "known", "");
 	     ef->have_temp = 1;
 	  }
-	_temperature_level_set(ef, ((double)temp - ef->temp->conf->low) / ef->temp->conf->high);
+	_temperature_level_set(ef, 
+			       (double)(temp - ef->temp->conf->low) / 
+			       (double)(ef->temp->conf->high - ef->temp->conf->low));
 	snprintf(buf, sizeof(buf), "%i°C", temp);
 	edje_object_part_text_set(ef->temp_object, "reading", buf);
      }
