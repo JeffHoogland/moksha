@@ -737,6 +737,9 @@ _e_border_free(E_Border *bd)
    ecore_x_window_del(bd->win);
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
    borders = evas_list_remove(borders, bd);
+
+   bd->zone->clients = evas_list_remove(bd->zone->clients, bd);
+   bd->desk->clients = evas_list_remove(bd->desk->clients, bd);
    free(bd);
 }
 

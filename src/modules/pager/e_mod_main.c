@@ -271,10 +271,12 @@ _pager_refresh(Pager *e)
 	  px = e->fx + (x * pw);
 	  py = e->fy + (y * ph);
 
-	  desk_obj = NULL;
 	  if (desks)
-	    desk_obj = (Evas_Object *) desks->data; /* re-use the objects if possible */
-	  if (!desk_obj)
+	    {
+	       desk_obj = (Evas_Object *) desks->data; /* re-use the objects if possible */
+	       desks = desks->next;
+	    }
+	  else
 	    {
 	       desk_obj = edje_object_add(e->evas);
 	       edje_object_file_set(desk_obj,
@@ -282,11 +284,11 @@ _pager_refresh(Pager *e)
 				    e_path_find(path_themes, "default.eet"),
 				    "modules/pager/desk");
 	       evas_object_pass_events_set(desk_obj, 1);
-	       evas_object_show(desk_obj);
 	       e->desks = evas_list_append(e->desks, desk_obj);
 	     }
 	  evas_object_resize(desk_obj, pw, ph);
 	  evas_object_move(desk_obj, px, py);
+	  evas_object_show(desk_obj);
 
 	  top = evas_object_layer_get(desk_obj);
 
@@ -295,16 +297,17 @@ _pager_refresh(Pager *e)
 	    {
 	       Evas_Coord winx, winy, winw, winh;
 	       border = (E_Border *) clients->data;
-
 	       winx = (Evas_Coord) ((double) border->x) * scalex;
 	       winy = (Evas_Coord) ((double) border->y) * scaley;
 	       winw = (Evas_Coord) ((double) border->w) * scalex;
 	       winh = (Evas_Coord) ((double) border->h) * scaley;
 
-	       win_obj = NULL;
 	       if (wins)
-		 win_obj = (Evas_Object *) wins->data;
-	       if (!win_obj)
+		 {
+		    win_obj = (Evas_Object *) wins->data;
+		    wins = wins->next;
+		 }
+	       else
 		 {
 		    win_obj = edje_object_add(e->evas);
 		    edje_object_file_set(win_obj,
@@ -313,28 +316,38 @@ _pager_refresh(Pager *e)
 					 "modules/pager/window");
 		    evas_object_pass_events_set(win_obj, 1);
 
-		    evas_object_show(win_obj);
 		    e->wins = evas_list_append(e->wins, win_obj);
 		 }
 	       evas_object_resize(win_obj, winw, winh);
 	       evas_object_move(win_obj, px + winx, py + winy);
+	       evas_object_show(win_obj);
 
 	       toptmp = evas_object_layer_get(win_obj);
 	       if (toptmp > top)
 		 top = toptmp;
 
 	       clients = clients->next;
-	       if (wins)
-		 wins = wins->next;
 	    }
 	  if (desk == current)
 	    {
 	       evas_object_move(e->screen, px, py);
 	       evas_object_layer_set(e->screen, top + 1);
 	    }
-	  if (desks)
-	    desks = desks->next;
        }
+
+   /* hide objects not needed; */
+   while (desks)
+     {
+	desk_obj = (Evas_Object *) desks->data;
+	evas_object_hide(desk_obj);
+	desks = desks->next;
+     }
+   while (wins)
+     {
+	win_obj = (Evas_Object *) wins->data;
+	evas_object_hide(win_obj);
+	wins = wins->next;
+     }
 }
 
 static void
