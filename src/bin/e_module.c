@@ -2,10 +2,8 @@
 
 /* TODO List:
  * 
- * * load and save list of modules to load or ban from loading
  * * add module types/classes
  * * add list of exclusions that a mdoule cant work with
- * * hook ipc calls to load module/unload, enable and disable a module etc.
  * 
  */
 
