@@ -2360,16 +2360,16 @@ e_border_viewable(E_Border *b)
    if (b->desk != e_desktops_get(e_desktops_get_current()))
      return 0;
 
-   if (b->current.x + b->current.w < b->desk->x)
+   if (b->current.x + b->current.w <= 0)
      return 0;
 
-   if (b->current.x > b->desk->x + b->desk->real.w)
+   if (b->current.x >= b->desk->real.w)
      return 0;
 
-   if (b->current.y + b->current.h < b->desk->y)
+   if (b->current.y + b->current.h <= 0)
      return 0;
 
-   if (b->current.y > b->desk->y + b->desk->real.h)
+   if (b->current.y >= b->desk->real.h)
      return 0;
 
    return 1;
@@ -2401,6 +2401,7 @@ e_border_raise_next(void)
    else
 	next = borders;
 
+   /* Now find the next viewable border on the same desktop */
    current = (E_Border *)next->data;
    while (next && !e_border_viewable(current))
      {
