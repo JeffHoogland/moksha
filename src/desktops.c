@@ -372,8 +372,9 @@ e_desktops_init_file_display(E_Desktop *desk)
    int max_colors = 216;
    int font_cache = 1024 * 1024;
    int image_cache = 8192 * 1024;
-   char *font_dir = PACKAGE_DATA_DIR"/data/fonts";   
+   char *font_dir;
    
+   font_dir = e_config_get("fonts");
    /* software */
    desk->evas.desk = evas_new_all(e_display_get(),
 				  desk->win.container,
@@ -396,13 +397,16 @@ e_desktops_init_file_display(E_Desktop *desk)
      {
 	Evas_Object o;
 	Evas e;
+	char buf[4096];
 	
 	e = desk->evas.desk;
-	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/data/images/bg.png");
+	sprintf(buf, "%sbg.png", e_config_get("images"));
+	o = evas_add_image_from_file(e, buf);
 	evas_move(e, o, 0, 0);
 	evas_resize(e, o, screen_w, screen_h);
 	evas_show(e, o);
-	o = evas_add_image_from_file(e, PACKAGE_DATA_DIR"/data/images/e_logo.png");
+	sprintf(buf, "%se_logo.png", e_config_get("images"));
+	o = evas_add_image_from_file(e, buf);
 	evas_move(e, o, 0, 0);
 	evas_show(e, o);
      }   

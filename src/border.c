@@ -377,11 +377,12 @@ e_focus_out(Eevent * ev)
 	b = e_border_find_by_window(e->win);
 	if (b)
 	  {	
-	     char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
+	     char *settings_db;
 	     E_DB_File *db;
 	     int focus_mode;
 	     char buf[4096];
    
+	     settings_db = e_config_get("settings");
 	     b->current.selected = 0;
 	     /* settings - click to focus would affect grabs */
 	     db = e_db_open_read(settings_db);   
@@ -986,12 +987,17 @@ void
 e_border_apply_border(E_Border *b)
 {
    int pl, pr, pt, pb;
+   char *borders, buf[4096], *border;
    
    if ((!b->client.titlebar) && 
-       (!b->client.border)) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/borderless.bits.db");
-   else if (b->current.selected) e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border.bits.db");
-   else                     e_border_set_bits(b, PACKAGE_DATA_DIR"/data/config/appearance/default/borders/border2.bits.db");
+       (!b->client.border))      border = "borderless.bits.db";
+   else if (b->current.selected) border = "border.bits.db";
+   else                          border = "border2.bits.db";
 
+   borders = e_config_get("borders");
+   sprintf(buf, "%s%s", borders, border);
+   e_border_set_bits(b, buf);
+   
    pl = pr = pt = pb = 0;
    if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);   
    e_icccm_set_frame_size(b->win.client, pl, pr, pt, pb);
@@ -1066,9 +1072,10 @@ e_border_new(void)
    int max_colors = 216;
    int font_cache = 1024 * 1024;
    int image_cache = 8192 * 1024;
-   char *font_dir = PACKAGE_DATA_DIR"/data/fonts";
+   char *font_dir;
    E_Desktop *desk;
    
+   font_dir = e_config_get("fonts");
    b = NEW(E_Border, 1);
    ZERO(b, E_Border, 1);
    
@@ -1223,12 +1230,14 @@ e_border_remove_mouse_grabs(E_Border *b)
 void
 e_border_attach_mouse_grabs(E_Border *b)
 {
-   char *grabs_db = PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db";
-   char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
+   char *grabs_db;
+   char *settings_db;
    E_DB_File *db;
    int focus_mode;
    char buf[4096];
    
+   grabs_db = e_config_get("grabs");
+   settings_db = e_config_get("settings");
    /* settings - click to focus would affect grabs */
    db = e_db_open_read(settings_db);   
    sprintf(buf, "/focus/mode");
@@ -1316,14 +1325,16 @@ e_border_attach_all_mouse_grabs(void)
 void
 e_border_redo_grabs(void)
 {   
-   char *grabs_db = PACKAGE_DATA_DIR"/data/config/behavior/default/grabs.db";
-   char *settings_db = PACKAGE_DATA_DIR"/data/config/behavior/default/settings.db";
+   char *grabs_db;
+   char *settings_db;
    static time_t mod_date_grabs = 0;
    static time_t mod_date_settings = 0;
    time_t mod;
    int changed = 0;
    Evas_List l;
    
+   grabs_db = e_config_get("grabs");
+   settings_db = e_config_get("settings");
    mod = e_file_modified_time(grabs_db);
    if (mod != mod_date_grabs) changed = 1;
    mod_date_grabs = mod;

@@ -57,7 +57,7 @@ static void e_act_zoom_start (void *o, E_Action *a, void *data, int x, int y, in
 static void
 _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mods, void *o)
 {
-   char *actions_db = PACKAGE_DATA_DIR"/data/config/behavior/default/actions.db";
+   char *actions_db;
    E_DB_File *db;
    int i, num;
    char *a_name = NULL;
@@ -69,6 +69,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
    int   a_modifiers = 0;
    E_Action *a;
 
+   actions_db = e_config_get("actions");
    db = e_db_open_read(actions_db);
    if (!db) return;
    if (!e_db_int_get(db, "/actions/count", &num)) goto error;

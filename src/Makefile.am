@@ -9,6 +9,7 @@ bin_PROGRAMS = enlightenment
 enlightenment_SOURCES = \
 actions.c \
 border.c \
+config.c \
 desktops.c \
 exec.c \
 icccm.c \
