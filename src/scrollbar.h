@@ -8,6 +8,8 @@ struct _E_Scrollbar
    double val;
    double max;
    double range;
+
+   char  *dir;
    
    Evas   evas;
    
@@ -22,6 +24,7 @@ struct _E_Scrollbar
    int    mouse_down;
    int    down_x, down_y;
    int    mouse_x, mouse_y;
+   int    scrolling_up, scrolling_down;
    
    struct {
       double x, y, w, h;      
