@@ -42,13 +42,13 @@ _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Focus_In *e;
    const char *modes[] = {
-      "ECORE_X_EVENT_MODE_NORMAL",
+	"ECORE_X_EVENT_MODE_NORMAL",
 	"ECORE_X_EVENT_MODE_WHILE_GRABBED",
 	"ECORE_X_EVENT_MODE_GRAB",
 	"ECORE_X_EVENT_MODE_UNGRAB"
    };
    const char *details[] = {
-      "ECORE_X_EVENT_DETAIL_ANCESTOR",
+	"ECORE_X_EVENT_DETAIL_ANCESTOR",
 	"ECORE_X_EVENT_DETAIL_VIRTUAL",
 	"ECORE_X_EVENT_DETAIL_INFERIOR",
 	"ECORE_X_EVENT_DETAIL_NON_LINEAR",
@@ -83,13 +83,13 @@ _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Focus_Out *e;
    const char *modes[] = {
-      "ECORE_X_EVENT_MODE_NORMAL",
+	"ECORE_X_EVENT_MODE_NORMAL",
 	"ECORE_X_EVENT_MODE_WHILE_GRABBED",
 	"ECORE_X_EVENT_MODE_GRAB",
 	"ECORE_X_EVENT_MODE_UNGRAB"
    };
    const char *details[] = {
-      "ECORE_X_EVENT_DETAIL_ANCESTOR",
+	"ECORE_X_EVENT_DETAIL_ANCESTOR",
 	"ECORE_X_EVENT_DETAIL_VIRTUAL",
 	"ECORE_X_EVENT_DETAIL_INFERIOR",
 	"ECORE_X_EVENT_DETAIL_NON_LINEAR",
