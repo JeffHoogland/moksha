@@ -220,6 +220,11 @@ struct _E_Border
       int border;
       int handles;
       int w, h;
+      struct {
+	 int requested;
+	 int x, y;
+	 int gravity;
+      } pos;
    } client;
    
    struct {

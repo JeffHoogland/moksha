@@ -1131,6 +1131,7 @@ E_Border *
 e_border_adopt(Window win, int use_client_pos)
 {
    E_Border *b;
+   int bw;
    
    /* create the struct */
    b = e_border_new();
@@ -1147,35 +1148,21 @@ e_border_adopt(Window win, int use_client_pos)
    e_window_set_events(b->win.container, XEV_CHILD_CHANGE | XEV_CHILD_REDIRECT);
    /* add to save set & border of 0 */
    e_icccm_adopt(win);
+   bw = e_window_get_border_width(win);
    e_window_set_border_width(win, 0);
    b->win.client = win;
    b->current.requested.visible = 1;
    /* get hints */
    e_icccm_get_size_info(win, b);
+   e_icccm_get_pos_info(win, b);
      {
 	int x, y, w, h;
-        int pl, pr, pt, pb;
 	
-	x = 0; y = 0; w = 0; h = 0;
 	e_window_get_geometry(win, &x, &y, &w, &h);
-	pl = pr = pt = pb = 0;
-	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
-	if (!b->placed)
-	  {
-	     /* get x,y location of client */
-	     x = rand()%640;
-	     y = rand()%480;
-	  }
-	else
-	  {
-	     x = b->current.x + pl;
-	     y = b->current.y + pt;
-	  }
-	b->current.requested.x = x - pl;
-	b->current.requested.y = y - pt;
-	b->current.requested.w = w + pl + pr;
-	b->current.requested.h = h + pt + pb;
-	b->changed = 1;
+        b->current.requested.x = x;
+	b->current.requested.y = y;	
+	b->current.requested.w = w;
+	b->current.requested.h = h;
      }
 	
    e_icccm_get_mwm_hints(win, b);
@@ -1206,6 +1193,76 @@ e_border_adopt(Window win, int use_client_pos)
 	if (b->bits.l) ebits_get_insets(b->bits.l, &pl, &pr, &pt, &pb);
 	b->current.requested.x += pl;
 	b->current.requested.y += pt;
+	b->changed = 1;
+     }
+     {
+	int x, y, w, h;
+        int pl, pr, pt, pb;
+	
+	pl = pr = pt = pb = 0;
+	if (b->bits.t) ebits_get_insets(b->bits.t, &pl, &pr, &pt, &pb);
+	bw *= 2;
+	if (b->client.pos.requested)
+	  {
+	     switch (b->client.pos.gravity)
+	       {
+		case NorthWestGravity:
+		  x = b->client.pos.x + pl;
+		  y = b->client.pos.y + pt;
+		  break;
+		case NorthGravity:
+		  x = b->client.pos.x + (bw / 2);
+		  y = b->client.pos.y + pt;
+		  break;
+		case NorthEastGravity:
+		  x = b->client.pos.x - pr + bw;
+		  y = b->client.pos.y + pt;
+		  break;
+		case EastGravity:
+		  x = b->client.pos.x - pr + bw;
+		  y = b->client.pos.y + (bw / 2);
+		  break;
+		case SouthEastGravity:
+		  x = b->client.pos.x - pr + bw;
+		  y = b->client.pos.y - pb + bw;
+		  break;
+		case SouthGravity:
+		  x = b->client.pos.x + (bw / 2);
+		  y = b->client.pos.y - pb;
+		  break;
+		case SouthWestGravity:
+		  x = b->client.pos.x + pl;
+		  y = b->client.pos.y - pb;
+		  break;
+		case WestGravity:
+		  x = b->client.pos.x + pl;
+		  y = b->client.pos.y + (bw / 2);
+		  break;
+		case CenterGravity:
+		  x = b->client.pos.x;
+		  y = b->client.pos.y;
+		  break;
+		case StaticGravity:
+		  x = b->client.pos.x;
+		  y = b->client.pos.y;
+		  break;
+		case ForgetGravity:
+		  x = b->client.pos.x;
+		  y = b->client.pos.y;
+		  break;
+		default:
+		  x = b->client.pos.x + pl;
+		  y = b->client.pos.y + pt;
+		  break;
+	       }
+	  }
+	else
+	  {
+	     x = rand()%600 + pl;
+	     y = rand()%400 + pt;
+	  }
+	b->current.requested.x = x - pl;
+	b->current.requested.y = y - pt;
 	b->changed = 1;
      }
    /* show the client */

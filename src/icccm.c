@@ -135,6 +135,35 @@ e_icccm_release(Window win)
 }
 
 void
+e_icccm_get_pos_info(Window win, E_Border *b)
+{
+   XSizeHints hint;
+   int mask;
+   
+   if (e_window_get_wm_size_hints(win, &hint, &mask))
+     {
+	if ((hint.flags & USPosition) || ((hint.flags & PPosition)))
+	  {
+	     int x, y, w, h;
+	     
+	     printf("%i %i\n", hint.flags & USPosition, hint.flags & PPosition);
+	     b->client.pos.requested = 1;
+	     b->client.pos.gravity = NorthWestGravity;
+	     if (hint.flags & PWinGravity) 
+	       b->client.pos.gravity = hint.win_gravity;
+	     x = y = w = h = 0;
+	     e_window_get_geometry(win, &x, &y, &w, &h);
+	     b->client.pos.x = x;
+	     b->client.pos.y = y;
+	  }
+	else
+	  {
+	     b->client.pos.requested = 0;
+	  }
+     }
+}
+
+void
 e_icccm_get_size_info(Window win, E_Border *b)
 {
    int base_w, base_h, min_w, min_h, max_w, max_h, grav, step_w, step_h;

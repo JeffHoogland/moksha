@@ -306,7 +306,7 @@ e_icon_calulcate_geometry(E_Icon *icon)
 	icon->current.ix = icon->current.x;
 	icon->current.iy = icon->current.y;
 	icon->current.tx = icon->current.x + ((iw - tw) / 2);
-	icon->current.ty = icon->current.y + ih;
+	icon->current.ty = icon->current.y + icon->view->spacing.icon.top + icon->view->spacing.icon.bottom + ih;
 	icon->current.w = iw;
 	icon->current.h = ih + th;
 	icon->current.iw = iw;
@@ -319,7 +319,7 @@ e_icon_calulcate_geometry(E_Icon *icon)
 	icon->current.ix = icon->current.x + ((tw - iw) / 2);
 	icon->current.iy = icon->current.y;
 	icon->current.tx = icon->current.x;
-	icon->current.ty = icon->current.y + ih;
+	icon->current.ty = icon->current.y + icon->view->spacing.icon.top + icon->view->spacing.icon.bottom + ih;
 	icon->current.w = tw;
 	icon->current.h = ih + th;
 	icon->current.iw = iw;
