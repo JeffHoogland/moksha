@@ -24,7 +24,9 @@ struct _Config_Face
 struct _Temperature
 {
    E_Menu           *config_menu;
-   Evas_List        *menus;
+   E_Menu           *config_menu_low;
+   E_Menu           *config_menu_high;
+   E_Menu           *config_menu_poll;
    Evas_List        *faces;
 
    Config           *conf;

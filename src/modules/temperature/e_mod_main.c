@@ -105,8 +105,7 @@ static Temperature *
 _temperature_new()
 {
    Temperature *e;
-   Evas_List *managers, *l, *l2, *cl, *ml;
-   E_Menu *mn;
+   Evas_List *managers, *l, *l2, *cl;
    E_Menu_Item *mi;
 
    temperature_count = 0;
@@ -181,15 +180,17 @@ _temperature_new()
 		  _temperature_face_menu_new(ef);
 
 		  /* Add main menu to face menu */
-		  /*
-		  for (ml = e->menus; ml; ml = ml->next)
-		    {
-		       mn = ml->data;
-		       mi = e_menu_item_new(ef->menu);
-		       e_menu_item_label_set(mi, "????");
-		       e_menu_item_submenu_set(mi, mn);
-		    }
-		  */
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, "Check Interval");
+		  e_menu_item_submenu_set(mi, e->config_menu_poll);
+
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, "Low Temperature");
+		  e_menu_item_submenu_set(mi, e->config_menu_low);
+
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, "High Temperature");
+		  e_menu_item_submenu_set(mi, e->config_menu_high);
 
 		  mi = e_menu_item_new(e->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -220,10 +221,10 @@ _temperature_shutdown(Temperature *e)
      _temperature_face_free(l->data);
    evas_list_free(e->faces);
 
-   for (l = e->menus; l; l = l->next)
-     e_object_del(E_OBJECT(l->data));
-   evas_list_free(e->menus);
    e_object_del(E_OBJECT(e->config_menu));
+   e_object_del(E_OBJECT(e->config_menu_poll));
+   e_object_del(E_OBJECT(e->config_menu_low));
+   e_object_del(E_OBJECT(e->config_menu_high));
 
    ecore_timer_del(e->temperature_check_timer);
 
@@ -448,7 +449,7 @@ _temperature_menu_high_100(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _temperature_config_menu_new(Temperature *e)
 {
-   E_Menu *mn, *config_menu1, *config_menu2, *config_menu3;
+   E_Menu *mn;
    E_Menu_Item *mi;
 
    /* Check interval */
@@ -489,7 +490,7 @@ _temperature_config_menu_new(Temperature *e)
    if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_very_slow, e);
 
-   config_menu1 = mn;
+   e->config_menu_poll = mn;
 
    /* Low temperature */
    mn = e_menu_new();
@@ -529,7 +530,7 @@ _temperature_config_menu_new(Temperature *e)
    if (e->conf->low == 50) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_low_50, e);
 
-   config_menu2 = mn;
+   e->config_menu_low = mn;
 
    /* High temperature */
    mn = e_menu_new();
@@ -597,27 +598,24 @@ _temperature_config_menu_new(Temperature *e)
    if (e->conf->high == 100) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_100, e);
 
-   config_menu3 = mn;
+   e->config_menu_high = mn;
 
    /* Main */
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Check Interval");
-   e_menu_item_submenu_set(mi, config_menu1);
+   e_menu_item_submenu_set(mi, e->config_menu_poll);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "Low Temperature");
-   e_menu_item_submenu_set(mi, config_menu2);
+   e_menu_item_submenu_set(mi, e->config_menu_low);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, "High Temperature");
-   e_menu_item_submenu_set(mi, config_menu3);
+   e_menu_item_submenu_set(mi, e->config_menu_high);
 
    e->config_menu = mn;
-   e->menus = evas_list_append(e->menus, config_menu1);
-   e->menus = evas_list_append(e->menus, config_menu2);
-   e->menus = evas_list_append(e->menus, config_menu3);
 }
 
 static Temperature_Face *
