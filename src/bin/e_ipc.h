@@ -18,6 +18,7 @@ typedef enum _E_Ipc_Op {
    E_IPC_OP_MODULE_DISABLE,
    E_IPC_OP_MODULE_LIST,
    E_IPC_OP_MODULE_LIST_REPLY,
+   E_IPC_OP_BG_SET,
    E_IPC_OP_LAST
 } E_Ipc_Op;
 

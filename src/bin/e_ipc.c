@@ -169,6 +169,35 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 	     free(data);
 	  }
 	break;
+      case E_IPC_OP_BG_SET:
+	  {
+	    char *file;
+	    char *valstr;
+	    Evas_List *cl;
+	    int cont;
+	              
+
+            file = malloc(e->size + 1);
+            file[e->size] = 0;
+            memcpy(file, e->data, e->size);
+
+	    valstr=strdup("desktop/background");
+	    cl=edje_file_collection_list(file);
+            cont=1;
+	    while(cl && cont)
+             {
+                if(!strcmp(cl->data,valstr))
+		{
+		  cont=0;
+		  ecore_config_string_set("e.desktop.default.background", file);
+		}
+		else
+		 cl++;
+	     }
+	    edje_file_collection_list_free(cl);
+	    free(valstr);
+            free(file);
+          }
       default:
 	break;
      }

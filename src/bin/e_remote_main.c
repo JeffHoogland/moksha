@@ -177,6 +177,16 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
 				   NULL, 0);
 	  }
+	else if ((!strcmp(argv[i], "-bg-set")) && (i < (argc - 1)))
+          {
+             i++;
+             v = argv[i];
+             ecore_ipc_server_send(_e_ipc_server,
+                                   E_IPC_DOMAIN_REQUEST,
+                                   E_IPC_OP_BG_SET,
+                                   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+                                   v, strlen(v));
+          }
      }
    if (reply_count >= reply_expect) ecore_main_loop_quit();
    return 1;
