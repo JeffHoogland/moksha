@@ -201,7 +201,7 @@ _pager_init()
 			 {
 			    face->conf = E_NEW(Config_Face, 1);
 			    face->conf->enabled = 1;
-			    face->conf->resize = PAGER_RESIZE_NONE;
+			    face->conf->resize = PAGER_RESIZE_BOTH;
 			    face->conf->scale = 1;
 			    pager->conf->faces = evas_list_append(pager->conf->faces, face->conf);
 			 }
@@ -380,7 +380,7 @@ _pager_face_menu_new(Pager_Face *face)
 
    /* Resize */
    mi = e_menu_item_new(face->menu);
-   e_menu_item_label_set(mi, "Resize");
+   e_menu_item_label_set(mi, "Auto resize");
    mn = e_menu_new();
    e_menu_item_submenu_set(mi, mn);
 
