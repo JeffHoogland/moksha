@@ -399,6 +399,18 @@ e_icon_cleanup(E_Icon *ic)
    D_ENTER;
    
    /* FIXME: free stuff here! this leaks ... */
+   /* (think I got them all) */
+
+   if (ic->obj.event1)
+     {
+       evas_del_object(ic->view->evas, ic->obj.event1);
+       evas_del_object(ic->view->evas, ic->obj.event2);
+     }
+
+   if (ic->obj.sel.under.icon) ebits_free(ic->obj.sel.under.icon);
+   if (ic->obj.sel.under.text) ebits_free(ic->obj.sel.under.text);
+   if (ic->obj.sel.over.icon) ebits_free(ic->obj.sel.over.icon);
+   if (ic->obj.sel.over.text) ebits_free(ic->obj.sel.over.text);
 
    e_object_cleanup(E_OBJECT(ic));
 
@@ -489,6 +501,12 @@ e_icon_hide(E_Icon *ic)
    e_text_hide(ic->obj.text);
    evas_hide(ic->view->evas, ic->obj.event1);
    evas_hide(ic->view->evas, ic->obj.event2);
+
+   /* Hide any selection in the view */
+   if(ic->obj.sel.under.icon) ebits_hide(ic->obj.sel.under.icon);
+   if(ic->obj.sel.under.text) ebits_hide(ic->obj.sel.under.text);
+   if(ic->obj.sel.over.icon) ebits_hide(ic->obj.sel.over.icon);
+   if(ic->obj.sel.over.text) ebits_hide(ic->obj.sel.over.text);
 
    D_RETURN;
 }
