@@ -403,10 +403,10 @@ e_focus_out(Eevent * ev)
 	b = e_border_find_by_window(e->win);
 	if (b)
 	  {	
-	     char *settings_db;
-	     E_DB_File *db;
+	     /* char *settings_db; */
+	     /* E_DB_File *db; */
 	     int focus_mode;
-	     char buf[4096];
+	     /* char buf[4096]; */
 	     E_CFG_INT(cfg_focus_mode, "settings", "/focus/mode", 0);
 	     
 	     E_CONFIG_INT_GET(cfg_focus_mode, focus_mode);

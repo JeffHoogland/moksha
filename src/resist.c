@@ -6,7 +6,7 @@ e_resist_border(E_Border *b)
    int resist = 1;
    int desk_resist = 32;
    int win_resist = 12;
-   int ok = 0;
+   /* int ok = 0; */
    int dx, dy, d;
    int resist_x = 0, resist_y = 0;
    Evas_List l, rects = NULL;

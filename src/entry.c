@@ -103,7 +103,7 @@ static void
 e_entry_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
 {
    E_Entry *entry;
-   int pos;
+   /* int pos; */
    
    entry = _data;
    if (_b == entry->mouse_down) entry->mouse_down = 0;
@@ -404,14 +404,14 @@ e_entry_handle_keypress(E_Entry *entry, Ev_Key_Down *e)
      }
    else if (!strcmp(e->key, "BackSpace"))
      {
-	char *str2;
+	/* char *str2; */
 	
 	if (entry->select.start >= 0) e_entry_clear_selection(entry);
 	else if (entry->cursor_pos > 0) e_entry_delete_to_left(entry);
      }
    else if (!strcmp(e->key, "Delete"))
      {
-	char *str2;
+	/* char *str2; */
 	
 	if (entry->select.start >= 0) e_entry_clear_selection(entry);
 	else if (entry->cursor_pos < strlen(entry->buffer)) e_entry_delete_to_right(entry);

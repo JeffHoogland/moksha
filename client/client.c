@@ -5,6 +5,7 @@
 #include <sys/un.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 
 struct _coords {
   int xid;

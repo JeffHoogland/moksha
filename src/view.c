@@ -67,7 +67,8 @@ e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
    
    ev = current_ev->event;
    v = _data;
-   if ((v->selection.w < 6) && (v->selection.h < 6))
+   if (((v->selection.w < 6) && (v->selection.h < 6)) ||
+       (!v->selection.on))
      {
 	if (_b == 1)
 	  {
@@ -417,8 +418,8 @@ e_view_file_added(int id, char *file)
 {
    E_Icon *icon;
    E_View *v;
-   char *realfile;
-   char buf[4096];
+   /* char *realfile; */
+   /* char buf[4096]; */
 
    /* if we get a path - ignore it - its not a file in the a dir */
    printf("e_view_file_added(%i, \"%s\");\n", id, file);
@@ -453,7 +454,7 @@ e_view_file_deleted(int id, char *file)
 {
    E_Icon *icon;
    E_View *v;
-   char *realfile;
+   /* char *realfile; */
 
    printf("e_view_file_deleted(%i, \"%s\");\n", id, file);
    v = e_view_find_by_monitor_id(id);

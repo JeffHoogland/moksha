@@ -92,7 +92,7 @@ char *
 e_file_get_file(char *file)
 {
    char *p;
-   char buf[4096];
+   /* char buf[4096]; */
    
    p = strrchr(file, '/');
    if (!p) return strdup(file);

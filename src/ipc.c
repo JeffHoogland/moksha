@@ -8,7 +8,7 @@ struct _coords {
 
 typedef struct _coords coords;
 
-void         e_ipc_init(void);
+/* void         e_ipc_init(void); */
 static void  e_ipc_get_version(int fd);
 static void  e_ipc_move_window(int fd);
 
