@@ -68,8 +68,23 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
    int   a_button = 0;
    char *a_key = NULL;
    int   a_modifiers = 0;
+   Evas_List l;
    E_Action *a;
+   static Evas_List actions = NULL;
+   E_CFG_FILE(cfg_actions, "actions");
 
+   E_CONFIG_CHECK_VALIDITY(cfg_actions, "actions");
+   /* if we had a previous list - nuke it */
+   if (actions)
+     {
+	for (l = actions; l; l = l->next)
+	  {
+	     a = l->data;
+	     if (a) _e_action_free(a);
+	  }
+	actions = evas_list_free(actions);
+     }
+   /* now build the list again */
    actions_db = e_config_get("actions");
    db = e_db_open_read(actions_db);
    if (!db) return;
@@ -77,10 +92,7 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
    for (i = 0; i < num; i++)
      {
 	char buf[4096];
-	Evas_List l;
-	a = NULL;
 	
-	a = NULL;
 	sprintf(buf, "/actions/%i/name", i);
 	a_name = e_db_str_get(db, buf);
 	sprintf(buf, "/actions/%i/action", i);
@@ -96,59 +108,78 @@ _e_action_find(char *action, int act, int button, char *key, Ev_Key_Modifiers mo
 	sprintf(buf, "/actions/%i/modifiers", i);
 	e_db_int_get(db, buf, &a_modifiers);
 	
-	if (act != a_event) goto next;
-	if (!((a_name) && 
-	      (action) && 
-	      (!strcmp(a_name, action)))) goto next;
-	if ((act >= ACT_MOUSE_CLICK) && 
-	    (act <= ACT_MOUSE_CLICKED) && 
-	    (!((a_button == -1) || 
-	       (a_button == button)))) goto next;
-	if ((act >= ACT_KEY_DOWN) && 
-	    (act <= ACT_KEY_UP) &&
-	    (!((a_key) && (key) &&
-	       (!strcmp(a_key, key))))) goto next;
-	if ((act >= ACT_MOUSE_CLICK) &&
-	    (act <= ACT_KEY_UP) &&
-	    (!((a_modifiers == -1) || 
-	       (a_modifiers == (int)mods)))) goto next;
-	for (l = action_protos; l; l = l->next)
-	  {
-	     E_Action_Proto *ap;
-	     
-	     ap = l->data;
-	     if (!strcmp(ap->action, a_action))
-	       {
-		  
-		  a = NEW(E_Action, 1);
-		  ZERO(a, E_Action, 1);
-		  
-		  OBJ_INIT(a, _e_action_free);
-		  
-		  a->name = a_name;
-		  a->action = a_action;
-		  a->params = a_params;
-		  a->event = a_event;
-		  a->button = a_button;
-		  a->key = a_key;
-		  a->modifiers = a_modifiers;
-		  a->action_proto = ap;
-		  a->object = o;
-		  a->started = 0;
-		  current_actions = evas_list_append(current_actions, a);
-	       }
-	  }
-	next:
-	if (!a)
-	  {
-	     IF_FREE(a_name);
-	     IF_FREE(a_action);
-	     IF_FREE(a_params);
-	     IF_FREE(a_key);
-	  }
+	a = NEW(E_Action, 1);
+	ZERO(a, E_Action, 1);
+	
+	OBJ_INIT(a, _e_action_free);
+	
+	a->name = a_name;
+	a->action = a_action;
+	a->params = a_params;
+	a->event = a_event;
+	a->button = a_button;
+	a->key = a_key;
+	a->modifiers = a_modifiers;
+	a->action_proto = NULL;
+	a->object = NULL;
+	a->started = 0;
+	actions = evas_list_append(actions, a);
      }
    error:
    e_db_close(db);
+   E_CONFIG_CHECK_VALIDITY_END;
+   /* run thru our actions list and match event, state and stuff with an */
+   /* and action for it */
+   for (l = actions; l; l = l->next)
+     {
+	Evas_List ll;
+	
+	a = l->data;
+	if (act != a->event) goto next;
+	if (!((a->name) && 
+	      (action) && 
+	      (!strcmp(a->name, action)))) goto next;
+	if ((act >= ACT_MOUSE_CLICK) && 
+	    (act <= ACT_MOUSE_CLICKED) && 
+	    (!((a->button == -1) || 
+	       (a->button == button)))) goto next;
+	if ((act >= ACT_KEY_DOWN) && 
+	    (act <= ACT_KEY_UP) &&
+	    (!((a->key) && (key) &&
+	       (!strcmp(a->key, key))))) goto next;
+	if ((act >= ACT_MOUSE_CLICK) &&
+	    (act <= ACT_KEY_UP) &&
+	    (!((a->modifiers == -1) || 
+	       (a->modifiers == (int)mods)))) goto next;
+	for (ll = action_protos; ll; ll = ll->next)
+	  {
+	     E_Action_Proto *ap;
+	     
+	     ap = ll->data;
+	     if (!strcmp(ap->action, a->action))
+	       {
+		  E_Action *aa;
+		  
+		  aa = NEW(E_Action, 1);
+		  ZERO(aa, E_Action, 1);
+		  
+		  OBJ_INIT(aa, _e_action_free);
+		  
+		  aa->name = strdup(a->name);
+		  aa->action = strdup(a->action);
+		  aa->params = strdup(a->params);
+		  aa->event = a->event;
+		  aa->button = a->button;
+		  aa->key = strdup(a->key);
+		  aa->modifiers = a->modifiers;
+		  aa->action_proto = ap;
+		  aa->object = o;
+		  aa->started = 0;
+		  current_actions = evas_list_append(current_actions, aa);
+	       }
+	  }
+	next:
+     }
 }
 
 static void

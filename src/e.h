@@ -584,24 +584,46 @@ void e_exec_restart(void);
 pid_t e_exec_run(char *exe);
 pid_t e_exec_run_in_dir(char *exe, char *dir);
 pid_t e_run_in_dir_with_env(char *exe, char *dir, int *launch_id_ret, char **env, char *launch_path);
-    
+
+/* something to check validity of config files where we get data from */
+/* for now its just a 5 second timout so it will only invalidate */
+/* if we havent looked for 5 seconds... BUT later when efsd is more solid */
+/* we should use that to tell us when its invalid */
+typedef struct _e_config_file E_Config_File;
+struct _e_config_file
+{
+   char   *src;
+   double  last_fetch;
+};
+#define E_CFG_FILE(_var, _src) \
+static E_Config_File _var = {_src, 0.0}
+#define E_CONFIG_CHECK_VALIDITY(_var, _src) \
+{ \
+double __time; \
+__time = e_get_time(); \
+if (_var.last_fetch < (__time - 5.0)) { \
+_var.last_fetch = __time;
+#define E_CONFIG_CHECK_VALIDITY_END \
+} \
+}
+
 typedef struct _e_config_element E_Config_Element;
 struct _e_config_element 
 {
-   char *src;
-   char *key;
-   double last_fetch;
-   int   type;
-   int    def_int_val;
-   float  def_float_val;
-   char  *def_str_val;
-   void  *def_data_val;
-   int    def_data_val_size;
-   int    cur_int_val;
-   float  cur_float_val;
-   char  *cur_str_val;
-   void  *cur_data_val;
-   int    cur_data_val_size;
+   char   *src;
+   char   *key;
+   double  last_fetch;
+   int     type;
+   int     def_int_val;
+   float   def_float_val;
+   char   *def_str_val;
+   void   *def_data_val;
+   int     def_data_val_size;
+   int     cur_int_val;
+   float   cur_float_val;
+   char   *cur_str_val;
+   void   *cur_data_val;
+   int     cur_data_val_size;
 };
 #define E_CFG_INT_T   123
 #define E_CFG_FLOAT_T 1234
