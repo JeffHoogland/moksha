@@ -815,8 +815,8 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 
 	evas_object_resize(p->base, p->fw * xcount, p->fh * ycount);
-	      
 	evas_object_resize(p->screen, p->fw, p->fh);
+	      
 	desks = p->desks;
 	while (desks)
 	  {
@@ -824,6 +824,9 @@ _pager_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     evas_object_resize(desk->obj, p->fw, p->fh);
 	     evas_object_move(desk->obj, p->fx + (desk->xpos * p->fw),
 			      p->fy + (desk->ypos * p->fh));
+	     if (desk->current)
+	       evas_object_move(p->screen, p->fx + (p->fw * desk->xpos),
+				 p->fy + (p->fh * desk->ypos));
 	     
 	     wins = desk->wins;
 	     while (wins)
