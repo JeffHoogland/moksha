@@ -564,12 +564,9 @@ static void
 e_menu_item_unselect (E_Menu_Item *mi)
 {
    D_ENTER;
-   D("mi unselect\n");
    if ((mi) && (mi->menu->selected == mi))
      {
-        D("mi && mi->menu->selected == mi\n");
         mi->menu->selected  = curr_selected_item = NULL;
-	D("after setting it NULL\n");
 	
         mi->selected = 0;
 	mi->menu->redo_sel = 1;

@@ -7,6 +7,7 @@
 
 #include "e_ferite.h"
 
+static void e_epplet_cleanup(E_Epplet *epp);
 static void e_epplet_mouse_down_cb (void *_data, Ebits_Object _o,
 				    char *_c, int _b, int _x, int _y,
 				    int _ox, int _oy, int _ow, int _oh);
@@ -20,6 +21,83 @@ static void e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
 				    int _ox, int _oy, int _ow, int _oh);
 
 static void e_epplet_observer_cleanup(E_Object *o);
+
+E_Epplet *
+e_epplet_new(void *scr)
+{
+#ifdef USE_FERITE
+   E_Epplet *epp;
+   FeriteScript *script;
+   char buf[PATH_MAX];
+   
+   D_ENTER;
+
+   script = (FeriteScript *)scr;
+
+   epp = NEW(E_Epplet, 1);
+   ZERO(epp, E_Epplet, 1);
+
+   e_object_init(E_OBJECT(epp), (E_Cleanup_Func) e_epplet_cleanup);
+
+   epp->context = e_epplet_get_context_from_script(script);
+   if (!(epp->context))
+   {
+      D("Error: epplet context not found\n");
+      D_RETURN_(NULL);
+   }
+   
+   epp->view = epp->context->view;
+   epp->name = strdup(epp->context->name);
+   epp->current.x = epp->context->geom.x;
+   epp->current.y = epp->context->geom.y;
+   epp->current.w = epp->context->geom.w;
+   epp->current.h = epp->context->geom.h;
+   epp->context->epp = epp;
+
+   snprintf(buf, PATH_MAX, "%s/.e_epplets/%s/", epp->view->dir, epp->name);
+   epp->dir = strdup(buf);
+
+   if (!(epp->view))
+   {
+      D("Error: no view found for epplet: %s\n", epp->name);
+      e_object_unref(E_OBJECT(epp)); 
+      D_RETURN_(NULL);
+   }
+   else
+   {
+      D_RETURN_(epp);
+   }
+#endif
+   
+}
+  
+static void
+e_epplet_cleanup(E_Epplet *epp)
+{
+   Evas_List l;
+   
+   D_ENTER;
+   
+#ifdef USE_FERITE
+   for (l = epp->ebits; l; l = l->next)
+   {
+      Ebits_Object o = l->data;
+      ebits_free(o);
+   }
+   
+   for (l = epp->evas_objects; l; l = l->next)
+   {
+      Evas_Object_Wrapper *o = l->data;
+      evas_del_object(o->evas, o->obj);
+
+      free(o);
+   }
+
+   if (epp->layout)  ebits_free(epp->layout);
+   if (epp->ui) ebits_free(epp->ui);
+#endif
+   D_RETURN;   
+}
 
 void
 e_epplet_load_from_layout (E_View * v)
@@ -63,7 +141,7 @@ e_epplet_load_from_layout (E_View * v)
 
       v->epplet_contexts = evas_list_append (v->epplet_contexts, context);
 
-      snprintf (buf, PATH_MAX,  "%s%s/%s.fe", e_config_get ("epplets"), context->name,
+      snprintf (buf, PATH_MAX,  "%s/.e_epplets/%s/%s.fe", v->dir, context->name,
 	       context->name);
       if (e_file_exists (buf))
 	e_epplet_script_load (context, buf);
@@ -141,9 +219,11 @@ e_epplet_script_load (E_Epplet_Context * context, char *path)
   D_RETURN;
 }
 
+
 void
 e_epplet_set_common_callbacks (E_Epplet * epp)
 {
+/*
   D ("setting callbacks\n");
 
 #ifdef USE_FERITE   
@@ -193,6 +273,7 @@ e_epplet_set_common_callbacks (E_Epplet * epp)
 #endif
 
   D ("callbacks set\n");
+*/
 }
 
 static void
@@ -312,7 +393,7 @@ e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
   D_ENTER;
 
 #ifdef USE_FERITE   
-  epp = _data;
+/*  epp = _data;
 
   if (epp->state.moving)
     {
@@ -329,7 +410,7 @@ e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
       epp->current.x = x;
       epp->current.y = y;
 
-      ebits_move (epp->bits, epp->current.x, epp->current.y);
+      ebits_move (epp->ui, epp->current.x, epp->current.y);
     }
 
   if (epp->state.resizing.left || epp->state.resizing.right
@@ -404,6 +485,7 @@ e_epplet_mouse_move_cb (void *_data, Ebits_Object _o,
       ebits_move (epp->bits, epp->current.x, epp->current.y);
 
     }
+*/
 #endif
 
   D_RETURN;

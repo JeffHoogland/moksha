@@ -35,6 +35,8 @@ struct _E_Epplet_Context
   E_View *view;
   FeriteScript *script;
 
+  E_Epplet *epp;
+
   struct {
     double x, y;
     double w, h;
@@ -44,55 +46,71 @@ struct _E_Epplet_Context
 
 struct _E_Epplet
 {
-	E_Object	o;
+   E_Object	o;
 	
-	E_Epplet_Context *context;
+   E_Epplet_Context *context;
 
-	char		*name;
-	E_View		*view;
-	Ebits_Object	 bits;
+   char		*name;
+   E_View	*view;
+   char         *dir;
+   Ebits_Object  layout;
+   Ebits_Object	 ui;
 
-	FeriteVariable *fbits;
 
-	struct {
-		double	x, y;
-		double w, h;
-	} current, requested, offset;
+   struct {
+      double	x, y;
+      double w, h;
+   } current, requested, offset;
 
-	struct {
-		int changed;
-		int moving;
-		struct {
-			int up, down, left, right;
-		}resizing;
-	} state;
+   struct {
+      int changed;
+      int moving;
+      struct {
+	int up, down, left, right;
+      }resizing;
+   } state;
 
-	void				*data;
-
+   Evas_List evas_objects;
+   Evas_List ebits;
 };
 
 struct _Evas_Object_Wrapper
 {
    Evas evas;
    Evas_Object obj;
+   E_Epplet *epp;
 };
 
-void e_epplet_load_from_layout(E_View *v);
+/* epplet loading / cleanup */
+E_Epplet         *e_epplet_new();
+void              e_epplet_load_from_layout(E_View *v);
+void              e_epplet_script_load(E_Epplet_Context *v, char *script_path);
 E_Epplet_Context *e_epplet_get_context_from_script(FeriteScript *script);
-void e_epplet_script_load(E_Epplet_Context *v, char *script_path);
+
+/* probably won't use this... */
 void e_epplet_set_common_callbacks(E_Epplet *epp);
+
+
+/* callbacks */
 E_Epplet_CB_Info *e_epplet_cb_new( FeriteScript *script, char *func_name,
-                  FeriteObject *data, FeriteObject *data2 );
-void e_epplet_cb_cleanup( E_Epplet_CB_Info *cb);
-void e_epplet_bits_cb (void *_data, Ebits_Object _o,  char *_c,
-      int _b, int _x, int _y, int _ox, int _oy, int _ow, int _oh);
-void e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
-                       int _b, int _x, int _y);
-void e_epplet_timer_func(int val, void *data);
+                                   FeriteObject *data, FeriteObject *data2 );
+void              e_epplet_cb_cleanup( E_Epplet_CB_Info *cb);
+void              e_epplet_bits_cb (void *_data, Ebits_Object _o,  char *_c,
+                                    int _b, int _x, int _y, int _ox, int _oy,
+				    int _ow, int _oh);
+void              e_epplet_evas_cb (void *_data, Evas _e, Evas_Object _o,
+                                    int _b, int _x, int _y);
+/* timers */
+void              e_epplet_timer_func(int val, void *data);
+
+/* Observers */
 E_Epplet_Observer *e_epplet_observer_new( FeriteScript *script,
-                   char *func_name, FeriteObject *data, char *event_type);
-void e_epplet_observer_register_desktops(E_Epplet_Observer *obs);
-void e_epplet_desktop_observer_func(E_Observer *observer, E_Observee *observee, E_Event_Type event);
+                                          char *func_name, FeriteObject *data,
+					  char *event_type);
+void               e_epplet_observer_register_desktops(E_Epplet_Observer *obs);
+void               e_epplet_desktop_observer_func(E_Observer *observer,
+                                                  E_Observee *observee,
+						  E_Event_Type event);
 /*void e_epplet_border_observer_func(E_Observer *observer, E_Observee *observee);*/
 
 #endif

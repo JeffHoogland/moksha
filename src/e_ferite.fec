@@ -2,6 +2,7 @@ header %{
    
    #include "Ecore.h"
    #include "Ebits.h"
+   #include "ferite.h"
    
    #include "desktops.h"
    #include "border.h"
@@ -9,11 +10,13 @@ header %{
    #include "debug.h"
    #include "globals.h"
    #include "observer.h"
+   #include "file.h"
 
    #define BorderObj ((E_Border *)(self->odata))
    #define BitsObj ((Ebits_Object)self->odata)
    #define EppObj ((E_Epplet *)(self->odata))
    #define EvasObj ((Evas_Object_Wrapper *)(self->odata))
+   
 %}
 
 class Border {
@@ -148,6 +151,11 @@ namespace e {
 	  ecore_event_loop_quit();  
    %}
 
+   function restart()
+   %{
+      e_exec_restart();
+   %}
+
    function dataCopy(object from, object to)
    %{
       to->odata = from->odata;
@@ -172,18 +180,27 @@ class EvasObject
     EvasObj = NEW(Evas_Object_Wrapper, 1);
     ZERO(EvasObj, Evas_Object_Wrapper, 1);
     
-    EvasObj->evas = ((E_Epplet *)(epp->odata))->view->evas;
+    EvasObj->epp = (E_Epplet *)(epp->odata);
+    EvasObj->evas = EvasObj->epp->view->evas;
+
+    EvasObj->epp->evas_objects = evas_list_append(EvasObj->epp->evas_objects, EvasObj);
+
   %}
   
   function Destructor()
   %{
   %}
 
-  function addImage(string path)
+  function addImage(string file)
   %{
-    if (EvasObj->evas)
-      EvasObj->obj = evas_add_image_from_file(EvasObj->evas, path);
-    ffree(path);
+    char buf[PATH_MAX];
+
+    if (EvasObj->evas && EvasObj->epp)
+    {
+      snprintf(buf, PATH_MAX, "%s%s", EvasObj->epp->view->dir, file);
+      EvasObj->obj = evas_add_image_from_file(EvasObj->evas, file);
+    }
+    ffree(file);
   %}
 
   function addRectangle()
@@ -255,10 +272,8 @@ class EvasObject
 
   function setColor(number r, number g, number b, number a)
   %{
-    D("in setColor\n");
     if (EvasObj->evas && EvasObj->obj)
       evas_set_color(EvasObj->evas, EvasObj->obj, (long)r, (long)g, (long)b, (long)a);
-    D("leaving setColor\n");
   %}
 
   
@@ -351,18 +366,23 @@ class EvasObject
 class Ebits
 {
   
-  function Ebits(string path)
+  function Ebits(string file, object epp)
   %{
-    D("in Ebits constructor\n");
-    D("loading bits\n");
+    char buf[PATH_MAX];
+    
+    snprintf(buf, PATH_MAX, "%s/.e_epplets/%s/%s", ((E_Epplet *)(epp->odata))->view->dir, ((E_Epplet *)(epp->odata))->name,  file);
+    D("adding ebits: %s\n", buf);
     BitsObj = NULL;
-    BitsObj = ebits_load(path);
-    if (BitsObj)
-       printf("bits loaded\n");
-    else
-       printf("ERROR: bits not found\n");
+    BitsObj = ebits_load(buf);
 
-    ffree(path);
+    ((E_Epplet *)(epp->odata))->ebits = evas_list_append(((E_Epplet *)(epp->odata))->ebits, BitsObj);
+/*
+    if (BitsObj)
+       D("bits loaded\n");
+    else
+       D("ERROR: bits not found\n");
+*/
+    ffree(file);
   %}
 
   function Destructor()
@@ -377,51 +397,60 @@ class Ebits
 
   function free()
   %{
-    ebits_free(BitsObj);
+    if(BitsObj)
+       ebits_free(BitsObj);
   %}
 
   function show()
   %{
+    if(BitsObj)
     ebits_show(BitsObj);
   %}
 
   function hide()
   %{
+    if(BitsObj)
     ebits_hide(BitsObj);
   %}
 
   function raise()
   %{
+    if(BitsObj)
     ebits_raise(BitsObj);
   %}
 
   function lower()
   %{
+    if(BitsObj)
     ebits_lower(BitsObj);
   %}
 
   function move(number x, number y)
   %{
+    if(BitsObj)
     ebits_move(BitsObj, x, y);
   %}
 
   function resize(number w, number h)
   %{
+    if(BitsObj)
     ebits_resize(BitsObj, w, h);
   %}
 
   function setLayer(number l)
   %{
+    if(BitsObj)
     ebits_set_layer(BitsObj, l);
   %}
 
   function setState(string bitName, string state)
   %{
-    ebits_set_named_bit_state(BitsObj, bitName, state);
+    if(BitsObj)
+      ebits_set_named_bit_state(BitsObj, bitName, state);
     ffree(bitName);
     ffree(state);
   %}
-
+/*
   function getNamedBitGeometry(string bitName, number x, number y, number w, number h)
   %{
     double xx, yy, ww, hh;
@@ -432,12 +461,13 @@ class Ebits
     w = ww; 
     h = hh; 
   %}
+*/
 
   function getNamedBitGeometryX(string bitName)
   %{
     double x;
-    ebits_get_named_bit_geometry(BitsObj, bitName, &x, NULL, NULL, NULL);
-    D("%s.x: %i\n", bitName, x);
+    if(BitsObj)
+       ebits_get_named_bit_geometry(BitsObj, bitName, &x, NULL, NULL, NULL);
     ffree(bitName);
     FE_RETURN_DOUBLE(x);
   %}
@@ -445,7 +475,8 @@ class Ebits
   function getNamedBitGeometryY(string bitName)
   %{
     double y;
-    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, &y, NULL, NULL);
+    if(BitsObj)
+      ebits_get_named_bit_geometry(BitsObj, bitName, NULL, &y, NULL, NULL);
     ffree(bitName);
     FE_RETURN_DOUBLE(y);
   %}
@@ -453,7 +484,8 @@ class Ebits
   function getNamedBitGeometryW(string bitName)
   %{
     double w;
-    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, &w, NULL);
+    if(BitsObj)
+      ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, &w, NULL);
     ffree(bitName);
     FE_RETURN_DOUBLE(w);
   %}
@@ -461,7 +493,8 @@ class Ebits
   function getNamedBitGeometryH(string bitName)
   %{
     double h;
-    ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, NULL, &h);
+    if(BitsObj)
+      ebits_get_named_bit_geometry(BitsObj, bitName, NULL, NULL, NULL, &h);
     ffree(bitName);
     FE_RETURN_DOUBLE(h);
   %}
@@ -472,7 +505,9 @@ class Ebits
     
     cb = e_epplet_cb_new(script, func, data, NULL);
     
-    ebits_set_classed_bit_callback(BitsObj, bitClass, CALLBACK_MOUSE_DOWN, e_epplet_bits_cb, cb);
+    if(BitsObj)
+      ebits_set_classed_bit_callback(BitsObj, bitClass, CALLBACK_MOUSE_DOWN,
+                                     e_epplet_bits_cb, cb);
 
     ffree(bitClass);
     ffree(func);
@@ -482,33 +517,62 @@ class Ebits
 class Epplet
 {
 
-  object bits;
+  object ui;
   
   function Epplet()
   %{
-    EppObj = malloc(sizeof(E_Epplet));
-    memset(EppObj, 0, sizeof(E_Epplet));
+     char buf[PATH_MAX];
+/*     FeriteVariable *ui;
+     FeriteVariable **params;*/
 
-    EppObj->context = e_epplet_get_context_from_script(script);
-    EppObj->view = EppObj->context->view;
-    EppObj->name = strdup(EppObj->context->name);
-    EppObj->current.x = EppObj->context->geom.x;
-    EppObj->current.y = EppObj->context->geom.y;
-    EppObj->current.w = EppObj->context->geom.w;
-    EppObj->current.h = EppObj->context->geom.h;
+     EppObj = e_epplet_new(script);
+#if 0
+/* FIXME: this is not complete, object creation doesn't work for some reason??? */
+     D("epplet created\n");
+     /* if ui.bits.db exists, make it the ui */
+     snprintf(buf, PATH_MAX, "%sui.bits.db", EppObj->dir);
+     if (e_file_exists(buf))
+     {
+       EppObj->ui = ebits_load(buf);
+       ebits_add_to_evas(EppObj->ui, EppObj->view->evas);
+       
+/*     ui = __ferite_get_variable_from_hash(script, self->variables, "ui");*/
+       params = __ferite_create_parameter_list_from_data(script, "so", "ui.bits.db", self);
+       ui = __ferite_new_object( script, __ferite_find_class(script, script->mainns, "Ebits"), params );
+       __ferite_delete_parameter_list(script, params);
+       D("object created, name: %s\n", ui->name);
 
-     if (!EppObj->view) { D("Error: no view found for script\n"); }
-     else { D("got view: %s\n", EppObj->view->dir); }
+/*FIXME: how do i set an object's data?*/				
+     }
+#endif
+
+     /* if layout.bits.db exists, make it the layout */
+     snprintf(buf, PATH_MAX, "%slayout.bits.db", EppObj->dir);
+     if (e_file_exists(buf))
+     {
+       double x, y, w, h;
+
+       EppObj->layout = ebits_load(buf);
+       ebits_add_to_evas(EppObj->layout, EppObj->view->evas);
+       ebits_move(EppObj->layout, 0, 0);
+       ebits_resize(EppObj->layout, EppObj->view->size.w, EppObj->view->size.h);
+       ebits_get_named_bit_geometry(EppObj->layout, EppObj->name,
+                                    &x, &y, &w, &h);
+
+       EppObj->current.x = x;
+       EppObj->current.y = y;
+       EppObj->current.w = w;
+       EppObj->current.h = h;
+     }
   %}
 
   function setBits(object ebits)
   %{
-    EppObj->bits = ((Ebits_Object)ebits->odata);
-    EppObj->fbits = ebits;
+    EppObj->ui = ((Ebits_Object)ebits->odata);
 
-    if(EppObj->bits && EppObj->view)
+    if(EppObj->ui && EppObj->view)
     {
-      ebits_add_to_evas(EppObj->bits, EppObj->view->evas);
+      ebits_add_to_evas(EppObj->ui, EppObj->view->evas);
       e_epplet_set_common_callbacks(EppObj);
       D("bits added to view\n");
       D("view dir: %s\n", EppObj->view->dir);
@@ -528,16 +592,16 @@ class Epplet
 
     D("moving epplet: %f, %f\n", x, y);
  
-    if (EppObj->bits)
-      ebits_move(EppObj->bits, EppObj->current.x, EppObj->current.y);
+    if (EppObj->ui)
+      ebits_move(EppObj->ui, EppObj->current.x, EppObj->current.y);
   %}
 
   function resize(number w, number h)
   %{
     EppObj->current.w = w;
     EppObj->current.h = h;
-    if (EppObj->bits)
-      ebits_resize(EppObj->bits, EppObj->current.w, EppObj->current.h);
+    if (EppObj->ui)
+      ebits_resize(EppObj->ui, EppObj->current.w, EppObj->current.h);
   %}
 
   function getX()
@@ -563,54 +627,36 @@ class Epplet
   function display()
   %{
     int mw, mh;
-
-    if(EppObj->view && EppObj->bits)
+    D("in display()\n");
+    if(EppObj->view && EppObj->ui)
     {
-      D("adding bits for epplet `%s'\n", EppObj->context->name);
-      D("x: %f, y: %f, w: %f, h: %f\n", EppObj->context->geom.x, EppObj->context->geom.y, EppObj->context->geom.w, EppObj->context->geom.h);
-      ebits_show(EppObj->bits);
+      ebits_show(EppObj->ui);
 
-      if ((EppObj->context->geom.w) && (EppObj->context->geom.h))
-      {
-        EppObj->current.w = EppObj->context->geom.w;
-        EppObj->current.h = EppObj->context->geom.h;
+      ebits_get_min_size(EppObj->ui, &mw, &mh);
+      if ( EppObj->current.w < mw )  EppObj->current.w = mw;
+      if ( EppObj->current.h < mh )  EppObj->current.h = mh;
 
-        ebits_get_min_size(EppObj->bits, &mw, &mh);
-        if ( EppObj->current.w < mw )  EppObj->current.w = mw;
-        if ( EppObj->current.h < mh )  EppObj->current.h = mh;
-      }
+      ebits_get_max_size(EppObj->ui, &mw, &mh);
+      if ( EppObj->current.w > mw )  EppObj->current.w = mw;
+      if ( EppObj->current.h > mh )  EppObj->current.h = mh;
+ 
+      if (EppObj->current.x >  (EppObj->view->size.w - EppObj->current.w))
+      EppObj->current.x =  EppObj->view->size.w - EppObj->current.w;
+      if (EppObj->current.y >  (EppObj->view->size.h - EppObj->current.h))
+      EppObj->current.y =  EppObj->view->size.h - EppObj->current.h;
 
-      else
-      {
-        ebits_get_min_size(EppObj->bits, &mw, &mh);
-        if (mw == 0 || mh == 0)
-        {
-          mw = mh = 50;
-        }
-        EppObj->current.w = mw;
-        EppObj->current.h = mh;
-      }
-
-      EppObj->current.x = EppObj->context->geom.x;
-      EppObj->current.y = EppObj->context->geom.y;
-
-      ebits_get_min_size(EppObj->bits, &mw, &mh);
-
-      if (EppObj->current.x >  (EppObj->view->size.w - mw))
-      EppObj->current.x =  EppObj->view->size.w - mw;
-      if (EppObj->current.y >  (EppObj->view->size.h - mh))
-      EppObj->current.y =  EppObj->view->size.h - mh;
-
-      ebits_set_layer(EppObj->bits, 12000);
-      ebits_resize(EppObj->bits, EppObj->current.w, EppObj->current.h);
-      ebits_move(EppObj->bits, EppObj->current.x, EppObj->current.y);
+      ebits_set_layer(EppObj->ui, 12000);
+      ebits_resize(EppObj->ui, EppObj->current.w, EppObj->current.h);
+      ebits_move(EppObj->ui, EppObj->current.x, EppObj->current.y);
     }
   %}
 
+/*
   function getBits()
   %{
     FE_RETURN_VAR(EppObj->fbits);
   %}
+*/
 
   function getViewW()
   %{
@@ -627,7 +673,7 @@ class Epplet
     char buf[PATH_MAX], *retval;
     
     printf("getting dir:\n");
-    snprintf(buf, PATH_MAX, "%s%s/", e_config_get("epplets"), EppObj->name);
+    snprintf(buf, PATH_MAX, "%s/.e_epplets/%s/", EppObj->view->dir, EppObj->name);
     printf("%s\n", buf);
     retval = (char *)buf;
     FE_RETURN_STR(retval, 0);
