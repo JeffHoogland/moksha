@@ -1,8 +1,6 @@
 #ifndef E_BORDER_H
 #define E_BORDER_H
 
-typedef enum _E_Direction E_Direction;
-typedef enum _E_Transition E_Transition;
 typedef struct _E_Border E_Border;
 
 enum _E_Direction
@@ -12,6 +10,7 @@ enum _E_Direction
     E_DIRECTION_LEFT,
     E_DIRECTION_RIGHT
 };
+typedef enum _E_Direction E_Direction;
 
 enum _E_Transition
 {
@@ -20,7 +19,7 @@ enum _E_Transition
     E_TRANSITION_ACCELERATE,
     E_TRANSITION_DECELERATE
 };
-
+typedef enum _E_Transition E_Transition;
 
 struct _E_Border
 {
