@@ -23,10 +23,25 @@ e_view_machine_init()
 }
 
 void
+e_view_machine_register_view_model (E_View_Model *m)
+{
+   D_ENTER;
+   VM->models = evas_list_append(VM->models, m);
+   D_RETURN;
+}
+
+void
+e_view_machine_unregister_view_model(E_View_Model *m)
+{
+   D_ENTER;
+   VM->models = evas_list_remove(VM->models, m);
+   D_RETURN;
+}
+
+void
 e_view_machine_register_view(E_View *v)
 {
    D_ENTER;
-   /* Add view to the list of views */
    VM->views = evas_list_append(VM->views, v);
    D_RETURN;
 }
@@ -35,28 +50,20 @@ void
 e_view_machine_unregister_view(E_View *v)
 {
    D_ENTER;
-   /* Remove the view from the global list of views
-    * and from the list of its model. */
    VM->views = evas_list_remove(VM->views, v);
-   v->model->views = evas_list_remove(v->model->views, v);
-   e_object_unref (E_OBJECT(v->model));
    D_RETURN;
 }
 
 void
 e_view_machine_close_all_views(void)
 {
-   Evas_List l,ll;
+   Evas_List l;
    D_ENTER;
    /* Copy the list of views and unregister them */
    for (l=VM->views;l;l=l->next)
    {
-      ll = evas_list_append(ll, l->data);
-   }
-   for (l=ll;l;l=l->next)
-   {
       E_View *v = l->data;
-      e_view_machine_unregister_view(v);
+      e_object_unref (E_OBJECT(v->model));
    }
    D_RETURN;
 }
@@ -83,8 +90,6 @@ e_view_machine_model_lookup(char *path)
 	   D("Model for this dir already exists\n");
 
 	   IF_FREE(realpath);
-
-	   e_object_ref (E_OBJECT(m));	   
 	   D_RETURN_(m);
 	 }
      }
@@ -120,3 +125,4 @@ e_view_machine_get_view_by_base_window(Window win)
      }	
    D_RETURN_(NULL);
 }
+

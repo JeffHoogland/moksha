@@ -54,6 +54,8 @@ void e_view_model_set_dir(E_View_Model *m, char *dir);
 
 E_View_Model * e_view_model_new(void);
 void e_view_model_init(void);
+void e_view_model_register_view(E_View_Model *m,E_View *v);
+void e_view_model_unregister_view(E_View *v);
 
 E_View_Model * e_view_model_find_by_monitor_id(int id);
 

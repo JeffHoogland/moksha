@@ -19,7 +19,6 @@ static void e_view_model_handle_efsd_event_reply_getmeta (EfsdEvent *ev);
 static void e_view_model_cleanup(E_View_Model *m);
 static void e_view_model_bg_reload_timeout(int val, void *data);
 static void e_view_model_set_default_background(E_View_Model *m);
-static void e_view_model_redraw_views(E_View_Model *m);
 
 void
 e_view_model_init(void)
@@ -42,7 +41,7 @@ e_view_model_cleanup(E_View_Model *m)
      e_fs_del_restart_handler(m->restarter);
 
    m->restarter = NULL;
-   VM->models = evas_list_remove(VM->models, m);
+   e_view_machine_unregister_view_model(m);
 
    e_object_cleanup(E_OBJECT(m));
 
@@ -64,28 +63,27 @@ e_view_model_new (void)
    e_object_init(E_OBJECT(m), 
 	 (E_Cleanup_Func) e_view_model_cleanup);
 
+   e_view_machine_register_view_model(m);
    D_RETURN_(m);
 }
 
-static void
-e_view_model_redraw_views(E_View_Model *m)
+void
+e_view_model_register_view(E_View_Model *m, E_View *v)
 {
-   Evas_List l;
-   E_View *v;
    D_ENTER;
+   v->model = m;
+   m->views = evas_list_append(m->views, v);
+   e_object_ref (E_OBJECT(v->model));
+   D_RETURN;   
+}
 
-   if (!m)
-     D_RETURN;
-
-   /* set the dirty flag of all views. the next time the idle
-    * handler calls update_views, they'll be redrawn */
-   for (l = m->views; l; l=l->next)
-   {
-      v = l->data;
-      v->changed = 1;
-   }
-
-   D_RETURN;
+void
+e_view_model_unregister_view(E_View *v)
+{
+   D_ENTER;
+   v->model->views = evas_list_remove(v->model->views, v);
+   e_object_unref (E_OBJECT(v->model));
+   D_RETURN;   
 }
 
 static void

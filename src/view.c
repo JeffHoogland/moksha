@@ -1457,8 +1457,6 @@ e_view_cleanup(E_View *v)
     * not via a timeout, because we will destroy the object after this.*/
    e_view_geometry_record(v);
    
-   e_view_machine_unregister_view(v);
-
    if (v->iconbar)
    {
       e_iconbar_save_out_final(v->iconbar);
@@ -1472,6 +1470,9 @@ e_view_cleanup(E_View *v)
    snprintf(name, PATH_MAX, "resort_timer.%s", v->name);
    ecore_del_event_timer(name);
 
+   /* unregister with the underlying model and the global list of views */
+   e_view_model_unregister_view(v);
+   e_view_machine_unregister_view(v);
    /* FIXME: clean up the rest!!! this leaks ... */
    
    /* Call the destructor of the base class */
@@ -1551,9 +1552,7 @@ e_view_set_dir(E_View *v, char *path, int is_desktop)
    if (!(m = e_view_machine_model_lookup(path)))
    {
       D("Model for this dir doesn't exist, make a new one\n");
-
       m = e_view_model_new();
-      VM->models = evas_list_append(VM->models, m);
       e_view_model_set_dir(m, path);
 
       snprintf(buf, PATH_MAX, "%s/.e_background.bg.db", m->dir);
@@ -1574,8 +1573,7 @@ e_view_set_dir(E_View *v, char *path, int is_desktop)
 
    if (m)
    {
-      v->model = m;   
-      v->model->views = evas_list_append(v->model->views, v);
+      e_view_model_register_view(m, v);
       /* FIXME do a real naming scheme here */
       snprintf(buf, PATH_MAX, "%s:%d", v->model->dir, e_object_get_usecount(E_OBJECT(v->model))); 
       e_strdup(v->name, buf);
