@@ -1,7 +1,10 @@
 #include "e.h"
 
 static Evas_List views = NULL;
+static Eevent *current_ev = NULL;
 
+static void e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
+static void e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y);
 static void e_idle(void *data);
 static void e_wheel(Eevent * ev);
 static void e_key_down(Eevent * ev);
@@ -13,6 +16,100 @@ static void e_mouse_in(Eevent * ev);
 static void e_mouse_out(Eevent * ev);
 static void e_window_expose(Eevent * ev);
 static void e_view_handle_fs(EfsdEvent *ev);
+
+static void
+e_bg_down_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+{
+   Ev_Mouse_Down          *ev;
+   E_View *v;
+   
+   ev = current_ev->event;
+   v = _data;
+   if (_b == 1)
+     {
+	v->selection.on = 1;
+	v->selection.start_x = _x;
+	v->selection.start_y = _y;
+	v->selection.x = _x;
+	v->selection.y = _y;
+	v->selection.w = 1;
+	v->selection.h = 1;
+	if (!v->selection.obj_rect)
+	  {
+	     v->selection.obj_rect = evas_add_rectangle(v->evas);
+	     v->selection.obj_l1 = evas_add_line(v->evas);
+	     v->selection.obj_l2 = evas_add_line(v->evas);
+	     v->selection.obj_l3 = evas_add_line(v->evas);
+	     v->selection.obj_l4 = evas_add_line(v->evas);
+	     evas_set_color(v->evas, v->selection.obj_rect, 255, 255, 255, 100);
+	     evas_set_color(v->evas, v->selection.obj_l1, 0, 0, 0, 200);
+	     evas_set_color(v->evas, v->selection.obj_l2, 0, 0, 0, 200);
+	     evas_set_color(v->evas, v->selection.obj_l3, 0, 0, 0, 200);
+	     evas_set_color(v->evas, v->selection.obj_l4, 0, 0, 0, 200);
+	     evas_set_layer(v->evas, v->selection.obj_rect, 100);
+	     evas_set_layer(v->evas, v->selection.obj_l1, 100);
+	     evas_set_layer(v->evas, v->selection.obj_l2, 100);
+	     evas_set_layer(v->evas, v->selection.obj_l3, 100);
+	     evas_set_layer(v->evas, v->selection.obj_l4, 100);
+	  }
+	e_view_update_selection(v, _x, _y);
+     }
+}
+
+static void
+e_bg_up_cb(void *_data, Evas _e, Evas_Object _o, int _b, int _x, int _y)
+{    
+   Ev_Mouse_Up          *ev;
+   E_View *v;
+   
+   ev = current_ev->event;
+   v = _data;
+   if ((v->selection.w < 6) && (v->selection.h < 6))
+     {
+	if (_b == 1)
+	  {
+	     static E_Build_Menu *buildmenu = NULL;
+	     
+	     if (!buildmenu)
+	       {
+		  char *apps_menu_db;
+		  
+		  apps_menu_db = e_config_get("apps_menu");
+		  if (apps_menu_db) buildmenu = e_build_menu_new_from_db(apps_menu_db);
+	       }
+	     if (buildmenu)
+	       {
+		  static E_Menu *menu = NULL;
+		  menu = buildmenu->menu;
+		  if (menu)
+		    e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+	       }
+	  }
+	else if (_b == 3)
+	  {
+	     static E_Menu *menu = NULL;
+	     
+	     if (!menu)
+	       {
+		  E_Menu_Item *menuitem;
+		  
+		  menu = e_menu_new();
+		  e_menu_set_padding_icon(menu, 8);
+		  e_menu_set_padding_state(menu, 8);
+		  menuitem = e_menu_item_new("Enlightenment "VERSION);
+		  e_menu_item_set_icon(menuitem, PACKAGE_DATA_DIR"/data/images/e_logo.png");
+		  e_menu_add_item(menu, menuitem);
+	       }
+	     if (menu)
+	       e_menu_show_at_mouse(menu, ev->rx, ev->ry, ev->time);
+	  }
+     }
+   if (ev->button == 1)
+     {
+	v->selection.on = 0;
+	e_view_update_selection(v, _x, _y);
+     }
+}
 
 static void
 e_idle(void *data)
@@ -116,6 +213,7 @@ e_mouse_down(Eevent * ev)
    Evas_List l;
    
    e = ev->event;
+   current_ev = ev;
    for (l = views; l; l = l->next)
      {
 	E_View *v;
@@ -123,42 +221,12 @@ e_mouse_down(Eevent * ev)
 	v = l->data;
 	if (e->win == v->win.main)
 	  {
-	     /* FIXME: */
-	     /* normally would handle selection in evasa object callbacks */
-	     /* but for now it's handled here */
-	     if (e->button == 1)
-	       {
-		  v->selection.on = 1;
-		  v->selection.start_x = e->x;
-		  v->selection.start_y = e->y;
-		  v->selection.x = e->x;
-		  v->selection.y = e->y;
-		  v->selection.w = 1;
-		  v->selection.h = 1;
-		  if (!v->selection.obj_rect)
-		    {
-		       v->selection.obj_rect = evas_add_rectangle(v->evas);
-		       v->selection.obj_l1 = evas_add_line(v->evas);
-		       v->selection.obj_l2 = evas_add_line(v->evas);
-		       v->selection.obj_l3 = evas_add_line(v->evas);
-		       v->selection.obj_l4 = evas_add_line(v->evas);
-		       evas_set_color(v->evas, v->selection.obj_rect, 255, 255, 255, 100);
-		       evas_set_color(v->evas, v->selection.obj_l1, 0, 0, 0, 200);
-		       evas_set_color(v->evas, v->selection.obj_l2, 0, 0, 0, 200);
-		       evas_set_color(v->evas, v->selection.obj_l3, 0, 0, 0, 200);
-		       evas_set_color(v->evas, v->selection.obj_l4, 0, 0, 0, 200);
-		       evas_set_layer(v->evas, v->selection.obj_rect, 100);
-		       evas_set_layer(v->evas, v->selection.obj_l1, 100);
-		       evas_set_layer(v->evas, v->selection.obj_l2, 100);
-		       evas_set_layer(v->evas, v->selection.obj_l3, 100);
-		       evas_set_layer(v->evas, v->selection.obj_l4, 100);
-		    }
-		  e_view_update_selection(v, e->x, e->y);
-	       }
 	     evas_event_button_down(v->evas, e->x, e->y, e->button);
+	     current_ev = NULL;
 	     return;
 	  }
      }
+   current_ev = NULL;
 }
 
 static void
@@ -168,6 +236,7 @@ e_mouse_up(Eevent * ev)
    Evas_List l;
    
    e = ev->event;
+   current_ev = ev;
    for (l = views; l; l = l->next)
      {
 	E_View *v;
@@ -175,57 +244,12 @@ e_mouse_up(Eevent * ev)
 	v = l->data;
 	if (e->win == v->win.main)
 	  {
-	     /* FIXME: temporary for now- should only do this if its a deskop */
-	     /* view and desktops accept focus on click. */
-	     /*	e_focus_to_window(e->win); */
-	     if ((v->selection.w < 6) && (v->selection.h < 6))
-	       {
-		  if (e->button == 1)
-		    {
-		       static E_Build_Menu *buildmenu = NULL;
-		       
-		       if (!buildmenu)
-			 {
-			    char *apps_menu_db;
-		       
-			    apps_menu_db = e_config_get("apps_menu");
-			    if (apps_menu_db) buildmenu = e_build_menu_new_from_db(apps_menu_db);
-			 }
-		       if (buildmenu)
-			 {
-			    static E_Menu *menu = NULL;
-			    menu = buildmenu->menu;
-			    if (menu)
-			      e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
-			 }
-		    }
-		  else if (e->button == 3)
-		    {
-		       static E_Menu *menu = NULL;
-		       
-		       if (!menu)
-			 {
-			    E_Menu_Item *menuitem;
-			    
-			    menu = e_menu_new();
-			    e_menu_set_padding_icon(menu, 8);
-			    e_menu_set_padding_state(menu, 8);
-			    menuitem = e_menu_item_new("Enlightenment "VERSION);
-			    e_menu_item_set_icon(menuitem, PACKAGE_DATA_DIR"/data/images/e_logo.png");
-			    e_menu_add_item(menu, menuitem);
-			 }
-		       if (menu)
-			 e_menu_show_at_mouse(menu, e->rx, e->ry, e->time);
-		    }
-	       }
-	     if (e->button == 1)
-	       {
-		  v->selection.on = 0;
-		  e_view_update_selection(v, e->x, e->y);
-	       }
 	     evas_event_button_up(v->evas, e->x, e->y, e->button);
+	     current_ev = NULL;
+	     return;
 	  }
      }
+   current_ev = NULL;
 }
 
 static void
@@ -603,6 +627,19 @@ e_view_new(void)
    v->options.back_pixmap = 0;
 #endif
    views = evas_list_append(views, v);
+   
+     {
+	E_Shelf *sh;
+	
+	sh = e_shelf_new();
+	e_shelf_set_name(sh, "Test Shelf");
+	e_shelf_set_view(sh, v);
+	e_shelf_show(sh);
+	e_shelf_move(sh, 10, 10);
+	e_shelf_resize(sh, 200, 150);
+	v->shelves = evas_list_append(v->shelves, sh);
+     }
+   
    return v;   
 }
 
@@ -700,6 +737,15 @@ e_view_realize(E_View *v)
 	v->bg->geom.h = v->size.h;
 	e_background_realize(v->bg, v->evas);
      }
+   v->obj_bg = evas_add_rectangle(v->evas);
+   evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_DOWN, e_bg_down_cb, v);
+   evas_callback_add(v->evas, v->obj_bg, CALLBACK_MOUSE_UP, e_bg_up_cb, v);
+   evas_set_layer(v->evas, v->obj_bg, 1);
+   evas_move(v->evas, v->obj_bg, 0, 0);
+   evas_resize(v->evas, v->obj_bg, 999999, 999999);
+   evas_set_color(v->evas, v->obj_bg, 0, 0, 0, 0);
+   evas_show(v->evas, v->obj_bg);
+   
    e_window_set_events(v->win.main, 
 		       XEV_EXPOSE | XEV_MOUSE_MOVE | 
 		       XEV_BUTTON | XEV_IN_OUT | XEV_KEY);
@@ -711,6 +757,19 @@ e_view_realize(E_View *v)
 	v->dir = NULL;
 	e_view_set_dir(v, dir);
 	IF_FREE(dir);
+     }
+   
+   if (v->shelves)
+     {
+	Evas_List l;
+	
+	for (l = v->shelves; l; l = l->next)
+	  {
+	     E_Shelf *sh;
+	     
+	     sh = l->data;
+	     e_shelf_realize(sh);
+	  }
      }
    v->changed = 1;
 }
@@ -726,14 +785,15 @@ e_view_update(E_View *v)
 {
    Evas_List l;
    
-   if (!v->changed) return;
-   
-   for (l = v->icons; l; l = l->next)
+   if (v->changed)
      {
-	E_Icon *icon;
-	
-	icon = l->data;
-	e_icon_update(icon);
+	for (l = v->icons; l; l = l->next)
+	  {
+	     E_Icon *icon;
+	     
+	     icon = l->data;
+	     e_icon_update(icon);
+	  }
      }
    if (v->options.back_pixmap)
      {
@@ -756,7 +816,7 @@ e_view_update(E_View *v)
      }
    else
      evas_render(v->evas);
-/*   v->changed = 0;*/
+   v->changed = 0;
 }
 
 void

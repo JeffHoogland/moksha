@@ -339,6 +339,8 @@ struct _E_View
       int                 x, y, w, h;
    } selection;
    
+   Evas_Object            obj_bg;
+   
    E_Background          *bg;
    
    int                    is_listing;
@@ -394,11 +396,21 @@ struct _E_Shelf
    OBJ_PROPERTIES;
    
    char *name;
+   E_View *view;
    
    int x, y, w, h;
    struct {
       Ebits_Object border;
    } bit;
+   struct {
+      Evas_Object clipper;
+   } obj;
+   int visible;
+   int icon_count;
+   struct {
+      int moving;
+      int resizing;
+   } state;
 };
 
 struct _E_Background
