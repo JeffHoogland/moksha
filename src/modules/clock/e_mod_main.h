@@ -16,6 +16,7 @@ struct _Config
 struct _Clock
 {
    Evas_List   *faces;
+   E_Menu      *config_menu;
    
 /*   E_Config_DD *conf_edd;*/
    Config      *conf;

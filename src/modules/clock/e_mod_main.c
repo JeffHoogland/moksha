@@ -13,19 +13,21 @@
 /* module private routines */
 static Clock  *_clock_init(E_Module *module);
 static void    _clock_shutdown(Clock *clock);
-static E_Menu *_clock_config_menu_new();
-static void    _clock_config_menu_del(E_Menu *menu);
+
+static void    _clock_config_menu_new(Clock *clock);
+
 static void    _clock_face_init(Clock_Face *face);
 static void    _clock_face_free(Clock_Face *face);
 static void    _clock_face_enable(Clock_Face *face);
 static void    _clock_face_disable(Clock_Face *face);
 static void    _clock_face_menu_new(Clock_Face *face);
 static void    _clock_face_menu_del(E_Menu *menu);
-static void    _clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
+static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int _clock_count;
+
 /* public module routines. all modules must have these */
 void *
 init(E_Module *module)
@@ -45,8 +47,8 @@ init(E_Module *module)
 	return NULL;
      }
    /* actually init clock */
-   module->config_menu = _clock_config_menu_new();
    clock = _clock_init(module);
+   module->config_menu = clock->config_menu;
    return clock;
 }
 
@@ -54,17 +56,14 @@ int
 shutdown(E_Module *module)
 {
    Clock *clock;
-   
+
+   if (module->config_menu)
+     module->config_menu = NULL;
+
    clock = module->data;
    if (clock)
-     {
-	if (module->config_menu)
-	  {
-	     _clock_config_menu_del(module->config_menu);
-	     module->config_menu = NULL;
-	  }
-	_clock_shutdown(clock);
-     }
+     _clock_shutdown(clock);
+
    return 1;
 }
 
@@ -118,6 +117,9 @@ _clock_init(E_Module *module)
     e->conf = E_NEW(Config, 1);
     }
     */
+
+   _clock_config_menu_new(clock);
+
    managers = e_manager_list();
    for (l = managers; l; l = l->next)
      {
@@ -162,24 +164,17 @@ _clock_shutdown(Clock *clock)
 
    for (list = clock->faces; list; list = list->next)
      _clock_face_free(list->data);
+
    evas_list_free(clock->faces);
+   e_object_del(E_OBJECT(clock->config_menu));
+
    free(clock);
 }
 
-static E_Menu *
-_clock_config_menu_new()
-{
-   E_Menu *mn;
-
-   mn = e_menu_new();
-
-   return mn;
-}
-
 static void
-_clock_config_menu_del(E_Menu *menu)
+_clock_config_menu_new(Clock *clock)
 {
-   e_object_del(E_OBJECT(menu));
+   clock->config_menu = e_menu_new();
 }
 
 static void
@@ -219,7 +214,7 @@ _clock_face_init(Clock_Face *face)
    e_gadman_client_align_set(face->gmc, 0.0, 1.0);
    e_gadman_client_aspect_set(face->gmc, 1.0, 1.0);
    e_gadman_client_resize(face->gmc, 64, 64);
-   e_gadman_client_change_func_set(face->gmc, _clock_cb_gmc_change, face);
+   e_gadman_client_change_func_set(face->gmc, _clock_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 
    _clock_face_menu_new(face);
@@ -280,7 +275,7 @@ _clock_face_menu_del(E_Menu *menu)
 }
 
 static void
-_clock_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
+_clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
    Clock_Face *face;
    Evas_Coord x, y, w, h;
