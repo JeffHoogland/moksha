@@ -1926,10 +1926,8 @@ e_view_icon_show(E_Icon *ic)
 {
    D_ENTER;
 
-   D("SHOWING ICON\n");
    
    if (ic->state.visible) D_RETURN;
-   D("SHOWING ICON REALLY\n");
    ic->state.visible = 1;
    if (!ic->obj.event1)
      {
