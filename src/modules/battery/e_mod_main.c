@@ -26,6 +26,7 @@ static void          _battery_face_cb_gmc_change(void *data, E_Gadman_Client *gm
 static void          _battery_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _battery_face_level_set(Battery_Face *ef, double level);
 static void          _battery_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
@@ -558,6 +559,11 @@ _battery_face_menu_new(Battery_Face *face)
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_face_cb_menu_enabled, face);
+
+   /* Edit */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_callback_set(mi, _battery_face_cb_menu_edit, face);
 }
 
 static void
@@ -1038,4 +1044,13 @@ _battery_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
 	_battery_face_enable(face);
      }
    e_menu_item_toggle_set(mi, face->conf->enabled);
+}
+
+static void
+_battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Battery_Face *face;
+
+   face = data;
+   e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }

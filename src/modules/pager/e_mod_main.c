@@ -51,6 +51,7 @@ static void        _pager_face_cb_menu_resize_both(void *data, E_Menu *m, E_Menu
 static void        _pager_face_cb_menu_size_small(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_size_medium(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_size_large(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int         _pager_count;
 
@@ -370,6 +371,11 @@ _pager_face_menu_new(Pager_Face *face)
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _pager_face_cb_menu_enabled, face);
+
+   /* Edit */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_callback_set(mi, _pager_face_cb_menu_edit, face);
 
    /* Scale */
    mi = e_menu_item_new(mn);
@@ -1203,4 +1209,13 @@ _pager_face_cb_menu_size_large(void *data, E_Menu *m, E_Menu_Item *mi)
    face->fw = 120;
    face->fh = 90;
    e_gadman_client_resize(face->gmc, face->fw * face->xnum, face->fh * face->ynum);
+}
+
+static void
+_pager_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager_Face *face;
+
+   face = data;
+   e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
