@@ -34,10 +34,10 @@ e_text_new(Evas evas, char *text, char *class)
    t->color.a = 255;
    t->w = evas_get_text_width(t->evas, t->obj.text) + 2;
    t->h = evas_get_text_height(t->evas, t->obj.text) + 2;
-   t->min.w = t->w;
-   t->min.h = t->h;
-   t->max.w = t->w;
-   t->max.h = t->h;
+   t->min.w = t->w + 2;
+   t->min.h = t->h + 2;
+   t->max.w = t->w + 2;
+   t->max.h = t->h + 2;
    return t;
 }
 

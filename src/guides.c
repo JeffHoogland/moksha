@@ -1,6 +1,7 @@
 #include "guides.h"
 #include "text.h"
 #include "config.h"
+#include "embed.h"
 
 static struct 
 {
@@ -152,7 +153,7 @@ e_guides_update(void)
 		  ebits_show(guides.disp.bg);
 	       }
 	  }
-	if ((!guides.current.display.text) && (guides.disp.icon))
+	if ((!guides.current.display.icon) && (guides.disp.icon))
 	  {
 	     evas_del_object(guides.disp.evas, guides.disp.icon);
 	     guides.disp.icon = NULL;

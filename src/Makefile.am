@@ -22,6 +22,7 @@ enlightenment_SOURCES = \
 	border.h border.c \
 	config.h config.c \
 	desktops.h desktops.c \
+	embed.c embed.h \
 	entry.h entry.c \
 	exec.h exec.c \
 	fs.h fs.c \
