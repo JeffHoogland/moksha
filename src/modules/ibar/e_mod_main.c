@@ -882,7 +882,7 @@ _ibar_icon_reorder_after(IBar_Icon *ic, IBar_Icon *after)
 static void
 _ibar_bar_frame_resize(IBar_Bar *ibb)
 {
-   Evas_Coord w, h;
+   Evas_Coord w, h, bw, bh;
    /* Not finished loading config yet! */
    if ((ibb->x == -1)
        || (ibb->y == -1)
@@ -894,10 +894,14 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
    e_box_freeze(ibb->box_object);
 
    e_box_min_size_get(ibb->box_object, &w, &h);
+   edje_extern_object_min_size_set(ibb->box_object, w, h);
+   edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
+   edje_object_size_min_calc(ibb->bar_object, &bw, &bh);
+   /* _calc */
 
    if (ibb->ibar->conf->width == IBAR_WIDTH_AUTO)
      {
-	e_gadman_client_resize(ibb->gmc, w, h);
+	e_gadman_client_resize(ibb->gmc, bw, bh);
      }
    else
      {
@@ -905,13 +909,13 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
 	    || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
 	  {
 	     /* h is the width of the bar */
-	     e_gadman_client_resize(ibb->gmc, w, ibb->h);
+	     e_gadman_client_resize(ibb->gmc, bw, ibb->h);
 	  }
 	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP)
 		 || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
 	  {
 	     /* w is the width of the bar */
-	     e_gadman_client_resize(ibb->gmc, ibb->w, h);
+	     e_gadman_client_resize(ibb->gmc, ibb->w, bh);
 	  }
      }
 

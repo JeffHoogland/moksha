@@ -3335,6 +3335,7 @@ _e_border_resize_begin(E_Border *bd)
    Evas_Coord w, h;
    char buf[40];
 
+   if (resize_ee) ecore_evas_free(resize_ee);
    resize_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
 					     0, 0, 10, 10);
    ecore_evas_borderless_set(resize_ee, 1);
@@ -3368,7 +3369,11 @@ static void
 _e_border_resize_end(E_Border *bd)
 {
    evas_object_del(resize_obj);
-   ecore_evas_free(resize_ee);
+   if (resize_ee)
+     {
+	ecore_evas_free(resize_ee);
+	resize_ee = NULL;
+     }
    resize = NULL;
 }
 

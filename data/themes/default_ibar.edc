@@ -20,21 +20,21 @@ group {
       part {
 	 name:          "background";
 	 mouse_events:  1;
-	 clip_to:       "items_clip";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   0    0;
 	       to:       "overlay";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -3   -3;
+	       offset:   -1   -1;
 	       to:       "overlay";
 	    }
 	    image {
 	       normal: "e17_ibar_bg_h.png";
+	       border: 6 6 6 6;
 	    }
 	    fill {
 	       smooth: 0;
@@ -44,16 +44,17 @@ group {
 	    state:    "vert" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   0    0;
 	       to:       "overlay";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -3   -3;
+	       offset:   -1   -1;
 	       to:       "overlay";
 	    }
 	    image {
 	       normal: "e17_ibar_bg_v.png";
+	       border: 6 6 6 6;
 	    }
 	    fill {
 	       smooth: 0;
@@ -68,9 +69,13 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       to:       "background";
+	       relative: 0.0  0.0;
+	       offset:   4    4;
 	    }
 	    rel2 {
 	       to:       "background";
+	       relative: 1.0  1.0;
+	       offset:   -5    -5;
 	    }
 	    color: 255 255 255 255;
 	 }
@@ -84,11 +89,11 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   4    4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -5    -1;
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -96,11 +101,11 @@ group {
 	    state:    "top" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   4    0;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -5    -5;
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -108,11 +113,11 @@ group {
 	    state:    "left" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -5  -5;
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -120,11 +125,11 @@ group {
 	    state:    "right" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   4    4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -1   -5;
 	    }
 	    color: 0 0 0 0;
 	 }
@@ -140,11 +145,11 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -1   3;
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
-	       border: 25 25 25 25;
+	       border: 13 13 13 13;
 	    }
 	    fill {
 	       smooth: 0;
@@ -154,7 +159,7 @@ group {
 	    state:    "top" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    -4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -162,7 +167,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_ibar_over_h.png";
-	       border: 25 25 25 25;
+	       border: 13 13 13 13;
 	    }
 	    fill {
 	       smooth: 0;
@@ -172,7 +177,7 @@ group {
 	    state:    "left" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   -4   0;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -180,7 +185,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_ibar_over_v.png";
-	       border: 25 25 25 25;
+	       border: 13 13 13 13;
 	    }
 	    fill {
 	       smooth: 0;
@@ -194,11 +199,11 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   3    -1;
 	    }
 	    image {
 	       normal: "e17_ibar_over_v.png";
-	       border: 25 25 25 25;
+	       border: 13 13 13 13;
 	    }
 	    fill {
 	       smooth: 0;
@@ -264,11 +269,11 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0   -18;
+	       offset:   0   -14;
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
-	       offset:   -1   22;
+	       offset:   -1   26;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_d.png";
@@ -278,11 +283,11 @@ group {
 	    state:    "top" 0.0;
 	    rel1 {
 	       relative: 0.0  1.0;
-	       offset:   0   -22;
+	       offset:   0   -26;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   18;
+	       offset:   -1   14;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_u.png";
@@ -292,11 +297,11 @@ group {
 	    state:    "right" 0.0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   -18 0;
+	       offset:   -14 0;
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
-	       offset:   22 -1;
+	       offset:   26 -1;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_r.png";
@@ -306,11 +311,11 @@ group {
 	    state:    "left" 0.0;
 	    rel1 {
 	       relative: 1.0 0.0;
-	       offset:   -22  0;
+	       offset:   -26  0;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   18  -1;
+	       offset:   14  -1;
 	    }
 	    image {
 	       normal: "e17_ibar_lamp_l.png";
