@@ -74,6 +74,14 @@ edb_ed $DB add "/actions/"$NUM"/key"       str ""
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_NONE
 NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/"$NUM"/name"      str "Window_Grab"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Raise"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_MOUSE_CLICK
+edb_ed $DB add "/actions/"$NUM"/button"    int 1
+edb_ed $DB add "/actions/"$NUM"/key"       str ""
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Window_Grab"
 edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Move"
 edb_ed $DB add "/actions/"$NUM"/params"    str ""
 edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_MOUSE_CLICK
@@ -175,6 +183,46 @@ edb_ed $DB add "/actions/"$NUM"/params"    str ""
 edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
 edb_ed $DB add "/actions/"$NUM"/button"    int 0
 edb_ed $DB add "/actions/"$NUM"/key"       str "m"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Close"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "x"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Shade"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "r"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Raise"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "Up"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Lower"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "Down"
+edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
+NUM=$[ $NUM + 1 ];
+edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
+edb_ed $DB add "/actions/"$NUM"/action"    str "Window_Stick"
+edb_ed $DB add "/actions/"$NUM"/params"    str ""
+edb_ed $DB add "/actions/"$NUM"/event"     int $ACT_KEY_DOWN
+edb_ed $DB add "/actions/"$NUM"/button"    int 0
+edb_ed $DB add "/actions/"$NUM"/key"       str "a"
 edb_ed $DB add "/actions/"$NUM"/modifiers" int $MOD_CTRL_ALT
 NUM=$[ $NUM + 1 ];
 edb_ed $DB add "/actions/"$NUM"/name"      str "Key_Binding"
