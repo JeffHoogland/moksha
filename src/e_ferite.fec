@@ -1,4 +1,4 @@
-%{
+header %{
    
    #include "Ecore.h"
    #include "desktops.h"
@@ -49,13 +49,13 @@ namespace e {
    function get_current_desktop()
    %{
 	  int retval = e_desktops_get_current();
-	  FE_RETURN_INT( retval );
+	  FE_RETURN_LONG( retval );
    %}	 
    
    function get_desktop_count()
    %{
 	  int retval = e_desktops_get_num();
-	  FE_RETURN_INT( retval );
+	  FE_RETURN_LONG( retval );
    %}
    
    function get_width();
