@@ -24,7 +24,7 @@ typedef struct _E_App          E_App;
 
 struct _E_App
 {
-   E_Object             e_obj_inherit;
+   E_Object       e_obj_inherit;
    
    E_App         *parent; /* the parent e_app node */
    

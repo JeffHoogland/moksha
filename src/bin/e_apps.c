@@ -5,7 +5,9 @@
 
 /* TODO List:
  * 
- * * if a application .eapp file is added in a different location in a monitored app tree but has the same filename as an existing one somewhere else, the existing one gets a changed callback, not an dded callback for the new one
+ * * if a application .eapp file is added in a different location in a monitored app tree
+ *   but has the same filename as an existing one somewhere else, the existing one gets a
+ *   changed callback, not an added callback for the new one
  * * track app execution state, visibility state etc. and call callbacks
  * * calls to execute an app or query its runing/starting state etc.
  */
