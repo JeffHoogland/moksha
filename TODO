@@ -40,7 +40,7 @@ ISSUES:
 * virtual desktops need fixing to work with zones properly
 * gadman gadget menu needs icons :)
 * window menu needs icons :)
-* java apps seem to have a hard time (cgoban for example)
+* java apps seem to have a hard time (cgoban for example, and batik)
 * ibar right click context menu needs config items in it as in the module config menu
 * any known segv's must go
 
