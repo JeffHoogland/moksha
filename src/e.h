@@ -104,9 +104,8 @@ _e_obj->e_obj_free = (void *) _e_obj_free_func; \
 (y < (yy + hh)) && \
 ((x + w) > xx) && \
 ((y + h) > yy))
-
 #define SPANS_COMMON(x1, w1, x2, w2) \
-  (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
+(!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
 #define UN(_blah) _blah = 0
 
 #define ACT_MOUSE_IN      0
@@ -328,21 +327,7 @@ struct _E_View
    struct {
       Evas_Render_Method  render_method;
       int                 back_pixmap;
-      struct {
-	 int method;
-	 struct {
-	    int dir;
-	    int w, h;
-	    int next_pos;
-	 } grid;
-      } arrange;
    } options;
-   
-   struct {
-      struct {
-	 int left, right, top, bottom;
-      } inset, icon, spacing;
-   } spacing;
    
    Evas                   evas;
    struct {
@@ -355,20 +340,66 @@ struct _E_View
    } size;
    struct {
       int                 x, y;
-   } viewport;
-   struct {
-      int                 x, y;
    } location;
    struct {
-      Evas_Object         obj_rect;
-      Evas_Object         obj_l1;
-      Evas_Object         obj_l2;
-      Evas_Object         obj_l3;
-      Evas_Object         obj_l4;
-      int                 on;
-      int                 start_x, start_y;
-      int                 x, y, w, h;
-   } selection;
+      /* +-----------------+
+       * |        Wt       |
+       * |  +-----------+  |
+       * |Wl|           |Wr|
+       * |  |    [I] Is |  |
+       * |  |    Ig     |  |
+       * |  |   [txt]   |  |
+       * |  |     Ib    |  |
+       * |  +-----------+  |
+       * |       Wb        |
+       * +-----------------+
+       */
+      struct {
+	 int l, r, t, b;
+      } window;
+      struct {
+	 int s, g, b;
+      } icon;
+   } spacing;
+   struct {
+      int on;
+      int x, y, w, h;
+      struct {
+	 int x, y;
+      } down;
+      struct {
+	 struct {
+	    int r, g, b, a;
+	 } 
+	 edge_l, edge_r, edge_t, edge_b, 
+	 middle, 
+	 grad_l, grad_r, grad_t, grad_b;
+	 struct {
+	    int l, r, t, b;
+	 } grad_size;
+      } config;
+      struct {
+	 Evas_Object clip;
+	 Evas_Object edge_l;
+	 Evas_Object edge_r;
+	 Evas_Object edge_t;
+	 Evas_Object edge_b;
+	 Evas_Object middle;
+	 Evas_Object grad_l;
+	 Evas_Object grad_r;
+	 Evas_Object grad_t;
+	 Evas_Object grad_b;
+      } obj;
+   } select;
+   struct {
+      int started;
+      Window win;
+      int x, y;
+      struct {
+	 int x, y;
+      } offset;
+      int update;
+   } drag;
    
    Evas_Object            obj_bg;
    
@@ -380,7 +411,9 @@ struct _E_View
    E_FS_Restarter        *restarter;
    
    Evas_List              icons;
-   Evas_List              shelves;
+   
+   int                    have_resort_queued;
+   int                    sel_count;
    
    int                    changed;
 };
@@ -393,56 +426,49 @@ struct _E_Icon
    
    E_View *view;
    
-   char    *shelf_name;
-   E_Shelf *shelf;
-   
    struct {
-      struct {
-	 char *base, *type;
-      } mime;
-      EfsdCmdId   link_get_id;
+      char *icon;
+      char *custom_icon;
       char *link;
-      int   is_exe;
-      int   is_dir;
       struct {
-	 char *normal;
-	 char *selected;
-	 char *clicked;
-      } icon;
-      struct {
-	 int have;
-	 int x, y;
-      } coord;
-      int ready;
+	 char *base;
+	 char *type;
+      } mime;
    } info;
    
    struct {
-      int     x, y;
-      int     ix, iy, tx, ty, iw, ih, tw, th, w, h;
+      Evas_Object icon;
+      Evas_Object text;
+      Evas_Object event1;
+      Evas_Object event2;
       struct {
-	 int text_location;
-	 int show_text;
-	 int show_icon;
-      } options;
-      struct {
-	 int  clicked;
-	 int  selected;
-	 int  hilited;
-      } state;
-      char   *icon;
-      int     visible;
-      int     viewable;
-   } current, previous;
+	 struct {
+	    Ebits_Object icon;
+	    Ebits_Object text;
+	 } over, under;
+      } sel;
+   } obj;
    
    struct {
-      Evas_Object   icon;
-      Evas_Object   filename;
-      Evas_Object   sel1, sel2;
-      Ebits_Object  sel_icon;
-      Ebits_Object  sel_text;
-      Ebits_Object  base_icon;
-      Ebits_Object  base_text;
-   } obj;
+      int hilited;
+      int clicked;
+      int selected;
+      int running;
+      int disabled;
+      int visible;
+      int just_selected;
+   } state;
+   
+   struct {
+      int x, y, w, h;
+      struct {
+	 int w, h;
+      } icon;
+      struct {
+	 int w, h;
+      } text;
+   } geom;
+   
    int     changed;   
 };
 

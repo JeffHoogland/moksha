@@ -79,7 +79,7 @@ static void
 _e_fs_restarter(int val, void *data)
 {
    if (ec) return;
-   printf("%i\n", efsd_pid);
+   printf("_e_fs_restarter %i\n", efsd_pid);
    if (val > 0)    
      {
 	if (efsd_pid <= 0)
@@ -92,6 +92,7 @@ _e_fs_restarter(int val, void *data)
 	Evas_List l;
 	
 	printf("connect!\n");
+	e_add_event_fd(efsd_get_connection_fd(ec), _e_fs_fd_handle);
 	for (l = fs_restart_handlers; l; l = l->next)
 	  {
 	     E_FS_Restarter *rs;
@@ -146,18 +147,23 @@ e_fs_init(void)
 
    e_event_filter_handler_add(EV_CHILD, e_fs_child_handle);   
    /* already have an efsd around? */
+   printf("try efsd initial open...\n");
    ec = efsd_open();
    /* no - efsd around */
    if (!ec)
      {
 	/* start efsd */
+	printf("start efsd...\n");
 	efsd_pid = e_exec_run("efsd -f");
 	if (efsd_pid > 0)
 	  {
-	     for (i = 0; (!ec) && (i < 4); i++)
+	     ec = efsd_open();
+	     for (i = 0; (!ec) && (i < 15); i++)
 	       {
 		  sleep(1);
+		  printf("try efsd open %i...\n", i, ec);
 		  ec = efsd_open();
+		  printf("(connection ptr: %p)\n", ec);
 	       }
 	  }
      }
