@@ -164,6 +164,51 @@ e_config_user_dir(void)
    D_RETURN_(cfg_user_dir);
 }
 
+typedef struct _e_config_file_entry E_Config_File_Entry;
+
+struct _e_config_file_entry
+{
+   char   *name;
+   struct {
+      char   *path;
+      time_t  last_mod;
+   } user, system;
+   Evas_List hash[256];
+};
+
+void
+e_config_add_change_cb(char *file, void (*func) (void *_data), void *data)
+{
+}
+
+void
+e_config_del_change_cb(char *file, void (*func) (void *_data))
+{
+}
+
+int
+e_config_val_int_get(char *file, char *key, int def)
+{
+}
+
+float
+e_config_val_float_get(char *file, char *key, float def)
+{
+}
+
+char *
+e_config_val_str_get(char *file, char *key, char *def)
+{
+}
+
+char *
+e_config_val_key_get(char *file, char *key, char *def)
+{
+}
+
+
+
+
 void
 e_config_type_add_node(E_Config_Base_Type *base, char *prefix, 
 		       E_Config_Datatype type, E_Config_Base_Type *list_type,

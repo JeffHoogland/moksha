@@ -355,6 +355,7 @@ e_iconbar_fix(E_Iconbar *ib)
 	     /* now move and resize it */
 	     evas_move(ic->iconbar->view->evas, ic->image, ix + ox, iy + oy);
 	     evas_resize(ic->iconbar->view->evas, ic->image, w, h);
+	     evas_set_image_fill(ic->iconbar->view->evas, ic->image, 0, 0, w, h);
 	     /* advance our position counter to the next spot */
 	     ix += w;
 	  }
@@ -374,6 +375,7 @@ e_iconbar_fix(E_Iconbar *ib)
 	     /* now move the icona nd resize it */
 	     evas_move(ic->iconbar->view->evas, ic->image, ix + ox, iy + oy);
 	     evas_resize(ic->iconbar->view->evas, ic->image, w, h);
+	     evas_set_image_fill(ic->iconbar->view->evas, ic->image, 0, 0, w, h);
 	     /* advance out counter to the next spot */
 	     iy += h;
 	  }

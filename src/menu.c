@@ -554,7 +554,7 @@ e_menu_item_unselect (E_Menu_Item *mi)
 
    if ((mi) && (mi->menu->selected == mi))
      {
-        mi->menu->selected = NULL;
+       mi->menu->selected = curr_selected_item = NULL;
 	mi->selected = 0;
 	mi->menu->redo_sel = 1;
 	mi->menu->changed = 1;
@@ -1131,7 +1131,8 @@ e_menu_cleanup(E_Menu *m)
 	IF_FREE(mi->icon);
 	free(mi);
      }
-   evas_list_free(m->entries);
+   m->entries = evas_list_free(m->entries);
+   m->selected = NULL;
    IF_FREE(m->bg_file);
    evas_free(m->evas);
    ecore_window_destroy(m->win.main);
@@ -1140,6 +1141,7 @@ e_menu_cleanup(E_Menu *m)
 
    /* Call the destructor of the base class */
    e_object_cleanup(E_OBJECT(m));
+   m = NULL;
 
    D_RETURN;
 }
@@ -1376,8 +1378,10 @@ e_menu_item_unrealize(E_Menu *m, E_Menu_Item *mi)
    mi->bg = NULL;
    IF_FREE(mi->bg_file);
    mi->bg_file = NULL;
-   if (mi->obj_entry) evas_del_object(m->evas, mi->obj_text);
+   if (mi->obj_entry) evas_del_object(m->evas, mi->obj_entry);
    mi->obj_entry = NULL;
+   if (mi->obj_text) evas_del_object(m->evas, mi->obj_text);
+   mi->obj_text = NULL;
    if (mi->obj_icon) evas_del_object(m->evas, mi->obj_icon);
    mi->obj_icon = NULL;
    if (mi->state) ebits_free(mi->state);

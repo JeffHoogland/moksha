@@ -22,6 +22,11 @@ e_text_new(Evas evas, char *text, char *class)
    t->obj.o3 = evas_add_text(t->evas, "borzoib", 8, t->text);
    t->obj.o4 = evas_add_text(t->evas, "borzoib", 8, t->text);
    t->obj.text = evas_add_text(t->evas, "borzoib", 8, t->text);
+   evas_set_pass_events(t->evas, t->obj.o1, 1);
+   evas_set_pass_events(t->evas, t->obj.o2, 1);
+   evas_set_pass_events(t->evas, t->obj.o3, 1);
+   evas_set_pass_events(t->evas, t->obj.o4, 1);
+   evas_set_pass_events(t->evas, t->obj.text, 1);
    evas_set_color(t->evas, t->obj.o1, 0, 0, 0, 255);
    evas_set_color(t->evas, t->obj.o2, 0, 0, 0, 255);
    evas_set_color(t->evas, t->obj.o3, 0, 0, 0, 255);
@@ -75,7 +80,7 @@ e_text_set_text(E_Text *t, char *text)
 
    if (!text) text = "";
    if (!strcmp(t->text, text)) D_RETURN;
-   IF_FREE(t->text);
+   FREE(t->text);
    t->text = strdup(text);
    evas_set_text(t->evas, t->obj.o1, t->text);
    evas_set_text(t->evas, t->obj.o2, t->text);

@@ -3,6 +3,8 @@
 
 #include "e.h"
 #include "observer.h"
+#include "debug.h"
+#include "text.h"
 
 #ifndef E_DESKTOPS_TYPEDEF
 #define E_DESKTOPS_TYPEDEF
@@ -37,7 +39,7 @@ struct _E_Border
    } evas;
    struct {
       struct {
-	 Evas_Object l, r, t, b;
+	 E_Text *l, *r, *t, *b;
       } title;
       struct {
 	 Evas_Object l, r, t, b;

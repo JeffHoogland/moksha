@@ -161,10 +161,9 @@ e_desktops_scroll(E_Desktop *desk, int dx, int dy)
 void
 e_desktops_cleanup(E_Desktop *desk)
 {
-   Evas_List l;
    D_ENTER;
 
-   for (l = desk->windows; l; l = l->next)
+   while (desk->windows)
      {
 	E_Border *b;
 	
@@ -176,6 +175,7 @@ e_desktops_cleanup(E_Desktop *desk)
 	    ecore_window_reparent(b->win.client, 0, 0, 0);
 	    e_icccm_release(b->win.client);
 	  }
+	e_object_unref(E_OBJECT(b));
      }
 
    ecore_window_destroy(desk->win.main);

@@ -1246,6 +1246,12 @@ e_border_cleanup(E_Border *b)
    if (b->bits.r) ebits_free(b->bits.r);
    if (b->bits.t) ebits_free(b->bits.t);
    if (b->bits.b) ebits_free(b->bits.b);
+   
+   if (b->obj.title.l) e_text_free(b->obj.title.l);
+   if (b->obj.title.r) e_text_free(b->obj.title.r);
+   if (b->obj.title.t) e_text_free(b->obj.title.t);
+   if (b->obj.title.b) e_text_free(b->obj.title.b);
+   
    evases = evas_list_remove(evases, b->evas.l);
    evases = evas_list_remove(evases, b->evas.r);
    evases = evas_list_remove(evases, b->evas.t);
@@ -1679,10 +1685,10 @@ e_border_new(void)
    e_cursors_display_in_window(b->win.t, "Default");
    e_cursors_display_in_window(b->win.b, "Default");
 
-   b->obj.title.l = evas_add_text(b->evas.l, "borzoib", 8, "");
-   b->obj.title.r = evas_add_text(b->evas.r, "borzoib", 8, "");
-   b->obj.title.t = evas_add_text(b->evas.t, "borzoib", 8, "");
-   b->obj.title.b = evas_add_text(b->evas.b, "borzoib", 8, "");
+   b->obj.title.l = e_text_new(b->evas.l, "", "title");
+   b->obj.title.r = e_text_new(b->evas.r, "", "title");
+   b->obj.title.t = e_text_new(b->evas.t, "", "title");
+   b->obj.title.b = e_text_new(b->evas.b, "", "title");
    
    b->obj.title_clip.l = evas_add_rectangle(b->evas.l);
    b->obj.title_clip.r = evas_add_rectangle(b->evas.r);
@@ -1693,31 +1699,21 @@ e_border_new(void)
    evas_set_color(b->evas.r, b->obj.title_clip.r, 255, 255, 255, 255);
    evas_set_color(b->evas.t, b->obj.title_clip.t, 255, 255, 255, 255);
    evas_set_color(b->evas.b, b->obj.title_clip.b, 255, 255, 255, 255);
-   
-   evas_set_pass_events(b->evas.l, b->obj.title.l, 1);
-   evas_set_pass_events(b->evas.r, b->obj.title.r, 1);
-   evas_set_pass_events(b->evas.t, b->obj.title.t, 1);
-   evas_set_pass_events(b->evas.b, b->obj.title.b, 1);
-   
-   evas_set_color(b->evas.l, b->obj.title.l, 0, 0, 0, 255);
-   evas_set_color(b->evas.r, b->obj.title.r, 0, 0, 0, 255);
-   evas_set_color(b->evas.t, b->obj.title.t, 0, 0, 0, 255);
-   evas_set_color(b->evas.b, b->obj.title.b, 0, 0, 0, 255);
 
-   evas_show(b->evas.l, b->obj.title.l);
-   evas_show(b->evas.r, b->obj.title.r);
-   evas_show(b->evas.t, b->obj.title.t);
-   evas_show(b->evas.b, b->obj.title.b);
+   e_text_show(b->obj.title.l);
+   e_text_show(b->obj.title.r);
+   e_text_show(b->obj.title.t);
+   e_text_show(b->obj.title.b);
 
    evas_show(b->evas.l, b->obj.title_clip.l);
    evas_show(b->evas.r, b->obj.title_clip.r);
    evas_show(b->evas.t, b->obj.title_clip.t);
    evas_show(b->evas.b, b->obj.title_clip.b);
    
-   evas_set_clip(b->evas.l, b->obj.title.l, b->obj.title_clip.l);
-   evas_set_clip(b->evas.l, b->obj.title.r, b->obj.title_clip.r);
-   evas_set_clip(b->evas.l, b->obj.title.t, b->obj.title_clip.t);
-   evas_set_clip(b->evas.l, b->obj.title.b, b->obj.title_clip.b);
+   e_text_set_clip(b->obj.title.l, b->obj.title_clip.l);
+   e_text_set_clip(b->obj.title.r, b->obj.title_clip.r);
+   e_text_set_clip(b->obj.title.t, b->obj.title_clip.t);
+   e_text_set_clip(b->obj.title.b, b->obj.title_clip.b);
    
    ecore_window_raise(b->win.input);
    ecore_window_raise(b->win.container);
@@ -2385,33 +2381,65 @@ e_border_update(E_Border *b)
 	double tx, ty, tw, th;
 	
 	ebits_get_named_bit_geometry(b->bits.l, "Title_Area", &tx, &ty, &tw, &th);
-	evas_set_text(b->evas.l, b->obj.title.l, b->client.title);
-	evas_move(b->evas.l, b->obj.title.l, tx, ty);
+	if (b->obj.title.l)
+	  {
+	     e_text_set_text(b->obj.title.l, b->client.title);
+	     e_text_move(b->obj.title.l, tx, ty);
+	     if (b->current.selected)
+	       e_text_set_state(b->obj.title.l, "selected");
+	     else
+	       e_text_set_state(b->obj.title.l, "normal");
+	  }
 	evas_move(b->evas.l, b->obj.title_clip.l, tx, ty);
 	evas_resize(b->evas.l, b->obj.title_clip.l, tw, th);
 	
 	ebits_get_named_bit_geometry(b->bits.r, "Title_Area", &tx, &ty, &tw, &th);
-	evas_set_text(b->evas.r, b->obj.title.r, b->client.title);
-	evas_move(b->evas.r, b->obj.title.r, tx, ty);
+	if (b->obj.title.r)
+	  {
+	     e_text_set_text(b->obj.title.r, b->client.title);
+	     e_text_move(b->obj.title.r, tx, ty);
+	     if (b->current.selected)
+	       e_text_set_state(b->obj.title.r, "selected");
+	     else
+	       e_text_set_state(b->obj.title.r, "normal");
+	  }
 	evas_move(b->evas.r, b->obj.title_clip.r, tx, ty);
 	evas_resize(b->evas.r, b->obj.title_clip.r, tw, th);
 	
 	ebits_get_named_bit_geometry(b->bits.t, "Title_Area", &tx, &ty, &tw, &th);
-	evas_set_text(b->evas.t, b->obj.title.t, b->client.title);
-	evas_move(b->evas.t, b->obj.title.t, tx, ty);
+	if (b->obj.title.t)
+	  {
+	     e_text_set_text(b->obj.title.t, b->client.title);
+	     e_text_move(b->obj.title.t, tx, ty);
+	     if (b->current.selected)
+	       e_text_set_state(b->obj.title.t, "selected");
+	     else
+	       e_text_set_state(b->obj.title.t, "normal");
+	  }
 	evas_move(b->evas.t, b->obj.title_clip.t, tx, ty);
 	evas_resize(b->evas.t, b->obj.title_clip.t, tw, th);
 	
 	ebits_get_named_bit_geometry(b->bits.b, "Title_Area", &tx, &ty, &tw, &th);
-	evas_set_text(b->evas.b, b->obj.title.b, b->client.title);
-	evas_move(b->evas.b, b->obj.title.b, tx, ty);
+	if (b->obj.title.b)
+	  {
+	     e_text_set_text(b->obj.title.b, b->client.title);
+	     e_text_move(b->obj.title.b, tx, ty);
+	     if (b->current.selected)
+	       e_text_set_state(b->obj.title.b, "selected");
+	     else
+	       e_text_set_state(b->obj.title.b, "normal");
+	  }
 	evas_move(b->evas.b, b->obj.title_clip.b, tx, ty);
 	evas_resize(b->evas.b, b->obj.title_clip.b, tw, th);
 
-	evas_set_layer(b->evas.l, b->obj.title.l, 1);
-	evas_set_layer(b->evas.r, b->obj.title.r, 1);
-	evas_set_layer(b->evas.t, b->obj.title.t, 1);
-	evas_set_layer(b->evas.b, b->obj.title.b, 1);   
+	if (b->obj.title.l)
+	  e_text_set_layer(b->obj.title.l, 1);
+	if (b->obj.title.r)
+	  e_text_set_layer(b->obj.title.r, 1);
+	if (b->obj.title.t)
+	  e_text_set_layer(b->obj.title.t, 1);
+	if (b->obj.title.b)
+	  e_text_set_layer(b->obj.title.b, 1);   
      }
    e_border_reshape(b);
    if (visibility_changed)
