@@ -14,6 +14,7 @@ global {
 
 /* function to update clock display */
 function clock_update(object data, number val){
+  string date = String.copySection(Time.ctime(Time.time()),8,20);
   string time = String.copySection(Time.ctime(Time.time()),11,20);
   number hour = String.toLong(String.copySection(time,0,2));
   string min = String.copySection(time,3,5);
@@ -24,7 +25,7 @@ function clock_update(object data, number val){
     timeofday = "PM";
     hour = hour - 12;
   }
-  data.setText(""+hour+":"+min+":"+seconds+" "+timeofday);
+  data.setText(""+hour+" "+min+" "+seconds+" "+timeofday);
   epp.addTimer("clockTimer",0.5,"clock_update",0,data);
 }
 
@@ -32,6 +33,7 @@ function clock_update(object data, number val){
 
 /* declare vars */
 object clock;
+object ebits;
 
 /* create a new epplet */
 epp = new Epplet();
@@ -42,15 +44,15 @@ epp.resize(100, 30);
 
 /* create text object for clock display */
 clock = new EvasObject(epp);
-/* clock.addText("borzoib",15,""); */
-clock.addText("plank",15,"");
+clock.addText("plank",15,""); 
+/*clock.addText("borzoib",13,"");*/
 clock.move(epp.getX()+2, epp.getY()+2);
 clock.setLayer(9999);
 clock.setColor(0,0,0,140);
 clock.show();
 
-/* add timer to update clock display */
-epp.addTimer("clockTimer", 0.5, "clock_update", 0, clock);
+/* update clock display */
+clock_update(clock,0);
 
 
 
