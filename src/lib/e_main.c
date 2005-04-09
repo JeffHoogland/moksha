@@ -7,11 +7,10 @@
  * TODO:
  * add ecore events for callbacks to all/some ipc calls, e.g. module_list
  *
- * add module_list, module_enabled_get and module_enabled_set
+ * add module_enabled_get
  *
  * augment IPC calls and add wrappers for them - i.e.:
- *   e restart/shutdown
- *   desktops add/remove/list/currentset/bgset etc
+ *   desktops add/remove/list/currentset etc
  *   windows shade[get/set]/maximise[get/set]/iconify[get/set]/list
  *
  * add ability to e to set theme, so we can have a theme_set call :)
@@ -26,10 +25,16 @@ static int  _e_ipc_init(const char *display);
 static void _e_ipc_shutdown(void);
 static int _e_cb_server_data(void *data, int type, void *event);
 
+static void _e_cb_module_list_free(void *data, void *ev);
+static void _e_cb_module_dir_list_free(void *data, void *ev);
+static void _e_cb_bg_dir_list_free(void *data, void *ev);
+
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
+int E_RESPONSE_MODULE_DIRS_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
+int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
@@ -102,7 +107,9 @@ e_init(const char* display)
    if (!E_RESPONSE_MODULE_LIST)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
+	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
+	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
      }
    
    if (free_disp)
@@ -127,12 +134,17 @@ e_shutdown(void)
 void
 e_restart(void)
 {
-   E_Ipc_Op type;
-
-   type = E_IPC_OP_RESTART;
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST, type, 0/*ref*/,
-			 0/*ref_to*/, 0/*response*/, NULL, 0);
+   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+                         E_IPC_OP_RESTART, 0/*ref*/, 0/*ref_to*/, 
+			 0/*response*/, NULL, 0);
+}
     
+void
+e_quit(void)
+{
+   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+                         E_IPC_OP_SHUTDOWN, 0/*ref*/, 0/*ref_to*/, 
+			 0/*response*/, NULL, 0);
 }
 
 void
@@ -180,6 +192,14 @@ e_module_list(void)
 }
 
 void
+e_module_dirs_list(void)
+{
+   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_MODULE_DIRS_LIST, 0/*ref*/, 0/*ref_to*/,
+			 0/*response*/, NULL, 0);
+}
+
+void
 e_background_set(const char *bgfile)
 {
    if (!bgfile)
@@ -196,6 +216,14 @@ e_background_get(void)
    ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
 			 E_IPC_OP_BG_GET, 0/*ref*/, 0/*ref_to*/,
 			 0/*response*/, NULL, 0);
+}
+
+void
+e_background_dirs_list(void)
+{
+   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_BG_DIRS_LIST, 0/*ref*/, 
+			 0/*ref_to*/, 0/*response*/, NULL, 0);
 }
 
 static int
@@ -242,28 +270,74 @@ _e_cb_server_data(void *data, int type, void *event)
 	case E_IPC_OP_MODULE_LIST_REPLY:
 	  if (e->data)
 	    {
+	       E_Response_Module_List *res;
+	       int count = 0;
 	       char *p;
              
+	       res = calloc(1, sizeof(E_Response_Module_List));
+
 	       p = e->data;
 	       while (p < (char *)(e->data + e->size))
 		 {
-		    E_Response_Module_List *res;
+		    p += strlen(p) + 1 + 1;
+		    count ++;
+		 }
+	       res->modules = malloc(sizeof(E_Response_Module_Data *) * count);
+	       res->count = count;
 
-		    res = calloc(1, sizeof(E_Response_Module_List));
-		    res->name = p;
-		    p += strlen(res->name);
+	       count = 0;
+	       p = e->data;
+	       while (p < (char *)(e->data + e->size))
+		 {
+		    E_Response_Module_Data *md;
+		    md = malloc(sizeof(E_Response_Module_Data));
+		    md->name = p;
+		    p += strlen(md->name);
 		    if (p < (char *)(e->data + e->size))
 		      {
 			 p++;
 			 if (p < (char *)(e->data + e->size))
 			   {
-			      res->enabled = *p;
+			      md->enabled = *p;
 			      p++;
-			      ecore_event_add(E_RESPONSE_MODULE_LIST, res,
-					      NULL, NULL);
 			   }
 		      }
+		    res->modules[count] = md;
+		    count ++;
 		 }
+			      ecore_event_add(E_RESPONSE_MODULE_LIST, res,
+				_e_cb_module_list_free, NULL);
+			   }
+          break;
+	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
+	  if (e->data)
+	    {
+	       E_Response_Module_Dirs_List *res;
+	       int count = 0;
+	       char *p;
+
+	       res = calloc(1, sizeof(E_Response_Module_Dirs_List));
+
+	       p = e->data;
+	       while (p < (char *)(e->data + e->size))
+	         {
+		    p += strlen(p) + 1;
+		    count ++;
+		      }
+
+	       res->dirs = malloc(sizeof(char *) * count);
+	       res->count = count;
+
+	       count = 0;
+	       p = e->data;
+	       while (p < (char *)(e->data + e->size))
+		 {
+	            res->dirs[count] = p;
+		    p += strlen(res->dirs[count]) + 1;
+		    count++;
+		 }
+	       ecore_event_add(E_RESPONSE_MODULE_DIRS_LIST, res,
+				_e_cb_module_dir_list_free, NULL);
 	    }
           break;
 	case E_IPC_OP_BG_GET_REPLY:
@@ -271,12 +345,79 @@ _e_cb_server_data(void *data, int type, void *event)
 	       E_Response_Background_Get *res;
 
 	       res = calloc(1, sizeof(E_Response_Background_Get));
-	       res->data = e->data;
+	       res->file = e->data;
 	       ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
 	       break;
 	    }
+	case E_IPC_OP_BG_DIRS_LIST_REPLY:
+	  if (e->data)
+	    {
+	       E_Response_Background_Dirs_List *res;
+	       char *p;
+	       int count = 0;
+
+	       res = calloc(1, sizeof(E_Response_Background_Dirs_List));
+
+	       p = e->data;
+	       while (p < (char *)(e->data + e->size))
+	         {
+		    p += strlen(p) + 1;
+		    count ++;
+		 }
+
+	       res->dirs = malloc(sizeof(char *) * count);
+	       res->count = count;
+
+	       count = 0;
+	       p = e->data;
+	       while (p < (char *)(e->data + e->size))
+		 {
+	            res->dirs[count] = p;
+		    p += strlen(res->dirs[count]) + 1;
+		    count++;
+		 }
+	       ecore_event_add(E_RESPONSE_BACKGROUND_DIRS_LIST, res,
+				_e_cb_bg_dir_list_free, NULL);
+	    }
+          break;
 	default:
           break;
      }
    return 1;
 }
+
+static void _e_cb_module_list_free(void *data, void *ev)
+{
+    E_Response_Module_List *e;
+    int i;
+
+    e = ev;
+    for (i = 0; i < e->count; i++)
+      {
+         free(e->modules[i]);
+      }
+    free(e->modules);
+    free(e);
+}
+
+static void
+_e_cb_module_dir_list_free(void *data, void *ev)
+{
+    E_Response_Module_Dirs_List *e;
+    
+    e = ev;
+    free(e->dirs);
+    free(e);
+}
+
+static void
+_e_cb_bg_dir_list_free(void *data, void *ev)
+{
+    E_Response_Background_Dirs_List *e;
+
+    e = ev;
+    free(e->dirs);
+    free(e);
+}
+
+

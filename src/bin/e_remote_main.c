@@ -50,7 +50,10 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
    OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
    OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
+   OREQ("-module-dirs-list", "List all modules directories", E_IPC_OP_MODULE_DIRS_LIST, 1),
    OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
+   OREQ("-bg-get", "Get the background edje file", E_IPC_OP_BG_GET, 1),
+   OREQ("-bg-dirs-list", "Get the background directories", E_IPC_OP_BG_DIRS_LIST, 1),
    OSTR("-font-fallback-remove", "Remove OPT1 from the fontset", E_IPC_OP_FONT_FALLBACK_REMOVE, 0),
    OSTR("-font-fallback-prepend", "Prepend OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_PREPEND, 0),
    OSTR("-font-fallback-append", "Append OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_APPEND, 0),
@@ -62,7 +65,8 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-font-default-remove", "Remove the default text class OPT1", E_IPC_OP_FONT_DEFAULT_REMOVE, 0),
    OREQ("-font-default-list", "List all configured text classes", E_IPC_OP_FONT_DEFAULT_LIST, 1),
    OMUL("-font-default-set", "Set textclass (OPT1) font (OPT2) and size (OPT3)", E_IPC_OP_FONT_DEFAULT_SET, 0, 3),
-   OREQ("-restart", "Restart E17", E_IPC_OP_RESTART, 0)
+   OREQ("-restart", "Restart E17", E_IPC_OP_RESTART, 0),
+   OREQ("-shutdown", "Shutdown E17", E_IPC_OP_SHUTDOWN, 0)
 };
 
 /* externally accessible functions */
@@ -338,6 +342,44 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	else
 	  printf("REPLY: MODULE NONE\n");
 	break;
+	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     char *p;
+
+	     p = e->data;
+	     while (p < (char *)(e->data + e->size))
+	       {
+		  char *dir;
+
+		  dir = p;
+		  printf("REPLY: MODULE DIR=%s\n", dir);
+		  p += strlen(dir) + 1;
+	       }
+	  }
+      break;
+      case E_IPC_OP_BG_GET_REPLY:
+      if (e->data)
+	{
+	   printf("REPLY: %s\n", e->data);
+	}
+      break;
+      case E_IPC_OP_BG_DIRS_LIST_REPLY:
+      if (e->data)
+	{
+	   char *p;
+ 
+	   p = e->data;
+	   while (p < (char *)(e->data + e->size))
+	     {
+	         char *dir;
+
+		 dir = p;
+		 printf("REPLY: BG DIR=%s\n", dir);
+		 p += strlen(dir) + 1;
+	     }
+	 }
+      break;
       case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
 	if (e->data)
 	  {

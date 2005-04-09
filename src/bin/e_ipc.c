@@ -1,9 +1,11 @@
 #include "e.h"
+#include "config.h"
 
 /* local subsystem functions */
 static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
+static char *_e_ipc_path_str_get(char **paths, int *bytes);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -168,6 +170,26 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 				   data, bytes);
 	     free(data);
 	  }
+	break;
+      case E_IPC_OP_MODULE_DIRS_LIST:
+	  {
+	     char *dirs[] = {
+		PACKAGE_LIB_DIR"/enlightenment/modules",
+		PACKAGE_LIB_DIR"/enlightenment/modules_extra",
+		"~/.e/e/modules",
+		NULL
+	     };
+	     char *data;
+	     int bytes = 0;
+
+	     data = _e_ipc_path_str_get(dirs, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_MODULE_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+ 	  }
 	break;
       case E_IPC_OP_BG_SET:
 	  {
@@ -460,9 +482,34 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
 
 	  }
 	break;
+      case E_IPC_OP_BG_DIRS_LIST:
+	  {
+	     char *dirs[] = {
+		PACKAGE_DATA_DIR"/data/themes",
+		"~/.e/e/backgrounds",
+		"~/.e/e/themes",
+		NULL
+	     };
+	     char *data;
+	     int bytes = 0;
+
+	     data = _e_ipc_path_str_get(dirs, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_BG_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+ 	  }
+	break;
       case E_IPC_OP_RESTART:
 	  {
 	     restart = 1;
+	     ecore_main_loop_quit();
+ 	  }
+	break;
+      case E_IPC_OP_SHUTDOWN:
+	  {
 	     ecore_main_loop_quit();
  	  }
 	break;
@@ -477,3 +524,39 @@ _e_ipc_cb_client_data(void *data, int type, void *event)
    /* ecore_ipc_server_del(ecore_ipc_client_server_get(e->client)); */
    return 1;
 }  
+
+/*
+ * FIXME: This dosen't handle the case where one of the paths is of the
+ *        form: ~moo/bar/baz need to figure out the correct path to the 
+ *        specified users homedir
+ */
+static char *
+_e_ipc_path_str_get(char **paths, int *bytes)
+{
+   char *data = NULL, **cur, *home;
+   int pos = 0;
+   char tmp[PATH_MAX];
+
+   *bytes = 0;
+   home = e_user_homedir_get();
+   for (cur = paths; *cur != NULL; cur++)
+     {
+	int len;
+	char *p;
+
+	p = *cur;
+	if (*p == '~') snprintf(tmp, PATH_MAX, "%s%s", home, ++p);
+	else snprintf(tmp, PATH_MAX, "%s", p);
+
+	*bytes += strlen(tmp) + 1;
+	data = realloc(data, *bytes);
+
+	memcpy(data + pos, tmp, strlen(tmp));
+	pos = *bytes;
+	data[pos - 1] = 0;
+     }
+   free(home);
+   return data;
+}
+
+
