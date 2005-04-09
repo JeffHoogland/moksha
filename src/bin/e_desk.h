@@ -18,7 +18,7 @@ struct _E_Desk
 
    E_Zone              *zone;
    char                *name;
-   int                  num;
+   int                  x, y;
    char                 visible : 1;
 
    Evas_Object         *bg_object;

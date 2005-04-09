@@ -1,6 +1,6 @@
-\MINI FREEZE:
+MINI FREEZE:
 
-Status: ON
+Status: OFF
 
 What is this:
 
@@ -29,9 +29,7 @@ Current freeze issues are:
 
 ISSUES:
 
-* virtual desktops need an overhaul. hacked in waay too quickly.
-* virtual desktops need fixing to work with zones properly
-* gadman gadget menu needs icons :)
+<EMPTY>
 <add more issues as they are found>
 
 
@@ -57,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* gadman gadget menu needs icons :)
 * module api needs to change entry calls, move label and icon to data file, not api
 * gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)
 * edit mode keybindings :)

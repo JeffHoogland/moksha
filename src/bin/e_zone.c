@@ -313,60 +313,62 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    E_Event_Zone_Desk_Count_Set *ev;
    
    xx = x_count;
-   if (xx < 1)
-     xx = 1;
+   if (xx < 1) xx = 1;
    yy = y_count;
-   if (yy < 1)
-     yy = 1;
+   if (yy < 1) yy = 1;
 
    new_desks = malloc(xx * yy * sizeof(E_Desk *));
-
    for (x = 0; x < xx; x++)
-     for(y = 0; y < yy; y++)
-       {
-	  if (x < zone->desk_x_count && y < zone->desk_y_count)
-	    desk = zone->desks[x + (y * zone->desk_x_count)];
-	  else
-	    desk = e_desk_new(zone, x, y);
-	  new_desks[x + (y * xx)] = desk;
-       }
+     {
+	for (y = 0; y < yy; y++)
+	  {
+	     if ((x < zone->desk_x_count) && (y < zone->desk_y_count))
+	       desk = zone->desks[x + (y * zone->desk_x_count)];
+	     else
+	       desk = e_desk_new(zone, x, y);
+	     new_desks[x + (y * xx)] = desk;
+	  }
+     }
 
    /* catch windoes that have fallen off the end if we got smaller */
    if (xx < zone->desk_x_count)
-     for (y = 0; y < zone->desk_y_count; y++)
-       {
-	  new_desk = zone->desks[xx - 1 + (y * zone->desk_x_count)];
-	  for (x = xx; x < zone->desk_x_count; x++)
-	    {
-	       desk = zone->desks[x + (y * zone->desk_x_count)];
-
-	       for (l = zone->container->clients; l; l = l->next)
-		 {
-		    bd = l->data;
-		    if (bd->desk == desk)
-		      e_border_desk_set(bd, new_desk);
-		 }
-	       e_object_del(E_OBJECT(desk));
-	    }
-       }  
+     {
+	for (y = 0; y < zone->desk_y_count; y++)
+	  {
+	     new_desk = zone->desks[xx - 1 + (y * zone->desk_x_count)];
+	     for (x = xx; x < zone->desk_x_count; x++)
+	       {
+		  desk = zone->desks[x + (y * zone->desk_x_count)];
+		  
+		  for (l = zone->container->clients; l; l = l->next)
+		    {
+		       bd = l->data;
+		       if (bd->desk == desk)
+			 e_border_desk_set(bd, new_desk);
+		    }
+		  e_object_del(E_OBJECT(desk));
+	       }
+	  }
+     }
    if (yy < zone->desk_y_count)
-     for (x = 0; x < zone->desk_x_count; x++)
-       {
-	  new_desk = zone->desks[x + ((yy - 1) * zone->desk_x_count)];
-	  for (y = yy; y < zone->desk_y_count; y++)
-	    {
-	       desk = zone->desks[x + (y * zone->desk_x_count)];
-
-	       for (l = zone->container->clients; l; l = l->next)
-		 {
-		    bd = l->data;
-		    if (bd->desk == desk)
-		      e_border_desk_set(bd, new_desk);
-		 }
-	       e_object_del(E_OBJECT(desk));
-	    }
-       }	
-
+     {
+	for (x = 0; x < zone->desk_x_count; x++)
+	  {
+	     new_desk = zone->desks[x + ((yy - 1) * zone->desk_x_count)];
+	     for (y = yy; y < zone->desk_y_count; y++)
+	       {
+		  desk = zone->desks[x + (y * zone->desk_x_count)];
+		  
+		  for (l = zone->container->clients; l; l = l->next)
+		    {
+		       bd = l->data;
+		       if (bd->desk == desk)
+			 e_border_desk_set(bd, new_desk);
+		    }
+		  e_object_del(E_OBJECT(desk));
+	       }
+	  }	
+     }
    if (zone->desks) free(zone->desks);
    zone->desks = new_desks;
    
