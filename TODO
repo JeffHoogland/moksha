@@ -110,7 +110,6 @@ These are in no particular order:
 * maybe add systray module/support?
 * allow object paranoia to be a runtime option too
 * add sliders, radio and check buttons for clientinfo pane
-* display coords while moving
 * add separate app menu bars at top of screen support
 * add "osd" subsystem for things like volume controls on keybboards, etc. that overlay the screen
 * add really nice "about" box with theme, authors credits list etc etc.
