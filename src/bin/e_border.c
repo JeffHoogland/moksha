@@ -111,6 +111,7 @@ static E_Border    *resize = NULL;
 static Ecore_Evas  *resize_ee = NULL;
 static Evas_Object *resize_obj = NULL;
 
+static E_Border    *move = NULL;
 static Ecore_Evas  *move_ee = NULL;
 static Evas_Object *move_obj = NULL;
 
@@ -1118,6 +1119,8 @@ _e_border_free(E_Border *bd)
 
    if (resize == bd)
      _e_border_resize_end(bd);
+   if (move == bd)
+     _e_border_resize_end(bd);
 
    while (bd->pending_move_resize)
      {
@@ -2063,6 +2066,7 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 			     bd->moving = 1;
 			     _e_border_moveinfo_gather(bd, source);
 			     e_border_raise(bd);
+			     _e_border_move_begin(bd);
 			  }
 			break;
 		     case E_BINDING_ACTION_RESIZE:
@@ -2166,7 +2170,10 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 		    {
 		     case E_BINDING_ACTION_MOVE:
 			if (bd->moving)
-			  bd->moving = 0;
+			  {
+			     bd->moving = 0;
+			     _e_border_move_end(bd);
+			  }
 			break;
 		     case E_BINDING_ACTION_RESIZE:
 			if (bd->resize_mode != RESIZE_NONE)
@@ -3610,7 +3617,7 @@ _e_border_move_begin(E_Border *bd)
 
    if (move_ee) ecore_evas_free(move_ee);
    move_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
-					     0, 0, 10, 10);
+					 0, 0, 10, 10);
    ecore_evas_override_set(move_ee, 1);
    ecore_evas_software_x11_direct_resize_set(move_ee, 1);
    e_canvas_add(move_ee);
@@ -3636,6 +3643,7 @@ _e_border_move_begin(E_Border *bd)
    ecore_evas_resize(move_ee, w, h);
 
    ecore_evas_show(move_ee);
+   move = bd;
 }
 
 static void
@@ -3647,6 +3655,7 @@ _e_border_move_end(E_Border *bd)
 	ecore_evas_free(move_ee);
 	move_ee = NULL;
      }
+   move = NULL;
 }
 
 static void
