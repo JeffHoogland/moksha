@@ -6,6 +6,5 @@ ibox \
 dropshadow \
 clock \
 pager \
-flame \
 battery \
 temperature
