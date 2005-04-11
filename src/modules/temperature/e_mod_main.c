@@ -40,11 +40,11 @@ init(E_Module *m)
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: Temperature\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: Temperature\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    m->api->version);
 	return NULL;
@@ -84,7 +84,7 @@ info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup("Temperature");
+   m->label = strdup(_("Temperature"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;
@@ -93,10 +93,10 @@ info(E_Module *m)
 int
 about(E_Module *m)
 {
-   e_error_dialog_show("Enlightenment Temperature Module",
-		       "A module to measure the ACPI Thermal sensor on Linux.\n"
-		       "It is especially useful for modern Laptops with high speed\n"
-		       "CPUs that generate a lot of heat.");
+   e_error_dialog_show(_("Enlightenment Temperature Module"),
+		       _("A module to measure the ACPI Thermal sensor on Linux.\n"
+			 "It is especially useful for modern Laptops with high speed\n"
+			 "CPUs that generate a lot of heat."));
    return 1;
 }
 
@@ -181,15 +181,15 @@ _temperature_new()
 
 		  /* Add main menu to face menu */
 		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, "Check Interval");
+		  e_menu_item_label_set(mi, _("Check Interval"));
 		  e_menu_item_submenu_set(mi, e->config_menu_poll);
 
 		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, "Low Temperature");
+		  e_menu_item_label_set(mi, _("Low Temperature"));
 		  e_menu_item_submenu_set(mi, e->config_menu_low);
 
 		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, "High Temperature");
+		  e_menu_item_label_set(mi, _("High Temperature"));
 		  e_menu_item_submenu_set(mi, e->config_menu_high);
 
 		  mi = e_menu_item_new(e->config_menu);
@@ -457,35 +457,35 @@ _temperature_config_menu_new(Temperature *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Fast (1 sec)");
+   e_menu_item_label_set(mi, _("Fast (1 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 1.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_fast, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Medium (5 sec)");
+   e_menu_item_label_set(mi, _("Medium (5 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 5.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_medium, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Normal (10 sec)");
+   e_menu_item_label_set(mi, _("Normal (10 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 10.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_normal, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Slow (30 sec)");
+   e_menu_item_label_set(mi, _("Slow (30 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 30.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_slow, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Slow (60 sec)");
+   e_menu_item_label_set(mi, _("Very Slow (60 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
@@ -497,35 +497,35 @@ _temperature_config_menu_new(Temperature *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "10°C");
+   e_menu_item_label_set(mi, _("10°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->low == 10) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_low_10, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "20°C");
+   e_menu_item_label_set(mi, _("20°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->low == 20) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_low_20, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "30°C");
+   e_menu_item_label_set(mi, _("30°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->low == 30) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_low_30, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "40°C");
+   e_menu_item_label_set(mi, _("40°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->low == 40) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_low_40, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "50°C");
+   e_menu_item_label_set(mi, _("50°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->low == 50) e_menu_item_toggle_set(mi, 1);
@@ -537,63 +537,63 @@ _temperature_config_menu_new(Temperature *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "20°C");
+   e_menu_item_label_set(mi, _("20°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 20) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_20, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "30°C");
+   e_menu_item_label_set(mi, _("30°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 30) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_30, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "40°C");
+   e_menu_item_label_set(mi, _("40°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 40) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_40, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "50°C");
+   e_menu_item_label_set(mi, _("50°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 50) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_50, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "60°C");
+   e_menu_item_label_set(mi, _("60°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 60) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_60, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "70°C");
+   e_menu_item_label_set(mi, _("70°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 70) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_70, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "80°C");
+   e_menu_item_label_set(mi, _("80°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 80) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_80, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "90°C");
+   e_menu_item_label_set(mi, _("90°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 90) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_menu_high_90, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "100°C");
+   e_menu_item_label_set(mi, _("100°C"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->high == 100) e_menu_item_toggle_set(mi, 1);
@@ -605,15 +605,15 @@ _temperature_config_menu_new(Temperature *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Interval");
+   e_menu_item_label_set(mi, _("Check Interval"));
    e_menu_item_submenu_set(mi, e->config_menu_poll);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Low Temperature");
+   e_menu_item_label_set(mi, _("Low Temperature"));
    e_menu_item_submenu_set(mi, e->config_menu_low);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "High Temperature");
+   e_menu_item_label_set(mi, _("High Temperature"));
    e_menu_item_submenu_set(mi, e->config_menu_high);
 
    e->config_menu = mn;
@@ -713,14 +713,14 @@ _temperature_face_menu_new(Temperature_Face *face)
    /* Enabled */
    /*
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_label_set(mi, _("Enabled"));
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _temperature_face_cb_menu_enabled, face);
     */
    /* Edit */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _temperature_face_cb_menu_edit, face);
 }
 

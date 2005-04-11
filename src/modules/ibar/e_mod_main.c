@@ -102,11 +102,11 @@ init(E_Module *m)
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: IBar\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: IBar\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    m->api->version);
 	return NULL;
@@ -146,7 +146,7 @@ info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup("IBar");
+   m->label = strdup(_("IBar"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;
@@ -155,11 +155,11 @@ info(E_Module *m)
 int
 about(E_Module *m)
 {
-   e_error_dialog_show("Enlightenment IBar Module",
-		       "This is the IBar Application Launcher bar module for Enlightenment.\n"
-		       "It is a first example module and is being used to flesh out several\n"
-		       "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-		       "so expect it to break often and change as it improves.");
+   e_error_dialog_show(_("Enlightenment IBar Module"),
+		       _("This is the IBar Application Launcher bar module for Enlightenment.\n"
+			 "It is a first example module and is being used to flesh out several\n"
+			 "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+			 "so expect it to break often and change as it improves."));
    return 1;
 }
 
@@ -714,7 +714,7 @@ _ibar_config_menu_new(IBar *ib)
    ib->config_menu_options = mn;
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Auto fit icons");
+   e_menu_item_label_set(mi, _("Auto fit icons"));
    e_menu_item_check_set(mi, 1);
    if (ib->conf->width == IBAR_WIDTH_AUTO) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_width_auto, ib);
@@ -723,77 +723,77 @@ _ibar_config_menu_new(IBar *ib)
    ib->config_menu_size = mn;
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Microscopic");
+   e_menu_item_label_set(mi, _("Microscopic"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 8) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_microscopic, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Tiny");
+   e_menu_item_label_set(mi, _("Tiny"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 12) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_tiny, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Small");
+   e_menu_item_label_set(mi, _("Very Small"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 16) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_very_small, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Small");
+   e_menu_item_label_set(mi, _("Small"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 24) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_small, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Medium");
+   e_menu_item_label_set(mi, _("Medium"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 32) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_medium, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Large");
+   e_menu_item_label_set(mi, _("Large"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 40) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_large, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Large");
+   e_menu_item_label_set(mi, _("Very Large"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 48) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_very_large, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Exteremely Large");
+   e_menu_item_label_set(mi, _("Exteremely Large"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 56) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_extremely_large, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Huge");
+   e_menu_item_label_set(mi, _("Huge"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 64) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_huge, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enormous");
+   e_menu_item_label_set(mi, _("Enormous"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 96) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_enormous, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Gigantic");
+   e_menu_item_label_set(mi, _("Gigantic"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 128) e_menu_item_toggle_set(mi, 1);
@@ -801,11 +801,11 @@ _ibar_config_menu_new(IBar *ib)
 
    /* Submenus */
    mi = e_menu_item_new(ib->config_menu);
-   e_menu_item_label_set(mi, "Options");
+   e_menu_item_label_set(mi, _("Options"));
    e_menu_item_submenu_set(mi, ib->config_menu_options);
 
    mi = e_menu_item_new(ib->config_menu);
-   e_menu_item_label_set(mi, "Size");
+   e_menu_item_label_set(mi, _("Size"));
    e_menu_item_submenu_set(mi, ib->config_menu_size);
 }
 

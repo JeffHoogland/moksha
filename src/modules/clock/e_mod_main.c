@@ -37,11 +37,11 @@ init(E_Module *module)
    /* check module api version */
    if (module->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: Clock\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: Clock\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    module->api->version);
 	return NULL;
@@ -83,7 +83,7 @@ info(E_Module *module)
 {
    char buf[4096];
    
-   module->label = strdup("Clock");
+   module->label = strdup(_("Clock"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
    module->icon_file = strdup(buf);
    return 1;
@@ -92,8 +92,8 @@ info(E_Module *module)
 int
 about(E_Module *module)
 {
-   e_error_dialog_show("Enlightenment Clock Module",
-		       "A simple module to give E17 a clock.");
+   e_error_dialog_show(_("Enlightenment Clock Module"),
+		       _("A simple module to give E17 a clock."));
    return 1;
 }
 
@@ -300,7 +300,7 @@ _clock_face_menu_new(Clock_Face *face)
    /* Enabled */
    /*
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_label_set(mi, _("Enabled"));
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _clock_face_cb_menu_enabled, face);
@@ -308,7 +308,7 @@ _clock_face_menu_new(Clock_Face *face)
    
    /* Edit */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _clock_face_cb_menu_edit, face);
 }
 
@@ -384,3 +384,4 @@ _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    face = data;
    e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
+

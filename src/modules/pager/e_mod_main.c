@@ -76,11 +76,11 @@ init(E_Module *module)
    /* check module api version */
    if (module->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: Pager\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: Pager\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    module->api->version);
 	return NULL;
@@ -123,7 +123,7 @@ info(E_Module *module)
 {
    char buf[4096];
 
-   module->label = strdup("Pager");
+   module->label = strdup(_("Pager"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
    module->icon_file = strdup(buf);
    return 1;
@@ -132,8 +132,8 @@ info(E_Module *module)
 int
 about(E_Module *module)
 {
-   e_error_dialog_show("Enlightenment Pager Module",
-		       "A pager module to navigate virtual desktops.");
+   e_error_dialog_show(_("Enlightenment Pager Module"),
+		       _("A pager module to navigate virtual desktops."));
    return 1;
 }
 

@@ -42,11 +42,11 @@ init(E_Module *m)
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: Battery\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: Battery\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    m->api->version);
 	return NULL;
@@ -86,7 +86,7 @@ info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup("Battery");
+   m->label = strdup(_("Battery"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;
@@ -95,11 +95,11 @@ info(E_Module *m)
 int
 about(E_Module *m)
 {
-   e_error_dialog_show("Enlightenment Battery Module",
-		       "A basic battery meter that uses either ACPI or APM\n"
-		       "on Linux to monitor your battery and AC power adaptor\n"
-		       "status. This will only work under Linux and is only\n"
-		       "as accurate as your BIOS or kernel drivers.");
+   e_error_dialog_show(_("Enlightenment Battery Module"),
+		       _("A basic battery meter that uses either ACPI or APM\n"
+			 "on Linux to monitor your battery and AC power adaptor\n"
+			 "status. This will only work under Linux and is only\n"
+			 "as accurate as your BIOS or kernel drivers."));
    return 1;
 }
 
@@ -187,11 +187,11 @@ _battery_new()
 
 		  /* Add main menu to face menu */
 		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, "Set Poll Time");
+		  e_menu_item_label_set(mi, _("Set Poll Time"));
 		  e_menu_item_submenu_set(mi, e->config_menu_poll);
 
 		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, "Set Alarm");
+		  e_menu_item_label_set(mi, _("Set Alarm"));
 		  e_menu_item_submenu_set(mi, e->config_menu_alarm);
 
 		  mi = e_menu_item_new(e->config_menu);
@@ -415,7 +415,7 @@ _battery_config_menu_new(Battery *e)
    e_menu_item_callback_set(mi, _battery_menu_alarm_50, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "1 hour");
+   e_menu_item_label_set(mi, _("1 hour"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 60) e_menu_item_toggle_set(mi, 1);
@@ -427,35 +427,35 @@ _battery_config_menu_new(Battery *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Fast (1 sec)");
+   e_menu_item_label_set(mi, _("Check Fast (1 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 1.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_fast, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Medium (5 sec)");
+   e_menu_item_label_set(mi, _("Check Medium (5 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 5.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_medium, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Normal (10 sec)");
+   e_menu_item_label_set(mi, _("Check Normal (10 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 10.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_normal, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Slow (30 sec)");
+   e_menu_item_label_set(mi, _("Check Slow (30 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 30.0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_slow, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Check Very Slow (60 sec)");
+   e_menu_item_label_set(mi, _("Check Very Slow (60 sec)"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
@@ -466,11 +466,11 @@ _battery_config_menu_new(Battery *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Set Poll Time");
+   e_menu_item_label_set(mi, _("Set Poll Time"));
    e_menu_item_submenu_set(mi, e->config_menu_poll);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Set Alarm");
+   e_menu_item_label_set(mi, _("Set Alarm"));
    e_menu_item_submenu_set(mi, e->config_menu_alarm);
 
    e->config_menu = mn;
@@ -552,7 +552,7 @@ _battery_face_menu_new(Battery_Face *face)
    /* Enabled */
    /*   
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_label_set(mi, _("Enabled"));
    e_menu_item_check_set(mi, 1);
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_face_cb_menu_enabled, face);
@@ -560,7 +560,7 @@ _battery_face_menu_new(Battery_Face *face)
    
    /* Edit */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _battery_face_cb_menu_edit, face);
 }
 
@@ -685,9 +685,9 @@ _battery_cb_check(void *data)
 			 {
 			    if (!ef->alarm_triggered)
 			      {
-				 e_error_dialog_show("Battery Running Low",
-						     "Your battery is running low.\n"
-						     "You may wish to switch to an AC source.");
+				 e_error_dialog_show(_("Battery Running Low"),
+						     _("Your battery is running low.\n"
+						       "You may wish to switch to an AC source."));
 			      }
 			    edje_object_signal_emit(face->bat_object, "pulse", "");
 			 }
@@ -747,7 +747,7 @@ _battery_cb_check(void *data)
 
 	     if (ef->battery_prev_battery != -2)
 	       edje_object_signal_emit(face->bat_object, "unknown", "");
-	     edje_object_part_text_set(face->bat_object, "reading", "NO INFO");
+	     edje_object_part_text_set(face->bat_object, "reading", _("NO INFO"));
 	     edje_object_part_text_set(face->bat_object, "time", "--:--");
 	     _battery_face_level_set(face, (double)(rand() & 0xff) / 255.0);
 	  }
@@ -879,7 +879,7 @@ _battery_linux_acpi_check(Battery *ef)
      {
 	stat->has_battery = 0;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup("NO BAT");
+	stat->reading = strdup(_("NO BAT"));
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
      }
@@ -903,7 +903,7 @@ _battery_linux_acpi_check(Battery *ef)
 	  }
 	if (level_unknown)
           {
-	     stat->reading = strdup("BAD DRIVER");
+	     stat->reading = strdup(_("BAD DRIVER"));
 	     stat->time = strdup("--:--");
 	     stat->level = 0.0;
           }
@@ -927,7 +927,7 @@ _battery_linux_acpi_check(Battery *ef)
      {
 	stat->has_battery = 1;
 	stat->state = BATTERY_STATE_NONE;
-	stat->reading = strdup("FULL");
+	stat->reading = strdup(_("FULL"));
 	stat->time = strdup("--:--");
 	stat->level = 1.0;
      }
@@ -987,19 +987,19 @@ _battery_linux_apm_check(Battery *ef)
 	switch (bat_stat)
 	  {
 	   case 0:
-	      stat->reading = strdup("High");
+	      stat->reading = strdup(_("High"));
 	      stat->level = 1.0;
 	      break;
 	   case 1:
-	      stat->reading = strdup("Low");
+	      stat->reading = strdup(_("Low"));
 	      stat->level = 0.5;
 	      break;
 	   case 2:
-	      stat->reading = strdup("Danger");
+	      stat->reading = strdup(_("Danger"));
 	      stat->level = 0.25;
 	      break;
 	   case 3:
-	      stat->reading = strdup("Charging");
+	      stat->reading = strdup(_("Charging"));
 	      stat->level = 1.0;
 	      break;
 	  }

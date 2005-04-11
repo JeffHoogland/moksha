@@ -74,11 +74,11 @@ init(E_Module *m)
    
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show("Module API Error",
-			    "Error initializing Module: Dropshadow\n"
-			    "It requires a minimum module API version of: %i.\n"
-			    "The module API advertized by Enlightenment is: %i.\n"
-			    "Aborting module.",
+	e_error_dialog_show(_("Module API Error"),
+			    _("Error initializing Module: Dropshadow\n"
+			      "It requires a minimum module API version of: %i.\n"
+			      "The module API advertized by Enlightenment is: %i.\n"
+			      "Aborting module."),
 			    E_MODULE_API_VERSION,
 			    m->api->version);
 	return NULL;
@@ -122,7 +122,7 @@ info(E_Module *m)
 {
    char buf[4096];
    
-   m->label = strdup("Dropshadow");
+   m->label = strdup(_("Dropshadow"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;
@@ -131,10 +131,10 @@ info(E_Module *m)
 int
 about(E_Module *m)
 {
-   e_error_dialog_show("Enlightenment Dropshadow Module",
-		       "This is the dropshadow module that allows dropshadows to be cast\n"
-		       "on the desktop background - without special X-Server extensions\n"
-		       "or hardware acceleration.");
+   e_error_dialog_show(_("Enlightenment Dropshadow Module"),
+		       _("This is the dropshadow module that allows dropshadows to be cast\n"
+			 "on the desktop background - without special X-Server extensions\n"
+			 "or hardware acceleration."));
    return 1;
 }
 
@@ -236,7 +236,7 @@ _ds_config_menu_new(Dropshadow *ds)
    mn = e_menu_new();
      
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Fuzzy");
+   e_menu_item_label_set(mi, _("Very Fuzzy"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_fuzzy.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -245,7 +245,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_very_fuzzy, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Fuzzy");
+   e_menu_item_label_set(mi, _("Fuzzy"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_fuzzy.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -254,7 +254,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_fuzzy, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Medium");
+   e_menu_item_label_set(mi, _("Medium"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_medium.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -263,7 +263,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_medium, ds);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Sharp");
+   e_menu_item_label_set(mi, _("Sharp"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_sharp.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -272,7 +272,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_sharp, ds);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Sharp");
+   e_menu_item_label_set(mi, _("Very Sharp"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_sharp.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -284,7 +284,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Dark");
+   e_menu_item_label_set(mi, _("Very Dark"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_dark.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -293,7 +293,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_very_dark, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Dark");
+   e_menu_item_label_set(mi, _("Dark"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_dark.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -302,7 +302,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_dark, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Light");
+   e_menu_item_label_set(mi, _("Light"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_light.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -311,7 +311,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_light, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Light");
+   e_menu_item_label_set(mi, _("Very Light"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_light.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -323,7 +323,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Far");
+   e_menu_item_label_set(mi, _("Very Far"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_far.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -332,7 +332,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_very_far, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Far");
+   e_menu_item_label_set(mi, _("Far"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_very_far.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -341,7 +341,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_far, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Close");
+   e_menu_item_label_set(mi, _("Close"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_far.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -350,7 +350,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_close, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Very Close");
+   e_menu_item_label_set(mi, _("Very Close"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_close.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -359,7 +359,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_very_close, ds);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Extremely Close");
+   e_menu_item_label_set(mi, _("Extremely Close"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_underneath.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -368,7 +368,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_extremely_close, ds);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Immediately Underneath");
+   e_menu_item_label_set(mi, _("Immediately Underneath"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_underneath.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
