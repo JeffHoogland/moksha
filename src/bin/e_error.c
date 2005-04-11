@@ -351,7 +351,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 static void
 _e_error_message_show_x(char *txt)
 {
-   e_error_dialog_show_internal("Enlightenment: Error!", txt);
+   e_error_dialog_show_internal(_("Enlightenment: Error!"), txt);
 }
 
 static void

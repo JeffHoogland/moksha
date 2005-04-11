@@ -1,0 +1,360 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2005-04-12 05:16+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/e_int_menus.c:272
+msgid "(No Applications)"
+msgstr ""
+
+#: src/bin/e_int_menus.c:445
+msgid "(No Windows)"
+msgstr ""
+
+#: src/bin/e_int_menus.c:521
+msgid "(Unused)"
+msgstr ""
+
+#: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
+msgid "About Enlightenment"
+msgstr ""
+
+#: src/bin/e_module.c:381
+msgid "About..."
+msgstr ""
+
+#: src/bin/e_main.c:361
+msgid "Artificially slowing startup so you can see it all."
+msgstr ""
+
+#: src/bin/e_gadman.c:526
+msgid "Automatic Height"
+msgstr ""
+
+#: src/bin/e_gadman.c:483
+msgid "Automatic Width"
+msgstr ""
+
+#: src/bin/e_gadman.c:509
+msgid "Center Horizontally"
+msgstr ""
+
+#: src/bin/e_gadman.c:552
+msgid "Center Vertically"
+msgstr ""
+
+#: src/bin/e_border.c:3213
+msgid "Close"
+msgstr ""
+
+#: src/bin/e_module.c:396
+msgid "Configuration"
+msgstr ""
+
+#: src/bin/e_border.c:3281
+msgid "Create Icon"
+msgstr ""
+
+#: src/bin/e_int_menus.c:77
+msgid "Desktops"
+msgstr ""
+
+#: src/bin/e_border.c:3255
+msgid "Edit Icon"
+msgstr ""
+
+#: src/bin/e_int_menus.c:515
+msgid "Edit Mode"
+msgstr ""
+
+#: src/bin/e_module.c:385
+msgid "Enabled"
+msgstr ""
+
+#: src/bin/e_gadman.c:563
+msgid "End Edit Mode"
+msgstr ""
+
+#: src/bin/e_main.c:345
+msgid "Enlightenment"
+msgstr ""
+
+#: src/bin/e_main.c:330
+msgid "Enlightenment IPC setup error!"
+msgstr ""
+
+#: src/bin/e_main.c:347
+msgid "Enlightenment Starting. Please wait."
+msgstr ""
+
+#: src/bin/e_main.c:157
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:235
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+
+#: src/bin/e_main.c:184
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+
+#: src/bin/e_main.c:223
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:215
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:207
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:173
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:167
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:272
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:288
+msgid "Enlightenment cannot set up its app system."
+msgstr ""
+
+#: src/bin/e_main.c:251
+msgid "Enlightenment cannot set up its config system."
+msgstr ""
+
+#: src/bin/e_main.c:262
+msgid "Enlightenment cannot set up its font system."
+msgstr ""
+
+#: src/bin/e_main.c:313
+msgid "Enlightenment cannot set up its module system."
+msgstr ""
+
+#: src/bin/e_main.c:243
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+
+#: src/bin/e_main.c:300 src/bin/e_main.c:331
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an exisiting copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+
+#: src/bin/e_main.c:191
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+
+#: src/bin/e_main.c:280
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+
+#: src/bin/e_error.c:354
+msgid "Enlightenment: Error!"
+msgstr ""
+
+#: src/bin/e_module.c:98 src/bin/e_module.c:109 src/bin/e_module.c:131
+msgid "Error loading Module"
+msgstr ""
+
+#: src/bin/e_border.c:3355
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+
+#: src/bin/e_int_menus.c:117
+msgid "Exit Enlightement"
+msgstr ""
+
+#: src/bin/e_int_menus.c:58
+msgid "Favorite Applications"
+msgstr ""
+
+#: src/bin/e_gadman.c:541
+msgid "Full Screen Height"
+msgstr ""
+
+#: src/bin/e_gadman.c:498
+msgid "Full Screen Width"
+msgstr ""
+
+#: src/bin/e_int_menus.c:93
+msgid "Gadgets"
+msgstr ""
+
+#: src/bin/e_gadman.c:536
+msgid "Half Screen Height"
+msgstr ""
+
+#: src/bin/e_gadman.c:493
+msgid "Half Screen Width"
+msgstr ""
+
+#: src/bin/e_border.c:3354
+msgid "Icon Edit Error"
+msgstr ""
+
+#: src/bin/e_border.c:3218
+msgid "Iconify"
+msgstr ""
+
+#: src/bin/e_border.c:3233
+msgid "Maximized"
+msgstr ""
+
+#: src/bin/e_int_menus.c:69
+msgid "Modules"
+msgstr ""
+
+#: src/bin/e_main.c:363
+msgid "Most features do not work yet, and those that do are buggy."
+msgstr ""
+
+#: src/bin/e_int_menus.c:362
+msgid "New Column of Desktops"
+msgstr ""
+
+#: src/bin/e_int_menus.c:354
+msgid "New Row of Desktops"
+msgstr ""
+
+#: src/bin/e_main.c:112
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+msgstr ""
+
+#: src/bin/e_int_menus.c:366
+msgid "Remove Column of Desktops"
+msgstr ""
+
+#: src/bin/e_int_menus.c:358
+msgid "Remove Row of Desktops"
+msgstr ""
+
+#: src/bin/e_int_menus.c:111
+msgid "Restart Enlightement"
+msgstr ""
+
+#: src/bin/e_border.c:3226
+msgid "Shaded"
+msgstr ""
+
+#: src/bin/e_border.c:3240
+msgid "Sticky"
+msgstr ""
+
+#: src/bin/e_module.c:99
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"No module named %s could be found in the\n"
+"module search directories\n"
+msgstr ""
+
+#: src/bin/e_module.c:110 src/bin/e_module.c:132
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"The full path to this module is:\n"
+"%s\n"
+"The error reported was:\n"
+"%s"
+msgstr ""
+
+#: src/bin/e_int_menus.c:211
+#, c-format
+msgid ""
+"This is Enlightenment %s.\n"
+"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+"\n"
+"We hope you enjoy using this software as much as we enjoyed writing it.\n"
+"\n"
+"Please think of the aardvarks. They need some love too."
+msgstr ""
+
+#: src/bin/e_main.c:362
+msgid "This is development code, so be warned."
+msgstr ""
+
+#: src/bin/e_main.c:322
+msgid ""
+"This is program has barely been started on, so it is not complete by a long\n"
+"shot. Please do NOT expect anything to work properly at this stage. It's\n"
+"being worked on.\n"
+"\n"
+"Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
+msgstr ""
+
+#: src/bin/e_main.c:321
+msgid "Welcome to Enlightenment 0.17"
+msgstr ""
+
+#: src/bin/e_int_menus.c:85
+msgid "Windows"
+msgstr ""
+
+#: src/bin/e_init.c:34
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr ""

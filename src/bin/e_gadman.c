@@ -480,7 +480,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	if (gmc->autow > 0)
 	  {
 	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "Automatic Width");
+	     e_menu_item_label_set(mi, _("Automatic Width"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, gmc->use_autow);
 	     e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
@@ -490,12 +490,12 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Half Screen Width");
+	e_menu_item_label_set(mi, _("Half Screen Width"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "half_width");
 	e_menu_item_callback_set(mi, _e_gadman_cb_half_width, gmc);
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Full Screen Width");
+	e_menu_item_label_set(mi, _("Full Screen Width"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "full_width");
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_width, gmc);
@@ -506,7 +506,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
      {
 	seperator = 1;
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Center Horizontally");
+	e_menu_item_label_set(mi, _("Center Horizontally"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "center_horiz");
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_horiz, gmc);
@@ -523,7 +523,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	if (gmc->autoh > 0)
 	  {
 	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, "Automatic Height");
+	     e_menu_item_label_set(mi, _("Automatic Height"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, gmc->use_autoh);
 	     e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
@@ -533,12 +533,12 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	     e_menu_item_separator_set(mi, 1);
 	  }
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Half Screen Height");
+	e_menu_item_label_set(mi, _("Half Screen Height"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "half_height");
 	e_menu_item_callback_set(mi, _e_gadman_cb_half_height, gmc);
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Full Screen Height");
+	e_menu_item_label_set(mi, _("Full Screen Height"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "full_height");
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_height, gmc);
@@ -549,7 +549,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
      {
 	seperator = 1;
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Center Vertically");
+	e_menu_item_label_set(mi, _("Center Vertically"));
 	e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 				  "center_vert");
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_vert, gmc);
@@ -560,7 +560,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	e_menu_item_separator_set(mi, 1);
      }
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "End Edit Mode");
+   e_menu_item_label_set(mi, _("End Edit Mode"));
    e_menu_item_callback_set(mi, _e_gadman_cb_end_edit_mode, gmc);
    
    return m;

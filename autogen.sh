@@ -7,7 +7,21 @@ echo "Running aclocal..."; aclocal $ACLOCAL_FLAGS -I m4 \
 && echo "Running autoheader..."; autoheader \
 && echo "Running autoconf..."; autoconf \
 && echo "Running libtoolize..."; ( libtoolize --automake || glibtoolize --automake ) \
-&& echo "Running automake..."; automake --add-missing --copy --gnu
+&& echo "Running automake..."; automake --add-missing --copy --gnu \
+&& echo "Generating gettext enlightenment.pot template"; \
+xgettext \
+-s \
+-n \
+-C \
+-d enlightenment \
+-p po \
+--copyright-holder="Enlightenment development team" \
+--foreign-user \
+--msgid-bugs-address="enlightenment-devel@lists.sourceforge.net" \
+-k -k_ -kd_ \
+--from-code=UTF-8 \
+-o enlightenment.pot \
+`find . -name "*.[ch]" -print` 
 
 ###  If you want this, uncomment it.
 ./configure "$@"

@@ -55,7 +55,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_favorite_apps_new();
    dat->apps = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Favorite Applications");
+   e_menu_item_label_set(mi, _("Favorite Applications"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "favorites");
    e_menu_item_submenu_set(mi, subm);
@@ -66,7 +66,7 @@ e_int_menus_main_new(void)
    subm = e_module_menu_new();
    dat->modules = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Modules");
+   e_menu_item_label_set(mi, _("Modules"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "module");
    e_menu_item_submenu_set(mi, subm);
@@ -74,7 +74,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Desktops");
+   e_menu_item_label_set(mi, _("Desktops"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "desktops");
    e_menu_item_submenu_set(mi, subm);
@@ -82,7 +82,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_clients_new();
    dat->clients = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Windows");
+   e_menu_item_label_set(mi, _("Windows"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "windows");
    e_menu_item_submenu_set(mi, subm);
@@ -90,7 +90,7 @@ e_int_menus_main_new(void)
    subm = e_int_menus_gadgets_new();
    dat->gadgets = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Gadgets");
+   e_menu_item_label_set(mi, _("Gadgets"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "gadgets");
    e_menu_item_submenu_set(mi, subm);
@@ -99,7 +99,7 @@ e_int_menus_main_new(void)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "About Enlightenment");   
+   e_menu_item_label_set(mi, _("About Enlightenment"));   
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
@@ -108,13 +108,13 @@ e_int_menus_main_new(void)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Restart Enlightement");
+   e_menu_item_label_set(mi, _("Restart Enlightement"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "reset");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Exit Enlightement");
+   e_menu_item_label_set(mi, _("Exit Enlightement"));
    e_menu_item_icon_edje_set(mi, e_path_find(path_icons, "default.edj"),
 			     "power");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
@@ -207,12 +207,13 @@ _e_int_menus_main_del_hook(void *obj)
 static void
 _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_error_dialog_show("About Enlightenment",
-		       "This is Enlightenment "VERSION".\n"
-		       "Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
-		       "\n"
-		       "We hope you enjoy using this software as much as we enjoyed writing it.\n\n"
-		       "Please think of the aardvarks. They need some love too."
+   e_error_dialog_show(_("About Enlightenment"),
+		       _("This is Enlightenment %s.\n"
+			 "Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+			 "\n"
+			 "We hope you enjoy using this software as much as we enjoyed writing it.\n\n"
+			 "Please think of the aardvarks. They need some love too."),
+		       VERSION
 		       );
 }
 
@@ -268,7 +269,7 @@ _e_int_menus_apps_scan(E_Menu *m)
    if (app_count == 0)
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "(No Applications)");
+	e_menu_item_label_set(mi, _("(No Applications)"));
      }
 }
 
@@ -350,19 +351,19 @@ _e_int_menus_desktops_pre_cb(void *data, E_Menu *m)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "New Row of Desktops");
+   e_menu_item_label_set(mi, _("New Row of Desktops"));
    e_menu_item_callback_set(mi, _e_int_menus_desktops_row_add_cb, NULL);
 	       
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Remove Row of Desktops");
+   e_menu_item_label_set(mi, _("Remove Row of Desktops"));
    e_menu_item_callback_set(mi, _e_int_menus_desktops_row_del_cb, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "New Column of Desktops");
+   e_menu_item_label_set(mi, _("New Column of Desktops"));
    e_menu_item_callback_set(mi, _e_int_menus_desktops_col_add_cb, NULL);
 	       
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Remove Column of Desktops");
+   e_menu_item_label_set(mi, _("Remove Column of Desktops"));
    e_menu_item_callback_set(mi, _e_int_menus_desktops_col_del_cb, NULL);
 }
 
@@ -441,7 +442,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      { 
 	/* FIXME here we want nothing, but that crashes!!! */
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "(No Windows)");
+	e_menu_item_label_set(mi, _("(No Windows)"));
 	return;
      }
    for (l = borders; l; l = l->next)
@@ -511,13 +512,13 @@ _e_int_menus_gadgets_pre_cb(void *data, E_Menu *m)
 	  e_menu_item_toggle_set(mi, 1);
 	else
 	  e_menu_item_toggle_set(mi, 0);
-	e_menu_item_label_set(mi, "Edit Mode");
+	e_menu_item_label_set(mi, _("Edit Mode"));
 	e_menu_item_callback_set(mi, _e_int_menus_gadgets_edit_mode_cb, root->zone->container->gadman);
      }
    else
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "(Unused)");
+	e_menu_item_label_set(mi, _("(Unused)"));
 	e_menu_item_callback_set(mi, NULL, NULL);
      }
 }

@@ -3210,12 +3210,12 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Close");
+   e_menu_item_label_set(mi, _("Close"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
    e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/close");
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Iconify");
+   e_menu_item_label_set(mi, _("Iconify"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
    e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/minimize");
 
@@ -3223,21 +3223,21 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Shaded");
+   e_menu_item_label_set(mi, _("Shaded"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
    e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/shade");
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Maximized");
+   e_menu_item_label_set(mi, _("Maximized"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
    e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/maximize");
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Sticky");
+   e_menu_item_label_set(mi, _("Sticky"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
@@ -3252,7 +3252,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    if (a)
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Edit Icon");
+	e_menu_item_label_set(mi, _("Edit Icon"));
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
 	e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
@@ -3278,7 +3278,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 		 "--win-class \"%s\" %s/.e/e/applications/all/%s.eapp",
 		 bd->client.icccm.class, homedir, name);
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Create Icon");
+	e_menu_item_label_set(mi, _("Create Icon"));
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
      }
 
@@ -3351,9 +3351,10 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    printf("EXEC %s\n", full);
    process = ecore_exe_run(full, NULL);
    if (!process || !ecore_exe_pid_get(process))
-     e_error_dialog_show("Icon Edit Error", "Error starting icon editor\n\n \
-			 please install e_util_eapp_edit\n \
-			 or make sure it is in your PATH\n");
+     e_error_dialog_show(_("Icon Edit Error"),
+			   _("Error starting icon editor\n\n"
+			     "please install e_util_eapp_edit\n"
+			     "or make sure it is in your PATH\n"));
 }
 
 static void

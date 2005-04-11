@@ -82,6 +82,8 @@ main(int argc, char **argv)
 	after_restart = 1;
      }
    putenv("RESTART=1");
+
+   e_intl_init();
    
    /* handle some command-line parameters */
    for (i = 1; i < argc; i++)
@@ -107,16 +109,16 @@ main(int argc, char **argv)
 		 (!strcmp(argv[i], "--help")))
 	  {
 	     printf
-	       ("Options:\n"
-		"\t-display DISPLAY\n"
-		"\t\tConnect to display named DISPLAY.\n"
-		"\t\tEG: -display :1.0\n"
-		"\t-fake-xinerama-screen WxH+X+Y\n"
-		"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
-		"\t\tgiven the geometry. Add as many as you like. They all\n"
-		"\t\treplace the real xinerama screens, if any. This can\n"
-		"\t\tbe used to simulate xinerama.\n"
-		"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+	       (_("Options:\n"
+		  "\t-display DISPLAY\n"
+		  "\t\tConnect to display named DISPLAY.\n"
+		  "\t\tEG: -display :1.0\n"
+		  "\t-fake-xinerama-screen WxH+X+Y\n"
+		  "\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+		  "\t\tgiven the geometry. Add as many as you like. They all\n"
+		  "\t\treplace the real xinerama screens, if any. This can\n"
+		  "\t\tbe used to simulate xinerama.\n"
+		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n")
 		);
 	     exit(0);
 	  }
@@ -152,8 +154,8 @@ main(int argc, char **argv)
    /* basic ecore init */
    if (!ecore_init())
      {
-	e_error_message_show("Enlightenment cannot Initialize Ecore!\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot Initialize Ecore!\n"
+			       "Perhaps you are out of memory?"));
 	exit(-1);
      }
    _e_main_shutdown_push(ecore_shutdown);
@@ -162,14 +164,14 @@ main(int argc, char **argv)
    /* setup a handler for when e is asked to exit via a system signal */
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT, _e_main_cb_signal_exit, NULL))
      {
-	e_error_message_show("Enlightenment cannot set up an exit signal handler.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot set up an exit signal handler.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    if(!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP, _e_main_cb_signal_hup, NULL))
      {
-	e_error_message_show("Enlightenment cannot set up a HUP signal handler.\n"
-                             "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot set up a HUP signal handler.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
 
@@ -179,15 +181,15 @@ main(int argc, char **argv)
    /* init x */
    if (!ecore_x_init(NULL))
      {
-	e_error_message_show("Enlightenment cannot initialize its X connection.\n"
-			     "Have you set your DISPLAY variable?");
+	e_error_message_show(_("Enlightenment cannot initialize its X connection.\n"
+			       "Have you set your DISPLAY variable?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_x_shutdown);
    if (!e_xinerama_init())
      {
-	e_error_message_show("Enlightenment cannot setup xinerama wrapping.\n"
-			     "This should not happen.");
+	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
+			       "This should not happen."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_xinerama_shutdown);
@@ -202,24 +204,24 @@ main(int argc, char **argv)
    /* init generic communications */
    if (!ecore_con_init())
      {
-	e_error_message_show("Enlightenment cannot initialize the connections system.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot initialize the connections system.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_con_shutdown);
    /* init ipc */
    if (!ecore_ipc_init())
      {
-	e_error_message_show("Enlightenment cannot initialize the ipc system.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot initialize the IPC system.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_ipc_shutdown);
    /* init the evas wrapper */
    if (!ecore_evas_init())
      {
-	e_error_message_show("Enlightenment cannot initialize the evas system.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot initialize the Evas system.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_evas_shutdown);
@@ -230,23 +232,23 @@ main(int argc, char **argv)
    /* setup directories we will be using for configurations sotrage etc. */
    if (!_e_main_dirs_init())
      {
-	e_error_message_show("Enlightenment cannot create directories in your home directory.\n"
-			     "Perhaps you have no home directory or the disk is full?");
+	e_error_message_show(_("Enlightenment cannot create directories in your home directory.\n"
+			       "Perhaps you have no home directory or the disk is full?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_dirs_shutdown);
    /* setup paths for finding things */
    if (!_e_main_path_init())
      {
-	e_error_message_show("Enlightenment cannot set up paths for finding files.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot set up paths for finding files.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_path_shutdown);
    /* init config system */
    if (!e_config_init())
      {
-	e_error_message_show("Enlightenment cannot set up its config system.");
+	e_error_message_show(_("Enlightenment cannot set up its config system."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_config_shutdown);
@@ -257,7 +259,7 @@ main(int argc, char **argv)
    /* init font system */
    if (!e_font_init())
      {
-	e_error_message_show("Enlightenment cannot set up its font system.");
+	e_error_message_show(_("Enlightenment cannot set up its font system."));
         _e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_font_shutdown);
@@ -267,23 +269,23 @@ main(int argc, char **argv)
    /* setup init status window/screen */
    if (!e_init_init())
      {
-	e_error_message_show("Enlightenment cannot set up init screen.\n"
-			     "Perhaps you are out of memory?");
+	e_error_message_show(_("Enlightenment cannot set up init screen.\n"
+			       "Perhaps you are out of memory?"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_init_shutdown);
    /* manage the root window */
    if (!_e_main_screens_init())
      {
-	e_error_message_show("Enlightenment set up window management for all the screens on your system\n"
-			     "failed. Perhaps another window manager is running?\n");
+	e_error_message_show(_("Enlightenment set up window management for all the screens on your system\n"
+			       "failed. Perhaps another window manager is running?\n"));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_screens_shutdown);
    /* init app system */
    if (!e_app_init())
      {
-	e_error_message_show("Enlightenment cannot set up its app system.");
+	e_error_message_show(_("Enlightenment cannot set up its app system."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_app_shutdown);
@@ -295,11 +297,11 @@ main(int argc, char **argv)
    if (!_e_main_ipc_init())
      {
 	e_error_message_show(
-			     "Enlightenment cannot set up the IPC socket.\n"
-			     "It likely is already in use by an exisiting copy of Enlightenment.\n"
-			     "Double check to see if Enlightenment is not already on this display,\n"
-			     "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			     "and try running again.");
+			     _("Enlightenment cannot set up the IPC socket.\n"
+			       "It likely is already in use by an exisiting copy of Enlightenment.\n"
+			       "Double check to see if Enlightenment is not already on this display,\n"
+			       "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+			       "and try running again."));
 	ipc_failed = 1;
      }
    else
@@ -308,7 +310,7 @@ main(int argc, char **argv)
    /* setup module loading etc */
    if (!e_module_init())
      {
-	e_error_message_show("Enlightenment cannot set up its module system.");
+	e_error_message_show(_("Enlightenment cannot set up its module system."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_module_shutdown);
@@ -316,21 +318,21 @@ main(int argc, char **argv)
    if (!nowelcome)
      {
 	/* explicitly show a gui dialog */
-	e_error_dialog_show("Welcome to Enlightenment 0.17",
-			    "This is program has barely been started on, so it is not complete by a long\n"
-			    "shot. Please do NOT expect anything to work properly at this stage. It's\n"
-			    "being worked on.\n"
-			    "\n"
-			    "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17.");
+	e_error_dialog_show(_("Welcome to Enlightenment 0.17"),
+			    _("This is program has barely been started on, so it is not complete by a long\n"
+			      "shot. Please do NOT expect anything to work properly at this stage. It's\n"
+			      "being worked on.\n"
+			      "\n"
+			      "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."));
      }
    
    if (ipc_failed)
-     e_error_dialog_show("Enlightenment IPC setup error!",
-			 "Enlightenment cannot set up the IPC socket.\n"
-			 "It likely is already in use by an exisiting copy of Enlightenment.\n"
-			 "Double check to see if Enlightenment is not already on this display,\n"
-			 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			 "and try running again.");
+     e_error_dialog_show(_("Enlightenment IPC setup error!"),
+			 _("Enlightenment cannot set up the IPC socket.\n"
+			   "It likely is already in use by an exisiting copy of Enlightenment.\n"
+			   "Double check to see if Enlightenment is not already on this display,\n"
+			   "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+			   "and try running again."));
    
    /* add in a handler that just before we go idle we flush x */
    _e_main_idle_enterer_flusher = ecore_idle_enterer_add(_e_main_cb_x_flusher, NULL);
@@ -340,9 +342,9 @@ main(int argc, char **argv)
 
    ecore_x_ungrab();
    
-   e_init_title_set("Enlightenment");
+   e_init_title_set(_("Enlightenment"));
    e_init_version_set(VERSION);
-   e_init_status_set("Enlightenment Starting. Please wait.");
+   e_init_status_set(_("Enlightenment Starting. Please wait."));
    
    if (!nostartup)
      {
@@ -356,9 +358,9 @@ main(int argc, char **argv)
      }
    else
      {
-	ecore_timer_add( 3.0, _e_main_cb_startup_fake_status, "Artificially slowing startup so you can see it all.");
-	ecore_timer_add( 7.5, _e_main_cb_startup_fake_status, "This is development code, so be warned.");
-	ecore_timer_add(12.0, _e_main_cb_startup_fake_status, "Most features do not work yet, and those that do are buggy.");
+	ecore_timer_add( 3.0, _e_main_cb_startup_fake_status, _("Artificially slowing startup so you can see it all."));
+	ecore_timer_add( 7.5, _e_main_cb_startup_fake_status, _("This is development code, so be warned."));
+	ecore_timer_add(12.0, _e_main_cb_startup_fake_status, _("Most features do not work yet, and those that do are buggy."));
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
      }
    
@@ -379,9 +381,7 @@ main(int argc, char **argv)
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
-	printf("Restart...\n");
 	ecore_app_restart();
-	printf("eh? restart failed!\n");
      }
    
    /* just return 0 to keep the compiler quiet */
@@ -517,6 +517,8 @@ _e_main_dirs_init(void)
 	system(buf);
      }
    free(homedir);
+
+   e_intl_shutdown();
    
    return 1;
 }

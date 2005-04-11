@@ -31,7 +31,7 @@ e_init_init(void)
    roots = ecore_x_window_root_list(&num);
    if ((!roots) || (num <= 0))
      {
-        e_error_message_show("X reports there are no root windows and %i screens!\n",
+        e_error_message_show(_("X reports there are no root windows and %i screens!\n"),
 			     num);
 	return 0;
      }

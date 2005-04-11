@@ -81,13 +81,22 @@ dnl Set PACKAGE_DATA_DIR in config.h.
 if test "x${datadir}" = 'x${prefix}/share'; then
   if test "x${prefix}" = "xNONE"; then
     AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}", "Package installed data destination")
+    AC_DEFINE_UNQUOTED(LOCALE_DIR, "${ac_default_prefix}/share/locale", "Locale directory")
   else
     AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}", "Package installed data destination")
+    AC_DEFINE_UNQUOTED(LOCALE_DIR, "${prefix}/share/locale", "Locale directory")
   fi
 else
   AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}", "Package installed data destination")
+  AC_DEFINE_UNQUOTED(LOCALE_DIR, "${datadir}/locale", "Locale directory")
 fi
-	  
+
+AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION(0.12.1)
+if test "x$LIBINTL" = "x"; then
+  LIBINTL="$INTLLIBS"
+fi
+
 AC_CHECK_LIB(dl, dlopen, dlopen_libs=-ldl)
 AC_SUBST(dlopen_libs)
 
@@ -153,7 +162,7 @@ AC_ARG_WITH(embryo-config,
 embryo_cflags=`$EMBRYO_CONFIG --cflags`
 embryo_libs=`$EMBRYO_CONFIG --libs`
 
-e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "
+e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "$LIBINTL" "
 e_cflags=$evas_cflags" "$ecore_cflags" "$edje_cflags" "$eet_cflags" "$embryo_cflags" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
@@ -211,6 +220,7 @@ data/icons/Makefile
 data/icons/images/Makefile
 data/other/Makefile
 doc/Makefile
+po/Makefile
 enlightenment-config
 ],[
 chmod +x enlightenment-config

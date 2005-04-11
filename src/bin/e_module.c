@@ -95,10 +95,10 @@ e_module_new(char *name)
      modpath = name;
    if (!modpath)
      {
-	e_error_dialog_show("Error loading Module",
-			    "There was an error loading module named: %s\n"
-			    "No module named %s could be found in the\n"
-			    "module search directories\n",
+	e_error_dialog_show(_("Error loading Module"),
+			    _("There was an error loading module named: %s\n"
+			      "No module named %s could be found in the\n"
+			      "module search directories\n"),
 			    name, buf);
 	free(m);
 	return NULL;
@@ -106,12 +106,12 @@ e_module_new(char *name)
    m->handle = dlopen(modpath, RTLD_NOW | RTLD_LOCAL);
    if (!m->handle)
      {
-	e_error_dialog_show("Error loading Module",
-			    "There was an error loading module named: %s\n"
-			    "The full path to this module is:\n"
-			    "%s\n"
-			    "The error reported was:\n"
-			    "%s",
+	e_error_dialog_show(_("Error loading Module"),
+			    _("There was an error loading module named: %s\n"
+			      "The full path to this module is:\n"
+			      "%s\n"
+			      "The error reported was:\n"
+			      "%s"),
 			    name, buf, dlerror());
 	free(m);
 	return NULL;
@@ -128,12 +128,12 @@ e_module_new(char *name)
        (!m->func.about)
        )
      {
-	e_error_dialog_show("Error loading Module",
-			    "There was an error loading module named: %s\n"
-			    "The full path to this module is:\n"
-			    "%s\n"
-			    "The error reported was:\n"
-			    "%s",
+	e_error_dialog_show(_("Error loading Module"),
+			    _("There was an error loading module named: %s\n"
+			      "The full path to this module is:\n"
+			      "%s\n"
+			      "The error reported was:\n"
+			      "%s"),
 			    name, buf, dlerror());
 	dlclose(m->handle);
 	free(m);
@@ -378,11 +378,11 @@ _e_module_control_menu_new(E_Module *mod)
    m = e_menu_new();
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "About...");
+   e_menu_item_label_set(mi, _("About..."));
    e_menu_item_callback_set(mi, _e_module_control_menu_about, mod);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Enabled");
+   e_menu_item_label_set(mi, _("Enabled"));
    e_menu_item_check_set(mi, 1);
    if (mod->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_module_control_menu_enabled, mod);
@@ -393,7 +393,7 @@ _e_module_control_menu_new(E_Module *mod)
 	e_menu_item_separator_set(mi, 1);
 	
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, "Configuration");
+	e_menu_item_label_set(mi, _("Configuration"));
 	e_menu_item_submenu_set(mi, mod->config_menu);
      }
    return m;
