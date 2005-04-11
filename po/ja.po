@@ -442,8 +442,8 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_int_menus.c:117
-msgid "Exit Enlightement"
-msgstr ""
+msgid "Exit Enlightenment"
+msgstr "出口の悟"
 
 #: src/modules/ibar/e_mod_main.c:775
 msgid "Exteremely Large"
