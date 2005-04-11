@@ -1120,7 +1120,7 @@ _e_border_free(E_Border *bd)
    if (resize == bd)
      _e_border_resize_end(bd);
    if (move == bd)
-     _e_border_resize_end(bd);
+     _e_border_move_end(bd);
 
    while (bd->pending_move_resize)
      {
