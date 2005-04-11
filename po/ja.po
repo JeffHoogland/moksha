@@ -1,16 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
 # This file is put in the public domain.
-# FIRST AUTHOR <raster@rasterman.com>, YEAR.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: enlightenment 0.16.999\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-12 05:16+0900\n"
+"POT-Creation-Date: 2005-04-12 06:59+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <raster@rasterman.com>\n"
-"Language-Team: LANGUAGE <enlightenment-devel@lists.sourceforge.ne>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,6 +27,77 @@ msgstr ""
 msgid "(Unused)"
 msgstr ""
 
+#: src/modules/battery/e_mod_main.c:418
+msgid "1 hour"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:596
+msgid "100C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:500
+msgid "10C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:507
+#: src/modules/temperature/e_mod_main.c:540
+msgid "20C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:514
+#: src/modules/temperature/e_mod_main.c:547
+msgid "30C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:521
+#: src/modules/temperature/e_mod_main.c:554
+msgid "40C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:528
+#: src/modules/temperature/e_mod_main.c:561
+msgid "50C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:568
+msgid "60C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:575
+msgid "70C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:582
+msgid "80C"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:589
+msgid "90C"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:99
+msgid ""
+"A basic battery meter that uses either ACPI or APM\n"
+"on Linux to monitor your battery and AC power adaptor\n"
+"status. This will only work under Linux and is only\n"
+"as accurate as your BIOS or kernel drivers."
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:97
+msgid ""
+"A module to measure the ACPI Thermal sensor on Linux.\n"
+"It is especially useful for modern Laptops with high speed\n"
+"CPUs that generate a lot of heat."
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:136
+msgid "A pager module to navigate virtual desktops."
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:96
+msgid "A simple module to give E17 a clock."
+msgstr ""
+
 #: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
 msgid "About Enlightenment"
 msgstr "悟について"
@@ -35,9 +106,13 @@ msgstr "悟について"
 msgid "About..."
 msgstr ""
 
-#: src/bin/e_main.c:361
+#: src/bin/e_main.c:360
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工に開始従ってあなたを遅らせることはそれをすべて見ることができる。"
+
+#: src/modules/ibar/e_mod_main.c:717
+msgid "Auto fit icons"
+msgstr ""
 
 #: src/bin/e_gadman.c:526
 msgid "Automatic Height"
@@ -45,6 +120,18 @@ msgstr ""
 
 #: src/bin/e_gadman.c:483
 msgid "Automatic Width"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:906
+msgid "BAD DRIVER"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:89
+msgid "Battery"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:688
+msgid "Battery Running Low"
 msgstr ""
 
 #: src/bin/e_gadman.c:509
@@ -55,7 +142,40 @@ msgstr ""
 msgid "Center Vertically"
 msgstr ""
 
-#: src/bin/e_border.c:3213
+#: src/modules/battery/e_mod_main.c:1002
+msgid "Charging"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:430
+msgid "Check Fast (1 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:184
+#: src/modules/temperature/e_mod_main.c:608
+msgid "Check Interval"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:437
+msgid "Check Medium (5 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:444
+msgid "Check Normal (10 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:451
+msgid "Check Slow (30 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:458
+msgid "Check Very Slow (60 sec)"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:86
+msgid "Clock"
+msgstr ""
+
+#: src/bin/e_border.c:3213 src/modules/dropshadow/e_mod_main.c:344
 msgid "Close"
 msgstr ""
 
@@ -67,15 +187,29 @@ msgstr ""
 msgid "Create Icon"
 msgstr ""
 
+#: src/modules/battery/e_mod_main.c:998
+msgid "Danger"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:296
+msgid "Dark"
+msgstr ""
+
 #: src/bin/e_int_menus.c:77
 msgid "Desktops"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:125
+msgid "Dropshadow"
 msgstr ""
 
 #: src/bin/e_border.c:3255
 msgid "Edit Icon"
 msgstr ""
 
-#: src/bin/e_int_menus.c:515
+#: src/bin/e_int_menus.c:515 src/modules/clock/e_mod_main.c:311
+#: src/modules/temperature/e_mod_main.c:723
+#: src/modules/battery/e_mod_main.c:563
 msgid "Edit Mode"
 msgstr ""
 
@@ -87,17 +221,45 @@ msgstr ""
 msgid "End Edit Mode"
 msgstr ""
 
-#: src/bin/e_main.c:345
+#: src/bin/e_main.c:344
 msgid "Enlightenment"
 msgstr "悟"
 
-#: src/bin/e_main.c:330
+#: src/modules/battery/e_mod_main.c:98
+msgid "Enlightenment Battery Module"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:95
+msgid "Enlightenment Clock Module"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:134
+msgid "Enlightenment Dropshadow Module"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:158
+msgid "Enlightenment IBar Module"
+msgstr ""
+
+#: src/bin/e_main.c:329
 msgid "Enlightenment IPC setup error!"
 msgstr ""
 
-#: src/bin/e_main.c:347
+#: src/modules/pager/e_mod_main.c:135
+msgid "Enlightenment Pager Module"
+msgstr ""
+
+#: src/bin/e_main.c:346
 msgid "Enlightenment Starting. Please wait."
 msgstr "悟は始まっている。ちょっとまってください。"
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid "Enlightenment Temperature Module"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:66
+msgid "Enlightenment Test Module"
+msgstr ""
 
 #: src/bin/e_main.c:157
 msgid ""
@@ -165,7 +327,7 @@ msgstr ""
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:312
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 
@@ -175,7 +337,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:300 src/bin/e_main.c:331
+#: src/bin/e_main.c:299 src/bin/e_main.c:330
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -200,6 +362,73 @@ msgstr ""
 msgid "Enlightenment: Error!"
 msgstr ""
 
+#: src/modules/ibar/e_mod_main.c:789
+msgid "Enormous"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:46
+#, c-format
+msgid ""
+"Error initializing Module: Battery\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:41
+#, c-format
+msgid ""
+"Error initializing Module: Clock\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:78
+#, c-format
+msgid ""
+"Error initializing Module: Dropshadow\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:106
+#, c-format
+msgid ""
+"Error initializing Module: IBar\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:80
+#, c-format
+msgid ""
+"Error initializing Module: Pager\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:44
+#, c-format
+msgid ""
+"Error initializing Module: Temperature\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:10
+#, c-format
+msgid ""
+"Error initializing Module: test\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+
 #: src/bin/e_module.c:98 src/bin/e_module.c:109 src/bin/e_module.c:131
 msgid "Error loading Module"
 msgstr ""
@@ -214,7 +443,27 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightement"
-msgstr "出口の悟"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:775
+msgid "Exteremely Large"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:362
+msgid "Extremely Close"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:930
+msgid "FULL"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:335
+msgid "Far"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:460
+msgid "Fast (1 sec)"
+msgstr ""
 
 #: src/bin/e_int_menus.c:58
 msgid "Favorite Applications"
@@ -228,8 +477,16 @@ msgstr ""
 msgid "Full Screen Width"
 msgstr ""
 
+#: src/modules/dropshadow/e_mod_main.c:248
+msgid "Fuzzy"
+msgstr ""
+
 #: src/bin/e_int_menus.c:93
 msgid "Gadgets"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:796
+msgid "Gigantic"
 msgstr ""
 
 #: src/bin/e_gadman.c:536
@@ -240,6 +497,23 @@ msgstr ""
 msgid "Half Screen Width"
 msgstr ""
 
+#: src/modules/battery/e_mod_main.c:990
+msgid "High"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:616
+msgid "High Temperature"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:782
+msgid "Huge"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:149
+msgid "IBar"
+msgstr ""
+
 #: src/bin/e_border.c:3354
 msgid "Icon Edit Error"
 msgstr ""
@@ -248,17 +522,77 @@ msgstr ""
 msgid "Iconify"
 msgstr ""
 
+#: src/modules/dropshadow/e_mod_main.c:371
+msgid "Immediately Underneath"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:761
+msgid "Large"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:305
+msgid "Light"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:994
+msgid "Low"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:612
+msgid "Low Temperature"
+msgstr ""
+
 #: src/bin/e_border.c:3233
 msgid "Maximized"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:257 src/modules/ibar/e_mod_main.c:754
+msgid "Medium"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:467
+msgid "Medium (5 sec)"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:726
+msgid "Microscopic"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:9 src/modules/dropshadow/e_mod_main.c:77
+#: src/modules/clock/e_mod_main.c:40 src/modules/temperature/e_mod_main.c:43
+#: src/modules/ibar/e_mod_main.c:105 src/modules/battery/e_mod_main.c:45
+#: src/modules/pager/e_mod_main.c:79
+msgid "Module API Error"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:24
+msgid "Module Config Menu Item 1"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:26
+msgid "Module Config Menu Item 2"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:28
+msgid "Module Config Menu Item 3"
 msgstr ""
 
 #: src/bin/e_int_menus.c:69
 msgid "Modules"
 msgstr ""
 
-#: src/bin/e_main.c:363
+#: src/bin/e_main.c:362
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr "ほとんどの特徴はまだ働かないし、特徴はバッギである。"
+
+#: src/modules/battery/e_mod_main.c:882
+msgid "NO BAT"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:750
+msgid "NO INFO"
+msgstr ""
 
 #: src/bin/e_int_menus.c:362
 msgid "New Column of Desktops"
@@ -266,6 +600,18 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:354
 msgid "New Row of Desktops"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:474
+msgid "Normal (10 sec)"
+msgstr ""
+
+#: src/bin/e_error.c:188 src/bin/e_error.c:197
+msgid "OK"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:804
+msgid "Options"
 msgstr ""
 
 #: src/bin/e_main.c:112
@@ -284,6 +630,10 @@ msgid ""
 "+0\n"
 msgstr ""
 
+#: src/modules/pager/e_mod_main.c:126
+msgid "Pager"
+msgstr ""
+
 #: src/bin/e_int_menus.c:366
 msgid "Remove Column of Desktops"
 msgstr ""
@@ -296,12 +646,48 @@ msgstr ""
 msgid "Restart Enlightement"
 msgstr "再始動悟"
 
+#: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
+msgid "Set Alarm"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
+msgid "Set Poll Time"
+msgstr ""
+
 #: src/bin/e_border.c:3226
 msgid "Shaded"
 msgstr ""
 
+#: src/modules/dropshadow/e_mod_main.c:266
+msgid "Sharp"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:808
+msgid "Size"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:481
+msgid "Slow (30 sec)"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:747
+msgid "Small"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:32
+msgid "Something Else"
+msgstr ""
+
 #: src/bin/e_border.c:3240
 msgid "Sticky"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:87
+msgid "Temperature"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:59
+msgid "Test!!!"
 msgstr ""
 
 #: src/bin/e_module.c:99
@@ -333,11 +719,11 @@ msgid ""
 "Please think of the aardvarks. They need some love too."
 msgstr ""
 
-#: src/bin/e_main.c:362
+#: src/bin/e_main.c:361
 msgid "This is development code, so be warned."
 msgstr "これは開発コード、従って警告される。"
 
-#: src/bin/e_main.c:322
+#: src/bin/e_main.c:321
 msgid ""
 "This is program has barely been started on, so it is not complete by a long\n"
 "shot. Please do NOT expect anything to work properly at this stage. It's\n"
@@ -346,7 +732,69 @@ msgid ""
 "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
 msgstr ""
 
-#: src/bin/e_main.c:321
+#: src/modules/ibar/e_mod_main.c:159
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:135
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast\n"
+"on the desktop background - without special X-Server extensions\n"
+"or hardware acceleration."
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:67
+msgid ""
+"This module is VERY simple and is only used to test the basic\n"
+"interface of the Enlightenment 0.17.0 module system. Please\n"
+"Ignore this module unless you are working on the module system."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:733
+msgid "Tiny"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:353
+msgid "Very Close"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:287
+msgid "Very Dark"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:326
+msgid "Very Far"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:239
+msgid "Very Fuzzy"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:768
+msgid "Very Large"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:314
+msgid "Very Light"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:275
+msgid "Very Sharp"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:488
+msgid "Very Slow (60 sec)"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:740
+msgid "Very Small"
+msgstr ""
+
+#: src/bin/e_main.c:320
 msgid "Welcome to Enlightenment 0.17"
 msgstr ""
 
@@ -357,4 +805,10 @@ msgstr ""
 #: src/bin/e_init.c:34
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:689
+msgid ""
+"Your battery is running low.\n"
+"You may wish to switch to an AC source."
 msgstr ""

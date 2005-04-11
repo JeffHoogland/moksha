@@ -296,8 +296,7 @@ main(int argc, char **argv)
    /* setup e ipc service */
    if (!_e_main_ipc_init())
      {
-	e_error_message_show(
-			     _("Enlightenment cannot set up the IPC socket.\n"
+	e_error_message_show(_("Enlightenment cannot set up the IPC socket.\n"
 			       "It likely is already in use by an exisiting copy of Enlightenment.\n"
 			       "Double check to see if Enlightenment is not already on this display,\n"
 			       "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"

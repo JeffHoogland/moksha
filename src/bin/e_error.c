@@ -185,7 +185,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 255, 255, 255, 128);
 	evas_object_text_font_set(o, "Vera-Bold", 12);
-	evas_object_text_text_set(o, "OK");
+	evas_object_text_text_set(o, _("OK"));
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 	evas_object_move(o, ((error_w - tw) / 2) + 1, (error_h - 16 - 32 + ((32 - th) / 2)) + 1);
 	evas_object_pass_events_set(o, 1);
@@ -194,7 +194,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_text_add(e);
 	evas_object_color_set(o, 0, 0, 0, 255);
 	evas_object_text_font_set(o, "Vera-Bold", 12);
-	evas_object_text_text_set(o, "OK");
+	evas_object_text_text_set(o, _("OK"));
 	evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 	evas_object_move(o, (error_w - tw) / 2, error_h - 16 - 32 + ((32 - th) / 2));
 	evas_object_pass_events_set(o, 1);
