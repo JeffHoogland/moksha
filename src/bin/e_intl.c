@@ -62,6 +62,7 @@ e_intl_language_name_get(const char *lang)
 {
    if (!lang) return "None";
    /* FIXME: add as many as we can to this */
+   IFL("") "None";
    IFL("C") "None";
    IFL("bg") "Bulgarian";
    IFL("bs") "Bosnian";
@@ -123,7 +124,7 @@ e_intl_language_simple_get(const char *lang)
    if (ISL("ja") || ISL("ja_JP") || ISL("JP") || ISL("en_CA"))
      return "ja";
    /* FIXME: add all sorts of fuzzy matching here */
-   return lang;
+   return "C";
 }
 
 const Evas_List *
