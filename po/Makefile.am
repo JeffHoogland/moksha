@@ -4,9 +4,11 @@ MSGFMT = msgfmt
 
 podir =
 po_DATA = \
+fr.mo \
 ja.mo
 
 LANGS = \
+fr \
 ja
 
 install-data-local:
@@ -14,9 +16,10 @@ install-data-local:
 	  $(INSTALL_DATA) -D \
 	  $$L.mo $(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
-	
+
 EXTRA_DIST = \
 enlightenment.pot \
+fr.po \
 ja.po
 
 .po.mo:
