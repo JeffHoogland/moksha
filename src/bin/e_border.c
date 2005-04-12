@@ -3664,7 +3664,7 @@ _e_border_move_update(E_Border *bd)
 {
    char buf[40];
 
-   snprintf(buf, sizeof(buf) - 1, "%ix%i", bd->x, bd->y);
+   snprintf(buf, sizeof(buf) - 1, "%i %i", bd->x, bd->y);
    edje_object_part_text_set(move_obj, "text", buf);
 }
 
