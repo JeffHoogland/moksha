@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-12 06:59+0900\n"
-"PO-Revision-Date: 2005-04-12 18:50+0200\n"
+"PO-Revision-Date: 2005-04-12 20:33+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -312,8 +312,9 @@ msgstr ""
 "Peut-être êtes-vous à court de mémoire ?"
 
 #: src/bin/e_main.c:207
+#, fuzzy
 msgid ""
-"Enlightenment cannot initialize the 
+"Enlightenment cannot initialize the"
 "Perhaps you are out of memory?"
 msgstr ""
 "Enlightenment ne peut pas inialiser le système de connexions.\n"
