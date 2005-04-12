@@ -95,7 +95,7 @@ static void    _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
 void *
-init(E_Module *m)
+e_modapi_init(E_Module *m)
 {
    IBar *ib;
 
@@ -118,7 +118,7 @@ init(E_Module *m)
 }
 
 int
-shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m)
 {
    IBar *ib;
 
@@ -132,7 +132,7 @@ shutdown(E_Module *m)
 }
 
 int
-save(E_Module *m)
+e_modapi_save(E_Module *m)
 {
    IBar *ib;
 
@@ -142,7 +142,7 @@ save(E_Module *m)
 }
 
 int
-info(E_Module *m)
+e_modapi_info(E_Module *m)
 {
    char buf[4096];
 
@@ -153,7 +153,7 @@ info(E_Module *m)
 }
 
 int
-about(E_Module *m)
+e_modapi_about(E_Module *m)
 {
    e_error_dialog_show(_("Enlightenment IBar Module"),
 		       _("This is the IBar Application Launcher bar module for Enlightenment.\n"

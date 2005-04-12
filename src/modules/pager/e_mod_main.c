@@ -69,7 +69,7 @@ static E_Config_DD *_conf_face_edd;
 
 /* public module routines. all modules must have these */
 void *
-init(E_Module *module)
+e_modapi_init(E_Module *module)
 {
    Pager *pager = NULL;
 
@@ -93,7 +93,7 @@ init(E_Module *module)
 }
 
 int
-shutdown(E_Module *module)
+e_modapi_shutdown(E_Module *module)
 {
    Pager *pager;
 
@@ -108,7 +108,7 @@ shutdown(E_Module *module)
 }
 
 int
-save(E_Module *module)
+e_modapi_save(E_Module *module)
 {
    Pager *pager;
 
@@ -119,7 +119,7 @@ save(E_Module *module)
 }
 
 int
-info(E_Module *module)
+e_modapi_info(E_Module *module)
 {
    char buf[4096];
 
@@ -130,7 +130,7 @@ info(E_Module *module)
 }
 
 int
-about(E_Module *module)
+e_modapi_about(E_Module *module)
 {
    e_error_dialog_show(_("Enlightenment Pager Module"),
 		       _("A pager module to navigate virtual desktops."));

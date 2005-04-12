@@ -116,11 +116,11 @@ e_module_new(char *name)
 	free(m);
 	return NULL;
      }
-   m->func.init = dlsym(m->handle, "init");
-   m->func.shutdown = dlsym(m->handle, "shutdown");
-   m->func.save = dlsym(m->handle, "save");
-   m->func.info = dlsym(m->handle, "info");
-   m->func.about = dlsym(m->handle, "about");
+   m->func.init = dlsym(m->handle, "e_modapi_init");
+   m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
+   m->func.save = dlsym(m->handle, "e_modapi_save");
+   m->func.info = dlsym(m->handle, "e_modapi_info");
+   m->func.about = dlsym(m->handle, "e_modapi_about");
    if ((!m->func.init) ||
        (!m->func.shutdown) ||
        (!m->func.save) ||

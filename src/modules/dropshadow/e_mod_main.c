@@ -68,7 +68,7 @@ static void        _ds_object_unset(Evas_Object *o);
     
 /* public module routines. all modules must have these */
 void *
-init(E_Module *m)
+e_modapi_init(E_Module *m)
 {
    Dropshadow *ds;
    
@@ -89,7 +89,7 @@ init(E_Module *m)
 }
 
 int
-shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m)
 {
    Dropshadow *ds;
    
@@ -108,7 +108,7 @@ shutdown(E_Module *m)
 }
 
 int
-save(E_Module *m)
+e_modapi_save(E_Module *m)
 {
    Dropshadow *ds;
    
@@ -118,7 +118,7 @@ save(E_Module *m)
 }
 
 int
-info(E_Module *m)
+e_modapi_info(E_Module *m)
 {
    char buf[4096];
    
@@ -129,7 +129,7 @@ info(E_Module *m)
 }
 
 int
-about(E_Module *m)
+e_modapi_about(E_Module *m)
 {
    e_error_dialog_show(_("Enlightenment Dropshadow Module"),
 		       _("This is the dropshadow module that allows dropshadows to be cast\n"

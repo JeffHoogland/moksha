@@ -30,7 +30,7 @@ static E_Config_DD *conf_face_edd;
 
 /* public module routines. all modules must have these */
 void *
-init(E_Module *module)
+e_modapi_init(E_Module *module)
 {
    Clock *clock;
    
@@ -54,7 +54,7 @@ init(E_Module *module)
 }
 
 int
-shutdown(E_Module *module)
+e_modapi_shutdown(E_Module *module)
 {
    Clock *clock;
 
@@ -69,7 +69,7 @@ shutdown(E_Module *module)
 }
 
 int
-save(E_Module *module)
+e_modapi_save(E_Module *module)
 {
    Clock *clock;
 
@@ -79,7 +79,7 @@ save(E_Module *module)
 }
 
 int
-info(E_Module *module)
+e_modapi_info(E_Module *module)
 {
    char buf[4096];
    
@@ -90,7 +90,7 @@ info(E_Module *module)
 }
 
 int
-about(E_Module *module)
+e_modapi_about(E_Module *module)
 {
    e_error_dialog_show(_("Enlightenment Clock Module"),
 		       _("A simple module to give E17 a clock."));

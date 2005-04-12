@@ -33,7 +33,7 @@ static int temperature_count;
 
 /* public module routines. all modules must have these */
 void *
-init(E_Module *m)
+e_modapi_init(E_Module *m)
 {
    Temperature *e;
 
@@ -56,7 +56,7 @@ init(E_Module *m)
 }
 
 int
-shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m)
 {
    Temperature *e;
 
@@ -70,7 +70,7 @@ shutdown(E_Module *m)
 }
 
 int
-save(E_Module *m)
+e_modapi_save(E_Module *m)
 {
    Temperature *e;
 
@@ -80,7 +80,7 @@ save(E_Module *m)
 }
 
 int
-info(E_Module *m)
+e_modapi_info(E_Module *m)
 {
    char buf[4096];
 
@@ -91,7 +91,7 @@ info(E_Module *m)
 }
 
 int
-about(E_Module *m)
+e_modapi_about(E_Module *m)
 {
    e_error_dialog_show(_("Enlightenment Temperature Module"),
 		       _("A module to measure the ACPI Thermal sensor on Linux.\n"

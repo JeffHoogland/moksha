@@ -2,7 +2,7 @@
 #include "e_mod_main.h"
 
 void *
-init(E_Module *m)
+e_modapi_init(E_Module *m)
 {
    if (m->api->version < E_MODULE_API_VERSION)
      {
@@ -32,11 +32,11 @@ init(E_Module *m)
 	e_menu_item_label_set(mi, _("Something Else"));
 	m->config_menu = mn;
      }
-   return init; /* bogus pointer - just to say we worked */
+   return e_modapi_init; /* bogus pointer - just to say we worked */
 }
 
 int
-shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m)
 {
    if (m->config_menu)
      {
@@ -48,20 +48,20 @@ shutdown(E_Module *m)
 }
 
 int
-save(E_Module *m)
+e_modapi_save(E_Module *m)
 {
    return 1;
 }
 
 int
-info(E_Module *m)
+e_modapi_info(E_Module *m)
 {
    m->label = strdup(_("Test!!!"));
    return 1;
 }
 
 int
-about(E_Module *m)
+e_modapi_about(E_Module *m)
 {
    e_error_dialog_show(_("Enlightenment Test Module"),
 		       _("This module is VERY simple and is only used to test the basic\n"
