@@ -3629,7 +3629,7 @@ _e_border_move_begin(E_Border *bd)
    move_obj = edje_object_add(ecore_evas_get(move_ee));
    edje_object_file_set(move_obj, e_path_find(path_themes, "default.edj"),
 			"widgets/border/default/move");
-   snprintf(buf, sizeof(buf), "9999x9999");
+   snprintf(buf, sizeof(buf), "9999 9999");
    edje_object_part_text_set(move_obj, "text", buf);
 
    edje_object_size_min_calc(move_obj, &w, &h);
@@ -3637,7 +3637,7 @@ _e_border_move_begin(E_Border *bd)
    evas_object_resize(move_obj, w, h);
    evas_object_show(move_obj);
 
-   snprintf(buf, sizeof(buf), "%ix%i", bd->x, bd->y);
+   snprintf(buf, sizeof(buf), "%i %i", bd->x, bd->y);
    edje_object_part_text_set(move_obj, "text", buf);
    
    ecore_evas_move(move_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);

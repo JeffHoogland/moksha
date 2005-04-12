@@ -5,6 +5,11 @@
 #include "config.h"
 
 /* TODO List:
+ * 
+ * * load/save language in config so u can change language runtime via a gui and/or ipc
+ * * add ipc to get/set/list languages, get language name, simplified language string, etc. (so a config tool can be written to display supported languages and be able to select from them)
+ * * add more language names to the language name list list in e_intl_language_name_get()
+ * * as we get translations add languages to the simplified lang list (C and en are currently the same, ja is a test translation - incomplete)
  */
 
 static char *_e_intl_language = NULL;
@@ -30,6 +35,13 @@ e_intl_init(void)
 int
 e_intl_shutdown(void)
 {
+   free(_e_intl_language);
+   _e_intl_language = NULL;
+   while (_e_intl_languages)
+     {
+	free(_e_intl_languages->data);
+	_e_intl_languages = evas_list_remove_list(_e_intl_languages, _e_intl_languages);
+     }
    return 1;
 }
 
@@ -37,10 +49,9 @@ void
 e_intl_language_set(const char *lang)
 {
    char buf[4096];
-
+   
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
-   /* FIXME: not sure the correct fix, but currenlty segv's if LANG isn't set */
    if (!lang) lang = "en";
    _e_intl_language = strdup(lang);
    snprintf(buf, sizeof(buf), "LANG=%s", _e_intl_language);
@@ -48,7 +59,7 @@ e_intl_language_set(const char *lang)
    setlocale(LC_ALL, "");
    bindtextdomain(PACKAGE, LOCALE_DIR);
    textdomain(PACKAGE);
-   //   XSetLocaleModifiers("");
+//   XSetLocaleModifiers("");
    bind_textdomain_codeset(PACKAGE, "UTF-8");
 }
 
@@ -120,8 +131,11 @@ e_intl_language_simple_get(const char *lang)
    strncpy(buf, lang, sizeof(buf) - 1);
    p = strchr(buf, '.');
    if (p) *p = 0;
+   /* do we want to split this inot the different forms of english?
+    * ie american vs british? or australian? etc.
+    */
    if (ISL("en") || ISL("en_US") || ISL("en_GB") || ISL("en_CA") ||
-	 ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
+       ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
      return "en";
    if (ISL("ja") || ISL("ja_JP") || ISL("JP"))
      return "ja";

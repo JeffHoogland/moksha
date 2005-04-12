@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-11 22:26-0400\n"
+"POT-Creation-Date: 2005-04-12 17:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,8 +207,9 @@ msgstr ""
 msgid "Edit Icon"
 msgstr ""
 
-#: src/bin/e_int_menus.c:515 src/modules/battery/e_mod_main.c:563
-#: src/modules/clock/e_mod_main.c:311 src/modules/temperature/e_mod_main.c:723
+#: src/bin/e_int_menus.c:515 src/modules/clock/e_mod_main.c:311
+#: src/modules/temperature/e_mod_main.c:723
+#: src/modules/battery/e_mod_main.c:563
 msgid "Edit Mode"
 msgstr ""
 
@@ -558,10 +559,10 @@ msgstr ""
 msgid "Microscopic"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
-#: src/modules/dropshadow/e_mod_main.c:77 src/modules/ibar/e_mod_main.c:105
-#: src/modules/pager/e_mod_main.c:79 src/modules/temperature/e_mod_main.c:43
-#: src/modules/test/e_mod_main.c:9
+#: src/modules/test/e_mod_main.c:9 src/modules/dropshadow/e_mod_main.c:77
+#: src/modules/clock/e_mod_main.c:40 src/modules/temperature/e_mod_main.c:43
+#: src/modules/ibar/e_mod_main.c:105 src/modules/battery/e_mod_main.c:45
+#: src/modules/pager/e_mod_main.c:79
 msgid "Module API Error"
 msgstr ""
 
