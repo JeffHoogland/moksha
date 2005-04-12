@@ -123,7 +123,7 @@ e_intl_language_simple_get(const char *lang)
    if (ISL("en") || ISL("en_US") || ISL("en_GB") || ISL("en_CA") ||
 	 ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
      return "en";
-   if (ISL("ja") || ISL("ja_JP") || ISL("JP") || ISL("en_CA"))
+   if (ISL("ja") || ISL("ja_JP") || ISL("JP"))
      return "ja";
    /* FIXME: add all sorts of fuzzy matching here */
    return "C";
