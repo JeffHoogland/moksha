@@ -28,6 +28,16 @@
 #include <Eet.h>
 #include <Edje.h>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#if HAVE___ATTRIBUTE__
+#define __UNUSED__ __attribute__((unused))
+#else
+#define __UNUSED__
+#endif
+
 #ifdef EAPI
 #undef EAPI
 #endif

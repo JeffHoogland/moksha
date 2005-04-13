@@ -2,7 +2,6 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-#include "config.h"
 
 /* TODO List:
  * 
@@ -26,6 +25,7 @@ e_intl_init(void)
    ADD_LANG("C");
    ADD_LANG("en");
    ADD_LANG("jp");
+   ADD_LANG("fr");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(NULL);
