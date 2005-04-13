@@ -390,7 +390,7 @@ _e_manager_free(E_Manager *man)
 }
 
 static int
-_e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
+_e_manager_cb_window_show_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Show_Request *e;
@@ -419,7 +419,7 @@ _e_manager_cb_window_show_request(void *data, int ev_type, void *ev)
 }
 
 static int
-_e_manager_cb_window_configure(void *data, int ev_type, void *ev)
+_e_manager_cb_window_configure(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Configure *e;

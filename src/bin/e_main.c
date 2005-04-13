@@ -2,7 +2,6 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-#include "config.h"
 
 /* local subsystem functions */
 static void _e_main_shutdown_push(int (*func)(void));
@@ -711,7 +710,7 @@ _e_main_ipc_shutdown(void)
 }
 
 static void
-_e_main_cb_x_fatal(void *data)
+_e_main_cb_x_fatal(void *data __UNUSED__)
 {
    e_error_gui_set(0);
    e_error_message_show("Lost X connection.");
@@ -720,7 +719,7 @@ _e_main_cb_x_fatal(void *data)
 }
 
 static int
-_e_main_cb_signal_exit(void *data, int ev_type, void *ev)
+_e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on ctrl-c, kill (pid) (also SIGINT, SIGTERM and SIGQIT) */
    ecore_main_loop_quit();
@@ -728,7 +727,7 @@ _e_main_cb_signal_exit(void *data, int ev_type, void *ev)
 }
 
 static int
-_e_main_cb_signal_hup(void *data, int ev_type, void *ev)
+_e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on SIGHUP to restart Enlightenment */
    printf("RESTART ON!\n");
@@ -738,14 +737,14 @@ _e_main_cb_signal_hup(void *data, int ev_type, void *ev)
 }
 
 static int
-_e_main_cb_x_flusher(void *data)
+_e_main_cb_x_flusher(void *data __UNUSED__)
 {
    ecore_x_flush();
    return 1;
 }
 
 static int
-_e_main_cb_idler_before(void *data)
+_e_main_cb_idler_before(void *data __UNUSED__)
 {
    Evas_List *l, *pl;
    
@@ -782,7 +781,7 @@ _e_main_cb_idler_before(void *data)
 }
 
 static int
-_e_main_cb_idler_after(void *data)
+_e_main_cb_idler_after(void *data __UNUSED__)
 {
 //   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
@@ -797,7 +796,7 @@ _e_main_cb_startup_fake_status(void *data)
 }
 
 static int
-_e_main_cb_startup_fake_end(void *data)
+_e_main_cb_startup_fake_end(void *data __UNUSED__)
 {
    e_init_hide();
    return 0;

@@ -229,7 +229,7 @@ _e_path_cache_free(E_Path *ep)
 }
 
 static Evas_Bool
-_e_path_cache_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
+_e_path_cache_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
    return 0;

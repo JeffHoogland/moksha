@@ -1,5 +1,4 @@
 #include "e.h"
-#include "config.h"
 
 /* local subsystem functions */
 static int _e_ipc_cb_client_add(void *data, int type, void *event);
@@ -40,7 +39,7 @@ e_ipc_shutdown(void)
 
 /* local subsystem globals */
 static int
-_e_ipc_cb_client_add(void *data, int type, void *event)
+_e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Client_Add *e;
    
@@ -51,7 +50,7 @@ _e_ipc_cb_client_add(void *data, int type, void *event)
 }
 
 static int
-_e_ipc_cb_client_del(void *data, int type, void *event)
+_e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Client_Del *e;
    
@@ -64,7 +63,7 @@ _e_ipc_cb_client_del(void *data, int type, void *event)
 }
 
 static int
-_e_ipc_cb_client_data(void *data, int type, void *event)
+_e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Client_Data *e;
    
@@ -541,7 +540,6 @@ _e_ipc_path_str_get(char **paths, int *bytes)
    home = e_user_homedir_get();
    for (cur = paths; *cur != NULL; cur++)
      {
-	int len;
 	char *p;
 
 	p = *cur;

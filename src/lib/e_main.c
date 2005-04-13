@@ -258,7 +258,7 @@ _e_ipc_shutdown(void)
 }
 
 static int
-_e_cb_server_data(void *data, int type, void *event)
+_e_cb_server_data(void *data __UNUSED__, int type, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    
@@ -386,7 +386,7 @@ _e_cb_server_data(void *data, int type, void *event)
    return 1;
 }
 
-static void _e_cb_module_list_free(void *data, void *ev)
+static void _e_cb_module_list_free(void *data __UNUSED__, void *ev)
 {
     E_Response_Module_List *e;
     int i;
@@ -401,7 +401,7 @@ static void _e_cb_module_list_free(void *data, void *ev)
 }
 
 static void
-_e_cb_module_dir_list_free(void *data, void *ev)
+_e_cb_module_dir_list_free(void *data __UNUSED__, void *ev)
 {
     E_Response_Module_Dirs_List *e;
     
@@ -411,7 +411,7 @@ _e_cb_module_dir_list_free(void *data, void *ev)
 }
 
 static void
-_e_cb_bg_dir_list_free(void *data, void *ev)
+_e_cb_bg_dir_list_free(void *data __UNUSED__, void *ev)
 {
     E_Response_Background_Dirs_List *e;
 

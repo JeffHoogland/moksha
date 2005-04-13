@@ -20,7 +20,7 @@ static Evas_List *_e_init_icon_list = NULL;
 int
 e_init_init(void)
 {
-   int x, y, w, h;
+   int w, h;
    Ecore_X_Window root;
    Ecore_X_Window *roots;
    int num;
