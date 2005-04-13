@@ -97,8 +97,9 @@ e_intl_language_name_get(const char *lang)
    IFL("lt") "Lithuanian";
    IFL("lv") "Latvian";
    IFL("nl") "Dutch";
-   IFL("nn") "Norwegian Bokmall";
-   IFL("no") "Norwegian Nynorsk";
+   IFL("no") "Norwegian";
+   IFL("nb") "Norwegian Bokmal";
+   IFL("nn") "Norwegian Nynorsk";
    IFL("pl") "Polish";
    IFL("pt") "Portuguese";
    IFL("pt_BR") "Portuguese (Brazil)";
