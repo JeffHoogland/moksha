@@ -68,6 +68,8 @@ struct _E_Menu
    unsigned char        pending_new_submenu : 1;
    unsigned char        have_submenu : 1;
    unsigned char        in_active_list : 1;
+   unsigned char        shaped : 1;
+   unsigned char        need_shape_export : 1;
 };
 
 struct _E_Menu_Item

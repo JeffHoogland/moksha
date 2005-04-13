@@ -10,6 +10,10 @@ images {
 }
 group {
    name: "widgets/menu/default/background";
+   data {
+// this tells e the border is shaped
+//      item: "shaped" "1";
+   }
    parts {
       part {
 	 name:          "base";

@@ -212,6 +212,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
+   ecore_x_window_shape_events_select(bd->win, 1);
    mwin = e_menu_grab_window_get();
    if (!mwin) mwin = e_init_window_get();
    if (mwin)
@@ -236,6 +237,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->event_win = ecore_x_window_input_new(bd->win, 0, 0, bd->w, bd->h);
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
    bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
+   ecore_x_window_shape_events_select(bd->bg_win, 1);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
    bd->client.shell_win = ecore_x_window_override_new(bd->win, 0, 0, 1, 1);
@@ -298,6 +300,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->w = bd->client.w;
    bd->h = bd->client.h;
    bd->changes.size = 1;
+   bd->changes.shape = 1;
 
    printf("##- ON MAP CLIENT 0x%x SIZE %ix%i\n",
 	  bd->client.win, bd->client.w, bd->client.h);
@@ -1059,6 +1062,36 @@ e_border_find_by_client_window(Ecore_X_Window win)
 }
 
 E_Border *
+e_border_find_by_frame_window(Ecore_X_Window win)
+{
+   Evas_List *l;
+
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	if (bd->bg_win == win) return bd;
+     }
+   return NULL;
+}
+
+E_Border *
+e_border_find_by_window(Ecore_X_Window win)
+{
+   Evas_List *l;
+
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	if (bd->win == win) return bd;
+     }
+   return NULL;
+}
+
+E_Border *
 e_border_focused_get(void)
 {
    return focused;
@@ -1543,7 +1576,26 @@ _e_border_cb_window_shape(void *data, int ev_type, void *ev)
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (!bd) return 1;
+   if (bd)
+     {
+	bd->changes.shape = 1;
+	bd->changed = 1;
+	return 1;
+     }
+   bd = e_border_find_by_window(e->win);
+   if (bd)
+     {
+	bd->need_shape_export = 1;
+	bd->changed = 1;
+	return 1;
+     }
+   bd = e_border_find_by_frame_window(e->win);
+   if (bd)
+     {
+	bd->need_shape_merge = 1;
+	bd->changed = 1;
+	return 1;
+     }
    return 1;
 }
 
@@ -2518,6 +2570,39 @@ _e_border_eval(E_Border *bd)
 	bd->client.netwm.fetch.desktop = 0;
      }
 
+   if (bd->changes.shape)
+     {
+	Ecore_X_Rectangle *rects;
+	int num;
+	
+	rects = ecore_x_window_shape_rectangles_get(bd->client.win, &num);
+	if (rects)
+	  {
+	     if ((num == 1) &&
+		 (rects[0].x == 0) &&
+		 (rects[0].y == 0) &&
+		 (rects[0].width == bd->client.w) &&
+		 (rects[0].height == bd->client.h))
+	       {
+		  if (bd->client.shaped)
+		    {
+		       bd->client.shaped = 0;
+		    }
+	       }
+	     else
+	       {
+		  if (!bd->client.shaped)
+		    {
+		       bd->client.shaped = 1;
+		    }
+	       }
+	     free(rects);
+	  }
+	bd->need_shape_merge = 1;
+	/* is the client shaped? */
+	bd->changes.shape = 0;
+     }
+
    if (bd->client.border.changed)
      {
 	Evas_Object *o;
@@ -2551,6 +2636,37 @@ _e_border_eval(E_Border *bd)
         ok = edje_object_file_set(o, path, buf);
 	if (ok)
 	  {
+	     const char *shape_option;
+	     
+	     shape_option = edje_object_data_get(o, "shaped");
+	     if (shape_option)
+	       {
+		  if (!strcmp(shape_option, "1"))
+		    {
+		       if (!bd->shaped)
+			 {
+			    bd->shaped = 1;
+			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+			 }
+		    }
+		  else
+		    {
+		       if (bd->shaped)
+			 {
+			    bd->shaped = 0;
+			    ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+			 }
+		    }
+	       }
+	     else
+	       {
+		  if (bd->shaped)
+		    {
+		       bd->shaped = 0;
+		       ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+		    }
+	       }
+	     
 	     edje_object_part_text_set(o, "title_text",
 //				       "Japanese (hiragana): いろはにほへとちりぬるを");
 				       bd->client.icccm.title);
@@ -2925,6 +3041,68 @@ _e_border_eval(E_Border *bd)
      {
 	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
 	bd->changes.reset_gravity = 0;
+     }
+   
+   if (bd->need_shape_merge)
+     {
+	if ((bd->shaped) || (bd->client.shaped))
+	  {
+	     Ecore_X_Window twin;
+	     
+	     twin = ecore_x_window_override_new(bd->win, 0, 0, bd->w, bd->h);
+	     if (bd->shaped)
+	       {
+		  ecore_x_window_shape_window_set(twin, bd->bg_win);
+	       }
+	     else
+	       {
+		  Ecore_X_Rectangle rects[4];
+		  
+		  rects[0].x      = 0;
+		  rects[0].y      = 0;
+		  rects[0].width  = bd->w;
+		  rects[0].height = bd->client_inset.t;
+		  rects[1].x      = 0;
+		  rects[1].y      = bd->client_inset.t;
+		  rects[1].width  = bd->client_inset.l;
+		  rects[1].height = bd->client.h;
+		  rects[2].x      = bd->w - bd->client_inset.r;
+		  rects[2].y      = bd->client_inset.t;
+		  rects[2].width  = bd->client_inset.r;
+		  rects[2].height = bd->client.h;
+		  rects[3].x      = 0;
+		  rects[3].y      = bd->h - bd->client_inset.b;
+		  rects[3].width  = bd->w;
+		  rects[3].height = bd->client_inset.b;
+		  ecore_x_window_shape_rectangles_set(twin, rects, 4);
+	       }
+	     ecore_x_window_shape_window_add_xy(twin, bd->client.win, bd->client_inset.l, bd->client_inset.t);
+	     ecore_x_window_shape_window_set(bd->win, twin);
+	     ecore_x_window_del(twin);
+	  }
+	else
+	  {
+	     ecore_x_window_shape_mask_set(bd->win, 0);
+	  }
+	bd->need_shape_merge = 0;
+     }
+   
+   if (bd->need_shape_export)
+     {
+	Ecore_X_Rectangle *rects;
+	int num;
+	
+	rects = ecore_x_window_shape_rectangles_get(bd->win, &num);
+	if (rects)
+	  {
+	     if (bd->client.shaped)
+	       e_container_shape_solid_rect_set(bd->shape, 0, 0, 0, 0);
+	     else
+	       e_container_shape_solid_rect_set(bd->shape, bd->client_inset.l, bd->client_inset.t, bd->client.w, bd->client.h);
+	     e_container_shape_rects_set(bd->shape, rects, num);
+	     free(rects);
+	  }
+	bd->need_shape_export = 0;
      }
 
    bd->changed = 0;
@@ -3705,3 +3883,4 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
 	borders = evas_list_prepend(borders, bd);
      }
 }
+

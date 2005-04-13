@@ -157,6 +157,7 @@ _ds_init(E_Module *m)
    E_CONFIG_VAL(D, T, shadow_x, INT);
    E_CONFIG_VAL(D, T, shadow_y, INT);
    E_CONFIG_VAL(D, T, blur_size, INT);
+   E_CONFIG_VAL(D, T, quality, INT);
    E_CONFIG_VAL(D, T, shadow_darkness, DOUBLE);
    
    ds->conf = e_config_domain_load("module.dropshadow", ds->conf_edd);
@@ -166,13 +167,15 @@ _ds_init(E_Module *m)
 	ds->conf->shadow_x = 4;
 	ds->conf->shadow_y = 4;
 	ds->conf->blur_size = 10;
+	ds->conf->quality = 2;
 	ds->conf->shadow_darkness = 0.5;
      }
    E_CONFIG_LIMIT(ds->conf->shadow_x, -200, 200);
    E_CONFIG_LIMIT(ds->conf->shadow_y, -200, 200);
    E_CONFIG_LIMIT(ds->conf->blur_size, 1, 120);
+   E_CONFIG_LIMIT(ds->conf->quality, 1, 10);
    E_CONFIG_LIMIT(ds->conf->shadow_darkness, 0.0, 1.0);
-   
+
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
    if (ds->conf->shadow_y >= ds->conf->blur_size)
@@ -222,6 +225,7 @@ _ds_shutdown(Dropshadow *ds)
      }
    if (ds->idler_before) e_main_idler_before_del(ds->idler_before);
    if (ds->table.gauss) free(ds->table.gauss);
+   if (ds->table.gauss2) free(ds->table.gauss2);
    _ds_shared_free(ds);
    free(ds);
 }
@@ -831,12 +835,23 @@ _ds_shadow_recalc(Shadow *sh)
 	Evas_List *l;
 	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
+	int x1, y1, x2, y2;
+	int q;
 	
+	q = sh->ds->conf->quality;
 	if ((!rects) && (sh->toosmall))
 	  sh->square = 1;
 	else
 	  sh->square = 0;
-	  
+	
+	/* FIXME: find "minimum" center of the shape rects - if any */
+	/* idea - take rects, run thru list. for each rect start x
+	 * check all rects with a y > than this one. (will come later
+	 * in the list). keep track of the last y point and id this rect x
+	 * spans this line then advance new y point by rect size if it
+	 * immediately joins it...
+	
+	 */
 	shx = sh->ds->conf->shadow_x;
 	shy = sh->ds->conf->shadow_y;
 	shw = sh->w;
@@ -849,56 +864,114 @@ _ds_shadow_recalc(Shadow *sh)
 	     sh->use_shared = 0;
 	  }
 	
-	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
+	sp = _ds_shpix_new((shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
 	if (sp)
 	  {
+	     int slx, sly, slw, slh;
+	     
 	     if (!rects)
 	       {
-		  _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
-		  _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
-		  _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
-		  _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
-		  _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
+		  /* FIXME; rounding errors - fix as below in else{} */
+		  _ds_shpix_fill(sp, 0,               0,               (shw + (bsz * 2)) / q, (bsz) / q, 0);
+		  _ds_shpix_fill(sp, 0,               (bsz + shh) / q, (shw + (bsz * 2)) / q, (bsz) / q, 0);
+		  _ds_shpix_fill(sp, 0,               (bsz) / q,       (bsz) / q,             (shh) / q, 0);
+		  _ds_shpix_fill(sp, (bsz + shw) / q, (bsz) / q,       (bsz) / q,             (shh) / q, 0);
+		  _ds_shpix_fill(sp, (bsz) / q,       (bsz) / q,       (shw) / q,             (shh) / q, 255);
 	       }
 	     else
 	       {
+		  _ds_shpix_fill(sp, 0, 0, (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q, 0);
 		  for (l = rects; l; l = l->next)
 		    {
 		       E_Rect *r;
 		       
 		       r = l->data;
-		       _ds_shpix_fill(sp, bsz + r->x, bsz + r->y, r->w, r->h, 255);
+		       x1 = (bsz + r->x) / q;
+		       y1 = (bsz + r->y) / q; 
+		       x2 = (bsz + r->x + r->w - 1) / q;
+		       y2 = (bsz + r->y + r->h - 1) / q;
+		       _ds_shpix_fill(sp, x1, y1, (x2 - x1) + 1, (y2 - y1) + 1, 255);
 		    }
 	       }
 	     
-	     _ds_shpix_blur(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2),
-			 sh->ds->table.gauss, bsz);
-		       
-	     _ds_shpix_object_set(sp, sh->object[0], 0, 0,
-			       shw + (bsz * 2), shh + (bsz * 2));
-		       
-	     evas_object_move(sh->object[0],
-			      sh->x + shx - bsz,
-			      sh->y + shy - bsz);
-	     evas_object_image_border_set(sh->object[0],
-					  0, 0, 0, 0);
-	     evas_object_resize(sh->object[0],
-				sh->w + (bsz * 2),
-				sh->h + (bsz * 2));
-	     evas_object_image_fill_set(sh->object[0], 0, 0, 
-				sh->w + (bsz * 2),
-				sh->h + (bsz * 2));
-	     _ds_object_unset(sh->object[1]);
-	     _ds_object_unset(sh->object[2]);
-	     _ds_object_unset(sh->object[3]);
-	     _ds_shpix_free(sp);
-	  }
-	
-	if (evas_object_visible_get(sh->object[0]))
-	  {
-	     evas_object_hide(sh->object[1]);
-	     evas_object_hide(sh->object[2]);
-	     evas_object_hide(sh->object[3]);
+	     e_container_shape_solid_rect_get(sh->shape, &slx, &sly, &slw, &slh);
+	     slx += bsz;
+	     sly += bsz;
+	     slw -= bsz * 2;
+	     slh -= bsz * 2;
+	     slw = (slw - 1 + slx) / q;
+	     slh = (slh - 1 + sly) / q;
+	     slx /= q;
+	     sly /= q;
+	     slw = slw - slx + 1;
+	     slh = slh - sly + 1;
+	     if ((slw > 0) && (slh > 0))
+	       {
+		  /* FIXME: handle as 4 separate shadow obj's - not 1 */
+		  _ds_shpix_blur(sp, 0, 0, 
+				 (shw + (bsz * 2)) / q, 
+				 (shh + (bsz * 2)) / q,
+				 sh->ds->table.gauss2, (bsz) / q);
+		  _ds_shpix_object_set(sp, sh->object[0], 0, 0,
+				       (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+		  
+		  evas_object_move(sh->object[0],
+				   sh->x + shx - bsz,
+				   sh->y + shy - bsz);
+		  evas_object_image_smooth_scale_set(sh->object[0], 1);
+		  evas_object_image_border_set(sh->object[0],
+					       0, 0, 0, 0);
+		  evas_object_resize(sh->object[0],
+				     sh->w + (bsz * 2),
+				     sh->h + (bsz * 2));
+		  evas_object_image_fill_set(sh->object[0], 0, 0, 
+					     sh->w + (bsz * 2),
+					     sh->h + (bsz * 2));
+		  _ds_object_unset(sh->object[1]);
+		  _ds_object_unset(sh->object[2]);
+		  _ds_object_unset(sh->object[3]);
+		  _ds_shpix_free(sp);
+		  
+		  if (evas_object_visible_get(sh->object[0]))
+		    {
+		       evas_object_hide(sh->object[1]);
+		       evas_object_hide(sh->object[2]);
+		       evas_object_hide(sh->object[3]);
+		    }
+	       }
+	     else
+	       {
+		  _ds_shpix_blur(sp, 0, 0, 
+				 (shw + (bsz * 2)) / q, 
+				 (shh + (bsz * 2)) / q,
+				 sh->ds->table.gauss2, (bsz) / q);
+		  _ds_shpix_object_set(sp, sh->object[0], 0, 0,
+				       (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+		  
+		  evas_object_move(sh->object[0],
+				   sh->x + shx - bsz,
+				   sh->y + shy - bsz);
+		  evas_object_image_smooth_scale_set(sh->object[0], 1);
+		  evas_object_image_border_set(sh->object[0],
+					       0, 0, 0, 0);
+		  evas_object_resize(sh->object[0],
+				     sh->w + (bsz * 2),
+				     sh->h + (bsz * 2));
+		  evas_object_image_fill_set(sh->object[0], 0, 0, 
+					     sh->w + (bsz * 2),
+					     sh->h + (bsz * 2));
+		  _ds_object_unset(sh->object[1]);
+		  _ds_object_unset(sh->object[2]);
+		  _ds_object_unset(sh->object[3]);
+		  _ds_shpix_free(sp);
+		  
+		  if (evas_object_visible_get(sh->object[0]))
+		    {
+		       evas_object_hide(sh->object[1]);
+		       evas_object_hide(sh->object[2]);
+		       evas_object_hide(sh->object[3]);
+		    }
+	       }
 	  }
      }
    else
@@ -965,6 +1038,7 @@ _ds_shadow_recalc(Shadow *sh)
 		  _ds_shstore_object_set(sh->ds->shared.shadow[2], sh->object[2]);
 		  _ds_shstore_object_set(sh->ds->shared.shadow[3], sh->object[3]);
 		       
+		  evas_object_image_smooth_scale_set(sh->object[0], 0);
 		  evas_object_move(sh->object[0],
 				   sh->x + shx - bsz,
 				   sh->y + shy - bsz);
@@ -977,6 +1051,7 @@ _ds_shadow_recalc(Shadow *sh)
 					     sh->w + (bsz) * 2,
 					     bsz - shy);
 		  
+		  evas_object_image_smooth_scale_set(sh->object[1], 0);
 		  evas_object_move(sh->object[1],
 				   sh->x + shx - bsz,
 				   sh->y);
@@ -989,6 +1064,7 @@ _ds_shadow_recalc(Shadow *sh)
 					     bsz - shx,
 					     sh->h);
 		  
+		  evas_object_image_smooth_scale_set(sh->object[2], 0);
 		  evas_object_move(sh->object[2],
 				   sh->x + sh->w, 
 				   sh->y);
@@ -1001,6 +1077,7 @@ _ds_shadow_recalc(Shadow *sh)
 					     bsz + shx,
 					     sh->h);
 		  
+		  evas_object_image_smooth_scale_set(sh->object[3], 0);
 		  evas_object_move(sh->object[3],
 				   sh->x + shx - bsz,
 				   sh->y + sh->h);
@@ -1100,7 +1177,8 @@ static void
 _ds_blur_init(Dropshadow *ds)
 {
    int i;
-
+   int q;
+   
    if (ds->table.gauss) free(ds->table.gauss);
    ds->table.gauss_size = (ds->conf->blur_size * 2) - 1;
    ds->table.gauss = calloc(1, ds->table.gauss_size * sizeof(unsigned char));
@@ -1113,6 +1191,22 @@ _ds_blur_init(Dropshadow *ds)
 	v = (double)i / (ds->conf->blur_size - 2);
 	ds->table.gauss[ds->conf->blur_size - 1 + i] =
 	  ds->table.gauss[ds->conf->blur_size - 1 - i] =
+	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
+     }
+
+   q = ds->conf->quality;
+   if (ds->table.gauss2) free(ds->table.gauss2);
+   ds->table.gauss2_size = ((ds->conf->blur_size / q) * 2) - 1;
+   ds->table.gauss2 = calloc(1, ds->table.gauss2_size * sizeof(unsigned char));
+   
+   ds->table.gauss[(ds->conf->blur_size / q) - 1] = 255;
+   for (i = 1; i < ((ds->conf->blur_size / q) - 1); i++)
+     {
+	double v;
+	
+	v = (double)i / ((ds->conf->blur_size / q) - 2);
+	ds->table.gauss2[(ds->conf->blur_size / q) - 1 + i] =
+	  ds->table.gauss2[(ds->conf->blur_size / q) - 1 - i] =
 	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
 }
@@ -1420,7 +1514,6 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
    
    evas_object_image_size_set(o, w, h);
    evas_object_image_alpha_set(o, 1);
-   evas_object_image_smooth_scale_set(o, 0);
    pix2 = evas_object_image_data_get(o, 1);
    if (pix2)
      {
@@ -1625,7 +1718,6 @@ _ds_shstore_object_set(Shstore *st, Evas_Object *o)
    evas_object_image_data_set(o, st->pix);
    evas_object_image_data_update_add(o, 0, 0, st->w, st->h);
    evas_object_image_alpha_set(o, 1);
-   evas_object_image_smooth_scale_set(o, 0);
 }
 
 static void

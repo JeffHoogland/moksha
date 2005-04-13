@@ -38,10 +38,7 @@ e_intl_shutdown(void)
    free(_e_intl_language);
    _e_intl_language = NULL;
    while (_e_intl_languages)
-     {
-	free(_e_intl_languages->data);
-	_e_intl_languages = evas_list_remove_list(_e_intl_languages, _e_intl_languages);
-     }
+     _e_intl_languages = evas_list_remove_list(_e_intl_languages, _e_intl_languages);
    return 1;
 }
 

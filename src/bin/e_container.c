@@ -394,8 +394,59 @@ e_container_shape_rects_get(E_Container_Shape *es)
    return es->shape;
 }
 
+void
+e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num)
+{
+   Evas_List *l;
+   int i;
+   
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
+   
+   if (es->shape)
+     {
+	for (l = es->shape; l; l = l->next)
+	  free(l->data);
+	evas_list_free(es->shape);
+	es->shape = NULL;
+     }
+   if (rects)
+     {
+	for (i = 0; i < num; i++)
+	  {
+	     E_Rect *r;
+	     
+	     r = malloc(sizeof(E_Rect));
+	     if (r)
+	       {
+		  r->x = rects[i].x;
+		  r->y = rects[i].y;
+		  r->w = rects[i].width;
+		  r->h = rects[i].height;
+		  es->shape = evas_list_append(es->shape, r);
+	       }
+	  }
+     }
+   _e_container_shape_change_call(es, E_CONTAINER_SHAPE_RECTS);
+}
 
+void
+e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h)
+{
+   es->solid_rect.x = x;
+   es->solid_rect.y = y;
+   es->solid_rect.w = w;
+   es->solid_rect.h = h;
+}
 
+void
+e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h)
+{
+   if (x) *x = es->solid_rect.x;
+   if (y) *y = es->solid_rect.y;
+   if (w) *w = es->solid_rect.w;
+   if (h) *h = es->solid_rect.h;
+}
 
 /* local subsystem functions */
 static void

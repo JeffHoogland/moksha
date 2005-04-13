@@ -23,6 +23,7 @@ struct _Config
 {
    int shadow_x, shadow_y;
    int blur_size;
+   int quality;
    double shadow_darkness;
 };
 
@@ -39,6 +40,8 @@ struct _Dropshadow
    struct {
       unsigned char *gauss;
       int            gauss_size;
+      unsigned char *gauss2;
+      int            gauss2_size;
    } table;
    
    struct {

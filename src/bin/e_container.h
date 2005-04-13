@@ -57,6 +57,9 @@ struct _E_Container_Shape
    E_Container   *con;
    int            x, y, w, h;
    unsigned char  visible : 1;
+   struct {
+      int x, y, w, h;
+   } solid_rect;
    Evas_List     *shape;
 };
 
@@ -98,6 +101,9 @@ EAPI E_Container       *e_container_shape_container_get(E_Container_Shape *es);
 EAPI void               e_container_shape_change_callback_add(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
 EAPI void               e_container_shape_change_callback_del(E_Container *con, void (*func) (void *data, E_Container_Shape *es, E_Container_Shape_Change ch), void *data);
 EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
+EAPI void               e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num);
+EAPI void               e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h);
+EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
 
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 

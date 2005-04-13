@@ -65,6 +65,7 @@ static int  _e_menu_cb_mouse_up                   (void *data, int type, void *e
 static int  _e_menu_cb_mouse_move                 (void *data, int type, void *event);
 static int  _e_menu_cb_mouse_wheel                (void *data, int type, void *event);
 static int  _e_menu_cb_scroll_timer               (void *data);
+static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
@@ -77,23 +78,25 @@ static int                  _e_menu_y                   = 0;
 static Ecore_X_Time         _e_menu_time                = 0;
 static int                  _e_menu_autoscroll_x        = 0;
 static int                  _e_menu_autoscroll_y        = 0;
-static Ecore_Event_Handler *_e_menu_key_down_handler    = NULL;
-static Ecore_Event_Handler *_e_menu_key_up_handler      = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_down_handler  = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_up_handler    = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_move_handler  = NULL;
-static Ecore_Event_Handler *_e_menu_mouse_wheel_handler = NULL;
+static Ecore_Event_Handler *_e_menu_key_down_handler     = NULL;
+static Ecore_Event_Handler *_e_menu_key_up_handler       = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_down_handler   = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_up_handler     = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_move_handler   = NULL;
+static Ecore_Event_Handler *_e_menu_mouse_wheel_handler  = NULL;
+static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 
 /* externally accessible functions */
 int
 e_menu_init(void)
 {
-   _e_menu_key_down_handler    = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,          _e_menu_cb_key_down,    NULL);
-   _e_menu_key_up_handler      = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,            _e_menu_cb_key_up,      NULL);
-   _e_menu_mouse_down_handler  = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_menu_cb_mouse_down,  NULL);
-   _e_menu_mouse_up_handler    = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,   _e_menu_cb_mouse_up,    NULL);
-   _e_menu_mouse_move_handler  = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,        _e_menu_cb_mouse_move,  NULL);
-   _e_menu_mouse_wheel_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,       _e_menu_cb_mouse_wheel, NULL);
+   _e_menu_key_down_handler     = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,          _e_menu_cb_key_down,    NULL);
+   _e_menu_key_up_handler       = ecore_event_handler_add(ECORE_X_EVENT_KEY_UP,            _e_menu_cb_key_up,      NULL);
+   _e_menu_mouse_down_handler   = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_menu_cb_mouse_down,  NULL);
+   _e_menu_mouse_up_handler     = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,   _e_menu_cb_mouse_up,    NULL);
+   _e_menu_mouse_move_handler   = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,        _e_menu_cb_mouse_move,  NULL);
+   _e_menu_mouse_wheel_handler  = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,       _e_menu_cb_mouse_wheel, NULL);
+   _e_menu_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,     _e_menu_cb_window_shape, NULL);
    return 1;
 }
 
@@ -104,9 +107,9 @@ e_menu_shutdown(void)
    E_FN_DEL(ecore_event_handler_del, _e_menu_key_up_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_down_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_up_handler);
-
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_move_handler);
    E_FN_DEL(ecore_event_handler_del, _e_menu_mouse_wheel_handler);
+   E_FN_DEL(ecore_event_handler_del, _e_menu_window_shape_handler);
 
    while (_e_active_menus)
      {
@@ -611,7 +614,8 @@ e_menu_idler_before(void)
 	     m->prev.visible = m->cur.visible;
 	     ecore_evas_raise(m->ecore_evas);
 	     ecore_evas_show(m->ecore_evas);
-	     e_container_shape_show(m->shape);
+	     if (!m->shaped)
+	       e_container_shape_show(m->shape);
 	  }
      }
    /* phase 4. de-activate... */
@@ -637,6 +641,28 @@ e_menu_idler_before(void)
 	     _e_active_menus = evas_list_remove(_e_active_menus, m);
 	     m->in_active_list = 0;
 	     e_object_unref(E_OBJECT(m));
+	  }
+     }
+   /* phase 5. shapes... */
+   for (l = _e_active_menus; l; l = l->next)
+     {
+	E_Menu *m;
+	
+	m = l->data;
+	if (m->need_shape_export)
+	  {
+	     Ecore_X_Rectangle *rects;
+	     int num;
+	     
+	     rects = ecore_x_window_shape_rectangles_get(m->evas_win, &num);
+	     if (rects)
+	       {
+		  e_container_shape_rects_set(m->shape, rects, num);
+		  free(rects);
+	       }
+	     m->need_shape_export = 0;
+	     if (m->cur.visible)
+	       e_container_shape_show(m->shape);
 	  }
      }
    /* del refcount to all menus we worked with */
@@ -981,6 +1007,7 @@ _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
    Evas_List *l;
+   int ok;
    
    if (m->realized) return;
    m->realized = 1;
@@ -999,6 +1026,7 @@ _e_menu_realize(E_Menu *m)
    evas_event_feed_mouse_in(m->evas, NULL);
    evas_event_feed_mouse_move(m->evas, -1000000, -1000000, NULL);
    m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
+   ecore_x_window_shape_events_select(m->evas_win, 1);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
    
@@ -1008,12 +1036,28 @@ _e_menu_realize(E_Menu *m)
    evas_object_data_set(o, "e_menu", m);
    evas_object_move(o, 0, 0);
    evas_object_resize(o, m->cur.w, m->cur.h);
-   edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
-			"widgets/menu/default/background");
+   ok = edje_object_file_set(o,
+			     /* FIXME: "default.edj" needs to come from conf */
+			     e_path_find(path_themes, "default.edj"),
+			     "widgets/menu/default/background");
+   if (ok)
+     {
+	const char *shape_option;
+	
+	shape_option = edje_object_data_get(o, "shaped");
+	if (shape_option)
+	  {
+	     if (!strcmp(shape_option, "1"))
+	       {
+		  m->shaped = 1;
+	       }
+	  }
+     }
    evas_object_show(o);
 
+   if (m->shaped)
+     ecore_evas_shaped_set(m->ecore_evas, m->shaped);
+   
    o = e_box_add(m->evas);
    m->container_object = o;
    evas_object_intercept_move_callback_add  (o, _e_menu_cb_intercept_container_move,   m);
@@ -2120,6 +2164,24 @@ _e_menu_cb_scroll_timer(void *data)
      {
 	_e_menu_scroll_timer = NULL;
 	return 0;
+     }
+   return 1;
+}
+
+static int
+_e_menu_cb_window_shape(void *data, int ev_type, void *ev)
+{
+   Evas_List *l;
+   Ecore_X_Event_Window_Shape *e;
+   
+   e = ev;
+   for (l = _e_active_menus; l; l = l->next)
+     {
+	E_Menu *m;
+	
+	m = l->data;
+	if (m->evas_win == e->win)
+	  m->need_shape_export = 1;
      }
    return 1;
 }

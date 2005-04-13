@@ -232,7 +232,8 @@ images {
 group {
    name: "widgets/border/default/border";
    data {
-      //	 item: "client_inset" "4 4 24 4";
+// this tells e the border is shaped      
+//      item: "shaped" "1";
    }
    parts {
       part {
