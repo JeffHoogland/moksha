@@ -1193,13 +1193,13 @@ _ds_blur_init(Dropshadow *ds)
 	  ds->table.gauss[ds->conf->blur_size - 1 - i] =
 	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
-
+   
    q = ds->conf->quality;
    if (ds->table.gauss2) free(ds->table.gauss2);
    ds->table.gauss2_size = ((ds->conf->blur_size / q) * 2) - 1;
    ds->table.gauss2 = calloc(1, ds->table.gauss2_size * sizeof(unsigned char));
    
-   ds->table.gauss[(ds->conf->blur_size / q) - 1] = 255;
+   ds->table.gauss2[(ds->conf->blur_size / q) - 1] = 255;
    for (i = 1; i < ((ds->conf->blur_size / q) - 1); i++)
      {
 	double v;
@@ -1274,7 +1274,7 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  sum = 0;
 		  for (l = 0; l <= l2; l++)
 		    {
-		       sum += (*p1) * lut[l];
+		       sum += (int)(*p1) * (int)lut[l];
 		       p1++;
 		    }
 		  *p2 = sum / full;
@@ -1293,7 +1293,7 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		    {
 		       wt = lut[l];
 		       weight += wt;
-		       sum += (*p1) * wt;
+		       sum += (int)(*p1) * (int)wt;
 		       p1++;
 		    }
 		  *p2 = sum / weight;
@@ -1346,7 +1346,7 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  sum = 0;
 		  for (l = 0; l <= l2; l++)
 		    {
-		       sum += (*p1) * lut[l];
+		       sum += (int)(*p1) * (int)lut[l];
 		       p1 += pix_w;
 		    }
 		  *p2 = sum / full;
@@ -1365,7 +1365,7 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		    {
 		       wt = lut[l];
 		       weight += wt;
-		       sum += (*p1) * wt;
+		       sum += (int)(*p1) * wt;
 		       p1 += pix_w;
 		    }
 		  *p2 = sum / weight;
