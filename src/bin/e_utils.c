@@ -49,6 +49,35 @@ e_util_wakeup(void)
    _e_util_dummy_timer = ecore_timer_add(0.0, _e_util_wakeup_cb, NULL);
 }
 
+void
+e_util_env_set(const char *var, const char *val)
+{
+   char buf[4096];
+   
+   if (val)
+     {
+#ifdef HAVE_SETENV	
+	setenv(var, val, 1);
+#else
+	char buf[8192];
+	
+	snprintf(buf, sizeof(buf), "%s=%s", var, val);
+	if (getenv(var))
+	  putenv(buf);
+	else
+	  putenv(strdup(buf));
+#endif	
+     }
+   else
+     {
+#ifdef HAVE_UNSETENV	
+	unsetenv(var);
+#else
+	if (getenv(var)) putenv(var);
+#endif	
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

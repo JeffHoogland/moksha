@@ -80,7 +80,7 @@ main(int argc, char **argv)
 	printf("after restart!!!\n");
 	after_restart = 1;
      }
-   putenv("RESTART=1");
+   e_util_env_set("RESTART", "1");
 
    e_intl_init();
    
@@ -91,8 +91,7 @@ main(int argc, char **argv)
 	  {
 	     i++;
 	     
-	     snprintf(buf, sizeof(buf), "DISPLAY=%s", argv[i]);
-	     putenv(buf);
+	     e_util_env_set("DISPLAY", argv[i]);
 	  }
 	else if ((!strcmp(argv[i], "-fake-xinerama-screen")) && (i < (argc - 1)))
 	  {
@@ -132,16 +131,16 @@ main(int argc, char **argv)
 	p = strrchr(s, ':');
 	if (!p)
 	  {
-	     snprintf(buf, sizeof(buf), "DISPLAY=%s:0.0", s);
-	     putenv(buf);
+	     snprintf(buf, sizeof(buf), "%s:0.0", s);
+	     e_util_env_set("DISPLAY", buf);
 	  }
 	else
 	  {
 	     p = strrchr(p, '.');
 	     if (!p)
 	       {
-		  snprintf(buf, sizeof(buf), "DISPLAY=%s.0", s);
-		  putenv(buf);
+		  snprintf(buf, sizeof(buf), "%s.0", s);
+		  e_util_env_set("DISPLAY", buf);
 	       }
 	  }
      }

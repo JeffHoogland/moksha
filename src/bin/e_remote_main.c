@@ -86,7 +86,7 @@ main(int argc, char **argv)
 	if (!p)
 	  {
 	     snprintf(buf, sizeof(buf), "DISPLAY=%s:0.0", s);
-	     putenv(buf);
+	     putenv(strdup(buf));
 	  }
 	else
 	  {
@@ -94,7 +94,7 @@ main(int argc, char **argv)
 	     if (!p)
 	       {
 		  snprintf(buf, sizeof(buf), "DISPLAY=%s.0", s);
-		  putenv(buf);
+		  putenv(strdup(buf));
 	       }
 	  }
      }
