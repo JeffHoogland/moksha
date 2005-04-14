@@ -32,7 +32,7 @@ struct _E_App_Callback
 static void      _e_app_free               (E_App *a);
 static void      _e_app_fields_fill        (E_App *a, const char *path);
 static void      _e_app_fields_empty       (E_App *a);
-static Evas_List *_e_app_dir_file_list_get (E_App *a);
+static Ecore_List *_e_app_dir_file_list_get (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static void      _e_app_change             (E_App *a, E_App_Change ch);
 static int       _e_apps_cb_exit           (void *data, int type, void *event);
@@ -179,7 +179,8 @@ e_app_is_parent(E_App *parent, E_App *app)
 void
 e_app_subdir_scan(E_App *a, int scan_subdirs)
 {
-   Evas_List *files, *l;
+   Ecore_List *files;
+   char *s;
    char buf[PATH_MAX];
 
    E_OBJECT_CHECK(a);
@@ -196,12 +197,10 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
      }
    a->scanned = 1;
    files = _e_app_dir_file_list_get(a);
-   for (l = files; l; l = l->next)
+   while ((s = ecore_list_next(files)))
      {
 	E_App *a2;
-	char *s;
 
-	s = l->data;
 	a2 = NULL;
 
 	snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
@@ -237,7 +236,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	  }
 	free(s);
      }
-   files = evas_list_free(files);
+   ecore_list_destroy(files);
 }
 
 int
@@ -549,10 +548,11 @@ _e_app_fields_empty(E_App *a)
      }
 }
 
-static Evas_List *
+static Ecore_List *
 _e_app_dir_file_list_get(E_App *a)
 {
-   Evas_List *files, *files2 = NULL, *l;
+   Ecore_List *files, *files2;
+   char *file;
    FILE *f;
    char buf[PATH_MAX];
    
@@ -561,6 +561,7 @@ _e_app_dir_file_list_get(E_App *a)
    f = fopen(buf, "rb");
    if (f)
      {
+	files2 = ecore_list_new();
 	while (fgets(buf, sizeof(buf), f))
 	  {
 	     int len;
@@ -575,16 +576,16 @@ _e_app_dir_file_list_get(E_App *a)
 		    }
 		  if (len > 0)
 		    {
-		       for (l = files; l; l = l->next)
+		       while ((file = ecore_list_next(files)))
 			 {
-			    if (!strcmp(buf, l->data))
+			    if (!strcmp(buf, file))
 			      {
-				 free(l->data);
-				 files = evas_list_remove_list(files, l);
+				 ecore_list_remove(files);
+				 free(file);
 				 break;
 			      }
 			 }
-		       files2 = evas_list_append(files2, strdup(buf));
+		       ecore_list_append(files2, strdup(buf));
 		    }
 	       }
 	  }
@@ -595,18 +596,20 @@ _e_app_dir_file_list_get(E_App *a)
 	files2 = files;
 	files = NULL;
      }
-   while (files)
+   if (files)
      {
-	char *s;
-	
-	s = files->data;
-	if (s[0] != '.')
-	  files2 = evas_list_append(files2, s);
-	else
-	  free(s);
-	files = evas_list_remove_list(files, files);
+	ecore_list_goto_first(files);
+	while ((file = ecore_list_next(files)))
+	  {
+	     if (file[0] != '.')
+	       ecore_list_append(files2, file);
+	     else
+	       free(file);
+	  }
+	ecore_list_destroy(files);
      }
    files = files2;
+   ecore_list_goto_first(files);
    return files;
 }
 
@@ -776,18 +779,17 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 static void
 _e_app_subdir_rescan(E_App *app)
 {
-   Evas_List         *files, *l, *l2;
-   Evas_List         *subapps = NULL, *changes = NULL;
+   Ecore_List        *files;
+   Evas_List         *subapps = NULL, *changes = NULL, *l, *l2;
    E_App_Change_Info *ch;
    char               buf[PATH_MAX];
+   char              *s;
 
    files = _e_app_dir_file_list_get(app);
-   for (l = files; l; l = l->next)
+   while ((s = ecore_list_next(files)))
      {
 	E_App *a2;
-	char *s;
 
-	s = l->data;
 	a2 = _e_app_subapp_file_find(app, s);
 	if (!a2)
 	  {
@@ -832,7 +834,7 @@ _e_app_subdir_rescan(E_App *app)
 	  subapps = evas_list_append(subapps, a2);
 	free(s);
      }
-   evas_list_free(files);
+   ecore_list_destroy(files);
    for (l = app->subapps; l; l = l->next)
      {
 	E_App *a2;

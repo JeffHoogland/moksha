@@ -776,13 +776,14 @@ _temperature_cb_check(void *data)
    Temperature *ef;
    Temperature_Face *face;
    int ret = 0;
-   Evas_List *therms, *l;
+   Ecore_List *therms;
+   Evas_List *l;
    int temp = 0;
    char buf[4096];
 
    ef = data;
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if (!therms)
+   if (ecore_list_is_empty(therms))
      {
 	FILE *f;
 
@@ -797,14 +798,12 @@ _temperature_cb_check(void *data)
      }
    else
      {
-	while (therms)
+	char *name;
+	while ((name = ecore_list_next(therms)))
 	  {
 	     char units[32];
-	     char *name;
 	     FILE *f;
 
-	     name = therms->data;
-	     therms = evas_list_remove_list(therms, therms);
 	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
@@ -818,6 +817,7 @@ _temperature_cb_check(void *data)
 	     free(name);
 	  }
      }
+   ecore_list_destroy(therms);
    if (ret)
      {
 	if (ef->have_temp != 1)

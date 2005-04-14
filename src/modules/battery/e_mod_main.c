@@ -760,8 +760,9 @@ _battery_cb_check(void *data)
 static Status *
 _battery_linux_acpi_check(Battery *ef)
 {
-   Evas_List *bats;
+   Ecore_List *bats;
    char buf[4096], buf2[4096];
+   char *name;
 
    int bat_max = 0;
    int bat_filled = 0;
@@ -787,13 +788,10 @@ _battery_linux_acpi_check(Battery *ef)
 
    /* Read some information on first run. */
    bats = ecore_file_ls("/proc/acpi/battery");
-   while (bats)
+   while ((name = ecore_list_next(bats)))
      {
 	FILE *f;
-	char *name;
 
-	name = bats->data;
-	bats = evas_list_remove_list(bats, bats);
 	if ((!strcmp(name, ".")) || (!strcmp(name, "..")))
 	  {
 	     free(name);
@@ -853,6 +851,7 @@ _battery_linux_acpi_check(Battery *ef)
 	  }
 	free(name);
      }
+   ecore_list_destroy(bats);
 
    if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
    if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
