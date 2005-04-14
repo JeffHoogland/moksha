@@ -21,10 +21,26 @@ e_intl_init(void)
 {
    if (_e_intl_languages) return 1;
 
-   /* supporeted languages - as we get translations - add them here */
+   /* supporeted languages - as we get translations - add them here
+    * 
+    * if you add a language:
+    * 
+    * NOTE: add a language NAME for this in e_intl_language_name_get() if
+    *       there isn't one yet (use the english name - then we will add
+    *       translations of the language names to the .po file)
+    * NOTE: add a translation logic list to take all possible ways to address
+    *       a language locale and convert it to a simplified one that is in
+    *       the list here below. languages can often have multiple ways of
+    *       being addressed (same language spoken in multiple countries or
+    *       many variants of the language). this translation allows all the
+    *       variants to be used and mapped to a simple "single" name for that
+    *       language. if the differences in variants are large (eg simplified
+    *       vs. traditional chinese) we may refer to them as separate languages
+    *       entirely.
+    */
    ADD_LANG("C");
    ADD_LANG("en");
-   ADD_LANG("jp");
+   ADD_LANG("ja");
    ADD_LANG("fr");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
@@ -70,6 +86,12 @@ const char *
 e_intl_language_name_get(const char *lang)
 {
    if (!lang) return "None";
+   /* this is a list of DISTINCT languages. some languages have variants that
+    * are different enough to justify being listed separately as distinct
+    * languages here. this is intended for use in a gui that lets you select
+    * a language, with e being able to give a name for the given language
+    * encoding (once simplfied)
+    */
    /* FIXME: add as many as we can to this */
    IFL("") "None";
    IFL("C") "None";
@@ -92,7 +114,7 @@ e_intl_language_name_get(const char *lang)
    IFL("hu") "Hungarian";
    IFL("id") "Indonesian";
    IFL("it") "Italian";
-   IFL("jp") "Japanese";
+   IFL("ja") "Japanese";
    IFL("kr") "Korean";
    IFL("lt") "Lithuanian";
    IFL("lv") "Latvian";
@@ -122,22 +144,37 @@ e_intl_language_name_get(const char *lang)
 const char *
 e_intl_language_simple_get(const char *lang)
 {
-   char buf[4096], *p;
+   static char buf[128];
+   char *p;
 
    if (!lang) return "C";
+   /* strip off the charset stuff after any "." eg: "en_US.UTF-8" -> "en_US" */
    strncpy(buf, lang, sizeof(buf) - 1);
    p = strchr(buf, '.');
    if (p) *p = 0;
    /* do we want to split this inot the different forms of english?
     * ie american vs british? or australian? etc.
     */
-   if (ISL("en") || ISL("en_US") || ISL("en_GB") || ISL("en_CA") ||
-       ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
+   /* for known specific mappings - do them first here */
+   if (ISL("en") || ISL("en_US") || ISL("en_GB") || ISL("en_GB@euro") || 
+       ISL("en_CA") || ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
      return "en";
    if (ISL("ja") || ISL("ja_JP") || ISL("JP"))
      return "ja";
-   /* FIXME: add all sorts of fuzzy matching here */
-   return "C";
+   if (ISL("fr") || ISL("fr_FR") || ISL("FR") || ISL("fr_FR@euro"))
+     return "fr";
+   /* this is the default fallback - we have no special cases for this lang
+    * so just strip off anything after and including the _ for country region
+    * and just return the language encoding
+    */
+   /* strip off anything after a "_" eg: "en_US" -> "en" */
+   p = strchr(buf, '_');
+   if (p) *p = 0;
+   /* we can safely retunr buf because its a static - BUT its contents will
+    * change if we call e_intl_language_simple_get() again - so its only
+    * intended for immediate use and de-reference, not for storage
+    */
+   return buf;
 }
 
 const Evas_List *
