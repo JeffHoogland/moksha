@@ -60,14 +60,14 @@ e_intl_shutdown(void)
 void
 e_intl_language_set(const char *lang)
 {
-   char buf[4096];
-   
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
-   if (!lang) lang = "en";
+   if (!lang)
+     {
+	setenv("LANG", "en", 1);
+	lang = "en";
+     }
    _e_intl_language = strdup(lang);
-   snprintf(buf, sizeof(buf), "LANG=%s", _e_intl_language);
-   putenv(buf);
    setlocale(LC_ALL, "");
    bindtextdomain(PACKAGE, LOCALE_DIR);
    textdomain(PACKAGE);
