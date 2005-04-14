@@ -376,6 +376,8 @@ main(int argc, char **argv)
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
    
+   e_intl_shutdown();
+   
    /* if we were flagged to restart, then  restart. */
    if (restart)
      {
@@ -516,8 +518,6 @@ _e_main_dirs_init(void)
      }
    free(homedir);
 
-   e_intl_shutdown();
-   
    return 1;
 }
 
