@@ -223,6 +223,14 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_evas_shutdown);
+    /* init the file system */
+   if (!ecore_file_init())
+     {
+	e_error_message_show(_("Enlightenment cannot initialize the File system.\n"
+			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(ecore_file_shutdown);
    
 	 
    /*** Finished loading subsystems, Loading WM Specifics ***/
