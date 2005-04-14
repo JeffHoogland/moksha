@@ -565,7 +565,7 @@ _e_app_dir_file_list_get(E_App *a)
 	while (fgets(buf, sizeof(buf), f))
 	  {
 	     int len;
-	     
+
 	     len = strlen(buf);
 	     if (len > 0)
 	       {
@@ -576,7 +576,8 @@ _e_app_dir_file_list_get(E_App *a)
 		    }
 		  if (len > 0)
 		    {
-		       while ((file = ecore_list_next(files)))
+		       ecore_list_goto_first(files);
+		       while ((file = ecore_list_current(files)))
 			 {
 			    if (!strcmp(buf, file))
 			      {
@@ -584,6 +585,7 @@ _e_app_dir_file_list_get(E_App *a)
 				 free(file);
 				 break;
 			      }
+			    ecore_list_next(files);
 			 }
 		       ecore_list_append(files2, strdup(buf));
 		    }
