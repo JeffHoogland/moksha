@@ -11,6 +11,16 @@ LANGS = \
 fr \
 ja
 
+EXTRA_DIST = \
+enlightenment.pot \
+fr.po \
+ja.po
+
+ja.mo:
+	$(MSGFMT) -f -o $@ ja.po
+fr.mo:
+	$(MSGFMT) -f -o $@ fr.po
+
 install-poDATA:
 uninstall-poDATA:
 install-data-local:
@@ -18,14 +28,11 @@ install-data-local:
 	  $(INSTALL_DATA) -D \
 	  $$L.mo $(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
-
-EXTRA_DIST = \
-enlightenment.pot \
-fr.po \
-ja.po
-
-.po.mo:
-	$(MSGFMT) -f -o $@ $<
+	
+uninstall:
+	for L in $(LANGS); do \
+	  rm -f  $(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
+	done
 
 clean-local:
 	rm -f *.mo
