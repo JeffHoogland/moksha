@@ -103,6 +103,7 @@ e_init_hide(void)
    /* FIXME: emit signal to edje and wait for it to respond or until a */
    /* in case the edje was badly created and never responds */
    if (!_e_init_ecore_evas) return;
+   _e_init_icons_del();
    ecore_evas_hide(_e_init_ecore_evas);
    evas_object_del(_e_init_object);
    e_canvas_del(_e_init_ecore_evas);
@@ -111,8 +112,7 @@ e_init_hide(void)
    _e_init_evas = NULL;
    _e_init_win = 0;
    _e_init_object = NULL;
-
-   _e_init_icons_del();
+   e_canvas_cache_flush();
 }
 
 void
