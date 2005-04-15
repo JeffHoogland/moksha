@@ -26,12 +26,12 @@ uninstall-poDATA:
 install-data-local:
 	for L in $(LANGS); do \
 	  $(INSTALL_DATA) -D \
-	  $$L.mo $(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
+	  $$L.mo $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
 	
 uninstall:
 	for L in $(LANGS); do \
-	  rm -f  $(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
+	  rm -f  $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
 
 clean-local:
