@@ -5,21 +5,26 @@ MSGFMT = msgfmt
 podir =
 po_DATA = \
 fr.mo \
-ja.mo
+ja.mo \
+es.mo
 
 LANGS = \
 fr \
-ja
+ja \
+es
 
 EXTRA_DIST = \
 enlightenment.pot \
 fr.po \
-ja.po
+ja.po \
+es.po
 
 ja.mo:
 	$(MSGFMT) -f -o $@ ja.po
 fr.mo:
 	$(MSGFMT) -f -o $@ fr.po
+es.mo:
+	$(MSGFMT) -f -o $@ es.po
 
 install-poDATA:
 uninstall-poDATA:

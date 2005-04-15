@@ -42,6 +42,7 @@ e_intl_init(void)
    ADD_LANG("en");
    ADD_LANG("ja");
    ADD_LANG("fr");
+   ADD_LANG("es");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));
@@ -103,6 +104,7 @@ e_intl_language_name_get(const char *lang)
    IFL("de") "German";
    IFL("el") "Greek";
    IFL("en") "English"; 
+   IFL("es") "Spanish"; 
    IFL("eu") "Basque";
    IFL("fa") "Persian";
    IFL("fr") "French";
@@ -123,7 +125,6 @@ e_intl_language_name_get(const char *lang)
    IFL("nn") "Norwegian Nynorsk";
    IFL("pl") "Polish";
    IFL("pt") "Portuguese";
-   IFL("pt_BR") "Portuguese (Brazil)";
    IFL("ro") "Romanian";
    IFL("ru") "Russian";
    IFL("sk") "Slovak";
@@ -134,6 +135,7 @@ e_intl_language_name_get(const char *lang)
    IFL("tr") "Tuirkish";
    IFL("uk") "Ukrainian";
    IFL("vi") "Vietnamese";
+   /* must keep both - politically sensitive */
    IFL("zh") "Chinese (Simplified)";
    IFL("zh_TW") "Chinese (Traditional)";
    return "Unknown";
@@ -162,6 +164,9 @@ e_intl_language_simple_get(const char *lang)
      return "ja";
    if (ISL("fr") || ISL("fr_FR") || ISL("FR") || ISL("fr_FR@euro"))
      return "fr";
+   if (ISL("es") || ISL("es_ES") || ISL("ES") || ISL("es_ES@euro") ||
+       ISL("es_AR"))
+     return "es";
    /* this is the default fallback - we have no special cases for this lang
     * so just strip off anything after and including the _ for country region
     * and just return the language encoding
