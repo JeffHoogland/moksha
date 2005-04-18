@@ -6,18 +6,24 @@ podir =
 po_DATA = \
 fr.mo \
 ja.mo \
-es.mo
+es.mo \
+pt.mo \
+fi.mo
 
 LANGS = \
 fr \
 ja \
-es
+es \
+pt \
+fi
 
 EXTRA_DIST = \
 enlightenment.pot \
 fr.po \
 ja.po \
-es.po
+es.po \
+pt.po \
+fi.po
 
 ja.mo:
 	$(MSGFMT) -f -o $@ ja.po
@@ -25,12 +31,17 @@ fr.mo:
 	$(MSGFMT) -f -o $@ fr.po
 es.mo:
 	$(MSGFMT) -f -o $@ es.po
+pt.mo:
+	$(MSGFMT) -f -o $@ pt.po
+fi.mo:
+	$(MSGFMT) -f -o $@ fi.po
 
 install-poDATA:
 uninstall-poDATA:
 install-data-local:
 	for L in $(LANGS); do \
-	  $(INSTALL_DATA) -D \
+	  $(MKINSTALLDIRS) $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES; \
+	  $(INSTALL_DATA) \
 	  $$L.mo $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
 	

@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* delete icon from bar .order and right lcikc on favorites menu - eapp data has vanished/gone corrupt. i suspect it is deleting the app object but not respecting refcount (ie it's in multiple dirs)
 * gadman gadget menu needs icons :)
 * module api needs to change entry calls, move label and icon to data file, not api
 * gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)

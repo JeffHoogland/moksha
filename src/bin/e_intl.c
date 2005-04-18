@@ -43,6 +43,8 @@ e_intl_init(void)
    ADD_LANG("ja");
    ADD_LANG("fr");
    ADD_LANG("es");
+   ADD_LANG("pt");
+   ADD_LANG("fi");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));
@@ -65,9 +67,15 @@ e_intl_language_set(const char *lang)
    
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
-   if (!lang) lang = "en";
-   _e_intl_language = strdup(lang);
-   e_util_env_set("LANG", _e_intl_language);
+   if (lang)
+     {
+	_e_intl_language = strdup(lang);
+	e_util_env_set("LANG", _e_intl_language);
+     }
+   else
+     {
+	_e_intl_language = NULL;
+     }
    setlocale(LC_ALL, "");
    bindtextdomain(PACKAGE, LOCALE_DIR);
    textdomain(PACKAGE);
@@ -165,8 +173,13 @@ e_intl_language_simple_get(const char *lang)
    if (ISL("fr") || ISL("fr_FR") || ISL("FR") || ISL("fr_FR@euro"))
      return "fr";
    if (ISL("es") || ISL("es_ES") || ISL("ES") || ISL("es_ES@euro") ||
-       ISL("es_AR"))
+       ISL("es_AR") || ISL("AR"))
      return "es";
+   if (ISL("pt") || ISL("pt_PT") || ISL("PT") || ISL("pt_PT@euro") ||
+       ISL("pt_BR") || ISL("BR"))
+     return "pt";
+   if (ISL("fi") || ISL("fi_FI") || ISL("FI") || ISL("fi_FI@euro"))
+     return "fi";
    /* this is the default fallback - we have no special cases for this lang
     * so just strip off anything after and including the _ for country region
     * and just return the language encoding
