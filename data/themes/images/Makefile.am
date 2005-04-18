@@ -255,5 +255,21 @@ e17_temperature_mid.png \
 e17_temperature_overlay.png \
 e17_gadman_indicator.png \
 e17_gadman_overlay.png \
-e17_logo.png
-
+e17_logo.png \
+e17_cpufreq_freq00.png \
+e17_cpufreq_freq01.png \
+e17_cpufreq_freq02.png \
+e17_cpufreq_freq03.png \
+e17_cpufreq_freq04.png \
+e17_cpufreq_freq05.png \
+e17_cpufreq_freq06.png \
+e17_cpufreq_freq07.png \
+e17_cpufreq_freq08.png \
+e17_cpufreq_freq09.png \
+e17_cpufreq_freq10.png \
+e17_cpufreq_increase1.png \
+e17_cpufreq_increase2.png \
+e17_cpufreq_decrease1.png \
+e17_cpufreq_decrease2.png \
+e17_cpufreq_cpu1.png \
+e17_cpufreq_cpu2.png

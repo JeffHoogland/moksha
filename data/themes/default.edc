@@ -35,5 +35,6 @@ collections {
 #include "default_move.edc"
 #include "default_temperature.edc"
 #include "default_error.edc"
+#include "default_cpufreq.edc"
 }
 

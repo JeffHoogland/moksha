@@ -6,4 +6,5 @@ dropshadow \
 clock \
 pager \
 battery \
-temperature
+temperature \
+cpufreq

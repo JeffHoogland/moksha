@@ -660,7 +660,7 @@ _temperature_face_new(E_Container *con)
    e_gadman_client_min_size_set(ef->gmc, 4, 4);
    e_gadman_client_max_size_set(ef->gmc, 128, 128);
    e_gadman_client_auto_size_set(ef->gmc, 40, 40);
-   e_gadman_client_align_set(ef->gmc, 0.9, 1.0);
+   e_gadman_client_align_set(ef->gmc, 1.0, 1.0);
    e_gadman_client_resize(ef->gmc, 40, 40);
    e_gadman_client_change_func_set(ef->gmc, _temperature_face_cb_gmc_change, ef);
    e_gadman_client_load(ef->gmc);
