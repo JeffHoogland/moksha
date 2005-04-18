@@ -393,7 +393,7 @@ msgid ""
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Enlightenmentin käynnistäminen epäonnistui kaikilla järjestelmäsi ruuduilla.\n"
-"Ehkäpä jokin toinen ikkunamanageri on käynnissä?"
+"Ehkäpä jokin toinen ikkunamanageri on käynnissä?\n"
 
 #: src/bin/e_error.c:354
 msgid "Enlightenment: Error!"
@@ -424,7 +424,7 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"Virhe Kellomoduulin käynnistyksessä\.n"
+"Virhe Kellomoduulin käynnistyksessä\n"
 "Se vaatii vähintään moduuli API:n versiota: %i.\n"
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
@@ -508,7 +508,7 @@ msgstr ""
 "Virhe kuvakemuokkaimen käynnistyksessä.\n"
 "\n"
 "Asenna e_util_eapp_edit tai varmista\n"
-"että se on määritelty PATH:issasi."
+"että se on määritelty PATH:issasi.\n"
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightenment"
@@ -779,7 +779,7 @@ msgid ""
 msgstr ""
 "Virhe moduulin %s lataamisessa.\n"
 "Yhtäkään moduulia nimeltä %s ei löytynyt\n"
-"etsityistä hakemistoista."
+"etsityistä hakemistoista.\n"
 
 #: src/bin/e_module.c:110 src/bin/e_module.c:132
 #, c-format
