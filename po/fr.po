@@ -509,7 +509,7 @@ msgid "Exit Enlightenment"
 msgstr "Quitter Enlightenment"
 
 #: src/modules/ibar/e_mod_main.c:775
-msgid "Exteremely Large"
+msgid "Extremely Large"
 msgstr "Extrêmement Large"
 
 #: src/modules/dropshadow/e_mod_main.c:362

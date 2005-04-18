@@ -446,7 +446,7 @@ msgid "Exit Enlightenment"
 msgstr "出口の悟"
 
 #: src/modules/ibar/e_mod_main.c:775
-msgid "Exteremely Large"
+msgid "Extremely Large"
 msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:362

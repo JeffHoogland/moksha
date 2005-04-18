@@ -772,7 +772,7 @@ _ibar_config_menu_new(IBar *ib)
    e_menu_item_callback_set(mi, _ibar_bar_cb_iconsize_very_large, ib);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Exteremely Large"));
+   e_menu_item_label_set(mi, _("Extremely Large"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 2);
    if (ib->conf->iconsize == 56) e_menu_item_toggle_set(mi, 1);
