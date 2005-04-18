@@ -7,7 +7,7 @@ files_DATA = \
 module_icon.png
 freqsetdir = $(libdir)/enlightenment/modules/$(MODULE)
 freqset_DATA = \
-freqset
+freqset$(EXEEXT)
 
 EXTRA_DIST = $(files_DATA)
 
@@ -33,8 +33,9 @@ installed_su = $(pkgdir)/freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
 INSTALL_SU = \
-  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset $(installed_su)"; \
-  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset $(installed_su); \
+  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(installed_su)"; \
+  mkdir $(pkgdir) -p; \
+  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(installed_su); \
   #echo " chown root $(installed_su)"; \
   #chown root $(installed_su); \
   #echo " chmod $(setuid_root_mode) $(installed_su)"; \
