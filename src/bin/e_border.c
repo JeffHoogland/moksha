@@ -3240,9 +3240,9 @@ _e_border_resize_handle(E_Border *bd)
 
    skiplist = evas_list_append(skiplist, bd);
    e_resist_container_border_position(bd->container, skiplist,
-	 bd->x, bd->y, bd->w, bd->h,
-	 x, y, w, h,
-	 &new_x, &new_y, &new_w, &new_h);
+				      bd->x, bd->y, bd->w, bd->h,
+				      x, y, w, h,
+				      &new_x, &new_y, &new_w, &new_h);
    evas_list_free(skiplist);
 
    w = new_w;
