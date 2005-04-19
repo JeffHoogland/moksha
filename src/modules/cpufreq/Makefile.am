@@ -33,9 +33,9 @@ installed_su = $(pkgdir)/freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
 INSTALL_SU = \
-  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(installed_su)"; \
-  mkdir $(pkgdir) -p; \
-  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(installed_su); \
+  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)/$(installed_su)"; \
+  mkdir $(DESTDIR)/$(pkgdir) -p; \
+  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)/$(installed_su); \
   #echo " chown root $(installed_su)"; \
   #chown root $(installed_su); \
   #echo " chmod $(setuid_root_mode) $(installed_su)"; \
