@@ -857,23 +857,15 @@ _e_app_subdir_rescan(E_App *app)
 	    }
 	if (a2)
 	  {
-	     if (a2->deleted)
-	       {
-		  /* Just unref it, so it will be deleted */
-		  e_object_unref(E_OBJECT(a2));
-	       }
-	     else
-	       {
-		  a2->deleted = 1;
-		  ch = calloc(1, sizeof(E_App_Change_Info));
-		  ch->app = a2;
-		  ch->change = E_APP_DEL;
-		  /* We don't need to ref this,
-		   * it has an extra ref
-		   e_object_ref(E_OBJECT(ch->app));
-		   */
-		  changes = evas_list_append(changes, ch);
-	       }
+	     a2->deleted = 1;
+	     ch = calloc(1, sizeof(E_App_Change_Info));
+	     ch->app = a2;
+	     ch->change = E_APP_DEL;
+	     /* We don't need to ref this,
+	      * it has an extra ref
+	      e_object_ref(E_OBJECT(ch->app));
+	      */
+	     changes = evas_list_append(changes, ch);
 	  }
      }
    /* FIXME: We only need to tell about order changes if there are! */
