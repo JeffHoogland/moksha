@@ -32,7 +32,7 @@ all-local: freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
 INSTALL_SU = \
-  test -z "$(pkgdir)" || mkdir -p "$(DESTDIR)$(pkgdir)"; \
+  test -z "$(pkgdir)" || $(MKINSTALLDIRS) "$(DESTDIR)$(pkgdir)"; \
   echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT)"; \
   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT);
 
