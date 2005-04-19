@@ -239,7 +239,8 @@ _cpufreq_free(Cpufreq *e)
    e_object_del(E_OBJECT(e->config_menu_poll));
    if (e->menu_governor)
      e_object_del(E_OBJECT(e->menu_governor));
-   e_object_del(E_OBJECT(e->menu_frequency));
+   if (e->menu_frequency)
+     e_object_del(E_OBJECT(e->menu_frequency));
 
    ecore_timer_del(e->frequency_check_timer);
 
