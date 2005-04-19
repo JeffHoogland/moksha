@@ -783,7 +783,7 @@ _temperature_cb_check(void *data)
 
    ef = data;
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if (ecore_list_is_empty(therms))
+   if (!therms || ecore_list_is_empty(therms))
      {
 	FILE *f;
 
@@ -817,7 +817,7 @@ _temperature_cb_check(void *data)
 	     free(name);
 	  }
      }
-   ecore_list_destroy(therms);
+   if (therms) ecore_list_destroy(therms);
    if (ret)
      {
 	if (ef->have_temp != 1)
