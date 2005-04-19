@@ -45,6 +45,7 @@ e_intl_init(void)
    ADD_LANG("es");
    ADD_LANG("pt");
    ADD_LANG("fi");
+   ADD_LANG("ru");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));
@@ -180,6 +181,8 @@ e_intl_language_simple_get(const char *lang)
      return "pt";
    if (ISL("fi") || ISL("fi_FI") || ISL("FI") || ISL("fi_FI@euro"))
      return "fi";
+   if (ISL("ru") || ISL("ru_RU") || ISL("RU"))
+     return "ru";
    /* this is the default fallback - we have no special cases for this lang
     * so just strip off anything after and including the _ for country region
     * and just return the language encoding
