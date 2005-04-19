@@ -227,10 +227,6 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	     if (a2)
 	       {
 		  a2->references = evas_list_append(a2->references, a);
-		  /* Don't add an extra ref when referencing,
-		   * else the object won't be deleted after deleting from
-		   * disk */
-		  e_object_unref(E_OBJECT(a2));
 		  a->subapps = evas_list_append(a->subapps, a2);
 	       }
 	  }
@@ -362,29 +358,28 @@ _e_app_free(E_App *a)
    while (a->subapps)
      {
 	E_App *a2;
-	
+
 	a2 = a->subapps->data;
 	a->subapps = evas_list_remove_list(a->subapps, a->subapps);
 	if (a2->parent == a)
 	  {
 	     /* If we are the parent, remove us */
 	     a2->parent = NULL;
-	     /* unref the child so it will be deleted too */
-	     e_object_unref(E_OBJECT(a2));
 	  }
 	else
 	  {
 	     /* We have a reference */
 	     a2->references = evas_list_remove(a2->references, a);
 	  }
+	/* unref the child so it will be deleted too */
+	e_object_unref(E_OBJECT(a2));
      }
    for (l = a->references; l; l = l->next)
      {
 	E_App *a2;
 
-	a2 = l->data;
-	if (a2)
-	  a2->subapps = evas_list_remove(a2->subapps, a);
+	a2 = l->next;
+	a2->subapps = evas_list_remove(a2->subapps, a);
      }
    evas_list_free(a->references);
 
@@ -710,6 +705,10 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	  {
 	      _e_app_subdir_rescan(app);
 	  }
+	else
+	  {
+	     printf("BUG: Weird event for .order: %d\n", event);
+	  }
      }
    else if (!strcmp(file, ".directory.eapp"))
      {
@@ -724,6 +723,10 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	  {
 	     _e_app_fields_empty(app);
 	     app->name = strdup(ecore_file_get_file(app->path));
+	  }
+	else
+	  {
+	     printf("BUG: Weird event for .directory.eapp: %d\n", event);
 	  }
      }
    else
@@ -747,8 +750,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	      * app */
 	     _e_app_subdir_rescan(app);
 	  }
-	else if ((event == ECORE_FILE_EVENT_DELETED_FILE)
-		 || (event == ECORE_FILE_EVENT_DELETED_DIRECTORY))
+	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
 	  {
 	     E_App *a;
 
@@ -756,10 +758,16 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     if (a)
 	       {
 		  a->deleted = 1;
+		  for (l = a->references; l; l = l->next)
+		    {
+		       E_App *a2;
+
+		       a2 = l->data;
+		       _e_app_subdir_rescan(a2);
+		    }
 		  _e_app_subdir_rescan(app);
 	       }
 	  }
-	/*
 	else if (event == ECORE_FILE_EVENT_DELETED_SELF)
 	  {
 	     Evas_List *l;
@@ -772,9 +780,8 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  a2 = l->data;
 		  _e_app_subdir_rescan(a2);
 	       }
-	     _e_app_change(app, E_APP_DEL);
+	     _e_app_subdir_rescan(app->parent);
 	  }
-	*/
      }
 }
 
@@ -825,9 +832,7 @@ _e_app_subdir_rescan(E_App *app)
 		       ch = calloc(1, sizeof(E_App_Change_Info));
 		       ch->app = a2;
 		       ch->change = E_APP_ADD;
-		       /* Don't add an extra ref, already added by e_app_new
 		       e_object_ref(E_OBJECT(ch->app));
-		       */
 		       changes = evas_list_append(changes, ch);
 		    }
 	       }
@@ -851,15 +856,23 @@ _e_app_subdir_rescan(E_App *app)
 	    }
 	if (a2)
 	  {
-	     a2->deleted = 1;
-	     ch = calloc(1, sizeof(E_App_Change_Info));
-	     ch->app = a2;
-	     ch->change = E_APP_DEL;
-	     /* We don't need to ref this,
-	      * it has an extra ref
-	      e_object_ref(E_OBJECT(ch->app));
-	      */
-	     changes = evas_list_append(changes, ch);
+	     if (a2->deleted)
+	       {
+		  /* Just unref it, so it will be deleted */
+		  e_object_unref(E_OBJECT(a2));
+	       }
+	     else
+	       {
+		  a2->deleted = 1;
+		  ch = calloc(1, sizeof(E_App_Change_Info));
+		  ch->app = a2;
+		  ch->change = E_APP_DEL;
+		  /* We don't need to ref this,
+		   * it has an extra ref
+		   e_object_ref(E_OBJECT(ch->app));
+		   */
+		  changes = evas_list_append(changes, ch);
+	       }
 	  }
      }
    /* FIXME: We only need to tell about order changes if there are! */
