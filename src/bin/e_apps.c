@@ -780,7 +780,8 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  a2 = l->data;
 		  _e_app_subdir_rescan(a2);
 	       }
-	     _e_app_subdir_rescan(app->parent);
+	     if (app->parent)
+	       _e_app_subdir_rescan(app->parent);
 	  }
      }
 }
