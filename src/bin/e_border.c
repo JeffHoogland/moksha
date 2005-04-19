@@ -3113,19 +3113,55 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
    *h -= bd->client_inset.t + bd->client_inset.b;
    if (*h < 1) *h = 1;
    if (*w < 1) *w = 1;
-   a = (double)*w / (double)*h;
-   if ((bd->client.icccm.min_aspect != 0.0) &&
-       (a < bd->client.icccm.min_aspect))
-     *w = *h * bd->client.icccm.min_aspect;
-   else if
-     ((bd->client.icccm.max_aspect != 0.0) &&
-      (a > bd->client.icccm.max_aspect))
-     *h = *w / bd->client.icccm.max_aspect;
-   *w = bd->client.icccm.base_w +
+   if ((bd->client.icccm.base_w >= 0) &&
+       (bd->client.icccm.base_h >= 0))
+     {
+	int tw, th;
+	
+	tw = *w - bd->client.icccm.base_w;
+	th = *h - bd->client.icccm.base_h;
+	if (tw < 1) tw = 1;
+	if (th < 1) th = 1;
+	a = (double)(tw) / (double)(th);
+	if ((bd->client.icccm.min_aspect != 0.0) &&
+	    (a < bd->client.icccm.min_aspect))
+	  {
+	     tw = th * bd->client.icccm.min_aspect;
+	     *w = tw + bd->client.icccm.base_w;
+	  }
+	else if ((bd->client.icccm.max_aspect != 0.0) &&
+	   (a > bd->client.icccm.max_aspect))
+	  {
+	     th = tw / bd->client.icccm.max_aspect;
+	     *h = th + bd->client.icccm.base_h;
+	  }
+     }
+   else
+     {
+	a = (double)*w / (double)*h;
+	if ((bd->client.icccm.min_aspect != 0.0) &&
+	    (a < bd->client.icccm.min_aspect))
+	  *w = *h * bd->client.icccm.min_aspect;
+	else if
+	  ((bd->client.icccm.max_aspect != 0.0) &&
+	   (a > bd->client.icccm.max_aspect))
+	  *h = *w / bd->client.icccm.max_aspect;
+     }
+   if (bd->client.icccm.base_w >= 0)
+     *w = bd->client.icccm.base_w +
      (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
       bd->client.icccm.step_w);
-   *h = bd->client.icccm.base_h +
+   else
+     *w = bd->client.icccm.min_w +
+     (((*w - bd->client.icccm.min_w) / bd->client.icccm.step_w) *
+      bd->client.icccm.step_w);
+   if (bd->client.icccm.base_h >= 0)
+     *h = bd->client.icccm.base_h +
      (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
+      bd->client.icccm.step_h);
+   else
+     *h = bd->client.icccm.min_h +
+     (((*h - bd->client.icccm.min_h) / bd->client.icccm.step_h) *
       bd->client.icccm.step_h);
 
    if (*h < 1) *h = 1;
@@ -3749,10 +3785,7 @@ _e_border_resize_begin(E_Border *bd)
    evas_object_resize(resize_obj, w, h);
    evas_object_show(resize_obj);
 
-   snprintf(buf, sizeof(buf), "%ix%i",
-	    (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
-	    (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
-   edje_object_part_text_set(resize_obj, "text", buf);
+   _e_border_resize_update(bd);
    
    ecore_evas_move(resize_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);
    ecore_evas_resize(resize_ee, w, h);
@@ -3779,9 +3812,15 @@ _e_border_resize_update(E_Border *bd)
 {
    char buf[40];
 
-   snprintf(buf, sizeof(buf) - 1, "%ix%i",
-	    (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
-	    (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
+   if ((bd->client.icccm.base_w >= 0) &&
+       (bd->client.icccm.base_h >= 0))
+     snprintf(buf, sizeof(buf), "%ix%i",
+	      (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
+	      (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
+   else
+     snprintf(buf, sizeof(buf), "%ix%i",
+	      (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w, 
+	      (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h);
    edje_object_part_text_set(resize_obj, "text", buf);
 }
 
