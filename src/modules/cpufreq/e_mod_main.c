@@ -5,6 +5,7 @@
 /* FIXME: need to handle performance and powersave gonvernors (only auto(ondemand)/manual(userspace) supported now)
  * FIXME: check permissions (can execute) setfreq before trying
  * FIXME: display throttling state
+ * FIXME: handle multiple cpu's (yes it's likely rare - but possible)
  */
 
 static Cpufreq *_cpufreq_new(E_Module *module);
@@ -462,9 +463,8 @@ _cpufreq_config_menu_new(Cpufreq *e)
 	     e_object_data_set(E_OBJECT(mi), l->data);
 	     e_menu_item_callback_set(mi, _cpufreq_menu_frequency, e);
 	  }
+	e->menu_frequency = mn;
      }
-
-   e->menu_frequency = mn;
 
    mn = e_menu_new();
 
