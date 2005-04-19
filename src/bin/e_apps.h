@@ -27,6 +27,7 @@ struct _E_App
    E_Object            e_obj_inherit;
    
    E_App              *parent; /* the parent e_app node */
+   E_App              *orig; /* if this is a copy, point to the original */
    
    char               *name; /* app name */
    char               *generic; /* generic app name */

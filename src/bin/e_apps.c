@@ -39,6 +39,7 @@ static int       _e_apps_cb_exit           (void *data, int type, void *event);
 static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
+static E_App    *_e_app_copy               (E_App *app);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -165,6 +166,7 @@ e_app_is_parent(E_App *parent, E_App *app)
    if (app->parent == parent)
      return 1;
 
+#if 0
    for (l = app->references; l; l = l->next)
      {
 	E_App *a2;
@@ -173,6 +175,7 @@ e_app_is_parent(E_App *parent, E_App *app)
 	if (a2 == parent)
 	  return 1;
      }
+#endif
    return 0;
 }
 
@@ -215,6 +218,7 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	  }
 	else
 	  {
+	     E_App *a3;
 	     Evas_List *pl;
 
 	     pl = _e_apps_repositories;
@@ -227,7 +231,12 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 	     if (a2)
 	       {
 		  a2->references = evas_list_append(a2->references, a);
-		  a->subapps = evas_list_append(a->subapps, a2);
+		  a3 = _e_app_copy(a2);
+		  if (a3)
+		    {
+		       a3->parent = a;
+		       a->subapps = evas_list_append(a->subapps, a3);
+		    }
 	       }
 	  }
 	free(s);
@@ -347,52 +356,64 @@ _e_app_free(E_App *a)
 {
    Evas_List *l;
 
-   while (a->instances)
+   if (a->orig)
      {
-	Ecore_Exe *exe;
-	
-	exe = a->instances->data;
-	ecore_exe_free(exe);
-	a->instances = evas_list_remove_list(a->instances, a->instances);
-     }
-   while (a->subapps)
-     {
-	E_App *a2;
-
-	a2 = a->subapps->data;
-	a->subapps = evas_list_remove_list(a->subapps, a->subapps);
-	if (a2->parent == a)
+	printf("E_App: This is a copy: %s\n", a->path);
+	while (a->instances)
 	  {
-	     /* If we are the parent, remove us */
+	     Ecore_Exe *exe;
+
+	     exe = a->instances->data;
+	     ecore_exe_free(exe);
+	     a->instances = evas_list_remove_list(a->instances, a->instances);
+	  }
+	/* If this is a copy, it shoudln't have any references! */
+	if (a->references)
+	  printf("BUG: A eapp copy shouldn't have any references!\n");
+	if (a->parent)
+	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
+	a->orig->references = evas_list_remove(a->orig->references, a);
+	e_object_unref(E_OBJECT(a->orig));
+	free(a);
+     }
+   else
+     {
+	printf("E_App: This is an original: %s\n", a->path);
+	while (a->instances)
+	  {
+	     Ecore_Exe *exe;
+
+	     exe = a->instances->data;
+	     ecore_exe_free(exe);
+	     a->instances = evas_list_remove_list(a->instances, a->instances);
+	  }
+	while (a->subapps)
+	  {
+	     E_App *a2;
+
+	     a2 = a->subapps->data;
+	     a->subapps = evas_list_remove_list(a->subapps, a->subapps);
+	     /* remove us as the parent */
 	     a2->parent = NULL;
+	     /* unref the child so it will be deleted too */
+	     e_object_unref(E_OBJECT(a2));
 	  }
-	else
-	  {
-	     /* We have a reference */
-	     a2->references = evas_list_remove(a2->references, a);
-	  }
-	/* unref the child so it will be deleted too */
-	e_object_unref(E_OBJECT(a2));
-     }
-   for (l = a->references; l; l = l->next)
-     {
-	E_App *a2;
+	/* If this is an original, it wont be deleted until all references
+	 * are gone */
+	if (a->references)
+	  printf("BUG: An original eapp shouldn't have any references when freed!\n");
 
-	a2 = l->data;
-	a2->subapps = evas_list_remove(a2->subapps, a);
+	if (a->parent)
+	  a->parent->subapps = evas_list_remove(a->parent->subapps, a);
+	if (a->monitor)
+	  ecore_file_monitor_del(a->monitor);
+	_e_apps = evas_hash_del(_e_apps, a->path, a);
+	_e_apps_list = evas_list_remove(_e_apps_list, a);
+	_e_app_fields_empty(a);
+	if (a->path) 
+	  free(a->path);
+	free(a);
      }
-   evas_list_free(a->references);
-
-   if (a->parent)
-     a->parent->subapps = evas_list_remove(a->parent->subapps, a);
-   if (a->monitor)
-     ecore_file_monitor_del(a->monitor);
-   _e_apps = evas_hash_del(_e_apps, a->path, a);
-   _e_apps_list = evas_list_remove(_e_apps_list, a);
-   _e_app_fields_empty(a);
-   if (a->path) 
-     free(a->path);
-   free(a);
 }
 
 static void
@@ -620,7 +641,8 @@ _e_app_subapp_file_find(E_App *a, const char *file)
 	E_App *a2;
 	
 	a2 = l->data;
-	if ((!strcmp(ecore_file_get_file(a2->path), file)) && (!a2->deleted)) return a2;
+	if ((a2->deleted) || ((a2->orig) && (a2->orig->deleted))) continue;
+	if (!strcmp(ecore_file_get_file(a2->path), file)) return a2;
      }
    return NULL;
 }
@@ -802,7 +824,11 @@ _e_app_subdir_rescan(E_App *app)
 	E_App *a2;
 
 	a2 = _e_app_subapp_file_find(app, s);
-	if (!a2)
+	if (a2)
+	  {
+	     subapps = evas_list_append(subapps, a2);
+	  }
+	else
 	  {
 	     /* If we still haven't found it, it is new! */
 	     snprintf(buf, sizeof(buf), "%s/%s", app->path, s);
@@ -815,11 +841,14 @@ _e_app_subdir_rescan(E_App *app)
 		  ch->change = E_APP_ADD;
 		  e_object_ref(E_OBJECT(ch->app));
 		  changes = evas_list_append(changes, ch);
+
+		  subapps = evas_list_append(subapps, a2);
 	       }
 	     else
 	       {
 		  /* We ask for a reference! */
 		  Evas_List *pl;
+		  E_App *a3;
 
 		  pl = _e_apps_repositories;
 		  while ((!a2) && (pl))
@@ -831,16 +860,21 @@ _e_app_subdir_rescan(E_App *app)
 		  if (a2)
 		    {
 		       a2->references = evas_list_append(a2->references, app);
-		       ch = calloc(1, sizeof(E_App_Change_Info));
-		       ch->app = a2;
-		       ch->change = E_APP_ADD;
-		       e_object_ref(E_OBJECT(ch->app));
-		       changes = evas_list_append(changes, ch);
+		       a3 = _e_app_copy(a2);
+		       if (a3)
+			 {
+			    a3->parent = app;
+			    ch = calloc(1, sizeof(E_App_Change_Info));
+			    ch->app = a3;
+			    ch->change = E_APP_ADD;
+			    e_object_ref(E_OBJECT(ch->app));
+			    changes = evas_list_append(changes, ch);
+
+			    subapps = evas_list_append(subapps, a3);
+			 }
 		    }
 	       }
 	  }
-	if (a2)
-	  subapps = evas_list_append(subapps, a2);
 	free(s);
      }
    ecore_list_destroy(files);
@@ -910,3 +944,37 @@ _e_app_is_eapp(const char *path)
    return 1;
 }
 
+static E_App *
+_e_app_copy(E_App *app)
+{
+   E_App *a2;
+
+   if (app->deleted)
+     {
+	printf("BUG: This app is deleted, can't make a copy: %s\n", app->path);
+	return NULL;
+     }
+   if (!_e_app_is_eapp(app->path))
+     {
+	printf("BUG: The app isn't an eapp: %s\n", app->path);
+	return NULL;
+     }
+
+   a2 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
+
+   a2->orig = app;
+
+   a2->name = app->name;
+   a2->generic = app->generic;
+   a2->comment = app->comment;
+   a2->exe = app->exe;
+   a2->path = app->path;
+   a2->win_name = app->win_name;
+   a2->win_class = app->win_class;
+   a2->startup_notify = app->startup_notify;
+   a2->wait_exit = app->wait_exit;
+   a2->starting = app->starting;
+   a2->scanned = app->scanned;
+
+   return a2;
+}
