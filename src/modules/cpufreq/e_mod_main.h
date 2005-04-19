@@ -17,6 +17,7 @@ struct _Status
    int          cur_frequency;
    int          can_set_frequency;
    char        *cur_governor;
+   unsigned char active;
 };
 
 struct _Config
@@ -41,7 +42,7 @@ struct _Cpufreq
    Config    *conf;
    Status    *status;
    
-   char *set_exe_path;
+   char      *set_exe_path;
    
    Ecore_Timer *frequency_check_timer;   
 };

@@ -2,10 +2,9 @@
 #include <errno.h>
 #include "e_mod_main.h"
 
-/* FIXME: need to handle performance and powersave convernors (only auto/manual now)
- * FIXME: check permissions (can execute) before trying
+/* FIXME: need to handle performance and powersave gonvernors (only auto(ondemand)/manual(userspace) supported now)
+ * FIXME: check permissions (can execute) setfreq before trying
  * FIXME: display throttling state
- * FIXME: if system doesnt support cpufreq - fade out
  */
 
 static Cpufreq *_cpufreq_new(E_Module *module);
@@ -496,9 +495,10 @@ _cpufreq_cb_check(void *data)
    Cpufreq *e;
    Cpufreq_Face *face;
    Evas_List *l;
-
+   int active;
+   
    e = data;
-
+   active = e->status->active;
    if (_cpufreq_status_check_current(e->status))
      {
 	for (l = e->faces; l; l = l->next) 
@@ -506,7 +506,18 @@ _cpufreq_cb_check(void *data)
 	     face = l->data;
 	     _cpufreq_face_update_current(face);
 	  }
-     }   
+     }
+   if (active != e->status->active)
+     {
+	for (l = e->faces; l; l = l->next) 
+	  {
+	     face = l->data;
+	     if (e->status->active == 0)
+	       edje_object_signal_emit(face->freq_object, "passive", "");
+	     else if (e->status->active == 1)
+	       edje_object_signal_emit(face->freq_object, "active", "");
+	  }
+     }
 
    return 1;
 }
@@ -524,6 +535,7 @@ _cpufreq_status_new()
    e->cur_frequency = 0;
    e->can_set_frequency = 0;
    e->cur_governor = NULL;
+   e->active = -1;
 
    return e;
 }
@@ -649,17 +661,20 @@ _cpufreq_status_check_current(Status *e)
    int frequency;
 
    ret = 0;
+   e->active = 0;
 
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
    if (f)
      {
-	fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	fgets(buf, sizeof(buf), f);
+	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
 	
 	frequency = atoi(buf);
-	if(frequency != e->cur_frequency)
+	if (frequency != e->cur_frequency)
 	  ret = 1;
 	e->cur_frequency = frequency;
+	e->active = 1;
      }
    
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed", "r");
@@ -676,14 +691,15 @@ _cpufreq_status_check_current(Status *e)
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor", "r");
    if (f)
      {
-	fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
+	fgets(buf, sizeof(buf), f);
+	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
 
 	if ((e->cur_governor == NULL) || (strcmp(buf, e->cur_governor)))
 	  {
 	     ret = 1;
 
-	     if(e->cur_governor)
+	     if (e->cur_governor)
 	       free(e->cur_governor);
 	     e->cur_governor = strdup(buf);
 
@@ -696,7 +712,7 @@ _cpufreq_status_check_current(Status *e)
 	       }
 	  }
      }
-
+   
    return ret;
 }
 

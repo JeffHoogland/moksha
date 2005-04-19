@@ -100,6 +100,8 @@ group {
       part {
 	 name: "meter";
 	 type: IMAGE;
+         clip_to: "fade_clip";
+	 mouse_events: 0;
 	 
 	 description {
 	    state: "default" 0.0;
@@ -191,6 +193,7 @@ group {
 	 name: "decrease_button";
 	 type: IMAGE;
 	 mouse_events: 1;
+         clip_to: "fade_clip";
 	 
 	 description {
 	    state: "default" 0.0;
@@ -224,6 +227,7 @@ group {
 	 name: "increase_button";
 	 type: IMAGE;
 	 mouse_events: 1;
+         clip_to: "fade_clip";
 	 
 	 description {
 	    state: "default" 0.0;
@@ -257,7 +261,7 @@ group {
 	 name: "cpu";
 	 type: IMAGE;
 	 mouse_events: 1;
-	 
+         clip_to: "fade_clip";
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
@@ -286,6 +290,7 @@ group {
 	 type: TEXT;
 	 effect: SOFT_SHADOW;
 	 mouse_events: 0;
+         clip_to: "fade_clip";
 	 description {
 	    state: "default" 0.0;
 	    rel1 {
@@ -311,6 +316,7 @@ group {
       part {      
 	 name:           "decrease";
 	 type:           RECT;
+         clip_to: "fade_clip";
 	 description {
 	    state: "default" 0.0;
 	    visible: 1;
@@ -334,6 +340,7 @@ group {
       part {      
 	 name:           "increase";
 	 type:           RECT;
+         clip_to: "fade_clip";
 	 description {
 	    state: "default" 0.0;
 	    visible: 1;
@@ -351,6 +358,19 @@ group {
 	    state: "inactive" 0.0;
 	    inherit: "default" 0.0;
 	    visible: 0;
+	 }
+      }
+      part {      
+	 name:           "fade_clip";
+	 type:           RECT;
+	 mouse_events:   0;
+	 description {
+	    state: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+	 description {
+	    state: "faded" 0.0;
+	    color: 255 255 255 128;
 	 }
       }
       
@@ -416,6 +436,20 @@ group {
 	 source: "decrease";
 	 action: STATE_SET "default" 0.0;
 	 target: "decrease_button";
+      }
+      program {
+	 name: "enabled";
+	 signal: "active";
+	 source: "";
+	 action: STATE_SET "default" 0.0;
+	 target: "fade_clip";
+      }
+      program {
+	 name: "disabled";
+	 signal: "passive";
+	 source: "";
+	 action: STATE_SET "faded" 0.0;
+	 target: "fade_clip";
       }
    }
 }
