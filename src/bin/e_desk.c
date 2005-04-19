@@ -149,8 +149,6 @@ e_desk_at_xy_get(E_Zone *zone, int x, int y)
 void
 e_desk_xy_get(E_Desk *desk, int *x, int *y)
 {
-   int xx, yy;
-
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
 

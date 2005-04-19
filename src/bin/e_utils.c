@@ -52,8 +52,6 @@ e_util_wakeup(void)
 void
 e_util_env_set(const char *var, const char *val)
 {
-   char buf[4096];
-   
    if (val)
      {
 #ifdef HAVE_SETENV	

@@ -359,15 +359,7 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
 
    if (bd->desk->zone != bd->zone)
      {
-	E_Desk *desk;
-//	int x, y;
-
-//	e_desk_xy_get(bd->desk, &x, &y);
-//	desk = e_desk_at_xy_get(bd->zone, x, y);
-//	if (desk)
-//	  e_border_desk_set(bd, desk);
-//	else
-	  e_border_desk_set(bd, e_desk_current_get(bd->zone));
+	e_border_desk_set(bd, e_desk_current_get(bd->zone));
      }
 
    ev = calloc(1, sizeof(E_Event_Border_Zone_Set));
