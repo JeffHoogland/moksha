@@ -378,7 +378,7 @@ _e_app_free(E_App *a)
      {
 	E_App *a2;
 
-	a2 = l->next;
+	a2 = l->data;
 	a2->subapps = evas_list_remove(a2->subapps, a);
      }
    evas_list_free(a->references);
@@ -753,6 +753,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
 	  {
 	     E_App *a;
+	     Evas_List *l;
 
 	     a = _e_app_subapp_file_find(app, file);
 	     if (a)
