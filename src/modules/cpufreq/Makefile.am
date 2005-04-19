@@ -29,17 +29,12 @@ module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 all-local: freqset$(EXEEXT)
-installed_su = $(pkgdir)/freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
 INSTALL_SU = \
-  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)/$(installed_su)"; \
-  mkdir $(DESTDIR)/$(pkgdir) -p; \
-  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install install -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)/$(installed_su); \
-  #echo " chown root $(installed_su)"; \
-  #chown root $(installed_su); \
-  #echo " chmod $(setuid_root_mode) $(installed_su)"; \
-  #chmod $(setuid_root_mode) $(installed_su)
+  test -z "$(pkgdir)" || $(mkdir_p) "$(DESTDIR)$(pkgdir)"; \
+  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT)"; \
+  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT);
 
 install-freqsetDATA: freqset$(EXEEXT)
 	@$(INSTALL_SU)
