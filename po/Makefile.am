@@ -55,7 +55,7 @@ install-poDATA:
 uninstall-poDATA:
 install-data-local:
 	for L in $(LANGS); do \
-	  $(MKINSTALLDIRS) $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES; \
+	  $(mkinstalldirs) $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES; \
 	  $(INSTALL_DATA) \
 	  $$L.mo $(DESTDIR)$(datadir)/locale/$$L/LC_MESSAGES/$(PACKAGE).mo; \
 	done
