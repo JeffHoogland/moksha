@@ -432,6 +432,10 @@ _cpufreq_config_menu_new(Cpufreq *e)
 	       e_menu_item_label_set(mi, _("Manual"));
 	     else if (!strcmp(l->data, "ondemand"))
 	       e_menu_item_label_set(mi, _("Automatic"));
+	     else if (!strcmp(l->data, "powersave"))
+	       e_menu_item_label_set(mi, _("Minimum Speed"));
+	     else if (!strcmp(l->data, "performance"))
+	       e_menu_item_label_set(mi, _("Maximum Speed"));
 	     e_menu_item_radio_set(mi, 1);
 	     e_menu_item_radio_group_set(mi, 1);
 	     e_object_data_set(E_OBJECT(mi), l->data);
@@ -636,8 +640,11 @@ _cpufreq_status_check_available(Status *e)
 	     while (isspace(*gov)) gov++;
 	     if (strlen(gov) != 0)
 	       {
-		  if ((!strcmp(gov, "ondemand")) ||
-		      (!strcmp(gov, "userspace")))
+//		  if ((!strcmp(gov, "ondemand")) ||
+//		      (!strcmp(gov, "userspace")) ||
+//		      (!strcmp(gov, "powersave")) ||
+//		      (!strcmp(gov, "performance"))
+//		      )
 		    e->governors = evas_list_append(e->governors, strdup(gov));
 	       }
 	     gov = strtok(NULL, " ");
@@ -965,14 +972,7 @@ _cpufreq_face_update_current(Cpufreq_Face *face)
 	     
 	     mi = l->data;
 	     gov = (char *)e_object_data_get(E_OBJECT(mi));
-	     if ((face->owner->status->can_set_frequency) &&
-		 (!strcmp(gov, "userspace")))
-	       {
-		  e_menu_item_toggle_set(mi, 1);
-		  break;
-	       }
-	     else if ((!face->owner->status->can_set_frequency) &&
-		 (!strcmp(gov, "ondemand")))
+	     if (!strcmp(face->owner->status->cur_governor, gov))
 	       {
 		  e_menu_item_toggle_set(mi, 1);
 		  break;
