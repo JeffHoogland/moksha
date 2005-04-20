@@ -457,9 +457,11 @@ _cpufreq_config_menu_new(Cpufreq *e)
 	     frequency = (int)l->data;
 	     mi = e_menu_item_new(mn);
 	     if (frequency < 1000000)
-	       snprintf(buf, sizeof(buf), _("%i Mhz"), frequency / 1000);
+	       snprintf(buf, sizeof(buf), _("%i Mhz"), 
+			frequency / 1000);
 	     else
-	       snprintf(buf, sizeof(buf), _("%i.%i Ghz"), frequency / 1000000, (frequency % 1000000) / 1000);
+	       snprintf(buf, sizeof(buf), _("%i.%i Ghz"), 
+			frequency / 1000000, (frequency % 1000000) / 100000);
 	     buf[sizeof(buf) - 1] = 0;
 	     e_menu_item_label_set(mi, buf);
 	     e_menu_item_radio_set(mi, 1);
@@ -637,7 +639,7 @@ _cpufreq_status_check_available(Status *e)
 	gov = strtok(buf, " ");
 	do 
 	  {
-	     while (isspace(*gov)) gov++;
+	     while ((*gov) && (isspace(*gov))) gov++;
 	     if (strlen(gov) != 0)
 	       {
 //		  if ((!strcmp(gov, "ondemand")) ||
