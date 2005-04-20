@@ -5,9 +5,6 @@ MODULE = cpufreq
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
 module_icon.png
-freqsetdir = $(libdir)/enlightenment/modules/$(MODULE)
-freqset_DATA = \
-freqset$(EXEEXT)
 
 EXTRA_DIST = $(files_DATA)
 
@@ -28,16 +25,13 @@ module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
-all-local: freqset$(EXEEXT)
+freqsetdir = $(pkgdir)
+freqset_DATA = \
+freqset$(EXEEXT)
 setuid_root_mode = a=rx,u+s
 
-INSTALL_SU = \
-  test -z "$(pkgdir)" || $(MKINSTALLDIRS) "$(DESTDIR)$(pkgdir)"; \
-  echo "$(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT)"; \
-  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL) -m $(setuid_root_mode) freqset$(EXEEXT) $(DESTDIR)$(pkgdir)/freqset$(EXEEXT);
-
-install-freqsetDATA: freqset$(EXEEXT)
-	@$(INSTALL_SU)
+install-data-hook:
+	@chmod $(setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT)
 
 noinst_PROGRAMS        = freqset
 freqset_SOURCES        = freqset.c
