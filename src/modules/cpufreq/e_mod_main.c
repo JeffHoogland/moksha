@@ -2,9 +2,8 @@
 #include <errno.h>
 #include "e_mod_main.h"
 
-/* FIXME: need to handle performance and powersave gonvernors (only auto(ondemand)/manual(userspace) supported now)
- * FIXME: check permissions (can execute) setfreq before trying
- * FIXME: display throttling state
+/* FIXME: check permissions (can execute) setfreq before trying
+ * FIXME: display throttling state ???
  * FIXME: handle multiple cpu's (yes it's likely rare - but possible)
  */
 
