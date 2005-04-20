@@ -55,7 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* delete icon from bar .order and right lcikc on favorites menu - eapp data has vanished/gone corrupt. i suspect it is deleting the app object but not respecting refcount (ie it's in multiple dirs)
+* bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the right of zone 2
+* bug: delete icon from bar .order and right lcikc on favorites menu - eapp data has vanished/gone corrupt. i suspect it is deleting the app object but not respecting refcount (ie it's in multiple dirs)
 * gadman gadget menu needs icons :)
 * module api needs to change entry calls, move label and icon to data file, not api
 * gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)
