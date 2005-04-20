@@ -3842,7 +3842,6 @@ _e_border_move_begin(E_Border *bd)
    e_canvas_add(move_ee);
    ecore_evas_borderless_set(move_ee, 1);
    ecore_evas_layer_set(move_ee, 999);
-   ecore_evas_show(move_ee);
 
    move_obj = edje_object_add(ecore_evas_get(move_ee));
    edje_object_file_set(move_obj, e_path_find(path_themes, "default.edj"),
@@ -3853,15 +3852,10 @@ _e_border_move_begin(E_Border *bd)
    edje_object_size_min_calc(move_obj, &w, &h);
    evas_object_move(move_obj, 0, 0);
    evas_object_resize(move_obj, w, h);
-   evas_object_show(move_obj);
-
-   snprintf(buf, sizeof(buf), "%i %i", bd->x, bd->y);
-   edje_object_part_text_set(move_obj, "text", buf);
    
    ecore_evas_move(move_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);
    ecore_evas_resize(move_ee, w, h);
 
-   ecore_evas_show(move_ee);
    move = bd;
 }
 
@@ -3883,6 +3877,8 @@ _e_border_move_update(E_Border *bd)
 {
    char buf[40];
 
+   evas_object_show(move_obj);
+   ecore_evas_show(move_ee);
    snprintf(buf, sizeof(buf) - 1, "%i %i", bd->x, bd->y);
    edje_object_part_text_set(move_obj, "text", buf);
 }
