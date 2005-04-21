@@ -3863,6 +3863,8 @@ _e_border_resize_update(E_Border *bd)
 {
    char buf[40];
 
+   if (!resize_ee) return;
+
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
      snprintf(buf, sizeof(buf), "%ix%i",
@@ -3927,6 +3929,8 @@ static void
 _e_border_move_update(E_Border *bd)
 {
    char buf[40];
+
+   if (!move_ee) return;
 
    evas_object_show(move_obj);
    ecore_evas_show(move_ee);
