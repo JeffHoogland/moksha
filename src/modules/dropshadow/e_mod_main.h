@@ -1,11 +1,14 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-typedef struct _Shpix      Shpix;
-typedef struct _Shstore    Shstore;
-typedef struct _Config     Config;
-typedef struct _Dropshadow Dropshadow;
-typedef struct _Shadow     Shadow;
+typedef struct _Shpix         Shpix;
+typedef struct _Shstore       Shstore;
+typedef struct _Config        Config;
+typedef struct _Dropshadow    Dropshadow;
+typedef struct _Shadow        Shadow;
+typedef struct _Shadow_Object Shadow_Object;
+typedef struct _Tilebuf       Tilebuf;
+typedef struct _Tilebuf_Tile  Tilebuf_Tile;
 
 struct _Shpix
 {
@@ -58,10 +61,40 @@ struct _Shadow
    
    Evas_Object *object[4];
    
+   Evas_List *object_list;
+   
+   unsigned char initted : 1;
    unsigned char reshape : 1;
    unsigned char square : 1;
    unsigned char toosmall : 1;
    unsigned char use_shared : 1;
+   unsigned char visible : 1;
+};
+
+struct _Shadow_Object
+{
+   int x, y, w, h;
+   Evas_Object *obj;
+};
+
+struct _Tilebuf
+{
+   int outbuf_w;
+   int outbuf_h;
+   
+   struct {
+      int           w, h;
+   } tile_size;
+   
+   struct {
+      int           w, h;
+      Tilebuf_Tile *tiles;
+   } tiles;
+};
+
+struct _Tilebuf_Tile
+{
+   int redraw : 1;
 };
 
 EAPI void *e_modapi_init     (E_Module *m);

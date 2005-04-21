@@ -5,9 +5,6 @@
  * 
  * * bug in shadow_x < 0 and shadow_y < 0 needs to be fixed (not urgent though)
  * * add alpha-pixel only pixel space to image objects in evas and make use of it to save cpu and ram
- * * when blurring ALSO cut out the overlayed rect frrom the blur algorithm
- * * handle shaped windows efficiently (as possible).
- * * share shadow pixels between shadow objects for square shapes if big enough to be split into 1 stretched images
  * * look into mmx for the blur function...
  * * handle other shadow pos cases where we cant use 4 objects (3 or 2).
  */
@@ -37,6 +34,7 @@ static Shadow     *_ds_shadow_find(Dropshadow *ds, E_Container_Shape *es);
 static Shadow     *_ds_shadow_add(Dropshadow *ds, E_Container_Shape *es);
 static void        _ds_shadow_obj_clear(Shadow *sh);
 static void        _ds_shadow_obj_init(Shadow *sh);
+static void        _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects);
 static void        _ds_shadow_obj_shutdown(Shadow *sh);
 static void        _ds_shadow_del(Shadow *sh);
 static void        _ds_shadow_show(Shadow *sh);
@@ -45,6 +43,7 @@ static void        _ds_shadow_move(Shadow *sh, int x, int y);
 static void        _ds_shadow_resize(Shadow *sh, int w, int h);
 static void        _ds_shadow_shaperects(Shadow *sh);
 static int         _ds_shadow_reshape(void *data);
+static void        _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, int y2);
 static void        _ds_shadow_recalc(Shadow *sh);
 static void        _ds_config_darkness_set(Dropshadow *ds, double v);
 static void        _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y);
@@ -57,6 +56,7 @@ static Shpix      *_ds_shpix_new(int w, int h);
 static void        _ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
 static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
+static void        _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size);
 static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
 static void        _ds_shared_free(Dropshadow *ds);
 static void        _ds_shared_use(Dropshadow *ds, Shadow *sh);
@@ -65,7 +65,21 @@ static Shstore    *_ds_shstore_new(Shpix *sp, int x, int y, int w, int h);
 static void        _ds_shstore_free(Shstore *st);
 static void        _ds_shstore_object_set(Shstore *st, Evas_Object *o);
 static void        _ds_object_unset(Evas_Object *o);
-    
+static int         _tilebuf_x_intersect(Tilebuf *tb, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill);
+static int         _tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *y1, int *y2, int *y1_fill, int *y2_fill);
+static int         _tilebuf_intersect(int tsize, int tlen, int tnum, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill);
+static void        _tilebuf_setup(Tilebuf *tb);
+static Tilebuf    *_tilebuf_new(int w, int h);
+static void        _tilebuf_free(Tilebuf *tb);
+static void        _tilebuf_set_tile_size(Tilebuf *tb, int tw, int th);
+static void        _tilebuf_get_tile_size(Tilebuf *tb, int *tw, int *th);
+static int         _tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h);
+static void        _tilebuf_clear(Tilebuf *tb);
+static Evas_List  *_tilebuf_get_render_rects(Tilebuf *tb);
+static void        _tilebuf_free_render_rects(Evas_List *rects);
+
+#define TILE(tb, x, y) ((tb)->tiles.tiles[((y) * (tb)->tiles.w) + (x)])
+
 /* public module routines. all modules must have these */
 void *
 e_modapi_init(E_Module *m)
@@ -607,7 +621,6 @@ _ds_shadow_add(Dropshadow *ds, E_Container_Shape *es)
    sh->ds = ds;
    sh->shape = es;
    e_object_ref(E_OBJECT(sh->shape));
-   _ds_shadow_obj_init(sh);
    return sh;
 }
 
@@ -617,6 +630,8 @@ _ds_shadow_obj_init(Shadow *sh)
    E_Container *con;
    int i;
    
+   if (sh->initted) return;
+   sh->initted = 1;
    con = e_container_shape_container_get(sh->shape);
    for (i = 0; i < 4; i++)
      {
@@ -628,6 +643,48 @@ _ds_shadow_obj_init(Shadow *sh)
 	evas_object_color_set(sh->object[i],
 			      255, 255, 255, 
 			      255 * sh->ds->conf->shadow_darkness);
+	if (sh->visible)
+	  evas_object_show(sh->object[i]);
+     }
+}
+
+static void
+_ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
+{
+   E_Container *con;
+   Evas_List *l;
+   int i;
+   
+   if (sh->initted) return;
+   sh->initted = 1;
+   con = e_container_shape_container_get(sh->shape);
+   for (l = rects; l; l = l->next)
+     {
+	E_Rect *r;
+	Evas_Object *o;
+	Shadow_Object *so;
+	
+	r = l->data;
+	so = calloc(1, sizeof(Shadow_Object));
+	if (so)
+	  {
+	     o = evas_object_image_add(con->bg_evas);
+	     evas_object_layer_set(o, 10);
+	     evas_object_pass_events_set(o, 1);
+	     evas_object_move(o, r->x, r->y);
+	     evas_object_resize(o, r->w, r->h);
+	     evas_object_color_set(o,
+				   255, 255, 255, 
+				   255 * sh->ds->conf->shadow_darkness);
+	     if (sh->visible)
+	       evas_object_show(o);
+	     so->obj = o;
+	     so->x = r->x;
+	     so->y = r->y;
+	     so->w = r->w;
+	     so->h = r->h;
+	     sh->object_list = evas_list_append(sh->object_list, so);
+	  }
      }
 }
 
@@ -635,6 +692,7 @@ static void
 _ds_shadow_obj_clear(Shadow *sh)
 {
    int i;
+   Evas_List *l;
    
    for (i = 0; i < 4; i++)
      {
@@ -646,6 +704,13 @@ _ds_shadow_obj_clear(Shadow *sh)
 	_ds_shared_unuse(sh->ds);
 	sh->use_shared = 0;
      }
+   for (l = sh->object_list; l; l = l->next)
+     {
+	Shadow_Object *so;
+	
+	so = l->data;
+	_ds_object_unset(so->obj);
+     }
 }
 
 
@@ -654,6 +719,8 @@ _ds_shadow_obj_shutdown(Shadow *sh)
 {
    int i;
    
+   if (!sh->initted) return;
+   sh->initted = 0;
    for (i = 0; i < 4; i++)
      {
 	if (sh->object[i])
@@ -667,6 +734,15 @@ _ds_shadow_obj_shutdown(Shadow *sh)
      {
 	_ds_shared_unuse(sh->ds);
 	sh->use_shared = 0;
+     }
+   while (sh->object_list)
+     {
+	Shadow_Object *so;
+	
+	so = sh->object_list->data;
+	evas_object_del(so->obj);
+	free(so);
+	sh->object_list = evas_list_remove_list(sh->object_list, sh->object_list);
      }
 }
 
@@ -687,60 +763,112 @@ _ds_shadow_del(Shadow *sh)
 static void
 _ds_shadow_show(Shadow *sh)
 {
-   if (sh->square)
+   Evas_List *l;
+   
+   _ds_shadow_obj_init(sh);
+   if (!sh->object_list)
      {
-	int i;
-	
-	for (i = 0; i < 4; i++)
-	  evas_object_show(sh->object[i]);
+	if (sh->square)
+	  {
+	     int i;
+	     
+	     for (i = 0; i < 4; i++)
+	       evas_object_show(sh->object[i]);
+	  }
+	else
+	  {
+	     evas_object_show(sh->object[0]);
+	  }
      }
    else
      {
-	evas_object_show(sh->object[0]);
+	for (l = sh->object_list; l; l = l->next)
+	  {
+	     Shadow_Object *so;
+	     
+	     so = l->data;
+	     evas_object_show(so->obj);
+	  }
      }
+   sh->visible = 1;
 }
 
 static void
 _ds_shadow_hide(Shadow *sh)
 {
-   if (sh->square)
+   Evas_List *l;
+   
+   _ds_shadow_obj_init(sh);
+   if (!sh->object_list)
      {
-	int i;
-	
-	for (i = 0; i < 4; i++)
-	  evas_object_hide(sh->object[i]);
+	if (sh->square)
+	  {
+	     int i;
+	     
+	     for (i = 0; i < 4; i++)
+	       evas_object_hide(sh->object[i]);
+	  }
+	else
+	  {
+	     evas_object_hide(sh->object[0]);
+	  }
      }
    else
      {
-	evas_object_hide(sh->object[0]);
+	for (l = sh->object_list; l; l = l->next)
+	  {
+	     Shadow_Object *so;
+	     
+	     so = l->data;
+	     evas_object_hide(so->obj);
+	  }
      }
+   sh->visible = 0;
 }
 
 static void
 _ds_shadow_move(Shadow *sh, int x, int y)
 {
+   Evas_List *l;
+   
+   _ds_shadow_obj_init(sh);
    sh->x = x;
    sh->y = y;
-   if ((sh->square) && (!sh->toosmall))
+   if (!sh->object_list)
      {
-	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
-	evas_object_move(sh->object[1],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y);
-	evas_object_move(sh->object[2],
-			 sh->x + sh->w, 
-			 sh->y);
-	evas_object_move(sh->object[3],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->h);
+	if ((sh->square) && (!sh->toosmall))
+	  {
+	     evas_object_move(sh->object[0],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	     evas_object_move(sh->object[1],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y);
+	     evas_object_move(sh->object[2],
+			      sh->x + sh->w, 
+			      sh->y);
+	     evas_object_move(sh->object[3],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + sh->h);
+	  }
+	else
+	  {
+	     evas_object_move(sh->object[0],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	  }
      }
    else
      {
-	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	for (l = sh->object_list; l; l = l->next)
+	  {
+	     Shadow_Object *so;
+	     
+	     so = l->data;
+	     evas_object_move(so->obj,
+			      sh->x + so->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + so->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	  }
      }
 }
 
@@ -749,6 +877,7 @@ _ds_shadow_resize(Shadow *sh, int w, int h)
 {
    unsigned char toosmall = 0;
    
+   _ds_shadow_obj_init(sh);
    if ((w < ((sh->ds->conf->blur_size * 2) + 2)) ||
        (h < ((sh->ds->conf->blur_size * 2) + 2)))
      toosmall = 1;
@@ -758,30 +887,33 @@ _ds_shadow_resize(Shadow *sh, int w, int h)
      sh->reshape = 1;
    if ((sh->square) && (!sh->toosmall))
      {
-	evas_object_move(sh->object[0],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
-	evas_object_move(sh->object[1],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y);
-	evas_object_move(sh->object[2],
-			 sh->x + sh->w, 
-			 sh->y);
-	evas_object_move(sh->object[3],
-			 sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-			 sh->y + sh->h);
-	
-	evas_object_resize(sh->object[0], sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
-	evas_object_image_fill_set(sh->object[0], 0, 0, sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
-	
-	evas_object_resize(sh->object[1], sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
-	evas_object_image_fill_set(sh->object[1], 0, 0, sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
-	
-	evas_object_resize(sh->object[2], sh->ds->conf->shadow_x + sh->ds->conf->blur_size, sh->h);
-	evas_object_image_fill_set(sh->object[2], 0, 0, sh->ds->conf->blur_size + sh->ds->conf->shadow_x, sh->h);
-	
-	evas_object_resize(sh->object[3], sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
-	evas_object_image_fill_set(sh->object[3], 0, 0, sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
+	if (!sh->object_list)
+	  {
+	     evas_object_move(sh->object[0],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+	     evas_object_move(sh->object[1],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y);
+	     evas_object_move(sh->object[2],
+			      sh->x + sh->w, 
+			      sh->y);
+	     evas_object_move(sh->object[3],
+			      sh->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+			      sh->y + sh->h);
+	     
+	     evas_object_resize(sh->object[0], sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
+	     evas_object_image_fill_set(sh->object[0], 0, 0, sh->w + (sh->ds->conf->blur_size) * 2, sh->ds->conf->blur_size - sh->ds->conf->shadow_y);
+	     
+	     evas_object_resize(sh->object[1], sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
+	     evas_object_image_fill_set(sh->object[1], 0, 0, sh->ds->conf->blur_size - sh->ds->conf->shadow_x, sh->h);
+	     
+	     evas_object_resize(sh->object[2], sh->ds->conf->shadow_x + sh->ds->conf->blur_size, sh->h);
+	     evas_object_image_fill_set(sh->object[2], 0, 0, sh->ds->conf->blur_size + sh->ds->conf->shadow_x, sh->h);
+	     
+	     evas_object_resize(sh->object[3], sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
+	     evas_object_image_fill_set(sh->object[3], 0, 0, sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
+	  }
      }
    else
      {
@@ -820,6 +952,49 @@ _ds_shadow_reshape(void *data)
 }
 
 static void
+_ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, int y2)
+{
+   int x, y;
+   unsigned char *ptr, *pptr;
+   int val;
+
+   if (x1 == x2) /* scan vert */
+     {
+	pptr = sp->pix + ((y1 - 1) * sp->w) + x1;
+	ptr = sp->pix + (y1 * sp->w) + x1;
+	for (y = y1; y <= y2; y++)
+	  {
+	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
+	     if ((val != 0) && (val != (255 * 4)))
+	       _tilebuf_add_redraw(tb, 
+				   x1 - ((bsz + 1) / q),
+				   y - ((bsz + 1) / q),
+				   ((bsz + 1) * 2) / q,
+				   ((bsz + 1) * 2) / q);
+	     ptr += sp->w;
+	     pptr += sp->h;
+	  }
+     }
+   else if (y1 == y2) /* scan horiz */
+     {
+	pptr = sp->pix + ((y1 - 1) * sp->w) + x1;
+	ptr = sp->pix + (y1 * sp->w) + x1;
+	for (x = x1; x <= x2; x++)
+	  {
+	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
+	     if ((val != 0) && (val != (255 * 4)))
+	       _tilebuf_add_redraw(tb, 
+				   x - ((bsz + 1) / q),
+				   y1 - ((bsz + 1) / q),
+				   ((bsz + 1) * 2) / q,
+				   ((bsz + 1) * 2) / q);
+	     ptr++;
+	     pptr++;
+	  }
+     }
+}
+
+static void
 _ds_shadow_recalc(Shadow *sh)
 {
    Evas_List *rects = NULL;
@@ -832,7 +1007,7 @@ _ds_shadow_recalc(Shadow *sh)
      sh->toosmall = 0;
    if ((rects) || (sh->toosmall))
      {
-	Evas_List *l;
+	Evas_List *l, *ll;
 	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
 	int x1, y1, x2, y2;
@@ -844,14 +1019,6 @@ _ds_shadow_recalc(Shadow *sh)
 	else
 	  sh->square = 0;
 	
-	/* FIXME: find "minimum" center of the shape rects - if any */
-	/* idea - take rects, run thru list. for each rect start x
-	 * check all rects with a y > than this one. (will come later
-	 * in the list). keep track of the last y point and id this rect x
-	 * spans this line then advance new y point by rect size if it
-	 * immediately joins it...
-	
-	 */
 	shx = sh->ds->conf->shadow_x;
 	shy = sh->ds->conf->shadow_y;
 	shw = sh->w;
@@ -867,8 +1034,9 @@ _ds_shadow_recalc(Shadow *sh)
 	sp = _ds_shpix_new((shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
 	if (sp)
 	  {
-	     int slx, sly, slw, slh;
+	     Tilebuf *tb;
 	     
+	     _ds_shadow_obj_shutdown(sh);
 	     if (!rects)
 	       {
 		  /* FIXME; rounding errors - fix as below in else{} */
@@ -894,83 +1062,132 @@ _ds_shadow_recalc(Shadow *sh)
 		    }
 	       }
 	     
-	     e_container_shape_solid_rect_get(sh->shape, &slx, &sly, &slw, &slh);
-	     slx += bsz;
-	     sly += bsz;
-	     slw -= bsz * 2;
-	     slh -= bsz * 2;
-	     slw = (slw - 1 + slx) / q;
-	     slh = (slh - 1 + sly) / q;
-	     slx /= q;
-	     sly /= q;
-	     slw = slw - slx + 1;
-	     slh = slh - sly + 1;
-	     if ((slw > 0) && (slh > 0))
+	     tb = _tilebuf_new((shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+	     if (tb)
 	       {
-		  /* FIXME: handle as 4 separate shadow obj's - not 1 */
-		  _ds_shpix_blur(sp, 0, 0, 
-				 (shw + (bsz * 2)) / q, 
-				 (shh + (bsz * 2)) / q,
-				 sh->ds->table.gauss2, (bsz) / q);
-		  _ds_shpix_object_set(sp, sh->object[0], 0, 0,
-				       (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+		  Evas_List *brects;
 		  
-		  evas_object_move(sh->object[0],
-				   sh->x + shx - bsz,
-				   sh->y + shy - bsz);
-		  evas_object_image_smooth_scale_set(sh->object[0], 1);
-		  evas_object_image_border_set(sh->object[0],
-					       0, 0, 0, 0);
-		  evas_object_resize(sh->object[0],
-				     sh->w + (bsz * 2),
-				     sh->h + (bsz * 2));
-		  evas_object_image_fill_set(sh->object[0], 0, 0, 
-					     sh->w + (bsz * 2),
-					     sh->h + (bsz * 2));
-		  _ds_object_unset(sh->object[1]);
-		  _ds_object_unset(sh->object[2]);
-		  _ds_object_unset(sh->object[3]);
-		  _ds_shpix_free(sp);
-		  
-		  if (evas_object_visible_get(sh->object[0]))
+		  _tilebuf_set_tile_size(tb, 16 / q, 16 / q);
+		  /* find edges */
+		  if (rects)
 		    {
-		       evas_object_hide(sh->object[1]);
-		       evas_object_hide(sh->object[2]);
-		       evas_object_hide(sh->object[3]);
+		       for (l = rects; l; l = l->next)
+			 {
+			    E_Rect *r;
+			    
+			    r = l->data;
+			    x1 = (bsz + r->x) / q;
+			    y1 = (bsz + r->y) / q;
+			    x2 = (bsz + r->x + r->w - 1) / q;
+			    y2 = (bsz + r->y + r->h - 1) / q;
+			    if (x1 < 1) x1 = 1;
+			    if (x1 >= (sp->w - 1)) x1 = (sp->w - 1) - 1;
+			    if (x2 < 1) x1 = 1;
+			    if (x2 >= (sp->w - 1)) x2 = (sp->w - 1) - 1;
+			    if (y1 < 1) y1 = 1;
+			    if (y1 >= (sp->h - 1)) y1 = (sp->h - 1) - 1;
+			    if (y2 < 1) y1 = 1;
+			    if (y2 >= (sp->h - 1)) y2 = (sp->h - 1) - 1;
+			    _ds_edge_scan(sp, tb, bsz, q, x1, y1, x2 + 1, y1);
+			    _ds_edge_scan(sp, tb, bsz, q, x1, y2 + 1, x2 + 1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, q, x1, y1, x1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, q, x2 + 1, y1, x2 + 1, y2 + 1);
+			 }
 		    }
+		  /* its a rect - just add the rect outline */
+		  else
+		    {
+		       _tilebuf_add_redraw(tb, 
+					   0, 
+					   0,
+					   (shw + (bsz * 2)) / q,
+					   ((bsz + 1) * 2) / q);
+		       _tilebuf_add_redraw(tb, 
+					   0, 
+					   ((bsz + 1) * 2) / q,
+					   ((bsz + 1) * 2) / q,
+					   sp->h - (2 * (((bsz + 1) * 2) / q)));
+		       _tilebuf_add_redraw(tb, 
+					   sp->w - (((bsz + 1) * 2) / q), 
+					   ((bsz + 1) * 2) / q,
+					   ((bsz + 1) * 2) / q,
+					   sp->h - (2 * (((bsz + 1) * 2) / q)));
+		       _tilebuf_add_redraw(tb, 
+					   0, 
+					   sp->h - (((bsz + 1) * 2) / q),
+					   (shw + (bsz * 2)) / q,
+					   ((bsz + 1) * 2) / q);
+		    }
+		  brects = _tilebuf_get_render_rects(tb);
+#if 0 /* enable this to see how dropshadow minimises what it has to go blur */
+		  printf("BRTECTS:\n");
+ 		  for (l = brects; l; l = l->next)
+		    {
+		       E_Rect *r;
+		       r = l->data;
+		       _ds_shpix_fill(sp, r->x, r->y, r->w, r->h, 255);
+/*		       printf("  %i,%i %ix%i\n", r->x, r->y, r->w, r->h);*/
+		    }
+		  printf("done\n");
+#else		  
+		  _ds_shpix_blur_rects(sp, brects,
+				       sh->ds->table.gauss2, (bsz) / q);
+#endif		  
+		  _ds_shadow_obj_init_rects(sh, brects);
+		  for (l = brects, ll = sh->object_list; 
+		       l && ll; 
+		       l = l->next, ll = ll->next)
+		    {
+		       Shadow_Object *so;
+		       E_Rect *r;
+		       int x, y, w, h;
+		       
+		       r = l->data;
+		       so = ll->data;
+		       evas_object_image_smooth_scale_set(so->obj, 1);
+		       evas_object_move(so->obj,
+					sh->x + so->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+					sh->y + so->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+		       evas_object_resize(so->obj,
+					  r->w, r->h);
+		       evas_object_image_fill_set(so->obj,
+						  0, 0,
+						  r->w, r->h);
+		       if (sh->visible)
+			 evas_object_show(so->obj);
+		       _ds_shpix_object_set(sp, so->obj, 
+					    r->x, r->y, r->w, r->h);
+		    }
+#if 0		  
+	     _ds_shpix_object_set(sp, sh->object[0], 0, 0,
+				  (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+	     evas_object_move(sh->object[0],
+			      sh->x + shx - bsz,
+			      sh->y + shy - bsz);
+	     evas_object_image_smooth_scale_set(sh->object[0], 1);
+	     evas_object_image_border_set(sh->object[0],
+					  0, 0, 0, 0);
+	     evas_object_resize(sh->object[0],
+				sh->w + (bsz * 2),
+				sh->h + (bsz * 2));
+	     evas_object_image_fill_set(sh->object[0], 0, 0, 
+					sh->w + (bsz * 2),
+					sh->h + (bsz * 2));
+	     _ds_object_unset(sh->object[1]);
+	     _ds_object_unset(sh->object[2]);
+	     _ds_object_unset(sh->object[3]);
+	     
+	     if (evas_object_visible_get(sh->object[0]))
+	       {
+		  evas_object_hide(sh->object[1]);
+		  evas_object_hide(sh->object[2]);
+		  evas_object_hide(sh->object[3]);
 	       }
-	     else
-	       {
-		  _ds_shpix_blur(sp, 0, 0, 
-				 (shw + (bsz * 2)) / q, 
-				 (shh + (bsz * 2)) / q,
-				 sh->ds->table.gauss2, (bsz) / q);
-		  _ds_shpix_object_set(sp, sh->object[0], 0, 0,
-				       (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
-		  
-		  evas_object_move(sh->object[0],
-				   sh->x + shx - bsz,
-				   sh->y + shy - bsz);
-		  evas_object_image_smooth_scale_set(sh->object[0], 1);
-		  evas_object_image_border_set(sh->object[0],
-					       0, 0, 0, 0);
-		  evas_object_resize(sh->object[0],
-				     sh->w + (bsz * 2),
-				     sh->h + (bsz * 2));
-		  evas_object_image_fill_set(sh->object[0], 0, 0, 
-					     sh->w + (bsz * 2),
-					     sh->h + (bsz * 2));
-		  _ds_object_unset(sh->object[1]);
-		  _ds_object_unset(sh->object[2]);
-		  _ds_object_unset(sh->object[3]);
+#endif
 		  _ds_shpix_free(sp);
 		  
-		  if (evas_object_visible_get(sh->object[0]))
-		    {
-		       evas_object_hide(sh->object[1]);
-		       evas_object_hide(sh->object[2]);
-		       evas_object_hide(sh->object[3]);
-		    }
+		  _tilebuf_free_render_rects(brects);
+		  _tilebuf_free(tb);
 	       }
 	  }
      }
@@ -978,6 +1195,7 @@ _ds_shadow_recalc(Shadow *sh)
      {
 	int shw, shh, bsz, shx, shy;
 	
+	_ds_shadow_obj_init(sh);
 	sh->square = 1;
 	
 	shx = sh->ds->conf->shadow_x;
@@ -1484,6 +1702,84 @@ _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, i
 }
 
 static void
+_ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size)
+{
+   Shpix *sp2;
+   Evas_List *l;
+   
+   if (!sp) return;
+   if (blur_size < 1) return;
+   
+   sp2 = _ds_shpix_new(sp->w, sp->h);
+   if (!sp2) return;
+   /* FIXME: copy the inverse rects from rects list */
+   memcpy(sp2->pix, sp->pix, sp->w * sp->h);
+   for (l = rects; l; l = l->next)
+     {
+	E_Rect *r;
+	int x, y, w, h;
+	
+	r = l->data;
+	x = r->x; y = r->y; w = r->w; h = r->h;
+	if ((w < 1) || (h < 1)) continue;
+	
+	if (x < 0)
+	  {
+	     w += x;
+	     x = 0;
+	     if (w < 1) continue;
+	  }
+	if (x >= sp->w) continue;
+	if ((x + w) > (sp->w)) w = sp->w - x;
+	
+	if (y < 0)
+	  {
+	     h += y;
+	     y = 0;
+	     if (h < 1) continue;
+	  }
+	if (y >= sp->h) continue;
+	if ((y + h) > (sp->h)) h = sp->h - y;
+	_ds_gauss_blur_h(sp->pix, sp2->pix,
+			 sp->w, sp->h,
+			 blur_lut, blur_size,
+			 x, y, x + w, y + h);
+     }
+   for (l = rects; l; l = l->next)
+     {
+	E_Rect *r;
+	int x, y, w, h;
+	
+	r = l->data;
+	x = r->x; y = r->y; w = r->w; h = r->h;
+	if ((w < 1) || (h < 1)) continue;
+	
+	if (x < 0)
+	  {
+	     w += x;
+	     x = 0;
+	     if (w < 1) continue;
+	  }
+	if (x >= sp->w) continue;
+	if ((x + w) > (sp->w)) w = sp->w - x;
+	
+	if (y < 0)
+	  {
+	     h += y;
+	     y = 0;
+	     if (h < 1) continue;
+	  }
+	if (y >= sp->h) continue;
+	if ((y + h) > (sp->h)) h = sp->h - y;
+	_ds_gauss_blur_v(sp2->pix, sp->pix,
+			 sp2->w, sp2->h,
+			 blur_lut, blur_size,
+			 x, y, x + w, y + h);
+     }
+   _ds_shpix_free(sp2);
+}
+
+static void
 _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 {
    unsigned char *p;
@@ -1725,4 +2021,238 @@ _ds_object_unset(Evas_Object *o)
 {
    evas_object_image_data_set(o, NULL);
    evas_object_image_size_set(o, 0, 0);
+}
+
+static int
+_tilebuf_x_intersect(Tilebuf *tb, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill)
+{
+   return _tilebuf_intersect(tb->tile_size.w, tb->outbuf_w, tb->tiles.w,
+			    x, w, x1, x2, x1_fill, x2_fill);
+}
+
+static int
+_tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *y1, int *y2, int *y1_fill, int *y2_fill)
+{
+   return _tilebuf_intersect(tb->tile_size.h, tb->outbuf_h, tb->tiles.h,
+			    y, h, y1, y2, y1_fill, y2_fill);
+}
+
+static int
+_tilebuf_intersect(int tsize, int tlen, int tnum, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill)
+{
+   int p1, p2;
+   
+   /* initial clip out of region */
+   if ((x + w) <= 0) return 0;
+   if (x >= tlen) return 0;
+   
+   /* adjust x & w so it all fits in region */
+   if (x < 0)
+     {
+	w += x;
+	x = 0;
+     }
+   if (w < 0) return 0;
+   if ((x + w) > tlen) w = tlen - x;
+   
+   /* now figure if the first edge is fully filling its tile */
+   p1 = (x) / tsize;
+   if ((p1 * tsize) == (x)) *x1_fill = 1;
+   else                     *x1_fill = 0;
+   *x1 = p1;
+   
+   /* now figure if the last edge is fully filling its tile */
+   p2 = (x + w - 1) / tsize;
+   if (((p2 + 1) * tsize) == (x + w)) *x2_fill = 1;
+   else                               *x2_fill = 0;
+   *x2 = p2;
+   
+   return 1;
+   tnum = 0;
+}
+
+static void
+_tilebuf_setup(Tilebuf *tb)
+{
+   if (tb->tiles.tiles) free(tb->tiles.tiles);
+   tb->tiles.tiles = NULL;
+   
+   tb->tiles.w = (tb->outbuf_w + (tb->tile_size.w - 1)) / tb->tile_size.w;
+   tb->tiles.h = (tb->outbuf_h + (tb->tile_size.h - 1)) / tb->tile_size.h;
+   
+   tb->tiles.tiles = malloc(tb->tiles.w * tb->tiles.h * sizeof(Tilebuf_Tile));
+   
+   if (!tb->tiles.tiles)
+     {
+	tb->tiles.w = 0;
+	tb->tiles.h = 0;
+	return;
+     }
+   memset(tb->tiles.tiles, 0, tb->tiles.w * tb->tiles.h * sizeof(Tilebuf_Tile));
+}
+
+static Tilebuf *
+_tilebuf_new(int w, int h)
+{
+   Tilebuf *tb;
+   
+   tb = calloc(1, sizeof(Tilebuf));
+   if (!tb) return NULL;
+   
+   tb->tile_size.w = 16;
+   tb->tile_size.h = 16;
+   tb->outbuf_w = w;
+   tb->outbuf_h = h;
+   
+   return tb;
+}
+
+static void
+_tilebuf_free(Tilebuf *tb)
+{
+   if (tb->tiles.tiles) free(tb->tiles.tiles);
+   free(tb);
+}
+
+static void
+_tilebuf_set_tile_size(Tilebuf *tb, int tw, int th)
+{
+   tb->tile_size.w = tw;
+   tb->tile_size.h = th;
+   _tilebuf_setup(tb);
+}
+
+static void
+_tilebuf_get_tile_size(Tilebuf *tb, int *tw, int *th)
+{
+   if (tw) *tw = tb->tile_size.w;
+   if (th) *th = tb->tile_size.h;
+}
+
+static int
+_tilebuf_add_redraw(Tilebuf *tb, int x, int y, int w, int h)
+{
+   int tx1, tx2, ty1, ty2, tfx1, tfx2, tfy1, tfy2, xx, yy;
+   int num;
+   
+   num = 0;
+   if (_tilebuf_x_intersect(tb, x, w, &tx1, &tx2, &tfx1, &tfx2) &&
+       _tilebuf_y_intersect(tb, y, h, &ty1, &ty2, &tfy1, &tfy2))
+     {
+	for (yy = ty1; yy <= ty2; yy++)
+	  {
+	     Tilebuf_Tile *tbt;
+	     
+	     tbt = &(TILE(tb, tx1, yy));
+	     for (xx = tx1; xx <= tx2; xx++)
+	       {
+		  tbt->redraw = 1;
+		  num++;
+		  tbt++;
+	       }
+	  }
+     }
+   return num;
+}
+
+static void
+_tilebuf_clear(Tilebuf *tb)
+{
+   if (!tb->tiles.tiles) return;
+   memset(tb->tiles.tiles, 0, tb->tiles.w * tb->tiles.h * sizeof(Tilebuf_Tile));
+}
+
+static Evas_List *
+_tilebuf_get_render_rects(Tilebuf *tb)
+{
+   Evas_List *rects = NULL;
+   int x, y;
+   
+   for (y = 0; y < tb->tiles.h; y++)
+     {
+	for (x = 0; x < tb->tiles.w; x++)
+	  {
+	     if (TILE(tb, x, y).redraw)
+	       {
+		  int can_expand_x = 1, can_expand_y = 1;
+		  E_Rect *r = NULL;
+		  int xx = 0, yy = 0;
+		  
+		  r = calloc(1, sizeof(E_Rect));
+		  /* amalgamate tiles */
+		  while (can_expand_x)
+		    {
+		       xx++;
+		       if ((x + xx) >= tb->tiles.w)
+			 can_expand_x = 0;
+		       else if (!(TILE(tb, x + xx, y).redraw))
+			 can_expand_x = 0;
+		       if (can_expand_x)
+			 TILE(tb, x + xx, y).redraw = 0;
+		    }
+		  while (can_expand_y)
+		    {
+		       int i;
+		       
+		       yy++;
+		       if ((y + yy) >= tb->tiles.h)
+			 can_expand_y = 0;
+		       if (can_expand_y)
+			 {
+			    for (i = x; i < x + xx; i++)
+			      {
+				 if (!(TILE(tb, i, y + yy).redraw))
+				   {
+				      can_expand_y = 0;
+				      break;
+				   }
+			      }
+			 }
+		       if (can_expand_y)
+			 {
+			    for (i = x; i < x + xx; i++)
+			      TILE(tb, i, y + yy).redraw = 0;
+			 }
+		    }
+		  TILE(tb, x, y).redraw = 0;
+		  r->x = x * tb->tile_size.w;
+		  r->y = y * tb->tile_size.h;
+		  r->w = (xx) * tb->tile_size.w;
+		  r->h = (yy) * tb->tile_size.h;
+		  if (r->x < 0)
+		    {
+		       r->w += r->x;
+		       r->x = 0;
+		    }
+		  if ((r->x + r->w) > tb->outbuf_w)
+		    r->w = tb->outbuf_w - r->x;
+		  if (r->y < 0)
+		    {
+		       r->h += r->y;
+		       r->y = 0;
+		    }
+		  if ((r->y + r->h) > tb->outbuf_h)
+		    r->h = tb->outbuf_h - r->y;
+		  if ((r->w <= 0) || (r->h <= 0))
+		    free(r);
+		  else
+		    rects = evas_list_append(rects, r);
+		  x = x + (xx - 1);
+	       }
+	  }
+     }
+   return rects;
+}
+
+static void
+_tilebuf_free_render_rects(Evas_List *rects)
+{
+   while (rects)
+     {
+	E_Rect *r;
+	
+	r = rects->data;
+	rects = evas_list_remove_list(rects, rects);
+	free(r);
+     }
 }
