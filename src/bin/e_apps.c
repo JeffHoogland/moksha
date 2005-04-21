@@ -158,7 +158,6 @@ error:
 int
 e_app_is_parent(E_App *parent, E_App *app)
 {
-   Evas_List *l;
    E_App *current;
 
    current = app->parent;
@@ -170,16 +169,6 @@ e_app_is_parent(E_App *parent, E_App *app)
 	current = current->parent;
      }
 
-#if 0
-   for (l = app->references; l; l = l->next)
-     {
-	E_App *a2;
-
-	a2 = l->data;
-	if (a2 == parent)
-	  return 1;
-     }
-#endif
    return 0;
 }
 
@@ -361,8 +350,6 @@ e_app_window_name_class_find(char *name, char *class)
 static void
 _e_app_free(E_App *a)
 {
-   Evas_List *l;
-
    if (a->orig)
      {
 	printf("E_App: This is a copy: %s\n", a->path);
