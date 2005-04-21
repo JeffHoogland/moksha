@@ -221,8 +221,7 @@ _clock_face_new(E_Container *con)
    face->clock_object = o;
 
    edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/clock"),
 			"modules/clock/main");
    evas_object_show(o);
    

@@ -45,7 +45,8 @@ e_table.h \
 e_layout.h \
 e_test.h \
 e_font.h \
-e_intl.h
+e_intl.h \
+e_theme.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -84,6 +85,7 @@ e_layout.c \
 e_test.c \
 e_font.c \
 e_intl.c \
+e_theme.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@

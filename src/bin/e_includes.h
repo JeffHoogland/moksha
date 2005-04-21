@@ -35,3 +35,4 @@
 #include "e_layout.h"
 #include "e_font.h"
 #include "e_intl.h"
+#include "e_theme.h"

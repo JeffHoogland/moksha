@@ -742,7 +742,7 @@ _cpufreq_face_new(E_Container *con, Cpufreq *owner)
    o = edje_object_add(con->bg_evas);
    ef->freq_object = o;
    edje_object_file_set(o, 
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/cpufreq"),
 			"modules/cpufreq/main");
    edje_object_signal_callback_add(o, "next_governor", "governor", _cpufreq_face_cb_set_governor, owner);
    edje_object_signal_callback_add(o, "increase_frequency", "frequency", _cpufreq_face_cb_set_frequency, owner);

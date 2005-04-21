@@ -2625,8 +2625,7 @@ _e_border_eval(E_Border *bd)
 	  }
         o = edje_object_add(bd->bg_evas);
 	bd->bg_object = o;
-	/* FIXME: "default.edj" needs to come from conf */
-	path = e_path_find(path_themes, "default.edj");
+	path = e_theme_file_get("base/theme/borders");
 	snprintf(buf, sizeof(buf), "widgets/border/%s/border",
 		 bd->client.border.name);
         ok = edje_object_file_set(o, path, buf);
@@ -3422,12 +3421,12 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Close"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/close");
+   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/close");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Iconify"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/minimize");
+   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/minimize");
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -3437,21 +3436,21 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/shade");
+   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/shade");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Maximized"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/maximize");
+   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/maximize");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Sticky"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/stick");
+   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/stick");
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -3827,7 +3826,7 @@ _e_border_resize_begin(E_Border *bd)
    ecore_evas_show(resize_ee);
 
    resize_obj = edje_object_add(ecore_evas_get(resize_ee));
-   edje_object_file_set(resize_obj, e_path_find(path_themes, "default.edj"),
+   edje_object_file_set(resize_obj, e_theme_file_get("base/theme/borders"),
 			"widgets/border/default/resize");
    snprintf(buf, sizeof(buf), "9999x9999");
    edje_object_part_text_set(resize_obj, "text", buf);
@@ -3896,7 +3895,7 @@ _e_border_move_begin(E_Border *bd)
    ecore_evas_layer_set(move_ee, 999);
 
    move_obj = edje_object_add(ecore_evas_get(move_ee));
-   edje_object_file_set(move_obj, e_path_find(path_themes, "default.edj"),
+   edje_object_file_set(move_obj, e_theme_file_get("base/theme/borders"),
 			"widgets/border/default/move");
    snprintf(buf, sizeof(buf), "9999 9999");
    edje_object_part_text_set(move_obj, "text", buf);

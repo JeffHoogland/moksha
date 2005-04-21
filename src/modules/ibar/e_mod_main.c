@@ -428,8 +428,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    o = edje_object_add(ibb->evas);
    ibb->bar_object = o;
    edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/ibar"),
 			"modules/ibar/main");
    evas_object_show(o);
 
@@ -437,8 +436,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    ibb->overlay_object = o;
    evas_object_layer_set(o, 1);
    edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/ibar"),
 			"modules/ibar/follower");
    evas_object_show(o);
 
@@ -613,8 +611,7 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    evas_object_intercept_move_callback_add(o, _ibar_icon_cb_intercept_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibar_icon_cb_intercept_resize, ic);
    edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/ibar"),
 			"modules/ibar/icon");
    evas_object_show(o);
 
@@ -632,8 +629,7 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    evas_object_intercept_move_callback_add(o, _ibar_icon_cb_intercept_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibar_icon_cb_intercept_resize, ic);
    edje_object_file_set(o,
-			/* FIXME: "default.edj" needs to come from conf */
-			e_path_find(path_themes, "default.edj"),
+                        e_theme_file_get("base/theme/modules/ibar"),
 			"modules/ibar/icon_overlay");
    evas_object_show(o);
 

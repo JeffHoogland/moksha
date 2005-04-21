@@ -808,8 +808,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	o = edje_object_add(mi->menu->evas);
 	mi->separator_object = o;
 	edje_object_file_set(o,
-			     /* FIXME: "default.edj" needs to come from conf */
-			     e_path_find(path_themes, "default.edj"),
+			     e_theme_file_get("base/theme/menus"),
 			     "widgets/menu/default/separator");
 	evas_object_show(o);
 	edje_object_size_min_calc(mi->separator_object, &ww, &hh);
@@ -827,8 +826,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	if ((mi->submenu) || (mi->submenu_pre_cb.func))
 	  {
 	     if (!edje_object_file_set(mi->bg_object,
-				       /* FIXME: "default.edj" needs to come from conf */
-				       e_path_find(path_themes, "default.edj"),
+				       e_theme_file_get("base/theme/menus"),
 				       "widgets/menu/default/submenu_bg"))
 	       goto no_submenu_item;
 	  }
@@ -836,8 +834,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	  {
 	     no_submenu_item:
 	     edje_object_file_set(mi->bg_object,
-				  /* FIXME: "default.edj" needs to come from conf */
-				  e_path_find(path_themes, "default.edj"),
+				  e_theme_file_get("base/theme/menus"),
 				  "widgets/menu/default/item_bg");
 	  }
 	evas_object_show(o);
@@ -855,8 +852,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->toggle_object = o;
 	     edje_object_file_set(o,
-				  /* FIXME: "default.edj" needs to come from conf */
-				  e_path_find(path_themes, "default.edj"),
+				  e_theme_file_get("base/theme/menus"),
 				  "widgets/menu/default/check");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
@@ -870,8 +866,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->toggle_object = o;
 	     edje_object_file_set(o,
-				  /* FIXME: "default.edj" needs to come from conf */
-				  e_path_find(path_themes, "default.edj"),
+				  e_theme_file_get("base/theme/menus"),
 				  "widgets/menu/default/radio");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
@@ -894,8 +889,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     
 	     o = edje_object_add(mi->menu->evas);
 	     if (edje_object_file_set(o,
-				      /* FIXME: "default.edj" needs to come from conf */
-				      e_path_find(path_themes, "default.edj"),
+				      e_theme_file_get("base/theme/menus"),
 				      "widgets/menu/default/icon"))
 	       {
 		  mi->icon_bg_object = o;
@@ -963,8 +957,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->label_object = o;
 	     edje_object_file_set(o,
-				  /* FIXME: "default.edj" needs to come from conf */
-				  e_path_find(path_themes, "default.edj"),
+				  e_theme_file_get("base/theme/menus"),
 				  "widgets/menu/default/label");
 	     /* default label */
 	     edje_object_part_text_set(o, "label", mi->label);
@@ -988,8 +981,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     o = edje_object_add(mi->menu->evas);
 	     mi->submenu_object = o;
 	     edje_object_file_set(o,
-				  /* FIXME: "default.edj" needs to come from conf */
-				  e_path_find(path_themes, "default.edj"),
+				  e_theme_file_get("base/theme/menus"),
 				  "widgets/menu/default/submenu");
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_show(o);
@@ -1061,8 +1053,7 @@ _e_menu_realize(E_Menu *m)
    evas_object_move(o, 0, 0);
    evas_object_resize(o, m->cur.w, m->cur.h);
    ok = edje_object_file_set(o,
-			     /* FIXME: "default.edj" needs to come from conf */
-			     e_path_find(path_themes, "default.edj"),
+                             e_theme_file_get("base/theme/menus"),
 			     "widgets/menu/default/background");
    if (ok)
      {
