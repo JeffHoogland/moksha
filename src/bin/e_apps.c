@@ -91,7 +91,7 @@ e_app_shutdown(void)
 	  {
 	     E_App *a;
 	     a = l->data;
-	     printf("BUG: %d %s\n", E_OBJECT(a)->references, a->path);
+	     printf("BUG: References %d %s\n", E_OBJECT(a)->references, a->path);
 	  }
      }
    return 1;
