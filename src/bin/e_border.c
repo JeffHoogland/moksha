@@ -3822,7 +3822,7 @@ _e_border_resize_begin(E_Border *bd)
    ecore_evas_software_x11_direct_resize_set(resize_ee, 1);
    e_canvas_add(resize_ee);
    ecore_evas_borderless_set(resize_ee, 1);
-   ecore_evas_layer_set(resize_ee, 999);
+   ecore_evas_layer_set(resize_ee, 255);
    ecore_evas_show(resize_ee);
 
    resize_obj = edje_object_add(ecore_evas_get(resize_ee));
@@ -3892,7 +3892,7 @@ _e_border_move_begin(E_Border *bd)
    ecore_evas_software_x11_direct_resize_set(move_ee, 1);
    e_canvas_add(move_ee);
    ecore_evas_borderless_set(move_ee, 1);
-   ecore_evas_layer_set(move_ee, 999);
+   ecore_evas_layer_set(move_ee, 255);
 
    move_obj = edje_object_add(ecore_evas_get(move_ee));
    edje_object_file_set(move_obj, e_theme_file_get("base/theme/borders"),
