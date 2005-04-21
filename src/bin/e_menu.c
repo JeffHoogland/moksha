@@ -67,6 +67,8 @@ static int  _e_menu_cb_mouse_wheel                (void *data, int type, void *e
 static int  _e_menu_cb_scroll_timer               (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
+static void _e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi);
+
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
@@ -498,6 +500,26 @@ e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, 
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->cb.func = func;
    mi->cb.data = data;
+}
+
+void
+e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   mi->submenu_pre_cb.func = func;
+   mi->submenu_pre_cb.data = data;
+   if (!mi->submenu_post_cb.func)
+     mi->submenu_post_cb.func = _e_menu_item_submenu_post_cb_default;
+}
+
+void
+e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+{
+   E_OBJECT_CHECK(mi);
+   E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   mi->submenu_post_cb.func = func;
+   mi->submenu_post_cb.data = data;
 }
 
 void
@@ -1436,6 +1458,8 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
      }
    mi->menu->pending_new_submenu = 0;
    _e_menu_deactivate_above(mi->menu);
+   if (mi->submenu_pre_cb.func)
+     mi->submenu_pre_cb.func(mi->submenu_pre_cb.data, mi->menu, mi);
    if (mi->submenu)
      {
 	E_Menu *m;
@@ -1447,6 +1471,8 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
 	_e_menu_reposition(m);
 	e_object_unref(E_OBJECT(m));
      }
+   if (mi->submenu_post_cb.func)
+     mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }
 
 static void
@@ -2184,4 +2210,16 @@ _e_menu_cb_window_shape(void *data, int ev_type, void *ev)
 	  m->need_shape_export = 1;
      }
    return 1;
+}
+
+static void
+_e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+
+   if (!mi->submenu) return;
+
+   subm = mi->submenu;
+   e_menu_item_submenu_set(mi, NULL);
+   e_object_del(E_OBJECT(subm));
 }

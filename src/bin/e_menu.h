@@ -107,7 +107,17 @@ struct _E_Menu_Item
       void *data;
       void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
    } cb;
-   
+
+    struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
+   } submenu_pre_cb;
+
+    struct {
+      void *data;
+      void (*func) (void *data, E_Menu *m, E_Menu_Item *mi);
+   } submenu_post_cb;
+
    unsigned char  separator : 1;
    unsigned char  radio : 1;
    unsigned char  check : 1;
@@ -147,6 +157,8 @@ EAPI void         e_menu_item_radio_group_set(E_Menu_Item *mi, int radg);
 EAPI void         e_menu_item_toggle_set(E_Menu_Item *mi, int tog);
 EAPI int          e_menu_item_toggle_get(E_Menu_Item *mi);
 EAPI void         e_menu_item_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+EAPI void         e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
+EAPI void         e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  void (*func) (void *data, E_Menu *m, E_Menu_Item *mi), void *data);
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 
 EAPI void         e_menu_idler_before(void);
