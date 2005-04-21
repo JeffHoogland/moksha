@@ -211,10 +211,10 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		  for (ll = man->containers; ll; ll = ll->next)
 		    {
 		       E_Container *con;
-             E_Zone *zone;
+		       E_Zone *zone;
 		       
 		       con = ll->data;
-             zone = e_zone_current_get(con);
+		       zone = e_zone_current_get(con);
 		       e_zone_bg_reconfigure(zone);
 		    }
 	       }
