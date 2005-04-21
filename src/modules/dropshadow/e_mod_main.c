@@ -181,9 +181,11 @@ _ds_init(E_Module *m)
 	ds->conf->shadow_x = 4;
 	ds->conf->shadow_y = 4;
 	ds->conf->blur_size = 10;
-	ds->conf->quality = 2;
+	ds->conf->quality = 1;
 	ds->conf->shadow_darkness = 0.5;
      }
+   /* FIXME: new shadow optimisations dont work with quality != 1 */
+   ds->conf->quality = 1;
    E_CONFIG_LIMIT(ds->conf->shadow_x, -200, 200);
    E_CONFIG_LIMIT(ds->conf->shadow_y, -200, 200);
    E_CONFIG_LIMIT(ds->conf->blur_size, 1, 120);
