@@ -72,6 +72,8 @@ static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
@@ -594,6 +596,7 @@ e_border_raise(E_Border *bd)
 			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			      0, 0, 0, 0, 0,
 			      mwin, ECORE_X_WINDOW_STACK_BELOW);
+
      {
 	E_Event_Border_Raise *ev;
 	
@@ -604,6 +607,7 @@ e_border_raise(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
    if (move_ee) ecore_evas_raise(move_ee);
+   if (resize_ee) ecore_evas_raise(resize_ee);
 }
 
 void
@@ -3452,6 +3456,14 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Send To"));
+   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_sendto_pre_cb, bd);
+   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/sendto");
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
    a = e_app_window_name_class_find(bd->client.icccm.name,
 				    bd->client.icccm.class);
 
@@ -3571,6 +3583,43 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->sticky) e_border_unstick(bd);
    else e_border_stick(bd);
+}
+
+static void
+_e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Menu_Item *submi;
+   E_Border *bd;
+   int i;
+
+   bd = data;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), bd);
+   e_menu_item_submenu_set(mi, subm);
+
+   for (i = 0; i < bd->zone->desk_x_count * bd->zone->desk_y_count; i++)
+     {
+	E_Desk *desk;
+
+	desk = bd->zone->desks[i];
+	submi = e_menu_item_new(subm);
+	e_menu_item_label_set(submi, desk->name);
+	e_menu_item_callback_set(submi, _e_border_menu_sendto_cb, desk);
+     }
+}
+
+static void
+_e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Desk *desk;
+   E_Border *bd;
+
+   desk = data;
+   bd = e_object_data_get(E_OBJECT(m));
+   if ((bd) && (desk))
+     e_border_desk_set(bd, desk);
 }
 
 static void

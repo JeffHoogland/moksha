@@ -824,7 +824,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	evas_object_intercept_move_callback_add  (o, _e_menu_cb_intercept_item_move,   mi);
 	evas_object_intercept_resize_callback_add(o, _e_menu_cb_intercept_item_resize, mi);
 
-	if (mi->submenu)
+	if ((mi->submenu) || (mi->submenu_pre_cb.func))
 	  {
 	     if (!edje_object_file_set(mi->bg_object,
 				       /* FIXME: "default.edj" needs to come from conf */
@@ -983,7 +983,7 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	     evas_object_pass_events_set(o, 1);
 	     e_box_pack_end(mi->container_object, o);
 	  }
-	if (mi->submenu)
+	if ((mi->submenu) || (mi->submenu_pre_cb.func))
 	  {
 	     o = edje_object_add(mi->menu->evas);
 	     mi->submenu_object = o;
@@ -2229,5 +2229,6 @@ _e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi)
 
    subm = mi->submenu;
    e_menu_item_submenu_set(mi, NULL);
+   printf("Delete submenu: %d\n", E_OBJECT(subm)->references);
    e_object_del(E_OBJECT(subm));
 }
