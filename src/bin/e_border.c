@@ -3618,10 +3618,11 @@ _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
-   if ((bd) && (desk)) {
-     e_border_desk_set(bd, desk);
-     e_desk_show(desk);
-   }
+   if ((bd) && (desk))
+     {
+	e_border_desk_set(bd, desk);
+	e_desk_show(desk);
+     }
 }
 
 static void
