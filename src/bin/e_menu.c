@@ -37,6 +37,7 @@ static void _e_menu_activate_internal             (E_Menu *m, E_Zone *zone);
 static void _e_menu_deactivate_all                (void);
 static void _e_menu_deactivate_above              (E_Menu *m);
 static void _e_menu_submenu_activate              (E_Menu_Item *mi);
+static void _e_menu_submenu_deactivate              (E_Menu_Item *mi);
 static void _e_menu_reposition                    (E_Menu *m);
 static int  _e_menu_active_call                   (void);
 static void _e_menu_item_activate_next            (void);
@@ -566,6 +567,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
 	if (mi->icon_key)
 	  edje_object_signal_emit(mi->icon_object, "passive", "");
 	edje_object_signal_emit(mi->menu->bg_object, "passive", "");
+	_e_menu_submenu_deactivate(mi);
      }
 }
 
@@ -1471,6 +1473,12 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
 	_e_menu_reposition(m);
 	e_object_unref(E_OBJECT(m));
      }
+}
+
+static void
+_e_menu_submenu_deactivate(E_Menu_Item *mi)
+{
+   if (mi->menu->active) return;
    if (mi->submenu_post_cb.func)
      mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }
