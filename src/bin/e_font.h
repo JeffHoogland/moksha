@@ -5,6 +5,7 @@
 
 typedef struct _E_Font_Default E_Font_Default;
 typedef struct _E_Font_Fallback E_Font_Fallback;
+typedef struct _E_Font_Fallback E_Font_Available;
 
 #else
 #ifndef E_FONT_H
@@ -14,10 +15,15 @@ struct _E_Font_Default
 {
    char * text_class;
    char * font;
-   int	size;
+   int    size;
 };
 
 struct _E_Font_Fallback
+{
+   char * name;
+};
+
+struct _E_Font_Available
 {
    char * name;
 };

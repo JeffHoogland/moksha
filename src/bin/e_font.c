@@ -8,17 +8,12 @@
  * - use e_path to search for available fonts
  */
 
-static Evas_List *_e_font_defaults = NULL;	/* MRU <E_Font_Default> */
-static Evas_List *_e_font_fallbacks = NULL;	/* <E_Font_Fallback> */
-
 static Evas_List *_e_font_font_dir_available_get (Evas_List * available_fonts, const char *font_dir);
 
 int
 e_font_init(void)
 {
-   /* just get the pointers into the config */
-   _e_font_defaults = e_config->font_defaults;
-   _e_font_fallbacks = e_config->font_fallbacks;
+   /* all init stuff is in e_config */
    return 1;
 }
 
@@ -38,7 +33,7 @@ e_font_apply(void)
    E_Font_Default *efd;
    
    /* setup edje fallback list */
-   next = _e_font_fallbacks;
+   next = e_config->font_fallbacks;
    if (next)
      {
 	eff = evas_list_data(next);
@@ -62,12 +57,10 @@ e_font_apply(void)
      edje_fontset_append_set(buf);
    
    /* setup edje text classes */
-   next = _e_font_defaults;
-   while (next)
+   for(next = e_config->font_defaults; next; next = evas_list_next(next))
      {
 	efd = evas_list_data(next);
 	edje_text_class_set(efd->text_class, efd->font, efd->size);
-	next = evas_list_next(next);
      }
 }
 
@@ -86,32 +79,30 @@ e_font_available_list(void)
 void
 e_font_available_list_free(Evas_List * available)
 {
-   char *font_name;
-   Evas_List *l;
+   E_Font_Available *efa;
    
-   for (l = available; l; l = l->next)
+   while(available)
      {
-	font_name = evas_list_data(l);
-	available = evas_list_remove(available, l);
-	free(font_name);
+	efa = available->data;
+	available = evas_list_remove_list(available, available);
+	E_FREE(efa->name);
+	E_FREE(efa);	
      }
 }
 
 void
 e_font_fallback_clear(void)
 {
-   Evas_List *next;
+   E_Font_Fallback *eff;
    
-   next = _e_font_fallbacks;
-   while (next)
-     {
-	E_Font_Fallback *eff;
-	
-	eff = evas_list_data(next);
-	_e_font_fallbacks = evas_list_remove_list(_e_font_fallbacks, next);
+   while(e_config->font_fallbacks)
+     {	
+	eff = e_config->font_fallbacks->data;
+	e_config->font_fallbacks = evas_list_remove_list(
+					e_config->font_fallbacks, 
+					e_config->font_fallbacks);
 	E_FREE(eff->name);
 	E_FREE(eff);
-	next = evas_list_next(next);
     }
 }
 
@@ -124,7 +115,7 @@ e_font_fallback_append(const char *font)
    
    eff = E_NEW(E_Font_Fallback, 1);
    eff->name = strdup(font);
-   _e_font_fallbacks = evas_list_append(_e_font_fallbacks, eff);
+   e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff);
 }
 
 void
@@ -136,35 +127,34 @@ e_font_fallback_prepend(const char *font)
    
    eff = E_NEW(E_Font_Fallback, 1);
    eff->name = strdup(font);
-   _e_font_fallbacks = evas_list_prepend(_e_font_fallbacks, eff);
+   e_config->font_fallbacks = evas_list_prepend(e_config->font_fallbacks, eff);
 }
 
 void
 e_font_fallback_remove(const char *font)
 {
    Evas_List *next;
-   
-   next = _e_font_fallbacks;
-   while (next)
+
+   for(next = e_config->font_fallbacks; next; next = evas_list_next(next))
      {
 	E_Font_Fallback *eff;
 	
 	eff = evas_list_data(next);
 	if (!strcmp(eff->name, font))
 	  {
-	     _e_font_fallbacks = evas_list_remove_list(_e_font_fallbacks, next);
+	     e_config->font_fallbacks = evas_list_remove_list(
+					e_config->font_fallbacks, next);
 	     E_FREE(eff->name);
 	     E_FREE(eff);
 	     break;
 	  }
-	next = evas_list_next(next);
      }
 }
 
 Evas_List *
 e_font_fallback_list(void)
 {
-   return _e_font_fallbacks;
+   return e_config->font_fallbacks;
 }
 
 void
@@ -174,8 +164,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
    Evas_List *next;
 
    /* search for the text class */
-   next = _e_font_defaults;
-   while (next)
+   for(next = e_config->font_defaults; next; next = evas_list_next(next))
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
@@ -184,11 +173,12 @@ e_font_default_set(const char *text_class, const char *font, int size)
 	     efd->font = strdup(font);
 	     efd->size = size;
 	     /* move to the front of the list */
-	     _e_font_defaults = evas_list_remove_list(_e_font_defaults, next);
-	     _e_font_defaults = evas_list_prepend(_e_font_defaults, efd);
+	     e_config->font_defaults = evas_list_remove_list(
+					e_config->font_defaults, next);
+	     e_config->font_defaults = evas_list_prepend(
+					e_config->font_defaults, efd);
 	     return;
 	  }
-	next = evas_list_next(next);
      }
 
    /* the text class doesnt exist */
@@ -197,7 +187,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
    efd->font = strdup(font);
    efd->size = size;
    
-   _e_font_defaults = evas_list_prepend(_e_font_defaults, efd);
+   e_config->font_defaults = evas_list_prepend(e_config->font_defaults, efd);
 }
 
 /*
@@ -210,18 +200,18 @@ e_font_default_get(const char *text_class)
    Evas_List *next;
 
    /* search for the text class */
-   next = _e_font_defaults;
-   while (next)
+   for(next = e_config->font_defaults; next; next = evas_list_next(next))
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
 	     /* move to the front of the list */
-	     _e_font_defaults = evas_list_remove_list(_e_font_defaults, next);
-	     _e_font_defaults = evas_list_prepend(_e_font_defaults, efd);
+	     e_config->font_defaults = evas_list_remove_list(
+					e_config->font_defaults, next);
+	     e_config->font_defaults = evas_list_prepend(
+					e_config->font_defaults, efd);
 	     return efd;
 	  }
-	next = evas_list_next(next);
      }
    return NULL;
 }
@@ -233,26 +223,25 @@ e_font_default_remove(const char *text_class)
    Evas_List *next;
    
    /* search for the text class */
-   next = _e_font_defaults;
-   while (next)
+   for(next = e_config->font_defaults; next; next = evas_list_next(next))
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
-	     _e_font_defaults = evas_list_remove_list(_e_font_defaults, next);
+	     e_config->font_defaults = evas_list_remove_list(
+					e_config->font_defaults, next);
 	     E_FREE(efd->text_class);
 	     E_FREE(efd->font);
 	     E_FREE(efd);
 	     return;
 	  }
-	next = evas_list_next(next);
     }
 }
 
 Evas_List *
 e_font_default_list(void)
 {
-   return _e_font_defaults;
+   return e_config->font_defaults;
 }
 
 static Evas_List *
@@ -271,19 +260,25 @@ _e_font_font_dir_available_get(Evas_List * available_fonts, const char *font_dir
 	/* read font alias lines */
 	while (fscanf(f, "%4090s %[^\n]\n", fname, fdef) == 2)
 	  {
+	     E_Font_Available *efa;
+	     
 	     /* skip comments */
 	     if ((fdef[0] == '!') || (fdef[0] == '#'))
 	       continue;
 	     
 	     /* skip duplicates */
-	     next = available_fonts;
-	     while (next)
+	     
+	     for (next = available_fonts; next; next = evas_list_next(next))
 	       {
-		  if (!strcmp((char *)evas_list_data(next), fname))
-		    continue;
-		  next = evas_list_next(next);
+	       	  efa = (E_Font_Available *)evas_list_data(next);
+	       
+		  if (!strcmp(efa->name, fname))
+		    continue;		  
 	       }
-	     available_fonts = evas_list_append(available_fonts, strdup(fname));
+	        
+	     efa = malloc(sizeof(E_Font_Available));
+	     efa->name = strdup(fname);
+	     available_fonts = evas_list_append(available_fonts, efa);
 	  }
 	fclose (f);
      }

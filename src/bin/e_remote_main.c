@@ -27,6 +27,12 @@ static int _e_ipc_cb_server_data(void *data, int type, void *event);
 
 static void _e_help(void);
 
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_module_list_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_available_list_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_default_list_dec);
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_font_default_dec);
+
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 static const char *display_name = NULL;
@@ -316,33 +322,23 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_MODULE_LIST_REPLY:
 	if (e->data)
 	  {
-	     char *p;
+	     Evas_List *modules;
+	     E_Module *m;
 	     
-	     p = e->data;
-	     while (p < (char *)(e->data + e->size))
+	     modules = _e_ipc_module_list_dec(e->data, e->size);	     
+	     while(modules)
 	       {
-		  char *name;
-		  char  enabled;
-		  
-		  name = p;
-		  p += strlen(name);
-		  if (p < (char *)(e->data + e->size))
-		    {
-		       p++;
-		       if (p < (char *)(e->data + e->size))
-			 {
-			    enabled = *p;
-			    p++;
-			    printf("REPLY: MODULE NAME=\"%s\" ENABLED=%i\n",
-				   name, (int)enabled);
-			 }
-		    }
+	     	   m = modules->data;
+	     	   printf("REPLY: MODULE NAME=\"%s\" ENABLED=%i\n",
+				   	m->name, m->enabled);
+		   modules = evas_list_remove_list(modules, modules);
+		   E_FREE(m);
 	       }
 	  }
 	else
 	  printf("REPLY: MODULE NONE\n");
 	break;
-	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
+       case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
 	if (e->data)
 	  {
 	     char *p;
@@ -366,7 +362,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       break;
       case E_IPC_OP_BG_DIRS_LIST_REPLY:
       if (e->data)
-	{
+	{	
 	   char *p;
  
 	   p = e->data;
@@ -383,21 +379,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
 	if (e->data)
 	  {
-	     char *p;
+	     Evas_List *fallbacks;
+	     E_Font_Fallback *eff;
 	     
-	     p = e->data;
-	     while (p < (char *)(e->data + e->size))
-	       {
-		  char *name;
-		  
-		  name = p;
-		  p += strlen(name);
-		  if (p < (char *)(e->data + e->size))
-		    {
-			printf("REPLY: FALLBACK NAME=\"%s\"\n", name);
-		    }
-		  p++;
-	       }
+	     fallbacks = _e_ipc_font_fallback_list_dec(e->data, e->size);
+	     while(fallbacks)
+	        {
+	            eff = fallbacks->data;
+	            printf("REPLY: FALLBACK NAME=\"%s\"\n", eff->name);
+		    fallbacks = evas_list_remove_list(fallbacks, fallbacks);
+		    E_FREE(eff);
+	        }
 	  }
 	else
 	  printf("REPLY: FALLBACK NONE\n");
@@ -405,20 +397,17 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_FONT_AVAILABLE_LIST_REPLY:
         if (e->data)
           {
-             char *p;
-          
-             p = e->data;
-             while (p < (char *)(e->data + e->size))
-              	{
-              	  char *name;
-              	  name = p;
- 		  p += strlen(name);
-		  if (p < (char *)(e->data + e->size))
-		    {
-			printf("REPLY: AVAILABLE NAME=\"%s\"\n", name);
-		    }
-		  p++;             	    
-              	}
+             Evas_List *available;
+	     E_Font_Available *fa;
+	
+	     available = _e_ipc_font_available_list_dec(e->data, e->size);
+	     while(available)
+	        {
+	            fa = available->data;
+	            printf("REPLY: AVAILABLE NAME=\"%s\"\n", fa->name);
+	            available = evas_list_remove_list(available, available);
+		    E_FREE(fa);
+		}
           }
         else
           printf("REPLY: AVAILABLE NONE\n"); 
@@ -426,27 +415,10 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_FONT_DEFAULT_GET_REPLY:
         if (e->data)
           {
-             char *text_class, *name;
-             char *p;
-	     char size;
-	     
-	     p = e->data;
-		  
-	     text_class = p;
-	     p += strlen(text_class) + 1;
-	     if (p < (char *)(e->data + e->size))
-	       {
-		       name = p;
-		       p  += strlen(name) + 1;     
-		       if (p < (char *)(e->data + e->size))
-			 {
-			   	 size = *p;
-			    	 printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%i\n",
-				   text_class, name, (int)size);
-				 p++;
-			  
-			 }
-	       }
+             E_Font_Default efd;
+             _e_ipc_font_default_dec(e->data, e->size, &efd);
+             printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
+				   efd.text_class, efd.font, efd.size);
           }
         else
           printf("REPLY: DEFAULT NONE\n"); 
@@ -454,29 +426,18 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_FONT_DEFAULT_LIST_REPLY:
         if (e->data)
           {
-             char *text_class, *name;
-             char *p;
-	     char size;
-	     
-	     p = e->data;
-		
-	while (p < (char *)(e->data + e->size))
-	{  
-	     text_class = p;
-	     p += strlen(text_class) + 1;
-	     if (p < (char *)(e->data + e->size))
-	       {
-		       name = p;
-		       p += strlen(name) + 1;
-		       if (p < (char *)(e->data + e->size))
-			 {
-			   	 size = *p;
-			    	 printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%i\n",
-				   text_class, name, (int)size);
-				 p++;
-			 }
+             Evas_List *defaults;
+             E_Font_Default *efd;
+          
+             defaults = _e_ipc_font_default_list_dec(e->data, e->size);
+             while(defaults)
+               {
+             	  efd = defaults->data;
+             	  printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
+				   efd->text_class, efd->font, efd->size);  
+                  defaults = evas_list_remove_list(defaults, defaults);
+		  E_FREE(efd);
 	       }
-	  }
           }
         else
           printf("REPLY: DEFAULT NONE\n"); 
@@ -531,4 +492,50 @@ _e_help(void)
 	  }
 	printf("  - %s\n", handler->desc);
      }
+}
+
+
+/* list/struct encoding functions */
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_module_list_dec)
+{
+    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Module);
+    ECORE_IPC_GETS(name);
+    ECORE_IPC_GET8(enabled);
+    ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_available_list_dec)
+{
+    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Font_Available);
+    ECORE_IPC_GETS(name);
+    ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_dec)
+{
+    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Font_Fallback);
+    ECORE_IPC_GETS(name);
+    ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_default_list_dec)
+{
+    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Font_Default);
+    ECORE_IPC_GETS(text_class);
+    ECORE_IPC_GETS(font);
+    ECORE_IPC_GET32(size);
+    ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_font_default_dec)
+{  
+   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Font_Default,
+	       1 +
+	       1 +
+	       4);
+   ECORE_IPC_CHEKS();
+   ECORE_IPC_GETS(text_class);
+   ECORE_IPC_GETS(font);
+   ECORE_IPC_GET32(size);
+   ECORE_IPC_DEC_STRUCT_FOOT();
 }

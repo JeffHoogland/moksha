@@ -5,6 +5,15 @@ static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
 static char *_e_ipc_path_str_get(char **paths, int *bytes);
+static char *_e_ipc_simple_str_dec(char *data, int bytes);
+static char **_e_ipc_multi_str_dec(char *data, int bytes, int str_count);
+
+/* encode functions, Should these be global? */
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc);
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -76,9 +85,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     char *name;
 	     
-	     name = malloc(e->size + 1);
-	     name[e->size] = 0;
-	     memcpy(name, e->data, e->size);
+	     name = _e_ipc_simple_str_dec(e->data, e->size);
+	     
 	     if (!e_module_find(name))
 	       {
 		  e_module_new(name);
@@ -92,9 +100,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     char *name;
 	     E_Module *m;
 	     
-	     name = malloc(e->size + 1);
-	     name[e->size] = 0;
-	     memcpy(name, e->data, e->size);
+	     name = _e_ipc_simple_str_dec(e->data, e->size);
+	     
 	     if ((m = e_module_find(name)))
 	       {
 		  if (e_module_enabled_get(m))
@@ -109,9 +116,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     char *name;
 	     E_Module *m;
 	     
-	     name = malloc(e->size + 1);
-	     name[e->size] = 0;
-	     memcpy(name, e->data, e->size);
+	     name = _e_ipc_simple_str_dec(e->data, e->size);
+	     
 	     if ((m = e_module_find(name)))
 	       {
 		  if (!e_module_enabled_get(m))
@@ -121,13 +127,12 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
 	break;
       case E_IPC_OP_MODULE_DISABLE:
-	  {
+	  {      
 	     char *name;
 	     E_Module *m;
 	     
-	     name = malloc(e->size + 1);
-	     name[e->size] = 0;
-	     memcpy(name, e->data, e->size);
+	     name = _e_ipc_simple_str_dec(e->data, e->size);
+	     
 	     if ((m = e_module_find(name)))
 	       {
 		  if (e_module_enabled_get(m))
@@ -138,30 +143,15 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_MODULE_LIST:
 	  {
-	     Evas_List *modules, *l;
+	     /* encode module list (str,8-bit) */
+	     Evas_List *modules;
+	     char * data;
 	     int bytes;
-	     E_Module *m;
-	     char *data, *p;
-		  
-	     bytes = 0;
-	     modules = e_module_list();
-	     for (l = modules; l; l = l->next)
-	       {
-		  m = l->data;
-		  bytes += strlen(m->name) + 1 + 1;
-	       }
-	     data = malloc(bytes);
-	     p = data;
-	     for (l = modules; l; l = l->next)
-	       {
-		  m = l->data;
-		  strcpy(p, m->name);
-		  p += strlen(m->name);
-		  *p = 0;
-		  p++;
-		  *p = e_module_enabled_get(m);
-		  p++;
-	       }
+
+             modules = e_module_list();
+	     data = _e_ipc_module_list_enc(modules, &bytes);
+	     
+	     /* send reply data */
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_MODULE_LIST_REPLY,
@@ -194,10 +184,9 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  {
 	     char *file;
 	     Evas_List *managers, *l;
+
+	     file = _e_ipc_simple_str_dec(e->data, e->size);
 	     
-	     file = malloc(e->size + 1);
-	     file[e->size] = 0;
-	     memcpy(file, e->data, e->size);
 	     E_FREE(e_config->desktop_default_background);
 	     e_config->desktop_default_background = file;
 	     
@@ -236,29 +225,13 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_FONT_AVAILABLE_LIST:
 	  {
-	     Evas_List *fonts_available, *l;
+	     /* encode font available list (str) */
+	     Evas_List *fonts_available;
 	     int bytes;
-	     char *font_name, *data, *p;
+	     char *data;
 		  
-	     bytes = 0;
-	     fonts_available = e_font_available_list();
-	     printf("ipc font av: %d\n", fonts_available);
-	     for (l = fonts_available; l; l = l->next)
-	       {
-		  font_name = evas_list_data(l);
-		  bytes += strlen(font_name) + 1;
-	       }
-
-	     data = malloc(bytes);
-	     p = data;
-	     for (l = fonts_available; l; l = l->next)
-	       {
-		  font_name = evas_list_data(l);
-		  strcpy(p, font_name);
-		  p += strlen(font_name);
-		  *p = 0;
-		  p++;
-	       }
+	     fonts_available = e_font_available_list();	       
+	     data = _e_ipc_font_available_list_enc(fonts_available, &bytes);	       
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_AVAILABLE_LIST_REPLY,
@@ -282,9 +255,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_FALLBACK_APPEND:
 	  {
 	     char * font_name;
-	     font_name = malloc(e->size + 1);
-	     font_name[e->size] = 0;
-	     memcpy(font_name, e->data, e->size);
+	     
+	     font_name = _e_ipc_simple_str_dec(e->data, e->size);
 	     e_font_fallback_append(font_name);
 	     free(font_name);
 
@@ -294,9 +266,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_FALLBACK_PREPEND:
 	  {
 	     char * font_name;
-	     font_name = malloc(e->size + 1);
-	     font_name[e->size] = 0;
-	     memcpy(font_name, e->data, e->size);
+
+	     font_name = _e_ipc_simple_str_dec(e->data, e->size);	     
 	     e_font_fallback_prepend(font_name);
 	     free(font_name);	   
 		
@@ -305,28 +276,15 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_FONT_FALLBACK_LIST:
 	  {
-	     Evas_List *fallbacks, *l;
+	  	
+	     /* encode font fallback list (str) */
+	     Evas_List *fallbacks;
 	     int bytes;
-	     E_Font_Fallback *eff;
-	     char *data, *p;
-		  
-	     bytes = 0;
+	     char *data;
+		 
 	     fallbacks = e_font_fallback_list();
-	     for (l = fallbacks; l; l = l->next)
-	       {
-		  eff = evas_list_data(l);
-		  bytes += strlen(eff->name) + 1;
-	       }
-	     data = malloc(bytes);
-	     p = data;
-	     for (l = fallbacks; l; l = l->next)
-	       {
-		  eff = evas_list_data(l);
-		  strcpy(p, eff->name);
-		  p += strlen(eff->name);
-		  *p = 0;
-		  p++;
-	       }
+
+	     data = _e_ipc_font_fallback_list_enc(fallbacks, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_FALLBACK_LIST_REPLY,
@@ -339,9 +297,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_FALLBACK_REMOVE:
 	  {
 	     char * font_name;
-	     font_name = malloc(e->size + 1);
-	     font_name[e->size] = 0;
-	     memcpy(font_name, e->data, e->size);
+
+	     font_name = _e_ipc_simple_str_dec(e->data, e->size);
 	     e_font_fallback_remove(font_name);
 	     free(font_name);	     
 
@@ -350,75 +307,30 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_FONT_DEFAULT_SET:
 	  {
-	     char * p;
-	     char * font_name;
-	     char * text_class;
-	     int font_size;
-
+	     char ** argv;
+	     int i, argc;
 	     
-	     p = e->data;
+	     argc = 3;
 	     
-	     /* Make sure our data is packed for us <str>0<str>0 */
-	     if( p[e->size - 1] != 0) {
-		break;
-	     }
-
-	     text_class = strdup(p);
-
-	     p += strlen(text_class) + 1;
-	     font_name = strdup(p);
-	
-	     p += strlen(font_name) + 1;
-	     font_size = atoi(p);
-
-	     e_font_default_set(text_class, font_name, font_size);
-
-	     free(font_name);
-	     free(text_class);
-
+	     argv = _e_ipc_multi_str_dec(e->data, e->size, argc);
+	     e_font_default_set(argv[0], argv[1], atoi(argv[2]));
+	     free(argv);	     
+	     
 	     e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_FONT_DEFAULT_GET:
 	  {
-	     int bytes;
+	  
+	     /* encode font default struct (str,str,32-bits)(E_Font_Default) */	     
 	     E_Font_Default *efd;
-	     char *data, *p, *text_class;
+	     char *data, *text_class;
+	     int bytes;
 	     
-	     text_class = malloc(e->size + 1);
-	     text_class[e->size] = 0;
-	     memcpy(text_class, e->data, e->size);
-	     
-	     efd = e_font_default_get (text_class);
-	     
+	     text_class = _e_ipc_simple_str_dec(e->data, e->size);	     
+	     efd = e_font_default_get (text_class);	     
 	     free(text_class);
-		  
-	     bytes = 0;
-	     if (efd) {
-	         bytes += strlen(efd->text_class) + 1;
-	         bytes += strlen(efd->font) + 1;
-	         bytes++; /* efd->size */
-	     }
-	     
-	     data = malloc(bytes);
-	     p = data;
-	     
-	     if (efd) {
-	         strcpy(p, efd->text_class);
-                 p += strlen(efd->text_class);
-                 *p = 0;
-	         p++;
-	     
-	         strcpy(p, efd->font);
-	         p += strlen(efd->font);
-	         *p = 0;
-	         p++;
-		  
-                 /* FIXME: should this be packed like this (int to char) ? */
-	         *p = (char) efd->size;
-	         p++;
-	     }
-
+	     data = _e_ipc_font_default_enc(efd, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_DEFAULT_GET_REPLY,
@@ -430,9 +342,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_DEFAULT_REMOVE:
 	  {	  
 	     char * text_class;
-	     text_class = malloc(e->size + 1);
-	     text_class[e->size] = 0;
-	     memcpy(text_class, e->data, e->size);
+	     
+	     text_class = _e_ipc_simple_str_dec(e->data, e->size);
 	     e_font_default_remove(text_class);
 	     free(text_class);	   
 
@@ -441,37 +352,13 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_FONT_DEFAULT_LIST:
 	  {
-	     Evas_List *defaults, *l;
+	     /* encode font default struct list (str,str,32-bits)(E_Font_Default) */
+	     Evas_List *defaults;
 	     int bytes;
-	     E_Font_Default *efd;
-	     char *data, *p;
+	     char *data;
 		  
-	     bytes = 0;
 	     defaults = e_font_default_list();
-	     for (l = defaults; l; l = l->next)
-	       {
-		  efd = l->data;
-		  bytes += strlen(efd->text_class) + 1;
-		  bytes += strlen(efd->font) + 1;
-		  bytes++; /* efd->size */
-	       }
-	     data = malloc(bytes);
-	     p = data;
-	     for (l =defaults; l; l = l->next)
-	       {
-		  efd = l->data;
-		  strcpy(p, efd->text_class);
-		  p += strlen(efd->text_class);
-		  *p = 0;
-		  p++;
-		  strcpy(p, efd->font);
-		  p += strlen(efd->font);
-		  *p = 0;
-		  p++;
-		  /* FIXME: should this be packed like this (int to char) ? */
-		  *p = (char) efd->size;
-		  p++;
-	       }
+	     data = _e_ipc_font_default_list_enc(defaults, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_DEFAULT_LIST_REPLY,
@@ -557,4 +444,115 @@ _e_ipc_path_str_get(char **paths, int *bytes)
    return data;
 }
 
+/**
+ * Decode a simple string that was passed by an IPC client
+ *
+ * The returned string must be freed
+ */
+static char *
+_e_ipc_simple_str_dec(char *data, int bytes)
+{
+    char *str;
+    
+    str = malloc(bytes + 1);
+    str[bytes] = 0;
+    memcpy(str, data, bytes);
+    
+    return str;
+}
 
+/**
+ * Decode a list of strings and return an array, you need to pass
+ * the string count that you are expecting back.
+ *
+ * Strings are encoded <str>0<str>0...
+ *
+ * free up the array that you get back
+ */
+static char **
+_e_ipc_multi_str_dec(char *data, int bytes, int str_count)
+{
+    char ** str_array;
+    int i;
+ 
+    /* Make sure our data is packed for us <str>0<str>0 */
+    if( data[bytes - 1] != 0) {
+	return NULL;
+    }
+
+    str_array = malloc(sizeof(char *)*str_count);
+
+    for(i = 0; i < str_count; i++) 
+    {
+        str_array[i] = data;
+	data += strlen(str_array[i]) + 1;
+    }
+
+    return str_array;
+}
+
+
+/* list/struct encoding functions */
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc)
+{
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Module);
+	ECORE_IPC_CNTS(name);
+	ECORE_IPC_CNT8();
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+    	int l1;
+    	ECORE_IPC_SLEN(l1, name);
+    	ECORE_IPC_PUTS(name, l1);
+    	ECORE_IPC_PUT8(enabled);
+    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc)
+{
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Available);
+	ECORE_IPC_CNTS(name);
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+    	int l1;
+    	ECORE_IPC_SLEN(l1, name);
+    	ECORE_IPC_PUTS(name, l1);
+    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc)
+{
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Fallback);
+	ECORE_IPC_CNTS(name);
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+    	int l1;
+    	ECORE_IPC_SLEN(l1, name);
+    	ECORE_IPC_PUTS(name, l1);
+    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc)
+{
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Default);
+	ECORE_IPC_CNTS(text_class);
+	ECORE_IPC_CNTS(font);
+	ECORE_IPC_CNT32();
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+    	int l1, l2;
+    	ECORE_IPC_SLEN(l1, text_class);
+    	ECORE_IPC_SLEN(l2, font);
+    	ECORE_IPC_PUTS(text_class, l1);
+    	ECORE_IPC_PUTS(font, l2);
+    	ECORE_IPC_PUT32(size);
+    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc)
+{
+   int l1, l2;
+   ECORE_IPC_ENC_STRUCT_HEAD(E_Font_Default, 
+	ECORE_IPC_SLEN(l1, text_class) +
+	ECORE_IPC_SLEN(l2, font) +
+	4);	   	   
+   ECORE_IPC_PUTS(text_class, l1);
+   ECORE_IPC_PUTS(font, l2);
+   ECORE_IPC_PUT32(size);
+   ECORE_IPC_ENC_STRUCT_FOOT();
+}
