@@ -75,6 +75,10 @@ static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void _e_border_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_border_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_border_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
 static void _e_border_event_border_zone_set_free(void *data, void *ev);
@@ -2410,6 +2414,11 @@ _e_border_eval(E_Border *bd)
 			 {
 			    evas_object_show(bd->icon_object);
 			    edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+#if 0
+			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_border_icon_cb_mouse_down, bd);
+			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_border_icon_cb_mouse_up, bd);
+			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_MOVE, _e_border_icon_cb_mouse_move, bd);
+#endif
 			 }
 		       else
 			 {
@@ -3624,6 +3633,38 @@ _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_border_desk_set(bd, desk);
 	e_border_hide(bd, 1);
      }
+}
+
+static void
+_e_border_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Border *bd;
+   Evas_Event_Mouse_Down *ev;
+
+   ev = event_info;
+   bd = data;
+
+   if (ev->button != 2)
+     return;
+   if (ev->flags != EVAS_BUTTON_NONE)
+     return;
+   if (ev->modifiers)
+     return;
+
+#if 0
+   ecore_x_dnd_type_set(win, "enlightenment/border", 1);
+   ecore_x_dnd_begin(win, bd->win, sizeof(bd->win));
+#endif
+}
+
+static void
+_e_border_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+}
+
+static void
+_e_border_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
 }
 
 static void
