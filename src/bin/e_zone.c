@@ -234,6 +234,45 @@ e_zone_bg_reconfigure(E_Zone *zone)
 void
 e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 {
+   if (y == 0)
+     {
+	/* top */
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
+	zone->flip.direction = E_DIRECTION_UP;
+     }
+   else if (x == (zone->w - 1))
+     {
+	/* right */
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
+	zone->flip.direction = E_DIRECTION_RIGHT;
+     }
+   else if (y == (zone->h - 1))
+     {
+	/* bottom */
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
+	zone->flip.direction = E_DIRECTION_DOWN;
+     }
+   else if (x == 0)
+     {
+	/* left */
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
+	zone->flip.direction = E_DIRECTION_LEFT;
+     }
+   else
+     {
+	/* in zone */
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = NULL;
+     }
 }
 
 static void
@@ -453,37 +492,35 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
    Ecore_X_Event_Mouse_In *ev;
    E_Zone *zone;
 
-   printf("in\n");
-
    ev = event;
    zone = data;
 
    if (ev->win == zone->flip.top)
      {
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
-	zone->flip.x = zone->desk_x_current;
-	zone->flip.y = zone->desk_y_current - 1;
 	zone->flip.direction = E_DIRECTION_UP;
      }
    else if (ev->win == zone->flip.right)
      {
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
-	zone->flip.x = zone->desk_x_current + 1;
-	zone->flip.y = zone->desk_y_current;
 	zone->flip.direction = E_DIRECTION_RIGHT;
      }
    else if (ev->win == zone->flip.bottom)
      {
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
-	zone->flip.x = zone->desk_x_current;
-	zone->flip.y = zone->desk_y_current + 1;
 	zone->flip.direction = E_DIRECTION_DOWN;
      }
    else if (ev->win == zone->flip.left)
      {
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
-	zone->flip.x = zone->desk_x_current - 1;
-	zone->flip.y = zone->desk_y_current;
 	zone->flip.direction = E_DIRECTION_LEFT;
      }
    return 1;
@@ -510,33 +547,62 @@ _e_zone_cb_timer(void *data)
 {
    E_Zone *zone;
    E_Desk *desk;
+   int x, y;
 
    zone = data;
-   desk = e_desk_at_xy_get(zone, zone->flip.x, zone->flip.y);
-   if (desk)
+
+   ecore_x_pointer_last_xy_get(&x, &y);
+
+   switch (zone->flip.direction)
      {
-	int x, y;
-
-	e_desk_show(desk);
-	_e_zone_update_flip(zone);
-
-	ecore_x_pointer_last_xy_get(&x, &y);
-
-	switch (zone->flip.direction)
-	  {
-	   case E_DIRECTION_UP:
-	      ecore_x_pointer_warp(zone->container->manager->win, x, zone->h - 2);
-	      break;
-	   case E_DIRECTION_RIGHT:
-	      ecore_x_pointer_warp(zone->container->manager->win, 2, y);
-	      break;
-	   case E_DIRECTION_DOWN:
-	      ecore_x_pointer_warp(zone->container->manager->win, x, 2);
-	      break;
-	   case E_DIRECTION_LEFT:
-	      ecore_x_pointer_warp(zone->container->manager->win, zone->w - 2, y);
-	      break;
-	  }
+      case E_DIRECTION_UP:
+	 if (zone->desk_y_current > 0)
+	   {
+	      desk = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current - 1);
+	      if (desk)
+		{
+		   e_desk_show(desk);
+		   ecore_x_pointer_warp(zone->container->manager->win, x, zone->h - 2);
+		   _e_zone_update_flip(zone);
+		}
+	   }
+	 break;
+      case E_DIRECTION_RIGHT:
+	 if ((zone->desk_x_current + 1) < zone->desk_x_count)
+	   {
+	      desk = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
+	      if (desk)
+		{
+		   e_desk_show(desk);
+		   ecore_x_pointer_warp(zone->container->manager->win, 2, y);
+		   _e_zone_update_flip(zone);
+		}
+	   }
+	 break;
+      case E_DIRECTION_DOWN:
+	 if ((zone->desk_y_current + 1) < zone->desk_y_count)
+	   {
+	      desk = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current + 1);
+	      if (desk)
+		{
+		   e_desk_show(desk);
+		   ecore_x_pointer_warp(zone->container->manager->win, x, 2);
+		   _e_zone_update_flip(zone);
+		}
+	   }
+	 break;
+      case E_DIRECTION_LEFT:
+	 if (zone->desk_x_current > 0)
+	   {
+	      desk = e_desk_at_xy_get(zone, zone->desk_x_current - 1, zone->desk_y_current);
+	      if (desk)
+		{
+		   e_desk_show(desk);
+		   ecore_x_pointer_warp(zone->container->manager->win, zone->w - 2, y);
+		   _e_zone_update_flip(zone);
+		}
+	   }
+	 break;
      }
 
    zone->flip.timer = NULL;
