@@ -38,6 +38,7 @@ struct _E_Zone
 	Ecore_X_Window top, right, bottom, left;
 	Ecore_Timer *timer;
 	int x, y;
+	E_Direction direction;
    } flip;
 };
 

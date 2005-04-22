@@ -450,27 +450,31 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
    if (ev->win == zone->flip.top)
      {
-	zone->flip.timer = ecore_timer_add(1, _e_zone_cb_timer, zone);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.x = zone->desk_x_current;
 	zone->flip.y = zone->desk_y_current - 1;
+	zone->flip.direction = E_DIRECTION_UP;
      }
    else if (ev->win == zone->flip.right)
      {
-	zone->flip.timer = ecore_timer_add(1, _e_zone_cb_timer, zone);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.x = zone->desk_x_current + 1;
 	zone->flip.y = zone->desk_y_current;
+	zone->flip.direction = E_DIRECTION_RIGHT;
      }
    else if (ev->win == zone->flip.bottom)
      {
-	zone->flip.timer = ecore_timer_add(1, _e_zone_cb_timer, zone);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.x = zone->desk_x_current;
 	zone->flip.y = zone->desk_y_current + 1;
+	zone->flip.direction = E_DIRECTION_DOWN;
      }
    else if (ev->win == zone->flip.left)
      {
-	zone->flip.timer = ecore_timer_add(1, _e_zone_cb_timer, zone);
+	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.x = zone->desk_x_current - 1;
 	zone->flip.y = zone->desk_y_current;
+	zone->flip.direction = E_DIRECTION_LEFT;
      }
    return 1;
 }
@@ -500,8 +504,30 @@ _e_zone_cb_timer(void *data)
    zone = data;
    desk = e_desk_at_xy_get(zone, zone->flip.x, zone->flip.y);
    if (desk)
-     e_desk_show(desk);
-   _e_zone_update_flip(zone);
+     {
+	int x, y;
+
+	e_desk_show(desk);
+	_e_zone_update_flip(zone);
+
+	ecore_x_pointer_last_xy_get(&x, &y);
+
+	switch (zone->flip.direction)
+	  {
+	   case E_DIRECTION_UP:
+	      ecore_x_pointer_warp(zone->container->manager->win, x, zone->h - 2);
+	      break;
+	   case E_DIRECTION_RIGHT:
+	      ecore_x_pointer_warp(zone->container->manager->win, 2, y);
+	      break;
+	   case E_DIRECTION_DOWN:
+	      ecore_x_pointer_warp(zone->container->manager->win, x, 2);
+	      break;
+	   case E_DIRECTION_LEFT:
+	      ecore_x_pointer_warp(zone->container->manager->win, zone->w - 2, y);
+	      break;
+	  }
+     }
 
    zone->flip.timer = NULL;
 
