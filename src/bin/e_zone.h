@@ -31,6 +31,14 @@ struct _E_Zone
    int                  desk_x_count, desk_y_count;
    int                  desk_x_current, desk_y_current;
    E_Desk             **desks;
+
+   Evas_List           *handlers;
+
+   struct {
+	Ecore_X_Window top, right, bottom, left;
+	Ecore_Timer *timer;
+	int x, y;
+   } flip;
 };
 
 struct _E_Event_Zone_Desk_Count_Set
