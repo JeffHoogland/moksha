@@ -57,7 +57,7 @@ e_font_apply(void)
      edje_fontset_append_set(buf);
    
    /* setup edje text classes */
-   for(next = e_config->font_defaults; next; next = evas_list_next(next))
+   for (next = e_config->font_defaults; next; next = next->next)
      {
 	efd = evas_list_data(next);
 	edje_text_class_set(efd->text_class, efd->font, efd->size);
@@ -81,7 +81,7 @@ e_font_available_list_free(Evas_List * available)
 {
    E_Font_Available *efa;
    
-   while(available)
+   while (available)
      {
 	efa = available->data;
 	available = evas_list_remove_list(available, available);
@@ -95,7 +95,7 @@ e_font_fallback_clear(void)
 {
    E_Font_Fallback *eff;
    
-   while(e_config->font_fallbacks)
+   while (e_config->font_fallbacks)
      {	
 	eff = e_config->font_fallbacks->data;
 	e_config->font_fallbacks = evas_list_remove_list(
@@ -135,7 +135,7 @@ e_font_fallback_remove(const char *font)
 {
    Evas_List *next;
 
-   for(next = e_config->font_fallbacks; next; next = evas_list_next(next))
+   for (next = e_config->font_fallbacks; next; next = next->next)
      {
 	E_Font_Fallback *eff;
 	
@@ -164,7 +164,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
    Evas_List *next;
 
    /* search for the text class */
-   for(next = e_config->font_defaults; next; next = evas_list_next(next))
+   for (next = e_config->font_defaults; next; next = next->next)
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
@@ -200,7 +200,7 @@ e_font_default_get(const char *text_class)
    Evas_List *next;
 
    /* search for the text class */
-   for(next = e_config->font_defaults; next; next = evas_list_next(next))
+   for (next = e_config->font_defaults; next; next = next->next)
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
@@ -223,7 +223,7 @@ e_font_default_remove(const char *text_class)
    Evas_List *next;
    
    /* search for the text class */
-   for(next = e_config->font_defaults; next; next = evas_list_next(next))
+   for (next = e_config->font_defaults; next; next = next->next)
      {
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
