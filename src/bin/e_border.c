@@ -2296,7 +2296,9 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 					   &new_x, &new_y, &new_w, &new_h);
 	evas_list_free(skiplist);
 	e_border_move(bd, new_x, new_y);
+#if 0
 	e_zone_flip_coords_handle(bd->zone, ev->root.x, ev->root.y);
+#endif
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
