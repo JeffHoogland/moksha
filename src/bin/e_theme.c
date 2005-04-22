@@ -3,6 +3,10 @@
  */
 #include "e.h"
 
+/* FIXME: need to make wrapper that can not just find the file but
+ *        detect if the edj has that named group and if not, fall back
+ */
+
 /* local subsystem functions */
 typedef struct _E_Theme_Result E_Theme_Result;
 

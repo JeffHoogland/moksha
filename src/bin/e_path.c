@@ -177,7 +177,8 @@ e_path_find(E_Path *ep, const char *file)
 	     rp = ecore_file_realpath(_e_path_buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
-		  strcpy(_e_path_buf, rp);
+		  strncpy(_e_path_buf, rp, sizeof(_e_path_buf) - 1);
+		  _e_path_buf[sizeof(_e_path_buf) - 1] = 0;
 		  free(rp);
 		  if (evas_hash_size(ep->hash) >= 512)
 		    _e_path_cache_free(ep);

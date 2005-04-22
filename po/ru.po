@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-18 19:19+0400\n"
-"PO-Revision-Date: 2005-04-19 03:14+0400\n"
+"PO-Revision-Date: 2005-04-20 10:10+0400\n"
 "Last-Translator: Denis Klykvin <nikon@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,47 +34,47 @@ msgstr "1 час"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr ""
+msgstr "100C"
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr ""
+msgstr "10C"
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr ""
+msgstr "20C"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr ""
+msgstr "30C"
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr ""
+msgstr "40C"
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr ""
+msgstr "50C"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr ""
+msgstr "60C"
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr ""
+msgstr "70C"
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr ""
+msgstr "80C"
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr ""
+msgstr "90C"
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -507,7 +507,7 @@ msgstr "Размытая"
 
 #: src/bin/e_int_menus.c:92
 msgid "Gadgets"
-msgstr "Приспособления"
+msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Gigantic"
@@ -536,7 +536,7 @@ msgstr "Огромный"
 
 #: src/modules/ibar/e_mod_main.c:149
 msgid "IBar"
-msgstr ""
+msgstr "IBar"
 
 #: src/bin/e_border.c:3532
 msgid "Icon Edit Error"

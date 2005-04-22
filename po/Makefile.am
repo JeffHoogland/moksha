@@ -11,7 +11,8 @@ pt.mo \
 fi.mo \
 ru.mo \
 bg.mo \
-de.mo
+de.mo \
+pl.mo
 
 LANGS = \
 fr \
@@ -21,7 +22,8 @@ pt \
 fi \
 ru \
 bg \
-de
+de \
+pl
 
 EXTRA_DIST = \
 enlightenment.pot \
@@ -32,7 +34,8 @@ pt.po \
 fi.po \
 ru.po \
 bg.po \
-de.po
+de.po \
+pl.po
 
 ja.mo:
 	$(MSGFMT) -f -o $@ ja.po
@@ -50,6 +53,8 @@ bg.mo:
 	$(MSGFMT) -f -o $@ bg.po
 de.mo:
 	$(MSGFMT) -f -o $@ de.po
+pl.mo:
+	$(MSGFMT) -f -o $@ pl.po
 
 install-poDATA:
 uninstall-poDATA:
