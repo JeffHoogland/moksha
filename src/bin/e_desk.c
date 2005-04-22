@@ -143,7 +143,7 @@ e_desk_at_xy_get(E_Zone *zone, int x, int y)
    if ((x >= zone->desk_x_count) || (y >= zone->desk_y_count))
      return NULL;
 
-   return (E_Desk *)zone->desks[x + (y * zone->desk_x_count)];
+   return zone->desks[x + (y * zone->desk_x_count)];
 }
 
 void
