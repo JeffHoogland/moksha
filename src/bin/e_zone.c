@@ -151,6 +151,11 @@ e_zone_resize(E_Zone *zone, int w, int h)
    evas_object_resize(zone->bg_object, w, h);
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
+
+   ecore_x_window_move_resize(zone->flip.top, 1, 0, w - 2, 1);
+   ecore_x_window_move_resize(zone->flip.right, w - 1, 1, 1, h - 2);
+   ecore_x_window_move_resize(zone->flip.bottom, 1, h - 1, w - 2, 1);
+   ecore_x_window_move_resize(zone->flip.left, 0, 1, 1, h - 2);
 }
 
 void
@@ -224,6 +229,11 @@ e_zone_bg_reconfigure(E_Zone *zone)
 			"desktop/background");
    evas_object_layer_set(o, -1);
    evas_object_show(o);
+}
+
+void
+e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
+{
 }
 
 static void
