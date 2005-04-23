@@ -8,7 +8,7 @@ AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AC_ISC_POSIX
-AM_INIT_AUTOMAKE(enlightenment, 0.16.999.004)
+AM_INIT_AUTOMAKE(enlightenment, 0.16.999.005)
 AM_CONFIG_HEADER(config.h)
 
 AC_C_BIGENDIAN
@@ -94,6 +94,8 @@ else
   AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}", "Package installed data destination")
   AC_DEFINE_UNQUOTED(LOCALE_DIR, "${datadir}/locale", "Locale directory")
 fi
+
+ALL_LINGUAS="bg de es fi fr ja pl pt ru"
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.12.1)
@@ -225,6 +227,7 @@ data/icons/images/Makefile
 data/other/Makefile
 doc/Makefile
 po/Makefile
+intl/Makefile
 enlightenment-config
 ],[
 chmod +x enlightenment-config

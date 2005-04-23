@@ -38,23 +38,23 @@ de.po \
 pl.po
 
 ja.mo:
-	$(MSGFMT) -f -o $@ ja.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/ja.po
 fr.mo:
-	$(MSGFMT) -f -o $@ fr.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/fr.po
 es.mo:
-	$(MSGFMT) -f -o $@ es.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/es.po
 pt.mo:
-	$(MSGFMT) -f -o $@ pt.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/pt.po
 fi.mo:
-	$(MSGFMT) -f -o $@ fi.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/fi.po
 ru.mo:
-	$(MSGFMT) -f -o $@ ru.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/ru.po
 bg.mo:
-	$(MSGFMT) -f -o $@ bg.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/bg.po
 de.mo:
-	$(MSGFMT) -f -o $@ de.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/de.po
 pl.mo:
-	$(MSGFMT) -f -o $@ pl.po
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/pl.po
 
 install-poDATA:
 uninstall-poDATA:

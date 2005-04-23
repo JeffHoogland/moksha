@@ -1,0 +1,1 @@
+MAINTAINERCLEANFILES = Makefile.in
