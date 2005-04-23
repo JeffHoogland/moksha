@@ -283,8 +283,19 @@ static void
 _e_zone_free(E_Zone *zone)
 {
    E_Container *con;
+   Evas_List *l;
    int x, y;
-   
+
+   /* remove handlers */
+   for (l = zone->handlers; l; l = l->next)
+     {
+	Ecore_Event_Handler *h;
+
+	h = l->next;
+	ecore_event_handler_del(h);
+     }
+   evas_list_free(zone->handlers);
+
    con = zone->container;
    if (zone->name) free(zone->name);
    con->zones = evas_list_remove(con->zones, zone);
