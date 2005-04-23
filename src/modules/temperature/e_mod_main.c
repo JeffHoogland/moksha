@@ -635,9 +635,8 @@ _temperature_face_new(E_Container *con)
    o = edje_object_add(con->bg_evas);
    ef->temp_object = o;
 
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/temperature"),
-			"modules/temperature/main");
+   e_theme_edje_object_set(o, "base/theme/modules/temperature",
+			   "modules/temperature/main");
    evas_object_show(o);
 
    o = evas_object_rectangle_add(con->bg_evas);

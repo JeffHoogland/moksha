@@ -427,17 +427,15 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    evas_event_freeze(ibb->evas);
    o = edje_object_add(ibb->evas);
    ibb->bar_object = o;
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/ibar"),
-			"modules/ibar/main");
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/main");
    evas_object_show(o);
 
    o = edje_object_add(ibb->evas);
    ibb->overlay_object = o;
    evas_object_layer_set(o, 1);
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/ibar"),
-			"modules/ibar/follower");
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/follower");
    evas_object_show(o);
 
    o = evas_object_rectangle_add(ibb->evas);
@@ -610,9 +608,8 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    ic->bg_object = o;
    evas_object_intercept_move_callback_add(o, _ibar_icon_cb_intercept_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibar_icon_cb_intercept_resize, ic);
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/ibar"),
-			"modules/ibar/icon");
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/icon");
    evas_object_show(o);
 
    o = edje_object_add(ibb->evas);
@@ -628,9 +625,8 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    ic->overlay_object = o;
    evas_object_intercept_move_callback_add(o, _ibar_icon_cb_intercept_move, ic);
    evas_object_intercept_resize_callback_add(o, _ibar_icon_cb_intercept_resize, ic);
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/ibar"),
-			"modules/ibar/icon_overlay");
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/icon_overlay");
    evas_object_show(o);
 
    o = edje_object_add(ibb->evas);

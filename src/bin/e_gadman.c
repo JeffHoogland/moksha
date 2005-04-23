@@ -599,9 +599,8 @@ _e_gadman_client_edit_begin(E_Gadman_Client *gmc)
    evas_object_layer_set(gmc->control_object, 100);
    evas_object_move(gmc->control_object, gmc->x, gmc->y);
    evas_object_resize(gmc->control_object, gmc->w, gmc->h);
-   edje_object_file_set(gmc->control_object,
-			e_theme_file_get("base/theme/gadman"),
-			"gadman/control");
+   e_theme_edje_object_set(gmc->control_object, "base/theme/gadman",
+			   "gadman/control");
    edje_object_signal_callback_add(gmc->control_object, "move_start", "",
 				   _e_gadman_cb_signal_move_start, gmc);
    edje_object_signal_callback_add(gmc->control_object, "move_stop", "",

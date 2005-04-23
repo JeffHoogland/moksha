@@ -810,6 +810,11 @@ e_border_shade(E_Border *bd, E_Direction dir)
 		  bd->changes.pos = 1;
 	       }
 
+	     if ((bd->shaped) || (bd->client.shaped))
+	       {
+		  bd->need_shape_merge = 1;
+		  bd->need_shape_export = 1;
+	       }
 	     bd->changes.size = 1;
 	     bd->shaded = 1;
 	     bd->changes.shaded = 1;
@@ -891,6 +896,11 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 		  bd->w = bd->client_inset.l + bd->client.w + bd->client_inset.r;
 		  bd->x = bd->x - bd->client.w;
 		  bd->changes.pos = 1;
+	       }
+	     if ((bd->shaped) || (bd->client.shaped))
+	       {
+		  bd->need_shape_merge = 1;
+		  bd->need_shape_export = 1;
 	       }
 	     bd->changes.size = 1;
 	     bd->shaded = 0;
@@ -2350,8 +2360,6 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 static void
 _e_border_eval(E_Border *bd)
 {
-   /* FIXME: get min/max/start size etc. gravity etc. */
-
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.title)
      {
@@ -2618,7 +2626,7 @@ _e_border_eval(E_Border *bd)
 	Evas_Coord cx, cy, cw, ch;
 	int l, r, t, b;
 	int ok;
-
+	
 	if (!bd->client.border.name)
 	  {
 	     bd->client.border.name = strdup("default");
@@ -2636,10 +2644,9 @@ _e_border_eval(E_Border *bd)
 	  }
         o = edje_object_add(bd->bg_evas);
 	bd->bg_object = o;
-	path = e_theme_file_get("base/theme/borders");
 	snprintf(buf, sizeof(buf), "widgets/border/%s/border",
 		 bd->client.border.name);
-        ok = edje_object_file_set(o, path, buf);
+	ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
 	if (ok)
 	  {
 	     const char *shape_option;
@@ -2674,7 +2681,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	     
 	     edje_object_part_text_set(o, "title_text",
-//				       "Japanese (hiragana): いろはにほへとちりぬるを");
+//				  "Japanese (hiragana): いろはにほへとちりぬるを");
 				       bd->client.icccm.title);
 //	     printf("SET TITLE2 %s\n", bd->client.icccm.title);
 	     evas_object_resize(o, 1000, 1000);
@@ -2715,7 +2722,7 @@ _e_border_eval(E_Border *bd)
 	edje_object_signal_callback_add(o, "resize_r_start", "*",
 					_e_border_cb_signal_resize_r_start, bd);
 	edje_object_signal_callback_add(o, "resize_br_start", "*",
-					_e_border_cb_signal_resize_br_start, bd);
+				   _e_border_cb_signal_resize_br_start, bd);
 	edje_object_signal_callback_add(o, "resize_b_start", "*",
 					_e_border_cb_signal_resize_b_start, bd);
 	edje_object_signal_callback_add(o, "resize_bl_start", "*",
@@ -2732,7 +2739,7 @@ _e_border_eval(E_Border *bd)
 	evas_object_resize(o, bd->w, bd->h);
 	evas_object_show(o);
 	bd->client.border.changed = 0;
-
+	
 	if (bd->icon_object)
 	  {
 	     if (bd->bg_object)
@@ -2746,7 +2753,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	  }
      }
-
+   
    if (bd->new_client)
      {
 	E_Event_Border_Add *ev;
@@ -3053,7 +3060,8 @@ _e_border_eval(E_Border *bd)
      {
 	if ((bd->shaped) || (bd->client.shaped))
 	  {
-	     Ecore_X_Window twin;
+	     Ecore_X_Window twin, twin2;
+	     int x, y;
 	     
 	     twin = ecore_x_window_override_new(bd->win, 0, 0, bd->w, bd->h);
 	     if (bd->shaped)
@@ -3071,18 +3079,41 @@ _e_border_eval(E_Border *bd)
 		  rects[1].x      = 0;
 		  rects[1].y      = bd->client_inset.t;
 		  rects[1].width  = bd->client_inset.l;
-		  rects[1].height = bd->client.h;
+		  rects[1].height = bd->h - bd->client_inset.t - bd->client_inset.b;
 		  rects[2].x      = bd->w - bd->client_inset.r;
 		  rects[2].y      = bd->client_inset.t;
 		  rects[2].width  = bd->client_inset.r;
-		  rects[2].height = bd->client.h;
+		  rects[2].height = bd->h - bd->client_inset.t - bd->client_inset.b;
 		  rects[3].x      = 0;
 		  rects[3].y      = bd->h - bd->client_inset.b;
 		  rects[3].width  = bd->w;
 		  rects[3].height = bd->client_inset.b;
 		  ecore_x_window_shape_rectangles_set(twin, rects, 4);
 	       }
-	     ecore_x_window_shape_window_add_xy(twin, bd->client.win, bd->client_inset.l, bd->client_inset.t);
+	     /* FIXME: need to clip client shape to client container
+	      * with offset for shading, if shading/shaded
+	      */
+	     twin2 = ecore_x_window_override_new(bd->win, 0, 0, 
+						 bd->w - bd->client_inset.l - bd->client_inset.r,
+						 bd->h - bd->client_inset.t - bd->client_inset.b);
+	     x = 0;
+	     y = 0;
+	     if ((bd->shading) || (bd->shaded))
+	       {
+		  if (bd->shade.dir ==  E_DIRECTION_UP)
+		    y = bd->h - bd->client_inset.t - bd->client_inset.b - bd->client.h;
+		  else if (bd->shade.dir == E_DIRECTION_LEFT)
+		    x = bd->w - bd->client_inset.l - bd->client_inset.r - bd->client.w;
+	       }
+	     ecore_x_window_shape_window_set_xy(twin2, bd->client.win,
+						x, y);
+	     ecore_x_window_shape_rectangle_clip(twin2, 0, 0, 
+						 bd->w - bd->client_inset.l - bd->client_inset.r,
+						 bd->h - bd->client_inset.t - bd->client_inset.b);
+	     ecore_x_window_shape_window_add_xy(twin, twin2,
+						bd->client_inset.l, 
+						bd->client_inset.t);
+	     ecore_x_window_del(twin2);
 	     ecore_x_window_shape_window_set(bd->win, twin);
 	     ecore_x_window_del(twin);
 	  }
@@ -3369,7 +3400,11 @@ _e_border_shade_animator(void *data)
 	bd->changes.pos = 1;
      }
 
-
+   if ((bd->shaped) || (bd->client.shaped))
+     {
+	bd->need_shape_merge = 1;
+	bd->need_shape_export = 1;
+     }
    bd->changes.size = 1;
    bd->changed = 1;
 
@@ -3432,12 +3467,18 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Close"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/close");
+   e_menu_item_icon_edje_set(mi, 
+			     e_theme_edje_file_get("base/theme/borders",
+						   "widgets/border/default/close"), 
+			     "widgets/border/default/close");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Iconify"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
-   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/minimize");
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+					      "widgets/border/default/minimize"),
+			     "widgets/border/default/minimize");
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -3447,21 +3488,30 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
-   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/shade");
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "widgets/border/default/shade"),
+			     "widgets/border/default/shade");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Maximized"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
-   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/maximize");
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+					      "widgets/border/default/maximize"),
+			     "widgets/border/default/maximize");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Sticky"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
-   e_menu_item_icon_edje_set(mi, e_theme_file_get("base/theme/borders"), "widgets/border/default/stick");
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "widgets/border/default/stick"),
+			     "widgets/border/default/stick");
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -3469,7 +3519,10 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Send To"));
    e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_sendto_pre_cb, bd);
-   e_menu_item_icon_edje_set(mi, e_path_find(path_themes, "default.edj"), "widgets/border/default/sendto");
+   e_menu_item_icon_edje_set(mi,
+			     e_theme_edje_file_get("base/theme/borders",
+						   "widgets/border/default/sendto"),
+			     "widgets/border/default/sendto");
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -3869,8 +3922,8 @@ _e_border_resize_begin(E_Border *bd)
    ecore_evas_show(resize_ee);
 
    resize_obj = edje_object_add(ecore_evas_get(resize_ee));
-   edje_object_file_set(resize_obj, e_theme_file_get("base/theme/borders"),
-			"widgets/border/default/resize");
+   e_theme_edje_object_set(resize_obj, "base/theme/borders",
+			   "widgets/border/default/resize");
    snprintf(buf, sizeof(buf), "9999x9999");
    edje_object_part_text_set(resize_obj, "text", buf);
 
@@ -3940,8 +3993,8 @@ _e_border_move_begin(E_Border *bd)
    ecore_evas_layer_set(move_ee, 255);
 
    move_obj = edje_object_add(ecore_evas_get(move_ee));
-   edje_object_file_set(move_obj, e_theme_file_get("base/theme/borders"),
-			"widgets/border/default/move");
+   e_theme_edje_object_set(move_obj, "base/theme/borders",
+			   "widgets/border/default/move");
    snprintf(buf, sizeof(buf), "9999 9999");
    edje_object_part_text_set(move_obj, "text", buf);
 

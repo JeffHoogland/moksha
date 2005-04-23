@@ -3,42 +3,37 @@
  */
 #include "e.h"
 
-/* FIXME: need to make wrapper that can not just find the file but
- *        detect if the edj has that named group and if not, fall back
- */
-
 /* local subsystem functions */
 typedef struct _E_Theme_Result E_Theme_Result;
 
 struct _E_Theme_Result
 {
-   unsigned char generated : 1;
    char *file;
    char *cache;
 };
 
-static const char *_e_theme_file_get_internal(char *category, int recursion);
+static Evas_Bool _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* local subsystem globals */
 static Evas_Hash *mappings = NULL;
+static Evas_Hash *group_cache = NULL;
 
 /* externally accessible functions */
 
 int
 e_theme_init(void)
 {
-   /* this is a fallback that is ALWAYS there */
+   /* this is a fallback that is ALWAYS there - if all fails things will */
+   /* always fall back to the default theme. the rest after this are config */
+   /* values users can set */
    e_theme_file_set("base", "default.edj");
    /* now add more */
-   /* FIXME: load these from a config */
+   /* FIXME: load these from a config and save them to a config x*/
    e_theme_file_set("base/theme", "default.edj");
    e_theme_file_set("base/theme/borders", "default.edj");
    e_theme_file_set("base/theme/menus", "default.edj");
-   e_theme_file_set("base/theme/background", "default.edj");
    e_theme_file_set("base/theme/error", "default.edj");
    e_theme_file_set("base/theme/gadman", "default.edj");
-   e_theme_file_set("base/theme/icons", "default.edj");
-   e_theme_file_set("base/theme/cursors", "default.edj");
    e_theme_file_set("base/theme/modules", "default.edj");
    e_theme_file_set("base/theme/modules/pager", "default.edj");
    e_theme_file_set("base/theme/modules/ibar", "default.edj");
@@ -46,33 +41,181 @@ e_theme_init(void)
    e_theme_file_set("base/theme/modules/battery", "default.edj");
    e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
    e_theme_file_set("base/theme/modules/temperature", "default.edj");
-   /* FIXME: need to not just load, but save TO the config too */
    return 1;
 }
 
 int
 e_theme_shutdown(void)
 {
-   /* FIXME; clear out mappings hash */
+   if (mappings)
+     {
+	evas_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
+	evas_hash_free(mappings);
+	mappings = NULL;
+     }
+   if (group_cache)
+     {
+	evas_hash_free(group_cache);
+	group_cache = NULL;
+     }
    return 1;
 }
 
-const char *
-e_theme_file_get(char *category)
+int
+e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
 {
-   return _e_theme_file_get_internal(category, 0);
+   E_Theme_Result *res;
+   char buf[256];
+   char *p;
+
+   /* find category -> edje mapping */
+   res = evas_hash_find(mappings, category);
+   if (res)
+     {
+	char *str;
+	
+	/* if found check cached path */
+	str = res->cache;
+	if (!str)
+	  {
+	     /* no cached path */
+	     str = res->file;
+	     /* if its not an absolute path find it */
+	     if (str[0] != '/')
+	       str = e_path_find(path_themes, str);
+	     /* save cached value */
+	     if (str)
+	       res->cache = strdup(str);
+	  }
+	if (str)
+	  {
+	     void *tres;
+	     int ok;
+	     
+	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
+	     tres = evas_hash_find(group_cache, buf);
+	     if (!tres)
+	       {
+		  ok = edje_object_file_set(o, str, group);
+                  /* save in the group cache hash */
+		  if (ok)
+		    group_cache = evas_hash_add(group_cache, buf, res);
+		  else
+		    group_cache = evas_hash_add(group_cache, buf, (void *)1);
+	       }
+	     else if (tres == (void *)1)
+	       ok = 0;
+	     else
+	       ok = 1;
+	     if (ok)
+	       {
+		  if (tres)
+		    edje_object_file_set(o, str, group);
+		  return 1;
+	       }
+	  }
+     }
+   /* no mapping or set failed - fall back */
+   strncpy(buf, category, sizeof(buf) - 1);
+   buf[sizeof(buf) - 1] = 0;
+   /* shorten string up to and not including last / char */
+   p = strrchr(buf, '/');
+   if (p) *p = 0;
+   /* no / anymore - we are already as far back as we can go */
+   else return 0;
+   /* try this category */
+   return e_theme_edje_object_set(o, buf, group);
+}
+
+const char *
+e_theme_edje_file_get(char *category, char *group)
+{
+   E_Theme_Result *res;
+   char buf[4096];
+   char *p;
+
+   /* find category -> edje mapping */
+   res = evas_hash_find(mappings, category);
+   if (res)
+     {
+	char *str;
+	
+	/* if found check cached path */
+	str = res->cache;
+	if (!str)
+	  {
+	     /* no cached path */
+	     str = res->file;
+	     /* if its not an absolute path find it */
+	     if (str[0] != '/')
+	       str = e_path_find(path_themes, str);
+	     /* save cached value */
+	     if (str)
+	       res->cache = strdup(str);
+	  }
+	if (str)
+	  {
+	     void *tres;
+	     Evas_List *coll, *l;
+	     int ok;
+	     
+	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
+	     tres = evas_hash_find(group_cache, buf);
+	     if (!tres)
+	       {
+		  /* if the group exists - return */
+		  coll = edje_file_collection_list(str);
+		  ok = 0;
+		  for (l = coll; l; l = l->next)
+		    {
+		       if (!strcmp(coll->data, group))
+			 {
+			    ok = 1;
+			    break;
+			 }
+		    }
+		  if (coll) edje_file_collection_list_free(coll);
+		  /* save in the group cache hash */
+		  if (ok)
+		    group_cache = evas_hash_add(group_cache, buf, res);
+		  else
+		    group_cache = evas_hash_add(group_cache, buf, (void *)1);
+	       }
+	     else if (tres == (void *)1) /* special pointer "1" == not there */
+	       ok = 0;
+	     else
+	       ok = 1;
+	     if (ok) return str;
+	  }
+     }
+   /* no mapping or set failed - fall back */
+   strncpy(buf, category, sizeof(buf) - 1);
+   buf[sizeof(buf) - 1] = 0;
+   /* shorten string up to and not including last / char */
+   p = strrchr(buf, '/');
+   if (p) *p = 0;
+   /* no / anymore - we are already as far back as we can go */
+   else return "";
+   /* try this category */
+   return e_theme_edje_file_get(buf, group);
 }
 
 void
 e_theme_file_set(char *category, char *file)
 {
    E_Theme_Result *res;
-   
+
+   if (group_cache)
+     {
+	evas_hash_free(group_cache);
+	group_cache = NULL;
+     }
    res = evas_hash_find(mappings, category);
    if (res)
      {
 	mappings = evas_hash_del(mappings, category, res);
-	free(res->file);
+	E_FREE(res->file);
+	E_FREE(res->cache);
 	free(res);
      }
    res = calloc(1, sizeof(E_Theme_Result));
@@ -82,38 +225,14 @@ e_theme_file_set(char *category, char *file)
 
 /* local subsystem functions */
 
-static const char *
-_e_theme_file_get_internal(char *category, int recursion)
+static Evas_Bool
+_e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata)
 {
-   const char *str;
    E_Theme_Result *res;
    
-   if (strlen(category) == 0) return NULL;
-   res = evas_hash_find(mappings, category);
-   if (!res)
-     {
-	char buf[256];
-	char *p;
-	
-	strncpy(buf, category, sizeof(buf) - 1);
-	buf[sizeof(buf) - 1] = 0;
-	p = strrchr(buf, '/');
-	if (p)
-	  {
-	     *p = 0;
-	     return
-	       _e_theme_file_get_internal(buf, recursion + 1);
-	  }
-	return NULL;
-     }
-   str = res->cache;
-   if (!str)
-     {
-	str = res->file;
-	if (str[0] != '/')
-	  str = e_path_find(path_themes, str);
-	if (str)
-	  res->cache = strdup(str);
-     }
-   return str;
+   res = data;
+   E_FREE(res->file);
+   E_FREE(res->cache);
+   free(res);
+   return 1;
 }

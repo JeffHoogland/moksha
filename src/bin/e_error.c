@@ -78,10 +78,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    e_pointer_ecore_evas_set(ee);
 
    o = edje_object_add(e);
-   if (!edje_object_file_set(o,
-			     e_theme_file_get("base/theme/error"),
-			     "error/main"))
-
+   if (!e_theme_edje_object_set(o, "base/theme/error", "error/main"))
      {
 	Evas_Coord tw, th;
 	char *newstr;
@@ -258,7 +255,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	snprintf(format, sizeof(format), 
 		 "source='%s' font='%s' size=%d wrap=word",
-		 e_theme_file_get("base/theme/error"),
+		 e_theme_edje_file_get("base/theme/error", "error/main"),
 		 "fonts/Edje Vera", 10);
 	text = evas_object_textblock_add(e);
 	evas_object_color_set(text, 0, 0, 0, 255);

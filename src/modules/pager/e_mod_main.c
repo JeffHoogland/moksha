@@ -329,9 +329,8 @@ _pager_face_new(E_Zone *zone)
    /* the bg */
    o = edje_object_add(face->evas);
    face->pager_object = o;
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/pager"),
-			 "modules/pager/main");
+   e_theme_edje_object_set(o, "base/theme/modules/pager",
+			   "modules/pager/main");
    evas_object_show(o);
    
    o = e_table_add(face->evas);
@@ -510,9 +509,8 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
 
    o = edje_object_add(face->evas);
    pd->desk_object = o;
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/pager"),
-			"modules/pager/desk");
+   e_theme_edje_object_set(o, "base/theme/modules/pager",
+			   "modules/pager/desk");
    e_table_pack(face->table_object, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);   
    evas_object_show(o);
@@ -589,9 +587,8 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 
    o = edje_object_add(pd->face->evas);
    pw->window_object = o;
-   edje_object_file_set(o,
-                        e_theme_file_get("base/theme/modules/pager"),
-			"modules/pager/window");
+   e_theme_edje_object_set(o, "base/theme/modules/pager",
+			   "modules/pager/window");
    if (visible) evas_object_show(o);
    e_layout_pack(pd->layout_object, pw->window_object);
    e_layout_child_raise(pw->window_object);

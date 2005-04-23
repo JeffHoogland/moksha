@@ -492,9 +492,8 @@ _battery_face_new(E_Container *con)
    o = edje_object_add(con->bg_evas);
    ef->bat_object = o;
 
-   edje_object_file_set(o,
-			e_theme_file_get("base/theme/modules/battery"),
-			"modules/battery/main");
+   e_theme_edje_object_set(o, "base/theme/modules/battery",
+			   "modules/battery/main");
    evas_object_show(o);
 
    o = evas_object_rectangle_add(con->bg_evas);

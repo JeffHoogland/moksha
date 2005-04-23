@@ -974,7 +974,7 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, in
 				   ((bsz + 1) * 2) / q,
 				   ((bsz + 1) * 2) / q);
 	     ptr += sp->w;
-	     pptr += sp->h;
+	     pptr += sp->w;
 	  }
      }
    else if (y1 == y2) /* scan horiz */
