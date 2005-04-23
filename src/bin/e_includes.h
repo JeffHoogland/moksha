@@ -36,3 +36,4 @@
 #include "e_font.h"
 #include "e_intl.h"
 #include "e_theme.h"
+#include "e_dnd.h"

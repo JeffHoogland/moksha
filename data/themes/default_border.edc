@@ -1133,6 +1133,12 @@ group {
 	 action:  SIGNAL_EMIT "action" "menu";
       }
       program {
+	 name:    "menu_action_icon4";
+	 signal:  "mouse,down,1";
+	 source:  "icon";
+	 action:  SIGNAL_EMIT "drag" "start";
+      }
+      program {
 	  name:    "menu_action_title3";
 	  signal:  "mouse,clicked,3";
 	  source:  "title";

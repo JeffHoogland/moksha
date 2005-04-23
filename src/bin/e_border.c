@@ -49,6 +49,7 @@ static void _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, co
 static void _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source);
 static int  _e_border_cb_mouse_in(void *data, int type, void *event);
 static int  _e_border_cb_mouse_out(void *data, int type, void *event);
 static int  _e_border_cb_mouse_down(void *data, int type, void *event);
@@ -74,10 +75,6 @@ static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-
-static void _e_border_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_border_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_border_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
@@ -1950,6 +1947,28 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 
 }
 
+static void
+_e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   E_Border *bd;
+
+   bd = data;
+
+   printf("drag_start\n");
+   if ((bd->client.icccm.name) && (bd->client.icccm.class))
+     {
+	E_App *a;
+
+	a = e_app_window_name_class_find(bd->client.icccm.name,
+					 bd->client.icccm.class);
+	if (a)
+	  {
+	     e_drag_start(bd->zone, "enlightenment/border", bd, 
+			  a->path, "icon");
+	  }
+     }
+}
+
 static int
 _e_border_cb_mouse_in(void *data, int type, void *event)
 {
@@ -2422,11 +2441,6 @@ _e_border_eval(E_Border *bd)
 			 {
 			    evas_object_show(bd->icon_object);
 			    edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
-#if 0
-			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_border_icon_cb_mouse_down, bd);
-			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_border_icon_cb_mouse_up, bd);
-			    evas_object_callback_add(bd->icon_object, EVAS_CALLBACK_MOUSE_MOVE, _e_border_icon_cb_mouse_move, bd);
-#endif
 			 }
 		       else
 			 {
@@ -2733,6 +2747,8 @@ _e_border_eval(E_Border *bd)
 					_e_border_cb_signal_resize_stop, bd);
 	edje_object_signal_callback_add(o, "action", "*",
 					_e_border_cb_signal_action, bd);
+	edje_object_signal_callback_add(o, "drag", "*",
+				        _e_border_cb_signal_drag, bd);
 	if (bd->focused)
 	  edje_object_signal_emit(bd->bg_object, "active", "");
 	evas_object_move(o, 0, 0);
@@ -3686,38 +3702,6 @@ _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	e_border_desk_set(bd, desk);
 	e_border_hide(bd, 1);
      }
-}
-
-static void
-_e_border_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   E_Border *bd;
-   Evas_Event_Mouse_Down *ev;
-
-   ev = event_info;
-   bd = data;
-
-   if (ev->button != 2)
-     return;
-   if (ev->flags != EVAS_BUTTON_NONE)
-     return;
-   if (ev->modifiers)
-     return;
-
-#if 0
-   ecore_x_dnd_type_set(win, "enlightenment/border", 1);
-   ecore_x_dnd_begin(win, bd->win, sizeof(bd->win));
-#endif
-}
-
-static void
-_e_border_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-}
-
-static void
-_e_border_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
 }
 
 static void

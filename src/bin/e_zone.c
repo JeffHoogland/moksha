@@ -291,10 +291,11 @@ _e_zone_free(E_Zone *zone)
      {
 	Ecore_Event_Handler *h;
 
-	h = l->next;
+	h = l->data;
 	ecore_event_handler_del(h);
      }
    evas_list_free(zone->handlers);
+   zone->handlers = NULL;
 
    con = zone->container;
    if (zone->name) free(zone->name);

@@ -62,6 +62,8 @@ static void        _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *o
 static void        _pager_desk_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void        _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
+static void        _pager_dnd_cb(void *data, const char *type, void *drop);
+
 static int         _pager_count;
 
 static E_Config_DD *_conf_edd;
@@ -338,6 +340,9 @@ _pager_face_new(E_Zone *zone)
    e_table_homogenous_set(o, 1);   
    edje_object_part_swallow(face->pager_object, "items", face->table_object);
    evas_object_show(o);
+
+   face->dnd_handler = e_dnd_handler_add(face, _pager_dnd_cb, "enlightenment/border",
+					 face->fx, face->fy, face->fw, face->fh);
    
    face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
@@ -549,6 +554,7 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
 	if (pw)
 	  pd->wins = evas_list_append(pd->wins, pw);
      }
+
    return pd;
 }
 
@@ -709,10 +715,10 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
 
    face = data;
    e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
-   face->fx = x;
-   face->fy = y;
-   face->fw = w;
-   face->fh = h;
+   face->dnd_handler->x = face->fx = x;
+   face->dnd_handler->y = face->fy = y;
+   face->dnd_handler->w = face->fw = w;
+   face->dnd_handler->h = face->fh = h;
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
@@ -1354,4 +1360,10 @@ _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_C
    desk = data;
    evas_object_resize(o, w, h);
    evas_object_resize(desk->event_object, w, h);
+}
+
+static void
+_pager_dnd_cb(void *data, const char *type, void *drop)
+{
+   printf("We have a drop!\n");
 }

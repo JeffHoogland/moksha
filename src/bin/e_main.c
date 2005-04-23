@@ -271,7 +271,7 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_font_shutdown);
    e_font_apply();
    e_canvas_recache();
-   
+
    /* setup init status window/screen */
    if (!e_init_init())
      {
@@ -326,6 +326,14 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_module_shutdown);
+
+   /* setup dnd */
+   if (!e_dnd_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its dnd system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_dnd_shutdown);
    
    if (!nowelcome)
      {
