@@ -169,7 +169,7 @@ e_theme_edje_file_get(char *category, char *group)
 		  ok = 0;
 		  for (l = coll; l; l = l->next)
 		    {
-		       if (!strcmp(coll->data, group))
+		       if (!strcmp(l->data, group))
 			 {
 			    ok = 1;
 			    break;
