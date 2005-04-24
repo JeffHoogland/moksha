@@ -75,7 +75,7 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_desk_show;
    Ecore_Event_Handler *ev_handler_container_resize;
 
-   E_DND_Handler *dnd_handler;
+   E_Drop_Handler *drop_handler;
 };
 
 struct _Pager_Desk

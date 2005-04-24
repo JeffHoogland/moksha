@@ -4,7 +4,7 @@
 #include "e.h"
 
 static Evas_List *event_handlers = NULL;
-static Evas_List *dnd_handlers = NULL;
+static Evas_List *drop_handlers = NULL;
 
 static Ecore_X_Window drag_win;
 static Ecore_Evas  *drag_ee = NULL;
@@ -61,15 +61,15 @@ e_dnd_shutdown(void)
    evas_list_free(event_handlers);
    event_handlers = NULL;
 
-   for (l = dnd_handlers; l; l = l->next)
+   for (l = drop_handlers; l; l = l->next)
      {
-	E_DND_Handler *h;
+	E_Drop_Handler *h;
 
 	h = l->data;
-	e_dnd_handler_del(h);
+	e_drop_handler_del(h);
      }
-   evas_list_free(dnd_handlers);
-   dnd_handlers = NULL;
+   evas_list_free(drop_handlers);
+   drop_handlers = NULL;
 
    return 1;
 }
@@ -146,9 +146,9 @@ e_drag_end(int x, int y)
    ecore_x_keyboard_ungrab();
    ecore_x_window_del(drag_win);
 
-   for (l = dnd_handlers; l; l = l->next)
+   for (l = drop_handlers; l; l = l->next)
      {
-	E_DND_Handler *h;
+	E_Drop_Handler *h;
 
 	h = l->data;
 	
@@ -163,14 +163,16 @@ e_drag_end(int x, int y)
      }
 
    free(drag_type);
+   drag_type = NULL;
+   drag_data = NULL;
 }
 
-E_DND_Handler *
-e_dnd_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h)
+E_Drop_Handler *
+e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h)
 {
-   E_DND_Handler *handler;
+   E_Drop_Handler *handler;
 
-   handler = E_NEW(E_DND_Handler, 1);
+   handler = E_NEW(E_Drop_Handler, 1);
    if (!handler) return NULL;
 
    handler->data = data;
@@ -181,13 +183,13 @@ e_dnd_handler_add(void *data, void (*func)(void *data, const char *type, void *d
    handler->w = w;
    handler->h = h;
 
-   dnd_handlers = evas_list_append(dnd_handlers, handler);
+   drop_handlers = evas_list_append(drop_handlers, handler);
 
    return handler;
 }
 
 void
-e_dnd_handler_del(E_DND_Handler *handler)
+e_drop_handler_del(E_Drop_Handler *handler)
 {
    free(handler->type);
    free(handler);

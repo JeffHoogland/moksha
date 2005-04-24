@@ -17,12 +17,13 @@ static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
 static void _e_zone_update_flip(E_Zone *zone);
-static int _e_zone_flip_up(E_Zone *zone, int x, int y);
-static int _e_zone_flip_right(E_Zone *zone, int x, int y);
-static int _e_zone_flip_down(E_Zone *zone, int x, int y);
-static int _e_zone_flip_left(E_Zone *zone, int x, int y);
 
 int E_EVENT_ZONE_DESK_COUNT_SET = 0;
+
+#define E_ZONE_FLIP_UP(zone) ((zone)->desk_y_current > 0)
+#define E_ZONE_FLIP_RIGHT(zone) (((zone)->desk_x_current + 1) < (zone)->desk_x_count)
+#define E_ZONE_FLIP_DOWN(zone) (((zone)->desk_y_current + 1) < (zone)->desk_y_count)
+#define E_ZONE_FLIP_LEFT(zone) ((zone)->desk_x_current > 0)
 
 int
 e_zone_init(void)
@@ -238,7 +239,7 @@ e_zone_bg_reconfigure(E_Zone *zone)
 void
 e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 {
-   if ((y == 0) && _e_zone_flip_up(zone, x, y))
+   if ((y == 0) && E_ZONE_FLIP_UP(zone))
      {
 	/* top */
 	if (zone->flip.timer)
@@ -246,7 +247,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_UP;
      }
-   else if ((x == (zone->w - 1)) && _e_zone_flip_right(zone, x, y))
+   else if ((x == (zone->w - 1)) && E_ZONE_FLIP_RIGHT(zone))
      {
 	/* right */
 	if (zone->flip.timer)
@@ -254,7 +255,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_RIGHT;
      }
-   else if ((y == (zone->h - 1)) && _e_zone_flip_down(zone, x, y))
+   else if ((y == (zone->h - 1)) && E_ZONE_FLIP_DOWN(zone))
      {
 	/* bottom */
 	if (zone->flip.timer)
@@ -262,7 +263,7 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 	zone->flip.timer = ecore_timer_add(0.5, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_DOWN;
      }
-   else if ((x == 0) && _e_zone_flip_left(zone, x, y))
+   else if ((x == 0) && E_ZONE_FLIP_LEFT(zone))
      {
 	/* left */
 	if (zone->flip.timer)
@@ -572,7 +573,7 @@ _e_zone_cb_timer(void *data)
    switch (zone->flip.direction)
      {
       case E_DIRECTION_UP:
-	 if (_e_zone_flip_up(zone, zone->desk_x_current, zone->desk_y_current))
+	 if (E_ZONE_FLIP_UP(zone))
 	   {
 	      desk = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current - 1);
 	      if (desk)
@@ -584,7 +585,7 @@ _e_zone_cb_timer(void *data)
 	   }
 	 break;
       case E_DIRECTION_RIGHT:
-	 if (_e_zone_flip_right(zone, zone->desk_x_current, zone->desk_y_current))
+	 if (E_ZONE_FLIP_RIGHT(zone))
 	   {
 	      desk = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
 	      if (desk)
@@ -596,7 +597,7 @@ _e_zone_cb_timer(void *data)
 	   }
 	 break;
       case E_DIRECTION_DOWN:
-	 if (_e_zone_flip_down(zone, zone->desk_x_current, zone->desk_y_current))
+	 if (E_ZONE_FLIP_DOWN(zone))
 	   {
 	      desk = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current + 1);
 	      if (desk)
@@ -608,7 +609,7 @@ _e_zone_cb_timer(void *data)
 	   }
 	 break;
       case E_DIRECTION_LEFT:
-	 if (_e_zone_flip_left(zone, zone->desk_x_current, zone->desk_y_current))
+	 if (E_ZONE_FLIP_LEFT(zone))
 	   {
 	      desk = e_desk_at_xy_get(zone, zone->desk_x_current - 1, zone->desk_y_current);
 	      if (desk)
@@ -630,55 +631,23 @@ static void
 _e_zone_update_flip(E_Zone *zone)
 {
 
-   if (_e_zone_flip_up(zone, zone->desk_x_current, zone->desk_y_current))
+   if (E_ZONE_FLIP_UP(zone))
      ecore_x_window_show(zone->flip.top);
    else
      ecore_x_window_hide(zone->flip.top);
 
-   if (_e_zone_flip_right(zone, zone->desk_x_current, zone->desk_y_current))
+   if (E_ZONE_FLIP_RIGHT(zone))
      ecore_x_window_show(zone->flip.right);
    else
      ecore_x_window_hide(zone->flip.right);
 
-   if (_e_zone_flip_down(zone, zone->desk_x_current, zone->desk_y_current))
+   if (E_ZONE_FLIP_DOWN(zone))
      ecore_x_window_show(zone->flip.bottom);
    else
      ecore_x_window_hide(zone->flip.bottom);
 
-   if (_e_zone_flip_left(zone, zone->desk_x_current, zone->desk_y_current))
+   if (E_ZONE_FLIP_LEFT(zone))
      ecore_x_window_show(zone->flip.left);
    else
      ecore_x_window_hide(zone->flip.left);
-}
-
-static int
-_e_zone_flip_up(E_Zone *zone, int x, int y)
-{
-   if (zone->desk_y_current > 0)
-     return 1;
-   return 0;
-}
-
-static int
-_e_zone_flip_right(E_Zone *zone, int x, int y)
-{
-   if ((zone->desk_x_current + 1) < zone->desk_x_count)
-     return 1;
-   return 0;
-}
-
-static int
-_e_zone_flip_down(E_Zone *zone, int x, int y)
-{
-   if ((zone->desk_y_current + 1) < zone->desk_y_count)
-     return 1;
-   return 0;
-}
-
-static int
-_e_zone_flip_left(E_Zone *zone, int x, int y)
-{
-   if (zone->desk_x_current > 0)
-     return 1;
-   return 0;
 }
