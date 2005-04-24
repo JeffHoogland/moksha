@@ -112,12 +112,7 @@ static Evas_List *borders = NULL;
 static E_Border  *focused = NULL;
 
 static E_Border    *resize = NULL;
-static Ecore_Evas  *resize_ee = NULL;
-static Evas_Object *resize_obj = NULL;
-
 static E_Border    *move = NULL;
-static Ecore_Evas  *move_ee = NULL;
-static Evas_Object *move_obj = NULL;
 
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
@@ -610,8 +605,8 @@ e_border_raise(E_Border *bd)
 	ev->above = NULL;
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
-   if (move_ee) ecore_evas_raise(move_ee);
-   if (resize_ee) ecore_evas_raise(resize_ee);
+   /* FIXME, ugly hack! */
+   e_moveresize_raise();
 }
 
 void
@@ -1958,7 +1953,7 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 
    bd = data;
 
-   printf("drag_start\n");
+   printf("drag_start %s %s\n", emission, source);
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
 	E_App *a;
@@ -2749,8 +2744,10 @@ _e_border_eval(E_Border *bd)
 					_e_border_cb_signal_resize_stop, bd);
 	edje_object_signal_callback_add(o, "action", "*",
 					_e_border_cb_signal_action, bd);
+#if 0
 	edje_object_signal_callback_add(o, "drag", "*",
 				        _e_border_cb_signal_drag, bd);
+#endif
 	if (bd->focused)
 	  edje_object_signal_emit(bd->bg_object, "active", "");
 	evas_object_move(o, 0, 0);
@@ -3895,134 +3892,67 @@ _e_border_desk_update(E_Border *bd)
 static void
 _e_border_resize_begin(E_Border *bd)
 {
-   Evas_Coord w, h;
-   char buf[40];
+   int w, h;
 
-   if (resize_ee)
+   if ((bd->client.icccm.base_w >= 0) &&
+       (bd->client.icccm.base_h >= 0))
      {
-	e_canvas_del(resize_ee);
-	ecore_evas_free(resize_ee);
+	w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
+	h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
      }
-   resize_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
-					     0, 0, 10, 10);
-   ecore_evas_override_set(resize_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(resize_ee, 1);
-   e_canvas_add(resize_ee);
-   ecore_evas_borderless_set(resize_ee, 1);
-   ecore_evas_layer_set(resize_ee, 255);
-   ecore_evas_show(resize_ee);
-
-   resize_obj = edje_object_add(ecore_evas_get(resize_ee));
-   e_theme_edje_object_set(resize_obj, "base/theme/borders",
-			   "widgets/border/default/resize");
-   snprintf(buf, sizeof(buf), "9999x9999");
-   edje_object_part_text_set(resize_obj, "text", buf);
-
-   edje_object_size_min_calc(resize_obj, &w, &h);
-   evas_object_move(resize_obj, 0, 0);
-   evas_object_resize(resize_obj, w, h);
-   evas_object_show(resize_obj);
-
-   _e_border_resize_update(bd);
-   
-   ecore_evas_move(resize_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);
-   ecore_evas_resize(resize_ee, w, h);
-
-   ecore_evas_show(resize_ee);
+   else
+     {
+	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
+	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+     }
+   e_resize_begin(bd->zone, w, h);
    resize = bd;
 }
 
 static void
 _e_border_resize_end(E_Border *bd)
 {
-   evas_object_del(resize_obj);
-   if (resize_ee)
-     {
-	e_canvas_del(resize_ee);
-	ecore_evas_free(resize_ee);
-	resize_ee = NULL;
-     }
+   e_resize_end();
    resize = NULL;
 }
 
 static void
 _e_border_resize_update(E_Border *bd)
 {
-   char buf[40];
-
-   if (!resize_ee) return;
+   int w, h;
 
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
-     snprintf(buf, sizeof(buf), "%ix%i",
-	      (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w, 
-	      (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h);
+     {
+	w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
+	h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
+     }
    else
-     snprintf(buf, sizeof(buf), "%ix%i",
-	      (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w, 
-	      (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h);
-   edje_object_part_text_set(resize_obj, "text", buf);
+     {
+	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
+	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+     }
+   e_resize_update(w, h);
 }
 
 static void
 _e_border_move_begin(E_Border *bd)
 {
-   Evas_Coord w, h;
-   char buf[40];
-
-   if (move_ee)
-     {
-	e_canvas_del(move_ee);
-	ecore_evas_free(move_ee);
-     }
-   move_ee = ecore_evas_software_x11_new(NULL, bd->zone->container->manager->win,
-					 0, 0, 10, 10);
-   ecore_evas_override_set(move_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(move_ee, 1);
-   e_canvas_add(move_ee);
-   ecore_evas_borderless_set(move_ee, 1);
-   ecore_evas_layer_set(move_ee, 255);
-
-   move_obj = edje_object_add(ecore_evas_get(move_ee));
-   e_theme_edje_object_set(move_obj, "base/theme/borders",
-			   "widgets/border/default/move");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(move_obj, "text", buf);
-
-   edje_object_size_min_calc(move_obj, &w, &h);
-   evas_object_move(move_obj, 0, 0);
-   evas_object_resize(move_obj, w, h);
-   
-   ecore_evas_move(move_ee, (bd->zone->w - w) / 2, (bd->zone->h - h) / 2);
-   ecore_evas_resize(move_ee, w, h);
-
+   e_move_begin(bd->zone, bd->x, bd->y);
    move = bd;
 }
 
 static void
 _e_border_move_end(E_Border *bd)
 {
-   evas_object_del(move_obj);
-   if (move_ee)
-     {
-	e_canvas_del(move_ee);
-	ecore_evas_free(move_ee);
-	move_ee = NULL;
-     }
+   e_move_end();
    move = NULL;
 }
 
 static void
 _e_border_move_update(E_Border *bd)
 {
-   char buf[40];
-
-   if (!move_ee) return;
-
-   evas_object_show(move_obj);
-   ecore_evas_show(move_ee);
-   snprintf(buf, sizeof(buf) - 1, "%i %i", bd->x, bd->y);
-   edje_object_part_text_set(move_obj, "text", buf);
+   e_move_update(bd->x, bd->y);
 }
 
 static void

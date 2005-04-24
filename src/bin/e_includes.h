@@ -37,3 +37,4 @@
 #include "e_intl.h"
 #include "e_theme.h"
 #include "e_dnd.h"
+#include "e_moveresize.h"

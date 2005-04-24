@@ -152,9 +152,6 @@ e_drag_end(int x, int y)
 
 	h = l->data;
 	
-	printf("pos: %d %d\n", x, y);
-	printf("pos: %d %d %d %d", h->x, h->y, h->w, h->y);
-	printf("data: %s %s\n", h->type, drag_type);
 	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
 	    && (!strcmp(h->type, drag_type)))
 	  {

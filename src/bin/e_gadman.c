@@ -69,21 +69,6 @@ static void _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static E_Config_DD *gadman_config_edd = NULL;
 
-static Ecore_Evas  *move_gm_ee = NULL;
-static Evas_Object *move_gm_obj = NULL;
-
-static Ecore_Evas  *resize_left_gm_ee = NULL;
-static Evas_Object *resize_left_gm_obj = NULL;
-
-static Ecore_Evas  *resize_right_gm_ee = NULL;
-static Evas_Object *resize_right_gm_obj = NULL;
-
-static Ecore_Evas  *resize_up_gm_ee = NULL;
-static Evas_Object *resize_up_gm_obj = NULL;
-
-static Ecore_Evas  *resize_down_gm_ee = NULL;
-static Evas_Object *resize_down_gm_obj = NULL;
-
 /* externally accessible functions */
 int
 e_gadman_init(void)
@@ -1068,10 +1053,7 @@ static void
 _e_gadman_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       w, h;
-   char             buf[40];
-
-   
+ 
    gmc = data;
    if (_e_gadman_client_is_being_modified(gmc)) return;
    _e_gadman_client_down_store(gmc);
@@ -1080,39 +1062,7 @@ _e_gadman_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    evas_object_raise(gmc->event_object);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_RAISE);
 
-   if (move_gm_ee)
-      {
-	 e_canvas_del(move_gm_ee);
-	 ecore_evas_free(move_gm_ee);
-      }
-   move_gm_ee = ecore_evas_software_x11_new(NULL,
-					    gmc->zone->container->manager->win,
-					    0, 0, 10, 10);
-   ecore_evas_override_set(move_gm_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(move_gm_ee, 1);
-   e_canvas_add(move_gm_ee);
-   ecore_evas_borderless_set(move_gm_ee, 1);
-   ecore_evas_layer_set(move_gm_ee, 999);
-   ecore_evas_show(move_gm_ee);
-
-   move_gm_obj = edje_object_add(ecore_evas_get(move_gm_ee));
-   edje_object_file_set(move_gm_obj, e_path_find(path_themes, "default.edj"),
-			"widgets/border/default/move");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(move_gm_obj, "text", buf);
-
-   edje_object_size_min_calc(move_gm_obj, &w, &h);
-   evas_object_move(move_gm_obj, 0, 0);
-   evas_object_resize(move_gm_obj, w, h);
-   evas_object_show(move_gm_obj);
-
-   snprintf(buf, sizeof(buf), "%i %i", gmc->x, gmc->y);
-   edje_object_part_text_set(move_gm_obj, "text", buf);
-
-   ecore_evas_move(move_gm_ee, (gmc->zone->w - w) / 2, (gmc->zone->h - h) / 2);
-   ecore_evas_resize(move_gm_ee, w, h);
-
-   ecore_evas_show(move_gm_ee);
+   e_move_begin(gmc->zone, gmc->x, gmc->y);
 }
 
 static void
@@ -1125,13 +1075,7 @@ _e_gadman_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    _e_gadman_client_geometry_to_align(gmc);
    e_gadman_client_save(gmc);
 
-   evas_object_del(move_gm_obj);
-   if (move_gm_ee)
-      {
-         e_canvas_del(move_gm_ee);
-	 ecore_evas_hide(move_gm_ee);
-	 move_gm_ee = NULL;
-      }
+   e_move_end();
 }
 
 static void
@@ -1143,7 +1087,6 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    int              nx, ny, nxx, nyy;
    int              new_zone = 0;
    Evas_List       *skiplist = NULL;
-   char             buf[40];
 
    
    gmc = data;
@@ -1293,57 +1236,21 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    e_object_unref(E_OBJECT(gmc));
 
-   snprintf(buf, sizeof(buf) - 1, "%i %i", gmc->x, gmc->y);
-   edje_object_part_text_set(move_gm_obj, "text", buf);
-
+   e_move_update(gmc->x, gmc->y);
 }
 
 static void
 _e_gadman_cb_signal_resize_left_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       w, h;
-   char             buf[40];
-   
+ 
    gmc = data;
    if (_e_gadman_client_is_being_modified(gmc)) return;
    _e_gadman_client_down_store(gmc);
    gmc->use_autow = 0;
    gmc->resizing_l = 1;
 
-   if (resize_left_gm_ee)
-      {
-	 e_canvas_del(resize_left_gm_ee);
-	 ecore_evas_free(resize_left_gm_ee);
-      }
-   resize_left_gm_ee = ecore_evas_software_x11_new(NULL,
-					    gmc->zone->container->manager->win,
-					    0, 0, 10, 10);
-   ecore_evas_override_set(resize_left_gm_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(resize_left_gm_ee, 1);
-   e_canvas_add(resize_left_gm_ee);
-   ecore_evas_borderless_set(resize_left_gm_ee, 1);
-   ecore_evas_layer_set(resize_left_gm_ee, 999);
-   ecore_evas_show(resize_left_gm_ee);
-
-   resize_left_gm_obj = edje_object_add(ecore_evas_get(resize_left_gm_ee));
-   edje_object_file_set(resize_left_gm_obj, e_path_find(path_themes, "default.edj"),
-			"widgets/border/default/resize");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(resize_left_gm_obj, "text", buf);
-
-   edje_object_size_min_calc(resize_left_gm_obj, &w, &h);
-   evas_object_move(resize_left_gm_obj, 0, 0);
-   evas_object_resize(resize_left_gm_obj, w, h);
-   evas_object_show(resize_left_gm_obj);
-
-   snprintf(buf, sizeof(buf), "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_left_gm_obj, "text", buf);
-
-   ecore_evas_move(resize_left_gm_ee, (gmc->zone->w - w) / 2, (gmc->zone->h - h) / 2);
-   ecore_evas_resize(resize_left_gm_ee, w, h);
-
-   ecore_evas_show(resize_left_gm_ee);
+   e_resize_begin(gmc->zone, gmc->w, gmc->h);
 }
 
 static void
@@ -1355,13 +1262,7 @@ _e_gadman_cb_signal_resize_left_stop(void *data, Evas_Object *obj, const char *e
    gmc->resizing_l = 0;
    e_gadman_client_save(gmc);
 
-   evas_object_del(resize_left_gm_obj);
-   if (resize_left_gm_ee)
-      {
-	 e_canvas_del(resize_left_gm_ee);
-	 ecore_evas_hide(resize_left_gm_ee);
-	 resize_left_gm_ee = NULL;
-      }
+   e_resize_end();
 }
 
 static void
@@ -1369,7 +1270,6 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
 {
    E_Gadman_Client *gmc;
    Evas_Coord       x, y;
-   char             buf[40];
    
    gmc = data;
    if (!gmc->resizing_l) return;
@@ -1419,56 +1319,21 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   snprintf(buf, sizeof(buf) - 1, "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_left_gm_obj, "text", buf);
+   e_resize_update(gmc->w, gmc->h);
 }
 
 static void
 _e_gadman_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       w, h;
-   char             buf[40];
-   
+ 
    gmc = data;
    if (_e_gadman_client_is_being_modified(gmc)) return;
    _e_gadman_client_down_store(gmc);
    gmc->use_autow = 0;
    gmc->resizing_r = 1;
 
-   if (resize_right_gm_ee)
-      {
-         e_canvas_del(resize_right_gm_ee);
-	 ecore_evas_free(resize_right_gm_ee);
-      }
-   resize_right_gm_ee = ecore_evas_software_x11_new(NULL,
-					    gmc->zone->container->manager->win,
-					    0, 0, 10, 10);
-   ecore_evas_override_set(resize_right_gm_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(resize_right_gm_ee, 1);
-   e_canvas_add(resize_right_gm_ee);
-   ecore_evas_borderless_set(resize_right_gm_ee, 1);
-   ecore_evas_layer_set(resize_right_gm_ee, 999);
-   ecore_evas_show(resize_right_gm_ee);
-
-   resize_right_gm_obj = edje_object_add(ecore_evas_get(resize_right_gm_ee));
-   edje_object_file_set(resize_right_gm_obj, e_path_find(path_themes, "default.edj"),
-			"widgets/border/default/resize");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(resize_right_gm_obj, "text", buf);
-
-   edje_object_size_min_calc(resize_right_gm_obj, &w, &h);
-   evas_object_move(resize_right_gm_obj, 0, 0);
-   evas_object_resize(resize_right_gm_obj, w, h);
-   evas_object_show(resize_right_gm_obj);
-
-   snprintf(buf, sizeof(buf), "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_right_gm_obj, "text", buf);
-
-   ecore_evas_move(resize_right_gm_ee, (gmc->zone->w - w) / 2, (gmc->zone->h - h) / 2);
-   ecore_evas_resize(resize_right_gm_ee, w, h);
-
-   ecore_evas_show(resize_right_gm_ee);
+   e_resize_begin(gmc->zone, gmc->w, gmc->h);
 }
 
 static void
@@ -1480,22 +1345,15 @@ _e_gadman_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *
    gmc->resizing_r = 0;
    e_gadman_client_save(gmc);
 
-   evas_object_del(resize_right_gm_obj);
-   if (resize_right_gm_ee)
-      {
-	 e_canvas_del(resize_right_gm_ee);
-	 ecore_evas_hide(resize_right_gm_ee);
-	 resize_right_gm_ee = NULL;
-      }
+   e_resize_end();
 }
 
 static void
 _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       x, y;
-   char             buf[40];
-   
+   Evas_Coord x, y;
+
    gmc = data;
    if (!gmc->resizing_r) return;
    if (!(gmc->policy & E_GADMAN_POLICY_HSIZE)) return;
@@ -1540,56 +1398,21 @@ _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   snprintf(buf, sizeof(buf) - 1, "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_right_gm_obj, "text", buf);
+   e_resize_update(gmc->w, gmc->h);
 }
 
 static void
 _e_gadman_cb_signal_resize_up_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       w, h;
-   char             buf[40];
-   
+ 
    gmc = data;
    if (_e_gadman_client_is_being_modified(gmc)) return;
    _e_gadman_client_down_store(gmc);
    gmc->use_autoh = 0;
    gmc->resizing_u = 1;
 
-   if (resize_up_gm_ee)
-      {
-	 e_canvas_del (resize_up_gm_ee);
-	 ecore_evas_free(resize_up_gm_ee);
-      }
-   resize_up_gm_ee = ecore_evas_software_x11_new(NULL,
-					    gmc->zone->container->manager->win,
-					    0, 0, 10, 10);
-   ecore_evas_override_set(resize_up_gm_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(resize_up_gm_ee, 1);
-   e_canvas_add(resize_up_gm_ee);
-   ecore_evas_borderless_set(resize_up_gm_ee, 1);
-   ecore_evas_layer_set(resize_up_gm_ee, 999);
-   ecore_evas_show(resize_up_gm_ee);
-
-   resize_up_gm_obj = edje_object_add(ecore_evas_get(resize_up_gm_ee));
-   edje_object_file_set(resize_up_gm_obj, e_path_find(path_themes, "default.edj"),
-			"widgets/border/default/resize");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(resize_up_gm_obj, "text", buf);
-
-   edje_object_size_min_calc(resize_up_gm_obj, &w, &h);
-   evas_object_move(resize_up_gm_obj, 0, 0);
-   evas_object_resize(resize_up_gm_obj, w, h);
-   evas_object_show(resize_up_gm_obj);
-
-   snprintf(buf, sizeof(buf), "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_up_gm_obj, "text", buf);
-
-   ecore_evas_move(resize_up_gm_ee, (gmc->zone->w - w) / 2, (gmc->zone->h - h) / 2);
-   ecore_evas_resize(resize_up_gm_ee, w, h);
-
-   ecore_evas_show(resize_up_gm_ee);
+   e_resize_begin(gmc->zone, gmc->w, gmc->h);
 }
 
 static void
@@ -1601,22 +1424,15 @@ _e_gadman_cb_signal_resize_up_stop(void *data, Evas_Object *obj, const char *emi
    gmc->resizing_u = 0;
    e_gadman_client_save(gmc);
 
-   evas_object_del(resize_up_gm_obj);
-   if (resize_up_gm_ee)
-      {
-	 e_canvas_del (resize_up_gm_ee);
-	 ecore_evas_hide(resize_up_gm_ee);
-	 resize_up_gm_ee = NULL;
-      }
+   e_resize_end();
 }
 
 static void
 _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       x, y;
-   char             buf[40];
-   
+   Evas_Coord x, y;
+
    gmc = data;
    if (!gmc->resizing_u) return;
    if (!(gmc->policy & E_GADMAN_POLICY_VSIZE)) return;
@@ -1665,16 +1481,13 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   snprintf(buf, sizeof(buf) - 1, "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_up_gm_obj, "text", buf);
+   e_resize_update(gmc->w, gmc->h);
 }
 
 static void
 _e_gadman_cb_signal_resize_down_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       w, h;
-   char             buf[40];
    
    gmc = data;
    if (_e_gadman_client_is_being_modified(gmc)) return;
@@ -1682,39 +1495,7 @@ _e_gadman_cb_signal_resize_down_start(void *data, Evas_Object *obj, const char *
    gmc->use_autoh = 0;
    gmc->resizing_d = 1;
 
-   if (resize_down_gm_ee)
-      {
-         e_canvas_del(resize_down_gm_ee);
-	 ecore_evas_free(resize_down_gm_ee);
-      }
-   resize_down_gm_ee = ecore_evas_software_x11_new(NULL,
-					    gmc->zone->container->manager->win,
-					    0, 0, 10, 10);
-   ecore_evas_override_set(resize_down_gm_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(resize_down_gm_ee, 1);
-   e_canvas_add(resize_down_gm_ee);
-   ecore_evas_borderless_set(resize_down_gm_ee, 1);
-   ecore_evas_layer_set(resize_down_gm_ee, 999);
-   ecore_evas_show(resize_down_gm_ee);
-
-   resize_down_gm_obj = edje_object_add(ecore_evas_get(resize_down_gm_ee));
-   edje_object_file_set(resize_down_gm_obj, e_path_find(path_themes, "default.edj"),
-			"widgets/border/default/resize");
-   snprintf(buf, sizeof(buf), "9999 9999");
-   edje_object_part_text_set(resize_down_gm_obj, "text", buf);
-
-   edje_object_size_min_calc(resize_down_gm_obj, &w, &h);
-   evas_object_move(resize_down_gm_obj, 0, 0);
-   evas_object_resize(resize_down_gm_obj, w, h);
-   evas_object_show(resize_down_gm_obj);
-
-   snprintf(buf, sizeof(buf), "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_down_gm_obj, "text", buf);
-
-   ecore_evas_move(resize_down_gm_ee, (gmc->zone->w - w) / 2, (gmc->zone->h - h) / 2);
-   ecore_evas_resize(resize_down_gm_ee, w, h);
-
-   ecore_evas_show(resize_down_gm_ee);
+   e_resize_begin(gmc->zone, gmc->w, gmc->h);
 }
 
 static void
@@ -1726,22 +1507,15 @@ _e_gadman_cb_signal_resize_down_stop(void *data, Evas_Object *obj, const char *e
    gmc->resizing_d = 0;
    e_gadman_client_save(gmc);
 
-   evas_object_del(resize_down_gm_obj);
-   if (resize_down_gm_ee)
-      {
-         e_canvas_del(resize_down_gm_ee);
-	 ecore_evas_hide(resize_down_gm_ee);
-	 resize_down_gm_ee = NULL;
-      }
+   e_resize_end();
 }
 
 static void
 _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Gadman_Client *gmc;
-   Evas_Coord       x, y;
-   char             buf[40];
-   
+   Evas_Coord x, y;
+ 
    gmc = data;
    if (!gmc->resizing_d) return;
    if (!(gmc->policy & E_GADMAN_POLICY_VSIZE)) return;
@@ -1786,8 +1560,7 @@ _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   snprintf(buf, sizeof(buf) - 1, "(%i,%i)", gmc->w, gmc->h);
-   edje_object_part_text_set(resize_down_gm_obj, "text", buf);
+   e_resize_update(gmc->w, gmc->h);
 }
 
 static void
