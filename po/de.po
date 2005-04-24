@@ -43,47 +43,47 @@ msgstr "1 Stunde"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr ""
+msgstr "100°C"
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr ""
+msgstr "10°C"
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr ""
+msgstr "20°C"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr ""
+msgstr "30°C"
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr ""
+msgstr "40°C"
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr ""
+msgstr "50°C"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr ""
+msgstr "60°C"
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr ""
+msgstr "70°C"
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr ""
+msgstr "80°C"
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr ""
+msgstr "90°C"
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -92,17 +92,19 @@ msgid ""
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
 msgstr ""
-# Enlightenment german translation.
-# This file is put in the public domain.
-# vandango <vandango@toenda.com>, 2005.
-#
+"Ein Batterieladeanzeige die entweder ACPI oder APM nutzt\n"
+"um unter Linux ihren Batterielade Status und ihren AC\n"
+"Stromadapter Status anzuzeigen. Es wird nur unter Linux laufen\n"
+"und ist nur so genau wie ihr BIOS oder Kernel Treiber."
+
+
 #: src/modules/temperature/e_mod_main.c:97
 msgid ""
 "A module to measure the ACPI Thermal sensor on Linux.\n"
 "It is especially useful for modern Laptops with high speed\n"
 "CPUs that generate a lot of heat."
 msgstr ""
-"Ein Modul um die ACPI Wärmesensoren unter Linux.\n"
+"Ein Modul um die ACPI Wärmesensoren unter Linux zu messen.\n"
 "Es ist besonders nützlich für moderne Laptops mit sehr schnellen\n"
 "Prozessoren, die eine menge Wärme produzieren."
 
@@ -229,7 +231,7 @@ msgstr "Uhr"
 
 #: src/bin/e_border.c:3391 src/modules/dropshadow/e_mod_main.c:348
 msgid "Close"
-msgstr "Nah"
+msgstr "Schliessen / Nah"
 
 #: src/bin/e_module.c:395
 msgid "Configuration"
@@ -279,7 +281,7 @@ msgstr "Bearbeitungs Modus beenden"
 
 #: src/bin/e_main.c:350
 msgid "Enlightenment"
-msgstr ""
+msgstr "Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
@@ -299,7 +301,7 @@ msgstr "Enlightenment IBar Modul"
 
 #: src/bin/e_main.c:335
 msgid "Enlightenment IPC setup error!"
-msgstr "Enlightenment IPC Einstellungs Fehler!"
+msgstr "Enlightenment Fehler in den IPC Einstellungen!"
 
 #: src/modules/pager/e_mod_main.c:135
 msgid "Enlightenment Pager Module"
@@ -338,70 +340,88 @@ msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
+"Enlightenment kann die Verbindung mit dem X-Server nicht initialisieren.\n"
+"Haben sie ihre DISPLAY Variable gesetzt?"
 
 #: src/bin/e_main.c:221
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann das Evas System nicht initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:229
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann das Dateisystem nicht initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:213
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann das IPC System nicht initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:205
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann das Verbindungssystem nicht initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:171
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann nicht den HUP Signalhandler initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:165
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann nicht den Exit Signalhandler initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:278
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann den Startbildschirm nicht initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
-msgstr ""
+msgstr "Enlightenment kann sein Programm System nicht initialisieren."
 
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
-msgstr ""
+msgstr "Enlightenment kann sein Konfigurations System nicht initialisieren."
 
 #: src/bin/e_main.c:268
 msgid "Enlightenment cannot set up its font system."
-msgstr ""
+msgstr "Enlightenment kann sein Schriftarten System nicht initialisieren."
 
 #: src/bin/e_main.c:318
 msgid "Enlightenment cannot set up its module system."
-msgstr ""
+msgstr "Enlightenment kann sein Modul System nicht initialisieren."
 
 #: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment kann keine Pfade um Datein zu finden initialisieren.\n"
+"Vielleicht haben sie nicht genügend Speicherplatz?"
 
 #: src/bin/e_main.c:305 src/bin/e_main.c:336
 msgid ""
@@ -411,22 +431,31 @@ msgid ""
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
 msgstr ""
+"Enlightenment kann den IPC Socket nicht initialisieren.\n"
+"Es wird anscheinend von einem gestartetem Enlightenment benutzt.\n"
+"Es wird nun nochmal getestet ob Enlightenment auf diesem Bildschirm läuft,\n"
+"aber wenn es läuft können sie alle Datein in ~/.ecore/enlightenment-*\n"
+"löschen und Enlightenment nochmal starten."
 
 #: src/bin/e_main.c:189
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
+"Enlightenment kann Xinerama nicht benutzen.\n"
+"Das sollte nicht passieren."
 
 #: src/bin/e_main.c:286
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
+"Enlightenment hat sich versucht auf jedem ihrer Bildschirme zu starten und\n"
+"ist dabei Fehlgeschlagen. Vielleicht läuft ein anderer Fenster Manager?\n"
 
 #: src/bin/e_error.c:354
-msgid "Enlightenment: Fehler!"
-msgstr ""
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: Fehler"
 
 #: src/modules/ibar/e_mod_main.c:789n
 msgid "Enormous"
@@ -441,9 +470,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: Batterie\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -454,9 +483,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: Uhr\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/dropshadow/e_mod_main.c:78
 #, c-format
@@ -467,9 +496,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: Schatten\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -480,9 +509,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: IBar\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/pager/e_mod_main.c:80
 #, c-format
@@ -493,9 +522,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: Arbeitsflächenumschalter\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -506,9 +535,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: Temperaturanzeige\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"IEs erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/cpufreq/e_mod_main.c:58
 #, c-format
@@ -519,9 +548,9 @@ msgid ""
 "Aborting module."
 msgstr ""
 "Fehler beim initialisieren des Modul's: CpuFreq\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -619,7 +648,7 @@ msgstr "Riesig"
 
 #: src/modules/ibar/e_mod_main.c:149
 msgid "IBar"
-msgstr ""
+msgstr "IBar"
 
 #: src/bin/e_border.c:3532
 msgid "Icon Edit Error"
@@ -678,16 +707,16 @@ msgid "Module API Error"
 msgstr "Modul API Fehler"
 
 #: src/modules/test/e_mod_main.c:24
-msgid "Modul Konfiguration Menueintrag 1"
-msgstr ""
+msgid "Module Config Menu Item 1"
+msgstr "Modul Konfiguration Menueintrag 1"
 
 #: src/modules/test/e_mod_main.c:26
-msgid "Modul Konfiguration Menueintrag 2"
-msgstr ""
+msgid "Module Config Menu Item  2"
+msgstr "Modul Konfiguration Menueintrag 2"
 
 #: src/modules/test/e_mod_main.c:28
-msgid "Modul Konfiguration Menueintrag 3"
-msgstr ""
+msgid "Module Config Menu Item  3"
+msgstr "Modul Konfiguration Menueintrag 3"
 
 #: src/bin/e_int_menus.c:68
 msgid "Modules"
@@ -745,10 +774,10 @@ msgstr ""
 "\t\tMit Bildschirm DISPLAY verbinden.\n"
 "\t\tEG: -display :1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
-"\t\tgiven the geometry. Add as many as you like. They all\n"
-"\t\treplace the real xinerama screens, if any. This can\n"
-"\t\tbe used to simulate xinerama.\n"
+"\t\tEin FALSCHER Xinerama Bildschirm wird hinzugefügt (anstatt des Echten)\n"
+"\t\tund gibt die Daten. Sie können soviele hinzufügen wie sie möchten. Sie\n"
+"\t\tersetzen alle den echten Xinerama Bildschirm. Dies kann benutzt werden\n"
+"\t\tum Xinerama zu simulieren.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
 
@@ -767,6 +796,10 @@ msgstr "Reihe mit Arbeitsflächen entfernen"
 #: src/bin/e_int_menus.c:110
 msgid "Restart Enlightement"
 msgstr "Enlightenment Neustarten"
+
+#: src/bin/e_border.c:3536
+msgid "Send To"
+msgstr "Senden an"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
@@ -807,7 +840,7 @@ msgstr "Klein"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
-msgstr ""
+msgstr "Irgendetwas"
 
 #: src/bin/e_border.c:3418
 msgid "Sticky"
@@ -858,15 +891,15 @@ msgid ""
 "Please think of the aardvarks. They need some love too."
 msgstr ""
 "Dies ist Enlightenment %s.\n"
-"Copyright © 1999-2004, das Enlightenment Entwicklungs Team.\n"
+"Copyright © 1999-2005, das Enlightenment Entwicklungs Team.\n"
 "\n"
 "Wir hoffen, daß sie mit dieser Software genausoviel Spaß haben werden, wie wir ihn beim schreiben hatten.\n"
 "\n"
 "Denken Sie bitte an die aardvarks. Sie benötigen auch etwas Liebe."
 
 #: src/bin/e_main.c:367
-msgid "Dieses ist Entwicklungscode und mit Achtung zu genießen."
-msgstr ""
+msgid "This is development code, so be warned."
+msgstr "Dieses ist Entwicklungscode und mit Achtung zu genießen."
 
 #: src/bin/e_main.c:327
 msgid ""
