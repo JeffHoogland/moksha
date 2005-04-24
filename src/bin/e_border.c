@@ -93,6 +93,7 @@ static void _e_border_event_border_stick_free(void *data, void *ev);
 static void _e_border_event_border_unstick_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
+static void _e_border_desk_update(E_Border *bd);
 
 static void _e_border_resize_begin(E_Border *bd);
 static void _e_border_resize_end(E_Border *bd);
@@ -437,6 +438,7 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
+   if (bd->moving) return;
 
    ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
@@ -487,6 +489,7 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->client.h);
    _e_border_move_update(bd);
    _e_border_zone_update(bd);
+   _e_border_desk_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -1749,6 +1752,7 @@ _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    bd = data;
    bd->moving = 0;
    _e_border_move_end(bd);
+   e_zone_flip_coords_handle(bd->zone, -1, -1);
 }
 
 static void
@@ -2254,6 +2258,7 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 			  {
 			     bd->moving = 0;
 			     _e_border_move_end(bd);
+			     e_zone_flip_coords_handle(bd->zone, -1, -1);
 			  }
 			break;
 		     case E_BINDING_ACTION_RESIZE:
@@ -2329,9 +2334,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 					   &new_x, &new_y, &new_w, &new_h);
 	evas_list_free(skiplist);
 	e_border_move(bd, new_x, new_y);
-#if 0
 	e_zone_flip_coords_handle(bd->zone, ev->root.x, ev->root.y);
-#endif
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
@@ -2635,7 +2638,6 @@ _e_border_eval(E_Border *bd)
    if (bd->client.border.changed)
      {
 	Evas_Object *o;
-	const char *path;
 	char buf[4096];
 	Evas_Coord cx, cy, cw, ch;
 	int l, r, t, b;
@@ -3858,7 +3860,6 @@ _e_border_event_border_icon_change_free(void *data, void *ev)
    free(e);
 }
 
-
 static void
 _e_border_zone_update(E_Border *bd)
 {
@@ -3883,6 +3884,12 @@ _e_border_zone_update(E_Border *bd)
 	     return;
 	  }
      }
+}
+
+static void
+_e_border_desk_update(E_Border *bd)
+{
+   e_border_desk_set(bd, e_desk_current_get(bd->zone));
 }
 
 static void

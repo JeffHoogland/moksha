@@ -67,8 +67,6 @@ e_intl_shutdown(void)
 void
 e_intl_language_set(const char *lang)
 {
-   char buf[4096];
-   
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
    if (lang)

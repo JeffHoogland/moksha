@@ -308,7 +308,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_DEFAULT_SET:
 	  {
 	     char ** argv;
-	     int i, argc;
+	     int argc;
 	     
 	     argc = 3;
 	     

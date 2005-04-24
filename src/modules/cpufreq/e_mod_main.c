@@ -1,5 +1,6 @@
 #include <Ecore.h>
 #include <errno.h>
+#include <ctype.h>
 #include "e_mod_main.h"
 
 /* FIXME: check permissions (can execute) setfreq before trying
@@ -852,6 +853,9 @@ _cpufreq_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change ch
 	 evas_object_raise(ef->freq_object);
 	 evas_object_raise(ef->event_object);
 	 break;
+      case E_GADMAN_CHANGE_EDGE:
+      case E_GADMAN_CHANGE_ZONE:
+	 break;
      }
 }
 
@@ -984,11 +988,9 @@ _cpufreq_face_update_current(Cpufreq_Face *face)
 static void
 _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emission, const char *src)
 {
-   int pid;
    Cpufreq *e;
    Evas_List *l;
    int next_frequency = 0;
-   char buf[128];
 
    e = data;
    
@@ -1020,7 +1022,6 @@ _cpufreq_face_cb_set_frequency(void *data, Evas_Object *obj, const char *emissio
 static void
 _cpufreq_face_cb_set_governor(void *data, Evas_Object *obj, const char *emission, const char *src)
 {
-   int pid;
    Cpufreq *e;
    Evas_List *l;
    char *next_governor = NULL;

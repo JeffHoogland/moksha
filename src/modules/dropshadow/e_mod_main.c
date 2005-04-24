@@ -655,7 +655,6 @@ _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
 {
    E_Container *con;
    Evas_List *l;
-   int i;
    
    if (sh->initted) return;
    sh->initted = 1;
@@ -1142,7 +1141,6 @@ _ds_shadow_recalc(Shadow *sh)
 		    {
 		       Shadow_Object *so;
 		       E_Rect *r;
-		       int x, y, w, h;
 		       
 		       r = l->data;
 		       so = ll->data;
