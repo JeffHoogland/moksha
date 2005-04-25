@@ -1964,6 +1964,7 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 	  {
 	     e_drag_start(bd->zone, "enlightenment/border", bd, 
 			  a->path, "icon");
+	     e_util_container_fake_mouse_up_later(bd->zone->container, 1);
 	  }
      }
 }
@@ -2744,10 +2745,8 @@ _e_border_eval(E_Border *bd)
 					_e_border_cb_signal_resize_stop, bd);
 	edje_object_signal_callback_add(o, "action", "*",
 					_e_border_cb_signal_action, bd);
-#if 0
 	edje_object_signal_callback_add(o, "drag", "*",
 				        _e_border_cb_signal_drag, bd);
-#endif
 	if (bd->focused)
 	  edje_object_signal_emit(bd->bg_object, "active", "");
 	evas_object_move(o, 0, 0);

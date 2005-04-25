@@ -5,6 +5,7 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Drop_Handler E_Drop_Handler;
+typedef struct _E_Drop_Event   E_Drop_Event;
 
 #else
 #ifndef E_DND_H
@@ -18,6 +19,12 @@ struct _E_Drop_Handler
    int x, y, w, h;
 };
 
+struct _E_Drop_Event
+{
+   void *data;
+   int x, y;
+};
+
 EAPI int  e_dnd_init(void);
 EAPI int  e_dnd_shutdown(void);
 
@@ -25,7 +32,7 @@ EAPI void e_drag_start(E_Zone *zone, const char *type, void *data, const char *i
 EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);
 
-EAPI E_Drop_Handler *e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h);
+EAPI E_Drop_Handler *e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *event_info), const char *type, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 
 #endif

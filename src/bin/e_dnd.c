@@ -132,6 +132,7 @@ void
 e_drag_end(int x, int y)
 {
    Evas_List *l;
+   E_Drop_Event *e;
 
    printf("drag_end\n");
 
@@ -146,6 +147,11 @@ e_drag_end(int x, int y)
    ecore_x_keyboard_ungrab();
    ecore_x_window_del(drag_win);
 
+   e = E_NEW(E_Drop_Event, 1);
+   e->data = drag_data;
+   e->x = x;
+   e->y = y;
+
    for (l = drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
@@ -155,10 +161,11 @@ e_drag_end(int x, int y)
 	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
 	    && (!strcmp(h->type, drag_type)))
 	  {
-	     h->func(h->data, drag_type, drag_data);
+	     h->func(h->data, drag_type, e);
 	  }
      }
 
+   free(e);
    free(drag_type);
    drag_type = NULL;
    drag_data = NULL;

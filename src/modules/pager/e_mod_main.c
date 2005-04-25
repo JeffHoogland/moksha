@@ -1363,7 +1363,19 @@ _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_C
 }
 
 static void
-_pager_drop_cb(void *data, const char *type, void *drop)
+_pager_drop_cb(void *data, const char *type, void *event_info)
 {
-   printf("We have a drop!\n");
+   E_Drop_Event *e;
+   Pager_Face *face;
+   int x, y, w, h;
+
+   e = event_info;
+   face = data;
+
+   x = e->x - face->fx;
+   y = e->y - face->fy;
+   w = x / face->xnum;
+   h = y / face->ynum;
+
+   printf("We have a drop! %d %d\n", w, h);
 }
