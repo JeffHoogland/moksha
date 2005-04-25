@@ -268,6 +268,9 @@ msgstr "Icon bearbeiten"
 #: src/bin/e_int_menus.c:514 src/modules/clock/e_mod_main.c:311
 #: src/modules/temperature/e_mod_main.c:723
 #: src/modules/battery/e_mod_main.c:563
+#: src/modules/pager/e_mod_main.c:420
+#: src/modules/cpufreq/e_mod_main.c:814
+#: src/modules/ibar/e_mod_main.c:554
 msgid "Edit Mode"
 msgstr "Bearbeitungs Modus"
 
@@ -864,6 +867,20 @@ msgstr ""
 "Es gabt beim Laden vom %s Modul einen Fehler.\n"
 "Es wurde kein Modul mit dem Namen %s in den\n"
 "Modul Verzeichnissen gefunden.\n"
+
+#: src/modules/cpufreq/e_mod_main.c:270
+#: src/modules/cpufreq/e_mod_main.c:288
+msgid "CPU Frequency ERROR"
+msgstr "CPU Frequenz FELER"
+
+#: src/modules/cpufreq/e_mod_main.c:271
+#: src/modules/cpufreq/e_mod_main.c:279
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+"Es gab einen Fehler beim setzen des CPU Frequenz Reglers\n"
+"über die Moduleigene Einstellungsmöglichkeit."
 
 #: src/bin/e_module.c:109 src/bin/e_module.c:131
 #, c-format
