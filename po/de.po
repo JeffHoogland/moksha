@@ -229,9 +229,13 @@ msgstr "Sehr langsam abfragen (60 sek)"
 msgid "Clock"
 msgstr "Uhr"
 
-#: src/bin/e_border.c:3391 src/modules/dropshadow/e_mod_main.c:348
+#: src/bin/e_border.c:3483
 msgid "Close"
-msgstr "Schliessen / Nah"
+msgstr "Schließen"
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Closely"
+msgstr "Nah"
 
 #: src/bin/e_module.c:395
 msgid "Configuration"
