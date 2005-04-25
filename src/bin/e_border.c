@@ -3,6 +3,14 @@
  */
 #include "e.h"
 
+typedef struct _E_Border_Fake_Mouse_Up_Info E_Border_Fake_Mouse_Up_Info;
+
+struct _E_Border_Fake_Mouse_Up_Info
+{
+   E_Border *border;
+   int       button;
+};
+
 //#define INOUTDEBUG 1
 
 #define RESIZE_NONE 0
@@ -105,6 +113,8 @@ static void _e_border_move_update(E_Border *bd);
 
 static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
+
+static void _e_border_fake_mouse_up_cb(void *data);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -1950,6 +1960,7 @@ static void
 _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Border *bd;
+   E_Border_Fake_Mouse_Up_Info *info;
 
    bd = data;
 
@@ -1964,7 +1975,12 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 	  {
 	     e_drag_start(bd->zone, "enlightenment/border", bd, 
 			  a->path, "icon");
-	     e_util_container_fake_mouse_up_later(bd->zone->container, 1);
+
+	     info = E_NEW(E_Border_Fake_Mouse_Up_Info, 1);
+	     info->border = bd;
+	     info->button = 1;
+	     e_object_ref(E_OBJECT(info->border));
+	     ecore_job_add(_e_border_fake_mouse_up_cb, info);
 	  }
      }
 }
@@ -3992,3 +4008,16 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
      }
 }
 
+static void
+_e_border_fake_mouse_up_cb(void *data)
+{
+   E_Border_Fake_Mouse_Up_Info *info;
+   
+   info = data;
+   if (info)
+     {
+	evas_event_feed_mouse_up(info->border->bg_evas, info->button, EVAS_BUTTON_NONE, NULL);
+	e_object_unref(E_OBJECT(info->border));
+	free(info);
+     }
+}
