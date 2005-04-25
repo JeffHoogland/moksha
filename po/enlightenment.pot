@@ -219,8 +219,12 @@ msgstr ""
 msgid "Clock"
 msgstr ""
 
-#: src/bin/e_border.c:3483 src/modules/dropshadow/e_mod_main.c:364
+#: src/bin/e_border.c:3483
 msgid "Close"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Closely"
 msgstr ""
 
 #: src/bin/e_module.c:395
