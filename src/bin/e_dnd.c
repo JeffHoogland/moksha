@@ -13,6 +13,10 @@ static Evas_Object *drag_obj;
 static char *drag_type;
 static void *drag_data;
 
+static int  drag;
+static void (*drag_cb)(void *data, void *event);
+static void *drag_cb_data;
+
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
 
@@ -75,7 +79,8 @@ e_dnd_shutdown(void)
 }
 
 void
-e_drag_start(E_Zone *zone, const char *type, void *data, const char *icon_path, const char *icon)
+e_drag_start(E_Zone *zone, const char *type, void *data,
+	     const char *icon_path, const char *icon)
 {
    int w, h;
 
@@ -85,6 +90,8 @@ e_drag_start(E_Zone *zone, const char *type, void *data, const char *icon_path, 
    ecore_x_window_show(drag_win);
    ecore_x_pointer_confine_grab(drag_win);
    ecore_x_keyboard_grab(drag_win);
+
+   drag = 0;
 
    if (drag_ee)
      {
@@ -120,6 +127,8 @@ e_drag_update(int x, int y)
    int w, h;
 
    if (!drag_ee) return;
+
+   drag = 1;
    
    evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
    evas_object_show(drag_obj);
@@ -132,9 +141,7 @@ void
 e_drag_end(int x, int y)
 {
    Evas_List *l;
-   E_Drop_Event *e;
-
-   printf("drag_end\n");
+   E_Drop_Event *ev;
 
    evas_object_del(drag_obj);
    if (drag_ee)
@@ -147,10 +154,11 @@ e_drag_end(int x, int y)
    ecore_x_keyboard_ungrab();
    ecore_x_window_del(drag_win);
 
-   e = E_NEW(E_Drop_Event, 1);
-   e->data = drag_data;
-   e->x = x;
-   e->y = y;
+   ev = E_NEW(E_Drop_Event, 1);
+   if (!ev) goto end;
+   ev->data = drag_data;
+   ev->x = x;
+   ev->y = y;
 
    for (l = drop_handlers; l; l = l->next)
      {
@@ -161,15 +169,23 @@ e_drag_end(int x, int y)
 	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
 	    && (!strcmp(h->type, drag_type)))
 	  {
-	     h->func(h->data, drag_type, e);
+	     h->func(h->data, drag_type, ev);
 	  }
      }
 
-   free(e);
+   free(ev);
+end:
    free(drag_type);
    drag_type = NULL;
    drag_data = NULL;
 }
+
+void
+e_drag_callback_set(void *data, void (*func)(void *data, void *event))
+{
+   drag_cb = func;
+   drag_cb_data = data;
+} 
 
 E_Drop_Handler *
 e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h)
@@ -208,6 +224,22 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
    if (ev->win != drag_win) return 1;
 
    e_drag_end(ev->x, ev->y);
+
+   if (drag_cb)
+     {
+	E_Drag_Event *e;
+	
+	e = E_NEW(E_Drag_Event, 1);
+	if (e)
+	  {
+	     e->drag = drag;
+	     e->x = ev->x;
+	     e->y = ev->y;
+	     (*drag_cb)(drag_cb_data, e);
+	     drag_cb = NULL;
+	     free(e);
+	  }
+     }
 
    return 1;
 }

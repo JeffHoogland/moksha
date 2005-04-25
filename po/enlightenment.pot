@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-25 00:34+0200\n"
+"POT-Creation-Date: 2005-04-25 21:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -122,7 +122,7 @@ msgstr ""
 msgid "About..."
 msgstr ""
 
-#: src/bin/e_main.c:381
+#: src/bin/e_main.c:389
 msgid "Artificially slowing startup so you can see it all."
 msgstr ""
 
@@ -156,6 +156,10 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
+msgid "CPU Frequency ERROR"
 msgstr ""
 
 #: src/bin/e_gadman.c:512
@@ -219,12 +223,8 @@ msgstr ""
 msgid "Clock"
 msgstr ""
 
-#: src/bin/e_border.c:3483
+#: src/bin/e_border.c:3498
 msgid "Close"
-msgstr ""
-
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Near"
 msgstr ""
 
 #: src/bin/e_module.c:395
@@ -235,7 +235,7 @@ msgstr ""
 msgid "CpuFreq"
 msgstr ""
 
-#: src/bin/e_border.c:3577
+#: src/bin/e_border.c:3592
 msgid "Create Icon"
 msgstr ""
 
@@ -255,14 +255,13 @@ msgstr ""
 msgid "Dropshadow"
 msgstr ""
 
-#: src/bin/e_border.c:3551
+#: src/bin/e_border.c:3566
 msgid "Edit Icon"
 msgstr ""
 
 #: src/bin/e_int_menus.c:522 src/modules/clock/e_mod_main.c:309
-#: src/modules/temperature/e_mod_main.c:721
-#: src/modules/battery/e_mod_main.c:561
-#: src/modules/pager/e_mod_main.c:420
+#: src/modules/ibar/e_mod_main.c:554 src/modules/battery/e_mod_main.c:561
+#: src/modules/temperature/e_mod_main.c:721 src/modules/pager/e_mod_main.c:420
 #: src/modules/cpufreq/e_mod_main.c:814
 msgid "Edit Mode"
 msgstr ""
@@ -275,7 +274,7 @@ msgstr ""
 msgid "End Edit Mode"
 msgstr ""
 
-#: src/bin/e_main.c:365
+#: src/bin/e_main.c:373
 msgid "Enlightenment"
 msgstr ""
 
@@ -295,7 +294,7 @@ msgstr ""
 msgid "Enlightenment IBar Module"
 msgstr ""
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:358
 msgid "Enlightenment IPC setup error!"
 msgstr ""
 
@@ -303,7 +302,7 @@ msgstr ""
 msgid "Enlightenment Pager Module"
 msgstr ""
 
-#: src/bin/e_main.c:367
+#: src/bin/e_main.c:375
 msgid "Enlightenment Starting. Please wait."
 msgstr ""
 
@@ -379,11 +378,15 @@ msgstr ""
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 
+#: src/bin/e_main.c:313
+msgid "Enlightenment cannot set up its bindings system."
+msgstr ""
+
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 
-#: src/bin/e_main.c:333
+#: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 
@@ -391,7 +394,7 @@ msgstr ""
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 
-#: src/bin/e_main.c:325
+#: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 
@@ -405,7 +408,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:312 src/bin/e_main.c:351
+#: src/bin/e_main.c:320 src/bin/e_main.c:359
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -510,7 +513,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr ""
 
-#: src/bin/e_border.c:3651
+#: src/bin/e_border.c:3666
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -522,12 +525,12 @@ msgstr ""
 msgid "Exit Enlightenment"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:382
-msgid "Extremely Near"
-msgstr ""
-
 #: src/modules/ibar/e_mod_main.c:767
 msgid "Extremely Large"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:382
+msgid "Extremely Near"
 msgstr ""
 
 #: src/modules/battery/e_mod_main.c:927
@@ -591,11 +594,11 @@ msgstr ""
 msgid "IBar"
 msgstr ""
 
-#: src/bin/e_border.c:3650
+#: src/bin/e_border.c:3665
 msgid "Icon Edit Error"
 msgstr ""
 
-#: src/bin/e_border.c:3491
+#: src/bin/e_border.c:3506
 msgid "Iconify"
 msgstr ""
 
@@ -624,7 +627,7 @@ msgstr ""
 msgid "Manual"
 msgstr ""
 
-#: src/bin/e_border.c:3512
+#: src/bin/e_border.c:3527
 msgid "Maximized"
 msgstr ""
 
@@ -632,7 +635,7 @@ msgstr ""
 msgid "Maximum Speed"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:746 src/modules/dropshadow/e_mod_main.c:277
+#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:746
 msgid "Medium"
 msgstr ""
 
@@ -648,10 +651,10 @@ msgstr ""
 msgid "Minimum Speed"
 msgstr ""
 
+#: src/modules/clock/e_mod_main.c:40 src/modules/dropshadow/e_mod_main.c:91
 #: src/modules/ibar/e_mod_main.c:105 src/modules/test/e_mod_main.c:9
-#: src/modules/cpufreq/e_mod_main.c:57 src/modules/clock/e_mod_main.c:40
-#: src/modules/pager/e_mod_main.c:81 src/modules/temperature/e_mod_main.c:43
-#: src/modules/dropshadow/e_mod_main.c:91 src/modules/battery/e_mod_main.c:45
+#: src/modules/battery/e_mod_main.c:45 src/modules/temperature/e_mod_main.c:43
+#: src/modules/pager/e_mod_main.c:81 src/modules/cpufreq/e_mod_main.c:57
 msgid "Module API Error"
 msgstr ""
 
@@ -671,7 +674,7 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
-#: src/bin/e_main.c:383
+#: src/bin/e_main.c:391
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr ""
 
@@ -681,6 +684,10 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:748
 msgid "NO INFO"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Near"
 msgstr ""
 
 #: src/bin/e_int_menus.c:369
@@ -735,7 +742,7 @@ msgstr ""
 msgid "Restart Enlightement"
 msgstr ""
 
-#: src/bin/e_border.c:3535
+#: src/bin/e_border.c:3550
 msgid "Send To"
 msgstr ""
 
@@ -747,8 +754,8 @@ msgstr ""
 msgid "Set Controller"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
 msgid "Set Poll Time"
 msgstr ""
 
@@ -756,7 +763,7 @@ msgstr ""
 msgid "Set Speed"
 msgstr ""
 
-#: src/bin/e_border.c:3502
+#: src/bin/e_border.c:3517
 msgid "Shaded"
 msgstr ""
 
@@ -780,7 +787,7 @@ msgstr ""
 msgid "Something Else"
 msgstr ""
 
-#: src/bin/e_border.c:3522
+#: src/bin/e_border.c:3537
 msgid "Sticky"
 msgstr ""
 
@@ -800,18 +807,6 @@ msgid ""
 "module search directories\n"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:270
-#: src/modules/cpufreq/e_mod_main.c:288
-msgid "CPU Frequency ERROR"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:271
-#: src/modules/cpufreq/e_mod_main.c:279
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"governor via the module's setfreq utility."
-msgstr ""
-
 #: src/bin/e_module.c:109 src/bin/e_module.c:131
 #, c-format
 msgid ""
@@ -820,6 +815,18 @@ msgid ""
 "%s\n"
 "The error reported was:\n"
 "%s"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:271
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:288
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"setting via the module's setfreq utility."
 msgstr ""
 
 #: src/bin/e_int_menus.c:218
@@ -833,11 +840,11 @@ msgid ""
 "Please think of the aardvarks. They need some love too."
 msgstr ""
 
-#: src/bin/e_main.c:382
+#: src/bin/e_main.c:390
 msgid "This is development code, so be warned."
 msgstr ""
 
-#: src/bin/e_main.c:342
+#: src/bin/e_main.c:350
 msgid ""
 "This is program has barely been started on, so it is not complete by a long\n"
 "shot. Please do NOT expect anything to work properly at this stage. It's\n"
@@ -872,10 +879,6 @@ msgstr ""
 msgid "Tiny"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:373
-msgid "Very Near"
-msgstr ""
-
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
 msgstr ""
@@ -896,6 +899,10 @@ msgstr ""
 msgid "Very Light"
 msgstr ""
 
+#: src/modules/dropshadow/e_mod_main.c:373
+msgid "Very Near"
+msgstr ""
+
 #: src/modules/dropshadow/e_mod_main.c:295
 msgid "Very Sharp"
 msgstr ""
@@ -908,7 +915,7 @@ msgstr ""
 msgid "Very Small"
 msgstr ""
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:349
 msgid "Welcome to Enlightenment 0.17"
 msgstr ""
 

@@ -3,14 +3,6 @@
  */
 #include "e.h"
 
-typedef struct _E_Border_Fake_Mouse_Up_Info E_Border_Fake_Mouse_Up_Info;
-
-struct _E_Border_Fake_Mouse_Up_Info
-{
-   E_Border *border;
-   int       button;
-};
-
 //#define INOUTDEBUG 1
 
 #define RESIZE_NONE 0
@@ -114,7 +106,7 @@ static void _e_border_move_update(E_Border *bd);
 static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
 
-static void _e_border_fake_mouse_up_cb(void *data);
+static void _e_border_drag_cb(void *data, void *event);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -1960,12 +1952,9 @@ static void
 _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Border *bd;
-   E_Border_Fake_Mouse_Up_Info *info;
 
    bd = data;
 
-#if 0
-   printf("drag_start %s %s\n", emission, source);
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
 	E_App *a;
@@ -1974,17 +1963,11 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 					 bd->client.icccm.class);
 	if (a)
 	  {
+	     e_drag_callback_set(bd, _e_border_drag_cb);
 	     e_drag_start(bd->zone, "enlightenment/border", bd, 
 			  a->path, "icon");
-
-	     info = E_NEW(E_Border_Fake_Mouse_Up_Info, 1);
-	     info->border = bd;
-	     info->button = 1;
-	     e_object_ref(E_OBJECT(info->border));
-	     ecore_job_add(_e_border_fake_mouse_up_cb, info);
 	  }
      }
-#endif
 }
 
 static int
@@ -2763,8 +2746,10 @@ _e_border_eval(E_Border *bd)
 					_e_border_cb_signal_resize_stop, bd);
 	edje_object_signal_callback_add(o, "action", "*",
 					_e_border_cb_signal_action, bd);
+#if 0
 	edje_object_signal_callback_add(o, "drag", "*",
 				        _e_border_cb_signal_drag, bd);
+#endif
 	if (bd->focused)
 	  edje_object_signal_emit(bd->bg_object, "active", "");
 	evas_object_move(o, 0, 0);
@@ -3713,7 +3698,7 @@ _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
-   if ((bd) && (desk))
+   if ((bd) && (desk) && (bd->desk != desk))
      {
 	e_border_desk_set(bd, desk);
 	e_border_hide(bd, 1);
@@ -4011,15 +3996,18 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
 }
 
 static void
-_e_border_fake_mouse_up_cb(void *data)
+_e_border_drag_cb(void *data, void *event)
 {
-   E_Border_Fake_Mouse_Up_Info *info;
-   
-   info = data;
-   if (info)
-     {
-	evas_event_feed_mouse_up(info->border->bg_evas, info->button, EVAS_BUTTON_NONE, NULL);
-	e_object_unref(E_OBJECT(info->border));
-	free(info);
-     }
+   E_Drag_Event *ev;
+   E_Border *bd;
+
+   ev = event;
+   bd = data;
+
+   printf("_e_border_drag_cb\n");
+
+   if (ev->drag)
+     evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
+   evas_event_feed_mouse_up(bd->bg_evas, 1, EVAS_BUTTON_NONE, NULL);
 }
+
