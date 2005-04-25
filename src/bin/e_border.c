@@ -1964,6 +1964,7 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 
    bd = data;
 
+#if 0
    printf("drag_start %s %s\n", emission, source);
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
@@ -1983,6 +1984,7 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 	     ecore_job_add(_e_border_fake_mouse_up_cb, info);
 	  }
      }
+#endif
 }
 
 static int
