@@ -99,12 +99,19 @@ e_container_new(E_Manager *man)
    con->name = strdup(name);
 
    screens = (Evas_List *)e_xinerama_screens_get();
-   for (l = screens; l; l = l->next)
+   if (screens)
      {
-	E_Screen *scr;
-	
-	scr = l->data;
-	zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
+	for (l = screens; l; l = l->next)
+	  {
+	     E_Screen *scr;
+	     
+	     scr = l->data;
+	     zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
+	  }
+     }
+   else
+     {
+	zone = e_zone_new(con, 0, 0, 0, con->w, con->h);
      }
    con->gadman = e_gadman_new(con);
    
@@ -525,25 +532,36 @@ _e_container_resize_handle(E_Container *con)
    e_xinerama_update();
    
    screens = (Evas_List *)e_xinerama_screens_get();
-   for (l = screens; l; l = l->next)
+   if (screens)
      {
-	E_Screen *scr;
+	for (l = screens; l; l = l->next)
+	  {
+	     E_Screen *scr;
+	     E_Zone *zone;
+	     
+	     scr = l->data;
+	     zone = e_container_zone_number_get(con, scr->screen);
+	     if (zone)
+	       {
+		  e_zone_move(zone, scr->x, scr->y);
+		  e_zone_resize(zone, scr->w, scr->h);
+	       }
+	     else
+	       {
+		  zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
+	       }
+	     /* FIXME: what if a zone exists for a screen that doesn't exist?
+	      *        not sure this will ever happen...
+	      */
+	  }
+     }
+   else
+     {
 	E_Zone *zone;
 	
-	scr = l->data;
-	zone = e_container_zone_number_get(con, scr->screen);
-	if (zone)
-	  {
-	     e_zone_move(zone, scr->x, scr->y);
-	     e_zone_resize(zone, scr->w, scr->h);
-	  }
-	else
-	  {
-	     zone = e_zone_new(con, scr->screen, scr->x, scr->y, scr->w, scr->h);
-	  }
-	/* FIXME: what if a zone exists for a screen that doesn't exist?
-	 *        not sure this will ever happen...
-	 */
+	zone = e_container_zone_number_get(con, 0);
+	e_zone_move(zone, 0, 0);
+	e_zone_resize(zone, con->w, con->h);
      }
    
    e_gadman_container_resize(con->gadman);

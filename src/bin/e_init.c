@@ -51,29 +51,44 @@ e_init_init(void)
    ecore_evas_show(_e_init_ecore_evas);
 
    screens = (Evas_List *)e_xinerama_screens_get();
-   for (l = screens; l; l = l->next)
+   if (screens)
      {
-	E_Screen *scr;
-	
-	scr = l->data;
-	o = edje_object_add(_e_init_evas);
-	/* first screen */
-	if (l == screens)
+	for (l = screens; l; l = l->next)
 	  {
-	     edje_object_file_set(o,
-				  /* FIXME: "init.edj" needs to come from config */
-				  e_path_find(path_init, "init.edj"),
-				  "init/splash");
-	     _e_init_object = o;
+	     E_Screen *scr;
+	     
+	     scr = l->data;
+	     o = edje_object_add(_e_init_evas);
+	     /* first screen */
+	     if (l == screens)
+	       {
+		  edje_object_file_set(o,
+				       /* FIXME: "init.edj" needs to come from config */
+				       e_path_find(path_init, "init.edj"),
+				       "init/splash");
+		  _e_init_object = o;
+	       }
+	     /* other screens */
+	     else
+	       edje_object_file_set(o,
+				    /* FIXME: "init.edj" needs to come from config */
+				    e_path_find(path_init, "init.edj"),
+				    "init/extra_screen");
+	     evas_object_move(o, scr->x, scr->y);
+	     evas_object_resize(o, scr->w, scr->h);
+	     evas_object_show(o);
 	  }
-	/* other screens */
-	else
-	  edje_object_file_set(o,
-			       /* FIXME: "init.edj" needs to come from config */
-			       e_path_find(path_init, "init.edj"),
-			       "init/extra_screen");
-	evas_object_move(o, scr->x, scr->y);
-	evas_object_resize(o, scr->w, scr->h);
+     }
+   else
+     {
+	o = edje_object_add(_e_init_evas);
+	edje_object_file_set(o,
+			     /* FIXME: "init.edj" needs to come from config */
+			     e_path_find(path_init, "init.edj"),
+			     "init/splash");
+	_e_init_object = o;
+	evas_object_move(o, 0, 0);
+	evas_object_resize(o, w, h);
 	evas_object_show(o);
      }
    
