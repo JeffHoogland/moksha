@@ -267,9 +267,9 @@ _cpufreq_set_governor(Cpufreq *e, const char *governor)
    ret = system(buf);
    if (ret != 0)
      {
-	e_error_dialog_show("CPU Frequency ERROR",
-			    "There was an error trying to set the cpu frequency\n"
-			    "governor via the module's setfreq utility.");
+	e_error_dialog_show(_("CPU Frequency ERROR"),
+			    _("There was an error trying to set the cpu frequency\n"
+			    "governor via the module's setfreq utility."));
      }
 }
 
@@ -284,9 +284,9 @@ _cpufreq_set_frequency(Cpufreq *e, int frequency)
    ret = system(buf);
    if (ret != 0)
      {
-	e_error_dialog_show("CPU Frequency ERROR",
-			    "There was an error trying to set the cpu frequency\n"
-			    "setting via the module's setfreq utility.");
+	e_error_dialog_show(_("CPU Frequency ERROR"),
+			    _("There was an error trying to set the cpu frequency\n"
+			    "setting via the module's setfreq utility."));
      }
 }
 
