@@ -227,6 +227,7 @@ data/icons/images/Makefile
 data/other/Makefile
 doc/Makefile
 po/Makefile
+intl/Makefile
 enlightenment-config
 ],[
 chmod +x enlightenment-config

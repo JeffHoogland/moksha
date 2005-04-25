@@ -48,6 +48,7 @@ e_font.h \
 e_intl.h \
 e_theme.h \
 e_dnd.h \
+e_bindings.h \
 e_moveresize.h
 
 enlightenment_SOURCES = \
@@ -89,6 +90,7 @@ e_font.c \
 e_intl.c \
 e_theme.c \
 e_dnd.c \
+e_bindings.c \
 e_moveresize.c \
 $(ENLIGHTENMENTHEADERS)
 

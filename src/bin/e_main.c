@@ -303,9 +303,17 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_theme_shutdown);
 
+   
    /* tell the error system that it can use gui dialogs now */
    e_error_gui_set(1);
    
+   /* init bindings system */
+   if (!e_bindings_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its bindings system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_bindings_shutdown);
    /* setup e ipc service */
    if (!_e_main_ipc_init())
      {
