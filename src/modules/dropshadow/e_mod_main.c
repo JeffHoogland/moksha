@@ -361,7 +361,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_far, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Close"));
+   e_menu_item_label_set(mi, _("Near"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_far.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -370,7 +370,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_close, ds);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Close"));
+   e_menu_item_label_set(mi, _("Very Near"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_close.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
@@ -379,7 +379,7 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_callback_set(mi, _ds_menu_very_close, ds);
    
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Extremely Close"));
+   e_menu_item_label_set(mi, _("Extremely Near"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_underneath.png", e_module_dir_get(ds->module));
    e_menu_item_icon_file_set(mi, buf);
    e_menu_item_radio_set(mi, 1);
