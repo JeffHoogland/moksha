@@ -551,7 +551,7 @@ _ibar_bar_menu_new(IBar_Bar *ibb)
    
    /* Edit */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _ibar_bar_cb_menu_edit, ibb);
 }
 
