@@ -234,7 +234,7 @@ msgid "Close"
 msgstr "Schließen"
 
 #: src/modules/dropshadow/e_mod_main.c:364
-msgid "Closely"
+msgid "Near"
 msgstr "Nah"
 
 #: src/bin/e_module.c:395
@@ -589,7 +589,7 @@ msgid "Exit Enlightenment"
 msgstr "Enlightenment verlassen"
 
 #: src/modules/dropshadow/e_mod_main.c:366
-msgid "Extremely Close"
+msgid "Extremely Near"
 msgstr "Extrem nah"
 
 #: src/modules/ibar/e_mod_main.c:775
@@ -971,7 +971,7 @@ msgid "Tiny"
 msgstr"Klein"
 
 #: src/modules/dropshadow/e_mod_main.c:357
-msgid "Very Close"
+msgid "Very Near"
 msgstr "Sehr nah"
 
 #: src/modules/dropshadow/e_mod_main.c:291
