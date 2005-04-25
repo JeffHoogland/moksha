@@ -811,7 +811,7 @@ _cpufreq_face_menu_new(Cpufreq_Face *face)
 
    /* Edit */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _cpufreq_face_cb_menu_edit, face);
 }
 

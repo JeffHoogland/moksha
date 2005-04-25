@@ -417,7 +417,7 @@ _pager_face_menu_new(Pager_Face *face)
    e_menu_item_callback_set(mi, _pager_face_cb_menu_enabled, face);
     */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Edit Mode");
+   e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _pager_face_cb_menu_edit, face);
 }
 
