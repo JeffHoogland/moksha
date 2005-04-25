@@ -5,9 +5,10 @@
 
 typedef enum _E_Binding_Context
 {
+   E_BINDING_CONTEXT_NONE,
+   E_BINDING_CONTEXT_UNKOWN,
    E_BINDING_CONTEXT_BORDER,
-   E_BINDING_CONTEXT_ZONE,
-   E_BINDING_CONTEXT_OTHER
+   E_BINDING_CONTEXT_ZONE
 } E_Binding_Context;
 
 #else
@@ -17,7 +18,8 @@ typedef enum _E_Binding_Context
 EAPI int         e_bindings_init(void);
 EAPI int         e_bindings_shutdown(void);
 
-//EAPI void        e_bindings_key_event_handle(E_Binding_Context context, E_Object *obj, char *key); /* finxish... */
+EAPI int         e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev);
+EAPI int         e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev);
 					 
 #endif
 #endif

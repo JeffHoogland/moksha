@@ -21,4 +21,16 @@ e_bindings_shutdown(void)
    return 1;
 }
 
+int
+e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   return 0;
+}
+
+int
+e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev)
+{
+   return 0;
+}
+
 /* local subsystem functions */

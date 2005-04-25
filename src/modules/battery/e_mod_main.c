@@ -786,7 +786,7 @@ _battery_linux_acpi_check(Battery *ef)
 
    /* Read some information on first run. */
    bats = ecore_file_ls("/proc/acpi/battery");
-   while ((name = ecore_list_next(bats)))
+   while ((bats) && (name = ecore_list_next(bats)))
      {
 	FILE *f;
 
@@ -849,7 +849,7 @@ _battery_linux_acpi_check(Battery *ef)
 	  }
 	free(name);
      }
-   ecore_list_destroy(bats);
+   if (bats) ecore_list_destroy(bats);
 
    if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
    if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
