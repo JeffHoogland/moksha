@@ -176,9 +176,9 @@ matrix shows the current state of internationalization, as of April
 PO files have been submitted to translation coordination, with a
 translation percentage of at least 50%.
 
-     Ready PO files    en fr ja
-                     +----------+
-     enlightenment   | [] [] [] |
+     Ready PO files    en fr ja de bg es fi pl pt ru
+                     +-------------------------------+
+     enlightenment   | [] [] [] [] [] [] [] [] [] [] |
 
 
    Some counters in the preceding matrix are higher than the number of
