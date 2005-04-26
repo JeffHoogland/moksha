@@ -23,5 +23,6 @@ xgettext \
 -o enlightenment.pot \
 `find . -name "*.[ch]" -print` 
 
-###  If you want this, uncomment it.
-./configure "$@"
+if [ -z "$NOCONFIGURE" ]; then
+	./configure "$@"
+fi
