@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-26 11:17+0800\n"
+"PO-Revision-Date: 2005-04-26 14:12+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -163,123 +163,123 @@ msgstr "电池电量低"
 
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
-msgstr ""
+msgstr "CPU频率控制模块"
 
 #: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
 msgid "CPU Frequency ERROR"
-msgstr ""
+msgstr "CPU频率错误"
 
 #: src/bin/e_gadman.c:512
 msgid "Center Horizontally"
-msgstr ""
+msgstr "水平居中"
 
 #: src/bin/e_gadman.c:559
 msgid "Center Vertically"
-msgstr ""
+msgstr "垂直居中"
 
 #: src/modules/battery/e_mod_main.c:999
 msgid "Charging"
-msgstr ""
+msgstr "充电中"
 
 #: src/modules/cpufreq/e_mod_main.c:388
 msgid "Check Fast (0.5 sec)"
-msgstr ""
+msgstr "频繁检查（每0.5秒）"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
-msgstr ""
+msgstr "频繁检查（每1秒）"
 
 #: src/modules/temperature/e_mod_main.c:184
 #: src/modules/temperature/e_mod_main.c:608
 msgid "Check Interval"
-msgstr ""
+msgstr "间歇检查"
 
 #: src/modules/cpufreq/e_mod_main.c:395
 msgid "Check Medium (1 sec)"
-msgstr ""
+msgstr "一般检查（每1秒）"
 
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
-msgstr ""
+msgstr "一般检查（每5秒）"
 
 #: src/modules/battery/e_mod_main.c:444
 msgid "Check Normal (10 sec)"
-msgstr ""
+msgstr "一般检查（每10秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:402
 msgid "Check Normal (2 sec)"
-msgstr ""
+msgstr "一般检查（每2秒）"
 
 #: src/modules/battery/e_mod_main.c:451
 msgid "Check Slow (30 sec)"
-msgstr ""
+msgstr "缓慢检查（每30秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:409
 msgid "Check Slow (5 sec)"
-msgstr ""
+msgstr "缓慢检查（每5秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:416
 msgid "Check Very Slow (30 sec)"
-msgstr ""
+msgstr "极缓慢检查（每30秒）"
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
-msgstr ""
+msgstr "极缓慢检查（每60秒）"
 
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
-msgstr ""
+msgstr "时钟"
 
 #: src/bin/e_border.c:3498
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
 #: src/bin/e_module.c:395
 msgid "Configuration"
-msgstr ""
+msgstr "配置"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
-msgstr ""
+msgstr "CPU频率"
 
 #: src/bin/e_border.c:3592
 msgid "Create Icon"
-msgstr ""
+msgstr "创建图标"
 
 #: src/modules/battery/e_mod_main.c:995
 msgid "Danger"
-msgstr ""
+msgstr "危险"
 
 #: src/modules/dropshadow/e_mod_main.c:316
 msgid "Dark"
-msgstr ""
+msgstr "暗"
 
 #: src/bin/e_int_menus.c:78
 msgid "Desktops"
-msgstr ""
+msgstr "桌面"
 
 #: src/modules/dropshadow/e_mod_main.c:139
 msgid "Dropshadow"
-msgstr ""
+msgstr "阴影"
 
 #: src/bin/e_border.c:3566
 msgid "Edit Icon"
-msgstr ""
+msgstr "编辑图标"
 
 #: src/bin/e_int_menus.c:522 src/modules/clock/e_mod_main.c:309
 #: src/modules/ibar/e_mod_main.c:554 src/modules/battery/e_mod_main.c:561
 #: src/modules/temperature/e_mod_main.c:721 src/modules/pager/e_mod_main.c:420
 #: src/modules/cpufreq/e_mod_main.c:814
 msgid "Edit Mode"
-msgstr ""
+msgstr "编辑模式"
 
 #: src/bin/e_module.c:384
 msgid "Enabled"
-msgstr ""
+msgstr "有效"
 
 #: src/bin/e_gadman.c:571
 msgid "End Edit Mode"
-msgstr ""
+msgstr "结束编辑模式"
 
 #: src/bin/e_main.c:373
 msgid "Enlightenment"
@@ -287,15 +287,15 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
-msgstr ""
+msgstr "Enlightenment电池模块"
 
 #: src/modules/clock/e_mod_main.c:95
 msgid "Enlightenment Clock Module"
-msgstr ""
+msgstr "Enlightenment时钟模块"
 
 #: src/modules/dropshadow/e_mod_main.c:148
 msgid "Enlightenment Dropshadow Module"
-msgstr ""
+msgstr "Enlightenment阴影模块"
 
 #: src/modules/ibar/e_mod_main.c:158
 msgid "Enlightenment IBar Module"
@@ -303,19 +303,19 @@ msgstr ""
 
 #: src/bin/e_main.c:358
 msgid "Enlightenment IPC setup error!"
-msgstr ""
+msgstr "Enlightenment IPC设置错误！"
 
 #: src/modules/pager/e_mod_main.c:137
 msgid "Enlightenment Pager Module"
-msgstr ""
+msgstr "Enlightenment Pager模块"
 
 #: src/bin/e_main.c:375
 msgid "Enlightenment Starting. Please wait."
-msgstr ""
+msgstr "Enlightenment 正在启动。请稍候。"
 
 #: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
-msgstr ""
+msgstr "Enlightenment 温度模块"
 
 #: src/modules/test/e_mod_main.c:66
 msgid "Enlightenment Test Module"
@@ -326,94 +326,116 @@ msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法启动Ecore！\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:241
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
+"Enlightenment 无法在您的主目录创建目录。\n"
+"可能您没有主目录或者磁盘已满？"
 
 #: src/bin/e_main.c:182
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
+"Enlightenment 无法启动X连接。\n"
+"您设定了DISPLAY环境变量吗？"
 
 #: src/bin/e_main.c:221
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法启动Evas系统。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:229
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法启动文件系统。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:213
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法启动IPC系统。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:205
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法启动连接系统。\n"
+"可能您的内存用完了？<"
 
 #: src/bin/e_main.c:171
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法建立一个HUP信号处理句柄。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:165
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法建立一个退出信号处理句柄。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:278
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法建立启动屏幕。\n"
+"可能您的内存用完了？"
 
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的应用系统。"
 
 #: src/bin/e_main.c:313
 msgid "Enlightenment cannot set up its bindings system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的绑定系统。"
 
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的配置系统。"
 
 #: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its dnd system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的拖放系统。"
 
 #: src/bin/e_main.c:268
 msgid "Enlightenment cannot set up its font system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的字体系统。"
 
 #: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its module system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的模块系统。"
 
 #: src/bin/e_main.c:301
 msgid "Enlightenment cannot set up its theme system."
-msgstr ""
+msgstr "Enlightenment 无法建立它的主题系统。"
 
 #: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment 无法建立路径以打开文件。\\n\"\n"
+"\"可能您的内存用完了？"
 
 #: src/bin/e_main.c:320 src/bin/e_main.c:359
 msgid ""
@@ -423,22 +445,31 @@ msgid ""
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
 msgstr ""
+"Enlightenment 无法建立IPC套接字。\n"
+"看起来已经有一个Enlightenment在运行了。\n"
+"请确认没有其它Enlightenment在同一个display上运行，\n"
+"如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
+"然后再试着运行一遍。"
 
 #: src/bin/e_main.c:189
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
+"Enlightenment 无法建立xinerama wrapping。\n"
+"这种情况不该发生。"
 
 #: src/bin/e_main.c:286
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
+"Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
+"可能有另外一个窗口管理器在运行？"
 
 #: src/bin/e_error.c:350
 msgid "Enlightenment: Error!"
-msgstr ""
+msgstr "Enlightenment：错误！"
 
 #: src/modules/ibar/e_mod_main.c:781
 msgid "Enormous"
@@ -452,6 +483,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：电池\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -461,6 +496,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：时钟\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/dropshadow/e_mod_main.c:92
 #, c-format
@@ -470,6 +509,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：阴影\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -479,6 +522,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：IBar\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/pager/e_mod_main.c:82
 #, c-format
@@ -488,6 +535,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：Pager\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -497,6 +548,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：温度\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/cpufreq/e_mod_main.c:58
 #, c-format
@@ -506,6 +561,10 @@ msgid ""
 "The module API advertized by Enlightenment is %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：CPU频率\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -515,10 +574,14 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"启动模块错误：测试模块\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
 
 #: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
 msgid "Error loading Module"
-msgstr ""
+msgstr "装入模块错误"
 
 #: src/bin/e_border.c:3666
 msgid ""
@@ -527,10 +590,14 @@ msgid ""
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
+"启动图标编辑器错误\n"
+"\n"
+"请安装 e_util_eapp_edit\n"
+"或者确认它已经在你的路径设置中"
 
 #: src/bin/e_int_menus.c:123
 msgid "Exit Enlightenment"
-msgstr ""
+msgstr "退出 Enlightenment"
 
 #: src/modules/ibar/e_mod_main.c:767
 msgid "Extremely Large"
