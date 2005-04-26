@@ -920,7 +920,7 @@ msgstr ""
 
 #: src/bin/e_main.c:367
 msgid "This is development code, so be warned."
-msgstr "Dieses ist Entwicklungscode und mit Achtung zu genießen."
+msgstr "Dieses ist Entwicklungscode und mit Vorsicht zu genießen."
 
 #: src/bin/e_main.c:327
 msgid ""
