@@ -106,8 +106,6 @@ static void _e_border_move_update(E_Border *bd);
 static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
 
-static void _e_border_drag_cb(void *data, void *event);
-
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -1894,6 +1892,9 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
    E_Border *bd;
 
    bd = data;
+
+   if (e_dnd_active()) return;
+
    printf("action %s\n", source);
    if (!strcmp(source, "close"))
      {
@@ -1954,20 +1955,9 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
    E_Border *bd;
 
    bd = data;
-
-   if ((bd->client.icccm.name) && (bd->client.icccm.class))
-     {
-	E_App *a;
-
-	a = e_app_window_name_class_find(bd->client.icccm.name,
-					 bd->client.icccm.class);
-	if (a)
-	  {
-	     e_drag_callback_set(bd, _e_border_drag_cb);
-	     e_drag_start(bd->zone, "enlightenment/border", bd, 
-			  a->path, "icon");
-	  }
-     }
+   bd->drag.start = 1;
+   bd->drag.x = -1;
+   bd->drag.y = -1;
 }
 
 static int
@@ -2281,6 +2271,9 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
      }
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
+
+   bd->drag.start = 0;
+
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
    evas_event_feed_mouse_up(bd->bg_evas, ev->button, EVAS_BUTTON_NONE, NULL);
    return 1;
@@ -2339,6 +2332,42 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
      }
    else
      {
+	if (bd->drag.start)
+	  {
+	     if ((bd->drag.x == -1) && (bd->drag.y == -1))
+	       {
+		  bd->drag.x = ev->x;
+		  bd->drag.y = ev->y;
+	       }
+	     else
+	       {
+		  int x, y;
+		  double dist;
+
+		  x = bd->drag.x - ev->x;
+		  y = bd->drag.y - ev->y;
+		  dist = sqrt(pow(x, 2) + pow(y, 2));
+		  if (dist > 10)
+		    {
+		       /* start drag! */
+		       if ((bd->client.icccm.name) && (bd->client.icccm.class))
+			 {
+			    E_App *a;
+
+			    a = e_app_window_name_class_find(bd->client.icccm.name,
+							     bd->client.icccm.class);
+			    if (a)
+			      {
+				 e_drag_start(bd->zone, "enlightenment/border", bd, 
+					      a->path, "icon");
+				 evas_event_feed_mouse_up(bd->bg_evas, 1,
+							  EVAS_BUTTON_NONE, NULL);
+			      }
+			 }
+		       bd->drag.start = 0;
+		    }
+	       }
+	  }
 	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
      }
    return 1;
@@ -2746,10 +2775,8 @@ _e_border_eval(E_Border *bd)
 					_e_border_cb_signal_resize_stop, bd);
 	edje_object_signal_callback_add(o, "action", "*",
 					_e_border_cb_signal_action, bd);
-#if 0
 	edje_object_signal_callback_add(o, "drag", "*",
 				        _e_border_cb_signal_drag, bd);
-#endif
 	if (bd->focused)
 	  edje_object_signal_emit(bd->bg_object, "active", "");
 	evas_object_move(o, 0, 0);
@@ -3994,20 +4021,3 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
 	borders = evas_list_prepend(borders, bd);
      }
 }
-
-static void
-_e_border_drag_cb(void *data, void *event)
-{
-   E_Drag_Event *ev;
-   E_Border *bd;
-
-   ev = event;
-   bd = data;
-
-   printf("_e_border_drag_cb\n");
-
-   if (ev->drag)
-     evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
-   evas_event_feed_mouse_up(bd->bg_evas, 1, EVAS_BUTTON_NONE, NULL);
-}
-

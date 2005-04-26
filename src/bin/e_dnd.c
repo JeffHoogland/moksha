@@ -13,9 +13,11 @@ static Evas_Object *drag_obj;
 static char *drag_type;
 static void *drag_data;
 
+#if 0
 static int  drag;
 static void (*drag_cb)(void *data, void *event);
 static void *drag_cb_data;
+#endif
 
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
@@ -78,6 +80,12 @@ e_dnd_shutdown(void)
    return 1;
 }
 
+int
+e_dnd_active(void)
+{
+   return (drag_win != 0);
+}
+
 void
 e_drag_start(E_Zone *zone, const char *type, void *data,
 	     const char *icon_path, const char *icon)
@@ -90,8 +98,6 @@ e_drag_start(E_Zone *zone, const char *type, void *data,
    ecore_x_window_show(drag_win);
    ecore_x_pointer_confine_grab(drag_win);
    ecore_x_keyboard_grab(drag_win);
-
-   drag = 0;
 
    if (drag_ee)
      {
@@ -128,8 +134,6 @@ e_drag_update(int x, int y)
 
    if (!drag_ee) return;
 
-   drag = 1;
-   
    evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
    evas_object_show(drag_obj);
    ecore_evas_show(drag_ee);
@@ -153,6 +157,7 @@ e_drag_end(int x, int y)
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_window_del(drag_win);
+   drag_win = 0;
 
    ev = E_NEW(E_Drop_Event, 1);
    if (!ev) goto end;
@@ -180,12 +185,14 @@ end:
    drag_data = NULL;
 }
 
+#if 0
 void
 e_drag_callback_set(void *data, void (*func)(void *data, void *event))
 {
    drag_cb = func;
    drag_cb_data = data;
 } 
+#endif
 
 E_Drop_Handler *
 e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h)
@@ -225,6 +232,7 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
 
    e_drag_end(ev->x, ev->y);
 
+#if 0
    if (drag_cb)
      {
 	E_Drag_Event *e;
@@ -240,6 +248,7 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
 	     free(e);
 	  }
      }
+#endif
 
    return 1;
 }

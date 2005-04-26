@@ -211,6 +211,11 @@ struct _E_Border
       unsigned int shaded : 1;
       unsigned int shape : 1;
    } changes;
+
+   struct {
+	unsigned char start : 1;
+	int x, y;
+   } drag;
 };
 
 struct _E_Border_Pending_Move_Resize 
