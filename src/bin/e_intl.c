@@ -49,6 +49,8 @@ e_intl_init(void)
    ADD_LANG("bg");
    ADD_LANG("de");
    ADD_LANG("pl");
+   ADD_LANG("zh_CN");
+   ADD_LANG("hu");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));
@@ -146,7 +148,7 @@ e_intl_language_name_get(const char *lang)
    IFL("uk") "Ukrainian";
    IFL("vi") "Vietnamese";
    /* must keep both - politically sensitive */
-   IFL("zh") "Chinese (Simplified)";
+   IFL("zh_CN") "Chinese (Simplified)";
    IFL("zh_TW") "Chinese (Traditional)";
    return "Unknown";
 }
@@ -191,6 +193,12 @@ e_intl_language_simple_get(const char *lang)
      return "de";
    if (ISL("pl") || ISL("pl_PL") || ISL("PL") || ISL("pl_PL@euro"))
      return "pl";
+   if (ISL("zh") || ISL("zh_CN") || ISL("CN"))
+     return "zh_CN";
+   if (ISL("zh") || ISL("zh_TW") || ISL("TW"))
+     return "zh_TW";
+   if (ISL("hu") || ISL("hu_HU") || ISL("HU"))
+     return "hu";
    /* this is the default fallback - we have no special cases for this lang
     * so just strip off anything after and including the _ for country region
     * and just return the language encoding

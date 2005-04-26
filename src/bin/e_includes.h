@@ -39,3 +39,4 @@
 #include "e_dnd.h"
 #include "e_bindings.h"
 #include "e_moveresize.h"
+#include "e_actions.h"

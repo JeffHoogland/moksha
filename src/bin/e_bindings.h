@@ -6,9 +6,10 @@
 typedef enum _E_Binding_Context
 {
    E_BINDING_CONTEXT_NONE,
-   E_BINDING_CONTEXT_UNKOWN,
+   E_BINDING_CONTEXT_UNKNOWN,
    E_BINDING_CONTEXT_BORDER,
-   E_BINDING_CONTEXT_ZONE
+   E_BINDING_CONTEXT_ZONE,
+   E_BINDING_CONTEXT_ANY
 } E_Binding_Context;
 
 /* why do we do this? config stored bindings must be fixed. x's modifier masks
@@ -32,6 +33,7 @@ EAPI int         e_bindings_shutdown(void);
 
 EAPI int         e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev);
 EAPI int         e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev);
+EAPI int         e_bindings_signale_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src);
 					 
 #endif
 #endif

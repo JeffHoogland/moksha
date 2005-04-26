@@ -49,7 +49,8 @@ e_intl.h \
 e_theme.h \
 e_dnd.h \
 e_bindings.h \
-e_moveresize.h
+e_moveresize.h \
+e_actions.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -92,6 +93,7 @@ e_theme.c \
 e_dnd.c \
 e_bindings.c \
 e_moveresize.c \
+e_actions.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@

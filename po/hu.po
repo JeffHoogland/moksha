@@ -1,14 +1,14 @@
-# Enlightenment 0.17 Simplified Chinese Translation
+# SOME DESCRIPTIVE TITLE.
 # This file is put in the public domain.
-# Emfox Zhou <emfox@zju.edu.cn>, 2005.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-26 14:12+0800\n"
-"Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
+"POT-Creation-Date: 2005-04-26 09:09+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,72 +17,72 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:460
 #, c-format
 msgid "%i Mhz"
-msgstr "%i 兆赫兹"
+msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:463
 #, c-format
 msgid "%i.%i Ghz"
-msgstr "%i.%i 吉赫兹"
+msgstr ""
 
 #: src/bin/e_int_menus.c:279
 msgid "(No Applications)"
-msgstr "（无应用程序）"
+msgstr "(Nincs alkalmazás)"
 
 #: src/bin/e_int_menus.c:452
 msgid "(No Windows)"
-msgstr "（无窗口）"
+msgstr "(Nincs ablak)"
 
 #: src/bin/e_int_menus.c:528
 msgid "(Unused)"
-msgstr "（未使用）"
+msgstr "(Nem használt)"
 
 #: src/modules/battery/e_mod_main.c:418
 msgid "1 hour"
-msgstr "一小时"
+msgstr "1 óra"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr "100度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr "10度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr "20度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr "30度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr "40度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr "50度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr "60度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr "70度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr "80度"
+msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr "90度"
+msgstr ""
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -91,9 +91,10 @@ msgid ""
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
 msgstr ""
-"一个简单的电池指示计，使用Linux下的ACPI或者APM模块来\n"
-"监视您的电池和交流电源适配器状态。仅能在Linux下工作，\n"
-"且依赖于您的BIOS和内核驱动。"
+"Egyszerű teleptöltöttség jelző, mely vagy az ACPI-n vagy\n"
+"az APM-en keresztül képes mérni a telep töltöttségét illetve\n"
+"a hálózati csatlakozás meglétét. Ez csak Linuxon működik és\n"
+"csak annyira pontos, amennyire a BIOS és a kernel meghajtók."
 
 #: src/modules/temperature/e_mod_main.c:97
 msgid ""
@@ -101,185 +102,182 @@ msgid ""
 "It is especially useful for modern Laptops with high speed\n"
 "CPUs that generate a lot of heat."
 msgstr ""
-"一个Linux下报告ACPI温度监视器状态的模块。\n"
-"尤其对于有着产生大量热量的高速CPU的现代笔记本电脑来说，\n"
-"这个模块特别有用。"
+"Ez a modul az ACPI hőmérők mérésére van Linuxon."
 
 #: src/modules/pager/e_mod_main.c:138
 msgid "A pager module to navigate virtual desktops."
-msgstr "一个切换虚拟桌面的Pager模块"
+msgstr "Pager modul a virtuális asztalok közötti váltásra."
 
 #: src/modules/cpufreq/e_mod_main.c:108
 msgid ""
 "A simple module to control the frequency of the system CPU. This is "
 "especially useful to save power on laptops."
 msgstr ""
-"一个控制系统CPU频率的简单模块。\n"
-"在为笔记本电脑节省电力时很有用。"
+"Egyszerű processzor frekvencia mérő és beállító modul."
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
-msgstr "一个给E17提供时钟的简单模块。"
+msgstr "Egyszerű óra modul."
 
 #: src/bin/e_int_menus.c:106 src/bin/e_int_menus.c:217
 msgid "About Enlightenment"
-msgstr "关于 Enlightenment"
+msgstr "Az Enlightenmentről"
 
 #: src/bin/e_module.c:380
 msgid "About..."
-msgstr "关于……"
+msgstr "Névjegy..."
 
 #: src/bin/e_main.c:389
 msgid "Artificially slowing startup so you can see it all."
-msgstr "人工调慢启动过程，以便您看得更清楚。"
+msgstr "Mesterségesen lassított indítás, hogy mindent láss."
 
 #: src/modules/ibar/e_mod_main.c:709
 msgid "Auto fit icons"
-msgstr "自动缩放图标"
+msgstr "Ikonok automatikus méretezése"
 
 #: src/modules/cpufreq/e_mod_main.c:434
 msgid "Automatic"
-msgstr "自动"
+msgstr "Automatikus"
 
 #: src/bin/e_gadman.c:530
 msgid "Automatic Height"
-msgstr "自动调整高度"
+msgstr "Automatikus magasság"
 
 #: src/bin/e_gadman.c:483
 msgid "Automatic Width"
-msgstr "自动调整宽度"
+msgstr "Automatikus szélesség"
 
 #: src/modules/battery/e_mod_main.c:903
 msgid "BAD DRIVER"
-msgstr "错误的驱动"
+msgstr "Rossz meghajtó"
 
 #: src/modules/battery/e_mod_main.c:89
 msgid "Battery"
-msgstr "电池"
+msgstr "Telep"
 
 #: src/modules/battery/e_mod_main.c:686
 msgid "Battery Running Low"
-msgstr "电池电量低"
+msgstr "Teleptöltöttség alacsony"
 
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
-msgstr "CPU频率控制模块"
+msgstr "Processzor frekvencia beállító modul"
 
 #: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
 msgid "CPU Frequency ERROR"
-msgstr "CPU频率错误"
+msgstr "Processzor frekvencia hiba"
 
 #: src/bin/e_gadman.c:512
 msgid "Center Horizontally"
-msgstr "水平居中"
+msgstr "Vízszintesen középre"
 
 #: src/bin/e_gadman.c:559
 msgid "Center Vertically"
-msgstr "垂直居中"
+msgstr "Függőlegesen középre"
 
 #: src/modules/battery/e_mod_main.c:999
 msgid "Charging"
-msgstr "充电中"
+msgstr "Töltés"
 
 #: src/modules/cpufreq/e_mod_main.c:388
 msgid "Check Fast (0.5 sec)"
-msgstr "频繁检查（每0.5秒）"
+msgstr "Gyakori ellenőrzés (0.5 mp)"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
-msgstr "频繁检查（每1秒）"
+msgstr "Gyakori ellenőrzés (1 mp)"
 
 #: src/modules/temperature/e_mod_main.c:184
 #: src/modules/temperature/e_mod_main.c:608
 msgid "Check Interval"
-msgstr "间歇检查"
+msgstr "Ellenőrzési gyakoriság"
 
 #: src/modules/cpufreq/e_mod_main.c:395
 msgid "Check Medium (1 sec)"
-msgstr "一般检查（每1秒）"
+msgstr "Közepesen gyakori ellenőrzés (1 mp)"
 
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
-msgstr "一般检查（每5秒）"
+msgstr "Közepesen gyakori ellenőrzés (5 mp)"
 
 #: src/modules/battery/e_mod_main.c:444
 msgid "Check Normal (10 sec)"
-msgstr "一般检查（每10秒）"
+msgstr "Alap ellenőrzési gyakoriság (10 mp)"
 
 #: src/modules/cpufreq/e_mod_main.c:402
 msgid "Check Normal (2 sec)"
-msgstr "一般检查（每2秒）"
+msgstr "Alap ellenőrzési gyakoriság (2 mp)"
 
 #: src/modules/battery/e_mod_main.c:451
 msgid "Check Slow (30 sec)"
-msgstr "缓慢检查（每30秒）"
+msgstr "Ritka ellenőrzés (30 mp)"
 
 #: src/modules/cpufreq/e_mod_main.c:409
 msgid "Check Slow (5 sec)"
-msgstr "缓慢检查（每5秒）"
+msgstr "Ritka ellenőrzés (5mp)"
 
 #: src/modules/cpufreq/e_mod_main.c:416
 msgid "Check Very Slow (30 sec)"
-msgstr "极缓慢检查（每30秒）"
+msgstr "Nagyok ritka ellenőrzés (30 mp)"
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
-msgstr "极缓慢检查（每60秒）"
+msgstr "Nagyon ritka ellenőrzés (60 mp)"
 
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
-msgstr "时钟"
+msgstr "Óra"
 
-#: src/bin/e_border.c:3498
+#: src/bin/e_border.c:3485
 msgid "Close"
-msgstr "关闭"
+msgstr "Bezár"
 
 #: src/bin/e_module.c:395
 msgid "Configuration"
-msgstr "配置"
+msgstr "Beállítás"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
-msgstr "CPU频率"
+msgstr "ProcFrek"
 
-#: src/bin/e_border.c:3592
+#: src/bin/e_border.c:3579
 msgid "Create Icon"
-msgstr "创建图标"
+msgstr "Ikon készítés"
 
 #: src/modules/battery/e_mod_main.c:995
 msgid "Danger"
-msgstr "危险"
+msgstr "Veszély"
 
 #: src/modules/dropshadow/e_mod_main.c:316
 msgid "Dark"
-msgstr "暗"
+msgstr "Sötét"
 
 #: src/bin/e_int_menus.c:78
 msgid "Desktops"
-msgstr "桌面"
+msgstr "Asztalok"
 
 #: src/modules/dropshadow/e_mod_main.c:139
 msgid "Dropshadow"
-msgstr "阴影"
+msgstr "Árnyék"
 
-#: src/bin/e_border.c:3566
+#: src/bin/e_border.c:3553
 msgid "Edit Icon"
-msgstr "编辑图标"
+msgstr "Ikon szerkesztés"
 
-#: src/bin/e_int_menus.c:522 src/modules/clock/e_mod_main.c:309
-#: src/modules/ibar/e_mod_main.c:554 src/modules/battery/e_mod_main.c:561
-#: src/modules/temperature/e_mod_main.c:721 src/modules/pager/e_mod_main.c:420
-#: src/modules/cpufreq/e_mod_main.c:814
+#: src/bin/e_int_menus.c:522 src/modules/battery/e_mod_main.c:561
+#: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
+#: src/modules/ibar/e_mod_main.c:554 src/modules/pager/e_mod_main.c:420
+#: src/modules/temperature/e_mod_main.c:721
 msgid "Edit Mode"
-msgstr "编辑模式"
+msgstr "Szerkesztési mód"
 
 #: src/bin/e_module.c:384
 msgid "Enabled"
-msgstr "有效"
+msgstr "Engedélyezve"
 
 #: src/bin/e_gadman.c:571
 msgid "End Edit Mode"
-msgstr "结束编辑模式"
+msgstr "Szerkesztési mód befejezése"
 
 #: src/bin/e_main.c:373
 msgid "Enlightenment"
@@ -287,155 +285,153 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
-msgstr "Enlightenment电池模块"
+msgstr "Enlightenment telepmérő modul"
 
 #: src/modules/clock/e_mod_main.c:95
 msgid "Enlightenment Clock Module"
-msgstr "Enlightenment时钟模块"
+msgstr "Enlightenment óra modul"
 
 #: src/modules/dropshadow/e_mod_main.c:148
 msgid "Enlightenment Dropshadow Module"
-msgstr "Enlightenment阴影模块"
+msgstr "Enlightenment árnyék modul"
 
 #: src/modules/ibar/e_mod_main.c:158
 msgid "Enlightenment IBar Module"
-msgstr ""
+msgstr "Enlightenment IBar modul"
 
 #: src/bin/e_main.c:358
 msgid "Enlightenment IPC setup error!"
-msgstr "Enlightenment IPC设置错误！"
+msgstr "Enlightenment IPC beállítási hiba!"
 
 #: src/modules/pager/e_mod_main.c:137
 msgid "Enlightenment Pager Module"
-msgstr "Enlightenment Pager模块"
+msgstr "Enlighenment pager modul"
 
 #: src/bin/e_main.c:375
 msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment 正在启动。请稍候。"
+msgstr "Enlightenment indítása. Kérem várjon."
 
 #: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
-msgstr "Enlightenment 温度模块"
+msgstr "Enlightenment hőmérő modul"
 
 #: src/modules/test/e_mod_main.c:66
 msgid "Enlightenment Test Module"
-msgstr ""
+msgstr "Enlightenment teszt modul"
 
 #: src/bin/e_main.c:155
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法启动Ecore！\n"
-"可能您的内存用完了？"
+"Hiba az Ecore inicializálásakor!\n"
+"Talán nincs elég memóra?"
 
 #: src/bin/e_main.c:241
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment 无法在您的主目录创建目录。\n"
-"可能您没有主目录或者磁盘已满？"
+"Nem sikerült létrehozni a szükséges könyvtárakat.\n"
+"Talán írásvédett a könyvtára vagy megtelt a lemez?"
 
 #: src/bin/e_main.c:182
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment 无法启动X连接。\n"
-"您设定了DISPLAY环境变量吗？"
+"Nem sikerült inicializálni az X kapcsolatot.\n"
+"Jól van beállítva a DISPLAY változó?"
 
 #: src/bin/e_main.c:221
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法启动Evas系统。\n"
-"可能您的内存用完了？"
+"Nem sikerült az Evas inicializálása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:229
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法启动文件系统。\n"
-"可能您的内存用完了？"
+"Nem sikerült inicializálni a File rendszert.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:213
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法启动IPC系统。\n"
-"可能您的内存用完了？"
+"Nem sikerült az IPC rendszer inicializálása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:205
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法启动连接系统。\n"
-"可能您的内存用完了？<"
+"Nem sikerült a kapcsolat rendszer inicializálása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:171
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法建立一个HUP信号处理句柄。\n"
-"可能您的内存用完了？"
+"Nem sikerült a HUP kezelő inicializálása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:165
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法建立一个退出信号处理句柄。\n"
-"可能您的内存用完了？"
+"Nem sikerült a kilépési szgnál kezelő inicializáslása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:278
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法建立启动屏幕。\n"
-"可能您的内存用完了？"
+"Nem sikerült a képernyő beállítása.\n"
+"Talán nincs elág memória?"
 
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenment 无法建立它的应用系统。"
+msgstr ""
 
 #: src/bin/e_main.c:313
 msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment 无法建立它的绑定系统。"
+msgstr ""
 
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment 无法建立它的配置系统。"
+msgstr ""
 
 #: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its dnd system."
-msgstr "Enlightenment 无法建立它的拖放系统。"
+msgstr ""
 
 #: src/bin/e_main.c:268
 msgid "Enlightenment cannot set up its font system."
-msgstr "Enlightenment 无法建立它的字体系统。"
+msgstr ""
 
 #: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its module system."
-msgstr "Enlightenment 无法建立它的模块系统。"
+msgstr ""
 
 #: src/bin/e_main.c:301
 msgid "Enlightenment cannot set up its theme system."
-msgstr "Enlightenment 无法建立它的主题系统。"
+msgstr ""
 
 #: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 无法建立路径以打开文件。\\n\"\n"
-"\"可能您的内存用完了？"
 
 #: src/bin/e_main.c:320 src/bin/e_main.c:359
 msgid ""
@@ -445,35 +441,26 @@ msgid ""
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
 msgstr ""
-"Enlightenment 无法建立IPC套接字。\n"
-"看起来已经有一个Enlightenment在运行了。\n"
-"请确认没有其它Enlightenment在同一个display上运行，\n"
-"如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
-"然后再试着运行一遍。"
 
 #: src/bin/e_main.c:189
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
-"Enlightenment 无法建立xinerama wrapping。\n"
-"这种情况不该发生。"
 
 #: src/bin/e_main.c:286
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
-"可能有另外一个窗口管理器在运行？\n"
 
 #: src/bin/e_error.c:350
 msgid "Enlightenment: Error!"
-msgstr "Enlightenment：错误！"
+msgstr "Enlightenment: Hiba!"
 
 #: src/modules/ibar/e_mod_main.c:781
 msgid "Enormous"
-msgstr ""
+msgstr "Rengeteg"
 
 #: src/modules/battery/e_mod_main.c:46
 #, c-format
@@ -483,10 +470,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：电池\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -496,10 +479,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：时钟\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/dropshadow/e_mod_main.c:92
 #, c-format
@@ -509,10 +488,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：阴影\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -522,10 +497,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：IBar\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/pager/e_mod_main.c:82
 #, c-format
@@ -535,10 +506,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：Pager\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -548,10 +515,6 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：温度\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/cpufreq/e_mod_main.c:58
 #, c-format
@@ -561,10 +524,6 @@ msgid ""
 "The module API advertized by Enlightenment is %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：CPU频率\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -574,163 +533,155 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"启动模块错误：测试模块\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
 #: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
 msgid "Error loading Module"
-msgstr "装入模块错误"
+msgstr ""
 
-#: src/bin/e_border.c:3666
+#: src/bin/e_border.c:3653
 msgid ""
 "Error starting icon editor\n"
 "\n"
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
-"启动图标编辑器错误\n"
-"\n"
-"请安装 e_util_eapp_edit\n"
-"或者确认它已经在你的路径设置中\n"
 
 #: src/bin/e_int_menus.c:123
 msgid "Exit Enlightenment"
-msgstr "退出 Enlightenment"
+msgstr "Kilépés"
 
 #: src/modules/ibar/e_mod_main.c:767
 msgid "Extremely Large"
-msgstr ""
+msgstr "Nagyon nagy"
 
 #: src/modules/dropshadow/e_mod_main.c:382
 msgid "Extremely Near"
-msgstr ""
+msgstr "Nagyon közel"
 
 #: src/modules/battery/e_mod_main.c:927
 msgid "FULL"
-msgstr ""
+msgstr "Feltöltve"
 
 #: src/modules/dropshadow/e_mod_main.c:355
 msgid "Far"
-msgstr ""
+msgstr "Messze"
 
 #: src/modules/temperature/e_mod_main.c:460
 msgid "Fast (1 sec)"
-msgstr ""
+msgstr "Gyors (1 mp)"
 
 #: src/bin/e_int_menus.c:57
 msgid "Favorite Applications"
-msgstr ""
+msgstr "Kedvenc programok"
 
 #: src/bin/e_gadman.c:547
 msgid "Full Screen Height"
-msgstr ""
+msgstr "Teljes képernyős magasság"
 
 #: src/bin/e_gadman.c:500
 msgid "Full Screen Width"
-msgstr ""
+msgstr "Teljes képernyős szélesség"
 
 #: src/modules/dropshadow/e_mod_main.c:268
 msgid "Fuzzy"
-msgstr ""
+msgstr "Elmosott"
 
 #: src/bin/e_int_menus.c:96
 msgid "Gadgets"
-msgstr ""
+msgstr "Bigyók"
 
 #: src/modules/ibar/e_mod_main.c:788
 msgid "Gigantic"
-msgstr ""
+msgstr "Gigantikus"
 
 #: src/bin/e_gadman.c:541
 msgid "Half Screen Height"
-msgstr ""
+msgstr "Fél képernyő magas"
 
 #: src/bin/e_gadman.c:494
 msgid "Half Screen Width"
-msgstr ""
+msgstr "Fél képernyő széles"
 
 #: src/modules/battery/e_mod_main.c:987
 msgid "High"
-msgstr ""
+msgstr "Magas"
 
 #: src/modules/temperature/e_mod_main.c:192
 #: src/modules/temperature/e_mod_main.c:616
 msgid "High Temperature"
-msgstr ""
+msgstr "Magas hőmérséklet"
 
 #: src/modules/ibar/e_mod_main.c:774
 msgid "Huge"
-msgstr ""
+msgstr "Óriási"
 
 #: src/modules/ibar/e_mod_main.c:149
 msgid "IBar"
 msgstr ""
 
-#: src/bin/e_border.c:3665
+#: src/bin/e_border.c:3652
 msgid "Icon Edit Error"
 msgstr ""
 
-#: src/bin/e_border.c:3506
+#: src/bin/e_border.c:3493
 msgid "Iconify"
-msgstr ""
+msgstr "Ikonizálás"
 
 #: src/modules/dropshadow/e_mod_main.c:391
 msgid "Immediately Underneath"
-msgstr ""
+msgstr "Közvetlenül alatta"
 
 #: src/modules/ibar/e_mod_main.c:753
 msgid "Large"
-msgstr ""
+msgstr "Nagy"
 
 #: src/modules/dropshadow/e_mod_main.c:325
 msgid "Light"
-msgstr ""
+msgstr "Világos"
 
 #: src/modules/battery/e_mod_main.c:991
 msgid "Low"
-msgstr ""
+msgstr "Alacsony"
 
 #: src/modules/temperature/e_mod_main.c:188
 #: src/modules/temperature/e_mod_main.c:612
 msgid "Low Temperature"
-msgstr ""
+msgstr "Alacsony hőmérséklet"
 
 #: src/modules/cpufreq/e_mod_main.c:432
 msgid "Manual"
-msgstr ""
+msgstr "Kézi"
 
-#: src/bin/e_border.c:3527
+#: src/bin/e_border.c:3514
 msgid "Maximized"
-msgstr ""
+msgstr "Maximalizált"
 
 #: src/modules/cpufreq/e_mod_main.c:438
 msgid "Maximum Speed"
-msgstr ""
+msgstr "Teljes sebesség"
 
 #: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:746
 msgid "Medium"
-msgstr ""
+msgstr "Közepes"
 
 #: src/modules/temperature/e_mod_main.c:467
 msgid "Medium (5 sec)"
-msgstr ""
+msgstr "Közepes (5 mp)"
 
 #: src/modules/ibar/e_mod_main.c:718
 msgid "Microscopic"
-msgstr ""
+msgstr "Mikroszkópikus"
 
 #: src/modules/cpufreq/e_mod_main.c:436
 msgid "Minimum Speed"
-msgstr ""
+msgstr "Minimum sebesség"
 
-#: src/modules/clock/e_mod_main.c:40 src/modules/dropshadow/e_mod_main.c:91
-#: src/modules/ibar/e_mod_main.c:105 src/modules/test/e_mod_main.c:9
-#: src/modules/battery/e_mod_main.c:45 src/modules/temperature/e_mod_main.c:43
-#: src/modules/pager/e_mod_main.c:81 src/modules/cpufreq/e_mod_main.c:57
+#: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
+#: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
+#: src/modules/ibar/e_mod_main.c:105 src/modules/pager/e_mod_main.c:81
+#: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
 msgid "Module API Error"
-msgstr ""
+msgstr "Modul API hiba"
 
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
@@ -746,35 +697,35 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:69
 msgid "Modules"
-msgstr ""
+msgstr "Modulok"
 
 #: src/bin/e_main.c:391
 msgid "Most features do not work yet, and those that do are buggy."
-msgstr ""
+msgstr "A legtöbb megoldés még nem működik, vagy hibát tartalmazhat."
 
 #: src/modules/battery/e_mod_main.c:879
 msgid "NO BAT"
-msgstr ""
+msgstr "Nincs telep"
 
 #: src/modules/battery/e_mod_main.c:748
 msgid "NO INFO"
-msgstr ""
+msgstr "Nincs infó"
 
 #: src/modules/dropshadow/e_mod_main.c:364
 msgid "Near"
-msgstr ""
+msgstr "Közel"
 
 #: src/bin/e_int_menus.c:369
 msgid "New Column of Desktops"
-msgstr ""
+msgstr "Új oszlop az asztalokhoz"
 
 #: src/bin/e_int_menus.c:361
 msgid "New Row of Desktops"
-msgstr ""
+msgstr "Új sor az asztalokhoz"
 
 #: src/modules/temperature/e_mod_main.c:474
 msgid "Normal (10 sec)"
-msgstr ""
+msgstr "Normál (10 sec)"
 
 #: src/bin/e_error.c:184 src/bin/e_error.c:193
 msgid "OK"
@@ -782,7 +733,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Options"
-msgstr ""
+msgstr "Opciók"
 
 #: src/bin/e_main.c:110
 #, c-format
@@ -806,72 +757,72 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:373
 msgid "Remove Column of Desktops"
-msgstr ""
+msgstr "Oszlop eltávolítása az asztalok közül"
 
 #: src/bin/e_int_menus.c:365
 msgid "Remove Row of Desktops"
-msgstr ""
+msgstr "Sor eltávolítása az asztalok közül"
 
 #: src/bin/e_int_menus.c:116
 msgid "Restart Enlightement"
-msgstr ""
+msgstr "Újraindítás"
 
-#: src/bin/e_border.c:3550
+#: src/bin/e_border.c:3537
 msgid "Send To"
-msgstr ""
+msgstr "Áthelyezés"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
-msgstr ""
+msgstr "Figyelmeztetés beállítása"
 
 #: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
 msgid "Set Controller"
-msgstr ""
+msgstr "Kezelő beállítása"
 
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 #: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
 msgid "Set Poll Time"
-msgstr ""
+msgstr "Lekérdezési idő beállítása"
 
 #: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
 msgid "Set Speed"
-msgstr ""
+msgstr "Sebesség beálllítása"
 
-#: src/bin/e_border.c:3517
+#: src/bin/e_border.c:3504
 msgid "Shaded"
 msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:286
 msgid "Sharp"
-msgstr ""
+msgstr "Éles"
 
 #: src/modules/ibar/e_mod_main.c:800
 msgid "Size"
-msgstr ""
+msgstr "Méret"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr ""
+msgstr "Lassú (30 mp)"
 
 #: src/modules/ibar/e_mod_main.c:739
 msgid "Small"
-msgstr ""
+msgstr "Kicsi"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
-msgstr ""
+msgstr "Valami más"
 
-#: src/bin/e_border.c:3537
+#: src/bin/e_border.c:3524
 msgid "Sticky"
-msgstr ""
+msgstr "Ragadós"
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
-msgstr ""
+msgstr "Hőmérséklet"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
-msgstr ""
+msgstr "Test!!!"
 
 #: src/bin/e_module.c:98
 #, c-format
@@ -907,7 +858,7 @@ msgstr ""
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+"Copyright ÂŠ 1999-2004, by the Enlightenment Dev Team.\n"
 "\n"
 "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 "\n"
@@ -916,7 +867,7 @@ msgstr ""
 
 #: src/bin/e_main.c:390
 msgid "This is development code, so be warned."
-msgstr ""
+msgstr "Fejlesztői változat!"
 
 #: src/bin/e_main.c:350
 msgid ""
@@ -951,51 +902,51 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:725
 msgid "Tiny"
-msgstr ""
+msgstr "Apró"
 
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
-msgstr ""
+msgstr "nagyon sötét"
 
 #: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Far"
-msgstr ""
+msgstr "Nagyon távol"
 
 #: src/modules/dropshadow/e_mod_main.c:259
 msgid "Very Fuzzy"
-msgstr ""
+msgstr "Nagyon elmosott"
 
 #: src/modules/ibar/e_mod_main.c:760
 msgid "Very Large"
-msgstr ""
+msgstr "Nagyon nagy"
 
 #: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Light"
-msgstr ""
+msgstr "Nagyon világos"
 
 #: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Near"
-msgstr ""
+msgstr "Nagyon közel"
 
 #: src/modules/dropshadow/e_mod_main.c:295
 msgid "Very Sharp"
-msgstr ""
+msgstr "Nagyon éles"
 
 #: src/modules/temperature/e_mod_main.c:488
 msgid "Very Slow (60 sec)"
-msgstr ""
+msgstr "Nagyon lassú (60 mp)"
 
 #: src/modules/ibar/e_mod_main.c:732
 msgid "Very Small"
-msgstr ""
+msgstr "Nagyon kicsi"
 
 #: src/bin/e_main.c:349
 msgid "Welcome to Enlightenment 0.17"
-msgstr ""
+msgstr "Üdvözli az Enlightenment 0.17"
 
 #: src/bin/e_int_menus.c:87
 msgid "Windows"
-msgstr ""
+msgstr "Ablakok"
 
 #: src/bin/e_init.c:34
 #, c-format
@@ -1007,3 +958,5 @@ msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
 msgstr ""
+"A teleptöltöttség alacsony.\n"
+"Érdemes lenne csatlakoztatni a hálózathoz."
