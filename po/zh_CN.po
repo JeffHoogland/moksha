@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-26 10:52+0800\n"
+"PO-Revision-Date: 2005-04-26 11:17+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,9 @@ msgid ""
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
 msgstr ""
+"一个简单的电池指示计，使用Linux下的ACPI或者APM模块来\n"
+"监视您的电池和交流电源适配器状态。仅能在Linux下工作，\n"
+"且依赖于您的BIOS和内核驱动。"
 
 #: src/modules/temperature/e_mod_main.c:97
 msgid ""
@@ -98,60 +101,65 @@ msgid ""
 "It is especially useful for modern Laptops with high speed\n"
 "CPUs that generate a lot of heat."
 msgstr ""
+"一个Linux下报告ACPI温度监视器状态的模块。\n"
+"尤其对于有着产生大量热量的高速CPU的现代笔记本电脑来说，\n"
+"这个模块特别有用。"
 
 #: src/modules/pager/e_mod_main.c:138
 msgid "A pager module to navigate virtual desktops."
-msgstr ""
+msgstr "一个切换虚拟桌面的Pager模块"
 
 #: src/modules/cpufreq/e_mod_main.c:108
 msgid ""
 "A simple module to control the frequency of the system CPU. This is "
 "especially useful to save power on laptops."
 msgstr ""
+"一个控制系统CPU频率的简单模块。\n"
+"在为笔记本电脑节省电力时很有用。"
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
-msgstr ""
+msgstr "一个给E17提供时钟的简单模块。"
 
 #: src/bin/e_int_menus.c:106 src/bin/e_int_menus.c:217
 msgid "About Enlightenment"
-msgstr ""
+msgstr "关于 Enlightenment"
 
 #: src/bin/e_module.c:380
 msgid "About..."
-msgstr ""
+msgstr "关于……"
 
 #: src/bin/e_main.c:389
 msgid "Artificially slowing startup so you can see it all."
-msgstr ""
+msgstr "人工调慢启动过程，以便您看得更清楚。"
 
 #: src/modules/ibar/e_mod_main.c:709
 msgid "Auto fit icons"
-msgstr ""
+msgstr "自动缩放图标"
 
 #: src/modules/cpufreq/e_mod_main.c:434
 msgid "Automatic"
-msgstr ""
+msgstr "自动"
 
 #: src/bin/e_gadman.c:530
 msgid "Automatic Height"
-msgstr ""
+msgstr "自动调整高度"
 
 #: src/bin/e_gadman.c:483
 msgid "Automatic Width"
-msgstr ""
+msgstr "自动调整宽度"
 
 #: src/modules/battery/e_mod_main.c:903
 msgid "BAD DRIVER"
-msgstr ""
+msgstr "错误的驱动"
 
 #: src/modules/battery/e_mod_main.c:89
 msgid "Battery"
-msgstr ""
+msgstr "电池"
 
 #: src/modules/battery/e_mod_main.c:686
 msgid "Battery Running Low"
-msgstr ""
+msgstr "电池电量低"
 
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
