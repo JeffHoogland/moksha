@@ -352,7 +352,7 @@ _e_app_free(E_App *a)
 {
    if (a->orig)
      {
-	printf("E_App: This is a copy: %s\n", a->path);
+	//printf("E_App: This is a copy: %s\n", a->path);
 	while (a->instances)
 	  {
 	     Ecore_Exe *exe;
@@ -372,7 +372,7 @@ _e_app_free(E_App *a)
      }
    else
      {
-	printf("E_App: This is an original: %s\n", a->path);
+	//printf("E_App: This is an original: %s\n", a->path);
 	while (a->instances)
 	  {
 	     Ecore_Exe *exe;
@@ -653,7 +653,7 @@ _e_app_change(E_App *a, E_App_Change ch)
    Evas_List *l;
    
    _e_apps_callbacks_walking = 1;
-   printf("Change: %d %s\n", ch, a->path);
+   //printf("Change: %d %s\n", ch, a->path);
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
 	E_App_Callback *cb;
@@ -718,7 +718,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	return;
      }
 
-   printf("Event: %d %s\n", event, path);
+   //printf("Event: %d %s\n", event, path);
 
    /* If this dir isn't scanned yet, no need to report changes! */
    if (!app->scanned)
