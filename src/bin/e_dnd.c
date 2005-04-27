@@ -105,7 +105,7 @@ e_drag_start(E_Zone *zone, const char *type, void *data,
 	ecore_evas_free(drag_ee);
      }
 
-   drag_ee = ecore_evas_software_x11_new(NULL, zone->container->manager->win,
+   drag_ee = ecore_evas_software_x11_new(NULL, zone->container->win,
 					 0, 0, 10, 10);
    ecore_evas_override_set(drag_ee, 1);
    ecore_evas_software_x11_direct_resize_set(drag_ee, 1);

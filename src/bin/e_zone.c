@@ -56,10 +56,10 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    zone->h = h;
    zone->num = num;
 
-   zone->flip.top = ecore_x_window_input_new(con->manager->win, 1, 0, w - 2, 1);
-   zone->flip.right = ecore_x_window_input_new(con->manager->win, w - 1, 1, 1, h - 2);
-   zone->flip.bottom = ecore_x_window_input_new(con->manager->win, 1, h - 1, w - 2, 1);
-   zone->flip.left = ecore_x_window_input_new(con->manager->win, 0, 1, 1, h - 2);
+   zone->flip.top = ecore_x_window_input_new(con->win, 1, 0, w - 2, 1);
+   zone->flip.right = ecore_x_window_input_new(con->win, w - 1, 1, 1, h - 2);
+   zone->flip.bottom = ecore_x_window_input_new(con->win, 1, h - 1, w - 2, 1);
+   zone->flip.left = ecore_x_window_input_new(con->win, 0, 1, 1, h - 2);
 
    zone->handlers = evas_list_append(zone->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_zone_cb_mouse_in, zone));
    zone->handlers = evas_list_append(zone->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_zone_cb_mouse_out, zone));
@@ -579,7 +579,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
-		   ecore_x_pointer_warp(zone->container->manager->win, x, zone->h - 2);
+		   ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
 		   _e_zone_update_flip(zone);
 		}
 	   }
@@ -591,7 +591,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
-		   ecore_x_pointer_warp(zone->container->manager->win, 2, y);
+		   ecore_x_pointer_warp(zone->container->win, 2, y);
 		   _e_zone_update_flip(zone);
 		}
 	   }
@@ -603,7 +603,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
-		   ecore_x_pointer_warp(zone->container->manager->win, x, 2);
+		   ecore_x_pointer_warp(zone->container->win, x, 2);
 		   _e_zone_update_flip(zone);
 		}
 	   }
@@ -615,7 +615,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
-		   ecore_x_pointer_warp(zone->container->manager->win, zone->w - 2, y);
+		   ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
 		   _e_zone_update_flip(zone);
 		}
 	   }

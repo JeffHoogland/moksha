@@ -16,7 +16,7 @@ void e_resize_begin(E_Zone *zone, int w, int h)
 	e_canvas_del(_ee);
 	ecore_evas_free(_ee);
      }
-   _ee = ecore_evas_software_x11_new(NULL, zone->container->manager->win,
+   _ee = ecore_evas_software_x11_new(NULL, zone->container->win,
 				     0, 0, 10, 10);
    ecore_evas_override_set(_ee, 1);
    ecore_evas_software_x11_direct_resize_set(_ee, 1);
@@ -83,7 +83,7 @@ void e_move_begin(E_Zone *zone, int x, int y)
 	e_canvas_del(_ee);
 	ecore_evas_free(_ee);
      }
-   _ee = ecore_evas_software_x11_new(NULL, zone->container->manager->win,
+   _ee = ecore_evas_software_x11_new(NULL, zone->container->win,
 					 0, 0, 10, 10);
    ecore_evas_override_set(_ee, 1);
    ecore_evas_software_x11_direct_resize_set(_ee, 1);
