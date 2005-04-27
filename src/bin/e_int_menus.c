@@ -216,7 +216,7 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    e_error_dialog_show(_("About Enlightenment"),
 		       _("This is Enlightenment %s.\n"
-			 "Copyright © 1999-2054, by the Enlightenment Dev Team.\n"
+			 "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
 			 "\n"
 			 "We hope you enjoy using this software as much as we enjoyed writing it.\n\n"
 			 "Please think of the aardvarks. They need some love too."),
