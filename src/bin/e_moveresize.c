@@ -22,7 +22,6 @@ void e_resize_begin(E_Zone *zone, int w, int h)
    ecore_evas_software_x11_direct_resize_set(_ee, 1);
    e_canvas_add(_ee);
    ecore_evas_borderless_set(_ee, 1);
-   ecore_evas_layer_set(_ee, 255);
    ecore_evas_show(_ee);
 
    _obj = edje_object_add(ecore_evas_get(_ee));
