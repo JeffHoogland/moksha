@@ -377,7 +377,7 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->submenu) e_object_unref(E_OBJECT(mi->submenu));
-   e_object_ref(E_OBJECT(sub));
+   if (sub) e_object_ref(E_OBJECT(sub));
    mi->submenu = sub;
    mi->changed = 1;
    mi->menu->changed = 1;
