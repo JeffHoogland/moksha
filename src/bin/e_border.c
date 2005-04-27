@@ -1954,10 +1954,13 @@ _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, con
 {
    E_Border *bd;
 
-   bd = data;
-   bd->drag.start = 1;
-   bd->drag.x = -1;
-   bd->drag.y = -1;
+   if (!strcmp(source, "icon"))
+     {
+	bd = data;
+	bd->drag.start = 1;
+	bd->drag.x = -1;
+	bd->drag.y = -1;
+     }
 }
 
 static int
