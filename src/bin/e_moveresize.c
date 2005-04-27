@@ -17,7 +17,7 @@ void e_resize_begin(E_Zone *zone, int w, int h)
 	ecore_evas_free(_ee);
      }
    _ee = ecore_evas_software_x11_new(NULL, zone->container->manager->win,
-					     0, 0, 10, 10);
+				     0, 0, 10, 10);
    ecore_evas_override_set(_ee, 1);
    ecore_evas_software_x11_direct_resize_set(_ee, 1);
    e_canvas_add(_ee);
@@ -30,7 +30,7 @@ void e_resize_begin(E_Zone *zone, int w, int h)
 			   "widgets/border/default/resize");
    snprintf(buf, sizeof(buf), "9999x9999");
    edje_object_part_text_set(_obj, "text", buf);
-
+   
    edje_object_size_min_calc(_obj, &ew, &eh);
    evas_object_move(_obj, 0, 0);
    evas_object_resize(_obj, ew, eh);
@@ -46,7 +46,11 @@ void e_resize_begin(E_Zone *zone, int w, int h)
 
 void e_resize_end(void)
 {
-   evas_object_del(_obj);
+   if (_obj)
+     {
+	evas_object_del(_obj);
+	_obj = NULL;
+     }
    if (_ee)
      {
 	e_canvas_del(_ee);
