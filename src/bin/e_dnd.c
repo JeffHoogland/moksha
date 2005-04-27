@@ -112,7 +112,6 @@ e_drag_start(E_Zone *zone, const char *type, void *data,
    ecore_evas_shaped_set(drag_ee, 1);
    e_canvas_add(drag_ee);
    ecore_evas_borderless_set(drag_ee, 1);
-   ecore_evas_layer_set(drag_ee, 255);
 
    drag_obj = edje_object_add(ecore_evas_get(drag_ee));
    edje_object_file_set(drag_obj, icon_path, icon);
