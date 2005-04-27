@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-26 14:12+0800\n"
+"PO-Revision-Date: 2005-04-27 20:37+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,72 +17,72 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:460
 #, c-format
 msgid "%i Mhz"
-msgstr "%i å…†èµ«å…¹"
+msgstr "%i ‘Õ×‘ºÕ‘×È"
 
 #: src/modules/cpufreq/e_mod_main.c:463
 #, c-format
 msgid "%i.%i Ghz"
-msgstr "%i.%i å‰èµ«å…¹"
+msgstr "%i.%i ‘¼ª‘ºÕ‘×È"
 
 #: src/bin/e_int_menus.c:279
 msgid "(No Applications)"
-msgstr "ï¼ˆæ— åº”ç”¨ç¨‹åºï¼‰"
+msgstr "‘£¨‘ÎŞ‘Ó¦‘ÓÃ‘³Ì‘Ğò‘£©"
 
 #: src/bin/e_int_menus.c:452
 msgid "(No Windows)"
-msgstr "ï¼ˆæ— çª—å£ï¼‰"
+msgstr "‘£¨‘ÎŞ‘´°‘¿Ú‘£©"
 
 #: src/bin/e_int_menus.c:528
 msgid "(Unused)"
-msgstr "ï¼ˆæœªä½¿ç”¨ï¼‰"
+msgstr "‘£¨‘Î´‘Ê¹‘ÓÃ‘£©"
 
 #: src/modules/battery/e_mod_main.c:418
 msgid "1 hour"
-msgstr "ä¸€å°æ—¶"
+msgstr "‘Ò»‘Ğ¡‘Ê±"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr "100åº¦"
+msgstr "100‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr "10åº¦"
+msgstr "10‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr "20åº¦"
+msgstr "20‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr "30åº¦"
+msgstr "30‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr "40åº¦"
+msgstr "40‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr "50åº¦"
+msgstr "50‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr "60åº¦"
+msgstr "60‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr "70åº¦"
+msgstr "70‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr "80åº¦"
+msgstr "80‘¶È"
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr "90åº¦"
+msgstr "90‘¶È"
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -91,9 +91,9 @@ msgid ""
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
 msgstr ""
-"ä¸€ä¸ªç®€å•çš„ç”µæ± æŒ‡ç¤ºè®¡ï¼Œä½¿ç”¨Linuxä¸‹çš„ACPIæˆ–è€…APMæ¨¡å—æ¥\n"
-"ç›‘è§†æ‚¨çš„ç”µæ± å’Œäº¤æµç”µæºé€‚é…å™¨çŠ¶æ€ã€‚ä»…èƒ½åœ¨Linuxä¸‹å·¥ä½œï¼Œ\n"
-"ä¸”ä¾èµ–äºæ‚¨çš„BIOSå’Œå†…æ ¸é©±åŠ¨ã€‚"
+"‘Ò»‘¸ö‘¼ò‘µ¥‘µÄ‘µç‘³Ø‘Ö¸‘Ê¾‘¼Æ‘£¬‘Ê¹‘ÓÃLinux‘ÏÂ‘µÄACPI‘»ò‘ÕßAPM‘Ä£‘¿é‘À´\n"
+"‘¼à‘ÊÓ‘Äú‘µÄ‘µç‘³Ø‘ºÍ‘½»‘Á÷‘µç‘Ô´‘ÊÊ‘Åä‘Æ÷‘×´‘Ì¬‘¡£‘½ö‘ÄÜ‘ÔÚLinux‘ÏÂ‘¹¤‘×÷‘£¬\n"
+"‘ÇÒ‘ÒÀ‘Àµ‘ÓÚ‘Äú‘µÄBIOS‘ºÍ‘ÄÚ‘ºË‘Çı‘¶¯‘¡£"
 
 #: src/modules/temperature/e_mod_main.c:97
 msgid ""
@@ -101,185 +101,185 @@ msgid ""
 "It is especially useful for modern Laptops with high speed\n"
 "CPUs that generate a lot of heat."
 msgstr ""
-"ä¸€ä¸ªLinuxä¸‹æŠ¥å‘ŠACPIæ¸©åº¦ç›‘è§†å™¨çŠ¶æ€çš„æ¨¡å—ã€‚\n"
-"å°¤å…¶å¯¹äºæœ‰ç€äº§ç”Ÿå¤§é‡çƒ­é‡çš„é«˜é€ŸCPUçš„ç°ä»£ç¬”è®°æœ¬ç”µè„‘æ¥è¯´ï¼Œ\n"
-"è¿™ä¸ªæ¨¡å—ç‰¹åˆ«æœ‰ç”¨ã€‚"
+"‘Ò»‘¸öLinux‘ÏÂ‘±¨‘¸æACPI‘ÎÂ‘¶È‘¼à‘ÊÓ‘Æ÷‘×´‘Ì¬‘µÄ‘Ä£‘¿é‘¡£\n"
+"‘ÓÈ‘Æä‘¶Ô‘ÓÚ‘ÓĞ‘×Å‘²ú‘Éú‘´ó‘Á¿‘ÈÈ‘Á¿‘µÄ‘¸ß‘ËÙCPU‘µÄ‘ÏÖ‘´ú‘±Ê‘¼Ç‘±¾‘µç‘ÄÔ‘À´‘Ëµ‘£¬\n"
+"‘Õâ‘¸ö‘Ä£‘¿é‘ÌØ‘±ğ‘ÓĞ‘ÓÃ‘¡£"
 
 #: src/modules/pager/e_mod_main.c:138
 msgid "A pager module to navigate virtual desktops."
-msgstr "ä¸€ä¸ªåˆ‡æ¢è™šæ‹Ÿæ¡Œé¢çš„Pageræ¨¡å—"
+msgstr "‘Ò»‘¸ö‘ÇĞ‘»»‘Ğé‘Äâ‘×À‘Ãæ‘µÄPager‘Ä£‘¿é"
 
 #: src/modules/cpufreq/e_mod_main.c:108
 msgid ""
 "A simple module to control the frequency of the system CPU. This is "
 "especially useful to save power on laptops."
 msgstr ""
-"ä¸€ä¸ªæ§åˆ¶ç³»ç»ŸCPUé¢‘ç‡çš„ç®€å•æ¨¡å—ã€‚\n"
-"åœ¨ä¸ºç¬”è®°æœ¬ç”µè„‘èŠ‚çœç”µåŠ›æ—¶å¾ˆæœ‰ç”¨ã€‚"
+"‘Ò»‘¸ö‘¿Ø‘ÖÆ‘Ïµ‘Í³CPU‘Æµ‘ÂÊ‘µÄ‘¼ò‘µ¥‘Ä£‘¿é‘¡£\n"
+"‘ÔÚ‘Îª‘±Ê‘¼Ç‘±¾‘µç‘ÄÔ‘½Ú‘Ê¡‘µç‘Á¦‘Ê±‘ºÜ‘ÓĞ‘ÓÃ‘¡£"
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
-msgstr "ä¸€ä¸ªç»™E17æä¾›æ—¶é’Ÿçš„ç®€å•æ¨¡å—ã€‚"
+msgstr "‘Ò»‘¸ö‘¸øE17‘Ìá‘¹©‘Ê±‘ÖÓ‘µÄ‘¼ò‘µ¥‘Ä£‘¿é‘¡£"
 
 #: src/bin/e_int_menus.c:106 src/bin/e_int_menus.c:217
 msgid "About Enlightenment"
-msgstr "å…³äº Enlightenment"
+msgstr "‘¹Ø‘ÓÚ Enlightenment"
 
 #: src/bin/e_module.c:380
 msgid "About..."
-msgstr "å…³äºâ€¦â€¦"
+msgstr "‘¹Ø‘ÓÚœôó¦œôó¦"
 
 #: src/bin/e_main.c:389
 msgid "Artificially slowing startup so you can see it all."
-msgstr "äººå·¥è°ƒæ…¢å¯åŠ¨è¿‡ç¨‹ï¼Œä»¥ä¾¿æ‚¨çœ‹å¾—æ›´æ¸…æ¥šã€‚"
+msgstr "‘ÈË‘¹¤‘µ÷‘Âı‘Æô‘¶¯‘¹ı‘³Ì‘£¬‘ÒÔ‘±ã‘Äú‘¿´‘µÃ‘¸ü‘Çå‘³ş‘¡£"
 
 #: src/modules/ibar/e_mod_main.c:709
 msgid "Auto fit icons"
-msgstr "è‡ªåŠ¨ç¼©æ”¾å›¾æ ‡"
+msgstr "‘×Ô‘¶¯‘Ëõ‘·Å‘Í¼‘±ê"
 
 #: src/modules/cpufreq/e_mod_main.c:434
 msgid "Automatic"
-msgstr "è‡ªåŠ¨"
+msgstr "‘×Ô‘¶¯"
 
 #: src/bin/e_gadman.c:530
 msgid "Automatic Height"
-msgstr "è‡ªåŠ¨è°ƒæ•´é«˜åº¦"
+msgstr "‘×Ô‘¶¯‘µ÷‘Õû‘¸ß‘¶È"
 
 #: src/bin/e_gadman.c:483
 msgid "Automatic Width"
-msgstr "è‡ªåŠ¨è°ƒæ•´å®½åº¦"
+msgstr "‘×Ô‘¶¯‘µ÷‘Õû‘¿í‘¶È"
 
 #: src/modules/battery/e_mod_main.c:903
 msgid "BAD DRIVER"
-msgstr "é”™è¯¯çš„é©±åŠ¨"
+msgstr "‘´í‘Îó‘µÄ‘Çı‘¶¯"
 
 #: src/modules/battery/e_mod_main.c:89
 msgid "Battery"
-msgstr "ç”µæ± "
+msgstr "‘µç‘³Ø"
 
 #: src/modules/battery/e_mod_main.c:686
 msgid "Battery Running Low"
-msgstr "ç”µæ± ç”µé‡ä½"
+msgstr "‘µç‘³Ø‘µç‘Á¿‘µÍ"
 
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
-msgstr "CPUé¢‘ç‡æ§åˆ¶æ¨¡å—"
+msgstr "CPU‘Æµ‘ÂÊ‘¿Ø‘ÖÆ‘Ä£‘¿é"
 
 #: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
 msgid "CPU Frequency ERROR"
-msgstr "CPUé¢‘ç‡é”™è¯¯"
+msgstr "CPU‘Æµ‘ÂÊ‘´í‘Îó"
 
 #: src/bin/e_gadman.c:512
 msgid "Center Horizontally"
-msgstr "æ°´å¹³å±…ä¸­"
+msgstr "‘Ë®‘Æ½‘¾Ó‘ÖĞ"
 
 #: src/bin/e_gadman.c:559
 msgid "Center Vertically"
-msgstr "å‚ç›´å±…ä¸­"
+msgstr "‘´¹‘Ö±‘¾Ó‘ÖĞ"
 
 #: src/modules/battery/e_mod_main.c:999
 msgid "Charging"
-msgstr "å……ç”µä¸­"
+msgstr "‘³ä‘µç‘ÖĞ"
 
 #: src/modules/cpufreq/e_mod_main.c:388
 msgid "Check Fast (0.5 sec)"
-msgstr "é¢‘ç¹æ£€æŸ¥ï¼ˆæ¯0.5ç§’ï¼‰"
+msgstr "‘Æµ‘·±‘¼ì‘²é‘£¨‘Ã¿0.5‘Ãë‘£©"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
-msgstr "é¢‘ç¹æ£€æŸ¥ï¼ˆæ¯1ç§’ï¼‰"
+msgstr "‘Æµ‘·±‘¼ì‘²é‘£¨‘Ã¿1‘Ãë‘£©"
 
 #: src/modules/temperature/e_mod_main.c:184
 #: src/modules/temperature/e_mod_main.c:608
 msgid "Check Interval"
-msgstr "é—´æ­‡æ£€æŸ¥"
+msgstr "‘¼ä‘Ğª‘¼ì‘²é"
 
 #: src/modules/cpufreq/e_mod_main.c:395
 msgid "Check Medium (1 sec)"
-msgstr "ä¸€èˆ¬æ£€æŸ¥ï¼ˆæ¯1ç§’ï¼‰"
+msgstr "‘Ò»‘°ã‘¼ì‘²é‘£¨‘Ã¿1‘Ãë‘£©"
 
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
-msgstr "ä¸€èˆ¬æ£€æŸ¥ï¼ˆæ¯5ç§’ï¼‰"
+msgstr "‘Ò»‘°ã‘¼ì‘²é‘£¨‘Ã¿5‘Ãë‘£©"
 
 #: src/modules/battery/e_mod_main.c:444
 msgid "Check Normal (10 sec)"
-msgstr "ä¸€èˆ¬æ£€æŸ¥ï¼ˆæ¯10ç§’ï¼‰"
+msgstr "‘Ò»‘°ã‘¼ì‘²é‘£¨‘Ã¿10‘Ãë‘£©"
 
 #: src/modules/cpufreq/e_mod_main.c:402
 msgid "Check Normal (2 sec)"
-msgstr "ä¸€èˆ¬æ£€æŸ¥ï¼ˆæ¯2ç§’ï¼‰"
+msgstr "‘Ò»‘°ã‘¼ì‘²é‘£¨‘Ã¿2‘Ãë‘£©"
 
 #: src/modules/battery/e_mod_main.c:451
 msgid "Check Slow (30 sec)"
-msgstr "ç¼“æ…¢æ£€æŸ¥ï¼ˆæ¯30ç§’ï¼‰"
+msgstr "‘»º‘Âı‘¼ì‘²é‘£¨‘Ã¿30‘Ãë‘£©"
 
 #: src/modules/cpufreq/e_mod_main.c:409
 msgid "Check Slow (5 sec)"
-msgstr "ç¼“æ…¢æ£€æŸ¥ï¼ˆæ¯5ç§’ï¼‰"
+msgstr "‘»º‘Âı‘¼ì‘²é‘£¨‘Ã¿5‘Ãë‘£©"
 
 #: src/modules/cpufreq/e_mod_main.c:416
 msgid "Check Very Slow (30 sec)"
-msgstr "æç¼“æ…¢æ£€æŸ¥ï¼ˆæ¯30ç§’ï¼‰"
+msgstr "‘¼«‘»º‘Âı‘¼ì‘²é‘£¨‘Ã¿30‘Ãë‘£©"
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
-msgstr "æç¼“æ…¢æ£€æŸ¥ï¼ˆæ¯60ç§’ï¼‰"
+msgstr "‘¼«‘»º‘Âı‘¼ì‘²é‘£¨‘Ã¿60‘Ãë‘£©"
 
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
-msgstr "æ—¶é’Ÿ"
+msgstr "‘Ê±‘ÖÓ"
 
 #: src/bin/e_border.c:3498
 msgid "Close"
-msgstr "å…³é—­"
+msgstr "‘¹Ø‘±Õ"
 
 #: src/bin/e_module.c:395
 msgid "Configuration"
-msgstr "é…ç½®"
+msgstr "‘Åä‘ÖÃ"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
-msgstr "CPUé¢‘ç‡"
+msgstr "CPU‘Æµ‘ÂÊ"
 
 #: src/bin/e_border.c:3592
 msgid "Create Icon"
-msgstr "åˆ›å»ºå›¾æ ‡"
+msgstr "‘´´‘½¨‘Í¼‘±ê"
 
 #: src/modules/battery/e_mod_main.c:995
 msgid "Danger"
-msgstr "å±é™©"
+msgstr "‘Î£‘ÏÕ"
 
 #: src/modules/dropshadow/e_mod_main.c:316
 msgid "Dark"
-msgstr "æš—"
+msgstr "‘°µ"
 
 #: src/bin/e_int_menus.c:78
 msgid "Desktops"
-msgstr "æ¡Œé¢"
+msgstr "‘×À‘Ãæ"
 
 #: src/modules/dropshadow/e_mod_main.c:139
 msgid "Dropshadow"
-msgstr "é˜´å½±"
+msgstr "‘Òõ‘Ó°"
 
 #: src/bin/e_border.c:3566
 msgid "Edit Icon"
-msgstr "ç¼–è¾‘å›¾æ ‡"
+msgstr "‘±à‘¼­‘Í¼‘±ê"
 
 #: src/bin/e_int_menus.c:522 src/modules/clock/e_mod_main.c:309
 #: src/modules/ibar/e_mod_main.c:554 src/modules/battery/e_mod_main.c:561
 #: src/modules/temperature/e_mod_main.c:721 src/modules/pager/e_mod_main.c:420
 #: src/modules/cpufreq/e_mod_main.c:814
 msgid "Edit Mode"
-msgstr "ç¼–è¾‘æ¨¡å¼"
+msgstr "‘±à‘¼­‘Ä£‘Ê½"
 
 #: src/bin/e_module.c:384
 msgid "Enabled"
-msgstr "æœ‰æ•ˆ"
+msgstr "‘ÓĞ‘Ğ§"
 
 #: src/bin/e_gadman.c:571
 msgid "End Edit Mode"
-msgstr "ç»“æŸç¼–è¾‘æ¨¡å¼"
+msgstr "‘½á‘Êø‘±à‘¼­‘Ä£‘Ê½"
 
 #: src/bin/e_main.c:373
 msgid "Enlightenment"
@@ -287,15 +287,15 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
-msgstr "Enlightenmentç”µæ± æ¨¡å—"
+msgstr "Enlightenment‘µç‘³Ø‘Ä£‘¿é"
 
 #: src/modules/clock/e_mod_main.c:95
 msgid "Enlightenment Clock Module"
-msgstr "Enlightenmentæ—¶é’Ÿæ¨¡å—"
+msgstr "Enlightenment‘Ê±‘ÖÓ‘Ä£‘¿é"
 
 #: src/modules/dropshadow/e_mod_main.c:148
 msgid "Enlightenment Dropshadow Module"
-msgstr "Enlightenmenté˜´å½±æ¨¡å—"
+msgstr "Enlightenment‘Òõ‘Ó°‘Ä£‘¿é"
 
 #: src/modules/ibar/e_mod_main.c:158
 msgid "Enlightenment IBar Module"
@@ -303,19 +303,19 @@ msgstr ""
 
 #: src/bin/e_main.c:358
 msgid "Enlightenment IPC setup error!"
-msgstr "Enlightenment IPCè®¾ç½®é”™è¯¯ï¼"
+msgstr "Enlightenment IPC‘Éè‘ÖÃ‘´í‘Îó‘£¡"
 
 #: src/modules/pager/e_mod_main.c:137
 msgid "Enlightenment Pager Module"
-msgstr "Enlightenment Pageræ¨¡å—"
+msgstr "Enlightenment Pager‘Ä£‘¿é"
 
 #: src/bin/e_main.c:375
 msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment æ­£åœ¨å¯åŠ¨ã€‚è¯·ç¨å€™ã€‚"
+msgstr "Enlightenment ‘Õı‘ÔÚ‘Æô‘¶¯‘¡£‘Çë‘ÉÔ‘ºò‘¡£"
 
 #: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
-msgstr "Enlightenment æ¸©åº¦æ¨¡å—"
+msgstr "Enlightenment ‘ÎÂ‘¶È‘Ä£‘¿é"
 
 #: src/modules/test/e_mod_main.c:66
 msgid "Enlightenment Test Module"
@@ -326,116 +326,116 @@ msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨Ecoreï¼\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯Ecore‘£¡\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:241
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment æ— æ³•åœ¨æ‚¨çš„ä¸»ç›®å½•åˆ›å»ºç›®å½•ã€‚\n"
-"å¯èƒ½æ‚¨æ²¡æœ‰ä¸»ç›®å½•æˆ–è€…ç£ç›˜å·²æ»¡ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘ÔÚ‘Äú‘µÄ‘Ö÷‘Ä¿‘Â¼‘´´‘½¨‘Ä¿‘Â¼‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘Ã»‘ÓĞ‘Ö÷‘Ä¿‘Â¼‘»ò‘Õß‘´Å‘ÅÌ‘ÒÑ‘Âú‘£¿"
 
 #: src/bin/e_main.c:182
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨Xè¿æ¥ã€‚\n"
-"æ‚¨è®¾å®šäº†DISPLAYç¯å¢ƒå˜é‡å—ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯X‘Á¬‘½Ó‘¡£\n"
+"‘Äú‘Éè‘¶¨‘ÁËDISPLAY‘»·‘¾³‘±ä‘Á¿‘Âğ‘£¿"
 
 #: src/bin/e_main.c:221
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨Evasç³»ç»Ÿã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯Evas‘Ïµ‘Í³‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:229
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨æ–‡ä»¶ç³»ç»Ÿã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯‘ÎÄ‘¼ş‘Ïµ‘Í³‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:213
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨IPCç³»ç»Ÿã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯IPC‘Ïµ‘Í³‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:205
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å¯åŠ¨è¿æ¥ç³»ç»Ÿã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ<"
+"Enlightenment ‘ÎŞ‘·¨‘Æô‘¶¯‘Á¬‘½Ó‘Ïµ‘Í³‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿<"
 
 #: src/bin/e_main.c:171
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹ä¸€ä¸ªHUPä¿¡å·å¤„ç†å¥æŸ„ã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ò»‘¸öHUP‘ĞÅ‘ºÅ‘´¦‘Àí‘¾ä‘±ú‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:165
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹ä¸€ä¸ªé€€å‡ºä¿¡å·å¤„ç†å¥æŸ„ã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ò»‘¸ö‘ÍË‘³ö‘ĞÅ‘ºÅ‘´¦‘Àí‘¾ä‘±ú‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:278
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹å¯åŠ¨å±å¹•ã€‚\n"
-"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Æô‘¶¯‘ÆÁ‘Ä»‘¡£\n"
+"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„åº”ç”¨ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘Ó¦‘ÓÃ‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:313
 msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„ç»‘å®šç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘°ó‘¶¨‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„é…ç½®ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘Åä‘ÖÃ‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its dnd system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„æ‹–æ”¾ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘ÍÏ‘·Å‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:268
 msgid "Enlightenment cannot set up its font system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„å­—ä½“ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘×Ö‘Ìå‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its module system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„æ¨¡å—ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘Ä£‘¿é‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:301
 msgid "Enlightenment cannot set up its theme system."
-msgstr "Enlightenment æ— æ³•å»ºç«‹å®ƒçš„ä¸»é¢˜ç³»ç»Ÿã€‚"
+msgstr "Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Ëü‘µÄ‘Ö÷‘Ìâ‘Ïµ‘Í³‘¡£"
 
 #: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹è·¯å¾„ä»¥æ‰“å¼€æ–‡ä»¶ã€‚\\n\"\n"
-"\"å¯èƒ½æ‚¨çš„å†…å­˜ç”¨å®Œäº†ï¼Ÿ"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢‘Â·‘¾¶‘ÒÔ‘´ò‘¿ª‘ÎÄ‘¼ş‘¡£\\n\"\n"
+"\"‘¿É‘ÄÜ‘Äú‘µÄ‘ÄÚ‘´æ‘ÓÃ‘Íê‘ÁË‘£¿"
 
 #: src/bin/e_main.c:320 src/bin/e_main.c:359
 msgid ""
@@ -445,31 +445,31 @@ msgid ""
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹IPCå¥—æ¥å­—ã€‚\n"
-"çœ‹èµ·æ¥å·²ç»æœ‰ä¸€ä¸ªEnlightenmentåœ¨è¿è¡Œäº†ã€‚\n"
-"è¯·ç¡®è®¤æ²¡æœ‰å…¶å®ƒEnlightenmentåœ¨åŒä¸€ä¸ªdisplayä¸Šè¿è¡Œï¼Œ\n"
-"å¦‚æœæ²¡æœ‰ï¼Œè¯•ç€åˆ é™¤ ~/.ecore/enlightenment-* ä¸‹çš„æ‰€æœ‰æ–‡ä»¶ï¼Œ\n"
-"ç„¶åå†è¯•ç€è¿è¡Œä¸€éã€‚"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢IPC‘Ì×‘½Ó‘×Ö‘¡£\n"
+"‘¿´‘Æğ‘À´‘ÒÑ‘¾­‘ÓĞ‘Ò»‘¸öEnlightenment‘ÔÚ‘ÔË‘ĞĞ‘ÁË‘¡£\n"
+"‘Çë‘È·‘ÈÏ‘Ã»‘ÓĞ‘Æä‘ËüEnlightenment‘ÔÚ‘Í¬‘Ò»‘¸ödisplay‘ÉÏ‘ÔË‘ĞĞ‘£¬\n"
+"‘Èç‘¹û‘Ã»‘ÓĞ‘£¬‘ÊÔ‘×Å‘É¾‘³ı ~/.ecore/enlightenment-* ‘ÏÂ‘µÄ‘Ëù‘ÓĞ‘ÎÄ‘¼ş‘£¬\n"
+"‘È»‘ºó‘ÔÙ‘ÊÔ‘×Å‘ÔË‘ĞĞ‘Ò»‘±é‘¡£"
 
 #: src/bin/e_main.c:189
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
-"Enlightenment æ— æ³•å»ºç«‹xinerama wrappingã€‚\n"
-"è¿™ç§æƒ…å†µä¸è¯¥å‘ç”Ÿã€‚"
+"Enlightenment ‘ÎŞ‘·¨‘½¨‘Á¢xinerama wrapping‘¡£\n"
+"‘Õâ‘ÖÖ‘Çé‘¿ö‘²»‘¸Ã‘·¢‘Éú‘¡£"
 
 #: src/bin/e_main.c:286
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenment åœ¨æ‚¨çš„æ‰€æœ‰çš„screenä¸Šå»ºç«‹çª—å£ç®¡ç†å¤±è´¥ã€‚\n"
-"å¯èƒ½æœ‰å¦å¤–ä¸€ä¸ªçª—å£ç®¡ç†å™¨åœ¨è¿è¡Œï¼Ÿ\n"
+"Enlightenment ‘ÔÚ‘Äú‘µÄ‘Ëù‘ÓĞ‘µÄscreen‘ÉÏ‘½¨‘Á¢‘´°‘¿Ú‘¹Ü‘Àí‘Ê§‘°Ü‘¡£\n"
+"‘¿É‘ÄÜ‘ÓĞ‘Áí‘Íâ‘Ò»‘¸ö‘´°‘¿Ú‘¹Ü‘Àí‘Æ÷‘ÔÚ‘ÔË‘ĞĞ‘£¿\n"
 
 #: src/bin/e_error.c:350
 msgid "Enlightenment: Error!"
-msgstr "Enlightenmentï¼šé”™è¯¯ï¼"
+msgstr "Enlightenment‘£º‘´í‘Îó‘£¡"
 
 #: src/modules/ibar/e_mod_main.c:781
 msgid "Enormous"
@@ -483,10 +483,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šç”µæ± \n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£º‘µç‘³Ø\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -496,10 +496,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šæ—¶é’Ÿ\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£º‘Ê±‘ÖÓ\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/dropshadow/e_mod_main.c:92
 #, c-format
@@ -509,10 +509,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šé˜´å½±\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£º‘Òõ‘Ó°\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -522,10 +522,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šIBar\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£ºIBar\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/pager/e_mod_main.c:82
 #, c-format
@@ -535,10 +535,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šPager\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£ºPager\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -548,10 +548,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šæ¸©åº¦\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£º‘ÎÂ‘¶È\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/cpufreq/e_mod_main.c:58
 #, c-format
@@ -561,10 +561,10 @@ msgid ""
 "The module API advertized by Enlightenment is %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šCPUé¢‘ç‡\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£ºCPU‘Æµ‘ÂÊ\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -574,14 +574,14 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"å¯åŠ¨æ¨¡å—é”™è¯¯ï¼šæµ‹è¯•æ¨¡å—\n"
-"è¦æ±‚æœ€å°çš„æ¨¡å—APIç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"Enlightenmentç»™çš„æ¨¡å—ç‰ˆæœ¬å·ï¼š%i ã€‚\n"
-"ä¸­æ­¢æ¨¡å—ã€‚"
+"‘Æô‘¶¯‘Ä£‘¿é‘´í‘Îó‘£º‘²â‘ÊÔ‘Ä£‘¿é\n"
+"‘Òª‘Çó‘×î‘Ğ¡‘µÄ‘Ä£‘¿éAPI‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"Enlightenment‘¸ø‘µÄ‘Ä£‘¿é‘°æ‘±¾‘ºÅ‘£º%i ‘¡£\n"
+"‘ÖĞ‘Ö¹‘Ä£‘¿é‘¡£"
 
 #: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
 msgid "Error loading Module"
-msgstr "è£…å…¥æ¨¡å—é”™è¯¯"
+msgstr "‘×°‘Èë‘Ä£‘¿é‘´í‘Îó"
 
 #: src/bin/e_border.c:3666
 msgid ""
@@ -590,50 +590,50 @@ msgid ""
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
-"å¯åŠ¨å›¾æ ‡ç¼–è¾‘å™¨é”™è¯¯\n"
+"‘Æô‘¶¯‘Í¼‘±ê‘±à‘¼­‘Æ÷‘´í‘Îó\n"
 "\n"
-"è¯·å®‰è£… e_util_eapp_edit\n"
-"æˆ–è€…ç¡®è®¤å®ƒå·²ç»åœ¨ä½ çš„è·¯å¾„è®¾ç½®ä¸­\n"
+"‘Çë‘°²‘×° e_util_eapp_edit\n"
+"‘»ò‘Õß‘È·‘ÈÏ‘Ëü‘ÒÑ‘¾­‘ÔÚ‘Äã‘µÄ‘Â·‘¾¶‘Éè‘ÖÃ‘ÖĞ\n"
 
 #: src/bin/e_int_menus.c:123
 msgid "Exit Enlightenment"
-msgstr "é€€å‡º Enlightenment"
+msgstr "‘ÍË‘³ö Enlightenment"
 
 #: src/modules/ibar/e_mod_main.c:767
 msgid "Extremely Large"
-msgstr ""
+msgstr "‘¼«‘´ó"
 
 #: src/modules/dropshadow/e_mod_main.c:382
 msgid "Extremely Near"
-msgstr ""
+msgstr "‘¼«‘½ü"
 
 #: src/modules/battery/e_mod_main.c:927
 msgid "FULL"
-msgstr ""
+msgstr "‘Âú"
 
 #: src/modules/dropshadow/e_mod_main.c:355
 msgid "Far"
-msgstr ""
+msgstr "‘Ô¶"
 
 #: src/modules/temperature/e_mod_main.c:460
 msgid "Fast (1 sec)"
-msgstr ""
+msgstr "‘¿ì ‘£¨‘Ã¿1‘Ãë‘£©"
 
 #: src/bin/e_int_menus.c:57
 msgid "Favorite Applications"
-msgstr ""
+msgstr "‘³£‘ÓÃ‘³Ì‘Ğò"
 
 #: src/bin/e_gadman.c:547
 msgid "Full Screen Height"
-msgstr ""
+msgstr "‘È«‘ÆÁ‘Ä»‘¸ß‘¶È"
 
 #: src/bin/e_gadman.c:500
 msgid "Full Screen Width"
-msgstr ""
+msgstr "‘È«‘ÆÁ‘Ä»‘¿í‘¶È"
 
 #: src/modules/dropshadow/e_mod_main.c:268
 msgid "Fuzzy"
-msgstr ""
+msgstr "‘Ä£‘ºı"
 
 #: src/bin/e_int_menus.c:96
 msgid "Gadgets"
@@ -645,24 +645,24 @@ msgstr ""
 
 #: src/bin/e_gadman.c:541
 msgid "Half Screen Height"
-msgstr ""
+msgstr "‘°ë‘ÆÁ‘Ä»‘¸ß‘¶È"
 
 #: src/bin/e_gadman.c:494
 msgid "Half Screen Width"
-msgstr ""
+msgstr "‘°ë‘ÆÁ‘Ä»‘¿í‘¶È"
 
 #: src/modules/battery/e_mod_main.c:987
 msgid "High"
-msgstr ""
+msgstr "‘¸ß"
 
 #: src/modules/temperature/e_mod_main.c:192
 #: src/modules/temperature/e_mod_main.c:616
 msgid "High Temperature"
-msgstr ""
+msgstr "‘¸ß‘ÎÂ"
 
 #: src/modules/ibar/e_mod_main.c:774
 msgid "Huge"
-msgstr ""
+msgstr "‘¾Ş‘´ó"
 
 #: src/modules/ibar/e_mod_main.c:149
 msgid "IBar"
@@ -670,11 +670,11 @@ msgstr ""
 
 #: src/bin/e_border.c:3665
 msgid "Icon Edit Error"
-msgstr ""
+msgstr "‘Í¼‘±ê‘±à‘¼­‘´í‘Îó"
 
 #: src/bin/e_border.c:3506
 msgid "Iconify"
-msgstr ""
+msgstr "‘×î‘Ğ¡‘»¯"
 
 #: src/modules/dropshadow/e_mod_main.c:391
 msgid "Immediately Underneath"
@@ -682,20 +682,20 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:753
 msgid "Large"
-msgstr ""
+msgstr "‘´ó"
 
 #: src/modules/dropshadow/e_mod_main.c:325
 msgid "Light"
-msgstr ""
+msgstr "‘ÁÁ"
 
 #: src/modules/battery/e_mod_main.c:991
 msgid "Low"
-msgstr ""
+msgstr "‘µÍ"
 
 #: src/modules/temperature/e_mod_main.c:188
 #: src/modules/temperature/e_mod_main.c:612
 msgid "Low Temperature"
-msgstr ""
+msgstr "‘µÍ‘ÎÂ"
 
 #: src/modules/cpufreq/e_mod_main.c:432
 msgid "Manual"
@@ -703,34 +703,34 @@ msgstr ""
 
 #: src/bin/e_border.c:3527
 msgid "Maximized"
-msgstr ""
+msgstr "‘×î‘´ó‘»¯"
 
 #: src/modules/cpufreq/e_mod_main.c:438
 msgid "Maximum Speed"
-msgstr ""
+msgstr "‘×î‘¸ß‘ËÙ"
 
 #: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:746
 msgid "Medium"
-msgstr ""
+msgstr "‘ÖĞ‘µÈ"
 
 #: src/modules/temperature/e_mod_main.c:467
 msgid "Medium (5 sec)"
-msgstr ""
+msgstr "‘ÖĞ‘µÈ ‘£¨‘Ã¿5‘Ãë‘£©"
 
 #: src/modules/ibar/e_mod_main.c:718
 msgid "Microscopic"
-msgstr ""
+msgstr "‘¼«‘Ğ¡"
 
 #: src/modules/cpufreq/e_mod_main.c:436
 msgid "Minimum Speed"
-msgstr ""
+msgstr "‘×î‘µÍ‘ËÙ"
 
 #: src/modules/clock/e_mod_main.c:40 src/modules/dropshadow/e_mod_main.c:91
 #: src/modules/ibar/e_mod_main.c:105 src/modules/test/e_mod_main.c:9
 #: src/modules/battery/e_mod_main.c:45 src/modules/temperature/e_mod_main.c:43
 #: src/modules/pager/e_mod_main.c:81 src/modules/cpufreq/e_mod_main.c:57
 msgid "Module API Error"
-msgstr ""
+msgstr "‘Ä£‘¿éAPI‘´í‘Îó"
 
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
@@ -746,11 +746,11 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:69
 msgid "Modules"
-msgstr ""
+msgstr "‘Ä£‘¿é"
 
 #: src/bin/e_main.c:391
 msgid "Most features do not work yet, and those that do are buggy."
-msgstr ""
+msgstr "‘ºÜ‘¶à‘ÌØ‘ĞÔ‘»¹‘²»‘ÄÜ‘ÓÃ‘£¬‘ÄÜ‘ÓÃ‘µÄ‘Ò²‘ÊÇ‘ÓĞ‘ºÜ‘¶àbug‘µÄ‘¡£"
 
 #: src/modules/battery/e_mod_main.c:879
 msgid "NO BAT"
@@ -762,19 +762,19 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:364
 msgid "Near"
-msgstr ""
+msgstr "‘½ü"
 
 #: src/bin/e_int_menus.c:369
 msgid "New Column of Desktops"
-msgstr ""
+msgstr "‘ĞÂ‘½¨‘Ò»‘ÁĞ‘×À‘Ãæ"
 
 #: src/bin/e_int_menus.c:361
 msgid "New Row of Desktops"
-msgstr ""
+msgstr "‘ĞÂ‘½¨‘Ò»‘ĞĞ‘×À‘Ãæ"
 
 #: src/modules/temperature/e_mod_main.c:474
 msgid "Normal (10 sec)"
-msgstr ""
+msgstr "‘Õı‘³£ ‘£¨‘Ã¿10‘Ãë‘£©"
 
 #: src/bin/e_error.c:184 src/bin/e_error.c:193
 msgid "OK"
@@ -782,7 +782,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Options"
-msgstr ""
+msgstr "‘Ñ¡‘Ïî"
 
 #: src/bin/e_main.c:110
 #, c-format
@@ -806,27 +806,27 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:373
 msgid "Remove Column of Desktops"
-msgstr ""
+msgstr "‘É¾‘³ı‘Ò»‘ÁĞ‘×À‘Ãæ"
 
 #: src/bin/e_int_menus.c:365
 msgid "Remove Row of Desktops"
-msgstr ""
+msgstr "‘É¾‘³ı‘Ò»‘ĞĞ‘×À‘Ãæ"
 
 #: src/bin/e_int_menus.c:116
 msgid "Restart Enlightement"
-msgstr ""
+msgstr "‘ÖØ‘Æô Enlightenment"
 
 #: src/bin/e_border.c:3550
 msgid "Send To"
-msgstr ""
+msgstr "‘·¢‘ËÍ‘µ½"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
-msgstr ""
+msgstr "‘Éè‘¶¨‘¾¯‘±¨"
 
 #: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
 msgid "Set Controller"
-msgstr ""
+msgstr "‘Éè‘¶¨‘¿Ø‘ÖÆ‘Æ÷"
 
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 #: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
@@ -835,7 +835,7 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
 msgid "Set Speed"
-msgstr ""
+msgstr "‘Éè‘¶¨‘ËÙ‘¶È"
 
 #: src/bin/e_border.c:3517
 msgid "Shaded"
@@ -843,19 +843,19 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:286
 msgid "Sharp"
-msgstr ""
+msgstr "‘Çå‘Îú"
 
 #: src/modules/ibar/e_mod_main.c:800
 msgid "Size"
-msgstr ""
+msgstr "‘´ó‘Ğ¡"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr ""
+msgstr "‘Âı ‘£¨‘Ã¿30‘Ãë‘£©"
 
 #: src/modules/ibar/e_mod_main.c:739
 msgid "Small"
-msgstr ""
+msgstr "‘Ğ¡"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
@@ -867,7 +867,7 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
-msgstr ""
+msgstr "‘ÎÂ‘¶È"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
@@ -880,6 +880,8 @@ msgid ""
 "No module named %s could be found in the\n"
 "module search directories\n"
 msgstr ""
+"‘µ¼‘Èë‘Ä£‘¿é %s ‘Ê±‘·¢‘Éú‘´í‘Îó‘¡£\n"
+"‘ÔÚ‘Ä£‘¿é‘ËÑ‘Ë÷‘Â·‘¾¶‘Àï‘ÎŞ‘·¨‘ÕÒ‘µ½‘Ãû‘½Ğ %s ‘µÄ‘Ä£‘¿é‘¡£\n"
 
 #: src/bin/e_module.c:109 src/bin/e_module.c:131
 #, c-format
@@ -890,33 +892,48 @@ msgid ""
 "The error reported was:\n"
 "%s"
 msgstr ""
+"‘µ¼‘Èë‘Ä£‘¿é %s ‘Ê±‘·¢‘Éú‘´í‘Îó‘¡£\n"
+"‘´Ë‘Ä£‘¿é‘µÄ‘Íê‘Õû‘Â·‘¾¶‘ÊÇ‘£º\n"
+"%s\n"
+"‘±¨‘¸æ‘µÄ‘´í‘Îó‘ÊÇ‘£º\n"
+"%s"
 
 #: src/modules/cpufreq/e_mod_main.c:271
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "governor via the module's setfreq utility."
 msgstr ""
+"‘Í¨‘¹ı‘Ä£‘¿é‘µÄ setfreq ‘¹¦‘ÄÜ‘Éè‘ÖÃCPU‘Æµ‘ÂÊ‘µ÷‘½Ú‘Æ÷‘µÄ‘Ê±‘ºò\n"
+"‘·¢‘Éú‘Ò»‘¸ö‘´í‘Îó‘¡£"
 
 #: src/modules/cpufreq/e_mod_main.c:288
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "setting via the module's setfreq utility."
 msgstr ""
+"‘Í¨‘¹ı‘Ä£‘¿é‘µÄ setfreq ‘¹¦‘ÄÜ‘Éè‘ÖÃCPU‘Æµ‘ÂÊ‘µÄ‘Ê±‘ºò\n"
+"‘·¢‘Éú‘Ò»‘¸ö‘´í‘Îó‘¡£"
 
 #: src/bin/e_int_menus.c:218
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
-"Copyright Â© 1999-2004, by the Enlightenment Dev Team.\n"
+"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
 "\n"
 "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 "\n"
 "Please think of the aardvarks. They need some love too."
 msgstr ""
+"‘Õâ‘ÊÇ Enlightenment %s‘¡£\n"
+"‘°æ‘È¨‘Ëù‘ÓĞ © 1999-2004, Enlightenment ‘¿ª‘·¢‘Ğ¡‘×é‘¡£\n"
+"\n"
+"‘ÎÒ‘ÃÇ‘Ï£‘Íû‘Äú‘ÄÜ‘ºÍ‘ÎÒ‘ÃÇ‘Ğ´‘Õâ‘¸ö‘Èí‘¼ş‘Ò»‘Ñù‘¿ª‘ĞÄ‘µØ‘Ê¹‘ÓÃ‘Ëü‘¡£\n"
+"\n"
+"‘Çë‘Ïë‘Ò»‘Ïë’ÅÚ’ÆÚ‘ÃÇ‘¡£ ‘Ëü‘ÃÇ‘Ò²‘Ğè‘Òª‘¹Ø‘»³‘¡£"
 
 #: src/bin/e_main.c:390
 msgid "This is development code, so be warned."
-msgstr ""
+msgstr "‘Õâ‘ÊÇ‘¿ª‘·¢‘ÖĞ‘µÄ‘´ú‘Âë‘£¬‘¾¯‘¸æ‘Ò»‘ÏÂ‘¡£"
 
 #: src/bin/e_main.c:350
 msgid ""
@@ -941,6 +958,8 @@ msgid ""
 "on the desktop background - without special X-Server extensions\n"
 "or hardware acceleration."
 msgstr ""
+"‘Õâ‘¸ö‘ÊÇ‘Òõ‘Ó°‘Ä£‘¿é‘£¬‘Ëü‘ÄÜ‘ÔÚ‘×À‘Ãæ‘±³‘¾°‘ÉÏ‘²ú‘Éú‘Í¶‘Ó°‘¡£\n"
+"‘²»‘Ğè‘Òª‘ÌØ‘±ğ‘µÄX‘·ş‘Îñ‘Æ÷‘À©‘Õ¹‘£¬‘»ò‘Õß‘Ó²‘¼ş‘¼Ó‘ËÙ‘¡£\n"
 
 #: src/modules/test/e_mod_main.c:67
 msgid ""
@@ -951,59 +970,61 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:725
 msgid "Tiny"
-msgstr ""
+msgstr "‘Î¢‘Ğ¡"
 
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
-msgstr ""
+msgstr "‘ºÜ‘°µ"
 
 #: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Far"
-msgstr ""
+msgstr "‘ºÜ‘Ô¶"
 
 #: src/modules/dropshadow/e_mod_main.c:259
 msgid "Very Fuzzy"
-msgstr ""
+msgstr "‘ºÜ‘Ä£‘ºı"
 
 #: src/modules/ibar/e_mod_main.c:760
 msgid "Very Large"
-msgstr ""
+msgstr "‘ºÜ‘´ó"
 
 #: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Light"
-msgstr ""
+msgstr "‘ºÜ‘ÁÁ"
 
 #: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Near"
-msgstr ""
+msgstr "‘ºÜ‘½ü"
 
 #: src/modules/dropshadow/e_mod_main.c:295
 msgid "Very Sharp"
-msgstr ""
+msgstr "‘ºÜ‘Çå‘Îú"
 
 #: src/modules/temperature/e_mod_main.c:488
 msgid "Very Slow (60 sec)"
-msgstr ""
+msgstr "‘ºÜ‘Âı ‘£¨‘Ã¿60‘Ãë‘£©"
 
 #: src/modules/ibar/e_mod_main.c:732
 msgid "Very Small"
-msgstr ""
+msgstr "‘ºÜ‘Ğ¡"
 
 #: src/bin/e_main.c:349
 msgid "Welcome to Enlightenment 0.17"
-msgstr ""
+msgstr "‘»¶‘Ó­‘À´‘µ½ Enlightenment 0.17"
 
 #: src/bin/e_int_menus.c:87
 msgid "Windows"
-msgstr ""
+msgstr "‘´°‘¿Ú"
 
 #: src/bin/e_init.c:34
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr ""
+msgstr "X ‘±¨‘¸æ‘Ã»‘ÓĞ‘¸ù‘´°‘¿Ú‘ºÍ %i ‘ÆÁ‘Ä»‘£¡\n"
 
 #: src/modules/battery/e_mod_main.c:687
 msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
 msgstr ""
+"‘Äú‘µÄ‘µç‘³Ø‘µç‘Á¿‘µÍ‘¡£\n"
+"‘Äú‘¿É‘ÄÜ‘Ïë‘Òª‘ÇĞ‘»»‘µ½‘Ê¹‘ÓÃ‘½»‘Á÷‘µç‘Ô´‘¡£"
