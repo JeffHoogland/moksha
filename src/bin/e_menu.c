@@ -740,6 +740,7 @@ _e_menu_item_free(E_Menu_Item *mi)
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
    if (mi->icon) free(mi->icon);
+   if (mi->icon_key) free(mi->icon_key);
    if (mi->label) free(mi->label);
    free(mi);
 }
