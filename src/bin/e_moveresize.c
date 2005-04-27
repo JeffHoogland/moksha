@@ -103,7 +103,11 @@ void e_move_begin(E_Zone *zone, int x, int y)
 
 void e_move_end(void)
 {
-   evas_object_del(_obj);
+   if (_obj)
+     {
+	evas_object_del(_obj);
+	_obj = NULL;
+     }
    if (_ee)
      {
 	e_canvas_del(_ee);
