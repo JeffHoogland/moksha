@@ -3,8 +3,10 @@
  */
 #include "e.h"
 
-Ecore_Evas *_ee = NULL;
-Evas_Object *_obj = NULL;
+static Ecore_Evas *_ee = NULL;
+static Evas_Object *_obj = NULL;
+
+static int visible = 0;
 
 void e_resize_begin(E_Zone *zone, int w, int h)
 {
@@ -22,7 +24,6 @@ void e_resize_begin(E_Zone *zone, int w, int h)
    ecore_evas_software_x11_direct_resize_set(_ee, 1);
    e_canvas_add(_ee);
    ecore_evas_borderless_set(_ee, 1);
-   ecore_evas_show(_ee);
 
    _obj = edje_object_add(ecore_evas_get(_ee));
    e_theme_edje_object_set(_obj, "base/theme/borders",
@@ -41,6 +42,9 @@ void e_resize_begin(E_Zone *zone, int w, int h)
    ecore_evas_resize(_ee, ew, eh);
 
    ecore_evas_show(_ee);
+   ecore_evas_raise(_ee);
+
+   visible = 1;
 }
 
 void e_resize_end(void)
@@ -56,6 +60,7 @@ void e_resize_end(void)
 	ecore_evas_free(_ee);
 	_ee = NULL;
      }
+   visible = 0;
 }
 
 void e_resize_update(int w, int h)
@@ -116,6 +121,7 @@ void e_move_end(void)
 	ecore_evas_free(_ee);
 	_ee = NULL;
      }
+   visible = 0;
 }
 
 void e_move_update(int x, int y)
@@ -124,8 +130,14 @@ void e_move_update(int x, int y)
 
    if (!_ee) return;
 
-   evas_object_show(_obj);
-   ecore_evas_show(_ee);
+   if (!visible)
+     {
+	evas_object_show(_obj);
+	ecore_evas_show(_ee);
+	ecore_evas_raise(_ee);
+
+	visible = 1;
+     }
    snprintf(buf, sizeof(buf) - 1, "%i %i", x, y);
    edje_object_part_text_set(_obj, "text", buf);
 }

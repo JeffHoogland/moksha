@@ -10,6 +10,8 @@ static Ecore_X_Window drag_win;
 static Ecore_Evas  *drag_ee = NULL;
 static Evas_Object *drag_obj;
 
+static int visible = 0;
+
 static char *drag_type;
 static void *drag_data;
 
@@ -133,10 +135,15 @@ e_drag_update(int x, int y)
 
    if (!drag_ee) return;
 
-   evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
-   evas_object_show(drag_obj);
-   ecore_evas_show(drag_ee);
+   if (!visible)
+     {
+	evas_object_show(drag_obj);
+	ecore_evas_show(drag_ee);
+	ecore_evas_raise(drag_ee);
+	visible = 1;
+     }
 
+   evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
    ecore_evas_move(drag_ee, x - (w / 2), y - (h / 2));
 }
 
@@ -146,13 +153,19 @@ e_drag_end(int x, int y)
    Evas_List *l;
    E_Drop_Event *ev;
 
-   evas_object_del(drag_obj);
+   if (drag_obj)
+     {
+	evas_object_del(drag_obj);
+	drag_obj = NULL;
+     }
    if (drag_ee)
      {
 	e_canvas_del(drag_ee);
 	ecore_evas_free(drag_ee);
 	drag_ee = NULL;
      }
+   visible = 0;
+
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
    ecore_x_window_del(drag_win);
