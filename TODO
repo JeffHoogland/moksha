@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* check window max size. if < size of zone (or maximisation area) disallow maximising and tell border edje object (via signals) to somehow disable the maximise buttons :) (and remove from the menu)
 * drag and drop subsystem (just handling dragging with some icon being dragged around and then a drop somewhere)
 * drag window icon (top-left) uses drag and drop to be able to drop on pager module and maybe ibar (to add the app to it?)
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the right of zone 2
