@@ -397,6 +397,18 @@ e_hints_window_maximized_isset(Ecore_X_Window win)
 }
 
 void
+e_hints_window_fullscreen_set(Ecore_X_Window win, int on)
+{
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_FULLSCREEN, on);
+}
+
+int
+e_hints_window_fullscreen_isset(Ecore_X_Window win)
+{
+   return ecore_x_netwm_window_state_isset(win, ECORE_X_WINDOW_STATE_FULLSCREEN);
+}
+
+void
 e_hints_window_sticky_set(Ecore_X_Window win, int on)
 {
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_STICKY, on);

@@ -36,6 +36,7 @@ static int _e_border_cb_window_colormap(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_shape(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_in(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_out(void *data, int ev_type, void *ev);
+static int _e_border_cb_window_state(void *data, int ev_type, void *ev);
 static int _e_border_cb_client_message(void *data, int ev_type, void *ev);
 
 static void _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -156,6 +157,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE, _e_border_cb_window_shape, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STATE, _e_border_cb_window_state, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
@@ -316,7 +318,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    ecore_x_window_border_width_set(win, 0);
    ecore_x_window_show(bd->event_win);
    ecore_x_window_show(bd->client.shell_win);
-   e_container_window_raise(con, bd->win, bd->layer);
    bd->shape = e_container_shape_add(con);
 
    bd->new_client = 1;
@@ -596,11 +597,7 @@ e_border_lower(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_before(bd, NULL);
-   ecore_x_window_configure(bd->win,
-			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-			    0, 0, 0, 0, 0,
-			    bd->container->bg_win, ECORE_X_WINDOW_STACK_ABOVE);
+   e_container_window_lower(bd->zone->container, bd->win, bd->layer);
      {
 	E_Event_Border_Lower *ev;
 	
@@ -942,6 +939,63 @@ e_border_unmaximize(E_Border *bd)
 	bd->changed = 1;
 
 	edje_object_signal_emit(bd->bg_object, "unmaximize", "");
+     }
+}
+void
+e_border_fullscreen(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   if ((bd->shaded) || (bd->shading)) return;
+   if (!bd->fullscreen)
+     {
+	bd->saved.x = bd->x;
+	bd->saved.y = bd->y;
+	bd->saved.w = bd->w;
+	bd->saved.h = bd->h;
+
+	e_hints_window_fullscreen_set(bd->client.win, 1);
+
+	bd->layer = 200;
+
+	e_border_raise(bd);
+	e_border_move_resize(bd,
+			     bd->zone->x - bd->client_inset.l,
+			     bd->zone->y - bd->client_inset.t,
+			     bd->zone->w + bd->client_inset.l + bd->client_inset.r,
+			     bd->zone->h + bd->client_inset.t + bd->client_inset.b);
+
+	bd->fullscreen = 1;
+	bd->changes.pos = 1;
+	bd->changes.size = 1;
+	bd->changed = 1;
+
+	edje_object_signal_emit(bd->bg_object, "fullscreen", "");
+     }
+}
+
+void
+e_border_unfullscreen(E_Border *bd)
+{
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   if ((bd->shaded) || (bd->shading)) return;
+   if (bd->fullscreen)
+     {
+	e_hints_window_fullscreen_set(bd->client.win, 0);
+
+	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
+
+	bd->layer = 100;
+	bd->fullscreen = 0;
+	bd->changes.pos = 1;
+	bd->changes.size = 1;
+	bd->changed = 1;
+
+	e_border_raise(bd);
+
+	edje_object_signal_emit(bd->bg_object, "unfullscreen", "");
      }
 }
 
@@ -1696,6 +1750,99 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    return 1;
 }
 
+/* FIXME: Really needs cleaning! */
+static int
+_e_border_cb_window_state(void *data, int ev_type, void *ev)
+{
+   E_Border *bd;
+   Ecore_X_Event_Window_State *e;
+   int i;
+
+   e = ev;
+   bd = e_border_find_by_client_window(e->win);
+   if (!bd) return 1;
+   printf("State: 0x%x %d %d\n", bd->client.win, e->state[0], e->state[1]);
+   for (i = 0; i < 2; i++)
+     {
+	int set;
+
+	if (e->state[i] != ECORE_X_WINDOW_STATE_UNKNOWN)
+	  {
+	     switch (e->action)
+	       {
+		case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+		   ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 0);
+		   set = 0;
+		   break;
+		case ECORE_X_WINDOW_STATE_ACTION_ADD:
+		   ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 1);
+		   set = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+		   if (ecore_x_netwm_window_state_isset(bd->client.win, e->state[i]))
+		     {
+			ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 0);
+			set = 0;
+		     }
+		   else
+		     {
+			ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 1);
+			set = 1;
+		     }
+		   break;
+	       }
+
+	     if (e->state[i] == ECORE_X_WINDOW_STATE_ABOVE)
+	       {
+		  if (set)
+		    {
+		       bd->layer = 150;
+		       bd->client.netwm.state.stacking = 1;
+		    }
+		  else
+		    {
+		       bd->layer = 100;
+		       bd->client.netwm.state.stacking = 0;
+		    }
+		  e_border_raise(bd);
+	       }
+	     else if (e->state[i] == ECORE_X_WINDOW_STATE_BELOW)
+	       {
+		  if (set)
+		    {
+		       bd->layer = 50;
+		       bd->client.netwm.state.stacking = 2;
+		    }
+		  else
+		    {
+		       bd->layer = 100;
+		       bd->client.netwm.state.stacking = 0;
+		    }
+		  e_border_raise(bd);
+	       }
+	     else if (e->state[i] == ECORE_X_WINDOW_STATE_FULLSCREEN)
+	       {
+		  if (set)
+		    {
+		       bd->layer = 200;
+		       bd->client.netwm.state.fullscreen = 1;
+
+		       e_border_fullscreen(bd);
+		    }
+		  else
+		    {
+		       bd->layer = 100;
+		       bd->client.netwm.state.fullscreen = 0;
+
+		       e_border_unfullscreen(bd);
+		    }
+		  e_border_raise(bd);
+	       }
+	  }
+     }
+   return 1;
+}
+
 static int
 _e_border_cb_client_message(void *data, int ev_type, void *ev)
 {
@@ -1929,7 +2076,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
      }
    else if (!strcmp(source, "lower"))
      {
-	e_container_window_lower(bd->zone->container, bd->win, bd->layer);
+	e_border_lower(bd);
      }
 }
 
@@ -2900,6 +3047,20 @@ _e_border_eval(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
 	/* Recreate state */
+	if (ecore_x_netwm_window_type_get(bd->client.win) == ECORE_X_WINDOW_TYPE_DESKTOP)
+	  bd->layer = 0;
+	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_BELOW))
+	  bd->layer = 50;
+	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE))
+	  bd->layer = 150;
+	else if (ecore_x_netwm_window_type_get(bd->client.win) == ECORE_X_WINDOW_TYPE_DOCK)
+	  bd->layer = 150;
+	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_FULLSCREEN))
+	  bd->layer = 200;
+	else
+	  bd->layer = 100;
+	e_container_window_raise(bd->zone->container, bd->win, bd->layer);
+
 	if (e_hints_window_sticky_isset(bd->client.win))
 	  e_border_stick(bd);
 	if (e_hints_window_shaded_isset(bd->client.win))

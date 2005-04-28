@@ -29,6 +29,8 @@ EAPI void e_hints_window_maximized_set(Ecore_X_Window win, int on);
 EAPI int  e_hints_window_maximized_isset(Ecore_X_Window win);
 EAPI void e_hints_window_sticky_set(Ecore_X_Window win, int on);
 EAPI int  e_hints_window_sticky_isset(Ecore_X_Window win);
+EAPI void e_hints_window_fullscreen_set(Ecore_X_Window win, int on);
+EAPI int  e_hints_window_fullscreen_isset(Ecore_X_Window win);
 EAPI void e_hints_window_icon_name_get(Ecore_X_Window win);
     
 #endif
