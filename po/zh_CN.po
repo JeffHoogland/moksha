@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-28 10:50+0800\n"
+"POT-Creation-Date: 2005-04-28 16:53+0800\n"
+"PO-Revision-Date: 2005-04-28 16:58+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -129,7 +129,7 @@ msgstr "关于 Enlightenment"
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_main.c:389
+#: src/bin/e_main.c:396
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
@@ -230,7 +230,7 @@ msgstr "极缓慢检查（每60秒）"
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:3498
+#: src/bin/e_border.c:3516
 msgid "Close"
 msgstr "关闭"
 
@@ -242,7 +242,7 @@ msgstr "配置"
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:3592
+#: src/bin/e_border.c:3610
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -262,14 +262,14 @@ msgstr "桌面"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:3566
+#: src/bin/e_border.c:3584
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_int_menus.c:522 src/modules/clock/e_mod_main.c:309
-#: src/modules/ibar/e_mod_main.c:554 src/modules/battery/e_mod_main.c:561
-#: src/modules/temperature/e_mod_main.c:721 src/modules/pager/e_mod_main.c:420
-#: src/modules/cpufreq/e_mod_main.c:814
+#: src/bin/e_int_menus.c:522 src/modules/ibar/e_mod_main.c:554
+#: src/modules/cpufreq/e_mod_main.c:814 src/modules/clock/e_mod_main.c:309
+#: src/modules/pager/e_mod_main.c:420 src/modules/temperature/e_mod_main.c:721
+#: src/modules/battery/e_mod_main.c:561
 msgid "Edit Mode"
 msgstr "编辑模式"
 
@@ -281,7 +281,7 @@ msgstr "有效"
 msgid "End Edit Mode"
 msgstr "结束编辑模式"
 
-#: src/bin/e_main.c:373
+#: src/bin/e_main.c:380
 msgid "Enlightenment"
 msgstr ""
 
@@ -301,7 +301,7 @@ msgstr "Enlightenment阴影模块"
 msgid "Enlightenment IBar Module"
 msgstr ""
 
-#: src/bin/e_main.c:358
+#: src/bin/e_main.c:365
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
@@ -309,7 +309,7 @@ msgstr "Enlightenment IPC设置错误！"
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment Pager模块"
 
-#: src/bin/e_main.c:375
+#: src/bin/e_main.c:382
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
@@ -401,11 +401,15 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
+#: src/bin/e_main.c:313
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment 无法建立它的动作系统。"
+
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment 无法建立它的应用系统。"
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:320
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
@@ -413,7 +417,7 @@ msgstr "Enlightenment 无法建立它的绑定系统。"
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:348
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
@@ -421,7 +425,7 @@ msgstr "Enlightenment 无法建立它的拖放系统。"
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:333
+#: src/bin/e_main.c:340
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
@@ -437,7 +441,7 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:320 src/bin/e_main.c:359
+#: src/bin/e_main.c:327 src/bin/e_main.c:366
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -467,7 +471,7 @@ msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
 
-#: src/bin/e_error.c:350
+#: src/bin/e_error.c:355
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
@@ -583,7 +587,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:3666
+#: src/bin/e_border.c:3684
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -668,11 +672,11 @@ msgstr "巨大"
 msgid "IBar"
 msgstr ""
 
-#: src/bin/e_border.c:3665
+#: src/bin/e_border.c:3683
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:3506
+#: src/bin/e_border.c:3524
 msgid "Iconify"
 msgstr "最小化"
 
@@ -701,7 +705,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr ""
 
-#: src/bin/e_border.c:3527
+#: src/bin/e_border.c:3545
 msgid "Maximized"
 msgstr "最大化"
 
@@ -709,7 +713,7 @@ msgstr "最大化"
 msgid "Maximum Speed"
 msgstr "最高速"
 
-#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:746
+#: src/modules/ibar/e_mod_main.c:746 src/modules/dropshadow/e_mod_main.c:277
 msgid "Medium"
 msgstr "中等"
 
@@ -725,10 +729,10 @@ msgstr "极小"
 msgid "Minimum Speed"
 msgstr "最低速"
 
-#: src/modules/clock/e_mod_main.c:40 src/modules/dropshadow/e_mod_main.c:91
 #: src/modules/ibar/e_mod_main.c:105 src/modules/test/e_mod_main.c:9
-#: src/modules/battery/e_mod_main.c:45 src/modules/temperature/e_mod_main.c:43
-#: src/modules/pager/e_mod_main.c:81 src/modules/cpufreq/e_mod_main.c:57
+#: src/modules/cpufreq/e_mod_main.c:57 src/modules/clock/e_mod_main.c:40
+#: src/modules/pager/e_mod_main.c:81 src/modules/temperature/e_mod_main.c:43
+#: src/modules/dropshadow/e_mod_main.c:91 src/modules/battery/e_mod_main.c:45
 msgid "Module API Error"
 msgstr "模块API错误"
 
@@ -748,7 +752,7 @@ msgstr ""
 msgid "Modules"
 msgstr "模块"
 
-#: src/bin/e_main.c:391
+#: src/bin/e_main.c:398
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr "很多特性还不能用，能用的也是有很多bug的。"
 
@@ -776,7 +780,7 @@ msgstr "新建一行桌面"
 msgid "Normal (10 sec)"
 msgstr "正常 （每10秒）"
 
-#: src/bin/e_error.c:184 src/bin/e_error.c:193
+#: src/bin/e_error.c:187 src/bin/e_error.c:196
 msgid "OK"
 msgstr ""
 
@@ -816,7 +820,7 @@ msgstr "删除一行桌面"
 msgid "Restart Enlightement"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_border.c:3550
+#: src/bin/e_border.c:3568
 msgid "Send To"
 msgstr "发送到"
 
@@ -828,8 +832,8 @@ msgstr "设定警报"
 msgid "Set Controller"
 msgstr "设定控制器"
 
-#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 #: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
+#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 msgid "Set Poll Time"
 msgstr ""
 
@@ -837,7 +841,7 @@ msgstr ""
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:3517
+#: src/bin/e_border.c:3535
 msgid "Shaded"
 msgstr ""
 
@@ -861,7 +865,7 @@ msgstr "小"
 msgid "Something Else"
 msgstr ""
 
-#: src/bin/e_border.c:3537
+#: src/bin/e_border.c:3555
 msgid "Sticky"
 msgstr ""
 
@@ -918,24 +922,24 @@ msgstr ""
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
 "\n"
 "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 "\n"
 "Please think of the aardvarks. They need some love too."
 msgstr ""
 "这是 Enlightenment %s。\n"
-"版权所有 © 1999-2004, Enlightenment 开发小组。\n"
+"版权所有 © 1999-2005, Enlightenment 开发小组。\n"
 "\n"
 "我们希望你能像我们开发这个软件一样开心地使用它。\n"
 "\n"
 "请想想土豚们。它们也需要关爱。"
 
-#: src/bin/e_main.c:390
+#: src/bin/e_main.c:397
 msgid "This is development code, so be warned."
 msgstr "这是开发中的代码，所以警告一下。"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:357
 msgid ""
 "This is program has barely been started on, so it is not complete by a long\n"
 "shot. Please do NOT expect anything to work properly at this stage. It's\n"
@@ -1018,7 +1022,7 @@ msgstr "很慢 （每60秒）"
 msgid "Very Small"
 msgstr "很小"
 
-#: src/bin/e_main.c:349
+#: src/bin/e_main.c:356
 msgid "Welcome to Enlightenment 0.17"
 msgstr "欢迎来到 Enlightenment 0.17"
 
