@@ -100,7 +100,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
 msgid "About Enlightenment"
-msgstr "悟について"
+msgstr "エンラーイテノメントについて"
 
 #: src/bin/e_module.c:381
 msgid "About..."
@@ -223,7 +223,7 @@ msgstr ""
 
 #: src/bin/e_main.c:344
 msgid "Enlightenment"
-msgstr "悟"
+msgstr "エンラーイテノメント"
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
@@ -251,7 +251,7 @@ msgstr ""
 
 #: src/bin/e_main.c:346
 msgid "Enlightenment Starting. Please wait."
-msgstr "悟は始まっている。ちょっとまってください。"
+msgstr "エンラーイテノメントは始まっている。ちょっとまってください。"
 
 #: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
@@ -443,7 +443,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightenment"
-msgstr "出口の悟"
+msgstr "エンラーイテノメント出口"
 
 #: src/modules/ibar/e_mod_main.c:775
 msgid "Extremely Large"
@@ -644,7 +644,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:111
 msgid "Restart Enlightement"
-msgstr "再始動悟"
+msgstr "エンラーイテノメント再始動"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
