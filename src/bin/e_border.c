@@ -1927,7 +1927,10 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
 	_e_border_menu_show(bd, x + bd->x, y + bd->y);
      }
-
+   else if (!strcmp(source, "lower"))
+     {
+	e_container_window_lower(bd->zone->container, bd->win, bd->layer);
+     }
 }
 
 static void

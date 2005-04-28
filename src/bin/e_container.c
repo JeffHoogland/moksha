@@ -500,6 +500,25 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
    int pos;
    
+   if (layer == 0) pos = 1;
+   else if ((layer > 0) && (layer <= 50)) pos = 2;
+   else if ((layer > 50) && (layer <= 100)) pos = 3;
+   else if ((layer > 100) && (layer <= 150)) pos = 4;
+   else if ((layer > 150) && (layer <= 200)) pos = 5;
+   else pos = 6;
+
+   ecore_x_window_configure(win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    con->layers[pos], ECORE_X_WINDOW_STACK_BELOW);
+}
+
+void
+e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
+{
+   int pos;
+   
    if (layer == 0) pos = 0;
    else if ((layer > 0) && (layer <= 50)) pos = 1;
    else if ((layer > 50) && (layer <= 100)) pos = 2;
@@ -508,16 +527,10 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
    else pos = 5;
 
    ecore_x_window_configure(win,
-	 ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-	 ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-	 0, 0, 0, 0, 0,
-	 con->layers[pos], ECORE_X_WINDOW_STACK_BELOW);
-}
-
-void
-e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
-{
-   ecore_x_window_lower(win);
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    con->layers[pos], ECORE_X_WINDOW_STACK_ABOVE);
 }
 
 /* local subsystem functions */

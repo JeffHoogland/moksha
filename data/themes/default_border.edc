@@ -1145,6 +1145,12 @@ group {
 	  action:  SIGNAL_EMIT "action" "menu";
       }
       program {
+	  name:    "menu_action_title4";
+	  signal:  "mouse,clicked,2";
+	  source:  "title";
+	  action:  SIGNAL_EMIT "action" "lower";
+      }
+      program {
 	 name:    "close_action";
 	 signal:  "mouse,clicked,1";
 	 source:  "button_0";
