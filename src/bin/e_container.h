@@ -48,6 +48,8 @@ struct _E_Container
    Evas_List           *shape_change_cb;
    Evas_List           *zones;
    Evas_List           *clients;
+
+   Ecore_X_Window       layers[7];
 };
 
 struct _E_Container_Shape
@@ -104,6 +106,11 @@ EAPI Evas_List         *e_container_shape_rects_get(E_Container_Shape *es);
 EAPI void               e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int num);
 EAPI void               e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h);
 EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
+
+EAPI void               e_container_window_show(E_Container *con, Ecore_X_Window, int layer);
+EAPI void               e_container_window_hide(E_Container *con, Ecore_X_Window, int layer);
+EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window, int layer);
+EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window, int layer);
 
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 

@@ -9,5 +9,3 @@ EAPI void e_resize_update(int w, int h);
 EAPI void e_move_begin(E_Zone *zone, int x, int y);
 EAPI void e_move_end(void);
 EAPI void e_move_update(int x, int y);
-
-EAPI void e_moveresize_raise(void);

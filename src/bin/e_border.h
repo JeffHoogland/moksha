@@ -216,6 +216,8 @@ struct _E_Border
 	unsigned char start : 1;
 	int x, y;
    } drag;
+
+   unsigned int layer;
 };
 
 struct _E_Border_Pending_Move_Resize 

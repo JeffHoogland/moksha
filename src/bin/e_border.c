@@ -199,7 +199,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    Ecore_X_Window_Attributes *att;
    Evas_List *list;
    E_Config_Binding *eb;
-   Ecore_X_Window mwin;
    unsigned int managed, desk[2];
    int deskx, desky;
 
@@ -213,14 +212,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
-   mwin = e_menu_grab_window_get();
-   if (!mwin) mwin = e_init_window_get();
-   if (mwin)
-     ecore_x_window_configure(bd->win,
-			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-			      0, 0, 0, 0, 0,
-			      mwin, ECORE_X_WINDOW_STACK_BELOW);
    /* Bindings */
    for (list = e_config->bindings; list; list = list->next)
      {
@@ -299,6 +290,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    bd->w = bd->client.w;
    bd->h = bd->client.h;
+
+   bd->layer = 100;
    bd->changes.size = 1;
    bd->changes.shape = 1;
 
@@ -321,8 +314,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    ecore_x_window_save_set_add(win);
    ecore_x_window_reparent(win, bd->client.shell_win, 0, 0);
    ecore_x_window_border_width_set(win, 0);
-   ecore_x_window_show(bd->event_win);
-   ecore_x_window_show(bd->client.shell_win);
+   e_container_window_show(con, bd->event_win, bd->layer);
+   e_container_window_show(con, bd->client.shell_win, bd->layer);
    bd->shape = e_container_shape_add(con);
 
    bd->new_client = 1;
@@ -410,7 +403,7 @@ e_border_show(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
-   ecore_x_window_show(bd->client.win);
+   e_container_window_show(bd->zone->container, bd->client.win, bd->layer);
    e_hints_window_visible_set(bd->client.win);
    bd->visible = 1;
    bd->changes.visible = 1;
@@ -436,7 +429,7 @@ e_border_hide(E_Border *bd, int manage)
    if (!bd->visible) return;
    if (bd->moving) return;
 
-   ecore_x_window_hide(bd->client.win);
+   e_container_window_hide(bd->zone->container, bd->client.win, bd->layer);
    e_container_shape_hide(bd->shape);
    if (!bd->iconic)
      e_hints_window_hidden_set(bd->client.win);
@@ -581,22 +574,10 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 void
 e_border_raise(E_Border *bd)
 {
-   Ecore_X_Window mwin;
-
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
-   mwin = e_menu_grab_window_get();
-   if (!mwin) mwin = e_init_window_get();
-   if (!mwin)
-     ecore_x_window_raise(bd->win);
-   else
-     ecore_x_window_configure(bd->win,
-			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-			      0, 0, 0, 0, 0,
-			      mwin, ECORE_X_WINDOW_STACK_BELOW);
-
+   e_container_window_raise(bd->zone->container, bd->win, bd->layer);
      {
 	E_Event_Border_Raise *ev;
 	
@@ -606,8 +587,6 @@ e_border_raise(E_Border *bd)
 	ev->above = NULL;
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
-   /* FIXME, ugly hack! */
-   e_moveresize_raise();
 }
 
 void
@@ -1123,7 +1102,7 @@ e_border_idler_before(void)
 	if ((bd->changes.visible) && (bd->visible))
 	  {
 	     ecore_evas_show(bd->bg_ecore_evas);
-	     ecore_x_window_show(bd->win);
+	     e_container_window_show(bd->zone->container, bd->win, bd->layer);
 	     bd->changes.visible = 0;
 	  }
      }
@@ -1135,7 +1114,7 @@ e_border_idler_before(void)
 	bd = l->data;
 	if ((bd->changes.visible) && (!bd->visible))
 	  {
-	     ecore_x_window_hide(bd->win);
+	     e_container_window_hide(bd->zone->container, bd->win, bd->layer);
 	     ecore_evas_hide(bd->bg_ecore_evas);
 	     bd->changes.visible = 0;
 	  }
@@ -2942,49 +2921,40 @@ _e_border_eval(E_Border *bd)
      {
 	/*  show at start of unshade (but don't hide until end of shade) */
 	if (bd->shaded)
-//	  ecore_x_window_show(bd->client.shell_win);
-	  ecore_x_window_raise(bd->client.shell_win);
+	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
 	bd->changes.shading = 0;
      }
    if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
      {
 	if (bd->shaded)
-//	  ecore_x_window_hide(bd->client.shell_win);
-	  ecore_x_window_lower(bd->client.shell_win);
+	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-//	  ecore_x_window_show(bd->client.shell_win);
-	  ecore_x_window_raise(bd->client.shell_win);
+	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
 	bd->changes.shaded = 0;
      }
    else if ((bd->changes.shaded) && (bd->changes.pos))
      {
 	if (bd->shaded)
-//	  ecore_x_window_hide(bd->client.shell_win);
-	  ecore_x_window_lower(bd->client.shell_win);
+	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-//	  ecore_x_window_show(bd->client.shell_win);
-	  ecore_x_window_raise(bd->client.shell_win);
+	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }
    else if ((bd->changes.shaded) && (bd->changes.size))
      {
 	if (bd->shaded)
-//	  ecore_x_window_hide(bd->client.shell_win);
-	  ecore_x_window_lower(bd->client.shell_win);
+	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-//	  ecore_x_window_show(bd->client.shell_win);
-	  ecore_x_window_raise(bd->client.shell_win);
+	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
 	bd->changes.shaded = 0;
      }
    else if (bd->changes.shaded)
      {
 	if (bd->shaded)
-//	  ecore_x_window_hide(bd->client.shell_win);
-	  ecore_x_window_lower(bd->client.shell_win);
+	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-//	  ecore_x_window_show(bd->client.shell_win);
-	  ecore_x_window_raise(bd->client.shell_win);
+	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }

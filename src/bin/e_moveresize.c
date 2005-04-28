@@ -141,9 +141,3 @@ void e_move_update(int x, int y)
    snprintf(buf, sizeof(buf) - 1, "%i %i", x, y);
    edje_object_part_text_set(_obj, "text", buf);
 }
-
-void
-e_moveresize_raise(void)
-{
-   if (_ee) ecore_evas_raise(_ee);
-}

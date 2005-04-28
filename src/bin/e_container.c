@@ -43,6 +43,7 @@ e_container_new(E_Manager *man)
    Evas_Object *o;
    char name[40];
    Evas_List *l, *screens;
+   int i;
    
    con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
@@ -97,6 +98,25 @@ e_container_new(E_Manager *man)
    con->num = evas_list_count(con->manager->containers);
    snprintf(name, sizeof(name), "Container %d", con->num);
    con->name = strdup(name);
+
+   /* init layers */
+   for (i = 0; i < 7; i++)
+     {
+	con->layers[i] = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
+
+	if (i > 0)
+	  ecore_x_window_configure(con->layers[i],
+				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+				   0, 0, 0, 0, 0,
+				   con->layers[i - 1], ECORE_X_WINDOW_STACK_ABOVE);
+     }
+
+   ecore_x_window_configure(con->bg_win,
+	 ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+	 ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+	 0, 0, 0, 0, 0,
+	 con->layers[0], ECORE_X_WINDOW_STACK_BELOW);
 
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
@@ -453,6 +473,52 @@ e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, 
    if (y) *y = es->solid_rect.y;
    if (w) *w = es->solid_rect.w;
    if (h) *h = es->solid_rect.h;
+}
+
+/* layers
+ * 0 = desktop
+ * 50 = below
+ * 100 = normal
+ * 150 = above
+ * 200 = fullscreen
+ * 999 = internal on top windows for E
+ */
+void
+e_container_window_show(E_Container *con, Ecore_X_Window win, int layer)
+{
+   ecore_x_window_show(win);
+   e_container_window_raise(con, win, layer);
+}
+
+void
+e_container_window_hide(E_Container *con, Ecore_X_Window win, int layer)
+{
+   ecore_x_window_hide(win);
+}
+
+void
+e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
+{
+   int pos;
+   
+   if (layer == 0) pos = 0;
+   else if ((layer > 0) && (layer <= 50)) pos = 1;
+   else if ((layer > 50) && (layer <= 100)) pos = 2;
+   else if ((layer > 100) && (layer <= 150)) pos = 3;
+   else if ((layer > 150) && (layer <= 200)) pos = 4;
+   else pos = 5;
+
+   ecore_x_window_configure(win,
+	 ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+	 ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+	 0, 0, 0, 0, 0,
+	 con->layers[pos], ECORE_X_WINDOW_STACK_BELOW);
+}
+
+void
+e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
+{
+   ecore_x_window_lower(win);
 }
 
 /* local subsystem functions */
