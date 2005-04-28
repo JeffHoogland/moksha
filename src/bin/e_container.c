@@ -487,7 +487,6 @@ void
 e_container_window_show(E_Container *con, Ecore_X_Window win, int layer)
 {
    ecore_x_window_show(win);
-   e_container_window_raise(con, win, layer);
 }
 
 void
