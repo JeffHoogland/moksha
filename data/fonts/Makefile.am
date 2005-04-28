@@ -17,6 +17,8 @@ dotum.ttf \
 fonts.alias \
 fonts.dir \
 kochi-gothic.ttf \
-kochi.COPYING
+kochi.COPYING \
+fireflysung.ttf \
+fireflysung.COPYING
 
 EXTRA_DIST = $(files_DATA)
