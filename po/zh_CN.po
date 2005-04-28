@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-25 21:25+0200\n"
-"PO-Revision-Date: 2005-04-27 19:39+0800\n"
+"PO-Revision-Date: 2005-04-28 10:50+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -822,11 +822,11 @@ msgstr "发送到"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
-msgstr ""
+msgstr "设定警报"
 
 #: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
 msgid "Set Controller"
-msgstr ""
+msgstr "设定控制器"
 
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 #: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
@@ -835,7 +835,7 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
 msgid "Set Speed"
-msgstr ""
+msgstr "设定速度"
 
 #: src/bin/e_border.c:3517
 msgid "Shaded"
@@ -843,19 +843,19 @@ msgstr ""
 
 #: src/modules/dropshadow/e_mod_main.c:286
 msgid "Sharp"
-msgstr ""
+msgstr "清晰"
 
 #: src/modules/ibar/e_mod_main.c:800
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr ""
+msgstr "慢 （每30秒）"
 
 #: src/modules/ibar/e_mod_main.c:739
 msgid "Small"
-msgstr ""
+msgstr "小"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
@@ -867,7 +867,7 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
-msgstr ""
+msgstr "温度"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
@@ -880,6 +880,8 @@ msgid ""
 "No module named %s could be found in the\n"
 "module search directories\n"
 msgstr ""
+"导入模块 %s 时发生错误。\n"
+"在模块搜索路径中没有找到名叫 %s 的模块。\n"
 
 #: src/bin/e_module.c:109 src/bin/e_module.c:131
 #, c-format
@@ -890,18 +892,27 @@ msgid ""
 "The error reported was:\n"
 "%s"
 msgstr ""
+"导入模块 %s 时发生错误。\n"
+"该模块的全路径是：\n"
+"%s\n"
+"错误报告如下：\n"
+"%s"
 
 #: src/modules/cpufreq/e_mod_main.c:271
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "governor via the module's setfreq utility."
 msgstr ""
+"试着通过模块的 setfreq 功能设定CPU频率调节器时\n"
+"时发生一个错误。"
 
 #: src/modules/cpufreq/e_mod_main.c:288
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "setting via the module's setfreq utility."
 msgstr ""
+"试着通过模块的 setfreq 功能设定CPU频率设置时\n"
+"时发生一个错误。"
 
 #: src/bin/e_int_menus.c:218
 #, c-format
@@ -913,10 +924,16 @@ msgid ""
 "\n"
 "Please think of the aardvarks. They need some love too."
 msgstr ""
+"这是 Enlightenment %s。\n"
+"版权所有 © 1999-2004, Enlightenment 开发小组。\n"
+"\n"
+"我们希望你能像我们开发这个软件一样开心地使用它。\n"
+"\n"
+"请想想土豚们。它们也需要关爱。"
 
 #: src/bin/e_main.c:390
 msgid "This is development code, so be warned."
-msgstr ""
+msgstr "这是开发中的代码，所以警告一下。"
 
 #: src/bin/e_main.c:350
 msgid ""
@@ -926,6 +943,11 @@ msgid ""
 "\n"
 "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
 msgstr ""
+"本程序几乎不能启动得起来，所以这完全是不太会成功的尝试。\n"
+"请“不要”期待任何东西在这个阶段能工作得很好。它们正在建设\n"
+"中。\n"
+"\n"
+"点击“OK”关闭本对话框，然后继续使用 Enlightenment 0.17。"
 
 #: src/modules/ibar/e_mod_main.c:159
 msgid ""
@@ -934,6 +956,10 @@ msgid ""
 "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
 "so expect it to break often and change as it improves."
 msgstr ""
+"这是为Enlightenment设计的 IBar应用程序启动栏 模块。\n"
+"它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
+"里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
+"因为它在增强。"
 
 #: src/modules/dropshadow/e_mod_main.c:149
 msgid ""
@@ -941,6 +967,9 @@ msgid ""
 "on the desktop background - without special X-Server extensions\n"
 "or hardware acceleration."
 msgstr ""
+"这是 阴影 模块，它使得可以在桌面背景上产生投影。\n"
+"不需要特殊的X服务器扩展，\n"
+"或是硬件加速。"
 
 #: src/modules/test/e_mod_main.c:67
 msgid ""
@@ -951,59 +980,61 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:725
 msgid "Tiny"
-msgstr ""
+msgstr "微小"
 
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
-msgstr ""
+msgstr "很暗"
 
 #: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Far"
-msgstr ""
+msgstr "很远"
 
 #: src/modules/dropshadow/e_mod_main.c:259
 msgid "Very Fuzzy"
-msgstr ""
+msgstr "很模糊"
 
 #: src/modules/ibar/e_mod_main.c:760
 msgid "Very Large"
-msgstr ""
+msgstr "很大"
 
 #: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Light"
-msgstr ""
+msgstr "很亮"
 
 #: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Near"
-msgstr ""
+msgstr "很近"
 
 #: src/modules/dropshadow/e_mod_main.c:295
 msgid "Very Sharp"
-msgstr ""
+msgstr "很清晰"
 
 #: src/modules/temperature/e_mod_main.c:488
 msgid "Very Slow (60 sec)"
-msgstr ""
+msgstr "很慢 （每60秒）"
 
 #: src/modules/ibar/e_mod_main.c:732
 msgid "Very Small"
-msgstr ""
+msgstr "很小"
 
 #: src/bin/e_main.c:349
 msgid "Welcome to Enlightenment 0.17"
-msgstr ""
+msgstr "欢迎来到 Enlightenment 0.17"
 
 #: src/bin/e_int_menus.c:87
 msgid "Windows"
-msgstr ""
+msgstr "窗口"
 
 #: src/bin/e_init.c:34
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr ""
+msgstr "X报告没有找到窗口和屏幕！\n"
 
 #: src/modules/battery/e_mod_main.c:687
 msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
 msgstr ""
+"您的电池电量低。\n"
+"您可能需要切换到使用交流电源。"
