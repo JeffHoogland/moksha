@@ -46,6 +46,7 @@ EAPI void		e_font_default_set(const char * text_class, const char * font, int si
 EAPI E_Font_Default *	e_font_default_get(const char * text_class);
 EAPI void		e_font_default_remove(const char * text_class);
 EAPI Evas_List *	e_font_default_list(void);
-
+EAPI const char        *e_font_default_string_get(const char *text_class, int *size_ret);
+    
 #endif
 #endif

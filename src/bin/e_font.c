@@ -10,6 +10,8 @@
 
 static Evas_List *_e_font_font_dir_available_get (Evas_List * available_fonts, const char *font_dir);
 
+static char _fn_buf[1024];
+
 int
 e_font_init(void)
 {
@@ -27,17 +29,25 @@ e_font_shutdown(void)
 void
 e_font_apply(void)
 {
-   char buf[PATH_MAX];
+   char buf[1024];
    Evas_List *next;
    E_Font_Fallback *eff;
    E_Font_Default *efd;
+   int blen, len;
    
    /* setup edje fallback list */
+   blen = sizeof(buf) - 1;
+   buf[blen] = 0;
    next = e_config->font_fallbacks;
    if (next)
      {
 	eff = evas_list_data(next);
-	strncpy(buf, eff->name, PATH_MAX - 1);
+	len = strlen(eff->name);
+	if (len < blen)
+	  {
+	     strcpy(buf, eff->name);
+	     blen -= len;
+	  }
 	next = evas_list_next(next);
      }
    else
@@ -45,16 +55,27 @@ e_font_apply(void)
 	edje_fontset_append_set(NULL);
      }
 
-   buf[0] = 0;
    while (next)
      {
 	eff = evas_list_data(next);
-	strcat(buf, ",");
-	strcat(buf, eff->name);
+	len = 1;
+	if (len < blen)
+	  {
+	     strcat(buf, ",");
+	     blen -= len;
+	  }
+	len = strlen(eff->name);
+	if (len < blen)
+	  {
+	     strcat(buf, eff->name);
+	     blen -= len;
+	  }
 	next = evas_list_next(next);
      }
    if (buf[0] != 0)
-     edje_fontset_append_set(buf);
+     {
+	edje_fontset_append_set(buf);
+     }
    
    /* setup edje text classes */
    for (next = e_config->font_defaults; next; next = next->next)
@@ -196,7 +217,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
 E_Font_Default *
 e_font_default_get(const char *text_class)
 {
-   E_Font_Default *efd;
+   E_Font_Default *efd, *defd = NULL;
    Evas_List *next;
 
    /* search for the text class */
@@ -212,8 +233,12 @@ e_font_default_get(const char *text_class)
 					e_config->font_defaults, efd);
 	     return efd;
 	  }
+	if (!strcmp(efd->text_class, "default"))
+	  defd = efd;
      }
-   return NULL;
+   if (!defd)
+     defd  = efd;
+   return defd;
 }
 
 void
@@ -242,6 +267,53 @@ Evas_List *
 e_font_default_list(void)
 {
    return e_config->font_defaults;
+}
+
+const char *
+e_font_default_string_get(const char *text_class, int *size_ret)
+{
+   E_Font_Default *efd;
+   Evas_List *next;
+   E_Font_Fallback *eff;
+   int blen, len;
+   
+   _fn_buf[0] = 0;
+   efd = e_font_default_get(text_class);
+   if (!efd)
+     {
+	if (size_ret) *size_ret = 0;
+	return "";
+     }
+   blen = sizeof(_fn_buf) - 1;
+   
+   len = strlen(efd->font);
+   if (len < blen)
+     {
+	strcpy(_fn_buf, efd->font);
+	blen -= len;
+     }
+   
+   next = e_config->font_fallbacks;
+   while (next)
+     {
+	eff = evas_list_data(next);
+	len = 1;
+	if (len < blen)
+	  {
+	     strcat(_fn_buf, ",");
+	     blen -= len;
+	  }
+	len = strlen(eff->name);
+	if (len < blen)
+	  {
+	     strcat(_fn_buf, eff->name);
+	     blen -= len;
+	  }
+	next = evas_list_next(next);
+     }
+   
+   if (size_ret) *size_ret = efd->size;
+   return _fn_buf;
 }
 
 static Evas_List *

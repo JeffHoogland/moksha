@@ -126,8 +126,11 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	  {
 	     char *p;
 	     Evas_Coord y;
-
+	     char *fname;
+	     int fsize;
+	     
 	     y = 16 + 64 + 16;
+	     fname = (char *)e_font_default_string_get("default", &fsize);
 	     for (p = newstr; p;)
 	       {
 		  char *pp;
@@ -136,7 +139,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 		  if (pp) *pp = 0;
 		  o = evas_object_text_add(e);
 		  evas_object_color_set(o, 255, 255, 255, 128);
-		  evas_object_text_font_set(o, "Vera", 10);
+		  evas_object_text_font_set(o, fname, fsize);
 		  evas_object_text_text_set(o, p);
 		  evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 		  evas_object_move(o, 16 + 1, y + 1);
@@ -145,7 +148,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 		  o = evas_object_text_add(e);
 		  evas_object_color_set(o, 0, 0, 0, 255);
-		  evas_object_text_font_set(o, "Vera", 10);
+		  evas_object_text_font_set(o, fname, fsize);
 		  evas_object_text_text_set(o, p);
 		  evas_object_geometry_get(o, NULL, NULL, &tw, &th);
 		  evas_object_move(o, 16, y);
@@ -244,7 +247,9 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	char format[1024];
 	Evas_Object *text;
 	int x, y, w, h, nw, nh;
-
+	char *fname;
+	int fsize;
+	
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, error_w, error_h);
 	edje_object_signal_callback_add(o, "close", "",
@@ -253,10 +258,10 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	edje_object_part_text_set(o, "title", title);
 
+	fname = (char *)e_font_default_string_get("default", &fsize);
 	snprintf(format, sizeof(format), 
-		 "source='%s' font='%s' size=%d wrap=word",
-		 e_theme_edje_file_get("base/theme/error", "error/main"),
-		 "fonts/Edje Vera", 10);
+		 "font='%s' size=%i wrap=word",
+		 fname, fsize);
 	text = evas_object_textblock_add(e);
 	evas_object_color_set(text, 0, 0, 0, 255);
 	evas_object_textblock_format_insert(text, format);
