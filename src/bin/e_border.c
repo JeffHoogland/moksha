@@ -3,7 +3,8 @@
  */
 #include "e.h"
 
-//#define INOUTDEBUG 1
+//#define INOUTDEBUG_MOUSE 1
+//#define INOUTDEBUG_FOCUS 1
 
 #define RESIZE_NONE 0
 #define RESIZE_TL   1
@@ -721,7 +722,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * 
  * now the focus is on Y where it should be on X
  */
-		  ecore_x_icccm_take_focus_send(bd->client.win, ECORE_X_CURRENT_TIME);
+		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
 		  e_hints_active_window_set(bd->container->manager, bd->client.win);
 		  ecore_x_window_focus(bd->client.win);
 	       }
@@ -1613,7 +1614,7 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-#ifdef INOUTDEBUG   
+#ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
 	char *ct;
@@ -1658,7 +1659,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-#ifdef INOUTDEBUG   
+#ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
 	char *ct;
@@ -1971,7 +1972,7 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 
    ev = event;
    bd = data;
-#ifdef INOUTDEBUG
+#ifdef INOUTDEBUG_MOUSE
      {
 	time_t t;
 	char *ct;
@@ -2036,7 +2037,7 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 
    ev = event;
    bd = data;
-#ifdef INOUTDEBUG
+#ifdef INOUTDEBUG_MOUSE
      {
 	time_t t;
 	char *ct;
