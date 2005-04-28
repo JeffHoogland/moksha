@@ -2921,7 +2921,8 @@ _e_border_eval(E_Border *bd)
      {
 	/*  show at start of unshade (but don't hide until end of shade) */
 	if (bd->shaded)
-	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  //e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shading = 0;
      }
    if ((bd->changes.shaded) && (bd->changes.pos) && (bd->changes.size))
@@ -2929,7 +2930,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->shaded)
 	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  //e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
      }
    else if ((bd->changes.shaded) && (bd->changes.pos))
@@ -2937,7 +2939,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->shaded)
 	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  //e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }
@@ -2946,7 +2949,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->shaded)
 	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  //e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.shaded = 0;
      }
    else if (bd->changes.shaded)
@@ -2954,7 +2958,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->shaded)
 	  e_container_window_lower(bd->zone->container, bd->client.shell_win, bd->layer);
 	else
-	  e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  //e_container_window_raise(bd->zone->container, bd->client.shell_win, bd->layer);
+	  ecore_x_window_raise(bd->client.shell_win);
 	bd->changes.size = 1;
 	bd->changes.shaded = 0;
      }
