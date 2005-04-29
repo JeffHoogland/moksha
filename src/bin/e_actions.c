@@ -173,6 +173,7 @@ ACT_FN_GO(desk_flip_by)
    if (!obj) return;
    if (obj->type != E_MANAGER_TYPE) return;
    con = e_manager_container_current_get((E_Manager *)obj);
+   /* FIXME: this shoudl really go into desk logic and zone... */
    if (con)
      {
 	E_Zone *zone;
