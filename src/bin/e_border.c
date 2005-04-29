@@ -699,29 +699,34 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * 
  * now the focus is on Y where it should be on X
  */
-		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-		  e_hints_active_window_set(bd->container->manager, bd);
 		  ecore_x_window_focus(bd->client.win);
+		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
+//		  e_hints_active_window_set(bd->container->manager, bd);
 	       }
 	     else
 	       {
 //		  printf("set focus\n");
 		  ecore_x_window_focus(bd->client.win);
-		  e_hints_active_window_set(bd->container->manager, bd);
+//		  e_hints_active_window_set(bd->container->manager, bd);
 	       }
 	  }
 	else
 	  {
 //	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->container->manager->win);
-	     e_hints_active_window_set(bd->container->manager, NULL);
+//	     e_hints_active_window_set(bd->container->manager, NULL);
 	  }
      }
    if ((bd->focused) && (focused != bd))
-     focused = bd;
+     {
+	focused = bd;
+	e_hints_active_window_set(bd->container->manager, bd);
+     }
    else if ((!bd->focused) && (focused == bd))
-     focused = NULL;
-
+     {
+	focused = NULL;
+	e_hints_active_window_set(bd->container->manager, NULL);
+     }
 //   printf("F %x %i\n", bd->client.win, bd->focused);
 }
 
