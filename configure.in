@@ -6,7 +6,6 @@ rm -f config.cache
 AC_INIT(configure.in)
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
-AC_CANONICAL_TARGET
 AC_ISC_POSIX
 AM_INIT_AUTOMAKE(enlightenment, 0.16.999.005)
 AM_CONFIG_HEADER(config.h)
@@ -23,7 +22,7 @@ AC_C___ATTRIBUTE__
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
-MODULE_ARCH="$target_os-$target_cpu"
+MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
 
