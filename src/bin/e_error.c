@@ -331,19 +331,10 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_name_set(o, "allocated");
      }
      {
-	Ecore_X_Window mwin, win;
+	Ecore_X_Window win;
 	
 	win = ecore_evas_software_x11_window_get(ee);
-	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = e_init_window_get();
-	if (!mwin)
-	  ecore_x_window_raise(win);
-	else
-	  ecore_x_window_configure(win,
-				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-				   0, 0, 0, 0, 0,
-				   mwin, ECORE_X_WINDOW_STACK_BELOW);
+	e_container_window_raise(con, win, 999);
 	ecore_evas_show(ee);
      }
 }
