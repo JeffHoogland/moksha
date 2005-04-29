@@ -107,6 +107,7 @@ struct _E_Border
 	 int start_x, start_y;
 	 double min_aspect, max_aspect;
 	 Ecore_X_Window_State_Hint initial_state;
+	 Ecore_X_Window_State_Hint state;
 	 Ecore_X_Pixmap icon_pixmap;
 	 Ecore_X_Pixmap icon_mask;
 	 Ecore_X_Window icon_window;
@@ -116,8 +117,6 @@ struct _E_Border
 	 unsigned char accepts_focus : 1;
 	 unsigned char urgent : 1;
 	 unsigned char delete_request : 1;
-	 unsigned char withdrawn : 1;
-	 unsigned char iconic : 1;
 	 unsigned char request_pos : 1;
 	 struct {
 	    unsigned int title : 1;
@@ -150,6 +149,9 @@ struct _E_Border
 	 /* NetWM Window state */
 	 struct {
 	    unsigned char modal : 1;
+	    unsigned char sticky : 1;
+	    unsigned char shaded : 1;
+	    unsigned char hidden : 1;
 	    unsigned char maximized_v : 1;
 	    unsigned char maximized_h : 1;
 	    unsigned char skip_taskbar : 1;
@@ -157,6 +159,8 @@ struct _E_Border
 	    unsigned char fullscreen : 1;
 	    unsigned char stacking : 2; /* 0 = None, 1 = Above, 2 = Below */
 	 } state;
+
+	 Ecore_X_Window_Type type;
 	 
       } netwm;
       Ecore_X_Window_Attributes initial_attributes;

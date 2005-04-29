@@ -3047,32 +3047,7 @@ _e_border_eval(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
 	/* Recreate state */
-	if (ecore_x_netwm_window_type_get(bd->client.win) == ECORE_X_WINDOW_TYPE_DESKTOP)
-	  bd->layer = 0;
-	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_BELOW))
-	  bd->layer = 50;
-	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE))
-	  bd->layer = 150;
-	else if (ecore_x_netwm_window_type_get(bd->client.win) == ECORE_X_WINDOW_TYPE_DOCK)
-	  bd->layer = 150;
-	else if (ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_FULLSCREEN))
-	  bd->layer = 200;
-	else
-	  bd->layer = 100;
-	e_container_window_raise(bd->zone->container, bd->win, bd->layer);
-
-	if (e_hints_window_sticky_isset(bd->client.win))
-	  e_border_stick(bd);
-	if (e_hints_window_shaded_isset(bd->client.win))
-	  e_border_shade(bd, e_hints_window_shade_direction_get(bd->client.win));
-	if (e_hints_window_maximized_isset(bd->client.win))
-	  e_border_maximize(bd);
-	if (e_hints_window_iconic_isset(bd->client.win))
-	  e_border_iconify(bd);
-	/* If a window isn't iconic, and is one the current desk,
-	 * show it! */
-	else if (bd->desk == e_desk_current_get(bd->zone))
-	  e_border_show(bd);
+	e_hints_window_init(bd);
 
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->client_inset.l,
