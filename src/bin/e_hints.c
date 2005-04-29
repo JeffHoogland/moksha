@@ -278,8 +278,7 @@ e_hints_window_init(E_Border *bd)
      e_border_iconify(bd);
    /* If a window isn't iconic, and is one the current desk,
     * show it! */
-   else if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NORMAL)
-	    && (bd->desk == e_desk_current_get(bd->zone)))
+   else if (bd->desk == e_desk_current_get(bd->zone))
      e_border_show(bd);
 }
 
