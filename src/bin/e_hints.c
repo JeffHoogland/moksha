@@ -149,30 +149,34 @@ e_hints_client_stacking_set(void)
 }
 
 void
-e_hints_active_window_set(E_Manager *man, Ecore_X_Window win)
+e_hints_active_window_set(E_Manager *man, E_Border *bd)
 {
    E_OBJECT_CHECK(man);
-   ecore_x_netwm_client_active_set(man->root, win);
+   if (bd)
+     ecore_x_netwm_client_active_set(man->root, bd->client.win);
+   else
+     ecore_x_netwm_client_active_set(man->root, 0);
 }
 
 void
-e_hints_window_name_set(Ecore_X_Window win, const char *name)
+e_hints_window_name_set(E_Border *bd)
 {
-   ecore_x_icccm_title_set(win, name);
-   ecore_x_netwm_name_set(win, name);
+   ecore_x_icccm_title_set(bd->client.win, bd->client.icccm.title);
+   ecore_x_netwm_name_set(bd->client.win, bd->client.icccm.title);
 }
 
-char *
-e_hints_window_name_get(Ecore_X_Window win)
+void
+e_hints_window_name_get(E_Border *bd)
 {
    char		*name;
 
-   name = ecore_x_netwm_name_get(win);
+   name = ecore_x_netwm_name_get(bd->client.win);
    if (!name)
-     name = ecore_x_icccm_title_get(win);
+     name = ecore_x_icccm_title_get(bd->client.win);
    if (!name)
      name = strdup("No name!!");
-   return name;
+   if (bd->client.icccm.title) free(bd->client.icccm.title);
+   bd->client.icccm.title = name;
 }
 
 void
@@ -267,7 +271,7 @@ e_hints_window_init(E_Border *bd)
    if (bd->client.netwm.state.sticky)
      e_border_stick(bd);
    if (bd->client.netwm.state.shaded)
-     e_border_shade(bd, e_hints_window_shade_direction_get(bd->client.win));
+     e_border_shade(bd, e_hints_window_shade_direction_get(bd));
    if (bd->client.netwm.state.maximized_v && bd->client.netwm.state.maximized_h)
      e_border_maximize(bd);
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -356,45 +360,78 @@ e_hints_window_state_get(E_Border *bd)
 }
 
 void
-e_hints_window_visible_set(Ecore_X_Window win)
+e_hints_window_visible_set(E_Border *bd)
 {
-   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 0);
+   if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_NORMAL)
+     {
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
+	bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
+     }
+   if (bd->client.netwm.state.hidden)
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HIDDEN, 0);
+	bd->client.netwm.state.hidden = 0;
+     }
 }
 
 void
-e_hints_window_iconic_set(Ecore_X_Window win)
+e_hints_window_iconic_set(E_Border *bd)
 {
-   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+   if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
+     {
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
+	bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_ICONIC;
+     }
+   if (!bd->client.netwm.state.hidden)
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+	bd->client.netwm.state.hidden = 1;
+     }
 }
 
 void
-e_hints_window_hidden_set(Ecore_X_Window win)
+e_hints_window_hidden_set(E_Border *bd)
 {
-   ecore_x_icccm_state_set(win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+   if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_WITHDRAWN)
+     {
+	ecore_x_icccm_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
+	bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_WITHDRAWN;
+     }
+   if (!bd->client.netwm.state.hidden)
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+	bd->client.netwm.state.hidden = 1;
+     }
 }
 
 void
-e_hints_window_shaded_set(Ecore_X_Window win, int on)
+e_hints_window_shaded_set(E_Border *bd, int on)
 {
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SHADED, on);
+   if ((!bd->client.netwm.state.shaded) && (on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_SHADED, 1);
+	bd->client.netwm.state.shaded = 1;
+     }
+   else if ((bd->client.netwm.state.shaded) && (!on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_SHADED, 0);
+	bd->client.netwm.state.shaded = 0;
+     }
 }
 
 void
-e_hints_window_shade_direction_set(Ecore_X_Window win, E_Direction dir)
+e_hints_window_shade_direction_set(E_Border *bd, E_Direction dir)
 {
-   ecore_x_window_prop_card32_set(win, E_ATOM_SHADE_DIRECTION, &dir, 1);
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_SHADE_DIRECTION, &dir, 1);
 }
 
 E_Direction
-e_hints_window_shade_direction_get(Ecore_X_Window win)
+e_hints_window_shade_direction_get(E_Border *bd)
 {
    int ret;
    E_Direction dir;
 
-   ret = ecore_x_window_prop_card32_get(win,
+   ret = ecore_x_window_prop_card32_get(bd->client.win,
 					E_ATOM_SHADE_DIRECTION,
 				       	&dir, 1);
    if (ret == 1)
@@ -404,22 +441,59 @@ e_hints_window_shade_direction_get(Ecore_X_Window win)
 }
 
 void
-e_hints_window_maximized_set(Ecore_X_Window win, int on)
+e_hints_window_maximized_set(E_Border *bd, int on)
 {
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT, on);
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ, on);
+   if ((!bd->client.netwm.state.maximized_v) && (on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT, 1);
+	bd->client.netwm.state.maximized_v = 1;
+     }
+   else if ((bd->client.netwm.state.maximized_v) && (!on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT, 0);
+	bd->client.netwm.state.maximized_v = 0;
+     }
+   if ((!bd->client.netwm.state.maximized_h) && (on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ, 1);
+	bd->client.netwm.state.maximized_h = 1;
+     }
+   else if ((bd->client.netwm.state.maximized_h) && (!on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ, 0);
+	bd->client.netwm.state.maximized_h = 0;
+     }
 }
 
 void
-e_hints_window_fullscreen_set(Ecore_X_Window win, int on)
+e_hints_window_fullscreen_set(E_Border *bd, int on)
 {
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_FULLSCREEN, on);
+   if ((!bd->client.netwm.state.fullscreen) && (on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_FULLSCREEN, 1);
+	bd->client.netwm.state.fullscreen = 1;
+     }
+   else if ((bd->client.netwm.state.fullscreen) && (!on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_FULLSCREEN, 0);
+	bd->client.netwm.state.fullscreen = 0;
+     }
 }
 
 void
-e_hints_window_sticky_set(Ecore_X_Window win, int on)
+e_hints_window_sticky_set(E_Border *bd, int on)
 {
-   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_STICKY, on);
+   ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, on);
+   if ((!bd->client.netwm.state.sticky) && (on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, 1);
+	bd->client.netwm.state.sticky = 1;
+     }
+   else if ((bd->client.netwm.state.sticky) && (!on))
+     {
+	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, 0);
+	bd->client.netwm.state.sticky = 0;
+     }
 }
 
 /*
@@ -432,13 +506,11 @@ ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_BELOW, on);
 */
 
 void
-e_hints_window_icon_name_get(Ecore_X_Window win)
+e_hints_window_icon_name_get(E_Border *bd)
 {
-   E_Border	*bd;
    char		*name;
 
-   name = ecore_x_netwm_icon_name_get(win);
-   bd = e_border_find_by_client_window(win);
+   name = ecore_x_netwm_icon_name_get(bd->client.win);
    if (bd->client.icccm.icon_name)
      free(bd->client.icccm.icon_name);
    bd->client.icccm.icon_name = name;

@@ -406,7 +406,7 @@ e_border_show(E_Border *bd)
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
    e_container_window_show(bd->zone->container, bd->client.win, bd->layer);
-   e_hints_window_visible_set(bd->client.win);
+   e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
 
@@ -434,7 +434,7 @@ e_border_hide(E_Border *bd, int manage)
    e_container_window_hide(bd->zone->container, bd->client.win, bd->layer);
    e_container_shape_hide(bd->shape);
    if (!bd->iconic)
-     e_hints_window_hidden_set(bd->client.win);
+     e_hints_window_hidden_set(bd);
 
    bd->visible = 0;
    bd->changes.visible = 1;
@@ -700,21 +700,21 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * now the focus is on Y where it should be on X
  */
 		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-		  e_hints_active_window_set(bd->container->manager, bd->client.win);
+		  e_hints_active_window_set(bd->container->manager, bd);
 		  ecore_x_window_focus(bd->client.win);
 	       }
 	     else
 	       {
 //		  printf("set focus\n");
 		  ecore_x_window_focus(bd->client.win);
-		  e_hints_active_window_set(bd->container->manager, bd->client.win);
+		  e_hints_active_window_set(bd->container->manager, bd);
 	       }
 	  }
 	else
 	  {
 //	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->container->manager->win);
-	     e_hints_active_window_set(bd->container->manager, 0);
+	     e_hints_active_window_set(bd->container->manager, NULL);
 	  }
      }
    if ((bd->focused) && (focused != bd))
@@ -741,8 +741,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	bd->shade.y = bd->y;
 	bd->shade.dir = dir;
 
-	e_hints_window_shaded_set(bd->client.win, 1);
-	e_hints_window_shade_direction_set(bd->client.win, dir);
+	e_hints_window_shaded_set(bd, 1);
+	e_hints_window_shade_direction_set(bd, dir);
 
 	if (e_config->border_shade_animate)
 	  {
@@ -818,8 +818,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
 	bd->shade.dir = dir;
 
-	e_hints_window_shaded_set(bd->client.win, 0);
-	e_hints_window_shade_direction_set(bd->client.win, dir);
+	e_hints_window_shaded_set(bd, 0);
+	e_hints_window_shade_direction_set(bd, dir);
 
 	if (bd->shade.dir == E_DIRECTION_UP ||
 	    bd->shade.dir == E_DIRECTION_LEFT)
@@ -906,7 +906,7 @@ e_border_maximize(E_Border *bd)
 	bd->saved.w = bd->w;
 	bd->saved.h = bd->h;
 
-	e_hints_window_maximized_set(bd->client.win, 1);
+	e_hints_window_maximized_set(bd, 1);
 
 	/* FIXME maximize intelligently */
 	e_border_raise(bd);
@@ -929,7 +929,7 @@ e_border_unmaximize(E_Border *bd)
    if (bd->maximized)
      {
 //	printf("UNMAXIMIZE!!\n");
-	e_hints_window_maximized_set(bd->client.win, 0);
+	e_hints_window_maximized_set(bd, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
@@ -955,7 +955,7 @@ e_border_fullscreen(E_Border *bd)
 	bd->saved.w = bd->w;
 	bd->saved.h = bd->h;
 
-	e_hints_window_fullscreen_set(bd->client.win, 1);
+	e_hints_window_fullscreen_set(bd, 1);
 
 	bd->layer = 200;
 
@@ -983,7 +983,7 @@ e_border_unfullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      {
-	e_hints_window_fullscreen_set(bd->client.win, 0);
+	e_hints_window_fullscreen_set(bd, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
@@ -1015,7 +1015,7 @@ e_border_iconify(E_Border *bd)
 	edje_object_signal_emit(bd->bg_object, "iconify", "");
      }
    iconic = 1;
-   e_hints_window_iconic_set(bd->client.win);
+   e_hints_window_iconic_set(bd);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &iconic, 1);
 
    ev = E_NEW(E_Event_Border_Iconify, 1);
@@ -1060,7 +1060,7 @@ e_border_stick(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    bd->sticky = 1;
-   e_hints_window_sticky_set(bd->client.win, 1);
+   e_hints_window_sticky_set(bd, 1);
 
    ev = E_NEW(E_Event_Border_Stick, 1);
    ev->border = bd;
@@ -1078,7 +1078,7 @@ e_border_unstick(E_Border *bd)
    /* Set the desk before we unstick the border */
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
    bd->sticky = 0;
-   e_hints_window_sticky_set(bd->client.win, 0);
+   e_hints_window_sticky_set(bd, 0);
 
    ev = E_NEW(E_Event_Border_Unstick, 1);
    ev->border = bd;
@@ -2545,8 +2545,7 @@ _e_border_eval(E_Border *bd)
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.title)
      {
-	if (bd->client.icccm.title) free(bd->client.icccm.title);
-	bd->client.icccm.title = e_hints_window_name_get(bd->client.win);
+	e_hints_window_name_get(bd);
 	bd->client.icccm.fetch.title = 0;
 	if (bd->bg_object)
 	  {
