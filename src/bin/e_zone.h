@@ -57,7 +57,8 @@ EAPI void       e_zone_bg_reconfigure(E_Zone *zone);
 EAPI void       e_zone_flip_coords_handle(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count);
 EAPI void       e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count);
-
+EAPI void       e_zone_update_flip(E_Zone *zone);
+    
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 
 #endif

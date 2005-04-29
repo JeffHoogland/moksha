@@ -108,6 +108,8 @@ static void _e_border_move_update(E_Border *bd);
 static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
 
+static int  _e_border_cb_focus_fix(void *data);
+
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
@@ -116,6 +118,8 @@ static E_Border  *focused = NULL;
 static E_Border    *resize = NULL;
 static E_Border    *move = NULL;
 
+static Ecore_Timer *focus_fix_timer = NULL;
+	       
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
 int E_EVENT_BORDER_ZONE_SET = 0;
@@ -177,6 +181,8 @@ e_border_init(void)
    E_EVENT_BORDER_LOWER = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
+   focus_fix_timer = ecore_timer_add(0.5, _e_border_cb_focus_fix, NULL);
+   
    return 1;
 }
 
@@ -191,6 +197,8 @@ e_border_shutdown(void)
 	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
+   ecore_timer_del(focus_fix_timer);
+   focus_fix_timer = NULL;
    return 1;
 }
 
@@ -235,6 +243,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 	e_canvas_del(bd->bg_ecore_evas);
 	ecore_evas_free(bd->bg_ecore_evas);
 	ecore_x_window_del(bd->client.shell_win);
+	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
 	ecore_x_window_del(bd->win);
 	free(bd);
 	return NULL;
@@ -703,7 +712,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	else
 	  {
 //	     printf("remove focus\n");
-	     ecore_x_window_focus(bd->container->manager->win);
+	     ecore_x_window_focus(bd->container->manager->root);
 //	     e_hints_active_window_set(bd->container->manager, NULL);
 	  }
      }
@@ -1197,7 +1206,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 }
 
 void
-e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    if (bd->moving)
      {
@@ -1251,7 +1260,7 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 }
 
 void
-e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    if (bd->resize_mode != RESIZE_NONE)
      {
@@ -1273,6 +1282,21 @@ e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	
 	ecore_x_pointer_last_xy_get(&x, &y);
 	_e_border_menu_show(bd, x, y);
+     }
+}
+
+void
+e_border_act_close_begin(E_Border *bd)
+{
+   if (bd->client.icccm.delete_request)
+     ecore_x_window_delete_request_send(bd->client.win);
+   else
+     {
+	ecore_x_kill(bd->client.win);
+	ecore_x_sync();
+//	ecore_x_window_del(bd->client.win);
+	e_border_hide(bd, 0);
+	e_object_del(E_OBJECT(bd));
      }
 }
 
@@ -1320,6 +1344,7 @@ _e_border_free(E_Border *bd)
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
    ecore_x_window_del(bd->client.shell_win);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
@@ -1818,6 +1843,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 	if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
 	else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) return 1;
+	else if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
      {
@@ -2109,16 +2135,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
    printf("action %s\n", source);
    if (!strcmp(source, "close"))
      {
-	if (bd->client.icccm.delete_request)
-	  ecore_x_window_delete_request_send(bd->client.win);
-	else
-	  {
-	     ecore_x_kill(bd->client.win);
-	     ecore_x_sync();
-//	     ecore_x_window_del(bd->client.win);
-	     e_border_hide(bd, 0);
-	     e_object_del(E_OBJECT(bd));
-	  }
+	e_border_act_close_begin(bd);
      }
    else if (!strcmp(source, "shade_up") || !strcmp(source, "shade"))
      {
@@ -4126,4 +4143,32 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_prepend(borders, bd);
      }
+}
+
+static int
+_e_border_cb_focus_fix(void *data)
+{
+   if (!focused)
+     {
+/*	
+	Evas_List *managers;
+	E_Manager *man;
+	
+	managers = e_manager_list();
+	if (managers)
+	  {
+	     E_Container *con;
+	     
+	     man = managers->data;
+	     con = e_manager_container_current_get(man);
+	     if (con)
+	       {
+		  printf("set foc to %x [%x]\n",
+			 man->focus_win, ecore_x_window_focus_get());
+		  ecore_x_window_focus(man->root);
+	       }
+	  }
+ */
+     }
+   return 1;
 }

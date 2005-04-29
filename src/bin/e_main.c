@@ -375,6 +375,8 @@ main(int argc, char **argv)
    /* an idle enterer to be called after all others */
    _e_main_idle_enterer_after = ecore_idle_enterer_add(_e_main_cb_idler_after, NULL);
 
+   e_managers_keys_grab();
+   
    ecore_x_ungrab();
    
    e_init_title_set(_("Enlightenment"));

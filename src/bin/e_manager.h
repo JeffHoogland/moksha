@@ -19,6 +19,7 @@ struct _E_Manager
    int                  x, y, w, h;
    char                 visible : 1;
    Ecore_X_Window       root;
+   Ecore_X_Window       focus_win;
    Evas_List           *handlers;
    Evas_List           *containers;
 };
@@ -40,5 +41,8 @@ EAPI void            e_manager_lower(E_Manager *man);
 EAPI E_Container    *e_manager_container_current_get(E_Manager *man);
 EAPI E_Container    *e_manager_container_number_get(E_Manager *man, int num);
 
+EAPI void            e_managers_keys_grab(void);
+EAPI void            e_managers_keys_ungrab(void);
+    
 #endif
 #endif

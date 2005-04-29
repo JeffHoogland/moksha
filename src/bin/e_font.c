@@ -37,6 +37,7 @@ e_font_apply(void)
    
    /* setup edje fallback list */
    blen = sizeof(buf) - 1;
+   buf[0] = 0;
    buf[blen] = 0;
    next = e_config->font_fallbacks;
    if (next)
@@ -49,33 +50,27 @@ e_font_apply(void)
 	     blen -= len;
 	  }
 	next = evas_list_next(next);
-     }
-   else
-     {
-	edje_fontset_append_set(NULL);
-     }
-
-   while (next)
-     {
-	eff = evas_list_data(next);
-	len = 1;
-	if (len < blen)
+	while (next)
 	  {
-	     strcat(buf, ",");
-	     blen -= len;
+	     eff = evas_list_data(next);
+	     len = 1;
+	     if (len < blen)
+	       {
+		  strcat(buf, ",");
+		  blen -= len;
+	       }
+	     len = strlen(eff->name);
+	     if (len < blen)
+	       {
+		  strcat(buf, eff->name);
+		  blen -= len;
+	       }
+	     next = evas_list_next(next);
 	  }
-	len = strlen(eff->name);
-	if (len < blen)
-	  {
-	     strcat(buf, eff->name);
-	     blen -= len;
-	  }
-	next = evas_list_next(next);
-     }
-   if (buf[0] != 0)
-     {
 	edje_fontset_append_set(buf);
      }
+   else
+     edje_fontset_append_set(NULL);
    
    /* setup edje text classes */
    for (next = e_config->font_defaults; next; next = next->next)

@@ -493,6 +493,12 @@ e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
    *y_count = zone->desk_y_count;
 }
 
+void
+e_zone_update_flip(E_Zone *zone)
+{
+   _e_zone_update_flip(zone);
+}
+
 static void
 _e_zone_event_zone_desk_count_set_free(void *data, void *ev)
 {

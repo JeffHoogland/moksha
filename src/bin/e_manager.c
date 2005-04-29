@@ -8,6 +8,7 @@ static void _e_manager_free(E_Manager *man);
 
 static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
+static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -85,9 +86,13 @@ e_manager_new(Ecore_X_Window root)
      {
 	man->win = man->root;
      }
+   man->focus_win = ecore_x_window_override_new(man->root, -1, -1, 1, 1);
+   ecore_x_window_show(man->focus_win);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    return man;
 }
@@ -361,6 +366,34 @@ e_manager_container_number_get(E_Manager *man, int num)
    return NULL;
 }
 
+void
+e_managers_keys_grab(void)
+{
+   Evas_List *l;
+
+   for (l = managers; l; l = l->next)
+     {
+	E_Manager *man;
+	
+	man = l->data;
+	e_bindings_key_grab(E_BINDING_CONTEXT_ANY, man->root);
+     }
+}
+
+void
+e_managers_keys_ungrab(void)
+{
+   Evas_List *l;
+   
+   for (l = managers; l; l = l->next)
+     {
+	E_Manager *man;
+	
+	man = l->data;
+	e_bindings_key_ungrab(E_BINDING_CONTEXT_ANY, man->root);
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_manager_free(E_Manager *man)
@@ -381,6 +414,7 @@ _e_manager_free(E_Manager *man)
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
      }
+   ecore_x_window_del(man->focus_win);
    if (man->root != man->win)
      {
 	ecore_x_window_del(man->win);
@@ -390,7 +424,7 @@ _e_manager_free(E_Manager *man)
 }
 
 static int
-_e_manager_cb_window_show_request(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+_e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Show_Request *e;
@@ -419,7 +453,7 @@ _e_manager_cb_window_show_request(void *data __UNUSED__, int ev_type __UNUSED__,
 }
 
 static int
-_e_manager_cb_window_configure(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+_e_manager_cb_window_configure(void *data, int ev_type __UNUSED__, void *ev)
 {
    E_Manager *man;
    Ecore_X_Event_Window_Configure *e;
@@ -428,6 +462,23 @@ _e_manager_cb_window_configure(void *data __UNUSED__, int ev_type __UNUSED__, vo
    e = ev;
    if (e->win != man->root) return 1;
    e_manager_resize(man, e->w, e->h);
+   return 1;
+}
+
+static int
+_e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
+{
+   E_Manager *man;
+   Ecore_X_Event_Key_Down *e;
+   
+   man = data;
+   e = ev;
+   printf("KEY %s [%x %x]\n",
+	  e->keyname, e->win, e->event_win);
+   if ((e->event_win != man->root) &&
+       (e->event_win != man->focus_win)) return 1;
+   if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
+     return 0;
    return 1;
 }
 
