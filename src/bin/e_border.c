@@ -2564,7 +2564,7 @@ _e_border_eval(E_Border *bd)
 	pclass = bd->client.icccm.class;
 	bd->client.icccm.name = NULL;
 	bd->client.icccm.class = NULL;
-	ecore_x_window_prop_name_class_get(bd->client.win, &bd->client.icccm.name, &bd->client.icccm.class);
+	ecore_x_icccm_name_class_get(bd->client.win, &bd->client.icccm.name, &bd->client.icccm.class);
 	if ((pname) && (bd->client.icccm.name) &&
 	    (pclass) && (bd->client.icccm.class))
 	  {
@@ -2752,12 +2752,14 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.netwm.fetch.pid)
      {
-	bd->client.netwm.pid = ecore_x_window_prop_pid_get(bd->client.win);
+	if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
+	  bd->client.netwm.pid = -1;
 	bd->client.netwm.fetch.pid = 0;
      }
    if (bd->client.netwm.fetch.desktop)
      {
-	bd->client.netwm.desktop = ecore_x_window_prop_desktop_get(bd->client.win);
+	if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
+	  bd->client.netwm.desktop = -1;
 	bd->client.netwm.fetch.desktop = 0;
      }
 
