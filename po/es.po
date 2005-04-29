@@ -1,4 +1,4 @@
-SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE TITLE.
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -82,7 +82,7 @@ msgid ""
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
 msgstr ""
-"Un medidor que utiliza tanto ACPI or APM\n
+"Un medidor que utiliza tanto ACPI or APM\n"
 "en Linux para monitorear el estado la bateria\n"
 "y el adaptador de corriente. Esto solo funcionara bajo Linux\n"
 "y es tan exacto como el BIOS o los drivers del kernel."
@@ -92,18 +92,18 @@ msgid ""
 "A module to measure the ACPI Thermal sensor on Linux.\n"
 "It is especially useful for modern Laptops with high speed\n"
 "CPUs that generate a lot of heat."
-msgstr "" 
+msgstr ""
 "Un modulo para medir el sensor termal del ACPI en Linux\n"
 "Es especialmente util para laptops de ultima generacion\n"
-"con CPUs veloces que generen mucha temperatura” 
+"con CPUs veloces que generen mucha temperatura."
 
 #: src/modules/pager/e_mod_main.c:136
 msgid "A pager module to navigate virtual desktops."
-msgstr "Un modulo Pager para navegar sobre los escritorios virtuales"
+msgstr "Un modulo Pager para navegar sobre los escritorios virtuales."
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
-msgstr "Un modulo que asigna a E17 un reloj"
+msgstr "Un modulo que asigna a E17 un reloj."
 
 #: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
 msgid "About Enlightenment"
@@ -381,8 +381,9 @@ msgstr "Enlightenment no puede configurar el socket IPC.\n"
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
-msgstr " Enlightenment no puede configurar xinerama wrapping.
-Esto no deberia suceder."
+msgstr ""
+"Enlightenment no puede configurar xinerama wrapping.\n"
+"Esto no deberia suceder."
 
 #: src/bin/e_main.c:280
 msgid ""
@@ -390,7 +391,7 @@ msgid ""
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "La configuracion de Enlightenment para el manejo de Ventanas en su Sistema fallo.\n"
-"Puede que haya otro sistema de manejo ya corriendo"
+"Puede que haya otro sistema de manejo ya corriendo\n"
 
 #: src/bin/e_error.c:354
 msgid "Enlightenment: Error!"
@@ -505,7 +506,7 @@ msgstr ""
 "Error iniciando Editor de Iconos.\n"
 "\n"
 "Por favor re-instale e_util_eapp_edit\n" 
-"o asegurese que este en su PATH"
+"o asegurese que este en su PATH\n"
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightenment"
@@ -705,7 +706,6 @@ msgstr "Options:\n"
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
-"
 
 #: src/modules/pager/e_mod_main.c:126
 msgid "Pager"
@@ -776,7 +776,7 @@ msgid ""
 msgstr ""
 "Se produjo un error cargando el modulo: %s\n"
 "Ningun modulo denominado %s pudo ser encontrado\n"
-"en la busqueda de Modulos de Directorios"
+"en la busqueda de Modulos de Directorios\n"
 
 #: src/bin/e_module.c:110 src/bin/e_module.c:132
 #, c-format
@@ -813,9 +813,9 @@ msgstr ""
 
 #: src/bin/e_main.c:361
 msgid "This is development code, so be warned."
-msgstr "ADVERTENCIA: Esto es un codigo en desarrollo.”
+msgstr "ADVERTENCIA: Esto es un codigo en desarrollo."
 
-c/bin/e_main.c:321
+#: src/bin/e_main.c:321
 msgid ""
 "This is program has barely been started on, so it is not complete by a long\n"
 "shot. Please do NOT expect anything to work properly at this stage. It's\n"
@@ -847,7 +847,7 @@ msgid ""
 "or hardware acceleration."
 msgstr "Este es el Modulo Dropshadow que nos permite insertar sombras\n"
 "en el fondo del escritorio sin ninguna extension del X-server\n"
-"o aceleracion de hardware”
+"o aceleracion de hardware."
 
 #: src/modules/test/e_mod_main.c:67
 msgid ""
@@ -857,19 +857,19 @@ msgid ""
 msgstr ""
 "Este es un modulo muy simple y solo para el testeo de la interface basica\n"
 "de Enlightenment 0.17. Por favor ignore este modulo a menos que este\n"
-"trabajando sobre el modulo de Sistema”
+"trabajando sobre el modulo de Sistema."
 
 #: src/modules/ibar/e_mod_main.c:733
 msgid "Tiny"
-msgstr "Pequeño
+msgstr "Pequeño"
 
 #: src/modules/dropshadow/e_mod_main.c:353
 msgid "Very Near"
-msgstr "Muy Cerca”
+msgstr "Muy Cerca"
 
 #: src/modules/dropshadow/e_mod_main.c:287
 msgid "Very Dark"
-msgstr "Muy Oscuro”
+msgstr "Muy Oscuro"
 
 #: src/modules/dropshadow/e_mod_main.c:326
 msgid "Very Far"
@@ -916,5 +916,6 @@ msgstr "X reporta que no hay ventanas y %i pantallas!\n"
 msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
-msgstr "Su bateria se esta agotando.\n"
+msgstr ""
+"Su bateria se esta agotando.\n"
 "Cambie a alimentacion electrica."
