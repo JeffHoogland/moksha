@@ -217,7 +217,7 @@ e_font_default_set(const char *text_class, const char *font, int size)
 E_Font_Default *
 e_font_default_get(const char *text_class)
 {
-   E_Font_Default *efd, *defd = NULL;
+   E_Font_Default *efd = NULL, *defd = NULL;
    Evas_List *next;
 
    /* search for the text class */
