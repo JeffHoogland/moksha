@@ -112,12 +112,6 @@ e_container_new(E_Manager *man)
 				   con->layers[i - 1], ECORE_X_WINDOW_STACK_ABOVE);
      }
 
-   ecore_x_window_configure(con->bg_win,
-	 ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-	 ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-	 0, 0, 0, 0, 0,
-	 con->layers[0], ECORE_X_WINDOW_STACK_BELOW);
-
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
      {
@@ -148,6 +142,7 @@ e_container_show(E_Container *con)
    ecore_x_window_lower(con->bg_win);
    if (con->win != con->manager->win)
      ecore_x_window_show(con->win);
+   ecore_x_icccm_state_set(con->bg_win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
    con->visible = 1;
 }
         
@@ -160,6 +155,7 @@ e_container_hide(E_Container *con)
    ecore_evas_hide(con->bg_ecore_evas);
    if (con->win != con->manager->win)
      ecore_x_window_hide(con->win);
+   ecore_x_icccm_state_set(con->bg_win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
    con->visible = 0;
 }
 
