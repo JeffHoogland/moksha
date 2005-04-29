@@ -15,14 +15,13 @@ static int visible = 0;
 static char *drag_type;
 static void *drag_data;
 
-#if 0
-static int  drag;
-static void (*drag_cb)(void *data, void *event);
-static void *drag_cb_data;
-#endif
-
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_enter(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_leave(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_position(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_drop(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
 int
 e_dnd_init(void)
@@ -42,13 +41,27 @@ e_dnd_init(void)
 	  {
 	     con = l2->data;
 
-#if 0
-	     e_hints_window_visible_set(con->bg_win);
 	     ecore_x_dnd_aware_set(con->bg_win, 1);
-	     ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP, _e_dnd_cb_event_dnd_drop , eb);
-	     ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION, _e_dnd_cb_event_dnd_position, eb);
-	     ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY, _e_dnd_cb_event_dnd_selection, eb);
-#endif
+	     event_handlers = evas_list_append(event_handlers,
+					       ecore_event_handler_add(ECORE_X_EVENT_XDND_ENTER,
+								       _e_dnd_cb_event_dnd_enter,
+								       con));
+	     event_handlers = evas_list_append(event_handlers,
+					       ecore_event_handler_add(ECORE_X_EVENT_XDND_LEAVE,
+								       _e_dnd_cb_event_dnd_leave,
+								       con));
+	     event_handlers = evas_list_append(event_handlers,
+					       ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION,
+								       _e_dnd_cb_event_dnd_position,
+								       con));
+	     event_handlers = evas_list_append(event_handlers,
+					       ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP,
+								       _e_dnd_cb_event_dnd_drop,
+								       con));
+	     event_handlers = evas_list_append(event_handlers,
+					       ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
+								       _e_dnd_cb_event_dnd_selection,
+								       con));
 	  }
      }
    return 1;
@@ -197,15 +210,6 @@ end:
    drag_data = NULL;
 }
 
-#if 0
-void
-e_drag_callback_set(void *data, void (*func)(void *data, void *event))
-{
-   drag_cb = func;
-   drag_cb_data = data;
-} 
-#endif
-
 E_Drop_Handler *
 e_drop_handler_add(void *data, void (*func)(void *data, const char *type, void *drop), const char *type, int x, int y, int w, int h)
 {
@@ -244,24 +248,6 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
 
    e_drag_end(ev->x, ev->y);
 
-#if 0
-   if (drag_cb)
-     {
-	E_Drag_Event *e;
-	
-	e = E_NEW(E_Drag_Event, 1);
-	if (e)
-	  {
-	     e->drag = drag;
-	     e->x = ev->x;
-	     e->y = ev->y;
-	     (*drag_cb)(drag_cb_data, e);
-	     drag_cb = NULL;
-	     free(e);
-	  }
-     }
-#endif
-
    return 1;
 }
 
@@ -277,3 +263,83 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    return 1;
 }
 
+static int
+_e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Enter *ev;
+   E_Container *con;
+
+   ev = event;
+   con = data;
+   if (con->bg_win != ev->win) return 1;
+   printf("Xdnd enter\n");
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Leave *ev;
+   E_Container *con;
+
+   ev = event;
+   con = data;
+   if (con->bg_win != ev->win) return 1;
+   printf("Xdnd leave\n");
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_position(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Position *ev;
+   E_Container *con;
+
+   ev = event;
+   con = data;
+   if (con->bg_win != ev->win) return 1;
+   printf("Xdnd pos\n");
+
+#if 0
+   for (l = drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+	
+	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
+	    && (!strcmp(h->type, drag_type)))
+	  {
+	     h->func(h->data, drag_type, ev);
+	  }
+     }
+#endif
+
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Drop *ev;
+   E_Container *con;
+
+   ev = event;
+   con = data;
+   if (con->bg_win != ev->win) return 1;
+   printf("Xdnd drop\n");
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
+{
+   Ecore_X_Event_Selection_Notify *ev;
+   E_Container *con;
+
+   ev = event;
+   con = data;
+   if (con->bg_win != ev->win) return 1;
+   printf("Xdnd selection\n");
+   return 1;
+}
