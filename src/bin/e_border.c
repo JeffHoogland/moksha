@@ -200,7 +200,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
    Evas_List *list;
-   E_Config_Binding *eb;
    unsigned int managed, desk[2];
    int deskx, desky;
 
@@ -214,16 +213,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->h = 1;
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
-   /* Bindings */
-   for (list = e_config->bindings; list; list = list->next)
-     {
-	eb = list->data;
-	ecore_x_window_button_grab(bd->win,
-				   eb->button,
-				   eb->mask,
-				   eb->modifiers,
-				   0);
-     }
+   e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win, 0, 0, bd->w, bd->h);
    ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
    e_canvas_add(bd->bg_ecore_evas);
@@ -1188,12 +1178,109 @@ e_border_clients_get()
    return borders;
 }
 
+void
+e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   if (!bd->moving)
+     {
+	bd->moving = 1;
+	if (ev)
+	  {
+	     char source[256];
+	     
+	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
+	     _e_border_moveinfo_gather(bd, source);
+	  }
+	e_border_raise(bd);
+	_e_border_move_begin(bd);
+     }
+}
+
+void
+e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   if (bd->moving)
+     {
+	bd->moving = 0;
+	_e_border_move_end(bd);
+	e_zone_flip_coords_handle(bd->zone, -1, -1);
+     }
+}
+
+void
+e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   if (bd->resize_mode == RESIZE_NONE)
+     {
+	if (bd->mouse.current.mx < (bd->x + bd-> w / 2))
+	  {
+	     if (bd->mouse.current.my < (bd->y + bd->h / 2))
+	       {
+		  bd->resize_mode = RESIZE_TL;
+		  GRAV_SET(bd, ECORE_X_GRAVITY_SE);
+	       }
+	     else
+	       {
+		  bd->resize_mode = RESIZE_BL;
+		  GRAV_SET(bd, ECORE_X_GRAVITY_NE);
+	       }
+	  }
+	else
+	  {
+	     if (bd->mouse.current.my < (bd->y + bd->h / 2))
+	       {
+		  bd->resize_mode = RESIZE_TR;
+		  GRAV_SET(bd, ECORE_X_GRAVITY_SW);
+	       }
+	     else
+	       {
+		  bd->resize_mode = RESIZE_BR;
+		  GRAV_SET(bd, ECORE_X_GRAVITY_NW);
+	       }
+	  }
+	if (ev)
+	  {
+	     char source[256];
+	     
+	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
+	     _e_border_moveinfo_gather(bd, source);
+	  }
+	e_border_raise(bd);
+	_e_border_resize_begin(bd);
+     }
+}
+
+void
+e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   if (bd->resize_mode != RESIZE_NONE)
+     {
+	bd->resize_mode = RESIZE_NONE;
+	_e_border_resize_end(bd);
+     }
+}
+
+void
+e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   if (ev)
+     {
+	_e_border_menu_show(bd, bd->x + ev->x, bd->y + ev->y);
+     }
+   else
+     {
+	int x, y;
+	
+	ecore_x_pointer_last_xy_get(&x, &y);
+	_e_border_menu_show(bd, x, y);
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)
 {
    Evas_List *list;
-   E_Config_Binding *eb;
 
    if (resize == bd)
      _e_border_resize_end(bd);
@@ -1233,15 +1320,6 @@ _e_border_free(E_Border *bd)
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
    ecore_x_window_del(bd->client.shell_win);
-   /* Bindings */
-   for (list = e_config->bindings; list; list = list->next)
-     {
-	eb = list->data;
-	ecore_x_window_button_ungrab(bd->win,
-				     eb->button,
-				     eb->modifiers,
-				     0);
-     }
    ecore_x_window_del(bd->win);
 
    bd->container->clients = evas_list_remove(bd->container->clients, bd);
@@ -2235,15 +2313,9 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Down *ev;
    E_Border *bd;
-   Evas_List *list;
-   E_Config_Binding *eb;
-   int x, y, w, h;
-   char source[16];
-   int modifiers;
 
    ev = event;
    bd = data;
-   modifiers = ev->modifiers;
    if (ev->event_win == bd->win)
      {
 	if ((ev->button >= 1) && (ev->button <= 3))
@@ -2257,67 +2329,8 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
-	/* Bindings */
-	/* Remove LOCK keys */
-	modifiers &= ~(ECORE_X_LOCK_SCROLL|ECORE_X_LOCK_NUM|ECORE_X_LOCK_CAPS);
-	for (list = e_config->bindings; list; list = list->next)
+	if (e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
 	  {
-	     eb = list->data;
-	     if ((ev->button == eb->button) && (modifiers == eb->modifiers))
-	       {
-		  snprintf(source, sizeof(source) - 1, "mouse,%d", eb->button);
-		  switch (eb->action)
-		    {
-		     case E_BINDING_ACTION_MENU:
-			_e_border_menu_show(bd, bd->x + ev->x, bd->y + ev->y);
-			break;
-		     case E_BINDING_ACTION_MOVE:
-			if (!bd->moving)
-			  {
-			     bd->moving = 1;
-			     _e_border_moveinfo_gather(bd, source);
-			     e_border_raise(bd);
-			     _e_border_move_begin(bd);
-			  }
-			break;
-		     case E_BINDING_ACTION_RESIZE:
-			if (bd->resize_mode == RESIZE_NONE)
-			  {
-			     ecore_x_window_geometry_get(bd->win, &x, &y, &w, &h);
-			     if (bd->mouse.current.mx < (x + w/2))
-			       {
-				  if (bd->mouse.current.my < (y + h/2))
-				    {
-				       bd->resize_mode = RESIZE_TL;
-				       GRAV_SET(bd, ECORE_X_GRAVITY_SE);
-				    }
-				  else
-				    {
-				       bd->resize_mode = RESIZE_BL;
-				       GRAV_SET(bd, ECORE_X_GRAVITY_NE);
-				    }
-			       }
-			     else
-			       {
-				  if (bd->mouse.current.my < (y + h/2))
-				    {
-				       bd->resize_mode = RESIZE_TR;
-				       GRAV_SET(bd, ECORE_X_GRAVITY_SW);
-				    }
-				  else
-				    {
-				       bd->resize_mode = RESIZE_BR;
-				       GRAV_SET(bd, ECORE_X_GRAVITY_NW);
-				    }
-			       }
-			     _e_border_moveinfo_gather(bd, source);
-			     e_border_raise(bd);
-			     _e_border_resize_begin(bd);
-			  }
-		    }
-		  /* We only want one action */
-		  break;
-	       }
 	  }
      }
    if (ev->win != bd->event_win) return 1;
@@ -2355,8 +2368,6 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
    E_Border *bd;
-   Evas_List *list;
-   E_Config_Binding *eb;
 
    ev = event;
    bd = data;
@@ -2371,33 +2382,8 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
-	/* Bindings */
-	for (list = e_config->bindings; list; list = list->next)
+	if (e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
 	  {
-	     eb = list->data;
-	     if (ev->button == eb->button)
-	       {
-		  switch (eb->action)
-		    {
-		     case E_BINDING_ACTION_MOVE:
-			if (bd->moving)
-			  {
-			     bd->moving = 0;
-			     _e_border_move_end(bd);
-			     e_zone_flip_coords_handle(bd->zone, -1, -1);
-			  }
-			break;
-		     case E_BINDING_ACTION_RESIZE:
-			if (bd->resize_mode != RESIZE_NONE)
-			  {
-			     bd->resize_mode = RESIZE_NONE;
-			     _e_border_resize_end(bd);
-			  }
-			break;
-		     default:
-			break;
-		    }
-	       }
 	  }
      }
    if (ev->win != bd->event_win) return 1;

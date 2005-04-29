@@ -51,6 +51,15 @@ static Evas_List *signal_bindings = NULL;
 int
 e_bindings_init(void)
 {
+   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
+			1, E_BINDING_MODIFIER_ALT, 0,
+			"window_move", "");
+   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
+			2, E_BINDING_MODIFIER_ALT, 0,
+			"window_resize", "");
+   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
+			3, E_BINDING_MODIFIER_ALT, 0,
+			"window_menu", "");
    return 1;
 }
 
@@ -65,7 +74,6 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 {
    E_Binding_Mouse *bind;
    
-   if (!params) params = "";
    bind = calloc(1, sizeof(E_Binding_Mouse));
    bind->ctxt = ctxt;
    bind->button = button;
@@ -81,7 +89,6 @@ e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 {
    Evas_List *l;
    
-   if (!params) params = "";
    for (l = mouse_bindings; l; l = l->next)
      {
 	E_Binding_Mouse *bind;
@@ -105,7 +112,7 @@ void
 e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
-   
+
    for (l = mouse_bindings; l; l = l->next)
      {
 	E_Binding_Mouse *bind;
@@ -121,7 +128,7 @@ e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
 	     ecore_x_window_button_grab(win, bind->button, 
-					ECORE_X_EVENT_MASK_KEY_DOWN | 
+					ECORE_X_EVENT_MASK_MOUSE_DOWN | 
 					ECORE_X_EVENT_MASK_MOUSE_UP | 
 					ECORE_X_EVENT_MASK_MOUSE_MOVE, 
 					mod, bind->any_mod);
@@ -183,6 +190,44 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 			 act->func.go_mouse(obj, bind->params, ev);
 		       else if (act->func.go)
 			 act->func.go(obj, bind->params);
+		       return 1;
+		    }
+		  return 0;
+	       }
+	  }
+     }
+   return 0;
+}
+
+int
+e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev)
+{
+   E_Binding_Modifier mod = 0;
+   Evas_List *l;
+   
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   for (l = mouse_bindings; l; l = l->next)
+     {
+	E_Binding_Mouse *bind;
+	
+	bind = l->data;
+	if ((bind->button == ev->button) &&
+	    ((bind->any_mod) || (bind->mod == mod)))
+	  {
+	     if (_e_bindings_context_match(bind->ctxt, ctxt))
+	       {
+		  E_Action *act;
+		  
+		  act = e_action_find(bind->action);
+		  if (act)
+		    {
+		       if (act->func.end_mouse)
+			 act->func.end_mouse(obj, bind->params, ev);
+		       else if (act->func.end)
+			 act->func.end(obj, bind->params);
 		       return 1;
 		    }
 		  return 0;

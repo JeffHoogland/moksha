@@ -24,7 +24,6 @@ static Ecore_Job *_e_config_save_job = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
-static E_Config_DD *_e_config_binding_edd = NULL;
 static E_Config_DD *_e_config_font_fallback_edd = NULL;
 static E_Config_DD *_e_config_font_default_edd = NULL;
 
@@ -39,16 +38,6 @@ e_config_init(void)
 #define D _e_config_module_edd
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, enabled, UCHAR);
-
-   _e_config_binding_edd = E_CONFIG_DD_NEW("E_Config_Binding", E_Config_Binding);
-#undef T
-#undef D
-#define T E_Config_Binding
-#define D _e_config_binding_edd
-   E_CONFIG_VAL(D, T, button, INT);
-   E_CONFIG_VAL(D, T, mask, INT);
-   E_CONFIG_VAL(D, T, modifiers, INT);
-   E_CONFIG_VAL(D, T, action, INT);
 
    _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
 						 E_Font_Default);   
@@ -86,7 +75,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
-   E_CONFIG_LIST(D, T, bindings, _e_config_binding_edd);
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
    E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd);
 
@@ -139,34 +127,6 @@ e_config_init(void)
 	     em->name = strdup("pager");
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
-	  }
-	  {
-	     E_Config_Binding *eb;
-
-	     eb = E_NEW(E_Config_Binding, 1);
-	     eb->button = 1;
-	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN |
-			ECORE_X_EVENT_MASK_MOUSE_UP |
-			ECORE_X_EVENT_MASK_MOUSE_MOVE;
-	     eb->modifiers = ECORE_X_MODIFIER_ALT;
-	     eb->action = E_BINDING_ACTION_MOVE;
-	     e_config->bindings = evas_list_append(e_config->bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding, 1);
-	     eb->button = 2;
-	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN |
-			ECORE_X_EVENT_MASK_MOUSE_UP |
-			ECORE_X_EVENT_MASK_MOUSE_MOVE;
-	     eb->modifiers = ECORE_X_MODIFIER_ALT;
-	     eb->action = E_BINDING_ACTION_RESIZE;
-	     e_config->bindings = evas_list_append(e_config->bindings, eb);
-
-	     eb = E_NEW(E_Config_Binding, 1);
-	     eb->button = 3;
-	     eb->mask = ECORE_X_EVENT_MASK_MOUSE_DOWN;
-	     eb->modifiers = ECORE_X_MODIFIER_ALT;
-	     eb->action = E_BINDING_ACTION_MENU;
-	     e_config->bindings = evas_list_append(e_config->bindings, eb);
 	  }
 	  {
 	     E_Font_Fallback* eff;
@@ -232,14 +192,6 @@ e_config_shutdown(void)
 	     E_FREE(em->name);
 	     E_FREE(em);
 	  }
-	while (e_config->bindings)
-	  {
-	     E_Config_Binding *eb;
-
-	     eb = e_config->bindings->data;
-	     e_config->bindings = evas_list_remove_list(e_config->bindings, e_config->bindings);
-	     E_FREE(eb);
-	  }
 	while (e_config->font_fallbacks)
 	  {
 	     E_Font_Fallback *eff;
@@ -265,7 +217,6 @@ e_config_shutdown(void)
      }
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
-   E_CONFIG_DD_FREE(_e_config_binding_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
    E_CONFIG_DD_FREE(_e_config_font_fallback_edd);
    return 1;

@@ -33,15 +33,7 @@
 
 typedef struct _E_Config        E_Config;
 typedef struct _E_Config_Module E_Config_Module;
-typedef struct _E_Config_Binding E_Config_Binding;
 typedef Eet_Data_Descriptor     E_Config_DD;
-
-typedef enum _E_Binding_Action
-{
-   E_BINDING_ACTION_MOVE,
-   E_BINDING_ACTION_RESIZE,
-   E_BINDING_ACTION_MENU
-} E_Binding_Action;
 
 #else
 #ifndef E_CONFIG_H
@@ -63,7 +55,6 @@ struct _E_Config
    int         zone_desks_y_count;
    int         use_virtual_roots;
    Evas_List  *modules;
-   Evas_List  *bindings;
    Evas_List  *font_fallbacks;
    Evas_List  *font_defaults;
 };
@@ -72,15 +63,6 @@ struct _E_Config_Module
 {
    char          *name;
    unsigned char  enabled;
-};
-
-struct _E_Config_Binding
-{
-   int                button;
-   Ecore_X_Event_Mask mask;
-   int                modifiers;
-   E_Binding_Action   action;
-
 };
 
 EAPI int e_config_init(void);

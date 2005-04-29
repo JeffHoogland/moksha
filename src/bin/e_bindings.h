@@ -31,9 +31,16 @@ typedef enum _E_Binding_Modifier
 EAPI int         e_bindings_init(void);
 EAPI int         e_bindings_shutdown(void);
 
+EAPI void        e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI void        e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI void        e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win);
+EAPI void        e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
 EAPI int         e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev);
+EAPI int         e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev);
+
 EAPI int         e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev);
-EAPI int         e_bindings_signale_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src);
+
+EAPI int         e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src);
 					 
 #endif
 #endif
