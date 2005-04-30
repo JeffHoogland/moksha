@@ -68,7 +68,7 @@ static void _e_border_resize_handle(E_Border *bd);
 static int  _e_border_shade_animator(void *data);
 
 static void _e_border_cb_border_menu_end(void *data, E_Menu *m);
-static void _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y);
+static void _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key);
 static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -1270,18 +1270,20 @@ e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 }
 
 void
-e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
+e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key)
 {
    if (ev)
      {
-	_e_border_menu_show(bd, bd->x + ev->x, bd->y + ev->y);
+	_e_border_menu_show(bd,
+			    bd->x + ev->x - bd->zone->container->x,
+			    bd->y + ev->y - bd->zone->container->y, key);
      }
    else
      {
 	int x, y;
 	
-	ecore_x_pointer_last_xy_get(&x, &y);
-	_e_border_menu_show(bd, x, y);
+	ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
+	_e_border_menu_show(bd, x, y, key);
      }
 }
 
@@ -1298,6 +1300,15 @@ e_border_act_close_begin(E_Border *bd)
 	e_border_hide(bd, 0);
 	e_object_del(E_OBJECT(bd));
      }
+}
+
+void
+e_border_act_kill_begin(E_Border *bd)
+{
+   ecore_x_kill(bd->client.win);
+   ecore_x_sync();
+   e_border_hide(bd, 0);
+   e_object_del(E_OBJECT(bd));
 }
 
 /* local subsystem functions */
@@ -2172,7 +2183,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	Evas_Coord x, y;
 
 	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
-	_e_border_menu_show(bd, x + bd->x, y + bd->y);
+	_e_border_menu_show(bd, x + bd->x, y + bd->y, 0);
      }
    else if (!strcmp(source, "lower"))
      {
@@ -3632,7 +3643,7 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
 }
 
 static void
-_e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
+_e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 {
    E_Menu *m;
    E_Menu_Item *mi;
@@ -3744,9 +3755,12 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y)
 	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
      }
 
-   e_menu_activate_mouse(m, bd->zone, x, y, 1, 1,
+   if (key)
+     e_menu_activate_key(m, bd->zone, x, y, 1, 1,
 			 E_MENU_POP_DIRECTION_DOWN);
-
+   else
+     e_menu_activate_mouse(m, bd->zone, x, y, 1, 1,
+			   E_MENU_POP_DIRECTION_DOWN);
 }
 
 static void
@@ -3773,7 +3787,7 @@ _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->maximized) e_border_uniconify(bd);
+   if (bd->iconic) e_border_uniconify(bd);
    else e_border_iconify(bd);
 }
 

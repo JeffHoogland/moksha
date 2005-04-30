@@ -352,9 +352,10 @@ EAPI void e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down 
 EAPI void e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev);
 EAPI void e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev);
 EAPI void e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev);
-EAPI void e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev);
+EAPI void e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key);
 EAPI void e_border_act_close_begin(E_Border *bd);
-  
+EAPI void e_border_act_kill_begin(E_Border *bd);
+    
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

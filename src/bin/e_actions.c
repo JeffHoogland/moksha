@@ -115,15 +115,34 @@ ACT_FN_GO(window_menu)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
-   if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_menu_begin((E_Border *)obj, NULL);
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   e_border_act_menu_begin((E_Border *)obj, NULL, 0);
 }
 ACT_FN_GO_MOUSE(window_menu)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
-   if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_menu_begin((E_Border *)obj, ev);
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   e_border_act_menu_begin((E_Border *)obj, ev, 0);
+}
+ACT_FN_GO_KEY(window_menu)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   e_border_act_menu_begin((E_Border *)obj, NULL, 1);
 }
 
 /***************************************************************************/
@@ -163,6 +182,95 @@ ACT_FN_GO(window_close)
 	if (!obj) return;
      }
    e_border_act_close_begin((E_Border *)obj);
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_kill)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+   e_border_act_kill_begin((E_Border *)obj);
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_sticky_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+     {
+	E_Border *bd;
+	
+	bd = (E_Border *)obj;
+	if (bd->sticky) e_border_unstick(bd);
+        else e_border_stick(bd);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_iconic_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+     {
+	E_Border *bd;
+	
+	bd = (E_Border *)obj;
+	if (bd->iconic) e_border_uniconify(bd);
+        else e_border_iconify(bd);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_maximized_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+     {
+	E_Border *bd;
+	
+	bd = (E_Border *)obj;
+	if (bd->maximized) e_border_unmaximize(bd);
+        else e_border_maximize(bd);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_shaded_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+	obj = E_OBJECT(e_border_focused_get());
+	if (!obj) return;
+     }
+     {
+	E_Border *bd;
+	
+	bd = (E_Border *)obj;
+	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
+        else e_border_shade(bd, E_DIRECTION_UP);
+     }
 }
 
 /***************************************************************************/
@@ -245,6 +353,141 @@ ACT_FN_GO(desk_linear_flip_to)
      }
 }
 
+/***************************************************************************/
+static void
+_e_actions_cb_menu_end(void *data, E_Menu *m)
+{
+   e_object_del(E_OBJECT(m));
+}
+static E_Menu *
+_e_actions_menu_find(char *name)
+{
+   if (!strcmp(name, "main")) return e_int_menus_main_new();
+   else if (!strcmp(name, "favorites")) return e_int_menus_favorite_apps_new();
+   else if (!strcmp(name, "clients")) return e_int_menus_clients_new();
+   return NULL;
+}
+ACT_FN_GO(menu_show)
+{
+   E_Zone *zone;
+
+   /* menu is active - abort */
+   if (e_menu_grab_window_get()) return;
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     {
+	zone = e_util_zone_current_get((E_Manager *)obj);
+	if (zone)
+	  {
+	     if (params)
+	       {
+		  E_Menu *m = NULL;
+		  
+		  m = _e_actions_menu_find(params);	
+		  if (m)
+		    {
+		       int x, y;
+		       
+		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		       m->zone = zone;
+		       ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		       e_menu_activate_mouse(m, zone, x, y, 1, 1,
+					     E_MENU_POP_DIRECTION_DOWN);
+		    }
+	       }
+	  }
+     }
+}
+ACT_FN_GO_MOUSE(menu_show)
+{
+   E_Zone *zone;
+
+   /* menu is active - abort */
+   if (e_menu_grab_window_get()) return;
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     {
+	zone = e_util_zone_current_get((E_Manager *)obj);
+	if (zone)
+	  {
+	     if (params)
+	       {
+		  E_Menu *m = NULL;
+		  
+		  m = _e_actions_menu_find(params);	
+		  if (m)
+		    {
+		       int x, y;
+		       
+		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		       m->zone = zone;
+		       x = ev->root.x;
+		       y = ev->root.y;
+		       x -= zone->container->x;
+		       y -= zone->container->y;
+		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		       e_menu_activate_mouse(m, zone, x, y, 1, 1,
+					     E_MENU_POP_DIRECTION_DOWN);
+		    }
+	       }
+	  }
+     }
+}
+ACT_FN_GO_KEY(menu_show)
+{
+   E_Zone *zone;
+
+   /* menu is active - abort */
+   if (e_menu_grab_window_get()) return;
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     {
+	zone = e_util_zone_current_get((E_Manager *)obj);
+	if (zone)
+	  {
+	     if (params)
+	       {
+		  E_Menu *m = NULL;
+		  
+		  m = _e_actions_menu_find(params);	
+		  if (m)
+		    {
+		       int x, y;
+		       
+		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		       m->zone = zone;
+		       ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		       e_menu_activate_key(m, zone, x, y, 1, 1,
+					   E_MENU_POP_DIRECTION_DOWN);
+		    }
+	       }
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(exec)
+{
+   E_Zone *zone;
+   
+   if (!obj) return;
+   if (obj->type != E_MANAGER_TYPE) return;
+   zone = e_util_zone_current_get((E_Manager *)obj);
+   if (zone)
+     {
+	if (params)
+	  {
+	     Ecore_Exe *exe;
+	     
+	     exe = ecore_exe_run(params, NULL);
+	     if (exe) ecore_exe_free(exe);
+	  }
+     }
+}
+
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 
@@ -267,12 +510,24 @@ e_actions_init(void)
   
    ACT_GO(window_menu);
    ACT_GO_MOUSE(window_menu);
+   ACT_GO_KEY(window_menu);
 
    ACT_GO(window_raise);
 
    ACT_GO(window_lower);
+   
    ACT_GO(window_close);
 
+   ACT_GO(window_kill);
+   
+   ACT_GO(window_sticky_toggle);
+   
+   ACT_GO(window_iconic_toggle);
+   
+   ACT_GO(window_maximized_toggle);
+   
+   ACT_GO(window_shaded_toggle);
+   
    ACT_GO(desk_flip_by);
 
    ACT_GO(desk_flip_to);
@@ -280,6 +535,12 @@ e_actions_init(void)
    ACT_GO(desk_linear_flip_by);
    
    ACT_GO(desk_linear_flip_to);
+
+   ACT_GO(menu_show);
+   ACT_GO_MOUSE(menu_show);
+   ACT_GO_KEY(menu_show);
+
+   ACT_GO(exec);
    
    return 1;
 }

@@ -61,6 +61,7 @@ e_bindings_init(void)
    e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
 			3, E_BINDING_MODIFIER_ALT, 0,
 			"window_menu", "");
+   
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "Left", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
 		      "desk_flip_by", "-1 0");
@@ -82,6 +83,25 @@ e_bindings_init(void)
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "x", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		      "window_close", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "k", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_kill", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "w", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_menu", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "s", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_sticky_toggle", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "i", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_iconic_toggle", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "f", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_maximized_toggle", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "r", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "window_shaded_toggle", "");
+   
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "Left", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		      "desk_linear_flip_by", "-1");
@@ -124,6 +144,46 @@ e_bindings_init(void)
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "F12", E_BINDING_MODIFIER_ALT, 0,
 		      "desk_linear_flip_to", "11");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "m", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "menu_show", "main");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "a", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "menu_show", "favorites");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Menu", 0, 0,
+		      "menu_show", "main");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Menu", E_BINDING_MODIFIER_CTRL, 0,
+		      "menu_show", "clients");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Menu", E_BINDING_MODIFIER_ALT, 0,
+		      "menu_show", "favorites");
+
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Insert", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "exec", "Eterm");
+   
+   /* shoudl do these - can't yet due to other things missing... */
+   
+   /* need a yes/no dialog for these - to stop accidental logouts. for this
+    * i'd make a special case that can ask u to log out, restart or shut down
+    * or even reboot (if you have permissions to do so)
+    */
+   /* CTRL+ALT Delete - logout */
+   /* CTRL+ALT End    - restart */
+   
+   /* need a way to display all focused windows nicely - subsystem for
+    * this that also grabs the modifier on activate (if there are any) so
+    * on release of modifier(s) OR on any new action this list aborts display
+    */
+   /* ALT Tab         - next window focus */
+   /* ALT_SHIFT Tab   - prev window focus */
+   
+   /* need to support fullscreen anyway for this - ie netwm and the border
+    * system need to handle this as well as possibly using xrandr/xvidmode
+    */
+   /* ALT Return      - fullscreen window */
    return 1;
 }
 

@@ -202,8 +202,8 @@ e_zone_current_get(E_Container *con)
    else
      {
 	int x, y;
-	
-	ecore_x_pointer_last_xy_get(&x, &y);
+
+	ecore_x_pointer_xy_get(con->win, &x, &y);
 	for (l = con->zones; l; l = l->next)
 	  {
 	     E_Zone *zone;
@@ -618,7 +618,7 @@ _e_zone_cb_timer(void *data)
 
    zone = data;
 
-   ecore_x_pointer_last_xy_get(&x, &y);
+   ecore_x_pointer_xy_get(zone->container->win, &x, &y);
 
    switch (zone->flip.direction)
      {

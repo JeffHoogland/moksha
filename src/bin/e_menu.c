@@ -151,8 +151,8 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = 0.0;
    _e_menu_activate_internal(m, zone);
-   m->cur.x = 200;
-   m->cur.y = 200;
+   m->cur.x = x + w;
+   m->cur.y = y + h;
    _e_menu_activate_first();
 }
 
@@ -167,8 +167,8 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = ecore_time_get();
    _e_menu_activate_internal(m, zone);
-   m->cur.x = x;
-   m->cur.y = y;
+   m->cur.x = x + w;
+   m->cur.y = y + h;
 	
    pmi = _e_menu_item_active_get();
    if (pmi) e_menu_item_active_set(pmi, 0);
