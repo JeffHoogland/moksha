@@ -54,7 +54,6 @@ main(int argc, char **argv)
    int i;
    int nosplash = 0;
    int nostartup = 0;
-   int nowelcome = 0;
    int after_restart = 0; 
    char buf[1024];
    char *s;
@@ -73,7 +72,6 @@ main(int argc, char **argv)
       
    if (getenv("NOSPLASH")) nosplash = 1;
    if (getenv("NOSTARTUP")) nostartup = 1;
-   if (getenv("NOWELCOME")) nowelcome = 1;
    
    if (getenv("RESTART"))
      {
@@ -349,18 +347,7 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
-   
-   if (!nowelcome)
-     {
-	/* explicitly show a gui dialog */
-	e_error_dialog_show(_("Welcome to Enlightenment 0.17"),
-			    _("This is program has barely been started on, so it is not complete by a long\n"
-			      "shot. Please do NOT expect anything to work properly at this stage. It's\n"
-			      "being worked on.\n"
-			      "\n"
-			      "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."));
-     }
-   
+
    if (ipc_failed)
      e_error_dialog_show(_("Enlightenment IPC setup error!"),
 			 _("Enlightenment cannot set up the IPC socket.\n"
