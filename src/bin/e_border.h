@@ -223,6 +223,7 @@ struct _E_Border
    } drag;
 
    unsigned int layer;
+   E_Action *cur_mouse_action;
 };
 
 struct _E_Border_Pending_Move_Resize 

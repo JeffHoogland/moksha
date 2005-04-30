@@ -72,7 +72,7 @@ e_bindings_init(void)
 		      "desk_flip_by", "0 -1");
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "Down", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_flip_by", "0 -1");
+		      "desk_flip_by", "0 1");
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "Up", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		      "window_raise", "");
@@ -226,7 +226,7 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-int
+E_Action *
 e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -255,16 +255,16 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 			 act->func.go_mouse(obj, bind->params, ev);
 		       else if (act->func.go)
 			 act->func.go(obj, bind->params);
-		       return 1;
+		       return act;
 		    }
-		  return 0;
+		  return NULL;
 	       }
 	  }
      }
-   return 0;
+   return NULL;
 }
 
-int
+E_Action *
 e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -293,13 +293,13 @@ e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 			 act->func.end_mouse(obj, bind->params, ev);
 		       else if (act->func.end)
 			 act->func.end(obj, bind->params);
-		       return 1;
+		       return act;
 		    }
-		  return 0;
+		  return NULL;
 	       }
 	  }
      }
-   return 0;
+   return NULL;
 }
 
 /* FIXME: finish off key bindings */
@@ -394,7 +394,7 @@ e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
      }
 }
 
-int
+E_Action *
 e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -423,16 +423,16 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 			 act->func.go_key(obj, bind->params, ev);
 		       else if (act->func.go)
 			 act->func.go(obj, bind->params);
-		       return 1;
+		       return act;
 		    }
-		  return 0;
+		  return NULL;
 	       }
 	  }
      }
-   return 0;
+   return NULL;
 }
 
-int
+E_Action *
 e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev)
 {
    E_Binding_Modifier mod = 0;
@@ -461,13 +461,13 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 			 act->func.end_key(obj, bind->params, ev);
 		       else if (act->func.end)
 			 act->func.end(obj, bind->params);
-		       return 1;
+		       return act;
 		    }
-		  return 0;
+		  return NULL;
 	       }
 	  }
      }
-   return 0;
+   return NULL;
 }
 
 /* FIXME: finish off signal bindings */

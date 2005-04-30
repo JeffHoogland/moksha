@@ -503,7 +503,7 @@ void
 e_zone_desk_flip_by(E_Zone *zone, int dx, int dy)
 {
    dx = zone->desk_x_current + dx;
-   dy = zone->desk_x_current + dy;
+   dy = zone->desk_y_current + dy;
    e_zone_desk_flip_to(zone, dx, dy);
 }
 
@@ -539,6 +539,7 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
    
    y = x / zone->desk_x_count;
    x = x - (y * zone->desk_x_count);
+   y = y % zone->desk_y_count;
    e_zone_desk_flip_to(zone, x, y);
 }
 

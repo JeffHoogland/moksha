@@ -2346,8 +2346,11 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
-	if (e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
+	if (!bd->cur_mouse_action)
 	  {
+	     bd->cur_mouse_action = 
+	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
+						  E_OBJECT(bd), ev);
 	  }
      }
    if (ev->win != bd->event_win) return 1;
@@ -2399,9 +2402,20 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
-	if (e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
+	/* bug/problem. this action COULD be deleted during a move */
+	/* ... VERY unlikely though... VERY */
+	/* also we dont pass the same params that went in - then again that */
+	/* should be ok as we are just ending the action if it has an end */
+	if (bd->cur_mouse_action)
 	  {
+	     if (bd->cur_mouse_action->func.end_mouse)
+	       bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
+	     else if (bd->cur_mouse_action->func.end)
+	       bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+	     bd->cur_mouse_action = NULL;
 	  }
+	else
+	  e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev);
      }
    if (ev->win != bd->event_win) return 1;
    if ((ev->button >= 1) && (ev->button <= 3))
