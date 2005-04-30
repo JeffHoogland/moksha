@@ -19,7 +19,6 @@ struct _E_Manager
    int                  x, y, w, h;
    char                 visible : 1;
    Ecore_X_Window       root;
-   Ecore_X_Window       focus_win;
    Evas_List           *handlers;
    Evas_List           *containers;
 };

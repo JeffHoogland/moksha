@@ -86,8 +86,6 @@ e_manager_new(Ecore_X_Window root)
      {
 	man->win = man->root;
      }
-   man->focus_win = ecore_x_window_override_new(man->root, -1, -1, 1, 1);
-   ecore_x_window_show(man->focus_win);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_manager_cb_window_show_request, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_manager_cb_window_configure, man);
@@ -219,7 +217,6 @@ e_manager_show(E_Manager *man)
 				   mwin, ECORE_X_WINDOW_STACK_BELOW);
 	ecore_x_window_show(man->win);
      }
-   ecore_x_window_focus(man->win);
    man->visible = 1;
 }
 
@@ -414,7 +411,6 @@ _e_manager_free(E_Manager *man)
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
      }
-   ecore_x_window_del(man->focus_win);
    if (man->root != man->win)
      {
 	ecore_x_window_del(man->win);
@@ -473,10 +469,8 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-   printf("KEY %s [%x %x]\n",
-	  e->keyname, e->win, e->event_win);
-   if ((e->event_win != man->root) &&
-       (e->event_win != man->focus_win)) return 1;
+   printf("KEY %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
+   if (e->event_win != man->root) return 1;
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
    return 1;
