@@ -76,6 +76,22 @@ e_util_env_set(const char *var, const char *val)
      }
 }
 
+E_Zone *
+e_util_zone_current_get(E_Manager *man)
+{
+   E_Container *con;
+   
+   con = e_manager_container_current_get(man);
+   if (con)
+     {
+	E_Zone *zone;
+	
+	zone = e_zone_current_get(con);
+	return zone;
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_util_container_fake_mouse_up_cb(void *data)

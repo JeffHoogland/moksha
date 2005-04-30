@@ -168,43 +168,79 @@ ACT_FN_GO(window_close)
 /***************************************************************************/
 ACT_FN_GO(desk_flip_by)
 {
-   E_Container *con;
+   E_Zone *zone;
    
    if (!obj) return;
    if (obj->type != E_MANAGER_TYPE) return;
-   con = e_manager_container_current_get((E_Manager *)obj);
-   /* FIXME: this shoudl really go into desk logic and zone... */
-   if (con)
+   zone = e_util_zone_current_get((E_Manager *)obj);
+   if (zone)
      {
-	E_Zone *zone;
-	
-	zone = e_zone_current_get(con);
-	if (zone)
+	if (params)
 	  {
-	     E_Desk *desk;
 	     int dx = 0, dy = 0;
-	     
-	     if (params)
-	       {
-		  if (sscanf(params, "%i %i", &dx, &dy) != 2)
-		    {
-		       dx = 0;
-		       dy = 0;
-		    }
-	       }
-	     dx = zone->desk_x_current + dx;
-	     if (dx < 0) dx = 0;
-	     else if (dx >= zone->desk_x_count) dx = zone->desk_x_count  - 1;
-	     dy = zone->desk_x_current + dy;
-	     if (dy < 0) dy = 0;
-	     else if (dy >= zone->desk_y_count) dy = zone->desk_y_count  - 1;
-	     desk = e_desk_at_xy_get(zone, dx, dy);
-	     if (desk)
-	       {  
-		  ecore_x_window_focus(con->manager->root);
-		  e_desk_show(desk);
-		  e_zone_update_flip(zone);
-	       }
+	
+	     if (sscanf(params, "%i %i", &dx, &dy) == 2)
+	       e_zone_desk_flip_by(zone, dx, dy);
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_flip_to)
+{
+   E_Zone *zone;
+   
+   if (!obj) return;
+   if (obj->type != E_MANAGER_TYPE) return;
+   zone = e_util_zone_current_get((E_Manager *)obj);
+   if (zone)
+     {
+	if (params)
+	  {
+	     int dx = 0, dy = 0;
+	
+	     if (sscanf(params, "%i %i", &dx, &dy) == 2)
+	       e_zone_desk_flip_to(zone, dx, dy);	
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_linear_flip_by)
+{
+   E_Zone *zone;
+   
+   if (!obj) return;
+   if (obj->type != E_MANAGER_TYPE) return;
+   zone = e_util_zone_current_get((E_Manager *)obj);
+   if (zone)
+     {
+	if (params)
+	  {
+	     int dx = 0;
+	
+	     if (sscanf(params, "%i", &dx) == 1)
+	       e_zone_desk_linear_flip_by(zone, dx);
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(desk_linear_flip_to)
+{
+   E_Zone *zone;
+   
+   if (!obj) return;
+   if (obj->type != E_MANAGER_TYPE) return;
+   zone = e_util_zone_current_get((E_Manager *)obj);
+   if (zone)
+     {
+	if (params)
+	  {
+	     int dx = 0;
+	
+	     if (sscanf(params, "%i", &dx) == 1)
+	       e_zone_desk_linear_flip_to(zone, dx);
 	  }
      }
 }
@@ -238,6 +274,12 @@ e_actions_init(void)
    ACT_GO(window_close);
 
    ACT_GO(desk_flip_by);
+
+   ACT_GO(desk_flip_to);
+
+   ACT_GO(desk_linear_flip_by);
+   
+   ACT_GO(desk_linear_flip_to);
    
    return 1;
 }

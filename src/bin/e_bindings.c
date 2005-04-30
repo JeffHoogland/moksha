@@ -82,6 +82,48 @@ e_bindings_init(void)
    e_bindings_key_add(E_BINDING_CONTEXT_ANY,
 		      "x", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
 		      "window_close", "");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Left", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "-1");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "Right", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_by", "1");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F1", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "0");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F2", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "1");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F3", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "2");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F4", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "3");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F5", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "4");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F6", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "5");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F7", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "6");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F8", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "7");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F9", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "8");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F10", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "9");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F11", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "10");
+   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
+		      "F12", E_BINDING_MODIFIER_ALT, 0,
+		      "desk_linear_flip_to", "11");
    return 1;
 }
 
