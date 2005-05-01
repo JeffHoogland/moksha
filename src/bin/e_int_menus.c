@@ -37,8 +37,8 @@ static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_desktops_col_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_themes_pre_cb      (void *data, E_Menu *m);
-static void _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_themes_pre_cb       (void *data, E_Menu *m);
+static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -565,11 +565,18 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
 }
 
+/* FIXME:
+ * 
+ * this HAS to go. its a REALLY BAD HACK - i've fixed up a few problems.. but
+ * this is just wrong - symlink ... wrong. i f u are going to do this - use
+ * the e_theme.c stuff - and add code to save and load it
+ */
 static void
 _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
    E_Menu *root;
+   int num = 0;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
@@ -578,12 +585,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	char buf[4096];
 	char *homedir;
 	
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Choose Theme"));
-	
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);	
-	
 	homedir = e_user_homedir_get();
 	if (homedir)
 	  {
@@ -591,49 +592,60 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     free(homedir);
 	  }
 	
-	if (ecore_file_exists(buf) && ecore_file_is_dir(buf))
+	if ((ecore_file_exists(buf)) && (ecore_file_is_dir(buf)))
 	  {
 	     Ecore_List *themes;
-	     char *theme, *deftheme;
 	     
 	     themes = ecore_file_ls(buf);
-	     theme = E_NEW(char, strlen(buf) + strlen("/default.edj") + 1);
-	     snprintf(theme, strlen(buf) + strlen("/default.edj") + 1, "%s/default.edj", buf);
-	     
-	     if (ecore_file_exists("/home/hisham/.e/e/themes/default.edj"))	       
-	       deftheme = ecore_file_readlink("/home/hisham/.e/e/themes/default.edj");	     
-	     if (deftheme)
+	     if (themes)
 	       {
-		  char *s;
-		  if ((s = strrchr(deftheme, '/')))
-		    deftheme = s + 1;
-	       }
-	     
-	     while ((theme = ecore_list_next(themes)))
-	       {			  
-		  if (ecore_file_is_dir(theme) || !strrchr(theme,'.'))
-		    continue;
-		  if (!strncmp(strrchr(theme,'.'), ".edj", 4))
-		    {		       
-		       mi = e_menu_item_new(m);
-		       e_menu_item_radio_set(mi, 1);
-		       if (deftheme)
-			 {			  
-			    if (!strcmp(theme, deftheme))
-			      e_menu_item_toggle_set(mi, 1);
-			 }
-		       *(strrchr(theme, '.')) = '\0';
-		       e_menu_item_label_set(mi, _(theme));
-		       e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
+		  char *theme, *deftheme = NULL;
+		  
+		  theme = E_NEW(char, strlen(buf) + strlen("/default.edj") + 1);
+		  strcpy(theme, buf);
+		  strcat(theme, "/default.edj");
+		  
+		  if (ecore_file_exists(theme))
+		    deftheme = ecore_file_readlink(theme);
+		  if (deftheme)
+		    {
+		       char *s;
+		       
+		       if ((s = strrchr(deftheme, '/')))
+			 deftheme = s + 1;
 		    }
+		  IF_FREE(theme);
+		  
+		  while ((theme = ecore_list_next(themes)))
+		    {
+		       char *ext;
+		       
+		       ext = strrchr(theme, '.');
+		       if (ecore_file_is_dir(theme) || (!ext))
+			 continue;
+		       if (!strcasecmp(ext, ".edj"))
+			 {
+			    mi = e_menu_item_new(m);
+			    e_menu_item_radio_set(mi, 1);
+			    if (deftheme)
+			      {			  
+				 if (!strcmp(theme, deftheme))
+				   e_menu_item_toggle_set(mi, 1);
+			      }
+			    *ext = 0;
+			    e_menu_item_label_set(mi, theme);
+			    e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
+			    num++;
+			 }
+		    }
+		  ecore_list_destroy(themes);
 	       }
 	  }
      }
-   else
+   if (num == 0)
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("(Unused)"));
-	e_menu_item_callback_set(mi, NULL, NULL);
+	e_menu_item_label_set(mi, _("(Empty)"));
      }
 }
 
