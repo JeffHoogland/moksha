@@ -178,7 +178,7 @@ e_config_init(void)
 	     
 	     et = E_NEW(E_Config_Theme, 1);
 	     et->category = strdup("theme");
-	     et->file = strdup("defaulty.edj");
+	     et->file = strdup("default.edj");
 	     e_config->themes = evas_list_append(e_config->themes, et);
 	  }
 	e_config_save_queue();
