@@ -1372,6 +1372,7 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 {
    E_Drop_Event *ev;
    IBar_Bar *ibb;
+   IBar_Icon *ic;
    Evas_Coord x, y, w, h;
    double iw;
    int pos;
@@ -1395,7 +1396,15 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 	iw = h / (double) evas_list_count(ibb->icons);
 	pos = round(y / iw);
      }
-
+   ic = evas_list_nth(ibb->icons, pos);
+   if (ic)
+     {
+	/* Add new eapp before this icon */
+     }
+   else
+     {
+	/* Add at the end */
+     }
 }
 
 static void
