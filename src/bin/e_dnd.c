@@ -154,6 +154,8 @@ e_drag_start(E_Container *con, const char *type, void *data,
 void
 e_drag_update(int x, int y)
 {
+   Evas_List *l;
+   E_Move_Event *ev;
    int w, h;
 
    if (!drag_ee) return;
@@ -168,6 +170,31 @@ e_drag_update(int x, int y)
 
    evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
    ecore_evas_move(drag_ee, x - (w / 2), y - (h / 2));
+
+   ev = E_NEW(E_Move_Event, 1);
+   if (!ev) goto end;
+   ev->x = x;
+   ev->y = y;
+
+   for (l = drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+
+	if (!h->active)
+	  continue;
+	
+	if ((h->cb.move)
+	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	  {
+	     h->cb.move(h->data, drag_type, ev);
+	  }
+     }
+
+   free(ev);
+end:
+   return;
 }
 
 void
