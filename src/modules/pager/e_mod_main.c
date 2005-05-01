@@ -341,7 +341,7 @@ _pager_face_new(E_Zone *zone)
    edje_object_part_swallow(face->pager_object, "items", face->table_object);
    evas_object_show(o);
 
-   face->drop_handler = e_drop_handler_add(face, _pager_drop_cb, "enlightenment/border",
+   face->drop_handler = e_drop_handler_add(face, _pager_drop_cb, NULL, "enlightenment/border",
 					   face->fx, face->fy, face->fw, face->fh);
    
    face->gmc = e_gadman_client_new(zone->container->gadman);

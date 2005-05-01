@@ -6,6 +6,7 @@
 
 typedef struct _E_Drop_Handler E_Drop_Handler;
 typedef struct _E_Drop_Event   E_Drop_Event;
+typedef struct _E_Move_Event   E_Move_Event;
 
 #else
 #ifndef E_DND_H
@@ -14,7 +15,10 @@ typedef struct _E_Drop_Event   E_Drop_Event;
 struct _E_Drop_Handler
 {
    void *data;
-   void (*func)(void *data, const char *type, void *drop);
+   struct {
+	void (*drop)(void *data, const char *type, void *event);
+	void (*move)(void *data, const char *type, void *event);
+   } func;
    char *type;
    int x, y, w, h;
 };
@@ -22,6 +26,11 @@ struct _E_Drop_Handler
 struct _E_Drop_Event
 {
    void *data;
+   int x, y;
+};
+
+struct _E_Move_Event
+{
    int x, y;
 };
 
@@ -36,7 +45,8 @@ EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);
 
 EAPI E_Drop_Handler *e_drop_handler_add(void *data,
-					void (*func)(void *data, const char *type, void *event_info),
+					void (*drop_func)(void *data, const char *type, void *event),
+					void (*move_func)(void *data, const char *type, void *event),
 				       	const char *type, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 
