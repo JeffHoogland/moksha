@@ -591,7 +591,7 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     free(homedir);
 	  }
 	
-	if(ecore_file_exists(buf) && ecore_file_is_dir(buf))
+	if (ecore_file_exists(buf) && ecore_file_is_dir(buf))
 	  {
 	     Ecore_List *themes;
 	     char *theme, *deftheme;
@@ -600,28 +600,29 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     theme = E_NEW(char, strlen(buf) + strlen("/default.edj") + 1);
 	     snprintf(theme, strlen(buf) + strlen("/default.edj") + 1, "%s/default.edj", buf);
 	     
-	     if(ecore_file_exists("/home/hisham/.e/e/themes/default.edj"))	       
+	     if (ecore_file_exists("/home/hisham/.e/e/themes/default.edj"))	       
 	       deftheme = ecore_file_readlink("/home/hisham/.e/e/themes/default.edj");	     
-	     if(deftheme)
+	     if (deftheme)
 	       {
 		  char *s;
-		  if((s = strrchr(deftheme, '/')))
+		  if ((s = strrchr(deftheme, '/')))
 		    deftheme = s + 1;
 	       }
 	     
-	     while((theme = ecore_list_next(themes)))
+	     while ((theme = ecore_list_next(themes)))
 	       {			  
-		  if(ecore_file_is_dir(theme) || !strrchr(theme,'.'))
+		  if (ecore_file_is_dir(theme) || !strrchr(theme,'.'))
 		    continue;
-		  if(!strncmp(strrchr(theme,'.'), ".edj", 4))
+		  if (!strncmp(strrchr(theme,'.'), ".edj", 4))
 		    {		       
 		       mi = e_menu_item_new(m);
 		       e_menu_item_radio_set(mi, 1);
-		       if(deftheme) {			  
-			  if(!strcmp(theme, deftheme))
-			    e_menu_item_toggle_set(mi, 1);
-		       }
-		       *(strrchr(theme,'.')) = '\0';
+		       if (deftheme)
+			 {			  
+			    if (!strcmp(theme, deftheme))
+			      e_menu_item_toggle_set(mi, 1);
+			 }
+		       *(strrchr(theme, '.')) = '\0';
 		       e_menu_item_label_set(mi, _(theme));
 		       e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
 		    }
@@ -655,11 +656,10 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      return;   
 
    ecore_file_unlink(buf);
-   if(!symlink(theme, buf))
+   if (!symlink(theme, buf))
      {
 	printf("RESTART ON!\n");
 	restart = 1;
 	ecore_main_loop_quit();
      }
-     
 }
