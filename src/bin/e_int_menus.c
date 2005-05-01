@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+extern E_Config *e_config;
+
 typedef struct _Main_Data Main_Data;
 
 struct _Main_Data
@@ -600,21 +602,17 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     if (themes)
 	       {
 		  char *theme, *deftheme = NULL;
+		  Evas_List *l;
 		  
-		  theme = E_NEW(char, strlen(buf) + strlen("/default.edj") + 1);
-		  strcpy(theme, buf);
-		  strcat(theme, "/default.edj");
-		  
-		  if (ecore_file_exists(theme))
-		    deftheme = ecore_file_readlink(theme);
-		  if (deftheme)
+		  for (l = e_config->themes; l; l = l->next)
 		    {
-		       char *s;
+		       E_Config_Theme *et;
+		       char buf[256];
 		       
-		       if ((s = strrchr(deftheme, '/')))
-			 deftheme = s + 1;
-		    }
-		  IF_FREE(theme);
+		       et = l->data;
+		       if(!strcmp(et->category,"theme"))
+			 deftheme = strdup(et->file);
+		    }		  		  
 		  
 		  while ((theme = ecore_list_next(themes)))
 		    {
@@ -652,26 +650,25 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   char *theme;
-   char *homedir;
-   char buf[4096];  
+   char *theme;;
+   E_Config_Theme *et;
+   Evas_List *l;
+      
+   et = E_NEW(E_Config_Theme, 1);
+   et->category = strdup("theme");
    
-   homedir = e_user_homedir_get();
-   if (homedir)     
-     {
-	snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
-	theme = E_NEW(char, 4096);
-	snprintf(theme, 4096, "%s/.e/e/themes/%s.edj", homedir, mi->label);
-	free(homedir);
-     }
-   else
-     return;   
+   theme = E_NEW(char, strlen(mi->label) + 5);
+   snprintf(theme, strlen(mi->label) + 5, "%s.edj", mi->label);
+   
+   et->file = strdup(theme);
+   /* Do we want to keep one theme for now? */
+   l = evas_list_last(e_config->themes);
+   e_config->themes = evas_list_remove_list(e_config->themes, l);
+   e_config->themes = evas_list_append(e_config->themes, et);
+   
+   e_config_save_queue();
 
-   ecore_file_unlink(buf);
-   if (!symlink(theme, buf))
-     {
-	printf("RESTART ON!\n");
-	restart = 1;
-	ecore_main_loop_quit();
-     }
+   printf("RESTART ON!\n");
+   restart = 1;
+   ecore_main_loop_quit();   
 }
