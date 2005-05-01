@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
+#include <math.h>
 
 /* TODO List:
  *
@@ -1369,11 +1370,43 @@ _ibar_bar_cb_animator(void *data)
 static void
 _ibar_bar_cb_drop(void *data, const char *type, void *event)
 {
+   E_Drop_Event *ev;
+   IBar_Bar *ibb;
+   Evas_Coord x, y, w, h;
+   double iw;
+   int pos;
+
+   ev = event;
+   ibb = data;
+
+   evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
+   x = ev->x - x;
+   y = ev->y - y;
+
+   if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
+       (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
+     {
+	iw = w / (double) evas_list_count(ibb->icons);
+	pos = round(x / iw);
+     }
+   else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
+	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
+     {
+	iw = h / (double) evas_list_count(ibb->icons);
+	pos = round(y / iw);
+     }
+
 }
 
 static void
 _ibar_bar_cb_move(void *data, const char *type, void *event)
 {
+   E_Drop_Event *ev;
+   IBar_Bar *ibb;
+   Evas_Coord x, y, w, h;
+
+   ev = event;
+   ibb = data;
 }
 
 static void
