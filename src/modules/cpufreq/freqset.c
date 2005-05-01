@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <string.h>
+
 
 int
 main(int argc, char *argv[])
 {
    int new_frequency = 0;
-   char *new_governor = NULL;
-   char buf[4096];
    FILE *f;
    
    if (argc != 3)
