@@ -28,6 +28,9 @@ static int bar_count;
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_bar_edd;
 
+static int drag, drag_start;
+static int drag_x, drag_y;
+
 /* const strings */
 static const char *_ibar_main_orientation[] =
 {"left", "right", "top", "bottom"};
@@ -65,6 +68,8 @@ static void    _ibar_bar_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void
 static void    _ibar_bar_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int     _ibar_bar_cb_timer(void *data);
 static int     _ibar_bar_cb_animator(void *data);
+static void    _ibar_bar_cb_drop(void *data, const char *type, void *event);
+static void    _ibar_bar_cb_move(void *data, const char *type, void *event);
 
 static void    _ibar_icon_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _ibar_icon_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -72,6 +77,7 @@ static void    _ibar_icon_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, voi
 static void    _ibar_icon_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _ibar_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void    _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void    _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
 #if 0
@@ -475,6 +481,9 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 
    e_box_thaw(ibb->box_object);
 
+   ibb->drop_handler = e_drop_handler_add(ibb, _ibar_bar_cb_drop, _ibar_bar_cb_move, "enlightenment/eapp",
+					  ibb->x, ibb->y, ibb->w, ibb->h);
+
    ibb->gmc = e_gadman_client_new(ibb->con->gadman);
    e_gadman_client_domain_set(ibb->gmc, "module.ibar", bar_count++);
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
@@ -602,6 +611,7 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _ibar_icon_cb_mouse_out, ic);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _ibar_icon_cb_mouse_down, ic);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _ibar_icon_cb_mouse_up, ic);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _ibar_icon_cb_mouse_move, ic);
    evas_object_show(o);
 
    o = edje_object_add(ibb->evas);
@@ -1168,10 +1178,17 @@ _ibar_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
    ic = data;
    if (ev->button == 1)
      {
+#if 0
 	edje_object_signal_emit(ic->bg_object, "start", "");
 	edje_object_signal_emit(ic->overlay_object, "start", "");
 	edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
 	e_app_exec(ic->app);
+#else
+	drag_x = ev->output.x;
+	drag_y = ev->output.y;
+	drag_start = 1; 
+	drag = 0; 
+#endif
      }
 }
 
@@ -1185,9 +1202,40 @@ _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    if (ev->button == 1)
      {
+#if 0
 	edje_object_signal_emit(ic->bg_object, "start_end", "");
 	edje_object_signal_emit(ic->overlay_object, "start_end", "");
 	edje_object_signal_emit(ic->ibb->overlay_object, "start_end", "");
+#else
+	if (!drag)
+	  e_app_exec(ic->app);
+	drag = 0;
+#endif
+     }
+}
+
+static void
+_ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   IBar_Icon *ic;
+
+   ev = event_info;
+   ic = data;
+
+   if (drag_start)
+     {
+	double dist;
+
+	dist = sqrt(pow((ev->cur.output.x - drag_x), 2) + pow((ev->cur.output.y - drag_y), 2));
+	printf("dist: %f\n", dist);
+	if (dist > 10)
+	  {
+	     drag = 1;
+	     drag_start = 0;
+	     e_drag_start(ic->ibb->con, "enlightenment/eapp", ic->app, ic->app->path, "icon");
+	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
+	  }
      }
 }
 
@@ -1319,15 +1367,27 @@ _ibar_bar_cb_animator(void *data)
 }
 
 static void
+_ibar_bar_cb_drop(void *data, const char *type, void *event)
+{
+}
+
+static void
+_ibar_bar_cb_move(void *data, const char *type, void *event)
+{
+}
+
+static void
 _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
    IBar_Bar *ibb;
+   int x, y, w, h;
 
    ibb = data;
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
 	 e_gadman_client_geometry_get(ibb->gmc, &ibb->x, &ibb->y, &ibb->w, &ibb->h);
+	 printf("ibar: %d %d %d %d\n", ibb->x, ibb->y, ibb->w, ibb->h);
 
 	 edje_extern_object_min_size_set(ibb->box_object, 0, 0);
 	 edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
@@ -1339,6 +1399,8 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 
 	 _ibar_bar_follower_reset(ibb);
 	 _ibar_bar_timer_handle(ibb);
+	 evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
+	 printf("box: %d %d %d %d\n", x, y, w, h);
 	 break;
       case E_GADMAN_CHANGE_EDGE:
 	 _ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));

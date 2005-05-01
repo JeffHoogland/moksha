@@ -63,6 +63,8 @@ struct _IBar_Bar
    E_Gadman_Client *gmc;
 
    Config_Bar     *conf;
+
+   E_Drop_Handler *drop_handler;
 };
 
 struct _IBar_Icon
