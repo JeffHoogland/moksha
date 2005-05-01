@@ -102,14 +102,14 @@ e_dnd_active(void)
 }
 
 void
-e_drag_start(E_Zone *zone, const char *type, void *data,
+e_drag_start(E_Container *con, const char *type, void *data,
 	     const char *icon_path, const char *icon)
 {
    int w, h;
 
-   drag_win = ecore_x_window_input_new(zone->container->win, 
-				       zone->x, zone->y,
-				       zone->w, zone->h);
+   drag_win = ecore_x_window_input_new(con->win, 
+				       con->x, con->y,
+				       con->w, con->h);
    ecore_x_window_show(drag_win);
    ecore_x_pointer_confine_grab(drag_win);
    ecore_x_keyboard_grab(drag_win);
@@ -120,7 +120,7 @@ e_drag_start(E_Zone *zone, const char *type, void *data,
 	ecore_evas_free(drag_ee);
      }
 
-   drag_ee = ecore_evas_software_x11_new(NULL, zone->container->win,
+   drag_ee = ecore_evas_software_x11_new(NULL, con->win,
 					 0, 0, 10, 10);
    ecore_evas_override_set(drag_ee, 1);
    ecore_evas_software_x11_direct_resize_set(drag_ee, 1);

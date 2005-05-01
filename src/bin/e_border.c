@@ -207,7 +207,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 {
    E_Border *bd;
    Ecore_X_Window_Attributes *att;
-   Evas_List *list;
    unsigned int managed, desk[2];
    int deskx, desky;
 
@@ -1315,8 +1314,6 @@ e_border_act_kill_begin(E_Border *bd)
 static void
 _e_border_free(E_Border *bd)
 {
-   Evas_List *list;
-
    if (resize == bd)
      _e_border_resize_end(bd);
    if (move == bd)
@@ -2525,7 +2522,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 							     bd->client.icccm.class);
 			    if (a)
 			      {
-				 e_drag_start(bd->zone, "enlightenment/border", bd, 
+				 e_drag_start(bd->zone->container, "enlightenment/border", bd, 
 					      a->path, "icon");
 				 evas_event_feed_mouse_up(bd->bg_evas, 1,
 							  EVAS_BUTTON_NONE, NULL);
