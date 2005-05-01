@@ -105,6 +105,7 @@ void
 e_drag_start(E_Container *con, const char *type, void *data,
 	     const char *icon_path, const char *icon)
 {
+   Evas_List *l;
    int w, h;
 
    drag_win = ecore_x_window_input_new(con->win, 
@@ -139,6 +140,15 @@ e_drag_start(E_Container *con, const char *type, void *data,
 
    drag_type = strdup(type);
    drag_data = data;
+
+   for (l = drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+	
+	h->active = !strcmp(h->type, drag_type);
+     }
 }
 
 void
@@ -195,12 +205,14 @@ e_drag_end(int x, int y)
 	E_Drop_Handler *h;
 
 	h = l->data;
+
+	if (!h->active)
+	  continue;
 	
-	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
-	    && (!strcmp(h->type, drag_type))
-	    && (h->func.drop))
+	if ((h->cb.drop)
+	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	  {
-	     h->func.drop(h->data, drag_type, ev);
+	     h->cb.drop(h->data, drag_type, ev);
 	  }
      }
 
@@ -213,8 +225,8 @@ end:
 
 E_Drop_Handler *
 e_drop_handler_add(void *data,
-		   void (*drop_func)(void *data, const char *type, void *event),
-		   void (*move_func)(void *data, const char *type, void *event),
+		   void (*drop_cb)(void *data, const char *type, void *event),
+		   void (*move_cb)(void *data, const char *type, void *event),
 		   const char *type, int x, int y, int w, int h)
 {
    E_Drop_Handler *handler;
@@ -223,8 +235,8 @@ e_drop_handler_add(void *data,
    if (!handler) return NULL;
 
    handler->data = data;
-   handler->func.drop = drop_func;
-   handler->func.move = move_func;
+   handler->cb.drop = drop_cb;
+   handler->cb.move = move_cb;
    handler->type = strdup(type);
    handler->x = x;
    handler->y = y;

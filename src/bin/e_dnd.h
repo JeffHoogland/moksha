@@ -18,9 +18,10 @@ struct _E_Drop_Handler
    struct {
 	void (*drop)(void *data, const char *type, void *event);
 	void (*move)(void *data, const char *type, void *event);
-   } func;
+   } cb;
    char *type;
    int x, y, w, h;
+   unsigned char active : 1;
 };
 
 struct _E_Drop_Event
@@ -45,8 +46,8 @@ EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);
 
 EAPI E_Drop_Handler *e_drop_handler_add(void *data,
-					void (*drop_func)(void *data, const char *type, void *event),
-					void (*move_func)(void *data, const char *type, void *event),
+					void (*drop_cb)(void *data, const char *type, void *event),
+					void (*move_cb)(void *data, const char *type, void *event),
 				       	const char *type, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 
