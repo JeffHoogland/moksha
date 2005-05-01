@@ -1380,14 +1380,13 @@ static void
 _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 {
    IBar_Bar *ibb;
-   int x, y, w, h;
+   Evas_Coord x, y, w, h;
 
    ibb = data;
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
 	 e_gadman_client_geometry_get(ibb->gmc, &ibb->x, &ibb->y, &ibb->w, &ibb->h);
-	 printf("ibar: %d %d %d %d\n", ibb->x, ibb->y, ibb->w, ibb->h);
 
 	 edje_extern_object_min_size_set(ibb->box_object, 0, 0);
 	 edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
@@ -1399,8 +1398,12 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 
 	 _ibar_bar_follower_reset(ibb);
 	 _ibar_bar_timer_handle(ibb);
+
 	 evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
-	 printf("box: %d %d %d %d\n", x, y, w, h);
+	 ibb->drop_handler->x = x;
+	 ibb->drop_handler->y = y;
+	 ibb->drop_handler->w = w;
+	 ibb->drop_handler->h = h;
 	 break;
       case E_GADMAN_CHANGE_EDGE:
 	 _ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));
