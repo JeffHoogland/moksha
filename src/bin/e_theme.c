@@ -27,22 +27,22 @@ e_theme_init(void)
    /* always fall back to the default theme. the rest after this are config */
    /* values users can set */
    e_theme_file_set("base", "default.edj");
-   /* now add more */
-   /* FIXME: load these from a config and save them to a config x*/
-   e_theme_file_set("base/theme", "default.edj");
-   e_theme_file_set("base/theme/borders", "default.edj");
-   e_theme_file_set("base/theme/menus", "default.edj");
-   e_theme_file_set("base/theme/error", "default.edj");
-   e_theme_file_set("base/theme/gadman", "default.edj");
-   e_theme_file_set("base/theme/dnd", "default.edj");
-   e_theme_file_set("base/theme/modules", "default.edj");
-   e_theme_file_set("base/theme/modules/pager", "default.edj");
-   e_theme_file_set("base/theme/modules/ibar", "default.edj");
-   e_theme_file_set("base/theme/modules/clock", "default.edj");
-   e_theme_file_set("base/theme/modules/battery", "default.edj");
-   e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
-   e_theme_file_set("base/theme/modules/temperature", "default.edj");
-   return 1;
+/*
+ * other possible categories...
+ *  e_theme_file_set("base/theme/borders", "default.edj");
+ *  e_theme_file_set("base/theme/menus", "default.edj");
+ *  e_theme_file_set("base/theme/error", "default.edj");
+ *  e_theme_file_set("base/theme/gadman", "default.edj");
+ *  e_theme_file_set("base/theme/dnd", "default.edj");
+ *  e_theme_file_set("base/theme/modules", "default.edj");
+ *  e_theme_file_set("base/theme/modules/pager", "default.edj");
+ *  e_theme_file_set("base/theme/modules/ibar", "default.edj");
+ *  e_theme_file_set("base/theme/modules/clock", "default.edj");
+ *  e_theme_file_set("base/theme/modules/battery", "default.edj");
+ *  e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
+ *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
+ */
+ return 1;
 }
 
 int

@@ -26,11 +26,20 @@ static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
 static E_Config_DD *_e_config_font_fallback_edd = NULL;
 static E_Config_DD *_e_config_font_default_edd = NULL;
+static E_Config_DD *_e_config_theme_edd = NULL;
 
 /* externally accessible functions */
 int
 e_config_init(void)
 {
+   _e_config_theme_edd = E_CONFIG_DD_NEW("E_Config_Theme", E_Config_Theme);
+#undef T
+#undef D
+#define T E_Config_Theme
+#define D _e_config_theme_edd
+   E_CONFIG_VAL(D, T, category, STR);
+   E_CONFIG_VAL(D, T, file, STR);
+   
    _e_config_module_edd = E_CONFIG_DD_NEW("E_Config_Module", E_Config_Module);
 #undef T
 #undef D
@@ -77,6 +86,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
    E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd);
+   E_CONFIG_LIST(D, T, themes, _e_config_theme_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (!e_config)
@@ -163,6 +173,14 @@ e_config_init(void)
              e_config->font_defaults = evas_list_append(e_config->font_defaults, efd); 
 	
 	  }
+	  {
+	     E_Config_Theme *et;
+	     
+	     et = E_NEW(E_Config_Theme, 1);
+	     et->category = strdup("theme");
+	     et->file = strdup("defaulty.edj");
+	     e_config->themes = evas_list_append(e_config->themes, et);
+	  }
 	e_config_save_queue();
      }
 
@@ -175,6 +193,23 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+
+     {
+	Evas_List *l;
+	
+	for (l = e_config->themes; l; l = l->next)
+	  {
+	     E_Config_Theme *et;
+	     char buf[256];
+	     
+	     et = l->data;
+	     snprintf(buf, sizeof(buf), "base/%s", et->category);
+	     printf("THEME: %s %s\n", buf, et->file);
+	     e_theme_file_set(buf, et->file);
+	  }
+     }
+   /* FIXME: run through themes and set */
+   
    return 1;
 }
 
@@ -210,6 +245,16 @@ e_config_shutdown(void)
 	     E_FREE(efd->text_class);
 	     E_FREE(efd->font);
 	     E_FREE(efd);
+	  }
+	while (e_config->themes)
+	  {
+	     E_Config_Theme *et;
+	     
+	     et = e_config->themes->data;
+	     e_config->themes = evas_list_remove_list(e_config->themes, e_config->themes);
+	     E_FREE(et->category);
+	     E_FREE(et->file);
+	     E_FREE(et);
 	  }
 
 	E_FREE(e_config->desktop_default_background);

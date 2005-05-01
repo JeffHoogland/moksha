@@ -33,6 +33,7 @@
 
 typedef struct _E_Config        E_Config;
 typedef struct _E_Config_Module E_Config_Module;
+typedef struct _E_Config_Theme  E_Config_Theme;
 typedef Eet_Data_Descriptor     E_Config_DD;
 
 #else
@@ -57,12 +58,19 @@ struct _E_Config
    Evas_List  *modules;
    Evas_List  *font_fallbacks;
    Evas_List  *font_defaults;
+   Evas_List  *themes;
 };
 
 struct _E_Config_Module
 {
    char          *name;
    unsigned char  enabled;
+};
+
+struct _E_Config_Theme
+{
+   char          *category;
+   char          *file;
 };
 
 EAPI int e_config_init(void);
