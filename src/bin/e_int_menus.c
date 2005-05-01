@@ -13,6 +13,7 @@ struct _Main_Data
    E_Menu *clients;
    E_Menu *modules;
    E_Menu *gadgets;
+   E_Menu *themes;
 };
 
 /* local subsystem functions */
@@ -36,6 +37,8 @@ static void _e_int_menus_desktops_col_add_cb (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_desktops_col_del_cb (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_themes_pre_cb      (void *data, E_Menu *m);
+static void _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -98,6 +101,15 @@ e_int_menus_main_new(void)
 			     e_path_find(path_icons, "default.edj"),
 			     "gadgets");
    e_menu_item_submenu_set(mi, subm);
+   
+   subm = e_int_menus_themes_new();
+   dat->themes = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Themes"));
+   e_menu_item_icon_edje_set(mi,
+			     e_path_find(path_icons, "default.edj"),
+			     "theme");
+   e_menu_item_submenu_set(mi, subm);   
   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -191,6 +203,16 @@ e_int_menus_gadgets_new(void)
    return m;
 }
 
+E_Menu *
+e_int_menus_themes_new(void)
+{
+   E_Menu *m;
+
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_themes_pre_cb, NULL);
+   return m;
+}
+
 /* local subsystem functions */
 static void
 _e_int_menus_main_del_hook(void *obj)
@@ -207,6 +229,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->gadgets));
+	e_object_del(E_OBJECT(dat->themes));	
 	free(dat);
      }
 }
@@ -540,4 +563,103 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      e_gadman_mode_set(gm, E_GADMAN_MODE_EDIT);
    else
      e_gadman_mode_set(gm, E_GADMAN_MODE_NORMAL);
+}
+
+static void
+_e_int_menus_themes_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   E_Menu *root;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   root = e_menu_root_get(m);
+   if ((root) && (root->zone))
+     {
+	char buf[4096];
+	char *homedir;
+	
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Choose Theme"));
+	
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);	
+	
+	homedir = e_user_homedir_get();
+	if (homedir)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/themes", homedir);
+	     free(homedir);
+	  }
+	
+	if(ecore_file_exists(buf) && ecore_file_is_dir(buf))
+	  {
+	     Ecore_List *themes;
+	     char *theme, *deftheme;
+	     
+	     themes = ecore_file_ls(buf);
+	     theme = E_NEW(char, strlen(buf) + strlen("/default.edj") + 1);
+	     snprintf(theme, strlen(buf) + strlen("/default.edj") + 1, "%s/default.edj", buf);
+	     
+	     if(ecore_file_exists("/home/hisham/.e/e/themes/default.edj"))	       
+	       deftheme = ecore_file_readlink("/home/hisham/.e/e/themes/default.edj");	     
+	     if(deftheme)
+	       {
+		  char *s;
+		  if((s = strrchr(deftheme, '/')))
+		    deftheme = s + 1;
+	       }
+	     
+	     while((theme = ecore_list_next(themes)))
+	       {			  
+		  if(ecore_file_is_dir(theme) || !strrchr(theme,'.'))
+		    continue;
+		  if(!strncmp(strrchr(theme,'.'), ".edj", 4))
+		    {		       
+		       mi = e_menu_item_new(m);
+		       e_menu_item_radio_set(mi, 1);
+		       if(deftheme) {			  
+			  if(!strcmp(theme, deftheme))
+			    e_menu_item_toggle_set(mi, 1);
+		       }
+		       *(strrchr(theme,'.')) = '\0';
+		       e_menu_item_label_set(mi, _(theme));
+		       e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
+		    }
+	       }
+	  }
+     }
+   else
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("(Unused)"));
+	e_menu_item_callback_set(mi, NULL, NULL);
+     }
+}
+
+static void
+_e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   char *theme;
+   char *homedir;
+   char buf[4096];  
+   
+   homedir = e_user_homedir_get();
+   if (homedir)     
+     {
+	snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
+	theme = E_NEW(char, 4096);
+	snprintf(theme, 4096, "%s/.e/e/themes/%s.edj", homedir, mi->label);
+	free(homedir);
+     }
+   else
+     return;   
+
+   ecore_file_unlink(buf);
+   if(!symlink(theme, buf))
+     {
+	printf("RESTART ON!\n");
+	restart = 1;
+	ecore_main_loop_quit();
+     }
+     
 }
