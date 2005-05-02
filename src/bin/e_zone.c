@@ -682,22 +682,34 @@ _e_zone_update_flip(E_Zone *zone)
 {
 
    if (E_ZONE_FLIP_UP(zone))
-     ecore_x_window_show(zone->flip.top);
+     {
+	ecore_x_window_show(zone->flip.top);
+	e_container_window_raise(zone->container, zone->flip.top, 999);
+     }
    else
      ecore_x_window_hide(zone->flip.top);
 
    if (E_ZONE_FLIP_RIGHT(zone))
-     ecore_x_window_show(zone->flip.right);
+     {
+	ecore_x_window_show(zone->flip.right);
+	e_container_window_raise(zone->container, zone->flip.right, 999);
+     }
    else
      ecore_x_window_hide(zone->flip.right);
 
    if (E_ZONE_FLIP_DOWN(zone))
-     ecore_x_window_show(zone->flip.bottom);
+     {
+	ecore_x_window_show(zone->flip.bottom);
+	e_container_window_raise(zone->container, zone->flip.bottom, 999);
+     }
    else
      ecore_x_window_hide(zone->flip.bottom);
 
    if (E_ZONE_FLIP_LEFT(zone))
-     ecore_x_window_show(zone->flip.left);
+     {
+	ecore_x_window_show(zone->flip.left);
+	e_container_window_raise(zone->container, zone->flip.left, 999);
+     }
    else
      ecore_x_window_hide(zone->flip.left);
 }
