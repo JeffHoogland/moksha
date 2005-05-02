@@ -5,6 +5,7 @@ static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
 static char *_e_ipc_path_str_get(char **paths, int *bytes);
+static char *_e_ipc_str_list_get(Evas_List *strs, int *bytes);
 static char *_e_ipc_simple_str_dec(char *data, int bytes);
 static char **_e_ipc_multi_str_dec(char *data, int bytes, int str_count);
 
@@ -14,6 +15,7 @@ ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc);
+//ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_string_list_enc);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -213,9 +215,9 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_BG_GET:
 	  {
 	     char *bg;
+	     
 	     bg = e_config->desktop_default_background;
-	     if (!bg)
-	       bg = "";
+	     if (!bg) bg = "";
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_BG_GET_REPLY,
@@ -328,7 +330,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     int bytes;
 	     
 	     text_class = _e_ipc_simple_str_dec(e->data, e->size);	     
-	     efd = e_font_default_get (text_class);	     
+	     efd = e_font_default_get(text_class);	     
 	     free(text_class);
 	     data = _e_ipc_font_default_enc(efd, &bytes);
 	     ecore_ipc_client_send(e->client,
@@ -399,6 +401,45 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     ecore_main_loop_quit();
  	  }
 	break;
+      case E_IPC_OP_LANG_LIST:
+	  {
+	     Evas_List *langs;
+	     int bytes;
+	     char *data;
+	     
+	     langs = (Evas_List *)e_intl_language_list();
+	     data = _e_ipc_str_list_get(langs, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_LANG_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+	     free(data);
+	  }
+      case E_IPC_OP_LANG_SET:
+	  {
+	     char *lang;
+	     
+	     lang = _e_ipc_simple_str_dec(e->data, e->size);
+	     IF_FREE(e_config->language);
+	     e_config->language = lang;
+	     e_intl_language_set(e_config->language);
+             e_config_save_queue();
+	  }
+      case E_IPC_OP_LANG_GET:
+	  {
+	     char *lang;
+	     
+	     lang = e_config->language;
+	     if (!lang) lang = "";
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_LANG_GET_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   lang, strlen(lang) + 1);
+	     free(data);
+	  }
+	break;
       default:
 	break;
      }
@@ -422,7 +463,7 @@ _e_ipc_path_str_get(char **paths, int *bytes)
    char *data = NULL, **cur, *home;
    int pos = 0;
    char tmp[PATH_MAX];
-
+   
    *bytes = 0;
    home = e_user_homedir_get();
    for (cur = paths; *cur != NULL; cur++)
@@ -444,6 +485,30 @@ _e_ipc_path_str_get(char **paths, int *bytes)
    return data;
 }
 
+static char *
+_e_ipc_str_list_get(Evas_List *strs, int *bytes)
+{
+   char *data = NULL, **cur;
+   int pos = 0;
+   Evas_List *l;
+   
+   *bytes = 0;
+   for (l = strs; l; l = l->next)
+     {
+	char *p;
+
+	p = l->data;
+
+	*bytes += strlen(p) + 1;
+	data = realloc(data, *bytes);
+
+	memcpy(data + pos, p, strlen(p));
+	pos = *bytes;
+	data[pos - 1] = 0;
+     }
+   return data;
+}
+
 /**
  * Decode a simple string that was passed by an IPC client
  *
@@ -452,13 +517,13 @@ _e_ipc_path_str_get(char **paths, int *bytes)
 static char *
 _e_ipc_simple_str_dec(char *data, int bytes)
 {
-    char *str;
-    
-    str = malloc(bytes + 1);
-    str[bytes] = 0;
-    memcpy(str, data, bytes);
-    
-    return str;
+   char *str;
+   
+   str = malloc(bytes + 1);
+   str[bytes] = 0;
+   memcpy(str, data, bytes);
+   
+   return str;
 }
 
 /**
@@ -472,26 +537,25 @@ _e_ipc_simple_str_dec(char *data, int bytes)
 static char **
 _e_ipc_multi_str_dec(char *data, int bytes, int str_count)
 {
-    char ** str_array;
-    int i;
- 
-    /* Make sure our data is packed for us <str>0<str>0 */
-    if( data[bytes - 1] != 0) {
-	return NULL;
-    }
-
-    str_array = malloc(sizeof(char *)*str_count);
-
-    for(i = 0; i < str_count; i++) 
-    {
+   char **str_array;
+   int i;
+   
+   /* Make sure our data is packed for us <str>0<str>0 */
+   if (data[bytes - 1] != 0)
+     return NULL;
+   
+   str_array = malloc(sizeof(char *) * str_count);
+   
+   for (i = 0; i < str_count; i++) 
+     {
         str_array[i] = data;
 	data += strlen(str_array[i]) + 1;
-    }
-
-    return str_array;
+     }
+   
+   return str_array;
 }
-
-
+   
+   
 /* list/struct encoding functions */
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc)
 {
@@ -556,3 +620,16 @@ ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc)
    ECORE_IPC_PUT32(size);
    ECORE_IPC_ENC_STRUCT_FOOT();
 }
+
+/*
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_string_list_enc)
+{
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_String);
+	ECORE_IPC_CNTS(str);
+    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+    	int l1;
+    	ECORE_IPC_SLEN(l1, str);
+    	ECORE_IPC_PUTS(str, l1);
+    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+*/

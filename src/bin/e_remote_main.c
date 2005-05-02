@@ -72,7 +72,10 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-font-default-list", "List all configured text classes", E_IPC_OP_FONT_DEFAULT_LIST, 1),
    OMUL("-font-default-set", "Set textclass (OPT1) font (OPT2) and size (OPT3)", E_IPC_OP_FONT_DEFAULT_SET, 0, 3),
    OREQ("-restart", "Restart E17", E_IPC_OP_RESTART, 0),
-   OREQ("-shutdown", "Shutdown E17", E_IPC_OP_SHUTDOWN, 0)
+   OREQ("-shutdown", "Shutdown E17", E_IPC_OP_SHUTDOWN, 0),
+   OREQ("-lang-get", "Get the current language", E_IPC_OP_LANG_GET, 1),
+   OREQ("-lang-list", "List all available languages", E_IPC_OP_LANG_LIST, 1),
+   OSTR("-lang-set", "Set the current language", E_IPC_OP_LANG_SET, 0)
 };
 
 /* externally accessible functions */
@@ -338,7 +341,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	else
 	  printf("REPLY: MODULE NONE\n");
 	break;
-       case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
+      case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
 	if (e->data)
 	  {
 	     char *p;
@@ -347,35 +350,35 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     while (p < (char *)(e->data + e->size))
 	       {
 		  char *dir;
-
+		  
 		  dir = p;
 		  printf("REPLY: MODULE DIR=%s\n", dir);
 		  p += strlen(dir) + 1;
 	       }
 	  }
-      break;
+	break;
       case E_IPC_OP_BG_GET_REPLY:
-      if (e->data)
-	{
-	   printf("REPLY: %s\n", e->data);
-	}
-      break;
+	if (e->data)
+	  {
+	     printf("REPLY: %s\n", e->data);
+	  }
+	break;
       case E_IPC_OP_BG_DIRS_LIST_REPLY:
-      if (e->data)
-	{	
-	   char *p;
- 
-	   p = e->data;
-	   while (p < (char *)(e->data + e->size))
-	     {
-	         char *dir;
-
-		 dir = p;
-		 printf("REPLY: BG DIR=%s\n", dir);
-		 p += strlen(dir) + 1;
-	     }
-	 }
-      break;
+	if (e->data)
+	  {	
+	     char *p;
+	     
+	     p = e->data;
+	     while (p < (char *)(e->data + e->size))
+	       {
+		  char *dir;
+		  
+		  dir = p;
+		  printf("REPLY: BG DIR=%s\n", dir);
+		  p += strlen(dir) + 1;
+	       }
+	  }
+	break;
       case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
 	if (e->data)
 	  {
@@ -384,12 +387,12 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     
 	     fallbacks = _e_ipc_font_fallback_list_dec(e->data, e->size);
 	     while(fallbacks)
-	        {
-	            eff = fallbacks->data;
-	            printf("REPLY: FALLBACK NAME=\"%s\"\n", eff->name);
-		    fallbacks = evas_list_remove_list(fallbacks, fallbacks);
-		    E_FREE(eff);
-	        }
+	       {
+		  eff = fallbacks->data;
+		  printf("REPLY: FALLBACK NAME=\"%s\"\n", eff->name);
+		  fallbacks = evas_list_remove_list(fallbacks, fallbacks);
+		  E_FREE(eff);
+	       }
 	  }
 	else
 	  printf("REPLY: FALLBACK NONE\n");
@@ -399,15 +402,15 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
           {
              Evas_List *available;
 	     E_Font_Available *fa;
-	
+	     
 	     available = _e_ipc_font_available_list_dec(e->data, e->size);
 	     while(available)
-	        {
-	            fa = available->data;
-	            printf("REPLY: AVAILABLE NAME=\"%s\"\n", fa->name);
-	            available = evas_list_remove_list(available, available);
-		    E_FREE(fa);
-		}
+	       {
+		  fa = available->data;
+		  printf("REPLY: AVAILABLE NAME=\"%s\"\n", fa->name);
+		  available = evas_list_remove_list(available, available);
+		  E_FREE(fa);
+	       }
           }
         else
           printf("REPLY: AVAILABLE NONE\n"); 
@@ -418,7 +421,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
              E_Font_Default efd;
              _e_ipc_font_default_dec(e->data, e->size, &efd);
              printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
-				   efd.text_class, efd.font, efd.size);
+		    efd.text_class, efd.font, efd.size);
           }
         else
           printf("REPLY: DEFAULT NONE\n"); 
@@ -428,13 +431,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
           {
              Evas_List *defaults;
              E_Font_Default *efd;
-          
+	     
              defaults = _e_ipc_font_default_list_dec(e->data, e->size);
              while(defaults)
                {
-             	  efd = defaults->data;
-             	  printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
-				   efd->text_class, efd->font, efd->size);  
+		  efd = defaults->data;
+		  printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
+			 efd->text_class, efd->font, efd->size);  
                   defaults = evas_list_remove_list(defaults, defaults);
 		  E_FREE(efd);
 	       }
@@ -442,6 +445,13 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
         else
           printf("REPLY: DEFAULT NONE\n"); 
         break;	
+      case E_IPC_OP_LANG_LIST_REPLY:
+        if (e->data)
+          {
+          }
+        else
+          printf("REPLY: AVAILABLE NONE\n"); 
+        break;   
       default:
 	break;
      }

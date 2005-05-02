@@ -1327,7 +1327,11 @@ _e_border_free(E_Border *bd)
 	e_object_del(E_OBJECT(bd->border_menu));
 	bd->border_menu = NULL;
      }
-   if (focused == bd) focused = NULL;
+   if (focused == bd)
+     {
+	ecore_x_window_focus(bd->container->manager->root);
+	focused = NULL;
+     }
    while (bd->handlers)
      {
 	Ecore_Event_Handler *h;

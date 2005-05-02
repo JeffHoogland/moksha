@@ -83,6 +83,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font_cache, INT);
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
+   E_CONFIG_VAL(D, T, language, STR);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
    E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd);
@@ -106,6 +107,7 @@ e_config_init(void)
 	e_config->zone_desks_x_count = 4;
 	e_config->zone_desks_y_count = 1;
 	e_config->use_virtual_roots = 0;
+	e_config->language = strdup("");
 	  {
 	     E_Config_Module *em;
 
@@ -194,6 +196,11 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
 
+   /* apply config */
+   
+   if ((e_config->language) && (strlen(e_config->language) > 0))
+     e_intl_language_set(e_config->language);
+   
      {
 	Evas_List *l;
 	
@@ -258,6 +265,7 @@ e_config_shutdown(void)
 	  }
 
 	E_FREE(e_config->desktop_default_background);
+	E_FREE(e_config->language);
 	E_FREE(e_config);
      }
    E_CONFIG_DD_FREE(_e_config_edd);

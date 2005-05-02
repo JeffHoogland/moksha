@@ -55,6 +55,7 @@ struct _E_Config
    int         zone_desks_x_count;
    int         zone_desks_y_count;
    int         use_virtual_roots;
+   char       *language;
    Evas_List  *modules;
    Evas_List  *font_fallbacks;
    Evas_List  *font_defaults;
