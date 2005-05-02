@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-extern E_Config *e_config;
-
 typedef struct _Main_Data Main_Data;
 
 struct _Main_Data
@@ -607,7 +605,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  for (l = e_config->themes; l; l = l->next)
 		    {
 		       E_Config_Theme *et;
-		       char buf[256];
 		       
 		       et = l->data;
 		       if (!strcmp(et->category, "theme"))

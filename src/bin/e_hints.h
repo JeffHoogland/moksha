@@ -23,6 +23,9 @@ EAPI void e_hints_window_state_get(E_Border *bd);
 EAPI void e_hints_window_type_set(E_Border *bd);
 EAPI void e_hints_window_type_get(E_Border *bd);
 
+EAPI void e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
+				      Ecore_X_Window_State_Action action);
+
 EAPI void e_hints_window_visible_set(E_Border *bd);
 EAPI void e_hints_window_iconic_set(E_Border *bd);
 EAPI void e_hints_window_hidden_set(E_Border *bd);

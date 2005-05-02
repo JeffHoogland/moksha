@@ -334,6 +334,8 @@ EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_maximize(E_Border *bd);
 EAPI void      e_border_unmaximize(E_Border *bd);
+EAPI void      e_border_fullscreen(E_Border *bd);
+EAPI void      e_border_unfullscreen(E_Border *bd);
 EAPI void      e_border_iconify(E_Border *bd);
 EAPI void      e_border_uniconify(E_Border *bd);
 EAPI void      e_border_stick(E_Border *bd);

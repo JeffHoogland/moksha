@@ -577,6 +577,7 @@ e_border_raise(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
+   printf("raise layer: %d\n", bd->layer);
    e_container_window_raise(bd->zone->container, bd->win, bd->layer);
      {
 	E_Event_Border_Raise *ev;
@@ -960,9 +961,7 @@ e_border_fullscreen(E_Border *bd)
 
 	e_hints_window_fullscreen_set(bd, 1);
 
-	bd->layer = 200;
-
-	e_border_raise(bd);
+	e_container_window_raise(bd->zone->container, bd->win, 200);
 	e_border_move_resize(bd,
 			     bd->zone->x - bd->client_inset.l,
 			     bd->zone->y - bd->client_inset.t,
@@ -990,7 +989,6 @@ e_border_unfullscreen(E_Border *bd)
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
-	bd->layer = 100;
 	bd->fullscreen = 0;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
@@ -1460,8 +1458,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
-	printf("generic config request %x %i %i %ix%i ...\n",
-	       e->win, e->x, e->y, e->w, e->h);
+	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
+	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
 	ecore_x_window_configure(e->win, e->value_mask,
 				 e->x, e->y, e->w, e->h, e->border,
 				 e->abovewin, e->detail);
@@ -1567,22 +1565,27 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  {
 	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
 	       {
+		  printf("config raise\n");
 		  e_border_raise(bd);
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
 	       {
+		  printf("config lower\n");
 		  e_border_lower(bd);
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
 	       {
+		  printf("config topif\n");
 		  /* FIXME: do */
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
 	       {
+		  printf("config bottomif\n");
 		  /* FIXME: do */
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
 	       {
+		  printf("config opposite\n");
 		  /* FIXME: do */
 	       }
 	  }
@@ -1880,83 +1883,7 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
    if (!bd) return 1;
    printf("State: 0x%x %d %d\n", bd->client.win, e->state[0], e->state[1]);
    for (i = 0; i < 2; i++)
-     {
-	int set;
-
-	if (e->state[i] != ECORE_X_WINDOW_STATE_UNKNOWN)
-	  {
-	     switch (e->action)
-	       {
-		case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-		   ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 0);
-		   set = 0;
-		   break;
-		case ECORE_X_WINDOW_STATE_ACTION_ADD:
-		   ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 1);
-		   set = 1;
-		   break;
-		case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-		   if (ecore_x_netwm_window_state_isset(bd->client.win, e->state[i]))
-		     {
-			ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 0);
-			set = 0;
-		     }
-		   else
-		     {
-			ecore_x_netwm_window_state_set(bd->client.win, e->state[i], 1);
-			set = 1;
-		     }
-		   break;
-	       }
-
-	     if (e->state[i] == ECORE_X_WINDOW_STATE_ABOVE)
-	       {
-		  if (set)
-		    {
-		       bd->layer = 150;
-		       bd->client.netwm.state.stacking = 1;
-		    }
-		  else
-		    {
-		       bd->layer = 100;
-		       bd->client.netwm.state.stacking = 0;
-		    }
-		  e_border_raise(bd);
-	       }
-	     else if (e->state[i] == ECORE_X_WINDOW_STATE_BELOW)
-	       {
-		  if (set)
-		    {
-		       bd->layer = 50;
-		       bd->client.netwm.state.stacking = 2;
-		    }
-		  else
-		    {
-		       bd->layer = 100;
-		       bd->client.netwm.state.stacking = 0;
-		    }
-		  e_border_raise(bd);
-	       }
-	     else if (e->state[i] == ECORE_X_WINDOW_STATE_FULLSCREEN)
-	       {
-		  if (set)
-		    {
-		       bd->layer = 200;
-		       bd->client.netwm.state.fullscreen = 1;
-
-		       e_border_fullscreen(bd);
-		    }
-		  else
-		    {
-		       bd->layer = 100;
-		       bd->client.netwm.state.fullscreen = 0;
-
-		       e_border_unfullscreen(bd);
-		    }
-		  e_border_raise(bd);
-	       }
-	  }
-     }
+     e_hints_window_state_update(bd, e->state[i], e->action);
    return 1;
 }
 
