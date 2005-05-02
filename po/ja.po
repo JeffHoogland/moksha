@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+# This is the Japanese locale definition for Enlightenment DR 17 
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-12 06:59+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2005-04-30 12:00+0900\n"
+"Last-Translator: David Stevenson <david.35472@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,63 +17,63 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:272
 msgid "(No Applications)"
-msgstr ""
+msgstr "(アプリケーション無し)"
 
 #: src/bin/e_int_menus.c:445
 msgid "(No Windows)"
-msgstr ""
+msgstr "(ウインドウ無し)"
 
 #: src/bin/e_int_menus.c:521
 msgid "(Unused)"
-msgstr ""
+msgstr "(未使用)"
 
 #: src/modules/battery/e_mod_main.c:418
 msgid "1 hour"
-msgstr ""
+msgstr "1時間"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr ""
+msgstr "100℃"
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr ""
+msgstr "10℃"
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr ""
+msgstr "20℃"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr ""
+msgstr "30℃"
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr ""
+msgstr "40℃"
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr ""
+msgstr "50℃"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr ""
+msgstr "60℃"
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr ""
+msgstr "70℃"
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr ""
+msgstr "80℃"
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr ""
+msgstr "90℃"
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -92,23 +92,23 @@ msgstr ""
 
 #: src/modules/pager/e_mod_main.c:136
 msgid "A pager module to navigate virtual desktops."
-msgstr ""
+msgstr "仮想デスクトップを切替えるためのページャモジュール。"
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
-msgstr ""
+msgstr "E17用のシンプルな時計モジュール"
 
 #: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
 msgid "About Enlightenment"
-msgstr "エンラーイテノメントについて"
+msgstr "Enlightenment について"
 
 #: src/bin/e_module.c:381
 msgid "About..."
-msgstr ""
+msgstr "情報"
 
 #: src/bin/e_main.c:360
 msgid "Artificially slowing startup so you can see it all."
-msgstr "人工に開始従ってあなたを遅らせることはそれをすべて見ることができる。"
+msgstr "すべてが見えるように起動が故意に減速されています。"
 
 #: src/modules/ibar/e_mod_main.c:717
 msgid "Auto fit icons"
@@ -116,11 +116,11 @@ msgstr ""
 
 #: src/bin/e_gadman.c:526
 msgid "Automatic Height"
-msgstr ""
+msgstr "高さの自動整理"
 
 #: src/bin/e_gadman.c:483
 msgid "Automatic Width"
-msgstr ""
+msgstr "広さの自動整理"
 
 #: src/modules/battery/e_mod_main.c:906
 msgid "BAD DRIVER"
@@ -128,7 +128,7 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:89
 msgid "Battery"
-msgstr ""
+msgstr "電池"
 
 #: src/modules/battery/e_mod_main.c:688
 msgid "Battery Running Low"
@@ -136,24 +136,24 @@ msgstr ""
 
 #: src/bin/e_gadman.c:509
 msgid "Center Horizontally"
-msgstr ""
+msgstr "水平に中央揃え"
 
 #: src/bin/e_gadman.c:552
 msgid "Center Vertically"
-msgstr ""
+msgstr "垂直に中央揃え"
 
 #: src/modules/battery/e_mod_main.c:1002
 msgid "Charging"
-msgstr ""
+msgstr "充電中"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
-msgstr ""
+msgstr "速く (1秒毎)"
 
 #: src/modules/temperature/e_mod_main.c:184
 #: src/modules/temperature/e_mod_main.c:608
 msgid "Check Interval"
-msgstr ""
+msgstr "観察間隔"
 
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
@@ -164,28 +164,28 @@ msgid "Check Normal (10 sec)"
 msgstr ""
 
 #: src/modules/battery/e_mod_main.c:451
-msgid "Check Slow (30 sec)"
+msgid "遅く (30秒毎)"
 msgstr ""
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
-msgstr ""
+msgstr "とても遅く (60秒毎)"
 
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
-msgstr ""
+msgstr "時計"
 
 #: src/bin/e_border.c:3213 src/modules/dropshadow/e_mod_main.c:344
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #: src/bin/e_module.c:396
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #: src/bin/e_border.c:3281
 msgid "Create Icon"
-msgstr ""
+msgstr "アイコン作成"
 
 #: src/modules/battery/e_mod_main.c:998
 msgid "Danger"
@@ -197,7 +197,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:77
 msgid "Desktops"
-msgstr ""
+msgstr "デスクトップ"
 
 #: src/modules/dropshadow/e_mod_main.c:125
 msgid "Dropshadow"
@@ -205,33 +205,33 @@ msgstr ""
 
 #: src/bin/e_border.c:3255
 msgid "Edit Icon"
-msgstr ""
+msgstr "アイコン編集"
 
 #: src/bin/e_int_menus.c:515 src/modules/clock/e_mod_main.c:311
 #: src/modules/temperature/e_mod_main.c:723
 #: src/modules/battery/e_mod_main.c:563
 msgid "Edit Mode"
-msgstr ""
+msgstr "編集モード"
 
 #: src/bin/e_module.c:385
 msgid "Enabled"
-msgstr ""
+msgstr "有効にする"
 
 #: src/bin/e_gadman.c:563
 msgid "End Edit Mode"
-msgstr ""
+msgstr "編集モード終了"
 
 #: src/bin/e_main.c:344
 msgid "Enlightenment"
-msgstr "エンラーイテノメント"
+msgstr "Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
-msgstr ""
+msgstr "Enlightenment 電池モジュール"
 
 #: src/modules/clock/e_mod_main.c:95
 msgid "Enlightenment Clock Module"
-msgstr ""
+msgstr "Enlightenment 時計モジュール"
 
 #: src/modules/dropshadow/e_mod_main.c:134
 msgid "Enlightenment Dropshadow Module"
@@ -239,7 +239,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:158
 msgid "Enlightenment IBar Module"
-msgstr ""
+msgstr "Enlightenment IBar モジュール"
 
 #: src/bin/e_main.c:329
 msgid "Enlightenment IPC setup error!"
@@ -247,25 +247,27 @@ msgstr ""
 
 #: src/modules/pager/e_mod_main.c:135
 msgid "Enlightenment Pager Module"
-msgstr ""
+msgstr "Enlightenment ページャモジュール"
 
 #: src/bin/e_main.c:346
 msgid "Enlightenment Starting. Please wait."
-msgstr "エンラーイテノメントは始まっている。ちょっとまってください。"
+msgstr "Enlightenment は起動しています。少々お待ち下さい。"
 
 #: src/modules/temperature/e_mod_main.c:96
 msgid "Enlightenment Temperature Module"
-msgstr ""
+msgstr "Enlightenment 温度計モジュール"
 
 #: src/modules/test/e_mod_main.c:66
 msgid "Enlightenment Test Module"
-msgstr ""
+msgstr "Enlightenment テストモジュール"
 
 #: src/bin/e_main.c:157
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment は Ecore を初期化できません！\n"
+"メモリー資源が低下していますか。"
 
 #: src/bin/e_main.c:235
 msgid ""
@@ -278,18 +280,24 @@ msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
+"Enlightenment は X への接続を初期化できません。\n"
+"環境変数 DISPLAY の指定をご確認ください。"
 
 #: src/bin/e_main.c:223
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment は Evas システムを初期化できません！\n"
+"メモリー資源が低下していますか。"
 
 #: src/bin/e_main.c:215
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Enlightenment は IPC システムを初期化できません！\n"
+"メモリー資源が低下していますか。"
 
 #: src/bin/e_main.c:207
 msgid ""
@@ -364,7 +372,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:789
 msgid "Enormous"
-msgstr ""
+msgstr "莫大"
 
 #: src/modules/battery/e_mod_main.c:46
 #, c-format
@@ -443,11 +451,11 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightenment"
-msgstr "エンラーイテノメント出口"
+msgstr "Enlightenment 終了"
 
 #: src/modules/ibar/e_mod_main.c:775
 msgid "Extremely Large"
-msgstr ""
+msgstr "とっても大きい"
 
 #: src/modules/dropshadow/e_mod_main.c:362
 msgid "Extremely Close"
@@ -463,11 +471,11 @@ msgstr ""
 
 #: src/modules/temperature/e_mod_main.c:460
 msgid "Fast (1 sec)"
-msgstr ""
+msgstr "速い(1秒毎)"
 
 #: src/bin/e_int_menus.c:58
 msgid "Favorite Applications"
-msgstr ""
+msgstr "アプリケーション"
 
 #: src/bin/e_gadman.c:541
 msgid "Full Screen Height"
@@ -487,7 +495,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Gigantic"
-msgstr ""
+msgstr "巨大"
 
 #: src/bin/e_gadman.c:536
 msgid "Half Screen Height"
@@ -504,11 +512,11 @@ msgstr ""
 #: src/modules/temperature/e_mod_main.c:192
 #: src/modules/temperature/e_mod_main.c:616
 msgid "High Temperature"
-msgstr ""
+msgstr "高温度"
 
 #: src/modules/ibar/e_mod_main.c:782
 msgid "Huge"
-msgstr ""
+msgstr "極めて大きい"
 
 #: src/modules/ibar/e_mod_main.c:149
 msgid "IBar"
@@ -520,7 +528,7 @@ msgstr ""
 
 #: src/bin/e_border.c:3218
 msgid "Iconify"
-msgstr ""
+msgstr "アイコン化"
 
 #: src/modules/dropshadow/e_mod_main.c:371
 msgid "Immediately Underneath"
@@ -528,7 +536,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:761
 msgid "Large"
-msgstr ""
+msgstr "大きい"
 
 #: src/modules/dropshadow/e_mod_main.c:305
 msgid "Light"
@@ -541,15 +549,15 @@ msgstr ""
 #: src/modules/temperature/e_mod_main.c:188
 #: src/modules/temperature/e_mod_main.c:612
 msgid "Low Temperature"
-msgstr ""
+msgstr "低温度"
 
 #: src/bin/e_border.c:3233
 msgid "Maximized"
-msgstr ""
+msgstr "最大化"
 
 #: src/modules/dropshadow/e_mod_main.c:257 src/modules/ibar/e_mod_main.c:754
 msgid "Medium"
-msgstr ""
+msgstr "中"
 
 #: src/modules/temperature/e_mod_main.c:467
 msgid "Medium (5 sec)"
@@ -557,7 +565,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:726
 msgid "Microscopic"
-msgstr ""
+msgstr "極めて小さい"
 
 #: src/modules/test/e_mod_main.c:9 src/modules/dropshadow/e_mod_main.c:77
 #: src/modules/clock/e_mod_main.c:40 src/modules/temperature/e_mod_main.c:43
@@ -580,11 +588,11 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:69
 msgid "Modules"
-msgstr ""
+msgstr "モジュール"
 
 #: src/bin/e_main.c:362
 msgid "Most features do not work yet, and those that do are buggy."
-msgstr "ほとんどの特徴はまだ働かないし、特徴はバッギである。"
+msgstr "ほとんどの機能はまだ動作しないし、動作する機能にはバッグがある。"
 
 #: src/modules/battery/e_mod_main.c:882
 msgid "NO BAT"
@@ -596,11 +604,11 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:362
 msgid "New Column of Desktops"
-msgstr ""
+msgstr "仮想デスクトップを横に広げる"
 
 #: src/bin/e_int_menus.c:354
 msgid "New Row of Desktops"
-msgstr ""
+msgstr "仮想デスクトップを縦に広げる"
 
 #: src/modules/temperature/e_mod_main.c:474
 msgid "Normal (10 sec)"
@@ -608,11 +616,11 @@ msgstr ""
 
 #: src/bin/e_error.c:188 src/bin/e_error.c:197
 msgid "OK"
-msgstr ""
+msgstr "了解"
 
 #: src/modules/ibar/e_mod_main.c:804
 msgid "Options"
-msgstr ""
+msgstr "オプション"
 
 #: src/bin/e_main.c:112
 #, c-format
@@ -632,19 +640,19 @@ msgstr ""
 
 #: src/modules/pager/e_mod_main.c:126
 msgid "Pager"
-msgstr ""
+msgstr "ページャ"
 
 #: src/bin/e_int_menus.c:366
 msgid "Remove Column of Desktops"
-msgstr ""
+msgstr "仮想デスクトップを横に狭める"
 
 #: src/bin/e_int_menus.c:358
 msgid "Remove Row of Desktops"
-msgstr ""
+msgstr "仮想デスクトップを縦に狭める"
 
 #: src/bin/e_int_menus.c:111
 msgid "Restart Enlightement"
-msgstr "エンラーイテノメント再始動"
+msgstr "Enlightenment 再始動"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
@@ -656,7 +664,7 @@ msgstr ""
 
 #: src/bin/e_border.c:3226
 msgid "Shaded"
-msgstr ""
+msgstr "シェード"
 
 #: src/modules/dropshadow/e_mod_main.c:266
 msgid "Sharp"
@@ -664,15 +672,15 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:808
 msgid "Size"
-msgstr ""
+msgstr "サイズ"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr ""
+msgstr "遅い(30秒毎)"
 
 #: src/modules/ibar/e_mod_main.c:747
 msgid "Small"
-msgstr ""
+msgstr "小さい"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
@@ -680,11 +688,11 @@ msgstr ""
 
 #: src/bin/e_border.c:3240
 msgid "Sticky"
-msgstr ""
+msgstr "Stick"
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
-msgstr ""
+msgstr "温度計"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
@@ -756,7 +764,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:733
 msgid "Tiny"
-msgstr ""
+msgstr "とっても小さい"
 
 #: src/modules/dropshadow/e_mod_main.c:353
 msgid "Very Close"
@@ -776,7 +784,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:768
 msgid "Very Large"
-msgstr ""
+msgstr "とても大きい"
 
 #: src/modules/dropshadow/e_mod_main.c:314
 msgid "Very Light"
@@ -792,7 +800,7 @@ msgstr ""
 
 #: src/modules/ibar/e_mod_main.c:740
 msgid "Very Small"
-msgstr ""
+msgstr "とても小さい"
 
 #: src/bin/e_main.c:320
 msgid "Welcome to Enlightenment 0.17"
@@ -800,7 +808,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:85
 msgid "Windows"
-msgstr ""
+msgstr "ウインドウ"
 
 #: src/bin/e_init.c:34
 #, c-format

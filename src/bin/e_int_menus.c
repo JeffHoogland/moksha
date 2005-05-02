@@ -610,8 +610,8 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		       char buf[256];
 		       
 		       et = l->data;
-		       if(!strcmp(et->category,"theme"))
-			 deftheme = strdup(et->file);
+		       if (!strcmp(et->category, "theme"))
+			 deftheme = et->file;
 		    }		  		  
 		  
 		  while ((theme = ecore_list_next(themes)))
@@ -653,17 +653,25 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    char *theme;;
    E_Config_Theme *et;
    Evas_List *l;
-      
+
+   for (l = e_config->themes; l; l = l->next)
+     {
+	et = l->data;
+	if (!strcmp(et->category, "theme"))
+	  {
+	     e_config->themes = evas_list_remove_list(e_config->themes, l);
+	     IF_FREE(et->category);
+	     IF_FREE(et->file);
+	     IF_FREE(et);
+	     break;
+	  }
+     }
+   
    et = E_NEW(E_Config_Theme, 1);
    et->category = strdup("theme");
-   
-   theme = E_NEW(char, strlen(mi->label) + 5);
-   snprintf(theme, strlen(mi->label) + 5, "%s.edj", mi->label);
-   
-   et->file = strdup(theme);
-   /* Do we want to keep one theme for now? */
-   l = evas_list_last(e_config->themes);
-   e_config->themes = evas_list_remove_list(e_config->themes, l);
+   et->file = E_NEW(char, strlen(mi->label) + 4 + 1);
+   strcpy(et->file, mi->label);
+   strcat(et->file, ".edj");
    e_config->themes = evas_list_append(e_config->themes, et);
    
    e_config_save_queue();
