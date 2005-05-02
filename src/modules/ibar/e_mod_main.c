@@ -1211,6 +1211,7 @@ _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if (!drag)
 	  e_app_exec(ic->app);
 	drag = 0;
+	drag_start = 0;
 #endif
      }
 }
