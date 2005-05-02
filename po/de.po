@@ -861,6 +861,10 @@ msgstr "Temperaturanzeige"
 msgid "Test!!!"
 msgstr ""
 
+#: src/bin/e_int_menus.c:108
+msgid "Themes"
+msgstr "Themes"
+
 #: src/bin/e_module.c:98
 #, c-format
 msgid ""
@@ -905,7 +909,7 @@ msgstr ""
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
 "\n"
 "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 "\n"
