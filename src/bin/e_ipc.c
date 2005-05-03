@@ -93,6 +93,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		  e_module_new(name);
 	       }
 	     free(name);
+             e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_MODULE_UNLOAD:
@@ -110,6 +111,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		  e_object_del(E_OBJECT(m));
 	       }
 	     free(name);
+             e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_MODULE_ENABLE:
@@ -125,6 +127,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		    e_module_enable(m);
 	       }
 	     free(name);
+             e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_MODULE_DISABLE:
@@ -140,6 +143,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 		    e_module_disable(m);
 	       }
 	     free(name);
+             e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_MODULE_LIST:
@@ -246,11 +250,13 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       case E_IPC_OP_FONT_APPLY:
 	  {
 	     e_font_apply();
+             e_config_save_queue();
 	  }
  	break;
       case E_IPC_OP_FONT_FALLBACK_CLEAR:
 	  {
 	     e_font_fallback_clear();
+             e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_FONT_FALLBACK_APPEND:

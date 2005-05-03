@@ -55,49 +55,39 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* if module can't load (error) u cant unload... save module list if any module doesnt load proprly so it wont be there next time.
 * dropshadow screws up when shadow becomes too thin (and transitions to different mode) and back.
 * mplayer fullscreen screws up (reparenting issues)
 * check window max size. if < size of zone (or maximisation area) disallow maximising and tell border edje object (via signals) to somehow disable the maximise buttons :) (and remove from the menu)
 * drag and drop subsystem (just handling dragging with some icon being dragged around and then a drop somewhere)
 * drag window icon (top-left) uses drag and drop to be able to drop on pager module and maybe ibar (to add the app to it?)
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the right of zone 2
-* bug: delete icon from bar .order and right lcikc on favorites menu - eapp data has vanished/gone corrupt. i suspect it is deleting the app object but not respecting refcount (ie it's in multiple dirs)
 * gadman gadget menu needs icons :)
-* module api needs to change entry calls, move label and icon to data file, not api
-* gadman edit mode for simgple gadgets with a key combo (eg alt+click on module)
+* module api needs to move label and icon to data file, not api
+* gadman edit mode for simple gadgets activate with a key combo (eg alt+click on module)
 * edit mode keybindings :)
 * "start button" module to pop up the e menu (left mouse right now)
-* edge flip for vd's
 * click to focus
-* gettext support/wrapper
-* language selector wrapper
 * make e17 re-locatable (ues environment var, or find out by hunting path argv[0] if its not a full path or munge the full path to the exe in argv[0])
 * java apps seem to have a hard time if we dont pretend to be kwin (see e_hints.c) - get this stuff upstream to sun and get things fixed in java.
-* dropshadow is not optimal and has extreme edge-case bugs
 * gadget containers (shelves)
 * track mouse location on a border/desktop level
 * add key input focus control for desktop modules
 * finish off icccm support
 * optimize clock theme (speed/cpu) (rotation in edje???)
-* add general actions to be hooked to button/key bindings
 * add "icon box"
 * add netwm support
 * different cursors for different parts of the screen
 * alt+tab status list of windows
 * add a "taskbar" module
-* add cpu module
-* add cpu speedstep module
+* add cpu load module
 * make root menus configurable (what mouse/key brings up what)
 * add a way to access all apps
-* list window properties then only fetch the ones that exist on window map
+* optimise client manage: list window properties then only fetch the ones that exist on window map
 * non opaque move/resize
-* support shaped border themes & menus
-* support shaped clients borders etc.
 * ibar need to support label pop-ups
-* ibar shoudl support subdirs with pop-up icons...
+* ibar should support subdirs with pop-up icons...
 * support dnd for ibar etc.
-* borders need to be able to change border on the fly
+* borders need to be able to change border theme on the fly
 * add window glueing
 * add window tabs (multiple clients in 1 border)
 * add setup/install wizard to seed eapp files etc. etc.
@@ -123,18 +113,18 @@ These are in no particular order:
 * add really nice "about" box with theme, authors credits list etc etc.
 * init splash needs te be able to be signalled "end of init" and it can respond with a "splash end" signal
 * "immortal" windows (e will not allow that window to be closed or will refuse to exit as long as the immortal flags is set until it is unset to stop users from doing silly things like logging out while important stuff is happening in that window -a menu option for this woudl be nice)
-* ibar lamp needs shrot timer on mouse out for hide before hiding (and del the time on mouse in)
+* ibar lamp needs short timer on mouse out for hide before hiding (and del the time on mouse in)
 * need to be able to remember client positons/etc.
-* key binding support in general
 * file icons on the desktop (people ask for it) - xdnd for these
 * gui config tools for bg's, keybndingins, etc. etc. etc.
 * go through e16 features we dont have and implement the most useful ones (or re-design and implement)
 * libehack from old e17 wrapper for executing apps
 * use libehack stuff to track launches of apps etc.
-* make it possible to disdable border buttons/actions (tell theme what is disabled)
+* make it possible to disable border buttons/actions (tell theme what is disabled)
 * make status modules (like cpu meter per window) use ehack to get pid to monitor it's cpu load
 * modules need config executables with proper widgets (sliders, check boxes, radio etc. not massive menus)
 * module control panel app
+* remove module config menus (make them part of the module control panel and as separate executables)
 * ipc needs to be massively useful and give all sorts of info and control
 * tip/hint/suggestion dialog app (textblock etc.)
 * segv/restart handler like e16.

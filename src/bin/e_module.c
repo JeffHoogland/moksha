@@ -37,7 +37,7 @@ static E_Module_Api _e_module_api =
 int
 e_module_init(void)
 {
-   Evas_List *l;
+   Evas_List *pl = NULL, *l;
    
    _e_path_modules = e_path_new();
    if (!_e_path_modules) return 0;
@@ -45,14 +45,23 @@ e_module_init(void)
    e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
    e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules_extra");
    
-   for (l = e_config->modules; l; l = l->next)
+   for (l = e_config->modules; l;)
      {
 	E_Config_Module *em;
 	E_Module *m;
 	
 	em = l->data;
+	pl = l;
+	l = l->next;
 	m = e_module_new(em->name);
 	if ((em->enabled) && (m)) e_module_enable(m);
+	else
+	  {
+	     IF_FREE(em->name);
+	     IF_FREE(em);
+	     e_config->modules = evas_list_remove_list(e_config->modules, pl);
+	     e_config_save_queue();
+	  }
      }
    
    return 1;
