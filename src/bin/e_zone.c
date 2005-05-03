@@ -513,9 +513,9 @@ e_zone_desk_flip_to(E_Zone *zone, int x, int y)
    E_Desk *desk;
    
    if (x < 0) x = 0;
-   else if (x >= zone->desk_x_count) x = zone->desk_x_count  - 1;
+   else if (x >= zone->desk_x_count) x = zone->desk_x_count - 1;
    if (y < 0) y = 0;
-   else if (y >= zone->desk_y_count) y = zone->desk_y_count  - 1;
+   else if (y >= zone->desk_y_count) y = zone->desk_y_count - 1;
    desk = e_desk_at_xy_get(zone, x, y);
    if (desk)
      {

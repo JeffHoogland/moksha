@@ -59,6 +59,9 @@ struct _IBar_Bar
    Ecore_Animator *animator;
    
    Evas_Coord      x, y, w, h;
+   struct {
+	Evas_Coord l, r, t, b;
+   } inset;
    
    E_Gadman_Client *gmc;
 

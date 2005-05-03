@@ -577,7 +577,6 @@ e_border_raise(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
-   printf("raise layer: %d\n", bd->layer);
    e_container_window_raise(bd->zone->container, bd->win, bd->layer);
      {
 	E_Event_Border_Raise *ev;
@@ -1368,6 +1367,8 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
+   printf("Delete border\n");
+
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
    /* FIXME Don't ref this during shutdown. And the event is pointless
@@ -1569,7 +1570,7 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  {
 	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
 	       {
-		  printf("config raise\n");
+		  printf("config raise %d\n", bd->layer);
 		  e_border_raise(bd);
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)

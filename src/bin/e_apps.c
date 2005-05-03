@@ -274,6 +274,34 @@ e_app_running_get(E_App *a)
 }
 
 void
+e_app_prepend_relative(E_App *add, E_App *before)
+{
+   if (!before->parent) return;
+
+   before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
+							add, before);
+
+   _e_app_change(add, E_APP_ADD);
+   _e_app_change(before->parent, E_APP_ORDER);
+}
+
+void
+e_app_append(E_App *add, E_App *parent)
+{
+   parent->subapps = evas_list_append(parent->subapps, add);
+
+   _e_app_change(add, E_APP_ADD);
+}
+
+void
+e_app_remove(E_App *remove, E_App *parent)
+{
+   parent->subapps = evas_list_remove(parent->subapps, remove);
+
+   _e_app_change(remove, E_APP_DEL);
+}
+
+void
 e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data)
 {
    E_App_Callback *cb;
