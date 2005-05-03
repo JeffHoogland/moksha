@@ -209,7 +209,7 @@ e_intl_language_simple_get(const char *lang)
      return "zh_TW";
    if (ISL("hu") || ISL("hu_HU") || ISL("HU"))
      return "hu";
-   if (ISL("sl") || ISL("sl_SL") || ISL("SL"))
+   if (ISL("sl") || ISL("sl_SI") || ISL("SI"))
      return "sl";
    if (ISL("it") || ISL("it_IT") || ISL("IT"))
      return "it";
