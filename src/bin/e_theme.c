@@ -23,10 +23,22 @@ static Evas_Hash *group_cache = NULL;
 int
 e_theme_init(void)
 {
+   Evas_List *l;
+   
    /* this is a fallback that is ALWAYS there - if all fails things will */
    /* always fall back to the default theme. the rest after this are config */
    /* values users can set */
    e_theme_file_set("base", "default.edj");
+   
+   for (l = e_config->themes; l; l = l->next)
+     {
+	E_Config_Theme *et;
+	char buf[256];
+	
+	et = l->data;
+	snprintf(buf, sizeof(buf), "base/%s", et->category);
+	e_theme_file_set(buf, et->file);
+     }
 /*
  * other possible categories...
  *  e_theme_file_set("base/theme/borders", "default.edj");

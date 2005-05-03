@@ -31,10 +31,12 @@
 
 #define E_CONFIG_LIMIT(v, min, max) {if (v > max) v = max; else if (v < min) v = min;}
 
-typedef struct _E_Config        E_Config;
-typedef struct _E_Config_Module E_Config_Module;
-typedef struct _E_Config_Theme  E_Config_Theme;
-typedef Eet_Data_Descriptor     E_Config_DD;
+typedef struct _E_Config                E_Config;
+typedef struct _E_Config_Module         E_Config_Module;
+typedef struct _E_Config_Theme          E_Config_Theme;
+typedef struct _E_Config_Binding_Mouse  E_Config_Binding_Mouse;
+typedef struct _E_Config_Binding_Key    E_Config_Binding_Key;
+typedef Eet_Data_Descriptor             E_Config_DD;
 
 #else
 #ifndef E_CONFIG_H
@@ -60,6 +62,8 @@ struct _E_Config
    Evas_List  *font_fallbacks;
    Evas_List  *font_defaults;
    Evas_List  *themes;
+   Evas_List  *mouse_bindings;
+   Evas_List  *key_bindings;
 };
 
 struct _E_Config_Module
@@ -72,6 +76,26 @@ struct _E_Config_Theme
 {
    char          *category;
    char          *file;
+};
+
+struct _E_Config_Binding_Mouse
+{
+   int            context;
+   int            modifiers;
+   char          *action;
+   char          *params;
+   unsigned char  button;
+   unsigned char  any_mod;
+};
+
+struct _E_Config_Binding_Key
+{
+   int            context;
+   int            modifiers;
+   char          *key;
+   char          *action;
+   char          *params;
+   unsigned char  any_mod;
 };
 
 EAPI int e_config_init(void);

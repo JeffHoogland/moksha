@@ -52,138 +52,25 @@ static Evas_List *signal_bindings = NULL;
 int
 e_bindings_init(void)
 {
-   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
-			1, E_BINDING_MODIFIER_ALT, 0,
-			"window_move", "");
-   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
-			2, E_BINDING_MODIFIER_ALT, 0,
-			"window_resize", "");
-   e_bindings_mouse_add(E_BINDING_CONTEXT_BORDER,
-			3, E_BINDING_MODIFIER_ALT, 0,
-			"window_menu", "");
+   Evas_List *l;
    
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Left", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_flip_by", "-1 0");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Right", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_flip_by", "1 0");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Up", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_flip_by", "0 -1");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Down", E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_flip_by", "0 1");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Up", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_raise", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Down", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_lower", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "x", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_close", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "k", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_kill", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "w", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_menu", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "s", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_sticky_toggle", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "i", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_iconic_toggle", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "f", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_maximized_toggle", "");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "r", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "window_shaded_toggle", "");
-   
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Left", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "-1");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Right", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_by", "1");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F1", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "0");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F2", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "1");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F3", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "2");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F4", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "3");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F5", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "4");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F6", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "5");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F7", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "6");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F8", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "7");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F9", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "8");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F10", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "9");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F11", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "10");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "F12", E_BINDING_MODIFIER_ALT, 0,
-		      "desk_linear_flip_to", "11");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "m", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "menu_show", "main");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "a", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "menu_show", "favorites");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Menu", 0, 0,
-		      "menu_show", "main");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Menu", E_BINDING_MODIFIER_CTRL, 0,
-		      "menu_show", "clients");
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Menu", E_BINDING_MODIFIER_ALT, 0,
-		      "menu_show", "favorites");
+   for (l = e_config->mouse_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Mouse *eb;
+	
+	eb = l->data;
+	e_bindings_mouse_add(eb->context, eb->button, eb->modifiers,
+			     eb->any_mod, eb->action, eb->params);
+     }
 
-   e_bindings_key_add(E_BINDING_CONTEXT_ANY,
-		      "Insert", E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-		      "exec", "Eterm");
-   
-   /* shoudl do these - can't yet due to other things missing... */
-   
-   /* need a yes/no dialog for these - to stop accidental logouts. for this
-    * i'd make a special case that can ask u to log out, restart or shut down
-    * or even reboot (if you have permissions to do so)
-    */
-   /* CTRL+ALT Delete - logout */
-   /* CTRL+ALT End    - restart */
-   
-   /* need a way to display all focused windows nicely - subsystem for
-    * this that also grabs the modifier on activate (if there are any) so
-    * on release of modifier(s) OR on any new action this list aborts display
-    */
-   /* ALT Tab         - next window focus */
-   /* ALT_SHIFT Tab   - prev window focus */
-   
-   /* need to support fullscreen anyway for this - ie netwm and the border
-    * system need to handle this as well as possibly using xrandr/xvidmode
-    */
-   /* ALT Return      - fullscreen window */
+   for (l = e_config->key_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Key *eb;
+	
+	eb = l->data;
+	e_bindings_key_add(eb->context, eb->key, eb->modifiers,
+			   eb->any_mod, eb->action, eb->params);
+     }
    return 1;
 }
 
