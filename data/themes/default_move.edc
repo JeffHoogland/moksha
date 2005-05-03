@@ -86,7 +86,7 @@ group {
             color: 0 0 0 255;
 	    color3: 255 255 255 128;
 	    text {
-	       text: "WIDTHxHEIGHT";
+	       text: "X Y";
 	       font: "Edje Vera";
 	       size: 10;
 	       align: 0.5 0.5;
