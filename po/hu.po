@@ -8,8 +8,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-26 09:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Balázs Tóth <tbalazs@uhulinux.hu\n"
+"Language-Team: HU <HU@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -349,7 +349,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült az Evas inicializálása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:229
 msgid ""
@@ -357,7 +357,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült inicializálni a File rendszert.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:213
 msgid ""
@@ -365,7 +365,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült az IPC rendszer inicializálása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:205
 msgid ""
@@ -373,7 +373,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült a kapcsolat rendszer inicializálása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:171
 msgid ""
@@ -381,7 +381,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült a HUP kezelő inicializálása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:165
 msgid ""
@@ -389,7 +389,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült a kilépési szgnál kezelő inicializáslása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:278
 msgid ""
@@ -397,41 +397,43 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Nem sikerült a képernyő beállítása.\n"
-"Talán nincs elág memória?"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:294
 msgid "Enlightenment cannot set up its app system."
-msgstr ""
+msgstr "Nem sikerült az 'app' alrendszer beállítása."
 
 #: src/bin/e_main.c:313
 msgid "Enlightenment cannot set up its bindings system."
-msgstr ""
+msgstr "Nem sikerült a 'bindings' alrendszer beállítása."
 
 #: src/bin/e_main.c:257
 msgid "Enlightenment cannot set up its config system."
-msgstr ""
+msgstr """Nem sikerült a 'config' alrendszer beállítása."
 
 #: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its dnd system."
-msgstr ""
+msgstr """Nem sikerült a 'dnd' alrendszer beállítása."
 
 #: src/bin/e_main.c:268
 msgid "Enlightenment cannot set up its font system."
-msgstr ""
+msgstr """Nem sikerült a 'font' alrendszer beállítása."
 
 #: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its module system."
-msgstr ""
+msgstr """Nem sikerült a 'module' alrendszer beállítása."
 
 #: src/bin/e_main.c:301
 msgid "Enlightenment cannot set up its theme system."
-msgstr ""
+msgstr """Nem sikerült a 'theme' alrendszer beállítása."
 
 #: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
+"Nem sikerült az elérési útvonalak beállítása.\n"
+"Talán nincs elég memória?"
 
 #: src/bin/e_main.c:320 src/bin/e_main.c:359
 msgid ""
@@ -441,18 +443,26 @@ msgid ""
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
 msgstr ""
+"Nem sikerült az IPC socket beállítása.\n"
+"Ez előfordulhat, ha már fut egy példány.\n"
+"Ha semmi más nem segít, akkor törölje a ~/.ecore/enlightenment-*\n"
+"könyvtárat és indítsa el újra az Enlightenmentet."
 
 #: src/bin/e_main.c:189
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
+"Nem sikerült a xinerama beállítása.\n"
+"Ennek nem lett volna szabad megtörténnie."
 
 #: src/bin/e_main.c:286
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
+"Nem sikerült az ablakkezelő beállítása.\n"
+"Talán már fut egy másik?\n"
 
 #: src/bin/e_error.c:350
 msgid "Enlightenment: Error!"
@@ -470,6 +480,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az Telepmérő modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -479,6 +492,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az Óra modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/dropshadow/e_mod_main.c:92
 #, c-format
@@ -488,6 +504,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az Árnyék modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -497,6 +516,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az IBar modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/pager/e_mod_main.c:82
 #, c-format
@@ -506,6 +528,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült a Pager modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -515,6 +540,9 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az Hőmérséklet modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/cpufreq/e_mod_main.c:58
 #, c-format
@@ -524,6 +552,9 @@ msgid ""
 "The module API advertized by Enlightenment is %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az ProcFrek modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -533,10 +564,13 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Nem sikerült az test modul indítása\n"
+"Legalább %i verziójú modul API szükséges.\n"
+"A rendelkezésre álló modul API verziója: %i."
 
 #: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
 msgid "Error loading Module"
-msgstr ""
+msgstr "Hiba a modul betöltése közben"
 
 #: src/bin/e_border.c:3653
 msgid ""
@@ -545,6 +579,10 @@ msgid ""
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
+"Nem sikerült az ikon szerkesztőt elindítani\n"
+"\n"
+"Telepítse az e_util_eapp_edit programot,\n"
+"vagy tegye elérhetővé a PATH-ban\n"
 
 #: src/bin/e_int_menus.c:123
 msgid "Exit Enlightenment"
@@ -685,15 +723,15 @@ msgstr "Modul API hiba"
 
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
-msgstr ""
+msgstr "Modul Config Menü Elem 1"
 
 #: src/modules/test/e_mod_main.c:26
 msgid "Module Config Menu Item 2"
-msgstr ""
+msgstr "Modul Config Menü Elem 2"
 
 #: src/modules/test/e_mod_main.c:28
 msgid "Module Config Menu Item 3"
-msgstr ""
+msgstr "Modul Config Menü Elem 3"
 
 #: src/bin/e_int_menus.c:69
 msgid "Modules"
@@ -831,6 +869,8 @@ msgid ""
 "No module named %s could be found in the\n"
 "module search directories\n"
 msgstr ""
+"Nem sikerült a(z) %s modult betölteni\n"
+"A(z) %s nevű modul nem található modul könyvtárban\n"
 
 #: src/bin/e_module.c:109 src/bin/e_module.c:131
 #, c-format
@@ -841,18 +881,26 @@ msgid ""
 "The error reported was:\n"
 "%s"
 msgstr ""
+"Hiba történt a(z) %s modul betöltése közben\n"
+"A modul elérési útvonala:\n"
+"%s\n"
+"A hiba leírása:\n"
+"%s"
 
 #: src/modules/cpufreq/e_mod_main.c:271
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "governor via the module's setfreq utility."
 msgstr ""
+"Nem sikerült a processzor sebességét felügyelő modul\n"
+"beállítása."
 
 #: src/modules/cpufreq/e_mod_main.c:288
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "setting via the module's setfreq utility."
 msgstr ""
+"Nem sikerült a processzor sebességét beállítani."
 
 #: src/bin/e_int_menus.c:218
 #, c-format
@@ -864,6 +912,12 @@ msgid ""
 "\n"
 "Please think of the aardvarks. They need some love too."
 msgstr ""
+"Ez az Enlightenment %s.\n"
+"Copyright 1999-2004, Enlightenment Dev Team.\n"
+"\n"
+"Reméljük legalább annyira élvezni fogja a használatát, mint amennyire mi élveztük az elkészítését.\n"
+"\n"
+"Kérjük gondoljon a földimalacokra. Nekik is szükségük van szeretetre."
 
 #: src/bin/e_main.c:390
 msgid "This is development code, so be warned."
@@ -885,6 +939,8 @@ msgid ""
 "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
 "so expect it to break often and change as it improves."
 msgstr ""
+"Ez az IBar program indító modul.\n"
+"Ez a modul aktív fejlesztés alatt áll, így gyakran változhat."
 
 #: src/modules/dropshadow/e_mod_main.c:149
 msgid ""
@@ -892,6 +948,8 @@ msgid ""
 "on the desktop background - without special X-Server extensions\n"
 "or hardware acceleration."
 msgstr ""
+"Ez az Árnyék modul, mely lehetővé teszi, hogy az ablakok árnyékot\n"
+"vethessenek a háttérre - speciális X szerver bővítmény nélkül."
 
 #: src/modules/test/e_mod_main.c:67
 msgid ""
@@ -899,6 +957,7 @@ msgid ""
 "interface of the Enlightenment 0.17.0 module system. Please\n"
 "Ignore this module unless you are working on the module system."
 msgstr ""
+"Teszt modul a modul alrendszer fejlesztésének megkönnyítésére."
 
 #: src/modules/ibar/e_mod_main.c:725
 msgid "Tiny"
@@ -906,7 +965,7 @@ msgstr "Apró"
 
 #: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
-msgstr "nagyon sötét"
+msgstr "Nagyon sötét"
 
 #: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Far"
@@ -951,7 +1010,7 @@ msgstr "Ablakok"
 #: src/bin/e_init.c:34
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr ""
+msgstr "Az X szerver szerint nincs 'root window' és %i képernyő!\n"
 
 #: src/modules/battery/e_mod_main.c:687
 msgid ""
