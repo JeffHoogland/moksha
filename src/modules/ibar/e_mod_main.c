@@ -1235,6 +1235,7 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
    ev = event_info;
    ic = data;
 
+#if 0
    if (drag_start)
      {
 	double dist;
@@ -1249,6 +1250,7 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     e_app_remove(ic->app);
 	  }
      }
+#endif
 }
 
 static void
