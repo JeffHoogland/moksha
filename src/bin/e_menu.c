@@ -2031,17 +2031,22 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
+   
    t = ecore_time_get();
    if ((_e_menu_activate_time != 0.0) && 
        ((t - _e_menu_activate_time) < e_config->menus_click_drag_timeout))
      return 1;
+
    ret = _e_menu_active_call();
    if (ret == 1)
      {
-	if (_e_menu_activate_time != 0.0)
+/* allow mouse to pop down menu if clicked elsewhere */	
+/*	if (_e_menu_activate_time != 0.0) */
 	  _e_menu_deactivate_all();
      }
    else if (ret == -1)
+     _e_menu_deactivate_all();
+   else
      _e_menu_deactivate_all();
    return 1;
 }
