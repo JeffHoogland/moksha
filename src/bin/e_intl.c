@@ -38,21 +38,21 @@ e_intl_init(void)
     *       vs. traditional chinese) we may refer to them as separate languages
     *       entirely.
     */
-   ADD_LANG("C");
-   ADD_LANG("en");
-   ADD_LANG("ja");
-   ADD_LANG("fr");
-   ADD_LANG("es");
-   ADD_LANG("pt");
-   ADD_LANG("fi");
-   ADD_LANG("ru");
-   ADD_LANG("bg");
-   ADD_LANG("de");
-   ADD_LANG("pl");
-   ADD_LANG("zh_CN");
-   ADD_LANG("hu");
-   ADD_LANG("sl");
-   ADD_LANG("it");
+   ADD_LANG("");
+   ADD_LANG("en_US.UTF-8");
+   ADD_LANG("ja_JP.UTF-8");
+   ADD_LANG("fr_FR.UTF-8");
+   ADD_LANG("es_AR.UTF-8");
+   ADD_LANG("pt_BR.UTF-8");
+   ADD_LANG("fi_FI.UTF-8");
+   ADD_LANG("ru_RU.UTF-8");
+   ADD_LANG("bg_BG.UTF-8");
+   ADD_LANG("de_DE.UTF-8");
+   ADD_LANG("pl_PL.UTF-8");
+   ADD_LANG("zh_CN.UTF-8");
+   ADD_LANG("hu_HU.UTF-8");
+   ADD_LANG("sl_SI.UTF-8");
+   ADD_LANG("it_IT.UTF-8");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));
@@ -82,7 +82,15 @@ e_intl_language_set(const char *lang)
      {
 	_e_intl_language = NULL;
      }
-   setlocale(LC_ALL, "");
+   if (setlocale(LC_ALL, "") == NULL)
+     {
+	perror("setlocale() :");
+	if (_e_intl_language)
+	  printf("An error occured when trying to use the locale: %s\nDetails:\n",
+		 _e_intl_language);
+	else
+	  printf("An error occured trying to use the default locale\n");
+     }
    bindtextdomain(PACKAGE, LOCALE_DIR);
    textdomain(PACKAGE);
 //   XSetLocaleModifiers("");

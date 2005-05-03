@@ -27,6 +27,8 @@ static int _e_ipc_cb_server_data(void *data, int type, void *event);
 
 static void _e_help(void);
 
+static Evas_List *_e_ipc_str_list_dec(char *data, int bytes);
+    
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_module_list_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_available_list_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_dec);
@@ -433,7 +435,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
              E_Font_Default *efd;
 	     
              defaults = _e_ipc_font_default_list_dec(e->data, e->size);
-             while(defaults)
+             while (defaults)
                {
 		  efd = defaults->data;
 		  printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
@@ -448,10 +450,27 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_LANG_LIST_REPLY:
         if (e->data)
           {
+	     Evas_List *langs;
+	     
+	     langs = _e_ipc_str_list_dec(e->data, e->size);
+	     if (langs)
+	       {
+		  Evas_List *l;
+		  
+		  for (l = langs; l; l = l->next)
+		    printf("REPLY: LANG=\"%s\"\n", l->data);
+		  evas_list_free(langs);
+	       }
           }
         else
           printf("REPLY: AVAILABLE NONE\n"); 
         break;   
+      case E_IPC_OP_LANG_GET_REPLY:
+	if (e->data)
+	  {
+	     printf("REPLY: %s\n", e->data);
+	  }
+	break;
       default:
 	break;
      }
@@ -504,6 +523,23 @@ _e_help(void)
      }
 }
 
+/* generic encoding functions */
+static Evas_List *
+_e_ipc_str_list_dec(char *data, int bytes)
+{
+   Evas_List *strs = NULL;
+   char *p;
+   
+   /* malformed list? */
+   if (data[bytes - 1] != 0) return NULL;
+   p = data;
+   while (p < (data + bytes))
+     {
+	strs = evas_list_append(strs, p);
+	p += strlen(p) + 1;
+     }
+   return strs;
+}
 
 /* list/struct encoding functions */
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_module_list_dec)

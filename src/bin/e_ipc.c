@@ -15,7 +15,6 @@ ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc);
-//ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_string_list_enc);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -416,6 +415,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 				   data, bytes);
 	     free(data);
 	  }
+	break;
       case E_IPC_OP_LANG_SET:
 	  {
 	     char *lang;
@@ -426,6 +426,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     e_intl_language_set(e_config->language);
              e_config_save_queue();
 	  }
+	break;
       case E_IPC_OP_LANG_GET:
 	  {
 	     char *lang;
@@ -485,6 +486,10 @@ _e_ipc_path_str_get(char **paths, int *bytes)
    return data;
 }
 
+/**
+ * Encode a list of strings into a flattened data block that looks like
+ * <str>0<str>0... (ie string chars - nul byte in between until the end)
+ */
 static char *
 _e_ipc_str_list_get(Evas_List *strs, int *bytes)
 {
@@ -620,16 +625,3 @@ ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc)
    ECORE_IPC_PUT32(size);
    ECORE_IPC_ENC_STRUCT_FOOT();
 }
-
-/*
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_string_list_enc)
-{
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_String);
-	ECORE_IPC_CNTS(str);
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1;
-    	ECORE_IPC_SLEN(l1, str);
-    	ECORE_IPC_PUTS(str, l1);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-*/

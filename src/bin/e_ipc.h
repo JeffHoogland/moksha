@@ -3,7 +3,8 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef enum _E_Ipc_Domain {
+typedef enum _E_Ipc_Domain
+{
    E_IPC_DOMAIN_NONE,
    E_IPC_DOMAIN_SETUP,
    E_IPC_DOMAIN_REQUEST,
@@ -12,7 +13,8 @@ typedef enum _E_Ipc_Domain {
    E_IPC_DOMAIN_LAST
 } E_Ipc_Domain;
 
-typedef enum _E_Ipc_Op {
+typedef enum _E_Ipc_Op
+{
    E_IPC_OP_NONE,
    E_IPC_OP_MODULE_LOAD,
    E_IPC_OP_MODULE_UNLOAD,

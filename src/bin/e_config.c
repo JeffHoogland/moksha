@@ -199,7 +199,10 @@ e_config_init(void)
    /* apply config */
    
    if ((e_config->language) && (strlen(e_config->language) > 0))
-     e_intl_language_set(e_config->language);
+     {
+	printf("SET LANG %s\n", e_config->language);
+	e_intl_language_set(e_config->language);
+     }
    
      {
 	Evas_List *l;
