@@ -40,6 +40,7 @@ static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, 
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
 static E_App    *_e_app_copy               (E_App *app);
+static void      _e_app_save_order         (E_App *app);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -281,6 +282,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
    before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
 							add, before);
 
+   _e_app_save_order(before->parent);
    _e_app_change(add, E_APP_ADD);
    _e_app_change(before->parent, E_APP_ORDER);
 }
@@ -290,14 +292,18 @@ e_app_append(E_App *add, E_App *parent)
 {
    parent->subapps = evas_list_append(parent->subapps, add);
 
+   _e_app_save_order(parent);
    _e_app_change(add, E_APP_ADD);
 }
 
 void
-e_app_remove(E_App *remove, E_App *parent)
+e_app_remove(E_App *remove)
 {
-   parent->subapps = evas_list_remove(parent->subapps, remove);
+   if (!remove->parent) return;
 
+   remove->parent->subapps = evas_list_remove(remove->parent->subapps, remove);
+
+   _e_app_save_order(remove->parent);
    _e_app_change(remove, E_APP_DEL);
 }
 
@@ -1025,4 +1031,27 @@ _e_app_copy(E_App *app)
    a2->scanned = app->scanned;
 
    return a2;
+}
+
+static void
+_e_app_save_order(E_App *app)
+{
+   FILE *f;
+   char buf[PATH_MAX];
+   Evas_List *l;
+   
+   if (!app) return;
+
+   snprintf(buf, sizeof(buf), "%s/.order", app->path);
+   f = fopen(buf, "wb");
+   if (!f) return;
+
+   for (l = app->subapps; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	fprintf(f, "%s\n", ecore_file_get_file(a->path));
+     }
+   fclose(f);
 }

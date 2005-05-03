@@ -67,7 +67,7 @@ EAPI int    e_app_starting_get(E_App *a);
 EAPI int    e_app_running_get(E_App *a);
 EAPI void   e_app_prepend_relative(E_App *add, E_App *before);
 EAPI void   e_app_append(E_App *add, E_App *parent);
-EAPI void   e_app_remove(E_App *remove, E_App *parent);
+EAPI void   e_app_remove(E_App *remove);
     
 EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);

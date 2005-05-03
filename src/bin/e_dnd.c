@@ -155,7 +155,9 @@ void
 e_drag_update(int x, int y)
 {
    Evas_List *l;
-   E_Move_Event *ev;
+   E_Enter_Event *enter_ev;
+   E_Move_Event *move_ev;
+   E_Leave_Event *leave_ev;
    int w, h;
 
    if (!drag_ee) return;
@@ -171,10 +173,17 @@ e_drag_update(int x, int y)
    evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
    ecore_evas_move(drag_ee, x - (w / 2), y - (h / 2));
 
-   ev = E_NEW(E_Move_Event, 1);
-   if (!ev) goto end;
-   ev->x = x;
-   ev->y = y;
+   enter_ev = E_NEW(E_Enter_Event, 1);
+   enter_ev->x = x;
+   enter_ev->y = y;
+   
+   move_ev = E_NEW(E_Move_Event, 1);
+   move_ev->x = x;
+   move_ev->y = y;
+
+   leave_ev = E_NEW(E_Leave_Event, 1);
+   leave_ev->x = x;
+   leave_ev->y = y;
 
    for (l = drop_handlers; l; l = l->next)
      {
@@ -185,16 +194,31 @@ e_drag_update(int x, int y)
 	if (!h->active)
 	  continue;
 	
-	if ((h->cb.move)
-	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	  {
-	     h->cb.move(h->data, drag_type, ev);
+	     if (!h->entered)
+	       {
+		  if (h->cb.enter)
+		    h->cb.enter(h->data, drag_type, enter_ev);
+		  h->entered = 1;
+	       }
+	     if (h->cb.move)
+	       h->cb.move(h->data, drag_type, move_ev);
+	  }
+	else
+	  {
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->data, drag_type, leave_ev);
+		  h->entered = 0;
+	       }
 	  }
      }
 
-   free(ev);
-end:
-   return;
+   free(enter_ev);
+   free(move_ev);
+   free(leave_ev);
 }
 
 void
@@ -252,8 +276,10 @@ end:
 
 E_Drop_Handler *
 e_drop_handler_add(void *data,
-		   void (*drop_cb)(void *data, const char *type, void *event),
+		   void (*enter_cb)(void *data, const char *type, void *event),
 		   void (*move_cb)(void *data, const char *type, void *event),
+		   void (*leave_cb)(void *data, const char *type, void *event),
+		   void (*drop_cb)(void *data, const char *type, void *event),
 		   const char *type, int x, int y, int w, int h)
 {
    E_Drop_Handler *handler;
@@ -262,8 +288,10 @@ e_drop_handler_add(void *data,
    if (!handler) return NULL;
 
    handler->data = data;
-   handler->cb.drop = drop_cb;
+   handler->cb.enter = enter_cb;
    handler->cb.move = move_cb;
+   handler->cb.leave = leave_cb;
+   handler->cb.drop = drop_cb;
    handler->type = strdup(type);
    handler->x = x;
    handler->y = y;
