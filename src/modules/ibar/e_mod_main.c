@@ -462,11 +462,6 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    edje_object_part_swallow(ibb->bar_object, "items", o);
    evas_object_show(o);
 
-   o = evas_object_rectangle_add(ibb->evas);
-   ibb->drag_object = o;
-   evas_object_color_set(o, 255, 0, 0, 255);
-   evas_object_resize(o, 32, 32);
-
    if (ibb->ibar->apps)
      {
 	for (l = ibb->ibar->apps->subapps; l; l = l->next)
@@ -545,7 +540,6 @@ _ibar_bar_free(IBar_Bar *ibb)
    evas_object_del(ibb->overlay_object);
    evas_object_del(ibb->box_object);
    evas_object_del(ibb->event_object);
-   evas_object_del(ibb->drag_object);
 
    e_gadman_client_save(ibb->gmc);
    e_object_del(E_OBJECT(ibb->gmc));
@@ -1388,10 +1382,16 @@ static void
 _ibar_bar_cb_enter(void *data, const char *type, void *event)
 {
    E_Enter_Event *ev;
+   Evas_Object *o;
    IBar_Bar *ibb;
 
    ev = event;
    ibb = data;
+
+   o = evas_object_rectangle_add(ibb->evas);
+   ibb->drag_object = o;
+   evas_object_color_set(o, 255, 0, 0, 255);
+   evas_object_resize(o, 32, 32);
 }
 
 static void
@@ -1463,7 +1463,7 @@ _ibar_bar_cb_leave(void *data, const char *type, void *event)
 
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
-   evas_object_hide(ibb->drag_object);
+   evas_object_del(ibb->drag_object);
    e_box_thaw(ibb->box_object);
 
    _ibar_bar_frame_resize(ibb);
@@ -1487,7 +1487,7 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
    /* remove drag marker */
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
-   evas_object_hide(ibb->drag_object);
+   evas_object_del(ibb->drag_object);
    e_box_thaw(ibb->box_object);
 
    _ibar_bar_frame_resize(ibb);
