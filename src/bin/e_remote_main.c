@@ -27,6 +27,8 @@ static int _e_ipc_cb_server_data(void *data, int type, void *event);
 
 static void _e_help(void);
 
+static const char *_e_ipc_context_str(int context);
+static const char *_e_ipc_modifier_str(int mod);
 static Evas_List *_e_ipc_str_list_dec(char *data, int bytes);
     
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_module_list_dec);
@@ -34,6 +36,8 @@ ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_available_list_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_font_default_list_dec);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_font_default_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_key_binding_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -77,7 +81,9 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-shutdown", "Shutdown E17", E_IPC_OP_SHUTDOWN, 0),
    OREQ("-lang-get", "Get the current language", E_IPC_OP_LANG_GET, 1),
    OREQ("-lang-list", "List all available languages", E_IPC_OP_LANG_LIST, 1),
-   OSTR("-lang-set", "Set the current language", E_IPC_OP_LANG_SET, 0)
+   OSTR("-lang-set", "Set the current language", E_IPC_OP_LANG_SET, 0),
+   OREQ("-binding-mouse-list", "List all mouse bindings", E_IPC_OP_BINDING_MOUSE_LIST, 1),
+   OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1)
 };
 
 /* externally accessible functions */
@@ -471,6 +477,56 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     printf("REPLY: %s\n", e->data);
 	  }
 	break;
+      case E_IPC_OP_BINDING_MOUSE_LIST_REPLY:
+        if (e->data)
+          {
+	     Evas_List *bindings;
+	     E_Config_Binding_Mouse *eb;
+	     
+	     bindings = _e_ipc_mouse_binding_dec(e->data, e->size);
+	     while (bindings)
+	       {
+		  eb = bindings->data;
+		  printf("REPLY: BINDING CONTEXT=%s MODIFIERS=%s BUTTON=%i ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n", 
+			 _e_ipc_context_str(eb->context),
+			 _e_ipc_modifier_str(eb->modifiers),
+			 eb->button,
+			 eb->any_mod,
+			 eb->action,
+			 eb->params
+			 );
+                  bindings = evas_list_remove_list(bindings, bindings);
+		  E_FREE(eb);
+	       }
+          }
+        else
+          printf("REPLY: AVAILABLE NONE\n"); 
+        break;   
+      case E_IPC_OP_BINDING_KEY_LIST_REPLY:
+        if (e->data)
+          {
+	     Evas_List *bindings;
+	     E_Config_Binding_Key *eb;
+	     
+	     bindings = _e_ipc_key_binding_dec(e->data, e->size);
+	     while (bindings)
+	       {
+		  eb = bindings->data;
+		  printf("REPLY: BINDING CONTEXT=%s MODIFIERS=%s KEY=\"%s\" ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n", 
+			 _e_ipc_context_str(eb->context),
+			 _e_ipc_modifier_str(eb->modifiers),
+			 eb->key,
+			 eb->any_mod,
+			 eb->action,
+			 eb->params
+			 );
+                  bindings = evas_list_remove_list(bindings, bindings);
+		  E_FREE(eb);
+	       }
+          }
+        else
+          printf("REPLY: AVAILABLE NONE\n"); 
+        break;   
       default:
 	break;
      }
@@ -524,6 +580,46 @@ _e_help(void)
 }
 
 /* generic encoding functions */
+static const char *
+_e_ipc_context_str(int context)
+{
+   if (context == E_BINDING_CONTEXT_NONE) return "NONE";
+   if (context == E_BINDING_CONTEXT_UNKNOWN) return "UNKNOWN";
+   if (context == E_BINDING_CONTEXT_BORDER) return "BORDER";
+   if (context == E_BINDING_CONTEXT_ZONE) return "ZONE";
+   if (context == E_BINDING_CONTEXT_MANAGER) return "MANAGER";
+   if (context == E_BINDING_CONTEXT_ANY) return "ANY";
+   return "";
+}
+
+static char _mod_buf[256];
+static const char *
+_e_ipc_modifier_str(int mod)
+{
+   _mod_buf[0] = 0;
+   if (mod & E_BINDING_MODIFIER_SHIFT)
+     {
+	if (_mod_buf[0] != 0) strcat(_mod_buf, "|");
+	strcat(_mod_buf, "SHIFT");
+     }
+   if (mod & E_BINDING_MODIFIER_CTRL)
+     {
+	if (_mod_buf[0] != 0) strcat(_mod_buf, "|");
+	strcat(_mod_buf, "CTRL");
+     }
+   if (mod & E_BINDING_MODIFIER_ALT)
+     {
+	if (_mod_buf[0] != 0) strcat(_mod_buf, "|");
+	strcat(_mod_buf, "ALT");
+     }
+   if (mod & E_BINDING_MODIFIER_WIN)
+     {
+	if (_mod_buf[0] != 0) strcat(_mod_buf, "|");
+	strcat(_mod_buf, "WIN");
+     }
+   return _mod_buf;
+}
+
 static Evas_List *
 _e_ipc_str_list_dec(char *data, int bytes)
 {
@@ -584,4 +680,28 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_font_default_dec)
    ECORE_IPC_GETS(font);
    ECORE_IPC_GET32(size);
    ECORE_IPC_DEC_STRUCT_FOOT();
+}
+
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_dec)
+{
+   ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Config_Binding_Mouse);
+   ECORE_IPC_GET32(context);
+   ECORE_IPC_GET32(modifiers);
+   ECORE_IPC_GETS(action);
+   ECORE_IPC_GETS(params);
+   ECORE_IPC_GET8(button);
+   ECORE_IPC_GET8(any_mod);
+   ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_key_binding_dec)
+{
+   ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Config_Binding_Key);
+   ECORE_IPC_GET32(context);
+   ECORE_IPC_GET32(modifiers);
+   ECORE_IPC_GETS(key);
+   ECORE_IPC_GETS(action);
+   ECORE_IPC_GETS(params);
+   ECORE_IPC_GET8(any_mod);
+   ECORE_IPC_DEC_EVAS_LIST_FOOT();
 }
