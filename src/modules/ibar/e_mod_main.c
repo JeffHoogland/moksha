@@ -1242,6 +1242,7 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     drag_start = 0;
 	     e_drag_start(ic->ibb->con, "enlightenment/eapp", ic->app, ic->app->path, "icon");
 	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
+	     e_app_remove(ic->app, ic->ibb->ibar->apps);
 	  }
      }
 }
