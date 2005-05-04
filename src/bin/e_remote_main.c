@@ -52,7 +52,7 @@ static int reply_expect = 0;
 
 #define OREQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
 #define OSTR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
-#define OFNC(opt, desc, param, fn, rep) {opt, desc, param, rep, SIMPLE_FUNC, 0, fn}
+#define OFNC(opt, desc, param, fn, rep) {opt, desc, param, rep, FULL_FUNC, 0, fn}
 #define OMUL(opt, desc, ipc, rep, argc) {opt, desc, argc, rep, MULTI_STR_REQ, ipc, NULL}
 
 E_IPC_Opt_Handler handlers[] =
