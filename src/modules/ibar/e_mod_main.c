@@ -74,7 +74,7 @@ static void    _ibar_bar_cb_enter(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_move(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_leave(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_drop(void *data, const char *type, void *event);
-static void    _ibar_bar_cb_finished(void *data, const char *type, int dropped);
+static void    _ibar_bar_cb_finished(E_Drag *drag, int dropped);
 
 static void    _ibar_icon_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _ibar_icon_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -1244,11 +1244,16 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	dist = sqrt(pow((ev->cur.output.x - drag_x), 2) + pow((ev->cur.output.y - drag_y), 2));
 	if (dist > 10)
 	  {
+	     E_Drag *d;
+
 	     drag = 1;
 	     drag_start = 0;
-	     e_drag_start(ic->ibb->con,
-			  "enlightenment/eapp", ic->app, _ibar_bar_cb_finished,
-			  ic->app->path, "icon");
+
+	     d = e_drag_new(ic->ibb->con,
+			    "enlightenment/eapp", ic->app, _ibar_bar_cb_finished,
+			    ic->app->path, "icon");
+	     e_drag_resize(d, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
+	     e_drag_start(d);
 	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
 	     e_app_remove(ic->app);
 	  }
@@ -1528,13 +1533,12 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 }
 
 static void
-_ibar_bar_cb_finished(void *data, const char *type, int dropped)
+_ibar_bar_cb_finished(E_Drag *drag, int dropped)
 {
-   /* Someone took over the eapp. */
-   if (dropped) return;
-
    /* Unref the object so it will be deleted. */
-   e_object_unref(E_OBJECT(data));
+   if (!dropped)
+     e_object_unref(E_OBJECT(drag->data));
+   e_drag_del(drag);
 }
 
 static void

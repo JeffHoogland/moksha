@@ -6,15 +6,10 @@
 static Evas_List *event_handlers = NULL;
 static Evas_List *drop_handlers = NULL;
 
-static Ecore_X_Window drag_win;
-static Ecore_Evas  *drag_ee = NULL;
-static Evas_Object *drag_obj;
+static Ecore_X_Window drag_win = 0;
 
-static int visible = 0;
-
-static char *drag_type;
-static void *drag_data;
-static void (*drag_finished)(void *data, const char *type, int dropped);
+static Evas_List *draggies = NULL;
+static E_Drag *drag_current = NULL;
 
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
@@ -31,8 +26,12 @@ e_dnd_init(void)
    E_Manager *man;
    E_Container *con;
 
-   event_handlers = evas_list_append(event_handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_dnd_cb_mouse_up, NULL));
-   event_handlers = evas_list_append(event_handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE, _e_dnd_cb_mouse_move, NULL));
+   event_handlers = evas_list_append(event_handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+							     _e_dnd_cb_mouse_up, NULL));
+   event_handlers = evas_list_append(event_handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
+							     _e_dnd_cb_mouse_move, NULL));
 
    for (l = e_manager_list(); l; l = l->next)
      {
@@ -72,7 +71,17 @@ int
 e_dnd_shutdown(void)
 {
    Evas_List *l;
-   
+
+   for (l = draggies; l; l = l->next)
+     {
+	E_Drag *drag;
+
+	drag = l->data;
+	e_drag_del(drag);
+     }
+   evas_list_free(draggies);
+   draggies = NULL;
+
    for (l = event_handlers; l; l = l->next)
      {
 	Ecore_Event_Handler *h;
@@ -96,6 +105,61 @@ e_dnd_shutdown(void)
    return 1;
 }
 
+E_Drag*
+e_drag_new(E_Container *con,
+	   const char *type, void *data,
+	   void (*finished_cb)(E_Drag *drag, int dropped),
+	   const char *icon_path, const char *icon)
+{
+   E_Drag *drag;
+   Evas_Coord w, h;
+
+   drag = E_NEW(E_Drag, 1);
+   if (!drag) return NULL;
+
+   drag->ee = ecore_evas_software_x11_new(NULL, con->win,
+					  0, 0, 10, 10);
+   ecore_evas_override_set(drag->ee, 1);
+   ecore_evas_software_x11_direct_resize_set(drag->ee, 1);
+   ecore_evas_shaped_set(drag->ee, 1);
+   e_canvas_add(drag->ee);
+   ecore_evas_borderless_set(drag->ee, 1);
+
+   drag->object = edje_object_add(ecore_evas_get(drag->ee));
+   edje_object_file_set(drag->object, icon_path, icon);
+
+   w = h = 24;
+   evas_object_move(drag->object, 0, 0);
+   evas_object_resize(drag->object, w, h);
+   ecore_evas_resize(drag->ee, w, h);
+   
+   drag->type = strdup(type);
+   drag->data = data;
+   drag->cb.finished = finished_cb;
+   drag->container = con;
+
+   return drag;
+}
+
+void
+e_drag_del(E_Drag *drag)
+{
+   draggies = evas_list_remove(draggies, drag);
+
+   evas_object_del(drag->object);
+   e_canvas_del(drag->ee);
+   ecore_evas_free(drag->ee);
+   free(drag->type);
+   free(drag);
+}
+
+void
+e_drag_resize(E_Drag *drag, Evas_Coord w, Evas_Coord h)
+{
+   evas_object_resize(drag->object, w, h);
+   ecore_evas_resize(drag->ee, w, h);
+}
+
 int
 e_dnd_active(void)
 {
@@ -103,46 +167,16 @@ e_dnd_active(void)
 }
 
 void
-e_drag_start(E_Container *con, const char *type, void *data,
-	     void (*finished_cb)(void *data, const char *type, int dropped),
-	     const char *icon_path, const char *icon)
+e_drag_start(E_Drag *drag)
 {
    Evas_List *l;
-   int w, h;
 
-   drag_win = ecore_x_window_input_new(con->win, 
-				       con->x, con->y,
-				       con->w, con->h);
+   drag_win = ecore_x_window_input_new(drag->container->win, 
+				       drag->container->x, drag->container->y,
+				       drag->container->w, drag->container->h);
    ecore_x_window_show(drag_win);
    ecore_x_pointer_confine_grab(drag_win);
    ecore_x_keyboard_grab(drag_win);
-
-   if (drag_ee)
-     {
-	e_canvas_del(drag_ee);
-	ecore_evas_free(drag_ee);
-     }
-
-   drag_ee = ecore_evas_software_x11_new(NULL, con->win,
-					 0, 0, 10, 10);
-   ecore_evas_override_set(drag_ee, 1);
-   ecore_evas_software_x11_direct_resize_set(drag_ee, 1);
-   ecore_evas_shaped_set(drag_ee, 1);
-   e_canvas_add(drag_ee);
-   ecore_evas_borderless_set(drag_ee, 1);
-
-   drag_obj = edje_object_add(ecore_evas_get(drag_ee));
-   edje_object_file_set(drag_obj, icon_path, icon);
-
-   w = h = 24;
-   evas_object_move(drag_obj, 0, 0);
-   evas_object_resize(drag_obj, w, h);
-   
-   ecore_evas_resize(drag_ee, w, h);
-
-   drag_type = strdup(type);
-   drag_data = data;
-   drag_finished = finished_cb;
 
    for (l = drop_handlers; l; l = l->next)
      {
@@ -150,8 +184,10 @@ e_drag_start(E_Container *con, const char *type, void *data,
 
 	h = l->data;
 	
-	h->active = !strcmp(h->type, drag_type);
+	h->active = !strcmp(h->type, drag->type);
      }
+
+   drag_current = drag;
 }
 
 void
@@ -163,18 +199,16 @@ e_drag_update(int x, int y)
    E_Leave_Event *leave_ev;
    int w, h;
 
-   if (!drag_ee) return;
-
-   if (!visible)
+   if (!drag_current->visible)
      {
-	evas_object_show(drag_obj);
-	ecore_evas_show(drag_ee);
-	ecore_evas_raise(drag_ee);
-	visible = 1;
+	evas_object_show(drag_current->object);
+	ecore_evas_show(drag_current->ee);
+	ecore_evas_raise(drag_current->ee);
+	drag_current->visible = 1;
      }
 
-   evas_object_geometry_get(drag_obj, NULL, NULL, &w, &h);
-   ecore_evas_move(drag_ee, x - (w / 2), y - (h / 2));
+   evas_object_geometry_get(drag_current->object, NULL, NULL, &w, &h);
+   ecore_evas_move(drag_current->ee, x - (w / 2), y - (h / 2));
 
    enter_ev = E_NEW(E_Enter_Event, 1);
    enter_ev->x = x;
@@ -202,18 +236,18 @@ e_drag_update(int x, int y)
 	     if (!h->entered)
 	       {
 		  if (h->cb.enter)
-		    h->cb.enter(h->data, drag_type, enter_ev);
+		    h->cb.enter(h->data, drag_current->type, enter_ev);
 		  h->entered = 1;
 	       }
 	     if (h->cb.move)
-	       h->cb.move(h->data, drag_type, move_ev);
+	       h->cb.move(h->data, drag_current->type, move_ev);
 	  }
 	else
 	  {
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->data, drag_type, leave_ev);
+		    h->cb.leave(h->data, drag_current->type, leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -231,18 +265,9 @@ e_drag_end(int x, int y)
    E_Drop_Event *ev;
    int dropped;
 
-   if (drag_obj)
-     {
-	evas_object_del(drag_obj);
-	drag_obj = NULL;
-     }
-   if (drag_ee)
-     {
-	e_canvas_del(drag_ee);
-	ecore_evas_free(drag_ee);
-	drag_ee = NULL;
-     }
-   visible = 0;
+   if (drag_current->ee)
+     ecore_evas_hide(drag_current->ee);
+   drag_current->visible = 0;
 
    ecore_x_pointer_ungrab();
    ecore_x_keyboard_ungrab();
@@ -250,8 +275,7 @@ e_drag_end(int x, int y)
    drag_win = 0;
 
    ev = E_NEW(E_Drop_Event, 1);
-   if (!ev) goto end;
-   ev->data = drag_data;
+   ev->data = drag_current->data;
    ev->x = x;
    ev->y = y;
 
@@ -268,18 +292,15 @@ e_drag_end(int x, int y)
 	if ((h->cb.drop)
 	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	  {
-	     h->cb.drop(h->data, drag_type, ev);
+	     h->cb.drop(h->data, drag_current->type, ev);
 	     dropped = 1;
 	  }
      }
-   (*drag_finished)(drag_data, drag_type, dropped);
+   if (drag_current->cb.finished)
+     drag_current->cb.finished(drag_current, dropped);
 
    free(ev);
-end:
-   free(drag_type);
-   drag_type = NULL;
-   drag_data = NULL;
-   drag_finished = NULL;
+   drag_current = NULL;
 }
 
 E_Drop_Handler *

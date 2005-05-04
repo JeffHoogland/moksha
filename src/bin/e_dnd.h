@@ -4,6 +4,7 @@
 
 #ifdef E_TYPEDEFS
 
+typedef struct _E_Drag         E_Drag;
 typedef struct _E_Drop_Handler E_Drop_Handler;
 typedef struct _E_Enter_Event  E_Enter_Event;
 typedef struct _E_Move_Event   E_Move_Event;
@@ -13,6 +14,19 @@ typedef struct _E_Drop_Event   E_Drop_Event;
 #else
 #ifndef E_DND_H
 #define E_DND_H
+
+struct _E_Drag
+{
+   char *type;
+   void *data;
+   struct {
+	void (*finished)(E_Drag *drag, int dropped);
+   } cb;
+   E_Container   *container;
+   Ecore_Evas    *ee;
+   unsigned char  visible : 1;
+   Evas_Object    *object;
+};
 
 struct _E_Drop_Handler
 {
@@ -55,9 +69,13 @@ EAPI int  e_dnd_shutdown(void);
 
 EAPI int  e_dnd_active(void);
 
-EAPI void e_drag_start(E_Container *con, const char *type, void *data,
-		       void (*finished_cb)(void *data, const char *type, int dropped),
-		       const char *icon_path, const char *icon);
+EAPI E_Drag* e_drag_new(E_Container *con, const char *type, void *data,
+			void (*finished_cb)(E_Drag *drag, int dropped),
+			const char *icon_path, const char *icon);
+EAPI void    e_drag_del(E_Drag *drag);
+EAPI void    e_drag_resize(E_Drag *drag, Evas_Coord w, Evas_Coord h);
+
+EAPI void e_drag_start(E_Drag *drag);
 EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);
 

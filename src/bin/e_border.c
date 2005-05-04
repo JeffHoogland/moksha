@@ -109,6 +109,7 @@ static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
 
 static int  _e_border_cb_focus_fix(void *data);
+static void  _e_border_cb_finished(E_Drag *drag, int dropped);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -2454,9 +2455,17 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 							     bd->client.icccm.class);
 			    if (a)
 			      {
-				 e_drag_start(bd->zone->container,
-					      "enlightenment/border", bd, NULL,
-					      a->path, "icon");
+				 E_Drag *drag;
+				 Evas_Coord w, h;
+				 
+				 drag = e_drag_new(bd->zone->container,
+						   "enlightenment/border", bd,
+						   _e_border_cb_finished,
+						   a->path, "icon");
+				 edje_object_part_geometry_get(bd->bg_object, "icon",
+							       NULL, NULL, &w, &h);
+				 e_drag_resize(drag, w, h);
+				 e_drag_start(drag);
 				 evas_event_feed_mouse_up(bd->bg_evas, 1,
 							  EVAS_BUTTON_NONE, NULL);
 			      }
@@ -3590,16 +3599,16 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_label_set(mi, _("Close"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
    e_menu_item_icon_edje_set(mi, 
-			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/close"), 
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/close"), 
 			     "widgets/border/default/close");
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Iconify"));
    e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
    e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/borders",
-					      "widgets/border/default/minimize"),
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/minimize"),
 			     "widgets/border/default/minimize");
 
    mi = e_menu_item_new(m);
@@ -3611,8 +3620,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
    e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/shade"),
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/shade"),
 			     "widgets/border/default/shade");
 
    mi = e_menu_item_new(m);
@@ -3621,8 +3630,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
    e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/borders",
-					      "widgets/border/default/maximize"),
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/maximize"),
 			     "widgets/border/default/maximize");
 
    mi = e_menu_item_new(m);
@@ -3631,8 +3640,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
    e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/stick"),
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/stick"),
 			     "widgets/border/default/stick");
 
    mi = e_menu_item_new(m);
@@ -3642,8 +3651,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_label_set(mi, _("Send To"));
    e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_sendto_pre_cb, bd);
    e_menu_item_icon_edje_set(mi,
-			     e_theme_edje_file_get("base/theme/borders",
-						   "widgets/border/default/sendto"),
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/sendto"),
 			     "widgets/border/default/sendto");
 
    mi = e_menu_item_new(m);
@@ -4129,4 +4138,10 @@ _e_border_cb_focus_fix(void *data)
  */
      }
    return 1;
+}
+
+static void
+_e_border_cb_finished(E_Drag *drag, int dropped)
+{
+   e_drag_del(drag);
 }
