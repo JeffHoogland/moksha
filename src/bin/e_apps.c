@@ -277,10 +277,14 @@ e_app_running_get(E_App *a)
 void
 e_app_prepend_relative(E_App *add, E_App *before)
 {
+   /* FIXME:
+    * - fix the path for add
+    */
    if (!before->parent) return;
 
    before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
 							add, before);
+   add->parent = before->parent;
 
    _e_app_save_order(before->parent);
    _e_app_change(add, E_APP_ADD);
@@ -290,7 +294,11 @@ e_app_prepend_relative(E_App *add, E_App *before)
 void
 e_app_append(E_App *add, E_App *parent)
 {
+   /* FIXME:
+    * - fix the path for add
+    */
    parent->subapps = evas_list_append(parent->subapps, add);
+   add->parent = parent;
 
    _e_app_save_order(parent);
    _e_app_change(add, E_APP_ADD);
@@ -299,11 +307,15 @@ e_app_append(E_App *add, E_App *parent)
 void
 e_app_remove(E_App *remove)
 {
+   /* FIXME:
+    * - check if this file exists, if it does, move it to trash
+    */
    if (!remove->parent) return;
 
    remove->parent->subapps = evas_list_remove(remove->parent->subapps, remove);
 
    _e_app_save_order(remove->parent);
+   remove->parent = NULL;
    _e_app_change(remove, E_APP_DEL);
 }
 
