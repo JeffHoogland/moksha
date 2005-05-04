@@ -15,8 +15,12 @@ ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_enc);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_list_enc);
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_mouse_binding_enc);
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc);
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -456,7 +460,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     char *data;
 	     
 	     bindings = e_config->mouse_bindings;
-	     data = _e_ipc_mouse_binding_enc(bindings, &bytes);
+	     data = _e_ipc_mouse_binding_list_enc(bindings, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_BINDING_MOUSE_LIST_REPLY,
@@ -480,7 +484,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     char *data;
 	     
 	     bindings = e_config->key_bindings;
-	     data = _e_ipc_key_binding_enc(bindings, &bytes);
+	     data = _e_ipc_key_binding_list_enc(bindings, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_BINDING_KEY_LIST_REPLY,
@@ -620,109 +624,180 @@ _e_ipc_multi_str_dec(char *data, int bytes, int str_count)
 /* list/struct encoding functions */
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Module);
-	ECORE_IPC_CNTS(name);
-	ECORE_IPC_CNT8();
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1;
-    	ECORE_IPC_SLEN(l1, name);
-    	ECORE_IPC_PUTS(name, l1);
-    	ECORE_IPC_PUT8(enabled);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Module);
+   ECORE_IPC_CNTS(name);
+   ECORE_IPC_CNT8();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1;
+   ECORE_IPC_SLEN(l1, name);
+   ECORE_IPC_PUTS(name, l1);
+   ECORE_IPC_PUT8(enabled);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }
 
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Available);
-	ECORE_IPC_CNTS(name);
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1;
-    	ECORE_IPC_SLEN(l1, name);
-    	ECORE_IPC_PUTS(name, l1);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Available);
+   ECORE_IPC_CNTS(name);
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1;
+   ECORE_IPC_SLEN(l1, name);
+   ECORE_IPC_PUTS(name, l1);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }
 
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Fallback);
-	ECORE_IPC_CNTS(name);
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1;
-    	ECORE_IPC_SLEN(l1, name);
-    	ECORE_IPC_PUTS(name, l1);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Fallback);
+   ECORE_IPC_CNTS(name);
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1;
+   ECORE_IPC_SLEN(l1, name);
+   ECORE_IPC_PUTS(name, l1);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }
 
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Default);
-	ECORE_IPC_CNTS(text_class);
-	ECORE_IPC_CNTS(font);
-	ECORE_IPC_CNT32();
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1, l2;
-    	ECORE_IPC_SLEN(l1, text_class);
-    	ECORE_IPC_SLEN(l2, font);
-    	ECORE_IPC_PUTS(text_class, l1);
-    	ECORE_IPC_PUTS(font, l2);
-    	ECORE_IPC_PUT32(size);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Default);
+   ECORE_IPC_CNTS(text_class);
+   ECORE_IPC_CNTS(font);
+   ECORE_IPC_CNT32();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1, l2;
+   ECORE_IPC_SLEN(l1, text_class);
+   ECORE_IPC_SLEN(l2, font);
+   ECORE_IPC_PUTS(text_class, l1);
+   ECORE_IPC_PUTS(font, l2);
+   ECORE_IPC_PUT32(size);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }
 
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc)
 {
    int l1, l2;
    ECORE_IPC_ENC_STRUCT_HEAD(E_Font_Default, 
-	ECORE_IPC_SLEN(l1, text_class) +
-	ECORE_IPC_SLEN(l2, font) +
-	4);
+			     ECORE_IPC_SLEN(l1, text_class) +
+			     ECORE_IPC_SLEN(l2, font) +
+			     4);
    ECORE_IPC_PUTS(text_class, l1);
    ECORE_IPC_PUTS(font, l2);
    ECORE_IPC_PUT32(size);
    ECORE_IPC_ENC_STRUCT_FOOT();
 }
 
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_enc)
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_list_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Mouse);
-	ECORE_IPC_CNT32();
-	ECORE_IPC_CNT32();
-	ECORE_IPC_CNTS(action);
-	ECORE_IPC_CNTS(params);
-	ECORE_IPC_CNT8();
-	ECORE_IPC_CNT8();
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1, l2;
-    	ECORE_IPC_PUT32(context);
-    	ECORE_IPC_PUT32(modifiers);
-    	ECORE_IPC_SLEN(l1, action);
-    	ECORE_IPC_SLEN(l2, params);
-    	ECORE_IPC_PUTS(action, l1);
-    	ECORE_IPC_PUTS(params, l2);
-    	ECORE_IPC_PUT8(button);
-    	ECORE_IPC_PUT8(any_mod);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Mouse);
+   ECORE_IPC_CNT32();
+   ECORE_IPC_CNT32();
+   ECORE_IPC_CNTS(action);
+   ECORE_IPC_CNTS(params);
+   ECORE_IPC_CNT8();
+   ECORE_IPC_CNT8();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1, l2;
+   ECORE_IPC_PUT32(context);
+   ECORE_IPC_PUT32(modifiers);
+   ECORE_IPC_SLEN(l1, action);
+   ECORE_IPC_SLEN(l2, params);
+   ECORE_IPC_PUTS(action, l1);
+   ECORE_IPC_PUTS(params, l2);
+   ECORE_IPC_PUT8(button);
+   ECORE_IPC_PUT8(any_mod);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }
 
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_enc)
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_mouse_binding_enc)
 {
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Key);
-	ECORE_IPC_CNT32();
-	ECORE_IPC_CNT32();
-	ECORE_IPC_CNTS(key);
-	ECORE_IPC_CNTS(action);
-	ECORE_IPC_CNTS(params);
-	ECORE_IPC_CNT8();
-    ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-    	int l1, l2, l3;
-    	ECORE_IPC_PUT32(context);
-    	ECORE_IPC_PUT32(modifiers);
-    	ECORE_IPC_SLEN(l1, key);
-    	ECORE_IPC_SLEN(l2, action);
-    	ECORE_IPC_SLEN(l3, params);
-    	ECORE_IPC_PUTS(key, l1);
-    	ECORE_IPC_PUTS(action, l2);
-    	ECORE_IPC_PUTS(params, l3);
-    	ECORE_IPC_PUT8(any_mod);
-    ECORE_IPC_ENC_EVAS_LIST_FOOT();
+   int l1, l2;
+   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Binding_Mouse,
+			     4 + 4 +
+			     ECORE_IPC_SLEN(l1, action) +
+			     ECORE_IPC_SLEN(l2, params) +
+			     1 + 1);
+   ECORE_IPC_PUT32(context);
+   ECORE_IPC_PUT32(modifiers);
+   ECORE_IPC_PUTS(action, l1);
+   ECORE_IPC_PUTS(params, l2);
+   ECORE_IPC_PUT8(button);
+   ECORE_IPC_PUT8(any_mod);
+   ECORE_IPC_ENC_STRUCT_FOOT();
 }
+
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec)
+{
+   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Binding_Mouse,
+				 4 + 4 +
+				 1 +
+				 1 +
+				 1 + 1);
+   ECORE_IPC_CHEKS();
+   ECORE_IPC_GET32(context);
+   ECORE_IPC_GET32(modifiers);
+   ECORE_IPC_GETS(action);
+   ECORE_IPC_GETS(params);
+   ECORE_IPC_GET8(button);
+   ECORE_IPC_GET8(any_mod);
+   ECORE_IPC_DEC_STRUCT_FOOT();
+}
+
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc)
+{
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Key);
+   ECORE_IPC_CNT32();
+   ECORE_IPC_CNT32();
+   ECORE_IPC_CNTS(key);
+   ECORE_IPC_CNTS(action);
+   ECORE_IPC_CNTS(params);
+   ECORE_IPC_CNT8();
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1, l2, l3;
+   ECORE_IPC_PUT32(context);
+   ECORE_IPC_PUT32(modifiers);
+   ECORE_IPC_SLEN(l1, key);
+   ECORE_IPC_SLEN(l2, action);
+   ECORE_IPC_SLEN(l3, params);
+   ECORE_IPC_PUTS(key, l1);
+   ECORE_IPC_PUTS(action, l2);
+   ECORE_IPC_PUTS(params, l3);
+   ECORE_IPC_PUT8(any_mod);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc)
+{
+   int l1, l2, l3;
+   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Binding_Key,
+			     4 + 4 +
+			     ECORE_IPC_SLEN(l1, key) +
+			     ECORE_IPC_SLEN(l2, action) +
+			     ECORE_IPC_SLEN(l3, params) +
+			     1);
+   ECORE_IPC_PUT32(context);
+   ECORE_IPC_PUT32(modifiers);
+   ECORE_IPC_PUTS(key, l1);
+   ECORE_IPC_PUTS(action, l2);
+   ECORE_IPC_PUTS(params, l3);
+   ECORE_IPC_PUT8(any_mod);
+   ECORE_IPC_ENC_STRUCT_FOOT();
+}
+
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec)
+{
+   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Binding_Key,
+				 4 + 4 +
+				 1 +
+				 1 +
+				 1 +
+				 1);
+   ECORE_IPC_CHEKS();
+   ECORE_IPC_GET32(context);
+   ECORE_IPC_GET32(modifiers);
+   ECORE_IPC_GETS(key);
+   ECORE_IPC_GETS(action);
+   ECORE_IPC_GETS(params);
+   ECORE_IPC_GET8(any_mod);
+   ECORE_IPC_DEC_STRUCT_FOOT();
+}
+
