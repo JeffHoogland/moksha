@@ -14,6 +14,7 @@ static int visible = 0;
 
 static char *drag_type;
 static void *drag_data;
+static void (*drag_finished)(void *data, const char *type, int dropped);
 
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
@@ -103,6 +104,7 @@ e_dnd_active(void)
 
 void
 e_drag_start(E_Container *con, const char *type, void *data,
+	     void (*finished_cb)(void *data, const char *type, int dropped),
 	     const char *icon_path, const char *icon)
 {
    Evas_List *l;
@@ -140,6 +142,7 @@ e_drag_start(E_Container *con, const char *type, void *data,
 
    drag_type = strdup(type);
    drag_data = data;
+   drag_finished = finished_cb;
 
    for (l = drop_handlers; l; l = l->next)
      {
@@ -226,6 +229,7 @@ e_drag_end(int x, int y)
 {
    Evas_List *l;
    E_Drop_Event *ev;
+   int dropped;
 
    if (drag_obj)
      {
@@ -251,6 +255,7 @@ e_drag_end(int x, int y)
    ev->x = x;
    ev->y = y;
 
+   dropped = 0;
    for (l = drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
@@ -264,14 +269,17 @@ e_drag_end(int x, int y)
 	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	  {
 	     h->cb.drop(h->data, drag_type, ev);
+	     dropped = 1;
 	  }
      }
+   (*drag_finished)(drag_data, drag_type, dropped);
 
    free(ev);
 end:
    free(drag_type);
    drag_type = NULL;
    drag_data = NULL;
+   drag_finished = NULL;
 }
 
 E_Drop_Handler *

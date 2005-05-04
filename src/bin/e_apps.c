@@ -279,6 +279,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
 {
    /* FIXME:
     * - fix the path for add
+    * - if eapp is in trash, move it to the right place
     */
    if (!before->parent) return;
 
@@ -296,6 +297,7 @@ e_app_append(E_App *add, E_App *parent)
 {
    /* FIXME:
     * - fix the path for add
+    * - if eapp is in trash, move it to the right place
     */
    parent->subapps = evas_list_append(parent->subapps, add);
    add->parent = parent;
@@ -309,14 +311,15 @@ e_app_remove(E_App *remove)
 {
    /* FIXME:
     * - check if this file exists, if it does, move it to trash
+    * - update path to eapp
     */
    if (!remove->parent) return;
 
    remove->parent->subapps = evas_list_remove(remove->parent->subapps, remove);
 
    _e_app_save_order(remove->parent);
-   remove->parent = NULL;
    _e_app_change(remove, E_APP_DEL);
+   remove->parent = NULL;
 }
 
 void

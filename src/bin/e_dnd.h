@@ -56,6 +56,7 @@ EAPI int  e_dnd_shutdown(void);
 EAPI int  e_dnd_active(void);
 
 EAPI void e_drag_start(E_Container *con, const char *type, void *data,
+		       void (*finished_cb)(void *data, const char *type, int dropped),
 		       const char *icon_path, const char *icon);
 EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);

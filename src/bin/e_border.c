@@ -2454,7 +2454,8 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 							     bd->client.icccm.class);
 			    if (a)
 			      {
-				 e_drag_start(bd->zone->container, "enlightenment/border", bd, 
+				 e_drag_start(bd->zone->container,
+					      "enlightenment/border", bd, NULL,
 					      a->path, "icon");
 				 evas_event_feed_mouse_up(bd->bg_evas, 1,
 							  EVAS_BUTTON_NONE, NULL);
