@@ -55,7 +55,6 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* init splash is BELOW client windows on startup (if windows exist  at start time or start before the splash goes away)
 * dropshadow screws up when shadow becomes too thin (and transitions to different mode) and back.
 * mplayer fullscreen screws up (reparenting issues)
 * check window max size. if < size of zone (or maximisation area) disallow maximising and tell border edje object (via signals) to somehow disable the maximise buttons :) (and remove from the menu)

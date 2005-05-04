@@ -44,6 +44,7 @@ e_container_new(E_Manager *man)
    char name[40];
    Evas_List *l, *screens;
    int i;
+   Ecore_X_Window mwin;
    
    con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
@@ -111,6 +112,15 @@ e_container_new(E_Manager *man)
 				   0, 0, 0, 0, 0,
 				   con->layers[i - 1], ECORE_X_WINDOW_STACK_ABOVE);
      }
+
+   mwin = e_init_window_get();
+   if (mwin)
+     ecore_x_window_configure(mwin,
+			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			      0, 0, 0, 0, 0,
+			      con->layers[6], ECORE_X_WINDOW_STACK_ABOVE);
+
 
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
