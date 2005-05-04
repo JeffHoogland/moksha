@@ -185,6 +185,7 @@ e_drag_start(E_Drag *drag)
 	h = l->data;
 	
 	h->active = !strcmp(h->type, drag->type);
+	h->entered = 0;
      }
 
    drag_current = drag;
