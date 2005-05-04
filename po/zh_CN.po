@@ -4,12 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-02 04:14+0800\n"
-"PO-Revision-Date: 2005-05-02 04:30+0800\n"
+"POT-Creation-Date: 2005-05-05 00:35+0800\n"
+"PO-Revision-Date: 2005-05-05 01:08+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +24,7 @@ msgstr "%i 兆赫兹"
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/bin/e_int_menus.c:648
+#: src/bin/e_int_menus.c:643
 msgid "(Empty)"
 msgstr "（空）"
 
@@ -111,7 +111,7 @@ msgstr ""
 
 #: src/modules/pager/e_mod_main.c:138
 msgid "A pager module to navigate virtual desktops."
-msgstr "一个切换虚拟桌面的Pager模块"
+msgstr "一个定位虚拟桌面的桌面切换器模块"
 
 #: src/modules/cpufreq/e_mod_main.c:108
 msgid ""
@@ -129,7 +129,7 @@ msgstr "一个给E17提供时钟的简单模块。"
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
-#: src/bin/e_module.c:380
+#: src/bin/e_module.c:389
 msgid "About..."
 msgstr "关于……"
 
@@ -137,7 +137,7 @@ msgstr "关于……"
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
-#: src/modules/ibar/e_mod_main.c:709
+#: src/modules/ibar/e_mod_main.c:730
 msgid "Auto fit icons"
 msgstr "自动缩放图标"
 
@@ -187,58 +187,58 @@ msgstr "充电中"
 
 #: src/modules/cpufreq/e_mod_main.c:388
 msgid "Check Fast (0.5 sec)"
-msgstr "频繁检查（每0.5秒）"
+msgstr "频繁检查（0.5秒）"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
-msgstr "频繁检查（每1秒）"
+msgstr "频繁检查（1秒）"
 
 #: src/modules/temperature/e_mod_main.c:184
 #: src/modules/temperature/e_mod_main.c:608
 msgid "Check Interval"
-msgstr "间歇检查"
+msgstr "检查间隔"
 
 #: src/modules/cpufreq/e_mod_main.c:395
 msgid "Check Medium (1 sec)"
-msgstr "一般检查（每1秒）"
+msgstr "一般检查（1秒）"
 
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
-msgstr "一般检查（每5秒）"
+msgstr "一般检查（5秒）"
 
 #: src/modules/battery/e_mod_main.c:444
 msgid "Check Normal (10 sec)"
-msgstr "一般检查（每10秒）"
+msgstr "一般检查（10秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:402
 msgid "Check Normal (2 sec)"
-msgstr "一般检查（每2秒）"
+msgstr "一般检查（2秒）"
 
 #: src/modules/battery/e_mod_main.c:451
 msgid "Check Slow (30 sec)"
-msgstr "缓慢检查（每30秒）"
+msgstr "缓慢检查（30秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:409
 msgid "Check Slow (5 sec)"
-msgstr "缓慢检查（每5秒）"
+msgstr "缓慢检查（5秒）"
 
 #: src/modules/cpufreq/e_mod_main.c:416
 msgid "Check Very Slow (30 sec)"
-msgstr "极缓慢检查（每30秒）"
+msgstr "极缓慢检查（30秒）"
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
-msgstr "极缓慢检查（每60秒）"
+msgstr "极缓慢检查（60秒）"
 
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:3657
+#: src/bin/e_border.c:3589
 msgid "Close"
 msgstr "关闭"
 
-#: src/bin/e_module.c:395
+#: src/bin/e_module.c:404
 msgid "Configuration"
 msgstr "配置"
 
@@ -246,7 +246,7 @@ msgstr "配置"
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:3751
+#: src/bin/e_border.c:3683
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -266,20 +266,20 @@ msgstr "桌面"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:3725
+#: src/bin/e_border.c:3657
 msgid "Edit Icon"
 msgstr "编辑图标"
 
 #: src/bin/e_int_menus.c:545 src/modules/battery/e_mod_main.c:561
 #: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
-#: src/modules/ibar/e_mod_main.c:554 src/modules/pager/e_mod_main.c:420
+#: src/modules/ibar/e_mod_main.c:574 src/modules/pager/e_mod_main.c:422
 #: src/modules/temperature/e_mod_main.c:721
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: src/bin/e_module.c:384
+#: src/bin/e_module.c:393
 msgid "Enabled"
-msgstr "有效"
+msgstr "启用"
 
 #: src/bin/e_gadman.c:571
 msgid "End Edit Mode"
@@ -287,7 +287,7 @@ msgstr "结束编辑模式"
 
 #: src/bin/e_main.c:369
 msgid "Enlightenment"
-msgstr ""
+msgstr "Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:98
 msgid "Enlightenment Battery Module"
@@ -301,7 +301,7 @@ msgstr "Enlightenment时钟模块"
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment阴影模块"
 
-#: src/modules/ibar/e_mod_main.c:158
+#: src/modules/ibar/e_mod_main.c:167
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar 模块"
 
@@ -311,7 +311,7 @@ msgstr "Enlightenment IPC设置错误！"
 
 #: src/modules/pager/e_mod_main.c:137
 msgid "Enlightenment Pager Module"
-msgstr "Enlightenment Pager模块"
+msgstr "Enlightenment桌面切换器模块"
 
 #: src/bin/e_main.c:371
 msgid "Enlightenment Starting. Please wait."
@@ -323,7 +323,7 @@ msgstr "Enlightenment 温度模块"
 
 #: src/modules/test/e_mod_main.c:66
 msgid "Enlightenment Test Module"
-msgstr ""
+msgstr "Enlightenment 测试模块"
 
 #: src/bin/e_main.c:153
 msgid ""
@@ -479,7 +479,7 @@ msgstr ""
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
-#: src/modules/ibar/e_mod_main.c:781
+#: src/modules/ibar/e_mod_main.c:802
 msgid "Enormous"
 msgstr "庞大"
 
@@ -522,7 +522,7 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/modules/ibar/e_mod_main.c:106
+#: src/modules/ibar/e_mod_main.c:115
 #, c-format
 msgid ""
 "Error initializing Module: IBar\n"
@@ -587,11 +587,11 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
+#: src/bin/e_module.c:106 src/bin/e_module.c:117 src/bin/e_module.c:139
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:3828
+#: src/bin/e_border.c:3760
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -607,7 +607,7 @@ msgstr ""
 msgid "Exit Enlightenment"
 msgstr "退出 Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:767
+#: src/modules/ibar/e_mod_main.c:788
 msgid "Extremely Large"
 msgstr "极大"
 
@@ -625,7 +625,7 @@ msgstr "远"
 
 #: src/modules/temperature/e_mod_main.c:460
 msgid "Fast (1 sec)"
-msgstr "快 （每1秒）"
+msgstr "快 （1秒）"
 
 #: src/bin/e_int_menus.c:60
 msgid "Favorite Applications"
@@ -647,7 +647,7 @@ msgstr "模糊"
 msgid "Gadgets"
 msgstr "附件"
 
-#: src/modules/ibar/e_mod_main.c:788
+#: src/modules/ibar/e_mod_main.c:809
 msgid "Gigantic"
 msgstr "超大"
 
@@ -668,19 +668,19 @@ msgstr "高"
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/ibar/e_mod_main.c:774
+#: src/modules/ibar/e_mod_main.c:795
 msgid "Huge"
 msgstr "巨大"
 
-#: src/modules/ibar/e_mod_main.c:149
+#: src/modules/ibar/e_mod_main.c:158
 msgid "IBar"
-msgstr ""
+msgstr "IBar"
 
-#: src/bin/e_border.c:3827
+#: src/bin/e_border.c:3759
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:3665
+#: src/bin/e_border.c:3597
 msgid "Iconify"
 msgstr "最小化"
 
@@ -688,7 +688,7 @@ msgstr "最小化"
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/modules/ibar/e_mod_main.c:753
+#: src/modules/ibar/e_mod_main.c:774
 msgid "Large"
 msgstr "大"
 
@@ -709,7 +709,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr "手动"
 
-#: src/bin/e_border.c:3686
+#: src/bin/e_border.c:3618
 msgid "Maximized"
 msgstr "最大化"
 
@@ -717,15 +717,15 @@ msgstr "最大化"
 msgid "Maximum Speed"
 msgstr "最高速"
 
-#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:746
+#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:767
 msgid "Medium"
 msgstr "中等"
 
 #: src/modules/temperature/e_mod_main.c:467
 msgid "Medium (5 sec)"
-msgstr "中等 （每5秒）"
+msgstr "中等 （5秒）"
 
-#: src/modules/ibar/e_mod_main.c:718
+#: src/modules/ibar/e_mod_main.c:739
 msgid "Microscopic"
 msgstr "极小"
 
@@ -735,22 +735,22 @@ msgstr "最低速"
 
 #: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
 #: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
-#: src/modules/ibar/e_mod_main.c:105 src/modules/pager/e_mod_main.c:81
+#: src/modules/ibar/e_mod_main.c:114 src/modules/pager/e_mod_main.c:81
 #: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
 msgid "Module API Error"
 msgstr "模块API错误"
 
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
-msgstr ""
+msgstr "模块配置菜单 1"
 
 #: src/modules/test/e_mod_main.c:26
 msgid "Module Config Menu Item 2"
-msgstr ""
+msgstr "模块配置菜单 2"
 
 #: src/modules/test/e_mod_main.c:28
 msgid "Module Config Menu Item 3"
-msgstr ""
+msgstr "模块配置菜单 3"
 
 #: src/bin/e_int_menus.c:72
 msgid "Modules"
@@ -762,11 +762,11 @@ msgstr "很多特性还不能用，能用的也是有很多bug的。"
 
 #: src/modules/battery/e_mod_main.c:879
 msgid "NO BAT"
-msgstr ""
+msgstr "没有电池"
 
 #: src/modules/battery/e_mod_main.c:748
 msgid "NO INFO"
-msgstr ""
+msgstr "没有信息"
 
 #: src/modules/dropshadow/e_mod_main.c:364
 msgid "Near"
@@ -782,13 +782,13 @@ msgstr "新建一行桌面"
 
 #: src/modules/temperature/e_mod_main.c:474
 msgid "Normal (10 sec)"
-msgstr "正常 （每10秒）"
+msgstr "正常 （10秒）"
 
 #: src/bin/e_error.c:187 src/bin/e_error.c:196
 msgid "OK"
-msgstr ""
+msgstr "确定"
 
-#: src/modules/ibar/e_mod_main.c:796
+#: src/modules/ibar/e_mod_main.c:817
 msgid "Options"
 msgstr "选项"
 
@@ -807,10 +807,20 @@ msgid ""
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
 msgstr ""
+"选项：\n"
+"\t-display DISPLAY\n"
+"\t\t连接到名为DISPLAY的一个显示终端。\n"
+"\t\t例如： -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\t加入一个伪xinerama屏幕（代替真实的那个），\n"
+"\t\t并给定尺寸。只要您愿意，就可以一直加上去。\n"
+"\t\t它们都会替代真实的xinerama屏幕，如果有存在\n"
+"\t\t的话。这个功能可以拿来模拟xinerama。\n"
+"\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 
 #: src/modules/pager/e_mod_main.c:128
 msgid "Pager"
-msgstr ""
+msgstr "桌面切换器"
 
 #: src/bin/e_int_menus.c:396
 msgid "Remove Column of Desktops"
@@ -824,7 +834,7 @@ msgstr "删除一行桌面"
 msgid "Restart Enlightement"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_border.c:3709
+#: src/bin/e_border.c:3641
 msgid "Send To"
 msgstr "发送到"
 
@@ -845,7 +855,7 @@ msgstr "设置检查时间"
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:3676
+#: src/bin/e_border.c:3608
 msgid "Shaded"
 msgstr "卷起"
 
@@ -853,23 +863,23 @@ msgstr "卷起"
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/ibar/e_mod_main.c:800
+#: src/modules/ibar/e_mod_main.c:821
 msgid "Size"
 msgstr "大小"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr "慢 （每30秒）"
+msgstr "慢 （30秒）"
 
-#: src/modules/ibar/e_mod_main.c:739
+#: src/modules/ibar/e_mod_main.c:760
 msgid "Small"
 msgstr "小"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
-msgstr ""
+msgstr "一些其它东西"
 
-#: src/bin/e_border.c:3696
+#: src/bin/e_border.c:3628
 msgid "Sticky"
 msgstr "粘住"
 
@@ -879,13 +889,13 @@ msgstr "温度"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
-msgstr ""
+msgstr "测试！！！"
 
 #: src/bin/e_int_menus.c:108
 msgid "Themes"
 msgstr "主题"
 
-#: src/bin/e_module.c:98
+#: src/bin/e_module.c:107
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -895,7 +905,7 @@ msgstr ""
 "导入模块 %s 时发生错误。\n"
 "在模块搜索路径中没有找到名叫 %s 的模块。\n"
 
-#: src/bin/e_module.c:109 src/bin/e_module.c:131
+#: src/bin/e_module.c:118 src/bin/e_module.c:140
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -947,7 +957,7 @@ msgstr ""
 msgid "This is development code, so be warned."
 msgstr "这是开发中的代码，所以警告一下。"
 
-#: src/modules/ibar/e_mod_main.c:159
+#: src/modules/ibar/e_mod_main.c:168
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.\n"
 "It is a first example module and is being used to flesh out several\n"
@@ -975,8 +985,11 @@ msgid ""
 "interface of the Enlightenment 0.17.0 module system. Please\n"
 "Ignore this module unless you are working on the module system."
 msgstr ""
+"这是一个非常简单的模块，它仅供测试 Enlightenment 0.17.0 的模块\n"
+"系统。\n"
+"请忽略这个模块，除非您正在为模块系统开发东西。"
 
-#: src/modules/ibar/e_mod_main.c:725
+#: src/modules/ibar/e_mod_main.c:746
 msgid "Tiny"
 msgstr "微小"
 
@@ -992,7 +1005,7 @@ msgstr "很远"
 msgid "Very Fuzzy"
 msgstr "很模糊"
 
-#: src/modules/ibar/e_mod_main.c:760
+#: src/modules/ibar/e_mod_main.c:781
 msgid "Very Large"
 msgstr "很大"
 
@@ -1010,9 +1023,9 @@ msgstr "很清晰"
 
 #: src/modules/temperature/e_mod_main.c:488
 msgid "Very Slow (60 sec)"
-msgstr "很慢 （每60秒）"
+msgstr "很慢 （60秒）"
 
-#: src/modules/ibar/e_mod_main.c:732
+#: src/modules/ibar/e_mod_main.c:753
 msgid "Very Small"
 msgstr "很小"
 
@@ -1023,7 +1036,7 @@ msgstr "窗口"
 #: src/bin/e_init.c:34
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X报告没有找到窗口和屏幕！\n"
+msgstr "X报告没有找到窗口和屏幕 %i ！\n"
 
 #: src/modules/battery/e_mod_main.c:687
 msgid ""
@@ -1032,20 +1045,3 @@ msgid ""
 msgstr ""
 "您的电池电量低。\n"
 "您可能需要切换到使用交流电源。"
-
-#~ msgid ""
-#~ "This is program has barely been started on, so it is not complete by a "
-#~ "long\n"
-#~ "shot. Please do NOT expect anything to work properly at this stage. It's\n"
-#~ "being worked on.\n"
-#~ "\n"
-#~ "Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
-#~ msgstr ""
-#~ "本程序几乎不能启动得起来，所以这完全是不太会成功的尝试。\n"
-#~ "请“不要”期待任何东西在这个阶段能工作得很好。它们正在建设\n"
-#~ "中。\n"
-#~ "\n"
-#~ "点击“OK”关闭本对话框，然后继续使用 Enlightenment 0.17。"
-
-#~ msgid "Welcome to Enlightenment 0.17"
-#~ msgstr "欢迎来到 Enlightenment 0.17"
