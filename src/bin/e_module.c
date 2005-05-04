@@ -54,7 +54,10 @@ e_module_init(void)
 	pl = l;
 	l = l->next;
 	m = e_module_new(em->name);
-	if ((em->enabled) && (m)) e_module_enable(m);
+	if (m)
+	  {
+	     if (em->enabled) e_module_enable(m);
+	  }
 	else
 	  {
 	     IF_FREE(em->name);
