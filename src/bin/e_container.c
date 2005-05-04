@@ -122,6 +122,15 @@ e_container_new(E_Manager *man)
 			      con->layers[6], ECORE_X_WINDOW_STACK_ABOVE);
 
 
+   mwin = e_menu_grab_window_get();
+   if (mwin)
+     ecore_x_window_configure(mwin,
+			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			      0, 0, 0, 0, 0,
+			      con->layers[6], ECORE_X_WINDOW_STACK_ABOVE);
+
+
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
      {
