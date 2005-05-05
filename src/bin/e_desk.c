@@ -99,6 +99,7 @@ e_desk_show(E_Desk *desk)
    ev = E_NEW(E_Event_Desk_Show, 1);
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
+   e_zone_update_flip(desk->zone);
    ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
 }
 
