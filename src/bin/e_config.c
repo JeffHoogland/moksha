@@ -240,6 +240,33 @@ e_config_init(void)
 	     eb->action = strdup("window_menu");
 	     eb->params = strdup("");
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Mouse, 1);
+	     eb->context = E_BINDING_CONTEXT_ZONE;
+	     eb->button = 1;
+	     eb->modifiers = 0;
+	     eb->any_mod = 0;
+	     eb->action = strdup("menu_show");
+	     eb->params = strdup("main");
+	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Mouse, 1);
+	     eb->context = E_BINDING_CONTEXT_ZONE;
+	     eb->button = 2;
+	     eb->modifiers = 0;
+	     eb->any_mod = 0;
+	     eb->action = strdup("menu_show");
+	     eb->params = strdup("clients");
+	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Mouse, 1);
+	     eb->context = E_BINDING_CONTEXT_ZONE;
+	     eb->button = 3;
+	     eb->modifiers = 0;
+	     eb->any_mod = 0;
+	     eb->action = strdup("menu_show");
+	     eb->params = strdup("favorites");
+	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 	  }
 	  {
 	     E_Config_Binding_Key *eb;

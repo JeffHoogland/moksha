@@ -39,6 +39,8 @@ struct _E_Zone
 	Ecore_Timer *timer;
 	E_Direction direction;
    } flip;
+   
+   E_Action *cur_mouse_action;
 };
 
 struct _E_Event_Zone_Desk_Count_Set

@@ -328,7 +328,20 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
    ev = (Evas_Event_Mouse_Down *)event_info;
    zone = data;
    if (e_menu_grab_window_get()) return;
-    
+
+   if (!zone->cur_mouse_action)
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
+	  {
+	     Ecore_X_Event_Mouse_Button_Down *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     zone->cur_mouse_action =
+	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
+						  E_OBJECT(zone), ev2);
+	  }
+     }
+#if 0  /* FIXME: nuke this later once the new configurable bindings settle */
    if (ev->button == 1)
      {
 	E_Menu *m;
@@ -361,6 +374,7 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 			      E_MENU_POP_DIRECTION_DOWN);
 	e_util_container_fake_mouse_up_all_later(zone->container);
      }
+#endif   
 }
 
 static void
@@ -371,6 +385,31 @@ _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
    
    ev = (Evas_Event_Mouse_Up *)event_info;      
    zone = data;
+   if (zone->cur_mouse_action)
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	  {
+	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     if (zone->cur_mouse_action->func.end_mouse)
+	       zone->cur_mouse_action->func.end_mouse(E_OBJECT(zone), "", ev2);
+	     else if (zone->cur_mouse_action->func.end)
+	       zone->cur_mouse_action->func.end(E_OBJECT(zone), "");
+	  }
+	zone->cur_mouse_action = NULL;
+     }
+   else
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	  {
+	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_ZONE,
+					      E_OBJECT(zone), ev2);
+	  }
+     }
 }
 
 static void

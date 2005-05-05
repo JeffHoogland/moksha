@@ -369,99 +369,100 @@ _e_actions_menu_find(char *name)
 }
 ACT_FN_GO(menu_show)
 {
-   E_Zone *zone;
+   E_Zone *zone = NULL;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
    if (!obj) return;
    if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
      {
-	zone = e_util_zone_current_get((E_Manager *)obj);
-	if (zone)
+	if (params)
 	  {
-	     if (params)
+	     E_Menu *m = NULL;
+	     
+	     m = _e_actions_menu_find(params);	
+	     if (m)
 	       {
-		  E_Menu *m = NULL;
+		  int x, y;
 		  
-		  m = _e_actions_menu_find(params);	
-		  if (m)
-		    {
-		       int x, y;
-		       
-		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
-		       m->zone = zone;
-		       ecore_x_pointer_xy_get(zone->container->win, &x, &y);
-		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
-		       e_menu_activate_mouse(m, zone, x, y, 1, 1,
-					     E_MENU_POP_DIRECTION_DOWN);
-		    }
+		  /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		  m->zone = zone;
+		  ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		  e_menu_activate_mouse(m, zone, x, y, 1, 1,
+					E_MENU_POP_DIRECTION_DOWN);
 	       }
 	  }
      }
 }
 ACT_FN_GO_MOUSE(menu_show)
 {
-   E_Zone *zone;
+   E_Zone *zone = NULL;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
    if (!obj) return;
    if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
      {
-	zone = e_util_zone_current_get((E_Manager *)obj);
-	if (zone)
+	if (params)
 	  {
-	     if (params)
+	     E_Menu *m = NULL;
+	     
+	     m = _e_actions_menu_find(params);	
+	     if (m)
 	       {
-		  E_Menu *m = NULL;
+		  int x, y;
 		  
-		  m = _e_actions_menu_find(params);	
-		  if (m)
-		    {
-		       int x, y;
-		       
-		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
-		       m->zone = zone;
-		       x = ev->root.x;
-		       y = ev->root.y;
-		       x -= zone->container->x;
-		       y -= zone->container->y;
-		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
-		       e_menu_activate_mouse(m, zone, x, y, 1, 1,
-					     E_MENU_POP_DIRECTION_DOWN);
-		    }
+		  /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		  m->zone = zone;
+		  x = ev->root.x;
+		  y = ev->root.y;
+		  x -= zone->container->x;
+		  y -= zone->container->y;
+		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		  e_menu_activate_mouse(m, zone, x, y, 1, 1,
+					E_MENU_POP_DIRECTION_DOWN);
+		  e_util_container_fake_mouse_up_all_later(zone->container);
 	       }
 	  }
      }
 }
 ACT_FN_GO_KEY(menu_show)
 {
-   E_Zone *zone;
+   E_Zone *zone = NULL;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
    if (!obj) return;
    if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
      {
-	zone = e_util_zone_current_get((E_Manager *)obj);
-	if (zone)
+	if (params)
 	  {
-	     if (params)
+	     E_Menu *m = NULL;
+	     
+	     m = _e_actions_menu_find(params);	
+	     if (m)
 	       {
-		  E_Menu *m = NULL;
+		  int x, y;
 		  
-		  m = _e_actions_menu_find(params);	
-		  if (m)
-		    {
-		       int x, y;
-		       
-		       /* FIXME: this is a bit of a hack... setting m->con - bad hack */
-		       m->zone = zone;
-		       ecore_x_pointer_xy_get(zone->container->win, &x, &y);
-		       e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
-		       e_menu_activate_key(m, zone, x, y, 1, 1,
-					   E_MENU_POP_DIRECTION_DOWN);
-		    }
+		  /* FIXME: this is a bit of a hack... setting m->con - bad hack */
+		  m->zone = zone;
+		  ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
+		  e_menu_activate_key(m, zone, x, y, 1, 1,
+				      E_MENU_POP_DIRECTION_DOWN);
 	       }
 	  }
      }
