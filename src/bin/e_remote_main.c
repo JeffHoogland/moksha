@@ -49,6 +49,194 @@ static const char *display_name = NULL;
 static int reply_count = 0;
 static int reply_expect = 0;
 
+static void
+_e_opt_binding_mouse_parse(E_Config_Binding_Mouse *eb, char **params)
+{
+   if (!strcmp(params[0], "NONE")) eb->context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb->context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb->context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb->context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb->context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb->context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+	printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+	       "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+	exit(-1);
+     }
+   eb->button = atoi(params[1]);
+   /* M1[|M2...] */
+     {
+	char *p, *pp;
+	
+	eb->modifiers = 0;
+	pp = params[2];
+	for (;;)
+	  {
+	     p = strchr(pp, '|');
+	     if (p)
+	       {
+		  if (!strncmp(pp, "SHIFT|", 6)) eb->modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strncmp(pp, "CTRL|", 5)) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strncmp(pp, "ALT|", 4)) eb->modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strncmp(pp, "WIN|", 4)) eb->modifiers |= E_BINDING_MODIFIER_WIN;
+		  else
+		    {
+		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN\n");
+		       exit(-1);
+		    }
+		  pp = p + 1;
+	       }
+	     else
+	       {
+		  if (!strcmp(pp, "SHIFT")) eb->modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strcmp(pp, "CTRL")) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strcmp(pp, "ALT")) eb->modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strcmp(pp, "WIN")) eb->modifiers |= E_BINDING_MODIFIER_WIN;
+		  else
+		    {
+		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN\n");
+		       exit(-1);
+		    }
+		  break;
+	       }
+	  }
+     }
+   eb->any_mod = atoi(params[3]);
+   eb->action = params[4];
+   eb->params = params[5];
+}
+
+static void
+_e_opt_binding_mouse_add(char **params)
+{
+   E_Config_Binding_Mouse bind;
+   int bytes;
+   char *data;
+   
+   _e_opt_binding_mouse_parse(&bind, params);
+   data = _e_ipc_mouse_binding_enc(&bind, &bytes);
+   ecore_ipc_server_send(_e_ipc_server,
+			 E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_BINDING_MOUSE_ADD,
+			 0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			 data, bytes);
+   free(data);
+}
+
+static void
+_e_opt_binding_mouse_del(char **params)
+{
+   E_Config_Binding_Mouse bind;
+   int bytes;
+   char *data;
+   
+   _e_opt_binding_mouse_parse(&bind, params);
+   data = _e_ipc_mouse_binding_enc(&bind, &bytes);
+   ecore_ipc_server_send(_e_ipc_server,
+			 E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_BINDING_MOUSE_DEL,
+			 0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			 data, bytes);
+   free(data);
+}
+
+static void
+_e_opt_binding_key_parse(E_Config_Binding_Key *eb, char **params)
+{
+   if (!strcmp(params[0], "NONE")) eb->context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb->context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb->context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb->context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb->context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb->context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+	printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+	       "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+	exit(-1);
+     }
+   eb->key = params[1];
+   /* M1[|M2...] */
+     {
+	char *p, *pp;
+	
+	eb->modifiers = 0;
+	pp = params[2];
+	for (;;)
+	  {
+	     p = strchr(pp, '|');
+	     if (p)
+	       {
+		  if (!strncmp(pp, "SHIFT|", 6)) eb->modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strncmp(pp, "CTRL|", 5)) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strncmp(pp, "ALT|", 4)) eb->modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strncmp(pp, "WIN|", 4)) eb->modifiers |= E_BINDING_MODIFIER_WIN;
+		  else
+		    {
+		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN\n");
+		       exit(-1);
+		    }
+		  pp = p + 1;
+	       }
+	     else
+	       {
+		  if (!strcmp(pp, "SHIFT")) eb->modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strcmp(pp, "CTRL")) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strcmp(pp, "ALT")) eb->modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strcmp(pp, "WIN")) eb->modifiers |= E_BINDING_MODIFIER_WIN;
+		  else
+		    {
+		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN\n");
+		       exit(-1);
+		    }
+		  break;
+	       }
+	  }
+     }
+   eb->any_mod = atoi(params[3]);
+   eb->action = params[4];
+   eb->params = params[5];
+}
+
+static void
+_e_opt_binding_key_add(char **params)
+{
+   E_Config_Binding_Key bind;
+   int bytes;
+   char *data;
+   
+   _e_opt_binding_key_parse(&bind, params);
+   data = _e_ipc_key_binding_enc(&bind, &bytes);
+   ecore_ipc_server_send(_e_ipc_server,
+			 E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_BINDING_KEY_ADD,
+			 0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			 data, bytes);
+   free(data);
+}
+
+static void
+_e_opt_binding_key_del(char **params)
+{
+   E_Config_Binding_Key bind;
+   int bytes;
+   char *data;
+   
+   _e_opt_binding_key_parse(&bind, params);
+   data = _e_ipc_key_binding_enc(&bind, &bytes);
+   ecore_ipc_server_send(_e_ipc_server,
+			 E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_BINDING_KEY_DEL,
+			 0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			 data, bytes);
+   free(data);
+}
+
 #define SIMPLE_REQ     0
 #define SIMPLE_STR_REQ 1
 #define FULL_FUNC      2
@@ -87,7 +275,11 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-lang-list", "List all available languages", E_IPC_OP_LANG_LIST, 1),
    OSTR("-lang-set", "Set the current language", E_IPC_OP_LANG_SET, 0),
    OREQ("-binding-mouse-list", "List all mouse bindings", E_IPC_OP_BINDING_MOUSE_LIST, 1),
-   OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1)
+   OFNC("-binding-mouse-add", "Add or replace an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_add, 0),
+   OFNC("-binding-mouse-del", "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_del, 0),
+   OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1),
+   OFNC("-binding-key-add", "Add or replace an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_add, 0),
+   OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0)
 };
 
 /* externally accessible functions */

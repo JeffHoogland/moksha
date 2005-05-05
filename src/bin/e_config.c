@@ -732,6 +732,48 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
    return ok;
 }
 
+E_Config_Binding_Mouse *
+e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
+{
+   Evas_List *l;
+   
+   for (l = e_config->mouse_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Mouse *eb;
+	
+	eb = l->data;
+	if ((eb->context == eb_in->context) &&
+	    (eb->button == eb_in->button) &&
+	    (eb->modifiers == eb_in->modifiers) &&
+	    (eb->any_mod == eb_in->any_mod) &&
+	    (!strcmp(eb->action, eb_in->action)) &&
+	    (!strcmp(eb->action, eb_in->action)))
+	  return eb;
+     }
+   return NULL;
+}
+
+E_Config_Binding_Key *
+e_config_binding_key_match(E_Config_Binding_Key *eb_in)
+{
+   Evas_List *l;
+   
+   for (l = e_config->key_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Key *eb;
+	
+	eb = l->data;
+	if ((eb->context == eb_in->context) &&
+	    (eb->modifiers == eb_in->modifiers) &&
+	    (eb->any_mod == eb_in->any_mod) &&
+	    (!strcmp(eb->key, eb_in->key)) &&
+	    (!strcmp(eb->action, eb_in->action)) &&
+	    (!strcmp(eb->action, eb_in->action)))
+	  return eb;
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_config_save_cb(void *data)

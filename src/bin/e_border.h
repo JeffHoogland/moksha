@@ -357,6 +357,9 @@ EAPI void e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *e
 EAPI void e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key);
 EAPI void e_border_act_close_begin(E_Border *bd);
 EAPI void e_border_act_kill_begin(E_Border *bd);
+
+EAPI void e_border_button_bindings_ungrab_all(void);
+EAPI void e_border_button_bindings_grab_all(void);
     
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;

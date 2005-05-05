@@ -108,6 +108,9 @@ EAPI int e_config_save(void);
 EAPI void e_config_save_flush(void);
 EAPI void e_config_save_queue(void);
 
+EAPI E_Config_Binding_Mouse *e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in);
+EAPI E_Config_Binding_Key *e_config_binding_key_match(E_Config_Binding_Key *eb_in);
+    
 extern EAPI E_Config *e_config;
 
 #endif

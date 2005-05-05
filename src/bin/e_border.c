@@ -1308,6 +1308,34 @@ e_border_act_kill_begin(E_Border *bd)
    e_object_del(E_OBJECT(bd));
 }
 
+void
+e_border_button_bindings_ungrab_all(void)
+{
+   Evas_List *l;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+     }
+}
+
+void
+e_border_button_bindings_grab_all(void)
+{
+   Evas_List *l;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)

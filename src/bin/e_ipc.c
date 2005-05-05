@@ -471,10 +471,50 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_BINDING_MOUSE_ADD:
 	  {
+	     E_Config_Binding_Mouse bind, *eb;
+	     
+	     _e_ipc_mouse_binding_dec(e->data, e->size, &bind);
+	       {
+		  eb = e_config_binding_mouse_match(&bind);
+		  if (!eb)
+		    {
+		       eb = E_NEW(E_Config_Binding_Key, 1);
+		       e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+		       eb->context = bind.context;
+		       eb->button = bind.button;
+		       eb->modifiers = bind.modifiers;
+		       eb->any_mod = bind.any_mod;
+		       eb->action = strdup(bind.action);
+		       eb->params = strdup(bind.params);
+		       e_border_button_bindings_ungrab_all();
+		       e_bindings_mouse_add(bind.context, bind.button, bind.modifiers,
+					    bind.any_mod, bind.action, bind.params);
+		       e_border_button_bindings_grab_all();
+		       e_config_save_queue();
+		    }
+	       }
  	  }
 	break;
       case E_IPC_OP_BINDING_MOUSE_DEL:
 	  {
+	     E_Config_Binding_Mouse bind, *eb;
+	     
+	     _e_ipc_mouse_binding_dec(e->data, e->size, &bind);
+	       {
+		  eb = e_config_binding_mouse_match(&bind);
+		  if (eb)
+		    {
+		       e_config->mouse_bindings = evas_list_remove(e_config->mouse_bindings, eb);
+		       IF_FREE(eb->action);
+		       IF_FREE(eb->params);
+		       IF_FREE(eb);
+		       e_border_button_bindings_ungrab_all();
+		       e_bindings_mouse_del(bind.context, bind.button, bind.modifiers,
+					    bind.any_mod, bind.action, bind.params);
+		       e_border_button_bindings_grab_all();
+		       e_config_save_queue();
+		    }
+	       }
  	  }
 	break;
       case E_IPC_OP_BINDING_KEY_LIST:
@@ -495,10 +535,51 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_BINDING_KEY_ADD:
 	  {
+	     E_Config_Binding_Key bind, *eb;
+	     
+	     _e_ipc_key_binding_dec(e->data, e->size, &bind);
+	       {
+		  eb = e_config_binding_key_match(&bind);
+		  if (!eb)
+		    {
+		       eb = E_NEW(E_Config_Binding_Key, 1);
+		       e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+		       eb->context = bind.context;
+		       eb->modifiers = bind.modifiers;
+		       eb->any_mod = bind.any_mod;
+		       eb->key = strdup(bind.key);
+		       eb->action = strdup(bind.action);
+		       eb->params = strdup(bind.params);
+		       e_managers_keys_ungrab();
+		       e_bindings_key_add(bind.context, bind.key, bind.modifiers,
+					  bind.any_mod, bind.action, bind.params);
+		       e_managers_keys_grab();
+		       e_config_save_queue();
+		    }
+	       }
  	  }
 	break;
       case E_IPC_OP_BINDING_KEY_DEL:
 	  {
+	     E_Config_Binding_Key bind, *eb;
+	     
+	     _e_ipc_key_binding_dec(e->data, e->size, &bind);
+	       {
+		  eb = e_config_binding_key_match(&bind);
+		  if (eb)
+		    {
+		       e_config->key_bindings = evas_list_remove(e_config->key_bindings, eb);
+		       IF_FREE(eb->key);
+		       IF_FREE(eb->action);
+		       IF_FREE(eb->params);
+		       IF_FREE(eb);
+		       e_managers_keys_ungrab();
+		       e_bindings_key_del(bind.context, bind.key, bind.modifiers,
+					  bind.any_mod, bind.action, bind.params);
+		       e_managers_keys_grab();
+		       e_config_save_queue();
+		    }
+	       }
  	  }
 	break;
       default:
