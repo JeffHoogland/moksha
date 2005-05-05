@@ -55,6 +55,11 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* perhaps we shoudl split focus and "Selected" windows. selected window is
+  what ocused is now and focus is something only affectinbg keyboard input. if
+  the focus window becoems another managed window it becoems the selected
+  window - otherwise click to focus or pointer focus will chose the selected
+  window that may get the focus if it allows it...
 * dropshadow screws up when shadow becomes too thin (and transitions to different mode) and back.
 * mplayer fullscreen screws up (reparenting issues)
 * check window max size. if < size of zone (or maximisation area) disallow maximising and tell border edje object (via signals) to somehow disable the maximise buttons :) (and remove from the menu)
