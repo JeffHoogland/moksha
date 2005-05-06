@@ -449,7 +449,8 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
 	  edje_object_signal_emit(mi->submenu_object, "toggle_on", "");
 	if (mi->toggle_object)
 	  edje_object_signal_emit(mi->toggle_object, "toggle_on", "");
-	edje_object_signal_emit(mi->menu->bg_object, "toggle_on", "");
+	if (mi->menu->bg_object)
+	  edje_object_signal_emit(mi->menu->bg_object, "toggle_on", "");
      }
    else
      {
@@ -464,7 +465,8 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
 	  edje_object_signal_emit(mi->submenu_object, "toggle_off", "");
 	if (mi->toggle_object)
 	  edje_object_signal_emit(mi->toggle_object, "toggle_off", "");
-	edje_object_signal_emit(mi->menu->bg_object, "toggle_off", "");
+	if (mi->menu->bg_object)
+	  edje_object_signal_emit(mi->menu->bg_object, "toggle_off", "");
      }
    if (tog)
      {

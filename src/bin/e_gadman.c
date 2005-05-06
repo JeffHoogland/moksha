@@ -976,10 +976,16 @@ _e_gadman_client_aspect_enforce(E_Gadman_Client *gmc, double cx, double cy, int 
 static void
 _e_gadman_client_geometry_apply(E_Gadman_Client *gmc)
 {
-   evas_object_move(gmc->event_object, gmc->x, gmc->y);
-   evas_object_resize(gmc->event_object, gmc->w, gmc->h);
-   evas_object_move(gmc->control_object, gmc->x, gmc->y);
-   evas_object_resize(gmc->control_object, gmc->w, gmc->h);
+   if (gmc->event_object)
+     {
+	evas_object_move(gmc->event_object, gmc->x, gmc->y);
+	evas_object_resize(gmc->event_object, gmc->w, gmc->h);
+     }
+   if (gmc->control_object)
+     {
+	evas_object_move(gmc->control_object, gmc->x, gmc->y);
+	evas_object_resize(gmc->control_object, gmc->w, gmc->h);
+     }
 }
 
 static void

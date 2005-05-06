@@ -915,6 +915,10 @@ _ds_shadow_resize(Shadow *sh, int w, int h)
 	     evas_object_resize(sh->object[3], sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
 	     evas_object_image_fill_set(sh->object[3], 0, 0, sh->w + (sh->ds->conf->blur_size * 2), sh->ds->conf->blur_size + sh->ds->conf->shadow_y);
 	  }
+	else
+	  {
+	     sh->reshape = 1;
+	  }
      }
    else
      {
@@ -1158,32 +1162,6 @@ _ds_shadow_recalc(Shadow *sh)
 		       _ds_shpix_object_set(sp, so->obj, 
 					    r->x, r->y, r->w, r->h);
 		    }
-#if 0		  
-	     _ds_shpix_object_set(sp, sh->object[0], 0, 0,
-				  (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
-	     evas_object_move(sh->object[0],
-			      sh->x + shx - bsz,
-			      sh->y + shy - bsz);
-	     evas_object_image_smooth_scale_set(sh->object[0], 1);
-	     evas_object_image_border_set(sh->object[0],
-					  0, 0, 0, 0);
-	     evas_object_resize(sh->object[0],
-				sh->w + (bsz * 2),
-				sh->h + (bsz * 2));
-	     evas_object_image_fill_set(sh->object[0], 0, 0, 
-					sh->w + (bsz * 2),
-					sh->h + (bsz * 2));
-	     _ds_object_unset(sh->object[1]);
-	     _ds_object_unset(sh->object[2]);
-	     _ds_object_unset(sh->object[3]);
-	     
-	     if (evas_object_visible_get(sh->object[0]))
-	       {
-		  evas_object_hide(sh->object[1]);
-		  evas_object_hide(sh->object[2]);
-		  evas_object_hide(sh->object[3]);
-	       }
-#endif
 		  _ds_shpix_free(sp);
 		  
 		  _tilebuf_free_render_rects(brects);
@@ -1212,6 +1190,8 @@ _ds_shadow_recalc(Shadow *sh)
 	  }
 	else
 	  {
+	     _ds_shadow_obj_shutdown(sh);
+	     _ds_shadow_obj_init(sh);
 	     _ds_shared_use(sh->ds, sh);
 	     sh->use_shared = 1;
 	  }
@@ -1310,8 +1290,9 @@ _ds_shadow_recalc(Shadow *sh)
 	       }
 	  }
 	
-	if (evas_object_visible_get(sh->object[0]))
+	if (sh->visible)
 	  {
+	     evas_object_show(sh->object[0]);
 	     evas_object_show(sh->object[1]);
 	     evas_object_show(sh->object[2]);
 	     evas_object_show(sh->object[3]);

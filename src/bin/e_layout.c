@@ -231,7 +231,7 @@ _e_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    li->w = 0;
    li->h = 0;
    evas_object_clip_set(obj, sd->clip);
-   evas_object_smart_member_add(li->sd->obj, obj);
+   evas_object_smart_member_add(obj, li->sd->obj);
    evas_object_data_set(obj, "e_layout_data", li);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_layout_smart_item_del_hook, NULL);
@@ -343,7 +343,7 @@ _e_layout_smart_add(Evas_Object *obj)
    sd->vw = 1;
    sd->vh = 1;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
-   evas_object_smart_member_add(obj, sd->clip);
+   evas_object_smart_member_add(sd->clip, obj);
    evas_object_move(sd->clip, -100000, -100000);
    evas_object_resize(sd->clip, 200000, 200000);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
