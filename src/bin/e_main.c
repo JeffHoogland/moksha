@@ -215,9 +215,16 @@ main(int argc, char **argv)
    _e_main_shutdown_push(ecore_ipc_shutdown);
    /* init the evas wrapper */
    if (!ecore_evas_init())
-     {
+     { 
 	e_error_message_show(_("Enlightenment cannot initialize the Evas system.\n"
 			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+    }
+   if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_X11))
+     {
+	e_error_message_show(_("Enlightenment found ecore_evas doesnt support Software X11\n"
+			       "rendering in Evas. Please check your installation of Evas and\n"
+			       "Ecore and check they support Software X11 rendering."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(ecore_evas_shutdown);

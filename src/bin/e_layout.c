@@ -155,12 +155,20 @@ e_layout_child_lower(Evas_Object *obj)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   li->sd->items = evas_list_remove(li->sd->items, obj);
-   if (li->sd->items)
+   if (!evas_list_find(li->sd->items, obj)) return;
+   if ((li->sd->items) && (li->sd->items->next))
      {
-	evas_object_stack_above(obj, evas_list_data(evas_list_last(li->sd->items)));
+	li->sd->items = evas_list_remove(li->sd->items, obj);
+/* FIXME: this is some deeb subtle problem - why do i have to do a restack? */
+/*	evas_object_stack_below(obj, li->sd->items->data);*/
+	li->sd->items = evas_list_prepend(li->sd->items, obj);
+	  {
+	     Evas_List *l;
+	     
+	     for (l = li->sd->items; l; l = l->next)
+	       evas_object_stack_below(l->data, li->sd->clip);
+	  }
      }
-   li->sd->items = evas_list_append(li->sd->items, obj);
 }
 
 void
@@ -170,10 +178,13 @@ e_layout_child_raise(Evas_Object *obj)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   li->sd->items = evas_list_remove(li->sd->items, obj);
-   if (li->sd->items)
-     evas_object_stack_below(obj, evas_list_data(li->sd->items));
-   li->sd->items = evas_list_prepend(li->sd->items, obj);
+   if (!evas_list_find(li->sd->items, obj)) return;
+   if ((li->sd->items) && (li->sd->items->next))
+     {
+	li->sd->items = evas_list_remove(li->sd->items, obj);
+	evas_object_stack_below(obj, li->sd->clip);
+	li->sd->items = evas_list_append(li->sd->items, obj);
+     }
 }
 
 void
@@ -183,10 +194,14 @@ e_layout_child_lower_below(Evas_Object *obj, Evas_Object *below)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   li->sd->items = evas_list_remove(li->sd->items, obj);
-   if (li->sd->items)
-     evas_object_stack_above(obj, below);
-   li->sd->items = evas_list_append_relative(li->sd->items, obj, below);
+   if (!evas_list_find(li->sd->items, below)) return;
+   if (!evas_list_find(li->sd->items, obj)) return;
+   if ((li->sd->items) && (li->sd->items->next))
+     {
+	li->sd->items = evas_list_remove(li->sd->items, obj);
+	evas_object_stack_below(obj, below);
+	li->sd->items = evas_list_prepend_relative(li->sd->items, obj, below);
+     }
 }
 
 void
@@ -196,10 +211,14 @@ e_layout_child_raise_above(Evas_Object *obj, Evas_Object *above)
    
    li = evas_object_data_get(obj, "e_layout_data");
    if (!li) return;
-   li->sd->items = evas_list_remove(li->sd->items, obj);
-   if (li->sd->items)
-     evas_object_stack_below(obj, above);
-   li->sd->items = evas_list_prepend_relative(li->sd->items, obj, above);
+   if (!evas_list_find(li->sd->items, above)) return;
+   if (!evas_list_find(li->sd->items, obj)) return;
+   if ((li->sd->items) && (li->sd->items->next))
+     {
+	li->sd->items = evas_list_remove(li->sd->items, obj);
+	evas_object_stack_above(obj, above);
+	li->sd->items = evas_list_append_relative(li->sd->items, obj, above);
+     }
 }
 
 void
@@ -235,10 +254,7 @@ _e_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_data_set(obj, "e_layout_data", li);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_layout_smart_item_del_hook, NULL);
-   if (li->sd->items)
-     evas_object_stack_below(obj, evas_list_data(li->sd->items));
-   else
-     evas_object_stack_above(obj, sd->obj);
+   evas_object_stack_below(obj, li->sd->clip);
    if (!evas_object_visible_get(sd->clip))
      evas_object_show(sd->clip);
    return li;
@@ -375,7 +391,6 @@ _e_layout_smart_layer_set(Evas_Object *obj, int layer)
       
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   
      {
 	Evas_List *l;
 	
@@ -397,10 +412,9 @@ _e_layout_smart_raise(Evas_Object *obj)
 	Evas_List *l;
 	
 	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_raise(l->data);
-	  }
+	  evas_object_raise(l->data);
      }
+   evas_object_raise(sd->clip);
 }
 
 static void
@@ -410,13 +424,12 @@ _e_layout_smart_lower(Evas_Object *obj)
    
    sd = evas_object_smart_data_get(obj);
    if (!sd) return; 
+   evas_object_lower(sd->clip);
      {
 	Evas_List *l;
 	
 	for (l = evas_list_last(sd->items); l; l = l->prev)
-	  {
-	     evas_object_lower(l->data);
-	  }
+	  evas_object_lower(l->data);
      }
 }
                                                              
@@ -427,13 +440,12 @@ _e_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   evas_object_stack_above(sd->clip, above);
      {
 	Evas_List *l;
 	
-	for (l = evas_list_last(sd->items); l; l = l->prev)
-	  {
-	     evas_object_stack_above(l->data, above);
-	  }
+	for (l = sd->items; l; l = l->next)
+	  evas_object_stack_below(l->data, sd->clip);
      }
 }
    
@@ -444,13 +456,12 @@ _e_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below)
       
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   evas_object_stack_below(sd->clip, below);
      {
 	Evas_List *l;
 	
 	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_stack_below(l->data, below);
-	  }
+	  evas_object_stack_below(l->data, sd->clip);
      }
 }
 
