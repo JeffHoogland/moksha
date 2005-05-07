@@ -60,15 +60,30 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    Evas_List   *l, *shapelist = NULL;
    Evas_Coord   maxw, maxh;
    E_Container *con;
+   Ecore_X_Window win;
    int          x, y;
 
    error_w = 400;
    error_h = 200;
    x = (man->w - error_w) / 2;
    y = (man->h - error_h) / 2;
-   ee = ecore_evas_software_x11_new(NULL, man->win, x, y, error_w, error_h);
-   ecore_evas_override_set(ee, 1);
-   ecore_evas_software_x11_direct_resize_set(ee, 1);
+   if (e_canvas_engine_decide(e_config->evas_engine_errors) ==
+       E_EVAS_ENGINE_GL_X11)
+     {
+	ee = ecore_evas_gl_x11_new(NULL, man->win, x, y, error_w, error_h);
+	ecore_evas_gl_x11_direct_resize_set(ee, 1);
+	ecore_evas_override_set(ee, 1);
+	win = ecore_evas_gl_x11_window_get(ee);
+	e_container_window_raise(con, win, 999);
+     }
+   else
+     {
+	ee = ecore_evas_software_x11_new(NULL, man->win, x, y, error_w, error_h);
+	ecore_evas_software_x11_direct_resize_set(ee, 1);
+	ecore_evas_override_set(ee, 1);
+	win = ecore_evas_software_x11_window_get(ee);
+	e_container_window_raise(con, win, 999);
+     }
    e_canvas_add(ee);
 
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
@@ -330,13 +345,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_rectangle_add(e);
 	evas_object_name_set(o, "allocated");
      }
-     {
-	Ecore_X_Window win;
-	
-	win = ecore_evas_software_x11_window_get(ee);
-	e_container_window_raise(con, win, 999);
-	ecore_evas_show(ee);
-     }
+   ecore_evas_show(ee);
 }
 
 /* local subsystem functions */

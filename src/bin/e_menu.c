@@ -1021,10 +1021,23 @@ _e_menu_realize(E_Menu *m)
    
    if (m->realized) return;
    m->realized = 1;
-   m->ecore_evas = ecore_evas_software_x11_new(NULL, m->zone->container->win, 
-					       m->cur.x, m->cur.y, 
-					       m->cur.w, m->cur.h);
-   ecore_evas_software_x11_direct_resize_set(m->ecore_evas, 1);
+   if (e_canvas_engine_decide(e_config->evas_engine_menus) ==
+       E_EVAS_ENGINE_GL_X11)
+     {
+	m->ecore_evas = ecore_evas_gl_x11_new(NULL, m->zone->container->win, 
+					      m->cur.x, m->cur.y, 
+					      m->cur.w, m->cur.h);
+	ecore_evas_gl_x11_direct_resize_set(m->ecore_evas, 1);
+	m->evas_win = ecore_evas_gl_x11_window_get(m->ecore_evas);
+     }
+   else
+     {
+	m->ecore_evas = ecore_evas_software_x11_new(NULL, m->zone->container->win, 
+						    m->cur.x, m->cur.y, 
+						    m->cur.w, m->cur.h);
+	ecore_evas_software_x11_direct_resize_set(m->ecore_evas, 1);
+	m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
+     }
    e_canvas_add(m->ecore_evas);
    m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);
@@ -1035,7 +1048,6 @@ _e_menu_realize(E_Menu *m)
    /* move cursor out to avoid event cycles during setup */
    evas_event_feed_mouse_in(m->evas, NULL);
    evas_event_feed_mouse_move(m->evas, -1000000, -1000000, NULL);
-   m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
    ecore_x_window_shape_events_select(m->evas_win, 1);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");

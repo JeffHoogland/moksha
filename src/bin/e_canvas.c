@@ -29,6 +29,22 @@ e_canvas_del(Ecore_Evas *ee)
    _e_canvases = evas_list_remove(_e_canvases, ee);
 }
 
+int
+e_canvas_engine_decide(int engine)
+{
+   /* if use default - use it */
+   if (engine == E_EVAS_ENGINE_DEFAULT)
+     engine = e_config->evas_engine_default;
+   /* if engine is gl - do we support it? */
+   if (engine == E_EVAS_ENGINE_GL_X11)
+     {
+	/* if we dont - fall back to software x11 */
+	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_GL_X11))
+	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
+     }
+   return engine;
+}
+
 void
 e_canvas_recache(void)
 {

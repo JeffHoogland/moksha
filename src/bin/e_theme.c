@@ -40,6 +40,13 @@ e_theme_init(void)
 	e_theme_file_set(buf, et->file);
      }
 /*
+ * this is used to sewt the theme for a CATEGORY of e17. "base" is always set
+ * to the default theme - because if a selected theme for lest say base/theme
+ * does not provide theme elements it can default back to the default theme.
+ * 
+ * the idea is you can actually set a different theme for different parts of
+ * the desktop... :)
+ * 
  * other possible categories...
  *  e_theme_file_set("base/theme/borders", "default.edj");
  *  e_theme_file_set("base/theme/menus", "default.edj");
@@ -234,6 +241,16 @@ e_theme_file_set(char *category, char *file)
    res = calloc(1, sizeof(E_Theme_Result));
    res->file = strdup(file);
    mappings = evas_hash_add(mappings, category, res);
+}
+
+void
+e_theme_about(E_Zone *zone, const char *file)
+{
+   static E_Popup *pop = NULL;
+   
+   if (pop) return;
+   pop = e_popup_new(zone, zone->w / 2, zone->h / 2, 1, 1);
+   e_popup_show(pop);
 }
 
 /* local subsystem functions */

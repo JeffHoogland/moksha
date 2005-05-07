@@ -135,6 +135,13 @@ e_config_init(void)
 	e_config->zone_desks_x_count = 4;
 	e_config->zone_desks_y_count = 1;
 	e_config->use_virtual_roots = 0;
+	e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
+	e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_init = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_menus = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_borders = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_errors = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
 	  {
 	     E_Config_Module *em;

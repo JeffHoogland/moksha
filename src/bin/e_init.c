@@ -38,12 +38,23 @@ e_init_init(void)
    root = roots[0];
    
    ecore_x_window_size_get(root, &w, &h);
-   _e_init_ecore_evas = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
-   ecore_evas_override_set(_e_init_ecore_evas, 1);
-   ecore_evas_software_x11_direct_resize_set(_e_init_ecore_evas, 1);
+   if (e_canvas_engine_decide(e_config->evas_engine_init) ==
+       E_EVAS_ENGINE_GL_X11)
+     {
+	_e_init_ecore_evas = ecore_evas_gl_x11_new(NULL, root, 0, 0, w, h);
+	ecore_evas_gl_x11_direct_resize_set(_e_init_ecore_evas, 1);
+	ecore_evas_override_set(_e_init_ecore_evas, 1);
+	_e_init_win = ecore_evas_gl_x11_window_get(_e_init_ecore_evas);
+     }
+   else
+     {
+	_e_init_ecore_evas = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
+	ecore_evas_software_x11_direct_resize_set(_e_init_ecore_evas, 1);
+	ecore_evas_override_set(_e_init_ecore_evas, 1);
+	_e_init_win = ecore_evas_software_x11_window_get(_e_init_ecore_evas);
+     }
    e_canvas_add(_e_init_ecore_evas);
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
-   _e_init_win = ecore_evas_software_x11_window_get(_e_init_ecore_evas);
    ecore_evas_name_class_set(_e_init_ecore_evas, "E", "Init_Window");
    ecore_evas_title_set(_e_init_ecore_evas, "Enlightenment Init");
    e_pointer_ecore_evas_set(_e_init_ecore_evas);

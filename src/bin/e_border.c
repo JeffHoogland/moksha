@@ -142,8 +142,8 @@ printf("GRAV TO %i\n", grav); \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
 ecore_x_window_gravity_set(bd->client.shell_win, grav); \
 ecore_x_window_gravity_set(bd->client.win, grav); \
-ecore_x_window_gravity_set(ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas), grav); \
-ecore_x_window_pixel_gravity_set(ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas), grav);
+ecore_x_window_gravity_set(bd->bg_subwin, grav); \
+ecore_x_window_pixel_gravity_set(bd->bg_subwin, grav);
 
 /* externally accessible functions */
 int
@@ -222,12 +222,26 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-   bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win, 0, 0, bd->w, bd->h);
-   ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
+   if (e_canvas_engine_decide(e_config->evas_engine_borders) ==
+       E_EVAS_ENGINE_GL_X11)
+     {
+	bd->bg_ecore_evas = ecore_evas_gl_x11_new(NULL, bd->win,
+						  0, 0, bd->w, bd->h);
+	ecore_evas_gl_x11_direct_resize_set(bd->bg_ecore_evas, 1);
+	bd->bg_win = ecore_evas_gl_x11_window_get(bd->bg_ecore_evas);
+	bd->bg_subwin = ecore_evas_gl_x11_subwindow_get(bd->bg_ecore_evas);
+     }
+   else
+     {
+	bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win,
+							0, 0, bd->w, bd->h);
+	ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
+	bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
+	bd->bg_subwin = ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas);
+     }
    e_canvas_add(bd->bg_ecore_evas);
    bd->event_win = ecore_x_window_input_new(bd->win, 0, 0, bd->w, bd->h);
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
-   bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
    ecore_x_window_shape_events_select(bd->bg_win, 1);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
    ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");

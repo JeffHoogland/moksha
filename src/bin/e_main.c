@@ -190,7 +190,7 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(e_xinerama_shutdown);
    
-   ecore_x_grab();
+//   ecore_x_grab();
    
    ecore_x_io_error_handler_set(_e_main_cb_x_fatal, NULL);
 
@@ -378,7 +378,7 @@ main(int argc, char **argv)
 
    e_managers_keys_grab();
    
-   ecore_x_ungrab();
+//   ecore_x_ungrab();
    
    e_init_title_set(_("Enlightenment"));
    e_init_version_set(VERSION);
@@ -491,7 +491,7 @@ _e_main_shutdown(int errorcode)
 static int
 _e_main_x_shutdown(void)
 {
-   ecore_x_ungrab();
+//   ecore_x_ungrab();
    ecore_x_focus_reset();
    ecore_x_events_allow_all();
 

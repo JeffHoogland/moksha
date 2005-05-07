@@ -42,6 +42,10 @@ typedef Eet_Data_Descriptor             E_Config_DD;
 #ifndef E_CONFIG_H
 #define E_CONFIG_H
 
+#define E_EVAS_ENGINE_DEFAULT      0
+#define E_EVAS_ENGINE_SOFTWARE_X11 1
+#define E_EVAS_ENGINE_GL_X11       2
+
 struct _E_Config
 {
    char       *desktop_default_background;
@@ -57,6 +61,13 @@ struct _E_Config
    int         zone_desks_x_count;
    int         zone_desks_y_count;
    int         use_virtual_roots;
+   int         evas_engine_default;
+   int         evas_engine_container;
+   int         evas_engine_init;
+   int         evas_engine_menus;
+   int         evas_engine_borders;
+   int         evas_engine_errors;
+   int         evas_engine_popups;
    char       *language;
    Evas_List  *modules;
    Evas_List  *font_fallbacks;
