@@ -567,9 +567,7 @@ _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
 /* FIXME:
  * 
- * this HAS to go. its a REALLY BAD HACK - i've fixed up a few problems.. but
- * this is just wrong - symlink ... wrong. i f u are going to do this - use
- * the e_theme.c stuff - and add code to save and load it
+ * Remove this later, keep for fast theme switching now.
  */
 static void
 _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
