@@ -90,7 +90,7 @@ e_move_begin(E_Zone *zone, int x, int y)
    evas_object_show(_obj);
    e_popup_edje_bg_object_set(_disp_pop, _obj);
 
-   e_move_update(x, y);
+//   e_move_update(x, y);
    
    e_popup_move_resize(_disp_pop,
 		       (_disp_pop->zone->w - ew) / 2,
