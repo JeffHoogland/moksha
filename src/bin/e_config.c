@@ -18,6 +18,8 @@ E_Config *e_config = NULL;
 
 /* local subsystem functions */
 static void _e_config_save_cb(void *data);
+static void _e_config_free(void);
+static int  _e_config_cb_timer(void *data);
 
 /* local subsystem globals */
 static Ecore_Job *_e_config_save_job = NULL;
@@ -97,6 +99,7 @@ e_config_init(void)
 #undef D
 #define T E_Config
 #define D _e_config_edd
+   E_CONFIG_VAL(D, T, config_version, INT);
    E_CONFIG_VAL(D, T, desktop_default_background, STR);
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_thresthold, DOUBLE);
@@ -118,10 +121,41 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd);
 
    e_config = e_config_domain_load("e", _e_config_edd);
+   if (e_config)
+     {
+	if (e_config->config_version < E_CONFIG_FILE_VERSION)
+	  {
+	     /* your config is too old - need new defaults */
+	     _e_config_free();
+	     ecore_timer_add(1.0, _e_config_cb_timer,
+			     "Configuration data needed upgrading. Your old configuration\n"
+			     "has been wiped and a new set of defaults initialized. This\n"
+			     "will happen regularly during development, so don't report a\n"
+			     "bug. This simply means Enlightenment needs new confiugration\n"
+			     "data by default for usable functionality that your old\n"
+			     "configuration simply lacks. This new set of defaults will fix\n"
+			     "that by adding it in. You can re-configure things now to your\n"
+			     "liking. Sorry for the hiccup in your confiugration.\n");
+	  }
+	else if (e_config->config_version > E_CONFIG_FILE_VERSION)
+	  {
+	     /* your config is too new - what the fuck??? */
+	     _e_config_free();
+	     ecore_timer_add(1.0, _e_config_cb_timer,
+			     "Your configuration is NEWER than Enlightenment. This is very\n"
+			     "strange. This should not happen unless you downgraded\n"
+			     "Enlightenment or copied the configuration from a place where\n"
+			     "a newer version of Enlightenment was running. This is bad and\n"
+			     "as a precaution your confiugration has been now restored to\n"
+			     "defaults. Sorry for the inconvenience.\n");
+	  }
+     }
+   
    if (!e_config)
      {
 	/* DEFAULT CONFIG */
 	e_config = E_NEW(E_Config, 1);
+	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.edj");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_thresthold = 300.0;
@@ -623,72 +657,6 @@ e_config_init(void)
 int
 e_config_shutdown(void)
 {
-   if (e_config)
-     {
-	while (e_config->modules)
-	  {
-	     E_Config_Module *em;
-
-	     em = e_config->modules->data;
-	     e_config->modules = evas_list_remove_list(e_config->modules, e_config->modules);
-	     E_FREE(em->name);
-	     E_FREE(em);
-	  }
-	while (e_config->font_fallbacks)
-	  {
-	     E_Font_Fallback *eff;
-	     
-	     eff = e_config->font_fallbacks->data;
-	     e_config->font_fallbacks = evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
-	     E_FREE(eff->name);
-	     E_FREE(eff);
-	  }
-	while (e_config->font_defaults)
-	  {
-	     E_Font_Default *efd;
-	     
-	     efd = e_config->font_defaults->data;
-	     e_config->font_defaults = evas_list_remove_list(e_config->font_defaults, e_config->font_defaults);
-	     E_FREE(efd->text_class);
-	     E_FREE(efd->font);
-	     E_FREE(efd);
-	  }
-	while (e_config->themes)
-	  {
-	     E_Config_Theme *et;
-	     
-	     et = e_config->themes->data;
-	     e_config->themes = evas_list_remove_list(e_config->themes, e_config->themes);
-	     E_FREE(et->category);
-	     E_FREE(et->file);
-	     E_FREE(et);
-	  }
-	while (e_config->mouse_bindings)
-	  {
-	     E_Config_Binding_Mouse *eb;
-	     
-	     eb = e_config->mouse_bindings->data;
-	     e_config->mouse_bindings  = evas_list_remove_list(e_config->mouse_bindings, e_config->mouse_bindings);
-	     E_FREE(eb->action);
-	     E_FREE(eb->params);
-	     E_FREE(eb);
-	  }
-	while (e_config->key_bindings)
-	  {
-	     E_Config_Binding_Key *eb;
-	     
-	     eb = e_config->key_bindings->data;
-	     e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
-	     E_FREE(eb->key);
-	     E_FREE(eb->action);
-	     E_FREE(eb->params);
-	     E_FREE(eb);
-	  }
-	
-	E_FREE(e_config->desktop_default_background);
-	E_FREE(e_config->language);
-	E_FREE(e_config);
-     }
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
@@ -816,4 +784,83 @@ _e_config_save_cb(void *data)
    e_module_save_all();
    e_config_domain_save("e", _e_config_edd, e_config);
    _e_config_save_job = NULL;
+}
+
+static void
+_e_config_free(void)
+{
+   if (e_config)
+     {
+	while (e_config->modules)
+	  {
+	     E_Config_Module *em;
+
+	     em = e_config->modules->data;
+	     e_config->modules = evas_list_remove_list(e_config->modules, e_config->modules);
+	     E_FREE(em->name);
+	     E_FREE(em);
+	  }
+	while (e_config->font_fallbacks)
+	  {
+	     E_Font_Fallback *eff;
+	     
+	     eff = e_config->font_fallbacks->data;
+	     e_config->font_fallbacks = evas_list_remove_list(e_config->font_fallbacks, e_config->font_fallbacks);
+	     E_FREE(eff->name);
+	     E_FREE(eff);
+	  }
+	while (e_config->font_defaults)
+	  {
+	     E_Font_Default *efd;
+	     
+	     efd = e_config->font_defaults->data;
+	     e_config->font_defaults = evas_list_remove_list(e_config->font_defaults, e_config->font_defaults);
+	     E_FREE(efd->text_class);
+	     E_FREE(efd->font);
+	     E_FREE(efd);
+	  }
+	while (e_config->themes)
+	  {
+	     E_Config_Theme *et;
+	     
+	     et = e_config->themes->data;
+	     e_config->themes = evas_list_remove_list(e_config->themes, e_config->themes);
+	     E_FREE(et->category);
+	     E_FREE(et->file);
+	     E_FREE(et);
+	  }
+	while (e_config->mouse_bindings)
+	  {
+	     E_Config_Binding_Mouse *eb;
+	     
+	     eb = e_config->mouse_bindings->data;
+	     e_config->mouse_bindings  = evas_list_remove_list(e_config->mouse_bindings, e_config->mouse_bindings);
+	     E_FREE(eb->action);
+	     E_FREE(eb->params);
+	     E_FREE(eb);
+	  }
+	while (e_config->key_bindings)
+	  {
+	     E_Config_Binding_Key *eb;
+	     
+	     eb = e_config->key_bindings->data;
+	     e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
+	     E_FREE(eb->key);
+	     E_FREE(eb->action);
+	     E_FREE(eb->params);
+	     E_FREE(eb);
+	  }
+	
+	E_FREE(e_config->desktop_default_background);
+	E_FREE(e_config->language);
+	E_FREE(e_config);
+     }
+}
+
+static int
+_e_config_cb_timer(void *data)
+{
+   e_error_dialog_show(_("Configuration Upgraded"),
+			 _(data));
+   return 0;
 }

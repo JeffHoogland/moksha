@@ -42,12 +42,19 @@ typedef Eet_Data_Descriptor             E_Config_DD;
 #ifndef E_CONFIG_H
 #define E_CONFIG_H
 
+/* increment this whenever we change config enough that you need new 
+ * defaults for e to work - started at 100 when we introduced this config
+ * versioning feature
+ */
+#define E_CONFIG_FILE_VERSION 100
+
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
 #define E_EVAS_ENGINE_GL_X11       2
 
 struct _E_Config
 {
+   int         config_version;
    char       *desktop_default_background;
    double      menus_scroll_speed;
    double      menus_fast_mouse_move_thresthold;
