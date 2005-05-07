@@ -12,7 +12,6 @@
  * * support alignment (x, y) as well as spawn direction
  * * need different menu style support for different menus
  * * add menu icon/title support
- * * support shaped menu windows
  * * use event timestamps not clock for "click and release" detect
  * * menu icons can set if/how they will be scaled
  * * support move/resize of "box" that spawned the menu
@@ -21,8 +20,7 @@
  * * allow menus to stretch width/height to fit spawner widget/box
  * * allow menus to auto-shrink (horizontally) if forced to
  * * support auto left/right direction spawn
- * * support menu icons supplied as edjes, not just image files
- * * support obscures to indicate offs-creen/not visible menu parts
+ * * support obscures to indicate offscreen/not visible menu parts
  */
 
 /* local subsystem functions */
@@ -31,13 +29,13 @@ static void _e_menu_item_free                     (E_Menu_Item *mi);
 static void _e_menu_item_realize                  (E_Menu_Item *mi);
 static void _e_menu_realize                       (E_Menu *m);
 static void _e_menu_items_layout_update           (E_Menu *m);
-static void _e_menu_item_unrealize               (E_Menu_Item *mi);
+static void _e_menu_item_unrealize                (E_Menu_Item *mi);
 static void _e_menu_unrealize                     (E_Menu *m);
 static void _e_menu_activate_internal             (E_Menu *m, E_Zone *zone);
 static void _e_menu_deactivate_all                (void);
 static void _e_menu_deactivate_above              (E_Menu *m);
 static void _e_menu_submenu_activate              (E_Menu_Item *mi);
-static void _e_menu_submenu_deactivate              (E_Menu_Item *mi);
+static void _e_menu_submenu_deactivate            (E_Menu_Item *mi);
 static void _e_menu_reposition                    (E_Menu *m);
 static int  _e_menu_active_call                   (void);
 static void _e_menu_item_activate_next            (void);
@@ -68,7 +66,7 @@ static int  _e_menu_cb_mouse_wheel                (void *data, int type, void *e
 static int  _e_menu_cb_scroll_timer               (void *data);
 static int  _e_menu_cb_window_shape               (void *data, int ev_type, void *ev);
 
-static void _e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
@@ -513,7 +511,7 @@ e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  void (*func) (void *data,
    mi->submenu_pre_cb.func = func;
    mi->submenu_pre_cb.data = data;
    if (!mi->submenu_post_cb.func)
-     mi->submenu_post_cb.func = _e_menu_item_submenu_post_cb_default;
+     mi->submenu_post_cb.func = _e_menu_cb_item_submenu_post_default;
 }
 
 void
@@ -715,6 +713,7 @@ static void
 _e_menu_free(E_Menu *m)
 {
    Evas_List *l, *tmp;
+   
    _e_menu_unrealize(m);
    for (l = m->items; l;)
      {
@@ -2211,7 +2210,7 @@ _e_menu_cb_window_shape(void *data, int ev_type, void *ev)
 }
 
 static void
-_e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *subm;
 
@@ -2219,6 +2218,5 @@ _e_menu_item_submenu_post_cb_default(void *data, E_Menu *m, E_Menu_Item *mi)
 
    subm = mi->submenu;
    e_menu_item_submenu_set(mi, NULL);
-   printf("Delete submenu: %d\n", E_OBJECT(subm)->references);
    e_object_del(E_OBJECT(subm));
 }

@@ -41,6 +41,7 @@ struct _E_Zone
    } flip;
    
    E_Action *cur_mouse_action;
+   Evas_List *popups;
 };
 
 struct _E_Event_Zone_Desk_Count_Set
