@@ -80,7 +80,7 @@ _e_opt_binding_mouse_parse(E_Config_Binding_Mouse *eb, char **params)
 		  else if (!strncmp(pp, "CTRL|", 5)) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strncmp(pp, "ALT|", 4)) eb->modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strncmp(pp, "WIN|", 4)) eb->modifiers |= E_BINDING_MODIFIER_WIN;
-		  else
+		  else if (strlen(pp) > 0)
 		    {
 		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN\n");
@@ -94,7 +94,7 @@ _e_opt_binding_mouse_parse(E_Config_Binding_Mouse *eb, char **params)
 		  else if (!strcmp(pp, "CTRL")) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strcmp(pp, "ALT")) eb->modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strcmp(pp, "WIN")) eb->modifiers |= E_BINDING_MODIFIER_WIN;
-		  else
+		  else if (strlen(pp) > 0)
 		    {
 		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN\n");
@@ -174,7 +174,7 @@ _e_opt_binding_key_parse(E_Config_Binding_Key *eb, char **params)
 		  else if (!strncmp(pp, "CTRL|", 5)) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strncmp(pp, "ALT|", 4)) eb->modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strncmp(pp, "WIN|", 4)) eb->modifiers |= E_BINDING_MODIFIER_WIN;
-		  else
+		  else if (strlen(pp) > 0)
 		    {
 		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN\n");
@@ -188,7 +188,7 @@ _e_opt_binding_key_parse(E_Config_Binding_Key *eb, char **params)
 		  else if (!strcmp(pp, "CTRL")) eb->modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strcmp(pp, "ALT")) eb->modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strcmp(pp, "WIN")) eb->modifiers |= E_BINDING_MODIFIER_WIN;
-		  else
+		  else if (strlen(pp) > 0)
 		    {
 		       printf("OPT3 moidifier unknonw. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN\n");
