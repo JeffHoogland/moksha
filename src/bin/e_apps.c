@@ -836,11 +836,12 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     if (a)
 	       {
 		  a->deleted = 1;
-		  for (l = a->references; l; l = l->next)
+		  for (l = a->references; l;)
 		    {
 		       E_App *a2;
 
 		       a2 = l->data;
+		       l = l->next;
 		       if (a2->parent)
 			 _e_app_subdir_rescan(a2->parent);
 		    }
@@ -852,11 +853,12 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     Evas_List *l;
 
 	     app->deleted = 1;
-	     for (l = app->references; l; l = l->next)
+	     for (l = app->references; l;)
 	       {
 		  E_App *a2;
 
 		  a2 = l->data;
+		  l = l->next;
 		  if (a2->parent)
 		    _e_app_subdir_rescan(a2->parent);
 	       }
