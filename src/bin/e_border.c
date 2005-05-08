@@ -215,11 +215,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    if (!bd) return NULL;
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
 
-   bd->container = con;
    printf("##- NEW CLIENT 0x%x\n", win);
    bd->w = 1;
    bd->h = 1;
-   bd->win = ecore_x_window_override_new(bd->container->win, 0, 0, bd->w, bd->h);
+   bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    if (e_canvas_engine_decide(e_config->evas_engine_borders) ==
@@ -714,31 +713,31 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  */
 		  ecore_x_window_focus(bd->client.win);
 		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-//		  e_hints_active_window_set(bd->container->manager, bd);
+//		  e_hints_active_window_set(bd->zone->container->manager, bd);
 	       }
 	     else
 	       {
 //		  printf("set focus\n");
 		  ecore_x_window_focus(bd->client.win);
-//		  e_hints_active_window_set(bd->container->manager, bd);
+//		  e_hints_active_window_set(bd->zone->container->manager, bd);
 	       }
 	  }
 	else
 	  {
 //	     printf("remove focus\n");
-	     ecore_x_window_focus(bd->container->manager->root);
-//	     e_hints_active_window_set(bd->container->manager, NULL);
+	     ecore_x_window_focus(bd->zone->container->manager->root);
+//	     e_hints_active_window_set(bd->zone->container->manager, NULL);
 	  }
      }
    if ((bd->focused) && (focused != bd))
      {
 	focused = bd;
-	e_hints_active_window_set(bd->container->manager, bd);
+	e_hints_active_window_set(bd->zone->container->manager, bd);
      }
    else if ((!bd->focused) && (focused == bd))
      {
 	focused = NULL;
-	e_hints_active_window_set(bd->container->manager, NULL);
+	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
 //   printf("F %x %i\n", bd->client.win, bd->focused);
 }
@@ -1371,7 +1370,7 @@ _e_border_free(E_Border *bd)
      }
    if (focused == bd)
      {
-	ecore_x_window_focus(bd->container->manager->root);
+	ecore_x_window_focus(bd->zone->container->manager->root);
 	focused = NULL;
      }
    while (bd->handlers)
@@ -1382,7 +1381,7 @@ _e_border_free(E_Border *bd)
 	bd->handlers = evas_list_remove_list(bd->handlers, bd->handlers);
 	ecore_event_handler_del(h);
      }
-   ecore_x_window_reparent(bd->client.win, bd->container->manager->root, bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
+   ecore_x_window_reparent(bd->client.win, bd->zone->container->manager->root, bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
    ecore_x_window_save_set_del(bd->client.win);
    if (bd->client.border.name) free(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
@@ -1399,7 +1398,7 @@ _e_border_free(E_Border *bd)
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
-   bd->container->clients = evas_list_remove(bd->container->clients, bd);
+   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
    borders = evas_list_remove(borders, bd);
 
    free(bd);
@@ -2457,7 +2456,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	new_x = x;
 	new_y = y;
 	skiplist = evas_list_append(skiplist, bd);
-	e_resist_container_border_position(bd->container, skiplist,
+	e_resist_container_border_position(bd->zone->container, skiplist,
 					   bd->x, bd->y, bd->w, bd->h,
 					   x, y, bd->w, bd->h,
 					   &new_x, &new_y, &new_w, &new_h);
@@ -3485,7 +3484,7 @@ _e_border_resize_handle(E_Border *bd)
      y += (th - h);
 
    skiplist = evas_list_append(skiplist, bd);
-   e_resist_container_border_position(bd->container, skiplist,
+   e_resist_container_border_position(bd->zone->container, skiplist,
 				      bd->x, bd->y, bd->w, bd->h,
 				      x, y, w, h,
 				      &new_x, &new_y, &new_w, &new_h);
@@ -4121,15 +4120,15 @@ _e_border_reorder_after(E_Border *bd, E_Border *after)
 {
    if (after)
      {
-	bd->container->clients = evas_list_remove(bd->container->clients, bd);
-	bd->container->clients = evas_list_append_relative(bd->container->clients, bd, after);
+	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
+	bd->zone->container->clients = evas_list_append_relative(bd->zone->container->clients, bd, after);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_append_relative(borders, bd, after);
      }
    else
      {
-	bd->container->clients = evas_list_remove(bd->container->clients, bd);
-	bd->container->clients = evas_list_append(bd->container->clients, bd);
+	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
+	bd->zone->container->clients = evas_list_append(bd->zone->container->clients, bd);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_append(borders, bd);
      }
@@ -4140,15 +4139,15 @@ _e_border_reorder_before(E_Border *bd, E_Border *before)
 {
    if (before)
      {
-	bd->container->clients = evas_list_remove(bd->container->clients, bd);
-	bd->container->clients = evas_list_prepend_relative(bd->container->clients, bd, before);
+	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
+	bd->zone->container->clients = evas_list_prepend_relative(bd->zone->container->clients, bd, before);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_prepend_relative(borders, bd, before);
      }
    else
      {
-	bd->container->clients = evas_list_remove(bd->container->clients, bd);
-	bd->container->clients = evas_list_prepend(bd->container->clients, bd);
+	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
+	bd->zone->container->clients = evas_list_prepend(bd->zone->container->clients, bd);
 	borders = evas_list_remove(borders, bd);
 	borders = evas_list_prepend(borders, bd);
      }

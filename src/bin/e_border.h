@@ -65,7 +65,6 @@ struct _E_Border
    Ecore_X_Window  win;
    int             x, y, w, h;
    int             ref;
-   E_Container    *container;
    E_Zone         *zone;
    E_Desk         *desk;
    Evas_List      *handlers;
