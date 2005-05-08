@@ -723,7 +723,7 @@ msgid "Remove Row of Desktops"
 msgstr "Usuń Rząd Pulpitów"
 
 #: src/bin/e_int_menus.c:111
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Zrestartuj Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473

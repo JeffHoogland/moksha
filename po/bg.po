@@ -822,7 +822,7 @@ msgid "Remove Row of Desktops"
 msgstr "Премахване ред от полета"
 
 #: src/bin/e_int_menus.c:128
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Рестартиране на Enlightenment"
 
 #: src/bin/e_border.c:3712

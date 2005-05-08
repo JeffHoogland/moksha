@@ -802,7 +802,7 @@ msgid "Remove Row of Desktops"
 msgstr "Sor eltávolítása az asztalok közül"
 
 #: src/bin/e_int_menus.c:116
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Újraindítás"
 
 #: src/bin/e_border.c:3537

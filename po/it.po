@@ -850,8 +850,8 @@ msgid "Remove Row of Desktops"
 msgstr "Rimuovi riga di desktop"
 
 #: src/bin/e_int_menus.c:116
-msgid "Restart Enlightement"
-msgstr "Riavvia Enlightement"
+msgid "Restart Enlightenment"
+msgstr "Riavvia Enlightenment"
 
 #: src/bin/e_border.c:3712
 msgid "Send To"

@@ -107,7 +107,7 @@ msgstr "Um módulo simples para fornecer um relógio ao E17."
 #: src/bin/e_int_menus.c:102
 #: src/bin/e_int_menus.c:210
 msgid "About Enlightenment"
-msgstr "Sobre o Enlightement"
+msgstr "Sobre o Enlightenment"
 
 #: src/bin/e_module.c:381
 msgid "About..."
@@ -663,7 +663,7 @@ msgid "Remove Row of Desktops"
 msgstr "Remove Linha de Áreas de Trabalho"
 
 #: src/bin/e_int_menus.c:111
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Reiniciar o Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:194

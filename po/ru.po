@@ -714,7 +714,7 @@ msgid "Remove Row of Desktops"
 msgstr "Удалить вертикаль Рабочих Столов"
 
 #: src/bin/e_int_menus.c:110
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Перезапустить Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473

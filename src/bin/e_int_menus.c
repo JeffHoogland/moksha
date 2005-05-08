@@ -125,7 +125,7 @@ e_int_menus_main_new(void)
    e_menu_item_separator_set(mi, 1);
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Restart Enlightement"));
+   e_menu_item_label_set(mi, _("Restart Enlightenment"));
    e_menu_item_icon_edje_set(mi,
 			     e_path_find(path_icons, "default.edj"),
 			     "reset");

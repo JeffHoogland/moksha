@@ -651,7 +651,7 @@ msgid "Remove Row of Desktops"
 msgstr "仮想デスクトップを縦に狭める"
 
 #: src/bin/e_int_menus.c:111
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Enlightenment 再始動"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473

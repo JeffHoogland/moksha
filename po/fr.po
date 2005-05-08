@@ -730,7 +730,7 @@ msgid "Remove Row of Desktops"
 msgstr "Enlever une ligne de bureaux"
 
 #: src/bin/e_int_menus.c:111
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Redémarrer Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473

@@ -831,7 +831,7 @@ msgid "Remove Row of Desktops"
 msgstr "删除一行桌面"
 
 #: src/bin/e_int_menus.c:128
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "重启 Enlightenment"
 
 #: src/bin/e_border.c:3641

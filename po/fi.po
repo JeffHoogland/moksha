@@ -723,7 +723,7 @@ msgid "Remove Row of Desktops"
 msgstr "Poista rivi työpöytiä"
 
 #: src/bin/e_int_menus.c:111
-msgid "Restart Enlightement"
+msgid "Restart Enlightenment"
 msgstr "Uudelleenkäynnistä Enlightenment"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
