@@ -593,8 +593,6 @@ e_border_raise(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
    e_container_window_raise(bd->zone->container, bd->win, bd->layer);
-   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-   bd->zone->container->clients = evas_list_append(bd->zone->container->clients, bd);
      {
 	E_Event_Border_Raise *ev;
 	
@@ -613,8 +611,6 @@ e_border_lower(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_before(bd, NULL);
    e_container_window_lower(bd->zone->container, bd->win, bd->layer);
-   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-   bd->zone->container->clients = evas_list_prepend(bd->zone->container->clients, bd);
      {
 	E_Event_Border_Lower *ev;
 	
@@ -637,8 +633,6 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
 			    above->win, ECORE_X_WINDOW_STACK_ABOVE);
-   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-   bd->zone->container->clients = evas_list_append_relative(bd->zone->container->clients, bd, above);
      {
 	E_Event_Border_Raise *ev;
 	
@@ -662,8 +656,6 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
 			    below->win, ECORE_X_WINDOW_STACK_BELOW);
-   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-   bd->zone->container->clients = evas_list_prepend_relative(bd->zone->container->clients, bd, below);
      {
 	E_Event_Border_Lower *ev;
 	
