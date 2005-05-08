@@ -16,9 +16,12 @@ static void _e_zone_event_zone_desk_count_set_free(void *data, void *ev);
 static int  _e_zone_cb_mouse_in(void *data, int type, void *event);
 static int  _e_zone_cb_mouse_out(void *data, int type, void *event);
 static int  _e_zone_cb_timer(void *data);
+static int  _e_zone_cb_desk_show(void *data, int type, void *event);
 static void _e_zone_update_flip(E_Zone *zone);
 
 int E_EVENT_ZONE_DESK_COUNT_SET = 0;
+
+static Evas_List *handlers = NULL;
 
 #define E_ZONE_FLIP_UP(zone) ((zone)->desk_y_current > 0)
 #define E_ZONE_FLIP_RIGHT(zone) (((zone)->desk_x_current + 1) < (zone)->desk_x_count)
@@ -29,6 +32,9 @@ int
 e_zone_init(void)
 {
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
+
+   handlers = evas_list_append(handlers,
+			       ecore_event_handler_add(E_EVENT_DESK_SHOW, _e_zone_cb_desk_show, NULL));
    
    return 1;
 }
@@ -36,6 +42,17 @@ e_zone_init(void)
 int
 e_zone_shutdown(void)
 {
+   Evas_List *l;
+
+   for (l = handlers; l; l = l->next)
+     {
+	Ecore_Event_Handler *evh;
+
+	evh = l->data;
+	ecore_event_handler_del(evh);
+     }
+   evas_list_free(handlers);
+   handlers = NULL;
    return 1;
 }
 
@@ -556,11 +573,7 @@ e_zone_desk_flip_to(E_Zone *zone, int x, int y)
    if (y < 0) y = 0;
    else if (y >= zone->desk_y_count) y = zone->desk_y_count - 1;
    desk = e_desk_at_xy_get(zone, x, y);
-   if (desk)
-     {
-	e_desk_show(desk);
-	_e_zone_update_flip(zone);
-     }
+   if (desk) e_desk_show(desk);
 }
 
 void
@@ -669,7 +682,6 @@ _e_zone_cb_timer(void *data)
 		{
 		   e_desk_show(desk);
 		   ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
-		   _e_zone_update_flip(zone);
 		}
 	   }
 	 break;
@@ -681,7 +693,6 @@ _e_zone_cb_timer(void *data)
 		{
 		   e_desk_show(desk);
 		   ecore_x_pointer_warp(zone->container->win, 2, y);
-		   _e_zone_update_flip(zone);
 		}
 	   }
 	 break;
@@ -693,7 +704,6 @@ _e_zone_cb_timer(void *data)
 		{
 		   e_desk_show(desk);
 		   ecore_x_pointer_warp(zone->container->win, x, 2);
-		   _e_zone_update_flip(zone);
 		}
 	   }
 	 break;
@@ -705,7 +715,6 @@ _e_zone_cb_timer(void *data)
 		{
 		   e_desk_show(desk);
 		   ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
-		   _e_zone_update_flip(zone);
 		}
 	   }
 	 break;
@@ -714,6 +723,16 @@ _e_zone_cb_timer(void *data)
    zone->flip.timer = NULL;
 
    return 0;
+}
+
+static int
+_e_zone_cb_desk_show(void *data, int type, void *event)
+{
+   E_Event_Desk_Show *ev;
+
+   ev = event;
+   _e_zone_update_flip(ev->desk->zone);
+   return 1;
 }
 
 static void
