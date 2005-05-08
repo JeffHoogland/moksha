@@ -12,7 +12,7 @@ EXTRA_DIST = $(files_DATA)
 INCLUDES               = -I. \
                          -I$(top_srcdir) \
                          -I$(includedir) \
-                         -I$(top_srcdir)$(MODULE) \
+                         -I$(top_srcdir)/$(MODULE) \
                          -I$(top_srcdir)/src/bin \
                          -I$(top_srcdir)/src/lib \
                          -I$(top_srcdir)/src/modules \
