@@ -34,6 +34,8 @@ E_Path *path_themes  = NULL;
 E_Path *path_init    = NULL;
 E_Path *path_icons   = NULL;
 int     restart      = 0;
+int     good         = 0;
+int     evil         = 0;
 
 /* local subsystem globals */
 #define MAX_LEVEL 32
@@ -72,12 +74,8 @@ main(int argc, char **argv)
       
    if (getenv("NOSPLASH")) nosplash = 1;
    if (getenv("NOSTARTUP")) nostartup = 1;
+   if (getenv("RESTART")) after_restart = 1;
    
-   if (getenv("RESTART"))
-     {
-	printf("after restart!!!\n");
-	after_restart = 1;
-     }
    e_util_env_set("RESTART", "1");
 
    e_intl_init();
@@ -100,12 +98,28 @@ main(int argc, char **argv)
 	     if (sscanf(argv[i], "%ix%i+%i+%i", &w, &h, &x, &y) == 4)
 	       e_xinerama_fake_screen_add(x, y, w, h);
 	  }
+	else if (!strcmp(argv[i], "-good"))
+	  {
+	     good = 1;
+	     evil = 0;
+	  }
+	else if (!strcmp(argv[i], "-evil"))
+	  {
+	     good = 0;
+	     evil = 1;
+	  }
+	else if (!strcmp(argv[i], "-psychotic"))
+	  {
+	     good = 1;
+	     evil = 1;
+	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
 		 (!strcmp(argv[i], "--help")))
 	  {
 	     printf
-	       (_("Options:\n"
+	       (_(
+		  "Options:\n"
 		  "\t-display DISPLAY\n"
 		  "\t\tConnect to display named DISPLAY.\n"
 		  "\t\tEG: -display :1.0\n"
@@ -114,7 +128,14 @@ main(int argc, char **argv)
 		  "\t\tgiven the geometry. Add as many as you like. They all\n"
 		  "\t\treplace the real xinerama screens, if any. This can\n"
 		  "\t\tbe used to simulate xinerama.\n"
-		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n")
+		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+		  "\t-good\n"
+		  "\t\tBe good.\n"
+		  "\t-evil\n"
+		  "\t\tBe evil.\n"
+		  "\t-psychotic\n"
+		  "\t\tBe psychotic.\n"
+		  )
 		);
 	     exit(0);
 	  }
