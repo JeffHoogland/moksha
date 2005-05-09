@@ -21,8 +21,6 @@ static void _e_zone_update_flip(E_Zone *zone);
 
 int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 
-static Evas_List *handlers = NULL;
-
 #define E_ZONE_FLIP_UP(zone) ((zone)->desk_y_current > 0)
 #define E_ZONE_FLIP_RIGHT(zone) (((zone)->desk_x_current + 1) < (zone)->desk_x_count)
 #define E_ZONE_FLIP_DOWN(zone) (((zone)->desk_y_current + 1) < (zone)->desk_y_count)
@@ -33,26 +31,12 @@ e_zone_init(void)
 {
    E_EVENT_ZONE_DESK_COUNT_SET = ecore_event_type_new();
 
-   handlers = evas_list_append(handlers,
-			       ecore_event_handler_add(E_EVENT_DESK_SHOW, _e_zone_cb_desk_show, NULL));
-   
    return 1;
 }
 
 int
 e_zone_shutdown(void)
 {
-   Evas_List *l;
-
-   for (l = handlers; l; l = l->next)
-     {
-	Ecore_Event_Handler *evh;
-
-	evh = l->data;
-	ecore_event_handler_del(evh);
-     }
-   evas_list_free(handlers);
-   handlers = NULL;
    return 1;
 }
 
@@ -78,8 +62,16 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    zone->flip.bottom = ecore_x_window_input_new(con->win, 1, h - 1, w - 2, 1);
    zone->flip.left = ecore_x_window_input_new(con->win, 0, 1, 1, h - 2);
 
-   zone->handlers = evas_list_append(zone->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_zone_cb_mouse_in, zone));
-   zone->handlers = evas_list_append(zone->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_zone_cb_mouse_out, zone));
+   zone->handlers = evas_list_append(zone->handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN,
+							     _e_zone_cb_mouse_in, zone));
+   zone->handlers = evas_list_append(zone->handlers,
+				     ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT,
+							     _e_zone_cb_mouse_out, zone));
+   zone->handlers = evas_list_append(zone->handlers,
+				     ecore_event_handler_add(E_EVENT_DESK_SHOW,
+							     _e_zone_cb_desk_show, zone));
+   
 
    snprintf(name, sizeof(name), "Zone %d", zone->num);
    zone->name = strdup(name);
@@ -729,9 +721,13 @@ static int
 _e_zone_cb_desk_show(void *data, int type, void *event)
 {
    E_Event_Desk_Show *ev;
+   E_Zone            *zone;
 
    ev = event;
-   _e_zone_update_flip(ev->desk->zone);
+   zone = data;
+   if (ev->desk->zone != zone) return 1;
+
+   _e_zone_update_flip(zone);
    return 1;
 }
 
