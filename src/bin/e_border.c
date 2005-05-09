@@ -75,6 +75,7 @@ static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -3686,6 +3687,16 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 			     "widgets/border/default/stick");
 
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Always On Top"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, (bd->layer == 175 ? 1 : 0));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/on_top"),
+			     "widgets/border/default/on_top");
+
+   mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
@@ -3821,6 +3832,23 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->sticky) e_border_unstick(bd);
    else e_border_stick(bd);
+}
+
+static void
+_e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   /* FIXME:
+    * - Remember old layer
+    * - update netwm hints
+    */
+   E_Border *bd;
+
+   bd = data;
+   if (bd->layer == 175)
+     bd->layer = 100;
+   else
+     bd->layer = 175;
+   e_container_window_raise(bd->zone->container, bd->win, bd->layer);
 }
 
 static void
