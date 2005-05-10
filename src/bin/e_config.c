@@ -135,7 +135,7 @@ e_config_init(void)
 			     "data by default for usable functionality that your old\n"
 			     "configuration simply lacks. This new set of defaults will fix\n"
 			     "that by adding it in. You can re-configure things now to your\n"
-			     "liking. Sorry for the hiccup in your confiugration.\n");
+			     "liking. Sorry for the hiccup in your configuration.\n");
 	  }
 	else if (e_config->config_version > E_CONFIG_FILE_VERSION)
 	  {
@@ -632,6 +632,7 @@ e_config_init(void)
 	  }
 	e_config_save_queue();
      }
+//   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
 
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);

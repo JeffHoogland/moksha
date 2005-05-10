@@ -72,11 +72,6 @@ main(int argc, char **argv)
 	     i++;
 	     set_win_class = argv[i];
 	  }
-	else if ((!strcmp(argv[i], "-set-win-class")) && (i < (argc - 1)))
-	  {
-	     i++;
-	     set_win_class = argv[i];
-	  }
 	else if ((!strcmp(argv[i], "-set-startup-notify")) && (i < (argc - 1)))
 	  {
 	     i++;
@@ -95,6 +90,8 @@ main(int argc, char **argv)
 	     del_exe = 1;
 	     del_win_name = 1;
 	     del_win_class = 1;
+	     del_startup_notify = 1;
+	     del_wait_exit = 1;
 	  }
 	else if ((!strcmp(argv[i], "-del-name")))
 	  {
@@ -143,6 +140,15 @@ main(int argc, char **argv)
      {
 	printf("ERROR: no file specified!\n");
 	_e_help();
+	exit(0);
+     }
+   if ((!set_name) && (!set_generic) && (!set_comment) && (!set_exe) &&
+       (!set_win_name) && (!set_win_class) && (!set_startup_notify) &&
+       (!set_wait_exit) && (!del_name) && (!del_generic) && (!del_comment) &&
+       (!del_exe) && (!del_win_name) && (!del_win_class) &&
+       (!del_startup_notify) && (!del_wait_exit))
+     {
+	printf("ERROR: nothing to do!\n");
 	exit(0);
      }
    eet_init();
