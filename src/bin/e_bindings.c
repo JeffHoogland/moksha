@@ -77,7 +77,28 @@ e_bindings_init(void)
 int
 e_bindings_shutdown(void)
 {
-   /* FIXME: free bindings */
+   Evas_List *l;
+   
+   for (l = mouse_bindings; l; l = l->next)
+     {
+	E_Binding_Mouse *bind;
+	
+	bind = l->data;
+	_e_bindings_mouse_free(bind);
+     }
+   evas_list_free(mouse_bindings);
+   mouse_bindings = NULL;
+
+   for (l = key_bindings; l; l = l->next)
+     {
+	E_Binding_Key *bind;
+	
+	bind = l->data;
+	_e_bindings_key_free(bind);
+     }
+   evas_list_free(key_bindings);
+   key_bindings = NULL;
+
    return 1;
 }
 

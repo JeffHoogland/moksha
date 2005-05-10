@@ -48,6 +48,7 @@
    static void _e_actions_act_##act##_end_key(E_Object *obj, char *params, Ecore_X_Event_Key_Up *ev)
 
 /* local subsystem functions */
+static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* to save writing this in N places - the sctions are defined here */
 /***************************************************************************/
@@ -549,7 +550,12 @@ e_actions_init(void)
 int
 e_actions_shutdown(void)
 {
-   /* FIXME: free actions */
+   if (actions)
+     {
+	evas_hash_foreach(actions, _e_actions_cb_free, NULL);
+	evas_hash_free(actions);
+	actions = NULL;
+     }
    return 1;
 }
 
@@ -593,3 +599,14 @@ e_action_del(char *name)
 }
 
 /* local subsystem functions */
+static Evas_Bool
+_e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
+		   void *data, void *fdata __UNUSED__)
+{
+   E_Action *act;
+
+   act = data;
+   IF_FREE(act->name);
+   free(act);
+   return 0;
+}
