@@ -26,7 +26,7 @@ struct _E_Drag
    struct {
 	void (*finished)(E_Drag *drag, int dropped);
    } cb;
-   E_Zone            *zone;
+   E_Container       *container;
    Ecore_Evas        *ecore_evas;
    Evas              *evas;
    Ecore_X_Window     evas_win;
@@ -85,7 +85,7 @@ EAPI int  e_dnd_shutdown(void);
 
 EAPI int  e_dnd_active(void);
 
-EAPI E_Drag* e_drag_new(E_Zone *zone, const char *type, void *data,
+EAPI E_Drag* e_drag_new(E_Container *container, const char *type, void *data,
 			void (*finished_cb)(E_Drag *drag, int dropped),
 			const char *icon_path, const char *icon);
 EAPI void    e_drag_show(E_Drag *drag);

@@ -2492,7 +2492,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 				 E_Drag *drag;
 				 Evas_Coord w, h;
 				 
-				 drag = e_drag_new(bd->zone,
+				 drag = e_drag_new(bd->zone->container,
 						   "enlightenment/border", bd,
 						   NULL,
 						   a->path, "icon");

@@ -16,7 +16,8 @@ static Evas_List *_e_popup_list = NULL;
 int
 e_popup_init(void)
 {
-   _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,      _e_popup_cb_window_shape, NULL);
+   _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
+							   _e_popup_cb_window_shape, NULL);
    return 1;
 }
 

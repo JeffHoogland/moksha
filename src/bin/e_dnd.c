@@ -3,11 +3,6 @@
  */
 #include "e.h"
 
-/*
- * TODO:
- * - check with multiple zones!
- */
-
 /* local subsystem functions */
 
 static void _e_drag_free(E_Drag *drag);
@@ -120,7 +115,7 @@ e_dnd_shutdown(void)
 }
 
 E_Drag*
-e_drag_new(E_Zone *zone,
+e_drag_new(E_Container *container,
 	   const char *type, void *data,
 	   void (*finished_cb)(E_Drag *drag, int dropped),
 	   const char *icon_path, const char *icon)
@@ -135,14 +130,14 @@ e_drag_new(E_Zone *zone,
    drag->w = 24;
    drag->h = 24;
    drag->layer = 250;
-   drag->zone = zone;
+   drag->container = container;
+   e_object_ref(E_OBJECT(drag->container));
    if (e_canvas_engine_decide(e_config->evas_engine_drag) ==
        E_EVAS_ENGINE_GL_X11)
      {
 	drag->ecore_evas = ecore_evas_gl_x11_new(NULL,
-						 drag->zone->container->win,
-						 drag->zone->x + drag->x,
-						 drag->zone->y + drag->y,
+						 drag->container->win,
+						 drag->x, drag->y,
 						 drag->w, drag->h);
 	ecore_evas_gl_x11_direct_resize_set(drag->ecore_evas, 1);
 	drag->evas_win = ecore_evas_gl_x11_window_get(drag->ecore_evas);
@@ -150,24 +145,22 @@ e_drag_new(E_Zone *zone,
    else
      {
 	drag->ecore_evas = ecore_evas_software_x11_new(NULL,
-						      drag->zone->container->win,
-						      drag->zone->x + drag->x,
-						      drag->zone->y + drag->y,
+						      drag->container->win,
+						      drag->x, drag->y,
 						      drag->w, drag->h);
 	ecore_evas_software_x11_direct_resize_set(drag->ecore_evas, 1);
 	drag->evas_win = ecore_evas_software_x11_window_get(drag->ecore_evas);
      }
    e_canvas_add(drag->ecore_evas);
-   drag->shape = e_container_shape_add(drag->zone->container);
-   e_container_shape_move(drag->shape, drag->zone->x + drag->x, drag->zone->y + drag->y);
+   drag->shape = e_container_shape_add(drag->container);
+   e_container_shape_move(drag->shape, drag->x, drag->y);
    e_container_shape_resize(drag->shape, drag->w, drag->h);
 
    drag->evas = ecore_evas_get(drag->ecore_evas);
-   e_container_window_raise(drag->zone->container, drag->evas_win, drag->layer);
+   e_container_window_raise(drag->container, drag->evas_win, drag->layer);
    ecore_x_window_shape_events_select(drag->evas_win, 1);
    ecore_evas_name_class_set(drag->ecore_evas, "E", "_e_drag_window");
    ecore_evas_title_set(drag->ecore_evas, "E Drag");
-   e_object_ref(E_OBJECT(drag->zone));
 
    ecore_evas_shaped_set(drag->ecore_evas, 1);
 
@@ -211,11 +204,11 @@ e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x;
    drag->y = y;
    ecore_evas_move(drag->ecore_evas,
-		   drag->zone->x + drag->x, 
-		   drag->zone->y + drag->y);
+		   drag->x, 
+		   drag->y);
    e_container_shape_move(drag->shape,
-			  drag->zone->x + drag->x, 
-			  drag->zone->y + drag->y);
+			  drag->x, 
+			  drag->y);
 }
 
 void
@@ -239,9 +232,9 @@ e_drag_start(E_Drag *drag)
 {
    Evas_List *l;
 
-   _drag_win = ecore_x_window_input_new(drag->zone->container->win, 
-					drag->zone->container->x, drag->zone->container->y,
-					drag->zone->container->w, drag->zone->container->h);
+   _drag_win = ecore_x_window_input_new(drag->container->win, 
+					drag->container->x, drag->container->y,
+					drag->container->w, drag->container->h);
    ecore_x_window_show(_drag_win);
    ecore_x_pointer_confine_grab(_drag_win);
    ecore_x_keyboard_grab(_drag_win);
@@ -405,7 +398,7 @@ _e_drag_free(E_Drag *drag)
 {
    _draggies = evas_list_remove(_draggies, drag);
 
-   e_object_unref(E_OBJECT(drag->zone));
+   e_object_unref(E_OBJECT(drag->container));
    evas_object_del(drag->object);
    e_canvas_del(drag->ecore_evas);
    ecore_evas_free(drag->ecore_evas);
