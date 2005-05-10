@@ -673,6 +673,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
+		   /* FIXME: move border after warp */
 		   ecore_x_pointer_warp(zone->container->win, x, zone->h - 2);
 		}
 	   }
@@ -684,6 +685,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
+		   /* FIXME: move border after warp */
 		   ecore_x_pointer_warp(zone->container->win, 2, y);
 		}
 	   }
@@ -695,6 +697,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
+		   /* FIXME: move border after warp */
 		   ecore_x_pointer_warp(zone->container->win, x, 2);
 		}
 	   }
@@ -706,6 +709,7 @@ _e_zone_cb_timer(void *data)
 	      if (desk)
 		{
 		   e_desk_show(desk);
+		   /* FIXME: move border after warp */
 		   ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
 		}
 	   }
