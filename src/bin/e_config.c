@@ -176,6 +176,7 @@ e_config_init(void)
 	e_config->evas_engine_borders = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_errors = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
 	  {
 	     E_Config_Module *em;

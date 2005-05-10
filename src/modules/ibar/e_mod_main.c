@@ -1249,7 +1249,7 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     drag = 1;
 	     drag_start = 0;
 
-	     d = e_drag_new(ic->ibb->con,
+	     d = e_drag_new(e_zone_current_get(ic->ibb->con),
 			    "enlightenment/eapp", ic->app, _ibar_bar_cb_finished,
 			    ic->app->path, "icon");
 	     e_drag_resize(d, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
@@ -1538,7 +1538,6 @@ _ibar_bar_cb_finished(E_Drag *drag, int dropped)
    /* Unref the object so it will be deleted. */
    if (!dropped)
      e_object_unref(E_OBJECT(drag->data));
-   e_drag_del(drag);
 }
 
 static void

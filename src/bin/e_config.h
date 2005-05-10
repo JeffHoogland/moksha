@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 100
+#define E_CONFIG_FILE_VERSION 101
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -75,6 +75,7 @@ struct _E_Config
    int         evas_engine_borders;
    int         evas_engine_errors;
    int         evas_engine_popups;
+   int         evas_engine_drag;
    char       *language;
    Evas_List  *modules;
    Evas_List  *font_fallbacks;

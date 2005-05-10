@@ -110,7 +110,6 @@ static void _e_border_reorder_after(E_Border *bd, E_Border *after);
 static void _e_border_reorder_before(E_Border *bd, E_Border *before);
 
 static int  _e_border_cb_focus_fix(void *data);
-static void  _e_border_cb_finished(E_Drag *drag, int dropped);
 
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -2493,9 +2492,9 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 				 E_Drag *drag;
 				 Evas_Coord w, h;
 				 
-				 drag = e_drag_new(bd->zone->container,
+				 drag = e_drag_new(bd->zone,
 						   "enlightenment/border", bd,
-						   _e_border_cb_finished,
+						   NULL,
 						   a->path, "icon");
 				 edje_object_part_geometry_get(bd->bg_object, "icon",
 							       NULL, NULL, &w, &h);
@@ -4205,10 +4204,4 @@ _e_border_cb_focus_fix(void *data)
  */
      }
    return 1;
-}
-
-static void
-_e_border_cb_finished(E_Drag *drag, int dropped)
-{
-   e_drag_del(drag);
 }
