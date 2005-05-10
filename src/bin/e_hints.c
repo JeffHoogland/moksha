@@ -256,9 +256,9 @@ e_hints_window_init(E_Border *bd)
 
    if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
      bd->layer = 0;
-   else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-     bd->layer = 50;
    else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
+     bd->layer = 50;
+   else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
      bd->layer = 150;
    else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
      bd->layer = 150;
@@ -614,6 +614,8 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_ABOVE:
+	 /* FIXME: Should this require that BELOW is set to 0 first, or just
+	  * do it? */
 	 changed = 0;
 	 switch (action)
 	   {
@@ -657,6 +659,8 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_BELOW:
+	 /* FIXME: Should this require that ABOVE is set to 0 first, or just
+	  * do it? */
 	 changed = 0;
 	 switch (action)
 	   {
@@ -900,9 +904,6 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MODAL, on);
 ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR, on);
 ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_PAGER, on);
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_FULLSCREEN, on);
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_ABOVE, on);
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_BELOW, on);
 */
 
 void
