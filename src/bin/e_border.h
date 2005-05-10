@@ -19,6 +19,13 @@ typedef enum _E_Transition
    E_TRANSITION_DECELERATE
 } E_Transition;
 
+typedef enum _E_Stacking
+{
+   E_STACKING_NONE,
+   E_STACKING_ABOVE,
+   E_STACKING_BELOW
+} E_Stacking;
+
 typedef struct _E_Border                     E_Border;
 typedef struct _E_Border_Pending_Move_Resize E_Border_Pending_Move_Resize;
 typedef struct _E_Event_Border_Resize        E_Event_Border_Resize;
@@ -157,7 +164,7 @@ struct _E_Border
 	    unsigned char skip_taskbar : 1;
 	    unsigned char skip_pager : 1;
 	    unsigned char fullscreen : 1;
-	    unsigned char stacking : 2; /* 0 = None, 1 = Above, 2 = Below */
+	    E_Stacking    stacking;
 	 } state;
 
 	 Ecore_X_Window_Type type;

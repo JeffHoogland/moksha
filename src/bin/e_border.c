@@ -3689,7 +3689,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Always On Top"));
    e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, (bd->layer == 175 ? 1 : 0));
+   e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
    e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
    e_menu_item_icon_edje_set(mi,
 			     (char *)e_theme_edje_file_get("base/theme/borders",
@@ -3844,10 +3844,16 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->layer == 175)
-     bd->layer = 100;
+   if (bd->layer == 150)
+     {
+	bd->layer = 100;
+	e_hints_window_stacking_set(bd, E_STACKING_NONE);
+     }
    else
-     bd->layer = 175;
+     {
+	bd->layer = 150;
+	e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
+     }
    e_container_window_raise(bd->zone->container, bd->win, bd->layer);
 }
 

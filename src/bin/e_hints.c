@@ -256,9 +256,9 @@ e_hints_window_init(E_Border *bd)
 
    if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
      bd->layer = 0;
-   else if (bd->client.netwm.state.stacking == 2)
+   else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
      bd->layer = 50;
-   else if (bd->client.netwm.state.stacking == 1)
+   else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
      bd->layer = 150;
    else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
      bd->layer = 150;
@@ -306,12 +306,15 @@ e_hints_window_state_set(E_Border *bd)
    
    switch (bd->client.netwm.state.stacking)
      {
-      case 1:
+      case E_STACKING_ABOVE:
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 1);
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 0);
-      case 2:
+	 break;
+      case E_STACKING_BELOW:
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 0);
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 1);
+	 break;
+      case E_STACKING_NONE:
       default:
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 0);
 	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 0);
@@ -615,28 +618,28 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       if (bd->client.netwm.state.stacking == 1)
+	       if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
 		 {
-		    bd->client.netwm.state.stacking = 0;
+		    bd->client.netwm.state.stacking = E_STACKING_NONE;
 		    changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       if (bd->client.netwm.state.stacking == 0)
+	       if (bd->client.netwm.state.stacking == E_STACKING_NONE)
 		 {
-		    bd->client.netwm.state.stacking = 1;
+		    bd->client.netwm.state.stacking = E_STACKING_ABOVE;
 		    changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       if (bd->client.netwm.state.stacking == 1)
+	       if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
 		 {
-		    bd->client.netwm.state.stacking = 0;
+		    bd->client.netwm.state.stacking = E_STACKING_NONE;
 		    changed = 1;
 		 }
-	       else if (bd->client.netwm.state.stacking == 0)
+	       else if (bd->client.netwm.state.stacking == E_STACKING_NONE)
 		 {
-		    bd->client.netwm.state.stacking = 1;
+		    bd->client.netwm.state.stacking = E_STACKING_ABOVE;
 		    changed = 1;
 		 }
 	       break;
@@ -658,28 +661,28 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       if (bd->client.netwm.state.stacking == 2)
+	       if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
 		 {
-		    bd->client.netwm.state.stacking = 0;
+		    bd->client.netwm.state.stacking = E_STACKING_NONE;
 		    changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       if (bd->client.netwm.state.stacking == 0)
+	       if (bd->client.netwm.state.stacking == E_STACKING_NONE)
 		 {
-		    bd->client.netwm.state.stacking = 2;
+		    bd->client.netwm.state.stacking = E_STACKING_BELOW;
 		    changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	       if (bd->client.netwm.state.stacking == 2)
+	       if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
 		 {
-		    bd->client.netwm.state.stacking = 0;
+		    bd->client.netwm.state.stacking = E_STACKING_NONE;
 		    changed = 1;
 		 }
-	       else if (bd->client.netwm.state.stacking == 0)
+	       else if (bd->client.netwm.state.stacking == E_STACKING_NONE)
 		 {
-		    bd->client.netwm.state.stacking = 2;
+		    bd->client.netwm.state.stacking = E_STACKING_BELOW;
 		    changed = 1;
 		 }
 	       break;
@@ -858,7 +861,6 @@ e_hints_window_fullscreen_set(E_Border *bd, int on)
 void
 e_hints_window_sticky_set(E_Border *bd, int on)
 {
-   ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, on);
    if ((!bd->client.netwm.state.sticky) && (on))
      {
 	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, 1);
@@ -869,6 +871,29 @@ e_hints_window_sticky_set(E_Border *bd, int on)
 	ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_STICKY, 0);
 	bd->client.netwm.state.sticky = 0;
      }
+}
+
+void
+e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
+{
+   if (bd->client.netwm.state.stacking == stacking) return;
+   switch (stacking)
+     {
+      case E_STACKING_ABOVE:
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 1);
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 0);
+	 break;
+      case E_STACKING_BELOW:
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 0);
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 1);
+	 break;
+      case E_STACKING_NONE:
+      default:
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE, 0);
+	 ecore_x_netwm_window_state_set(bd->client.win, ECORE_X_WINDOW_STATE_BELOW, 0);
+	 break;
+     }
+   bd->client.netwm.state.stacking = stacking;
 }
 
 /*
