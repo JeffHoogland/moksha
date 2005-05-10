@@ -1613,27 +1613,22 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  {
 	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
 	       {
-		  printf("config raise %d\n", bd->layer);
 		  e_border_raise(bd);
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
 	       {
-		  printf("config lower\n");
 		  e_border_lower(bd);
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
 	       {
-		  printf("config topif\n");
 		  /* FIXME: do */
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
 	       {
-		  printf("config bottomif\n");
 		  /* FIXME: do */
 	       }
 	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
 	       {
-		  printf("config opposite\n");
 		  /* FIXME: do */
 	       }
 	  }
@@ -1918,7 +1913,6 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    return 1;
 }
 
-/* FIXME: Really needs cleaning! */
 static int
 _e_border_cb_window_state(void *data, int ev_type, void *ev)
 {
@@ -1929,7 +1923,6 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("State: 0x%x %d %d\n", bd->client.win, e->state[0], e->state[1]);
    for (i = 0; i < 2; i++)
      e_hints_window_state_update(bd, e->state[i], e->action);
    return 1;
@@ -3839,7 +3832,6 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    /* FIXME:
     * - Remember old layer
-    * - update netwm hints
     */
    E_Border *bd;
 
