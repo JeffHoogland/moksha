@@ -1390,7 +1390,7 @@ _ibar_bar_cb_animator(void *data)
 static void
 _ibar_bar_cb_enter(void *data, const char *type, void *event)
 {
-   E_Enter_Event *ev;
+   E_Event_Dnd_Enter *ev;
    Evas_Object *o;
    IBar_Bar *ibb;
 
@@ -1406,7 +1406,7 @@ _ibar_bar_cb_enter(void *data, const char *type, void *event)
 static void
 _ibar_bar_cb_move(void *data, const char *type, void *event)
 {
-   E_Move_Event *ev;
+   E_Event_Dnd_Move *ev;
    IBar_Bar *ibb;
    IBar_Icon *ic;
    Evas_Coord x, y, w, h;
@@ -1464,7 +1464,7 @@ _ibar_bar_cb_move(void *data, const char *type, void *event)
 static void
 _ibar_bar_cb_leave(void *data, const char *type, void *event)
 {
-   E_Leave_Event *ev;
+   E_Event_Dnd_Leave *ev;
    IBar_Bar *ibb;
 
    ev = event;
@@ -1481,7 +1481,7 @@ _ibar_bar_cb_leave(void *data, const char *type, void *event)
 static void
 _ibar_bar_cb_drop(void *data, const char *type, void *event)
 {
-   E_Drop_Event *ev;
+   E_Event_Dnd_Drop *ev;
    E_App *app;
    IBar_Bar *ibb;
    IBar_Icon *ic;

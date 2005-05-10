@@ -195,9 +195,9 @@ void
 e_drag_update(int x, int y)
 {
    Evas_List *l;
-   E_Enter_Event *enter_ev;
-   E_Move_Event *move_ev;
-   E_Leave_Event *leave_ev;
+   E_Event_Dnd_Enter *enter_ev;
+   E_Event_Dnd_Move *move_ev;
+   E_Event_Dnd_Leave *leave_ev;
    int w, h;
 
    if (!drag_current->visible)
@@ -211,15 +211,15 @@ e_drag_update(int x, int y)
    evas_object_geometry_get(drag_current->object, NULL, NULL, &w, &h);
    ecore_evas_move(drag_current->ee, x - (w / 2), y - (h / 2));
 
-   enter_ev = E_NEW(E_Enter_Event, 1);
+   enter_ev = E_NEW(E_Event_Dnd_Enter, 1);
    enter_ev->x = x;
    enter_ev->y = y;
    
-   move_ev = E_NEW(E_Move_Event, 1);
+   move_ev = E_NEW(E_Event_Dnd_Move, 1);
    move_ev->x = x;
    move_ev->y = y;
 
-   leave_ev = E_NEW(E_Leave_Event, 1);
+   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
    leave_ev->x = x;
    leave_ev->y = y;
 
@@ -263,7 +263,7 @@ void
 e_drag_end(int x, int y)
 {
    Evas_List *l;
-   E_Drop_Event *ev;
+   E_Event_Dnd_Drop *ev;
    int dropped;
 
    if (drag_current->ee)
@@ -275,7 +275,7 @@ e_drag_end(int x, int y)
    ecore_x_window_del(drag_win);
    drag_win = 0;
 
-   ev = E_NEW(E_Drop_Event, 1);
+   ev = E_NEW(E_Event_Dnd_Drop, 1);
    ev->data = drag_current->data;
    ev->x = x;
    ev->y = y;

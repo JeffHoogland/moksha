@@ -1367,7 +1367,7 @@ _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_C
 static void
 _pager_drop_cb(void *data, const char *type, void *event_info)
 {
-   E_Drop_Event *ev;
+   E_Event_Dnd_Drop *ev;
    Pager_Face *face;
    E_Desk *desk;
    E_Border *bd;

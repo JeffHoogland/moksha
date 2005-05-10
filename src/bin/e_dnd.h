@@ -4,12 +4,12 @@
 
 #ifdef E_TYPEDEFS
 
-typedef struct _E_Drag         E_Drag;
-typedef struct _E_Drop_Handler E_Drop_Handler;
-typedef struct _E_Enter_Event  E_Enter_Event;
-typedef struct _E_Move_Event   E_Move_Event;
-typedef struct _E_Leave_Event  E_Leave_Event;
-typedef struct _E_Drop_Event   E_Drop_Event;
+typedef struct _E_Drag             E_Drag;
+typedef struct _E_Drop_Handler     E_Drop_Handler;
+typedef struct _E_Event_Dnd_Enter  E_Event_Dnd_Enter;
+typedef struct _E_Event_Dnd_Move   E_Event_Dnd_Move;
+typedef struct _E_Event_Dnd_Leave  E_Event_Dnd_Leave;
+typedef struct _E_Event_Dnd_Drop   E_Event_Dnd_Drop;
 
 #else
 #ifndef E_DND_H
@@ -43,22 +43,22 @@ struct _E_Drop_Handler
    unsigned char entered : 1;
 };
 
-struct _E_Enter_Event
+struct _E_Event_Dnd_Enter
 {
    int x, y;
 };
 
-struct _E_Move_Event
+struct _E_Event_Dnd_Move
 {
    int x, y;
 };
 
-struct _E_Leave_Event
+struct _E_Event_Dnd_Leave
 {
    int x, y;
 };
 
-struct _E_Drop_Event
+struct _E_Event_Dnd_Drop
 {
    void *data;
    int x, y;
