@@ -1425,11 +1425,19 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (!bd)
+   if (!bd) return 1;
+#if 0
+   else if (e_object_is_del(E_OBJECT(bd)))
      {
-	printf("BUG: Need this border: 0x%x\n", e->win);
-	return 1;
+	printf("Rescue this poor border from deletion!\n");
+	E_OBJECT(bd)->deleted = 0;
+	e_object_ref(E_OBJECT(bd));
+	e_border_show(bd);
+	e_border_raise(bd);
      }
+#endif
+   e_border_show(bd);
+   e_border_raise(bd);
    return 1;
 }
 
@@ -1462,6 +1470,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	bd->ignore_first_unmap--;
 	return 1;
      }
+#if 0
    /* Don't delete hidden or iconified windows */
    if ((bd->iconic) || (!bd->visible))
      {
@@ -1472,6 +1481,8 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	e_border_hide(bd, 0);
 	e_object_del(E_OBJECT(bd));
      }
+#endif
+   e_border_hide(bd, 1);
    return 1;
 }
 
