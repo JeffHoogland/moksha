@@ -1409,8 +1409,6 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
-   printf("Delete border\n");
-
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
    /* FIXME Don't ref this during shutdown. And the event is pointless
@@ -1449,7 +1447,6 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
-   int was_iconic = 0, was_visible = 0;
 
 //   printf("in hide cb\n");
    bd = data;
@@ -1462,16 +1459,14 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
-   was_iconic = bd->iconic;
-   was_visible = bd->visible;
-   if (!(was_iconic) && (was_visible))
+   if ((bd->iconic) || (!bd->visible))
      {
-	e_border_hide(bd, 0);
-	e_object_del(E_OBJECT(bd));
+	e_border_hide(bd, 1);
      }
    else
      {
-	e_border_hide(bd, 1);
+	e_border_hide(bd, 0);
+	e_object_del(E_OBJECT(bd));
      }
    return 1;
 }
