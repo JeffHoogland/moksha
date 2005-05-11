@@ -297,6 +297,8 @@ e_app_prepend_relative(E_App *add, E_App *before)
      {
 	/* Move to all */
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
+	if (ecore_file_exists(buf))
+	  snprintf(buf, sizeof(buf), "%s/%s", before->parent->path, ecore_file_get_file(add->path));
 	ecore_file_mv(add->path, buf);
 	free(add->path);
 	add->path = strdup(buf);
@@ -320,6 +322,8 @@ e_app_append(E_App *add, E_App *parent)
      {
 	/* Move to all */
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
+	if (ecore_file_exists(buf))
+	  snprintf(buf, sizeof(buf), "%s/%s", parent->path, ecore_file_get_file(add->path));
 	ecore_file_mv(add->path, buf);
 	free(add->path);
 	add->path = strdup(buf);
