@@ -1245,13 +1245,17 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	if (dist > 10)
 	  {
 	     E_Drag *d;
+	     Evas_Object *o;
 
 	     drag = 1;
 	     drag_start = 0;
 
 	     d = e_drag_new(ic->ibb->con,
-			    "enlightenment/eapp", ic->app, _ibar_bar_cb_finished,
-			    ic->app->path, "icon");
+			    "enlightenment/eapp", ic->app, _ibar_bar_cb_finished);
+	     o = edje_object_add(e_drag_evas_get(d));
+	     edje_object_file_set(o, ic->app->path, "icon");
+	     e_drag_object_set(d, o);
+
 	     e_drag_resize(d, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
 	     e_drag_start(d);
 	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
@@ -1433,6 +1437,9 @@ _ibar_bar_cb_move(void *data, const char *type, void *event)
 	iw = h / (double) evas_list_count(ibb->icons);
 	pos = round(y / iw);
      }
+   else
+     return;
+
    ic = evas_list_nth(ibb->icons, pos);
 
    e_box_freeze(ibb->box_object);
@@ -1519,6 +1526,9 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 	iw = h / (double) evas_list_count(ibb->icons);
 	pos = round(y / iw);
      }
+   else
+     return;
+
    ic = evas_list_nth(ibb->icons, pos);
    if (ic)
      {
@@ -1562,10 +1572,10 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 _ibar_bar_follower_reset(ibb);
 	 _ibar_bar_timer_handle(ibb);
 
-	 ibb->drop_handler->x = ibb->x + ibb->inset.l;
-	 ibb->drop_handler->y = ibb->y + ibb->inset.t;
-	 ibb->drop_handler->w = ibb->w - (ibb->inset.l + ibb->inset.r);
-	 ibb->drop_handler->h = ibb->h - (ibb->inset.t + ibb->inset.b);
+	 e_drop_handler_geometry_set(ibb->drop_handler,
+				     ibb->x + ibb->inset.l, ibb->y + ibb->inset.t,
+				     ibb->w - (ibb->inset.l + ibb->inset.r),
+				     ibb->h - (ibb->inset.t + ibb->inset.b));
 	 break;
       case E_GADMAN_CHANGE_EDGE:
 	 _ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));

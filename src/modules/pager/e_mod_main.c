@@ -62,7 +62,7 @@ static void        _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *o
 static void        _pager_desk_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void        _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
-static void        _pager_drop_cb(void *data, const char *type, void *drop);
+static void        _pager_cb_drop(void *data, const char *type, void *drop);
 
 static int         _pager_count;
 
@@ -342,7 +342,7 @@ _pager_face_new(E_Zone *zone)
    evas_object_show(o);
 
    face->drop_handler = e_drop_handler_add(face,
-					   NULL, NULL, NULL, _pager_drop_cb,
+					   NULL, NULL, NULL, _pager_cb_drop,
 					   "enlightenment/border",
 					   face->fx, face->fy, face->fw, face->fh);
    
@@ -717,10 +717,11 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
 
    face = data;
    e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
-   face->drop_handler->x = face->fx = x;
-   face->drop_handler->y = face->fy = y;
-   face->drop_handler->w = face->fw = w;
-   face->drop_handler->h = face->fh = h;
+   face->fx = x;
+   face->fy = y;
+   face->fw = w;
+   face->fh = h;
+   e_drop_handler_geometry_set(face->drop_handler, x, y, w, h);
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
@@ -1365,7 +1366,7 @@ _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_C
 }
 
 static void
-_pager_drop_cb(void *data, const char *type, void *event_info)
+_pager_cb_drop(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Drop *ev;
    Pager_Face *face;
@@ -1377,6 +1378,7 @@ _pager_drop_cb(void *data, const char *type, void *event_info)
    ev = event_info;
    face = data;
 
+   /* FIXME, check if the pager module has border */
    w = face->fw / (double) face->xnum;
    h = face->fh / (double) face->ynum;
 

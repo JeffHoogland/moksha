@@ -117,8 +117,7 @@ e_dnd_shutdown(void)
 E_Drag*
 e_drag_new(E_Container *container,
 	   const char *type, void *data,
-	   void (*finished_cb)(E_Drag *drag, int dropped),
-	   const char *icon_path, const char *icon)
+	   void (*finished_cb)(E_Drag *drag, int dropped))
 {
    E_Drag *drag;
 
@@ -164,8 +163,8 @@ e_drag_new(E_Container *container,
 
    ecore_evas_shaped_set(drag->ecore_evas, 1);
 
-   drag->object = edje_object_add(drag->evas);
-   edje_object_file_set(drag->object, icon_path, icon);
+   drag->object = evas_object_rectangle_add(drag->evas);
+   evas_object_color_set(drag->object, 255, 0, 0, 255);
    evas_object_show(drag->object);
 
    evas_object_move(drag->object, 0, 0);
@@ -177,6 +176,19 @@ e_drag_new(E_Container *container,
    drag->cb.finished = finished_cb;
 
    return drag;
+}
+
+Evas *
+e_drag_evas_get(E_Drag *drag)
+{
+   return drag->evas;
+}
+
+void
+e_drag_object_set(E_Drag *drag, Evas_Object *object)
+{
+   if (drag->object) evas_object_del(drag->object);
+   drag->object = object;
 }
 
 void
@@ -204,15 +216,15 @@ e_drag_move(E_Drag *drag, int x, int y)
    drag->x = x;
    drag->y = y;
    ecore_evas_move(drag->ecore_evas,
-		   drag->x, 
-		   drag->y);
+		   drag->x - (drag->w / 2), 
+		   drag->y - (drag->h / 2));
    e_container_shape_move(drag->shape,
-			  drag->x, 
-			  drag->y);
+			  drag->x - (drag->w / 2), 
+			  drag->y - (drag->h / 2));
 }
 
 void
-e_drag_resize(E_Drag *drag, unsigned int w, unsigned int h)
+e_drag_resize(E_Drag *drag, int w, int h)
 {
    if ((drag->w == w) && (drag->h == h)) return;
    drag->h = h;
@@ -382,6 +394,15 @@ e_drop_handler_add(void *data,
    _drop_handlers = evas_list_append(_drop_handlers, handler);
 
    return handler;
+}
+
+void
+e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
+{
+   handler->x = x;
+   handler->y = y;
+   handler->w = w;
+   handler->h = h;
 }
 
 void

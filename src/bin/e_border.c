@@ -2490,12 +2490,15 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 			    if (a)
 			      {
 				 E_Drag *drag;
+				 Evas_Object *o;
 				 Evas_Coord w, h;
 				 
 				 drag = e_drag_new(bd->zone->container,
-						   "enlightenment/border", bd,
-						   NULL,
-						   a->path, "icon");
+						   "enlightenment/border", bd, NULL);
+				 o = edje_object_add(drag->evas);
+				 edje_object_file_set(o, a->path, "icon");
+				 e_drag_object_set(drag, o);
+
 				 edje_object_part_geometry_get(bd->bg_object, "icon",
 							       NULL, NULL, &w, &h);
 				 e_drag_resize(drag, w, h);

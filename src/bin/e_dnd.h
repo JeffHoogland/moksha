@@ -33,15 +33,10 @@ struct _E_Drag
    E_Container_Shape *shape;
    Evas_Object       *object;
 
-   int          x, y;
-   unsigned int w, h;
+   int x, y, w, h;
 
    unsigned int   layer;
    unsigned char  visible : 1;
-   /*
-   unsigned char  shaped : 1;
-   unsigned char  need_shape_export : 1; 
-   */
 };
 
 struct _E_Drop_Handler
@@ -86,12 +81,13 @@ EAPI int  e_dnd_shutdown(void);
 EAPI int  e_dnd_active(void);
 
 EAPI E_Drag* e_drag_new(E_Container *container, const char *type, void *data,
-			void (*finished_cb)(E_Drag *drag, int dropped),
-			const char *icon_path, const char *icon);
+			void (*finished_cb)(E_Drag *drag, int dropped));
+EAPI Evas   *e_drag_evas_get(E_Drag *drag);
+EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
 EAPI void    e_drag_show(E_Drag *drag);
 EAPI void    e_drag_hide(E_Drag *drag);
 EAPI void    e_drag_move(E_Drag *drag, int x, int y);
-EAPI void    e_drag_resize(E_Drag *drag, unsigned int w, unsigned int h);
+EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
 
 EAPI void e_drag_start(E_Drag *drag);
 EAPI void e_drag_update(int x, int y);
@@ -103,6 +99,7 @@ EAPI E_Drop_Handler *e_drop_handler_add(void *data,
 					void (*leave_cb)(void *data, const char *type, void *event),
 					void (*drop_cb)(void *data, const char *type, void *event),
 				       	const char *type, int x, int y, int w, int h);
+EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 
 #endif
