@@ -56,7 +56,7 @@ e_object_del(E_Object *obj)
 }
 
 int
-e_object_del_get(E_Object *obj)
+e_object_is_del(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, 1);
    return obj->deleted;

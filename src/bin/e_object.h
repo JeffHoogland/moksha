@@ -74,7 +74,7 @@ struct _E_Object
 
 EAPI void *e_object_alloc               (int size, int type, E_Object_Cleanup_Func cleanup_func);
 EAPI void  e_object_del                 (E_Object *obj);
-EAPI int   e_object_del_get             (E_Object *obj);
+EAPI int   e_object_is_del              (E_Object *obj);
 EAPI void  e_object_del_func_set        (E_Object *obj, E_Object_Cleanup_Func del_func);
 EAPI void  e_object_type_set            (E_Object *obj, int type);
 EAPI void  e_object_free                (E_Object *obj);

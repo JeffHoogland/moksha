@@ -259,11 +259,11 @@ e_gadman_client_load(E_Gadman_Client *gmc)
      }
    _e_gadman_client_overlap_deny(gmc);
    e_object_ref(E_OBJECT(gmc));
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_EDGE);
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    e_object_unref(E_OBJECT(gmc));
 
@@ -291,9 +291,9 @@ e_gadman_client_zone_set(E_Gadman_Client *gmc, E_Zone *zone)
    gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
    gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
    e_object_ref(E_OBJECT(gmc));
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    e_object_unref(E_OBJECT(gmc));
 }
@@ -1228,17 +1228,17 @@ _e_gadman_cb_signal_move_go(void *data, Evas_Object *obj, const char *emission, 
    _e_gadman_client_geometry_to_align(gmc);
    _e_gadman_client_geometry_apply(gmc);
    e_object_ref(E_OBJECT(gmc));
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      {
 	if (new_zone)
 	  _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_ZONE);
      }
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      {
 	if (new_edge)
 	  _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_EDGE);
      }
-   if (!e_object_del_get(E_OBJECT(gmc)))
+   if (!e_object_is_del(E_OBJECT(gmc)))
      _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    e_object_unref(E_OBJECT(gmc));
 

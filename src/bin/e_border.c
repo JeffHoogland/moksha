@@ -1408,7 +1408,7 @@ static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
-
+ 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
    /* FIXME Don't ref this during shutdown. And the event is pointless
@@ -1425,7 +1425,11 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (!bd) return 1;
+   if (!bd)
+     {
+	printf("BUG: Need this border: 0x%x\n", e->win);
+	return 1;
+     }
    return 1;
 }
 
@@ -1517,46 +1521,25 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
 	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
 	  );
+
+   if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ||
+	 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
      {
-	if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ||
-	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
-	  {
-	     int x, y;
+	int x, y;
 
-	     y = bd->y;
-	     x = bd->x;
-	     printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i\n",
-		    bd->client.win,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
-		    x, y);
-	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
-	       x = e->x;
-	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y)
-	       y = e->y;
-	     if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
-		 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
-	       {
-		  int w, h;
-
-		  h = bd->h;
-		  w = bd->w;
-		  if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W)
-		    w = e->w + bd->client_inset.l + bd->client_inset.r;
-		  if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
-		    h = e->h + bd->client_inset.t + bd->client_inset.b;
-		  printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
-			 bd->client.win,
-			 e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
-			 e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-			 e->w, e->h);
-		  e_border_move_resize(bd, x, y, w, h);
-	       }
-	     else
-	       e_border_move(bd, x, y);
-	  }
-	else if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
-		 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
+	y = bd->y;
+	x = bd->x;
+	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i\n",
+	       bd->client.win,
+	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
+	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
+	       x, y);
+	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
+	  x = e->x;
+	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y)
+	  y = e->y;
+	if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
+	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
 	  {
 	     int w, h;
 
@@ -1571,60 +1554,80 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
 		    e->w, e->h);
-	     e_border_resize(bd, w, h);
+	     e_border_move_resize(bd, x, y, w, h);
 	  }
-	if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
-	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING))
-	  {
-	     E_Border *obd;
+	else
+	  e_border_move(bd, x, y);
+     }
+   else if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
+	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
+     {
+	int w, h;
 
-	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
-	       {
-		  obd = e_border_find_by_client_window(e->abovewin);
-		  if (obd)
-		    e_border_stack_above(bd, obd);
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
-	       {
-		  obd = e_border_find_by_client_window(e->abovewin);
-		  if (obd)
-		    e_border_stack_below(bd, obd);
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
-	       {
-		  /* FIXME: do */
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
-	       {
-		  /* FIXME: do */
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
-	       {
-		  /* FIXME: do */
-	       }
-	  }
-	else if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE)
+	h = bd->h;
+	w = bd->w;
+	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W)
+	  w = e->w + bd->client_inset.l + bd->client_inset.r;
+	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
+	  h = e->h + bd->client_inset.t + bd->client_inset.b;
+	printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
+	       bd->client.win,
+	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
+	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
+	       e->w, e->h);
+	e_border_resize(bd, w, h);
+     }
+   if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
+       (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING))
+     {
+	E_Border *obd;
+
+	if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
 	  {
-	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
-	       {
-		  e_border_raise(bd);
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
-	       {
-		  e_border_lower(bd);
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
-	       {
-		  /* FIXME: do */
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
-	       {
-		  /* FIXME: do */
-	       }
-	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
-	       {
-		  /* FIXME: do */
-	       }
+	     obd = e_border_find_by_client_window(e->abovewin);
+	     if (obd)
+	       e_border_stack_above(bd, obd);
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	  {
+	     obd = e_border_find_by_client_window(e->abovewin);
+	     if (obd)
+	       e_border_stack_below(bd, obd);
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
+	  {
+	     /* FIXME: do */
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
+	  {
+	     /* FIXME: do */
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
+	  {
+	     /* FIXME: do */
+	  }
+     }
+   else if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE)
+     {
+	if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+	  {
+	     e_border_raise(bd);
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	  {
+	     e_border_lower(bd);
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
+	  {
+	     /* FIXME: do */
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
+	  {
+	     /* FIXME: do */
+	  }
+	else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
+	  {
+	     /* FIXME: do */
 	  }
      }
    return 1;
