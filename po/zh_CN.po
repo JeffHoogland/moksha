@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-05 00:35+0800\n"
-"PO-Revision-Date: 2005-05-05 01:08+0800\n"
+"POT-Creation-Date: 2005-05-12 00:43+0800\n"
+"PO-Revision-Date: 2005-05-12 00:56+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "%i 兆赫兹"
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/bin/e_int_menus.c:643
+#: src/bin/e_int_menus.c:641
 msgid "(Empty)"
 msgstr "（空）"
 
@@ -129,15 +129,19 @@ msgstr "一个给E17提供时钟的简单模块。"
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
-#: src/bin/e_module.c:389
+#: src/bin/e_module.c:392
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_border.c:3694
+msgid "Always On Top"
+msgstr "置顶"
+
+#: src/bin/e_main.c:420
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
-#: src/modules/ibar/e_mod_main.c:730
+#: src/modules/ibar/e_mod_main.c:732
 msgid "Auto fit icons"
 msgstr "自动缩放图标"
 
@@ -234,19 +238,23 @@ msgstr "极缓慢检查（60秒）"
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:3589
+#: src/bin/e_border.c:3645
 msgid "Close"
 msgstr "关闭"
 
-#: src/bin/e_module.c:404
+#: src/bin/e_module.c:407
 msgid "Configuration"
 msgstr "配置"
+
+#: src/bin/e_config.c:865
+msgid "Configuration Upgraded"
+msgstr "配置已经升级"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:3683
+#: src/bin/e_border.c:3749
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -266,18 +274,18 @@ msgstr "桌面"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:3657
+#: src/bin/e_border.c:3723
 msgid "Edit Icon"
 msgstr "编辑图标"
 
 #: src/bin/e_int_menus.c:545 src/modules/battery/e_mod_main.c:561
 #: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
-#: src/modules/ibar/e_mod_main.c:574 src/modules/pager/e_mod_main.c:422
+#: src/modules/ibar/e_mod_main.c:576 src/modules/pager/e_mod_main.c:422
 #: src/modules/temperature/e_mod_main.c:721
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: src/bin/e_module.c:393
+#: src/bin/e_module.c:396
 msgid "Enabled"
 msgstr "启用"
 
@@ -285,7 +293,7 @@ msgstr "启用"
 msgid "End Edit Mode"
 msgstr "结束编辑模式"
 
-#: src/bin/e_main.c:369
+#: src/bin/e_main.c:404
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -301,11 +309,11 @@ msgstr "Enlightenment时钟模块"
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment阴影模块"
 
-#: src/modules/ibar/e_mod_main.c:167
+#: src/modules/ibar/e_mod_main.c:169
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar 模块"
 
-#: src/bin/e_main.c:352
+#: src/bin/e_main.c:387
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
@@ -313,7 +321,7 @@ msgstr "Enlightenment IPC设置错误！"
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment桌面切换器模块"
 
-#: src/bin/e_main.c:371
+#: src/bin/e_main.c:406
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
@@ -325,7 +333,7 @@ msgstr "Enlightenment 温度模块"
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment 测试模块"
 
-#: src/bin/e_main.c:153
+#: src/bin/e_main.c:174
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -333,7 +341,7 @@ msgstr ""
 "Enlightenment 无法启动Ecore！\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:239
+#: src/bin/e_main.c:267
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -341,7 +349,7 @@ msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
 "可能您没有主目录或者磁盘已满？"
 
-#: src/bin/e_main.c:180
+#: src/bin/e_main.c:201
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -349,7 +357,7 @@ msgstr ""
 "Enlightenment 无法启动X连接。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:219
+#: src/bin/e_main.c:240
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -357,7 +365,7 @@ msgstr ""
 "Enlightenment 无法启动Evas系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:227
+#: src/bin/e_main.c:255
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -365,7 +373,7 @@ msgstr ""
 "Enlightenment 无法启动文件系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:211
+#: src/bin/e_main.c:232
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -373,7 +381,7 @@ msgstr ""
 "Enlightenment 无法启动IPC系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:203
+#: src/bin/e_main.c:224
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -381,7 +389,7 @@ msgstr ""
 "Enlightenment 无法启动连接系统。\n"
 "可能您的内存用完了？<"
 
-#: src/bin/e_main.c:169
+#: src/bin/e_main.c:190
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -389,7 +397,7 @@ msgstr ""
 "Enlightenment 无法建立一个HUP信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:163
+#: src/bin/e_main.c:184
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -397,7 +405,7 @@ msgstr ""
 "Enlightenment 无法建立一个退出信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:290
+#: src/bin/e_main.c:325
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -405,39 +413,43 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:262
+#: src/bin/e_main.c:290
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 无法建立它的动作系统。"
 
-#: src/bin/e_main.c:306
+#: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment 无法建立它的应用系统。"
 
-#: src/bin/e_main.c:269
+#: src/bin/e_main.c:297
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
-#: src/bin/e_main.c:255
+#: src/bin/e_main.c:283
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:381
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
-#: src/bin/e_main.c:280
+#: src/bin/e_main.c:315
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:338
+#: src/bin/e_main.c:373
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:304
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment 无法建立它的弹出系统。"
+
+#: src/bin/e_main.c:348
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 无法建立它的主题系统。"
 
-#: src/bin/e_main.c:247
+#: src/bin/e_main.c:275
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -445,7 +457,7 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:325 src/bin/e_main.c:353
+#: src/bin/e_main.c:360 src/bin/e_main.c:388
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -459,7 +471,7 @@ msgstr ""
 "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 "然后再试着运行一遍。"
 
-#: src/bin/e_main.c:187
+#: src/bin/e_main.c:208
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -467,7 +479,17 @@ msgstr ""
 "Enlightenment 无法建立xinerama wrapping。\n"
 "这种情况不该发生。"
 
-#: src/bin/e_main.c:298
+#: src/bin/e_main.c:246
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment 发现 ecore_evas 不支持Evas的软件X11\n"
+"渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
+"件X11渲染。"
+
+#: src/bin/e_main.c:333
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -475,11 +497,11 @@ msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
 
-#: src/bin/e_error.c:346
+#: src/bin/e_error.c:355
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
-#: src/modules/ibar/e_mod_main.c:802
+#: src/modules/ibar/e_mod_main.c:804
 msgid "Enormous"
 msgstr "庞大"
 
@@ -522,7 +544,7 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/modules/ibar/e_mod_main.c:115
+#: src/modules/ibar/e_mod_main.c:117
 #, c-format
 msgid ""
 "Error initializing Module: IBar\n"
@@ -587,11 +609,11 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/bin/e_module.c:106 src/bin/e_module.c:117 src/bin/e_module.c:139
+#: src/bin/e_module.c:109 src/bin/e_module.c:120 src/bin/e_module.c:142
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:3760
+#: src/bin/e_border.c:3826
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -607,7 +629,7 @@ msgstr ""
 msgid "Exit Enlightenment"
 msgstr "退出 Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:788
+#: src/modules/ibar/e_mod_main.c:790
 msgid "Extremely Large"
 msgstr "极大"
 
@@ -647,7 +669,7 @@ msgstr "模糊"
 msgid "Gadgets"
 msgstr "附件"
 
-#: src/modules/ibar/e_mod_main.c:809
+#: src/modules/ibar/e_mod_main.c:811
 msgid "Gigantic"
 msgstr "超大"
 
@@ -668,19 +690,19 @@ msgstr "高"
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/ibar/e_mod_main.c:795
+#: src/modules/ibar/e_mod_main.c:797
 msgid "Huge"
 msgstr "巨大"
 
-#: src/modules/ibar/e_mod_main.c:158
+#: src/modules/ibar/e_mod_main.c:160
 msgid "IBar"
 msgstr "IBar"
 
-#: src/bin/e_border.c:3759
+#: src/bin/e_border.c:3825
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:3597
+#: src/bin/e_border.c:3653
 msgid "Iconify"
 msgstr "最小化"
 
@@ -688,7 +710,7 @@ msgstr "最小化"
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/modules/ibar/e_mod_main.c:774
+#: src/modules/ibar/e_mod_main.c:776
 msgid "Large"
 msgstr "大"
 
@@ -709,7 +731,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr "手动"
 
-#: src/bin/e_border.c:3618
+#: src/bin/e_border.c:3674
 msgid "Maximized"
 msgstr "最大化"
 
@@ -717,7 +739,7 @@ msgstr "最大化"
 msgid "Maximum Speed"
 msgstr "最高速"
 
-#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:767
+#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:769
 msgid "Medium"
 msgstr "中等"
 
@@ -725,7 +747,7 @@ msgstr "中等"
 msgid "Medium (5 sec)"
 msgstr "中等 （5秒）"
 
-#: src/modules/ibar/e_mod_main.c:739
+#: src/modules/ibar/e_mod_main.c:741
 msgid "Microscopic"
 msgstr "极小"
 
@@ -735,7 +757,7 @@ msgstr "最低速"
 
 #: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
 #: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
-#: src/modules/ibar/e_mod_main.c:114 src/modules/pager/e_mod_main.c:81
+#: src/modules/ibar/e_mod_main.c:116 src/modules/pager/e_mod_main.c:81
 #: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
 msgid "Module API Error"
 msgstr "模块API错误"
@@ -756,7 +778,7 @@ msgstr "模块配置菜单 3"
 msgid "Modules"
 msgstr "模块"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:422
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr "很多特性还不能用，能用的也是有很多bug的。"
 
@@ -784,15 +806,15 @@ msgstr "新建一行桌面"
 msgid "Normal (10 sec)"
 msgstr "正常 （10秒）"
 
-#: src/bin/e_error.c:187 src/bin/e_error.c:196
+#: src/bin/e_error.c:202 src/bin/e_error.c:211
 msgid "OK"
 msgstr "确定"
 
-#: src/modules/ibar/e_mod_main.c:817
+#: src/modules/ibar/e_mod_main.c:819
 msgid "Options"
 msgstr "选项"
 
-#: src/bin/e_main.c:108
+#: src/bin/e_main.c:122
 #, c-format
 msgid ""
 "Options:\n"
@@ -806,6 +828,12 @@ msgid ""
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
 msgstr ""
 "选项：\n"
 "\t-display DISPLAY\n"
@@ -817,6 +845,12 @@ msgstr ""
 "\t\t它们都会替代真实的xinerama屏幕，如果有存在\n"
 "\t\t的话。这个功能可以拿来模拟xinerama。\n"
 "\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t-good\n"
+"\t\t好。\n"
+"\t-evil\n"
+"\t\t不好。\n"
+"\t-psychotic\n"
+"\t\t精神病。\n"
 
 #: src/modules/pager/e_mod_main.c:128
 msgid "Pager"
@@ -834,7 +868,7 @@ msgstr "删除一行桌面"
 msgid "Restart Enlightenment"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_border.c:3641
+#: src/bin/e_border.c:3707
 msgid "Send To"
 msgstr "发送到"
 
@@ -855,7 +889,7 @@ msgstr "设置检查时间"
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:3608
+#: src/bin/e_border.c:3664
 msgid "Shaded"
 msgstr "卷起"
 
@@ -863,7 +897,7 @@ msgstr "卷起"
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/ibar/e_mod_main.c:821
+#: src/modules/ibar/e_mod_main.c:823
 msgid "Size"
 msgstr "大小"
 
@@ -871,7 +905,7 @@ msgstr "大小"
 msgid "Slow (30 sec)"
 msgstr "慢 （30秒）"
 
-#: src/modules/ibar/e_mod_main.c:760
+#: src/modules/ibar/e_mod_main.c:762
 msgid "Small"
 msgstr "小"
 
@@ -879,7 +913,7 @@ msgstr "小"
 msgid "Something Else"
 msgstr "一些其它东西"
 
-#: src/bin/e_border.c:3628
+#: src/bin/e_border.c:3684
 msgid "Sticky"
 msgstr "粘住"
 
@@ -895,7 +929,7 @@ msgstr "测试！！！"
 msgid "Themes"
 msgstr "主题"
 
-#: src/bin/e_module.c:107
+#: src/bin/e_module.c:110
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -905,7 +939,7 @@ msgstr ""
 "导入模块 %s 时发生错误。\n"
 "在模块搜索路径中没有找到名叫 %s 的模块。\n"
 
-#: src/bin/e_module.c:118 src/bin/e_module.c:140
+#: src/bin/e_module.c:121 src/bin/e_module.c:143
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -953,11 +987,11 @@ msgstr ""
 "\n"
 "请想想土豚们。它们也需要关爱。"
 
-#: src/bin/e_main.c:386
+#: src/bin/e_main.c:421
 msgid "This is development code, so be warned."
 msgstr "这是开发中的代码，所以警告一下。"
 
-#: src/modules/ibar/e_mod_main.c:168
+#: src/modules/ibar/e_mod_main.c:170
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.\n"
 "It is a first example module and is being used to flesh out several\n"
@@ -989,7 +1023,7 @@ msgstr ""
 "系统。\n"
 "请忽略这个模块，除非您正在为模块系统开发东西。"
 
-#: src/modules/ibar/e_mod_main.c:746
+#: src/modules/ibar/e_mod_main.c:748
 msgid "Tiny"
 msgstr "微小"
 
@@ -1005,7 +1039,7 @@ msgstr "很远"
 msgid "Very Fuzzy"
 msgstr "很模糊"
 
-#: src/modules/ibar/e_mod_main.c:781
+#: src/modules/ibar/e_mod_main.c:783
 msgid "Very Large"
 msgstr "很大"
 
@@ -1025,7 +1059,7 @@ msgstr "很清晰"
 msgid "Very Slow (60 sec)"
 msgstr "很慢 （60秒）"
 
-#: src/modules/ibar/e_mod_main.c:753
+#: src/modules/ibar/e_mod_main.c:755
 msgid "Very Small"
 msgstr "很小"
 
