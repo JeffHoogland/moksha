@@ -37,6 +37,7 @@ struct _E_Drag
 
    unsigned int   layer;
    unsigned char  visible : 1;
+   unsigned char  need_shape_export : 1;
 };
 
 struct _E_Drop_Handler
@@ -88,6 +89,7 @@ EAPI void    e_drag_show(E_Drag *drag);
 EAPI void    e_drag_hide(E_Drag *drag);
 EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
+EAPI void    e_drag_idler_before(void);
 
 EAPI void e_drag_start(E_Drag *drag);
 EAPI void e_drag_update(int x, int y);

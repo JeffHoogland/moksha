@@ -814,6 +814,7 @@ _e_main_cb_idler_before(void *data __UNUSED__)
    e_focus_idler_before();
    e_border_idler_before();
    e_popup_idler_before();
+   e_drag_idler_before();
    for (l = _e_main_idler_before_list; l; l = l->next)
      {
 	E_Before_Idler *eb;

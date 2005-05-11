@@ -1250,8 +1250,8 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     drag = 1;
 	     drag_start = 0;
 
-	     d = e_drag_new(ic->ibb->con,
-			    "enlightenment/eapp", ic->app, _ibar_bar_cb_finished);
+	     d = e_drag_new(ic->ibb->con, "enlightenment/eapp",
+			    ic->app, _ibar_bar_cb_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     edje_object_file_set(o, ic->app->path, "icon");
 	     e_drag_object_set(d, o);

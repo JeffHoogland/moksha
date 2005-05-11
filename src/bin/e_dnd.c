@@ -6,6 +6,7 @@
 /* local subsystem functions */
 
 static void _e_drag_free(E_Drag *drag);
+static int  _e_dnd_cb_window_shape(void *data, int type, void *event);
 
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
 static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
@@ -22,7 +23,7 @@ static Evas_List *_drop_handlers = NULL;
 
 static Ecore_X_Window _drag_win = 0;
 
-static Evas_List *_draggies = NULL;
+static Evas_List *_drag_list = NULL;
 static E_Drag *_drag_current = NULL;
 
 /* externally accessible functions */
@@ -40,6 +41,9 @@ e_dnd_init(void)
    _event_handlers = evas_list_append(_event_handlers,
 				      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 							      _e_dnd_cb_mouse_move, NULL));
+   _event_handlers = evas_list_append(_event_handlers,
+				      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
+							      _e_dnd_cb_window_shape, NULL));
 
    for (l = e_manager_list(); l; l = l->next)
      {
@@ -80,7 +84,7 @@ e_dnd_shutdown(void)
 {
    Evas_List *l;
 
-   for (l = _draggies; l;)
+   for (l = _drag_list; l;)
      {
 	E_Drag *drag;
 
@@ -88,8 +92,8 @@ e_dnd_shutdown(void)
 	l = l->next;
 	e_object_del(E_OBJECT(drag));
      }
-   evas_list_free(_draggies);
-   _draggies = NULL;
+   evas_list_free(_drag_list);
+   _drag_list = NULL;
 
    for (l = _event_handlers; l; l = l->next)
      {
@@ -170,10 +174,12 @@ e_drag_new(E_Container *container,
    evas_object_move(drag->object, 0, 0);
    evas_object_resize(drag->object, drag->w, drag->h);
    ecore_evas_resize(drag->ecore_evas, drag->w, drag->h);
-   
+
    drag->type = strdup(type);
    drag->data = data;
    drag->cb.finished = finished_cb;
+
+   _drag_list = evas_list_append(_drag_list, drag);
 
    return drag;
 }
@@ -189,6 +195,7 @@ e_drag_object_set(E_Drag *drag, Evas_Object *object)
 {
    if (drag->object) evas_object_del(drag->object);
    drag->object = object;
+   evas_object_resize(drag->object, drag->w, drag->h);
 }
 
 void
@@ -196,6 +203,7 @@ e_drag_show(E_Drag *drag)
 {
    if (drag->visible) return;
    drag->visible = 1;
+   evas_object_show(drag->object);
    ecore_evas_show(drag->ecore_evas);
    e_container_shape_show(drag->shape);
 }
@@ -205,6 +213,7 @@ e_drag_hide(E_Drag *drag)
 {
    if (!drag->visible) return;
    drag->visible = 0;
+   evas_object_hide(drag->object);
    ecore_evas_hide(drag->ecore_evas);
    e_container_shape_hide(drag->shape);
 }
@@ -229,6 +238,7 @@ e_drag_resize(E_Drag *drag, int w, int h)
    if ((drag->w == w) && (drag->h == h)) return;
    drag->h = h;
    drag->w = w;
+   evas_object_resize(drag->object, drag->w, drag->h);
    ecore_evas_resize(drag->ecore_evas, drag->w, drag->h);
    e_container_shape_resize(drag->shape, drag->w, drag->h);
 }
@@ -412,19 +422,69 @@ e_drop_handler_del(E_Drop_Handler *handler)
    free(handler);
 }
 
+
+void
+e_drag_idler_before(void)
+{
+   Evas_List *l;
+   
+   for (l = _drag_list; l; l = l->next)
+     {
+	E_Drag *drag;
+	
+	drag = l->data;
+	if (drag->need_shape_export)
+	  {
+	     Ecore_X_Rectangle *rects;
+	     int num;
+	     
+	     rects = ecore_x_window_shape_rectangles_get(drag->evas_win, &num);
+	     if (rects)
+	       {
+		  e_container_shape_rects_set(drag->shape, rects, num);
+		  free(rects);
+	       }
+	     drag->need_shape_export = 0;
+	     if (drag->visible)
+	       e_container_shape_show(drag->shape);
+	  }
+     }
+}
+
 /* local subsystem functions */
 
 static void
 _e_drag_free(E_Drag *drag)
 {
-   _draggies = evas_list_remove(_draggies, drag);
+   _drag_list = evas_list_remove(_drag_list, drag);
 
    e_object_unref(E_OBJECT(drag->container));
+   e_container_shape_hide(drag->shape);
+   e_object_del(E_OBJECT(drag->shape));
    evas_object_del(drag->object);
    e_canvas_del(drag->ecore_evas);
    ecore_evas_free(drag->ecore_evas);
    free(drag->type);
    free(drag);
+}
+
+
+static int
+_e_dnd_cb_window_shape(void *data, int ev_type, void *ev)
+{
+   Evas_List *l;
+   Ecore_X_Event_Window_Shape *e;
+   
+   e = ev;
+   for (l = _drag_list; l; l = l->next)
+     {
+	E_Drag *drag;
+	
+	drag = l->data;
+	if (drag->evas_win == e->win)
+	  drag->need_shape_export = 1;
+     }
+   return 1;
 }
 
 static int
