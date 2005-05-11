@@ -542,6 +542,7 @@ _e_main_dirs_init(void)
 	"%s/.e/e/applications/bar",
 	"%s/.e/e/applications/startup",
 	"%s/.e/e/applications/restart",
+	"%s/.e/e/applications/trash",
 	"%s/.e/e/modules",
 	"%s/.e/e/config"
      };

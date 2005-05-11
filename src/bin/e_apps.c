@@ -51,6 +51,8 @@ static Evas_List   *_e_apps_change_callbacks = NULL;
 static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
 static Evas_List   *_e_apps_repositories = NULL;
 static E_App       *_e_apps_all = NULL;
+static char        *_e_apps_path_all = NULL;
+static char        *_e_apps_path_trash = NULL;
 
 /* externally accessible functions */
 int
@@ -60,7 +62,10 @@ e_app_init(void)
    char buf[PATH_MAX];
    
    home = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/applications/trash", home);
+   _e_apps_path_trash = strdup(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
+   _e_apps_path_all = strdup(buf);
    free(home);
    _e_apps_repositories = evas_list_append(_e_apps_repositories, strdup(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_apps_cb_exit, NULL);
@@ -86,6 +91,8 @@ e_app_shutdown(void)
 	ecore_event_handler_del(_e_apps_exit_handler);
 	_e_apps_exit_handler = NULL;
      }
+   free(_e_apps_path_trash);
+   free(_e_apps_path_all);
      {
 	Evas_List *l;
 	for (l = _e_apps_list; l; l = l->next)
@@ -277,15 +284,23 @@ e_app_running_get(E_App *a)
 void
 e_app_prepend_relative(E_App *add, E_App *before)
 {
-   /* FIXME:
-    * - fix the path for add
-    * - if eapp is in trash, move it to the right place
-    */
+   char buf[PATH_MAX];
+
    if (!before->parent) return;
 
    before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
 							add, before);
    add->parent = before->parent;
+
+   /* Check if this app is in the trash */
+   if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
+     {
+	/* Move to all */
+	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
+	ecore_file_mv(add->path, buf);
+	free(add->path);
+	add->path = strdup(buf);
+     }
 
    _e_app_save_order(before->parent);
    _e_app_change(add, E_APP_ADD);
@@ -295,12 +310,20 @@ e_app_prepend_relative(E_App *add, E_App *before)
 void
 e_app_append(E_App *add, E_App *parent)
 {
-   /* FIXME:
-    * - fix the path for add
-    * - if eapp is in trash, move it to the right place
-    */
+   char buf[PATH_MAX];
+
    parent->subapps = evas_list_append(parent->subapps, add);
    add->parent = parent;
+
+   /* Check if this app is in the trash */
+   if (!strncmp(add->path, _e_apps_path_trash, strlen(_e_apps_path_trash)))
+     {
+	/* Move to all */
+	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all, ecore_file_get_file(add->path));
+	ecore_file_mv(add->path, buf);
+	free(add->path);
+	add->path = strdup(buf);
+     }
 
    _e_app_save_order(parent);
    _e_app_change(add, E_APP_ADD);
@@ -309,14 +332,22 @@ e_app_append(E_App *add, E_App *parent)
 void
 e_app_remove(E_App *remove)
 {
-   /* FIXME:
-    * - check if this file exists, if it does, move it to trash
-    * - update path to eapp
-    */
+   char buf[PATH_MAX];
+
    if (!remove->parent) return;
 
    remove->parent->subapps = evas_list_remove(remove->parent->subapps, remove);
 
+   /* Check if this app is in a repository or in the parents dir */
+   snprintf(buf, sizeof(buf), "%s/%s", remove->parent->path, ecore_file_get_file(remove->path));
+   if (ecore_file_exists(buf))
+     {
+	/* Move to trash */
+	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_trash, ecore_file_get_file(remove->path));
+	ecore_file_mv(remove->path, buf);
+	free(remove->path);
+	remove->path = strdup(buf);
+     }
    _e_app_save_order(remove->parent);
    _e_app_change(remove, E_APP_DEL);
    remove->parent = NULL;
@@ -377,7 +408,6 @@ e_app_window_name_class_find(char *name, char *class)
 	  {
 	     int ok = 0;
 	     
-//	     printf("%s.%s == %s.%s\n", name, class, a->win_name, a->win_class);
 	     if ((!a->win_name) ||
 		 ((a->win_name) && name && (!strcmp(a->win_name, name))))
 	       ok++;
@@ -401,7 +431,6 @@ _e_app_free(E_App *a)
 {
    if (a->orig)
      {
-	//printf("E_App: This is a copy: %s\n", a->path);
 	while (a->instances)
 	  {
 	     Ecore_Exe *exe;
@@ -421,7 +450,6 @@ _e_app_free(E_App *a)
      }
    else
      {
-	//printf("E_App: This is an original: %s\n", a->path);
 	while (a->instances)
 	  {
 	     Ecore_Exe *exe;
@@ -702,7 +730,6 @@ _e_app_change(E_App *a, E_App_Change ch)
    Evas_List *l;
    
    _e_apps_callbacks_walking = 1;
-   //printf("Change: %d %s\n", ch, a->path);
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
 	E_App_Callback *cb;
@@ -766,8 +793,6 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	printf("Event on a deleted eapp\n");
 	return;
      }
-
-   //printf("Event: %d %s\n", event, path);
 
    /* If this dir isn't scanned yet, no need to report changes! */
    if (!app->scanned)
@@ -975,14 +1000,6 @@ _e_app_subdir_rescan(E_App *app)
    /* FIXME: We only need to tell about order changes if there are! */
    evas_list_free(app->subapps);
    app->subapps = subapps;
-#if 0
-   for (l = subapps; l; l = l->next)
-     {
-	E_App *a;
-	a = l->data;
-	printf("subapps: %s\n", a->path);
-     }
-#endif
    ch = calloc(1, sizeof(E_App_Change_Info));
    ch->app = app;
    ch->change = E_APP_ORDER;
