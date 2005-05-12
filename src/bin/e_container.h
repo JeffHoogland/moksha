@@ -36,7 +36,7 @@ struct _E_Container
    E_Manager           *manager;
    E_Gadman            *gadman;
    
-   int                  num;
+   unsigned int         num;
    char                *name;
    
    Ecore_Evas          *bg_ecore_evas;

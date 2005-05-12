@@ -147,7 +147,7 @@ struct _E_Border
       } mwm;
       struct {
 	 pid_t pid;
-	 int desktop;
+	 unsigned int desktop;
 	 struct {
 	    unsigned int pid : 1;
 	    unsigned int desktop : 1;

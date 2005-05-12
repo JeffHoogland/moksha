@@ -645,7 +645,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 static void
 _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   char *theme;;
    E_Config_Theme *et;
    Evas_List *l;
 

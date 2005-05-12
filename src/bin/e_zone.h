@@ -21,7 +21,7 @@ struct _E_Zone
    char                *name;
    /* num matches the id of the xinerama screen
     * this zone belongs to. */
-   int                  num;
+   unsigned int         num;
    E_Container         *container;
 
    Evas_Object         *bg_object;
