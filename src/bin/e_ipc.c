@@ -634,7 +634,7 @@ _e_ipc_path_str_get(char **paths, int *bytes)
 static char *
 _e_ipc_str_list_get(Evas_List *strs, int *bytes)
 {
-   char *data = NULL, **cur;
+   char *data = NULL;
    int pos = 0;
    Evas_List *l;
    

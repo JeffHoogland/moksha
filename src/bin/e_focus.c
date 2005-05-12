@@ -41,6 +41,9 @@ static int
 _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Focus_In *e;
+
+   e = ev;
+#if 0
    const char *modes[] = {
 	"ECORE_X_EVENT_MODE_NORMAL",
 	"ECORE_X_EVENT_MODE_WHILE_GRABBED",
@@ -57,24 +60,22 @@ _e_focus_cb_window_focus_in(void *data, int ev_type, void *ev)
 	"ECORE_X_EVENT_DETAIL_POINTER_ROOT",
 	"ECORE_X_EVENT_DETAIL_DETAIL_NONE"
    };
-   
-   e = ev;
-#if 0   
+
    if (e_border_find_by_client_window(e->win))
      {
-	printf("BI 0x%x md=%s dt=%s\n", 
+	printf("BI 0x%x md=%s dt=%s\n",
 	       e->win,
 	       modes[e->mode],
 	       details[e->detail]);
      }
    else
      {
-	printf("FI 0x%x md=%s dt=%s\n", 
+	printf("FI 0x%x md=%s dt=%s\n",
 	       e->win,
 	       modes[e->mode],
 	       details[e->detail]);
      }
-#endif   
+#endif
    return 1;
 }
 
@@ -82,6 +83,9 @@ static int
 _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
 {
    Ecore_X_Event_Window_Focus_Out *e;
+
+   e = ev;
+#if 0
    const char *modes[] = {
 	"ECORE_X_EVENT_MODE_NORMAL",
 	"ECORE_X_EVENT_MODE_WHILE_GRABBED",
@@ -98,19 +102,17 @@ _e_focus_cb_window_focus_out(void *data, int ev_type, void *ev)
 	"ECORE_X_EVENT_DETAIL_POINTER_ROOT",
 	"ECORE_X_EVENT_DETAIL_DETAIL_NONE"
    };
-   
-   e = ev;
-#if 0   
+
    if (e_border_find_by_client_window(e->win))
      {
-	printf("BO 0x%x md=%s dt=%s\n", 
+	printf("BO 0x%x md=%s dt=%s\n",
 	       e->win,
 	       modes[e->mode],
 	       details[e->detail]);
      }
    else
      {
-	printf("FO 0x%x md=%s dt=%s\n", 
+	printf("FO 0x%x md=%s dt=%s\n",
 	       e->win,
 	       modes[e->mode],
 	       details[e->detail]);

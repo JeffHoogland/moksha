@@ -564,7 +564,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_BG_GET_REPLY:
 	if (e->data)
 	  {
-	     printf("REPLY: %s\n", e->data);
+	     printf("REPLY: %s\n", (char *)e->data);
 	  }
 	break;
       case E_IPC_OP_BG_DIRS_LIST_REPLY:
@@ -660,7 +660,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 		  Evas_List *l;
 		  
 		  for (l = langs; l; l = l->next)
-		    printf("REPLY: LANG=\"%s\"\n", l->data);
+		    printf("REPLY: LANG=\"%s\"\n", (char *)l->data);
 		  evas_list_free(langs);
 	       }
           }
@@ -670,7 +670,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
       case E_IPC_OP_LANG_GET_REPLY:
 	if (e->data)
 	  {
-	     printf("REPLY: %s\n", e->data);
+	     printf("REPLY: %s\n", (char *)e->data);
 	  }
 	break;
       case E_IPC_OP_BINDING_MOUSE_LIST_REPLY:
