@@ -651,7 +651,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
 
-   /* apply lang config - exception and config is loaded after intl setup */
+   /* apply lang config - exception because config is loaded after intl setup */
    
    if ((e_config->language) && (strlen(e_config->language) > 0))
      {
