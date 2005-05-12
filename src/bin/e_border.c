@@ -412,6 +412,7 @@ e_border_show(E_Border *bd)
 {
    E_Event_Border_Show *ev;
    unsigned int visible;
+   unsigned int hidden;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -426,6 +427,8 @@ e_border_show(E_Border *bd)
    visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
+   hidden = 0;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_HIDDEN, &hidden, 1);
 
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
@@ -1483,7 +1486,14 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	e_object_del(E_OBJECT(bd));
      }
 #endif
-   if (bd->visible) bd->hidden = 1;
+   if (bd->visible)
+     {
+	unsigned int hidden;
+	
+	bd->hidden = 1;
+	hidden = 1;
+	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_HIDDEN, &hidden, 1);
+     }
    e_border_hide(bd, 1);
    return 1;
 }

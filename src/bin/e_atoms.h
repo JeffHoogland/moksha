@@ -15,6 +15,7 @@ extern EAPI Ecore_X_Atom E_ATOM_ZONE;
 extern EAPI Ecore_X_Atom E_ATOM_DESK;
 extern EAPI Ecore_X_Atom E_ATOM_MAPPED;
 extern EAPI Ecore_X_Atom E_ATOM_SHADE_DIRECTION;
+extern EAPI Ecore_X_Atom E_ATOM_HIDDEN;
 
 EAPI int    e_atoms_init(void);
 EAPI int    e_atoms_shutdown(void);
