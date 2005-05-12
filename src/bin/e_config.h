@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 102
+#define E_CONFIG_FILE_VERSION 103
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -57,7 +57,7 @@ struct _E_Config
    int         config_version;
    char       *desktop_default_background;
    double      menus_scroll_speed;
-   double      menus_fast_mouse_move_thresthold;
+   double      menus_fast_mouse_move_threshhold;
    double      menus_click_drag_timeout;
    int         border_shade_animate;
    int         border_shade_transition;

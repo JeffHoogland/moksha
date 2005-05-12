@@ -2076,7 +2076,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
-   fast_move_threshold = e_config->menus_fast_mouse_move_thresthold;
+   fast_move_threshold = e_config->menus_fast_mouse_move_threshhold;
    dx = ev->x - _e_menu_x;
    dy = ev->y - _e_menu_y;
    d = (dx * dx) + (dy * dy);
@@ -2084,6 +2084,8 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
    dt = dt * dt;
    if ((dt > 0.0) && ((d / dt) >= (fast_move_threshold * fast_move_threshold)))
      is_fast = 1;
+//   printf("d=%i dt=%3.9f fast_move_threshold=%3.3f ---> FAST=%i\n", 
+//	  d, dt, fast_move_threshold, is_fast);
    for (l = _e_active_menus; l; l = l->next)
      {
 	tmp = evas_list_append(tmp, l->data);
@@ -2098,7 +2100,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 	  {
 	     if (is_fast)
 	       m->fast_mouse = 1;
-	     else
+	     else if (dt > 0.0)
 	       {
 		  m->fast_mouse = 0;
 		  if (m->pending_new_submenu)

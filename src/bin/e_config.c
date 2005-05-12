@@ -99,10 +99,11 @@ e_config_init(void)
 #undef D
 #define T E_Config
 #define D _e_config_edd
-   E_CONFIG_VAL(D, T, config_version, INT);
-   E_CONFIG_VAL(D, T, desktop_default_background, STR);
+   /**/ /* == already configurable via ipc */
+   E_CONFIG_VAL(D, T, config_version, INT); /**/
+   E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, menus_fast_mouse_move_thresthold, DOUBLE);
+   E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE);
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, border_shade_animate, INT);
    E_CONFIG_VAL(D, T, border_shade_transition, INT);
@@ -110,18 +111,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, framerate, DOUBLE);
    E_CONFIG_VAL(D, T, image_cache, INT);
    E_CONFIG_VAL(D, T, font_cache, INT);
-   E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
-   E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
-   E_CONFIG_VAL(D, T, use_virtual_roots, INT);
-   E_CONFIG_VAL(D, T, use_edge_flip, INT);
+   E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
+   E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
+   E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
+   E_CONFIG_VAL(D, T, use_edge_flip, INT); 
    E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE);
-   E_CONFIG_VAL(D, T, language, STR);
-   E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
-   E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
-   E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd);
-   E_CONFIG_LIST(D, T, themes, _e_config_theme_edd);
-   E_CONFIG_LIST(D, T, mouse_bindings, _e_config_bindings_mouse_edd);
-   E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd);
+   E_CONFIG_VAL(D, T, language, STR); /**/
+   E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
+   E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd); /**/
+   E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd); /**/
+   E_CONFIG_LIST(D, T, themes, _e_config_theme_edd); /**/
+   E_CONFIG_LIST(D, T, mouse_bindings, _e_config_bindings_mouse_edd); /**/
+   E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd); /**/
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -131,26 +132,26 @@ e_config_init(void)
 	     /* your config is too old - need new defaults */
 	     _e_config_free();
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     "Configuration data needed upgrading. Your old configuration\n"
-			     "has been wiped and a new set of defaults initialized. This\n"
-			     "will happen regularly during development, so don't report a\n"
-			     "bug. This simply means Enlightenment needs new confiugration\n"
-			     "data by default for usable functionality that your old\n"
-			     "configuration simply lacks. This new set of defaults will fix\n"
-			     "that by adding it in. You can re-configure things now to your\n"
-			     "liking. Sorry for the hiccup in your configuration.\n");
+			     _("Configuration data needed upgrading. Your old configuration\n"
+			       "has been wiped and a new set of defaults initialized. This\n"
+			       "will happen regularly during development, so don't report a\n"
+			       "bug. This simply means Enlightenment needs new confiugration\n"
+			       "data by default for usable functionality that your old\n"
+			       "configuration simply lacks. This new set of defaults will fix\n"
+			       "that by adding it in. You can re-configure things now to your\n"
+			       "liking. Sorry for the hiccup in your configuration.\n"));
 	  }
 	else if (e_config->config_version > E_CONFIG_FILE_VERSION)
 	  {
 	     /* your config is too new - what the fuck??? */
 	     _e_config_free();
 	     ecore_timer_add(1.0, _e_config_cb_timer,
-			     "Your configuration is NEWER than Enlightenment. This is very\n"
-			     "strange. This should not happen unless you downgraded\n"
-			     "Enlightenment or copied the configuration from a place where\n"
-			     "a newer version of Enlightenment was running. This is bad and\n"
-			     "as a precaution your confiugration has been now restored to\n"
-			     "defaults. Sorry for the inconvenience.\n");
+			     _("Your configuration is NEWER than Enlightenment. This is very\n"
+			       "strange. This should not happen unless you downgraded\n"
+			       "Enlightenment or copied the configuration from a place where\n"
+			       "a newer version of Enlightenment was running. This is bad and\n"
+			       "as a precaution your confiugration has been now restored to\n"
+			       "defaults. Sorry for the inconvenience.\n"));
 	  }
      }
    
@@ -161,7 +162,7 @@ e_config_init(void)
 	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.edj");
 	e_config->menus_scroll_speed = 1000.0;
-	e_config->menus_fast_mouse_move_thresthold = 300.0;
+	e_config->menus_fast_mouse_move_threshhold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
 	e_config->border_shade_animate = 1;
 	e_config->border_shade_transition = E_TRANSITION_DECELERATE;
@@ -641,7 +642,7 @@ e_config_init(void)
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
 
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
-   E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_thresthold, 1.0, 2000.0);
+   E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
    E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
    E_CONFIG_LIMIT(e_config->border_shade_transition, 0, 3);
@@ -869,6 +870,6 @@ static int
 _e_config_cb_timer(void *data)
 {
    e_error_dialog_show(_("Configuration Upgraded"),
-			 _(data));
+			 data);
    return 0;
 }
