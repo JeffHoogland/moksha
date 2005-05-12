@@ -121,11 +121,11 @@ e_manager_manage_windows(E_Manager *man)
 	     /* we have seen this window before */
 	     if ((ret > -1) && (ret_val == 1))
 	       {
-		  E_Container *con = NULL;
-		  E_Zone      *zone = NULL;
-		  E_Desk      *desk = NULL;
-		  E_Border    *bd = NULL;
-		  int          id;
+		  E_Container  *con = NULL;
+		  E_Zone       *zone = NULL;
+		  E_Desk       *desk = NULL;
+		  E_Border     *bd = NULL;
+		  unsigned int  id;
 
 		  /* get all information from window before it is 
 		   * reset by e_border_new */
