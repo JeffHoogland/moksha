@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 101
+#define E_CONFIG_FILE_VERSION 102
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -68,6 +68,8 @@ struct _E_Config
    int         zone_desks_x_count;
    int         zone_desks_y_count;
    int         use_virtual_roots;
+   int         use_edge_flip;
+   double      edge_flip_timeout;
    int         evas_engine_default;
    int         evas_engine_container;
    int         evas_engine_init;

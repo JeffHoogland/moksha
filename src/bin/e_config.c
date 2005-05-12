@@ -112,6 +112,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font_cache, INT);
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
+   E_CONFIG_VAL(D, T, use_virtual_roots, INT);
+   E_CONFIG_VAL(D, T, use_edge_flip, INT);
+   E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE);
    E_CONFIG_VAL(D, T, language, STR);
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd);
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd);
@@ -169,6 +172,8 @@ e_config_init(void)
 	e_config->zone_desks_x_count = 4;
 	e_config->zone_desks_y_count = 1;
 	e_config->use_virtual_roots = 0;
+	e_config->use_edge_flip = 1;
+	e_config->edge_flip_timeout = 0.25;
 	e_config->evas_engine_default = E_EVAS_ENGINE_SOFTWARE_X11;
 	e_config->evas_engine_container = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_init = E_EVAS_ENGINE_DEFAULT;
