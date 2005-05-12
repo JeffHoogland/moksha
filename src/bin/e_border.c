@@ -421,7 +421,8 @@ e_border_show(E_Border *bd)
    e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
-
+   bd->hidden = 0;
+   
    visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
@@ -1482,6 +1483,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	e_object_del(E_OBJECT(bd));
      }
 #endif
+   if (bd->visible) bd->hidden = 1;
    e_border_hide(bd, 1);
    return 1;
 }

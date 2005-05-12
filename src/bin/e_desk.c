@@ -70,7 +70,8 @@ e_desk_show(E_Desk *desk)
      {
 	E_Border *bd = l->data;
 
-	if (bd->desk->zone == desk->zone && !bd->iconic)
+	if ((bd->desk->zone == desk->zone) && (!bd->iconic) &&
+	    (!bd->hidden))
 	  {
 	     if ((bd->desk == desk) || (bd->sticky))
 	       e_border_show(bd);

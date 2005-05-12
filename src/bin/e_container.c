@@ -185,7 +185,6 @@ e_container_hide(E_Container *con)
    ecore_evas_hide(con->bg_ecore_evas);
    if (con->win != con->manager->win)
      ecore_x_window_hide(con->win);
-   ecore_x_icccm_state_set(con->bg_win, ECORE_X_WINDOW_STATE_HINT_WITHDRAWN);
    con->visible = 0;
 }
 
