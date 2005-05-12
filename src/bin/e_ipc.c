@@ -9,6 +9,9 @@ static char *_e_ipc_str_list_get(Evas_List *strs, int *bytes);
 static char *_e_ipc_simple_str_dec(char *data, int bytes);
 static char **_e_ipc_multi_str_dec(char *data, int bytes, int str_count);
 
+static int _e_ipc_double_dec(char *data, int bytes, double *dest);
+static int _e_ipc_int_dec(char *data, int bytes, int *dest);
+
 /* encode functions, Should these be global? */
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
@@ -40,12 +43,15 @@ e_ipc_init(void)
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_ADD, _e_ipc_cb_client_add, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DEL, _e_ipc_cb_client_del, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA, _e_ipc_cb_client_data, NULL);
+
+   e_ipc_codec_init();
    return 1;
 }
 
 void
 e_ipc_shutdown(void)
 {
+   e_ipc_codec_shutdown();
    if (_e_ipc_server)
      {
 	ecore_ipc_server_del(_e_ipc_server);
@@ -582,6 +588,71 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
  	  }
 	break;
+      case E_IPC_OP_MENUS_SCROLL_SPEED_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->menus_scroll_speed)))
+	  {
+	     E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
+	     e_config_save_queue();
+	  }
+	break;
+      case E_IPC_OP_MENUS_SCROLL_SPEED_GET:
+	  {
+	     void *data;
+	     int   bytes;
+	     
+	     if ((data = e_ipc_codec_double_enc(e_config->menus_scroll_speed,
+						&bytes)))
+	       {
+		  ecore_ipc_client_send(e->client,
+					E_IPC_DOMAIN_REPLY,
+					E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY,
+					0/*ref*/, 0/*ref_to*/, 0/*response*/,
+					data, bytes);
+		  free(data);
+	       }
+	  }
+	break;
+      case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET:
+	break;
+      case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET:
+	break;
+      case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET:
+	break;
+      case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_ANIMATE_SET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_ANIMATE_GET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_TRANSITION_SET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_TRANSITION_GET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_SPEED_SET:
+	break;
+      case E_IPC_OP_BORDER_SHADE_SPEED_GET:
+	break;
+      case E_IPC_OP_FRAMERATE_SET:
+	break;
+      case E_IPC_OP_FRAMERATE_GET:
+	break;
+      case E_IPC_OP_IMAGE_CACHE_SET:
+	break;
+      case E_IPC_OP_IMAGE_CACHE_GET:
+	break;
+      case E_IPC_OP_FONT_CAHCE_SET:
+	break;
+      case E_IPC_OP_FONT_CACHE_GET:
+	break;
+      case E_IPC_OP_USE_EDGE_FLIP_SET:
+	break;
+      case E_IPC_OP_USE_EDGE_FLIP_GET:
+	break;
+      case E_IPC_OP_EDGE_FLIP_TIMEOUT_SET:
+	break;
+      case E_IPC_OP_EDGE_FLIP_TIMEOUT_GET:
+	break;
       default:
 	break;
      }
@@ -668,7 +739,6 @@ _e_ipc_simple_str_dec(char *data, int bytes)
    str = malloc(bytes + 1);
    str[bytes] = 0;
    memcpy(str, data, bytes);
-   
    return str;
 }
 
@@ -700,7 +770,8 @@ _e_ipc_multi_str_dec(char *data, int bytes, int str_count)
    
    return str_array;
 }
-   
+
+/* FIXME: just use eet for this - saves a lot of hassle */
    
 /* list/struct encoding functions */
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc)

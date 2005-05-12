@@ -51,7 +51,8 @@ e_dnd.h \
 e_bindings.h \
 e_moveresize.h \
 e_actions.h \
-e_popup.h
+e_popup.h \
+e_ipc_codec.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -96,12 +97,14 @@ e_bindings.c \
 e_moveresize.c \
 e_actions.c \
 e_popup.c \
+e_ipc_codec.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@
 
 enlightenment_remote_SOURCES = \
 e.h \
+e_ipc_codec.c \
 e_remote_main.c
 
 enlightenment_remote_LDFLAGS = @e_libs@ @dlopen_libs@

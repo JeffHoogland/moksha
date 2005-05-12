@@ -56,8 +56,8 @@ Also look at all the .c files - they have their own localized TODO lists
 These are in no particular order:
 
 * break out desks x/y size config so you can have a different desktop size
-  per zone
-* simplify adding config options to ipc
+  per zone - right now there is a signle global (use this later as the default
+  for new/unconfigured zones)
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user

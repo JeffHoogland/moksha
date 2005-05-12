@@ -41,4 +41,5 @@
 #include "e_moveresize.h"
 #include "e_actions.h"
 #include "e_popup.h"
+#include "e_ipc_codec.h"
 #include "e_test.h"

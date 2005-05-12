@@ -4,6 +4,8 @@
 #ifndef E_H
 #define E_H
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -27,10 +29,6 @@
 #include <Ecore_X_Atoms.h>
 #include <Eet.h>
 #include <Edje.h>
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 #if HAVE___ATTRIBUTE__
 #define __UNUSED__ __attribute__((unused))
