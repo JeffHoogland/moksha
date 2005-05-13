@@ -182,7 +182,7 @@ e_border_init(void)
    E_EVENT_BORDER_LOWER = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
-   focus_fix_timer = ecore_timer_add(0.5, _e_border_cb_focus_fix, NULL);
+   focus_fix_timer = ecore_timer_add(0.1, _e_border_cb_focus_fix, NULL);
    
    return 1;
 }
@@ -412,7 +412,6 @@ e_border_show(E_Border *bd)
 {
    E_Event_Border_Show *ev;
    unsigned int visible;
-   unsigned int hidden;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -422,13 +421,10 @@ e_border_show(E_Border *bd)
    e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
-   bd->hidden = 0;
    
    visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
-   hidden = 0;
-   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_HIDDEN, &hidden, 1);
 
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
@@ -1117,7 +1113,11 @@ e_border_find_by_client_window(Ecore_X_Window win)
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->client.win == win) return bd;
+	if (bd->client.win == win)
+	  {
+	     if (!e_object_is_del(E_OBJECT(bd)))
+	       return bd;
+	  }
      }
    return NULL;
 }
@@ -1132,7 +1132,11 @@ e_border_find_by_frame_window(Ecore_X_Window win)
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->bg_win == win) return bd;
+	if (bd->bg_win == win)
+	  {
+	     if (!e_object_is_del(E_OBJECT(bd)))
+	       return bd;
+	  }
      }
    return NULL;
 }
@@ -1147,7 +1151,11 @@ e_border_find_by_window(Ecore_X_Window win)
 	E_Border *bd;
 
 	bd = l->data;
-	if (bd->win == win) return bd;
+	if (bd->win == win)
+	  {
+	     if (!e_object_is_del(E_OBJECT(bd)))
+	       return bd;
+	  }
      }
    return NULL;
 }
@@ -1388,8 +1396,11 @@ _e_border_free(E_Border *bd)
 	bd->handlers = evas_list_remove_list(bd->handlers, bd->handlers);
 	ecore_event_handler_del(h);
      }
-   ecore_x_window_reparent(bd->client.win, bd->zone->container->manager->root, bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
-   ecore_x_window_save_set_del(bd->client.win);
+   if (!bd->already_unparented)
+     {
+	ecore_x_window_reparent(bd->client.win, bd->zone->container->manager->root, bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
+	ecore_x_window_save_set_del(bd->client.win);
+     }
    if (bd->client.border.name) free(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
@@ -1433,16 +1444,7 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-#if 0
-   else if (e_object_is_del(E_OBJECT(bd)))
-     {
-	printf("Rescue this poor border from deletion!\n");
-	E_OBJECT(bd)->deleted = 0;
-	e_object_ref(E_OBJECT(bd));
-	e_border_show(bd);
-	e_border_raise(bd);
-     }
-#endif
+   printf("border MAP REQ %x\n", e->win);
    e_border_show(bd);
    e_border_raise(bd);
    return 1;
@@ -1456,6 +1458,7 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border DESTROY %x\n", e->win);
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
@@ -1472,12 +1475,13 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border HIDE %x\n", e->win);
    if (bd->ignore_first_unmap > 0)
      {
 	bd->ignore_first_unmap--;
 	return 1;
      }
-#if 1
+   printf("HIDE win %x\n", e->win);
    /* Don't delete hidden or iconified windows */
    if ((bd->iconic) || (!bd->visible))
      {
@@ -1485,25 +1489,17 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
      }
    else
      {
+	printf("repar\n");
 	e_border_hide(bd, 0);
+//	ecore_x_window_hide(bd->client.win);
+	ecore_x_window_reparent(bd->client.win,
+				bd->zone->container->manager->root,
+				bd->x + bd->client_inset.l,
+				bd->y + bd->client_inset.t);
+	ecore_x_window_save_set_del(bd->client.win);
+	bd->already_unparented = 1;
 	e_object_del(E_OBJECT(bd));
      }
-#else
-   /* we need to re-enable the above. when clients hide windows they often
-    * dont destory - keep around to do somethign else with. if we dont unmanage
-    * then we have all sorts of problems believeing it still exists. bigger
-    * problems than mplayer. :)
-    */
-   if (bd->visible)
-     {
-	unsigned int hidden;
-	
-	bd->hidden = 1;
-	hidden = 1;
-	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_HIDDEN, &hidden, 1);
-     }
-   e_border_hide(bd, 1);
-#endif   
    return 1;
 }
 
@@ -1517,7 +1513,9 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   if (e->parent == bd->client.shell_win) return 1;
+   printf("border REPARENT %x\n", e->win);
+//   if (e->parent == bd->client.shell_win) return 1;
+   if (ecore_x_window_parent_get(e->win) == bd->client.shell_win) return 1;
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
@@ -1543,6 +1541,7 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 				 e->abovewin, e->detail);
 	return 1;
      }
+   printf("border CONFIG %x\n", e->win);
    printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
 	  e->win,
 	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
@@ -1618,13 +1617,19 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  {
 	     obd = e_border_find_by_client_window(e->abovewin);
 	     if (obd)
-	       e_border_stack_above(bd, obd);
+	       {
+		  printf("border STACK ABOVE %x\n", e->abovewin);
+		  e_border_stack_above(bd, obd);
+	       }
 	  }
 	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
 	  {
 	     obd = e_border_find_by_client_window(e->abovewin);
 	     if (obd)
-	       e_border_stack_below(bd, obd);
+	       {
+		  printf("border STACK BELOW %x\n", e->abovewin);
+		  e_border_stack_below(bd, obd);
+	       }
 	  }
 	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
 	  {
@@ -1683,6 +1688,7 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	ecore_x_window_resize(e->win, e->w, e->h);
 	return 1;
      }
+   printf("border RESIZE %x\n", e->win);
    printf("##- RESIZE REQ 0x%x\n", bd->client.win);
      {
 	int w, h;
@@ -1733,6 +1739,7 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border PROP %x\n", e->win);
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
 	bd->client.icccm.fetch.title = 1;
@@ -1809,6 +1816,7 @@ _e_border_cb_window_shape(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (bd)
      {
+   printf("border SHAPE %x\n", e->win);
 	bd->changes.shape = 1;
 	bd->changed = 1;
 	return 1;
@@ -1839,6 +1847,7 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border FOCUS %x\n", e->win);
 #ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
@@ -1884,6 +1893,7 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border UNFOCUS %x\n", e->win);
 #ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
@@ -1952,6 +1962,7 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("border STATE %x\n", e->win);
    for (i = 0; i < 2; i++)
      e_hints_window_state_update(bd, e->state[i], e->action);
    return 1;

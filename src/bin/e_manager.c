@@ -156,10 +156,6 @@ e_manager_manage_windows(E_Manager *man)
 					    deskxy[0],
 					    deskxy[1]);
 
-		  ret = ecore_x_window_prop_card32_get(windows[i],
-						       E_ATOM_HIDDEN,
-						       &ret_val, 1);
-		  if (!((ret == 1) && (ret_val)))
 		    {
 		       bd = e_border_new(con, windows[i], 1);
 		       if (bd)
@@ -430,18 +426,27 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-   if (e->parent != man->root) return 1; /* try other handlers for this */
+   printf("show req %x / %x\n", e->win, e->parent);
+#if 0   
+   if (e->parent != man->root)
+     return 1; /* try other handlers for this */
+#endif   
+   if (ecore_x_window_parent_get(e->win) != man->root)
+     return 1;  /* try other handlers for this */
    
      {
 	E_Container *con;
 	E_Border *bd;
 	
+	printf("werdup\n");
 	con = e_container_current_get(man);
 	if (!e_border_find_by_client_window(e->win))
 	  {
+	     printf("SHOW REQ %x\n", e->win);
 	     bd = e_border_new(con, e->win, 0);
 	     if (bd)
 	       {
+		  printf("BD! %x\n", bd->win);
 		  e_border_raise(bd);
 		  e_border_show(bd);
 	       }

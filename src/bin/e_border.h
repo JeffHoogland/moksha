@@ -186,10 +186,10 @@ struct _E_Border
    unsigned char   iconic : 1;
    unsigned char   sticky : 1;
    unsigned char   shaped : 1;
-   unsigned char   hidden : 1;
    unsigned char   need_shape_merge : 1;
    unsigned char   need_shape_export : 1;
    unsigned char   fullscreen : 1;
+   unsigned char   already_unparented : 1;
    
    unsigned char   changed : 1;
    
