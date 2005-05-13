@@ -63,6 +63,8 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    Ecore_X_Window win;
    int          x, y;
 
+   con = e_container_current_get(man);
+
    error_w = 400;
    error_h = 200;
    x = (man->w - error_w) / 2;
