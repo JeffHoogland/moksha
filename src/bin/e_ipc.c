@@ -4,6 +4,9 @@
 static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
+static void _e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode);
+static void _e_ipc_reply_int_send(Ecore_Ipc_Client *client, int val, int opcode);
+static void _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode);
 static char *_e_ipc_path_str_get(char **paths, int *bytes);
 static char *_e_ipc_str_list_get(Evas_List *strs, int *bytes);
 static char *_e_ipc_simple_str_dec(char *data, int bytes);
@@ -597,61 +600,180 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
 	break;
       case E_IPC_OP_MENUS_SCROLL_SPEED_GET:
-	  {
-	     void *data;
-	     int   bytes;
-	     
-	     if ((data = e_ipc_codec_double_enc(e_config->menus_scroll_speed,
-						&bytes)))
-	       {
-		  ecore_ipc_client_send(e->client,
-					E_IPC_DOMAIN_REPLY,
-					E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY,
-					0/*ref*/, 0/*ref_to*/, 0/*response*/,
-					data, bytes);
-		  free(data);
-	       }
-	  }
+	_e_ipc_reply_double_send(e->client,
+				 e_config->menus_scroll_speed, 
+				 E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY);
 	break;
       case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->menus_fast_mouse_move_threshhold)))
+	  {
+	     E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET:
+	_e_ipc_reply_double_send(e->client,
+				 e_config->menus_fast_mouse_move_threshhold, 
+				 E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET_REPLY);
 	break;
       case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->menus_click_drag_timeout)))
+	  {
+	     E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET:
+	_e_ipc_reply_double_send(e->client,
+				 e_config->menus_click_drag_timeout,
+				 E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET_REPLY);
 	break;
       case E_IPC_OP_BORDER_SHADE_ANIMATE_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->border_shade_animate)))
+	  {
+	     E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_BORDER_SHADE_ANIMATE_GET:
+	_e_ipc_reply_int_send(e->client,
+			      e_config->border_shade_animate,
+			      E_IPC_OP_BORDER_SHADE_ANIMATE_GET_REPLY);
 	break;
       case E_IPC_OP_BORDER_SHADE_TRANSITION_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->border_shade_transition)))
+	  {
+	     E_CONFIG_LIMIT(e_config->border_shade_speed, 0, 3);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_BORDER_SHADE_TRANSITION_GET:
+	_e_ipc_reply_int_send(e->client,
+			      e_config->border_shade_transition,
+			      E_IPC_OP_BORDER_SHADE_TRANSITION_GET_REPLY);
 	break;
       case E_IPC_OP_BORDER_SHADE_SPEED_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->framerate)))
+	  {
+	     E_CONFIG_LIMIT(e_config->framerate, 1.0, 20000.0);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_BORDER_SHADE_SPEED_GET:
+	_e_ipc_reply_double_send(e->client,
+				 e_config->border_shade_speed,
+				 E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY);
 	break;
       case E_IPC_OP_FRAMERATE_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->framerate)))
+	  {
+	     E_CONFIG_LIMIT(e_config->image_cache, 1.0, 200.0);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_FRAMERATE_GET:
+	_e_ipc_reply_double_send(e->client,
+				 e_config->framerate,
+				 E_IPC_OP_FRAMERATE_GET_REPLY);
 	break;
       case E_IPC_OP_IMAGE_CACHE_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->image_cache)))
+	  {
+	     E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_IMAGE_CACHE_GET:
+	_e_ipc_reply_int_send(e->client,
+			      e_config->image_cache,
+			      E_IPC_OP_IMAGE_CACHE_GET_REPLY);
 	break;
       case E_IPC_OP_FONT_CAHCE_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->font_cache)))
+	  {
+	     E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_FONT_CACHE_GET:
+	_e_ipc_reply_int_send(e->client,
+			      e_config->font_cache,
+			      E_IPC_OP_FONT_CACHE_GET_REPLY);
 	break;
       case E_IPC_OP_USE_EDGE_FLIP_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->use_edge_flip)))
+	  {
+	     E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_USE_EDGE_FLIP_GET:
+	_e_ipc_reply_int_send(e->client,
+			      e_config->use_edge_flip,
+			      E_IPC_OP_USE_EDGE_FLIP_GET_REPLY);
 	break;
       case E_IPC_OP_EDGE_FLIP_TIMEOUT_SET:
+	if (e_ipc_codec_double_dec(e->data, e->size,
+				   &(e_config->edge_flip_timeout)))
+	  {
+	     E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
+	     e_config_save_queue();
+	  }
 	break;
       case E_IPC_OP_EDGE_FLIP_TIMEOUT_GET:
+	_e_ipc_reply_double_send(e->client,
+				 e_config->edge_flip_timeout,
+				 E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY);
+	break;
+      case E_IPC_OP_DESKS_SET:
+	if (e_ipc_codec_2int_dec(e->data, e->size,
+				 &(e_config->zone_desks_x_count),
+				 &(e_config->zone_desks_y_count)))
+	  {
+	     Evas_List *l;
+	     
+	     E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
+	     E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
+	     for (l = e_manager_list(); l; l = l->next)
+	       {
+		  E_Manager *man;
+		  Evas_List *l2;
+		  
+		  man = l->data;
+		  for (l2 = man->containers; l2; l2 = l2->next)
+		    {
+		       E_Container *con;
+		       Evas_List *l3;
+		       
+		       con = l2->data;
+		       for (l3 = con->zones; l3; l3 = l3->next)
+			 {
+			    E_Zone *zone;
+			    
+			    zone = l3->data;
+			    e_zone_desk_count_set(zone,
+						  e_config->zone_desks_x_count,
+						  e_config->zone_desks_y_count);
+			 }
+		    }
+	       }
+	     e_config_save_queue();
+	  }
+	break;
+      case E_IPC_OP_DESKS_GET:
+	_e_ipc_reply_2int_send(e->client,
+			       e_config->zone_desks_x_count,
+			       e_config->zone_desks_y_count,
+			       E_IPC_OP_DESKS_GET_REPLY);
 	break;
       default:
 	break;
@@ -664,6 +786,57 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    /* ecore_ipc_server_del(ecore_ipc_client_server_get(e->client)); */
    return 1;
 }  
+
+static void
+_e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode)
+{
+   void *data;
+   int   bytes;
+   
+   if ((data = e_ipc_codec_double_enc(val, &bytes)))
+     {
+	ecore_ipc_client_send(client,
+			      E_IPC_DOMAIN_REPLY,
+			      opcode,
+			      0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			      data, bytes);
+	free(data);
+     }
+}
+
+static void
+_e_ipc_reply_int_send(Ecore_Ipc_Client *client, int val, int opcode)
+{
+   void *data;
+   int   bytes;
+   
+   if ((data = e_ipc_codec_int_enc(val, &bytes)))
+     {
+	ecore_ipc_client_send(client,
+			      E_IPC_DOMAIN_REPLY,
+			      opcode,
+			      0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			      data, bytes);
+	free(data);
+     }
+}
+
+static void
+_e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode)
+{
+   void *data;
+   int   bytes;
+   
+   if ((data = e_ipc_codec_2int_enc(val1, val2, &bytes)))
+     {
+	ecore_ipc_client_send(client,
+			      E_IPC_DOMAIN_REPLY,
+			      opcode,
+			      0/*ref*/, 0/*ref_to*/, 0/*response*/,
+			      data, bytes);
+	free(data);
+     }
+}
 
 /*
  * FIXME: This dosen't handle the case where one of the paths is of the

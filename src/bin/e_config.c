@@ -111,8 +111,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, framerate, DOUBLE);
    E_CONFIG_VAL(D, T, image_cache, INT);
    E_CONFIG_VAL(D, T, font_cache, INT);
-   E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
-   E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
+   E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
+   E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
    E_CONFIG_VAL(D, T, use_edge_flip, INT); 
    E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE);
@@ -650,6 +650,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+   E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
+   E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
+   E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
 
    /* apply lang config - exception because config is loaded after intl setup */

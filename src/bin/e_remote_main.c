@@ -361,10 +361,12 @@ main(int argc, char **argv)
 	       "Maybe try the '-display :0.0' option?\n");
 	exit(-1);
      }
+   e_ipc_codec_init();
 
    /* start our main loop */
    ecore_main_loop_begin();
-   
+
+   e_ipc_codec_shutdown();
    _e_ipc_shutdown();
    ecore_ipc_shutdown();
    ecore_shutdown();
