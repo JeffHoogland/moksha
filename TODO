@@ -67,22 +67,18 @@ These are in no particular order:
   the focus window becoems another managed window it becoems the selected
   window - otherwise click to focus or pointer focus will chose the selected
   window that may get the focus if it allows it...
-* mplayer fullscreen screws up (reparenting issues) and focus
 * check window max size. if < size of zone (or maximisation area) disallow
   maximising and tell border edje object (via signals) to somehow disable the
   maximise buttons :) (and remove from the menu)
-* drag and drop subsystem (just handling dragging with some icon being dragged
-  around and then a drop somewhere)
-* drag window icon (top-left) uses drag and drop to be able to drop on pager
-  module and maybe ibar (to add the app to it?)
+* drag and drop need to center icon at correct offset based on mouse down
+  before drag start
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
 * gadman gadget menu needs icons :)
 * module api needs to move label and icon to data file, not api
-* gadman edit mode for simple gadgets activate with a key combo (eg alt+click 
-  on module)
-* edit mode keybindings :)
+* gadman edit mode for simple gadgets activate with a button bind (eg
+  alt+click on module like windows) or a pure key binding
 * "start button" module to pop up the e menu (left mouse right now)
 * click to focus
 * make e17 re-locatable (ues environment var, or find out by hunting path
@@ -91,18 +87,16 @@ These are in no particular order:
   (see e_hints.c) - get this stuff upstream to sun and get things fixed in
   java.
 * gadget containers (shelves?)
-* track mouse location on a border/desktop level
 * add key input focus control for desktop modules
 * finish off icccm support
 * optimize clock theme (speed/cpu) (rotation in edje???)
 * add "icon box"
-* add netwm support
+* add complete netwm support
 * different cursors for different parts of the screen
 * alt+tab popup list of windows
 * add a "taskbar" module
 * add cpu load module
-* make root menus configurable (what mouse/key brings up what)
-* add a way to access all apps
+* add a way to access "all" apps app dir
 * optimise client manage: list window properties then only fetch the ones
   that exist on window map
 * non opaque move/resize
@@ -116,10 +110,10 @@ These are in no particular order:
 * make ipc try open on other ports numbers if current is taken
 * make ipc try re-open if connection dies
 * add clientinfo pane/popdown for borders
-* add a button area expansion for borders
-* add template button for expanded buttons
-* add a status area expansion for borders
-* add a status module template for borders
+* add a button area expansion for borders ???
+* add template button for expanded buttons ???
+* add a status area expansion for borders ???
+* add a status module template for borders ???
 * support text and color classes
 * add tooltips
 * add fullscreen support (e16 xvidmode or xrandr style)
@@ -144,7 +138,7 @@ These are in no particular order:
   the time on mouse in)
 * need to be able to remember client positons/etc.
 * file icons on the desktop (people ask for it) - xdnd for these
-* gui config tools for bg's, keybndingins, etc. etc. etc.
+* gui config tools for bg's, keybindings, etc. etc. etc.
 * go through e16 features we dont have and implement the most useful ones (or
   re-design and implement)
 * libehack from old e17 wrapper for executing apps
@@ -158,6 +152,5 @@ These are in no particular order:
 * module control panel app
 * remove module config menus (make them part of the module control panel and
   as separate executables)
-* ipc needs to be massively useful and give all sorts of info and control
 * tip/hint/suggestion dialog app (textblock etc.)
 * segv/restart handler like e16.
