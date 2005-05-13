@@ -3,6 +3,59 @@
  */
 #include "e.h"
 
+void
+e_place_zone_region_smart_cleanup(E_Zone *zone)
+{
+   E_Desk *desk;
+   Evas_List *l, *borders = NULL;
+
+   E_OBJECT_CHECK(zone);
+   desk = e_desk_current_get(zone);
+   for (l = e_border_clients_get(); l; l = l->next)
+     {
+	E_Border *border;
+
+	border = l->data;
+	/* Build a list of windows on this desktop and not iconified. */
+	if ((border->desk == desk) && !(border->iconic))
+	  {
+	     int area;
+	     Evas_List *ll;
+
+	     /* Ordering windows largest to smallest gives better results */
+	     area = border->w * border->h;
+	     for (ll = borders; ll; ll = ll->next)
+	       {
+		  int testarea;
+		  E_Border *bd = ll->data;
+
+		  testarea = bd->w * bd->h;
+		  /* Insert the border if larger than the current border */
+		  if (area >= testarea)
+		    {
+		       borders = evas_list_prepend_relative(borders, border, bd);
+		       break;
+		    }
+	       }
+	     /* Looped over all borders without placing, so place at end */
+	     if (!ll) borders = evas_list_append(borders, border);
+	  }
+     }
+
+   /* Loop over the borders moving each one using the smart placement */
+   while (borders)
+     {
+	int new_x, new_y;
+	E_Border *border;
+
+	border = borders->data;
+	e_place_zone_region_smart(zone, borders, border->x, border->y,
+				  border->w, border->h, &new_x, &new_y);
+	e_border_move(border, new_x, new_y);
+	borders = evas_list_remove(borders, border);
+     }
+}
+
 int
 e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
 {

@@ -29,6 +29,7 @@ static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_clients_cleanup_cb  (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_pre_cb     (void *data, E_Menu *m);
 static void _e_int_menus_desktops_item_cb    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_desktops_row_add_cb (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -491,6 +492,12 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 					 bd->client.icccm.class);
 	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Cleanup Windows"));
+   e_menu_item_icon_edje_set(mi,
+			     e_path_find(path_icons, "default.edj"),
+			     "windows");
+   e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);
 }
@@ -524,6 +531,14 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_desk_show(bd->desk);
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
+}
+
+static void 
+_e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Zone *zone = data;
+
+   e_place_zone_region_smart_cleanup(zone);
 }
 
 static void
