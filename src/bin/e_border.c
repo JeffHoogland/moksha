@@ -1417,6 +1417,12 @@ _e_border_free(E_Border *bd)
 	bd->handlers = evas_list_remove_list(bd->handlers, bd->handlers);
 	ecore_event_handler_del(h);
      }
+   if (!bd->already_unparented)
+     {
+	ecore_x_window_reparent(bd->client.win, bd->zone->container->manager->root,
+				bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
+	ecore_x_window_save_set_del(bd->client.win);
+     }
    if (bd->client.border.name) free(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
@@ -1442,12 +1448,6 @@ static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
-
-   ecore_x_window_reparent(bd->client.win,
-			   bd->zone->container->manager->root,
-			   bd->x + bd->client_inset.l,
-			   bd->y + bd->client_inset.t);
-   ecore_x_window_save_set_del(bd->client.win);
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
@@ -1508,6 +1508,12 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    else
      {
 	e_border_hide(bd, 0);
+	ecore_x_window_reparent(bd->client.win,
+				bd->zone->container->manager->root,
+				bd->x + bd->client_inset.l,
+				bd->y + bd->client_inset.t);
+	ecore_x_window_save_set_del(bd->client.win);
+	bd->already_unparented = 1;
 	e_object_del(E_OBJECT(bd));
      }
    return 1;
@@ -2517,31 +2523,26 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 		  if (dist > 10)
 		    {
 		       /* start drag! */
-		       if ((bd->client.icccm.name) && (bd->client.icccm.class))
+		       if (bd->icon_object)
 			 {
-			    E_App *a;
+			    E_Drag *drag;
+			    Evas_Object *o;
+			    Evas_Coord w, h;
+			    const char *file, *part;
 
-			    a = e_app_window_name_class_find(bd->client.icccm.name,
-							     bd->client.icccm.class);
-			    if (a)
-			      {
-				 E_Drag *drag;
-				 Evas_Object *o;
-				 Evas_Coord w, h;
-				 
-				 drag = e_drag_new(bd->zone->container,
-						   "enlightenment/border", bd, NULL);
-				 o = edje_object_add(drag->evas);
-				 edje_object_file_set(o, a->path, "icon");
-				 e_drag_object_set(drag, o);
+			    drag = e_drag_new(bd->zone->container,
+					      "enlightenment/border", bd, NULL);
+			    o = edje_object_add(drag->evas);
+			    edje_object_file_get(bd->icon_object, &file, &part);
+			    edje_object_file_set(o, file, part);
+			    e_drag_object_set(drag, o);
 
-				 edje_object_part_geometry_get(bd->bg_object, "icon",
-							       NULL, NULL, &w, &h);
-				 e_drag_resize(drag, w, h);
-				 e_drag_start(drag);
-				 evas_event_feed_mouse_up(bd->bg_evas, 1,
-							  EVAS_BUTTON_NONE, NULL);
-			      }
+			    evas_object_geometry_get(bd->icon_object,
+						     NULL, NULL, &w, &h);
+			    e_drag_resize(drag, w, h);
+			    e_drag_start(drag);
+			    evas_event_feed_mouse_up(bd->bg_evas, 1,
+						     EVAS_BUTTON_NONE, NULL);
 			 }
 		       bd->drag.start = 0;
 		    }
