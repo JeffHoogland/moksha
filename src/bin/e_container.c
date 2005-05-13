@@ -616,7 +616,7 @@ e_container_border_raise(E_Border *bd)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    bd->zone->container->layers[pos - 1].win, ECORE_X_WINDOW_STACK_BELOW);
+			    bd->zone->container->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
 
    bd->zone->container->layers[pos - 1].clients =
       evas_list_append(bd->zone->container->layers[pos - 1].clients, bd);
