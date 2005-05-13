@@ -237,15 +237,21 @@ _e_opt_binding_key_del(char **params)
    free(data);
 }
 
-#define SIMPLE_REQ     0
-#define SIMPLE_STR_REQ 1
-#define FULL_FUNC      2
-#define MULTI_STR_REQ  3
+#define SIMPLE_REQ      0
+#define SIMPLE_STR_REQ  1
+#define FULL_FUNC       2
+#define MULTI_STR_REQ   3
+#define SIMPLE_INT_REQ  4
+#define SIMPLE_DBL_REQ  5
+#define SIMPLE_2INT_REQ 6
 
-#define OREQ(opt, desc, ipc, rep) {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
-#define OSTR(opt, desc, ipc, rep) {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
+#define OREQ(opt, desc, ipc, rep)       {opt, desc, 0, rep, SIMPLE_REQ, ipc, NULL}
+#define OSTR(opt, desc, ipc, rep)       {opt, desc, 1, rep, SIMPLE_STR_REQ, ipc, NULL}
 #define OFNC(opt, desc, param, fn, rep) {opt, desc, param, rep, FULL_FUNC, 0, fn}
 #define OMUL(opt, desc, ipc, rep, argc) {opt, desc, argc, rep, MULTI_STR_REQ, ipc, NULL}
+#define OINT(opt, desc, ipc, rep)       {opt, desc, 1, rep, SIMPLE_INT_REQ, ipc, NULL}
+#define ODBL(opt, desc, ipc, rep)       {opt, desc, 1, rep, SIMPLE_DBL_REQ, ipc, NULL}
+#define O2INT(opt, desc, ipc, rep)      {opt, desc, 2, rep, SIMPLE_2INT_REQ, ipc, NULL}
 
 E_IPC_Opt_Handler handlers[] =
 {
@@ -279,7 +285,31 @@ E_IPC_Opt_Handler handlers[] =
    OFNC("-binding-mouse-del", "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_del, 0),
    OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1),
    OFNC("-binding-key-add", "Add or replace an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_add, 0),
-   OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0)
+   OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
+   ODBL("-menus-scroll-speed-set", "Set the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_SET, 0),
+   OREQ("-menus-scroll-speed-get", "Get the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_GET, 1),
+   ODBL("-menus-fast-move-threshhold-set", "Set the mouse speed in pixels per second that is considered a 'fast move'", E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET, 0),
+   OREQ("-menus-fast-move-threshhold-get", "Get the mouse speed (pixels/sec) that is considered a fast move", E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET, 1),
+   ODBL("-menus-click-drag-timeout-set", "Set the time (in seconds) between a mouse press and release that will keep the menu up anyway", E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET, 0),
+   OREQ("-menus-click-drag-timeout-get", "Get the above value", E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET, 1),
+   OINT("-border-shade-animate-set", "Set the shading animation flag (0/1)", E_IPC_OP_BORDER_SHADE_ANIMATE_SET, 0),
+   OREQ("-border-shade-animate-get", "Get the shading animation flag", E_IPC_OP_BORDER_SHADE_ANIMATE_GET, 1),
+   OINT("-border-shade-transition-set", "Set the shading animation algorithm (0, 1, 2 or 3)", E_IPC_OP_BORDER_SHADE_TRANSITION_SET, 0),
+   OREQ("-border-shade-transition-get", "Get the above value", E_IPC_OP_BORDER_SHADE_TRANSITION_GET, 1),
+   ODBL("-border-shade-speed-set", "Set the shading speed (pixels/sec)", E_IPC_OP_BORDER_SHADE_SPEED_SET, 0),
+   OREQ("-border-shade-speed-get", "Get the shading speed", E_IPC_OP_BORDER_SHADE_SPEED_GET, 1),
+   ODBL("-framerate-set", "Set the animation framerate (fps)", E_IPC_OP_FRAMERATE_SET, 0),
+   OREQ("-framerate-get", "Get the animation framerate", E_IPC_OP_FRAMERATE_GET, 1),
+   OINT("-image-cache-set", "Set the speculative image cache size (Kb)", E_IPC_OP_IMAGE_CACHE_SET, 0),
+   OREQ("-image-cache-get", "Get the image cache size", E_IPC_OP_IMAGE_CACHE_GET, 1),
+   OINT("-font-cache-set", "Get the speculative font cache size (Kb)", E_IPC_OP_FONT_CACHE_SET, 0),
+   OREQ("-font-cache-get", "Set the font cache size", E_IPC_OP_FONT_CACHE_GET, 1),
+   OINT("-edge-flip-set", "Set the edge flip flag (0/1)", E_IPC_OP_USE_EDGE_FLIP_SET, 0),
+   OREQ("-edge-flip-get", "Get the edge flip flag", E_IPC_OP_USE_EDGE_FLIP_GET, 1),
+   ODBL("-edge-flip_timeout-set", "Set the edge flip timeout (sec)", E_IPC_OP_EDGE_FLIP_TIMEOUT_SET, 0),
+   OREQ("-edge-flip_timeout-get", "Get the edge flip timeout", E_IPC_OP_EDGE_FLIP_TIMEOUT_GET, 1),
+   O2INT("-desks-set", "Get the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
+   OREQ("-desks-get", "Set the number of virtual desktops", E_IPC_OP_DESKS_GET, 1)
 };
 
 /* externally accessible functions */
@@ -468,18 +498,20 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 			  case MULTI_STR_REQ:
 			    /* pack up the data "<str>0<str>0" */
 			    data_size = 0;
-			    for(k = 0; k < handler->num_params; k++) {
-				data_size += strlen(argv[ i + 1 + k ]);
-				data_size++; /* NULL Pad */
-			    }			     
+			    for (k = 0; k < handler->num_params; k++)
+			      {
+				 data_size += strlen(argv[ i + 1 + k ]);
+				 data_size++; /* NULL Pad */
+			      }			     
 			    v = malloc(data_size);
 			    p = v;	    			
-			    for(k = 0; k < handler->num_params; k++) {
+			    for (k = 0; k < handler->num_params; k++)
+			      {
 				 strcpy(p, argv[ i + 1 + k]);
 				 p += strlen(argv[ i + 1 + k]);
 				 *p = 0;
 				 p++;
-			    }	
+			      }	
 			    ecore_ipc_server_send(_e_ipc_server,
 						  E_IPC_DOMAIN_REQUEST,
 						  handler->simple_request_id,
@@ -490,6 +522,37 @@ _e_ipc_cb_server_add(void *data, int type, void *event)
 			    break;
 			  case FULL_FUNC:
 			    handler->func(argv + i + 1);
+			    break;
+			  case SIMPLE_INT_REQ:
+			    v = e_ipc_codec_int_enc(atoi(argv[i + 1]),
+						    &data_size);
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  v, data_size);
+			    free(v);
+			    break;
+			  case SIMPLE_DBL_REQ:
+			    v = e_ipc_codec_double_enc(atof(argv[i + 1]),
+						       &data_size);
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  v, data_size);
+			    free(v);
+			    break;
+			  case SIMPLE_2INT_REQ:
+			    v = e_ipc_codec_2int_enc(atoi(argv[i + 1]),
+						     atoi(argv[i + 2]),
+						     &data_size);
+			    ecore_ipc_server_send(_e_ipc_server,
+						  E_IPC_DOMAIN_REQUEST,
+						  handler->simple_request_id,
+						  0/*ref*/, 0/*ref_to*/, 0/*response*/,
+						  v, data_size);
+			    free(v);
 			    break;
 			  default:
 			    break;
@@ -725,6 +788,115 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
         else
           printf("REPLY: AVAILABLE NONE\n"); 
         break;   
+      case E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_BORDER_SHADE_ANIMATE_GET_REPLY:
+	if (e->data)
+	  {
+	     int val;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
+	       printf("REPLY: %i\n", val);
+	  }
+	break;
+      case E_IPC_OP_BORDER_SHADE_TRANSITION_GET_REPLY:
+	if (e->data)
+	  {
+	     int val;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
+	       printf("REPLY: %i\n", val);
+	  }
+	break;
+      case E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_FRAMERATE_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_IMAGE_CACHE_GET_REPLY:
+	if (e->data)
+	  {
+	     int val;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
+	       printf("REPLY: %i\n", val);
+	  }
+	break;
+      case E_IPC_OP_FONT_CACHE_GET_REPLY:
+	if (e->data)
+	  {
+	     int val;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
+	       printf("REPLY: %i\n", val);
+	  }
+	break;
+      case E_IPC_OP_USE_EDGE_FLIP_GET_REPLY:
+	if (e->data)
+	  {
+	     int val;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
+	       printf("REPLY: %i\n", val);
+	  }
+	break;
+      case E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY:
+	if (e->data)
+	  {
+	     double val;
+	     
+	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
+	       printf("REPLY: %3.3f\n", val);
+	  }
+	break;
+      case E_IPC_OP_DESKS_GET_REPLY:
+	if (e->data)
+	  {
+	     int val1;
+	     int val2;
+	     
+	     if (e_ipc_codec_2int_dec(e->data, e->size, &val1, &val2))
+	       printf("REPLY: %i %i\n", val1, val2);
+	  }
+	break;
       default:
 	break;
      }

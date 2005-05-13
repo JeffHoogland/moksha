@@ -102,20 +102,20 @@ e_config_init(void)
    /**/ /* == already configurable via ipc */
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
-   E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE);
-   E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE);
-   E_CONFIG_VAL(D, T, border_shade_animate, INT);
-   E_CONFIG_VAL(D, T, border_shade_transition, INT);
-   E_CONFIG_VAL(D, T, border_shade_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, framerate, DOUBLE);
-   E_CONFIG_VAL(D, T, image_cache, INT);
-   E_CONFIG_VAL(D, T, font_cache, INT);
-   E_CONFIG_VAL(D, T, zone_desks_x_count, INT);
-   E_CONFIG_VAL(D, T, zone_desks_y_count, INT);
+   E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, border_shade_animate, INT); /**/
+   E_CONFIG_VAL(D, T, border_shade_transition, INT); /**/
+   E_CONFIG_VAL(D, T, border_shade_speed, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, framerate, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, image_cache, INT); /**/
+   E_CONFIG_VAL(D, T, font_cache, INT); /**/
+   E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
+   E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
-   E_CONFIG_VAL(D, T, use_edge_flip, INT); 
-   E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE);
+   E_CONFIG_VAL(D, T, use_edge_flip, INT); /**/
+   E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE); /**/
    E_CONFIG_VAL(D, T, language, STR); /**/
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd); /**/

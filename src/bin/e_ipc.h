@@ -59,7 +59,6 @@ typedef enum _E_Ipc_Op
    E_IPC_OP_BINDING_KEY_LIST_REPLY,
    E_IPC_OP_BINDING_KEY_ADD,
    E_IPC_OP_BINDING_KEY_DEL,
-     
    E_IPC_OP_MENUS_SCROLL_SPEED_SET,
    E_IPC_OP_MENUS_SCROLL_SPEED_GET,
    E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY,
@@ -84,7 +83,7 @@ typedef enum _E_Ipc_Op
    E_IPC_OP_IMAGE_CACHE_SET,
    E_IPC_OP_IMAGE_CACHE_GET,
    E_IPC_OP_IMAGE_CACHE_GET_REPLY,
-   E_IPC_OP_FONT_CAHCE_SET,
+   E_IPC_OP_FONT_CACHE_SET,
    E_IPC_OP_FONT_CACHE_GET,
    E_IPC_OP_FONT_CACHE_GET_REPLY,
    E_IPC_OP_USE_EDGE_FLIP_SET,
@@ -96,8 +95,11 @@ typedef enum _E_Ipc_Op
    E_IPC_OP_DESKS_SET,
    E_IPC_OP_DESKS_GET,
    E_IPC_OP_DESKS_GET_REPLY,
-     
    E_IPC_OP_LAST
+     /* FIXME: add ipc: */
+     /* get list of actions */
+     /* get list of paths */
+     /* add/del extra paths */
 } E_Ipc_Op;
 
 #else

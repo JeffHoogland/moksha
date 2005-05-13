@@ -695,7 +695,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			      e_config->image_cache,
 			      E_IPC_OP_IMAGE_CACHE_GET_REPLY);
 	break;
-      case E_IPC_OP_FONT_CAHCE_SET:
+      case E_IPC_OP_FONT_CACHE_SET:
 	if (e_ipc_codec_int_dec(e->data, e->size,
 				&(e_config->font_cache)))
 	  {
