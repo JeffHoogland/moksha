@@ -426,7 +426,6 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-   printf("show req %x / %x\n", e->win, e->parent);
 #if 0   
    if (e->parent != man->root)
      return 1; /* try other handlers for this */
@@ -438,15 +437,12 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 	E_Container *con;
 	E_Border *bd;
 	
-	printf("werdup\n");
 	con = e_container_current_get(man);
 	if (!e_border_find_by_client_window(e->win))
 	  {
-	     printf("SHOW REQ %x\n", e->win);
 	     bd = e_border_new(con, e->win, 0);
 	     if (bd)
 	       {
-		  printf("BD! %x\n", bd->win);
 		  e_border_raise(bd);
 		  e_border_show(bd);
 	       }

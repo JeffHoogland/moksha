@@ -138,7 +138,6 @@ int E_EVENT_BORDER_LOWER = 0;
 int E_EVENT_BORDER_ICON_CHANGE = 0;
 
 #define GRAV_SET(bd, grav) \
-printf("GRAV TO %i\n", grav); \
 ecore_x_window_gravity_set(bd->bg_win, grav); \
 ecore_x_window_gravity_set(bd->client.shell_win, grav); \
 ecore_x_window_gravity_set(bd->client.win, grav); \
@@ -1444,7 +1443,6 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border MAP REQ %x\n", e->win);
    e_border_show(bd);
    e_border_raise(bd);
    return 1;
@@ -1458,7 +1456,6 @@ static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border DESTROY %x\n", e->win);
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
    return 1;
@@ -1475,13 +1472,11 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border HIDE %x\n", e->win);
    if (bd->ignore_first_unmap > 0)
      {
 	bd->ignore_first_unmap--;
 	return 1;
      }
-   printf("HIDE win %x\n", e->win);
    /* Don't delete hidden or iconified windows */
    if ((bd->iconic) || (!bd->visible))
      {
@@ -1489,9 +1484,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
      }
    else
      {
-	printf("repar\n");
 	e_border_hide(bd, 0);
-//	ecore_x_window_hide(bd->client.win);
 	ecore_x_window_reparent(bd->client.win,
 				bd->zone->container->manager->root,
 				bd->x + bd->client_inset.l,
@@ -1513,7 +1506,6 @@ _e_border_cb_window_reparent(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border REPARENT %x\n", e->win);
 //   if (e->parent == bd->client.shell_win) return 1;
    if (ecore_x_window_parent_get(e->win) == bd->client.shell_win) return 1;
    e_border_hide(bd, 0);
@@ -1541,7 +1533,6 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 				 e->abovewin, e->detail);
 	return 1;
      }
-   printf("border CONFIG %x\n", e->win);
    printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
 	  e->win,
 	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
@@ -1617,19 +1608,13 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  {
 	     obd = e_border_find_by_client_window(e->abovewin);
 	     if (obd)
-	       {
-		  printf("border STACK ABOVE %x\n", e->abovewin);
-		  e_border_stack_above(bd, obd);
-	       }
+	       e_border_stack_above(bd, obd);
 	  }
 	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
 	  {
 	     obd = e_border_find_by_client_window(e->abovewin);
 	     if (obd)
-	       {
-		  printf("border STACK BELOW %x\n", e->abovewin);
-		  e_border_stack_below(bd, obd);
-	       }
+	       e_border_stack_below(bd, obd);
 	  }
 	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
 	  {
@@ -1688,7 +1673,6 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	ecore_x_window_resize(e->win, e->w, e->h);
 	return 1;
      }
-   printf("border RESIZE %x\n", e->win);
    printf("##- RESIZE REQ 0x%x\n", bd->client.win);
      {
 	int w, h;
@@ -1739,7 +1723,6 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border PROP %x\n", e->win);
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
 	bd->client.icccm.fetch.title = 1;
@@ -1816,7 +1799,6 @@ _e_border_cb_window_shape(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (bd)
      {
-   printf("border SHAPE %x\n", e->win);
 	bd->changes.shape = 1;
 	bd->changed = 1;
 	return 1;
@@ -1847,7 +1829,6 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border FOCUS %x\n", e->win);
 #ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
@@ -1893,7 +1874,6 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border UNFOCUS %x\n", e->win);
 #ifdef INOUTDEBUG_FOCUS
      {
 	time_t t;
@@ -1962,7 +1942,6 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   printf("border STATE %x\n", e->win);
    for (i = 0; i < 2; i++)
      e_hints_window_state_update(bd, e->state[i], e->action);
    return 1;
@@ -2148,7 +2127,6 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 
    if (e_dnd_active()) return;
 
-   printf("action %s\n", source);
    if (!strcmp(source, "close"))
      {
 	e_border_act_close_begin(bd);
