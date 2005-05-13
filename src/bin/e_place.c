@@ -47,7 +47,6 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
    while (borders)
      {
 	int new_x, new_y;
-	E_Border *border;
 
 	border = borders->data;
 	e_place_zone_region_smart(zone, borders, border->x, border->y,
@@ -272,7 +271,6 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     bl = e_container_border_list_first(zone->container);
 		     while ((bd = e_container_border_list_next(bl)))
 		       {
-			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
@@ -336,7 +334,6 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     bl = e_container_border_list_first(zone->container);
 		     while ((bd = e_container_border_list_next(bl)))
 		       {
-			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
@@ -400,7 +397,6 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		     bl = e_container_border_list_first(zone->container);
 		     while ((bd = e_container_border_list_next(bl)))
 		       {
-			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
