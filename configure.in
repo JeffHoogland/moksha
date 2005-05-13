@@ -214,6 +214,7 @@ src/modules/pager/Makefile
 src/modules/battery/Makefile
 src/modules/temperature/Makefile
 src/modules/cpufreq/Makefile
+src/modules/ibox/Makefile
 data/Makefile
 data/fonts/Makefile
 data/images/Makefile

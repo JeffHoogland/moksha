@@ -7,4 +7,5 @@ clock \
 pager \
 battery \
 temperature \
-cpufreq
+cpufreq \
+ibox

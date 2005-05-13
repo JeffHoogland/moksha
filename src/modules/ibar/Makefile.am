@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-MODULE = ibar
+MODULE = ibox
 
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
