@@ -106,9 +106,6 @@ static void _e_border_move_begin(E_Border *bd);
 static void _e_border_move_end(E_Border *bd);
 static void _e_border_move_update(E_Border *bd);
 
-static void _e_border_reorder_after(E_Border *bd, E_Border *after);
-static void _e_border_reorder_before(E_Border *bd, E_Border *before);
-
 static int  _e_border_cb_focus_fix(void *data);
 
 /* local subsystem globals */
@@ -336,7 +333,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    bd->zone = e_zone_current_get(con);
    bd->desk = e_desk_current_get(bd->zone);
-   con->clients = evas_list_append(con->clients, bd);
+   e_container_border_add(bd);
    borders = evas_list_append(borders, bd);
 
    managed = 1;
@@ -592,8 +589,9 @@ e_border_raise(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   _e_border_reorder_after(bd, NULL);
+ 
    e_container_border_raise(bd);
+
      {
 	E_Event_Border_Raise *ev;
 	
@@ -610,8 +608,9 @@ e_border_lower(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   _e_border_reorder_before(bd, NULL);
+
    e_container_border_lower(bd);
+
      {
 	E_Event_Border_Lower *ev;
 	
@@ -628,12 +627,9 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   _e_border_reorder_after(bd, above);
-   ecore_x_window_configure(bd->win,
-			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-			    0, 0, 0, 0, 0,
-			    above->win, ECORE_X_WINDOW_STACK_ABOVE);
+
+   e_container_border_stack_above(bd, above);
+
      {
 	E_Event_Border_Raise *ev;
 	
@@ -651,12 +647,8 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   _e_border_reorder_before(bd, below);
-   ecore_x_window_configure(bd->win,
-			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-			    0, 0, 0, 0, 0,
-			    below->win, ECORE_X_WINDOW_STACK_BELOW);
+
+   e_container_border_stack_below(bd, below);
      {
 	E_Event_Border_Lower *ev;
 	
@@ -1173,7 +1165,7 @@ e_border_focused_get(void)
 void
 e_border_idler_before(void)
 {
-   Evas_List *l;
+   Evas_List *ml, *cl;
 
    if (!borders)
      return;
@@ -1182,37 +1174,62 @@ e_border_idler_before(void)
     * 1. show windows
     * 2. hide windows and evaluate rest
     */
-   for (l = borders->last; l; l = l->prev)
+   for (ml = e_manager_list(); ml; ml = ml->next)
      {
-	E_Border *bd;
+	E_Manager *man;
 
-	bd = l->data;
-	if ((bd->changes.visible) && (bd->visible))
+	man = ml->data;
+	for (cl = man->containers; cl; cl = cl->next)
 	  {
-	     ecore_evas_show(bd->bg_ecore_evas);
-	     ecore_x_window_show(bd->win);
-	     bd->changes.visible = 0;
+	     E_Container *con;
+	     E_Border_List *bl;
+	     E_Border *bd;
+
+	     con = cl->data;
+	     bl = e_container_border_list_last(con);
+	     while ((bd = e_container_border_list_prev(bl)))
+	       {
+		  if ((bd->changes.visible) && (bd->visible))
+		    {
+		       ecore_evas_show(bd->bg_ecore_evas);
+		       ecore_x_window_show(bd->win);
+		       bd->changes.visible = 0;
+		    }
+	       }
 	  }
      }
 
-   for (l = borders; l; l = l->next)
+   for (ml = e_manager_list(); ml; ml = ml->next)
      {
-	E_Border *bd;
+	E_Manager *man;
 
-	bd = l->data;
-	if ((bd->changes.visible) && (!bd->visible))
+	man = ml->data;
+	for (cl = man->containers; cl; cl = cl->next)
 	  {
-	     ecore_x_window_hide(bd->win);
-	     ecore_evas_hide(bd->bg_ecore_evas);
-	     bd->changes.visible = 0;
+	     E_Container *con;
+	     E_Border_List *bl;
+	     E_Border *bd;
+
+	     con = cl->data;
+	     bl = e_container_border_list_first(con);
+	     while ((bd = e_container_border_list_next(bl)))
+	       {
+		  if ((bd->changes.visible) && (!bd->visible))
+		    {
+		       ecore_x_window_hide(bd->win);
+		       ecore_evas_hide(bd->bg_ecore_evas);
+		       bd->changes.visible = 0;
+		    }
+		  if (bd->changed) _e_border_eval(bd);
+	       }
 	  }
-	if (bd->changed) _e_border_eval(bd);
      }
 }
 
 Evas_List *
 e_border_clients_get()
 {
+   /* FIXME: This should be a somewhat ordered list */
    return borders;
 }
 
@@ -1420,7 +1437,7 @@ _e_border_free(E_Border *bd)
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
-   bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
+   e_container_border_remove(bd);
    borders = evas_list_remove(borders, bd);
 
    free(bd);
@@ -4165,44 +4182,6 @@ static void
 _e_border_move_update(E_Border *bd)
 {
    e_move_update(bd->x, bd->y);
-}
-
-static void
-_e_border_reorder_after(E_Border *bd, E_Border *after)
-{
-   if (after)
-     {
-	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-	bd->zone->container->clients = evas_list_append_relative(bd->zone->container->clients, bd, after);
-	borders = evas_list_remove(borders, bd);
-	borders = evas_list_append_relative(borders, bd, after);
-     }
-   else
-     {
-	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-	bd->zone->container->clients = evas_list_append(bd->zone->container->clients, bd);
-	borders = evas_list_remove(borders, bd);
-	borders = evas_list_append(borders, bd);
-     }
-}
-
-static void
-_e_border_reorder_before(E_Border *bd, E_Border *before)
-{
-   if (before)
-     {
-	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-	bd->zone->container->clients = evas_list_prepend_relative(bd->zone->container->clients, bd, before);
-	borders = evas_list_remove(borders, bd);
-	borders = evas_list_prepend_relative(borders, bd, before);
-     }
-   else
-     {
-	bd->zone->container->clients = evas_list_remove(bd->zone->container->clients, bd);
-	bd->zone->container->clients = evas_list_prepend(bd->zone->container->clients, bd);
-	borders = evas_list_remove(borders, bd);
-	borders = evas_list_prepend(borders, bd);
-     }
 }
 
 static int

@@ -32,10 +32,11 @@ e_hints_init(void)
 void
 e_hints_client_list_set(void)
 {
-   Evas_List *ml = NULL, *cl = NULL, *bl = NULL;
+   Evas_List *ml = NULL, *cl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;
+   E_Border_List *bl;
    E_Border *b;
    Ecore_X_Window *clients = NULL;
 
@@ -46,7 +47,7 @@ e_hints_client_list_set(void)
 	for (cl = m->containers; cl; cl = cl->next)
 	  {
 	     c = cl->data;
-	     num += evas_list_count(c->clients);
+	     num += e_container_borders_count(c);
 	  }
      }
    
@@ -63,11 +64,10 @@ e_hints_client_list_set(void)
 	     for (cl = m->containers; cl; cl = cl->next)
 	       {
 		  c = cl->data;
-		  for (bl = c->clients; bl; bl = bl->next)
-		    {
-		       b = bl->data;
-		       clients[i++] = b->win;
-		    }
+		  bl = e_container_border_list_first(c);
+		  while ((b = e_container_border_list_next(bl)))
+		    clients[i++] = b->win;
+		  e_container_border_list_free(bl);
 	       }
 	  }
 	for (ml = e_manager_list(); ml; ml = ml->next)
@@ -94,10 +94,11 @@ e_hints_client_list_set(void)
 void
 e_hints_client_stacking_set(void)
 {
-   Evas_List *ml = NULL, *cl = NULL, *bl = NULL;
+   Evas_List *ml = NULL, *cl = NULL;
    unsigned int i = 0, num = 0;
    E_Manager *m;
    E_Container *c;
+   E_Border_List *bl;
    E_Border *b;
    Ecore_X_Window *clients = NULL;
 
@@ -108,7 +109,7 @@ e_hints_client_stacking_set(void)
 	for (cl = m->containers; cl; cl = cl->next)
 	  {
 	     c = cl->data;
-	     num += evas_list_count(c->clients);
+	     num += e_container_borders_count(c);
 	  }
      }
    
@@ -124,11 +125,10 @@ e_hints_client_stacking_set(void)
 	     for (cl = m->containers; cl; cl = cl->next)
 	       {
 		  c = cl->data;
-		  for (bl = c->clients; bl; bl = bl->next)
-		    {
-		       b = bl->data;
-		       clients[i++] = b->win;
-		    }
+		  bl = e_container_border_list_first(c);
+		  while ((b = e_container_border_list_next(bl)))
+		    clients[i++] = b->win;
+		  e_container_border_list_free(bl);
 	       }
 	  }
 	for (ml = e_manager_list(); ml; ml = ml->next)

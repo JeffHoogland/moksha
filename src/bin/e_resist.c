@@ -26,6 +26,8 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    int gad_resist = 32;
    Evas_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
+   E_Border_List *bl;
+   E_Border *bd;
 
    /* FIXME: get resist values from config */
    if (!resist)
@@ -63,11 +65,11 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    /* can add code here to add more fake obstacles with custom resist values */
    /* here if need be - ie xinerama middle between screens and panels etc. */
 
-   for (l = con->clients; l; l = l->next)
+   bl = e_container_border_list_first(con);
+   while ((bd = e_container_border_list_next(bl)))
      {
         E_Border *bd;
 
-	bd = l->data;
 	if (bd->visible)
 	  {
 	     int ok;
@@ -87,6 +89,8 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	       }
 	  }
      }
+   e_container_border_list_free(bl);
+
    for (l = con->gadman->clients; l; l = l->next)
      {
         E_Gadman_Client *gmc;

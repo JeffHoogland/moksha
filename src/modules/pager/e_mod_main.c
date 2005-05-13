@@ -500,9 +500,10 @@ _pager_face_zone_unset(Pager_Face *face)
 static Pager_Desk *
 _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
 {
-   Pager_Desk  *pd;
-   Evas_Object *o;
-   Evas_List   *l;
+   Pager_Desk    *pd;
+   Evas_Object   *o;
+   E_Border_List *bl;
+   E_Border      *bd;
 
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
@@ -545,17 +546,17 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    
    if (desk == e_desk_current_get(desk->zone)) _pager_face_desk_select(pd);
 
-   for (l = desk->zone->container->clients; l; l = l->next)
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((bd = e_container_border_list_next(bl)))
      {
 	Pager_Win   *pw;
-	E_Border    *bd;
 	
-	bd = l->data;	
 	if ((bd->new_client) || (bd->desk != desk)) continue;
 	pw = _pager_window_new(pd, bd);
 	if (pw)
 	  pd->wins = evas_list_append(pd->wins, pw);
      }
+   e_container_border_list_free(bl);
 
    return pd;
 }

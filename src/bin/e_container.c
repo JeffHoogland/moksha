@@ -6,6 +6,8 @@
 /* TODO List:
  * 
  * * fix shape callbacks to be able to be safely deleted
+ * * remove duplicate bd->layer -> layers code
+ *
  */
 
 /* local subsystem functions */
@@ -508,6 +510,51 @@ e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, 
  * 200 = fullscreen
  * 999 = internal on top windows for E
  */
+int
+e_container_borders_count(E_Container *con)
+{
+   /* FIXME: This could be stored and not calculated */
+   int num, i;
+
+   num = 0;
+   for (i = 0; i < num; i++)
+     num += evas_list_count(con->layers[i].clients);
+
+   return num;
+}
+
+void
+e_container_border_add(E_Border *bd)
+{
+   int pos;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_append(bd->zone->container->layers[pos].clients, bd);
+}
+
+void
+e_container_border_remove(E_Border *bd)
+{
+   int pos;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+}
+
 void
 e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
@@ -605,6 +652,78 @@ e_container_border_lower(E_Border *bd)
       evas_list_prepend(bd->zone->container->layers[pos].clients, bd);
 }
 
+void
+e_container_border_stack_above(E_Border *bd, E_Border *above)
+{
+   int pos;
+
+   /* Remove from old layer */
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+
+   /* Add to new layer */
+   bd->layer = above->layer;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   ecore_x_window_configure(bd->win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    above->win, ECORE_X_WINDOW_STACK_ABOVE);
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_append_relative(bd->zone->container->layers[pos].clients, bd, above);
+}
+
+void
+e_container_border_stack_below(E_Border *bd, E_Border *below)
+{
+   int pos;
+
+   /* Remove from old layer */
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+
+   /* Add to new layer */
+   bd->layer = below->layer;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   ecore_x_window_configure(bd->win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    below->win, ECORE_X_WINDOW_STACK_BELOW);
+
+   bd->zone->container->layers[pos].clients =
+      evas_list_prepend_relative(bd->zone->container->layers[pos].clients, bd, below);
+}
+
 E_Border_List *
 e_container_border_list_first(E_Container *con)
 {
@@ -629,6 +748,8 @@ e_container_border_list_last(E_Container *con)
    list->container = con;
    e_object_ref(E_OBJECT(con));
    list->layer = 6;
+   if (list->clients = list->container->layers[list->layer].clients)
+     list->clients = list->container->layers[list->layer].clients->last;
    while ((list->layer > 0) && (!list->clients))
      {
 	list->layer--;

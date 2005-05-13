@@ -7,15 +7,15 @@ void
 e_place_zone_region_smart_cleanup(E_Zone *zone)
 {
    E_Desk *desk;
-   Evas_List *l, *borders = NULL;
+   Evas_List *borders = NULL;
+   E_Border_List *bl;
+   E_Border *border;
 
    E_OBJECT_CHECK(zone);
    desk = e_desk_current_get(zone);
-   for (l = e_border_clients_get(); l; l = l->next)
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((border = e_container_border_list_next(bl)))
      {
-	E_Border *border;
-
-	border = l->data;
 	/* Build a list of windows on this desktop and not iconified. */
 	if ((border->desk == desk) && !(border->iconic))
 	  {
@@ -41,6 +41,7 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 	     if (!ll) borders = evas_list_append(borders, border);
 	  }
      }
+   e_container_border_list_free(bl);
 
    /* Loop over the borders moving each one using the smart placement */
    while (borders)
@@ -61,7 +62,9 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 {
    int                 a_w = 0, a_h = 0;
    int                *a_x = NULL, *a_y = NULL;
-   Evas_List          *l, *ll;
+   Evas_List          *ll;
+   E_Border_List      *bl;
+   E_Border           *bd;
 
    a_w = 2;
    a_h = 2;
@@ -76,13 +79,12 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    a_y[0] = 0;
    a_y[1] = zone->h;
 
-   for (l = zone->container->clients; l; l = l->next)
+   bl = e_container_border_list_first(zone->container);
+   while ((bd = e_container_border_list_next(bl)))
      {
-	E_Border           *bd;
 	int ok;
 	
 	ok = 1;
-	bd = l->data;
 	for (ll = skiplist; ll; ll = ll->next)
 	  {
 	     if (ll->data == bd)
@@ -189,6 +191,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 	       }
 	  }
      }
+   e_container_border_list_free(bl);
+
    {
       int                 i, j;
       int                 area = 0x7fffffff;
@@ -202,14 +206,13 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  {
 		     int ar = 0;
 
-		     for (l = zone->container->clients; l; l = l->next)
+		     bl = e_container_border_list_first(zone->container);
+		     while ((bd = e_container_border_list_next(bl)))
 		       {
-			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
 			  ok = 1;
-			  bd = l->data;
 			  x1 = a_x[i];
 			  y1 = a_y[j];
 			  w1 = w;
@@ -251,6 +254,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			       ar += (iw * ih);
 			    }
 		       }
+		     e_container_border_list_free(bl);
+
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -264,14 +269,14 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  {
 		     int ar = 0;
 
-		     for (l = zone->container->clients; l; l = l->next)
+		     bl = e_container_border_list_first(zone->container);
+		     while ((bd = e_container_border_list_next(bl)))
 		       {
 			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
 			  ok = 1;
-			  bd = l->data;
 			  x1 = a_x[i + 1] - w;
 			  y1 = a_y[j];
 			  w1 = w;
@@ -313,6 +318,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			       ar += (iw * ih);
 			    }
 		       }
+		     e_container_border_list_free(bl);
+
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -326,14 +333,14 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  {
 		     int ar = 0;
 
-		     for (l = zone->container->clients; l; l = l->next)
+		     bl = e_container_border_list_first(zone->container);
+		     while ((bd = e_container_border_list_next(bl)))
 		       {
 			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
 			  ok = 1;
-			  bd = l->data;
 			  x1 = a_x[i + 1] - w;
 			  y1 = a_y[j + 1] - h;
 			  w1 = w;
@@ -375,6 +382,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			       ar += (iw * ih);
 			    }
 		       }
+		     e_container_border_list_free(bl);
+
 		     if (ar < area)
 		       {
 			  area = ar;
@@ -388,14 +397,14 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  {
 		     int ar = 0;
 
-		     for (l = zone->container->clients; l; l = l->next)
+		     bl = e_container_border_list_first(zone->container);
+		     while ((bd = e_container_border_list_next(bl)))
 		       {
 			  E_Border *bd;
 			  int x1, y1, w1, h1, x2, y2, w2, h2;
 			  int ok;
 			  
 			  ok = 1;
-			  bd = l->data;
 			  x1 = a_x[i];
 			  y1 = a_y[j + 1] - h;
 			  w1 = w;
@@ -437,6 +446,8 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 			       ar += (iw * ih);
 			    }
 		       }
+		     e_container_border_list_free(bl);
+
 		     if (ar < area)
 		       {
 			  area = ar;
