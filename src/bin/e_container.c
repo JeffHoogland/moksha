@@ -114,14 +114,14 @@ e_container_new(E_Manager *man)
    /* init layers */
    for (i = 0; i < 7; i++)
      {
-	con->layers[i] = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
+	con->layers[i].win = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
 
 	if (i > 0)
-	  ecore_x_window_configure(con->layers[i],
+	  ecore_x_window_configure(con->layers[i].win,
 				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 				   0, 0, 0, 0, 0,
-				   con->layers[i - 1], ECORE_X_WINDOW_STACK_ABOVE);
+				   con->layers[i - 1].win, ECORE_X_WINDOW_STACK_ABOVE);
      }
 
    mwin = e_init_window_get();
@@ -130,7 +130,7 @@ e_container_new(E_Manager *man)
 			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			      0, 0, 0, 0, 0,
-			      con->layers[6], ECORE_X_WINDOW_STACK_ABOVE);
+			      con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
 
 
    mwin = e_menu_grab_window_get();
@@ -139,7 +139,7 @@ e_container_new(E_Manager *man)
 			      ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			      ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			      0, 0, 0, 0, 0,
-			      con->layers[6], ECORE_X_WINDOW_STACK_ABOVE);
+			      con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
 
 
    screens = (Evas_List *)e_xinerama_screens_get();
@@ -523,7 +523,8 @@ e_container_window_hide(E_Container *con, Ecore_X_Window win, int layer)
 void
 e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos;
+   int pos, i;
+   E_Border *bd;
    
    if (layer == 0) pos = 1;
    else if ((layer > 0) && (layer <= 50)) pos = 2;
@@ -536,13 +537,21 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    con->layers[pos], ECORE_X_WINDOW_STACK_BELOW);
+			    con->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
+
+   bd = e_border_find_by_client_window(win);
+   if (!bd) return;
+   /* FIXME, remember the old layer if layer is changed. */
+   for (i = 0; i < 7; i++)
+     con->layers[i].clients = evas_list_remove(con->layers[i].clients, bd);
+   con->layers[pos - 1].clients = evas_list_append(con->layers[pos - 1].clients, bd);
 }
 
 void
 e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos;
+   int pos, i;
+   E_Border *bd;
    
    if (layer == 0) pos = 0;
    else if ((layer > 0) && (layer <= 50)) pos = 1;
@@ -555,7 +564,14 @@ e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    con->layers[pos], ECORE_X_WINDOW_STACK_ABOVE);
+			    con->layers[pos].win, ECORE_X_WINDOW_STACK_ABOVE);
+
+   bd = e_border_find_by_client_window(win);
+   if (!bd) return;
+   /* FIXME, remember the old layer if layer is changed. */
+   for (i = 0; i < 7; i++)
+     con->layers[i].clients = evas_list_remove(con->layers[i].clients, bd);
+   con->layers[pos].clients = evas_list_prepend(con->layers[pos].clients, bd);
 }
 
 /* local subsystem functions */
