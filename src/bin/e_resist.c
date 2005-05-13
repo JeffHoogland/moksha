@@ -68,8 +68,6 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    bl = e_container_border_list_first(con);
    while ((bd = e_container_border_list_next(bl)))
      {
-        E_Border *bd;
-
 	if (bd->visible)
 	  {
 	     int ok;
