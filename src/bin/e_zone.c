@@ -441,9 +441,9 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    E_Desk   **new_desks;
    E_Desk    *desk, *new_desk;
    int        x, y, xx, yy, moved;
-   Evas_List *l;
    E_Border  *bd;
    E_Event_Zone_Desk_Count_Set *ev;
+   E_Border_List *bl;
    
    xx = x_count;
    if (xx < 1) xx = 1;
@@ -473,12 +473,13 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       {
 		  desk = zone->desks[x + (y * zone->desk_x_count)];
 		  
-		  for (l = zone->container->clients; l; l = l->next)
+		  bl = e_container_border_list_first(zone->container);
+		  while ((bd = e_container_border_list_next(bl)))
 		    {
-		       bd = l->data;
 		       if (bd->desk == desk)
 			 e_border_desk_set(bd, new_desk);
 		    }
+		  e_container_border_list_free(bl);
 		  e_object_del(E_OBJECT(desk));
 	       }
 	  }
@@ -492,12 +493,13 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 	       {
 		  desk = zone->desks[x + (y * zone->desk_x_count)];
 		  
-		  for (l = zone->container->clients; l; l = l->next)
+		  bl = e_container_border_list_first(zone->container);
+		  while ((bd = e_container_border_list_next(bl)))
 		    {
-		       bd = l->data;
 		       if (bd->desk == desk)
 			 e_border_desk_set(bd, new_desk);
 		    }
+		  e_container_border_list_free(bl);
 		  e_object_del(E_OBJECT(desk));
 	       }
 	  }	

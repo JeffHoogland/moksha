@@ -605,20 +605,96 @@ e_container_border_lower(E_Border *bd)
       evas_list_prepend(bd->zone->container->layers[pos].clients, bd);
 }
 
+E_Border_List *
+e_container_border_list_first(E_Container *con)
+{
+   E_Border_List *list;
+   list = E_NEW(E_Border_List, 1);
+   if (!list) return NULL;
+   list->container = con;
+   e_object_ref(E_OBJECT(con));
+   list->layer = 0;
+   list->clients = list->container->layers[list->layer].clients;
+   while ((list->layer < 6) && (!list->clients))
+     list->clients = list->container->layers[++list->layer].clients;
+   return list;
+}
+
+E_Border_List *
+e_container_border_list_last(E_Container *con)
+{
+   E_Border_List *list;
+   list = E_NEW(E_Border_List, 1);
+   if (!list) return NULL;
+   list->container = con;
+   e_object_ref(E_OBJECT(con));
+   list->layer = 6;
+   while ((list->layer > 0) && (!list->clients))
+     {
+	list->layer--;
+	if (list->container->layers[list->layer].clients)
+	  list->clients = list->container->layers[list->layer].clients->last;
+     }
+   return list;
+}
+
+E_Border *
+e_container_border_list_next(E_Border_List *list)
+{
+   E_Border *bd;
+
+   if (!list->clients) return NULL;
+
+   bd = list->clients->data;
+
+   list->clients = list->clients->next;
+   while ((list->layer < 6) && (!list->clients))
+     list->clients = list->container->layers[++list->layer].clients;
+
+   return bd;
+}
+
+E_Border *
+e_container_border_list_prev(E_Border_List *list)
+{
+   E_Border *bd;
+
+   if (!list->clients) return NULL;
+   
+   bd = list->clients->data;
+
+   list->clients = list->clients->prev;
+   while ((list->layer > 0) && (!list->clients))
+     list->clients = list->container->layers[--list->layer].clients;
+
+   return bd;
+}
+
+void
+e_container_border_list_free(E_Border_List *list)
+{
+   e_object_unref(E_OBJECT(list->container));
+   free(list);
+}
+
 /* local subsystem functions */
 static void
 _e_container_free(E_Container *con)
 {
    Evas_List *l, *tmp;
-   
+   int i;
+
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
-   for (l = con->clients; l;)
+   for (i = 0; i < 7; i++)
      {
-	tmp = l;
-	l = l->next;
-	e_object_free(E_OBJECT(tmp->data));
+	for (l = con->layers[i].clients; l;)
+	  {
+	     tmp = l;
+	     l = l->next;
+	     e_object_free(E_OBJECT(tmp->data));
+	  }
      }
    for (l = con->zones; l;)
      {
@@ -675,6 +751,7 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Evas_List *l, *screens;
+   int i;
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
@@ -717,21 +794,24 @@ _e_container_resize_handle(E_Container *con)
    e_gadman_container_resize(con->gadman);
    e_object_ref(E_OBJECT(con));
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
-   for (l = con->clients; l; l = l->next)
+   for (i = 0; i < 7; i++)
      {
-	E_Border *bd;
-	
-	bd = l->data;
-	
-	if (bd->w > bd->zone->w)
-	  e_border_resize(bd, bd->zone->w, bd->h);
-	if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
-	  e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
-	    
-	if (bd->h > bd->zone->h)
-	  e_border_resize(bd, bd->w, bd->zone->h);
-	if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
-	  e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
+	for (l = con->layers[i].clients; l; l = l->next)
+	  {
+	     E_Border *bd;
+
+	     bd = l->data;
+
+	     if (bd->w > bd->zone->w)
+	       e_border_resize(bd, bd->zone->w, bd->h);
+	     if ((bd->x + bd->w) > (bd->zone->x + bd->zone->w))
+	       e_border_move(bd, bd->zone->x + bd->zone->w - bd->w, bd->y);
+
+	     if (bd->h > bd->zone->h)
+	       e_border_resize(bd, bd->w, bd->zone->h);
+	     if ((bd->y + bd->h) > (bd->zone->y + bd->zone->h))
+	       e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
+	  }
      }
 }
 

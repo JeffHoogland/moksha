@@ -58,18 +58,18 @@ e_desk_name_set(E_Desk *desk, const char *name)
 void
 e_desk_show(E_Desk *desk)
 {
-   Evas_List         *l;
+   E_Border_List     *bl;
    int                x, y;
    E_Event_Desk_Show *ev;
-   
+   E_Border *bd;
+
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
    
-   for (l = desk->zone->container->clients; l; l = l->next)
+   bl = e_container_border_list_first(desk->zone->container);
+   while ((bd = e_container_border_list_next(bl)))
      {
-	E_Border *bd = l->data;
-
 	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
 	  {
 	     if ((bd->desk == desk) || (bd->sticky))
@@ -78,6 +78,7 @@ e_desk_show(E_Desk *desk)
 	       e_border_hide(bd, 1);
 	  }
      }
+   e_container_border_list_free(bl);
    
    for (x = 0; x < desk->zone->desk_x_count; x++)
      {

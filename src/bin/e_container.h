@@ -15,6 +15,7 @@ typedef enum _E_Container_Shape_Change
 } E_Container_Shape_Change;
 
 typedef struct _E_Container                E_Container;
+typedef struct _E_Border_List              E_Border_List;
 typedef struct _E_Container_Shape          E_Container_Shape;
 typedef struct _E_Container_Shape_Callback E_Container_Shape_Callback;
 typedef struct _E_Event_Container_Resize   E_Event_Container_Resize;
@@ -46,13 +47,20 @@ struct _E_Container
    
    Evas_List           *shapes;
    Evas_List           *shape_change_cb;
-   Evas_List           *zones;
    Evas_List           *clients;
+   Evas_List           *zones;
 
    struct {
 	Ecore_X_Window win;
 	Evas_List *clients;
    } layers[7];
+};
+
+struct _E_Border_List
+{
+   E_Container *container;
+   int layer;
+   Evas_List *clients;
 };
 
 struct _E_Container_Shape
@@ -91,6 +99,12 @@ EAPI void         e_container_resize(E_Container *con, int w, int h);
 EAPI void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);
 EAPI void         e_container_raise(E_Container *con);
 EAPI void         e_container_lower(E_Container *con);
+
+EAPI E_Border_List *e_container_border_list_first(E_Container *con);
+EAPI E_Border_List *e_container_border_list_last(E_Container *con);
+EAPI E_Border      *e_container_border_list_next(E_Border_List *list);
+EAPI E_Border      *e_container_border_list_prev(E_Border_List *list);
+EAPI void           e_container_border_list_free(E_Border_List *list);
 
 EAPI E_Zone      *e_container_zone_at_point_get(E_Container *con, int x, int y);
 EAPI E_Zone      *e_container_zone_number_get(E_Container *con, int num);
