@@ -616,7 +616,7 @@ e_container_border_raise(E_Border *bd)
 			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
 			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 			    0, 0, 0, 0, 0,
-			    bd->zone->container->layers[pos].win, ECORE_X_WINDOW_STACK_BELOW);
+			    bd->zone->container->layers[pos - 1].win, ECORE_X_WINDOW_STACK_BELOW);
 
    bd->zone->container->layers[pos - 1].clients =
       evas_list_append(bd->zone->container->layers[pos - 1].clients, bd);
@@ -748,7 +748,7 @@ e_container_border_list_last(E_Container *con)
    list->container = con;
    e_object_ref(E_OBJECT(con));
    list->layer = 6;
-   if (list->clients = list->container->layers[list->layer].clients)
+   if (list->container->layers[list->layer].clients)
      list->clients = list->container->layers[list->layer].clients->last;
    while ((list->layer > 0) && (!list->clients))
      {
