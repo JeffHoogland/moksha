@@ -1196,6 +1196,7 @@ e_border_idler_before(void)
 		       bd->changes.visible = 0;
 		    }
 	       }
+	     e_container_border_list_free(bl);
 	  }
      }
 
@@ -1222,6 +1223,7 @@ e_border_idler_before(void)
 		    }
 		  if (bd->changed) _e_border_eval(bd);
 	       }
+	     e_container_border_list_free(bl);
 	  }
      }
 }

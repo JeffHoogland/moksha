@@ -7,6 +7,8 @@
 
 /* TODO List:
  *
+ * * Listen to change of main e_app!
+ *
  * * Create separate config for each bar
  * * Fix menu
  *
