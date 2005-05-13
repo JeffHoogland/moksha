@@ -110,10 +110,10 @@ EAPI void               e_container_shape_rects_set(E_Container_Shape *es, Ecore
 EAPI void               e_container_shape_solid_rect_set(E_Container_Shape *es, int x, int y, int w, int h);
 EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, int *h);
 
-EAPI void               e_container_window_show(E_Container *con, Ecore_X_Window, int layer);
-EAPI void               e_container_window_hide(E_Container *con, Ecore_X_Window, int layer);
 EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window, int layer);
 EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window, int layer);
+EAPI void               e_container_border_raise(E_Border *bd);
+EAPI void               e_container_border_lower(E_Border *bd);
 
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 

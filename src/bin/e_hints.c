@@ -264,7 +264,7 @@ e_hints_window_init(E_Border *bd)
      bd->layer = 150;
    else
      bd->layer = 100;
-   e_container_window_raise(bd->zone->container, bd->win, bd->layer);
+   e_container_border_raise(bd);
 
    if (bd->client.netwm.state.sticky)
      e_border_stick(bd);

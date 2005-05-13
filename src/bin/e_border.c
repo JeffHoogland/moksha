@@ -416,7 +416,7 @@ e_border_show(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
-   e_container_window_show(bd->zone->container, bd->client.win, bd->layer);
+   ecore_x_window_show(bd->client.win);
    e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
@@ -441,7 +441,7 @@ e_border_hide(E_Border *bd, int manage)
    if (!bd->visible) return;
    if (bd->moving) return;
 
-   e_container_window_hide(bd->zone->container, bd->client.win, bd->layer);
+   ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
    if (!bd->iconic)
      e_hints_window_hidden_set(bd);
@@ -593,7 +593,7 @@ e_border_raise(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_after(bd, NULL);
-   e_container_window_raise(bd->zone->container, bd->win, bd->layer);
+   e_container_border_raise(bd);
      {
 	E_Event_Border_Raise *ev;
 	
@@ -611,7 +611,7 @@ e_border_lower(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    _e_border_reorder_before(bd, NULL);
-   e_container_window_lower(bd->zone->container, bd->win, bd->layer);
+   e_container_border_lower(bd);
      {
 	E_Event_Border_Lower *ev;
 	
@@ -969,6 +969,8 @@ e_border_fullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (!bd->fullscreen)
      {
+	int layer;
+
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -976,7 +978,10 @@ e_border_fullscreen(E_Border *bd)
 
 	e_hints_window_fullscreen_set(bd, 1);
 
-	e_container_window_raise(bd->zone->container, bd->win, 200);
+	layer = bd->layer;
+	bd->layer = 200;
+	e_border_raise(bd);
+	bd->layer = layer;
 	e_border_move_resize(bd,
 			     bd->zone->x - bd->client_inset.l,
 			     bd->zone->y - bd->client_inset.t,
@@ -1185,7 +1190,7 @@ e_border_idler_before(void)
 	if ((bd->changes.visible) && (bd->visible))
 	  {
 	     ecore_evas_show(bd->bg_ecore_evas);
-	     e_container_window_show(bd->zone->container, bd->win, bd->layer);
+	     ecore_x_window_show(bd->win);
 	     bd->changes.visible = 0;
 	  }
      }
@@ -1197,7 +1202,7 @@ e_border_idler_before(void)
 	bd = l->data;
 	if ((bd->changes.visible) && (!bd->visible))
 	  {
-	     e_container_window_hide(bd->zone->container, bd->win, bd->layer);
+	     ecore_x_window_hide(bd->win);
 	     ecore_evas_hide(bd->bg_ecore_evas);
 	     bd->changes.visible = 0;
 	  }
@@ -3867,7 +3872,7 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 	bd->layer = 150;
 	e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
      }
-   e_container_window_raise(bd->zone->container, bd->win, bd->layer);
+   e_container_border_raise(bd);
 }
 
 static void
