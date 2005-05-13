@@ -439,7 +439,6 @@ e_border_show(E_Border *bd)
 void
 e_border_hide(E_Border *bd, int manage)
 {
-   E_Event_Border_Hide *ev;
    unsigned int visible;
 
    E_OBJECT_CHECK(bd);
@@ -460,10 +459,14 @@ e_border_hide(E_Border *bd, int manage)
    if (!manage)
      ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
 
-   ev = calloc(1, sizeof(E_Event_Border_Hide));
-   ev->border = bd;
-   e_object_ref(E_OBJECT(bd));
-   ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
+     {
+	E_Event_Border_Hide *ev;
+	
+	ev = calloc(1, sizeof(E_Event_Border_Hide));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
+     }
 }
 
 void
@@ -1474,7 +1477,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	bd->ignore_first_unmap--;
 	return 1;
      }
-#if 0
+#if 1
    /* Don't delete hidden or iconified windows */
    if ((bd->iconic) || (!bd->visible))
      {
@@ -1485,7 +1488,12 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	e_border_hide(bd, 0);
 	e_object_del(E_OBJECT(bd));
      }
-#endif
+#else
+   /* we need to re-enable the above. when clients hide windows they often
+    * dont destory - keep around to do somethign else with. if we dont unmanage
+    * then we have all sorts of problems believeing it still exists. bigger
+    * problems than mplayer. :)
+    */
    if (bd->visible)
      {
 	unsigned int hidden;
@@ -1495,6 +1503,7 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_HIDDEN, &hidden, 1);
      }
    e_border_hide(bd, 1);
+#endif   
    return 1;
 }
 
