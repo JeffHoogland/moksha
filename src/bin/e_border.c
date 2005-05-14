@@ -1451,6 +1451,13 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
+   ecore_x_window_reparent(bd->client.win,
+			   bd->zone->container->manager->root,
+			   bd->x + bd->client_inset.l,
+			   bd->y + bd->client_inset.t);
+   ecore_x_window_save_set_del(bd->client.win);
+   bd->already_unparented = 1;
+
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
    /* FIXME Don't ref this during shutdown. And the event is pointless
@@ -1510,12 +1517,6 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
    else
      {
 	e_border_hide(bd, 0);
-	ecore_x_window_reparent(bd->client.win,
-				bd->zone->container->manager->root,
-				bd->x + bd->client_inset.l,
-				bd->y + bd->client_inset.t);
-	ecore_x_window_save_set_del(bd->client.win);
-	bd->already_unparented = 1;
 	e_object_del(E_OBJECT(bd));
      }
    return 1;
