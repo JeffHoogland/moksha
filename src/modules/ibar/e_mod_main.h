@@ -5,60 +5,60 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config      Config;
-typedef struct _Config_Box  Config_Box;
-typedef struct _IBox        IBox;
-typedef struct _IBox_Box    IBox_Box;
-typedef struct _IBox_Icon   IBox_Icon;
+typedef struct _Config_Bar  Config_Bar;
+typedef struct _IBar        IBar;
+typedef struct _IBar_Bar    IBar_Bar;
+typedef struct _IBar_Icon   IBar_Icon;
 
-#define IBOX_WIDTH_AUTO -1
-#define IBOX_WIDTH_FIXED -2
+#define IBAR_WIDTH_AUTO -1
+#define IBAR_WIDTH_FIXED -2
 
 struct _Config
 {
+   char         *appdir;
    double        follow_speed;
    double        autoscroll_speed;
    int           iconsize;
    int           width;
-   Evas_List    *boxes;
+   Evas_List    *bars;
 };
 
-struct _Config_Box
+struct _Config_Bar
 {
    unsigned char enabled;
 };
 
-struct _IBox
+struct _IBar
 {
-   Evas_List   *boxes;
+   E_App       *apps;
+   Evas_List   *bars;
    E_Menu      *config_menu;
    E_Menu      *config_menu_options;
    E_Menu      *config_menu_size;
-   
+
    Config      *conf;
 };
 
-struct _IBox_Box
+struct _IBar_Bar
 {
-   IBox        *ibox;
+   IBar        *ibar;
    E_Container *con;
    Evas        *evas;
    E_Menu      *menu;
-   
-   Evas_Object *box_object;
+
+   Evas_Object *bar_object;
    Evas_Object *overlay_object;
-   Evas_Object *item_object;
+   Evas_Object *box_object;
    Evas_Object *event_object;
-   
+   Evas_Object *drag_object;
+
    Evas_List   *icons;
 
-   Ecore_Event_Handler *ev_handler_border_iconify;
-   Ecore_Event_Handler *ev_handler_border_uniconify;
-   
    double          align, align_req;
    double          follow, follow_req;
    Ecore_Timer    *timer;
    Ecore_Animator *animator;
-   
+
    Evas_Coord      x, y, w, h;
    struct {
 	Evas_Coord l, r, t, b;
@@ -66,18 +66,21 @@ struct _IBox_Box
 
    E_Gadman_Client *gmc;
 
-   Config_Box     *conf;
+   Config_Bar     *conf;
+
+   E_Drop_Handler *drop_handler;
 };
 
-struct _IBox_Icon
+struct _IBar_Icon
 {
-   IBox_Box      *ibb;
-   E_Border      *border;
+   IBar_Bar      *ibb;
+   E_App         *app;
    Evas_Object   *bg_object;
    Evas_Object   *overlay_object;
    Evas_Object   *icon_object;
    Evas_Object   *event_object;
- 
+   Evas_List     *extra_icons;
+
    unsigned char  raise_on_hilight : 1;
 };
 
