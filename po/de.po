@@ -225,6 +225,10 @@ msgstr "Sehr langsam abfragen (30 sek)"
 msgid "Check Very Slow (60 sec)"
 msgstr "Sehr langsam abfragen (60 sek)"
 
+#: src/bin/e_int_menus.c:496
+msgid "Cleanup Windows"
+msgstr "Fenster aufräumen"
+
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
 msgstr "Uhr"
@@ -233,13 +237,37 @@ msgstr "Uhr"
 msgid "Close"
 msgstr "Schließen"
 
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Near"
-msgstr "Nah"
-
 #: src/bin/e_module.c:395
 msgid "Configuration"
 msgstr "Konfiguration"
+
+#: src/bin/e_config.c:875
+msgid "Configuration Upgraded"
+msgstr "Konfiguration erneuert"
+
+#: src/bin/e_config.c:135
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new confiugration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"Ihre Konfiguration muss erneuert werden. Ihre alten Einstellungen\n"
+"wurden gelöscht und neue Standartwerte initialisiert. Dies\n"
+"wird während der Entwicklung regelmäßig passieren, also bitte\n"
+"keinen BUG melden. Enlightenment benötigt lediglich neue Konfigurationsdaten\n"
+"als Standartwerte für neue Funktionalität, die ihre alte Konfiguration\n"
+"einfach nicht hatte. Die wird durch die enue Konfiguration erneuert.\n"
+"Du kannst jetzt natürlich wieder Enlightenment nach deinen Wünschen\n"
+"gestalten. Entschuldigung.\n"
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Near"
+msgstr "Nah"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
@@ -1030,3 +1058,19 @@ msgid ""
 msgstr ""
 "Ihre Batterie ist bald leer.\n"
 "Sie könnten sich an eine AC Quelle (Steckdose) anschließen."
+
+#: src/bin/e_config.c:149
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your confiugration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"Ihre konfiguration ist NEUER als Enlightenment. Das ist sehr\n"
+"merkwürdig. Das kann nicht passieren, ausser sie haben eine\n"
+"ältere Version installiert oder eine Konfigurationsdatei genommen\n"
+"die von einer neueren Version von Enlightenment stammt. Das ist sehr\n"
+"schlecht und zur Vorsicht wurde ihre Konfigurationsdatei auf die\n"
+"Standarts zurückgesetzt. Entschuldigen sie bitte.\n"
