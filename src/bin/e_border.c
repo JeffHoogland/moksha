@@ -1963,13 +1963,48 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_State *e;
-   int i;
+   int i, on;
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (!bd) return 1;
-   for (i = 0; i < 2; i++)
-     e_hints_window_state_update(bd, e->state[i], e->action);
+   if (!bd)
+     {
+	for (i = 0; i < 2; i++)
+	  {
+	     if (e->state[i] == ECORE_X_WINDOW_STATE_ICONIFIED)
+	       {
+		  if (e->action == ECORE_X_WINDOW_STATE_ACTION_ADD)
+		    {
+		       ecore_x_icccm_state_set(e->win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
+		       ecore_x_netwm_window_state_set(e->win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
+		    }
+	       }
+	     else
+	       {
+		  switch (e->action)
+		    {
+		     case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+			ecore_x_netwm_window_state_set(e->win, e->state[i], 0);
+			break;
+		     case ECORE_X_WINDOW_STATE_ACTION_ADD:
+			ecore_x_netwm_window_state_set(e->win, e->state[i], 1);
+			break;
+		     case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+			on = ecore_x_netwm_window_state_isset(e->win, e->state[i]);
+			if (on)
+			  ecore_x_netwm_window_state_set(e->win, e->state[i], 0);
+			else
+			  ecore_x_netwm_window_state_set(e->win, e->state[i], 1);
+			break;
+		    }
+	       }
+	  }
+     }
+   else
+     {
+	for (i = 0; i < 2; i++)
+	  e_hints_window_state_update(bd, e->state[i], e->action);
+     }
    return 1;
 }
 
