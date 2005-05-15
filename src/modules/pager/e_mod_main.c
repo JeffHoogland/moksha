@@ -735,7 +735,10 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    face->fy = y;
    face->fw = w;
    face->fh = h;
-   e_drop_handler_geometry_set(face->drop_handler, x, y, w, h);
+   e_drop_handler_geometry_set(face->drop_handler,
+			       face->fx + face->inset.l, face->fy + face->inset.t,
+			       face->fw - (face->inset.l + face->inset.r),
+			       face->fh - (face->inset.t + face->inset.b));
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
