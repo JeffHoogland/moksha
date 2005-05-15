@@ -34,6 +34,7 @@ struct _E_Drag
    Evas_Object       *object;
 
    int x, y, w, h;
+   int dx, dy;
 
    unsigned int   layer;
    unsigned char  visible : 1;
@@ -81,7 +82,8 @@ EAPI int  e_dnd_shutdown(void);
 
 EAPI int  e_dnd_active(void);
 
-EAPI E_Drag* e_drag_new(E_Container *container, const char *type, void *data,
+/* x and y are the top left coords of the object that is to be dragged */
+EAPI E_Drag* e_drag_new(E_Container *container, int x, int y, const char *type, void *data,
 			void (*finished_cb)(E_Drag *drag, int dropped));
 EAPI Evas   *e_drag_evas_get(E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
@@ -91,7 +93,8 @@ EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
 EAPI void    e_drag_idler_before(void);
 
-EAPI void e_drag_start(E_Drag *drag);
+/* x and y are the coords where the mouse is when dragging starts */
+EAPI void e_drag_start(E_Drag *drag, int x, int y);
 EAPI void e_drag_update(int x, int y);
 EAPI void e_drag_end(int x, int y);
 

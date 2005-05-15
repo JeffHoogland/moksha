@@ -2512,38 +2512,38 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	  {
 	     if ((bd->drag.x == -1) && (bd->drag.y == -1))
 	       {
-		  bd->drag.x = ev->x;
-		  bd->drag.y = ev->y;
+		  bd->drag.x = ev->root.x;
+		  bd->drag.y = ev->root.y;
 	       }
 	     else
 	       {
 		  int x, y;
 		  double dist;
 
-		  x = bd->drag.x - ev->x;
-		  y = bd->drag.y - ev->y;
+		  x = bd->drag.x - ev->root.x;
+		  y = bd->drag.y - ev->root.y;
 		  dist = sqrt(pow(x, 2) + pow(y, 2));
-		  if (dist > 10)
+		  if (dist > 4)
 		    {
 		       /* start drag! */
 		       if (bd->icon_object)
 			 {
 			    E_Drag *drag;
 			    Evas_Object *o;
-			    Evas_Coord w, h;
+			    Evas_Coord x, y, w, h;
 			    const char *file, *part;
 
-			    drag = e_drag_new(bd->zone->container,
+			    evas_object_geometry_get(bd->icon_object,
+						     &x, &y, &w, &h);
+			    drag = e_drag_new(bd->zone->container, bd->x + x, bd->y + y,
 					      "enlightenment/border", bd, NULL);
 			    o = edje_object_add(drag->evas);
 			    edje_object_file_get(bd->icon_object, &file, &part);
 			    edje_object_file_set(o, file, part);
 			    e_drag_object_set(drag, o);
 
-			    evas_object_geometry_get(bd->icon_object,
-						     NULL, NULL, &w, &h);
 			    e_drag_resize(drag, w, h);
-			    e_drag_start(drag);
+			    e_drag_start(drag, bd->drag.x, bd->drag.y);
 			    evas_event_feed_mouse_up(bd->bg_evas, 1,
 						     EVAS_BUTTON_NONE, NULL);
 			 }

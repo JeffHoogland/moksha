@@ -119,7 +119,7 @@ e_dnd_shutdown(void)
 }
 
 E_Drag*
-e_drag_new(E_Container *container,
+e_drag_new(E_Container *container, int x, int y,
 	   const char *type, void *data,
 	   void (*finished_cb)(E_Drag *drag, int dropped))
 {
@@ -128,8 +128,8 @@ e_drag_new(E_Container *container,
    drag = E_OBJECT_ALLOC(E_Drag, E_DRAG_TYPE, _e_drag_free);
    if (!drag) return NULL;
 
-   drag->x = 0;
-   drag->y = 0;
+   drag->x = x;
+   drag->y = y;
    drag->w = 24;
    drag->h = 24;
    drag->layer = 250;
@@ -221,15 +221,15 @@ e_drag_hide(E_Drag *drag)
 void
 e_drag_move(E_Drag *drag, int x, int y)
 {
-   if ((drag->x == x) && (drag->y == y)) return;
-   drag->x = x;
-   drag->y = y;
+   if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
+   drag->x = x - drag->dx;
+   drag->y = y - drag->dy;
    ecore_evas_move(drag->ecore_evas,
-		   drag->x - (drag->w / 2), 
-		   drag->y - (drag->h / 2));
+		   drag->x, 
+		   drag->y);
    e_container_shape_move(drag->shape,
-			  drag->x - (drag->w / 2), 
-			  drag->y - (drag->h / 2));
+			  drag->x, 
+			  drag->y);
 }
 
 void
@@ -250,7 +250,7 @@ e_dnd_active(void)
 }
 
 void
-e_drag_start(E_Drag *drag)
+e_drag_start(E_Drag *drag, int x, int y)
 {
    Evas_List *l;
 
@@ -260,6 +260,9 @@ e_drag_start(E_Drag *drag)
    ecore_x_window_show(_drag_win);
    ecore_x_pointer_confine_grab(_drag_win);
    ecore_x_keyboard_grab(_drag_win);
+
+   drag->dx = x - drag->x;
+   drag->dy = y - drag->y;
 
    for (l = _drop_handlers; l; l = l->next)
      {

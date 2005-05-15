@@ -1240,22 +1240,25 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	double dist;
 
 	dist = sqrt(pow((ev->cur.output.x - drag_x), 2) + pow((ev->cur.output.y - drag_y), 2));
-	if (dist > 10)
+	if (dist > 4)
 	  {
 	     E_Drag *d;
 	     Evas_Object *o;
+	     Evas_Coord x, y, w, h;
 
 	     drag = 1;
 	     drag_start = 0;
 
-	     d = e_drag_new(ic->ibb->con, "enlightenment/eapp",
+	     evas_object_geometry_get(ic->icon_object,
+				      &x, &y, &w, &h);
+	     d = e_drag_new(ic->ibb->con, x, y, "enlightenment/eapp",
 			    ic->app, _ibar_bar_cb_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     edje_object_file_set(o, ic->app->path, "icon");
 	     e_drag_object_set(d, o);
 
-	     e_drag_resize(d, ic->ibb->ibar->conf->iconsize, ic->ibb->ibar->conf->iconsize);
-	     e_drag_start(d);
+	     e_drag_resize(d, w, h);
+	     e_drag_start(d, drag_x, drag_y);
 	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
 	     e_app_remove(ic->app);
 	  }
