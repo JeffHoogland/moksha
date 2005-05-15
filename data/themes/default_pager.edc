@@ -62,6 +62,12 @@ group {
 
 group {
    name: "modules/pager/desk";
+   data {
+      item: "drag" "0";
+   }
+   script {
+      public active;
+   }
    parts {
       part {
 	 name:          "clip";
@@ -132,6 +138,11 @@ group {
 	    state:    "active" 0.0;
 	    inherit:  "default" 0.0;
 	    color: 255 255 255 255;
+	 }
+	 description {
+	    state:    "drag" 0.0;
+	    inherit:  "default" 0.0;
+	    color: 255 255 255 164;
 	 }
       }
       part {
@@ -381,6 +392,48 @@ group {
 	 target:  "clip";
 	 target:  "sel";
 	 target:  "overlay";
+      }
+      program {
+	 name:    "set_active";
+	 signal:  "active";
+	 source:  "";
+	 script {
+	    set_int(active, 1);
+	 }
+      }
+      program {
+	 name:    "set_passive";
+	 signal:  "passive";
+	 source:  "";
+	 script {
+	    set_int(active, 0);
+	 }
+      }
+      program {
+	 name:   "drag_in";
+	 signal: "drag";
+	 source: "in";
+	 action: STATE_SET "drag" 0.0;
+	 target: "overlay";
+      }
+      program {
+	 name:   "drag_out";
+	 signal: "drag";
+	 source: "out";
+	 script {
+	   if (get_int(active) == 1)
+	      set_state(PART:"overlay", "active", 0.0);
+	   else
+	      set_state(PART:"overlay", "default", 0.0);
+	 }
+      }
+      program {
+	 name: "init";
+	 signal: "load";
+	 source: "";
+	 script {
+	    set_int(active, 0);
+	 }
       }
    }
 }

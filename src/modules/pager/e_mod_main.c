@@ -62,7 +62,10 @@ static void        _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *o
 static void        _pager_desk_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void        _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
-static void        _pager_cb_drop(void *data, const char *type, void *drop);
+static void        _pager_face_cb_enter(void *data, const char *type, void *drop);
+static void        _pager_face_cb_move(void *data, const char *type, void *drop);
+static void        _pager_face_cb_leave(void *data, const char *type, void *drop);
+static void        _pager_face_cb_drop(void *data, const char *type, void *drop);
 
 static int         _pager_count;
 
@@ -274,6 +277,7 @@ _pager_face_new(E_Zone *zone)
 {
    Pager_Face  *face;
    Evas_Object *o;
+   Evas_Coord   x, y, w, h;
 
    face = E_NEW(Pager_Face, 1);
    if (!face) return NULL;
@@ -341,8 +345,17 @@ _pager_face_new(E_Zone *zone)
    edje_object_part_swallow(face->pager_object, "items", face->table_object);
    evas_object_show(o);
 
+   evas_object_resize(face->pager_object, 1000, 1000);
+   edje_object_calc_force(face->pager_object);
+   edje_object_part_geometry_get(face->pager_object, "items", &x, &y, &w, &h);
+   face->inset.l = x;
+   face->inset.r = 1000 - (x + w);
+   face->inset.t = y;
+   face->inset.b = 1000 - (y + h);
+
    face->drop_handler = e_drop_handler_add(face,
-					   NULL, NULL, NULL, _pager_cb_drop,
+					   _pager_face_cb_enter, _pager_face_cb_move,
+					   _pager_face_cb_leave, _pager_face_cb_drop,
 					   "enlightenment/border",
 					   face->fx, face->fy, face->fw, face->fh);
    
@@ -1367,12 +1380,10 @@ _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_C
 }
 
 static void
-_pager_cb_drop(void *data, const char *type, void *event_info)
+_pager_face_cb_enter(void *data, const char *type, void *event_info)
 {
-   E_Event_Dnd_Drop *ev;
+   E_Event_Dnd_Enter *ev;
    Pager_Face *face;
-   E_Desk *desk;
-   E_Border *bd;
    int x, y;
    double w, h;
 
@@ -1385,6 +1396,73 @@ _pager_cb_drop(void *data, const char *type, void *event_info)
 
    x = (ev->x - face->fx) / w;
    y = (ev->y - face->fy) / h;
+}
+
+static void
+_pager_face_cb_move(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Move *ev;
+   Pager_Face *face;
+   Pager_Desk *pd;
+   int x, y;
+   double w, h;
+   Evas_List *l;
+
+   ev = event_info;
+   face = data;
+
+   w = (face->fw - (face->inset.l + face->inset.r)) / (double) face->xnum;
+   h = (face->fh - (face->inset.t + face->inset.b)) / (double) face->ynum;
+
+   x = (ev->x - (face->fx + face->inset.l)) / w;
+   y = (ev->y - (face->fy + face->inset.t)) / h;
+
+   for (l = face->desks; l; l = l->next)
+     {
+	pd = l->data;
+	if ((pd->xpos == x) && (pd->ypos == y))
+	  edje_object_signal_emit(pd->desk_object, "drag", "in");
+	else
+	  edje_object_signal_emit(pd->desk_object, "drag", "out");
+     }
+}
+
+static void
+_pager_face_cb_leave(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Leave *ev;
+   Pager_Face *face;
+   Evas_List *l;
+
+   ev = event_info;
+   face = data;
+
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	pd = l->data;
+	edje_object_signal_emit(pd->desk_object, "drag", "out");
+     }
+}
+
+static void
+_pager_face_cb_drop(void *data, const char *type, void *event_info)
+{
+   E_Event_Dnd_Drop *ev;
+   Pager_Face *face;
+   E_Desk *desk;
+   E_Border *bd;
+   int x, y;
+   double w, h;
+
+   ev = event_info;
+   face = data;
+
+   w = (face->fw - (face->inset.l + face->inset.r)) / (double) face->xnum;
+   h = (face->fh - (face->inset.t + face->inset.b)) / (double) face->ynum;
+
+   x = (ev->x - (face->fx + face->inset.l)) / w;
+   y = (ev->y - (face->fy + face->inset.t)) / h;
 
    desk = e_desk_at_xy_get(face->zone, x, y);
    bd = ev->data;

@@ -53,6 +53,9 @@ struct _Pager_Face
    Evas_Object  *table_object;
    
    Evas_Coord    fx, fy, fw, fh;
+   struct {
+	Evas_Coord l, r, t, b;
+   } inset;
 
    /* Current nr. of desktops */
    int           xnum, ynum;
@@ -87,6 +90,7 @@ struct _Pager_Desk
    Evas_Object *desk_object;
    Evas_Object *layout_object;
    Evas_Object *event_object;
+
    int          xpos, ypos;
 
    int          current : 1;
