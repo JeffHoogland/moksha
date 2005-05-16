@@ -62,11 +62,9 @@ group {
 
 group {
    name: "modules/pager/desk";
-   data {
-      item: "drag" "0";
-   }
    script {
       public active;
+      public drag;
    }
    parts {
       part {
@@ -413,18 +411,25 @@ group {
 	 name:   "drag_in";
 	 signal: "drag";
 	 source: "in";
-	 action: STATE_SET "drag" 0.0;
-	 target: "overlay";
+	 script {
+      	    if (get_int(drag) == 0) {
+	       set_state(PART:"overlay", "drag", 0.0);
+	       set_int(drag, 1);
+	    }
+	 }
       }
       program {
 	 name:   "drag_out";
 	 signal: "drag";
 	 source: "out";
 	 script {
-	   if (get_int(active) == 1)
-	      set_state(PART:"overlay", "active", 0.0);
-	   else
-	      set_state(PART:"overlay", "default", 0.0);
+	    if (get_int(drag) == 1) {
+	       if (get_int(active) == 1)
+	      	  set_state(PART:"overlay", "active", 0.0);
+	       else
+	      	  set_state(PART:"overlay", "default", 0.0);
+	       set_int(drag, 0);
+	    }
 	 }
       }
       program {
@@ -433,6 +438,7 @@ group {
 	 source: "";
 	 script {
 	    set_int(active, 0);
+	    set_int(drag, 0);
 	 }
       }
    }
