@@ -153,6 +153,7 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
+   /* FIXME: Wrong text */
    e_error_dialog_show(_("Enlightenment IBox Module"),
 		       _("This is the IBox Application Launcher box module for Enlightenment.\n"
 			 "It is a first example module and is being used to flesh out several\n"
@@ -336,7 +337,7 @@ _ibox_box_new(IBox *ib, E_Container *con)
    ibb->ev_handler_border_iconify = 
       ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _ibox_box_cb_event_border_iconify, ibb);
    ibb->ev_handler_border_uniconify = 
-      ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _ibox_box_cb_event_border_uniconify, ibb);
+      ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _ibox_box_cb_event_border_uniconify, ibb);
  
    bl = e_container_border_list_first(ibb->con);
    while ((bd = e_container_border_list_next(bl)))
@@ -367,15 +368,15 @@ _ibox_box_new(IBox *ib, E_Container *con)
    e_gadman_client_domain_set(ibb->gmc, "module.ibox", box_count++);
    policy = E_GADMAN_POLICY_EDGES | E_GADMAN_POLICY_HMOVE | E_GADMAN_POLICY_VMOVE;
    if (ibb->ibox->conf->width == IBOX_WIDTH_FIXED)
-     policy |= E_GADMAN_POLICY_HSIZE;
+     policy |= E_GADMAN_POLICY_VSIZE;
    e_gadman_client_policy_set(ibb->gmc, policy);
    e_gadman_client_min_size_set(ibb->gmc, 8, 8);
    e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
-   e_gadman_client_align_set(ibb->gmc, 0.5, 1.0);
+   e_gadman_client_align_set(ibb->gmc, 0.0, 0.5);
    e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->inset.t + ibb->inset.b);
    e_gadman_client_change_func_set(ibb->gmc, _ibox_box_cb_gmc_change, ibb);
-   e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_BOTTOM);
+   e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_LEFT);
    e_gadman_client_load(ibb->gmc);
 
    evas_event_thaw(ibb->evas);
@@ -1127,6 +1128,7 @@ _ibox_box_cb_event_border_iconify(void *data, int type, void *event)
 
    if (!_ibox_icon_find(ibb, ev->border))
      ic = _ibox_icon_new(ibb, ev->border);
+   _ibox_box_frame_resize(ibb);
 
    return 1;
 }
@@ -1143,6 +1145,7 @@ _ibox_box_cb_event_border_uniconify(void *data, int type, void *event)
 
    ic = _ibox_icon_find(ibb, ev->border);
    _ibox_icon_free(ic);
+   _ibox_box_frame_resize(ibb);
 
    return 1;
 }
