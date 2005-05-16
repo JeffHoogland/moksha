@@ -37,6 +37,7 @@ static int _e_border_cb_window_shape(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_in(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_out(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_state(void *data, int ev_type, void *ev);
+static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_client_message(void *data, int ev_type, void *ev);
 
 static void _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -159,6 +160,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STATE, _e_border_cb_window_state, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DESKTOP_CHANGE, _e_border_cb_desktop_change, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
@@ -291,8 +293,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.fetch.size_pos_hints = 1;
    bd->client.icccm.fetch.protocol = 1;
    bd->client.mwm.fetch.hints = 1;
-   bd->client.netwm.fetch.pid = 1;
-   bd->client.netwm.fetch.desktop = 1;
    bd->client.border.changed = 1;
 
    bd->client.w = att->w;
@@ -379,8 +379,6 @@ void
 e_border_desk_set(E_Border *bd, E_Desk *desk)
 {
    E_Event_Border_Desk_Set *ev;
-   int deskx, desky;
-   unsigned int deskpos[2];
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -390,17 +388,14 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    bd->desk = desk;
    e_border_zone_set(bd, desk->zone);
 
+   e_hints_window_desktop_set(bd);
+
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
-
-   e_desk_xy_get(desk, &deskx, &desky);
-   deskpos[0] = deskx;
-   deskpos[1] = desky;
-   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
 }
 
 void
@@ -1789,17 +1784,6 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.mwm.fetch.hints = 1;
 	bd->changed = 1;
      }
-   else if (e->atom == ECORE_X_ATOM_NET_WM_PID)
-     {
-	bd->client.netwm.fetch.pid = 1;
-	bd->changed = 1;
-     }
-   else if (e->atom == ECORE_X_ATOM_NET_WM_DESKTOP)
-     {
-	bd->client.netwm.fetch.desktop = 1;
-	bd->changed = 1;
-     }
-//   bd->client.border.changed = 1;
    return 1;
 }
 
@@ -1967,7 +1951,12 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (!bd)
+   if (bd)
+     {
+	for (i = 0; i < 2; i++)
+	  e_hints_window_state_update(bd, e->state[i], e->action);
+     }
+   else
      {
 	for (i = 0; i < 2; i++)
 	  {
@@ -2005,10 +1994,37 @@ _e_border_cb_window_state(void *data, int ev_type, void *ev)
 	       }
 	  }
      }
+   return 1;
+}
+
+static int
+_e_border_cb_desktop_change(void *data, int ev_type, void *ev)
+{
+   E_Border *bd;
+   Ecore_X_Event_Desktop_Change *e;
+
+   e = ev;
+   if (e->desk < 0) return 1;
+   bd = e_border_find_by_client_window(e->win);
+   if (bd)
+     {
+	if (bd->client.netwm.desktop == 0xffffffff)
+	  e_border_stick(bd);
+	else if (e->desk < (bd->zone->desk_x_count * bd->zone->desk_y_count))
+	  {
+	     E_Desk *desk;
+	     int x, y;
+
+	     y = e->desk / bd->zone->desk_x_count;
+	     x = e->desk - (y * bd->zone->desk_x_count);
+
+	     desk = e_desk_at_xy_get(bd->zone, x, y);
+	     e_border_desk_set(bd, desk);
+	  }
+     }
    else
      {
-	for (i = 0; i < 2; i++)
-	  e_hints_window_state_update(bd, e->state[i], e->action);
+	ecore_x_netwm_desktop_set(e->win, e->desk);
      }
    return 1;
 }
@@ -2838,18 +2854,6 @@ _e_border_eval(E_Border *bd)
 	     bd->client.border.changed = 1;
 	  }
 	bd->client.mwm.fetch.hints = 0;
-     }
-   if (bd->client.netwm.fetch.pid)
-     {
-	if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
-	  bd->client.netwm.pid = -1;
-	bd->client.netwm.fetch.pid = 0;
-     }
-   if (bd->client.netwm.fetch.desktop)
-     {
-	if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
-	  bd->client.netwm.desktop = -1;
-	bd->client.netwm.fetch.desktop = 0;
      }
 
    if (bd->changes.shape)

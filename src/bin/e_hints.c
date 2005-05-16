@@ -24,91 +24,33 @@ e_hints_init(void)
 //	     on finding this out when it shoudl be irrelevant! stupid FUCKS.
 	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");
 //	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
-	     /* Set what we support */
+
+	     /* Set what hints we support */
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_ACTIVE_WINDOW, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST_STACKING, 1);
+
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTED, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 1);
-	     /*
-		ECORE_X_ATOM_NET_NUMBER_OF_DESKTOPS;
-		ECORE_X_ATOM_NET_VIRTUAL_ROOTS;
-		ECORE_X_ATOM_NET_DESKTOP_NAMES;
-		ECORE_X_ATOM_NET_DESKTOP_GEOMETRY;
-		ECORE_X_ATOM_NET_DESKTOP_VIEWPORT;
-		ECORE_X_ATOM_NET_DESKTOP_LAYOUT;
-		ECORE_X_ATOM_NET_WORKAREA;
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_VIRTUAL_ROOTS, 1);
 
-		ECORE_X_ATOM_NET_CURRENT_DESKTOP;
-		ECORE_X_ATOM_NET_SHOWING_DESKTOP;
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_NAME, 1);
 
-		ECORE_X_ATOM_NET_CLIENT_LIST;
-		ECORE_X_ATOM_NET_CLIENT_LIST_STACKING;
-		ECORE_X_ATOM_NET_ACTIVE_WINDOW;
-
-		ECORE_X_ATOM_NET_WM_NAME;
-		ECORE_X_ATOM_NET_WM_VISIBLE_NAME;
-		ECORE_X_ATOM_NET_WM_ICON_NAME;
-		ECORE_X_ATOM_NET_WM_VISIBLE_ICON_NAME;
-		ECORE_X_ATOM_NET_WM_DESKTOP;
-		ECORE_X_ATOM_NET_WM_STRUT;
-		ECORE_X_ATOM_NET_WM_STRUT_PARTIAL;
-		ECORE_X_ATOM_NET_WM_ICON_GEOMETRY;
-		ECORE_X_ATOM_NET_WM_ICON;
-		ECORE_X_ATOM_NET_WM_PID;
-		ECORE_X_ATOM_NET_WM_HANDLED_ICONS;
-		ECORE_X_ATOM_NET_WM_USER_TIME;
-
-		ECORE_X_ATOM_NET_WM_ALLOWED_ACTIONS;
-		ECORE_X_ATOM_NET_WM_ACTION_MOVE;
-		ECORE_X_ATOM_NET_WM_ACTION_RESIZE;
-		ECORE_X_ATOM_NET_WM_ACTION_MINIMIZE;
-		ECORE_X_ATOM_NET_WM_ACTION_SHADE;
-		ECORE_X_ATOM_NET_WM_ACTION_STICK;
-		ECORE_X_ATOM_NET_WM_ACTION_MAXIMIZE_HORZ;
-		ECORE_X_ATOM_NET_WM_ACTION_MAXIMIZE_VERT;
-		ECORE_X_ATOM_NET_WM_ACTION_FULLSCREEN;
-		ECORE_X_ATOM_NET_WM_ACTION_CHANGE_DESKTOP;
-		ECORE_X_ATOM_NET_WM_ACTION_CLOSE;
-
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DESKTOP;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DOCK;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_TOOLBAR;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_MENU;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_UTILITY;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_SPLASH;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DIALOG;
-		ECORE_X_ATOM_NET_WM_WINDOW_TYPE_NORMAL;
-
-*/
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MODAL, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_STICKY, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_VERT, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_HORZ, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SHADED, 1);
-	     /*
-		ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SKIP_TASKBAR, 1);
-		ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SKIP_PAGER, 1);
-		*/
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_HIDDEN, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_FULLSCREEN, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_ABOVE, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_BELOW, 1);
-	     /*
-		ECORE_X_ATOM_NET_WM_STATE_DEMANDS_ATTENTION;
-
-		ECORE_X_ATOM_NET_WM_WINDOW_OPACITY;
-
-		ECORE_X_ATOM_NET_FRAME_EXTENTS;
-		ECORE_X_ATOM_NET_REQUEST_FRAME_EXTENTS;
-
-		ECORE_X_ATOM_NET_WM_PING;
-		ECORE_X_ATOM_NET_WM_SYNC_REQUEST;
-		*/
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_FULLSCREEN, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_HIDDEN, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_HORZ, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_VERT, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SHADED, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_STICKY, 1);
 	  }
         free(roots);
      }
 }
 
+/* FIXME, this should set the list in map order, not stack order */
 void
 e_hints_client_list_set(void)
 {
@@ -344,7 +286,27 @@ e_hints_window_init(E_Border *bd)
      bd->layer = 150;
    else
      bd->layer = 100;
-   e_container_border_raise(bd);
+   e_border_raise(bd);
+
+   if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
+     bd->client.netwm.desktop = 0;
+   if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
+     bd->client.netwm.pid = -1;
+
+   if (bd->client.netwm.desktop == 0xffffffff)
+     e_border_stick(bd);
+   else if ((bd->client.netwm.desktop >= 0)
+	    && (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count)))
+     {
+	E_Desk *desk;
+	int x, y;
+
+	y = bd->client.netwm.desktop / bd->zone->desk_x_count;
+	x = bd->client.netwm.desktop - (y * bd->zone->desk_x_count);
+
+	desk = e_desk_at_xy_get(bd->zone, x, y);
+	e_border_desk_set(bd, desk);
+     }
 
    if (bd->client.netwm.state.sticky)
      e_border_stick(bd);
@@ -360,6 +322,10 @@ e_hints_window_init(E_Border *bd)
     * show it! */
    else if (bd->desk == e_desk_current_get(bd->zone))
      e_border_show(bd);
+
+   /* Update stacking */
+   e_hints_client_list_set();
+   e_hints_client_stacking_set();
 }
 
 void
@@ -989,11 +955,29 @@ ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_PAGER, on);
 void
 e_hints_window_icon_name_get(E_Border *bd)
 {
-   char		*name;
+   char *name;
 
    name = ecore_x_netwm_icon_name_get(bd->client.win);
    if (bd->client.icccm.icon_name)
      free(bd->client.icccm.icon_name);
    bd->client.icccm.icon_name = name;
    bd->changed = 1;
+}
+
+void
+e_hints_window_desktop_set(E_Border *bd)
+{
+   unsigned int deskpos[2];
+   unsigned int current;
+ 
+   current = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
+   if (bd->client.netwm.desktop != current)
+     {
+	deskpos[0] = bd->desk->x;
+	deskpos[1] = bd->desk->y;
+	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
+
+	ecore_x_netwm_desktop_set(bd->client.win, current);
+	bd->client.netwm.desktop = current;
+     }
 }

@@ -592,6 +592,7 @@ e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 			    0, 0, 0, 0, 0,
 			    con->layers[pos].win, ECORE_X_WINDOW_STACK_ABOVE);
 }
+
 void
 e_container_border_raise(E_Border *bd)
 {
@@ -620,6 +621,8 @@ e_container_border_raise(E_Border *bd)
 
    bd->zone->container->layers[pos - 1].clients =
       evas_list_append(bd->zone->container->layers[pos - 1].clients, bd);
+
+   e_hints_client_stacking_set();
 }
 
 void
@@ -650,6 +653,8 @@ e_container_border_lower(E_Border *bd)
 
    bd->zone->container->layers[pos].clients =
       evas_list_prepend(bd->zone->container->layers[pos].clients, bd);
+
+   e_hints_client_stacking_set();
 }
 
 void

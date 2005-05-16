@@ -148,11 +148,7 @@ struct _E_Border
       struct {
 	 pid_t pid;
 	 unsigned int desktop;
-	 struct {
-	    unsigned int pid : 1;
-	    unsigned int desktop : 1;
-	 } fetch;
-	 
+
 	 /* NetWM Window state */
 	 struct {
 	    unsigned char modal : 1;
