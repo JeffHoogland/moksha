@@ -70,7 +70,11 @@ _NET_WM_STATE_MODAL                 [ ]
 _NET_WM_STATE_SHADED                [X]
 _NET_WM_STATE_SKIP_PAGER            [ ]
 _NET_WM_STATE_SKIP_TASKBAR          [ ]
-_NET_WM_STATE_STICKY                [X]
+/* _NET_WM_STATE_STICKY indicates that the
+ * Window Manager SHOULD keep the window's
+ * position fixed on the screen, even when
+ * the virtual desktop scrolls. */
+_NET_WM_STATE_STICKY                [?]
 _NET_WM_STRUT                       [ ]
 _NET_WM_STRUT_PARTIAL               [ ]
 _NET_WM_SYNC_REQUEST                [ ]

@@ -60,16 +60,7 @@ e_container_new(E_Manager *man)
 	
 	con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
 	ecore_x_icccm_title_set(con->win, "Enlightenment Container");
-	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = e_init_window_get();
-	if (!mwin)
-	  ecore_x_window_raise(con->win);
-	else
-	  ecore_x_window_configure(con->win,
-				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-				   0, 0, 0, 0, 0,
-				   mwin, ECORE_X_WINDOW_STACK_BELOW);
+	ecore_x_window_raise(con->win);
      }
    else
      {
@@ -124,8 +115,11 @@ e_container_new(E_Manager *man)
 				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
 				   0, 0, 0, 0, 0,
 				   con->layers[i - 1].win, ECORE_X_WINDOW_STACK_ABOVE);
+	else
+	  ecore_x_window_raise(con->layers[i].win);
      }
 
+   /* Put init win on top */
    mwin = e_init_window_get();
    if (mwin)
      ecore_x_window_configure(mwin,
@@ -135,6 +129,7 @@ e_container_new(E_Manager *man)
 			      con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
 
 
+   /* Put menu win on top */
    mwin = e_menu_grab_window_get();
    if (mwin)
      ecore_x_window_configure(mwin,
@@ -143,6 +138,12 @@ e_container_new(E_Manager *man)
 			      0, 0, 0, 0, 0,
 			      con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
 
+   /* Put background win at the bottom */
+   ecore_x_window_configure(con->bg_win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    con->layers[0].win, ECORE_X_WINDOW_STACK_BELOW);
 
    screens = (Evas_List *)e_xinerama_screens_get();
    if (screens)
@@ -171,7 +172,11 @@ e_container_show(E_Container *con)
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
    if (con->visible) return;
    ecore_evas_show(con->bg_ecore_evas);
-   ecore_x_window_lower(con->bg_win);
+   ecore_x_window_configure(con->bg_win,
+			    ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+			    ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+			    0, 0, 0, 0, 0,
+			    con->layers[0].win, ECORE_X_WINDOW_STACK_BELOW);
    if (con->win != con->manager->win)
      ecore_x_window_show(con->win);
    ecore_x_icccm_state_set(con->bg_win, ECORE_X_WINDOW_STATE_HINT_NORMAL);
@@ -257,6 +262,7 @@ e_container_raise(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+#if 0
    if (con->win != con->manager->win)
      {
 	ecore_x_window_raise(con->win);
@@ -265,6 +271,7 @@ e_container_raise(E_Container *con)
      {
 	ecore_x_window_lower(con->bg_win);
      }
+#endif
 }
 
 void
@@ -272,12 +279,14 @@ e_container_lower(E_Container *con)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+#if 0
    if (con->win != con->manager->win)
      ecore_x_window_lower(con->win);
    else
      {
 	ecore_x_window_lower(con->bg_win);
      }
+#endif
 }
 
 E_Zone *
@@ -791,7 +800,11 @@ e_container_border_list_prev(E_Border_List *list)
 
    list->clients = list->clients->prev;
    while ((list->layer > 0) && (!list->clients))
-     list->clients = list->container->layers[--list->layer].clients;
+     {
+	list->layer--;
+	if (list->container->layers[list->layer].clients)
+	  list->clients = list->container->layers[list->layer].clients->last;
+     }
 
    return bd;
 }

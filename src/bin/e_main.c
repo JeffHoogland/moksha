@@ -644,10 +644,6 @@ _e_main_screens_init(void)
 	     return 0;
 	  }
      }
-   
-   /* Init border stacking */
-   e_hints_client_list_set();
-   e_hints_client_stacking_set();
 
    free(roots);
    ecore_x_sync();
