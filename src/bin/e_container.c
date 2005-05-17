@@ -56,8 +56,6 @@ e_container_new(E_Manager *man)
    con->h = con->manager->h;
    if (e_config->use_virtual_roots)
      {
-        Ecore_X_Window mwin;
-	
 	con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
 	ecore_x_icccm_title_set(con->win, "Enlightenment Container");
 	ecore_x_window_raise(con->win);

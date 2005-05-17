@@ -147,6 +147,23 @@ e_desk_at_xy_get(E_Zone *zone, int x, int y)
    return zone->desks[x + (y * zone->desk_x_count)];
 }
 
+E_Desk *
+e_desk_at_pos_get(E_Zone *zone, int pos)
+{
+   int x, y;
+
+   E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
+
+   y = pos / zone->desk_x_count;
+   x = pos - (y * zone->desk_x_count);
+
+   if ((x >= zone->desk_x_count) || (y >= zone->desk_y_count))
+     return NULL;
+
+   return zone->desks[x + (y * zone->desk_x_count)];
+}
+
 void
 e_desk_xy_get(E_Desk *desk, int *x, int *y)
 {

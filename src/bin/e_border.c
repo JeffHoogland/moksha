@@ -2004,22 +2004,18 @@ _e_border_cb_desktop_change(void *data, int ev_type, void *ev)
    Ecore_X_Event_Desktop_Change *e;
 
    e = ev;
-   if (e->desk < 0) return 1;
    bd = e_border_find_by_client_window(e->win);
    if (bd)
      {
-	if (bd->client.netwm.desktop == 0xffffffff)
+	if (e->desk == 0xffffffff)
 	  e_border_stick(bd);
 	else if (e->desk < (bd->zone->desk_x_count * bd->zone->desk_y_count))
 	  {
 	     E_Desk *desk;
-	     int x, y;
 
-	     y = e->desk / bd->zone->desk_x_count;
-	     x = e->desk - (y * bd->zone->desk_x_count);
-
-	     desk = e_desk_at_xy_get(bd->zone, x, y);
-	     e_border_desk_set(bd, desk);
+	     desk = e_desk_at_pos_get(bd->zone, e->desk);
+	     if (desk)
+	       e_border_desk_set(bd, desk);
 	  }
      }
    else

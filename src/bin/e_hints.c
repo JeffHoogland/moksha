@@ -266,6 +266,7 @@ e_hints_window_init(E_Border *bd)
 {
    e_hints_window_state_get(bd);
    e_hints_window_type_get(bd);
+   int has;
 
    bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)
@@ -288,32 +289,35 @@ e_hints_window_init(E_Border *bd)
      bd->layer = 100;
    e_border_raise(bd);
 
+   has = 1;
    if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
+     has = 0;
+   if (has)
      {
-	bd->client.netwm.use_desktop = 0;
-	bd->client.netwm.desktop = 0;
+	if (bd->client.netwm.desktop == 0xffffffff)
+	  e_border_stick(bd);
+	else if (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count))
+	  {
+	     E_Desk *desk;
+
+	     desk = e_desk_at_pos_get(bd->zone, bd->client.netwm.desktop);
+	     if (desk)
+	       e_border_desk_set(bd, desk);
+	  }
+	else
+	  {
+	     /* Update netwm desktop with current desktop */
+	     e_hints_window_desktop_set(bd);
+	  }
      }
    else
-     bd->client.netwm.use_desktop = 1;
+     {
+	/* Update netwm desktop with current desktop */
+	e_hints_window_desktop_set(bd);
+     }
+
    if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
      bd->client.netwm.pid = -1;
-
-   if (bd->client.netwm.desktop == 0xffffffff)
-     e_border_stick(bd);
-   else if ((bd->client.netwm.use_desktop) &&
-	    (bd->client.netwm.desktop >= 0) &&
-	    (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count)))
-     {
-	E_Desk *desk;
-	int x, y;
-
-	y = bd->client.netwm.desktop / bd->zone->desk_x_count;
-	x = bd->client.netwm.desktop - (y * bd->zone->desk_x_count);
-
-	desk = e_desk_at_xy_get(bd->zone, x, y);
-	if (desk)
-	  e_border_desk_set(bd, desk);
-     }
 
    if (bd->client.netwm.state.sticky)
      e_border_stick(bd);
