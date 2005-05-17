@@ -1144,7 +1144,8 @@ _ibox_box_cb_event_border_uniconify(void *data, int type, void *event)
    ibb = data;
 
    ic = _ibox_icon_find(ibb, ev->border);
-   _ibox_icon_free(ic);
+   if (ic)
+     _ibox_icon_free(ic);
    _ibox_box_frame_resize(ibb);
 
    return 1;
