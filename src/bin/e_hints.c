@@ -30,6 +30,8 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST_STACKING, 1);
 
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_DESKTOP_GEOMETRY, 1);
+
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTED, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_VIRTUAL_ROOTS, 1);
@@ -48,6 +50,12 @@ e_hints_init(void)
 	  }
         free(roots);
      }
+}
+
+void
+e_hints_manager_init(E_Manager *man)
+{
+   ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
 }
 
 /* FIXME, this should set the list in map order, not stack order */
@@ -327,7 +335,8 @@ e_hints_window_init(E_Border *bd)
      e_border_maximize(bd);
    if (bd->client.netwm.state.fullscreen)
      e_border_fullscreen(bd);
-   if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
+   if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
+       && (bd->client.netwm.state.hidden))
      e_border_iconify(bd);
    /* If a window isn't iconic, and is one the current desk,
     * show it! */
