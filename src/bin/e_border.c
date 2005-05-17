@@ -468,6 +468,7 @@ e_border_move(E_Border *bd, int x, int y)
 	E_Border_Pending_Move_Resize  *pnd;
 
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	if (!pnd) return;
 	pnd->move = 1;
 	pnd->x = x;
 	pnd->y = y;
@@ -504,6 +505,7 @@ e_border_resize(E_Border *bd, int w, int h)
 	E_Border_Pending_Move_Resize  *pnd;
 
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	if (!pnd) return;
 	pnd->resize = 1;
 	pnd->w = w;
 	pnd->h = h;
@@ -542,6 +544,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 	E_Border_Pending_Move_Resize  *pnd;
 
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
+	if (!pnd) return;
 	pnd->move = 1;
 	pnd->resize = 1;
 	pnd->x = x;
