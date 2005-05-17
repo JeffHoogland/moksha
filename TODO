@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* drop on ibar for re-ordering, removal seems broken (drop location is the
+  wrong spot)
 * break out desks x/y size config so you can have a different desktop size
   per zone - right now there is a signle global (use this later as the default
   for new/unconfigured zones)

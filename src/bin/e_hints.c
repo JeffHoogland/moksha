@@ -289,14 +289,20 @@ e_hints_window_init(E_Border *bd)
    e_border_raise(bd);
 
    if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
-     bd->client.netwm.desktop = 0;
+     {
+	bd->client.netwm.use_desktop = 0;
+	bd->client.netwm.desktop = 0;
+     }
+   else
+     bd->client.netwm.use_desktop = 1;
    if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
      bd->client.netwm.pid = -1;
 
    if (bd->client.netwm.desktop == 0xffffffff)
      e_border_stick(bd);
-   else if ((bd->client.netwm.desktop >= 0)
-	    && (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count)))
+   else if ((bd->client.netwm.use_desktop) &&
+	    (bd->client.netwm.desktop >= 0) &&
+	    (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count)))
      {
 	E_Desk *desk;
 	int x, y;
@@ -305,7 +311,8 @@ e_hints_window_init(E_Border *bd)
 	x = bd->client.netwm.desktop - (y * bd->zone->desk_x_count);
 
 	desk = e_desk_at_xy_get(bd->zone, x, y);
-	e_border_desk_set(bd, desk);
+	if (desk)
+	  e_border_desk_set(bd, desk);
      }
 
    if (bd->client.netwm.state.sticky)
