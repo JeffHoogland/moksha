@@ -1051,6 +1051,7 @@ e_border_uniconify(E_Border *bd)
 	e_border_desk_set(bd, desk);
 	bd->iconic = 0;
 	e_border_show(bd);
+	e_border_raise(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
    iconic = 0;
