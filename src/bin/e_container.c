@@ -784,6 +784,11 @@ e_container_border_list_next(E_Border_List *list)
    while ((list->layer < 6) && (!list->clients))
      list->clients = list->container->layers[++list->layer].clients;
 
+   if (E_OBJECT(bd)->deleted)
+     {
+	printf("BUG: A deleted border shouldn't be in a containers client list!\n");
+	return NULL;
+     }
    return bd;
 }
 
@@ -804,6 +809,11 @@ e_container_border_list_prev(E_Border_List *list)
 	  list->clients = list->container->layers[list->layer].clients->last;
      }
 
+   if (E_OBJECT(bd)->deleted)
+     {
+	printf("BUG: A deleted border shouldn't be in a containers client list!\n");
+	return NULL;
+     }
    return bd;
 }
 
