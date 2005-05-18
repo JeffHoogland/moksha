@@ -274,7 +274,6 @@ e_hints_window_init(E_Border *bd)
 {
    e_hints_window_state_get(bd);
    e_hints_window_type_get(bd);
-   int has;
 
    bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)
@@ -297,10 +296,7 @@ e_hints_window_init(E_Border *bd)
      bd->layer = 100;
    e_border_raise(bd);
 
-   has = 1;
-   if (!ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
-     has = 0;
-   if (has)
+   if (ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
      {
 	if (bd->client.netwm.desktop == 0xffffffff)
 	  e_border_stick(bd);
