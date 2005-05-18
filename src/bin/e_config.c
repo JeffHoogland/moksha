@@ -188,6 +188,10 @@ e_config_init(void)
 	     E_Config_Module *em;
 
 	     em = E_NEW(E_Config_Module, 1);
+	     em->name = strdup("start");
+	     em->enabled = 1;
+	     e_config->modules = evas_list_append(e_config->modules, em);
+	     em = E_NEW(E_Config_Module, 1);
 	     em->name = strdup("ibar");
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);

@@ -8,4 +8,5 @@ pager \
 battery \
 temperature \
 cpufreq \
-ibox
+ibox \
+start

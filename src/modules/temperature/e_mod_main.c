@@ -793,6 +793,40 @@ _temperature_cb_check(void *data)
 	       ret = 1;
 	     fclose(f);
 	  }
+	else
+	  {
+	     therms = ecore_file_ls("/sys/bus/i2c/devices");
+	     if ((therms) && (!ecore_list_is_empty(therms)))
+	       {
+		  char *name;
+		  
+		  while ((name = ecore_list_next(therms)))
+		    {
+		       char fname[1024];
+		       
+		       sprintf(fname, "/sys/bus/i2c/devices/%s/temp1_input",
+			       name);
+		       if (ecore_file_exists(fname))
+			 {
+			    FILE *f;
+			    
+			    f = fopen(fname,"r");
+			    if (f) 
+			      {
+				 fgets(buf, sizeof(buf), f);
+				 buf[sizeof(buf) - 1] = 0;
+				 
+				 /* actuallty read the temp */
+				 if (sscanf(buf, "%i", &temp) == 1)
+				   ret = 1;
+				 /* Hack for temp */
+				 temp = temp / 1000;
+				 fclose(f);
+			      }
+			 }
+		    }
+	       }
+	  }
      }
    else
      {

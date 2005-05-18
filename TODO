@@ -55,6 +55,12 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* ctrl-d in xterms (or clising of windows) doesnt always close the window.
+  sometimes it loses its dropshadow, but the window border is still there.
+* fix action delete (can segv if action is stored for "long runing actions"
+  like move/resize)
+* multiple zones and a pager per zone doesnt flip desktops in that zone alone
+  - they affect both zones only the first time u run e...
 * drop on ibar for re-ordering, removal seems broken (drop location is the
   wrong spot)
 * break out desks x/y size config so you can have a different desktop size

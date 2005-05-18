@@ -1,0 +1,24 @@
+group {
+   name: "modules/start/main";
+   max:  128 128;
+   parts {
+      part {
+	 name: "base";
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    rel1 {
+	       relative: 0.1 0.1;
+	    }
+	    rel2 {
+	       relative: 0.9 0.9;
+	    }
+	    image {
+	       normal: "e17_logo.png";
+	    }
+	 }
+      }
+   }
+}
+
+

@@ -19,6 +19,7 @@ typedef enum _E_Binding_Context
  */
 typedef enum _E_Binding_Modifier
 {
+   E_BINDING_MODIFIER_NONE = 0,
    E_BINDING_MODIFIER_SHIFT = (1 << 0),
    E_BINDING_MODIFIER_CTRL = (1 << 1),
    E_BINDING_MODIFIER_ALT = (1 << 2),

@@ -37,5 +37,6 @@ collections {
 #include "default_error.edc"
 #include "default_cpufreq.edc"
 #include "default_ibox.edc"
+#include "default_start.edc"
 }
 
