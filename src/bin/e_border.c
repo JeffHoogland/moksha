@@ -1439,6 +1439,7 @@ _e_border_free(E_Border *bd)
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
+   e_container_border_remove(bd);
    borders = evas_list_remove(borders, bd);
 
    free(bd);
@@ -1455,8 +1456,6 @@ _e_border_del(E_Border *bd)
 			   bd->y + bd->client_inset.t);
    ecore_x_window_save_set_del(bd->client.win);
    bd->already_unparented = 1;
-
-   e_container_border_remove(bd);
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
    ev->border = bd;
