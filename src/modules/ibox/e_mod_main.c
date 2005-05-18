@@ -548,8 +548,8 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
 static void
 _ibox_icon_free(IBox_Icon *ic)
 {
-   if( ic == NULL )
-     return;
+   if (!ic) return;
+
    ic->ibb->icons = evas_list_remove(ic->ibb->icons, ic);
    if (ic->bg_object) evas_object_del(ic->bg_object);
    if (ic->overlay_object) evas_object_del(ic->overlay_object);
