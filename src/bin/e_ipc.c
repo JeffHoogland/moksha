@@ -647,7 +647,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (e_ipc_codec_int_dec(e->data, e->size,
 				&(e_config->border_shade_transition)))
 	  {
-	     E_CONFIG_LIMIT(e_config->border_shade_speed, 0, 3);
+	     E_CONFIG_LIMIT(e_config->border_shade_transition, 0, 3);
 	     e_config_save_queue();
 	  }
 	break;
@@ -658,9 +658,9 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_BORDER_SHADE_SPEED_SET:
 	if (e_ipc_codec_double_dec(e->data, e->size,
-				   &(e_config->framerate)))
+				   &(e_config->border_shade_speed)))
 	  {
-	     E_CONFIG_LIMIT(e_config->framerate, 1.0, 20000.0);
+	     E_CONFIG_LIMIT(e_config->border_shade_speed, 1.0, 20000.0);
 	     e_config_save_queue();
 	  }
 	break;
