@@ -92,11 +92,11 @@ group {
 	    aspect: 1.0 1.0;
 	    rel1 {
 	       to: "title_bar";
-	       offset: 7 7;
+	       offset: 0 0;
 	    }
 	    rel2 {
 	       to: "title_bar";
-	       offset: -8 -8;
+	       offset: -1 -1;
 	    }
 	    image {
 	       normal: "e17_logo.png";
@@ -107,11 +107,11 @@ group {
 	    inherit: "default" 0.0;
 	    rel1 {
 	       to: "title_bar";
-	       offset: 9 9;
+	       offset: 7 7;
 	    }
 	    rel2 {
 	       to: "title_bar";
-	       offset: -10 -10;
+	       offset: -8 -8;
 	    }
 	 }
       }
@@ -419,6 +419,7 @@ group {
 	 name:    "go_active";
 	 action:  STATE_SET "active" 0.0;
 	 target:  "title_bar";
+	 target:  "logo";
 	 transition: LINEAR 0.05;
 	 after:   "go_active2";
       }
@@ -484,9 +485,24 @@ group {
 	 name:    "logo_go_active";
 	 signal:  "";
 	 source:  "";
-	 action:  STATE_SET "active" 0.0;
-         transition: LINEAR 0.2;
-	 target:  "logo";
+	 after: "hover_go_active";
+      }
+      program {
+	 name:    "hover_go_active";
+	 signal:  "";
+	 source:  "";
+	 action:  STATE_SET "visible" 0.0;
+	 target:  "logo2";
+	 after:   "hover_go_active2";
+      }
+      program {
+	 name:    "hover_go_active2";
+	 signal:  "";
+	 source:  "";
+	 action:  STATE_SET "hidden" 0.0;
+	 transition: LINEAR 0.5;
+	 target:  "logo2";
+	 after:   "hover_go_active";
       }
       
       program {      
@@ -503,6 +519,7 @@ group {
 	 name:    "go_passive";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "title_shadow2";
+	 target:  "logo";
 	 transition: LINEAR 0.1;
 	 after:   "go_passive2";
       }
@@ -524,30 +541,12 @@ group {
 	 name:    "logo_go_passive";
 	 signal:  "";
 	 source:  "";
-	 action:  STATE_SET "default" 0.0;
-	 target:  "logo";
+	 after:   "hover_go_passive";
       }
       
       program {
-	 name:    "hover_go_active";
-	 signal:  "active";
-	 source:  "";
-	 action:  STATE_SET "visible" 0.0;
-	 target:  "logo2";
-	 after:   "hover_go_active2";
-      }
-      program {
-	 name:    "hover_go_active2";
-	 signal:  "";
-	 source:  "";
-	 action:  STATE_SET "hidden" 0.0;
-	 transition: LINEAR 0.5;
-	 target:  "logo2";
-	 after:   "hover_go_active";
-      }
-      program {
 	 name:    "hover_go_passive";
-	 signal:  "passive";
+	 signal:  "";
 	 source:  "";
 	 action:  ACTION_STOP;
 	 target:  "hover_go_active";
