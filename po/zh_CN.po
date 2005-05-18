@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-18 12:24+0800\n"
-"PO-Revision-Date: 2005-05-18 12:39+0800\n"
+"POT-Creation-Date: 2005-05-19 03:27+0800\n"
+"PO-Revision-Date: 2005-05-19 03:33+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "%i 兆赫兹"
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/bin/e_int_menus.c:656
+#: src/bin/e_int_menus.c:659
 msgid "(Empty)"
 msgstr "（空）"
 
@@ -36,7 +36,7 @@ msgstr "（无应用程序）"
 msgid "(No Windows)"
 msgstr "（无窗口）"
 
-#: src/bin/e_int_menus.c:566
+#: src/bin/e_int_menus.c:569
 msgid "(Unused)"
 msgstr "（未使用）"
 
@@ -141,7 +141,7 @@ msgstr "置顶"
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
-#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:588
+#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:590
 msgid "Auto fit icons"
 msgstr "自动缩放图标"
 
@@ -234,7 +234,7 @@ msgstr "极缓慢检查（30秒）"
 msgid "Check Very Slow (60 sec)"
 msgstr "极缓慢检查（60秒）"
 
-#: src/bin/e_int_menus.c:496
+#: src/bin/e_int_menus.c:499
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
@@ -250,7 +250,7 @@ msgstr "关闭"
 msgid "Configuration"
 msgstr "配置"
 
-#: src/bin/e_config.c:875
+#: src/bin/e_config.c:879
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
 
@@ -302,10 +302,11 @@ msgstr "阴影"
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_int_menus.c:560 src/modules/battery/e_mod_main.c:561
+#: src/bin/e_int_menus.c:563 src/modules/battery/e_mod_main.c:561
 #: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
 #: src/modules/ibar/e_mod_main.c:574 src/modules/pager/e_mod_main.c:435
 #: src/modules/temperature/e_mod_main.c:721 src/modules/ibox/e_mod_main.c:444
+#: src/modules/start/e_mod_main.c:235
 msgid "Edit Mode"
 msgstr "编辑模式"
 
@@ -348,6 +349,10 @@ msgstr "Enlightenment IPC设置错误！"
 #: src/modules/pager/e_mod_main.c:140
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment桌面切换器模块"
+
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment开始菜单模块"
 
 #: src/bin/e_main.c:406
 msgid "Enlightenment Starting. Please wait."
@@ -529,7 +534,7 @@ msgstr ""
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
-#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:660
+#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:662
 msgid "Enormous"
 msgstr "庞大"
 
@@ -637,6 +642,19 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"启动模块错误：开始菜单模块\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
+
 #: src/modules/test/e_mod_main.c:10
 #, c-format
 msgid ""
@@ -670,7 +688,11 @@ msgstr ""
 msgid "Exit Enlightenment"
 msgstr "退出 Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:646
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "E17的试验性的按键模块"
+
+#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:648
 msgid "Extremely Large"
 msgstr "极大"
 
@@ -710,7 +732,7 @@ msgstr "模糊"
 msgid "Gadgets"
 msgstr "附件"
 
-#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:667
+#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:669
 msgid "Gigantic"
 msgstr "超大"
 
@@ -731,7 +753,7 @@ msgstr "高"
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:653
+#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:655
 msgid "Huge"
 msgstr "巨大"
 
@@ -755,7 +777,7 @@ msgstr "最小化"
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:632
+#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:634
 msgid "Large"
 msgstr "大"
 
@@ -785,7 +807,7 @@ msgid "Maximum Speed"
 msgstr "最高速"
 
 #: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:767
-#: src/modules/ibox/e_mod_main.c:625
+#: src/modules/ibox/e_mod_main.c:627
 msgid "Medium"
 msgstr "中等"
 
@@ -793,7 +815,7 @@ msgstr "中等"
 msgid "Medium (5 sec)"
 msgstr "中等 （5秒）"
 
-#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:597
+#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:599
 msgid "Microscopic"
 msgstr "极小"
 
@@ -805,7 +827,7 @@ msgstr "最低速"
 #: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
 #: src/modules/ibar/e_mod_main.c:114 src/modules/pager/e_mod_main.c:84
 #: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
-#: src/modules/ibox/e_mod_main.c:103
+#: src/modules/ibox/e_mod_main.c:103 src/modules/start/e_mod_main.c:28
 msgid "Module API Error"
 msgstr "模块API错误"
 
@@ -857,7 +879,7 @@ msgstr "正常 （10秒）"
 msgid "OK"
 msgstr "确定"
 
-#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:675
+#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:677
 msgid "Options"
 msgstr "选项"
 
@@ -945,7 +967,7 @@ msgstr "卷起"
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:679
+#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:681
 msgid "Size"
 msgstr "大小"
 
@@ -953,13 +975,17 @@ msgstr "大小"
 msgid "Slow (30 sec)"
 msgstr "慢 （30秒）"
 
-#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:618
+#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:620
 msgid "Small"
 msgstr "小"
 
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
 msgstr "一些其它东西"
+
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "开始菜单"
 
 #: src/bin/e_border.c:3760
 msgid "Sticky"
@@ -1083,7 +1109,7 @@ msgstr ""
 "系统。\n"
 "请忽略这个模块，除非您正在为模块系统开发东西。"
 
-#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:604
+#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:606
 msgid "Tiny"
 msgstr "微小"
 
@@ -1099,7 +1125,7 @@ msgstr "很远"
 msgid "Very Fuzzy"
 msgstr "很模糊"
 
-#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:639
+#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:641
 msgid "Very Large"
 msgstr "很大"
 
@@ -1119,7 +1145,7 @@ msgstr "很清晰"
 msgid "Very Slow (60 sec)"
 msgstr "很慢 （60秒）"
 
-#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:611
+#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:613
 msgid "Very Small"
 msgstr "很小"
 
