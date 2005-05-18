@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* fix start moduel to pop menu towards the middle of the screen and fix mensu
+  to support anchoring to a rect and popping up in a direction other than down
 * ctrl-d in xterms (or clising of windows) doesnt always close the window.
   sometimes it loses its dropshadow, but the window border is still there.
 * fix action delete (can segv if action is stored for "long runing actions"
