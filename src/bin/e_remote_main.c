@@ -310,8 +310,8 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-edge-flip-get", "Get the edge flip flag", E_IPC_OP_USE_EDGE_FLIP_GET, 1),
    ODBL("-edge-flip_timeout-set", "Set the edge flip timeout (sec)", E_IPC_OP_EDGE_FLIP_TIMEOUT_SET, 0),
    OREQ("-edge-flip_timeout-get", "Get the edge flip timeout", E_IPC_OP_EDGE_FLIP_TIMEOUT_GET, 1),
-   O2INT("-desks-set", "Get the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
-   OREQ("-desks-get", "Set the number of virtual desktops", E_IPC_OP_DESKS_GET, 1)
+   O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
+   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1)
 };
 
 /* externally accessible functions */

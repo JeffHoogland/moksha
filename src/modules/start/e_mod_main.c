@@ -13,6 +13,7 @@ static void _start_face_menu_new(Start_Face *face);
 static void _start_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _start_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void _start_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _start_menu_cb_post_deactivate(void *data, E_Menu *m);
 
 static int button_count;
 static E_Config_DD *conf_edd;
@@ -37,7 +38,6 @@ e_modapi_init(E_Module *m)
    /* Create the button */
    e = _start_new();
    m->config_menu = e->config_menu;
-   //m->main_menu = e_int_menus_main_new();
    return e;
 }
 
@@ -179,6 +179,7 @@ _start_face_new(E_Container *con)
    face->button_object = o;
    
    e_theme_edje_object_set(o, "base/theme/modules/start", "modules/start/main");
+   edje_object_signal_emit(o, "passive", "");
    evas_object_show(o);
    
    o = evas_object_rectangle_add(con->bg_evas);
@@ -234,7 +235,6 @@ _start_face_menu_new(Start_Face *face)
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _start_face_cb_menu_edit, face);
    
-   face->main_menu = e_int_menus_main_new();
 }
 
 static void
@@ -264,7 +264,7 @@ _start_face_free(Start_Face *face)
    evas_object_del(face->button_object);
    evas_object_del(face->event_object);
    e_object_del(E_OBJECT(face->menu));
-   e_object_del(E_OBJECT(face->main_menu));
+   if (face->main_menu) e_object_del(E_OBJECT(face->main_menu));
 
    free(face->conf);
    free(face);
@@ -341,13 +341,34 @@ _start_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    ev = event_info;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con), ev->output.x, ev->output.y, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con), 
+			      ev->output.x, ev->output.y, 1, 1, 
+			      E_MENU_POP_DIRECTION_AUTO);
 	e_util_container_fake_mouse_up_all_later(face->con);
      }
    else if (ev->button == 1)
      {
-	/* Pop up main menu */
-	e_menu_activate_mouse(face->main_menu, e_zone_current_get(face->con), ev->output.x, ev->output.y, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+	Evas_Coord x, y, w, h;
+	
+        e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
+	if (!face->main_menu)
+	  face->main_menu = e_int_menus_main_new();
+	e_menu_post_deactivate_callback_set(face->main_menu, _start_menu_cb_post_deactivate, face);
+	e_menu_activate_mouse(face->main_menu, e_zone_current_get(face->con), 
+			      x, y, w, h,
+			      E_MENU_POP_DIRECTION_AUTO);
 	e_util_container_fake_mouse_up_all_later(face->con);
+	edje_object_signal_emit(face->button_object, "active", "");
      }
+}
+
+static void
+_start_menu_cb_post_deactivate(void *data, E_Menu *m)
+{
+   Start_Face *face;
+   
+   face = data;
+   if (!face->main_menu) return;
+   edje_object_signal_emit(face->button_object, "passive", "");
+   face->main_menu = NULL;
 }

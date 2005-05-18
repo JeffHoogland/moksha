@@ -493,6 +493,9 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
    mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    e_menu_item_icon_edje_set(mi,
 			     e_path_find(path_icons, "default.edj"),
