@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-12 00:43+0800\n"
-"PO-Revision-Date: 2005-05-12 00:56+0800\n"
+"POT-Creation-Date: 2005-05-18 12:24+0800\n"
+"PO-Revision-Date: 2005-05-18 12:39+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -24,19 +24,19 @@ msgstr "%i 兆赫兹"
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/bin/e_int_menus.c:641
+#: src/bin/e_int_menus.c:656
 msgid "(Empty)"
 msgstr "（空）"
 
-#: src/bin/e_int_menus.c:302
+#: src/bin/e_int_menus.c:303
 msgid "(No Applications)"
 msgstr "（无应用程序）"
 
-#: src/bin/e_int_menus.c:475
+#: src/bin/e_int_menus.c:476
 msgid "(No Windows)"
 msgstr "（无窗口）"
 
-#: src/bin/e_int_menus.c:551
+#: src/bin/e_int_menus.c:566
 msgid "(Unused)"
 msgstr "（未使用）"
 
@@ -109,7 +109,7 @@ msgstr ""
 "尤其对于有着产生大量热量的高速CPU的现代笔记本电脑来说，\n"
 "这个模块特别有用。"
 
-#: src/modules/pager/e_mod_main.c:138
+#: src/modules/pager/e_mod_main.c:141
 msgid "A pager module to navigate virtual desktops."
 msgstr "一个定位虚拟桌面的桌面切换器模块"
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "A simple module to give E17 a clock."
 msgstr "一个给E17提供时钟的简单模块。"
 
-#: src/bin/e_int_menus.c:118 src/bin/e_int_menus.c:240
+#: src/bin/e_int_menus.c:119 src/bin/e_int_menus.c:241
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
@@ -133,7 +133,7 @@ msgstr "关于 Enlightenment"
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_border.c:3694
+#: src/bin/e_border.c:3770
 msgid "Always On Top"
 msgstr "置顶"
 
@@ -141,7 +141,7 @@ msgstr "置顶"
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
-#: src/modules/ibar/e_mod_main.c:732
+#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:588
 msgid "Auto fit icons"
 msgstr "自动缩放图标"
 
@@ -234,11 +234,15 @@ msgstr "极缓慢检查（30秒）"
 msgid "Check Very Slow (60 sec)"
 msgstr "极缓慢检查（60秒）"
 
+#: src/bin/e_int_menus.c:496
+msgid "Cleanup Windows"
+msgstr "重新排列窗口"
+
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:3645
+#: src/bin/e_border.c:3721
 msgid "Close"
 msgstr "关闭"
 
@@ -246,15 +250,35 @@ msgstr "关闭"
 msgid "Configuration"
 msgstr "配置"
 
-#: src/bin/e_config.c:865
+#: src/bin/e_config.c:875
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
+
+#: src/bin/e_config.c:135
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new confiugration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"配置文件需要被升级。\n"
+"您的旧的配置文件已经被抹去，一系列新的配置文件已按默认状态生成。\n"
+"这种情况在开发中发生是正常的，所以请不要报告错误。\n"
+"这只是意味着Enlightenment需要新的配置文件数据，而您的旧配置里\n"
+"没有这些数据。\n"
+"新版本的配置文件会修复这个问题，就是加入这些数据。现在您可以重新\n"
+"配置您的桌面设置。\n"
+"很抱歉打断了您的配置。\n"
 
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:3749
+#: src/bin/e_border.c:3825
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -266,7 +290,7 @@ msgstr "危险"
 msgid "Dark"
 msgstr "暗"
 
-#: src/bin/e_int_menus.c:81
+#: src/bin/e_int_menus.c:82
 msgid "Desktops"
 msgstr "桌面"
 
@@ -274,14 +298,14 @@ msgstr "桌面"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:3723
+#: src/bin/e_border.c:3799
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_int_menus.c:545 src/modules/battery/e_mod_main.c:561
+#: src/bin/e_int_menus.c:560 src/modules/battery/e_mod_main.c:561
 #: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
-#: src/modules/ibar/e_mod_main.c:576 src/modules/pager/e_mod_main.c:422
-#: src/modules/temperature/e_mod_main.c:721
+#: src/modules/ibar/e_mod_main.c:574 src/modules/pager/e_mod_main.c:435
+#: src/modules/temperature/e_mod_main.c:721 src/modules/ibox/e_mod_main.c:444
 msgid "Edit Mode"
 msgstr "编辑模式"
 
@@ -309,15 +333,19 @@ msgstr "Enlightenment时钟模块"
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment阴影模块"
 
-#: src/modules/ibar/e_mod_main.c:169
+#: src/modules/ibar/e_mod_main.c:167
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar 模块"
+
+#: src/modules/ibox/e_mod_main.c:157
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox 模块"
 
 #: src/bin/e_main.c:387
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
-#: src/modules/pager/e_mod_main.c:137
+#: src/modules/pager/e_mod_main.c:140
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment桌面切换器模块"
 
@@ -497,11 +525,11 @@ msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
 
-#: src/bin/e_error.c:355
+#: src/bin/e_error.c:357
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
-#: src/modules/ibar/e_mod_main.c:804
+#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:660
 msgid "Enormous"
 msgstr "庞大"
 
@@ -544,7 +572,7 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/modules/ibar/e_mod_main.c:117
+#: src/modules/ibar/e_mod_main.c:115
 #, c-format
 msgid ""
 "Error initializing Module: IBar\n"
@@ -557,7 +585,20 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/modules/pager/e_mod_main.c:82
+#: src/modules/ibox/e_mod_main.c:104
+#, c-format
+msgid ""
+"Error initializing Module: IBox\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"启动模块错误：IBox\n"
+"要求最小的模块API版本号：%i 。\n"
+"Enlightenment给的模块版本号：%i 。\n"
+"中止模块。"
+
+#: src/modules/pager/e_mod_main.c:85
 #, c-format
 msgid ""
 "Error initializing Module: Pager\n"
@@ -613,7 +654,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:3826
+#: src/bin/e_border.c:3902
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -625,11 +666,11 @@ msgstr ""
 "请安装 e_util_eapp_edit\n"
 "或者确认它已经在你的路径设置中\n"
 
-#: src/bin/e_int_menus.c:135
+#: src/bin/e_int_menus.c:136
 msgid "Exit Enlightenment"
 msgstr "退出 Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:790
+#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:646
 msgid "Extremely Large"
 msgstr "极大"
 
@@ -649,7 +690,7 @@ msgstr "远"
 msgid "Fast (1 sec)"
 msgstr "快 （1秒）"
 
-#: src/bin/e_int_menus.c:60
+#: src/bin/e_int_menus.c:61
 msgid "Favorite Applications"
 msgstr "常用程序"
 
@@ -665,11 +706,11 @@ msgstr "全屏幕宽度"
 msgid "Fuzzy"
 msgstr "模糊"
 
-#: src/bin/e_int_menus.c:99
+#: src/bin/e_int_menus.c:100
 msgid "Gadgets"
 msgstr "附件"
 
-#: src/modules/ibar/e_mod_main.c:811
+#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:667
 msgid "Gigantic"
 msgstr "超大"
 
@@ -690,19 +731,23 @@ msgstr "高"
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/ibar/e_mod_main.c:797
+#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:653
 msgid "Huge"
 msgstr "巨大"
 
-#: src/modules/ibar/e_mod_main.c:160
+#: src/modules/ibar/e_mod_main.c:158
 msgid "IBar"
 msgstr "IBar"
 
-#: src/bin/e_border.c:3825
+#: src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
+msgstr "IBox"
+
+#: src/bin/e_border.c:3901
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:3653
+#: src/bin/e_border.c:3729
 msgid "Iconify"
 msgstr "最小化"
 
@@ -710,7 +755,7 @@ msgstr "最小化"
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/modules/ibar/e_mod_main.c:776
+#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:632
 msgid "Large"
 msgstr "大"
 
@@ -731,7 +776,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr "手动"
 
-#: src/bin/e_border.c:3674
+#: src/bin/e_border.c:3750
 msgid "Maximized"
 msgstr "最大化"
 
@@ -739,7 +784,8 @@ msgstr "最大化"
 msgid "Maximum Speed"
 msgstr "最高速"
 
-#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:769
+#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:767
+#: src/modules/ibox/e_mod_main.c:625
 msgid "Medium"
 msgstr "中等"
 
@@ -747,7 +793,7 @@ msgstr "中等"
 msgid "Medium (5 sec)"
 msgstr "中等 （5秒）"
 
-#: src/modules/ibar/e_mod_main.c:741
+#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:597
 msgid "Microscopic"
 msgstr "极小"
 
@@ -757,8 +803,9 @@ msgstr "最低速"
 
 #: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
 #: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
-#: src/modules/ibar/e_mod_main.c:116 src/modules/pager/e_mod_main.c:81
+#: src/modules/ibar/e_mod_main.c:114 src/modules/pager/e_mod_main.c:84
 #: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
+#: src/modules/ibox/e_mod_main.c:103
 msgid "Module API Error"
 msgstr "模块API错误"
 
@@ -774,7 +821,7 @@ msgstr "模块配置菜单 2"
 msgid "Module Config Menu Item 3"
 msgstr "模块配置菜单 3"
 
-#: src/bin/e_int_menus.c:72
+#: src/bin/e_int_menus.c:73
 msgid "Modules"
 msgstr "模块"
 
@@ -794,11 +841,11 @@ msgstr "没有信息"
 msgid "Near"
 msgstr "近"
 
-#: src/bin/e_int_menus.c:392
+#: src/bin/e_int_menus.c:393
 msgid "New Column of Desktops"
 msgstr "新建一列桌面"
 
-#: src/bin/e_int_menus.c:384
+#: src/bin/e_int_menus.c:385
 msgid "New Row of Desktops"
 msgstr "新建一行桌面"
 
@@ -806,11 +853,11 @@ msgstr "新建一行桌面"
 msgid "Normal (10 sec)"
 msgstr "正常 （10秒）"
 
-#: src/bin/e_error.c:202 src/bin/e_error.c:211
+#: src/bin/e_error.c:204 src/bin/e_error.c:213
 msgid "OK"
 msgstr "确定"
 
-#: src/modules/ibar/e_mod_main.c:819
+#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:675
 msgid "Options"
 msgstr "选项"
 
@@ -844,7 +891,8 @@ msgstr ""
 "\t\t并给定尺寸。只要您愿意，就可以一直加上去。\n"
 "\t\t它们都会替代真实的xinerama屏幕，如果有存在\n"
 "\t\t的话。这个功能可以拿来模拟xinerama。\n"
-"\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600"
+"+800+0\n"
 "\t-good\n"
 "\t\t好。\n"
 "\t-evil\n"
@@ -852,23 +900,23 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病。\n"
 
-#: src/modules/pager/e_mod_main.c:128
+#: src/modules/pager/e_mod_main.c:131
 msgid "Pager"
 msgstr "桌面切换器"
 
-#: src/bin/e_int_menus.c:396
+#: src/bin/e_int_menus.c:397
 msgid "Remove Column of Desktops"
 msgstr "删除一列桌面"
 
-#: src/bin/e_int_menus.c:388
+#: src/bin/e_int_menus.c:389
 msgid "Remove Row of Desktops"
 msgstr "删除一行桌面"
 
-#: src/bin/e_int_menus.c:128
+#: src/bin/e_int_menus.c:129
 msgid "Restart Enlightenment"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_border.c:3707
+#: src/bin/e_border.c:3783
 msgid "Send To"
 msgstr "发送到"
 
@@ -889,7 +937,7 @@ msgstr "设置检查时间"
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:3664
+#: src/bin/e_border.c:3740
 msgid "Shaded"
 msgstr "卷起"
 
@@ -897,7 +945,7 @@ msgstr "卷起"
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/ibar/e_mod_main.c:823
+#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:679
 msgid "Size"
 msgstr "大小"
 
@@ -905,7 +953,7 @@ msgstr "大小"
 msgid "Slow (30 sec)"
 msgstr "慢 （30秒）"
 
-#: src/modules/ibar/e_mod_main.c:762
+#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:618
 msgid "Small"
 msgstr "小"
 
@@ -913,7 +961,7 @@ msgstr "小"
 msgid "Something Else"
 msgstr "一些其它东西"
 
-#: src/bin/e_border.c:3684
+#: src/bin/e_border.c:3760
 msgid "Sticky"
 msgstr "粘住"
 
@@ -925,7 +973,7 @@ msgstr "温度"
 msgid "Test!!!"
 msgstr "测试！！！"
 
-#: src/bin/e_int_menus.c:108
+#: src/bin/e_int_menus.c:109
 msgid "Themes"
 msgstr "主题"
 
@@ -970,7 +1018,7 @@ msgstr ""
 "试着通过模块的 setfreq 功能设定CPU频率设置时\n"
 "时发生一个错误。"
 
-#: src/bin/e_int_menus.c:241
+#: src/bin/e_int_menus.c:242
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
@@ -991,7 +1039,7 @@ msgstr ""
 msgid "This is development code, so be warned."
 msgstr "这是开发中的代码，所以警告一下。"
 
-#: src/modules/ibar/e_mod_main.c:170
+#: src/modules/ibar/e_mod_main.c:168
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.\n"
 "It is a first example module and is being used to flesh out several\n"
@@ -999,6 +1047,18 @@ msgid ""
 "so expect it to break often and change as it improves."
 msgstr ""
 "这是为Enlightenment设计的 IBar应用程序启动栏 模块。\n"
+"它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
+"里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
+"因为它在增强。"
+
+#: src/modules/ibox/e_mod_main.c:158
+msgid ""
+"This is the IBox Application Launcher box module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"这是为Enlightenment设计的 IBox应用程序启动栏 模块。\n"
 "它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
 "里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
 "因为它在增强。"
@@ -1023,7 +1083,7 @@ msgstr ""
 "系统。\n"
 "请忽略这个模块，除非您正在为模块系统开发东西。"
 
-#: src/modules/ibar/e_mod_main.c:748
+#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:604
 msgid "Tiny"
 msgstr "微小"
 
@@ -1039,7 +1099,7 @@ msgstr "很远"
 msgid "Very Fuzzy"
 msgstr "很模糊"
 
-#: src/modules/ibar/e_mod_main.c:783
+#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:639
 msgid "Very Large"
 msgstr "很大"
 
@@ -1059,11 +1119,11 @@ msgstr "很清晰"
 msgid "Very Slow (60 sec)"
 msgstr "很慢 （60秒）"
 
-#: src/modules/ibar/e_mod_main.c:755
+#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:611
 msgid "Very Small"
 msgstr "很小"
 
-#: src/bin/e_int_menus.c:90
+#: src/bin/e_int_menus.c:91
 msgid "Windows"
 msgstr "窗口"
 
@@ -1079,3 +1139,19 @@ msgid ""
 msgstr ""
 "您的电池电量低。\n"
 "您可能需要切换到使用交流电源。"
+
+#: src/bin/e_config.c:149
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your confiugration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"您的配置文件比当前的Enlightenment要“新”。\n"
+"这是非常奇怪的事。\n"
+"除非您降级了Enlightenment，或者复制了其它地方的某个新版本的配\n"
+"置文件，否则这种情况不应该发生。这是不好的情况，以防万一，您的\n"
+"配置文件已经被恢复到默认状态。\n"
+"对任何的不便表示歉意。\n"
