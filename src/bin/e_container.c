@@ -551,6 +551,8 @@ e_container_border_remove(E_Border *bd)
 {
    int i;
 
+   /* FIXME: Could revert to old behaviour, ->layer is consistent
+    * with pos now. */
    for (i = 0; i < 7; i++)
      {
 	bd->zone->container->layers[i].clients =
