@@ -57,8 +57,9 @@ These are in no particular order:
 
 * start module needs to have an way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
-* ctrl-d in xterms (or clising of windows) doesnt always close the window.
-  sometimes it loses its dropshadow, but the window border is still there.
+* (closing of windows) doesn't always close the window. sometimes it loses
+  its dropshadow, but the window border is still there. i suspect excess
+  references - but why? we need to be careful to not leak windows here.
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
 * multiple zones and a pager per zone doesnt flip desktops in that zone alone

@@ -13,7 +13,10 @@ typedef struct _Gadman_Client_Config Gadman_Client_Config;
 
 struct _Gadman_Client_Config
 {
-   double ax, ay;
+//   double ax, ay;
+   struct {
+      int x, y, w, h;
+   } pos;
    int w, h;
    int edge;
    int zone;
@@ -78,8 +81,12 @@ e_gadman_init(void)
 #undef D
 #define T Gadman_Client_Config
 #define D gadman_config_edd
-   E_CONFIG_VAL(D, T, ax, DOUBLE);
-   E_CONFIG_VAL(D, T, ay, DOUBLE);
+//   E_CONFIG_VAL(D, T, ax, DOUBLE);
+//   E_CONFIG_VAL(D, T, ay, DOUBLE);
+   E_CONFIG_VAL(D, T, pos.x, INT);
+   E_CONFIG_VAL(D, T, pos.y, INT);
+   E_CONFIG_VAL(D, T, pos.w, INT);
+   E_CONFIG_VAL(D, T, pos.h, INT);
    E_CONFIG_VAL(D, T, w, INT);
    E_CONFIG_VAL(D, T, h, INT);
    E_CONFIG_VAL(D, T, edge, INT);
@@ -201,8 +208,10 @@ e_gadman_client_save(E_Gadman_Client *gmc)
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    /* save all values */
-   cf.ax = gmc->ax;
-   cf.ay = gmc->ay;
+   cf.pos.x = gmc->x - gmc->zone->x;
+   cf.pos.y = gmc->y - gmc->zone->y;
+   cf.pos.w = gmc->zone->w;
+   cf.pos.h = gmc->zone->h;
    cf.w = gmc->w;
    cf.h = gmc->h;
    cf.edge = gmc->edge;
@@ -227,13 +236,21 @@ e_gadman_client_load(E_Gadman_Client *gmc)
      {
 	E_Zone *zone;
 	
-	E_CONFIG_LIMIT(cf->ax, 0.0, 1.0);
-	E_CONFIG_LIMIT(cf->ay, 0.0, 1.0);
+	E_CONFIG_LIMIT(cf->pos.x, 0, 10000);
+	E_CONFIG_LIMIT(cf->pos.y, 0, 10000);
+	E_CONFIG_LIMIT(cf->pos.w, 1, 10000);
+	E_CONFIG_LIMIT(cf->pos.h, 1, 10000);
 	E_CONFIG_LIMIT(cf->w, 0, 10000);
 	E_CONFIG_LIMIT(cf->h, 0, 10000);
 	E_CONFIG_LIMIT(cf->edge, E_GADMAN_EDGE_LEFT, E_GADMAN_EDGE_BOTTOM);
-	gmc->ax = cf->ax;
-	gmc->ay = cf->ay;
+	if (cf->pos.w != cf->w)
+	  gmc->ax = (double)(cf->pos.x - cf->w) / (double)(cf->pos.w - cf->w);
+	else
+	  gmc->ax = 0.0;
+	if (cf->pos.h != cf->h)
+	  gmc->ay = (double)(cf->pos.y - cf->h) / (double)(cf->pos.h - cf->h);
+	else
+	  gmc->ay = 0.0;
 	gmc->w = cf->w;
 	gmc->h = cf->h;
 	gmc->edge = cf->edge;
@@ -253,8 +270,16 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	  }
 	if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
 	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
-	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
-	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+//	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+//	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+	if (cf->pos.w != cf->w)
+	  gmc->x = gmc->zone->x + ((cf->pos.x * (gmc->zone->w - gmc->w)) / (cf->pos.w - gmc->w));
+	else
+	  gmc->x = gmc->zone->x;
+	if (cf->pos.h != cf->h)
+	  gmc->y = gmc->zone->y + ((cf->pos.y * (gmc->zone->h - gmc->h)) / (cf->pos.h - gmc->h));
+	else
+	  gmc->y = gmc->zone->y;
 	free(cf);
      }
    _e_gadman_client_overlap_deny(gmc);
