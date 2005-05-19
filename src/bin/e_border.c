@@ -431,7 +431,9 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
+   printf("hide1\n");
    if (bd->moving) return;
+   printf("hide2\nn");
 
    ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
@@ -452,6 +454,7 @@ e_border_hide(E_Border *bd, int manage)
 	ev = calloc(1, sizeof(E_Event_Border_Hide));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
+	printf("ref bd %p to %i\n", bd, e_object_ref_get(E_OBJECT(bd)));
 	ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
 }
@@ -1390,6 +1393,7 @@ e_border_button_bindings_grab_all(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   printf("BD FREE %p\n", bd);
    if (resize == bd)
      _e_border_resize_end(bd);
    if (move == bd)
@@ -1450,6 +1454,7 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
+   printf("BD DEL %p\n", bd);
    ecore_x_window_reparent(bd->client.win,
 			   bd->zone->container->manager->root,
 			   bd->x + bd->client_inset.l,
@@ -1501,20 +1506,26 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 //   printf("in hide cb\n");
    bd = data;
    e = ev;
+   printf("hide..\n");
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
+   printf("found %p\n");
    if (bd->ignore_first_unmap > 0)
      {
+	printf("IGNORE UNMAP\n");
 	bd->ignore_first_unmap--;
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
    if ((bd->iconic) || (!bd->visible))
      {
+	printf("iconic %i || !visible %i\n",
+	       bd->iconic, bd->visible);
 	e_border_hide(bd, 1);
      }
    else
      {
+	printf("hide + del\n");
 	e_border_hide(bd, 0);
 	e_object_del(E_OBJECT(bd));
      }
