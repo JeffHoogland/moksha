@@ -279,7 +279,7 @@ e_hints_window_init(E_Border *bd)
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)
      {
 	if (bd->client.netwm.state.hidden)
-	  bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_WITHDRAWN;
+	  bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_ICONIC;
 	else
 	  bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
      }
