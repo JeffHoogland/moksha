@@ -1000,6 +1000,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->changes.size = 1;
 	bd->changed = 1;
 
+	/* FIXME: Find right layer */
 	bd->layer = 100;
 	e_border_raise(bd);
 
