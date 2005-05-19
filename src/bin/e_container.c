@@ -549,17 +549,13 @@ e_container_border_add(E_Border *bd)
 void
 e_container_border_remove(E_Border *bd)
 {
-   int pos;
+   int i;
 
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
-   else pos = 5;
-
-   bd->zone->container->layers[pos].clients =
-      evas_list_remove(bd->zone->container->layers[pos].clients, bd);
+   for (i = 0; i < 7; i++)
+     {
+	bd->zone->container->layers[i].clients =
+	   evas_list_remove(bd->zone->container->layers[i].clients, bd);
+     }
 }
 
 void

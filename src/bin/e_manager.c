@@ -92,6 +92,10 @@ e_manager_new(Ecore_X_Window root)
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
+
+   /* setup hints */
+   e_hints_manager_init(man);
+
    return man;
 }
 
@@ -273,6 +277,8 @@ e_manager_resize(E_Manager *man, int w, int h)
 	con = l->data;
 	e_container_resize(con, man->w, man->h);
      }
+
+   ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
 }
 
 void

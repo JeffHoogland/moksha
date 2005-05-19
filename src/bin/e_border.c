@@ -2924,7 +2924,6 @@ _e_border_eval(E_Border *bd)
 	     evas_object_del(bd->bg_object);
 	  }
         o = edje_object_add(bd->bg_evas);
-	bd->bg_object = o;
 	snprintf(buf, sizeof(buf), "widgets/border/%s/border",
 		 bd->client.border.name);
 	ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
@@ -2932,6 +2931,7 @@ _e_border_eval(E_Border *bd)
 	  {
 	     const char *shape_option;
 	     
+	     bd->bg_object = o;
 	     shape_option = edje_object_data_get(o, "shaped");
 	     if (shape_option)
 	       {
@@ -2975,6 +2975,8 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
+	     evas_object_del(o);
+	     bd->bg_object = NULL;
 	     l = 0;
 	     r = 0;
 	     t = 0;
@@ -2990,37 +2992,40 @@ _e_border_eval(E_Border *bd)
 	bd->h += (bd->client_inset.t + bd->client_inset.b);
 	bd->changes.size = 1;
 	ecore_x_window_move(bd->client.shell_win, l, t);
-	edje_object_signal_callback_add(o, "move_start", "*",
-					_e_border_cb_signal_move_start, bd);
-	edje_object_signal_callback_add(o, "move_stop", "*",
-					_e_border_cb_signal_move_stop, bd);
-	edje_object_signal_callback_add(o, "resize_tl_start", "*",
-					_e_border_cb_signal_resize_tl_start, bd);
-	edje_object_signal_callback_add(o, "resize_t_start", "*",
-					_e_border_cb_signal_resize_t_start, bd);
-	edje_object_signal_callback_add(o, "resize_tr_start", "*",
-					_e_border_cb_signal_resize_tr_start, bd);
-	edje_object_signal_callback_add(o, "resize_r_start", "*",
-					_e_border_cb_signal_resize_r_start, bd);
-	edje_object_signal_callback_add(o, "resize_br_start", "*",
-				   _e_border_cb_signal_resize_br_start, bd);
-	edje_object_signal_callback_add(o, "resize_b_start", "*",
-					_e_border_cb_signal_resize_b_start, bd);
-	edje_object_signal_callback_add(o, "resize_bl_start", "*",
-					_e_border_cb_signal_resize_bl_start, bd);
-	edje_object_signal_callback_add(o, "resize_l_start", "*",
-					_e_border_cb_signal_resize_l_start, bd);
-	edje_object_signal_callback_add(o, "resize_stop", "*",
-					_e_border_cb_signal_resize_stop, bd);
-	edje_object_signal_callback_add(o, "action", "*",
-					_e_border_cb_signal_action, bd);
-	edje_object_signal_callback_add(o, "drag", "*",
-				        _e_border_cb_signal_drag, bd);
-	if (bd->focused)
-	  edje_object_signal_emit(bd->bg_object, "active", "");
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, bd->w, bd->h);
-	evas_object_show(o);
+	if (bd->bg_object)
+	  {
+	     edje_object_signal_callback_add(bd->bg_object, "move_start", "*",
+					     _e_border_cb_signal_move_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "move_stop", "*",
+					     _e_border_cb_signal_move_stop, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_tl_start", "*",
+					     _e_border_cb_signal_resize_tl_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_t_start", "*",
+					     _e_border_cb_signal_resize_t_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_tr_start", "*",
+					     _e_border_cb_signal_resize_tr_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_r_start", "*",
+					     _e_border_cb_signal_resize_r_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_br_start", "*",
+					     _e_border_cb_signal_resize_br_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_b_start", "*",
+					     _e_border_cb_signal_resize_b_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_bl_start", "*",
+					     _e_border_cb_signal_resize_bl_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_l_start", "*",
+					     _e_border_cb_signal_resize_l_start, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "resize_stop", "*",
+					     _e_border_cb_signal_resize_stop, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "action", "*",
+					     _e_border_cb_signal_action, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "drag", "*",
+					     _e_border_cb_signal_drag, bd);
+	     if (bd->focused)
+	       edje_object_signal_emit(bd->bg_object, "active", "");
+	     evas_object_move(bd->bg_object, 0, 0);
+	     evas_object_resize(bd->bg_object, bd->w, bd->h);
+	     evas_object_show(bd->bg_object);
+	  }
 	bd->client.border.changed = 0;
 	
 	if (bd->icon_object)
