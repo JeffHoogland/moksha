@@ -52,7 +52,8 @@ e_bindings.h \
 e_moveresize.h \
 e_actions.h \
 e_popup.h \
-e_ipc_codec.h
+e_ipc_codec.h \
+e_prefix.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -98,6 +99,7 @@ e_moveresize.c \
 e_actions.c \
 e_popup.c \
 e_ipc_codec.c \
+e_prefix.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@

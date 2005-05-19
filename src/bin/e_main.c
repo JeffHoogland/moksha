@@ -69,6 +69,21 @@ main(int argc, char **argv)
    sigaction(SIGSEGV, &sigsegv_action, NULL);
 #endif
 
+   /* FIXME: this is the init code for letting e be relocatable. right now
+    * its not used - so i want to see if it can reliably determine its exe
+    * prefix
+    */
+   if (!e_prefix_determine(argv[0]))
+     {
+	fprintf(stderr,
+		"ERROR: Enlightenment cannot determine its installed\n"
+		"       prefix from the system or argv[0].\n"
+		"       This is because it is not on Linux AND has been\n"
+		"       Executed strangely. This is unusal.\n"
+		);
+	exit(-1);
+     }
+   
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
       

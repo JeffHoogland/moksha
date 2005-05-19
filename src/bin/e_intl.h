@@ -17,8 +17,6 @@ EAPI int e_intl_init(void);
 EAPI int e_intl_shutdown(void);
 EAPI void e_intl_language_set(const char *lang);
 EAPI const char *e_intl_language_get(void);
-EAPI const char *e_intl_language_name_get(const char *lang);
-EAPI const char *e_intl_language_simple_get(const char *lang);
 EAPI const Evas_List *e_intl_language_list(void);
     
 #endif

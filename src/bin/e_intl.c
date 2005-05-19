@@ -38,6 +38,9 @@ e_intl_init(void)
     *       vs. traditional chinese) we may refer to them as separate languages
     *       entirely.
     */
+   /* FIXME: remove this - hunt locale dirs (a user one in ~/.e/e/ too for
+    * user installed locale support
+    */
    ADD_LANG("");
    ADD_LANG("en_US.UTF-8");
    ADD_LANG("ja_JP.UTF-8");
@@ -71,6 +74,7 @@ e_intl_shutdown(void)
 void
 e_intl_language_set(const char *lang)
 {
+   /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
    if (lang)
@@ -104,132 +108,9 @@ e_intl_language_get(void)
    return _e_intl_language;
 }
 
-#define IFL(l) if (!strcmp(lang, l)) return
-const char *
-e_intl_language_name_get(const char *lang)
-{
-   if (!lang) return "None";
-   /* this is a list of DISTINCT languages. some languages have variants that
-    * are different enough to justify being listed separately as distinct
-    * languages here. this is intended for use in a gui that lets you select
-    * a language, with e being able to give a name for the given language
-    * encoding (once simplfied)
-    */
-   /* FIXME: add as many as we can to this */
-   IFL("") "None";
-   IFL("C") "None";
-   IFL("bg") "Bulgarian";
-   IFL("bs") "Bosnian";
-   IFL("ca") "Catalan";
-   IFL("cs") "Czech";
-   IFL("cy") "Welsh";
-   IFL("da") "Danish";
-   IFL("de") "German";
-   IFL("el") "Greek";
-   IFL("en") "English"; 
-   IFL("es") "Spanish"; 
-   IFL("eu") "Basque";
-   IFL("fa") "Persian";
-   IFL("fr") "French";
-   IFL("fi") "Finnish";
-   IFL("gl") "Galician";
-   IFL("hi") "Hindi";
-   IFL("hr") "Croatian";
-   IFL("hu") "Hungarian";
-   IFL("id") "Indonesian";
-   IFL("it") "Italian";
-   IFL("ja") "Japanese";
-   IFL("kr") "Korean";
-   IFL("lt") "Lithuanian";
-   IFL("lv") "Latvian";
-   IFL("nl") "Dutch";
-   IFL("no") "Norwegian";
-   IFL("nb") "Norwegian Bokmal";
-   IFL("nn") "Norwegian Nynorsk";
-   IFL("pl") "Polish";
-   IFL("pt") "Portuguese";
-   IFL("ro") "Romanian";
-   IFL("ru") "Russian";
-   IFL("sk") "Slovak";
-   IFL("sl") "Slovenian";
-   IFL("sq") "Albanian";
-   IFL("sr") "Serbian";
-   IFL("sv") "Swedish";
-   IFL("tr") "Tuirkish";
-   IFL("uk") "Ukrainian";
-   IFL("vi") "Vietnamese";
-   /* must keep both - politically sensitive */
-   IFL("zh_CN") "Chinese (Simplified)";
-   IFL("zh_TW") "Chinese (Traditional)";
-   return "Unknown";
-}
-
-#define ISL(l) (!strcasecmp(buf, l))
-const char *
-e_intl_language_simple_get(const char *lang)
-{
-   static char buf[128];
-   char *p;
-
-   if (!lang) return "C";
-   /* strip off the charset stuff after any "." eg: "en_US.UTF-8" -> "en_US" */
-   strncpy(buf, lang, sizeof(buf) - 1);
-   p = strchr(buf, '.');
-   if (p) *p = 0;
-   /* do we want to split this inot the different forms of english?
-    * ie american vs british? or australian? etc.
-    */
-   /* for known specific mappings - do them first here */
-   if (ISL("en") || ISL("en_US") || ISL("en_GB") || ISL("en_GB@euro") || 
-       ISL("en_CA") || ISL("en_AU") || ISL("en_NZ") || ISL("en_RN"))
-     return "en";
-   if (ISL("ja") || ISL("ja_JP") || ISL("JP"))
-     return "ja";
-   if (ISL("fr") || ISL("fr_FR") || ISL("FR") || ISL("fr_FR@euro"))
-     return "fr";
-   if (ISL("es") || ISL("es_ES") || ISL("ES") || ISL("es_ES@euro") ||
-       ISL("es_AR") || ISL("AR"))
-     return "es";
-   if (ISL("pt") || ISL("pt_PT") || ISL("PT") || ISL("pt_PT@euro") ||
-       ISL("pt_BR") || ISL("BR"))
-     return "pt";
-   if (ISL("fi") || ISL("fi_FI") || ISL("FI") || ISL("fi_FI@euro"))
-     return "fi";
-   if (ISL("ru") || ISL("ru_RU") || ISL("RU"))
-     return "ru";
-   if (ISL("bg") || ISL("bg_BG") || ISL("BG"))
-     return "bg";
-   if (ISL("de") || ISL("de_DE") || ISL("DE") || ISL("de_DE@euro") ||
-       ISL("de_AT") || ISL("AT") || ISL("de_AT@euro"))
-     return "de";
-   if (ISL("pl") || ISL("pl_PL") || ISL("PL") || ISL("pl_PL@euro"))
-     return "pl";
-   if (ISL("zh") || ISL("zh_CN") || ISL("CN"))
-     return "zh_CN";
-   if (ISL("zh") || ISL("zh_TW") || ISL("TW"))
-     return "zh_TW";
-   if (ISL("hu") || ISL("hu_HU") || ISL("HU"))
-     return "hu";
-   if (ISL("sl") || ISL("sl_SI") || ISL("SI"))
-     return "sl";
-   if (ISL("it") || ISL("it_IT") || ISL("IT"))
-     return "it";
-   /* this is the default fallback - we have no special cases for this lang
-    * so just strip off anything after and including the _ for country region
-    * and just return the language encoding
-    */
-   /* strip off anything after a "_" eg: "en_US" -> "en" */
-   p = strchr(buf, '_');
-   if (p) *p = 0;
-   /* we can safely retunr buf because its a static - BUT its contents will
-    * change if we call e_intl_language_simple_get() again - so its only
-    * intended for immediate use and de-reference, not for storage
-    */
-   return buf;
-}
-
 const Evas_List *
 e_intl_language_list(void)
 {
+   /* FIXME: hunt dirs for locales */
    return _e_intl_languages;
 }
