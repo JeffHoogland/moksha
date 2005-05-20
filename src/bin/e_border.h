@@ -28,8 +28,9 @@ typedef enum _E_Stacking
 
 typedef enum _E_Focus_Policy
 {
-   E_FOCUS_CLICK = 0,
-   E_FOCUS_MOUSE = 1
+   E_FOCUS_CLICK,
+   E_FOCUS_MOUSE,
+   E_FOCUS_SLOPPY
 } E_Focus_Policy;
 
 

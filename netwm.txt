@@ -8,7 +8,7 @@ _NET_CLIENT_LIST                    [X]
 _NET_CLIENT_LIST_STACKING           [X]
 _NET_CLOSE_WINDOW                   [ ]
 _NET_CURRENT_DESKTOP                [ ]
-_NET_DESKTOP_GEOMETRY               [ ]
+_NET_DESKTOP_GEOMETRY               [?] /* Listen to _NET_DESKTOP_GEOMETRY requests */
 _NET_DESKTOP_LAYOUT                 [ ]
 _NET_DESKTOP_LAYOUT_S               [ ]
 _NET_DESKTOP_NAMES                  [ ]

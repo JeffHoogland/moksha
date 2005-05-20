@@ -250,9 +250,10 @@ _e_opt_focus_policy_set(char **params)
    value = 0;
    if (!strcmp(params[0], "MOUSE")) value = E_FOCUS_MOUSE;
    else if (!strcmp(params[0], "CLICK")) value = E_FOCUS_CLICK;
+   else if (!strcmp(params[0], "SLOPPY")) value = E_FOCUS_SLOPPY;
    else
      {
-	printf("focus must be MOUSE or CLICK\n");
+	printf("focus must be MOUSE, CLICK or SLOPPY\n");
 	exit(-1);
      }
    data = e_ipc_codec_int_enc(value, &bytes);
