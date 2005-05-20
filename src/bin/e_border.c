@@ -440,7 +440,11 @@ e_border_hide(E_Border *bd, int manage)
    if (bd->moving) return;
 
    if (!bd->need_reparent)
-     ecore_x_window_hide(bd->client.win);
+     {
+	if (bd->focused)
+	  ecore_x_window_focus(bd->zone->container->manager->root);
+	ecore_x_window_hide(bd->client.win);
+     }
    e_container_shape_hide(bd->shape);
    if (!bd->iconic)
      e_hints_window_hidden_set(bd);
@@ -2452,7 +2456,11 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	  }
 	e_focus_event_mouse_down(bd);
      }
-   if (ev->win != bd->event_win) return 1;
+   if ((ev->win != bd->event_win) && (ev->event_win != bd->win))
+     {
+	printf("abort ev\n");
+	return 1;
+     }
    if ((ev->button >= 1) && (ev->button <= 3))
      {
 	bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
@@ -2464,18 +2472,23 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
      }
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
+/*   
    if (bd->moving)
      {
+	printf("moving\n");
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
      }
    else
+*/
      {
 	Evas_Button_Flags flags = EVAS_BUTTON_NONE;
 
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	printf("mouse %i %i | DBL %i TRIP %i\n",
+	       ev->x, ev->y, ev->double_click, ev->triple_click);
 	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
 	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, NULL);
      }
@@ -2505,7 +2518,6 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	/* ... VERY unlikely though... VERY */
 	/* also we dont pass the same params that went in - then again that */
 	/* should be ok as we are just ending the action if it has an end */
-	printf("mouse up after grab!\n");
 	if (bd->cur_mouse_action)
 	  {
 	     if (bd->cur_mouse_action->func.end_mouse)
