@@ -315,7 +315,6 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 {
    Evas_List *l;
 
-   printf("GRAB KEYS %p\n", key_bindings);
    for (l = key_bindings; l; l = l->next)
      {
 	E_Binding_Key *bind;
@@ -330,7 +329,6 @@ e_bindings_key_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 	     if (bind->mod & E_BINDING_MODIFIER_CTRL) mod |= ECORE_X_MODIFIER_CTRL;
 	     if (bind->mod & E_BINDING_MODIFIER_ALT) mod |= ECORE_X_MODIFIER_ALT;
 	     if (bind->mod & E_BINDING_MODIFIER_WIN) mod |= ECORE_X_MODIFIER_WIN;
-	     printf("BIND %x %s %x %i\n", win, bind->key, mod, bind->any_mod);
 	     ecore_x_window_key_grab(win, bind->key,
 				     mod, bind->any_mod);
 	  }

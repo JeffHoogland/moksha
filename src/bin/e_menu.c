@@ -2056,14 +2056,14 @@ _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
     * 
     * quadrants... which one
     */
-   if (w != m->zone->container->w)
-     xr = (double)(x - m->zone->container->x) /
-     (double)(m->zone->container->w - w);
+   if (w != m->zone->w)
+     xr = (double)(x - m->zone->x) /
+     (double)(m->zone->w - w);
    else
      xr = 0.0;
-   if (h != m->zone->container->h)
-     yr = (double)(y - m->zone->container->y) /
-     (double)(m->zone->container->h - h);
+   if (h != m->zone->h)
+     yr = (double)(y - m->zone->y) /
+     (double)(m->zone->h - h);
    else
      yr = 0.0;
    if ((xr + yr) < 0.99) /* top or left */
@@ -2072,9 +2072,9 @@ _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
 	  /* L */
 	  {
 	     m->cur.x = x + w;
-	     if (y < (m->zone->container->y + ((m->zone->container->h * 1) / 3)))
+	     if (y < (m->zone->y + ((m->zone->h * 1) / 3)))
 	       m->cur.y = y;
-	     else if (y < (m->zone->container->y + ((m->zone->container->h * 2) / 3)))
+	     else if (y < (m->zone->y + ((m->zone->h * 2) / 3)))
 	       m->cur.y = y + ((h - m->cur.h) / 2);
 	     else
 	       m->cur.y = y + h - m->cur.h;
@@ -2084,9 +2084,9 @@ _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
 	  /* T */
 	  {
 	     m->cur.y = y + h;
-	     if (x < (m->zone->container->x + ((m->zone->container->w * 1) / 3)))
+	     if (x < (m->zone->x + ((m->zone->w * 1) / 3)))
 	       m->cur.x = x;
-	     else if (x < (m->zone->container->x + ((m->zone->container->w * 2) / 3)))
+	     else if (x < (m->zone->x + ((m->zone->w * 2) / 3)))
 	       m->cur.x = x + ((w - m->cur.w) / 2);
 	     else
 	       m->cur.x = x + w - m->cur.w;
@@ -2099,9 +2099,9 @@ _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
 	  /* B */
 	  {
 	     m->cur.y = y - m->cur.h;
-	     if (x < (m->zone->container->x + ((m->zone->container->w * 1) / 3)))
+	     if (x < (m->zone->x + ((m->zone->w * 1) / 3)))
 	       m->cur.x = x;
-	     else if (x < (m->zone->container->x + ((m->zone->container->w * 2) / 3)))
+	     else if (x < (m->zone->x + ((m->zone->w * 2) / 3)))
 	       m->cur.x = x + ((w - m->cur.w) / 2);
 	     else
 	       m->cur.x = x + w - m->cur.w;
@@ -2111,9 +2111,9 @@ _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
 	  /* R */
 	  {
 	     m->cur.x = x - m->cur.w;
-	     if (y < (m->zone->container->y + ((m->zone->container->h * 1) / 3)))
+	     if (y < (m->zone->y + ((m->zone->h * 1) / 3)))
 	       m->cur.y = y;
-	     else if (y < (m->zone->container->y + ((m->zone->container->h * 2) / 3)))
+	     else if (y < (m->zone->y + ((m->zone->h * 2) / 3)))
 	       m->cur.y = y + ((h - m->cur.h) / 2);
 	     else
 	       m->cur.y = y + h - m->cur.h;

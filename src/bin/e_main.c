@@ -38,6 +38,7 @@ E_Path *path_backgrounds = NULL;
 int     restart      = 0;
 int     good         = 0;
 int     evil         = 0;
+int     starting     = 1;
 
 /* local subsystem globals */
 #define MAX_LEVEL 32
@@ -443,6 +444,8 @@ main(int argc, char **argv)
    /* run any testing code now we are set up */
    e_test();
    
+   /* no longer starting up */
+   starting = 0;
    /* start our main loop */
    ecore_main_loop_begin();
    

@@ -97,5 +97,8 @@ extern EAPI E_Path *path_init;
 extern EAPI E_Path *path_modules;
 extern EAPI E_Path *path_backgrounds;
 extern EAPI int     restart;
+extern EAPI int     good;
+extern EAPI int     evil;
+extern EAPI int     starting;
 
 #endif

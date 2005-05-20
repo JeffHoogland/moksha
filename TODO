@@ -63,8 +63,6 @@ These are in no particular order:
   border stays around - something is keeping extra references maybe?
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
-* multiple zones and a pager per zone doesnt flip desktops in that zone alone
-  - they affect both zones only the first time u run e...
 * drop on ibar for re-ordering, removal seems broken (drop location is the
   wrong spot)
 * break out desks x/y size config so you can have a different desktop size

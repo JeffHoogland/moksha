@@ -212,7 +212,7 @@ e_zone_current_get(E_Container *con)
 	/* the current zone is whatever zone has the focused window */
 	return bd->zone;
      }
-   else
+   else if (!starting)
      {
 	int x, y;
 
