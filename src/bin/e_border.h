@@ -28,8 +28,8 @@ typedef enum _E_Stacking
 
 typedef enum _E_Focus_Policy
 {
-   E_FOCUS_FOLLOW_MOUSE = 1 << 0,
-   E_FOCUS_AUTORAISE = 1 << 1
+   E_FOCUS_CLICK = 0,
+   E_FOCUS_MOUSE = 1
 } E_Focus_Policy;
 
 
@@ -194,6 +194,7 @@ struct _E_Border
    unsigned char   fullscreen : 1;
    unsigned char   already_unparented : 1;
    unsigned char   need_reparent : 1;
+   unsigned char   button_grabbed : 1;
  
    unsigned char   changed : 1;
    

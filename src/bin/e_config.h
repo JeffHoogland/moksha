@@ -36,7 +36,6 @@ typedef struct _E_Config_Module         E_Config_Module;
 typedef struct _E_Config_Theme          E_Config_Theme;
 typedef struct _E_Config_Binding_Mouse  E_Config_Binding_Mouse;
 typedef struct _E_Config_Binding_Key    E_Config_Binding_Key;
-typedef struct _E_Config_Focus_Policy   E_Config_Focus_Policy;
 typedef Eet_Data_Descriptor             E_Config_DD;
 
 #else
@@ -47,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 104
+#define E_CONFIG_FILE_VERSION 105
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -94,9 +93,11 @@ struct _E_Config
    Evas_List  *path_append_icons;
    Evas_List  *path_append_modules;
    Evas_List  *path_append_backgrounds;
-   E_Focus_Policy focus_policy;
-   int            raise_timer;
-   
+   int         focus_policy;
+   int         pass_click_on;
+   int         always_click_to_raise;
+   int         use_auto_raise;
+   double      auto_raise_delay;
 };
 
 struct _E_Config_Module
@@ -130,14 +131,6 @@ struct _E_Config_Binding_Key
    char          *params;
    unsigned char  any_mod;
 };
-
-struct _E_Config_Focus_Policy
-{
-   E_Focus_Policy focus_policy;
-   int		  raise_timer;
-};
-
-
 
 EAPI int e_config_init(void);
 EAPI int e_config_shutdown(void);

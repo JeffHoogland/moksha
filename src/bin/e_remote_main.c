@@ -43,8 +43,6 @@ ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_dec);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec);
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc);
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -242,79 +240,27 @@ _e_opt_binding_key_del(char **params)
    free(data);
 }
 
-static void _e_opt_focus_policy_parse(E_Config_Focus_Policy* policy, char **params)
-{
-   /* M1[|M2...] */
-     {
-	char *p, *pp;
-	
-	policy->focus_policy = 0;
-	pp = params[0];
-	for (;;)
-	  {
-	     p = strchr(pp, '|');
-	     if (p)
-	       {
-		  if (!strncmp(pp, "FOLLOW|", 7))
-		    policy->focus_policy |= E_FOCUS_FOLLOW_MOUSE;
-		  else if (!strncmp(pp, "CLICK|", 6))
-		    policy->focus_policy &= 
-		       ~(E_FOCUS_FOLLOW_MOUSE | E_FOCUS_AUTORAISE);
-		  else if (!strncmp(pp, "AUTORAISE|", 10)) 
-		    policy->focus_policy |= E_FOCUS_AUTORAISE;
-		  else if (strlen(pp) > 0)
-		    {
-		       printf("OPT1 option. Must be or mask of:\n"
-			      "  FOLLOW CLICK AUTORAISE\n");
-		       exit(-1);
-		    }
-		  pp = p + 1;
-	       }
-	     else
-	       {
-		  if (!strcmp(pp, "FOLLOW"))
-		    policy->focus_policy |= E_FOCUS_FOLLOW_MOUSE;
-		  else if (!strcmp(pp, "CLICK"))
-		    policy->focus_policy &= 
-		       ~(E_FOCUS_FOLLOW_MOUSE | E_FOCUS_AUTORAISE);
-		  else if (!strcmp(pp, "AUTORAISE")) 
-		    policy->focus_policy |= E_FOCUS_AUTORAISE;
-		  else if (strlen(pp) > 0)
-		    {
-		       printf("OPT1 option. Must be or mask of:\n"
-			      "  FOLLOW CLICK AUTORAISE\n");
-		       exit(-1);
-		    }
-		  break;
-	       }
-	  }
-     }
-
-   if(params[1][0] != 0)
-     policy->raise_timer = atoi(params[1]);
-   else if(policy->focus_policy & E_FOCUS_AUTORAISE)
-     {
-	printf("OPT2 option is should be seted, if you use AUTORAISE.\n");
-     }
-
-}
-
-
 static void
-_e_opt_focus_policy_set(char** params)
+_e_opt_focus_policy_set(char **params)
 {
-   E_Config_Focus_Policy policy;
    int bytes;
    char *data;
-
-   _e_opt_focus_policy_parse(&policy, params);
-   data = _e_ipc_focus_policy_enc(&policy, &bytes);
+   int value;
+   
+   value = 0;
+   if (!strcmp(params[0], "MOUSE")) value = E_FOCUS_MOUSE;
+   else if (!strcmp(params[0], "CLICK")) value = E_FOCUS_CLICK;
+   else
+     {
+	printf("focus must be MOUSE or CLICK\n");
+	exit(-1);
+     }
+   data = e_ipc_codec_int_enc(value, &bytes);
    ecore_ipc_server_send(_e_ipc_server,
 			 E_IPC_DOMAIN_REQUEST,
 			 E_IPC_OP_FOCUS_POLICY_SET,
 			 0, 0, 0,
 			 data, bytes);
-
    free(data);
 }
 
@@ -424,7 +370,7 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
    O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
    OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
-   OFNC("-focus-policy-set", "Set focus policy. OPT1 = Policy. OPT2 = Raise Time.", 2, _e_opt_focus_policy_set, 0),
+   OFNC("-focus-policy-set", "Set focus policy. OPT1 = CLICK or MOUSE", 1, _e_opt_focus_policy_set, 0),
    OREQ("-focus-policy-get", "Get focus policy.", E_IPC_OP_FOCUS_POLICY_GET, 1)
 };
 
@@ -1110,12 +1056,18 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  }
 	break;
       case E_IPC_OP_FOCUS_POLICY_GET_REPLY:
-	if(e->data)
+	if (e->data)
 	  {
-	     E_Config_Focus_Policy policy;
-
-	     if(_e_ipc_focus_policy_dec(e->data, e->size, &policy))
-	       printf("REPLY: %i %i\n", policy.focus_policy, policy.raise_timer);
+	     int value;
+	     
+	     if (e_ipc_codec_int_dec(e->data, e->size,
+				&(value)))
+	       {
+		  if (value == E_FOCUS_MOUSE)
+		    printf("REPLY: MOUSE\n");
+		  else if (value == E_FOCUS_CLICK)
+		    printf("REPLY: CLICK\n");
+	       }
 	  }
 	break;
 	
@@ -1369,28 +1321,10 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec)
    ECORE_IPC_GET8(any_mod);
    ECORE_IPC_DEC_STRUCT_FOOT();
 }
+
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec)
 {
    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Path_Dir);
    ECORE_IPC_GETS(dir);
    ECORE_IPC_DEC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc)
-{
-   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Focus_Policy,
-	 1 + 4);
-   ECORE_IPC_PUT8(focus_policy);
-   ECORE_IPC_PUT32(raise_timer);
-   ECORE_IPC_ENC_STRUCT_FOOT();
-}
-
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec)
-{
-   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Focus_Policy,
-	 1 + 4);
-   ECORE_IPC_CHEKS();
-   ECORE_IPC_GET8(focus_policy);
-   ECORE_IPC_GET32(raise_timer);
-   ECORE_IPC_DEC_STRUCT_FOOT();
 }

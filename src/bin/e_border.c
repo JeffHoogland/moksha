@@ -219,6 +219,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_focus_setup(bd);
    if (e_canvas_engine_decide(e_config->evas_engine_borders) ==
        E_EVAS_ENGINE_GL_X11)
      {
@@ -673,9 +674,15 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    if (!bd->client.icccm.accepts_focus) return;
 //   printf("flag focus to %i\n", focus);
    if ((focus) && (!bd->focused))
-     edje_object_signal_emit(bd->bg_object, "active", "");
+     {
+	edje_object_signal_emit(bd->bg_object, "active", "");
+	e_focus_event_focus_in(bd);
+     }
    else if ((!focus) && (bd->focused))
-     edje_object_signal_emit(bd->bg_object, "passive", "");
+     {
+	edje_object_signal_emit(bd->bg_object, "passive", "");
+	e_focus_event_focus_out(bd);
+     }
    bd->focused = focus;
    if (set)
      {
@@ -1445,6 +1452,7 @@ _e_border_free(E_Border *bd)
    e_canvas_del(bd->bg_ecore_evas);
    ecore_evas_free(bd->bg_ecore_evas);
    ecore_x_window_del(bd->client.shell_win);
+   e_focus_setdown(bd);
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
@@ -2423,26 +2431,25 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
    bd = data;
    if (ev->event_win == bd->win)
      {
-	if(!e_focus_event_mouse_down(bd))
+	if ((ev->button >= 1) && (ev->button <= 3))
 	  {
-	     if ((ev->button >= 1) && (ev->button <= 3))
-	       {
-		  bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
-		  bd->mouse.last_down[ev->button - 1].my = ev->root.y;
-		  bd->mouse.last_down[ev->button - 1].x = bd->x;
-		  bd->mouse.last_down[ev->button - 1].y = bd->y;
-		  bd->mouse.last_down[ev->button - 1].w = bd->w;
-		  bd->mouse.last_down[ev->button - 1].h = bd->h;
-	       }
-	     bd->mouse.current.mx = ev->root.x;
-	     bd->mouse.current.my = ev->root.y;
-	     if (!bd->cur_mouse_action)
-	       {
-		  bd->cur_mouse_action = 
-		     e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
-			   E_OBJECT(bd), ev);
-	       }
+	     bd->mouse.last_down[ev->button - 1].mx = ev->root.x;
+	     bd->mouse.last_down[ev->button - 1].my = ev->root.y;
+	     bd->mouse.last_down[ev->button - 1].x = bd->x;
+	     bd->mouse.last_down[ev->button - 1].y = bd->y;
+	     bd->mouse.last_down[ev->button - 1].w = bd->w;
+	     bd->mouse.last_down[ev->button - 1].h = bd->h;
 	  }
+	bd->mouse.current.mx = ev->root.x;
+	bd->mouse.current.my = ev->root.y;
+	if (!bd->cur_mouse_action)
+	  {
+	     bd->cur_mouse_action = 
+	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
+						  E_OBJECT(bd), ev);
+	  }
+	if (!bd->cur_mouse_action)
+	  e_focus_event_mouse_down(bd);
      }
    if (ev->win != bd->event_win) return 1;
    if ((ev->button >= 1) && (ev->button <= 3))
@@ -2484,31 +2491,31 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
    bd = data;
    if (ev->event_win == bd->win)
      {
-	if(!e_focus_event_mouse_up(bd))
+	if ((ev->button >= 1) && (ev->button <= 3))
 	  {
-	     if ((ev->button >= 1) && (ev->button <= 3))
-	       {
-		  bd->mouse.last_up[ev->button - 1].mx = ev->root.x;
-		  bd->mouse.last_up[ev->button - 1].my = ev->root.y;
-		  bd->mouse.last_up[ev->button - 1].x = bd->x;
-		  bd->mouse.last_up[ev->button - 1].y = bd->y;
-	       }
-	     bd->mouse.current.mx = ev->root.x;
-	     bd->mouse.current.my = ev->root.y;
-	     /* bug/problem. this action COULD be deleted during a move */
-	     /* ... VERY unlikely though... VERY */
-	     /* also we dont pass the same params that went in - then again that */
-	     /* should be ok as we are just ending the action if it has an end */
-	     if (bd->cur_mouse_action)
-	       {
-		  if (bd->cur_mouse_action->func.end_mouse)
-		    bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
-		  else if (bd->cur_mouse_action->func.end)
-		    bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
-		  bd->cur_mouse_action = NULL;
-	       }
-	     else
-	       e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev);
+	     bd->mouse.last_up[ev->button - 1].mx = ev->root.x;
+	     bd->mouse.last_up[ev->button - 1].my = ev->root.y;
+	     bd->mouse.last_up[ev->button - 1].x = bd->x;
+	     bd->mouse.last_up[ev->button - 1].y = bd->y;
+	  }
+	bd->mouse.current.mx = ev->root.x;
+	bd->mouse.current.my = ev->root.y;
+	/* bug/problem. this action COULD be deleted during a move */
+	/* ... VERY unlikely though... VERY */
+	/* also we dont pass the same params that went in - then again that */
+	/* should be ok as we are just ending the action if it has an end */
+	if (bd->cur_mouse_action)
+	  {
+	     if (bd->cur_mouse_action->func.end_mouse)
+	       bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
+	     else if (bd->cur_mouse_action->func.end)
+	       bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+	     bd->cur_mouse_action = NULL;
+	  }
+	else
+	  {
+	     if (!e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
+	       e_focus_event_mouse_up(bd);
 	  }
      }
    if (ev->win != bd->event_win) return 1;
@@ -2652,12 +2659,14 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
    if (type == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
      {
 	Ecore_X_Event_Mouse_Button_Down *e;
-	E_Border *bd;
 
 	e = event;
-	bd = e_border_find_by_client_window(e->win);
-	if (!bd) bd = e_border_find_by_client_window(e->event_win);
-	/* FIXME: return 1 if we pass this click on... */
+	if ((e_config->pass_click_on) ||
+	    (e_config->always_click_to_raise))
+	  {
+	     printf("ALLOW PRESS\n");
+	     return 1;
+	  }
      }
    return 0;
 }

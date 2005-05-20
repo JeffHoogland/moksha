@@ -27,8 +27,6 @@ ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc);
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc);
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -738,35 +736,17 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			       E_IPC_OP_DESKS_GET_REPLY);
 	break;
       case E_IPC_OP_FOCUS_POLICY_SET:
+	if (e_ipc_codec_int_dec(e->data, e->size,
+				&(e_config->focus_policy)))
 	  {
-	     E_Config_Focus_Policy policy;
-	     
-	     _e_ipc_focus_policy_dec(e->data, e->size, &policy);
-	     e_config->focus_policy = policy.focus_policy;
-	     e_config->raise_timer = policy.raise_timer;
-	     
+	     /* FIXME: if going to/from click to focus grab/ungrab */
+	     e_config_save_queue();
 	  }
 	break;
       case E_IPC_OP_FOCUS_POLICY_GET:
-	  {
-	     int bytes;
-	     E_Config_Focus_Policy policy;
-	     char *data;
-	     
-	     policy.focus_policy = e_config->focus_policy;
-	     policy.raise_timer = e_config->raise_timer;
-	     
-	     data = _e_ipc_focus_policy_enc(&policy, &bytes);
-	     
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_FOCUS_POLICY_GET_REPLY,
-				   0, 0, 0,
-				   data, bytes);
-	     
-	     free(data);
-	     
-	  }
+	_e_ipc_reply_int_send(e->client,
+			      e_config->focus_policy,
+			      E_IPC_OP_FOCUS_POLICY_GET_REPLY);
 	break;
       case E_IPC_OP_MODULE_DIRS_LIST:
 	  {
@@ -1518,23 +1498,4 @@ ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc)
    ECORE_IPC_SLEN(l1, dir);
    ECORE_IPC_PUTS(dir, l1);
    ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc)
-{
-   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Focus_Policy,
-			     1 + 4);
-   ECORE_IPC_PUT8(focus_policy);
-   ECORE_IPC_PUT32(raise_timer);
-   ECORE_IPC_ENC_STRUCT_FOOT();
-}
-
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec)
-{
-   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Focus_Policy,
-				 1 + 4);
-   ECORE_IPC_CHEKS();
-   ECORE_IPC_GET8(focus_policy);
-   ECORE_IPC_GET32(raise_timer);
-   ECORE_IPC_DEC_STRUCT_FOOT();
 }
