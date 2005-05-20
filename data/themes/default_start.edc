@@ -386,6 +386,7 @@ group {
 	    val = get_int(is_hilited);
 	    if (val == 0)
 	      run_program(PROGRAM:"go_active_pre");
+	    run_program(PROGRAM:"logo_go_active");
 	 }
       }
       program {      
@@ -402,6 +403,7 @@ group {
 		 run_program(PROGRAM:"go_passive_pre");
 		 set_int(is_hilited, 0);
 	      }
+	    run_program(PROGRAM:"logo_go_passive");
 	 }
       }
       
