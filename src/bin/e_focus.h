@@ -9,6 +9,11 @@
 EAPI int e_focus_init(void);
 EAPI int e_focus_shutdown(void);
 EAPI void e_focus_idler_before(void);
+
+EAPI int e_focus_event_mouse_in(E_Border* bd);
+EAPI int e_focus_event_mouse_out(E_Border* bd);
+EAPI int e_focus_event_mouse_down(E_Border* bd);
+EAPI int e_focus_event_mouse_up(E_Border* bd);
     
 #endif
 #endif

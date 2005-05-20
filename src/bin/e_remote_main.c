@@ -43,6 +43,8 @@ ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_dec);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec);
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc);
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -240,6 +242,82 @@ _e_opt_binding_key_del(char **params)
    free(data);
 }
 
+static void _e_opt_focus_policy_parse(E_Config_Focus_Policy* policy, char **params)
+{
+   /* M1[|M2...] */
+     {
+	char *p, *pp;
+	
+	policy->focus_policy = 0;
+	pp = params[0];
+	for (;;)
+	  {
+	     p = strchr(pp, '|');
+	     if (p)
+	       {
+		  if (!strncmp(pp, "FOLLOW|", 7))
+		    policy->focus_policy |= E_FOCUS_FOLLOW_MOUSE;
+		  else if (!strncmp(pp, "CLICK|", 6))
+		    policy->focus_policy &= 
+		       ~(E_FOCUS_FOLLOW_MOUSE | E_FOCUS_AUTORAISE);
+		  else if (!strncmp(pp, "AUTORAISE|", 10)) 
+		    policy->focus_policy |= E_FOCUS_AUTORAISE;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT1 option. Must be or mask of:\n"
+			      "  FOLLOW CLICK AUTORAISE\n");
+		       exit(-1);
+		    }
+		  pp = p + 1;
+	       }
+	     else
+	       {
+		  if (!strcmp(pp, "FOLLOW"))
+		    policy->focus_policy |= E_FOCUS_FOLLOW_MOUSE;
+		  else if (!strcmp(pp, "CLICK"))
+		    policy->focus_policy &= 
+		       ~(E_FOCUS_FOLLOW_MOUSE | E_FOCUS_AUTORAISE);
+		  else if (!strcmp(pp, "AUTORAISE")) 
+		    policy->focus_policy |= E_FOCUS_AUTORAISE;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT1 option. Must be or mask of:\n"
+			      "  FOLLOW CLICK AUTORAISE\n");
+		       exit(-1);
+		    }
+		  break;
+	       }
+	  }
+     }
+
+   if(params[1][0] != 0)
+     policy->raise_timer = atoi(params[1]);
+   else if(policy->focus_policy & E_FOCUS_AUTORAISE)
+     {
+	printf("OPT2 option is should be seted, if you use AUTORAISE.\n");
+     }
+
+}
+
+
+static void
+_e_opt_focus_policy_set(char** params)
+{
+   E_Config_Focus_Policy policy;
+   int bytes;
+   char *data;
+
+   _e_opt_focus_policy_parse(&policy, params);
+   data = _e_ipc_focus_policy_enc(&policy, &bytes);
+   ecore_ipc_server_send(_e_ipc_server,
+			 E_IPC_DOMAIN_REQUEST,
+			 E_IPC_OP_FOCUS_POLICY_SET,
+			 0, 0, 0,
+			 data, bytes);
+
+   free(data);
+}
+
 #define SIMPLE_REQ      0
 #define SIMPLE_STR_REQ  1
 #define FULL_FUNC       2
@@ -263,7 +341,7 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
    OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
    OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
-      OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
+   OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
    OREQ("-bg-get", "Get the background edje file", E_IPC_OP_BG_GET, 1),
    OSTR("-font-fallback-remove", "Remove OPT1 from the fontset", E_IPC_OP_FONT_FALLBACK_REMOVE, 0),
    OSTR("-font-fallback-prepend", "Prepend OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_PREPEND, 0),
@@ -293,19 +371,19 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-dirs-remove", "Remove OPT1 from the user module path", E_IPC_OP_MODULE_DIRS_REMOVE, 0),
    OREQ("-data-dirs-list", "List all data directories", E_IPC_OP_DATA_DIRS_LIST, 1),
    OSTR("-data-dirs-append", "Append OPT1 to the user data path", E_IPC_OP_DATA_DIRS_APPEND, 0),
-    OSTR("-data-dirs-prepend", "Prepend OPT1 to the user data path", E_IPC_OP_DATA_DIRS_PREPEND, 0),
+   OSTR("-data-dirs-prepend", "Prepend OPT1 to the user data path", E_IPC_OP_DATA_DIRS_PREPEND, 0),
    OSTR("-data-dirs-remove", "Remove OPT1 from the user data path", E_IPC_OP_DATA_DIRS_REMOVE, 0),
    OREQ("-font-dirs-list", "List all font directories", E_IPC_OP_FONT_DIRS_LIST, 1),
    OSTR("-font-dirs-append", "Append OPT1 to the user font path", E_IPC_OP_FONT_DIRS_APPEND, 0),
-    OSTR("-font-dirs-prepend", "Prepend OPT1 to the user font path", E_IPC_OP_FONT_DIRS_PREPEND, 0),
+   OSTR("-font-dirs-prepend", "Prepend OPT1 to the user font path", E_IPC_OP_FONT_DIRS_PREPEND, 0),
    OSTR("-font-dirs-remove", "Remove OPT1 from the user font path", E_IPC_OP_FONT_DIRS_REMOVE, 0),
    OREQ("-theme-dirs-list", "List all theme directories", E_IPC_OP_THEME_DIRS_LIST, 1),
    OSTR("-theme-dirs-append", "Append OPT1 to the user theme path", E_IPC_OP_THEME_DIRS_APPEND, 0),
-    OSTR("-theme-dirs-prepend", "Prepend OPT1 to the user theme path", E_IPC_OP_THEME_DIRS_PREPEND, 0),
+   OSTR("-theme-dirs-prepend", "Prepend OPT1 to the user theme path", E_IPC_OP_THEME_DIRS_PREPEND, 0),
    OSTR("-theme-dirs-remove", "Remove OPT1 from the user theme path", E_IPC_OP_THEME_DIRS_REMOVE, 0),
    OREQ("-init-dirs-list", "List all init directories", E_IPC_OP_INIT_DIRS_LIST, 1),
    OSTR("-init-dirs-append", "Append OPT1 to the user init path", E_IPC_OP_INIT_DIRS_APPEND, 0),
-    OSTR("-init-dirs-prepend", "Prepend OPT1 to the user init path", E_IPC_OP_INIT_DIRS_PREPEND, 0),
+   OSTR("-init-dirs-prepend", "Prepend OPT1 to the user init path", E_IPC_OP_INIT_DIRS_PREPEND, 0),
    OSTR("-init-dirs-remove", "Remove OPT1 from the user init path", E_IPC_OP_INIT_DIRS_REMOVE, 0),
    OREQ("-icon-dirs-list", "List all icon directories", E_IPC_OP_ICON_DIRS_LIST, 1),
    OSTR("-icon-dirs-append", "Append OPT1 to the user icon path", E_IPC_OP_ICON_DIRS_APPEND, 0),
@@ -315,7 +393,7 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-image-dirs-append", "Append OPT1 to the user image path", E_IPC_OP_IMAGE_DIRS_APPEND, 0),
    OSTR("-image-dirs-prepend", "Prepend OPT1 to the user image path", E_IPC_OP_IMAGE_DIRS_PREPEND, 0),
    OSTR("-image-dirs-remove", "Remove OPT1 from the user image path", E_IPC_OP_IMAGE_DIRS_REMOVE, 0),
-  OREQ("-bg-dirs-list", "List all background directories", E_IPC_OP_BG_DIRS_LIST, 1),
+   OREQ("-bg-dirs-list", "List all background directories", E_IPC_OP_BG_DIRS_LIST, 1),
    OSTR("-bg-dirs-append", "Append OPT1 to the user background path", E_IPC_OP_BG_DIRS_APPEND, 0),
    OSTR("-bg-dirs-prepend", "Prepend OPT1 to the user background path", E_IPC_OP_BG_DIRS_PREPEND, 0),
    OSTR("-bg-dirs-remove", "Remove OPT1 from the user background path", E_IPC_OP_BG_DIRS_REMOVE, 0),
@@ -343,7 +421,11 @@ E_IPC_Opt_Handler handlers[] =
    ODBL("-edge-flip_timeout-set", "Set the edge flip timeout (sec)", E_IPC_OP_EDGE_FLIP_TIMEOUT_SET, 0),
    OREQ("-edge-flip_timeout-get", "Get the edge flip timeout", E_IPC_OP_EDGE_FLIP_TIMEOUT_GET, 1),
    O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
-   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1)
+   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
+   O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
+   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
+   OFNC("-focus-policy-set", "Set focus policy. OPT1 = Policy. OPT2 = Raise Time.", 2, _e_opt_focus_policy_set, 0),
+   OREQ("-focus-policy-get", "Get focus policy.", E_IPC_OP_FOCUS_POLICY_GET, 1)
 };
 
 /* externally accessible functions */
@@ -1027,6 +1109,16 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       printf("REPLY: %i %i\n", val1, val2);
 	  }
 	break;
+      case E_IPC_OP_FOCUS_POLICY_GET_REPLY:
+	if(e->data)
+	  {
+	     E_Config_Focus_Policy policy;
+
+	     if(_e_ipc_focus_policy_dec(e->data, e->size, &policy))
+	       printf("REPLY: %i %i\n", policy.focus_policy, policy.raise_timer);
+	  }
+	break;
+	
       default:
 	break;
      }
@@ -1282,4 +1374,23 @@ ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec)
    ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Path_Dir);
    ECORE_IPC_GETS(dir);
    ECORE_IPC_DEC_EVAS_LIST_FOOT();
+}
+
+ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_focus_policy_enc)
+{
+   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Focus_Policy,
+	 1 + 4);
+   ECORE_IPC_PUT8(focus_policy);
+   ECORE_IPC_PUT32(raise_timer);
+   ECORE_IPC_ENC_STRUCT_FOOT();
+}
+
+ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_focus_policy_dec)
+{
+   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Focus_Policy,
+	 1 + 4);
+   ECORE_IPC_CHEKS();
+   ECORE_IPC_GET8(focus_policy);
+   ECORE_IPC_GET32(raise_timer);
+   ECORE_IPC_DEC_STRUCT_FOOT();
 }

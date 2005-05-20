@@ -36,6 +36,7 @@ typedef struct _E_Config_Module         E_Config_Module;
 typedef struct _E_Config_Theme          E_Config_Theme;
 typedef struct _E_Config_Binding_Mouse  E_Config_Binding_Mouse;
 typedef struct _E_Config_Binding_Key    E_Config_Binding_Key;
+typedef struct _E_Config_Focus_Policy   E_Config_Focus_Policy;
 typedef Eet_Data_Descriptor             E_Config_DD;
 
 #else
@@ -93,7 +94,9 @@ struct _E_Config
    Evas_List  *path_append_icons;
    Evas_List  *path_append_modules;
    Evas_List  *path_append_backgrounds;
-
+   E_Focus_Policy focus_policy;
+   int            raise_timer;
+   
 };
 
 struct _E_Config_Module
@@ -127,6 +130,14 @@ struct _E_Config_Binding_Key
    char          *params;
    unsigned char  any_mod;
 };
+
+struct _E_Config_Focus_Policy
+{
+   E_Focus_Policy focus_policy;
+   int		  raise_timer;
+};
+
+
 
 EAPI int e_config_init(void);
 EAPI int e_config_shutdown(void);

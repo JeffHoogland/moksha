@@ -149,6 +149,11 @@ typedef enum _E_Ipc_Op
    E_IPC_OP_DESKS_SET,
    E_IPC_OP_DESKS_GET,
    E_IPC_OP_DESKS_GET_REPLY,
+     
+   E_IPC_OP_FOCUS_POLICY_SET,
+   E_IPC_OP_FOCUS_POLICY_GET,
+   E_IPC_OP_FOCUS_POLICY_GET_REPLY,
+     
    E_IPC_OP_LAST
      /* FIXME: add ipc: */
      /* get list of actions */

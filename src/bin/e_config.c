@@ -200,6 +200,8 @@ e_config_init(void)
 	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
+	e_config->focus_policy = E_FOCUS_FOLLOW_MOUSE;
+	e_config->raise_timer = 0;
 	  {
 	     E_Config_Module *em;
 

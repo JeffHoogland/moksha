@@ -55,6 +55,9 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* for click to focus - grab the mouse on all new windows, ungrab on focus, grab again on unfocus
+* move all ipc codecs to use eet
+* make raise_timer a on/off flag and add a double for delay
 * on restart e always goes back to desktop 0,0 - it shoudl go to the desktop
   it was last on (per zone, per container, per manager).
 * start module needs to have an way to alert users to "click here" and back

@@ -26,6 +26,13 @@ typedef enum _E_Stacking
    E_STACKING_BELOW
 } E_Stacking;
 
+typedef enum _E_Focus_Policy
+{
+   E_FOCUS_FOLLOW_MOUSE = 1 << 0,
+   E_FOCUS_AUTORAISE = 1 << 1
+} E_Focus_Policy;
+
+
 typedef struct _E_Border                     E_Border;
 typedef struct _E_Border_Pending_Move_Resize E_Border_Pending_Move_Resize;
 typedef struct _E_Event_Border_Resize        E_Event_Border_Resize;
@@ -229,6 +236,7 @@ struct _E_Border
 
    unsigned int layer;
    E_Action *cur_mouse_action;
+   Ecore_Timer *raise_timer;
 };
 
 struct _E_Border_Pending_Move_Resize 
