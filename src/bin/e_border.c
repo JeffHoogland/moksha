@@ -1379,6 +1379,7 @@ e_border_button_bindings_ungrab_all(void)
 	E_Border *bd;
 	
 	bd = l->data;
+	e_focus_setdown(bd);
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
      }
 }
@@ -1394,6 +1395,7 @@ e_border_button_bindings_grab_all(void)
 	
 	bd = l->data;
 	e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_focus_setup(bd);
      }
 }
 
@@ -2448,8 +2450,7 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
 						  E_OBJECT(bd), ev);
 	  }
-	if (!bd->cur_mouse_action)
-	  e_focus_event_mouse_down(bd);
+	e_focus_event_mouse_down(bd);
      }
    if (ev->win != bd->event_win) return 1;
    if ((ev->button >= 1) && (ev->button <= 3))
@@ -2504,6 +2505,7 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	/* ... VERY unlikely though... VERY */
 	/* also we dont pass the same params that went in - then again that */
 	/* should be ok as we are just ending the action if it has an end */
+	printf("mouse up after grab!\n");
 	if (bd->cur_mouse_action)
 	  {
 	     if (bd->cur_mouse_action->func.end_mouse)
@@ -2655,17 +2657,25 @@ _e_border_cb_mouse_wheel(void *data, int type, void *event)
 
 static int
 _e_border_cb_grab_replay(void *data, int type, void *event)
-{
-   if (type == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
+{ 
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   if (type != ECORE_X_EVENT_MOUSE_BUTTON_DOWN) return 0;
+   
+   ev = event;
+   if ((e_config->pass_click_on) || (e_config->always_click_to_raise))
      {
-	Ecore_X_Event_Mouse_Button_Down *e;
-
-	e = event;
-	if ((e_config->pass_click_on) ||
-	    (e_config->always_click_to_raise))
+	E_Border *bd;
+	
+	bd = e_border_find_by_window(ev->event_win);
+	if (bd)
 	  {
-	     printf("ALLOW PRESS\n");
-	     return 1;
+	     if (bd->cur_mouse_action) return 0;
+	     if (ev->event_win == bd->win)
+	       {
+		  if (!e_bindings_mouse_down_find(E_BINDING_CONTEXT_BORDER,
+						  E_OBJECT(bd), ev, NULL))
+		    return 1;
+	       }
 	  }
      }
    return 0;

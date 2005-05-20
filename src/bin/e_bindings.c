@@ -4,38 +4,6 @@
 #include "e.h"
 
 /* local subsystem functions */
-typedef struct _E_Binding_Mouse  E_Binding_Mouse;
-typedef struct _E_Binding_Key    E_Binding_Key;
-typedef struct _E_Binding_Signal E_Binding_Signal;
-
-struct _E_Binding_Mouse
-{
-   E_Binding_Context ctxt;
-   int button;
-   E_Binding_Modifier mod;
-   unsigned char any_mod : 1;
-   char *action;
-   char *params;
-};
-
-struct _E_Binding_Key
-{
-   E_Binding_Context ctxt;
-   char *key;
-   E_Binding_Modifier mod;
-   unsigned char any_mod : 1;
-   char *action;
-   char *params;
-};
-
-struct _E_Binding_Signal
-{
-   E_Binding_Context ctxt;
-   char *sig;
-   char *src;
-   char *action;
-   char *params;
-};
 
 static void _e_bindings_mouse_free(E_Binding_Mouse *bind);
 static void _e_bindings_key_free(E_Binding_Key *bind);
@@ -195,7 +163,7 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 }
 
 E_Action *
-e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
+e_bindings_mouse_down_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev, E_Binding_Mouse **bind_ret)
 {
    E_Binding_Modifier mod = 0;
    Evas_List *l;
@@ -217,15 +185,57 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 		  E_Action *act;
 		  
 		  act = e_action_find(bind->action);
-		  if (act)
-		    {
-		       if (act->func.go_mouse)
-			 act->func.go_mouse(obj, bind->params, ev);
-		       else if (act->func.go)
-			 act->func.go(obj, bind->params);
-		       return act;
-		    }
-		  return NULL;
+		  if (bind_ret) *bind_ret = bind;
+		  return act;
+	       }
+	  }
+     }
+   return NULL;
+}
+
+E_Action *
+e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Down *ev)
+{
+   E_Action *act;
+   E_Binding_Mouse *bind;
+   
+   act = e_bindings_mouse_down_find(ctxt, obj, ev, &bind);
+   if (act)
+     {
+	if (act->func.go_mouse)
+	  act->func.go_mouse(obj, bind->params, ev);
+	else if (act->func.go)
+	  act->func.go(obj, bind->params);
+	return act;
+     }
+   return act;
+}
+
+E_Action *
+e_bindings_mouse_up_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev, E_Binding_Mouse **bind_ret)
+{
+   E_Binding_Modifier mod = 0;
+   Evas_List *l;
+   
+   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
+   for (l = mouse_bindings; l; l = l->next)
+     {
+	E_Binding_Mouse *bind;
+	
+	bind = l->data;
+	if ((bind->button == ev->button) &&
+	    ((bind->any_mod) || (bind->mod == mod)))
+	  {
+	     if (_e_bindings_context_match(bind->ctxt, ctxt))
+	       {
+		  E_Action *act;
+		  
+		  act = e_action_find(bind->action);
+		  if (bind_ret) *bind_ret = bind;
+		  return act;
 	       }
 	  }
      }
@@ -235,39 +245,19 @@ e_bindings_mouse_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_
 E_Action *
 e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Button_Up *ev)
 {
-   E_Binding_Modifier mod = 0;
-   Evas_List *l;
+   E_Action *act;
+   E_Binding_Mouse *bind;
    
-   if (ev->modifiers & ECORE_X_MODIFIER_SHIFT) mod |= E_BINDING_MODIFIER_SHIFT;
-   if (ev->modifiers & ECORE_X_MODIFIER_CTRL) mod |= E_BINDING_MODIFIER_CTRL;
-   if (ev->modifiers & ECORE_X_MODIFIER_ALT) mod |= E_BINDING_MODIFIER_ALT;
-   if (ev->modifiers & ECORE_X_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
-   for (l = mouse_bindings; l; l = l->next)
+   act = e_bindings_mouse_up_find(ctxt, obj, ev, &bind);
+   if (act)
      {
-	E_Binding_Mouse *bind;
-	
-	bind = l->data;
-	if ((bind->button == ev->button) &&
-	    ((bind->any_mod) || (bind->mod == mod)))
-	  {
-	     if (_e_bindings_context_match(bind->ctxt, ctxt))
-	       {
-		  E_Action *act;
-		  
-		  act = e_action_find(bind->action);
-		  if (act)
-		    {
-		       if (act->func.end_mouse)
-			 act->func.end_mouse(obj, bind->params, ev);
-		       else if (act->func.end)
-			 act->func.end(obj, bind->params);
-		       return act;
-		    }
-		  return NULL;
-	       }
-	  }
+	if (act->func.end_mouse)
+	  act->func.end_mouse(obj, bind->params, ev);
+	else if (act->func.end)
+	  act->func.end(obj, bind->params);
+	return act;
      }
-   return NULL;
+   return act;
 }
 
 /* FIXME: finish off key bindings */

@@ -88,6 +88,7 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 	evas_object_move(o, x, y);
 	evas_object_resize(o, w, h);
 	evas_object_color_set(o, 255, 255, 255, 255);
+	evas_object_repeat_events_set(o, 1);
 	evas_object_show(o);
 	
 	o = edje_object_add(con->bg_evas);

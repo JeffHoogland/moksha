@@ -100,6 +100,7 @@ struct _E_Config
    double      auto_raise_delay;
 };
 
+/* FIXME: all of thsie needs to become eet lumps for enmcode/decode */
 struct _E_Config_Module
 {
    char          *name;

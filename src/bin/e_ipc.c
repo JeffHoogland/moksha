@@ -736,12 +736,13 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			       E_IPC_OP_DESKS_GET_REPLY);
 	break;
       case E_IPC_OP_FOCUS_POLICY_SET:
+	e_border_button_bindings_ungrab_all();
 	if (e_ipc_codec_int_dec(e->data, e->size,
 				&(e_config->focus_policy)))
 	  {
-	     /* FIXME: if going to/from click to focus grab/ungrab */
 	     e_config_save_queue();
 	  }
+	e_border_button_bindings_grab_all();
 	break;
       case E_IPC_OP_FOCUS_POLICY_GET:
 	_e_ipc_reply_int_send(e->client,

@@ -207,7 +207,7 @@ e_config_init(void)
 	e_config->language = strdup("");
 	e_config->focus_policy = E_FOCUS_MOUSE;
 	e_config->pass_click_on = 1;
-	e_config->always_click_to_raise = 1;
+	e_config->always_click_to_raise = 0;
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
 	  {
@@ -670,7 +670,6 @@ e_config_init(void)
 	e_config_save_queue();
      }
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
-   e_config->focus_policy = E_FOCUS_MOUSE;
 
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
