@@ -26,7 +26,6 @@ static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *m
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
-static E_Path    *_e_path_modules  = NULL;
 
 static E_Module_Api _e_module_api =
 {
@@ -38,12 +37,6 @@ int
 e_module_init(void)
 {
    Evas_List *pl = NULL, *l;
-   
-   _e_path_modules = e_path_new();
-   if (!_e_path_modules) return 0;
-   e_path_path_append(_e_path_modules, "~/.e/e/modules");
-   e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
-   e_path_path_append(_e_path_modules, PACKAGE_LIB_DIR"/enlightenment/modules_extra");
    
    for (l = e_config->modules; l;)
      {
@@ -80,8 +73,6 @@ e_module_shutdown(void)
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
      }
-   e_object_del(E_OBJECT(_e_path_modules));
-   _e_path_modules = NULL;
    return 1;
 }
 
@@ -100,7 +91,7 @@ e_module_new(char *name)
    if (name[0] != '/')
      {
 	snprintf(buf, sizeof(buf), "%s/%s/module.so", name, MODULE_ARCH);
-	modpath = e_path_find(_e_path_modules, buf);
+	modpath = e_path_find(path_modules, buf);
      }
    else
      modpath = name;

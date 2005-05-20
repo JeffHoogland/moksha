@@ -42,6 +42,7 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec);
 ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_dec);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -262,10 +263,8 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-module-enable", "Enable module OPT1 if not enabled", E_IPC_OP_MODULE_ENABLE, 0),
    OSTR("-module-disable", "Disable module OPT1 if not disabled", E_IPC_OP_MODULE_DISABLE, 0),
    OREQ("-module-list", "List all loaded modules and their states", E_IPC_OP_MODULE_LIST, 1),
-   OREQ("-module-dirs-list", "List all modules directories", E_IPC_OP_MODULE_DIRS_LIST, 1),
-   OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
+      OSTR("-bg-set", "Set the background edje file to be OPT1", E_IPC_OP_BG_SET, 0),
    OREQ("-bg-get", "Get the background edje file", E_IPC_OP_BG_GET, 1),
-   OREQ("-bg-dirs-list", "Get the background directories", E_IPC_OP_BG_DIRS_LIST, 1),
    OSTR("-font-fallback-remove", "Remove OPT1 from the fontset", E_IPC_OP_FONT_FALLBACK_REMOVE, 0),
    OSTR("-font-fallback-prepend", "Prepend OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_PREPEND, 0),
    OSTR("-font-fallback-append", "Append OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_APPEND, 0),
@@ -287,6 +286,39 @@ E_IPC_Opt_Handler handlers[] =
    OFNC("-binding-mouse-del", "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_del, 0),
    OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1),
    OFNC("-binding-key-add", "Add an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_add, 0),
+   OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
+   OREQ("-module-dirs-list", "List all module directories", E_IPC_OP_MODULE_DIRS_LIST, 1),
+   OSTR("-module-dirs-append", "Append OPT1 to the user module path", E_IPC_OP_MODULE_DIRS_APPEND, 0),
+   OSTR("-module-dirs-prepend", "Prepend OPT1 to the user module path", E_IPC_OP_MODULE_DIRS_PREPEND, 0),
+   OSTR("-module-dirs-remove", "Remove OPT1 from the user module path", E_IPC_OP_MODULE_DIRS_REMOVE, 0),
+   OREQ("-data-dirs-list", "List all data directories", E_IPC_OP_DATA_DIRS_LIST, 1),
+   OSTR("-data-dirs-append", "Append OPT1 to the user data path", E_IPC_OP_DATA_DIRS_APPEND, 0),
+    OSTR("-data-dirs-prepend", "Prepend OPT1 to the user data path", E_IPC_OP_DATA_DIRS_PREPEND, 0),
+   OSTR("-data-dirs-remove", "Remove OPT1 from the user data path", E_IPC_OP_DATA_DIRS_REMOVE, 0),
+   OREQ("-font-dirs-list", "List all font directories", E_IPC_OP_FONT_DIRS_LIST, 1),
+   OSTR("-font-dirs-append", "Append OPT1 to the user font path", E_IPC_OP_FONT_DIRS_APPEND, 0),
+    OSTR("-font-dirs-prepend", "Prepend OPT1 to the user font path", E_IPC_OP_FONT_DIRS_PREPEND, 0),
+   OSTR("-font-dirs-remove", "Remove OPT1 from the user font path", E_IPC_OP_FONT_DIRS_REMOVE, 0),
+   OREQ("-theme-dirs-list", "List all theme directories", E_IPC_OP_THEME_DIRS_LIST, 1),
+   OSTR("-theme-dirs-append", "Append OPT1 to the user theme path", E_IPC_OP_THEME_DIRS_APPEND, 0),
+    OSTR("-theme-dirs-prepend", "Prepend OPT1 to the user theme path", E_IPC_OP_THEME_DIRS_PREPEND, 0),
+   OSTR("-theme-dirs-remove", "Remove OPT1 from the user theme path", E_IPC_OP_THEME_DIRS_REMOVE, 0),
+   OREQ("-init-dirs-list", "List all init directories", E_IPC_OP_INIT_DIRS_LIST, 1),
+   OSTR("-init-dirs-append", "Append OPT1 to the user init path", E_IPC_OP_INIT_DIRS_APPEND, 0),
+    OSTR("-init-dirs-prepend", "Prepend OPT1 to the user init path", E_IPC_OP_INIT_DIRS_PREPEND, 0),
+   OSTR("-init-dirs-remove", "Remove OPT1 from the user init path", E_IPC_OP_INIT_DIRS_REMOVE, 0),
+   OREQ("-icon-dirs-list", "List all icon directories", E_IPC_OP_ICON_DIRS_LIST, 1),
+   OSTR("-icon-dirs-append", "Append OPT1 to the user icon path", E_IPC_OP_ICON_DIRS_APPEND, 0),
+   OSTR("-icon-dirs-prepend", "Prepend OPT1 to the user icon path", E_IPC_OP_ICON_DIRS_PREPEND, 0),
+   OSTR("-icon-dirs-remove", "Remove OPT1 from the user icon path", E_IPC_OP_ICON_DIRS_REMOVE, 0),
+   OREQ("-image-dirs-list", "List all image directories", E_IPC_OP_IMAGE_DIRS_LIST, 1),
+   OSTR("-image-dirs-append", "Append OPT1 to the user image path", E_IPC_OP_IMAGE_DIRS_APPEND, 0),
+   OSTR("-image-dirs-prepend", "Prepend OPT1 to the user image path", E_IPC_OP_IMAGE_DIRS_PREPEND, 0),
+   OSTR("-image-dirs-remove", "Remove OPT1 from the user image path", E_IPC_OP_IMAGE_DIRS_REMOVE, 0),
+  OREQ("-bg-dirs-list", "List all background directories", E_IPC_OP_BG_DIRS_LIST, 1),
+   OSTR("-bg-dirs-append", "Append OPT1 to the user background path", E_IPC_OP_BG_DIRS_APPEND, 0),
+   OSTR("-bg-dirs-prepend", "Prepend OPT1 to the user background path", E_IPC_OP_BG_DIRS_PREPEND, 0),
+   OSTR("-bg-dirs-remove", "Remove OPT1 from the user background path", E_IPC_OP_BG_DIRS_REMOVE, 0),
    OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
    ODBL("-menus-scroll-speed-set", "Set the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_SET, 0),
    OREQ("-menus-scroll-speed-get", "Get the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_GET, 1),
@@ -600,7 +632,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     E_Module *m;
 	     
 	     modules = _e_ipc_module_list_dec(e->data, e->size);	     
-	     while(modules)
+	     while (modules)
 	       {
 	     	   m = modules->data;
 	     	   printf("REPLY: MODULE NAME=\"%s\" ENABLED=%i\n",
@@ -612,42 +644,10 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	else
 	  printf("REPLY: MODULE NONE\n");
 	break;
-      case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
-	if (e->data)
-	  {
-	     char *p;
-
-	     p = e->data;
-	     while (p < (char *)(e->data + e->size))
-	       {
-		  char *dir;
-		  
-		  dir = p;
-		  printf("REPLY: MODULE DIR=%s\n", dir);
-		  p += strlen(dir) + 1;
-	       }
-	  }
-	break;
       case E_IPC_OP_BG_GET_REPLY:
 	if (e->data)
 	  {
 	     printf("REPLY: %s\n", (char *)e->data);
-	  }
-	break;
-      case E_IPC_OP_BG_DIRS_LIST_REPLY:
-	if (e->data)
-	  {	
-	     char *p;
-	     
-	     p = e->data;
-	     while (p < (char *)(e->data + e->size))
-	       {
-		  char *dir;
-		  
-		  dir = p;
-		  printf("REPLY: BG DIR=%s\n", dir);
-		  p += strlen(dir) + 1;
-	       }
 	  }
 	break;
       case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
@@ -790,6 +790,134 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
         else
           printf("REPLY: AVAILABLE NONE\n"); 
         break;   
+      case E_IPC_OP_DATA_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: DATA DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_IMAGE_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: IMAGE DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_FONT_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: FONT DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_THEME_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: THEME DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_INIT_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: INIT DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_ICON_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: ICON DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: MODULE DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
+      case E_IPC_OP_BG_DIRS_LIST_REPLY:
+	if (e->data)
+	  {
+	     Evas_List *dirs;
+	     E_Path_Dir *dir;
+
+	     dirs = _e_ipc_path_list_dec(e->data, e->size);
+	     while (dirs)
+	       {
+		  dir = dirs->data;
+		  printf("REPLY: BACKGROUND DIR=\"%s\"\n", dir->dir);
+		  dirs = evas_list_remove_list(dirs, dirs);
+		  E_FREE(dir);
+	       }
+	  }
+	break;
       case E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY:
 	if (e->data)
 	  {
@@ -1148,4 +1276,10 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec)
    ECORE_IPC_GETS(params);
    ECORE_IPC_GET8(any_mod);
    ECORE_IPC_DEC_STRUCT_FOOT();
+}
+ECORE_IPC_DEC_EVAS_LIST_PROTO(_e_ipc_path_list_dec)
+{
+   ECORE_IPC_DEC_EVAS_LIST_HEAD(E_Path_Dir);
+   ECORE_IPC_GETS(dir);
+   ECORE_IPC_DEC_EVAS_LIST_FOOT();
 }

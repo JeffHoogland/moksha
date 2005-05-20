@@ -7,7 +7,6 @@ static int _e_ipc_cb_client_data(void *data, int type, void *event);
 static void _e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode);
 static void _e_ipc_reply_int_send(Ecore_Ipc_Client *client, int val, int opcode);
 static void _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode);
-static char *_e_ipc_path_str_get(char **paths, int *bytes);
 static char *_e_ipc_str_list_get(Evas_List *strs, int *bytes);
 static char *_e_ipc_simple_str_dec(char *data, int bytes);
 static char **_e_ipc_multi_str_dec(char *data, int bytes, int str_count);
@@ -27,6 +26,7 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec);
 ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc);
 ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
 ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -179,26 +179,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 				   data, bytes);
 	     free(data);
 	  }
-	break;
-      case E_IPC_OP_MODULE_DIRS_LIST:
-	  {
-	     char *dirs[] = {
-		PACKAGE_LIB_DIR"/enlightenment/modules",
-		PACKAGE_LIB_DIR"/enlightenment/modules_extra",
-		"~/.e/e/modules",
-		NULL
-	     };
-	     char *data;
-	     int bytes = 0;
-
-	     data = _e_ipc_path_str_get(dirs, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_MODULE_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
- 	  }
 	break;
       case E_IPC_OP_BG_SET:
 	  {
@@ -389,26 +369,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     free(data);
 
 	  }
-	break;
-      case E_IPC_OP_BG_DIRS_LIST:
-	  {
-	     char *dirs[] = {
-		PACKAGE_DATA_DIR"/data/themes",
-		"~/.e/e/backgrounds",
-		"~/.e/e/themes",
-		NULL
-	     };
-	     char *data;
-	     int bytes = 0;
-
-	     data = _e_ipc_path_str_get(dirs, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_BG_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
- 	  }
 	break;
       case E_IPC_OP_RESTART:
 	  {
@@ -775,6 +735,431 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			       e_config->zone_desks_y_count,
 			       E_IPC_OP_DESKS_GET_REPLY);
 	break;
+
+      /* Module PATH IPC */
+      case E_IPC_OP_MODULE_DIRS_LIST:
+	  {
+	     Evas_List *dir_list;
+	     char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_modules);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_MODULE_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_MODULE_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_modules, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_MODULE_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_modules, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_MODULE_DIRS_REMOVE:
+          {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_modules, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Theme PATH IPC */
+      case E_IPC_OP_THEME_DIRS_LIST:
+	  {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_themes);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_THEME_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_THEME_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_themes, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_THEME_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_themes, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_THEME_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_themes, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Font Path IPC */
+      case E_IPC_OP_FONT_DIRS_LIST:
+          {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_fonts);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_FONT_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_FONT_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_fonts, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_FONT_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_fonts, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_FONT_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_fonts, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+   
+      /* data Path IPC */
+      case E_IPC_OP_DATA_DIRS_LIST:
+	  {
+             Evas_List *dir_list;
+	     char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_data);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_DATA_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_DATA_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_data, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_DATA_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_data, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_DATA_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_data, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Images Path IPC */
+      case E_IPC_OP_IMAGE_DIRS_LIST:
+   	  {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_images);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_IMAGE_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_IMAGE_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_images, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+     case E_IPC_OP_IMAGE_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_images, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_IMAGE_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_images, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Init Path IPC */
+      case E_IPC_OP_INIT_DIRS_LIST:
+   	  {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_init);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_INIT_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_INIT_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_init, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue();
+	     break;
+	  }
+      case E_IPC_OP_INIT_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_init, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue();
+	     break;
+	  }
+      case E_IPC_OP_INIT_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_init, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Icon Path IPC */
+      case E_IPC_OP_ICON_DIRS_LIST:
+	  {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_icons);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_ICON_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_ICON_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_icons, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_ICON_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_icons, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_ICON_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_icons, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
+      /* Icon Path IPC */
+      case E_IPC_OP_BG_DIRS_LIST:
+	  {
+	     Evas_List *dir_list;
+             char *data;
+	     int bytes = 0;
+
+	     dir_list = e_path_dir_list_get(path_backgrounds);
+	     data = _e_ipc_path_list_enc(dir_list, &bytes);
+	     ecore_ipc_client_send(e->client,
+				   E_IPC_DOMAIN_REPLY,
+				   E_IPC_OP_BG_DIRS_LIST_REPLY,
+				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
+				   data, bytes);
+
+	     e_path_dir_list_free(dir_list);
+	     free(data);
+	     break;
+	  }
+      case E_IPC_OP_BG_DIRS_APPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_append(path_backgrounds, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_BG_DIRS_PREPEND:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_prepend(path_backgrounds, dir);
+	     
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+      case E_IPC_OP_BG_DIRS_REMOVE:
+	  {	  
+	     char * dir;
+	     
+	     dir = _e_ipc_simple_str_dec(e->data, e->size);
+	     e_path_user_path_remove(path_backgrounds, dir);
+
+	     free(dir);	   
+	     e_config_save_queue(); 
+	     break;
+	  }
+
       default:
 	break;
      }
@@ -836,39 +1221,6 @@ _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode)
 			      data, bytes);
 	free(data);
      }
-}
-
-/*
- * FIXME: This dosen't handle the case where one of the paths is of the
- *        form: ~moo/bar/baz need to figure out the correct path to the 
- *        specified users homedir
- */
-static char *
-_e_ipc_path_str_get(char **paths, int *bytes)
-{
-   char *data = NULL, **cur, *home;
-   int pos = 0;
-   char tmp[PATH_MAX];
-   
-   *bytes = 0;
-   home = e_user_homedir_get();
-   for (cur = paths; *cur != NULL; cur++)
-     {
-	char *p;
-
-	p = *cur;
-	if (*p == '~') snprintf(tmp, PATH_MAX, "%s%s", home, ++p);
-	else snprintf(tmp, PATH_MAX, "%s", p);
-
-	*bytes += strlen(tmp) + 1;
-	data = realloc(data, *bytes);
-
-	memcpy(data + pos, tmp, strlen(tmp));
-	pos = *bytes;
-	data[pos - 1] = 0;
-     }
-   free(home);
-   return data;
 }
 
 /**
@@ -1126,3 +1478,13 @@ ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec)
    ECORE_IPC_DEC_STRUCT_FOOT();
 }
 
+ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc)
+{
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Path_Dir);
+   ECORE_IPC_CNTS(dir);
+   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
+   int l1;
+   ECORE_IPC_SLEN(l1, dir);
+   ECORE_IPC_PUTS(dir, l1);
+   ECORE_IPC_ENC_EVAS_LIST_FOOT();
+}

@@ -33,6 +33,8 @@ E_Path *path_fonts   = NULL;
 E_Path *path_themes  = NULL;
 E_Path *path_init    = NULL;
 E_Path *path_icons   = NULL;
+E_Path *path_modules = NULL;
+E_Path *path_backgrounds = NULL;
 int     restart      = 0;
 int     good         = 0;
 int     evil         = 0;
@@ -284,6 +286,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_dirs_shutdown);
+   /* init config system */
+   if (!e_config_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its config system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_config_shutdown);
    /* setup paths for finding things */
    if (!_e_main_path_init())
      {
@@ -292,13 +301,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_path_shutdown);
-   /* init config system */
-   if (!e_config_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its config system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_config_shutdown);
    /* init actions system */
    if (!e_actions_init())
      {
@@ -683,53 +685,93 @@ _e_main_screens_shutdown(void)
 static int
 _e_main_path_init(void)
 {
+   /* setup data paths */
    path_data = e_path_new();
    if (!path_data)
      {
 	e_error_message_show("Cannot allocate path for path_data\n");
 	return 0;
      }
-   e_path_path_append(path_data, PACKAGE_DATA_DIR"/data");
+   e_path_default_path_append(path_data, PACKAGE_DATA_DIR"/data");
+   e_path_user_path_set(path_data, &(e_config->path_append_data));
+
+   /* setup image paths */
    path_images = e_path_new();
    if (!path_images)
      {
 	e_error_message_show("Cannot allocate path for path_images\n");
 	return 0;
      }
-   e_path_path_append(path_images, "~/.e/e/images");
-   e_path_path_append(path_images, PACKAGE_DATA_DIR"/data/images");
+   e_path_default_path_append(path_images, "~/.e/e/images");
+   e_path_default_path_append(path_images, PACKAGE_DATA_DIR"/data/images");
+   e_path_user_path_set(path_images, &(e_config->path_append_images));
+   
+   /* setup font paths */
    path_fonts = e_path_new();
    if (!path_fonts)
      {
 	e_error_message_show("Cannot allocate path for path_fonts\n");
 	return 0;
      }
-   e_path_path_append(path_fonts, "~/.e/e/fonts");
-   e_path_path_append(path_fonts, PACKAGE_DATA_DIR"/data/fonts");
+   e_path_default_path_append(path_fonts, "~/.e/e/fonts");
+   e_path_default_path_append(path_fonts, PACKAGE_DATA_DIR"/data/fonts");
+   e_path_user_path_set(path_fonts, &(e_config->path_append_fonts));
+
+   /* setup theme paths */
    path_themes = e_path_new();
    if (!path_themes)
      {
 	e_error_message_show("Cannot allocate path for path_themes\n");
 	return 0;
      }
-   e_path_path_append(path_themes, "~/.e/e/themes");
-   e_path_path_append(path_themes, PACKAGE_DATA_DIR"/data/themes");
+   e_path_default_path_append(path_themes, "~/.e/e/themes");
+   e_path_default_path_append(path_themes, PACKAGE_DATA_DIR"/data/themes");
+   e_path_user_path_set(path_themes, &(e_config->path_append_themes));
+
+   /* setup icon paths */
    path_icons = e_path_new();
    if (!path_icons)
      {
 	e_error_message_show("Cannot allocate path for path_icons\n");
 	return 0;
      }
-   e_path_path_append(path_icons, "~/.e/e/icons");
-   e_path_path_append(path_icons, PACKAGE_DATA_DIR"/data/icons");
+   e_path_default_path_append(path_icons, "~/.e/e/icons");
+   e_path_default_path_append(path_icons, PACKAGE_DATA_DIR"/data/icons");
+   e_path_user_path_set(path_icons, &(e_config->path_append_icons));
+
+   /* setup init paths */
    path_init = e_path_new();
    if (!path_init)
      {
 	e_error_message_show("Cannot allocate path for path_init\n");
 	return 0;
      }
-   e_path_path_append(path_init, "~/.e/e/init");
-   e_path_path_append(path_init, PACKAGE_DATA_DIR"/data/init");
+   e_path_default_path_append(path_init, "~/.e/e/init");
+   e_path_default_path_append(path_init, PACKAGE_DATA_DIR"/data/init");
+   e_path_user_path_set(path_init, &(e_config->path_append_init));
+
+   /* setup module paths */
+   path_modules = e_path_new();
+   if (!path_modules) 
+     {
+	e_error_message_show("Cannot allocate path for path_modules\n");
+	return 0;
+     }
+   e_path_default_path_append(path_modules, "~/.e/e/modules");
+   e_path_default_path_append(path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
+   e_path_default_path_append(path_modules, PACKAGE_LIB_DIR"/enlightenment/modules_extra");
+   e_path_user_path_set(path_modules, &(e_config->path_append_modules));    
+
+   /* setup background paths */
+   path_backgrounds = e_path_new();
+   if (!path_backgrounds) 
+     {
+	e_error_message_show("Cannot allocate path for path_backgrounds\n");
+	return 0;
+     }
+   e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
+   e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
+
    return 1;
 }
 
@@ -765,6 +807,16 @@ _e_main_path_shutdown(void)
      {
 	e_object_del(E_OBJECT(path_init));
 	path_init = NULL;
+     }
+   if (path_modules)
+     {
+        e_object_del(E_OBJECT(path_modules));
+        path_modules = NULL;
+     }
+   if (path_backgrounds)
+     {
+	e_object_del(E_OBJECT(path_backgrounds));
+        path_backgrounds = NULL;
      }
    return 1;
 }

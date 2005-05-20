@@ -31,11 +31,19 @@ static E_Config_DD *_e_config_font_default_edd = NULL;
 static E_Config_DD *_e_config_theme_edd = NULL;
 static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
+static E_Config_DD *_e_config_path_append_edd = NULL;
 
 /* externally accessible functions */
 int
 e_config_init(void)
 {
+   _e_config_path_append_edd = E_CONFIG_DD_NEW("E_Path_Dir", E_Path_Dir);
+#undef T
+#undef D
+#define T E_Path_Dir
+#define D _e_config_path_append_edd
+   E_CONFIG_VAL(D, T, dir, STR);
+
    _e_config_theme_edd = E_CONFIG_DD_NEW("E_Config_Theme", E_Config_Theme);
 #undef T
 #undef D
@@ -123,6 +131,14 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, themes, _e_config_theme_edd); /**/
    E_CONFIG_LIST(D, T, mouse_bindings, _e_config_bindings_mouse_edd); /**/
    E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_data, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_images, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_fonts, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_themes, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_init, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_icons, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_modules, _e_config_path_append_edd); /**/
+   E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -866,7 +882,71 @@ _e_config_free(void)
 	     E_FREE(eb->params);
 	     E_FREE(eb);
 	  }
-	
+	while (e_config->path_append_data)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_data->data;
+	     e_config->path_append_data = evas_list_remove_list(e_config->path_append_data, e_config->path_append_data);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_images)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_images->data;
+	     e_config->path_append_images = evas_list_remove_list(e_config->path_append_images, e_config->path_append_images);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_fonts)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_fonts->data;
+	     e_config->path_append_fonts = evas_list_remove_list(e_config->path_append_fonts, e_config->path_append_fonts);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_themes)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_themes->data;
+	     e_config->path_append_themes = evas_list_remove_list(e_config->path_append_themes, e_config->path_append_themes);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_init)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_init->data;
+	     e_config->path_append_init = evas_list_remove_list(e_config->path_append_init, e_config->path_append_init);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_icons)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_icons->data;
+	     e_config->path_append_icons = evas_list_remove_list(e_config->path_append_icons, e_config->path_append_icons);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_modules)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_modules->data;
+	     e_config->path_append_modules = evas_list_remove_list(e_config->path_append_modules, e_config->path_append_modules);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_backgrounds)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_backgrounds->data;
+	     e_config->path_append_backgrounds = evas_list_remove_list(e_config->path_append_backgrounds, e_config->path_append_backgrounds);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config->language);
 	E_FREE(e_config);

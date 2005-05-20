@@ -22,13 +22,14 @@ e_path_new(void)
 }
 
 void
-e_path_path_append(E_Path *ep, const char *path)
+e_path_default_path_append(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!path) return;
    if (path[0] == '~')
      {
+        E_Path_Dir *epd;
 	char *new_path;
 	char *home_dir;
 	int len1, len2;
@@ -43,24 +44,52 @@ e_path_path_append(E_Path *ep, const char *path)
 	     free(home_dir);
 	     return;
 	  }
+	epd = malloc(sizeof(E_Path_Dir));
+        if (!epd)
+	  {
+	     free(home_dir);
+	     free(new_path);
+	     return;
+	  }
+
+        epd->dir = new_path;
 	strcpy(new_path, home_dir);
 	strcat(new_path, path + 1);
 	free(home_dir);
-	ep->dir_list = evas_list_append(ep->dir_list, new_path);	
+	ep->default_dir_list = evas_list_append(ep->default_dir_list, epd);	
      }
    else
-     ep->dir_list = evas_list_append(ep->dir_list, strdup(path));
+     {
+	E_Path_Dir *epd;
+	epd = malloc(sizeof(E_Path_Dir));
+	if (!epd)
+	  return;
+	epd->dir = strdup(path);
+	ep->default_dir_list = evas_list_append(ep->default_dir_list, epd);
+     }
    _e_path_cache_free(ep);
 }
 
 void
-e_path_path_prepend(E_Path *ep, const char *path)
+e_path_user_path_set(E_Path *ep, Evas_List **user_dir_list)
+{
+
+   E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
+   
+   ep->user_dir_list = user_dir_list;
+   _e_path_cache_free(ep);
+}
+
+void
+e_path_user_path_append(E_Path *ep, const char *path)
 {
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!path) return;
    if (path[0] == '~')
      {
+        E_Path_Dir *epd;
 	char *new_path;
 	char *home_dir;
 	int len1, len2;
@@ -75,18 +104,83 @@ e_path_path_prepend(E_Path *ep, const char *path)
 	     free(home_dir);
 	     return;
 	  }
+	epd = malloc(sizeof(E_Path_Dir));
+        if (!epd)
+	  {
+	     free(home_dir);
+	     free(new_path);
+	     return;
+	  }
+
+        epd->dir = new_path;
 	strcpy(new_path, home_dir);
 	strcat(new_path, path + 1);
 	free(home_dir);
-	ep->dir_list = evas_list_prepend(ep->dir_list, new_path);	
+	*(ep->user_dir_list) = evas_list_append(*(ep->user_dir_list), epd);	
      }
    else
-     ep->dir_list = evas_list_prepend(ep->dir_list, strdup(path));
+     {
+	E_Path_Dir *epd;
+	epd = malloc(sizeof(E_Path_Dir));
+	if (!epd)
+	  return;
+	epd->dir = strdup(path);
+	*(ep->user_dir_list) = evas_list_append(*(ep->user_dir_list), epd);
+     }
    _e_path_cache_free(ep);
 }
 
 void
-e_path_path_remove(E_Path *ep, const char *path)
+e_path_user_path_prepend(E_Path *ep, const char *path)
+{
+   E_OBJECT_CHECK(ep);
+   E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
+   if (!path) return;
+   if (path[0] == '~')
+     {
+        E_Path_Dir *epd;
+	char *new_path;
+	char *home_dir;
+	int len1, len2;
+	
+	home_dir = e_user_homedir_get();
+	if (!home_dir) return;
+	len1 = strlen(home_dir);
+	len2 = strlen(path);
+	new_path = malloc(len1 + len2 + 1);
+	if (!new_path)
+	  {
+	     free(home_dir);
+	     return;
+	  }
+	epd = malloc(sizeof(E_Path_Dir));
+        if (!epd)
+	  {
+	     free(home_dir);
+	     free(new_path);
+	     return;
+	  }
+
+        epd->dir = new_path;
+	strcpy(new_path, home_dir);
+	strcat(new_path, path + 1);
+	free(home_dir);
+	*(ep->user_dir_list) = evas_list_prepend(*(ep->user_dir_list), epd);	
+     }
+   else
+     {
+	E_Path_Dir *epd;
+	epd = malloc(sizeof(E_Path_Dir));
+	if (!epd)
+	  return;
+	epd->dir = strdup(path);
+	*(ep->user_dir_list) = evas_list_prepend(*(ep->user_dir_list), epd);
+     }
+   _e_path_cache_free(ep);
+}
+
+void
+e_path_user_path_remove(E_Path *ep, const char *path)
 {
    Evas_List *l;
 
@@ -112,16 +206,19 @@ e_path_path_remove(E_Path *ep, const char *path)
 	strcpy(new_path, home_dir);
 	strcat(new_path, path + 1);
 	free(home_dir);
-	for (l = ep->dir_list; l; l = l->next)
+	for (l = *(ep->user_dir_list); l; l = l->next)
 	  {
-	     char *p;
+	     E_Path_Dir *epd;
 	     
-	     p = l->data;
-	     if (p)
+	     epd = l->data;
+	     if (epd->dir)
 	       {
-		  if (!strcmp(p, new_path))
+		  if (!strcmp(epd->dir, new_path))
 		    {
-		       ep->dir_list = evas_list_prepend(ep->dir_list, l->data);
+		       *(ep->user_dir_list) = evas_list_remove_list(
+						*(ep->user_dir_list), l);
+		       free(epd->dir);
+		       free(epd);
 		       free(new_path);
 		       _e_path_cache_free(ep);
 		       return;
@@ -132,16 +229,18 @@ e_path_path_remove(E_Path *ep, const char *path)
       }
    else
      {
-	for (l = ep->dir_list; l; l = l->next)
+	for (l = *(ep->user_dir_list); l; l = l->next)
 	  {
-	     char *p;
-	     
-	     p = l->data;
-	     if (p)
+	     E_Path_Dir *epd;
+	     epd = l->data;
+	     if (epd->dir)
 	       {
-		  if (!strcmp(p, path))
+		  if (!strcmp(epd->dir, path))
 		    {
-		       ep->dir_list = evas_list_prepend(ep->dir_list, l->data);
+		       *(ep->user_dir_list) = evas_list_remove_list(
+						*(ep->user_dir_list), l);
+		       free(epd->dir);
+		       free(epd);
 		       _e_path_cache_free(ep);
 		       return;
 		    }
@@ -158,6 +257,7 @@ e_path_find(E_Path *ep, const char *file)
    
    E_OBJECT_CHECK_RETURN(ep, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(ep, E_PATH_TYPE, NULL);
+
    if (!file) return NULL;
    _e_path_buf[0] = 0;
    str = evas_hash_find(ep->hash, file);
@@ -166,14 +266,40 @@ e_path_find(E_Path *ep, const char *file)
 	strcpy(_e_path_buf, str);
 	return _e_path_buf;
      }
-   for (l = ep->dir_list; l; l = l->next)
+   /* Look in the default dir list */
+   for (l = ep->default_dir_list; l; l = l->next)
      {
-	char *p, *rp;
+	E_Path_Dir *epd;
+	char *rp;
 	
-	p = l->data;
-	if (p)
+	epd = l->data;
+	if (epd->dir)
 	  {
-	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", p, file);
+	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", epd->dir, file);
+	     rp = ecore_file_realpath(_e_path_buf);
+	     if ((rp) && (rp[0] != 0))
+	       {
+		  strncpy(_e_path_buf, rp, sizeof(_e_path_buf) - 1);
+		  _e_path_buf[sizeof(_e_path_buf) - 1] = 0;
+		  free(rp);
+		  if (evas_hash_size(ep->hash) >= 512)
+		    _e_path_cache_free(ep);
+		  ep->hash = evas_hash_add(ep->hash, file, strdup(_e_path_buf));
+		  return _e_path_buf;
+	       }
+	     if (rp) free(rp);
+	  }
+     }
+   /* Look in the users dir list */
+   for (l = *(ep->user_dir_list); l; l = l->next)
+     {
+	E_Path_Dir *epd;
+	char *rp;
+	
+	epd = l->data;
+	if (epd->dir)
+	  {
+	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", epd->dir, file);
 	     rp = ecore_file_realpath(_e_path_buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
@@ -195,16 +321,63 @@ void
 e_path_evas_append(E_Path *ep, Evas *evas)
 {
    Evas_List *l;
+   Evas_List *dir_list;
    
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!evas) return;
-   for (l = ep->dir_list; l; l = l->next)
+
+   dir_list = e_path_dir_list_get(ep);
+
+   for (l = dir_list; l; l = l->next)
      {
-	char *p;
+	E_Path_Dir *epd;
 	
-	p = l->data;
-	if (p) evas_font_path_append(evas, p);
+	epd = l->data;
+	if (epd->dir) evas_font_path_append(evas, epd->dir);
+     }
+}
+
+/* compine default_list and and user_list int and easy to use list */
+Evas_List *
+e_path_dir_list_get(E_Path *ep)
+{
+   Evas_List	*dir_list;
+   Evas_List	*l;
+   E_Path_Dir	*new_epd;
+   E_Path_Dir	*epd;
+
+   dir_list = NULL;
+
+   for (l = ep->default_dir_list; l; l = l->next)
+     {
+	epd = l->data;
+	new_epd = malloc(sizeof(E_Path_Dir));
+	new_epd->dir = strdup(epd->dir);
+	dir_list = evas_list_append(dir_list, new_epd);
+     }
+   for (l = *(ep->user_dir_list); l; l = l->next)
+     {
+	epd = l->data;
+	new_epd = malloc(sizeof(E_Path_Dir));
+	new_epd->dir = strdup(epd->dir);
+	dir_list = evas_list_append(dir_list, new_epd);
+     }
+
+   return dir_list;
+}
+
+void
+e_path_dir_list_free(Evas_List *dir_list)
+{
+   E_Path_Dir *epd;
+
+   while (dir_list)
+     {
+	epd = dir_list->data;
+	dir_list = evas_list_remove_list(dir_list, dir_list);
+	free(epd->dir);
+	free(epd);
      }
 }
 
@@ -213,10 +386,14 @@ static void
 _e_path_free(E_Path *ep)
 {
    _e_path_cache_free(ep);
-   while (ep->dir_list)
+   while (ep->default_dir_list)
      {
-	free(ep->dir_list->data);
-	ep->dir_list = evas_list_remove_list(ep->dir_list, ep->dir_list);
+	E_Path_Dir *epd;
+	epd = ep->default_dir_list->data;
+	free(epd->dir);
+	free(epd);
+	ep->default_dir_list = evas_list_remove_list(ep->default_dir_list, 
+						ep->default_dir_list);
      }
    free(ep);
 }
@@ -227,6 +404,7 @@ _e_path_cache_free(E_Path *ep)
    if (!ep->hash) return;
    evas_hash_foreach(ep->hash, _e_path_cache_free_cb, NULL);
    evas_hash_free(ep->hash);
+   ep->hash = NULL;
 }
 
 static Evas_Bool

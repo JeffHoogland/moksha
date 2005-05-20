@@ -83,12 +83,19 @@ e_font_apply(void)
 Evas_List *
 e_font_available_list(void)
 {
-   Evas_List *available;
-   
+   Evas_List *dir_list;
+   Evas_List *next;
+   Evas_List *available;   
+
+   dir_list = e_path_dir_list_get(path_fonts);
    available = NULL;
-   /* use e_path for this */
-   available = _e_font_font_dir_available_get(available, "~/.e/e/fonts");
-   available = _e_font_font_dir_available_get(available, PACKAGE_DATA_DIR "/data/fonts");
+   for ( next = dir_list; next; next = next->next)
+     {
+        E_Path_Dir *epd = next->data;
+	available = _e_font_font_dir_available_get(available, epd->dir);
+     }
+   
+   e_path_dir_list_free(dir_list);
    return available;
 }
 

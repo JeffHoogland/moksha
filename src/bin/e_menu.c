@@ -410,7 +410,7 @@ e_menu_item_num_get(E_Menu_Item *mi)
 }
 
 void
-e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon)
+e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -427,7 +427,7 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, char *icon)
 }
 
 void
-e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key)
+e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
@@ -446,7 +446,7 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, char *icon, char *key)
 }
 
 void
-e_menu_item_label_set(E_Menu_Item *mi, char *label)
+e_menu_item_label_set(E_Menu_Item *mi, const char *label)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);

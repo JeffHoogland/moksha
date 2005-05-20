@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 103
+#define E_CONFIG_FILE_VERSION 104
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -85,6 +85,15 @@ struct _E_Config
    Evas_List  *themes;
    Evas_List  *mouse_bindings;
    Evas_List  *key_bindings;
+   Evas_List  *path_append_data;
+   Evas_List  *path_append_images;
+   Evas_List  *path_append_fonts;
+   Evas_List  *path_append_themes;
+   Evas_List  *path_append_init;
+   Evas_List  *path_append_icons;
+   Evas_List  *path_append_modules;
+   Evas_List  *path_append_backgrounds;
+
 };
 
 struct _E_Config_Module
