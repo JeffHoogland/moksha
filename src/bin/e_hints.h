@@ -7,6 +7,7 @@
 #define E_HINTS_H
 
 EAPI void e_hints_init(void);
+EAPI void e_hints_e16_comms_pretend(E_Manager *man);
 EAPI void e_hints_manager_init(E_Manager *man);
 EAPI void e_hints_client_list_set(void);
 EAPI void e_hints_client_stacking_set(void);

@@ -19,11 +19,24 @@ e_hints_init(void)
 	     Ecore_X_Window win;
 	     
 	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
-//	     I don't FUCKING believe it. if we PRETENT we are Kwin - java is
-//	     happy. why? it expects a double reparenting wm then. java insists
-//	     on finding this out when it shoudl be irrelevant! stupid FUCKS.
-	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");
-//	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
+/*	     
+ * I don't FUCKING believe it. if we PRETENT we are Kwin - java is happy.
+ * why? it expects a double reparenting wm then. java insists on finding this
+ * out when it should be irrelevant! stupid code! I can't believe the time we
+ * just wasted hunting a bug that wasn't and that is due to sheer stupid
+ * coding.
+ */
+/* Now for more stupidity... Openoffice.org will change its look and feel 
+ * depending on what wm it thinks there is... so if we pretend to be Kwin...
+ * it tries to use kde preferences, if found.
+ */
+/* I have disabled tyhis now by pretending to be E16 with e16 comms. this
+ * means java plays nice and uses our FRAMe property.. but we had to do other
+ * evil stuff as java EXPECTS all this at REPARENT time... i've deferred
+ * reparenting... i hate java!
+ */
+/*	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");*/
+	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
 
 	     /* Set what hints we support */
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_ACTIVE_WINDOW, 1);
@@ -52,10 +65,31 @@ e_hints_init(void)
      }
 }
 
+/* 
+ * This is here so we don't have to pretend to be Kwin anymore - we pretend
+ * to do old e16 style ipc. in fact we just ignore it... but set up the
+ * window port anyway
+ */
+void
+e_hints_e16_comms_pretend(E_Manager *man)
+{
+   Ecore_X_Window win;
+   Ecore_X_Atom enlightenment_comms, string;
+   char buf[256];
+   
+   enlightenment_comms = ecore_x_atom_get("ENLIGHTENMENT_COMMS");
+   string = ecore_x_atom_get("STRING");
+   win = ecore_x_window_input_new(man->root, -100, -100, 1, 1);
+   snprintf(buf, sizeof(buf), "WINID %8x", (int)win);
+   ecore_x_window_prop_property_set(win, enlightenment_comms, string, 8, buf, 14);
+   ecore_x_window_prop_property_set(man->root, enlightenment_comms, string, 8, buf, 14);
+}
+
 void
 e_hints_manager_init(E_Manager *man)
 {
    ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
+   e_hints_e16_comms_pretend(man);
 }
 
 /* FIXME, this should set the list in map order, not stack order */

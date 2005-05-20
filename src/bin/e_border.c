@@ -321,8 +321,12 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 	bd->ignore_first_unmap = 2;
      }
 
-   ecore_x_window_save_set_add(win);
-   ecore_x_window_reparent(win, bd->client.shell_win, 0, 0);
+   /* just to friggin make java happy - we're DELAYING the reparent until
+    * evail time...
+    */
+/*   ecore_x_window_reparent(win, bd->client.shell_win, 0, 0); */
+   bd->need_reparent = 1;
+   
    ecore_x_window_border_width_set(win, 0);
    ecore_x_window_show(bd->event_win);
    ecore_x_window_show(bd->client.shell_win);
@@ -408,7 +412,8 @@ e_border_show(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->visible) return;
    e_container_shape_show(bd->shape);
-   ecore_x_window_show(bd->client.win);
+   if (!bd->need_reparent)
+     ecore_x_window_show(bd->client.win);
    e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
@@ -433,7 +438,8 @@ e_border_hide(E_Border *bd, int manage)
    if (!bd->visible) return;
    if (bd->moving) return;
 
-   ecore_x_window_hide(bd->client.win);
+   if (!bd->need_reparent)
+     ecore_x_window_hide(bd->client.win);
    e_container_shape_hide(bd->shape);
    if (!bd->iconic)
      e_hints_window_hidden_set(bd);
@@ -2853,7 +2859,6 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->client.mwm.fetch.hints = 0;
      }
-
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -3027,6 +3032,15 @@ _e_border_eval(E_Border *bd)
 		  evas_object_hide(bd->icon_object);
 	       }
 	  }
+     }
+   
+   if (bd->need_reparent)
+     {     
+	ecore_x_window_save_set_add(bd->client.win);
+	ecore_x_window_reparent(bd->client.win, bd->client.shell_win, 0, 0);
+	if (bd->visible)
+	  ecore_x_window_show(bd->client.win);
+	bd->need_reparent = 0;
      }
    
    if (bd->new_client)

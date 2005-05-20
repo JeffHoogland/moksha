@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* on restart e always goes back to desktop 0,0 - it shoudl go to the desktop
+  it was last on (per zone, per container, per manager).
 * start module needs to have an way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
 * (closing of windows) doesn't always close the window. sometimes it loses
