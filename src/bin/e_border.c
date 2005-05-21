@@ -2612,13 +2612,12 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	       }
 	     else
 	       {
-		  int x, y;
-		  double dist;
-
-		  x = bd->drag.x - ev->root.x;
-		  y = bd->drag.y - ev->root.y;
-		  dist = sqrt(pow(x, 2) + pow(y, 2));
-		  if (dist > 4)
+		  int dx, dy;
+		  
+		  dx = bd->drag.x - ev->root.x;
+		  dy = bd->drag.y - ev->root.y;
+		  if (((dx * dx) + (dy * dy)) > 
+		      (e_config->drag_resist * e_config->drag_resist))
 		    {
 		       /* start drag! */
 		       if (bd->icon_object)

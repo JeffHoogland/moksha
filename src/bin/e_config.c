@@ -144,6 +144,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, always_click_to_raise, INT);
    E_CONFIG_VAL(D, T, use_auto_raise, INT);
    E_CONFIG_VAL(D, T, auto_raise_delay, DOUBLE); 
+   E_CONFIG_VAL(D, T, drag_resist, INT);
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -210,6 +211,7 @@ e_config_init(void)
 	e_config->always_click_to_raise = 0;
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
+	e_config->drag_resist = 8;
 	  {
 	     E_Config_Module *em;
 
@@ -684,8 +686,12 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
+   E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
+   E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
+   E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->auto_raise_delay, 0.0, 5.0);
+   E_CONFIG_LIMIT(e_config->drag_resist, 0, 100);
 
    /* apply lang config - exception because config is loaded after intl setup */
    

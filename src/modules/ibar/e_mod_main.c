@@ -1237,10 +1237,12 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 
    if (drag_start)
      {
-	double dist;
+	int dx, dy;
 
-	dist = sqrt(pow((ev->cur.output.x - drag_x), 2) + pow((ev->cur.output.y - drag_y), 2));
-	if (dist > 4)
+	dx = ev->cur.output.x - drag_x;
+	dy = ev->cur.output.y - drag_y;
+	if (((dx * dx) + (dy * dy)) > 
+	    (e_config->drag_resist * e_config->drag_resist))
 	  {
 	     E_Drag *d;
 	     Evas_Object *o;

@@ -55,17 +55,18 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* double check edje and evas image caches are working
 * breaking out config via ipc / e_remote is too much work. this needs to get
   easier.
-* for click to focus - grab the mouse on all new windows, ungrab on focus, grab again on unfocus
 * move all ipc codecs to use eet
-* make raise_timer a on/off flag and add a double for delay
 * on restart e always goes back to desktop 0,0 - it shoudl go to the desktop
   it was last on (per zone, per container, per manager).
 * start module needs to have an way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
 * sometiems windows that get shut down/closed get unparented but the whole
-  border stays around - something is keeping extra references maybe?
+  border stays around - something is keeping extra references maybe? it is
+  hidden, until you flip desktops then it appears again - but with no client
+  around.
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
 * drop on ibar for re-ordering, removal seems broken (drop location is the
