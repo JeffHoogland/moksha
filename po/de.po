@@ -342,6 +342,10 @@ msgstr "Enlightenment Fehler in den IPC Einstellungen!"
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment Arbeitsflächenumschalter Modul"
 
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment Startbutton Modul"
+
 #: src/bin/e_main.c:352
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment Started. Bitte warten."
@@ -587,6 +591,19 @@ msgstr ""
 "Die Enlightenment bekannte Modul API ist: %i.\n"
 "Laden des Moduls wird abgebrochen."
 
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fehler beim initialisieren des Modul's: start\n"
+"Es erfordert eine minimale Version der Modul API von: %i.\n"
+"Die Enlightenment bekannte Modul API ist: %i.\n"
+"Laden des Moduls wird abgebrochen."
+
 #: src/modules/test/e_mod_main.c:10
 #, c-format
 msgid ""
@@ -615,6 +632,10 @@ msgstr ""
 #: src/bin/e_int_menus.c:116
 msgid "Exit Enlightenment"
 msgstr "Enlightenment verlassen"
+
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Experimentelles Startbutton Modul für E17"
 
 #: src/modules/dropshadow/e_mod_main.c:366
 msgid "Extremely Near"
@@ -876,6 +897,10 @@ msgstr "Klein"
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
 msgstr "Irgendetwas"
+
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "Start"
 
 #: src/bin/e_border.c:3418
 msgid "Sticky"
