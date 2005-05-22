@@ -369,8 +369,6 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-edge-flip_timeout-get", "Get the edge flip timeout", E_IPC_OP_EDGE_FLIP_TIMEOUT_GET, 1),
    O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
    OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
-   O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
-   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
    OFNC("-focus-policy-set", "Set focus policy. OPT1 = CLICK or MOUSE", 1, _e_opt_focus_policy_set, 0),
    OREQ("-focus-policy-get", "Get focus policy.", E_IPC_OP_FOCUS_POLICY_GET, 1)
 };
