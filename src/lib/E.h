@@ -23,6 +23,7 @@ typedef struct _E_Response_Module_Data		E_Response_Module_Data;
 typedef struct _E_Response_Module_Dirs_List	E_Response_Module_Dirs_List;
 typedef struct _E_Response_Background_Get E_Response_Background_Get;
 typedef struct _E_Response_Background_Dirs_List	E_Response_Background_Dirs_List;
+typedef struct _E_Response_Theme_Dirs_List	E_Response_Theme_Dirs_List;
 
 struct _E_Response_Module_List
 {
@@ -53,10 +54,17 @@ struct _E_Response_Background_Dirs_List
    int	    count;
 };
 
+struct _E_Response_Theme_Dirs_List
+{
+   char   **dirs;
+   int	    count;
+};
+
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
 extern EAPI int E_RESPONSE_MODULE_DIRS_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_DIRS_LIST;
+extern EAPI int E_RESPONSE_THEME_DIRS_LIST;
 
 #ifdef __cplusplus
 extern "C" {
@@ -78,10 +86,11 @@ extern "C" {
    /* E desktop manipulation */
    EAPI void         e_background_set             (const char *bgfile);
    EAPI void         e_background_get             (void);
-   
+
    /* E path information */
    EAPI void         e_module_dirs_list           (void);
    EAPI void         e_background_dirs_list       (void);
+   EAPI void         e_theme_dirs_list            (void);
 
 #ifdef __cplusplus
 }
