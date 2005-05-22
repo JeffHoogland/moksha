@@ -41,7 +41,7 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->zone = zone;
    desk->x = x;
    desk->y = y;
-   snprintf(name, sizeof(name), "Desktop %d, %d", x, y);
+   snprintf(name, sizeof(name), _("Desktop %d, %d"), x, y);
    desk->name = strdup(name);
    return desk;
 }
