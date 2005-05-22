@@ -1,31 +1,44 @@
-# SOME DESCRIPTIVE TITLE.
+# Enlightenment 0.17 Finnish translation
 # This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Jyri Hämäläinen <wildfinn@gmail.com>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-17 19:15+0200\n"
-"PO-Revision-Date: 2005-04-17 19:15+0200\n"
-"Last-Translator: Jyri Hämäläinen <Wildfinn@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2005-04-17 03:27+0800\n"
+"PO-Revision-Date: 2005-05-19 03:33+0800\n"
+"Last-Translator: Jyri Hämäläinen <wildfinn@gmail.com>\n"
+"Language-Team: Jyri Hämäläinen <wildfinn@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_int_menus.c:272
+#: src/modules/cpufreq/e_mod_main.c:460
+#, c-format
+msgid "%i Mhz"
+msgstr "%i Mhz"
+
+#: src/modules/cpufreq/e_mod_main.c:463
+#, c-format
+msgid "%i.%i Ghz"
+msgstr "%i.%i Ghz"
+
+#: src/bin/e_int_menus.c:659
+msgid "(Empty)"
+msgstr "（Tyhjä）"
+
+#: src/bin/e_int_menus.c:303
 msgid "(No Applications)"
-msgstr "(Ei ohjelmia)"
+msgstr "（Ei sovelluksia）"
 
-#: src/bin/e_int_menus.c:445
+#: src/bin/e_int_menus.c:476
 msgid "(No Windows)"
-msgstr "(Ei ikkunoita)"
+msgstr "（Ei ikkunoita）"
 
-#: src/bin/e_int_menus.c:521
+#: src/bin/e_int_menus.c:569
 msgid "(Unused)"
-msgstr "(Käyttämätön)"
+msgstr "（Käyttämätön）"
 
 #: src/modules/battery/e_mod_main.c:418
 msgid "1 hour"
@@ -33,47 +46,47 @@ msgstr "1 tunti"
 
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
-msgstr ""
+msgstr "100C"
 
 #: src/modules/temperature/e_mod_main.c:500
 msgid "10C"
-msgstr ""
+msgstr "10C"
 
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
-msgstr ""
+msgstr "20C"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
 msgid "30C"
-msgstr ""
+msgstr "30C"
 
 #: src/modules/temperature/e_mod_main.c:521
 #: src/modules/temperature/e_mod_main.c:554
 msgid "40C"
-msgstr ""
+msgstr "40C"
 
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
-msgstr ""
+msgstr "50C"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
-msgstr ""
+msgstr "60C"
 
 #: src/modules/temperature/e_mod_main.c:575
 msgid "70C"
-msgstr ""
+msgstr "70C"
 
 #: src/modules/temperature/e_mod_main.c:582
 msgid "80C"
-msgstr ""
+msgstr "80C"
 
 #: src/modules/temperature/e_mod_main.c:589
 msgid "90C"
-msgstr ""
+msgstr "90C"
 
 #: src/modules/battery/e_mod_main.c:99
 msgid ""
@@ -81,7 +94,7 @@ msgid ""
 "on Linux to monitor your battery and AC power adaptor\n"
 "status. This will only work under Linux and is only\n"
 "as accurate as your BIOS or kernel drivers."
-msgstr "" 
+msgstr ""
 "Tavallinen akkumittari, joka käyttää joko ACPI:a tai APM:ää\n"
 "Linuxissa tarkkaillakseen akkusi ja AC adapterin tilaa. Tämä\n"
 "toimii vain Linuxissa ja on vain niin tarkka kuin BIOS:isi\n"
@@ -97,31 +110,47 @@ msgstr ""
 "Se on erytyisen hyödyllinen moderneissa kannettavissa, joissa\n"
 "on nopeita paljon lämpöä tuottavia prosessoreita."
 
-#: src/modules/pager/e_mod_main.c:136
+#: src/modules/pager/e_mod_main.c:141
 msgid "A pager module to navigate virtual desktops."
 msgstr "Pager moduuli jolla vaihdetaan virtuaalityöpöytiä"
+
+#: src/modules/cpufreq/e_mod_main.c:108
+msgid ""
+"A simple module to control the frequency of the system CPU. This is "
+"especially useful to save power on laptops."
+msgstr ""
+"Yksinkertainen moduuli jolla hallitaan järjestelmän prosessorin kellotaajuutta.\n"
+"Tämä on erityisen hyödyllistä virran säästämiseksi kannettavissa."
 
 #: src/modules/clock/e_mod_main.c:96
 msgid "A simple module to give E17 a clock."
 msgstr "Yksinkertainen E17 kellomoduuli"
 
-#: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
+#: src/bin/e_int_menus.c:119 src/bin/e_int_menus.c:241
 msgid "About Enlightenment"
 msgstr "Enlightenmentista"
 
-#: src/bin/e_module.c:381
+#: src/bin/e_module.c:392
 msgid "About..."
-msgstr ""
+msgstr "Tietoa"
 
-#: src/bin/e_main.c:360
+#: src/bin/e_border.c:3770
+msgid "Always On Top"
+msgstr "Aina päällä"
+
+#: src/bin/e_main.c:420
 msgid "Artificially slowing startup so you can see it all."
 msgstr "Käynnistys hidastuu keinotekoisesti, jotta voisit nähdä sen kokonaan"
 
-#: src/modules/ibar/e_mod_main.c:717
+#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:590
 msgid "Auto fit icons"
 msgstr "Sovita kuvakkeet automaattisesti"
 
-#: src/bin/e_gadman.c:526
+#: src/modules/cpufreq/e_mod_main.c:434
+msgid "Automatic"
+msgstr "自动"
+
+#: src/bin/e_gadman.c:530
 msgid "Automatic Height"
 msgstr "Automaattinen korkeus"
 
@@ -129,7 +158,7 @@ msgstr "Automaattinen korkeus"
 msgid "Automatic Width"
 msgstr "Automaattinen leveys"
 
-#: src/modules/battery/e_mod_main.c:906
+#: src/modules/battery/e_mod_main.c:903
 msgid "BAD DRIVER"
 msgstr "HUONO AJURI"
 
@@ -137,21 +166,33 @@ msgstr "HUONO AJURI"
 msgid "Battery"
 msgstr "Akku"
 
-#: src/modules/battery/e_mod_main.c:688
+#: src/modules/battery/e_mod_main.c:686
 msgid "Battery Running Low"
 msgstr "Akku loppumassa"
 
-#: src/bin/e_gadman.c:509
+#: src/modules/cpufreq/e_mod_main.c:107
+msgid "CPU Frequency Controller Module"
+msgstr "Kellotaajuudenhallintamoduuli"
+
+#: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
+msgid "CPU Frequency ERROR"
+msgstr "VIRHE Kellotaajuudessa"
+
+#: src/bin/e_gadman.c:512
 msgid "Center Horizontally"
 msgstr "Keskitä leveyssuunnassa"
 
-#: src/bin/e_gadman.c:552
+#: src/bin/e_gadman.c:559
 msgid "Center Vertically"
 msgstr "Keskitä pystysuunnassa"
 
-#: src/modules/battery/e_mod_main.c:1002
+#: src/modules/battery/e_mod_main.c:999
 msgid "Charging"
 msgstr "Lataa"
+
+#: src/modules/cpufreq/e_mod_main.c:388
+msgid "Check Fast (0.5 sec)"
+msgstr "Nopea tarkistus (0.5 sek)"
 
 #: src/modules/battery/e_mod_main.c:430
 msgid "Check Fast (1 sec)"
@@ -162,6 +203,10 @@ msgstr "Nopea tarkistus (1 sek)"
 msgid "Check Interval"
 msgstr "Tarkistusväli"
 
+#: src/modules/cpufreq/e_mod_main.c:395
+msgid "Check Medium (1 sec)"
+msgstr "Keskinopea tarkistus (1 sek)"
+
 #: src/modules/battery/e_mod_main.c:437
 msgid "Check Medium (5 sec)"
 msgstr "Keskinopea tarkistus (5 sek)"
@@ -170,65 +215,111 @@ msgstr "Keskinopea tarkistus (5 sek)"
 msgid "Check Normal (10 sec)"
 msgstr "Normaali tarkistus (10 sek)"
 
+#: src/modules/cpufreq/e_mod_main.c:402
+msgid "Check Normal (2 sec)"
+msgstr "Normaali tarkistus (2 sek)"
+
 #: src/modules/battery/e_mod_main.c:451
 msgid "Check Slow (30 sec)"
-msgstr "Hidas tarkistus (30 sek) "
+msgstr "Hidas tarkistus (30 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:409
+msgid "Check Slow (5 sec)"
+msgstr "Hidas tarkistus (5 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:416
+msgid "Check Very Slow (30 sec)"
+msgstr "Erittäin hidas tarkistus (30 sek)"
 
 #: src/modules/battery/e_mod_main.c:458
 msgid "Check Very Slow (60 sec)"
 msgstr "Erittäin hidas tarkistus (60 sek)"
 
+#: src/bin/e_int_menus.c:499
+msgid "Cleanup Windows"
+msgstr "Siivoa ikkunat"
+
 #: src/modules/clock/e_mod_main.c:86
 msgid "Clock"
 msgstr "Kello"
 
-#: src/bin/e_border.c:3213 src/modules/dropshadow/e_mod_main.c:344
+#: src/bin/e_border.c:3721
 msgid "Close"
 msgstr "Lähellä"
 
-#: src/bin/e_module.c:396
+#: src/bin/e_module.c:407
 msgid "Configuration"
-msgstr "Konfiguraatio"
+msgstr "Asetukset"
 
-#: src/bin/e_border.c:3281
+#: src/bin/e_config.c:879
+msgid "Configuration Upgraded"
+msgstr "Asetukset päivitetty"
+
+#: src/bin/e_config.c:135
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new confiugration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"Asetukset tarvitsivat päivittämistä, joten vanhat asetuksesi on poistettu\n"
+"ja uudet vakioasetukset on asetettu. Tämä tulee tapahtumaan\n"
+"säännöllisesti kehitystyön aikana, joten älä ilmoita virheestä.\n"
+"Tämä tarkoittaa yksinertaisesti sitä että Enlightenment tarvitsee\n"
+"uudet vakioasetukset toiminnoille jotka yksinkertaisesti puuttuvat\n"
+"vanhasta.Uudet asetukset korjaavat tämän lisäämällä nämä uudet\n"
+"ominaisuudet. Voit tehdä haluamasi asetukset uudelleen.\n"
+"Olemme pahoillamme häiriöstä.\n"
+
+#: src/modules/cpufreq/e_mod_main.c:98
+msgid "CpuFreq"
+msgstr "Kellotaajuus"
+
+#: src/bin/e_border.c:3825
 msgid "Create Icon"
 msgstr "Luo kuvake"
 
-#: src/modules/battery/e_mod_main.c:998
+#: src/modules/battery/e_mod_main.c:995
 msgid "Danger"
 msgstr "Vaara"
 
-#: src/modules/dropshadow/e_mod_main.c:296
+#: src/modules/dropshadow/e_mod_main.c:316
 msgid "Dark"
 msgstr "Tumma"
 
-#: src/bin/e_int_menus.c:77
+#: src/bin/e_int_menus.c:82
 msgid "Desktops"
 msgstr "Työpöydät"
 
-#: src/modules/dropshadow/e_mod_main.c:125
+#: src/modules/dropshadow/e_mod_main.c:139
 msgid "Dropshadow"
 msgstr "Varjo"
 
-#: src/bin/e_border.c:3255
+#: src/bin/e_border.c:3799
 msgid "Edit Icon"
 msgstr "Muokkaa kuvaketta"
 
-#: src/bin/e_int_menus.c:515 src/modules/clock/e_mod_main.c:311
-#: src/modules/temperature/e_mod_main.c:723
-#: src/modules/battery/e_mod_main.c:563
+#: src/bin/e_int_menus.c:563 src/modules/battery/e_mod_main.c:561
+#: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:814
+#: src/modules/ibar/e_mod_main.c:574 src/modules/pager/e_mod_main.c:435
+#: src/modules/temperature/e_mod_main.c:721 src/modules/ibox/e_mod_main.c:444
+#: src/modules/start/e_mod_main.c:235
 msgid "Edit Mode"
 msgstr "Muokkaustila"
 
-#: src/bin/e_module.c:385
+#: src/bin/e_module.c:396
 msgid "Enabled"
 msgstr "Sallittu"
 
-#: src/bin/e_gadman.c:563
+#: src/bin/e_gadman.c:571
 msgid "End Edit Mode"
 msgstr "Lopeta muokkaustila"
 
-#: src/bin/e_main.c:344
+#: src/bin/e_main.c:404
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -240,23 +331,31 @@ msgstr "Enlightenment Akkumoduuli"
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment Kellomoduuli"
 
-#: src/modules/dropshadow/e_mod_main.c:134
+#: src/modules/dropshadow/e_mod_main.c:148
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment Varjomoduuli"
 
-#: src/modules/ibar/e_mod_main.c:158
+#: src/modules/ibar/e_mod_main.c:167
 msgid "Enlightenment IBar Module"
-msgstr "Enlightenment IBar-moduuli"
+msgstr "Enlightenment IBar moduuli"
 
-#: src/bin/e_main.c:329
+#: src/modules/ibox/e_mod_main.c:157
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox moduuli"
+
+#: src/bin/e_main.c:387
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC asetusvirhe!"
 
-#: src/modules/pager/e_mod_main.c:135
+#: src/modules/pager/e_mod_main.c:140
 msgid "Enlightenment Pager Module"
-msgstr "Enlightenment Pager-moduuli"
+msgstr "Enlightenment Pager moduuli"
 
-#: src/bin/e_main.c:346
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment Käynnistä moduuli"
+
+#: src/bin/e_main.c:406
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment käynnistyy. Odota"
 
@@ -268,7 +367,7 @@ msgstr "Enlightenment Lämpömittarimoduuli"
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment Testimoduuli"
 
-#: src/bin/e_main.c:157
+#: src/bin/e_main.c:174
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -276,7 +375,7 @@ msgstr ""
 "Enlightenment ei voi alustaa Ecorea!\n"
 "Enhkäpä muisti on loppu?"
 
-#: src/bin/e_main.c:235
+#: src/bin/e_main.c:267
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -284,15 +383,15 @@ msgstr ""
 "Enlightenment ei voi luoda hakemistoja kotihakemistoosi.\n"
 "Ehkä sinulla ei ole kotihakemistoa, tai levy on täynnä?"
 
-#: src/bin/e_main.c:184
+#: src/bin/e_main.c:201
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment ei voi alustaa yhteyttään X:ään.\n"
+"Enlightenment ei voi avata yhteyttään X:ään.\n"
 "Oletko asettanut DISPLAY muuttujasi?"
 
-#: src/bin/e_main.c:223
+#: src/bin/e_main.c:240
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -300,7 +399,15 @@ msgstr ""
 "Enlightenment ei voi käynnistää Evas järjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:215
+#: src/bin/e_main.c:255
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment ei voi käynnistää File järjestelmää.\n"
+"Ehkäpä muisti on lopussa?"
+
+#: src/bin/e_main.c:232
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -308,7 +415,7 @@ msgstr ""
 "Enlightenment ei voi alustaa IPC järjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:207
+#: src/bin/e_main.c:224
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -316,7 +423,7 @@ msgstr ""
 "Enlightenment ei voi alustaa yhteysjärjestelmää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:173
+#: src/bin/e_main.c:190
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -324,7 +431,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää HUP signaalinkäsittelijää.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:167
+#: src/bin/e_main.c:184
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -332,7 +439,7 @@ msgstr ""
 "Enlightenment ei voi käynnistää exit singnaalinkäsittelijää"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:272
+#: src/bin/e_main.c:325
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -340,23 +447,43 @@ msgstr ""
 "Enlightenment ei voi käynnistää avausruutua"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:288
+#: src/bin/e_main.c:290
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment ei voi käynnistää toimintajärjestelmäänsä."
+
+#: src/bin/e_main.c:341
 msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenmebt ei voi käynnistää ohjelmistojärjestelmäänsä"
+msgstr "Enlightenmebt ei voi käynnistää sovellusjärjestelmäänsä"
 
-#: src/bin/e_main.c:251
+#: src/bin/e_main.c:297
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment ei voi käynnistää liitäntäjärjestelmäänsä."
+
+#: src/bin/e_main.c:283
 msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment ei voi käynnistää konfigurointijärjestelmäänsä."
+msgstr "Enlightenment ei voi käynnistää asetusjärjestelmäänsä."
 
-#: src/bin/e_main.c:262
+#: src/bin/e_main.c:381
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenment ei voi käynnistää dnd järjestelmäänsä"
+
+#: src/bin/e_main.c:315
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ei voi käynnistää kirjasinjärjestelmäänsä."
 
-#: src/bin/e_main.c:312
+#: src/bin/e_main.c:373
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ei voi käynnistää moduulijärjestelmäänsä."
 
-#: src/bin/e_main.c:243
+#: src/bin/e_main.c:304
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment ei voi käynnistää ponnahdusikkunajärjestelmäänsä."
+
+#: src/bin/e_main.c:348
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenment ei voi käynnistää ulkoasujärjestelmäänsä"
+
+#: src/bin/e_main.c:275
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -364,7 +491,7 @@ msgstr ""
 "Enlightenment ei voi asettaa reittejä tiedostojen löytämiselle.\n"
 "Ehkäpä muisti on lopussa?"
 
-#: src/bin/e_main.c:299 src/bin/e_main.c:330
+#: src/bin/e_main.c:360 src/bin/e_main.c:388
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -378,28 +505,37 @@ msgstr ""
 "jos se epäonnistuu yritä poistaa kaikki tiedostot ~/.ecore/enlightenment-*\n"
 "kansioista ja yritä uudelleen."
 
-
-#: src/bin/e_main.c:191
+#: src/bin/e_main.c:208
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
-"Enlightenment ei voi käynnistää Xinerama käärimistä.\n"
+"Enlightenment ei voi asettaa xinerama käärimistä.\n"
 "Tämän ei pitäisi tapahtua."
 
-#: src/bin/e_main.c:280
+#: src/bin/e_main.c:246
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment selvitti, että ecore_evas ei tue ohjelmistopohjaista\n"
+"X11 renderöintiä Evasissa. Tarkkista Evas ja Ecore asennuksesi ja tarkista\n"
+"että ne tukevat ohjelmistopohjaista X11 renderöintiä."
+
+#: src/bin/e_main.c:333
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenmentin käynnistäminen epäonnistui kaikilla järjestelmäsi ruuduilla.\n"
-"Ehkäpä jokin toinen ikkunamanageri on käynnissä?\n"
+"Enlightenmentin ikkunanhallinnan käynnistäminen epäonnistui kaikilla järjestelmäsi\n"
+"ruuduilla. Ehkäpä jokin toinen ikkunamanageri on käynnissä?\n"
 
-#: src/bin/e_error.c:354
+#: src/bin/e_error.c:357
 msgid "Enlightenment: Error!"
-msgstr "Enlightenment: Virhe!"
+msgstr "Enlightenment：Virhe！"
 
-#: src/modules/ibar/e_mod_main.c:789
+#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:662
 msgid "Enormous"
 msgstr "Valtava"
 
@@ -429,7 +565,7 @@ msgstr ""
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
 
-#: src/modules/dropshadow/e_mod_main.c:78
+#: src/modules/dropshadow/e_mod_main.c:92
 #, c-format
 msgid ""
 "Error initializing Module: Dropshadow\n"
@@ -442,7 +578,7 @@ msgstr ""
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
 
-#: src/modules/ibar/e_mod_main.c:106
+#: src/modules/ibar/e_mod_main.c:115
 #, c-format
 msgid ""
 "Error initializing Module: IBar\n"
@@ -455,7 +591,20 @@ msgstr ""
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
 
-#: src/modules/pager/e_mod_main.c:80
+#: src/modules/ibox/e_mod_main.c:104
+#, c-format
+msgid ""
+"Error initializing Module: IBox\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Virhe iBox moduulin käynnistyksessä.\n"
+"Se vaatii vähintään moduuli API:n versiota: %i.\n"
+"Enlightenmentin ilmoittama moduuli API on: %i.\n"
+"Moduuli keskeytetään."
+
+#: src/modules/pager/e_mod_main.c:85
 #, c-format
 msgid ""
 "Error initializing Module: Pager\n"
@@ -481,6 +630,32 @@ msgstr ""
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
 
+#: src/modules/cpufreq/e_mod_main.c:58
+#, c-format
+msgid ""
+"Error initializing Module: cpufreq\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is %i.\n"
+"Aborting module."
+msgstr ""
+"Virhe Kellotaajuusmoduulin käynnistyksessä.\n"
+"Se vaatii vähintään moduuli API:n versiota: %i.\n"
+"Enlightenmentin ilmoittama moduuli API on: %i.\n"
+"Moduuli keskeytetään."
+
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Virhe Käynnistä moduulin käynnistyksessä.\n"
+"Se vaatii vähintään moduuli API:n versiota: %i.\n"
+"Enlightenmentin ilmoittama moduuli API on: %i.\n"
+"Moduuli keskeytetään."
+
 #: src/modules/test/e_mod_main.c:10
 #, c-format
 msgid ""
@@ -489,16 +664,16 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
-"Virhe testimoduulin käynnistyksessä.\n"
+"Virhe Testimoduulin käynnistyksessä.\n"
 "Se vaatii vähintään moduuli API:n versiota: %i.\n"
 "Enlightenmentin ilmoittama moduuli API on: %i.\n"
 "Moduuli keskeytetään."
 
-#: src/bin/e_module.c:98 src/bin/e_module.c:109 src/bin/e_module.c:131
+#: src/bin/e_module.c:109 src/bin/e_module.c:120 src/bin/e_module.c:142
 msgid "Error loading Module"
 msgstr "Virhe moduulin latauksessa"
 
-#: src/bin/e_border.c:3355
+#: src/bin/e_border.c:3902
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -510,63 +685,67 @@ msgstr ""
 "Asenna e_util_eapp_edit tai varmista\n"
 "että se on määritelty PATH:issasi.\n"
 
-#: src/bin/e_int_menus.c:117
+#: src/bin/e_int_menus.c:136
 msgid "Exit Enlightenment"
 msgstr "Sulje Enlightenment"
 
-#: src/modules/ibar/e_mod_main.c:775
-msgid "Extremely Large"
-msgstr "Eirttäin suuri"
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Kokeellinen painikemoduuli E17:lle"
 
-#: src/modules/dropshadow/e_mod_main.c:362
-msgid "Extremely Close"
+#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:648
+msgid "Extremely Large"
+msgstr "Erittäin suuri"
+
+#: src/modules/dropshadow/e_mod_main.c:382
+msgid "Extremely Near"
 msgstr "Erittäin lähellä"
 
-#: src/modules/battery/e_mod_main.c:930
+#: src/modules/battery/e_mod_main.c:927
 msgid "FULL"
 msgstr "TÄYSI"
 
-#: src/modules/dropshadow/e_mod_main.c:335
+#: src/modules/dropshadow/e_mod_main.c:355
 msgid "Far"
 msgstr "Kaukana"
 
 #: src/modules/temperature/e_mod_main.c:460
 msgid "Fast (1 sec)"
-msgstr "Nopea (1 sek)"
+msgstr "Nopea （1 sek）"
 
-#: src/bin/e_int_menus.c:58
+#: src/bin/e_int_menus.c:61
 msgid "Favorite Applications"
-msgstr "Suosikkiohjelmat"
+msgstr "Suosikkisovellukset"
 
-#: src/bin/e_gadman.c:541
+#: src/bin/e_gadman.c:547
 msgid "Full Screen Height"
 msgstr "Koko ruudun korkeus"
 
-#: src/bin/e_gadman.c:498
+#: src/bin/e_gadman.c:500
 msgid "Full Screen Width"
 msgstr "Koko ruudun leveys"
 
-#: src/modules/dropshadow/e_mod_main.c:248
+#: src/modules/dropshadow/e_mod_main.c:268
 msgid "Fuzzy"
 msgstr "Sumea"
 
-#: src/bin/e_int_menus.c:93
+#: src/bin/e_int_menus.c:100
 msgid "Gadgets"
 msgstr "Vekottimet"
 
-#: src/modules/ibar/e_mod_main.c:796
+#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:669
 msgid "Gigantic"
 msgstr "Jättimäinen"
 
-#: src/bin/e_gadman.c:536
+#: src/bin/e_gadman.c:541
 msgid "Half Screen Height"
 msgstr "Puolet ruudun korkeudesta"
 
-#: src/bin/e_gadman.c:493
+#: src/bin/e_gadman.c:494
 msgid "Half Screen Width"
 msgstr "Puolet ruudun leveydestä"
 
-#: src/modules/battery/e_mod_main.c:990
+#: src/modules/battery/e_mod_main.c:987
 msgid "High"
 msgstr "Korkea"
 
@@ -575,35 +754,39 @@ msgstr "Korkea"
 msgid "High Temperature"
 msgstr "Korkea lämpötila"
 
-#: src/modules/ibar/e_mod_main.c:782
+#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:655
 msgid "Huge"
 msgstr "Valtava"
 
-#: src/modules/ibar/e_mod_main.c:149
+#: src/modules/ibar/e_mod_main.c:158
 msgid "IBar"
 msgstr "IBar"
 
-#: src/bin/e_border.c:3354
+#: src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
+msgstr "IBox"
+
+#: src/bin/e_border.c:3901
 msgid "Icon Edit Error"
 msgstr "Kuvakemuokkausvirhe"
 
-#: src/bin/e_border.c:3218
+#: src/bin/e_border.c:3729
 msgid "Iconify"
 msgstr "Ikonisoi"
 
-#: src/modules/dropshadow/e_mod_main.c:371
+#: src/modules/dropshadow/e_mod_main.c:391
 msgid "Immediately Underneath"
 msgstr "Välittömästi alapuolella"
 
-#: src/modules/ibar/e_mod_main.c:761
+#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:634
 msgid "Large"
 msgstr "Suuri"
 
-#: src/modules/dropshadow/e_mod_main.c:305
+#: src/modules/dropshadow/e_mod_main.c:325
 msgid "Light"
-msgstr "Valoisa"
+msgstr "Vaalea"
 
-#: src/modules/battery/e_mod_main.c:994
+#: src/modules/battery/e_mod_main.c:991
 msgid "Low"
 msgstr "Matala"
 
@@ -612,11 +795,20 @@ msgstr "Matala"
 msgid "Low Temperature"
 msgstr "Matala lämpötila"
 
-#: src/bin/e_border.c:3233
+#: src/modules/cpufreq/e_mod_main.c:432
+msgid "Manual"
+msgstr "Käsikäyttöinen"
+
+#: src/bin/e_border.c:3750
 msgid "Maximized"
 msgstr "Maksimoitu"
 
-#: src/modules/dropshadow/e_mod_main.c:257 src/modules/ibar/e_mod_main.c:754
+#: src/modules/cpufreq/e_mod_main.c:438
+msgid "Maximum Speed"
+msgstr "Maksiminopeus"
+
+#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:767
+#: src/modules/ibox/e_mod_main.c:627
 msgid "Medium"
 msgstr "Keskitaso"
 
@@ -624,50 +816,59 @@ msgstr "Keskitaso"
 msgid "Medium (5 sec)"
 msgstr "Keskitaso (5 sek)"
 
-#: src/modules/ibar/e_mod_main.c:726
+#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:599
 msgid "Microscopic"
 msgstr "Mikroskooppinen"
 
-#: src/modules/test/e_mod_main.c:9 src/modules/dropshadow/e_mod_main.c:77
-#: src/modules/clock/e_mod_main.c:40 src/modules/temperature/e_mod_main.c:43
-#: src/modules/ibar/e_mod_main.c:105 src/modules/battery/e_mod_main.c:45
-#: src/modules/pager/e_mod_main.c:79
+#: src/modules/cpufreq/e_mod_main.c:436
+msgid "Minimum Speed"
+msgstr "Miniminopeus"
+
+#: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
+#: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
+#: src/modules/ibar/e_mod_main.c:114 src/modules/pager/e_mod_main.c:84
+#: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
+#: src/modules/ibox/e_mod_main.c:103 src/modules/start/e_mod_main.c:28
 msgid "Module API Error"
 msgstr "Moduuli API virhe"
 
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
-msgstr "Moduuliasetus valikko-osa 1"
+msgstr "Moduuliasetusvalikon kohta 1"
 
 #: src/modules/test/e_mod_main.c:26
 msgid "Module Config Menu Item 2"
-msgstr "Moduuliasetus valikko-osa 2"
+msgstr "Moduuliasetusvalikon kohta 2"
 
 #: src/modules/test/e_mod_main.c:28
 msgid "Module Config Menu Item 3"
-msgstr "Moduuliasetus valikko-osa 3"
+msgstr "Moduuliasetusvalikon kohta 3"
 
-#: src/bin/e_int_menus.c:69
+#: src/bin/e_int_menus.c:73
 msgid "Modules"
 msgstr "Moduulit"
 
-#: src/bin/e_main.c:362
+#: src/bin/e_main.c:422
 msgid "Most features do not work yet, and those that do are buggy."
-msgstr "Useimmat ominaisuudet eivät toimi vielä, ja ne jotka toimivat ovat bugisia."
+msgstr "Useimmat ominaisuudet eivät toimi vielä, ja ne jotka toimivat ovat virheellisiä."
 
-#: src/modules/battery/e_mod_main.c:882
+#: src/modules/battery/e_mod_main.c:879
 msgid "NO BAT"
 msgstr "EI AKKUA"
 
-#: src/modules/battery/e_mod_main.c:750
+#: src/modules/battery/e_mod_main.c:748
 msgid "NO INFO"
 msgstr "EI TIETOA"
 
-#: src/bin/e_int_menus.c:362
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Near"
+msgstr "Lähellä"
+
+#: src/bin/e_int_menus.c:393
 msgid "New Column of Desktops"
 msgstr "Uusi pylväs työpöytiä"
 
-#: src/bin/e_int_menus.c:354
+#: src/bin/e_int_menus.c:385
 msgid "New Row of Desktops"
 msgstr "Uusi rivi työpöytiä"
 
@@ -675,15 +876,15 @@ msgstr "Uusi rivi työpöytiä"
 msgid "Normal (10 sec)"
 msgstr "Normaali (10 sek)"
 
-#: src/bin/e_error.c:188 src/bin/e_error.c:197
+#: src/bin/e_error.c:204 src/bin/e_error.c:213
 msgid "OK"
 msgstr "OK"
 
-#: src/modules/ibar/e_mod_main.c:804
+#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:677
 msgid "Options"
 msgstr "Valinnat"
 
-#: src/bin/e_main.c:112
+#: src/bin/e_main.c:122
 #, c-format
 msgid ""
 "Options:\n"
@@ -697,6 +898,12 @@ msgid ""
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
 msgstr ""
 "Valinnat:\n"
 "\t-näyttö DISPLAY\n"
@@ -709,48 +916,67 @@ msgstr ""
 "\t\txineraman simuloimiseen.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-hyvä\n"
+"\t\tOle hyvä.\n"
+"\t-paha\n"
+"\t\tOle paha.\n"
+"\t-psykottinen\n"
+"\t\tOle psykoottinen.\n"
 
-#: src/modules/pager/e_mod_main.c:126
+#: src/modules/pager/e_mod_main.c:131
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_menus.c:366
+#: src/bin/e_int_menus.c:397
 msgid "Remove Column of Desktops"
 msgstr "Poista pylväs työpöytiä"
 
-#: src/bin/e_int_menus.c:358
+#: src/bin/e_int_menus.c:389
 msgid "Remove Row of Desktops"
 msgstr "Poista rivi työpöytiä"
 
-#: src/bin/e_int_menus.c:111
+#: src/bin/e_int_menus.c:129
 msgid "Restart Enlightenment"
-msgstr "Uudelleenkäynnistä Enlightenment"
+msgstr "Käynnistä E uudelleen"
+
+#: src/bin/e_border.c:3783
+msgid "Send To"
+msgstr "Lähetä"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
 msgstr "Aseta hälytys"
 
+#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
+msgid "Set Controller"
+msgstr "Aseta säädin"
+
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
 msgid "Set Poll Time"
 msgstr "Aseta kyselyaika"
 
-#: src/bin/e_border.c:3226
+#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
+msgid "Set Speed"
+msgstr "Aseta nopeus"
+
+#: src/bin/e_border.c:3740
 msgid "Shaded"
 msgstr "Varjostettu"
 
-#: src/modules/dropshadow/e_mod_main.c:266
+#: src/modules/dropshadow/e_mod_main.c:286
 msgid "Sharp"
 msgstr "Terävä"
 
-#: src/modules/ibar/e_mod_main.c:808
+#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:681
 msgid "Size"
 msgstr "Koko"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
-msgstr "Hidas (30 sek"
+msgstr "Hidas (30 sek)"
 
-#: src/modules/ibar/e_mod_main.c:747
+#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:620
 msgid "Small"
 msgstr "Pieni"
 
@@ -758,7 +984,11 @@ msgstr "Pieni"
 msgid "Something Else"
 msgstr "Jotain muuta"
 
-#: src/bin/e_border.c:3240
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "Käynnistä"
+
+#: src/bin/e_border.c:3760
 msgid "Sticky"
 msgstr "Tarttuva"
 
@@ -770,7 +1000,11 @@ msgstr "Lämpötila"
 msgid "Test!!!"
 msgstr "Testi!!!"
 
-#: src/bin/e_module.c:99
+#: src/bin/e_int_menus.c:109
+msgid "Themes"
+msgstr "Ulkoasut"
+
+#: src/bin/e_module.c:110
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -781,7 +1015,7 @@ msgstr ""
 "Yhtäkään moduulia nimeltä %s ei löytynyt\n"
 "etsityistä hakemistoista.\n"
 
-#: src/bin/e_module.c:110 src/bin/e_module.c:132
+#: src/bin/e_module.c:121 src/bin/e_module.c:143
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -796,42 +1030,44 @@ msgstr ""
 "Ilmoitettu virhe oli:\n"
 "%s"
 
-#: src/bin/e_int_menus.c:211
+#: src/modules/cpufreq/e_mod_main.c:271
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+"Tapahrui virhe kellotaajuuden hallitsijan asettamisessa\n"
+"moduulin setfreq ominaisuuden kautta."
+
+#: src/modules/cpufreq/e_mod_main.c:288
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"setting via the module's setfreq utility."
+msgstr ""
+"Tapahrui virhe kellotaajuuden asettamisessa moduulin\n"
+"setfreq ominaisuuden kautta."
+
+#: src/bin/e_int_menus.c:242
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
 "\n"
 "We hope you enjoy using this software as much as we enjoyed writing it.\n"
 "\n"
 "Please think of the aardvarks. They need some love too."
 msgstr ""
 "Tämä on enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team."
+"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
 "\n"
 "Toivomme että nautit tämän ohjelmiston käytöstä yhtä paljon kuin nautimme sen kirjoittamisesta.\n"
 "\n"
 "Ajatelkaa maasikoja. Nekin tarvitsevat rakkautta."
 
-#: src/bin/e_main.c:361
+#: src/bin/e_main.c:421
 msgid "This is development code, so be warned."
 msgstr "Varoitus: Tämä on kehitteillä olevaa koodia"
 
-#: src/bin/e_main.c:321
-msgid ""
-"This is program has barely been started on, so it is not complete by a long\n"
-"shot. Please do NOT expect anything to work properly at this stage. It's\n"
-"being worked on.\n"
-"\n"
-"Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
-msgstr ""
-"Tämän ohjelman kehitystyö on hädin tuskin aloitettu, joten se ei ole valmis\n"
-"pitkällä tähtäimellä. ÄLÄ odota minkään toimivan kunnolla tässä vaiheessa.\n"
-"Sitä työstetään yhä.\n"
-"\n"
-"Paina \"OK\" poistaaksesi tämän ilmoituksen ja jatkaaksesi Enlightenment 0.17 käyttöä."
-
-#: src/modules/ibar/e_mod_main.c:159
+#: src/modules/ibar/e_mod_main.c:168
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.\n"
 "It is a first example module and is being used to flesh out several\n"
@@ -843,7 +1079,19 @@ msgstr ""
 "useissa Enlightenment 0.17.0:n liitännöissä. Se on raskaan kehitystyön alla\n,"
 "joten odota sen hajoavan usein ja muuttuvan kehittyessään."
 
-#: src/modules/dropshadow/e_mod_main.c:135
+#: src/modules/ibox/e_mod_main.c:158
+msgid ""
+"This is the IBox Application Launcher box module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"Tämä on IBox ohjelmistojen käynnistyspalkkimoduuli Enlightenmentille.\n"
+"Se on ensimmäinen esimerkkimoduuli ja sitä käytetään 'antamaan lihaa luden päälle'\n"
+"useissa Enlightenment 0.17.0:n liitännöissä. Se on raskaan kehitystyön alla\n,"
+"joten odota sen hajoavan usein ja muuttuvan kehittyessään."
+
+#: src/modules/dropshadow/e_mod_main.c:149
 msgid ""
 "This is the dropshadow module that allows dropshadows to be cast\n"
 "on the desktop background - without special X-Server extensions\n"
@@ -860,38 +1108,38 @@ msgid ""
 "Ignore this module unless you are working on the module system."
 msgstr ""
 "Tämä moduuli on ERITTÄIN yksinkertainen ja sitä käytetään vain\n"
-"testaamaan Enlightenment 0.17.0:n perusliitäntöjä. Jätä tämä\n"
+"kokeilemaan Enlightenment 0.17.0:n moduulijärjestelmän perusliitäntöjä. Jätä tämä\n"
 "huomiotta ellet työskentele enlightenmentin moduulijärjestelmän parissa."
 
-#: src/modules/ibar/e_mod_main.c:733
+#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:606
 msgid "Tiny"
 msgstr "Pikkuruinen"
 
-#: src/modules/dropshadow/e_mod_main.c:353
-msgid "Very Close"
-msgstr "Erittäin lähellä"
-
-#: src/modules/dropshadow/e_mod_main.c:287
+#: src/modules/dropshadow/e_mod_main.c:307
 msgid "Very Dark"
 msgstr "Erittäin tumma"
 
-#: src/modules/dropshadow/e_mod_main.c:326
+#: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Far"
 msgstr "Erittäin kaukana"
 
-#: src/modules/dropshadow/e_mod_main.c:239
+#: src/modules/dropshadow/e_mod_main.c:259
 msgid "Very Fuzzy"
 msgstr "Erittäin sumea"
 
-#: src/modules/ibar/e_mod_main.c:768
+#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:641
 msgid "Very Large"
 msgstr "Erittäin suuri"
 
-#: src/modules/dropshadow/e_mod_main.c:314
+#: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Light"
-msgstr "Erittäin valoisa"
+msgstr "Erittäin vaalea"
 
-#: src/modules/dropshadow/e_mod_main.c:275
+#: src/modules/dropshadow/e_mod_main.c:373
+msgid "Very Near"
+msgstr "Erittäin lähellä"
+
+#: src/modules/dropshadow/e_mod_main.c:295
 msgid "Very Sharp"
 msgstr "Erittäin terävä"
 
@@ -899,15 +1147,11 @@ msgstr "Erittäin terävä"
 msgid "Very Slow (60 sec)"
 msgstr "Erittäin hidas (60 sek)"
 
-#: src/modules/ibar/e_mod_main.c:740
+#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:613
 msgid "Very Small"
 msgstr "Erittäin pieni"
 
-#: src/bin/e_main.c:320
-msgid "Welcome to Enlightenment 0.17"
-msgstr "Tervetuloa Enlightenment 0.17:ta"
-
-#: src/bin/e_int_menus.c:85
+#: src/bin/e_int_menus.c:91
 msgid "Windows"
 msgstr "Ikkunat"
 
@@ -916,10 +1160,25 @@ msgstr "Ikkunat"
 msgid "X reports there are no root windows and %i screens!\n"
 msgstr "X ilmoittaa että root ikkunoita ja %i ruutuja ei ole!\n"
 
-#: src/modules/battery/e_mod_main.c:689
+#: src/modules/battery/e_mod_main.c:687
 msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
 msgstr ""
 "Akkusi on lopussa.\n"
 "Halunnet vaihtaa ulkoiseen virtalähteeseen."
+
+#: src/bin/e_config.c:149
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your confiugration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"Asetuksesi ovat UUDEMMAT kuin Enlightenment. Tämä on erittäin omituista,\n"
+"eikä näin pitäisi tapahtua ellet ole vaihtanut Enlightenmentia vanhempaan\n"
+"versioon, tai kopioinut asetuksia paikasta joss oli käytössä uudempi versio\n"
+"Enlightenmentista. Tämä on huono asia ja varokeinona asetuksesi on palautettu\n"
+"vakioasetuksiin. Olemme pahoillamme häiriöstä.\n"
