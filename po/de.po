@@ -265,6 +265,11 @@ msgstr ""
 "Du kannst jetzt natürlich wieder Enlightenment nach deinen Wünschen\n"
 "gestalten. Entschuldigung.\n"
 
+#: src/bin/e_container.c:102
+#, c-format
+msgid "Container %d"
+msgstr "Container %d"
+
 #: src/modules/dropshadow/e_mod_main.c:364
 msgid "Near"
 msgstr "Nah"
