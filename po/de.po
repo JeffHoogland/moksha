@@ -290,6 +290,11 @@ msgstr "Gefahr"
 msgid "Dark"
 msgstr "Dunkel"
 
+#: src/bin/e_desk.c:44
+#, c-format
+msgid "Desktop %d, %d"
+msgstr "Arbeitsfläche %d, %d"
+
 #: src/bin/e_int_menus.c:76
 msgid "Desktops"
 msgstr "Arbeitsflächen"
