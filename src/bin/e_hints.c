@@ -45,6 +45,8 @@ e_hints_init(void)
 
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_DESKTOP_GEOMETRY, 1);
 
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_FRAME_EXTENTS, 1);
+
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTED, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_VIRTUAL_ROOTS, 1);
@@ -52,14 +54,24 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_NAME, 1);
 
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_STICKY, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_VERT, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_HORZ, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SHADED, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_HIDDEN, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_FULLSCREEN, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_ABOVE, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_BELOW, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_FULLSCREEN, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_HIDDEN, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_HORZ, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_MAXIMIZED_VERT, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_SHADED, 1);
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_STICKY, 1);
+
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DESKTOP, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DOCK, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_TOOLBAR, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_MENU, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_UTILITY, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_SPLASH, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DIALOG, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_NORMAL, 1);
 	  }
         free(roots);
      }
