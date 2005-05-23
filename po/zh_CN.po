@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-19 03:27+0800\n"
-"PO-Revision-Date: 2005-05-19 03:33+0800\n"
+"POT-Creation-Date: 2005-05-24 07:19+0800\n"
+"PO-Revision-Date: 2005-05-24 01:21+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -129,15 +129,15 @@ msgstr "一个给E17提供时钟的简单模块。"
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
-#: src/bin/e_module.c:392
+#: src/bin/e_module.c:383
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_border.c:3770
+#: src/bin/e_border.c:3832
 msgid "Always On Top"
 msgstr "置顶"
 
-#: src/bin/e_main.c:420
+#: src/bin/e_main.c:438
 msgid "Artificially slowing startup so you can see it all."
 msgstr "人工调慢启动过程，以便您看得更清楚。"
 
@@ -149,11 +149,11 @@ msgstr "自动缩放图标"
 msgid "Automatic"
 msgstr "自动"
 
-#: src/bin/e_gadman.c:530
+#: src/bin/e_gadman.c:555
 msgid "Automatic Height"
 msgstr "自动调整高度"
 
-#: src/bin/e_gadman.c:483
+#: src/bin/e_gadman.c:508
 msgid "Automatic Width"
 msgstr "自动调整宽度"
 
@@ -177,11 +177,11 @@ msgstr "CPU频率控制模块"
 msgid "CPU Frequency ERROR"
 msgstr "CPU频率错误"
 
-#: src/bin/e_gadman.c:512
+#: src/bin/e_gadman.c:537
 msgid "Center Horizontally"
 msgstr "水平居中"
 
-#: src/bin/e_gadman.c:559
+#: src/bin/e_gadman.c:584
 msgid "Center Vertically"
 msgstr "垂直居中"
 
@@ -242,19 +242,19 @@ msgstr "重新排列窗口"
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:3721
+#: src/bin/e_border.c:3783
 msgid "Close"
 msgstr "关闭"
 
-#: src/bin/e_module.c:407
+#: src/bin/e_module.c:398
 msgid "Configuration"
 msgstr "配置"
 
-#: src/bin/e_config.c:879
+#: src/bin/e_config.c:977
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
 
-#: src/bin/e_config.c:135
+#: src/bin/e_config.c:157
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -274,11 +274,16 @@ msgstr ""
 "配置您的桌面设置。\n"
 "很抱歉打断了您的配置。\n"
 
+#: src/bin/e_container.c:102
+#, c-format
+msgid "Container %d"
+msgstr "容器 %d"
+
 #: src/modules/cpufreq/e_mod_main.c:98
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:3825
+#: src/bin/e_border.c:3887
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -290,6 +295,11 @@ msgstr "危险"
 msgid "Dark"
 msgstr "暗"
 
+#: src/bin/e_desk.c:44
+#, c-format
+msgid "Desktop %d, %d"
+msgstr "桌面 %d, %d"
+
 #: src/bin/e_int_menus.c:82
 msgid "Desktops"
 msgstr "桌面"
@@ -298,7 +308,7 @@ msgstr "桌面"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:3799
+#: src/bin/e_border.c:3861
 msgid "Edit Icon"
 msgstr "编辑图标"
 
@@ -310,15 +320,15 @@ msgstr "编辑图标"
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: src/bin/e_module.c:396
+#: src/bin/e_module.c:387
 msgid "Enabled"
 msgstr "启用"
 
-#: src/bin/e_gadman.c:571
+#: src/bin/e_gadman.c:596
 msgid "End Edit Mode"
 msgstr "结束编辑模式"
 
-#: src/bin/e_main.c:404
+#: src/bin/e_main.c:422
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -342,7 +352,7 @@ msgstr "Enlightenment IBar 模块"
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox 模块"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:405
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
@@ -354,7 +364,7 @@ msgstr "Enlightenment桌面切换器模块"
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment开始菜单模块"
 
-#: src/bin/e_main.c:406
+#: src/bin/e_main.c:424
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
@@ -366,7 +376,7 @@ msgstr "Enlightenment 温度模块"
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment 测试模块"
 
-#: src/bin/e_main.c:174
+#: src/bin/e_main.c:192
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -374,7 +384,7 @@ msgstr ""
 "Enlightenment 无法启动Ecore！\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:267
+#: src/bin/e_main.c:285
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -382,7 +392,7 @@ msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
 "可能您没有主目录或者磁盘已满？"
 
-#: src/bin/e_main.c:201
+#: src/bin/e_main.c:219
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -390,7 +400,7 @@ msgstr ""
 "Enlightenment 无法启动X连接。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:240
+#: src/bin/e_main.c:258
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -398,7 +408,7 @@ msgstr ""
 "Enlightenment 无法启动Evas系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:255
+#: src/bin/e_main.c:273
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -406,7 +416,7 @@ msgstr ""
 "Enlightenment 无法启动文件系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:232
+#: src/bin/e_main.c:250
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -414,7 +424,7 @@ msgstr ""
 "Enlightenment 无法启动IPC系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:224
+#: src/bin/e_main.c:242
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -422,7 +432,7 @@ msgstr ""
 "Enlightenment 无法启动连接系统。\n"
 "可能您的内存用完了？<"
 
-#: src/bin/e_main.c:190
+#: src/bin/e_main.c:208
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -430,7 +440,7 @@ msgstr ""
 "Enlightenment 无法建立一个HUP信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:184
+#: src/bin/e_main.c:202
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -438,7 +448,7 @@ msgstr ""
 "Enlightenment 无法建立一个退出信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:325
+#: src/bin/e_main.c:343
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -446,43 +456,43 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:290
+#: src/bin/e_main.c:308
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 无法建立它的动作系统。"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:359
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment 无法建立它的应用系统。"
 
-#: src/bin/e_main.c:297
+#: src/bin/e_main.c:315
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
-#: src/bin/e_main.c:283
+#: src/bin/e_main.c:293
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:381
+#: src/bin/e_main.c:399
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
-#: src/bin/e_main.c:315
+#: src/bin/e_main.c:333
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:373
+#: src/bin/e_main.c:391
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
-#: src/bin/e_main.c:304
+#: src/bin/e_main.c:322
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 无法建立它的弹出系统。"
 
-#: src/bin/e_main.c:348
+#: src/bin/e_main.c:366
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 无法建立它的主题系统。"
 
-#: src/bin/e_main.c:275
+#: src/bin/e_main.c:300
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -490,7 +500,7 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:360 src/bin/e_main.c:388
+#: src/bin/e_main.c:378 src/bin/e_main.c:406
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -504,7 +514,7 @@ msgstr ""
 "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 "然后再试着运行一遍。"
 
-#: src/bin/e_main.c:208
+#: src/bin/e_main.c:226
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -512,7 +522,7 @@ msgstr ""
 "Enlightenment 无法建立xinerama wrapping。\n"
 "这种情况不该发生。"
 
-#: src/bin/e_main.c:246
+#: src/bin/e_main.c:264
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -522,7 +532,7 @@ msgstr ""
 "渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
 "件X11渲染。"
 
-#: src/bin/e_main.c:333
+#: src/bin/e_main.c:351
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -668,11 +678,11 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/bin/e_module.c:109 src/bin/e_module.c:120 src/bin/e_module.c:142
+#: src/bin/e_module.c:100 src/bin/e_module.c:111 src/bin/e_module.c:133
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:3902
+#: src/bin/e_border.c:3964
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -716,11 +726,11 @@ msgstr "快 （1秒）"
 msgid "Favorite Applications"
 msgstr "常用程序"
 
-#: src/bin/e_gadman.c:547
+#: src/bin/e_gadman.c:572
 msgid "Full Screen Height"
 msgstr "全屏幕高度"
 
-#: src/bin/e_gadman.c:500
+#: src/bin/e_gadman.c:525
 msgid "Full Screen Width"
 msgstr "全屏幕宽度"
 
@@ -736,11 +746,11 @@ msgstr "附件"
 msgid "Gigantic"
 msgstr "超大"
 
-#: src/bin/e_gadman.c:541
+#: src/bin/e_gadman.c:566
 msgid "Half Screen Height"
 msgstr "半屏幕高度"
 
-#: src/bin/e_gadman.c:494
+#: src/bin/e_gadman.c:519
 msgid "Half Screen Width"
 msgstr "半屏幕宽度"
 
@@ -765,11 +775,11 @@ msgstr "IBar"
 msgid "IBox"
 msgstr "IBox"
 
-#: src/bin/e_border.c:3901
+#: src/bin/e_border.c:3963
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:3729
+#: src/bin/e_border.c:3791
 msgid "Iconify"
 msgstr "最小化"
 
@@ -798,7 +808,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr "手动"
 
-#: src/bin/e_border.c:3750
+#: src/bin/e_border.c:3812
 msgid "Maximized"
 msgstr "最大化"
 
@@ -847,7 +857,7 @@ msgstr "模块配置菜单 3"
 msgid "Modules"
 msgstr "模块"
 
-#: src/bin/e_main.c:422
+#: src/bin/e_main.c:440
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr "很多特性还不能用，能用的也是有很多bug的。"
 
@@ -879,11 +889,12 @@ msgstr "正常 （10秒）"
 msgid "OK"
 msgstr "确定"
 
-#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:677
+#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:817
+#: src/modules/ibox/e_mod_main.c:677
 msgid "Options"
 msgstr "选项"
 
-#: src/bin/e_main.c:122
+#: src/bin/e_main.c:140
 #, c-format
 msgid ""
 "Options:\n"
@@ -938,7 +949,7 @@ msgstr "删除一行桌面"
 msgid "Restart Enlightenment"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_border.c:3783
+#: src/bin/e_border.c:3845
 msgid "Send To"
 msgstr "发送到"
 
@@ -959,7 +970,7 @@ msgstr "设置检查时间"
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:3740
+#: src/bin/e_border.c:3802
 msgid "Shaded"
 msgstr "卷起"
 
@@ -967,7 +978,8 @@ msgstr "卷起"
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:681
+#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:821
+#: src/modules/ibox/e_mod_main.c:681
 msgid "Size"
 msgstr "大小"
 
@@ -987,7 +999,7 @@ msgstr "一些其它东西"
 msgid "Start"
 msgstr "开始菜单"
 
-#: src/bin/e_border.c:3760
+#: src/bin/e_border.c:3822
 msgid "Sticky"
 msgstr "粘住"
 
@@ -1003,7 +1015,7 @@ msgstr "测试！！！"
 msgid "Themes"
 msgstr "主题"
 
-#: src/bin/e_module.c:110
+#: src/bin/e_module.c:101
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -1013,7 +1025,7 @@ msgstr ""
 "导入模块 %s 时发生错误。\n"
 "在模块搜索路径中没有找到名叫 %s 的模块。\n"
 
-#: src/bin/e_module.c:121 src/bin/e_module.c:143
+#: src/bin/e_module.c:112 src/bin/e_module.c:134
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -1061,7 +1073,7 @@ msgstr ""
 "\n"
 "请想想土豚们。它们也需要关爱。"
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:439
 msgid "This is development code, so be warned."
 msgstr "这是开发中的代码，所以警告一下。"
 
@@ -1166,7 +1178,7 @@ msgstr ""
 "您的电池电量低。\n"
 "您可能需要切换到使用交流电源。"
 
-#: src/bin/e_config.c:149
+#: src/bin/e_config.c:171
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
