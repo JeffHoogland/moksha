@@ -344,7 +344,6 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-bg-dirs-append", "Append OPT1 to the user background path", E_IPC_OP_BG_DIRS_APPEND, 0),
    OSTR("-bg-dirs-prepend", "Prepend OPT1 to the user background path", E_IPC_OP_BG_DIRS_PREPEND, 0),
    OSTR("-bg-dirs-remove", "Remove OPT1 from the user background path", E_IPC_OP_BG_DIRS_REMOVE, 0),
-   OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
    ODBL("-menus-scroll-speed-set", "Set the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_SET, 0),
    OREQ("-menus-scroll-speed-get", "Get the scroll speed of menus (pixels/sec)", E_IPC_OP_MENUS_SCROLL_SPEED_GET, 1),
    ODBL("-menus-fast-move-threshhold-set", "Set the mouse speed in pixels per second that is considered a 'fast move'", E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET, 0),
