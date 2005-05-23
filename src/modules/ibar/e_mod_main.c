@@ -272,11 +272,11 @@ _ibar_new()
 
 		  /* Add main menu to bar menu */
 		  mi = e_menu_item_new(ibb->menu);
-		  e_menu_item_label_set(mi, "Options");
+		  e_menu_item_label_set(mi, _("Options"));
 		  e_menu_item_submenu_set(mi, ib->config_menu_options);
 
 		  mi = e_menu_item_new(ibb->menu);
-		  e_menu_item_label_set(mi, "Size");
+		  e_menu_item_label_set(mi, _("Size"));
 		  e_menu_item_submenu_set(mi, ib->config_menu_size);
 
 		  mi = e_menu_item_new(ib->config_menu);
