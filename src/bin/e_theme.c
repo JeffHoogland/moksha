@@ -104,8 +104,7 @@ e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
 	     if (str[0] != '/')
 	       str = e_path_find(path_themes, str);
 	     /* save cached value */
-	     if (str)
-	       res->cache = strdup(str);
+	     if (str) res->cache = str;
 	  }
 	if (str)
 	  {
@@ -170,8 +169,7 @@ e_theme_edje_file_get(char *category, char *group)
 	     if (str[0] != '/')
 	       str = e_path_find(path_themes, str);
 	     /* save cached value */
-	     if (str)
-	       res->cache = strdup(str);
+	     if (str) res->cache = str;
 	  }
 	if (str)
 	  {

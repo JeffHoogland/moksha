@@ -608,5 +608,5 @@ _e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
    act = data;
    IF_FREE(act->name);
    free(act);
-   return 0;
+   return 1;
 }

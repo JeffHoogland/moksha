@@ -228,6 +228,8 @@ _temperature_free(Temperature *e)
 
    ecore_timer_del(e->temperature_check_timer);
 
+   for (l = e->conf->faces; l; l = l->next)
+     free(l->data);
    evas_list_free(e->conf->faces);
    free(e->conf);
    free(e);

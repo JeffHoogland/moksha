@@ -295,6 +295,20 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.fetch.protocol = 1;
    bd->client.mwm.fetch.hints = 1;
    bd->client.border.changed = 1;
+   
+   bd->client.netwm.pid = 0;
+   bd->client.netwm.desktop = 0;
+   bd->client.netwm.state.modal = 0;
+   bd->client.netwm.state.sticky = 0;
+   bd->client.netwm.state.shaded = 0;
+   bd->client.netwm.state.hidden = 0;
+   bd->client.netwm.state.maximized_v = 0;
+   bd->client.netwm.state.maximized_h = 0;
+   bd->client.netwm.state.skip_taskbar = 0;
+   bd->client.netwm.state.skip_pager = 0;
+   bd->client.netwm.state.fullscreen = 0;
+   bd->client.netwm.state.stacking = E_STACKING_NONE;
+   bd->client.netwm.type = ECORE_X_WINDOW_TYPE_NORMAL;
 
    bd->client.w = att->w;
    bd->client.h = att->h;

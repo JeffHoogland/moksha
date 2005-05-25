@@ -8,9 +8,6 @@ static void      _e_path_free(E_Path *ep);
 static void      _e_path_cache_free(E_Path *ep);
 static Evas_Bool _e_path_cache_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
-/* local subsystem globals */
-static char _e_path_buf[PATH_MAX] = "";
-
 /* externally accessible functions */
 E_Path *
 e_path_new(void)
@@ -254,18 +251,14 @@ e_path_find(E_Path *ep, const char *file)
 {
    Evas_List *l;
    char *str;
+   char buf[PATH_MAX] = "";
    
    E_OBJECT_CHECK_RETURN(ep, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(ep, E_PATH_TYPE, NULL);
 
    if (!file) return NULL;
-   _e_path_buf[0] = 0;
    str = evas_hash_find(ep->hash, file);
-   if (str)
-     {
-	strcpy(_e_path_buf, str);
-	return _e_path_buf;
-     }
+   if (str) return strdup(str);
    /* Look in the default dir list */
    for (l = ep->default_dir_list; l; l = l->next)
      {
@@ -275,17 +268,17 @@ e_path_find(E_Path *ep, const char *file)
 	epd = l->data;
 	if (epd->dir)
 	  {
-	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", epd->dir, file);
-	     rp = ecore_file_realpath(_e_path_buf);
+	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
+	     rp = ecore_file_realpath(buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
-		  strncpy(_e_path_buf, rp, sizeof(_e_path_buf) - 1);
-		  _e_path_buf[sizeof(_e_path_buf) - 1] = 0;
+		  strncpy(buf, rp, sizeof(buf) - 1);
+		  buf[sizeof(buf) - 1] = 0;
 		  free(rp);
 		  if (evas_hash_size(ep->hash) >= 512)
 		    _e_path_cache_free(ep);
-		  ep->hash = evas_hash_add(ep->hash, file, strdup(_e_path_buf));
-		  return _e_path_buf;
+		  ep->hash = evas_hash_add(ep->hash, file, strdup(buf));
+		  return strdup(buf);
 	       }
 	     if (rp) free(rp);
 	  }
@@ -299,22 +292,22 @@ e_path_find(E_Path *ep, const char *file)
 	epd = l->data;
 	if (epd->dir)
 	  {
-	     snprintf(_e_path_buf, sizeof(_e_path_buf), "%s/%s", epd->dir, file);
-	     rp = ecore_file_realpath(_e_path_buf);
+	     snprintf(buf, sizeof(buf), "%s/%s", epd->dir, file);
+	     rp = ecore_file_realpath(buf);
 	     if ((rp) && (rp[0] != 0))
 	       {
-		  strncpy(_e_path_buf, rp, sizeof(_e_path_buf) - 1);
-		  _e_path_buf[sizeof(_e_path_buf) - 1] = 0;
+		  strncpy(buf, rp, sizeof(buf) - 1);
+		  buf[sizeof(buf) - 1] = 0;
 		  free(rp);
 		  if (evas_hash_size(ep->hash) >= 512)
 		    _e_path_cache_free(ep);
-		  ep->hash = evas_hash_add(ep->hash, file, strdup(_e_path_buf));
-		  return _e_path_buf;
+		  ep->hash = evas_hash_add(ep->hash, file, strdup(buf));
+		  return strdup(buf);
 	       }
 	     if (rp) free(rp);
 	  }
      }
-   return _e_path_buf;
+   return NULL;
 }
 
 void
@@ -335,7 +328,10 @@ e_path_evas_append(E_Path *ep, Evas *evas)
 	
 	epd = l->data;
 	if (epd->dir) evas_font_path_append(evas, epd->dir);
+	free(epd->dir);
+	free(epd);
      }
+   if (dir_list) evas_list_free(dir_list);
 }
 
 /* compine default_list and and user_list int and easy to use list */
@@ -411,5 +407,5 @@ static Evas_Bool
 _e_path_cache_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
-   return 0;
+   return 1;
 }

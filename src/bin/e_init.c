@@ -26,6 +26,7 @@ e_init_init(void)
    int num;
    Evas_Object *o;
    Evas_List *l, *screens;
+   char *s;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -73,18 +74,20 @@ e_init_init(void)
 	     /* first screen */
 	     if (l == screens)
 	       {
-		  edje_object_file_set(o,
-				       /* FIXME: "init.edj" needs to come from config */
-				       e_path_find(path_init, "init.edj"),
-				       "init/splash");
+		  /* FIXME: "init.edj" needs to come from config */
+		  s = e_path_find(path_init, "init.edj"),
+		  edje_object_file_set(o, s, "init/splash");
+		  IF_FREE(s);
 		  _e_init_object = o;
 	       }
 	     /* other screens */
 	     else
-	       edje_object_file_set(o,
-				    /* FIXME: "init.edj" needs to come from config */
-				    e_path_find(path_init, "init.edj"),
-				    "init/extra_screen");
+	       {
+		  /* FIXME: "init.edj" needs to come from config */
+		  s = e_path_find(path_init, "init.edj"),
+		  edje_object_file_set(o, s, "init/extra_screen");
+		  IF_FREE(s);
+	       }
 	     evas_object_move(o, scr->x, scr->y);
 	     evas_object_resize(o, scr->w, scr->h);
 	     evas_object_show(o);
@@ -93,10 +96,10 @@ e_init_init(void)
    else
      {
 	o = edje_object_add(_e_init_evas);
-	edje_object_file_set(o,
-			     /* FIXME: "init.edj" needs to come from config */
-			     e_path_find(path_init, "init.edj"),
-			     "init/splash");
+	/* FIXME: "init.edj" needs to come from config */
+	s = e_path_find(path_init, "init.edj"),
+	edje_object_file_set(o, s, "init/splash");
+	IF_FREE(s);
 	_e_init_object = o;
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, w, h);

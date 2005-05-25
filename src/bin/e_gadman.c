@@ -491,6 +491,7 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
    E_Menu *m;
    E_Menu_Item *mi;
    int disallow, seperator;
+   char *s;
    
    E_OBJECT_CHECK_RETURN(gmc, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(gmc, E_GADMAN_CLIENT_TYPE, NULL);
@@ -508,24 +509,24 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	     e_menu_item_label_set(mi, _("Automatic Width"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, gmc->use_autow);
-	     e_menu_item_icon_edje_set(mi, 
-				       e_path_find(path_icons, "default.edj"),
-				       "auto_width");
+	     s = e_path_find(path_icons, "default.edj");
+	     e_menu_item_icon_edje_set(mi, s, "auto_width");
+	     IF_FREE(s);
 	     e_menu_item_callback_set(mi, _e_gadman_cb_auto_width, gmc);
 	     mi = e_menu_item_new(m);
 	     e_menu_item_separator_set(mi, 1);
 	  }
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Half Screen Width"));
-	e_menu_item_icon_edje_set(mi, 
-				  e_path_find(path_icons, "default.edj"),
-				  "half_width");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "half_width");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_gadman_cb_half_width, gmc);
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Full Screen Width"));
-	e_menu_item_icon_edje_set(mi, 
-				  e_path_find(path_icons, "default.edj"),
-				  "full_width");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "full_width");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_width, gmc);
      }
    disallow = (gmc->policy & E_GADMAN_POLICY_EDGES)
@@ -535,9 +536,9 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	seperator = 1;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Center Horizontally"));
-	e_menu_item_icon_edje_set(mi, 
-				  e_path_find(path_icons, "default.edj"),
-				  "center_horiz");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "center_horiz");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_horiz, gmc);
      }
    if (seperator)
@@ -555,24 +556,23 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	     e_menu_item_label_set(mi, _("Automatic Height"));
 	     e_menu_item_check_set(mi, 1);
 	     e_menu_item_toggle_set(mi, gmc->use_autoh);
-	     e_menu_item_icon_edje_set(mi, 
-				       e_path_find(path_icons, "default.edj"),
-				       "auto_height");
+	     s = e_path_find(path_icons, "default.edj"),
+	     e_menu_item_icon_edje_set(mi, s, "auto_height");
+	     IF_FREE(s);
 	     e_menu_item_callback_set(mi, _e_gadman_cb_auto_height, gmc);
 	     mi = e_menu_item_new(m);
 	     e_menu_item_separator_set(mi, 1);
 	  }
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Half Screen Height"));
-	e_menu_item_icon_edje_set(mi, 
-				  e_path_find(path_icons, "default.edj"),
-				  "half_height");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "half_height");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_gadman_cb_half_height, gmc);
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Full Screen Height"));
-	e_menu_item_icon_edje_set(mi, 
-				  e_path_find(path_icons, "default.edj"),
-				  "full_height");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "full_height");
 	e_menu_item_callback_set(mi, _e_gadman_cb_full_height, gmc);
      }
    disallow = (gmc->policy & E_GADMAN_POLICY_EDGES)
@@ -582,9 +582,9 @@ e_gadman_client_menu_new(E_Gadman_Client *gmc)
 	seperator = 1;
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Center Vertically"));
-	e_menu_item_icon_edje_set(mi,
-				  e_path_find(path_icons, "default.edj"),
-				  "center_vert");
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "center_vert");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_gadman_cb_center_vert, gmc);
      }
    if (seperator)

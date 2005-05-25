@@ -171,6 +171,7 @@ e_module_new(char *name)
 	e_config->modules = evas_list_append(e_config->modules, em);
 	e_config_save_queue();
      }
+   free(modpath);
    return m;
 }
 

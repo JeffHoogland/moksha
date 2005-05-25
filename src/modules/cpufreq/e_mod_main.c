@@ -247,11 +247,7 @@ _cpufreq_free(Cpufreq *e)
    _cpufreq_status_free(e->status);
 
    free(e->set_exe_path);
-//   while (e->conf->faces)
-//     {
-//	free(e->conf->faces->data);
-//	e->conf->faces = evas_list_remove_list(e->conf->faces, e->conf->faces);
-//     }
+   evas_list_free(e->conf->faces);
    free(e->conf);
    free(e);
 }

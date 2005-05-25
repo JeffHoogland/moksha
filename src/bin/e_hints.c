@@ -162,7 +162,7 @@ e_hints_client_list_set(void)
 	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
 	  }
      }
-
+   IF_FREE(clients);
 }
 
 /* Client list is already in stacking order, so this function is nearly
@@ -221,7 +221,7 @@ e_hints_client_stacking_set(void)
 	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
 	  }
      }
-
+   IF_FREE(clients);
 }
 
 void
@@ -1033,6 +1033,11 @@ e_hints_window_desktop_set(E_Border *bd)
    unsigned int current;
  
    current = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
+   /* if valgrind complains here it is complaining bd->client.netwm.desktop
+    * is an uninitialised variable - but it isn't. it can't be. its part of
+    * a calloc()'d struct and thus has to have been set to 0. hell even
+    * e_border.c explicitly sets it to 0 on creation of the border object.
+    */
    if (bd->client.netwm.desktop != current)
      {
 	deskpos[0] = bd->desk->x;

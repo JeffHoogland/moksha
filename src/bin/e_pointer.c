@@ -11,14 +11,23 @@ e_pointer_container_set(E_Container *con)
    int w, h;
    Evas_Object *o;
    int *pix;
+   char *s;
 
    E_OBJECT_CHECK(E_OBJECT(con));
    
    o = evas_object_image_add(con->bg_evas);
    if (ecore_x_cursor_color_supported_get())
-     evas_object_image_file_set(o, e_path_find(path_images, "pointer.png"), NULL);
+     {
+	s = e_path_find(path_images, "pointer.png");
+	evas_object_image_file_set(o, s, NULL);
+	IF_FREE(s);
+     }
    else
-     evas_object_image_file_set(o, e_path_find(path_images, "pointer_mono.png"), NULL);
+     {
+	s = e_path_find(path_images, "pointer_mono.png");
+	evas_object_image_file_set(o, s, NULL);
+	IF_FREE(s);
+     }
    evas_object_image_size_get(o, &w, &h);
    pix = evas_object_image_data_get(o, 0);
    cur = ecore_x_cursor_new(con->win, pix, w, h, 0, 0);
@@ -38,14 +47,23 @@ e_pointer_ecore_evas_set(Ecore_Evas *ee)
    Evas_Object *o;
    int *pix;
    Evas *e;
+   char *s;
    
    e = ecore_evas_get(ee);
    win = ecore_evas_software_x11_window_get(ee);
    o = evas_object_image_add(e);
    if (ecore_x_cursor_color_supported_get())
-     evas_object_image_file_set(o, e_path_find(path_images, "pointer.png"), NULL);
+     {
+	s = e_path_find(path_images, "pointer.png");
+	evas_object_image_file_set(o, s, NULL);
+	IF_FREE(s);
+     }
    else
-     evas_object_image_file_set(o, e_path_find(path_images, "pointer_mono.png"), NULL);
+     {
+	s = e_path_find(path_images, "pointer_mono.png");
+	evas_object_image_file_set(o, s, NULL);
+	IF_FREE(s);
+     }
    evas_object_image_size_get(o, &w, &h);
    pix = evas_object_image_data_get(o, 0);
    cur = ecore_x_cursor_new(win, pix, w, h, 0, 0);
