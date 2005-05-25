@@ -1,0 +1,30 @@
+# $Id$
+# bash-completion script for enlightenment_remote
+# By Justin Rocha (Xenith)
+
+_enlightenment_remote() {
+	local cur prev opts
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+	opts="-h --help -module-load -module-unload -module-enable -module-disable \
+	-module-list -module-dirs-list -bg-set -bg-get -bg-dirs-list \
+    -font-fallback-remove -font-fallback-prepend -font-fallback-append \
+    -font-apply -font-fallback-list -font-available-list -font-fallback-clear \
+    -font-default-get -font-default-remove -font-default-list -font-default-set \
+    -font-default-remove -font-default-list -font-default-set -restart \
+    -shutdown -lang-get -lang-list -lang-set -binding-mouse-list \
+    -binding-mouse-add -binding-mouse-del -binding-key-list \
+    -binding-key-add -binding-key-del"
+
+	if [[ "${cur}" == -* ]] || [[ ${COMP_CWORD} -eq 1 ]]; then
+    	COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
+	fi
+
+	case "${prev}" in
+		-h|--help)
+			COMPREPLY=($(compgen -W "${opts/-h --help}" -- "${cur}"))
+			;;
+	esac		
+}
+complete -F _enlightenment_remote enlightenment_remote
