@@ -992,6 +992,7 @@ e_border_fullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (!bd->fullscreen)
      {
+	printf("FULLSCREEEN!\n");
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -1024,6 +1025,7 @@ e_border_unfullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      {
+	printf("UNFULLSCREEEN!\n");
 	e_hints_window_fullscreen_set(bd, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
@@ -1102,6 +1104,8 @@ e_border_stick(E_Border *bd)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   if (bd->sticky) return;
+   printf("STICK!\n");
    bd->sticky = 1;
    e_hints_window_sticky_set(bd, 1);
 
@@ -1119,6 +1123,8 @@ e_border_unstick(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* Set the desk before we unstick the border */
+   if (!bd->sticky) return;
+   printf("UNSTICK!\n");
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
    bd->sticky = 0;
    e_hints_window_sticky_set(bd, 0);

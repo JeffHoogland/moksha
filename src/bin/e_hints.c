@@ -345,7 +345,10 @@ e_hints_window_init(E_Border *bd)
    if (ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
      {
 	if (bd->client.netwm.desktop == 0xffffffff)
-	  e_border_stick(bd);
+	  {
+	     printf("CLIENT asks for all desks!\n");
+	     e_border_stick(bd);
+	  }
 	else if (bd->client.netwm.desktop < (bd->zone->desk_x_count * bd->zone->desk_y_count))
 	  {
 	     E_Desk *desk;
@@ -370,7 +373,10 @@ e_hints_window_init(E_Border *bd)
      bd->client.netwm.pid = -1;
 
    if (bd->client.netwm.state.sticky)
-     e_border_stick(bd);
+     {
+	printf("CLIENT asks for stickiness!\n");
+	e_border_stick(bd);
+     }
    if (bd->client.netwm.state.shaded)
      e_border_shade(bd, e_hints_window_shade_direction_get(bd));
    if (bd->client.netwm.state.maximized_v && bd->client.netwm.state.maximized_h)
