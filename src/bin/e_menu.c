@@ -1136,6 +1136,7 @@ _e_menu_realize(E_Menu *m)
    
    ecore_evas_callback_resize_set(m->ecore_evas, _e_menu_cb_ecore_evas_resize);
    m->evas = ecore_evas_get(m->ecore_evas);
+   evas_event_freeze(m->evas);
    /* move cursor out to avoid event cycles during setup */
    evas_event_feed_mouse_in(m->evas, NULL);
    evas_event_feed_mouse_move(m->evas, -1000000, -1000000, NULL);
@@ -1190,6 +1191,7 @@ _e_menu_realize(E_Menu *m)
    _e_menu_items_layout_update(m);
    e_box_thaw(o);
    evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
+   evas_event_thaw(m->evas);
 }
 
 static void

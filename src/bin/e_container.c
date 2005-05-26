@@ -810,6 +810,50 @@ e_container_border_list_free(E_Border_List *list)
    free(list);
 }
 
+void
+e_container_all_freeze(void)
+{
+   Evas_List *managers, *l;
+   
+   managers = e_manager_list();
+   for (l = managers; l; l = l->next)
+     {
+	Evas_List *ll;
+	E_Manager *man;
+	
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     E_Container *con;
+	     
+	     con = ll->data;
+	     evas_event_freeze(con->bg_evas);
+	  }
+     }
+}
+
+void
+e_container_all_thaw(void)
+{
+   Evas_List *managers, *l;
+   
+   managers = e_manager_list();
+   for (l = managers; l; l = l->next)
+     {
+	Evas_List *ll;
+	E_Manager *man;
+	
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     E_Container *con;
+	     
+	     con = ll->data;
+	     evas_event_thaw(con->bg_evas);
+	  }
+     }
+}
+
 /* local subsystem functions */
 static void
 _e_container_free(E_Container *con)

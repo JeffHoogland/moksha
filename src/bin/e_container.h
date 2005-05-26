@@ -133,6 +133,9 @@ EAPI void               e_container_border_lower(E_Border *bd);
 EAPI void               e_container_border_stack_above(E_Border *bd, E_Border *above);
 EAPI void               e_container_border_stack_below(E_Border *bd, E_Border *below);
 
+EAPI void               e_container_all_freeze(void);
+EAPI void               e_container_all_thaw(void);
+    
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 
 #endif

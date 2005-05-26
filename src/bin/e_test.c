@@ -170,7 +170,7 @@ _cb_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
 	break;
      }
 }
-#elif 0
+#elif 1
 static int
 _e_test_timer(void *data)
 {

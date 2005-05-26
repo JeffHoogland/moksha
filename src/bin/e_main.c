@@ -352,6 +352,9 @@ main(int argc, char **argv)
 			       "failed. Perhaps another window manager is running?\n"));
 	_e_main_shutdown(-1);
      }
+   
+   e_container_all_freeze();
+   
    _e_main_shutdown_push(_e_main_screens_shutdown);
    /* init app system */
    if (!e_app_init())
@@ -440,6 +443,8 @@ main(int argc, char **argv)
 	ecore_timer_add(12.0, _e_main_cb_startup_fake_status, _("Most features do not work yet, and those that do are buggy."));
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
      }
+   
+   e_container_all_thaw();
    
    /* run any testing code now we are set up */
    e_test();
