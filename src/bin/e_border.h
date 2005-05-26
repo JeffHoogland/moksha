@@ -239,6 +239,8 @@ struct _E_Border
    unsigned int layer;
    E_Action *cur_mouse_action;
    Ecore_Timer *raise_timer;
+
+   Ecore_Timer *dangling_ref_check;
 };
 
 struct _E_Border_Pending_Move_Resize 

@@ -337,7 +337,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
      }
 
    /* just to friggin make java happy - we're DELAYING the reparent until
-    * evail time...
+    * eval time...
     */
 /*   ecore_x_window_reparent(win, bd->client.shell_win, 0, 0); */
    bd->need_reparent = 1;
@@ -1377,20 +1377,13 @@ e_border_act_close_begin(E_Border *bd)
    if (bd->client.icccm.delete_request)
      ecore_x_window_delete_request_send(bd->client.win);
    else
-     {
-	ecore_x_kill(bd->client.win);
-	ecore_x_sync();
-//	ecore_x_window_del(bd->client.win);
-	e_border_hide(bd, 0);
-	e_object_del(E_OBJECT(bd));
-     }
+     e_border_act_kill_begin(bd);
 }
 
 void
 e_border_act_kill_begin(E_Border *bd)
 {
    ecore_x_kill(bd->client.win);
-   ecore_x_sync();
    e_border_hide(bd, 0);
    e_object_del(E_OBJECT(bd));
 }
@@ -1434,6 +1427,11 @@ _e_border_free(E_Border *bd)
    if (move == bd)
      _e_border_move_end(bd);
 
+   if (bd->dangling_ref_check)
+     {
+	ecore_timer_del(bd->dangling_ref_check);
+	bd->dangling_ref_check = NULL;
+     }
    if (bd->raise_timer)
      {
 	ecore_timer_del(bd->raise_timer);
@@ -1467,6 +1465,7 @@ _e_border_free(E_Border *bd)
 	ecore_x_window_reparent(bd->client.win, bd->zone->container->manager->root,
 				bd->x + bd->client_inset.l, bd->y + bd->client_inset.t);
 	ecore_x_window_save_set_del(bd->client.win);
+	bd->already_unparented = 1;
      }
    if (bd->client.border.name) free(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
@@ -1490,16 +1489,36 @@ _e_border_free(E_Border *bd)
    free(bd);
 }
 
+static int
+_e_border_del_dangling_ref_check(void *data)
+{
+   E_Border *bd;
+   
+   bd = data;
+   printf("---\n");
+   printf("EEK EEK border still around 1 second after being deleted!\n");
+   printf("%p, %i, \"%s\" [\"%s\" \"%s\"]\n",
+	  bd, e_object_ref_get(E_OBJECT(bd)), bd->client.icccm.title,
+	  bd->client.icccm.name, bd->client.icccm.class);
+   printf("---\n");
+   return 1;
+}
+
 static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
-   ecore_x_window_reparent(bd->client.win,
-			   bd->zone->container->manager->root,
-			   bd->x + bd->client_inset.l,
-			   bd->y + bd->client_inset.t);
-   ecore_x_window_save_set_del(bd->client.win);
+   if (!bd->dangling_ref_check)
+     bd->dangling_ref_check = ecore_timer_add(1.0, _e_border_del_dangling_ref_check, bd);
+   if (!bd->already_unparented)
+     {
+	ecore_x_window_reparent(bd->client.win,
+				bd->zone->container->manager->root,
+				bd->x + bd->client_inset.l,
+				bd->y + bd->client_inset.t);
+	ecore_x_window_save_set_del(bd->client.win);
+     }
    bd->already_unparented = 1;
 
    ev = calloc(1, sizeof(E_Event_Border_Remove));
@@ -1524,7 +1543,8 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    return 1;
 }
 
-static int _e_border_cb_window_destroy(void *data, int ev_type, void *ev)
+static int
+_e_border_cb_window_destroy(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Destroy *e;
@@ -3925,13 +3945,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
    if (bd->client.icccm.delete_request)
      ecore_x_window_delete_request_send(bd->client.win);
    else
-     {
-	ecore_x_kill(bd->client.win);
-	ecore_x_sync();
-//         ecore_x_window_del(bd->client.win);
-	e_border_hide(bd, 0);
-	e_object_del(E_OBJECT(bd));
-     }
+     e_border_act_close_begin(bd);
 }
 
 static void
