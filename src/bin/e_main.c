@@ -590,7 +590,6 @@ _e_main_dirs_init(void)
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/bar/.order", homedir);
    if (!ecore_file_exists(buf))
      {
-	printf("GETTING YOU STARTED!\n");
 	snprintf(buf, sizeof(buf), 
 		 "gzip -d -c < %s/data/other/applications.tar.gz | "
 		 "(cd %s/.e/e/ ; tar -xf -)", 
@@ -863,7 +862,6 @@ static int
 _e_main_cb_signal_hup(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on SIGHUP to restart Enlightenment */
-   printf("RESTART ON!\n");
    restart = 1;
    ecore_main_loop_quit();
    return 1;

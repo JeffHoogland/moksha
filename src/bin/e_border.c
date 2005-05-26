@@ -213,7 +213,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    if (!bd) return NULL;
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
 
-   printf("##- NEW CLIENT 0x%x\n", win);
+//   printf("##- NEW CLIENT 0x%x\n", win);
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
@@ -251,7 +251,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    att = &bd->client.initial_attributes;
    if ((!ecore_x_window_attributes_get(win, att)) || (att->input_only))
      {
-	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
+//	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
 	e_canvas_del(bd->bg_ecore_evas);
 	ecore_evas_free(bd->bg_ecore_evas);
 	ecore_x_window_del(bd->client.shell_win);
@@ -320,15 +320,15 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->changes.size = 1;
    bd->changes.shape = 1;
 
-   printf("##- ON MAP CLIENT 0x%x SIZE %ix%i\n",
-	  bd->client.win, bd->client.w, bd->client.h);
+//   printf("##- ON MAP CLIENT 0x%x SIZE %ix%i\n",
+//	  bd->client.win, bd->client.w, bd->client.h);
 
    /* FIXME: if first_map is 1 then we should ignore the first hide event
     * or ensure the window is alreayd hidden and events flushed before we
     * create a border for it */
    if (first_map)
      {
-	printf("##- FIRST MAP\n");
+//	printf("##- FIRST MAP\n");
 	bd->x = att->x;
 	bd->y = att->y;
 	bd->changes.pos = 1;
@@ -992,7 +992,7 @@ e_border_fullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (!bd->fullscreen)
      {
-	printf("FULLSCREEEN!\n");
+//	printf("FULLSCREEEN!\n");
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -1025,7 +1025,7 @@ e_border_unfullscreen(E_Border *bd)
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      {
-	printf("UNFULLSCREEEN!\n");
+//	printf("UNFULLSCREEEN!\n");
 	e_hints_window_fullscreen_set(bd, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
@@ -1105,7 +1105,7 @@ e_border_stick(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->sticky) return;
-   printf("STICK!\n");
+//   printf("STICK!\n");
    bd->sticky = 1;
    e_hints_window_sticky_set(bd, 1);
 
@@ -1124,7 +1124,7 @@ e_border_unstick(E_Border *bd)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* Set the desk before we unstick the border */
    if (!bd->sticky) return;
-   printf("UNSTICK!\n");
+//   printf("UNSTICK!\n");
    e_border_desk_set(bd, e_desk_current_get(bd->zone));
    bd->sticky = 0;
    e_hints_window_sticky_set(bd, 0);
@@ -1611,28 +1611,28 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
-	  e->win, e->w, e->h, e->x, e->y);
+//   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
+//	  e->win, e->w, e->h, e->x, e->y);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
-	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
-	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
+//	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
+//	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
 	ecore_x_window_configure(e->win, e->value_mask,
 				 e->x, e->y, e->w, e->h, e->border,
 				 e->abovewin, e->detail);
 	return 1;
      }
-   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
-	  e->win,
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y) ? 'Y':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ? 'W':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H) ? 'H':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_BORDER_WIDTH) ? 'B':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
-	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
-	  );
+//   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
+//	  e->win,
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y) ? 'Y':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ? 'W':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H) ? 'H':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_BORDER_WIDTH) ? 'B':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
+//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
+//	  );
 
    if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ||
 	 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
@@ -1641,11 +1641,11 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
 	y = bd->y;
 	x = bd->x;
-	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i\n",
-	       bd->client.win,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
-	       x, y);
+//	printf("##- ASK FOR 0x%x TO MOVE TO [FLG X%liY%li] %i,%i\n",
+//	       bd->client.win,
+//	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X,
+//	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y,
+//	       x, y);
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X)
 	  x = e->x;
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y)
@@ -1661,11 +1661,11 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       w = e->w + bd->client_inset.l + bd->client_inset.r;
 	     if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
 	       h = e->h + bd->client_inset.t + bd->client_inset.b;
-	     printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
-		    bd->client.win,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
-		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-		    e->w, e->h);
+//	     printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
+//		    bd->client.win,
+//		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
+//		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
+//		    e->w, e->h);
 	     e_border_move_resize(bd, x, y, w, h);
 	  }
 	else
@@ -1682,11 +1682,11 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	  w = e->w + bd->client_inset.l + bd->client_inset.r;
 	if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H)
 	  h = e->h + bd->client_inset.t + bd->client_inset.b;
-	printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
-	       bd->client.win,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
-	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
-	       e->w, e->h);
+//	printf("##- ASK FOR 0x%x TO RESIZE TO [FLG W%liH%li] %i,%i\n",
+//	       bd->client.win,
+//	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W,
+//	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
+//	       e->w, e->h);
 	e_border_resize(bd, w, h);
      }
    if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
@@ -1753,17 +1753,17 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-   printf("##- RESZ REQ 0x%x , %iX%i\n",
-	  e->win, e->w, e->h);
+//   printf("##- RESZ REQ 0x%x , %iX%i\n",
+//	  e->win, e->w, e->h);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
-	printf("generic resize request %x %ix%i ...\n",
-	       e->win, e->w, e->h);
+//	printf("generic resize request %x %ix%i ...\n",
+//	       e->win, e->w, e->h);
 	ecore_x_window_resize(e->win, e->w, e->h);
 	return 1;
      }
-   printf("##- RESIZE REQ 0x%x\n", bd->client.win);
+//   printf("##- RESIZE REQ 0x%x\n", bd->client.win);
      {
 	int w, h;
 
@@ -1771,8 +1771,8 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	w = bd->w;
 	w = e->w + bd->client_inset.l + bd->client_inset.r;
 	h = e->h + bd->client_inset.t + bd->client_inset.b;
-	printf("##- ASK FOR 0x%x TO RESIZE TO %i,%i\n",
-	       bd->client.win, e->w, e->h);
+//	printf("##- ASK FOR 0x%x TO RESIZE TO %i,%i\n",
+//	       bd->client.win, e->w, e->h);
 	e_border_resize(bd, w, h);
      }
    return 1;
@@ -2500,7 +2500,7 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
      }
    if ((ev->win != bd->event_win) && (ev->event_win != bd->win))
      {
-	printf("abort ev\n");
+//	printf("abort ev\n");
 	return 1;
      }
    if ((ev->button >= 1) && (ev->button <= 3))
@@ -2529,8 +2529,8 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	printf("mouse %i %i | DBL %i TRIP %i\n",
-	       ev->x, ev->y, ev->double_click, ev->triple_click);
+//	printf("mouse %i %i | DBL %i TRIP %i\n",
+//	       ev->x, ev->y, ev->double_click, ev->triple_click);
 	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
 	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, NULL);
      }
@@ -2875,7 +2875,7 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
-	     printf("##- NO SIZE HINTS!\n");
+//	     printf("##- NO SIZE HINTS!\n");
 	  }
 	if (bd->client.icccm.min_w > 32767) bd->client.icccm.min_w = 32767;
 	if (bd->client.icccm.min_h > 32767) bd->client.icccm.min_h = 32767;
@@ -2885,12 +2885,12 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
 	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
 	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
-	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i\n",
-	       bd->client.win,
-	       bd->client.icccm.min_w, bd->client.icccm.min_h,
-	       bd->client.icccm.max_w, bd->client.icccm.max_h,
-	       bd->client.icccm.base_w, bd->client.icccm.base_h,
-	       bd->client.icccm.step_w, bd->client.icccm.step_h);
+//	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i\n",
+//	       bd->client.win,
+//	       bd->client.icccm.min_w, bd->client.icccm.min_h,
+//	       bd->client.icccm.max_w, bd->client.icccm.max_h,
+//	       bd->client.icccm.base_w, bd->client.icccm.base_h,
+//	       bd->client.icccm.step_w, bd->client.icccm.step_h);
 
 	bd->client.icccm.fetch.size_pos_hints = 0;
      }
@@ -2926,7 +2926,7 @@ _e_border_eval(E_Border *bd)
 	bd->client.mwm.borderless = 0;
 	if (bd->client.mwm.exists)
 	  {
-	     printf("##- MWM HINTS SET 0x%x!\n", bd->client.win);
+//	     printf("##- MWM HINTS SET 0x%x!\n", bd->client.win);
 	     if ((!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_ALL)) &&
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
 		 (!(bd->client.mwm.decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
@@ -2939,8 +2939,8 @@ _e_border_eval(E_Border *bd)
 	       bd->client.border.name = strdup("borderless");
 	     else
 	       bd->client.border.name = strdup("default");
-	     if (bd->client.mwm.borderless)
-	       printf("client %s borderless\n", bd->client.icccm.title);
+//	     if (bd->client.mwm.borderless)
+//	       printf("client %s borderless\n", bd->client.icccm.title);
 	     bd->client.border.changed = 1;
 	  }
 	bd->client.mwm.fetch.hints = 0;
@@ -3134,10 +3134,10 @@ _e_border_eval(E_Border *bd)
 	E_Event_Border_Add *ev;
 
 	bd->new_client = 0;
-	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
+//	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
 	  {
-	     printf("##- REMANAGE!\n");
+//	     printf("##- REMANAGE!\n");
 	     bd->x -= bd->client_inset.l;
 	     bd->y -= bd->client_inset.t;
 	     bd->changes.pos = 1;
@@ -3150,8 +3150,8 @@ _e_border_eval(E_Border *bd)
 		  int bw;
 
 		  att = &bd->client.initial_attributes;
-		  printf("##- REQUEST POS 0x%x [%i,%i]\n",
-			 bd->client.win, att->x, att->y);
+//		  printf("##- REQUEST POS 0x%x [%i,%i]\n",
+//			 bd->client.win, att->x, att->y);
 		  bw = att->border * 2;
 		  switch (bd->client.icccm.gravity)
 		    {
@@ -3195,7 +3195,7 @@ _e_border_eval(E_Border *bd)
 		  Evas_List *skiplist = NULL;
 		  int new_x, new_y;
 
-		  printf("##- AUTO POS 0x%x\n", bd->client.win);
+//		  printf("##- AUTO POS 0x%x\n", bd->client.win);
 		  if (bd->zone->w > bd->w)
 		    new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
 		  else
@@ -3298,7 +3298,7 @@ _e_border_eval(E_Border *bd)
 
    if ((bd->changes.pos) && (bd->changes.size))
      {
-	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
+//	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
 	if (bd->shaded && !bd->shading)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -3357,7 +3357,7 @@ _e_border_eval(E_Border *bd)
      }
    else if (bd->changes.size)
      {
-	printf("##- BORDER NEEDS SIZE CHANGE 0x%x\n", bd->client.win);
+//	printf("##- BORDER NEEDS SIZE CHANGE 0x%x\n", bd->client.win);
 	if (bd->shaded && !bd->shading)
 	  {
 	     evas_obscured_clear(bd->bg_evas);
@@ -3991,7 +3991,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    full = malloc(strlen(file) + strlen(command) + 1);
    strcpy(full, command);
    strcat(full, file);
-   printf("EXEC %s\n", full);
+//   printf("EXEC %s\n", full);
    process = ecore_exe_run(full, NULL);
    if (!process || !ecore_exe_pid_get(process))
      e_error_dialog_show(_("Icon Edit Error"),

@@ -324,8 +324,8 @@ _e_font_font_dir_available_get(Evas_List * available_fonts, const char *font_dir
    char buf[4096];
    FILE *f;
    
-   sprintf (buf, "%s/fonts.alias", font_dir);
-   f = fopen (buf, "r");
+   snprintf(buf, sizeof(buf), "%s/fonts.alias", font_dir);
+   f = fopen(buf, "r");
    if (f)
      {
 	char fname[4096], fdef[4096];

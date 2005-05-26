@@ -696,10 +696,7 @@ e_config_init(void)
    /* apply lang config - exception because config is loaded after intl setup */
    
    if ((e_config->language) && (strlen(e_config->language) > 0))
-     {
-	printf("SET LANG %s\n", e_config->language);
-	e_intl_language_set(e_config->language);
-     }
+     e_intl_language_set(e_config->language);
    
    return 1;
 }
@@ -830,7 +827,6 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 static void
 _e_config_save_cb(void *data)
 {
-   printf("SAVE!!!!\n");
    e_module_save_all();
    e_config_domain_save("e", _e_config_edd, e_config);
    _e_config_save_job = NULL;

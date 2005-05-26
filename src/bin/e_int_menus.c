@@ -252,7 +252,6 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   printf("RESTART ON!\n");
    restart = 1;
    ecore_main_loop_quit();
 }
@@ -690,7 +689,6 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    
    e_config_save_queue();
 
-   printf("RESTART ON!\n");
    restart = 1;
    ecore_main_loop_quit();   
 }
