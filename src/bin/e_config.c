@@ -109,6 +109,7 @@ e_config_init(void)
 #define D _e_config_edd
    /**/ /* == already configurable via ipc */
    E_CONFIG_VAL(D, T, config_version, INT); /**/
+   E_CONFIG_VAL(D, T, show_splash, INT); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
@@ -182,6 +183,7 @@ e_config_init(void)
 	/* DEFAULT CONFIG */
 	e_config = E_NEW(E_Config, 1);
 	e_config->config_version = E_CONFIG_FILE_VERSION;
+	e_config->show_splash = 1;
 	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.edj");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_threshhold = 300.0;
@@ -674,6 +676,7 @@ e_config_init(void)
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
 
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
+   E_CONFIG_LIMIT(e_config->show_splash, 0, 1);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
    E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
    E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);

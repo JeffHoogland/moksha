@@ -4,6 +4,7 @@
 #include "e.h"
 
 static void _e_init_icons_del(void);
+static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
 static Ecore_X_Window  _e_init_win = 0;
@@ -105,7 +106,10 @@ e_init_init(void)
 	evas_object_resize(o, w, h);
 	evas_object_show(o);
      }
-   
+   edje_object_part_text_set(_e_init_object, "disable_text", 
+			     _("Disable this splash screen in the future?"));
+   edje_object_signal_callback_add(_e_init_object, "disable_state", "*",
+				   _e_init_cb_signal_disable, NULL);
    free(roots);
    return 1;
 }
@@ -234,4 +238,12 @@ _e_init_icons_del(void)
    if (_e_init_icon_box)
      evas_object_del(_e_init_icon_box);
    _e_init_icon_box = NULL;
+}
+
+static void
+_e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   if (!strcmp(source, "disable")) e_config->show_splash = 0;
+   else e_config->show_splash = 1;
+   e_config_save_queue();
 }

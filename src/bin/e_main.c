@@ -57,7 +57,6 @@ main(int argc, char **argv)
 {
    int ipc_failed = 0;
    int i;
-   int nosplash = 0;
    int nostartup = 0;
    int after_restart = 0; 
    char buf[1024];
@@ -90,7 +89,6 @@ main(int argc, char **argv)
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
       
-   if (getenv("NOSPLASH")) nosplash = 1;
    if (getenv("NOSTARTUP")) nostartup = 1;
    if (getenv("RESTART")) after_restart = 1;
    
@@ -337,14 +335,17 @@ main(int argc, char **argv)
    e_font_apply();
    e_canvas_recache();
 
-   /* setup init status window/screen */
-   if (!e_init_init())
+   if (!((!e_config->show_splash) || (after_restart)))
      {
-	e_error_message_show(_("Enlightenment cannot set up init screen.\n"
-			       "Perhaps you are out of memory?"));
-	_e_main_shutdown(-1);
+	/* setup init status window/screen */
+	if (!e_init_init())
+	  {
+	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
+				    "Perhaps you are out of memory?"));
+	     _e_main_shutdown(-1);
+	  }
+	_e_main_shutdown_push(e_init_shutdown);
      }
-   _e_main_shutdown_push(e_init_shutdown);
    /* manage the root window */
    if (!_e_main_screens_init())
      {
@@ -432,11 +433,7 @@ main(int argc, char **argv)
 	else e_startup(E_STARTUP_START);
      }
    
-   if ((nosplash) || (after_restart))
-     {
-	ecore_timer_add(0.0, _e_main_cb_startup_fake_end, NULL);
-     }
-   else
+   if (!((!e_config->show_splash) || (after_restart)))
      {
 	ecore_timer_add( 3.0, _e_main_cb_startup_fake_status, _("Artificially slowing startup so you can see it all."));
 	ecore_timer_add( 7.5, _e_main_cb_startup_fake_status, _("This is development code, so be warned."));

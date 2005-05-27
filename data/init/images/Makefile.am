@@ -1,6 +1,8 @@
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = \
 brushed.png \
+check1.png \
+check2.png \
 loop_eintro_121.png \
 loop_eintro_122.png \
 loop_eintro_123.png \
