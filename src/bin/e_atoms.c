@@ -23,6 +23,7 @@ e_atoms_init(void)
    E_ATOM_MAPPED = ecore_x_atom_get("__E_WINDOW_MAPPED");
    E_ATOM_SHADE_DIRECTION = ecore_x_atom_get("__E_WINDOW_SHADE_DIRECTION");
    E_ATOM_HIDDEN = ecore_x_atom_get("__E_WINDOW_HIDDEN");
+   
    return 1;
 }
 

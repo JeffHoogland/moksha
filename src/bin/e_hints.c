@@ -244,6 +244,9 @@ e_hints_window_name_set(E_Border *bd)
 void
 e_hints_window_name_get(E_Border *bd)
 {
+   /* FIXME: only call from border_eval() if fetch flag set */
+   /* FIXME: split name into icccm and netwm name - prefer netwm name */
+   /* if its not NULL */
    char		*name;
 
    name = ecore_x_netwm_name_get(bd->client.win);
@@ -318,6 +321,7 @@ e_hints_desktop_config_set(void)
 void
 e_hints_window_init(E_Border *bd)
 {
+   /* FIXME: only call from border_eval() if fetch flag set */
    e_hints_window_state_get(bd);
    e_hints_window_type_get(bd);
 
@@ -443,6 +447,7 @@ void e_hints_window_type_set(E_Border *bd)
 
 void e_hints_window_type_get(E_Border *bd)
 {
+   /* FIXME: only call from border_eval() if fetch flag set */
    bd->client.netwm.type = ecore_x_netwm_window_type_get(bd->client.win);
 }
 
@@ -831,6 +836,7 @@ e_hints_window_state_get(E_Border *bd)
 {
    int		 above, below;
 
+   /* FIXME: each of these is a round trip. need to make it a single fetch */
    bd->client.netwm.state.modal = 
       ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_MODAL);
    bd->client.netwm.state.sticky = 

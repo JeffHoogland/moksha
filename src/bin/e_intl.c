@@ -99,12 +99,15 @@ e_intl_language_set(const char *lang)
    
    /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
+   if (!lang) lang = getenv("LANGUAGE");
+   if (!lang) lang = getenv("LC_ALL");
    if (!lang) lang = getenv("LANG");
    if (lang)
      {
 	_e_intl_language = strdup(lang);
-	e_util_env_set("LANG", _e_intl_language);
-	if (getenv("LC_ALL")) e_util_env_set("LC_ALL", _e_intl_language);
+	e_util_env_set("LANGUAGE", _e_intl_language);
+	e_util_env_set("LC_ALL", _e_intl_language);
+	if (getenv("LANG")) e_util_env_set("LANG", _e_intl_language);
      }
    else
      {

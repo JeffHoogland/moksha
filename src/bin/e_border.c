@@ -289,6 +289,40 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.max_aspect = 0.0;
    bd->client.icccm.accepts_focus = 1;
 
+     {
+	int at_num = 0, i;
+	Ecore_X_Atom *atoms;
+	
+	atoms = ecore_x_window_prop_list(bd->client.win, &at_num);
+	if (atoms)
+	  {
+	     for (i = 0; i < at_num; i++)
+	       {
+		  if (atoms[i] == ECORE_X_ATOM_WM_NAME)
+		    bd->client.icccm.fetch.title = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_CLASS)
+		    bd->client.icccm.fetch.name_class = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_ICON_NAME)
+		    bd->client.icccm.fetch.icon_name = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_MACHINE)
+		    bd->client.icccm.fetch.machine = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_HINTS)
+		    bd->client.icccm.fetch.hints = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_NORMAL_HINTS)
+		    bd->client.icccm.fetch.size_pos_hints = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_PROTOCOLS)
+		    bd->client.icccm.fetch.protocol = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
+		    bd->client.mwm.fetch.hints = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
+		    bd->client.icccm.fetch.transient_for = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
+		    bd->client.icccm.fetch.window_role = 1;
+	       }
+	     free(atoms);
+	  }
+     }
+/*   
    bd->client.icccm.fetch.title = 1;
    bd->client.icccm.fetch.name_class = 1;
    bd->client.icccm.fetch.icon_name = 1;
@@ -297,8 +331,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.fetch.size_pos_hints = 1;
    bd->client.icccm.fetch.protocol = 1;
    bd->client.mwm.fetch.hints = 1;
+ */
    bd->client.border.changed = 1;
    
+   /* FIXME; set fetch flags as above */
    bd->client.netwm.pid = 0;
    bd->client.netwm.desktop = 0;
    bd->client.netwm.state.modal = 0;
@@ -1146,7 +1182,8 @@ e_border_find_by_client_window(Ecore_X_Window win)
    E_Border *bd;
    
    bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
-   if ((bd) && (!e_object_is_del(E_OBJECT(bd))))
+   if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
+       (bd->client.win == win))
      return bd;
    return NULL;
 }
@@ -1154,13 +1191,25 @@ e_border_find_by_client_window(Ecore_X_Window win)
 E_Border *
 e_border_find_by_frame_window(Ecore_X_Window win)
 {
-   return e_border_find_by_client_window(win);
+   E_Border *bd;
+   
+   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
+       (bd->bg_win == win))
+     return bd;
+   return NULL;
 }
 
 E_Border *
 e_border_find_by_window(Ecore_X_Window win)
 {
-   return e_border_find_by_client_window(win);
+   E_Border *bd;
+   
+   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
+       (bd->win == win))
+     return bd;
+   return NULL;
 }
 
 E_Border *
@@ -1444,6 +1493,7 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.class) free(bd->client.icccm.class);
    if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
    if (bd->client.icccm.machine) free(bd->client.icccm.machine);
+   if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
    e_object_del(E_OBJECT(bd->shape));
    if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);
@@ -1825,6 +1875,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    else if (e->atom == ECORE_X_ATOM_MOTIF_WM_HINTS)
      {
 	bd->client.mwm.fetch.hints = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_WM_TRANSIENT_FOR)
+     {
+	bd->client.icccm.fetch.transient_for = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_WM_WINDOW_ROLE)
+     {
+	bd->client.icccm.fetch.window_role = 1;
 	bd->changed = 1;
      }
    return 1;
@@ -2918,6 +2978,16 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->client.mwm.fetch.hints = 0;
      }
+   if (bd->client.icccm.fetch.transient_for)
+     {
+	bd->client.icccm.transient_for = ecore_x_icccm_transient_for_get(bd->client.win);
+	bd->client.icccm.fetch.transient_for = 0;
+     }
+   if (bd->client.icccm.fetch.window_role)
+     {
+	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
+	bd->client.icccm.fetch.window_role = 0;
+     }
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -3217,6 +3287,7 @@ _e_border_eval(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
 	/* Recreate state */
+	/* FIXME: this should be split into property fetches and state setup */
 	e_hints_window_init(bd);
 
 	ecore_x_icccm_move_resize_send(bd->client.win,

@@ -127,20 +127,24 @@ struct _E_Border
 	 Ecore_X_Pixmap icon_mask;
 	 Ecore_X_Window icon_window;
 	 Ecore_X_Window window_group;
+	 Ecore_X_Window transient_for;
 	 Ecore_X_Gravity gravity;
+	 char *window_role;
 	 unsigned char take_focus : 1;
 	 unsigned char accepts_focus : 1;
 	 unsigned char urgent : 1;
 	 unsigned char delete_request : 1;
 	 unsigned char request_pos : 1;
 	 struct {
-	    unsigned int title : 1;
-	    unsigned int name_class : 1;
-	    unsigned int icon_name : 1;
-	    unsigned int machine : 1;
-	    unsigned int hints : 1;
-	    unsigned int size_pos_hints : 1;
-	    unsigned int protocol : 1;
+	    unsigned char title : 1;
+	    unsigned char name_class : 1;
+	    unsigned char icon_name : 1;
+	    unsigned char machine : 1;
+	    unsigned char hints : 1;
+	    unsigned char size_pos_hints : 1;
+	    unsigned char protocol : 1;
+	    unsigned char transient_for : 1;
+	    unsigned char window_role : 1;
 	 } fetch;
       } icccm;
       struct {
@@ -150,10 +154,11 @@ struct _E_Border
 	 unsigned char exists : 1;
 	 unsigned char borderless : 1;
 	 struct {
-	    unsigned int hints : 1;
+	    unsigned char hints : 1;
 	 } fetch;
       } mwm;
       struct {
+	 /* FIXME: add name field */
 	 pid_t pid;
 	 unsigned int desktop;
 
@@ -173,6 +178,14 @@ struct _E_Border
 
 	 Ecore_X_Window_Type type;
 	 
+	 struct {
+	    unsigned char name : 1;
+	    unsigned char pid : 1;
+	    unsigned char desktop : 1;
+	    unsigned char type : 1;
+	    unsigned char icon_name : 1;
+	    unsigned char state : 1;
+	 } fetch;
       } netwm;
       Ecore_X_Window_Attributes initial_attributes;
    } client;
