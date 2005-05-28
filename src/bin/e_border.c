@@ -36,7 +36,7 @@ static int _e_border_cb_window_colormap(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_shape(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_in(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_out(void *data, int ev_type, void *ev);
-static int _e_border_cb_window_state(void *data, int ev_type, void *ev);
+static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_client_message(void *data, int ev_type, void *ev);
 
@@ -162,7 +162,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE, _e_border_cb_window_shape, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
-   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STATE, _e_border_cb_window_state, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STATE_REQUEST, _e_border_cb_window_state_request, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DESKTOP_CHANGE, _e_border_cb_desktop_change, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
@@ -1986,10 +1986,10 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
 }
 
 static int
-_e_border_cb_window_state(void *data, int ev_type, void *ev)
+_e_border_cb_window_state_request(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
-   Ecore_X_Event_Window_State *e;
+   Ecore_X_Event_Window_State_Request *e;
    int i, on;
 
    e = ev;
@@ -2792,8 +2792,7 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.icccm.fetch.icon_name)
      {
-	if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
-	bd->client.icccm.icon_name = ecore_x_window_prop_icon_name_get(bd->client.win);
+	e_hints_window_icon_name_get(bd);
 	bd->client.icccm.fetch.icon_name = 0;
      }
    if (bd->client.icccm.fetch.machine)

@@ -2,22 +2,26 @@
  * Not all of these are hints, just copied out
  * everything with _NET in it from the spec.
  */
+/*
+ * P = For pagers, and extern pager wont work with E's desktop setup
+ * E can have multiple virtual roots AND multiple desktops AND several
+ * zones when using xinerama
+ */
 
 _NET_ACTIVE_WINDOW                  [?] /* Listen to active window requests */
 _NET_CLIENT_LIST                    [X]
 _NET_CLIENT_LIST_STACKING           [X]
-_NET_CLOSE_WINDOW                   [ ]
-_NET_CURRENT_DESKTOP                [ ]
+_NET_CLOSE_WINDOW                   [P]
+_NET_CURRENT_DESKTOP                [P]
 _NET_DESKTOP_GEOMETRY               [?] /* Listen to _NET_DESKTOP_GEOMETRY requests */
-_NET_DESKTOP_LAYOUT                 [ ]
-_NET_DESKTOP_LAYOUT_S               [ ]
+_NET_DESKTOP_LAYOUT                 [P]
 _NET_DESKTOP_NAMES                  [ ]
-_NET_DESKTOP_VIEWPORT               [ ]
+_NET_DESKTOP_VIEWPORT               [P]
 _NET_FRAME_EXTENTS                  [X]
-_NET_MOVERESIZE_WINDOW              [ ]
-_NET_NUMBER_OF_DESKTOPS             [ ]
+_NET_MOVERESIZE_WINDOW              [P]
+_NET_NUMBER_OF_DESKTOPS             [P]
 _NET_REQUEST_FRAME_EXTENTS          [ ]
-_NET_RESTACK_WINDOW                 [ ]
+_NET_RESTACK_WINDOW                 [P]
 _NET_SHOWING_DESKTOP                [ ]
 _NET_SUPPORTED                      [X]
 _NET_SUPPORTING_WM_CHECK            [X]
@@ -37,7 +41,7 @@ _NET_WM_DESKTOP                     [?] /* Remove this property on unmap */
 _NET_WM_HANDLED_ICONS               [ ]
 _NET_WM_ICON                        [ ]
 _NET_WM_ICON_GEOMETRY               [ ]
-_NET_WM_ICON_NAME                   [ ]
+_NET_WM_ICON_NAME                   [X]
 _NET_WM_MOVERESIZE                  [ ]
 _NET_WM_NAME                        [X]
 _NET_WM_PID                         [X]
@@ -64,9 +68,8 @@ _NET_WM_STRUT_PARTIAL               [ ]
 _NET_WM_SYNC_REQUEST                [ ]
 _NET_WM_SYNC_REQUEST_COUNTER        [ ]
 _NET_WM_USER_TIME                   [ ]
-_NET_WM_VISIBLE_ICON_NAME           [ ]
-_NET_WM_VISIBLE_NAME                [ ]
-_NET_WM_VISIBLE_NAME_STRING         [ ]
+_NET_WM_VISIBLE_ICON_NAME           [X] /* E uses _NET_WM_ICON_NAME, doesn't need to set this */
+_NET_WM_VISIBLE_NAME                [X] /* E uses _NET_WM_NAME, doesn't need to set this */
 /* Do we have to do anything special with these, except
  * stacking order? */
 _NET_WM_WINDOW_TYPE                 [X]

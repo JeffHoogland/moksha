@@ -1025,9 +1025,14 @@ e_hints_window_icon_name_get(E_Border *bd)
 {
    char *name;
 
+   if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
+
    name = ecore_x_netwm_icon_name_get(bd->client.win);
-   if (bd->client.icccm.icon_name)
-     free(bd->client.icccm.icon_name);
+   if (!name)
+     name = ecore_x_icccm_icon_name_get(bd->client.win);
+   if (!name)
+     name = strdup("");
+
    bd->client.icccm.icon_name = name;
    bd->changed = 1;
 }
