@@ -56,11 +56,19 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
      }
 }
 
+static int
+_e_place_cb_sort_cmp(const void *v1, const void *v2)
+{
+   return (*((int *)v1)) - (*((int *)v2));
+}
+
 int
 e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry)
 {
-   int                 a_w = 0, a_h = 0;
+   int                 a_w = 0, a_h = 0, a_alloc_w = 0, a_alloc_h = 0;
    int                *a_x = NULL, *a_y = NULL;
+   int                 zw, zh;
+   char               *u_x = NULL, *u_y = NULL;
    Evas_List          *ll;
    E_Border_List      *bl;
    E_Border           *bd;
@@ -81,15 +89,22 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    x -= zone->x;
    y -= zone->y;
    
+   zw = zone->w;
+   zh = zone->h;
+   
+   u_x = calloc(zw + 1, sizeof(char));
+   u_y = calloc(zh + 1, sizeof(char));
+   
    a_x[0] = 0;
-   a_x[1] = zone->w;
+   a_x[1] = zw;
    a_y[0] = 0;
-   a_y[1] = zone->h;
+   a_y[1] = zh;
 
    bl = e_container_border_list_first(zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
 	int ok;
+	int bx, by, bw, bh;
 	
 	ok = 1;
 	for (ll = skiplist; ll; ll = ll->next)
@@ -100,105 +115,66 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 		  break;
 	       }
 	  }
-	if ((ok) && (bd->visible))
+	if ((!ok) || (!bd->visible)) continue;
+	
+	bx = bd->x - zone->x;
+	by = bd->y - zone->y;
+	bw = bd->w;
+	bh = bd->h;
+	
+	if (E_INTERSECTS(bx, by, bw, bh, 0, 0, zw, zh))
 	  {
-	     if (E_INTERSECTS((bd->x - zone->x), (bd->y - zone->y),
-			      bd->w, bd->h, 0, 0, zone->w, zone->h))
+	     if ((bx > 0) && (bx <= zw) && (!u_x[bx]))
 	       {
-		  int i, j;
-
-		  for (i = 0; i < a_w; i++)
+		  a_w++;
+		  if (a_w > a_alloc_w)
 		    {
-		       int                 ok = 1;
-
-		       if ((bd->x - zone->x) > 0)
-			 {
-			    if (a_x[i] == (bd->x - zone->x))
-			       ok = 0;
-			    else if (a_x[i] > (bd->x - zone->x))
-			      {
-				 a_w++;
-				 E_REALLOC(a_x, int, a_w);
-
-				 for (j = a_w - 1; j > i; j--)
-				    a_x[j] = a_x[j - 1];
-				 a_x[i] = (bd->x - zone->x);
-				 ok = 0;
-			      }
-			 }
-		       if (!ok)
-			  break;
+		       a_alloc_w += 32;
+		       E_REALLOC(a_x, int, a_alloc_w);
 		    }
-		  for (i = 0; i < a_w; i++)
+		  a_x[a_w - 1] = bx;
+		  u_x[bx] = 1;
+	       }
+	     if (((bx + bw) > 0) && ((bx + bw) <= zw) && (!u_x[bx + bw]))
+	       {
+		  a_w++;
+		  if (a_w > a_alloc_w)
 		    {
-		       int ok = 1;
-
-		       if ((bd->x - zone->x) + bd->w < zone->w)
-			 {
-			    if (a_x[i] == (bd->x - zone->x) + bd->w)
-			       ok = 0;
-			    else if (a_x[i] > (bd->x - zone->x) + bd->w)
-			      {
-				 a_w++;
-				 E_REALLOC(a_x, int, a_w);
-
-				 for (j = a_w - 1; j > i; j--)
-				    a_x[j] = a_x[j - 1];
-				 a_x[i] = (bd->x - zone->x) + bd->w;
-				 ok = 0;
-			      }
-			 }
-		       if (!ok)
-			  break;
+		       a_alloc_w += 32;
+		       E_REALLOC(a_x, int, a_alloc_w);
 		    }
-		  for (i = 0; i < a_h; i++)
+		  a_x[a_w - 1] = bx + bw;
+		  u_x[bx + bw] = 1;
+	       }
+	     if ((by > 0) && (by <= zh) && (!u_y[by]))
+	       {
+		  a_h++;
+		  if (a_h > a_alloc_h)
 		    {
-		       int ok = 1;
-
-		       if ((bd->y - zone->y) > 0)
-			 {
-			    if (a_y[i] == (bd->y - zone->y))
-			       ok = 0;
-			    else if (a_y[i] > (bd->y - zone->y))
-			      {
-				 a_h++;
-				 E_REALLOC(a_y, int, a_h);
-
-				 for (j = a_h - 1; j > i; j--)
-				    a_y[j] = a_y[j - 1];
-				 a_y[i] = (bd->y - zone->y);
-				 ok = 0;
-			      }
-			 }
-		       if (!ok)
-			  break;
+		       a_alloc_h += 32;
+		       E_REALLOC(a_y, int, a_alloc_h);
 		    }
-		  for (i = 0; i < a_h; i++)
+		  a_y[a_h - 1] = by;
+		  u_y[by] = 1;
+	       }
+	     if (((by + bh) > 0) && ((by + bh) <= zh) && (!u_y[by + bh]))
+	       {
+		  a_h++;
+		  if (a_h > a_alloc_h)
 		    {
-		       int ok = 1;
-
-		       if ((bd->y - zone->y) + bd->h < zone->h)
-			 {
-			    if (a_y[i] == (bd->y - zone->y) + bd->h)
-			       ok = 0;
-			    else if (a_y[i] > (bd->y - zone->y) + bd->h)
-			      {
-				 a_h++;
-				 E_REALLOC(a_y, int, a_h);
-
-				 for (j = a_h - 1; j > i; j--)
-				    a_y[j] = a_y[j - 1];
-				 a_y[i] = (bd->y - zone->y) + bd->h;
-				 ok = 0;
-			      }
-			 }
-		       if (!ok)
-			  break;
+		       a_alloc_h += 32;
+		       E_REALLOC(a_y, int, a_alloc_h);
 		    }
+		  a_y[a_h - 1] = by + bh;
+		  u_y[by + bh] = 1;
 	       }
 	  }
      }
+   qsort(a_x, a_w, sizeof(int), _e_place_cb_sort_cmp);
+   qsort(a_y, a_h, sizeof(int), _e_place_cb_sort_cmp);
    e_container_border_list_free(bl);
+   free(u_x);
+   free(u_y);
 
    {
       int                 i, j;
