@@ -165,7 +165,7 @@ _e_prefix_try_argv(char *argv0)
    p = path;
    cp = p;
    lenexe = strlen(argv0);
-   while (p = strchr(cp, ':'))
+   while ((p = strchr(cp, ':')))
      {
 	len = p - cp;
 	s = malloc(len + 1 + lenexe + 1);

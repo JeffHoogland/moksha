@@ -88,9 +88,7 @@ _start_new(void)
 {
    Start *e;
    Evas_List *managers, *l, *l2, *cl;
-   E_Menu *mn;
    E_Menu_Item *mi;
-   Evas_Object *o;
    
    button_count = 0;
    e = E_NEW(Start, 1);
