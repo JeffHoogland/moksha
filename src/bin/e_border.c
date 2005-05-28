@@ -109,9 +109,12 @@ static void _e_border_move_update(E_Border *bd);
 
 static int  _e_border_cb_focus_fix(void *data);
 
+static char *_e_border_winid_str_get(Ecore_X_Window win);
+    
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
 static Evas_List *borders = NULL;
+static Evas_Hash *borders_hash = NULL;
 static E_Border  *focused = NULL;
 
 static E_Border    *resize = NULL;
@@ -354,7 +357,9 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->desk = e_desk_current_get(bd->zone);
    e_container_border_add(bd);
    borders = evas_list_append(borders, bd);
-
+   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->client.win), bd);
+   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
+   borders_hash = evas_hash_add(borders_hash, _e_border_winid_str_get(bd->win), bd);
    managed = 1;
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
@@ -1138,58 +1143,24 @@ e_border_unstick(E_Border *bd)
 E_Border *
 e_border_find_by_client_window(Ecore_X_Window win)
 {
-   Evas_List *l;
-
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-
-	bd = l->data;
-	if (bd->client.win == win)
-	  {
-	     if (!e_object_is_del(E_OBJECT(bd)))
-	       return bd;
-	  }
-     }
+   E_Border *bd;
+   
+   bd = evas_hash_find(borders_hash, _e_border_winid_str_get(win));
+   if ((bd) && (!e_object_is_del(E_OBJECT(bd))))
+     return bd;
    return NULL;
 }
 
 E_Border *
 e_border_find_by_frame_window(Ecore_X_Window win)
 {
-   Evas_List *l;
-
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-
-	bd = l->data;
-	if (bd->bg_win == win)
-	  {
-	     if (!e_object_is_del(E_OBJECT(bd)))
-	       return bd;
-	  }
-     }
-   return NULL;
+   return e_border_find_by_client_window(win);
 }
 
 E_Border *
 e_border_find_by_window(Ecore_X_Window win)
 {
-   Evas_List *l;
-
-   for (l = borders; l; l = l->next)
-     {
-	E_Border *bd;
-
-	bd = l->data;
-	if (bd->win == win)
-	  {
-	     if (!e_object_is_del(E_OBJECT(bd)))
-	       return bd;
-	  }
-     }
-   return NULL;
+   return e_border_find_by_client_window(win);
 }
 
 E_Border *
@@ -1484,6 +1455,9 @@ _e_border_free(E_Border *bd)
    ecore_x_window_del(bd->win);
 
    e_container_border_remove(bd);
+   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->client.win), bd);
+   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
+   borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->win), bd);
    borders = evas_list_remove(borders, bd);
 
    free(bd);
@@ -4350,4 +4324,24 @@ _e_border_cb_focus_fix(void *data)
  */
      }
    return 1;
+}
+
+static char *
+_e_border_winid_str_get(Ecore_X_Window win)
+{
+   const char *vals = "qWeRtYuIoP5-$&<~";
+   static char id[9];
+   unsigned int val;
+   
+   val = (unsigned int)win;
+   id[0] = vals[(val >> 28) & 0xf];
+   id[1] = vals[(val >> 24) & 0xf];
+   id[2] = vals[(val >> 20) & 0xf];
+   id[3] = vals[(val >> 16) & 0xf];
+   id[4] = vals[(val >> 12) & 0xf];
+   id[5] = vals[(val >>  8) & 0xf];
+   id[6] = vals[(val >>  4) & 0xf];
+   id[7] = vals[(val      ) & 0xf];
+   id[8] = 0;
+   return id;
 }

@@ -65,6 +65,14 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    E_Border_List      *bl;
    E_Border           *bd;
 
+#if 0
+   /* DISABLE placement entirely for speed testing */
+   *rx = x;
+   *ry = y;
+   return 1;
+#endif
+   
+   /* FIXME: this NEEDS optimizing */
    a_w = 2;
    a_h = 2;
    a_x = E_NEW(int, 2);

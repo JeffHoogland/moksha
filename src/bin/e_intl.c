@@ -71,9 +71,32 @@ e_intl_shutdown(void)
    return 1;
 }
 
+/* FIXME: finish this */
+static Evas_List *
+_e_intl_dir_scan(char *dir)
+{
+   Ecore_List *files;
+   char *file;
+   
+   files = ecore_file_ls(dir);
+   if (!files) return NULL;
+   
+   ecore_list_goto_first(files);
+   while ((file = ecore_list_current(files)))
+     {
+	free(file);
+	ecore_list_remove(files);
+	ecore_list_next(files);
+     }
+   return NULL;
+}
+
 void
 e_intl_language_set(const char *lang)
 {
+   /* 1 list ~/.e/e/locale contents */
+   /* 2 list LOCALE_DIR contents */
+   
    /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
    if (!lang) lang = getenv("LANG");
