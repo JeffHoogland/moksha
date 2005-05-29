@@ -834,34 +834,76 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 void
 e_hints_window_state_get(E_Border *bd)
 {
-   int		 above, below;
+   int i, num;
+   Ecore_X_Window_State *state;
 
-   /* FIXME: each of these is a round trip. need to make it a single fetch */
-   bd->client.netwm.state.modal = 
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_MODAL);
-   bd->client.netwm.state.sticky = 
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_STICKY);
-   bd->client.netwm.state.maximized_v = 
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_VERT);
-   bd->client.netwm.state.maximized_h = 
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ);
-   bd->client.netwm.state.shaded =
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_SHADED);
-   bd->client.netwm.state.skip_taskbar =
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR);
-   bd->client.netwm.state.skip_pager =
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_SKIP_PAGER);
-   bd->client.netwm.state.hidden =
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_HIDDEN);
-   bd->client.netwm.state.fullscreen =
-      ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_FULLSCREEN);
-   
-   above = ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_ABOVE);
-   below = ecore_x_netwm_window_state_isset(bd->client.win, ECORE_X_WINDOW_STATE_BELOW);
-   bd->client.netwm.state.stacking = (above << 0) + (below << 1);
+   bd->client.netwm.state.modal = 0;
+   bd->client.netwm.state.sticky = 0;
+   bd->client.netwm.state.maximized_v = 0;
+   bd->client.netwm.state.maximized_h = 0;
+   bd->client.netwm.state.shaded = 0;
+   bd->client.netwm.state.skip_taskbar = 0;
+   bd->client.netwm.state.skip_pager = 0;
+   bd->client.netwm.state.hidden = 0;
+   bd->client.netwm.state.fullscreen = 0;
+   bd->client.netwm.state.stacking = 0;
+
+   state = ecore_x_netwm_window_state_get(bd->client.win, &num);
+   if (state)
+     {
+	for (i = 0; i < num; i++)
+	  {
+	     switch (state[i])
+	       {
+		case ECORE_X_WINDOW_STATE_ICONIFIED:
+		   /* Ignore */
+		   break;
+		case ECORE_X_WINDOW_STATE_MODAL:
+		   bd->client.netwm.state.modal = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_STICKY:
+		   bd->client.netwm.state.sticky = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
+		   bd->client.netwm.state.maximized_v = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
+		   bd->client.netwm.state.maximized_h = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_SHADED:
+		   bd->client.netwm.state.shaded = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
+		   bd->client.netwm.state.skip_taskbar = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_SKIP_PAGER:
+		   bd->client.netwm.state.skip_pager = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_HIDDEN:
+		   bd->client.netwm.state.hidden = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_FULLSCREEN:
+		   bd->client.netwm.state.fullscreen = 1;
+		   break;
+		case ECORE_X_WINDOW_STATE_ABOVE:
+		   bd->client.netwm.state.stacking = E_STACKING_ABOVE;
+		   break;
+		case ECORE_X_WINDOW_STATE_BELOW:
+		   bd->client.netwm.state.stacking = E_STACKING_BELOW;
+		   break;
+		case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
+		   /* FIXME */
+		   break;
+		case ECORE_X_WINDOW_STATE_UNKNOWN:
+		   /* Ignore */
+		   break;
+	       }
+	  }
+	free(state);
+     }
 }
 
-void
+   void
 e_hints_window_visible_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_NORMAL)
@@ -876,7 +918,7 @@ e_hints_window_visible_set(E_Border *bd)
      }
 }
 
-void
+   void
 e_hints_window_iconic_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -891,7 +933,7 @@ e_hints_window_iconic_set(E_Border *bd)
      }
 }
 
-void
+   void
 e_hints_window_hidden_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -906,7 +948,7 @@ e_hints_window_hidden_set(E_Border *bd)
      }
 }
 
-void
+   void
 e_hints_window_shaded_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.shaded) && (on))
@@ -921,28 +963,28 @@ e_hints_window_shaded_set(E_Border *bd, int on)
      }
 }
 
-void
+   void
 e_hints_window_shade_direction_set(E_Border *bd, E_Direction dir)
 {
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_SHADE_DIRECTION, &dir, 1);
 }
 
-E_Direction
+   E_Direction
 e_hints_window_shade_direction_get(E_Border *bd)
 {
    int ret;
    E_Direction dir;
 
    ret = ecore_x_window_prop_card32_get(bd->client.win,
-					E_ATOM_SHADE_DIRECTION,
-				       	&dir, 1);
+	 E_ATOM_SHADE_DIRECTION,
+	 &dir, 1);
    if (ret == 1)
      return dir;
 
    return E_DIRECTION_UP;
 }
 
-void
+   void
 e_hints_window_maximized_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.maximized_v) && (on))
@@ -967,7 +1009,7 @@ e_hints_window_maximized_set(E_Border *bd, int on)
      }
 }
 
-void
+   void
 e_hints_window_fullscreen_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.fullscreen) && (on))
@@ -982,7 +1024,7 @@ e_hints_window_fullscreen_set(E_Border *bd, int on)
      }
 }
 
-void
+   void
 e_hints_window_sticky_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.sticky) && (on))
@@ -997,7 +1039,7 @@ e_hints_window_sticky_set(E_Border *bd, int on)
      }
 }
 
-void
+   void
 e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 {
    if (bd->client.netwm.state.stacking == stacking) return;
@@ -1021,12 +1063,12 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 }
 
 /*
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MODAL, on);
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR, on);
-ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_PAGER, on);
-*/
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_MODAL, on);
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_TASKBAR, on);
+   ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_PAGER, on);
+   */
 
-void
+   void
 e_hints_window_icon_name_get(E_Border *bd)
 {
    char *name;
@@ -1043,12 +1085,12 @@ e_hints_window_icon_name_get(E_Border *bd)
    bd->changed = 1;
 }
 
-void
+   void
 e_hints_window_desktop_set(E_Border *bd)
 {
    unsigned int deskpos[2];
    unsigned int current;
- 
+
    current = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
    /* if valgrind complains here it is complaining bd->client.netwm.desktop
     * is an uninitialised variable - but it isn't. it can't be. its part of
