@@ -158,9 +158,10 @@ struct _E_Border
 	 } fetch;
       } mwm;
       struct {
-	 /* FIXME: add name field */
 	 pid_t pid;
 	 unsigned int desktop;
+	 char *name;
+	 char *icon_name;
 
 	 /* NetWM Window state */
 	 struct {
@@ -180,11 +181,19 @@ struct _E_Border
 	 
 	 struct {
 	    unsigned char name : 1;
+	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char pid : 1;
+	    */
+	    /* No, ignore this
 	    unsigned char desktop : 1;
+	    */
+	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char type : 1;
+	    */
 	    unsigned char icon_name : 1;
+	    /* No, don't fetch state, update on client message
 	    unsigned char state : 1;
+	    */
 	 } fetch;
       } netwm;
       Ecore_X_Window_Attributes initial_attributes;

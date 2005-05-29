@@ -272,10 +272,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    bd->client.win = win;
 
-   bd->client.icccm.title = strdup("");
+   bd->client.icccm.title = NULL;
    bd->client.icccm.name = strdup("");
    bd->client.icccm.class = strdup("");
-   bd->client.icccm.icon_name = strdup("");
+   bd->client.icccm.icon_name = NULL;
    bd->client.icccm.machine = strdup("");
    bd->client.icccm.min_w = 1;
    bd->client.icccm.min_h = 1;
@@ -289,6 +289,22 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.max_aspect = 0.0;
    bd->client.icccm.accepts_focus = 1;
 
+   bd->client.netwm.pid = 0;
+   bd->client.netwm.name = NULL;
+   bd->client.netwm.icon_name = NULL;
+   bd->client.netwm.desktop = 0;
+   bd->client.netwm.state.modal = 0;
+   bd->client.netwm.state.sticky = 0;
+   bd->client.netwm.state.shaded = 0;
+   bd->client.netwm.state.hidden = 0;
+   bd->client.netwm.state.maximized_v = 0;
+   bd->client.netwm.state.maximized_h = 0;
+   bd->client.netwm.state.skip_taskbar = 0;
+   bd->client.netwm.state.skip_pager = 0;
+   bd->client.netwm.state.fullscreen = 0;
+   bd->client.netwm.state.stacking = E_STACKING_NONE;
+   bd->client.netwm.type = ECORE_X_WINDOW_TYPE_NORMAL;
+
      {
 	int at_num = 0, i;
 	Ecore_X_Atom *atoms;
@@ -296,6 +312,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 	atoms = ecore_x_window_prop_list(bd->client.win, &at_num);
 	if (atoms)
 	  {
+	     /* icccm */
 	     for (i = 0; i < at_num; i++)
 	       {
 		  if (atoms[i] == ECORE_X_ATOM_WM_NAME)
@@ -319,6 +336,23 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
 		    bd->client.icccm.fetch.window_role = 1;
 	       }
+	     /* netwm, loop again, netwm will ignore some icccm, so we
+	      * have to be sure that netwm is checked after */
+	     for (i = 0; i < at_num; i++)
+	       {
+		  if (atoms[i] == ECORE_X_ATOM_NET_WM_NAME)
+		    {
+		       /* Ignore icccm */
+		       bd->client.icccm.fetch.title = 0;
+		       bd->client.netwm.fetch.name = 1;
+		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON_NAME)
+		    {
+		       /* Ignore icccm */
+		       bd->client.icccm.fetch.icon_name = 0;
+		       bd->client.netwm.fetch.icon_name = 1;
+		    }
+	       }
 	     free(atoms);
 	  }
      }
@@ -334,21 +368,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
  */
    bd->client.border.changed = 1;
    
-   /* FIXME; set fetch flags as above */
-   bd->client.netwm.pid = 0;
-   bd->client.netwm.desktop = 0;
-   bd->client.netwm.state.modal = 0;
-   bd->client.netwm.state.sticky = 0;
-   bd->client.netwm.state.shaded = 0;
-   bd->client.netwm.state.hidden = 0;
-   bd->client.netwm.state.maximized_v = 0;
-   bd->client.netwm.state.maximized_h = 0;
-   bd->client.netwm.state.skip_taskbar = 0;
-   bd->client.netwm.state.skip_pager = 0;
-   bd->client.netwm.state.fullscreen = 0;
-   bd->client.netwm.state.stacking = E_STACKING_NONE;
-   bd->client.netwm.type = ECORE_X_WINDOW_TYPE_NORMAL;
-
    bd->client.w = att->w;
    bd->client.h = att->h;
 
@@ -1839,7 +1858,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
    if (!bd) return 1;
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
-	bd->client.icccm.fetch.title = 1;
+	if ((!bd->client.netwm.name) &&
+	    (!bd->client.netwm.fetch.name))
+	  {
+	     bd->client.icccm.fetch.title = 1;
+	     bd->changed = 1;
+	  }
+     }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_NAME)
+     {
+	bd->client.netwm.fetch.name = 1;
 	bd->changed = 1;
      }
    else if (e->atom == ECORE_X_ATOM_WM_CLASS)
@@ -1849,7 +1877,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
      }
    else if (e->atom == ECORE_X_ATOM_WM_ICON_NAME)
      {
-	bd->client.icccm.fetch.icon_name = 1;
+	if ((!bd->client.netwm.icon_name) &&
+	    (!bd->client.netwm.fetch.icon_name))
+	  {
+	     bd->client.icccm.fetch.icon_name = 1;
+	     bd->changed = 1;
+	  }
+     }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_ICON_NAME)
+     {
+	bd->client.netwm.fetch.icon_name = 1;
 	bd->changed = 1;
      }
    else if (e->atom == ECORE_X_ATOM_WM_CLIENT_MACHINE)
@@ -2774,14 +2811,26 @@ _e_border_eval(E_Border *bd)
    /* fetch any info queued to be fetched */
    if (bd->client.icccm.fetch.title)
      {
-	e_hints_window_name_get(bd);
+	if (bd->client.icccm.title) free(bd->client.icccm.title);
+	bd->client.icccm.title = ecore_x_icccm_title_get(bd->client.win);
+
 	bd->client.icccm.fetch.title = 0;
 	if (bd->bg_object)
 	  {
 	     edje_object_part_text_set(bd->bg_object, "title_text",
-//				       "Japanese (hiragana): いろはにほへとちりぬるを");
 				       bd->client.icccm.title);
-//	     printf("SET TITLE %s\n", bd->client.icccm.title);
+	  }
+     }
+   if (bd->client.netwm.fetch.name)
+     {
+	if (bd->client.netwm.name) free(bd->client.netwm.name);
+	bd->client.netwm.name = ecore_x_netwm_name_get(bd->client.win);
+
+	bd->client.netwm.fetch.name = 0;
+	if (bd->bg_object)
+	  {
+	     edje_object_part_text_set(bd->bg_object, "title_text",
+				       bd->client.netwm.name);
 	  }
      }
    if (bd->client.icccm.fetch.name_class)
@@ -2852,8 +2901,17 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.icccm.fetch.icon_name)
      {
-	e_hints_window_icon_name_get(bd);
+	if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
+	bd->client.icccm.icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
+
 	bd->client.icccm.fetch.icon_name = 0;
+     }
+   if (bd->client.netwm.fetch.icon_name)
+     {
+	if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
+	bd->client.netwm.icon_name = ecore_x_netwm_icon_name_get(bd->client.win);
+
+	bd->client.netwm.fetch.icon_name = 0;
      }
    if (bd->client.icccm.fetch.machine)
      {
@@ -3082,10 +3140,12 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 	     
-	     edje_object_part_text_set(o, "title_text",
-//				  "Japanese (hiragana): いろはにほへとちりぬるを");
-				       bd->client.icccm.title);
-//	     printf("SET TITLE2 %s\n", bd->client.icccm.title);
+	     if (bd->client.netwm.name)
+	       edje_object_part_text_set(o, "title_text",
+					 bd->client.netwm.name);
+	     else if (bd->client.icccm.title)
+	       edje_object_part_text_set(o, "title_text",
+					 bd->client.icccm.title);
 	     evas_object_resize(o, 1000, 1000);
 	     edje_object_calc_force(o);
 	     edje_object_part_geometry_get(o, "client", &cx, &cy, &cw, &ch);

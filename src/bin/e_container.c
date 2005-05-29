@@ -58,6 +58,7 @@ e_container_new(E_Manager *man)
      {
 	con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
 	ecore_x_icccm_title_set(con->win, "Enlightenment Container");
+	ecore_x_netwm_name_set(con->win, "Enlightenment Container");
 	ecore_x_window_raise(con->win);
      }
    else

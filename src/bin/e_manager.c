@@ -71,6 +71,7 @@ e_manager_new(Ecore_X_Window root)
 	
 	man->win = ecore_x_window_override_new(man->root, man->x, man->y, man->w, man->h);
 	ecore_x_icccm_title_set(man->win, "Enlightenment Manager");
+	ecore_x_netwm_name_set(man->win, "Enlightenment Manager");
 	mwin = e_menu_grab_window_get();
 	if (!mwin) mwin = e_init_window_get();
 	if (!mwin)

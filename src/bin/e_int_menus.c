@@ -484,7 +484,12 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 
 	mi = e_menu_item_new(m);
 	e_menu_item_check_set(mi, 1);
-	e_menu_item_label_set(mi, bd->client.icccm.title);
+	if (bd->client.netwm.name)
+	  e_menu_item_label_set(mi, bd->client.netwm.name);
+	else if (bd->client.icccm.title)
+	  e_menu_item_label_set(mi, bd->client.icccm.title);
+	else
+	  e_menu_item_label_set(mi, "No name!!");
 	/* ref the border as we implicitly unref it in the callback */
 	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);

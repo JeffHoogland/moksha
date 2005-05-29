@@ -235,30 +235,6 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
 }
 
 void
-e_hints_window_name_set(E_Border *bd)
-{
-   ecore_x_icccm_title_set(bd->client.win, bd->client.icccm.title);
-   ecore_x_netwm_name_set(bd->client.win, bd->client.icccm.title);
-}
-
-void
-e_hints_window_name_get(E_Border *bd)
-{
-   /* FIXME: only call from border_eval() if fetch flag set */
-   /* FIXME: split name into icccm and netwm name - prefer netwm name */
-   /* if its not NULL */
-   char		*name;
-
-   name = ecore_x_netwm_name_get(bd->client.win);
-   if (!name)
-     name = ecore_x_icccm_title_get(bd->client.win);
-   if (!name)
-     name = strdup("No name!!");
-   if (bd->client.icccm.title) free(bd->client.icccm.title);
-   bd->client.icccm.title = name;
-}
-
-void
 e_hints_desktop_config_set(void)
 {
    /* Set desktop count, desktop names and workarea */
@@ -905,7 +881,7 @@ e_hints_window_state_get(E_Border *bd)
      }
 }
 
-   void
+void
 e_hints_window_visible_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_NORMAL)
@@ -920,7 +896,7 @@ e_hints_window_visible_set(E_Border *bd)
      }
 }
 
-   void
+void
 e_hints_window_iconic_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -935,7 +911,7 @@ e_hints_window_iconic_set(E_Border *bd)
      }
 }
 
-   void
+void
 e_hints_window_hidden_set(E_Border *bd)
 {
    if (bd->client.icccm.state != ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -950,7 +926,7 @@ e_hints_window_hidden_set(E_Border *bd)
      }
 }
 
-   void
+void
 e_hints_window_shaded_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.shaded) && (on))
@@ -965,13 +941,13 @@ e_hints_window_shaded_set(E_Border *bd, int on)
      }
 }
 
-   void
+void
 e_hints_window_shade_direction_set(E_Border *bd, E_Direction dir)
 {
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_SHADE_DIRECTION, &dir, 1);
 }
 
-   E_Direction
+E_Direction
 e_hints_window_shade_direction_get(E_Border *bd)
 {
    int ret;
@@ -986,7 +962,7 @@ e_hints_window_shade_direction_get(E_Border *bd)
    return E_DIRECTION_UP;
 }
 
-   void
+void
 e_hints_window_maximized_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.maximized_v) && (on))
@@ -1011,7 +987,7 @@ e_hints_window_maximized_set(E_Border *bd, int on)
      }
 }
 
-   void
+void
 e_hints_window_fullscreen_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.fullscreen) && (on))
@@ -1026,7 +1002,7 @@ e_hints_window_fullscreen_set(E_Border *bd, int on)
      }
 }
 
-   void
+void
 e_hints_window_sticky_set(E_Border *bd, int on)
 {
    if ((!bd->client.netwm.state.sticky) && (on))
@@ -1041,7 +1017,7 @@ e_hints_window_sticky_set(E_Border *bd, int on)
      }
 }
 
-   void
+void
 e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 {
    if (bd->client.netwm.state.stacking == stacking) return;
@@ -1070,24 +1046,7 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
    ecore_x_netwm_window_state_set(win, ECORE_X_WINDOW_STATE_SKIP_PAGER, on);
    */
 
-   void
-e_hints_window_icon_name_get(E_Border *bd)
-{
-   char *name;
-
-   if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
-
-   name = ecore_x_netwm_icon_name_get(bd->client.win);
-   if (!name)
-     name = ecore_x_icccm_icon_name_get(bd->client.win);
-   if (!name)
-     name = strdup("");
-
-   bd->client.icccm.icon_name = name;
-   bd->changed = 1;
-}
-
-   void
+void
 e_hints_window_desktop_set(E_Border *bd)
 {
    unsigned int deskpos[2];
