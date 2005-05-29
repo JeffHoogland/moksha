@@ -321,7 +321,7 @@ e_hints_desktop_config_set(void)
 void
 e_hints_window_init(E_Border *bd)
 {
-   /* FIXME: only call from border_eval() if fetch flag set */
+   /* Don't need fetch flag, is onlt called from new border */
    e_hints_window_state_get(bd);
    e_hints_window_type_get(bd);
 
@@ -346,6 +346,8 @@ e_hints_window_init(E_Border *bd)
      bd->layer = 100;
    e_border_raise(bd);
 
+#if 0
+   /* Ignore this, E has incompatible desktop setup */
    if (ecore_x_netwm_desktop_get(bd->client.win, &bd->client.netwm.desktop))
      {
 	if (bd->client.netwm.desktop == 0xffffffff)
@@ -372,15 +374,15 @@ e_hints_window_init(E_Border *bd)
 	/* Update netwm desktop with current desktop */
 	e_hints_window_desktop_set(bd);
      }
+#endif
 
+   /* It's ok not to have fetch flag, should only be set on startup
+    * and not changed. */
    if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
      bd->client.netwm.pid = -1;
 
    if (bd->client.netwm.state.sticky)
-     {
-//	printf("CLIENT asks for stickiness!\n");
-	e_border_stick(bd);
-     }
+     e_border_stick(bd);
    if (bd->client.netwm.state.shaded)
      e_border_shade(bd, e_hints_window_shade_direction_get(bd));
    if (bd->client.netwm.state.maximized_v && bd->client.netwm.state.maximized_h)
@@ -447,7 +449,7 @@ void e_hints_window_type_set(E_Border *bd)
 
 void e_hints_window_type_get(E_Border *bd)
 {
-   /* FIXME: only call from border_eval() if fetch flag set */
+   /* Don't need fetch flag, only called on new border */
    bd->client.netwm.type = ecore_x_netwm_window_type_get(bd->client.win);
 }
 
