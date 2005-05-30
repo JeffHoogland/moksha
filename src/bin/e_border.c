@@ -1513,6 +1513,8 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.icon_name) free(bd->client.icccm.icon_name);
    if (bd->client.icccm.machine) free(bd->client.icccm.machine);
    if (bd->client.icccm.window_role) free(bd->client.icccm.window_role);
+   if (bd->client.netwm.name) free(bd->client.netwm.name);
+   if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
    e_object_del(E_OBJECT(bd->shape));
    if (bd->icon_object) evas_object_del(bd->icon_object);
    evas_object_del(bd->bg_object);
