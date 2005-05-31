@@ -56,6 +56,7 @@ e_intl_init(void)
    ADD_LANG("hu_HU.UTF-8");
    ADD_LANG("sl_SI.UTF-8");
    ADD_LANG("it_IT.UTF-8");
+   ADD_LANG("cs_CS.UTF-8");
 
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
    e_intl_language_set(getenv("LANG"));

@@ -1,0 +1,1219 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DR17 \n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2005-05-25 16:42+0200\n"
+"PO-Revision-Date: 2005-05-25 18:29+0100\n"
+"Last-Translator: Martin Sekera <trancelis@centrum.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/modules/cpufreq/e_mod_main.c:456
+#, c-format
+msgid "%i Mhz"
+msgstr "%i MHz"
+
+#: src/modules/cpufreq/e_mod_main.c:459
+#, c-format
+msgid "%i.%i Ghz"
+msgstr "%i.%i GHz"
+
+#: src/bin/e_int_menus.c:661
+msgid "(Empty)"
+msgstr "(Prázdné)"
+
+#: src/bin/e_int_menus.c:304
+msgid "(No Applications)"
+msgstr "(Žádné aplikace)"
+
+#: src/bin/e_int_menus.c:478
+msgid "(No Windows)"
+msgstr "(Žádná okna)"
+
+#: src/bin/e_int_menus.c:571
+msgid "(Unused)"
+msgstr "(Nepoužito)"
+
+#: src/modules/battery/e_mod_main.c:418
+msgid "1 hour"
+msgstr "1 hodina"
+
+#: src/modules/temperature/e_mod_main.c:598
+msgid "100C"
+msgstr "100 °C"
+
+#: src/modules/temperature/e_mod_main.c:502
+msgid "10C"
+msgstr "10 °C"
+
+#: src/modules/temperature/e_mod_main.c:509
+#: src/modules/temperature/e_mod_main.c:542
+msgid "20C"
+msgstr "20 °C"
+
+#: src/modules/temperature/e_mod_main.c:516
+#: src/modules/temperature/e_mod_main.c:549
+msgid "30C"
+msgstr "30 °C"
+
+#: src/modules/temperature/e_mod_main.c:523
+#: src/modules/temperature/e_mod_main.c:556
+msgid "40C"
+msgstr "40 °C"
+
+#: src/modules/temperature/e_mod_main.c:530
+#: src/modules/temperature/e_mod_main.c:563
+msgid "50C"
+msgstr "50 °C"
+
+#: src/modules/temperature/e_mod_main.c:570
+msgid "60C"
+msgstr "60 °C"
+
+#: src/modules/temperature/e_mod_main.c:577
+msgid "70C"
+msgstr "70 °C"
+
+#: src/modules/temperature/e_mod_main.c:584
+msgid "80C"
+msgstr "80 °C"
+
+#: src/modules/temperature/e_mod_main.c:591
+msgid "90C"
+msgstr "90 °C"
+
+#: src/modules/battery/e_mod_main.c:99
+msgid ""
+"A basic battery meter that uses either ACPI or APM\n"
+"on Linux to monitor your battery and AC power adaptor\n"
+"status. This will only work under Linux and is only\n"
+"as accurate as your BIOS or kernel drivers."
+msgstr ""
+"Základní měřič stavu baterie a zdroje, který používá buď\n"
+" ACPI nebo APM. Funguje pouze na Linuxu a je tak přesný,\n"
+"jak přesné jsou vaše jaderné ovladače nebo ovladač BIOSu."
+
+#: src/modules/temperature/e_mod_main.c:97
+msgid ""
+"A module to measure the ACPI Thermal sensor on Linux.\n"
+"It is especially useful for modern Laptops with high speed\n"
+"CPUs that generate a lot of heat."
+msgstr ""
+"Modul využívající ACPI senzor k měření teploty na Linuxu.\n"
+"Největší uplatnění najde na moderních laptopech osazených rychlými CPU,\n"
+"které produkují mnoho tepla."
+
+#: src/modules/pager/e_mod_main.c:141
+msgid "A pager module to navigate virtual desktops."
+msgstr "Modul pageru pro pohyb mezi virtuálními plochami."
+
+#: src/modules/cpufreq/e_mod_main.c:108
+msgid "A simple module to control the frequency of the system CPU. This is especially useful to save power on laptops."
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:96
+msgid "A simple module to give E17 a clock."
+msgstr "Jednoduchý modul, který dává E17 hodiny."
+
+#: src/bin/e_int_menus.c:120
+#: src/bin/e_int_menus.c:242
+msgid "About Enlightenment"
+msgstr "O Enlightenmentu"
+
+#: src/bin/e_module.c:384
+msgid "About..."
+msgstr "O aplikaci..."
+
+#: src/bin/e_border.c:3846
+msgid "Always On Top"
+msgstr "Vždy navrchu"
+
+#: src/bin/e_main.c:438
+msgid "Artificially slowing startup so you can see it all."
+msgstr "Uměle brzdím start aby bylo všecko vidět."
+
+#: src/modules/ibar/e_mod_main.c:730
+#: src/modules/ibox/e_mod_main.c:590
+msgid "Auto fit icons"
+msgstr "Automaticky zvětšovat ikony"
+
+#: src/modules/cpufreq/e_mod_main.c:430
+msgid "Automatic"
+msgstr "Automatický"
+
+#: src/bin/e_gadman.c:556
+msgid "Automatic Height"
+msgstr "Automatická výška"
+
+#: src/bin/e_gadman.c:509
+msgid "Automatic Width"
+msgstr "Automatická šířka"
+
+#: src/modules/battery/e_mod_main.c:903
+msgid "BAD DRIVER"
+msgstr "ŠPATNÝ OVLADAČ"
+
+#: src/modules/battery/e_mod_main.c:89
+msgid "Battery"
+msgstr "Baterie"
+
+#: src/modules/battery/e_mod_main.c:686
+msgid "Battery Running Low"
+msgstr "Baterie "
+
+#: src/modules/cpufreq/e_mod_main.c:107
+msgid "CPU Frequency Controller Module"
+msgstr "Modul pro ovládání frekvence CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:266
+#: src/modules/cpufreq/e_mod_main.c:283
+msgid "CPU Frequency ERROR"
+msgstr "CHYBA frekvence CPU"
+
+#: src/bin/e_gadman.c:538
+msgid "Center Horizontally"
+msgstr "Vystředit horizontálně"
+
+#: src/bin/e_gadman.c:584
+msgid "Center Vertically"
+msgstr "Vystředit vertikálně"
+
+#: src/modules/battery/e_mod_main.c:999
+msgid "Charging"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:384
+msgid "Check Fast (0.5 sec)"
+msgstr "Rychle (0,5 s)"
+
+#: src/modules/battery/e_mod_main.c:430
+msgid "Check Fast (1 sec)"
+msgstr "Rychle (1 s)"
+
+#: src/modules/temperature/e_mod_main.c:184
+#: src/modules/temperature/e_mod_main.c:610
+msgid "Check Interval"
+msgstr "Aktualizovat"
+
+#: src/modules/cpufreq/e_mod_main.c:391
+msgid "Check Medium (1 sec)"
+msgstr "Středně rychle (1 s)"
+
+#: src/modules/battery/e_mod_main.c:437
+msgid "Check Medium (5 sec)"
+msgstr "Středně rychle (5 s)"
+
+#: src/modules/battery/e_mod_main.c:444
+msgid "Check Normal (10 sec)"
+msgstr "Normálně (10 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:398
+msgid "Check Normal (2 sec)"
+msgstr "Normálně (2 s)"
+
+#: src/modules/battery/e_mod_main.c:451
+msgid "Check Slow (30 sec)"
+msgstr "Pomalu (30 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:405
+msgid "Check Slow (5 sec)"
+msgstr "Pomalu (5 s)"
+
+#: src/modules/cpufreq/e_mod_main.c:412
+msgid "Check Very Slow (30 sec)"
+msgstr "Velmi pomalu (30 s)"
+
+#: src/modules/battery/e_mod_main.c:458
+msgid "Check Very Slow (60 sec)"
+msgstr "Velmi pomalu (60 s)"
+
+#: src/bin/e_int_menus.c:501
+msgid "Cleanup Windows"
+msgstr "Vyčistit okna"
+
+#: src/modules/clock/e_mod_main.c:86
+msgid "Clock"
+msgstr "Hodiny"
+
+#: src/bin/e_border.c:3797
+msgid "Close"
+msgstr "Zavřít"
+
+#: src/bin/e_module.c:399
+msgid "Configuration"
+msgstr "Nastavení"
+
+#: src/bin/e_config.c:977
+msgid "Configuration Upgraded"
+msgstr "Nastavení aktualizováno"
+
+#: src/bin/e_config.c:157
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new confiugration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"Data nastavení je třeba aktualizovat. Vaše staré nastavení\n"
+"bylo odstraněno a nová sada standardních nastavení byla načtena.\n"
+"Bude se to dít pravidelně při vývoji, takže neposílejte hlášení chyb.\n"
+"Znamená to, že Enlightenment potřebuje zavést nastavení nových\n"
+"vlastností, které ve vašem starém nastavení prostě není. Nová sada nastavení\n"
+"je doplní. Nyní můžete si můžete nastavit Enlightenment zpět k obrazu svému.\n"
+"Omlouváme se za způsobené potíže.\n"
+
+#: src/bin/e_container.c:102
+#, c-format
+msgid "Container %d"
+msgstr "Kontejner %i"
+
+#: src/modules/cpufreq/e_mod_main.c:98
+msgid "CpuFreq"
+msgstr "CpuFreq"
+
+#: src/bin/e_border.c:3901
+msgid "Create Icon"
+msgstr "Vytvořit ikonu"
+
+#: src/modules/battery/e_mod_main.c:995
+msgid "Danger"
+msgstr "Nebezpečí"
+
+#: src/modules/dropshadow/e_mod_main.c:316
+msgid "Dark"
+msgstr "Tmavé"
+
+#: src/bin/e_desk.c:44
+#, c-format
+msgid "Desktop %d, %d"
+msgstr "Plocha %d, %d"
+
+#: src/bin/e_int_menus.c:83
+msgid "Desktops"
+msgstr "Plochy"
+
+#: src/modules/dropshadow/e_mod_main.c:139
+msgid "Dropshadow"
+msgstr "Stíny"
+
+#: src/bin/e_border.c:3875
+msgid "Edit Icon"
+msgstr "Upravit ikonu"
+
+#: src/bin/e_int_menus.c:565
+#: src/modules/battery/e_mod_main.c:561
+#: src/modules/clock/e_mod_main.c:309
+#: src/modules/cpufreq/e_mod_main.c:810
+#: src/modules/ibar/e_mod_main.c:574
+#: src/modules/ibox/e_mod_main.c:444
+#: src/modules/pager/e_mod_main.c:435
+#: src/modules/start/e_mod_main.c:235
+#: src/modules/temperature/e_mod_main.c:723
+msgid "Edit Mode"
+msgstr "Režim úprav"
+
+#: src/bin/e_module.c:388
+msgid "Enabled"
+msgstr "Povoleno"
+
+#: src/bin/e_gadman.c:596
+msgid "End Edit Mode"
+msgstr "Ukončit režim úprav"
+
+#: src/bin/e_main.c:422
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/modules/battery/e_mod_main.c:98
+msgid "Enlightenment Battery Module"
+msgstr "Modul baterie Enlightenment"
+
+#: src/modules/clock/e_mod_main.c:95
+msgid "Enlightenment Clock Module"
+msgstr "Modul hodin Enlightenment"
+
+#: src/modules/dropshadow/e_mod_main.c:148
+msgid "Enlightenment Dropshadow Module"
+msgstr "Modul stínů Enlightenment"
+
+#: src/modules/ibar/e_mod_main.c:167
+msgid "Enlightenment IBar Module"
+msgstr "Modul IBar Enlightenment"
+
+#: src/modules/ibox/e_mod_main.c:157
+msgid "Enlightenment IBox Module"
+msgstr "Modul IBox Enlightenment"
+
+#: src/bin/e_main.c:405
+msgid "Enlightenment IPC setup error!"
+msgstr "Modul  Enlightenment"
+
+#: src/modules/pager/e_mod_main.c:140
+msgid "Enlightenment Pager Module"
+msgstr "Modul pageru Enlightenment"
+
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Modul Start Enlightenment"
+
+#: src/bin/e_main.c:424
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment startuje. Prosím čekejte."
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid "Enlightenment Temperature Module"
+msgstr "Modul teploty Enlightenment"
+
+#: src/modules/test/e_mod_main.c:66
+msgid "Enlightenment Test Module"
+msgstr "Zkušební modul Enlightenment"
+
+#: src/bin/e_main.c:192
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit Ecore!\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:285
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment nemůže vytvářet adresáře ve vašem domovském adresáři.\n"
+"Možná žádný nemáte nebo je disk plný?"
+
+#: src/bin/e_main.c:219
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenmentu se nepodařilo spojit s X serverem.\n"
+"Máte nastavenou proměnnou DISPLAY?"
+
+#: src/bin/e_main.c:258
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém Evas!\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:273
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:250
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém IPC.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:242
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit systém spojení.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:208
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit handler signálu HUP.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:202
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit handler signálu exit.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:343
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo spustit úvodní obrazovku.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:308
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenmentu se nepodařilo spustit systém akcí."
+
+#: src/bin/e_main.c:359
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenmentu se nepodařilo spustit systém aplikací."
+
+#: src/bin/e_main.c:315
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenmentu se nepodařilo spustit systém klávesových zkratek."
+
+#: src/bin/e_main.c:293
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenmentu se nepodařilo spustit systém nastavení."
+
+#: src/bin/e_main.c:399
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenmentu se nepodařilo spustit systém dnd."
+
+#: src/bin/e_main.c:333
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenmentu se nepodařilo spustit systém fontů."
+
+#: src/bin/e_main.c:391
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenmentu se nepodařilo spustit systém modulů."
+
+#: src/bin/e_main.c:322
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenmentu se nepodařilo spustit systém pop-upů."
+
+#: src/bin/e_main.c:366
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenmentu se nepodařilo spustit systém témat."
+
+#: src/bin/e_main.c:300
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentu se nepodařilo nastavit cesty k vyhledávání souborů.\n"
+"Možná došla paměť?"
+
+#: src/bin/e_main.c:378
+#: src/bin/e_main.c:406
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an exisiting copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+"Enlightenmentu se nepodařilo otevřít svůj IPC socket.\n"
+"Je pravděpodobné, že je již používán běžící kopií Enlightenmentu.\n"
+"Zkontrolujte, zda Enlightenment již neběží na této obrazovce,\n"
+"pokud ne, smažte všechny soubory ~/.ecore/enlightenment-*\n"
+"a zkuste spustit znova."
+
+#: src/bin/e_main.c:226
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Enlightenmentu se nepodařilo nastavit xinerama wrapping.\n"
+"Tohle by se nemělo stávat."
+
+#: src/bin/e_main.c:264
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment zjistil, že ecore_evas nepodporuje softwarové X11\n"
+"vykreslování v Evas-u. Prosím zjistěte, zda Evas a Ecore podporují\n"
+"softwarové X11 vykreslování."
+
+#: src/bin/e_main.c:351
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Nastavení manažeru okna na všech obrazovkách v systému selhalo.\n"
+"Neběží už jiný okenní manažer?\n"
+
+#: src/bin/e_error.c:364
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: Chyba!"
+
+#: src/modules/ibar/e_mod_main.c:802
+#: src/modules/ibox/e_mod_main.c:662
+msgid "Enormous"
+msgstr "Obrovský"
+
+#: src/modules/battery/e_mod_main.c:46
+#, c-format
+msgid ""
+"Error initializing Module: Battery\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Baterie\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/clock/e_mod_main.c:41
+#, c-format
+msgid ""
+"Error initializing Module: Clock\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Zastavuji module."
+msgstr ""
+"Chyba nahrávání modulu: Hodiny\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/dropshadow/e_mod_main.c:92
+#, c-format
+msgid ""
+"Error initializing Module: Dropshadow\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Stíny\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/ibar/e_mod_main.c:115
+#, c-format
+msgid ""
+"Error initializing Module: IBar\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: IBar\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/ibox/e_mod_main.c:104
+#, c-format
+msgid ""
+"Error initializing Module: IBox\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Ibox\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/pager/e_mod_main.c:85
+#, c-format
+msgid ""
+"Error initializing Module: Pager\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Pager\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+#: src/modules/temperature/e_mod_main.c:44
+#, c-format
+msgid ""
+"Error initializing Module: Temperature\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Teplota\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+
+#: src/modules/cpufreq/e_mod_main.c:58
+#, c-format
+msgid ""
+"Error initializing Module: cpufreq\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: CpuFreq\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: Start\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+
+#: src/modules/test/e_mod_main.c:10
+#, c-format
+msgid ""
+"Error initializing Module: test\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Chyba nahrávání modulu: test\n"
+"Je zapotřebí API modul s verzí minimálně %i.\n"
+"API modul v Enlightenmentu má verzi %i.\n"
+"Ukončuji modul."
+
+
+#: src/bin/e_module.c:100
+#: src/bin/e_module.c:111
+#: src/bin/e_module.c:133
+msgid "Error loading Module"
+msgstr "Chyba nahrávání modulu"
+
+#: src/bin/e_border.c:3978
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"Chyba při spouštění editoru ikon\n"
+"\n"
+"prosím nainstalujte e_util_eapp_edit\n"
+"nebo zajistěte, aby byl ve vaší PATH\n"
+
+#: src/bin/e_int_menus.c:137
+msgid "Exit Enlightenment"
+msgstr "Opustit Enlightenment"
+
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Experimentální hlavní nabídka pro E17"
+
+#: src/modules/ibar/e_mod_main.c:788
+#: src/modules/ibox/e_mod_main.c:648
+msgid "Extremely Large"
+msgstr "Hodně velký"
+
+#: src/modules/dropshadow/e_mod_main.c:382
+msgid "Extremely Near"
+msgstr "Extrémně blízké"
+
+#: src/modules/battery/e_mod_main.c:927
+msgid "FULL"
+msgstr "PLNO"
+
+#: src/modules/dropshadow/e_mod_main.c:355
+msgid "Far"
+msgstr "Vzdálené"
+
+#: src/modules/temperature/e_mod_main.c:462
+msgid "Fast (1 sec)"
+msgstr "Rychle (1 s)"
+
+#: src/bin/e_int_menus.c:62
+msgid "Favorite Applications"
+msgstr "Oblíbené aplikace"
+
+#: src/bin/e_gadman.c:573
+msgid "Full Screen Height"
+msgstr "Výška přes celou obrazovku"
+
+#: src/bin/e_gadman.c:526
+msgid "Full Screen Width"
+msgstr "Šířka přes celou obrazovku"
+
+#: src/modules/dropshadow/e_mod_main.c:268
+msgid "Fuzzy"
+msgstr "Neostré"
+
+#: src/bin/e_int_menus.c:101
+msgid "Gadgets"
+msgstr "Vychytávky"
+
+#: src/modules/ibar/e_mod_main.c:809
+#: src/modules/ibox/e_mod_main.c:669
+msgid "Gigantic"
+msgstr "Gigantický"
+
+#: src/bin/e_gadman.c:567
+msgid "Half Screen Height"
+msgstr "Šířka přes polovinu obrazovky"
+
+#: src/bin/e_gadman.c:520
+msgid "Half Screen Width"
+msgstr "Výška přes polovinu obrazovky"
+
+#: src/modules/battery/e_mod_main.c:987
+msgid "High"
+msgstr "Vysoký"
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:618
+msgid "High Temperature"
+msgstr "Horní mez teploty"
+
+#: src/modules/ibar/e_mod_main.c:795
+#: src/modules/ibox/e_mod_main.c:655
+msgid "Huge"
+msgstr "Mohutný"
+
+#: src/modules/ibar/e_mod_main.c:158
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
+msgstr "IBox"
+
+#: src/bin/e_border.c:3977
+msgid "Icon Edit Error"
+msgstr "Chyba editoru ikon"
+
+#: src/bin/e_border.c:3805
+msgid "Iconify"
+msgstr "Ikonifikovat"
+
+#: src/modules/dropshadow/e_mod_main.c:391
+msgid "Immediately Underneath"
+msgstr "Těsně pod"
+
+#: src/modules/ibar/e_mod_main.c:774
+#: src/modules/ibox/e_mod_main.c:634
+msgid "Large"
+msgstr "Větší"
+
+#: src/modules/dropshadow/e_mod_main.c:325
+msgid "Light"
+msgstr "Světlé"
+
+#: src/modules/battery/e_mod_main.c:991
+msgid "Low"
+msgstr "Nízké"
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:614
+msgid "Low Temperature"
+msgstr "Dolní mez teploty"
+
+#: src/modules/cpufreq/e_mod_main.c:428
+msgid "Manual"
+msgstr "Ruční"
+
+#: src/bin/e_border.c:3826
+msgid "Maximized"
+msgstr "Maximalizovaný"
+
+#: src/modules/cpufreq/e_mod_main.c:434
+msgid "Maximum Speed"
+msgstr "Maximální rychlost"
+
+#: src/modules/dropshadow/e_mod_main.c:277
+#: src/modules/ibar/e_mod_main.c:767
+#: src/modules/ibox/e_mod_main.c:627
+msgid "Medium"
+msgstr "Střední"
+
+#: src/modules/temperature/e_mod_main.c:469
+msgid "Medium (5 sec)"
+msgstr "Střední (5 s)"
+
+#: src/modules/ibar/e_mod_main.c:739
+#: src/modules/ibox/e_mod_main.c:599
+msgid "Microscopic"
+msgstr "Mikroskopický"
+
+#: src/modules/cpufreq/e_mod_main.c:432
+msgid "Minimum Speed"
+msgstr "Minimální rychlost"
+
+#: src/modules/battery/e_mod_main.c:45
+#: src/modules/clock/e_mod_main.c:40
+#: src/modules/cpufreq/e_mod_main.c:57
+#: src/modules/dropshadow/e_mod_main.c:91
+#: src/modules/ibar/e_mod_main.c:114
+#: src/modules/ibox/e_mod_main.c:103
+#: src/modules/pager/e_mod_main.c:84
+#: src/modules/start/e_mod_main.c:28
+#: src/modules/temperature/e_mod_main.c:43
+#: src/modules/test/e_mod_main.c:9
+msgid "Module API Error"
+msgstr "Chyba API modulu"
+
+#: src/modules/test/e_mod_main.c:24
+msgid "Module Config Menu Item 1"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:26
+msgid "Module Config Menu Item 2"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:28
+msgid "Module Config Menu Item 3"
+msgstr ""
+
+#: src/bin/e_int_menus.c:74
+msgid "Modules"
+msgstr "Moduly"
+
+#: src/bin/e_main.c:440
+msgid "Most features do not work yet, and those that do are buggy."
+msgstr "Většina věcí ještě nefunguje, a ty které ano jdou špatně."
+
+#: src/modules/battery/e_mod_main.c:879
+msgid "NO BAT"
+msgstr "ŽÍDNÝ BAT"
+
+#: src/modules/battery/e_mod_main.c:748
+msgid "NO INFO"
+msgstr "ŽÁDNÉ INFO"
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Near"
+msgstr "Blízké"
+
+#: src/bin/e_int_menus.c:394
+msgid "New Column of Desktops"
+msgstr "Nový sloupec ploch"
+
+#: src/bin/e_int_menus.c:386
+msgid "New Row of Desktops"
+msgstr "Nový řádek ploch"
+
+#: src/modules/temperature/e_mod_main.c:476
+msgid "Normal (10 sec)"
+msgstr "Normální (10 s)"
+
+#: src/bin/e_error.c:209
+#: src/bin/e_error.c:218
+msgid "OK"
+msgstr "OK"
+
+#: src/modules/ibar/e_mod_main.c:275
+#: src/modules/ibar/e_mod_main.c:817
+#: src/modules/ibox/e_mod_main.c:677
+msgid "Options"
+msgstr "Nastavení"
+
+#: src/bin/e_main.c:140
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+"Nastavení:\n"
+"\t-display DISPLAY\n"
+"\t\tPřipojí se k obrazovce DISPLAY.\n"
+"\t\tpř: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tPřidá FALEŠNOU xinerama obrazovku (namísto skutečné)\n"
+"\t\ts danou geometrií. Můžete ořidat kolik chcete. Všecny\n"
+"\t\tnahrazují reálné obrazovky xinerama, pokud nějaké jsou.\n"
+"\t\tPoužitelné k simulaci xineramy.\n"
+"\t\tpř: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t-good\n"
+"\t\tBýt dobrý.\n"
+"\t-evil\n"
+"\t\tBýt ďábelský.\n"
+"\t-psychotic\n"
+"\t\tBýt psychotický.\n"
+
+#: src/modules/pager/e_mod_main.c:131
+msgid "Pager"
+msgstr "Pager"
+
+#: src/bin/e_int_menus.c:398
+msgid "Remove Column of Desktops"
+msgstr "Odstranit sloupec ploch"
+
+#: src/bin/e_int_menus.c:390
+msgid "Remove Row of Desktops"
+msgstr "Odstranit řádek ploch"
+
+#: src/bin/e_int_menus.c:130
+msgid "Restart Enlightenment"
+msgstr "Restartovat Enlightenment"
+
+#: src/bin/e_border.c:3859
+msgid "Send To"
+msgstr "Poslat na"
+
+#: src/modules/battery/e_mod_main.c:194
+#: src/modules/battery/e_mod_main.c:473
+msgid "Set Alarm"
+msgstr "Nastavit alarm"
+
+#: src/modules/cpufreq/e_mod_main.c:198
+#: src/modules/cpufreq/e_mod_main.c:480
+msgid "Set Controller"
+msgstr "Nastavit ovladač"
+
+#: src/modules/battery/e_mod_main.c:190
+#: src/modules/battery/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:191
+#: src/modules/cpufreq/e_mod_main.c:474
+msgid "Set Poll Time"
+msgstr "Aktualizovat"
+
+#: src/modules/cpufreq/e_mod_main.c:206
+#: src/modules/cpufreq/e_mod_main.c:487
+msgid "Set Speed"
+msgstr "Nastavit rychlost"
+
+#: src/bin/e_border.c:3816
+msgid "Shaded"
+msgstr "Stínované"
+
+#: src/modules/dropshadow/e_mod_main.c:286
+msgid "Sharp"
+msgstr "Ostré"
+
+#: src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:821
+#: src/modules/ibox/e_mod_main.c:681
+msgid "Size"
+msgstr "Velikost"
+
+#: src/modules/temperature/e_mod_main.c:483
+msgid "Slow (30 sec)"
+msgstr "Pomalu (30 s)"
+
+#: src/modules/ibar/e_mod_main.c:760
+#: src/modules/ibox/e_mod_main.c:620
+msgid "Small"
+msgstr "Malý"
+
+#: src/modules/test/e_mod_main.c:32
+msgid "Something Else"
+msgstr "Něco jiného"
+
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "Start"
+
+#: src/bin/e_border.c:3836
+msgid "Sticky"
+msgstr "Sticky"
+
+#: src/modules/temperature/e_mod_main.c:87
+msgid "Temperature"
+msgstr "Teplota"
+
+#: src/modules/test/e_mod_main.c:59
+msgid "Test!!!"
+msgstr "Test!!!"
+
+#: src/bin/e_int_menus.c:110
+msgid "Themes"
+msgstr "Témata"
+
+#: src/bin/e_module.c:101
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"No module named %s could be found in the\n"
+"module search directories\n"
+msgstr ""
+"Došlo k chybě při načítání modulu %s.\n"
+"Žádný modul s názvem %s nebyl nazelen\n"
+"v adresářích pro hledání modulů\n"
+
+#: src/bin/e_module.c:112
+#: src/bin/e_module.c:134
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"The full path to this module is:\n"
+"%s\n"
+"The error reported was:\n"
+"%s"
+msgstr ""
+"Došlo k chybě při načítání modulu %s.\n"
+"Plná cesta k modulu je:\n"
+"%s\n"
+"Nahlášená chyba je:\n"
+"%s"
+
+#: src/modules/cpufreq/e_mod_main.c:267
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+"Došlo k chybě při pokusu nastavit frekvenci CPU\n"
+"pomocí utility setfreq modulu."
+
+#: src/bin/e_int_menus.c:243
+#, c-format
+msgid ""
+"This is Enlightenment %s.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+"\n"
+"We hope you enjoy using this software as much as we enjoyed writing it.\n"
+"\n"
+"Please think of the aardvarks. They need some love too."
+msgstr ""
+"Enlightenment %s.\n"
+"Copyright © 1999-2005, Enlightenment Dev Team.\n"
+"\n"
+"Doufáme, že se vám tento software bude líbit stejně, jako nás baví jej psát.\n"
+"\n"
+"Please think of the aardvarks. They need some love too."
+
+#: src/bin/e_main.c:439
+msgid "This is development code, so be warned."
+msgstr "Tohle je vývojový kód, byli jste varováni..."
+
+#: src/modules/ibar/e_mod_main.c:168
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"Toto je IBar - lišta pro spouštění aplikací pro Enlightenment.\n"
+"Je to první ukázkový modul a používá se k předvedení mnoha\n"
+"rozhraní v Enlightenment 0.17.0. Probíhá na něm intenzívní vývoj,\n"
+"takže očekávejte hodně chyb a změny k lepšímu."
+
+#: src/modules/ibox/e_mod_main.c:158
+msgid ""
+"This is the IBox Application Launcher box module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"Toto je IBox - lišta pro spouštění aplikací pro Enlightenment.\n"
+"Je to první ukázkový modul a používá se k předvedení mnoha\n"
+"rozhraní v Enlightenment 0.17.0. Probíhá na něm intenzívní vývoj,\n"
+"takže očekávejte hodně chyb a změny k lepšímu."
+
+#: src/modules/dropshadow/e_mod_main.c:149
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast\n"
+"on the desktop background - without special X-Server extensions\n"
+"or hardware acceleration."
+msgstr ""
+"Modul, který umožňuje oknům vrhat stíny bez potřeby speciálních\n"
+"rozšíření X serveru nebo hardwarové akcelerace."
+
+#: src/modules/test/e_mod_main.c:67
+msgid ""
+"This module is VERY simple and is only used to test the basic\n"
+"interface of the Enlightenment 0.17.0 module system. Please\n"
+"Ignore this module unless you are working on the module system."
+msgstr ""
+"Tenhle modul je VELMi jednoduchý a slouží pouze ke zkoušení základního\n"
+"rozhraní modulového systému Enlightenment 0.17.0. Prosím ignorujte jej,\n"
+"pokud se ovšem nezabýváte vývojem systému modulů."
+
+#: src/modules/ibar/e_mod_main.c:746
+#: src/modules/ibox/e_mod_main.c:606
+msgid "Tiny"
+msgstr "Drobný"
+
+#: src/modules/dropshadow/e_mod_main.c:307
+msgid "Very Dark"
+msgstr "Velmi tmavé"
+
+#: src/modules/dropshadow/e_mod_main.c:346
+msgid "Very Far"
+msgstr "Velmi vzdálené"
+
+#: src/modules/dropshadow/e_mod_main.c:259
+msgid "Very Fuzzy"
+msgstr "Velmi neostré"
+
+#: src/modules/ibar/e_mod_main.c:781
+#: src/modules/ibox/e_mod_main.c:641
+msgid "Very Large"
+msgstr "Velký"
+
+#: src/modules/dropshadow/e_mod_main.c:334
+msgid "Very Light"
+msgstr "Velmi světlé"
+
+#: src/modules/dropshadow/e_mod_main.c:373
+msgid "Very Near"
+msgstr "Velmi blízké"
+
+#: src/modules/dropshadow/e_mod_main.c:295
+msgid "Very Sharp"
+msgstr "Velmi ostré"
+
+#: src/modules/temperature/e_mod_main.c:490
+msgid "Very Slow (60 sec)"
+msgstr "Velmi pomalu (60 s)"
+
+#: src/modules/ibar/e_mod_main.c:753
+#: src/modules/ibox/e_mod_main.c:613
+msgid "Very Small"
+msgstr "Velmi malý"
+
+#: src/bin/e_int_menus.c:92
+msgid "Windows"
+msgstr "Okna"
+
+#: src/bin/e_init.c:35
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "X hlásí, že tu nejsou žádná root-okna a %i obrazovek!\n"
+
+#: src/modules/battery/e_mod_main.c:687
+msgid ""
+"Your battery is running low.\n"
+"You may wish to switch to an AC source."
+msgstr ""
+"Vaše baterie je už skoro prázdná.\n"
+"Možná budete chtít přepnout na síťový zdroj."
+
+#: src/bin/e_config.c:171
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your confiugration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"Vaše nastavení je NOVĚJŠÍ než Enlightenment. To je hoodně\n"
+"zvláštní. Nemělo by se to stát, pokud jste ovšem nedowngradovali\n"
+"Enlightenment nebo nekopírovali soubory s nastavením z místa, kde\n"
+"běžela novější verze Enlightenmentu. Je to zlé a jako protiopatření\n"
+"bylo vaše nastavení vráceno do původních hodnot.\n"
+"Omlouvám se za nepohodlí.\n"

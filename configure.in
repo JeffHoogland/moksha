@@ -94,7 +94,7 @@ else
   AC_DEFINE_UNQUOTED(LOCALE_DIR, "${datadir}/locale", "Locale directory")
 fi
 
-ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it"
+ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs"
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.12.1)

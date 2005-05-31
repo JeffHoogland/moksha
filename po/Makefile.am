@@ -16,7 +16,8 @@ pl.mo \
 zh_CN.mo \
 hu.mo \
 sl.mo \
-it.mo
+it.mo \
+cs.mo
 
 LANGS = \
 fr \
@@ -31,7 +32,8 @@ pl \
 zh_CN \
 hu \
 sl \
-it
+it \
+cs
 
 EXTRA_DIST = \
 enlightenment.pot \
@@ -47,7 +49,8 @@ pl.po \
 zh_CN.po \
 hu.po \
 sl.po \
-it.po
+it.po \
+cs.po
 
 ja.mo:
 	$(MSGFMT) -f -o $@ $(top_srcdir)/po/ja.po
@@ -75,6 +78,8 @@ sl.mo:
 	$(MSGFMT) -f -o $@ $(top_srcdir)/po/sl.po
 it.mo:
 	$(MSGFMT) -f -o $@ $(top_srcdir)/po/it.po
+cs.mo:
+	$(MSGFMT) -f -o $@ $(top_srcdir)/po/cs.po
 
 install-poDATA:
 uninstall-poDATA:

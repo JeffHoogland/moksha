@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* add actions to flip desktops on a given zone and/or container only
 * don't show borders before window
 * double check edje and evas image caches are working
 * breaking out config via ipc / e_remote is too much work. this needs to get
