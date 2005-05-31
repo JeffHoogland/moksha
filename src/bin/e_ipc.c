@@ -4,12 +4,6 @@
 static int _e_ipc_cb_client_add(void *data, int type, void *event);
 static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
-static void _e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode);
-static void _e_ipc_reply_int_send(Ecore_Ipc_Client *client, int val, int opcode);
-static void _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode);
-
-static int _e_ipc_double_dec(char *data, int bytes, double *dest);
-static int _e_ipc_int_dec(char *data, int bytes, int *dest);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -1119,6 +1113,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    return 1;
 }  
 
+#if 0
 static void
 _e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode)
 {
@@ -1169,3 +1164,4 @@ _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode)
 	free(data);
      }
 }
+#endif
