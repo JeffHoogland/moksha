@@ -951,24 +951,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	else
 	  printf("REPLY: FALLBACK NONE\n");
 	break;
-      case E_IPC_OP_FONT_AVAILABLE_LIST_REPLY:
-        if (e->data)
-          {
-             Evas_List *available;
-	     E_Font_Available *fa;
-	     
-	     available = _e_ipc_font_available_list_dec(e->data, e->size);
-	     while (available)
-	       {
-		  fa = available->data;
-		  printf("REPLY: AVAILABLE NAME=\"%s\"\n", fa->name);
-		  available = evas_list_remove_list(available, available);
-		  E_FREE(fa);
-	       }
-          }
-        else
-          printf("REPLY: AVAILABLE NONE\n"); 
-        break;   
       case E_IPC_OP_FONT_DEFAULT_GET_REPLY:
         if (e->data)
           {

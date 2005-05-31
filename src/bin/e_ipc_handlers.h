@@ -111,6 +111,12 @@ break;
    } \
 break;
 
+#define LIST() \
+   Evas_List *dat = NULL, *l;
+
+#define DECODE(__dec) \
+   if (__dec(e->data, e->size, &dat))
+
 #endif
 
 
@@ -330,7 +336,15 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
-//   
+   GENERIC(HANDLER);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
 #endif
 #undef HANDLER
      

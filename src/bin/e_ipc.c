@@ -78,30 +78,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 #undef TYPE	
 /* here to steal from to port over to the new e_ipc_handlers.h */	
 #if 0
-      case E_IPC_OP_FONT_AVAILABLE_LIST:
-	  {
-	     E_Font_Available *fa;
-	     Evas_List *dat = NULL, *l, *fa_list;
-	     void *data;
-	     int bytes;
-	     
-	     fa_list = e_font_available_list();
-	     for (l = fa_list; l; l = l->next)
-	       {
-		  fa = l->data;
-		  dat = evas_list_append(dat, fa->name);
-	       }
-	     data = e_ipc_codec_str_list_enc(dat, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_FONT_AVAILABLE_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
-	     evas_list_free(dat);
-	     e_font_available_list_free(fa_list);
-	  }
-	break;
       case E_IPC_OP_FONT_APPLY:
 	  {
 	     e_font_apply();
