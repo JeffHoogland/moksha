@@ -3,11 +3,15 @@
  */
 #ifdef E_TYPEDEFS
 
-typedef struct _E_Ipc_Int         E_Ipc_Int;
-typedef struct _E_Ipc_Double      E_Ipc_Double;
-typedef struct _E_Ipc_2Int        E_Ipc_2Int;
-typedef struct _E_Ipc_Str         E_Ipc_Str;
-typedef struct _E_Ipc_Str_List    E_Ipc_Str_List;
+typedef struct _E_Ipc_Int              E_Ipc_Int;
+typedef struct _E_Ipc_Double           E_Ipc_Double;
+typedef struct _E_Ipc_2Int             E_Ipc_2Int;
+typedef struct _E_Ipc_List             E_Ipc_List;
+typedef struct _E_Ipc_Str              E_Ipc_Str;
+typedef struct _E_Ipc_Str_Int          E_Ipc_Str_Int;
+typedef struct _E_Ipc_Str_Int_List     E_Ipc_Str_Int_List;
+typedef struct _E_Ipc_2Str_Int         E_Ipc_2Str_Int;
+typedef struct _E_Ipc_2Str_Int_List    E_Ipc_2Str_Int_List;
 
 #else
 #ifndef E_IPC_CODEC_H
@@ -28,15 +32,28 @@ struct _E_Ipc_2Int
    int val1, val2;
 };
 
+struct _E_Ipc_List
+{
+   Evas_List *list;
+};
+
 struct _E_Ipc_Str
 {
    char *str;
 };
 
-struct _E_Ipc_Str_List
+struct _E_Ipc_Str_Int
 {
-   Evas_List *list;
+   char *str;
+   int   val;
 };
+
+struct _E_Ipc_2Str_Int
+{
+   char *str1, *str2;
+   int   val;
+};
+
 
 EAPI int      e_ipc_codec_init(void);
 EAPI void     e_ipc_codec_shutdown(void);
@@ -51,6 +68,14 @@ EAPI int      e_ipc_codec_str_dec(char *data, int bytes, char **dest);
 EAPI void    *e_ipc_codec_str_enc(char *str, int *size_ret);
 EAPI int      e_ipc_codec_str_list_dec(char *data, int bytes, Evas_List **dest);
 EAPI void    *e_ipc_codec_str_list_enc(Evas_List *list, int *size_ret);
+EAPI int      e_ipc_codec_str_int_dec(char *data, int bytes, E_Ipc_Str_Int **dest);
+EAPI void    *e_ipc_codec_str_int_enc(char *str, int val, int *size_ret);
+EAPI int      e_ipc_codec_str_int_list_dec(char *data, int bytes, Evas_List **dest);
+EAPI void    *e_ipc_codec_str_int_list_enc(Evas_List *list, int *size_ret);
+EAPI int      e_ipc_codec_2str_int_dec(char *data, int bytes, E_Ipc_2Str_Int **dest);
+EAPI void    *e_ipc_codec_2str_int_enc(char *str1, char *str2, int val, int *size_ret);
+EAPI int      e_ipc_codec_2str_int_list_dec(char *data, int bytes, Evas_List **dest);
+EAPI void    *e_ipc_codec_2str_int_list_enc(Evas_List *list, int *size_ret);
     
 #endif
 #endif

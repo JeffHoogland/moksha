@@ -18,6 +18,8 @@
 # endif
 #endif
 
+/* FIXME: this is all borken right now :( */
+
 typedef struct _E_Response_Module_List    E_Response_Module_List;
 typedef struct _E_Response_Module_Data		E_Response_Module_Data;
 typedef struct _E_Response_Module_Dirs_List	E_Response_Module_Dirs_List;

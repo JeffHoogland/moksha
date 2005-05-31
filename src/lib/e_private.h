@@ -1,5 +1,5 @@
-#ifndef _E_PRIVATE_H
-#define _E_PRIVATE_H
+#ifndef E_PRIVATE_H
+#define E_PRIVATE_H
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -10,6 +10,12 @@
 #else
 #define __UNUSED__
 #endif
+
+#define E_REMOTE_OPTIONS 1
+#define E_REMOTE_OUT     2
+#define E_WM_IN          3
+#define E_REMOTE_IN      4
+#define E_ENUM           5
 
 #define E_TYPEDEFS 1
 #include "e_ipc.h"

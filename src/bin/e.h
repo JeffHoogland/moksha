@@ -66,6 +66,12 @@ typedef struct _E_Rect E_Rect;
 #define E_NEW_BIG(s, n) malloc(n * sizeof(s))
 #define E_FREE(p) { if (p) {free(p); p = NULL;} }
 
+#define E_REMOTE_OPTIONS 1
+#define E_REMOTE_OUT     2
+#define E_WM_IN          3
+#define E_REMOTE_IN      4
+#define E_ENUM           5
+
 #define E_TYPEDEFS 1
 #include "e_includes.h"
 #undef E_TYPEDEFS

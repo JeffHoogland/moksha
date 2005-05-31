@@ -7,26 +7,9 @@ static int _e_ipc_cb_client_data(void *data, int type, void *event);
 static void _e_ipc_reply_double_send(Ecore_Ipc_Client *client, double val, int opcode);
 static void _e_ipc_reply_int_send(Ecore_Ipc_Client *client, int val, int opcode);
 static void _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode);
-static char *_e_ipc_str_list_get(Evas_List *strs, int *bytes);
-static char *_e_ipc_simple_str_dec(char *data, int bytes);
-static char **_e_ipc_multi_str_dec(char *data, int bytes, int str_count);
 
 static int _e_ipc_double_dec(char *data, int bytes, double *dest);
 static int _e_ipc_int_dec(char *data, int bytes, int *dest);
-
-/* encode functions, Should these be global? */
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc);
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_list_enc);
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_mouse_binding_enc);
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc);
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc);
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec);
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc);
 
 /* local subsystem globals */
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
@@ -96,150 +79,81 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
    switch (e->minor)
      {
-      case E_IPC_OP_MODULE_LOAD:
-	if (e->data)
-	  {
-	     char *name;
-	     
-	     name = _e_ipc_simple_str_dec(e->data, e->size);
-	     
-	     if (!e_module_find(name))
-	       {
-		  e_module_new(name);
-	       }
-	     free(name);
-             e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MODULE_UNLOAD:
-	if (e->data)
-	  {
-	     char *name;
-	     E_Module *m;
-	     
-	     name = _e_ipc_simple_str_dec(e->data, e->size);
-	     
-	     if ((m = e_module_find(name)))
-	       {
-		  if (e_module_enabled_get(m))
-		    e_module_disable(m);
-		  e_object_del(E_OBJECT(m));
-	       }
-	     free(name);
-             e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MODULE_ENABLE:
-	  {
-	     char *name;
-	     E_Module *m;
-	     
-	     name = _e_ipc_simple_str_dec(e->data, e->size);
-	     
-	     if ((m = e_module_find(name)))
-	       {
-		  if (!e_module_enabled_get(m))
-		    e_module_enable(m);
-	       }
-	     free(name);
-             e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MODULE_DISABLE:
-	  {      
-	     char *name;
-	     E_Module *m;
-	     
-	     name = _e_ipc_simple_str_dec(e->data, e->size);
-	     
-	     if ((m = e_module_find(name)))
-	       {
-		  if (e_module_enabled_get(m))
-		    e_module_disable(m);
-	       }
-	     free(name);
-             e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MODULE_LIST:
-	  {
-	     /* encode module list (str,8-bit) */
-	     Evas_List *modules;
-	     char * data;
-	     int bytes;
-
-             modules = e_module_list();
-	     data = _e_ipc_module_list_enc(modules, &bytes);
-	     
-	     /* send reply data */
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_MODULE_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
-	  }
-	break;
+#define TYPE  E_WM_IN
+#include      "e_ipc_handlers.h"
+#undef TYPE	
+/* here to steal from to port over to the new e_ipc_handlers.h */	
+#if 0
       case E_IPC_OP_BG_SET:
 	  {
-	     char *file;
-	     Evas_List *managers, *l;
-
-	     file = _e_ipc_simple_str_dec(e->data, e->size);
+	     char *file = NULL;
 	     
-	     E_FREE(e_config->desktop_default_background);
-	     e_config->desktop_default_background = file;
-	     
-	     managers = e_manager_list();
-	     for (l = managers; l; l = l->next)
+	     if (e_ipc_codec_str_dec(e->data, e->size, &file))
 	       {
-		  Evas_List *ll;
-		  E_Manager *man;
-		  
-		  man = l->data;
-		  for (ll = man->containers; ll; ll = ll->next)
+		  Evas_List *managers, *l;
+
+		  E_FREE(e_config->desktop_default_background);
+		  e_config->desktop_default_background = file;
+		  managers = e_manager_list();
+		  for (l = managers; l; l = l->next)
 		    {
-		       E_Container *con;
-		       E_Zone *zone;
+		       Evas_List *ll;
+		       E_Manager *man;
 		       
-		       con = ll->data;
-		       zone = e_zone_current_get(con);
-		       e_zone_bg_reconfigure(zone);
+		       man = l->data;
+		       for (ll = man->containers; ll; ll = ll->next)
+			 {
+			    E_Container *con;
+			    E_Zone *zone;
+			    
+			    con = ll->data;
+			    zone = e_zone_current_get(con);
+			    e_zone_bg_reconfigure(zone);
+			 }
 		    }
+		  e_config_save_queue();
 	       }
-	     e_config_save_queue();
           }
 	break;
       case E_IPC_OP_BG_GET:
 	  {
-	     char *bg;
+	     void *data;
+	     int bytes;
 	     
-	     bg = e_config->desktop_default_background;
-	     if (!bg) bg = "";
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_BG_GET_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   bg, strlen(bg) + 1);
+	     data = e_ipc_codec_str_enc(e_config->desktop_default_background, &bytes);
+	     if (data)
+	       {
+		  ecore_ipc_client_send(e->client,
+					E_IPC_DOMAIN_REPLY,
+					E_IPC_OP_BG_GET_REPLY,
+					0/*ref*/, 0/*ref_to*/, 0/*response*/,
+					data, bytes);
+		  free(data);
+	       }
  	  }
 	break;
       case E_IPC_OP_FONT_AVAILABLE_LIST:
 	  {
-	     /* encode font available list (str) */
-	     Evas_List *fonts_available;
+	     E_Font_Available *fa;
+	     Evas_List *dat = NULL, *l, *fa_list;
+	     void *data;
 	     int bytes;
-	     char *data;
-		  
-	     fonts_available = e_font_available_list();	       
-	     data = _e_ipc_font_available_list_enc(fonts_available, &bytes);	       
+	     
+	     fa_list = e_font_available_list();
+	     for (l = fa_list; l; l = l->next)
+	       {
+		  fa = l->data;
+		  dat = evas_list_append(dat, fa->name);
+	       }
+	     data = e_ipc_codec_str_list_enc(dat, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_AVAILABLE_LIST_REPLY,
 				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
 				   data, bytes);
-	     
-	     e_font_available_list_free(fonts_available);
 	     free(data);
+	     evas_list_free(dat);
+	     e_font_available_list_free(fa_list);
 	  }
 	break;
       case E_IPC_OP_FONT_APPLY:
@@ -256,118 +170,139 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	break;
       case E_IPC_OP_FONT_FALLBACK_APPEND:
 	  {
-	     char * font_name;
+	     char *font_name = NULL;
 	     
-	     font_name = _e_ipc_simple_str_dec(e->data, e->size);
-	     e_font_fallback_append(font_name);
-	     free(font_name);
-
-	     e_config_save_queue(); 
+	     if (e_ipc_codec_str_dec(e->data, e->size, &font_name))
+	       {
+		  e_font_fallback_append(font_name);
+		  free(font_name);
+		  e_config_save_queue();
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_FALLBACK_PREPEND:
 	  {
-	     char * font_name;
-
-	     font_name = _e_ipc_simple_str_dec(e->data, e->size);	     
-	     e_font_fallback_prepend(font_name);
-	     free(font_name);	   
-		
-	     e_config_save_queue();  
+	     char *font_name = NULL;
+	     
+	     if (e_ipc_codec_str_dec(e->data, e->size, &font_name))
+	       {
+		  e_font_fallback_prepend(font_name);
+		  free(font_name);	   
+		  e_config_save_queue();  
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_FALLBACK_LIST:
 	  {
-	  	
-	     /* encode font fallback list (str) */
-	     Evas_List *fallbacks;
+	     E_Font_Fallback *ff;
+	     Evas_List *dat = NULL, *l;
+	     void *data;
 	     int bytes;
-	     char *data;
-		 
-	     fallbacks = e_font_fallback_list();
-
-	     data = _e_ipc_font_fallback_list_enc(fallbacks, &bytes);
+	     
+	     for (l = e_font_available_list(); l; l = l->next)
+	       {
+		  ff = l->data;
+		  dat = evas_list_append(dat, ff->name);
+	       }
+	     data = e_ipc_codec_str_list_enc(dat, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_FALLBACK_LIST_REPLY,
 				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
 				   data, bytes);
 	     free(data);
-
+	     evas_list_free(dat);
 	  }
 	break;
       case E_IPC_OP_FONT_FALLBACK_REMOVE:
 	  {
-	     char * font_name;
-
-	     font_name = _e_ipc_simple_str_dec(e->data, e->size);
-	     e_font_fallback_remove(font_name);
-	     free(font_name);	     
-
-	     e_config_save_queue();
+	     char *font_name = NULL;
+	     
+	     if (e_ipc_codec_str_dec(e->data, e->size, &font_name))
+	       {
+		  e_font_fallback_remove(font_name);
+		  free(font_name);	     
+		  e_config_save_queue();
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_DEFAULT_SET:
 	  {
-	     char ** argv;
-	     int argc;
+	     E_Ipc_2Str_Int *v = NULL;
 	     
-	     argc = 3;
-	     
-	     argv = _e_ipc_multi_str_dec(e->data, e->size, argc);
-	     e_font_default_set(argv[0], argv[1], atoi(argv[2]));
-	     free(argv);	     
-	     
-	     e_config_save_queue();
+	     if (e_ipc_codec_2str_int_dec(e->data, e->size, &v))
+	       {
+		  e_font_default_set(v->str1, v->str2, v->val);
+		  free(v->str1);
+		  free(v->str2);
+		  free(v);
+		  e_config_save_queue();
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_DEFAULT_GET:
 	  {
-	  
-	     /* encode font default struct (str,str,32-bits)(E_Font_Default) */	     
 	     E_Font_Default *efd;
-	     char *data, *text_class;
+	     char *tclass = NULL;
+	     void *data;
 	     int bytes;
 	     
-	     text_class = _e_ipc_simple_str_dec(e->data, e->size);	     
-	     efd = e_font_default_get(text_class);	     
-	     free(text_class);
-	     data = _e_ipc_font_default_enc(efd, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_FONT_DEFAULT_GET_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
+	     if (e_ipc_codec_str_dec(e->data, e->size, &tclass))
+	       {
+		  efd = e_font_default_get(tclass);
+		  data = e_ipc_codec_2str_int_enc(efd->text_class, efd->font, efd->size, &bytes);
+		  ecore_ipc_client_send(e->client,
+					E_IPC_DOMAIN_REPLY,
+					E_IPC_OP_FONT_DEFAULT_GET_REPLY,
+					0/*ref*/, 0/*ref_to*/, 0/*response*/,
+					data, bytes);
+		  free(data);
+		  free(tclass);
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_DEFAULT_REMOVE:
 	  {	  
-	     char * text_class;
+	     char *tclass = NULL;
 	     
-	     text_class = _e_ipc_simple_str_dec(e->data, e->size);
-	     e_font_default_remove(text_class);
-	     free(text_class);	   
-
-	     e_config_save_queue(); 
+	     if (e_ipc_codec_str_dec(e->data, e->size, &tclass))
+	       {
+		  e_font_default_remove(tclass);
+		  free(tclass);
+		  e_config_save_queue(); 
+	       }
 	  }
 	break;
       case E_IPC_OP_FONT_DEFAULT_LIST:
 	  {
-	     /* encode font default struct list (str,str,32-bits)(E_Font_Default) */
-	     Evas_List *defaults;
+	     E_Ipc_2Str_Int *v;
+	     E_Font_Default *efd;
+	     Evas_List *dat = NULL, *l;
+	     void *data;
 	     int bytes;
-	     char *data;
-		  
-	     defaults = e_font_default_list();
-	     data = _e_ipc_font_default_list_enc(defaults, &bytes);
+	     
+	     for (l = e_font_default_list(); l; l = l->next)
+	       {
+		  efd = l->data;
+		  v = calloc(1, sizeof(E_Ipc_2Str_Int));
+		  v->str1 = efd->text_class;
+		  v->str2 = efd->font;
+		  v->val = efd->size;
+		  dat = evas_list_append(dat, v);
+	       }
+	     data = e_ipc_codec_2str_int_list_enc(dat, &bytes);
 	     ecore_ipc_client_send(e->client,
 				   E_IPC_DOMAIN_REPLY,
 				   E_IPC_OP_FONT_DEFAULT_LIST_REPLY,
 				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
 				   data, bytes);
+	     while (dat)
+	       {
+		  v = dat->data;
+		  free(v);
+		  dat = evas_list_remove_list(dat, dat);
+	       }
 	     free(data);
-
 	  }
 	break;
       case E_IPC_OP_RESTART:
@@ -1171,7 +1106,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     e_config_save_queue(); 
 	     break;
 	  }
-
+#endif
       default:
 	break;
      }
@@ -1233,270 +1168,4 @@ _e_ipc_reply_2int_send(Ecore_Ipc_Client *client, int val1, int val2, int opcode)
 			      data, bytes);
 	free(data);
      }
-}
-
-/**
- * Encode a list of strings into a flattened data block that looks like
- * <str>0<str>0... (ie string chars - nul byte in between until the end)
- */
-static char *
-_e_ipc_str_list_get(Evas_List *strs, int *bytes)
-{
-   char *data = NULL;
-   int pos = 0;
-   Evas_List *l;
-   
-   *bytes = 0;
-   for (l = strs; l; l = l->next)
-     {
-	char *p;
-
-	p = l->data;
-
-	*bytes += strlen(p) + 1;
-	data = realloc(data, *bytes);
-
-	memcpy(data + pos, p, strlen(p));
-	pos = *bytes;
-	data[pos - 1] = 0;
-     }
-   return data;
-}
-
-/**
- * Decode a simple string that was passed by an IPC client
- *
- * The returned string must be freed
- */
-static char *
-_e_ipc_simple_str_dec(char *data, int bytes)
-{
-   char *str;
-   
-   str = malloc(bytes + 1);
-   str[bytes] = 0;
-   memcpy(str, data, bytes);
-   return str;
-}
-
-/**
- * Decode a list of strings and return an array, you need to pass
- * the string count that you are expecting back.
- *
- * Strings are encoded <str>0<str>0...
- *
- * free up the array that you get back
- */
-static char **
-_e_ipc_multi_str_dec(char *data, int bytes, int str_count)
-{
-   char **str_array;
-   int i;
-   
-   /* Make sure our data is packed for us <str>0<str>0 */
-   if (data[bytes - 1] != 0)
-     return NULL;
-   
-   str_array = malloc(sizeof(char *) * str_count);
-   
-   for (i = 0; i < str_count; i++) 
-     {
-        str_array[i] = data;
-	data += strlen(str_array[i]) + 1;
-     }
-   
-   return str_array;
-}
-
-/* FIXME: just use eet for this - saves a lot of hassle */
-   
-/* list/struct encoding functions */
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_module_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Module);
-   ECORE_IPC_CNTS(name);
-   ECORE_IPC_CNT8();
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1;
-   ECORE_IPC_SLEN(l1, name);
-   ECORE_IPC_PUTS(name, l1);
-   ECORE_IPC_PUT8(enabled);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_available_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Available);
-   ECORE_IPC_CNTS(name);
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1;
-   ECORE_IPC_SLEN(l1, name);
-   ECORE_IPC_PUTS(name, l1);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_fallback_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Fallback);
-   ECORE_IPC_CNTS(name);
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1;
-   ECORE_IPC_SLEN(l1, name);
-   ECORE_IPC_PUTS(name, l1);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_font_default_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Font_Default);
-   ECORE_IPC_CNTS(text_class);
-   ECORE_IPC_CNTS(font);
-   ECORE_IPC_CNT32();
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1, l2;
-   ECORE_IPC_SLEN(l1, text_class);
-   ECORE_IPC_SLEN(l2, font);
-   ECORE_IPC_PUTS(text_class, l1);
-   ECORE_IPC_PUTS(font, l2);
-   ECORE_IPC_PUT32(size);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_font_default_enc)
-{
-   int l1, l2;
-   ECORE_IPC_ENC_STRUCT_HEAD(E_Font_Default, 
-			     ECORE_IPC_SLEN(l1, text_class) +
-			     ECORE_IPC_SLEN(l2, font) +
-			     4);
-   ECORE_IPC_PUTS(text_class, l1);
-   ECORE_IPC_PUTS(font, l2);
-   ECORE_IPC_PUT32(size);
-   ECORE_IPC_ENC_STRUCT_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_mouse_binding_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Mouse);
-   ECORE_IPC_CNT32();
-   ECORE_IPC_CNT32();
-   ECORE_IPC_CNTS(action);
-   ECORE_IPC_CNTS(params);
-   ECORE_IPC_CNT8();
-   ECORE_IPC_CNT8();
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1, l2;
-   ECORE_IPC_PUT32(context);
-   ECORE_IPC_PUT32(modifiers);
-   ECORE_IPC_SLEN(l1, action);
-   ECORE_IPC_SLEN(l2, params);
-   ECORE_IPC_PUTS(action, l1);
-   ECORE_IPC_PUTS(params, l2);
-   ECORE_IPC_PUT8(button);
-   ECORE_IPC_PUT8(any_mod);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_mouse_binding_enc)
-{
-   int l1, l2;
-   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Binding_Mouse,
-			     4 + 4 +
-			     ECORE_IPC_SLEN(l1, action) +
-			     ECORE_IPC_SLEN(l2, params) +
-			     1 + 1);
-   ECORE_IPC_PUT32(context);
-   ECORE_IPC_PUT32(modifiers);
-   ECORE_IPC_PUTS(action, l1);
-   ECORE_IPC_PUTS(params, l2);
-   ECORE_IPC_PUT8(button);
-   ECORE_IPC_PUT8(any_mod);
-   ECORE_IPC_ENC_STRUCT_FOOT();
-}
-
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_mouse_binding_dec)
-{
-   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Binding_Mouse,
-				 4 + 4 +
-				 1 +
-				 1 +
-				 1 + 1);
-   ECORE_IPC_CHEKS();
-   ECORE_IPC_GET32(context);
-   ECORE_IPC_GET32(modifiers);
-   ECORE_IPC_GETS(action);
-   ECORE_IPC_GETS(params);
-   ECORE_IPC_GET8(button);
-   ECORE_IPC_GET8(any_mod);
-   ECORE_IPC_DEC_STRUCT_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_key_binding_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Config_Binding_Key);
-   ECORE_IPC_CNT32();
-   ECORE_IPC_CNT32();
-   ECORE_IPC_CNTS(key);
-   ECORE_IPC_CNTS(action);
-   ECORE_IPC_CNTS(params);
-   ECORE_IPC_CNT8();
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1, l2, l3;
-   ECORE_IPC_PUT32(context);
-   ECORE_IPC_PUT32(modifiers);
-   ECORE_IPC_SLEN(l1, key);
-   ECORE_IPC_SLEN(l2, action);
-   ECORE_IPC_SLEN(l3, params);
-   ECORE_IPC_PUTS(key, l1);
-   ECORE_IPC_PUTS(action, l2);
-   ECORE_IPC_PUTS(params, l3);
-   ECORE_IPC_PUT8(any_mod);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
-}
-
-ECORE_IPC_ENC_STRUCT_PROTO(_e_ipc_key_binding_enc)
-{
-   int l1, l2, l3;
-   ECORE_IPC_ENC_STRUCT_HEAD(E_Config_Binding_Key,
-			     4 + 4 +
-			     ECORE_IPC_SLEN(l1, key) +
-			     ECORE_IPC_SLEN(l2, action) +
-			     ECORE_IPC_SLEN(l3, params) +
-			     1);
-   ECORE_IPC_PUT32(context);
-   ECORE_IPC_PUT32(modifiers);
-   ECORE_IPC_PUTS(key, l1);
-   ECORE_IPC_PUTS(action, l2);
-   ECORE_IPC_PUTS(params, l3);
-   ECORE_IPC_PUT8(any_mod);
-   ECORE_IPC_ENC_STRUCT_FOOT();
-}
-
-ECORE_IPC_DEC_STRUCT_PROTO(_e_ipc_key_binding_dec)
-{
-   ECORE_IPC_DEC_STRUCT_HEAD_MIN(E_Config_Binding_Key,
-				 4 + 4 +
-				 1 +
-				 1 +
-				 1 +
-				 1);
-   ECORE_IPC_CHEKS();
-   ECORE_IPC_GET32(context);
-   ECORE_IPC_GET32(modifiers);
-   ECORE_IPC_GETS(key);
-   ECORE_IPC_GETS(action);
-   ECORE_IPC_GETS(params);
-   ECORE_IPC_GET8(any_mod);
-   ECORE_IPC_DEC_STRUCT_FOOT();
-}
-
-ECORE_IPC_ENC_EVAS_LIST_PROTO(_e_ipc_path_list_enc)
-{
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_START(E_Path_Dir);
-   ECORE_IPC_CNTS(dir);
-   ECORE_IPC_ENC_EVAS_LIST_HEAD_FINISH();
-   int l1;
-   ECORE_IPC_SLEN(l1, dir);
-   ECORE_IPC_PUTS(dir, l1);
-   ECORE_IPC_ENC_EVAS_LIST_FOOT();
 }

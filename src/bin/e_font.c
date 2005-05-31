@@ -100,7 +100,7 @@ e_font_available_list(void)
 }
 
 void
-e_font_available_list_free(Evas_List * available)
+e_font_available_list_free(Evas_List *available)
 {
    E_Font_Available *efa;
    
@@ -319,7 +319,7 @@ e_font_default_string_get(const char *text_class, int *size_ret)
 }
 
 static Evas_List *
-_e_font_font_dir_available_get(Evas_List * available_fonts, const char *font_dir)
+_e_font_font_dir_available_get(Evas_List *available_fonts, const char *font_dir)
 {
    char buf[4096];
    FILE *f;
