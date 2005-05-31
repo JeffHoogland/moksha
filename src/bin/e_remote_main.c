@@ -933,37 +933,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    printf("REPLY: BEGIN\n");
    switch (e->minor)
      {  
-      case E_IPC_OP_MODULE_LIST_REPLY:
-	if (e->data)
-	  {
-	     Evas_List *modules;
-	     E_Module *m;
-	     
-	     modules = _e_ipc_module_list_dec(e->data, e->size);	     
-	     while (modules)
-	       {
-	     	   m = modules->data;
-	     	   printf("REPLY: MODULE NAME=\"%s\" ENABLED=%i\n",
-				   	m->name, m->enabled);
-		   modules = evas_list_remove_list(modules, modules);
-		   E_FREE(m);
-	       }
-	  }
-	else
-	  printf("REPLY: MODULE NONE\n");
-	break;
-      case E_IPC_OP_BG_GET_REPLY:
-	if (e->data)
-	  {
-	     char *file = NULL;
-	     
-	     if (e_ipc_codec_str_dec(e->data, e->size, &file))
-	       {  
-		  printf("REPLY: %s\n", file);
-		  free(file);
-	       }
-	  }
-	break;
       case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
 	if (e->data)
 	  {

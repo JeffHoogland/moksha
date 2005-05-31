@@ -272,6 +272,18 @@ break;
 #endif
 #undef HANDLER
      
+/****************************************************************************/
+#define HANDLER E_IPC_OP_BG_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HANDLER);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#endif
+#undef HANDLER
+     
    
    
    
