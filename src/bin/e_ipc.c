@@ -78,37 +78,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 #undef TYPE	
 /* here to steal from to port over to the new e_ipc_handlers.h */	
 #if 0
-      case E_IPC_OP_BG_SET:
-	  {
-	     char *file = NULL;
-	     
-	     if (e_ipc_codec_str_dec(e->data, e->size, &file))
-	       {
-		  Evas_List *managers, *l;
-
-		  E_FREE(e_config->desktop_default_background);
-		  e_config->desktop_default_background = file;
-		  managers = e_manager_list();
-		  for (l = managers; l; l = l->next)
-		    {
-		       Evas_List *ll;
-		       E_Manager *man;
-		       
-		       man = l->data;
-		       for (ll = man->containers; ll; ll = ll->next)
-			 {
-			    E_Container *con;
-			    E_Zone *zone;
-			    
-			    con = ll->data;
-			    zone = e_zone_current_get(con);
-			    e_zone_bg_reconfigure(zone);
-			 }
-		    }
-		  e_config_save_queue();
-	       }
-          }
-	break;
       case E_IPC_OP_BG_GET:
 	  {
 	     void *data;

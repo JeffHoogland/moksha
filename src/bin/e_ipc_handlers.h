@@ -216,6 +216,34 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
 #endif
 #undef HANDLER
      
+/****************************************************************************/
+#define HANDLER E_IPC_OP_BG_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   {"-default-bg-set", 1, "Set the default background edje to the desktop background in the file 'OPT1' (must be a full path)", 0, HANDLER},
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HANDLER);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HANDLER);
+   Evas_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   E_FREE(e_config->desktop_default_background);
+   e_config->desktop_default_background = strdup(s);
+   for (l = e_manager_list(); l; l = l->next) {
+      man = l->data;
+      for (ll = man->containers; ll; ll = ll->next) {	
+	 con = ll->data;
+	 zone = e_zone_current_get(con);
+	 e_zone_bg_reconfigure(zone);
+      }
+   }
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HANDLER
+     
    
    
    
