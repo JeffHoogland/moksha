@@ -2100,6 +2100,10 @@ _e_border_cb_window_state_request(void *data, int ev_type, void *ev)
      }
    else
      {
+	/* FIXME: We should ignore this when the window isn't mapped.
+	 * The window should state the properties by itself, and we
+	 * will pick them up on border creation.
+	 */
 	for (i = 0; i < 2; i++)
 	  {
 	     switch (e->state[i])
@@ -2834,6 +2838,11 @@ _e_border_eval(E_Border *bd)
 	     edje_object_part_text_set(bd->bg_object, "title_text",
 				       bd->client.netwm.name);
 	  }
+     }
+   if (bd->client.netwm.update.state)
+     {
+	e_hints_window_state_set(bd);
+	bd->client.netwm.update.state = 0;
      }
    if (bd->client.icccm.fetch.name_class)
      {

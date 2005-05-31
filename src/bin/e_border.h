@@ -195,6 +195,10 @@ struct _E_Border
 	    unsigned char state : 1;
 	    */
 	 } fetch;
+
+	 struct {
+	      unsigned char state : 1;
+	 } update;
       } netwm;
       Ecore_X_Window_Attributes initial_attributes;
    } client;
