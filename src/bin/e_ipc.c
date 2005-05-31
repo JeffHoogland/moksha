@@ -78,18 +78,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 #undef TYPE	
 /* here to steal from to port over to the new e_ipc_handlers.h */	
 #if 0
-      case E_IPC_OP_FONT_APPLY:
-	  {
-	     e_font_apply();
-             e_config_save_queue();
-	  }
- 	break;
-      case E_IPC_OP_FONT_FALLBACK_CLEAR:
-	  {
-	     e_font_fallback_clear();
-             e_config_save_queue();
-	  }
-	break;
       case E_IPC_OP_FONT_FALLBACK_APPEND:
 	  {
 	     char *font_name = NULL;
