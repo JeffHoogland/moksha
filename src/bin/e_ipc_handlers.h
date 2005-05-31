@@ -22,7 +22,9 @@ if (e->data) { \
    } \
 } \
 break;
+
 # define SAVE e_config_save_queue()
+
 # define REQ_STRING(__str, HANDLER) \
 case HANDLER: { void *data; int bytes; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
@@ -32,23 +34,27 @@ case HANDLER: { void *data; int bytes; \
    } \
 } \
 break;
+
 # define REQ_NULL(HANDLER) \
 case HANDLER: \
    ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HANDLER, 0, 0, 0, NULL, 0); \
 break;
+
 # define FREE_LIST(__list) \
 while (__list) { \
    free(__list->data); \
    __list = evas_list_remove_list(__list, __list); \
 }
+
 # define SEND_DATA(__opcode) \
 ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, bytes)
-# define STRING_INT_LIST(__v, __dec, __typ, HANDLER) \
+
+# define STRING_INT_LIST(__v, HANDLER) \
  case HANDLER: { \
     Evas_List *dat = NULL, *l; \
-    if (__dec(e->data, e->size, &dat)) { \
+    if (e_ipc_codec_str_int_list_dec(e->data, e->size, &dat)) { \
        for (l = dat; l; l = l->next) { \
-	  __typ *__v; \
+	  E_Ipc_Str_Int *__v; \
 	  __v = l->data;
 #define END_STRING_INT_LIST(__v) \
 	  free(__v->str); \
@@ -59,15 +65,16 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
     reply_count++; \
  } \
    break;
-#define SEND_STRING_INT_LIST(__list, __typ1, __v1, __typ2, __v2, HANDLER) \
+
+#define SEND_STRING_INT_LIST(__list, __typ1, __v1, __v2, HANDLER) \
  case HANDLER: { \
     Evas_List *dat = NULL, *l; \
     void *data; int bytes; \
     for (l = e_module_list(); l; l = l->next) { \
        __typ1 *__v1; \
-       __typ2 *__v2; \
+       E_Ipc_Str_Int *__v2; \
        __v1 = l->data; \
-       __v2 = calloc(1, sizeof(__typ2));
+       __v2 = calloc(1, sizeof(E_Ipc_Str_Int));
 #define END_SEND_STRING_INT_LIST(__v1, __op) \
        dat = evas_list_append(dat, __v1); \
     } \
@@ -77,6 +84,7 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
     FREE_LIST(dat); \
  } \
    break;
+
 #define SEND_STRING(__str, __op, HANDLER) \
 case HANDLER: { void *data; int bytes; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
@@ -204,7 +212,7 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HANDLER);
 #elif (TYPE == E_WM_IN)
-   SEND_STRING_INT_LIST(e_module_list(), E_Module, mod, E_Ipc_Str_Int, v, HANDLER);
+   SEND_STRING_INT_LIST(e_module_list(), E_Module, mod, v, HANDLER);
    v->str = mod->name;
    v->val = mod->enabled;
    END_SEND_STRING_INT_LIST(v, E_IPC_OP_MODULE_LIST_REPLY);
@@ -218,7 +226,7 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
-   STRING_INT_LIST(v, e_ipc_codec_str_int_list_dec, E_Ipc_Str_Int, HANDLER);
+   STRING_INT_LIST(v, HANDLER);
    printf("REPLY: \"%s\" ENABLED %i\n", v->str, v->val);
    END_STRING_INT_LIST(v);
 #endif
