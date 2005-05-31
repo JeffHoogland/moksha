@@ -78,23 +78,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 #undef TYPE	
 /* here to steal from to port over to the new e_ipc_handlers.h */	
 #if 0
-      case E_IPC_OP_BG_GET:
-	  {
-	     void *data;
-	     int bytes;
-	     
-	     data = e_ipc_codec_str_enc(e_config->desktop_default_background, &bytes);
-	     if (data)
-	       {
-		  ecore_ipc_client_send(e->client,
-					E_IPC_DOMAIN_REPLY,
-					E_IPC_OP_BG_GET_REPLY,
-					0/*ref*/, 0/*ref_to*/, 0/*response*/,
-					data, bytes);
-		  free(data);
-	       }
- 	  }
-	break;
       case E_IPC_OP_FONT_AVAILABLE_LIST:
 	  {
 	     E_Font_Available *fa;

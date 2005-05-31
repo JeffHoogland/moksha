@@ -59,7 +59,6 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
     reply_count++; \
  } \
    break;
-
 #define SEND_STRING_INT_LIST(__list, __typ1, __v1, __typ2, __v2, HANDLER) \
  case HANDLER: { \
     Evas_List *dat = NULL, *l; \
@@ -78,6 +77,15 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
     FREE_LIST(dat); \
  } \
    break;
+#define SEND_STRING(__str, __op, HANDLER) \
+case HANDLER: { void *data; int bytes; \
+   data = e_ipc_codec_str_enc(__str, &bytes); \
+   if (data) { \
+      ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
 
 #endif
 
@@ -240,6 +248,18 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
    }
    SAVE;
    END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HANDLER
+     
+/****************************************************************************/
+#define HANDLER E_IPC_OP_BG_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   {"-default-bg-set", 0, "Get the default background edje file path", 1, HANDLER},
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HANDLER);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->desktop_default_background, E_IPC_OP_MODULE_LIST_REPLY, HANDLER);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HANDLER
