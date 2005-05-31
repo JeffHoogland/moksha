@@ -47,7 +47,8 @@ while (__list) { \
 }
 
 # define SEND_DATA(__opcode) \
-ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, bytes)
+ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, bytes); \
+free(data);
 
 # define STRING_INT_LIST(__v, HANDLER) \
  case HANDLER: { \
@@ -80,7 +81,6 @@ ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __opcode, 0, 0, 0, data, by
     } \
     data = e_ipc_codec_str_int_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
-    free(data); \
     FREE_LIST(dat); \
  } \
    break;
@@ -93,6 +93,22 @@ case HANDLER: { void *data; int bytes; \
       free(data); \
    } \
 } \
+break;
+
+#define LIST_DATA() \
+   Evas_List *dat = NULL, *l; \
+   void *data; int bytes;
+
+#define ENCODE(__dat, __enc) \
+   data = __enc(__dat, &bytes);
+
+#define FOR(__start) \
+   for (l = __start; l; l = l->next)
+#define GENERIC(HANDLER) \
+ case HANDLER: {
+
+#define END_GENERIC() \
+   } \
 break;
 
 #endif
@@ -281,6 +297,40 @@ break;
    STRING(s, HANDLER);
    printf("REPLY: \"%s\"\n", s);
    END_STRING(s);
+#endif
+#undef HANDLER
+     
+/****************************************************************************/
+#define HANDLER E_IPC_OP_FONT_AVAILABLE_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   {"-font-available-list", 0, "List all available fonts", 1, HANDLER},
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HANDLER);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HANDLER);
+   LIST_DATA();
+   E_Font_Available *fa;
+   Evas_List *fa_list;
+   fa_list = e_font_available_list();
+   FOR(fa_list) { fa = l->data;
+      dat = evas_list_append(dat, fa->name);
+   }
+   ENCODE(dat, e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_FONT_AVAILABLE_LIST_REPLY);
+   evas_list_free(dat);
+   e_font_available_list_free(fa_list);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HANDLER
+     
+/****************************************************************************/
+#define HANDLER E_IPC_OP_FONT_AVAILABLE_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+//   
 #endif
 #undef HANDLER
      

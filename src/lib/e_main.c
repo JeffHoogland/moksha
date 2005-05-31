@@ -33,10 +33,10 @@ static void _e_cb_theme_dir_list_free(void *data __UNUSED__, void *ev);
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
-int E_RESPONSE_MODULE_DIRS_LIST = 0;
+//int E_RESPONSE_MODULE_DIRS_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
-int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
-int E_RESPONSE_THEME_DIRS_LIST = 0;
+//int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
+//int E_RESPONSE_THEME_DIRS_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
@@ -109,10 +109,10 @@ e_init(const char* display)
    if (!E_RESPONSE_MODULE_LIST)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
-	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
+//	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
-	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
-	E_RESPONSE_THEME_DIRS_LIST = ecore_event_type_new();
+//	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
+//	E_RESPONSE_THEME_DIRS_LIST = ecore_event_type_new();
      }
    
    if (free_disp)
@@ -197,9 +197,9 @@ e_module_list(void)
 void
 e_module_dirs_list(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-			 E_IPC_OP_MODULE_DIRS_LIST, 0/*ref*/, 0/*ref_to*/,
-			 0/*response*/, NULL, 0);
+//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+//			 E_IPC_OP_MODULE_DIRS_LIST, 0/*ref*/, 0/*ref_to*/,
+//			 0/*response*/, NULL, 0);
 }
 
 void
@@ -224,17 +224,17 @@ e_background_get(void)
 void
 e_background_dirs_list(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-			 E_IPC_OP_BG_DIRS_LIST, 0/*ref*/, 
-			 0/*ref_to*/, 0/*response*/, NULL, 0);
+//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+//			 E_IPC_OP_BG_DIRS_LIST, 0/*ref*/, 
+//			 0/*ref_to*/, 0/*response*/, NULL, 0);
 }
 
 void
 e_theme_dirs_list(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-			 E_IPC_OP_THEME_DIRS_LIST, 0/*ref*/, 
-			 0/*ref_to*/, 0/*response*/, NULL, 0);
+//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
+//			 E_IPC_OP_THEME_DIRS_LIST, 0/*ref*/, 
+//			 0/*ref_to*/, 0/*response*/, NULL, 0);
 }
 
 static int
@@ -320,6 +320,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_module_list_free, NULL);
 			   }
           break;
+/*	
 	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
@@ -351,16 +352,17 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_module_dir_list_free, NULL);
 	    }
           break;
-	case E_IPC_OP_BG_GET_REPLY:
-	    {
-	       E_Response_Background_Get *res;
-
-	       res = calloc(1, sizeof(E_Response_Background_Get));
-	       res->file = e->data;
-	       ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
-	       break;
-	    }
-	case E_IPC_OP_BG_DIRS_LIST_REPLY:
+ */
+      case E_IPC_OP_BG_GET_REPLY:
+	  {
+	     E_Response_Background_Get *res;
+	     
+	     res = calloc(1, sizeof(E_Response_Background_Get));
+	     res->file = e->data;
+	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
+	  }
+	break;
+/*	case E_IPC_OP_BG_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Background_Dirs_List *res;
@@ -391,7 +393,8 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_bg_dir_list_free, NULL);
 	    }
           break;
-	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
+ */
+/*	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Theme_Dirs_List *res;
@@ -422,6 +425,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_theme_dir_list_free, NULL);
 	    }
           break;
+ */
 	default:
           break;
      }
