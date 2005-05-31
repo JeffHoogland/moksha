@@ -263,7 +263,7 @@ break;
 /****************************************************************************/
 #define HANDLER E_IPC_OP_BG_GET
 #if (TYPE == E_REMOTE_OPTIONS)
-   {"-default-bg-set", 0, "Get the default background edje file path", 1, HANDLER},
+   {"-default-bg-get", 0, "Get the default background edje file path", 1, HANDLER},
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HANDLER);
 #elif (TYPE == E_WM_IN)
