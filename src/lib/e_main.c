@@ -98,7 +98,13 @@ e_init(const char* display)
 	return 0;
      }
 
-   /* FIXME */ e_ipc_codec_init();
+   /* setup e ipc codecs */
+   if (!e_ipc_codec_init())
+     {       
+	fprintf(stderr, "ERROR: Could not start enlightenment IPC codecs.\n");
+	return 0;
+     }
+
    /* setup e ipc service */
    if (!_e_ipc_init(disp))
      {
