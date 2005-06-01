@@ -216,7 +216,6 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    if (!bd) return NULL;
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
 
-//   printf("##- NEW CLIENT 0x%x\n", win);
    bd->w = 1;
    bd->h = 1;
    bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
@@ -1583,8 +1582,13 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
-   e_border_show(bd);
-   e_border_raise(bd);
+   if (bd->iconic)
+     e_border_uniconify(bd);
+   else
+     {
+	e_border_show(bd);
+	e_border_raise(bd);
+     }
    return 1;
 }
 
