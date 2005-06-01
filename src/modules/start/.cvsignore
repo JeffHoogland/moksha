@@ -1,0 +1,7 @@
+module.la
+e_mod_main.lo
+Makefile.in
+Makefile
+.libs
+.deps
+
