@@ -291,7 +291,7 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
-   SEND_STRING(e_config->desktop_default_background, E_IPC_OP_MODULE_LIST_REPLY, HDL);
+   SEND_STRING(e_config->desktop_default_background, E_IPC_OP_BG_GET_REPLY, HDL);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL

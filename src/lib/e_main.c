@@ -98,6 +98,7 @@ e_init(const char* display)
 	return 0;
      }
 
+   /* FIXME */ e_ipc_codec_init();
    /* setup e ipc service */
    if (!_e_ipc_init(disp))
      {
@@ -126,6 +127,7 @@ e_init(const char* display)
 int
 e_shutdown(void)
 {
+   e_ipc_codec_shutdown();
    _e_ipc_shutdown();
    ecore_ipc_shutdown();
    ecore_shutdown();
@@ -356,9 +358,14 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
       case E_IPC_OP_BG_GET_REPLY:
 	  {
 	     E_Response_Background_Get *res;
+	     char *str = NULL;
 	     
 	     res = calloc(1, sizeof(E_Response_Background_Get));
-	     res->file = e->data;
+	     if (e->data)
+	       {
+		  e_ipc_codec_str_dec(e->data, e->size, &str);
+		  res->file = str;
+	       }
 	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
 	  }
 	break;
