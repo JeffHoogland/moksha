@@ -390,6 +390,13 @@ main(int argc, char **argv)
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
    /* setup module loading etc */
+   if (!e_msg_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its msg system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_msg_shutdown);
+   /* setup module loading etc */
    if (!e_module_init())
      {
 	e_error_message_show(_("Enlightenment cannot set up its module system."));

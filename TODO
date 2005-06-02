@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
+* add input method selector stuff to eapp - same as locale
 * libechack needs to come back - and execute all things with libehack preloads active
 * get all libehack properties if they exist
 * titlebar/border expansion/gadget panel for moduels to put window widgets in
