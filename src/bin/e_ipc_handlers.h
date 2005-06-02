@@ -126,8 +126,16 @@ break;
 #define DECODE(__dec) \
    if (__dec(e->data, e->size, &dat))
 
-#endif
+#define SEND_DIR_LIST(__pathtype, __replytype) \
+   GENERIC(HDL); \
+   Evas_List *dir_list; \
+   dir_list = e_path_dir_list_get(__pathtype); \
+   ENCODE(dir_list, e_ipc_codec_str_list_enc); \
+   SEND_DATA(__replytype); \
+   END_GENERIC();
 
+
+#endif
 
 
 
