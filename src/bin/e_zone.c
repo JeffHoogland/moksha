@@ -459,13 +459,20 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
 int
 e_zone_app_exec(E_Zone *zone, E_App *a)
 {
-   int ret;
-   char *penv_display, *p1, *p2;
+   static int launch_id = 1;
+   char *p1, *p2;
+   char *penv_display;
+   char *penv_ld_preload;
+   char *penv_ld_preload_path;
    char buf[4096], buf2[32];
    
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
+   penv_ld_preload = getenv("LD_PRELOAD");
+   if (penv_ld_preload) penv_ld_preload = strdup(penv_ld_preload);
+   penv_ld_preload_path = getenv("LD_PRELOAD_PATH");
+   if (penv_ld_preload_path) penv_ld_preload_path = strdup(penv_ld_preload_path);
    
    /* set env vars */
    p1 = strrchr(penv_display, ':');
@@ -490,16 +497,22 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
      strcpy(buf, penv_display);
    e_util_env_set("DISPLAY", buf);
    snprintf(buf, sizeof(buf), "%i %i", zone->desk_x_current, zone->desk_y_current);
-   e_util_env_set("_E_DESK", buf);
+   e_util_env_set("E_DESK", buf);
    snprintf(buf, sizeof(buf), "%i", zone->num);
-   e_util_env_set("_E_ZONE", buf);
+   e_util_env_set("E_ZONE", buf);
    snprintf(buf, sizeof(buf), "%i", zone->container->num);
-   e_util_env_set("_E_CONTAINER", buf);
+   e_util_env_set("E_CONTAINER", buf);
    snprintf(buf, sizeof(buf), "%i", zone->container->manager->num);
-   e_util_env_set("_E_MANAGER", buf);
+   e_util_env_set("E_MANAGER", buf);
+   e_util_env_set("LD_PRELOAD_PATH", PACKAGE_LIB_DIR"/enlightenment/preload");
+   e_util_env_set("LD_PRELOAD", PACKAGE_LIB_DIR"/enlightenment/preload/e_hack.so");
    
+   snprintf(buf, sizeof(buf), "%i", launch_id);
+   e_util_env_set("E_LAUNCH_ID", buf);
+   launch_id++;
+   if (launch_id == 0) launch_id = 1;
    /* execute */
-   ret = e_app_exec(a);
+   if (!e_app_exec(a)) return 0;
    
    /* reset env vars */
    if (penv_display)
@@ -507,7 +520,17 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	e_util_env_set("DISPLAY", penv_display);
 	free(penv_display);
      }
-   return ret;
+   if (penv_ld_preload)
+     {
+	e_util_env_set("LD_PRELOAD", penv_ld_preload);
+	free(penv_ld_preload);
+     }
+   if (penv_ld_preload_path)
+     {
+	e_util_env_set("LD_PRELOAD_PATH", penv_ld_preload_path);
+	free(penv_ld_preload_path);
+     }
+   return launch_id;
 }
 
 /* local subsystem functions */

@@ -99,7 +99,7 @@ e_container_new(E_Manager *man)
    
    e_pointer_container_set(con);
 
-   con->num = evas_list_count(con->manager->containers);
+   con->num = evas_list_count(con->manager->containers) - 1;
    snprintf(name, sizeof(name), _("Container %d"), con->num);
    con->name = strdup(name);
 
