@@ -16,13 +16,33 @@
  * add ability to e to set theme, so we can have a theme_set call :)
  */
 
+#include <Evas.h>
 #include "E.h"
 #include "e_private.h"
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 
+typedef struct _Opt Opt;
+
+struct _Opt 
+{
+   char     *opt;
+   int       num_param; 
+   char     *desc;
+   int       num_reply;
+   E_Ipc_Op  opcode;
+};
+
+Opt opts[] = { 
+#define TYPE  E_REMOTE_OPTIONS
+#include      "e_ipc_handlers.h"
+#undef TYPE 
+};
+
 static int  _e_ipc_init(const char *display);
 static void _e_ipc_shutdown(void);
+static Opt *_e_ipc_call_find(char *name);
+static void _e_ipc_call(Opt *opt, char **params);
 static int _e_cb_server_data(void *data, int type, void *event);
 
 static void _e_cb_module_list_free(void *data, void *ev);
@@ -98,13 +118,6 @@ e_init(const char* display)
 	return 0;
      }
 
-   /* setup e ipc codecs */
-   if (!e_ipc_codec_init())
-     {       
-	fprintf(stderr, "ERROR: Could not start enlightenment IPC codecs.\n");
-	return 0;
-     }
-
    /* setup e ipc service */
    if (!_e_ipc_init(disp))
      {
@@ -112,6 +125,7 @@ e_init(const char* display)
 	       "Did you specify the right display?\n");
 	return 0;
      }
+   e_ipc_codec_init();
    
    if (!E_RESPONSE_MODULE_LIST)
      {
@@ -145,17 +159,13 @@ e_shutdown(void)
 void
 e_restart(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-                         E_IPC_OP_RESTART, 0/*ref*/, 0/*ref_to*/, 
-			 0/*response*/, NULL, 0);
+   _e_ipc_call(_e_ipc_call_find("-restart"), NULL);
 }
     
 void
 e_quit(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-                         E_IPC_OP_SHUTDOWN, 0/*ref*/, 0/*ref_to*/, 
-			 0/*response*/, NULL, 0);
+   _e_ipc_call(_e_ipc_call_find("-shutdown"), NULL);
 }
 
 void
@@ -167,13 +177,9 @@ e_module_enabled_set(const char *module, int enable)
      return;
 
    if (enable)
-     type = E_IPC_OP_MODULE_ENABLE;
+     _e_ipc_call(_e_ipc_call_find("-module-enable"), &module);
    else
-     type = E_IPC_OP_MODULE_DISABLE;
-
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST, type, 0/*ref*/,
-			 0/*ref_to*/, 0/*response*/, (void *)module,
-			 strlen(module));
+     _e_ipc_call(_e_ipc_call_find("-module-disable"), &module);
 }
 
 void
@@ -185,21 +191,15 @@ e_module_load_set(const char *module, int load)
      return;
 
    if (load)
-     type = E_IPC_OP_MODULE_LOAD;
+     _e_ipc_call(_e_ipc_call_find("-module-load"), &module);
    else
-     type = E_IPC_OP_MODULE_UNLOAD;
-
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST, type, 0/*ref*/,
-			 0/*ref_to*/, 0/*response*/, (void *)module,
-			 strlen(module));
+     _e_ipc_call(_e_ipc_call_find("-module-unload"), &module);
 }
 
 void
 e_module_list(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-			 E_IPC_OP_MODULE_LIST, 0/*ref*/, 0/*ref_to*/,
-			 0/*response*/, NULL, 0);
+   _e_ipc_call(_e_ipc_call_find("-module-list"), NULL);
 }
 
 void
@@ -216,17 +216,13 @@ e_background_set(const char *bgfile)
    if (!bgfile)
      return;
 
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST, E_IPC_OP_BG_SET,
-			 0/*ref*/, 0/*ref_to*/, 0/*response*/, (void *)bgfile,
-			 strlen(bgfile));
+   _e_ipc_call(_e_ipc_call_find("-default-bg-set"), &bgfile);
 }
 
 void
 e_background_get(void)
 {
-   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-			 E_IPC_OP_BG_GET, 0/*ref*/, 0/*ref_to*/,
-			 0/*response*/, NULL, 0);
+   _e_ipc_call(_e_ipc_call_find("-default-bg-get"), NULL);
 }
 
 void
@@ -245,6 +241,8 @@ e_theme_dirs_list(void)
 //			 0/*ref_to*/, 0/*response*/, NULL, 0);
 }
 
+//static int reply_count = 0;
+
 static int
 _e_ipc_init(const char *display)
 {
@@ -259,10 +257,8 @@ _e_ipc_init(const char *display)
    /* similar... */
    if (!_e_ipc_server) return 0;
    
-/*   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_cb_server_add, NULL);*/
-/*   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_cb_server_del, NULL);*/
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _e_cb_server_data, NULL);
-   
+
    return 1;
 }
 
@@ -276,9 +272,79 @@ _e_ipc_shutdown(void)
      }
 }
 
+static Opt *
+_e_ipc_call_find(char *name)
+{
+   int i, j;
+
+   for (j = 0; j < (int)(sizeof(opts) / sizeof(Opt)); j++)
+     { 
+        Opt *opt;
+        
+        opt = &(opts[j]);
+        if (!strcmp(opt->opt, name))
+	  return opt;
+     }  
+   return NULL;
+}
+
+static void
+_e_ipc_call(Opt *opt, char **params)
+{
+   Ecore_Ipc_Event_Server_Data *e = malloc(sizeof(Ecore_Ipc_Event_Server_Data));
+   e->server = _e_ipc_server;
+   
+   switch(opt->opcode)
+     {
+
+#define TYPE  E_REMOTE_OUT
+#include      "e_ipc_handlers.h"
+#undef TYPE
+
+	default:
+	  break;
+     }
+   free(e);
+}
+
 static int
 _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 {
+   Ecore_Ipc_Event_Server_Data *e;
+
+   e = event;
+
+   switch (e->minor)
+     {
+
+	case E_IPC_OP_BG_GET_REPLY:
+	  {
+	     E_Response_Background_Get *res;
+	     char *str = NULL;
+
+	     res = calloc(1, sizeof(E_Response_Background_Get));
+	     if (e->data)
+	       {
+		  e_ipc_codec_str_dec(e->data, e->size, &str);
+		  res->file = str;
+	       }
+	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
+	  }
+	  break;
+
+// FIXME: if we were to use the e_handlers.h then it will need library
+// stuff, i.e. E_LIB_IN which creates the replies and sends the event...
+// 
+//#define TYPE  E_REMOTE_IN
+//#include      "e_ipc_handlers.h"
+//#undef TYPE
+
+	default:
+	  break;
+     }
+   
+
+	/*
    Ecore_Ipc_Event_Server_Data *e;
    
    e = event;
@@ -328,7 +394,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_module_list_free, NULL);
 			   }
           break;
-/*	
+*	
 	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
@@ -360,7 +426,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_module_dir_list_free, NULL);
 	    }
           break;
- */
+ *
       case E_IPC_OP_BG_GET_REPLY:
 	  {
 	     E_Response_Background_Get *res;
@@ -369,13 +435,13 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 	     res = calloc(1, sizeof(E_Response_Background_Get));
 	     if (e->data)
 	       {
-		  e_ipc_codec_str_dec(e->data, e->size, &str);
+		  e_codec_str_dec(e->data, e->size, &str);
 		  res->file = str;
 	       }
 	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
 	  }
 	break;
-/*	case E_IPC_OP_BG_DIRS_LIST_REPLY:
+*	case E_IPC_OP_BG_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Background_Dirs_List *res;
@@ -406,8 +472,8 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_bg_dir_list_free, NULL);
 	    }
           break;
- */
-/*	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
+ *
+*	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Theme_Dirs_List *res;
@@ -438,11 +504,11 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_theme_dir_list_free, NULL);
 	    }
           break;
- */
+ *
 	default:
           break;
      }
-   return 1;
+   return 1;*/
 }
 
 static void _e_cb_module_list_free(void *data __UNUSED__, void *ev)

@@ -379,10 +379,41 @@ break;
 #undef HDL
  
 
-   
-   
-   
-   
+
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_RESTART
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-restart", 0, "Restart Enlightenment", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   restart = 1;
+   ecore_main_loop_quit();
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
+#define HDL E_IPC_OP_SHUTDOWN
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-shutdown", 0, "Shutdown (exit) Enlightenment", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   ecore_main_loop_quit();
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+
+
+
+
 #if 0
 }
 #endif

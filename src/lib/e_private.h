@@ -23,3 +23,9 @@
 #include "e_ipc.h"
 
 #endif
+
+#define E_TYPEDEFS 1
+#include "e_ipc_codec.h"
+#undef E_TYPEDEFS
+#include "e_ipc_codec.h"
+

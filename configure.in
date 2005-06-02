@@ -116,6 +116,8 @@ AC_ARG_WITH(evas-config,
 ])
 evas_cflags=`$EVAS_CONFIG --cflags`
 evas_libs=`$EVAS_CONFIG --libs`
+AC_SUBST(evas_cflags)
+AC_SUBST(evas_libs)
 
 AC_ARG_WITH(ecore-config,
 [  --with-ecore-config=ECORE_CONFIG  use ecore-config specified ],
