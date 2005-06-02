@@ -124,7 +124,7 @@ break;
    Evas_List *dat = NULL, *l;
 
 #define DECODE(__dec) \
-   if (dat && __dec(e->data, e->size, &dat))
+   if (__dec(e->data, e->size, &dat))
 
 #endif
 
