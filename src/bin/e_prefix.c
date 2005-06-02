@@ -11,6 +11,7 @@ static int _e_prefix_try_argv(char *argv0);
 static char *_exe_path = NULL;
 static char *_prefix_path = NULL;
 
+/* externally accessible functions */
 int
 e_prefix_determine(char *argv0)
 {

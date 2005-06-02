@@ -55,6 +55,10 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* libechack needs to come back - and execute all things with libehack preloads active
+* get all libehack properties if they exist
+* titlebar/border expansion/gadget panel for moduels to put window widgets in
+* a generic module messaging system (events with strings)
 * add actions to flip desktops on a given zone and/or container only
 * don't show borders before window
 * double check edje and evas image caches are working
