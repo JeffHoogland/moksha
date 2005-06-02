@@ -294,148 +294,6 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
      }
 }
 
-static void
-_e_zone_free(E_Zone *zone)
-{
-   E_Container *con;
-   Evas_List *l;
-   int x, y;
-
-   /* remove handlers */
-   for (l = zone->handlers; l; l = l->next)
-     {
-	Ecore_Event_Handler *h;
-
-	h = l->data;
-	ecore_event_handler_del(h);
-     }
-   evas_list_free(zone->handlers);
-   zone->handlers = NULL;
-
-   con = zone->container;
-   if (zone->name) free(zone->name);
-   con->zones = evas_list_remove(con->zones, zone);
-   evas_object_del(zone->bg_event_object);
-   evas_object_del(zone->bg_clip_object);
-   evas_object_del(zone->bg_object);
-   /* free desks */
-   for (x = 0; x < zone->desk_x_count; x++)
-     for(y = 0; y < zone->desk_y_count; y++)
-       e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
-   free(zone->desks);
-
-   free(zone);
-}
-
-static void
-_e_zone_cb_menu_end(void *data, E_Menu *m)
-{
-   e_object_del(E_OBJECT(m));
-}
-
-static void
-_e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Zone *zone;
-   Evas_Event_Mouse_Down *ev;
-   
-   ev = (Evas_Event_Mouse_Down *)event_info;
-   zone = data;
-   if (e_menu_grab_window_get()) return;
-
-   if (!zone->cur_mouse_action)
-     {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
-	  {
-	     Ecore_X_Event_Mouse_Button_Down *ev2;
-	     
-	     ev2 = ecore_event_current_event_get();
-	     zone->cur_mouse_action =
-	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
-						  E_OBJECT(zone), ev2);
-	  }
-     }
-#if 0  /* FIXME: nuke this later once the new configurable bindings settle */
-   if (ev->button == 1)
-     {
-	E_Menu *m;
-
-	m = e_int_menus_main_new();
-	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
-	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(zone->container);
-     }
-   else if (ev->button == 2)
-     {
-	E_Menu *m;
-
-	m = e_int_menus_clients_new();
-	/* FIXME: this is a bit of a hack... setting m->con - bad hack */
-	m->zone = zone;
-	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
-	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(zone->container);
-     }
-   else if (ev->button == 3)
-     {
-	E_Menu *m;
-
-	m = e_int_menus_favorite_apps_new();
-	e_menu_post_deactivate_callback_set(m, _e_zone_cb_menu_end, NULL);
-	e_menu_activate_mouse(m, zone, ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
-	e_util_container_fake_mouse_up_all_later(zone->container);
-     }
-#endif   
-}
-
-static void
-_e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Zone *zone;
-   Evas_Event_Mouse_Up *ev;
-   
-   ev = (Evas_Event_Mouse_Up *)event_info;      
-   zone = data;
-   if (zone->cur_mouse_action)
-     {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
-	  {
-	     Ecore_X_Event_Mouse_Button_Up *ev2;
-	     
-	     ev2 = ecore_event_current_event_get();
-	     if (zone->cur_mouse_action->func.end_mouse)
-	       zone->cur_mouse_action->func.end_mouse(E_OBJECT(zone), "", ev2);
-	     else if (zone->cur_mouse_action->func.end)
-	       zone->cur_mouse_action->func.end(E_OBJECT(zone), "");
-	  }
-	zone->cur_mouse_action = NULL;
-     }
-   else
-     {
-	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
-	  {
-	     Ecore_X_Event_Mouse_Button_Up *ev2;
-	     
-	     ev2 = ecore_event_current_event_get();
-	     e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_ZONE,
-					      E_OBJECT(zone), ev2);
-	  }
-     }
-}
-
-static void
-_e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
-{
-   E_Zone *zone;
-   Evas_Event_Mouse_Move *ev;
-   
-   ev = (Evas_Event_Mouse_Move *)event_info;   
-   zone = data;
-}
-
 void
 e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 {
@@ -596,6 +454,169 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
    x = x - (y * zone->desk_x_count);
    if (y >= zone->desk_y_count) return;
    e_zone_desk_flip_to(zone, x, y);
+}
+
+int
+e_zone_app_exec(E_Zone *zone, E_App *a)
+{
+   int ret;
+   char *penv_display, *p1, *p2;
+   char buf[4096], buf2[32];
+   
+   /* save previous env vars we need to save */
+   penv_display = getenv("DISPLAY");
+   if (penv_display) penv_display = strdup(penv_display);
+   
+   /* set env vars */
+   p1 = strrchr(penv_display, ':');
+   p2 = strrchr(penv_display, '.');
+   if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
+     {
+	/* yes it could overflow... but who will voerflow DISPLAY eh? why? to
+	 * "exploit" your own applications running as you?
+	 */
+	strcpy(buf, penv_display);
+	buf[p2 - penv_display + 1] = 0;
+	snprintf(buf2, sizeof(buf2), "%i", zone->container->manager->num);
+	strcat(buf, buf2);
+     }
+   else if (p1) /* "blah:x */
+     {
+	strcpy(buf, penv_display);
+	snprintf(buf2, sizeof(buf2), ".%i", zone->container->manager->num);
+	strcat(buf, buf2);
+     }
+   else
+     strcpy(buf, penv_display);
+   e_util_env_set("DISPLAY", buf);
+   snprintf(buf, sizeof(buf), "%i %i", zone->desk_x_current, zone->desk_y_current);
+   e_util_env_set("_E_DESK", buf);
+   snprintf(buf, sizeof(buf), "%i", zone->num);
+   e_util_env_set("_E_ZONE", buf);
+   snprintf(buf, sizeof(buf), "%i", zone->container->num);
+   e_util_env_set("_E_CONTAINER", buf);
+   snprintf(buf, sizeof(buf), "%i", zone->container->manager->num);
+   e_util_env_set("_E_MANAGER", buf);
+   
+   /* execute */
+   ret = e_app_exec(a);
+   
+   /* reset env vars */
+   if (penv_display)
+     {
+	e_util_env_set("DISPLAY", penv_display);
+	free(penv_display);
+     }
+   return ret;
+}
+
+/* local subsystem functions */
+static void
+_e_zone_free(E_Zone *zone)
+{
+   E_Container *con;
+   Evas_List *l;
+   int x, y;
+
+   /* remove handlers */
+   for (l = zone->handlers; l; l = l->next)
+     {
+	Ecore_Event_Handler *h;
+
+	h = l->data;
+	ecore_event_handler_del(h);
+     }
+   evas_list_free(zone->handlers);
+   zone->handlers = NULL;
+
+   con = zone->container;
+   if (zone->name) free(zone->name);
+   con->zones = evas_list_remove(con->zones, zone);
+   evas_object_del(zone->bg_event_object);
+   evas_object_del(zone->bg_clip_object);
+   evas_object_del(zone->bg_object);
+   /* free desks */
+   for (x = 0; x < zone->desk_x_count; x++)
+     for(y = 0; y < zone->desk_y_count; y++)
+       e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
+   free(zone->desks);
+
+   free(zone);
+}
+
+static void
+_e_zone_cb_menu_end(void *data, E_Menu *m)
+{
+   e_object_del(E_OBJECT(m));
+}
+
+static void
+_e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   E_Zone *zone;
+   Evas_Event_Mouse_Down *ev;
+   
+   ev = (Evas_Event_Mouse_Down *)event_info;
+   zone = data;
+   if (e_menu_grab_window_get()) return;
+
+   if (!zone->cur_mouse_action)
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_DOWN)
+	  {
+	     Ecore_X_Event_Mouse_Button_Down *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     zone->cur_mouse_action =
+	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
+						  E_OBJECT(zone), ev2);
+	  }
+     }
+}
+
+static void
+_e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   E_Zone *zone;
+   Evas_Event_Mouse_Up *ev;
+   
+   ev = (Evas_Event_Mouse_Up *)event_info;      
+   zone = data;
+   if (zone->cur_mouse_action)
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	  {
+	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     if (zone->cur_mouse_action->func.end_mouse)
+	       zone->cur_mouse_action->func.end_mouse(E_OBJECT(zone), "", ev2);
+	     else if (zone->cur_mouse_action->func.end)
+	       zone->cur_mouse_action->func.end(E_OBJECT(zone), "");
+	  }
+	zone->cur_mouse_action = NULL;
+     }
+   else
+     {
+	if (ecore_event_current_type_get() == ECORE_X_EVENT_MOUSE_BUTTON_UP)
+	  {
+	     Ecore_X_Event_Mouse_Button_Up *ev2;
+	     
+	     ev2 = ecore_event_current_event_get();
+	     e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_ZONE,
+					      E_OBJECT(zone), ev2);
+	  }
+     }
+}
+
+static void
+_e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info)
+{
+   E_Zone *zone;
+   Evas_Event_Mouse_Move *ev;
+   
+   ev = (Evas_Event_Mouse_Move *)event_info;   
+   zone = data;
 }
 
 static void

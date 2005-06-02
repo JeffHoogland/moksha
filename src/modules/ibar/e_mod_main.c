@@ -1193,7 +1193,7 @@ _ibar_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
 	edje_object_signal_emit(ic->bg_object, "start", "");
 	edje_object_signal_emit(ic->overlay_object, "start", "");
 	edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
-	e_app_exec(ic->app);
+	e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
 #else
 	drag_x = ev->output.x;
 	drag_y = ev->output.y;
@@ -1219,7 +1219,7 @@ _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	edje_object_signal_emit(ic->ibb->overlay_object, "start_end", "");
 #else
 	if (!drag)
-	  e_app_exec(ic->app);
+	  e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
 	drag = 0;
 	drag_start = 0;
 #endif

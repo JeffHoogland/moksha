@@ -648,6 +648,7 @@ _e_main_screens_init(void)
 	E_Container *con;
 	
 	man = e_manager_new(roots[i]);
+	man->num = i;
 	e_init_show();
 	if (man) e_manager_show(man);
 	else

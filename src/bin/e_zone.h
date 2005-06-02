@@ -65,6 +65,8 @@ EAPI void       e_zone_desk_flip_by(E_Zone *zone, int dx, int dy);
 EAPI void       e_zone_desk_flip_to(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);
 EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
+
+EAPI int        e_zone_app_exec(E_Zone *zone, E_App *a);
     
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
 

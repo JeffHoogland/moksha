@@ -256,6 +256,8 @@ e_app_exec(E_App *a)
    E_OBJECT_CHECK_RETURN(a, 0);
    E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
    if (!a->exe) return 0;
+   /* FIXME: set up locale, encoding and input method env vars if they are in
+    * the eapp file */
    exe = ecore_exe_run(a->exe, a);
    if (!exe) return 0;
    a->instances = evas_list_append(a->instances, exe);

@@ -511,7 +511,8 @@ ACT_FN_GO(app)
 			 a = e_app_generic_find(p + 1);
 		       else if (!strcmp(p2, "exe:"))
 			 a = e_app_exe_find(p + 1);
-		       if (a) e_app_exec(a);
+		       if (a)
+			 e_zone_app_exec(zone, a);
 		    }
 		  free(p2);
 	       }

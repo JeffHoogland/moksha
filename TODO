@@ -66,10 +66,11 @@ These are in no particular order:
   it was last on (per zone, per container, per manager).
 * start module needs to have an way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
-* sometiems windows that get shut down/closed get unparented but the whole
+* sometimes windows that get shut down/closed get unparented but the whole
   border stays around - something is keeping extra references maybe? it is
   hidden, until you flip desktops then it appears again - but with no client
-  around.
+  around. currently they have a dangling reference - need to find out WHO
+  added that ref and didnt remove it
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
 * drop on ibar for re-ordering, removal seems broken (drop location is the
@@ -89,8 +90,6 @@ These are in no particular order:
 * check window max size. if < size of zone (or maximisation area) disallow
   maximising and tell border edje object (via signals) to somehow disable the
   maximise buttons :) (and remove from the menu)
-* drag and drop need to center icon at correct offset based on mouse down
-  before drag start
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
@@ -98,26 +97,18 @@ These are in no particular order:
 * module api needs to move label and icon to data file, not api
 * gadman edit mode for simple gadgets activate with a button bind (eg
   alt+click on module like windows) or a pure key binding
-* "start button" module to pop up the e menu (left mouse right now)
-* click to focus
-* make e17 re-locatable (ues environment var, or find out by hunting path
-  argv[0] if its not a full path or munge the full path to the exe in argv[0])
-* java apps seem to have a hard time if we dont pretend to be kwin
-  (see e_hints.c) - get this stuff upstream to sun and get things fixed in
-  java.
+* make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
 * gadget containers (shelves?)
 * add key input focus control for desktop modules
 * finish off icccm support
-* optimize clock theme (speed/cpu) (rotation in edje???)
-* add "icon box"
+* optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
+* fix iconbox to not dissapear to nothing when its empty
 * add complete netwm support
 * different cursors for different parts of the screen
 * alt+tab popup list of windows
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* optimise client manage: list window properties then only fetch the ones
-  that exist on window map
 * non opaque move/resize
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
@@ -136,10 +127,7 @@ These are in no particular order:
 * support text and color classes
 * add tooltips
 * add fullscreen support (e16 xvidmode or xrandr style)
-* add screen rotation info to managers (from xrandr)
-* make xrandr support get rotation
-* add rotation to containers
-* fix multihead support (executing with DISPLAY=:0.1 on screen 1 for example)
+* make xrandr support get rotation and store it
 * maybe add systray module/support?
 * allow object paranoia to be a runtime option too
 * add sliders, radio and check buttons for clientinfo pane
@@ -158,10 +146,9 @@ These are in no particular order:
 * need to be able to remember client positons/etc.
 * file icons on the desktop (people ask for it) - xdnd for these
 * gui config tools for bg's, keybindings, etc. etc. etc.
+* "control panel" app to launch the gui config tools
 * go through e16 features we dont have and implement the most useful ones (or
   re-design and implement)
-* libehack from old e17 wrapper for executing apps
-* use libehack stuff to track launches of apps etc.
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * make status modules (like cpu meter per window) use ehack to get pid to

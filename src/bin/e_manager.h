@@ -16,6 +16,7 @@ struct _E_Manager
    E_Object             e_obj_inherit;
    
    Ecore_X_Window       win;
+   int                  num;
    int                  x, y, w, h;
    char                 visible : 1;
    Ecore_X_Window       root;
