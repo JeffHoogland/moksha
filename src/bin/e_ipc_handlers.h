@@ -265,7 +265,7 @@ break;
 #elif (TYPE == E_LIB_IN)
    GENERIC(HDL);
    Evas_List *dat = NULL;
-   if (e_ipc_codec_str_int_list_dec(e->data, e->size, &dat)) {
+   DECODE(e_ipc_codec_str_int_list_dec) {
      RESPONSE(r, E_Response_Module_List, HDL);
 
      /* FIXME - this is a mess, needs to be merged into macros... */
@@ -273,9 +273,9 @@ break;
      r->modules = malloc(sizeof(E_Response_Module_Data *) * count);
      r->count = count;
 
+     LIST()
      count = 0;
-     Evas_List *l;
-     for (l = dat; l; l = l->next) {
+     FOR(dat) {
        E_Response_Module_Data *md;
        E_Ipc_Str_Int *v;
 
