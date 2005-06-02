@@ -62,12 +62,8 @@ These are in no particular order:
 * get all libehack properties if they exist
 * titlebar/border expansion/gadget panel for moduels to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
-* don't show borders before window
-* double check edje and evas image caches are working
-* breaking out config via ipc / e_remote is too much work. this needs to get
-  easier.
-* move all ipc codecs to use eet
-* on restart e always goes back to desktop 0,0 - it shoudl go to the desktop
+* re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
+* on restart e always goes back to desktop 0,0 - it should go to the desktop
   it was last on (per zone, per container, per manager).
 * start module needs to have an way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
