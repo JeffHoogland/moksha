@@ -472,6 +472,18 @@ ACT_FN_GO_KEY(menu_show)
 /***************************************************************************/
 ACT_FN_GO(exec)
 {
+   if (params)
+     {
+	Ecore_Exe *exe;
+	
+	exe = ecore_exe_run(params, NULL);
+	if (exe) ecore_exe_free(exe);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(app)
+{
    E_Zone *zone;
    
    if (!obj) return;
@@ -481,10 +493,28 @@ ACT_FN_GO(exec)
      {
 	if (params)
 	  {
-	     Ecore_Exe *exe;
+	     E_App *a = NULL;
+	     char *p, *p2;
 	     
-	     exe = ecore_exe_run(params, NULL);
-	     if (exe) ecore_exe_free(exe);
+	     p2 = strdup(params);
+	     if (p2)
+	       {
+		  p = strchr(p2, ' ');
+		  if (p)
+		    {
+		       *p = 0;
+		       if (!strcmp(p2, "file:"))
+			 a = e_app_file_find(p + 1);
+		       else if (!strcmp(p2, "name:"))
+			 a = e_app_name_find(p + 1);
+		       else if (!strcmp(p2, "generic:"))
+			 a = e_app_generic_find(p + 1);
+		       else if (!strcmp(p2, "exe:"))
+			 a = e_app_exe_find(p + 1);
+		       if (a) e_app_exec(a);
+		    }
+		  free(p2);
+	       }
 	  }
      }
 }
@@ -543,6 +573,8 @@ e_actions_init(void)
    ACT_GO_KEY(menu_show);
 
    ACT_GO(exec);
+
+   ACT_GO(app);
    
    return 1;
 }

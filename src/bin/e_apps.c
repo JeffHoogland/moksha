@@ -429,6 +429,114 @@ e_app_window_name_class_find(char *name, char *class)
    return NULL;
 }
 
+E_App *
+e_app_file_find(char *file)
+{
+   Evas_List *l;
+   
+   if (!file) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->path)
+	  {
+	     char *p;
+	     
+	     p = strchr(a->path, '/');
+	     if (p)
+	       {
+		  p++;
+		  if (!strcmp(p, file))
+		    {
+		       _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+		       _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		       return a;
+		    }
+	       }
+	  }
+     }
+   return NULL;
+}
+
+E_App *
+e_app_name_find(char *name)
+{
+   Evas_List *l;
+   
+   if (!name) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->name)
+	  {
+	     if (!strcasecmp(a->name, name))
+	       {
+		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  return a;
+	       }
+	  }
+     }
+   return NULL;
+}
+
+E_App *
+e_app_generic_find(char *generic)
+{
+   Evas_List *l;
+   
+   if (!generic) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->generic)
+	  {
+	     if (!strcasecmp(a->generic, generic))
+	       {
+		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  return a;
+	       }
+	  }
+     }
+   return NULL;
+}
+
+E_App *
+e_app_exe_find(char *exe)
+{
+   Evas_List *l;
+   
+   if (!exe) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->exe)
+	  {
+	     if (!strcmp(a->exe, exe))
+	       {
+		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
+		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
+		  return a;
+	       }
+	  }
+     }
+   return NULL;
+}
+
+
 /* local subsystem functions */
 static void
 _e_app_free(E_App *a)

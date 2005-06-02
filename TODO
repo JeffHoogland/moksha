@@ -55,7 +55,6 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* add app execute action (execute eapp - not just exe line)
 * add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
 * add input method selector stuff to eapp - same as locale
 * libechack needs to come back - and execute all things with libehack preloads active

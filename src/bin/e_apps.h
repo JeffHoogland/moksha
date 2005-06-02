@@ -73,6 +73,10 @@ EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_
 EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 
 EAPI E_App *e_app_window_name_class_find(char *name, char *class);
-
+EAPI E_App *e_app_file_find(char *file);
+EAPI E_App *e_app_name_find(char *name);
+EAPI E_App *e_app_generic_find(char *generic);
+EAPI E_App *e_app_exe_find(char *exe);
+    
 #endif
 #endif
