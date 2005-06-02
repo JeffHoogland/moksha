@@ -41,8 +41,8 @@ Opt opts[] = {
 
 static int  _e_ipc_init(const char *display);
 static void _e_ipc_shutdown(void);
-static Opt *_e_ipc_call_find(char *name);
-static void _e_ipc_call(Opt *opt, char **params);
+static E_Ipc_Op _e_ipc_call_find(char *name);
+static void _e_ipc_call(E_Ipc_Op opcode, char **params);
 static int _e_cb_server_data(void *data, int type, void *event);
 
 static void _e_cb_module_list_free(void *data, void *ev);
@@ -159,47 +159,43 @@ e_shutdown(void)
 void
 e_restart(void)
 {
-   _e_ipc_call(_e_ipc_call_find("-restart"), NULL);
+   _e_ipc_call(E_IPC_OP_RESTART, NULL);
 }
     
 void
 e_quit(void)
 {
-   _e_ipc_call(_e_ipc_call_find("-shutdown"), NULL);
+   _e_ipc_call(E_IPC_OP_SHUTDOWN, NULL);
 }
 
 void
 e_module_enabled_set(const char *module, int enable)
 {
-   E_Ipc_Op type;
-
    if (!module)
      return;
 
    if (enable)
-     _e_ipc_call(_e_ipc_call_find("-module-enable"), &module);
+     _e_ipc_call(E_IPC_OP_MODULE_ENABLE, &module);
    else
-     _e_ipc_call(_e_ipc_call_find("-module-disable"), &module);
+     _e_ipc_call(E_IPC_OP_MODULE_DISABLE, &module);
 }
 
 void
 e_module_load_set(const char *module, int load)
 {
-   E_Ipc_Op type;
-
    if (!module)
      return;
 
    if (load)
-     _e_ipc_call(_e_ipc_call_find("-module-load"), &module);
+     _e_ipc_call(E_IPC_OP_MODULE_LOAD, &module);
    else
-     _e_ipc_call(_e_ipc_call_find("-module-unload"), &module);
+     _e_ipc_call(E_IPC_OP_MODULE_UNLOAD, &module);
 }
 
 void
 e_module_list(void)
 {
-   _e_ipc_call(_e_ipc_call_find("-module-list"), NULL);
+   _e_ipc_call(E_IPC_OP_MODULE_LIST, NULL);
 }
 
 void
@@ -216,13 +212,13 @@ e_background_set(const char *bgfile)
    if (!bgfile)
      return;
 
-   _e_ipc_call(_e_ipc_call_find("-default-bg-set"), &bgfile);
+   _e_ipc_call(E_IPC_OP_BG_SET, &bgfile);
 }
 
 void
 e_background_get(void)
 {
-   _e_ipc_call(_e_ipc_call_find("-default-bg-get"), NULL);
+   _e_ipc_call(E_IPC_OP_BG_GET, NULL);
 }
 
 void
@@ -272,7 +268,7 @@ _e_ipc_shutdown(void)
      }
 }
 
-static Opt *
+static E_Ipc_Op
 _e_ipc_call_find(char *name)
 {
    int i, j;
@@ -283,18 +279,18 @@ _e_ipc_call_find(char *name)
         
         opt = &(opts[j]);
         if (!strcmp(opt->opt, name))
-	  return opt;
+	  return opt->opcode;
      }  
-   return NULL;
+   return 0;
 }
 
 static void
-_e_ipc_call(Opt *opt, char **params)
+_e_ipc_call(E_Ipc_Op opcode, char **params)
 {
    Ecore_Ipc_Event_Server_Data *e = malloc(sizeof(Ecore_Ipc_Event_Server_Data));
    e->server = _e_ipc_server;
    
-   switch(opt->opcode)
+   switch(opcode)
      {
 
 #define TYPE  E_REMOTE_OUT

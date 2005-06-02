@@ -1,6 +1,6 @@
 MAINTAINERCLEANFILES	= Makefile.in
 INCLUDES		= -I$(includedir) \
-			  -I$(top_srcdir)/src/bin
+			  -I$(top_srcdir)/src/bin \
 			  @ecore_cflags@ \
 			  @evas_cflags@
 
