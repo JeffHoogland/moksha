@@ -169,7 +169,6 @@ e_ipc_codec_str_list_dec(char *data, int bytes, Evas_List **dest)
      {
         E_Ipc_Str *str_node;
 	
-	str_node = malloc(sizeof(E_Ipc_Str));
         str_node = l->data;
 	list = evas_list_append(list, str_node->str);
      }
