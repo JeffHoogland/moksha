@@ -25,6 +25,13 @@ if (e->data) { \
 } \
 break;
 
+# define RESPONSE(__res, __store, HDL) \
+   __store *__res = calloc(1, sizeof(__store)); \
+   if (e->data) {
+#define END_RESPONSE(__res, __type) \
+   } \
+   ecore_event_add(__type, __res, NULL, NULL);
+
 # define SAVE e_config_save_queue()
 
 # define REQ_STRING(__str, HDL) \
@@ -147,6 +154,8 @@ break;
  *   ...
  * E_REMOTE_IN
  *   ...
+ * E_LIB_IN
+ *   ...
  */
 
 #if 0
@@ -253,6 +262,34 @@ break;
    STRING_INT_LIST(v, HDL);
    printf("REPLY: \"%s\" ENABLED %i\n", v->str, v->val);
    END_STRING_INT_LIST(v);
+#elif (TYPE == E_LIB_IN)
+   GENERIC(HDL);
+   Evas_List *dat = NULL;
+   if (e_ipc_codec_str_int_list_dec(e->data, e->size, &dat)) {
+     RESPONSE(r, E_Response_Module_List, HDL);
+
+     /* FIXME - this is a mess, needs to be merged into macros... */
+     int count = evas_list_count(dat);
+     r->modules = malloc(sizeof(E_Response_Module_Data *) * count);
+     r->count = count;
+
+     count = 0;
+     Evas_List *l;
+     for (l = dat; l; l = l->next) {
+       E_Response_Module_Data *md;
+       E_Ipc_Str_Int *v;
+
+       v = l->data;
+       md = malloc(sizeof(E_Response_Module_Data));
+       
+       md->name = v->str;
+       md->enabled = v->val;
+       r->modules[count] = md;
+       count ++;
+     }
+     END_RESPONSE(r, E_RESPONSE_MODULE_LIST); /* FIXME - need a custom free */
+   }
+   END_GENERIC();
 #endif
 #undef HDL
      
@@ -304,6 +341,12 @@ break;
 #elif (TYPE == E_REMOTE_IN)
    STRING(s, HDL);
    printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#elif (TYPE == E_LIB_IN)
+   STRING(s, HDL);
+   RESPONSE(r, E_Response_Background_Get, HDL);
+   r->file = strdup(s);
+   END_RESPONSE(r, E_RESPONSE_BACKGROUND_GET);
    END_STRING(s);
 #endif
 #undef HDL

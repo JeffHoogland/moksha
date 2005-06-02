@@ -313,27 +313,9 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
    switch (e->minor)
      {
 
-	case E_IPC_OP_BG_GET_REPLY:
-	  {
-	     E_Response_Background_Get *res;
-	     char *str = NULL;
-
-	     res = calloc(1, sizeof(E_Response_Background_Get));
-	     if (e->data)
-	       {
-		  e_ipc_codec_str_dec(e->data, e->size, &str);
-		  res->file = str;
-	       }
-	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
-	  }
-	  break;
-
-// FIXME: if we were to use the e_handlers.h then it will need library
-// stuff, i.e. E_LIB_IN which creates the replies and sends the event...
-// 
-//#define TYPE  E_REMOTE_IN
-//#include      "e_ipc_handlers.h"
-//#undef TYPE
+#define TYPE  E_LIB_IN
+#include      "e_ipc_handlers.h"
+#undef TYPE
 
 	default:
 	  break;
@@ -348,49 +330,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
    type = E_IPC_OP_MODULE_LIST;
    switch (e->minor)
      {  
-	case E_IPC_OP_MODULE_LIST_REPLY:
-	  if (e->data)
-	    {
-	       E_Response_Module_List *res;
-	       int count = 0;
-	       char *p;
-             
-	       res = calloc(1, sizeof(E_Response_Module_List));
-
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-		 {
-		    p += strlen(p) + 1 + 1;
-		    count ++;
-		 }
-	       res->modules = malloc(sizeof(E_Response_Module_Data *) * count);
-	       res->count = count;
-
-	       count = 0;
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-		 {
-		    E_Response_Module_Data *md;
-		    md = malloc(sizeof(E_Response_Module_Data));
-		    md->name = p;
-		    p += strlen(md->name);
-		    if (p < (char *)(e->data + e->size))
-		      {
-			 p++;
-			 if (p < (char *)(e->data + e->size))
-			   {
-			      md->enabled = *p;
-			      p++;
-			   }
-		      }
-		    res->modules[count] = md;
-		    count ++;
-		 }
-			      ecore_event_add(E_RESPONSE_MODULE_LIST, res,
-				_e_cb_module_list_free, NULL);
-			   }
-          break;
-*	
+	
 	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
@@ -422,22 +362,8 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_module_dir_list_free, NULL);
 	    }
           break;
- *
-      case E_IPC_OP_BG_GET_REPLY:
-	  {
-	     E_Response_Background_Get *res;
-	     char *str = NULL;
-	     
-	     res = calloc(1, sizeof(E_Response_Background_Get));
-	     if (e->data)
-	       {
-		  e_codec_str_dec(e->data, e->size, &str);
-		  res->file = str;
-	       }
-	     ecore_event_add(E_RESPONSE_BACKGROUND_GET, res, NULL, NULL);
-	  }
-	break;
-*	case E_IPC_OP_BG_DIRS_LIST_REPLY:
+ 
+	case E_IPC_OP_BG_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Background_Dirs_List *res;
@@ -468,8 +394,8 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_bg_dir_list_free, NULL);
 	    }
           break;
- *
-*	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
+ 
+	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
 	  if (e->data)
 	    {
 	       E_Response_Theme_Dirs_List *res;
@@ -500,7 +426,7 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 				_e_cb_theme_dir_list_free, NULL);
 	    }
           break;
- *
+ 
 	default:
           break;
      }
