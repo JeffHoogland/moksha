@@ -124,16 +124,7 @@ break;
    Evas_List *dat = NULL, *l;
 
 #define DECODE(__dec) \
-   if (__dec(e->data, e->size, &dat))
-
-#define SEND_DIR_LIST(__pathtype, __replytype) \
-   GENERIC(HDL); \
-   Evas_List *dir_list; \
-   dir_list = e_path_dir_list_get(__pathtype); \
-   ENCODE(dir_list, e_ipc_codec_str_list_enc); \
-   SEND_DATA(__replytype); \
-   END_GENERIC();
-
+   if (dat && __dec(e->data, e->size, &dat))
 
 #endif
 
@@ -450,7 +441,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_SHUTDOWN
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-shutdown", 0, "Shutdown (exit) Enlightenment", 1, HDL)
+   OP("-shutdown", 0, "Shutdown (exit) Enlightenment", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
@@ -458,6 +449,55 @@ break;
    ecore_main_loop_quit();
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+
+
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DIRS_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-dirs-list", 1, "List the directory of type specified by 'OPT1', try 'backgrounds'", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   LIST_DATA()
+   Evas_List *dir_list = NULL;
+   if (!strcmp(s, "backgrounds"))
+     dir_list = e_path_dir_list_get(path_backgrounds);
+   E_Path_Dir *p;
+   FOR(dir_list) { p = l->data;
+     dat = evas_list_append(dat, p->dir);
+   }
+
+   ENCODE(dat, e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_DIRS_LIST_REPLY);
+   evas_list_free(dat);
+   e_path_dir_list_free(dir_list);
+   END_STRING(s)
+#elif (TYPE == E_REMOTE_IN)
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DIRS_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+     FOR(dat) {
+       printf("REPLY: \"%s\"\n", (char *)(l->data));
+     }
+     FREE_LIST(dat);
+   }
+   END_GENERIC();
 #endif
 #undef HDL
 

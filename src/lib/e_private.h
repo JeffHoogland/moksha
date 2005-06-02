@@ -16,6 +16,7 @@
 #define E_WM_IN          3
 #define E_REMOTE_IN      4
 #define E_ENUM           5
+#define E_LIB_IN         6
 
 #define E_TYPEDEFS 1
 #include "e_ipc.h"
