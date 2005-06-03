@@ -662,6 +662,8 @@ _e_main_screens_init(void)
 	  {
 	     e_container_show(con);
 	     e_manager_manage_windows(man);
+	     /* setup hints */
+	     e_hints_manager_init(man);
 	  }
 	else
 	  {

@@ -94,9 +94,6 @@ e_manager_new(Ecore_X_Window root)
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
-   /* setup hints */
-   e_hints_manager_init(man);
-
    return man;
 }
 
