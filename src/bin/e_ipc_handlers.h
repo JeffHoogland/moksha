@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 /* NOTE:
  * 
  * This is a very SPECIAL file. This servers as a kind of "auto code generator"
@@ -25,6 +28,17 @@ if (e->data) { \
 } \
 break;
 
+
+# define START_DOUBLE(__dbl, HDL) \
+case HDL: \
+if (e->data) { \
+   double __dbl = 0.0; \
+   if (e_ipc_codec_double_dec(e->data, e->size, &(__dbl))) {
+# define END_DOUBLE() \
+   } \
+} \
+break;
+
 # define RESPONSE(__res, __store, HDL) \
    __store *__res = calloc(1, sizeof(__store)); \
    if (e->data) {
@@ -37,6 +51,16 @@ break;
 # define REQ_STRING(__str, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+#define REQ_DOUBLE(__dbl, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_double_enc(__dbl, &bytes); \
    if (data) { \
       ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
       free(data); \
@@ -97,6 +121,16 @@ free(data);
 #define SEND_STRING(__str, __op, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
+   if (data) { \
+      ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+#define SEND_DOUBLE(__dbl, __op, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_double_enc(__dbl, &bytes); \
    if (data) { \
       ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
       free(data); \
@@ -565,8 +599,45 @@ break;
 #undef HDL
 
 
+/****************************************************************************/
+#define HDL E_IPC_OP_FRAMERATE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-framerate-set", 1, "Get the animation framerate (fps)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   double dbl;
+   START_DOUBLE(dbl, HDL);
+   e_config->framerate = dbl;
+   e_config_save_queue();
+   END_DOUBLE();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_FRAMERATE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-framerate-get", 0, "Get the animation framerate (fps)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->framerate, E_IPC_OP_FRAMERATE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_FRAMERATE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(fps, HDL);
+   printf("REPLY: %3.3f\n", fps);
+   END_DOUBLE();
+#endif
+#undef HDL
 
 #if 0
 }
