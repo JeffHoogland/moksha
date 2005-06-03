@@ -1430,8 +1430,35 @@ e_border_act_kill_begin(E_Border *bd)
    e_object_del(E_OBJECT(bd));
 }
 
-void e_border_icon_add(E_Border *bd, Evas *e)
+/* FIXME: Prefer app icon or own icon? */
+Evas_Object *
+e_border_icon_add(E_Border *bd, Evas *evas)
 {
+   Evas_Object *o;
+
+   o = NULL;
+   if (bd->client.netwm.icon.data)
+     {
+	printf("icon size: %d %d\n", bd->client.netwm.icon.width, bd->client.netwm.icon.height);
+	o = e_icon_add(evas);
+	e_icon_data_set(o, bd->client.netwm.icon.data,
+			bd->client.netwm.icon.width,
+			bd->client.netwm.icon.height);
+	e_icon_alpha_set(o, 1);
+     }
+   else if ((bd->client.icccm.name) && (bd->client.icccm.class))
+     {
+	E_App *a;
+
+	a = e_app_window_name_class_find(bd->client.icccm.name,
+					 bd->client.icccm.class);
+	if (a)
+	  {
+	     o = edje_object_add(evas);
+	     edje_object_file_set(o, a->path, "icon");
+	  }
+     }
+   return o;
 }
 
 void
@@ -2889,44 +2916,7 @@ _e_border_eval(E_Border *bd)
 	if (pname) free(pname);
 	if (pclass) free(pclass);
 	if (nc_change)
-	  {
-	     E_App *a;
-
-	     a = NULL;
-	     if (bd->icon_object)
-	       {
-		  evas_object_del(bd->icon_object);
-		  bd->icon_object = NULL;
-	       }
-	     if ((bd->client.icccm.name) && (bd->client.icccm.class))
-	       {
-		  printf("name: %s, class: %s\n", bd->client.icccm.name, bd->client.icccm.class);
-		  a = e_app_window_name_class_find(bd->client.icccm.name,
-						   bd->client.icccm.class);
-		  if (a)
-		    {
-		       bd->icon_object = edje_object_add(bd->bg_evas);
-		       edje_object_file_set(bd->icon_object, a->path, "icon");
-		       if (bd->bg_object)
-			 {
-			    evas_object_show(bd->icon_object);
-			    edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
-			 }
-		       else
-			 {
-			    evas_object_hide(bd->icon_object);
-			 }
-		    }
-	       }
-	       {
-		  E_Event_Border_Icon_Change *ev;
-		  
-		  ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
-		  ev->border = bd;
-		  e_object_ref(E_OBJECT(bd));
-		  ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev, _e_border_event_border_icon_change_free, NULL);
-	       }
-	  }
+	  bd->changes.icon = 1;
 	bd->client.icccm.fetch.name_class = 0;
      }
    if (bd->client.icccm.fetch.icon_name)
@@ -2943,7 +2933,6 @@ _e_border_eval(E_Border *bd)
 
 	bd->client.netwm.fetch.icon_name = 0;
      }
-   /*
    if (bd->client.netwm.fetch.icon)
      {
 	if (bd->client.netwm.icon.data) free(bd->client.netwm.icon.data);
@@ -2952,30 +2941,38 @@ _e_border_eval(E_Border *bd)
 				    &bd->client.netwm.icon.data, &bd->client.netwm.icon.size))
 	  printf("ERROR: Fetch icon from client\n");
 	else
-	  {
-	     if (bd->icon_object)
-	       {
-		  evas_object_del(bd->icon_object);
-		  bd->icon_object = NULL;
-	       }
-	     bd->icon_object = e_icon_add(bd->bg_evas);
-	     e_icon_data_set(bd->icon_object, bd->client.netwm.icon.data,
-			     bd->client.netwm.icon.width, bd->client.netwm.icon.height);
-	     e_icon_alpha_set(bd->icon_object, 1);
-
-	     if (bd->bg_object)
-	       {
-		  evas_object_show(bd->icon_object);
-		  edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
-	       }
-	     else
-	       {
-		  evas_object_hide(bd->icon_object);
-	       }
-	  }
+	  bd->changes.icon = 1;
 	bd->client.netwm.fetch.icon = 0;
      }
-   */
+   if (bd->changes.icon)
+     {
+	if (bd->icon_object)
+	  {
+	     evas_object_del(bd->icon_object);
+	     bd->icon_object = NULL;
+	  }
+
+	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+	if (bd->bg_object)
+	  {
+	     evas_object_show(bd->icon_object);
+	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	  }
+	else
+	  {
+	     evas_object_hide(bd->icon_object);
+	  }
+
+	  {
+	     E_Event_Border_Icon_Change *ev;
+
+	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
+	     ev->border = bd;
+	     e_object_ref(E_OBJECT(bd));
+	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev, _e_border_event_border_icon_change_free, NULL);
+	  }
+	bd->changes.icon = 0;
+     }
    if (bd->client.icccm.fetch.machine)
      {
 	if (bd->client.icccm.machine) free(bd->client.icccm.machine);

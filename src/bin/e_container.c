@@ -208,7 +208,10 @@ e_container_current_get(E_Manager *man)
 	  return con;
      }
    /* If noone is available, return the first */
-   return (E_Container *)man->containers->data;
+   if (!man->containers)
+     return NULL;
+   l = man->containers;
+   return (E_Container *)l->data;
 }
 
 void

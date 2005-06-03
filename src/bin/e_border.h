@@ -252,16 +252,17 @@ struct _E_Border
    Evas_List *pending_move_resize;
    
    struct {
-      unsigned int visible : 1;
-      unsigned int pos : 1;
-      unsigned int size : 1;
-      unsigned int stack : 1;
-      unsigned int prop : 1;
-      unsigned int border : 1;
-      unsigned int reset_gravity : 1;
-      unsigned int shading : 1;
-      unsigned int shaded : 1;
-      unsigned int shape : 1;
+      unsigned char visible : 1;
+      unsigned char pos : 1;
+      unsigned char size : 1;
+      unsigned char stack : 1;
+      unsigned char prop : 1;
+      unsigned char border : 1;
+      unsigned char reset_gravity : 1;
+      unsigned char shading : 1;
+      unsigned char shaded : 1;
+      unsigned char shape : 1;
+      unsigned char icon : 1;
    } changes;
 
    struct {
@@ -408,7 +409,7 @@ EAPI void e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down 
 EAPI void e_border_act_close_begin(E_Border *bd);
 EAPI void e_border_act_kill_begin(E_Border *bd);
 
-EAPI void e_border_icon_add(E_Border *bd, Evas *e);
+EAPI Evas_Object *e_border_icon_add(E_Border *bd, Evas *evas);
 
 EAPI void e_border_button_bindings_ungrab_all(void);
 EAPI void e_border_button_bindings_grab_all(void);

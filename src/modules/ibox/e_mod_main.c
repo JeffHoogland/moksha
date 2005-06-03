@@ -474,7 +474,6 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
    char *str;
    Evas_Object *o;
    Evas_Coord bw, bh;
-   const char *file, *part;
 
    /* FIXME: Add default icon! */
    if (!bd->icon_object) return NULL;
@@ -505,11 +504,11 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
 			   "modules/ibox/icon");
    evas_object_show(o);
 
-   o = edje_object_add(ibb->evas);
-   ic->icon_object = o;
-   edje_object_file_get(ic->border->icon_object, &file, &part);
-   edje_object_file_set(o, file, part);
+   o = e_border_icon_add(ic->border, ibb->evas);
+   evas_object_resize(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
+   /*
    edje_extern_object_min_size_set(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
+   */
    edje_object_part_swallow(ic->bg_object, "item", o);
    edje_object_size_min_calc(ic->bg_object, &bw, &bh);
    evas_object_pass_events_set(o, 1);
@@ -534,11 +533,13 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
 			  bw, bh /* max */
 			  );
 
+   /*
    str = (char *)edje_object_data_get(ic->icon_object, "raise_on_hilight");
    if (str)
      {
 	if (atoi(str) == 1) ic->raise_on_hilight = 1;
      }
+   */
 
    edje_object_signal_emit(ic->bg_object, "passive", "");
    edje_object_signal_emit(ic->overlay_object, "passive", "");
@@ -1233,7 +1234,9 @@ _ibox_box_iconsize_change(IBox_Box *ibb)
 
 	ic = l->data;
 	o = ic->icon_object;
+	/*
 	edje_extern_object_min_size_set(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
+	*/
 
 	evas_object_resize(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
 
