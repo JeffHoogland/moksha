@@ -541,7 +541,6 @@ break;
 	 }
       }
 
-      printf("TYPE %s\n", type);
       if (!strcmp(type, "data"))
 	res = 0;
       else if (!strcmp(type, "images"))
@@ -558,7 +557,6 @@ break;
 	res = E_RESPONSE_MODULE_DIRS_LIST;
       else if (!strcmp(type, "backgrounds"))
 	res = E_RESPONSE_BACKGROUND_DIRS_LIST;
-      printf("RES %d\n");
       END_RESPONSE(r, res); /* FIXME - need a custom free */
    }
    END_GENERIC();
