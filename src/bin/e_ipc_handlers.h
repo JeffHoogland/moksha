@@ -460,16 +460,31 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DIRS_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-dirs-list", 1, "List the directory of type specified by 'OPT1', try 'backgrounds'", 1, HDL)
+   OP("-dirs-list", 1, "List the directory of type specified by 'OPT1', try 'themes'", 1, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    LIST_DATA()
    Evas_List *dir_list = NULL;
-   if (!strcmp(s, "backgrounds"))
+   if (!strcmp(s, "data"))
+     dir_list = e_path_dir_list_get(path_data);
+   else if (!strcmp(s, "images"))
+     dir_list = e_path_dir_list_get(path_images);
+   else if (!strcmp(s, "fonts"))
+     dir_list = e_path_dir_list_get(path_fonts);
+   else if (!strcmp(s, "themes"))
+     dir_list = e_path_dir_list_get(path_themes);
+   else if (!strcmp(s, "init"))
+     dir_list = e_path_dir_list_get(path_init);
+   else if (!strcmp(s, "icons"))
+     dir_list = e_path_dir_list_get(path_icons);
+   else if (!strcmp(s, "modules"))
+     dir_list = e_path_dir_list_get(path_modules);
+   else if (!strcmp(s, "backgrounds"))
      dir_list = e_path_dir_list_get(path_backgrounds);
    E_Path_Dir *p;
+   dat = evas_list_append(dat, strdup(s));
    FOR(dir_list) { p = l->data;
      dat = evas_list_append(dat, p->dir);
    }
@@ -494,7 +509,10 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
      FOR(dat) {
-       printf("REPLY: \"%s\"\n", (char *)(l->data));
+       if (dat == l)
+	 printf("REPLY: Listing for \"%s\"\n", (char *)(l->data));
+       else
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
      }
      FREE_LIST(dat);
    }
