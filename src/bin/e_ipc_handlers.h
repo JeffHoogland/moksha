@@ -517,6 +517,52 @@ break;
      FREE_LIST(dat);
    }
    END_GENERIC();
+#elif (TYPE == E_LIB_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      int count;
+      char *p, *type;
+      int res;
+      RESPONSE(r, E_Response_Dirs_List, HDL);
+
+      /* FIXME - this is a mess, needs to be merged into macros... */
+      count = evas_list_count(dat);
+      r->dirs = malloc(sizeof(char *) * count);
+      r->count = count - 1; /* leave off the "type" */
+
+      count = 0;
+      FOR(dat) {
+	 if (dat == l)
+	   type = l->data;
+	 else {
+	   r->dirs[count] = l->data;
+	   count++;
+	 }
+      }
+
+      printf("TYPE %s\n", type);
+      if (!strcmp(type, "data"))
+	res = 0;
+      else if (!strcmp(type, "images"))
+	res = 0;
+      else if (!strcmp(type, "fonts"))
+	res = 0;
+      else if (!strcmp(type, "themes"))
+	res = E_RESPONSE_THEME_DIRS_LIST;
+      else if (!strcmp(type, "init"))
+	res = 0;
+      else if (!strcmp(type, "icons"))
+	res = 0;
+      else if (!strcmp(type, "modules"))
+	res = E_RESPONSE_MODULE_DIRS_LIST;
+      else if (!strcmp(type, "backgrounds"))
+	res = E_RESPONSE_BACKGROUND_DIRS_LIST;
+      printf("RES %d\n");
+      END_RESPONSE(r, res); /* FIXME - need a custom free */
+   }
+   END_GENERIC();
+
 #endif
 #undef HDL
 

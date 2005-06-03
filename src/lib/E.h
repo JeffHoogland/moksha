@@ -22,10 +22,8 @@
 
 typedef struct _E_Response_Module_List    E_Response_Module_List;
 typedef struct _E_Response_Module_Data		E_Response_Module_Data;
-typedef struct _E_Response_Module_Dirs_List	E_Response_Module_Dirs_List;
+typedef struct _E_Response_Dirs_List	E_Response_Dirs_List;
 typedef struct _E_Response_Background_Get E_Response_Background_Get;
-typedef struct _E_Response_Background_Dirs_List	E_Response_Background_Dirs_List;
-typedef struct _E_Response_Theme_Dirs_List	E_Response_Theme_Dirs_List;
 
 struct _E_Response_Module_List
 {
@@ -39,7 +37,7 @@ struct _E_Response_Module_Data
    char    enabled;
 };
 
-struct _E_Response_Module_Dirs_List
+struct _E_Response_Dirs_List
 {
    char   **dirs;
    int	    count;
@@ -48,18 +46,6 @@ struct _E_Response_Module_Dirs_List
 struct _E_Response_Background_Get
 {
    char   *file;
-};
-
-struct _E_Response_Background_Dirs_List
-{
-   char   **dirs;
-   int	    count;
-};
-
-struct _E_Response_Theme_Dirs_List
-{
-   char   **dirs;
-   int	    count;
 };
 
 extern EAPI int E_RESPONSE_MODULE_LIST;

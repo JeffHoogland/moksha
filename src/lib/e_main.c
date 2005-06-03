@@ -63,10 +63,10 @@ static void _e_cb_theme_dir_list_free(void *data __UNUSED__, void *ev);
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
-//int E_RESPONSE_MODULE_DIRS_LIST = 0;
+int E_RESPONSE_MODULE_DIRS_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
-//int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
-//int E_RESPONSE_THEME_DIRS_LIST = 0;
+int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
+int E_RESPONSE_THEME_DIRS_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
@@ -140,10 +140,10 @@ e_init(const char* display)
    if (!E_RESPONSE_MODULE_LIST)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
-//	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
-//	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
-//	E_RESPONSE_THEME_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_THEME_DIRS_LIST = ecore_event_type_new();
      }
    
    if (free_disp)
@@ -211,9 +211,8 @@ e_module_list(void)
 void
 e_module_dirs_list(void)
 {
-//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-//			 E_IPC_OP_MODULE_DIRS_LIST, 0/*ref*/, 0/*ref_to*/,
-//			 0/*response*/, NULL, 0);
+   char *type = "modules";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
@@ -234,20 +233,16 @@ e_background_get(void)
 void
 e_background_dirs_list(void)
 {
-//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-//			 E_IPC_OP_BG_DIRS_LIST, 0/*ref*/, 
-//			 0/*ref_to*/, 0/*response*/, NULL, 0);
+   char *type = "backgrounds";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
 e_theme_dirs_list(void)
 {
-//   ecore_ipc_server_send(_e_ipc_server, E_IPC_DOMAIN_REQUEST,
-//			 E_IPC_OP_THEME_DIRS_LIST, 0/*ref*/, 
-//			 0/*ref_to*/, 0/*response*/, NULL, 0);
+   char *type = "themes";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
-
-//static int reply_count = 0;
 
 static int
 _e_ipc_init(const char *display)
@@ -330,117 +325,6 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 	default:
 	  break;
      }
-   
-
-	/*
-   Ecore_Ipc_Event_Server_Data *e;
-   
-   e = event;
-
-   type = E_IPC_OP_MODULE_LIST;
-   switch (e->minor)
-     {  
-	
-	case E_IPC_OP_MODULE_DIRS_LIST_REPLY:
-	  if (e->data)
-	    {
-	       E_Response_Module_Dirs_List *res;
-	       int count = 0;
-	       char *p;
-
-	       res = calloc(1, sizeof(E_Response_Module_Dirs_List));
-
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-	         {
-		    p += strlen(p) + 1;
-		    count ++;
-		      }
-
-	       res->dirs = malloc(sizeof(char *) * count);
-	       res->count = count;
-
-	       count = 0;
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-		 {
-	            res->dirs[count] = p;
-		    p += strlen(res->dirs[count]) + 1;
-		    count++;
-		 }
-	       ecore_event_add(E_RESPONSE_MODULE_DIRS_LIST, res,
-				_e_cb_module_dir_list_free, NULL);
-	    }
-          break;
- 
-	case E_IPC_OP_BG_DIRS_LIST_REPLY:
-	  if (e->data)
-	    {
-	       E_Response_Background_Dirs_List *res;
-	       char *p;
-	       int count = 0;
-
-	       res = calloc(1, sizeof(E_Response_Background_Dirs_List));
-
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-	         {
-		    p += strlen(p) + 1;
-		    count ++;
-		 }
-
-	       res->dirs = malloc(sizeof(char *) * count);
-	       res->count = count;
-
-	       count = 0;
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-		 {
-	            res->dirs[count] = p;
-		    p += strlen(res->dirs[count]) + 1;
-		    count++;
-		 }
-	       ecore_event_add(E_RESPONSE_BACKGROUND_DIRS_LIST, res,
-				_e_cb_bg_dir_list_free, NULL);
-	    }
-          break;
- 
-	case E_IPC_OP_THEME_DIRS_LIST_REPLY:
-	  if (e->data)
-	    {
-	       E_Response_Theme_Dirs_List *res;
-	       char *p;
-	       int count = 0;
-
-	       res = calloc(1, sizeof(E_Response_Theme_Dirs_List));
-
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-	         {
-		    p += strlen(p) + 1;
-		    count ++;
-		 }
-
-	       res->dirs = malloc(sizeof(char *) * count);
-	       res->count = count;
-
-	       count = 0;
-	       p = e->data;
-	       while (p < (char *)(e->data + e->size))
-		 {
-	            res->dirs[count] = p;
-		    p += strlen(res->dirs[count]) + 1;
-		    count++;
-		 }
-	       ecore_event_add(E_RESPONSE_THEME_DIRS_LIST, res,
-				_e_cb_theme_dir_list_free, NULL);
-	    }
-          break;
- 
-	default:
-          break;
-     }
-   return 1;*/
 }
 
 static void _e_cb_module_list_free(void *data __UNUSED__, void *ev)
@@ -458,29 +342,9 @@ static void _e_cb_module_list_free(void *data __UNUSED__, void *ev)
 }
 
 static void
-_e_cb_module_dir_list_free(void *data __UNUSED__, void *ev)
+_e_cb_dir_list_free(void *data __UNUSED__, void *ev)
 {
-    E_Response_Module_Dirs_List *e;
-    
-    e = ev;
-    free(e->dirs);
-    free(e);
-}
-
-static void
-_e_cb_bg_dir_list_free(void *data __UNUSED__, void *ev)
-{
-    E_Response_Background_Dirs_List *e;
-
-    e = ev;
-    free(e->dirs);
-    free(e);
-}
-
-static void
-_e_cb_theme_dir_list_free(void *data __UNUSED__, void *ev)
-{
-    E_Response_Theme_Dirs_List *e;
+    E_Response_Dirs_List *e;
 
     e = ev;
     free(e->dirs);
