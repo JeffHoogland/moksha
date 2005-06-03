@@ -355,6 +355,20 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		    {
 		       bd->client.netwm.fetch.icon = 1;
 		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_USER_TIME)
+		    {
+		       bd->client.netwm.fetch.user_time = 1;
+		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
+		    {
+		       printf("ECORE_X_ATOM_NET_WM_STRUT\n");
+		       bd->client.netwm.fetch.strut = 1;
+		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
+		    {
+		       printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
+		       bd->client.netwm.fetch.strut = 1;
+		    }
 	       }
 	     free(atoms);
 	  }
@@ -1971,6 +1985,21 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.netwm.fetch.icon = 1;
 	bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
+     {
+	bd->client.netwm.fetch.user_time = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_STRUT)
+     {
+	bd->client.netwm.fetch.strut = 1;
+	bd->changed = 1;
+     }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
+     {
+	bd->client.netwm.fetch.strut = 1;
+	bd->changed = 1;
+     }
    */
    return 1;
 }
@@ -2943,6 +2972,44 @@ _e_border_eval(E_Border *bd)
 	else
 	  bd->changes.icon = 1;
 	bd->client.netwm.fetch.icon = 0;
+     }
+   if (bd->client.netwm.fetch.user_time)
+     {
+	ecore_x_netwm_user_time_get(bd->client.win, &bd->client.netwm.user_time);
+
+	bd->client.netwm.fetch.user_time = 0;
+     }
+   if (bd->client.netwm.fetch.strut)
+     {
+	if (!ecore_x_netwm_strut_partial_get(bd->client.win,
+					     &bd->client.netwm.strut.left,
+					     &bd->client.netwm.strut.right,
+					     &bd->client.netwm.strut.top,
+					     &bd->client.netwm.strut.bottom,
+					     &bd->client.netwm.strut.left_start_y,
+					     &bd->client.netwm.strut.left_end_y,
+					     &bd->client.netwm.strut.right_start_y,
+					     &bd->client.netwm.strut.right_end_y,
+					     &bd->client.netwm.strut.top_start_x,
+					     &bd->client.netwm.strut.top_end_x,
+					     &bd->client.netwm.strut.bottom_start_x,
+					     &bd->client.netwm.strut.bottom_end_x))
+	  {
+	     ecore_x_netwm_strut_get(bd->client.win,
+				     &bd->client.netwm.strut.left, &bd->client.netwm.strut.right,
+				     &bd->client.netwm.strut.top, &bd->client.netwm.strut.bottom);
+
+	     bd->client.netwm.strut.left_start_y = 0;
+	     bd->client.netwm.strut.left_end_y = 0;
+	     bd->client.netwm.strut.right_start_y = 0;
+	     bd->client.netwm.strut.right_end_y = 0;
+	     bd->client.netwm.strut.top_start_x = 0;
+	     bd->client.netwm.strut.top_end_x = 0;
+	     bd->client.netwm.strut.bottom_start_x = 0;
+	     bd->client.netwm.strut.bottom_end_x = 0;
+	  }
+
+	bd->client.netwm.fetch.strut = 0;
      }
    if (bd->changes.icon)
      {

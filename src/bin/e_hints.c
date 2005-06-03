@@ -43,8 +43,6 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST_STACKING, 1);
 
-	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_DESKTOP_GEOMETRY, 1);
-
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_FRAME_EXTENTS, 1);
 
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTED, 1);
@@ -68,6 +66,10 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_ABOVE, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STATE_BELOW, 1);
 
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STRUT, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_STRUT_PARTIAL, 1);
+
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_USER_TIME, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_VISIBLE_ICON_NAME, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_VISIBLE_NAME, 1);
 
@@ -80,6 +82,7 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_SPLASH, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_DIALOG, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_WINDOW_TYPE_NORMAL, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WORKAREA, 1);
 	  }
         free(roots);
      }
@@ -108,7 +111,6 @@ e_hints_e16_comms_pretend(E_Manager *man)
 void
 e_hints_manager_init(E_Manager *man)
 {
-   ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
    e_hints_e16_comms_pretend(man);
 }
 
@@ -1033,7 +1035,9 @@ e_hints_window_desktop_set(E_Border *bd)
 	deskpos[1] = bd->desk->y;
 	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
 
+#if 0
 	ecore_x_netwm_desktop_set(bd->client.win, current);
+#endif
 	bd->client.netwm.desktop = current;
      }
 }

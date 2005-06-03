@@ -168,6 +168,21 @@ struct _E_Border
 	      int height;
 	      int size;
 	 } icon;
+	 unsigned int user_time;
+	 struct {
+	      int left;
+	      int right;
+	      int top;
+	      int bottom;
+	      int left_start_y;
+	      int left_end_y;
+	      int right_start_y;
+	      int right_end_y;
+	      int top_start_x;
+	      int top_end_x;
+	      int bottom_start_x;
+	      int bottom_end_x;
+	 } strut;
 
 	 /* NetWM Window state */
 	 struct {
@@ -189,6 +204,8 @@ struct _E_Border
 	    unsigned char name : 1;
 	    unsigned char icon_name : 1;
 	    unsigned char icon : 1;
+	    unsigned char user_time : 1;
+	    unsigned char strut : 1;
 	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char pid : 1;
 	    */
