@@ -215,17 +215,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     free(data);
 	  }
 	break;
-      case E_IPC_OP_RESTART:
-	  {
-	     restart = 1;
-	     ecore_main_loop_quit();
- 	  }
-	break;
-      case E_IPC_OP_SHUTDOWN:
-	  {
-	     ecore_main_loop_quit();
- 	  }
-	break;
       case E_IPC_OP_LANG_LIST:
 	  {
 	     Evas_List *langs;
@@ -396,19 +385,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
  	  }
 	break;
-      case E_IPC_OP_MENUS_SCROLL_SPEED_SET:
-	if (e_ipc_codec_double_dec(e->data, e->size,
-				   &(e_config->menus_scroll_speed)))
-	  {
-	     E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MENUS_SCROLL_SPEED_GET:
-	_e_ipc_reply_double_send(e->client,
-				 e_config->menus_scroll_speed, 
-				 E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY);
-	break;
       case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET:
 	if (e_ipc_codec_double_dec(e->data, e->size,
 				   &(e_config->menus_fast_mouse_move_threshhold)))
@@ -473,19 +449,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	_e_ipc_reply_double_send(e->client,
 				 e_config->border_shade_speed,
 				 E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY);
-	break;
-      case E_IPC_OP_FRAMERATE_SET:
-	if (e_ipc_codec_double_dec(e->data, e->size,
-				   &(e_config->framerate)))
-	  {
-	     E_CONFIG_LIMIT(e_config->image_cache, 1.0, 200.0);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_FRAMERATE_GET:
-	_e_ipc_reply_double_send(e->client,
-				 e_config->framerate,
-				 E_IPC_OP_FRAMERATE_GET_REPLY);
 	break;
       case E_IPC_OP_IMAGE_CACHE_SET:
 	if (e_ipc_codec_int_dec(e->data, e->size,
@@ -594,24 +557,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			      e_config->focus_policy,
 			      E_IPC_OP_FOCUS_POLICY_GET_REPLY);
 	break;
-      case E_IPC_OP_MODULE_DIRS_LIST:
-	  {
-	     Evas_List *dir_list;
-	     char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_modules);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_MODULE_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_MODULE_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -646,25 +591,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Theme PATH IPC */
-      case E_IPC_OP_THEME_DIRS_LIST:
-	  {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_themes);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_THEME_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_THEME_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -699,25 +625,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Font Path IPC */
-      case E_IPC_OP_FONT_DIRS_LIST:
-          {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_fonts);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_FONT_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_FONT_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -752,25 +659,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
    
-      /* data Path IPC */
-      case E_IPC_OP_DATA_DIRS_LIST:
-	  {
-             Evas_List *dir_list;
-	     char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_data);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_DATA_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_DATA_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -805,25 +693,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Images Path IPC */
-      case E_IPC_OP_IMAGE_DIRS_LIST:
-   	  {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_images);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_IMAGE_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_IMAGE_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -858,25 +727,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Init Path IPC */
-      case E_IPC_OP_INIT_DIRS_LIST:
-   	  {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_init);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_INIT_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_INIT_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -911,25 +761,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Icon Path IPC */
-      case E_IPC_OP_ICON_DIRS_LIST:
-	  {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_icons);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_ICON_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_ICON_DIRS_APPEND:
 	  {	  
 	     char * dir;
@@ -964,25 +795,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     break;
 	  }
 
-      /* Icon Path IPC */
-      case E_IPC_OP_BG_DIRS_LIST:
-	  {
-	     Evas_List *dir_list;
-             char *data;
-	     int bytes = 0;
-
-	     dir_list = e_path_dir_list_get(path_backgrounds);
-	     data = _e_ipc_path_list_enc(dir_list, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_BG_DIRS_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-
-	     e_path_dir_list_free(dir_list);
-	     free(data);
-	     break;
-	  }
       case E_IPC_OP_BG_DIRS_APPEND:
 	  {	  
 	     char * dir;
