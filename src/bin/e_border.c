@@ -351,6 +351,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		       bd->client.icccm.fetch.icon_name = 0;
 		       bd->client.netwm.fetch.icon_name = 1;
 		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON)
+		    {
+		       bd->client.netwm.fetch.icon = 1;
+		    }
 	       }
 	     free(atoms);
 	  }
@@ -1426,6 +1430,10 @@ e_border_act_kill_begin(E_Border *bd)
    e_object_del(E_OBJECT(bd));
 }
 
+void e_border_icon_add(E_Border *bd, Evas *e)
+{
+}
+
 void
 e_border_button_bindings_ungrab_all(void)
 {
@@ -1930,6 +1938,13 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.icccm.fetch.window_role = 1;
 	bd->changed = 1;
      }
+   /*
+   else if (e->atom == ECORE_X_ATOM_NET_WM_ICON)
+     {
+	bd->client.netwm.fetch.icon = 1;
+	bd->changed = 1;
+     }
+   */
    return 1;
 }
 
@@ -2928,6 +2943,39 @@ _e_border_eval(E_Border *bd)
 
 	bd->client.netwm.fetch.icon_name = 0;
      }
+   /*
+   if (bd->client.netwm.fetch.icon)
+     {
+	if (bd->client.netwm.icon.data) free(bd->client.netwm.icon.data);
+	if (!ecore_x_netwm_icon_get(bd->client.win,
+				    &bd->client.netwm.icon.width, &bd->client.netwm.icon.height,
+				    &bd->client.netwm.icon.data, &bd->client.netwm.icon.size))
+	  printf("ERROR: Fetch icon from client\n");
+	else
+	  {
+	     if (bd->icon_object)
+	       {
+		  evas_object_del(bd->icon_object);
+		  bd->icon_object = NULL;
+	       }
+	     bd->icon_object = e_icon_add(bd->bg_evas);
+	     e_icon_data_set(bd->icon_object, bd->client.netwm.icon.data,
+			     bd->client.netwm.icon.width, bd->client.netwm.icon.height);
+	     e_icon_alpha_set(bd->icon_object, 1);
+
+	     if (bd->bg_object)
+	       {
+		  evas_object_show(bd->icon_object);
+		  edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	       }
+	     else
+	       {
+		  evas_object_hide(bd->icon_object);
+	       }
+	  }
+	bd->client.netwm.fetch.icon = 0;
+     }
+   */
    if (bd->client.icccm.fetch.machine)
      {
 	if (bd->client.icccm.machine) free(bd->client.icccm.machine);

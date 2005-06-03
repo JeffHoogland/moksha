@@ -162,6 +162,12 @@ struct _E_Border
 	 unsigned int desktop;
 	 char *name;
 	 char *icon_name;
+	 struct {
+	      unsigned int *data;
+	      int width;
+	      int height;
+	      int size;
+	 } icon;
 
 	 /* NetWM Window state */
 	 struct {
@@ -181,6 +187,8 @@ struct _E_Border
 	 
 	 struct {
 	    unsigned char name : 1;
+	    unsigned char icon_name : 1;
+	    unsigned char icon : 1;
 	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char pid : 1;
 	    */
@@ -190,7 +198,6 @@ struct _E_Border
 	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char type : 1;
 	    */
-	    unsigned char icon_name : 1;
 	    /* No, don't fetch state, update on client message
 	    unsigned char state : 1;
 	    */
@@ -400,6 +407,8 @@ EAPI void e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *e
 EAPI void e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key);
 EAPI void e_border_act_close_begin(E_Border *bd);
 EAPI void e_border_act_kill_begin(E_Border *bd);
+
+EAPI void e_border_icon_add(E_Border *bd, Evas *e);
 
 EAPI void e_border_button_bindings_ungrab_all(void);
 EAPI void e_border_button_bindings_grab_all(void);

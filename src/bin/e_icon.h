@@ -11,9 +11,12 @@ EAPI void         e_icon_file_set         (Evas_Object *obj, const char *file);
 EAPI const char  *e_icon_file_get         (Evas_Object *obj);
 EAPI void         e_icon_smooth_scale_set (Evas_Object *obj, int smooth);
 EAPI int          e_icon_smooth_scale_get (Evas_Object *obj);
+EAPI void         e_icon_alpha_set        (Evas_Object *obj, int smooth);
+EAPI int          e_icon_alpha_get        (Evas_Object *obj);
 EAPI void         e_icon_size_get         (Evas_Object *obj, int *w, int *h);
 EAPI int          e_icon_fill_inside_get  (Evas_Object *obj);
 EAPI void         e_icon_fill_inside_set  (Evas_Object *obj, int fill_inside);
+EAPI void         e_icon_data_set         (Evas_Object *obj, void *data, int w, int h);
 
 #endif
 #endif

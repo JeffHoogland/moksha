@@ -39,7 +39,7 @@ _NET_WM_ACTION_STICK                [ ]
 _NET_WM_ALLOWED_ACTIONS             [ ]
 _NET_WM_DESKTOP                     [?] /* Remove this property on unmap */
 _NET_WM_HANDLED_ICONS               [ ]
-_NET_WM_ICON                        [ ]
+_NET_WM_ICON                        [X]
 _NET_WM_ICON_GEOMETRY               [ ]
 _NET_WM_ICON_NAME                   [X]
 _NET_WM_MOVERESIZE                  [ ]
