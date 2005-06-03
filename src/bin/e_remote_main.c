@@ -239,6 +239,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
      }
    printf("REPLY <- END\n");
    if (reply_count >= reply_expect) ecore_main_loop_quit();
+   return 1;
 }
 
 static void
