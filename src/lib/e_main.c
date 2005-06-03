@@ -17,10 +17,20 @@
  */
 
 #include <Evas.h>
-#include "E.h"
-#include "e_private.h"
+#include <Eet.h>
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
+#include "E.h"
+#include "e_private.h"
+
+#define E_TYPEDEFS 1
+#include "e_config.h"
+#include "e_ipc_codec.h"
+#undef E_TYPEDEFS
+#include "e_config.h"
+#include "e_ipc_codec.h"
+#define E_H
+#include "e_ipc_codec.c"
 
 typedef struct _Opt Opt;
 

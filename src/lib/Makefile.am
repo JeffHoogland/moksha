@@ -10,9 +10,7 @@ include_HEADERS		= E.h
 
 libe_la_SOURCES= \
 e_main.c \
-e.h \
-../bin/e_ipc_codec.c \
-../bin/e_ipc_codec.h \
+E.h \
 e_private.h
 
 libe_la_LIBADD		= @ecore_libs@ @evas_libs@
