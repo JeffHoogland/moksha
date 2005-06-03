@@ -235,7 +235,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	x = (man->w - error_w) / 2;
 	y = (man->h - error_h) / 2;
-	con = e_manager_container_current_get(man);
+	con = e_container_current_get(man);
 	if (con)
 	  {
 	     E_Zone *zone;
@@ -322,7 +322,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 
 	x = (man->w - error_w) / 2;
 	y = (man->h - error_h) / 2;
-	con = e_manager_container_current_get(man);
+	con = e_container_current_get(man);
 	if (con)
 	  {
 	     E_Zone *zone;

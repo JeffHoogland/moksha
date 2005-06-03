@@ -81,7 +81,7 @@ e_util_zone_current_get(E_Manager *man)
 {
    E_Container *con;
    
-   con = e_manager_container_current_get(man);
+   con = e_container_current_get(man);
    if (con)
      {
 	E_Zone *zone;

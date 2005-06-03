@@ -44,6 +44,7 @@ e_hints_init(void)
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_CLIENT_LIST_STACKING, 1);
 
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_FRAME_EXTENTS, 1);
+	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_REQUEST_FRAME_EXTENTS, 1);
 
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTED, 1);
 	     ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_SUPPORTING_WM_CHECK, 1);
@@ -114,7 +115,7 @@ e_hints_manager_init(E_Manager *man)
    /* Set desktop count, desktop names and workarea */
    int			i = 0, num = 0;
    unsigned int		*areas = NULL;
-   Evas_List		*ml, *cl;
+   Evas_List		*cl;
    Ecore_X_Window	*vroots = NULL;
    /* FIXME: Desktop names not yet implemented */
 /*   char			**names; */
@@ -154,7 +155,10 @@ e_hints_manager_init(E_Manager *man)
      {
 	ecore_x_netwm_desk_roots_set(man->root, num, vroots);
      }
+#if 0
+   /* No need for workarea without desktops */
    ecore_x_netwm_desk_workareas_set(man->root, num, areas);
+#endif
 
    free(vroots);
    free(areas);

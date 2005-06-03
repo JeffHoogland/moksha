@@ -9,6 +9,7 @@ static void _e_manager_free(E_Manager *man);
 static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
 static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
+static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -93,6 +94,8 @@ e_manager_new(Ecore_X_Window root)
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
+   h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
+   if (h) man->handlers = evas_list_append(man->handlers, h);
 
    return man;
 }
@@ -138,18 +141,14 @@ e_manager_manage_windows(E_Manager *man)
 						       &id, 1);
 		  if (ret == 1)
 		    con = e_manager_container_number_get(man, id);
-		  else
-		    con = e_manager_container_current_get(man);
 		  if (!con)
-		    e_container_current_get(man);
+		    con = e_container_current_get(man);
 		  
 		  ret = ecore_x_window_prop_card32_get(windows[i],
 						       E_ATOM_ZONE,
 						       &id, 1);
 		  if (ret == 1)
 		    zone = e_container_zone_number_get(con, id);
-		  else
-		    zone = e_zone_current_get(con);
 		  if (!zone)
 		    zone = e_zone_current_get(con);
 		  ret = ecore_x_window_prop_card32_get(windows[i],
@@ -179,7 +178,7 @@ e_manager_manage_windows(E_Manager *man)
 		   * should be seen */
 		  E_Container *con;
 		  E_Border *bd;
-		  con = e_manager_container_current_get(man);
+		  con = e_container_current_get(man);
 		  bd = e_border_new(con, windows[i], 1);
 		  if (bd)
 		    e_border_show(bd);
@@ -339,18 +338,6 @@ e_manager_lower(E_Manager *man)
 }
 
 E_Container *
-e_manager_container_current_get(E_Manager *man)
-{
-   /* FIXME
-    * Currently only one container, but...
-    */
-   E_OBJECT_CHECK_RETURN(man, NULL);
-   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
-
-   return (E_Container *)man->containers->data;
-}
-
-E_Container *
 e_manager_container_number_get(E_Manager *man, int num)
 {
    Evas_List *l;
@@ -483,6 +470,42 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    if (e->event_win != man->root) return 1;
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;
+   return 1;
+}
+
+static int
+_e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev)
+{
+   E_Manager *man;
+   E_Container *con;
+   Ecore_X_Event_Frame_Extents_Request *e;
+   Evas_Object *o;
+   int ok;
+   
+   man = data;
+   con = e_container_current_get(man);
+   e = ev;
+
+   if (ecore_x_window_parent_get(e->win) != man->root) return 1;
+
+   o = edje_object_add(con->bg_evas);
+   ok = e_theme_edje_object_set(o, "base/theme/borders", "widgets/border/default/border");
+   if (ok)
+     {
+	Evas_Coord x, y, w, h;
+	int l, r, t, b;
+
+	evas_object_resize(o, 1000, 1000);
+	edje_object_calc_force(o);
+	edje_object_part_geometry_get(o, "client", &x, &y, &w, &h);
+	l = x;
+	r = 1000 - (x + w);
+	t = y;
+	b = 1000 - (y + h);
+
+	ecore_x_netwm_frame_size_set(e->win, l, r, t, b);
+     }
+
    return 1;
 }
 

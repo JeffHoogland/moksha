@@ -1451,16 +1451,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
    Evas_Object *o;
 
    o = NULL;
-   if (bd->client.netwm.icon.data)
-     {
-	printf("icon size: %d %d\n", bd->client.netwm.icon.width, bd->client.netwm.icon.height);
-	o = e_icon_add(evas);
-	e_icon_data_set(o, bd->client.netwm.icon.data,
-			bd->client.netwm.icon.width,
-			bd->client.netwm.icon.height);
-	e_icon_alpha_set(o, 1);
-     }
-   else if ((bd->client.icccm.name) && (bd->client.icccm.class))
+   if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
 	E_App *a;
 
@@ -1471,6 +1462,14 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	     o = edje_object_add(evas);
 	     edje_object_file_set(o, a->path, "icon");
 	  }
+     }
+   else if (bd->client.netwm.icon.data)
+     {
+	o = e_icon_add(evas);
+	e_icon_data_set(o, bd->client.netwm.icon.data,
+			bd->client.netwm.icon.width,
+			bd->client.netwm.icon.height);
+	e_icon_alpha_set(o, 1);
      }
    return o;
 }
