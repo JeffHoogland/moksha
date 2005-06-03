@@ -63,10 +63,17 @@ static void _e_cb_theme_dir_list_free(void *data __UNUSED__, void *ev);
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
-int E_RESPONSE_MODULE_DIRS_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
-int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
+
+int E_RESPONSE_DATA_DIRS_LIST = 0;
+int E_RESPONSE_IMAGE_DIRS_LIST = 0;
+int E_RESPONSE_FONT_DIRS_LIST = 0;
 int E_RESPONSE_THEME_DIRS_LIST = 0;
+int E_RESPONSE_INIT_DIRS_LIST = 0;
+int E_RESPONSE_ICON_DIRS_LIST = 0;
+int E_RESPONSE_MODULE_DIRS_LIST = 0;
+int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
+
 
 /*
  * initialise connection to the current E running on "display".
@@ -140,10 +147,17 @@ e_init(const char* display)
    if (!E_RESPONSE_MODULE_LIST)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
-	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
-	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
+
+	E_RESPONSE_DATA_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_IMAGE_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_FONT_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_THEME_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_INIT_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_ICON_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
+	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
+
      }
    
    if (free_disp)
@@ -209,13 +223,6 @@ e_module_list(void)
 }
 
 void
-e_module_dirs_list(void)
-{
-   char *type = "modules";
-   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
-}
-
-void
 e_background_set(const char *bgfile)
 {
    if (!bgfile)
@@ -231,9 +238,23 @@ e_background_get(void)
 }
 
 void
-e_background_dirs_list(void)
+e_data_dirs_list(void)
 {
-   char *type = "backgrounds";
+   char *type = "data";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_image_dirs_list(void)
+{
+   char *type = "images";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_font_dirs_list(void)
+{
+   char *type = "fonts";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
@@ -241,6 +262,34 @@ void
 e_theme_dirs_list(void)
 {
    char *type = "themes";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_init_dirs_list(void)
+{
+   char *type = "inits";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_icon_dirs_list(void)
+{
+   char *type = "icons";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_module_dirs_list(void)
+{
+   char *type = "modules";
+   _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_background_dirs_list(void)
+{
+   char *type = "backgrounds";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 

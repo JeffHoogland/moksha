@@ -50,9 +50,15 @@ struct _E_Response_Background_Get
 
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
+
+extern EAPI int E_RESPONSE_DATA_DIRS_LIST;
+extern EAPI int E_RESPONSE_IMAGE_DIRS_LIST;
+extern EAPI int E_RESPONSE_FONT_DIRS_LIST;
+extern EAPI int E_RESPONSE_THEME_DIRS_LIST;
+extern EAPI int E_RESPONSE_INIT_DIRS_LIST;
+extern EAPI int E_RESPONSE_ICON_DIRS_LIST;
 extern EAPI int E_RESPONSE_MODULE_DIRS_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_DIRS_LIST;
-extern EAPI int E_RESPONSE_THEME_DIRS_LIST;
 
 #ifdef __cplusplus
 extern "C" {
@@ -76,9 +82,14 @@ extern "C" {
    EAPI void         e_background_get             (void);
 
    /* E path information */
+   EAPI void         e_data_dirs_list             (void);
+   EAPI void         e_image_dirs_list            (void);
+   EAPI void         e_font_dirs_list             (void);
+   EAPI void         e_theme_dirs_list            (void);
+   EAPI void         e_init_dirs_list             (void);
+   EAPI void         e_icon_dirs_list             (void);
    EAPI void         e_module_dirs_list           (void);
    EAPI void         e_background_dirs_list       (void);
-   EAPI void         e_theme_dirs_list            (void);
 
 #ifdef __cplusplus
 }

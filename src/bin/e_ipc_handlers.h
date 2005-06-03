@@ -576,17 +576,17 @@ break;
       }
 
       if (!strcmp(type, "data"))
-	res = 0;
+	res = E_RESPONSE_DATA_DIRS_LIST;
       else if (!strcmp(type, "images"))
-	res = 0;
+	res = E_RESPONSE_IMAGE_DIRS_LIST;
       else if (!strcmp(type, "fonts"))
-	res = 0;
+	res = E_RESPONSE_FONT_DIRS_LIST;
       else if (!strcmp(type, "themes"))
 	res = E_RESPONSE_THEME_DIRS_LIST;
       else if (!strcmp(type, "init"))
-	res = 0;
+	res = E_RESPONSE_INIT_DIRS_LIST;
       else if (!strcmp(type, "icons"))
-	res = 0;
+	res = E_RESPONSE_ICON_DIRS_LIST;
       else if (!strcmp(type, "modules"))
 	res = E_RESPONSE_MODULE_DIRS_LIST;
       else if (!strcmp(type, "backgrounds"))
