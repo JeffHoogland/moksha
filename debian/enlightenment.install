@@ -3,3 +3,4 @@ usr/bin/enlightenment_eapp
 usr/bin/enlightenment_remote
 usr/share/enlightenment/doc/*
 usr/lib/enlightenment/modules/*
+usr/lib/enlightenment/preload/*
