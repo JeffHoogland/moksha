@@ -302,7 +302,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.netwm.state.skip_pager = 0;
    bd->client.netwm.state.fullscreen = 0;
    bd->client.netwm.state.stacking = E_STACKING_NONE;
-   bd->client.netwm.type = ECORE_X_WINDOW_TYPE_NORMAL;
+   bd->client.netwm.type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 
      {
 	int at_num = 0, i;
@@ -368,6 +368,12 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		    {
 		       printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
 		       bd->client.netwm.fetch.strut = 1;
+		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
+		    {
+		       /* Ignore mwm */
+		       bd->client.mwm.fetch.hints = 0;
+		       bd->client.netwm.fetch.type = 1;
 		    }
 	       }
 	     free(atoms);
@@ -1965,8 +1971,12 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
      }
    else if (e->atom == ECORE_X_ATOM_MOTIF_WM_HINTS)
      {
-	bd->client.mwm.fetch.hints = 1;
-	bd->changed = 1;
+	if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN) &&
+	    (!bd->client.netwm.fetch.type))
+	  {
+	     bd->client.mwm.fetch.hints = 1;
+	     bd->changed = 1;
+	  }
      }
    else if (e->atom == ECORE_X_ATOM_WM_TRANSIENT_FOR)
      {
@@ -3038,6 +3048,18 @@ _e_border_eval(E_Border *bd)
 	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev, _e_border_event_border_icon_change_free, NULL);
 	  }
 	bd->changes.icon = 0;
+     }
+   if (bd->client.netwm.fetch.type)
+     {
+	e_hints_window_type_get(bd);
+	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+	  {
+	     if (bd->client.border.name) free(bd->client.border.name);
+	     bd->client.border.name = strdup("borderless");
+	     bd->client.border.changed = 1;
+	  }
+
+	bd->client.netwm.fetch.type = 0;
      }
    if (bd->client.icccm.fetch.machine)
      {

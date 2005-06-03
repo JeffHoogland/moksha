@@ -299,7 +299,6 @@ e_hints_window_init(E_Border *bd)
 {
    /* Don't need fetch flag, is onlt called from new border */
    e_hints_window_state_get(bd);
-   e_hints_window_type_get(bd);
 
    bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)

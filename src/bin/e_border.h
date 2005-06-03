@@ -206,6 +206,7 @@ struct _E_Border
 	    unsigned char icon : 1;
 	    unsigned char user_time : 1;
 	    unsigned char strut : 1;
+	    unsigned char type : 1;
 	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char pid : 1;
 	    */
