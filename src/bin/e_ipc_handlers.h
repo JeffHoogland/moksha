@@ -602,11 +602,10 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_FRAMERATE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-framerate-set", 1, "Get the animation framerate (fps)", 0, HDL)
+   OP("-framerate-set", 1, "Set the animation framerate (fps)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_DOUBLE(atof(params[0]), HDL);
 #elif (TYPE == E_WM_IN)
-   double dbl;
    START_DOUBLE(dbl, HDL);
    e_config->framerate = dbl;
    e_config_save_queue();
@@ -635,6 +634,46 @@ break;
 #elif (TYPE == E_REMOTE_IN)
    START_DOUBLE(fps, HDL);
    printf("REPLY: %3.3f\n", fps);
+   END_DOUBLE();
+#endif
+#undef HDL
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_SCROLL_SPEED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-scroll-speed-set", 1, "Set the scroll speed of menus (pixels/sec)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(dbl, HDL);
+   e_config->menus_scroll_speed = dbl;
+   e_config_save_queue();
+   END_DOUBLE();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_SCROLL_SPEED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-scroll-speed-get", 0, "Get the scroll speed of menus (pixels/sec)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->menus_scroll_speed, E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(speed, HDL);
+   printf("REPLY: %3.3f\n", speed);
    END_DOUBLE();
 #endif
 #undef HDL
