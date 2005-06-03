@@ -14,8 +14,6 @@ EAPI void e_hints_client_stacking_set(void);
 
 EAPI void e_hints_active_window_set(E_Manager *man, E_Border *bd);
 
-EAPI void e_hints_desktop_config_set(void);
-
 EAPI void e_hints_window_init(E_Border *bd);
 EAPI void e_hints_window_state_set(E_Border *bd);
 EAPI void e_hints_window_state_get(E_Border *bd);

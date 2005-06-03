@@ -111,7 +111,53 @@ e_hints_e16_comms_pretend(E_Manager *man)
 void
 e_hints_manager_init(E_Manager *man)
 {
+   /* Set desktop count, desktop names and workarea */
+   int			i = 0, num = 0;
+   unsigned int		*areas = NULL;
+   Evas_List		*ml, *cl;
+   Ecore_X_Window	*vroots = NULL;
+   /* FIXME: Desktop names not yet implemented */
+/*   char			**names; */
+
    e_hints_e16_comms_pretend(man);
+
+   num = evas_list_count(man->containers);
+
+   vroots = calloc(num, sizeof(Ecore_X_Window));
+   if (!vroots) return;
+   
+/*   names = calloc(num, sizeof(char *));*/
+   
+   areas = calloc(4 * num, sizeof(unsigned int));
+   if (!areas)
+     {
+	free(vroots);
+	return;
+     }
+   
+   for (cl = man->containers; cl; cl = cl->next)
+     {
+	E_Container *c;
+
+	c = cl->data;
+	areas[4 * i] = c->x;
+	areas[4 * i + 1] = c->y;
+	areas[4 * i + 2] = c->w;
+	areas[4 * i + 3] = c->h;
+	vroots[i++] = c->win;
+     }
+
+#if 0
+   ecore_x_netwm_desk_count_set(man->root, num);
+#endif
+   if (e_config->use_virtual_roots)
+     {
+	ecore_x_netwm_desk_roots_set(man->root, num, vroots);
+     }
+   ecore_x_netwm_desk_workareas_set(man->root, num, areas);
+
+   free(vroots);
+   free(areas);
 }
 
 /* FIXME, this should set the list in map order, not stack order */
@@ -242,66 +288,6 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
      ecore_x_netwm_client_active_set(man->root, bd->client.win);
    else
      ecore_x_netwm_client_active_set(man->root, 0);
-}
-
-void
-e_hints_desktop_config_set(void)
-{
-   /* Set desktop count, desktop names and workarea */
-   
-   int			i = 0, num = 0;
-   unsigned int		*areas = NULL;
-   E_Manager		*m;
-   E_Container		*c;
-   Evas_List		*ml, *cl;
-   Ecore_X_Window	*vroots = NULL;
-   /* FIXME: Desktop names not yet implemented */
-/*   char			**names; */
-
-   for (ml = e_manager_list(); ml; ml = ml->next)
-     {
-	m = ml->data;
-	num += evas_list_count(m->containers);
-     }
-
-   vroots = calloc(num, sizeof(Ecore_X_Window));
-   if (!vroots) return;
-   
-/*   names = calloc(num, sizeof(char *));*/
-   
-   areas = calloc(4 * num, sizeof(unsigned int));
-   if (!areas)
-     {
-	free(vroots);
-	return;
-     }
-   
-   for (ml = e_manager_list(); ml; ml=ml->next)
-     {
-	m = ml->data;
-	for (cl = m->containers; cl; cl=cl->next)
-	  {
-	     c = cl->data;
-	     areas[4 * i] = c->x;
-	     areas[4 * i + 1] = c->y;
-	     areas[4 * i + 2] = c->w;
-	     areas[4 * i + 3] = c->h;
-	     vroots[i++] = c->win;
-	  }
-     }
-   
-   for (ml = e_manager_list(); ml; ml = ml->next)
-     {
-	m = ml->data;
-	ecore_x_netwm_desk_count_set(m->root, num);
-	if (e_config->use_virtual_roots)
-	  {
-	     ecore_x_netwm_desk_roots_set(m->root, num, vroots);
-	  }
-	ecore_x_netwm_desk_workareas_set(m->root, num, areas);
-     }
-   free(vroots);
-   free(areas);
 }
 
 void
