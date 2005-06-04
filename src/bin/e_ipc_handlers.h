@@ -34,7 +34,17 @@ case HDL: \
 if (e->data) { \
    double __dbl = 0.0; \
    if (e_ipc_codec_double_dec(e->data, e->size, &(__dbl))) {
-# define END_DOUBLE() \
+# define END_DOUBLE \
+   } \
+} \
+break;
+
+# define START_INT(__int, HDL) \
+case HDL: \
+if (e->data) { \
+   int __int = 0; \
+   if (e_ipc_codec_int_dec(e->data, e->size, &(__int))) {
+# define END_INT \
    } \
 } \
 break;
@@ -58,7 +68,7 @@ case HDL: { void *data; int bytes; \
 } \
 break;
 
-#define REQ_DOUBLE(__dbl, HDL) \
+# define REQ_DOUBLE(__dbl, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_double_enc(__dbl, &bytes); \
    if (data) { \
@@ -67,6 +77,22 @@ case HDL: { void *data; int bytes; \
    } \
 } \
 break;
+
+# define REQ_INT_START(HDL) \
+case HDL: { void *data; int bytes;
+
+# define REQ_INT_END(__int, HDL) \
+   data = e_ipc_codec_int_enc(__int, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define REQ_INT(__int, HDL) \
+   REQ_INT_START(__int, HDL) \
+   REQ_INT_END(HDL)
 
 # define REQ_NULL(HDL) \
 case HDL: \
@@ -131,6 +157,16 @@ break;
 #define SEND_DOUBLE(__dbl, __op, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_double_enc(__dbl, &bytes); \
+   if (data) { \
+      ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define SEND_INT(__int, __op, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_int_enc(__int, &bytes); \
    if (data) { \
       ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
       free(data); \
@@ -608,8 +644,8 @@ break;
 #elif (TYPE == E_WM_IN)
    START_DOUBLE(dbl, HDL);
    e_config->framerate = dbl;
-   e_config_save_queue();
-   END_DOUBLE();
+   SAVE;
+   END_DOUBLE;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -634,7 +670,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
    START_DOUBLE(fps, HDL);
    printf("REPLY: %3.3f\n", fps);
-   END_DOUBLE();
+   END_DOUBLE;
 #endif
 #undef HDL
 
@@ -648,8 +684,8 @@ break;
 #elif (TYPE == E_WM_IN)
    START_DOUBLE(dbl, HDL);
    e_config->menus_scroll_speed = dbl;
-   e_config_save_queue();
-   END_DOUBLE();
+   SAVE;
+   END_DOUBLE;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -661,7 +697,7 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
-   SEND_DOUBLE(e_config->menus_scroll_speed, E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY, HDL);
+   SEND_DOUBLE(e_config->menus_scroll_speed, E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY, HDL)
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -674,7 +710,62 @@ break;
 #elif (TYPE == E_REMOTE_IN)
    START_DOUBLE(speed, HDL);
    printf("REPLY: %3.3f\n", speed);
-   END_DOUBLE();
+   END_DOUBLE;
+#endif
+#undef HDL
+
+   
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_POLICY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-policy-set", 1, "Set the focus policy. OPT1 = CLICK or MOUSE or SLOPPY", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "MOUSE")) value = E_FOCUS_MOUSE;
+   else if (!strcmp(params[0], "CLICK")) value = E_FOCUS_CLICK;
+   else if (!strcmp(params[0], "SLOPPY")) value = E_FOCUS_SLOPPY;
+   else
+     {
+	 printf("focus must be MOUSE, CLICK or SLOPPY\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->focus_policy = value;
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_POLICY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-policy-get", 0, "Get focus policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->focus_policy, E_IPC_OP_FOCUS_POLICY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_POLICY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == E_FOCUS_MOUSE)
+     printf("REPLY: MOUSE\n");
+   else if (policy == E_FOCUS_CLICK)
+     printf("REPLY: CLICK\n");
+   else if (policy == E_FOCUS_SLOPPY)
+     printf("REPLY: SLOPPY\n");
+   END_INT
 #endif
 #undef HDL
 
