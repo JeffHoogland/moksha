@@ -372,7 +372,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
 		    {
 		       /* Ignore mwm */
-		       bd->client.mwm.fetch.hints = 0;
+//		       bd->client.mwm.fetch.hints = 0;
 		       bd->client.netwm.fetch.type = 1;
 		    }
 	       }
