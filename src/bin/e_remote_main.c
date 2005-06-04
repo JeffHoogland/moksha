@@ -1267,22 +1267,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	       printf("REPLY: %i %i\n", val1, val2);
 	  }
 	break;
-      case E_IPC_OP_FOCUS_POLICY_GET_REPLY:
-	if (e->data)
-	  {
-	     int value;
-	     
-	     if (e_ipc_codec_int_dec(e->data, e->size,
-				&(value)))
-	       {
-		  if (value == E_FOCUS_MOUSE)
-		    printf("REPLY: MOUSE\n");
-		  else if (value == E_FOCUS_CLICK)
-		    printf("REPLY: CLICK\n");
-	       }
-	  }
-	break;
-	
       default:
 	break;
      }
