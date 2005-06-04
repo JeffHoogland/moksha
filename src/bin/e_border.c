@@ -371,8 +371,9 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		    }
 		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
 		    {
-		       /* Ignore mwm */
-//		       bd->client.mwm.fetch.hints = 0;
+		       /* Ignore mwm
+		       bd->client.mwm.fetch.hints = 0;
+		       */
 		       bd->client.netwm.fetch.type = 1;
 		    }
 	       }
@@ -1971,12 +1972,16 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
      }
    else if (e->atom == ECORE_X_ATOM_MOTIF_WM_HINTS)
      {
+	/*
 	if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN) &&
 	    (!bd->client.netwm.fetch.type))
 	  {
+	*/
 	     bd->client.mwm.fetch.hints = 1;
 	     bd->changed = 1;
+	/*
 	  }
+	*/
      }
    else if (e->atom == ECORE_X_ATOM_WM_TRANSIENT_FOR)
      {
