@@ -28,6 +28,20 @@ if (e->data) { \
 } \
 break;
 
+# define STRING2(__str1, __str2, __2str, HDL) \
+case HDL: \
+if (e->data) { \
+   char *__str1 = NULL, *__str2 = NULL; \
+   E_Ipc_2Str *__2str = NULL; \
+   __2str = calloc(1, sizeof(E_Ipc_2Str)); \
+   if (e_ipc_codec_2str_dec(e->data, e->size, &(__2str))) { \
+      __str1 = __2str->str1; \
+      __str2 = __2str->str2;
+# define END_STRING2(__2str) \
+      free(__2str); \
+   } \
+} \
+break;
 
 # define START_DOUBLE(__dbl, HDL) \
 case HDL: \
@@ -61,6 +75,16 @@ break;
 # define REQ_STRING(__str, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define REQ_2STRING(__str1, __str2, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_2str_enc(__str1, __str2, &bytes); \
    if (data) { \
       ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
       free(data); \
@@ -630,10 +654,107 @@ break;
       END_RESPONSE(r, res); /* FIXME - need a custom free */
    }
    END_GENERIC();
-
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_DIRS_APPEND
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-dirs-list-append", 1, "Append the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2STRING(params[0], params[1], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING2(s1, s2, e_2str, HDL);
+   E_Path *path = NULL;
+   if (!strcmp(s1, "data"))
+     path = path_data;
+   else if (!strcmp(s1, "images"))
+     path = path_images;
+   else if (!strcmp(s1, "fonts"))
+     path = path_fonts;
+   else if (!strcmp(s1, "themes"))
+     path = path_themes;
+   else if (!strcmp(s1, "init"))
+     path = path_init;
+   else if (!strcmp(s1, "icons"))
+     path = path_icons;
+   else if (!strcmp(s1, "modules"))
+     path = path_modules;
+   else if (!strcmp(s1, "backgrounds"))
+     path = path_backgrounds;
+   e_path_user_path_append(path, s2);
+   SAVE;
+   END_STRING2(e_2str)
+#elif (TYPE == E_REMOTE_IN)
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DIRS_PREPEND
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-dirs-list-prepend", 1, "Prepend the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2STRING(params[0], params[1], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING2(s1, s2, e_2str, HDL);
+   E_Path *path = NULL;
+   if (!strcmp(s1, "data"))
+     path = path_data;
+   else if (!strcmp(s1, "images"))
+     path = path_images;
+   else if (!strcmp(s1, "fonts"))
+     path = path_fonts;
+   else if (!strcmp(s1, "themes"))
+     path = path_themes;
+   else if (!strcmp(s1, "init"))
+     path = path_init;
+   else if (!strcmp(s1, "icons"))
+     path = path_icons;
+   else if (!strcmp(s1, "modules"))
+     path = path_modules;
+   else if (!strcmp(s1, "backgrounds"))
+     path = path_backgrounds;
+   e_path_user_path_prepend(path, s2);
+   SAVE;
+   END_STRING2(e_2str)
+#elif (TYPE == E_REMOTE_IN)
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DIRS_REMOVE
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-dirs-list-remove", 1, "Remove the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2STRING(params[0], params[1], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING2(s1, s2, e_2str, HDL);
+   E_Path *path = NULL;
+   if (!strcmp(s1, "data"))
+     path = path_data;
+   else if (!strcmp(s1, "images"))
+     path = path_images;
+   else if (!strcmp(s1, "fonts"))
+     path = path_fonts;
+   else if (!strcmp(s1, "themes"))
+     path = path_themes;
+   else if (!strcmp(s1, "init"))
+     path = path_init;
+   else if (!strcmp(s1, "icons"))
+     path = path_icons;
+   else if (!strcmp(s1, "modules"))
+     path = path_modules;
+   else if (!strcmp(s1, "backgrounds"))
+     path = path_backgrounds;
+   e_path_user_path_remove(path, s2);
+   SAVE;
+   END_STRING2(e_2str)
+#elif (TYPE == E_REMOTE_IN)
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
 
 /****************************************************************************/
 #define HDL E_IPC_OP_FRAMERATE_SET

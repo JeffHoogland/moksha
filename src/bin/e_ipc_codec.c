@@ -9,6 +9,7 @@ static Eet_Data_Descriptor *_e_ipc_int_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_double_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_2int_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_2str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_int_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_str_int_list_edd = NULL;
@@ -31,6 +32,10 @@ e_ipc_codec_init(void)
 
    _e_ipc_str_edd = E_CONFIG_DD_NEW("str", E_Ipc_Str);
    E_CONFIG_VAL(_e_ipc_str_edd, E_Ipc_Str, str, STR);
+
+   _e_ipc_2str_edd = E_CONFIG_DD_NEW("2str", E_Ipc_2Str);
+   E_CONFIG_VAL(_e_ipc_2str_edd, E_Ipc_2Str, str1, STR);
+   E_CONFIG_VAL(_e_ipc_2str_edd, E_Ipc_2Str, str2, STR);
    
    _e_ipc_str_list_edd = E_CONFIG_DD_NEW("str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_str_list_edd, E_Ipc_List, list, _e_ipc_str_edd);
@@ -59,6 +64,7 @@ e_ipc_codec_shutdown(void)
    E_CONFIG_DD_FREE(_e_ipc_double_edd);
    E_CONFIG_DD_FREE(_e_ipc_2int_edd);
    E_CONFIG_DD_FREE(_e_ipc_str_edd);
+   E_CONFIG_DD_FREE(_e_ipc_2str_edd);
    E_CONFIG_DD_FREE(_e_ipc_str_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_str_int_edd);
    E_CONFIG_DD_FREE(_e_ipc_str_int_list_edd);
@@ -154,6 +160,28 @@ e_ipc_codec_str_enc(char *str, int *size_ret)
    
    dat.str = str;
    return eet_data_descriptor_encode(_e_ipc_str_edd, &dat, size_ret);
+}
+
+int
+e_ipc_codec_2str_dec(char *data, int bytes, E_Ipc_2Str **dest)
+{
+   E_Ipc_2Str *dat;
+   
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_2str_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat;
+   return 1;
+}
+
+void *
+e_ipc_codec_2str_enc(char *str1, char *str2, int *size_ret)
+{
+   E_Ipc_2Str dat;
+   
+   dat.str1 = str1;
+   dat.str2 = str2;
+   return eet_data_descriptor_encode(_e_ipc_2str_edd, &dat, size_ret);
 }
 
 int
