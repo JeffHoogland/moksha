@@ -6,15 +6,17 @@
 //#define INOUTDEBUG_MOUSE 1
 //#define INOUTDEBUG_FOCUS 1
 
-#define RESIZE_NONE 0
-#define RESIZE_TL   1
-#define RESIZE_T    2
-#define RESIZE_TR   3
-#define RESIZE_R    4
-#define RESIZE_BR   5
-#define RESIZE_B    6
-#define RESIZE_BL   7
-#define RESIZE_L    8
+/* These are compatible with netwm */
+#define RESIZE_TL   0
+#define RESIZE_T    1
+#define RESIZE_TR   2
+#define RESIZE_R    3
+#define RESIZE_BR   4
+#define RESIZE_B    5
+#define RESIZE_BL   6
+#define RESIZE_L    7
+#define MOVE        8
+#define RESIZE_NONE 11
 
 /* local subsystem functions */
 static void _e_border_free(E_Border *bd);
@@ -37,6 +39,7 @@ static int _e_border_cb_window_shape(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_in(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_focus_out(void *data, int ev_type, void *ev);
 static int _e_border_cb_window_state_request(void *data, int ev_type, void *ev);
+static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev);
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_client_message(void *data, int ev_type, void *ev);
 
@@ -163,6 +166,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STATE_REQUEST, _e_border_cb_window_state_request, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST, _e_border_cb_window_move_resize_request, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DESKTOP_CHANGE, _e_border_cb_desktop_change, NULL));
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
@@ -398,6 +402,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->w = bd->client.w;
    bd->h = bd->client.h;
 
+   bd->resize_mode = RESIZE_NONE;
    bd->layer = 100;
    bd->changes.size = 1;
    bd->changes.shape = 1;
@@ -2233,6 +2238,118 @@ _e_border_cb_window_state_request(void *data, int ev_type, void *ev)
 }
 
 static int
+_e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
+{
+   E_Border *bd;
+   Ecore_X_Event_Window_Move_Resize_Request *e;
+
+   e = ev;
+   bd = e_border_find_by_client_window(e->win);
+   if (!bd) return 1;
+
+   if ((bd->shaded) || (bd->shading) || (bd->maximized) ||
+       (bd->moving) || (bd->resize_mode != RESIZE_NONE))
+     return 1;
+
+   if ((e->button >= 1) && (e->button <= 3))
+     {
+	bd->mouse.last_down[e->button - 1].mx = e->x;
+	bd->mouse.last_down[e->button - 1].my = e->y;
+	bd->mouse.last_down[e->button - 1].x = bd->x;
+	bd->mouse.last_down[e->button - 1].y = bd->y;
+	bd->mouse.last_down[e->button - 1].w = bd->w;
+	bd->mouse.last_down[e->button - 1].h = bd->h;
+     }
+   else
+     {
+	bd->moveinfo.down.x = bd->x;
+	bd->moveinfo.down.y = bd->y;
+	bd->moveinfo.down.w = bd->w;
+	bd->moveinfo.down.h = bd->h;
+     }
+   bd->mouse.current.mx = e->x;
+   bd->mouse.current.my = e->y;
+   bd->moveinfo.down.button = e->button;
+   bd->moveinfo.down.mx = e->x;
+   bd->moveinfo.down.my = e->y;
+   bd->grab = 1;
+
+   e_border_raise(bd);
+   if (e->direction == RESIZE_TL)
+     {
+	bd->resize_mode = RESIZE_TL;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_SE);
+     }
+   else if (e->direction == RESIZE_T)
+     {
+	bd->resize_mode = RESIZE_T;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_S);
+     }
+   else if (e->direction == RESIZE_TR)
+     {
+	bd->resize_mode = RESIZE_TR;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_SW);
+     }
+   else if (e->direction == RESIZE_R)
+     {
+	bd->resize_mode = RESIZE_R;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_W);
+     }
+   else if (e->direction == RESIZE_BR)
+     {
+	bd->resize_mode = RESIZE_BR;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
+     }
+   else if (e->direction == RESIZE_B)
+     {
+	bd->resize_mode = RESIZE_B;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_N);
+     }
+   else if (e->direction == RESIZE_BL)
+     {
+	bd->resize_mode = RESIZE_BL;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_NE);
+     }
+   else if (e->direction == RESIZE_L)
+     {
+	bd->resize_mode = RESIZE_L;
+
+	bd->cur_mouse_action = e_action_find("window_resize");
+	_e_border_resize_begin(bd);
+	GRAV_SET(bd, ECORE_X_GRAVITY_E);
+     }
+   else if (e->direction == MOVE)
+     {
+	bd->moving = 1;
+
+	bd->cur_mouse_action = e_action_find("window_move");
+	_e_border_move_begin(bd);
+     }
+   return 1;
+}
+
+static int
 _e_border_cb_desktop_change(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
@@ -2654,6 +2771,13 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	     bd->mouse.last_down[ev->button - 1].w = bd->w;
 	     bd->mouse.last_down[ev->button - 1].h = bd->h;
 	  }
+	else
+	  {
+	     bd->moveinfo.down.x = bd->x;
+	     bd->moveinfo.down.y = bd->y;
+	     bd->moveinfo.down.w = bd->w;
+	     bd->moveinfo.down.h = bd->h;
+	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
 	if (!bd->cur_mouse_action)
@@ -2677,6 +2801,13 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	bd->mouse.last_down[ev->button - 1].y = bd->y;
 	bd->mouse.last_down[ev->button - 1].w = bd->w;
 	bd->mouse.last_down[ev->button - 1].h = bd->h;
+     }
+   else
+     {
+	bd->moveinfo.down.x = bd->x;
+	bd->moveinfo.down.y = bd->y;
+	bd->moveinfo.down.w = bd->w;
+	bd->moveinfo.down.h = bd->h;
      }
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
@@ -2789,9 +2920,9 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	  }
 	else
 	  {
-	     x = bd->x +
+	     x = bd->moveinfo.down.x +
 	       (bd->mouse.current.mx - bd->moveinfo.down.mx);
-	     y = bd->y +
+	     y = bd->moveinfo.down.y +
 	       (bd->mouse.current.my - bd->moveinfo.down.my);
 	  }
 	new_x = x;
@@ -3874,7 +4005,7 @@ _e_border_resize_handle(E_Border *bd)
 	  w = bd->mouse.last_down[bd->moveinfo.down.button - 1].w +
 	  (bd->mouse.current.mx - bd->moveinfo.down.mx);
 	else
-	  w = bd->w + (bd->mouse.current.mx - bd->moveinfo.down.mx);
+	  w = bd->moveinfo.down.w + (bd->mouse.current.mx - bd->moveinfo.down.mx);
      }
    else if ((bd->resize_mode == RESIZE_TL) ||
 	    (bd->resize_mode == RESIZE_L) ||
@@ -3885,7 +4016,7 @@ _e_border_resize_handle(E_Border *bd)
 	  w = bd->mouse.last_down[bd->moveinfo.down.button - 1].w -
 	  (bd->mouse.current.mx - bd->moveinfo.down.mx);
 	else
-	  w = bd->w - (bd->mouse.current.mx - bd->moveinfo.down.mx);
+	  w = bd->moveinfo.down.w - (bd->mouse.current.mx - bd->moveinfo.down.mx);
      }
 
    if ((bd->resize_mode == RESIZE_TL) ||
@@ -3897,7 +4028,7 @@ _e_border_resize_handle(E_Border *bd)
 	  h = bd->mouse.last_down[bd->moveinfo.down.button - 1].h -
 	  (bd->mouse.current.my - bd->moveinfo.down.my);
 	else
-	  h = bd->h - (bd->mouse.current.my - bd->moveinfo.down.my);
+	  h = bd->moveinfo.down.h - (bd->mouse.current.my - bd->moveinfo.down.my);
      }
    else if ((bd->resize_mode == RESIZE_BL) ||
 	    (bd->resize_mode == RESIZE_B) ||
@@ -3908,7 +4039,7 @@ _e_border_resize_handle(E_Border *bd)
 	  h = bd->mouse.last_down[bd->moveinfo.down.button - 1].h +
 	  (bd->mouse.current.my - bd->moveinfo.down.my);
 	else
-	  h = bd->h + (bd->mouse.current.my - bd->moveinfo.down.my);
+	  h = bd->moveinfo.down.h + (bd->mouse.current.my - bd->moveinfo.down.my);
      }
 
    tw = bd->w;
@@ -4531,6 +4662,8 @@ _e_border_resize_begin(E_Border *bd)
 	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
 	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
      }
+   if (bd->grab)
+     ecore_x_pointer_grab(bd->win);
    e_resize_begin(bd->zone, w, h);
    resize = bd;
 }
@@ -4538,6 +4671,9 @@ _e_border_resize_begin(E_Border *bd)
 static void
 _e_border_resize_end(E_Border *bd)
 {
+   if (bd->grab)
+     ecore_x_pointer_ungrab();
+   bd->grab = 0;
    e_resize_end();
    resize = NULL;
 }
@@ -4564,6 +4700,8 @@ _e_border_resize_update(E_Border *bd)
 static void
 _e_border_move_begin(E_Border *bd)
 {
+   if (bd->grab)
+     ecore_x_pointer_grab(bd->win);
    e_move_begin(bd->zone, bd->x, bd->y);
    move = bd;
 }
@@ -4571,6 +4709,9 @@ _e_border_move_begin(E_Border *bd)
 static void
 _e_border_move_end(E_Border *bd)
 {
+   if (bd->grab)
+     ecore_x_pointer_ungrab();
+   bd->grab = 0;
    e_move_end();
    move = NULL;
 }

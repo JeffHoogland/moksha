@@ -247,6 +247,7 @@ struct _E_Border
    unsigned char   already_unparented : 1;
    unsigned char   need_reparent : 1;
    unsigned char   button_grabbed : 1;
+   unsigned char   grab : 1;
  
    unsigned char   changed : 1;
    
