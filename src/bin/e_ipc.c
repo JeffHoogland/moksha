@@ -476,32 +476,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 			      e_config->font_cache,
 			      E_IPC_OP_FONT_CACHE_GET_REPLY);
 	break;
-      case E_IPC_OP_USE_EDGE_FLIP_SET:
-	if (e_ipc_codec_int_dec(e->data, e->size,
-				&(e_config->use_edge_flip)))
-	  {
-	     E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_USE_EDGE_FLIP_GET:
-	_e_ipc_reply_int_send(e->client,
-			      e_config->use_edge_flip,
-			      E_IPC_OP_USE_EDGE_FLIP_GET_REPLY);
-	break;
-      case E_IPC_OP_EDGE_FLIP_TIMEOUT_SET:
-	if (e_ipc_codec_double_dec(e->data, e->size,
-				   &(e_config->edge_flip_timeout)))
-	  {
-	     E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_EDGE_FLIP_TIMEOUT_GET:
-	_e_ipc_reply_double_send(e->client,
-				 e_config->edge_flip_timeout,
-				 E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY);
-	break;
       case E_IPC_OP_DESKS_SET:
 	if (e_ipc_codec_2int_dec(e->data, e->size,
 				 &(e_config->zone_desks_x_count),

@@ -91,8 +91,8 @@ case HDL: { void *data; int bytes;
 break;
 
 # define REQ_INT(__int, HDL) \
-   REQ_INT_START(__int, HDL) \
-   REQ_INT_END(HDL)
+   REQ_INT_START(HDL) \
+   REQ_INT_END(__int, HDL)
 
 # define REQ_NULL(HDL) \
 case HDL: \
@@ -766,6 +766,86 @@ break;
    else if (policy == E_FOCUS_SLOPPY)
      printf("REPLY: SLOPPY\n");
    END_INT
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_EDGE_FLIP_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edge-flip-set", 1, "Set the edge flip flag (0/1)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->use_edge_flip = value;
+   E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_EDGE_FLIP_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edge-flip-get", 0, "Get the edge flip flag", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->use_edge_flip, E_IPC_OP_USE_EDGE_FLIP_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_EDGE_FLIP_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edge-flip-timeout-set", 1, "Set the edge flip timeout (sec)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL)
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(dbl, HDL);
+   e_config->edge_flip_timeout = dbl;
+   E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edge-flip-timeout-get", 0, "Get the edge flip timeout", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->edge_flip_timeout, E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL)
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
 #endif
 #undef HDL
 

@@ -620,10 +620,6 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-image-cache-get", "Get the image cache size", E_IPC_OP_IMAGE_CACHE_GET, 1),
    OINT("-font-cache-set", "Get the speculative font cache size (Kb)", E_IPC_OP_FONT_CACHE_SET, 0),
    OREQ("-font-cache-get", "Set the font cache size", E_IPC_OP_FONT_CACHE_GET, 1),
-   OINT("-edge-flip-set", "Set the edge flip flag (0/1)", E_IPC_OP_USE_EDGE_FLIP_SET, 0),
-   OREQ("-edge-flip-get", "Get the edge flip flag", E_IPC_OP_USE_EDGE_FLIP_GET, 1),
-   ODBL("-edge-flip_timeout-set", "Set the edge flip timeout (sec)", E_IPC_OP_EDGE_FLIP_TIMEOUT_SET, 0),
-   OREQ("-edge-flip_timeout-get", "Get the edge flip timeout", E_IPC_OP_EDGE_FLIP_TIMEOUT_GET, 1),
    O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
    OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
 };
@@ -1237,24 +1233,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     
 	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
 	       printf("REPLY: %i\n", val);
-	  }
-	break;
-      case E_IPC_OP_USE_EDGE_FLIP_GET_REPLY:
-	if (e->data)
-	  {
-	     int val;
-	     
-	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
-	       printf("REPLY: %i\n", val);
-	  }
-	break;
-      case E_IPC_OP_EDGE_FLIP_TIMEOUT_GET_REPLY:
-	if (e->data)
-	  {
-	     double val;
-	     
-	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
-	       printf("REPLY: %3.3f\n", val);
 	  }
 	break;
       case E_IPC_OP_DESKS_GET_REPLY:
