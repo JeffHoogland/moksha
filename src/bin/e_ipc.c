@@ -450,32 +450,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 				 e_config->border_shade_speed,
 				 E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY);
 	break;
-      case E_IPC_OP_IMAGE_CACHE_SET:
-	if (e_ipc_codec_int_dec(e->data, e->size,
-				&(e_config->image_cache)))
-	  {
-	     E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_IMAGE_CACHE_GET:
-	_e_ipc_reply_int_send(e->client,
-			      e_config->image_cache,
-			      E_IPC_OP_IMAGE_CACHE_GET_REPLY);
-	break;
-      case E_IPC_OP_FONT_CACHE_SET:
-	if (e_ipc_codec_int_dec(e->data, e->size,
-				&(e_config->font_cache)))
-	  {
-	     E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_FONT_CACHE_GET:
-	_e_ipc_reply_int_send(e->client,
-			      e_config->font_cache,
-			      E_IPC_OP_FONT_CACHE_GET_REPLY);
-	break;
       case E_IPC_OP_DESKS_SET:
 	if (e_ipc_codec_2int_dec(e->data, e->size,
 				 &(e_config->zone_desks_x_count),

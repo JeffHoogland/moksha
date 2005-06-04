@@ -849,6 +849,85 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_CACHE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-cache-set", 1, "Set the font cache size (Kb)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL)
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->font_cache = val;
+   E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_CACHE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-cache-get", 0, "Get the speculative font cache size (Kb)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->font_cache, E_IPC_OP_FONT_CACHE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_CACHE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_IMAGE_CACHE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-image-cache-set", 1, "Set the image cache size (Kb)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL)
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->image_cache = val;
+   E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_IMAGE_CACHE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-image-cache-get", 0, "Get the speculative image cache size (Kb)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->image_cache, E_IPC_OP_IMAGE_CACHE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_IMAGE_CACHE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
 #if 0
 }
 #endif

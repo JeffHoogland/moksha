@@ -616,10 +616,6 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-border-shade-transition-get", "Get the above value", E_IPC_OP_BORDER_SHADE_TRANSITION_GET, 1),
    ODBL("-border-shade-speed-set", "Set the shading speed (pixels/sec)", E_IPC_OP_BORDER_SHADE_SPEED_SET, 0),
    OREQ("-border-shade-speed-get", "Get the shading speed", E_IPC_OP_BORDER_SHADE_SPEED_GET, 1),
-   OINT("-image-cache-set", "Set the speculative image cache size (Kb)", E_IPC_OP_IMAGE_CACHE_SET, 0),
-   OREQ("-image-cache-get", "Get the image cache size", E_IPC_OP_IMAGE_CACHE_GET, 1),
-   OINT("-font-cache-set", "Get the speculative font cache size (Kb)", E_IPC_OP_FONT_CACHE_SET, 0),
-   OREQ("-font-cache-get", "Set the font cache size", E_IPC_OP_FONT_CACHE_GET, 1),
    O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
    OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
 };
@@ -1215,24 +1211,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	     
 	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
 	       printf("REPLY: %3.3f\n", val);
-	  }
-	break;
-      case E_IPC_OP_IMAGE_CACHE_GET_REPLY:
-	if (e->data)
-	  {
-	     int val;
-	     
-	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
-	       printf("REPLY: %i\n", val);
-	  }
-	break;
-      case E_IPC_OP_FONT_CACHE_GET_REPLY:
-	if (e->data)
-	  {
-	     int val;
-	     
-	     if (e_ipc_codec_int_dec(e->data, e->size, &val))
-	       printf("REPLY: %i\n", val);
 	  }
 	break;
       case E_IPC_OP_DESKS_GET_REPLY:
