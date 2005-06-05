@@ -132,6 +132,10 @@ msgstr "Über Enlightenment"
 msgid "About..."
 msgstr "Über..."
 
+#: src/bin/e_border.c:4280
+msgid "Always On Top"
+msgstr "Immer im Vordergrund"
+
 #: src/bin/e_main.c:366
 msgid "Artificially slowing startup so you can see it all."
 msgstr "Künstlich verlangsamter Start damit sie alles sehen können."
@@ -834,6 +838,12 @@ msgid ""
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
 msgstr ""
 "Optionen:\n"
 "\t-display DISPLAY\n"
@@ -846,6 +856,12 @@ msgstr ""
 "\t\tum Xinerama zu simulieren.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-Gut\n"
+"\t\tSei gut.\n"
+"\t-Böse\n"
+"\t\tSei Bose.\n"
+"\t-Psychotisch\n"
+"\t\tSei Psychotisch.\n"
 
 #: src/modules/pager/e_mod_main.c:126
 msgid "Pager"
@@ -858,6 +874,10 @@ msgstr "Spalte mit Arbeitsflächen entfernen"
 #: src/bin/e_int_menus.c:357
 msgid "Remove Row of Desktops"
 msgstr "Reihe mit Arbeitsflächen entfernen"
+
+#: src/bin/e_int_menus.c:130
+msgid "Run Command"
+msgstr "Befehl ausführen ..."
 
 #: src/bin/e_int_menus.c:110
 msgid "Restart Enlightenment"
