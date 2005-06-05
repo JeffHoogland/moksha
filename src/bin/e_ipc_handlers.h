@@ -1029,6 +1029,47 @@ break;
    END_INT;
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-fast-move-threshold-set", 1, "Set the mouse speed (pixels/second) that is considered a 'fast move'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->menus_fast_mouse_move_threshhold = val;
+   E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-fast-move-threshold-get", 0, "Get the mouse speed (pixels/second) that is considered a 'fast move'", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->menus_fast_mouse_move_threshhold, E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL)
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
 #if 0
 }
 #endif

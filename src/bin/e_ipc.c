@@ -385,19 +385,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
  	  }
 	break;
-      case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_SET:
-	if (e_ipc_codec_double_dec(e->data, e->size,
-				   &(e_config->menus_fast_mouse_move_threshhold)))
-	  {
-	     E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET:
-	_e_ipc_reply_double_send(e->client,
-				 e_config->menus_fast_mouse_move_threshhold, 
-				 E_IPC_OP_MENUS_FAST_MOVE_THRESHHOLD_GET_REPLY);
-	break;
       case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET:
 	if (e_ipc_codec_double_dec(e->data, e->size,
 				   &(e_config->menus_click_drag_timeout)))
