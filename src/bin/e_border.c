@@ -1443,7 +1443,14 @@ void
 e_border_act_close_begin(E_Border *bd)
 {
    if (bd->client.icccm.delete_request)
-     ecore_x_window_delete_request_send(bd->client.win);
+     {
+	ecore_x_window_delete_request_send(bd->client.win);
+	if (bd->client.netwm.ping)
+	  {
+	     ecore_x_netwm_ping(bd->client.win);
+	     bd->ping = ecore_time_get();
+	  }
+     }
    else
      e_border_act_kill_begin(bd);
 }
@@ -3280,9 +3287,22 @@ _e_border_eval(E_Border *bd)
 	     for (i = 0; i < num; i++)
 	       {
 		  if (proto[i] == ECORE_X_WM_PROTOCOL_DELETE_REQUEST)
-		    bd->client.icccm.delete_request = 1;
-		  if (proto[i] == ECORE_X_WM_PROTOCOL_TAKE_FOCUS)
+		    {
+		       printf("ECORE_X_WM_PROTOCOL_DELETE_REQUEST\n");
+		       bd->client.icccm.delete_request = 1;
+		    }
+		  else if (proto[i] == ECORE_X_WM_PROTOCOL_TAKE_FOCUS)
 		    bd->client.icccm.take_focus = 1;
+		  else if (proto[i] == ECORE_X_NET_WM_PROTOCOL_PING)
+		    {
+		       printf("ECORE_X_NET_WM_PROTOCOL_PING\n");
+		       bd->client.netwm.ping = 1;
+		    }
+		  else if (proto[i] == ECORE_X_NET_WM_PROTOCOL_SYNC_REQUEST)
+		    {
+		       printf("ECORE_X_NET_WM_PROTOCOL_SYNC_REQUEST\n");
+		       bd->client.netwm.sync_request = 1;
+		    }
 	       }
 	     free(proto);
 	  }
@@ -4333,10 +4353,7 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->client.icccm.delete_request)
-     ecore_x_window_delete_request_send(bd->client.win);
-   else
-     e_border_act_close_begin(bd);
+   e_border_act_close_begin(bd);
 }
 
 static void

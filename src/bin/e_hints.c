@@ -501,6 +501,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_STICKY:
@@ -529,6 +530,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if (bd->client.netwm.state.sticky)
 		e_border_stick(bd);
 	      else
@@ -561,6 +563,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if ((bd->client.netwm.state.maximized_v)
 		  && (bd->client.netwm.state.maximized_h))
 		e_border_maximize(bd);
@@ -595,6 +598,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if ((bd->client.netwm.state.maximized_v)
 		  && (bd->client.netwm.state.maximized_h))
 		e_border_maximize(bd);
@@ -629,6 +633,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if (bd->client.netwm.state.shaded)
 		e_border_shade(bd, e_hints_window_shade_direction_get(bd));
 	      else
@@ -661,6 +666,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_SKIP_PAGER:
@@ -690,6 +696,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   {
 	      /* FIXME, we have a pager, care about this! */
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_HIDDEN:
@@ -721,6 +728,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if (bd->client.netwm.state.fullscreen)
 		e_border_fullscreen(bd);
 	      else
@@ -763,6 +771,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if (bd->client.netwm.state.stacking)
 		bd->layer = 150;
 	      else
@@ -806,6 +815,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 if (changed)
 	   {
 	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
 	      if (bd->client.netwm.state.stacking)
 		bd->layer = 50;
 	      else
@@ -906,6 +916,7 @@ e_hints_window_visible_set(E_Border *bd)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.hidden = 0;
+	bd->changed = 1;
      }
 }
 
@@ -921,6 +932,7 @@ e_hints_window_iconic_set(E_Border *bd)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.hidden = 1;
+	bd->changed = 1;
      }
 }
 
@@ -936,6 +948,7 @@ e_hints_window_hidden_set(E_Border *bd)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.hidden = 0;
+	bd->changed = 1;
      }
 }
 
@@ -946,11 +959,13 @@ e_hints_window_shaded_set(E_Border *bd, int on)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.shaded = 1;
+	bd->changed = 1;
      }
    else if ((bd->client.netwm.state.shaded) && (!on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.shaded = 0;
+	bd->changed = 1;
      }
 }
 
@@ -982,21 +997,25 @@ e_hints_window_maximized_set(E_Border *bd, int on)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_v = 1;
+	bd->changed = 1;
      }
    else if ((bd->client.netwm.state.maximized_v) && (!on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_v = 0;
+	bd->changed = 1;
      }
    if ((!bd->client.netwm.state.maximized_h) && (on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_h = 1;
+	bd->changed = 1;
      }
    else if ((bd->client.netwm.state.maximized_h) && (!on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_h = 0;
+	bd->changed = 1;
      }
 }
 
@@ -1007,11 +1026,13 @@ e_hints_window_fullscreen_set(E_Border *bd, int on)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.fullscreen = 1;
+	bd->changed = 1;
      }
    else if ((bd->client.netwm.state.fullscreen) && (!on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.fullscreen = 0;
+	bd->changed = 1;
      }
 }
 
@@ -1022,11 +1043,13 @@ e_hints_window_sticky_set(E_Border *bd, int on)
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.sticky = 1;
+	bd->changed = 1;
      }
    else if ((bd->client.netwm.state.sticky) && (!on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.sticky = 0;
+	bd->changed = 1;
      }
 }
 
@@ -1036,6 +1059,7 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
    if (bd->client.netwm.state.stacking == stacking) return;
    bd->client.netwm.update.state = 1;
    bd->client.netwm.state.stacking = stacking;
+   bd->changed = 1;
 }
 
 void

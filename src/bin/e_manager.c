@@ -10,6 +10,7 @@ static int _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
 static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
+static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -95,6 +96,7 @@ e_manager_new(Ecore_X_Window root)
    h = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_manager_cb_key_down, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
    h = ecore_event_handler_add(ECORE_X_EVENT_FRAME_EXTENTS_REQUEST, _e_manager_cb_frame_extents_request, man);
+   h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
    return man;
@@ -506,6 +508,25 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	ecore_x_netwm_frame_size_set(e->win, l, r, t, b);
      }
 
+   return 1;
+}
+
+static int
+_e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
+{
+   E_Manager *man;
+   E_Border *bd;
+   Ecore_X_Event_Ping *e;
+   
+   man = data;
+   e = ev;
+
+   if (e->win != man->root) return 1;
+
+   bd = e_border_find_by_client_window(e->event_win);
+   if (!bd) return 1;
+
+   printf("PING response: %f\n", ecore_time_get() - bd->ping);
    return 1;
 }
 

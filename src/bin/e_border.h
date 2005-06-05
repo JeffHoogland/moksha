@@ -183,6 +183,8 @@ struct _E_Border
 	      int bottom_start_x;
 	      int bottom_end_x;
 	 } strut;
+	 unsigned char ping : 1;
+	 unsigned char sync_request : 1;
 
 	 /* NetWM Window state */
 	 struct {
@@ -248,6 +250,8 @@ struct _E_Border
    unsigned char   need_reparent : 1;
    unsigned char   button_grabbed : 1;
    unsigned char   grab : 1;
+
+   double          ping;
  
    unsigned char   changed : 1;
    
