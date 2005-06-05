@@ -19,6 +19,7 @@ struct _Main_Data
 /* local subsystem functions */
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_apps_scan           (E_Menu *m);
@@ -122,6 +123,13 @@ e_int_menus_main_new(void)
    e_menu_item_icon_edje_set(mi, s, "e");
    IF_FREE(s);
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
+
+   if (e_util_app_installed("exige"))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Run Command"));
+	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);
+     }
    
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -247,6 +255,15 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 			 "Please think of the aardvarks. They need some love too."),
 		       VERSION
 		       );
+}
+
+static void
+_e_int_menus_main_run(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Ecore_Exe *exe;
+
+   exe = ecore_exe_run("exige", NULL);
+   if (exe) ecore_exe_free(exe);
 }
 
 static void

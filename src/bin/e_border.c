@@ -4277,43 +4277,46 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 							   "widgets/border/default/sendto"),
 			     "widgets/border/default/sendto");
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   a = e_app_window_name_class_find(bd->client.icccm.name,
-				    bd->client.icccm.class);
-
-   if (a)
+   if (e_util_app_installed("emblem"))
      {
 	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Edit Icon"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
-	e_menu_item_icon_edje_set(mi, a->path, "icon");
-     }
-   else if (bd->client.icccm.class) /* icons with no class useless to borders */
-     {
-	static char buf[PATH_MAX + 50];
-	char *name, *homedir;
-	int i, l;
+	e_menu_item_separator_set(mi, 1);
 
-	buf[0] = '\0';
-	/* generate a reasonable file name from the window class */
-	/* FIXME - I think there could be duplicates - how better to do this? */
-	name = strdup(bd->client.icccm.class);
-	l = strlen(name);
-	for (i = 0; i < l; i++)
+	a = e_app_window_name_class_find(bd->client.icccm.name,
+					 bd->client.icccm.class);
+
+	if (a)
 	  {
-	     if (name[i] == ' ') name[i] = '_';
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Edit Icon"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
+	     e_menu_item_icon_edje_set(mi, a->path, "icon");
 	  }
-	/* previously this could be null, but it will exist now */
-	homedir = e_user_homedir_get();
+	else if (bd->client.icccm.class) /* icons with no class useless to borders */
+	  {
+	     static char buf[PATH_MAX + 50];
+	     char *name, *homedir;
+	     int i, l;
 
-	snprintf(buf, sizeof(buf),
-		 "--win-class \"%s\" %s/.e/e/applications/all/%s.eapp",
-		 bd->client.icccm.class, homedir, name);
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Create Icon"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
+	     buf[0] = '\0';
+	     /* generate a reasonable file name from the window class */
+	     /* FIXME - I think there could be duplicates - how better to do this? */
+	     name = strdup(bd->client.icccm.class);
+	     l = strlen(name);
+	     for (i = 0; i < l; i++)
+	       {
+		 if (name[i] == ' ') name[i] = '_';
+	       }
+	     /* previously this could be null, but it will exist now */
+	     homedir = e_user_homedir_get();
+
+	     snprintf(buf, sizeof(buf),
+		      "--win-class \"%s\" %s/.e/e/applications/all/%s.eapp",
+		      bd->client.icccm.class, homedir, name);
+	     mi = e_menu_item_new(m);
+	     e_menu_item_label_set(mi, _("Create Icon"));
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
+	  }
      }
 
    if (key)

@@ -11,6 +11,8 @@ EAPI void e_util_container_fake_mouse_up_all_later(E_Container *con);
 EAPI void e_util_wakeup(void);
 EAPI void e_util_env_set(const char *var, const char *val);
 EAPI E_Zone *e_util_zone_current_get(E_Manager *man);
+EAPI int  e_util_utils_installed(void);
+EAPI int  e_util_app_installed(char *app);
 
 #endif
 #endif

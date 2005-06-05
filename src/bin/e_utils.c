@@ -113,3 +113,29 @@ _e_util_wakeup_cb(void *data)
    _e_util_dummy_timer = NULL;
    return 0;
 }
+
+int
+e_util_utils_installed(void)
+{
+   return e_util_app_installed("emblem");
+}
+
+int
+e_util_app_installed(char *app)
+{
+   char *cmd, *tmp;
+   int   ret, len;
+
+   if (!app)
+     return 0;
+
+   cmd = "which %s > /dev/null 2>&1";
+   len = strlen(cmd) + strlen(app) - 1; // -1 is -2 for "%s" and +1 for "\0"
+   tmp = malloc(len);
+   snprintf(tmp, len, cmd, app);
+   
+   ret = system(tmp);
+   free(tmp);
+   return (ret == 0);
+}
+
