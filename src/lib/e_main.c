@@ -20,8 +20,10 @@
 #include <Eet.h>
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
-#include "E.h"
+#include "E_Lib.h"
 #include "e.h"
+
+#include "e_ipc_codec.c"
 
 typedef struct _Opt Opt;
 

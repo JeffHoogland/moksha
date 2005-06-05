@@ -6,7 +6,7 @@ INCLUDES		= -I$(includedir) \
 
 lib_LTLIBRARIES		= libe.la
 
-include_HEADERS		= E.h
+include_HEADERS		= E_Lib.h
 
 libe_la_SOURCES= \
 e_main.c \
