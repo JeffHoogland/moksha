@@ -220,6 +220,26 @@ break;
 #define DECODE(__dec) \
    if (__dec(e->data, e->size, &dat))
 
+# define E_PATH_GET(__path, __str) \
+   E_Path *__path = NULL; \
+   if (!strcmp(__str, "data")) \
+     __path = path_data; \
+   else if (!strcmp(__str, "images")) \
+     __path = path_images; \
+   else if (!strcmp(__str, "fonts")) \
+     __path = path_fonts; \
+   else if (!strcmp(__str, "themes")) \
+     __path = path_themes; \
+   else if (!strcmp(__str, "init")) \
+     __path = path_init; \
+   else if (!strcmp(__str, "icons")) \
+     __path = path_icons; \
+   else if (!strcmp(__str, "modules")) \
+     __path = path_modules; \
+   else if (!strcmp(__str, "backgrounds")) \
+     __path = path_backgrounds; 
+
+
 #endif
 
 
@@ -665,23 +685,7 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_Path *path = NULL;
-   if (!strcmp(s1, "data"))
-     path = path_data;
-   else if (!strcmp(s1, "images"))
-     path = path_images;
-   else if (!strcmp(s1, "fonts"))
-     path = path_fonts;
-   else if (!strcmp(s1, "themes"))
-     path = path_themes;
-   else if (!strcmp(s1, "init"))
-     path = path_init;
-   else if (!strcmp(s1, "icons"))
-     path = path_icons;
-   else if (!strcmp(s1, "modules"))
-     path = path_modules;
-   else if (!strcmp(s1, "backgrounds"))
-     path = path_backgrounds;
+   E_PATH_GET(path, s1)
    e_path_user_path_append(path, s2);
    SAVE;
    END_STRING2(e_2str)
@@ -698,23 +702,7 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_Path *path = NULL;
-   if (!strcmp(s1, "data"))
-     path = path_data;
-   else if (!strcmp(s1, "images"))
-     path = path_images;
-   else if (!strcmp(s1, "fonts"))
-     path = path_fonts;
-   else if (!strcmp(s1, "themes"))
-     path = path_themes;
-   else if (!strcmp(s1, "init"))
-     path = path_init;
-   else if (!strcmp(s1, "icons"))
-     path = path_icons;
-   else if (!strcmp(s1, "modules"))
-     path = path_modules;
-   else if (!strcmp(s1, "backgrounds"))
-     path = path_backgrounds;
+   E_PATH_GET(path, s1)
    e_path_user_path_prepend(path, s2);
    SAVE;
    END_STRING2(e_2str)
@@ -731,23 +719,7 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_Path *path = NULL;
-   if (!strcmp(s1, "data"))
-     path = path_data;
-   else if (!strcmp(s1, "images"))
-     path = path_images;
-   else if (!strcmp(s1, "fonts"))
-     path = path_fonts;
-   else if (!strcmp(s1, "themes"))
-     path = path_themes;
-   else if (!strcmp(s1, "init"))
-     path = path_init;
-   else if (!strcmp(s1, "icons"))
-     path = path_icons;
-   else if (!strcmp(s1, "modules"))
-     path = path_modules;
-   else if (!strcmp(s1, "backgrounds"))
-     path = path_backgrounds;
+   E_PATH_GET(path, s1)
    e_path_user_path_remove(path, s2);
    SAVE;
    END_STRING2(e_2str)

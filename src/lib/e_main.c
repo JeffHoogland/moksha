@@ -44,7 +44,7 @@ Opt opts[] = {
 
 static int  _e_ipc_init(const char *display);
 static void _e_ipc_shutdown(void);
-static E_Ipc_Op _e_ipc_call_find(char *name);
+static E_Ipc_Op _e_ipc_call_find(const char *name);
 static void _e_ipc_call(E_Ipc_Op opcode, char **params);
 static int _e_cb_server_data(void *data, int type, void *event);
 
@@ -188,25 +188,32 @@ e_lib_quit(void)
 void
 e_lib_module_enabled_set(const char *module, int enable)
 {
+   char *tmp;
+
    if (!module)
      return;
 
+   tmp = strdup(module);
    if (enable)
-     _e_ipc_call(E_IPC_OP_MODULE_ENABLE, &module);
+     _e_ipc_call(E_IPC_OP_MODULE_ENABLE, &tmp);
    else
-     _e_ipc_call(E_IPC_OP_MODULE_DISABLE, &module);
+     _e_ipc_call(E_IPC_OP_MODULE_DISABLE, &tmp);
+   free(tmp);
 }
 
 void
 e_lib_module_load_set(const char *module, int load)
 {
+   char *tmp;
    if (!module)
      return;
 
+   tmp = strdup(module);
    if (load)
-     _e_ipc_call(E_IPC_OP_MODULE_LOAD, &module);
+     _e_ipc_call(E_IPC_OP_MODULE_LOAD, &tmp);
    else
-     _e_ipc_call(E_IPC_OP_MODULE_UNLOAD, &module);
+     _e_ipc_call(E_IPC_OP_MODULE_UNLOAD, &tmp);
+   free(tmp);
 }
 
 void
@@ -218,10 +225,13 @@ e_lib_module_list(void)
 void
 e_lib_background_set(const char *bgfile)
 {
+   char *tmp;
    if (!bgfile)
      return;
 
-   _e_ipc_call(E_IPC_OP_BG_SET, &bgfile);
+   tmp = strdup(bgfile);
+   _e_ipc_call(E_IPC_OP_BG_SET, &tmp);
+   free(tmp);
 }
 
 void
@@ -316,7 +326,7 @@ _e_ipc_shutdown(void)
 }
 
 static E_Ipc_Op
-_e_ipc_call_find(char *name)
+_e_ipc_call_find(const char *name)
 {
    int i, j;
 
