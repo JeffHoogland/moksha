@@ -765,6 +765,8 @@ break;
 #elif (TYPE == E_WM_IN)
    START_DOUBLE(dbl, HDL);
    e_config->framerate = dbl;
+   E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
+   edje_frametime_set(1.0 / e_config->framerate);
    SAVE;
    END_DOUBLE;
 #elif (TYPE == E_REMOTE_IN)
@@ -805,6 +807,7 @@ break;
 #elif (TYPE == E_WM_IN)
    START_DOUBLE(dbl, HDL);
    e_config->menus_scroll_speed = dbl;
+   E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    SAVE;
    END_DOUBLE;
 #elif (TYPE == E_REMOTE_IN)
@@ -856,6 +859,7 @@ break;
    START_INT(value, HDL);
    e_border_button_bindings_ungrab_all();
    e_config->focus_policy = value;
+   E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
    e_border_button_bindings_grab_all();
    SAVE;
    END_INT
@@ -982,6 +986,7 @@ break;
    START_INT(val, HDL);
    e_config->font_cache = val;
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+   e_canvas_recache();
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -1022,6 +1027,7 @@ break;
    START_INT(val, HDL);
    e_config->image_cache = val;
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
+   e_canvas_recache();
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)

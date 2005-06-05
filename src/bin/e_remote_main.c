@@ -238,6 +238,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	break;
      }
    printf("REPLY <- END\n");
+   reply_count++;
    if (reply_count >= reply_expect) ecore_main_loop_quit();
    return 1;
 }
@@ -1204,6 +1205,7 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
      }
    printf("REPLY: END\n");
    reply_count++;
+   printf("%i == %i\n",  reply_count, reply_expect);
    if (reply_count >= reply_expect) ecore_main_loop_quit();
    return 1;
 }
