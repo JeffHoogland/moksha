@@ -854,7 +854,9 @@ break;
    REQ_INT_END(value, HDL);
 #elif (TYPE == E_WM_IN)
    START_INT(value, HDL);
+   e_border_button_bindings_ungrab_all();
    e_config->focus_policy = value;
+   e_border_button_bindings_grab_all();
    SAVE;
    END_INT
 #elif (TYPE == E_REMOTE_IN)

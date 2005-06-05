@@ -57,8 +57,8 @@ These are in no particular order:
 
 * add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
 * add input method selector stuff to eapp - same as locale
-* get all libehack properties if they exist
-* titlebar/border expansion/gadget panel for moduels to put window widgets in
+* get all libe_hack properties if they exist
+* titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
 * on restart e always goes back to desktop 0,0 - it should go to the desktop
