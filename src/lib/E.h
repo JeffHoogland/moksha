@@ -65,31 +65,31 @@ extern "C" {
 #endif
 
    /* library startup and shutdown */
-   EAPI int          e_init                       (const char *display);
-   EAPI int          e_shutdown                   (void);
+   EAPI int          e_lib_init                       (const char *display);
+   EAPI int          e_lib_shutdown                   (void);
 
    /* E startup and shutdown */
-   EAPI void         e_restart                    (void);
-   EAPI void         e_quit                       (void);
+   EAPI void         e_lib_restart                    (void);
+   EAPI void         e_lib_quit                       (void);
 
    /* E module manipulation */
-   EAPI void         e_module_enabled_set         (const char *module, int enable);
-   EAPI void         e_module_loaded_set          (const char *module, int load);
-   EAPI void         e_module_list                (void);
+   EAPI void         e_lib_module_enabled_set         (const char *module, int enable);
+   EAPI void         e_lib_module_loaded_set          (const char *module, int load);
+   EAPI void         e_lib_module_list                (void);
 
    /* E desktop manipulation */
-   EAPI void         e_background_set             (const char *bgfile);
-   EAPI void         e_background_get             (void);
+   EAPI void         e_lib_background_set             (const char *bgfile);
+   EAPI void         e_lib_background_get             (void);
 
    /* E path information */
-   EAPI void         e_data_dirs_list             (void);
-   EAPI void         e_image_dirs_list            (void);
-   EAPI void         e_font_dirs_list             (void);
-   EAPI void         e_theme_dirs_list            (void);
-   EAPI void         e_init_dirs_list             (void);
-   EAPI void         e_icon_dirs_list             (void);
-   EAPI void         e_module_dirs_list           (void);
-   EAPI void         e_background_dirs_list       (void);
+   EAPI void         e_lib_data_dirs_list             (void);
+   EAPI void         e_lib_image_dirs_list            (void);
+   EAPI void         e_lib_font_dirs_list             (void);
+   EAPI void         e_lib_theme_dirs_list            (void);
+   EAPI void         e_lib_init_dirs_list             (void);
+   EAPI void         e_lib_icon_dirs_list             (void);
+   EAPI void         e_lib_module_dirs_list           (void);
+   EAPI void         e_lib_background_dirs_list       (void);
 
 #ifdef __cplusplus
 }

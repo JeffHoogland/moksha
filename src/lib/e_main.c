@@ -21,16 +21,7 @@
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 #include "E.h"
-#include "e_private.h"
-
-#define E_TYPEDEFS 1
-#include "e_config.h"
-#include "e_ipc_codec.h"
-#undef E_TYPEDEFS
-#include "e_config.h"
-#include "e_ipc_codec.h"
-#define E_H
-#include "e_ipc_codec.c"
+#include "e.h"
 
 typedef struct _Opt Opt;
 
@@ -80,7 +71,7 @@ int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
  * If parameter is null try to use DISPLAY env var.
  */
 int
-e_init(const char* display)
+e_lib_init(const char* display)
 {
    char *disp, *pos;
    int free_disp;
@@ -95,7 +86,7 @@ e_init(const char* display)
      disp = getenv("DISPLAY");
    
    if (!disp)
-     fprintf(stderr, "ERROR: No display parameter passed to e_init, and no DISPLAY variable\n");
+     fprintf(stderr, "ERROR: No display parameter passed to e_lib_init, and no DISPLAY variable\n");
 
    pos = strrchr(disp, ':');
    if (!pos)
@@ -169,7 +160,7 @@ e_init(const char* display)
  * close our connection to E
  */
 int
-e_shutdown(void)
+e_lib_shutdown(void)
 {
    e_ipc_codec_shutdown();
    _e_ipc_shutdown();
@@ -181,19 +172,19 @@ e_shutdown(void)
 
 /* actual IPC calls */
 void
-e_restart(void)
+e_lib_restart(void)
 {
    _e_ipc_call(E_IPC_OP_RESTART, NULL);
 }
     
 void
-e_quit(void)
+e_lib_quit(void)
 {
    _e_ipc_call(E_IPC_OP_SHUTDOWN, NULL);
 }
 
 void
-e_module_enabled_set(const char *module, int enable)
+e_lib_module_enabled_set(const char *module, int enable)
 {
    if (!module)
      return;
@@ -205,7 +196,7 @@ e_module_enabled_set(const char *module, int enable)
 }
 
 void
-e_module_load_set(const char *module, int load)
+e_lib_module_load_set(const char *module, int load)
 {
    if (!module)
      return;
@@ -217,13 +208,13 @@ e_module_load_set(const char *module, int load)
 }
 
 void
-e_module_list(void)
+e_lib_module_list(void)
 {
    _e_ipc_call(E_IPC_OP_MODULE_LIST, NULL);
 }
 
 void
-e_background_set(const char *bgfile)
+e_lib_background_set(const char *bgfile)
 {
    if (!bgfile)
      return;
@@ -232,62 +223,62 @@ e_background_set(const char *bgfile)
 }
 
 void
-e_background_get(void)
+e_lib_background_get(void)
 {
    _e_ipc_call(E_IPC_OP_BG_GET, NULL);
 }
 
 void
-e_data_dirs_list(void)
+e_lib_data_dirs_list(void)
 {
    char *type = "data";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_image_dirs_list(void)
+e_lib_image_dirs_list(void)
 {
    char *type = "images";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_font_dirs_list(void)
+e_lib_font_dirs_list(void)
 {
    char *type = "fonts";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_theme_dirs_list(void)
+e_lib_theme_dirs_list(void)
 {
    char *type = "themes";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_init_dirs_list(void)
+e_lib_init_dirs_list(void)
 {
    char *type = "inits";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_icon_dirs_list(void)
+e_lib_icon_dirs_list(void)
 {
    char *type = "icons";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_module_dirs_list(void)
+e_lib_module_dirs_list(void)
 {
    char *type = "modules";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
 }
 
 void
-e_background_dirs_list(void)
+e_lib_background_dirs_list(void)
 {
    char *type = "backgrounds";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
