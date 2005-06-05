@@ -583,8 +583,6 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1),
    OFNC("-binding-key-add", "Add an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_add, 0),
    OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
-   ODBL("-menus-click-drag-timeout-set", "Set the time (in seconds) between a mouse press and release that will keep the menu up anyway", E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET, 0),
-   OREQ("-menus-click-drag-timeout-get", "Get the above value", E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET, 1),
    OINT("-border-shade-animate-set", "Set the shading animation flag (0/1)", E_IPC_OP_BORDER_SHADE_ANIMATE_SET, 0),
    OREQ("-border-shade-animate-get", "Get the shading animation flag", E_IPC_OP_BORDER_SHADE_ANIMATE_GET, 1),
    OINT("-border-shade-transition-set", "Set the shading animation algorithm (0, 1, 2 or 3)", E_IPC_OP_BORDER_SHADE_TRANSITION_SET, 0),
@@ -1126,15 +1124,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
 	  }
 	break;
       case E_IPC_OP_MENUS_SCROLL_SPEED_GET_REPLY:
-	if (e->data)
-	  {
-	     double val;
-	     
-	     if (e_ipc_codec_double_dec(e->data, e->size, &val))
-	       printf("REPLY: %3.3f\n", val);
-	  }
-	break;
-      case E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET_REPLY:
 	if (e->data)
 	  {
 	     double val;

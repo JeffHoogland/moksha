@@ -1070,6 +1070,46 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-click-drag-timeout-set", 1, "Set the time (in sec) between a mouse press and release that will keep the menu up anyway", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->menus_click_drag_timeout = val;
+   E_CONFIG_LIMIT(e_config->menus_click_drag_timeout, 0.0, 10.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menus-click-drag-timeout-get", 0, "Get the time (in sec) between a mouse press and release that will keep the menu up anyway", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->menus_click_drag_timeout, E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENUS_CLICK_DRAG_TIMEOUT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL)
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
 #if 0
 }
 #endif
