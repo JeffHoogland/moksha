@@ -6,37 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-23 22:34+0200\n"
-"PO-Revision-Date: 2005-05-23 22:35+0200\n"
+"POT-Creation-Date: 2005-06-06 20:06+0200\n"
+"PO-Revision-Date: 2005-06-06 20:07+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: src/modules/cpufreq/e_mod_main.c:460
+#: src/modules/cpufreq/e_mod_main.c:456
 #, c-format
 msgid "%i Mhz"
 msgstr "%i Mhz"
 
-#: src/modules/cpufreq/e_mod_main.c:463
+#: src/modules/cpufreq/e_mod_main.c:459
 #, c-format
 msgid "%i.%i Ghz"
 msgstr "%i.%i Ghz"
 
-#: src/bin/e_int_menus.c:659
+#: src/bin/e_int_menus.c:682
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
-#: src/bin/e_int_menus.c:303
+#: src/bin/e_int_menus.c:320
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:476
+#: src/bin/e_int_menus.c:494
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:569
+#: src/bin/e_int_menus.c:592
 msgid "(Unused)"
 msgstr "(Inutilizzato)"
 
@@ -44,47 +44,47 @@ msgstr "(Inutilizzato)"
 msgid "1 hour"
 msgstr "1 ora"
 
-#: src/modules/temperature/e_mod_main.c:596
+#: src/modules/temperature/e_mod_main.c:598
 msgid "100C"
 msgstr "100C"
 
-#: src/modules/temperature/e_mod_main.c:500
+#: src/modules/temperature/e_mod_main.c:502
 msgid "10C"
 msgstr "10C"
 
-#: src/modules/temperature/e_mod_main.c:507
-#: src/modules/temperature/e_mod_main.c:540
+#: src/modules/temperature/e_mod_main.c:509
+#: src/modules/temperature/e_mod_main.c:542
 msgid "20C"
 msgstr "20C"
 
-#: src/modules/temperature/e_mod_main.c:514
-#: src/modules/temperature/e_mod_main.c:547
+#: src/modules/temperature/e_mod_main.c:516
+#: src/modules/temperature/e_mod_main.c:549
 msgid "30C"
 msgstr "30C"
 
-#: src/modules/temperature/e_mod_main.c:521
-#: src/modules/temperature/e_mod_main.c:554
+#: src/modules/temperature/e_mod_main.c:523
+#: src/modules/temperature/e_mod_main.c:556
 msgid "40C"
 msgstr "40C"
 
-#: src/modules/temperature/e_mod_main.c:528
-#: src/modules/temperature/e_mod_main.c:561
+#: src/modules/temperature/e_mod_main.c:530
+#: src/modules/temperature/e_mod_main.c:563
 msgid "50C"
 msgstr "50C"
 
-#: src/modules/temperature/e_mod_main.c:568
+#: src/modules/temperature/e_mod_main.c:570
 msgid "60C"
 msgstr "60C"
 
-#: src/modules/temperature/e_mod_main.c:575
+#: src/modules/temperature/e_mod_main.c:577
 msgid "70C"
 msgstr "70C"
 
-#: src/modules/temperature/e_mod_main.c:582
+#: src/modules/temperature/e_mod_main.c:584
 msgid "80C"
 msgstr "80C"
 
-#: src/modules/temperature/e_mod_main.c:589
+#: src/modules/temperature/e_mod_main.c:591
 msgid "90C"
 msgstr "90C"
 
@@ -128,35 +128,35 @@ msgstr ""
 msgid "A simple module to give E17 a clock."
 msgstr "Un semplice modulo per dare un orologio a E17."
 
-#: src/bin/e_int_menus.c:119 src/bin/e_int_menus.c:241
+#: src/bin/e_int_menus.c:121 src/bin/e_int_menus.c:250
 msgid "About Enlightenment"
 msgstr "Informazioni su Enlightenment"
 
-#: src/bin/e_module.c:383
+#: src/bin/e_module.c:384
 msgid "About..."
 msgstr "Informazioni su..."
 
-#: src/bin/e_border.c:3832
+#: src/bin/e_border.c:4349
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_main.c:438
+#: src/bin/e_main.c:446
 msgid "Artificially slowing startup so you can see it all."
 msgstr "Avvio rallentato artificialmente così da poterlo vedere tutto."
 
-#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:590
+#: src/modules/ibar/e_mod_main.c:730 src/modules/ibox/e_mod_main.c:591
 msgid "Auto fit icons"
 msgstr "Larghezza automatica"
 
-#: src/modules/cpufreq/e_mod_main.c:434
+#: src/modules/cpufreq/e_mod_main.c:430
 msgid "Automatic"
 msgstr "Automatico"
 
-#: src/bin/e_gadman.c:555
+#: src/bin/e_gadman.c:556
 msgid "Automatic Height"
 msgstr "Altezza automatica"
 
-#: src/bin/e_gadman.c:508
+#: src/bin/e_gadman.c:509
 msgid "Automatic Width"
 msgstr "Larghezza automatica"
 
@@ -176,11 +176,11 @@ msgstr "Batteria bassa"
 msgid "CPU Frequency Controller Module"
 msgstr "Modulo controllo frequenza CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
+#: src/modules/cpufreq/e_mod_main.c:266 src/modules/cpufreq/e_mod_main.c:283
 msgid "CPU Frequency ERROR"
 msgstr "ERRORE frequenza CPU"
 
-#: src/bin/e_gadman.c:537
+#: src/bin/e_gadman.c:538
 msgid "Center Horizontally"
 msgstr "Centra orizzontalmente"
 
@@ -192,7 +192,7 @@ msgstr "Centra verticalmente"
 msgid "Charging"
 msgstr "In carica"
 
-#: src/modules/cpufreq/e_mod_main.c:388
+#: src/modules/cpufreq/e_mod_main.c:384
 msgid "Check Fast (0.5 sec)"
 msgstr "Controllo veloce (0.5 sec)"
 
@@ -201,11 +201,11 @@ msgid "Check Fast (1 sec)"
 msgstr "Controllo veloce (1 sec)"
 
 #: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:608
+#: src/modules/temperature/e_mod_main.c:610
 msgid "Check Interval"
 msgstr "Frequenza controllo"
 
-#: src/modules/cpufreq/e_mod_main.c:395
+#: src/modules/cpufreq/e_mod_main.c:391
 msgid "Check Medium (1 sec)"
 msgstr "Controllo medio (1 sec)"
 
@@ -217,7 +217,7 @@ msgstr "Controllo medio (5 sec)"
 msgid "Check Normal (10 sec)"
 msgstr "Controllo normale (10 sec)"
 
-#: src/modules/cpufreq/e_mod_main.c:402
+#: src/modules/cpufreq/e_mod_main.c:398
 msgid "Check Normal (2 sec)"
 msgstr "Controllo normale (2 sec)"
 
@@ -225,11 +225,11 @@ msgstr "Controllo normale (2 sec)"
 msgid "Check Slow (30 sec)"
 msgstr "Controllo lento (30 sec)"
 
-#: src/modules/cpufreq/e_mod_main.c:409
+#: src/modules/cpufreq/e_mod_main.c:405
 msgid "Check Slow (5 sec)"
 msgstr "Controllo lento (5 sec)"
 
-#: src/modules/cpufreq/e_mod_main.c:416
+#: src/modules/cpufreq/e_mod_main.c:412
 msgid "Check Very Slow (30 sec)"
 msgstr "Controllo molto lento (30 sec)"
 
@@ -237,7 +237,7 @@ msgstr "Controllo molto lento (30 sec)"
 msgid "Check Very Slow (60 sec)"
 msgstr "Controllo molto lento (60 sec)"
 
-#: src/bin/e_int_menus.c:499
+#: src/bin/e_int_menus.c:522
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -245,19 +245,19 @@ msgstr "Ordina Finestre"
 msgid "Clock"
 msgstr "Clock"
 
-#: src/bin/e_border.c:3783
+#: src/bin/e_border.c:4300
 msgid "Close"
 msgstr "Chiudi"
 
-#: src/bin/e_module.c:398
+#: src/bin/e_module.c:399
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: src/bin/e_config.c:977
+#: src/bin/e_config.c:976
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
-#: src/bin/e_config.c:157
+#: src/bin/e_config.c:158
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -279,7 +279,7 @@ msgstr ""
 "Adesso è possibile riconfigurare le cose a proprio piacimento.\n"
 "Ci scusiamo per il disagio.\n"
 
-#: src/bin/e_container.c:102
+#: src/bin/e_container.c:103
 #, c-format
 msgid "Container %d"
 msgstr "Contenitore %d"
@@ -288,7 +288,7 @@ msgstr "Contenitore %d"
 msgid "CpuFreq"
 msgstr "CpuFreq"
 
-#: src/bin/e_border.c:3887
+#: src/bin/e_border.c:4406
 msgid "Create Icon"
 msgstr "Crea icona"
 
@@ -305,27 +305,31 @@ msgstr "Scura"
 msgid "Desktop %d, %d"
 msgstr "Desktop %d, %d"
 
-#: src/bin/e_int_menus.c:82
+#: src/bin/e_int_menus.c:84
 msgid "Desktops"
 msgstr "Desktop"
+
+#: src/bin/e_init.c:110
+msgid "Disable this splash screen in the future?"
+msgstr "Disabilitare questo splash screen nel futuro?"
 
 #: src/modules/dropshadow/e_mod_main.c:139
 msgid "Dropshadow"
 msgstr "Dropshadow"
 
-#: src/bin/e_border.c:3861
+#: src/bin/e_border.c:4380
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_int_menus.c:563 src/modules/ibar/e_mod_main.c:574
-#: src/modules/ibox/e_mod_main.c:444 src/modules/cpufreq/e_mod_main.c:814
+#: src/bin/e_int_menus.c:586 src/modules/ibar/e_mod_main.c:574
+#: src/modules/ibox/e_mod_main.c:444 src/modules/cpufreq/e_mod_main.c:810
 #: src/modules/clock/e_mod_main.c:309 src/modules/pager/e_mod_main.c:435
-#: src/modules/start/e_mod_main.c:235 src/modules/temperature/e_mod_main.c:721
+#: src/modules/start/e_mod_main.c:233 src/modules/temperature/e_mod_main.c:723
 #: src/modules/battery/e_mod_main.c:561
 msgid "Edit Mode"
 msgstr "Modalità modifica"
 
-#: src/bin/e_module.c:387
+#: src/bin/e_module.c:388
 msgid "Enabled"
 msgstr "Abilitato"
 
@@ -333,7 +337,7 @@ msgstr "Abilitato"
 msgid "End Edit Mode"
 msgstr "Fine modalità modifica"
 
-#: src/bin/e_main.c:422
+#: src/bin/e_main.c:434
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -357,7 +361,7 @@ msgstr "Modulo IBar di Enlightenment"
 msgid "Enlightenment IBox Module"
 msgstr "Modulo IBox di Enlightenment"
 
-#: src/bin/e_main.c:405
+#: src/bin/e_main.c:417
 msgid "Enlightenment IPC setup error!"
 msgstr "Errore impostazione IPC di Enlightenment"
 
@@ -369,7 +373,7 @@ msgstr "Modulo Pager di Enlightenment"
 msgid "Enlightenment Start Module"
 msgstr "Modulo Start di Enlightenment"
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:436
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -381,7 +385,7 @@ msgstr "Modulo Temperature di Enlightenment"
 msgid "Enlightenment Test Module"
 msgstr "Modulo Test di Enlightenment"
 
-#: src/bin/e_main.c:192
+#: src/bin/e_main.c:191
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -389,7 +393,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare Ecore!\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:285
+#: src/bin/e_main.c:284
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -397,7 +401,7 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: src/bin/e_main.c:219
+#: src/bin/e_main.c:218
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -405,7 +409,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare la connessione a X.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:258
+#: src/bin/e_main.c:257
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -413,7 +417,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema Evas.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:273
+#: src/bin/e_main.c:272
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -421,7 +425,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema File.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:250
+#: src/bin/e_main.c:249
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -429,7 +433,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema IPC.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:242
+#: src/bin/e_main.c:241
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -437,7 +441,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema di connessioni\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:208
+#: src/bin/e_main.c:207
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -445,7 +449,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali HUP.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:202
+#: src/bin/e_main.c:201
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -453,7 +457,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali d'uscita.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:343
+#: src/bin/e_main.c:344
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -461,61 +465,67 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:308
+#: src/bin/e_main.c:307
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:364
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di applicazioni."
 
-#: src/bin/e_main.c:315
+#: src/bin/e_main.c:314
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:293
+#: src/bin/e_main.c:292
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:399
+#: src/bin/e_main.c:411
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:333
+#: src/bin/e_main.c:332
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:391
+#: src/bin/e_main.c:403
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:322
+#: src/bin/e_main.c:396
+msgid "Enlightenment cannot set up its msg system."
+msgstr ""
+"Enlightenment non riesce a configurare il suo\n"
+"sistema di messaggi."
+
+#: src/bin/e_main.c:321
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:366
+#: src/bin/e_main.c:371
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:300
+#: src/bin/e_main.c:299
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -523,7 +533,7 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:378 src/bin/e_main.c:406
+#: src/bin/e_main.c:383 src/bin/e_main.c:418
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an exisiting copy of Enlightenment.\n"
@@ -537,7 +547,7 @@ msgstr ""
 "su questo display, altrimenti provate a cancellare tutti i file\n"
 "in ~/.ecore/enlightenment-* e riavviatelo."
 
-#: src/bin/e_main.c:226
+#: src/bin/e_main.c:225
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -545,7 +555,7 @@ msgstr ""
 "Enlightenment non riesce a configurare xinerama.\n"
 "Questo non dovrebbe accadere."
 
-#: src/bin/e_main.c:264
+#: src/bin/e_main.c:263
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -555,7 +565,7 @@ msgstr ""
 "software X11 in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il rendering software X11."
 
-#: src/bin/e_main.c:351
+#: src/bin/e_main.c:353
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -564,11 +574,11 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_error.c:357
+#: src/bin/e_error.c:364
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment: Errore!"
 
-#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:662
+#: src/modules/ibar/e_mod_main.c:802 src/modules/ibox/e_mod_main.c:663
 msgid "Enormous"
 msgstr "Enorme"
 
@@ -706,7 +716,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr "Errore nel caricamento del modulo"
 
-#: src/bin/e_border.c:3964
+#: src/bin/e_border.c:4475
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -718,7 +728,7 @@ msgstr ""
 "si prega di installare e_util_eapp_edit o\n"
 "di assicurarsi che sia nel proprio PATH\n"
 
-#: src/bin/e_int_menus.c:136
+#: src/bin/e_int_menus.c:145
 msgid "Exit Enlightenment"
 msgstr "Esci da Enlightenment"
 
@@ -726,7 +736,7 @@ msgstr "Esci da Enlightenment"
 msgid "Experimental Button module for E17"
 msgstr "Modulo sperimentale per un pulsante d'avvio menu per E17"
 
-#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:648
+#: src/modules/ibar/e_mod_main.c:788 src/modules/ibox/e_mod_main.c:649
 msgid "Extremely Large"
 msgstr "Estremamente grande"
 
@@ -742,19 +752,19 @@ msgstr "CARICA"
 msgid "Far"
 msgstr "Lontana"
 
-#: src/modules/temperature/e_mod_main.c:460
+#: src/modules/temperature/e_mod_main.c:462
 msgid "Fast (1 sec)"
 msgstr "Veloce (1 sec)"
 
-#: src/bin/e_int_menus.c:61
+#: src/bin/e_int_menus.c:63
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_gadman.c:572
+#: src/bin/e_gadman.c:573
 msgid "Full Screen Height"
 msgstr "Altezza a schermo pieno"
 
-#: src/bin/e_gadman.c:525
+#: src/bin/e_gadman.c:526
 msgid "Full Screen Width"
 msgstr "Larghezza a schermo pieno"
 
@@ -762,19 +772,19 @@ msgstr "Larghezza a schermo pieno"
 msgid "Fuzzy"
 msgstr "Sfumata"
 
-#: src/bin/e_int_menus.c:100
+#: src/bin/e_int_menus.c:102
 msgid "Gadgets"
 msgstr "Gadget"
 
-#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:669
+#: src/modules/ibar/e_mod_main.c:809 src/modules/ibox/e_mod_main.c:670
 msgid "Gigantic"
 msgstr "Gigantesco"
 
-#: src/bin/e_gadman.c:566
+#: src/bin/e_gadman.c:567
 msgid "Half Screen Height"
 msgstr "Mezza altezza schermo"
 
-#: src/bin/e_gadman.c:519
+#: src/bin/e_gadman.c:520
 msgid "Half Screen Width"
 msgstr "Mezza larghezza schermo"
 
@@ -783,11 +793,11 @@ msgid "High"
 msgstr "Alta"
 
 #: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:616
+#: src/modules/temperature/e_mod_main.c:618
 msgid "High Temperature"
 msgstr "Alta temperatura"
 
-#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:655
+#: src/modules/ibar/e_mod_main.c:795 src/modules/ibox/e_mod_main.c:656
 msgid "Huge"
 msgstr "Grandissima"
 
@@ -799,11 +809,11 @@ msgstr "IBar"
 msgid "IBox"
 msgstr "IBox"
 
-#: src/bin/e_border.c:3963
+#: src/bin/e_border.c:4474
 msgid "Icon Edit Error"
 msgstr "Errore dell'editor di icone"
 
-#: src/bin/e_border.c:3791
+#: src/bin/e_border.c:4308
 msgid "Iconify"
 msgstr "Iconifica"
 
@@ -811,7 +821,7 @@ msgstr "Iconifica"
 msgid "Immediately Underneath"
 msgstr "Immediatamente sotto"
 
-#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:634
+#: src/modules/ibar/e_mod_main.c:774 src/modules/ibox/e_mod_main.c:635
 msgid "Large"
 msgstr "Grande"
 
@@ -824,36 +834,36 @@ msgid "Low"
 msgstr "Bassa"
 
 #: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:612
+#: src/modules/temperature/e_mod_main.c:614
 msgid "Low Temperature"
 msgstr "Bassa temperatura"
 
-#: src/modules/cpufreq/e_mod_main.c:432
+#: src/modules/cpufreq/e_mod_main.c:428
 msgid "Manual"
 msgstr "Manuale"
 
-#: src/bin/e_border.c:3812
+#: src/bin/e_border.c:4329
 msgid "Maximized"
 msgstr "Massimizzata"
 
-#: src/modules/cpufreq/e_mod_main.c:438
+#: src/modules/cpufreq/e_mod_main.c:434
 msgid "Maximum Speed"
 msgstr "Massima velocità"
 
-#: src/modules/ibar/e_mod_main.c:767 src/modules/ibox/e_mod_main.c:627
+#: src/modules/ibar/e_mod_main.c:767 src/modules/ibox/e_mod_main.c:628
 #: src/modules/dropshadow/e_mod_main.c:277
 msgid "Medium"
 msgstr "Media"
 
-#: src/modules/temperature/e_mod_main.c:467
+#: src/modules/temperature/e_mod_main.c:469
 msgid "Medium (5 sec)"
 msgstr "Media (5 sec)"
 
-#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:599
+#: src/modules/ibar/e_mod_main.c:739 src/modules/ibox/e_mod_main.c:600
 msgid "Microscopic"
 msgstr "Microscopica"
 
-#: src/modules/cpufreq/e_mod_main.c:436
+#: src/modules/cpufreq/e_mod_main.c:432
 msgid "Minimum Speed"
 msgstr "Minima velocità"
 
@@ -877,11 +887,11 @@ msgstr "Oggetto menu configurazione modulo 2"
 msgid "Module Config Menu Item 3"
 msgstr "Oggetto menu configurazione modulo 3"
 
-#: src/bin/e_int_menus.c:73
+#: src/bin/e_int_menus.c:75
 msgid "Modules"
 msgstr "Moduli"
 
-#: src/bin/e_main.c:440
+#: src/bin/e_main.c:448
 msgid "Most features do not work yet, and those that do are buggy."
 msgstr ""
 "La maggior parte delle funzionalità non ci sono ancora,\n"
@@ -899,27 +909,28 @@ msgstr "NESSUNA INFORMAZIONE"
 msgid "Near"
 msgstr "Vicina"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:410
 msgid "New Column of Desktops"
 msgstr "Nuova colonna di desktop"
 
-#: src/bin/e_int_menus.c:385
+#: src/bin/e_int_menus.c:402
 msgid "New Row of Desktops"
 msgstr "Nuova riga di desktop"
 
-#: src/modules/temperature/e_mod_main.c:474
+#: src/modules/temperature/e_mod_main.c:476
 msgid "Normal (10 sec)"
 msgstr "Normale (10 sec)"
 
-#: src/bin/e_error.c:204 src/bin/e_error.c:213
+#: src/bin/e_error.c:209 src/bin/e_error.c:218
 msgid "OK"
 msgstr "OK"
 
-#: src/modules/ibar/e_mod_main.c:817 src/modules/ibox/e_mod_main.c:677
+#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:817
+#: src/modules/ibox/e_mod_main.c:678
 msgid "Options"
 msgstr "Opzioni"
 
-#: src/bin/e_main.c:140
+#: src/bin/e_main.c:139
 #, c-format
 msgid ""
 "Options:\n"
@@ -962,19 +973,23 @@ msgstr ""
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_menus.c:397
+#: src/bin/e_int_menus.c:414
 msgid "Remove Column of Desktops"
 msgstr "Rimuovi colonna di desktop"
 
-#: src/bin/e_int_menus.c:389
+#: src/bin/e_int_menus.c:406
 msgid "Remove Row of Desktops"
 msgstr "Rimuovi riga di desktop"
 
-#: src/bin/e_int_menus.c:129
+#: src/bin/e_int_menus.c:138
 msgid "Restart Enlightenment"
 msgstr "Riavvia Enlightement"
 
-#: src/bin/e_border.c:3845
+#: src/bin/e_int_menus.c:130
+msgid "Run Command"
+msgstr "Esegui comando"
+
+#: src/bin/e_border.c:4362
 msgid "Send To"
 msgstr "Invia a"
 
@@ -982,20 +997,20 @@ msgstr "Invia a"
 msgid "Set Alarm"
 msgstr "Imposta Allarme"
 
-#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
+#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:480
 msgid "Set Controller"
 msgstr "Imposta Controller"
 
-#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
+#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:474
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 msgid "Set Poll Time"
 msgstr "Imposta Tempo di prelevamento"
 
-#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
+#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:487
 msgid "Set Speed"
 msgstr "Imposta Velocità"
 
-#: src/bin/e_border.c:3802
+#: src/bin/e_border.c:4319
 msgid "Shaded"
 msgstr "Arrotolata"
 
@@ -1003,15 +1018,16 @@ msgstr "Arrotolata"
 msgid "Sharp"
 msgstr "Contrastata"
 
-#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:681
+#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:821
+#: src/modules/ibox/e_mod_main.c:682
 msgid "Size"
 msgstr "Dimensione"
 
-#: src/modules/temperature/e_mod_main.c:481
+#: src/modules/temperature/e_mod_main.c:483
 msgid "Slow (30 sec)"
 msgstr "Lento (30 sec)"
 
-#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:620
+#: src/modules/ibar/e_mod_main.c:760 src/modules/ibox/e_mod_main.c:621
 msgid "Small"
 msgstr "Piccola"
 
@@ -1023,7 +1039,7 @@ msgstr "Qualcos'altro"
 msgid "Start"
 msgstr "Start"
 
-#: src/bin/e_border.c:3822
+#: src/bin/e_border.c:4339
 msgid "Sticky"
 msgstr "Appiccicata"
 
@@ -1035,7 +1051,7 @@ msgstr "Temperature"
 msgid "Test!!!"
 msgstr "Prova!!!"
 
-#: src/bin/e_int_menus.c:109
+#: src/bin/e_int_menus.c:111
 msgid "Themes"
 msgstr "Temi"
 
@@ -1065,7 +1081,7 @@ msgstr ""
 "L'errore riportato è stato:\n"
 "%s"
 
-#: src/modules/cpufreq/e_mod_main.c:271
+#: src/modules/cpufreq/e_mod_main.c:267
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "governor via the module's setfreq utility."
@@ -1074,7 +1090,7 @@ msgstr ""
 "della frequenza della cpu attraverso l'utilità\n"
 "setfreq del modulo."
 
-#: src/modules/cpufreq/e_mod_main.c:288
+#: src/modules/cpufreq/e_mod_main.c:284
 msgid ""
 "There was an error trying to set the cpu frequency\n"
 "setting via the module's setfreq utility."
@@ -1083,7 +1099,7 @@ msgstr ""
 "della frequenza della cpu attraverso l'utilità\n"
 "setfreq del modulo."
 
-#: src/bin/e_int_menus.c:242
+#: src/bin/e_int_menus.c:251
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
@@ -1101,7 +1117,7 @@ msgstr ""
 "\n"
 "Pensate agli aardvark. Anch'essi hanno bisogno di un pò d'amore."
 
-#: src/bin/e_main.c:439
+#: src/bin/e_main.c:447
 msgid "This is development code, so be warned."
 msgstr "Questo è codice di sviluppo, siete avvertiti."
 
@@ -1150,7 +1166,7 @@ msgstr ""
 "Enlightenment 0.17.0. Si prega di ignorare questo modulo,\n"
 "a meno che si stia lavorando sul sistema dei moduli."
 
-#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:606
+#: src/modules/ibar/e_mod_main.c:746 src/modules/ibox/e_mod_main.c:607
 msgid "Tiny"
 msgstr "Piccolissima"
 
@@ -1166,7 +1182,7 @@ msgstr "Molto lontana"
 msgid "Very Fuzzy"
 msgstr "Molto sfumata"
 
-#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:641
+#: src/modules/ibar/e_mod_main.c:781 src/modules/ibox/e_mod_main.c:642
 msgid "Very Large"
 msgstr "Molto grande"
 
@@ -1182,19 +1198,19 @@ msgstr "Molto vicina"
 msgid "Very Sharp"
 msgstr "Molto contrastata"
 
-#: src/modules/temperature/e_mod_main.c:488
+#: src/modules/temperature/e_mod_main.c:490
 msgid "Very Slow (60 sec)"
 msgstr "Molto lento (60 sec)"
 
-#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:613
+#: src/modules/ibar/e_mod_main.c:753 src/modules/ibox/e_mod_main.c:614
 msgid "Very Small"
 msgstr "Molto piccola"
 
-#: src/bin/e_int_menus.c:91
+#: src/bin/e_int_menus.c:93
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_init.c:34
+#: src/bin/e_init.c:36
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
 msgstr "X sostiene che non vi è root window e schermi %i!\n"
@@ -1207,7 +1223,7 @@ msgstr ""
 "La vostra batteria si sta esaurendo.\n"
 "Vogliate passare ad una alimentazione di rete."
 
-#: src/bin/e_config.c:171
+#: src/bin/e_config.c:172
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
