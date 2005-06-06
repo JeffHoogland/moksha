@@ -601,11 +601,13 @@ e_border_move(E_Border *bd, int x, int y)
    bd->y = y;
    bd->changed = 1;
    bd->changes.pos = 1;
+#if 0
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.wait++;
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
+#endif
    ecore_x_icccm_move_resize_send(bd->client.win,
 				  bd->x + bd->client_inset.l,
 				  bd->y + bd->client_inset.t,
@@ -2975,11 +2977,13 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	int new_w, new_h;
 	Evas_List *skiplist = NULL;
 
+#if 0
 	if ((ecore_time_get() - bd->client.netwm.sync.time) > 0.5)
 	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
 	    (bd->client.netwm.sync.alarm) &&
 	    (bd->client.netwm.sync.wait > 1)) return 1;
+#endif
 
 	if ((bd->moveinfo.down.button >= 1) && (bd->moveinfo.down.button <= 3))
 	  {
@@ -4799,6 +4803,7 @@ _e_border_move_begin(E_Border *bd)
 {
    if (grabbed)
      ecore_x_pointer_grab(bd->win);
+#if 0
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
@@ -4806,6 +4811,7 @@ _e_border_move_begin(E_Border *bd)
 	bd->client.netwm.sync.wait = 0;
 	bd->client.netwm.sync.time = ecore_time_get();
      }
+#endif
    e_move_begin(bd->zone, bd->x, bd->y);
    move = bd;
 }
@@ -4816,11 +4822,13 @@ _e_border_move_end(E_Border *bd)
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;
+#if 0
    if (bd->client.netwm.sync.alarm)
      {
 	ecore_x_sync_alarm_free(bd->client.netwm.sync.alarm);
 	bd->client.netwm.sync.alarm = 0;
      }
+#endif
    e_move_end();
    move = NULL;
 }
