@@ -184,7 +184,14 @@ struct _E_Border
 	      int bottom_end_x;
 	 } strut;
 	 unsigned char ping : 1;
-	 unsigned char sync_request : 1;
+	 struct {
+	      unsigned char        request : 1;
+	      unsigned int         wait;
+	      Ecore_X_Sync_Alarm   alarm;
+	      Ecore_X_Sync_Counter counter;
+	      unsigned int         serial;
+	      double               time;
+	 } sync;
 
 	 /* NetWM Window state */
 	 struct {
@@ -249,7 +256,6 @@ struct _E_Border
    unsigned char   already_unparented : 1;
    unsigned char   need_reparent : 1;
    unsigned char   button_grabbed : 1;
-   unsigned char   grab : 1;
 
    double          ping;
  
@@ -418,6 +424,7 @@ EAPI void      e_border_unstick(E_Border *bd);
 EAPI E_Border *e_border_find_by_client_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_frame_window(Ecore_X_Window win);
 EAPI E_Border *e_border_find_by_window(Ecore_X_Window win);
+EAPI E_Border *e_border_find_by_alarm(Ecore_X_Sync_Alarm alarm);
 EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);

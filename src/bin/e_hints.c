@@ -17,7 +17,7 @@ e_hints_init(void)
 	for (i = 0; i < num; i++)
 	  {
 	     Ecore_X_Window win;
-	     Ecore_X_Atom supported[35];
+	     Ecore_X_Atom supported[38];
 	     int num;
 	     
 	     win = ecore_x_window_new(roots[i], -200, -200, 5, 5);
@@ -112,9 +112,9 @@ e_hints_init(void)
 	     /*ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_HANDLED_ICONS, 1);*/
 	     supported[num++] = ECORE_X_ATOM_NET_WM_USER_TIME;
 	     supported[num++] = ECORE_X_ATOM_NET_FRAME_EXTENTS;
-	     /*ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_PING, 1);*/
-	     /*ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_SYNC_REQUEST, 1);*/
-	     /*ecore_x_netwm_supported(roots[i], ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER, 1);*/
+	     supported[num++] = ECORE_X_ATOM_NET_WM_PING;
+	     supported[num++] = ECORE_X_ATOM_NET_WM_SYNC_REQUEST;
+	     supported[num++] = ECORE_X_ATOM_NET_WM_SYNC_REQUEST_COUNTER;
 	     ecore_x_netwm_supported_set(roots[i], supported, num);
 	  }
         free(roots);
