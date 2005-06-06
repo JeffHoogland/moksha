@@ -29,7 +29,6 @@ e_path_from_env(char *env)
 
    if (!env_path)
      return ep;
-   printf("need to add all parts of %s\n", env_path);
 
    env_path = strdup(env_path);
    last = env_path;
