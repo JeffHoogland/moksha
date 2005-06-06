@@ -685,8 +685,9 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_PATH_GET(path, s1)
-   e_path_user_path_append(path, s2);
+   { E_PATH_GET(path, s1)
+     e_path_user_path_append(path, s2);
+   }
    SAVE;
    END_STRING2(e_2str)
 #elif (TYPE == E_REMOTE_IN)
@@ -702,8 +703,9 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_PATH_GET(path, s1)
-   e_path_user_path_prepend(path, s2);
+   { E_PATH_GET(path, s1)
+     e_path_user_path_prepend(path, s2);
+   }
    SAVE;
    END_STRING2(e_2str)
 #elif (TYPE == E_REMOTE_IN)
@@ -719,8 +721,9 @@ break;
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   E_PATH_GET(path, s1)
-   e_path_user_path_remove(path, s2);
+   { E_PATH_GET(path, s1)
+     e_path_user_path_remove(path, s2);
+   }
    SAVE;
    END_STRING2(e_2str)
 #elif (TYPE == E_REMOTE_IN)
