@@ -123,19 +123,29 @@ e_util_utils_installed(void)
 int
 e_util_app_installed(char *app)
 {
-   char *cmd, *tmp;
-   int   ret, len;
+   char buf[PATH_MAX];
+   Evas_List *list, *l;
+   E_Path_Dir *dir;
+   int found;
 
    if (!app)
      return 0;
 
-   cmd = "which %s > /dev/null 2>&1";
-   len = strlen(cmd) + strlen(app) - 1; // -1 is -2 for "%s" and +1 for "\0"
-   tmp = malloc(len);
-   snprintf(tmp, len, cmd, app);
+   found = 0;
+   list = e_path_dir_list_get(path_bin);
+   for (l = list; l; l = l->next)
+     {
+	dir = l->data;
+	snprintf(buf, strlen(dir->dir) + strlen(app) + 2, "%s/%s", dir->dir,
+		 app); // 2 = "/" + "\0"
+	if (ecore_file_exists(buf) && ecore_file_can_exec(buf))
+	  {
+	     found = 1;
+	     break;
+	  }
+     }
    
-   ret = system(tmp);
-   free(tmp);
-   return (ret == 0);
+   e_path_dir_list_free(list);
+   return found;
 }
 

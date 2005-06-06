@@ -18,6 +18,40 @@ e_path_new(void)
    return ep;
 }
 
+E_Path *
+e_path_from_env(char *env)
+{
+   E_Path *ep;
+   char *env_path, *p, *last;
+
+   ep = e_path_new();
+   env_path = getenv(env);
+
+   if (!env_path)
+     return ep;
+   printf("need to add all parts of %s\n", env_path);
+
+   env_path = strdup(env_path);
+   last = env_path;
+   for (p = env_path; *p; p++)
+     {
+	if (*p == ':')
+	  *p = '\0';
+
+	if (!*p)
+	  {
+	     e_path_default_path_append(ep, last);
+	     last = p+1;
+	  }
+
+     }
+   if (p > last)
+     e_path_default_path_append(ep, last);
+
+   free(env_path);
+   return ep;
+}
+
 void
 e_path_default_path_append(E_Path *ep, const char *path)
 {
@@ -352,12 +386,16 @@ e_path_dir_list_get(E_Path *ep)
 	new_epd->dir = strdup(epd->dir);
 	dir_list = evas_list_append(dir_list, new_epd);
      }
-   for (l = *(ep->user_dir_list); l; l = l->next)
+
+   if (ep->user_dir_list)
      {
-	epd = l->data;
-	new_epd = malloc(sizeof(E_Path_Dir));
-	new_epd->dir = strdup(epd->dir);
-	dir_list = evas_list_append(dir_list, new_epd);
+	for (l = *(ep->user_dir_list); l; l = l->next)
+	  {
+	     epd = l->data;
+	     new_epd = malloc(sizeof(E_Path_Dir));
+	     new_epd->dir = strdup(epd->dir);
+	     dir_list = evas_list_append(dir_list, new_epd);
+	  }
      }
 
    return dir_list;
