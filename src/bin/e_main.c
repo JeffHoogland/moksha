@@ -390,7 +390,7 @@ main(int argc, char **argv)
    else
      _e_main_shutdown_push(_e_main_ipc_shutdown);
 
-   /* setup module loading etc */
+   /* setup generic msg handling etc */
    if (!e_msg_init())
      {
 	e_error_message_show(_("Enlightenment cannot set up its msg system."));
@@ -404,7 +404,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_module_shutdown);
-
    /* setup dnd */
    if (!e_dnd_init())
      {
@@ -412,6 +411,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
+   /* setup winlist */
+   if (!e_winlist_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its window list system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_winlist_shutdown);
 
    if (ipc_failed)
      e_error_dialog_show(_("Enlightenment IPC setup error!"),

@@ -496,6 +496,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    else
      strcpy(buf, penv_display);
    e_util_env_set("DISPLAY", buf);
+/*   
    snprintf(buf, sizeof(buf), "%i %i", zone->desk_x_current, zone->desk_y_current);
    e_util_env_set("E_DESK", buf);
    snprintf(buf, sizeof(buf), "%i", zone->num);
@@ -504,11 +505,11 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    e_util_env_set("E_CONTAINER", buf);
    snprintf(buf, sizeof(buf), "%i", zone->container->manager->num);
    e_util_env_set("E_MANAGER", buf);
-   e_util_env_set("LD_PRELOAD_PATH", PACKAGE_LIB_DIR"/enlightenment/preload");
-   e_util_env_set("LD_PRELOAD", PACKAGE_LIB_DIR"/enlightenment/preload/e_hack.so");
-   
    snprintf(buf, sizeof(buf), "%i", launch_id);
    e_util_env_set("E_LAUNCH_ID", buf);
+   e_util_env_set("LD_PRELOAD_PATH", PACKAGE_LIB_DIR"/enlightenment/preload");
+   e_util_env_set("LD_PRELOAD", PACKAGE_LIB_DIR"/enlightenment/preload/e_hack.so");
+ */
    launch_id++;
    if (launch_id == 0) launch_id = 1;
    /* execute */
@@ -520,6 +521,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	e_util_env_set("DISPLAY", penv_display);
 	free(penv_display);
      }
+/*   
    if (penv_ld_preload)
      {
 	e_util_env_set("LD_PRELOAD", penv_ld_preload);
@@ -530,6 +532,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	e_util_env_set("LD_PRELOAD_PATH", penv_ld_preload_path);
 	free(penv_ld_preload_path);
      }
+ */
    return launch_id;
 }
 
