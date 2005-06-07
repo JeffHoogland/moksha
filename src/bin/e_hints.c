@@ -185,7 +185,7 @@ e_hints_manager_init(E_Manager *man)
 #endif
    if (e_config->use_virtual_roots)
      {
-	ecore_x_netwm_desk_roots_set(man->root, num, vroots);
+	ecore_x_netwm_desk_roots_set(man->root, vroots, num);
      }
 #if 0
    /* No need for workarea without desktops */
@@ -241,8 +241,8 @@ e_hints_client_list_set(void)
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
-	     ecore_x_netwm_client_list_set(m->root, num, clients);
-	     ecore_x_netwm_client_list_stacking_set(m->root, num, clients);
+	     ecore_x_netwm_client_list_set(m->root, clients, num);
+	     ecore_x_netwm_client_list_stacking_set(m->root, clients, num);
 	  }
      }
    else
@@ -250,8 +250,8 @@ e_hints_client_list_set(void)
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
-	     ecore_x_netwm_client_list_set(m->root, 0, NULL);
-	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
+	     ecore_x_netwm_client_list_set(m->root, NULL, 0);
+	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }
    IF_FREE(clients);
@@ -302,7 +302,7 @@ e_hints_client_stacking_set(void)
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
-	     ecore_x_netwm_client_list_stacking_set(m->root, num, clients);
+	     ecore_x_netwm_client_list_stacking_set(m->root, clients, num);
 	  }
      }
    else
@@ -310,7 +310,7 @@ e_hints_client_stacking_set(void)
 	for (ml = e_manager_list(); ml; ml = ml->next)
 	  {
 	     m = ml->data;
-	     ecore_x_netwm_client_list_stacking_set(m->root, 0, NULL);
+	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }
    IF_FREE(clients);
@@ -444,7 +444,7 @@ e_hints_window_state_set(E_Border *bd)
       default:
 	 break;
      }
-   ecore_x_netwm_window_state_list_set(bd->client.win, state, num);
+   ecore_x_netwm_window_state_set(bd->client.win, state, num);
 }
 
 void e_hints_window_type_set(E_Border *bd)
@@ -454,7 +454,7 @@ void e_hints_window_type_set(E_Border *bd)
 
 void e_hints_window_type_get(E_Border *bd)
 {
-   bd->client.netwm.type = ecore_x_netwm_window_type_get(bd->client.win);
+   ecore_x_netwm_window_type_get(bd->client.win, &bd->client.netwm.type);
 }
 
 void
@@ -830,7 +830,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 void
 e_hints_window_state_get(E_Border *bd)
 {
-   int i, num;
+   unsigned int i, num;
    Ecore_X_Window_State *state;
 
    bd->client.netwm.state.modal = 0;
@@ -844,7 +844,7 @@ e_hints_window_state_get(E_Border *bd)
    bd->client.netwm.state.fullscreen = 0;
    bd->client.netwm.state.stacking = 0;
 
-   state = ecore_x_netwm_window_state_list_get(bd->client.win, &num);
+   ecore_x_netwm_window_state_get(bd->client.win, &state, &num);
    if (state)
      {
 	for (i = 0; i < num; i++)

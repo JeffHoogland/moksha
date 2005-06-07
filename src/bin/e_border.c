@@ -2241,57 +2241,15 @@ _e_border_cb_window_state_request(void *data, int ev_type, void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_State_Request *e;
-   int i, on;
+   int i;
 
    e = ev;
    bd = e_border_find_by_client_window(e->win);
-   if (bd)
-     {
-	for (i = 0; i < 2; i++)
-	  e_hints_window_state_update(bd, e->state[i], e->action);
-     }
-   else
-     {
-	/* FIXME: We should ignore this when the window isn't mapped.
-	 * The window should state the properties by itself, and we
-	 * will pick them up on border creation.
-	 */
-	for (i = 0; i < 2; i++)
-	  {
-	     switch (e->state[i])
-	       {
-		case ECORE_X_WINDOW_STATE_ICONIFIED:
-		   if (e->action == ECORE_X_WINDOW_STATE_ACTION_ADD)
-		     {
-			ecore_x_icccm_state_set(e->win, ECORE_X_WINDOW_STATE_HINT_ICONIC);
-			ecore_x_netwm_window_state_set(e->win, ECORE_X_WINDOW_STATE_HIDDEN, 1);
-		     }
-		   break;
-		case ECORE_X_WINDOW_STATE_UNKNOWN:
-		case ECORE_X_WINDOW_STATE_HIDDEN:
-		   /* Ignore */
-		   break;
-		default:
-		   switch (e->action)
-		     {
-		      case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-			 ecore_x_netwm_window_state_set(e->win, e->state[i], 0);
-			 break;
-		      case ECORE_X_WINDOW_STATE_ACTION_ADD:
-			 ecore_x_netwm_window_state_set(e->win, e->state[i], 1);
-			 break;
-		      case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-			 on = ecore_x_netwm_window_state_isset(e->win, e->state[i]);
-			 if (on)
-			   ecore_x_netwm_window_state_set(e->win, e->state[i], 0);
-			 else
-			   ecore_x_netwm_window_state_set(e->win, e->state[i], 1);
-			 break;
-		     }
-		   break;
-	       }
-	  }
-     }
+   if (!bd) return 1;
+
+   for (i = 0; i < 2; i++)
+     e_hints_window_state_update(bd, e->state[i], e->action);
+
    return 1;
 }
 
@@ -3126,7 +3084,7 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.name)
      {
 	if (bd->client.netwm.name) free(bd->client.netwm.name);
-	bd->client.netwm.name = ecore_x_netwm_name_get(bd->client.win);
+	ecore_x_netwm_name_get(bd->client.win, &bd->client.netwm.name);
 
 	bd->client.netwm.fetch.name = 0;
 	if (bd->bg_object)
@@ -3174,7 +3132,7 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.icon_name)
      {
 	if (bd->client.netwm.icon_name) free(bd->client.netwm.icon_name);
-	bd->client.netwm.icon_name = ecore_x_netwm_icon_name_get(bd->client.win);
+	ecore_x_netwm_icon_name_get(bd->client.win, &bd->client.netwm.icon_name);
 
 	bd->client.netwm.fetch.icon_name = 0;
      }
