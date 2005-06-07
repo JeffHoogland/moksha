@@ -329,10 +329,6 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
 void
 e_hints_window_init(E_Border *bd)
 {
-   /* Don't need fetch flag, is onlt called from new border */
-   e_hints_window_state_get(bd);
-
-   bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)
      {
 	if (bd->client.netwm.state.hidden)
@@ -458,7 +454,6 @@ void e_hints_window_type_set(E_Border *bd)
 
 void e_hints_window_type_get(E_Border *bd)
 {
-   /* Don't need fetch flag, only called on new border */
    bd->client.netwm.type = ecore_x_netwm_window_type_get(bd->client.win);
 }
 

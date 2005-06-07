@@ -145,6 +145,7 @@ struct _E_Border
 	    unsigned char protocol : 1;
 	    unsigned char transient_for : 1;
 	    unsigned char window_role : 1;
+	    unsigned char state : 1;
 	 } fetch;
       } icccm;
       struct {
@@ -216,17 +217,12 @@ struct _E_Border
 	    unsigned char user_time : 1;
 	    unsigned char strut : 1;
 	    unsigned char type : 1;
+	    unsigned char state : 1;
 	    /* No, fetch on new_client, shouldn't be changed after map.
 	    unsigned char pid : 1;
 	    */
 	    /* No, ignore this
 	    unsigned char desktop : 1;
-	    */
-	    /* No, fetch on new_client, shouldn't be changed after map.
-	    unsigned char type : 1;
-	    */
-	    /* No, don't fetch state, update on client message
-	    unsigned char state : 1;
 	    */
 	 } fetch;
 

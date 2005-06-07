@@ -343,6 +343,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		    bd->client.icccm.fetch.transient_for = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
 		    bd->client.icccm.fetch.window_role = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
+		    bd->client.icccm.fetch.state = 1;
 	       }
 	     /* netwm, loop again, netwm will ignore some icccm, so we
 	      * have to be sure that netwm is checked after */
@@ -385,20 +387,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		       */
 		       bd->client.netwm.fetch.type = 1;
 		    }
+		  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STATE)
+		    {
+		       bd->client.netwm.fetch.state = 1;
+		    }
 	       }
 	     free(atoms);
 	  }
      }
-/*   
-   bd->client.icccm.fetch.title = 1;
-   bd->client.icccm.fetch.name_class = 1;
-   bd->client.icccm.fetch.icon_name = 1;
-   bd->client.icccm.fetch.machine = 1;
-   bd->client.icccm.fetch.hints = 1;
-   bd->client.icccm.fetch.size_pos_hints = 1;
-   bd->client.icccm.fetch.protocol = 1;
-   bd->client.mwm.fetch.hints = 1;
- */
    bd->client.border.changed = 1;
    
    bd->client.w = att->w;
@@ -3139,11 +3135,6 @@ _e_border_eval(E_Border *bd)
 				       bd->client.netwm.name);
 	  }
      }
-   if (bd->client.netwm.update.state)
-     {
-	e_hints_window_state_set(bd);
-	bd->client.netwm.update.state = 0;
-     }
    if (bd->client.icccm.fetch.name_class)
      {
 	int nc_change = 0;
@@ -3236,34 +3227,15 @@ _e_border_eval(E_Border *bd)
 
 	bd->client.netwm.fetch.strut = 0;
      }
-   if (bd->changes.icon)
+   if (bd->client.icccm.fetch.state)
      {
-	if (bd->icon_object)
-	  {
-	     evas_object_del(bd->icon_object);
-	     bd->icon_object = NULL;
-	  }
-
-	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
-	if (bd->bg_object)
-	  {
-	     evas_object_show(bd->icon_object);
-	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
-	  }
-	else
-	  {
-	     evas_object_hide(bd->icon_object);
-	  }
-
-	  {
-	     E_Event_Border_Icon_Change *ev;
-
-	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
-	     ev->border = bd;
-	     e_object_ref(E_OBJECT(bd));
-	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev, _e_border_event_border_icon_change_free, NULL);
-	  }
-	bd->changes.icon = 0;
+	bd->client.icccm.state = ecore_x_icccm_state_get(bd->client.win);
+	bd->client.icccm.fetch.state = 0;
+     }
+   if (bd->client.netwm.fetch.state)
+     {
+	e_hints_window_state_get(bd);
+	bd->client.netwm.fetch.state = 0;
      }
    if (bd->client.netwm.fetch.type)
      {
@@ -3273,6 +3245,23 @@ _e_border_eval(E_Border *bd)
 	     if (bd->client.border.name) free(bd->client.border.name);
 	     bd->client.border.name = strdup("borderless");
 	     bd->client.border.changed = 1;
+	  }
+	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	  {
+	     if (bd->client.border.name) free(bd->client.border.name);
+	     bd->client.border.name = strdup("borderless");
+	     bd->client.border.changed = 1;
+
+	     if (!bd->client.netwm.state.skip_pager)
+	       {
+		  bd->client.netwm.state.skip_pager = 1;
+		  bd->client.netwm.update.state = 1;
+	       }
+	     if (!bd->client.netwm.state.skip_taskbar)
+	       {
+		  bd->client.netwm.state.skip_taskbar = 1;
+		  bd->client.netwm.update.state = 1;
+	       }
 	  }
 
 	bd->client.netwm.fetch.type = 0;
@@ -3418,6 +3407,41 @@ _e_border_eval(E_Border *bd)
      {
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
 	bd->client.icccm.fetch.window_role = 0;
+     }
+   if (bd->client.netwm.update.state)
+     {
+	e_hints_window_state_set(bd);
+	bd->client.netwm.update.state = 0;
+     }
+   if (bd->changes.icon)
+     {
+	if (bd->icon_object)
+	  {
+	     evas_object_del(bd->icon_object);
+	     bd->icon_object = NULL;
+	  }
+
+	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+	if (bd->bg_object)
+	  {
+	     evas_object_show(bd->icon_object);
+	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	  }
+	else
+	  {
+	     evas_object_hide(bd->icon_object);
+	  }
+
+	  {
+	     E_Event_Border_Icon_Change *ev;
+
+	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
+	     ev->border = bd;
+	     e_object_ref(E_OBJECT(bd));
+	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
+			     _e_border_event_border_icon_change_free, NULL);
+	  }
+	bd->changes.icon = 0;
      }
    if (bd->changes.shape)
      {
