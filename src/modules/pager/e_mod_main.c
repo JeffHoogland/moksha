@@ -598,7 +598,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    E_App       *app;
    int          visible;
 
-   if (!border) return NULL;
+   if ((!border) || (border->client.netwm.state.skip_pager)) return NULL;
    pw = E_NEW(Pager_Win, 1);
    if (!pw) return NULL;
 
