@@ -377,9 +377,11 @@ _e_cb_server_data(void *data __UNUSED__, int type, void *event)
 	default:
 	  break;
      }
+   return 1;
 }
 
-static void _e_cb_module_list_free(void *data __UNUSED__, void *ev)
+static void
+_e_cb_module_list_free(void *data __UNUSED__, void *ev)
 {
     E_Response_Module_List *e;
     int i;
