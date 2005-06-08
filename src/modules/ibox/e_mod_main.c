@@ -357,10 +357,23 @@ _ibox_box_new(IBox *ib, E_Container *con)
    evas_object_resize(ibb->box_object, 1000, 1000);
    edje_object_calc_force(ibb->box_object);
    edje_object_part_geometry_get(ibb->box_object, "items", &x, &y, &w, &h);
-   ibb->inset.l = x;
-   ibb->inset.r = 1000 - (x + w);
-   ibb->inset.t = y;
-   ibb->inset.b = 1000 - (y + h);
+   ibb->box_inset.l = x;
+   ibb->box_inset.r = 1000 - (x + w);
+   ibb->box_inset.t = y;
+   ibb->box_inset.b = 1000 - (y + h);
+
+   /* Calculate icon inset */
+   o = edje_object_add(ibb->evas);
+   e_theme_edje_object_set(o, "base/theme/modules/ibox",
+	                   "modules/ibox/icon");
+   evas_object_resize(o, 100, 100);
+   edje_object_calc_force(o);
+   edje_object_part_geometry_get(o, "item", &x, &y, &w, &h);
+   ibb->icon_inset.l = x;
+   ibb->icon_inset.r = 100 - (x + w);
+   ibb->icon_inset.t = y;
+   ibb->icon_inset.b = 100 - (y + h);
+   evas_object_del(o);
 
    e_box_thaw(ibb->item_object);
 
@@ -374,7 +387,7 @@ _ibox_box_new(IBox *ib, E_Container *con)
    e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
    e_gadman_client_align_set(ibb->gmc, 0.0, 0.5);
-   e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->inset.t + ibb->inset.b);
+   e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->box_inset.t + ibb->box_inset.b);
    e_gadman_client_change_func_set(ibb->gmc, _ibox_box_cb_gmc_change, ibb);
    e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_LEFT);
    e_gadman_client_load(ibb->gmc);
@@ -473,7 +486,7 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
    IBox_Icon *ic;
    char *str;
    Evas_Object *o;
-   Evas_Coord bw, bh;
+   Evas_Coord w, h;
 
    /* FIXME: Add default icon! */
    if (!bd->icon_object) return NULL;
@@ -505,12 +518,9 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
    evas_object_show(o);
 
    o = e_border_icon_add(ic->border, ibb->evas);
+   ic->icon_object = o;
    evas_object_resize(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
-   /*
-   edje_extern_object_min_size_set(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
-   */
    edje_object_part_swallow(ic->bg_object, "item", o);
-   edje_object_size_min_calc(ic->bg_object, &bw, &bh);
    evas_object_pass_events_set(o, 1);
    evas_object_show(o);
 
@@ -524,13 +534,15 @@ _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
 
    evas_object_raise(ic->event_object);
 
+   w = ibb->ibox->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+   h = ibb->ibox->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
    e_box_pack_end(ibb->item_object, ic->bg_object);
    e_box_pack_options_set(ic->bg_object,
 			  1, 1, /* fill */
 			  0, 0, /* expand */
 			  0.5, 0.5, /* align */
-			  bw, bh, /* min */
-			  bw, bh /* max */
+			  w, h, /* min */
+			  w, h /* max */
 			  );
 
    /*
@@ -697,7 +709,13 @@ _ibox_box_frame_resize(IBox_Box *ibb)
    evas_event_freeze(ibb->evas);
    e_box_freeze(ibb->item_object);
 
-   e_box_min_size_get(ibb->item_object, &w, &h);
+   if (e_box_pack_count_get(ibb->item_object))
+     e_box_min_size_get(ibb->item_object, &w, &h);
+   else
+     {
+	w = ibb->ibox->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+	h = ibb->ibox->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
+     }
    edje_extern_object_min_size_set(ibb->item_object, w, h);
    edje_object_part_swallow(ibb->box_object, "items", ibb->item_object);
    edje_object_size_min_calc(ibb->box_object, &bw, &bh);
@@ -756,12 +774,13 @@ _ibox_box_edge_change(IBox_Box *ibb, int edge)
 	o = ic->bg_object;
 	edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[edge]);
 	edje_object_message_signal_process(o);
-	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 
 	o = ic->overlay_object;
 	edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[edge]);
 	edje_object_message_signal_process(o);
 
+	bw = ibb->ibox->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+	bh = ibb->ibox->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
 	e_box_pack_options_set(ic->bg_object,
 			       1, 1, /* fill */
 			       0, 0, /* expand */
@@ -1234,15 +1253,11 @@ _ibox_box_iconsize_change(IBox_Box *ibb)
 
 	ic = l->data;
 	o = ic->icon_object;
-	/*
-	edje_extern_object_min_size_set(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
-	*/
-
 	evas_object_resize(o, ibb->ibox->conf->iconsize, ibb->ibox->conf->iconsize);
-
 	edje_object_part_swallow(ic->bg_object, "item", o);
-	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 
+	bw = ibb->ibox->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+	bh = ibb->ibox->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
 	e_box_pack_options_set(ic->bg_object,
 	      1, 1, /* fill */
 	      0, 0, /* expand */

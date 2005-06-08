@@ -62,7 +62,10 @@ struct _IBox_Box
    Evas_Coord      x, y, w, h;
    struct {
 	Evas_Coord l, r, t, b;
-   } inset;
+   } box_inset;
+   struct {
+	Evas_Coord l, r, t, b;
+   } icon_inset;
 
    E_Gadman_Client *gmc;
 
@@ -77,7 +80,7 @@ struct _IBox_Icon
    Evas_Object   *overlay_object;
    Evas_Object   *icon_object;
    Evas_Object   *event_object;
- 
+
    unsigned char  raise_on_hilight : 1;
 };
 
