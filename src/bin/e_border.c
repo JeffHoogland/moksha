@@ -45,6 +45,8 @@ static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
 
+static int _e_border_cb_zone_desk_flip(void *data, int ev_type, void *ev);
+
 static void _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -102,7 +104,6 @@ static void _e_border_event_border_stick_free(void *data, void *ev);
 static void _e_border_event_border_unstick_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
-static void _e_border_desk_update(E_Border *bd);
 
 static void _e_border_resize_begin(E_Border *bd);
 static void _e_border_resize_end(E_Border *bd);
@@ -176,6 +177,8 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_SYNC_ALARM, _e_border_cb_sync_alarm, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
+   handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_ZONE_DESK_FLIP, _e_border_cb_zone_desk_flip, NULL));
+
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
    E_EVENT_BORDER_DESK_SET = ecore_event_type_new();
@@ -192,7 +195,7 @@ e_border_init(void)
    E_EVENT_BORDER_LOWER = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
-   focus_fix_timer = ecore_timer_add(0.1, _e_border_cb_focus_fix, NULL);
+   //focus_fix_timer = ecore_timer_add(0.1, _e_border_cb_focus_fix, NULL);
    
    return 1;
 }
@@ -208,7 +211,7 @@ e_border_shutdown(void)
 	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
-   ecore_timer_del(focus_fix_timer);
+   //ecore_timer_del(focus_fix_timer);
    focus_fix_timer = NULL;
    return 1;
 }
@@ -611,7 +614,6 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->client.h);
    _e_border_move_update(bd);
    _e_border_zone_update(bd);
-   _e_border_desk_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -2404,6 +2406,39 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    if (!bd) return 1;
    bd->client.netwm.sync.wait--;
    bd->client.netwm.sync.time = ecore_time_get();
+   return 1;
+}
+
+/* FIXME:
+ * Using '2' is bad, may change in zone flip code.
+ * Calculate pos from e->x and e->y
+ */
+static int
+_e_border_cb_zone_desk_flip(void *data, int ev_type, void *ev)
+{
+   E_Event_Zone_Desk_Flip *e;
+
+   e = ev;
+   if ((!move) || (move->desk != e->prev)) return 1;
+
+   e_border_desk_set(move, e->current);
+   e_border_show(move);
+   switch (e->direction)
+     {
+      case E_DIRECTION_UP:
+	 e_border_move(move, move->x, move->y + (move->zone->h - 2));
+	 break;
+      case E_DIRECTION_RIGHT:
+	 e_border_move(move, move->x - (move->zone->w - 2), move->y);
+	 break;
+      case E_DIRECTION_DOWN:
+	 e_border_move(move, move->x, move->y - (move->zone->h - 2));
+	 break;
+      case E_DIRECTION_LEFT:
+	 e_border_move(move, move->x + (move->zone->w - 2), move->y);
+	 break;
+     }
+
    return 1;
 }
 
@@ -4709,12 +4744,6 @@ _e_border_zone_update(E_Border *bd)
 	     return;
 	  }
      }
-}
-
-static void
-_e_border_desk_update(E_Border *bd)
-{
-   e_border_desk_set(bd, e_desk_current_get(bd->zone));
 }
 
 static void
