@@ -2915,7 +2915,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
    Ecore_X_Event_Mouse_Move *ev;
    E_Border *bd;
 
-   printf("move: %d %d\n", ev->root.x, ev->root.y);
    ev = event;
    bd = data;
    if (ev->event_win == bd->win)
