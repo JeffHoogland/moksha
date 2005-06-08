@@ -574,9 +574,6 @@ E_IPC_Opt_Handler handlers[] =
    OSTR("-font-default-remove", "Remove the default text class OPT1", E_IPC_OP_FONT_DEFAULT_REMOVE, 0),
    OREQ("-font-default-list", "List all configured text classes", E_IPC_OP_FONT_DEFAULT_LIST, 1),
    OMUL("-font-default-set", "Set textclass (OPT1) font (OPT2) and size (OPT3)", E_IPC_OP_FONT_DEFAULT_SET, 0, 3),
-   OREQ("-lang-get", "Get the current language", E_IPC_OP_LANG_GET, 1),
-   OREQ("-lang-list", "List all available languages", E_IPC_OP_LANG_LIST, 1),
-   OSTR("-lang-set", "Set the current language", E_IPC_OP_LANG_SET, 0),
    OREQ("-binding-mouse-list", "List all mouse bindings", E_IPC_OP_BINDING_MOUSE_LIST, 1),
    OFNC("-binding-mouse-add", "Add an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_add, 0),
    OFNC("-binding-mouse-del", "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_del, 0),
@@ -921,30 +918,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
         else
           printf("REPLY: DEFAULT NONE\n"); 
         break;	
-      case E_IPC_OP_LANG_LIST_REPLY:
-        if (e->data)
-          {
-	     Evas_List *langs;
-	     
-	     langs = _e_ipc_str_list_dec(e->data, e->size);
-	     if (langs)
-	       {
-		  Evas_List *l;
-		  
-		  for (l = langs; l; l = l->next)
-		    printf("REPLY: LANG=\"%s\"\n", (char *)l->data);
-		  evas_list_free(langs);
-	       }
-          }
-        else
-          printf("REPLY: AVAILABLE NONE\n"); 
-        break;   
-      case E_IPC_OP_LANG_GET_REPLY:
-	if (e->data)
-	  {
-	     printf("REPLY: %s\n", (char *)e->data);
-	  }
-	break;
       case E_IPC_OP_BINDING_MOUSE_LIST_REPLY:
         if (e->data)
           {

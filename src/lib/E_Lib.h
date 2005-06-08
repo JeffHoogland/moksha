@@ -18,12 +18,12 @@
 # endif
 #endif
 
-/* FIXME: this is all borken right now :( */
 
 typedef struct _E_Response_Module_List    E_Response_Module_List;
 typedef struct _E_Response_Module_Data		E_Response_Module_Data;
 typedef struct _E_Response_Dirs_List	E_Response_Dirs_List;
 typedef struct _E_Response_Background_Get E_Response_Background_Get;
+typedef struct _E_Response_Language_Get E_Response_Language_Get;
 
 struct _E_Response_Module_List
 {
@@ -48,8 +48,14 @@ struct _E_Response_Background_Get
    char   *file;
 };
 
+struct _E_Response_Language_Get
+{
+   char   *lang;
+};
+
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
+extern EAPI int E_RESPONSE_LANGUAGE_GET;
 
 extern EAPI int E_RESPONSE_DATA_DIRS_LIST;
 extern EAPI int E_RESPONSE_IMAGE_DIRS_LIST;
@@ -80,6 +86,10 @@ extern "C" {
    /* E desktop manipulation */
    EAPI void         e_lib_background_set             (const char *bgfile);
    EAPI void         e_lib_background_get             (void);
+
+   /* languages */
+   EAPI void         e_lib_language_set               (const char *lang);
+   EAPI void         e_lib_language_get               (void);
 
    /* E path information */
    EAPI void         e_lib_data_dirs_list             (void);

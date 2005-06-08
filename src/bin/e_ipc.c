@@ -215,47 +215,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     free(data);
 	  }
 	break;
-      case E_IPC_OP_LANG_LIST:
-	  {
-	     Evas_List *langs;
-	     int bytes;
-	     char *data;
-	     
-	     langs = (Evas_List *)e_intl_language_list();
-	     data = _e_ipc_str_list_get(langs, &bytes);
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_LANG_LIST_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   data, bytes);
-	     free(data);
-	  }
-	break;
-      case E_IPC_OP_LANG_SET:
-	  {
-	     char *lang;
-	     
-	     lang = _e_ipc_simple_str_dec(e->data, e->size);
-	     IF_FREE(e_config->language);
-	     e_config->language = lang;
-	     e_intl_language_set(e_config->language);
-             e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_LANG_GET:
-	  {
-	     char *lang;
-	     
-	     lang = e_config->language;
-	     if (!lang) lang = "";
-	     ecore_ipc_client_send(e->client,
-				   E_IPC_DOMAIN_REPLY,
-				   E_IPC_OP_LANG_GET_REPLY,
-				   0/*ref*/, 0/*ref_to*/, 0/*response*/,
-				   lang, strlen(lang) + 1);
-	     free(data);
-	  }
-	break;
       case E_IPC_OP_BINDING_MOUSE_LIST:
 	  {
 	     Evas_List *bindings;

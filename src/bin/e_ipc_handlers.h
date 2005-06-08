@@ -539,6 +539,7 @@ break;
 
 
 
+
 /****************************************************************************/
 #define HDL E_IPC_OP_RESTART
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -567,6 +568,86 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_LANG_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-lang-list", 0, "List all available languages", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   ENCODE((Evas_List *)e_intl_language_list(), e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_LANG_LIST_REPLY);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_LANG_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_LANG_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-lang-set", 1, "Set the current language to 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   IF_FREE(e_config->language);
+   e_config->language = strdup(s);
+   e_intl_language_set(e_config->language);
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_LANG_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-lang-get", 0, "Get the current language", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->language, E_IPC_OP_LANG_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_LANG_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#elif (TYPE == E_LIB_IN)
+   STRING(s, HDL);
+   RESPONSE(r, E_Response_Language_Get, HDL);
+   r->lang = strdup(s);
+   END_RESPONSE(r, E_RESPONSE_LANGUAGE_GET);
+   END_STRING(s);
+#endif
+#undef HDL
 
 
 

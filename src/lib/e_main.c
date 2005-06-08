@@ -49,14 +49,13 @@ static void _e_ipc_call(E_Ipc_Op opcode, char **params);
 static int _e_cb_server_data(void *data, int type, void *event);
 
 static void _e_cb_module_list_free(void *data, void *ev);
-static void _e_cb_module_dir_list_free(void *data, void *ev);
-static void _e_cb_bg_dir_list_free(void *data, void *ev);
-static void _e_cb_theme_dir_list_free(void *data __UNUSED__, void *ev);
+static void _e_cb_dir_list_free(void *data __UNUSED__, void *ev);
 
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
+int E_RESPONSE_LANGUAGE_GET = 0;
 
 int E_RESPONSE_DATA_DIRS_LIST = 0;
 int E_RESPONSE_IMAGE_DIRS_LIST = 0;
@@ -141,6 +140,7 @@ e_lib_init(const char* display)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
+	E_RESPONSE_LANGUAGE_GET = ecore_event_type_new();
 
 	E_RESPONSE_DATA_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_IMAGE_DIRS_LIST = ecore_event_type_new();
@@ -238,6 +238,24 @@ void
 e_lib_background_get(void)
 {
    _e_ipc_call(E_IPC_OP_BG_GET, NULL);
+}
+
+void
+e_lib_language_set(const char *lang)
+{
+   char *tmp;
+   if (!lang)
+     return;
+
+   tmp = strdup(lang);
+   _e_ipc_call(E_IPC_OP_LANG_SET, &tmp);
+   free(tmp);
+}
+
+void
+e_lib_language_get(void)
+{
+   _e_ipc_call(E_IPC_OP_LANG_GET, NULL);
 }
 
 void
