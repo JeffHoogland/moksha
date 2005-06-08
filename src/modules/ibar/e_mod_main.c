@@ -482,18 +482,30 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    evas_object_resize(ibb->bar_object, 1000, 1000);
    edje_object_calc_force(ibb->bar_object);
    edje_object_part_geometry_get(ibb->bar_object, "items", &x, &y, &w, &h);
-   ibb->inset.l = x;
-   ibb->inset.r = 1000 - (x + w);
-   ibb->inset.t = y;
-   ibb->inset.b = 1000 - (y + h);
+   ibb->bar_inset.l = x;
+   ibb->bar_inset.r = 1000 - (x + w);
+   ibb->bar_inset.t = y;
+   ibb->bar_inset.b = 1000 - (y + h);
+
+   o = edje_object_add(ibb->evas);
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/icon");
+   evas_object_resize(o, 100, 100);
+   edje_object_calc_force(o);
+   edje_object_part_geometry_get(o, "item", &x, &y, &w, &h);
+   ibb->icon_inset.l = x;
+   ibb->icon_inset.r = 100 - (x + w);
+   ibb->icon_inset.t = y;
+   ibb->icon_inset.b = 100 - (y + h);
+   evas_object_del(o);
 
    ibb->drop_handler = e_drop_handler_add(ibb,
 					  _ibar_bar_cb_enter, _ibar_bar_cb_move,
 					  _ibar_bar_cb_leave, _ibar_bar_cb_drop,
 					  "enlightenment/eapp",
-					  ibb->x + ibb->inset.l, ibb->y + ibb->inset.t,
-					  ibb->w - (ibb->inset.l + ibb->inset.r),
-					  ibb->h - (ibb->inset.t + ibb->inset.b));
+					  ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+					  ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+					  ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
 
    ibb->gmc = e_gadman_client_new(ibb->con->gadman);
    e_gadman_client_domain_set(ibb->gmc, "module.ibar", bar_count++);
@@ -505,7 +517,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    e_gadman_client_max_size_set(ibb->gmc, 3200, 3200);
    e_gadman_client_auto_size_set(ibb->gmc, -1, -1);
    e_gadman_client_align_set(ibb->gmc, 0.5, 1.0);
-   e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->inset.t + ibb->inset.b);
+   e_gadman_client_resize(ibb->gmc, 400, 32 + ibb->bar_inset.t + ibb->bar_inset.b);
    e_gadman_client_change_func_set(ibb->gmc, _ibar_bar_cb_gmc_change, ibb);
    e_gadman_client_edge_set(ibb->gmc, E_GADMAN_EDGE_BOTTOM);
    e_gadman_client_load(ibb->gmc);
@@ -603,7 +615,7 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
    IBar_Icon *ic;
    char *str;
    Evas_Object *o;
-   Evas_Coord bw, bh;
+   Evas_Coord w, h;
 
    ic = E_NEW(IBar_Icon, 1);
    if (!ic) return NULL;
@@ -635,10 +647,9 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
 
    o = edje_object_add(ibb->evas);
    ic->icon_object = o;
+   evas_object_resize(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
    edje_object_file_set(o, ic->app->path, "icon");
-   edje_extern_object_min_size_set(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
    edje_object_part_swallow(ic->bg_object, "item", o);
-   edje_object_size_min_calc(ic->bg_object, &bw, &bh);
    evas_object_pass_events_set(o, 1);
    evas_object_show(o);
 
@@ -659,13 +670,15 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
 
    evas_object_raise(ic->event_object);
 
+   w = ibb->ibar->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+   h = ibb->ibar->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
    e_box_pack_end(ibb->box_object, ic->bg_object);
    e_box_pack_options_set(ic->bg_object,
 			  1, 1, /* fill */
 			  0, 0, /* expand */
 			  0.5, 0.5, /* align */
-			  bw, bh, /* min */
-			  bw, bh /* max */
+			  w, h, /* min */
+			  w, h /* max */
 			  );
 
    str = (char *)edje_object_data_get(ic->icon_object, "raise_on_hilight");
@@ -856,7 +869,7 @@ _ibar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before)
 static void
 _ibar_icon_reorder_after(IBar_Icon *ic, IBar_Icon *after)
 {
-   Evas_Coord bw, bh;
+   Evas_Coord w, h;
 
    e_box_freeze(ic->ibb->box_object);
    e_box_unpack(ic->bg_object);
@@ -871,13 +884,14 @@ _ibar_icon_reorder_after(IBar_Icon *ic, IBar_Icon *after)
 	ic->ibb->icons = evas_list_append(ic->ibb->icons, ic);
 	e_box_pack_end(ic->ibb->box_object, ic->bg_object);
      }
-   edje_object_size_min_calc(ic->bg_object, &bw, &bh);
+   w = ic->ibb->ibar->conf->iconsize + ic->ibb->icon_inset.l + ic->ibb->icon_inset.r;
+   h = ic->ibb->ibar->conf->iconsize + ic->ibb->icon_inset.t + ic->ibb->icon_inset.b;
    e_box_pack_options_set(ic->bg_object,
 			  1, 1, /* fill */
 			  0, 0, /* expand */
 			  0.5, 0.5, /* align */
-			  bw, bh, /* min */
-			  bw, bh /* max */
+			  w, h, /* min */
+			  w, h /* max */
 			  );
    e_box_thaw(ic->ibb->box_object);
 }
@@ -931,7 +945,7 @@ static void
 _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
 {
    Evas_List *l;
-   Evas_Coord bw, bh, tmp;
+   Evas_Coord w, h, tmp;
    Evas_Object *o;
    E_Gadman_Policy policy;
    int changed;
@@ -955,18 +969,19 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
 	o = ic->bg_object;
 	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
 	edje_object_message_signal_process(o);
-	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 
 	o = ic->overlay_object;
 	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
 	edje_object_message_signal_process(o);
 
+	w = ibb->ibar->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+	h = ibb->ibar->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
 	e_box_pack_options_set(ic->bg_object,
 			       1, 1, /* fill */
 			       0, 0, /* expand */
 			       0.5, 0.5, /* align */
-			       bw, bh, /* min */
-			       bw, bh /* max */
+			       w, h, /* min */
+			       w, h /* max */
 			       );
      }
 
@@ -1400,21 +1415,6 @@ _ibar_bar_cb_enter(void *data, const char *type, void *event)
    E_Event_Dnd_Enter *ev;
    Evas_Object *o;
    IBar_Bar *ibb;
-
-   ev = event;
-   ibb = data;
-
-   o = evas_object_rectangle_add(ibb->evas);
-   ibb->drag_object = o;
-   evas_object_color_set(o, 255, 0, 0, 255);
-   evas_object_resize(o, 32, 32);
-}
-
-static void
-_ibar_bar_cb_move(void *data, const char *type, void *event)
-{
-   E_Event_Dnd_Move *ev;
-   IBar_Bar *ibb;
    IBar_Icon *ic;
    Evas_Coord x, y, w, h;
    double iw;
@@ -1423,25 +1423,23 @@ _ibar_bar_cb_move(void *data, const char *type, void *event)
    ev = event;
    ibb = data;
 
-   x = ev->x - (ibb->x + ibb->inset.l);
-   y = ev->y - (ibb->y + ibb->inset.t);
-   w = ibb->w - (ibb->inset.l + ibb->inset.r);
-   h = ibb->h - (ibb->inset.t + ibb->inset.b);
+   o = evas_object_rectangle_add(ibb->evas);
+   ibb->drag_object = o;
+   evas_object_color_set(o, 255, 0, 0, 255);
+   evas_object_resize(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
 
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
      {
-	iw = w / (double) evas_list_count(ibb->icons);
-	pos = round(x / iw);
+	iw = w / (double) e_box_pack_count_get(ibb->box_object);
+	pos = x / iw;
      }
    else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
 	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
      {
-	iw = h / (double) evas_list_count(ibb->icons);
-	pos = round(y / iw);
+	iw = h / (double) e_box_pack_count_get(ibb->box_object);
+	pos = y / iw;
      }
-   else
-     return;
 
    ic = evas_list_nth(ibb->icons, pos);
 
@@ -1458,13 +1456,74 @@ _ibar_bar_cb_move(void *data, const char *type, void *event)
 	/* Add at the end */
 	e_box_pack_end(ibb->box_object, ibb->drag_object);
      }
-   edje_object_size_min_calc(ibb->drag_object, &w, &h);
+   w = ibb->ibar->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+   h = ibb->ibar->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
    e_box_pack_options_set(ibb->drag_object,
 			  1, 1, /* fill */
 			  0, 0, /* expand */
 			  0.5, 0.5, /* align */
-			  32, 32, /* min */
-			  32, 32 /* max */
+			  w, h, /* min */
+			  w, h /* max */
+			  );
+   e_box_thaw(ibb->box_object);
+
+   _ibar_bar_frame_resize(ibb);
+}
+
+static void
+_ibar_bar_cb_move(void *data, const char *type, void *event)
+{
+   E_Event_Dnd_Move *ev;
+   IBar_Bar *ibb;
+   IBar_Icon *ic;
+   Evas_Coord x, y, w, h;
+   double iw;
+   int pos;
+
+   ev = event;
+   ibb = data;
+
+   x = ev->x - (ibb->x + ibb->bar_inset.l);
+   y = ev->y - (ibb->y + ibb->bar_inset.t);
+   w = ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r);
+   h = ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b);
+
+   if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
+       (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
+     {
+	iw = w / (double) e_box_pack_count_get(ibb->box_object);
+	pos = x / iw;
+     }
+   else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
+	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
+     {
+	iw = h / (double) e_box_pack_count_get(ibb->box_object);
+	pos = y / iw;
+     }
+
+   ic = evas_list_nth(ibb->icons, pos);
+
+   e_box_freeze(ibb->box_object);
+   evas_object_show(ibb->drag_object);
+   e_box_unpack(ibb->drag_object);
+   if (ic)
+     {
+	/* Add new eapp before this icon */
+	e_box_pack_before(ibb->box_object, ibb->drag_object, ic->bg_object);
+     }
+   else
+     {
+	/* Add at the end */
+	e_box_pack_end(ibb->box_object, ibb->drag_object);
+     }
+   w = ibb->ibar->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+   h = ibb->ibar->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
+   e_box_pack_options_set(ibb->drag_object,
+			  1, 1, /* fill */
+			  0, 0, /* expand */
+			  0.5, 0.5, /* align */
+			  w, h, /* min */
+			  w, h /* max */
 			  );
    e_box_thaw(ibb->box_object);
 
@@ -1512,25 +1571,23 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
    _ibar_bar_frame_resize(ibb);
 
    /* add dropped element */
-   x = ev->x - (ibb->x + ibb->inset.l);
-   y = ev->y - (ibb->y + ibb->inset.t);
-   w = ibb->w - (ibb->inset.l + ibb->inset.r);
-   h = ibb->h - (ibb->inset.t + ibb->inset.b);
+   x = ev->x - (ibb->x + ibb->bar_inset.l);
+   y = ev->y - (ibb->y + ibb->bar_inset.t);
+   w = ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r);
+   h = ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b);
 
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
      {
 	iw = w / (double) evas_list_count(ibb->icons);
-	pos = round(x / iw);
+	pos = x / iw;
      }
    else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
 	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
      {
 	iw = h / (double) evas_list_count(ibb->icons);
-	pos = round(y / iw);
+	pos = y / iw;
      }
-   else
-     return;
 
    ic = evas_list_nth(ibb->icons, pos);
    if (ic)
@@ -1576,9 +1633,9 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 _ibar_bar_timer_handle(ibb);
 
 	 e_drop_handler_geometry_set(ibb->drop_handler,
-				     ibb->x + ibb->inset.l, ibb->y + ibb->inset.t,
-				     ibb->w - (ibb->inset.l + ibb->inset.r),
-				     ibb->h - (ibb->inset.t + ibb->inset.b));
+				     ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				     ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				     ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
 	 break;
       case E_GADMAN_CHANGE_EDGE:
 	 _ibar_bar_edge_change(ibb, e_gadman_client_edge_get(ibb->gmc));
@@ -1635,23 +1692,22 @@ _ibar_bar_iconsize_change(IBar_Bar *ibb)
      {
 	IBar_Icon *ic;
 	Evas_Object *o;
-	Evas_Coord bw, bh;
+	Evas_Coord w, h;
 
 	ic = l->data;
 	o = ic->icon_object;
-	edje_extern_object_min_size_set(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
 
 	evas_object_resize(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
-
 	edje_object_part_swallow(ic->bg_object, "item", o);
-	edje_object_size_min_calc(ic->bg_object, &bw, &bh);
 
+	w = ibb->ibar->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
+	h = ibb->ibar->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
 	e_box_pack_options_set(ic->bg_object,
 	      1, 1, /* fill */
 	      0, 0, /* expand */
 	      0.5, 0.5, /* align */
-	      bw, bh, /* min */
-	      bw, bh /* max */
+	      w, h, /* min */
+	      w, h /* max */
 	      );
      }
    e_box_thaw(ibb->box_object);

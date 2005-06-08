@@ -62,7 +62,10 @@ struct _IBar_Bar
    Evas_Coord      x, y, w, h;
    struct {
 	Evas_Coord l, r, t, b;
-   } inset;
+   } bar_inset;
+   struct {
+	Evas_Coord l, r, t, b;
+   } icon_inset;
 
    E_Gadman_Client *gmc;
 
