@@ -72,8 +72,6 @@ These are in no particular order:
   added that ref and didnt remove it
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
-* drop on ibar for re-ordering, removal seems broken (drop location is the
-  wrong spot)
 * break out desks x/y size config so you can have a different desktop size
   per zone - right now there is a signle global (use this later as the default
   for new/unconfigured zones)
@@ -101,7 +99,6 @@ These are in no particular order:
 * add key input focus control for desktop modules
 * finish off icccm support
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
-* fix iconbox to not dissapear to nothing when its empty
 * add complete netwm support
 * different cursors for different parts of the screen
 * alt+tab popup list of windows
