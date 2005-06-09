@@ -22,6 +22,7 @@ images {
    image: "gadget.png" LOSSY 90;
 
    image: "configuration.png" LOSSY 90;
+   image: "run.png" LOSSY 90;
 }
 
 collections {
@@ -373,4 +374,23 @@ collections {
 	 }
       }
    }
+   group {
+      name: "run";
+      max:  64 64;
+      parts {
+	 part {
+	    name:          "icon";
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+	       aspect:   1.0 1.0;
+	       max:      64 64;
+	       image {
+		  normal: "run.png";
+	       }
+	    }
+	 }
+      }
+   }
+
 }
