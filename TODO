@@ -57,7 +57,6 @@ These are in no particular order:
 
 * add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
 * add input method selector stuff to eapp - same as locale
-* get all libe_hack properties if they exist
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
@@ -147,8 +146,6 @@ These are in no particular order:
   re-design and implement)
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* make status modules (like cpu meter per window) use ehack to get pid to
-  monitor it's cpu load
 * modules need config executables with proper widgets (sliders, check boxes,
   radio etc. not massive menus)
 * module control panel app
