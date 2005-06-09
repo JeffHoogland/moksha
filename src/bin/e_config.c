@@ -158,7 +158,7 @@ e_config_init(void)
 			     _("Configuration data needed upgrading. Your old configuration\n"
 			       "has been wiped and a new set of defaults initialized. This\n"
 			       "will happen regularly during development, so don't report a\n"
-			       "bug. This simply means Enlightenment needs new confiugration\n"
+			       "bug. This simply means Enlightenment needs new configuration\n"
 			       "data by default for usable functionality that your old\n"
 			       "configuration simply lacks. This new set of defaults will fix\n"
 			       "that by adding it in. You can re-configure things now to your\n"
@@ -173,7 +173,7 @@ e_config_init(void)
 			       "strange. This should not happen unless you downgraded\n"
 			       "Enlightenment or copied the configuration from a place where\n"
 			       "a newer version of Enlightenment was running. This is bad and\n"
-			       "as a precaution your confiugration has been now restored to\n"
+			       "as a precaution your configuration has been now restored to\n"
 			       "defaults. Sorry for the inconvenience.\n"));
 	  }
      }
