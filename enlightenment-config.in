@@ -47,7 +47,11 @@ while test $# -gt 0; do
       echo $libdirs
       ;;
     --module-dir)
-      dir="@libdir@/enlightenment/modules_extra"
+      dir="@libdir@/@PACKAGE@/modules_extra"
+      echo $dir
+      ;;
+    --config-apps-dir)
+      dir="@datadir@/@PACKAGE@/config-apps"
       echo $dir
       ;;
     *)

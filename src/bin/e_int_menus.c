@@ -14,6 +14,7 @@ struct _Main_Data
    E_Menu *modules;
    E_Menu *gadgets;
    E_Menu *themes;
+   E_Menu *config;
 };
 
 /* local subsystem functions */
@@ -128,9 +129,21 @@ e_int_menus_main_new(void)
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Run Command"));
+	s = e_path_find(path_icons, "default.edj");
+	e_menu_item_icon_edje_set(mi, s, "run");
+	IF_FREE(s);
 	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);
      }
-   
+
+   subm = e_int_menus_config_apps_new();
+   dat->config = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Configuration"));
+   s = e_path_find(path_icons, "default.edj");
+   e_menu_item_icon_edje_set(mi, s, "configuration");
+   IF_FREE(s);
+   e_menu_item_submenu_set(mi, subm);
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    
@@ -194,6 +207,15 @@ e_int_menus_favorite_apps_new(void)
 }
 
 E_Menu *
+e_int_menus_config_apps_new(void)
+{
+   E_Menu *m;
+   
+   m = e_int_menus_apps_new(PACKAGE_DATA_DIR "/config-apps");
+   return m;
+}
+
+E_Menu *
 e_int_menus_clients_new(void)
 {
    E_Menu *m;
@@ -240,6 +262,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->gadgets));
 	e_object_del(E_OBJECT(dat->themes));	
+	e_object_del(E_OBJECT(dat->config));
 	free(dat);
      }
 }
