@@ -1484,7 +1484,7 @@ e_border_act_close_begin(E_Border *bd)
 	ecore_x_window_delete_request_send(bd->client.win);
 	if (bd->client.netwm.ping)
 	  {
-	     ecore_x_netwm_ping(bd->client.win);
+	     ecore_x_netwm_ping_send(bd->client.win);
 	     bd->ping = ecore_time_get();
 	  }
      }
@@ -3262,7 +3262,7 @@ _e_border_eval(E_Border *bd)
    if (bd->client.icccm.fetch.machine)
      {
 	if (bd->client.icccm.machine) free(bd->client.icccm.machine);
-	bd->client.icccm.machine = ecore_x_window_prop_client_machine_get(bd->client.win);
+	bd->client.icccm.machine = ecore_x_icccm_client_machine_get(bd->client.win);
 	bd->client.icccm.fetch.machine = 0;
      }
    if (bd->client.icccm.fetch.hints)

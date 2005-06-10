@@ -198,12 +198,12 @@ struct _E_Border
 	 struct {
 	    unsigned char modal : 1;
 	    unsigned char sticky : 1;
-	    unsigned char shaded : 1;
-	    unsigned char hidden : 1;
 	    unsigned char maximized_v : 1;
 	    unsigned char maximized_h : 1;
+	    unsigned char shaded : 1;
 	    unsigned char skip_taskbar : 1;
 	    unsigned char skip_pager : 1;
+	    unsigned char hidden : 1;
 	    unsigned char fullscreen : 1;
 	    E_Stacking    stacking;
 	 } state;
