@@ -12,4 +12,6 @@ windows.png \
 module.png \
 favorites.png \
 desktop.png \
-gadget.png
+gadget.png \
+configuration.png \
+run.png

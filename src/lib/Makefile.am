@@ -10,7 +10,7 @@ include_HEADERS		= E_Lib.h
 
 libe_la_SOURCES= \
 e_main.c \
-E.h \
+E_Lib.h \
 e_private.h
 
 libe_la_LIBADD		= @ecore_libs@ @evas_libs@
