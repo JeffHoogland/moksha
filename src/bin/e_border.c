@@ -3721,10 +3721,10 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (pnd->resize)
 	       {
-		  bd->w = pnd->w + bd->client_inset.l + bd->client_inset.r;
-		  bd->h = pnd->h + bd->client_inset.t + bd->client_inset.b;
-		  bd->client.w = pnd->w;
-		  bd->client.h = pnd->h;
+		  bd->w = pnd->w;
+		  bd->h = pnd->h;
+		  bd->client.w = pnd->w - (bd->client_inset.l + bd->client_inset.r);
+		  bd->client.h = pnd->h - (bd->client_inset.t + bd->client_inset.b);
 		  bd->changes.size = 1;
 	       }
 	     free(pnd);
@@ -3736,7 +3736,7 @@ _e_border_eval(E_Border *bd)
 	e_object_ref(E_OBJECT(bd));
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
-	/* Recreate state */
+     	/* Recreate state */
 	/* FIXME: this should be split into property fetches and state setup */
 	e_hints_window_init(bd);
 

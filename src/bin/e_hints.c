@@ -689,7 +689,6 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 if (changed)
 	   {
-	      /* FIXME, we have a pager, care about this! */
 	      bd->client.netwm.update.state = 1;
 	      bd->changed = 1;
 	   }
