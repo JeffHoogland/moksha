@@ -713,6 +713,7 @@ _ibox_box_frame_resize(IBox_Box *ibb)
      e_box_min_size_get(ibb->item_object, &w, &h);
    else
      {
+	/* FIXME: This isn't correct with FIXED_WIDTH! */
 	w = ibb->ibox->conf->iconsize + ibb->icon_inset.l + ibb->icon_inset.r;
 	h = ibb->ibox->conf->iconsize + ibb->icon_inset.t + ibb->icon_inset.b;
      }

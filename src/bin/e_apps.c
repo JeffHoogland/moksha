@@ -336,6 +336,26 @@ e_app_append(E_App *add, E_App *parent)
 }
 
 void
+e_app_files_prepend_relative(Evas_List *files, E_App *before)
+{
+   /* FIXME:
+    * Parse all files
+    * Put them in all
+    * Change the .order file for before->parent
+    */
+}
+
+void
+e_app_files_append(Evas_List *files, E_App *parent)
+{
+   /* FIXME:
+    * Parse all files
+    * Put them in all
+    * Change the .order file for before->parent
+    */
+}
+
+void
 e_app_remove(E_App *remove)
 {
    char buf[PATH_MAX];

@@ -3,6 +3,11 @@
  */
 #include "e.h"
 
+/*
+ * TODO:
+ * Better system to let a drop target support several drop types
+ */
+
 /* local subsystem functions */
 
 static void _e_drag_free(E_Drag *drag);
@@ -18,6 +23,11 @@ static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
 /* local subsystem globals */
 
+typedef struct _XDnd {
+     int x, y;
+     void *data;
+} XDnd;
+
 static Evas_List *_event_handlers = NULL;
 static Evas_List *_drop_handlers = NULL;
 
@@ -25,6 +35,8 @@ static Ecore_X_Window _drag_win = 0;
 
 static Evas_List *_drag_list = NULL;
 static E_Drag *_drag_current = NULL;
+
+static XDnd *_xdnd;
 
 /* externally accessible functions */
 
@@ -285,8 +297,11 @@ e_drag_update(int x, int y)
    E_Event_Dnd_Move *move_ev;
    E_Event_Dnd_Leave *leave_ev;
 
-   e_drag_show(_drag_current);
-   e_drag_move(_drag_current, x, y);
+   if (_drag_current)
+     {
+	e_drag_show(_drag_current);
+	e_drag_move(_drag_current, x, y);
+     }
 
    enter_ev = E_NEW(E_Event_Dnd_Enter, 1);
    enter_ev->x = x;
@@ -314,18 +329,18 @@ e_drag_update(int x, int y)
 	     if (!h->entered)
 	       {
 		  if (h->cb.enter)
-		    h->cb.enter(h->data, _drag_current->type, enter_ev);
+		    h->cb.enter(h->data, h->type, enter_ev);
 		  h->entered = 1;
 	       }
 	     if (h->cb.move)
-	       h->cb.move(h->data, _drag_current->type, move_ev);
+	       h->cb.move(h->data, h->type, move_ev);
 	  }
 	else
 	  {
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->data, _drag_current->type, leave_ev);
+		    h->cb.leave(h->data, h->type, leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -343,15 +358,21 @@ e_drag_end(int x, int y)
    E_Event_Dnd_Drop *ev;
    int dropped;
 
-   e_drag_hide(_drag_current);
+   if (_drag_current)
+     {
+	e_drag_hide(_drag_current);
 
-   ecore_x_pointer_ungrab();
-   ecore_x_keyboard_ungrab();
-   ecore_x_window_del(_drag_win);
-   _drag_win = 0;
+	ecore_x_pointer_ungrab();
+	ecore_x_keyboard_ungrab();
+	ecore_x_window_del(_drag_win);
+	_drag_win = 0;
+     }
 
    ev = E_NEW(E_Event_Dnd_Drop, 1);
-   ev->data = _drag_current->data;
+   if (_drag_current)
+     ev->data = _drag_current->data;
+   else if (_xdnd)
+     ev->data = _xdnd->data;
    ev->x = x;
    ev->y = y;
 
@@ -368,14 +389,17 @@ e_drag_end(int x, int y)
 	if ((h->cb.drop)
 	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	  {
-	     h->cb.drop(h->data, _drag_current->type, ev);
+	     h->cb.drop(h->data, h->type, ev);
 	     dropped = 1;
 	  }
      }
-   if (_drag_current->cb.finished)
-     _drag_current->cb.finished(_drag_current, dropped);
-   e_object_del(E_OBJECT(_drag_current));
-   _drag_current = NULL;
+   if (_drag_current)
+     {
+	if (_drag_current->cb.finished)
+	  _drag_current->cb.finished(_drag_current, dropped);
+	e_object_del(E_OBJECT(_drag_current));
+	_drag_current = NULL;
+     }
 
    free(ev);
 }
@@ -421,6 +445,7 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
 void
 e_drop_handler_del(E_Drop_Handler *handler)
 {
+   _drop_handlers = evas_list_remove(_drop_handlers, handler);
    free(handler->type);
    free(handler);
 }
@@ -520,11 +545,29 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Enter *ev;
    E_Container *con;
+   Evas_List *l;
+   int i;
 
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
    printf("Xdnd enter\n");
+   for (i = 0; i < ev->num_types; i++)
+     {
+	printf("type: %s\n", ev->types[i]);
+	/* FIXME: Maybe we want to get something else then files dropped? */
+	if (strcmp("text/uri-list", ev->types[i]))
+	  continue;
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     h->active = !strcmp(h->type, "enlightenment/x-file");
+	     h->entered = 0;
+	  }
+     }
    return 1;
 }
 
@@ -546,27 +589,38 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
    E_Container *con;
+   Ecore_X_Rectangle rect;
+   Evas_List *l;
+
+   int active;
 
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
-   printf("Xdnd pos\n");
 
-#if 0
+   rect.x = 0;
+   rect.y = 0;
+   rect.width = 0;
+   rect.height = 0;
+
    for (l = _drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
 
 	h = l->data;
-	
-	if ((x >= h->x) && (x < h->x + h->w) && (y >= h->y) && (y < h->y + h->h)
-	    && (!strcmp(h->type, drag_type)))
-	  {
-	     h->func(h->data, drag_type, ev);
-	  }
+	if (h->active)
+	  active = 1;
      }
-#endif
+   if (!active)
+     {
+	ecore_x_dnd_send_status(0, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
+     }
+   else
+     {
+	e_drag_update(ev->position.x, ev->position.y);
 
+	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
+     }
    return 1;
 }
 
@@ -580,6 +634,12 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    con = data;
    if (con->bg_win != ev->win) return 1;
    printf("Xdnd drop\n");
+
+   ecore_x_selection_xdnd_request(ev->win, "text/uri-list");
+
+   _xdnd = E_NEW(XDnd, 1);
+   _xdnd->x = ev->position.x;
+   _xdnd->y = ev->position.y;
    return 1;
 }
 
@@ -587,11 +647,34 @@ static int
 _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
+   Ecore_X_Selection_Data_Files   *files;
    E_Container *con;
+   Evas_List *l = NULL;
+   int i;
 
    ev = event;
    con = data;
-   if (con->bg_win != ev->win) return 1;
+   if ((con->bg_win != ev->win) ||
+       (ev->selection != ECORE_X_SELECTION_XDND)) return 1;
    printf("Xdnd selection\n");
+
+   files = ev->data;
+   for (i = 0; i < files->num_files; i++)
+     {
+	printf("files: %s\n", files->files[i]);
+	/* FIXME:
+	 * Remove file:///
+	 * If ftp:// or http:// use curl/wget
+	 * else, drop it...
+	l = evas_list_append(l, files->files[i]);
+	*/
+     }
+
+   _xdnd->data = l;
+   e_drag_end(_xdnd->x, _xdnd->y);
+   evas_list_free(l);
+   ecore_x_dnd_send_finished();
+   free(_xdnd);
+   _xdnd = NULL;
    return 1;
 }

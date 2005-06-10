@@ -397,13 +397,6 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_msg_shutdown);
-   /* setup module loading etc */
-   if (!e_module_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its module system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_module_shutdown);
    /* setup dnd */
    if (!e_dnd_init())
      {
@@ -411,6 +404,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
+   /* setup module loading etc */
+   if (!e_module_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its module system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_module_shutdown);
    /* setup winlist */
    if (!e_winlist_init())
      {

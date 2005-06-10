@@ -390,6 +390,8 @@ _pager_face_free(Pager_Face *face)
    e_gadman_client_save(face->gmc);
    e_object_del(E_OBJECT(face->gmc));
 
+   e_drop_handler_del(face->drop_handler);
+
    _pager_face_zone_unset(face);
    ecore_event_handler_del(face->ev_handler_border_resize);
    ecore_event_handler_del(face->ev_handler_border_move);

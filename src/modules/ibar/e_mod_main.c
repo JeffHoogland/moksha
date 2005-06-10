@@ -3,7 +3,6 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
-#include <math.h>
 
 /* TODO List:
  *
@@ -72,7 +71,8 @@ static int     _ibar_bar_cb_animator(void *data);
 static void    _ibar_bar_cb_enter(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_move(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_leave(void *data, const char *type, void *event);
-static void    _ibar_bar_cb_drop(void *data, const char *type, void *event);
+static void    _ibar_bar_cb_drop_eapp(void *data, const char *type, void *event);
+static void    _ibar_bar_cb_drop_file(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_finished(E_Drag *drag, int dropped);
 
 static void    _ibar_icon_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
@@ -500,13 +500,20 @@ _ibar_bar_new(IBar *ib, E_Container *con)
    ibb->icon_inset.b = 100 - (y + h);
    evas_object_del(o);
 
-   ibb->drop_handler = e_drop_handler_add(ibb,
-					  _ibar_bar_cb_enter, _ibar_bar_cb_move,
-					  _ibar_bar_cb_leave, _ibar_bar_cb_drop,
-					  "enlightenment/eapp",
-					  ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
-					  ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
-					  ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
+   ibb->drop_eapp = e_drop_handler_add(ibb,
+				       _ibar_bar_cb_enter, _ibar_bar_cb_move,
+				       _ibar_bar_cb_leave, _ibar_bar_cb_drop_eapp,
+				       "enlightenment/eapp",
+				       ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				       ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				       ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
+   ibb->drop_file = e_drop_handler_add(ibb,
+				       _ibar_bar_cb_enter, _ibar_bar_cb_move,
+				       _ibar_bar_cb_leave, _ibar_bar_cb_drop_file,
+				       "enlightenment/x-file",
+				       ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				       ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				       ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
 
    ibb->gmc = e_gadman_client_new(ibb->con->gadman);
    e_gadman_client_domain_set(ibb->gmc, "module.ibar", bar_count++);
@@ -546,6 +553,9 @@ _ibar_bar_free(IBar_Bar *ibb)
 
    while (ibb->icons)
      _ibar_icon_free(ibb->icons->data);
+
+   e_drop_handler_del(ibb->drop_eapp);
+   e_drop_handler_del(ibb->drop_file);
 
    if (ibb->timer) ecore_timer_del(ibb->timer);
    if (ibb->animator) ecore_animator_del(ibb->animator);
@@ -1542,7 +1552,7 @@ _ibar_bar_cb_leave(void *data, const char *type, void *event)
 }
 
 static void
-_ibar_bar_cb_drop(void *data, const char *type, void *event)
+_ibar_bar_cb_drop_eapp(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Drop *ev;
    E_App *app;
@@ -1577,6 +1587,41 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 }
 
 static void
+_ibar_bar_cb_drop_file(void *data, const char *type, void *event)
+{
+   E_Event_Dnd_Drop *ev;
+   IBar_Bar *ibb;
+   IBar_Icon *ic;
+   Evas_List *l;
+
+   ev = event;
+   ibb = data;
+   l = ev->data;
+
+   /* add dropped element */
+   ic = _ibar_icon_pos_find(ibb, ev->x, ev->y);
+
+   /* remove drag marker */
+   e_box_freeze(ibb->box_object);
+   e_box_unpack(ibb->drag_object);
+   evas_object_del(ibb->drag_object);
+   e_box_thaw(ibb->box_object);
+
+   _ibar_bar_frame_resize(ibb);
+
+   if (ic)
+     {
+	/* Add new eapp before this icon */
+	e_app_files_prepend_relative(l, ic->app);
+     }
+   else
+     {
+	/* Add at the end */
+	e_app_files_append(l, ibb->ibar->apps);
+     }
+}
+
+static void
 _ibar_bar_cb_finished(E_Drag *drag, int dropped)
 {
    /* Unref the object so it will be deleted. */
@@ -1606,7 +1651,11 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 _ibar_bar_follower_reset(ibb);
 	 _ibar_bar_timer_handle(ibb);
 
-	 e_drop_handler_geometry_set(ibb->drop_handler,
+	 e_drop_handler_geometry_set(ibb->drop_eapp,
+				     ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				     ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				     ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
+	 e_drop_handler_geometry_set(ibb->drop_file,
 				     ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
 				     ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
 				     ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
