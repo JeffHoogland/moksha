@@ -51,6 +51,7 @@ struct _IBar_Bar
    Evas_Object *box_object;
    Evas_Object *event_object;
    Evas_Object *drag_object;
+   Evas_Object *drag_object_overlay;
 
    Evas_List   *icons;
 

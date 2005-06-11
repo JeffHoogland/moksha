@@ -63,7 +63,7 @@ These are in no particular order:
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
 * on restart e always goes back to desktop 0,0 - it should go to the desktop
   it was last on (per zone, per container, per manager).
-* start module needs to have an way to alert users to "click here" and back
+* start module needs to have a way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
 * sometimes windows that get shut down/closed get unparented but the whole
   border stays around - something is keeping extra references maybe? it is
@@ -108,7 +108,9 @@ These are in no particular order:
 * non opaque move/resize
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
-* support dnd for ibar etc.
+* ibar need to handle drop from other places (xdnd, drop from window etc.)
+* ibar lamp needs short timer on mouse out for hide before hiding (and del
+  the time on mouse in)
 * borders need to be able to change border theme on the fly
 * add window glueing
 * add window tabs (multiple clients in 1 border)
@@ -137,8 +139,6 @@ These are in no particular order:
   refuse to exit as long as the immortal flags is set until it is unset to
   stop users from doing silly things like logging out while important stuff
   is happening in that window -a menu option for this woudl be nice)
-* ibar lamp needs short timer on mouse out for hide before hiding (and del
-  the time on mouse in)
 * need to be able to remember client positons/etc.
 * file icons on the desktop (people ask for it) - xdnd for these
 * gui config tools for bg's, keybindings, etc. etc. etc.

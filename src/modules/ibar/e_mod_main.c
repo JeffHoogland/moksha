@@ -103,6 +103,9 @@ static void    _ibar_bar_cb_iconsize_gigantic(void *data, E_Menu *m, E_Menu_Item
 static void    _ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void    _ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
+static void    _ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
+
 /* public module routines. all modules must have these */
 void *
 e_modapi_init(E_Module *m)
@@ -563,7 +566,11 @@ _ibar_bar_free(IBar_Bar *ibb)
    evas_object_del(ibb->overlay_object);
    evas_object_del(ibb->box_object);
    evas_object_del(ibb->event_object);
-
+   if (ibb->drag_object) evas_object_del(ibb->drag_object);
+   ibb->drag_object = NULL;
+   if (ibb->drag_object_overlay) evas_object_del(ibb->drag_object_overlay);
+   ibb->drag_object_overlay = NULL;
+   
    e_gadman_client_save(ibb->gmc);
    e_object_del(E_OBJECT(ibb->gmc));
 
@@ -1453,7 +1460,7 @@ static void
 _ibar_bar_cb_enter(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Enter *ev;
-   Evas_Object *o;
+   Evas_Object *o, *o2;
    IBar_Bar *ibb;
    IBar_Icon *ic;
    int w, h;
@@ -1461,15 +1468,27 @@ _ibar_bar_cb_enter(void *data, const char *type, void *event)
    ev = event;
    ibb = data;
 
-   o = evas_object_rectangle_add(ibb->evas);
+   o = edje_object_add(ibb->evas);
    ibb->drag_object = o;
-   evas_object_color_set(o, 255, 0, 0, 255);
+   o2 = edje_object_add(ibb->evas);
+   ibb->drag_object_overlay = o2;
+   evas_object_intercept_move_callback_add(o, _ibar_drag_cb_intercept_move, o2);
+   evas_object_intercept_resize_callback_add(o, _ibar_drag_cb_intercept_resize, o2);
+   e_theme_edje_object_set(o, "base/theme/modules/ibar",
+			   "modules/ibar/drop");
+   e_theme_edje_object_set(o2, "base/theme/modules/ibar",
+			   "modules/ibar/drop_overlay");
+   edje_object_signal_emit(o, "set_orientation",
+			   _ibar_main_orientation[e_gadman_client_edge_get(ibb->gmc)]);
+   edje_object_signal_emit(o2, "set_orientation",
+			   _ibar_main_orientation[e_gadman_client_edge_get(ibb->gmc)]);
    evas_object_resize(o, ibb->ibar->conf->iconsize, ibb->ibar->conf->iconsize);
 
    ic = _ibar_icon_pos_find(ibb, ev->x, ev->y);
 
    e_box_freeze(ibb->box_object);
    evas_object_show(ibb->drag_object);
+   evas_object_show(ibb->drag_object_overlay);
    if (ic)
      {
 	/* Add new eapp before this icon */
@@ -1546,6 +1565,9 @@ _ibar_bar_cb_leave(void *data, const char *type, void *event)
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
    evas_object_del(ibb->drag_object);
+   ibb->drag_object = NULL;
+   evas_object_del(ibb->drag_object_overlay);
+   ibb->drag_object_overlay = NULL;
    e_box_thaw(ibb->box_object);
 
    _ibar_bar_frame_resize(ibb);
@@ -1570,6 +1592,9 @@ _ibar_bar_cb_drop_eapp(void *data, const char *type, void *event)
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
    evas_object_del(ibb->drag_object);
+   ibb->drag_object = NULL;
+   evas_object_del(ibb->drag_object_overlay);
+   ibb->drag_object_overlay = NULL;
    e_box_thaw(ibb->box_object);
 
    _ibar_bar_frame_resize(ibb);
@@ -1605,6 +1630,9 @@ _ibar_bar_cb_drop_file(void *data, const char *type, void *event)
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
    evas_object_del(ibb->drag_object);
+   ibb->drag_object = NULL;
+   evas_object_del(ibb->drag_object_overlay);
+   ibb->drag_object_overlay = NULL;
    e_box_thaw(ibb->box_object);
 
    _ibar_bar_frame_resize(ibb);
@@ -1961,3 +1989,18 @@ _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    ibb = data;
    e_gadman_mode_set(ibb->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
+
+static void
+_ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y)
+{
+   evas_object_move(o, x, y);
+   evas_object_move(data, x, y);
+}
+
+static void
+_ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h)
+{
+   evas_object_resize(o, w, h);
+   evas_object_resize(data, w, h);
+}
+
