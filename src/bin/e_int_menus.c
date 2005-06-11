@@ -125,7 +125,7 @@ e_int_menus_main_new(void)
    IF_FREE(s);
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
-   if (e_util_app_installed("exige"))
+   if (ecore_file_app_installed("exige"))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Run Command"));

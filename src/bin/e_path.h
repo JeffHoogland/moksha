@@ -30,7 +30,6 @@ struct _E_Path
 
 /* init and setup */
 EAPI E_Path     *e_path_new(void);
-EAPI E_Path     *e_path_from_env(char *env);
 EAPI void        e_path_user_path_set(E_Path *ep, Evas_List **user_dir_list);
 EAPI void        e_path_inherit_path_set(E_Path *ep, E_Path *path_inherit);
 /* append a hardcoded path */

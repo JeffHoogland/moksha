@@ -117,35 +117,6 @@ _e_util_wakeup_cb(void *data)
 int
 e_util_utils_installed(void)
 {
-   return e_util_app_installed("emblem");
-}
-
-int
-e_util_app_installed(char *app)
-{
-   char buf[PATH_MAX];
-   Evas_List *list, *l;
-   E_Path_Dir *dir;
-   int found;
-
-   if (!app)
-     return 0;
-
-   found = 0;
-   list = e_path_dir_list_get(path_bin);
-   for (l = list; l; l = l->next)
-     {
-	dir = l->data;
-	snprintf(buf, strlen(dir->dir) + strlen(app) + 2, "%s/%s", dir->dir,
-		 app); // 2 = "/" + "\0"
-	if (ecore_file_exists(buf) && ecore_file_can_exec(buf))
-	  {
-	     found = 1;
-	     break;
-	  }
-     }
-   
-   e_path_dir_list_free(list);
-   return found;
+   return ecore_file_app_installed("emblem");
 }
 

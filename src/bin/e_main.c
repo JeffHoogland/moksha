@@ -35,7 +35,6 @@ E_Path *path_init    = NULL;
 E_Path *path_icons   = NULL;
 E_Path *path_modules = NULL;
 E_Path *path_backgrounds = NULL;
-E_Path *path_bin     = NULL;
 int     restart      = 0;
 int     good         = 0;
 int     evil         = 0;
@@ -792,14 +791,6 @@ _e_main_path_init(void)
      }
    e_path_default_path_append(path_backgrounds, "~/.e/e/backgrounds");
    e_path_user_path_set(path_backgrounds, &(e_config->path_append_backgrounds));
-
-   /* setup PATH path */
-   path_bin = e_path_from_env("PATH");
-   if (!path_bin)
-     {
-	e_error_message_show("Cannot allocate path for path_bin\n");
-	return 0;
-     }
 
    return 1;
 }

@@ -4383,7 +4383,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 							   "widgets/border/default/sendto"),
 			     "widgets/border/default/sendto");
 
-   if (e_util_app_installed("e_util_eapp_edit"))
+   if (ecore_file_app_installed("e_util_eapp_edit"))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);

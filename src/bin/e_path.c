@@ -18,39 +18,6 @@ e_path_new(void)
    return ep;
 }
 
-E_Path *
-e_path_from_env(char *env)
-{
-   E_Path *ep;
-   char *env_path, *p, *last;
-
-   ep = e_path_new();
-   env_path = getenv(env);
-
-   if (!env_path)
-     return ep;
-
-   env_path = strdup(env_path);
-   last = env_path;
-   for (p = env_path; *p; p++)
-     {
-	if (*p == ':')
-	  *p = '\0';
-
-	if (!*p)
-	  {
-	     e_path_default_path_append(ep, last);
-	     last = p+1;
-	  }
-
-     }
-   if (p > last)
-     e_path_default_path_append(ep, last);
-
-   free(env_path);
-   return ep;
-}
-
 void
 e_path_default_path_append(E_Path *ep, const char *path)
 {
