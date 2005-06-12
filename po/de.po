@@ -890,7 +890,7 @@ msgstr "Enlightenment neu starten"
 
 #: src/bin/e_border.c:3536
 msgid "Send To"
-msgstr "Verlegen nach"
+msgstr "Verschieben nach"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
