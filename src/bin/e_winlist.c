@@ -29,6 +29,7 @@ static int _e_winlist_cb_key_up(void *data, int type, void *event);
 static E_Popup *winlist = NULL;
 static Evas_Object *bg_object = NULL;
 static Evas_Object *list_object = NULL;
+static Evas_Object *icon_object = NULL;
 static Evas_List *wins = NULL;
 static Evas_List *win_selected = NULL;
 static int hold_count = 0;
@@ -39,6 +40,7 @@ static Ecore_X_Window input_window = 0;
 /* FIXME: gfx are UGLY. theyare test gfx and nothng more atm */
 /* FIXME: support optional warp pointer to window */
 /* FIXME: add mouse downa nd up handlers and pass events to bindings from them incase mouse binding starst winlist */
+/* FIXME: can fix mouse in/out after pop down of ui by disabling al lcrossing event masks on borders  and desktop, hide, then re-enable. if mouse is in a border fake a mouse in to make events work :) */
 
 /* externally accessible functions */
 int
@@ -93,6 +95,7 @@ e_winlist_show(E_Zone *zone)
    e_box_orientation_set(o, 0);
    e_box_homogenous_set(o, 1);
    edje_object_part_swallow(bg_object, "list_swallow", o);
+   edje_object_part_text_set(bg_object, "title_text", _("Select a window"));
    evas_object_show(o);
 
    desk = e_desk_current_get(winlist->zone);
@@ -137,7 +140,7 @@ e_winlist_hide(void)
 {
    if (!winlist) return;
    
-   /* FIXME: ensure whatever window is selected is focused after we finish cleanup */
+   /* FIXME: ensure whatever window is selected is focused after we finish cleanup - seee above for fix to mouse enter events */
    
    evas_event_freeze(winlist->evas);
    e_popup_hide(winlist);
@@ -148,9 +151,14 @@ e_winlist_hide(void)
 	
 	ww = wins->data;
 	evas_object_del(ww->bg_object);
-	evas_object_del(ww->icon_object);
+	if (ww->icon_object) evas_object_del(ww->icon_object);
 	free(ww);
 	wins = evas_list_remove_list(wins, wins);
+     }
+   if (icon_object)
+     {
+	evas_object_del(icon_object);
+	icon_object = NULL;
      }
    e_box_thaw(list_object);
    win_selected = NULL;
@@ -253,10 +261,13 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	else if (bd->client.icccm.title)
 	  edje_object_part_text_set(o, "title_text", bd->client.icccm.title);
 	evas_object_show(o);
-	o = e_border_icon_add(bd, winlist->evas);
-	ww->icon_object = o;
-	edje_object_part_swallow(ww->bg_object, "icon_swallow", o);
-	evas_object_show(o);
+	if (edje_object_part_exists(ww->bg_object, "icon_swallow"))
+	  {
+	     o = e_border_icon_add(bd, winlist->evas);
+	     ww->icon_object = o;
+	     edje_object_part_swallow(ww->bg_object, "icon_swallow", o);
+	     evas_object_show(o);
+	  }
 	edje_object_size_min_calc(ww->bg_object, &mw, &mh);
 	e_box_pack_end(list_object, ww->bg_object);
 	e_box_pack_options_set(ww->bg_object, 
@@ -282,7 +293,7 @@ _e_winlist_border_del(E_Border *bd)
 	if (ww->border == bd)
 	  {
 	     evas_object_del(ww->bg_object);
-	     evas_object_del(ww->icon_object);
+	     if (ww->icon_object) evas_object_del(ww->icon_object);
 	     free(ww);
 	     wins = evas_list_remove_list(wins, l);
 	     return;
@@ -309,12 +320,30 @@ static void
 _e_winlist_activate(void)
 {
    E_Winlist_Win *ww;
+   Evas_Object *o;
 
    if (!win_selected) return;
    ww = win_selected->data;
    edje_object_signal_emit(ww->bg_object, "active", "");
    e_border_raise(ww->border);
    e_border_focus_set(ww->border, 1, 1);
+   if (ww->border->client.netwm.name)
+     edje_object_part_text_set(bg_object, "title_text", ww->border->client.netwm.name);
+   else if (ww->border->client.icccm.title)
+     edje_object_part_text_set(bg_object, "title_text", ww->border->client.icccm.title);
+   if (icon_object)
+     {
+	evas_object_del(icon_object);
+	icon_object = NULL;
+     }
+   if (edje_object_part_exists(bg_object, "icon_swallow"))
+     {
+	o = e_border_icon_add(ww->border, winlist->evas);
+	icon_object = o;
+	edje_object_part_swallow(bg_object, "icon_swallow", o);
+	evas_object_show(o);
+     }
+   
    edje_object_signal_emit(bg_object, "active", "");
 }
 
@@ -325,6 +354,12 @@ _e_winlist_deactivate(void)
 
    if (!win_selected) return;
    ww = win_selected->data;
+   if (icon_object)
+     {
+	evas_object_del(icon_object);
+	icon_object = NULL;
+     }
+   edje_object_part_text_set(bg_object, "title_text", "");
    edje_object_signal_emit(ww->bg_object, "passive", "");
    e_border_focus_set(ww->border, 0, 0);
 }
