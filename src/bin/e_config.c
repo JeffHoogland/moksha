@@ -650,6 +650,24 @@ e_config_init(void)
 	     eb->params = strdup("Eterm");
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("Tab");
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("winlist");
+	     eb->params = strdup("next");
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("Tab");
+	     eb->modifiers = E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("winlist");
+	     eb->params = strdup("prev");
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
    /* should do these - can't yet due to other things missing... */
    
    /* need a yes/no dialog for these - to stop accidental logouts. for this

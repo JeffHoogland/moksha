@@ -439,7 +439,9 @@ EAPI Evas_Object *e_border_icon_add(E_Border *bd, Evas *evas);
 
 EAPI void e_border_button_bindings_ungrab_all(void);
 EAPI void e_border_button_bindings_grab_all(void);
-    
+
+EAPI Evas_List *e_border_focus_stack_get(void);
+
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

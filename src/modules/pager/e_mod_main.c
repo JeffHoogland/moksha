@@ -365,12 +365,12 @@ _pager_face_new(E_Zone *zone)
    e_gadman_client_domain_set(face->gmc, "module.pager", _pager_count++);
    e_gadman_client_zone_set(face->gmc, face->zone);
    e_gadman_client_policy_set(face->gmc,
+//			      E_GADMAN_POLICY_FIXED_ZONE | 
 			      E_GADMAN_POLICY_ANYWHERE |
 			      E_GADMAN_POLICY_HMOVE |
 			      E_GADMAN_POLICY_VMOVE |
 			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE |
-			      E_GADMAN_POLICY_FIXED_ZONE);
+			      E_GADMAN_POLICY_VSIZE);
    e_gadman_client_min_size_set(face->gmc, 8, 8);
    e_gadman_client_max_size_set(face->gmc, 600, 600);
    e_gadman_client_auto_size_set(face->gmc, 186, 40);

@@ -520,6 +520,107 @@ ACT_FN_GO(app)
      }
 }
 
+/***************************************************************************/
+ACT_FN_GO(winlist)
+{
+   E_Zone *zone = NULL;
+   
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
+     {
+	if (params)
+	  {
+	     if (!strcmp(params, "next"))
+	       {
+		  e_winlist_show(zone);
+		  e_winlist_next();
+	       }
+	     else if (!strcmp(params, "prev"))
+	       {
+		  e_winlist_show(zone);
+		  e_winlist_prev();
+	       }
+	  }
+	else
+	  {
+	     e_winlist_show(zone);
+	     e_winlist_next();
+	  }
+     }
+}
+ACT_FN_GO_MOUSE(winlist)
+{
+   E_Zone *zone = NULL;
+   
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
+     {
+	if (params)
+	  {
+	     if (!strcmp(params, "next"))
+	       {
+		  if (e_winlist_show(zone))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  e_winlist_next();
+	       }
+	     else if (!strcmp(params, "prev"))
+	       {
+		  if (e_winlist_show(zone))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  e_winlist_prev();
+	       }
+	  }
+	else
+	  {
+	     if (e_winlist_show(zone))
+	       e_winlist_modifiers_set(ev->modifiers);
+	     e_winlist_next();
+	  }
+     }
+}
+ACT_FN_GO_KEY(winlist)
+{
+   E_Zone *zone = NULL;
+   
+   if (!obj) return;
+   if (obj->type == E_MANAGER_TYPE)
+     zone = e_util_zone_current_get((E_Manager *)obj);
+   else if (obj->type == E_ZONE_TYPE)
+     zone = (E_Zone *)obj;
+   if (zone)
+     {
+	if (params)
+	  {
+	     if (!strcmp(params, "next"))
+	       {
+		  if (e_winlist_show(zone))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  e_winlist_next();
+	       }
+	     else if (!strcmp(params, "prev"))
+	       {
+		  if (e_winlist_show(zone))
+		    e_winlist_modifiers_set(ev->modifiers);
+		  e_winlist_prev();
+	       }
+	  }
+	else
+	  {
+	     if (e_winlist_show(zone))
+	       e_winlist_modifiers_set(ev->modifiers);
+	     e_winlist_next();
+	  }
+     }
+}
+
 
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
@@ -576,6 +677,10 @@ e_actions_init(void)
    ACT_GO(exec);
 
    ACT_GO(app);
+   
+   ACT_GO(winlist);
+   ACT_GO_MOUSE(winlist);
+   ACT_GO_KEY(winlist);
    
    return 1;
 }

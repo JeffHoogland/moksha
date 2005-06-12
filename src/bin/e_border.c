@@ -129,7 +129,9 @@ static E_Border    *move = NULL;
 static Ecore_Timer *focus_fix_timer = NULL;
 
 static int grabbed = 0;
-	       
+
+static Evas_List *focus_stack = NULL;
+
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
 int E_EVENT_BORDER_ZONE_SET = 0;
@@ -457,6 +459,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    desk[1] = desky;
    ecore_x_window_prop_card32_set(win, E_ATOM_DESK, desk, 2);
 
+   focus_stack = evas_list_append(focus_stack, bd);
+   
    return bd;
 }
 
@@ -804,6 +808,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 //   printf("flag focus to %i\n", focus);
    if ((focus) && (!bd->focused))
      {
+	focus_stack = evas_list_remove(focus_stack, bd);
+	focus_stack = evas_list_prepend(focus_stack, bd);
 	edje_object_signal_emit(bd->bg_object, "active", "");
 	e_focus_event_focus_in(bd);
      }
@@ -1560,6 +1566,12 @@ e_border_button_bindings_grab_all(void)
      }
 }
 
+Evas_List *
+e_border_focus_stack_get(void)
+{
+   return focus_stack;
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)
@@ -1633,7 +1645,8 @@ _e_border_free(E_Border *bd)
    borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
    borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->win), bd);
    borders = evas_list_remove(borders, bd);
-
+   focus_stack = evas_list_remove(focus_stack, bd);
+   
    free(bd);
 }
 
@@ -1656,7 +1669,7 @@ static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
-
+   
    if (!bd->dangling_ref_check)
      bd->dangling_ref_check = ecore_timer_add(1.0, _e_border_del_dangling_ref_check, bd);
    if (!bd->already_unparented)

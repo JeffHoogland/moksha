@@ -371,7 +371,7 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
 	       {
 		  E_Action *act;
-		  
+	
 		  act = e_action_find(bind->action);
 		  if (act)
 		    {

@@ -10,7 +10,7 @@
 EAPI int e_winlist_init(void);
 EAPI int e_winlist_shutdown(void);
 
-EAPI void e_winlist_show(E_Zone *zone);
+EAPI int  e_winlist_show(E_Zone *zone);
 EAPI void e_winlist_hide(void);
 EAPI void e_winlist_next(void);
 EAPI void e_winlist_prev(void);

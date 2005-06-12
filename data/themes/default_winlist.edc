@@ -1,0 +1,226 @@
+images {
+   image: "e17_menu_bg.png" COMP;
+}
+group {
+   name: "widgets/winlist/main";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    0;
+	       to_y:     "base2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max:      99999 48;
+	    align:    0.5   0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "list_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   16   16;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -17  -17;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "widgets/winlist/item";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    0;
+	       to_y:     "base2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max:      99999 48;
+	    align:    0.5   0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "icon_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    aspect: 1.0 1.0;
+	    align: 0.0 0.5;
+	    aspect_preference: VERTICAL;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   4   4;
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   4   -5;
+	    }
+	 }
+      }
+      part {
+	 name:           "title_text";
+	 type:           TEXT;
+	 effect:         SHADOW;
+	 mouse_events:   0;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 128;
+	    color3: 255 255 255 128;
+	    rel1 {
+	       to_x: "icon_swallow";
+	       relative: 1.0 0.0;
+	       offset: 4 4;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset: -5 -5;
+	    }
+	    text {
+	       text:     "";
+	       font:     "Edje Vera";
+	       size:     10;
+	       min:      0 1;
+	       align:    0.0 0.5;
+	       text_class: "title_bar";
+	    }
+	 }
+	 description {
+	    state: "active" 0.0;
+	    inherit: "default" 0.0;
+	    color: 0 0 0 255;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name: "go_active";
+	 signal: "active";
+	 source: "";
+         action:  STATE_SET "active" 0.0;
+	 target: "title_text";
+      }
+      program {
+	 name: "go_passive";
+	 signal: "passive";
+	 source: "";
+         action:  STATE_SET "default" 0.0;
+	 target: "title_text";
+      }
+   }
+}

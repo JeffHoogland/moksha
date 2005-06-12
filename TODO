@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* coudl speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
+* make it easy for moduels to hook into ipc and extend it for themselves
 * check evas has eet support early on.
 * add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
 * add input method selector stuff to eapp - same as locale

@@ -18,7 +18,6 @@
 
 fonts {
    font: "Vera.ttf"   "Edje Vera";
-   //   font: "kochi-gothic.ttf"   "Edje Vera";
    font: "VeraBd.ttf" "Edje Vera Bold";
 }
 
@@ -38,5 +37,6 @@ collections {
 #include "default_cpufreq.edc"
 #include "default_ibox.edc"
 #include "default_start.edc"
+#include "default_winlist.edc"
 }
 

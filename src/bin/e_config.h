@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 107
+#define E_CONFIG_FILE_VERSION 108
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1

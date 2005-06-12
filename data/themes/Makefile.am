@@ -28,7 +28,8 @@ default_temperature.edc \
 default_error.edc \
 default_cpufreq.edc \
 default_ibox.edc \
-default_start.edc
+default_start.edc \
+default_winlist.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
