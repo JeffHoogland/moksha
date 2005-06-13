@@ -105,6 +105,13 @@ e_winlist_show(E_Zone *zone)
 	_e_winlist_border_add(bd, winlist->zone, desk);
      }
    e_box_thaw(list_object);
+   
+   if (!wins)
+     {
+	e_winlist_hide();
+	return 1;
+     }
+   
    bd = e_border_focused_get();
    if (bd) e_border_focus_set(bd, 0, 0);
    _e_winlist_activate_nth(0);
@@ -128,11 +135,6 @@ e_winlist_show(E_Zone *zone)
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
    
-   if (!wins)
-     {
-	e_winlist_hide();
-	return 1;
-     }
    e_popup_show(winlist);
    return 1;
 }
@@ -161,13 +163,13 @@ e_winlist_hide(void)
 	free(ww);
 	wins = evas_list_remove_list(wins, wins);
      }
+   e_box_thaw(list_object);
+   win_selected = NULL;
    if (icon_object)
      {
 	evas_object_del(icon_object);
 	icon_object = NULL;
      }
-   e_box_thaw(list_object);
-   win_selected = NULL;
    evas_object_del(list_object);
    list_object = NULL;
    evas_object_del(bg_object);
