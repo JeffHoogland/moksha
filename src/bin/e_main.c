@@ -659,6 +659,7 @@ _e_main_screens_init(void)
 	  {
 	     man->num = i;
 	     e_manager_show(man);
+	     if (i == 0) ecore_x_window_focus(man->root);
 	  }
 	else
 	  {

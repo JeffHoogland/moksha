@@ -24,6 +24,7 @@ static int _e_winlist_cb_event_border_add(void *data, int type,  void *event);
 static int _e_winlist_cb_event_border_remove(void *data, int type,  void *event);
 static int _e_winlist_cb_key_down(void *data, int type, void *event);
 static int _e_winlist_cb_key_up(void *data, int type, void *event);
+static int _e_winlist_animator(void *data);
 
 /* local subsystem globals */
 static E_Popup *winlist = NULL;
@@ -193,6 +194,10 @@ e_winlist_hide(void)
 	else if (bd->desk) e_desk_show(bd->desk);
 	e_border_raise(bd);
 	e_border_focus_set(bd, 1, 1);
+	if (e_config->focus_policy != E_FOCUS_CLICK)
+	  ecore_x_pointer_warp(bd->zone->container->win,
+			       bd->x + (bd->w / 2),
+			       bd->y + (bd->h / 2));
 	/* FIXME: ensure whatever window is selected is focused after we finish cleanup - seee above for fix to mouse enter events */
      }
 }
@@ -201,7 +206,10 @@ void
 e_winlist_next(void)
 {
    _e_winlist_deactivate();
-   win_selected = win_selected->next;
+   if (!win_selected)
+     win_selected = wins;
+   else
+     win_selected = win_selected->next;
    if (!win_selected) win_selected = wins;
    _e_winlist_show_active();
    _e_winlist_activate();
@@ -211,7 +219,10 @@ void
 e_winlist_prev(void)
 {
    _e_winlist_deactivate();
-   win_selected = win_selected->prev;
+   if (!win_selected)
+     win_selected = wins;
+   else
+     win_selected = win_selected->prev;
    if (!win_selected) win_selected = evas_list_last(wins);
    _e_winlist_show_active();
    _e_winlist_activate();
@@ -349,12 +360,12 @@ _e_winlist_activate(void)
    if ((!ww->border->iconic) &&
        (ww->border->desk == e_desk_current_get(winlist->zone)))
      {
-	e_border_raise(ww->border);
-	e_border_focus_set(ww->border, 1, 1);
 	if (e_config->focus_policy != E_FOCUS_CLICK)
 	  ecore_x_pointer_warp(ww->border->zone->container->win,
 			       ww->border->x + (ww->border->w / 2),
 			       ww->border->y + (ww->border->h / 2));
+	e_border_raise(ww->border);
+	e_border_focus_set(ww->border, 1, 1);
      }
    if (ww->border->client.netwm.name)
      edje_object_part_text_set(bg_object, "title_text", ww->border->client.netwm.name);
@@ -500,4 +511,9 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
    e_bindings_key_up_event_handle(E_BINDING_CONTEXT_WINLIST,
 				  E_OBJECT(winlist->zone), ev);
    return 1;
+}
+
+static int
+_e_winlist_animator(void *data)
+{
 }
