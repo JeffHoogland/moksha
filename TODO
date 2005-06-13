@@ -162,6 +162,4 @@ These are in no particular order:
   as separate executables)
 * tip/hint/suggestion dialog app (textblock etc.)
 * segv/restart handler like e16.
-* bug: if you change the number of desks down e will segv. (ie, change to 6x6
-  then to 8x4)
 
