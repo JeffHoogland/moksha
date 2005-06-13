@@ -126,8 +126,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_winlist_top.png";
-	       border: 0 0 0 20;
-	       middle: 0;
+	       border: 0 0 0 19;
 	    }
 	    fill {
 	       smooth: 0;
@@ -150,8 +149,7 @@ group {
 	    }
 	    image {
 	       normal: "e17_winlist_bottom.png";
-	       border: 0 0 5 0;
-	       middle: 0;
+	       border: 0 0 4 0;
 	    }
 	    fill {
 	       smooth: 0;
