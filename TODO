@@ -59,7 +59,6 @@ These are in no particular order:
 * winlist - popup win size/pos should be configurable
 * winlist - support different window list fill policies
 * winlist - make warp pointer optional if in click to focus mode
-* winlist - gfx suck - fix them
 * coudl speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
 * make it easy for moduels to hook into ipc and extend it for themselves
 * check evas has eet support early on.

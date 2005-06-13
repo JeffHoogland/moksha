@@ -82,7 +82,7 @@ e_winlist_show(E_Zone *zone)
    w = zone->w / 2;
    if (w > 320) w = 320;
    h = zone->h / 2;
-   if (h > 400) h = 400;
+   if (h > 320) h = 320;
    x = (zone->w - w) / 2;
    y = (zone->h - h) / 2;
    
@@ -285,7 +285,7 @@ _e_winlist_size_adjust(void)
    w = winlist->zone->w / 2;
    if (w > 320) w = 320;
    h = mh;
-   if (h > 400) h = 400;
+   if (h > 320) h = 320;
    x = (winlist->zone->w - w) / 2;
    y = (winlist->zone->h - h) / 2;
    evas_object_resize(bg_object, w, h);
