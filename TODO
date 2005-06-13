@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* maximised apps when e restarts 
 * actions to make current zone different (warp mouse to there)
 * winlist - popup win size/pos should be configurable
 * winlist - support different window list fill policies
