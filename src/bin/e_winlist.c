@@ -37,10 +37,7 @@ static int hold_mod = 0;
 static Evas_List *handlers = NULL;
 static Ecore_X_Window input_window = 0;
 
-/* FIXME: gfx are UGLY. theyare test gfx and nothng more atm */
-/* FIXME: support optional warp pointer to window */
 /* FIXME: add mouse downa nd up handlers and pass events to bindings from them incase mouse binding starst winlist */
-/* FIXME: can fix mouse in/out after pop down of ui by disabling al lcrossing event masks on borders  and desktop, hide, then re-enable. if mouse is in a border fake a mouse in to make events work :) */
 
 /* externally accessible functions */
 int
@@ -131,6 +128,11 @@ e_winlist_show(E_Zone *zone)
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
    
+   if (!wins)
+     {
+	e_winlist_hide();
+	return 1;
+     }
    e_popup_show(winlist);
    return 1;
 }
@@ -138,17 +140,21 @@ e_winlist_show(E_Zone *zone)
 void
 e_winlist_hide(void)
 {
+   E_Border *bd = NULL;
+   E_Winlist_Win *ww;
+   
    if (!winlist) return;
    
-   /* FIXME: ensure whatever window is selected is focused after we finish cleanup - seee above for fix to mouse enter events */
-   
+   if (win_selected)
+     {
+	ww = win_selected->data;
+	bd = ww->border;
+     }
    evas_event_freeze(winlist->evas);
    e_popup_hide(winlist);
    e_box_freeze(list_object);
    while (wins)
      {
-	E_Winlist_Win *ww;
-	
 	ww = wins->data;
 	evas_object_del(ww->bg_object);
 	if (ww->icon_object) evas_object_del(ww->icon_object);
@@ -178,6 +184,15 @@ e_winlist_hide(void)
      }
    ecore_x_window_del(input_window);
    input_window = 0;
+   
+   if (bd)
+     {
+	if (bd->iconic) e_border_uniconify(bd);
+	else if (bd->desk) e_desk_show(bd->desk);
+	e_border_raise(bd);
+	e_border_focus_set(bd, 1, 1);
+	/* FIXME: ensure whatever window is selected is focused after we finish cleanup - seee above for fix to mouse enter events */
+     }
 }
 
 void
@@ -242,7 +257,11 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 {
    if ((bd->zone) &&
        (bd->zone == zone) &&
-       ((bd->desk == desk) || (bd->sticky)))
+       ((bd->desk == desk) || (bd->sticky)) &&
+       (bd->client.icccm.accepts_focus) &&
+       (!bd->client.netwm.state.skip_taskbar) &&
+       (!bd->client.netwm.state.hidden)
+       )
      {
 	E_Winlist_Win *ww;
 	Evas_Coord mw, mh;
@@ -325,8 +344,16 @@ _e_winlist_activate(void)
    if (!win_selected) return;
    ww = win_selected->data;
    edje_object_signal_emit(ww->bg_object, "active", "");
-   e_border_raise(ww->border);
-   e_border_focus_set(ww->border, 1, 1);
+   if ((!ww->border->iconic) &&
+       (ww->border->desk == e_desk_current_get(winlist->zone)))
+     {
+	e_border_raise(ww->border);
+	e_border_focus_set(ww->border, 1, 1);
+	if (e_config->focus_policy != E_FOCUS_CLICK)
+	  ecore_x_pointer_warp(ww->border->zone->container->win,
+			       ww->border->x + (ww->border->w / 2),
+			       ww->border->y + (ww->border->h / 2));
+     }
    if (ww->border->client.netwm.name)
      edje_object_part_text_set(bg_object, "title_text", ww->border->client.netwm.name);
    else if (ww->border->client.icccm.title)
