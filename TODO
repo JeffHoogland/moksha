@@ -56,7 +56,7 @@ Also look at all the .c files - they have their own localized TODO lists
 These are in no particular order:
 
 * actions to make current zone different (warp mouse to there)
-* winlist - size/pos should be configurable
+* winlist - popup win size/pos should be configurable
 * winlist - support different window list fill policies
 * winlist - make warp pointer optional if in click to focus mode
 * winlist - gfx suck - fix them

@@ -24,6 +24,8 @@ static int _e_winlist_cb_event_border_add(void *data, int type,  void *event);
 static int _e_winlist_cb_event_border_remove(void *data, int type,  void *event);
 static int _e_winlist_cb_key_down(void *data, int type, void *event);
 static int _e_winlist_cb_key_up(void *data, int type, void *event);
+static int _e_winlist_scroll_timer(void *data);
+static int _e_winlist_warp_timer(void *data);
 static int _e_winlist_animator(void *data);
 
 /* local subsystem globals */
@@ -37,6 +39,17 @@ static int hold_count = 0;
 static int hold_mod = 0;
 static Evas_List *handlers = NULL;
 static Ecore_X_Window input_window = 0;
+static int warp_to = 0;
+static int warp_to_x = 0;
+static int warp_to_y = 0;
+static int warp_x = 0;
+static int warp_y = 0;
+static int scroll_to = 0;
+static double scroll_align_to = 0.0;
+static double scroll_align = 0.0;
+static Ecore_Timer *warp_timer = NULL;
+static Ecore_Timer *scroll_timer = NULL;
+static Ecore_Timer *animator = NULL;
 
 /* FIXME: add mouse downa nd up handlers and pass events to bindings from them incase mouse binding starst winlist */
 
@@ -69,8 +82,7 @@ e_winlist_show(E_Zone *zone)
    w = zone->w / 2;
    if (w > 320) w = 320;
    h = zone->h / 2;
-   if (h > 800) h = 800;
-   else if (h < 400) h = 400;
+   if (h > 400) h = 400;
    x = (zone->w - w) / 2;
    y = (zone->h - h) / 2;
    
@@ -187,7 +199,21 @@ e_winlist_hide(void)
      }
    ecore_x_window_del(input_window);
    input_window = 0;
-   
+   if (warp_timer)
+     {
+	ecore_timer_del(warp_timer);
+	warp_timer = NULL;
+     }
+   if (scroll_timer)
+     {
+	ecore_timer_del(scroll_timer);
+	scroll_timer = NULL;
+     }
+   if (animator)
+     {
+	ecore_animator_del(animator);
+	animator = NULL;
+     }
    if (bd)
      {
 	if (bd->iconic) e_border_uniconify(bd);
@@ -252,13 +278,14 @@ _e_winlist_size_adjust(void)
    edje_object_part_swallow(bg_object, "list_swallow", list_object);
    edje_object_size_min_calc(bg_object, &mw, &mh);
    edje_extern_object_min_size_set(list_object, -1, -1);
+   edje_object_part_swallow(bg_object, "list_swallow", list_object);
    e_box_thaw(list_object);
    
    /* FIXME: sizes/pos should be config */
    w = winlist->zone->w / 2;
    if (w > 320) w = 320;
    h = mh;
-   if (h > 800) h = 800;
+   if (h > 400) h = 400;
    x = (winlist->zone->w - w) / 2;
    y = (winlist->zone->h - h) / 2;
    evas_object_resize(bg_object, w, h);
@@ -361,9 +388,23 @@ _e_winlist_activate(void)
        (ww->border->desk == e_desk_current_get(winlist->zone)))
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
-	  ecore_x_pointer_warp(ww->border->zone->container->win,
-			       ww->border->x + (ww->border->w / 2),
-			       ww->border->y + (ww->border->h / 2));
+	  {
+	     int animate_warp = 1;
+	     
+	     warp_to_x = ww->border->x + (ww->border->w / 2);
+	     warp_to_y = ww->border->y + (ww->border->h / 2);
+	     if (animate_warp)
+	       {
+		  warp_to = 1;
+		  if (!warp_timer)
+		    warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+		  if (!animator)
+		    animator = ecore_animator_add(_e_winlist_animator, NULL);
+	       }
+	     else
+	       ecore_x_pointer_warp(ww->border->zone->container->win,
+				    warp_to_x, warp_to_y);
+	  }
 	e_border_raise(ww->border);
 	e_border_focus_set(ww->border, 1, 1);
      }
@@ -407,6 +448,30 @@ _e_winlist_deactivate(void)
 static void
 _e_winlist_show_active(void)
 {
+   Evas_List *l;
+   int i, n;
+   int animate_scroll = 1;
+   
+   if (!wins) return;
+   for (i = 0, l = wins; l; l = l->next, i++)
+     {
+	if (l == win_selected) break;
+     }
+   n = evas_list_count(wins);
+   if (n <= 1) return;
+   scroll_align_to = (double)i / (double)(n - 1);
+   if (animate_scroll)
+     {
+	scroll_to = 1;
+	if (!scroll_timer)
+	  scroll_timer = ecore_timer_add(0.01, _e_winlist_scroll_timer, NULL);
+	if (!animator)
+	  animator = ecore_animator_add(_e_winlist_animator, NULL);
+     }
+   else
+     {
+	e_box_align_set(list_object, 0.5, scroll_align);
+     }
    /* FIXME: scroll so the selected win is visible */
 }
 
@@ -514,6 +579,71 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
 }
 
 static int
+_e_winlist_scroll_timer(void *data)
+{
+   if (scroll_to)
+     {
+	double scroll_speed = 0.1;
+
+	scroll_align = (scroll_align * (1.0 - scroll_speed)) + (scroll_align_to * scroll_speed);
+	return 1;
+     }
+   scroll_timer = NULL;
+   return 0;
+}
+
+static int
+_e_winlist_warp_timer(void *data)
+{
+   if (warp_to)
+     {
+	int x, y;
+	double warp_speed = 0.2;
+	
+	ecore_x_pointer_xy_get(winlist->zone->container->win, &x, &y);
+	warp_x = (x * (1.0 - warp_speed)) + (warp_to_x * warp_speed);
+	warp_y = (y * (1.0 - warp_speed)) + (warp_to_y * warp_speed);
+	return 1;
+     }
+   warp_timer = NULL;
+   return 0;
+}
+
+static int
 _e_winlist_animator(void *data)
 {
+   if (warp_to)
+     {
+	int dx, dy;
+	
+	dx = warp_x - warp_to_x;
+	dy = warp_y - warp_to_y;
+	dx = dx * dx;
+	dy = dy * dy;
+	if ((dx <= 1) && (dy <= 1))
+	  {
+	     warp_x = warp_to_x;
+	     warp_y = warp_to_y;
+	     warp_to = 0;
+	  }
+	ecore_x_pointer_warp(winlist->zone->container->win,
+			     warp_x, warp_y);
+     }
+   if (scroll_to)
+     {
+	double da;
+	
+	da = scroll_align - scroll_align_to;
+	if (da < 0.0) da = -da;
+	if (da < 0.01)
+	  {
+	     scroll_align = scroll_align_to;
+	     scroll_to = 0;
+	  }
+        e_box_align_set(list_object, 0.5, 1.0 - scroll_align);
+     }
+   /* FIXME: update scroll alignment */
+   if ((warp_to) || (scroll_to)) return 1;
+   animator = NULL;
+   return 0;
 }
