@@ -580,8 +580,6 @@ E_IPC_Opt_Handler handlers[] =
    OREQ("-binding-key-list", "List all key bindings", E_IPC_OP_BINDING_KEY_LIST, 1),
    OFNC("-binding-key-add", "Add an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_add, 0),
    OFNC("-binding-key-del", "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_key_del, 0),
-   O2INT("-desks-set", "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", E_IPC_OP_DESKS_SET, 0),
-   OREQ("-desks-get", "Get the number of virtual desktops", E_IPC_OP_DESKS_GET, 1),
 };
 
 /* externally accessible functions */
@@ -962,16 +960,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
         else
           printf("REPLY: AVAILABLE NONE\n"); 
         break;   
-      case E_IPC_OP_DESKS_GET_REPLY:
-	if (e->data)
-	  {
-	     int val1;
-	     int val2;
-	     
-	     if (e_ipc_codec_2int_dec(e->data, e->size, &val1, &val2))
-	       printf("REPLY: %i %i\n", val1, val2);
-	  }
-	break;
       default:
 	break;
      }

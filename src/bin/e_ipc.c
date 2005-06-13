@@ -344,47 +344,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 	       }
  	  }
 	break;
-      case E_IPC_OP_DESKS_SET:
-	if (e_ipc_codec_2int_dec(e->data, e->size,
-				 &(e_config->zone_desks_x_count),
-				 &(e_config->zone_desks_y_count)))
-	  {
-	     Evas_List *l;
-	     
-	     E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
-	     E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
-	     for (l = e_manager_list(); l; l = l->next)
-	       {
-		  E_Manager *man;
-		  Evas_List *l2;
-		  
-		  man = l->data;
-		  for (l2 = man->containers; l2; l2 = l2->next)
-		    {
-		       E_Container *con;
-		       Evas_List *l3;
-		       
-		       con = l2->data;
-		       for (l3 = con->zones; l3; l3 = l3->next)
-			 {
-			    E_Zone *zone;
-			    
-			    zone = l3->data;
-			    e_zone_desk_count_set(zone,
-						  e_config->zone_desks_x_count,
-						  e_config->zone_desks_y_count);
-			 }
-		    }
-	       }
-	     e_config_save_queue();
-	  }
-	break;
-      case E_IPC_OP_DESKS_GET:
-	_e_ipc_reply_2int_send(e->client,
-			       e_config->zone_desks_x_count,
-			       e_config->zone_desks_y_count,
-			       E_IPC_OP_DESKS_GET_REPLY);
-	break;
 #endif
       default:
 	break;

@@ -63,6 +63,17 @@ if (e->data) { \
 } \
 break;
 
+# define START_2INT(__int1, __int2, HDL) \
+case HDL: \
+if (e->data) { \
+   int __int1 = 0; \
+   int __int2 = 0; \
+   if (e_ipc_codec_2int_dec(e->data, e->size, &(__int1), &(__int2))) {
+# define END_2INT \
+   } \
+} \
+break;
+
 # define RESPONSE(__res, __store, HDL) \
    __store *__res = calloc(1, sizeof(__store)); \
    if (e->data) {
@@ -117,6 +128,16 @@ break;
 # define REQ_INT(__int, HDL) \
    REQ_INT_START(HDL) \
    REQ_INT_END(__int, HDL)
+
+# define REQ_2INT(__int1, __int2, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_2int_enc(__int1, __int2, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
 
 # define REQ_NULL(HDL) \
 case HDL: \
@@ -191,6 +212,16 @@ break;
 # define SEND_INT(__int, __op, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_int_enc(__int, &bytes); \
+   if (data) { \
+      ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define SEND_2INT(__int1, __int2,__op, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_2int_enc(__int1, __int2, &bytes); \
    if (data) { \
       ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
       free(data); \
@@ -1311,6 +1342,71 @@ break;
    START_DOUBLE(val, HDL)
    printf("REPLY: %3.3f\n", val);
    END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desks-set", 1, "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2INT(atoi(params[0]), atoi(params[1]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_2INT(val1, val2, HDL);
+   e_config->zone_desks_x_count = val1;
+   e_config->zone_desks_y_count = val2;
+   E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64)
+   E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64)
+   {
+      Evas_List *l;
+      for (l = e_manager_list(); l; l = l->next)
+	{
+	   E_Manager *man;
+	   Evas_List *l2;
+	   man = l->data;
+	   for (l2 = man->containers; l2; l2 = l2->next)
+	     {
+		E_Container *con;
+		Evas_List *l3;
+		con = l2->data;
+		for (l3 = con->zones; l3; l3 = l3->next)
+		  {
+		     E_Zone *zone;
+		     zone = l3->data;
+		     e_zone_desk_count_set(zone, 
+					   e_config->zone_desks_x_count, 
+					   e_config->zone_desks_y_count);
+		  }
+	     }
+	}
+   }
+   SAVE;
+   END_2INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desks-get", 0, "Get the number of virtual desktops", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_2INT(e_config->zone_desks_x_count, e_config->zone_desks_y_count, E_IPC_OP_DESKS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_2INT(val1, val2, HDL)
+   printf("REPLY: %i %i\n", val1, val2);
+   END_2INT;
 #endif
 #undef HDL
 
