@@ -1194,6 +1194,126 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_ANIMATE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-animate-set", 1, "Set the shading animation flag (0/1)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->border_shade_animate = val;
+   E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_ANIMATE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-animate-get", 0, "Get the shading animation flag (0/1)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->border_shade_animate, E_IPC_OP_BORDER_SHADE_ANIMATE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_ANIMATE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+   /****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_TRANSITION_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-transition-set", 1, "Set the shading animation algorithm (0, 1, 2 or 3)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+      REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->border_shade_transition = val;
+   E_CONFIG_LIMIT(e_config->border_shade_transition, 0, 3);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_TRANSITION_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-transition-get", 0, "Get the shading animation algorithm (0, 1, 2 or 3)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->border_shade_transition, E_IPC_OP_BORDER_SHADE_TRANSITION_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_TRANSITION_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_SPEED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-speed-set", 1, "Set the shading speed (pixels/sec)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+      REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->border_shade_speed = val;
+   E_CONFIG_LIMIT(e_config->border_shade_speed, 1.0, 20000.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_SPEED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-border-shade-speed-get", 0, "Get the shading speed (pixels/sec)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->border_shade_speed, E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_BORDER_SHADE_SPEED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL)
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
 #if 0
 }
 #endif
