@@ -24,6 +24,9 @@ static int _e_winlist_cb_event_border_add(void *data, int type,  void *event);
 static int _e_winlist_cb_event_border_remove(void *data, int type,  void *event);
 static int _e_winlist_cb_key_down(void *data, int type, void *event);
 static int _e_winlist_cb_key_up(void *data, int type, void *event);
+static int _e_winlist_cb_mouse_down(void *data, int type, void *event);
+static int _e_winlist_cb_mouse_up(void *data, int type, void *event);
+static int _e_winlist_cb_mouse_wheel(void *data, int type, void *event);
 static int _e_winlist_scroll_timer(void *data);
 static int _e_winlist_warp_timer(void *data);
 static int _e_winlist_animator(void *data);
@@ -50,8 +53,6 @@ static double scroll_align = 0.0;
 static Ecore_Timer *warp_timer = NULL;
 static Ecore_Timer *scroll_timer = NULL;
 static Ecore_Timer *animator = NULL;
-
-/* FIXME: add mouse downa nd up handlers and pass events to bindings from them incase mouse binding starst winlist */
 
 /* externally accessible functions */
 int
@@ -147,6 +148,15 @@ e_winlist_show(E_Zone *zone)
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (ECORE_X_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
+   handlers = evas_list_append
+     (handlers, ecore_event_handler_add
+      (ECORE_X_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
    
    e_popup_show(winlist);
    return 1;
@@ -586,6 +596,52 @@ _e_winlist_cb_key_up(void *data, int type, void *event)
      }
    e_bindings_key_up_event_handle(E_BINDING_CONTEXT_WINLIST,
 				  E_OBJECT(winlist->zone), ev);
+   return 1;
+}
+
+static int
+_e_winlist_cb_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   
+   ev = event;
+   if (ev->win != input_window) return 1;
+   e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_WINLIST,
+				      E_OBJECT(winlist->zone), ev);
+   return 1;
+}
+
+static int
+_e_winlist_cb_mouse_up(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Up *ev;
+   
+   ev = event;
+   if (ev->win != input_window) return 1;
+   e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINLIST,
+				    E_OBJECT(winlist->zone), ev);
+   return 1;
+}
+
+static int
+_e_winlist_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   
+   ev = event;
+   if (ev->win != input_window) return 1;
+   if (ev->z < 0) /* up */
+     {
+	int i;
+	
+	for (i = ev->z; i < 0; i++) e_winlist_prev();
+     }
+   else if (ev->z > 0) /* down */
+     {
+	int i;
+	
+	for (i = ev->z; i > 0; i--) e_winlist_next();
+     }
    return 1;
 }
 
