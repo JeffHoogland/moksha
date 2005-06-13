@@ -217,7 +217,10 @@ e_winlist_hide(void)
    if (bd)
      {
 	if (bd->iconic) e_border_uniconify(bd);
-	else if (bd->desk) e_desk_show(bd->desk);
+	else if (bd->desk)
+	  {
+	     if (!bd->sticky) e_desk_show(bd->desk);
+	  }
 	e_border_raise(bd);
 	e_border_focus_set(bd, 1, 1);
 	if (e_config->focus_policy != E_FOCUS_CLICK)
@@ -385,7 +388,8 @@ _e_winlist_activate(void)
    ww = win_selected->data;
    edje_object_signal_emit(ww->bg_object, "active", "");
    if ((!ww->border->iconic) &&
-       (ww->border->desk == e_desk_current_get(winlist->zone)))
+       ((ww->border->desk == e_desk_current_get(winlist->zone)) ||
+	(ww->border->sticky)))
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
 	  {
