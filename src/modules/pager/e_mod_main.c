@@ -1162,7 +1162,6 @@ _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event)
    E_Desk                      *desk;
    Evas_List                   *l;
    int                          desks_x, desks_y;
-   int                          max_x, max_y;
    int                          x, y;
    Evas_Coord                   lw, lh, dw, dh;
 
@@ -1180,12 +1179,28 @@ _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event)
    else dh = 0;
    dh *= (desks_y - face->ynum);
    
-   max_x = MAX(face->xnum, desks_x);
-   max_y = MAX(face->ynum, desks_y);
-
-   for (x = 0; x < max_x; x++)
+   /* Loop to remove extra desks */
+   for (l = face->desks; l;)
      {
-	for (y = 0; y < max_y; y++)
+	pd = l->data;
+	l = l->next;
+	if ((pd->xpos >= desks_x) || (pd->ypos >= desks_y))
+	  {
+	     /* remove desk */
+	     if (pd->current)
+	       {
+		  desk = e_desk_current_get(ev->zone);
+		  pd2 = _pager_face_desk_find(face, desk);
+		  _pager_face_desk_select(pd2);
+	       }
+	     face->desks = evas_list_remove(face->desks, pd);
+	     _pager_desk_free(pd);
+	  }
+     }
+   /* Loop to add new desks */
+   for (x = 0; x < desks_x; x++)
+     {
+	for (y = 0; y < desks_y; y++)
 	  {
 	     if ((x >= face->xnum) || (y >= face->ynum))
 	       {
@@ -1194,24 +1209,6 @@ _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event)
 		  pd = _pager_desk_new(face, desk, x, y);
 		  if (pd)
 		    face->desks = evas_list_append(face->desks, pd);
-	       }
-	     else if ((x >= desks_x) || (y >= desks_y))
-	       {
-		  /* del desk */
-		  for (l = face->desks; l; l = l->next)
-		    {
-		       pd = l->data;
-		       if ((pd->xpos == x) && (pd->ypos == y))
-			 break;
-		    }
-		  if (pd->current)
-		    {
-		       desk = e_desk_current_get(ev->zone);
-		       pd2 = _pager_face_desk_find(face, desk);
-		       _pager_face_desk_select(pd2);
-		    }
-		  face->desks = evas_list_remove(face->desks, pd);
-		  _pager_desk_free(pd);
 	       }
 	  }
      }
