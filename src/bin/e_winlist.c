@@ -298,12 +298,11 @@ _e_winlist_size_adjust(void)
 static void
 _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 {
-   if ((bd->zone) &&
-       (bd->zone == zone) &&
-       ((bd->desk == desk) || (bd->sticky)) &&
+   if ((((bd->zone) && (bd->zone == zone) &&
+	 ((bd->desk == desk) || (bd->sticky))) ||
+	((bd->zone->container == zone->container) && (bd->iconic))) &&
        (bd->client.icccm.accepts_focus) &&
-       (!bd->client.netwm.state.skip_taskbar) &&
-       (!bd->client.netwm.state.hidden)
+       (!bd->client.netwm.state.skip_taskbar)
        )
      {
 	E_Winlist_Win *ww;
@@ -354,6 +353,13 @@ _e_winlist_border_del(E_Border *bd)
 	ww = l->data;
 	if (ww->border == bd)
 	  {
+	     if (l == win_selected)
+	       {
+		  win_selected = l->next;
+		  if (!win_selected) win_selected = l->prev;
+		  _e_winlist_show_active();
+		  _e_winlist_activate();
+	       }
 	     evas_object_del(ww->bg_object);
 	     if (ww->icon_object) evas_object_del(ww->icon_object);
 	     free(ww);
