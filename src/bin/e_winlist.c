@@ -217,6 +217,7 @@ e_winlist_hide(void)
    if (bd)
      {
 	if (bd->iconic) e_border_uniconify(bd);
+	if (bd->shaded) e_border_unshade(bd, bd->shade.dir);
 	else if (bd->desk)
 	  {
 	     if (!bd->sticky) e_desk_show(bd->desk);
