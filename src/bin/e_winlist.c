@@ -339,7 +339,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
      {
 	if (bd->sticky)
 	  {
-	     if ((bd->zone) && (bd->zone != zone) &&
+	     if ((bd->zone != zone) &&
 		 (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
 	  }
 	else
@@ -378,6 +378,18 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	     edje_object_part_swallow(ww->bg_object, "icon_swallow", o);
 	     evas_object_show(o);
 	  }
+	if (bd->iconic)
+	  {
+	     edje_object_signal_emit(ww->bg_object, "iconified", "");
+	  }
+	else if (bd->desk != desk)
+	  {
+	     if (!((bd->sticky) && (bd->zone == zone)))
+	       {
+		  edje_object_signal_emit(ww->bg_object, "invisible", "");
+	       }
+	  }
+	  
 	edje_object_size_min_calc(ww->bg_object, &mw, &mh);
 	e_box_pack_end(list_object, ww->bg_object);
 	e_box_pack_options_set(ww->bg_object, 

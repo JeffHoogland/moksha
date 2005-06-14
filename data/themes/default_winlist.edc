@@ -5,6 +5,8 @@ images {
    image: "e17_ibar_bg_h.png" COMP;
    image: "e17_ibar_over_v.png" COMP;
    image: "e17_gadman_overlay.png" COMP;
+   image: "e17_pager_window.png" COMP;
+   image: "e17_pager_desk.png" COMP;
 }
 
 group {
@@ -291,8 +293,9 @@ group {
 	       to_x: "icon_swallow";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
+	       relative: 0.0  1.0;
 	       offset:   -1   -1;
+	       to_x: "type";
 	    }
 	    image {
 	       normal: "e17_titlebar_outline.png";
@@ -485,8 +488,9 @@ group {
 	       to_x: "icon_swallow";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
+	       relative: 0.0  1.0;
 	       offset:   -8 -6;
+	       to_x: "type";
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -685,8 +689,57 @@ group {
 	    }
 	 }
       }
+      part {
+	 name: "type";
+	 description {
+	    state: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    align: 1.0 0.5;
+	    aspect_preference: VERTICAL;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   -1  1;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1  4;
+	       to_y: "title2";
+	    }
+            image {
+	       normal: "e17_pager_window.png";
+	       border: 6 13 7 5;
+	    }
+	 }
+	 description {
+	    state: "iconified" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 0;
+	 }
+	 description {
+	    state: "invisible" 0.0;
+	    inherit: "default" 0.0;
+            image {
+               normal: "e17_pager_desk.png";
+	       border: 2 2 2 2;
+	    }
+	 }
+      }
    }
    programs {
+      program {
+	 name:    "type1";
+	 signal:  "iconified";
+	 source:  "";
+	 action:  STATE_SET "iconified" 0.0;
+	 target:  "type";
+      }
+      program {
+	 name:    "type2";
+	 signal:  "invisible";
+	 source:  "";
+	 action:  STATE_SET "invisible" 0.0;
+	 target:  "type";
+      }
       program {
 	 name:    "go_active_pre";
 	 signal:  "active";
