@@ -134,7 +134,7 @@ e_winlist_show(E_Zone *zone)
    
    bd = e_border_focused_get();
    if (bd) e_border_focus_set(bd, 0, 0);
-   _e_winlist_activate_nth(0);
+   _e_winlist_activate_nth(1);
    evas_event_thaw(winlist->evas);
    _e_winlist_size_adjust();
 
@@ -459,7 +459,10 @@ _e_winlist_activate(void)
 	if (ww->border->desk) e_desk_show(ww->border->desk);
 	ok = 1;
      }
-   if ((ww->border->shaded) &&
+   if (((ww->border->shaded) ||
+	((ww->border->changes.shaded) &&
+	 (ww->border->shade.val != ww->border->shaded) &&
+	 (ww->border->shade.val))) &&
        (ww->border->desk == e_desk_current_get(winlist->zone)) &&
        (e_config->winlist_list_uncover_while_selecting))
      {

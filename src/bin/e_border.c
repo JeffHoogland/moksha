@@ -4271,8 +4271,8 @@ _e_border_shade_animator(void *data)
    bd->changed = 1;
 
    /* we're done */
-   if ( (bd->shaded && (bd->shade.val == 1)) ||
-        (!(bd->shaded) && (bd->shade.val == 0)) )
+   if ((bd->shaded && (bd->shade.val == 1)) ||
+       (!(bd->shaded) && (bd->shade.val == 0)) )
      {
 	E_Event_Border_Resize *ev;
 

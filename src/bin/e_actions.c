@@ -536,19 +536,19 @@ ACT_FN_GO(winlist)
 	  {
 	     if (!strcmp(params, "next"))
 	       {
-		  e_winlist_show(zone);
-		  e_winlist_next();
+		  if (!e_winlist_show(zone))
+		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
-		  e_winlist_show(zone);
-		  e_winlist_prev();
+		  if (!e_winlist_show(zone))
+		    e_winlist_prev();
 	       }
 	  }
 	else
 	  {
-	     e_winlist_show(zone);
-	     e_winlist_next();
+	     if (!e_winlist_show(zone))
+	       e_winlist_next();
 	  }
      }
 }
@@ -569,20 +569,23 @@ ACT_FN_GO_MOUSE(winlist)
 	       {
 		  if (e_winlist_show(zone))
 		    e_winlist_modifiers_set(ev->modifiers);
-		  e_winlist_next();
+		  else
+		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
 		  if (e_winlist_show(zone))
 		    e_winlist_modifiers_set(ev->modifiers);
-		  e_winlist_prev();
+		  else
+		    e_winlist_prev();
 	       }
 	  }
 	else
 	  {
 	     if (e_winlist_show(zone))
 	       e_winlist_modifiers_set(ev->modifiers);
-	     e_winlist_next();
+	     else
+	       e_winlist_next();
 	  }
      }
 }
@@ -603,20 +606,23 @@ ACT_FN_GO_KEY(winlist)
 	       {
 		  if (e_winlist_show(zone))
 		    e_winlist_modifiers_set(ev->modifiers);
-		  e_winlist_next();
+		  else
+		    e_winlist_next();
 	       }
 	     else if (!strcmp(params, "prev"))
 	       {
 		  if (e_winlist_show(zone))
 		    e_winlist_modifiers_set(ev->modifiers);
-		  e_winlist_prev();
+		  else
+		    e_winlist_prev();
 	       }
 	  }
 	else
 	  {
 	     if (e_winlist_show(zone))
 	       e_winlist_modifiers_set(ev->modifiers);
-	     e_winlist_next();
+	     else
+	       e_winlist_next();
 	  }
      }
 }
