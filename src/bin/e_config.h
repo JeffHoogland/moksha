@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 108
+#define E_CONFIG_FILE_VERSION 111
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -99,7 +99,29 @@ struct _E_Config
    int         always_click_to_raise;
    int         use_auto_raise;
    double      auto_raise_delay;
+   int         use_resist;
    int         drag_resist;
+   int         desk_resist;
+   int         window_resist;
+   int         gadget_resist;
+   int         winlist_warp_while_selecting;
+   int         winlist_warp_at_end;
+   double      winlist_warp_speed;
+   int         winlist_scroll_animate;
+   double      winlist_scroll_speed;
+   int         winlist_list_show_iconified;
+   int         winlist_list_show_other_desk_windows;
+   int         winlist_list_show_other_screen_windows;
+   int         winlist_list_uncover_while_selecting;
+   int         winlist_list_jump_desk_while_selecting;
+   double      winlist_pos_align_x;
+   double      winlist_pos_align_y;
+   double      winlist_pos_size_w;
+   double      winlist_pos_size_h;
+   int         winlist_pos_min_w;
+   int         winlist_pos_min_h;
+   int         winlist_pos_max_w;
+   int         winlist_pos_max_h;
 };
 
 /* FIXME: all of thsie needs to become eet lumps for enmcode/decode */

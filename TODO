@@ -57,10 +57,9 @@ These are in no particular order:
 
 * maximised apps when e restarts 
 * actions to make current zone different (warp mouse to there)
-* winlist - popup win size/pos should be configurable
-* winlist - support different window list fill policies
-* winlist - make warp pointer optional if in click to focus mode
+* actions to make the current container different
 * winlist - add state/signal and gfx for wins that are iconified
+* winlist - add state/signal and gfx for wins that are on another desk/screen
 * coudl speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
 * make it easy for moduels to hook into ipc and extend it for themselves
 * check evas has eet support early on.

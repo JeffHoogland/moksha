@@ -29,6 +29,10 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
    E_Border_List *bl;
    E_Border *bd;
 
+   resist = e_config->use_resist;
+   desk_resist = e_config->desk_resist;
+   win_resist = e_config->window_resist;
+   gad_resist = e_config->gadget_resist;
    /* FIXME: get resist values from config */
    if (!resist)
      {
@@ -38,6 +42,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	*rw = h;
 	return 0;
      }
+   
    /* edges of screen */
 #define OBSTACLE(_x, _y, _w, _h, _resist) \
    { \

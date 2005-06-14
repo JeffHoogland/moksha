@@ -145,8 +145,30 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, always_click_to_raise, INT);
    E_CONFIG_VAL(D, T, use_auto_raise, INT);
    E_CONFIG_VAL(D, T, auto_raise_delay, DOUBLE); 
+   E_CONFIG_VAL(D, T, use_resist, INT);
    E_CONFIG_VAL(D, T, drag_resist, INT);
-
+   E_CONFIG_VAL(D, T, desk_resist, INT);
+   E_CONFIG_VAL(D, T, window_resist, INT);
+   E_CONFIG_VAL(D, T, gadget_resist, INT);
+   E_CONFIG_VAL(D, T, winlist_warp_while_selecting, INT);
+   E_CONFIG_VAL(D, T, winlist_warp_at_end, INT);
+   E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_scroll_animate, INT);
+   E_CONFIG_VAL(D, T, winlist_scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_list_show_iconified, INT);
+   E_CONFIG_VAL(D, T, winlist_list_show_other_desk_windows, INT);
+   E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT);
+   E_CONFIG_VAL(D, T, winlist_list_uncover_while_selecting, INT);
+   E_CONFIG_VAL(D, T, winlist_list_jump_desk_while_selecting, INT);
+   E_CONFIG_VAL(D, T, winlist_pos_align_x, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_pos_align_y, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_pos_size_w, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_pos_size_h, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_pos_min_w, INT);
+   E_CONFIG_VAL(D, T, winlist_pos_min_h, INT);
+   E_CONFIG_VAL(D, T, winlist_pos_max_w, INT);
+   E_CONFIG_VAL(D, T, winlist_pos_max_h, INT);
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -213,7 +235,30 @@ e_config_init(void)
 	e_config->always_click_to_raise = 0;
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
+	e_config->use_resist = 1;
 	e_config->drag_resist = 8;
+	e_config->desk_resist = 32;
+	e_config->window_resist = 12;
+	e_config->gadget_resist = 32;
+	e_config->winlist_warp_while_selecting = 1;
+	e_config->winlist_warp_at_end = 1;
+	e_config->winlist_warp_speed = 0.2;
+	e_config->winlist_scroll_animate = 1;
+	e_config->winlist_scroll_speed = 0.1;
+	e_config->winlist_list_show_iconified = 1;
+	e_config->winlist_list_show_other_desk_windows = 0;
+	e_config->winlist_list_show_other_screen_windows = 0;
+	e_config->winlist_list_uncover_while_selecting = 0;
+	e_config->winlist_list_jump_desk_while_selecting = 0;
+	e_config->winlist_pos_align_x = 0.5;
+	e_config->winlist_pos_align_y = 0.5;
+	e_config->winlist_pos_size_w = 0.5;
+	e_config->winlist_pos_size_h = 0.5;
+	e_config->winlist_pos_min_w = 0;
+	e_config->winlist_pos_min_h = 0;
+	e_config->winlist_pos_max_w = 320;
+	e_config->winlist_pos_max_h = 320;
+	
 	  {
 	     E_Config_Module *em;
 
@@ -712,8 +757,30 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->auto_raise_delay, 0.0, 5.0);
+   E_CONFIG_LIMIT(e_config->use_resist, 0, 1);
    E_CONFIG_LIMIT(e_config->drag_resist, 0, 100);
-
+   E_CONFIG_LIMIT(e_config->desk_resist, 0, 100);
+   E_CONFIG_LIMIT(e_config->window_resist, 0, 100);
+   E_CONFIG_LIMIT(e_config->gadget_resist, 0, 100);
+   E_CONFIG_LIMIT(e_config->winlist_warp_while_selecting, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_warp_at_end, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_warp_speed, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_scroll_animate, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_scroll_speed, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_list_show_iconified, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_desk_windows, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_screen_windows, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_uncover_while_selecting, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_list_jump_desk_while_selecting, 0, 1);
+   E_CONFIG_LIMIT(e_config->winlist_pos_align_x, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_pos_align_y, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_pos_size_w, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_pos_size_h, 0.0, 1.0);
+   E_CONFIG_LIMIT(e_config->winlist_pos_min_w, 0, 4000);
+   E_CONFIG_LIMIT(e_config->winlist_pos_min_h, 0, 4000);
+   E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
+   E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
+;
    /* apply lang config - exception because config is loaded after intl setup */
    
    if ((e_config->language) && (strlen(e_config->language) > 0))

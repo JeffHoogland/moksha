@@ -11,6 +11,8 @@ struct _E_Winlist_Win
    Evas_Object *bg_object;
    Evas_Object *icon_object;
    E_Border *border;
+   unsigned char was_iconified : 1;
+   unsigned char was_shaded : 1;
 };
 
 static void _e_winlist_size_adjust(void);
@@ -79,13 +81,17 @@ e_winlist_show(E_Zone *zone)
    
    if (winlist) return 0;
 
-   /* FIXME: sizes/pos should be config */
-   w = zone->w / 2;
-   if (w > 320) w = 320;
-   h = zone->h / 2;
-   if (h > 320) h = 320;
-   x = (zone->w - w) / 2;
-   y = (zone->h - h) / 2;
+   w = (double)zone->w * e_config->winlist_pos_size_w;
+   if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
+   else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
+   if (w > zone->w) w = zone->w;
+   x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
+   
+   h = (double)zone->h * e_config->winlist_pos_size_h;
+   if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
+   else if (h < e_config->winlist_pos_min_h) h = e_config->winlist_pos_min_h;
+   if (h > zone->h) h = zone->h;
+   y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
    
    winlist = e_popup_new(zone, x, y, w, h); 
    if (!winlist) return;
@@ -234,11 +240,12 @@ e_winlist_hide(void)
 	  }
 	e_border_raise(bd);
 	e_border_focus_set(bd, 1, 1);
-	if (e_config->focus_policy != E_FOCUS_CLICK)
+	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+	    (e_config->winlist_warp_at_end) ||
+	    (e_config->winlist_warp_while_selecting))
 	  ecore_x_pointer_warp(bd->zone->container->win,
 			       bd->x + (bd->w / 2),
 			       bd->y + (bd->h / 2));
-	/* FIXME: ensure whatever window is selected is focused after we finish cleanup - seee above for fix to mouse enter events */
      }
 }
 
@@ -284,6 +291,7 @@ static void
 _e_winlist_size_adjust(void)
 {
    Evas_Coord mw, mh;
+   E_Zone *zone;
    int x, y, w, h;   
 
    e_box_freeze(list_object);
@@ -295,13 +303,20 @@ _e_winlist_size_adjust(void)
    edje_object_part_swallow(bg_object, "list_swallow", list_object);
    e_box_thaw(list_object);
    
-   /* FIXME: sizes/pos should be config */
-   w = winlist->zone->w / 2;
-   if (w > 320) w = 320;
+   zone = winlist->zone;
+   w = (double)zone->w * e_config->winlist_pos_size_w;
+   if (w < mw) w = mw;
+   if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
+   else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
+   if (w > zone->w) w = zone->w;
+   x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
+   
    h = mh;
-   if (h > 320) h = 320;
-   x = (winlist->zone->w - w) / 2;
-   y = (winlist->zone->h - h) / 2;
+   if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
+   else if (h < e_config->winlist_pos_min_h) h = e_config->winlist_pos_min_h;
+   if (h > zone->h) h = zone->h;
+   y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
+   
    evas_object_resize(bg_object, w, h);
    e_popup_move_resize(winlist, x, y, w, h);
 }
@@ -309,12 +324,35 @@ _e_winlist_size_adjust(void)
 static void
 _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 {
-   if ((((bd->zone) && (bd->zone == zone) &&
-	 ((bd->desk == desk) || (bd->sticky))) ||
-	((bd->zone->container == zone->container) && (bd->iconic))) &&
-       (bd->client.icccm.accepts_focus) &&
-       (!bd->client.netwm.state.skip_taskbar)
-       )
+   int ok;
+
+   ok = 1;
+   if ((!bd->client.icccm.accepts_focus)) ok = 0;
+   if (bd->client.netwm.state.skip_taskbar) ok = 0;
+   if (bd->iconic)
+     {
+	if (!e_config->winlist_list_show_iconified) ok = 0;
+	if ((bd->zone != zone) &&
+	    (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+     }
+   else
+     {
+	if (bd->sticky)
+	  {
+	     if ((bd->zone) && (bd->zone != zone) &&
+		 (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+	  }
+	else
+	  {
+	     if (bd->desk != desk)
+	       {
+		  if ((bd->zone) && (bd->zone != zone) &&
+		      (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+		  else if (!e_config->winlist_list_show_other_desk_windows) ok = 0;
+	       }
+	  }
+     }
+   if (ok)
      {
 	E_Winlist_Win *ww;
 	Evas_Coord mw, mh;
@@ -400,21 +438,46 @@ _e_winlist_activate(void)
 {
    E_Winlist_Win *ww;
    Evas_Object *o;
-
+   int ok;
+   
    if (!win_selected) return;
    ww = win_selected->data;
    edje_object_signal_emit(ww->bg_object, "active", "");
+   ok = 0;
+
+   if ((ww->border->iconic) &&
+       (e_config->winlist_list_uncover_while_selecting))
+     {
+	e_border_uniconify(ww->border);
+	ww->was_iconified = 1;
+	ok = 1;
+     }
+   if ((!ww->border->sticky) &&
+       (ww->border->desk != e_desk_current_get(winlist->zone)) &&
+       (e_config->winlist_list_jump_desk_while_selecting))
+     {
+	if (ww->border->desk) e_desk_show(ww->border->desk);
+	ok = 1;
+     }
+   if ((ww->border->shaded) &&
+       (ww->border->desk == e_desk_current_get(winlist->zone)) &&
+       (e_config->winlist_list_uncover_while_selecting))
+     {
+	e_border_unshade(ww->border, ww->border->shade.dir);
+	ww->was_shaded = 1;
+	ok = 1;
+     }
    if ((!ww->border->iconic) &&
        ((ww->border->desk == e_desk_current_get(winlist->zone)) ||
 	(ww->border->sticky)))
+     ok = 1;
+   if (ok)
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
 	  {
-	     int animate_warp = 1;
-	     
 	     warp_to_x = ww->border->x + (ww->border->w / 2);
 	     warp_to_y = ww->border->y + (ww->border->h / 2);
-	     if (animate_warp)
+	     if (e_config->winlist_warp_while_selecting)
 	       {
 		  warp_to = 1;
 		  if (!warp_timer)
@@ -456,6 +519,12 @@ _e_winlist_deactivate(void)
 
    if (!win_selected) return;
    ww = win_selected->data;
+   if (ww->was_shaded)
+     e_border_shade(ww->border, ww->border->shade.dir);
+   if (ww->was_iconified)
+     e_border_iconify(ww->border);
+   ww->was_shaded = 0;
+   ww->was_iconified = 0;
    if (icon_object)
      {
 	evas_object_del(icon_object);
@@ -471,7 +540,6 @@ _e_winlist_show_active(void)
 {
    Evas_List *l;
    int i, n;
-   int animate_scroll = 1;
    
    if (!wins) return;
    for (i = 0, l = wins; l; l = l->next, i++)
@@ -481,7 +549,7 @@ _e_winlist_show_active(void)
    n = evas_list_count(wins);
    if (n <= 1) return;
    scroll_align_to = (double)i / (double)(n - 1);
-   if (animate_scroll)
+   if (e_config->winlist_scroll_animate)
      {
 	scroll_to = 1;
 	if (!scroll_timer)
@@ -493,7 +561,6 @@ _e_winlist_show_active(void)
      {
 	e_box_align_set(list_object, 0.5, scroll_align);
      }
-   /* FIXME: scroll so the selected win is visible */
 }
 
 static int
@@ -650,9 +717,10 @@ _e_winlist_scroll_timer(void *data)
 {
    if (scroll_to)
      {
-	double scroll_speed = 0.1;
+	double spd;
 
-	scroll_align = (scroll_align * (1.0 - scroll_speed)) + (scroll_align_to * scroll_speed);
+	spd = e_config->winlist_scroll_speed;
+	scroll_align = (scroll_align * (1.0 - spd)) + (scroll_align_to * spd);
 	return 1;
      }
    scroll_timer = NULL;
@@ -665,11 +733,12 @@ _e_winlist_warp_timer(void *data)
    if (warp_to)
      {
 	int x, y;
-	double warp_speed = 0.2;
+	double spd;
 	
+	spd = e_config->winlist_warp_speed;
 	ecore_x_pointer_xy_get(winlist->zone->container->win, &x, &y);
-	warp_x = (x * (1.0 - warp_speed)) + (warp_to_x * warp_speed);
-	warp_y = (y * (1.0 - warp_speed)) + (warp_to_y * warp_speed);
+	warp_x = (x * (1.0 - spd)) + (warp_to_x * spd);
+	warp_y = (y * (1.0 - spd)) + (warp_to_y * spd);
 	return 1;
      }
    warp_timer = NULL;
@@ -709,7 +778,6 @@ _e_winlist_animator(void *data)
 	  }
         e_box_align_set(list_object, 0.5, 1.0 - scroll_align);
      }
-   /* FIXME: update scroll alignment */
    if ((warp_to) || (scroll_to)) return 1;
    animator = NULL;
    return 0;
