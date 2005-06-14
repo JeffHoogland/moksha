@@ -422,8 +422,11 @@ static void
 _e_winlist_activate_nth(int n)
 {
    Evas_List *l;
+   int cnt;
    
    _e_winlist_deactivate();
+   cnt = evas_list_count(wins);
+   if (n >= cnt) n = cnt - 1;
    l = evas_list_nth_list(wins, n);
    if (l)
      {
