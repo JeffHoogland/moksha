@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* sometimes the mouse gets locked to a window with a mouse grab of some sort x(it gets the down event and not the up)
 * maximised apps when e restarts 
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
