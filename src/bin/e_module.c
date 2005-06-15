@@ -94,7 +94,7 @@ e_module_new(char *name)
 	modpath = e_path_find(path_modules, buf);
      }
    else
-     modpath = name;
+     modpath = strdup(name);
    if (!modpath)
      {
 	e_error_dialog_show(_("Error loading Module"),
