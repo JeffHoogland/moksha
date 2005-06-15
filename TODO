@@ -106,7 +106,6 @@ These are in no particular order:
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
 * add complete netwm support
 * different cursors for different parts of the screen
-* alt+tab popup list of windows
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir

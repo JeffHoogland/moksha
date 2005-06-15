@@ -738,6 +738,14 @@ e_config_init(void)
      }
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
 
+// TESTING OPTIONS
+/*
+	e_config->winlist_list_show_iconified = 1;
+	e_config->winlist_list_show_other_desk_windows = 1;
+	e_config->winlist_list_show_other_screen_windows = 1;
+	e_config->winlist_list_uncover_while_selecting = 1;
+	e_config->winlist_list_jump_desk_while_selecting = 1;
+*/   
    E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
    E_CONFIG_LIMIT(e_config->show_splash, 0, 1);
    E_CONFIG_LIMIT(e_config->menus_fast_mouse_move_threshhold, 1.0, 2000.0);
