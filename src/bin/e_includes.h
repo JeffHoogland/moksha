@@ -47,3 +47,4 @@
 #include "e_datastore.h"
 #include "e_msg.h"
 #include "e_winlist.h"
+#include "e_alert.h"

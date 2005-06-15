@@ -22,15 +22,105 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    write(2, "**** Printing Backtrace... *****\n\n", 34);
    size = backtrace(array, 255);
    backtrace_symbols_fd(array, size, 2);
+   e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
+		"This is not meant to happen and is likely a sign of a\n"
+		"bug in Enlightenment or the libraries it relies on.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the bext we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
    exit(-11); 
 }
 #else
-void e_sigseg_act(int x, siginfo_t *info, void *data)
+void
+e_sigseg_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** SEGMENTATION FAULT ****\n", 29);
-   write(2, "**** Backtrace disabled... *****\n\n", 34);
+   e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
+		"This is not meant to happen and is likely a sign of a\n"
+		"bug in Enlightenment or the libraries it relies on.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the bext we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
    exit(-11);
 }
 #endif
 
-     
+void
+e_sigill_act(int x, siginfo_t *info, void *data)
+{
+   write(2, "**** ILLEGAL INSTRUCTION ****\n", 30);
+   e_alert_show("This is very bad. Enlightenment has executed and illegal\n"
+		"instruction. This is most likely because Enlightenment or\n"
+		"a library it depends on has been compiled for a CPU type\n"
+		"that you don't have.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the bext we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
+   exit(-11);
+}
+
+void
+e_sigfpe_act(int x, siginfo_t *info, void *data)
+{
+   write(2, "**** FLOATING POINT EXCEPTION ****\n", 35);
+   e_alert_show("This is very bad. Enlightenment has recieved a floating\n"
+		"point exception. This is probably due to a divide by 0\n"
+		"in Enlightenment or a library it depends on.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the bext we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
+   exit(-11);
+}
+
+void
+e_sigbus_act(int x, siginfo_t *info, void *data)
+{
+   write(2, "**** BUS ERROR ****\n", 21);
+   e_alert_show("This is very bad. Enlightenment has recieved a bus error.\n"
+		"This could be for many reasons - accessing memory not in\n"
+		"its available address space or unable to be paged in.\n"
+		"\n"
+		"You can gdb attach to this process now to try debug it\n"
+		"or you could exit, or just hit restart to try and get\n"
+		"your desktop back the way it was. This may not always\n"
+		"work perfectly, but it is the bext we can do for now.\n"
+		"\n"
+		"Please help us debug this by compiling Enlightenment and\n"
+		"all its dependency libraries with gdb debugging enabled\n"
+		"and gdb attach to E when this happens and try figure out\n"
+		"what's going on and set us gdb backtraces, variable dumps\n"
+		"etc.");
+   exit(-11);
+}

@@ -61,15 +61,30 @@ main(int argc, char **argv)
    int after_restart = 0; 
    char buf[1024];
    char *s;
-#if 0   
-   /* install the signal handlers. */ 
-   struct sigaction sigsegv_action;
-   
-   sigsegv_action.sa_sigaction = &e_sigseg_act;
-   sigsegv_action.sa_flags = 0;
-   sigemptyset(&sigsegv_action.sa_mask);
-   sigaction(SIGSEGV, &sigsegv_action, NULL);
-#endif
+   struct sigaction action;
+
+   /* trap deadly bug signals and allow some form of sane recovery */
+   /* or ability to gdb attach and debug at this point - better than your */
+   /* wm/desktop vanishing and not knowing what happened */
+   action.sa_sigaction = e_sigseg_act;
+   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_ONESHOT | SA_NOMASK | SA_SIGINFO;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGSEGV, &action, NULL);
+
+   action.sa_sigaction = e_sigill_act;
+   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_ONESHOT | SA_NOMASK | SA_SIGINFO;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGILL, &action, NULL);
+
+   action.sa_sigaction = e_sigfpe_act;
+   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_ONESHOT | SA_NOMASK | SA_SIGINFO; 
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGFPE, &action, NULL);
+
+   action.sa_sigaction = e_sigbus_act;
+   action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_ONESHOT | SA_NOMASK | SA_SIGINFO;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGBUS, &action, NULL);
 
    /* FIXME: this is the init code for letting e be relocatable. right now
     * its not used - so i want to see if it can reliably determine its exe
@@ -219,6 +234,14 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(_e_main_x_shutdown);
+   /* init x */
+   if (!e_alert_init(NULL))
+     {
+	e_error_message_show(_("Enlightenment cannot initialize its emergency alert system.\n"
+			       "Have you set your DISPLAY variable?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_alert_shutdown);
    if (!e_xinerama_init())
      {
 	e_error_message_show(_("Enlightenment cannot setup xinerama wrapping.\n"
@@ -458,7 +481,7 @@ main(int argc, char **argv)
    
    /* run any testing code now we are set up */
    e_test();
-   
+
    /* no longer starting up */
    starting = 0;
    /* start our main loop */

@@ -158,5 +158,4 @@ These are in no particular order:
 * remove module config menus (make them part of the module control panel and
   as separate executables)
 * tip/hint/suggestion dialog app (textblock etc.)
-* segv/restart handler like e16.
 

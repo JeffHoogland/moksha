@@ -4,6 +4,7 @@ INCLUDES = -I$(includedir) \
 	   -I$(top_srcdir)/src/bin \
 	   -I$(top_srcdir)/src/lib \
 	   @e_cflags@ \
+	   @x_cflags@ \
 	   @EDJE_DEF@
 
 bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
@@ -58,7 +59,8 @@ e_ipc_codec.h \
 e_prefix.h \
 e_datastore.h \
 e_msg.h \
-e_winlist.h
+e_winlist.h \
+e_alert.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -108,9 +110,10 @@ e_prefix.c \
 e_datastore.c \
 e_msg.c \
 e_winlist.c \
+e_alert.c \
 $(ENLIGHTENMENTHEADERS)
 
-enlightenment_LDFLAGS = -export-dynamic @e_libs@ @dlopen_libs@
+enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@
 
 enlightenment_remote_SOURCES = \
 e.h \
