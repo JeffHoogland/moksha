@@ -242,7 +242,7 @@ e_config_init(void)
 	e_config->gadget_resist = 32;
 	e_config->winlist_warp_while_selecting = 1;
 	e_config->winlist_warp_at_end = 1;
-	e_config->winlist_warp_speed = 0.2;
+	e_config->winlist_warp_speed = 0.1;
 	e_config->winlist_scroll_animate = 1;
 	e_config->winlist_scroll_speed = 0.1;
 	e_config->winlist_list_show_iconified = 1;

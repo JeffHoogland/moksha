@@ -493,6 +493,7 @@ _e_winlist_activate(void)
      {
 	if (e_config->focus_policy != E_FOCUS_CLICK)
 	  {
+	     ecore_x_pointer_xy_get(winlist->zone->container->win, &warp_x, &warp_y);
 	     warp_to_x = ww->border->x + (ww->border->w / 2);
 	     warp_to_y = ww->border->y + (ww->border->h / 2);
 	     if (e_config->winlist_warp_while_selecting)
@@ -754,7 +755,8 @@ _e_winlist_warp_timer(void *data)
 	double spd;
 	
 	spd = e_config->winlist_warp_speed;
-	ecore_x_pointer_xy_get(winlist->zone->container->win, &x, &y);
+	x = warp_x;
+	y = warp_y;
 	warp_x = (x * (1.0 - spd)) + (warp_to_x * spd);
 	warp_y = (y * (1.0 - spd)) + (warp_to_y * spd);
 	return 1;
