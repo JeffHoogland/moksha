@@ -6,6 +6,7 @@ images {
    image: "e17_ibar_over_v.png" COMP;
    image: "e17_gadman_overlay.png" COMP;
    image: "e17_pager_window.png" COMP;
+   image: "e17_pager_window_shaded.png" COMP;
    image: "e17_pager_desk.png" COMP;
 }
 
@@ -723,6 +724,14 @@ group {
 	       border: 2 2 2 2;
 	    }
 	 }
+	 description {
+	    state: "shaded" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_pager_window_shaded.png";
+	       border: 6 13 9 0;
+	    }
+	 }
       }
    }
    programs {
@@ -738,6 +747,13 @@ group {
 	 signal:  "invisible";
 	 source:  "";
 	 action:  STATE_SET "invisible" 0.0;
+	 target:  "type";
+      }
+      program {
+	 name:    "type3";
+	 signal:  "shaded";
+	 source:  "";
+	 action:  STATE_SET "shaded" 0.0;
 	 target:  "type";
       }
       program {

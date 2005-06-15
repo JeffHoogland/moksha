@@ -378,7 +378,11 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	     edje_object_part_swallow(ww->bg_object, "icon_swallow", o);
 	     evas_object_show(o);
 	  }
-	if (bd->iconic)
+	if (bd->shaded)
+	  {
+	     edje_object_signal_emit(ww->bg_object, "shaded", "");
+	  }
+	else if (bd->iconic)
 	  {
 	     edje_object_signal_emit(ww->bg_object, "iconified", "");
 	  }
