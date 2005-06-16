@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* setup configs for gnome and kde (as options) if they are installed (eg
+  run gnome-settings-daemon).
 * sometimes the mouse gets locked to a window with a mouse grab of some sort
   in x (it gets the down event and not the up?) so e thinks its down but it
   isnt
