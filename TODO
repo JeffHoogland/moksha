@@ -55,15 +55,23 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* sometimes the mouse gets locked to a window with a mouse grab of some sort x(it gets the down event and not the up)
-* maximised apps when e restarts 
+* sometimes the mouse gets locked to a window with a mouse grab of some sort
+  in x (it gets the down event and not the up?) so e thinks its down but it
+  isnt
+* maximised apps when e restarts are not recognised as maximised
+* maximised apps need their border to change (only titlebar for example)
+* need an "expanded" mode for windows that maximises but NOT over modules and
+  you can still shade, resize etc.
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
-* coudl speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
-* make it easy for moduels to hook into ipc and extend it for themselves
+* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
+* make it easy for modules to hook into ipc and extend it for themselves
 * check evas has eet support early on.
-* add locale and encoding fields to eapp files (to launch eapp in that locale+encoding)
+* add locale and encoding fields to eapp files (to launch eapp in that
+  locale+encoding)
 * add input method selector stuff to eapp - same as locale
+* gadman needs some changes to virtualise the canvas/container the gadget
+  ends up in (eg in popups or border)
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
@@ -75,7 +83,7 @@ These are in no particular order:
   border stays around - something is keeping extra references maybe? it is
   hidden, until you flip desktops then it appears again - but with no client
   around. currently they have a dangling reference - need to find out WHO
-  added that ref and didnt remove it
+  added that ref and didnt remove it (i haven't seen this for ages now)
 * fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
 * break out desks x/y size config so you can have a different desktop size
@@ -92,20 +100,23 @@ These are in no particular order:
   window that may get the focus if it allows it...
 * check window max size. if < size of zone (or maximisation area) disallow
   maximising and tell border edje object (via signals) to somehow disable the
-  maximise buttons :) (and remove from the menu)
+  maximise buttons :) (and remove from the menu) or center client in frame or
+  something else to not exceed max size for window
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
 * gadman gadget menu needs icons :)
-* module api needs to move label and icon to data file, not api
+* module api needs to move label and icon to data file (.eapp file?), not api
 * gadman edit mode for simple gadgets activate with a button bind (eg
   alt+click on module like windows) or a pure key binding
 * make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
-* gadget containers (shelves?)
+* gadget containers (shelves?) using popups as well as in-line in a canvas
 * add key input focus control for desktop modules
 * finish off icccm support
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
-* add complete netwm support
+* finish complete netwm support
+* make the cursors an edje buffer canvas for changinig cursor depending on
+  context
 * different cursors for different parts of the screen
 * add a "taskbar" module
 * add cpu load module
@@ -116,7 +127,8 @@ These are in no particular order:
 * ibar need to handle drop from other places (xdnd, drop from window etc.)
 * ibar lamp needs short timer on mouse out for hide before hiding (and del
   the time on mouse in)
-* borders need to be able to change border theme on the fly
+* borders need to be able to change border theme on the fly by mene or app
+  properties
 * add window glueing
 * add window tabs (multiple clients in 1 border)
 * add setup/install wizard to seed eapp files etc. etc.
@@ -125,8 +137,6 @@ These are in no particular order:
 * add clientinfo pane/popdown for borders
 * add a button area expansion for borders ???
 * add template button for expanded buttons ???
-* add a status area expansion for borders ???
-* add a status module template for borders ???
 * support text and color classes
 * add tooltips
 * add fullscreen support (e16 xvidmode or xrandr style)
@@ -145,16 +155,17 @@ These are in no particular order:
   stop users from doing silly things like logging out while important stuff
   is happening in that window -a menu option for this woudl be nice)
 * need to be able to remember client positons/etc.
+* with remember need to be able lock in attributes so the app (or user or both)
+  cannot change them (eg this window is a fixed size and location - app cannot
+  ask for a new size or location)
 * file icons on the desktop (people ask for it) - xdnd for these
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
-* go through e16 features we dont have and implement the most useful ones (or
-  re-design and implement)
+* dnd from pager to other pagers/ to desktop/ibox etc.
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * modules need config executables with proper widgets (sliders, check boxes,
   radio etc. not massive menus)
-* module control panel app
 * remove module config menus (make them part of the module control panel and
   as separate executables)
 * tip/hint/suggestion dialog app (textblock etc.)
