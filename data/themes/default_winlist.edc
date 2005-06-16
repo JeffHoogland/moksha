@@ -85,8 +85,9 @@ group {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;
 	    rel1 {
-	       relative: 0.0 0.0;
+	       relative: 0.0 1.0;
 	       offset:   16   16;
+	       to_y:    "title";
 	    }
 	    rel2 {
 	       relative: 1.0 0.0;
@@ -156,6 +157,33 @@ group {
 	    }
 	    fill {
 	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "title";
+	 type: TEXT;
+	 effect: SOFT_SHADOW;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.5 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:  16 16;
+	    }
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset:   -17 16;
+	    }
+	    color: 255 255 255 255;
+	    color3: 0 0 0 22;
+	    text {
+	       text: "Title goes here";
+	       font: "Edje Vera Bold";
+	       size: 10;
+	       min:  0 1;
+	       align: 0.5 0.0;
 	    }
 	 }
       }

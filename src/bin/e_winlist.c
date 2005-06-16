@@ -112,7 +112,7 @@ e_winlist_show(E_Zone *zone)
    e_box_orientation_set(o, 0);
    e_box_homogenous_set(o, 1);
    edje_object_part_swallow(bg_object, "list_swallow", o);
-   edje_object_part_text_set(bg_object, "title_text", _("Select a window"));
+   edje_object_part_text_set(bg_object, "title", _("Select a window"));
    evas_object_show(o);
 
    desk = e_desk_current_get(winlist->zone);
