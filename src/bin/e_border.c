@@ -808,8 +808,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 //   printf("flag focus to %i\n", focus);
    if ((focus) && (!bd->focused))
      {
-	focus_stack = evas_list_remove(focus_stack, bd);
-	focus_stack = evas_list_prepend(focus_stack, bd);
+	if (!e_winlist_active_get())
+	  {
+	     focus_stack = evas_list_remove(focus_stack, bd);
+	     focus_stack = evas_list_prepend(focus_stack, bd);
+	  }
 	edje_object_signal_emit(bd->bg_object, "active", "");
 	e_focus_event_focus_in(bd);
      }

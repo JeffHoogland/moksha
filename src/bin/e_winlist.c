@@ -249,6 +249,13 @@ e_winlist_hide(void)
      }
 }
 
+int
+e_winlist_active_get(void)
+{
+   if (winlist) return 1;
+   return 0;
+}
+
 void
 e_winlist_next(void)
 {
