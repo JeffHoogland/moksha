@@ -27,6 +27,9 @@ static int  _e_main_cb_idler_after(void *data);
 static int  _e_main_cb_startup_fake_status(void *data);
 static int  _e_main_cb_startup_fake_end(void *data);
 
+static void _e_main_desk_save(void);
+static void _e_main_desk_restore(E_Manager *man, E_Container *con);
+
 E_Path *path_data    = NULL;
 E_Path *path_images  = NULL;
 E_Path *path_fonts   = NULL;
@@ -492,6 +495,9 @@ main(int argc, char **argv)
    /*     and all changed config was already saved before */
    e_config_save_flush();
 
+   /* Store current selected desktops */
+   _e_main_desk_save();
+
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
    
@@ -697,6 +703,7 @@ _e_main_screens_init(void)
 	     e_manager_manage_windows(man);
 	     /* setup hints */
 	     e_hints_manager_init(man);
+	     _e_main_desk_restore(man, con);
 	  }
 	else
 	  {
@@ -975,4 +982,64 @@ _e_main_cb_startup_fake_end(void *data __UNUSED__)
 {
    e_init_hide();
    return 0;
+}
+
+static void
+_e_main_desk_save(void)
+{
+   Evas_List *ml;
+   char env[1024];
+   char name[1024];
+
+   for (ml = e_manager_list(); ml; ml = ml->next)
+     {
+	E_Manager *man;
+	Evas_List *cl;
+
+	man = ml->data;
+
+	for (cl = man->containers; cl; cl = cl->next)
+	  {
+	     E_Container *con;
+	     Evas_List *zl;
+
+	     con = cl->data;
+	     
+	     for (zl = con->zones; zl; zl = zl->next)
+	       {
+		  E_Zone *zone;
+
+		  zone = zl->data;
+
+		  snprintf(name, sizeof(name), "DESK_%d_%d_%d", man->num, con->num, zone->num);
+		  snprintf(env, sizeof(env), "%d,%d", zone->desk_x_current, zone->desk_y_current);
+		  e_util_env_set(name, env);
+	       }
+	  }
+     }
+}
+
+static void
+_e_main_desk_restore(E_Manager *man, E_Container *con)
+{
+   Evas_List *zl;
+   char *env;
+   char name[1024];
+
+   for (zl = con->zones; zl; zl = zl->next)
+     {
+	E_Zone *zone;
+	E_Desk *desk;
+	int desk_x, desk_y;
+
+	zone = zl->data;
+
+	snprintf(name, sizeof(name), "DESK_%d_%d_%d", man->num, con->num, zone->num);
+	env = getenv(name);
+	if (!env) continue;
+	if (!sscanf(env, "%d,%d", &desk_x, &desk_y)) continue;
+	desk = e_desk_at_xy_get(zone, desk_x, desk_y);
+	if (!desk) continue;
+	e_desk_show(desk);
+     }
 }
