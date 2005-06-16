@@ -4389,7 +4389,6 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 							   "widgets/border/default/on_top"),
 			     "widgets/border/default/on_top");
 
-   printf("wtf?\n");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Borderless"));
    e_menu_item_check_set(mi, 1);
