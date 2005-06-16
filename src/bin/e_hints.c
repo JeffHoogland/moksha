@@ -388,7 +388,7 @@ e_hints_window_init(E_Border *bd)
      e_border_stick(bd);
    if (bd->client.netwm.state.shaded)
      e_border_shade(bd, e_hints_window_shade_direction_get(bd));
-   if (bd->client.netwm.state.maximized_v && bd->client.netwm.state.maximized_h)
+   if ((bd->client.netwm.state.maximized_v) && (bd->client.netwm.state.maximized_h))
      e_border_maximize(bd);
    if (bd->client.netwm.state.fullscreen)
      e_border_fullscreen(bd);
