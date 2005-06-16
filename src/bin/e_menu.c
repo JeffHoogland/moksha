@@ -74,6 +74,7 @@ static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
 static double               _e_menu_activate_time       = 0.0;
+static int                  _e_menu_activate_floating   = 0;
 static Ecore_Timer         *_e_menu_scroll_timer        = NULL;
 static double               _e_menu_scroll_start        = 0.0;
 static int                  _e_menu_x                   = 0;
@@ -150,6 +151,7 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = 0.0;
+   _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
      {
@@ -204,6 +206,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = ecore_time_get();
+   _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
      {
@@ -247,6 +250,7 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    _e_menu_activate_time = 0.0;
+   _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
      {
@@ -2245,7 +2249,10 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
    t = ecore_time_get();
    if ((_e_menu_activate_time != 0.0) && 
        ((t - _e_menu_activate_time) < e_config->menus_click_drag_timeout))
-     return 1;
+     {
+	_e_menu_activate_floating = 1;
+	return 1;
+     }
 
    ret = _e_menu_active_call();
    if (ret == 1)
@@ -2256,7 +2263,7 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
      }
    else if (ret == -1)
      _e_menu_deactivate_all();
-   else
+   else if (!_e_menu_activate_floating)
      _e_menu_deactivate_all();
    return 1;
 }
