@@ -1069,9 +1069,53 @@ e_border_maximize(E_Border *bd)
 
 	e_hints_window_maximized_set(bd, 1);
 
-	/* FIXME maximize intelligently */
 	e_border_raise(bd);
-	e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
+	if (e_config->smart_maximize)
+	  {
+	     Evas_List *l;
+	     int x1, y1, x2, y2;
+
+	     x1 = bd->zone->x;
+	     y1 = bd->zone->y;
+	     x2 = bd->zone->x + bd->zone->w;
+	     y2 = bd->zone->y + bd->zone->h;
+
+	     /* walk through all gadgets */
+	     /* FIXME: Should we care about clients that aren't aligned to */
+	     /* one edge? */
+	     for (l = bd->zone->container->gadman->clients; l; l = l->next)
+	       {
+		  E_Gadman_Client *gmc;
+
+		  gmc = l->data;
+		  if ((gmc->zone != bd->zone) ||
+		      ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
+		    continue;
+		  switch (gmc->edge)
+		    {
+		     case E_GADMAN_EDGE_LEFT:
+			if ((gmc->x + gmc->w) > x1)
+			  x1 = (gmc->x + gmc->w);
+			break;
+		     case E_GADMAN_EDGE_RIGHT:
+			if (gmc->x < x2)
+			  x2 = gmc->x;
+			break;
+		     case E_GADMAN_EDGE_TOP:
+			if ((gmc->y + gmc->h) > y1)
+			  y1 = (gmc->y + gmc->h);
+			break;
+		     case E_GADMAN_EDGE_BOTTOM:
+			if (gmc->y < y2)
+			  y2 = gmc->y;
+			break;
+		    }
+	       }
+	     /* FIXME: walk through docks and toolbars */
+	     e_border_move_resize(bd, x1, y1, x2 - x1, y2 - y1);
+	  }
+	else
+	  e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	bd->maximized = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
