@@ -55,6 +55,10 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* window icons should be able to be chosen if e eapp icon overrides netwm
+  icon or the other way around.
+* eapps need to provide title matching too as well as name and class
+* .eapp needs to become .eap :)
 * icons should be able to be overidden from the theme (eapp and menu stuff
   etc.)
 * transients should have option to always follow parent
