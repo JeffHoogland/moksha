@@ -14,15 +14,16 @@
 #   .  completions for -binding-(key|mouse)-del should be based on existing
 #      bindings
 
-local allopts="-bg-dirs-list -bg-get -bg-set -binding-key-add -binding-key-del \
-               -binding-key-list -binding-mouse-add -binding-mouse-del \
-	       -binding-mouse-list -font-apply -font-available-list \
-	       -font-default-get -font-default-list -font-default-remove \
-	       -font-default-set -font-fallback-append -font-fallback-clear \
-	       -font-fallback-list -font-fallback-prepend -font-fallback-remove \
-	       -lang-get -lang-list -lang-set -module-dirs-list -module-disable \
-	       -module-enable -module-list -module-load -module-unload -restart \
-	       -shutdown -help"
+local allopts="-bg-dirs-list -default-bg-get -default-bg-set \
+            -binding-key-add -binding-key-del \
+            -binding-key-list -binding-mouse-add -binding-mouse-del \
+            -binding-mouse-list -font-apply -font-available-list \
+            -font-default-get -font-default-list -font-default-remove \
+            -font-default-set -font-fallback-append -font-fallback-clear \
+            -font-fallback-list -font-fallback-prepend -font-fallback-remove \
+            -lang-get -lang-list -lang-set -module-dirs-list -module-disable \
+            -module-enable -module-list -module-load -module-unload -restart \
+            -shutdown -help"
 
 local text_classes="default title_bar"
 local contexts="NONE UNKNOWN BORDER ZONE MANAGER ANY"
@@ -39,8 +40,8 @@ _arguments : \
 	"($allopts)-module-disable[Disable module if not disabled]:module name:->enabled-module" \
 	"($allopts)-module-list[List all loaded modules and their states]" \
 	"($allopts)-module-dirs-list[List all modules directories]" \
-	"($allopts)-bg-set[Set the background edje file]:background edje:_files -g \*.edj" \
-	"($allopts)-bg-get[Get the background edje file]" \
+	"($allopts)-default-bg-set[Set the background edje file]:background edje:_files -g \*.edj" \
+	"($allopts)-default-bg-get[Get the background edje file]" \
 	"($allopts)-bg-dirs-list[Get the background directories]" \
 	"($allopts)-font-fallback-remove[Remove a font from the fontset]:font name:->fallback-font" \
 	"($allopts)-font-fallback-prepend[Prepend a font to the fontset]:font name:->available-font" \
@@ -87,23 +88,23 @@ case $state in
 		tag=languages
 		;;
 	enabled-module)
-		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED=1.*/\1/gp;d'))
+		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED 1.*/\1/gp;d'))
 		description="enabled module"
 		tag=modules
 		;;
 	disabled-module)
-		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED=0/\1/gp;d'))
+		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED 0/\1/gp;d'))
 		description="disabled module"
 		tag=modules
 		;;
 	unloaded-module)
 		# FIXME: matches all available modules, not just unloaded ones
-		opts=(${^$($cmd -module-dirs-list | sed 's/REPLY: MODULE DIR=\(.*\)/\1/gp;d')}/*(N/:t))
+		opts=(${^$($cmd -dirs-list modules | sed 's/.*"\([^"]*\)"/\1/gp;d')}/*(N/:t))
 		description="module name"
 		tag=modules
 		;;
 	loaded-module)
-		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED=./\1/gp;d'))
+		opts=($($cmd -module-list | sed 's/.*"\([^"]*\)" ENABLED ./\1/gp;d'))
 		description="loaded module"
 		tag=modules
 		;;
