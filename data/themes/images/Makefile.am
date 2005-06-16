@@ -274,4 +274,5 @@ e17_cpufreq_decrease2.png \
 e17_cpufreq_cpu1.png \
 e17_cpufreq_cpu2.png \
 e17_winlist_top.png \
-e17_winlist_bottom.png
+e17_winlist_bottom.png \
+e17_pager_window_shaded.png
