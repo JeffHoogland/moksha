@@ -25,6 +25,7 @@ static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
 typedef struct _XDnd {
      int x, y;
+     char *type;
      void *data;
 } XDnd;
 
@@ -356,7 +357,6 @@ e_drag_end(int x, int y)
 {
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
-   int dropped;
 
    if (_drag_current)
      {
@@ -376,29 +376,61 @@ e_drag_end(int x, int y)
    ev->x = x;
    ev->y = y;
 
-   dropped = 0;
-   for (l = _drop_handlers; l; l = l->next)
+   if (ev->data)
      {
-	E_Drop_Handler *h;
+	int dropped;
 
-	h = l->data;
-
-	if (!h->active)
-	  continue;
-	
-	if ((h->cb.drop)
-	    && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	dropped = 0;
+	for (l = _drop_handlers; l; l = l->next)
 	  {
-	     h->cb.drop(h->data, h->type, ev);
-	     dropped = 1;
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if ((h->cb.drop)
+		   && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	       {
+		  h->cb.drop(h->data, h->type, ev);
+		  dropped = 1;
+	       }
+	  }
+	if (_drag_current)
+	  {
+	     if (_drag_current->cb.finished)
+	       _drag_current->cb.finished(_drag_current, dropped);
+	     e_object_del(E_OBJECT(_drag_current));
+	     _drag_current = NULL;
 	  }
      }
-   if (_drag_current)
+   else
      {
-	if (_drag_current->cb.finished)
-	  _drag_current->cb.finished(_drag_current, dropped);
-	e_object_del(E_OBJECT(_drag_current));
-	_drag_current = NULL;
+	/* Just leave */
+	E_Event_Dnd_Leave *leave_ev;
+
+	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
+	/* FIXME: We don't need x and y in leave */
+	leave_ev->x = 0;
+	leave_ev->y = 0;
+
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->data, h->type, leave_ev);
+		  h->entered = 0;
+	       }
+	  }
      }
 
    free(ev);
@@ -552,20 +584,47 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    con = data;
    if (con->bg_win != ev->win) return 1;
    printf("Xdnd enter\n");
+   for (l = _drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+
+	h->active = 0;
+	h->entered = 0;
+     }
    for (i = 0; i < ev->num_types; i++)
      {
-	printf("type: %s\n", ev->types[i]);
 	/* FIXME: Maybe we want to get something else then files dropped? */
-	if (strcmp("text/uri-list", ev->types[i]))
-	  continue;
-	for (l = _drop_handlers; l; l = l->next)
+	if (!strcmp("text/uri-list", ev->types[i]))
 	  {
-	     E_Drop_Handler *h;
+	     _xdnd = E_NEW(XDnd, 1);
+	     _xdnd->type = strdup("text/uri-list");
+	     for (l = _drop_handlers; l; l = l->next)
+	       {
+		  E_Drop_Handler *h;
 
-	     h = l->data;
+		  h = l->data;
 
-	     h->active = !strcmp(h->type, "enlightenment/x-file");
-	     h->entered = 0;
+		  h->active = !strcmp(h->type, "enlightenment/x-file");
+		  h->entered = 0;
+	       }
+	     break;
+	  }
+	else if (!strcmp("text/x-moz-url", ev->types[i]))
+	  {
+	     _xdnd = E_NEW(XDnd, 1);
+	     _xdnd->type = strdup("text/x-moz-url");
+	     for (l = _drop_handlers; l; l = l->next)
+	       {
+		  E_Drop_Handler *h;
+
+		  h = l->data;
+
+		  h->active = !strcmp(h->type, "enlightenment/x-file");
+		  h->entered = 0;
+	       }
+	     break;
 	  }
      }
    return 1;
@@ -576,11 +635,43 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Leave *ev;
    E_Container *con;
+   E_Event_Dnd_Leave *leave_ev;
+   Evas_List *l;
 
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
    printf("Xdnd leave\n");
+
+   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
+   /* FIXME: We don't need x and y in leave */
+   leave_ev->x = 0;
+   leave_ev->y = 0;
+
+   for (l = _drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+
+	if (!h->active)
+	  continue;
+	
+	if (h->entered)
+	  {
+	     if (h->cb.leave)
+	       h->cb.leave(h->data, h->type, leave_ev);
+	     h->entered = 0;
+	  }
+     }
+
+   if (_xdnd)
+     {
+	free(_xdnd->type);
+	free(_xdnd);
+	_xdnd = NULL;
+     }
+   free(leave_ev);
    return 1;
 }
 
@@ -603,6 +694,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    rect.width = 0;
    rect.height = 0;
 
+   active = 0;
    for (l = _drop_handlers; l; l = l->next)
      {
 	E_Drop_Handler *h;
@@ -635,9 +727,8 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    if (con->bg_win != ev->win) return 1;
    printf("Xdnd drop\n");
 
-   ecore_x_selection_xdnd_request(ev->win, "text/uri-list");
+   ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
-   _xdnd = E_NEW(XDnd, 1);
    _xdnd->x = ev->position.x;
    _xdnd->y = ev->position.y;
    return 1;
@@ -647,9 +738,7 @@ static int
 _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
-   Ecore_X_Selection_Data_Files   *files;
    E_Container *con;
-   Evas_List *l = NULL;
    int i;
 
    ev = event;
@@ -658,22 +747,65 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
        (ev->selection != ECORE_X_SELECTION_XDND)) return 1;
    printf("Xdnd selection\n");
 
-   files = ev->data;
-   for (i = 0; i < files->num_files; i++)
+   if (!strcmp("text/uri-list", _xdnd->type))
      {
-	printf("files: %s\n", files->files[i]);
-	/* FIXME:
-	 * Remove file:///
-	 * If ftp:// or http:// use curl/wget
-	 * else, drop it...
-	l = evas_list_append(l, files->files[i]);
-	*/
-     }
+	Ecore_X_Selection_Data_Files   *files;
+	Evas_List *l = NULL;
 
-   _xdnd->data = l;
-   e_drag_end(_xdnd->x, _xdnd->y);
-   evas_list_free(l);
+	files = ev->data;
+	for (i = 0; i < files->num_files; i++)
+	  l = evas_list_append(l, files->files[i]);
+	_xdnd->data = l;
+	e_drag_end(_xdnd->x, _xdnd->y);
+	evas_list_free(l);
+     }
+   else if (!strcmp("text/x-moz-url", _xdnd->type))
+     {
+	/* FIXME: Create a ecore x parser for this type */
+	Ecore_X_Selection_Data *data;
+	Evas_List *l = NULL;
+	char file[PATH_MAX];
+	char *text;
+	int i, size;
+
+	data = ev->data;
+	text = data->data;
+	size = MIN(data->length, PATH_MAX - 1);
+	/* A moz url _shall_ contain a space */
+	/* FIXME: The data is two-byte unicode. Somewhere it
+	 * is written that the url and the text is separated by
+	 * a space, but it seems like they are separated by
+	 * newline
+	 */
+	for (i = 0; i < size; i++)
+	  {
+	     file[i] = text[i];
+	     printf("'%d-%c' ", text[i], text[i]);
+	     /*
+	     if (text[i] == ' ')
+	       {
+		  file[i] = '\0';
+		  break;
+	       }
+	       */
+	  }
+	printf("\n");
+	file[i] = '\0';
+	printf("file: %d \"%s\"\n", i, file);
+	l = evas_list_append(l, file);
+
+	_xdnd->data = l;
+	e_drag_end(_xdnd->x, _xdnd->y);
+	evas_list_free(l);
+     }
+   else
+     {
+	e_drag_end(_xdnd->x, _xdnd->y);
+     }
+   /* FIXME: When to execute this? It could be executed in ecore_x after getting
+    * the drop property... */
    ecore_x_dnd_send_finished();
+   free(_xdnd->type);
    free(_xdnd);
    _xdnd = NULL;
    return 1;

@@ -10,6 +10,7 @@
  *   is added in 'all', it doesn't show!
  * - track app execution state, visibility state etc. and call callbacks
  * - calls to execute an app or query its runing/starting state etc.
+ * - clean up the add app functions. To much similar code.
  */
 
 /* local subsystem functions */
@@ -338,21 +339,98 @@ e_app_append(E_App *add, E_App *parent)
 void
 e_app_files_prepend_relative(Evas_List *files, E_App *before)
 {
-   /* FIXME:
-    * Parse all files
-    * Put them in all
-    * Change the .order file for before->parent
-    */
+   Evas_List *l;
+
+   if (!before->parent) return;
+
+   for (l = files; l; l = l->next)
+     {
+	char *file;
+
+	file = l->data;
+	if (!_e_app_is_eapp(file)) continue;
+	if (!ecore_file_download(file, _e_apps_path_all)) continue;
+     }
+   /* Force rescan of all subdir */
+   _e_app_subdir_rescan(_e_apps_all);
+   /* Change .order file */
+   if (before->parent != _e_apps_all)
+     {
+	FILE *f;
+	char buf[PATH_MAX];
+
+	snprintf(buf, sizeof(buf), "%s/.order", before->parent->path);
+	f = fopen(buf, "wb");
+	if (!f) return;
+
+	for (l = before->parent->subapps; l; l = l->next)
+	  {
+	     E_App *a;
+	     Evas_List *l2;
+
+	     a = l->data;
+	     if (a == before)
+	       {
+		  /* Add the new files */
+		  for (l2 = files; l2; l2 = l2->next)
+		    {
+		       char *file;
+
+		       file = l2->data;
+		       fprintf(f, "%s\n", ecore_file_get_file(file));
+		    }
+	       }
+	     fprintf(f, "%s\n", ecore_file_get_file(a->path));
+	  }
+	fclose(f);
+     }
 }
 
 void
 e_app_files_append(Evas_List *files, E_App *parent)
 {
-   /* FIXME:
-    * Parse all files
-    * Put them in all
-    * Change the .order file for before->parent
-    */
+   Evas_List *l, *subapps, *changes = NULL;
+   E_App_Change_Info *ch;
+
+   subapps = parent->subapps;
+
+   for (l = files; l; l = l->next)
+     {
+	char *file;
+
+	file = l->data;
+	if (!_e_app_is_eapp(file)) continue;
+	if (!ecore_file_download(file, _e_apps_path_all)) continue;
+     }
+   /* Force rescan of all subdir */
+   _e_app_subdir_rescan(_e_apps_all);
+   /* Change .order file */
+   if (parent != _e_apps_all)
+     {
+	FILE *f;
+	char buf[PATH_MAX];
+
+	snprintf(buf, sizeof(buf), "%s/.order", parent->path);
+	f = fopen(buf, "wb");
+	if (!f) return;
+
+	for (l = parent->subapps; l; l = l->next)
+	  {
+	     E_App *a;
+
+	     a = l->data;
+	     fprintf(f, "%s\n", ecore_file_get_file(a->path));
+	  }
+	/* Add the new files */
+	for (l = files; l; l = l->next)
+	  {
+	     char *file;
+
+	     file = l->data;
+	     fprintf(f, "%s\n", ecore_file_get_file(file));
+	  }
+	fclose(f);
+     }
 }
 
 void

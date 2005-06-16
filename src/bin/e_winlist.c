@@ -94,7 +94,7 @@ e_winlist_show(E_Zone *zone)
    y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
    
    winlist = e_popup_new(zone, x, y, w, h); 
-   if (!winlist) return;
+   if (!winlist) return 0;
    e_popup_layer_set(winlist, 255);
    evas_event_freeze(winlist->evas);
    o = edje_object_add(winlist->evas);
@@ -595,6 +595,7 @@ _e_winlist_cb_event_border_add(void *data, int type,  void *event)
    _e_winlist_border_add(ev->border, winlist->zone,
 			 e_desk_current_get(winlist->zone));
    _e_winlist_size_adjust();
+   return 1;
 }
 
 static int
@@ -605,6 +606,7 @@ _e_winlist_cb_event_border_remove(void *data, int type,  void *event)
    ev = event;
    _e_winlist_border_del(ev->border);
    _e_winlist_size_adjust();
+   return 1;
 }
 
 static int
