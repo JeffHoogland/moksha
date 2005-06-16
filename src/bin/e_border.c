@@ -84,8 +84,9 @@ static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
@@ -4388,12 +4389,23 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 							   "widgets/border/default/on_top"),
 			     "widgets/border/default/on_top");
 
+   printf("wtf?\n");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Borderless"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, !strcmp("borderless", bd->client.border.name));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_borderless, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/borderless"),
+			     "widgets/border/default/borderless");
+
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Send To"));
-   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_sendto_pre_cb, bd);
+   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
    e_menu_item_icon_edje_set(mi,
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/sendto"),
@@ -4541,9 +4553,30 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    e_container_border_raise(bd);
 }
+static void
+_e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   int toggle;
+
+   bd = data;
+   if (!bd) return;
+   
+   toggle = e_menu_item_toggle_get(mi);
+   if (bd->client.border.name) free(bd->client.border.name);
+   
+   if (toggle)
+     bd->client.border.name = strdup("borderless");
+   else
+     bd->client.border.name = strdup("default");
+   bd->client.border.changed = 1;
+   bd->changed = 1;
+}
+
 
 static void
-_e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Menu *subm;
    E_Menu_Item *submi;
@@ -4563,12 +4596,12 @@ _e_border_menu_sendto_pre_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	desk = bd->zone->desks[i];
 	submi = e_menu_item_new(subm);
 	e_menu_item_label_set(submi, desk->name);
-	e_menu_item_callback_set(submi, _e_border_menu_sendto_cb, desk);
+	e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
      }
 }
 
 static void
-_e_border_menu_sendto_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Desk *desk;
    E_Border *bd;
