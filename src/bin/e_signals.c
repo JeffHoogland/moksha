@@ -22,6 +22,10 @@ e_sigseg_act(int x, siginfo_t *info, void *data)
    write(2, "**** Printing Backtrace... *****\n\n", 34);
    size = backtrace(array, 255);
    backtrace_symbols_fd(array, size, 2);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
    e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
 		"This is not meant to happen and is likely a sign of a\n"
 		"bug in Enlightenment or the libraries it relies on.\n"
@@ -43,6 +47,10 @@ void
 e_sigseg_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** SEGMENTATION FAULT ****\n", 29);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
    e_alert_show("This is very bad. Enlightenment has segfaulted.\n"
 		"This is not meant to happen and is likely a sign of a\n"
 		"bug in Enlightenment or the libraries it relies on.\n"
@@ -65,6 +73,10 @@ void
 e_sigill_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** ILLEGAL INSTRUCTION ****\n", 30);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
    e_alert_show("This is very bad. Enlightenment has executed and illegal\n"
 		"instruction. This is most likely because Enlightenment or\n"
 		"a library it depends on has been compiled for a CPU type\n"
@@ -87,6 +99,10 @@ void
 e_sigfpe_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** FLOATING POINT EXCEPTION ****\n", 35);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
    e_alert_show("This is very bad. Enlightenment has recieved a floating\n"
 		"point exception. This is probably due to a divide by 0\n"
 		"in Enlightenment or a library it depends on.\n"
@@ -108,6 +124,10 @@ void
 e_sigbus_act(int x, siginfo_t *info, void *data)
 {
    write(2, "**** BUS ERROR ****\n", 21);
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   ecore_x_ungrab();
+   ecore_x_sync();
    e_alert_show("This is very bad. Enlightenment has recieved a bus error.\n"
 		"This could be for many reasons - accessing memory not in\n"
 		"its available address space or unable to be paged in.\n"
