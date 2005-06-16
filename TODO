@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* icons should be able to be overidden from the theme (eapp and menu stuff
+  etc.)
 * transients should have option to always follow parent
   (move/resize/raise/lower)
 * netwm center on parent support  
