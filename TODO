@@ -55,6 +55,21 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* "lost windows" - windows that are moved outside the desktop coords BY an app
+  or are put there to start should be considered "lost windows" e should keep
+  a list of these and some sort of access to them so a user can forcibly get
+  them back by saying "get me that lost window"
+* netwm window types and states need addressing (do special/appropriate things)
+  for each of them.
+* set _NET_WM_ALLOWED_ACTIONS
+* use ecore_x_netwm_ping_send() to windowsthat suport it regularly to see if
+  they are dead or not (do this all the time - like every few seconds) to be
+  able to inform users of dead applications about the time they die, not some
+  time afterwards. (also ask if u want to kill the process then)
+* netwm frame extents request (_e_manager_cb_frame_extents_request) needs
+  to properly choose the border based on client window properties.
+* do something with the icccm urgency field hint
+* different borders for non-resizable windows, shaped windows etc.
 * actuallly break out ipc and config to set bg per desktop (per zone)
 * break out ipc to set names for desktops and zones
 * bug: when u send a window to another desktop and then restart - it goes

@@ -489,9 +489,10 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    e = ev;
 
    if (ecore_x_window_parent_get(e->win) != man->root) return 1;
-
+   /* FIXME: this is definitely not perfect - we need to handle a border guess here */
    o = edje_object_add(con->bg_evas);
-   ok = e_theme_edje_object_set(o, "base/theme/borders", "widgets/border/default/border");
+   ok = e_theme_edje_object_set(o, "base/theme/borders",
+				"widgets/border/default/border");
    if (ok)
      {
 	Evas_Coord x, y, w, h;
@@ -507,6 +508,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 
 	ecore_x_netwm_frame_size_set(e->win, l, r, t, b);
      }
+   evas_object_del(o);
 
    return 1;
 }
