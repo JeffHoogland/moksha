@@ -105,7 +105,6 @@ e_manager_new(Ecore_X_Window root)
 void
 e_manager_manage_windows(E_Manager *man)
 {
-   /* FIXME: move this to an actual function to start managing */
    Ecore_X_Window *windows;
    int wnum;
 
