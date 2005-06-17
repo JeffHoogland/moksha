@@ -855,7 +855,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * 
  * now the focus is on Y where it should be on X
  */
-		  ecore_x_window_focus(bd->client.win);
+// technially this is wrong to set the focus explicitly (passive focus model)
+//		  ecore_x_window_focus(bd->client.win);
 		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
 //		  e_hints_active_window_set(bd->zone->container->manager, bd);
 	       }
