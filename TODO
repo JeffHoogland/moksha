@@ -88,7 +88,6 @@ These are in no particular order:
   etc.)
 * transients should have option to always follow parent
   (move/resize/raise/lower)
-* netwm center on parent support  
 * setup configs for gnome and kde (as options) if they are installed (eg
   run gnome-settings-daemon).
 * sometimes the mouse gets locked to a window with a mouse grab of some sort
