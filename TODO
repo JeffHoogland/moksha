@@ -75,9 +75,6 @@ These are in no particular order:
 * different borders for non-resizable windows, shaped windows etc.
 * actuallly break out ipc and config to set bg per desktop (per zone)
 * break out ipc to set names for desktops and zones
-* bug: when u send a window to another desktop and then restart - it goes
-  back to the desktop it was on before sending it (we dont update the
-  properties)
 * bug: pager doesnt handle container/zone resize properly (and goes a weird
   size)??? (try resize screen to like 480x640 (new aspect))
 * window icons should be able to be chosen if e eapp icon overrides netwm
