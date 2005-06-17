@@ -55,6 +55,28 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* add fullscreen support (e16 xvidmode or xrandr style)
+* implement thses maximise/fullscreen modes:
+  1. fullscreen (no border - resizes to default screen res). window is locked,
+     no mouse bindings work. any focus change out of thsi window will go out of
+     fullscreen  mode
+  2. zoom (changes screen res to match window, or closest res thats bigger
+     than the window, centers it - no borders/title etc). window is locked, no
+     mouse bindings work. any focus change out of thsi window will go out of
+     zoom  mode
+  3. maximise (only title is displayed - program fills the rest of the screen)
+     disable resize, shade, move etc. in this mode. iconify is ok.
+  4. maximise2 (maximise window up to the edge of panels, gadgets etc. -
+     disable all resizing and moving just like 1, 2 nd 3 (maybe make border
+     thinner to indicate this). disable stuff like 3.
+  5. expand (just resize window to fill the same space as 4. - but it still can
+     be shaded, resized, moved etc.)
+  6. fill (expand to the nearest window edge or screen edge)
+  for 5 and 6 u want to able to do this independently for width and height as
+  well as for both at once. for 1. & 2. if window max size (or aspect
+  adjusted size) is smaller that screen max size, fill in space in between
+  with black. for 3. we want to fill the inbewteen space with some theme
+  defined image data
 * implement a better dialog for things like "do you want to do X - yes or no?"
 * dialogs for generic contents too
 * bug?: xine's ui window/panel is under its video window when u go
@@ -91,9 +113,6 @@ These are in no particular order:
   in x (it gets the down event and not the up?) so e thinks its down but it
   isn't
 * maximised apps when e restarts are not recognised as maximised
-* maximised apps need their border to change (only titlebar for example)
-* need an "expanded" mode for windows that maximises but NOT over modules and
-  you can still shade, resize etc.
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
@@ -173,7 +192,6 @@ These are in no particular order:
 * add template button for expanded buttons ???
 * support text and color classes
 * add tooltips
-* add fullscreen support (e16 xvidmode or xrandr style)
 * make xrandr support get rotation and store it
 * maybe add systray module/support?
 * allow object paranoia to be a runtime option too
