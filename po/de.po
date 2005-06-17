@@ -169,6 +169,10 @@ msgstr "Batterie"
 msgid "Battery Running Low"
 msgstr "Batterie ist bald leer"
 
+#: src/bin/e_border.c:4475
+msgid "Borderless"
+msgstr "Rahmenlos"
+
 #: src/modules/cpufreq/e_mod_main.c:107
 msgid "CPU Frequency Controller Module"
 msgstr "CPU Frequenz Kontroll-Modul"
