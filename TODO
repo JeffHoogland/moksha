@@ -55,8 +55,11 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* when u send a window to another desktop and then restart - it goes back to the desktop it was on before sending it (we dont update the properties)
-* pager doesnt handle container/zone resize properly (and goes a weird size)
+* bug: when u send a window to another desktop and then restart - it goes
+  back to the desktop it was on before sending it (we dont update the
+  properties)
+* bug: pager doesnt handle container/zone resize properly (and goes a weird
+  size)??? (try resize screen to like 480x640 (new aspect))
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
 * eapps need to provide title matching too as well as name and class
@@ -70,14 +73,15 @@ These are in no particular order:
   run gnome-settings-daemon).
 * sometimes the mouse gets locked to a window with a mouse grab of some sort
   in x (it gets the down event and not the up?) so e thinks its down but it
-  isnt
+  isn't
 * maximised apps when e restarts are not recognised as maximised
 * maximised apps need their border to change (only titlebar for example)
 * need an "expanded" mode for windows that maximises but NOT over modules and
   you can still shade, resize etc.
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
-* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4 rows at once
+* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
+  rows at once
 * make it easy for modules to hook into ipc and extend it for themselves
 * check evas has eet support early on.
 * add locale and encoding fields to eapp files (to launch eapp in that
@@ -87,9 +91,9 @@ These are in no particular order:
   ends up in (eg in popups or border)
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
+* pagers should be able to be configured to control more than the current zone
+  (select which zone they control)
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
-* on restart e always goes back to desktop 0,0 - it should go to the desktop
-  it was last on (per zone, per container, per manager).
 * start module needs to have a way to alert users to "click here" and back
   off alerting users as they learn what it is (over time)
 * sometimes windows that get shut down/closed get unparented but the whole
@@ -140,6 +144,7 @@ These are in no particular order:
 * ibar need to handle drop from other places (xdnd, drop from window etc.)
 * ibar lamp needs short timer on mouse out for hide before hiding (and del
   the time on mouse in)
+* ibar needs lamp follower to be optional in ibar config (for the user)
 * borders need to be able to change border theme on the fly by mene or app
   properties
 * add window glueing
