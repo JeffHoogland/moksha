@@ -1059,24 +1059,22 @@ e_hints_window_stacking_set(E_Border *bd, E_Stacking stacking)
 void
 e_hints_window_desktop_set(E_Border *bd)
 {
+   /* This function is only called when really changing desktop,
+    * so just set the property and don't care about the roundtrip.
+    */
    unsigned int deskpos[2];
-   unsigned int current;
 
-   current = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
    /* if valgrind complains here it is complaining bd->client.netwm.desktop
     * is an uninitialised variable - but it isn't. it can't be. its part of
     * a calloc()'d struct and thus has to have been set to 0. hell even
     * e_border.c explicitly sets it to 0 on creation of the border object.
     */
-   if (bd->client.netwm.desktop != current)
-     {
-	deskpos[0] = bd->desk->x;
-	deskpos[1] = bd->desk->y;
-	ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
+   deskpos[0] = bd->desk->x;
+   deskpos[1] = bd->desk->y;
+   ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_DESK, deskpos, 2);
 
 #if 0
-	ecore_x_netwm_desktop_set(bd->client.win, current);
+   ecore_x_netwm_desktop_set(bd->client.win, current);
 #endif
-	bd->client.netwm.desktop = current;
-     }
+   bd->client.netwm.desktop = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
 }

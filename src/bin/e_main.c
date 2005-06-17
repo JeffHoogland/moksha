@@ -700,10 +700,9 @@ _e_main_screens_init(void)
 	if (con)
 	  {
 	     e_container_show(con);
-	     e_manager_manage_windows(man);
-	     /* setup hints */
 	     e_hints_manager_init(man);
 	     _e_main_desk_restore(man, con);
+	     e_manager_manage_windows(man);
 	  }
 	else
 	  {
