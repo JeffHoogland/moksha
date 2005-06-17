@@ -347,6 +347,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		    bd->client.mwm.fetch.hints = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
 		    bd->client.icccm.fetch.transient_for = 1;
+		  else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
+		    bd->client.icccm.fetch.client_leader = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
 		    bd->client.icccm.fetch.window_role = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
@@ -2099,6 +2101,11 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.icccm.fetch.transient_for = 1;
 	bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_WM_CLIENT_LEADER)
+     {
+	bd->client.icccm.fetch.client_leader = 1;
+	bd->changed = 1;
+     }
    else if (e->atom == ECORE_X_ATOM_WM_WINDOW_ROLE)
      {
 	bd->client.icccm.fetch.window_role = 1;
@@ -3458,6 +3465,11 @@ _e_border_eval(E_Border *bd)
 	bd->client.icccm.transient_for = ecore_x_icccm_transient_for_get(bd->client.win);
 	bd->client.icccm.fetch.transient_for = 0;
      }
+   if (bd->client.icccm.fetch.client_leader)
+     {
+	bd->client.icccm.client_leader = ecore_x_icccm_client_leader_get(bd->client.win);
+	bd->client.icccm.fetch.client_leader = 0;
+     }
    if (bd->client.icccm.fetch.window_role)
      {
 	bd->client.icccm.window_role = ecore_x_icccm_window_role_get(bd->client.win);
@@ -3468,6 +3480,7 @@ _e_border_eval(E_Border *bd)
 	e_hints_window_state_set(bd);
 	bd->client.netwm.update.state = 0;
      }
+
    if (bd->changes.icon)
      {
 	if (bd->icon_object)
@@ -3747,27 +3760,51 @@ _e_border_eval(E_Border *bd)
 	       }
 	     else
 	       {
-		  Evas_List *skiplist = NULL;
-		  int new_x, new_y;
+		  int placed = 0;
+		  
+		  /* FIXME: special placement for dialogs etc. etc. etc goes
+		   * here */
+		  if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG) &&
+		      ((bd->client.icccm.transient_for != 0)))
+		    {
+		       E_Border *bd_parent;
+		       
+		       bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
+//		       if (!bd_parent)
+//			 bd_parent = e_border_find_by_client_window(bd->client.icccm.client_leader);
+		       /* FIXME: what if parent is not on this desktop - or zone? */
+		       if ((bd_parent) && (bd_parent->visible))
+			 {
+			    bd->x = bd_parent->x + ((bd_parent->w - bd->w) / 2);
+			    bd->y = bd_parent->y + ((bd_parent->h - bd->h) / 2);
+			    bd->changes.pos = 1;
+			    placed = 1;
+			 }
+		    }
+		  if (!placed)
+		    {
+		       Evas_List *skiplist = NULL;
+		       int new_x, new_y;
 
 //		  printf("##- AUTO POS 0x%x\n", bd->client.win);
-		  if (bd->zone->w > bd->w)
-		    new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
-		  else
-		    new_x = bd->zone->x;
-		  if (bd->zone->h > bd->h)
-		    new_y = bd->zone->y + (rand() % (bd->zone->h - bd->h));
-		  else
-		    new_y = bd->zone->y;
-
-		  skiplist = evas_list_append(skiplist, bd);
-		  e_place_zone_region_smart(bd->zone, skiplist,
-					    bd->x, bd->y, bd->w, bd->h,
-					    &new_x, &new_y);
-		  evas_list_free(skiplist);
-		  bd->x = new_x;
-		  bd->y = new_y;
-		  bd->changes.pos = 1;
+		       if (bd->zone->w > bd->w)
+			 new_x = bd->zone->x + (rand() % (bd->zone->w - bd->w));
+		       else
+			 new_x = bd->zone->x;
+		       if (bd->zone->h > bd->h)
+			 new_y = bd->zone->y + (rand() % (bd->zone->h - bd->h));
+		       else
+			 new_y = bd->zone->y;
+		       
+		       skiplist = evas_list_append(skiplist, bd);
+		       e_place_zone_region_smart(bd->zone, skiplist,
+						 bd->x, bd->y, bd->w, bd->h,
+						 &new_x, &new_y);
+		       evas_list_free(skiplist);
+		       bd->x = new_x;
+		       bd->y = new_y;
+		       bd->changes.pos = 1;
+		    }
 	       }
 	  }
 	while (bd->pending_move_resize)

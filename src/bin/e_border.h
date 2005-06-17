@@ -128,6 +128,7 @@ struct _E_Border
 	 Ecore_X_Window icon_window;
 	 Ecore_X_Window window_group;
 	 Ecore_X_Window transient_for;
+	 Ecore_X_Window client_leader;
 	 Ecore_X_Gravity gravity;
 	 char *window_role;
 	 unsigned char take_focus : 1;
@@ -144,6 +145,7 @@ struct _E_Border
 	    unsigned char size_pos_hints : 1;
 	    unsigned char protocol : 1;
 	    unsigned char transient_for : 1;
+	    unsigned char client_leader : 1;
 	    unsigned char window_role : 1;
 	    unsigned char state : 1;
 	 } fetch;

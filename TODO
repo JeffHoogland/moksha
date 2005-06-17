@@ -65,7 +65,6 @@ These are in no particular order:
   them back by saying "get me that lost window"
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
-* set _NET_WM_ALLOWED_ACTIONS
 * use ecore_x_netwm_ping_send() to windowsthat suport it regularly to see if
   they are dead or not (do this all the time - like every few seconds) to be
   able to inform users of dead applications about the time they die, not some
