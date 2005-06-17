@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* when u send a window to another desktop and then restart - it goes back to the desktop it was on before sending it (we dont update the properties)
 * pager doesnt handle container/zone resize properly (and goes a weird size)
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
