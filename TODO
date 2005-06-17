@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* actuallly break out ipc and config to set bg per desktop (per zone)
+* break out ipc to set names for desktops and zones
 * bug: when u send a window to another desktop and then restart - it goes
   back to the desktop it was on before sending it (we dont update the
   properties)
