@@ -292,26 +292,6 @@ e_container_lower(E_Container *con)
 #endif
 }
 
-void
-e_container_bg_black(E_Container *con)
-{
-   Evas_Object *o;
-
-   o = con->bg_blank_object;
-   evas_object_layer_set(o, 100);
-   evas_object_color_set(o, 0, 0, 0, 255);
-}
-
-void
-e_container_bg_white(E_Container *con)
-{
-   Evas_Object *o;
-
-   o = con->bg_blank_object;
-   evas_object_layer_set(o, -100);
-   evas_object_color_set(o, 255, 255, 255, 255);
-}
-
 E_Zone *
 e_container_zone_at_point_get(E_Container *con, int x, int y)
 {

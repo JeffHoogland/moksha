@@ -1093,6 +1093,9 @@ e_border_maximize(E_Border *bd)
 	e_border_raise(bd);
 	switch (e_config->maximize_policy)
 	  {
+	   case E_MAXIMIZE_NONE:
+	      /* Ignore */
+	      break;
 	   case E_MAXIMIZE_ZOOM:
 	      /* FIXME */
 	      break;
@@ -1195,6 +1198,9 @@ e_border_unmaximize(E_Border *bd)
 
 	switch (bd->maximized)
 	  {
+	   case E_MAXIMIZE_NONE:
+	      /* Ignore */
+	      break;
 	   case E_MAXIMIZE_ZOOM:
 	      /* FIXME */
 	      break;
@@ -1232,7 +1238,7 @@ e_border_unmaximize(E_Border *bd)
 	      /* FIXME */
 	      break;
 	  }
-	bd->maximized = 0;
+	bd->maximized = E_MAXIMIZE_NONE;
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
@@ -1255,9 +1261,6 @@ e_border_fullscreen(E_Border *bd)
      {
 	int x, y, w, h;
 //	printf("FULLSCREEEN!\n");
-	/* make container bg black and show it */
-	e_container_bg_black(bd->zone->container);
-
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -1295,9 +1298,6 @@ e_border_unfullscreen(E_Border *bd)
    if (bd->fullscreen)
      {
 //	printf("UNFULLSCREEEN!\n");
-	/* make container bg white and hide it */
-	e_container_bg_white(bd->zone->container);
-
 	e_hints_window_fullscreen_set(bd, 0);
 	bd->fullscreen = 0;
 
@@ -1555,7 +1555,6 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
 	     _e_border_moveinfo_gather(bd, source);
 	  }
-	e_border_raise(bd);
      }
 }
 
@@ -1610,7 +1609,6 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
 	     _e_border_moveinfo_gather(bd, source);
 	  }
-	e_border_raise(bd);
      }
 }
 
@@ -2649,7 +2647,6 @@ _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
      return;
    bd->moving = 1;
    _e_border_moveinfo_gather(bd, source);
-   e_border_raise(bd);
 }
 
 static void
@@ -5025,6 +5022,7 @@ _e_border_resize_begin(E_Border *bd)
 {
    int w, h;
 
+   e_border_raise(bd);
    if ((bd->shaded) || (bd->shading) ||
        (bd->maximized) || (bd->fullscreen))
      return 0;
@@ -5099,6 +5097,7 @@ _e_border_resize_update(E_Border *bd)
 static int
 _e_border_move_begin(E_Border *bd)
 {
+   e_border_raise(bd);
    if ((bd->maximized) || (bd->fullscreen))
      return 0;
 
