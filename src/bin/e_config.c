@@ -168,7 +168,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_pos_min_h, INT);
    E_CONFIG_VAL(D, T, winlist_pos_max_w, INT);
    E_CONFIG_VAL(D, T, winlist_pos_max_h, INT);
-   E_CONFIG_VAL(D, T, smart_maximize, INT);
+   E_CONFIG_VAL(D, T, maximize_policy, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -259,7 +259,7 @@ e_config_init(void)
 	e_config->winlist_pos_min_h = 0;
 	e_config->winlist_pos_max_w = 320;
 	e_config->winlist_pos_max_h = 320;
-	e_config->smart_maximize = 1;
+	e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
 	
 	  {
 	     E_Config_Module *em;
@@ -790,6 +790,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_pos_min_h, 0, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
+   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_ZOOM, E_MAXIMIZE_FILL);
 ;
    /* apply lang config - exception because config is loaded after intl setup */
    

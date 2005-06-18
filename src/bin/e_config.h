@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 112
+#define E_CONFIG_FILE_VERSION 113
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -122,7 +122,7 @@ struct _E_Config
    int         winlist_pos_min_h;
    int         winlist_pos_max_w;
    int         winlist_pos_max_h;
-   int         smart_maximize;
+   int         maximize_policy;
 };
 
 /* FIXME: all of thsie needs to become eet lumps for enmcode/decode */
