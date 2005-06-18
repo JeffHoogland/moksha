@@ -354,7 +354,7 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
 	 * attach a callback and wait for the download to finish */
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
 				   ecore_file_get_file(file));
-	if (!ecore_file_download(file, _e_apps_path_all, NULL, NULL)) continue;
+	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
      }
    /* Force rescan of all subdir */
    _e_app_subdir_rescan(_e_apps_all);
