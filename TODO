@@ -58,6 +58,8 @@ These are in no particular order:
 * pager problems. Seems to loose or mess up windows sometimes.
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
+  Which of these should be different modes, and which should be options for
+  a mode?
   1. fullscreen (no border - resizes to default screen res). window is locked,
      no mouse bindings work. any focus change out of thsi window will go out of
      fullscreen  mode
