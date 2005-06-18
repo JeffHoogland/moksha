@@ -106,12 +106,12 @@ static void _e_border_event_border_unstick_free(void *data, void *ev);
 
 static void _e_border_zone_update(E_Border *bd);
 
-static void _e_border_resize_begin(E_Border *bd);
-static void _e_border_resize_end(E_Border *bd);
+static int  _e_border_resize_begin(E_Border *bd);
+static int  _e_border_resize_end(E_Border *bd);
 static void _e_border_resize_update(E_Border *bd);
 
-static void _e_border_move_begin(E_Border *bd);
-static void _e_border_move_end(E_Border *bd);
+static int  _e_border_move_begin(E_Border *bd);
+static int  _e_border_move_end(E_Border *bd);
 static void _e_border_move_update(E_Border *bd);
 
 static int  _e_border_cb_focus_fix(void *data);
@@ -591,7 +591,8 @@ e_border_move(E_Border *bd, int x, int y)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if (bd->fullscreen) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->fullscreen) || (bd->maximized)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -636,7 +637,8 @@ e_border_resize(E_Border *bd, int w, int h)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if (bd->fullscreen) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->fullscreen) || (bd->maximized)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -682,7 +684,8 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if (bd->fullscreen) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->fullscreen) || (bd->maximized)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -904,7 +907,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (bd->maximized) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->fullscreen) || (bd->maximized)) return;
    if (!bd->shaded)
      {
 //	printf("SHADE!\n");
@@ -983,7 +987,8 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (bd->maximized) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->fullscreen) || (bd->maximized)) return;
    if (bd->shaded)
      {
 //	printf("UNSHADE!\n");
@@ -1069,9 +1074,13 @@ e_border_maximize(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->shaded) || (bd->shading)) return;
+   if ((bd->fullscreen) || (bd->shaded) || (bd->shading)) return;
    if (!bd->maximized)
      {
+	Evas_List *l;
+	int x1, y1, x2, y2;
+	int w, h;
+
 //	printf("MAXIMIZE!!\n");
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
@@ -1081,52 +1090,88 @@ e_border_maximize(E_Border *bd)
 	e_hints_window_maximized_set(bd, 1);
 
 	e_border_raise(bd);
-	if (e_config->smart_maximize)
+	switch (e_config->maximize_policy)
 	  {
-	     Evas_List *l;
-	     int x1, y1, x2, y2;
+	   case E_MAXIMIZE_ZOOM:
+	      /* FIXME */
+	      break;
+	   case E_MAXIMIZE_FULLSCREEN:
+	      /* FIXME: Care about step size */
+	      if (bd->bg_object)
+		{
+		   Evas_Coord cx, cy, cw, ch;
 
-	     x1 = bd->zone->x;
-	     y1 = bd->zone->y;
-	     x2 = bd->zone->x + bd->zone->w;
-	     y2 = bd->zone->y + bd->zone->h;
+		   edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
+		   edje_object_message_signal_process(bd->bg_object);
 
-	     /* walk through all gadgets */
-	     /* FIXME: Should we care about clients that aren't aligned to */
-	     /* one edge? */
-	     for (l = bd->zone->container->gadman->clients; l; l = l->next)
-	       {
-		  E_Gadman_Client *gmc;
+		   evas_object_resize(bd->bg_object, 1000, 1000);
+		   edje_object_calc_force(bd->bg_object);
+		   edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+		   bd->client_inset.l = cx;
+		   bd->client_inset.r = 1000 - (cx + cw);
+		   bd->client_inset.t = cy;
+		   bd->client_inset.b = 1000 - (cy + ch);
+		   ecore_x_netwm_frame_size_set(bd->client.win,
+						bd->client_inset.l, bd->client_inset.r,
+						bd->client_inset.t, bd->client_inset.b);
+		   ecore_x_e_frame_size_set(bd->client.win,
+					    bd->client_inset.l, bd->client_inset.r,
+					    bd->client_inset.t, bd->client_inset.b);
+		}
+	      w = bd->zone->w;
+	      h = bd->zone->h;
+	      /* center x-direction */
+	      _e_border_resize_limit(bd, &w, &h);
+	      x1 = bd->zone->x + (bd->zone->w - w) / 2;
+	      e_border_move_resize(bd, x1, bd->zone->y, w, h);
+	      break;
+	   case E_MAXIMIZE_SMART:
+	      x1 = bd->zone->x;
+	      y1 = bd->zone->y;
+	      x2 = bd->zone->x + bd->zone->w;
+	      y2 = bd->zone->y + bd->zone->h;
 
-		  gmc = l->data;
-		  if ((gmc->zone != bd->zone) ||
-		      ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
-		    continue;
-		  switch (gmc->edge)
-		    {
-		     case E_GADMAN_EDGE_LEFT:
-			if ((gmc->x + gmc->w) > x1)
-			  x1 = (gmc->x + gmc->w);
-			break;
-		     case E_GADMAN_EDGE_RIGHT:
-			if (gmc->x < x2)
-			  x2 = gmc->x;
-			break;
-		     case E_GADMAN_EDGE_TOP:
-			if ((gmc->y + gmc->h) > y1)
-			  y1 = (gmc->y + gmc->h);
-			break;
-		     case E_GADMAN_EDGE_BOTTOM:
-			if (gmc->y < y2)
-			  y2 = gmc->y;
-			break;
-		    }
-	       }
-	     /* FIXME: walk through docks and toolbars */
-	     e_border_move_resize(bd, x1, y1, x2 - x1, y2 - y1);
+	      /* walk through all gadgets */
+	      /* FIXME: Should we care about clients that aren't aligned to */
+	      /* one edge? */
+	      for (l = bd->zone->container->gadman->clients; l; l = l->next)
+		{
+		   E_Gadman_Client *gmc;
+
+		   gmc = l->data;
+		   if ((gmc->zone != bd->zone) ||
+		       ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
+		     continue;
+		   switch (gmc->edge)
+		     {
+		      case E_GADMAN_EDGE_LEFT:
+			 if ((gmc->x + gmc->w) > x1)
+			   x1 = (gmc->x + gmc->w);
+			 break;
+		      case E_GADMAN_EDGE_RIGHT:
+			 if (gmc->x < x2)
+			   x2 = gmc->x;
+			 break;
+		      case E_GADMAN_EDGE_TOP:
+			 if ((gmc->y + gmc->h) > y1)
+			   y1 = (gmc->y + gmc->h);
+			 break;
+		      case E_GADMAN_EDGE_BOTTOM:
+			 if (gmc->y < y2)
+			   y2 = gmc->y;
+			 break;
+		     }
+		}
+	      /* FIXME: walk through docks and toolbars */
+	      e_border_move_resize(bd, x1, y1, x2 - x1, y2 - y1);
+	      break;
+	   case E_MAXIMIZE_EXPAND:
+	      /* FIXME */
+	      break;
+	   case E_MAXIMIZE_FILL:
+	      /* FIXME */
+	      break;
 	  }
-	else
-	  e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	bd->maximized = 1;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
@@ -1141,15 +1186,55 @@ e_border_unmaximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->shaded) || (bd->shading)) return;
+   if ((bd->fullscreen) || (bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
      {
 //	printf("UNMAXIMIZE!!\n");
 	e_hints_window_maximized_set(bd, 0);
+	bd->maximized = 0;
+
+	switch (e_config->maximize_policy)
+	  {
+	   case E_MAXIMIZE_ZOOM:
+	      /* FIXME */
+	      break;
+	   case E_MAXIMIZE_FULLSCREEN:
+	      /* FIXME */
+	      if (bd->bg_object)
+		{
+		   Evas_Coord cx, cy, cw, ch;
+
+		   edje_object_signal_emit(bd->bg_object, "unmaximize,fullscreen", "");
+		   edje_object_message_signal_process(bd->bg_object);
+
+		   evas_object_resize(bd->bg_object, 1000, 1000);
+		   edje_object_calc_force(bd->bg_object);
+		   edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+		   bd->client_inset.l = cx;
+		   bd->client_inset.r = 1000 - (cx + cw);
+		   bd->client_inset.t = cy;
+		   bd->client_inset.b = 1000 - (cy + ch);
+		   ecore_x_netwm_frame_size_set(bd->client.win,
+						bd->client_inset.l, bd->client_inset.r,
+						bd->client_inset.t, bd->client_inset.b);
+		   ecore_x_e_frame_size_set(bd->client.win,
+					    bd->client_inset.l, bd->client_inset.r,
+					    bd->client_inset.t, bd->client_inset.b);
+		}
+	      break;
+	   case E_MAXIMIZE_SMART:
+	      /* FIXME */
+	      break;
+	   case E_MAXIMIZE_EXPAND:
+	      /* FIXME */
+	      break;
+	   case E_MAXIMIZE_FILL:
+	      /* FIXME */
+	      break;
+	  }
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
-	bd->maximized = 0;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
 	bd->changed = 1;
@@ -1163,7 +1248,8 @@ e_border_fullscreen(E_Border *bd)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->shaded) || (bd->shading)) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;
    if (!bd->fullscreen)
      {
 //	printf("FULLSCREEEN!\n");
@@ -1196,7 +1282,8 @@ e_border_unfullscreen(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->shaded) || (bd->shading)) return;
+   /* FIXME: Some types of maximized might allow this */
+   if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      {
 //	printf("UNFULLSCREEEN!\n");
@@ -1225,7 +1312,7 @@ e_border_iconify(E_Border *bd)
    unsigned int iconic;
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->shading)) return;
+   if ((bd->fullscreen) || (bd->shading)) return;
    if (!bd->iconic)
      {
 	bd->iconic = 1;
@@ -1251,7 +1338,7 @@ e_border_uniconify(E_Border *bd)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->shading)) return;
+   if ((bd->fullscreen) || (bd->shading)) return;
    if (bd->iconic)
      {
 	desk = e_desk_current_get(bd->desk->zone);
@@ -1446,6 +1533,9 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    if (!bd->moving)
      {
+	if (!_e_border_move_begin(bd))
+	  return;
+
 	bd->moving = 1;
 	if (ev)
 	  {
@@ -1455,7 +1545,6 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	     _e_border_moveinfo_gather(bd, source);
 	  }
 	e_border_raise(bd);
-	_e_border_move_begin(bd);
      }
 }
 
@@ -1475,6 +1564,8 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    if (bd->resize_mode == RESIZE_NONE)
      {
+	if (!_e_border_resize_begin(bd))
+	  return;
 	if (bd->mouse.current.mx < (bd->x + bd-> w / 2))
 	  {
 	     if (bd->mouse.current.my < (bd->y + bd->h / 2))
@@ -1509,7 +1600,6 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	     _e_border_moveinfo_gather(bd, source);
 	  }
 	e_border_raise(bd);
-	_e_border_resize_begin(bd);
      }
 }
 
@@ -1520,6 +1610,8 @@ e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
      {
 	bd->resize_mode = RESIZE_NONE;
 	_e_border_resize_end(bd);
+	bd->changes.reset_gravity = 1;
+	bd->changed = 1;
      }
 }
 
@@ -2378,74 +2470,84 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
    e_border_raise(bd);
    if (e->direction == RESIZE_TL)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_TL;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_SE);
      }
    else if (e->direction == RESIZE_T)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_T;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_S);
      }
    else if (e->direction == RESIZE_TR)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_TR;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_SW);
      }
    else if (e->direction == RESIZE_R)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_R;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_W);
      }
    else if (e->direction == RESIZE_BR)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_BR;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
      }
    else if (e->direction == RESIZE_B)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_B;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_N);
      }
    else if (e->direction == RESIZE_BL)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_BL;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_NE);
      }
    else if (e->direction == RESIZE_L)
      {
+	if (!_e_border_resize_begin(bd))
+	  return 1;
 	bd->resize_mode = RESIZE_L;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	_e_border_resize_begin(bd);
 	GRAV_SET(bd, ECORE_X_GRAVITY_E);
      }
    else if (e->direction == MOVE)
      {
+	if (!_e_border_move_begin(bd))
+	  return 1;
+
 	bd->moving = 1;
 
 	bd->cur_mouse_action = e_action_find("window_move");
-	_e_border_move_begin(bd);
      }
    return 1;
 }
@@ -2531,9 +2633,11 @@ _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    E_Border *bd;
 
    bd = data;
+
+   if (!_e_border_move_begin(bd))
+     return;
    bd->moving = 1;
    _e_border_moveinfo_gather(bd, source);
-   _e_border_move_begin(bd);
    e_border_raise(bd);
 }
 
@@ -2555,10 +2659,9 @@ _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *em
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_TL;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_SE);
 }
@@ -2570,10 +2673,9 @@ _e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emi
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_T;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_S);
 }
@@ -2585,10 +2687,9 @@ _e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *em
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_TR;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_SW);
 }
@@ -2600,10 +2701,9 @@ _e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emi
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_R;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_W);
 }
@@ -2615,10 +2715,9 @@ _e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *em
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_BR;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_NW);
 }
@@ -2630,10 +2729,9 @@ _e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emi
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_B;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_N);
 }
@@ -2645,10 +2743,9 @@ _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *em
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_BL;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_NE);
 }
@@ -2660,10 +2757,9 @@ _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emi
 
    bd = data;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
-
+   if (!_e_border_resize_begin(bd))
+     return;
    bd->resize_mode = RESIZE_L;
-   _e_border_resize_begin(bd);
    _e_border_moveinfo_gather(bd, source);
    GRAV_SET(bd, ECORE_X_GRAVITY_E);
 }
@@ -2674,8 +2770,6 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
    E_Border *bd;
 
    bd = data;
-
-   if ((bd->shaded) || (bd->shading) || (bd->maximized)) return;
 
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
@@ -4890,10 +4984,15 @@ _e_border_zone_update(E_Border *bd)
      }
 }
 
-static void
+static int
 _e_border_resize_begin(E_Border *bd)
 {
    int w, h;
+
+   if ((bd->shaded) || (bd->shading) ||
+       (bd->maximized) || (bd->fullscreen))
+     return 0;
+
 
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
@@ -4917,11 +5016,18 @@ _e_border_resize_begin(E_Border *bd)
      }
    e_resize_begin(bd->zone, w, h);
    resize = bd;
+   return 1;
 }
 
-static void
+static int
 _e_border_resize_end(E_Border *bd)
 {
+   /* This shouldn't happend, and if, we should be able to end
+   if ((bd->shaded) || (bd->shading) ||
+       (bd->maximized) || (bd->fullscreen))
+     return 0;
+     */
+
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;
@@ -4932,6 +5038,7 @@ _e_border_resize_end(E_Border *bd)
      }
    e_resize_end();
    resize = NULL;
+   return 1;
 }
 
 static void
@@ -4953,9 +5060,12 @@ _e_border_resize_update(E_Border *bd)
    e_resize_update(w, h);
 }
 
-static void
+static int
 _e_border_move_begin(E_Border *bd)
 {
+   if ((bd->maximized) || (bd->fullscreen))
+     return 0;
+
    if (grabbed)
      ecore_x_pointer_grab(bd->win);
 #if 0
@@ -4969,11 +5079,18 @@ _e_border_move_begin(E_Border *bd)
 #endif
    e_move_begin(bd->zone, bd->x, bd->y);
    move = bd;
+   return 1;
 }
 
-static void
+static int
 _e_border_move_end(E_Border *bd)
 {
+   /* This shouldn't happend, and if, we should be able to end
+   if ((bd->shaded) || (bd->shading) ||
+       (bd->maximized) || (bd->fullscreen))
+     return 0;
+   */
+
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;
@@ -4986,6 +5103,7 @@ _e_border_move_end(E_Border *bd)
 #endif
    e_move_end();
    move = NULL;
+   return 1;
 }
 
 static void
