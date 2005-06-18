@@ -681,6 +681,8 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   if (bd->fullscreen) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -1199,10 +1201,10 @@ e_border_unfullscreen(E_Border *bd)
      {
 //	printf("UNFULLSCREEEN!\n");
 	e_hints_window_fullscreen_set(bd, 0);
+	bd->fullscreen = 0;
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
-	bd->fullscreen = 0;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
 	bd->changed = 1;
