@@ -8,7 +8,6 @@
  */
 
 static void _e_zone_free(E_Zone *zone);
-static void _e_zone_cb_menu_end(void *data, E_Menu *m);
 static void _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void _e_zone_cb_bg_mouse_move(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -571,12 +570,6 @@ _e_zone_free(E_Zone *zone)
    free(zone->desks);
 
    free(zone);
-}
-
-static void
-_e_zone_cb_menu_end(void *data, E_Menu *m)
-{
-   e_object_del(E_OBJECT(m));
 }
 
 static void

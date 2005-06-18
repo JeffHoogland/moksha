@@ -611,6 +611,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 	       }
 	     break;
 	  }
+#if 0
 	else if (!strcmp("text/x-moz-url", ev->types[i]))
 	  {
 	     _xdnd = E_NEW(XDnd, 1);
@@ -626,6 +627,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 	       }
 	     break;
 	  }
+#endif
      }
    return 1;
 }

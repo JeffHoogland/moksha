@@ -346,10 +346,15 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
    for (l = files; l; l = l->next)
      {
 	char *file;
+	char buf[PATH_MAX];
 
 	file = l->data;
 	if (!_e_app_is_eapp(file)) continue;
-	if (!ecore_file_download(file, _e_apps_path_all)) continue;
+	/* FIXME: If we are downloading something from net, we must
+	 * attach a callback and wait for the download to finish */
+	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
+				   ecore_file_get_file(file));
+	if (!ecore_file_download(file, _e_apps_path_all, NULL, NULL)) continue;
      }
    /* Force rescan of all subdir */
    _e_app_subdir_rescan(_e_apps_all);
@@ -389,18 +394,22 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
 void
 e_app_files_append(Evas_List *files, E_App *parent)
 {
-   Evas_List *l, *subapps, *changes = NULL;
-   E_App_Change_Info *ch;
+   Evas_List *l, *subapps;
 
    subapps = parent->subapps;
 
    for (l = files; l; l = l->next)
      {
 	char *file;
+	char buf[PATH_MAX];
 
 	file = l->data;
 	if (!_e_app_is_eapp(file)) continue;
-	if (!ecore_file_download(file, _e_apps_path_all)) continue;
+	/* FIXME: If we are downloading something from net, we must
+	 * attach a callback and wait for the download to finish */
+	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_all,
+				   ecore_file_get_file(file));
+	if (!ecore_file_download(file, buf, NULL, NULL)) continue;
      }
    /* Force rescan of all subdir */
    _e_app_subdir_rescan(_e_apps_all);
