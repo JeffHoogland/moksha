@@ -1450,6 +1450,27 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_MAXIMIZE_POLICY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == E_MAXIMIZE_ZOOM)
+     printf("REPLY: ZOOM\n");
+   else if (policy == E_MAXIMIZE_FULLSCREEN)
+     printf("REPLY: FULLSCREEN\n");
+   else if (policy == E_MAXIMIZE_SMART)
+     printf("REPLY: SMART\n");
+   else if (policy == E_MAXIMIZE_EXPAND)
+     printf("REPLY: EXPAND\n");
+   else if (policy == E_MAXIMIZE_FILL)
+     printf("REPLY: FILL\n");
+   END_INT
+#endif
+#undef HDL
+
 #if 0
 }
 #endif
