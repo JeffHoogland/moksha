@@ -373,6 +373,25 @@ group {
 	       smooth: 0;
 	    }
 	 }
+	 description {
+	    state:    "hidden" 0.0;
+	    rel1 {
+	       relative: 1.0  1.0;
+	       offset:   0    0;
+	       to_y:     "t3";
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	       to_y:     "b2";
+	    }
+	    image {
+	       normal: "e17_border4.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
       }
       part {
 	 name:          "b2";
@@ -394,12 +413,48 @@ group {
 	       smooth: 0;
 	    }
 	 }
+	 description {
+	    state:    "hidden" 0.0;
+	    rel1 {
+	       relative: 1.0  1.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_border5.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
       }
       part {
 	 name:          "b3";
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 1.0  0.0;
+	       offset:   0    0;
+	       to:       "b4";
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1   -1;
+	       to:       "b2";
+	    }
+	    image {
+	       normal: "e17_border6.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state:    "hidden" 0.0;
 	    rel1 {
 	       relative: 1.0  0.0;
 	       offset:   0    0;
@@ -438,6 +493,23 @@ group {
 	       smooth: 0;
 	    }
 	 }
+	 description {
+	    state:    "hidden" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   -1    -1;
+	    }
+	    image {
+	       normal: "e17_border7.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
       }
       part {
 	 name:          "b5";
@@ -452,6 +524,25 @@ group {
 	    rel2 {
 	       relative: 0.0  0.0;
 	       offset:   3    -1;
+	       to_y:     "b4";
+	    }
+	    image {
+	       normal: "e17_border4.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state:    "hidden" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	       to_y:     "t1";
+	    }
+	    rel2 {
+	       relative: 0.0  0.0;
+	       offset:   -1   -1;
 	       to_y:     "b4";
 	    }
 	    image {
@@ -957,9 +1048,10 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  1.0;
-	       offset:   4    0;
-	       to:       "t1";
+	       relative: 1.0  1.0;
+	       offset:   0    0;
+	       to_x:     "b5";
+	       to_y:     "t1";
 	    }
 	    rel2 {
 	       relative: 0.0  0.0;
@@ -1478,6 +1570,36 @@ group {
 	 target:  "button_2_bg";
 	 target:  "button_2_detail";
 	 transition: LINEAR 0.2;
+      }
+      program {
+	 name:    "maximize_fullscreen";
+	 signal:  "maximize,fullscreen";
+	 source:  "";
+	 action:  STATE_SET "hidden" 0.0;
+	 target:  "b1";
+	 action:  STATE_SET "hidden" 0.0;
+	 target:  "b2";
+	 action:  STATE_SET "hidden" 0.0;
+	 target:  "b3";
+	 action:  STATE_SET "hidden" 0.0;
+	 target:  "b4";
+	 action:  STATE_SET "hidden" 0.0;
+	 target:  "b5";
+      }
+      program {
+	 name:    "unmaximize_fullscreen";
+	 signal:  "unmaximize,fullscreen";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "b1";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "b2";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "b3";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "b4";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "b5";
       }
    }
 }
