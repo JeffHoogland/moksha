@@ -1133,49 +1133,6 @@ e_border_maximize(E_Border *bd)
 	      bd->maximized = E_MAXIMIZE_FULLSCREEN;
 	      break;
 	   case E_MAXIMIZE_SMART:
-	      x1 = bd->zone->x;
-	      y1 = bd->zone->y;
-	      x2 = bd->zone->x + bd->zone->w;
-	      y2 = bd->zone->y + bd->zone->h;
-
-	      /* walk through all gadgets */
-	      /* FIXME: Should we care about clients that aren't aligned to */
-	      /* one edge? */
-	      for (l = bd->zone->container->gadman->clients; l; l = l->next)
-		{
-		   E_Gadman_Client *gmc;
-
-		   gmc = l->data;
-		   if ((gmc->zone != bd->zone) ||
-		       ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
-		     continue;
-		   switch (gmc->edge)
-		     {
-		      case E_GADMAN_EDGE_LEFT:
-			 if ((gmc->x + gmc->w) > x1)
-			   x1 = (gmc->x + gmc->w);
-			 break;
-		      case E_GADMAN_EDGE_RIGHT:
-			 if (gmc->x < x2)
-			   x2 = gmc->x;
-			 break;
-		      case E_GADMAN_EDGE_TOP:
-			 if ((gmc->y + gmc->h) > y1)
-			   y1 = (gmc->y + gmc->h);
-			 break;
-		      case E_GADMAN_EDGE_BOTTOM:
-			 if (gmc->y < y2)
-			   y2 = gmc->y;
-			 break;
-		     }
-		}
-	      /* FIXME: walk through docks and toolbars */
-	      w = x2 - x1;
-	      h = y2 - y1;
-	      _e_border_resize_limit(bd, &w, &h);
-	      e_border_move_resize(bd, x1, y1, w, h);
-	      bd->maximized = E_MAXIMIZE_SMART;
-	      break;
 	   case E_MAXIMIZE_EXPAND:
 	      x1 = bd->zone->x;
 	      y1 = bd->zone->y;
@@ -1183,42 +1140,34 @@ e_border_maximize(E_Border *bd)
 	      y2 = bd->zone->y + bd->zone->h;
 
 	      /* walk through all gadgets */
-	      /* FIXME: Should we care about clients that aren't aligned to */
-	      /* one edge? */
-	      for (l = bd->zone->container->gadman->clients; l; l = l->next)
-		{
-		   E_Gadman_Client *gmc;
+	      e_maximize_border_gadman(bd, &x1, &y1, &x2, &y2);
 
-		   gmc = l->data;
-		   if ((gmc->zone != bd->zone) ||
-		       ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
+	      /* walk through docks and toolbars */
+	      bl = e_container_border_list_first(bd->zone->container);
+	      while ((bd2 = e_container_border_list_next(bl)))
+		{
+		   if (bd2->zone != bd->zone) continue;
+		   if ((bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK) &&
+		       (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_TOOLBAR))
 		     continue;
-		   switch (gmc->edge)
-		     {
-		      case E_GADMAN_EDGE_LEFT:
-			 if ((gmc->x + gmc->w) > x1)
-			   x1 = (gmc->x + gmc->w);
-			 break;
-		      case E_GADMAN_EDGE_RIGHT:
-			 if (gmc->x < x2)
-			   x2 = gmc->x;
-			 break;
-		      case E_GADMAN_EDGE_TOP:
-			 if ((gmc->y + gmc->h) > y1)
-			   y1 = (gmc->y + gmc->h);
-			 break;
-		      case E_GADMAN_EDGE_BOTTOM:
-			 if (gmc->y < y2)
-			   y2 = gmc->y;
-			 break;
-		     }
+
+		   if ((bd2->x < x2) && (bd2->x >= (bd->x + bd->w)))
+		     x2 = bd2->x;
+		   if (((bd2->x + bd2->w) > x1) && ((bd2->x + bd2->w) <= bd->x))
+		     x1 = (bd2->x + bd2->w);
+		   if ((bd2->y < y2) && (bd2->y >= (bd->y + bd->w)))
+		     y2 = bd2->y;
+		   if (((bd2->y + bd2->h) > y1) && ((bd2->y + bd2->h) <= bd->y))
+		     y1 = (bd2->y + bd2->h);
 		}
-	      /* FIXME: walk through docks and toolbars */
+	      e_container_border_list_free(bl);
 	      w = x2 - x1;
 	      h = y2 - y1;
 	      _e_border_resize_limit(bd, &w, &h);
 	      e_border_move_resize(bd, x1, y1, w, h);
-	      /* Don't set bd->maximized, no need to return from this state */
+	      /* Don't set bd->maximized if E_MAXIMIZE_EXPAND, no need to return from this state */
+	      if (e_config->maximize_policy == E_MAXIMIZE_SMART)
+		bd->maximized = e_config->maximize_policy;
 	      break;
 	   case E_MAXIMIZE_FILL:
 	      x1 = bd->zone->x;
@@ -1227,35 +1176,21 @@ e_border_maximize(E_Border *bd)
 	      y2 = bd->zone->y + bd->zone->h;
 
 	      /* walk through all gadgets */
-	      /* FIXME: Should we care about clients that aren't aligned to */
-	      /* one edge? */
 	      for (l = bd->zone->container->gadman->clients; l; l = l->next)
 		{
 		   E_Gadman_Client *gmc;
 
 		   gmc = l->data;
-		   if ((gmc->zone != bd->zone) ||
-		       ((gmc->policy & 0xff) != E_GADMAN_POLICY_EDGES))
-		     continue;
-		   switch (gmc->edge)
-		     {
-		      case E_GADMAN_EDGE_LEFT:
-			 if ((gmc->x + gmc->w) > x1)
-			   x1 = (gmc->x + gmc->w);
-			 break;
-		      case E_GADMAN_EDGE_RIGHT:
-			 if (gmc->x < x2)
-			   x2 = gmc->x;
-			 break;
-		      case E_GADMAN_EDGE_TOP:
-			 if ((gmc->y + gmc->h) > y1)
-			   y1 = (gmc->y + gmc->h);
-			 break;
-		      case E_GADMAN_EDGE_BOTTOM:
-			 if (gmc->y < y2)
-			   y2 = gmc->y;
-			 break;
-		     }
+		   if ((gmc->zone != bd->zone)) continue;
+
+		   if ((gmc->x < x2) && (gmc->x >= (bd->x + bd->w)))
+		     x2 = gmc->x;
+		   if (((gmc->x + gmc->w) > x1) && ((gmc->x + gmc->w) <= bd->x))
+		     x1 = (gmc->x + gmc->w);
+		   if ((gmc->y < y2) && (gmc->y >= (bd->y + bd->w)))
+		     y2 = gmc->y;
+		   if (((gmc->y + gmc->h) > y1) && ((gmc->y + gmc->h) <= bd->y))
+		     y1 = (gmc->y + gmc->h);
 		}
 	      /* walk through all windows */
 	      bl = e_container_border_list_first(bd->zone->container);
