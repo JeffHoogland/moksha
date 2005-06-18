@@ -11,8 +11,9 @@ static void _e_help(void);
 int
 main(int argc, char **argv)
 {
-   int i;
-   Eet_File *ef;
+   int i = 0;
+   int valid_args = 0;
+   Eet_File *ef = NULL;
    char buf[4096];
    
    char *lang = NULL;
@@ -41,46 +42,55 @@ main(int argc, char **argv)
 	  {
 	     i++;
 	     lang = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-name")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_name = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-generic")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_generic = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-comment")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_comment = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-exe")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_exe = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-name")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_name = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-class")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_class = argv[i];
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-startup-notify")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_startup_notify = atoi(argv[i]);
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-set-wait-exit")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_wait_exit = atoi(argv[i]);
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-all")))
 	  {
@@ -92,38 +102,47 @@ main(int argc, char **argv)
 	     del_win_class = 1;
 	     del_startup_notify = 1;
 	     del_wait_exit = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-name")))
 	  {
 	     del_name = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-generic")))
 	  {
 	     del_generic = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-comment")))
 	  {
 	     del_comment = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-exe")))
 	  {
 	     del_exe = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-name")))
 	  {
 	     del_win_name = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-class")))
 	  {
 	     del_win_class = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-startup-notify")))
 	  {
 	     del_startup_notify = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-wait-exit")))
 	  {
 	     del_wait_exit = 1;
+             valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
@@ -142,15 +161,13 @@ main(int argc, char **argv)
 	_e_help();
 	exit(0);
      }
-   if ((!set_name) && (!set_generic) && (!set_comment) && (!set_exe) &&
-       (!set_win_name) && (!set_win_class) && (!set_startup_notify) &&
-       (!set_wait_exit) && (!del_name) && (!del_generic) && (!del_comment) &&
-       (!del_exe) && (!del_win_name) && (!del_win_class) &&
-       (!del_startup_notify) && (!del_wait_exit))
-     {
-	printf("ERROR: nothing to do!\n");
-	exit(0);
-     }
+
+    if (valid_args == 0) {
+        printf("ERROR: no valid arguments!\n");
+        _e_help();
+        exit(0);
+    }
+
    eet_init();
    ef = eet_open(file, EET_FILE_MODE_READ_WRITE);
    if (!ef)
