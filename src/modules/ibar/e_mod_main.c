@@ -84,6 +84,7 @@ static void    _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, voi
 static void    _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void    _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _ibar_bar_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi);
 #if 0
 static void    _ibar_icon_reorder_before(IBar_Icon *ic, IBar_Icon *before);
 #endif
@@ -201,6 +202,7 @@ _ibar_new()
 #define T Config
 #define D conf_edd
    E_CONFIG_VAL(D, T, appdir, STR);
+   E_CONFIG_VAL(D, T, follower, INT);
    E_CONFIG_VAL(D, T, follow_speed, DOUBLE);
    E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, iconsize, INT);
@@ -212,6 +214,7 @@ _ibar_new()
      {
 	ib->conf = E_NEW(Config, 1);
 	ib->conf->appdir = strdup("bar");
+	ib->conf->follower = 1;
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
 	ib->conf->iconsize = 24;
@@ -439,12 +442,15 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 			   "modules/ibar/main");
    evas_object_show(o);
 
-   o = edje_object_add(ibb->evas);
-   ibb->overlay_object = o;
-   evas_object_layer_set(o, 1);
-   e_theme_edje_object_set(o, "base/theme/modules/ibar",
-			   "modules/ibar/follower");
-   evas_object_show(o);
+   if (ibb->ibar->conf->follower)
+     {
+	o = edje_object_add(ibb->evas);
+	ibb->overlay_object = o;
+	evas_object_layer_set(o, 1);
+	e_theme_edje_object_set(o, "base/theme/modules/ibar",
+				"modules/ibar/follower");
+	evas_object_show(o);
+     }
 
    o = evas_object_rectangle_add(ibb->evas);
    ibb->event_object = o;
@@ -563,7 +569,7 @@ _ibar_bar_free(IBar_Bar *ibb)
    if (ibb->timer) ecore_timer_del(ibb->timer);
    if (ibb->animator) ecore_animator_del(ibb->animator);
    evas_object_del(ibb->bar_object);
-   evas_object_del(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_del(ibb->overlay_object);
    evas_object_del(ibb->box_object);
    evas_object_del(ibb->event_object);
    if (ibb->drag_object) evas_object_del(ibb->drag_object);
@@ -610,7 +616,7 @@ _ibar_bar_enable(IBar_Bar *ibb)
 {
    ibb->conf->enabled = 1;
    evas_object_show(ibb->bar_object);
-   evas_object_show(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_show(ibb->overlay_object);
    evas_object_show(ibb->box_object);
    evas_object_show(ibb->event_object);
    e_config_save_queue();
@@ -621,7 +627,7 @@ _ibar_bar_disable(IBar_Bar *ibb)
 {
    ibb->conf->enabled = 0;
    evas_object_hide(ibb->bar_object);
-   evas_object_hide(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_hide(ibb->overlay_object);
    evas_object_hide(ibb->box_object);
    evas_object_hide(ibb->event_object);
    e_config_save_queue();
@@ -791,6 +797,12 @@ _ibar_config_menu_new(IBar *ib)
    e_menu_item_check_set(mi, 1);
    if (ib->conf->width == IBAR_WIDTH_AUTO) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibar_bar_cb_width_auto, ib);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Follower"));
+   e_menu_item_check_set(mi, 1);
+   if (ib->conf->follower) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibar_bar_cb_follower, ib);
 
    mn = e_menu_new();
    ib->config_menu_size = mn;
@@ -1002,9 +1014,12 @@ _ibar_bar_edge_change(IBar_Bar *ibb, int edge)
    edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
    edje_object_message_signal_process(o);
 
-   o = ibb->overlay_object;
-   edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
-   edje_object_message_signal_process(o);
+   if (ibb->overlay_object)
+     {
+	o = ibb->overlay_object;
+	edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[edge]);
+	edje_object_message_signal_process(o);
+     }
 
    e_box_freeze(ibb->box_object);
 
@@ -1134,6 +1149,8 @@ static void
 _ibar_bar_follower_reset(IBar_Bar *ibb)
 {
    Evas_Coord ww, hh, bx, by, bw, bh, d1, d2, mw, mh;
+
+   if (!ibb->overlay_object) return;
 
    evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
    evas_object_geometry_get(ibb->box_object, &bx, &by, &bw, &bh);
@@ -1337,7 +1354,8 @@ _ibar_bar_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    ibb = data;
-   edje_object_signal_emit(ibb->overlay_object, "active", "");
+   if (ibb->overlay_object)
+     edje_object_signal_emit(ibb->overlay_object, "active", "");
    _ibar_bar_motion_handle(ibb, ev->canvas.x, ev->canvas.y);
    _ibar_bar_timer_handle(ibb);
 }
@@ -1350,7 +1368,8 @@ _ibar_bar_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    ibb = data;
-   edje_object_signal_emit(ibb->overlay_object, "passive", "");
+   if (ibb->overlay_object)
+     edje_object_signal_emit(ibb->overlay_object, "passive", "");
    _ibar_bar_follower_reset(ibb);
    _ibar_bar_timer_handle(ibb);
 }
@@ -1430,6 +1449,11 @@ _ibar_bar_cb_animator(void *data)
    Evas_Coord x, y, w, h, mw, mh;
 
    ibb = data;
+   if (!ibb->overlay_object)
+     {
+	ibb->animator = NULL;
+	return 0;
+     }
 
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
@@ -1672,9 +1696,11 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
 
 	 evas_object_move(ibb->bar_object, ibb->x, ibb->y);
-	 evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
+	 if (ibb->overlay_object)
+	   evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
 	 evas_object_resize(ibb->bar_object, ibb->w, ibb->h);
-	 evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
+	 if (ibb->overlay_object)
+	   evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
 
 	 _ibar_bar_follower_reset(ibb);
 	 _ibar_bar_timer_handle(ibb);
@@ -1728,6 +1754,47 @@ _ibar_bar_cb_width_auto(void *data, E_Menu *m, E_Menu_Item *mi)
 	     ibb = l->data;
 	     _ibar_bar_update_policy(ibb);
 	     _ibar_bar_frame_resize(ibb);
+	  }
+     }
+   e_config_save_queue();
+}
+
+static void
+_ibar_bar_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBar          *ib;
+   IBar_Bar      *ibb;
+   unsigned char  enabled;
+   Evas_List     *l;
+
+   ib = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((enabled) && (!ib->conf->follower))
+     {
+	ib->conf->follower = 1;
+	for (l = ib->bars; l; l = l->next)
+	  {
+	     Evas_Object *o;
+
+	     ibb = l->data;
+	     if (ibb->overlay_object) continue;
+	     o = edje_object_add(ibb->evas);
+	     ibb->overlay_object = o;
+	     evas_object_layer_set(o, 1);
+	     e_theme_edje_object_set(o, "base/theme/modules/ibar",
+				     "modules/ibar/follower");
+	     evas_object_show(o);
+	  }
+     }
+   else if (!(enabled) && (ib->conf->follower))
+     {
+	ib->conf->follower = 0;
+	for (l = ib->bars; l; l = l->next)
+	  {
+	     ibb = l->data;
+	     if (!ibb->overlay_object) continue;
+	     evas_object_del(ibb->overlay_object);
+	     ibb->overlay_object = NULL;
 	  }
      }
    e_config_save_queue();
