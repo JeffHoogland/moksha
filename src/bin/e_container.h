@@ -98,6 +98,9 @@ EAPI void         e_container_resize(E_Container *con, int w, int h);
 EAPI void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);
 EAPI void         e_container_raise(E_Container *con);
 EAPI void         e_container_lower(E_Container *con);
+EAPI void         e_container_bg_black(E_Container *con);
+EAPI void         e_container_bg_white(E_Container *con);
+
 
 EAPI E_Border_List *e_container_border_list_first(E_Container *con);
 EAPI E_Border_List *e_container_border_list_last(E_Container *con);

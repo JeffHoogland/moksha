@@ -85,6 +85,7 @@ static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -1252,7 +1253,11 @@ e_border_fullscreen(E_Border *bd)
    if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;
    if (!bd->fullscreen)
      {
+	int x, y, w, h;
 //	printf("FULLSCREEEN!\n");
+	/* make container bg black and show it */
+	e_container_bg_black(bd->zone->container);
+
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -1262,11 +1267,14 @@ e_border_fullscreen(E_Border *bd)
 
 	bd->layer = 200;
 	e_border_raise(bd);
-	e_border_move_resize(bd,
-			     bd->zone->x - bd->client_inset.l,
-			     bd->zone->y - bd->client_inset.t,
-			     bd->zone->w + bd->client_inset.l + bd->client_inset.r,
-			     bd->zone->h + bd->client_inset.t + bd->client_inset.b);
+	x = bd->zone->x - bd->client_inset.l;
+	y = bd->zone->y - bd->client_inset.t;
+	w = bd->zone->w + bd->client_inset.l + bd->client_inset.r;
+	h = bd->zone->h + bd->client_inset.t + bd->client_inset.b;
+	_e_border_resize_limit(bd, &w, &h);
+	/* center x */
+	x = x + (bd->zone->w + bd->client_inset.l + bd->client_inset.r - w) / 2;
+	e_border_move_resize(bd, x, y, w, h);
 
 	bd->fullscreen = 1;
 	bd->changes.pos = 1;
@@ -1287,6 +1295,9 @@ e_border_unfullscreen(E_Border *bd)
    if (bd->fullscreen)
      {
 //	printf("UNFULLSCREEEN!\n");
+	/* make container bg white and hide it */
+	e_container_bg_white(bd->zone->container);
+
 	e_hints_window_fullscreen_set(bd, 0);
 	bd->fullscreen = 0;
 
@@ -4590,6 +4601,16 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 			     "widgets/border/default/borderless");
 
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Fullscreen"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, bd->fullscreen);
+   e_menu_item_callback_set(mi, _e_border_menu_cb_fullscreen, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/fullscreen"),
+			     "widgets/border/default/fullscreen");
+
+   mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
@@ -4742,11 +4763,11 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    e_container_border_raise(bd);
 }
+
 static void
 _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
-
    int toggle;
 
    bd = data;
@@ -4763,6 +4784,21 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
    bd->changed = 1;
 }
 
+static void
+_e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   int toggle;
+
+   bd = data;
+   if (!bd) return;
+   
+   toggle = e_menu_item_toggle_get(mi);
+   if (toggle)
+     e_border_fullscreen(bd);
+   else
+     e_border_unfullscreen(bd);
+}
 
 static void
 _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi)
