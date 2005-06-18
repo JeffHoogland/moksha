@@ -33,6 +33,16 @@ typedef enum _E_Focus_Policy
    E_FOCUS_SLOPPY
 } E_Focus_Policy;
 
+typedef enum _E_Maximize_Policy
+{
+   E_MAXIMIZE_ZOOM,
+   E_MAXIMIZE_FULLSCREEN,
+   E_MAXIMIZE_SMART,
+   E_MAXIMIZE_EXPAND,
+   E_MAXIMIZE_FILL
+} E_Maximise_Policy;
+
+
 
 typedef struct _E_Border                     E_Border;
 typedef struct _E_Border_Pending_Move_Resize E_Border_Pending_Move_Resize;
