@@ -929,7 +929,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_FOCUS_POLICY_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-focus-policy-set", 1, "Set the focus policy. OPT1 = CLICK or MOUSE or SLOPPY", 0, HDL)
+   OP("-focus-policy-set", 1, "Set the focus policy. OPT1 = CLICK, MOUSE or SLOPPY", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
@@ -1407,6 +1407,46 @@ break;
    START_2INT(val1, val2, HDL)
    printf("REPLY: %i %i\n", val1, val2);
    END_2INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MAXIMIZE_POLICY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-maximize-policy-set", 1, "Set the maximize policy. OPT1 = ZOOM, FULLSCREEN, SMART, EXPAND or FILL", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "ZOOM")) value = E_MAXIMIZE_ZOOM;
+   else if (!strcmp(params[0], "FULLSCREEN")) value = E_MAXIMIZE_FULLSCREEN;
+   else if (!strcmp(params[0], "SMART")) value = E_MAXIMIZE_SMART;
+   else if (!strcmp(params[0], "EXPAND")) value = E_MAXIMIZE_EXPAND;
+   else if (!strcmp(params[0], "FILL")) value = E_MAXIMIZE_FILL;
+   else
+     {
+	 printf("maximize must be ZOOM, FULLSCREEN, SMART, EXPAND or FILL\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->maximize_policy = value;
+   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_ZOOM, E_MAXIMIZE_FILL);
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MAXIMIZE_POLICY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-maximize-policy-get", 0, "Get maximize policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->maximize_policy, E_IPC_OP_MAXIMIZE_POLICY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
 

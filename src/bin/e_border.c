@@ -1173,7 +1173,7 @@ e_border_maximize(E_Border *bd)
 	      /* FIXME */
 	      break;
 	  }
-	bd->maximized = 1;
+	bd->maximized = e_config->maximize_policy;
 	bd->changes.pos = 1;
 	bd->changes.size = 1;
 	bd->changed = 1;
@@ -1192,9 +1192,8 @@ e_border_unmaximize(E_Border *bd)
      {
 //	printf("UNMAXIMIZE!!\n");
 	e_hints_window_maximized_set(bd, 0);
-	bd->maximized = 0;
 
-	switch (e_config->maximize_policy)
+	switch (bd->maximized)
 	  {
 	   case E_MAXIMIZE_ZOOM:
 	      /* FIXME */
@@ -1233,6 +1232,7 @@ e_border_unmaximize(E_Border *bd)
 	      /* FIXME */
 	      break;
 	  }
+	bd->maximized = 0;
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
