@@ -14,6 +14,7 @@ EAPI E_Menu *e_int_menus_favorite_apps_new(void);
 EAPI E_Menu *e_int_menus_config_apps_new(void);
 EAPI E_Menu *e_int_menus_gadgets_new(void);
 EAPI E_Menu *e_int_menus_themes_new(void);
+EAPI E_Menu *e_int_menus_lost_clients_new(void);
     
 #endif
 #endif

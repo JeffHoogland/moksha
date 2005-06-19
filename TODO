@@ -59,7 +59,9 @@ These are in no particular order:
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
-  a mode?
+  a mode? i think they all should be distinct actions of their own bound
+  to a key, button etc. which one of these the maximize button on a window
+  will execute should be a configuration value though :)
   1. fullscreen (no border - resizes to default screen res). window is locked,
      no mouse bindings work. any focus change out of thsi window will go out of
      fullscreen  mode
@@ -84,10 +86,6 @@ These are in no particular order:
 * dialogs for generic contents too
 * bug?: xine's ui window/panel is under its video window when u go
   fullscreen. is this correct?
-* "lost windows" - windows that are moved outside the desktop coords BY an app
-  or are put there to start should be considered "lost windows" e should keep
-  a list of these and some sort of access to them so a user can forcibly get
-  them back by saying "get me that lost window"
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
 * use ecore_x_netwm_ping_send() to windowsthat suport it regularly to see if

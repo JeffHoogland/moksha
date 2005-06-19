@@ -60,6 +60,7 @@ typedef struct _E_Rect E_Rect;
 #define E_FN_DEL(_fn, _h) if (_h) { _fn(_h); _h = NULL; }
 #define E_INTERSECTS(x, y, w, h, xx, yy, ww, hh) (((x) < ((xx) + (ww))) && ((y) < ((yy) + (hh))) && (((x) + (w)) > (xx)) && (((y) + (h)) > (yy)))
 #define E_INSIDE(x, y, xx, yy, ww, hh) (((x) < ((xx) + (ww))) && ((y) < ((yy) + (hh))) && ((x) >= (xx)) && ((y) >= (yy)))
+#define E_CONTAINS(x, y, w, h, xx, yy, ww, hh) (((xx) >= (x)) && (((x) + (w)) <= ((xx) + (ww))) && ((yy) >= (y)) && (((y) + (h)) <= ((yy) + (hh))))
 #define E_SPANS_COMMON(x1, w1, x2, w2) (!((((x2) + (w2)) <= (x1)) || ((x2) >= ((x1) + (w1)))))
 #define E_REALLOC(p, s, n) p = realloc(p, sizeof(s) * n)
 #define E_NEW(s, n) calloc(n, sizeof(s))

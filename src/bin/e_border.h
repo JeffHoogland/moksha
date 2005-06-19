@@ -454,6 +454,7 @@ EAPI void e_border_button_bindings_ungrab_all(void);
 EAPI void e_border_button_bindings_grab_all(void);
 
 EAPI Evas_List *e_border_focus_stack_get(void);
+EAPI Evas_List *e_border_lost_windows_get(E_Zone *zone);
 
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;

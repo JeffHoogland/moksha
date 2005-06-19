@@ -1778,6 +1778,68 @@ e_border_focus_stack_get(void)
    return focus_stack;
 }
 
+Evas_List *
+e_border_lost_windows_get(E_Zone *zone)
+{
+   Evas_List *list = NULL, *l;
+   int loss_overlap = 5;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (bd->zone)
+	  {
+	     if ((bd->zone == zone) ||
+		 (bd->zone->container == zone->container))
+	       {
+		  if (!E_INTERSECTS(bd->zone->x + loss_overlap, 
+				    bd->zone->y + loss_overlap,
+				    bd->zone->w - (2 * loss_overlap),
+				    bd->zone->h - (2 * loss_overlap),
+				    bd->x, bd->y, bd->w, bd->h))
+		    {
+		       list = evas_list_append(list, bd);
+		    }
+		  else if ((!E_CONTAINS(bd->zone->x, bd->zone->y,
+					bd->zone->w, bd->zone->h,
+					bd->x, bd->y, bd->w, bd->h)) &&
+			   (bd->shaped))
+		    {
+		       Ecore_X_Rectangle *rect;
+		       int i, num;
+		       
+		       rect = ecore_x_window_shape_rectangles_get(bd->win, &num);
+		       if (rect)
+			 {
+			    int ok;
+			    
+			    ok = 0;
+			    for (i = 0; i < num; i++)
+			      {
+				 if (E_INTERSECTS(bd->zone->x + loss_overlap,
+						  bd->zone->y + loss_overlap,
+						  bd->zone->w - (2 * loss_overlap),
+						  bd->zone->h - (2 * loss_overlap),
+						  rect[i].x, rect[i].y,
+						  rect[i].width, rect[i].height))
+				   {
+				      ok = 1;
+				      break;
+				   }
+			      }
+			    free(rect);
+			    if (!ok)
+			      list = evas_list_append(list, bd);
+			 }
+		    }
+	       }
+	  }
+     }
+   return list;
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)

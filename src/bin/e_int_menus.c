@@ -15,6 +15,7 @@ struct _Main_Data
    E_Menu *gadgets;
    E_Menu *themes;
    E_Menu *config;
+   E_Menu *lost_clients;
 };
 
 /* local subsystem functions */
@@ -42,6 +43,9 @@ static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_lost_clients_pre_cb      (void *data, E_Menu *m);
+static void _e_int_menus_lost_clients_free_hook   (void *obj);
+static void _e_int_menus_lost_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* externally accessible functions */
 E_Menu *
@@ -94,6 +98,15 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Windows"));
    s = e_path_find(path_icons, "default.edj");
    e_menu_item_icon_edje_set(mi, s, "windows");
+   IF_FREE(s);
+   e_menu_item_submenu_set(mi, subm);
+  
+   subm = e_int_menus_lost_clients_new();
+   dat->lost_clients = subm;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Lost Windows"));
+   s = e_path_find(path_icons, "default.edj");
+   e_menu_item_icon_edje_set(mi, s, "lost_windows");
    IF_FREE(s);
    e_menu_item_submenu_set(mi, subm);
   
@@ -245,6 +258,16 @@ e_int_menus_themes_new(void)
    return m;
 }
 
+E_Menu *
+e_int_menus_lost_clients_new(void)
+{
+   E_Menu *m;
+
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_lost_clients_pre_cb, NULL);
+   return m;
+}
+
 /* local subsystem functions */
 static void
 _e_int_menus_main_del_hook(void *obj)
@@ -263,6 +286,7 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->gadgets));
 	e_object_del(E_OBJECT(dat->themes));	
 	e_object_del(E_OBJECT(dat->config));
+	e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
      }
 }
@@ -529,7 +553,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	else if (bd->client.icccm.title)
 	  e_menu_item_label_set(mi, bd->client.icccm.title);
 	else
-	  e_menu_item_label_set(mi, "No name!!");
+	  e_menu_item_label_set(mi, _("No name!!"));
 	/* ref the border as we implicitly unref it in the callback */
 	e_object_ref(E_OBJECT(bd));
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
@@ -568,7 +592,6 @@ _e_int_menus_clients_free_hook(void *obj)
 	e_object_unref(E_OBJECT(bd));
      }
 }
-
 
 static void 
 _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
@@ -736,4 +759,82 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    restart = 1;
    ecore_main_loop_quit();   
+}
+
+static void
+_e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   Evas_List *l, *borders = NULL;
+   E_Menu *root;
+   E_Zone *zone = NULL;
+   char *s;
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   root = e_menu_root_get(m);
+   /* get the current clients */
+   if (root)
+     zone = root->zone;
+   borders = e_border_lost_windows_get(zone);
+
+   if (!borders)
+     { 
+	/* FIXME here we want nothing, but that crashes!!! */
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("(No Windows)"));
+	return;
+     }
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd = l->data;
+	E_App *a;
+
+	mi = e_menu_item_new(m);
+	if (bd->client.netwm.name)
+	  e_menu_item_label_set(mi, bd->client.netwm.name);
+	else if (bd->client.icccm.title)
+	  e_menu_item_label_set(mi, bd->client.icccm.title);
+	else
+	  e_menu_item_label_set(mi, _("No name!!"));
+	/* ref the border as we implicitly unref it in the callback */
+	e_object_ref(E_OBJECT(bd));
+	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
+	a = e_app_window_name_class_find(bd->client.icccm.name,
+					 bd->client.icccm.class);
+	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
+     }
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
+   e_object_data_set(E_OBJECT(m), borders);
+}
+
+static void
+_e_int_menus_lost_clients_free_hook(void *obj)
+{
+   E_Menu *m;
+   Evas_List *borders;
+   
+   m = obj;
+   borders = e_object_data_get(E_OBJECT(m));
+   while (borders)
+     {
+	E_Border *bd;
+	
+	bd = borders->data;
+	borders = evas_list_remove_list(borders, borders);
+	e_object_unref(E_OBJECT(bd));
+     }
+}
+
+
+static void 
+_e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd = data;
+
+   E_OBJECT_CHECK(bd);
+   if (bd->iconic) e_border_uniconify(bd);
+   if (bd->desk) e_desk_show(bd->desk);
+   e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), bd->zone->y + ((bd->zone->h - bd->h) / 2));
+   e_border_raise(bd);
+   e_border_focus_set(bd, 1, 1);
 }
