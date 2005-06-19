@@ -1165,9 +1165,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      /* Don't set bd->maximized, no need to return from this state */
 	      break;
 	  }
-	bd->changes.pos = 1;
-	bd->changes.size = 1;
-	bd->changed = 1;
 
 	if (bd->maximized)
 	  {
@@ -1231,10 +1228,6 @@ e_border_unmaximize(E_Border *bd)
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 
-	bd->changes.pos = 1;
-	bd->changes.size = 1;
-	bd->changed = 1;
-
 	edje_object_signal_emit(bd->bg_object, "unmaximize", "");
      }
 }
@@ -1259,8 +1252,16 @@ e_border_fullscreen(E_Border *bd)
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
 	bd->saved.h = bd->h;
+	bd->client_inset.sl = bd->client_inset.l;
+	bd->client_inset.sr = bd->client_inset.r;
+	bd->client_inset.st = bd->client_inset.t;
+	bd->client_inset.sb = bd->client_inset.b;
+	bd->client_inset.l = 0;
+	bd->client_inset.r = 0;
+	bd->client_inset.t = 0;
+	bd->client_inset.b = 0;
 
-	e_hints_window_fullscreen_set(bd, 1);
+	e_desk_black_set(bd->desk, 1);
 
 	bd->layer = 200;
 	e_border_raise(bd);
@@ -1276,10 +1277,8 @@ e_border_fullscreen(E_Border *bd)
 	ecore_evas_hide(bd->bg_ecore_evas);
 
 	bd->fullscreen = 1;
-	bd->changes.pos = 1;
-	bd->changes.size = 1;
-	bd->changed = 1;
 
+	e_hints_window_fullscreen_set(bd, 1);
 	edje_object_signal_emit(bd->bg_object, "fullscreen", "");
      }
 }
@@ -1294,20 +1293,22 @@ e_border_unfullscreen(E_Border *bd)
    if (bd->fullscreen)
      {
 //	printf("UNFULLSCREEEN!\n");
-	e_hints_window_fullscreen_set(bd, 0);
 	bd->fullscreen = 0;
+	bd->client_inset.l = bd->client_inset.sl;
+	bd->client_inset.r = bd->client_inset.sr;
+	bd->client_inset.t = bd->client_inset.st;
+	bd->client_inset.b = bd->client_inset.sb;
+
+	e_desk_black_set(bd->desk, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	ecore_evas_show(bd->bg_ecore_evas);
-
-	bd->changes.pos = 1;
-	bd->changes.size = 1;
-	bd->changed = 1;
 
 	/* FIXME: Find right layer */
 	bd->layer = 100;
 	e_border_raise(bd);
 
+	e_hints_window_fullscreen_set(bd, 0);
 	edje_object_signal_emit(bd->bg_object, "unfullscreen", "");
      }
 }
@@ -4533,7 +4534,7 @@ _e_border_shade_animator(void *data)
 
    /* we're done */
    if ((bd->shaded && (bd->shade.val == 1)) ||
-       (!(bd->shaded) && (bd->shade.val == 0)) )
+       ((!bd->shaded) && (bd->shade.val == 0)) )
      {
 	E_Event_Border_Resize *ev;
 

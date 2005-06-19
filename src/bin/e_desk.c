@@ -30,6 +30,7 @@ E_Desk *
 e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk      *desk;
+   Evas_Object *o;
    char		name[40];
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
@@ -43,6 +44,17 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->y = y;
    snprintf(name, sizeof(name), _("Desktop %d, %d"), x, y);
    desk->name = strdup(name);
+
+   o = evas_object_rectangle_add(zone->container->bg_evas);
+   desk->bg_black_object = o;
+   evas_object_layer_set(o, 100);
+   evas_object_move(o, zone->x, zone->y);
+   evas_object_resize(o, zone->w, zone->h);
+   evas_object_color_set(o, 0, 0, 0, 255);
+   snprintf(name, sizeof(name), "desktop/background/%d.%d", desk->x, desk->y);
+   evas_object_name_set(o, name);
+   evas_object_data_set(o, "e_desk", desk);
+
    return desk;
 }
 
@@ -88,6 +100,7 @@ e_desk_show(E_Desk *desk)
 
 	     desk2 = e_desk_at_xy_get(desk->zone,x, y);
 	     desk2->visible = 0;
+	     evas_object_hide(desk2->bg_black_object);
 	     if (desk2 == desk)
 	       {
 		  desk->zone->desk_x_current = x;
@@ -95,12 +108,29 @@ e_desk_show(E_Desk *desk)
 	       }
 	  }
      }
+   if (desk->black)
+     evas_object_show(desk->bg_black_object);
    desk->visible = 1;
 
    ev = E_NEW(E_Event_Desk_Show, 1);
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
+}
+
+void
+e_desk_black_set(E_Desk *desk, int set)
+{
+   if ((!desk->black) && (set))
+     {
+	evas_object_show(desk->bg_black_object);
+	desk->black = 1;
+     }
+   else if ((desk->black) && (!set))
+     {
+	evas_object_hide(desk->bg_black_object);
+	desk->black = 0;
+     }
 }
 
 void
