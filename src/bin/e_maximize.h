@@ -6,7 +6,8 @@
 #ifndef E_MAXIMIZE_H
 #define E_MAXIMIZE_H
 
-void e_maximize_border_gadman(E_Border *bd, int *x1, int *y1, int *x2, int *y2);
+void e_maximize_border_gadman_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2);
+void e_maximize_border_gadman_fill(E_Border *bd, int *x1, int *y1, int *x2, int *y2);
 
 #endif
 #endif

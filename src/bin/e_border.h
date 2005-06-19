@@ -33,7 +33,7 @@ typedef enum _E_Focus_Policy
    E_FOCUS_SLOPPY
 } E_Focus_Policy;
 
-typedef enum _E_Maximize_Policy
+typedef enum _E_Maximize
 {
    E_MAXIMIZE_NONE,
    E_MAXIMIZE_ZOOM,
@@ -41,7 +41,7 @@ typedef enum _E_Maximize_Policy
    E_MAXIMIZE_SMART,
    E_MAXIMIZE_EXPAND,
    E_MAXIMIZE_FILL
-} E_Maximize_Policy;
+} E_Maximize;
 
 
 
@@ -255,7 +255,7 @@ struct _E_Border
    unsigned char   re_manage : 1;
    unsigned char   shading : 1;
    unsigned char   shaded : 1;
-   E_Maximize_Policy maximized;
+   E_Maximize      maximized;
    unsigned char   iconic : 1;
    unsigned char   sticky : 1;
    unsigned char   shaped : 1;
@@ -421,7 +421,7 @@ EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
 EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);
-EAPI void      e_border_maximize(E_Border *bd);
+EAPI void      e_border_maximize(E_Border *bd, E_Maximize max);
 EAPI void      e_border_unmaximize(E_Border *bd);
 EAPI void      e_border_fullscreen(E_Border *bd);
 EAPI void      e_border_unfullscreen(E_Border *bd);

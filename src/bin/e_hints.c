@@ -389,7 +389,7 @@ e_hints_window_init(E_Border *bd)
    if (bd->client.netwm.state.shaded)
      e_border_shade(bd, e_hints_window_shade_direction_get(bd));
    if ((bd->client.netwm.state.maximized_v) && (bd->client.netwm.state.maximized_h))
-     e_border_maximize(bd);
+     e_border_maximize(bd, e_config->maximize_policy);
    if (bd->client.netwm.state.fullscreen)
      e_border_fullscreen(bd);
    if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
@@ -561,7 +561,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	      bd->changed = 1;
 	      if ((bd->client.netwm.state.maximized_v)
 		  && (bd->client.netwm.state.maximized_h))
-		e_border_maximize(bd);
+		e_border_maximize(bd, e_config->maximize_policy);
 	      else if ((!bd->client.netwm.state.maximized_v)
 		       && (!bd->client.netwm.state.maximized_h))
 		e_border_unmaximize(bd);
@@ -596,7 +596,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	      bd->changed = 1;
 	      if ((bd->client.netwm.state.maximized_v)
 		  && (bd->client.netwm.state.maximized_h))
-		e_border_maximize(bd);
+		e_border_maximize(bd, e_config->maximize_policy);
 	      else if ((!bd->client.netwm.state.maximized_v)
 		       && (!bd->client.netwm.state.maximized_h))
 		e_border_unmaximize(bd);

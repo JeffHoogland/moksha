@@ -1070,7 +1070,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 }
 
 void
-e_border_maximize(E_Border *bd)
+e_border_maximize(E_Border *bd, E_Maximize max)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -1091,7 +1091,7 @@ e_border_maximize(E_Border *bd)
 	bd->saved.h = bd->h;
 
 	e_border_raise(bd);
-	switch (e_config->maximize_policy)
+	switch (max)
 	  {
 	   case E_MAXIMIZE_NONE:
 	      /* Ignore */
@@ -1140,9 +1140,11 @@ e_border_maximize(E_Border *bd)
 	      y2 = bd->zone->y + bd->zone->h;
 
 	      /* walk through all gadgets */
-	      e_maximize_border_gadman(bd, &x1, &y1, &x2, &y2);
+	      e_maximize_border_gadman_fit(bd, &x1, &y1, &x2, &y2);
 
 	      /* walk through docks and toolbars */
+	      /* FIXME */
+#if 0
 	      bl = e_container_border_list_first(bd->zone->container);
 	      while ((bd2 = e_container_border_list_next(bl)))
 		{
@@ -1161,6 +1163,7 @@ e_border_maximize(E_Border *bd)
 		     y1 = (bd2->y + bd2->h);
 		}
 	      e_container_border_list_free(bl);
+#endif
 	      w = x2 - x1;
 	      h = y2 - y1;
 	      _e_border_resize_limit(bd, &w, &h);
@@ -1176,23 +1179,11 @@ e_border_maximize(E_Border *bd)
 	      y2 = bd->zone->y + bd->zone->h;
 
 	      /* walk through all gadgets */
-	      for (l = bd->zone->container->gadman->clients; l; l = l->next)
-		{
-		   E_Gadman_Client *gmc;
+	      e_maximize_border_gadman_fill(bd, &x1, &y1, &x2, &y2);
 
-		   gmc = l->data;
-		   if ((gmc->zone != bd->zone)) continue;
-
-		   if ((gmc->x < x2) && (gmc->x >= (bd->x + bd->w)))
-		     x2 = gmc->x;
-		   if (((gmc->x + gmc->w) > x1) && ((gmc->x + gmc->w) <= bd->x))
-		     x1 = (gmc->x + gmc->w);
-		   if ((gmc->y < y2) && (gmc->y >= (bd->y + bd->w)))
-		     y2 = gmc->y;
-		   if (((gmc->y + gmc->h) > y1) && ((gmc->y + gmc->h) <= bd->y))
-		     y1 = (gmc->y + gmc->h);
-		}
 	      /* walk through all windows */
+	      /* FIXME */
+#if 0
 	      bl = e_container_border_list_first(bd->zone->container);
 	      while ((bd2 = e_container_border_list_next(bl)))
 		{
@@ -1208,6 +1199,7 @@ e_border_maximize(E_Border *bd)
 		     y1 = (bd2->y + bd2->h);
 		}
 	      e_container_border_list_free(bl);
+#endif
 
 	      w = x2 - x1;
 	      h = y2 - y1;
@@ -2930,7 +2922,7 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
    else if (!strcmp(source, "maximize"))
      {
 	if (bd->maximized) e_border_unmaximize(bd);
-	else e_border_maximize(bd);
+	else e_border_maximize(bd, e_config->maximize_policy);
      }
    else if (!strcmp(source, "iconify"))
      {
@@ -4802,7 +4794,7 @@ _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
 
    bd = data;
    if (bd->maximized) e_border_unmaximize(bd);
-   else e_border_maximize(bd);
+   else e_border_maximize(bd, e_config->maximize_policy);
 }
 
 static void

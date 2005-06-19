@@ -251,7 +251,7 @@ ACT_FN_GO(window_maximized_toggle)
 	
 	bd = (E_Border *)obj;
 	if (bd->maximized) e_border_unmaximize(bd);
-        else e_border_maximize(bd);
+        else e_border_maximize(bd, e_config->maximize_policy);
      }
 }
 
