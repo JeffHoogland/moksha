@@ -748,7 +748,7 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       int count;
-      char *p, *type;
+      char *type;
       int res;
       RESPONSE(r, E_Response_Dirs_List, HDL);
 

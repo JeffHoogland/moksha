@@ -768,7 +768,6 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
    Evas_List *l, *borders = NULL;
    E_Menu *root;
    E_Zone *zone = NULL;
-   char *s;
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);

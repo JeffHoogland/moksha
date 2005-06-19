@@ -57,17 +57,16 @@ e_alert_shutdown(void)
 void
 e_alert_show(char *text)
 {
-   int                  wid, hih, w, h, i, j, k, mask;
+   int                  wid, hih, w, i, j, k, mask;
    XGCValues            gcv;
    GC                   gc;
    char                 line[1024];
    XEvent               ev;
    XSetWindowAttributes att;
-   int                  fw, fh, x, y, ww, hh, mh;
+   int                  fw, fh, ww, hh, mh;
    KeyCode              key;
    int                  button;
    Window               win = 0, b1 = 0, b2 = 0, b3 = 0;
-   XCharStruct          cs;
 
    if (!text) return;
 
