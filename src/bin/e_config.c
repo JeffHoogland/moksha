@@ -790,7 +790,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_pos_min_h, 0, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
-   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_ZOOM, E_MAXIMIZE_FILL);
+   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_FILL);
 ;
    /* apply lang config - exception because config is loaded after intl setup */
    

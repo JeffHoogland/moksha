@@ -1413,25 +1413,24 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_MAXIMIZE_POLICY_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-maximize-policy-set", 1, "Set the maximize policy. OPT1 = ZOOM, FULLSCREEN, SMART, EXPAND or FILL", 0, HDL)
+   OP("-maximize-policy-set", 1, "Set the maximize policy. OPT1 = FULLSCREEN, SMART, EXPAND or FILL", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
-   if (!strcmp(params[0], "ZOOM")) value = E_MAXIMIZE_ZOOM;
-   else if (!strcmp(params[0], "FULLSCREEN")) value = E_MAXIMIZE_FULLSCREEN;
+   if (!strcmp(params[0], "FULLSCREEN")) value = E_MAXIMIZE_FULLSCREEN;
    else if (!strcmp(params[0], "SMART")) value = E_MAXIMIZE_SMART;
    else if (!strcmp(params[0], "EXPAND")) value = E_MAXIMIZE_EXPAND;
    else if (!strcmp(params[0], "FILL")) value = E_MAXIMIZE_FILL;
    else
      {
-	 printf("maximize must be ZOOM, FULLSCREEN, SMART, EXPAND or FILL\n");
+	 printf("maximize must be FULLSCREEN, SMART, EXPAND or FILL\n");
 	 exit(-1);
      }
    REQ_INT_END(value, HDL);
 #elif (TYPE == E_WM_IN)
    START_INT(value, HDL);
    e_config->maximize_policy = value;
-   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_ZOOM, E_MAXIMIZE_FILL);
+   E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_FILL);
    SAVE;
    END_INT
 #elif (TYPE == E_REMOTE_IN)
@@ -1457,9 +1456,7 @@ break;
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    START_INT(policy, HDL);
-   if (policy == E_MAXIMIZE_ZOOM)
-     printf("REPLY: ZOOM\n");
-   else if (policy == E_MAXIMIZE_FULLSCREEN)
+   if (policy == E_MAXIMIZE_FULLSCREEN)
      printf("REPLY: FULLSCREEN\n");
    else if (policy == E_MAXIMIZE_SMART)
      printf("REPLY: SMART\n");

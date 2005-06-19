@@ -1078,9 +1078,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    if ((bd->fullscreen) || (bd->shaded) || (bd->shading)) return;
    if (!bd->maximized)
      {
-	Evas_List *l;
-	E_Border_List *bl;
-	E_Border *bd2;
 	int x1, y1, x2, y2;
 	int w, h;
 
@@ -1095,10 +1092,6 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	  {
 	   case E_MAXIMIZE_NONE:
 	      /* Ignore */
-	      break;
-	   case E_MAXIMIZE_ZOOM:
-	      /* FIXME */
-	      bd->maximized = E_MAXIMIZE_ZOOM;
 	      break;
 	   case E_MAXIMIZE_FULLSCREEN:
 	      if (bd->bg_object)
@@ -1143,27 +1136,8 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      e_maximize_border_gadman_fit(bd, &x1, &y1, &x2, &y2);
 
 	      /* walk through docks and toolbars */
-	      /* FIXME */
-#if 0
-	      bl = e_container_border_list_first(bd->zone->container);
-	      while ((bd2 = e_container_border_list_next(bl)))
-		{
-		   if (bd2->zone != bd->zone) continue;
-		   if ((bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK) &&
-		       (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_TOOLBAR))
-		     continue;
+	      e_maximize_border_dock_fit(bd, &x1, &y1, &x2, &y2);
 
-		   if ((bd2->x < x2) && (bd2->x >= (bd->x + bd->w)))
-		     x2 = bd2->x;
-		   if (((bd2->x + bd2->w) > x1) && ((bd2->x + bd2->w) <= bd->x))
-		     x1 = (bd2->x + bd2->w);
-		   if ((bd2->y < y2) && (bd2->y >= (bd->y + bd->w)))
-		     y2 = bd2->y;
-		   if (((bd2->y + bd2->h) > y1) && ((bd2->y + bd2->h) <= bd->y))
-		     y1 = (bd2->y + bd2->h);
-		}
-	      e_container_border_list_free(bl);
-#endif
 	      w = x2 - x1;
 	      h = y2 - y1;
 	      _e_border_resize_limit(bd, &w, &h);
@@ -1182,24 +1156,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      e_maximize_border_gadman_fill(bd, &x1, &y1, &x2, &y2);
 
 	      /* walk through all windows */
-	      /* FIXME */
-#if 0
-	      bl = e_container_border_list_first(bd->zone->container);
-	      while ((bd2 = e_container_border_list_next(bl)))
-		{
-		   if (bd2->zone != bd->zone) continue;
-
-		   if ((bd2->x < x2) && (bd2->x >= (bd->x + bd->w)))
-		     x2 = bd2->x;
-		   if (((bd2->x + bd2->w) > x1) && ((bd2->x + bd2->w) <= bd->x))
-		     x1 = (bd2->x + bd2->w);
-		   if ((bd2->y < y2) && (bd2->y >= (bd->y + bd->w)))
-		     y2 = bd2->y;
-		   if (((bd2->y + bd2->h) > y1) && ((bd2->y + bd2->h) <= bd->y))
-		     y1 = (bd2->y + bd2->h);
-		}
-	      e_container_border_list_free(bl);
-#endif
+	      e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2);
 
 	      w = x2 - x1;
 	      h = y2 - y1;
@@ -1236,9 +1193,6 @@ e_border_unmaximize(E_Border *bd)
 	  {
 	   case E_MAXIMIZE_NONE:
 	      /* Ignore */
-	      break;
-	   case E_MAXIMIZE_ZOOM:
-	      /* FIXME */
 	      break;
 	   case E_MAXIMIZE_FULLSCREEN:
 	      if (bd->bg_object)
@@ -1289,6 +1243,11 @@ e_border_fullscreen(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   /* FIXME:
+    * Implement both fullscreen modes!
+    * Black background!
+    */
 
    /* FIXME: Some types of maximized might allow this */
    if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;

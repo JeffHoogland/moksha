@@ -976,6 +976,10 @@ _e_container_resize_handle(E_Container *con)
    e_gadman_container_resize(con->gadman);
    e_object_ref(E_OBJECT(con));
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
+#if 0
+   /* FIXME: This is wrong, we should only move/resize to save things from
+    * disappearing!
+    */
    for (i = 0; i < 7; i++)
      {
 	for (l = con->layers[i].clients; l; l = l->next)
@@ -995,6 +999,7 @@ _e_container_resize_handle(E_Container *con)
 	       e_border_move(bd, bd->x, bd->zone->y + bd->zone->h - bd->h);
 	  }
      }
+#endif
 }
 
 static void

@@ -36,12 +36,19 @@ typedef enum _E_Focus_Policy
 typedef enum _E_Maximize
 {
    E_MAXIMIZE_NONE,
-   E_MAXIMIZE_ZOOM,
    E_MAXIMIZE_FULLSCREEN,
    E_MAXIMIZE_SMART,
    E_MAXIMIZE_EXPAND,
    E_MAXIMIZE_FILL
 } E_Maximize;
+
+typedef enum _E_Fullscreen
+{
+   /* Resize window */
+   E_FULLSCREEN_RESIZE,
+   /* Change screen resoultion and resize window */
+   E_FULLSCREEN_ZOOM
+} E_Fullscreen;
 
 
 
