@@ -256,23 +256,25 @@ struct _E_Border
    
    E_Container_Shape *shape;
    
-   unsigned char   visible : 1;
-   unsigned char   moving : 1;
-   unsigned char   focused : 1;
-   unsigned char   new_client : 1;
-   unsigned char   re_manage : 1;
-   unsigned char   shading : 1;
-   unsigned char   shaded : 1;
+   unsigned int    visible : 1;
+   unsigned int    moving : 1;
+   unsigned int    focused : 1;
+   unsigned int    new_client : 1;
+   unsigned int    re_manage : 1;
+   unsigned int    shading : 1;
+   unsigned int    shaded : 1;
+   unsigned int    iconic : 1;
+   unsigned int    sticky : 1;
+   unsigned int    shaped : 1;
+   unsigned int    need_shape_merge : 1;
+   unsigned int    need_shape_export : 1;
+   unsigned int    fullscreen : 1;
+   unsigned int    already_unparented : 1;
+   unsigned int    need_reparent : 1;
+   unsigned int    button_grabbed : 1;
+   unsigned int    delete_requested : 1;
+   unsigned int    ping_ok : 1;
    E_Maximize      maximized;
-   unsigned char   iconic : 1;
-   unsigned char   sticky : 1;
-   unsigned char   shaped : 1;
-   unsigned char   need_shape_merge : 1;
-   unsigned char   need_shape_export : 1;
-   unsigned char   fullscreen : 1;
-   unsigned char   already_unparented : 1;
-   unsigned char   need_reparent : 1;
-   unsigned char   button_grabbed : 1;
 
    double          ping;
  
@@ -319,6 +321,7 @@ struct _E_Border
    unsigned int layer;
    E_Action *cur_mouse_action;
    Ecore_Timer *raise_timer;
+   Ecore_Timer *ping_timer;
 
    Ecore_Timer *dangling_ref_check;
 };
@@ -464,6 +467,8 @@ EAPI void e_border_button_bindings_grab_all(void);
 EAPI Evas_List *e_border_focus_stack_get(void);
 EAPI Evas_List *e_border_lost_windows_get(E_Zone *zone);
 
+EAPI void e_border_ping(E_Border *bd);
+    
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

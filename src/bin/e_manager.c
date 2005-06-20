@@ -527,7 +527,7 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
    bd = e_border_find_by_client_window(e->event_win);
    if (!bd) return 1;
 
-   printf("PING response: %f\n", ecore_time_get() - bd->ping);
+   bd->ping_ok = 1;
    return 1;
 }
 

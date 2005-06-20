@@ -116,6 +116,7 @@ static int  _e_border_move_end(E_Border *bd);
 static void _e_border_move_update(E_Border *bd);
 
 static int  _e_border_cb_focus_fix(void *data);
+static int  _e_border_cb_ping_timer(void *data);
 
 static char *_e_border_winid_str_get(Ecore_X_Window win);
     
@@ -1538,6 +1539,16 @@ e_border_clients_get()
 }
 
 void
+e_border_ping(E_Border *bd)
+{
+   bd->ping_ok = 0;
+   ecore_x_netwm_ping_send(bd->client.win);
+   bd->ping = ecore_time_get();
+   if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
+   bd->ping_timer = ecore_timer_add(10.0, _e_border_cb_ping_timer, bd);
+}
+
+void
 e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    if (!bd->moving)
@@ -1645,12 +1656,10 @@ e_border_act_close_begin(E_Border *bd)
 {
    if (bd->client.icccm.delete_request)
      {
+	bd->delete_requested = 1;
 	ecore_x_window_delete_request_send(bd->client.win);
 	if (bd->client.netwm.ping)
-	  {
-	     ecore_x_netwm_ping_send(bd->client.win);
-	     bd->ping = ecore_time_get();
-	  }
+	  e_border_ping(bd);
      }
    else
      e_border_act_kill_begin(bd);
@@ -1805,6 +1814,11 @@ _e_border_free(E_Border *bd)
      {
 	ecore_timer_del(bd->dangling_ref_check);
 	bd->dangling_ref_check = NULL;
+     }
+   if (bd->ping_timer)
+     {
+	ecore_timer_del(bd->ping_timer);
+	bd->ping_timer = NULL;
      }
    if (bd->raise_timer)
      {
@@ -3602,6 +3616,13 @@ _e_border_eval(E_Border *bd)
 	       }
 	     free(proto);
 	  }
+	if (bd->client.netwm.ping)
+	  e_border_ping(bd);
+	else
+	  {
+	     if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
+	     bd->ping_timer = NULL;
+	  }
 	bd->client.icccm.fetch.protocol = 0;
      }
    if (bd->client.mwm.fetch.hints)
@@ -5235,6 +5256,34 @@ _e_border_cb_focus_fix(void *data)
    return 1;
 }
 
+static int
+_e_border_cb_ping_timer(void *data)
+{
+   E_Border *bd;
+   
+   bd = data;
+   if (bd->ping_ok)
+     {
+	/* FIXME: if hung, reset hung state to normal */
+	e_border_ping(bd);
+     }
+   else
+     {
+	/* FIXME: if !hung, set hung state then... */
+	if (bd->delete_requested)
+	  {
+	     printf("DELETE REQ HUNG: BORDER %p [%s] not responding to ping!!!!\n",
+		    bd, bd->client.icccm.title);
+	  }
+	else
+	  {
+	     printf("HUNG APP: BORDER %p [%s] not responding to ping!!!!\n",
+		    bd, bd->client.icccm.title);
+	  }
+     }
+   return 1;
+}
+
 static char *
 _e_border_winid_str_get(Ecore_X_Window win)
 {
@@ -5254,3 +5303,4 @@ _e_border_winid_str_get(Ecore_X_Window win)
    id[8] = 0;
    return id;
 }
+

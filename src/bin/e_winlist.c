@@ -140,8 +140,7 @@ e_winlist_show(E_Zone *zone)
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
    ecore_x_window_show(input_window);
-   ecore_x_pointer_grab(input_window);
-   ecore_x_keyboard_grab(input_window);
+   e_grabinput_get(input_window, 0, input_window);
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
@@ -214,6 +213,7 @@ e_winlist_hide(void)
 	handlers = evas_list_remove_list(handlers, handlers);
      }
    ecore_x_window_del(input_window);
+   e_grabinput_release(input_window, input_window);
    input_window = 0;
    if (warp_timer)
      {

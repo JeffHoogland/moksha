@@ -55,6 +55,8 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* ctrl+alt+backspace will leave e in 100% cpu infinite look printing out errors
+* "run command" typebuffer thing
 * pager problems. Seems to loose or mess up windows sometimes.
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
@@ -88,7 +90,7 @@ These are in no particular order:
   fullscreen. is this correct?
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
-* use ecore_x_netwm_ping_send() to windowsthat suport it regularly to see if
+* use ecore_x_netwm_ping_send() to windows that suport it regularly to see if
   they are dead or not (do this all the time - like every few seconds) to be
   able to inform users of dead applications about the time they die, not some
   time afterwards. (also ask if u want to kill the process then)

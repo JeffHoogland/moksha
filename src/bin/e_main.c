@@ -429,6 +429,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_dnd_shutdown);
+   /* setup input grabbing co-operation system */
+   if (!e_grabinput_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its inptu grab handling system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_grabinput_shutdown);
    /* setup module loading etc */
    if (!e_module_init())
      {
