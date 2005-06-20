@@ -42,6 +42,10 @@ msgstr "(Unbenutzt)"
 msgid "1 hour"
 msgstr "1 Stunde"
 
+#: src/modules/battery/e_mod_main.c:383
+msgid "10 mins"
+msgstr "10 Minuten"
+
 #: src/modules/temperature/e_mod_main.c:596
 msgid "100C"
 msgstr "100°C"
@@ -50,10 +54,18 @@ msgstr "100°C"
 msgid "10C"
 msgstr "10°C"
 
+#: src/modules/battery/e_mod_main.c:390
+msgid "20 mins"
+msgstr "20 Minuten"
+
 #: src/modules/temperature/e_mod_main.c:507
 #: src/modules/temperature/e_mod_main.c:540
 msgid "20C"
 msgstr "20°C"
+
+#: src/modules/battery/e_mod_main.c:397
+msgid "30 mins"
+msgstr "30 Minuten"
 
 #: src/modules/temperature/e_mod_main.c:514
 #: src/modules/temperature/e_mod_main.c:547
@@ -65,10 +77,19 @@ msgstr "30°C"
 msgid "40C"
 msgstr "40°C"
 
+#: src/modules/battery/e_mod_main.c:404
+msgid "40 mins"
+msgstr "40 Minuten"
+
 #: src/modules/temperature/e_mod_main.c:528
 #: src/modules/temperature/e_mod_main.c:561
 msgid "50C"
 msgstr "50°C"
+
+#: src/modules/temperature/e_mod_main.c:530
+#: src/modules/temperature/e_mod_main.c:563
+msgid "50 mins"
+msgstr "50 Minuten"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
@@ -307,6 +328,14 @@ msgstr "Arbeitsfläche %d, %d"
 #: src/bin/e_int_menus.c:76
 msgid "Desktops"
 msgstr "Arbeitsflächen"
+
+#: src/modules/battery/e_mod_main.c:376
+msgid "Disable"
+msgstr "Deaktiviert"
+
+#: src/bin/e_init.c:110
+msgid "Disable this splash screen in the future?"
+msgstr "Diesen Bildschirm in Zukunft nicht mehr anzeigen?"
 
 #: src/modules/dropshadow/e_mod_main.c:125
 msgid "Dropshadow"
@@ -919,7 +948,7 @@ msgstr "Regler einstellen"
 #: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:472
 #: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
 msgid "Set Poll Time"
-msgstr "Abfragehäufigkeit einstallen"
+msgstr "Abfragehäufigkeit einstellen"
 
 #: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:485
 msgid "Set Speed"
