@@ -684,6 +684,10 @@ msgstr "Oft (1 sek)"
 msgid "Favorite Applications"
 msgstr "Bevorzugte Anwendungen"
 
+#: src/modules/ibar/e_mod_main.c:802
+msgid "Follower"
+msgstr "Anhänger"
+
 #: src/bin/e_gadman.c:541
 msgid "Full Screen Height"
 msgstr "Gesamte Bildschirmhöhe"
@@ -691,6 +695,10 @@ msgstr "Gesamte Bildschirmhöhe"
 #: src/bin/e_gadman.c:498
 msgid "Full Screen Width"
 msgstr "Gesamte Bildschirmbreite"
+
+#: src/bin/e_border.c:4682
+msgid "Fullscreen"
+msgstr "Vollbild"
 
 #: src/modules/dropshadow/e_mod_main.c:252
 msgid "Fuzzy"
@@ -748,6 +756,10 @@ msgstr "Groß"
 #: src/modules/dropshadow/e_mod_main.c:309
 msgid "Light"
 msgstr "Hell"
+
+#: src/bin/e_int_menus.c:107
+msgid "Lost Windows"
+msgstr "Verlorene Fenster"
 
 #: src/modules/battery/e_mod_main.c:993
 msgid "Low"
