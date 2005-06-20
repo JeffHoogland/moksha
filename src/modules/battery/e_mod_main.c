@@ -373,42 +373,42 @@ _battery_config_menu_new(Battery *e)
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Disable");
+   e_menu_item_label_set(mi, _("Disable"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_disable, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "10 mins");
+   e_menu_item_label_set(mi, _("10 mins"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 10) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_10, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "20 mins");
+   e_menu_item_label_set(mi, _("20 mins"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 20) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_20, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "30 mins");
+   e_menu_item_label_set(mi, _("30 mins"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 30) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_30, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "40 mins");
+   e_menu_item_label_set(mi, _("40 mins");
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 40) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_menu_alarm_40, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "50 mins");
+   e_menu_item_label_set(mi, _("50 mins"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (e->conf->alarm == 50) e_menu_item_toggle_set(mi, 1);
