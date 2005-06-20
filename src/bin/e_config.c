@@ -237,7 +237,7 @@ e_config_init(void)
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
 	e_config->use_resist = 1;
-	e_config->drag_resist = 8;
+	e_config->drag_resist = 16;
 	e_config->desk_resist = 32;
 	e_config->window_resist = 12;
 	e_config->gadget_resist = 32;
