@@ -55,6 +55,7 @@ Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
+* resize of xmms plpaylist is broken when sizing up
 * quit app while in fullscreen black bg stays
 * if focus changes while in fullscreen, un-fullscreen the app and deal with
   focus
@@ -227,4 +228,3 @@ These are in no particular order:
 * remove module config menus (make them part of the module control panel and
   as separate executables)
 * tip/hint/suggestion dialog app (textblock etc.)
-
