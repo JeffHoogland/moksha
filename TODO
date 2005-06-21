@@ -103,6 +103,7 @@ These are in no particular order:
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
 * actuallly break out ipc and config to set bg per desktop (per zone)
+* add bg transition effects like crossfade, zoom in / out etc...
 * break out ipc to set names for desktops and zones
 * bug: pager doesnt handle container/zone resize properly (and goes a weird
   size)??? (try resize screen to like 480x640 (new aspect))
