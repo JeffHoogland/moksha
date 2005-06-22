@@ -161,7 +161,6 @@ These are in no particular order:
 * quit app while in fullscreen black bg stays
 * if focus changes while in fullscreen, un-fullscreen the app and deal with
   focus
-* ctrl+alt+backspace will leave e in 100% cpu infinite look printing out errors
 * pager problems. Seems to loose or mess up windows sometimes.
 * bug?: xine's ui window/panel is under its video window when u go
   fullscreen. is this correct?
