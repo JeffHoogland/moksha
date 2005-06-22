@@ -119,6 +119,8 @@ These are in no particular order:
 * add a way to access "all" apps app dir
 * ibar need to handle drop from other places (xdnd, drop from window etc.)
 * dnd from pager to other pagers/ to desktop/ibox etc.
+* ibar should enable user to select different dirs to view per bar and allow
+  new bars to be created or bars to be deleted
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
 * ibar needs lamp follower to be optional in ibar config (for the user)
