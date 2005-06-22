@@ -1670,8 +1670,9 @@ e_border_act_close_begin(E_Border *bd)
 void
 e_border_act_kill_begin(E_Border *bd)
 {
-   if (bd->client.netwm.pid != 0)
+   if (bd->client.netwm.pid > 1)
      {
+	printf("%i\n", bd->client.netwm.pid);
 	kill(bd->client.netwm.pid, SIGINT);
 	bd->kill_timer = ecore_timer_add(10.0, _e_border_cb_kill_timer, bd);
      }
@@ -5328,7 +5329,7 @@ _e_border_cb_kill_timer(void *data)
    E_Border *bd;
    
    bd = data;
-   if (bd->client.netwm.pid != 0)
+   if (bd->client.netwm.pid > 1)
      kill(bd->client.netwm.pid, SIGKILL);
    bd->kill_timer = NULL;
    return 0;
