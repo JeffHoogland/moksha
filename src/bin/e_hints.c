@@ -130,14 +130,23 @@ void
 e_hints_e16_comms_pretend(E_Manager *man)
 {
    Ecore_X_Window win;
-   Ecore_X_Atom enlightenment_comms, string;
+   Ecore_X_Atom enlightenment_comms, enlightenment_version, string;
    char buf[256];
    
    enlightenment_comms = ecore_x_atom_get("ENLIGHTENMENT_COMMS");
+   enlightenment_version = ecore_x_atom_get("ENLIGHTENMENT_VERSION");
    string = ecore_x_atom_get("STRING");
+   
    win = ecore_x_window_input_new(man->root, -100, -100, 1, 1);
+
+   /* to help detect this is NOT e16 */
+   snprintf(buf, sizeof(buf), "Enlightenment %s", VERSION);
+   ecore_x_window_prop_property_set(win, enlightenment_version, string, 8, buf, strlen(buf));
+   ecore_x_window_prop_property_set(man->root, enlightenment_version, string, 8, buf, strlen(buf));
+   
    snprintf(buf, sizeof(buf), "WINID %8x", (int)win);
    ecore_x_window_prop_property_set(win, enlightenment_comms, string, 8, buf, 14);
+   
    ecore_x_window_prop_property_set(man->root, enlightenment_comms, string, 8, buf, 14);
 }
 
