@@ -185,6 +185,8 @@ These are in no particular order:
 
 3. cleanups
 
+* make auto kill client and the kill() stuff config options
+* make 10.0 sec ping time and the 10.0 sec wait for a SIGKILL an option
 * make it easy for modules to hook into ipc and extend it for themselves
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
 * gadman needs some changes to virtualise the canvas/container the gadget
