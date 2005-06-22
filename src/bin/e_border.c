@@ -5309,13 +5309,11 @@ _e_border_cb_ping_timer(void *data)
 	  {
 	     bd->hung = 1;
 	     edje_object_signal_emit(bd->bg_object, "hung", "");
-	     /* if dialog is up - hide it now */
+	     /* FIXME: if below dialog is up - hide it now */
 	  }
 	if (bd->delete_requested)
 	  {
 	     /* FIXME: pop up dialog saying app is hung - kill client, or pid */
-	     printf("DELETE REQ HUNG: BORDER %p [%s] not responding to ping!!!!\n",
-		    bd, bd->client.icccm.title);
 	     e_border_act_kill_begin(bd);
 	  }
      }
