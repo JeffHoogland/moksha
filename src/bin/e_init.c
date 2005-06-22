@@ -5,6 +5,7 @@
 
 static void _e_init_icons_del(void);
 static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
 static Ecore_X_Window  _e_init_win = 0;
@@ -110,6 +111,8 @@ e_init_init(void)
 			     _("Disable this splash screen in the future?"));
    edje_object_signal_callback_add(_e_init_object, "disable_state", "*",
 				   _e_init_cb_signal_disable, NULL);
+   edje_object_signal_callback_add(_e_init_object, "done_ok", "*",
+				   _e_init_cb_signal_done_ok, NULL);
    free(roots);
    return 1;
 }
@@ -175,7 +178,12 @@ e_init_window_get(void)
    return _e_init_win;
 }
 
-/* code for displaying startup icons */
+void
+e_init_done(void)
+{
+   if (!_e_init_object) return;
+   edje_object_signal_emit(_e_init_object, "done", "");
+}
 
 void
 e_init_icons_app_add(E_App *app)
@@ -246,4 +254,10 @@ _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, co
    if (!strcmp(source, "disable")) e_config->show_splash = 0;
    else e_config->show_splash = 1;
    e_config_save_queue();
+}
+
+static void
+_e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   e_init_hide();
 }

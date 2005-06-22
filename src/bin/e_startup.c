@@ -47,7 +47,11 @@ _e_startup(void)
    E_App *a;
    char buf[4096];
    
-   if (!startup_apps) return;
+   if (!startup_apps)
+     {
+	e_init_done();
+	return;
+     }
    a = evas_list_nth(startup_apps->subapps, start_app_pos);
    start_app_pos++;
    if (!a)
@@ -57,7 +61,7 @@ _e_startup(void)
 	start_app_pos = -1;
 	waiting_app = NULL;
 	e_app_change_callback_del(_e_startup_app_exit_cb, NULL);
-//	e_init_hide();
+	e_init_done();
 	return;
      }
    e_app_exec(a);

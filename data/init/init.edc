@@ -1305,6 +1305,20 @@ collections {
 	 }
 
 	 program {
+	    name: "done1";
+	    signal: "done";
+	    source: "";
+            action: STATE_SET "default" 0.0;
+	    transition: SINUSOIDAL 1.0;
+	    target: "logo_point";
+	    after: "done2";
+	 }
+	 program {
+	    name: "done2";
+	    action: SIGNAL_EMIT "done_ok" "";
+	 }
+	 
+	 program {
 	    name: "disable_down";
 	    signal: "mouse,down,1";
 	    source: "disable_event";

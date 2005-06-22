@@ -137,8 +137,6 @@ These are in no particular order:
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
 * add really nice "about" box with theme, authors credits list etc etc.
-* init splash needs te be able to be signalled "end of init" and it can
-  respond with a "splash end" signal
 * "immortal" windows (e will not allow that window to be closed or will
   refuse to exit as long as the immortal flags is set until it is unset to
   stop users from doing silly things like logging out while important stuff

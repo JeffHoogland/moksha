@@ -481,9 +481,6 @@ main(int argc, char **argv)
    
    if (!((!e_config->show_splash) || (after_restart)))
      {
-	ecore_timer_add( 3.0, _e_main_cb_startup_fake_status, _("Artificially slowing startup so you can see it all."));
-	ecore_timer_add( 7.5, _e_main_cb_startup_fake_status, _("This is development code, so be warned."));
-	ecore_timer_add(12.0, _e_main_cb_startup_fake_status, _("Most features do not work yet, and those that do are buggy."));
 	ecore_timer_add(16.0, _e_main_cb_startup_fake_end, NULL);
      }
    
@@ -974,13 +971,6 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 //   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
    return 1;
-}
-
-static int
-_e_main_cb_startup_fake_status(void *data)
-{
-   e_init_status_set((const char *)data);
-   return 0;
 }
 
 static int
