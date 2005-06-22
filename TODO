@@ -34,34 +34,16 @@ ISSUES:
 
 
 
-
-
-
-
-
-FIXME: group these TODO items into:
-
-1. essential features
-2. fixes
-3. cleanups
-4. optimisations
-5. nice to have features
-
-
-
 Some of the things (in very short form) that need to be done to E17...
 
 Also look at all the .c files - they have their own localized TODO lists
 
 These are in no particular order:
 
-* resize of xmms plpaylist is broken when sizing up
-* quit app while in fullscreen black bg stays
-* if focus changes while in fullscreen, un-fullscreen the app and deal with
-  focus
-* ctrl+alt+backspace will leave e in 100% cpu infinite look printing out errors
-* "run command" typebuffer thing
-* pager problems. Seems to loose or mess up windows sometimes.
+
+
+1. essential features
+
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
@@ -90,62 +72,27 @@ These are in no particular order:
   defined image data
 * implement a better dialog for things like "do you want to do X - yes or no?"
 * dialogs for generic contents too
-* bug?: xine's ui window/panel is under its video window when u go
-  fullscreen. is this correct?
+* tip/hint/suggestion dialog app (textblock etc.)
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
-* use ecore_x_netwm_ping_send() to windows that suport it regularly to see if
-  they are dead or not (do this all the time - like every few seconds) to be
-  able to inform users of dead applications about the time they die, not some
-  time afterwards. (also ask if u want to kill the process then)
 * netwm frame extents request (_e_manager_cb_frame_extents_request) needs
   to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
-* actuallly break out ipc and config to set bg per desktop (per zone)
 * add bg transition effects like crossfade, zoom in / out etc...
 * break out ipc to set names for desktops and zones
-* bug: pager doesnt handle container/zone resize properly (and goes a weird
-  size)??? (try resize screen to like 480x640 (new aspect))
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
 * eapps need to provide title matching too as well as name and class
-* .eapp needs to become .eap :)
-* icons should be able to be overidden from the theme (eapp and menu stuff
-  etc.)
 * transients should have option to always follow parent
   (move/resize/raise/lower)
-* setup configs for gnome and kde (as options) if they are installed (eg
-  run gnome-settings-daemon).
-* sometimes the mouse gets locked to a window with a mouse grab of some sort
-  in x (it gets the down event and not the up?) so e thinks its down but it
-  isn't
-* maximised apps when e restarts are not recognised as maximised
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
-* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
-  rows at once
-* make it easy for modules to hook into ipc and extend it for themselves
-* check evas has eet support early on.
 * add locale and encoding fields to eapp files (to launch eapp in that
   locale+encoding)
 * add input method selector stuff to eapp - same as locale
-* gadman needs some changes to virtualise the canvas/container the gadget
-  ends up in (eg in popups or border)
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
-* pagers should be able to be configured to control more than the current zone
-  (select which zone they control)
-* re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
-* start module needs to have a way to alert users to "click here" and back
-  off alerting users as they learn what it is (over time)
-* sometimes windows that get shut down/closed get unparented but the whole
-  border stays around - something is keeping extra references maybe? it is
-  hidden, until you flip desktops then it appears again - but with no client
-  around. currently they have a dangling reference - need to find out WHO
-  added that ref and didnt remove it (i haven't seen this for ages now)
-* fix action delete (can segv if action is stored for "long runing actions"
-  like move/resize)
 * break out desks x/y size config so you can have a different desktop size
   per zone - right now there is a signle global (use this later as the default
   for new/unconfigured zones)
@@ -153,27 +100,16 @@ These are in no particular order:
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
   or superuser, and the .mo in the system or a user locales dir.
-* perhaps we should split focus and "selected" windows. selected window is
-  what ocused is now and focus is something only affectinbg keyboard input. if
-  the focus window becoems another managed window it becoems the selected
-  window - otherwise click to focus or pointer focus will chose the selected
-  window that may get the focus if it allows it...
 * check window max size. if < size of zone (or maximisation area) disallow
   maximising and tell border edje object (via signals) to somehow disable the
   maximise buttons :) (and remove from the menu) or center client in frame or
   something else to not exceed max size for window
-* bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
-  a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
-  right of zone 2
 * gadman gadget menu needs icons :)
-* module api needs to move label and icon to data file (.eapp file?), not api
 * gadman edit mode for simple gadgets activate with a button bind (eg
   alt+click on module like windows) or a pure key binding
-* make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
 * gadget containers (shelves?) using popups as well as in-line in a canvas
 * add key input focus control for desktop modules
 * finish off icccm support
-* optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
 * finish complete netwm support
 * make the cursors an edje buffer canvas for changinig cursor depending on
   context
@@ -181,32 +117,23 @@ These are in no particular order:
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* non opaque move/resize
+* ibar need to handle drop from other places (xdnd, drop from window etc.)
+* dnd from pager to other pagers/ to desktop/ibox etc.
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
-* ibar need to handle drop from other places (xdnd, drop from window etc.)
-* ibar lamp needs short timer on mouse out for hide before hiding (and del
-  the time on mouse in)
 * ibar needs lamp follower to be optional in ibar config (for the user)
 * borders need to be able to change border theme on the fly by mene or app
   properties
 * add window glueing
-* add window tabs (multiple clients in 1 border)
 * add setup/install wizard to seed eapp files etc. etc.
 * make ipc try open on other ports numbers if current is taken
 * make ipc try re-open if connection dies
-* add clientinfo pane/popdown for borders
-* add a button area expansion for borders ???
-* add template button for expanded buttons ???
 * support text and color classes
+* add clientinfo pane/popdown for borders
+* add sliders, radio and check buttons for clientinfo pane
 * add tooltips
 * make xrandr support get rotation and store it
-* maybe add systray module/support?
-* allow object paranoia to be a runtime option too
-* add sliders, radio and check buttons for clientinfo pane
 * add separate app menu bars at top of screen support
-* add "osd" subsystem for things like volume controls on keybboards, etc.
-  that overlay the screen
 * add really nice "about" box with theme, authors credits list etc etc.
 * init splash needs te be able to be signalled "end of init" and it can
   respond with a "splash end" signal
@@ -218,14 +145,88 @@ These are in no particular order:
 * with remember need to be able lock in attributes so the app (or user or both)
   cannot change them (eg this window is a fixed size and location - app cannot
   ask for a new size or location)
-* file icons on the desktop (people ask for it) - xdnd for these
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
-* dnd from pager to other pagers/ to desktop/ibox etc.
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * modules need config executables with proper widgets (sliders, check boxes,
   radio etc. not massive menus)
 * remove module config menus (make them part of the module control panel and
   as separate executables)
-* tip/hint/suggestion dialog app (textblock etc.)
+
+2. fixes
+
+* resize of xmms plpaylist is broken when sizing up
+* quit app while in fullscreen black bg stays
+* if focus changes while in fullscreen, un-fullscreen the app and deal with
+  focus
+* ctrl+alt+backspace will leave e in 100% cpu infinite look printing out errors
+* pager problems. Seems to loose or mess up windows sometimes.
+* bug?: xine's ui window/panel is under its video window when u go
+  fullscreen. is this correct?
+* bug: pager doesnt handle container/zone resize properly (and goes a weird
+  size)??? (try resize screen to like 480x640 (new aspect))
+* .eapp needs to become .eap :)
+* sometimes the mouse gets locked to a window with a mouse grab of some sort
+  in x (it gets the down event and not the up?) so e thinks its down but it
+  isn't
+* maximised apps when e restarts are not recognised as maximised
+* sometimes windows that get shut down/closed get unparented but the whole
+  border stays around - something is keeping extra references maybe? it is
+  hidden, until you flip desktops then it appears again - but with no client
+  around. currently they have a dangling reference - need to find out WHO
+  added that ref and didnt remove it (i haven't seen this for ages now)
+* fix action delete (can segv if action is stored for "long runing actions"
+  like move/resize)
+* bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
+  a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
+  right of zone 2
+
+3. cleanups
+
+* actuallly break out ipc and config to set bg per desktop (per zone)
+* make it easy for modules to hook into ipc and extend it for themselves
+* re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
+* gadman needs some changes to virtualise the canvas/container the gadget
+  ends up in (eg in popups or border)
+* perhaps we should split focus and "selected" windows. selected window is
+  what ocused is now and focus is something only affectinbg keyboard input. if
+  the focus window becoems another managed window it becoems the selected
+  window - otherwise click to focus or pointer focus will chose the selected
+  window that may get the focus if it allows it...
+* module api needs to move label and icon to data file (.eapp file?), not api
+* make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
+* ibar lamp needs short timer on mouse out for hide before hiding (and del
+  the time on mouse in)
+* allow object paranoia to be a runtime option too
+
+4. optimisations
+
+* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
+  rows at once
+* optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
+
+5. nice to have features
+
+* "run command" typebuffer thing
+* use ecore_x_netwm_ping_send() to windows that suport it regularly to see if
+  they are dead or not (do this all the time - like every few seconds) to be
+  able to inform users of dead applications about the time they die, not some
+  time afterwards. (also ask if u want to kill the process then)
+* icons should be able to be overidden from the theme (eapp and menu stuff
+  etc.)
+* setup configs for gnome and kde (as options) if they are installed (eg
+  run gnome-settings-daemon).
+* check evas has eet support early on.
+* pagers should be able to be configured to control more than the current zone
+  (select which zone they control)
+* start module needs to have a way to alert users to "click here" and back
+  off alerting users as they learn what it is (over time)
+* non opaque move/resize
+* add window tabs (multiple clients in 1 border)
+* add a button area expansion for borders ???
+* add template button for expanded buttons ???
+* maybe add systray module/support?
+* add "osd" subsystem for things like volume controls on keybboards, etc.
+  that overlay the screen
+* file icons on the desktop (people ask for it) - xdnd for these
