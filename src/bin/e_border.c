@@ -79,6 +79,7 @@ static void _e_border_cb_border_menu_end(void *data, E_Menu *m);
 static void _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key);
 static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -117,6 +118,7 @@ static void _e_border_move_update(E_Border *bd);
 
 static int  _e_border_cb_focus_fix(void *data);
 static int  _e_border_cb_ping_timer(void *data);
+static int  _e_border_cb_kill_timer(void *data);
 
 static char *_e_border_winid_str_get(Ecore_X_Window win);
     
@@ -1668,9 +1670,16 @@ e_border_act_close_begin(E_Border *bd)
 void
 e_border_act_kill_begin(E_Border *bd)
 {
-   ecore_x_kill(bd->client.win);
+   if (bd->client.netwm.pid != 0)
+     {
+	kill(bd->client.netwm.pid, SIGINT);
+	bd->kill_timer = ecore_timer_add(10.0, _e_border_cb_kill_timer, bd);
+     }
+   else
+     {
+	ecore_x_kill(bd->client.win);
+     }
    e_border_hide(bd, 0);
-   e_object_del(E_OBJECT(bd));
 }
 
 /* FIXME: Prefer app icon or own icon? */
@@ -1814,6 +1823,11 @@ _e_border_free(E_Border *bd)
      {
 	ecore_timer_del(bd->dangling_ref_check);
 	bd->dangling_ref_check = NULL;
+     }
+   if (bd->kill_timer)
+     {
+	ecore_timer_del(bd->kill_timer);
+	bd->kill_timer = NULL;
      }
    if (bd->ping_timer)
      {
@@ -4629,6 +4643,16 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Kill"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
+   e_menu_item_icon_edje_set(mi, 
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/kill"),
+			     "widgets/border/default/kill");
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Shaded"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
@@ -4766,6 +4790,15 @@ _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->iconic) e_border_uniconify(bd);
    else e_border_iconify(bd);
+}
+
+static void
+_e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+
+   bd = data;
+   e_border_act_kill_begin(bd);
 }
 
 static void
@@ -5264,24 +5297,43 @@ _e_border_cb_ping_timer(void *data)
    bd = data;
    if (bd->ping_ok)
      {
-	/* FIXME: if hung, reset hung state to normal */
-	e_border_ping(bd);
+	if (bd->hung)
+	  {
+	     bd->hung = 0;
+	     edje_object_signal_emit(bd->bg_object, "unhung", "");
+	  }
      }
    else
      {
-	/* FIXME: if !hung, set hung state then... */
+	if (!bd->hung)
+	  {
+	     bd->hung = 1;
+	     edje_object_signal_emit(bd->bg_object, "hung", "");
+	     /* if dialog is up - hide it now */
+	  }
 	if (bd->delete_requested)
 	  {
+	     /* FIXME: pop up dialog saying app is hung - kill client, or pid */
 	     printf("DELETE REQ HUNG: BORDER %p [%s] not responding to ping!!!!\n",
 		    bd, bd->client.icccm.title);
-	  }
-	else
-	  {
-	     printf("HUNG APP: BORDER %p [%s] not responding to ping!!!!\n",
-		    bd, bd->client.icccm.title);
+	     e_border_act_kill_begin(bd);
 	  }
      }
-   return 1;
+   bd->ping_timer = NULL;
+   e_border_ping(bd);
+   return 0;
+}
+
+static int
+_e_border_cb_kill_timer(void *data)
+{
+   E_Border *bd;
+   
+   bd = data;
+   if (bd->client.netwm.pid != 0)
+     kill(bd->client.netwm.pid, SIGKILL);
+   bd->kill_timer = NULL;
+   return 0;
 }
 
 static char *

@@ -153,6 +153,7 @@ These are in no particular order:
   radio etc. not massive menus)
 * remove module config menus (make them part of the module control panel and
   as separate executables)
+* actuallly break out ipc and config to set bg per desktop (per zone)
 
 2. fixes
 
@@ -184,7 +185,6 @@ These are in no particular order:
 
 3. cleanups
 
-* actuallly break out ipc and config to set bg per desktop (per zone)
 * make it easy for modules to hook into ipc and extend it for themselves
 * re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
 * gadman needs some changes to virtualise the canvas/container the gadget
@@ -209,10 +209,6 @@ These are in no particular order:
 5. nice to have features
 
 * "run command" typebuffer thing
-* use ecore_x_netwm_ping_send() to windows that suport it regularly to see if
-  they are dead or not (do this all the time - like every few seconds) to be
-  able to inform users of dead applications about the time they die, not some
-  time afterwards. (also ask if u want to kill the process then)
 * icons should be able to be overidden from the theme (eapp and menu stuff
   etc.)
 * setup configs for gnome and kde (as options) if they are installed (eg

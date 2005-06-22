@@ -274,6 +274,7 @@ struct _E_Border
    unsigned int    button_grabbed : 1;
    unsigned int    delete_requested : 1;
    unsigned int    ping_ok : 1;
+   unsigned int    hung : 1;
    E_Maximize      maximized;
 
    double          ping;
@@ -322,6 +323,7 @@ struct _E_Border
    E_Action *cur_mouse_action;
    Ecore_Timer *raise_timer;
    Ecore_Timer *ping_timer;
+   Ecore_Timer *kill_timer;
 
    Ecore_Timer *dangling_ref_check;
 };
