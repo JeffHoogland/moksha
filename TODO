@@ -158,6 +158,7 @@ These are in no particular order:
 2. fixes
 
 * resize of xmms plpaylist is broken when sizing up
+* Hide other windows while doing fullscreen.
 * quit app while in fullscreen black bg stays
 * if focus changes while in fullscreen, un-fullscreen the app and deal with
   focus
