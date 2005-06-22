@@ -29,6 +29,7 @@ e17_mini_button.png \
 e17_mini_button_shadow1.png \
 e17_mini_button_shadow2.png \
 e17_titlebar.png \
+e17_titlebar_hung.png \
 e17_titlebar_glint1.png \
 e17_titlebar_glint2.png \
 e17_titlebar_glint3.png \
