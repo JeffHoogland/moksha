@@ -820,8 +820,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if (!bd->client.icccm.accepts_focus) return;
-//   printf("flag focus to %i\n", focus);
    if ((focus) && (!bd->focused))
      {
 	if (!e_winlist_active_get())
@@ -840,14 +838,19 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    bd->focused = focus;
    if (set)
      {
-//	printf("send focus to %i\n", focus);
 	if (bd->focused)
 	  {
 	     if ((focused != bd) && (focused))
 	       e_border_focus_set(focused, 0, 0);
-	     if (bd->client.icccm.take_focus)
+	     if ((!bd->client.icccm.accepts_focus) &&
+		 (!bd->client.icccm.take_focus))
 	       {
-//		  printf("take focus!\n");
+		  /* no input */
+	       }
+	     else if ((bd->client.icccm.accepts_focus) &&
+		      (bd->client.icccm.take_focus))
+	       {
+		  /* locally active */
 /* this is a problem - basically we ASK the client to TAKE the focus itself
  * BUT if a whole stream of events is happening, the client may take the focus
  * LATER after we have gone and reset it back to somewhere else, thus it steals
@@ -870,25 +873,25 @@ e_border_focus_set(E_Border *bd, int focus, int set)
  * 
  * now the focus is on Y where it should be on X
  */
-// technially this is wrong to set the focus explicitly (passive focus model)
-// BUT qt applications dont work without it - we should get in touch with
-// trolltech...
 		  ecore_x_window_focus(bd->client.win);
 		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-//		  e_hints_active_window_set(bd->zone->container->manager, bd);
 	       }
-	     else
+	     else if ((!bd->client.icccm.accepts_focus) &&
+		      (bd->client.icccm.take_focus))
 	       {
-//		  printf("set focus\n");
+		  /* globally active */
+		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
+	       }
+	     else if ((bd->client.icccm.accepts_focus) &&
+		      (!bd->client.icccm.take_focus))
+	       {
+		  /* passive */
 		  ecore_x_window_focus(bd->client.win);
-//		  e_hints_active_window_set(bd->zone->container->manager, bd);
 	       }
 	  }
 	else
 	  {
-//	     printf("remove focus\n");
 	     ecore_x_window_focus(bd->zone->container->manager->root);
-//	     e_hints_active_window_set(bd->zone->container->manager, NULL);
 	  }
      }
    if ((bd->focused) && (focused != bd))
@@ -901,7 +904,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	focused = NULL;
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
-//   printf("F %x %i\n", bd->client.win, bd->focused);
 }
 
 void
