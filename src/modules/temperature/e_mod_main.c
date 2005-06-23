@@ -4,6 +4,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#ifdef __FreeBSD__
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif
+
 /* TODO List:
  *
  * which options should be in main menu, and which in face menu?
@@ -780,8 +785,28 @@ _temperature_cb_check(void *data)
    Evas_List *l;
    int temp = 0;
    char buf[4096];
-
+#ifdef __FreeBSD__
+   static int mib[5] = {-1};
+   int len;
+#endif
    ef = data;
+#ifdef __FreeBSD__
+   if (mib[0] == -1)
+     {
+	len = 5;
+	sysctlnametomib("hw.acpi.thermal.tz0.temperature", mib, &len);
+     }
+   
+   if (mib[0] != -1)
+     {
+	len = sizeof(temp);
+        if (sysctl(mib, 5, &temp, &len, NULL, 0) != -1)
+	  {
+	     temp = (temp - 2732) / 10;
+	     ret = 1;
+	  }
+     }
+#else  
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
    if (!therms || ecore_list_is_empty(therms))
      {
@@ -852,6 +877,7 @@ _temperature_cb_check(void *data)
 	  }
      }
    if (therms) ecore_list_destroy(therms);
+#endif   
    if (ret)
      {
 	if (ef->have_temp != 1)
