@@ -157,6 +157,8 @@ These are in no particular order:
 
 2. fixes
 
+* on font apply borders need to be adjuted for size changes
+* font aply doesnt seem to keep working (edje problem?) unless you restart
 * alt +click window (or just click its title) and start a move. if you flip
   desktop WHILE moving (with key binding) the window will follow but the pager
   doesnt update.
