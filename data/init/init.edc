@@ -498,6 +498,10 @@ images {
 collections {
    group {
       name: "init/splash";
+      script {
+	 public is_ready;
+	 public do_end;
+      }
       parts {
 	 part {
 	    name: "background";
@@ -1262,6 +1266,15 @@ collections {
       }
       programs {
 	 program {
+	    name: "init";
+	    signal: "load";
+	    source: "";
+	    script {
+	       set_int(is_ready, 0);
+	       set_int(do_end, 0);
+	    }
+	 }
+	 program {
 	    name: "init_pause";
 	    signal: "show";
 	    source: "";
@@ -1288,6 +1301,19 @@ collections {
 	    action: STATE_SET "intro_go" 0.0;
 	    transition: LINEAR 4.0;
 	    target: "logo";
+	    after: "logo_animate2b";
+	 }
+	 program {
+	    name: "logo_animate2b";
+	    script {
+	       new val;
+	       
+	       val = get_int(do_end);
+	       if (val == 1)
+		 run_program(PROGRAM:"done2");
+	       else
+		 set_int(is_ready, 1);
+	    }
 	    after: "logo_animate3";
 	 }
 	 program {
@@ -1308,13 +1334,25 @@ collections {
 	    name: "done1";
 	    signal: "done";
 	    source: "";
-            action: STATE_SET "default" 0.0;
-	    transition: SINUSOIDAL 1.0;
-	    target: "logo_point";
-	    after: "done2";
+	    script {
+	       new val;
+	       
+	       val = get_int(is_ready);
+	       if (val == 1)
+		 run_program(PROGRAM:"done2");
+	       else
+		 set_int(do_end, 1);
+	    }
 	 }
 	 program {
 	    name: "done2";
+            action: STATE_SET "default" 0.0;
+	    transition: SINUSOIDAL 4.0;
+	    target: "logo_point";
+	    after: "done3";
+	 }
+	 program {
+	    name: "done3";
 	    action: SIGNAL_EMIT "done_ok" "";
 	 }
 	 
