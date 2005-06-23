@@ -15,8 +15,14 @@
 #ifndef E_IPC_HANDLERS_H
 # define E_IPC_HANDLERS_H
 
+/* 
+ * add a new ooption for enlightenment_remote
+ * OP(opt, num_params, description, num_expected_replies, HDL) 
+ */
 # define OP(__a, __b, __c, __d, __e) \
      {__a, __b, __c, __d, __e},
+
+
 # define STRING(__str, HDL) \
 case HDL: \
 if (e->data) { \
@@ -38,7 +44,28 @@ if (e->data) { \
       __str1 = __2str->str1; \
       __str2 = __2str->str2;
 # define END_STRING2(__2str) \
+      free(__2str->str1); \
+      free(__2str->str2); \
       free(__2str); \
+   } \
+} \
+break;
+
+# define STRING2_INT(__str1, __str2, __int, __2str_int, HDL) \
+case HDL: \
+if (e->data) { \
+   char *__str1 = NULL, *__str2 = NULL; \
+   int __int; \
+   E_Ipc_2Str_Int *__2str_int = NULL; \
+   __2str_int = calloc(1, sizeof(E_Ipc_2Str_Int)); \
+   if (e_ipc_codec_2str_int_dec(e->data, e->size, &(__2str_int))) { \
+      __str1 = __2str_int->str1; \
+      __str2 = __2str_int->str2; \
+      __int  = __2str_int->val;
+# define END_STRING2_INT(__2str_int) \
+      free(__2str_int->str1); \
+      free(__2str_int->str2); \
+      free(__2str_int); \
    } \
 } \
 break;
@@ -96,6 +123,16 @@ break;
 # define REQ_2STRING(__str1, __str2, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_2str_enc(__str1, __str2, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+# define REQ_2STRING_INT(__str1, __str2, __int, HDL) \
+case HDL: { void *data; int bytes; \
+   data = e_ipc_codec_2str_int_enc(__str1, __str2, __int, &bytes); \
    if (data) { \
       ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
       free(data); \
@@ -175,7 +212,7 @@ free(data);
  case HDL: { \
     Evas_List *dat = NULL, *l; \
     void *data; int bytes; \
-    for (l = e_module_list(); l; l = l->next) { \
+    for (l = __list; l; l = l->next) { \
        __typ1 *__v1; \
        E_Ipc_Str_Int *__v2; \
        __v1 = l->data; \
@@ -184,6 +221,42 @@ free(data);
        dat = evas_list_append(dat, __v1); \
     } \
     data = e_ipc_codec_str_int_list_enc(dat, &bytes); \
+    SEND_DATA(__op); \
+    FREE_LIST(dat); \
+ } \
+   break;
+
+# define STRING2_INT_LIST(__v, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    if (e_ipc_codec_2str_int_list_dec(e->data, e->size, &dat)) { \
+       for (l = dat; l; l = l->next) { \
+	  E_Ipc_2Str_Int *__v; \
+	  __v = l->data;
+#define END_STRING2_INT_LIST(__v) \
+	  free(__v->str1); \
+	  free(__v->str2); \
+	  free(__v); \
+       } \
+       evas_list_free(dat); \
+    } \
+    reply_count++; \
+ } \
+   break;
+
+#define SEND_STRING2_INT_LIST(__list, __typ1, __v1, __v2, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    void *data; int bytes; \
+    for (l = __list; l; l = l->next) { \
+       __typ1 *__v1; \
+       E_Ipc_2Str_Int *__v2; \
+       __v1 = l->data; \
+       __v2 = calloc(1, sizeof(E_Ipc_2Str_Int));
+#define END_SEND_STRING2_INT_LIST(__v1, __op) \
+       dat = evas_list_append(dat, __v1); \
+    } \
+    data = e_ipc_codec_2str_int_list_enc(dat, &bytes); \
     SEND_DATA(__op); \
     FREE_LIST(dat); \
  } \
@@ -543,6 +616,7 @@ break;
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-font-apply", 0, "Apply font settings changes", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    e_font_apply();
@@ -552,6 +626,192 @@ break;
 #endif
 #undef HDL
  
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_FALLBACK_APPEND
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP(	"-font-fallback-append", 
+	1 /*num_params*/, 
+	"Append OPT1 to the fontset", 
+	0 /*num_expected_replies*/, 
+	HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_font_fallback_append(s);
+   SAVE;   
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_FALLBACK_PREPEND
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP(	"-font-fallback-prepend", 
+	1 /*num_params*/, 
+	"Prepend OPT1 to the fontset", 
+	0 /*num_expected_replies*/, 
+	HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_font_fallback_prepend(s);
+   SAVE;   
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_FALLBACK_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-fallback-list", 0, "List the fallback fonts in order", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+
+   LIST_DATA();
+   E_Font_Fallback *ff;
+   FOR(e_config->font_fallbacks) { ff = l->data;
+      dat = evas_list_append(dat, ff->name);
+   }
+   ENCODE(dat, e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_FONT_FALLBACK_LIST_REPLY);
+   evas_list_free(dat);
+
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_FALLBACK_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_FALLBACK_REMOVE
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-fallback-remove", 1, "Remove OPT1 from the fontset", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_font_fallback_remove(s);
+   SAVE;   
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-default-set", 3, "Set textclass (OPT1) font (OPT2) and size (OPT3)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2STRING_INT(params[0], params[1], atoi(params[2]), HDL) 
+#elif (TYPE == E_WM_IN)
+   STRING2_INT(text_class, font_name, font_size, e_2str_int, HDL);
+   e_font_default_set(text_class, font_name, font_size);
+   SAVE;   
+   END_STRING2_INT(e_2str_int);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-default-get", 1, "List the default font associated with OPT1", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(text_class, HDL);
+   E_Font_Default *efd;
+   void *data;
+   int bytes;
+   
+   efd = e_font_default_get(text_class);
+   data = e_ipc_codec_2str_int_enc(efd->text_class, efd->font, efd->size, &bytes);   
+   SEND_DATA(E_IPC_OP_FONT_DEFAULT_GET_REPLY);
+
+   END_STRING(text_class);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING2_INT(text_class, font_name, font_size, e_2str_int, HDL);
+   printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
+                    text_class, font_name, font_size); 
+   END_STRING2_INT(e_2str_int);
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_REMOVE
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-default-remove", 1, "Remove the default text class OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(text_class, HDL);
+   e_font_default_remove(text_class);
+   SAVE;
+   END_STRING(text_class);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-font-default-list", 0, "List all configured text classes", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING2_INT_LIST(e_font_default_list(), E_Font_Default, efd, v, HDL);
+   v->str1 = efd->text_class;
+   v->str2 = efd->font;
+   v->val  = efd->size;
+   END_SEND_STRING2_INT_LIST(v, E_IPC_OP_FONT_DEFAULT_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FONT_DEFAULT_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING2_INT_LIST(v, HDL);
+   printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n", v->str1, v->str2, v->val);
+   END_STRING2_INT_LIST(v);
+#endif
+#undef HDL
+
 /****************************************************************************/
 #define HDL E_IPC_OP_FONT_FALLBACK_CLEAR
 #if (TYPE == E_REMOTE_OPTIONS)

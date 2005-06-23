@@ -566,14 +566,6 @@ _e_opt_focus_policy_set(char **params)
 
 E_IPC_Opt_Handler handlers[] =
 {
-   OSTR("-font-fallback-remove", "Remove OPT1 from the fontset", E_IPC_OP_FONT_FALLBACK_REMOVE, 0),
-   OSTR("-font-fallback-prepend", "Prepend OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_PREPEND, 0),
-   OSTR("-font-fallback-append", "Append OPT1 to the fontset", E_IPC_OP_FONT_FALLBACK_APPEND, 0),
-   OREQ("-font-fallback-list", "List the fallback fonts in order", E_IPC_OP_FONT_FALLBACK_LIST, 1),
-   OSTR("-font-default-get", "List the default font associated with OPT1", E_IPC_OP_FONT_DEFAULT_GET, 1),
-   OSTR("-font-default-remove", "Remove the default text class OPT1", E_IPC_OP_FONT_DEFAULT_REMOVE, 0),
-   OREQ("-font-default-list", "List all configured text classes", E_IPC_OP_FONT_DEFAULT_LIST, 1),
-   OMUL("-font-default-set", "Set textclass (OPT1) font (OPT2) and size (OPT3)", E_IPC_OP_FONT_DEFAULT_SET, 0, 3),
    OREQ("-binding-mouse-list", "List all mouse bindings", E_IPC_OP_BINDING_MOUSE_LIST, 1),
    OFNC("-binding-mouse-add", "Add an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_add, 0),
    OFNC("-binding-mouse-del", "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 6, _e_opt_binding_mouse_del, 0),
@@ -862,54 +854,6 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    printf("REPLY: BEGIN\n");
    switch (e->minor)
      {  
-      case E_IPC_OP_FONT_FALLBACK_LIST_REPLY:
-	if (e->data)
-	  {
-	     Evas_List *fallbacks;
-	     E_Font_Fallback *eff;
-	     
-	     fallbacks = _e_ipc_font_fallback_list_dec(e->data, e->size);
-	     while (fallbacks)
-	       {
-		  eff = fallbacks->data;
-		  printf("REPLY: FALLBACK NAME=\"%s\"\n", eff->name);
-		  fallbacks = evas_list_remove_list(fallbacks, fallbacks);
-		  E_FREE(eff);
-	       }
-	  }
-	else
-	  printf("REPLY: FALLBACK NONE\n");
-	break;
-      case E_IPC_OP_FONT_DEFAULT_GET_REPLY:
-        if (e->data)
-          {
-             E_Font_Default efd;
-             _e_ipc_font_default_dec(e->data, e->size, &efd);
-             printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
-		    efd.text_class, efd.font, efd.size);
-          }
-        else
-          printf("REPLY: DEFAULT NONE\n"); 
-        break;
-      case E_IPC_OP_FONT_DEFAULT_LIST_REPLY:
-        if (e->data)
-          {
-             Evas_List *defaults;
-             E_Font_Default *efd;
-	     
-             defaults = _e_ipc_font_default_list_dec(e->data, e->size);
-             while (defaults)
-               {
-		  efd = defaults->data;
-		  printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
-			 efd->text_class, efd->font, efd->size);  
-                  defaults = evas_list_remove_list(defaults, defaults);
-		  E_FREE(efd);
-	       }
-          }
-        else
-          printf("REPLY: DEFAULT NONE\n"); 
-        break;	
       case E_IPC_OP_BINDING_MOUSE_LIST_REPLY:
         if (e->data)
           {
