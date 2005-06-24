@@ -169,6 +169,7 @@ These are in no particular order:
   and something else... they still are around in x- just e hides them and
   never shows them again
 * resize of xmms playlist is broken when sizing up
+* this same bug can be seen resizing eclipse - it stays 1 event behind
 * Hide other windows while doing fullscreen.
 * quit app while in fullscreen black bg stays
 * if focus changes while in fullscreen, un-fullscreen the app and deal with
