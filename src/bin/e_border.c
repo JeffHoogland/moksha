@@ -556,7 +556,12 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
    if (bd->moving) return;
-
+   if (bd->resize_mode != RESIZE_NONE)
+     {
+	bd->resize_mode = RESIZE_NONE;
+	_e_border_resize_end(bd);
+     }
+   
    if (!bd->need_reparent)
      {
 	if (bd->focused)
@@ -1543,16 +1548,6 @@ e_border_clients_get()
 }
 
 void
-e_border_ping(E_Border *bd)
-{
-   bd->ping_ok = 0;
-   ecore_x_netwm_ping_send(bd->client.win);
-   bd->ping = ecore_time_get();
-   if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
-   bd->ping_timer = ecore_timer_add(10.0, _e_border_cb_ping_timer, bd);
-}
-
-void
 e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
    if (!bd->moving)
@@ -1811,6 +1806,36 @@ e_border_lost_windows_get(E_Zone *zone)
 	  }
      }
    return list;
+}
+
+void
+e_border_ping(E_Border *bd)
+{
+   bd->ping_ok = 0;
+   ecore_x_netwm_ping_send(bd->client.win);
+   bd->ping = ecore_time_get();
+   if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
+   bd->ping_timer = ecore_timer_add(10.0, _e_border_cb_ping_timer, bd);
+}
+
+void
+e_border_move_cancel(void)
+{
+   if (move)
+     {
+	move->moving = 0;
+	_e_border_move_end(move);
+     }
+}
+
+void
+e_border_resize_cancel(void)
+{
+   if (resize)
+     {
+	resize->resize_mode = RESIZE_NONE;
+	_e_border_resize_end(resize);
+     }
 }
 
 /* local subsystem functions */
@@ -5152,7 +5177,6 @@ _e_border_resize_begin(E_Border *bd)
        (bd->maximized) || (bd->fullscreen))
      return 0;
 
-
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
      {
@@ -5186,7 +5210,6 @@ _e_border_resize_end(E_Border *bd)
        (bd->maximized) || (bd->fullscreen))
      return 0;
      */
-
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;

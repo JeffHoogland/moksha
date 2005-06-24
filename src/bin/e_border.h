@@ -470,7 +470,9 @@ EAPI Evas_List *e_border_focus_stack_get(void);
 EAPI Evas_List *e_border_lost_windows_get(E_Zone *zone);
 
 EAPI void e_border_ping(E_Border *bd);
-    
+EAPI void e_border_move_cancel(void);
+EAPI void e_border_resize_cancel(void);
+
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

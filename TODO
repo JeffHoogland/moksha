@@ -15,11 +15,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: on font apply borders need to be adjuted for size changes
 * BUG: font apply doesnt seem to keep working (edje problem?) unless you
   restart
-* BUG: alt +click window (or just click its title) and start a move. if you
-  flip desktop WHILE moving (with key binding) the window will follow but the
-  pager doesnt update.
-* BUG: if you flip desktops while resizing resize should get aborted, not
-  continue.
 * BUG: if i downlock my machine to like 400mhz (make it sloooow) or load it
   down with lots of load and then hold down ctrl+alt+right for a while
   windows on desktops vanish... there must be a race condition with a

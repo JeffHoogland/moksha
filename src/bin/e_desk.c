@@ -87,7 +87,12 @@ e_desk_show(E_Desk *desk)
 	     if ((bd->desk == desk) || (bd->sticky))
 	       e_border_show(bd);
 	     else
-	       e_border_hide(bd, 1);
+	       {
+		  if (bd->moving)
+		    e_border_desk_set(bd, desk);
+		  else
+		    e_border_hide(bd, 1);
+	       }
 	  }
      }
    e_container_border_list_free(bl);
