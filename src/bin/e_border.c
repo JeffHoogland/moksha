@@ -555,7 +555,12 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
-   if (bd->moving) return;
+   if (bd->moving)
+     {
+	bd->moving = 0;
+	_e_border_move_end(bd);
+	e_zone_flip_coords_handle(bd->zone, -1, -1);
+     }
    if (bd->fullscreen)
      e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)

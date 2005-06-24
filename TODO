@@ -20,14 +20,12 @@ Some of the things (in very short form) that need to be done to E17...
   windows on desktops vanish... there must be a race condition with a
   map/unmap event and something else... they still are around in x- just e
   hides them and never shows them again
-* BUG?: pager problems. Seems to loose or mess up windows sometimes.
-* BUG?: xine's ui window/panel is under its video window when u go
   fullscreen. is this correct?
 * BUG: pager doesnt handle container/zone resize properly (and goes a weird
   size)??? (try resize screen to like 480x640 (new aspect))
 * BUG: sometimes the mouse gets locked to a window with a mouse grab of some
   sort in x (it gets the down event and not the up?) so e thinks its down but
-  it isn't
+  it isn't - happens a lot in click to focus.
 * BUG: maximised apps when e restarts are not recognised as maximised
 * BUG: sometimes windows that get shut down/closed get unparented but the whole
   border stays around - something is keeping extra references maybe? it is
@@ -39,6 +37,8 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
+* BUG?: pager problems. Seems to loose or mess up windows sometimes.
+* BUG?: xine's ui window/panel is under its video window when u go
 ]]]
 
 [[[
