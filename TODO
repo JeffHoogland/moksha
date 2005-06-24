@@ -8,6 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: sometimes unshade fails. Must be the wrong order of some events.
 * BUG: on drag and drop of icon from border, when dragged over pager, the
   pager hilights, but on drop it stays hilighted - doesnt reset to normal
   until a virtual desktop switch
