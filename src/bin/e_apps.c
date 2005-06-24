@@ -129,7 +129,7 @@ e_app_new(const char *path, int scan_subdirs)
 
 	if (ecore_file_is_dir(a->path))
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.directory.eapp", path);
+	     snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
 	     if (ecore_file_exists(buf))
 	       _e_app_fields_fill(a, buf);
 	     else
@@ -1033,7 +1033,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     printf("BUG: Weird event for .order: %d\n", event);
 	  }
      }
-   else if (!strcmp(file, ".directory.eapp"))
+   else if (!strcmp(file, ".directory.eap"))
      {
 	if ((event == ECORE_FILE_EVENT_CREATED_FILE)
 	    || (event == ECORE_FILE_EVENT_MODIFIED))
@@ -1049,7 +1049,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	  }
 	else
 	  {
-	     printf("BUG: Weird event for .directory.eapp: %d\n", event);
+	     printf("BUG: Weird event for .directory.eap: %d\n", event);
 	  }
      }
    else
@@ -1247,7 +1247,7 @@ _e_app_is_eapp(const char *path)
      return 0;
 
    p++;
-   if ((strcasecmp(p, "eapp")))
+   if ((strcasecmp(p, "eap")))
      return 0;
 
    return 1;

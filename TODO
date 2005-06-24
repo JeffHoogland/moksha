@@ -157,39 +157,40 @@ These are in no particular order:
 
 2. fixes
 
-* on font apply borders need to be adjuted for size changes
-* font aply doesnt seem to keep working (edje problem?) unless you restart
-* alt +click window (or just click its title) and start a move. if you flip
-  desktop WHILE moving (with key binding) the window will follow but the pager
-  doesnt update.
-* if you flip desktops while resizing resize should get aborted, not continue.
-* if i downlock my machine to like 400mhz (make it sloooow) or load it down
-  with lots of load and then hold down ctrl+alt+right for a while windows on
-  desktops vanish... there must be a race condition with a map/unmap event
-  and something else... they still are around in x- just e hides them and
-  never shows them again
-* resize of xmms playlist is broken when sizing up
-* this same bug can be seen resizing eclipse - it stays 1 event behind
-* Hide other windows while doing fullscreen.
-* quit app while in fullscreen black bg stays
-* if focus changes while in fullscreen, un-fullscreen the app and deal with
-  focus
-* pager problems. Seems to loose or mess up windows sometimes.
+* need to hide other windows while doing fullscreen.
+* bug: on font apply borders need to be adjuted for size changes
+* bug: font apply doesnt seem to keep working (edje problem?) unless you
+  restart
+* bug: alt +click window (or just click its title) and start a move. if you
+  flip desktop WHILE moving (with key binding) the window will follow but the
+  pager doesnt update.
+* bug: if you flip desktops while resizing resize should get aborted, not
+  continue.
+* bug: if i downlock my machine to like 400mhz (make it sloooow) or load it
+  down with lots of load and then hold down ctrl+alt+right for a while
+  windows on desktops vanish... there must be a race condition with a
+  map/unmap event and something else... they still are around in x- just e
+  hides them and never shows them again
+* bug: resize of xmms playlist is broken when sizing up
+* bug: this same bug can be seen resizing eclipse - it stays 1 event behind
+* bug: quit app while in fullscreen black bg stays
+* bug: if focus changes while in fullscreen, un-fullscreen the app and deal
+  with focus
+* pug?: pager problems. Seems to loose or mess up windows sometimes.
 * bug?: xine's ui window/panel is under its video window when u go
   fullscreen. is this correct?
 * bug: pager doesnt handle container/zone resize properly (and goes a weird
   size)??? (try resize screen to like 480x640 (new aspect))
-* .eapp needs to become .eap :)
-* sometimes the mouse gets locked to a window with a mouse grab of some sort
-  in x (it gets the down event and not the up?) so e thinks its down but it
-  isn't
-* maximised apps when e restarts are not recognised as maximised
-* sometimes windows that get shut down/closed get unparented but the whole
+* bug: sometimes the mouse gets locked to a window with a mouse grab of some
+  sort in x (it gets the down event and not the up?) so e thinks its down but
+  it isn't
+* bug: maximised apps when e restarts are not recognised as maximised
+* bug: sometimes windows that get shut down/closed get unparented but the whole
   border stays around - something is keeping extra references maybe? it is
   hidden, until you flip desktops then it appears again - but with no client
   around. currently they have a dangling reference - need to find out WHO
   added that ref and didnt remove it (i haven't seen this for ages now)
-* fix action delete (can segv if action is stored for "long runing actions"
+* bug: fix action delete (can segv if action is stored for "long runing actions"
   like move/resize)
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
