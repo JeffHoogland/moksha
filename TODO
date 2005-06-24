@@ -126,7 +126,7 @@ These are in no particular order:
 * ibar needs lamp follower to be optional in ibar config (for the user)
 * borders need to be able to change border theme on the fly by mene or app
   properties
-* add window glueing
+* add window glueing (i'm on it, so talk to me before doing any glue code -- rephorm)
 * add setup/install wizard to seed eapp files etc. etc.
 * make ipc try open on other ports numbers if current is taken
 * make ipc try re-open if connection dies
