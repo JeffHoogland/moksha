@@ -556,6 +556,8 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
    if (bd->moving) return;
+   if (bd->fullscreen)
+     e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
      {
 	bd->resize_mode = RESIZE_NONE;
@@ -839,6 +841,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	edje_object_signal_emit(bd->bg_object, "passive", "");
 	e_focus_event_focus_out(bd);
+	if (bd->fullscreen)
+	  e_border_unfullscreen(bd);
      }
    bd->focused = focus;
    if (set)

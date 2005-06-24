@@ -20,9 +20,6 @@ Some of the things (in very short form) that need to be done to E17...
   windows on desktops vanish... there must be a race condition with a
   map/unmap event and something else... they still are around in x- just e
   hides them and never shows them again
-* BUG: quit app while in fullscreen black bg stays
-* BUG: if focus changes while in fullscreen, un-fullscreen the app and deal
-  with focus
 * BUG?: pager problems. Seems to loose or mess up windows sometimes.
 * BUG?: xine's ui window/panel is under its video window when u go
   fullscreen. is this correct?
