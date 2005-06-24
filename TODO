@@ -1,48 +1,50 @@
-MINI FREEZE:
-
-Status: OFF
-
-What is this:
-
-We will have lots more of these during e17 devel for serveral reasons. A mini
-freeze is a call to STOP adding new features and funkiness. It means people
-need to stop and go BACK over their code and fix FIXME's. All those bits of
-code where things are string together with sticky tape and chewing gum need
-to be fixed PROPERLY. This may mean pooling code into a common subsystem
-(this is not a new feature. it is fixing loose ends with design). This may
-mean adding api calls to make implementation cleaner or remove hacks. it may
-mean more debugging tools in things like e_object and more checks for sanity.
-
-This means testing stuff so it doesnt crash. or make things unusable or leak
-memory. check leaks (use valgrind or whatever tools) to check for leaks, and
-for stability issues. double check you return the correct values from
-functions or use return values. Check callbacks. Compile with -W -Wall to
-help find obvious bugs waiting to happen. Modules need to clean up on
-shutdown. Code needs to use the appropriate subsystem that is available for
-what it wants OR a subsystem needs writing if it will be a shared/common
-feature.
-
-This issues list must be brought to 0 size before E17 features can move
-further.
-
-Current freeze issues are:
-
-ISSUES:
-
-<EMPTY>
-<add more issues as they are found>
-
-
-
 Some of the things (in very short form) that need to be done to E17...
+(These are in no particular order)
 
-Also look at all the .c files - they have their own localized TODO lists
+-------------------------------------------------------------------------------
+  1. BUGS / FIXES
+-------------------------------------------------------------------------------
 
-These are in no particular order:
+* need to hide other windows while doing fullscreen.
+* bug: on font apply borders need to be adjuted for size changes
+* bug: font apply doesnt seem to keep working (edje problem?) unless you
+  restart
+* bug: alt +click window (or just click its title) and start a move. if you
+  flip desktop WHILE moving (with key binding) the window will follow but the
+  pager doesnt update.
+* bug: if you flip desktops while resizing resize should get aborted, not
+  continue.
+* bug: if i downlock my machine to like 400mhz (make it sloooow) or load it
+  down with lots of load and then hold down ctrl+alt+right for a while
+  windows on desktops vanish... there must be a race condition with a
+  map/unmap event and something else... they still are around in x- just e
+  hides them and never shows them again
+* bug: quit app while in fullscreen black bg stays
+* bug: if focus changes while in fullscreen, un-fullscreen the app and deal
+  with focus
+* pug?: pager problems. Seems to loose or mess up windows sometimes.
+* bug?: xine's ui window/panel is under its video window when u go
+  fullscreen. is this correct?
+* bug: pager doesnt handle container/zone resize properly (and goes a weird
+  size)??? (try resize screen to like 480x640 (new aspect))
+* bug: sometimes the mouse gets locked to a window with a mouse grab of some
+  sort in x (it gets the down event and not the up?) so e thinks its down but
+  it isn't
+* bug: maximised apps when e restarts are not recognised as maximised
+* bug: sometimes windows that get shut down/closed get unparented but the whole
+  border stays around - something is keeping extra references maybe? it is
+  hidden, until you flip desktops then it appears again - but with no client
+  around. currently they have a dangling reference - need to find out WHO
+  added that ref and didnt remove it (i haven't seen this for ages now)
+* bug: fix action delete (can segv if action is stored for "long runing actions"
+  like move/resize)
+* bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
+  a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
+  right of zone 2
 
-
-
-1. essential features
+-------------------------------------------------------------------------------
+  2. ESSENTIAL FEATURES
+-------------------------------------------------------------------------------
 
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
@@ -155,48 +157,9 @@ These are in no particular order:
   as separate executables)
 * actuallly break out ipc and config to set bg per desktop (per zone)
 
-2. fixes
-
-* need to hide other windows while doing fullscreen.
-* bug: on font apply borders need to be adjuted for size changes
-* bug: font apply doesnt seem to keep working (edje problem?) unless you
-  restart
-* bug: alt +click window (or just click its title) and start a move. if you
-  flip desktop WHILE moving (with key binding) the window will follow but the
-  pager doesnt update.
-* bug: if you flip desktops while resizing resize should get aborted, not
-  continue.
-* bug: if i downlock my machine to like 400mhz (make it sloooow) or load it
-  down with lots of load and then hold down ctrl+alt+right for a while
-  windows on desktops vanish... there must be a race condition with a
-  map/unmap event and something else... they still are around in x- just e
-  hides them and never shows them again
-* bug: resize of xmms playlist is broken when sizing up
-* bug: this same bug can be seen resizing eclipse - it stays 1 event behind
-* bug: quit app while in fullscreen black bg stays
-* bug: if focus changes while in fullscreen, un-fullscreen the app and deal
-  with focus
-* pug?: pager problems. Seems to loose or mess up windows sometimes.
-* bug?: xine's ui window/panel is under its video window when u go
-  fullscreen. is this correct?
-* bug: pager doesnt handle container/zone resize properly (and goes a weird
-  size)??? (try resize screen to like 480x640 (new aspect))
-* bug: sometimes the mouse gets locked to a window with a mouse grab of some
-  sort in x (it gets the down event and not the up?) so e thinks its down but
-  it isn't
-* bug: maximised apps when e restarts are not recognised as maximised
-* bug: sometimes windows that get shut down/closed get unparented but the whole
-  border stays around - something is keeping extra references maybe? it is
-  hidden, until you flip desktops then it appears again - but with no client
-  around. currently they have a dangling reference - need to find out WHO
-  added that ref and didnt remove it (i haven't seen this for ages now)
-* bug: fix action delete (can segv if action is stored for "long runing actions"
-  like move/resize)
-* bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
-  a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
-  right of zone 2
-
-3. cleanups
+-------------------------------------------------------------------------------
+  3. CLEANUPS
+-------------------------------------------------------------------------------
 
 * make auto kill client and the kill() stuff config options
 * make 10.0 sec ping time and the 10.0 sec wait for a SIGKILL an option
@@ -215,13 +178,15 @@ These are in no particular order:
   the time on mouse in)
 * allow object paranoia to be a runtime option too
 
-4. optimisations
+-------------------------------------------------------------------------------
+  4. OPTIMISATIONS
+-------------------------------------------------------------------------------
 
 * could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
   rows at once
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
 
-5. nice to have features
+  5. "NICE TO HAVE" FEATURES
 
 * "run command" typebuffer thing
 * icons should be able to be overidden from the theme (eapp and menu stuff

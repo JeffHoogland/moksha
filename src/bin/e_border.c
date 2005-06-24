@@ -2691,6 +2691,8 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    if (!bd) return 1;
    bd->client.netwm.sync.wait--;
    bd->client.netwm.sync.time = ecore_time_get();
+   if (bd->client.netwm.sync.wait <= 0)
+     _e_border_resize_handle(bd);
    return 1;
 }
 
@@ -3277,12 +3279,18 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
+#if 0
+	/* FIXME: it seems we send sync requests we dont get replies to */
+	/* ie our sync wait > 1 often - try eclipse - its slow enough to */
+	/* REALLY show how bad this is */
+	printf("SYNC %i - %3.3f\n", bd->client.netwm.sync.wait,
+	       ecore_time_get() - bd->client.netwm.sync.time);
 	if ((ecore_time_get() - bd->client.netwm.sync.time) > 0.5)
 	  bd->client.netwm.sync.wait = 0;
 	if ((bd->client.netwm.sync.request) &&
 	    (bd->client.netwm.sync.alarm) &&
 	    (bd->client.netwm.sync.wait > 1)) return 1;
-
+#endif
 	_e_border_resize_handle(bd);
      }
    else
