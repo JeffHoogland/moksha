@@ -1,8 +1,11 @@
+<<<
 Some of the things (in very short form) that need to be done to E17...
 (These are in no particular order)
+>>>
 
+[[[
 -------------------------------------------------------------------------------
-  1. BUGS / FIXES
+  BUGS / FIXES
 -------------------------------------------------------------------------------
 
 * need to hide other windows while doing fullscreen.
@@ -41,9 +44,11 @@ Some of the things (in very short form) that need to be done to E17...
 * bug: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
+]]]
 
+[[[
 -------------------------------------------------------------------------------
-  2. ESSENTIAL FEATURES
+  ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
 * add fullscreen support (e16 xvidmode or xrandr style)
@@ -156,9 +161,11 @@ Some of the things (in very short form) that need to be done to E17...
 * remove module config menus (make them part of the module control panel and
   as separate executables)
 * actuallly break out ipc and config to set bg per desktop (per zone)
+]]]
 
+[[[
 -------------------------------------------------------------------------------
-  3. CLEANUPS
+  CLEANUPS
 -------------------------------------------------------------------------------
 
 * make auto kill client and the kill() stuff config options
@@ -177,16 +184,12 @@ Some of the things (in very short form) that need to be done to E17...
 * ibar lamp needs short timer on mouse out for hide before hiding (and del
   the time on mouse in)
 * allow object paranoia to be a runtime option too
+]]]
 
+[[[
 -------------------------------------------------------------------------------
-  4. OPTIMISATIONS
+  "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
-
-* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
-  rows at once
-* optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
-
-  5. "NICE TO HAVE" FEATURES
 
 * "run command" typebuffer thing
 * icons should be able to be overidden from the theme (eapp and menu stuff
@@ -206,3 +209,15 @@ Some of the things (in very short form) that need to be done to E17...
 * add "osd" subsystem for things like volume controls on keybboards, etc.
   that overlay the screen
 * file icons on the desktop (people ask for it) - xdnd for these
+]]]
+
+[[[
+-------------------------------------------------------------------------------
+  OPTIMISATIONS
+-------------------------------------------------------------------------------
+
+* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
+  rows at once
+* optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
+]]]
+
