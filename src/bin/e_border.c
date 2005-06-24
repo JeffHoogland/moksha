@@ -1855,7 +1855,7 @@ _e_border_free(E_Border *bd)
      _e_border_resize_end(bd);
    if (move == bd)
      _e_border_move_end(bd);
-   /* FIXME: Other states to end before dying? */
+   /* TODO: Other states to end before dying? */
 
    if (bd->dangling_ref_check)
      {
@@ -2741,10 +2741,8 @@ _e_border_cb_zone_desk_flip(void *data, int ev_type, void *ev)
    E_Event_Zone_Desk_Flip *e;
 
    e = ev;
-   if ((!move) || (move->desk != e->prev)) return 1;
+   if (!move) return 1;
 
-   e_border_desk_set(move, e->current);
-   e_border_show(move);
    switch (e->direction)
      {
       case E_DIRECTION_UP:
