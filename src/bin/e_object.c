@@ -252,6 +252,39 @@ e_object_del_attach_func_set(E_Object *obj, void (*func) (void *obj))
    obj->del_att_func = func;
 }
 
+void
+e_object_breadcrumb_add(E_Object *obj, char *crumb)
+{
+   E_OBJECT_CHECK(obj);
+   obj->crumbs = evas_list_append(obj->crumbs, strdup(crumb));
+}
+
+void
+e_object_breadcrumb_del(E_Object *obj, char *crumb)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK(obj);
+   for (l = obj->crumbs; l; l = l->next)
+     {
+	if (!strcmp(crumb, l->data))
+	  {
+	     free(l->data);
+	     obj->crumbs = evas_list_remove_list(obj->crumbs, l);
+	  }
+     }
+}
+
+void
+e_object_breadcrumb_debug(E_Object *obj)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK(obj);
+   for (l = obj->crumbs; l; l = l->next)
+     printf("CRUMB: %s\n", l->data);
+}
+
 #ifdef OBJECT_PARANOIA_CHECK
 /* local subsystem functions */
 static void

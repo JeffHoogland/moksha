@@ -70,6 +70,7 @@ struct _E_Object
    void                  (*del_att_func) (void *obj);
    void                   *data;
    unsigned char           deleted : 1;
+   Evas_List              *crumbs;
 };
 
 EAPI void *e_object_alloc               (int size, int type, E_Object_Cleanup_Func cleanup_func);
@@ -86,6 +87,10 @@ EAPI void  e_object_data_set            (E_Object *obj, void *data);
 EAPI void *e_object_data_get            (E_Object *obj);
 EAPI void  e_object_free_attach_func_set(E_Object *obj, void (*func) (void *obj));
 EAPI void  e_object_del_attach_func_set (E_Object *obj, void (*func) (void *obj));
+
+EAPI void  e_object_breadcrumb_add      (E_Object *obj, char *crumb);
+EAPI void  e_object_breadcrumb_del      (E_Object *obj, char *crumb);
+EAPI void  e_object_breadcrumb_debug    (E_Object *obj);
 
 #endif
 #endif

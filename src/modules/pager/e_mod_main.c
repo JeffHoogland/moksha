@@ -606,6 +606,8 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 
    pw->border = border;
    e_object_ref(E_OBJECT(border));
+   e_object_breadcrumb_add(E_OBJECT(border), "pager_module");
+   
    visible = !border->iconic;
    pw->desk = pd;
 
@@ -636,6 +638,7 @@ _pager_window_free(Pager_Win *pw)
 {
    if (pw->window_object) evas_object_del(pw->window_object);
    if (pw->icon_object) evas_object_del(pw->icon_object);
+   e_object_breadcrumb_del(E_OBJECT(pw->border), "pager_module");
    e_object_unref(E_OBJECT(pw->border));
    free(pw);
 }
