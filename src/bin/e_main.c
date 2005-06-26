@@ -99,7 +99,7 @@ main(int argc, char **argv)
 		"ERROR: Enlightenment cannot determine its installed\n"
 		"       prefix from the system or argv[0].\n"
 		"       This is because it is not on Linux AND has been\n"
-		"       Executed strangely. This is unusal.\n"
+		"       Executed strangely. This is unusual.\n"
 		);
 	exit(-1);
      }
@@ -303,7 +303,7 @@ main(int argc, char **argv)
 	 
    /*** Finished loading subsystems, Loading WM Specifics ***/
 	 
-   /* setup directories we will be using for configurations sotrage etc. */
+   /* setup directories we will be using for configurations storage etc. */
    if (!_e_main_dirs_init())
      {
 	e_error_message_show(_("Enlightenment cannot create directories in your home directory.\n"
@@ -406,7 +406,7 @@ main(int argc, char **argv)
    if (!_e_main_ipc_init())
      {
 	e_error_message_show(_("Enlightenment cannot set up the IPC socket.\n"
-			       "It likely is already in use by an exisiting copy of Enlightenment.\n"
+			       "It likely is already in use by an existing copy of Enlightenment.\n"
 			       "Double check to see if Enlightenment is not already on this display,\n"
 			       "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 			       "and try running again."));
@@ -432,7 +432,7 @@ main(int argc, char **argv)
    /* setup input grabbing co-operation system */
    if (!e_grabinput_init())
      {
-	e_error_message_show(_("Enlightenment cannot set up its inptu grab handling system."));
+	e_error_message_show(_("Enlightenment cannot set up its input grab handling system."));
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_grabinput_shutdown);
@@ -454,7 +454,7 @@ main(int argc, char **argv)
    if (ipc_failed)
      e_error_dialog_show(_("Enlightenment IPC setup error!"),
 			 _("Enlightenment cannot set up the IPC socket.\n"
-			   "It likely is already in use by an exisiting copy of Enlightenment.\n"
+			   "It likely is already in use by an existing copy of Enlightenment.\n"
 			   "Double check to see if Enlightenment is not already on this display,\n"
 			   "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 			   "and try running again."));

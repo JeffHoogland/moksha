@@ -4826,7 +4826,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 	     homedir = e_user_homedir_get();
 
 	     snprintf(buf, sizeof(buf),
-		      "--win-class \"%s\" %s/.e/e/applications/all/%s.eapp",
+		      "--win-class \"%s\" %s/.e/e/applications/all/%s.eap",
 		      bd->client.icccm.class, homedir, name);
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Create Icon"));
