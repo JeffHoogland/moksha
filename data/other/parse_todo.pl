@@ -35,9 +35,10 @@ while(<>) {
 				$is_title = 1;
 			}
 		}
-	} elsif (/$\\* .*/) {
+	} elsif (/^\* .*/) {
 		if ($in_body ) {
 			$total_item_count++;
+			$_ =~ s/^\* //;
 			push(@{$todo_hash{$title}}, $item);
 			$item = {};
 			$item->{'asignee'} = "Unknown";
@@ -65,7 +66,7 @@ for $title ( keys %todo_hash ) {
 
 	print "<h2>" . $title . "</h2>\n";
 
-	print "<table> \n";
+	print "<table>\n";
 	print "    <tr><td>Asignee</td><td>Task</td></tr>\n";
 	for $item ( @{$todo_hash{$title}} ) {
 		my $asignee = $item->{'asignee'};
