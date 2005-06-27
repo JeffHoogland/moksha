@@ -11,6 +11,10 @@
  * * as we get translations add languages to the simplified lang list (C and en are currently the same, ja is a test translation - incomplete)
  */
 
+static char *_e_intl_orig_lc_messages = NULL;
+static char *_e_intl_orig_language = NULL;
+static char *_e_intl_orig_lc_all = NULL;
+static char *_e_intl_orig_lang = NULL;
 static char *_e_intl_language = NULL;
 static Evas_List *_e_intl_languages = NULL;
 
@@ -19,6 +23,8 @@ static Evas_List *_e_intl_languages = NULL;
 int
 e_intl_init(void)
 {
+   char *s;
+   
    if (_e_intl_languages) return 1;
 
    /* supporeted languages - as we get translations - add them here
@@ -58,16 +64,24 @@ e_intl_init(void)
    ADD_LANG("it_IT.UTF-8");
    ADD_LANG("cs_CS.UTF-8");
 
+   if ((s = getenv("LC_MESSAGES"))) _e_intl_orig_lc_messages = strdup(s);
+   if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
+   if ((s = getenv("LC_ALL"))) _e_intl_orig_lc_all = strdup(s);
+   if ((s = getenv("LANG"))) _e_intl_orig_lang = strdup(s);
+   
    /* FIXME: NULL == use LANG. make this read a config value if it exists */
-   e_intl_language_set(getenv("LANG"));
+   e_intl_language_set(NULL);
    return 1;
 }
 
 int
 e_intl_shutdown(void)
 {
-   free(_e_intl_language);
-   _e_intl_language = NULL;
+   IF_FREE(_e_intl_language);
+   IF_FREE(_e_intl_orig_lc_messages);
+   IF_FREE(_e_intl_orig_language);
+   IF_FREE(_e_intl_orig_lc_all);
+   IF_FREE(_e_intl_orig_lang);
    evas_list_free(_e_intl_languages);
    return 1;
 }
@@ -100,6 +114,15 @@ e_intl_language_set(const char *lang)
    
    /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
+   /* NULL lang means set everything back to the original environemtn defaults */
+   if (!lang)
+     {
+	if (_e_intl_orig_lc_messages) e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
+	if (_e_intl_orig_language) e_util_env_set("LANGUAGE", _e_intl_orig_language);
+	if (_e_intl_orig_lc_all) e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
+	if (_e_intl_orig_lang) e_util_env_set("LANG", _e_intl_orig_lang);
+     }
+   if (!lang) lang = getenv("LC_MESSAGES");
    if (!lang) lang = getenv("LANGUAGE");
    if (!lang) lang = getenv("LC_ALL");
    if (!lang) lang = getenv("LANG");
@@ -107,8 +130,9 @@ e_intl_language_set(const char *lang)
      {
 	_e_intl_language = strdup(lang);
 	e_util_env_set("LANGUAGE", _e_intl_language);
-	if (getenv("LC_ALL")) e_util_env_set("LC_ALL", _e_intl_language);
-	if (getenv("LANG")) e_util_env_set("LANG", _e_intl_language);
+	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
+	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
+	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
      }
    else
      {

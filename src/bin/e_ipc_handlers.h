@@ -903,7 +903,10 @@ break;
    STRING(s, HDL);
    IF_FREE(e_config->language);
    e_config->language = strdup(s);
-   e_intl_language_set(e_config->language);
+   if ((e_config->language) && (strlen(e_config->language) > 0))
+     e_intl_language_set(e_config->language);
+   else
+     e_intl_language_set(NULL);
    SAVE;
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
