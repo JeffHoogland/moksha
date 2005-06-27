@@ -51,6 +51,43 @@ if (e->data) { \
 } \
 break;
 
+/**
+ * INT3_STRING3:
+ * Decode event data of type E_Ipc_3Int_3Str
+ */
+# define INT3_STRING3(__3int_3str, HDL) \
+case HDL: \
+if (e->data) { \
+   E_Ipc_3Int_3Str *__3int_3str = NULL; \
+   __3int_3str = calloc(1, sizeof(E_Ipc_3Int_3Str)); \
+   if (e_ipc_codec_3int_3str_dec(e->data, e->size, &(__3int_3str))) {
+# define END_INT3_STRING3(__3int_3str) \
+      free(__3int_3str->str1); \
+      free(__3int_3str->str2); \
+      free(__3int_3str->str3); \
+      free(__3int_3str); \
+   } \
+} \
+break;
+
+/**
+ * INT4_STRING2:
+ * Decode event data of type E_Ipc_4Int_2Str
+ */
+# define INT4_STRING2(__4int_2str, HDL) \
+case HDL: \
+if (e->data) { \
+   E_Ipc_4Int_2Str *__4int_2str = NULL; \
+   __4int_2str = calloc(1, sizeof(E_Ipc_4Int_2Str)); \
+   if (e_ipc_codec_4int_2str_dec(e->data, e->size, &(__4int_2str))) {
+# define END_INT4_STRING2(__4int_2str) \
+      free(__4int_2str->str1); \
+      free(__4int_2str->str2); \
+      free(__4int_2str); \
+   } \
+} \
+break;
+
 # define STRING2_INT(__str1, __str2, __int, __2str_int, HDL) \
 case HDL: \
 if (e->data) { \
@@ -123,6 +160,31 @@ break;
 # define REQ_2STRING(__str1, __str2, HDL) \
 case HDL: { void *data; int bytes; \
    data = e_ipc_codec_2str_enc(__str1, __str2, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+#define REQ_3INT_3STRING_START(HDL) \
+case HDL: { void *data; int bytes; \
+
+#define REQ_3INT_3STRING_END(__val1, __val2, __val3, __str1, __str2, __str3, HDL) \
+   data = e_ipc_codec_3int_3str_enc(__val1, __val2, __val3, __str1, __str2, __str3, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
+
+#define REQ_4INT_2STRING_START(HDL) \
+case HDL: { void *data; int bytes; \
+
+#define REQ_4INT_2STRING_END(__val1, __val2, __val3, __val4, __str1, __str2, HDL) \
+   data = e_ipc_codec_4int_2str_enc(__val1, __val2, __val3, __val4, __str1, __str2, &bytes); \
    if (data) { \
       ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
       free(data); \
@@ -226,7 +288,126 @@ free(data);
  } \
    break;
 
-# define STRING2_INT_LIST(__v, HDL) \
+/**
+ * INT3_STRING3:
+ * Decode event data is a list of E_Ipc_3Int_3Str objects and iterate
+ * the list. For each iteration the object __v will contain a decoded list
+ * element.
+ *
+ * Use END_INT3_STRING3_LIST to terminate the loop and free all data. 
+ */
+#define INT3_STRING3_LIST(__v, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    if (e_ipc_codec_3int_3str_list_dec(e->data, e->size, &dat)) { \
+       for (l = dat; l; l = l->next) { \
+	  E_Ipc_3Int_3Str *__v; \
+	  __v = l->data;
+#define END_INT3_STRING3_LIST(__v) \
+          free(__v->str1); \
+          free(__v->str2); \
+          free(__v->str3); \
+          free(__v); \
+       } \
+       evas_list_free(dat); \
+    } else { \
+       printf("Decode FAILURE!!!\n"); \
+    } \
+    reply_count++; \
+ } \
+  break;
+
+/** 
+ * SEND_INT3_STRING3_LIST:
+ * Start to encode a list of objects to prepare them for sending via
+ * ipc. The object __v1 will be of type __typ1 and __v2 will be of type
+ * E_Ipc_3Int_3Str. 
+ *
+ * Use END_SEND_INT3_STRING3_LIST to terminate the encode iteration and 
+ * send that data. The list will be freed.
+ */
+#define SEND_INT3_STRING3_LIST(__list, __typ1, __v1, __v2, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    void *data; int bytes; \
+    for (l = __list; l; l = l->next) { \
+       __typ1 *__v1; \
+       E_Ipc_3Int_3Str *__v2; \
+       __v1 = l->data; \
+       __v2 = calloc(1, sizeof(E_Ipc_3Int_3Str));
+#define END_SEND_INT3_STRING3_LIST(__v1, __op) \
+       dat = evas_list_append(dat, __v1); \
+    } \
+    data = e_ipc_codec_3int_3str_list_enc(dat, &bytes); \
+    SEND_DATA(__op); \
+    FREE_LIST(dat); \
+ } \
+   break;
+
+/**
+ * INT4_STRING2:
+ * Decode event data is a list of E_Ipc_4Int_2Str objects and iterate
+ * the list. For each iteration the object __v will contain a decoded list
+ * element.
+ *
+ * Use END_INT4_STRING2_LIST to terminate the loop and free all data. 
+ */
+#define INT4_STRING2_LIST(__v, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    if (e_ipc_codec_4int_2str_list_dec(e->data, e->size, &dat)) { \
+       for (l = dat; l; l = l->next) { \
+	  E_Ipc_4Int_2Str *__v; \
+	  __v = l->data;
+#define END_INT4_STRING2_LIST(__v) \
+          free(__v->str1); \
+          free(__v->str2); \
+          free(__v); \
+       } \
+       evas_list_free(dat); \
+    } else { \
+       printf("Decode FAILURE!!!\n"); \
+    } \
+    reply_count++; \
+ } \
+  break;
+
+/** 
+ * SEND_INT4_STRING2_LIST:
+ * Start to encode a list of objects to prepare them for sending via
+ * ipc. The object __v1 will be of type __typ1 and __v2 will be of type
+ * E_Ipc_4Int_2Str. 
+ *
+ * Use END_SEND_INT4_STRING2_LIST to terminate the encode iteration and 
+ * send that data. The list will be freed.
+ */
+#define SEND_INT4_STRING2_LIST(__list, __typ1, __v1, __v2, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    void *data; int bytes; \
+    for (l = __list; l; l = l->next) { \
+       __typ1 *__v1; \
+       E_Ipc_4Int_2Str *__v2; \
+       __v1 = l->data; \
+       __v2 = calloc(1, sizeof(E_Ipc_4Int_2Str));
+#define END_SEND_INT4_STRING2_LIST(__v1, __op) \
+       dat = evas_list_append(dat, __v1); \
+    } \
+    data = e_ipc_codec_4int_2str_list_enc(dat, &bytes); \
+    SEND_DATA(__op); \
+    FREE_LIST(dat); \
+ } \
+   break;
+
+/**
+ * STRING2_INT_LIST:
+ * Decode event data which is a list of E_Ipc_2Str_Int objects and iterate 
+ * the list. For each iteration the object __v will contain a decoded list
+ * element. 
+ *
+ * Use END_STRING2_INT_LIST to terminate the loop and free all data.
+ */
+#define STRING2_INT_LIST(__v, HDL) \
  case HDL: { \
     Evas_List *dat = NULL, *l; \
     if (e_ipc_codec_2str_int_list_dec(e->data, e->size, &dat)) { \
@@ -244,6 +425,15 @@ free(data);
  } \
    break;
 
+/** 
+ * SEND_STRING2_INT_LIST:
+ * Start to encode a list of objects to prepare them for sending via
+ * ipc. The object __v1 will be of type __typ1 and __v2 will be of type
+ * E_Ipc_2Str_Int. 
+ *
+ * Use END_SEND_STRING2_INT_LIST to terminate the encode iteration and 
+ * send that data. The list will be freed.
+ */
 #define SEND_STRING2_INT_LIST(__list, __typ1, __v1, __v2, HDL) \
  case HDL: { \
     Evas_List *dat = NULL, *l; \
@@ -1730,6 +1920,573 @@ break;
    END_INT
 #endif
 #undef HDL
+
+/***************/
+#define HDL E_IPC_OP_BINDING_MOUSE_LIST 
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-mouse-list", 0, "List all mouse bindings", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action or send reply */
+   SEND_INT4_STRING2_LIST(e_config->mouse_bindings, E_Config_Binding_Mouse, emb, v, HDL);
+   v->val1 = emb->context;
+   v->val2 = emb->modifiers;
+   v->str1 = emb->action;
+   v->str2 = emb->params;
+   v->val3 = emb->button;
+   v->val4 = emb->any_mod;
+   END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_BINDING_MOUSE_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_BINDING_MOUSE_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   /* e_remote decode the response from e_ipc and print it to the console */
+   INT4_STRING2_LIST(v, HDL);
+   {
+      char *context;
+      char modifier[256];
+      
+      if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
+      else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
+      else if (v->val1 == E_BINDING_CONTEXT_BORDER) context = "BORDER";
+      else if (v->val1 == E_BINDING_CONTEXT_ZONE) context = "ZONE";
+      else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
+      else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
+      else context = "";
+ 
+      modifier[0] = 0;
+      if (v->val2 & E_BINDING_MODIFIER_SHIFT)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "SHIFT");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_CTRL)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "CTRL");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_ALT)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "ALT");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_WIN)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "WIN");
+      }
+      if (v->val2 == E_BINDING_MODIFIER_NONE)
+         strcpy(modifier, "NONE");
+
+      printf("REPLY: BINDING CONTEXT=%s BUTTON=%i MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
+		context,
+                v->val3,
+		modifier,
+                v->val4,
+                v->str1,
+                v->str2
+        );
+   }
+   END_INT4_STRING2_LIST(v);
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_BINDING_MOUSE_ADD
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-mouse-add", 6, "Add an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_4INT_2STRING_START(HDL);
+   E_Config_Binding_Mouse eb;
+
+   if (!strcmp(params[0], "NONE")) eb.context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb.context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb.context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb.context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+        printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+               "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+        exit(-1);
+     }
+   eb.button = atoi(params[1]);
+   /* M1[|M2...] */
+     {
+        char *p, *pp;
+
+        eb.modifiers = 0;
+        pp = params[2];
+        for (;;)
+          {
+             p = strchr(pp, '|');
+             if (p)
+               {
+                  if (!strncmp(pp, "SHIFT|", 6)) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+                  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+                  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+                  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+                  else if (strlen(pp) > 0)
+                    {
+                       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+                              "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+                       exit(-1);
+                    }
+                  pp = p + 1;
+               }
+             else
+               {
+                  if (!strcmp(pp, "SHIFT")) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+                  else if (!strcmp(pp, "CTRL")) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+                  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+                  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+                  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
+                  else if (strlen(pp) > 0)
+                    {
+                       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+                              "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+                       exit(-1);
+                    }
+                  break;
+               }
+          }
+     }
+   eb.any_mod = atoi(params[3]);
+   eb.action = params[4];
+   eb.params = params[5];
+   REQ_4INT_2STRING_END(eb.context, eb.modifiers, eb.button, eb.any_mod, eb.action, eb.params, HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action */
+   INT4_STRING2(v, HDL)
+   E_Config_Binding_Mouse bind, *eb;
+
+   bind.context = v->val1; 
+   bind.modifiers = v->val2;
+   bind.button = v->val3;
+   bind.any_mod = v->val4;
+   bind.action = v->str1; 
+   bind.params = v->str2;
+
+   eb = e_config_binding_mouse_match(&bind);
+   if (!eb)
+     {
+        eb = E_NEW(E_Config_Binding_Key, 1);
+        e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+        eb->context = bind.context;
+        eb->button = bind.button;
+        eb->modifiers = bind.modifiers;
+        eb->any_mod = bind.any_mod;
+        eb->action = strdup(bind.action);
+        eb->params = strdup(bind.params);
+        e_border_button_bindings_ungrab_all();
+        e_bindings_mouse_add(bind.context, bind.button, bind.modifiers,
+                        bind.any_mod, bind.action, bind.params);
+	e_border_button_bindings_grab_all();
+        e_config_save_queue();  
+     }
+   END_INT4_STRING2(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/*****/
+
+
+
+/***************/
+#define HDL E_IPC_OP_BINDING_MOUSE_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-mouse-del", 6, "Delete an existing mouse binding. OPT1 = Context, OPT2 = button, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_4INT_2STRING_START(HDL);
+   E_Config_Binding_Mouse eb;
+
+   if (!strcmp(params[0], "NONE")) eb.context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb.context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb.context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb.context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+        printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+               "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+        exit(-1);
+     }
+   eb.button = atoi(params[1]);
+   /* M1[|M2...] */
+     {
+        char *p, *pp;
+
+        eb.modifiers = 0;
+        pp = params[2];
+        for (;;)
+          {
+             p = strchr(pp, '|');
+             if (p)
+               {
+                  if (!strncmp(pp, "SHIFT|", 6)) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+                  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+                  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+                  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+                  else if (strlen(pp) > 0)
+                    {
+                       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+                              "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+                       exit(-1);
+                    }
+                  pp = p + 1;
+               }
+             else
+               {
+                  if (!strcmp(pp, "SHIFT")) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+                  else if (!strcmp(pp, "CTRL")) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+                  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+                  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+                  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
+                  else if (strlen(pp) > 0)
+                    {
+                       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+                              "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+                       exit(-1);
+                    }
+                  break;
+               }
+          }
+     }
+   eb.any_mod = atoi(params[3]);
+   eb.action = params[4];
+   eb.params = params[5];
+ 
+   REQ_4INT_2STRING_END(eb.context, eb.modifiers, eb.button, eb.any_mod, eb.action, eb.params, HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action */
+   INT4_STRING2(v, HDL)
+   E_Config_Binding_Mouse bind, *eb;
+
+   bind.context = v->val1;
+   bind.modifiers = v->val2;
+   bind.button = v->val3;
+   bind.any_mod = v->val4;
+   bind.action = v->str1;
+   bind.params = v->str2;
+   
+   eb = e_config_binding_mouse_match(&bind);
+   if (eb)
+     {
+	e_config->mouse_bindings = evas_list_remove(e_config->mouse_bindings, eb);
+        IF_FREE(eb->action);
+        IF_FREE(eb->params);
+        IF_FREE(eb);
+        e_border_button_bindings_ungrab_all();
+        e_bindings_mouse_del(bind.context, bind.button, bind.modifiers,
+                bind.any_mod, bind.action, bind.params);
+        e_border_button_bindings_grab_all();
+        e_config_save_queue();
+     }
+   END_INT4_STRING2(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_BINDING_KEY_LIST 
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-key-list", 0, "List all key bindings", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action or send reply */
+   SEND_INT3_STRING3_LIST(e_config->key_bindings, E_Config_Binding_Key, ekb, v, HDL);
+   v->val1 = ekb->context;
+   v->val2 = ekb->modifiers;
+   v->val3 = ekb->any_mod;
+   v->str1 = ekb->key;
+   v->str2 = ekb->action;
+   v->str3 = ekb->params;
+   END_SEND_INT3_STRING3_LIST(v, E_IPC_OP_BINDING_KEY_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_BINDING_KEY_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   /* e_remote decode the response from e_ipc and print it to the console */
+   INT3_STRING3_LIST(v, HDL);
+   {
+      char *context;
+      char modifier[256];
+      
+      if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
+      else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
+      else if (v->val1 == E_BINDING_CONTEXT_BORDER) context = "BORDER";
+      else if (v->val1 == E_BINDING_CONTEXT_ZONE) context = "ZONE";
+      else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
+      else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
+      else context = "";
+ 
+      modifier[0] = 0;
+      if (v->val2 & E_BINDING_MODIFIER_SHIFT)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "SHIFT");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_CTRL)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "CTRL");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_ALT)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "ALT");
+      }
+      if (v->val2 & E_BINDING_MODIFIER_WIN)
+      {
+        if (modifier[0] != 0) strcat(modifier, "|");
+        strcat(modifier, "WIN");
+      }
+      if (v->val2 == E_BINDING_MODIFIER_NONE)
+         strcpy(modifier, "NONE");
+
+      printf("REPLY: BINDING CONTEXT=%s KEY=\"%s\" MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
+		context,
+                v->str1,
+		modifier,
+                v->val3,
+                v->str2,
+                v->str3
+        );
+   }
+   END_INT3_STRING3_LIST(v);
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_BINDING_KEY_ADD
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-key-add", 6, "Add an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_3INT_3STRING_START(HDL);
+   E_Config_Binding_Key eb;
+   if (!strcmp(params[0], "NONE")) eb.context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb.context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb.context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb.context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+	printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+	       "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+	exit(-1);
+     }
+   eb.key = params[1];
+   /* M1[|M2...] */
+     {
+	char *p, *pp;
+	
+	eb.modifiers = 0;
+	pp = params[2];
+	for (;;)
+	  {
+	     p = strchr(pp, '|');
+	     if (p)
+	       {
+		  if (!strncmp(pp, "SHIFT|", 6)) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+		       exit(-1);
+		    }
+		  pp = p + 1;
+	       }
+	     else
+	       {
+		  if (!strcmp(pp, "SHIFT")) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strcmp(pp, "CTRL")) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+		  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+		       exit(-1);
+		    }
+		  break;
+	       }
+	  }
+     }
+   eb.any_mod = atoi(params[3]);
+   eb.action = params[4];
+   eb.params = params[5];
+   REQ_3INT_3STRING_END(eb.context, eb.modifiers, eb.any_mod, eb.key, eb.action, eb.params, HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action */
+   INT3_STRING3(v, HDL)
+   E_Config_Binding_Key bind, *eb;
+
+   bind.context = v->val1; 
+   bind.modifiers = v->val2;
+   bind.any_mod = v->val3;
+   bind.key = v->str1; 
+   bind.action = v->str2;
+   bind.params = v->str3;
+
+   eb = e_config_binding_key_match(&bind);
+   if (!eb)
+     {
+        eb = E_NEW(E_Config_Binding_Key, 1);
+        e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+        eb->context = bind.context;
+        eb->modifiers = bind.modifiers;
+        eb->any_mod = bind.any_mod;
+        eb->key = strdup(bind.key);
+        eb->action = strdup(bind.action);
+        eb->params = strdup(bind.params);
+        e_managers_keys_ungrab();
+        e_bindings_key_add(bind.context, bind.key, bind.modifiers,
+                bind.any_mod, bind.action, bind.params);
+        e_managers_keys_grab();
+        e_config_save_queue();
+     }
+   END_INT3_STRING3(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/*****/
+
+
+
+/***************/
+#define HDL E_IPC_OP_BINDING_KEY_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   /* e_remote define command line args */
+   OP("-binding-key-del", 6, "Delete an existing key binding. OPT1 = Context, OPT2 = key, OPT3 = modifiers, OPT4 = any modifier ok, OPT5 = action, OPT6 = action parameters", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   /* e_remote parse command line args encode and send request */
+   REQ_3INT_3STRING_START(HDL);
+   E_Config_Binding_Key eb;
+   if (!strcmp(params[0], "NONE")) eb.context = E_BINDING_CONTEXT_NONE;
+   else if (!strcmp(params[0], "UNKNOWN")) eb.context = E_BINDING_CONTEXT_UNKNOWN;
+   else if (!strcmp(params[0], "BORDER")) eb.context = E_BINDING_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "ZONE")) eb.context = E_BINDING_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
+   else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
+   else
+     {
+	printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
+	       "  NONE UNKNOWN BORDER ZONE MANAGER ANY\n");
+	exit(-1);
+     }
+   eb.key = params[1];
+   /* M1[|M2...] */
+     {
+	char *p, *pp;
+	
+	eb.modifiers = 0;
+	pp = params[2];
+	for (;;)
+	  {
+	     p = strchr(pp, '|');
+	     if (p)
+	       {
+		  if (!strncmp(pp, "SHIFT|", 6)) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+		       exit(-1);
+		    }
+		  pp = p + 1;
+	       }
+	     else
+	       {
+		  if (!strcmp(pp, "SHIFT")) eb.modifiers |= E_BINDING_MODIFIER_SHIFT;
+		  else if (!strcmp(pp, "CTRL")) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
+		  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
+		  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
+		  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
+		  else if (strlen(pp) > 0)
+		    {
+		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
+			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
+		       exit(-1);
+		    }
+		  break;
+	       }
+	  }
+     }
+   eb.any_mod = atoi(params[3]);
+   eb.action = params[4];
+   eb.params = params[5];
+   REQ_3INT_3STRING_END(eb.context, eb.modifiers, eb.any_mod, eb.key, eb.action, eb.params, HDL);
+#elif (TYPE == E_WM_IN)
+   /* e_ipc decode request and do action */
+   INT3_STRING3(v, HDL)
+   E_Config_Binding_Key bind, *eb;
+
+   bind.context = v->val1; 
+   bind.modifiers = v->val2;
+   bind.any_mod = v->val3;
+   bind.key = v->str1; 
+   bind.action = v->str2;
+   bind.params = v->str3;
+
+   eb = e_config_binding_key_match(&bind);
+   if (eb)
+     {
+       e_config->key_bindings = evas_list_remove(e_config->key_bindings, eb);
+       IF_FREE(eb->key);
+       IF_FREE(eb->action);
+       IF_FREE(eb->params);
+       IF_FREE(eb);
+       e_managers_keys_ungrab();
+       e_bindings_key_del(bind.context, bind.key, bind.modifiers,
+			  bind.any_mod, bind.action, bind.params);
+       e_managers_keys_grab();
+       e_config_save_queue();
+    }
+
+   END_INT3_STRING3(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/*****/
 
 #if 0
 }
