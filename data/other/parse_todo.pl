@@ -17,9 +17,6 @@ my %todo_hash;
 my $title;
 my $item = {};
 
-my $item_count;
-my $total_item_count = 0;
-
 while(<>) {
 	chomp;    
 
@@ -37,19 +34,25 @@ while(<>) {
 		}
 	} elsif (/^\* /) {
 		if ($in_body ) {
-			$total_item_count++;
 			$_ =~ s/^\* //;
 			push(@{$todo_hash{$title}}, $item);
 			$item = {};
 			$item->{'asignee'} = "Unknown";
 			$item->{'task'} = $_ ;
 			if(/<(.*)>/) {
-				$item->{'asignee'} = $1;
+				my $email = $1;
+ 				if ($email =~ /(.*) AT /) {			
+					$item->{'asignee'} = $1;
+					$item->{'asignee_email'} = $email;
+				} else {
+					$item->{'asignee'} = $email;
+					$item->{'asignee_email'} = 0;
+				}
 			}
 		}
 	} else {
 		if ($in_body) {
-			if($is_title) {
+			if ($is_title) {
 				$title = $_;
 			} else {
 				$item->{'task'} = $item->{'task'} . $_ ;
@@ -69,9 +72,18 @@ for $title ( keys %todo_hash ) {
 	print "<table>\n";
 	print "    <tr><td>Asignee</td><td>Task</td></tr>\n";
 	for $item ( @{$todo_hash{$title}} ) {
+		my $asignee_email = $item->{'asignee_email'};
 		my $asignee = $item->{'asignee'};
 		my $task = $item->{'task'};
-		print "    <tr><td>$asignee</td><td>$task</td></tr>\n";
+
+		my $mailto;
+
+		if ($asignee_email) {
+		     $mailto = "<a href='mailto:$asignee_email'>$asignee</a>"	
+		} else {
+		     $mailto = $asignee;
+		}
+		print "    <tr><td>$mailto</td><td>$task</td></tr>\n";
 	}
 	print "</table>\n";
 }
