@@ -354,7 +354,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	       {
 		  char buf[4096];
 		  
-		  snprintf(buf, sizeof(buf), "%s/.directory.eapp", a->path);
+		  snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
 		  e_menu_item_icon_edje_set(mi, buf, "icon");
 		  e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
 		  app_count++;

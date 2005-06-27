@@ -5,7 +5,7 @@
 
 /* TODO List:
  * 
- * - We assume only .eapp files in 'all', no subdirs
+ * - We assume only .eap files in 'all', no subdirs
  * - If a .order file references a non-existing file, and the file
  *   is added in 'all', it doesn't show!
  * - track app execution state, visibility state etc. and call callbacks
