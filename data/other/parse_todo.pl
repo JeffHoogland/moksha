@@ -35,7 +35,7 @@ while(<>) {
 				$is_title = 1;
 			}
 		}
-	} elsif (/^\* .*/) {
+	} elsif (/^\* /) {
 		if ($in_body ) {
 			$total_item_count++;
 			$_ =~ s/^\* //;
