@@ -1471,6 +1471,7 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
    Pager_Face *face;
    E_Desk *desk;
    E_Border *bd;
+   Evas_List *l;
    int x, y;
    double w, h;
 
@@ -1490,5 +1491,12 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
      {
 	e_border_desk_set(bd, desk);
 	e_border_hide(bd, 1);
+     }
+
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	pd = l->data;
+	edje_object_signal_emit(pd->desk_object, "drag", "out");
      }
 }
