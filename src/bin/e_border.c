@@ -647,7 +647,7 @@ e_border_move(E_Border *bd, int x, int y)
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
+  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
 
@@ -1877,6 +1877,8 @@ _e_border_free(E_Border *bd)
      _e_border_move_end(bd);
    /* TODO: Other states to end before dying? */
 
+   IF_FREE(bd->shape_rects);
+   bd->shape_rects_num = 0;
    if (bd->dangling_ref_check)
      {
 	ecore_timer_del(bd->dangling_ref_check);
@@ -4353,18 +4355,53 @@ _e_border_eval(E_Border *bd)
    
    if (bd->need_shape_export)
      {
-	Ecore_X_Rectangle *rects;
+	Ecore_X_Rectangle *rects, *orects;
 	int num;
 	
 	rects = ecore_x_window_shape_rectangles_get(bd->win, &num);
 	if (rects)
 	  {
-	     if (bd->client.shaped)
-	       e_container_shape_solid_rect_set(bd->shape, 0, 0, 0, 0);
+	     int changed;
+	     
+	     changed = 1;
+	     if ((num == bd->shape_rects_num) && (bd->shape_rects))
+	       {
+		  int i;
+		  
+		  orects = bd->shape_rects;
+		  for (i = 0; i < num; i++)
+		    {
+		       if ((orects[i].x != rects[i].x) ||
+			   (orects[i].y != rects[i].y) ||
+			   (orects[i].width != rects[i].width) ||
+			   (orects[i].height != rects[i].height))
+			 {
+			    changed = 1;
+			    break;
+			 }
+		    }
+		  changed = 0;
+	       }
+	     if (changed)
+	       {
+		  if (bd->client.shaped)
+		    e_container_shape_solid_rect_set(bd->shape, 0, 0, 0, 0);
+		  else
+		    e_container_shape_solid_rect_set(bd->shape, bd->client_inset.l, bd->client_inset.t, bd->client.w, bd->client.h);
+		  IF_FREE(bd->shape_rects);
+		  bd->shape_rects = rects;
+		  bd->shape_rects_num = num;
+		  e_container_shape_rects_set(bd->shape, rects, num);
+	       }
 	     else
-	       e_container_shape_solid_rect_set(bd->shape, bd->client_inset.l, bd->client_inset.t, bd->client.w, bd->client.h);
-	     e_container_shape_rects_set(bd->shape, rects, num);
-	     free(rects);
+	       free(rects);
+	  }
+	else
+	  {
+	     IF_FREE(bd->shape_rects);
+	     bd->shape_rects = NULL;
+	     bd->shape_rects_num = 0;
+	     e_container_shape_rects_set(bd->shape, NULL, 0);
 	  }
 	bd->need_shape_export = 0;
      }

@@ -36,6 +36,9 @@ struct _E_Drag
    int x, y, w, h;
    int dx, dy;
 
+   int shape_rects_num;
+   Ecore_X_Rectangle *shape_rects;
+   
    unsigned int   layer;
    unsigned char  visible : 1;
    unsigned char  need_shape_export : 1;

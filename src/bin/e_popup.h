@@ -26,6 +26,8 @@ struct _E_Popup
    Ecore_X_Window       evas_win;
    E_Container_Shape   *shape;
    E_Zone              *zone;
+   int                  shape_rects_num;
+   Ecore_X_Rectangle   *shape_rects;
 };
 
 EAPI int         e_popup_init(void);

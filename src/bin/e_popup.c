@@ -173,19 +173,54 @@ e_popup_idler_before(void)
 	pop = l->data;
 	if (pop->need_shape_export)
 	  {
-	     Ecore_X_Rectangle *rects;
+             Ecore_X_Rectangle *rects, *orects;
 	     int num;
 	     
 	     rects = ecore_x_window_shape_rectangles_get(pop->evas_win, &num);
 	     if (rects)
 	       {
-		  e_container_shape_rects_set(pop->shape, rects, num);
-		  free(rects);
+		  int changed;
+		  
+		  changed = 1;
+		  if ((num == pop->shape_rects_num) && (pop->shape_rects))
+		    {
+		       int i;
+		       
+		       orects = pop->shape_rects;
+		       for (i = 0; i < num; i++)
+			 {
+			    if ((orects[i].x != rects[i].x) ||
+				(orects[i].y != rects[i].y) ||
+				(orects[i].width != rects[i].width) ||
+				(orects[i].height != rects[i].height))
+			      {
+				 changed = 1;
+				 break;
+			      }
+			 }
+		       changed = 0;
+		    }
+		  if (changed)
+		    {
+		       IF_FREE(pop->shape_rects);
+		       pop->shape_rects = rects;
+		       pop->shape_rects_num = num;
+		       e_container_shape_rects_set(pop->shape, rects, num);
+		    }
+		  else
+		    free(rects);
+	       }
+	     else
+	       {
+		  IF_FREE(pop->shape_rects);
+		  pop->shape_rects = NULL;
+		  pop->shape_rects_num = 0;
+		  e_container_shape_rects_set(pop->shape, NULL, 0);
 	       }
 	     pop->need_shape_export = 0;
-	     if (pop->visible)
-	       e_container_shape_show(pop->shape);
 	  }
+	if (pop->visible)
+	  e_container_shape_show(pop->shape);
      }
 }
 
@@ -194,6 +229,8 @@ e_popup_idler_before(void)
 static void
 _e_popup_free(E_Popup *pop)
 {
+   IF_FREE(pop->shape_rects);
+   pop->shape_rects_num = 0;
    e_container_shape_hide(pop->shape);
    e_object_del(E_OBJECT(pop->shape));
    e_canvas_del(pop->ecore_evas);

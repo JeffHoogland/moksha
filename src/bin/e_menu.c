@@ -770,14 +770,49 @@ e_menu_idler_before(void)
 	m = l->data;
 	if (m->need_shape_export)
 	  {
-	     Ecore_X_Rectangle *rects;
+	     Ecore_X_Rectangle *rects, *orects;
 	     int num;
 	     
 	     rects = ecore_x_window_shape_rectangles_get(m->evas_win, &num);
 	     if (rects)
 	       {
-		  e_container_shape_rects_set(m->shape, rects, num);
-		  free(rects);
+                 int changed;
+		  
+		  changed = 1;
+		  if ((num == m->shape_rects_num) && (m->shape_rects))
+		    {
+		       int i;
+		       
+		       orects = m->shape_rects;
+		       for (i = 0; i < num; i++)
+			 {
+			    if ((orects[i].x != rects[i].x) ||
+				(orects[i].y != rects[i].y) ||
+				(orects[i].width != rects[i].width) ||
+				(orects[i].height != rects[i].height))
+			      {
+				 changed = 1;
+				 break;
+			      }
+			 }
+		       changed = 0;
+		    }
+		  if (changed)
+		    {
+		       IF_FREE(m->shape_rects);
+		       m->shape_rects = rects;
+		       m->shape_rects_num = num;
+		       e_container_shape_rects_set(m->shape, rects, num);
+		    }
+		  else
+		    free(rects);
+	       }
+	     else
+	       {
+                  IF_FREE(m->shape_rects);
+		  m->shape_rects = NULL;
+		  m->shape_rects_num = 0;
+		  e_container_shape_rects_set(m->shape, NULL, 0);
 	       }
 	     m->need_shape_export = 0;
 	     if (m->cur.visible)
@@ -814,6 +849,8 @@ _e_menu_free(E_Menu *m)
    Evas_List *l, *tmp;
    
    _e_menu_unrealize(m);
+   IF_FREE(m->shape_rects);
+   m->shape_rects_num = 0;
    for (l = m->items; l;)
      {
 	tmp = l;

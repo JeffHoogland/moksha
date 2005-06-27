@@ -55,7 +55,9 @@ struct _E_Menu
    Evas_Object         *container_object;
    Evas_Coord           container_x, container_y, container_w, container_h;
    E_Container_Shape   *shape;
-
+   int                  shape_rects_num;
+   Ecore_X_Rectangle   *shape_rects;
+   
    struct {
       void *data;
       void (*func) (void *data, E_Menu *m);

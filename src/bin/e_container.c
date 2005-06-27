@@ -465,30 +465,10 @@ e_container_shape_rects_set(E_Container_Shape *es, Ecore_X_Rectangle *rects, int
 {
    Evas_List *l;
    int i;
-   int changed = 1;
    E_Rect *r;
    
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_CONTAINER_SHAPE_TYPE);
-
-   if (num == evas_list_count(es->shape))
-     {
-	for (i = 0, l = es->shape; (i < num) && (l); i++, l = l->next)
-	  {
-	     r = l->data;
-	     if ((r->x != rects[i].x) || (r->y != rects[i].y) ||
-		 (r->w != rects[i].width) || (r->h != rects[i].height))
-	       {
-		  changed = 1;
-		  break;
-	       }
-	  }
-	changed = 0;
-     }
-   if (!changed)
-     {
-	return;
-     }
    if (es->shape)
      {
 	for (l = es->shape; l; l = l->next)

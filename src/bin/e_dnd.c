@@ -23,11 +23,14 @@ static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
 /* local subsystem globals */
 
-typedef struct _XDnd {
-     int x, y;
-     char *type;
-     void *data;
-} XDnd;
+typedef struct _XDnd XDnd;
+
+struct _XDnd
+{
+   int x, y;
+   char *type;
+   void *data;
+};
 
 static Evas_List *_event_handlers = NULL;
 static Evas_List *_drop_handlers = NULL;
@@ -495,14 +498,49 @@ e_drag_idler_before(void)
 	drag = l->data;
 	if (drag->need_shape_export)
 	  {
-	     Ecore_X_Rectangle *rects;
+	     Ecore_X_Rectangle *rects, *orects;
 	     int num;
 	     
 	     rects = ecore_x_window_shape_rectangles_get(drag->evas_win, &num);
 	     if (rects)
 	       {
-		  e_container_shape_rects_set(drag->shape, rects, num);
-		  free(rects);
+		  int changed;
+		  
+		  changed = 1;
+		  if ((num == drag->shape_rects_num) && (drag->shape_rects))
+		    {
+		       int i;
+		       
+		       orects = drag->shape_rects;
+		       for (i = 0; i < num; i++)
+			 {
+			    if ((orects[i].x != rects[i].x) ||
+				(orects[i].y != rects[i].y) ||
+				(orects[i].width != rects[i].width) ||
+				(orects[i].height != rects[i].height))
+			      {
+				 changed = 1;
+				 break;
+			      }
+			 }
+		       changed = 0;
+		    }
+		  if (changed)
+		    {
+		       IF_FREE(drag->shape_rects);
+		       drag->shape_rects = rects;
+		       drag->shape_rects_num = num;
+		       e_container_shape_rects_set(drag->shape, rects, num);
+		    }
+		  else
+		    free(rects);
+	       }
+	     else
+	       {
+		  IF_FREE(drag->shape_rects);
+		  drag->shape_rects = NULL;
+		  drag->shape_rects_num = 0;
+		  e_container_shape_rects_set(drag->shape, NULL, 0);
 	       }
 	     drag->need_shape_export = 0;
 	     if (drag->visible)
@@ -518,6 +556,8 @@ _e_drag_free(E_Drag *drag)
 {
    _drag_list = evas_list_remove(_drag_list, drag);
 
+   IF_FREE(drag->shape_rects);
+   drag->shape_rects_num = 0;
    e_object_unref(E_OBJECT(drag->container));
    e_container_shape_hide(drag->shape);
    e_object_del(E_OBJECT(drag->shape));

@@ -324,6 +324,8 @@ struct _E_Border
    Ecore_Timer *raise_timer;
    Ecore_Timer *ping_timer;
    Ecore_Timer *kill_timer;
+   int shape_rects_num;
+   Ecore_X_Rectangle *shape_rects;
 
    Ecore_Timer *dangling_ref_check;
 };
