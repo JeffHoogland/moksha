@@ -447,6 +447,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    ecore_x_window_show(bd->client.shell_win);
    bd->shape = e_container_shape_add(con);
 
+   if (e_config->focus_setting != E_FOCUS_NONE)
+     bd->take_focus = 1;
    bd->new_client = 1;
    bd->changed = 1;
 
@@ -4405,7 +4407,26 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->need_shape_export = 0;
      }
-
+   
+   if (bd->take_focus)
+     {
+	if (e_config->focus_setting == E_FOCUS_NEW_WINDOW)
+	  e_border_focus_set(bd, 1, 1);
+	else
+	  {
+	     if (bd->client.icccm.transient_for != 0)
+	       {
+		  if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
+		      
+		      ((e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED) &&
+		       (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
+			e_border_focused_get())))
+		    e_border_focus_set(bd, 1, 1);
+	       }
+	  }
+	bd->take_focus = 0;
+     }
+     
    bd->changed = 0;
 
    bd->changes.stack = 0;

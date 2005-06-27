@@ -141,6 +141,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_modules, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
+   E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT);
    E_CONFIG_VAL(D, T, always_click_to_raise, INT);
    E_CONFIG_VAL(D, T, use_auto_raise, INT);
@@ -232,6 +233,7 @@ e_config_init(void)
 	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
 	e_config->focus_policy = E_FOCUS_MOUSE;
+	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
 	e_config->use_auto_raise = 0;
@@ -724,13 +726,6 @@ e_config_init(void)
    /* CTRL+ALT Delete - logout */
    /* CTRL+ALT End    - restart */
    
-   /* need a way to display all focused windows nicely - subsystem for
-    * this that also grabs the modifier on activate (if there are any) so
-    * on release of modifier(s) OR on any new action this list aborts display
-    */
-   /* ALT Tab         - next window focus */
-   /* ALT_SHIFT Tab   - prev window focus */
-   
    /* need to support fullscreen anyway for this - ie netwm and the border
     * system need to handle this as well as possibly using xrandr/xvidmode
     */
@@ -763,6 +758,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
    E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
+   E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
    E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
    E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);

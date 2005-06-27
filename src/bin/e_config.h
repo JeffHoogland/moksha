@@ -46,7 +46,7 @@ typedef Eet_Data_Descriptor             E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 113
+#define E_CONFIG_FILE_VERSION 114
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -95,6 +95,7 @@ struct _E_Config
    Evas_List  *path_append_modules;
    Evas_List  *path_append_backgrounds;
    int         focus_policy;
+   int         focus_setting;
    int         pass_click_on;
    int         always_click_to_raise;
    int         use_auto_raise;

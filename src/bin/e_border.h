@@ -33,6 +33,14 @@ typedef enum _E_Focus_Policy
    E_FOCUS_SLOPPY
 } E_Focus_Policy;
 
+typedef enum _E_Focus_Setting
+{
+   E_FOCUS_NONE,
+   E_FOCUS_NEW_WINDOW,
+   E_FOCUS_NEW_DIALOG,
+   E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED
+} E_Focus_Setting;
+
 typedef enum _E_Maximize
 {
    E_MAXIMIZE_NONE,
@@ -275,6 +283,7 @@ struct _E_Border
    unsigned int    delete_requested : 1;
    unsigned int    ping_ok : 1;
    unsigned int    hung : 1;
+   unsigned int    take_focus : 1;
    E_Maximize      maximized;
 
    double          ping;
