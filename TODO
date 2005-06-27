@@ -9,21 +9,16 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * BUG: sometimes unshade fails. Must be the wrong order of some events.
-* BUG: on drag and drop of icon from border, when dragged over pager, the
-  pager hilights, but on drop it stays hilighted - doesnt reset to normal
-  until a virtual desktop switch
 * FIX: need to hide other windows while doing fullscreen.
-* BUG: on font apply borders need to be adjuted for size changes
+* BUG: on font apply borders need to be adjusted for size changes
 * BUG: font apply doesnt seem to keep working (edje problem?) unless you
   restart
-* BUG: if i downlock my machine to like 400mhz (make it sloooow) or load it
+* BUG: if i downclock my machine to like 400mhz (make it sloooow) or load it
   down with lots of load and then hold down ctrl+alt+right for a while
   windows on desktops vanish... there must be a race condition with a
   map/unmap event and something else... they still are around in x- just e
   hides them and never shows them again
   fullscreen. is this correct?
-* BUG: pager doesnt handle container/zone resize properly (and goes a weird
-  size)??? (try resize screen to like 480x640 (new aspect))
 * BUG: sometimes the mouse gets locked to a window with a mouse grab of some
   sort in x (it gets the down event and not the up?) so e thinks its down but
   it isn't - happens a lot in click to focus.

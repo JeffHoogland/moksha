@@ -1246,11 +1246,18 @@ _pager_face_cb_event_container_resize(void *data, int type, void *event)
    Pager_Face               *face;
    E_Event_Container_Resize *ev;
    Evas_List                *l;
-   Evas_Coord                w, h, lw, lh;
+   Evas_Coord                w, h, lw, lh, dw, dh, padw, padh;
    
    face = data;
    ev = event;
    if (face->zone->container != ev->container) return 1;
+   
+   evas_object_geometry_get(face->table_object, NULL, NULL, &lw, &lh);
+   if (face->xnum > 0) dw = lw / face->xnum;
+   else dw = 0;
+   if (face->ynum > 0) dh = lh / face->ynum;
+   else dh = 0;
+   
    for (l = face->desks; l; l = l->next)
      {
 	Pager_Desk *pd;
@@ -1266,10 +1273,17 @@ _pager_face_cb_event_container_resize(void *data, int type, void *event)
    w = face->fw;
    h = face->fh;
    evas_object_geometry_get(face->table_object, NULL, NULL, &lw, &lh);
+   padw = w - lw;
+   padh = h - lh;
+   
    if ((face->xnum * face->zone->w) > (face->ynum * face->zone->h))
-     w = face->xnum * ((face->zone->w * lh) / face->zone->h);
+     {
+	w = (face->xnum * ((face->zone->w * dh) / face->zone->h)) + padw;
+     }
    else
-     h = face->ynum * ((face->zone->h * lw) / face->zone->w);
+     {
+	h = (face->ynum * ((face->zone->h * dw) / face->zone->w)) + padh;
+     }
    e_gadman_client_resize(face->gmc, w, h);
    return 1;
 }
