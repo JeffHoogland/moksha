@@ -162,7 +162,6 @@ Some of the things (in very short form) that need to be done to E17...
 * make auto kill client and the kill() stuff config options
 * make 10.0 sec ping time and the 10.0 sec wait for a SIGKILL an option
 * make it easy for modules to hook into ipc and extend it for themselves
-* re-implement all ipc to go via e_ipc_handlers.h and e_ipc_codec.[ch]
 * gadman needs some changes to virtualise the canvas/container the gadget
   ends up in (eg in popups or border)
 * perhaps we should split focus and "selected" windows. selected window is
