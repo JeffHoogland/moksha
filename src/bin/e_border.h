@@ -220,7 +220,7 @@ struct _E_Border
 	    Ecore_X_Sync_Alarm   alarm;
 	    Ecore_X_Sync_Counter counter;
 	    unsigned int         serial;
-	    double               time; // FIXME: change
+	    double               send_time;
 	 } sync;
 
 	 /* NetWM Window state */

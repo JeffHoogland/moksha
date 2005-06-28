@@ -2774,7 +2774,7 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
    bd = e_border_find_by_alarm(e->alarm);
    if (!bd) return 1;
    bd->client.netwm.sync.wait--;
-   bd->client.netwm.sync.time = ecore_time_get();
+   bd->client.netwm.sync.send_time = ecore_time_get();
    if (bd->client.netwm.sync.wait <= 0)
      _e_border_resize_handle(bd);
    return 1;
@@ -5335,7 +5335,7 @@ _e_border_resize_begin(E_Border *bd)
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
 	bd->client.netwm.sync.serial = 0;
 	bd->client.netwm.sync.wait = 0;
-	bd->client.netwm.sync.time = ecore_time_get();
+	bd->client.netwm.sync.send_time = ecore_time_get();
      }
    e_resize_begin(bd->zone, w, h);
    resize = bd;
