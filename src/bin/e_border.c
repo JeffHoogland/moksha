@@ -2830,6 +2830,7 @@ _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    E_Border *bd;
 
    bd = data;
+   if (!bd->moving) return;
    bd->moving = 0;
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
@@ -2953,7 +2954,7 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
    E_Border *bd;
 
    bd = data;
-
+   if (bd->resize_mode == RESIZE_NONE) return;
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
    _e_border_resize_end(bd);
@@ -5313,8 +5314,7 @@ _e_border_resize_begin(E_Border *bd)
    int w, h;
 
    e_border_raise(bd);
-   if ((bd->shaded) || (bd->shading) ||
-       (bd->maximized) || (bd->fullscreen))
+   if ((bd->shaded) || (bd->shading) || (bd->maximized) || (bd->fullscreen))
      return 0;
 
    if ((bd->client.icccm.base_w >= 0) &&
