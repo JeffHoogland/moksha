@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-my $TODO;
+use strict;
 
 my $new_item = 0;
 my $in_body  = 0;
@@ -34,21 +34,22 @@ while(<>) {
 		}
 	} elsif (/^\* /) {
 		if ($in_body ) {
-			$_ =~ s/^\* //;
-			push(@{$todo_hash{$title}}, $item);
-			$item = {};
-			$item->{'asignee'} = "Unknown";
-			$item->{'task'} = $_ ;
-			if(/<(.*)>/) {
-				my $email = $1;
- 				if ($email =~ /(.*) AT /) {			
+			if ($item->{'task'}) {
+				my $task = $item->{'task'};
+				$task =~ s/^\* //;
+				if ($task =~ s/<(.*)>//) {
+					$item->{'asignee_email'} = $1;
+					$1 =~ /(.*) AT /;
 					$item->{'asignee'} = $1;
-					$item->{'asignee_email'} = $email;
 				} else {
-					$item->{'asignee'} = $email;
 					$item->{'asignee_email'} = 0;
+					$item->{'asignee'} = 'None';
 				}
+				$item->{'task'} = $task;
+				push(@{$todo_hash{$title}}, $item);
 			}
+			$item = {};
+			$item->{'task'} = $_ ;
 		}
 	} else {
 		if ($in_body) {
@@ -56,9 +57,6 @@ while(<>) {
 				$title = $_;
 			} else {
 				$item->{'task'} = $item->{'task'} . $_ ;
-				if(/<(.*)>/) {
-					$item->{'asignee'} = $1;
-				}
 			}
 		}
 	}
@@ -66,11 +64,11 @@ while(<>) {
 }
 
 for $title ( keys %todo_hash ) {
-
+	my $count = 1;
 	print "<h2>" . $title . "</h2>\n";
 
 	print "<table>\n";
-	print "    <tr><td>Asignee</td><td>Task</td></tr>\n";
+	print "    <tr><td>#</td><td>Asignee</td><td>Task</td></tr>\n";
 	for $item ( @{$todo_hash{$title}} ) {
 		my $asignee_email = $item->{'asignee_email'};
 		my $asignee = $item->{'asignee'};
@@ -83,7 +81,8 @@ for $title ( keys %todo_hash ) {
 		} else {
 		     $mailto = $asignee;
 		}
-		print "    <tr><td>$mailto</td><td>$task</td></tr>\n";
+		print "    <tr><td>$count</td><td>$mailto</td><td>$task</td></tr>\n";
+		$count++;
 	}
 	print "</table>\n";
 }
