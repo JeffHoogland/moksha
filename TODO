@@ -8,8 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: sometimes unshade fails. Must be the wrong order of some events.
-* FIX: need to hide other windows while doing fullscreen.
+* BUG: sometimes unshade fails. Must be the wrong order of some events. (under
+  what conditions? i don't see it)
+* BUG: when fullscreen should put up big black window above all windows EXCEPT
+  the fullscreen one (no need to hide other windows). in general fullscreen
+  needs work, cleaning and testing
 * BUG: on font apply borders need to be adjusted for size changes
 * BUG: font apply doesnt seem to keep working (edje problem?) unless you
   restart
@@ -28,8 +31,6 @@ Some of the things (in very short form) that need to be done to E17...
   hidden, until you flip desktops then it appears again - but with no client
   around. currently they have a dangling reference - need to find out WHO
   added that ref and didnt remove it (i haven't seen this for ages now)
-* BUG: fix action delete (can segv if action is stored for "long runing actions"
-  like move/resize)
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
@@ -159,6 +160,13 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* winlist should support place for window "screenshot" in list as well as
+  app icon
+* winlist should in theory allow horizontal list layout not just vertical (set
+  by the theme)
+* winlist could divide windows up into blocks - sub-lists within a container
+  pwer desktop (with stick windows considered to live on the "current" desk
+  when winlist starts)
 * make auto kill client and the kill() stuff config options
 * make 10.0 sec ping time and the 10.0 sec wait for a SIGKILL an option
 * make it easy for modules to hook into ipc and extend it for themselves

@@ -5,8 +5,16 @@
 
 typedef struct _E_Action E_Action;
 
+#else
+#ifndef E_ACTIONS_H
+#define E_ACTIONS_H
+
+#define E_ACTION_TYPE 0xE0b01010
+
 struct _E_Action
 {
+   E_Object             e_obj_inherit;
+   
    char *name;
    struct {
       void (*go)        (E_Object *obj, char *params);
@@ -18,16 +26,11 @@ struct _E_Action
    } func;
 };
 
-#else
-#ifndef E_ACTIONS_H
-#define E_ACTIONS_H
-
 EAPI int         e_actions_init(void);
 EAPI int         e_actions_shutdown(void);
 
+EAPI E_Action   *e_action_add(char *name);
 EAPI E_Action   *e_action_find(char *name);
-EAPI E_Action   *e_action_set(char *name);
-EAPI void        e_action_del(char *name);
     
 #endif
 #endif

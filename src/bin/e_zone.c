@@ -546,6 +546,12 @@ _e_zone_free(E_Zone *zone)
    Evas_List *l;
    int x, y;
 
+   if (zone->cur_mouse_action)
+     {
+	e_object_unref(E_OBJECT(zone->cur_mouse_action));
+	zone->cur_mouse_action = NULL;
+     }
+   
    /* remove handlers */
    for (l = zone->handlers; l; l = l->next)
      {
@@ -565,10 +571,11 @@ _e_zone_free(E_Zone *zone)
    evas_object_del(zone->bg_object);
    /* free desks */
    for (x = 0; x < zone->desk_x_count; x++)
-     for(y = 0; y < zone->desk_y_count; y++)
-       e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
+     {
+	for(y = 0; y < zone->desk_y_count; y++)
+	  e_object_del(E_OBJECT(zone->desks[x + (y * zone->desk_x_count)]));
+     }
    free(zone->desks);
-
    free(zone);
 }
 
@@ -592,6 +599,8 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 	     zone->cur_mouse_action =
 	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
 						  E_OBJECT(zone), ev2);
+	     if (zone->cur_mouse_action)
+	       e_object_ref(E_OBJECT(zone->cur_mouse_action));
 	  }
      }
 }
@@ -616,6 +625,7 @@ _e_zone_cb_bg_mouse_up(void *data, Evas *evas, Evas_Object *obj, void *event_inf
 	     else if (zone->cur_mouse_action->func.end)
 	       zone->cur_mouse_action->func.end(E_OBJECT(zone), "");
 	  }
+	e_object_unref(E_OBJECT(zone->cur_mouse_action));
 	zone->cur_mouse_action = NULL;
      }
    else

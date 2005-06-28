@@ -215,12 +215,12 @@ struct _E_Border
 	 } strut;
 	 unsigned char ping : 1;
 	 struct {
-	      unsigned char        request : 1;
-	      unsigned int         wait;
-	      Ecore_X_Sync_Alarm   alarm;
-	      Ecore_X_Sync_Counter counter;
-	      unsigned int         serial;
-	      double               time;
+	    unsigned char        request : 1;
+	    unsigned int         wait;
+	    Ecore_X_Sync_Alarm   alarm;
+	    Ecore_X_Sync_Counter counter;
+	    unsigned int         serial;
+	    double               time; // FIXME: change
 	 } sync;
 
 	 /* NetWM Window state */

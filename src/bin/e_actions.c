@@ -6,48 +6,49 @@
 #define INITS 
 #define ACT_GO(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.go = _e_actions_act_##name##_go; \
    }
 #define ACT_FN_GO(act) \
    static void _e_actions_act_##act##_go(E_Object *obj, char *params)
 #define ACT_GO_MOUSE(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.go_mouse = _e_actions_act_##name##_go_mouse; \
    }
 #define ACT_FN_GO_MOUSE(act) \
    static void _e_actions_act_##act##_go_mouse(E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Down *ev)
 #define ACT_GO_KEY(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.go_key = _e_actions_act_##name##_go_key; \
    }
 #define ACT_FN_GO_KEY(act) \
    static void _e_actions_act_##act##_go_key(E_Object *obj, char *params, Ecore_X_Event_Key_Down *ev)
 #define ACT_END(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.end = _e_actions_act_##name##_end; \
    }
 #define ACT_FN_END(act) \
    static void _e_actions_act_##act##_end(E_Object *obj, char *params)
 #define ACT_END_MOUSE(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.end_mouse = _e_actions_act_##name##_end_mouse; \
    }
 #define ACT_FN_END_MOUSE(act) \
    static void _e_actions_act_##act##_end_mouse(E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Up *ev)
 #define ACT_END_KEY(name) \
    { \
-      act = e_action_set(#name); \
+      act = e_action_add(#name); \
       if (act) act->func.end_key = _e_actions_act_##name##_end_key; \
    }
 #define ACT_FN_END_KEY(act) \
    static void _e_actions_act_##act##_end_key(E_Object *obj, char *params, Ecore_X_Event_Key_Up *ev)
 
 /* local subsystem functions */
+static void _e_action_free(E_Action *act);
 static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
 
 /* to save writing this in N places - the sctions are defined here */
@@ -704,6 +705,22 @@ e_actions_shutdown(void)
 }
 
 E_Action *
+e_action_add(char *name)
+{
+   E_Action *act;
+   
+   act = e_action_find(name);
+   if (!act)
+     {
+	act = E_OBJECT_ALLOC(E_Action, E_ACTION_TYPE, _e_action_free);
+	if (!act) return NULL;
+	act->name = strdup(name);
+	actions = evas_hash_add(actions, name, act);
+     }
+   return act;
+}
+
+E_Action *
 e_action_find(char *name)
 {
    E_Action *act;
@@ -712,45 +729,20 @@ e_action_find(char *name)
    return act;
 }
 
-E_Action *
-e_action_set(char *name)
-{
-   E_Action *act;
-   
-   act = e_action_find(name);
-   if (!act)
-     {
-	act = calloc(1, sizeof(E_Action));
-	if (!act) return NULL;
-	act->name = strdup(name);
-	actions = evas_hash_add(actions, name, act);
-     }
-   return act;
-}
-
-void
-e_action_del(char *name)
-{
-   E_Action *act;
-   
-   act = e_action_find(name);
-   if (act)
-     {
-	actions = evas_hash_del(actions, name, act);
-	IF_FREE(act->name);
-	free(act);
-     }
-}
-
 /* local subsystem functions */
+
+static void
+_e_action_free(E_Action *act)
+{
+   actions = evas_hash_del(actions, act->name, act);
+   IF_FREE(act->name);
+   free(act);
+}
+
 static Evas_Bool
 _e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 		   void *data, void *fdata __UNUSED__)
 {
-   E_Action *act;
-
-   act = data;
-   IF_FREE(act->name);
-   free(act);
+   e_object_del(E_OBJECT(data));
    return 1;
 }
