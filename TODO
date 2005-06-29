@@ -58,7 +58,7 @@ Some of the things (in very short form) that need to be done to E17...
      disable all resizing and moving just like 1, 2 nd 3 (maybe make border
      thinner to indicate this). disable stuff like 3.
   5. expand (just resize window to fill the same space as 4. - but it still can
-     be shaded, resized, moved etc.)
+      be shaded, resized, moved etc.)
   6. fill (expand to the nearest window edge or screen edge)
   for 5 and 6 u want to able to do this independently for width and height as
   well as for both at once. for 1. & 2. if window max size (or aspect
@@ -74,7 +74,6 @@ Some of the things (in very short form) that need to be done to E17...
   to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
-* add bg transition effects like crossfade, zoom in / out etc...
 * break out ipc to set names for desktops and zones
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
