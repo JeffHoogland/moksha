@@ -65,10 +65,21 @@ main(int argc, char **argv)
    char buf[1024];
    char *s;
    struct sigaction action;
-
    /* trap deadly bug signals and allow some form of sane recovery */
    /* or ability to gdb attach and debug at this point - better than your */
    /* wm/desktop vanishing and not knowing what happened */
+
+#if 1
+     {   
+	stack_t ss;
+	
+	ss.ss_sp = malloc(8 * 1024);
+	ss.ss_size = 8 * 1024;
+	ss.ss_flags = 0;
+	sigaltstack(&ss, NULL);
+     }
+#endif
+   
    action.sa_sigaction = e_sigseg_act;
    action.sa_flags = SA_ONSTACK | SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
    sigemptyset(&action.sa_mask);
