@@ -49,6 +49,7 @@ e_theme_init(void)
  * 
  * other possible categories...
  *  e_theme_file_set("base/theme/borders", "default.edj");
+ *  e_theme_file_set("base/theme/background", "default.edj");
  *  e_theme_file_set("base/theme/menus", "default.edj");
  *  e_theme_file_set("base/theme/error", "default.edj");
  *  e_theme_file_set("base/theme/gadman", "default.edj");

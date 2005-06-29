@@ -28,6 +28,11 @@ struct _E_Zone
    Evas_Object         *bg_object;
    Evas_Object         *bg_event_object;
    Evas_Object         *bg_clip_object;
+   Evas_Object         *prev_bg_object;
+   Ecore_Animator      *bg_animator;
+   double               bg_set_time;
+   double               bg_transition_time;
+   E_Bg_Transition_Mode bg_transition_mode;
    
    int                  desk_x_count, desk_y_count;
    int                  desk_x_current, desk_y_current;

@@ -379,6 +379,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_app_shutdown);
+   /* init theme system */
+   if (!e_theme_init())
+     {
+	e_error_message_show(_("Enlightenment cannot set up its theme system."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_theme_shutdown);
    /* manage the root window */
    if (!_e_main_screens_init())
      {
@@ -390,13 +397,6 @@ main(int argc, char **argv)
    e_container_all_freeze();
    
    _e_main_shutdown_push(_e_main_screens_shutdown);
-   /* init theme system */
-   if (!e_theme_init())
-     {
-	e_error_message_show(_("Enlightenment cannot set up its theme system."));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(e_theme_shutdown);
 
    
    /* tell the error system that it can use gui dialogs now */

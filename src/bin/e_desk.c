@@ -71,7 +71,7 @@ void
 e_desk_show(E_Desk *desk)
 {
    E_Border_List     *bl;
-   int                x, y;
+   int                x, y, was_zone = 0;
    E_Event_Desk_Show *ev;
    E_Border *bd;
 
@@ -80,6 +80,7 @@ e_desk_show(E_Desk *desk)
    if (desk->visible) return;
    
    bl = e_container_border_list_first(desk->zone->container);
+   if (desk->zone->bg_object) was_zone = 1;
    while ((bd = e_container_border_list_next(bl)))
      {
 	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
@@ -114,10 +115,16 @@ e_desk_show(E_Desk *desk)
      evas_object_show(desk->bg_black_object);
    desk->visible = 1;
 
+   if (was_zone)
+     e_bg_zone_update(desk->zone, E_BG_TRANSITION_CHANGE);
+   else
+     e_bg_zone_update(desk->zone, E_BG_TRANSITION_START);
+   
    ev = E_NEW(E_Event_Desk_Show, 1);
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
+   
 }
 
 void

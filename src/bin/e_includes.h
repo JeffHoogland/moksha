@@ -50,3 +50,4 @@
 #include "e_alert.h"
 #include "e_maximize.h"
 #include "e_grabinput.h"
+#include "e_bg.h"

@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <sys/param.h>
 #include <dlfcn.h>
+#include <math.h>
 
 #include <Evas.h>
 #include <Ecore.h>

@@ -175,6 +175,12 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE);
    E_CONFIG_VAL(D, T, ping_clients, INT);
    E_CONFIG_VAL(D, T, ping_clients_wait, DOUBLE);
+   E_CONFIG_VAL(D, T, desktop_bg_start_transition, INT);
+   E_CONFIG_VAL(D, T, desktop_bg_start_transition_time, DOUBLE);
+   E_CONFIG_VAL(D, T, desktop_bg_desk_transition, INT);
+   E_CONFIG_VAL(D, T, desktop_bg_desk_transition_time, DOUBLE);
+   E_CONFIG_VAL(D, T, desktop_bg_change_transition, INT);
+   E_CONFIG_VAL(D, T, desktop_bg_change_transition_time, DOUBLE);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -213,7 +219,7 @@ e_config_init(void)
 	e_config = E_NEW(E_Config, 1);
 	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->show_splash = 1;
-	e_config->desktop_default_background = strdup(PACKAGE_DATA_DIR"/data/themes/default.edj");
+	e_config->desktop_default_background = strdup("");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_threshhold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
@@ -272,6 +278,12 @@ e_config_init(void)
 	e_config->kill_timer_wait = 10.0;
 	e_config->ping_clients = 1;
 	e_config->ping_clients_wait = 10.0;
+	e_config->desktop_bg_start_transition = E_BG_TRANSITION_MODE_NONE;
+	e_config->desktop_bg_start_transition_time = 1.0;
+	e_config->desktop_bg_desk_transition = E_BG_TRANSITION_MODE_SINUSOUDAL_FADE;
+	e_config->desktop_bg_desk_transition_time = 0.5;
+	e_config->desktop_bg_change_transition = E_BG_TRANSITION_MODE_SINUSOUDAL_FADE;
+	e_config->desktop_bg_change_transition_time = 1.0;
 	
 	  {
 	     E_Config_Module *em;
@@ -802,6 +814,12 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
    E_CONFIG_LIMIT(e_config->ping_clients, 0, 1);
    E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
+   E_CONFIG_LIMIT(e_config->desktop_bg_start_transition, E_BG_TRANSITION_MODE_NONE, E_BG_TRANSITION_MODE_LAST);
+   E_CONFIG_LIMIT(e_config->desktop_bg_start_transition_time, 0.01, 60.0);
+   E_CONFIG_LIMIT(e_config->desktop_bg_desk_transition, E_BG_TRANSITION_MODE_NONE, E_BG_TRANSITION_MODE_LAST);
+   E_CONFIG_LIMIT(e_config->desktop_bg_desk_transition_time, 0.01, 60.0);
+   E_CONFIG_LIMIT(e_config->desktop_bg_change_transition, E_BG_TRANSITION_MODE_NONE, E_BG_TRANSITION_MODE_LAST);
+   E_CONFIG_LIMIT(e_config->desktop_bg_change_transition_time, 0.01, 60.0);
 
    /* apply lang config - exception because config is loaded after intl setup */
    

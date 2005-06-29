@@ -47,6 +47,7 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 {
    E_Zone *zone;
    char    name[40];
+   Evas_Object *o;
 
    zone = E_OBJECT_ALLOC(E_Zone, E_ZONE_TYPE, _e_zone_free);
    if (!zone) return NULL;
@@ -80,44 +81,24 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
 
    con->zones = evas_list_append(con->zones, zone);
    
-   if (1)
-     {
-	char name[40];
-	Evas_Object *o;
+   o = evas_object_rectangle_add(con->bg_evas);
+   zone->bg_clip_object = o;
+   evas_object_move(o, x, y);
+   evas_object_resize(o, w, h);
+   evas_object_color_set(o, 255, 255, 255, 255);
+   evas_object_repeat_events_set(o, 1);
+   evas_object_show(o);
 
-	o = evas_object_rectangle_add(con->bg_evas);
-	zone->bg_clip_object = o;
-	evas_object_move(o, x, y);
-	evas_object_resize(o, w, h);
-	evas_object_color_set(o, 255, 255, 255, 255);
-	evas_object_repeat_events_set(o, 1);
-	evas_object_show(o);
-	
-	o = edje_object_add(con->bg_evas);
-	zone->bg_object = o;
-	evas_object_layer_set(o, -1);
-	snprintf(name, sizeof(name), "desktop/background/%d", zone->num);
-	evas_object_name_set(o, name);
-	evas_object_data_set(o, "e_zone", zone);
-	evas_object_move(o, x, y);
-	evas_object_resize(o, w, h);
-	edje_object_file_set(o,
-			     e_config->desktop_default_background,
-			     "desktop/background");
-	evas_object_clip_set(o, zone->bg_clip_object);
-	evas_object_show(o);
-
-	o = evas_object_rectangle_add(con->bg_evas);
-	zone->bg_event_object = o;
-	evas_object_clip_set(o, zone->bg_clip_object);
-	evas_object_move(o, x, y);
-	evas_object_resize(o, w, h);
-	evas_object_color_set(o, 255, 255, 255, 0);
-	evas_object_show(o);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_zone_cb_bg_mouse_down, zone);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,   _e_zone_cb_bg_mouse_up, zone);
-	evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move, zone);
-     }
+   o = evas_object_rectangle_add(con->bg_evas);
+   zone->bg_event_object = o;
+   evas_object_clip_set(o, zone->bg_clip_object);
+   evas_object_move(o, x, y);
+   evas_object_resize(o, w, h);
+   evas_object_color_set(o, 255, 255, 255, 0);
+   evas_object_show(o);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_zone_cb_bg_mouse_down, zone);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,   _e_zone_cb_bg_mouse_up, zone);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move, zone);
 
    zone->desk_x_count = 0;
    zone->desk_y_count = 0;
@@ -239,17 +220,9 @@ e_zone_current_get(E_Container *con)
 void
 e_zone_bg_reconfigure(E_Zone *zone)
 {
-   Evas_Object *o;
-   
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   o = zone->bg_object;
-   evas_object_hide(o);
-   edje_object_file_set(o,
-			e_config->desktop_default_background,
-			"desktop/background");
-   evas_object_layer_set(o, -1);
-   evas_object_show(o);
+   e_bg_zone_update(zone, E_BG_TRANSITION_CHANGE);
 }
 
 void
@@ -569,6 +542,8 @@ _e_zone_free(E_Zone *zone)
    evas_object_del(zone->bg_event_object);
    evas_object_del(zone->bg_clip_object);
    evas_object_del(zone->bg_object);
+   if (zone->prev_bg_object) evas_object_del(zone->prev_bg_object);
+   if (zone->bg_animator) ecore_animator_del(zone->bg_animator);
    /* free desks */
    for (x = 0; x < zone->desk_x_count; x++)
      {
