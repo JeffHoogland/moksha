@@ -1691,23 +1691,21 @@ e_border_act_close_begin(E_Border *bd)
 	if (bd->client.netwm.ping)
 	  e_border_ping(bd);
      }
-   else
+   else if (e_config->kill_if_close_not_possible)
      e_border_act_kill_begin(bd);
 }
 
 void
 e_border_act_kill_begin(E_Border *bd)
 {
-   if (bd->client.netwm.pid > 1)
+   if ((bd->client.netwm.pid > 1) && (e_config->kill_process))
      {
-	printf("%i\n", bd->client.netwm.pid);
 	kill(bd->client.netwm.pid, SIGINT);
-	bd->kill_timer = ecore_timer_add(10.0, _e_border_cb_kill_timer, bd);
+	bd->kill_timer = ecore_timer_add(e_config->kill_timer_wait,
+					 _e_border_cb_kill_timer, bd);
      }
    else
-     {
-	ecore_x_kill(bd->client.win);
-     }
+     ecore_x_kill(bd->client.win);
    e_border_hide(bd, 0);
 }
 
@@ -1846,7 +1844,9 @@ e_border_ping(E_Border *bd)
    ecore_x_netwm_ping_send(bd->client.win);
    bd->ping = ecore_time_get();
    if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
-   bd->ping_timer = ecore_timer_add(10.0, _e_border_cb_ping_timer, bd);
+   if (e_config->ping_clients)
+     bd->ping_timer = ecore_timer_add(e_config->ping_clients_wait,
+				      _e_border_cb_ping_timer, bd);
 }
 
 void

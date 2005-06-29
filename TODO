@@ -163,8 +163,6 @@ Some of the things (in very short form) that need to be done to E17...
 * winlist could divide windows up into blocks - sub-lists within a container
   pwer desktop (with stick windows considered to live on the "current" desk
   when winlist starts)
-* make auto kill client and the kill() stuff config options
-* make 10.0 sec ping time and the 10.0 sec wait for a SIGKILL an option
 * make it easy for modules to hook into ipc and extend it for themselves
 * gadman needs some changes to virtualise the canvas/container the gadget
   ends up in (eg in popups or border)

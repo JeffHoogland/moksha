@@ -170,6 +170,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_pos_max_w, INT);
    E_CONFIG_VAL(D, T, winlist_pos_max_h, INT);
    E_CONFIG_VAL(D, T, maximize_policy, INT);
+   E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT);
+   E_CONFIG_VAL(D, T, kill_process, INT);
+   E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE);
+   E_CONFIG_VAL(D, T, ping_clients, INT);
+   E_CONFIG_VAL(D, T, ping_clients_wait, DOUBLE);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -262,6 +267,11 @@ e_config_init(void)
 	e_config->winlist_pos_max_w = 320;
 	e_config->winlist_pos_max_h = 320;
 	e_config->maximize_policy = E_MAXIMIZE_FULLSCREEN;
+	e_config->kill_if_close_not_possible = 1;
+	e_config->kill_process = 1;
+	e_config->kill_timer_wait = 10.0;
+	e_config->ping_clients = 1;
+	e_config->ping_clients_wait = 10.0;
 	
 	  {
 	     E_Config_Module *em;
@@ -787,7 +797,12 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
    E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
    E_CONFIG_LIMIT(e_config->maximize_policy, E_MAXIMIZE_FULLSCREEN, E_MAXIMIZE_FILL);
-;
+   E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
+   E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
+   E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
+   E_CONFIG_LIMIT(e_config->ping_clients, 0, 1);
+   E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
+
    /* apply lang config - exception because config is loaded after intl setup */
    
    if ((e_config->language) && (strlen(e_config->language) > 0))
