@@ -584,6 +584,14 @@ _e_int_menus_clients_free_hook(void *obj)
    
    m = obj;
    borders = e_object_data_get(E_OBJECT(m));
+   if (borders == NULL)
+     {
+	printf("########################################################\n");
+	printf("########################################################\n");
+	printf("clients menu free cb called and object data is NULL!\n");
+	printf("########################################################\n");
+	printf("########################################################\n");
+     }
    while (borders)
      {
 	E_Border *bd;
@@ -598,8 +606,9 @@ _e_int_menus_clients_free_hook(void *obj)
 static void 
 _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Border *bd = data;
-
+   E_Border *bd;
+   
+   bd = data;
    E_OBJECT_CHECK(bd);
    if (bd->iconic) e_border_uniconify(bd);
    e_desk_show(bd->desk);
@@ -610,8 +619,9 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void 
 _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Zone *zone = data;
+   E_Zone *zone;
 
+   zone = data;
    e_place_zone_region_smart_cleanup(zone);
 }
 
