@@ -260,8 +260,19 @@ e_app_exec(E_App *a)
    /* FIXME: set up locale, encoding and input method env vars if they are in
     * the eapp file */
    exe = ecore_exe_run(a->exe, a);
-   if (!exe) return 0;
+   if (!exe)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable fork a child process\n"
+			      "to run the execute line:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    a->exe);
+	return 0;
+     }
    a->instances = evas_list_append(a->instances, exe);
+   e_object_ref(E_OBJECT(a));
    if (a->startup_notify) a->starting = 1;
    _e_app_change(a, E_APP_EXEC);
    return 1;
@@ -994,8 +1005,17 @@ _e_apps_cb_exit(void *data, int type, void *event)
 	a = ecore_exe_data_get(ev->exe);
 	if (a)
 	  {
+	     if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
+	       e_error_dialog_show(_("Run Error"),
+				   _("Enlightenment was unable run the program:\n"
+				     "\n"
+				     "%s\n"
+				     "\n"
+				     "The command was not found\n"),
+				   a->exe);	
 	     a->instances = evas_list_remove(a->instances, ev->exe);
 	     _e_app_change(a, E_APP_EXIT);
+	     e_object_unref(E_OBJECT(a));
 	  }
      }
    return 1;

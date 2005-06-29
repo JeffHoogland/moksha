@@ -8,8 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: sometimes unshade fails. Must be the wrong order of some events. (under
-  what conditions? i don't see it)
 * BUG: when fullscreen should put up big black window above all windows EXCEPT
   the fullscreen one (no need to hide other windows). in general fullscreen
   needs work, cleaning and testing
@@ -83,13 +81,13 @@ Some of the things (in very short form) that need to be done to E17...
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
 * eapps need to provide title matching too as well as name and class
+* add locale and encoding fields to eapp files (to launch eapp in that
+  locale+encoding)
+* add input method selector stuff to eapp - same as locale
 * transients should have option to always follow parent
   (move/resize/raise/lower)
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
-* add locale and encoding fields to eapp files (to launch eapp in that
-  locale+encoding)
-* add input method selector stuff to eapp - same as locale
 * titlebar/border expansion/gadget panel for modules to put window widgets in
 * add actions to flip desktops on a given zone and/or container only
 * break out desks x/y size config so you can have a different desktop size
@@ -99,10 +97,6 @@ Some of the things (in very short form) that need to be done to E17...
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
   or superuser, and the .mo in the system or a user locales dir.
-* check window max size. if < size of zone (or maximisation area) disallow
-  maximising and tell border edje object (via signals) to somehow disable the
-  maximise buttons :) (and remove from the menu) or center client in frame or
-  something else to not exceed max size for window
 * gadman gadget menu needs icons :)
 * gadman edit mode for simple gadgets activate with a button bind (eg
   alt+click on module like windows) or a pure key binding
@@ -123,7 +117,7 @@ Some of the things (in very short form) that need to be done to E17...
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
 * ibar needs lamp follower to be optional in ibar config (for the user)
-* borders need to be able to change border theme on the fly by mene or app
+* borders need to be able to change border theme on the fly by menu or app
   properties
 * add window glueing <rephorm AT rephorm DOT com>
 * add setup/install wizard to seed eapp files etc. etc.
