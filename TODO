@@ -8,10 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: when an app sends a map request and its on another desktop it gets
-  shown on the current desktop BUT the pager (and presumably e17) doesnt adust
-  the desktop it should be on, OR it doesnt deny the map as its already on the
-  other desktop.
 * BUG: when fullscreen should put up big black window above all windows EXCEPT
   the fullscreen one (no need to hide other windows). in general fullscreen
   needs work, cleaning and testing

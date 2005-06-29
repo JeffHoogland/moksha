@@ -2021,7 +2021,8 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
      e_border_uniconify(bd);
    else
      {
-	e_border_show(bd);
+	/* FIXME: make border "urgent" for a bit - it wants attention */
+/*	e_border_show(bd); */
 	e_border_raise(bd);
      }
    return 1;
