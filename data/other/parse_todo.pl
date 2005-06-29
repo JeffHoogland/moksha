@@ -17,13 +17,36 @@ my %todo_hash;
 my $title;
 my $item = {};
 
+# use globals
+sub push_item {
+    	if ($item->{'task'}) {
+		my $task = $item->{'task'};
+		$task =~ s/^\* //;
+		if ($task =~ s/<(.*)>//) {
+			$item->{'asignee_email'} = $1;
+			$1 =~ /(.*) AT /;
+			$item->{'asignee'} = $1;
+		} else {
+			$item->{'asignee_email'} = 0;
+			$item->{'asignee'} = 'None';
+		}
+		$item->{'task'} = $task;
+		push(@{$todo_hash{$title}}, $item);
+	}
+}
+
 while(<>) {
 	chomp;    
 
 	if(/\[\[\[/) {
+		$item->{'task'} = 0;
 		$in_body = 1;
 	} elsif (/\]\]\]/) {
-		$in_body = 0;
+		if ($in_body) {
+			push_item;
+			$item = {};
+			$in_body = 0;
+		}
 	} elsif (/^---.*---$/) {
 		if ($in_body) {
 			if($is_title) {
@@ -34,20 +57,7 @@ while(<>) {
 		}
 	} elsif (/^\* /) {
 		if ($in_body ) {
-			if ($item->{'task'}) {
-				my $task = $item->{'task'};
-				$task =~ s/^\* //;
-				if ($task =~ s/<(.*)>//) {
-					$item->{'asignee_email'} = $1;
-					$1 =~ /(.*) AT /;
-					$item->{'asignee'} = $1;
-				} else {
-					$item->{'asignee_email'} = 0;
-					$item->{'asignee'} = 'None';
-				}
-				$item->{'task'} = $task;
-				push(@{$todo_hash{$title}}, $item);
-			}
+			push_item;
 			$item = {};
 			$item->{'task'} = $_ ;
 		}
@@ -77,7 +87,7 @@ for $title ( keys %todo_hash ) {
 		my $mailto;
 
 		if ($asignee_email) {
-		     $mailto = "<a href='mailto:$asignee_email'>$asignee</a>"	
+		     $mailto = "<a href='mailto://$asignee_email'>$asignee</a>"	
 		} else {
 		     $mailto = $asignee;
 		}
