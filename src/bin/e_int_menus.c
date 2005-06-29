@@ -289,6 +289,14 @@ _e_int_menus_main_del_hook(void *obj)
 	e_object_del(E_OBJECT(dat->lost_clients));
 	free(dat);
      }
+   else
+     {
+	printf("%$%@%#^#^#$^#$\n"
+	       "%$%@%#^#^#$^#$\n"
+	       "  main menu object data is NULL!\n"
+	       "%$%@%#^#^#$^#$\n"
+	       "%$%@%#^#^#$^#$\n");
+     }
 }
 
 static void
