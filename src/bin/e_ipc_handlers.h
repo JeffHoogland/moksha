@@ -709,20 +709,9 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   Evas_List *l, *ll;
-   E_Manager *man;
-   E_Container *con;
-   E_Zone *zone;
    E_FREE(e_config->desktop_default_background);
    e_config->desktop_default_background = strdup(s);
-   for (l = e_manager_list(); l; l = l->next) {
-      man = l->data;
-      for (ll = man->containers; ll; ll = ll->next) {	
-	 con = ll->data;
-	 zone = e_zone_current_get(con);
-	 e_zone_bg_reconfigure(zone);
-      }
-   }
+   e_bg_update();
    SAVE;
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
@@ -2849,6 +2838,72 @@ break;
    START_INT(val, HDL);
    printf("REPLY: THRESHOLD=%d\n", val);
    END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_BG_ADD
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-bg-add", 4, "Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desktop name OPT4 = bg file path", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_3INT_3STRING_START(HDL);
+   REQ_3INT_3STRING_END(atoi(params[0]), atoi(params[1]), 0, params[2], params[3], "", HDL);
+#elif (TYPE == E_WM_IN)
+   INT3_STRING3(v, HDL);
+   e_bg_add(v->val1, v->val2, v->str1, v->str2);
+   e_bg_update();
+   SAVE;
+   END_INT3_STRING3(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_BG_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-bg-del", 3, "Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desktop name", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_3INT_3STRING_START(HDL);
+   REQ_3INT_3STRING_END(atoi(params[0]), atoi(params[1]), 0, params[2], "", "", HDL);
+#elif (TYPE == E_WM_IN)
+   INT3_STRING3(v, HDL);
+   e_bg_del(v->val1, v->val2, v->str1);
+   e_bg_update();
+   SAVE;
+   END_INT3_STRING3(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_BG_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-bg-list", 0, "List all current desktop bg definitions", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT3_STRING3_LIST(e_config->desktop_backgrounds, E_Config_Desktop_Background, cfbg, v, HDL);
+   v->val1 = cfbg->container;
+   v->val2 = cfbg->zone;
+   v->val3 = 0;
+   v->str1 = cfbg->desk;
+   v->str2 = cfbg->file;
+   v->str3 = "";
+   END_SEND_INT3_STRING3_LIST(v, E_IPC_OP_DESKTOP_BG_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_BG_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   INT3_STRING3_LIST(v, HDL);
+   printf("REPLY: BG CONTAINER=%i ZONE=%i DESK=\"%s\" FILE=\"%s\"\n",
+	  v->val1, v->val2, v->str1, v->str2);
+   END_INT3_STRING3_LIST(v);
 #endif
 #undef HDL
 

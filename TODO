@@ -10,7 +10,9 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: when fullscreen should put up big black window above all windows EXCEPT
   the fullscreen one (no need to hide other windows). in general fullscreen
-  needs work, cleaning and testing
+  needs work, cleaning and testing. dont allow desktop switches for the desk
+  a fullscreened window is on, nor allow windows to be raised above the fs win
+  etc. ie the app must seem to be entirely fs for that zone.
 * BUG: on font apply borders need to be adjusted for size changes
 * BUG: font apply doesnt seem to keep working (edje problem?) unless you
   restart
@@ -74,10 +76,11 @@ Some of the things (in very short form) that need to be done to E17...
   to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
-* break out ipc to set names for desktops and zones
+* break out ipc to set names for desktops (and get names/list them)
+* some sort of gui display of a desktop name (in the pager?)
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around.
-* eapps need to provide title matching too as well as name and class
+* eaps need to provide title matching too as well as name and class
 * add locale and encoding fields to eapp files (to launch eapp in that
   locale+encoding)
 * add input method selector stuff to eapp - same as locale
@@ -101,7 +104,7 @@ Some of the things (in very short form) that need to be done to E17...
 * add key input focus control for desktop modules
 * finish off icccm support
 * finish complete netwm support
-* make the cursors an edje buffer canvas for changinig cursor depending on
+* make the cursors an edje buffer canvas for changing cursor depending on
   context
 * different cursors for different parts of the screen
 * add a "taskbar" module
@@ -113,13 +116,10 @@ Some of the things (in very short form) that need to be done to E17...
   new bars to be created or bars to be deleted
 * ibar need to support label pop-ups
 * ibar should support subdirs with pop-up icons...
-* ibar needs lamp follower to be optional in ibar config (for the user)
 * borders need to be able to change border theme on the fly by menu or app
   properties
 * add window glueing <rephorm AT rephorm DOT com>
-* add setup/install wizard to seed eapp files etc. etc.
-* make ipc try open on other ports numbers if current is taken
-* make ipc try re-open if connection dies
+* add setup/install wizard to seed eap files etc. etc.
 * support text and color classes
 * add clientinfo pane/popdown for borders
 * add sliders, radio and check buttons for clientinfo pane
@@ -143,7 +143,6 @@ Some of the things (in very short form) that need to be done to E17...
   radio etc. not massive menus)
 * remove module config menus (make them part of the module control panel and
   as separate executables)
-* actuallly break out ipc and config to set bg per desktop (per zone)
 ]]]
 
 [[[

@@ -13,6 +13,8 @@ void
 e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 {
    Evas_Object *o;
+   Evas_List *l;
+   int ok;
 
    if (transition == E_BG_TRANSITION_START)
      {
@@ -65,14 +67,32 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    evas_object_data_set(o, "e_zone", zone);
    evas_object_move(o, zone->x, zone->y);
    evas_object_resize(o, zone->w, zone->h);
-   
-   /* FIXME: check config and look for a special bg for the current desk */
-   if (!edje_object_file_set(o,
-			     e_config->desktop_default_background,
-			     "desktop/background"))
+
+   ok = 0;
+   for (l = e_config->desktop_backgrounds; l; l = l->next)
      {
-	e_theme_edje_object_set(o, "base/theme/background",
-				"desktop/background");
+	E_Config_Desktop_Background *cfbg;
+	E_Desk *desk;
+	
+	cfbg = l->data;
+	if ((cfbg->container >= 0) &&
+	    (zone->container->num != cfbg->container)) continue;
+	if ((cfbg->zone >= 0) &&
+	    (zone->num != cfbg->zone)) continue;
+	if ((!cfbg->desk) || (strlen(cfbg->desk) == 0)) continue;
+	desk = e_desk_current_get(zone);
+	if (!desk) continue;
+	if (strcmp(cfbg->desk, desk->name)) continue;
+	ok = edje_object_file_set(o, cfbg->file,
+				  "desktop/background");
+	break;
+     }
+   if (!ok)
+     {
+	if (!edje_object_file_set(o, e_config->desktop_default_background,
+				  "desktop/background"))
+	  e_theme_edje_object_set(o, "base/theme/background",
+				  "desktop/background");
      }
    evas_object_layer_set(o, -1);
    evas_object_lower(o);
@@ -100,6 +120,62 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	if (!zone->bg_animator)
 	  zone->bg_animator= ecore_animator_add(_e_bg_animator, zone);
 	zone->bg_set_time = ecore_time_get();
+     }
+}
+
+void
+e_bg_add(int container, int zone, char *desk, char *file)
+{
+   E_Config_Desktop_Background *cfbg;
+   
+   e_bg_del(container, zone, desk);
+   cfbg = E_NEW(E_Config_Desktop_Background, 1);
+   cfbg->container = container;
+   cfbg->zone = zone;
+   cfbg->desk = strdup(desk);
+   cfbg->file = strdup(file);
+   e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
+}
+
+void
+e_bg_del(int container, int zone, char *desk)
+{
+   Evas_List *l;
+   
+   for (l = e_config->desktop_backgrounds; l; l = l->next)
+     {
+	E_Config_Desktop_Background *cfbg;
+	
+	cfbg = l->data;
+	if ((cfbg->container == container) && (cfbg->zone == zone) &&
+	    (!strcmp(cfbg->desk, desk)))
+	  {
+	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
+	     IF_FREE(cfbg->desk);
+	     IF_FREE(cfbg->file);
+	     free(cfbg);
+	     break;
+	  }
+     }
+}
+
+void
+e_bg_update(void)
+{
+   Evas_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     con = ll->data;
+	     zone = e_zone_current_get(con);
+	     e_zone_bg_reconfigure(zone);
+	  }
      }
 }
 

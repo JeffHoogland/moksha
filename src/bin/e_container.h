@@ -50,8 +50,8 @@ struct _E_Container
    Evas_List           *zones;
 
    struct {
-	Ecore_X_Window win;
-	Evas_List *clients;
+      Ecore_X_Window win;
+      Evas_List *clients;
    } layers[7];
 };
 

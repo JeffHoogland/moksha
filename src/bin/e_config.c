@@ -32,11 +32,22 @@ static E_Config_DD *_e_config_theme_edd = NULL;
 static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
+static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 
 /* externally accessible functions */
 int
 e_config_init(void)
 {
+   _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
+#undef T
+#undef D
+#define T E_Config_Desktop_Background
+#define D _e_config_desktop_bg_edd
+   E_CONFIG_VAL(D, T, container, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
+   E_CONFIG_VAL(D, T, desk, STR);
+   E_CONFIG_VAL(D, T, file, STR);
+   
    _e_config_path_append_edd = E_CONFIG_DD_NEW("E_Path_Dir", E_Path_Dir);
 #undef T
 #undef D
@@ -111,6 +122,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, show_splash, INT); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
+   E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd);
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
@@ -836,6 +848,11 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
    E_CONFIG_DD_FREE(_e_config_font_fallback_edd);
+   E_CONFIG_DD_FREE(_e_config_theme_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_mouse_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
+   E_CONFIG_DD_FREE(_e_config_path_append_edd);
+   E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
    return 1;
 }
 

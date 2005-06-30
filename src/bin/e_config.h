@@ -31,12 +31,13 @@
 
 #define E_CONFIG_LIMIT(v, min, max) {if (v > max) v = max; else if (v < min) v = min;}
 
-typedef struct _E_Config                E_Config;
-typedef struct _E_Config_Module         E_Config_Module;
-typedef struct _E_Config_Theme          E_Config_Theme;
-typedef struct _E_Config_Binding_Mouse  E_Config_Binding_Mouse;
-typedef struct _E_Config_Binding_Key    E_Config_Binding_Key;
-typedef Eet_Data_Descriptor             E_Config_DD;
+typedef struct _E_Config                    E_Config;
+typedef struct _E_Config_Module             E_Config_Module;
+typedef struct _E_Config_Theme              E_Config_Theme;
+typedef struct _E_Config_Binding_Mouse      E_Config_Binding_Mouse;
+typedef struct _E_Config_Binding_Key        E_Config_Binding_Key;
+typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
+typedef Eet_Data_Descriptor                 E_Config_DD;
 
 #else
 #ifndef E_CONFIG_H
@@ -57,6 +58,7 @@ struct _E_Config
    int         config_version;
    int         show_splash;
    char       *desktop_default_background;
+   Evas_List  *desktop_backgrounds;
    double      menus_scroll_speed;
    double      menus_fast_mouse_move_threshhold;
    double      menus_click_drag_timeout;
@@ -167,6 +169,14 @@ struct _E_Config_Binding_Key
    char          *action;
    char          *params;
    unsigned char  any_mod;
+};
+
+struct _E_Config_Desktop_Background
+{
+   int            container;
+   int            zone;
+   char          *desk;
+   char          *file;
 };
 
 EAPI int e_config_init(void);
