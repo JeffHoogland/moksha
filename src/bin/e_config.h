@@ -172,7 +172,8 @@ struct _E_Config_Desktop_Background
 {
    int            container;
    int            zone;
-   char          *desk;
+   int            desk_x;
+   int            desk_y;
    char          *file;
 };
 

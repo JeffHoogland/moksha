@@ -73,10 +73,9 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	    (zone->container->num != cfbg->container)) continue;
 	if ((cfbg->zone >= 0) &&
 	    (zone->num != cfbg->zone)) continue;
-	if ((!cfbg->desk) || (strlen(cfbg->desk) == 0)) continue;
 	desk = e_desk_current_get(zone);
 	if (!desk) continue;
-	if (strcmp(cfbg->desk, desk->name)) continue;
+	if ((cfbg->desk_x != desk->x) || (cfbg->desk_y != desk->y)) continue;
 	ok = edje_object_file_set(o, cfbg->file,
 				  "desktop/background");
 	break;
@@ -119,21 +118,22 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 }
 
 void
-e_bg_add(int container, int zone, char *desk, char *file)
+e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
 {
    E_Config_Desktop_Background *cfbg;
    
-   e_bg_del(container, zone, desk);
+   e_bg_del(container, zone, desk_x, desk_y);
    cfbg = E_NEW(E_Config_Desktop_Background, 1);
    cfbg->container = container;
    cfbg->zone = zone;
-   cfbg->desk = strdup(desk);
+   cfbg->desk_x = desk_x;
+   cfbg->desk_y = desk_y;
    cfbg->file = strdup(file);
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
 }
 
 void
-e_bg_del(int container, int zone, char *desk)
+e_bg_del(int container, int zone, int desk_x, int desk_y)
 {
    Evas_List *l;
    
@@ -143,10 +143,9 @@ e_bg_del(int container, int zone, char *desk)
 	
 	cfbg = l->data;
 	if ((cfbg->container == container) && (cfbg->zone == zone) &&
-	    (!strcmp(cfbg->desk, desk)))
+	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
 	  {
 	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
-	     IF_FREE(cfbg->desk);
 	     IF_FREE(cfbg->file);
 	     free(cfbg);
 	     break;

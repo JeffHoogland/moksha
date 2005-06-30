@@ -45,7 +45,8 @@ e_config_init(void)
 #define D _e_config_desktop_bg_edd
    E_CONFIG_VAL(D, T, container, INT);
    E_CONFIG_VAL(D, T, zone, INT);
-   E_CONFIG_VAL(D, T, desk, STR);
+   E_CONFIG_VAL(D, T, desk_x, INT);
+   E_CONFIG_VAL(D, T, desk_y, INT);
    E_CONFIG_VAL(D, T, file, STR);
    
    _e_config_path_append_edd = E_CONFIG_DD_NEW("E_Path_Dir", E_Path_Dir);

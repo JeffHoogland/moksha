@@ -2844,16 +2844,16 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DESKTOP_BG_ADD
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-desktop-bg-add", 4, "Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desktop name OPT4 = bg file path", 0, HDL)
+   OP("-desktop-bg-add", 5, "Add a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y. OPT5 = bg file path", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
-   REQ_3INT_3STRING_START(HDL);
-   REQ_3INT_3STRING_END(atoi(params[0]), atoi(params[1]), 0, params[2], params[3], "", HDL);
+   REQ_4INT_2STRING_START(HDL);
+   REQ_4INT_2STRING_END(atoi(params[0]), atoi(params[1]), atoi(params[2]), atoi(params[3]), params[4], "", HDL);
 #elif (TYPE == E_WM_IN)
-   INT3_STRING3(v, HDL);
-   e_bg_add(v->val1, v->val2, v->str1, v->str2);
+   INT4_STRING2(v, HDL);
+   e_bg_add(v->val1, v->val2, v->val3, v->val4, v->str1);
    e_bg_update();
    SAVE;
-   END_INT3_STRING3(v);
+   END_INT4_STRING2(v);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -2861,16 +2861,16 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DESKTOP_BG_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-desktop-bg-del", 3, "Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desktop name", 0, HDL)
+   OP("-desktop-bg-del", 4, "Delete a desktop bg definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y.", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
-   REQ_3INT_3STRING_START(HDL);
-   REQ_3INT_3STRING_END(atoi(params[0]), atoi(params[1]), 0, params[2], "", "", HDL);
+   REQ_4INT_2STRING_START(HDL);
+   REQ_4INT_2STRING_END(atoi(params[0]), atoi(params[1]), atoi(params[2]), atoi(params[3]), "", "", HDL);
 #elif (TYPE == E_WM_IN)
-   INT3_STRING3(v, HDL);
-   e_bg_del(v->val1, v->val2, v->str1);
+   INT4_STRING2(v, HDL);
+   e_bg_del(v->val1, v->val2, v->val3, v->val4);
    e_bg_update();
    SAVE;
-   END_INT3_STRING3(v);
+   END_INT4_STRING2(v);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -2882,14 +2882,14 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
-   SEND_INT3_STRING3_LIST(e_config->desktop_backgrounds, E_Config_Desktop_Background, cfbg, v, HDL);
+   SEND_INT4_STRING2_LIST(e_config->desktop_backgrounds, E_Config_Desktop_Background, cfbg, v, HDL);
    v->val1 = cfbg->container;
    v->val2 = cfbg->zone;
-   v->val3 = 0;
-   v->str1 = cfbg->desk;
-   v->str2 = cfbg->file;
-   v->str3 = "";
-   END_SEND_INT3_STRING3_LIST(v, E_IPC_OP_DESKTOP_BG_LIST_REPLY);
+   v->val3 = cfbg->desk_x;
+   v->val4 = cfbg->desk_y;
+   v->str1 = cfbg->file;
+   v->str2 = "";
+   END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_DESKTOP_BG_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -2900,10 +2900,10 @@ break;
 #elif (TYPE == E_REMOTE_OUT)
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
-   INT3_STRING3_LIST(v, HDL);
-   printf("REPLY: BG CONTAINER=%i ZONE=%i DESK=\"%s\" FILE=\"%s\"\n",
-	  v->val1, v->val2, v->str1, v->str2);
-   END_INT3_STRING3_LIST(v);
+   INT4_STRING2_LIST(v, HDL);
+   printf("REPLY: BG CONTAINER=%i ZONE=%i DESK_X=%i DESK_Y=%i FILE=\"%s\"\n",
+	  v->val1, v->val2, v->val3, v->val4, v->str1);
+   END_INT4_STRING2_LIST(v);
 #endif
 #undef HDL
 
