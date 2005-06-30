@@ -2486,7 +2486,373 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
-/*****/
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_RAISE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-always-click-to-raise-set", 1, "Set the always click to raise policy, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->always_click_to_raise = policy;
+   E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_RAISE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-always-click-to-raise-get", 0, "Get the always click to raise policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->always_click_to_raise, E_IPC_OP_ALWAYS_CLICK_TO_RAISE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_RAISE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_AUTO_RAISE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-auto-raise-set", 1, "Set use auto raise policy, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->use_auto_raise = policy;
+   E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_AUTO_RAISE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-auto-raise-get", 0, "Get use auto raise policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->use_auto_raise, E_IPC_OP_USE_AUTO_RAISE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_AUTO_RAISE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PASS_CLICK_ON_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-pass-click-on-set", 1, "Set pass click on policy, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->pass_click_on = policy;
+   E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PASS_CLICK_ON_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-pass-click-on-get", 0, "Get pass click on policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->pass_click_on, E_IPC_OP_PASS_CLICK_ON_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PASS_CLICK_ON_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_AUTO_RAISE_DELAY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-auto-raise-delay-set", 1, "Set the auto raise delay (Seconds)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(dbl, HDL);
+   e_config->auto_raise_delay = dbl;
+   E_CONFIG_LIMIT(e_config->auto_raise_delay, 0.0, 5.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_AUTO_RAISE_DELAY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-auto-raise-delay-get", 0, "Get the auto raise delay  (Seconds)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->auto_raise_delay, E_IPC_OP_AUTO_RAISE_DELAY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_AUTO_RAISE_DELAY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(dbl, HDL);
+   printf("REPLY: DELAY=%3.3f\n", dbl);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_USE_RESIST_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-resist-set", 1, "Set resist policy, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->use_resist = policy;
+   E_CONFIG_LIMIT(e_config->use_resist, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_RESIST_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-resist-get", 0, "Get use resist policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->use_resist, E_IPC_OP_USE_RESIST_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_RESIST_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_DRAG_RESIST_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-drag-resist-set", 1, "Set drag resist threshold (0-100)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->drag_resist = val;
+   E_CONFIG_LIMIT(e_config->drag_resist, 0, 100);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DRAG_RESIST_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-drag-resist-get", 0, "Get drag resist threshold", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->drag_resist, E_IPC_OP_DRAG_RESIST_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DRAG_RESIST_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: THRESHOLD=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_DESK_RESIST_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desk-resist-set", 1, "Set desktop resist threshold (0-100)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->desk_resist = val;
+   E_CONFIG_LIMIT(e_config->desk_resist, 0, 100);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESK_RESIST_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desk-resist-get", 0, "Get desktop resist threshold", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->desk_resist, E_IPC_OP_DESK_RESIST_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESK_RESIST_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: THRESHOLD=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINDOW_RESIST_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-window-resist-set", 1, "Set window resist threshold (0-100)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->window_resist = val;
+   E_CONFIG_LIMIT(e_config->window_resist, 0, 100);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINDOW_RESIST_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-window-resist-get", 0, "Get window resist threshold", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->window_resist, E_IPC_OP_WINDOW_RESIST_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINDOW_RESIST_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: THRESHOLD=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_GADGET_RESIST_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-gadget-resist-set", 1, "Set gadget resist threshold (0-100)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->gadget_resist = val;
+   E_CONFIG_LIMIT(e_config->gadget_resist, 0, 100);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_GADGET_RESIST_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-gadget-resist-get", 0, "Get gadget resist threshold", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->gadget_resist, E_IPC_OP_GADGET_RESIST_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_GADGET_RESIST_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: THRESHOLD=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
 
 #if 0
 }

@@ -142,15 +142,15 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
-   E_CONFIG_VAL(D, T, pass_click_on, INT);
-   E_CONFIG_VAL(D, T, always_click_to_raise, INT);
-   E_CONFIG_VAL(D, T, use_auto_raise, INT);
-   E_CONFIG_VAL(D, T, auto_raise_delay, DOUBLE); 
-   E_CONFIG_VAL(D, T, use_resist, INT);
-   E_CONFIG_VAL(D, T, drag_resist, INT);
-   E_CONFIG_VAL(D, T, desk_resist, INT);
-   E_CONFIG_VAL(D, T, window_resist, INT);
-   E_CONFIG_VAL(D, T, gadget_resist, INT);
+   E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
+   E_CONFIG_VAL(D, T, always_click_to_raise, INT); /**/
+   E_CONFIG_VAL(D, T, use_auto_raise, INT); /**/
+   E_CONFIG_VAL(D, T, auto_raise_delay, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, use_resist, INT); /**/
+   E_CONFIG_VAL(D, T, drag_resist, INT); /**/
+   E_CONFIG_VAL(D, T, desk_resist, INT); /**/
+   E_CONFIG_VAL(D, T, window_resist, INT); /**/
+   E_CONFIG_VAL(D, T, gadget_resist, INT); /**/
    E_CONFIG_VAL(D, T, winlist_warp_while_selecting, INT);
    E_CONFIG_VAL(D, T, winlist_warp_at_end, INT);
    E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE);
@@ -169,7 +169,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_pos_min_h, INT);
    E_CONFIG_VAL(D, T, winlist_pos_max_w, INT);
    E_CONFIG_VAL(D, T, winlist_pos_max_h, INT);
-   E_CONFIG_VAL(D, T, maximize_policy, INT);
+   E_CONFIG_VAL(D, T, maximize_policy, INT); /**/
    E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT);
    E_CONFIG_VAL(D, T, kill_process, INT);
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE);

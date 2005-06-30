@@ -20,21 +20,12 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 				   int x, int y, int w, int h,
 				   int *rx, int *ry, int *rw, int *rh)
 {
-   int resist = 1;
-   int desk_resist = 32;
-   int win_resist = 12;
-   int gad_resist = 32;
    Evas_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
    E_Border_List *bl;
    E_Border *bd;
-
-   resist = e_config->use_resist;
-   desk_resist = e_config->desk_resist;
-   win_resist = e_config->window_resist;
-   gad_resist = e_config->gadget_resist;
-   /* FIXME: get resist values from config */
-   if (!resist)
+   
+   if (!e_config->use_resist)
      {
 	*rx = x;
 	*ry = y;
@@ -64,7 +55,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	E_Zone *zone;
 
 	zone = l->data;
-	HOLDER(zone->x, zone->y, zone->w, zone->h, desk_resist);
+	HOLDER(zone->x, zone->y, zone->w, zone->h, e_config->desk_resist);
      }
    /* FIXME: need to add resist or complete BLOCKS for things like ibar */
    /* can add code here to add more fake obstacles with custom resist values */
@@ -88,7 +79,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	       }
 	     if (ok)
 	       {
-		  OBSTACLE(bd->x, bd->y, bd->w, bd->h, win_resist);
+		  OBSTACLE(bd->x, bd->y, bd->w, bd->h, e_config->window_resist);
 	       }
 	  }
      }
@@ -99,7 +90,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
         E_Gadman_Client *gmc;
 
 	gmc = l->data;
-	OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, gad_resist);
+	OBSTACLE(gmc->x, gmc->y, gmc->w, gmc->h, e_config->gadget_resist);
      }
    if (rects)
      {
@@ -123,13 +114,10 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 				   int x, int y, int w, int h,
 				   int *rx, int *ry)
 {
-   int resist = 1;
-   int gad_resist = 32;
    Evas_List *l, *ll, *rects = NULL;
    E_Resist_Rect *r;
 
-   /* FIXME: get resist values from config */
-   if (!resist)
+   if (!e_config->use_resist)
      {
 	*rx = x;
 	*ry = y;
@@ -159,7 +147,7 @@ e_resist_container_gadman_position(E_Container *con, Evas_List *skiplist,
 	     r->y = gmc->y;
 	     r->w = gmc->w;
 	     r->h = gmc->h;
-	     r->v1 = gad_resist;
+	     r->v1 = e_config->gadget_resist;
 	     rects = evas_list_append(rects, r);
 	  }
      }
