@@ -116,7 +116,7 @@ e_desk_show(E_Desk *desk)
    desk->visible = 1;
 
    if (was_zone)
-     e_bg_zone_update(desk->zone, E_BG_TRANSITION_CHANGE);
+     e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
    else
      e_bg_zone_update(desk->zone, E_BG_TRANSITION_START);
    
