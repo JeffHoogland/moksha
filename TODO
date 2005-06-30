@@ -165,7 +165,7 @@ Some of the things (in very short form) that need to be done to E17...
   the focus window becoems another managed window it becoems the selected
   window - otherwise click to focus or pointer focus will chose the selected
   window that may get the focus if it allows it...
-* module api needs to move label and icon to data file (.eapp file?), not api
+* module api needs to move label and icon to data file (.eap file?), not api
 * make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
 * ibar lamp needs short timer on mouse out for hide before hiding (and del
   the time on mouse in)
