@@ -38,5 +38,6 @@ collections {
 #include "default_ibox.edc"
 #include "default_start.edc"
 #include "default_winlist.edc"
+#include "default_transitions.edc"
 }
 

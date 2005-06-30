@@ -543,7 +543,8 @@ _e_zone_free(E_Zone *zone)
    evas_object_del(zone->bg_clip_object);
    evas_object_del(zone->bg_object);
    if (zone->prev_bg_object) evas_object_del(zone->prev_bg_object);
-   if (zone->bg_animator) ecore_animator_del(zone->bg_animator);
+   if (zone->transition_object) evas_object_del(zone->transition_object);
+
    /* free desks */
    for (x = 0; x < zone->desk_x_count; x++)
      {

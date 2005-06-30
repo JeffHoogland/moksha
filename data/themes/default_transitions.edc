@@ -1,0 +1,189 @@
+images {
+   image: "e17_transition_vswipe_gap.png" COMP;
+}
+
+group {
+   name: "transitions/crossfade";
+   parts {
+      part {
+	 name:          "bg_prev";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	 }
+      }
+      part {
+	 name:          "bg_new";
+	 type:          SWALLOW;
+	 clip_to:       "bg_new_clip";
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	 }
+      }
+      part {
+	 name:          "bg_new_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    color: 255 255 255 0;
+	 }
+	 description {
+	    state: "done" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "go";
+	 signal:  "go";
+	 source:  "";
+	 action:  STATE_SET "done" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target:  "bg_new_clip";
+	 after:   "go2";
+      }
+      program {
+	 name:    "go2";
+	 action:  SIGNAL_EMIT "done" "";
+      }
+   }
+}
+
+group {
+   name: "transitions/vswipe";
+   parts {
+      part {
+	 name:          "bg_prev";
+	 type:          SWALLOW;
+	 clip_to:       "bg_prev_clip";
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
+      part {
+	 name:          "bg_new";
+	 type:          SWALLOW;
+	 clip_to:       "bg_new_clip";
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
+      part {
+	 name:          "bg_prev_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    state: "default" 0.0;
+	 }
+	 description {
+	    state: "done" 0.0;
+	    inherit: "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
+      part {
+	 name: "swipe_gap";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 0 64;
+	    max: 99999 64;
+	    rel1 {
+	       to: "bg_prev_clip";
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       to: "bg_prev_clip";
+	       relative: 1.0  0.0;
+	       offset:   -1   0;
+	    }
+	    image {
+	       normal: "e17_transition_vswipe_gap.png";
+	    }
+	 }
+      }
+      part {
+	 name:          "bg_new_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -1   -1;
+	    }
+	 }
+	 description {
+	    state: "done" 0.0;
+	    inherit: "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "go";
+	 signal:  "go";
+	 source:  "";
+	 action:  STATE_SET "done" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target:  "bg_new_clip";
+	 target:  "bg_prev_clip";
+	 after:   "go2";
+      }
+      program {
+	 name:    "go2";
+	 action:  SIGNAL_EMIT "done" "";
+      }
+   }
+}

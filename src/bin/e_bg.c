@@ -4,7 +4,7 @@
 #include "e.h"
 
 /* local subsystem functions */
-static int _e_bg_animator(void *data);
+static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
 
@@ -15,35 +15,13 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    Evas_Object *o;
    Evas_List *l;
    int ok;
-
-   if (transition == E_BG_TRANSITION_START)
-     {
-	zone->bg_transition_mode = e_config->desktop_bg_start_transition;
-	zone->bg_transition_time = e_config->desktop_bg_start_transition_time;
-     }
-   else if (transition == E_BG_TRANSITION_DESK)
-     {
-	zone->bg_transition_mode = e_config->desktop_bg_desk_transition;
-	zone->bg_transition_time = e_config->desktop_bg_desk_transition_time;
-     }
-   else if (transition == E_BG_TRANSITION_CHANGE)
-     {
-	zone->bg_transition_mode = e_config->desktop_bg_change_transition;
-	zone->bg_transition_time = e_config->desktop_bg_change_transition_time;
-     }
-   if ((zone->bg_transition_mode == E_BG_TRANSITION_MODE_NONE) ||
-       (zone->bg_transition_time == 0.0))
-     transition = E_BG_TRANSITION_NONE;
-   if (zone->bg_transition_mode == E_BG_TRANSITION_MODE_RANDOM)
-     {
-	zone->bg_transition_mode = 
-	  (rand() % (E_BG_TRANSITION_MODE_LAST - E_BG_TRANSITION_MODE_RANDOM))
-	  + E_BG_TRANSITION_MODE_RANDOM + 1;
-	if (zone->bg_transition_mode <= E_BG_TRANSITION_MODE_RANDOM)
-	  zone->bg_transition_mode = E_BG_TRANSITION_MODE_RANDOM + 1;
-	else if (zone->bg_transition_mode >= E_BG_TRANSITION_MODE_LAST)
-	  zone->bg_transition_mode = E_BG_TRANSITION_MODE_LAST - 1;
-     }
+   char *trans = "";
+   
+   if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
+   else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
+   else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
+   if (strlen(trans) < 1) transition = E_BG_TRANSITION_NONE;
+   
    if (transition == E_BG_TRANSITION_NONE)
      {
 	if (zone->bg_object)
@@ -52,15 +30,31 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	     zone->bg_object = NULL;
 	  }
      }
-   if (transition != E_BG_TRANSITION_NONE)
+   else
      {
+	char buf[4096];
+	
 	if (zone->bg_object)
 	  {
 	     if (zone->prev_bg_object)
 	       evas_object_del(zone->prev_bg_object);
 	     zone->prev_bg_object = zone->bg_object;
+	     if (zone->transition_object)
+	       evas_object_del(zone->transition_object);
+	     zone->transition_object = NULL;
 	     zone->bg_object = NULL;
 	  }
+	o = edje_object_add(zone->container->bg_evas);
+	zone->transition_object = o;
+	evas_object_data_set(o, "e_zone", zone);
+	snprintf(buf, sizeof(buf), "transitions/%s", trans);
+	e_theme_edje_object_set(o, "base/theme/transitions", buf);
+	edje_object_signal_callback_add(o, "done", "*", _e_bg_signal, zone);
+	evas_object_move(o, zone->x, zone->y);
+	evas_object_resize(o, zone->w, zone->h);
+	evas_object_layer_set(o, -1);
+	evas_object_clip_set(o, zone->bg_clip_object);
+	evas_object_show(o);
      }
    o = edje_object_add(zone->container->bg_evas);
    zone->bg_object = o;
@@ -94,9 +88,8 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	  e_theme_edje_object_set(o, "base/theme/background",
 				  "desktop/background");
      }
-   evas_object_layer_set(o, -1);
-   evas_object_lower(o);
 
+   evas_object_layer_set(o, -1);
    evas_object_clip_set(o, zone->bg_clip_object);
    evas_object_show(o);
    
@@ -117,9 +110,11 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    
    if (transition != E_BG_TRANSITION_NONE)
      {
-	if (!zone->bg_animator)
-	  zone->bg_animator= ecore_animator_add(_e_bg_animator, zone);
-	zone->bg_set_time = ecore_time_get();
+	edje_object_part_swallow(zone->transition_object, "bg_prev",
+				 zone->prev_bg_object);
+	edje_object_part_swallow(zone->transition_object, "bg_new",
+				 zone->bg_object);
+	edje_object_signal_emit(zone->transition_object, "go", "");
      }
 }
 
@@ -181,49 +176,26 @@ e_bg_update(void)
 
 /* local subsystem functions */
 
-static int
-_e_bg_animator(void *data)
+static void
+_e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Zone *zone;
-   double t;
-   int a;
    
    zone = data;
-   /* t is an animating INDEX 0.0 - 1.0, it is used as a lookup into
-    * the effect. 1.0 == finished */
-   t = (ecore_time_get() - zone->bg_set_time) / zone->bg_transition_time;
-   if (t < 0.0) t = 0.0;
-   else if (t > 1.0) t = 1.0;
-   
-   if (zone->bg_transition_mode == E_BG_TRANSITION_MODE_FADE)
-     {
-	a = (1.0 - t) * 255.0;
-	if (a < 0) a = 0;
-	else if (a > 255) a = 255;
-	evas_object_color_set(zone->prev_bg_object,
-			      255, 255, 255, a);
-     }
-   else if (zone->bg_transition_mode == E_BG_TRANSITION_MODE_SINUSOUDAL_FADE)
-     {
-	double t2;
-	
-	t2 = (1.0 - cos(t * M_PI)) / 2.0;
-	
-	a = (1.0 - t2) * 255.0;
-	if (a < 0) a = 0;
-	else if (a > 255) a = 255;
-	evas_object_color_set(zone->prev_bg_object,
-			      255, 255, 255, a);
-     }
-     
-   /* if we still animate.. */
-   if (t < 1.0) return 1;
-   
+
    if (zone->prev_bg_object)
      {
 	evas_object_del(zone->prev_bg_object);
 	zone->prev_bg_object = NULL;
      }
-   zone->bg_animator = NULL;
-   return 0;
+   if (zone->transition_object)
+     {
+	evas_object_del(zone->transition_object);
+	zone->transition_object = NULL;
+     }
+   evas_object_move(zone->bg_object, zone->x, zone->y);
+   evas_object_resize(zone->bg_object, zone->w, zone->h);
+   evas_object_layer_set(zone->bg_object, -1);
+   evas_object_clip_set(zone->bg_object, zone->bg_clip_object);
+   evas_object_show(zone->bg_object);
 }
