@@ -1723,9 +1723,10 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	
 	if (bd->client.netwm.name) title = bd->client.netwm.name;
 	else title = bd->client.icccm.title;
-	a = e_app_window_name_class_title_find(bd->client.icccm.name,
-					       bd->client.icccm.class,
-					       title);
+	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
+						    bd->client.icccm.class,
+						    title,
+						    bd->client.icccm.window_role);
 	if (a)
 	  {
 	     o = edje_object_add(evas);
@@ -4901,9 +4902,10 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 	else title = bd->client.icccm.title;
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
-	a = e_app_window_name_class_title_find(bd->client.icccm.name,
-					       bd->client.icccm.class,
-					       title);
+	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
+						    bd->client.icccm.class,
+						    title,
+						    bd->client.icccm.window_role);
 	if (a)
 	  {
 	     mi = e_menu_item_new(m);

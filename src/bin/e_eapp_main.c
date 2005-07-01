@@ -24,6 +24,7 @@ main(int argc, char **argv)
    int del_win_name = 0;
    int del_win_class = 0;
    int del_win_title = 0;
+   int del_win_role = 0;
    int del_startup_notify = 0;
    int del_wait_exit = 0;
    char *file = NULL;
@@ -34,6 +35,7 @@ main(int argc, char **argv)
    char *set_win_name = NULL;
    char *set_win_class = NULL;
    char *set_win_title = NULL;
+   char *set_win_role = NULL;
    int   set_startup_notify = -1;
    int   set_wait_exit = -1;
    
@@ -88,6 +90,12 @@ main(int argc, char **argv)
 	     set_win_title = argv[i];
              valid_args++;
 	  }
+	else if ((!strcmp(argv[i], "-set-win-role")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     set_win_role = argv[i];
+             valid_args++;
+	  }
 	else if ((!strcmp(argv[i], "-set-startup-notify")) && (i < (argc - 1)))
 	  {
 	     i++;
@@ -109,6 +117,7 @@ main(int argc, char **argv)
 	     del_win_name = 1;
 	     del_win_class = 1;
 	     del_win_title = 1;
+	     del_win_role = 1;
 	     del_startup_notify = 1;
 	     del_wait_exit = 1;
              valid_args++;
@@ -146,6 +155,11 @@ main(int argc, char **argv)
 	else if ((!strcmp(argv[i], "-del-win-title")))
 	  {
 	     del_win_title = 1;
+             valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-del-win-role")))
+	  {
+	     del_win_role = 1;
              valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-del-startup-notify")))
@@ -215,6 +229,8 @@ main(int argc, char **argv)
      eet_write(ef, "app/window/class", set_win_class, strlen(set_win_class), 0);
    if (set_win_title)
      eet_write(ef, "app/window/title", set_win_title, strlen(set_win_title), 0);
+   if (set_win_role)
+     eet_write(ef, "app/window/role", set_win_role, strlen(set_win_role), 0);
    if (set_startup_notify >= 0)
      {
 	unsigned char tmp[1];
@@ -279,6 +295,8 @@ main(int argc, char **argv)
      eet_delete(ef, "app/window/class");
    if (del_win_title)
      eet_delete(ef, "app/window/title");
+   if (del_win_role)
+     eet_delete(ef, "app/window/role");
    if (del_startup_notify)
      eet_delete(ef, "app/info/startup_notify");
    if (del_wait_exit)
@@ -299,9 +317,10 @@ _e_help(void)
 	  "  -set-generic GENERIC       Set the application generic name\n"
 	  "  -set-comment COMMENT       Set the application comment\n"
 	  "  -set-exe EXE               Set the application execute line\n"
-	  "  -set-win-name WIN_NAME     Set the application window name\n"
-	  "  -set-win-class WIN_CLASS   Set the application window class\n"
+	  "  -set-win-name WIN_NAME     Set the application window name glob\n"
+	  "  -set-win-class WIN_CLASS   Set the application window class glob\n"
 	  "  -set-win-title WIN_TITLE   Set the application window title glob\n"
+	  "  -set-win-role WIN_ROLE     Set the application window role glob\n"
 	  "  -set-startup-notify [1/0]  Set the application startup notify flag\n"
 	  "  -set-wait-exit [1/0]       Set the application wait exit flag\n"
 	  "  -del-name                  Delete the application name\n"
@@ -311,6 +330,7 @@ _e_help(void)
 	  "  -del-win-name              Delete the application window name\n"
 	  "  -del-win-class             Delete the application window class\n"
 	  "  -del-win-title             Delete the application window title glob\n"
+	  "  -del-win-role              Delete the application window role glob\n"
 	  "  -del-startup-notify        Delete the application startup notify flag\n"
 	  "  -del-wait-exit             Delete the application wait exit flag\n"
 	  );

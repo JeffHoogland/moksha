@@ -38,6 +38,7 @@ struct _E_App
    char               *win_name; /* window name */
    char               *win_class; /* window class */
    char               *win_title; /* window title */
+   char               *win_role; /* window role */
    
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    
@@ -75,7 +76,7 @@ EAPI void   e_app_remove(E_App *remove);
 EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 
-EAPI E_App *e_app_window_name_class_title_find(char *name, char *class, char *title);
+EAPI E_App *e_app_window_name_class_title_role_find(char *name, char *class, char *title, char *role);
 EAPI E_App *e_app_file_find(char *file);
 EAPI E_App *e_app_name_find(char *name);
 EAPI E_App *e_app_generic_find(char *generic);

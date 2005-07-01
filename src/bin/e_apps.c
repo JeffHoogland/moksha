@@ -516,7 +516,7 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
 }
 
 E_App *
-e_app_window_name_class_title_find(char *name, char *class, char *title)
+e_app_window_name_class_title_role_find(char *name, char *class, char *title, char *role)
 {
    Evas_List *l;
    
@@ -530,19 +530,22 @@ e_app_window_name_class_title_find(char *name, char *class, char *title)
 	
 	a = l->data;
 	ok = 0;
-	if ((a->win_name) || (a->win_class) || (a->win_title))
+	if ((a->win_name) || (a->win_class) || (a->win_title) || (a->win_role))
 	  {
 	     if ((!a->win_name) ||
-		 ((a->win_name) && (name) && (!strcmp(a->win_name, name))))
+		 ((a->win_name) && (name) && (e_util_glob_match(name, a->win_name))))
 	       ok++;
 	     if ((!a->win_class) ||
-		 ((a->win_class) && (class) && (!strcmp(a->win_class, class))))
+		 ((a->win_class) && (class) && (e_util_glob_match(class, a->win_class))))
 	       ok++;
 	     if ((!a->win_title) ||
 		 ((a->win_title) && (title) && (e_util_glob_match(title, a->win_title))))
 	       ok++;
+	     if ((!a->win_role) ||
+		 ((a->win_role) && (role) && (e_util_glob_match(role, a->win_role))))
+	       ok++;
 	  }
-	if (ok >= 3)
+	if (ok >= 4)
 	  {
 	     _e_apps_list = evas_list_remove_list(_e_apps_list, l);
 	     _e_apps_list = evas_list_prepend(_e_apps_list, a);
@@ -829,6 +832,15 @@ _e_app_fields_fill(E_App *a, const char *path)
 	memcpy(str, v, size);
 	str[size] = 0;
 	a->win_title = str;
+	free(v);
+     }
+   v = eet_read(ef, "app/window/role", &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->win_role = str;
 	free(v);
      }
    v = eet_read(ef, "app/info/startup_notify", &size);
