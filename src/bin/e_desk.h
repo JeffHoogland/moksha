@@ -23,7 +23,10 @@ struct _E_Desk
    char                 black : 1;
 
    Evas_Object         *bg_object;
-   Evas_Object         *bg_black_object;
+
+   Ecore_Evas          *black_ecore_evas;
+   Evas                *black_evas;
+   Ecore_X_Window       black_win;
 };
 
 struct _E_Event_Desk_Show

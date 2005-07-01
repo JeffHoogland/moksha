@@ -45,15 +45,23 @@ e_desk_new(E_Zone *zone, int x, int y)
    snprintf(name, sizeof(name), _("Desktop %d, %d"), x, y);
    desk->name = strdup(name);
 
-   o = evas_object_rectangle_add(zone->container->bg_evas);
-   desk->bg_black_object = o;
-   evas_object_layer_set(o, 100);
-   evas_object_move(o, zone->x, zone->y);
+   /* TODO: config the ecore_evas type. */
+   desk->black_ecore_evas = ecore_evas_software_x11_new(NULL, zone->container->win,
+							0, 0, zone->w, zone->h);
+   ecore_evas_software_x11_direct_resize_set(desk->black_ecore_evas, 1);
+   ecore_evas_override_set(desk->black_ecore_evas, 1);
+   ecore_evas_layer_set(desk->black_ecore_evas, 6);
+
+   desk->black_win = ecore_evas_software_x11_window_get(desk->black_ecore_evas);
+   desk->black_evas = ecore_evas_get(desk->black_ecore_evas);
+
+   o = evas_object_rectangle_add(desk->black_evas);
+   evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_color_set(o, 0, 0, 0, 255);
-   snprintf(name, sizeof(name), "desktop/background/%d.%d", desk->x, desk->y);
-   evas_object_name_set(o, name);
-   evas_object_data_set(o, "e_desk", desk);
+   ecore_evas_name_class_set(desk->black_ecore_evas, "E", "Black_Window");
+   snprintf(name, sizeof(name), "Enlightenment Black Desk (%d, %d)", desk->x, desk->y);
+   ecore_evas_title_set(desk->black_ecore_evas, name);
 
    return desk;
 }
@@ -103,7 +111,7 @@ e_desk_show(E_Desk *desk)
 
 	     desk2 = e_desk_at_xy_get(desk->zone,x, y);
 	     desk2->visible = 0;
-	     evas_object_hide(desk2->bg_black_object);
+	     ecore_evas_hide(desk2->black_ecore_evas);
 	     if (desk2 == desk)
 	       {
 		  desk->zone->desk_x_current = x;
@@ -112,7 +120,10 @@ e_desk_show(E_Desk *desk)
 	  }
      }
    if (desk->black)
-     evas_object_show(desk->bg_black_object);
+     {
+	ecore_evas_show(desk->black_ecore_evas);
+	e_container_window_raise(desk->zone->container, desk->black_win, 150);
+     }
    desk->visible = 1;
 
    if (was_zone)
@@ -132,12 +143,13 @@ e_desk_black_set(E_Desk *desk, int set)
 {
    if ((!desk->black) && (set))
      {
-	evas_object_show(desk->bg_black_object);
+	ecore_evas_show(desk->black_ecore_evas);
+	e_container_window_raise(desk->zone->container, desk->black_win, 150);
 	desk->black = 1;
      }
    else if ((desk->black) && (!set))
      {
-	evas_object_hide(desk->bg_black_object);
+	ecore_evas_hide(desk->black_ecore_evas);
 	desk->black = 0;
      }
 }
