@@ -1205,10 +1205,9 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	  }
 
 	if (bd->maximized > E_MAXIMIZE_FULLSCREEN)
-	  {
-	     edje_object_signal_emit(bd->bg_object, "maximize", "");
-	     e_hints_window_maximized_set(bd, 1);
-	  }
+	  edje_object_signal_emit(bd->bg_object, "maximize", "");
+	if (bd->maximized)
+	  e_hints_window_maximized_set(bd, 1);
 
      }
 }
@@ -3092,15 +3091,20 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
+   if (grabbed) return 1;
    if (ev->event_win == bd->win)
      {
 	e_focus_event_mouse_in(bd);
      }
+#if 0
    if ((ev->win != bd->win) &&
        (ev->win != bd->event_win) &&
        (ev->event_win != bd->win) &&
        (ev->event_win != bd->event_win))
-	 return 1;
+     return 1;
+#else
+   if (ev->win != bd->event_win) return 1;
+#endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
@@ -3147,6 +3151,7 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
+   if (grabbed) return 1;
    if (ev->event_win == bd->win)
      {
 	if (bd->fullscreen)
@@ -3161,11 +3166,15 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	  return 1;
 	e_focus_event_mouse_out(bd);
      }
+#if 0
    if ((ev->win != bd->win) &&
        (ev->win != bd->event_win) &&
        (ev->event_win != bd->win) &&
        (ev->event_win != bd->event_win))
      return 1;
+#else
+   if (ev->win != bd->event_win) return 1;
+#endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
