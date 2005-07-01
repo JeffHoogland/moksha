@@ -3148,6 +3148,19 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
    /* FIXME: this would normally take focus away in pointer focus mode */
 //   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
    if (grabbed) return 1;
+	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
+	    (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR))
+	  {
+	     if (bd->cur_mouse_action)
+	       {
+		  if (bd->cur_mouse_action->func.end_mouse)
+		    bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
+		  else if (bd->cur_mouse_action->func.end)
+		    bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+		  e_object_unref(E_OBJECT(bd->cur_mouse_action));
+		  bd->cur_mouse_action = NULL;
+	       }
+	  }
    if (ev->event_win == bd->win)
      {
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
