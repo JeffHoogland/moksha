@@ -8,11 +8,10 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: when fullscreen should put up big black window above all windows EXCEPT
-  the fullscreen one (no need to hide other windows). in general fullscreen
-  needs work, cleaning and testing. dont allow desktop switches for the desk
-  a fullscreened window is on, nor allow windows to be raised above the fs win
-  etc. ie the app must seem to be entirely fs for that zone.
+* BUG: in general fullscreen needs work, cleaning and testing. dont allow
+  desktop switches for the desk a fullscreened window is on, nor allow windows
+  to be raised above the fs win etc. ie the app must seem to be entirely fs for
+  that zone.
 * BUG: on font apply borders need to be adjusted for size changes
 * BUG: font apply doesnt seem to keep working (edje problem?) unless you
   restart
