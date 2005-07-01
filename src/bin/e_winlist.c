@@ -502,22 +502,16 @@ _e_winlist_activate(void)
      ok = 1;
    if (ok)
      {
-	if (e_config->focus_policy != E_FOCUS_CLICK)
+	if (e_config->winlist_warp_while_selecting)
 	  {
 	     ecore_x_pointer_xy_get(winlist->zone->container->win, &warp_x, &warp_y);
 	     warp_to_x = ww->border->x + (ww->border->w / 2);
 	     warp_to_y = ww->border->y + (ww->border->h / 2);
-	     if (e_config->winlist_warp_while_selecting)
-	       {
-		  warp_to = 1;
-		  if (!warp_timer)
-		    warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-		  if (!animator)
-		    animator = ecore_animator_add(_e_winlist_animator, NULL);
-	       }
-	     else
-	       ecore_x_pointer_warp(ww->border->zone->container->win,
-				    warp_to_x, warp_to_y);
+	     warp_to = 1;
+	     if (!warp_timer)
+	       warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+	     if (!animator)
+	       animator = ecore_animator_add(_e_winlist_animator, NULL);
 	  }
 	e_border_raise(ww->border);
 	e_border_focus_set(ww->border, 1, 1);
