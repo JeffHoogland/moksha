@@ -33,7 +33,7 @@ Some of the things (in very short form) that need to be done to E17...
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
 * BUG?: pager problems. Seems to loose or mess up windows sometimes.
-* BUG?: xine's ui window/panel is under its video window when u go
+* BUG?: xine's ui window/panel is under its video window when u go fullscreen
 ]]]
 
 [[[

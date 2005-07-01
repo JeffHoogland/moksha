@@ -1203,7 +1203,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      break;
 	  }
 
-	if (bd->maximized)
+	if (bd->maximized > E_MAXIMIZE_FULLSCREEN)
 	  {
 	     edje_object_signal_emit(bd->bg_object, "maximize", "");
 	     e_hints_window_maximized_set(bd, 1);
@@ -3978,6 +3978,17 @@ _e_border_eval(E_Border *bd)
 					     _e_border_cb_signal_drag, bd);
 	     if (bd->focused)
 	       edje_object_signal_emit(bd->bg_object, "active", "");
+	     if (bd->shaded)
+	       edje_object_signal_emit(bd->bg_object, "shaded", "");
+	     if (bd->maximized == E_MAXIMIZE_FULLSCREEN)
+	       edje_object_signal_emit(bd->bg_object, "maximize,fullscreen", "");
+	     else if (bd->maximized > E_MAXIMIZE_FULLSCREEN)
+	       edje_object_signal_emit(bd->bg_object, "maximize", "");
+	     if (bd->fullscreen)
+	       edje_object_signal_emit(bd->bg_object, "fullscreen", "");
+	     if (bd->hung)
+	       edje_object_signal_emit(bd->bg_object, "hung", "");
+	     
 	     evas_object_move(bd->bg_object, 0, 0);
 	     evas_object_resize(bd->bg_object, bd->w, bd->h);
 	     evas_object_show(bd->bg_object);
