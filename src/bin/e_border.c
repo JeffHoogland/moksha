@@ -2648,11 +2648,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_TL;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_SE);
      }
    else if (e->direction == RESIZE_T)
@@ -2662,11 +2665,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_T;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_S);
      }
    else if (e->direction == RESIZE_TR)
@@ -2676,11 +2682,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_TR;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_SW);
      }
    else if (e->direction == RESIZE_R)
@@ -2690,11 +2699,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_R;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_W);
      }
    else if (e->direction == RESIZE_BR)
@@ -2704,11 +2716,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_BR;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_NW);
      }
    else if (e->direction == RESIZE_B)
@@ -2718,11 +2733,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_B;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_N);
      }
    else if (e->direction == RESIZE_BL)
@@ -2732,11 +2750,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_BL;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_NE);
      }
    else if (e->direction == RESIZE_L)
@@ -2746,11 +2767,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->resize_mode = RESIZE_L;
 
 	bd->cur_mouse_action = e_action_find("window_resize");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
 	GRAV_SET(bd, ECORE_X_GRAVITY_E);
      }
    else if (e->direction == MOVE)
@@ -2760,11 +2784,14 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	bd->moving = 1;
 	
 	bd->cur_mouse_action = e_action_find("window_move");
-	if ((!bd->cur_mouse_action->func.end_mouse) &&
-	    (!bd->cur_mouse_action->func.end))
-	  bd->cur_mouse_action = NULL;
 	if (bd->cur_mouse_action)
-	  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  {
+	     if ((!bd->cur_mouse_action->func.end_mouse) &&
+		 (!bd->cur_mouse_action->func.end))
+	       bd->cur_mouse_action = NULL;
+	     if (bd->cur_mouse_action)
+	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	  }
      }
    return 1;
 }
@@ -3215,11 +3242,14 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	     bd->cur_mouse_action = 
 	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
 						  E_OBJECT(bd), ev);
-	     if ((!bd->cur_mouse_action->func.end_mouse) &&
-		 (!bd->cur_mouse_action->func.end))
-	       bd->cur_mouse_action = NULL;
 	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	       {
+		  if ((!bd->cur_mouse_action->func.end_mouse) &&
+		      (!bd->cur_mouse_action->func.end))
+		    bd->cur_mouse_action = NULL;
+		  if (bd->cur_mouse_action)
+		    e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	       }
 	  }
 	e_focus_event_mouse_down(bd);
      }
