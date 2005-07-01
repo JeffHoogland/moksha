@@ -69,7 +69,6 @@ Some of the things (in very short form) that need to be done to E17...
   defined image data
 * implement a better dialog for things like "do you want to do X - yes or no?"
 * dialogs for generic contents too
-* tip/hint/suggestion dialog app (textblock etc.)
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
 * netwm frame extents request (_e_manager_cb_frame_extents_request) needs
@@ -119,7 +118,6 @@ Some of the things (in very short form) that need to be done to E17...
 * support text and color classes
 * add clientinfo pane/popdown for borders
 * add sliders, radio and check buttons for clientinfo pane
-* add tooltips
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
 * add really nice "about" box with theme, authors credits list etc etc.
@@ -173,6 +171,8 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* tip/hint/suggestion dialog app (textblock etc.)
+* add tooltips
 * add locale and encoding fields to eapp files (to launch eapp in that
   locale+encoding)
 * add input method selector stuff to eapp - same as locale
