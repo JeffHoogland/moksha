@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-/* FIXME: handle LANG!!!! */
-
 static void _e_help(void);
 
 /* externally accessible functions */
