@@ -3064,26 +3064,10 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
-/*   
-   if ((ev->mode == ECORE_X_EVENT_MODE_GRAB) &&
-       (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) &&
-       (ev->win == bd->event_win) &&
-       (ev->event_win == bd->win))
-     return 1;
-   else if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
-       (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL) &&
-       (ev->win == bd->event_win) &&
-       (ev->event_win == bd->win))
-     return 1;
- */
    if (grabbed) return 1;
    if (ev->event_win == bd->win)
      {
-	/* FIXME: this would normally put focus on the client on pointer */
-	/* focus - but click to focus it wouldnt */
 	e_focus_event_mouse_in(bd);
-//	e_border_focus_set(bd, 1, 1);
-//      e_border_raise(bd);
      }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
@@ -3132,39 +3116,31 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
-   /* FIXME: this would normally take focus away in pointer focus mode */
-//   if (ev->mode == ECORE_X_EVENT_MODE_UNGRAB) return 1;
    if (grabbed) return 1;
-	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
-	    (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR))
+   if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
+       (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR))
+     {
+	if (bd->cur_mouse_action)
 	  {
-	     if (bd->cur_mouse_action)
-	       {
-		  if (bd->cur_mouse_action->func.end_mouse)
-		    bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
-		  else if (bd->cur_mouse_action->func.end)
-		    bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
-		  e_object_unref(E_OBJECT(bd->cur_mouse_action));
-		  bd->cur_mouse_action = NULL;
-	       }
+	     if (bd->cur_mouse_action->func.end_mouse)
+	       bd->cur_mouse_action->func.end_mouse(E_OBJECT(bd), "", ev);
+	     else if (bd->cur_mouse_action->func.end)
+	       bd->cur_mouse_action->func.end(E_OBJECT(bd), "");
+	     e_object_unref(E_OBJECT(bd->cur_mouse_action));
+	     bd->cur_mouse_action = NULL;
 	  }
+     }
    if (ev->event_win == bd->win)
      {
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
-/* this is the out for pointer focus
-	if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
-	    (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL))
-	  return 1;
- */
 	if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
 	  return 1;
 	if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
 	e_focus_event_mouse_out(bd);
-	//e_border_focus_set(bd, 0, 1);
      }
    if (ev->win != bd->event_win) return 1;
    bd->mouse.current.mx = ev->root.x;
