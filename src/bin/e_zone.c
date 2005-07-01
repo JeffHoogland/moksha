@@ -574,6 +574,9 @@ _e_zone_cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_i
 	     zone->cur_mouse_action =
 	       e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_ZONE,
 						  E_OBJECT(zone), ev2);
+	     if ((!zone->cur_mouse_action->func.end_mouse) &&
+		 (!zone->cur_mouse_action->func.end))
+	       zone->cur_mouse_action = NULL;
 	     if (zone->cur_mouse_action)
 	       e_object_ref(E_OBJECT(zone->cur_mouse_action));
 	  }
