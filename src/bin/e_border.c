@@ -862,6 +862,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	edje_object_signal_emit(bd->bg_object, "passive", "");
 	e_focus_event_focus_out(bd);
+	/* FIXME: Sometimes we should leave the window fullscreen! */
 	if (bd->fullscreen)
 	  e_border_unfullscreen(bd);
      }

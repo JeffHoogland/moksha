@@ -79,14 +79,30 @@ void
 e_desk_show(E_Desk *desk)
 {
    E_Border_List     *bl;
-   int                x, y, was_zone = 0;
+   E_Border          *bd;
+   int                was_zone = 0;
+   int                x, y;
    E_Event_Desk_Show *ev;
-   E_Border *bd;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (desk->visible) return;
-   
+
+   for (x = 0; x < desk->zone->desk_x_count; x++)
+     {
+	for (y = 0; y < desk->zone->desk_y_count; y++)
+	  {
+	     E_Desk *desk2;
+
+	     desk2 = e_desk_at_xy_get(desk->zone,x, y);
+	     if (desk2->visible)
+	       {
+		  desk2->visible = 0;
+		  ecore_evas_hide(desk2->black_ecore_evas);
+	       }
+	  }
+     }
+
    bl = e_container_border_list_first(desk->zone->container);
    if (desk->zone->bg_object) was_zone = 1;
    while ((bd = e_container_border_list_next(bl)))
@@ -103,22 +119,8 @@ e_desk_show(E_Desk *desk)
      }
    e_container_border_list_free(bl);
    
-   for (x = 0; x < desk->zone->desk_x_count; x++)
-     {
-	for (y = 0; y < desk->zone->desk_y_count; y++)
-	  {
-	     E_Desk *desk2;
-
-	     desk2 = e_desk_at_xy_get(desk->zone,x, y);
-	     desk2->visible = 0;
-	     ecore_evas_hide(desk2->black_ecore_evas);
-	     if (desk2 == desk)
-	       {
-		  desk->zone->desk_x_current = x;
-		  desk->zone->desk_y_current = y;
-	       }
-	  }
-     }
+   desk->zone->desk_x_current = desk->x;
+   desk->zone->desk_y_current = desk->y;
    if (desk->fullscreen)
      {
 	ecore_evas_show(desk->black_ecore_evas);

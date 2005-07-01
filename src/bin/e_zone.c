@@ -346,12 +346,10 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    moved = 0;
    if (zone->desk_x_current >= xx)
      {
-	zone->desk_x_current = xx - 1;
 	moved = 1;
      }
    if (zone->desk_y_current >= yy)
      {
-	zone->desk_y_current = yy - 1;
 	moved = 1;
      }
    if (moved)
