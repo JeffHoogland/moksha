@@ -813,8 +813,6 @@ _pager_face_cb_event_border_add(void *data, int type, void *event)
    if (face->zone != ev->border->zone) return 1;
    if (_pager_face_border_find(face, ev->border))
      {
-	printf("BUG: _pager_face_cb_event_border_add()\n");
-	printf("     An already existing border shouldn't be added again\n");
 	return 1;
      }
 
