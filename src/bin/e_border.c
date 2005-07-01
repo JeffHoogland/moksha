@@ -566,7 +566,7 @@ e_border_hide(E_Border *bd, int manage)
 	_e_border_move_end(bd);
 	e_zone_flip_coords_handle(bd->zone, -1, -1);
      }
-   if (bd->fullscreen)
+   if ((bd->desk->visible) && (bd->fullscreen))
      e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
      {
