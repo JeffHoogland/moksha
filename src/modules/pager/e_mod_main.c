@@ -618,13 +618,10 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    if (visible) evas_object_show(o);
    e_layout_pack(pd->layout_object, pw->window_object);
    e_layout_child_raise(pw->window_object);
-   app = e_app_window_name_class_find(border->client.icccm.name,
-				      border->client.icccm.class);
-   if (app)
+   o = e_border_icon_add(border, pd->face->evas);
+   if (o)
      {
-	o = edje_object_add(pd->face->evas);
 	pw->icon_object = o;
-	edje_object_file_set(o, app->path, "icon");
 	evas_object_show(o);
 	edje_object_part_swallow(pw->window_object, "icon", o);
      }
@@ -1133,21 +1130,17 @@ _pager_face_cb_event_border_icon_change(void *data, int type, void *event)
 	if (pw)
 	  {
 	     E_App *app;
+	     Evas_Object *o;
 	     
 	     if (pw->icon_object)
 	       {
 		  evas_object_del(pw->icon_object);
 		  pw->icon_object = NULL;
 	       }
-	     app = e_app_window_name_class_find(ev->border->client.icccm.name,
-						ev->border->client.icccm.class);
-	     if (app)
+	     o = e_border_icon_add(ev->border, pd->face->evas);
+	     if (o)
 	       {
-		  Evas_Object *o;
-		  
-		  o = edje_object_add(pd->face->evas);
 		  pw->icon_object = o;
-		  edje_object_file_set(o, app->path, "icon");
 		  evas_object_show(o);
 		  edje_object_part_swallow(pw->window_object, "icon", o);
 	       }

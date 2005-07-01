@@ -16,6 +16,7 @@
 #include <sys/param.h>
 #include <dlfcn.h>
 #include <math.h>
+#include <fnmatch.h>
 
 #include <Evas.h>
 #include <Ecore.h>

@@ -22,6 +22,20 @@ AC_C___ATTRIBUTE__
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
+AC_CHECK_HEADERS(fnmatch.h,, AC_MSG_ERROR([Cannot find fnmatch.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
+
+AC_CHECK_FUNCS(fnmatch, res=yes, res=no)
+if test "x$res" = "xno"; then
+        AC_CHECK_LIB(fnmatch, fnmatch, res=yes, res=no)
+	if test "x$res" = "xno"; then
+		AC_MSG_ERROR([Cannot find fnmatch() in neither libc nor libfnmatch])
+        else
+	        fnmatch_libs="-lfnmatch"
+	fi
+fi
+				
+AC_SUBST(fnmatch_libs)
+				
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
@@ -185,7 +199,7 @@ AC_ARG_WITH(embryo-config,
 embryo_cflags=`$EMBRYO_CONFIG --cflags`
 embryo_libs=`$EMBRYO_CONFIG --libs`
 
-e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "$LIBINTL" "
+e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "$LIBINTL" "$fnmatch_libs" "
 e_cflags=$evas_cflags" "$ecore_cflags" "$edje_cflags" "$eet_cflags" "$embryo_cflags" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)

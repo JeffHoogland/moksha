@@ -120,3 +120,15 @@ e_util_utils_installed(void)
    return ecore_file_app_installed("emblem");
 }
 
+int
+e_util_glob_match(char *str, char *glob)
+{
+   if (glob[0] == 0)
+     {
+	if (str[0] == 0) return 1;
+	return 0;
+     }
+   if (!strcmp(glob, "*")) return 1;
+   if (!fnmatch(glob, str, 0)) return 1;
+   return 0;
+}

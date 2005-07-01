@@ -553,7 +553,10 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      {
 	E_Border *bd = l->data;
 	E_App *a;
-
+	char *title = "";
+	
+	if (bd->client.netwm.name) title = bd->client.netwm.name;
+	else title = bd->client.icccm.title;
 	mi = e_menu_item_new(m);
 	e_menu_item_check_set(mi, 1);
 	if (bd->client.netwm.name)
@@ -567,8 +570,9 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 	e_object_breadcrumb_add(E_OBJECT(bd), "clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
 	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
-	a = e_app_window_name_class_find(bd->client.icccm.name,
-					 bd->client.icccm.class);
+	a = e_app_window_name_class_title_find(bd->client.icccm.name,
+					       bd->client.icccm.class,
+					       title);
 	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
    mi = e_menu_item_new(m);
@@ -807,7 +811,10 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
      {
 	E_Border *bd = l->data;
 	E_App *a;
-
+	char *title = "";
+	
+	if (bd->client.netwm.name) title = bd->client.netwm.name;
+	else title = bd->client.icccm.title;
 	mi = e_menu_item_new(m);
 	if (bd->client.netwm.name)
 	  e_menu_item_label_set(mi, bd->client.netwm.name);
@@ -819,8 +826,9 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_object_ref(E_OBJECT(bd));
 	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
-	a = e_app_window_name_class_find(bd->client.icccm.name,
-					 bd->client.icccm.class);
+	a = e_app_window_name_class_title_find(bd->client.icccm.name,
+					       bd->client.icccm.class,
+					       title);
 	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
