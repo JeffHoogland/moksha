@@ -123,7 +123,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, show_splash, INT); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
-   E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd);
+   E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd); /**/
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
@@ -164,11 +164,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_resist, INT); /**/
    E_CONFIG_VAL(D, T, window_resist, INT); /**/
    E_CONFIG_VAL(D, T, gadget_resist, INT); /**/
-   E_CONFIG_VAL(D, T, winlist_warp_while_selecting, INT);
-   E_CONFIG_VAL(D, T, winlist_warp_at_end, INT);
-   E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE);
-   E_CONFIG_VAL(D, T, winlist_scroll_animate, INT);
-   E_CONFIG_VAL(D, T, winlist_scroll_speed, DOUBLE);
+   E_CONFIG_VAL(D, T, winlist_warp_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_warp_at_end, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, winlist_scroll_animate, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_list_show_iconified, INT);
    E_CONFIG_VAL(D, T, winlist_list_show_other_desk_windows, INT);
    E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT);

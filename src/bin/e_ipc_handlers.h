@@ -310,8 +310,6 @@ free(data);
           free(__v); \
        } \
        evas_list_free(dat); \
-    } else { \
-       printf("Decode FAILURE!!!\n"); \
     } \
     reply_count++; \
  } \
@@ -365,8 +363,6 @@ free(data);
           free(__v); \
        } \
        evas_list_free(dat); \
-    } else { \
-       printf("Decode FAILURE!!!\n"); \
     } \
     reply_count++; \
  } \
@@ -2906,6 +2902,211 @@ break;
    END_INT4_STRING2_LIST(v);
 #endif
 #undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_WARP_WHILE_SELECTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-while-selecting-set", 1, "Set winlist (alt+tab) warp while selecting policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_warp_while_selecting = policy;
+   E_CONFIG_LIMIT(e_config->winlist_warp_while_selecting, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_WHILE_SELECTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-while-selecting-get", 0, "Get winlist (alt+tab) warp while selecting policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_warp_while_selecting, E_IPC_OP_WINLIST_WARP_WHILE_SELECTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_WHILE_SELECTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_WARP_AT_END_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-at-end-set", 1, "Set winlist (alt+tab) warp at end policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_warp_at_end = policy;
+   E_CONFIG_LIMIT(e_config->winlist_warp_at_end, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_AT_END_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-at-end-get", 0, "Get winlist (alt+tab) warp at end policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_warp_at_end, E_IPC_OP_WINLIST_WARP_AT_END_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_AT_END_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_SPEED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-speed-set", 1, "Set winlist warp speed (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_warp_speed = val;
+   E_CONFIG_LIMIT(e_config->winlist_warp_speed, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_SPEED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-warp-speed-get", 0, "Get winlist warp speed", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_warp_speed, E_IPC_OP_WINLIST_WARP_SPEED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_WARP_SPEED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: SPEED=%3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_SCROLL_ANIMATE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-scroll-animate-set", 1, "Set winlist (alt+tab) scroll animate policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_scroll_animate = policy;
+   E_CONFIG_LIMIT(e_config->winlist_scroll_animate, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_SCROLL_ANIMATE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-scroll-animate-get", 0, "Get winlist (alt+tab) scroll animate policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_scroll_animate, E_IPC_OP_WINLIST_SCROLL_ANIMATE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_SCROLL_ANIMATE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_SCROLL_SPEED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-scroll-speed-set", 1, "Set winlist scroll speed (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_scroll_speed = val;
+   E_CONFIG_LIMIT(e_config->winlist_scroll_speed, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_SCROLL_SPEED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-scroll-speed-get", 0, "Get winlist scroll speed", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_scroll_speed, E_IPC_OP_WINLIST_SCROLL_SPEED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_SCROLL_SPEED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: SPEED=%3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+
 
 /****************************************************************************/
 
