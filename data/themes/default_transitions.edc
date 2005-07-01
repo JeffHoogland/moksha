@@ -82,11 +82,11 @@ group {
 	 description {
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    -32;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -1   31;
 	    }
 	    state: "default" 0.0;
 	 }
@@ -95,11 +95,11 @@ group {
 	    inherit: "default" 0.0;
 	    rel1 {
 	       relative: 0.0  1.0;
-	       offset:   0    0;
+	       offset:   0    31;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -1   31;
 	    }
 	 }
       }
@@ -111,11 +111,11 @@ group {
 	    state: "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    -32;
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
-	       offset:   -1   -1;
+	       offset:   -1   -32;
 	    }
 	 }
 	 description {
@@ -123,11 +123,11 @@ group {
 	    inherit: "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   0    -32;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -1   31;
 	    }
 	 }
       }
@@ -138,7 +138,6 @@ group {
 	    state: "default" 0.0;
 	    min: 0 64;
 	    max: 99999 64;
-	    align: 0.5 1.0;
 	    rel1 {
 	       to: "bg_prev_clip";
 	       relative: 0.0  0.0;
@@ -153,11 +152,6 @@ group {
 	       normal: "e17_transition_vswipe_gap.png";
 	    }
 	 }
-	 description {
-	    state: "done" 0.0;
-	    inherit: "default" 0.0;
-	    align: 0.5 0.0;
-	 }
       }
    }
    programs {
@@ -169,7 +163,6 @@ group {
 	 transition: SINUSOIDAL 1.0;
 	 target:  "bg_new_clip";
 	 target:  "bg_prev_clip";
-	 target:  "swipe_gap";
 	 after:   "go2";
       }
       program {
