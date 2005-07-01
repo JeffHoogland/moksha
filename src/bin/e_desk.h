@@ -20,7 +20,7 @@ struct _E_Desk
    char                *name;
    int                  x, y;
    char                 visible : 1;
-   char                 black : 1;
+   E_Border            *fullscreen;
 
    Evas_Object         *bg_object;
 
@@ -39,7 +39,7 @@ EAPI int          e_desk_shutdown(void);
 EAPI E_Desk      *e_desk_new(E_Zone *zone, int x, int y);
 EAPI void         e_desk_name_set(E_Desk *desk, const char *name);
 EAPI void         e_desk_show(E_Desk *desk);
-EAPI void         e_desk_black_set(E_Desk *desk, int set);
+EAPI void         e_desk_fullscreen_set(E_Desk *desk, E_Border *bd);
 EAPI E_Desk      *e_desk_current_get(E_Zone *zone);
 EAPI E_Desk      *e_desk_at_xy_get(E_Zone *zone, int x, int y);
 EAPI E_Desk      *e_desk_at_pos_get(E_Zone *zone, int pos);

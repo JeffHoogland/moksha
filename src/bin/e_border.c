@@ -1298,7 +1298,7 @@ e_border_fullscreen(E_Border *bd)
 	bd->client_inset.t = 0;
 	bd->client_inset.b = 0;
 
-	e_desk_black_set(bd->desk, 1);
+	e_desk_fullscreen_set(bd->desk, bd);
 
 	bd->layer = 200;
 	e_border_raise(bd);
@@ -1336,7 +1336,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client_inset.t = bd->client_inset.st;
 	bd->client_inset.b = bd->client_inset.sb;
 
-	e_desk_black_set(bd->desk, 0);
+	e_desk_fullscreen_set(bd->desk, NULL);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	ecore_evas_show(bd->bg_ecore_evas);
@@ -3091,12 +3091,15 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
-   if (grabbed) return 1;
    if (ev->event_win == bd->win)
      {
 	e_focus_event_mouse_in(bd);
      }
-   if (ev->win != bd->event_win) return 1;
+   if ((ev->win != bd->win) &&
+       (ev->win != bd->event_win) &&
+       (ev->event_win != bd->win) &&
+       (ev->event_win != bd->event_win))
+	 return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
@@ -3143,10 +3146,10 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	       details[ev->detail]);
      }
 #endif
-   if (grabbed) return 1;
-   
    if (ev->event_win == bd->win)
      {
+	if (bd->fullscreen)
+	  return 1;
 	if ((ev->mode == ECORE_X_EVENT_MODE_UNGRAB) &&
 	    (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
 	  return 1;
@@ -3157,7 +3160,11 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	  return 1;
 	e_focus_event_mouse_out(bd);
      }
-   if (ev->win != bd->event_win) return 1;
+   if ((ev->win != bd->win) &&
+       (ev->win != bd->event_win) &&
+       (ev->event_win != bd->win) &&
+       (ev->event_win != bd->event_win))
+     return 1;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
    evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);

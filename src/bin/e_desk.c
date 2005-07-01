@@ -119,10 +119,11 @@ e_desk_show(E_Desk *desk)
 	       }
 	  }
      }
-   if (desk->black)
+   if (desk->fullscreen)
      {
 	ecore_evas_show(desk->black_ecore_evas);
 	e_container_window_raise(desk->zone->container, desk->black_win, 150);
+	e_border_fullscreen(desk->fullscreen);
      }
    desk->visible = 1;
 
@@ -139,18 +140,18 @@ e_desk_show(E_Desk *desk)
 }
 
 void
-e_desk_black_set(E_Desk *desk, int set)
+e_desk_fullscreen_set(E_Desk *desk, E_Border *bd)
 {
-   if ((!desk->black) && (set))
+   if ((!desk->fullscreen) && (bd))
      {
 	ecore_evas_show(desk->black_ecore_evas);
 	e_container_window_raise(desk->zone->container, desk->black_win, 150);
-	desk->black = 1;
+	desk->fullscreen = bd;
      }
-   else if ((desk->black) && (!set))
+   else if ((desk->fullscreen) && (!bd))
      {
 	ecore_evas_hide(desk->black_ecore_evas);
-	desk->black = 0;
+	desk->fullscreen = NULL;
      }
 }
 
