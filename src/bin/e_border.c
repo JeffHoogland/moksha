@@ -45,7 +45,7 @@ static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
 
-static int _e_border_cb_zone_desk_flip(void *data, int ev_type, void *ev);
+static int _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
 
 static void _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -184,7 +184,7 @@ e_border_init(void)
    handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_SYNC_ALARM, _e_border_cb_sync_alarm, NULL));
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
-   handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_ZONE_DESK_FLIP, _e_border_cb_zone_desk_flip, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
@@ -2791,28 +2791,15 @@ _e_border_cb_sync_alarm(void *data, int ev_type, void *ev)
  * Calculate pos from e->x and e->y
  */
 static int
-_e_border_cb_zone_desk_flip(void *data, int ev_type, void *ev)
+_e_border_cb_pointer_warp(void *data, int ev_type, void *ev)
 {
-   E_Event_Zone_Desk_Flip *e;
+   E_Event_Pointer_Warp *e;
 
    e = ev;
    if (!move) return 1;
 
-   switch (e->direction)
-     {
-      case E_DIRECTION_UP:
-	 e_border_move(move, move->x, move->y + (move->zone->h - 2));
-	 break;
-      case E_DIRECTION_RIGHT:
-	 e_border_move(move, move->x - (move->zone->w - 2), move->y);
-	 break;
-      case E_DIRECTION_DOWN:
-	 e_border_move(move, move->x, move->y - (move->zone->h - 2));
-	 break;
-      case E_DIRECTION_LEFT:
-	 e_border_move(move, move->x + (move->zone->w - 2), move->y);
-	 break;
-     }
+   printf("warp: %d %d %d %d\n", e->curr.x, e->prev.x, e->curr.y, e->prev.y);
+   e_border_move(move, move->x + (e->curr.x - e->prev.x), move->y + (e->curr.y - e->prev.y));
 
    return 1;
 }

@@ -6,7 +6,8 @@
 typedef struct _E_Zone     E_Zone;
 
 typedef struct _E_Event_Zone_Desk_Count_Set     E_Event_Zone_Desk_Count_Set;
-typedef struct _E_Event_Zone_Desk_Flip          E_Event_Zone_Desk_Flip;
+/* TODO: Move this to a general place? */
+typedef struct _E_Event_Pointer_Warp            E_Event_Pointer_Warp;
 
 #else
 #ifndef E_ZONE_H
@@ -52,11 +53,14 @@ struct _E_Event_Zone_Desk_Count_Set
    E_Zone *zone;
 };
 
-struct _E_Event_Zone_Desk_Flip
+struct _E_Event_Pointer_Warp
 {
-   int x, y;
-   E_Direction direction;
-   E_Desk *prev, *current;
+   struct {
+	int x, y;
+   } prev;
+   struct {
+	int x, y;
+   } curr;
 };
 
 EAPI int        e_zone_init(void);
@@ -79,7 +83,7 @@ EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI int        e_zone_app_exec(E_Zone *zone, E_App *a);
     
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;
-extern EAPI int E_EVENT_ZONE_DESK_FLIP;
+extern EAPI int E_EVENT_POINTER_WARP;
 
 #endif
 #endif

@@ -24,7 +24,6 @@ static int  _e_main_cb_x_flusher(void *data);
 static int  _e_main_cb_idler_before(void *data);
 static int  _e_main_cb_idler_after(void *data);
 
-static int  _e_main_cb_startup_fake_status(void *data);
 static int  _e_main_cb_startup_fake_end(void *data);
 
 static void _e_main_desk_save(void);
