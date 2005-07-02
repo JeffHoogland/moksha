@@ -355,6 +355,105 @@ ACT_FN_GO(desk_linear_flip_to)
      }
 }
 
+#define ZONE_DESK_ACTION(con_num, zone_num, zone, act) \
+E_Zone *zone; \
+if ((con_num < 0) || (zone_num < 0)) { \
+   Evas_List *l, *ll, *lll; \
+   E_Container *con; \
+   E_Manager *man; \
+   if ((con_num >= 0) && (zone_num < 0)) /* con=1 zone=all */ { \
+	con = e_util_container_number_get(con_num); \
+	for (l = con->zones; l; l = l->next) { \
+	   zone = l->data; \
+	   act; \
+	} } \
+   else if ((con_num < 0) && (zone_num >= 0)) /* con=all zone=1 */ { \
+	for (l = e_manager_list(); l; l = l->next) { \
+	   man = l->data; \
+	   for (ll = man->containers; ll; ll = ll->next) { \
+	      con = ll->data; \
+	      zone = e_container_zone_number_get(con, zone_num); \
+	      if (zone) \
+		act; \
+	   } } } \
+   else if ((con_num < 0) && (zone_num < 0)) /* con=all zone=all */ { \
+      for (l = e_manager_list(); l; l = l->next) { \
+	 man = l->data; \
+	 for (ll = man->containers; ll; ll = ll->next) { \
+	    con = ll->data; \
+	    for (lll = con->zones; lll; lll = lll->next) { \
+	       zone = lll->data; \
+	       act; \
+	    } } } } } \
+else { \
+   zone = e_util_container_zone_number_get(con_num, zone_num); \
+   if (zone) act; \
+}
+
+/***************************************************************************/
+ACT_FN_GO(zone_desk_flip_by)
+{
+   if (params)
+     {
+	int con_num = 0, zone_num = 0;
+	int dx = 0, dy = 0;
+	
+	if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &dx, &dy) == 4)
+	  {
+	     ZONE_DESK_ACTION(con_num, zone_num, zone,
+			      e_zone_desk_flip_by(zone, dx, dy));
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(zone_desk_flip_to)
+{
+   if (params)
+     {
+	int con_num = 0, zone_num = 0;
+	int dx = 0, dy = 0;
+	
+	if (sscanf(params, "%i %i %i %i", &con_num, &zone_num, &dx, &dy) == 4)
+	  {
+	     ZONE_DESK_ACTION(con_num, zone_num, zone,
+			      e_zone_desk_flip_to(zone, dx, dy));
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(zone_desk_linear_flip_by)
+{
+   if (params)
+     {
+	int con_num = 0, zone_num = 0;
+	int dx = 0;
+	
+	if (sscanf(params, "%i %i %i", &con_num, &zone_num, &dx) == 3)
+	  {
+	     ZONE_DESK_ACTION(con_num, zone_num, zone,
+			      e_zone_desk_linear_flip_by(zone, dx));
+	  }
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(zone_desk_linear_flip_to)
+{
+   if (params)
+     {
+	int con_num = 0, zone_num = 0;
+	int dx = 0;
+	
+	if (sscanf(params, "%i %i %i", &con_num, &zone_num, &dx) == 3)
+	  {
+	     ZONE_DESK_ACTION(con_num, zone_num, zone,
+			      e_zone_desk_linear_flip_to(zone, dx));
+	  }
+     }
+}
+
 /***************************************************************************/
 static void
 _e_actions_cb_menu_end(void *data, E_Menu *m)

@@ -83,7 +83,6 @@ Some of the things (in very short form) that need to be done to E17...
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in
-* add actions to flip desktops on a given zone and/or container only
 * break out desks x/y size config so you can have a different desktop size
   per zone - right now there is a signle global (use this later as the default
   for new/unconfigured zones)

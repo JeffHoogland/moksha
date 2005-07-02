@@ -132,3 +132,30 @@ e_util_glob_match(char *str, char *glob)
    if (!fnmatch(glob, str, 0)) return 1;
    return 0;
 }
+
+E_Container *
+e_util_container_number_get(int num)
+{
+   Evas_List *l;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	E_Manager *man;
+	E_Container *con;
+	
+	man = l->data;
+	con = e_manager_container_number_get(man, num);
+	if (con) return con;
+     }
+   return NULL;
+}
+
+E_Zone *
+e_util_container_zone_number_get(int con_num, int zone_num)
+{
+   E_Container *con;
+   
+   con = e_util_container_number_get(con_num);
+   if (!con) return NULL;
+   return e_container_zone_number_get(con, zone_num);
+}
