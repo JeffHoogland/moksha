@@ -169,28 +169,28 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_scroll_animate, INT); /**/
    E_CONFIG_VAL(D, T, winlist_scroll_speed, DOUBLE); /**/
-   E_CONFIG_VAL(D, T, winlist_list_show_iconified, INT);
-   E_CONFIG_VAL(D, T, winlist_list_show_other_desk_windows, INT);
-   E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT);
-   E_CONFIG_VAL(D, T, winlist_list_uncover_while_selecting, INT);
-   E_CONFIG_VAL(D, T, winlist_list_jump_desk_while_selecting, INT);
-   E_CONFIG_VAL(D, T, winlist_pos_align_x, DOUBLE);
-   E_CONFIG_VAL(D, T, winlist_pos_align_y, DOUBLE);
-   E_CONFIG_VAL(D, T, winlist_pos_size_w, DOUBLE);
-   E_CONFIG_VAL(D, T, winlist_pos_size_h, DOUBLE);
-   E_CONFIG_VAL(D, T, winlist_pos_min_w, INT);
-   E_CONFIG_VAL(D, T, winlist_pos_min_h, INT);
-   E_CONFIG_VAL(D, T, winlist_pos_max_w, INT);
-   E_CONFIG_VAL(D, T, winlist_pos_max_h, INT);
+   E_CONFIG_VAL(D, T, winlist_list_show_iconified, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_show_other_desk_windows, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_uncover_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_jump_desk_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_align_x, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_align_y, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_size_w, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_size_h, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_min_w, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_min_h, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_max_w, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_pos_max_h, INT); /**/
    E_CONFIG_VAL(D, T, maximize_policy, INT); /**/
-   E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT);
-   E_CONFIG_VAL(D, T, kill_process, INT);
-   E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE);
-   E_CONFIG_VAL(D, T, ping_clients, INT);
-   E_CONFIG_VAL(D, T, ping_clients_wait, DOUBLE);
-   E_CONFIG_VAL(D, T, transition_start, STR);
-   E_CONFIG_VAL(D, T, transition_desk, STR);
-   E_CONFIG_VAL(D, T, transition_change, STR);
+   E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT); /**/
+   E_CONFIG_VAL(D, T, kill_process, INT); /**/
+   E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, ping_clients, INT); /**/
+   E_CONFIG_VAL(D, T, ping_clients_wait, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, transition_start, STR); /**/
+   E_CONFIG_VAL(D, T, transition_desk, STR); /**/
+   E_CONFIG_VAL(D, T, transition_change, STR); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)

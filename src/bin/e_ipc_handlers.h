@@ -1906,7 +1906,8 @@ break;
 #endif
 #undef HDL
 
-/***************/
+/****************************************************************************/
+
 #define HDL E_IPC_OP_BINDING_MOUSE_LIST 
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2087,11 +2088,9 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
-/*****/
 
+/****************************************************************************/
 
-
-/***************/
 #define HDL E_IPC_OP_BINDING_MOUSE_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -2370,11 +2369,9 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
-/*****/
 
+/****************************************************************************/
 
-
-/***************/
 #define HDL E_IPC_OP_BINDING_KEY_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
    /* e_remote define command line args */
@@ -3106,10 +3103,862 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_ICONIFIED_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-iconified-set", 1, "Set whether winlist (alt+tab) will show iconfied windows", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_show_iconified = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_show_iconified, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_ICONIFIED_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-iconified-get", 0, "Get whether winlist (alt+tab) will show iconfied windows", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_show_iconified, E_IPC_OP_WINLIST_LIST_SHOW_ICONIFIED_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_ICONIFIED_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-desk-windows-set", 1, "Set whether winlist (alt+tab) will show other desk windows", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_show_other_desk_windows = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_desk_windows, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-desk-windows-get", 0, "Get winlist (alt+tab) show other desk windows", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_show_other_desk_windows, E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_DESK_WINDOWS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_WINDOWS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-screen-windows-set", 1, "Set winlist (alt+tab) show other screen windows policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_show_other_screen_windows = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_show_other_screen_windows, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_WINDOWS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-show-other-screen-windows-get", 0, "Get winlist (alt+tab) show other screen windows policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_show_other_screen_windows, E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_WINDOWS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_SHOW_OTHER_SCREEN_WINDOWS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_UNCOVER_WHILE_SELECTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-uncover-while-selecting-set", 1, "Set whether winlist (alt+tab) will show iconified windows while selecting", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_uncover_while_selecting = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_uncover_while_selecting, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_UNCOVER_WHILE_SELECTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-uncover-while-selecting-get", 0, "Get whether winlist (alt+tab) will show iconified windows while selecting", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_uncover_while_selecting, E_IPC_OP_WINLIST_LIST_UNCOVER_WHILE_SELECTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_UNCOVER_WHILE_SELECTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: POLICY=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_JUMP_DESK_WHILE_SELECTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-jump-desk-while-selecting-set", 1, "Set winlist (alt+tab) jump desk while selecting policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_jump_desk_while_selecting = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_jump_desk_while_selecting, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_JUMP_DESK_WHILE_SELECTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-jump-desk-while-selecting-get", 0, "Get winlist (alt+tab) jump desk while selecting policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_jump_desk_while_selecting, E_IPC_OP_WINLIST_LIST_JUMP_DESK_WHILE_SELECTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_JUMP_DESK_WHILE_SELECTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_X_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-align-x-set", 1, "Set winlist position align for x axis (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_pos_align_x = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_align_x, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_X_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-align-x-get", 0, "Get winlist position align for x axis", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_pos_align_x, E_IPC_OP_WINLIST_POS_ALIGN_X_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_X_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_Y_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-align-y-set", 1, "Set winlist position align for y axis (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_pos_align_y = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_align_y, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_Y_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-align-y-get", 0, "Get winlist position align for y axis", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_pos_align_y, E_IPC_OP_WINLIST_POS_ALIGN_Y_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_ALIGN_Y_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_W_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-size-w-set", 1, "Set winlist position size width (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_pos_size_w = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_size_w, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_W_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-size-w-get", 0, "Get winlist position size width", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_pos_size_w, E_IPC_OP_WINLIST_POS_SIZE_W_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_W_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_H_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-size-h-set", 1, "Set winlist position size height (0.0-1.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->winlist_pos_size_h = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_size_h, 0.0, 1.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_H_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-size-h-get", 0, "Get winlist position size height", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->winlist_pos_size_h, E_IPC_OP_WINLIST_POS_SIZE_H_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_SIZE_H_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_POS_MIN_W_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-min-w-set", 1, "Set winlist (alt+tab) minimum width", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->winlist_pos_min_w = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_min_w, 0, 4000);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MIN_W_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-min-w-get", 0, "Get winlist (alt+tab) minimum width", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_pos_min_w, E_IPC_OP_WINLIST_POS_MIN_W_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MIN_W_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_POS_MIN_H_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-min-h-set", 1, "Set winlist (alt+tab) minimum height", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->winlist_pos_min_h = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_min_h, 0, 4000);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MIN_H_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-min-h-get", 0, "Get winlist (alt+tab) minimum height", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_pos_min_h, E_IPC_OP_WINLIST_POS_MIN_H_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MIN_H_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_POS_MAX_W_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-max-w-set", 1, "Set winlist (alt+tab) maximum width", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->winlist_pos_max_w = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_max_w, 8, 4000);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MAX_W_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-max-w-get", 0, "Get winlist (alt+tab) maximum width", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_pos_max_w, E_IPC_OP_WINLIST_POS_MAX_W_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MAX_W_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_POS_MAX_H_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-max-h-set", 1, "Set winlist (alt+tab) maximum height", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->winlist_pos_max_h = val;
+   E_CONFIG_LIMIT(e_config->winlist_pos_max_h, 8, 4000);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MAX_H_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-pos-max-h-get", 0, "Get winlist (alt+tab) maximum height", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_pos_max_h, E_IPC_OP_WINLIST_POS_MAX_H_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_POS_MAX_H_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_KILL_IF_CLOSE_NOT_POSSIBLE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-if-close-not-possible-set", 1, "Set whether E should kill an application if it can not close", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->kill_if_close_not_possible = val;
+   E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_IF_CLOSE_NOT_POSSIBLE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-if-close-not-possible-get", 0, "Get whether E should kill an application if it can not close", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->kill_if_close_not_possible, E_IPC_OP_KILL_IF_CLOSE_NOT_POSSIBLE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_IF_CLOSE_NOT_POSSIBLE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: KILL=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_KILL_PROCESS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-process-set", 1, "Set whether E should kill the process directly or through x", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->kill_process = val;
+   E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_PROCESS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-process-get", 0, "Get whether E should kill the process directly or through x", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->kill_process, E_IPC_OP_KILL_PROCESS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_PROCESS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: KILL=%d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_TIMER_WAIT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-timer-wait-set", 1, "Set interval to wait before killing client (0.0-120.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->kill_timer_wait = val;
+   E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_TIMER_WAIT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-kill-timer-wait-get", 0, "Get interval to wait before killing client", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->kill_timer_wait, E_IPC_OP_KILL_TIMER_WAIT_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_KILL_TIMER_WAIT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
 
 
 /****************************************************************************/
 
+#define HDL E_IPC_OP_PING_CLIENTS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-ping-clients-set", 1, "Set whether E should ping clients", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->ping_clients = val;
+   E_CONFIG_LIMIT(e_config->ping_clients, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PING_CLIENTS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-ping-clients-get", 0, "Get whether E should ping clients", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->ping_clients, E_IPC_OP_PING_CLIENTS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PING_CLIENTS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PING_CLIENTS_WAIT_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-ping-clients-wait-set", 1, "Set client ping interval (0.0-120.0)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(val, HDL);
+   e_config->ping_clients_wait = val;
+   E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PING_CLIENTS_WAIT_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-ping-clients-wait-get", 0, "Get client ping interval", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->ping_clients_wait, E_IPC_OP_PING_CLIENTS_WAIT_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PING_CLIENTS_WAIT_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(val, HDL);
+   printf("REPLY: %3.3f\n", val);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_START_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-start-set", 1, "Get the background transition used when E starts", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   E_FREE(e_config->transition_start);
+   e_config->transition_start = strdup(s);
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_START_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-start-get", 0, "Get the background transition used when E starts", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->transition_start, E_IPC_OP_TRANSITION_START_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_START_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+ 
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_DESK_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-desk-set", 1, "Set the transition used when switching desktops", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   E_FREE(e_config->transition_desk);
+   e_config->transition_desk = strdup(s);
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_DESK_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-desk-get", 0, "Get the transition used when switching desktops", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->transition_desk, E_IPC_OP_TRANSITION_DESK_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_DESK_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#elif (TYPE == E_LIB_IN)
+#endif
+#undef HDL
+ 
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_CHANGE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-change-set", 1, "Set the transition used when changing backgrounds", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   E_FREE(e_config->transition_change);
+   e_config->transition_change = strdup(s);
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_CHANGE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-change-get", 0, "Get the transition used when changing backgrounds", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config->transition_change, E_IPC_OP_TRANSITION_CHANGE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_CHANGE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#endif
+#undef HDL
+ 
 #if 0
 }
 #endif
