@@ -374,7 +374,7 @@ msgstr "Activé"
 
 #: src/bin/e_gadman.c:596
 msgid "End Edit Mode"
-msgstr "Quiter le mode d'édition"
+msgstr "Quitter le mode d'édition"
 
 #: src/bin/e_main.c:472
 msgid "Enlightenment"
