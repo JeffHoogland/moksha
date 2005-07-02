@@ -47,6 +47,7 @@ e_container_new(E_Manager *man)
    Evas_List *l, *screens;
    int i;
    Ecore_X_Window mwin;
+   static int container_num = 0;
    
    con = E_OBJECT_ALLOC(E_Container, E_CONTAINER_TYPE, _e_container_free);
    if (!con) return NULL;
@@ -99,7 +100,8 @@ e_container_new(E_Manager *man)
    
    e_pointer_container_set(con);
 
-   con->num = evas_list_count(con->manager->containers) - 1;
+   con->num = container_num;
+   container_num++;
    snprintf(name, sizeof(name), _("Container %d"), con->num);
    con->name = strdup(name);
 
