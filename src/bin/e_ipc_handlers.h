@@ -3958,6 +3958,66 @@ break;
    END_STRING(s);
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_SETTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-setting-set", 1, "Set the focus setting policy (\"NONE\", \"NEW_WINDOW\", \"NEW_DIALOG\", \"NEW_DIALOG_IF_OWNER_FOCUSED\")", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "NONE")) value = E_FOCUS_NONE;
+   else if (!strcmp(params[0], "NEW_WINDOW")) value = E_FOCUS_NEW_WINDOW;
+   else if (!strcmp(params[0], "NEW_DIALOG")) value = E_FOCUS_NEW_DIALOG;
+   else if (!strcmp(params[0], "NEW_DIALOG_IF_OWNER_FOCUSED")) value = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
+   else
+     {
+	 printf("focus setting must be \"NONE\", \"NEW_WINDOW\", \"NEW_DIALOG\", \"NEW_DIALOG_IF_OWNER_FOCUSED\"\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_border_button_bindings_ungrab_all();
+   e_config->focus_setting = value;
+   E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
+   e_border_button_bindings_grab_all();
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_SETTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-setting-get", 0, "Get the focus setting policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->focus_setting, E_IPC_OP_FOCUS_SETTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_SETTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(setting, HDL);
+   if (setting == E_FOCUS_NONE)
+     printf("REPLY: NONE\n");
+   else if (setting == E_FOCUS_NEW_WINDOW)
+     printf("REPLY: NEW_WINDOW\n");
+   else if (setting == E_FOCUS_NEW_DIALOG)
+     printf("REPLY: NEW_DIALOG\n");
+   else if (setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)
+     printf("REPLY: NEW_DIALOG_IF_OWNER_FOCUSED\n");
+   END_INT
+#endif
+#undef HDL
  
 #if 0
 }
