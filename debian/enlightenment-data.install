@@ -5,3 +5,4 @@ usr/share/enlightenment/data/themes/*.edj
 usr/share/enlightenment/data/init/*.edj
 usr/share/enlightenment/data/other/*
 usr/share/locale
+usr/share/xsessions

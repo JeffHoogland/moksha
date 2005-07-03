@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-06-23 10:23+0800\n"
-"PO-Revision-Date: 2005-06-23 10:30+0800\n"
+"POT-Creation-Date: 2005-07-02 23:36+0800\n"
+"PO-Revision-Date: 2005-07-02 23:40+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -24,19 +24,19 @@ msgstr "%i 兆赫兹"
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/bin/e_int_menus.c:728
+#: src/bin/e_int_menus.c:753
 msgid "(Empty)"
 msgstr "（空）"
 
-#: src/bin/e_int_menus.c:367
+#: src/bin/e_int_menus.c:375
 msgid "(No Applications)"
 msgstr "（无应用程序）"
 
-#: src/bin/e_int_menus.c:541 src/bin/e_int_menus.c:783
+#: src/bin/e_int_menus.c:549 src/bin/e_int_menus.c:808
 msgid "(No Windows)"
 msgstr "（无窗口）"
 
-#: src/bin/e_int_menus.c:638
+#: src/bin/e_int_menus.c:663
 msgid "(Unused)"
 msgstr "（未使用）"
 
@@ -48,11 +48,11 @@ msgstr "一小时"
 msgid "10 mins"
 msgstr "10分钟"
 
-#: src/modules/temperature/e_mod_main.c:598
+#: src/modules/temperature/e_mod_main.c:603
 msgid "100C"
 msgstr "100度"
 
-#: src/modules/temperature/e_mod_main.c:502
+#: src/modules/temperature/e_mod_main.c:507
 msgid "10C"
 msgstr "10度"
 
@@ -60,8 +60,8 @@ msgstr "10度"
 msgid "20 mins"
 msgstr "20分钟"
 
-#: src/modules/temperature/e_mod_main.c:509
-#: src/modules/temperature/e_mod_main.c:542
+#: src/modules/temperature/e_mod_main.c:514
+#: src/modules/temperature/e_mod_main.c:547
 msgid "20C"
 msgstr "20度"
 
@@ -69,8 +69,8 @@ msgstr "20度"
 msgid "30 mins"
 msgstr "30分钟"
 
-#: src/modules/temperature/e_mod_main.c:516
-#: src/modules/temperature/e_mod_main.c:549
+#: src/modules/temperature/e_mod_main.c:521
+#: src/modules/temperature/e_mod_main.c:554
 msgid "30C"
 msgstr "30度"
 
@@ -78,8 +78,8 @@ msgstr "30度"
 msgid "40 mins"
 msgstr "40分钟"
 
-#: src/modules/temperature/e_mod_main.c:523
-#: src/modules/temperature/e_mod_main.c:556
+#: src/modules/temperature/e_mod_main.c:528
+#: src/modules/temperature/e_mod_main.c:561
 msgid "40C"
 msgstr "40度"
 
@@ -87,24 +87,24 @@ msgstr "40度"
 msgid "50 mins"
 msgstr "50分钟"
 
-#: src/modules/temperature/e_mod_main.c:530
-#: src/modules/temperature/e_mod_main.c:563
+#: src/modules/temperature/e_mod_main.c:535
+#: src/modules/temperature/e_mod_main.c:568
 msgid "50C"
 msgstr "50度"
 
-#: src/modules/temperature/e_mod_main.c:570
+#: src/modules/temperature/e_mod_main.c:575
 msgid "60C"
 msgstr "60度"
 
-#: src/modules/temperature/e_mod_main.c:577
+#: src/modules/temperature/e_mod_main.c:582
 msgid "70C"
 msgstr "70度"
 
-#: src/modules/temperature/e_mod_main.c:584
+#: src/modules/temperature/e_mod_main.c:589
 msgid "80C"
 msgstr "80度"
 
-#: src/modules/temperature/e_mod_main.c:591
+#: src/modules/temperature/e_mod_main.c:596
 msgid "90C"
 msgstr "90度"
 
@@ -119,7 +119,7 @@ msgstr ""
 "监视您的电池和交流电源适配器状态。仅能在Linux下工作，\n"
 "且依赖于您的BIOS和内核驱动。"
 
-#: src/modules/temperature/e_mod_main.c:97
+#: src/modules/temperature/e_mod_main.c:102
 msgid ""
 "A module to measure the ACPI Thermal sensor on Linux.\n"
 "It is especially useful for modern Laptops with high speed\n"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "A simple module to give E17 a clock."
 msgstr "一个给E17提供时钟的简单模块。"
 
-#: src/bin/e_int_menus.c:135 src/bin/e_int_menus.c:297
+#: src/bin/e_int_menus.c:135 src/bin/e_int_menus.c:305
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
@@ -153,7 +153,7 @@ msgstr "关于 Enlightenment"
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_border.c:4687
+#: src/bin/e_border.c:4898
 msgid "Always On Top"
 msgstr "置顶"
 
@@ -185,7 +185,7 @@ msgstr "电池"
 msgid "Battery Running Low"
 msgstr "电池电量低"
 
-#: src/bin/e_border.c:4697
+#: src/bin/e_border.c:4908
 msgid "Borderless"
 msgstr "无边框"
 
@@ -217,8 +217,8 @@ msgstr "频繁检查（0.5秒）"
 msgid "Check Fast (1 sec)"
 msgstr "频繁检查（1秒）"
 
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:610
+#: src/modules/temperature/e_mod_main.c:189
+#: src/modules/temperature/e_mod_main.c:615
 msgid "Check Interval"
 msgstr "检查间隔"
 
@@ -254,7 +254,7 @@ msgstr "极缓慢检查（30秒）"
 msgid "Check Very Slow (60 sec)"
 msgstr "极缓慢检查（60秒）"
 
-#: src/bin/e_int_menus.c:569
+#: src/bin/e_int_menus.c:583
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
@@ -262,7 +262,7 @@ msgstr "重新排列窗口"
 msgid "Clock"
 msgstr "时钟"
 
-#: src/bin/e_border.c:4628
+#: src/bin/e_border.c:4839
 msgid "Close"
 msgstr "关闭"
 
@@ -270,11 +270,11 @@ msgstr "关闭"
 msgid "Configuration"
 msgstr "配置"
 
-#: src/bin/e_config.c:1072
+#: src/bin/e_config.c:1107
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
 
-#: src/bin/e_config.c:181
+#: src/bin/e_config.c:203
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -294,7 +294,7 @@ msgstr ""
 "配置您的桌面设置。\n"
 "很抱歉打断了您的配置。\n"
 
-#: src/bin/e_container.c:103
+#: src/bin/e_container.c:105
 #, c-format
 msgid "Container %d"
 msgstr "容器 %d"
@@ -303,7 +303,7 @@ msgstr "容器 %d"
 msgid "CpuFreq"
 msgstr "CPU频率"
 
-#: src/bin/e_border.c:4764
+#: src/bin/e_border.c:4979
 msgid "Create Icon"
 msgstr "创建图标"
 
@@ -336,14 +336,14 @@ msgstr "以后不显示这个启动屏幕？"
 msgid "Dropshadow"
 msgstr "阴影"
 
-#: src/bin/e_border.c:4738
+#: src/bin/e_border.c:4953
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_int_menus.c:632 src/modules/battery/e_mod_main.c:561
+#: src/bin/e_int_menus.c:657 src/modules/battery/e_mod_main.c:561
 #: src/modules/clock/e_mod_main.c:309 src/modules/cpufreq/e_mod_main.c:810
 #: src/modules/ibar/e_mod_main.c:610 src/modules/pager/e_mod_main.c:437
-#: src/modules/temperature/e_mod_main.c:723 src/modules/ibox/e_mod_main.c:457
+#: src/modules/temperature/e_mod_main.c:728 src/modules/ibox/e_mod_main.c:457
 #: src/modules/start/e_mod_main.c:233
 msgid "Edit Mode"
 msgstr "编辑模式"
@@ -356,7 +356,7 @@ msgstr "启用"
 msgid "End Edit Mode"
 msgstr "结束编辑模式"
 
-#: src/bin/e_main.c:472
+#: src/bin/e_main.c:482
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -380,7 +380,7 @@ msgstr "Enlightenment IBar 模块"
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox 模块"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:465
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
@@ -392,11 +392,11 @@ msgstr "Enlightenment桌面切换器模块"
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment开始菜单模块"
 
-#: src/bin/e_main.c:474
+#: src/bin/e_main.c:484
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
-#: src/modules/temperature/e_mod_main.c:96
+#: src/modules/temperature/e_mod_main.c:101
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment 温度模块"
 
@@ -404,7 +404,7 @@ msgstr "Enlightenment 温度模块"
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment 测试模块"
 
-#: src/bin/e_main.c:208
+#: src/bin/e_main.c:218
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -412,7 +412,7 @@ msgstr ""
 "Enlightenment 无法启动Ecore！\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:309
+#: src/bin/e_main.c:319
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -420,7 +420,7 @@ msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
 "可能您没有主目录或者磁盘已满？"
 
-#: src/bin/e_main.c:235
+#: src/bin/e_main.c:245
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -428,7 +428,7 @@ msgstr ""
 "Enlightenment 无法启动X连接。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:243
+#: src/bin/e_main.c:253
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -436,7 +436,7 @@ msgstr ""
 "Enlightenment 无法启动紧急警报系统。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:282
+#: src/bin/e_main.c:292
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -444,7 +444,7 @@ msgstr ""
 "Enlightenment 无法启动Evas系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:297
+#: src/bin/e_main.c:307
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -452,7 +452,7 @@ msgstr ""
 "Enlightenment 无法启动文件系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:274
+#: src/bin/e_main.c:284
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -460,7 +460,7 @@ msgstr ""
 "Enlightenment 无法启动IPC系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:266
+#: src/bin/e_main.c:276
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -468,7 +468,7 @@ msgstr ""
 "Enlightenment 无法启动连接系统。\n"
 "可能您的内存用完了？<"
 
-#: src/bin/e_main.c:224
+#: src/bin/e_main.c:234
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -476,7 +476,7 @@ msgstr ""
 "Enlightenment 无法建立一个HUP信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:218
+#: src/bin/e_main.c:228
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -484,7 +484,7 @@ msgstr ""
 "Enlightenment 无法建立一个退出信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:369
+#: src/bin/e_main.c:379
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -492,55 +492,55 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:332
+#: src/bin/e_main.c:342
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 无法建立它的动作系统。"
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:388
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment 无法建立它的应用系统。"
 
-#: src/bin/e_main.c:339
+#: src/bin/e_main.c:349
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
-#: src/bin/e_main.c:317
+#: src/bin/e_main.c:327
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:428
+#: src/bin/e_main.c:438
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
-#: src/bin/e_main.c:357
+#: src/bin/e_main.c:367
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:435
-msgid "Enlightenment cannot set up its inptu grab handling system."
+#: src/bin/e_main.c:445
+msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment 无法建立它的输入捕获处理系统。"
 
-#: src/bin/e_main.c:442
+#: src/bin/e_main.c:452
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:431
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment 无法建立它的消息系统。"
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:356
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 无法建立它的弹出系统。"
 
-#: src/bin/e_main.c:396
+#: src/bin/e_main.c:395
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 无法建立它的主题系统。"
 
-#: src/bin/e_main.c:449
+#: src/bin/e_main.c:459
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment 无法建立它的窗口列表系统。"
 
-#: src/bin/e_main.c:324
+#: src/bin/e_main.c:334
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -548,10 +548,10 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:408 src/bin/e_main.c:456
+#: src/bin/e_main.c:418 src/bin/e_main.c:466
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
 "Double check to see if Enlightenment is not already on this display,\n"
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
@@ -562,7 +562,7 @@ msgstr ""
 "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 "然后再试着运行一遍。"
 
-#: src/bin/e_main.c:250
+#: src/bin/e_main.c:260
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -570,7 +570,7 @@ msgstr ""
 "Enlightenment 无法建立xinerama wrapping。\n"
 "这种情况不该发生。"
 
-#: src/bin/e_main.c:288
+#: src/bin/e_main.c:298
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -580,13 +580,43 @@ msgstr ""
 "渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
 "件X11渲染。"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:402
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
+
+#: src/bin/e_apps.c:266
+#, c-format
+msgid ""
+"Enlightenment was unable fork a child process\n"
+"to run the execute line:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"Enlightenment无法创建一个子进程\n"
+"来运行指定命令行：\n"
+"\n"
+"%s\n"
+"\n"
+
+#: src/bin/e_apps.c:1034
+#, c-format
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
+msgstr ""
+"Enlightenment无法运行程序：\n"
+"\n"
+"%s\n"
+"\n"
+"程序找不到\n"
 
 #: src/bin/e_error.c:364
 msgid "Enlightenment: Error!"
@@ -674,7 +704,7 @@ msgstr ""
 "Enlightenment给的模块版本号：%i 。\n"
 "中止模块。"
 
-#: src/modules/temperature/e_mod_main.c:44
+#: src/modules/temperature/e_mod_main.c:49
 #, c-format
 msgid ""
 "Error initializing Module: Temperature\n"
@@ -730,7 +760,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_border.c:4842
+#: src/bin/e_border.c:5057
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -766,7 +796,7 @@ msgstr "满"
 msgid "Far"
 msgstr "远"
 
-#: src/modules/temperature/e_mod_main.c:462
+#: src/modules/temperature/e_mod_main.c:467
 msgid "Fast (1 sec)"
 msgstr "快 （1秒）"
 
@@ -786,7 +816,7 @@ msgstr "全屏幕高度"
 msgid "Full Screen Width"
 msgstr "全屏幕宽度"
 
-#: src/bin/e_border.c:4707
+#: src/bin/e_border.c:4918
 msgid "Fullscreen"
 msgstr "全屏"
 
@@ -814,8 +844,8 @@ msgstr "半屏幕宽度"
 msgid "High"
 msgstr "高"
 
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:618
+#: src/modules/temperature/e_mod_main.c:197
+#: src/modules/temperature/e_mod_main.c:623
 msgid "High Temperature"
 msgstr "高温"
 
@@ -831,11 +861,11 @@ msgstr "IBar"
 msgid "IBox"
 msgstr "IBox"
 
-#: src/bin/e_border.c:4841
+#: src/bin/e_border.c:5056
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:4636
+#: src/bin/e_border.c:4847
 msgid "Iconify"
 msgstr "最小化"
 
@@ -843,7 +873,7 @@ msgstr "最小化"
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/bin/e_border.c:4647
+#: src/bin/e_border.c:4858
 msgid "Kill"
 msgstr "杀死"
 
@@ -863,8 +893,8 @@ msgstr "丢失的窗口"
 msgid "Low"
 msgstr "低"
 
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:614
+#: src/modules/temperature/e_mod_main.c:193
+#: src/modules/temperature/e_mod_main.c:619
 msgid "Low Temperature"
 msgstr "低温"
 
@@ -872,7 +902,7 @@ msgstr "低温"
 msgid "Manual"
 msgstr "手动"
 
-#: src/bin/e_border.c:4667
+#: src/bin/e_border.c:4878
 msgid "Maximized"
 msgstr "最大化"
 
@@ -885,7 +915,7 @@ msgstr "最高速"
 msgid "Medium"
 msgstr "中等"
 
-#: src/modules/temperature/e_mod_main.c:469
+#: src/modules/temperature/e_mod_main.c:474
 msgid "Medium (5 sec)"
 msgstr "中等 （5秒）"
 
@@ -900,7 +930,7 @@ msgstr "最低速"
 #: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
 #: src/modules/cpufreq/e_mod_main.c:57 src/modules/dropshadow/e_mod_main.c:91
 #: src/modules/ibar/e_mod_main.c:119 src/modules/pager/e_mod_main.c:84
-#: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
+#: src/modules/temperature/e_mod_main.c:48 src/modules/test/e_mod_main.c:9
 #: src/modules/ibox/e_mod_main.c:103 src/modules/start/e_mod_main.c:28
 msgid "Module API Error"
 msgstr "模块API错误"
@@ -933,19 +963,19 @@ msgstr "没有信息"
 msgid "Near"
 msgstr "近"
 
-#: src/bin/e_int_menus.c:457
+#: src/bin/e_int_menus.c:465
 msgid "New Column of Desktops"
 msgstr "新建一列桌面"
 
-#: src/bin/e_int_menus.c:449
+#: src/bin/e_int_menus.c:457
 msgid "New Row of Desktops"
 msgstr "新建一行桌面"
 
-#: src/bin/e_int_menus.c:556 src/bin/e_int_menus.c:797
+#: src/bin/e_int_menus.c:567 src/bin/e_int_menus.c:825
 msgid "No name!!"
-msgstr ""
+msgstr "无名！！"
 
-#: src/modules/temperature/e_mod_main.c:476
+#: src/modules/temperature/e_mod_main.c:481
 msgid "Normal (10 sec)"
 msgstr "正常 （10秒）"
 
@@ -958,7 +988,7 @@ msgstr "确定"
 msgid "Options"
 msgstr "选项"
 
-#: src/bin/e_main.c:156
+#: src/bin/e_main.c:166
 #, c-format
 msgid ""
 "Options:\n"
@@ -1001,11 +1031,11 @@ msgstr ""
 msgid "Pager"
 msgstr "桌面切换器"
 
-#: src/bin/e_int_menus.c:461
+#: src/bin/e_int_menus.c:469
 msgid "Remove Column of Desktops"
 msgstr "删除一列桌面"
 
-#: src/bin/e_int_menus.c:453
+#: src/bin/e_int_menus.c:461
 msgid "Remove Row of Desktops"
 msgstr "删除一行桌面"
 
@@ -1017,11 +1047,15 @@ msgstr "重启 Enlightenment"
 msgid "Run Command"
 msgstr "运行命令"
 
+#: src/bin/e_apps.c:265 src/bin/e_apps.c:1033
+msgid "Run Error"
+msgstr "运行时错误"
+
 #: src/bin/e_winlist.c:115
 msgid "Select a window"
 msgstr "选择一个窗口"
 
-#: src/bin/e_border.c:4720
+#: src/bin/e_border.c:4931
 msgid "Send To"
 msgstr "发送到"
 
@@ -1042,7 +1076,7 @@ msgstr "设置检查时间"
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/bin/e_border.c:4657
+#: src/bin/e_border.c:4868
 msgid "Shaded"
 msgstr "卷起"
 
@@ -1055,7 +1089,7 @@ msgstr "清晰"
 msgid "Size"
 msgstr "大小"
 
-#: src/modules/temperature/e_mod_main.c:483
+#: src/modules/temperature/e_mod_main.c:488
 msgid "Slow (30 sec)"
 msgstr "慢 （30秒）"
 
@@ -1071,11 +1105,11 @@ msgstr "一些其它东西"
 msgid "Start"
 msgstr "开始菜单"
 
-#: src/bin/e_border.c:4677
+#: src/bin/e_border.c:4888
 msgid "Sticky"
 msgstr "粘住"
 
-#: src/modules/temperature/e_mod_main.c:87
+#: src/modules/temperature/e_mod_main.c:92
 msgid "Temperature"
 msgstr "温度"
 
@@ -1128,7 +1162,7 @@ msgstr ""
 "试着通过模块的 setfreq 功能设定CPU频率设置时\n"
 "时发生一个错误。"
 
-#: src/bin/e_int_menus.c:298
+#: src/bin/e_int_menus.c:306
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
@@ -1221,7 +1255,7 @@ msgstr "很近"
 msgid "Very Sharp"
 msgstr "很清晰"
 
-#: src/modules/temperature/e_mod_main.c:490
+#: src/modules/temperature/e_mod_main.c:495
 msgid "Very Slow (60 sec)"
 msgstr "很慢 （60秒）"
 
@@ -1246,7 +1280,7 @@ msgstr ""
 "您的电池电量低。\n"
 "您可能需要切换到使用交流电源。"
 
-#: src/bin/e_config.c:195
+#: src/bin/e_config.c:217
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
