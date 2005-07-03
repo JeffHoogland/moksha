@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Enlightenment
+Comment=Log in using Enlightenment (Version @VERSION@)
+Type=XSession
+Exec=@bindir@/enlightenment
+TryExec=@bindir@/enlightenment
