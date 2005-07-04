@@ -40,6 +40,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* add window placement optiond like place at pointer
+* add option like "focus all new windows" etc.
 * shaded windows should not allow border changes by the user
 * if a border is borderless it should not be allowed to be shaded (padl/r/t/b
   is 0)

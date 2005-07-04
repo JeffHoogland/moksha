@@ -1581,6 +1581,7 @@ e_border_clients_get()
 void
 e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
+   if (bd->lock_user_location) return;
    if (!bd->moving)
      {
 	if (!_e_border_move_begin(bd))
@@ -1611,6 +1612,7 @@ e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 void
 e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
+   if (bd->lock_user_size) return;
    if (bd->resize_mode == RESIZE_NONE)
      {
 	if (!_e_border_resize_begin(bd))
@@ -2165,10 +2167,18 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 		    e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
 		    e->w, e->h);
 #endif
-	     e_border_move_resize(bd, x, y, w, h);
+	     if ((!bd->lock_client_location) && (!bd->lock_client_size))
+	       e_border_move_resize(bd, x, y, w, h);
+	     else if (!bd->lock_client_location)
+	       e_border_move(bd, x, y);
+	     else if (!bd->lock_client_size)
+	       e_border_resize(bd, w, h);
 	  }
 	else
-	  e_border_move(bd, x, y);
+	  {
+	     if (!bd->lock_client_location)
+	       e_border_move(bd, x, y);
+	  }
      }
    else if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ||
 	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H))
@@ -2188,7 +2198,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H,
 	       e->w, e->h);
 #endif
-	e_border_resize(bd, w, h);
+	if (!bd->lock_client_size)
+	  e_border_resize(bd, w, h);
      }
    if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
        (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING))
@@ -5471,7 +5482,8 @@ _e_border_resize_begin(E_Border *bd)
    int w, h;
 
    e_border_raise(bd);
-   if ((bd->shaded) || (bd->shading) || (bd->maximized) || (bd->fullscreen))
+   if ((bd->shaded) || (bd->shading) || (bd->maximized) || (bd->fullscreen) ||
+       (bd->lock_user_size))
      return 0;
 
    if ((bd->client.icccm.base_w >= 0) &&
@@ -5543,7 +5555,7 @@ static int
 _e_border_move_begin(E_Border *bd)
 {
    e_border_raise(bd);
-   if ((bd->maximized) || (bd->fullscreen))
+   if ((bd->maximized) || (bd->fullscreen) || (bd->lock_user_location))
      return 0;
 
    if (grabbed)
