@@ -40,6 +40,9 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* shaded windows should not allow border changes by the user
+* if a border is borderless it should not be allowed to be shaded (padl/r/t/b
+  is 0)
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thses maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
@@ -199,8 +202,6 @@ Some of the things (in very short form) that need to be done to E17...
   OPTIMISATIONS
 -------------------------------------------------------------------------------
 
-* could speedup dropshadow's gaussian blurr with mmx and sse by doign 2 or 4
-  rows at once
 * optimize clock theme (speed/cpu) (rotation in edje??? or evas???)
 ]]]
 

@@ -1,6 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+/* i measure a mere 9% speedup using mmx for simd sums. :(
+ * need to detect mmx capbale cpu's to enable this though
+#define MMX 1
+*/
+
 /* TODO List:
  * 
  * * bug in shadow_x < 0 and shadow_y < 0 needs to be fixed (not urgent though)
@@ -99,6 +104,23 @@ e_modapi_init(E_Module *m)
      }
    ds = _ds_init(m);
    m->config_menu = _ds_config_menu_new(ds);
+/*   
+     {
+	Shpix *sh;
+	double t1, t2;
+	int i;
+	
+	sh = _ds_shpix_new(1000, 1000);
+	t1 = ecore_time_get();
+	for (i = 0; i < 100; i++)
+	  {
+	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size);
+	  }
+	t2 = ecore_time_get();
+	printf("blur time: %3.3f\n", t2 -t1);
+	_ds_shpix_free(sh);
+     }
+ */
    return ds;
 }
 
@@ -1470,12 +1492,36 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	     for (y = ry; y < ryy; y++)
 	       {
 		  p1 = pp;
+#ifdef MMX
+		  /* sum 4 pixels at once */
+		  pxor_r2r(mm7, mm7); // mm7 = 00000000
+		  pxor_r2r(mm2, mm2); // mm2 = 00000000
+		  for (l = 0; l <= (l2 - 3); l += 4)
+		    {
+		       movd_m2r(((int *)p1)[0], mm0); // mm0 = 0000abcd
+		       movd_m2r(((int *)(&lut[l]))[0], mm1); // mm1 = 0000wxyz
+		       punpcklbw_r2r(mm2, mm0); // mm0 = 0a0b0c0d
+		       punpcklbw_r2r(mm2, mm1); // mm1 = 0w0x0y0z
+		       pmaddwd_r2r(mm0, mm1); // mm1 = (a * w) + (b * x) | (c * y) + (d * z)
+		       paddd_r2r(mm1, mm7); // mm7 += (c * y) + (d * z)
+		       psrlq_i2r(32, mm1); // mm0 = 0000 | (a * w) + (b * x)
+		       paddd_r2r(mm1, mm7); // mm7 += (a * w) + (b * x)
+		       p1 += 4;
+		    }
+		  movd_r2m(mm7, sum); // sum = mm7
+		  for (; l <= l2; l++)
+		    {
+		       sum += (int)(*p1) * (int)lut[l];
+		       p1++;
+		    }
+#else
 		  sum = 0;
 		  for (l = 0; l <= l2; l++)
 		    {
 		       sum += (int)(*p1) * (int)lut[l];
 		       p1++;
 		    }
+#endif		       
 		  *p2 = sum / full;
 		  p2 += pix_w;
 		  pp += pix_w;
@@ -1501,13 +1547,16 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	       }
 	  }
      }
+#ifdef MMX
+   emms();
+#endif   
 }
 
 static void
 _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
-   int i, sum, weight, l, l1, l2, wt, y1, y2;
+   int i, sum, weight, l, l1, l2, wt, y1, y2, tpix;
    unsigned char *p1, *p2, *pp;
    int full, usefull;
    
@@ -1542,12 +1591,39 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	     for (x = rx; x < rxx; x++)
 	       {
 		  p1 = pp;
+#ifdef MMX
+		  /* sum 4 pixels at once */
+		  pxor_r2r(mm7, mm7); // mm7 = 00000000
+		  pxor_r2r(mm2, mm2); // mm2 = 00000000
+		  for (l = 0; l <= (l2 - 3); l += 4)
+		    {
+		       tpix = (p1[0]); p1 += pix_w;
+		       tpix |= (p1[0] << 8); p1 += pix_w;
+		       tpix |= (p1[0] << 16); p1 += pix_w;
+		       tpix |= (p1[0] << 24); p1 += pix_w;
+		       movd_m2r(tpix, mm0); // mm0 = 0000abcd
+		       movd_m2r(((int *)(&lut[l]))[0], mm1); // mm1 = 0000wxyz
+		       punpcklbw_r2r(mm2, mm0); // mm0 = 0a0b0c0d
+		       punpcklbw_r2r(mm2, mm1); // mm1 = 0w0x0y0z
+		       pmaddwd_r2r(mm0, mm1); // mm1 = (a * w) + (b * x) | (c * y) + (d * z)
+		       paddd_r2r(mm1, mm7); // mm7 += (c * y) + (d * z)
+		       psrlq_i2r(32, mm1); // mm0 = 0000 | (a * w) + (b * x)
+		       paddd_r2r(mm1, mm7); // mm7 += (a * w) + (b * x)
+		    }
+		  movd_r2m(mm7, sum); // sum = mm7
+		  for (; l <= l2; l++)
+		    {
+		       sum += (int)(*p1) * (int)lut[l];
+		       p1 += pix_w;
+		    }
+#else
 		  sum = 0;
 		  for (l = 0; l <= l2; l++)
 		    {
 		       sum += (int)(*p1) * (int)lut[l];
 		       p1 += pix_w;
 		    }
+#endif		  
 		  *p2 = sum / full;
 		  p2++;
 		  pp++;
@@ -1573,6 +1649,9 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	       }
 	  }
      }
+#ifdef MMX
+   emms();
+#endif   
 }
 
 static Shpix *
@@ -1765,7 +1844,7 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 {
    unsigned char *p;
    unsigned int *pix2, *p2;
-   int xx, yy, jump;
+   int xx, yy, jump, pix;
 
    if (!sp) return;
    if (!o) return;
@@ -1799,17 +1878,43 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 	p2 = pix2;
 	for (yy = 0; yy < h; yy++)
 	  {
+#ifdef MMX
+	     /* expand 2 pixels at once */
+	     for (xx = 0; xx < (w - 1); xx += 2)
+	       {
+		  pix = (p[1] << 24) | (p[0] << 8);
+		  movd_m2r(pix, mm1); // mm1 = A0a0
+		  pxor_r2r(mm0, mm0); // mm0 = 00000000
+		  punpcklbw_r2r(mm1, mm0); // mm0 = A000a000
+		  movq_r2m(mm0, p2[0]); // *p2 = mm0;
+		  p2 += 2;
+		  p += 2;
+	       }
+	     for (; xx < w; xx++)
+	       {
+		  *p2 = ((*p) << 24);
+		  p2++;
+		  p++;
+	       }
+#else
 	     for (xx = 0; xx < w; xx++)
 	       {
 		  *p2 = ((*p) << 24);
 		  p2++;
 		  p++;
 	       }
+#endif	     
 	     p += jump;
 	  }
 	evas_object_image_data_set(o, pix2);
 	evas_object_image_data_update_add(o, 0, 0, w, h);
      }
+#ifdef MMX
+   /* we did mmx stuff - cleanup */
+   emms();
+#else
+#endif
+   
 }
 
 static void

@@ -4886,6 +4886,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_toggle_set(mi, bd->var); \
    e_menu_item_callback_set(mi, _e_border_menu_cb_##var, bd);
 
+   /* FIXME: 1 big menu right now - mayeb layer make it 3 submenus? */
    NEW_LOCK_MI("Position (User)", lock_user_location);
    NEW_LOCK_MI("Size (User)", lock_user_size);
    NEW_LOCK_MI("Stacking (User)", lock_user_stacking);

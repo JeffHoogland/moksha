@@ -12,6 +12,7 @@ bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
 ENLIGHTENMENTHEADERS = \
 e.h \
 e_includes.h \
+e_mmx.h \
 e_ipc_handlers.h \
 e_ipc_handlers_list.h \
 e_user.h \
