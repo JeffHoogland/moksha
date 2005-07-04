@@ -58,14 +58,16 @@ ACT_FN_GO(window_move)
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_move_begin((E_Border *)obj, NULL);
+   if (!((E_Border *)obj)->lock_user_location)
+     e_border_act_move_begin((E_Border *)obj, NULL);
 }
 ACT_FN_GO_MOUSE(window_move)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_move_begin((E_Border *)obj, ev);
+   if (!((E_Border *)obj)->lock_user_location)
+     e_border_act_move_begin((E_Border *)obj, ev);
 }
 ACT_FN_END(window_move)
 {
@@ -88,14 +90,16 @@ ACT_FN_GO(window_resize)
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_resize_begin((E_Border *)obj, NULL);
+   if (!((E_Border *)obj)->lock_user_size)
+     e_border_act_resize_begin((E_Border *)obj, NULL);
 }
 ACT_FN_GO_MOUSE(window_resize)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
    if (obj->type != E_BORDER_TYPE) return;
-   e_border_act_resize_begin((E_Border *)obj, ev);
+   if (!((E_Border *)obj)->lock_user_size)
+     e_border_act_resize_begin((E_Border *)obj, ev);
 }
 ACT_FN_END(window_resize)
 {
@@ -157,7 +161,8 @@ ACT_FN_GO(window_raise)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   e_border_raise((E_Border *)obj);
+   if (!((E_Border *)obj)->lock_user_stacking)
+     e_border_raise((E_Border *)obj);
 }
 
 /***************************************************************************/
@@ -170,7 +175,8 @@ ACT_FN_GO(window_lower)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   e_border_lower((E_Border *)obj);
+   if (!((E_Border *)obj)->lock_user_stacking)
+     e_border_lower((E_Border *)obj);
 }
 
 /***************************************************************************/
@@ -183,7 +189,8 @@ ACT_FN_GO(window_close)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   e_border_act_close_begin((E_Border *)obj);
+   if (!((E_Border *)obj)->lock_close)
+     e_border_act_close_begin((E_Border *)obj);
 }
 
 /***************************************************************************/
@@ -196,7 +203,8 @@ ACT_FN_GO(window_kill)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
-   e_border_act_kill_begin((E_Border *)obj);
+   if (!((E_Border *)obj)->lock_close)
+     e_border_act_kill_begin((E_Border *)obj);
 }
 
 /***************************************************************************/
@@ -209,6 +217,7 @@ ACT_FN_GO(window_sticky_toggle)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   if (!((E_Border *)obj)->lock_user_sticky)
      {
 	E_Border *bd;
 	
@@ -228,6 +237,7 @@ ACT_FN_GO(window_iconic_toggle)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   if (!((E_Border *)obj)->lock_user_iconify)
      {
 	E_Border *bd;
 	
@@ -247,6 +257,7 @@ ACT_FN_GO(window_maximized_toggle)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   if (!((E_Border *)obj)->lock_user_maximize)
      {
 	E_Border *bd;
 	
@@ -266,6 +277,7 @@ ACT_FN_GO(window_shaded_toggle)
 	obj = E_OBJECT(e_border_focused_get());
 	if (!obj) return;
      }
+   if (!((E_Border *)obj)->lock_user_shade)
      {
 	E_Border *bd;
 	

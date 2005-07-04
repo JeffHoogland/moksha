@@ -133,7 +133,11 @@ e_winlist_show(E_Zone *zone)
      }
    
    bd = e_border_focused_get();
-   if (bd) e_border_focus_set(bd, 0, 0);
+   if (bd)
+     {
+	if (!bd->lock_focus_out)
+	  e_border_focus_set(bd, 0, 0);
+     }
    _e_winlist_activate_nth(1);
    evas_event_thaw(winlist->evas);
    _e_winlist_size_adjust();
@@ -232,14 +236,24 @@ e_winlist_hide(void)
      }
    if (bd)
      {
-	if (bd->iconic) e_border_uniconify(bd);
-	if (bd->shaded) e_border_unshade(bd, bd->shade.dir);
+	if (bd->iconic)
+	  {
+	     if (!bd->lock_user_iconify)
+	       e_border_uniconify(bd);
+	  }
+	if (bd->shaded)
+	  {
+	     if (!bd->lock_user_shade)
+	       e_border_unshade(bd, bd->shade.dir);
+	  }
 	else if (bd->desk)
 	  {
 	     if (!bd->sticky) e_desk_show(bd->desk);
 	  }
-	e_border_raise(bd);
-	e_border_focus_set(bd, 1, 1);
+	if (!bd->lock_user_stacking)
+	  e_border_raise(bd);
+	if (!bd->lock_focus_in)
+	  e_border_focus_set(bd, 1, 1);
 	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
 	    (e_config->winlist_warp_at_end) ||
 	    (e_config->winlist_warp_while_selecting))
@@ -474,7 +488,8 @@ _e_winlist_activate(void)
    if ((ww->border->iconic) &&
        (e_config->winlist_list_uncover_while_selecting))
      {
-	e_border_uniconify(ww->border);
+	if (!ww->border->lock_user_iconify)
+	  e_border_uniconify(ww->border);
 	ww->was_iconified = 1;
 	ok = 1;
      }
@@ -492,7 +507,8 @@ _e_winlist_activate(void)
        (ww->border->desk == e_desk_current_get(winlist->zone)) &&
        (e_config->winlist_list_uncover_while_selecting))
      {
-	e_border_unshade(ww->border, ww->border->shade.dir);
+	if (!ww->border->lock_user_shade)
+	  e_border_unshade(ww->border, ww->border->shade.dir);
 	ww->was_shaded = 1;
 	ok = 1;
      }
@@ -513,8 +529,10 @@ _e_winlist_activate(void)
 	     if (!animator)
 	       animator = ecore_animator_add(_e_winlist_animator, NULL);
 	  }
-	e_border_raise(ww->border);
-	e_border_focus_set(ww->border, 1, 1);
+	if (!ww->border->lock_user_stacking)
+	  e_border_raise(ww->border);
+	if (!ww->border->lock_focus_out)
+	  e_border_focus_set(ww->border, 1, 1);
      }
    if (ww->border->client.netwm.name)
      edje_object_part_text_set(bg_object, "title_text", ww->border->client.netwm.name);
@@ -544,9 +562,15 @@ _e_winlist_deactivate(void)
    if (!win_selected) return;
    ww = win_selected->data;
    if (ww->was_shaded)
-     e_border_shade(ww->border, ww->border->shade.dir);
+     {
+	if (!ww->border->lock_user_shade)
+	  e_border_shade(ww->border, ww->border->shade.dir);
+     }
    if (ww->was_iconified)
-     e_border_iconify(ww->border);
+     {
+	if (!ww->border->lock_user_iconify)
+	  e_border_iconify(ww->border);
+     }
    ww->was_shaded = 0;
    ww->was_iconified = 0;
    if (icon_object)
@@ -556,7 +580,8 @@ _e_winlist_deactivate(void)
      }
    edje_object_part_text_set(bg_object, "title_text", "");
    edje_object_signal_emit(ww->bg_object, "passive", "");
-   e_border_focus_set(ww->border, 0, 0);
+   if (!ww->border->lock_focus_in)
+     e_border_focus_set(ww->border, 0, 0);
 }
 
 static void

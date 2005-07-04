@@ -8,6 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* e_hints.c manually changes flags on a border isnetad of calling
+  e_border_stick() for exampe or the calls in e_border.c - add calls as needed
+  to e_border.c. before calling check the lock flags too.
 * BUG: in general fullscreen needs work, cleaning and testing. dont allow
   desktop switches for the desk a fullscreened window is on, nor allow windows
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
@@ -40,8 +43,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* add window placement optiond like place at pointer
-* add option like "focus all new windows" etc.
+* add window placement options like place at pointer
 * shaded windows should not allow border changes by the user
 * if a border is borderless it should not be allowed to be shaded (padl/r/t/b
   is 0)

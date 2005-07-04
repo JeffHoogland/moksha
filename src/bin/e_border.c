@@ -1686,6 +1686,7 @@ e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int k
 void
 e_border_act_close_begin(E_Border *bd)
 {
+   if (bd->lock_close) return;
    if (bd->client.icccm.delete_request)
      {
 	bd->delete_requested = 1;
@@ -1700,6 +1701,7 @@ e_border_act_close_begin(E_Border *bd)
 void
 e_border_act_kill_begin(E_Border *bd)
 {
+   if (bd->lock_close) return;
    if ((bd->client.netwm.pid > 1) && (e_config->kill_process))
      {
 	kill(bd->client.netwm.pid, SIGINT);
@@ -2030,12 +2032,16 @@ _e_border_cb_window_show_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
    if (bd->iconic)
-     e_border_uniconify(bd);
+     {
+	if (!bd->lock_client_iconify)
+	  e_border_uniconify(bd);
+     }
    else
      {
 	/* FIXME: make border "urgent" for a bit - it wants attention */
 /*	e_border_show(bd); */
-	e_border_raise(bd);
+	if (!bd->lock_client_stacking)
+	  e_border_raise(bd);
      }
    return 1;
 }
@@ -2201,57 +2207,60 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	if (!bd->lock_client_size)
 	  e_border_resize(bd, w, h);
      }
-   if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
-       (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING))
+   if (!bd->lock_client_stacking)
      {
-	E_Border *obd;
-
-	if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+	if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) &&
+	    (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING))
 	  {
-	     obd = e_border_find_by_client_window(e->abovewin);
-	     if (obd)
-	       e_border_stack_above(bd, obd);
+	     E_Border *obd;
+	     
+	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+	       {
+		  obd = e_border_find_by_client_window(e->abovewin);
+		  if (obd)
+		    e_border_stack_above(bd, obd);
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	       {
+		  obd = e_border_find_by_client_window(e->abovewin);
+		  if (obd)
+		    e_border_stack_below(bd, obd);
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
+	       {
+		  /* FIXME: do */
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
+	       {
+		  /* FIXME: do */
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
+	       {
+		  /* FIXME: do */
+	       }
 	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	else if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE)
 	  {
-	     obd = e_border_find_by_client_window(e->abovewin);
-	     if (obd)
-	       e_border_stack_below(bd, obd);
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
-	  {
-	     /* FIXME: do */
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
-	  {
-	     /* FIXME: do */
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
-	  {
-	     /* FIXME: do */
-	  }
-     }
-   else if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE)
-     {
-	if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
-	  {
-	     e_border_raise(bd);
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
-	  {
-	     e_border_lower(bd);
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
-	  {
-	     /* FIXME: do */
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
-	  {
-	     /* FIXME: do */
-	  }
-	else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
-	  {
-	     /* FIXME: do */
+	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+	       {
+		  e_border_raise(bd);
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	       {
+		  e_border_lower(bd);
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
+	       {
+		  /* FIXME: do */
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
+	       {
+		  /* FIXME: do */
+	       }
+	     else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
+	       {
+		  /* FIXME: do */
+	       }
 	  }
      }
    return 1;
@@ -2656,7 +2665,8 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
    bd->moveinfo.down.my = e->y;
    grabbed = 1;
 
-   e_border_raise(bd);
+   if (!bd->lock_user_stacking)
+     e_border_raise(bd);
    if (e->direction == RESIZE_TL)
      {
 	if (!_e_border_resize_begin(bd))
@@ -3036,37 +3046,56 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 
    if (!strcmp(source, "close"))
      {
-	e_border_act_close_begin(bd);
+	if (!bd->lock_close)
+	  e_border_act_close_begin(bd);
      }
    else if (!strcmp(source, "shade_up") || !strcmp(source, "shade"))
      {
-	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
-	else e_border_shade(bd, E_DIRECTION_UP);
+	if (!bd->lock_user_shade)
+	  {
+	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
+	     else e_border_shade(bd, E_DIRECTION_UP);
+	  }
      }
    else if (!strcmp(source, "shade_down"))
      {
-	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_DOWN);
-	else e_border_shade(bd, E_DIRECTION_DOWN);
+	if (!bd->lock_user_shade)
+	  {
+	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_DOWN);
+	     else e_border_shade(bd, E_DIRECTION_DOWN);
+	  }
      }
    else if (!strcmp(source, "shade_left"))
      {
-	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_LEFT);
-	else e_border_shade(bd, E_DIRECTION_LEFT);
+	if (!bd->lock_user_shade)
+	  {
+	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_LEFT);
+	     else e_border_shade(bd, E_DIRECTION_LEFT);
+	  }
      }
    else if (!strcmp(source, "shade_right"))
      {
-	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_RIGHT);
-	else e_border_shade(bd, E_DIRECTION_RIGHT);
+	if (!bd->lock_user_shade)
+	  {
+	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_RIGHT);
+	     else e_border_shade(bd, E_DIRECTION_RIGHT);
+	  }
      }
    else if (!strcmp(source, "maximize"))
      {
-	if (bd->maximized) e_border_unmaximize(bd);
-	else e_border_maximize(bd, e_config->maximize_policy);
+	if (!bd->lock_user_maximize)
+	  {
+	     if (bd->maximized) e_border_unmaximize(bd);
+	     else e_border_maximize(bd, e_config->maximize_policy);
+	  }
      }
    else if (!strcmp(source, "iconify"))
      {
-	if (bd->iconic) e_border_uniconify(bd);
-	else e_border_iconify(bd);
+	if (!bd->lock_user_iconify)
+	  {
+	     if (bd->iconic) e_border_uniconify(bd);
+	     else e_border_iconify(bd);
+	  }
      }
    else if (!strcmp(source, "menu"))
      {
@@ -3075,9 +3104,15 @@ _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, c
 	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
 	_e_border_menu_show(bd, x + bd->x, y + bd->y, 0);
      }
+   else if (!strcmp(source, "raise"))
+     {
+	if (!bd->lock_user_stacking)
+	  e_border_raise(bd);
+     }
    else if (!strcmp(source, "lower"))
      {
-	e_border_lower(bd);
+	if (!bd->lock_user_stacking)
+	  e_border_lower(bd);
      }
 }
 
@@ -3666,27 +3701,30 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.type)
      {
 	e_hints_window_type_get(bd);
-	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+	if ((!bd->lock_border) || (!bd->client.border.name))
 	  {
-	     if (bd->client.border.name) free(bd->client.border.name);
-	     bd->client.border.name = strdup("borderless");
-	     bd->client.border.changed = 1;
-	  }
-	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
-	  {
-	     if (bd->client.border.name) free(bd->client.border.name);
-	     bd->client.border.name = strdup("borderless");
-	     bd->client.border.changed = 1;
-
-	     if (!bd->client.netwm.state.skip_pager)
+	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
 	       {
-		  bd->client.netwm.state.skip_pager = 1;
-		  bd->client.netwm.update.state = 1;
+		  if (bd->client.border.name) free(bd->client.border.name);
+		  bd->client.border.name = strdup("borderless");
+		  bd->client.border.changed = 1;
 	       }
-	     if (!bd->client.netwm.state.skip_taskbar)
+	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
 	       {
-		  bd->client.netwm.state.skip_taskbar = 1;
-		  bd->client.netwm.update.state = 1;
+		  if (bd->client.border.name) free(bd->client.border.name);
+		  bd->client.border.name = strdup("borderless");
+		  bd->client.border.changed = 1;
+		  
+		  if (!bd->client.netwm.state.skip_pager)
+		    {
+		       bd->client.netwm.state.skip_pager = 1;
+		       bd->client.netwm.update.state = 1;
+		    }
+		  if (!bd->client.netwm.state.skip_taskbar)
+		    {
+		       bd->client.netwm.state.skip_taskbar = 1;
+		       bd->client.netwm.update.state = 1;
+		    }
 	       }
 	  }
 
@@ -3820,14 +3858,17 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (bd->client.mwm.borderless != pb)
 	  {
-	     if (bd->client.border.name) free(bd->client.border.name);
-	     if (bd->client.mwm.borderless)
-	       bd->client.border.name = strdup("borderless");
-	     else
-	       bd->client.border.name = strdup("default");
+	     if ((!bd->lock_border) || (!bd->client.border.name))
+	       {
+		  if (bd->client.border.name) free(bd->client.border.name);
+		  if (bd->client.mwm.borderless)
+		    bd->client.border.name = strdup("borderless");
+		  else
+		    bd->client.border.name = strdup("default");
 //	     if (bd->client.mwm.borderless)
 //	       printf("client %s borderless\n", bd->client.icccm.title);
-	     bd->client.border.changed = 1;
+		  bd->client.border.changed = 1;
+	       }
 	  }
 	bd->client.mwm.fetch.hints = 0;
      }
@@ -4512,7 +4553,10 @@ _e_border_eval(E_Border *bd)
    if (bd->take_focus)
      {
 	if (e_config->focus_setting == E_FOCUS_NEW_WINDOW)
-	  e_border_focus_set(bd, 1, 1);
+	  {
+	     if (!bd->lock_focus_out)
+	       e_border_focus_set(bd, 1, 1);
+	  }
 	else
 	  {
 	     if (bd->client.icccm.transient_for != 0)
@@ -4522,7 +4566,10 @@ _e_border_eval(E_Border *bd)
 		      ((e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED) &&
 		       (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
 			e_border_focused_get())))
-		    e_border_focus_set(bd, 1, 1);
+		    {
+		       if (!bd->lock_focus_out)
+			 e_border_focus_set(bd, 1, 1);
+		    }
 	       }
 	  }
 	bd->take_focus = 0;
@@ -4931,94 +4978,121 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Close"));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-   e_menu_item_icon_edje_set(mi, 
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/close"), 
-			     "widgets/border/default/close");
+   if (!bd->lock_close)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Close"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
+	e_menu_item_icon_edje_set(mi, 
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/close"), 
+				  "widgets/border/default/close");
+     }
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Iconify"));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/minimize"),
-			     "widgets/border/default/minimize");
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Kill"));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
-   e_menu_item_icon_edje_set(mi, 
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/kill"),
-			     "widgets/border/default/kill");
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   if (!bd->lock_user_iconify)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Iconify"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/minimize"),
+				  "widgets/border/default/minimize");
+     }
    
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Shaded"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/shade"),
-			     "widgets/border/default/shade");
+   e_menu_item_separator_set(mi, 1);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Maximized"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/maximize"),
-			     "widgets/border/default/maximize");
+   if (!bd->lock_close)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Kill"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
+	e_menu_item_icon_edje_set(mi, 
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/kill"),
+				  "widgets/border/default/kill");
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+   
+   if (!bd->lock_user_shade)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Shaded"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/shade"),
+				  "widgets/border/default/shade");
+     }
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Sticky"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/stick"),
-			     "widgets/border/default/stick");
+   if (!bd->lock_user_maximize)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Maximized"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, (bd->maximized ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_maximize, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/maximize"),
+				  "widgets/border/default/maximize");
+     }
+   
+   if (!bd->lock_user_sticky)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Sticky"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, (bd->sticky ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_stick, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stick"),
+				  "widgets/border/default/stick");
+     }
+   
+   if (!bd->lock_user_stacking)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Always On Top"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/on_top"),
+				  "widgets/border/default/on_top");
+     }
+   
+   if (!bd->lock_border)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Borderless"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, !strcmp("borderless", bd->client.border.name));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_borderless, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/borderless"),
+				  "widgets/border/default/borderless");
+     }
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Always On Top"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/on_top"),
-			     "widgets/border/default/on_top");
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Borderless"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, !strcmp("borderless", bd->client.border.name));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_borderless, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/borderless"),
-			     "widgets/border/default/borderless");
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Fullscreen"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, bd->fullscreen);
-   e_menu_item_callback_set(mi, _e_border_menu_cb_fullscreen, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/fullscreen"),
-			     "widgets/border/default/fullscreen");
+   if (!bd->lock_user_fullscreen)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Fullscreen"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, bd->fullscreen);
+	e_menu_item_callback_set(mi, _e_border_menu_cb_fullscreen, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/fullscreen"),
+				  "widgets/border/default/fullscreen");
+     }
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -5101,7 +5175,8 @@ _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   e_border_act_close_begin(bd);
+   if (!bd->lock_close)
+     e_border_act_close_begin(bd);
 }
 
 static void
@@ -5110,8 +5185,11 @@ _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->iconic) e_border_uniconify(bd);
-   else e_border_iconify(bd);
+   if (!bd->lock_user_iconify)
+     {
+	if (bd->iconic) e_border_uniconify(bd);
+	else e_border_iconify(bd);
+     }
 }
 
 static void
@@ -5120,7 +5198,8 @@ _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   e_border_act_kill_begin(bd);
+   if (!bd->lock_close)
+     e_border_act_kill_begin(bd);
 }
 
 static void
@@ -5129,8 +5208,11 @@ _e_border_menu_cb_maximize(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->maximized) e_border_unmaximize(bd);
-   else e_border_maximize(bd, e_config->maximize_policy);
+   if (!bd->lock_user_maximize)
+     {
+	if (bd->maximized) e_border_unmaximize(bd);
+	else e_border_maximize(bd, e_config->maximize_policy);
+     }
 }
 
 static void
@@ -5139,8 +5221,11 @@ _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
-   else e_border_shade(bd, E_DIRECTION_UP);
+   if (!bd->lock_user_shade)
+     {
+	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
+	else e_border_shade(bd, E_DIRECTION_UP);
+     }
 }
 
 static void
@@ -5171,8 +5256,11 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->sticky) e_border_unstick(bd);
-   else e_border_stick(bd);
+   if (!bd->lock_user_sticky)
+     {
+	if (bd->sticky) e_border_unstick(bd);
+	else e_border_stick(bd);
+     }
 }
 
 static void
@@ -5226,11 +5314,14 @@ _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
    
-   toggle = e_menu_item_toggle_get(mi);
-   if (toggle)
-     e_border_fullscreen(bd);
-   else
-     e_border_unfullscreen(bd);
+   if (!bd->lock_user_fullscreen)
+     {
+	toggle = e_menu_item_toggle_get(mi);
+	if (toggle)
+	  e_border_fullscreen(bd);
+	else
+	  e_border_unfullscreen(bd);
+     }
 }
 
 static void
@@ -5481,7 +5572,8 @@ _e_border_resize_begin(E_Border *bd)
 {
    int w, h;
 
-   e_border_raise(bd);
+   if (!bd->lock_user_stacking)
+     e_border_raise(bd);
    if ((bd->shaded) || (bd->shading) || (bd->maximized) || (bd->fullscreen) ||
        (bd->lock_user_size))
      return 0;
@@ -5554,7 +5646,8 @@ _e_border_resize_update(E_Border *bd)
 static int
 _e_border_move_begin(E_Border *bd)
 {
-   e_border_raise(bd);
+   if (!bd->lock_user_stacking)
+     e_border_raise(bd);
    if ((bd->maximized) || (bd->fullscreen) || (bd->lock_user_location))
      return 0;
 

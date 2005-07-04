@@ -286,28 +286,28 @@ struct _E_Border
    unsigned int    take_focus : 1;
    E_Maximize      maximized;
 
-   unsigned int    lock_user_location : 1;
-   unsigned int    lock_client_location : 1;
-   unsigned int    lock_user_size : 1;
-   unsigned int    lock_client_size : 1;
-   unsigned int    lock_user_stacking : 1;
-   unsigned int    lock_client_stacking : 1;
-   unsigned int    lock_user_iconify : 1;
-   unsigned int    lock_client_iconify : 1;
+   unsigned int    lock_user_location : 1; /*DONE*/
+   unsigned int    lock_client_location : 1; /*DONE*/
+   unsigned int    lock_user_size : 1; /*DONE*/
+   unsigned int    lock_client_size : 1; /*DONE*/
+   unsigned int    lock_user_stacking : 1; /*DONE*/
+   unsigned int    lock_client_stacking : 1; /*DONE*/
+   unsigned int    lock_user_iconify : 1; /*DONE*/
+   unsigned int    lock_client_iconify : 1; /*DONE*/
    unsigned int    lock_user_desk : 1;
    unsigned int    lock_client_desk : 1;
-   unsigned int    lock_user_sticky : 1;
-   unsigned int    lock_client_sticky : 1;
-   unsigned int    lock_user_shade : 1;
-   unsigned int    lock_client_shade : 1;
-   unsigned int    lock_user_maximize : 1;
-   unsigned int    lock_client_mazimize : 1;
-   unsigned int    lock_user_fullscreen : 1;
-   unsigned int    lock_client_fullscreen : 1;
-   unsigned int    lock_border : 1;
-   unsigned int    lock_close : 1;
-   unsigned int    lock_focus_in : 1;
-   unsigned int    lock_focus_out : 1;
+   unsigned int    lock_user_sticky : 1; /*DONE*/
+   unsigned int    lock_client_sticky : 1; /*DONE*/
+   unsigned int    lock_user_shade : 1; /*DONE*/
+   unsigned int    lock_client_shade : 1; /*DONE*/
+   unsigned int    lock_user_maximize : 1; /*DONE*/
+   unsigned int    lock_client_mazimize : 1; /*DONE*/
+   unsigned int    lock_user_fullscreen : 1; /*DONE*/
+   unsigned int    lock_client_fullscreen : 1; /*DONE*/
+   unsigned int    lock_border : 1; /*DONE*/
+   unsigned int    lock_close : 1; /*DONE*/
+   unsigned int    lock_focus_in : 1; /*DONE*/
+   unsigned int    lock_focus_out : 1; /*DONE*/
    unsigned int    lock_life : 1;
    
    double          ping;

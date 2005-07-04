@@ -623,10 +623,16 @@ _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    
    bd = data;
    E_OBJECT_CHECK(bd);
-   if (bd->iconic) e_border_uniconify(bd);
+   if (bd->iconic)
+     {
+	if (!bd->lock_user_iconify)
+	  e_border_uniconify(bd);
+     }
    e_desk_show(bd->desk);
-   e_border_raise(bd);
-   e_border_focus_set(bd, 1, 1);
+   if (!bd->lock_user_stacking)
+     e_border_raise(bd);
+   if (!bd->lock_focus_out)
+     e_border_focus_set(bd, 1, 1);
 }
 
 static void 
