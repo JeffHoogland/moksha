@@ -4921,8 +4921,8 @@ NEW_LOCK_FN(lock_user_fullscreen)
 NEW_LOCK_FN(lock_client_fullscreen)
 NEW_LOCK_FN(lock_border)
 NEW_LOCK_FN(lock_close)
-NEW_LOCK_FN(lock_focus_in)
-NEW_LOCK_FN(lock_focus_out)
+/*NEW_LOCK_FN(lock_focus_in)*/
+/*NEW_LOCK_FN(lock_focus_out)*/
 NEW_LOCK_FN(lock_life)
 
 static void
@@ -4939,39 +4939,39 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 
 #define NEW_LOCK_MI(txt, var) \
    mi = e_menu_item_new(m); \
-   e_menu_item_label_set(mi, _(txt)); \
+   e_menu_item_label_set(mi, txt); \
    e_menu_item_check_set(mi, 1); \
    e_menu_item_toggle_set(mi, bd->var); \
    e_menu_item_callback_set(mi, _e_border_menu_cb_##var, bd);
 
    /* FIXME: 1 big menu right now - mayeb layer make it 3 submenus? */
-   NEW_LOCK_MI("Position (User)", lock_user_location);
-   NEW_LOCK_MI("Size (User)", lock_user_size);
-   NEW_LOCK_MI("Stacking (User)", lock_user_stacking);
-   NEW_LOCK_MI("Iconify (User)", lock_user_iconify);
-   NEW_LOCK_MI("Virtual Desktop (User)", lock_user_desk);
-   NEW_LOCK_MI("Sticky (User)", lock_user_sticky);
-   NEW_LOCK_MI("Shade (User)", lock_user_shade);
-   NEW_LOCK_MI("Maximize (User)", lock_user_maximize);
-   NEW_LOCK_MI("Fullscreen (User)", lock_user_fullscreen);
+   NEW_LOCK_MI(_("Position (User)"), lock_user_location);
+   NEW_LOCK_MI(_("Size (User)"), lock_user_size);
+   NEW_LOCK_MI(_("Stacking (User)"), lock_user_stacking);
+   NEW_LOCK_MI(_("Iconify (User)"), lock_user_iconify);
+/*   NEW_LOCK_MI(_("Virtual Desktop (User)"), lock_user_desk);*/
+   NEW_LOCK_MI(_("Sticky (User)"), lock_user_sticky);
+   NEW_LOCK_MI(_("Shade (User)"), lock_user_shade);
+   NEW_LOCK_MI(_("Maximize (User)"), lock_user_maximize);
+   NEW_LOCK_MI(_("Fullscreen (User)"), lock_user_fullscreen);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   NEW_LOCK_MI("Position (Application)", lock_client_location);
-   NEW_LOCK_MI("Size (Application)", lock_client_size);
-   NEW_LOCK_MI("Stacking (Application)", lock_client_stacking);
-   NEW_LOCK_MI("Iconify (Application)", lock_client_iconify);
-   NEW_LOCK_MI("Virtual Desktop (Application)", lock_client_desk);
-   NEW_LOCK_MI("Sticky (Application)", lock_client_sticky);
-   NEW_LOCK_MI("Shade (Application)", lock_client_shade);
-   NEW_LOCK_MI("Maximize (Application)", lock_client_mazimize);
-   NEW_LOCK_MI("Fullscreen (Application)", lock_client_fullscreen);
+   NEW_LOCK_MI(_("Position (Application)"), lock_client_location);
+   NEW_LOCK_MI(_("Size (Application)"), lock_client_size);
+   NEW_LOCK_MI(_("Stacking (Application)"), lock_client_stacking);
+   NEW_LOCK_MI(_("Iconify (Application)"), lock_client_iconify);
+/*   NEW_LOCK_MI(_("Virtual Desktop (Application)"), lock_client_desk);*/
+   NEW_LOCK_MI(_("Sticky (Application)"), lock_client_sticky);
+   NEW_LOCK_MI(_("Shade (Application)"), lock_client_shade);
+   NEW_LOCK_MI(_("Maximize (Application)"), lock_client_mazimize);
+   NEW_LOCK_MI(_("Fullscreen (Application)"), lock_client_fullscreen);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   NEW_LOCK_MI("Border", lock_border);
-   NEW_LOCK_MI("Close", lock_close);
-   NEW_LOCK_MI("Focus In", lock_focus_in);
-   NEW_LOCK_MI("Focus Out", lock_focus_out);
-   NEW_LOCK_MI("Lifespan", lock_life);
+   NEW_LOCK_MI(_("Border"), lock_border);
+   NEW_LOCK_MI(_("Close"), lock_close);
+/*   NEW_LOCK_MI(_("Focus In"), lock_focus_in);*/
+/*   NEW_LOCK_MI(_("Focus Out"), lock_focus_out);*/
+/*   NEW_LOCK_MI(_("Lifespan"), lock_life);*/
    
    m = e_menu_new();
    e_object_data_set(E_OBJECT(m), bd);
