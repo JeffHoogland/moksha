@@ -1,0 +1,83 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
+#ifdef E_TYPEDEFS
+
+typedef struct _E_Remember E_Remember;
+#define E_REMEMBER_MATCH_NAME (1 << 0)
+#define E_REMEMBER_MATCH_CLASS (1 << 1)
+#define E_REMEMBER_MATCH_TITLE (1 << 2)
+#define E_REMEMBER_MATCH_ROLE (1 << 3)
+
+#define E_REMEMBER_APPLY_POS (1 << 0)
+#define E_REMEMBER_APPLY_SIZE (1 << 1)
+#define E_REMEMBER_APPLY_LAYER (1 << 2)
+#define E_REMEMBER_APPLY_LOCKS (1 << 3)
+#define E_REMEMBER_APPLY_BORDER (1 << 4)
+#define E_REMEMBER_APPLY_STICKY (1 << 5)
+#define E_REMEMBER_APPLY_DESKTOP (1 << 6)
+#define E_REMEMBER_APPLY_SHADE (1 << 7)
+#define E_REMEMBER_APPLY_ZONE (1 << 8)
+#define E_REMEMBER_APPLY_RUN (1 << 9)
+
+#else
+#ifndef E_REMEMBER_H
+#define E_REMEMBER_H
+
+struct _E_Remember
+{
+   int            match;
+   unsigned char  apply_first_only;
+   int            used_count;
+   char          *name, *class, *title, *role;
+   int            apply;
+   struct {
+      int           pos_x, pos_y;
+      int           res_x, res_y;
+      int           pos_w, pos_h;
+      
+      int           w, h;
+      
+      int           layer;
+      
+      unsigned char lock_user_location; 
+      unsigned char lock_client_location; 
+      unsigned char lock_user_size; 
+      unsigned char lock_client_size; 
+      unsigned char lock_user_stacking; 
+      unsigned char lock_client_stacking; 
+      unsigned char lock_user_iconify; 
+      unsigned char lock_client_iconify; 
+      unsigned char lock_user_desk;
+      unsigned char lock_client_desk;
+      unsigned char lock_user_sticky; 
+      unsigned char lock_client_sticky; 
+      unsigned char lock_user_shade; 
+      unsigned char lock_client_shade; 
+      unsigned char lock_user_maximize; 
+      unsigned char lock_client_mazimize; 
+      unsigned char lock_user_fullscreen; 
+      unsigned char lock_client_fullscreen; 
+      unsigned char lock_border; 
+      unsigned char lock_close; 
+      unsigned char lock_focus_in; 
+      unsigned char lock_focus_out; 
+      unsigned char lock_life;
+      
+      char         *border;
+      
+      unsigned char sticky;
+      
+      unsigned char shaded;
+      
+      int           zone;
+      
+      char         *command;
+   } prop;
+};
+
+EAPI int          e_remember_init(void);
+EAPI int          e_remember_shutdown(void);
+
+#endif
+#endif

@@ -403,6 +403,13 @@ main(int argc, char **argv)
 			       "failed. Perhaps another window manager is running?\n"));
 	_e_main_shutdown(-1);
      }
+   /* do remember stuff */
+   if (!e_remember_init())
+     {
+	e_error_message_show(_("Enlightenment cannot setup remember settings."));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(e_remember_shutdown);
    
    e_container_all_freeze();
    
