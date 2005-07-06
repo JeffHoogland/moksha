@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-06-22 03:23+0200\n"
+"POT-Creation-Date: 2005-07-06 19:15+0200\n"
 "PO-Revision-Date: 2005-05-11 00:22+0100\n"
 "Last-Translator: Perat Tomaž <pithlit@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,19 +25,19 @@ msgstr ""
 msgid "%i.%i Ghz"
 msgstr ""
 
-#: src/bin/e_int_menus.c:728
+#: src/bin/e_int_menus.c:759
 msgid "(Empty)"
 msgstr "(Prazno)"
 
-#: src/bin/e_int_menus.c:367
+#: src/bin/e_int_menus.c:375
 msgid "(No Applications)"
 msgstr "(Ni aplikacij)"
 
-#: src/bin/e_int_menus.c:541 src/bin/e_int_menus.c:783
+#: src/bin/e_int_menus.c:549 src/bin/e_int_menus.c:814
 msgid "(No Windows)"
 msgstr "(Ni oken)"
 
-#: src/bin/e_int_menus.c:638
+#: src/bin/e_int_menus.c:669
 msgid "(Unused)"
 msgstr "(Neuporabljeno)"
 
@@ -45,47 +45,67 @@ msgstr "(Neuporabljeno)"
 msgid "1 hour"
 msgstr "1 ura"
 
-#: src/modules/temperature/e_mod_main.c:598
+#: src/modules/battery/e_mod_main.c:383
+msgid "10 mins"
+msgstr "10 minut"
+
+#: src/modules/temperature/e_mod_main.c:603
 msgid "100C"
 msgstr "100°C"
 
-#: src/modules/temperature/e_mod_main.c:502
+#: src/modules/temperature/e_mod_main.c:507
 msgid "10C"
 msgstr "10°C"
 
-#: src/modules/temperature/e_mod_main.c:509
-#: src/modules/temperature/e_mod_main.c:542
+#: src/modules/battery/e_mod_main.c:390
+msgid "20 mins"
+msgstr "20 minut"
+
+#: src/modules/temperature/e_mod_main.c:514
+#: src/modules/temperature/e_mod_main.c:547
 msgid "20C"
 msgstr "20°C"
 
-#: src/modules/temperature/e_mod_main.c:516
-#: src/modules/temperature/e_mod_main.c:549
+#: src/modules/battery/e_mod_main.c:397
+msgid "30 mins"
+msgstr "30 minut"
+
+#: src/modules/temperature/e_mod_main.c:521
+#: src/modules/temperature/e_mod_main.c:554
 msgid "30C"
 msgstr "30°C"
 
-#: src/modules/temperature/e_mod_main.c:523
-#: src/modules/temperature/e_mod_main.c:556
+#: src/modules/battery/e_mod_main.c:404
+msgid "40 mins"
+msgstr "40 minut"
+
+#: src/modules/temperature/e_mod_main.c:528
+#: src/modules/temperature/e_mod_main.c:561
 msgid "40C"
 msgstr "40°C"
 
-#: src/modules/temperature/e_mod_main.c:530
-#: src/modules/temperature/e_mod_main.c:563
+#: src/modules/battery/e_mod_main.c:411
+msgid "50 mins"
+msgstr "50 minut"
+
+#: src/modules/temperature/e_mod_main.c:535
+#: src/modules/temperature/e_mod_main.c:568
 msgid "50C"
 msgstr "50°C"
 
-#: src/modules/temperature/e_mod_main.c:570
+#: src/modules/temperature/e_mod_main.c:575
 msgid "60C"
 msgstr "60°C"
 
-#: src/modules/temperature/e_mod_main.c:577
+#: src/modules/temperature/e_mod_main.c:582
 msgid "70C"
 msgstr "70°C"
 
-#: src/modules/temperature/e_mod_main.c:584
+#: src/modules/temperature/e_mod_main.c:589
 msgid "80C"
 msgstr "80°C"
 
-#: src/modules/temperature/e_mod_main.c:591
+#: src/modules/temperature/e_mod_main.c:596
 msgid "90C"
 msgstr "90°C"
 
@@ -101,7 +121,7 @@ msgstr ""
 "mrežni priključek. Deluje le na Linux-u in je le tako\n"
 "natančen kot vaš BIOS oziroma jederni gonilniki."
 
-#: src/modules/temperature/e_mod_main.c:97
+#: src/modules/temperature/e_mod_main.c:102
 msgid ""
 "A module to measure the ACPI Thermal sensor on Linux.\n"
 "It is especially useful for modern Laptops with high speed\n"
@@ -127,7 +147,7 @@ msgstr ""
 msgid "A simple module to give E17 a clock."
 msgstr "Modul, ki na vaše E17 namizje pričara uro."
 
-#: src/bin/e_int_menus.c:135 src/bin/e_int_menus.c:297
+#: src/bin/e_int_menus.c:135 src/bin/e_int_menus.c:305
 msgid "About Enlightenment"
 msgstr "O Enlightenment (Razsvetljenje)"
 
@@ -135,13 +155,9 @@ msgstr "O Enlightenment (Razsvetljenje)"
 msgid "About..."
 msgstr "O..."
 
-#: src/bin/e_border.c:4641
+#: src/bin/e_border.c:5061
 msgid "Always On Top"
 msgstr "Vedno na Vrhu"
-
-#: src/bin/e_main.c:477
-msgid "Artificially slowing startup so you can see it all."
-msgstr "Umetno upočasnjen zagon... da si lahko vse v miru ogledate."
 
 #: src/modules/ibar/e_mod_main.c:796 src/modules/ibox/e_mod_main.c:603
 msgid "Auto fit icons"
@@ -171,7 +187,12 @@ msgstr "Baterija"
 msgid "Battery Running Low"
 msgstr "Baterija bo kmalu prazna"
 
-#: src/bin/e_border.c:4651
+#: src/bin/e_border.c:4970
+#, fuzzy
+msgid "Border"
+msgstr "Okvir"
+
+#: src/bin/e_border.c:5074
 msgid "Borderless"
 msgstr "Brez okvirja"
 
@@ -203,8 +224,8 @@ msgstr "Hitro preverjanje (0.5 sek)"
 msgid "Check Fast (1 sec)"
 msgstr "Hitro preverjanje (1 sek)"
 
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:610
+#: src/modules/temperature/e_mod_main.c:189
+#: src/modules/temperature/e_mod_main.c:615
 msgid "Check Interval"
 msgstr "Nastavi preverjanje"
 
@@ -240,7 +261,7 @@ msgstr "Zelo počasno preverjanje (30 sek)"
 msgid "Check Very Slow (60 sec)"
 msgstr "Zelo počasno preverjanje (60 sek)"
 
-#: src/bin/e_int_menus.c:569
+#: src/bin/e_int_menus.c:583
 msgid "Cleanup Windows"
 msgstr "Razvrsti Okna"
 
@@ -248,7 +269,7 @@ msgstr "Razvrsti Okna"
 msgid "Clock"
 msgstr "Ura"
 
-#: src/bin/e_border.c:4592
+#: src/bin/e_border.c:4971 src/bin/e_border.c:4984
 msgid "Close"
 msgstr "Zapri"
 
@@ -256,11 +277,11 @@ msgstr "Zapri"
 msgid "Configuration"
 msgstr "Nastavitve"
 
-#: src/bin/e_config.c:1072
+#: src/bin/e_config.c:1107
 msgid "Configuration Upgraded"
 msgstr "Nastavitve Osvežene"
 
-#: src/bin/e_config.c:181
+#: src/bin/e_config.c:203
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
@@ -279,7 +300,7 @@ msgstr ""
 "nastavitve, ki jih vaša stara nastavitvena datoteka ne vsebuje. Sedaj\n"
 "pa lahko ponovno nastavite stvari po svoje. Opravičujemo se za kolcanje.\n"
 
-#: src/bin/e_container.c:103
+#: src/bin/e_container.c:105
 #, c-format
 msgid "Container %d"
 msgstr "Območje %d"
@@ -288,7 +309,7 @@ msgstr "Območje %d"
 msgid "CpuFreq"
 msgstr "Frekvenca CPU"
 
-#: src/bin/e_border.c:4718
+#: src/bin/e_border.c:5159
 msgid "Create Icon"
 msgstr "Ustvari Ikono"
 
@@ -296,7 +317,7 @@ msgstr "Ustvari Ikono"
 msgid "Danger"
 msgstr "Nevarnost"
 
-#: src/modules/dropshadow/e_mod_main.c:316
+#: src/modules/dropshadow/e_mod_main.c:338
 msgid "Dark"
 msgstr "Temno"
 
@@ -309,22 +330,26 @@ msgstr "Namizje %d, %d"
 msgid "Desktops"
 msgstr "Namizja"
 
-#: src/bin/e_init.c:110
+#: src/modules/battery/e_mod_main.c:376
+msgid "Disable"
+msgstr "Onemogoči"
+
+#: src/bin/e_init.c:111
 msgid "Disable this splash screen in the future?"
 msgstr "V prihodje onemogoči to animacijo?"
 
-#: src/modules/dropshadow/e_mod_main.c:139
+#: src/modules/dropshadow/e_mod_main.c:161
 msgid "Dropshadow"
 msgstr "Senčenje"
 
-#: src/bin/e_border.c:4692
+#: src/bin/e_border.c:5133
 msgid "Edit Icon"
 msgstr "Uredi Ikono"
 
-#: src/bin/e_int_menus.c:632 src/modules/ibar/e_mod_main.c:610
+#: src/bin/e_int_menus.c:663 src/modules/ibar/e_mod_main.c:610
 #: src/modules/ibox/e_mod_main.c:457 src/modules/cpufreq/e_mod_main.c:810
 #: src/modules/clock/e_mod_main.c:309 src/modules/pager/e_mod_main.c:437
-#: src/modules/start/e_mod_main.c:233 src/modules/temperature/e_mod_main.c:723
+#: src/modules/start/e_mod_main.c:233 src/modules/temperature/e_mod_main.c:728
 #: src/modules/battery/e_mod_main.c:561
 msgid "Edit Mode"
 msgstr "Urejanje"
@@ -337,7 +362,7 @@ msgstr "Vključeno"
 msgid "End Edit Mode"
 msgstr "Končaj z urejanjem"
 
-#: src/bin/e_main.c:465
+#: src/bin/e_main.c:489
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -349,7 +374,7 @@ msgstr "Enlightenment Modul - Baterija"
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment Modul - Ura"
 
-#: src/modules/dropshadow/e_mod_main.c:148
+#: src/modules/dropshadow/e_mod_main.c:170
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment Modul - Senčenje"
 
@@ -361,7 +386,7 @@ msgstr "Enlightenment Modul - iVrstica"
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment Modul - iKišta"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:472
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment napaka pri nastavitvi IPC!"
 
@@ -373,11 +398,11 @@ msgstr "Enlightenment Modul - Namizja"
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment Modul - Start"
 
-#: src/bin/e_main.c:467
+#: src/bin/e_main.c:491
 msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment Zagon. Prosimo počakajte."
+msgstr "Enlightenment se zaganja. Prosimo počakajte."
 
-#: src/modules/temperature/e_mod_main.c:96
+#: src/modules/temperature/e_mod_main.c:101
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment Modul - Temperatura"
 
@@ -385,7 +410,7 @@ msgstr "Enlightenment Modul - Temperatura"
 msgid "Enlightenment Test Module"
 msgstr "Enlightenment Modul - Test"
 
-#: src/bin/e_main.c:208
+#: src/bin/e_main.c:218
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -393,7 +418,7 @@ msgstr ""
 "Enlightenment ne more zagnati Ecore!\n"
 "Vam mogoče primankuje spomina?"
 
-#: src/bin/e_main.c:309
+#: src/bin/e_main.c:319
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -401,7 +426,7 @@ msgstr ""
 "Enlightenment ne more ustvariti map v vaši domači mapi.\n"
 "Mogoče nimate domače mape ali pa imate poln disk?"
 
-#: src/bin/e_main.c:235
+#: src/bin/e_main.c:245
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -409,7 +434,7 @@ msgstr ""
 "Enlightenment ne more ustvariti povezave z X serverjem.\n"
 "Ste že nastavili svojo \"DISPLAY\" spremenljivko?"
 
-#: src/bin/e_main.c:243
+#: src/bin/e_main.c:253
 #, fuzzy
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
@@ -418,7 +443,7 @@ msgstr ""
 "Enlightenment ne more ustvariti povezave z X serverjem.\n"
 "Ste že nastavili svojo \"DISPLAY\" spremenljivko?"
 
-#: src/bin/e_main.c:282
+#: src/bin/e_main.c:292
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -426,7 +451,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema Evas.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:297
+#: src/bin/e_main.c:307
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -434,7 +459,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema datotek.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:274
+#: src/bin/e_main.c:284
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -442,7 +467,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema IPC.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:266
+#: src/bin/e_main.c:276
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -450,7 +475,7 @@ msgstr ""
 "Enlightenment ne more zagnati sistema povezav.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:224
+#: src/bin/e_main.c:234
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -458,7 +483,7 @@ msgstr ""
 "Enlightenment ne more nastaviti upravitelja HUP signalov.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:218
+#: src/bin/e_main.c:228
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -466,7 +491,7 @@ msgstr ""
 "Enlightenment ne more nastaviti upravitelja izhodnih signalov.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:369
+#: src/bin/e_main.c:379
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -474,55 +499,59 @@ msgstr ""
 "Enlightenment ne more nastaviti zagonskega okna.\n"
 "Ste mogoče ostali brez spomina?"
 
-#: src/bin/e_main.c:332
+#: src/bin/e_main.c:342
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment ne more nastaviti svojega sistema akcij."
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:388
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment ne more nastaviti programskega sistema."
 
-#: src/bin/e_main.c:339
+#: src/bin/e_main.c:349
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment ne more nastaviti svojega sistema povezav."
 
-#: src/bin/e_main.c:317
+#: src/bin/e_main.c:327
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne more nastaviti nastavitvenega sistema."
 
-#: src/bin/e_main.c:428
+#: src/bin/e_main.c:445
 #, fuzzy
 msgid "Enlightenment cannot set up its dnd system."
-msgstr ""
-"Enlightenment ne more nastaviti svojega sistema dnd (drag & drop)."
+msgstr "Enlightenment ne more nastaviti svojega sistema dnd (drag & drop)."
 
-#: src/bin/e_main.c:357
+#: src/bin/e_main.c:367
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment ne more nastaviti font sistema."
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:452
+#, fuzzy
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr "Enlightenment ne more nastaviti svojega sistema povezav."
+
+#: src/bin/e_main.c:459
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment ne more nastaviti modularnega sistema."
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:438
 #, fuzzy
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment ne more nastaviti tematskega sistema."
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:356
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment ne more nastaviti svojega popup sistema."
 
-#: src/bin/e_main.c:396
+#: src/bin/e_main.c:395
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment ne more nastaviti tematskega sistema."
 
-#: src/bin/e_main.c:442
+#: src/bin/e_main.c:466
 #, fuzzy
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment ne more nastaviti svojega sistema povezav."
 
-#: src/bin/e_main.c:324
+#: src/bin/e_main.c:334
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -530,10 +559,11 @@ msgstr ""
 "Enlightenment ne more nastaviti poti za iskanje datotek.\n"
 "Mogoče ste ostali brez spomina?"
 
-#: src/bin/e_main.c:408 src/bin/e_main.c:449
+#: src/bin/e_main.c:425 src/bin/e_main.c:473
+#, fuzzy
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
 "Double check to see if Enlightenment is not already on this display,\n"
 "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 "and try running again."
@@ -542,10 +572,14 @@ msgstr ""
 "Zelo verjetno ga uporablje obstoječa različica Enlightenment.\n"
 "Preverite če Enlightenment mogoče že ne teče na tem zaslonu.\n"
 "Če pa temu ni tako poizkusite odstranite vse datoteke v ~/.ecore/"
-"enlightenment-*\n"
-"in poizkusite ponovno zagnati Enlightenment."
+"enlightenment-* in poizkusite ponovno zagnati Enlightenment."
 
-#: src/bin/e_main.c:250
+#: src/bin/e_main.c:409
+#, fuzzy
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenment ne more nastaviti shranjevanja nastavitev."
+
+#: src/bin/e_main.c:260
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -553,7 +587,7 @@ msgstr ""
 "Enlightenment ne more nastaviti xinerama ovijanja.\n"
 "To se ne bi smelo dogajati."
 
-#: src/bin/e_main.c:288
+#: src/bin/e_main.c:298
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -563,15 +597,44 @@ msgstr ""
 "izrisovanja v Evas. Preverite vaše Evas in Ecore nastavitve in se\n"
 "prepričajte, da podpirajo software X11 izrisovanje."
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:402
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Enlightenment je poizkusil nastaviti upravljanje z okni na vseh zaslonih "
-"vašega\n"
-"sistema in pri tem klavrno propadel. Mogoče uporabljate drug upravljalnik z "
-"okni?\n"
+"vašega sistema in pri tem klavrno propadel. Mogoče uporabljate drug\n"
+"upravljalnik z okni?\n"
+
+#: src/bin/e_apps.c:266
+#, c-format
+msgid ""
+"Enlightenment was unable fork a child process\n"
+"to run the execute line:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"Enlightenment ni uspel ustvariti podrejenega procesa\n"
+"za zagon vrstice:\n"
+"\n"
+"%s\n"
+"\n"
+
+#: src/bin/e_apps.c:1034
+#, c-format
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
+msgstr ""
+"Enlightenment ni uspel pognati programa:\n"
+"\n"
+"%s\n"
+"\n"
+"Ukaz ne obstaja.\n"
 
 #: src/bin/e_error.c:364
 msgid "Enlightenment: Error!"
@@ -607,7 +670,7 @@ msgstr ""
 "Verzija API modula kot ga prepozna Enlightenment je: %i.\n"
 "Opuščanje modula."
 
-#: src/modules/dropshadow/e_mod_main.c:92
+#: src/modules/dropshadow/e_mod_main.c:97
 #, c-format
 msgid ""
 "Error initializing Module: Dropshadow\n"
@@ -659,7 +722,7 @@ msgstr ""
 "Verzija API modula kot ga prepozna Enlightenment je: %i.\n"
 "Opuščanje modula."
 
-#: src/modules/temperature/e_mod_main.c:44
+#: src/modules/temperature/e_mod_main.c:49
 #, c-format
 msgid ""
 "Error initializing Module: Temperature\n"
@@ -715,7 +778,7 @@ msgstr ""
 msgid "Error loading Module"
 msgstr "Napaka pri zagonu modula"
 
-#: src/bin/e_border.c:4787
+#: src/bin/e_border.c:5248
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -739,7 +802,7 @@ msgstr "Testni modul gumba za zagon menija E17"
 msgid "Extremely Large"
 msgstr "Zelo veliko"
 
-#: src/modules/dropshadow/e_mod_main.c:382
+#: src/modules/dropshadow/e_mod_main.c:404
 msgid "Extremely Near"
 msgstr "Zelo zelo blizu"
 
@@ -747,11 +810,11 @@ msgstr "Zelo zelo blizu"
 msgid "FULL"
 msgstr "POLNO"
 
-#: src/modules/dropshadow/e_mod_main.c:355
+#: src/modules/dropshadow/e_mod_main.c:377
 msgid "Far"
 msgstr "Daleč"
 
-#: src/modules/temperature/e_mod_main.c:462
+#: src/modules/temperature/e_mod_main.c:467
 msgid "Fast (1 sec)"
 msgstr "Hitro (1 sek)"
 
@@ -771,12 +834,22 @@ msgstr "Čez celotno višino ekrana"
 msgid "Full Screen Width"
 msgstr "Čez celotno širino ekrana"
 
-#: src/bin/e_border.c:4661
+#: src/bin/e_border.c:5087
 #, fuzzy
 msgid "Fullscreen"
 msgstr "Celozaslonski način"
 
-#: src/modules/dropshadow/e_mod_main.c:268
+#: src/bin/e_border.c:4967
+#, fuzzy
+msgid "Fullscreen (Application)"
+msgstr "Celozaslonski Način (Program)"
+
+#: src/bin/e_border.c:4956
+#, fuzzy
+msgid "Fullscreen (User)"
+msgstr "Celozaslonski način (Uporabnik)"
+
+#: src/modules/dropshadow/e_mod_main.c:290
 msgid "Fuzzy"
 msgstr "Mehko"
 
@@ -800,8 +873,8 @@ msgstr "Čez pol širine ekrana"
 msgid "High"
 msgstr "Visoko"
 
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:618
+#: src/modules/temperature/e_mod_main.c:197
+#: src/modules/temperature/e_mod_main.c:623
 msgid "High Temperature"
 msgstr "Visoka Temperatura"
 
@@ -817,25 +890,44 @@ msgstr "iVrstica"
 msgid "IBox"
 msgstr "iKišta"
 
-#: src/bin/e_border.c:4786
+#: src/bin/e_border.c:5247
 msgid "Icon Edit Error"
 msgstr "Napaka pri urejanju ikone"
 
-#: src/bin/e_border.c:4600
+#: src/bin/e_border.c:4995
 msgid "Iconify"
 msgstr "Minimiraj"
 
-#: src/modules/dropshadow/e_mod_main.c:391
+#: src/bin/e_border.c:4962
+#, fuzzy
+msgid "Iconify (Application)"
+msgstr "Minimiraj (Program)"
+
+#: src/bin/e_border.c:4951
+#, fuzzy
+msgid "Iconify (User)"
+msgstr "Minimiraj (Uporabnik)"
+
+#: src/modules/dropshadow/e_mod_main.c:413
 msgid "Immediately Underneath"
 msgstr "Neposredno spodaj"
+
+#: src/bin/e_border.c:5009
+msgid "Kill"
+msgstr "Uniči"
 
 #: src/modules/ibar/e_mod_main.c:846 src/modules/ibox/e_mod_main.c:647
 msgid "Large"
 msgstr "Veliko"
 
-#: src/modules/dropshadow/e_mod_main.c:325
+#: src/modules/dropshadow/e_mod_main.c:347
 msgid "Light"
 msgstr "Svetlo"
+
+#: src/bin/e_border.c:5101
+#, fuzzy
+msgid "Locks"
+msgstr "Zakleni"
 
 #: src/bin/e_int_menus.c:107
 #, fuzzy
@@ -846,8 +938,8 @@ msgstr "Izgubljena okna"
 msgid "Low"
 msgstr "Nizko"
 
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:614
+#: src/modules/temperature/e_mod_main.c:193
+#: src/modules/temperature/e_mod_main.c:619
 msgid "Low Temperature"
 msgstr "Nizka Temperatura"
 
@@ -855,21 +947,31 @@ msgstr "Nizka Temperatura"
 msgid "Manual"
 msgstr "Ročno"
 
-#: src/bin/e_border.c:4621
+#: src/bin/e_border.c:4966
+#, fuzzy
+msgid "Maximize (Application)"
+msgstr "Povečaj (Program)"
+
+#: src/bin/e_border.c:4955
+#, fuzzy
+msgid "Maximize (User)"
+msgstr "Povečaj (Uporabnik)"
+
+#: src/bin/e_border.c:5035
 msgid "Maximized"
-msgstr "Povečaj"
+msgstr "Povečano"
 
 #: src/modules/cpufreq/e_mod_main.c:434
 #, fuzzy
 msgid "Maximum Speed"
-msgstr "Najmanjša hitrost"
+msgstr "Največja hitrost"
 
 #: src/modules/ibar/e_mod_main.c:839 src/modules/ibox/e_mod_main.c:640
-#: src/modules/dropshadow/e_mod_main.c:277
+#: src/modules/dropshadow/e_mod_main.c:299
 msgid "Medium"
 msgstr "Srednje"
 
-#: src/modules/temperature/e_mod_main.c:469
+#: src/modules/temperature/e_mod_main.c:474
 msgid "Medium (5 sec)"
 msgstr "Srednje (5 sek)"
 
@@ -884,8 +986,8 @@ msgstr "Najmanjša hitrost"
 #: src/modules/ibar/e_mod_main.c:119 src/modules/ibox/e_mod_main.c:103
 #: src/modules/test/e_mod_main.c:9 src/modules/cpufreq/e_mod_main.c:57
 #: src/modules/clock/e_mod_main.c:40 src/modules/pager/e_mod_main.c:84
-#: src/modules/start/e_mod_main.c:28 src/modules/temperature/e_mod_main.c:43
-#: src/modules/dropshadow/e_mod_main.c:91 src/modules/battery/e_mod_main.c:45
+#: src/modules/start/e_mod_main.c:28 src/modules/temperature/e_mod_main.c:48
+#: src/modules/dropshadow/e_mod_main.c:96 src/modules/battery/e_mod_main.c:45
 msgid "Module API Error"
 msgstr "Napaka Modul API"
 
@@ -905,11 +1007,6 @@ msgstr "Nastavitev modula - Meni 3"
 msgid "Modules"
 msgstr "Modul"
 
-#: src/bin/e_main.c:479
-msgid "Most features do not work yet, and those that do are buggy."
-msgstr ""
-"Večina stvari še ne deluje. Tiste ki pa delujejo... so verjetno polomljene."
-
 #: src/modules/battery/e_mod_main.c:879
 msgid "NO BAT"
 msgstr "NI BATERIJE"
@@ -918,23 +1015,23 @@ msgstr "NI BATERIJE"
 msgid "NO INFO"
 msgstr "NI INFORMACIJ"
 
-#: src/modules/dropshadow/e_mod_main.c:364
+#: src/modules/dropshadow/e_mod_main.c:386
 msgid "Near"
 msgstr "Blizu"
 
-#: src/bin/e_int_menus.c:457
+#: src/bin/e_int_menus.c:465
 msgid "New Column of Desktops"
 msgstr "Nov stolpec z namizji"
 
-#: src/bin/e_int_menus.c:449
+#: src/bin/e_int_menus.c:457
 msgid "New Row of Desktops"
 msgstr "Nova vrstica z namizji"
 
-#: src/bin/e_int_menus.c:556 src/bin/e_int_menus.c:797
+#: src/bin/e_int_menus.c:567 src/bin/e_int_menus.c:831
 msgid "No name!!"
 msgstr "Brez imena!!"
 
-#: src/modules/temperature/e_mod_main.c:476
+#: src/modules/temperature/e_mod_main.c:481
 msgid "Normal (10 sec)"
 msgstr "Normalno (10 sek)"
 
@@ -947,7 +1044,7 @@ msgstr "OK"
 msgid "Options"
 msgstr "Možnosti"
 
-#: src/bin/e_main.c:156
+#: src/bin/e_main.c:166
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -984,11 +1081,20 @@ msgstr ""
 msgid "Pager"
 msgstr "Namizja"
 
-#: src/bin/e_int_menus.c:461
+#: src/bin/e_border.c:4959
+#, fuzzy
+msgid "Position (Application)"
+msgstr "Postavitev (Program)"
+
+#: src/bin/e_border.c:4948
+msgid "Position (User)"
+msgstr "Postavitev (Uporabnik)"
+
+#: src/bin/e_int_menus.c:469
 msgid "Remove Column of Desktops"
 msgstr "Odstrani stolpec z namizji"
 
-#: src/bin/e_int_menus.c:453
+#: src/bin/e_int_menus.c:461
 msgid "Remove Row of Desktops"
 msgstr "Odstrani vrstico z namizji"
 
@@ -1000,12 +1106,16 @@ msgstr "Ponovno zaženi Enlightenment"
 msgid "Run Command"
 msgstr "Poženi Ukaz"
 
+#: src/bin/e_apps.c:265 src/bin/e_apps.c:1033
+msgid "Run Error"
+msgstr "Napaka pri zagonu"
+
 #: src/bin/e_winlist.c:115
 #, fuzzy
 msgid "Select a window"
 msgstr "Izberi okno"
 
-#: src/bin/e_border.c:4674
+#: src/bin/e_border.c:5111
 msgid "Send To"
 msgstr "Pošlji na"
 
@@ -1026,11 +1136,20 @@ msgstr "Nastavi čas poizvedbe"
 msgid "Set Speed"
 msgstr "Nastavi hitrost"
 
-#: src/bin/e_border.c:4611
-msgid "Shaded"
-msgstr "Zasenči"
+#: src/bin/e_border.c:4965
+#, fuzzy
+msgid "Shade (Application)"
+msgstr "Zasenči (Program)"
 
-#: src/modules/dropshadow/e_mod_main.c:286
+#: src/bin/e_border.c:4954
+msgid "Shade (User)"
+msgstr "Zasenči (Uporabnik)"
+
+#: src/bin/e_border.c:5022
+msgid "Shaded"
+msgstr "Zasenčeno"
+
+#: src/modules/dropshadow/e_mod_main.c:308
 msgid "Sharp"
 msgstr "Ostro"
 
@@ -1039,7 +1158,16 @@ msgstr "Ostro"
 msgid "Size"
 msgstr "Velikost"
 
-#: src/modules/temperature/e_mod_main.c:483
+#: src/bin/e_border.c:4960
+#, fuzzy
+msgid "Size (Application)"
+msgstr "Velikost (Program)"
+
+#: src/bin/e_border.c:4949
+msgid "Size (User)"
+msgstr "Velikost (Uporabnik)"
+
+#: src/modules/temperature/e_mod_main.c:488
 msgid "Slow (30 sec)"
 msgstr "Počasi (30 sek)"
 
@@ -1051,15 +1179,34 @@ msgstr "Majhno"
 msgid "Something Else"
 msgstr "Nekaj drugega"
 
+#: src/bin/e_border.c:4961
+#, fuzzy
+msgid "Stacking (Application)"
+msgstr "Razvrščanje (Program)"
+
+#: src/bin/e_border.c:4950
+msgid "Stacking (User)"
+msgstr "Razvrščanje (Uporabnik)"
+
 #: src/modules/start/e_mod_main.c:72
 msgid "Start"
 msgstr "Start"
 
-#: src/bin/e_border.c:4631
+#: src/bin/e_border.c:5048
 msgid "Sticky"
 msgstr "Lepljivo"
 
-#: src/modules/temperature/e_mod_main.c:87
+#: src/bin/e_border.c:4964
+#, fuzzy
+msgid "Sticky (Application)"
+msgstr "Lepljivo (Program)"
+
+#: src/bin/e_border.c:4953
+#, fuzzy
+msgid "Sticky (User)"
+msgstr "Lepljivo (Uporabnik)"
+
+#: src/modules/temperature/e_mod_main.c:92
 msgid "Temperature"
 msgstr "Temperatura"
 
@@ -1114,7 +1261,7 @@ msgstr ""
 "Prišlo je do napake pri poizkusi nastavitve frekvence\n"
 "procesorja preko modulovega setfreq orodja."
 
-#: src/bin/e_int_menus.c:298
+#: src/bin/e_int_menus.c:306
 #, fuzzy, c-format
 msgid ""
 "This is Enlightenment %s.\n"
@@ -1131,10 +1278,6 @@ msgstr ""
 "pri pisanju.\n"
 "\n"
 "Pomislite pa kdaj tudi na aardvarke. Tudi oni potrebujejo kanček ljubezni."
-
-#: src/bin/e_main.c:478
-msgid "This is development code, so be warned."
-msgstr "Ta koda je še v razvoju. Prosimo, uživajte jo v zmernih odmerkih."
 
 #: src/modules/ibar/e_mod_main.c:173
 msgid ""
@@ -1161,7 +1304,7 @@ msgstr ""
 "uporabniških vmesnikov. Je še v začetku razvoja, zato pričakujte\n"
 "obilo sesutij in sprememb."
 
-#: src/modules/dropshadow/e_mod_main.c:149
+#: src/modules/dropshadow/e_mod_main.c:171
 msgid ""
 "This is the dropshadow module that allows dropshadows to be cast\n"
 "on the desktop background - without special X-Server extensions\n"
@@ -1185,15 +1328,15 @@ msgstr ""
 msgid "Tiny"
 msgstr "Majhno"
 
-#: src/modules/dropshadow/e_mod_main.c:307
+#: src/modules/dropshadow/e_mod_main.c:329
 msgid "Very Dark"
 msgstr "Zelo temno"
 
-#: src/modules/dropshadow/e_mod_main.c:346
+#: src/modules/dropshadow/e_mod_main.c:368
 msgid "Very Far"
 msgstr "Zelo daleč"
 
-#: src/modules/dropshadow/e_mod_main.c:259
+#: src/modules/dropshadow/e_mod_main.c:281
 msgid "Very Fuzzy"
 msgstr "Zelo mehko"
 
@@ -1201,19 +1344,19 @@ msgstr "Zelo mehko"
 msgid "Very Large"
 msgstr "Zelo veliko"
 
-#: src/modules/dropshadow/e_mod_main.c:334
+#: src/modules/dropshadow/e_mod_main.c:356
 msgid "Very Light"
 msgstr "Zelo svetlo"
 
-#: src/modules/dropshadow/e_mod_main.c:373
+#: src/modules/dropshadow/e_mod_main.c:395
 msgid "Very Near"
 msgstr "Zelo blizu"
 
-#: src/modules/dropshadow/e_mod_main.c:295
+#: src/modules/dropshadow/e_mod_main.c:317
 msgid "Very Sharp"
 msgstr "Zelo ostro"
 
-#: src/modules/temperature/e_mod_main.c:490
+#: src/modules/temperature/e_mod_main.c:495
 msgid "Very Slow (60 sec)"
 msgstr "Zelo počasi (60 sek)"
 
@@ -1225,10 +1368,10 @@ msgstr "Zelo majhno"
 msgid "Windows"
 msgstr "Okna"
 
-#: src/bin/e_init.c:36
+#: src/bin/e_init.c:37
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X server sporoča da ne najde osnovnega okna in %i zaslona!\n"
+msgstr "X server sporoča, da ne najde osnovnega okna in %i zaslona!\n"
 
 #: src/modules/battery/e_mod_main.c:687
 msgid ""
@@ -1236,9 +1379,9 @@ msgid ""
 "You may wish to switch to an AC source."
 msgstr ""
 "Vaša baterija je skoraj prazna.\n"
-"Mogoče bi bilo pametno preklopini na omrežje?"
+"Mogoče bi bilo pametno preklopiti na omrežje?"
 
-#: src/bin/e_config.c:195
+#: src/bin/e_config.c:217
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -1253,6 +1396,17 @@ msgstr ""
 "novejši Enlightenment. To je zelo slabo, zato smo vaše nastavitve\n"
 "ponovno nastavili na privzete vrednosti. Prosimo, sprejmite naše\n"
 "opravičilo za vse nevšečnosti.\n"
+
+#~ msgid "Artificially slowing startup so you can see it all."
+#~ msgstr "Umetno upočasnjen zagon... da si lahko vse v miru ogledate."
+
+#~ msgid "Most features do not work yet, and those that do are buggy."
+#~ msgstr ""
+#~ "Večina stvari še ne deluje. Tiste ki pa delujejo... so verjetno "
+#~ "polomljene."
+
+#~ msgid "This is development code, so be warned."
+#~ msgstr "Ta koda je še v razvoju. Prosimo, uživajte jo v zmernih odmerkih."
 
 #~ msgid ""
 #~ "This is program has barely been started on, so it is not complete by a "
