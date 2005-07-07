@@ -114,7 +114,7 @@ e_remember_find(E_Border *bd)
 	    (bd->client.icccm.window_role) && (rem->role) &&
 	    (!strcmp(rem->role, bd->client.icccm.window_role)))
 	  matches++;
-	if (matches >= required_matches)
+	if ((matches >= required_matches) && (!rem->delete_me))
 	  return rem;
      }
    return NULL;
