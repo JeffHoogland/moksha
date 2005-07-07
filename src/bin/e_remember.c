@@ -145,8 +145,8 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    if (bd->client.icccm.window_role)
      rem->role = strdup(bd->client.icccm.window_role);
    
-   rem->prop.pos_x = bd->x + bd->client_inset.l - bd->zone->x;
-   rem->prop.pos_y = bd->y + bd->client_inset.t - bd->zone->y;
+   rem->prop.pos_x = bd->x - bd->zone->x;
+   rem->prop.pos_y = bd->y - bd->zone->y;
    rem->prop.res_x = bd->zone->w;
    rem->prop.res_y = bd->zone->h;
    rem->prop.pos_w = bd->client.w;

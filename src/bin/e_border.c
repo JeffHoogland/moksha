@@ -4001,7 +4001,7 @@ _e_border_eval(E_Border *bd)
 		  if (desk)
 		    e_border_desk_set(bd, desk);
 	       }
-	     if (rem->apply & E_REMEMBER_APPLY_POS)
+	     if ((rem->apply & E_REMEMBER_APPLY_POS) && (!bd->re_manage))
 	       {
 		  E_Event_Border_Move *ev;
 		  
