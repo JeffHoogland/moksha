@@ -269,6 +269,7 @@ struct _E_Border
    unsigned int    focused : 1;
    unsigned int    new_client : 1;
    unsigned int    re_manage : 1;
+   unsigned int    placed : 1;
    unsigned int    shading : 1;
    unsigned int    shaded : 1;
    unsigned int    iconic : 1;
@@ -332,6 +333,7 @@ struct _E_Border
    Evas_List *stick_desks;
    E_Menu *border_menu;
    E_Menu *border_locks_menu;
+   E_Menu *border_remember_menu;
    Evas_List *pending_move_resize;
    
    struct {
@@ -360,6 +362,7 @@ struct _E_Border
    Ecore_Timer *kill_timer;
    int shape_rects_num;
    Ecore_X_Rectangle *shape_rects;
+   E_Remember *remember;
 
    Ecore_Timer *dangling_ref_check;
 };

@@ -134,6 +134,7 @@ struct _E_Config
    char       *transition_start;
    char       *transition_desk;
    char       *transition_change;
+   Evas_List  *remembers;
 };
 
 struct _E_Config_Module

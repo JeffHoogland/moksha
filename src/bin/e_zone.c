@@ -485,7 +485,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    launch_id++;
    if (launch_id == 0) launch_id = 1;
    /* execute */
-   if (!e_app_exec(a)) return 0;
+   if (!e_app_exec(a)) launch_id = 0;
    
    /* reset env vars */
    if (penv_display)

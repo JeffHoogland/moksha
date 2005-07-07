@@ -4,6 +4,7 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Remember E_Remember;
+
 #define E_REMEMBER_MATCH_NAME (1 << 0)
 #define E_REMEMBER_MATCH_CLASS (1 << 1)
 #define E_REMEMBER_MATCH_TITLE (1 << 2)
@@ -26,6 +27,7 @@ typedef struct _E_Remember E_Remember;
 
 struct _E_Remember
 {
+   unsigned char  delete_me;
    int            match;
    unsigned char  apply_first_only;
    int            used_count;
@@ -70,14 +72,24 @@ struct _E_Remember
       
       unsigned char shaded;
       
+      int           desk_x, desk_y;
+      
       int           zone;
       
+      int           head;
       char         *command;
    } prop;
 };
 
 EAPI int          e_remember_init(void);
 EAPI int          e_remember_shutdown(void);
-
+EAPI E_Remember  *e_remember_new(void);
+EAPI int          e_remember_usable_get(E_Remember *rem);
+EAPI void         e_remember_use(E_Remember *rem);
+EAPI void         e_remember_unuse(E_Remember *rem);
+EAPI void         e_remember_del(E_Remember *rem);
+EAPI E_Remember  *e_remember_find(E_Border *bd);
+EAPI void         e_remember_update(E_Remember *rem, E_Border *bd);
+    
 #endif
 #endif

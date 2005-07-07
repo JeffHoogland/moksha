@@ -159,3 +159,59 @@ e_util_container_zone_number_get(int con_num, int zone_num)
    if (!con) return NULL;
    return e_container_zone_number_get(con, zone_num);
 }
+
+int
+e_util_head_exec(int head, char *cmd)
+{
+   char *penv_display;
+   char *p1, *p2;
+   char buf[4096], buf2[32];
+   int ok = 0;
+   Ecore_Exe *exe;
+   
+   penv_display = getenv("DISPLAY");
+   if (penv_display) penv_display = strdup(penv_display);
+   /* set env vars */
+   p1 = strrchr(penv_display, ':');
+   p2 = strrchr(penv_display, '.');
+   if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
+     {
+	/* yes it could overflow... but who will voerflow DISPLAY eh? why? to
+	 * "exploit" your own applications running as you?
+	 */
+	strcpy(buf, penv_display);
+	buf[p2 - penv_display + 1] = 0;
+	snprintf(buf2, sizeof(buf2), "%i", head);
+	strcat(buf, buf2);
+     }
+   else if (p1) /* "blah:x */
+     {
+	strcpy(buf, penv_display);
+	snprintf(buf2, sizeof(buf2), ".%i", head);
+	strcat(buf, buf2);
+     }
+   else
+     strcpy(buf, penv_display);
+   
+   ok = 1;
+   exe = ecore_exe_run(cmd, NULL);
+   if (!exe)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable fork a child process\n"
+			      "to run the execute line:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    cmd);
+	ok = 0;
+     }
+   
+   /* reset env vars */
+   if (penv_display)
+     {
+	e_util_env_set("DISPLAY", penv_display);
+	free(penv_display);
+     }
+   return ok;
+}

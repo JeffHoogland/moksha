@@ -33,6 +33,7 @@ static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
+static E_Config_DD *_e_config_remember_edd = NULL;
 
 /* externally accessible functions */
 int
@@ -114,6 +115,59 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
+   _e_config_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
+#undef T
+#undef D
+#define T E_Remember
+#define D _e_config_remember_edd
+   E_CONFIG_VAL(D, T, match, INT);
+   E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, class, STR);
+   E_CONFIG_VAL(D, T, title, STR);
+   E_CONFIG_VAL(D, T, role, STR);
+   E_CONFIG_VAL(D, T, apply, INT);
+   E_CONFIG_VAL(D, T, prop.pos_x, INT);
+   E_CONFIG_VAL(D, T, prop.pos_y, INT);
+   E_CONFIG_VAL(D, T, prop.res_x, INT);
+   E_CONFIG_VAL(D, T, prop.res_y, INT);
+   E_CONFIG_VAL(D, T, prop.pos_w, INT);
+   E_CONFIG_VAL(D, T, prop.pos_h, INT);
+   E_CONFIG_VAL(D, T, prop.w, INT);
+   E_CONFIG_VAL(D, T, prop.h, INT);
+   E_CONFIG_VAL(D, T, prop.layer, INT);
+   E_CONFIG_VAL(D, T, prop.lock_user_location, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_location, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_size, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_size, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_stacking, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_stacking, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_iconify, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_iconify, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_desk, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_desk, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_sticky, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_sticky, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_shade, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_shade, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_maximize, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_mazimize, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_user_fullscreen, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_fullscreen, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_border, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_close, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_focus_in, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_focus_out, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_life, UCHAR);
+   E_CONFIG_VAL(D, T, prop.border, STR);
+   E_CONFIG_VAL(D, T, prop.sticky, UCHAR);
+   E_CONFIG_VAL(D, T, prop.shaded, UCHAR);
+   E_CONFIG_VAL(D, T, prop.desk_x, INT);
+   E_CONFIG_VAL(D, T, prop.desk_y, INT);
+   E_CONFIG_VAL(D, T, prop.zone, INT);
+   E_CONFIG_VAL(D, T, prop.head, INT);
+   E_CONFIG_VAL(D, T, prop.command, STR);
+   
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -191,6 +245,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transition_start, STR); /**/
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
+   E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)

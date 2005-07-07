@@ -4,6 +4,7 @@
 #include "e.h"
 
 /* local subsystem functions */
+static void _e_remember_free(E_Remember *rem);
 
 /* local subsystem globals */
 
@@ -12,6 +13,17 @@
 int
 e_remember_init(void)
 {
+   Evas_List *l;
+   
+   for (l = e_config->remembers; l; l = l->next)
+     {
+	E_Remember *rem;
+	
+	rem = l->data;
+	if ((rem->apply & E_REMEMBER_APPLY_RUN) && 
+	    (rem->prop.command))
+	  e_util_head_exec(rem->prop.head, rem->prop.command);
+     }
    return 1;
 }
 
@@ -21,4 +33,184 @@ e_remember_shutdown(void)
    return 1;
 }
 
+E_Remember *
+e_remember_new(void)
+{
+   E_Remember *rem;
+   
+   rem = E_NEW(E_Remember, 1);
+   if (!rem) return NULL;
+   e_config->remembers = evas_list_prepend(e_config->remembers, rem);
+   return rem;
+}
+
+int
+e_remember_usable_get(E_Remember *rem)
+{
+   if ((rem->apply_first_only) && (rem->used_count > 0)) return 0;
+   return 1;
+}
+
+void
+e_remember_use(E_Remember *rem)
+{
+   rem->used_count++;
+}
+
+void
+e_remember_unuse(E_Remember *rem)
+{
+   rem->used_count--;
+   if ((rem->used_count <= 0) && (rem->delete_me))
+     _e_remember_free(rem);
+}
+
+void
+e_remember_del(E_Remember *rem)
+{
+   if (rem->used_count > 0)
+     {
+	rem->delete_me = 1;
+	return;
+     }
+   _e_remember_free(rem);
+}
+
+E_Remember *
+e_remember_find(E_Border *bd)
+{
+   Evas_List *l;
+   
+   for (l = e_config->remembers; l; l = l->next)
+     {
+	E_Remember *rem;
+	int required_matches;
+	int matches;
+	char *title = "";
+	
+	rem = l->data;
+	matches = 0;
+	required_matches = 0;
+	if (rem->match & E_REMEMBER_MATCH_NAME) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_CLASS) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TITLE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_ROLE) required_matches++;
+	
+	if (bd->client.netwm.name) title = bd->client.netwm.name;
+	else title = bd->client.icccm.title;
+	
+	if ((rem->match & E_REMEMBER_MATCH_NAME) &&
+	    (bd->client.icccm.name) && (rem->name) &&
+	    (!strcmp(rem->name, bd->client.icccm.name)))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_CLASS) &&
+	    (bd->client.icccm.class) && (rem->class) &&
+	    (!strcmp(rem->class, bd->client.icccm.class)))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TITLE) &&
+	    (title) && (rem->title) && (!strcmp(rem->title, title)))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_ROLE) &&
+	    (bd->client.icccm.window_role) && (rem->role) &&
+	    (!strcmp(rem->role, bd->client.icccm.window_role)))
+	  matches++;
+	if (matches >= required_matches)
+	  return rem;
+     }
+   return NULL;
+}
+
+void
+e_remember_update(E_Remember *rem, E_Border *bd)
+{
+   IF_FREE(rem->name);
+   IF_FREE(rem->class);
+   /* only match title the first time - never change it later */
+   /* IF_FREE(rem->title); */
+   IF_FREE(rem->role);
+   IF_FREE(rem->prop.border);
+   IF_FREE(rem->prop.command);
+   
+   if (bd->client.icccm.name)
+     rem->name = strdup(bd->client.icccm.name);
+   if (bd->client.icccm.class)
+     rem->class = strdup(bd->client.icccm.class);
+   /* only match title the first time - never change it later */
+   /*
+   if (bd->client.netwm.name)
+     rem->title = strdup(bd->client.netwm.name);
+   else if (bd->client.icccm.title)
+     rem->title = strdup(bd->client.icccm.title);
+    */
+   if (bd->client.icccm.window_role)
+     rem->role = strdup(bd->client.icccm.window_role);
+   
+   rem->prop.pos_x = bd->x + bd->client_inset.l - bd->zone->x;
+   rem->prop.pos_y = bd->y + bd->client_inset.t - bd->zone->y;
+   rem->prop.res_x = bd->zone->w;
+   rem->prop.res_y = bd->zone->h;
+   rem->prop.pos_w = bd->client.w;
+   rem->prop.pos_h = bd->client.h;
+   
+   rem->prop.w = bd->client.w;
+   rem->prop.h = bd->client.h;
+   
+   rem->prop.layer = bd->layer;
+   
+   rem->prop.lock_user_location = bd->lock_user_location;
+   rem->prop.lock_client_location = bd->lock_client_location;
+   rem->prop.lock_user_size = bd->lock_user_size;
+   rem->prop.lock_client_size = bd->lock_client_size;
+   rem->prop.lock_user_stacking = bd->lock_user_stacking;
+   rem->prop.lock_client_stacking = bd->lock_client_stacking;
+   rem->prop.lock_user_iconify = bd->lock_user_iconify;
+   rem->prop.lock_client_iconify = bd->lock_client_iconify;
+   rem->prop.lock_user_desk = bd->lock_user_desk;
+   rem->prop.lock_client_desk = bd->lock_client_desk;
+   rem->prop.lock_user_sticky = bd->lock_user_sticky;
+   rem->prop.lock_client_sticky = bd->lock_client_sticky;
+   rem->prop.lock_user_shade = bd->lock_user_shade;
+   rem->prop.lock_client_shade = bd->lock_client_shade;
+   rem->prop.lock_user_maximize = bd->lock_user_maximize;
+   rem->prop.lock_client_mazimize = bd->lock_client_mazimize;
+   rem->prop.lock_user_fullscreen = bd->lock_user_fullscreen;
+   rem->prop.lock_client_fullscreen = bd->lock_client_fullscreen;
+   rem->prop.lock_border = bd->lock_border;
+   rem->prop.lock_close = bd->lock_close;
+   rem->prop.lock_focus_in = bd->lock_focus_in;
+   rem->prop.lock_focus_out = bd->lock_focus_out;
+   rem->prop.lock_life = bd->lock_life;
+
+   IF_FREE(rem->prop.border);
+   if (bd->client.border.name)
+     rem->prop.border = strdup(bd->client.border.name);
+   
+   rem->prop.sticky = bd->sticky;
+   
+   rem->prop.shaded = bd->shaded;
+   
+   e_desk_xy_get(bd->desk, &rem->prop.desk_x, &rem->prop.desk_y);
+   
+   rem->prop.zone = bd->zone->num;
+   
+   rem->prop.head = bd->zone->container->manager->num;
+/* FIXME: e17 doesn't fetch WM_COMMAND property yet
+   IF_FREE(rem->prop.command);
+ */
+   
+   e_config_save_queue();
+}
+
 /* local subsystem functions */
+static void
+_e_remember_free(E_Remember *rem)
+{
+   e_config->remembers = evas_list_remove(e_config->remembers, rem);
+   IF_FREE(rem->name);
+   IF_FREE(rem->class);
+   IF_FREE(rem->title);
+   IF_FREE(rem->role);
+   IF_FREE(rem->prop.border);
+   IF_FREE(rem->prop.command);
+   free(rem);
+}
