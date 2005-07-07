@@ -3952,8 +3952,9 @@ _e_border_eval(E_Border *bd)
 	       }
 	     free(rects);
 	  }
+	else
+	  bd->client.shaped = 0;
 	bd->need_shape_merge = 1;
-	/* is the client shaped? */
 	bd->changes.shape = 0;
      }
 
@@ -4317,7 +4318,7 @@ _e_border_eval(E_Border *bd)
    if ((bd->changes.pos) && (bd->changes.size))
      {
 //	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
-	if (bd->shaded && !bd->shading)
+	if ((bd->shaded) && (!bd->shading))
 	  {
 	     evas_obscured_clear(bd->bg_evas);
 	     ecore_x_window_move_resize(bd->win, bd->x, bd->y, bd->w, bd->h);
@@ -4463,9 +4464,6 @@ _e_border_eval(E_Border *bd)
 		  rects[3].height = bd->client_inset.b;
 		  ecore_x_window_shape_rectangles_set(twin, rects, 4);
 	       }
-	     /* FIXME: need to clip client shape to client container
-	      * with offset for shading, if shading/shaded
-	      */
 	     twin2 = ecore_x_window_override_new(bd->win, 0, 0, 
 						 bd->w - bd->client_inset.l - bd->client_inset.r,
 						 bd->h - bd->client_inset.t - bd->client_inset.b);
@@ -4494,6 +4492,7 @@ _e_border_eval(E_Border *bd)
 	  {
 	     ecore_x_window_shape_mask_set(bd->win, 0);
 	  }
+//	bd->need_shape_export = 1;
 	bd->need_shape_merge = 0;
      }
    
@@ -4513,6 +4512,7 @@ _e_border_eval(E_Border *bd)
 		  int i;
 		  
 		  orects = bd->shape_rects;
+		  changed = 0;
 		  for (i = 0; i < num; i++)
 		    {
 		       if ((orects[i].x != rects[i].x) ||
@@ -4524,7 +4524,6 @@ _e_border_eval(E_Border *bd)
 			    break;
 			 }
 		    }
-		  changed = 0;
 	       }
 	     if (changed)
 	       {
