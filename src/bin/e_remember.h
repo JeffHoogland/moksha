@@ -9,6 +9,8 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_MATCH_CLASS (1 << 1)
 #define E_REMEMBER_MATCH_TITLE (1 << 2)
 #define E_REMEMBER_MATCH_ROLE (1 << 3)
+#define E_REMEMBER_MATCH_TYPE (1 << 4)
+#define E_REMEMBER_MATCH_TRANSIENT (1 << 5)
 
 #define E_REMEMBER_APPLY_POS (1 << 0)
 #define E_REMEMBER_APPLY_SIZE (1 << 1)
@@ -32,6 +34,8 @@ struct _E_Remember
    unsigned char  apply_first_only;
    int            used_count;
    char          *name, *class, *title, *role;
+   int            type;
+   unsigned char  transient;
    int            apply;
    struct {
       int           pos_x, pos_y;

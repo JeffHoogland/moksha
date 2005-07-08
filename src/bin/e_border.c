@@ -5161,6 +5161,32 @@ _e_border_menu_cb_remember_match_role(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 					  
 static void
+_e_border_menu_cb_remember_match_type(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   if (!bd->remember) return;
+   if (e_menu_item_toggle_get(mi))
+     bd->remember->match |= E_REMEMBER_MATCH_TYPE;
+   else
+     bd->remember->match &= ~E_REMEMBER_MATCH_TYPE;
+   e_config_save_queue();
+}
+					  
+static void
+_e_border_menu_cb_remember_match_transient(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   if (!bd->remember) return;
+   if (e_menu_item_toggle_get(mi))
+     bd->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
+   else
+     bd->remember->match &= ~E_REMEMBER_MATCH_TRANSIENT;
+   e_config_save_queue();
+}
+					  
+static void
 _e_border_menu_cb_remember_apply_pos(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
@@ -5364,6 +5390,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    NEW_REMEMBER_MI(_("Match by class"), match, E_REMEMBER_MATCH_CLASS, _e_border_menu_cb_remember_match_class);
    NEW_REMEMBER_MI(_("Match by title"), match, E_REMEMBER_MATCH_TITLE, _e_border_menu_cb_remember_match_title);
    NEW_REMEMBER_MI(_("Match by role"), match, E_REMEMBER_MATCH_ROLE, _e_border_menu_cb_remember_match_role);
+   NEW_REMEMBER_MI(_("Match by window type"), match, E_REMEMBER_MATCH_TYPE, _e_border_menu_cb_remember_match_type);
+   NEW_REMEMBER_MI(_("Match by transient status"), match, E_REMEMBER_MATCH_TRANSIENT, _e_border_menu_cb_remember_match_transient);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
    NEW_REMEMBER_MI(_("Remember position"), apply, E_REMEMBER_APPLY_POS, _e_border_menu_cb_remember_apply_pos);

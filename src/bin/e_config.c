@@ -126,6 +126,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, class, STR);
    E_CONFIG_VAL(D, T, title, STR);
    E_CONFIG_VAL(D, T, role, STR);
+   E_CONFIG_VAL(D, T, type, INT);
+   E_CONFIG_VAL(D, T, transient, UCHAR);
    E_CONFIG_VAL(D, T, apply, INT);
    E_CONFIG_VAL(D, T, prop.pos_x, INT);
    E_CONFIG_VAL(D, T, prop.pos_y, INT);

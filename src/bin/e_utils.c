@@ -215,3 +215,23 @@ e_util_head_exec(int head, char *cmd)
      }
    return ok;
 }
+
+int
+e_util_strcmp(char *s1, char *s2)
+{
+   if ((s1) && (s2))
+     return strcmp(s1, s2);
+   return 0x7fffffff;
+}
+
+int
+e_util_both_str_empty(char *s1, char *s2)
+{
+   int empty = 0;
+   
+   if ((!s1) && (!s2)) return 1;
+   if ((!s1) || ((s1) && (s1[0] == 0))) empty++;
+   if ((!s2) || ((s2) && (s2[0] == 0))) empty++;
+   if (empty == 2) return 1;
+   return 0;
+}

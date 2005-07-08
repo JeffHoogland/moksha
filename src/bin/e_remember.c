@@ -6,6 +6,10 @@
 /* local subsystem functions */
 static void _e_remember_free(E_Remember *rem);
 
+/* FIXME: match netwm window type
+ * FIXME: match transient (is it a transient for something or not)
+ */
+
 /* local subsystem globals */
 
 /* externally accessible functions */
@@ -95,24 +99,34 @@ e_remember_find(E_Border *bd)
 	if (rem->match & E_REMEMBER_MATCH_CLASS) required_matches++;
 	if (rem->match & E_REMEMBER_MATCH_TITLE) required_matches++;
 	if (rem->match & E_REMEMBER_MATCH_ROLE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TYPE) required_matches++;
+	if (rem->match & E_REMEMBER_MATCH_TRANSIENT) required_matches++;
 	
 	if (bd->client.netwm.name) title = bd->client.netwm.name;
 	else title = bd->client.icccm.title;
 	
 	if ((rem->match & E_REMEMBER_MATCH_NAME) &&
-	    (bd->client.icccm.name) && (rem->name) &&
-	    (!strcmp(rem->name, bd->client.icccm.name)))
+	    ((!e_util_strcmp(rem->name, bd->client.icccm.name)) ||
+	     (e_util_both_str_empty(rem->name, bd->client.icccm.name))))
 	  matches++;
 	if ((rem->match & E_REMEMBER_MATCH_CLASS) &&
-	    (bd->client.icccm.class) && (rem->class) &&
-	    (!strcmp(rem->class, bd->client.icccm.class)))
+	    ((!e_util_strcmp(rem->class, bd->client.icccm.class)) ||
+	     (e_util_both_str_empty(rem->class, bd->client.icccm.class))))
 	  matches++;
 	if ((rem->match & E_REMEMBER_MATCH_TITLE) &&
-	    (title) && (rem->title) && (!strcmp(rem->title, title)))
+	    ((!e_util_strcmp(rem->title, title)) ||
+	     (e_util_both_str_empty(rem->title, title))))
 	  matches++;
 	if ((rem->match & E_REMEMBER_MATCH_ROLE) &&
-	    (bd->client.icccm.window_role) && (rem->role) &&
-	    (!strcmp(rem->role, bd->client.icccm.window_role)))
+	    ((!e_util_strcmp(rem->role, bd->client.icccm.window_role)) ||
+	     (e_util_both_str_empty(rem->role, bd->client.icccm.window_role))))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TYPE) &&
+	    (rem->type == bd->client.netwm.type))
+	  matches++;
+	if ((rem->match & E_REMEMBER_MATCH_TRANSIENT) &&
+	    (((rem->transient) && (bd->client.icccm.transient_for != 0)) ||
+	     ((!rem->transient) && (bd->client.icccm.transient_for == 0))))
 	  matches++;
 	if ((matches >= required_matches) && (!rem->delete_me))
 	  return rem;
@@ -125,8 +139,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
 {
    IF_FREE(rem->name);
    IF_FREE(rem->class);
-   /* only match title the first time - never change it later */
-   /* IF_FREE(rem->title); */
+   IF_FREE(rem->title);
    IF_FREE(rem->role);
    IF_FREE(rem->prop.border);
    IF_FREE(rem->prop.command);
@@ -135,15 +148,19 @@ e_remember_update(E_Remember *rem, E_Border *bd)
      rem->name = strdup(bd->client.icccm.name);
    if (bd->client.icccm.class)
      rem->class = strdup(bd->client.icccm.class);
-   /* only match title the first time - never change it later */
-   /*
    if (bd->client.netwm.name)
      rem->title = strdup(bd->client.netwm.name);
    else if (bd->client.icccm.title)
      rem->title = strdup(bd->client.icccm.title);
-    */
    if (bd->client.icccm.window_role)
      rem->role = strdup(bd->client.icccm.window_role);
+
+   rem->type = bd->client.netwm.type;
+   
+   if (bd->client.icccm.transient_for != 0)
+     rem->transient = 1;
+   else
+     rem->transient = 0;
    
    rem->prop.pos_x = bd->x - bd->zone->x;
    rem->prop.pos_y = bd->y - bd->zone->y;

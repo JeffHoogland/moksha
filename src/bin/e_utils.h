@@ -17,6 +17,8 @@ EAPI int          e_util_glob_match(char *str, char *glob);
 EAPI E_Container *e_util_container_number_get(int num);
 EAPI E_Zone      *e_util_container_zone_number_get(int con_num, int zone_num);
 EAPI int          e_util_head_exec(int head, char *cmd);
-    
+EAPI int          e_util_strcmp(char *s1, char *s2);    
+EAPI int          e_util_both_str_empty(char *s1, char *s2);
+
 #endif
 #endif
