@@ -5103,7 +5103,17 @@ _e_border_menu_cb_remember_first(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    bd->remember->apply_first_only = e_menu_item_toggle_get(mi);
    e_config_save_queue();
 }
@@ -5113,7 +5123,17 @@ _e_border_menu_cb_remember_match_name(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_NAME;
    else
@@ -5126,7 +5146,17 @@ _e_border_menu_cb_remember_match_class(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_CLASS;
    else
@@ -5139,7 +5169,17 @@ _e_border_menu_cb_remember_match_title(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_TITLE;
    else
@@ -5152,7 +5192,17 @@ _e_border_menu_cb_remember_match_role(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_ROLE;
    else
@@ -5165,7 +5215,17 @@ _e_border_menu_cb_remember_match_type(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_TYPE;
    else
@@ -5178,7 +5238,17 @@ _e_border_menu_cb_remember_match_transient(void *data, E_Menu *m, E_Menu_Item *m
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
    else
@@ -5191,7 +5261,17 @@ _e_border_menu_cb_remember_apply_pos(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_POS;
    else
@@ -5204,7 +5284,17 @@ _e_border_menu_cb_remember_apply_size(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_SIZE;
    else
@@ -5217,7 +5307,17 @@ _e_border_menu_cb_remember_apply_layer(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_LAYER;
    else
@@ -5230,7 +5330,17 @@ _e_border_menu_cb_remember_apply_locks(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_LOCKS;
    else
@@ -5243,7 +5353,17 @@ _e_border_menu_cb_remember_apply_border(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_BORDER;
    else
@@ -5256,7 +5376,17 @@ _e_border_menu_cb_remember_apply_sticky(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_STICKY;
    else
@@ -5269,7 +5399,17 @@ _e_border_menu_cb_remember_apply_desktop(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_DESKTOP;
    else
@@ -5282,7 +5422,17 @@ _e_border_menu_cb_remember_apply_shade(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_SHADE;
    else
@@ -5295,7 +5445,17 @@ _e_border_menu_cb_remember_apply_zone(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_ZONE;
    else
@@ -5308,7 +5468,17 @@ _e_border_menu_cb_remember_apply_run(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
    bd = data;
-   if (!bd->remember) return;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
    if (e_menu_item_toggle_get(mi))
      bd->remember->apply |= E_REMEMBER_APPLY_RUN;
    else
