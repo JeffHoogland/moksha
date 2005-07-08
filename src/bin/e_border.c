@@ -1878,6 +1878,22 @@ e_border_resize_cancel(void)
      }
 }
 
+Evas_List *
+e_border_immortal_windows_get(void)
+{
+   Evas_List *list = NULL, *l;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+	
+	bd = l->data;
+	if (bd->lock_life)
+	  list = evas_list_append(list, bd);
+     }
+   return list;
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)
@@ -5532,7 +5548,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    NEW_LOCK_MI(_("Close"), lock_close);
 /*   NEW_LOCK_MI(_("Focus In"), lock_focus_in);*/
 /*   NEW_LOCK_MI(_("Focus Out"), lock_focus_out);*/
-/*   NEW_LOCK_MI(_("Lifespan"), lock_life);*/
+   NEW_LOCK_MI(_("Lifespan"), lock_life);
 
    m = e_menu_new();
    bd->border_remember_menu = m;

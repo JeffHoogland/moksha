@@ -331,7 +331,7 @@ _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   ecore_main_loop_quit();
+   if (!e_util_immortal_check()) ecore_main_loop_quit();
 }
 
 static void

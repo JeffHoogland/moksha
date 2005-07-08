@@ -923,7 +923,7 @@ static int
 _e_main_cb_signal_exit(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
    /* called on ctrl-c, kill (pid) (also SIGINT, SIGTERM and SIGQIT) */
-   ecore_main_loop_quit();
+   if (!e_util_immortal_check()) ecore_main_loop_quit();
    return 1;
 }
 

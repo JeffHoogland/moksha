@@ -44,6 +44,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* be able to set window to skip window list (and remember this)
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add window placement options like place at pointer
 * shaded windows should not allow border changes by the user
@@ -86,9 +87,9 @@ Some of the things (in very short form) that need to be done to E17...
 * break out ipc to set names for desktops (and get names/list them)
 * some sort of gui display of a desktop name (in the pager?)
 * window icons should be able to be chosen if e eapp icon overrides netwm
-  icon or the other way around.
+  icon or the other way around (and remember this).
 * transients should have option to always follow parent
-  (move/resize/raise/lower)
+  (move/resize/raise/lower) (and remember this).
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in
@@ -128,22 +129,12 @@ Some of the things (in very short form) that need to be done to E17...
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
 * add really nice "about" box with theme, authors credits list etc etc.
-* "immortal" windows (e will not allow that window to be closed or will
-  refuse to exit as long as the immortal flags is set until it is unset to
-  stop users from doing silly things like logging out while important stuff
-  is happening in that window -a menu option for this woudl be nice)
-* need to be able to remember client positons/etc.
-* with remember need to be able lock in attributes so the app (or user or both)
-  cannot change them (eg this window is a fixed size and location - app cannot
-  ask for a new size or location)
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
-* modules need config executables with proper widgets (sliders, check boxes,
-  radio etc. not massive menus)
-* remove module config menus (make them part of the module control panel and
-  as separate executables)
+* modules need config dialogs instead of long winded menus
+* remove module config menus (make them part of the module control panel etc.)
 ]]]
 
 [[[

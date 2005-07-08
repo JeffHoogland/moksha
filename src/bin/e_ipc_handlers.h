@@ -1028,7 +1028,7 @@ break;
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
-   ecore_main_loop_quit();
+   if (!e_util_immortal_check()) ecore_main_loop_quit();
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif

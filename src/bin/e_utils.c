@@ -235,3 +235,26 @@ e_util_both_str_empty(char *s1, char *s2)
    if (empty == 2) return 1;
    return 0;
 }
+
+int
+e_util_immortal_check(void)
+{
+   Evas_List *wins;
+   
+   wins = e_border_immortal_windows_get();
+   if (wins)
+     {
+	e_error_dialog_show(_("Cannot exit becaose of immortal windows."),
+			    _("Some windows are left with still around with\n"
+			      "the Lifespan lock enabled. This means that\n"
+			      "Enlightenment will not allow itself to exit\n"
+			      "until these windows have been closed or have\n"
+			      "the lifespan lock removed.\n"));
+	/* FIXME: should really display a list of these lifespan locked */
+	/* windows in a dialog and let the user disable their locks in */
+	/* this dialog */
+	evas_list_free(wins);
+	return 1;
+     }
+   return 0;
+}
