@@ -108,6 +108,7 @@ EAPI void             e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_C
 EAPI void             e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge);
 EAPI E_Gadman_Edge    e_gadman_client_edge_get(E_Gadman_Client *gmc);
 EAPI void             e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+EAPI void             e_gadman_client_user_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h);
 EAPI void             e_gadman_client_change_func_set(E_Gadman_Client *gmc, void (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change), void *data);
 EAPI E_Menu          *e_gadman_client_menu_new(E_Gadman_Client *gmc);

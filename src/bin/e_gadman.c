@@ -460,7 +460,7 @@ e_gadman_client_geometry_get(E_Gadman_Client *gmc, Evas_Coord *x, Evas_Coord *y,
 }
 
 void
-e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
+e_gadman_client_user_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
 {
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
@@ -471,9 +471,37 @@ e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
    gmc->h = h;
    if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
    gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
-   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_geometry_to_align(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+}
+
+void
+e_gadman_client_resize(E_Gadman_Client *gmc, Evas_Coord w, Evas_Coord h)
+{
+   int re_adjust = 0;
+   
+   E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
+   if ((gmc->w == w) && (gmc->h == h)) return;
+   gmc->w = w;
+   if (gmc->w > gmc->zone->w)
+     {
+	gmc->w = gmc->zone->w;
+	re_adjust = 1;
+     }
+   gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
+   gmc->h = h;
+   if (gmc->h > gmc->zone->h)
+     {
+	gmc->h = gmc->zone->h;
+	re_adjust = 1;
+     }
+   gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
+   _e_gadman_client_geometry_apply(gmc);
+   if (re_adjust)
+     _e_gadman_client_geometry_to_align(gmc);
+   _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 }
 
 void
