@@ -101,7 +101,8 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	if ((pfile) && (file) && (!strcmp(pfile, file)) &&
 	    (pgroup) && (group) && (!strcmp(pgroup, group)))
 	  {
-	     evas_object_del(zone->prev_bg_object);
+	     evas_object_del(zone->bg_object);
+	     zone->bg_object = zone->prev_bg_object;
 	     zone->prev_bg_object = NULL;
 	     return;
 	  }
