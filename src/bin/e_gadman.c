@@ -1317,7 +1317,7 @@ _e_gadman_cb_signal_resize_left_start(void *data, Evas_Object *obj, const char *
    gmc->use_autow = 0;
    gmc->resizing_l = 1;
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1390,7 +1390,7 @@ _e_gadman_cb_signal_resize_left_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1408,7 +1408,7 @@ _e_gadman_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char 
    gmc->use_autow = 0;
    gmc->resizing_r = 1;
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1477,7 +1477,7 @@ _e_gadman_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *em
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1495,7 +1495,7 @@ _e_gadman_cb_signal_resize_up_start(void *data, Evas_Object *obj, const char *em
    gmc->use_autoh = 0;
    gmc->resizing_u = 1;
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1568,7 +1568,7 @@ _e_gadman_cb_signal_resize_up_go(void *data, Evas_Object *obj, const char *emiss
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1586,7 +1586,7 @@ _e_gadman_cb_signal_resize_down_start(void *data, Evas_Object *obj, const char *
    gmc->use_autoh = 0;
    gmc->resizing_d = 1;
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
@@ -1655,7 +1655,7 @@ _e_gadman_cb_signal_resize_down_go(void *data, Evas_Object *obj, const char *emi
    _e_gadman_client_geometry_apply(gmc);
    _e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
 
-   if (e_config->move_info_follows)
+   if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(gmc->x, gmc->y, gmc->w, gmc->h);
    else
      e_move_resize_object_coords_set(gmc->zone->x, gmc->zone->y, gmc->zone->w, gmc->zone->h);
