@@ -22,6 +22,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_APPLY_SHADE (1 << 7)
 #define E_REMEMBER_APPLY_ZONE (1 << 8)
 #define E_REMEMBER_APPLY_RUN (1 << 9)
+#define E_REMEMBER_APPLY_SKIP_WINLIST (1 << 10)
 
 #else
 #ifndef E_REMEMBER_H
@@ -75,6 +76,8 @@ struct _E_Remember
       unsigned char sticky;
       
       unsigned char shaded;
+      
+      unsigned char skip_winlist;
       
       int           desk_x, desk_y;
       

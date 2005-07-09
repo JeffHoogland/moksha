@@ -206,6 +206,8 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    
    rem->prop.shaded = bd->shaded;
    
+   rem->prop.skip_winlist = bd->user_skip_winlist;
+   
    e_desk_xy_get(bd->desk, &rem->prop.desk_x, &rem->prop.desk_y);
    
    rem->prop.zone = bd->zone->num;

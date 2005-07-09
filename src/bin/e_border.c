@@ -87,6 +87,7 @@ static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -4098,6 +4099,10 @@ _e_border_eval(E_Border *bd)
 		  bd->lock_focus_out = rem->prop.lock_focus_out;
 		  bd->lock_life = rem->prop.lock_life;
 	       }
+	     if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
+	       {
+		  bd->user_skip_winlist = rem->prop.skip_winlist;
+	       }
 	  }
      }
    
@@ -5480,6 +5485,29 @@ _e_border_menu_cb_remember_apply_zone(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 					  
 static void
+_e_border_menu_cb_remember_apply_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   if (!bd->remember)
+     {
+	bd->remember = e_remember_new();
+	if (bd->remember)
+	  {
+	     e_remember_use(bd->remember);
+	     e_remember_update(bd->remember, bd);
+	  }
+	else
+	  return;
+     }
+   if (e_menu_item_toggle_get(mi))
+     bd->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
+   else
+     bd->remember->apply &= ~E_REMEMBER_APPLY_SKIP_WINLIST;
+   e_config_save_queue();
+}
+					  
+static void
 _e_border_menu_cb_remember_apply_run(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
@@ -5562,33 +5590,34 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_callback_set(mi, cb, bd);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remember this window")); \
+   e_menu_item_label_set(mi, _("Remember This Window")); \
    e_menu_item_check_set(mi, 1);
    if (bd->remember)
      e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Remember this instance only"), apply_first_only, 1, _e_border_menu_cb_remember_first);
+   NEW_REMEMBER_MI(_("Remember This Instance Only"), apply_first_only, 1, _e_border_menu_cb_remember_first);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Match by name"), match, E_REMEMBER_MATCH_NAME, _e_border_menu_cb_remember_match_name);
-   NEW_REMEMBER_MI(_("Match by class"), match, E_REMEMBER_MATCH_CLASS, _e_border_menu_cb_remember_match_class);
-   NEW_REMEMBER_MI(_("Match by title"), match, E_REMEMBER_MATCH_TITLE, _e_border_menu_cb_remember_match_title);
-   NEW_REMEMBER_MI(_("Match by role"), match, E_REMEMBER_MATCH_ROLE, _e_border_menu_cb_remember_match_role);
-   NEW_REMEMBER_MI(_("Match by window type"), match, E_REMEMBER_MATCH_TYPE, _e_border_menu_cb_remember_match_type);
-   NEW_REMEMBER_MI(_("Match by transient status"), match, E_REMEMBER_MATCH_TRANSIENT, _e_border_menu_cb_remember_match_transient);
+   NEW_REMEMBER_MI(_("Match by Name"), match, E_REMEMBER_MATCH_NAME, _e_border_menu_cb_remember_match_name);
+   NEW_REMEMBER_MI(_("Match by Class"), match, E_REMEMBER_MATCH_CLASS, _e_border_menu_cb_remember_match_class);
+   NEW_REMEMBER_MI(_("Match by Title"), match, E_REMEMBER_MATCH_TITLE, _e_border_menu_cb_remember_match_title);
+   NEW_REMEMBER_MI(_("Match by Role"), match, E_REMEMBER_MATCH_ROLE, _e_border_menu_cb_remember_match_role);
+   NEW_REMEMBER_MI(_("Match by Window Type"), match, E_REMEMBER_MATCH_TYPE, _e_border_menu_cb_remember_match_type);
+   NEW_REMEMBER_MI(_("Match by Transient Status"), match, E_REMEMBER_MATCH_TRANSIENT, _e_border_menu_cb_remember_match_transient);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Remember position"), apply, E_REMEMBER_APPLY_POS, _e_border_menu_cb_remember_apply_pos);
-   NEW_REMEMBER_MI(_("Remember size"), apply, E_REMEMBER_APPLY_SIZE, _e_border_menu_cb_remember_apply_size);
-   NEW_REMEMBER_MI(_("Remember stacking"), apply, E_REMEMBER_APPLY_LAYER, _e_border_menu_cb_remember_apply_layer);
-   NEW_REMEMBER_MI(_("Remember locks"), apply, E_REMEMBER_APPLY_LOCKS, _e_border_menu_cb_remember_apply_locks);
-   NEW_REMEMBER_MI(_("Remember border"), apply, E_REMEMBER_APPLY_BORDER, _e_border_menu_cb_remember_apply_border);
-   NEW_REMEMBER_MI(_("Remember stickiness"), apply, E_REMEMBER_APPLY_STICKY, _e_border_menu_cb_remember_apply_sticky);
-   NEW_REMEMBER_MI(_("Remember desktop"), apply, E_REMEMBER_APPLY_DESKTOP, _e_border_menu_cb_remember_apply_desktop);
-   NEW_REMEMBER_MI(_("Remember shaded state"), apply, E_REMEMBER_APPLY_SHADE, _e_border_menu_cb_remember_apply_shade);
-   NEW_REMEMBER_MI(_("Remember zone"), apply, E_REMEMBER_APPLY_ZONE, _e_border_menu_cb_remember_apply_zone);
+   NEW_REMEMBER_MI(_("Remember Position"), apply, E_REMEMBER_APPLY_POS, _e_border_menu_cb_remember_apply_pos);
+   NEW_REMEMBER_MI(_("Remember Size"), apply, E_REMEMBER_APPLY_SIZE, _e_border_menu_cb_remember_apply_size);
+   NEW_REMEMBER_MI(_("Remember Stacking"), apply, E_REMEMBER_APPLY_LAYER, _e_border_menu_cb_remember_apply_layer);
+   NEW_REMEMBER_MI(_("Remember Locks"), apply, E_REMEMBER_APPLY_LOCKS, _e_border_menu_cb_remember_apply_locks);
+   NEW_REMEMBER_MI(_("Remember Border"), apply, E_REMEMBER_APPLY_BORDER, _e_border_menu_cb_remember_apply_border);
+   NEW_REMEMBER_MI(_("Remember Stickiness"), apply, E_REMEMBER_APPLY_STICKY, _e_border_menu_cb_remember_apply_sticky);
+   NEW_REMEMBER_MI(_("Remember Desktop"), apply, E_REMEMBER_APPLY_DESKTOP, _e_border_menu_cb_remember_apply_desktop);
+   NEW_REMEMBER_MI(_("Remember Shaded State"), apply, E_REMEMBER_APPLY_SHADE, _e_border_menu_cb_remember_apply_shade);
+   NEW_REMEMBER_MI(_("Remember Zone"), apply, E_REMEMBER_APPLY_ZONE, _e_border_menu_cb_remember_apply_zone);
+   NEW_REMEMBER_MI(_("Remember Skip Window List"), apply, E_REMEMBER_APPLY_SKIP_WINLIST, _e_border_menu_cb_remember_apply_skip_winlist);
 /*   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -5715,6 +5744,20 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 				  "widgets/border/default/fullscreen");
      }
 
+   if ((bd->client.icccm.accepts_focus) &&
+       (!bd->client.netwm.state.skip_taskbar))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Skip Window List"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, bd->user_skip_winlist);
+	e_menu_item_callback_set(mi, _e_border_menu_cb_skip_winlist, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/skip_winlist"),
+				  "widgets/border/default/skip_winlist");
+     }
+   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -5950,6 +5993,23 @@ _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
 	else
 	  e_border_unfullscreen(bd);
      }
+}
+
+static void
+_e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   int toggle;
+
+   bd = data;
+   if (!bd) return;
+   
+   if ((bd->client.icccm.accepts_focus) &&
+       (!bd->client.netwm.state.skip_taskbar))
+     bd->user_skip_winlist = e_menu_item_toggle_get(mi);
+   else
+     bd->user_skip_winlist = 0;
+   if (bd->remember) e_remember_update(bd->remember, bd);
 }
 
 static void

@@ -164,6 +164,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, prop.border, STR);
    E_CONFIG_VAL(D, T, prop.sticky, UCHAR);
    E_CONFIG_VAL(D, T, prop.shaded, UCHAR);
+   E_CONFIG_VAL(D, T, prop.skip_winlist, UCHAR);
    E_CONFIG_VAL(D, T, prop.desk_x, INT);
    E_CONFIG_VAL(D, T, prop.desk_y, INT);
    E_CONFIG_VAL(D, T, prop.zone, INT);
