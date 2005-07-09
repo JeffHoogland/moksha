@@ -13,6 +13,9 @@ main(int argc, char **argv)
    int valid_args = 0;
    Eet_File *ef = NULL;
    char buf[4096];
+   int write_ops = 0;
+   int size;
+   char *str, *v;
    
    char *lang = NULL;
    int del_name = 0;
@@ -36,6 +39,16 @@ main(int argc, char **argv)
    char *set_win_role = NULL;
    int   set_startup_notify = -1;
    int   set_wait_exit = -1;
+   int   get_name = 0;
+   int   get_generic = 0;
+   int   get_comment = 0;
+   int   get_exe = 0;
+   int   get_win_name = 0;
+   int   get_win_class = 0;
+   int   get_win_title = 0;
+   int   get_win_role = 0;
+   int   get_startup_notify = 0;
+   int   get_wait_exit = 0;
    
    /* handle some command-line parameters */
    for (i = 1; i < argc; i++)
@@ -45,66 +58,77 @@ main(int argc, char **argv)
 	     i++;
 	     lang = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-name")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_name = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-generic")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_generic = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-comment")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_comment = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-exe")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_exe = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-name")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_name = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-class")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_class = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-title")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_title = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-win-role")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_win_role = argv[i];
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-startup-notify")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_startup_notify = atoi(argv[i]);
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-wait-exit")) && (i < (argc - 1)))
 	  {
 	     i++;
 	     set_wait_exit = atoi(argv[i]);
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-all")))
 	  {
@@ -119,56 +143,67 @@ main(int argc, char **argv)
 	     del_startup_notify = 1;
 	     del_wait_exit = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-name")))
 	  {
 	     del_name = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-generic")))
 	  {
 	     del_generic = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-comment")))
 	  {
 	     del_comment = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-exe")))
 	  {
 	     del_exe = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-name")))
 	  {
 	     del_win_name = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-class")))
 	  {
 	     del_win_class = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-title")))
 	  {
 	     del_win_title = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-win-role")))
 	  {
 	     del_win_role = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-startup-notify")))
 	  {
 	     del_startup_notify = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-del-wait-exit")))
 	  {
 	     del_wait_exit = 1;
              valid_args++;
+             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
@@ -177,6 +212,56 @@ main(int argc, char **argv)
 	  {
 	     _e_help();
 	     exit(0);
+	  }
+	else if ((!strcmp(argv[i], "-get-name")))
+	  {
+	     get_name = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-generic")))
+	  {
+	     get_generic = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-comment")))
+	  {
+	     get_comment = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-exe")))
+	  {
+	     get_exe = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-win-name")))
+	  {
+	     get_win_name = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-win-class")))
+	  {
+	     get_win_class = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-win-title")))
+	  {
+	     get_win_title = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-win-role")))
+	  {
+	     get_win_role = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-startup-notify")))
+	  {
+	     get_startup_notify = 1;
+	        valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-wait-exit")))
+	  {
+	     get_wait_exit = 1;
+	        valid_args++;
 	  }
 	else
 	  file = argv[i];
@@ -195,7 +280,14 @@ main(int argc, char **argv)
     }
 
    eet_init();
-   ef = eet_open(file, EET_FILE_MODE_READ_WRITE);
+   if (write_ops != 0)
+     {
+        ef = eet_open(file, EET_FILE_MODE_READ_WRITE);
+     }
+   else
+     {
+        ef = eet_open(file, EET_FILE_MODE_READ);
+     }
    if (!ef)
      {
 	printf("ERROR: cannot open file %s for READ/WRITE\n", file);
@@ -299,6 +391,166 @@ main(int argc, char **argv)
      eet_delete(ef, "app/info/startup_notify");
    if (del_wait_exit)
      eet_delete(ef, "app/info/wait_exit");
+   if (get_name)
+     {
+        if (lang)
+          {
+             snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
+             v = eet_read(ef, buf, &size);
+             if (!v) v = eet_read(ef, "app/info/name", &size);
+          }
+        else
+          v = eet_read(ef, "app/info/name", &size);
+
+        if (v)
+          {
+              str = malloc(size + 1);
+              memcpy(str, v, size);
+              str[size] = 0;
+              free(v);
+              printf("%s\n", str);
+          }
+     }
+   if (get_generic)
+     {
+        if (lang)
+          {
+             snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
+             v = eet_read(ef, buf, &size);
+             if (!v) v = eet_read(ef, "app/info/generic", &size);
+          }
+        else
+          v = eet_read(ef, "app/info/generic", &size);
+
+        if (v)
+          {
+              str = malloc(size + 1);
+              memcpy(str, v, size);
+              str[size] = 0;
+              free(v);
+              printf("%s\n", str);
+          }
+     }
+   if (get_comment)
+     {
+        if (lang)
+          {
+             snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
+             v = eet_read(ef, buf, &size);
+             if (!v) v = eet_read(ef, "app/info/comment", &size);
+          }
+        else
+          v = eet_read(ef, "app/info/comment", &size);
+
+        if (v)
+          {
+              str = malloc(size + 1);
+              memcpy(str, v, size);
+              str[size] = 0;
+              free(v);
+              printf("%s\n", str);
+          }
+     }
+   if (get_exe)
+     {
+        v = eet_read(ef, "app/info/exe", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
+   if (get_win_name)
+     {
+        v = eet_read(ef, "app/window/name", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
+   if (get_win_class)
+     {
+        v = eet_read(ef, "app/window/class", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
+   if (get_win_title)
+     {
+        v = eet_read(ef, "app/window/title", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
+   if (get_win_role)
+     {
+        v = eet_read(ef, "app/window/role", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
+   if (get_startup_notify)
+     {
+        v = eet_read(ef, "app/info/startup_notify", &size);
+        if (v)
+          {
+             if ((int) *v == 1)
+               {
+                  printf("1\n");
+               }
+             else
+               {
+                  printf("0\n");
+               }
+             free(v);
+          }
+        else
+          {
+             printf("Not set\n");
+          }
+     }
+   if (get_wait_exit)
+     {
+        v = eet_read(ef, "app/info/wait_exit", &size);
+        if (v)
+          {
+             if ((int) *v == 1)
+               {
+                  printf("1\n");
+               }
+             else
+               {
+                  printf("0\n");
+               }
+             free(v);
+          }
+        else
+          {
+             printf("Not set\n");
+          }
+     }
    
    eet_close(ef);
    eet_shutdown();
@@ -321,6 +573,16 @@ _e_help(void)
 	  "  -set-win-role WIN_ROLE     Set the application window role glob\n"
 	  "  -set-startup-notify [1/0]  Set the application startup notify flag\n"
 	  "  -set-wait-exit [1/0]       Set the application wait exit flag\n"
+	  "  -get-name                  Get the application name\n"
+	  "  -get-generic               Get the application generic name\n"
+	  "  -get-comment               Get the application comment\n"
+	  "  -get-exe                   Get the application execute line\n"
+	  "  -get-win-name              Get the application window name glob\n"
+	  "  -get-win-class             Get the application window class glob\n"
+	  "  -get-win-title             Get the application window title glob\n"
+	  "  -get-win-role              Get the application window role glob\n"
+	  "  -get-startup-notify        Get the application startup notify flag\n"
+	  "  -get-wait-exit             Get the application wait exit flag\n"
 	  "  -del-name                  Delete the application name\n"
 	  "  -del-generic               Delete the application generic name\n"
 	  "  -del-comment               Delete the application comment\n"
