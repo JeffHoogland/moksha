@@ -7,6 +7,10 @@ static E_Popup *_disp_pop = NULL;
 static Evas_Object *_obj = NULL;
 
 static int visible = 0;
+static int obj_x = 0;
+static int obj_y = 0;
+static int obj_w = 0;
+static int obj_h = 0;
 
 void
 e_resize_begin(E_Zone *zone, int w, int h)
@@ -33,8 +37,10 @@ e_resize_begin(E_Zone *zone, int w, int h)
    e_resize_update(w, h);
 
    e_popup_move_resize(_disp_pop,
-		       (_disp_pop->zone->w - ew) / 2,
-		       (_disp_pop->zone->h - eh) / 2,
+		       (obj_x - _disp_pop->zone->x) +
+		       ((obj_w - ew) / 2),
+		       (obj_y - _disp_pop->zone->y) +
+		       ((obj_h - eh) / 2),
 		       ew, eh);
    e_popup_show(_disp_pop);
    visible = 1;
@@ -95,8 +101,10 @@ e_move_begin(E_Zone *zone, int x, int y)
 //   e_move_update(x, y);
    
    e_popup_move_resize(_disp_pop,
-		       (_disp_pop->zone->w - ew) / 2,
-		       (_disp_pop->zone->h - eh) / 2,
+		       (obj_x - _disp_pop->zone->x) +
+		       ((obj_w - ew) / 2),
+		       (obj_y - _disp_pop->zone->y) +
+		       ((obj_h - eh) / 2),
 		       ew, eh);
 //   e_popup_show(_disp_pop);
 //   visible = 1;
@@ -132,4 +140,22 @@ e_move_update(int x, int y)
      }
    snprintf(buf, sizeof(buf), "%i %i", x, y);
    edje_object_part_text_set(_obj, "text", buf);
+}
+
+void
+e_move_resize_object_coords_set(int x, int y, int w, int h)
+{
+   obj_x = x;
+   obj_y = y;
+   obj_w = w;
+   obj_h = h;
+   if (visible)
+     {
+	e_popup_move(_disp_pop,
+		     (obj_x - _disp_pop->zone->x) +
+		     ((obj_w - _disp_pop->w) / 2),
+		     (obj_y - _disp_pop->zone->y) +
+		     ((obj_h - _disp_pop->h) / 2)
+		     );
+     }
 }

@@ -249,6 +249,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
    E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
+   E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
+   E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -349,7 +351,8 @@ e_config_init(void)
 	e_config->transition_start = strdup("");
 	e_config->transition_desk = strdup("vswipe");
 	e_config->transition_change = strdup("crossfade");
-	
+	e_config->move_info_follows = 1;
+	e_config->resize_info_follows = 1;
 	  {
 	     E_Config_Module *em;
 

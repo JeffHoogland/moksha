@@ -44,8 +44,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* option to allow move and resize info boxes to be able to follow the object
-  around
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add window placement options like place at pointer
 * shaded windows should not allow border changes by the user

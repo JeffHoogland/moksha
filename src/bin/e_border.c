@@ -6286,6 +6286,10 @@ _e_border_resize_begin(E_Border *bd)
 	bd->client.netwm.sync.wait = 0;
 	bd->client.netwm.sync.send_time = ecore_time_get();
      }
+   if (e_config->move_info_follows)
+     e_move_resize_object_coords_set(bd->x, bd->y, bd->w, bd->h); 
+   else
+     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
    e_resize_begin(bd->zone, w, h);
    resize = bd;
    return 1;
@@ -6328,6 +6332,10 @@ _e_border_resize_update(E_Border *bd)
 	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
 	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
      }
+   if (e_config->move_info_follows)
+     e_move_resize_object_coords_set(bd->x, bd->y, bd->w, bd->h);
+   else
+     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
    e_resize_update(w, h);
 }
 
@@ -6350,6 +6358,10 @@ _e_border_move_begin(E_Border *bd)
 	bd->client.netwm.sync.time = ecore_time_get();
      }
 #endif
+   if (e_config->move_info_follows)
+     e_move_resize_object_coords_set(bd->x, bd->y, bd->w, bd->h); 
+   else
+     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
    e_move_begin(bd->zone, bd->x, bd->y);
    move = bd;
    return 1;
@@ -6382,6 +6394,10 @@ _e_border_move_end(E_Border *bd)
 static void
 _e_border_move_update(E_Border *bd)
 {
+   if (e_config->move_info_follows)
+     e_move_resize_object_coords_set(bd->x, bd->y, bd->w, bd->h); 
+   else
+     e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
    e_move_update(bd->x, bd->y);
 }
 
