@@ -4019,6 +4019,41 @@ break;
 #endif
 #undef HDL
  
+/****************************************************************************/
+#define HDL E_IPC_OP_EXEC_ACTION
+#if (TYPE == E_REMOTE_OPTIONS)
+	OP("-exec-action", 2, "Executes an action given the name (OPT1) and a string of parameters (OPT2).", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+	REQ_2STRING(params[0], params[1], HDL);
+#elif (TYPE == E_WM_IN)
+	STRING2(actionName, paramList, e_2str, HDL);
+	{
+		Evas_List *m;
+		E_Manager *man;
+		E_Action
+			*act
+		;
+
+		man = NULL;
+
+		m = e_manager_list();
+		if (m) {
+			man = m->data;
+
+			if (man) {
+				act = e_action_find(actionName);
+
+				if (act && act->func.go) {
+					act->func.go(E_OBJECT(man), paramList);
+				}
+			}
+		}
+	}
+	END_STRING2(e_2str)
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
 #if 0
 }
 #endif
