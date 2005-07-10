@@ -34,6 +34,10 @@ if (e->data) { \
 } \
 break;
 
+/**
+ * STRING2:
+ * decode event data of type E_Ipc_2Str
+ */
 # define STRING2(__str1, __str2, __2str, HDL) \
 case HDL: \
 if (e->data) { \
@@ -138,6 +142,9 @@ if (e->data) { \
 } \
 break;
 
+/**
+ * Get event data for libe processing
+ */
 # define RESPONSE(__res, __store, HDL) \
    __store *__res = calloc(1, sizeof(__store)); \
    if (e->data) {
@@ -447,6 +454,60 @@ free(data);
     FREE_LIST(dat); \
  } \
    break;
+
+/**
+ * STRING2_LIST:
+ * Decode event data which is a list of E_Ipc_2Str objects and iterate 
+ * the list. For each iteration the object __v will contain a decoded list
+ * element. 
+ *
+ * Use END_STRING2_LIST to terminate the loop and free all data.
+ */
+#define STRING2_LIST(__v, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    if (e_ipc_codec_2str_list_dec(e->data, e->size, &dat)) { \
+       for (l = dat; l; l = l->next) { \
+	  E_Ipc_2Str *__v; \
+	  __v = l->data;
+#define END_STRING2_LIST(__v) \
+	  free(__v->str1); \
+	  free(__v->str2); \
+	  free(__v); \
+       } \
+       evas_list_free(dat); \
+    } \
+    reply_count++; \
+ } \
+   break;
+
+/** 
+ * SEND_STRING2_LIST:
+ * Start to encode a list of objects to prepare them for sending via
+ * ipc. The object __v1 will be of type __typ1 and __v2 will be of type
+ * E_Ipc_2Str. 
+ *
+ * Use END_SEND_STRING2_LIST to terminate the encode iteration and 
+ * send that data. The list will be freed.
+ */
+#define SEND_STRING2_LIST(__list, __typ1, __v1, __v2, HDL) \
+ case HDL: { \
+    Evas_List *dat = NULL, *l; \
+    void *data; int bytes; \
+    for (l = __list; l; l = l->next) { \
+       __typ1 *__v1; \
+       E_Ipc_2Str *__v2; \
+       __v1 = l->data; \
+       __v2 = calloc(1, sizeof(E_Ipc_2Str));
+#define END_SEND_STRING2_LIST(__v1, __op) \
+       dat = evas_list_append(dat, __v1); \
+    } \
+    data = e_ipc_codec_2str_list_enc(dat, &bytes); \
+    SEND_DATA(__op); \
+    FREE_LIST(dat); \
+ } \
+   break;
+
 
 #define SEND_STRING(__str, __op, HDL) \
 case HDL: { void *data; int bytes; \
@@ -4053,6 +4114,37 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_THEMES_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-themes-list", 0, "List themes and associated categories", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING2_LIST(e_config->themes, E_Config_Theme, theme, v, HDL);
+   v->str1 = theme->category;
+   v->str2 = theme->file;
+   END_SEND_STRING2_LIST(v, E_IPC_OP_THEMES_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_THEMES_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING2_LIST(v, HDL);
+   printf("REPLY: CATEGORY=\"%s\" EDJE=\"%s\"\n", v->str1, v->str2);
+   END_STRING2_LIST(v);
+#endif
+#undef HDL
+     
+/****************************************************************************/
+
+
 
 #if 0
 }

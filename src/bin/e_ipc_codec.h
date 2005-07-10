@@ -83,12 +83,17 @@ EAPI int      e_ipc_codec_double_dec(char *data, int bytes, double *dest);
 EAPI void    *e_ipc_codec_double_enc(double val, int *size_ret);
 EAPI int      e_ipc_codec_2int_dec(char *data, int bytes, int *dest, int *dest2x);
 EAPI void    *e_ipc_codec_2int_enc(int val1, int val2, int *size_ret);
+
 EAPI int      e_ipc_codec_str_dec(char *data, int bytes, char **dest);
 EAPI void    *e_ipc_codec_str_enc(char *str, int *size_ret);
-EAPI int      e_ipc_codec_2str_dec(char *data, int bytes, E_Ipc_2Str **dest);
-EAPI void    *e_ipc_codec_2str_enc(char *str1, char *str2, int *size_ret);
 EAPI int      e_ipc_codec_str_list_dec(char *data, int bytes, Evas_List **dest);
 EAPI void    *e_ipc_codec_str_list_enc(Evas_List *list, int *size_ret);
+
+EAPI int      e_ipc_codec_2str_dec(char *data, int bytes, E_Ipc_2Str **dest);
+EAPI void    *e_ipc_codec_2str_enc(char *str1, char *str2, int *size_ret);
+EAPI int      e_ipc_codec_2str_list_dec(char *data, int bytes, Evas_List **dest);
+EAPI void    *e_ipc_codec_2str_list_enc(Evas_List *list, int *size_ret);
+
 EAPI int      e_ipc_codec_str_int_dec(char *data, int bytes, E_Ipc_Str_Int **dest);
 EAPI void    *e_ipc_codec_str_int_enc(char *str, int val, int *size_ret);
 EAPI int      e_ipc_codec_str_int_list_dec(char *data, int bytes, Evas_List **dest);

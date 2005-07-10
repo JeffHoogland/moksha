@@ -3,11 +3,6 @@
  */
 #include "e.h"
 
-/* TODO List
- *
- * * setting up a new config value and a listener callback is too long winded - need to have helper funcs and macros do this so it's more like 1 line per new config value or 2
- */
-
 #if ((E17_PROFILE >= LOWRES_PDA) && (E17_PROFILE <= HIRES_PDA))
 #define DEF_MENUCLICK 1.25
 #else

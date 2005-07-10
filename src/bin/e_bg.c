@@ -98,8 +98,8 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	
 	edje_object_file_get(zone->prev_bg_object, &pfile, &pgroup);
 	edje_object_file_get(zone->bg_object, &file, &group);
-	if ((!e_util_strcmp(pfile, file)) &&
-	    (!e_util_strcmp(pgroup, group)))
+	if ((!e_util_strcmp((char *)pfile, (char *)file)) &&
+	    (!e_util_strcmp((char *)pgroup, (char *)group)))
 	  {
 	     evas_object_del(zone->bg_object);
 	     zone->bg_object = zone->prev_bg_object;
