@@ -575,6 +575,12 @@ e_border_hide(E_Border *bd, int manage)
 	_e_border_resize_end(bd);
      }
    
+   if (bd->focused)
+     {
+	printf("REMOVe FOCUS!\n");
+	e_border_focus_set(bd, 0, 1);
+     }
+   
    if (!bd->need_reparent)
      {
 	if (bd->focused)
@@ -594,7 +600,7 @@ e_border_hide(E_Border *bd, int manage)
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    if (!manage)
      ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
-
+   
      {
 	E_Event_Border_Hide *ev;
 	
@@ -856,11 +862,13 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     focus_stack = evas_list_remove(focus_stack, bd);
 	     focus_stack = evas_list_prepend(focus_stack, bd);
 	  }
+//	printf("EMIT 0x%x activeve\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "active", "");
 	e_focus_event_focus_in(bd);
      }
    else if ((!focus) && (bd->focused))
      {
+//	printf("EMIT 0x%x passive\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "passive", "");
 	e_focus_event_focus_out(bd);
 	/* FIXME: Sometimes we should leave the window fullscreen! */
@@ -872,8 +880,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if (bd->focused)
 	  {
-	     if ((focused != bd) && (focused))
-	       e_border_focus_set(focused, 0, 0);
 	     if ((!bd->client.icccm.accepts_focus) &&
 		 (!bd->client.icccm.take_focus))
 	       {
@@ -923,16 +929,37 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	else
 	  {
-	     ecore_x_window_focus(bd->zone->container->manager->root);
+//	     ecore_x_window_focus(bd->zone->container->manager->root);
+	     ecore_x_window_focus(bd->zone->container->bg_win);
 	  }
      }
    if ((bd->focused) && (focused != bd))
      {
+	if (focused)
+	  {
+//	     printf("unfocus previous\n");
+	     edje_object_signal_emit(focused->bg_object, "passive", "");
+	     e_focus_event_focus_out(focused);
+	     /* FIXME: Sometimes we should leave the window fullscreen! */
+	     if (focused->fullscreen) e_border_unfullscreen(focused);
+	     focused->focused = 0;
+//		  e_border_focus_set(focused, 0, 0);
+	  }
 	focused = bd;
 	e_hints_active_window_set(bd->zone->container->manager, bd);
      }
    else if ((!bd->focused) && (focused == bd))
      {
+	if (focused)
+	  {
+//	     printf("unfocus previous\n");
+	     edje_object_signal_emit(focused->bg_object, "passive", "");
+	     e_focus_event_focus_out(focused);
+	     /* FIXME: Sometimes we should leave the window fullscreen! */
+	     if (focused->fullscreen) e_border_unfullscreen(focused);
+	     focused->focused = 0;
+//		  e_border_focus_set(focused, 0, 0);
+	  }
 	focused = NULL;
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
@@ -4711,7 +4738,10 @@ _e_border_eval(E_Border *bd)
 	if (e_config->focus_setting == E_FOCUS_NEW_WINDOW)
 	  {
 	     if (!bd->lock_focus_out)
-	       e_border_focus_set(bd, 1, 1);
+	       {
+		  printf("noo\n");
+		  e_border_focus_set(bd, 1, 1);
+	       }
 	  }
 	else
 	  {
@@ -4724,7 +4754,10 @@ _e_border_eval(E_Border *bd)
 			e_border_focused_get())))
 		    {
 		       if (!bd->lock_focus_out)
-			 e_border_focus_set(bd, 1, 1);
+			 {
+			    printf("noo2\n");
+			    e_border_focus_set(bd, 1, 1);
+			 }
 		    }
 	       }
 	  }
