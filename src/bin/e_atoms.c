@@ -11,6 +11,7 @@ Ecore_X_Atom E_ATOM_DESK = 0;
 Ecore_X_Atom E_ATOM_MAPPED = 0;
 Ecore_X_Atom E_ATOM_SHADE_DIRECTION = 0;
 Ecore_X_Atom E_ATOM_HIDDEN = 0;
+Ecore_X_Atom E_ATOM_SAVED_SIZE = 0;
 
 /* externally accessible functions */
 int
@@ -23,7 +24,8 @@ e_atoms_init(void)
    E_ATOM_MAPPED = ecore_x_atom_get("__E_WINDOW_MAPPED");
    E_ATOM_SHADE_DIRECTION = ecore_x_atom_get("__E_WINDOW_SHADE_DIRECTION");
    E_ATOM_HIDDEN = ecore_x_atom_get("__E_WINDOW_HIDDEN");
-   
+   E_ATOM_SAVED_SIZE = ecore_x_atom_get("__E_WINDOW_SAVED_SIZE");
+
    return 1;
 }
 
