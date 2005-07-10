@@ -575,16 +575,11 @@ e_border_hide(E_Border *bd, int manage)
 	_e_border_resize_end(bd);
      }
    
-   if (bd->focused)
-     {
-	printf("REMOVe FOCUS!\n");
-	e_border_focus_set(bd, 0, 1);
-     }
-   
    if (!bd->need_reparent)
      {
 	if (bd->focused)
-	  ecore_x_window_focus(bd->zone->container->manager->root);
+//	  ecore_x_window_focus(bd->zone->container->manager->root);
+	  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
 	ecore_x_window_hide(bd->client.win);
      }
    e_container_shape_hide(bd->shape);
@@ -882,55 +877,22 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  {
 	     if ((!bd->client.icccm.accepts_focus) &&
 		 (!bd->client.icccm.take_focus))
-	       {
-		  /* no input */
-	       }
+	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_NO_INPUT);
 	     else if ((bd->client.icccm.accepts_focus) &&
 		      (bd->client.icccm.take_focus))
-	       {
-		  /* locally active */
-/* this is a problem - basically we ASK the client to TAKE the focus itself
- * BUT if a whole stream of events is happening, the client may take the focus
- * LATER after we have gone and reset it back to somewhere else, thus it steals
- * the focus away from where it should be (due to x being async etc.). no matter
- * how nice and ICCCM this is - it's a major design flaw (imho) in ICCCM as it
- * becomes nigh impossible for the wm then to re-serialise events and get the
- * focus back to where it should be.
- * 
- * example scenario of the bug:
- * 
- * mouse enter window X
- * wm set focus to X
- * mouse leaves window X
- * remove focus from window X
- * mouse enters window Y
- * wm asks client Y to "take the focus"
- * mouse instantly moves back to window X
- * wm sets focus on X
- * suddenly focus is stolen by client Y as it finally recieved the request and took the focus
- * 
- * now the focus is on Y where it should be on X
- */
-		  ecore_x_window_focus(bd->client.win);
-		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-	       }
+	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
 	     else if ((!bd->client.icccm.accepts_focus) &&
 		      (bd->client.icccm.take_focus))
-	       {
-		  /* globally active */
-		  ecore_x_icccm_take_focus_send(bd->client.win, ecore_x_current_time_get());
-	       }
+	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
 	     else if ((bd->client.icccm.accepts_focus) &&
 		      (!bd->client.icccm.take_focus))
-	       {
-		  /* passive */
-		  ecore_x_window_focus(bd->client.win);
-	       }
+	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
 	  }
 	else
 	  {
 //	     ecore_x_window_focus(bd->zone->container->manager->root);
-	     ecore_x_window_focus(bd->zone->container->bg_win);
+//	     ecore_x_window_focus(bd->zone->container->bg_win);
+	     e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
 	  }
      }
    if ((bd->focused) && (focused != bd))
@@ -1982,7 +1944,9 @@ _e_border_free(E_Border *bd)
      }
    if (focused == bd)
      {
-	ecore_x_window_focus(bd->zone->container->manager->root);
+//	ecore_x_window_focus(bd->zone->container->manager->root);
+	e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
+	e_hints_active_window_set(bd->zone->container->manager, NULL);
 	focused = NULL;
      }
    while (bd->handlers)
