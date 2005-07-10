@@ -3331,6 +3331,10 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 	  }
 	e_focus_event_mouse_down(bd);
      }
+   if (ev->win != ev->event_win)
+     {
+	return 1;
+     }
    if ((ev->win != bd->event_win) && (ev->event_win != bd->win))
      {
 //	printf("abort ev\n");
@@ -3357,7 +3361,8 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 /*   
    if (bd->moving)
      {
-	printf("moving\n");
+
+ printf("moving\n");
      }
    else if (bd->resize_mode != RESIZE_NONE)
      {
@@ -3369,8 +3374,6 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-//	printf("mouse %i %i | DBL %i TRIP %i\n",
-//	       ev->x, ev->y, ev->double_click, ev->triple_click);
 	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, NULL);
 	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, NULL);
      }
