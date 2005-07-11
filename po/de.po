@@ -1,6 +1,6 @@
 # Enlightenment german translation.
 # This file is put in the public domain.
-# vandango <vandango@toenda.com>, 2005.
+# vandango <vandango@toenda.com>, 2005, 2005/07/10
 # Azundris <edevel@azundris.com>, 2005/06/08.
 #
 #, fuzzy
@@ -189,6 +189,10 @@ msgstr "Batterie"
 #: src/modules/battery/e_mod_main.c:688
 msgid "Battery Running Low"
 msgstr "Batterie ist bald leer"
+
+#: src/bin/e_border.c:5586
+msgid "Border"
+msgstr "Fensterrahmen"
 
 #: src/bin/e_border.c:4475
 msgid "Borderless"
@@ -729,13 +733,21 @@ msgstr "Gesamte Bildschirmbreite"
 msgid "Fullscreen"
 msgstr "Vollbild"
 
+#: src/bin/e_border.c:5583
+msgid "Fullscreen (Application)"
+msgstr "Vollbild (Anwendung)"
+
+#: src/bin/e_border.c:5572
+msgid "Fullscreen (User)"
+msgstr "Vollbild (Benutzer)"
+
 #: src/modules/dropshadow/e_mod_main.c:252
 msgid "Fuzzy"
 msgstr "Weich"
 
 #: src/bin/e_int_menus.c:92
 msgid "Gadgets"
-msgstr ""
+msgstr "Kleine Helfer"
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Gigantic"
@@ -774,13 +786,29 @@ msgstr "Icon Bearbeitungsfehler"
 msgid "Iconify"
 msgstr "Minimieren"
 
+#: src/bin/e_border.c:5578
+msgid "Iconify (Application)"
+msgstr "Minimieren (Anwendung)"
+
+#: src/bin/e_border.c:5567
+msgid "Iconify (User)"
+msgstr "Minimieren (Benutzer)"
+
 #: src/modules/dropshadow/e_mod_main.c:375
 msgid "Immediately Underneath"
 msgstr "Direkt darunterliegend"
 
+#: src/bin/e_border.c:5670
+msgid "Kill"
+msgstr "Töten"
+
 #: src/modules/ibar/e_mod_main.c:761
 msgid "Large"
 msgstr "Groß"
+
+#: src/bin/e_border.c:5590
+msgid "Lifespan"
+msgstr "Lebensspanne"
 
 #: src/modules/dropshadow/e_mod_main.c:309
 msgid "Light"
@@ -789,6 +817,10 @@ msgstr "Hell"
 #: src/bin/e_int_menus.c:107
 msgid "Lost Windows"
 msgstr "Verlorene Fenster"
+
+#: src/bin/e_border.c:5776
+msgid "Locks"
+msgstr "Sperren"
 
 #: src/modules/battery/e_mod_main.c:993
 msgid "Low"
@@ -802,6 +834,42 @@ msgstr "Niedrige Temperatur"
 #: src/modules/cpufreq/e_mod_main.c:431
 msgid "Manual"
 msgstr "Manuell"
+
+#: src/bin/e_border.c:5615
+msgid "Match by Class"
+msgstr "Zur Klasse passend"
+
+#: src/bin/e_border.c:5614
+msgid "Match by Name"
+msgstr "Zum Namen passend"
+
+#: src/bin/e_border.c:5617
+msgid "Match by Role"
+msgstr "Zur Rolle passend"
+
+#: src/bin/e_border.c:5616
+msgid "Match by Title"
+msgstr "Zum Titel passend"
+
+#: src/bin/e_border.c:5619
+msgid "Match by Transient Status"
+msgstr "Zum Vorübergehenden Status passend"
+
+#: src/bin/e_border.c:5618
+msgid "Match by Window Type"
+msgstr "Zum Fenstertyp passend"
+
+#: src/bin/e_border.c:5582
+msgid "Maximize (Application)"
+msgstr "Maximieren (Anwendung)"
+
+#: src/bin/e_border.c:5571
+msgid "Maximize (User)"
+msgstr "Maximieren (Benutzer)"
+
+#: src/modules/cpufreq/e_mod_main.c:434
+msgid "Maximum Speed"
+msgstr "Maximale Geschwindigkeit"
 
 #: src/bin/e_border.c:3411
 msgid "Maximized"
@@ -917,6 +985,66 @@ msgstr ""
 msgid "Pager"
 msgstr "Arbeitsflächenumschalter"
 
+#: src/bin/e_border.c:5575
+msgid "Position (Application)"
+msgstr "Position (Anwendung)"
+
+#: src/bin/e_border.c:5564
+msgid "Position (User)"
+msgstr "Position (Benutzer)"
+
+#: src/bin/e_border.c:5783
+msgid "Remember"
+msgstr "Erinnern"
+
+#: src/bin/e_border.c:5626
+msgid "Remember Border"
+msgstr "Fensterrand erinnern"
+
+#: src/bin/e_border.c:5628
+msgid "Remember Desktop"
+msgstr "Arbeitsfläche erinnern"
+
+#: src/bin/e_border.c:5625
+msgid "Remember Locks"
+msgstr "Sperren erinnern"
+
+#: src/bin/e_border.c:5622
+msgid "Remember Position"
+msgstr "Position erinnern"
+
+#: src/bin/e_border.c:5629
+msgid "Remember Shaded State"
+msgstr "Einklappstatus erinnern"
+
+#: src/bin/e_border.c:5623
+msgid "Remember Size"
+msgstr "Größe erinnern"
+
+#: src/bin/e_border.c:5631
+msgid "Remember Skip Window List"
+msgstr "Übersprungene Fensterlisten erinnern"
+
+#: src/bin/e_border.c:5624
+msgid "Remember Stacking"
+msgstr "Stapel erinnern"
+
+#: src/bin/e_border.c:5627
+msgid "Remember Stickiness"
+msgstr "Klebrigkeit erinnern"
+
+#: src/bin/e_border.c:5611
+msgid "Remember This Instance Only"
+msgstr "Nur diese Instance erinnern"
+
+#: src/bin/e_border.c:5604
+msgid "Remember This Window"
+msgstr "Dieses Fenster erinnern"
+
+#: src/bin/e_border.c:5630
+msgid "Remember Zone"
+msgstr "Zone erinnern"
+
 #: src/bin/e_int_menus.c:365
 msgid "Remove Column of Desktops"
 msgstr "Spalte mit Arbeitsflächen entfernen"
@@ -958,6 +1086,14 @@ msgstr "Geschwindigkeit einstellen"
 msgid "Shaded"
 msgstr "Eingeklappt"
 
+#: src/bin/e_border.c:5581
+msgid "Shade (Application)"
+msgstr "Einklappen (Anwendung)"
+
+#: src/bin/e_border.c:5570
+msgid "Shade (User)"
+msgstr "Einklappen (Benutzer)"
+
 #: src/modules/dropshadow/e_mod_main.c:270
 msgid "Sharp"
 msgstr "Scharf"
@@ -965,6 +1101,18 @@ msgstr "Scharf"
 #: src/modules/ibar/e_mod_main.c:808
 msgid "Size"
 msgstr "Größe"
+
+#: src/bin/e_border.c:5576
+msgid "Size (Application)"
+msgstr "Größe (Anwendung)"
+
+#: src/bin/e_border.c:5565
+msgid "Size (User)"
+msgstr "Größe (Benutzer)"
+
+#: src/bin/e_border.c:5762
+msgid "Skip Window List"
+msgstr "Fensterliste Überspringen"
 
 #: src/modules/temperature/e_mod_main.c:481
 msgid "Slow (30 sec)"
@@ -982,9 +1130,25 @@ msgstr "Irgendetwas"
 msgid "Start"
 msgstr "Start"
 
+#: src/bin/e_border.c:5577
+msgid "Stacking (Application)"
+msgstr "Stapel (Anwendung)"
+
+#: src/bin/e_border.c:5566
+msgid "Stacking (User)"
+msgstr "Stapel (Benutzer)"
+
 #: src/bin/e_border.c:3418
 msgid "Sticky"
 msgstr "Klebrig"
+
+#: src/bin/e_border.c:5580
+msgid "Sticky (Application)"
+msgstr "Klebrig (Anwendung)"
+
+#: src/bin/e_border.c:5569
+msgid "Sticky (User)"
+msgstr "Klebrig (Benutzer)"
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
@@ -996,7 +1160,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:108
 msgid "Themes"
-msgstr "Aussehen"
+msgstr "Erscheinungsbild"
 
 #: src/bin/e_module.c:98
 #, c-format
