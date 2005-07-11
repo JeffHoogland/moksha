@@ -243,6 +243,81 @@ e_theme_file_set(char *category, char *file)
 }
 
 void
+e_theme_config_set(const char *category, const char *file)
+{
+   E_Config_Theme *ect;
+   Evas_List *next;
+
+   /* search for the category */
+   for (next = e_config->themes; next; next = next->next)
+     {
+	ect = evas_list_data(next);
+	if (!strcmp(ect->category, category))
+	  {
+	     E_FREE(ect->file);
+	     ect->file = strdup(file);
+	     return;
+	  }
+     }
+
+   /* the text class doesnt exist */
+   ect = E_NEW(E_Config_Theme, 1);
+   ect->category = strdup(category);
+   ect->file = strdup(file);
+   
+   e_config->themes = evas_list_append(e_config->themes, ect);
+}
+
+/*
+ * returns a pointer to the data, return null if nothing if found.
+ */
+E_Config_Theme *
+e_theme_config_get(const char *category)
+{
+   E_Config_Theme *ect = NULL;
+   Evas_List *next;
+
+   /* search for the category */
+   for (next = e_config->themes; next; next = next->next)
+     {
+	ect = evas_list_data(next);
+	if (!strcmp(ect->category, category))
+	  {
+	     return ect;
+	  }
+     }
+   return NULL;
+}
+
+void
+e_theme_config_remove(const char *category)
+{
+   E_Config_Theme *ect;
+   Evas_List *next;
+   
+   /* search for the category */
+   for (next = e_config->themes; next; next = next->next)
+     {
+	ect = evas_list_data(next);
+	if (!strcmp(ect->category, category))
+	  {
+	     e_config->themes = evas_list_remove_list(
+					e_config->themes, next);
+	     E_FREE(ect->category);
+	     E_FREE(ect->file);
+	     E_FREE(ect);
+	     return;
+	  }
+    }
+}
+
+Evas_List *
+e_theme_config_list(void)
+{
+   return e_config->themes;
+}
+
+void
 e_theme_about(E_Zone *zone, const char *file)
 {
    static E_Popup *pop = NULL;

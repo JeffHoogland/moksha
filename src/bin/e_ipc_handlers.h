@@ -4116,35 +4116,98 @@ break;
 #undef HDL
 
 /****************************************************************************/
-#define HDL E_IPC_OP_THEMES_LIST
+#define HDL E_IPC_OP_THEME_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-themes-list", 0, "List themes and associated categories", 1, HDL)
+   OP("-theme-list", 0, "List themes and associated categories", 1, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    SEND_STRING2_LIST(e_config->themes, E_Config_Theme, theme, v, HDL);
    v->str1 = theme->category;
    v->str2 = theme->file;
-   END_SEND_STRING2_LIST(v, E_IPC_OP_THEMES_LIST_REPLY);
+   END_SEND_STRING2_LIST(v, E_IPC_OP_THEME_LIST_REPLY);
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
-     
+    
 /****************************************************************************/
-#define HDL E_IPC_OP_THEMES_LIST_REPLY
+#define HDL E_IPC_OP_THEME_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    STRING2_LIST(v, HDL);
-   printf("REPLY: CATEGORY=\"%s\" EDJE=\"%s\"\n", v->str1, v->str2);
+   printf("REPLY: CATEGORY=\"%s\" FILE=\"%s\"\n", v->str1, v->str2);
    END_STRING2_LIST(v);
 #endif
 #undef HDL
      
 /****************************************************************************/
 
+#define HDL E_IPC_OP_THEME_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-theme-set", 2, "Set theme category (OPT1) and edje file (OPT2)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2STRING(params[0], params[1], HDL) 
+#elif (TYPE == E_WM_IN)
+   STRING2(category, file, e_2str, HDL);
+   e_theme_config_set(category, file);
+   SAVE;   
+   END_STRING2(e_2str);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_THEME_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-theme-get", 1, "List the theme associated with the category OPT1", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(category, HDL);
+   E_Config_Theme *ect;
+   void *data;
+   int bytes;
+   
+   ect = e_theme_config_get(category);
+   data = e_ipc_codec_2str_enc(ect->category, ect->file, &bytes);   
+   SEND_DATA(E_IPC_OP_THEME_GET_REPLY);
+
+   END_STRING(category);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_THEME_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING2(category, file, e_2str, HDL);
+   printf("REPLY: DEFAULT CATEGORY=\"%s\" FILE=\"%s\"\n",
+                    category, file); 
+   END_STRING2(e_2str);
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_THEME_REMOVE
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-theme-remove", 1, "Remove the theme category OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(category, HDL);
+   e_theme_config_remove(category);
+   SAVE;
+   END_STRING(category);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
 
 #if 0
 }
