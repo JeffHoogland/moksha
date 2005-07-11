@@ -368,8 +368,10 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	  {
 	     if (bd->desk != desk)
 	       {
-		  if ((bd->zone) && (bd->zone != zone) &&
-		      (!e_config->winlist_list_show_other_screen_windows)) ok = 0;
+		  if ((bd->zone) && (bd->zone != zone))
+		    {
+		       if (!e_config->winlist_list_show_other_screen_windows) ok = 0;
+		    }
 		  else if (!e_config->winlist_list_show_other_desk_windows) ok = 0;
 	       }
 	  }

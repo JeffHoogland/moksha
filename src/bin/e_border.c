@@ -1702,6 +1702,7 @@ e_border_act_close_begin(E_Border *bd)
 void
 e_border_act_kill_begin(E_Border *bd)
 {
+   if (bd->internal) return;
    if (bd->lock_close) return;
    if ((bd->client.netwm.pid > 1) && (e_config->kill_process))
      {
@@ -5664,7 +5665,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if (!bd->lock_close)
+   if ((!bd->lock_close) && (!bd->internal))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Kill"));
@@ -5880,7 +5881,7 @@ _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (!bd->lock_close)
+   if ((!bd->lock_close) && (!bd->internal))
      e_border_act_kill_begin(bd);
 }
 

@@ -310,7 +310,8 @@ struct _E_Border
    unsigned int    lock_close : 1; /*DONE*/
    unsigned int    lock_focus_in : 1; /*DONE*/
    unsigned int    lock_focus_out : 1; /*DONE*/
-   unsigned int    lock_life : 1;
+   unsigned int    lock_life : 1; /*DONE*/
+   unsigned int    internal : 1;
    
    double          ping;
  

@@ -53,3 +53,4 @@
 #include "e_grabinput.h"
 #include "e_bg.h"
 #include "e_remember.h"
+#include "e_win.h"

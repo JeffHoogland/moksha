@@ -206,6 +206,48 @@ _e_test_internal(E_Container *con)
 {
    _e_test_timer(NULL);
 }
+#elif 0
+static void
+_e_test_resize(E_Win *win)
+{
+   Evas_Object *o;
+   
+   o = win->data;
+   printf("RESIZE %i %i\n", win->w, win->h);
+   evas_object_resize(o, win->w, win->h);
+   evas_object_color_set(o, rand() & 0xff, rand() & 0xff, rand() & 0xff, 255);
+}
+
+static void
+_e_test_delete(E_Win *win)
+{
+   printf("DEL!\n");
+   e_object_del(E_OBJECT(win));
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Win *win;
+   Evas_Object *o;
+   
+   win = e_win_new(con);
+   e_win_resize_callback_set(win, _e_test_resize);
+   e_win_delete_callback_set(win, _e_test_delete);
+   e_win_placed_set(win, 0);
+   e_win_move_resize(win, 10, 80, 400, 200);
+   e_win_name_class_set(win, "E", "_test_window");
+   e_win_title_set(win, "A test window");
+   e_win_raise(win);
+   e_win_show(win);
+   
+   o = evas_object_rectangle_add(e_win_evas_get(win));
+   evas_object_color_set(o, 255, 200, 100, 255);
+   evas_object_resize(o, 400, 200);
+   evas_object_show(o);
+   
+   win->data = o;
+}
 #else
 static void
 _e_test_internal(E_Container *con)

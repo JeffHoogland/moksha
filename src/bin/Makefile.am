@@ -65,7 +65,8 @@ e_alert.h \
 e_maximize.h \
 e_grabinput.h \
 e_bg.h \
-e_remember.h
+e_remember.h \
+e_win.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -120,6 +121,7 @@ e_maximize.c \
 e_grabinput.c \
 e_bg.c \
 e_remember.c \
+e_win.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@

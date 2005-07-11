@@ -80,6 +80,8 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 void
 e_popup_show(E_Popup *pop)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (pop->visible) return;
    pop->visible = 1;
    ecore_evas_show(pop->ecore_evas);
@@ -89,6 +91,8 @@ e_popup_show(E_Popup *pop)
 void
 e_popup_hide(E_Popup *pop)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if (!pop->visible) return;
    pop->visible = 0;
    ecore_evas_hide(pop->ecore_evas);
@@ -98,6 +102,8 @@ e_popup_hide(E_Popup *pop)
 void
 e_popup_move(E_Popup *pop, int x, int y)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if ((pop->x == x) && (pop->y == y)) return;
    pop->x = x;
    pop->y = y;
@@ -112,6 +118,8 @@ e_popup_move(E_Popup *pop, int x, int y)
 void
 e_popup_resize(E_Popup *pop, int w, int h)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if ((pop->w == w) && (pop->h == h)) return;
    pop->w = w;
    pop->h = h;
@@ -122,6 +130,8 @@ e_popup_resize(E_Popup *pop, int w, int h)
 void
 e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    if ((pop->x == x) && (pop->y == y) &&
        (pop->w == w) && (pop->h == h)) return;
    pop->x = x;
@@ -143,6 +153,8 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 {
    const char *shape_option;
    
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    shape_option = edje_object_data_get(o, "shaped");
    if (shape_option)
      {
@@ -157,6 +169,8 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 void
 e_popup_layer_set(E_Popup *pop, int layer)
 {
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
    pop->layer = layer;
    e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
 }

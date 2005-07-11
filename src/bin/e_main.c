@@ -698,6 +698,7 @@ _e_main_screens_init(void)
      }
    if (!e_focus_init()) return 0;
    if (!e_border_init()) return 0;
+   if (!e_win_init()) return 0;
    for (i = 0; i < num; i++)
      {
 	E_Manager *man;
@@ -741,6 +742,7 @@ _e_main_screens_init(void)
 static int
 _e_main_screens_shutdown(void)
 {
+   e_win_shutdown();
    e_border_shutdown();
    e_focus_shutdown();
    e_menu_shutdown();
