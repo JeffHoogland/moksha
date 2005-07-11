@@ -54,3 +54,4 @@
 #include "e_bg.h"
 #include "e_remember.h"
 #include "e_win.h"
+#include "e_pan.h"
