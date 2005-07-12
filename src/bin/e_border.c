@@ -576,13 +576,6 @@ e_border_hide(E_Border *bd, int manage)
 	_e_border_resize_end(bd);
      }
    
-   if (!bd->need_reparent)
-     {
-	if (bd->focused)
-//	  ecore_x_window_focus(bd->zone->container->manager->root);
-	  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
-	ecore_x_window_hide(bd->client.win);
-     }
    e_container_shape_hide(bd->shape);
    /* FIXME: If the client unmaps itself, the border should be
     * withdrawn, not iconic */
@@ -592,6 +585,17 @@ e_border_hide(E_Border *bd, int manage)
    bd->visible = 0;
    bd->changes.visible = 1;
 
+   if (!bd->need_reparent)
+     {
+	if (bd->focused)
+	  {
+	     e_border_focus_set(bd, 0, 1);
+	     if (e_config->focus_revert_on_hide_or_close)
+	       e_desk_last_focused_focus(bd->desk);
+	  }
+	ecore_x_window_hide(bd->client.win);
+     }
+   
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    if (!manage)
@@ -853,6 +857,12 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((focus) && (!bd->focused))
      {
+	if ((bd->visible) && (bd->changes.visible))
+	  {
+	     bd->want_focus = 1;
+	     bd->changed = 1;
+	     return;
+	  }
 	if (!e_winlist_active_get())
 	  {
 	     focus_stack = evas_list_remove(focus_stack, bd);
@@ -1901,6 +1911,11 @@ e_border_immortal_windows_get(void)
 static void
 _e_border_free(E_Border *bd)
 {
+   if (bd->focused)
+     {
+	if (e_config->focus_revert_on_hide_or_close)
+	  e_desk_last_focused_focus(bd->desk);
+     }
    if (resize == bd)
      _e_border_resize_end(bd);
    if (move == bd)
@@ -2908,10 +2923,7 @@ _e_border_cb_pointer_warp(void *data, int ev_type, void *ev)
 
    e = ev;
    if (!move) return 1;
-
-   printf("warp: %d %d %d %d\n", e->curr.x, e->prev.x, e->curr.y, e->prev.y);
    e_border_move(move, move->x + (e->curr.x - e->prev.x), move->y + (e->curr.y - e->prev.y));
-
    return 1;
 }
 
@@ -4709,16 +4721,15 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->need_shape_export = 0;
      }
-   
-   if (bd->take_focus)
+
+   if ((bd->take_focus) || (bd->want_focus))
      {
-	if (e_config->focus_setting == E_FOCUS_NEW_WINDOW)
+	if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
+	    (bd->want_focus))
 	  {
 	     if (!bd->lock_focus_out)
-	       {
-		  printf("noo\n");
-		  e_border_focus_set(bd, 1, 1);
-	       }
+	       e_border_focus_set(bd, 1, 1);
+	     bd->want_focus = 0;
 	  }
 	else
 	  {
@@ -4732,7 +4743,6 @@ _e_border_eval(E_Border *bd)
 		    {
 		       if (!bd->lock_focus_out)
 			 {
-			    printf("noo2\n");
 			    e_border_focus_set(bd, 1, 1);
 			 }
 		    }

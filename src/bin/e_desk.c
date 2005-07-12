@@ -83,6 +83,7 @@ e_desk_show(E_Desk *desk)
    int                was_zone = 0;
    int                x, y;
    E_Event_Desk_Show *ev;
+   Evas_List         *l;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
@@ -118,7 +119,10 @@ e_desk_show(E_Desk *desk)
 	  }
      }
    e_container_border_list_free(bl);
-   
+
+   if (e_config->focus_last_focused_per_desktop)
+     e_desk_last_focused_focus(desk);
+	
    desk->zone->desk_x_current = desk->x;
    desk->zone->desk_y_current = desk->y;
    if (desk->fullscreen)
@@ -139,6 +143,26 @@ e_desk_show(E_Desk *desk)
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_DESK_SHOW, ev, _e_border_event_desk_show_free, NULL);
    
+}
+
+void
+e_desk_last_focused_focus(E_Desk *desk)
+{
+   Evas_List *l;
+   E_Border *bd;
+   
+   for (l = e_border_focus_stack_get(); l; l = l->next)
+     {
+	bd = l->data;
+	if ((!bd->iconic) && (bd->visible) &&
+	    (((bd->desk == desk) ||
+	      ((bd->sticky) && (bd->zone == desk->zone)))))
+	  {
+	     /* this was the window last focused in this desktop */
+	     e_border_focus_set(bd, 1, 1);
+	     break;
+	  }
+     }
 }
 
 void

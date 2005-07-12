@@ -244,8 +244,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
    E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
-   E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
-   E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
+   E_CONFIG_VAL(D, T, move_info_follows, INT);
+   E_CONFIG_VAL(D, T, resize_info_follows, INT);
+   E_CONFIG_VAL(D, T, focus_last_focused_per_desktop, INT);
+   E_CONFIG_VAL(D, T, focus_revert_on_hide_or_close, INT);
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -348,6 +350,9 @@ e_config_init(void)
 	e_config->transition_change = strdup("crossfade");
 	e_config->move_info_follows = 1;
 	e_config->resize_info_follows = 1;
+	e_config->focus_last_focused_per_desktop = 1;
+	e_config->focus_revert_on_hide_or_close = 1;
+	
 	  {
 	     E_Config_Module *em;
 
@@ -877,6 +882,10 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
    E_CONFIG_LIMIT(e_config->ping_clients, 0, 1);
    E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
+   E_CONFIG_LIMIT(e_config->move_info_follows, 0, 1);
+   E_CONFIG_LIMIT(e_config->resize_info_follows, 0, 1);
+   E_CONFIG_LIMIT(e_config->focus_last_focused_per_desktop, 0, 1);
+   E_CONFIG_LIMIT(e_config->focus_revert_on_hide_or_close, 0, 1);
 
    /* apply lang config - exception because config is loaded after intl setup */
    

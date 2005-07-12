@@ -285,6 +285,7 @@ struct _E_Border
    unsigned int    ping_ok : 1;
    unsigned int    hung : 1;
    unsigned int    take_focus : 1;
+   unsigned int    want_focus : 1;
    unsigned int    user_skip_winlist : 1;
    E_Maximize      maximized;
 
