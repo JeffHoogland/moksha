@@ -3602,7 +3602,8 @@ _e_border_cb_grab_replay(void *data, int type, void *event)
 	bd = e_border_find_by_window(ev->event_win);
 	if (bd)
 	  {
-	     if (bd->cur_mouse_action) return 0;
+	     if (bd->cur_mouse_action)
+	       return 0;
 	     if (ev->event_win == bd->win)
 	       {
 		  if (!e_bindings_mouse_down_find(E_BINDING_CONTEXT_BORDER,

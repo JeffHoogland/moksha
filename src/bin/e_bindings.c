@@ -260,7 +260,6 @@ e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
    return act;
 }
 
-/* FIXME: finish off key bindings */
 void
 e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, int any_mod, char *action, char *params)
 {
