@@ -19,12 +19,12 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:455
 #, c-format
 msgid "%i MHz"
-msgstr ""
+msgstr "%i MHz"
 
 #: src/modules/cpufreq/e_mod_main.c:457
 #, c-format
 msgid "%i.%i GHz"
-msgstr ""
+msgstr "%i.%i GHz"
 
 #: src/bin/e_int_menus.c:271
 msgid "(No Applications)"
@@ -157,6 +157,10 @@ msgstr "Über..."
 #: src/bin/e_border.c:4280
 msgid "Always On Top"
 msgstr "Immer im Vordergrund"
+
+#: src/bin/e_border.c:5757
+msgid "Always Below"
+msgstr "Immer im Hintergrund"
 
 #: src/bin/e_main.c:366
 msgid "Artificially slowing startup so you can see it all."
@@ -1156,7 +1160,7 @@ msgstr "Temperaturanzeige"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
-msgstr ""
+msgstr "Test!!!"
 
 #: src/bin/e_int_menus.c:108
 msgid "Themes"
