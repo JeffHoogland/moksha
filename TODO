@@ -8,7 +8,7 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* rememebr desk doesnt work
+* remember desk doesnt work
 * e_hints.c manually changes flags on a border isnetad of calling
   e_border_stick() for exampe or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.
@@ -25,7 +25,7 @@ Some of the things (in very short form) that need to be done to E17...
   map/unmap event and something else... they still are around in x- just e
   hides them and never shows them again
   fullscreen. is this correct?
-* BUG: sometimes the mouse gets locked to a window with a mouse grab of some
+* FIXED?: sometimes the mouse gets locked to a window with a mouse grab of some
   sort in x (it gets the down event and not the up?) so e thinks its down but
   it isn't - happens a lot in click to focus.
 * BUG: client windows list somehow doesn't unref its list of borders in the
