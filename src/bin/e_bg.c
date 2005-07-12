@@ -13,14 +13,75 @@ void
 e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 {
    Evas_Object *o;
-   Evas_List *l;
+   Evas_List *l, *ll, *entries;
    int ok;
+   const char *bgfile = "";
    char *trans = "";
    
    if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
    else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
    else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
    if (strlen(trans) < 1) transition = E_BG_TRANSITION_NONE;
+
+   ok = 0;
+   for (l = e_config->desktop_backgrounds; l; l = l->next)
+     {
+	E_Config_Desktop_Background *cfbg;
+	E_Desk *desk;
+	
+	cfbg = l->data;
+	if ((cfbg->container >= 0) &&
+	    (zone->container->num != cfbg->container)) continue;
+	if ((cfbg->zone >= 0) &&
+	    (zone->num != cfbg->zone)) continue;
+	desk = e_desk_current_get(zone);
+	if (!desk) continue;
+	if ((cfbg->desk_x != desk->x) || (cfbg->desk_y != desk->y)) continue;
+	entries = edje_file_collection_list(cfbg->file);
+	if (entries)
+	  {
+	     for (ll = entries; ll; ll = ll->next)
+	       {
+		  if (!strcmp(ll->data, "desktop/background"))
+		    {
+		       bgfile = cfbg->file;
+		       ok = 1;
+		       break;
+		    }
+	       }
+	     edje_file_collection_list_free(entries);
+	  }
+	break;
+     }
+   if (!ok)
+     {
+	entries = edje_file_collection_list(e_config->desktop_default_background);
+	if (entries)
+	  {
+	     for (ll = entries; ll; ll = ll->next)
+	       {
+		  if (!strcmp(ll->data, "desktop/background"))
+		    {
+		       bgfile = e_config->desktop_default_background;
+		       ok = 1;
+		       break;
+		    }
+	       }
+	     edje_file_collection_list_free(entries);
+	  }
+	if (!ok)
+	  {
+	     bgfile = e_theme_edje_file_get("base/theme/background", "desktop/background");
+	  }
+     }
+   if (zone->bg_object)
+     {
+	const char *pfile = "";
+	
+	edje_object_file_get(zone->bg_object, &pfile, NULL);
+	if (!e_util_strcmp((char *)pfile, (char *)bgfile))
+	  return;
+     }
    
    if (transition == E_BG_TRANSITION_NONE)
      {
@@ -61,52 +122,10 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    evas_object_data_set(o, "e_zone", zone);
    evas_object_move(o, zone->x, zone->y);
    evas_object_resize(o, zone->w, zone->h);
-
-   ok = 0;
-   for (l = e_config->desktop_backgrounds; l; l = l->next)
-     {
-	E_Config_Desktop_Background *cfbg;
-	E_Desk *desk;
-	
-	cfbg = l->data;
-	if ((cfbg->container >= 0) &&
-	    (zone->container->num != cfbg->container)) continue;
-	if ((cfbg->zone >= 0) &&
-	    (zone->num != cfbg->zone)) continue;
-	desk = e_desk_current_get(zone);
-	if (!desk) continue;
-	if ((cfbg->desk_x != desk->x) || (cfbg->desk_y != desk->y)) continue;
-	ok = edje_object_file_set(o, cfbg->file,
-				  "desktop/background");
-	break;
-     }
-   if (!ok)
-     {
-	if (!edje_object_file_set(o, e_config->desktop_default_background,
-				  "desktop/background"))
-	  e_theme_edje_object_set(o, "base/theme/background",
-				  "desktop/background");
-     }
-
+   edje_object_file_set(o, bgfile, "desktop/background");
    evas_object_layer_set(o, -1);
    evas_object_clip_set(o, zone->bg_clip_object);
    evas_object_show(o);
-   
-   if (zone->prev_bg_object)
-     {
-	const char *pfile =  "", *pgroup = "", *file = "", *group = "";
-	
-	edje_object_file_get(zone->prev_bg_object, &pfile, &pgroup);
-	edje_object_file_get(zone->bg_object, &file, &group);
-	if ((!e_util_strcmp((char *)pfile, (char *)file)) &&
-	    (!e_util_strcmp((char *)pgroup, (char *)group)))
-	  {
-	     evas_object_del(zone->bg_object);
-	     zone->bg_object = zone->prev_bg_object;
-	     zone->prev_bg_object = NULL;
-	     return;
-	  }
-     }
    
    if (transition != E_BG_TRANSITION_NONE)
      {
