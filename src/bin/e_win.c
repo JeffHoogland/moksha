@@ -16,7 +16,8 @@ static Evas_List *wins = NULL;
 /* externally accessible functions */
 int
 e_win_init(void)
-{    
+{
+   return 1;
 }
 
 int
@@ -28,6 +29,7 @@ e_win_shutdown(void)
 	e_object_del(E_OBJECT(wins->data));
      }
 */
+   return 1;
 }
 
 E_Win *
