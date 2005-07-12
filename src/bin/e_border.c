@@ -855,6 +855,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   if ((bd->visible) && (bd->changes.visible))
+     {  
+	if ((bd->want_focus) && (set) && (!focus))
+	  bd->want_focus = 0;
+     }
    if ((focus) && (!bd->focused))
      {
 	if ((bd->visible) && (bd->changes.visible))

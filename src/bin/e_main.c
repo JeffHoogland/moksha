@@ -710,7 +710,6 @@ _e_main_screens_init(void)
 	  {
 	     man->num = i;
 	     e_manager_show(man);
-	     if (i == 0) ecore_x_window_focus(man->root);
 	  }
 	else
 	  {
@@ -722,6 +721,7 @@ _e_main_screens_init(void)
 	if (con)
 	  {
 	     e_container_show(con);
+	     e_grabinput_focus(con->bg_win, E_FOCUS_METHOD_PASSIVE);
 	     e_hints_manager_init(man);
 	     _e_main_desk_restore(man, con);
 	     e_manager_manage_windows(man);
