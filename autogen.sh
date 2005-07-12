@@ -10,7 +10,6 @@ echo "Running aclocal..."; aclocal $ACLOCAL_FLAGS -I m4 \
 && echo "Running automake..."; automake --add-missing --copy --gnu \
 && echo "Generating gettext enlightenment.pot template"; \
 xgettext \
--s \
 -n \
 -C \
 -d enlightenment \

@@ -385,6 +385,27 @@ e_zone_update_flip(E_Zone *zone)
 }
 
 void
+e_zone_update_flip_all(void)
+{
+   Evas_List *l, *ll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     con = ll->data;
+	     zone = e_zone_current_get(con);
+	     e_zone_update_flip(zone);
+	  }
+     }
+}
+
+
+void
 e_zone_desk_flip_by(E_Zone *zone, int dx, int dy)
 {
    dx = zone->desk_x_current + dx;

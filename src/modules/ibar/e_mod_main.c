@@ -172,7 +172,7 @@ e_modapi_about(E_Module *m)
    e_error_dialog_show(_("Enlightenment IBar Module"),
 		       _("This is the IBar Application Launcher bar module for Enlightenment.\n"
 			 "It is a first example module and is being used to flesh out several\n"
-			 "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+			 "interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
 			 "so expect it to break often and change as it improves."));
    return 1;
 }

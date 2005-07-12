@@ -75,6 +75,7 @@ EAPI void       e_zone_flip_coords_handle(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count);
 EAPI void       e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count);
 EAPI void       e_zone_update_flip(E_Zone *zone);
+EAPI void       e_zone_update_flip_all(void);
 EAPI void       e_zone_desk_flip_by(E_Zone *zone, int dx, int dy);
 EAPI void       e_zone_desk_flip_to(E_Zone *zone, int x, int y);
 EAPI void       e_zone_desk_linear_flip_by(E_Zone *zone, int dx);

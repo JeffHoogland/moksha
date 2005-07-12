@@ -66,6 +66,6 @@ e_modapi_about(E_Module *m)
    e_error_dialog_show(_("Enlightenment Test Module"),
 		       _("This module is VERY simple and is only used to test the basic\n"
 			 "interface of the Enlightenment 0.17.0 module system. Please\n"
-			 "Ignore this module unless you are working on the module system."));
+			 "ignore this module unless you are working on the module system."));
    return 1;
 }

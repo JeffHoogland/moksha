@@ -22,11 +22,20 @@ static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gad
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _clock_face_cb_digital_none(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _clock_face_cb_digital_military(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int _clock_count;
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
+
+const int
+	DIGITAL_STYLE_NONE = 0,
+	DIGITAL_STYLE_NORMAL = 1,
+	DIGITAL_STYLE_MILITARY = 2
+;
 
 /* public module routines. all modules must have these */
 void *
@@ -115,6 +124,7 @@ _clock_new()
 #define T Config_Face
 #define D conf_face_edd
    E_CONFIG_VAL(D, T, enabled, UCHAR);
+   E_CONFIG_VAL(D, T, digitalStyle, INT);
 
    conf_edd = E_CONFIG_DD_NEW("Clock_Config", Config);
 #undef T
@@ -153,6 +163,7 @@ _clock_new()
 		    {
 		       face->conf = E_NEW(Config_Face, 1);
 		       face->conf->enabled = 1;
+                       face->conf->digitalStyle = DIGITAL_STYLE_NONE;
 		       clock->conf->faces = evas_list_append(clock->conf->faces, face->conf);
 		    }
 		  else
@@ -289,7 +300,7 @@ _clock_face_disable(Clock_Face *face)
 static void
 _clock_face_menu_new(Clock_Face *face)
 {
-   E_Menu *mn;
+   E_Menu *mn, *smn;
    E_Menu_Item *mi;
 
    mn = e_menu_new();
@@ -308,6 +319,52 @@ _clock_face_menu_new(Clock_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _clock_face_cb_menu_edit, face);
+
+   /*
+    * Create a Digital submenu
+    */
+   smn = e_menu_new();
+
+   /* Hide digital time */
+   mi = e_menu_item_new(smn);
+   e_menu_item_label_set(mi, _("No Digital Display"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (face->conf->digitalStyle == DIGITAL_STYLE_NONE) {
+      e_menu_item_toggle_set(mi, 1);
+      _clock_face_cb_digital_none(face, smn, mi);
+   }
+   e_menu_item_callback_set(mi, _clock_face_cb_digital_none, face);
+
+   /* Show normal time */
+   mi = e_menu_item_new(smn);
+   e_menu_item_label_set(mi, _("Normal Time"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (face->conf->digitalStyle == DIGITAL_STYLE_NORMAL) {
+      e_menu_item_toggle_set(mi, 1);
+      _clock_face_cb_digital_normal(face, smn, mi);
+   }
+   e_menu_item_callback_set(mi, _clock_face_cb_digital_normal, face);
+
+   /* Show military time */
+   mi = e_menu_item_new(smn);
+   e_menu_item_label_set(mi, _("Military Time"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (face->conf->digitalStyle == DIGITAL_STYLE_MILITARY) {
+      e_menu_item_toggle_set(mi, 1);
+      _clock_face_cb_digital_military(face, smn, mi);
+   }
+   e_menu_item_callback_set(mi, _clock_face_cb_digital_military, face);
+
+   face->digital_menu = smn;
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Digital Display"));
+   e_menu_item_submenu_set(mi, face->digital_menu);
+
+
 }
 
 static void
@@ -372,6 +429,63 @@ _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
      { 
 	_clock_face_enable(face);
      }
+}
+
+static void
+_clock_face_cb_digital_none(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+	Clock_Face *face;
+	char buf[2];
+
+	face = data;
+
+	memset(buf, 0, sizeof(buf));
+
+	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_NONE);
+
+	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
+
+	face->conf->digitalStyle = DIGITAL_STYLE_NONE;
+
+	e_config_save_queue();
+}
+
+static void
+_clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+	Clock_Face *face;
+	char buf[2];
+
+	face = data;
+
+	memset(buf, 0, sizeof(buf));
+
+	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_NORMAL);
+
+	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
+
+	face->conf->digitalStyle = DIGITAL_STYLE_NORMAL;
+
+	e_config_save_queue();
+}
+
+static void
+_clock_face_cb_digital_military(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+	Clock_Face *face;
+	char buf[2];
+
+	face = data;
+
+	memset(buf, 0, sizeof(buf));
+
+	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_MILITARY);
+
+	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
+
+	face->conf->digitalStyle = DIGITAL_STYLE_MILITARY;
+
+	e_config_save_queue();
 }
 
 static void

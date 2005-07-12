@@ -17,6 +17,9 @@ struct _Config
 struct _Config_Face
 {
    unsigned char enabled;
+   int
+      digitalStyle
+   ;
 };
 
 struct _Clock
@@ -31,6 +34,7 @@ struct _Clock_Face
 {
    E_Container *con;
    E_Menu      *menu;
+   E_Menu      *digital_menu;
    Config_Face *conf;
    
    Evas_Object *clock_object;

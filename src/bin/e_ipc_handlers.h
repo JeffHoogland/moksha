@@ -1492,6 +1492,7 @@ break;
    START_INT(value, HDL);
    e_config->use_edge_flip = value;
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
+   e_zone_update_flip_all();
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
