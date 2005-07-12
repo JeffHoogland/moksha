@@ -6489,6 +6489,11 @@ _e_border_cb_ping_timer(void *data)
 	  {
 	     bd->hung = 0;
 	     edje_object_signal_emit(bd->bg_object, "unhung", "");
+	     if (bd->kill_timer)
+	       {
+		  ecore_timer_del(bd->kill_timer);
+		  bd->kill_timer = NULL;
+	       }
 	  }
      }
    else
@@ -6516,8 +6521,11 @@ _e_border_cb_kill_timer(void *data)
    E_Border *bd;
    
    bd = data;
-   if (bd->client.netwm.pid > 1)
-     kill(bd->client.netwm.pid, SIGKILL);
+   if (bd->hung)
+     {
+	if (bd->client.netwm.pid > 1)
+	  kill(bd->client.netwm.pid, SIGKILL);
+     }
    bd->kill_timer = NULL;
    return 0;
 }
