@@ -252,8 +252,11 @@ e_winlist_hide(void)
 	  }
 	if (!bd->lock_user_stacking)
 	  e_border_raise(bd);
-	if (!bd->lock_focus_in)
-	  e_border_focus_set(bd, 1, 1);
+	if (!bd->lock_focus_out)
+	  {
+	     e_border_focus_set(bd, 1, 1);
+	     e_border_focus_latest_set(bd);
+	  }
 	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
 	    (e_config->winlist_warp_at_end) ||
 	    (e_config->winlist_warp_while_selecting))

@@ -473,6 +473,7 @@ EAPI void      e_border_raise(E_Border *bd);
 EAPI void      e_border_lower(E_Border *bd);
 EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
 EAPI void      e_border_stack_below(E_Border *bd, E_Border *below);
+EAPI void      e_border_focus_latest_set(E_Border *bd);
 EAPI void      e_border_focus_set(E_Border *bd, int focus, int set);
 EAPI void      e_border_shade(E_Border *bd, E_Direction dir);
 EAPI void      e_border_unshade(E_Border *bd, E_Direction dir);

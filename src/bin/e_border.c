@@ -851,6 +851,13 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 }
 
 void
+e_border_focus_latest_set(E_Border *bd)
+{
+   focus_stack = evas_list_remove(focus_stack, bd);
+   focus_stack = evas_list_prepend(focus_stack, bd);
+}
+
+void
 e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
@@ -869,10 +876,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     return;
 	  }
 	if (!e_winlist_active_get())
-	  {
-	     focus_stack = evas_list_remove(focus_stack, bd);
-	     focus_stack = evas_list_prepend(focus_stack, bd);
-	  }
+	  e_border_focus_latest_set(bd);
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "active", "");
 	e_focus_event_focus_in(bd);
