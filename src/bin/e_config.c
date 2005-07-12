@@ -244,10 +244,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
    E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
-   E_CONFIG_VAL(D, T, move_info_follows, INT);
-   E_CONFIG_VAL(D, T, resize_info_follows, INT);
-   E_CONFIG_VAL(D, T, focus_last_focused_per_desktop, INT);
-   E_CONFIG_VAL(D, T, focus_revert_on_hide_or_close, INT);
+   E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
+   E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
+   E_CONFIG_VAL(D, T, focus_last_focused_per_desktop, INT); /**/
+   E_CONFIG_VAL(D, T, focus_revert_on_hide_or_close, INT); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -907,6 +907,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
+   E_CONFIG_DD_FREE(_e_config_remember_edd);
    return 1;
 }
 

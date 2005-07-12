@@ -4210,6 +4210,171 @@ break;
 
 /****************************************************************************/
 
+#define HDL E_IPC_OP_MOVE_INFO_FOLLOWS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-move-info-follows-set", 1, "Set whether the move dialog should follow the client window", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->move_info_follows = val;
+   E_CONFIG_LIMIT(e_config->move_info_follows, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MOVE_INFO_FOLLOWS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-move-info-follows-get", 0, "Get whether the move dialog should follow the client window", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->move_info_follows, E_IPC_OP_MOVE_INFO_FOLLOWS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MOVE_INFO_FOLLOWS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_RESIZE_INFO_FOLLOWS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-resize-info-follows-set", 1, "Set whether the resize dialog should follow the client window", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->resize_info_follows = val;
+   E_CONFIG_LIMIT(e_config->resize_info_follows, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_RESIZE_INFO_FOLLOWS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-resize-info-follows-get", 0, "Set whether the resize dialog should follow the client window", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->resize_info_follows, E_IPC_OP_RESIZE_INFO_FOLLOWS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_RESIZE_INFO_FOLLOWS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-last-focused-per-desktop-set", 1, "Set whether E should remember focused windows when switching desks", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->focus_last_focused_per_desktop = val;
+   E_CONFIG_LIMIT(e_config->focus_last_focused_per_desktop, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-last-focused-per-desktop-get", 0, "Get whether E should remember focused windows when switching desks", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->focus_last_focused_per_desktop, E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_FOCUS_REVERT_ON_HIDE_OR_CLOSE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-revert-on-hide-or-close-set", 1, "Set whether E will focus the last focused window when you hide or close a focused window", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->focus_revert_on_hide_or_close = val;
+   E_CONFIG_LIMIT(e_config->focus_revert_on_hide_or_close, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_REVERT_ON_HIDE_OR_CLOSE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-focus-revert-on-hide-or-close-get", 0, "Get whether E will focus the last focused window when you hide or close a focused window", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->focus_revert_on_hide_or_close, E_IPC_OP_FOCUS_REVERT_ON_HIDE_OR_CLOSE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FOCUS_REVERT_ON_HIDE_OR_CLOSE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+
 #if 0
 }
 #endif
