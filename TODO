@@ -17,17 +17,12 @@ Some of the things (in very short form) that need to be done to E17...
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
   that zone.
 * BUG: on font apply borders need to be adjusted for size changes
-* BUG: font apply doesnt seem to keep working (edje problem?) unless you
-  restart
 * BUG: if i downclock my machine to like 400mhz (make it sloooow) or load it
   down with lots of load and then hold down ctrl+alt+right for a while
   windows on desktops vanish... there must be a race condition with a
   map/unmap event and something else... they still are around in x- just e
   hides them and never shows them again
   fullscreen. is this correct?
-* FIXED?: sometimes the mouse gets locked to a window with a mouse grab of some
-  sort in x (it gets the down event and not the up?) so e thinks its down but
-  it isn't - happens a lot in click to focus.
 * BUG: client windows list somehow doesn't unref its list of borders in the
   free callback set on it. why? is this callback never called? or is the
   data pointer on the menu object null for some reason?
