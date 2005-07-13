@@ -85,6 +85,7 @@ static void _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -1978,6 +1979,11 @@ _e_border_free(E_Border *bd)
      {
 	e_object_del(E_OBJECT(bd->border_remember_menu));
 	bd->border_remember_menu = NULL;
+     }
+   if (bd->border_stacking_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_stacking_menu));
+	bd->border_stacking_menu = NULL;
      }
    if (focused == bd)
      {
@@ -5081,6 +5087,11 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
 	     e_object_del(E_OBJECT(bd->border_remember_menu));
 	     bd->border_remember_menu = NULL;
 	  }
+	if (bd->border_stacking_menu)
+	  {
+	     e_object_del(E_OBJECT(bd->border_stacking_menu));
+	     bd->border_stacking_menu = NULL;
+	  }
 	bd->border_menu = NULL;
      }
    e_object_del(E_OBJECT(m));
@@ -5656,6 +5667,43 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
    e_menu_item_separator_set(mi, 1);
    NEW_REMEMBER_MI(_("Run this porgram on login"), apply, E_REMEMBER_APPLY_RUN, _e_border_menu_cb_remember_apply_run);
  */ 
+
+   m = e_menu_new();
+   bd->border_stacking_menu = m;
+   if (!bd->lock_user_stacking)
+     {
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Always On Top"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
+   e_menu_item_icon_edje_set(mi,
+			    (char *)e_theme_edje_file_get("base/theme/borders",
+							  "widgets/border/default/stack_on_top"),
+			    "widgets/border/default/stack_on_top");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Normal"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_toggle_set(mi, (bd->layer == 100 ? 1 : 0));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_normal, bd);
+   e_menu_item_icon_edje_set(mi,
+			    (char *)e_theme_edje_file_get("base/theme/borders",
+							  "widgets/border/default/stack_normal"),
+			    "widgets/border/default/stack_normal");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Always Below"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   e_menu_item_toggle_set(mi, (bd->layer == 50 ? 1 : 0));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_below, bd);
+   e_menu_item_icon_edje_set(mi,
+			    (char *)e_theme_edje_file_get("base/theme/borders",
+							  "widgets/border/default/stack_below"),
+			    "widgets/border/default/stack_below");
+     }
+   
    m = e_menu_new();
    e_object_data_set(E_OBJECT(m), bd);
    bd->border_menu = m;
@@ -5737,32 +5785,14 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 								"widgets/border/default/stick"),
 				  "widgets/border/default/stick");
      }
-   
-   if (!bd->lock_user_stacking)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Always On Top"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
-	e_menu_item_icon_edje_set(mi,
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/on_top"),
-				  "widgets/border/default/on_top");
-     }
-   
-   if (!bd->lock_user_stacking)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Always Below"));
-	e_menu_item_check_set(mi, 1);
-	e_menu_item_toggle_set(mi, (bd->layer == 50 ? 1 : 0));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_below, bd);
-	e_menu_item_icon_edje_set(mi,
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/below"),
-				  "widgets/border/default/below");
-     }
+  
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Stacking"));
+   e_menu_item_submenu_set(mi, bd->border_stacking_menu);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/stacking"),
+			     "widgets/border/default/stacking");
    
    if (!bd->lock_border)
      {
@@ -5989,12 +6019,7 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->layer == 150)
-     {
-	bd->layer = 100;
-	e_hints_window_stacking_set(bd, E_STACKING_NONE);
-     }
-   else
+   if (bd->layer != 150)
      {
 	bd->layer = 150;
 	e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
@@ -6011,15 +6036,27 @@ _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Border *bd;
 
    bd = data;
-   if (bd->layer == 50)
-     {
-	bd->layer = 100;
-	e_hints_window_stacking_set(bd, E_STACKING_NONE);
-     }
-   else
+   if (bd->layer != 50)
      {
 	bd->layer = 50;
 	e_hints_window_stacking_set(bd, E_STACKING_BELOW);
+     }
+   e_container_border_raise(bd);
+}
+
+static void
+_e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   /* FIXME:
+    * - Remember old layer
+    */
+   E_Border *bd;
+
+   bd = data;
+   if (bd->layer != 100)
+     {
+	bd->layer = 100;
+	e_hints_window_stacking_set(bd, E_STACKING_NONE);
      }
    e_container_border_raise(bd);
 }

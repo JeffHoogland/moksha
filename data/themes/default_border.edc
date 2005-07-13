@@ -226,6 +226,17 @@ images {
    image: "e17_button_detail_minimize.png" COMP;
    image: "e17_button_detail_shade.png" COMP;
    image: "e17_button_detail_stick.png" COMP;
+   image: "e17_button_detail_locks.png" COMP;
+   image: "e17_button_detail_borderless.png" COMP;
+   image: "e17_button_detail_remember.png" COMP;
+   image: "e17_button_detail_skip_winlist.png" COMP;
+   image: "e17_button_detail_fullscreen.png" COMP;
+   image: "e17_button_detail_sendto.png" COMP;
+   image: "e17_button_detail_kill.png" COMP;
+   image: "e17_button_detail_stacking.png" COMP;
+   image: "e17_button_detail_stack_below.png" COMP;
+   image: "e17_button_detail_stack_normal.png" COMP;
+   image: "e17_button_detail_stack_on_top.png" COMP;
    image: "e17_mini_button.png" COMP;
    image: "e17_mini_button_shadow1.png" COMP;
    image: "e17_mini_button_shadow2.png" COMP;
@@ -1664,4 +1675,15 @@ FULL_SIZE_BORDER_BUTTON("minimize")
 FULL_SIZE_BORDER_BUTTON("maximize")
 FULL_SIZE_BORDER_BUTTON("shade")
 FULL_SIZE_BORDER_BUTTON("stick")
+FULL_SIZE_BORDER_BUTTON("kill")
+FULL_SIZE_BORDER_BUTTON("locks")
+FULL_SIZE_BORDER_BUTTON("borderless")
+FULL_SIZE_BORDER_BUTTON("fullscreen")
+FULL_SIZE_BORDER_BUTTON("remember")
+FULL_SIZE_BORDER_BUTTON("skip_winlist")
+FULL_SIZE_BORDER_BUTTON("sendto")
+FULL_SIZE_BORDER_BUTTON("stacking")
+FULL_SIZE_BORDER_BUTTON("stack_on_top")
+FULL_SIZE_BORDER_BUTTON("stack_normal")
+FULL_SIZE_BORDER_BUTTON("stack_below")
 

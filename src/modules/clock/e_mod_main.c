@@ -24,7 +24,7 @@ static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *m
 static void    _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_digital_none(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _clock_face_cb_digital_military(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _clock_face_cb_digital_24hour(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int _clock_count;
 
@@ -34,7 +34,7 @@ static E_Config_DD *conf_face_edd;
 const int
 	DIGITAL_STYLE_NONE = 0,
 	DIGITAL_STYLE_NORMAL = 1,
-	DIGITAL_STYLE_MILITARY = 2
+	DIGITAL_STYLE_24HOUR = 2
 ;
 
 /* public module routines. all modules must have these */
@@ -338,7 +338,7 @@ _clock_face_menu_new(Clock_Face *face)
 
    /* Show normal time */
    mi = e_menu_item_new(smn);
-   e_menu_item_label_set(mi, _("Normal Time"));
+   e_menu_item_label_set(mi, _("Normal"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
    if (face->conf->digitalStyle == DIGITAL_STYLE_NORMAL) {
@@ -347,16 +347,16 @@ _clock_face_menu_new(Clock_Face *face)
    }
    e_menu_item_callback_set(mi, _clock_face_cb_digital_normal, face);
 
-   /* Show military time */
+   /* Show 24hour time */
    mi = e_menu_item_new(smn);
-   e_menu_item_label_set(mi, _("Military Time"));
+   e_menu_item_label_set(mi, _("24 Hour"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (face->conf->digitalStyle == DIGITAL_STYLE_MILITARY) {
+   if (face->conf->digitalStyle == DIGITAL_STYLE_24HOUR) {
       e_menu_item_toggle_set(mi, 1);
-      _clock_face_cb_digital_military(face, smn, mi);
+      _clock_face_cb_digital_24hour(face, smn, mi);
    }
-   e_menu_item_callback_set(mi, _clock_face_cb_digital_military, face);
+   e_menu_item_callback_set(mi, _clock_face_cb_digital_24hour, face);
 
    face->digital_menu = smn;
 
@@ -470,7 +470,7 @@ _clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_clock_face_cb_digital_military(void *data, E_Menu *m, E_Menu_Item *mi)
+_clock_face_cb_digital_24hour(void *data, E_Menu *m, E_Menu_Item *mi)
 {
 	Clock_Face *face;
 	char buf[2];
@@ -479,11 +479,11 @@ _clock_face_cb_digital_military(void *data, E_Menu *m, E_Menu_Item *mi)
 
 	memset(buf, 0, sizeof(buf));
 
-	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_MILITARY);
+	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_24HOUR);
 
 	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
 
-	face->conf->digitalStyle = DIGITAL_STYLE_MILITARY;
+	face->conf->digitalStyle = DIGITAL_STYLE_24HOUR;
 
 	e_config_save_queue();
 }
