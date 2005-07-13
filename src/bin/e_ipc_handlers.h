@@ -2132,7 +2132,7 @@ break;
    eb = e_config_binding_mouse_match(&bind);
    if (!eb)
      {
-        eb = E_NEW(E_Config_Binding_Key, 1);
+        eb = E_NEW(E_Config_Binding_Mouse, 1);
         e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
         eb->context = bind.context;
         eb->button = bind.button;
