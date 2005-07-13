@@ -193,7 +193,7 @@ _e_test_timer(void *data)
 	man = l->data;
 	m = e_int_menus_main_new();
 	e_menu_activate_mouse(m,
-			      e_container_zone_number_get(e_manager_container_current_get(man), 0),
+			      e_container_zone_number_get(e_container_current_get(man), 0),
 			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
 	ecore_timer_add(0.2, _e_test_timer, m);
 	return 0;

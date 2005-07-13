@@ -411,13 +411,13 @@ e_config_init(void)
 	  { 
 	     E_Font_Default* efd;
 	     
-             efd = E_NEW(E_Font_Fallback, 1);
+             efd = E_NEW(E_Font_Default, 1);
 	     efd->text_class = strdup("default");
 	     efd->font = strdup("Vera");
 	     efd->size = 10;
              e_config->font_defaults = evas_list_append(e_config->font_defaults, efd); 
 	
-             efd = E_NEW(E_Font_Fallback, 1);
+             efd = E_NEW(E_Font_Default, 1);
 	     efd->text_class = strdup("title_bar");
 	     efd->font = strdup("Vera");
 	     efd->size = 10;
