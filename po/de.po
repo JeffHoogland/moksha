@@ -1031,7 +1031,7 @@ msgstr "Übersprungene Fensterlisten erinnern"
 
 #: src/bin/e_border.c:5624
 msgid "Remember Stacking"
-msgstr "Stapel erinnern"
+msgstr "Ablage erinnern"
 
 #: src/bin/e_border.c:5627
 msgid "Remember Stickiness"
@@ -1136,15 +1136,19 @@ msgstr "Start"
 
 #: src/bin/e_border.c:5577
 msgid "Stacking (Application)"
-msgstr "Stapel (Anwendung)"
+msgstr "Ablage (Anwendung)"
 
 #: src/bin/e_border.c:5566
 msgid "Stacking (User)"
-msgstr "Stapel (Benutzer)"
+msgstr "Ablage (Benutzer)"
 
 #: src/bin/e_border.c:3418
 msgid "Sticky"
 msgstr "Klebrig"
+
+#: src/bin/e_border.c:5790
+msgid "Stacking"
+msgstr "Ablage"
 
 #: src/bin/e_border.c:5580
 msgid "Sticky (Application)"
