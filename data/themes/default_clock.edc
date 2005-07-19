@@ -199,9 +199,9 @@ group {
 	 new digitalStyle;
 	 new DIGITAL_STYLE_NONE, DIGITAL_STYLE_NORMAL, DIGITAL_STYLE_24HOUR;
 
-	DIGITAL_STYLE_NONE = 0;
-	DIGITAL_STYLE_NORMAL = 1;
-	DIGITAL_STYLE_24HOUR = 2;
+	 DIGITAL_STYLE_NONE = 0;
+	 DIGITAL_STYLE_NORMAL = 1;
+	 DIGITAL_STYLE_24HOUR = 2;
 
 	 get_text(PART:"digitalStyle", digiBuf, 2);
 
@@ -242,51 +242,49 @@ group {
 
 	 buf[0] = 0;
 	 if (minute < 10) {snprintf(buf, 10, "0%i", minute);}
-	 else        {snprintf(buf, 10, "%i", minute);}
+	 else             {snprintf(buf, 10, "%i", minute);}
 	 snprintf(minuteStr, 3, "%s", buf);
 
 	 buf[0] = 0;
 	 isAfternoon = 0;
 	 v = hour;
 	 if (hour >= 12 && hour < 24) { isAfternoon = 1; }
-	 if (digitalStyle == DIGITAL_STYLE_24HOUR) {
-		 if (v == 0) { v = 24; }
-	 } else {
-		 v = (v % 12);
-		 if (v == 0) { v = 12; }
+	 if (digitalStyle == DIGITAL_STYLE_NORMAL) {
+	    v = (v % 12);
+	    if (v == 0) { v = 12; }
 	 }
 	 if (digitalStyle == DIGITAL_STYLE_24HOUR && v < 10) {
-		 snprintf(buf, 10, "0%i", v);
-	} else {
-		 snprintf(buf, 10, "%i", v);
+	    snprintf(buf, 10, "0%i", v);
+	 } else {
+	    snprintf(buf, 10, "%i", v);
 	 }
 	 snprintf(hourStr, 3, "%s", buf);
 
-	buf[0] = 0;
+	 buf[0] = 0;
 
-	if (isAfternoon == 1) {
-		snprintf(buf, 10, "PM");
-	} else {
-		snprintf(buf, 10, "AM");
-	}
+	 if (isAfternoon == 1) {
+	    snprintf(buf, 10, "PM");
+	 } else {
+	    snprintf(buf, 10, "AM");
+	 }
 
-	if (digitalStyle != DIGITAL_STYLE_NONE) {
-		if (digitalStyle == DIGITAL_STYLE_NORMAL) {
-			snprintf(digitalVal, 14, "%s:%s:%s %s", hourStr, minuteStr, secondStr, buf);
-		} else if (digitalStyle == DIGITAL_STYLE_24HOUR) {
-			snprintf(digitalVal, 14, " %s:%s:%s ", hourStr, minuteStr, secondStr);
-		}
+	 if (digitalStyle != DIGITAL_STYLE_NONE) {
+	    if (digitalStyle == DIGITAL_STYLE_NORMAL) {
+	       snprintf(digitalVal, 14, "%s:%s:%s %s", hourStr, minuteStr, secondStr, buf);
+	    } else if (digitalStyle == DIGITAL_STYLE_24HOUR) {
+	       snprintf(digitalVal, 14, " %s:%s:%s ", hourStr, minuteStr, secondStr);
+	    }
 
-		set_text(PART:"digital", digitalVal);
-		set_state(PART:"digital", "digital", 0.0);
-		set_state(PART:"digital_bg", "digital", 0.0);
-		set_state(PART:"digital_bg_overlay", "digital", 0.0);
-	} else {
-		set_text(PART:"digital", "");
-		set_state(PART:"digital", "hidden", 0.0);
-		set_state(PART:"digital_bg", "hidden", 0.0);
-		set_state(PART:"digital_bg_overlay", "hidden", 0.0);
-	}
+	    set_text(PART:"digital", digitalVal);
+	    set_state(PART:"digital", "digital", 0.0);
+	    set_state(PART:"digital_bg", "digital", 0.0);
+	    set_state(PART:"digital_bg_overlay", "digital", 0.0);
+	 } else {
+	    set_text(PART:"digital", "");
+	    set_state(PART:"digital", "hidden", 0.0);
+	    set_state(PART:"digital_bg", "hidden", 0.0);
+	    set_state(PART:"digital_bg_overlay", "hidden", 0.0);
+	 }
       }
    }
    parts {
