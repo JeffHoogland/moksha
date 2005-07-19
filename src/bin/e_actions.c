@@ -223,7 +223,7 @@ ACT_FN_GO(window_sticky_toggle)
 	
 	bd = (E_Border *)obj;
 	if (bd->sticky) e_border_unstick(bd);
-        else e_border_stick(bd);
+	else e_border_stick(bd);
      }
 }
 
@@ -243,7 +243,7 @@ ACT_FN_GO(window_iconic_toggle)
 	
 	bd = (E_Border *)obj;
 	if (bd->iconic) e_border_uniconify(bd);
-        else e_border_iconify(bd);
+	else e_border_iconify(bd);
      }
 }
 
@@ -263,7 +263,7 @@ ACT_FN_GO(window_maximized_toggle)
 	
 	bd = (E_Border *)obj;
 	if (bd->maximized) e_border_unmaximize(bd);
-        else e_border_maximize(bd, e_config->maximize_policy);
+	else e_border_maximize(bd, e_config->maximize_policy);
      }
 }
 
@@ -283,7 +283,7 @@ ACT_FN_GO(window_shaded_toggle)
 	
 	bd = (E_Border *)obj;
 	if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
-        else e_border_shade(bd, E_DIRECTION_UP);
+	else e_border_shade(bd, E_DIRECTION_UP);
      }
 }
 
@@ -299,20 +299,21 @@ ACT_FN_GO(move_relative)
      }
    if (params)
      {
-       int dx, dy;
+	int dx, dy;
 
-       if (sscanf(params, "%i %i", &dx, &dy) == 2) {
-         E_Border *bd;
-         
-         bd = (E_Border *)obj;
+	if (sscanf(params, "%i %i", &dx, &dy) == 2)
+	  {
+	     E_Border *bd;
 
-         e_border_move(bd, bd->x + dx, bd->y + dy);
-         
-         if (e_config->focus_policy != E_FOCUS_CLICK)
-           ecore_x_pointer_warp(bd->zone->container->win,
-                                bd->x + (bd->w / 2),
-                                bd->y + (bd->h / 2));
-       }
+	     bd = (E_Border *)obj;
+
+	     e_border_move(bd, bd->x + dx, bd->y + dy);
+
+	     if (e_config->focus_policy != E_FOCUS_CLICK)
+	       ecore_x_pointer_warp(bd->zone->container->win,
+				    bd->x + (bd->w / 2),
+				    bd->y + (bd->h / 2));
+	}
      }
 }
 
@@ -328,39 +329,39 @@ ACT_FN_GO(move_absolute)
      }
    if (params)
      {
-       E_Border *bd;
-       int x, y;
-       char cx, cy;
-         
-       bd = (E_Border *)obj;
+	E_Border *bd;
+	int x, y;
+	char cx, cy;
 
-       if (sscanf(params, "%c%i %c%i", &cx, &x, &cy, &y) == 4)
-         {
-           // Nothing, both x and y is updated.
-         }
-       else if (sscanf(params, "* %c%i", &cy, &y) == 2)
-         {
-           // Updated y, reset x.
-           x = bd->x;
-         }
-       else if (sscanf(params, "%c%i *", &cx, &x) == 2)
-         {
-           // Updated x, reset y.
-           y = bd->y;
-         }
+	bd = (E_Border *)obj;
 
-       if (cx == '-') x = bd->zone->w - bd->w - x;
-       if (cy == '-') y = bd->zone->h - bd->h - y;
+	if (sscanf(params, "%c%i %c%i", &cx, &x, &cy, &y) == 4)
+	  {
+	     // Nothing, both x and y is updated.
+	  }
+	else if (sscanf(params, "* %c%i", &cy, &y) == 2)
+	  {
+	     // Updated y, reset x.
+	     x = bd->x;
+	  }
+	else if (sscanf(params, "%c%i *", &cx, &x) == 2)
+	  {
+	     // Updated x, reset y.
+	     y = bd->y;
+	  }
 
-       if (x != bd->x || y != bd->y)
-         {
-           e_border_move(bd, x, y);
+	if (cx == '-') x = bd->zone->w - bd->w - x;
+	if (cy == '-') y = bd->zone->h - bd->h - y;
 
-           if (e_config->focus_policy != E_FOCUS_CLICK)
-             ecore_x_pointer_warp(bd->zone->container->win,
-                                  bd->x + (bd->w / 2),
-                                  bd->y + (bd->h / 2));
-         }
+	if (x != bd->x || y != bd->y)
+	  {
+	     e_border_move(bd, x, y);
+
+	     if (e_config->focus_policy != E_FOCUS_CLICK)
+	       ecore_x_pointer_warp(bd->zone->container->win,
+				    bd->x + (bd->w / 2),
+				    bd->y + (bd->h / 2));
+	  }
      }
 }
 
@@ -377,19 +378,19 @@ ACT_FN_GO(resize)
 
    if (params)
      {
-       int dw, dh;
+	int dw, dh;
 
-       if (sscanf(params, "%i %i", &dw, &dh) == 2) {
-         E_Border *bd;
-         bd = (E_Border *)obj;
+	if (sscanf(params, "%i %i", &dw, &dh) == 2) {
+	     E_Border *bd;
+	     bd = (E_Border *)obj;
 
-         e_border_resize(bd, bd->w + dw, bd->h + dh);
-         
-         if (e_config->focus_policy != E_FOCUS_CLICK)
-           ecore_x_pointer_warp(bd->zone->container->win,
-                                bd->x + (bd->w / 2),
-                                bd->y + (bd->h / 2));
-       }
+	     e_border_resize(bd, bd->w + dw, bd->h + dh);
+
+	     if (e_config->focus_policy != E_FOCUS_CLICK)
+	       ecore_x_pointer_warp(bd->zone->container->win,
+				    bd->x + (bd->w / 2),
+				    bd->y + (bd->h / 2));
+	}
      }
 }
 
@@ -428,7 +429,7 @@ ACT_FN_GO(desk_flip_to)
 	     int dx = 0, dy = 0;
 	
 	     if (sscanf(params, "%i %i", &dx, &dy) == 2)
-	       e_zone_desk_flip_to(zone, dx, dy);	
+	       e_zone_desk_flip_to(zone, dx, dy);
 	  }
      }
 }
