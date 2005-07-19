@@ -21,6 +21,7 @@
 /* local subsystem functions */
 static void _e_border_free(E_Border *bd);
 static void _e_border_del(E_Border *bd);
+static void _e_border_menus_del(E_Border *bd);
 
 /* FIXME: these likely belong in a separate icccm/client handler */
 /* and the border needs to become a dumb object that just does what its */
@@ -119,7 +120,6 @@ static int  _e_border_move_begin(E_Border *bd);
 static int  _e_border_move_end(E_Border *bd);
 static void _e_border_move_update(E_Border *bd);
 
-static int  _e_border_cb_focus_fix(void *data);
 static int  _e_border_cb_ping_timer(void *data);
 static int  _e_border_cb_kill_timer(void *data);
 
@@ -133,8 +133,6 @@ static E_Border  *focused = NULL;
 
 static E_Border    *resize = NULL;
 static E_Border    *move = NULL;
-
-static Ecore_Timer *focus_fix_timer = NULL;
 
 static int grabbed = 0;
 
@@ -205,8 +203,6 @@ e_border_init(void)
    E_EVENT_BORDER_LOWER = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
-   //focus_fix_timer = ecore_timer_add(0.1, _e_border_cb_focus_fix, NULL);
-   
    return 1;
 }
 
@@ -221,8 +217,6 @@ e_border_shutdown(void)
 	handlers = evas_list_remove_list(handlers, handlers);
 	ecore_event_handler_del(h);
      }
-   //ecore_timer_del(focus_fix_timer);
-   focus_fix_timer = NULL;
    return 1;
 }
 
@@ -1965,26 +1959,9 @@ _e_border_free(E_Border *bd)
 	free(bd->pending_move_resize->data);
 	bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
      }
-   if (bd->border_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_menu));
-	bd->border_menu = NULL;
-     }
-   if (bd->border_locks_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_locks_menu));
-	bd->border_locks_menu = NULL;
-     }
-   if (bd->border_remember_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_remember_menu));
-	bd->border_remember_menu = NULL;
-     }
-   if (bd->border_stacking_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_stacking_menu));
-	bd->border_stacking_menu = NULL;
-     }
+
+   _e_border_menus_del(bd);
+
    if (focused == bd)
      {
 //	ecore_x_window_focus(bd->zone->container->manager->root);
@@ -2081,6 +2058,31 @@ _e_border_del(E_Border *bd)
    e_object_ref(E_OBJECT(bd));
    e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
    ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+}
+
+static void
+_e_border_menus_del(E_Border *bd)
+{
+   if (bd->border_locks_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_locks_menu));
+	bd->border_locks_menu = NULL;
+     }
+   if (bd->border_remember_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_remember_menu));
+	bd->border_remember_menu = NULL;
+     }
+   if (bd->border_stacking_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_stacking_menu));
+	bd->border_stacking_menu = NULL;
+     }
+   if (bd->border_menu)
+     {
+	e_object_del(E_OBJECT(bd->border_menu));
+	bd->border_menu = NULL;
+     }
 }
 
 static int
@@ -5073,24 +5075,10 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
    bd = e_object_data_get(E_OBJECT(m));
    if (bd)
      {
-	if (bd->border_locks_menu)
-	  {
-	     e_object_del(E_OBJECT(bd->border_locks_menu));
-	     bd->border_locks_menu = NULL;
-	  }
-	if (bd->border_remember_menu)
-	  {
-	     e_object_del(E_OBJECT(bd->border_remember_menu));
-	     bd->border_remember_menu = NULL;
-	  }
-	if (bd->border_stacking_menu)
-	  {
-	     e_object_del(E_OBJECT(bd->border_stacking_menu));
-	     bd->border_stacking_menu = NULL;
-	  }
-	bd->border_menu = NULL;
+	_e_border_menus_del(bd);
      }
-   e_object_del(E_OBJECT(m));
+   else
+     e_object_del(E_OBJECT(m));
 }
 
 #define NEW_LOCK_FN(var) \
@@ -6499,34 +6487,6 @@ _e_border_move_update(E_Border *bd)
    else
      e_move_resize_object_coords_set(bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
    e_move_update(bd->x, bd->y);
-}
-
-static int
-_e_border_cb_focus_fix(void *data)
-{
-   if (!focused)
-     {
-/*	
-	Evas_List *managers;
-	E_Manager *man;
-	
-	managers = e_manager_list();
-	if (managers)
-	  {
-	     E_Container *con;
-	     
-	     man = managers->data;
-	     con = e_manager_container_current_get(man);
-	     if (con)
-	       {
-		  printf("set foc to %x [%x]\n",
-			 man->focus_win, ecore_x_window_focus_get());
-		  ecore_x_window_focus(man->root);
-	       }
-	  }
- */
-     }
-   return 1;
 }
 
 static int
