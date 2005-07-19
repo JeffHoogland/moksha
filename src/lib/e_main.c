@@ -56,6 +56,7 @@ static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 int E_RESPONSE_MODULE_LIST = 0;
 int E_RESPONSE_BACKGROUND_GET = 0;
 int E_RESPONSE_LANGUAGE_GET = 0;
+int E_RESPONSE_THEME_GET = 0;
 
 int E_RESPONSE_DATA_DIRS_LIST = 0;
 int E_RESPONSE_IMAGE_DIRS_LIST = 0;
@@ -140,6 +141,7 @@ e_lib_init(const char* display)
      {
 	E_RESPONSE_MODULE_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_GET = ecore_event_type_new();
+	E_RESPONSE_THEME_GET = ecore_event_type_new();
 	E_RESPONSE_LANGUAGE_GET = ecore_event_type_new();
 
 	E_RESPONSE_DATA_DIRS_LIST = ecore_event_type_new();
@@ -238,6 +240,18 @@ void
 e_lib_background_get(void)
 {
    _e_ipc_call(E_IPC_OP_BG_GET, NULL);
+}
+
+void
+e_lib_theme_get(const char *category)
+{
+   char *tmp;
+   if (!category)
+     return;
+
+   tmp = strdup(category);
+   _e_ipc_call(E_IPC_OP_THEME_GET, &tmp);
+   free(tmp);
 }
 
 void

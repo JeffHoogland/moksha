@@ -24,6 +24,7 @@ typedef struct _E_Response_Module_Data		E_Response_Module_Data;
 typedef struct _E_Response_Dirs_List	E_Response_Dirs_List;
 typedef struct _E_Response_Background_Get E_Response_Background_Get;
 typedef struct _E_Response_Language_Get E_Response_Language_Get;
+typedef struct _E_Response_Theme_Get E_Response_Theme_Get;
 
 struct _E_Response_Module_List
 {
@@ -48,6 +49,12 @@ struct _E_Response_Background_Get
    char   *file;
 };
 
+struct _E_Response_Theme_Get
+{
+   char   *file;
+   char   *category;
+};
+
 struct _E_Response_Language_Get
 {
    char   *lang;
@@ -56,6 +63,7 @@ struct _E_Response_Language_Get
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
 extern EAPI int E_RESPONSE_LANGUAGE_GET;
+extern EAPI int E_RESPONSE_THEME_GET;
 
 extern EAPI int E_RESPONSE_DATA_DIRS_LIST;
 extern EAPI int E_RESPONSE_IMAGE_DIRS_LIST;
@@ -86,6 +94,9 @@ extern "C" {
    /* E desktop manipulation */
    EAPI void         e_lib_background_set             (const char *bgfile);
    EAPI void         e_lib_background_get             (void);
+
+   /* E current theme manipulation */
+   EAPI void         e_lib_theme_get                  (const char *category);
 
    /* languages */
    EAPI void         e_lib_language_set               (const char *lang);

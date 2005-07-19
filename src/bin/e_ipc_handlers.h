@@ -4190,6 +4190,13 @@ break;
    printf("REPLY: DEFAULT CATEGORY=\"%s\" FILE=\"%s\"\n",
                     category, file); 
    END_STRING2(e_2str);
+#elif (TYPE == E_LIB_IN)
+   STRING2(category, file, e_2str, HDL);
+   RESPONSE(r, E_Response_Theme_Get, HDL);
+   r->file = strdup(file);
+   r->category = strdup(category);
+   END_RESPONSE(r, E_RESPONSE_THEME_GET);
+   END_STRING2(e_2str);
 #endif
 #undef HDL
 
