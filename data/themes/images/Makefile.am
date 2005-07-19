@@ -17,6 +17,8 @@ e17_button_detail_close.png \
 e17_button_detail_fullscreen.png \
 e17_button_detail_kill.png \
 e17_button_detail_locks.png \
+e17_button_detail_locks_user.png \
+e17_button_detail_locks_application.png \
 e17_button_detail_maximize.png \
 e17_button_detail_minimize.png \
 e17_button_detail_remember.png \

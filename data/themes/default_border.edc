@@ -227,6 +227,8 @@ images {
    image: "e17_button_detail_shade.png" COMP;
    image: "e17_button_detail_stick.png" COMP;
    image: "e17_button_detail_locks.png" COMP;
+   image: "e17_button_detail_locks_user.png" COMP;
+   image: "e17_button_detail_locks_application.png" COMP;
    image: "e17_button_detail_borderless.png" COMP;
    image: "e17_button_detail_remember.png" COMP;
    image: "e17_button_detail_skip_winlist.png" COMP;
@@ -1677,6 +1679,8 @@ FULL_SIZE_BORDER_BUTTON("shade")
 FULL_SIZE_BORDER_BUTTON("stick")
 FULL_SIZE_BORDER_BUTTON("kill")
 FULL_SIZE_BORDER_BUTTON("locks")
+FULL_SIZE_BORDER_BUTTON("locks_user")
+FULL_SIZE_BORDER_BUTTON("locks_application")
 FULL_SIZE_BORDER_BUTTON("borderless")
 FULL_SIZE_BORDER_BUTTON("fullscreen")
 FULL_SIZE_BORDER_BUTTON("remember")
