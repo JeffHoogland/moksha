@@ -399,7 +399,7 @@ e_hints_window_init(E_Border *bd)
      e_border_shade(bd, e_hints_window_shade_direction_get(bd));
    if ((bd->client.netwm.state.maximized_v) && (bd->client.netwm.state.maximized_h))
      {
-	e_hints_window_saved_size_get(bd, &bd->saved.x, &bd->saved.y, &bd->saved.w, &bd->saved.h);
+	e_hints_window_saved_size_get(bd);
 	e_border_maximize(bd, e_config->maximize_policy);
      }
    if (bd->client.netwm.state.fullscreen)
@@ -998,19 +998,19 @@ e_hints_window_shade_direction_get(E_Border *bd)
 }
 
 void
-e_hints_window_saved_size_set(E_Border *bd, int x, int y, int w, int h)
+e_hints_window_saved_size_set(E_Border *bd)
 {
    unsigned int sizes[4];
 
-   sizes[0] = x;
-   sizes[1] = y;
-   sizes[2] = w;
-   sizes[3] = h;
+   sizes[0] = bd->saved.x;
+   sizes[1] = bd->saved.y;
+   sizes[2] = bd->saved.w;
+   sizes[3] = bd->saved.h;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_SAVED_SIZE, sizes, 4);
 }
 
 int
-e_hints_window_saved_size_get(E_Border *bd, int *x, int *y, int *w, int *h)
+e_hints_window_saved_size_get(E_Border *bd)
 {
    int ret;
    int sizes[4];
@@ -1018,10 +1018,10 @@ e_hints_window_saved_size_get(E_Border *bd, int *x, int *y, int *w, int *h)
    memset(sizes, 0, sizeof(sizes));
    ret = ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_SAVED_SIZE,
 				        sizes, 4);
-   if (x) *x = sizes[0];
-   if (y) *y = sizes[1];
-   if (w) *w = sizes[2];
-   if (h) *h = sizes[3];
+   bd->saved.x = sizes[0];
+   bd->saved.y = sizes[1];
+   bd->saved.w = sizes[2];
+   bd->saved.h = sizes[3];
 
    return ret;
 }
