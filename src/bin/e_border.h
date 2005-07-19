@@ -304,7 +304,7 @@ struct _E_Border
    unsigned int    lock_user_shade : 1; /*DONE*/
    unsigned int    lock_client_shade : 1; /*DONE*/
    unsigned int    lock_user_maximize : 1; /*DONE*/
-   unsigned int    lock_client_mazimize : 1; /*DONE*/
+   unsigned int    lock_client_maximize : 1; /*DONE*/
    unsigned int    lock_user_fullscreen : 1; /*DONE*/
    unsigned int    lock_client_fullscreen : 1; /*DONE*/
    unsigned int    lock_border : 1; /*DONE*/

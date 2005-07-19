@@ -83,7 +83,6 @@ e_desk_show(E_Desk *desk)
    int                was_zone = 0;
    int                x, y;
    E_Event_Desk_Show *ev;
-   Evas_List         *l;
 
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);

@@ -148,7 +148,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, prop.lock_user_shade, UCHAR);
    E_CONFIG_VAL(D, T, prop.lock_client_shade, UCHAR);
    E_CONFIG_VAL(D, T, prop.lock_user_maximize, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_mazimize, UCHAR);
+   E_CONFIG_VAL(D, T, prop.lock_client_maximize, UCHAR);
    E_CONFIG_VAL(D, T, prop.lock_user_fullscreen, UCHAR);
    E_CONFIG_VAL(D, T, prop.lock_client_fullscreen, UCHAR);
    E_CONFIG_VAL(D, T, prop.lock_border, UCHAR);

@@ -4055,8 +4055,6 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if ((rem->apply & E_REMEMBER_APPLY_POS) && (!bd->re_manage))
 	       {
-		  E_Event_Border_Move *ev;
-		  
 		  bd->x = rem->prop.pos_x;
 		  bd->y = rem->prop.pos_y;
 		  if (bd->zone->w != rem->prop.res_x)
@@ -4074,8 +4072,6 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SIZE)
 	       {
-		  E_Event_Border_Resize *ev;
-		  
 		  bd->w = rem->prop.w + bd->client_inset.l + bd->client_inset.r;
 		  bd->h = rem->prop.h + bd->client_inset.t + bd->client_inset.b;
 		  bd->client.w = bd->w - (bd->client_inset.l + bd->client_inset.r);
@@ -4125,7 +4121,7 @@ _e_border_eval(E_Border *bd)
 		  bd->lock_user_shade = rem->prop.lock_user_shade;
 		  bd->lock_client_shade = rem->prop.lock_client_shade;
 		  bd->lock_user_maximize = rem->prop.lock_user_maximize;
-		  bd->lock_client_mazimize = rem->prop.lock_client_mazimize;
+		  bd->lock_client_maximize = rem->prop.lock_client_maximize;
 		  bd->lock_user_fullscreen = rem->prop.lock_user_fullscreen;
 		  bd->lock_client_fullscreen = rem->prop.lock_client_fullscreen;
 		  bd->lock_border = rem->prop.lock_border;
@@ -5122,7 +5118,7 @@ NEW_LOCK_FN(lock_client_sticky)
 NEW_LOCK_FN(lock_user_shade)
 NEW_LOCK_FN(lock_client_shade)
 NEW_LOCK_FN(lock_user_maximize)
-NEW_LOCK_FN(lock_client_mazimize)
+NEW_LOCK_FN(lock_client_maximize)
 NEW_LOCK_FN(lock_user_fullscreen)
 NEW_LOCK_FN(lock_client_fullscreen)
 NEW_LOCK_FN(lock_border)
@@ -5612,7 +5608,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 /*   NEW_LOCK_MI(_("Virtual Desktop (Application)"), lock_client_desk);*/
    NEW_LOCK_MI(_("Sticky (Application)"), lock_client_sticky);
    NEW_LOCK_MI(_("Shade (Application)"), lock_client_shade);
-   NEW_LOCK_MI(_("Maximize (Application)"), lock_client_mazimize);
+   NEW_LOCK_MI(_("Maximize (Application)"), lock_client_maximize);
    NEW_LOCK_MI(_("Fullscreen (Application)"), lock_client_fullscreen);
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -6104,7 +6100,6 @@ static void
 _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
-   int toggle;
 
    bd = data;
    if (!bd) return;

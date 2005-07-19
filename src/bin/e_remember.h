@@ -62,7 +62,7 @@ struct _E_Remember
       unsigned char lock_user_shade; 
       unsigned char lock_client_shade; 
       unsigned char lock_user_maximize; 
-      unsigned char lock_client_mazimize; 
+      unsigned char lock_client_maximize; 
       unsigned char lock_user_fullscreen; 
       unsigned char lock_client_fullscreen; 
       unsigned char lock_border; 

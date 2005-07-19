@@ -189,7 +189,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_user_shade = bd->lock_user_shade;
    rem->prop.lock_client_shade = bd->lock_client_shade;
    rem->prop.lock_user_maximize = bd->lock_user_maximize;
-   rem->prop.lock_client_mazimize = bd->lock_client_mazimize;
+   rem->prop.lock_client_maximize = bd->lock_client_maximize;
    rem->prop.lock_user_fullscreen = bd->lock_user_fullscreen;
    rem->prop.lock_client_fullscreen = bd->lock_client_fullscreen;
    rem->prop.lock_border = bd->lock_border;
