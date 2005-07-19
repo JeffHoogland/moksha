@@ -5075,10 +5075,14 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
    bd = e_object_data_get(E_OBJECT(m));
    if (bd)
      {
+	/* If the border exists, delete all associated menus */
 	_e_border_menus_del(bd);
      }
    else
-     e_object_del(E_OBJECT(m));
+     {
+	/* Just delete this menu */
+	e_object_del(E_OBJECT(m));
+     }
 }
 
 #define NEW_LOCK_FN(var) \
