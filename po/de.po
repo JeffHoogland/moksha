@@ -146,6 +146,18 @@ msgstr ""
 msgid "A simple module to give E17 a clock."
 msgstr "Eine einfache Uhr für E17."
 
+#: src/modules/clock/e_mod_main.c:330
+msgid "No Digital Display"
+msgstr "Keine Digitale Uhr"
+
+#: src/modules/clock/e_mod_main.c:352
+msgid "24 Hour"
+msgstr "24 Stunden"
+
+#: src/modules/clock/e_mod_main.c:364
+msgid "Digital Display"
+msgstr "Digitale Uhr"
+
 #: src/bin/e_int_menus.c:101 src/bin/e_int_menus.c:209
 msgid "About Enlightenment"
 msgstr "Über Enlightenment"
@@ -737,13 +749,13 @@ msgstr "Gesamte Bildschirmbreite"
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: src/bin/e_border.c:5583
-msgid "Fullscreen (Application)"
-msgstr "Vollbild (Anwendung)"
+#: src/bin/e_border.c:5621
+msgid "User"
+msgstr "Benutzer"
 
-#: src/bin/e_border.c:5572
-msgid "Fullscreen (User)"
-msgstr "Vollbild (Benutzer)"
+#: src/bin/e_border.c:5629
+msgid "Application"
+msgstr "Anwendung"
 
 #: src/modules/dropshadow/e_mod_main.c:252
 msgid "Fuzzy"
@@ -789,14 +801,6 @@ msgstr "Icon Bearbeitungsfehler"
 #: src/bin/e_border.c:3396
 msgid "Iconify"
 msgstr "Minimieren"
-
-#: src/bin/e_border.c:5578
-msgid "Iconify (Application)"
-msgstr "Minimieren (Anwendung)"
-
-#: src/bin/e_border.c:5567
-msgid "Iconify (User)"
-msgstr "Minimieren (Benutzer)"
 
 #: src/modules/dropshadow/e_mod_main.c:375
 msgid "Immediately Underneath"
@@ -862,14 +866,6 @@ msgstr "Zum Vorübergehenden Status passend"
 #: src/bin/e_border.c:5618
 msgid "Match by Window Type"
 msgstr "Zum Fenstertyp passend"
-
-#: src/bin/e_border.c:5582
-msgid "Maximize (Application)"
-msgstr "Maximieren (Anwendung)"
-
-#: src/bin/e_border.c:5571
-msgid "Maximize (User)"
-msgstr "Maximieren (Benutzer)"
 
 #: src/modules/cpufreq/e_mod_main.c:434
 msgid "Maximum Speed"
@@ -989,14 +985,6 @@ msgstr ""
 msgid "Pager"
 msgstr "Arbeitsflächenumschalter"
 
-#: src/bin/e_border.c:5575
-msgid "Position (Application)"
-msgstr "Position (Anwendung)"
-
-#: src/bin/e_border.c:5564
-msgid "Position (User)"
-msgstr "Position (Benutzer)"
-
 #: src/bin/e_border.c:5783
 msgid "Remember"
 msgstr "Erinnern"
@@ -1090,14 +1078,6 @@ msgstr "Geschwindigkeit einstellen"
 msgid "Shaded"
 msgstr "Eingeklappt"
 
-#: src/bin/e_border.c:5581
-msgid "Shade (Application)"
-msgstr "Einklappen (Anwendung)"
-
-#: src/bin/e_border.c:5570
-msgid "Shade (User)"
-msgstr "Einklappen (Benutzer)"
-
 #: src/modules/dropshadow/e_mod_main.c:270
 msgid "Sharp"
 msgstr "Scharf"
@@ -1105,14 +1085,6 @@ msgstr "Scharf"
 #: src/modules/ibar/e_mod_main.c:808
 msgid "Size"
 msgstr "Größe"
-
-#: src/bin/e_border.c:5576
-msgid "Size (Application)"
-msgstr "Größe (Anwendung)"
-
-#: src/bin/e_border.c:5565
-msgid "Size (User)"
-msgstr "Größe (Benutzer)"
 
 #: src/bin/e_border.c:5762
 msgid "Skip Window List"
@@ -1134,29 +1106,21 @@ msgstr "Irgendetwas"
 msgid "Start"
 msgstr "Start"
 
-#: src/bin/e_border.c:5577
-msgid "Stacking (Application)"
-msgstr "Ablage (Anwendung)"
-
-#: src/bin/e_border.c:5566
-msgid "Stacking (User)"
-msgstr "Ablage (Benutzer)"
-
 #: src/bin/e_border.c:3418
 msgid "Sticky"
 msgstr "Klebrig"
 
+#: src/bin/e_border.c:5600 src/bin/e_border.c:5613
+msgid "Shade"
+msgstr "Einklappstatus"
+
+#: src/bin/e_border.c:5601 src/bin/e_border.c:5614
+msgid "Maximize"
+msgstr "Maximiert"
+
 #: src/bin/e_border.c:5790
 msgid "Stacking"
 msgstr "Ablage"
-
-#: src/bin/e_border.c:5580
-msgid "Sticky (Application)"
-msgstr "Klebrig (Anwendung)"
-
-#: src/bin/e_border.c:5569
-msgid "Sticky (User)"
-msgstr "Klebrig (Benutzer)"
 
 #: src/modules/temperature/e_mod_main.c:87
 msgid "Temperature"
