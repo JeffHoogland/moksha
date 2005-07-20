@@ -30,7 +30,6 @@ E_Desk *
 e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk      *desk;
-   Evas_Object *o;
    char		name[40];
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
@@ -44,24 +43,6 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->y = y;
    snprintf(name, sizeof(name), _("Desktop %d, %d"), x, y);
    desk->name = strdup(name);
-
-   /* TODO: config the ecore_evas type. */
-   desk->black_ecore_evas = ecore_evas_software_x11_new(NULL, zone->container->win,
-							0, 0, zone->w, zone->h);
-   ecore_evas_software_x11_direct_resize_set(desk->black_ecore_evas, 1);
-   ecore_evas_override_set(desk->black_ecore_evas, 1);
-   ecore_evas_layer_set(desk->black_ecore_evas, 6);
-
-   desk->black_win = ecore_evas_software_x11_window_get(desk->black_ecore_evas);
-   desk->black_evas = ecore_evas_get(desk->black_ecore_evas);
-
-   o = evas_object_rectangle_add(desk->black_evas);
-   evas_object_move(o, 0, 0);
-   evas_object_resize(o, zone->w, zone->h);
-   evas_object_color_set(o, 0, 0, 0, 255);
-   ecore_evas_name_class_set(desk->black_ecore_evas, "E", "Black_Window");
-   snprintf(name, sizeof(name), "Enlightenment Black Desk (%d, %d)", desk->x, desk->y);
-   ecore_evas_title_set(desk->black_ecore_evas, name);
 
    return desk;
 }
@@ -95,11 +76,7 @@ e_desk_show(E_Desk *desk)
 	     E_Desk *desk2;
 
 	     desk2 = e_desk_at_xy_get(desk->zone,x, y);
-	     if (desk2->visible)
-	       {
-		  desk2->visible = 0;
-		  ecore_evas_hide(desk2->black_ecore_evas);
-	       }
+	     desk2->visible = 0;
 	  }
      }
 
@@ -124,12 +101,6 @@ e_desk_show(E_Desk *desk)
 	
    desk->zone->desk_x_current = desk->x;
    desk->zone->desk_y_current = desk->y;
-   if (desk->fullscreen)
-     {
-	ecore_evas_show(desk->black_ecore_evas);
-	e_container_window_raise(desk->zone->container, desk->black_win, 150);
-	e_border_fullscreen(desk->fullscreen);
-     }
    desk->visible = 1;
 
    if (was_zone)
@@ -161,22 +132,6 @@ e_desk_last_focused_focus(E_Desk *desk)
 	     e_border_focus_set(bd, 1, 1);
 	     break;
 	  }
-     }
-}
-
-void
-e_desk_fullscreen_set(E_Desk *desk, E_Border *bd)
-{
-   if ((!desk->fullscreen) && (bd))
-     {
-	ecore_evas_show(desk->black_ecore_evas);
-	e_container_window_raise(desk->zone->container, desk->black_win, 150);
-	desk->fullscreen = bd;
-     }
-   else if ((desk->fullscreen) && (!bd))
-     {
-	ecore_evas_hide(desk->black_ecore_evas);
-	desk->fullscreen = NULL;
      }
 }
 

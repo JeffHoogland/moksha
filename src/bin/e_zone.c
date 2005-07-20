@@ -99,6 +99,24 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,   _e_zone_cb_bg_mouse_up, zone);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_zone_cb_bg_mouse_move, zone);
 
+   /* TODO: config the ecore_evas type. */
+   zone->black_ecore_evas = ecore_evas_software_x11_new(NULL, zone->container->win,
+							0, 0, zone->w, zone->h);
+   ecore_evas_software_x11_direct_resize_set(zone->black_ecore_evas, 1);
+   ecore_evas_override_set(zone->black_ecore_evas, 1);
+   ecore_evas_layer_set(zone->black_ecore_evas, 6);
+
+   zone->black_win = ecore_evas_software_x11_window_get(zone->black_ecore_evas);
+   zone->black_evas = ecore_evas_get(zone->black_ecore_evas);
+
+   o = evas_object_rectangle_add(zone->black_evas);
+   evas_object_move(o, 0, 0);
+   evas_object_resize(o, zone->w, zone->h);
+   evas_object_color_set(o, 0, 0, 0, 255);
+   ecore_evas_name_class_set(zone->black_ecore_evas, "E", "Black_Window");
+   snprintf(name, sizeof(name), "Enlightenment Black Zone (%d)", zone->num);
+   ecore_evas_title_set(zone->black_ecore_evas, name);
+
    zone->desk_x_count = 0;
    zone->desk_y_count = 0;
    zone->desk_x_current = 0;
@@ -180,6 +198,22 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
    evas_object_resize(zone->bg_event_object, w, h);
    evas_object_resize(zone->bg_clip_object, w, h);
 } 
+
+void
+e_zone_fullscreen_set(E_Zone *zone, int on)
+{
+   if ((!zone->fullscreen) && (on))
+     {
+	ecore_evas_show(zone->black_ecore_evas);
+	e_container_window_raise(zone->container, zone->black_win, 150);
+	zone->fullscreen = 1;
+     }
+   else if ((zone->fullscreen) && (!on))
+     {
+	ecore_evas_hide(zone->black_ecore_evas);
+	zone->fullscreen = 0;
+     }
+}
 
 E_Zone *
 e_zone_current_get(E_Container *con)

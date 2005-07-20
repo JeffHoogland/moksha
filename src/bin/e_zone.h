@@ -25,6 +25,7 @@ struct _E_Zone
     * this zone belongs to. */
    unsigned int         num;
    E_Container         *container;
+   int                  fullscreen;
 
    Evas_Object         *bg_object;
    Evas_Object         *bg_event_object;
@@ -46,6 +47,10 @@ struct _E_Zone
    
    E_Action *cur_mouse_action;
    Evas_List *popups;
+
+   Ecore_Evas          *black_ecore_evas;
+   Evas                *black_evas;
+   Ecore_X_Window       black_win;
 };
 
 struct _E_Event_Zone_Desk_Count_Set
@@ -69,6 +74,7 @@ EAPI E_Zone    *e_zone_new(E_Container *con, int num, int x, int y, int w, int h
 EAPI void       e_zone_move(E_Zone *zone, int x, int y);
 EAPI void       e_zone_resize(E_Zone *zone, int w, int h);
 EAPI void       e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h);
+EAPI void       e_zone_fullscreen_set(E_Zone *zone, int on);
 EAPI E_Zone    *e_zone_current_get(E_Container *con);
 EAPI void       e_zone_bg_reconfigure(E_Zone *zone);
 EAPI void       e_zone_flip_coords_handle(E_Zone *zone, int x, int y);

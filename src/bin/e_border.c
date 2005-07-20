@@ -563,7 +563,7 @@ e_border_hide(E_Border *bd, int manage)
 	_e_border_move_end(bd);
 	e_zone_flip_coords_handle(bd->zone, -1, -1);
      }
-   if ((bd->desk->visible) && (bd->fullscreen))
+   if (bd->fullscreen)
      e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
      {
@@ -1314,7 +1314,7 @@ e_border_fullscreen(E_Border *bd)
 	bd->client_inset.t = 0;
 	bd->client_inset.b = 0;
 
-	e_desk_fullscreen_set(bd->desk, bd);
+	e_zone_fullscreen_set(bd->zone, 1);
 
 	bd->layer = 200;
 	e_border_raise(bd);
@@ -1352,7 +1352,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client_inset.t = bd->client_inset.st;
 	bd->client_inset.b = bd->client_inset.sb;
 
-	e_desk_fullscreen_set(bd->desk, NULL);
+	e_zone_fullscreen_set(bd->zone, 0);
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	ecore_evas_show(bd->bg_ecore_evas);
@@ -5690,38 +5690,40 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key)
 
    m = e_menu_new();
    bd->border_stacking_menu = m;
-   if (!bd->lock_user_stacking)
+   /* Only allow to change layer for windows in "normal" layers */
+   if ((!bd->lock_user_stacking) &&
+       ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
      {
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Always On Top"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
-   e_menu_item_icon_edje_set(mi,
-			    (char *)e_theme_edje_file_get("base/theme/borders",
-							  "widgets/border/default/stack_on_top"),
-			    "widgets/border/default/stack_on_top");
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Normal"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   e_menu_item_toggle_set(mi, (bd->layer == 100 ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_normal, bd);
-   e_menu_item_icon_edje_set(mi,
-			    (char *)e_theme_edje_file_get("base/theme/borders",
-							  "widgets/border/default/stack_normal"),
-			    "widgets/border/default/stack_normal");
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Always Below"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   e_menu_item_toggle_set(mi, (bd->layer == 50 ? 1 : 0));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_below, bd);
-   e_menu_item_icon_edje_set(mi,
-			    (char *)e_theme_edje_file_get("base/theme/borders",
-							  "widgets/border/default/stack_below"),
-			    "widgets/border/default/stack_below");
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Always On Top"));
+	e_menu_item_radio_set(mi, 1);
+	e_menu_item_radio_group_set(mi, 2);
+	e_menu_item_toggle_set(mi, (bd->layer == 150 ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_on_top, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stack_on_top"),
+				  "widgets/border/default/stack_on_top");
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Normal"));
+	e_menu_item_radio_set(mi, 1);
+	e_menu_item_radio_group_set(mi, 2);
+	e_menu_item_toggle_set(mi, (bd->layer == 100 ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_normal, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stack_normal"),
+				  "widgets/border/default/stack_normal");
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Always Below"));
+	e_menu_item_radio_set(mi, 1);
+	e_menu_item_radio_group_set(mi, 2);
+	e_menu_item_toggle_set(mi, (bd->layer == 50 ? 1 : 0));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_below, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/stack_below"),
+				  "widgets/border/default/stack_below");
      }
 
    m = e_menu_new();
@@ -6033,9 +6035,6 @@ _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   /* FIXME:
-    * - Remember old layer
-    */
    E_Border *bd;
 
    bd = data;
@@ -6050,9 +6049,6 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   /* FIXME:
-    * - Remember old layer
-    */
    E_Border *bd;
 
    bd = data;
@@ -6067,9 +6063,6 @@ _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   /* FIXME:
-    * - Remember old layer
-    */
    E_Border *bd;
 
    bd = data;
