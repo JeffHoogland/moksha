@@ -471,7 +471,7 @@ void e_hints_window_type_get(E_Border *bd)
 
 void
 e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
-      Ecore_X_Window_State_Action action)
+			    Ecore_X_Window_State_Action action)
 {
    int changed;
 
