@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-07-12 12:33+0800\n"
-"PO-Revision-Date: 2005-07-12 12:54+0800\n"
+"POT-Creation-Date: 2005-07-20 12:50+0800\n"
+"PO-Revision-Date: 2005-07-20 16:59+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
@@ -61,219 +61,189 @@ msgstr ""
 "Enlightenment不允许它自己退出，除非这些窗口已经被关闭，\n"
 "或者被去除生命周期锁。\n"
 
-#: src/bin/e_border.c:5566
-msgid "Position (User)"
-msgstr "位置（用户）"
+#: src/bin/e_border.c:5594 src/bin/e_border.c:5607
+msgid "Position"
+msgstr "位置"
 
-#: src/bin/e_border.c:5567
-msgid "Size (User)"
-msgstr "大小（用户）"
+#: src/bin/e_border.c:5595 src/bin/e_border.c:5608
+#: src/modules/ibar/e_mod_main.c:286 src/modules/ibar/e_mod_main.c:893
+#: src/modules/ibox/e_mod_main.c:694
+msgid "Size"
+msgstr "大小"
 
-#: src/bin/e_border.c:5568
-msgid "Stacking (User)"
-msgstr "堆叠（用户）"
+#: src/bin/e_border.c:5596 src/bin/e_border.c:5609 src/bin/e_border.c:5810
+msgid "Stacking"
+msgstr "堆叠"
 
-#: src/bin/e_border.c:5569
-msgid "Iconify (User)"
-msgstr "最小化（用户）"
-
-#: src/bin/e_border.c:5571
-msgid "Sticky (User)"
-msgstr "粘住（用户）"
-
-#: src/bin/e_border.c:5572
-msgid "Shade (User)"
-msgstr "卷起（用户）"
-
-#: src/bin/e_border.c:5573
-msgid "Maximize (User)"
-msgstr "最大化（用户）"
-
-#: src/bin/e_border.c:5574
-msgid "Fullscreen (User)"
-msgstr "全屏（用户）"
-
-#: src/bin/e_border.c:5577
-msgid "Position (Application)"
-msgstr "位置（应用程序）"
-
-#: src/bin/e_border.c:5578
-msgid "Size (Application)"
-msgstr "大小（应用程序）"
-
-#: src/bin/e_border.c:5579
-msgid "Stacking (Application)"
-msgstr "堆叠（应用程序）"
-
-#: src/bin/e_border.c:5580
-msgid "Iconify (Application)"
-msgstr "最小化（应用程序）"
-
-#: src/bin/e_border.c:5582
-msgid "Sticky (Application)"
-msgstr "粘住（应用程序）"
-
-#: src/bin/e_border.c:5583
-msgid "Shade (Application)"
-msgstr "卷起（应用程序）"
-
-#: src/bin/e_border.c:5584
-msgid "Maximize (Application)"
-msgstr "最大化（应用程序）"
-
-#: src/bin/e_border.c:5585
-msgid "Fullscreen (Application)"
-msgstr "全屏（应用程序）"
-
-#: src/bin/e_border.c:5588
-msgid "Border"
-msgstr "边框"
-
-#: src/bin/e_border.c:5589 src/bin/e_border.c:5647
-msgid "Close"
-msgstr "关闭"
-
-#: src/bin/e_border.c:5592
-msgid "Lifespan"
-msgstr "生命周期"
-
-#: src/bin/e_border.c:5606
-msgid "Remember This Window"
-msgstr "记住该窗口"
-
-#: src/bin/e_border.c:5613
-msgid "Remember This Instance Only"
-msgstr "只记住这个实例"
-
-#: src/bin/e_border.c:5616
-msgid "Match by Name"
-msgstr "名称匹配"
-
-#: src/bin/e_border.c:5617
-msgid "Match by Class"
-msgstr "类匹配"
-
-#: src/bin/e_border.c:5618
-msgid "Match by Title"
-msgstr "标题匹配"
-
-#: src/bin/e_border.c:5619
-msgid "Match by Role"
-msgstr "角色匹配"
-
-#: src/bin/e_border.c:5620
-msgid "Match by Window Type"
-msgstr "窗口类型匹配"
-
-#: src/bin/e_border.c:5621
-msgid "Match by Transient Status"
-msgstr "瞬态匹配"
-
-#: src/bin/e_border.c:5624
-msgid "Remember Position"
-msgstr "记住位置"
-
-#: src/bin/e_border.c:5625
-msgid "Remember Size"
-msgstr "记住大小"
-
-#: src/bin/e_border.c:5626
-msgid "Remember Stacking"
-msgstr "记住堆叠"
-
-#: src/bin/e_border.c:5627
-msgid "Remember Locks"
-msgstr "记住锁定"
-
-#: src/bin/e_border.c:5628
-msgid "Remember Border"
-msgstr "记住边框"
-
-#: src/bin/e_border.c:5629
-msgid "Remember Stickiness"
-msgstr "记住粘住状态"
-
-#: src/bin/e_border.c:5630
-msgid "Remember Desktop"
-msgstr "记住桌面"
-
-#: src/bin/e_border.c:5631
-msgid "Remember Shaded State"
-msgstr "记住卷起状态"
-
-#: src/bin/e_border.c:5632
-msgid "Remember Zone"
-msgstr "记住区域"
-
-#: src/bin/e_border.c:5633
-msgid "Remember Skip Window List"
-msgstr "记住跳过窗口列表"
-
-#: src/bin/e_border.c:5658
+#: src/bin/e_border.c:5597 src/bin/e_border.c:5610 src/bin/e_border.c:5746
 msgid "Iconify"
 msgstr "最小化"
 
-#: src/bin/e_border.c:5672
-msgid "Kill"
-msgstr "杀死"
-
-#: src/bin/e_border.c:5685
-msgid "Shaded"
-msgstr "卷起"
-
-#: src/bin/e_border.c:5698
-msgid "Maximized"
-msgstr "最大化"
-
-#: src/bin/e_border.c:5711
+#: src/bin/e_border.c:5599 src/bin/e_border.c:5612 src/bin/e_border.c:5799
 msgid "Sticky"
 msgstr "粘住"
 
-#: src/bin/e_border.c:5724
-msgid "Always On Top"
-msgstr "置顶"
+#: src/bin/e_border.c:5600 src/bin/e_border.c:5613
+msgid "Shade"
+msgstr "卷起"
 
-#: src/bin/e_border.c:5737
-msgid "Always Below"
-msgstr "置底"
+#: src/bin/e_border.c:5601 src/bin/e_border.c:5614
+msgid "Maximize"
+msgstr "最大化"
 
-#: src/bin/e_border.c:5750
-msgid "Borderless"
-msgstr "无边框"
-
-#: src/bin/e_border.c:5763
+#: src/bin/e_border.c:5602 src/bin/e_border.c:5615 src/bin/e_border.c:5833
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: src/bin/e_border.c:5777
+#: src/bin/e_border.c:5621
+msgid "User"
+msgstr "用户"
+
+#: src/bin/e_border.c:5629
+msgid "Application"
+msgstr "应用程序"
+
+#: src/bin/e_border.c:5639
+msgid "Border"
+msgstr "边框"
+
+#: src/bin/e_border.c:5640 src/bin/e_border.c:5735
+msgid "Close"
+msgstr "关闭"
+
+#: src/bin/e_border.c:5643
+msgid "Lifespan"
+msgstr "生命周期"
+
+#: src/bin/e_border.c:5657
+msgid "Remember This Window"
+msgstr "记住该窗口"
+
+#: src/bin/e_border.c:5664
+msgid "Remember This Instance Only"
+msgstr "只记住这个实例"
+
+#: src/bin/e_border.c:5667
+msgid "Match by Name"
+msgstr "名称匹配"
+
+#: src/bin/e_border.c:5668
+msgid "Match by Class"
+msgstr "类匹配"
+
+#: src/bin/e_border.c:5669
+msgid "Match by Title"
+msgstr "标题匹配"
+
+#: src/bin/e_border.c:5670
+msgid "Match by Role"
+msgstr "角色匹配"
+
+#: src/bin/e_border.c:5671
+msgid "Match by Window Type"
+msgstr "窗口类型匹配"
+
+#: src/bin/e_border.c:5672
+msgid "Match by Transient Status"
+msgstr "瞬态匹配"
+
+#: src/bin/e_border.c:5675
+msgid "Remember Position"
+msgstr "记住位置"
+
+#: src/bin/e_border.c:5676
+msgid "Remember Size"
+msgstr "记住大小"
+
+#: src/bin/e_border.c:5677
+msgid "Remember Stacking"
+msgstr "记住堆叠"
+
+#: src/bin/e_border.c:5678
+msgid "Remember Locks"
+msgstr "记住锁定"
+
+#: src/bin/e_border.c:5679
+msgid "Remember Border"
+msgstr "记住边框"
+
+#: src/bin/e_border.c:5680
+msgid "Remember Stickiness"
+msgstr "记住粘住状态"
+
+#: src/bin/e_border.c:5681
+msgid "Remember Desktop"
+msgstr "记住桌面"
+
+#: src/bin/e_border.c:5682
+msgid "Remember Shaded State"
+msgstr "记住卷起状态"
+
+#: src/bin/e_border.c:5683
+msgid "Remember Zone"
+msgstr "记住区域"
+
+#: src/bin/e_border.c:5684
+msgid "Remember Skip Window List"
+msgstr "记住跳过窗口列表"
+
+#: src/bin/e_border.c:5696
+msgid "Always On Top"
+msgstr "置顶"
+
+#: src/bin/e_border.c:5706 src/modules/clock/e_mod_main.c:341
+msgid "Normal"
+msgstr "正常"
+
+#: src/bin/e_border.c:5716
+msgid "Always Below"
+msgstr "置底"
+
+#: src/bin/e_border.c:5760
+msgid "Kill"
+msgstr "杀死"
+
+#: src/bin/e_border.c:5773
+msgid "Shaded"
+msgstr "卷起"
+
+#: src/bin/e_border.c:5786
+msgid "Maximized"
+msgstr "最大化"
+
+#: src/bin/e_border.c:5820
+msgid "Borderless"
+msgstr "无边框"
+
+#: src/bin/e_border.c:5847
 msgid "Skip Window List"
 msgstr "跳过窗口列表"
 
-#: src/bin/e_border.c:5791
+#: src/bin/e_border.c:5861
 msgid "Locks"
 msgstr "锁定"
 
-#: src/bin/e_border.c:5798
+#: src/bin/e_border.c:5868
 msgid "Remember"
 msgstr "记住"
 
-#: src/bin/e_border.c:5808
+#: src/bin/e_border.c:5878
 msgid "Send To"
 msgstr "发送到"
 
-#: src/bin/e_border.c:5830
+#: src/bin/e_border.c:5900
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_border.c:5856
+#: src/bin/e_border.c:5926
 msgid "Create Icon"
 msgstr "创建图标"
 
-#: src/bin/e_border.c:5944
+#: src/bin/e_border.c:6014
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:5945
+#: src/bin/e_border.c:6015
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -285,7 +255,7 @@ msgstr ""
 "请安装 e_util_eapp_edit\n"
 "或者确认它已经在你的路径设置中\n"
 
-#: src/bin/e_config.c:258
+#: src/bin/e_config.c:260
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -305,7 +275,7 @@ msgstr ""
 "配置您的桌面设置。\n"
 "很抱歉打断了您的配置。\n"
 
-#: src/bin/e_config.c:272
+#: src/bin/e_config.c:274
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -321,7 +291,7 @@ msgstr ""
 "配置文件已经被恢复到默认状态。\n"
 "对任何的不便表示歉意。\n"
 
-#: src/bin/e_config.c:1163
+#: src/bin/e_config.c:1173
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
 
@@ -951,13 +921,9 @@ msgstr "一个给E17提供时钟的简单模块。"
 msgid "No Digital Display"
 msgstr "无数字显示"
 
-#: src/modules/clock/e_mod_main.c:341
-msgid "Normal Time"
-msgstr "正常时间"
-
 #: src/modules/clock/e_mod_main.c:352
-msgid "Military Time"
-msgstr "军用时间"
+msgid "24 Hour"
+msgstr "24小时"
 
 #: src/modules/clock/e_mod_main.c:364
 msgid "Digital Display"
@@ -1195,11 +1161,6 @@ msgstr ""
 #: src/modules/ibox/e_mod_main.c:690
 msgid "Options"
 msgstr "选项"
-
-#: src/modules/ibar/e_mod_main.c:286 src/modules/ibar/e_mod_main.c:893
-#: src/modules/ibox/e_mod_main.c:694
-msgid "Size"
-msgstr "大小"
 
 #: src/modules/ibar/e_mod_main.c:796 src/modules/ibox/e_mod_main.c:603
 msgid "Auto fit icons"
