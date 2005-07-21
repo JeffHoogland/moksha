@@ -435,12 +435,8 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
 	if (!e_border_find_by_client_window(e->win))
 	  {
 	     bd = e_border_new(con, e->win, 0);
-	     if (bd)
-	       {
-		  e_border_raise(bd);
-		  e_border_show(bd);
-	       }
-	     else ecore_x_window_show(e->win);
+	     if (!bd)
+	       ecore_x_window_show(e->win);
 	  }
      }
    return 1;
