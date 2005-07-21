@@ -87,11 +87,25 @@ e_desk_show(E_Desk *desk)
 	if ((bd->desk->zone == desk->zone) && (!bd->iconic))
 	  {
 	     if ((bd->desk == desk) || (bd->sticky))
-	       e_border_show(bd);
+	       {
+		  e_border_show(bd);
+		  if (bd->want_fullscreen)
+		    {
+		       e_border_fullscreen(bd);
+		       bd->want_fullscreen = 0;
+		    }
+	       }
 	     else if (bd->moving)
 	       e_border_desk_set(bd, desk);
 	     else
-	       e_border_hide(bd, 1);
+	       {
+		  /* We have to remember that this border wants to become
+		   * fullscreen when we go back to this desk.
+		   */
+		  if (bd->fullscreen)
+		    bd->want_fullscreen = 1;
+		  e_border_hide(bd, 1);
+	       }
 	  }
      }
    e_container_border_list_free(bl);
