@@ -471,371 +471,279 @@ void e_hints_window_type_get(E_Border *bd)
 
 void
 e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
-			    Ecore_X_Window_State_Action action)
+      Ecore_X_Window_State_Action action)
 {
    int changed;
-   
+
    switch (state)
      {
       case ECORE_X_WINDOW_STATE_ICONIFIED:
-	if (action != ECORE_X_WINDOW_STATE_ACTION_ADD) return;
-	if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC) return;
-	if (!bd->lock_client_iconify)
-	  e_border_iconify(bd);
-	break;
+	 if (action != ECORE_X_WINDOW_STATE_ACTION_ADD) return;
+	 if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC) return;
+	 if (!bd->lock_client_iconify)
+	   e_border_iconify(bd);
+	 break;
       case ECORE_X_WINDOW_STATE_MODAL:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.modal)
-	       {
-		  bd->client.netwm.state.modal = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.modal)
-	       {
-		  bd->client.netwm.state.modal = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.modal = !bd->client.netwm.state.modal;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	  }
-	break;
+	 changed = 0;
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       if (bd->client.netwm.state.modal)
+		 {
+		    bd->client.netwm.state.modal = 0;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       if (!bd->client.netwm.state.modal)
+		 {
+		    bd->client.netwm.state.modal = 1;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       bd->client.netwm.state.modal = !bd->client.netwm.state.modal;
+	       changed = 1;
+	       break;
+	   }
+	 if (changed)
+	   {
+	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_STICKY:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.sticky)
-	       {
-		  bd->client.netwm.state.sticky = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.sticky)
-	       {
-		  bd->client.netwm.state.sticky = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.sticky = !bd->client.netwm.state.sticky;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if (bd->client.netwm.state.sticky)
-	       e_border_stick(bd);
-	     else
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       e_border_unstick(bd);
-	  }
-	break;
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       e_border_stick(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       if (bd->sticky)
+		 e_border_unstick(bd);
+	       else
+		 e_border_stick(bd);
+	       break;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.maximized_v)
-	       {
-		  bd->client.netwm.state.maximized_v = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.maximized_v)
-	       {
-		  bd->client.netwm.state.maximized_v = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.maximized_v = !bd->client.netwm.state.maximized_v;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if ((bd->client.netwm.state.maximized_v)
-		 && (bd->client.netwm.state.maximized_h))
-	       e_border_maximize(bd, e_config->maximize_policy);
-	     else if ((!bd->client.netwm.state.maximized_v)
-		      && (!bd->client.netwm.state.maximized_h))
-	       e_border_unmaximize(bd);
-	  }
-	break;
+	 changed = 0;
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       if (bd->client.netwm.state.maximized_v)
+		 {
+		    bd->client.netwm.state.maximized_v = 0;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       if (!bd->client.netwm.state.maximized_v)
+		 {
+		    bd->client.netwm.state.maximized_v = 1;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       bd->client.netwm.state.maximized_v = !bd->client.netwm.state.maximized_v;
+	       changed = 1;
+	       break;
+	   }
+	 if (changed)
+	   {
+	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
+	      if ((bd->client.netwm.state.maximized_v)
+		    && (bd->client.netwm.state.maximized_h))
+		e_border_maximize(bd, e_config->maximize_policy);
+	      else if ((!bd->client.netwm.state.maximized_v)
+		    && (!bd->client.netwm.state.maximized_h))
+		e_border_unmaximize(bd);
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.maximized_h)
-	       {
-		  bd->client.netwm.state.maximized_h = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.maximized_h)
-	       {
-		  bd->client.netwm.state.maximized_h = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.maximized_h = !bd->client.netwm.state.maximized_h;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if ((bd->client.netwm.state.maximized_v)
-		 && (bd->client.netwm.state.maximized_h))
-	       e_border_maximize(bd, e_config->maximize_policy);
-	     else if ((!bd->client.netwm.state.maximized_v)
-		      && (!bd->client.netwm.state.maximized_h))
-	       e_border_unmaximize(bd);
-	  }
-	break;
+	 changed = 0;
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       if (bd->client.netwm.state.maximized_h)
+		 {
+		    bd->client.netwm.state.maximized_h = 0;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       if (!bd->client.netwm.state.maximized_h)
+		 {
+		    bd->client.netwm.state.maximized_h = 1;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       bd->client.netwm.state.maximized_h = !bd->client.netwm.state.maximized_h;
+	       changed = 1;
+	       break;
+	   }
+	 if (changed)
+	   {
+	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
+	      if ((bd->client.netwm.state.maximized_v)
+		    && (bd->client.netwm.state.maximized_h))
+		e_border_maximize(bd, e_config->maximize_policy);
+	      else if ((!bd->client.netwm.state.maximized_v)
+		    && (!bd->client.netwm.state.maximized_h))
+		e_border_unmaximize(bd);
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_SHADED:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.shaded)
-	       {
-		  bd->client.netwm.state.shaded = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.shaded)
-	       {
-		  bd->client.netwm.state.shaded = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.shaded = !bd->client.netwm.state.shaded;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if (bd->client.netwm.state.shaded)
-	       e_border_shade(bd, e_hints_window_shade_direction_get(bd));
-	     else
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       e_border_unshade(bd, e_hints_window_shade_direction_get(bd));
-	  }
-	break;
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       e_border_shade(bd, e_hints_window_shade_direction_get(bd));
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       if (bd->shaded)
+		 e_border_unshade(bd, e_hints_window_shade_direction_get(bd));
+	       else
+		 e_border_shade(bd, e_hints_window_shade_direction_get(bd));
+	       break;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.skip_taskbar)
-	       {
-		  bd->client.netwm.state.skip_taskbar = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.skip_taskbar)
-	       {
-		  bd->client.netwm.state.skip_taskbar = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.skip_taskbar = !bd->client.netwm.state.skip_taskbar;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	  }
-	break;
+	 changed = 0;
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       if (bd->client.netwm.state.skip_taskbar)
+		 {
+		    bd->client.netwm.state.skip_taskbar = 0;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       if (!bd->client.netwm.state.skip_taskbar)
+		 {
+		    bd->client.netwm.state.skip_taskbar = 1;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       bd->client.netwm.state.skip_taskbar = !bd->client.netwm.state.skip_taskbar;
+	       changed = 1;
+	       break;
+	   }
+	 if (changed)
+	   {
+	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_SKIP_PAGER:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.skip_pager)
-	       {
-		  bd->client.netwm.state.skip_pager = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.skip_pager)
-	       {
-		  bd->client.netwm.state.skip_pager = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.skip_pager = !bd->client.netwm.state.skip_pager;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	  }
-	break;
+	 changed = 0;
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       if (bd->client.netwm.state.skip_pager)
+		 {
+		    bd->client.netwm.state.skip_pager = 0;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       if (!bd->client.netwm.state.skip_pager)
+		 {
+		    bd->client.netwm.state.skip_pager = 1;
+		    changed = 1;
+		 }
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       bd->client.netwm.state.skip_pager = !bd->client.netwm.state.skip_pager;
+	       changed = 1;
+	       break;
+	   }
+	 if (changed)
+	   {
+	      bd->client.netwm.update.state = 1;
+	      bd->changed = 1;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_HIDDEN:
-	/* Ignore */
-	break;
+	 /* Ignore */
+	 break;
       case ECORE_X_WINDOW_STATE_FULLSCREEN:
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.fullscreen)
-	       {
-		  bd->client.netwm.state.fullscreen = 0;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (!bd->client.netwm.state.fullscreen)
-	       {
-		  bd->client.netwm.state.fullscreen = 1;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     bd->client.netwm.state.fullscreen = !bd->client.netwm.state.fullscreen;
-	     changed = 1;
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if (bd->client.netwm.state.fullscreen)
-	       e_border_fullscreen(bd);
-	     else
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       e_border_unfullscreen(bd);
-	  }
-	break;
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       e_border_fullscreen(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       if (bd->fullscreen)
+		 e_border_unfullscreen(bd);
+	       else
+		 e_border_fullscreen(bd);
+	       break;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_ABOVE:
-	/* FIXME: Should this require that BELOW is set to 0 first, or just
-	 * do it? */
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_NONE;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (bd->client.netwm.state.stacking == E_STACKING_NONE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_ABOVE;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_NONE;
-		  changed = 1;
-	       }
-	     else if (bd->client.netwm.state.stacking == E_STACKING_NONE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_ABOVE;
-		  changed = 1;
-	       }
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if (bd->client.netwm.state.stacking)
+	 /* FIXME: Should this require that BELOW is set to 0 first, or just
+	  * do it? */
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
+	       bd->layer = 100;
+	       e_border_raise(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
 	       bd->layer = 150;
-	     else
-	       bd->layer = 100;
-	     e_border_raise(bd);
-	  }
-	break;
+	       e_border_raise(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       if (bd->layer == 150)
+		 bd->layer = 100;
+	       else
+		 bd->layer = 150;
+	       e_border_raise(bd);
+	       break;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_BELOW:
-	/* FIXME: Should this require that ABOVE is set to 0 first, or just
-	 * do it? */
-	changed = 0;
-	switch (action)
-	  {
-	   case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	     if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_NONE;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	     if (bd->client.netwm.state.stacking == E_STACKING_NONE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_BELOW;
-		  changed = 1;
-	       }
-	     break;
-	   case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-	     if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_NONE;
-		  changed = 1;
-	       }
-	     else if (bd->client.netwm.state.stacking == E_STACKING_NONE)
-	       {
-		  bd->client.netwm.state.stacking = E_STACKING_BELOW;
-		  changed = 1;
-	       }
-	     break;
-	  }
-	if (changed)
-	  {
-	     bd->client.netwm.update.state = 1;
-	     bd->changed = 1;
-	     if (bd->client.netwm.state.stacking)
-	       bd->layer = 50;
-	     else
+	 /* FIXME: Should this require that ABOVE is set to 0 first, or just
+	  * do it? */
+	 switch (action)
+	   {
+	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       bd->layer = 100;
-	     e_border_raise(bd);
-	  }
-	break;
+	       e_border_raise(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
+	       bd->layer = 50;
+	       e_border_raise(bd);
+	       break;
+	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
+	       if (bd->layer == 50)
+		 bd->layer = 100;
+	       else
+		 bd->layer = 50;
+	       e_border_raise(bd);
+	       break;
+	   }
+	 break;
       case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
-	/* FIXME */
-	break;
+	 /* FIXME */
+	 break;
       case ECORE_X_WINDOW_STATE_UNKNOWN:
-	/* Ignore */
-	break;
+	 /* Ignore */
+	 break;
      }
 }
 
