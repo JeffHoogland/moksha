@@ -37,13 +37,14 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* support xrandr to change res from e itself (and save it etc.)
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add window placement options like place at pointer
 * shaded windows should not allow border changes by the user
 * if a border is borderless it should not be allowed to be shaded (padl/r/t/b
   is 0)
 * add fullscreen support (e16 xvidmode or xrandr style)
-* implement thses maximise/fullscreen modes:
+* implement thees maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
   a mode? i think they all should be distinct actions of their own bound
   to a key, button etc. which one of these the maximize button on a window

@@ -182,7 +182,7 @@ _e_test_timer(void *data)
      {
 	e_menu_deactivate(m);
 	e_object_del(E_OBJECT(m));
-	ecore_timer_add(0.2, _e_test_timer, NULL);
+	ecore_timer_add(0.05, _e_test_timer, NULL);
 	return 0;
      }
    managers = e_manager_list();
@@ -195,7 +195,7 @@ _e_test_timer(void *data)
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_container_current_get(man), 0),
 			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
-	ecore_timer_add(0.2, _e_test_timer, m);
+	ecore_timer_add(0.05, _e_test_timer, m);
 	return 0;
      }
    return 0;
@@ -248,6 +248,40 @@ _e_test_internal(E_Container *con)
    
    win->data = o;
 }
+#elif 0
+static int
+_e_test_timer(void *data)
+{
+   E_Menu *m;
+   static int y = 0;
+   
+   m = data;
+   ecore_x_pointer_warp(m->evas_win, 20, y);
+   y += 10;
+   if (y > m->cur.h) y = 0;
+   return 1;
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Menu *m;
+   Evas_List *managers, *l;
+   
+   managers = e_manager_list();
+   for (l = managers; l; l = l->next)
+     {
+	E_Manager *man;
+	
+	man = l->data;
+	m = e_int_menus_main_new();
+	e_menu_activate_mouse(m,
+			      e_container_zone_number_get(e_container_current_get(man), 0),
+			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+	ecore_timer_add(0.02, _e_test_timer, m);
+     }
+}
+#elif 0
 #else
 static void
 _e_test_internal(E_Container *con)

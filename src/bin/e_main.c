@@ -157,6 +157,12 @@ main(int argc, char **argv)
 	     good = 1;
 	     evil = 1;
 	  }
+	else if ((!strcmp(argv[i], "-profile")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     
+	     e_util_env_set("CONF_PROFILE", argv[i]);
+	  }
 	else if ((!strcmp(argv[i], "-h")) ||
 		 (!strcmp(argv[i], "-help")) ||
 		 (!strcmp(argv[i], "--help")))
@@ -173,6 +179,8 @@ main(int argc, char **argv)
 		  "\t\treplace the real xinerama screens, if any. This can\n"
 		  "\t\tbe used to simulate xinerama.\n"
 		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+		  "\t-profile CONF_PROFILE\n"
+		  "\t\tUse the configuration profile CONF_PROFILE instead of the the user delected default ot just \"default\".\n"
 		  "\t-good\n"
 		  "\t\tBe good.\n"
 		  "\t-evil\n"

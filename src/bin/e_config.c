@@ -18,6 +18,7 @@ static int  _e_config_cb_timer(void *data);
 
 /* local subsystem globals */
 static Ecore_Job *_e_config_save_job = NULL;
+static char *_e_config_profile = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
@@ -34,6 +35,40 @@ static E_Config_DD *_e_config_remember_edd = NULL;
 int
 e_config_init(void)
 {
+   _e_config_profile = getenv("CONF_PROFILE");
+   if (!_e_config_profile)
+     {
+	Eet_File *ef;
+	char buf[4096];
+	char *homedir;
+
+	homedir = e_user_homedir_get();
+	snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
+		 homedir);
+	ef = eet_open(buf, EET_FILE_MODE_READ);
+	E_FREE(homedir);
+	if (ef)
+	  {
+	     char *data;
+	     int data_len = 0;
+	     
+	     data = eet_read(ef, "config", &data_len);
+	     if ((data) && (data_len > 0))
+	       {
+		  _e_config_profile = malloc(data_len + 1);
+		  if (_e_config_profile)
+		    {
+		       memcpy(_e_config_profile, data, data_len);
+		       _e_config_profile[data_len] = 0;
+		    }
+		  free(data);
+	       }
+	     eet_close(ef);
+	  }
+	else
+	  _e_config_profile = strdup("default");
+     }
+   else _e_config_profile = strdup(_e_config_profile);
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
 #undef D
@@ -898,6 +933,7 @@ e_config_init(void)
 int
 e_config_shutdown(void)
 {
+   IF_FREE(_e_config_profile);
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
@@ -940,6 +976,90 @@ e_config_save_queue(void)
    _e_config_save_job = ecore_job_add(_e_config_save_cb, NULL);
 }
 
+char *
+e_config_profile_get(void)
+{
+   return _e_config_profile;
+}
+
+void e_config_profile_set(char *prof)
+{
+   IF_FREE(_e_config_profile);
+   _e_config_profile = strdup(prof);
+}
+
+Evas_List *
+e_config_profile_list(void)
+{
+   Ecore_List *files;
+   char buf[4096];
+   char *homedir;
+   Evas_List *flist = NULL;
+   
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/", homedir);
+   files = ecore_file_ls(buf);
+   if (files)
+     {
+	char *file;
+	
+	ecore_list_goto_first(files);
+	while ((file = ecore_list_current(files)))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, file);
+	     if (ecore_file_is_dir(buf))
+	       flist = evas_list_append(flist, strdup(file));
+	     ecore_list_next(files);
+	  }
+        ecore_list_destroy(files);
+     }
+   E_FREE(homedir);
+   return flist;
+}
+
+void
+e_config_profile_add(char *prof)
+{
+   char buf[4096];
+   char *homedir;
+   
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
+	    homedir, prof);
+   ecore_file_mkpath(buf);
+   E_FREE(homedir);
+}
+
+void
+e_config_profile_del(char *prof)
+{
+   Ecore_List *files;
+   char buf[4096];
+   char *homedir;
+   
+   homedir = e_user_homedir_get();
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
+   files = ecore_file_ls(buf);
+   if (files)
+     {
+	char *file;
+	
+	ecore_list_goto_first(files);
+	while ((file = ecore_list_current(files)))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s",
+		      homedir, prof, file);
+	     ecore_file_unlink(buf);
+	     ecore_list_next(files);
+	  }
+        ecore_list_destroy(files);
+     }
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", homedir, prof);
+   ecore_file_rmdir(buf);
+   E_FREE(homedir);
+}
+
+
 void *
 e_config_domain_load(char *domain, E_Config_DD *edd)
 {
@@ -949,9 +1069,16 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
    void *data = NULL;
 
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);
-   E_FREE(homedir);
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg",
+	    homedir, _e_config_profile, domain);
    ef = eet_open(buf, EET_FILE_MODE_READ);
+   if (!ef)
+     {
+	snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg",
+		 homedir, "default", domain);
+	ef = eet_open(buf, EET_FILE_MODE_READ);
+     }
+   E_FREE(homedir);
    if (ef)
      {
 	data = eet_data_read(ef, edd, "config");
@@ -970,7 +1097,20 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 
    /* FIXME: check for other sessions fo E runing */
    homedir = e_user_homedir_get();
-   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s.cfg", homedir, domain);
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
+	    homedir);
+   ef = eet_open(buf, EET_FILE_MODE_WRITE);
+   if (ef)
+     {
+	ok = eet_write(ef, "config", _e_config_profile, 
+		       strlen(_e_config_profile), 0);
+	eet_close(ef);
+     }
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
+	    homedir, _e_config_profile);
+   ecore_file_mkpath(buf);
+   snprintf(buf, sizeof(buf), "%s/.e/e/config/%s/%s.cfg", 
+	    homedir, _e_config_profile, domain);
    E_FREE(homedir);
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (ef)
@@ -1163,6 +1303,10 @@ _e_config_free(void)
 
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config->language);
+	E_FREE(e_config->transition_start);
+	E_FREE(e_config->transition_desk);
+	E_FREE(e_config->transition_change);
+	/* FIXME: free e_config->remembers */
 	E_FREE(e_config);
      }
 }

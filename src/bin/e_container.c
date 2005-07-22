@@ -764,12 +764,12 @@ e_container_border_list_last(E_Container *con)
    e_object_ref(E_OBJECT(con));
    list->layer = 6;
    if (list->container->layers[list->layer].clients)
-     list->clients = list->container->layers[list->layer].clients->last;
+     list->clients = evas_list_last(list->container->layers[list->layer].clients);
    while ((list->layer > 0) && (!list->clients))
      {
 	list->layer--;
 	if (list->container->layers[list->layer].clients)
-	  list->clients = list->container->layers[list->layer].clients->last;
+	  list->clients = evas_list_last(list->container->layers[list->layer].clients);
      }
    return list;
 }
@@ -803,7 +803,7 @@ e_container_border_list_prev(E_Border_List *list)
      {
 	list->layer--;
 	if (list->container->layers[list->layer].clients)
-	  list->clients = list->container->layers[list->layer].clients->last;
+	  list->clients = evas_list_last(list->container->layers[list->layer].clients);
      }
    return bd;
 }

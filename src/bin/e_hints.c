@@ -32,8 +32,8 @@ e_hints_init(void)
  * depending on what wm it thinks there is... so if we pretend to be Kwin...
  * it tries to use kde preferences, if found.
  */
-/* I have disabled tyhis now by pretending to be E16 with e16 comms. this
- * means java plays nice and uses our FRAMe property.. but we had to do other
+/* I have disabled this now by pretending to be E16 with e16 comms. this
+ * means java plays nice and uses our FRAME property.. but we had to do other
  * evil stuff as java EXPECTS all this at REPARENT time... i've deferred
  * reparenting... i hate java!
  */

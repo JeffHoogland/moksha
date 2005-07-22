@@ -185,12 +185,18 @@ struct _E_Config_Desktop_Background
 EAPI int e_config_init(void);
 EAPI int e_config_shutdown(void);
 
-EAPI void *e_config_domain_load(char *domain, E_Config_DD *edd);
-EAPI int   e_config_domain_save(char *domain, E_Config_DD *edd, void *data);
-
 EAPI int e_config_save(void);
 EAPI void e_config_save_flush(void);
 EAPI void e_config_save_queue(void);
+
+EAPI char *e_config_profile_get(void);
+EAPI void e_config_profile_set(char *prof);
+EAPI Evas_List *e_config_profile_list(void);
+EAPI void e_config_profile_add(char *prof);
+EAPI void e_config_profile_del(char *prof);
+
+EAPI void *e_config_domain_load(char *domain, E_Config_DD *edd);
+EAPI int   e_config_domain_save(char *domain, E_Config_DD *edd, void *data);
 
 EAPI E_Config_Binding_Mouse *e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in);
 EAPI E_Config_Binding_Key *e_config_binding_key_match(E_Config_Binding_Key *eb_in);

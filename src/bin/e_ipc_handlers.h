@@ -4381,6 +4381,44 @@ break;
 
 /****************************************************************************/
 
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-default-profile-set", 1, "Set the default configuration profile to OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_config_profile_set(s);
+   SAVE;
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-default-profile-get", 0, "Get the default configuration profile", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_STRING(e_config_profile_get(), E_IPC_OP_PROFILE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   STRING(s, HDL);
+   printf("REPLY: \"%s\"\n", s);
+   END_STRING(s);
+#endif
+#undef HDL
 
 #if 0
 }

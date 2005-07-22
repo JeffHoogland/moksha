@@ -1776,7 +1776,7 @@ _e_menu_item_activate_previous(void)
 		    }
 		  else
 		    {
-		       ll = m->items->last;
+		       ll = evas_list_last(m->items);
 		       mi = ll->data;
 		       while ((mi->separator) && (ll->prev))
 			 {
