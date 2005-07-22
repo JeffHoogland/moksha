@@ -378,6 +378,11 @@ msgstr "Bearbeitungsmodus"
 msgid "Enabled"
 msgstr "Aktiviert"
 
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "%s started"
+
 #: src/bin/e_gadman.c:563
 msgid "End Edit Mode"
 msgstr "Bearbeitungsmodus beenden"
