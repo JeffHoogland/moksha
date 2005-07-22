@@ -65,7 +65,7 @@ _e_startup(void)
 	return;
      }
    e_app_exec(a);
-   snprintf(buf, sizeof(buf), "Starting %s", a->name);
+   snprintf(buf, sizeof(buf), _("Starting %s"), a->name);
    e_init_status_set((const char *)buf);   
    e_init_icons_app_add(a);
    if (a->wait_exit)
