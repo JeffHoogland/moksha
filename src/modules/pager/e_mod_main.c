@@ -1338,7 +1338,7 @@ _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
      {
 	e_menu_activate_mouse(pd->face->menu, pd->face->zone,
 			      ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_container_fake_mouse_up_all_later(pd->face->zone->container);
      }
    else if (ev->button == 1)

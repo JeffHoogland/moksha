@@ -770,7 +770,7 @@ _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *eve
      {
 	e_menu_activate_mouse(ef->menu, e_zone_current_get(ef->con),
 			      ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_container_fake_mouse_up_all_later(ef->con);
      }
 }

@@ -194,7 +194,7 @@ _e_test_timer(void *data)
 	m = e_int_menus_main_new();
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_container_current_get(man), 0),
-			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN, 0);
 	ecore_timer_add(0.05, _e_test_timer, m);
 	return 0;
      }
@@ -277,7 +277,7 @@ _e_test_internal(E_Container *con)
 	m = e_int_menus_main_new();
 	e_menu_activate_mouse(m,
 			      e_container_zone_number_get(e_container_current_get(man), 0),
-			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN);
+			      0, 0, 1, 1, E_MENU_POP_DIRECTION_DOWN, 0);
 	ecore_timer_add(0.02, _e_test_timer, m);
      }
 }

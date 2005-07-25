@@ -1067,7 +1067,7 @@ _e_gadman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_in
 	  {
 	     e_menu_post_deactivate_callback_set(m, _e_gadman_cb_menu_end, gmc);
 	     e_menu_activate_mouse(m, gmc->zone, ev->output.x, ev->output.y, 1, 1,
-				   E_MENU_POP_DIRECTION_DOWN);
+				   E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	     e_util_container_fake_mouse_up_all_later(gmc->zone->container);
 	  }
      }

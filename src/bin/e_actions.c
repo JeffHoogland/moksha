@@ -614,7 +614,8 @@ ACT_FN_GO(menu_show)
 		  ecore_x_pointer_xy_get(zone->container->win, &x, &y);
 		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
 		  e_menu_activate_mouse(m, zone, x, y, 1, 1,
-					E_MENU_POP_DIRECTION_DOWN);
+					E_MENU_POP_DIRECTION_DOWN, 
+					ecore_x_current_time_get());
 	       }
 	  }
      }
@@ -649,7 +650,7 @@ ACT_FN_GO_MOUSE(menu_show)
 		  y -= zone->container->y;
 		  e_menu_post_deactivate_callback_set(m, _e_actions_cb_menu_end, NULL);
 		  e_menu_activate_mouse(m, zone, x, y, 1, 1,
-					E_MENU_POP_DIRECTION_DOWN);
+					E_MENU_POP_DIRECTION_DOWN, ev->time);
 		  e_util_container_fake_mouse_up_all_later(zone->container);
 	       }
 	  }

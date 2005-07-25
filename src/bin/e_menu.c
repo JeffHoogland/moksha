@@ -73,7 +73,7 @@ static void _e_menu_cb_item_submenu_post_default  (void *data, E_Menu *m, E_Menu
 /* local subsystem globals */
 static Ecore_X_Window       _e_menu_win                 = 0;
 static Evas_List           *_e_active_menus             = NULL;
-static double               _e_menu_activate_time       = 0.0;
+static Ecore_X_Time         _e_menu_activate_time       = 0;
 static int                  _e_menu_activate_floating   = 0;
 static Ecore_Timer         *_e_menu_scroll_timer        = NULL;
 static double               _e_menu_scroll_start        = 0.0;
@@ -150,7 +150,7 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   _e_menu_activate_time = 0.0;
+   _e_menu_activate_time = 0;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
@@ -197,7 +197,7 @@ e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir
 }
 
 void
-e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
+e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir, Ecore_X_Time activate_time)
 {
    E_Menu_Item *pmi;
    
@@ -205,7 +205,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   _e_menu_activate_time = ecore_time_get();
+   _e_menu_activate_time = activate_time;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
@@ -249,7 +249,7 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   _e_menu_activate_time = 0.0;
+   _e_menu_activate_time = 0;
    _e_menu_activate_floating = 0;
    _e_menu_activate_internal(m, zone);
    switch (dir)
@@ -1183,8 +1183,8 @@ _e_menu_realize(E_Menu *m)
    m->evas = ecore_evas_get(m->ecore_evas);
    evas_event_freeze(m->evas);
    /* move cursor out to avoid event cycles during setup */
-   evas_event_feed_mouse_in(m->evas, NULL);
-   evas_event_feed_mouse_move(m->evas, -1000000, -1000000, NULL);
+   evas_event_feed_mouse_in(m->evas, ecore_x_current_time_get(), NULL);
+   evas_event_feed_mouse_move(m->evas, -1000000, -1000000, ecore_x_current_time_get(), NULL);
    ecore_x_window_shape_events_select(m->evas_win, 1);
    ecore_evas_name_class_set(m->ecore_evas, "E", "_e_menu_window");
    ecore_evas_title_set(m->ecore_evas, "E Menu");
@@ -2279,15 +2279,15 @@ static int
 _e_menu_cb_mouse_up(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
-   double t;
+   Ecore_X_Time t;
    int ret;
    
    ev = event;
    if (ev->win != _e_menu_win) return 1;
    
-   t = ecore_time_get();
-   if ((_e_menu_activate_time != 0.0) && 
-       ((t - _e_menu_activate_time) < e_config->menus_click_drag_timeout))
+   t = ev->time - _e_menu_activate_time;
+   if ((_e_menu_activate_time != 0) &&
+       (t < (e_config->menus_click_drag_timeout * 1000)))
      {
 	_e_menu_activate_floating = 1;
 	return 1;
@@ -2297,7 +2297,7 @@ _e_menu_cb_mouse_up(void *data, int type, void *event)
    if (ret == 1)
      {
 /* allow mouse to pop down menu if clicked elsewhere */	
-/*	if (_e_menu_activate_time != 0.0) */
+/*	if (_e_menu_activate_time != 0) */
 	  _e_menu_deactivate_all();
      }
    else if (ret == -1)
@@ -2358,6 +2358,7 @@ _e_menu_cb_mouse_move(void *data, int type, void *event)
 	     evas_event_feed_mouse_move(m->evas,
 					ev->x - m->cur.x + m->zone->x,
 					ev->y - m->cur.y + m->zone->y,
+					ev->time,
 					NULL);
 	  }
      }

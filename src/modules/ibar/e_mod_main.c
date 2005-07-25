@@ -1340,7 +1340,7 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	     e_drag_resize(d, w, h);
 	     e_drag_start(d, drag_x, drag_y);
-	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, NULL);
+	     evas_event_feed_mouse_up(ic->ibb->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 	     e_app_remove(ic->app);
 	  }
      }
@@ -1386,7 +1386,7 @@ _ibar_bar_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	e_menu_activate_mouse(ibb->menu, e_zone_current_get(ibb->con),
 			      ev->output.x, ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN);
+			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 	e_util_container_fake_mouse_up_later(ibb->con, 3);
      }
 }

@@ -133,7 +133,7 @@ EAPI int          e_menu_shutdown(void);
 
 EAPI E_Menu      *e_menu_new(void);
 EAPI void         e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
-EAPI void         e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
+EAPI void         e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir, Ecore_X_Time activate_time);
 EAPI void         e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
 EAPI void         e_menu_deactivate(E_Menu *m);
 EAPI int          e_menu_freeze(E_Menu *m);

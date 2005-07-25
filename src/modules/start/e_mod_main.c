@@ -339,9 +339,9 @@ _start_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    ev = event_info;
    if (ev->button == 3)
      {
-	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con), 
+	e_menu_activate_mouse(face->menu, e_zone_current_get(face->con),
 			      ev->output.x, ev->output.y, 1, 1, 
-			      E_MENU_POP_DIRECTION_AUTO);
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
 	e_util_container_fake_mouse_up_all_later(face->con);
      }
    else if (ev->button == 1)
@@ -352,9 +352,9 @@ _start_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	if (!face->main_menu)
 	  face->main_menu = e_int_menus_main_new();
 	e_menu_post_deactivate_callback_set(face->main_menu, _start_menu_cb_post_deactivate, face);
-	e_menu_activate_mouse(face->main_menu, e_zone_current_get(face->con), 
+	e_menu_activate_mouse(face->main_menu, e_zone_current_get(face->con),
 			      x, y, w, h,
-			      E_MENU_POP_DIRECTION_AUTO);
+			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
 	e_util_container_fake_mouse_up_all_later(face->con);
 	edje_object_signal_emit(face->button_object, "active", "");
      }
