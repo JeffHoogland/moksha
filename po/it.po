@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-07-17 20:35+0200\n"
-"PO-Revision-Date: 2005-07-17 21:06+0200\n"
+"POT-Creation-Date: 2005-07-24 20:13+0200\n"
+"PO-Revision-Date: 2005-07-24 20:22+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -161,7 +161,7 @@ msgstr ""
 "\n"
 "Il comando non è stato trovato\n"
 
-#: src/bin/e_desk.c:45
+#: src/bin/e_desk.c:44
 #, c-format
 msgid "Desktop %d, %d"
 msgstr "Desktop %d, %d"
@@ -175,7 +175,7 @@ msgstr "X sostiene che non vi è root window e schermi %i!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
 
-#: src/bin/e_main.c:166
+#: src/bin/e_main.c:172
 #, c-format
 msgid ""
 "Options:\n"
@@ -189,6 +189,9 @@ msgid ""
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"delected default ot just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -205,8 +208,11 @@ msgstr ""
 "\t\tdata la geometria. Ne aggiunge quanti se ne vogliono. Questo\n"
 "\t\tsostituiscono tutti i veri schermi xinerama, se ce ne sono.\n"
 "\t\tQuesto si può usare per simulare xinerama.\n"
-"\t\tES: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEsempio:\n"
+"\t\t-fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUsa il profilo di configurazione CONF_PROFILE invece di quello\n"
+"\t\trilevato predefinito dell'utente o semplicemente \"default\".\n"
 "\t-good\n"
 "\t\tSii buono.\n"
 "\t-evil\n"
@@ -214,7 +220,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tSii psicotico.\n"
 
-#: src/bin/e_main.c:218
+#: src/bin/e_main.c:226
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -222,7 +228,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare Ecore!\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:228
+#: src/bin/e_main.c:236
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -230,7 +236,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali d'uscita.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:234
+#: src/bin/e_main.c:242
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -238,7 +244,7 @@ msgstr ""
 "Enlightenment non riesce a configurare un gestore di segnali HUP.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:245
+#: src/bin/e_main.c:253
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -246,7 +252,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare la connessione a X.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:253
+#: src/bin/e_main.c:261
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -255,7 +261,7 @@ msgstr ""
 "di allarme d'emergenza.\n"
 "Avete impostato la variabile DISPLAY?"
 
-#: src/bin/e_main.c:260
+#: src/bin/e_main.c:268
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -263,7 +269,7 @@ msgstr ""
 "Enlightenment non riesce a configurare xinerama.\n"
 "Questo non dovrebbe accadere."
 
-#: src/bin/e_main.c:276
+#: src/bin/e_main.c:284
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -271,7 +277,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema di connessioni\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:284
+#: src/bin/e_main.c:292
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -279,7 +285,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema IPC.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:292
+#: src/bin/e_main.c:300
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -287,7 +293,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema Evas.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:298
+#: src/bin/e_main.c:306
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -297,7 +303,7 @@ msgstr ""
 "software X11 in Evas. Controllate le vostre installazioni di Evas e\n"
 "Ecore e il loro supporto per il rendering software X11."
 
-#: src/bin/e_main.c:307
+#: src/bin/e_main.c:315
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -305,7 +311,7 @@ msgstr ""
 "Enlightenment non riesce ad inizializzare il sistema File.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:319
+#: src/bin/e_main.c:327
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -313,13 +319,13 @@ msgstr ""
 "Enlightenment non riesce a creare directory nella vostra home.\n"
 "Forse non avete home directory, o il disco è pieno?"
 
-#: src/bin/e_main.c:327
+#: src/bin/e_main.c:335
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di configurazione."
 
-#: src/bin/e_main.c:334
+#: src/bin/e_main.c:342
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -327,31 +333,31 @@ msgstr ""
 "Enlightenment non riesce a configurare i percorsi per la\n"
 "ricerca dei file. Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:342
+#: src/bin/e_main.c:350
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di azioni."
 
-#: src/bin/e_main.c:349
+#: src/bin/e_main.c:357
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di binding (associazioni)."
 
-#: src/bin/e_main.c:356
+#: src/bin/e_main.c:364
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di popup."
 
-#: src/bin/e_main.c:367
+#: src/bin/e_main.c:375
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di font."
 
-#: src/bin/e_main.c:379
+#: src/bin/e_main.c:387
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -359,19 +365,19 @@ msgstr ""
 "Enlightenment non riesce a configurare la schermata d'avvio.\n"
 "Forse siete a corto di memoria?"
 
-#: src/bin/e_main.c:388
+#: src/bin/e_main.c:396
 msgid "Enlightenment cannot set up its app system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di applicazioni."
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:403
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di temi."
 
-#: src/bin/e_main.c:402
+#: src/bin/e_main.c:410
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -380,13 +386,13 @@ msgstr ""
 "da parte di Enlightenment è fallita. Forse c'è un altro window\n"
 "manager in esecuzione?\n"
 
-#: src/bin/e_main.c:409
+#: src/bin/e_main.c:417
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 "Enlightenment non riesce a configurare le\n"
 "impostazioni da ricordare."
 
-#: src/bin/e_main.c:425 src/bin/e_main.c:473
+#: src/bin/e_main.c:433 src/bin/e_main.c:481
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -400,45 +406,45 @@ msgstr ""
 "su questo display, altrimenti provate a cancellare tutti i file\n"
 "in ~/.ecore/enlightenment-* e riavviatelo."
 
-#: src/bin/e_main.c:438
+#: src/bin/e_main.c:446
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di messaggi."
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:453
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di 'drag & drop'."
 
-#: src/bin/e_main.c:452
+#: src/bin/e_main.c:460
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di gestione dell'input catturato."
 
-#: src/bin/e_main.c:459
+#: src/bin/e_main.c:467
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di moduli."
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:474
 msgid "Enlightenment cannot set up its window list system."
 msgstr ""
 "Enlightenment non riesce a configurare il suo\n"
 "sistema di window list (lista finestre)."
 
-#: src/bin/e_main.c:472
+#: src/bin/e_main.c:480
 msgid "Enlightenment IPC setup error!"
 msgstr "Errore impostazione IPC di Enlightenment"
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:497
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:491
+#: src/bin/e_main.c:499
 msgid "Enlightenment Starting. Please wait."
 msgstr "Avvio di Enlightenment. Attendere prego."
 
@@ -480,12 +486,17 @@ msgstr "Informazioni su..."
 msgid "Enabled"
 msgstr "Abilitato"
 
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "Avvio di %s"
+
 #: src/bin/e_container.c:105
 #, c-format
 msgid "Container %d"
 msgstr "Contenitore %d"
 
-#: src/bin/e_config.c:260
+#: src/bin/e_config.c:295
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -507,7 +518,7 @@ msgstr ""
 "Adesso è possibile riconfigurare le cose a proprio piacimento.\n"
 "Ci scusiamo per il disagio.\n"
 
-#: src/bin/e_config.c:274
+#: src/bin/e_config.c:309
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -524,7 +535,7 @@ msgstr ""
 "stata ripristinata a scopo precauzionale ai valori predefiniti. Ci\n"
 "scusiamo per l'inconveniente.\n"
 
-#: src/bin/e_config.c:1173
+#: src/bin/e_config.c:1317
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -591,227 +602,189 @@ msgstr ""
 "Questo significa che Enlightenment non uscirà finche queste finestre\n"
 "non saranno chiuse o avranno il blocco Perpetua disabilitato.\n"
 
-#: src/bin/e_border.c:5597
-msgid "Position (User)"
-msgstr "Posizione (Utente)"
+#: src/bin/e_border.c:5594 src/bin/e_border.c:5607
+msgid "Position"
+msgstr "Posizione"
 
-#: src/bin/e_border.c:5598
-msgid "Size (User)"
-msgstr "Dimensione (Utente)"
+#: src/bin/e_border.c:5595 src/bin/e_border.c:5608
+#: src/modules/ibar/e_mod_main.c:286 src/modules/ibar/e_mod_main.c:893
+#: src/modules/ibox/e_mod_main.c:694
+msgid "Size"
+msgstr "Dimensione"
 
-#: src/bin/e_border.c:5599
-msgid "Stacking (User)"
-msgstr "Livello (Utente)"
-
-#: src/bin/e_border.c:5600
-msgid "Iconify (User)"
-msgstr "Iconificata (Utente)"
-
-#: src/bin/e_border.c:5602
-msgid "Sticky (User)"
-msgstr "Appiccicata (Utente)"
-
-#: src/bin/e_border.c:5603
-msgid "Shade (User)"
-msgstr "Arrotolata (Utente)"
-
-#: src/bin/e_border.c:5604
-msgid "Maximize (User)"
-msgstr "Massimizzata (Utente)"
-
-#: src/bin/e_border.c:5605
-msgid "Fullscreen (User)"
-msgstr "A tutto schermo (Utente)"
-
-#: src/bin/e_border.c:5608
-msgid "Position (Application)"
-msgstr "Posizione (Applicazione)"
-
-#: src/bin/e_border.c:5609
-msgid "Size (Application)"
-msgstr "Dimensione (Applicazione)"
-
-#: src/bin/e_border.c:5610
-msgid "Stacking (Application)"
-msgstr "Livello (Applicazione)"
-
-#: src/bin/e_border.c:5611
-msgid "Iconify (Application)"
-msgstr "Iconificata (Applicazione)"
-
-#: src/bin/e_border.c:5613
-msgid "Sticky (Application)"
-msgstr "Appiccicata (Applicazione)"
-
-#: src/bin/e_border.c:5614
-msgid "Shade (Application)"
-msgstr "Arrotolata (Applicazione)"
-
-#: src/bin/e_border.c:5615
-msgid "Maximize (Application)"
-msgstr "Massimizzata (Applicazione)"
-
-#: src/bin/e_border.c:5616
-msgid "Fullscreen (Application)"
-msgstr "A tutto schermo (Applicazione)"
-
-#: src/bin/e_border.c:5619
-msgid "Border"
-msgstr "Bordo"
-
-#: src/bin/e_border.c:5620 src/bin/e_border.c:5715
-msgid "Close"
-msgstr "Chiudi"
-
-#: src/bin/e_border.c:5623
-msgid "Lifespan"
-msgstr "Perpetua"
-
-#: src/bin/e_border.c:5637
-msgid "Remember This Window"
-msgstr "Ricorda Questa Finestra"
-
-#: src/bin/e_border.c:5644
-msgid "Remember This Instance Only"
-msgstr "Ricorda Solo Questa Istanza"
-
-#: src/bin/e_border.c:5647
-msgid "Match by Name"
-msgstr "Corrispondenza per Nome"
-
-#: src/bin/e_border.c:5648
-msgid "Match by Class"
-msgstr "Corrispondenza per Classe"
-
-#: src/bin/e_border.c:5649
-msgid "Match by Title"
-msgstr "Corrispondenza per Titolo"
-
-#: src/bin/e_border.c:5650
-msgid "Match by Role"
-msgstr "Corrispondenza per Ruolo"
-
-#: src/bin/e_border.c:5651
-msgid "Match by Window Type"
-msgstr "Corrispondenza per Tipo Finestra"
-
-#: src/bin/e_border.c:5652
-msgid "Match by Transient Status"
-msgstr "Corrispondenza per Stato Transitorio"
-
-#: src/bin/e_border.c:5655
-msgid "Remember Position"
-msgstr "Ricorda Posizione"
-
-#: src/bin/e_border.c:5656
-msgid "Remember Size"
-msgstr "Ricorda Dimensione"
-
-#: src/bin/e_border.c:5657
-msgid "Remember Stacking"
-msgstr "Ricorda Livello"
-
-#: src/bin/e_border.c:5658
-msgid "Remember Locks"
-msgstr "Ricorda Blocchi"
-
-#: src/bin/e_border.c:5659
-msgid "Remember Border"
-msgstr "Ricorda Bordo"
-
-#: src/bin/e_border.c:5660
-msgid "Remember Stickiness"
-msgstr "Ricorda Stato Appiccicata"
-
-#: src/bin/e_border.c:5661
-msgid "Remember Desktop"
-msgstr "Ricorda Desktop"
-
-#: src/bin/e_border.c:5662
-msgid "Remember Shaded State"
-msgstr "Ricorda Stato Arrotolata"
-
-#: src/bin/e_border.c:5663
-msgid "Remember Zone"
-msgstr "Ricorda Zona"
-
-#: src/bin/e_border.c:5664
-msgid "Remember Skip Window List"
-msgstr "Ricorda Fuori Lista Finestre"
-
-#: src/bin/e_border.c:5676
-msgid "Always On Top"
-msgstr "Sempre sulle altre"
-
-#: src/bin/e_border.c:5686 src/modules/clock/e_mod_main.c:341
-msgid "Normal"
-msgstr "Normale"
-
-#: src/bin/e_border.c:5696
-msgid "Always Below"
-msgstr "Sempre sotto le altre"
-
-#: src/bin/e_border.c:5726
-msgid "Iconify"
-msgstr "Iconifica"
-
-#: src/bin/e_border.c:5740
-msgid "Kill"
-msgstr "Uccidi"
-
-#: src/bin/e_border.c:5753
-msgid "Shaded"
-msgstr "Arrotolata"
-
-#: src/bin/e_border.c:5766
-msgid "Maximized"
-msgstr "Massimizzata"
-
-#: src/bin/e_border.c:5779
-msgid "Sticky"
-msgstr "Appiccicata"
-
-#: src/bin/e_border.c:5790
+#: src/bin/e_border.c:5596 src/bin/e_border.c:5609 src/bin/e_border.c:5812
 msgid "Stacking"
 msgstr "Livello"
 
-#: src/bin/e_border.c:5800
-msgid "Borderless"
-msgstr "Senza bordo"
+#: src/bin/e_border.c:5597 src/bin/e_border.c:5610 src/bin/e_border.c:5748
+msgid "Iconify"
+msgstr "Iconifica"
 
-#: src/bin/e_border.c:5813
+#: src/bin/e_border.c:5599 src/bin/e_border.c:5612 src/bin/e_border.c:5801
+msgid "Sticky"
+msgstr "Appiccica"
+
+#: src/bin/e_border.c:5600 src/bin/e_border.c:5613
+msgid "Shade"
+msgstr "Arrotola"
+
+#: src/bin/e_border.c:5601 src/bin/e_border.c:5614
+msgid "Maximize"
+msgstr "Massimizza"
+
+#: src/bin/e_border.c:5602 src/bin/e_border.c:5615 src/bin/e_border.c:5835
 msgid "Fullscreen"
 msgstr "A tutto schermo"
 
-#: src/bin/e_border.c:5827
+#: src/bin/e_border.c:5621
+msgid "User"
+msgstr "Utente"
+
+#: src/bin/e_border.c:5629
+msgid "Application"
+msgstr "Applicazione"
+
+#: src/bin/e_border.c:5639
+msgid "Border"
+msgstr "Bordo"
+
+#: src/bin/e_border.c:5640 src/bin/e_border.c:5737
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/bin/e_border.c:5643
+msgid "Lifespan"
+msgstr "Perpetua"
+
+#: src/bin/e_border.c:5657
+msgid "Remember This Window"
+msgstr "Ricorda Questa Finestra"
+
+#: src/bin/e_border.c:5664
+msgid "Remember This Instance Only"
+msgstr "Ricorda Solo Questa Istanza"
+
+#: src/bin/e_border.c:5667
+msgid "Match by Name"
+msgstr "Corrispondenza per Nome"
+
+#: src/bin/e_border.c:5668
+msgid "Match by Class"
+msgstr "Corrispondenza per Classe"
+
+#: src/bin/e_border.c:5669
+msgid "Match by Title"
+msgstr "Corrispondenza per Titolo"
+
+#: src/bin/e_border.c:5670
+msgid "Match by Role"
+msgstr "Corrispondenza per Ruolo"
+
+#: src/bin/e_border.c:5671
+msgid "Match by Window Type"
+msgstr "Corrispondenza per Tipo Finestra"
+
+#: src/bin/e_border.c:5672
+msgid "Match by Transient Status"
+msgstr "Corrispondenza per Stato Transitorio"
+
+#: src/bin/e_border.c:5675
+msgid "Remember Position"
+msgstr "Ricorda Posizione"
+
+#: src/bin/e_border.c:5676
+msgid "Remember Size"
+msgstr "Ricorda Dimensione"
+
+#: src/bin/e_border.c:5677
+msgid "Remember Stacking"
+msgstr "Ricorda Livello"
+
+#: src/bin/e_border.c:5678
+msgid "Remember Locks"
+msgstr "Ricorda Blocchi"
+
+#: src/bin/e_border.c:5679
+msgid "Remember Border"
+msgstr "Ricorda Bordo"
+
+#: src/bin/e_border.c:5680
+msgid "Remember Stickiness"
+msgstr "Ricorda Stato Appiccicata"
+
+#: src/bin/e_border.c:5681
+msgid "Remember Desktop"
+msgstr "Ricorda Desktop"
+
+#: src/bin/e_border.c:5682
+msgid "Remember Shaded State"
+msgstr "Ricorda Stato Arrotolata"
+
+#: src/bin/e_border.c:5683
+msgid "Remember Zone"
+msgstr "Ricorda Zona"
+
+#: src/bin/e_border.c:5684
+msgid "Remember Skip Window List"
+msgstr "Ricorda Fuori Lista Finestre"
+
+#: src/bin/e_border.c:5698
+msgid "Always On Top"
+msgstr "Sempre sulle altre"
+
+#: src/bin/e_border.c:5708 src/modules/clock/e_mod_main.c:341
+msgid "Normal"
+msgstr "Normale"
+
+#: src/bin/e_border.c:5718
+msgid "Always Below"
+msgstr "Sempre sotto le altre"
+
+#: src/bin/e_border.c:5762
+msgid "Kill"
+msgstr "Uccidi"
+
+#: src/bin/e_border.c:5775
+msgid "Shaded"
+msgstr "Arrotolata"
+
+#: src/bin/e_border.c:5788
+msgid "Maximized"
+msgstr "Massimizzata"
+
+#: src/bin/e_border.c:5822
+msgid "Borderless"
+msgstr "Senza bordo"
+
+#: src/bin/e_border.c:5849
 msgid "Skip Window List"
 msgstr "Fuori Lista Finestre"
 
-#: src/bin/e_border.c:5841
+#: src/bin/e_border.c:5863
 msgid "Locks"
 msgstr "Blocchi"
 
-#: src/bin/e_border.c:5848
+#: src/bin/e_border.c:5870
 msgid "Remember"
 msgstr "Ricorda"
 
-#: src/bin/e_border.c:5858
+#: src/bin/e_border.c:5880
 msgid "Send To"
 msgstr "Invia a"
 
-#: src/bin/e_border.c:5880
+#: src/bin/e_border.c:5902
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_border.c:5906
+#: src/bin/e_border.c:5928
 msgid "Create Icon"
 msgstr "Crea icona"
 
-#: src/bin/e_border.c:5994
+#: src/bin/e_border.c:6016
 msgid "Icon Edit Error"
 msgstr "Errore dell'editor di icone"
 
-#: src/bin/e_border.c:5995
+#: src/bin/e_border.c:6017
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -868,11 +841,6 @@ msgstr ""
 #: src/modules/ibox/e_mod_main.c:690
 msgid "Options"
 msgstr "Opzioni"
-
-#: src/modules/ibar/e_mod_main.c:286 src/modules/ibar/e_mod_main.c:893
-#: src/modules/ibox/e_mod_main.c:694
-msgid "Size"
-msgstr "Dimensione"
 
 #: src/modules/ibar/e_mod_main.c:796 src/modules/ibox/e_mod_main.c:603
 msgid "Auto fit icons"
