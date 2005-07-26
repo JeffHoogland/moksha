@@ -301,6 +301,7 @@ e_module_menu_new(void)
    E_Menu_Item *mi;
    Evas_List *l;
    Module_Menu_Data *dat;
+   int mod_count = 0;
    
    dat = calloc(1, sizeof(Module_Menu_Data));
    m = e_menu_new();
@@ -326,6 +327,12 @@ e_module_menu_new(void)
 	subm = _e_module_control_menu_new(mod);
 	e_menu_item_submenu_set(mi, subm);
 	dat->submenus = evas_list_append(dat->submenus, subm);
+	++mod_count;
+     }
+   if (mod_count == 0)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("(No Loaded Modules)"));
      }
    return m;
 }
