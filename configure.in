@@ -124,7 +124,7 @@ AC_CHECK_HEADER(X11/X.h,
 AC_SUBST(x_cflags)
 AC_SUBST(x_libs)
 
-ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs da"
+ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs da sk"
 AC_SUBST(ALL_LINGUAS)
 
 AM_GNU_GETTEXT([external])

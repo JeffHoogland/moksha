@@ -428,6 +428,8 @@ _cpufreq_config_menu_new(Cpufreq *e)
 	       e_menu_item_label_set(mi, _("Manual"));
 	     else if (!strcmp(l->data, "ondemand"))
 	       e_menu_item_label_set(mi, _("Automatic"));
+	     else if (!strcmp(l->data, "conservative"))
+	       e_menu_item_label_set(mi, _("Lower Power Automatic"));
 	     else if (!strcmp(l->data, "powersave"))
 	       e_menu_item_label_set(mi, _("Minimum Speed"));
 	     else if (!strcmp(l->data, "performance"))
