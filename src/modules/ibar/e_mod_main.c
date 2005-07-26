@@ -71,7 +71,9 @@ static int     _ibar_bar_cb_animator(void *data);
 static void    _ibar_bar_cb_enter(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_move(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_leave(void *data, const char *type, void *event);
+
 static void    _ibar_bar_cb_drop_eapp(void *data, const char *type, void *event);
+static void    _ibar_bar_cb_drop_border(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_drop_file(void *data, const char *type, void *event);
 static void    _ibar_bar_cb_finished(E_Drag *drag, int dropped);
 
@@ -516,6 +518,13 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 				       ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
 				       ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
 				       ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
+   ibb->drop_border = e_drop_handler_add(ibb,
+				       _ibar_bar_cb_enter, _ibar_bar_cb_move,
+				       _ibar_bar_cb_leave, _ibar_bar_cb_drop_border,
+				       "enlightenment/border",
+				       ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				       ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				       ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
    ibb->drop_file = e_drop_handler_add(ibb,
 				       _ibar_bar_cb_enter, _ibar_bar_cb_move,
 				       _ibar_bar_cb_leave, _ibar_bar_cb_drop_file,
@@ -564,6 +573,7 @@ _ibar_bar_free(IBar_Bar *ibb)
      _ibar_icon_free(ibb->icons->data);
 
    e_drop_handler_del(ibb->drop_eapp);
+   e_drop_handler_del(ibb->drop_border);
    e_drop_handler_del(ibb->drop_file);
 
    if (ibb->timer) ecore_timer_del(ibb->timer);
@@ -1608,6 +1618,52 @@ _ibar_bar_cb_drop_eapp(void *data, const char *type, void *event)
    ev = event;
    ibb = data;
    app = ev->data;
+   
+   /* add dropped element */
+   ic = _ibar_icon_pos_find(ibb, ev->x, ev->y);
+
+   /* remove drag marker */
+   e_box_freeze(ibb->box_object);
+   e_box_unpack(ibb->drag_object);
+   evas_object_del(ibb->drag_object);
+   ibb->drag_object = NULL;
+   evas_object_del(ibb->drag_object_overlay);
+   ibb->drag_object_overlay = NULL;
+   e_box_thaw(ibb->box_object);
+
+   _ibar_bar_frame_resize(ibb);
+
+   if (ic)
+     {
+	/* Add new eapp before this icon */
+	e_app_prepend_relative(app, ic->app);
+     }
+   else
+     {
+	/* Add at the end */
+	e_app_append(app, ibb->ibar->apps);
+     }
+}
+
+static void
+_ibar_bar_cb_drop_border(void *data, const char *type, void *event)
+{
+   E_Event_Dnd_Drop *ev;
+   E_App *app;
+   IBar_Bar *ibb;
+   IBar_Icon *ic;
+
+   E_Border *bd;
+   char *title = "";
+
+   ev = event;
+   ibb = data;
+   bd = ev->data;
+   if (bd->client.netwm.name) title = bd->client.netwm.name;
+   else title = bd->client.icccm.title;
+   app = e_app_window_name_class_title_role_find(bd->client.icccm.name,
+						 bd->client.icccm.class,
+						 title, bd->client.icccm.window_role);
 
    /* add dropped element */
    ic = _ibar_icon_pos_find(ibb, ev->x, ev->y);
@@ -1706,6 +1762,10 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 _ibar_bar_timer_handle(ibb);
 
 	 e_drop_handler_geometry_set(ibb->drop_eapp,
+				     ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
+				     ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
+				     ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));
+	 e_drop_handler_geometry_set(ibb->drop_border,
 				     ibb->x + ibb->bar_inset.l, ibb->y + ibb->bar_inset.t,
 				     ibb->w - (ibb->bar_inset.l + ibb->bar_inset.r),
 				     ibb->h - (ibb->bar_inset.t + ibb->bar_inset.b));

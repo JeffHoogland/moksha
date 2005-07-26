@@ -74,6 +74,7 @@ struct _IBar_Bar
    Config_Bar     *conf;
 
    E_Drop_Handler *drop_eapp;
+   E_Drop_Handler *drop_border;
    E_Drop_Handler *drop_file;
 };
 
