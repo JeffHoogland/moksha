@@ -4005,14 +4005,24 @@ _e_border_eval(E_Border *bd)
 	Ecore_X_Rectangle *rects;
 	int num;
 	
+	bd->changes.shape = 0;
 	rects = ecore_x_window_shape_rectangles_get(bd->client.win, &num);
 	if (rects)
 	  {
+	     int cw = 0, ch = 0;
+	     
+	     /* This doesnt fix the race, but makes it smaller. we detect
+	      * this and if cw and ch != client w/h then mark this as needing
+	      * a shape change again to fixup next event loop.
+	      */
+	     ecore_x_window_size_get(bd->client.win, &cw, &ch);
+	     if ((cw != bd->client.w) || (ch != bd->client.h))
+	       bd->changes.shape = 1;
 	     if ((num == 1) &&
 		 (rects[0].x == 0) &&
 		 (rects[0].y == 0) &&
-		 (rects[0].width == bd->client.w) &&
-		 (rects[0].height == bd->client.h))
+		 (rects[0].width == cw) &&
+		 (rects[0].height == ch))
 	       {
 		  if (bd->client.shaped)
 		    {
@@ -4031,7 +4041,6 @@ _e_border_eval(E_Border *bd)
 	else
 	  bd->client.shaped = 0;
 	bd->need_shape_merge = 1;
-	bd->changes.shape = 0;
      }
 
    if (bd->new_client)
