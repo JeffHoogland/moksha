@@ -180,7 +180,7 @@ main(int argc, char **argv)
 		  "\t\tbe used to simulate xinerama.\n"
 		  "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 		  "\t-profile CONF_PROFILE\n"
-		  "\t\tUse the configuration profile CONF_PROFILE instead of the the user delected default ot just \"default\".\n"
+		  "\t\tUse the configuration profile CONF_PROFILE instead of the the user selected default or just \"default\".\n"
 		  "\t-good\n"
 		  "\t\tBe good.\n"
 		  "\t-evil\n"
