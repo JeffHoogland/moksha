@@ -558,11 +558,7 @@ e_border_hide(E_Border *bd, int manage)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->visible) return;
    if (bd->moving)
-     {
-	bd->moving = 0;
-	_e_border_move_end(bd);
-	e_zone_flip_coords_handle(bd->zone, -1, -1);
-     }
+     _e_border_move_end(bd);
    if (bd->fullscreen)
      e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
@@ -1603,6 +1599,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	if (!_e_border_move_begin(bd))
 	  return;
 
+	e_zone_flip_win_disable();
 	bd->moving = 1;
 	if (ev)
 	  {
@@ -1619,6 +1616,7 @@ e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    if (bd->moving)
      {
+	e_zone_flip_win_restore();
 	bd->moving = 0;
 	_e_border_move_end(bd);
 	e_zone_flip_coords_handle(bd->zone, -1, -1);
@@ -2882,6 +2880,7 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 	if (!_e_border_move_begin(bd))
 	  return 1;
 	bd->moving = 1;
+	e_zone_flip_win_disable();
 	
 	bd->cur_mouse_action = e_action_find("window_move");
 	if (bd->cur_mouse_action)
@@ -2965,6 +2964,7 @@ _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emissio
    if (!_e_border_move_begin(bd))
      return;
    bd->moving = 1;
+   e_zone_flip_win_disable();
    _e_border_moveinfo_gather(bd, source);
 }
 
@@ -2976,6 +2976,7 @@ _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    bd = data;
    if (!bd->moving) return;
    bd->moving = 0;
+   e_zone_flip_win_restore();
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
 }

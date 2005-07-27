@@ -264,33 +264,29 @@ e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
    if ((y == 0) && E_ZONE_FLIP_UP(zone))
      {
 	/* top */
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_UP;
      }
    else if ((x == (zone->w - 1)) && E_ZONE_FLIP_RIGHT(zone))
      {
 	/* right */
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_RIGHT;
      }
    else if ((y == (zone->h - 1)) && E_ZONE_FLIP_DOWN(zone))
      {
 	/* bottom */
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_DOWN;
      }
    else if ((x == 0) && E_ZONE_FLIP_LEFT(zone))
      {
 	/* left */
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_LEFT;
      }
    else
@@ -481,6 +477,57 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
    x = x - (y * zone->desk_x_count);
    if (y >= zone->desk_y_count) return;
    e_zone_desk_flip_to(zone, x, y);
+}
+
+void
+e_zone_flip_win_disable(void)
+{
+   Evas_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     con = ll->data;
+	     for (lll = con->zones; lll; lll = lll->next)
+	       {
+		  E_Zone *zone;
+		  
+		  zone = lll->data;
+		  ecore_x_window_hide(zone->flip.left);
+		  ecore_x_window_hide(zone->flip.right);
+		  ecore_x_window_hide(zone->flip.top);
+		  ecore_x_window_hide(zone->flip.bottom);
+	       }
+	  }
+     }
+}
+
+void
+e_zone_flip_win_restore(void)
+{
+   Evas_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     con = ll->data;
+	     for (lll = con->zones; lll; lll = lll->next)
+	       {
+		  E_Zone *zone;
+		  
+		  zone = lll->data;
+		  _e_zone_update_flip(zone);
+	       }
+	  }
+     }
 }
 
 int
@@ -706,30 +753,26 @@ _e_zone_cb_mouse_in(void *data, int type, void *event)
 
    if (ev->win == zone->flip.top)
      {
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_UP;
      }
    else if (ev->win == zone->flip.right)
      {
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_RIGHT;
      }
    else if (ev->win == zone->flip.bottom)
      {
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_DOWN;
      }
    else if (ev->win == zone->flip.left)
      {
-	if (zone->flip.timer)
-	  ecore_timer_del(zone->flip.timer);
-	zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
+	if (!zone->flip.timer)
+	  zone->flip.timer = ecore_timer_add(e_config->edge_flip_timeout, _e_zone_cb_timer, zone);
 	zone->flip.direction = E_DIRECTION_LEFT;
      }
    return 1;
@@ -744,10 +787,15 @@ _e_zone_cb_mouse_out(void *data, int type, void *event)
    ev = event;
    zone = data;
 
-   if (zone->flip.timer)
-     ecore_timer_del(zone->flip.timer);
-   zone->flip.timer = NULL;
-
+   if ((ev->win == zone->flip.top) ||
+       (ev->win == zone->flip.bottom) ||
+       (ev->win == zone->flip.left) ||
+       (ev->win == zone->flip.right))
+     {
+	if (zone->flip.timer)
+	  ecore_timer_del(zone->flip.timer);
+	zone->flip.timer = NULL;
+     }
    return 1;
 }
 
@@ -759,6 +807,7 @@ _e_zone_cb_timer(void *data)
    E_Event_Pointer_Warp *ev;
    int x, y;
 
+   printf("_e_zone_cb_timer()\n");
    ev = E_NEW(E_Event_Pointer_Warp, 1);
    if (!ev) return 0;
 
@@ -772,7 +821,7 @@ _e_zone_cb_timer(void *data)
    switch (zone->flip.direction)
      {
       case E_DIRECTION_UP:
-	 if (E_ZONE_FLIP_UP(zone))
+	if (E_ZONE_FLIP_UP(zone))
 	   {
 	      current = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current - 1);
 	      if (current)
@@ -783,55 +832,58 @@ _e_zone_cb_timer(void *data)
 		   ev->curr.y = zone->h - 2;
 		}
 	   }
-	 break;
+	break;
       case E_DIRECTION_RIGHT:
-	 if (E_ZONE_FLIP_RIGHT(zone))
-	   {
-	      current = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
-	      if (current)
-		{
-		   e_desk_show(current);
-		   ecore_x_pointer_warp(zone->container->win, 2, y);
-		   ev->curr.y = y;
-		   ev->curr.x = 2;
-		}
-	   }
-	 break;
+	printf("clip right...\n");
+	if (E_ZONE_FLIP_RIGHT(zone))
+	  {
+	     printf("ummm...\n");
+	     current = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
+	     if (current)
+	       {
+		  printf("show new desk\n");
+		  e_desk_show(current);
+		  ecore_x_pointer_warp(zone->container->win, 2, y);
+		  ev->curr.y = y;
+		  ev->curr.x = 2;
+	       }
+	  }
+	break;
       case E_DIRECTION_DOWN:
-	 if (E_ZONE_FLIP_DOWN(zone))
-	   {
-	      current = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current + 1);
-	      if (current)
-		{
-		   e_desk_show(current);
-		   ecore_x_pointer_warp(zone->container->win, x, 2);
-		   ev->curr.x = x;
-		   ev->curr.y = 2;
-		}
-	   }
-	 break;
+	if (E_ZONE_FLIP_DOWN(zone))
+	  {
+	     current = e_desk_at_xy_get(zone, zone->desk_x_current, zone->desk_y_current + 1);
+	     if (current)
+	       {
+		  e_desk_show(current);
+		  ecore_x_pointer_warp(zone->container->win, x, 2);
+		  ev->curr.x = x;
+		  ev->curr.y = 2;
+	       }
+	  }
+	break;
       case E_DIRECTION_LEFT:
-	 if (E_ZONE_FLIP_LEFT(zone))
-	   {
-	      current = e_desk_at_xy_get(zone, zone->desk_x_current - 1, zone->desk_y_current);
-	      if (current)
-		{
-		   e_desk_show(current);
-		   ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
-		   ev->curr.y = y;
-		   ev->curr.x = zone->w - 2;
-		}
-	   }
-	 break;
+	if (E_ZONE_FLIP_LEFT(zone))
+	  {
+	     current = e_desk_at_xy_get(zone, zone->desk_x_current - 1, zone->desk_y_current);
+	     if (current)
+	       {
+		  e_desk_show(current);
+		  ecore_x_pointer_warp(zone->container->win, zone->w - 2, y);
+		  ev->curr.y = y;
+		  ev->curr.x = zone->w - 2;
+	       }
+	  }
+	break;
      }
-
+   
    zone->flip.timer = NULL;
-
+   
    if (current)
      ecore_event_add(E_EVENT_POINTER_WARP, ev, NULL, NULL);
    else
      free(ev);
-
+   
    return 0;
 }
 
