@@ -2250,7 +2250,28 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	     else if (!bd->lock_client_location)
 	       e_border_move(bd, x, y);
 	     else if (!bd->lock_client_size)
-	       e_border_resize(bd, w, h);
+	       {
+		  if ((bd->shaded) || (bd->shading))
+		    {
+		       int pw, ph;
+		       
+		       pw = bd->client.w;
+		       ph = bd->client.h;
+		       if ((bd->shade.dir == E_DIRECTION_UP) ||
+			   (bd->shade.dir == E_DIRECTION_DOWN))
+			 {
+			    e_border_resize(bd, w, bd->h);
+			    bd->client.h = ph;
+			 }
+		       else
+			 {
+			    e_border_resize(bd, bd->w, h);
+			    bd->client.w = pw;
+			 }
+		    }
+		  else
+		    e_border_resize(bd, w, h);
+	       }
 	  }
 	else
 	  {
@@ -2277,7 +2298,28 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 	       e->w, e->h);
 #endif
 	if (!bd->lock_client_size)
-	  e_border_resize(bd, w, h);
+	  {
+	     if ((bd->shaded) || (bd->shading))
+	       {
+		  int pw, ph;
+		  
+		  pw = bd->client.w;
+		  ph = bd->client.h;
+		  if ((bd->shade.dir == E_DIRECTION_UP) ||
+		      (bd->shade.dir == E_DIRECTION_DOWN))
+		    {
+		       e_border_resize(bd, w, bd->h);
+		       bd->client.h = ph;
+		    }
+		  else
+		    {
+		       e_border_resize(bd, bd->w, h);
+		       bd->client.w = pw;
+		    }
+	       }
+	     else
+	       e_border_resize(bd, w, h);
+	  }
      }
    if (!bd->lock_client_stacking)
      {
@@ -2366,7 +2408,26 @@ _e_border_cb_window_resize_request(void *data, int ev_type, void *ev)
 	h = e->h + bd->client_inset.t + bd->client_inset.b;
 //	printf("##- ASK FOR 0x%x TO RESIZE TO %i,%i\n",
 //	       bd->client.win, e->w, e->h);
-	e_border_resize(bd, w, h);
+	if ((bd->shaded) || (bd->shading))
+	  {
+	     int pw, ph;
+	     
+	     pw = bd->client.w;
+	     ph = bd->client.h;
+	     if ((bd->shade.dir == E_DIRECTION_UP) ||
+		 (bd->shade.dir == E_DIRECTION_DOWN))
+	       {
+		  e_border_resize(bd, w, bd->h);
+		  bd->client.h = ph;
+	       }
+	     else
+	       {
+		  e_border_resize(bd, bd->w, h);
+		  bd->client.w = pw;
+	       }
+	  }
+	else
+	  e_border_resize(bd, w, h);
      }
    return 1;
 }
