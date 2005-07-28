@@ -763,7 +763,8 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	     break;
 	  }
      }
-   
+
+   /* FIXME: EVIL... relies on label + .edj being the filename! */
    et = E_NEW(E_Config_Theme, 1);
    et->category = strdup("theme");
    et->file = E_NEW(char, strlen(mi->label) + 4 + 1);

@@ -30,7 +30,7 @@ e_resist_container_border_position(E_Container *con, Evas_List *skiplist,
 	*rx = x;
 	*ry = y;
 	*rw = w;
-	*rw = h;
+	*rh = h;
 	return 0;
      }
    
