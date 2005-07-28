@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: if aqn app resizes while shaded the window goes to the size but app
+  is not visible. need to defer most of the resize until unshade... :)
 * e_hints.c manually changes flags on a border isnetad of calling
   e_border_stick() for exampe or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.
