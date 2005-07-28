@@ -55,3 +55,4 @@
 #include "e_remember.h"
 #include "e_win.h"
 #include "e_pan.h"
+#include "e_dialog.h"

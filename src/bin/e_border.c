@@ -490,7 +490,7 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    ev = calloc(1, sizeof(E_Event_Border_Zone_Set));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_zone_set_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_zone_set_event");
    ev->zone = zone;
    e_object_ref(E_OBJECT(zone));
    ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
@@ -516,7 +516,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    ev = calloc(1, sizeof(E_Event_Border_Desk_Set));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_desk_set_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_desk_set_event");
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
@@ -545,7 +545,7 @@ e_border_show(E_Border *bd)
    ev = calloc(1, sizeof(E_Event_Border_Show));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_show_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_show_event");
    ecore_event_add(E_EVENT_BORDER_SHOW, ev, _e_border_event_border_show_free, NULL);
 }
 
@@ -598,7 +598,7 @@ e_border_hide(E_Border *bd, int manage)
 	ev = calloc(1, sizeof(E_Event_Border_Hide));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
 	ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
 }
@@ -647,7 +647,7 @@ e_border_move(E_Border *bd, int x, int y)
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
+//  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
 }
 
@@ -693,7 +693,7 @@ e_border_resize(E_Border *bd, int w, int h)
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 }
 
@@ -748,13 +748,13 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
    ecore_event_add(E_EVENT_BORDER_MOVE, mev, _e_border_event_border_move_free, NULL);
 
    rev = calloc(1, sizeof(E_Event_Border_Resize));
    rev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
 }
 
@@ -772,7 +772,7 @@ e_border_raise(E_Border *bd)
 	ev = calloc(1, sizeof(E_Event_Border_Raise));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
 	ev->above = NULL;
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
@@ -792,7 +792,7 @@ e_border_lower(E_Border *bd)
 	ev = calloc(1, sizeof(E_Event_Border_Lower));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
 	ev->below = NULL;
 	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
      }
@@ -812,10 +812,10 @@ e_border_stack_above(E_Border *bd, E_Border *above)
 	ev = calloc(1, sizeof(E_Event_Border_Raise));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
 	ev->above = above;
 	e_object_ref(E_OBJECT(above));
-	e_object_breadcrumb_add(E_OBJECT(above), "border_raise_event.above");
+//	e_object_breadcrumb_add(E_OBJECT(above), "border_raise_event.above");
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
 }
@@ -833,10 +833,10 @@ e_border_stack_below(E_Border *bd, E_Border *below)
 	ev = calloc(1, sizeof(E_Event_Border_Lower));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
 	ev->below = below;
 	e_object_ref(E_OBJECT(below));
-	e_object_breadcrumb_add(E_OBJECT(below), "border_lower_event.below");
+//	e_object_breadcrumb_add(E_OBJECT(below), "border_lower_event.below");
 	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
      }
 }
@@ -1012,7 +1012,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	     /* The resize is added in the animator when animation complete */
 	     /* For non-animated, we add it immediately with the new size */
 	     e_object_ref(E_OBJECT(bd));
-	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
 	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	  }
 
@@ -1101,7 +1101,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	     /* The resize is added in the animator when animation complete */
 	     /* For non-animated, we add it immediately with the new size */
 	     e_object_ref(E_OBJECT(bd));
-	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
 	     ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	  }
 
@@ -1384,7 +1384,7 @@ e_border_iconify(E_Border *bd)
    ev = E_NEW(E_Event_Border_Iconify, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_iconify_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_iconify_event");
    ecore_event_add(E_EVENT_BORDER_ICONIFY, ev, _e_border_event_border_iconify_free, NULL);
 }
 
@@ -1413,7 +1413,7 @@ e_border_uniconify(E_Border *bd)
    ev = E_NEW(E_Event_Border_Uniconify, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_uniconify_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_uniconify_event");
    ecore_event_add(E_EVENT_BORDER_UNICONIFY, ev, _e_border_event_border_uniconify_free, NULL);
 
 }
@@ -1433,7 +1433,7 @@ e_border_stick(E_Border *bd)
    ev = E_NEW(E_Event_Border_Stick, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_stick_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_stick_event");
    ecore_event_add(E_EVENT_BORDER_STICK, ev, _e_border_event_border_stick_free, NULL);
 }
 
@@ -1454,7 +1454,7 @@ e_border_unstick(E_Border *bd)
    ev = E_NEW(E_Event_Border_Unstick, 1);
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_unstick_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_unstick_event");
    ecore_event_add(E_EVENT_BORDER_UNSTICK, ev, _e_border_event_border_unstick_free, NULL);
 }
 
@@ -1614,13 +1614,11 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 void
 e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
-   if (bd->moving)
-     {
-	e_zone_flip_win_restore();
-	bd->moving = 0;
-	_e_border_move_end(bd);
-	e_zone_flip_coords_handle(bd->zone, -1, -1);
-     }
+   if (!bd->moving) return;
+   bd->moving = 0;
+   e_zone_flip_win_restore();
+   _e_border_move_end(bd);
+   e_zone_flip_coords_handle(bd->zone, -1, -1);
 }
 
 void
@@ -1877,11 +1875,7 @@ e_border_ping(E_Border *bd)
 void
 e_border_move_cancel(void)
 {
-   if (move)
-     {
-	move->moving = 0;
-	_e_border_move_end(move);
-     }
+   if (move) _e_border_move_end(move);
 }
 
 void
@@ -1933,11 +1927,13 @@ _e_border_free(E_Border *bd)
    
    IF_FREE(bd->shape_rects);
    bd->shape_rects_num = 0;
+/*   
    if (bd->dangling_ref_check)
      {
 	ecore_timer_del(bd->dangling_ref_check);
 	bd->dangling_ref_check = NULL;
      }
+ */
    if (bd->kill_timer)
      {
 	ecore_timer_del(bd->kill_timer);
@@ -2017,6 +2013,7 @@ _e_border_free(E_Border *bd)
    free(bd);
 }
 
+/*
 static int
 _e_border_del_dangling_ref_check(void *data)
 {
@@ -2028,18 +2025,21 @@ _e_border_del_dangling_ref_check(void *data)
    printf("%p, %i, \"%s\" [\"%s\" \"%s\"]\n",
 	  bd, e_object_ref_get(E_OBJECT(bd)), bd->client.icccm.title,
 	  bd->client.icccm.name, bd->client.icccm.class);
-   e_object_breadcrumb_debug(E_OBJECT(bd));
+//   e_object_breadcrumb_debug(E_OBJECT(bd));
    printf("---\n");
    return 1;
 }
+*/
 
 static void
 _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
-   
+
+/*   
    if (!bd->dangling_ref_check)
      bd->dangling_ref_check = ecore_timer_add(1.0, _e_border_del_dangling_ref_check, bd);
+ */
    if (!bd->already_unparented)
      {
 	ecore_x_window_reparent(bd->client.win,
@@ -2055,7 +2055,7 @@ _e_border_del(E_Border *bd)
    /* FIXME Don't ref this during shutdown. And the event is pointless
     * during shutdown.. */
    e_object_ref(E_OBJECT(bd));
-   e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
+//   e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
    ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
 }
 
@@ -3995,7 +3995,7 @@ _e_border_eval(E_Border *bd)
 	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
 	     ev->border = bd;
 	     e_object_ref(E_OBJECT(bd));
-	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
+//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
 	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
 			     _e_border_event_border_icon_change_free, NULL);
 	  }
@@ -4467,7 +4467,7 @@ _e_border_eval(E_Border *bd)
 	ev = calloc(1, sizeof(E_Event_Border_Add));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
 	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
      	/* Recreate state */
@@ -5081,7 +5081,7 @@ _e_border_shade_animator(void *data)
 	ev = calloc(1, sizeof(E_Event_Border_Resize));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-	e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
 	ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
 	return 0;
      }
@@ -6187,7 +6187,7 @@ _e_border_event_border_resize_free(void *data, void *ev)
    E_Event_Border_Resize *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_resize_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_resize_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6198,7 +6198,7 @@ _e_border_event_border_move_free(void *data, void *ev)
    E_Event_Border_Move *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_move_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_move_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6209,7 +6209,7 @@ _e_border_event_border_add_free(void *data, void *ev)
    E_Event_Border_Add *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_add_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_add_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6220,7 +6220,7 @@ _e_border_event_border_remove_free(void *data, void *ev)
    E_Event_Border_Remove *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_remove_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_remove_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6231,7 +6231,7 @@ _e_border_event_border_show_free(void *data, void *ev)
    E_Event_Border_Show *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_show_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_show_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6242,7 +6242,7 @@ _e_border_event_border_hide_free(void *data, void *ev)
    E_Event_Border_Hide *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_hide_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_hide_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6253,7 +6253,7 @@ _e_border_event_border_iconify_free(void *data, void *ev)
    E_Event_Border_Iconify *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_iconify_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_iconify_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6264,7 +6264,7 @@ _e_border_event_border_uniconify_free(void *data, void *ev)
    E_Event_Border_Uniconify *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_uniconify_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_uniconify_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6275,7 +6275,7 @@ _e_border_event_border_stick_free(void *data, void *ev)
    E_Event_Border_Stick *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_stick_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_stick_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6286,7 +6286,7 @@ _e_border_event_border_unstick_free(void *data, void *ev)
    E_Event_Border_Unstick *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_unstick_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_unstick_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }
@@ -6297,7 +6297,7 @@ _e_border_event_border_zone_set_free(void *data, void *ev)
    E_Event_Border_Zone_Set *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_zone_set_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_zone_set_event");
    e_object_unref(E_OBJECT(e->border));
    e_object_unref(E_OBJECT(e->zone));
    free(e);
@@ -6309,7 +6309,7 @@ _e_border_event_border_desk_set_free(void *data, void *ev)
    E_Event_Border_Desk_Set *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_desk_set_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_desk_set_event");
    e_object_unref(E_OBJECT(e->border));
    e_object_unref(E_OBJECT(e->desk));
    free(e);
@@ -6321,11 +6321,11 @@ _e_border_event_border_raise_free(void *data, void *ev)
    E_Event_Border_Raise *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_raise_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_raise_event");
    e_object_unref(E_OBJECT(e->border));
    if (e->above)
      {
-	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
+//	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
 	e_object_unref(E_OBJECT(e->above));
      }
    free(e);
@@ -6337,11 +6337,11 @@ _e_border_event_border_lower_free(void *data, void *ev)
    E_Event_Border_Lower *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_lower_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_lower_event");
    e_object_unref(E_OBJECT(e->border));
    if (e->below)
      {
-	e_object_breadcrumb_del(E_OBJECT(e->below), "border_lower_event.below");
+//	e_object_breadcrumb_del(E_OBJECT(e->below), "border_lower_event.below");
 	e_object_unref(E_OBJECT(e->below));
      }
    free(e);
@@ -6353,7 +6353,7 @@ _e_border_event_border_icon_change_free(void *data, void *ev)
    E_Event_Border_Icon_Change *e;
 
    e = ev;
-   e_object_breadcrumb_del(E_OBJECT(e->border), "border_icon_change_event");
+//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_icon_change_event");
    e_object_unref(E_OBJECT(e->border));
    free(e);
 }

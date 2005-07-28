@@ -1,0 +1,253 @@
+images {
+   image: "e17_menu_bg.png" COMP;
+   image: "e17_winlist_top.png" COMP;
+   image: "e17_winlist_bottom.png" COMP;
+   image: "e17_button2.png" COMP;
+   image: "e17_button.png" COMP;
+}
+
+group {
+   name: "widgets/dialog/main";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    0;
+	       to_y:     "base2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max:      99999 48;
+	    align:    0.5   0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "icon_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 0.5;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   16  16;
+	    }
+	    rel2 {
+	       relative: 0.0 0.0;
+	       offset:   16  -9;
+	       to_y: "buttons_swallow";
+	    }
+	 }
+      }
+      part {
+	 name: "content_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   8   16;
+	       to_x:     "icon_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset:   -17  -9;
+	       to_y: "buttons_swallow";
+	    }
+	 }
+      }
+      part {
+	 name:          "top";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -2   16;
+	       to_y:     "content_swallow";
+	    }
+	    image {
+	       normal: "e17_winlist_top.png";
+	       border: 0 0 0 19;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "bottom";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    -3;
+	       to_y:     "content_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_winlist_bottom.png";
+	       border: 0 0 4 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "buttons_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    align: 0.5 1.0;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   16   -9;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -17  -9;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "widgets/dialog/button";
+   parts {
+      part {
+	 name:          "button_image";
+	 type:          IMAGE;
+	 mouse_events:  1;
+	 description {
+	    state:    "default" 0.0;
+	    min:      64 32;
+	    image {
+	       normal: "e17_button.png";
+	       border: 8 8 8 8;
+	    }
+	 }
+	 description {
+	    state:    "clicked" 0.0;
+	    min:      64 32;
+	    image {
+	       normal: "e17_button2.png";
+	       border: 8 8 8 8;
+	    }
+	 }
+      }
+      part {
+	 name:          "button_text";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   6    6;
+	       to:     "button_image";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -7   -7;
+	       to:     "button_image";
+	    }
+	    color:    0   0   0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text:     "OK";
+	       font:     "Edje Vera";
+	       size:     10;
+	       min:      0 0;
+	       align:    0.5 0.5;
+	    }
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:   "button_click";
+	 signal: "mouse,down,1";
+	 source: "button_image";
+	 action: STATE_SET "clicked" 0.0;
+	 target: "button_image";
+      }
+      program {
+	 name:   "button_unclick";
+	 signal: "mouse,up,1";
+	 source: "button_image";
+	 action: STATE_SET "default" 0.0;
+	 target: "button_image";
+      }
+      program {
+	 name:   "button_unclick2";
+	 signal: "mouse,clicked";
+	 source: "button_image";
+	 action: SIGNAL_EMIT "click" "";
+      }
+   }
+}

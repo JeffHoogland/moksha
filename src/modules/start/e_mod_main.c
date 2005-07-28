@@ -368,5 +368,6 @@ _start_menu_cb_post_deactivate(void *data, E_Menu *m)
    face = data;
    if (!face->main_menu) return;
    edje_object_signal_emit(face->button_object, "passive", "");
+   e_object_del(E_OBJECT(face->main_menu));
    face->main_menu = NULL;
 }

@@ -371,7 +371,7 @@ struct _E_Border
    Ecore_X_Rectangle *shape_rects;
    E_Remember *remember;
 
-   Ecore_Timer *dangling_ref_check;
+//   Ecore_Timer *dangling_ref_check;
 };
 
 struct _E_Border_Pending_Move_Resize 

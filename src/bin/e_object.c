@@ -80,11 +80,13 @@ void
 e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
+/*   
    if (obj->crumbs)
      {
 	printf("EEEK obj type %x has crumbs still! ->\n", obj->type);
 	e_object_breadcrumb_debug(obj);
      }
+ */
    if (obj->free_att_func) obj->free_att_func(obj);
    obj->magic = E_OBJECT_MAGIC_FREED;
    obj->cleanup_func(obj);
@@ -257,6 +259,7 @@ e_object_del_attach_func_set(E_Object *obj, void (*func) (void *obj))
    obj->del_att_func = func;
 }
 
+/*
 void
 e_object_breadcrumb_add(E_Object *obj, char *crumb)
 {
@@ -290,6 +293,7 @@ e_object_breadcrumb_debug(E_Object *obj)
    for (l = obj->crumbs; l; l = l->next)
      printf("CRUMB: %s\n", l->data);
 }
+*/
 
 #ifdef OBJECT_PARANOIA_CHECK
 /* local subsystem functions */

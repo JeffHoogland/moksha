@@ -1,6 +1,6 @@
 Summary: The Enlightenment window manager
 Name: enlightenment
-Version: 0.17.0_pre10
+Version: 0.16.999.011
 Release: NOT_RELEASE_1.%(date '+%Y%m%d')
 License: BSD
 Group: User Interface/Desktops
@@ -52,16 +52,17 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root)
 %doc AUTHORS COPYING COPYING-PLAIN README
 %{_bindir}/*
+%{_libdir}/libe.so.*
 %{_libdir}/%{name}
 %{_datadir}/%{name}
+%{_datadir}/locale/*
 
 %files devel
 %defattr(-, root, root)
 %{_includedir}/enlightenment/*.h
-%{_includedir}/E.h
+%{_includedir}/E_Lib.h
 %{_libdir}/libe.a
 %{_libdir}/libe.la
-%{_libdir}/libe.so.0.0.0
-
+%{_libdir}/libe.so
 
 %changelog

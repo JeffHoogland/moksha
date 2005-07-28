@@ -282,6 +282,29 @@ _e_test_internal(E_Container *con)
      }
 }
 #elif 0
+static void
+_e_test_dialog_del(void *obj)
+{
+   E_Dialog *dia;
+   
+   dia = obj;
+   printf("dialog delete hook!\n");
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   
+   dia = e_dialog_new(con);
+   e_object_del_attach_func_set(E_OBJECT(dia), _e_test_dialog_del);
+   e_dialog_title_set(dia, "A Test Dialog");
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_button_add(dia, "Apply", NULL, NULL, NULL);
+   e_dialog_button_add(dia, "Cancel", NULL, NULL, NULL);
+   e_dialog_show(dia);
+}
+#elif 0
 #else
 static void
 _e_test_internal(E_Container *con)

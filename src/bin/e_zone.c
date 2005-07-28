@@ -807,7 +807,6 @@ _e_zone_cb_timer(void *data)
    E_Event_Pointer_Warp *ev;
    int x, y;
 
-   printf("_e_zone_cb_timer()\n");
    ev = E_NEW(E_Event_Pointer_Warp, 1);
    if (!ev) return 0;
 
@@ -834,14 +833,11 @@ _e_zone_cb_timer(void *data)
 	   }
 	break;
       case E_DIRECTION_RIGHT:
-	printf("clip right...\n");
 	if (E_ZONE_FLIP_RIGHT(zone))
 	  {
-	     printf("ummm...\n");
 	     current = e_desk_at_xy_get(zone, zone->desk_x_current + 1, zone->desk_y_current);
 	     if (current)
 	       {
-		  printf("show new desk\n");
 		  e_desk_show(current);
 		  ecore_x_pointer_warp(zone->container->win, 2, y);
 		  ev->curr.y = y;

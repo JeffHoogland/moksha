@@ -338,6 +338,24 @@ e_manager_lower(E_Manager *man)
      ecore_x_window_lower(man->win);
 }
 
+E_Manager *
+e_manager_current_get(void)
+{
+   Evas_List *l;
+   E_Manager *man;
+   int x, y;
+   
+   if (!managers) return NULL;
+   for (l = managers; l; l = l->next)
+     {
+	man = l->data;
+	ecore_x_pointer_xy_get(man->win, &x, &y);
+	if (E_INSIDE(x, y, man->x, man->y, man->w, man->h))
+	  return man;
+     }
+   return managers->data;
+}
+
 E_Container *
 e_manager_container_number_get(E_Manager *man, int num)
 {
