@@ -3363,6 +3363,7 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
      }
 #endif
    if (grabbed) return 1;
+#if 0   
    if (ev->event_win == bd->win)
      {
 	if (bd->fullscreen)
@@ -3377,6 +3378,7 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 	  return 1;
 	e_focus_event_mouse_out(bd);
      }
+#endif   
 #if 0
    if ((ev->win != bd->win) &&
        (ev->win != bd->event_win) &&

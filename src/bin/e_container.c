@@ -18,6 +18,7 @@ static void _e_container_shape_free(E_Container_Shape *es);
 static void _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change ch);
 static void _e_container_resize_handle(E_Container *con);
 static void _e_container_event_container_resize_free(void *data, void *ev);
+static void _e_container_cb_mouse_in(Ecore_Evas *ee);
 
 int E_EVENT_CONTAINER_RESIZE = 0;
 static int container_count;
@@ -81,6 +82,7 @@ e_container_new(E_Manager *man)
 	ecore_evas_override_set(con->bg_ecore_evas, 1);
 	con->bg_win = ecore_evas_software_x11_window_get(con->bg_ecore_evas);
      }
+   ecore_evas_callback_mouse_in_set(con->bg_ecore_evas, _e_container_cb_mouse_in);
    e_canvas_add(con->bg_ecore_evas);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
@@ -1010,4 +1012,20 @@ _e_container_event_container_resize_free(void *data, void *ev)
    e = ev;
    e_object_unref(E_OBJECT(e->container));
    free(e);
+}
+
+static void
+_e_container_cb_mouse_in(Ecore_Evas *ee)
+{
+   Evas *evas;
+   Evas_Object *o;
+   E_Container *con;
+   E_Border *bd;
+   
+   evas = ecore_evas_get(ee);
+   o = evas_object_name_find(evas, "desktop/background");
+   if (!o) return;
+   con = evas_object_data_get(o, "e_container");
+   bd = e_border_focused_get();
+   if (bd) e_focus_event_mouse_out(bd);
 }
