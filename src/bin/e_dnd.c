@@ -811,7 +811,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	int i, size;
 
 	data = ev->data;
-	text = data->data;
+	text = (char *)data->data;
 	size = MIN(data->length, PATH_MAX - 1);
 	/* A moz url _shall_ contain a space */
 	/* FIXME: The data is two-byte unicode. Somewhere it

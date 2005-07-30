@@ -54,7 +54,6 @@ e_int_menus_main_new(void)
    E_Menu *m, *subm;
    E_Menu_Item *mi;
    Main_Data *dat;
-   char *s;
    
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
@@ -66,9 +65,7 @@ e_int_menus_main_new(void)
    dat->apps = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorite Applications"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "favorites");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/favorites");
    e_menu_item_submenu_set(mi, subm);
   
    mi = e_menu_item_new(m);
@@ -78,54 +75,42 @@ e_int_menus_main_new(void)
    dat->modules = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Modules"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "module");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
    e_menu_item_submenu_set(mi, subm);
 
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktops"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "desktops");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/desktops");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_clients_new();
    dat->clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Windows"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "windows");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/windows");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_lost_clients_new();
    dat->lost_clients = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Lost Windows"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "lost_windows");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/lost_windows");
    e_menu_item_submenu_set(mi, subm);
   
    subm = e_int_menus_gadgets_new();
    dat->gadgets = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Gadgets"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "gadgets");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/gadgets");
    e_menu_item_submenu_set(mi, subm);
    
    subm = e_int_menus_themes_new();
    dat->themes = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Themes"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "theme");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/themes");
    e_menu_item_submenu_set(mi, subm);   
   
    mi = e_menu_item_new(m);
@@ -133,18 +118,14 @@ e_int_menus_main_new(void)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("About Enlightenment"));   
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "e");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    if (ecore_file_app_installed("exige"))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Run Command"));
-	s = e_path_find(path_icons, "default.edj");
-	e_menu_item_icon_edje_set(mi, s, "run");
-	IF_FREE(s);
+	e_util_menu_item_edje_icon_set(mi, "enlightenment/run");
 	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);
      }
 
@@ -152,9 +133,7 @@ e_int_menus_main_new(void)
    dat->config = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Configuration"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "configuration");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/configuration");
    e_menu_item_submenu_set(mi, subm);
 
    mi = e_menu_item_new(m);
@@ -162,16 +141,12 @@ e_int_menus_main_new(void)
    
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Restart Enlightenment"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "reset");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/reset");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Exit Enlightenment"));
-   s = e_path_find(path_icons, "default.edj");
-   e_menu_item_icon_edje_set(mi, s, "power");
-   IF_FREE(s);
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/exit");
    e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
    return m;
 }

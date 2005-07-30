@@ -167,8 +167,6 @@ Some of the things (in very short form) that need to be done to E17...
   locale+encoding)
 * add input method selector stuff to eapp - same as locale
 * "run command" typebuffer thing
-* icons should be able to be overidden from the theme (eapp and menu stuff
-  etc.)
 * setup configs for gnome and kde (as options) if they are installed (eg
   run gnome-settings-daemon).
 * check evas has eet support early on.

@@ -258,8 +258,6 @@ data/init/Makefile
 data/init/images/Makefile
 data/themes/Makefile
 data/themes/images/Makefile
-data/icons/Makefile
-data/icons/images/Makefile
 data/other/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop

@@ -720,8 +720,7 @@ _e_app_free(E_App *a)
 	_e_apps = evas_hash_del(_e_apps, a->path, a);
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
 	_e_app_fields_empty(a);
-	if (a->path) 
-	  free(a->path);
+	IF_FREE(a->path);
 	free(a);
      }
 }
@@ -806,6 +805,15 @@ _e_app_fields_fill(E_App *a, const char *path)
 	a->exe = str;
 	free(v);
      }
+   v = eet_read(ef, "app/icon/class", &size);
+   if (v)
+     {
+	str = malloc(size + 1);
+	memcpy(str, v, size);
+	str[size] = 0;
+	a->icon_class = str;
+	free(v);
+     }
    v = eet_read(ef, "app/window/name", &size);
    if (v)
      {
@@ -860,36 +868,15 @@ _e_app_fields_fill(E_App *a, const char *path)
 static void
 _e_app_fields_empty(E_App *a)
 {
-   if (a->name)
-     {
-	free(a->name);
-	a->name = NULL;
-     }
-   if (a->generic)
-     {
-	free(a->generic);
-	a->generic = NULL;
-     }
-   if (a->comment)
-     {
-	free(a->comment);
-	a->comment = NULL;
-     }
-   if (a->exe)
-     {
-	free(a->exe);
-	a->exe = NULL;
-     }
-   if (a->win_name)
-     {
-	free(a->win_name);
-	a->win_name = NULL;
-     }
-   if (a->win_class)
-     {
-	free(a->win_class);
-	a->win_class = NULL;
-     }
+   IF_FREE(a->name);
+   IF_FREE(a->generic);
+   IF_FREE(a->comment);
+   IF_FREE(a->exe);
+   IF_FREE(a->icon_class);
+   IF_FREE(a->win_name);
+   IF_FREE(a->win_class);
+   IF_FREE(a->win_title);
+   IF_FREE(a->win_role);
 }
 
 static Ecore_List *

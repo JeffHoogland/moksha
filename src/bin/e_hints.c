@@ -921,7 +921,7 @@ int
 e_hints_window_saved_size_get(E_Border *bd)
 {
    int ret;
-   int sizes[4];
+   unsigned int sizes[4];
 
    memset(sizes, 0, sizeof(sizes));
    ret = ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_SAVED_SIZE,

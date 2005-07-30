@@ -1,3 +1,3 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = fonts images init themes icons other xsession
+SUBDIRS = fonts images init themes other xsession
 

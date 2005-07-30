@@ -54,6 +54,7 @@ e_theme_init(void)
  *  e_theme_file_set("base/theme/error", "default.edj");
  *  e_theme_file_set("base/theme/gadman", "default.edj");
  *  e_theme_file_set("base/theme/dnd", "default.edj");
+ *  e_theme_file_set("base/theme/icons", "default.edj");
  *  e_theme_file_set("base/theme/modules", "default.edj");
  *  e_theme_file_set("base/theme/modules/pager", "default.edj");
  *  e_theme_file_set("base/theme/modules/ibar", "default.edj");

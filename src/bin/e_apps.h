@@ -33,12 +33,15 @@ struct _E_App
    char               *generic; /* generic app name */
    char               *comment; /* a longer description */
    char               *exe; /* command to execute, NULL if directory */
+   
    char               *path; /* path to .eet containing icons etc. etc. */
 
    char               *win_name; /* window name */
    char               *win_class; /* window class */
    char               *win_title; /* window title */
    char               *win_role; /* window role */
+
+   char               *icon_class; /* icon_class */
    
    Evas_List          *subapps; /* if this a directory, a list of more E_App's */
    

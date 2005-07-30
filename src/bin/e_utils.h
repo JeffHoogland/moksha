@@ -20,6 +20,8 @@ EAPI int          e_util_head_exec(int head, char *cmd);
 EAPI int          e_util_strcmp(char *s1, char *s2);    
 EAPI int          e_util_both_str_empty(char *s1, char *s2);
 EAPI int          e_util_immortal_check(void);
+EAPI int          e_util_edje_icon_set(Evas_Object *obj, char *name);
+EAPI void         e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name);
     
 #endif
 #endif

@@ -1748,7 +1748,8 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	if (a)
 	  {
 	     o = edje_object_add(evas);
-	     edje_object_file_set(o, a->path, "icon");
+	     if (!e_util_edje_icon_set(o, a->icon_class))
+	       edje_object_file_set(o, a->path, "icon");
 	  }
      }
    else if (bd->client.netwm.icon.data)

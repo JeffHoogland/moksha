@@ -26,6 +26,7 @@ main(int argc, char **argv)
    int del_win_class = 0;
    int del_win_title = 0;
    int del_win_role = 0;
+   int del_icon_class = 0;
    int del_startup_notify = 0;
    int del_wait_exit = 0;
    char *file = NULL;
@@ -37,6 +38,7 @@ main(int argc, char **argv)
    char *set_win_class = NULL;
    char *set_win_title = NULL;
    char *set_win_role = NULL;
+   char *set_icon_class = NULL;
    int   set_startup_notify = -1;
    int   set_wait_exit = -1;
    int   get_name = 0;
@@ -47,6 +49,7 @@ main(int argc, char **argv)
    int   get_win_class = 0;
    int   get_win_title = 0;
    int   get_win_role = 0;
+   int   get_icon_class = 0;
    int   get_startup_notify = 0;
    int   get_wait_exit = 0;
    
@@ -116,6 +119,13 @@ main(int argc, char **argv)
              valid_args++;
              write_ops++;
 	  }
+	else if ((!strcmp(argv[i], "-set-icon-class")) && (i < (argc - 1)))
+	  {
+	     i++;
+	     set_icon_class = argv[i];
+             valid_args++;
+             write_ops++;
+	  }
 	else if ((!strcmp(argv[i], "-set-startup-notify")) && (i < (argc - 1)))
 	  {
 	     i++;
@@ -140,6 +150,7 @@ main(int argc, char **argv)
 	     del_win_class = 1;
 	     del_win_title = 1;
 	     del_win_role = 1;
+	     del_icon_class = 1;
 	     del_startup_notify = 1;
 	     del_wait_exit = 1;
              valid_args++;
@@ -193,6 +204,12 @@ main(int argc, char **argv)
              valid_args++;
              write_ops++;
 	  }
+	else if ((!strcmp(argv[i], "-del-icon-class")))
+	  {
+	     del_icon_class = 1;
+             valid_args++;
+             write_ops++;
+	  }
 	else if ((!strcmp(argv[i], "-del-startup-notify")))
 	  {
 	     del_startup_notify = 1;
@@ -216,52 +233,57 @@ main(int argc, char **argv)
 	else if ((!strcmp(argv[i], "-get-name")))
 	  {
 	     get_name = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-generic")))
 	  {
 	     get_generic = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-comment")))
 	  {
 	     get_comment = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-exe")))
 	  {
 	     get_exe = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-win-name")))
 	  {
 	     get_win_name = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-win-class")))
 	  {
 	     get_win_class = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-win-title")))
 	  {
 	     get_win_title = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-win-role")))
 	  {
 	     get_win_role = 1;
-	        valid_args++;
+	     valid_args++;
+	  }
+	else if ((!strcmp(argv[i], "-get-icon-class")))
+	  {
+	     get_icon_class = 1;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-startup-notify")))
 	  {
 	     get_startup_notify = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else if ((!strcmp(argv[i], "-get-wait-exit")))
 	  {
 	     get_wait_exit = 1;
-	        valid_args++;
+	     valid_args++;
 	  }
 	else
 	  file = argv[i];
@@ -321,6 +343,8 @@ main(int argc, char **argv)
      eet_write(ef, "app/window/title", set_win_title, strlen(set_win_title), 0);
    if (set_win_role)
      eet_write(ef, "app/window/role", set_win_role, strlen(set_win_role), 0);
+   if (set_icon_class)
+     eet_write(ef, "app/icon/class", set_icon_class, strlen(set_icon_class), 0);
    if (set_startup_notify >= 0)
      {
 	unsigned char tmp[1];
@@ -387,6 +411,8 @@ main(int argc, char **argv)
      eet_delete(ef, "app/window/title");
    if (del_win_role)
      eet_delete(ef, "app/window/role");
+   if (del_icon_class)
+     eet_delete(ef, "app/icon/class");
    if (del_startup_notify)
      eet_delete(ef, "app/info/startup_notify");
    if (del_wait_exit)
@@ -511,6 +537,18 @@ main(int argc, char **argv)
              printf("%s\n", str);
           }
      }
+   if (get_icon_class)
+     {
+        v = eet_read(ef, "app/icon/class", &size);
+        if (v)
+          {
+             str = malloc(size + 1);
+             memcpy(str, v, size);
+             str[size] = 0;
+             free(v);
+             printf("%s\n", str);
+          }
+     }
    if (get_startup_notify)
      {
         v = eet_read(ef, "app/info/startup_notify", &size);
@@ -571,6 +609,7 @@ _e_help(void)
 	  "  -set-win-class WIN_CLASS   Set the application window class glob\n"
 	  "  -set-win-title WIN_TITLE   Set the application window title glob\n"
 	  "  -set-win-role WIN_ROLE     Set the application window role glob\n"
+	  "  -set-icon-class CLASS_NAME Set the application icon class for themes\n"
 	  "  -set-startup-notify [1/0]  Set the application startup notify flag\n"
 	  "  -set-wait-exit [1/0]       Set the application wait exit flag\n"
 	  "  -get-name                  Get the application name\n"
@@ -581,6 +620,7 @@ _e_help(void)
 	  "  -get-win-class             Get the application window class glob\n"
 	  "  -get-win-title             Get the application window title glob\n"
 	  "  -get-win-role              Get the application window role glob\n"
+	  "  -get-icon-class            Get the application icon class for themes\n"
 	  "  -get-startup-notify        Get the application startup notify flag\n"
 	  "  -get-wait-exit             Get the application wait exit flag\n"
 	  "  -del-name                  Delete the application name\n"
@@ -591,6 +631,7 @@ _e_help(void)
 	  "  -del-win-class             Delete the application window class\n"
 	  "  -del-win-title             Delete the application window title glob\n"
 	  "  -del-win-role              Delete the application window role glob\n"
+	  "  -del-icon-class            Delete the application icon class for themes\n"
 	  "  -del-startup-notify        Delete the application startup notify flag\n"
 	  "  -del-wait-exit             Delete the application wait exit flag\n"
 	  );

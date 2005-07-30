@@ -255,3 +255,30 @@ e_util_immortal_check(void)
      }
    return 0;
 }
+
+int
+e_util_edje_icon_set(Evas_Object *obj, char *name)
+{
+   char *file;
+   char buf[4096];
+
+   if (!name) return 0;
+   snprintf(buf, sizeof(buf), "icons/%s", name);
+   file = (char *)e_theme_edje_file_get("base/theme/icons", buf);
+   if (!file[0]) return;
+   edje_object_file_set(obj, file, buf);
+   return 1;
+}
+
+void
+e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
+{
+   char *file;
+   char buf[4096];
+   
+   if (!name) return;
+   snprintf(buf, sizeof(buf), "icons/%s", name);
+   file = (char *)e_theme_edje_file_get("base/theme/icons", buf);
+   if (!file[0]) return;
+   e_menu_item_icon_edje_set(mi, file, buf);
+}
