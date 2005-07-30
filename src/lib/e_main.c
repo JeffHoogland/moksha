@@ -247,16 +247,18 @@ e_lib_desktop_background_add(const int con, const int zone, const int desk_x, co
 {
    char *params[5];
    int i;
-   if(!bgfile)
+   
+   if (!bgfile)
      return;
-   for(i = 0; i < 4; i++)
+   for (i = 0; i < 4; i++)
      params[i] = (char *)calloc(5,sizeof(char));
    sprintf(params[0],"%i",con);
    sprintf(params[1],"%i",zone);
    sprintf(params[2],"%i",desk_x);
    sprintf(params[3],"%i",desk_y);
    params[4] = strdup(bgfile);
-   if(!params[0] | !params[1] | !params[2] | !params[3] | !params[4])
+   if ((!params[0]) || (!params[1]) || (!params[2]) || (!params[3]) || 
+       (!params[4]))
      return;
    _e_ipc_call(E_IPC_OP_DESKTOP_BG_ADD, params);
    free(params[0]);
@@ -271,14 +273,15 @@ e_lib_desktop_background_del(const int con, const int zone, const int desk_x, co
 {
    int i;
    char *params[4];
-   for(i = 0; i < 4; i++)
+
+   for (i = 0; i < 4; i++)
      params[i] = (char *)calloc(5,sizeof(char));
    sprintf(params[0],"%i",con);
    sprintf(params[1],"%i",zone);
    sprintf(params[2],"%i",desk_x);
    sprintf(params[3],"%i",desk_y);
-   if(!params[0] | !params[1] | !params[2] | !params[3])
-     return;
+   if ((!params[0]) || (!params[1]) || (!params[2]) || (!params[3]) || 
+       (!params[4]))
    _e_ipc_call(E_IPC_OP_DESKTOP_BG_DEL, params);
    free(params[0]);
    free(params[1]);
