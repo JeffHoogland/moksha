@@ -236,7 +236,6 @@ _ds_init(E_Module *m)
    E_CONFIG_LIMIT(ds->conf->shadow_darkness, 0.0, 1.0);
    /* special - must be power of 2 */
    if (ds->conf->quality == 3) ds->conf->quality = 4;
-   ds->conf->quality = 4;
    
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
