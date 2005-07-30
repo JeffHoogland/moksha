@@ -986,6 +986,18 @@ msgstr ""
 "\t-Psychotisch\n"
 "\t\tSei psychotisch.\n"
 
+#: src/modules/desktopname/e_mod_main.c:77
+msgid "DesktopName"
+msgstr "Arbeitsflächenname"
+
+#: src/modules/desktopname/e_mod_main.c:86
+msgid "Enlightenment DesktopName Module"
+msgstr "Enlightenment Arbeitsflächenname Modul"
+
+#: src/modules/desktopname/e_mod_main.c:87
+msgid "Experimental module for E17: display desktop name on screen."
+msgstr "Experimentelles Modul für E17: Den Arbeitsflächennamen auf dem Bildschirm ausgeben"
+
 #: src/modules/pager/e_mod_main.c:126
 msgid "Pager"
 msgstr "Arbeitsflächenumschalter"
@@ -1060,7 +1072,7 @@ msgstr "Enlightenment neu starten"
 
 #: src/bin/e_border.c:3536
 msgid "Send To"
-msgstr "Verschieben nach"
+msgstr "Auf Arbeitsfläche"
 
 #: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
 msgid "Set Alarm"
