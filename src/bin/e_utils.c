@@ -262,6 +262,7 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
    char *buf;
    char *p, *c;
    
+   if ((!list) || (!list[0])) return 0;
    buf = malloc(strlen(list) + 1);
    p = list;
    while (p)
@@ -303,6 +304,7 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
    char *buf;
    char *p, *c;
    
+   if ((!list) || (!list[0])) return 0;
    buf = malloc(strlen(list) + 1);
    p = list;
    while (p)
