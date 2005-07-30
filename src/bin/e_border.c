@@ -1748,7 +1748,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	if (a)
 	  {
 	     o = edje_object_add(evas);
-	     if (!e_util_edje_icon_set(o, a->icon_class))
+	     if (!e_util_edje_icon_list_set(o, a->icon_class))
 	       edje_object_file_set(o, a->path, "icon");
 	  }
      }

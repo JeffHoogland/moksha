@@ -257,28 +257,117 @@ e_util_immortal_check(void)
 }
 
 int
+e_util_ejde_icon_list_set(Evas_Object *obj, char *list)
+{
+   char *buf;
+   char *p, *c;
+   
+   buf = malloc(strlen(list) + 1);
+   p = list;
+   while (p)
+     {
+	c = strchr(p, ',');
+	if (c)
+	  {
+	     strncpy(buf, p, c - p);
+	     buf[c - p] = 0;
+	     if (e_util_edje_icon_set(obj, buf))
+	       {
+		  free(buf);
+		  return 1;
+	       }
+	     p = c + 1;
+	     if (!*p)
+	       {
+		  free(buf);
+		  return 0;
+	       }
+	  }
+	else
+	  {
+	     strcpy(buf, p);
+	     if (e_util_edje_icon_set(obj, buf))
+	       {
+		  free(buf);
+		  return 1;
+	       }
+	  }
+     }
+   free(buf);
+   return 0;
+}
+
+int
+e_util_menu_item_ejde_icon_list_set(E_Menu_Item *mi, char *list)
+{
+   char *buf;
+   char *p, *c;
+   
+   buf = malloc(strlen(list) + 1);
+   p = list;
+   while (p)
+     {
+	c = strchr(p, ',');
+	if (c)
+	  {
+	     strncpy(buf, p, c - p);
+	     buf[c - p] = 0;
+	     if (e_util_menu_item_edje_icon_set(mi, buf))
+	       {
+		  free(buf);
+		  return 1;
+	       }
+	     p = c + 1;
+	     if (!*p)
+	       {
+		  free(buf);
+		  return 0;
+	       }
+	  }
+	else
+	  {
+	     strcpy(buf, p);
+	     if (e_util_menu_item_edje_icon_set(mi, buf))
+	       {
+		  free(buf);
+		  return 1;
+	       }
+	  }
+     }
+   free(buf);
+   return 0;
+}
+
+int
 e_util_edje_icon_set(Evas_Object *obj, char *name)
 {
    char *file;
    char buf[4096];
 
-   if (!name) return 0;
+   if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "icons/%s", name);
    file = (char *)e_theme_edje_file_get("base/theme/icons", buf);
-   if (!file[0]) return;
-   edje_object_file_set(obj, file, buf);
-   return 1;
+   if (file[0])
+     {
+	edje_object_file_set(obj, file, buf);
+	return 1;
+     }
+   return 0;
 }
 
-void
+int
 e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
 {
    char *file;
    char buf[4096];
    
-   if (!name) return;
+   if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "icons/%s", name);
    file = (char *)e_theme_edje_file_get("base/theme/icons", buf);
-   if (!file[0]) return;
-   e_menu_item_icon_edje_set(mi, file, buf);
+   if (file[0])
+     {
+	e_menu_item_icon_edje_set(mi, file, buf);
+	return 1;
+     }
+   return 0;
 }
