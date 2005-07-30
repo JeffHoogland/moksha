@@ -33,6 +33,9 @@ static void        _ds_menu_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_very_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_extremely_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_under(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _ds_menu_high_quality(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _ds_menu_medium_quality(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _ds_menu_low_quality(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_container_shapes_add(Dropshadow *ds, E_Container *con);
 static void        _ds_shape_change(void *data, E_Container_Shape *es, E_Container_Shape_Change ch);
 static Shadow     *_ds_shadow_find(Dropshadow *ds, E_Container_Shape *es);
@@ -48,20 +51,21 @@ static void        _ds_shadow_move(Shadow *sh, int x, int y);
 static void        _ds_shadow_resize(Shadow *sh, int w, int h);
 static void        _ds_shadow_shaperects(Shadow *sh);
 static int         _ds_shadow_reshape(void *data);
-static void        _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, int y2);
+static void        _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2);
 static void        _ds_shadow_recalc(Shadow *sh);
 static void        _ds_config_darkness_set(Dropshadow *ds, double v);
 static void        _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y);
 static void        _ds_config_blur_set(Dropshadow *ds, int blur);
+static void        _ds_config_quality_set(Dropshadow *ds, int q);
 static void        _ds_blur_init(Dropshadow *ds);
 static double      _ds_gauss_int(double x);
-static void        _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
-static void        _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy);
+static void        _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy);
+static void        _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy);
 static Shpix      *_ds_shpix_new(int w, int h);
 static void        _ds_shpix_free(Shpix *sp);
 static void        _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val);
-static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size);
-static void        _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size);
+static void        _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size, int q);
+static void        _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size, int q);
 static void        _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h);
 static void        _ds_shared_free(Dropshadow *ds);
 static void        _ds_shared_use(Dropshadow *ds, Shadow *sh);
@@ -104,7 +108,7 @@ e_modapi_init(E_Module *m)
      }
    ds = _ds_init(m);
    m->config_menu = _ds_config_menu_new(ds);
-/*   
+#if 0
      {
 	Shpix *sh;
 	double t1, t2;
@@ -114,13 +118,32 @@ e_modapi_init(E_Module *m)
 	t1 = ecore_time_get();
 	for (i = 0; i < 100; i++)
 	  {
-	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size);
+	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 1);
+	  }
+	t2 = ecore_time_get();
+	printf("blur time: %3.3f\n", t2 -t1);
+	_ds_shpix_free(sh);
+	
+	sh = _ds_shpix_new(1000, 1000);
+	t1 = ecore_time_get();
+	for (i = 0; i < 100; i++)
+	  {
+	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 2);
+	  }
+	t2 = ecore_time_get();
+	printf("blur time: %3.3f\n", t2 -t1);
+	
+	sh = _ds_shpix_new(1000, 1000);
+	t1 = ecore_time_get();
+	for (i = 0; i < 100; i++)
+	  {
+	     _ds_shpix_blur(sh, 0, 0, 1000, 100, ds->table.gauss, ds->conf->blur_size, 4);
 	  }
 	t2 = ecore_time_get();
 	printf("blur time: %3.3f\n", t2 -t1);
 	_ds_shpix_free(sh);
      }
- */
+#endif   
    return ds;
 }
 
@@ -203,17 +226,18 @@ _ds_init(E_Module *m)
 	ds->conf->shadow_x = 4;
 	ds->conf->shadow_y = 4;
 	ds->conf->blur_size = 10;
-	ds->conf->quality = 1;
+	ds->conf->quality = 2;
 	ds->conf->shadow_darkness = 0.5;
      }
-   /* FIXME: new shadow optimisations dont work with quality != 1 */
-   ds->conf->quality = 1;
    E_CONFIG_LIMIT(ds->conf->shadow_x, -200, 200);
    E_CONFIG_LIMIT(ds->conf->shadow_y, -200, 200);
    E_CONFIG_LIMIT(ds->conf->blur_size, 1, 120);
-   E_CONFIG_LIMIT(ds->conf->quality, 1, 10);
+   E_CONFIG_LIMIT(ds->conf->quality, 1, 4);
    E_CONFIG_LIMIT(ds->conf->shadow_darkness, 0.0, 1.0);
-
+   /* special - must be power of 2 */
+   if (ds->conf->quality == 3) ds->conf->quality = 4;
+   ds->conf->quality = 4;
+   
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
    if (ds->conf->shadow_y >= ds->conf->blur_size)
@@ -417,6 +441,40 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_radio_group_set(mi, 3);
    if (ds->conf->shadow_x == 0) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ds_menu_under, ds);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("High Quality"));
+   snprintf(buf, sizeof(buf), "%s/menu_icon_hi_quality.png", e_module_dir_get(ds->module));
+   e_menu_item_icon_file_set(mi, buf);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 4);
+   if (ds->conf->quality == 1) e_menu_item_toggle_set(mi, 1);
+   else e_menu_item_toggle_set(mi, 0);
+   e_menu_item_callback_set(mi, _ds_menu_high_quality, ds);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Medium Quality"));
+   snprintf(buf, sizeof(buf), "%s/menu_icon_med_quality.png", e_module_dir_get(ds->module));
+   e_menu_item_icon_file_set(mi, buf);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 4);
+   if (ds->conf->quality == 2) e_menu_item_toggle_set(mi, 1);
+   else e_menu_item_toggle_set(mi, 0);
+   e_menu_item_callback_set(mi, _ds_menu_medium_quality, ds);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Low Quality"));
+   snprintf(buf, sizeof(buf), "%s/menu_icon_lo_quality.png", e_module_dir_get(ds->module));
+   e_menu_item_icon_file_set(mi, buf);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 4);
+   if (ds->conf->quality == 4) e_menu_item_toggle_set(mi, 1);
+   else e_menu_item_toggle_set(mi, 0);
+   e_menu_item_callback_set(mi, _ds_menu_low_quality, ds);
+   
    return mn;
 }
 
@@ -553,6 +611,33 @@ _ds_menu_under(void *data, E_Menu *m, E_Menu_Item *mi)
    
    ds = data;
    _ds_config_shadow_xy_set(ds, 0, 0);
+}
+
+static void
+_ds_menu_high_quality(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Dropshadow *ds;
+   
+   ds = data;
+   _ds_config_quality_set(ds, 1);
+}
+
+static void
+_ds_menu_medium_quality(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Dropshadow *ds;
+   
+   ds = data;
+   _ds_config_quality_set(ds, 2);
+}
+
+static void
+_ds_menu_low_quality(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Dropshadow *ds;
+   
+   ds = data;
+   _ds_config_quality_set(ds, 4);
 }
 
 static void
@@ -979,7 +1064,7 @@ _ds_shadow_reshape(void *data)
 }
 
 static void
-_ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, int y2)
+_ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2)
 {
    int x, y;
    unsigned char *ptr, *pptr;
@@ -994,10 +1079,10 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, in
 	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
 	     if ((val != 0) && (val != (255 * 4)))
 	       _tilebuf_add_redraw(tb, 
-				   x1 - ((bsz + 1) / q),
-				   y - ((bsz + 1) / q),
-				   ((bsz + 1) * 2) / q,
-				   ((bsz + 1) * 2) / q);
+				   x1 - (bsz + 1),
+				   y - (bsz + 1),
+				   (bsz + 1) * 2,
+				   (bsz + 1) * 2);
 	     ptr += sp->w;
 	     pptr += sp->w;
 	  }
@@ -1011,10 +1096,10 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int q, int x1, int y1, int x2, in
 	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
 	     if ((val != 0) && (val != (255 * 4)))
 	       _tilebuf_add_redraw(tb, 
-				   x - ((bsz + 1) / q),
-				   y1 - ((bsz + 1) / q),
-				   ((bsz + 1) * 2) / q,
-				   ((bsz + 1) * 2) / q);
+				   x - (bsz + 1),
+				   y1 - (bsz + 1),
+				   (bsz + 1) * 2,
+				   (bsz + 1) * 2);
 	     ptr++;
 	     pptr++;
 	  }
@@ -1038,9 +1123,7 @@ _ds_shadow_recalc(Shadow *sh)
 	Shpix *sp;
 	int shw, shh, bsz, shx, shy;
 	int x1, y1, x2, y2;
-	int q;
 	
-	q = sh->ds->conf->quality;
 	if ((!rects) && (sh->toosmall))
 	  sh->square = 1;
 	else
@@ -1058,7 +1141,7 @@ _ds_shadow_recalc(Shadow *sh)
 	     sh->use_shared = 0;
 	  }
 	
-	sp = _ds_shpix_new((shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+	sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
 	if (sp)
 	  {
 	     Tilebuf *tb;
@@ -1066,35 +1149,34 @@ _ds_shadow_recalc(Shadow *sh)
 	     _ds_shadow_obj_shutdown(sh);
 	     if (!rects)
 	       {
-		  /* FIXME; rounding errors - fix as below in else{} */
-		  _ds_shpix_fill(sp, 0,               0,               (shw + (bsz * 2)) / q, (bsz) / q, 0);
-		  _ds_shpix_fill(sp, 0,               (bsz + shh) / q, (shw + (bsz * 2)) / q, (bsz) / q, 0);
-		  _ds_shpix_fill(sp, 0,               (bsz) / q,       (bsz) / q,             (shh) / q, 0);
-		  _ds_shpix_fill(sp, (bsz + shw) / q, (bsz) / q,       (bsz) / q,             (shh) / q, 0);
-		  _ds_shpix_fill(sp, (bsz) / q,       (bsz) / q,       (shw) / q,             (shh) / q, 255);
+		  _ds_shpix_fill(sp, 0,         0,         shw + (bsz * 2), bsz, 0);
+		  _ds_shpix_fill(sp, 0,         bsz + shh, shw + (bsz * 2), bsz, 0);
+		  _ds_shpix_fill(sp, 0,         bsz,       bsz,             shh, 0);
+		  _ds_shpix_fill(sp, bsz + shw, bsz,       bsz,             shh, 0);
+		  _ds_shpix_fill(sp, bsz,       bsz,       shw,             shh, 255);
 	       }
 	     else
 	       {
-		  _ds_shpix_fill(sp, 0, 0, (shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q, 0);
+		  _ds_shpix_fill(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2), 0);
 		  for (l = rects; l; l = l->next)
 		    {
 		       E_Rect *r;
 		       
 		       r = l->data;
-		       x1 = (bsz + r->x) / q;
-		       y1 = (bsz + r->y) / q; 
-		       x2 = (bsz + r->x + r->w - 1) / q;
-		       y2 = (bsz + r->y + r->h - 1) / q;
+		       x1 = bsz + r->x;
+		       y1 = bsz + r->y; 
+		       x2 = bsz + r->x + r->w - 1;
+		       y2 = bsz + r->y + r->h - 1;
 		       _ds_shpix_fill(sp, x1, y1, (x2 - x1) + 1, (y2 - y1) + 1, 255);
 		    }
 	       }
 	     
-	     tb = _tilebuf_new((shw + (bsz * 2)) / q, (shh + (bsz * 2)) / q);
+	     tb = _tilebuf_new(shw + (bsz * 2), shh + (bsz * 2));
 	     if (tb)
 	       {
 		  Evas_List *brects;
 		  
-		  _tilebuf_set_tile_size(tb, 16 / q, 16 / q);
+		  _tilebuf_set_tile_size(tb, 16, 16);
 		  /* find edges */
 		  if (rects)
 		    {
@@ -1103,10 +1185,10 @@ _ds_shadow_recalc(Shadow *sh)
 			    E_Rect *r;
 			    
 			    r = l->data;
-			    x1 = (bsz + r->x) / q;
-			    y1 = (bsz + r->y) / q;
-			    x2 = (bsz + r->x + r->w - 1) / q;
-			    y2 = (bsz + r->y + r->h - 1) / q;
+			    x1 = bsz + r->x;
+			    y1 = bsz + r->y;
+			    x2 = bsz + r->x + r->w - 1;
+			    y2 = bsz + r->y + r->h - 1;
 			    if (x1 < 1) x1 = 1;
 			    if (x1 >= (sp->w - 1)) x1 = (sp->w - 1) - 1;
 			    if (x2 < 1) x1 = 1;
@@ -1115,10 +1197,10 @@ _ds_shadow_recalc(Shadow *sh)
 			    if (y1 >= (sp->h - 1)) y1 = (sp->h - 1) - 1;
 			    if (y2 < 1) y1 = 1;
 			    if (y2 >= (sp->h - 1)) y2 = (sp->h - 1) - 1;
-			    _ds_edge_scan(sp, tb, bsz, q, x1, y1, x2 + 1, y1);
-			    _ds_edge_scan(sp, tb, bsz, q, x1, y2 + 1, x2 + 1, y2 + 1);
-			    _ds_edge_scan(sp, tb, bsz, q, x1, y1, x1, y2 + 1);
-			    _ds_edge_scan(sp, tb, bsz, q, x2 + 1, y1, x2 + 1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, x1, y1, x2 + 1, y1);
+			    _ds_edge_scan(sp, tb, bsz, x1, y2 + 1, x2 + 1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, x1, y1, x1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, x2 + 1, y1, x2 + 1, y2 + 1);
 			 }
 		    }
 		  /* its a rect - just add the rect outline */
@@ -1127,23 +1209,23 @@ _ds_shadow_recalc(Shadow *sh)
 		       _tilebuf_add_redraw(tb, 
 					   0, 
 					   0,
-					   (shw + (bsz * 2)) / q,
-					   ((bsz + 1) * 2) / q);
+					   shw + (bsz * 2),
+					   (bsz + 1) * 2);
 		       _tilebuf_add_redraw(tb, 
 					   0, 
-					   ((bsz + 1) * 2) / q,
-					   ((bsz + 1) * 2) / q,
-					   sp->h - (2 * (((bsz + 1) * 2) / q)));
+					   (bsz + 1) * 2,
+					   (bsz + 1) * 2,
+					   sp->h - (2 * ((bsz + 1) * 2)));
 		       _tilebuf_add_redraw(tb, 
-					   sp->w - (((bsz + 1) * 2) / q), 
-					   ((bsz + 1) * 2) / q,
-					   ((bsz + 1) * 2) / q,
-					   sp->h - (2 * (((bsz + 1) * 2) / q)));
+					   sp->w - ((bsz + 1) * 2), 
+					   (bsz + 1) * 2,
+					   (bsz + 1) * 2,
+					   sp->h - (2 * ((bsz + 1) * 2)));
 		       _tilebuf_add_redraw(tb, 
 					   0, 
-					   sp->h - (((bsz + 1) * 2) / q),
-					   (shw + (bsz * 2)) / q,
-					   ((bsz + 1) * 2) / q);
+					   sp->h - ((bsz + 1) * 2),
+					   shw + (bsz * 2),
+					   (bsz + 1) * 2);
 		    }
 		  brects = _tilebuf_get_render_rects(tb);
 #if 0 /* enable this to see how dropshadow minimises what it has to go blur */
@@ -1158,7 +1240,7 @@ _ds_shadow_recalc(Shadow *sh)
 		  printf("done\n");
 #else		  
 		  _ds_shpix_blur_rects(sp, brects,
-				       sh->ds->table.gauss2, (bsz) / q);
+				       sh->ds->table.gauss2, bsz, sh->ds->conf->quality);
 #endif		  
 		  _ds_shadow_obj_init_rects(sh, brects);
 		  for (l = brects, ll = sh->object_list; 
@@ -1325,7 +1407,7 @@ _ds_shadow_recalc(Shadow *sh)
 static void
 _ds_config_darkness_set(Dropshadow *ds, double v)
 {
-   Evas_List *l;
+   Evas_List *l, *ll;
    
    if (v < 0.0) v = 0.0;
    else if (v > 1.0) v = 1.0;
@@ -1337,10 +1419,25 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 	int i;
 
 	sh = l->data;
-	for (i = 0; i < 4; i++)
-	  evas_object_color_set(sh->object[i],
-				255, 255, 255, 
-				255 * ds->conf->shadow_darkness);
+	if (sh->object_list)
+	  {
+	     for (ll = sh->object_list; ll; ll = ll->next)
+	       {
+		  Shadow_Object *so;
+		  
+		  so = ll->data;
+		  evas_object_color_set(so->obj,
+					255, 255, 255, 
+					255 * ds->conf->shadow_darkness);
+	       }
+	  }
+	else
+	  {
+	     for (i = 0; i < 4; i++)
+	       evas_object_color_set(sh->object[i],
+				     255, 255, 255, 
+				     255 * ds->conf->shadow_darkness);
+	  }
      }
    e_config_save_queue();
 }
@@ -1395,10 +1492,31 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
 }
 
 static void
+_ds_config_quality_set(Dropshadow *ds, int q)
+{
+   Evas_List *l;
+   
+   if (q < 1) q = 1;
+   if (q > 4) q = 4;
+   if (q == 3) q = 4;
+   if (ds->conf->quality == q) return;
+   ds->conf->quality = q;
+   _ds_blur_init(ds);
+   for (l = ds->shadows; l; l = l->next)
+     {
+	Shadow *sh;
+	
+	sh = l->data;
+	_ds_shadow_obj_clear(sh);
+	_ds_shadow_shaperects(sh);
+     }
+   e_config_save_queue();
+}
+
+static void
 _ds_blur_init(Dropshadow *ds)
 {
    int i;
-   int q;
    
    if (ds->table.gauss) free(ds->table.gauss);
    ds->table.gauss_size = (ds->conf->blur_size * 2) - 1;
@@ -1415,19 +1533,18 @@ _ds_blur_init(Dropshadow *ds)
 	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
    
-   q = ds->conf->quality;
    if (ds->table.gauss2) free(ds->table.gauss2);
-   ds->table.gauss2_size = ((ds->conf->blur_size / q) * 2) - 1;
+   ds->table.gauss2_size = (ds->conf->blur_size * 2) - 1;
    ds->table.gauss2 = calloc(1, ds->table.gauss2_size * sizeof(unsigned char));
    
-   ds->table.gauss2[(ds->conf->blur_size / q) - 1] = 255;
-   for (i = 1; i < ((ds->conf->blur_size / q) - 1); i++)
+   ds->table.gauss2[ds->conf->blur_size - 1] = 255;
+   for (i = 1; i < (ds->conf->blur_size - 1); i++)
      {
 	double v;
 	
-	v = (double)i / ((ds->conf->blur_size / q) - 2);
-	ds->table.gauss2[(ds->conf->blur_size / q) - 1 + i] =
-	  ds->table.gauss2[(ds->conf->blur_size / q) - 1 - i] =
+	v = (double)i / (ds->conf->blur_size - 2);
+	ds->table.gauss2[ds->conf->blur_size - 1 + i] =
+	  ds->table.gauss2[ds->conf->blur_size - 1 - i] =
 	  _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
 }
@@ -1454,7 +1571,7 @@ _ds_gauss_int(double x)
 }
 
 static void
-_ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy)
+_ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
    int i, sum, weight, x1, x2, l, l1, l2, wt;
@@ -1464,7 +1581,7 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
    full = 0;
    for (i = 0; i < (blur * 2) - 1; i++)
      full += lut[i];
-   for (x = rx; x < rxx; x++)
+   for (x = rx; x < rxx; x += q)
      {
 	usefull = 1;
 	
@@ -1546,6 +1663,69 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  pp += pix_w;
 	       }
 	  }
+	/* if its an even number of pixels - force the last row to be done too
+	 * as we can't really interpolate that
+	 */
+	if ((q == 2) && (x == (rxx - 2)))
+	  x--;
+	else if ((q == 4) && (x >= (rxx - 4)) && (x < (rxx - 1)))
+	  x = rxx - 1 - 4;
+     }
+   if (q == 2)
+     {
+	for (x = rx + 1; x < rxx; x += q)
+	  {
+	     p2 = pix_dst + x + (ry * pix_w);
+	     for (y = ry; y < ryy; y++)
+	       {
+		  *p2 = ((*(p2 - 1)) + (*(p2 + 1))) / 2;
+		  p2 += pix_w;
+	       }
+	     if (x == (rxx - 3)) break;
+	  }
+     }
+   else if (q == 4)
+     {
+	for (x = rx + 1; x < rxx; x += q)
+	  {
+	     /* 3 pix left to interp */
+	     if (x <= (rxx - 4))
+	       {
+		  p2 = pix_dst + x + 1 + (ry * pix_w);
+		  for (y = ry; y < ryy; y++)
+		    {
+		       *p2 = ((*(p2 - 2)) + (*(p2 + 2))) / 2;
+		       *(p2 - 1) = ((*(p2 - 2)) + (*(p2))) / 2;
+		       *(p2 + 1) = ((*(p2 + 2)) + (*(p2))) / 2;
+		       p2 += pix_w;
+		    }
+	       }
+	     /* 1 pix left to interp */
+	     else if (x == (rxx - 2))
+	       {
+		  p2 = pix_dst + x + (ry * pix_w);
+		  for (y = ry; y < ryy; y++)
+		    {
+		       *p2 = ((*(p2 - 1)) + (*(p2 + 1))) / 2;
+		       p2 += pix_w;
+		    }
+		  break;
+	       }
+	     /* 2 pix left to interp */
+	     else if (x == (rxx - 3))
+	       {
+		  p2 = pix_dst + x + (ry * pix_w);
+		  for (y = ry; y < ryy; y++)
+		    {
+		       *p2 = (((*(p2 - 1)) * 2) + (*(p2 + 2))) / 3;
+		       *(p2 + 1) = ((*(p2 - 1)) + ((*(p2 + 2)) * 2)) / 3;
+		       p2 += pix_w;
+		    }
+		  break;
+	       }
+	     else if (x == (rxx - 1))
+	       break;
+	  }
      }
 #ifdef MMX
    emms();
@@ -1553,7 +1733,7 @@ _ds_gauss_blur_h(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 }
 
 static void
-_ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int rx, int ry, int rxx, int ryy)
+_ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
    int i, sum, weight, l, l1, l2, wt, y1, y2, tpix;
@@ -1563,7 +1743,7 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
    full = 0;
    for (i = 0; i < (blur * 2) - 1; i++)
      full += lut[i];
-   for (y = ry; y < ryy; y++)
+   for (y = ry; y < ryy; y += q)
      {
 	usefull = 1;
 	
@@ -1648,6 +1828,68 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 		  pp++;
 	       }
 	  }
+	/* if its an even number of pixels - force the last row to be done too
+	 * as we can't really interpolate that
+	 */
+	if ((q == 2) && (y == (ryy - 2))) y--;
+	else if ((q == 4) && (y >= (ryy - 4)) && (y < (ryy - 1)))
+	  y = ryy - 1 - 4;
+     }
+   if (q == 2)
+     {
+	for (y = ry + 1; y < ryy; y += q)
+	  {
+	     p2 = pix_dst + (y * pix_w) + rx;
+	     for (x = rx; x < rxx; x++)
+	       {
+		  *p2 = ((*(p2 - pix_w)) + (*(p2 + pix_w))) / 2;
+		  p2++;
+	       }
+	     if (y == (ryy - 3)) break;
+	  }
+     }
+   else if (q == 4)
+     {
+	for (y = ry + 1; y < ryy; y += q)
+	  {
+	     /* 3 pix left to interp */
+	     if (y <= (ryy - 4))
+	       {
+		  p2 = pix_dst + ((y + 1) * pix_w) + rx;
+		  for (x = rx; x < rxx; x++)
+		    {
+		       *p2 = ((*(p2 - (pix_w * 2))) + (*(p2 + (pix_w * 2)))) / 2;
+		       *(p2 - pix_w) = ((*(p2 - (pix_w * 2))) + (*(p2))) / 2;
+		       *(p2 + pix_w) = ((*(p2 + (pix_w * 2))) + (*(p2))) / 2;
+		       p2++;
+		    }
+	       }
+	     /* 1 pix left to interp */
+	     else if (y == (ryy - 2))
+	       {
+		  p2 = pix_dst + (y * pix_w) + rx;
+		  for (x = rx; x < rxx; x++)
+		    {
+		       *p2 = ((*(p2 - pix_w)) + (*(p2 + pix_w))) / 2;
+		       p2++;
+		    }
+		  break;
+	       }
+	     /* 2 pix left to interp */
+	     else if (y == (ryy - 3))
+	       {
+		  p2 = pix_dst + (y * pix_w) + rx;
+		  for (x = rx; x < rxx; x++)
+		    {
+		       *p2 = (((*(p2 - pix_w)) * 2) + (*(p2 + (pix_w * 2)))) / 3;
+		       *(p2 + pix_w) = ((*(p2 - pix_w)) + ((*(p2 + (pix_w * 2))) * 2)) / 3;
+		       p2++;
+		    }
+		  break;
+	       }
+	     else if (y == (ryy - 1))
+	       break;
+	  }
      }
 #ifdef MMX
    emms();
@@ -1720,7 +1962,7 @@ _ds_shpix_fill(Shpix *sp, int x, int y, int w, int h, unsigned char val)
 }
 
 static void
-_ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size)
+_ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, int blur_size, int q)
 {
    Shpix *sp2;
    
@@ -1752,17 +1994,17 @@ _ds_shpix_blur(Shpix *sp, int x, int y, int w, int h, unsigned char *blur_lut, i
    memcpy(sp2->pix, sp->pix, sp->w * sp->h);
    _ds_gauss_blur_h(sp->pix, sp2->pix,
 		    sp->w, sp->h,
-		    blur_lut, blur_size,
+		    blur_lut, blur_size, q,
 		    x, y, x + w, y + h);
    _ds_gauss_blur_v(sp2->pix, sp->pix,
 		    sp->w, sp->h,
-		    blur_lut, blur_size,
+		    blur_lut, blur_size, q,
 		    x, y, x + w, y + h);
    _ds_shpix_free(sp2);
 }
 
 static void
-_ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size)
+_ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int blur_size, int q)
 {
    Shpix *sp2;
    Evas_List *l;
@@ -1802,7 +2044,7 @@ _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int b
 	if ((y + h) > (sp->h)) h = sp->h - y;
 	_ds_gauss_blur_h(sp->pix, sp2->pix,
 			 sp->w, sp->h,
-			 blur_lut, blur_size,
+			 blur_lut, blur_size, q,
 			 x, y, x + w, y + h);
      }
    for (l = rects; l; l = l->next)
@@ -1833,7 +2075,7 @@ _ds_shpix_blur_rects(Shpix *sp, Evas_List *rects, unsigned char *blur_lut, int b
 	if ((y + h) > (sp->h)) h = sp->h - y;
 	_ds_gauss_blur_v(sp2->pix, sp->pix,
 			 sp2->w, sp2->h,
-			 blur_lut, blur_size,
+			 blur_lut, blur_size, q,
 			 x, y, x + w, y + h);
      }
    _ds_shpix_free(sp2);
@@ -1994,7 +2236,7 @@ _ds_shared_use(Dropshadow *ds, Shadow *sh)
 			*/
 		       _ds_shpix_blur(sp, 0, 0, 
 				      shw + (bsz * 2), shh + (bsz * 2),
-				      ds->table.gauss, bsz);
+				      ds->table.gauss, bsz, ds->conf->quality);
 
 		       ds->shared.shadow[0] = 
 			 _ds_shstore_new(sp,

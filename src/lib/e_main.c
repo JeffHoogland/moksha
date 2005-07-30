@@ -243,6 +243,35 @@ e_lib_background_get(void)
 }
 
 void
+e_lib_desktop_background_add(const char *con, const char *zone, const char *desk_x, const char *desk_y, const char *bgfile)
+{
+   char *params[5];
+   if(!bgfile | !desk_y | !desk_x | !zone | !con)
+     return;
+   params[0] = strdup(con);
+   params[1] = strdup(zone);
+   params[2] = strdup(desk_x);
+   params[3] = strdup(desk_y);
+   params[4] = strdup(bgfile);
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_ADD, params);
+   free(params);
+}
+
+void
+e_lib_desktop_background_del(const char *con, const char *zone, const char *desk_x, const char *desk_y)
+{
+   char *params[4];
+   if(!desk_y | !desk_x | !zone | !con)
+     return;
+   params[0] = strdup(con);
+   params[1] = strdup(zone);
+   params[2] = strdup(desk_x);
+   params[3] = strdup(desk_y);
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_DEL, params);
+   free(params);
+}
+
+void
 e_lib_theme_get(const char *category)
 {
    char *tmp;
