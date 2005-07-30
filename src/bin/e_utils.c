@@ -257,7 +257,7 @@ e_util_immortal_check(void)
 }
 
 int
-e_util_ejde_icon_list_set(Evas_Object *obj, char *list)
+e_util_edje_icon_list_set(Evas_Object *obj, char *list)
 {
    char *buf;
    char *p, *c;
@@ -298,7 +298,7 @@ e_util_ejde_icon_list_set(Evas_Object *obj, char *list)
 }
 
 int
-e_util_menu_item_ejde_icon_list_set(E_Menu_Item *mi, char *list)
+e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
 {
    char *buf;
    char *p, *c;
