@@ -94,8 +94,8 @@ extern "C" {
    /* E desktop manipulation */
    EAPI void         e_lib_background_set             (const char *bgfile);
    EAPI void         e_lib_background_get             (void);
-   EAPI void         e_lib_desktop_background_add     (const char *con, const char *zone, const char *desk_x, const char *desk_y, const char *bgfile);
-   EAPI void         e_lib_desktop_background_del     (const char *con, const char *zone, const char *desk_x, const char *desk_y);
+   EAPI void         e_lib_desktop_background_add     (const int con, const int zone, const int desk_x, const int desk_y, const char *bgfile);
+   EAPI void         e_lib_desktop_background_del     (const int con, const int zone, const int desk_x, const int desk_y);
 
    /* E current theme manipulation */
    EAPI void         e_lib_theme_get                  (const char *category);

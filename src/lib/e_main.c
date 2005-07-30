@@ -272,6 +272,79 @@ e_lib_desktop_background_del(const char *con, const char *zone, const char *desk
 }
 
 void
+e_lib_desktop_background_add(const char *con, const char *zone, const char *desk_x, const char *desk_y, const char *bgfile)
+{
+   char *params[5];
+   if(!bgfile | !desk_y | !desk_x | !zone | !con)
+     return;
+   params[0] = strdup(con);
+   params[1] = strdup(zone);
+   params[2] = strdup(desk_x);
+   params[3] = strdup(desk_y);
+   params[4] = strdup(bgfile);
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_ADD, params);
+   free(params);
+}
+
+void
+e_lib_desktop_background_del(const char *con, const char *zone, const char *desk_x, const char *desk_y)
+{
+   char *params[4];
+   if(!desk_y | !desk_x | !zone | !con)
+     return;
+   params[0] = strdup(con);
+   params[1] = strdup(zone);
+   params[2] = strdup(desk_x);
+   params[3] = strdup(desk_y);
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_DEL, params);
+   free(params);
+}
+
+void
+e_lib_desktop_background_add(const int con, const int zone, const int desk_x, const int desk_y, const char *bgfile)
+{
+   char *params[5];
+   int i;
+   if(!bgfile)
+     return;
+   for(i = 0; i < 4; i++)
+     params[i] = (char *)calloc(5,sizeof(char));
+   sprintf(params[0],"%i",con);
+   sprintf(params[1],"%i",zone);
+   sprintf(params[2],"%i",desk_x);
+   sprintf(params[3],"%i",desk_y);
+   params[4] = strdup(bgfile);
+   if(!params[0] | !params[1] | !params[2] | !params[3] | !params[4])
+     return;
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_ADD, params);
+   free(params[0]);
+   free(params[1]);
+   free(params[2]);
+   free(params[3]);
+   free(params[4]);
+}
+
+void
+e_lib_desktop_background_del(const int con, const int zone, const int desk_x, const int desk_y)
+{
+   int i;
+   char *params[4];
+   for(i = 0; i < 4; i++)
+     params[i] = (char *)calloc(5,sizeof(char));
+   sprintf(params[0],"%i",con);
+   sprintf(params[1],"%i",zone);
+   sprintf(params[2],"%i",desk_x);
+   sprintf(params[3],"%i",desk_y);
+   if(!params[0] | !params[1] | !params[2] | !params[3])
+     return;
+   _e_ipc_call(E_IPC_OP_DESKTOP_BG_DEL, params);
+   free(params[0]);
+   free(params[1]);
+   free(params[2]);
+   free(params[3]);
+}
+
+void
 e_lib_theme_get(const char *category)
 {
    char *tmp;
