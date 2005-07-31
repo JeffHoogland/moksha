@@ -276,6 +276,16 @@ e_winlist_active_get(void)
 void
 e_winlist_next(void)
 {
+   if (evas_list_count(wins) == 1)
+     {
+	if (!win_selected)
+	  {
+	     win_selected = wins;
+	     _e_winlist_show_active();
+	     _e_winlist_activate();
+	  }
+	return;
+     }
    _e_winlist_deactivate();
    if (!win_selected)
      win_selected = wins;
@@ -289,6 +299,16 @@ e_winlist_next(void)
 void
 e_winlist_prev(void)
 {
+   if (evas_list_count(wins) == 1)
+     {
+	if (!win_selected)
+	  {
+	     win_selected = wins;
+	     _e_winlist_show_active();
+	     _e_winlist_activate();
+	  }
+	return;
+     }
    _e_winlist_deactivate();
    if (!win_selected)
      win_selected = wins;
