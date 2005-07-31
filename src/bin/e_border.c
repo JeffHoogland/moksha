@@ -4549,6 +4549,17 @@ _e_border_eval(E_Border *bd)
 				       bd->y + bd->client_inset.t,
 				       bd->client.w,
 				       bd->client.h);
+	/* if the explicit geometry request asks for the app to be
+	 * in another zone - well move it there */
+	  {
+	     E_Zone *zone;
+	     
+	     zone = e_container_zone_at_point_get(bd->zone->container,
+						  bd->x + (bd->w / 2),
+						  bd->y + (bd->h / 2));
+	     if (zone != bd->zone)
+	       e_border_zone_set(bd, zone);
+	  }
      }
 
    /* effect changes to the window border itself */
