@@ -17,7 +17,8 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
    while ((border = e_container_border_list_next(bl)))
      {
 	/* Build a list of windows on this desktop and not iconified. */
-	if ((border->desk == desk) && !(border->iconic))
+	if ((border->desk == desk) && (!border->iconic) &&
+	    (!border->lock_user_location))
 	  {
 	     int area;
 	     Evas_List *ll;
@@ -27,8 +28,9 @@ e_place_zone_region_smart_cleanup(E_Zone *zone)
 	     for (ll = borders; ll; ll = ll->next)
 	       {
 		  int testarea;
-		  E_Border *bd = ll->data;
-
+		  E_Border *bd;
+		  
+		  bd = ll->data;
 		  testarea = bd->w * bd->h;
 		  /* Insert the border if larger than the current border */
 		  if (area >= testarea)

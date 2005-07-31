@@ -880,6 +880,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	/* FIXME: Sometimes we should leave the window fullscreen! */
 	if (bd->fullscreen)
 	  e_border_unfullscreen(bd);
+	if (bd->raise_timer)
+	  {
+	     ecore_timer_del(bd->raise_timer);
+	     bd->raise_timer = NULL;
+	  }
      }
    bd->focused = focus;
    if (set)
@@ -947,6 +952,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized)) return;
+   if (!strcmp("borderless", bd->client.border.name)) return;
    if (!bd->shaded)
      {
 //	printf("SHADE!\n");
@@ -3842,7 +3848,7 @@ _e_border_eval(E_Border *bd)
    if (bd->client.netwm.fetch.type)
      {
 	e_hints_window_type_get(bd);
-	if ((!bd->lock_border) || (!bd->client.border.name))
+	if (((!bd->lock_border) || (!bd->client.border.name)) && (!bd->shaded))
 	  {
 	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
 	       {
@@ -3999,7 +4005,8 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (bd->client.mwm.borderless != pb)
 	  {
-	     if ((!bd->lock_border) || (!bd->client.border.name))
+	     if (((!bd->lock_border) || (!bd->client.border.name))
+		 && (!bd->shaded))
 	       {
 		  if (bd->client.border.name) free(bd->client.border.name);
 		  if (bd->client.mwm.borderless)
@@ -4111,7 +4118,14 @@ _e_border_eval(E_Border *bd)
    if (bd->new_client)
      {
 	E_Remember *rem = NULL;
-	
+	E_Event_Border_Add *ev;
+
+	ev = calloc(1, sizeof(E_Event_Border_Add));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+//	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
+	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
+
 	if (!bd->remember)
 	  {
 	     rem = e_remember_find(bd);
@@ -4391,8 +4405,6 @@ _e_border_eval(E_Border *bd)
    
    if (bd->new_client)
      {
-	E_Event_Border_Add *ev;
-
 	bd->new_client = 0;
 //	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
@@ -4527,12 +4539,6 @@ _e_border_eval(E_Border *bd)
 	     free(pnd);
 	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
 	  }
-
-	ev = calloc(1, sizeof(E_Event_Border_Add));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
-	ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
      	/* Recreate state */
 	/* FIXME: this should be split into property fetches and state setup */
@@ -5845,7 +5851,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	e_menu_item_separator_set(mi, 1);
      }
    
-   if (!bd->lock_user_shade)
+   if ((!bd->lock_user_shade) && (!(!strcmp("borderless", bd->client.border.name))))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Shaded"));
@@ -5891,8 +5897,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/stacking"),
 			     "widgets/border/default/stacking");
-   
-   if (!bd->lock_border)
+   if ((!bd->shaded) && (!bd->lock_border))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Borderless"));
@@ -5904,7 +5909,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 								"widgets/border/default/borderless"),
 				  "widgets/border/default/borderless");
      }
-
+   
    if (!bd->lock_user_fullscreen)
      {
 	mi = e_menu_item_new(m);
@@ -6159,15 +6164,17 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
    
-   toggle = e_menu_item_toggle_get(mi);
-   if (bd->client.border.name) free(bd->client.border.name);
-   
-   if (toggle)
-     bd->client.border.name = strdup("borderless");
-   else
-     bd->client.border.name = strdup("default");
-   bd->client.border.changed = 1;
-   bd->changed = 1;
+   if ((!bd->lock_border) && (!bd->shaded))
+     {
+	if (bd->client.border.name) free(bd->client.border.name);
+	toggle = e_menu_item_toggle_get(mi);
+	if (toggle)
+	  bd->client.border.name = strdup("borderless");
+	else
+	  bd->client.border.name = strdup("default");
+	bd->client.border.changed = 1;
+	bd->changed = 1;
+     }
 }
 
 static void

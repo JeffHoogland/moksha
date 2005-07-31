@@ -44,6 +44,7 @@ struct _E_Container
    Evas                *bg_evas;
    Evas_Object         *bg_blank_object;
    Ecore_X_Window       bg_win;
+   Ecore_X_Window       event_win;
    
    Evas_List           *shapes;
    Evas_List           *shape_change_cb;
@@ -135,7 +136,7 @@ EAPI void               e_container_border_stack_below(E_Border *bd, E_Border *b
 
 EAPI void               e_container_all_freeze(void);
 EAPI void               e_container_all_thaw(void);
-    
+
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 
 #endif

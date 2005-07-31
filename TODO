@@ -8,11 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: must delete aurtais timer on focus out.
-* BUG: remember stickiness does not show in the pager when applied later by
-  the remember code
-* e_hints.c manually changes flags on a border isnetad of calling
-  e_border_stick() for exampe or the calls in e_border.c - add calls as needed
+* e_hints.c manually changes flags on a border instead of calling
+  e_border_stick() for example or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.
 * BUG: in general fullscreen needs work, cleaning and testing. dont allow
   desktop switches for the desk a fullscreened window is on, nor allow windows
@@ -28,7 +25,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
-* BUG?: pager problems. Seems to loose or mess up windows sometimes.
 * BUG?: xine's ui window/panel is under its video window when u go fullscreen
 ]]]
 
@@ -37,12 +33,10 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* in addition to smart place should add manual placement and place at pointer
+  and maybe a few others.
 * support xrandr to change res from e itself (and save it etc.)
 * emit signal to submenu entries if they have a submenu shown for them or not
-* add window placement options like place at pointer
-* shaded windows should not allow border changes by the user
-* if a border is borderless it should not be allowed to be shaded (padl/r/t/b
-  is 0)
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
@@ -94,8 +88,6 @@ Some of the things (in very short form) that need to be done to E17...
   specifies the locale and font) and then install the font(s) either as a user
   or superuser, and the .mo in the system or a user locales dir.
 * all menus need icons if they dont have them  yet:)
-* gadman edit mode for simple gadgets activate with a button bind (eg
-  alt+click on module like windows) or a pure key binding
 * gadget containers (shelves?) using popups as well as in-line in a canvas
 * add key input focus control for desktop modules
 * finish off icccm support
@@ -106,7 +98,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add a "taskbar" module
 * add cpu load module
 * add a way to access "all" apps app dir
-* ibar need to handle drop from other places (xdnd, drop from window etc.)
 * dnd from pager to other pagers/ to desktop/ibox etc.
 * ibar should enable user to select different dirs to view per bar and allow
   new bars to be created or bars to be deleted
@@ -122,6 +113,7 @@ Some of the things (in very short form) that need to be done to E17...
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
 * add really nice "about" box with theme, authors credits list etc etc.
+* theme about data/box
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
 * make it possible to disable border buttons/actions (tell theme what is
@@ -151,7 +143,6 @@ Some of the things (in very short form) that need to be done to E17...
   window - otherwise click to focus or pointer focus will chose the selected
   window that may get the focus if it allows it...
 * module api needs to move label and icon to data file (.eap file?), not api
-* make e17 re-locatable (ie use e_prefix.c stuff instead of #defined paths)
 * ibar lamp needs short timer on mouse out for hide before hiding (and del
   the time on mouse in)
 * allow object paranoia to be a runtime option too

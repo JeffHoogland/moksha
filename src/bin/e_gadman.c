@@ -127,12 +127,22 @@ e_gadman_mode_set(E_Gadman *gm, E_Gadman_Mode mode)
    if (gm->mode == E_GADMAN_MODE_EDIT)
      {
 	for (l = gm->clients; l; l = l->next)
-	  _e_gadman_client_edit_begin(l->data);
+	  {
+	     E_Gadman_Client *gmc;
+	     
+	     gmc = l->data;
+	     _e_gadman_client_edit_begin(gmc);
+	  }
      }
    else if (gm->mode == E_GADMAN_MODE_NORMAL)
      {
 	for (l = gm->clients; l; l = l->next)
-	  _e_gadman_client_edit_end(l->data);
+	  {
+	     E_Gadman_Client *gmc;
+	     
+	     gmc = l->data;
+	     _e_gadman_client_edit_end(gmc);
+	  }
      }
 }
 
@@ -281,6 +291,9 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	else
 	  gmc->y = gmc->zone->y;
 	free(cf);
+     }
+   else
+     {
      }
    _e_gadman_client_overlap_deny(gmc);
    e_object_ref(E_OBJECT(gmc));
@@ -717,6 +730,15 @@ _e_gadman_client_edit_begin(E_Gadman_Client *gmc)
 static void
 _e_gadman_client_edit_end(E_Gadman_Client *gmc)
 {
+   if (gmc->moving) e_move_end();
+   if ((gmc->resizing_l) || (gmc->resizing_r) ||
+       (gmc->resizing_u) || (gmc->resizing_d))
+       e_resize_end();
+   gmc->moving = 0;
+   gmc->resizing_l = 0;
+   gmc->resizing_r = 0;
+   gmc->resizing_u = 0;
+   gmc->resizing_d = 0;
    evas_object_del(gmc->control_object);
    gmc->control_object = NULL;
    evas_object_del(gmc->event_object);

@@ -13,15 +13,24 @@
 /* local subsystem functions */
 static void _e_container_free(E_Container *con);
 
+static E_Container *_e_container_find_by_event_window(Ecore_X_Window win);
+
+static int  _e_container_cb_mouse_in(void *data, int type, void *event);
+static int  _e_container_cb_mouse_out(void *data, int type, void *event);
+static int  _e_container_cb_mouse_down(void *data, int type, void *event);
+static int  _e_container_cb_mouse_up(void *data, int type, void *event);
+static int  _e_container_cb_mouse_move(void *data, int type, void *event);
+static int  _e_container_cb_mouse_wheel(void *data, int type, void *event);
+
 static void _e_container_shape_del(E_Container_Shape *es);
 static void _e_container_shape_free(E_Container_Shape *es);
 static void _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change ch);
 static void _e_container_resize_handle(E_Container *con);
 static void _e_container_event_container_resize_free(void *data, void *ev);
-static void _e_container_cb_mouse_in(Ecore_Evas *ee);
 
 int E_EVENT_CONTAINER_RESIZE = 0;
 static int container_count;
+static Evas_List *handlers = NULL;
 
 /* externally accessible functions */
 int
@@ -29,12 +38,24 @@ e_container_init(void)
 {
    E_EVENT_CONTAINER_RESIZE = ecore_event_type_new();
    container_count = 0;
+   
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_container_cb_mouse_in, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_container_cb_mouse_out, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN, _e_container_cb_mouse_down, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP, _e_container_cb_mouse_up, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE, _e_container_cb_mouse_move, NULL));
+   handlers = evas_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL, _e_container_cb_mouse_wheel, NULL));
    return 1;
 }
 
 int
 e_container_shutdown(void)
 {
+   while (handlers)
+     {
+	ecore_event_handler_del(handlers->data);
+	handlers = evas_list_remove_list(handlers, handlers);
+     }
    return 1;
 }
 
@@ -82,7 +103,8 @@ e_container_new(E_Manager *man)
 	ecore_evas_override_set(con->bg_ecore_evas, 1);
 	con->bg_win = ecore_evas_software_x11_window_get(con->bg_ecore_evas);
      }
-   ecore_evas_callback_mouse_in_set(con->bg_ecore_evas, _e_container_cb_mouse_in);
+   con->event_win = ecore_x_window_input_new(con->bg_win, 0, 0, con->w, con->h);
+   ecore_x_window_show(con->event_win);
    e_canvas_add(con->bg_ecore_evas);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
@@ -868,6 +890,7 @@ _e_container_free(E_Container *con)
    Evas_List *l, *tmp;
    int i;
 
+   ecore_x_window_del(con->event_win);
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
@@ -896,6 +919,134 @@ _e_container_free(E_Container *con)
    if (con->name)
      free(con->name);
    free(con);
+}
+
+static E_Container *
+_e_container_find_by_event_window(Ecore_X_Window win)
+{
+   Evas_List *managers, *l;
+   
+   managers = e_manager_list();
+   for (l = managers; l; l = l->next)
+     {
+	Evas_List *ll;
+	E_Manager *man;
+	
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     E_Container *con;
+	     
+	     con = ll->data;
+	     if (con->event_win == win) return con;
+	  }
+     }
+   return NULL;
+}
+
+static int
+_e_container_cb_mouse_in(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_In *ev;
+   E_Border *bd;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+	bd = e_border_focused_get();
+	if (bd) e_focus_event_mouse_out(bd);
+	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
+        evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_container_cb_mouse_out(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Out *ev;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
+        evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_container_cb_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+        Evas_Button_Flags flags = EVAS_BUTTON_NONE;
+
+	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
+					   E_OBJECT(con), ev);
+	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
+	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
+	evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_container_cb_mouse_up(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Up *ev;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
+        evas_event_feed_mouse_up(con->bg_evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
+	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_CONTAINER,
+					 E_OBJECT(con), ev);
+     }
+   return 1;
+}
+
+static int
+_e_container_cb_mouse_move(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Move *ev;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+        evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_container_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   E_Container *con;
+   
+   ev = event;
+   con = _e_container_find_by_event_window(ev->event_win);
+   if (con)
+     {
+	evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
+     }
+   return 1;
 }
    
 static void
@@ -1012,20 +1163,4 @@ _e_container_event_container_resize_free(void *data, void *ev)
    e = ev;
    e_object_unref(E_OBJECT(e->container));
    free(e);
-}
-
-static void
-_e_container_cb_mouse_in(Ecore_Evas *ee)
-{
-   Evas *evas;
-   Evas_Object *o;
-   E_Container *con;
-   E_Border *bd;
-   
-   evas = ecore_evas_get(ee);
-   o = evas_object_name_find(evas, "desktop/background");
-   if (!o) return;
-   con = evas_object_data_get(o, "e_container");
-   bd = e_border_focused_get();
-   if (bd) e_focus_event_mouse_out(bd);
 }

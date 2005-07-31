@@ -198,8 +198,10 @@ E_Menu *
 e_int_menus_config_apps_new(void)
 {
    E_Menu *m;
+   char buf[4096];
    
-   m = e_int_menus_apps_new(PACKAGE_DATA_DIR "/config-apps");
+   snprintf(buf, sizeof(buf), "%s/config-apps", e_prefix_data_get());
+   m = e_int_menus_apps_new(buf);
    return m;
 }
 

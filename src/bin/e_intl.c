@@ -112,7 +112,7 @@ void
 e_intl_language_set(const char *lang)
 {
    /* 1 list ~/.e/e/locale contents */
-   /* 2 list LOCALE_DIR contents */
+   /* 2 list e_preifx_locale_get() contents */
    
    /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
@@ -149,7 +149,7 @@ e_intl_language_set(const char *lang)
 	else
 	  printf("An error occured trying to use the default locale\n");
      }
-   bindtextdomain(PACKAGE, LOCALE_DIR);
+   bindtextdomain(PACKAGE, e_prefix_locale_get());
    textdomain(PACKAGE);
 //   XSetLocaleModifiers("");
    bind_textdomain_codeset(PACKAGE, "UTF-8");

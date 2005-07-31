@@ -527,6 +527,15 @@ e_config_init(void)
 	     eb->action = strdup("menu_show");
 	     eb->params = strdup("favorites");
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
+	     
+	     eb = E_NEW(E_Config_Binding_Mouse, 1);
+	     eb->context = E_BINDING_CONTEXT_CONTAINER;
+	     eb->button = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("edit_mode");
+	     eb->params = strdup("");
+	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 	  }
 	  {
 	     E_Config_Binding_Key *eb;
@@ -844,6 +853,15 @@ e_config_init(void)
 	     eb->any_mod = 0;
 	     eb->action = strdup("winlist");
 	     eb->params = strdup("prev");
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("g");
+	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("edit_mode_toggle");
+	     eb->params = strdup("");
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
    /* should do these - can't yet due to other things missing... */

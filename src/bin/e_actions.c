@@ -847,6 +847,45 @@ ACT_FN_GO_KEY(winlist)
      }
 }
 
+/***************************************************************************/
+ACT_FN_GO(edit_mode)
+{
+   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+   if (!obj) return;
+   if (obj->type != E_CONTAINER_TYPE)
+     {
+	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+	if (!obj) return;
+     }
+   e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_EDIT);
+}
+ACT_FN_END(edit_mode)
+{
+   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+   if (!obj) return;
+   if (obj->type != E_CONTAINER_TYPE)
+     {
+	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+	if (!obj) return;
+     }
+   e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
+}
+
+/***************************************************************************/
+ACT_FN_GO(edit_mode_toggle)
+{
+   if (!obj) obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+   if (!obj) return;
+   if (obj->type != E_CONTAINER_TYPE)
+     {
+	obj = E_OBJECT(e_container_current_get(e_manager_current_get()));
+	if (!obj) return;
+     }
+   if (e_gadman_mode_get(((E_Container *)obj)->gadman) == E_GADMAN_MODE_NORMAL)
+     e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_EDIT);
+   else
+     e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
+}
 
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
@@ -913,6 +952,11 @@ e_actions_init(void)
    ACT_GO(winlist);
    ACT_GO_MOUSE(winlist);
    ACT_GO_KEY(winlist);
+   
+   ACT_GO(edit_mode);
+   ACT_END(edit_mode);
+   
+   ACT_GO(edit_mode_toggle);
    
    return 1;
 }

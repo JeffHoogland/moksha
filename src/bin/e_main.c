@@ -111,7 +111,38 @@ main(int argc, char **argv)
 		"       This is because it is not on Linux AND has been\n"
 		"       Executed strangely. This is unusual.\n"
 		);
-	exit(-1);
+	e_prefix_fallback();
+     }
+   else
+     {
+	/* do some extra tests to see if the prefix really is right */
+	char buf[4096];
+	
+	snprintf(buf, sizeof(buf), "%s/data/themes/default.edj",
+		 e_prefix_data_get());
+	if (!ecore_file_exists(buf))
+	  {
+	     printf("WARNING: Prefix guess was wrong. Guessed:\n"
+		    "         %s\n"
+		    "         Tried to find file:\n"
+		    "         %s\n",
+		    e_prefix_get(), buf);
+	     e_prefix_fallback();
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf), "%s/enlightenment/modules",
+		      e_prefix_data_get());
+	     if (!ecore_file_is_dir(buf))
+	       {
+		  printf("WARNING: Prefix guess was wrong. Guessed:\n"
+			 "         %s\n"
+			 "         Tried to find directory:\n"
+			 "         %s\n",
+			 e_prefix_get(), buf);
+		  e_prefix_fallback();
+	       }
+	  }
      }
    
    /* for debugging by redirecting stdout of e to a log file to tail */
@@ -667,7 +698,7 @@ _e_main_dirs_init(void)
 	snprintf(buf, sizeof(buf), 
 		 "gzip -d -c < %s/data/other/applications.tar.gz | "
 		 "(cd %s/.e/e/ ; tar -xf -)", 
-		 PACKAGE_DATA_DIR,
+		 e_prefix_data_get(),
 		 homedir);
 	system(buf);
      }
@@ -766,6 +797,8 @@ _e_main_screens_shutdown(void)
 static int
 _e_main_path_init(void)
 {
+   char buf[4096];
+   
    /* setup data paths */
    path_data = e_path_new();
    if (!path_data)
@@ -773,7 +806,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_data\n");
 	return 0;
      }
-   e_path_default_path_append(path_data, PACKAGE_DATA_DIR"/data");
+   snprintf(buf, sizeof(buf), "%s/data", e_prefix_data_get());
+   e_path_default_path_append(path_data, buf);
    e_path_user_path_set(path_data, &(e_config->path_append_data));
 
    /* setup image paths */
@@ -784,7 +818,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_images, "~/.e/e/images");
-   e_path_default_path_append(path_images, PACKAGE_DATA_DIR"/data/images");
+   snprintf(buf, sizeof(buf), "%s/data/images", e_prefix_data_get());
+   e_path_default_path_append(path_images, buf);
    e_path_user_path_set(path_images, &(e_config->path_append_images));
    
    /* setup font paths */
@@ -795,7 +830,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_fonts, "~/.e/e/fonts");
-   e_path_default_path_append(path_fonts, PACKAGE_DATA_DIR"/data/fonts");
+   snprintf(buf, sizeof(buf), "%s/data/fonts", e_prefix_data_get());
+   e_path_default_path_append(path_fonts, buf);
    e_path_user_path_set(path_fonts, &(e_config->path_append_fonts));
 
    /* setup theme paths */
@@ -806,7 +842,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_themes, "~/.e/e/themes");
-   e_path_default_path_append(path_themes, PACKAGE_DATA_DIR"/data/themes");
+   snprintf(buf, sizeof(buf), "%s/data/themes", e_prefix_data_get());
+   e_path_default_path_append(path_themes, buf);
    e_path_user_path_set(path_themes, &(e_config->path_append_themes));
 
    /* setup icon paths */
@@ -817,7 +854,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_icons, "~/.e/e/icons");
-   e_path_default_path_append(path_icons, PACKAGE_DATA_DIR"/data/icons");
+   snprintf(buf, sizeof(buf), "%s/data/icons", e_prefix_data_get());
+   e_path_default_path_append(path_icons, buf);
    e_path_user_path_set(path_icons, &(e_config->path_append_icons));
 
    /* setup init paths */
@@ -828,7 +866,8 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_init, "~/.e/e/init");
-   e_path_default_path_append(path_init, PACKAGE_DATA_DIR"/data/init");
+   snprintf(buf, sizeof(buf), "%s/data/init", e_prefix_data_get());
+   e_path_default_path_append(path_init, buf);
    e_path_user_path_set(path_init, &(e_config->path_append_init));
 
    /* setup module paths */
@@ -839,8 +878,14 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_modules, "~/.e/e/modules");
-   e_path_default_path_append(path_modules, PACKAGE_LIB_DIR"/enlightenment/modules");
-   e_path_default_path_append(path_modules, PACKAGE_LIB_DIR"/enlightenment/modules_extra");
+   snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_preifx_lib_get());
+   e_path_default_path_append(path_modules, buf);
+   /* FIXME: eventually this has to go - moduels shoudl have installers that
+    * add appropriate install paths (if not installed to user homedir) to
+    * e's module search dirs
+    */
+   snprintf(buf, sizeof(buf), "%s/enlightenment/modules_extra", e_preifx_lib_get());
+   e_path_default_path_append(path_modules, buf);
    e_path_user_path_set(path_modules, &(e_config->path_append_modules));    
 
    /* setup background paths */

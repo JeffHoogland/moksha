@@ -4,28 +4,38 @@
 #include "e.h"
 
 /* local subsystem functions */
+static int _e_prefix_fallbacks(void);
 static int _e_prefix_try_proc(void);
 static int _e_prefix_try_argv(char *argv0);
 
 /* local subsystem globals */
 static char *_exe_path = NULL;
 static char *_prefix_path = NULL;
+static char *_prefix_path_locale = NULL;
+static char *_prefix_path_bin = NULL;
+static char *_prefix_path_data = NULL;
+static char *_prefix_path_lib = NULL;
 
 /* externally accessible functions */
 int
 e_prefix_determine(char *argv0)
 {
    char *p;
-   
-   if (_exe_path) free(_exe_path);
-   _exe_path = NULL;
-   if (_prefix_path) free(_prefix_path);
-   _prefix_path = NULL;
+
+   IF_FREE(_exe_path);
+   IF_FREE(_prefix_path);
+   IF_FREE(_prefix_path_locale);
+   IF_FREE(_prefix_path_bin);
+   IF_FREE(_prefix_path_data);
+   IF_FREE(_prefix_path_lib);
    
    if (!_e_prefix_try_proc())
      {
 	if (!_e_prefix_try_argv(argv0))
-	  return 0;
+	  {
+	     _e_prefix_fallbacks();
+	     return 0;
+	  }
      }
    /* _exe_path is now a full absolute path TO this exe - figure out rest */
    /*   if
@@ -50,6 +60,27 @@ e_prefix_determine(char *argv0)
 		    {
 		       strncpy(_prefix_path, _exe_path, p - _exe_path);
 		       _prefix_path[p - _exe_path] = 0;
+		       
+		       _prefix_path_locale = malloc(strlen(_prefix_path) + 1 +
+						    strlen("/share/locale"));
+		       strcpy(_prefix_path_locale, _prefix_path);
+		       strcat(_prefix_path_locale, "/share/locale");
+		       
+		       _prefix_path_bin = malloc(strlen(_prefix_path) + 1 +
+						    strlen("/bin"));
+		       strcpy(_prefix_path_bin, _prefix_path);
+		       strcat(_prefix_path_bin, "/bin");
+		       
+		       _prefix_path_data = malloc(strlen(_prefix_path) + 1 +
+						    strlen("/share/enlightenment"));
+		       strcpy(_prefix_path_data, _prefix_path);
+		       strcat(_prefix_path_data, "/share/enlightenment");
+
+		       _prefix_path_lib = malloc(strlen(_prefix_path) + 1 +
+						    strlen("/lib"));
+		       strcpy(_prefix_path_lib, _prefix_path);
+		       strcat(_prefix_path_lib, "/lib");
+		       
 		       printf("DYNAMIC DETERMINED PREFIX: %s\n", _prefix_path);
 		       return 1;
 		    }
@@ -57,6 +88,7 @@ e_prefix_determine(char *argv0)
 		    {
 		       free(_exe_path);
 		       _exe_path = NULL;
+		       _e_prefix_fallbacks();
 		       return 0;
 		    }
 	       }
@@ -65,7 +97,20 @@ e_prefix_determine(char *argv0)
      }
    free(_exe_path);
    _exe_path = NULL;
+   _e_prefix_fallbacks();
    return 0;
+}
+
+void
+e_prefix_fallback(void)
+{
+   IF_FREE(_exe_path);
+   IF_FREE(_prefix_path);
+   IF_FREE(_prefix_path_locale);
+   IF_FREE(_prefix_path_bin);
+   IF_FREE(_prefix_path_data);
+   IF_FREE(_prefix_path_lib);
+   _e_prefix_fallbacks();
 }
 
 const char *
@@ -74,7 +119,48 @@ e_prefix_get(void)
    return _prefix_path;
 }
 
+const char *
+e_prefix_locale_get(void)
+{
+   return _prefix_path_locale;
+}
+
+const char *
+e_preifx_bin_get(void)
+{
+   return _prefix_path_bin;
+}
+
+const char *
+e_prefix_data_get(void)
+{
+   return _prefix_path_data;
+}
+
+const char *
+e_preifx_lib_get(void)
+{
+   return _prefix_path_lib;
+}
+
 /* local subsystem functions */
+static int
+_e_prefix_fallbacks(void)
+{
+   char *p;
+
+   _prefix_path = strdup(PACKAGE_BIN_DIR);
+   p = strrchr(_prefix_path, '/');
+   if (p) *p = 0;
+   _prefix_path_locale = strdup(LOCALE_DIR);
+   _prefix_path_bin = strdup(PACKAGE_BIN_DIR);
+   _prefix_path_data = strdup(PACKAGE_DATA_DIR);
+   _prefix_path_lib = strdup(PACKAGE_LIB_DIR);
+   printf("WARNING: Enlightenment could not determine its installed prefix\n"
+	  "         and is falling back on the compiled in default:\n"
+	  "         %s\n", _prefix_path);
+}
+
 static int
 _e_prefix_try_proc(void)
 {
