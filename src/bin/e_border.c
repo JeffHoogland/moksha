@@ -643,12 +643,12 @@ e_border_move(E_Border *bd, int x, int y)
 				  bd->client.w,
 				  bd->client.h);
    _e_border_move_update(bd);
-   _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Move));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //  e_object_breadcrumb_add(E_OBJECT(bd), "border_move_event");
    ecore_event_add(E_EVENT_BORDER_MOVE, ev, _e_border_event_border_move_free, NULL);
+   _e_border_zone_update(bd);
 }
 
 void
@@ -689,12 +689,12 @@ e_border_resize(E_Border *bd, int w, int h)
 				  bd->y + bd->client_inset.t,
 				  bd->client.w,
 				  bd->client.h);
-   _e_border_zone_update(bd);
    ev = calloc(1, sizeof(E_Event_Border_Resize));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
    ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
+   _e_border_zone_update(bd);
 }
 
 void
@@ -744,7 +744,6 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 				  bd->client.w,
 				  bd->client.h);
    _e_border_resize_update(bd);
-   _e_border_zone_update(bd);
    mev = calloc(1, sizeof(E_Event_Border_Move));
    mev->border = bd;
    e_object_ref(E_OBJECT(bd));
@@ -756,6 +755,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
    ecore_event_add(E_EVENT_BORDER_RESIZE, rev, _e_border_event_border_resize_free, NULL);
+   _e_border_zone_update(bd);
 }
 
 void
