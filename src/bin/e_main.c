@@ -132,7 +132,7 @@ main(int argc, char **argv)
 	else
 	  {
 	     snprintf(buf, sizeof(buf), "%s/enlightenment/modules",
-		      e_prefix_data_get());
+		      e_prefix_lib_get());
 	     if (!ecore_file_is_dir(buf))
 	       {
 		  printf("WARNING: Prefix guess was wrong. Guessed:\n"
