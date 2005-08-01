@@ -878,13 +878,13 @@ _e_main_path_init(void)
 	return 0;
      }
    e_path_default_path_append(path_modules, "~/.e/e/modules");
-   snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_preifx_lib_get());
+   snprintf(buf, sizeof(buf), "%s/enlightenment/modules", e_prefix_lib_get());
    e_path_default_path_append(path_modules, buf);
    /* FIXME: eventually this has to go - moduels shoudl have installers that
     * add appropriate install paths (if not installed to user homedir) to
     * e's module search dirs
     */
-   snprintf(buf, sizeof(buf), "%s/enlightenment/modules_extra", e_preifx_lib_get());
+   snprintf(buf, sizeof(buf), "%s/enlightenment/modules_extra", e_prefix_lib_get());
    e_path_default_path_append(path_modules, buf);
    e_path_user_path_set(path_modules, &(e_config->path_append_modules));    
 
