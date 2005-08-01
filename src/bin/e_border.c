@@ -922,6 +922,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
 	     focused->focused = 0;
 //		  e_border_focus_set(focused, 0, 0);
+	     if (focused->raise_timer)
+	       {
+		  ecore_timer_del(focused->raise_timer);
+		  focused->raise_timer = NULL;
+	       }
 	  }
 	focused = bd;
 	e_hints_active_window_set(bd->zone->container->manager, bd);
@@ -937,6 +942,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
 	     focused->focused = 0;
 //		  e_border_focus_set(focused, 0, 0);
+	     if (focused->raise_timer)
+	       {
+		  ecore_timer_del(focused->raise_timer);
+		  focused->raise_timer = NULL;
+	       }
 	  }
 	focused = NULL;
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
