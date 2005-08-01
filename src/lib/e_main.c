@@ -302,6 +302,21 @@ e_lib_theme_get(const char *category)
 }
 
 void
+e_lib_theme_set(const char *category, const char *file)
+{
+   char *tmp[2];
+   if (!category && !file)
+     return; 
+
+   tmp[0] = strdup(category);
+   tmp[1] = strdup(file);
+
+   _e_ipc_call(E_IPC_OP_THEME_SET, tmp);
+   free(tmp[0]);
+   free(tmp[1]);
+}
+
+void
 e_lib_language_set(const char *lang)
 {
    char *tmp;
