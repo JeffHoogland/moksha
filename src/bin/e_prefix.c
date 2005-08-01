@@ -126,7 +126,7 @@ e_prefix_locale_get(void)
 }
 
 const char *
-e_preifx_bin_get(void)
+e_prefix_bin_get(void)
 {
    return _prefix_path_bin;
 }
@@ -138,7 +138,7 @@ e_prefix_data_get(void)
 }
 
 const char *
-e_preifx_lib_get(void)
+e_prefix_lib_get(void)
 {
    return _prefix_path_lib;
 }
