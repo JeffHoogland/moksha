@@ -5,13 +5,13 @@
 #include "e_mod_main.h"
 
 #ifdef __FreeBSD__
-#include <sys/types.h>
-#include <sys/sysctl.h>
-#include <fcntl.h>
-  #ifdef __i386__
-  #include <machine/apm_bios.h>
-  #endif
-#include <stdio.h>
+# include <sys/types.h>
+# include <sys/sysctl.h>
+# include <fcntl.h>
+# ifdef __i386__
+#  include <machine/apm_bios.h>
+# endif
+# include <stdio.h>
 #endif
 
 /* TODO List:
@@ -27,8 +27,10 @@ static int           _battery_cb_check(void *data);
 static Status       *_battery_linux_acpi_check(Battery *ef);
 static Status       *_battery_linux_apm_check(Battery *ef);
 /* Should these be  #ifdef'd ?  */
+#ifdef __FreeBSD__
 static Status       *_battery_bsd_acpi_check(Battery *ef);
 static Status       *_battery_bsd_apm_check(Battery *ef);
+#endif
 
 static Battery_Face *_battery_face_new(E_Container *con);
 static void          _battery_face_free(Battery_Face *ef);
@@ -659,14 +661,16 @@ _battery_cb_check(void *data)
       	len = sizeof(acline);
       	if (sysctlbyname("hw.acpi.acline", &acline, &len, NULL, 0) == 0) 
       	  {
-      	     len = 3;
-      	     if (sysctlnametomib("hw.acpi.acline", acline_mib, &len) == 0)
+	     len = 3;
+	     if (sysctlnametomib("hw.acpi.acline", acline_mib, &len) == 0)
       	        ef->battery_check_mode = CHECK_ACPI; 
-      	  } else {
-      	     apm_fd = open("/dev/apm", O_RDONLY); 
+	  }
+	else
+	  {
+	     apm_fd = open("/dev/apm", O_RDONLY); 
 	     if (apm_fd != -1)
-	        ef->battery_check_mode = CHECK_APM;
-      	  }
+	       ef->battery_check_mode = CHECK_APM;
+	  }
      }
    switch (ef->battery_check_mode)
      {
@@ -1366,4 +1370,3 @@ _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    face = data;
    e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
-
