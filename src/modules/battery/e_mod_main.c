@@ -1076,6 +1076,7 @@ _battery_linux_apm_check(Battery *ef)
    return stat;
 }
 
+#ifdef __FreeBSD__
 static Status *
 _battery_bsd_acpi_check(Battery *ef)
 {
@@ -1332,6 +1333,7 @@ _battery_bsd_apm_check(Battery *ef)
    
    return stat;
 }
+#endif
 
 static void
 _battery_face_level_set(Battery_Face *ef, double level)
