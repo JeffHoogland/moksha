@@ -4,6 +4,16 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#ifdef __FreeBSD__
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#include <fcntl.h>
+  #ifdef __i386__
+  #include <machine/apm_bios.h>
+  #endif
+#include <stdio.h>
+#endif
+
 /* TODO List:
  *
  * which options should be in main menu, and which in face menu?
@@ -16,6 +26,9 @@ static void          _battery_config_menu_new(Battery *e);
 static int           _battery_cb_check(void *data);
 static Status       *_battery_linux_acpi_check(Battery *ef);
 static Status       *_battery_linux_apm_check(Battery *ef);
+/* Should these be  #ifdef'd ?  */
+static Status       *_battery_bsd_acpi_check(Battery *ef);
+static Status       *_battery_bsd_apm_check(Battery *ef);
 
 static Battery_Face *_battery_face_new(E_Container *con);
 static void          _battery_face_free(Battery_Face *ef);
@@ -98,7 +111,7 @@ e_modapi_about(E_Module *m)
    e_error_dialog_show(_("Enlightenment Battery Module"),
 		       _("A basic battery meter that uses either ACPI or APM\n"
 			 "on Linux to monitor your battery and AC power adaptor\n"
-			 "status. This will only work under Linux and is only\n"
+			 "status. This will work under Linux and FreeBSD and is only\n"
 			 "as accurate as your BIOS or kernel drivers."));
    return 1;
 }
@@ -635,24 +648,57 @@ _battery_cb_check(void *data)
    Status *ret = NULL;
 
    ef = data;
+#ifdef __FreeBSD__
+   int acline;
+   size_t len;
+   int apm_fd = -1;
+   int acline_mib[3] = {-1};
+   
    if (ef->battery_check_mode == 0)
      {
-	if (ecore_file_is_dir("/proc/acpi"))
-	  ef->battery_check_mode = CHECK_LINUX_ACPI;
-	else if (ecore_file_exists("/proc/apm"))
-	  ef->battery_check_mode = CHECK_LINUX_APM;
+      	len = sizeof(acline);
+      	if (sysctlbyname("hw.acpi.acline", &acline, &len, NULL, 0) == 0) 
+      	  {
+      	     len = 3;
+      	     if (sysctlnametomib("hw.acpi.acline", acline_mib, &len) == 0)
+      	        ef->battery_check_mode = CHECK_ACPI; 
+      	  } else {
+      	     apm_fd = open("/dev/apm", O_RDONLY); 
+	     if (apm_fd != -1)
+	        ef->battery_check_mode = CHECK_APM;
+      	  }
      }
    switch (ef->battery_check_mode)
      {
-      case CHECK_LINUX_ACPI:
+      case CHECK_ACPI:
+	ret = _battery_bsd_acpi_check(ef);
+	break;
+      case CHECK_APM:
+	ret = _battery_bsd_apm_check(ef);
+	break;
+      default:
+	break;
+     }
+#else
+   if (ef->battery_check_mode == 0)
+     {
+	if (ecore_file_is_dir("/proc/acpi"))
+	  ef->battery_check_mode = CHECK_ACPI;
+	else if (ecore_file_exists("/proc/apm"))
+	  ef->battery_check_mode = CHECK_APM;
+     }
+   switch (ef->battery_check_mode)
+     {
+      case CHECK_ACPI:
 	ret = _battery_linux_acpi_check(ef);
 	break;
-      case CHECK_LINUX_APM:
+      case CHECK_APM:
 	ret = _battery_linux_apm_check(ef);
 	break;
       default:
 	break;
      }
+#endif
    if (ret)
      {
 	if (ret->has_battery)
@@ -1026,6 +1072,263 @@ _battery_linux_apm_check(Battery *ef)
    return stat;
 }
 
+static Status *
+_battery_bsd_acpi_check(Battery *ef)
+{
+   /* Assumes only a single battery - I don't know how multiple batts 
+    * are represented in sysctl */
+
+   Ecore_List *bats;
+   char buf[4096], buf2[4096];
+   char *name;
+
+   int bat_max = 0;
+   int bat_filled = 0;
+   int bat_level = 0;
+   int bat_drain = 1;
+
+   int bat_val = 0;
+
+   int discharging = 0;
+   int charging = 0;
+   int battery = 0;
+
+   int design_cap_unknown = 0;
+   int last_full_unknown = 0;
+   int rate_unknown = 0;
+   int level_unknown = 0;
+
+   int hours, minutes;
+   
+   int mib_state[4];
+   int mib_life[4];
+   int mib_time[4];
+   int mib_units[4];
+   size_t len;
+   int state;
+   int level;
+   int time;
+   int life;
+   int batteries;
+
+   Status *stat;
+
+   stat = E_NEW(Status, 1);
+
+   /* Read some information on first run. */
+   len = 4;
+   sysctlnametomib("hw.acpi.battery.state", mib_state, &len);
+   len = sizeof(state);
+   if (sysctl(mib_state, 4, &state, &len, NULL, 0) == -1)
+      /* ERROR */
+      state = -1;     
+
+   len = 4;
+   sysctlnametomib("hw.acpi.battery.life", mib_life, &len);
+   len = sizeof(life);
+   if (sysctl(mib_life, 4, &life, &len, NULL, 0) == -1)
+      /* ERROR */
+      level = -1; 
+
+   bat_val = life;
+      
+   len = 4;
+   sysctlnametomib("hw.acpi.battery.time", mib_time, &len);
+   len = sizeof(time);
+   if (sysctl(mib_time, 4, &time, &len, NULL, 0) == -1)
+      /* ERROR */
+      time = -2;     
+
+   len = 4;
+   sysctlnametomib("hw.acpi.battery.units", mib_units, &len);
+   len = sizeof(batteries);
+   if (sysctl(mib_time, 4, &batteries, &len, NULL, 0) == -1)
+      /* ERROR */
+      batteries = 1;     
+   
+   if (ef->battery_prev_drain < 1)  
+     ef->battery_prev_drain = 1;
+   
+   if (bat_drain < 1) 
+     bat_drain = ef->battery_prev_drain;
+   
+   ef->battery_prev_drain = bat_drain;
+
+   /*if (bat_filled > 0) 
+     bat_val = (100 * bat_level) / bat_filled;
+   else 
+     bat_val = 100;
+
+   if (state == BATTERY_STATE_DISCHARGING) 
+     minutes = (60 * bat_level) / bat_drain;
+   else
+     {
+	if (bat_filled > 0)
+	  minutes = (60 * (bat_filled - bat_level)) / bat_drain;
+	else
+	  minutes = 0;
+     }*/
+   minutes = time;
+   hours = minutes / 60;
+   minutes -= (hours * 60);
+
+   if (hours < 0) 
+     hours = 0;
+   if (minutes < 0) 
+     minutes = 0;
+
+   if (batteries == 1) /* hw.acpi.battery.units = 1 means NO BATTS */
+     {
+	stat->has_battery = 0;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("NO BAT"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   else if ((state == BATTERY_STATE_CHARGING) || 
+	    (state == BATTERY_STATE_DISCHARGING)) 
+     {
+	ef->battery_prev_battery = 1;
+	stat->has_battery = 1;
+        if (state == BATTERY_STATE_CHARGING)
+          {
+	     stat->state = BATTERY_STATE_CHARGING;
+	     ef->alarm_triggered = 0;
+          }
+	else if (state == BATTERY_STATE_DISCHARGING)
+	  {
+	     stat->state = BATTERY_STATE_DISCHARGING;
+	     if (stat->level < 0.1) /* Why this if condition */
+	       {
+		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		    stat->alarm = 1;
+	       }
+	  }
+	if (!level)
+          {
+	     stat->reading = strdup(_("BAD DRIVER"));
+	     stat->time = strdup("--:--");
+	     stat->level = 0.0;
+          }
+	else if (time == -1)
+          {
+             snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     stat->reading = strdup(buf);
+	     stat->time = strdup("--:--");
+	     stat->level = (double)bat_val / 100.0;
+          }
+	else
+          {
+             snprintf(buf, sizeof(buf), "%i%%", bat_val);
+	     stat->reading = strdup(buf);
+             snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	     stat->time = strdup(buf);
+	     stat->level = (double)bat_val / 100.0;
+          }
+     }
+   else
+     {
+	stat->has_battery = 1;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("FULL"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   return stat;
+}
+
+static Status *
+_battery_bsd_apm_check(Battery *ef)
+{
+   int  ac_stat, bat_stat, bat_val, time_val;
+   char buf[4096];
+   int  hours, minutes;
+   int apm_fd = -1;
+   struct apm_info info;
+   
+   Status *stat;
+
+   apm_fd = open("/dev/apm", O_RDONLY);
+   
+   if (apm_fd != -1 && ioctl(apm_fd, APMIO_GETINFO, &info) != -1)
+     {
+	/* set values */
+	ac_stat = info.ai_acline;
+	bat_stat = info.ai_batt_stat;
+	bat_val = info.ai_batt_life;
+	time_val = info.ai_batt_time;
+     }
+   else
+     {
+        return NULL;
+     }
+
+   stat = E_NEW(Status, 1);
+
+   if (info.ai_batteries == 1) /* ai_batteries == 1 means NO battery,
+				  ai_batteries == 2 means 1 battery */
+     {
+	stat->has_battery = 0;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup("NO BAT");
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+	return stat;
+     }
+   
+   
+   ef->battery_prev_battery = 1;
+   stat->has_battery = 1;
+
+   if (ac_stat) /* Wallpowered */
+     {
+	stat->state = BATTERY_STATE_CHARGING;
+	stat->time = strdup("--:--");
+	switch (bat_stat) /* On FreeBSD the time_val is -1 when AC ist plugged
+			     in. This means we don't know how long the battery
+			     will recharge */ 
+	  {
+	   case 0:
+	      stat->reading = strdup(_("High"));
+	      stat->level = 1.0; 
+	      break;
+	   case 1:
+	      stat->reading = strdup(_("Low"));
+	      stat->level = 0.5;
+	      break;
+	   case 2:
+	      stat->reading = strdup(_("Danger"));
+	      stat->level = 0.25;
+	      break;
+	   case 3:
+	      stat->reading = strdup(_("Charging"));
+	      stat->level = 1.0;
+	      break;
+	  }
+     }
+   else /* Running on battery */
+     {
+	stat->state = BATTERY_STATE_DISCHARGING;
+	
+        snprintf(buf, sizeof(buf), "%i%%", bat_val);
+        stat->reading = strdup(buf);
+        stat->level = (double)bat_val / 100.0;
+	
+	hours = time_val / 3600;
+	minutes = (time_val / 60) % 60;
+	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	stat->time = strdup(buf);
+
+	if (stat->level < 0.1) /* Why this if condition? */
+	  {
+	     if (((hours * 60) + minutes) <= ef->conf->alarm)
+	       stat->alarm = 1;
+	  }
+     }
+   
+   return stat;
+}
+
 static void
 _battery_face_level_set(Battery_Face *ef, double level)
 {
@@ -1063,3 +1366,4 @@ _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    face = data;
    e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
+

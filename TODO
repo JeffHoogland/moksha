@@ -33,6 +33,7 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* if a parent window is "on top" child dialog windows should also be "on top"
 * in addition to smart place should add manual placement and place at pointer
   and maybe a few others.
 * support xrandr to change res from e itself (and save it etc.)

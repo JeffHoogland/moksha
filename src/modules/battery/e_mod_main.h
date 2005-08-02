@@ -12,8 +12,8 @@ typedef struct _Battery_Face Battery_Face;
 typedef struct _Status       Status;
 
 #define CHECK_NONE 0
-#define CHECK_LINUX_ACPI 1
-#define CHECK_LINUX_APM 2
+#define CHECK_ACPI 1
+#define CHECK_APM 2
 
 struct _Config
 {
@@ -57,9 +57,16 @@ struct _Battery_Face
    E_Gadman_Client *gmc;
 };
 
+#ifdef __FreeBSD__
+#define BATTERY_STATE_NONE 0
+#define BATTERY_STATE_DISCHARGING 1
+#define BATTERY_STATE_CHARGING 2
+#define BATTERY_STATE_REMOVED 7
+#else
 #define BATTERY_STATE_NONE 0
 #define BATTERY_STATE_CHARGING 1
 #define BATTERY_STATE_DISCHARGING 2
+#endif
 
 struct _Status
 {
