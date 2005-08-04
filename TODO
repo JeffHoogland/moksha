@@ -33,7 +33,12 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* make gadman rememebr positions PER resolution so if you switch to a res it
+* desktopname could reaally be part of pager - and display a full pager layout
+  of all desktops and whihc one of them just got selected
+* when a dir has a .order file that references a eap in all/ then if the eap
+  in all changes, the eap reference in the dir with the .order file does not
+  get a changed event and pick up the changes.
+* make gadman remember positions PER resolution so if you switch to a res it
   uses that res's layout if it exists
 * if a parent window is "on top" child dialog windows should also be "on top"
 * in addition to smart place should add manual placement and place at pointer
