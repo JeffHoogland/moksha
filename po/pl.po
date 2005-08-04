@@ -8,1070 +8,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-06-21 00:56+0200\n"
-"PO-Revision-Date: 2005-06-21 01:14+0200\n"
+"POT-Creation-Date: 2005-08-03 18:15+0200\n"
+"PO-Revision-Date: 2005-08-03 18:29+0200\n"
 "Last-Translator: Grzegorz Gaczyński <grzewho@gmail.com>\n"
-"Language-Team: Polish\n"
+"Language-Team: Polish <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: src/modules/cpufreq/e_mod_main.c:456
-#, c-format
-msgid "%i Mhz"
-msgstr "%i·Mhz"
-
-#: src/modules/cpufreq/e_mod_main.c:459
-#, c-format
-msgid "%i.%i Ghz"
-msgstr "%i.%i·Ghz"
-
-#: src/bin/e_int_menus.c:728
-msgid "(Empty)"
-msgstr "(Puste)"
-
-#: src/bin/e_int_menus.c:367
-msgid "(No Applications)"
-msgstr "(Brak Aplikacji)"
-
-#: src/bin/e_int_menus.c:541 src/bin/e_int_menus.c:783
-msgid "(No Windows)"
-msgstr "(Brak Okien)"
-
-#: src/bin/e_int_menus.c:638
-msgid "(Unused)"
-msgstr "(Nieużywane)"
-
-#: src/modules/battery/e_mod_main.c:418
-msgid "1 hour"
-msgstr "1 godzina"
-
-#: src/modules/temperature/e_mod_main.c:598
-msgid "100C"
-msgstr "100C"
-
-#: src/modules/temperature/e_mod_main.c:502
-msgid "10C"
-msgstr "10C"
-
-#: src/modules/temperature/e_mod_main.c:509
-#: src/modules/temperature/e_mod_main.c:542
-msgid "20C"
-msgstr "20C"
-
-#: src/modules/temperature/e_mod_main.c:516
-#: src/modules/temperature/e_mod_main.c:549
-msgid "30C"
-msgstr "30C"
-
-#: src/modules/temperature/e_mod_main.c:523
-#: src/modules/temperature/e_mod_main.c:556
-msgid "40C"
-msgstr "40C"
-
-#: src/modules/temperature/e_mod_main.c:530
-#: src/modules/temperature/e_mod_main.c:563
-msgid "50C"
-msgstr "50C"
-
-#: src/modules/temperature/e_mod_main.c:570
-msgid "60C"
-msgstr "60C"
-
-#: src/modules/temperature/e_mod_main.c:577
-msgid "70C"
-msgstr "70C"
-
-#: src/modules/temperature/e_mod_main.c:584
-msgid "80C"
-msgstr "80C"
-
-#: src/modules/temperature/e_mod_main.c:591
-msgid "90C"
-msgstr "90C"
-
-#: src/modules/battery/e_mod_main.c:99
-msgid ""
-"A basic battery meter that uses either ACPI or APM\n"
-"on Linux to monitor your battery and AC power adaptor\n"
-"status. This will only work under Linux and is only\n"
-"as accurate as your BIOS or kernel drivers."
-msgstr ""
-"Prosty miernik ładowania do monitorowania stanu baterii i źródła napięcia\n"
-"korzystający z ACPI lub APM pod Linuksem .\n"
-"Działa wyłącznie pod Linuksem a jego dokładność zależna jest\n"
-"od Twojego BIOSu oraz sterowników kernela."
-
-#: src/modules/temperature/e_mod_main.c:97
-msgid ""
-"A module to measure the ACPI Thermal sensor on Linux.\n"
-"It is especially useful for modern Laptops with high speed\n"
-"CPUs that generate a lot of heat."
-msgstr ""
-"Moduł pomiaru temperatury czujnika ACPI pod Linuksem.\n"
-"Szczególnie użyteczny dla współczesnych laptopów\n"
-"z szybkimi procesorami, które generują dużo ciepła."
-
-#: src/modules/pager/e_mod_main.c:141
-msgid "A pager module to navigate virtual desktops."
-msgstr "Moduł Pagera do nawigacji po wirtualnych pulpitach."
-
-#: src/modules/cpufreq/e_mod_main.c:108
-msgid ""
-"A simple module to control the frequency of the system CPU. This is "
-"especially useful to save power on laptops."
-msgstr ""
-"Prosty moduł służący do kontroli częstotliwości CPU. Użyteczny do "
-"oszczędzania energii w laptopach."
-
-#: src/modules/clock/e_mod_main.c:96
-msgid "A simple module to give E17 a clock."
-msgstr "Prosty moduł zegara analogowego."
-
-#: src/bin/e_int_menus.c:135 src/bin/e_int_menus.c:297
-msgid "About Enlightenment"
-msgstr "O Enlightenment"
-
-#: src/bin/e_module.c:384
-msgid "About..."
-msgstr "O programie..."
-
-#: src/bin/e_border.c:4662
-msgid "Always On Top"
-msgstr "Zawsze na wierzchu"
-
-#: src/bin/e_main.c:484
-msgid "Artificially slowing startup so you can see it all."
-msgstr "Sztucznie spowolnione uruchamianie, abyś zobaczył je w całości."
-
-#: src/modules/ibox/e_mod_main.c:603 src/modules/ibar/e_mod_main.c:796
-msgid "Auto fit icons"
-msgstr "Dopasuj do ikon"
-
-#: src/modules/cpufreq/e_mod_main.c:430
-msgid "Automatic"
-msgstr "Automatyczny"
-
-#: src/bin/e_gadman.c:556
-msgid "Automatic Height"
-msgstr "Automatyczna Wysokość"
-
-#: src/bin/e_gadman.c:509
-msgid "Automatic Width"
-msgstr "Automatyczna Szerokość"
-
-#: src/modules/battery/e_mod_main.c:903
-msgid "BAD DRIVER"
-msgstr "ZŁY STEROWNIK"
-
-#: src/modules/battery/e_mod_main.c:89
-msgid "Battery"
-msgstr "Bateria"
-
-#: src/modules/battery/e_mod_main.c:686
-msgid "Battery Running Low"
-msgstr "Niski Stan Baterii"
-
-#: src/bin/e_border.c:4672
-msgid "Borderless"
-msgstr "Bez ramki"
-
-#: src/modules/cpufreq/e_mod_main.c:107
-msgid "CPU Frequency Controller Module"
-msgstr "Moduł Kontroli Częstotliwości CPU"
-
-#: src/modules/cpufreq/e_mod_main.c:266 src/modules/cpufreq/e_mod_main.c:283
-msgid "CPU Frequency ERROR"
-msgstr "Częstotliwość CPU BŁĄD"
-
-#: src/bin/e_gadman.c:538
-msgid "Center Horizontally"
-msgstr "Wycentruj Poziomo"
-
-#: src/bin/e_gadman.c:584
-msgid "Center Vertically"
-msgstr "Wycentruj Pionowo"
-
-#: src/modules/battery/e_mod_main.c:999
-msgid "Charging"
-msgstr "Ładowanie"
-
-#: src/modules/cpufreq/e_mod_main.c:384
-msgid "Check Fast (0.5 sec)"
-msgstr "Krótki (0.5 sek)"
-
-#: src/modules/battery/e_mod_main.c:430
-msgid "Check Fast (1 sec)"
-msgstr "Krótki (1 sek)"
-
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:610
-msgid "Check Interval"
-msgstr "Okres Pomiaru"
-
-#: src/modules/cpufreq/e_mod_main.c:391
-msgid "Check Medium (1 sec)"
-msgstr "Średni (1 sek)"
-
-#: src/modules/battery/e_mod_main.c:437
-msgid "Check Medium (5 sec)"
-msgstr "Średni (5 sek)"
-
-#: src/modules/battery/e_mod_main.c:444
-msgid "Check Normal (10 sec)"
-msgstr "Normalny (10 sek)"
-
-#: src/modules/cpufreq/e_mod_main.c:398
-msgid "Check Normal (2 sec)"
-msgstr "Normalny (2 sek)"
-
-#: src/modules/battery/e_mod_main.c:451
-msgid "Check Slow (30 sec)"
-msgstr "Długi (30 sek)"
-
-#: src/modules/cpufreq/e_mod_main.c:405
-msgid "Check Slow (5 sec)"
-msgstr "Długi (5 sek)"
-
-#: src/modules/cpufreq/e_mod_main.c:412
-msgid "Check Very Slow (30 sec)"
-msgstr "Bardzo długi (30 sek)"
-
-#: src/modules/battery/e_mod_main.c:458
-msgid "Check Very Slow (60 sec)"
-msgstr "Bardzo długi (60 sek)"
-
-#: src/bin/e_int_menus.c:569
-msgid "Cleanup Windows"
-msgstr "Uporządkuj Okna"
-
-#: src/modules/clock/e_mod_main.c:86
-msgid "Clock"
-msgstr "Zegar"
-
-#: src/bin/e_border.c:4613
-msgid "Close"
-msgstr "Zamknij"
-
-#: src/bin/e_module.c:399 src/bin/e_int_menus.c:154
-msgid "Configuration"
-msgstr "Konfiguracja"
-
-#: src/bin/e_config.c:1072
-msgid "Configuration Upgraded"
-msgstr "Zaktualizowano Konfigurację"
-
-#: src/bin/e_config.c:181
-msgid ""
-"Configuration data needed upgrading. Your old configuration\n"
-"has been wiped and a new set of defaults initialized. This\n"
-"will happen regularly during development, so don't report a\n"
-"bug. This simply means Enlightenment needs new configuration\n"
-"data by default for usable functionality that your old\n"
-"configuration simply lacks. This new set of defaults will fix\n"
-"that by adding it in. You can re-configure things now to your\n"
-"liking. Sorry for the hiccup in your configuration.\n"
-msgstr ""
-"Dane konfiguracyjne wymagają odnowienia. Twoja stara konfiguracja\n"
-"została usunięta i zastąpiona przez nową domyślną. Tak będzie się działo\n"
-"podczas tworzenia Enlightenment, więc nie ma potrzeby zgłaszania błędu.\n"
-"Oznacza to po prostu, że Enlightenment domyślnie wymaga nowszych danych\n"
-"konfiguracyjnych by być w pełni użyteczne, czego nie posiadają Twoje stare\n"
-"pliki konfiguracyjne. Nowy domyślny zestaw naprawi to poprzez ich dodanie.\n"
-"Możesz przekonfigurować wszystko zgodnie ze swoimi upodobaniami.\n"
-"Przepraszamy za zamieszanie w Twojej konfiguracji.\n"
-
-#: src/bin/e_container.c:103
-#, c-format
-msgid "Container %d"
-msgstr "Pojemnik %d"
-
-#: src/modules/cpufreq/e_mod_main.c:98
-msgid "CpuFreq"
-msgstr "CpuFreq"
-
-#: src/bin/e_border.c:4739
-msgid "Create Icon"
-msgstr "Utwórz Ikonę"
-
-#: src/modules/battery/e_mod_main.c:995
-msgid "Danger"
-msgstr "Uwaga"
-
-#: src/modules/dropshadow/e_mod_main.c:316
-msgid "Dark"
-msgstr "Ciemny"
-
-#: src/bin/e_desk.c:45
-#, c-format
-msgid "Desktop %d, %d"
-msgstr "Pulpit %d, %d"
-
-#: src/bin/e_int_menus.c:89
-msgid "Desktops"
-msgstr "Pulpity"
-
-#: src/bin/e_init.c:110
-msgid "Disable this splash screen in the future?"
-msgstr "Wyłączyć ekran powitalny w przyszłości ?"
-
-#: src/modules/dropshadow/e_mod_main.c:139
-msgid "Dropshadow"
-msgstr "Cień"
-
-#: src/bin/e_border.c:4713
-msgid "Edit Icon"
-msgstr "Edytuj Ikonę"
-
-#: src/bin/e_int_menus.c:632 src/modules/ibox/e_mod_main.c:457
-#: src/modules/pager/e_mod_main.c:437 src/modules/clock/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:561 src/modules/ibar/e_mod_main.c:610
-#: src/modules/temperature/e_mod_main.c:723
-#: src/modules/cpufreq/e_mod_main.c:810 src/modules/start/e_mod_main.c:233
-msgid "Edit Mode"
-msgstr "Tryb Edycji"
-
-#: src/bin/e_module.c:388
-msgid "Enabled"
-msgstr "Włączony"
-
-#: src/bin/e_gadman.c:596
-msgid "End Edit Mode"
-msgstr "Zakończ Tryb Edycji"
-
-#: src/bin/e_main.c:472
-msgid "Enlightenment"
-msgstr "Enlightenment"
-
-#: src/modules/battery/e_mod_main.c:98
-msgid "Enlightenment Battery Module"
-msgstr "Moduł Baterii dla Enlightenment"
-
-#: src/modules/clock/e_mod_main.c:95
-msgid "Enlightenment Clock Module"
-msgstr "Moduł Zegara dla Enlightenment"
-
-#: src/modules/dropshadow/e_mod_main.c:148
-msgid "Enlightenment Dropshadow Module"
-msgstr "Moduł Cienia dla Enlightenment"
-
-#: src/modules/ibar/e_mod_main.c:172
-msgid "Enlightenment IBar Module"
-msgstr "Moduł IBar dla Enlightenment"
-
-#: src/modules/ibox/e_mod_main.c:157
-msgid "Enlightenment IBox Module"
-msgstr "Moduł IBox dla Enlightenment"
-
-#: src/bin/e_main.c:455
-msgid "Enlightenment IPC setup error!"
-msgstr "Błąd ustawień IPC dla Enlightenment !"
-
-#: src/modules/pager/e_mod_main.c:140
-msgid "Enlightenment Pager Module"
-msgstr "Moduł Pagera dla Enlightenment"
-
-#: src/modules/start/e_mod_main.c:81
-msgid "Enlightenment Start Module"
-msgstr "Moduł Start dla Enlightenment"
-
-#: src/bin/e_main.c:474
-msgid "Enlightenment Starting. Please wait."
-msgstr "Uruchamia się Enlightenment. Proszę czekać."
-
-#: src/modules/temperature/e_mod_main.c:96
-msgid "Enlightenment Temperature Module"
-msgstr "Moduł Temperatury dla Enlightenment"
-
-#: src/modules/test/e_mod_main.c:66
-msgid "Enlightenment Test Module"
-msgstr "Moduł Test dla Enlightenment"
-
-#: src/bin/e_main.c:208
-msgid ""
-"Enlightenment cannot Initialize Ecore!\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może uruchomić Ecore!\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:309
-msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
-"Perhaps you have no home directory or the disk is full?"
-msgstr ""
-"Enlightenment nie może utworzyć katalogów w katalogu domowym.\n"
-"Może nie masz katalogu domowego lub dysk jest pełny ?"
-
-#: src/bin/e_main.c:235
-msgid ""
-"Enlightenment cannot initialize its X connection.\n"
-"Have you set your DISPLAY variable?"
-msgstr ""
-"Enlightenment nie może ustanowić połączenia z X\n"
-"Czy ustawiłeś zmienną DISPLAY ?"
-
-#: src/bin/e_main.c:243
-msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
-"Have you set your DISPLAY variable?"
-msgstr ""
-"Enlightenment nie może ustanowić swojego systemu ostrzeżeń.\n"
-"Czy ustawiłeś zmienną DISPLAY ?"
-
-#: src/bin/e_main.c:282
-msgid ""
-"Enlightenment cannot initialize the Evas system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może uruchomić systemu Evas.\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:297
-msgid ""
-"Enlightenment cannot initialize the File system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może uruchomić systemu plików.\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:274
-msgid ""
-"Enlightenment cannot initialize the IPC system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie moż uruchomić systemu IPC.\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:266
-msgid ""
-"Enlightenment cannot initialize the connections system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może uruchomić systemu połączeń.\n"
-"Może masz zbyt mało pamięci?"
-
-#: src/bin/e_main.c:224
-msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może ustawić obsługi sygnału HUP.\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:218
-msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może ustawić obsługi sygnału wyjścia.Może masz zbyt mało "
-"pamięci ?"
-
-#: src/bin/e_main.c:369
-msgid ""
-"Enlightenment cannot set up init screen.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może ustawić ekranu startowego.Może masz zbyt mało "
-"pamięci ?"
-
-#: src/bin/e_main.c:332
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenment nie może ustawić swojego systemu zdarzeń."
-
-#: src/bin/e_main.c:378
-msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenment nie może ustawić swojego systemu aplikacji."
-
-#: src/bin/e_main.c:339
-msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment nie może ustawić swojego systemu powiązań."
-
-#: src/bin/e_main.c:317
-msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment nie może ustawić swojego systemu konfiguracji."
-
-#: src/bin/e_main.c:428
-msgid "Enlightenment cannot set up its dnd system."
-msgstr ""
-"Enlightenment nie może ustawić swojego systemu \"przeciągnij i upuść\"."
-
-#: src/bin/e_main.c:357
-msgid "Enlightenment cannot set up its font system."
-msgstr "Enlightenment nie może ustawić swojego systemu czcionek."
-
-#: src/bin/e_main.c:435
-msgid "Enlightenment cannot set up its inptu grab handling system."
-msgstr "Enlightenment nie może ustawić swojego systemu obsługi wprowadzania."
-
-#: src/bin/e_main.c:442
-msgid "Enlightenment cannot set up its module system."
-msgstr "Enlightenment nie może ustawić swojego systemu modułów."
-
-#: src/bin/e_main.c:421
-msgid "Enlightenment cannot set up its msg system."
-msgstr "Enlightenment nie może ustawić swojego systemu wiadomości."
-
-#: src/bin/e_main.c:346
-msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment nie może ustawić swojego systemu wyskakujących okien."
-
-#: src/bin/e_main.c:396
-msgid "Enlightenment cannot set up its theme system."
-msgstr "Enlightenment nie może ustawić swojego systemu tematów."
-
-#: src/bin/e_main.c:449
-msgid "Enlightenment cannot set up its window list system."
-msgstr "Enlightenment nie może ustawić swojego systemu listy okien."
-
-#: src/bin/e_main.c:324
-msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment nie może ustawić ścieżek by znaleźć pliki.\n"
-"Może masz zbyt mało pamięci ?"
-
-#: src/bin/e_main.c:408 src/bin/e_main.c:456
-msgid ""
-"Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
-"Double check to see if Enlightenment is not already on this display,\n"
-"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-"and try running again."
-msgstr ""
-"Enlightenment nie może otworzyć połączenia IPC.\n"
-"Możliwe, że jest ono już używane przez istniejącą kopię Enlightenment.\n"
-"Upewnij się czy Enlightenment nie jest już uruchomiony,\n"
-"jeśli to zawiedzie, spróbuj usunąć wszystkie pliki z ~/.ecore/enlightenment-"
-"*\n"
-"i spróbuj uruchomić ponownie."
-
-#: src/bin/e_main.c:250
-msgid ""
-"Enlightenment cannot setup xinerama wrapping.\n"
-"This should not happen."
-msgstr ""
-"Enlightenment nie może uruchomić xineramy.\n"
-"Tak nie powinno się stać."
-
-#: src/bin/e_main.c:288
-msgid ""
-"Enlightenment found ecore_evas doesnt support Software X11\n"
-"rendering in Evas. Please check your installation of Evas and\n"
-"Ecore and check they support Software X11 rendering."
-msgstr ""
-"Enlightenment stwierdził, że ecore_evas nie wspiera programowego\n"
-"renderowania X11 w Evas. Proszę sprawdzić Swoją instalację Evas i\n"
-"Ecore oraz czy wspierają one programowe renderowanie X11."
-
-#: src/bin/e_main.c:385
-msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
-"failed. Perhaps another window manager is running?\n"
-msgstr ""
-"Enlightenment nie jest w stanie zarządzać oknami dla wszystkich ekranów na "
-"Twoim\n"
-"systemie. Być może jest uruchomiony jakiś inny menedżer okien ?\n"
-
-#: src/bin/e_error.c:364
-msgid "Enlightenment: Error!"
-msgstr "Enlightenment: Błąd!"
-
-#: src/modules/ibox/e_mod_main.c:675 src/modules/ibar/e_mod_main.c:874
-msgid "Enormous"
-msgstr "Olbrzymi"
-
-#: src/modules/battery/e_mod_main.c:46
+#: src/bin/e_apps.c:265 src/bin/e_apps.c:1019 src/bin/e_utils.c:200
+msgid "Run Error"
+msgstr "Błąd Uruchamiania"
+
+#: src/bin/e_apps.c:266 src/bin/e_utils.c:201
 #, c-format
 msgid ""
-"Error initializing Module: Battery\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Enlightenment was unable fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
 msgstr ""
-"Błąd podczas uruchamiania Modułu Baterii.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
+"Enlightenment nie jest w stanie utworzyć procesu potomnego:\n"
+"\n"
+"%s\n"
+"\n"
 
-#: src/modules/clock/e_mod_main.c:41
+#: src/bin/e_apps.c:1020
 #, c-format
 msgid ""
-"Error initializing Module: Clock\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
 msgstr ""
-"Błąd podczas uruchamiania Modułu Zegara.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/dropshadow/e_mod_main.c:92
-#, c-format
-msgid ""
-"Error initializing Module: Dropshadow\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu Cienia.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/ibar/e_mod_main.c:120
-#, c-format
-msgid ""
-"Error initializing Module: IBar\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu IBar.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/ibox/e_mod_main.c:104
-#, c-format
-msgid ""
-"Error initializing Module: IBox\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu IBox.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/pager/e_mod_main.c:85
-#, c-format
-msgid ""
-"Error initializing Module: Pager\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu Pagera.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/temperature/e_mod_main.c:44
-#, c-format
-msgid ""
-"Error initializing Module: Temperature\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu Temperatury.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/cpufreq/e_mod_main.c:58
-#, c-format
-msgid ""
-"Error initializing Module: cpufreq\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu cpufreq.\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/start/e_mod_main.c:29
-#, c-format
-msgid ""
-"Error initializing Module: start\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu Start..\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
-
-#: src/modules/test/e_mod_main.c:10
-#, c-format
-msgid ""
-"Error initializing Module: test\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"Błąd podczas uruchamiania Modułu Test..\n"
-"Wymaga on API modułu w wersji przynajmniej: %i.\n"
-"API modułu polecane przez Enlightenment to: %i.\n"
-"Moduł wyłączono."
+"Enlightenment nie jest w stanie uruchomić programu:\n"
+"\n"
+"%s\n"
+"\n"
+"Nie znaleziono polecenia\n"
 
 #: src/bin/e_module.c:100 src/bin/e_module.c:111 src/bin/e_module.c:133
 msgid "Error loading Module"
 msgstr "Błąd ładowania Modułu"
-
-#: src/bin/e_border.c:4808
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Błąd podczas uruchamiania edytora ikon.\n"
-"\n"
-"Proszę zainstalować e_util_eapp_edit\n"
-"lub upewnić się że jest on w zmiennej PATH.\n"
-
-#: src/bin/e_int_menus.c:171
-msgid "Exit Enlightenment"
-msgstr "Opuść Enlightenment"
-
-#: src/modules/start/e_mod_main.c:82
-msgid "Experimental Button module for E17"
-msgstr "Eksperymentalny moduł Przycisku dla E17"
-
-#: src/modules/ibox/e_mod_main.c:661 src/modules/ibar/e_mod_main.c:860
-msgid "Extremely Large"
-msgstr "Niezwykle Duży"
-
-#: src/modules/dropshadow/e_mod_main.c:382
-msgid "Extremely Near"
-msgstr "Niezwykle Blisko"
-
-#: src/modules/battery/e_mod_main.c:927
-msgid "FULL"
-msgstr "PEŁNA"
-
-#: src/modules/dropshadow/e_mod_main.c:355
-msgid "Far"
-msgstr "Daleko"
-
-#: src/modules/temperature/e_mod_main.c:462
-msgid "Fast (1 sec)"
-msgstr "Szybko (1 sek)"
-
-#: src/bin/e_int_menus.c:68
-msgid "Favorite Applications"
-msgstr "Ulubione Aplikacje"
-
-#: src/modules/ibar/e_mod_main.c:802
-msgid "Follower"
-msgstr "Goniec"
-
-#: src/bin/e_gadman.c:573
-msgid "Full Screen Height"
-msgstr "Pełna Wysokość Ekranu"
-
-#: src/bin/e_gadman.c:526
-msgid "Full Screen Width"
-msgstr "Pełna Szerokość Ekranu"
-
-#: src/bin/e_border.c:4682
-msgid "Fullscreen"
-msgstr "Pełny Ekran"
-
-#: src/modules/dropshadow/e_mod_main.c:268
-msgid "Fuzzy"
-msgstr "Zamazany"
-
-#: src/bin/e_int_menus.c:116
-msgid "Gadgets"
-msgstr "Gadżety"
-
-#: src/modules/ibox/e_mod_main.c:682 src/modules/ibar/e_mod_main.c:881
-msgid "Gigantic"
-msgstr "Gigantyczny"
-
-#: src/bin/e_gadman.c:567
-msgid "Half Screen Height"
-msgstr "Połowa Wysokości Ekranu"
-
-#: src/bin/e_gadman.c:520
-msgid "Half Screen Width"
-msgstr "Połowa Szerokości Ekranu"
-
-#: src/modules/battery/e_mod_main.c:987
-msgid "High"
-msgstr "Wysoki"
-
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:618
-msgid "High Temperature"
-msgstr "Wysoka Temperatura"
-
-#: src/modules/ibox/e_mod_main.c:668 src/modules/ibar/e_mod_main.c:867
-msgid "Huge"
-msgstr "Ogromny"
-
-#: src/modules/ibar/e_mod_main.c:163
-msgid "IBar"
-msgstr "IBar"
-
-#: src/modules/ibox/e_mod_main.c:147
-msgid "IBox"
-msgstr "IBox"
-
-#: src/bin/e_border.c:4807
-msgid "Icon Edit Error"
-msgstr "Błąd Edytora Ikon"
-
-#: src/bin/e_border.c:4621
-msgid "Iconify"
-msgstr "Do Ikony"
-
-#: src/modules/dropshadow/e_mod_main.c:391
-msgid "Immediately Underneath"
-msgstr "Bezpośrednio Pod"
-
-#: src/modules/ibox/e_mod_main.c:647 src/modules/ibar/e_mod_main.c:846
-msgid "Large"
-msgstr "Duży"
-
-#: src/modules/dropshadow/e_mod_main.c:325
-msgid "Light"
-msgstr "Jasny"
-
-#: src/bin/e_int_menus.c:107
-msgid "Lost Windows"
-msgstr "Utracone Okna"
-
-#: src/modules/battery/e_mod_main.c:991
-msgid "Low"
-msgstr "Niski"
-
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:614
-msgid "Low Temperature"
-msgstr "Niska Temperatura"
-
-#: src/modules/cpufreq/e_mod_main.c:428
-msgid "Manual"
-msgstr "Ręcznie"
-
-#: src/bin/e_border.c:4642
-msgid "Maximized"
-msgstr "Maksymalizuj"
-
-#: src/modules/cpufreq/e_mod_main.c:434
-msgid "Maximum Speed"
-msgstr "Maksymalna Prędkość"
-
-#: src/modules/ibox/e_mod_main.c:640 src/modules/dropshadow/e_mod_main.c:277
-#: src/modules/ibar/e_mod_main.c:839
-msgid "Medium"
-msgstr "Średni"
-
-#: src/modules/temperature/e_mod_main.c:469
-msgid "Medium (5 sec)"
-msgstr "Średni (5 sek)"
-
-#: src/modules/ibox/e_mod_main.c:612 src/modules/ibar/e_mod_main.c:811
-msgid "Microscopic"
-msgstr "Mikroskopijny"
-
-#: src/modules/cpufreq/e_mod_main.c:432
-msgid "Minimum Speed"
-msgstr "Minimalna Prędkość"
-
-#: src/modules/ibox/e_mod_main.c:103 src/modules/pager/e_mod_main.c:84
-#: src/modules/clock/e_mod_main.c:40 src/modules/battery/e_mod_main.c:45
-#: src/modules/dropshadow/e_mod_main.c:91 src/modules/ibar/e_mod_main.c:119
-#: src/modules/test/e_mod_main.c:9 src/modules/temperature/e_mod_main.c:43
-#: src/modules/cpufreq/e_mod_main.c:57 src/modules/start/e_mod_main.c:28
-msgid "Module API Error"
-msgstr "Błąd API modułu"
-
-#: src/modules/test/e_mod_main.c:24
-msgid "Module Config Menu Item 1"
-msgstr "Pozycja Menu Konfiguracji 1"
-
-#: src/modules/test/e_mod_main.c:26
-msgid "Module Config Menu Item 2"
-msgstr "Pozycja Menu Konfiguracji 2"
-
-#: src/modules/test/e_mod_main.c:28
-msgid "Module Config Menu Item 3"
-msgstr "Pozycja Menu Konfiguracji 3"
-
-#: src/bin/e_int_menus.c:80
-msgid "Modules"
-msgstr "Moduły"
-
-#: src/bin/e_main.c:486
-msgid "Most features do not work yet, and those that do are buggy."
-msgstr "Większość elementów jeszcze nie działa, a część nadal zawiera błędy."
-
-#: src/modules/battery/e_mod_main.c:879
-msgid "NO BAT"
-msgstr "BRAK BATERII"
-
-#: src/modules/battery/e_mod_main.c:748
-msgid "NO INFO"
-msgstr "BRAK INFO"
-
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Near"
-msgstr "Blisko"
-
-#: src/bin/e_int_menus.c:457
-msgid "New Column of Desktops"
-msgstr "Nowa Kolumna Pulpitów"
-
-#: src/bin/e_int_menus.c:449
-msgid "New Row of Desktops"
-msgstr "Nowy Rząd Pulpitów"
-
-#: src/bin/e_int_menus.c:556 src/bin/e_int_menus.c:797
-msgid "No name!!"
-msgstr "Bez nazwy!!"
-
-#: src/modules/temperature/e_mod_main.c:476
-msgid "Normal (10 sec)"
-msgstr "Normalny (10 sek)"
-
-#: src/bin/e_error.c:209 src/bin/e_error.c:218
-msgid "OK"
-msgstr "OK"
-
-#: src/modules/ibox/e_mod_main.c:690 src/modules/ibar/e_mod_main.c:282
-#: src/modules/ibar/e_mod_main.c:889
-msgid "Options"
-msgstr "Opcje"
-
-#: src/bin/e_main.c:156
-#, c-format
-msgid ""
-"Options:\n"
-"\t-display DISPLAY\n"
-"\t\tConnect to display named DISPLAY.\n"
-"\t\tEG: -display :1.0\n"
-"\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
-"\t\tgiven the geometry. Add as many as you like. They all\n"
-"\t\treplace the real xinerama screens, if any. This can\n"
-"\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
-"\t-good\n"
-"\t\tBe good.\n"
-"\t-evil\n"
-"\t\tBe evil.\n"
-"\t-psychotic\n"
-"\t\tBe psychotic.\n"
-msgstr ""
-"Opcje:\n"
-"\t-ekran DISPLAY\n"
-"\t\tPodłącz do ekranu DISPLAY.\n"
-"\t\tnp. : -display :1.0\n"
-"\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tDodaj FAŁSZYWY ekran xinerama (zamiast rzeczywistego)\n"
-"\t\to podanej geomerii. Możesz ich dodać ile tylko chcesz.\n"
-"\t\tWszystkie zastąpią rzeczywiste ekrany, jeśli takie istnieją.\n"
-"\t\tMoże to być użyte do symulacji xineramy.\n"
-"\t\tnp.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
-"\t-dobrze\n"
-"\t\tBądź dobry.\n"
-"\t-źle\n"
-"\t\tBądź zły.\n"
-"\t-psychotycznie\n"
-"\t\tBądź psychotyczny.\n"
-
-#: src/modules/pager/e_mod_main.c:131
-msgid "Pager"
-msgstr "Pager"
-
-#: src/bin/e_int_menus.c:461
-msgid "Remove Column of Desktops"
-msgstr "Usuń Kolumnę Pulpitów"
-
-#: src/bin/e_int_menus.c:453
-msgid "Remove Row of Desktops"
-msgstr "Usuń Rząd Pulpitów"
-
-#: src/bin/e_int_menus.c:164
-msgid "Restart Enlightenment"
-msgstr "Zrestartuj Enlightenment"
-
-#: src/bin/e_int_menus.c:144
-msgid "Run Command"
-msgstr "Uruchom polecenie"
-
-#: src/bin/e_winlist.c:115
-msgid "Select a window"
-msgstr "Wybierz Okno"
-
-#: src/bin/e_border.c:4695
-msgid "Send To"
-msgstr "Wyślij na"
-
-#: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
-msgid "Set Alarm"
-msgstr "Ustaw Alarm"
-
-#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:480
-msgid "Set Controller"
-msgstr "Ustaw Kontroler"
-
-#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
-#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:474
-msgid "Set Poll Time"
-msgstr "Ustaw Czas Pomiaru"
-
-#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:487
-msgid "Set Speed"
-msgstr "Ustaw Prędkość"
-
-#: src/bin/e_border.c:4632
-msgid "Shaded"
-msgstr "Zwiniń"
-
-#: src/modules/dropshadow/e_mod_main.c:286
-msgid "Sharp"
-msgstr "Wyraźny"
-
-#: src/modules/ibox/e_mod_main.c:694 src/modules/ibar/e_mod_main.c:286
-#: src/modules/ibar/e_mod_main.c:893
-msgid "Size"
-msgstr "Rozmiar"
-
-#: src/modules/temperature/e_mod_main.c:483
-msgid "Slow (30 sec)"
-msgstr "Powolny (30 sek)"
-
-#: src/modules/ibox/e_mod_main.c:633 src/modules/ibar/e_mod_main.c:832
-msgid "Small"
-msgstr "Mały"
-
-#: src/modules/test/e_mod_main.c:32
-msgid "Something Else"
-msgstr "Coś Innego"
-
-#: src/modules/start/e_mod_main.c:72
-msgid "Start"
-msgstr "Start"
-
-#: src/bin/e_border.c:4652
-msgid "Sticky"
-msgstr "Przyklej"
-
-#: src/modules/temperature/e_mod_main.c:87
-msgid "Temperature"
-msgstr "Temperatura"
-
-#: src/modules/test/e_mod_main.c:59
-msgid "Test!!!"
-msgstr "Test!!!"
-
-#: src/bin/e_int_menus.c:125
-msgid "Themes"
-msgstr "Tematy"
 
 #: src/bin/e_module.c:101
 #, c-format
@@ -1099,23 +78,324 @@ msgstr ""
 "Zgłoszony błąd to:\n"
 "%s"
 
-#: src/modules/cpufreq/e_mod_main.c:267
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"governor via the module's setfreq utility."
-msgstr ""
-"Wystąpił błąd podczas ustalania zarządcy częstoliwością\n"
-"cpu poprzez aplikację setfreq modułu."
+#: src/bin/e_module.c:335
+msgid "(No Loaded Modules)"
+msgstr "Brak Załadowanych Modułów"
 
-#: src/modules/cpufreq/e_mod_main.c:284
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"setting via the module's setfreq utility."
-msgstr ""
-"Wystąpił błąd podczas ustalania częstoliwości cpu\n"
-"poprzez aplikację setfreq modułu."
+#: src/bin/e_module.c:391
+msgid "About..."
+msgstr "O programie..."
 
-#: src/bin/e_int_menus.c:298
+#: src/bin/e_module.c:395
+msgid "Enabled"
+msgstr "Włączony"
+
+#: src/bin/e_module.c:406 src/bin/e_int_menus.c:135
+msgid "Configuration"
+msgstr "Konfiguracja"
+
+#: src/bin/e_container.c:129
+#, c-format
+msgid "Container %d"
+msgstr "Pojemnik %d"
+
+#: src/bin/e_gadman.c:550
+msgid "Automatic Width"
+msgstr "Automatyczna Szerokość"
+
+#: src/bin/e_gadman.c:561
+msgid "Half Screen Width"
+msgstr "Połowa Szerokości Ekranu"
+
+#: src/bin/e_gadman.c:567
+msgid "Full Screen Width"
+msgstr "Pełna Szerokość Ekranu"
+
+#: src/bin/e_gadman.c:579
+msgid "Center Horizontally"
+msgstr "Wycentruj Poziomo"
+
+#: src/bin/e_gadman.c:597
+msgid "Automatic Height"
+msgstr "Automatyczna Wysokość"
+
+#: src/bin/e_gadman.c:608
+msgid "Half Screen Height"
+msgstr "Połowa Wysokości Ekranu"
+
+#: src/bin/e_gadman.c:614
+msgid "Full Screen Height"
+msgstr "Pełna Wysokość Ekranu"
+
+#: src/bin/e_gadman.c:625
+msgid "Center Vertically"
+msgstr "Wycentruj Pionowo"
+
+#: src/bin/e_gadman.c:637
+msgid "End Edit Mode"
+msgstr "Zakończ Tryb Edycji"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "Uruchamia się %s"
+
+#: src/bin/e_border.c:5697 src/bin/e_border.c:5710
+msgid "Position"
+msgstr "Pozycja"
+
+#: src/bin/e_border.c:5698 src/bin/e_border.c:5711
+#: src/modules/ibox/e_mod_main.c:694 src/modules/ibar/e_mod_main.c:288
+#: src/modules/ibar/e_mod_main.c:903
+msgid "Size"
+msgstr "Rozmiar"
+
+#: src/bin/e_border.c:5699 src/bin/e_border.c:5712 src/bin/e_border.c:5915
+msgid "Stacking"
+msgstr "Położenie"
+
+#: src/bin/e_border.c:5700 src/bin/e_border.c:5713 src/bin/e_border.c:5851
+msgid "Iconify"
+msgstr "Do Ikony"
+
+#: src/bin/e_border.c:5702 src/bin/e_border.c:5715 src/bin/e_border.c:5904
+msgid "Sticky"
+msgstr "Przyklej"
+
+#: src/bin/e_border.c:5703 src/bin/e_border.c:5716
+msgid "Shade"
+msgstr "Zwinń"
+
+#: src/bin/e_border.c:5704 src/bin/e_border.c:5717
+msgid "Maximize"
+msgstr "Maksymalizuj"
+
+#: src/bin/e_border.c:5705 src/bin/e_border.c:5718 src/bin/e_border.c:5937
+msgid "Fullscreen"
+msgstr "Pełny Ekran"
+
+#: src/bin/e_border.c:5724
+msgid "User"
+msgstr "Użytkownik"
+
+#: src/bin/e_border.c:5732
+msgid "Application"
+msgstr "Aplikacja"
+
+#: src/bin/e_border.c:5742
+msgid "Border"
+msgstr "Ramka"
+
+#: src/bin/e_border.c:5743 src/bin/e_border.c:5840
+msgid "Close"
+msgstr "Zamknij"
+
+#: src/bin/e_border.c:5746
+msgid "Lifespan"
+msgstr "Użyteczność"
+
+#: src/bin/e_border.c:5760
+msgid "Remember This Window"
+msgstr "Zapamiętaj To Okno"
+
+#: src/bin/e_border.c:5767
+msgid "Remember This Instance Only"
+msgstr "Zapamiętaj Tylko Ten Przypadek"
+
+#: src/bin/e_border.c:5770
+msgid "Match by Name"
+msgstr "Dopasuj poprzez Nazwę"
+
+#: src/bin/e_border.c:5771
+msgid "Match by Class"
+msgstr "Dopasuj poprzez Klasę"
+
+#: src/bin/e_border.c:5772
+msgid "Match by Title"
+msgstr "Dopasuj poprzez Tytuł"
+
+#: src/bin/e_border.c:5773
+msgid "Match by Role"
+msgstr "Dopasuj poprzez Rolę"
+
+#: src/bin/e_border.c:5774
+msgid "Match by Window Type"
+msgstr "Dopasuj poprzez Typ Okna"
+
+#: src/bin/e_border.c:5775
+msgid "Match by Transient Status"
+msgstr "Dopasuj poprzez Stan Przejścia"
+
+#: src/bin/e_border.c:5778
+msgid "Remember Position"
+msgstr "Zapamiętaj Pozycję"
+
+#: src/bin/e_border.c:5779
+msgid "Remember Size"
+msgstr "Zapamiętaj Rozmiar"
+
+#: src/bin/e_border.c:5780
+msgid "Remember Stacking"
+msgstr "Zapamiętaj Pozycję"
+
+#: src/bin/e_border.c:5781
+msgid "Remember Locks"
+msgstr "Zapamiętaj Blokady"
+
+#: src/bin/e_border.c:5782
+msgid "Remember Border"
+msgstr "Zapamiętaj Ramkę"
+
+#: src/bin/e_border.c:5783
+msgid "Remember Stickiness"
+msgstr "Zapamiętaj Przyklejenie"
+
+#: src/bin/e_border.c:5784
+msgid "Remember Desktop"
+msgstr "Zapamiętaj Pulpit"
+
+#: src/bin/e_border.c:5785
+msgid "Remember Shaded State"
+msgstr "Zapamiętaj Stan Zwinięcia"
+
+#: src/bin/e_border.c:5786
+msgid "Remember Zone"
+msgstr "Zapamiętaj Strefę"
+
+#: src/bin/e_border.c:5787
+msgid "Remember Skip Window List"
+msgstr "Zapamiętaj Listę Omijanych Okien"
+
+#: src/bin/e_border.c:5801
+msgid "Always On Top"
+msgstr "Zawsze na wierzchu"
+
+#: src/bin/e_border.c:5811 src/modules/clock/e_mod_main.c:341
+#: src/modules/desktopname/e_mod_main.c:149
+msgid "Normal"
+msgstr "Normalny"
+
+#: src/bin/e_border.c:5821
+msgid "Always Below"
+msgstr "Zawsze poniżej"
+
+#: src/bin/e_border.c:5865
+msgid "Kill"
+msgstr "Zabij"
+
+#: src/bin/e_border.c:5878
+msgid "Shaded"
+msgstr "Zwiniń"
+
+#: src/bin/e_border.c:5891
+msgid "Maximized"
+msgstr "Maksymalizuj"
+
+#: src/bin/e_border.c:5924
+msgid "Borderless"
+msgstr "Bez ramki"
+
+#: src/bin/e_border.c:5951
+msgid "Skip Window List"
+msgstr "Pomiń Na Liście Okien"
+
+#: src/bin/e_border.c:5965
+msgid "Locks"
+msgstr "Blokady"
+
+#: src/bin/e_border.c:5972
+msgid "Remember"
+msgstr "Zapamiętaj"
+
+#: src/bin/e_border.c:5982
+msgid "Send To"
+msgstr "Wyślij na"
+
+#: src/bin/e_border.c:6004
+msgid "Edit Icon"
+msgstr "Edytuj Ikonę"
+
+#: src/bin/e_border.c:6030
+msgid "Create Icon"
+msgstr "Utwórz Ikonę"
+
+#: src/bin/e_border.c:6118
+msgid "Icon Edit Error"
+msgstr "Błąd Edytora Ikon"
+
+#: src/bin/e_border.c:6119
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"Błąd podczas uruchamiania edytora ikon.\n"
+"\n"
+"Proszę zainstalować e_util_eapp_edit\n"
+"lub upewnić się że jest on w zmiennej PATH.\n"
+
+#: src/bin/e_utils.c:246
+msgid "Cannot exit - immortal windows."
+msgstr "Nie można wyjść - nieśmiertelne okna."
+
+#: src/bin/e_utils.c:247
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+"Niektóre okna pozostają wciąż z włączoną blokadą czasu działania.\n"
+"Oznacza to, że Enlightenment nie może zezwolić sobie na wyjście\n"
+"dopóki te okna nie zostaną zamknięte, bądź usunięta blokada czasu "
+"działania.\n"
+
+#: src/bin/e_int_menus.c:67
+msgid "Favorite Applications"
+msgstr "Ulubione Aplikacje"
+
+#: src/bin/e_int_menus.c:77
+msgid "Modules"
+msgstr "Moduły"
+
+#: src/bin/e_int_menus.c:84
+msgid "Desktops"
+msgstr "Pulpity"
+
+#: src/bin/e_int_menus.c:91
+msgid "Windows"
+msgstr "Okna"
+
+#: src/bin/e_int_menus.c:98
+msgid "Lost Windows"
+msgstr "Utracone Okna"
+
+#: src/bin/e_int_menus.c:105
+msgid "Gadgets"
+msgstr "Gadżety"
+
+#: src/bin/e_int_menus.c:112
+msgid "Themes"
+msgstr "Tematy"
+
+#: src/bin/e_int_menus.c:120 src/bin/e_int_menus.c:274
+msgid "About Enlightenment"
+msgstr "O Enlightenment"
+
+#: src/bin/e_int_menus.c:127
+msgid "Run Command"
+msgstr "Uruchom polecenie"
+
+#: src/bin/e_int_menus.c:143
+msgid "Restart Enlightenment"
+msgstr "Zrestartuj Enlightenment"
+
+#: src/bin/e_int_menus.c:148
+msgid "Exit Enlightenment"
+msgstr "Opuść Enlightenment"
+
+#: src/bin/e_int_menus.c:275
 #, c-format
 msgid ""
 "This is Enlightenment %s.\n"
@@ -1132,112 +412,92 @@ msgstr ""
 "\n"
 "Prosimy pomyśleć o mrówkojadach. One też potrzebują trochę miłości."
 
-#: src/bin/e_main.c:485
-msgid "This is development code, so be warned."
-msgstr "Ostrzegamy, to jest kod rozwojowy."
+#: src/bin/e_int_menus.c:344
+msgid "(No Applications)"
+msgstr "(Brak Aplikacji)"
 
-#: src/modules/ibar/e_mod_main.c:173
-msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
-msgstr ""
-"Oto moduł uruchamiania aplikacji IBar dla Enlightenment.\n"
-"Jest on pierwszym przykładowym modułem użytym do wprowadzenia\n"
-"kilku interfejsów w Enlightenment 0.17.0. Jest on w trakcie tworzenia,\n"
-"więc spodziewaj się częstych awarii oraz zmian."
+#: src/bin/e_int_menus.c:426
+msgid "New Row of Desktops"
+msgstr "Nowy Rząd Pulpitów"
 
-#: src/modules/ibox/e_mod_main.c:158
-msgid ""
-"This is the IBox Application Launcher box module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
-msgstr ""
-"Oto moduł uruchamiania aplikacji IBox dla Enlightenment.\n"
-"Jest on pierwszym przykładowym modułem użytym do wprowadzenia\n"
-"kilku interfejsów w Enlightenment 0.17.0. Jest on w trakcie tworzenia,\n"
-"więc spodziewaj się częstych awarii oraz zmian."
+#: src/bin/e_int_menus.c:430
+msgid "Remove Row of Desktops"
+msgstr "Usuń Rząd Pulpitów"
 
-#: src/modules/dropshadow/e_mod_main.c:149
-msgid ""
-"This is the dropshadow module that allows dropshadows to be cast\n"
-"on the desktop background - without special X-Server extensions\n"
-"or hardware acceleration."
-msgstr ""
-"Oto moduł cienia, który pozwala na rzucenie cienia na tło\n"
-"pulpitu bez użycia specjalnych rozszerzeń X-Serwera\n"
-"czy wspomagania sprzętowego."
+#: src/bin/e_int_menus.c:434
+msgid "New Column of Desktops"
+msgstr "Nowa Kolumna Pulpitów"
 
-#: src/modules/test/e_mod_main.c:67
-msgid ""
-"This module is VERY simple and is only used to test the basic\n"
-"interface of the Enlightenment 0.17.0 module system. Please\n"
-"Ignore this module unless you are working on the module system."
-msgstr ""
-"Oto BARDZO prosty moduł służący wyłącznie do testowania\n"
-"interfejsu systemu modułów Enlightenment 0.17.0. Prosimy\n"
-"o zignorowanie tego modułu, chyba że pracujesz nad tym systemem."
+#: src/bin/e_int_menus.c:438
+msgid "Remove Column of Desktops"
+msgstr "Usuń Kolumnę Pulpitów"
 
-#: src/modules/ibox/e_mod_main.c:619 src/modules/ibar/e_mod_main.c:818
-msgid "Tiny"
-msgstr "Malutki"
+#: src/bin/e_int_menus.c:518 src/bin/e_int_menus.c:777
+msgid "(No Windows)"
+msgstr "(Brak Okien)"
 
-#: src/modules/dropshadow/e_mod_main.c:307
-msgid "Very Dark"
-msgstr "Bardzo Ciemny"
+#: src/bin/e_int_menus.c:536 src/bin/e_int_menus.c:794
+msgid "No name!!"
+msgstr "Bez nazwy!!"
 
-#: src/modules/dropshadow/e_mod_main.c:346
-msgid "Very Far"
-msgstr "Bardzo Daleko"
+#: src/bin/e_int_menus.c:552
+msgid "Cleanup Windows"
+msgstr "Uporządkuj Okna"
 
-#: src/modules/dropshadow/e_mod_main.c:259
-msgid "Very Fuzzy"
-msgstr "Bardzo Zamazany"
+#: src/bin/e_int_menus.c:625 src/modules/ibox/e_mod_main.c:457
+#: src/modules/pager/e_mod_main.c:437 src/modules/clock/e_mod_main.c:320
+#: src/modules/battery/e_mod_main.c:576 src/modules/ibar/e_mod_main.c:620
+#: src/modules/temperature/e_mod_main.c:728
+#: src/modules/cpufreq/e_mod_main.c:812 src/modules/start/e_mod_main.c:233
+msgid "Edit Mode"
+msgstr "Tryb Edycji"
 
-#: src/modules/ibox/e_mod_main.c:654 src/modules/ibar/e_mod_main.c:853
-msgid "Very Large"
-msgstr "Bardzo Duży"
+#: src/bin/e_int_menus.c:631
+msgid "(Unused)"
+msgstr "(Nieużywane)"
 
-#: src/modules/dropshadow/e_mod_main.c:334
-msgid "Very Light"
-msgstr "Bardzo Jasny"
+#: src/bin/e_int_menus.c:721
+msgid "(Empty)"
+msgstr "(Puste)"
 
-#: src/modules/dropshadow/e_mod_main.c:373
-msgid "Very Near"
-msgstr "Bardzo Blisko"
+#: src/bin/e_error.c:209 src/bin/e_error.c:218
+msgid "OK"
+msgstr "OK"
 
-#: src/modules/dropshadow/e_mod_main.c:295
-msgid "Very Sharp"
-msgstr "Bardzo Wyraźny"
+#: src/bin/e_error.c:364
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: Błąd!"
 
-#: src/modules/temperature/e_mod_main.c:490
-msgid "Very Slow (60 sec)"
-msgstr "Bardzo Powolny (60 sek)"
+#: src/bin/e_winlist.c:115
+msgid "Select a window"
+msgstr "Wybierz Okno"
 
-#: src/modules/ibox/e_mod_main.c:626 src/modules/ibar/e_mod_main.c:825
-msgid "Very Small"
-msgstr "Bardzo Mały"
-
-#: src/bin/e_int_menus.c:98
-msgid "Windows"
-msgstr "Okna"
-
-#: src/bin/e_init.c:36
+#: src/bin/e_desk.c:44
 #, c-format
-msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X zgłasza, że nie ma %i ekranów ani żadnych okien root!\n"
+msgid "Desktop %d, %d"
+msgstr "Pulpit %d, %d"
 
-#: src/modules/battery/e_mod_main.c:687
+#: src/bin/e_config.c:295
 msgid ""
-"Your battery is running low.\n"
-"You may wish to switch to an AC source."
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new configuration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
 msgstr ""
-"Twoja bateria się wyczerpuje.\n"
-"Możesz przełączyć się na źródło stałego zasilania."
+"Dane konfiguracyjne wymagają odnowienia. Twoja stara konfiguracja\n"
+"została usunięta i zastąpiona przez nową domyślną. Tak będzie się działo\n"
+"podczas tworzenia Enlightenment, więc nie ma potrzeby zgłaszania błędu.\n"
+"Oznacza to po prostu, że Enlightenment domyślnie wymaga nowszych danych\n"
+"konfiguracyjnych by być w pełni użyteczne, czego nie posiadają Twoje stare\n"
+"pliki konfiguracyjne. Nowy domyślny zestaw naprawi to poprzez ich dodanie.\n"
+"Możesz przekonfigurować wszystko zgodnie ze swoimi upodobaniami.\n"
+"Przepraszamy za zamieszanie w Twojej konfiguracji.\n"
 
-#: src/bin/e_config.c:195
+#: src/bin/e_config.c:309
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -1252,3 +512,1075 @@ msgstr ""
 "Enlightenment. To jest złe rozwiązanie i dla ostrożności twoja konfiguracja\n"
 "została przywrócona do domyślnej. Przepraszamy za niedogodność.\n"
 
+#: src/bin/e_config.c:1339
+msgid "Configuration Upgraded"
+msgstr "Zaktualizowano Konfigurację"
+
+#: src/bin/e_main.c:203
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+"Opcje:\n"
+"\t-ekran DISPLAY\n"
+"\t\tPodłącz do ekranu DISPLAY.\n"
+"\t\tnp. : -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tDodaj FAŁSZYWY ekran xinerama (zamiast rzeczywistego)\n"
+"\t\to podanej geomerii. Możesz ich dodać ile tylko chcesz.\n"
+"\t\tWszystkie zastąpią rzeczywiste ekrany, jeśli takie istnieją.\n"
+"\t\tMoże to być użyte do symulacji xineramy.\n"
+"\t\tnp.: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile·CONF_PROFILE\n"
+"\t\tUżyj profilu konfiguracyjnego CONF_PROFILE zamiast domyślnie wybranego "
+"przez użytkownika lub tylko \"domyślnego\".\n"
+"\t-dobrze\n"
+"\t\tBądź dobry.\n"
+"\t-źle\n"
+"\t\tBądź zły.\n"
+"\t-psychotycznie\n"
+"\t\tBądź psychotyczny.\n"
+
+#: src/bin/e_main.c:257
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może uruchomić Ecore!\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:267
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może ustawić obsługi sygnału wyjścia.Może masz zbyt mało "
+"pamięci ?"
+
+#: src/bin/e_main.c:273
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może ustawić obsługi sygnału HUP.\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:284
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment nie może ustanowić połączenia z X\n"
+"Czy ustawiłeś zmienną DISPLAY ?"
+
+#: src/bin/e_main.c:292
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment nie może ustanowić swojego systemu ostrzeżeń.\n"
+"Czy ustawiłeś zmienną DISPLAY ?"
+
+#: src/bin/e_main.c:299
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Enlightenment nie może uruchomić xineramy.\n"
+"Tak nie powinno się stać."
+
+#: src/bin/e_main.c:315
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może uruchomić systemu połączeń.\n"
+"Może masz zbyt mało pamięci?"
+
+#: src/bin/e_main.c:323
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie moż uruchomić systemu IPC.\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:331
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może uruchomić systemu Evas.\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:337
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment stwierdził, że ecore_evas nie wspiera programowego\n"
+"renderowania X11 w Evas. Proszę sprawdzić Swoją instalację Evas i\n"
+"Ecore oraz czy wspierają one programowe renderowanie X11."
+
+#: src/bin/e_main.c:346
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może uruchomić systemu plików.\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:358
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment nie może utworzyć katalogów w katalogu domowym.\n"
+"Może nie masz katalogu domowego lub dysk jest pełny ?"
+
+#: src/bin/e_main.c:366
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenment nie może ustawić swojego systemu konfiguracji."
+
+#: src/bin/e_main.c:373
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może ustawić ścieżek by znaleźć pliki.\n"
+"Może masz zbyt mało pamięci ?"
+
+#: src/bin/e_main.c:381
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment nie może ustawić swojego systemu zdarzeń."
+
+#: src/bin/e_main.c:388
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment nie może ustawić swojego systemu powiązań."
+
+#: src/bin/e_main.c:395
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment nie może ustawić swojego systemu wyskakujących okien."
+
+#: src/bin/e_main.c:406
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenment nie może ustawić swojego systemu czcionek."
+
+#: src/bin/e_main.c:418
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment nie może ustawić ekranu startowego.Może masz zbyt mało "
+"pamięci ?"
+
+#: src/bin/e_main.c:427
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenment nie może ustawić swojego systemu aplikacji."
+
+#: src/bin/e_main.c:434
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenment nie może ustawić swojego systemu tematów."
+
+#: src/bin/e_main.c:441
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Enlightenment nie jest w stanie zarządzać oknami dla wszystkich ekranów na "
+"Twoim\n"
+"systemie. Być może jest uruchomiony jakiś inny menedżer okien ?\n"
+
+#: src/bin/e_main.c:448
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenment nie może ustawić swojego systemu zapamiętywania."
+
+#: src/bin/e_main.c:464 src/bin/e_main.c:512
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+"Enlightenment nie może otworzyć połączenia IPC.\n"
+"Możliwe, że jest ono już używane przez istniejącą kopię Enlightenment.\n"
+"Upewnij się czy Enlightenment nie jest już uruchomiony na tym ekranie,\n"
+"a jeśli to zawiedzie, spróbuj usunąć wszystkie pliki z ~/.ecore/"
+"enlightenment-*\n"
+"i spróbuj uruchomić ponownie."
+
+#: src/bin/e_main.c:477
+msgid "Enlightenment cannot set up its msg system."
+msgstr "Enlightenment nie może ustawić swojego systemu wiadomości."
+
+#: src/bin/e_main.c:484
+msgid "Enlightenment cannot set up its dnd system."
+msgstr ""
+"Enlightenment nie może ustawić swojego systemu \"przeciągnij i upuść\"."
+
+#: src/bin/e_main.c:491
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr ""
+"Enlightenment nie może ustawić swojego systemu obsługi przechwytu "
+"wprowadzania."
+
+#: src/bin/e_main.c:498
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenment nie może ustawić swojego systemu modułów."
+
+#: src/bin/e_main.c:505
+msgid "Enlightenment cannot set up its window list system."
+msgstr "Enlightenment nie może ustawić swojego systemu listy okien."
+
+#: src/bin/e_main.c:511
+msgid "Enlightenment IPC setup error!"
+msgstr "Błąd ustawień IPC dla Enlightenment !"
+
+#: src/bin/e_main.c:528
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/bin/e_main.c:530
+msgid "Enlightenment Starting. Please wait."
+msgstr "Uruchamia się Enlightenment. Proszę czekać."
+
+#: src/bin/e_init.c:37
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "X zgłasza, że nie ma %i ekranów ani żadnych okien root!\n"
+
+#: src/bin/e_init.c:111
+msgid "Disable this splash screen in the future?"
+msgstr "Wyłączyć ekran powitalny w przyszłości ?"
+
+#: src/modules/ibox/e_mod_main.c:103 src/modules/pager/e_mod_main.c:84
+#: src/modules/clock/e_mod_main.c:49 src/modules/battery/e_mod_main.c:60
+#: src/modules/dropshadow/e_mod_main.c:100 src/modules/ibar/e_mod_main.c:121
+#: src/modules/test/e_mod_main.c:9 src/modules/temperature/e_mod_main.c:48
+#: src/modules/cpufreq/e_mod_main.c:57 src/modules/start/e_mod_main.c:28
+#: src/modules/desktopname/e_mod_main.c:30
+msgid "Module API Error"
+msgstr "Błąd API modułu"
+
+#: src/modules/ibox/e_mod_main.c:104
+#, c-format
+msgid ""
+"Error initializing Module: IBox\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu IBox.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
+msgstr "IBox"
+
+#: src/modules/ibox/e_mod_main.c:157
+msgid "Enlightenment IBox Module"
+msgstr "Moduł IBox dla Enlightenment"
+
+#: src/modules/ibox/e_mod_main.c:158
+msgid ""
+"This is the IBox Application Launcher box module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"Oto moduł uruchamiania aplikacji IBox dla Enlightenment.\n"
+"Jest on pierwszym przykładowym modułem użytym do wprowadzenia\n"
+"kilku interfejsów w Enlightenment 0.17.0. Jest on w trakcie tworzenia,\n"
+"więc spodziewaj się częstych awarii oraz zmian."
+
+#: src/modules/ibox/e_mod_main.c:603 src/modules/ibar/e_mod_main.c:806
+msgid "Auto fit icons"
+msgstr "Dopasuj do ikon"
+
+#: src/modules/ibox/e_mod_main.c:612 src/modules/ibar/e_mod_main.c:821
+msgid "Microscopic"
+msgstr "Mikroskopijny"
+
+#: src/modules/ibox/e_mod_main.c:619 src/modules/ibar/e_mod_main.c:828
+msgid "Tiny"
+msgstr "Malutki"
+
+#: src/modules/ibox/e_mod_main.c:626 src/modules/ibar/e_mod_main.c:835
+msgid "Very Small"
+msgstr "Bardzo Mały"
+
+#: src/modules/ibox/e_mod_main.c:633 src/modules/ibar/e_mod_main.c:842
+msgid "Small"
+msgstr "Mały"
+
+#: src/modules/ibox/e_mod_main.c:640 src/modules/dropshadow/e_mod_main.c:322
+#: src/modules/ibar/e_mod_main.c:849
+msgid "Medium"
+msgstr "Średni"
+
+#: src/modules/ibox/e_mod_main.c:647 src/modules/ibar/e_mod_main.c:856
+msgid "Large"
+msgstr "Duży"
+
+#: src/modules/ibox/e_mod_main.c:654 src/modules/ibar/e_mod_main.c:863
+msgid "Very Large"
+msgstr "Bardzo Duży"
+
+#: src/modules/ibox/e_mod_main.c:661 src/modules/ibar/e_mod_main.c:870
+msgid "Extremely Large"
+msgstr "Niezwykle Duży"
+
+#: src/modules/ibox/e_mod_main.c:668 src/modules/ibar/e_mod_main.c:877
+msgid "Huge"
+msgstr "Ogromny"
+
+#: src/modules/ibox/e_mod_main.c:675 src/modules/ibar/e_mod_main.c:884
+msgid "Enormous"
+msgstr "Olbrzymi"
+
+#: src/modules/ibox/e_mod_main.c:682 src/modules/ibar/e_mod_main.c:891
+msgid "Gigantic"
+msgstr "Gigantyczny"
+
+#: src/modules/ibox/e_mod_main.c:690 src/modules/ibar/e_mod_main.c:284
+#: src/modules/ibar/e_mod_main.c:899
+msgid "Options"
+msgstr "Opcje"
+
+#: src/modules/pager/e_mod_main.c:85
+#, c-format
+msgid ""
+"Error initializing Module: Pager\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Pagera.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/pager/e_mod_main.c:131
+msgid "Pager"
+msgstr "Pager"
+
+#: src/modules/pager/e_mod_main.c:140
+msgid "Enlightenment Pager Module"
+msgstr "Moduł Pagera dla Enlightenment"
+
+#: src/modules/pager/e_mod_main.c:141
+msgid "A pager module to navigate virtual desktops."
+msgstr "Moduł Pagera do nawigacji po wirtualnych pulpitach."
+
+#: src/modules/clock/e_mod_main.c:50
+#, c-format
+msgid ""
+"Error initializing Module: Clock\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Zegara.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/clock/e_mod_main.c:95
+msgid "Clock"
+msgstr "Zegar"
+
+#: src/modules/clock/e_mod_main.c:104
+msgid "Enlightenment Clock Module"
+msgstr "Moduł Zegara dla Enlightenment"
+
+#: src/modules/clock/e_mod_main.c:105
+msgid "A simple module to give E17 a clock."
+msgstr "Prosty moduł zegara analogowego."
+
+#: src/modules/clock/e_mod_main.c:330
+msgid "No Digital Display"
+msgstr "Bez Wyświetlacza Cyfrowego"
+
+#: src/modules/clock/e_mod_main.c:352
+msgid "24 Hour"
+msgstr "24 godzinny"
+
+#: src/modules/clock/e_mod_main.c:364
+msgid "Digital Display"
+msgstr "Wyświetlacz Cyfrowy"
+
+#: src/modules/battery/e_mod_main.c:61
+#, c-format
+msgid ""
+"Error initializing Module: Battery\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Baterii.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/battery/e_mod_main.c:104
+msgid "Battery"
+msgstr "Bateria"
+
+#: src/modules/battery/e_mod_main.c:113
+msgid "Enlightenment Battery Module"
+msgstr "Moduł Baterii dla Enlightenment"
+
+#: src/modules/battery/e_mod_main.c:114
+msgid ""
+"A basic battery meter that uses either ACPI or APM\n"
+"on Linux to monitor your battery and AC power adaptor\n"
+"status. This will work under Linux and FreeBSD and is only\n"
+"as accurate as your BIOS or kernel drivers."
+msgstr ""
+"Prosty miernik ładowania do monitorowania stanu baterii\n"
+"i źródła napięcia korzystający z ACPI lub APM.\n"
+"Działa pod Linuksem i FreeBSD a jego dokładność zależna jest\n"
+"od Twojego BIOSu oraz sterowników kernela."
+
+#: src/modules/battery/e_mod_main.c:205 src/modules/battery/e_mod_main.c:484
+#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:476
+msgid "Set Poll Time"
+msgstr "Ustaw Czas Pomiaru"
+
+#: src/modules/battery/e_mod_main.c:209 src/modules/battery/e_mod_main.c:488
+msgid "Set Alarm"
+msgstr "Ustaw Alarm"
+
+#: src/modules/battery/e_mod_main.c:391
+msgid "Disable"
+msgstr "Wyłącz"
+
+#: src/modules/battery/e_mod_main.c:398
+msgid "10 mins"
+msgstr "10 min"
+
+#: src/modules/battery/e_mod_main.c:405
+msgid "20 mins"
+msgstr "20 min"
+
+#: src/modules/battery/e_mod_main.c:412
+msgid "30 mins"
+msgstr "30 min"
+
+#: src/modules/battery/e_mod_main.c:419
+msgid "40 mins"
+msgstr "40 min"
+
+#: src/modules/battery/e_mod_main.c:426
+msgid "50 mins"
+msgstr "50 min"
+
+#: src/modules/battery/e_mod_main.c:433
+msgid "1 hour"
+msgstr "1 godzina"
+
+#: src/modules/battery/e_mod_main.c:445
+msgid "Check Fast (1 sec)"
+msgstr "Krótki (1 sek)"
+
+#: src/modules/battery/e_mod_main.c:452
+msgid "Check Medium (5 sec)"
+msgstr "Średni (5 sek)"
+
+#: src/modules/battery/e_mod_main.c:459
+msgid "Check Normal (10 sec)"
+msgstr "Normalny (10 sek)"
+
+#: src/modules/battery/e_mod_main.c:466
+msgid "Check Slow (30 sec)"
+msgstr "Długi (30 sek)"
+
+#: src/modules/battery/e_mod_main.c:473
+msgid "Check Very Slow (60 sec)"
+msgstr "Bardzo długi (60 sek)"
+
+#: src/modules/battery/e_mod_main.c:736
+msgid "Battery Running Low"
+msgstr "Niski Stan Baterii"
+
+#: src/modules/battery/e_mod_main.c:737
+msgid ""
+"Your battery is running low.\n"
+"You may wish to switch to an AC source."
+msgstr ""
+"Twoja bateria się wyczerpuje.\n"
+"Możesz przełączyć się na źródło stałego zasilania."
+
+#: src/modules/battery/e_mod_main.c:798
+msgid "NO INFO"
+msgstr "BRAK INFO"
+
+#: src/modules/battery/e_mod_main.c:929 src/modules/battery/e_mod_main.c:1189
+msgid "NO BAT"
+msgstr "BRAK BATERII"
+
+#: src/modules/battery/e_mod_main.c:953 src/modules/battery/e_mod_main.c:1214
+msgid "BAD DRIVER"
+msgstr "ZŁY STEROWNIK"
+
+#: src/modules/battery/e_mod_main.c:977 src/modules/battery/e_mod_main.c:1238
+msgid "FULL"
+msgstr "PEŁNA"
+
+#: src/modules/battery/e_mod_main.c:1037 src/modules/battery/e_mod_main.c:1297
+msgid "High"
+msgstr "Wysoki"
+
+#: src/modules/battery/e_mod_main.c:1041 src/modules/battery/e_mod_main.c:1301
+msgid "Low"
+msgstr "Niski"
+
+#: src/modules/battery/e_mod_main.c:1045 src/modules/battery/e_mod_main.c:1305
+msgid "Danger"
+msgstr "Uwaga"
+
+#: src/modules/battery/e_mod_main.c:1049 src/modules/battery/e_mod_main.c:1309
+msgid "Charging"
+msgstr "Ładowanie"
+
+#: src/modules/dropshadow/e_mod_main.c:101
+#, c-format
+msgid ""
+"Error initializing Module: Dropshadow\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Cienia.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/dropshadow/e_mod_main.c:184
+msgid "Dropshadow"
+msgstr "Cień"
+
+#: src/modules/dropshadow/e_mod_main.c:193
+msgid "Enlightenment Dropshadow Module"
+msgstr "Moduł Cienia dla Enlightenment"
+
+#: src/modules/dropshadow/e_mod_main.c:194
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast\n"
+"on the desktop background - without special X-Server extensions\n"
+"or hardware acceleration."
+msgstr ""
+"Oto moduł cienia, który pozwala na rzucenie cienia na tło\n"
+"pulpitu bez użycia specjalnych rozszerzeń X-Serwera\n"
+"czy wspomagania sprzętowego."
+
+#: src/modules/dropshadow/e_mod_main.c:304
+msgid "Very Fuzzy"
+msgstr "Bardzo Zamazany"
+
+#: src/modules/dropshadow/e_mod_main.c:313
+msgid "Fuzzy"
+msgstr "Zamazany"
+
+#: src/modules/dropshadow/e_mod_main.c:331
+msgid "Sharp"
+msgstr "Wyraźny"
+
+#: src/modules/dropshadow/e_mod_main.c:340
+msgid "Very Sharp"
+msgstr "Bardzo Wyraźny"
+
+#: src/modules/dropshadow/e_mod_main.c:352
+msgid "Very Dark"
+msgstr "Bardzo Ciemny"
+
+#: src/modules/dropshadow/e_mod_main.c:361
+msgid "Dark"
+msgstr "Ciemny"
+
+#: src/modules/dropshadow/e_mod_main.c:370
+msgid "Light"
+msgstr "Jasny"
+
+#: src/modules/dropshadow/e_mod_main.c:379
+msgid "Very Light"
+msgstr "Bardzo Jasny"
+
+#: src/modules/dropshadow/e_mod_main.c:391
+msgid "Very Far"
+msgstr "Bardzo Daleko"
+
+#: src/modules/dropshadow/e_mod_main.c:400
+msgid "Far"
+msgstr "Daleko"
+
+#: src/modules/dropshadow/e_mod_main.c:409
+msgid "Near"
+msgstr "Blisko"
+
+#: src/modules/dropshadow/e_mod_main.c:418
+msgid "Very Near"
+msgstr "Bardzo Blisko"
+
+#: src/modules/dropshadow/e_mod_main.c:427
+msgid "Extremely Near"
+msgstr "Niezwykle Blisko"
+
+#: src/modules/dropshadow/e_mod_main.c:436
+msgid "Immediately Underneath"
+msgstr "Bezpośrednio Pod"
+
+#: src/modules/dropshadow/e_mod_main.c:448
+msgid "High Quality"
+msgstr "Wysoka Jakość"
+
+#: src/modules/dropshadow/e_mod_main.c:458
+msgid "Medium Quality"
+msgstr "Średnia Jakość"
+
+#: src/modules/dropshadow/e_mod_main.c:468
+msgid "Low Quality"
+msgstr "Niska Jakość"
+
+#: src/modules/ibar/e_mod_main.c:122
+#, c-format
+msgid ""
+"Error initializing Module: IBar\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu IBar.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/ibar/e_mod_main.c:165
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibar/e_mod_main.c:174
+msgid "Enlightenment IBar Module"
+msgstr "Moduł IBar dla Enlightenment"
+
+#: src/modules/ibar/e_mod_main.c:175
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"Oto moduł uruchamiania aplikacji IBar dla Enlightenment.\n"
+"Jest on pierwszym przykładowym modułem użytym do wprowadzenia\n"
+"kilku interfejsów w Enlightenment 0.17.0. Jest on w trakcie tworzenia,\n"
+"więc spodziewaj się częstych awarii oraz zmian."
+
+#: src/modules/ibar/e_mod_main.c:812
+msgid "Follower"
+msgstr "Goniec"
+
+#: src/modules/test/e_mod_main.c:10
+#, c-format
+msgid ""
+"Error initializing Module: test\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Test..\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/test/e_mod_main.c:24
+msgid "Module Config Menu Item 1"
+msgstr "Pozycja Menu Konfiguracji 1"
+
+#: src/modules/test/e_mod_main.c:26
+msgid "Module Config Menu Item 2"
+msgstr "Pozycja Menu Konfiguracji 2"
+
+#: src/modules/test/e_mod_main.c:28
+msgid "Module Config Menu Item 3"
+msgstr "Pozycja Menu Konfiguracji 3"
+
+#: src/modules/test/e_mod_main.c:32
+msgid "Something Else"
+msgstr "Coś Innego"
+
+#: src/modules/test/e_mod_main.c:59
+msgid "Test!!!"
+msgstr "Test!!!"
+
+#: src/modules/test/e_mod_main.c:66
+msgid "Enlightenment Test Module"
+msgstr "Moduł Test dla Enlightenment"
+
+#: src/modules/test/e_mod_main.c:67
+msgid ""
+"This module is VERY simple and is only used to test the basic\n"
+"interface of the Enlightenment 0.17.0 module system. Please\n"
+"ignore this module unless you are working on the module system."
+msgstr ""
+"Oto BARDZO prosty moduł służący wyłącznie do testowania podstawowego\n"
+"interfejsu systemu modułów Enlightenment 0.17.0. Prosimy\n"
+"o zignorowanie tego modułu, chyba że pracujesz nad systemem modułów."
+
+#: src/modules/temperature/e_mod_main.c:49
+#, c-format
+msgid ""
+"Error initializing Module: Temperature\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Temperatury.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/temperature/e_mod_main.c:92
+msgid "Temperature"
+msgstr "Temperatura"
+
+#: src/modules/temperature/e_mod_main.c:101
+msgid "Enlightenment Temperature Module"
+msgstr "Moduł Temperatury dla Enlightenment"
+
+#: src/modules/temperature/e_mod_main.c:102
+msgid ""
+"A module to measure the ACPI Thermal sensor on Linux.\n"
+"It is especially useful for modern Laptops with high speed\n"
+"CPUs that generate a lot of heat."
+msgstr ""
+"Moduł pomiaru temperatury czujnika ACPI pod Linuksem.\n"
+"Szczególnie użyteczny dla współczesnych laptopów\n"
+"z szybkimi procesorami, które generują dużo ciepła."
+
+#: src/modules/temperature/e_mod_main.c:189
+#: src/modules/temperature/e_mod_main.c:615
+msgid "Check Interval"
+msgstr "Okres Pomiaru"
+
+#: src/modules/temperature/e_mod_main.c:193
+#: src/modules/temperature/e_mod_main.c:619
+msgid "Low Temperature"
+msgstr "Niska Temperatura"
+
+#: src/modules/temperature/e_mod_main.c:197
+#: src/modules/temperature/e_mod_main.c:623
+msgid "High Temperature"
+msgstr "Wysoka Temperatura"
+
+#: src/modules/temperature/e_mod_main.c:467
+msgid "Fast (1 sec)"
+msgstr "Szybko (1 sek)"
+
+#: src/modules/temperature/e_mod_main.c:474
+msgid "Medium (5 sec)"
+msgstr "Średni (5 sek)"
+
+#: src/modules/temperature/e_mod_main.c:481
+msgid "Normal (10 sec)"
+msgstr "Normalny (10 sek)"
+
+#: src/modules/temperature/e_mod_main.c:488
+msgid "Slow (30 sec)"
+msgstr "Powolny (30 sek)"
+
+#: src/modules/temperature/e_mod_main.c:495
+msgid "Very Slow (60 sec)"
+msgstr "Bardzo Powolny (60 sek)"
+
+#: src/modules/temperature/e_mod_main.c:507
+msgid "10C"
+msgstr "10C"
+
+#: src/modules/temperature/e_mod_main.c:514
+#: src/modules/temperature/e_mod_main.c:547
+msgid "20C"
+msgstr "20C"
+
+#: src/modules/temperature/e_mod_main.c:521
+#: src/modules/temperature/e_mod_main.c:554
+msgid "30C"
+msgstr "30C"
+
+#: src/modules/temperature/e_mod_main.c:528
+#: src/modules/temperature/e_mod_main.c:561
+msgid "40C"
+msgstr "40C"
+
+#: src/modules/temperature/e_mod_main.c:535
+#: src/modules/temperature/e_mod_main.c:568
+msgid "50C"
+msgstr "50C"
+
+#: src/modules/temperature/e_mod_main.c:575
+msgid "60C"
+msgstr "60C"
+
+#: src/modules/temperature/e_mod_main.c:582
+msgid "70C"
+msgstr "70C"
+
+#: src/modules/temperature/e_mod_main.c:589
+msgid "80C"
+msgstr "80C"
+
+#: src/modules/temperature/e_mod_main.c:596
+msgid "90C"
+msgstr "90C"
+
+#: src/modules/temperature/e_mod_main.c:603
+msgid "100C"
+msgstr "100C"
+
+#: src/modules/cpufreq/e_mod_main.c:58
+#, c-format
+msgid ""
+"Error initializing Module: cpufreq\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu cpufreq.\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/cpufreq/e_mod_main.c:98
+msgid "CpuFreq"
+msgstr "CpuFreq"
+
+#: src/modules/cpufreq/e_mod_main.c:107
+msgid "CPU Frequency Controller Module"
+msgstr "Moduł Kontroli Częstotliwości CPU"
+
+#: src/modules/cpufreq/e_mod_main.c:108
+msgid ""
+"A simple module to control the frequency of the system CPU. This is "
+"especially useful to save power on laptops."
+msgstr ""
+"Prosty moduł służący do kontroli częstotliwości CPU. Użyteczny do "
+"oszczędzania energii w laptopach."
+
+#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:482
+msgid "Set Controller"
+msgstr "Ustaw Kontroler"
+
+#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:489
+msgid "Set Speed"
+msgstr "Ustaw Prędkość"
+
+#: src/modules/cpufreq/e_mod_main.c:266 src/modules/cpufreq/e_mod_main.c:283
+msgid "CPU Frequency ERROR"
+msgstr "Częstotliwość CPU BŁĄD"
+
+#: src/modules/cpufreq/e_mod_main.c:267
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+"Wystąpił błąd podczas ustalania zarządcy częstoliwością\n"
+"cpu poprzez aplikację setfreq modułu."
+
+#: src/modules/cpufreq/e_mod_main.c:284
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"setting via the module's setfreq utility."
+msgstr ""
+"Wystąpił błąd podczas ustalania częstoliwości cpu\n"
+"poprzez aplikację setfreq modułu."
+
+#: src/modules/cpufreq/e_mod_main.c:384
+msgid "Check Fast (0.5 sec)"
+msgstr "Krótki (0.5 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:391
+msgid "Check Medium (1 sec)"
+msgstr "Średni (1 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:398
+msgid "Check Normal (2 sec)"
+msgstr "Normalny (2 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:405
+msgid "Check Slow (5 sec)"
+msgstr "Długi (5 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:412
+msgid "Check Very Slow (30 sec)"
+msgstr "Bardzo długi (30 sek)"
+
+#: src/modules/cpufreq/e_mod_main.c:428
+msgid "Manual"
+msgstr "Ręcznie"
+
+#: src/modules/cpufreq/e_mod_main.c:430
+msgid "Automatic"
+msgstr "Automatyczny"
+
+#: src/modules/cpufreq/e_mod_main.c:432
+msgid "Lower Power Automatic"
+msgstr "Niższa Moc Automatycznie"
+
+#: src/modules/cpufreq/e_mod_main.c:434
+msgid "Minimum Speed"
+msgstr "Minimalna Prędkość"
+
+#: src/modules/cpufreq/e_mod_main.c:436
+msgid "Maximum Speed"
+msgstr "Maksymalna Prędkość"
+
+#: src/modules/cpufreq/e_mod_main.c:458
+#, c-format
+msgid "%i Mhz"
+msgstr "%i·Mhz"
+
+#: src/modules/cpufreq/e_mod_main.c:461
+#, c-format
+msgid "%i.%i Ghz"
+msgstr "%i.%i·Ghz"
+
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu Start..\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "Start"
+
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Moduł Start dla Enlightenment"
+
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Eksperymentalny moduł Przycisku dla E17"
+
+#: src/modules/desktopname/e_mod_main.c:31
+#, c-format
+msgid ""
+"Error initializing Module: desktop\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Błąd podczas uruchamiania Modułu: pulpit\n"
+"Wymaga on API modułu w wersji przynajmniej: %i.\n"
+"API modułu polecane przez Enlightenment to: %i.\n"
+"Moduł wyłączono."
+
+#: src/modules/desktopname/e_mod_main.c:77
+msgid "DesktopName"
+msgstr "Nazwa Pulpitu"
+
+#: src/modules/desktopname/e_mod_main.c:86
+msgid "Enlightenment DesktopName Module"
+msgstr "Moduł Nazwy Pulpitu dla Enlightenment"
+
+#: src/modules/desktopname/e_mod_main.c:87
+msgid "Experimental module for E17: display desktop name on screen."
+msgstr "Eksperymentalny moduł dla E17: wyświetla nazwę pulpitu na ekranie."
+
+#: src/modules/desktopname/e_mod_main.c:135
+msgid "Very Slow"
+msgstr "Bardzo Powolny"
+
+#: src/modules/desktopname/e_mod_main.c:142
+msgid "Slow"
+msgstr "Powoli"
+
+#: src/modules/desktopname/e_mod_main.c:156
+msgid "Fast"
+msgstr "Szybko"
+
+#: src/modules/desktopname/e_mod_main.c:163
+msgid "Very Fast"
+msgstr "Bardzo Szybki"
+
+#~ msgid "Fullscreen (Application)"
+#~ msgstr "Pełny Ekran (Aplikacji)"
+
+#~ msgid "Fullscreen (User)"
+#~ msgstr "Pełny Ekran (Użytkownika)"
+
+#~ msgid "Iconify (Application)"
+#~ msgstr "Do Ikony (Aplikacja)"
+
+#~ msgid "Iconify (User)"
+#~ msgstr "Do Ikony (Użytkownik)"
+
+#~ msgid "Maximize (Application)"
+#~ msgstr "Zmaksymalizowane (Aplikacja)"
+
+#~ msgid "Maximize (User)"
+#~ msgstr "Maksymalizowane (Użytkownik)"
+
+#~ msgid "Position (Application)"
+#~ msgstr "Pozycja (Aplikacja)"
+
+#~ msgid "Shade (Application)"
+#~ msgstr "Zwinięte (Aplikacja)"
+
+#~ msgid "Shade (User)"
+#~ msgstr "Zwinięcie (Użytkownik)"
+
+#~ msgid "Size (Application)"
+#~ msgstr "Rozmiar (Aplikacja)"
+
+#~ msgid "Size (User)"
+#~ msgstr "Rozmiar (Użytkownik)"
+
+#~ msgid "Stacking (Application)"
+#~ msgstr "Poziom (Aplikacja)"
+
+#~ msgid "Sticky (Application)"
+#~ msgstr "Przyklejenie (Aplikacja)"
+
+#~ msgid "Sticky (User)"
+#~ msgstr "Przyklejenie (Użytkownik)"
+
+#~ msgid "Artificially slowing startup so you can see it all."
+#~ msgstr "Sztucznie spowolnione uruchamianie, abyś zobaczył je w całości."
+
+#~ msgid "Most features do not work yet, and those that do are buggy."
+#~ msgstr ""
+#~ "Większość elementów jeszcze nie działa, a część nadal zawiera błędy."
+
+#~ msgid "This is development code, so be warned."
+#~ msgstr "Ostrzegamy, to jest kod rozwojowy."
