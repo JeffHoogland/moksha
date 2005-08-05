@@ -4407,8 +4407,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
+   e_config_save_flush();
    e_config_profile_set(s);
-   SAVE;
+   e_config_profile_save();
+   e_config_save_block_set(1);
+   restart = 1;
+   ecore_main_loop_quit();
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif

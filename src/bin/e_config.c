@@ -17,6 +17,7 @@ static void _e_config_free(void);
 static int  _e_config_cb_timer(void *data);
 
 /* local subsystem globals */
+static int _e_config_save_block = 0;
 static Ecore_Job *_e_config_save_job = NULL;
 static char *_e_config_profile = NULL;
 
@@ -977,6 +978,7 @@ e_config_save(void)
 	ecore_job_del(_e_config_save_job);
 	_e_config_save_job = NULL;
      }
+   _e_config_save_cb(NULL);
    return e_config_domain_save("e", _e_config_edd, e_config);
 }
 
@@ -987,7 +989,7 @@ e_config_save_flush(void)
      {
 	ecore_job_del(_e_config_save_job);
 	_e_config_save_job = NULL;
-	e_config_domain_save("e", _e_config_edd, e_config);
+	_e_config_save_cb(NULL);
      }
 }
 
@@ -1081,6 +1083,17 @@ e_config_profile_del(char *prof)
    E_FREE(homedir);
 }
 
+void
+e_config_save_block_set(int block)
+{
+  _e_config_save_block = block;
+}
+
+int
+e_config_save_block_get(void)
+{
+   return _e_config_save_block;
+}
 
 void *
 e_config_domain_load(char *domain, E_Config_DD *edd)
@@ -1110,14 +1123,14 @@ e_config_domain_load(char *domain, E_Config_DD *edd)
 }
 
 int
-e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
+e_config_profile_save(void)
 {
    Eet_File *ef;
    char buf[4096];
    char *homedir;
    int ok = 0;
 
-   /* FIXME: check for other sessions fo E runing */
+   /* FIXME: check for other sessions fo E running */
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 	    homedir);
@@ -1128,6 +1141,20 @@ e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
 		       strlen(_e_config_profile), 0);
 	eet_close(ef);
      }
+   return ok;
+}
+
+int
+e_config_domain_save(char *domain, E_Config_DD *edd, void *data)
+{
+   Eet_File *ef;
+   char buf[4096];
+   char *homedir;
+   int ok = 0;
+
+   if (_e_config_save_block) return 0;
+   /* FIXME: check for other sessions fo E running */
+   homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/%s", 
 	    homedir, _e_config_profile);
    ecore_file_mkpath(buf);
@@ -1189,6 +1216,7 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 static void
 _e_config_save_cb(void *data)
 {
+   e_config_profile_save();
    e_module_save_all();
    e_config_domain_save("e", _e_config_edd, e_config);
    _e_config_save_job = NULL;

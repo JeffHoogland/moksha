@@ -730,6 +730,7 @@ _e_gadman_client_edit_begin(E_Gadman_Client *gmc)
 static void
 _e_gadman_client_edit_end(E_Gadman_Client *gmc)
 {
+   e_gadman_client_save(gmc);
    if (gmc->moving) e_move_end();
    if ((gmc->resizing_l) || (gmc->resizing_r) ||
        (gmc->resizing_u) || (gmc->resizing_d))
