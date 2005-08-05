@@ -2067,13 +2067,16 @@ _e_border_del(E_Border *bd)
      }
    bd->already_unparented = 1;
 
-   ev = calloc(1, sizeof(E_Event_Border_Remove));
-   ev->border = bd;
-   /* FIXME Don't ref this during shutdown. And the event is pointless
-    * during shutdown.. */
-   e_object_ref(E_OBJECT(bd));
-//   e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
-   ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+   if (!bd->new_client)
+     {
+	ev = calloc(1, sizeof(E_Event_Border_Remove));
+	ev->border = bd;
+	/* FIXME Don't ref this during shutdown. And the event is pointless
+	 * during shutdown.. */
+	e_object_ref(E_OBJECT(bd));
+	// e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
+	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+     }
 }
 
 static void
