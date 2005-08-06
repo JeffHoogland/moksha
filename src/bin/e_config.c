@@ -337,7 +337,7 @@ e_config_init(void)
 	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->show_splash = 1;
 	e_config->desktop_default_background = strdup("");
-	e_config->desktop_default_name = strdup("Desktop %d, %d");
+	e_config->desktop_default_name = strdup("Desktop %i, %i");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_threshhold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
