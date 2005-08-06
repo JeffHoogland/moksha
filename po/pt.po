@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-12 17:46+0900\n"
-"PO-Revision-Date: 2005-04-15 13:16-0300\n"
-"Last-Translator: Rafael 'Fumasa' Giorgetti <fumasa@gmail.com>\n"
+"PO-Revision-Date: 2005-07-29 22:23-0300\n"
+"Last-Translator: MDK <mdkcore@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -385,6 +385,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: Battery\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/clock/e_mod_main.c:41
 #, c-format
@@ -394,6 +398,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: Clock\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/dropshadow/e_mod_main.c:78
 #, c-format
@@ -403,6 +411,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: Dropshadow\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/ibar/e_mod_main.c:106
 #, c-format
@@ -412,6 +424,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: IBar\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/pager/e_mod_main.c:80
 #, c-format
@@ -421,6 +437,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: Pager\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/temperature/e_mod_main.c:44
 #, c-format
@@ -430,6 +450,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: Temperature\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -439,6 +463,10 @@ msgid ""
 "The module API advertized by Enlightenment is: %i.\n"
 "Aborting module."
 msgstr ""
+"Erro inicializando Módulo: test\n"
+"Isto requere no mínimo módulo API versão: %i.\n"
+"O módulo API anunciado pelo Enlightenment é: %i.\n"
+"Abortando módulo."
 
 #: src/bin/e_module.c:98
 #: src/bin/e_module.c:109
@@ -453,6 +481,10 @@ msgid ""
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
+"Erro ao iniciar editor de ícone\n"
+"\n"
+"por favor instale e_util_eapp_edit\n"
+"ou tenha certeza que está em seu PATH\n"
 
 #: src/bin/e_int_menus.c:117
 msgid "Exit Enlightenment"
@@ -497,9 +529,8 @@ msgid "Fuzzy"
 msgstr "Disfocado"
 
 #: src/bin/e_int_menus.c:93
-#, fuzzy
 msgid "Gadgets"
-msgstr "Gadgets"
+msgstr "Bugigangas"
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Gigantic"
@@ -720,6 +751,9 @@ msgid ""
 "No module named %s could be found in the\n"
 "module search directories\n"
 msgstr ""
+"Houve um erro carregando módulo chamado: %s\n"
+"Nenhum módulo chamado %s pôde ser encontrado nos\n"
+"diretórios de procura de módulos\n"
 
 #: src/bin/e_module.c:110
 #: src/bin/e_module.c:132
@@ -731,6 +765,11 @@ msgid ""
 "The error reported was:\n"
 "%s"
 msgstr ""
+"Houve um erro carregando módulo chamado: %s\n"
+"O caminho completo para este módulo é:\n"
+"%s\n"
+"O erro reportado foi:\n"
+"%s"
 
 #: src/bin/e_int_menus.c:211
 #, c-format
@@ -777,6 +816,9 @@ msgid ""
 "interface of the Enlightenment 0.17.0 module system. Please\n"
 "Ignore this module unless you are working on the module system."
 msgstr ""
+"Este módulo é MUITO simples e é usado somente para testar a interface\n"
+"básica do  sistema de módulos do Enlightenment 0.17.0. Por favor\n"
+"Ignore este módulo a não ser que você esteja trabalhando no sistema de módulos."
 
 #: src/modules/ibar/e_mod_main.c:733
 msgid "Tiny"
@@ -836,4 +878,6 @@ msgid ""
 "Your battery is running low.\n"
 "You may wish to switch to an AC source."
 msgstr ""
+"Sua bateria esta fraca.\n"
+"Você pode desejar trocar para uma fonte AC."
 
