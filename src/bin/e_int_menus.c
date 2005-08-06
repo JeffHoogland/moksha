@@ -689,6 +689,16 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 			 deftheme = et->file;
 		    }		  		  
 		  
+		  mi = e_menu_item_new(m);
+		  e_menu_item_radio_set(mi, 1);
+		  e_menu_item_radio_group_set(mi, 1);
+		  if (((deftheme) && (!strcmp("default.edj", deftheme))) ||
+		      (!deftheme))
+		    e_menu_item_toggle_set(mi, 1);
+		  e_menu_item_label_set(mi, "default");
+		  e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
+		  num++;
+		  
 		  while ((theme = ecore_list_next(themes)))
 		    {
 		       char *ext;
@@ -700,6 +710,7 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 			 {
 			    mi = e_menu_item_new(m);
 			    e_menu_item_radio_set(mi, 1);
+			    e_menu_item_radio_group_set(mi, 1);
 			    if (deftheme)
 			      {			  
 				 if (!strcmp(theme, deftheme))

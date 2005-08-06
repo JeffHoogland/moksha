@@ -61,7 +61,7 @@ main(int argc, char **argv)
    int i;
    int nostartup = 0;
    int after_restart = 0; 
-   char buf[1024];
+   char buf[PATH_MAX];
    char *s;
    struct sigaction action;
    /* trap deadly bug signals and allow some form of sane recovery */
@@ -244,6 +244,20 @@ main(int argc, char **argv)
 		  snprintf(buf, sizeof(buf), "%s.0", s);
 		  e_util_env_set("DISPLAY", buf);
 	       }
+	  }
+     }
+
+   /* fixes for FOOLS that keep cp'ing default.edj into ~/.e/e/themes */
+     {
+	char *homedir;
+	
+	homedir = e_user_homedir_get();
+	if (homedir)
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/themes/default.edj", homedir);
+	     if (ecore_file_exists(buf))
+	       ecore_file_unlink(buf);
+	     free(homedir);
 	  }
      }
    
