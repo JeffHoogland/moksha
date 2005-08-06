@@ -2981,7 +2981,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
 #define HDL E_IPC_OP_WINLIST_WARP_WHILE_SELECTING_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-winlist-warp-while-selecting-set", 1, "Set winlist (alt+tab) warp while selecting policy", 0, HDL)
@@ -4439,6 +4438,72 @@ break;
    STRING(s, HDL);
    printf("REPLY: \"%s\"\n", s);
    END_STRING(s);
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_NAME_ADD
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-name-add", 5, "Add a desktop name definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y. OPT5 = desktop name", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_4INT_2STRING_START(HDL);
+   REQ_4INT_2STRING_END(atoi(params[0]), atoi(params[1]), atoi(params[2]), atoi(params[3]), params[4], "", HDL);
+#elif (TYPE == E_WM_IN)
+   INT4_STRING2(v, HDL);
+   e_desk_name_add(v->val1, v->val2, v->val3, v->val4, v->str1);
+   e_desk_name_update();
+   SAVE;
+   END_INT4_STRING2(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_NAME_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-name-del", 4, "Delete a desktop name definition. OPT1 = container no. OPT2 = zone no. OPT3 = desk_x. OPT4 = desk_y.", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_4INT_2STRING_START(HDL);
+   REQ_4INT_2STRING_END(atoi(params[0]), atoi(params[1]), atoi(params[2]), atoi(params[3]), "", "", HDL);
+#elif (TYPE == E_WM_IN)
+   INT4_STRING2(v, HDL);
+   e_desk_name_del(v->val1, v->val2, v->val3, v->val4);
+   e_desk_name_update();
+   SAVE;
+   END_INT4_STRING2(v);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_NAME_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-desktop-name-list", 0, "List all current desktop name definitions", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT4_STRING2_LIST(e_config->desktop_names, E_Config_Desktop_Name, cfname, v, HDL);
+   v->val1 = cfname->container;
+   v->val2 = cfname->zone;
+   v->val3 = cfname->desk_x;
+   v->val4 = cfname->desk_y;
+   v->str1 = cfname->name;
+   v->str2 = "";
+   END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_DESKTOP_NAME_LIST_REPLY);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DESKTOP_NAME_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   INT4_STRING2_LIST(v, HDL);
+   printf("REPLY: BG CONTAINER=%i ZONE=%i DESK_X=%i DESK_Y=%i NAME=\"%s\"\n",
+	  v->val1, v->val2, v->val3, v->val4, v->str1);
+   END_INT4_STRING2_LIST(v);
 #endif
 #undef HDL
 

@@ -30,6 +30,7 @@ static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
+static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
 
 /* externally accessible functions */
@@ -81,6 +82,17 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_y, INT);
    E_CONFIG_VAL(D, T, file, STR);
    
+   _e_config_desktop_name_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Name", E_Config_Desktop_Name);
+#undef T
+#undef D
+#define T E_Config_Desktop_Name
+#define D _e_config_desktop_name_edd
+   E_CONFIG_VAL(D, T, container, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
+   E_CONFIG_VAL(D, T, desk_x, INT);
+   E_CONFIG_VAL(D, T, desk_y, INT);
+   E_CONFIG_VAL(D, T, name, STR);
+
    _e_config_path_append_edd = E_CONFIG_DD_NEW("E_Path_Dir", E_Path_Dir);
 #undef T
 #undef D
@@ -211,7 +223,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, config_version, INT); /**/
    E_CONFIG_VAL(D, T, show_splash, INT); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
+   E_CONFIG_VAL(D, T, desktop_default_name, STR); /**/
    E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd); /**/
+   E_CONFIG_LIST(D, T, desktop_names, _e_config_desktop_name_edd); /**/
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
@@ -323,6 +337,7 @@ e_config_init(void)
 	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->show_splash = 1;
 	e_config->desktop_default_background = strdup("");
+	e_config->desktop_default_name = strdup("Desktop %d, %d");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_threshhold = 300.0;
 	e_config->menus_click_drag_timeout = DEF_MENUCLICK;
@@ -966,6 +981,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
+   E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
    E_CONFIG_DD_FREE(_e_config_remember_edd);
    return 1;
 }
@@ -1352,6 +1368,7 @@ _e_config_free(void)
 	  }
 
 	E_FREE(e_config->desktop_default_background);
+	E_FREE(e_config->desktop_default_name);
 	E_FREE(e_config->language);
 	E_FREE(e_config->transition_start);
 	E_FREE(e_config->transition_desk);

@@ -37,6 +37,7 @@ typedef struct _E_Config_Theme              E_Config_Theme;
 typedef struct _E_Config_Binding_Mouse      E_Config_Binding_Mouse;
 typedef struct _E_Config_Binding_Key        E_Config_Binding_Key;
 typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
+typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef Eet_Data_Descriptor                 E_Config_DD;
 
 #else
@@ -59,6 +60,8 @@ struct _E_Config
    int         show_splash;
    char       *desktop_default_background;
    Evas_List  *desktop_backgrounds;
+   char       *desktop_default_name;
+   Evas_List  *desktop_names;
    double      menus_scroll_speed;
    double      menus_fast_mouse_move_threshhold;
    double      menus_click_drag_timeout;
@@ -180,6 +183,15 @@ struct _E_Config_Desktop_Background
    int            desk_x;
    int            desk_y;
    char          *file;
+};
+
+struct _E_Config_Desktop_Name
+{
+   int            container;
+   int            zone;
+   int            desk_x;
+   int            desk_y;
+   char          *name;
 };
 
 EAPI int        e_config_init(void);

@@ -353,7 +353,7 @@ ACT_FN_GO(move_absolute)
 	if (cx == '-') x = bd->zone->w - bd->w - x;
 	if (cy == '-') y = bd->zone->h - bd->h - y;
 
-	if (x != bd->x || y != bd->y)
+	if ((x != bd->x) || (y != bd->y))
 	  {
 	     e_border_move(bd, x, y);
 

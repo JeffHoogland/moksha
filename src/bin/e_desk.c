@@ -31,6 +31,8 @@ e_desk_new(E_Zone *zone, int x, int y)
 {
    E_Desk      *desk;
    char		name[40];
+   int ok;
+   Evas_List *l;
    
    E_OBJECT_CHECK_RETURN(zone, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
@@ -41,9 +43,31 @@ e_desk_new(E_Zone *zone, int x, int y)
    desk->zone = zone;
    desk->x = x;
    desk->y = y;
-   snprintf(name, sizeof(name), _("Desktop %d, %d"), x, y);
-   desk->name = strdup(name);
 
+/* Get current desktop's name */
+   ok = 0;
+
+   for (l = e_config->desktop_names; l; l = l->next)
+     {
+	E_Config_Desktop_Name *cfname;
+
+	cfname = l->data;
+	if ((cfname->container >= 0) &&
+	    (zone->container->num != cfname->container)) continue;
+	if ((cfname->zone >= 0) &&
+	    (zone->num != cfname->zone)) continue;
+	if ((cfname->desk_x != desk->x) || (cfname->desk_y != desk->y)) continue;
+	desk->name = strdup(cfname->name);
+	ok = 1;
+	break;
+     }
+
+   if (!ok)
+     {
+   	snprintf(name, sizeof(name), _(e_config->desktop_default_name), x, y);
+   	desk->name = strdup(name);
+     }
+   
    return desk;
 }
 
@@ -54,6 +78,96 @@ e_desk_name_set(E_Desk *desk, const char *name)
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    E_FREE(desk->name);
    desk->name = strdup(name);
+}
+
+void
+e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name)
+{
+   E_Config_Desktop_Name *cfname;
+   
+   e_desk_name_del(container, zone, desk_x, desk_y);
+   cfname = E_NEW(E_Config_Desktop_Name, 1);
+   cfname->container = container;
+   cfname->zone = zone;
+   cfname->desk_x = desk_x;
+   cfname->desk_y = desk_y;
+   cfname->name = strdup(name);
+   e_config->desktop_names = evas_list_append(e_config->desktop_names, cfname);
+}
+
+void
+e_desk_name_del(int container, int zone, int desk_x, int desk_y)
+{
+   Evas_List *l;
+   
+   for (l = e_config->desktop_names; l; l = l->next)
+     {
+	E_Config_Desktop_Name *cfname;
+	
+	cfname = l->data;
+	if ((cfname->container == container) && (cfname->zone == zone) &&
+	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
+	  {
+	     e_config->desktop_names = evas_list_remove_list(e_config->desktop_names, l);
+	     IF_FREE(cfname->name);
+	     free(cfname);
+	     break;
+	  }
+     }
+}
+
+void
+e_desk_name_update(void)
+{
+   Evas_List *m, *c, *z, *d, *l;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   E_Desk *desk;
+   int d_x, d_y, ok;
+   char	name[40];
+   
+   for (m = e_manager_list(); m; m = m->next)
+     {
+	man = m->data;
+	for (c = man->containers; c; c = c->next)
+	  {
+	     con = c->data;
+	     for (z = con->zones; z; z = z->next)
+	       {
+		  zone = z->data;
+		  for (d_x = 0; d_x < zone->desk_x_count; d_x++)
+		    {
+		       for (d_y = 0; d_y < zone->desk_y_count; d_y++)
+		         {
+			    desk = zone->desks[d_x + zone->desk_x_count * d_y];
+			    ok = 0;
+
+			    for (l = e_config->desktop_names; l; l = l->next)
+			      {
+				 E_Config_Desktop_Name *cfname;
+
+				 cfname = l->data;
+				 if ((cfname->container >= 0) &&
+				     (con->num != cfname->container)) continue;
+				 if ((cfname->zone >= 0) &&
+	    			     (zone->num != cfname->zone)) continue;
+				 if ((cfname->desk_x != d_x) || (cfname->desk_y != d_y)) continue;
+				 e_desk_name_set(desk,cfname->name);
+				 ok = 1;
+				 break;
+		       	      }
+
+			    if (!ok)
+			      {
+				 snprintf(name, sizeof(name), _(e_config->desktop_default_name), d_x, d_y);
+				 e_desk_name_set(desk,name);
+			      }
+			 }
+		    }
+	       }
+	  }
+     }
 }
 
 void
