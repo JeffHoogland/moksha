@@ -984,7 +984,11 @@ break;
    int bytes;
    
    efd = e_font_default_get(text_class);
-   data = e_ipc_codec_2str_int_enc(efd->text_class, efd->font, efd->size, &bytes);   
+   if (efd == NULL)
+     data = NULL;
+   else
+     data = e_ipc_codec_2str_int_enc(efd->text_class, efd->font, efd->size, &bytes);
+	
    SEND_DATA(E_IPC_OP_FONT_DEFAULT_GET_REPLY);
 
    END_STRING(text_class);
@@ -4189,7 +4193,11 @@ break;
    int bytes;
    
    ect = e_theme_config_get(category);
-   data = e_ipc_codec_2str_enc(ect->category, ect->file, &bytes);   
+   if (ect == NULL)
+     data = NULL;
+   else
+     data = e_ipc_codec_2str_enc(ect->category, ect->file, &bytes);
+  	
    SEND_DATA(E_IPC_OP_THEME_GET_REPLY);
 
    END_STRING(category);
