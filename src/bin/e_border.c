@@ -4570,7 +4570,23 @@ _e_border_eval(E_Border *bd)
 	     zone = e_container_zone_at_point_get(bd->zone->container,
 						  bd->x + (bd->w / 2),
 						  bd->y + (bd->h / 2));
-	     if (zone != bd->zone)
+	     if (!zone)
+	       zone = e_container_zone_at_point_get(bd->zone->container,
+						    bd->x,
+						    bd->y);
+	     if (!zone)
+	       zone = e_container_zone_at_point_get(bd->zone->container,
+						    bd->x + bd->w - 1,
+						    bd->y);
+	     if (!zone)
+	       zone = e_container_zone_at_point_get(bd->zone->container,
+						    bd->x + bd->w - 1,
+						    bd->y + bd->h - 1);
+	     if (!zone)
+	       zone = e_container_zone_at_point_get(bd->zone->container,
+						    bd->x,
+						    bd->y + bd->h - 1);
+	     if ((zone) && (zone != bd->zone))
 	       e_border_zone_set(bd, zone);
 	  }
      }
