@@ -40,7 +40,7 @@ static int       _e_apps_cb_exit           (void *data, int type, void *event);
 static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
 static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
-static E_App    *_e_app_copy               (E_App *app);
+static int       _e_app_copy               (E_App *dst, E_App *src);
 static void      _e_app_save_order         (E_App *app);
 
 /* local subsystem globals */
@@ -234,12 +234,17 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 		    }
 		  if (a2)
 		    {
-		       a3 = _e_app_copy(a2);
+		       a3 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 		       if (a3)
 			 {
-			    a3->parent = a;
-			    a->subapps = evas_list_append(a->subapps, a3);
-			    a2->references = evas_list_append(a2->references, a3);
+			    if (_e_app_copy(a3, a2))
+			      {
+				 a3->parent = a;
+				 a->subapps = evas_list_append(a->subapps, a3);
+				 a2->references = evas_list_append(a2->references, a3);
+			      }
+			    else
+			      e_object_del(E_OBJECT(a3));
 			 }
 		    }
 	       }
@@ -970,7 +975,7 @@ static void
 _e_app_change(E_App *a, E_App_Change ch)
 {
    Evas_List *l;
-   
+
    _e_apps_callbacks_walking = 1;
    for (l = _e_apps_change_callbacks; l; l = l->next)
      {
@@ -1091,9 +1096,20 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	     a2 = _e_app_subapp_file_find(app, file);
 	     if (a2)
 	       {
+		  Evas_List *l;
+
 		  _e_app_fields_empty(a2);
 		  _e_app_fields_fill(a2, path);
 		  _e_app_change(a2, E_APP_CHANGE);
+
+		  for (l = a2->references; l; l = evas_list_next(l))
+		    {
+		       E_App *a3;
+
+		       a3 = l->data;
+		       if (_e_app_copy(a3, a2))
+			 _e_app_change(a3, E_APP_CHANGE);
+		    }
 	       }
 	  }
 	else if ((event == ECORE_FILE_EVENT_CREATED_FILE)
@@ -1203,18 +1219,23 @@ _e_app_subdir_rescan(E_App *app)
 			 }
 		       if (a2)
 			 {
-			    a3 = _e_app_copy(a2);
+			    a3 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 			    if (a3)
 			      {
-				 a3->parent = app;
-				 ch = calloc(1, sizeof(E_App_Change_Info));
-				 ch->app = a3;
-				 ch->change = E_APP_ADD;
-				 e_object_ref(E_OBJECT(ch->app));
-				 changes = evas_list_append(changes, ch);
+				 if (_e_app_copy(a3, a2))
+				   {
+				      a3->parent = app;
+				      ch = calloc(1, sizeof(E_App_Change_Info));
+				      ch->app = a3;
+				      ch->change = E_APP_ADD;
+				      e_object_ref(E_OBJECT(ch->app));
+				      changes = evas_list_append(changes, ch);
 
-				 subapps = evas_list_append(subapps, a3);
-				 a2->references = evas_list_append(a2->references, a3);
+				      subapps = evas_list_append(subapps, a3);
+				      a2->references = evas_list_append(a2->references, a3);
+				   }
+				 else
+				   e_object_del(E_OBJECT(a3));
 			      }
 			 }
 		    }
@@ -1283,39 +1304,35 @@ _e_app_is_eapp(const char *path)
    return 1;
 }
 
-static E_App *
-_e_app_copy(E_App *app)
+static int
+_e_app_copy(E_App *dst, E_App *src)
 {
-   E_App *a2;
-
-   if (app->deleted)
+   if (src->deleted)
      {
-	printf("BUG: This app is deleted, can't make a copy: %s\n", app->path);
-	return NULL;
+	printf("BUG: This app is deleted, can't make a copy: %s\n", src->path);
+	return 0;
      }
-   if (!_e_app_is_eapp(app->path))
+   if (!_e_app_is_eapp(src->path))
      {
-	printf("BUG: The app isn't an eapp: %s\n", app->path);
-	return NULL;
+	printf("BUG: The app isn't an eapp: %s\n", src->path);
+	return 0;
      }
 
-   a2 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
+   dst->orig = src;
 
-   a2->orig = app;
+   dst->name = src->name;
+   dst->generic = src->generic;
+   dst->comment = src->comment;
+   dst->exe = src->exe;
+   dst->path = src->path;
+   dst->win_name = src->win_name;
+   dst->win_class = src->win_class;
+   dst->startup_notify = src->startup_notify;
+   dst->wait_exit = src->wait_exit;
+   dst->starting = src->starting;
+   dst->scanned = src->scanned;
 
-   a2->name = app->name;
-   a2->generic = app->generic;
-   a2->comment = app->comment;
-   a2->exe = app->exe;
-   a2->path = app->path;
-   a2->win_name = app->win_name;
-   a2->win_class = app->win_class;
-   a2->startup_notify = app->startup_notify;
-   a2->wait_exit = app->wait_exit;
-   a2->starting = app->starting;
-   a2->scanned = app->scanned;
-
-   return a2;
+   return 1;
 }
 
 static void
