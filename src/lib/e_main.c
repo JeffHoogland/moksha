@@ -51,6 +51,11 @@ static int _e_cb_server_data(void *data, int type, void *event);
 static void _e_cb_module_list_free(void *data, void *ev);
 static void _e_cb_dir_list_free(void *data __UNUSED__, void *ev);
 
+static void e_lib_binding_key_handle(int hdl, unsigned int *context, unsigned int modifiers, const char *key, 
+					       unsigned int any_mod, const char *action, const char *params);
+static void e_lib_binding_mouse_handle(int hdl, unsigned int *context, unsigned int modifiers, unsigned int button,
+				 	       unsigned int any_mod, const char *action, const char *params);
+
 static Ecore_Ipc_Server *_e_ipc_server  = NULL;
 
 int E_RESPONSE_MODULE_LIST = 0;
@@ -67,6 +72,8 @@ int E_RESPONSE_ICON_DIRS_LIST = 0;
 int E_RESPONSE_MODULE_DIRS_LIST = 0;
 int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
 
+int E_RESPONSE_BINDING_KEY_LIST = 0;
+int E_RESPONSE_BINDING_MOUSE_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
@@ -153,6 +160,8 @@ e_lib_init(const char* display)
 	E_RESPONSE_MODULE_DIRS_LIST = ecore_event_type_new();
 	E_RESPONSE_BACKGROUND_DIRS_LIST = ecore_event_type_new();
 
+	E_RESPONSE_BINDING_KEY_LIST = ecore_event_type_new();
+	E_RESPONSE_BINDING_MOUSE_LIST = ecore_event_type_new();
      }
    
    if (free_disp)
@@ -388,6 +397,125 @@ e_lib_background_dirs_list(void)
 {
    char *type = "backgrounds";
    _e_ipc_call(E_IPC_OP_DIRS_LIST, &type);
+}
+
+void
+e_lib_bindings_key_list(void)
+{
+   _e_ipc_call(E_IPC_OP_BINDING_KEY_LIST, NULL);
+}
+
+static void
+e_lib_binding_key_handle(int hdl, unsigned int *context, unsigned int modifiers, const char *key, 
+		       unsigned int any_mod, const char *action, const char *key_params)
+{
+   char buf[256];
+   char *params[6];
+   int i;
+   
+   for (i = 0; i < 5; i++)
+     params[i] = calloc(5, sizeof(char));
+
+   snprintf(buf, 256, "%d", context);
+   params[0] = strdup(buf);
+
+   snprintf(buf, 256, "%d", modifiers);
+   params[1] = strdup(buf);
+
+   params[2] = strdup(key);
+
+   snprintf(buf, 256, "%d", any_mod);
+   params[3] = strdup(buf);
+
+   params[4] = strdup(action);
+   params[5] = strdup(key_params);
+
+   if ((!params[0]) || (!params[1]) || (!params[2]) 
+	 || (!params[3]) || (!params[4]) || (!params[5]))
+     return;
+
+   _e_ipc_call(hdl, params);
+
+   free(params[0]);
+   free(params[1]);
+   free(params[2]);
+   free(params[3]);
+   free(params[4]);
+   free(params[5]);
+}
+
+void
+e_lib_binding_key_del(unsigned int *context, unsigned int modifiers, const char *key, 
+		       unsigned int any_mod, const char *action, const char *params)
+{
+   e_lib_binding_key_handle(E_IPC_OP_BINDING_KEY_DEL, context, modifiers, key, any_mod, action, params);
+}
+
+void
+e_lib_binding_key_add(unsigned int *context, unsigned int modifiers, const char *key, 
+			unsigned int any_mod, const char *action, const char *params)
+{
+   e_lib_binding_key_handle(E_IPC_OP_BINDING_KEY_ADD, context, modifiers, key, any_mod, action, params);
+}
+
+void
+e_lib_bindings_mouse_list(void)
+{
+   _e_ipc_call(E_IPC_OP_BINDING_MOUSE_LIST, NULL);
+}
+
+static void
+e_lib_binding_mouse_handle(int hdl, unsigned int *context, unsigned int modifiers, unsigned int button,
+		       unsigned int any_mod, const char *action, const char *mouse_params)
+{
+   char buf[256];
+   char *params[6];
+   int i;
+   
+   for (i = 0; i < 5; i++)
+     params[i] = calloc(5, sizeof(char));
+
+   snprintf(buf, 256, "%d", context);
+   params[0] = strdup(buf);
+
+   snprintf(buf, 256, "%d", modifiers);
+   params[1] = strdup(buf);
+
+   snprintf(buf, 256, "%d", button);
+   params[2] = strdup(buf);
+
+   snprintf(buf, 256, "%d", any_mod);
+   params[3] = strdup(buf);
+
+   params[4] = strdup(action);
+   params[5] = strdup(mouse_params);
+
+   if ((!params[0]) || (!params[1]) || (!params[2]) 
+	 || (!params[3]) || (!params[4]) || (!params[5]))
+     return;
+
+   _e_ipc_call(hdl, params);
+
+   free(params[0]);
+   free(params[1]);
+   free(params[2]);
+   free(params[3]);
+   free(params[4]);
+   free(params[5]);
+}
+
+void
+e_lib_binding_mouse_del(unsigned int *context, unsigned int modifiers, unsigned int button, 
+					unsigned int any_mod, const char *action, const char *params)
+{
+   e_lib_binding_mouse_handle(E_IPC_OP_BINDING_MOUSE_DEL, context, modifiers, button, any_mod, action, params);
+}
+
+void
+e_lib_binding_mouse_add(unsigned int *context, unsigned int modifiers, unsigned int button, 
+		   			unsigned int any_mod, const char *action, const char *params)
+{
+   e_lib_binding_mouse_handle(E_IPC_OP_BINDING_MOUSE_ADD, context, modifiers, button, any_mod, action, params);
 }
 
 static int

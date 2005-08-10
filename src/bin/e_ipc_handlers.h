@@ -145,7 +145,7 @@ break;
 /**
  * Get event data for libe processing
  */
-# define RESPONSE(__res, __store, HDL) \
+# define RESPONSE(__res, __store) \
    __store *__res = calloc(1, sizeof(__store)); \
    if (e->data) {
 #define END_RESPONSE(__res, __type) \
@@ -273,7 +273,6 @@ free(data);
        } \
        evas_list_free(dat); \
     } \
-    reply_count++; \
  } \
    break;
 
@@ -304,21 +303,30 @@ free(data);
  * Use END_INT3_STRING3_LIST to terminate the loop and free all data. 
  */
 #define INT3_STRING3_LIST(__v, HDL) \
+   INT3_STRING3_LIST_START(__v, HDL) \
+   INT3_STRING3_LIST_ITERATE(__v)
+
+#define INT3_STRING3_LIST_START(__v, HDL) \
  case HDL: { \
     Evas_List *dat = NULL, *l; \
-    if (e_ipc_codec_3int_3str_list_dec(e->data, e->size, &dat)) { \
+    if (e_ipc_codec_3int_3str_list_dec(e->data, e->size, &dat)) {
+#define INT3_STRING3_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_3Int_3Str *__v; \
 	  __v = l->data;
 #define END_INT3_STRING3_LIST(__v) \
+   END_INT3_STRING3_LIST_ITERATE(__v) \
+   END_INT3_STRING3_LIST_START()
+
+#define END_INT3_STRING3_LIST_ITERATE(__v) \
           free(__v->str1); \
           free(__v->str2); \
           free(__v->str3); \
           free(__v); \
-       } \
+       } 
+#define END_INT3_STRING3_LIST_START() \
        evas_list_free(dat); \
     } \
-    reply_count++; \
  } \
   break;
 
@@ -358,20 +366,29 @@ free(data);
  * Use END_INT4_STRING2_LIST to terminate the loop and free all data. 
  */
 #define INT4_STRING2_LIST(__v, HDL) \
+   INT4_STRING2_LIST_START(__v, HDL) \
+   INT4_STRING2_LIST_ITERATE(__v)
+
+#define INT4_STRING2_LIST_START(__v, HDL) \
  case HDL: { \
     Evas_List *dat = NULL, *l; \
-    if (e_ipc_codec_4int_2str_list_dec(e->data, e->size, &dat)) { \
+    if (e_ipc_codec_4int_2str_list_dec(e->data, e->size, &dat)) { 
+#define INT4_STRING2_LIST_ITERATE(__v) \
        for (l = dat; l; l = l->next) { \
 	  E_Ipc_4Int_2Str *__v; \
 	  __v = l->data;
 #define END_INT4_STRING2_LIST(__v) \
+   END_INT4_STRING2_LIST_ITERATE(__v) \
+   END_INT4_STRING2_LIST_START()
+
+#define END_INT4_STRING2_LIST_ITERATE(__v) \
           free(__v->str1); \
           free(__v->str2); \
           free(__v); \
        } \
-       evas_list_free(dat); \
+       evas_list_free(dat);
+#define END_INT4_STRING2_LIST_START() \
     } \
-    reply_count++; \
  } \
   break;
 
@@ -424,7 +441,6 @@ free(data);
        } \
        evas_list_free(dat); \
     } \
-    reply_count++; \
  } \
    break;
 
@@ -477,7 +493,6 @@ free(data);
        } \
        evas_list_free(dat); \
     } \
-    reply_count++; \
  } \
    break;
 
@@ -732,7 +747,7 @@ break;
    DECODE(e_ipc_codec_str_int_list_dec) {
       LIST();
       int count;
-      RESPONSE(r, E_Response_Module_List, HDL);
+      RESPONSE(r, E_Response_Module_List);
 
       /* FIXME - this is a mess, needs to be merged into macros... */
       count = evas_list_count(dat);
@@ -798,7 +813,7 @@ break;
    END_STRING(s);
 #elif (TYPE == E_LIB_IN)
    STRING(s, HDL);
-   RESPONSE(r, E_Response_Background_Get, HDL);
+   RESPONSE(r, E_Response_Background_Get);
    r->file = strdup(s);
    END_RESPONSE(r, E_RESPONSE_BACKGROUND_GET);
    END_STRING(s);
@@ -1176,7 +1191,7 @@ break;
    END_STRING(s);
 #elif (TYPE == E_LIB_IN)
    STRING(s, HDL);
-   RESPONSE(r, E_Response_Language_Get, HDL);
+   RESPONSE(r, E_Response_Language_Get);
    r->lang = strdup(s);
    END_RESPONSE(r, E_RESPONSE_LANGUAGE_GET);
    END_STRING(s);
@@ -1253,7 +1268,7 @@ break;
       int count;
       char *type;
       int res;
-      RESPONSE(r, E_Response_Dirs_List, HDL);
+      RESPONSE(r, E_Response_Dirs_List);
 
       /* FIXME - this is a mess, needs to be merged into macros... */
       count = evas_list_count(dat);
@@ -1991,7 +2006,6 @@ break;
    v->val3 = emb->button;
    v->val4 = emb->any_mod;
    END_SEND_INT4_STRING2_LIST(v, E_IPC_OP_BINDING_MOUSE_LIST_REPLY);
-#elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
 
@@ -2053,6 +2067,36 @@ break;
         );
    }
    END_INT4_STRING2_LIST(v);
+#elif E_LIB_IN
+   INT4_STRING2_LIST_START(v, HDL);
+   {
+      int count;
+      RESPONSE(r, E_Response_Binding_Mouse_List);
+      count = evas_list_count(dat);
+      r->bindings = malloc(sizeof(E_Response_Binding_Mouse_Data *) * count);
+      r->count = count;
+
+      count = 0;
+      INT4_STRING2_LIST_ITERATE(v);
+      {
+	 E_Response_Binding_Mouse_Data *d;
+
+	 d = malloc(sizeof(E_Response_Binding_Mouse_Data));
+	 d->ctx = v->val1;
+	 d->button = v->val3;
+	 d->mod = v->val2;
+	 d->any_mod = v->val4;
+	 d->action = ((v->str1) ? strdup(v->str1) : NULL);
+	 d->params = ((v->str2) ? strdup(v->str2) : NULL);
+
+	 r->bindings[count] = d;
+	 count++;
+      }
+      END_INT4_STRING2_LIST_ITERATE(v);
+      /* this will leak, need to free the event data */
+      END_RESPONSE(r, E_RESPONSE_BINDING_MOUSE_LIST);
+   }
+   END_INT4_STRING2_LIST_START();
 #endif
 #undef HDL
 
@@ -2344,6 +2388,36 @@ break;
         );
    }
    END_INT3_STRING3_LIST(v);
+#elif E_LIB_IN
+   INT3_STRING3_LIST_START(v, HDL);
+   {
+      int count = 0;
+      RESPONSE(r, E_Response_Binding_Key_List);
+      count = evas_list_count(dat);
+      r->bindings = malloc(sizeof(E_Response_Binding_Key_Data *) * count);
+      r->count = count;
+
+      count = 0;
+      INT3_STRING3_LIST_ITERATE(v);
+      {
+	 E_Response_Binding_Key_Data *d;
+
+	 d = malloc(sizeof(E_Response_Binding_Key_Data));
+	 d->ctx = v->val1;
+	 d->key = ((v->str1) ? strdup(v->str1) : NULL);
+	 d->mod = v->val2;
+	 d->any_mod = v->val3;
+	 d->action = ((v->str2) ? strdup(v->str2) : NULL);
+	 d->params = ((v->str3) ? strdup(v->str3) : NULL);
+
+	 r->bindings[count] = d;
+	 count++;
+      }
+      END_INT3_STRING3_LIST_ITERATE(v);
+      /* this will leak, need to free the event data */
+      END_RESPONSE(r, E_RESPONSE_BINDING_KEY_LIST);
+   }
+   END_INT3_STRING3_LIST_START();
 #endif
 #undef HDL
 
@@ -4217,7 +4291,7 @@ break;
    END_STRING2(e_2str);
 #elif (TYPE == E_LIB_IN)
    STRING2(category, file, e_2str, HDL);
-   RESPONSE(r, E_Response_Theme_Get, HDL);
+   RESPONSE(r, E_Response_Theme_Get);
    r->file = strdup(file);
    r->category = strdup(category);
    END_RESPONSE(r, E_RESPONSE_THEME_GET);

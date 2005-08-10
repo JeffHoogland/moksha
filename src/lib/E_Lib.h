@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=3:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #ifndef _E_H
 #define _E_H
 
@@ -18,13 +21,39 @@
 # endif
 #endif
 
+typedef enum E_Lib_Binding_Context
+{
+   E_LIB_BINDING_CONTEXT_NONE,
+   E_LIB_BINDING_CONTEXT_UNKNOWN,
+   E_LIB_BINDING_CONTEXT_BORDER,
+   E_LIB_BINDING_CONTEXT_ZONE,
+   E_LIB_BINDING_CONTEXT_CONTAINER,
+   E_LIB_BINDING_CONTEXT_MANAGER,
+   E_LIB_BINDING_CONTEXT_MENU,
+   E_LIB_BINDING_CONTEXT_WINLIST,
+   E_LIB_BINDING_CONTEXT_ANY
+} E_Lib_Binding_Context;
 
-typedef struct _E_Response_Module_List    E_Response_Module_List;
-typedef struct _E_Response_Module_Data		E_Response_Module_Data;
-typedef struct _E_Response_Dirs_List	E_Response_Dirs_List;
+typedef enum E_Lib_Binding_Modifier
+{
+   E_LIB_BINDING_MODIFIER_NONE = 0,
+   E_LIB_BINDING_MODIFIER_SHIFT = (1 << 0),
+   E_LIB_BINDING_MODIFIER_CTRL = (1 << 1),
+   E_LIB_BINDING_MODIFIER_ALT = (1 << 2),
+   E_LIB_BINDING_MODIFIER_WIN = (1 << 3)
+} E_Lib_Binding_Modifier;
+
+typedef struct _E_Response_Module_List E_Response_Module_List;
+typedef struct _E_Response_Module_Data E_Response_Module_Data;
+typedef struct _E_Response_Dirs_List E_Response_Dirs_List;
 typedef struct _E_Response_Background_Get E_Response_Background_Get;
 typedef struct _E_Response_Language_Get E_Response_Language_Get;
 typedef struct _E_Response_Theme_Get E_Response_Theme_Get;
+
+typedef struct _E_Response_Binding_Mouse_List E_Response_Binding_Mouse_List;
+typedef struct _E_Response_Binding_Mouse_Data E_Response_Binding_Mouse_Data;
+typedef struct _E_Response_Binding_Key_List E_Response_Binding_Key_List;
+typedef struct _E_Response_Binding_Key_Data E_Response_Binding_Key_Data;
 
 struct _E_Response_Module_List
 {
@@ -60,6 +89,38 @@ struct _E_Response_Language_Get
    char   *lang;
 };
 
+struct _E_Response_Binding_Key_List
+{
+    E_Response_Binding_Key_Data    **bindings;
+    int				     count;
+};
+
+struct _E_Response_Binding_Key_Data
+{
+   E_Lib_Binding_Context ctx;
+   char *key;
+   E_Lib_Binding_Modifier mod;
+   unsigned char any_mod : 1;
+   char *action;
+   char *params;
+};
+
+struct _E_Response_Binding_Mouse_List
+{
+    E_Response_Binding_Mouse_Data    **bindings;
+    int			   	       count;
+};
+
+struct _E_Response_Binding_Mouse_Data
+{
+   E_Lib_Binding_Context ctx;
+   int button;
+   E_Lib_Binding_Modifier mod;
+   unsigned char any_mod : 1;
+   char *action;
+   char *params;
+};
+
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
 extern EAPI int E_RESPONSE_LANGUAGE_GET;
@@ -73,6 +134,9 @@ extern EAPI int E_RESPONSE_INIT_DIRS_LIST;
 extern EAPI int E_RESPONSE_ICON_DIRS_LIST;
 extern EAPI int E_RESPONSE_MODULE_DIRS_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_DIRS_LIST;
+
+extern EAPI int E_RESPONSE_BINDING_KEY_LIST;
+extern EAPI int E_RESPONSE_BINDING_MOUSE_LIST;
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,6 +160,19 @@ extern "C" {
    EAPI void         e_lib_background_get             (void);
    EAPI void         e_lib_desktop_background_add     (const int con, const int zone, const int desk_x, const int desk_y, const char *bgfile);
    EAPI void         e_lib_desktop_background_del     (const int con, const int zone, const int desk_x, const int desk_y);
+
+   /* key/mouse bindings */
+   EAPI void	     e_lib_bindings_key_list	      (void);
+   EAPI void	     e_lib_binding_key_del	      (unsigned int *context, unsigned int modifiers, const char *key, 
+		   						unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_key_add	      (unsigned int *context, unsigned int modifiers, const char *key, 
+		   						unsigned int any_mod, const char *action, const char *params);
+
+   EAPI void	     e_lib_bindings_mouse_list	      (void);
+   EAPI void	     e_lib_binding_mouse_del	      (unsigned int *context, unsigned int modifiers, unsigned int button, 
+		   						unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_mouse_add	      (unsigned int *context, unsigned int modifiers, unsigned int button, 
+		   						unsigned int any_mod, const char *action, const char *params);
 
    /* E current theme manipulation */
    EAPI void         e_lib_theme_set                  (const char *category, const char *file);
