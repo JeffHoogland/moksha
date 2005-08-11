@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: resize xmms playlist seems to clip/cut off window every 2nd resize step
+  to previous rect shape. must be some shape propagation issue.
 * e_hints.c manually changes flags on a border instead of calling
   e_border_stick() for example or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.
