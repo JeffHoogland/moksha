@@ -403,7 +403,10 @@ e_hints_window_init(E_Border *bd)
 	e_border_maximize(bd, e_config->maximize_policy);
      }
    if (bd->client.netwm.state.fullscreen)
-     e_border_fullscreen(bd);
+     {
+	e_hints_window_saved_size_get(bd);
+	e_border_fullscreen(bd);
+     }
    if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
        && (bd->client.netwm.state.hidden))
      e_border_iconify(bd);
