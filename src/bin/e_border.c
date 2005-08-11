@@ -1136,15 +1136,11 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	int x1, y1, x2, y2;
 	int w, h;
 
-//	printf("MAXIMIZE!!\n");
-	if (!bd->saved.x && !bd->saved.y && !bd->saved.w && !bd->saved.h)
-	  {
-	     bd->saved.x = bd->x;
-	     bd->saved.y = bd->y;
-	     bd->saved.w = bd->w;
-	     bd->saved.h = bd->h;
-	     e_hints_window_saved_size_set(bd);
-	  }
+	bd->saved.x = bd->x;
+	bd->saved.y = bd->y;
+	bd->saved.w = bd->w;
+	bd->saved.h = bd->h;
+	e_hints_window_size_set(bd);
 
 	e_border_raise(bd);
 	switch (max)
@@ -1286,7 +1282,7 @@ e_border_unmaximize(E_Border *bd)
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	bd->saved.x = bd->saved.y = bd->saved.w = bd->saved.h = 0;
-	e_hints_window_saved_size_set(bd);
+	e_hints_window_size_unset(bd);
 
 	edje_object_signal_emit(bd->bg_object, "unmaximize", "");
      }
@@ -1307,15 +1303,12 @@ e_border_fullscreen(E_Border *bd)
    if (!bd->fullscreen)
      {
 	int x, y, w, h;
-//	printf("FULLSCREEEN!\n");
-	if (!bd->saved.x && !bd->saved.y && !bd->saved.w && !bd->saved.h)
-	  {
-	     bd->saved.x = bd->x;
-	     bd->saved.y = bd->y;
-	     bd->saved.w = bd->w;
-	     bd->saved.h = bd->h;
-	     e_hints_window_saved_size_set(bd);
-	  }
+
+	bd->saved.x = bd->x;
+	bd->saved.y = bd->y;
+	bd->saved.w = bd->w;
+	bd->saved.h = bd->h;
+	e_hints_window_size_set(bd);
 
 	bd->client_inset.sl = bd->client_inset.l;
 	bd->client_inset.sr = bd->client_inset.r;
@@ -1344,6 +1337,7 @@ e_border_fullscreen(E_Border *bd)
 	bd->fullscreen = 1;
 
 	e_hints_window_fullscreen_set(bd, 1);
+	e_hints_window_size_unset(bd);
 	edje_object_signal_emit(bd->bg_object, "fullscreen", "");
      }
 }
