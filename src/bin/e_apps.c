@@ -1102,7 +1102,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 		  _e_app_fields_fill(a2, path);
 		  _e_app_change(a2, E_APP_CHANGE);
 
-		  for (l = a2->references; l; l = l = l->next)
+		  for (l = a2->references; l; l = l->next)
 		    {
 		       E_App *a3;
 
