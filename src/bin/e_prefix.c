@@ -159,6 +159,7 @@ _e_prefix_fallbacks(void)
    printf("WARNING: Enlightenment could not determine its installed prefix\n"
 	  "         and is falling back on the compiled in default:\n"
 	  "         %s\n", _prefix_path);
+   return 1;
 }
 
 static int
