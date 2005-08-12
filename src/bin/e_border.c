@@ -928,7 +928,6 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  focused->raise_timer = NULL;
 	       }
 	  }
-	focused = bd;
 	e_hints_active_window_set(bd->zone->container->manager, bd);
      }
    else if ((!bd->focused) && (focused == bd))
@@ -948,9 +947,10 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 		  focused->raise_timer = NULL;
 	       }
 	  }
-	focused = NULL;
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
+   if (bd->focused) focused = bd;
+   else if ((!bd->focused) && (focused == bd)) focused = NULL;
 }
 
 void
@@ -2674,7 +2674,15 @@ _e_border_cb_window_focus_in(void *data, int ev_type, void *ev)
 	       modes[e->mode],
 	       details[e->detail]);
      }
-#endif   
+#endif
+   if (e->mode == ECORE_X_EVENT_MODE_GRAB)
+     {
+	if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return 1;
+     }
+   else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
+     {
+	if (e->detail == ECORE_X_EVENT_DETAIL_POINTER) return 1;
+     }
    e_border_focus_set(bd, 1, 0);
    return 1;
 }
