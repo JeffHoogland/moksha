@@ -23,6 +23,8 @@ Some of the things (in very short form) that need to be done to E17...
   hides them and never shows them again
   fullscreen. is this correct?
 * BUG: Check stacking in pager, doesn't care about below, above.
+  e_container_border_raise/lower should return what window they are above/
+  below.
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
