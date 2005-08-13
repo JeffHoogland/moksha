@@ -679,6 +679,11 @@ e_border_resize(E_Border *bd, int w, int h)
    bd->client.h = bd->h - (bd->client_inset.t + bd->client_inset.b);
    bd->changed = 1;
    bd->changes.size = 1;
+   if ((bd->shaped) || (bd->client.shaped))
+     {
+	bd->need_shape_merge = 1;
+	bd->need_shape_export = 1;
+     }
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.wait++;
@@ -733,6 +738,11 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    bd->changed = 1;
    bd->changes.pos = 1;
    bd->changes.size = 1;
+   if ((bd->shaped) || (bd->client.shaped))
+     {
+	bd->need_shape_merge = 1;
+	bd->need_shape_export = 1;
+     }
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.wait++;
@@ -1022,6 +1032,11 @@ e_border_shade(E_Border *bd, E_Direction dir)
 	     bd->shaded = 1;
 	     bd->changes.shaded = 1;
 	     bd->changed = 1;
+	     if ((bd->shaped) || (bd->client.shaped))
+	       {
+		  bd->need_shape_merge = 1;
+		  bd->need_shape_export = 1;
+	       }
 	     edje_object_signal_emit(bd->bg_object, "shaded", "");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
@@ -1111,6 +1126,11 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 	     bd->shaded = 0;
 	     bd->changes.shaded = 1;
 	     bd->changed = 1;
+	     if ((bd->shaped) || (bd->client.shaped))
+	       {
+		  bd->need_shape_merge = 1;
+		  bd->need_shape_export = 1;
+	       }
 	     edje_object_signal_emit(bd->bg_object, "unshaded", "");
 	     ev = calloc(1, sizeof(E_Event_Border_Resize));
 	     ev->border = bd;
