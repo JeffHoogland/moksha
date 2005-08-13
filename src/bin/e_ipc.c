@@ -6,7 +6,7 @@ static int _e_ipc_cb_client_del(void *data, int type, void *event);
 static int _e_ipc_cb_client_data(void *data, int type, void *event);
 
 /* local subsystem globals */
-static Ecore_Ipc_Server *_e_ipc_server  = NULL;
+static Ecore_Ipc_Server *_e_ipc_server = NULL;
 
 /* externally accessible functions */
 int
