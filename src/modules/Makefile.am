@@ -10,4 +10,5 @@ temperature \
 cpufreq \
 ibox \
 start \
-desktopname
+desktopname \
+randr
