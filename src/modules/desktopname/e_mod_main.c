@@ -93,10 +93,6 @@ _dn_new(void)
 {
    DesktopName *dn;
 
-   Evas_List *managers, *l, *l2;
-   E_Manager *man;
-   E_Container *con;
-
    dn = E_NEW(DesktopName, 1);
    if (!dn) return NULL;
 

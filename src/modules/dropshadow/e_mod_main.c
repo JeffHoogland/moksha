@@ -1735,7 +1735,7 @@ static void
 _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
-   int i, sum, weight, l, l1, l2, wt, y1, y2, tpix;
+   int i, sum, weight, l, l1, l2, wt, y1, y2;
    unsigned char *p1, *p2, *pp;
    int full, usefull;
    
@@ -2085,7 +2085,7 @@ _ds_shpix_object_set(Shpix *sp, Evas_Object *o, int x, int y, int w, int h)
 {
    unsigned char *p;
    unsigned int *pix2, *p2;
-   int xx, yy, jump, pix;
+   int xx, yy, jump;
 
    if (!sp) return;
    if (!o) return;

@@ -484,7 +484,6 @@ static IBox_Icon *
 _ibox_icon_new(IBox_Box *ibb, E_Border *bd)
 {
    IBox_Icon *ic;
-   char *str;
    Evas_Object *o;
    Evas_Coord w, h;
 

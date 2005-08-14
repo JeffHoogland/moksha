@@ -597,7 +597,6 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 {
    Pager_Win   *pw;
    Evas_Object *o;
-   E_App       *app;
    int          visible;
 
    if ((!border) || (border->client.netwm.state.skip_pager)) return NULL;
@@ -1127,7 +1126,6 @@ _pager_face_cb_event_border_icon_change(void *data, int type, void *event)
 	pw = _pager_desk_border_find(pd, ev->border);
 	if (pw)
 	  {
-	     E_App *app;
 	     Evas_Object *o;
 	     
 	     if (pw->icon_object)
