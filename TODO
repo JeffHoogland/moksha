@@ -111,7 +111,7 @@ Some of the things (in very short form) that need to be done to E17...
 * ibar should support subdirs with pop-up icons...
 * borders need to be able to change border theme on the fly by menu or app
   properties
-* add window glueing <rephorm AT rephorm DOT com>
+* add window glueing
 * add setup/install wizard to seed eap files etc. etc.
 * support text and color classes
 * add clientinfo pane/popdown for borders
