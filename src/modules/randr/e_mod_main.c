@@ -303,7 +303,7 @@ _randr_face_free(Randr_Face *face)
    evas_object_del(face->button_object);
    evas_object_del(face->event_object);
    e_object_del(E_OBJECT(face->config_menu));
-   e_object_del(E_OBJECT(face->resolution_menu));
+   if (face->resolution_menu) e_object_del(E_OBJECT(face->resolution_menu));
    ecore_event_handler_del(face->randr_handler);
 
    free(face->conf);
