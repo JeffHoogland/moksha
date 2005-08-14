@@ -15,7 +15,6 @@ Some of the things (in very short form) that need to be done to E17...
   desktop switches for the desk a fullscreened window is on, nor allow windows
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
   that zone.
-* BUG: on font apply borders need to be adjusted for size changes
 * BUG: if i downclock my machine to like 400mhz (make it sloooow) or load it
   down with lots of load and then hold down ctrl+alt+right for a while
   windows on desktops vanish... there must be a race condition with a

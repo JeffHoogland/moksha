@@ -1919,6 +1919,47 @@ e_border_resize_cancel(void)
      }
 }
 
+void
+e_border_frame_recalc(E_Border *bd)
+{
+   Evas_Coord cx, cy, cw, ch;
+
+   if (!bd->bg_object) return;
+
+   bd->w -= (bd->client_inset.l + bd->client_inset.r);
+   bd->h -= (bd->client_inset.t + bd->client_inset.b);
+
+   evas_object_resize(bd->bg_object, 1000, 1000);
+   edje_object_calc_force(bd->bg_object);
+   edje_object_part_geometry_get(bd->bg_object, "client", &cx, &cy, &cw, &ch);
+   bd->client_inset.l = cx;
+   bd->client_inset.r = 1000 - (cx + cw);
+   bd->client_inset.t = cy;
+   bd->client_inset.b = 1000 - (cy + ch);
+   ecore_x_netwm_frame_size_set(bd->client.win,
+				bd->client_inset.l, bd->client_inset.r,
+				bd->client_inset.t, bd->client_inset.b);
+   ecore_x_e_frame_size_set(bd->client.win,
+			    bd->client_inset.l, bd->client_inset.r,
+			    bd->client_inset.t, bd->client_inset.b);
+
+   bd->w += (bd->client_inset.l + bd->client_inset.r);
+   bd->h += (bd->client_inset.t + bd->client_inset.b);
+
+   bd->changed = 1;
+   bd->changes.size = 1;
+   if ((bd->shaped) || (bd->client.shaped))
+     {
+	bd->need_shape_merge = 1;
+	bd->need_shape_export = 1;
+     }
+   ecore_x_icccm_move_resize_send(bd->client.win,
+				  bd->x + bd->client_inset.l,
+				  bd->y + bd->client_inset.t,
+				  bd->client.w,
+				  bd->client.h);
+}
+
 Evas_List *
 e_border_immortal_windows_get(void)
 {

@@ -30,29 +30,27 @@ void
 e_font_apply(void)
 {
    char buf[1024];
-   Evas_List *next;
+   Evas_List *l;
    E_Font_Fallback *eff;
-   E_Font_Default *efd;
    int blen, len;
    
    /* setup edje fallback list */
    blen = sizeof(buf) - 1;
    buf[0] = 0;
    buf[blen] = 0;
-   next = e_config->font_fallbacks;
-   if (next)
+   l = e_config->font_fallbacks;
+   if (l)
      {
-	eff = evas_list_data(next);
+	eff = evas_list_data(l);
 	len = strlen(eff->name);
 	if (len < blen)
 	  {
 	     strcpy(buf, eff->name);
 	     blen -= len;
 	  }
-	next = evas_list_next(next);
-	while (next)
+	for (l = evas_list_next(l); l; l = l->next)
 	  {
-	     eff = evas_list_data(next);
+	     eff = evas_list_data(l);
 	     len = 1;
 	     if (len < blen)
 	       {
@@ -65,7 +63,6 @@ e_font_apply(void)
 		  strcat(buf, eff->name);
 		  blen -= len;
 	       }
-	     next = evas_list_next(next);
 	  }
 	edje_fontset_append_set(buf);
      }
@@ -73,10 +70,21 @@ e_font_apply(void)
      edje_fontset_append_set(NULL);
    
    /* setup edje text classes */
-   for (next = e_config->font_defaults; next; next = next->next)
+   for (l = e_config->font_defaults; l; l = l->next)
      {
-	efd = evas_list_data(next);
+	E_Font_Default *efd;
+
+	efd = evas_list_data(l);
 	edje_text_class_set(efd->text_class, efd->font, efd->size);
+     }
+
+   /* Update borders */
+   for (l = e_border_clients_get(); l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	e_border_frame_recalc(bd);
      }
 }
 
