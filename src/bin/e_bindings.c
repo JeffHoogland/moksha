@@ -429,8 +429,6 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 int
 e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src)
 {
-   Evas_List *l;
-   
    return 0;
 }
 

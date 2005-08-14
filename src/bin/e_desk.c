@@ -119,7 +119,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 void
 e_desk_name_update(void)
 {
-   Evas_List *m, *c, *z, *d, *l;
+   Evas_List *m, *c, *z, *l;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
