@@ -1086,7 +1086,9 @@ _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
    Evas_List *l, *screens;
+#if 0
    int i;
+#endif
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
