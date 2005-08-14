@@ -310,4 +310,9 @@ static void
 _e_test_internal(E_Container *con)
 {    
 }
+
+static void
+_cb_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
+{
+}
 #endif
