@@ -163,16 +163,16 @@ extern "C" {
 
    /* key/mouse bindings */
    EAPI void	     e_lib_bindings_key_list	      (void);
-   EAPI void	     e_lib_binding_key_del	      (unsigned int *context, unsigned int modifiers, const char *key, 
-		   						unsigned int any_mod, const char *action, const char *params);
-   EAPI void	     e_lib_binding_key_add	      (unsigned int *context, unsigned int modifiers, const char *key, 
-		   						unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_key_del	      (unsigned int context, unsigned int modifiers, const char *key, 
+						       unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_key_add	      (unsigned int context, unsigned int modifiers, const char *key, 
+						       unsigned int any_mod, const char *action, const char *params);
 
    EAPI void	     e_lib_bindings_mouse_list	      (void);
-   EAPI void	     e_lib_binding_mouse_del	      (unsigned int *context, unsigned int modifiers, unsigned int button, 
-		   						unsigned int any_mod, const char *action, const char *params);
-   EAPI void	     e_lib_binding_mouse_add	      (unsigned int *context, unsigned int modifiers, unsigned int button, 
-		   						unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_mouse_del	      (unsigned int context, unsigned int modifiers, unsigned int button, 
+						       unsigned int any_mod, const char *action, const char *params);
+   EAPI void	     e_lib_binding_mouse_add	      (unsigned int context, unsigned int modifiers, unsigned int button, 
+						       unsigned int any_mod, const char *action, const char *params);
 
    /* E current theme manipulation */
    EAPI void         e_lib_theme_set                  (const char *category, const char *file);
