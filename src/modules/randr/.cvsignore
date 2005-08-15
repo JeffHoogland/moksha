@@ -4,3 +4,4 @@ Makefile
 Makefile.in
 *.lo
 module.la
+e_mod_main.loT

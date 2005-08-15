@@ -7,23 +7,70 @@ _enlightenment_remote() {
 	COMPREPLY=()
 	cur=${COMP_WORDS[COMP_CWORD]}
 	prev=${COMP_WORDS[COMP_CWORD-1]}
-	opts="-h --help -module-load -module-unload -module-enable -module-disable \
-	-module-list -module-dirs-list -bg-set -bg-get -bg-dirs-list \
-    -font-fallback-remove -font-fallback-prepend -font-fallback-append \
-    -font-apply -font-fallback-list -font-available-list -font-fallback-clear \
-    -font-default-get -font-default-remove -font-default-list -font-default-set \
-    -font-default-remove -font-default-list -font-default-set -restart \
-    -shutdown -lang-get -lang-list -lang-set -binding-mouse-list \
+	opts="-h -help --help -display -module-load -module-unload -module-enable \
+    -module-disable -module-list -default-bg-set -default-bg-get \
+    -font-available-list -font-apply -font-fallback-append \
+    -font-fallback-prepend -font-fallback-list -font-fallback-remove \
+    -font-default-set -font-default-get -font-default-remove -font-default-list \
+    -font-fallback-clear -restart -shutdown -lang-list -lang-set -lang-get \
+    -dirs-list -dirs-list-append -dirs-list-prepend -dirs-list-remove \
+    -framerate-set -framerate-get -menus-scroll-speed-set \
+    -menus-scroll-speed-get -focus-policy-set -focus-policy-get -edge-flip-set \
+    -edge-flip-get -edge-flip-timeout-set -edge-flip-timeout-get -font-cache-set \
+    -font-cache-get -image-cache-set -image-cache-get \
+    -menus-fast-move-threshold-set -menus-fast-move-threshold-get \
+    -menus-click-drag-timeout-set -menus-click-drag-timeout-get \
+    -border-shade-animate-set -border-shade-animate-get \
+    -border-shade-transition-set -border-shade-transition-get \
+    -border-shade-speed-set -border-shade-speed-get -desks-set -desks-get \
+    -maximize-policy-set -maximize-policy-get -binding-mouse-list \
     -binding-mouse-add -binding-mouse-del -binding-key-list \
-    -binding-key-add -binding-key-del"
+    -binding-key-add -binding-key-del -always-click-to-raise-set \
+    -always-click-to-raise-get -use-auto-raise-set -use-auto-raise-get \
+    -pass-click-on-set -pass-click-on-get -auto-raise-delay-set \
+    -auto-raise-delay-get -use-resist-set -use-resist-get \
+    -drag-resist-set -drag-resist-get -desk-resist-set -desk-resist-get \
+    -window-resist-set -window-resist-get -gadget-resist-set -gadget-resist-get \
+    -desktop-bg-add -desktop-bg-del -desktop-bg-list \
+    -winlist-warp-while-selecting-set -winlist-warp-while-selecting-get \
+    -winlist-warp-at-end-set -winlist-warp-at-end-get -winlist-warp-speed-set \
+    -winlist-warp-speed-get -winlist-scroll-animate-set -winlist-scroll-animate-get \
+    -winlist-scroll-speed-set -winlist-scroll-speed-get \
+    -winlist-list-show-iconified-set -winlist-list-show-iconified-get \
+    -winlist-list-show-other-desk-windows-set \
+    -winlist-list-show-other-desk-windows-get \
+    -winlist-list-show-other-screen-windows-set \
+    -winlist-list-show-other-screen-windows-get \
+    -winlist-list-uncover-while-selecting-set \
+    -winlist-list-uncover-while-selecting-get \
+    -winlist-list-jump-desk-while-selecting-set \
+    -winlist-list-jump-desk-while-selecting-get \
+    -winlist-pos-align-x-set -winlist-pos-align-x-get -winlist-pos-align-y-set \
+    -winlist-pos-align-y-get -winlist-pos-size-w-set -winlist-pos-size-w-get \
+    -winlist-pos-size-h-set -winlist-pos-size-h-get -winlist-pos-min-w-set \
+    -winlist-pos-min-w-get -winlist-pos-min-h-set -winlist-pos-min-h-get \
+    -winlist-pos-max-w-set -winlist-pos-max-w-get -winlist-pos-max-h-set \
+    -winlist-pos-max-h-get -kill-if-close-not-possible-set \
+    -kill-if-close-not-possible-get -kill-process-set -kill-process-get \
+    -kill-timer-wait-set -kill-time-wait-get -ping-clients-set \
+    -ping-clients-get -ping-cleints-wait-set -ping-clients-wait-get \
+    -transition-start-set -transition-start-get -transition-desk-set \
+    -transition-desk-get -transition-change-set -transition-change-get \
+    -focus-setting-set -focus-setting-get -exec-action -theme-list -theme-set \
+    -theme-get -theme-remove -move-info-follows-set -move-info-follows-get \
+    -resize-info-follows-set -resize-info-follows-get \
+    -focus-last-focused-per-desktop-set -focus-last-focused-per-desktop-get \
+    -focus-revert-on-hide-or-close-set -focus-revert-on-hide-or-close-get \
+    -default-profile-set -default-profile-get -desktop-name-add \
+    -desktop-name-del -desktop-name-list"
 
 	if [[ "${cur}" == -* ]] || [[ ${COMP_CWORD} -eq 1 ]]; then
     	COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
 	fi
 
 	case "${prev}" in
-		-h|--help)
-			COMPREPLY=($(compgen -W "${opts/-h --help}" -- "${cur}"))
+		-h|-help|--help)
+			COMPREPLY=($(compgen -W "${opts/-h -help --help}" -- "${cur}"))
 			;;
 	esac		
 }

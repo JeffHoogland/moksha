@@ -17,3 +17,4 @@ mkinstalldirs
 stamp-h
 stamp-h.in
 *.tar.gz
+ltmain.sh
