@@ -2027,6 +2027,8 @@ _e_border_free(E_Border *bd)
 	bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
      }
 
+   if (bd->border_menu) e_menu_deactivate(bd->border_menu);
+
    _e_border_menus_del(bd);
 
    if (focused == bd)
@@ -2108,6 +2110,9 @@ _e_border_del(E_Border *bd)
 {
    E_Event_Border_Remove *ev;
 
+   if (bd->border_menu) e_menu_deactivate(bd->border_menu);
+
+   _e_border_menus_del(bd);
 /*   
    if (!bd->dangling_ref_check)
      bd->dangling_ref_check = ecore_timer_add(1.0, _e_border_del_dangling_ref_check, bd);
@@ -2137,35 +2142,46 @@ _e_border_del(E_Border *bd)
 static void
 _e_border_menus_del(E_Border *bd)
 {
+   int was_menu = 0;
+
    if (bd->border_locks_menu)
      {
 	e_object_del(E_OBJECT(bd->border_locks_menu));
 	bd->border_locks_menu = NULL;
+	was_menu = 1;
      }
    if (bd->border_locks_user_menu)
      {
 	e_object_del(E_OBJECT(bd->border_locks_user_menu));
 	bd->border_locks_user_menu = NULL;
+	was_menu = 1;
      }
    if (bd->border_locks_application_menu)
      {
 	e_object_del(E_OBJECT(bd->border_locks_application_menu));
 	bd->border_locks_application_menu = NULL;
+	was_menu = 1;
      }
    if (bd->border_remember_menu)
      {
 	e_object_del(E_OBJECT(bd->border_remember_menu));
 	bd->border_remember_menu = NULL;
+	was_menu = 1;
      }
    if (bd->border_stacking_menu)
      {
 	e_object_del(E_OBJECT(bd->border_stacking_menu));
 	bd->border_stacking_menu = NULL;
+	was_menu = 1;
      }
    if (bd->border_menu)
      {
 	e_object_del(E_OBJECT(bd->border_menu));
 	bd->border_menu = NULL;
+	was_menu = 1;
+     }
+   if (was_menu)
+     {
      }
 }
 
