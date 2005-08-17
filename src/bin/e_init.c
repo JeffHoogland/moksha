@@ -13,6 +13,7 @@ static Ecore_Evas     *_e_init_ecore_evas = NULL;
 static Evas           *_e_init_evas = NULL;
 static Evas_Object    *_e_init_object = NULL;
 static Evas_Object    *_e_init_icon_box = NULL;
+static E_Pointer      *_e_init_pointer = NULL;
 
 /* startup icons */
 static Evas_Coord _e_init_icon_size = 0;
@@ -60,7 +61,7 @@ e_init_init(void)
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
    ecore_evas_name_class_set(_e_init_ecore_evas, "E", "Init_Window");
    ecore_evas_title_set(_e_init_ecore_evas, "Enlightenment Init");
-   e_pointer_ecore_evas_set(_e_init_ecore_evas);
+   _e_init_pointer = e_pointer_window_set(_e_init_win);
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
 
@@ -144,10 +145,12 @@ e_init_hide(void)
    evas_object_del(_e_init_object);
    e_canvas_del(_e_init_ecore_evas);
    ecore_evas_free(_e_init_ecore_evas);
+   e_object_del(E_OBJECT(_e_init_pointer));
    _e_init_ecore_evas = NULL;
    _e_init_evas = NULL;
    _e_init_win = 0;
    _e_init_object = NULL;
+   _e_init_pointer = NULL;
    e_canvas_cache_flush();
 }
 

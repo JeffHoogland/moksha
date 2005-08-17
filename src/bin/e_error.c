@@ -61,6 +61,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    Evas_Coord   maxw, maxh;
    E_Container *con;
    Ecore_X_Window win;
+   E_Pointer   *p;
    int          x, y;
    char        *s;
 
@@ -93,7 +94,8 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");
 //   ecore_evas_avoid_damage_set(ee, 1);
    e = ecore_evas_get(ee);
-   e_pointer_ecore_evas_set(ee);
+   p = e_pointer_window_set(win);
+   ecore_evas_data_set(ee, "pointer", p);
 
    o = edje_object_add(e);
    if (!e_theme_edje_object_set(o, "base/theme/error", "error/main"))
@@ -421,12 +423,16 @@ _e_error_cb_job_ecore_evas_free(void *data)
 {
    Ecore_Evas *ee;
    Evas_List *shapelist, *l;
+   E_Pointer *p;
 
    ee = data;
    shapelist = ecore_evas_data_get(ee, "shapes");
    for (l = shapelist; l; l = l->next)
      e_object_del(E_OBJECT(l->data));
    evas_list_free(shapelist);
+
+   p = ecore_evas_data_get(ee, "pointer");
+   e_object_del(E_OBJECT(p));
 
    e_canvas_del(ee);
    ecore_evas_free(ee);

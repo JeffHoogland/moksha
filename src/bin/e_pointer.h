@@ -2,12 +2,30 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #ifdef E_TYPEDEFS
+
+typedef struct _E_Pointer E_Pointer;
+
 #else
 #ifndef E_POINTER_H
 #define E_POINTER_H
 
-EAPI void e_pointer_container_set(E_Container *con);
-EAPI void e_pointer_ecore_evas_set(Ecore_Evas *ee);
-    
+#define E_POINTER_TYPE 0xE0b01013
+
+struct _E_Pointer
+{
+     E_Object e_obj_inherit;
+
+     Evas *evas;
+     Evas_Object *evas_object;
+     int *pixels;
+
+     Ecore_X_Window win;
+
+     int w, h;
+};
+
+EAPI E_Pointer *e_pointer_window_set(Ecore_X_Window win);
+EAPI void       e_pointer_idler_before(void);
+
 #endif
 #endif

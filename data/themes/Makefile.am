@@ -34,6 +34,7 @@ default_transitions.edc \
 default_dialog.edc \
 default_desktopname.edc \
 default_icons.edc \
+default_pointer.edc \
 default_randr.edc
 
 default.edj: Makefile $(EXTRA_DIST)

@@ -43,5 +43,6 @@ collections {
 #include "default_desktopname.edc"
 #include "default_icons.edc"
 #include "default_randr.edc"
+#include "default_pointer.edc"
 }
 

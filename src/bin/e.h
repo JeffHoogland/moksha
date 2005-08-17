@@ -19,6 +19,7 @@
 #include <fnmatch.h>
 
 #include <Evas.h>
+#include <Evas_Engine_Buffer.h>
 #include <Ecore.h>
 #include <Ecore_X.h>
 #include <Ecore_Evas.h>

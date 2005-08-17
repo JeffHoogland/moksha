@@ -424,17 +424,6 @@ main(int argc, char **argv)
    e_font_apply();
    e_canvas_recache();
 
-   if (!((!e_config->show_splash) || (after_restart)))
-     {
-	/* setup init status window/screen */
-	if (!e_init_init())
-	  {
-	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
-				    "Perhaps you are out of memory?"));
-	     _e_main_shutdown(-1);
-	  }
-	_e_main_shutdown_push(e_init_shutdown);
-     }
    /* init app system */
    if (!e_app_init())
      {
@@ -449,6 +438,17 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    _e_main_shutdown_push(e_theme_shutdown);
+   if (!((!e_config->show_splash) || (after_restart)))
+     {
+	/* setup init status window/screen */
+	if (!e_init_init())
+	  {
+	     e_error_message_show(_("Enlightenment cannot set up init screen.\n"
+				    "Perhaps you are out of memory?"));
+	     _e_main_shutdown(-1);
+	  }
+	_e_main_shutdown_push(e_init_shutdown);
+     }
    /* manage the root window */
    if (!_e_main_screens_init())
      {
@@ -1022,6 +1022,7 @@ _e_main_cb_idler_before(void *data __UNUSED__)
    e_border_idler_before();
    e_popup_idler_before();
    e_drag_idler_before();
+   e_pointer_idler_before();
    for (l = _e_main_idler_before_list; l; l = l->next)
      {
 	E_Before_Idler *eb;
