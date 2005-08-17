@@ -8,7 +8,6 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* ewl_test combo produces a window less than 0x0 pixels! wow!
 * e_hints.c manually changes flags on a border instead of calling
   e_border_stick() for example or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.

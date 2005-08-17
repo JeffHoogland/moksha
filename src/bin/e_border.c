@@ -667,8 +667,8 @@ e_border_resize(E_Border *bd, int w, int h)
 	pnd = E_NEW(E_Border_Pending_Move_Resize, 1);
 	if (!pnd) return;
 	pnd->resize = 1;
-	pnd->w = w;
-	pnd->h = h;
+	pnd->w = w - (bd->client_inset.l + bd->client_inset.r);
+	pnd->h = h - (bd->client_inset.t + bd->client_inset.b);
 	bd->pending_move_resize = evas_list_append(bd->pending_move_resize, pnd);
 	return;
      }
@@ -723,8 +723,8 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 	pnd->resize = 1;
 	pnd->x = x;
 	pnd->y = y;
-	pnd->w = w;
-	pnd->h = h;
+	pnd->w = w - (bd->client_inset.l + bd->client_inset.r);
+	pnd->h = h - (bd->client_inset.t + bd->client_inset.b);
 	bd->pending_move_resize = evas_list_append(bd->pending_move_resize, pnd);
 	return;
      }
@@ -4621,10 +4621,10 @@ _e_border_eval(E_Border *bd)
 	       {
 		  if (pnd->resize)
 		    {
-		       bd->w = pnd->w;
-		       bd->h = pnd->h;
-		       bd->client.w = pnd->w - (bd->client_inset.l + bd->client_inset.r);
-		       bd->client.h = pnd->h - (bd->client_inset.t + bd->client_inset.b);
+		       bd->w = pnd->w + (bd->client_inset.l + bd->client_inset.r);
+		       bd->h = pnd->h + (bd->client_inset.t + bd->client_inset.b);
+		       bd->client.w = pnd->w;
+		       bd->client.h = pnd->h;
 		       bd->changes.size = 1;
 		    }
 	       }
