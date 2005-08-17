@@ -1,0 +1,45 @@
+images {
+   image: "pointer.png" COMP;
+   image: "pointer_mono.png" COMP;
+}
+
+   group {
+      name: "pointer/enlightenment/default";
+      min:  22 32;
+      max:  22 32;
+      parts {
+	 part {
+	    name:          "default";
+	    type:          IMAGE;
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+      	       min:      22 32;
+	       max:      22 32;
+	       image {
+		  normal: "pointer.png";
+	       }
+	    }
+	 }
+      }
+   }
+   group {
+      name: "pointer/enlightenment/mono";
+      min:  16 24;
+      max:  16 24;
+      parts {
+	 part {
+	    name:          "mono";
+	    type:          IMAGE;
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+      	       min:      16 24;
+	       max:      16 24;
+	       image {
+		  normal: "pointer_mono.png";
+	       }
+	    }
+	 }
+      }
+   }
