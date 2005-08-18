@@ -14,6 +14,16 @@
 # include <stdio.h>
 #endif
 
+#ifdef HAVE_CFBASE_H
+#include <CFBase.h>
+#include <CFNumber.h>
+#include <CFArray.h>
+#include <CFDictionary.h>
+#include <CFRunLoop.h>
+#include <ps/IOPSKeys.h>
+#include <ps/IOPowerSources.h>
+#endif
+
 /* TODO List:
  *
  * which options should be in main menu, and which in face menu?
@@ -30,6 +40,10 @@ static Status       *_battery_linux_apm_check(Battery *ef);
 #ifdef __FreeBSD__
 static Status       *_battery_bsd_acpi_check(Battery *ef);
 static Status       *_battery_bsd_apm_check(Battery *ef);
+#endif
+
+#ifdef HAVE_CFBASE_H
+static Status       *_battery_darwin_check(Battery *ef);
 #endif
 
 static Battery_Face *_battery_face_new(E_Container *con);
@@ -683,6 +697,8 @@ _battery_cb_check(void *data)
       default:
 	break;
      }
+#elif defined(HAVE_CFBASE_H) /* OS X */
+   ret = _battery_darwin_check(ef);
 #else
    if (ef->battery_check_mode == 0)
      {
@@ -1339,6 +1355,158 @@ _battery_bsd_apm_check(Battery *ef)
 	  }
      }
    
+   return stat;
+}
+#endif
+
+#ifdef HAVE_CFBASE_H
+/*
+ * There is a good chance this will work with a UPS as well as a battery.
+ */
+static Status *
+_battery_darwin_check(Battery *ef)
+{
+   const void *values;
+   int device_num;
+   int device_count;
+   int  hours, minutes;
+   int currentval = 0;
+   int maxval = 0;
+   char buf[4096];
+   CFTypeRef blob;
+   CFArrayRef sources;
+   CFDictionaryRef device_dict;
+   
+   Status *stat;
+
+   stat = E_NEW(Status, 1);
+
+   /*
+    * Retrieve the power source data and the array of sources.
+    */
+   blob = IOPSCopyPowerSourcesInfo();
+   sources = IOPSCopyPowerSourcesList(blob);
+   device_count = CFArrayGetCount(sources); 
+
+   for (device_num = 0; device_num < device_count; device_num++)
+     {
+	CFTypeRef ps;
+
+	printf("device %d of %d\n", device_num, device_count);
+
+	/*
+	 * Retrieve a dictionary of values for this device and the
+	 * count of keys in the dictionary.
+	 */
+	ps = CFArrayGetValueAtIndex(sources, device_num);
+	device_dict = IOPSGetPowerSourceDescription(blob, ps);
+
+	/*
+	 * Retrieve the charging key and save the present charging value if
+	 * one exists.
+	 */
+	if (CFDictionaryGetValueIfPresent(device_dict, CFSTR(kIOPSIsChargingKey), &values))
+	  {
+	     stat->has_battery = 1;
+	     if (CFBooleanGetValue(values))
+	       {
+		  stat->state = BATTERY_STATE_CHARGING;
+	       }
+	     else
+	       {
+		  stat->state = BATTERY_STATE_DISCHARGING;
+	       }
+	     // CFRelease(values);
+	     break;
+	  }
+
+     }
+
+   /*
+    * Check for battery.
+    */
+   if (!stat->has_battery)
+     {
+	CFRelease(sources);
+	CFRelease(blob);
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup("NO BAT");
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+	return stat;
+     }
+
+   /*
+    * A battery was found so move along based on that assumption.
+    */
+   ef->battery_prev_battery = 1;
+   stat->has_battery = 1;
+
+   /*
+    * Retrieve the current capacity key.
+    */
+   values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSCurrentCapacityKey));
+   CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
+   // CFRelease(values);
+
+   /*
+    * Retrieve the max capacity key.
+    */
+   values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSMaxCapacityKey));
+   CFNumberGetValue(values, kCFNumberSInt32Type, &maxval);
+   // CFRelease(values);
+
+   /*
+    * Calculate the percentage charged.
+    */
+   stat->level = (double)currentval / (double)maxval;
+   printf("Battery charge %g\n", stat->level);
+
+   /*
+    * Retrieve the remaining battery power or time until charged in minutes.
+    */
+   if (stat->state == BATTERY_STATE_DISCHARGING)
+     {
+	values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSTimeToEmptyKey));
+	CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
+	// CFRelease(values);
+
+	/*
+	 * Display remaining battery percentage.
+	 */
+	snprintf(buf, sizeof(buf), "%i%%", (int)(stat->level * 100));
+	stat->reading = strdup(buf);
+
+	hours = currentval / 60;
+	minutes = currentval % 60;
+
+	/*
+	 * Check if an alarm should be raised.
+	 */
+	if (currentval <= ef->conf->alarm)
+	  stat->alarm = 1;
+     }
+   else
+     {
+	values = CFDictionaryGetValue(device_dict, CFSTR(kIOPSTimeToFullChargeKey));
+	CFNumberGetValue(values, kCFNumberSInt32Type, &currentval);
+	// CFRelease(values);
+
+	stat->reading = strdup(_("Charging"));
+
+	hours = currentval / 60;
+	minutes = currentval % 60;
+     }
+
+   /*
+    * Store the time remaining.
+    */
+   snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+   stat->time = strdup(buf);
+
+   CFRelease(sources);
+   CFRelease(blob);
+
    return stat;
 }
 #endif
