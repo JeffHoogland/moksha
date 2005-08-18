@@ -134,7 +134,7 @@ AC_CHECK_HEADERS(CFBase.h,
     cf_cflags="${cf_cflags} -I /System/Library/Frameworks/IOKit.framework/Headers"
     cf_libs="-framework 'CoreFoundation' -framework 'IOKit'"
   ],[
-    AC_MSG_ERROR([Cannot find CoreFoundation headers and libraries.])
+    AC_MSG_WARN([Cannot find CoreFoundation headers and libraries.])
   ]
 )
 CPPFLAGS="${PCPPFLAGS}"
