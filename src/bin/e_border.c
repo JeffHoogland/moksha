@@ -940,11 +940,15 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, bd);
      }
+
+#if 0
+   /* i'm pretty sure this case is handled above -- this was resulting in the "passive"
+    * event getting sent twice when going from a window to the desktop. --rephorm */
    else if ((!bd->focused) && (focused == bd))
      {
 	if (focused)
 	  {
-//	     printf("unfocus previous\n");
+//	     printf("unfocus previous 2\n");
 	     edje_object_signal_emit(focused->bg_object, "passive", "");
 	     e_focus_event_focus_out(focused);
 	     /* FIXME: Sometimes we should leave the window fullscreen! */
@@ -959,6 +963,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  }
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
+#endif
    if (bd->focused) focused = bd;
    else if ((!bd->focused) && (focused == bd)) focused = NULL;
 }
