@@ -1408,7 +1408,8 @@ _battery_darwin_check(Battery *ef)
 	if (CFDictionaryGetValueIfPresent(device_dict, CFSTR(kIOPSIsChargingKey), &values))
 	  {
 	     stat->has_battery = 1;
-	     if (CFBooleanGetValue(values))
+	     printf("%s: %d\n", kIOPSIsChargingKey, CFBooleanGetValue(values));
+	     if (CFBooleanGetValue(values) > 0)
 	       {
 		  stat->state = BATTERY_STATE_CHARGING;
 	       }
@@ -1501,8 +1502,13 @@ _battery_darwin_check(Battery *ef)
    /*
     * Store the time remaining.
     */
-   snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
-   stat->time = strdup(buf);
+   if (minutes >= 0)
+     {
+	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	stat->time = strdup(buf);
+     }
+   else
+     stat->time = strdup("--:--");
 
    CFRelease(sources);
    CFRelease(blob);
