@@ -5,6 +5,7 @@ INCLUDES = -I$(includedir) \
 	   -I$(top_srcdir)/src/lib \
 	   @e_cflags@ \
 	   @x_cflags@ \
+	   @cf_cflags@ \
 	   @EDJE_DEF@
 
 bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
@@ -128,7 +129,7 @@ e_pan.c \
 e_dialog.c \
 $(ENLIGHTENMENTHEADERS)
 
-enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@
+enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@
 
 enlightenment_remote_SOURCES = \
 e.h \

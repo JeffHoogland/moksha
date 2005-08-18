@@ -124,6 +124,23 @@ AC_CHECK_HEADER(X11/X.h,
 AC_SUBST(x_cflags)
 AC_SUBST(x_libs)
 
+cf_cflags=""
+cf_libs=""
+PCPPFLAGS="${CPPFLAGS}"
+CPPFLAGS="${CPPFLAGS} -I /System/Library/Frameworks/CoreFoundation.framework/Headers"
+AC_CHECK_HEADERS(CFBase.h,
+  [
+    cf_cflags="-I /System/Library/Frameworks/CoreFoundation.framework/Headers"
+    cf_cflags="${cf_cflags} -I /System/Library/Frameworks/IOKit.framework/Headers"
+    cf_libs="-framework 'CoreFoundation' -framework 'IOKit'"
+  ],[
+    AC_MSG_ERROR([Cannot find CoreFoundation headers and libraries.])
+  ]
+)
+CPPFLAGS="${PCPPFLAGS}"
+AC_SUBST(cf_cflags)
+AC_SUBST(cf_libs)
+
 ALL_LINGUAS="bg de es fi fr ja pl pt ru zh_CN hu sl it cs da sk"
 AC_SUBST(ALL_LINGUAS)
 
