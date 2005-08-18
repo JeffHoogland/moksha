@@ -1673,8 +1673,14 @@ group {
 	 action:  ACTION_STOP;
 	 target:  "go_hung";
 	 target:  "go_hung2";
+	 after:   "go_unhung2";
+      } 
+      program {
+	 name:    "go_unhung2";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "title_hung";
       }
-   }
+  }
 }
 
 FULL_SIZE_BORDER_BUTTON("close")
