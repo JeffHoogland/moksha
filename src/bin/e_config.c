@@ -298,6 +298,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
    E_CONFIG_VAL(D, T, focus_last_focused_per_desktop, INT); /**/
    E_CONFIG_VAL(D, T, focus_revert_on_hide_or_close, INT); /**/
+   E_CONFIG_VAL(D, T, cursor_size, INT); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -403,6 +404,7 @@ e_config_init(void)
 	e_config->resize_info_follows = 1;
 	e_config->focus_last_focused_per_desktop = 1;
 	e_config->focus_revert_on_hide_or_close = 1;
+	e_config->cursor_size = 32;
 	
 	  {
 	     E_Config_Module *em;
@@ -959,6 +961,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->resize_info_follows, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_last_focused_per_desktop, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_revert_on_hide_or_close, 0, 1);
+   E_CONFIG_LIMIT(e_config->cursor_size, 0, 1024);
 
    /* apply lang config - exception because config is loaded after intl setup */
    

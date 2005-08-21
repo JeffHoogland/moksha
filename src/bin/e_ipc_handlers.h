@@ -4589,6 +4589,51 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+
+#define HDL E_IPC_OP_CURSOR_SIZE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cursor-size-set", 1, "Set the E cursor size", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->cursor_size = val;
+   /* TODO: Update cursor size on screen! */
+   E_CONFIG_LIMIT(e_config->cursor_size, 0, 1024);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_CURSOR_SIZE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cursor-size-get", 0, "Get the E cursor size", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->cursor_size, E_IPC_OP_CURSOR_SIZE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_CURSOR_SIZE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+
 #if 0
 }
 #endif
