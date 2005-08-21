@@ -346,16 +346,19 @@ e_hints_window_init(E_Border *bd)
 	  bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
      }
 
-   if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
-     bd->layer = 0;
-   else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-     bd->layer = 50;
-   else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-     bd->layer = 150;
-   else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
-     bd->layer = 150;
-   else
-     bd->layer = 100;
+   if (!bd->lock_client_stacking)
+     {
+	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+	  bd->layer = 0;
+	else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
+	  bd->layer = 50;
+	else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
+	  bd->layer = 150;
+	else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	  bd->layer = 150;
+	else
+	  bd->layer = 100;
+     }
    e_border_raise(bd);
 
 #if 0
@@ -394,22 +397,47 @@ e_hints_window_init(E_Border *bd)
      bd->client.netwm.pid = -1;
 
    if (bd->client.netwm.state.sticky)
-     e_border_stick(bd);
+     {
+	if (!bd->lock_client_sticky)
+	  e_border_stick(bd);
+	else
+	  e_hints_window_sticky_set(bd, 0);
+     }
    if (bd->client.netwm.state.shaded)
-     e_border_shade(bd, e_hints_window_shade_direction_get(bd));
+     {
+	if (!bd->lock_client_shade)
+	  e_border_shade(bd, e_hints_window_shade_direction_get(bd));
+	else
+	  e_hints_window_shaded_set(bd, 0);
+     }
    if ((bd->client.netwm.state.maximized_v) && (bd->client.netwm.state.maximized_h))
      {
-	e_hints_window_size_get(bd);
-	e_border_maximize(bd, e_config->maximize_policy);
+	if (!bd->lock_client_maximize)
+	  {
+	     e_hints_window_size_get(bd);
+	     e_border_maximize(bd, e_config->maximize_policy);
+	  }
+	else
+	  e_hints_window_maximized_set(bd, 0);
      }
    if (bd->client.netwm.state.fullscreen)
      {
-	e_hints_window_size_get(bd);
-	e_border_fullscreen(bd);
+	if (!bd->lock_client_fullscreen)
+	  {
+	     e_hints_window_size_get(bd);
+	     e_border_fullscreen(bd);
+	  }
+	else
+	  e_hints_window_fullscreen_set(bd, 0);
      }
-   if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC)
-       && (bd->client.netwm.state.hidden))
-     e_border_iconify(bd);
+   if ((bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC) &&
+       (bd->client.netwm.state.hidden))
+     {
+	if (!bd->lock_client_iconify)
+	  e_border_iconify(bd);
+	else
+	  e_hints_window_visible_set(bd);
+     }
    /* If a window isn't iconic, and is one the current desk,
     * show it! */
    else if (bd->desk == e_desk_current_get(bd->zone))
@@ -483,8 +511,8 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
       case ECORE_X_WINDOW_STATE_ICONIFIED:
 	 if (action != ECORE_X_WINDOW_STATE_ACTION_ADD) return;
 	 if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_ICONIC) return;
-	 if (!bd->lock_client_iconify)
-	   e_border_iconify(bd);
+	 if (bd->lock_client_iconify) return;
+	 e_border_iconify(bd);
 	 break;
       case ECORE_X_WINDOW_STATE_MODAL:
 	 changed = 0;
@@ -516,6 +544,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_STICKY:
+	 if (bd->lock_client_sticky) return;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
@@ -533,6 +562,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
+	 if (bd->lock_client_maximize) return;
 	 changed = 0;
 	 switch (action)
 	   {
@@ -559,15 +589,16 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   {
 	      bd->client.netwm.update.state = 1;
 	      bd->changed = 1;
-	      if ((bd->client.netwm.state.maximized_v)
-		    && (bd->client.netwm.state.maximized_h))
+	      if ((bd->client.netwm.state.maximized_v) &&
+		  (bd->client.netwm.state.maximized_h))
 		e_border_maximize(bd, e_config->maximize_policy);
-	      else if ((!bd->client.netwm.state.maximized_v)
-		    && (!bd->client.netwm.state.maximized_h))
+	      else if ((!bd->client.netwm.state.maximized_v) &&
+		       (!bd->client.netwm.state.maximized_h))
 		e_border_unmaximize(bd);
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
+	 if (bd->lock_client_maximize) return;
 	 changed = 0;
 	 switch (action)
 	   {
@@ -594,15 +625,16 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   {
 	      bd->client.netwm.update.state = 1;
 	      bd->changed = 1;
-	      if ((bd->client.netwm.state.maximized_v)
-		    && (bd->client.netwm.state.maximized_h))
+	      if ((bd->client.netwm.state.maximized_v) &&
+		  (bd->client.netwm.state.maximized_h))
 		e_border_maximize(bd, e_config->maximize_policy);
-	      else if ((!bd->client.netwm.state.maximized_v)
-		    && (!bd->client.netwm.state.maximized_h))
+	      else if ((!bd->client.netwm.state.maximized_v) &&
+		       (!bd->client.netwm.state.maximized_h))
 		e_border_unmaximize(bd);
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_SHADED:
+	 if (bd->lock_client_shade) return;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
@@ -681,6 +713,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 /* Ignore */
 	 break;
       case ECORE_X_WINDOW_STATE_FULLSCREEN:
+	 if (bd->lock_client_fullscreen) return;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
@@ -698,6 +731,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_ABOVE:
+	 if (bd->lock_client_stacking) return;
 	 /* FIXME: Should this require that BELOW is set to 0 first, or just
 	  * do it? */
 	 switch (action)
@@ -720,6 +754,7 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_BELOW:
+	 if (bd->lock_client_stacking) return;
 	 /* FIXME: Should this require that ABOVE is set to 0 first, or just
 	  * do it? */
 	 switch (action)
