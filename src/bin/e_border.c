@@ -1224,7 +1224,10 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      e_border_move_resize(bd, x1, y1, w, h);
 	      /* Don't set bd->maximized if E_MAXIMIZE_EXPAND, no need to return from this state */
 	      if (e_config->maximize_policy == E_MAXIMIZE_SMART)
-		bd->maximized = e_config->maximize_policy;
+		{
+		   bd->maximized = e_config->maximize_policy;
+		   edje_object_signal_emit(bd->bg_object, "maximize", "");
+		}
 	      break;
 	   case E_MAXIMIZE_FILL:
 	      x1 = bd->zone->x;
@@ -1246,10 +1249,10 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      break;
 	  }
 
-	if (bd->maximized > E_MAXIMIZE_FULLSCREEN)
-	  edje_object_signal_emit(bd->bg_object, "maximize", "");
 	if (bd->maximized)
 	  e_hints_window_maximized_set(bd, 1);
+	else
+	  e_hints_window_maximized_set(bd, 0);
 
      }
 }
