@@ -133,6 +133,7 @@ _temperature_new()
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
+   E_CONFIG_VAL(D, T, sensor_name, STR);
 
    e->conf = e_config_domain_load("module.temperature", conf_edd);
    if (!e->conf)
@@ -141,6 +142,7 @@ _temperature_new()
 	e->conf->poll_time = 10.0;
 	e->conf->low = 30;
 	e->conf->high = 80;
+        e->conf->sensor_name = "temp1";
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->low, 0, 100);
@@ -455,10 +457,46 @@ _temperature_menu_high_100(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_temperature_menu_sensor_1(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Temperature *e;
+
+   e = data;
+   e->conf->sensor_name = "temp1";
+   _temperature_cb_check(e);
+   e_config_save_queue();
+}
+
+static void
+_temperature_menu_sensor_2(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Temperature *e;
+
+   e = data;
+   e->conf->sensor_name = "temp2";
+   _temperature_cb_check(e);
+   e_config_save_queue();
+}
+
+static void
+_temperature_menu_sensor_3(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Temperature *e;
+
+   e = data;
+   e->conf->sensor_name = "temp3";
+   _temperature_cb_check(e);
+   e_config_save_queue();
+}
+
+static void
 _temperature_config_menu_new(Temperature *e)
 {
    E_Menu *mn;
    E_Menu_Item *mi;
+#ifndef __FreeBSD__
+   Ecore_List *therms;
+#endif
 
    /* Check interval */
    mn = e_menu_new();
@@ -608,6 +646,53 @@ _temperature_config_menu_new(Temperature *e)
 
    e->config_menu_high = mn;
 
+   /* Sensor */
+#ifndef __FreeBSD__
+   therms = ecore_file_ls("/proc/acpi/thermal_zone");
+   if ((!therms) || (ecore_list_is_empty(therms)))
+     {
+	FILE *f;
+	
+	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
+	if (f) fclose(f);
+	
+	if (!f)
+	  {
+	     if (therms) ecore_list_destroy(therms);
+	     
+	     therms = ecore_file_ls("/sys/bus/i2c/devices");
+	     if (therms && !ecore_list_is_empty(therms))
+	       {
+		  mn = e_menu_new();
+		  
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Temp1"));
+		  e_menu_item_radio_set(mi, 1);
+		  e_menu_item_radio_group_set(mi, 1);
+		  if ((!e->conf->sensor_name) || (!strcmp(e->conf->sensor_name, "temp1"))) e_menu_item_toggle_set(mi, 1);
+		  e_menu_item_callback_set(mi, _temperature_menu_sensor_1, e);
+		  
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Temp2"));
+		  e_menu_item_radio_set(mi, 1);
+		  e_menu_item_radio_group_set(mi, 1);
+		  if ((e->conf->sensor_name) && (!strcmp(e->conf->sensor_name, "temp2"))) e_menu_item_toggle_set(mi, 1);
+		  e_menu_item_callback_set(mi, _temperature_menu_sensor_2, e);
+		  
+		  mi = e_menu_item_new(mn);
+		  e_menu_item_label_set(mi, _("Temp3"));
+		  e_menu_item_radio_set(mi, 1);
+		  e_menu_item_radio_group_set(mi, 1);
+		  if ((e->conf->sensor_name) && (!strcmp(e->conf->sensor_name, "temp3"))) e_menu_item_toggle_set(mi, 1);
+		  e_menu_item_callback_set(mi, _temperature_menu_sensor_3, e);
+		  
+		  e->config_menu_sensor = mn;
+	       }
+	  }
+     }
+   if (therms) ecore_list_destroy(therms);
+#endif
+
    /* Main */
    mn = e_menu_new();
 
@@ -622,6 +707,13 @@ _temperature_config_menu_new(Temperature *e)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("High Temperature"));
    e_menu_item_submenu_set(mi, e->config_menu_high);
+
+   if (e->config_menu_sensor)
+     {
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Sensor"));
+	e_menu_item_submenu_set(mi, e->config_menu_sensor);
+     }
 
    e->config_menu = mn;
 }
@@ -825,14 +917,17 @@ _temperature_cb_check(void *data)
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
 	     if ((therms) && (!ecore_list_is_empty(therms)))
 	       {
-		  char *name;
+		  char *name, *sensor;
+
+                  sensor = ef->conf->sensor_name;
+                  if (!sensor) sensor = "temp1";
 		  
 		  while ((name = ecore_list_next(therms)))
 		    {
 		       char fname[1024];
 		       
-		       sprintf(fname, "/sys/bus/i2c/devices/%s/temp1_input",
-			       name);
+		       sprintf(fname, "/sys/bus/i2c/devices/%s/%s_input",
+			       name, sensor);
 		       if (ecore_file_exists(fname))
 			 {
 			    FILE *f;

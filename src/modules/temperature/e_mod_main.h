@@ -14,6 +14,7 @@ struct _Config
    double poll_time;
    int low, high;
    Evas_List *faces;
+   char *sensor_name;
 };
 
 struct _Config_Face
@@ -27,6 +28,7 @@ struct _Temperature
    E_Menu           *config_menu_low;
    E_Menu           *config_menu_high;
    E_Menu           *config_menu_poll;
+   E_Menu           *config_menu_sensor;
    Evas_List        *faces;
 
    Config           *conf;
