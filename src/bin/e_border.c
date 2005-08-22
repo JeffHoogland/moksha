@@ -6050,7 +6050,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 				  "widgets/border/default/fullscreen");
      }
 
-   if ((bd->client.icccm.accepts_focus) &&
+   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
        (!bd->client.netwm.state.skip_taskbar))
      {
 	mi = e_menu_item_new(m);
@@ -6331,7 +6331,7 @@ _e_border_menu_cb_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (!bd) return;
    
-   if ((bd->client.icccm.accepts_focus) &&
+   if ((bd->client.icccm.accepts_focus || bd->client.icccm.take_focus) &&
        (!bd->client.netwm.state.skip_taskbar))
      bd->user_skip_winlist = e_menu_item_toggle_get(mi);
    else

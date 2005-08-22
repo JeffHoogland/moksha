@@ -371,7 +371,8 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
    int ok;
 
    ok = 1;
-   if ((!bd->client.icccm.accepts_focus)) ok = 0;
+   if ((!bd->client.icccm.accepts_focus) &&
+       (!bd->client.icccm.take_focus)) ok = 0;
    if (bd->client.netwm.state.skip_taskbar) ok = 0;
    if (bd->user_skip_winlist) ok = 0;
    if (bd->iconic)
