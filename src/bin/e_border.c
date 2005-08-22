@@ -1356,14 +1356,14 @@ e_border_fullscreen(E_Border *bd)
 
 	bd->layer = 200;
 	e_border_raise(bd);
-	x = bd->zone->x - bd->client_inset.l;
-	y = bd->zone->y - bd->client_inset.t;
-	w = bd->zone->w + bd->client_inset.l + bd->client_inset.r;
-	h = bd->zone->h + bd->client_inset.t + bd->client_inset.b;
+	x = bd->zone->x;
+	y = bd->zone->y;
+	w = bd->zone->w;
+	h = bd->zone->h;
 	_e_border_resize_limit(bd, &w, &h);
 	/* center */
-	x = x + (bd->zone->w + bd->client_inset.l + bd->client_inset.r - w) / 2;
-	y = y + (bd->zone->h + bd->client_inset.t + bd->client_inset.b - h) / 2;
+	x = x + (bd->zone->w - w) / 2;
+	y = y + (bd->zone->h - h) / 2;
 	e_border_move_resize(bd, x, y, w, h);
 	ecore_evas_hide(bd->bg_ecore_evas);
 
@@ -5027,11 +5027,11 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 	if ((bd->client.icccm.min_aspect != 0.0) &&
 	    (a < bd->client.icccm.min_aspect))
 	  {
-	     tw = th * bd->client.icccm.min_aspect;
-	     *w = tw + bd->client.icccm.base_w;
+	     th = tw / bd->client.icccm.max_aspect;
+	     *h = th + bd->client.icccm.base_h;
 	  }
 	else if ((bd->client.icccm.max_aspect != 0.0) &&
-	   (a > bd->client.icccm.max_aspect))
+		 (a > bd->client.icccm.max_aspect))
 	  {
 	     th = tw / bd->client.icccm.max_aspect;
 	     *h = th + bd->client.icccm.base_h;
@@ -5042,10 +5042,9 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 	a = (double)*w / (double)*h;
 	if ((bd->client.icccm.min_aspect != 0.0) &&
 	    (a < bd->client.icccm.min_aspect))
-	  *w = *h * bd->client.icccm.min_aspect;
-	else if
-	  ((bd->client.icccm.max_aspect != 0.0) &&
-	   (a > bd->client.icccm.max_aspect))
+	  *h = *w / bd->client.icccm.min_aspect;
+	else if ((bd->client.icccm.max_aspect != 0.0) &&
+		 (a > bd->client.icccm.max_aspect))
 	  *h = *w / bd->client.icccm.max_aspect;
      }
    if (bd->client.icccm.base_w >= 0)
