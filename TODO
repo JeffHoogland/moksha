@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: e often forgets what window is focused so ctrl+alt+x for example doesnt
+  close the current focused window... hmmmm
 * e_hints.c manually changes flags on a border instead of calling
   e_border_stick() for example or the calls in e_border.c - add calls as needed
   to e_border.c. before calling check the lock flags too.

@@ -479,7 +479,10 @@ main(int argc, char **argv)
 			       "It likely is already in use by an existing copy of Enlightenment.\n"
 			       "Double check to see if Enlightenment is not already on this display,\n"
 			       "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-			       "and try running again."));
+			       "and try running again.\n"
+			       "\n"
+			       "If you use AFS then maybe you might want to make a symlink from\n"
+			       "~/.ecore to /tmp/my_directory/ecore where sockets can be made."));
 	ipc_failed = 1;
      }
    else
