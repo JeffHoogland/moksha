@@ -48,7 +48,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 122
+#define E_CONFIG_FILE_VERSION 123
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -143,6 +143,8 @@ struct _E_Config
    int         focus_last_focused_per_desktop;
    int         focus_revert_on_hide_or_close;
    int         cursor_size;
+   int         menu_autoscroll_margin;
+   int         menu_autoscroll_cursor_margin;
 };
 
 struct _E_Config_Module

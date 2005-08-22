@@ -1968,24 +1968,24 @@ _e_menu_outside_bounds_get(int xdir, int ydir)
 	E_Menu *m;
 
 	m = l->data;
-	if (m->cur.x < m->zone->x)
+	if (m->cur.x < m->zone->x + e_config->menu_autoscroll_margin)
 	  {
-	     i = m->zone->x - m->cur.x;
+	     i = m->zone->x - m->cur.x + e_config->menu_autoscroll_margin;
 	     if (i > outl) outl = i;
 	  }
-	if (m->cur.y < m->zone->y)
+	if (m->cur.y < m->zone->y + e_config->menu_autoscroll_margin)
 	  {
-	     i = m->zone->y - m->cur.y;
+	     i = m->zone->y - m->cur.y + e_config->menu_autoscroll_margin;
 	     if (i > outt) outt = i;
 	  }
-	if ((m->cur.x + m->cur.w) > (m->zone->w))
+	if ((m->cur.x + m->cur.w) > (m->zone->w - e_config->menu_autoscroll_margin))
 	  {
-	     i = m->cur.x + m->cur.w - (m->zone->x + m->zone->w);
+	     i = m->cur.x + m->cur.w - (m->zone->x + m->zone->w - e_config->menu_autoscroll_margin);
 	     if (i > outr) outr = i;
 	  }
-	if ((m->cur.y + m->cur.h) > (m->zone->h))
+	if ((m->cur.y + m->cur.h) > (m->zone->h - e_config->menu_autoscroll_margin))
 	  {
-	     i = m->cur.y + m->cur.h - (m->zone->y + m->zone->h);
+	     i = m->cur.y + m->cur.h - (m->zone->y + m->zone->h - e_config->menu_autoscroll_margin);
 	     if (i > outb) outb = i;
 	  }
      }
@@ -2029,11 +2029,11 @@ _e_menu_mouse_autoscroll_check(void)
    int autoscroll_x = 0;
    int autoscroll_y = 0;
    
-   if (_e_menu_x == 0)
+   if (_e_menu_x - e_config->menu_autoscroll_cursor_margin <= 0)
      {
 	if (_e_menu_outside_bounds_get(-1, 0)) autoscroll_x = -1;
      }
-   if (_e_menu_y == 0)
+   if (_e_menu_y - e_config->menu_autoscroll_cursor_margin <= 0)
      {
 	if (_e_menu_outside_bounds_get(0, -1)) autoscroll_y = -1;
      }
@@ -2044,11 +2044,11 @@ _e_menu_mouse_autoscroll_check(void)
 	     E_Menu *m;
 	     
 	     m = _e_active_menus->data;
-	     if (_e_menu_x == (m->zone->w - 1))
+	     if (_e_menu_x + e_config->menu_autoscroll_cursor_margin >= (m->zone->w - 1))
 	       {
 		  if (_e_menu_outside_bounds_get(1, 0)) autoscroll_x = 1;
 	       }
-	     if (_e_menu_y == (m->zone->h - 1))
+	     if (_e_menu_y + e_config->menu_autoscroll_cursor_margin >= (m->zone->h - 1))
 	       {
 		  if (_e_menu_outside_bounds_get(0, 1)) autoscroll_y = 1;
 	       }

@@ -636,14 +636,6 @@ break;
  * E_LIB_IN
  *   ...
  */
-
-#if 0
-{
-#endif
-   
-   
-   
-   
    
 /****************************************************************************/
 #define HDL E_IPC_OP_MODULE_LOAD
@@ -4632,8 +4624,82 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
-
-#if 0
-}
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_MARGIN_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-autoscroll-margin-set", 1, "Set the distance from the edge of the screen the menu will autoscroll to", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->menu_autoscroll_margin = value;
+   E_CONFIG_LIMIT(e_config->menu_autoscroll_margin, 0, 50);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
 #endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_MARGIN_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-autoscroll-margin-get", 0, "Get the distance from the edge of the screen the menu will autoscroll to", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->menu_autoscroll_margin, E_IPC_OP_MENU_AUTOSCROLL_MARGIN_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_MARGIN_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+		 printf("REPLY: %i\n", val);
+		 END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_CURSOR_MARGIN_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-autoscroll-cursor-margin-set", 1, "Set the distance from the edge of the screen the cursor needs to be to start menu autoscrolling", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->menu_autoscroll_cursor_margin = value;
+   E_CONFIG_LIMIT(e_config->menu_autoscroll_cursor_margin, 0, 50);
+	 //   e_zone_update_flip_all();
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_CURSOR_MARGIN_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-autoscroll-cursor-margin-get", 0, "Get the distance from the edge of the screen the cursor needs to be to start menu autoscrolling", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->menu_autoscroll_cursor_margin, E_IPC_OP_MENU_AUTOSCROLL_CURSOR_MARGIN_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_AUTOSCROLL_CURSOR_MARGIN_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+		 printf("REPLY: %i\n", val);
+		 END_INT;
+#endif
+#undef HDL
