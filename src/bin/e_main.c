@@ -68,7 +68,7 @@ main(int argc, char **argv)
    /* or ability to gdb attach and debug at this point - better than your */
    /* wm/desktop vanishing and not knowing what happened */
 
-#if 1
+#if 0
      {   
 	stack_t ss;
 	
