@@ -12,6 +12,8 @@ images {
    image: "e17_icon_theme_glow_0.png" LOSSY 90;   
 
    image: "e17_icon_windows.png" LOSSY 90;
+	
+   image: "e17_icon_lost_windows.png" LOSSY 90;	
   
    image: "e17_icon_module.png" LOSSY 90;
    
@@ -278,6 +280,24 @@ images {
 	       max:      64 64;
 	       image {
 		  normal: "e17_icon_windows.png";
+	       }
+	    }
+	 }
+      }
+   }
+   group {
+      name: "icons/enlightenment/lost_windows";
+      max:  64 64;
+      parts {
+	 part {
+	    name:          "icon";
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+	       aspect:   1.0 1.0;
+	       max:      64 64;
+	       image {
+		  normal: "e17_icon_lost_windows.png";
 	       }
 	    }
 	 }
