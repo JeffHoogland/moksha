@@ -19,6 +19,8 @@ struct _Main_Data
 };
 
 /* local subsystem functions */
+static void _e_int_menus_quit                (void);
+static void _e_int_menus_quit_cb             (void *data);
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
@@ -46,6 +48,9 @@ static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_lost_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook   (void *obj);
 static void _e_int_menus_lost_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+
+/* local subsystem globals */
+static Ecore_Job *_e_int_menus_quit_job = NULL;
 
 /* externally accessible functions */
 E_Menu *
@@ -247,6 +252,23 @@ e_int_menus_lost_clients_new(void)
 
 /* local subsystem functions */
 static void
+_e_int_menus_quit(void)
+{
+   if (_e_int_menus_quit_job)
+     {
+	ecore_job_del(_e_int_menus_quit_job);
+	_e_int_menus_quit_job = NULL;
+     }
+   _e_int_menus_quit_job = ecore_job_add(_e_int_menus_quit_cb, NULL);
+}
+
+static void
+_e_int_menus_quit_cb(void *data)
+{
+   ecore_main_loop_quit();
+}
+
+static void
 _e_int_menus_main_del_hook(void *obj)
 {
    Main_Data *dat;
@@ -294,13 +316,13 @@ static void
 _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    restart = 1;
-   ecore_main_loop_quit();
+   _e_int_menus_quit();
 }
 
 static void
 _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   if (!e_util_immortal_check()) ecore_main_loop_quit();
+   if (!e_util_immortal_check()) _e_int_menus_quit();
 }
 
 static void
@@ -763,7 +785,7 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_config_save_queue();
 
    restart = 1;
-   ecore_main_loop_quit();   
+   _e_int_menus_quit();   
 }
 
 static void
