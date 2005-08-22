@@ -4,6 +4,10 @@
 #include <unistd.h>
 #include <string.h>
 
+#ifdef __FreeBSD__
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif
 
 int
 main(int argc, char *argv[])
@@ -22,7 +26,31 @@ main(int argc, char *argv[])
      {
         fprintf(stderr, "Unable to assume root privileges\n");
      }
-   
+
+#ifdef __FreeBSD__
+   if (!strcmp(argv[1], "frequency"))
+     {
+        new_frequency = atoi(argv[2]);
+	int len = 4;	
+        if (sysctlbyname("dev.cpu.0.freq", NULL, 0, &new_frequency, &len) == -1)
+          {
+             fprintf(stderr, "Unable to open frequency interface for writing.\n");
+             return 1;
+          }
+	
+        return 0;
+     }
+   else if (!strcmp(argv[1], "governor"))
+     {
+        fprintf(stderr, "Governors not (yet) implemented on FreeBSD.\n");
+        return 0;
+     }
+   else
+     {
+        fprintf(stderr, "Unknown command.\n");
+        return 1;
+     }
+#else   
    if (!strcmp(argv[1], "frequency"))
      {
         new_frequency = atoi(argv[2]);
@@ -56,5 +84,7 @@ main(int argc, char *argv[])
         fprintf(stderr, "Unknown command.\n");
         return 1;
      }
+#endif
+
    seteuid(-1);
 }

@@ -3,6 +3,11 @@
 #include <ctype.h>
 #include "e_mod_main.h"
 
+#ifdef __FreeBSD__   
+#include <sys/types.h>
+#include <sys/sysctl.h>
+#endif  
+
 /* FIXME: check permissions (can execute) setfreq before trying
  * FIXME: display throttling state ???
  * FIXME: handle multiple cpu's (yes it's likely rare - but possible)
@@ -144,8 +149,12 @@ _cpufreq_new(E_Module *module)
 	e->conf->poll_time = 2.0;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 60.0);
-	
+#ifdef __FreeBSD__	
+   /* does e_module_dir_get(module) work correctly in linux???  - yes it does... what's wrong in bsd? */
+   snprintf(buf, sizeof(buf), "%s/%s/cpufreq/freqset", e_module_dir_get(module), MODULE_ARCH);
+#else   
    snprintf(buf, sizeof(buf), "%s/%s/freqset", e_module_dir_get(module), MODULE_ARCH);
+#endif
    buf[sizeof(buf) - 1] = 0;
    e->set_exe_path = strdup(buf);
    e->frequency_check_timer = ecore_timer_add(e->conf->poll_time, _cpufreq_cb_check, e);
@@ -275,6 +284,9 @@ _cpufreq_set_frequency(Cpufreq *e, int frequency)
    char buf[4096];
    int ret;
    
+#ifdef __FreeBSD__
+   frequency /= 1000;
+#endif 
    snprintf(buf, sizeof(buf),
 	    "%s %s %i", e->set_exe_path, "frequency", frequency);
    ret = system(buf);
@@ -582,14 +594,63 @@ static int
 _cpufreq_status_check_available(Status *e)
 {
    char buf[4096];
-   FILE *f;
    Evas_List *l;
+#ifdef __FreeBSD__
+   int freq, num, i;
+   size_t len = 0;
+   char *freqs, *pos, *q;
 
+   /* read freq_levels sysctl and store it in freq */
+   len = sizeof(buf);
+   if (sysctlbyname("dev.cpu.0.freq_levels", buf, &len, NULL, 0) == 0)
+     {    
+	/* sysctl returns 0 on success */
+	
+	if (e->frequencies)
+	  {
+	     evas_list_free(e->frequencies);
+	     e->frequencies = NULL;
+	  }
+	
+	/* go through freqs and cound them */
+	num = 1;
+	for (pos = buf; *pos != 0; pos++)
+	  {
+	     if (*pos == ' ')
+	       {
+		  num++;
+	       }
+	  }
+	
+	/* parse freqs and store the frequencies in e->frequencies */ 
+	for (i = 0, pos=buf; i < num; i++)
+	  {
+	     q = strchr(pos, ' ');
+	     if (q != NULL) *q = '\0';
+	     
+	     sscanf(pos, "%d/%*d", &freq);
+	     freq*=1000;
+	     e->frequencies = evas_list_append(e->frequencies, (void *)freq);
+	     pos = q + 1;
+	  }
+     }
+   
+   /* sort is not necessary because freq_levels is already sorted */
+   /* freebsd doesn't have governors */
+   if (e->governors)
+     {
+	for (l = e->governors; l; l = l->next) free(l->data);
+	evas_list_free(e->governors);
+	e->governors = NULL;
+     }
+#else
+   FILE *f;
+   
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies", "r");
    if (f)
      {
 	char *freq;
-
+	
 	if (e->frequencies)
 	  {
 	     evas_list_free(e->frequencies);
@@ -654,7 +715,7 @@ _cpufreq_status_check_available(Status *e)
 	e->governors = evas_list_sort(e->governors, evas_list_count(e->governors),
 				      (int (*)(void *, void *))strcmp);
      }
-
+#endif
    return 1;
 }
 
@@ -664,12 +725,27 @@ _cpufreq_status_check_current(Status *e)
    char buf[4096];
    int i;
    FILE *f;
-   int ret;
-   int frequency;
+   int ret = 0;
+   int frequency = 0;
+#ifdef __FreeBSD__
+   int len = 4;
 
-   ret = 0;
    e->active = 0;
+   /* frequency is stored in dev.cpu.0.freq */
+   if (sysctlbyname("dev.cpu.0.freq", &frequency, &len, NULL, 0) == 0)
+     {
+	frequency *= 1000;
+	if (frequency != e->cur_frequency) ret = 1;
+	e->cur_frequency = frequency;
+	e->active = 1;
+     }
 
+    /* hardcoded for testing */
+    e->can_set_frequency = 1;
+    e->cur_governor = NULL;
+#else
+   e->active = 0;
+   
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", "r");
    if (f)
      {
@@ -719,7 +795,7 @@ _cpufreq_status_check_current(Status *e)
 	       }
 	  }
      }
-   
+#endif
    return ret;
 }
 
@@ -942,9 +1018,14 @@ _cpufreq_face_update_current(Cpufreq_Face *face)
    edje_object_message_send(face->freq_object, EDJE_MESSAGE_INT_SET, 3, frequency_msg);
    free(frequency_msg);
 
-   governor_msg.str = face->owner->status->cur_governor;
-   edje_object_message_send(face->freq_object, EDJE_MESSAGE_STRING, 4, &governor_msg);
-   
+   /* BSD crashes here without the if-condition
+    * since it has no governors (yet) */
+   if (face->owner->status->cur_governor != NULL)
+     {
+         governor_msg.str = face->owner->status->cur_governor;
+         edje_object_message_send(face->freq_object, EDJE_MESSAGE_STRING, 4, &governor_msg);
+    }
+	 
    if (face->owner->menu_frequency)
      {
 	Evas_List *l;
