@@ -1161,6 +1161,11 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	int x1, y1, x2, y2;
 	int w, h;
 
+	if (bd->new_client)
+	  {
+	     bd->need_maximize = 1;
+	     return;
+	  }
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
 	bd->saved.w = bd->w;
@@ -2285,8 +2290,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-//   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
-//	  e->win, e->w, e->h, e->x, e->y);
+   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
+	  e->win, e->w, e->h, e->x, e->y);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
@@ -4721,6 +4726,12 @@ _e_border_eval(E_Border *bd)
 	bd->changes.shaded = 0;
      }
 
+   if (bd->need_maximize)
+     {
+	e_border_maximize(bd, e_config->maximize_policy);
+	bd->need_maximize = 0;
+     }
+   
    if ((bd->changes.pos) && (bd->changes.size))
      {
 //	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);

@@ -288,6 +288,7 @@ struct _E_Border
    unsigned int    take_focus : 1;
    unsigned int    want_focus : 1;
    unsigned int    user_skip_winlist : 1;
+   unsigned int    need_maximize : 1;
    E_Maximize      maximized;
 
    unsigned int    lock_user_location : 1; /*DONE*/
