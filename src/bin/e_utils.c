@@ -373,3 +373,26 @@ e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name)
      }
    return 0;
 }
+
+E_Container *
+e_util_container_window_find(Ecore_X_Window win)
+{
+   Evas_List *l, *ll;
+
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	E_Manager *man;
+	
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+          {
+	     E_Container *con;
+	     
+	     con = ll->data;
+	     if ((con->win == win) || (con->bg_win == win) || 
+		 (con->event_win == win))
+	       return con;
+	  }
+     }
+   return NULL;
+}

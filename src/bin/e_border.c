@@ -2297,9 +2297,10 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
      {
 //	printf("generic config request 0x%x 0x%lx %i %i %ix%i %i 0x%x 0x%x...\n",
 //	       e->win, e->value_mask, e->x, e->y, e->w, e->h, e->border, e->abovewin, e->detail);
-	ecore_x_window_configure(e->win, e->value_mask,
-				 e->x, e->y, e->w, e->h, e->border,
-				 e->abovewin, e->detail);
+	if (!e_util_container_window_find(e->win))
+	  ecore_x_window_configure(e->win, e->value_mask,
+				   e->x, e->y, e->w, e->h, e->border,
+				   e->abovewin, e->detail);
 	return 1;
      }
 //   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
@@ -2558,7 +2559,21 @@ _e_border_cb_window_stack_request(void *data, int ev_type, void *ev)
    e = ev;
    bd = e_border_find_by_client_window(e->win);
 //   printf("stack req for %0x bd %p\n", e->win, bd);
-   if (!bd) return 1;
+   if (!bd)
+     {
+	if (!e_util_container_window_find(e->win))
+	  {
+	     if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+	       ecore_x_window_raise(e->win);
+	     else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+	       ecore_x_window_lower(e->win);
+	  }
+	return 1;
+     }
+   if (e->detail == ECORE_X_WINDOW_STACK_ABOVE)
+     e_border_raise(bd);
+   else if (e->detail == ECORE_X_WINDOW_STACK_BELOW)
+     e_border_lower(bd);
    return 1;
 }
 

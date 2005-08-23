@@ -24,6 +24,7 @@ EAPI int          e_util_edje_icon_list_set(Evas_Object *obj, char *list);
 EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list);
 EAPI int          e_util_edje_icon_set(Evas_Object *obj, char *name);
 EAPI int          e_util_menu_item_edje_icon_set(E_Menu_Item *mi, char *name);
+EAPI E_Container *e_util_container_window_find(Ecore_X_Window win);
     
 #endif
 #endif
