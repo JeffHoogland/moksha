@@ -4,25 +4,22 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static Randr *_randr_new(void);
-static Randr_Face *_randr_face_new(E_Container *con);
-static void _randr_free(Randr *e);
-static void _randr_face_free(Randr_Face *face);
-static void _randr_face_enable(Randr_Face *e);
-static void _randr_face_disable(Randr_Face *e);
-static void _randr_config_menu_new(Randr *e);
-static void _randr_face_menu_new(Randr_Face *face);
-static void _randr_face_menu_resolution_new(Randr_Face *face);
-static void _randr_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _randr_face_post_cb_menu_resolution_change(void *data, E_Menu *m);
-static void _randr_face_cb_menu_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _randr_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void _randr_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int  _randr_face_cb_screen_change(void *data, int type, void *event);
+/*
+ * TODO:
+ * * Check if randr is available. It might be disabled in
+ *   ecore_x, or not available on screen
+ * * Restore screen res if the user wants it
+ */
 
-static int button_count;
+static Randr *_randr_new(void);
+static void _randr_free(Randr *e);
+static void _randr_config_menu_new(Randr *e);
+static void _randr_menu_resolution_add(void *data, E_Menu *m);
+static void _randr_menu_resolution_del(void *data, E_Menu *m);
+static void _randr_menu_cb_store(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi);
+
 static E_Config_DD *conf_edd;
-static E_Config_DD *conf_face_edd;
 
 void *
 e_modapi_init(E_Module *m)
@@ -92,171 +89,89 @@ static Randr *
 _randr_new(void)
 {
    Randr *e;
-   Evas_List *managers, *l, *l2, *cl;
-   E_Menu_Item *mi;
    
-   button_count = 0;
    e = E_NEW(Randr, 1);
    if (!e) return NULL;
    
-   conf_face_edd = E_CONFIG_DD_NEW("Randr_Config_Face", Config_Face);
-#undef T
-#undef D
-#define T Config_Face
-#define D conf_face_edd
-   E_CONFIG_VAL(D, T, enabled, UCHAR);
-
    conf_edd = E_CONFIG_DD_NEW("Randr_Config", Config);
 #undef T
 #undef D
 #define T Config
 #define D conf_edd
-   E_CONFIG_LIST(D, T, faces, conf_face_edd);
+   E_CONFIG_VAL(D, T, store, INT);
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
    
    e->conf = e_config_domain_load("module.randr", conf_edd);
    if (!e->conf) e->conf = E_NEW(Config, 1);
    
    _randr_config_menu_new(e);
-   
-   managers = e_manager_list();
-   cl = e->conf->faces;
-   for (l = managers; l; l = l->next)
-     {
-	E_Manager *man;
-	
-	man = l->data;
-	for (l2 = man->containers; l2; l2 = l2->next)
-	  {
-	     E_Container *con;
-	     Randr_Face *face;
-	     
-	     con = l2->data;
-	     face = _randr_face_new(con);
-	     if (face)
-	       {
-		  ecore_x_randr_events_select(con->bg_win, 1);
-		  e->faces = evas_list_append(e->faces, face);
-		  /* Config */
-		  if (!cl)
-		    {
-		       face->conf = E_NEW(Config_Face, 1);
-		       face->conf->enabled = 1;
-		       e->conf->faces = evas_list_append(e->conf->faces, face->conf);
-		    }
-		  else
-		    {
-		       face->conf = cl->data;
-		       cl = cl->next;
-		    }
-		  
-		  /* Menu */
-		  /* This menu must be initialized after conf */
-		  _randr_face_menu_new(face);
-		  
-		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, con->name);
-		  
-		  e_menu_item_submenu_set(mi, face->config_menu);
-		  
-		  /* Setup */
-		  if (!face->conf->enabled) _randr_face_disable(face);
-	       }
-	  }
-     }
+
+   e->augmentation = e_int_menus_menu_augmentation_add("config",
+						       _randr_menu_resolution_add, e,
+						       _randr_menu_resolution_del, e);
+
    return e;
 }
 
-static Randr_Face *
-_randr_face_new(E_Container *con)
+static void
+_randr_free(Randr *e)
 {
-   Randr_Face *face;
-   Evas_Object *o;
+   E_CONFIG_DD_FREE(conf_edd);
    
-   face = E_NEW(Randr_Face, 1);
-   if (!face) return NULL;
+   e_object_del(E_OBJECT(e->config_menu));
+   if (e->resolution_menu)
+     e_object_del(E_OBJECT(e->resolution_menu));
    
-   face->con = con;
-   e_object_ref(E_OBJECT(con));
-   
-   evas_event_freeze(con->bg_evas);
-   o = edje_object_add(con->bg_evas);
-   face->button_object = o;
-   
-   e_theme_edje_object_set(o, "base/theme/modules/randr", "modules/randr/main");
-   edje_object_signal_emit(o, "passive", "");
-   evas_object_show(o);
-   
-   o = evas_object_rectangle_add(con->bg_evas);
-   face->event_object = o;
-   evas_object_layer_set(o, 2);
-   evas_object_repeat_events_set(o, 1);
-   evas_object_color_set(o, 0, 0, 0, 0);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _randr_face_cb_mouse_down, face);
-   evas_object_show(o);
-   
-   face->gmc = e_gadman_client_new(con->gadman);
-   e_gadman_client_domain_set(face->gmc, "module.randr", button_count++);
-   e_gadman_client_policy_set(face->gmc,
-			      E_GADMAN_POLICY_ANYWHERE |
-			      E_GADMAN_POLICY_HMOVE |
-			      E_GADMAN_POLICY_VMOVE |
-			      E_GADMAN_POLICY_HSIZE |
-			      E_GADMAN_POLICY_VSIZE);
-   e_gadman_client_min_size_set(face->gmc, 4, 4);
-   e_gadman_client_max_size_set(face->gmc, 512, 512);
-   e_gadman_client_auto_size_set(face->gmc, 40, 40);
-   e_gadman_client_align_set(face->gmc, 0.0, 1.0);
-   e_gadman_client_aspect_set(face->gmc, 1.0, 1.0);
-   e_gadman_client_resize(face->gmc, 40, 40);
-   e_gadman_client_change_func_set(face->gmc, _randr_face_cb_gmc_change, face);
-   e_gadman_client_load(face->gmc);
-   
-   evas_event_thaw(con->bg_evas);
-   
-   face->randr_handler = ecore_event_handler_add(ECORE_X_EVENT_SCREEN_CHANGE,
-						 _randr_face_cb_screen_change,
-						 face);
-   return face;
+   e_int_menus_menu_augmentation_del("config", e->augmentation);
+   free(e->conf);
+   free(e);
 }
 
 static void
-_randr_face_menu_new(Randr_Face *face)
+_randr_config_menu_new(Randr *e)
 {
-   E_Menu *mn;
+   E_Menu *m;
    E_Menu_Item *mi;
- 
-   mn = e_menu_new();
-   face->config_menu = mn;
-   
-   /* Enabled */
-   /*
-    mi = e_menu_item_new(mn);
-    e_menu_item_label_set(mi, _("Enabled"));
-    e_menu_item_check_set(mi, 1);
-    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
-    e_menu_item_callback_set(mi, _clock_face_cb_menu_enabled, face);
-    */
-   
-   /* Edit */
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Edit Mode"));
-   e_menu_item_callback_set(mi, _randr_face_cb_menu_edit, face);
+
+   m = e_menu_new();
+   e->config_menu = m;
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Store"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, e->conf->store);
+   e_menu_item_callback_set(mi, _randr_menu_cb_store, e);
 }
 
 static void
-_randr_face_menu_resolution_new(Randr_Face *face)
+_randr_menu_resolution_add(void *data, E_Menu *m)
 {
-   E_Menu *mn;
+   E_Manager *man;
+   Randr *e;
+   E_Menu *subm, *root;
    E_Menu_Item *mi;
    Ecore_X_Screen_Size *sizes;
    Ecore_X_Screen_Size size;
    int i, n;
 
-   mn = e_menu_new();
-   face->resolution_menu = mn;
+   e = data;
 
-   sizes = ecore_x_randr_screen_sizes_get(face->con->manager->root, &n);
-   size = ecore_x_randr_current_screen_size_get(face->con->manager->root);
+   subm = e_menu_new();
+   e->resolution_menu = subm;
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Resolution"));
+   e_menu_item_submenu_set(mi, subm);
+
+   root = e_menu_root_get(m);
+   if (!root->zone)
+     man = e_manager_current_get();
+   else
+     man = root->zone->container->manager;
+
+   sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
+   size = ecore_x_randr_current_screen_size_get(man->root);
    if (sizes)
      {
 	char buf[16];
@@ -264,176 +179,51 @@ _randr_face_menu_resolution_new(Randr_Face *face)
 	for (i = 0; i < n; i++)
 	  {
 	     snprintf(buf, sizeof(buf), "%dx%d", sizes[i].width, sizes[i].height);
-	     mi = e_menu_item_new(mn);
+	     mi = e_menu_item_new(subm);
 	     e_menu_item_radio_set(mi, 1);
 	     e_menu_item_radio_group_set(mi, 1);
 	     if ((sizes[i].width == size.width) && (sizes[i].height == size.height))
 	       e_menu_item_toggle_set(mi, 1);
 	     e_menu_item_label_set(mi, buf);
-	     e_menu_item_callback_set(mi, _randr_face_cb_menu_resolution_change, face);
+	     e_menu_item_callback_set(mi, _randr_menu_cb_resolution_change, e);
 	  }
 	free(sizes);
      }
 }
 
 static void
-_randr_free(Randr *e)
+_randr_menu_resolution_del(void *data, E_Menu *m)
 {
-   Evas_List *list;
-   
-   E_CONFIG_DD_FREE(conf_edd);
-   E_CONFIG_DD_FREE(conf_face_edd);
-   
-   for (list = e->faces; list; list = list->next)
-     _randr_face_free(list->data);
-   evas_list_free(e->faces);
-   
-   e_object_del(E_OBJECT(e->config_menu));
-   
-   evas_list_free(e->conf->faces);
-   free(e->conf);
-   free(e);
-}
+   Randr *e;
 
-static void
-_randr_face_free(Randr_Face *face)
-{
-   e_object_unref(E_OBJECT(face->con));
-   e_object_del(E_OBJECT(face->gmc));
-   evas_object_del(face->button_object);
-   evas_object_del(face->event_object);
-   e_object_del(E_OBJECT(face->config_menu));
-   if (face->resolution_menu) e_object_del(E_OBJECT(face->resolution_menu));
-   ecore_event_handler_del(face->randr_handler);
-
-   free(face->conf);
-   free(face);
-   button_count--;
-}
-
-static void
-_randr_config_menu_new(Randr *e)
-{
-   e->config_menu = e_menu_new();
-}
-
-static void
-_randr_face_disable(Randr_Face *e)
-{
-   e->conf->enabled = 0;
-   evas_object_hide(e->button_object);
-   evas_object_hide(e->event_object);
-   e_config_save_queue();
-}
-
-static void
-_randr_face_enable(Randr_Face *e)
-{
-   e->conf->enabled = 1;
-   evas_object_show(e->button_object);
-   evas_object_show(e->event_object);
-   e_config_save_queue();
-}
-
-static void
-_randr_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change)
-{
-   Randr_Face *e;
-   Evas_Coord x, y, w, h;
-   
    e = data;
-   switch (change)
+
+   if (e->resolution_menu)
      {
-      case E_GADMAN_CHANGE_MOVE_RESIZE:
-	e_gadman_client_geometry_get(e->gmc, &x, &y, &w, &h);
-	evas_object_move(e->button_object, x, y);
-	evas_object_move(e->event_object, x, y);
-	evas_object_resize(e->button_object, w, h);
-	evas_object_resize(e->event_object, w, h);
-	break;
-      case E_GADMAN_CHANGE_RAISE:
-	evas_object_raise(e->button_object);
-	evas_object_raise(e->event_object);
-	break;
-      case E_GADMAN_CHANGE_EDGE:
-      case E_GADMAN_CHANGE_ZONE:
-	/* FIXME: Must we do something here? */
-	break;
+	e_object_del(E_OBJECT(e->resolution_menu));
+	e->resolution_menu = NULL;
      }
 }
 
 static void
-_randr_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
+_randr_menu_cb_store(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   Randr_Face *face;
-   
-   face = data;
-   e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
+   Randr *e;
+
+   e = data;
+   e->conf->store = e_menu_item_toggle_get(mi);
 }
 
 static void
-_randr_face_post_cb_menu_resolution_change(void *data, E_Menu *m)
+_randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   Randr_Face *face;
-   
-   face = data;
-   e_object_del(E_OBJECT(face->resolution_menu));
-   face->resolution_menu = NULL;
-   edje_object_signal_emit(face->button_object, "passive", "");
-}
-
-static void
-_randr_face_cb_menu_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Randr_Face *face;
+   Randr *e;
    Ecore_X_Screen_Size size;
    
-   face = data;
+   e = data;
    if (sscanf(mi->label, "%dx%d", &size.width, &size.height) != 2) return;
-   ecore_x_randr_screen_size_set(face->con->manager->root, size);
-}
+   ecore_x_randr_screen_size_set(m->zone->container->manager->root, size);
 
-static void
-_randr_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-   Randr_Face *face;
-   Evas_Event_Mouse_Down *ev;
-   
-   face = data;
-   ev = event_info;
-   if (ev->button == 3)
-     {
-	e_menu_activate_mouse(face->config_menu, e_zone_current_get(face->con),
-			      ev->output.x, ev->output.y, 1, 1, 
-			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-	e_util_container_fake_mouse_up_all_later(face->con);
-     }
-   else if (ev->button == 1)
-     {
-	Evas_Coord x, y, w, h;
-
-	_randr_face_menu_resolution_new(face);
-	e_menu_post_deactivate_callback_set(face->resolution_menu,
-					    _randr_face_post_cb_menu_resolution_change,
-					    face);
-        e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
-	e_menu_activate_mouse(face->resolution_menu, e_zone_current_get(face->con),
-			      x, y, w, h,
-			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-	e_util_container_fake_mouse_up_all_later(face->con);
-	edje_object_signal_emit(face->button_object, "active", "");
-     }
-}
-
-static int
-_randr_face_cb_screen_change(void *data, int type, void *event)
-{
-   Randr_Face *face;
-   Ecore_X_Event_Screen_Change *ev;
-
-   face = data;
-   ev = event;
-   if (ev->win != face->con->bg_win) return 1;
-   printf("res: %dx%d\n", ev->width, ev->height);
-   return 1;
+   e->conf->width = size.width;
+   e->conf->height = size.height;
 }

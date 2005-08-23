@@ -31,6 +31,8 @@ static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_del_hook       (void *obj);
 static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
+static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -48,9 +50,13 @@ static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item
 static void _e_int_menus_lost_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook   (void *obj);
 static void _e_int_menus_lost_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_augmentation_add    (E_Menu *m, Evas_List *augmentation);
+static void _e_int_menus_augmentation_del    (E_Menu *m, Evas_List *augmentation);
 
 /* local subsystem globals */
 static Ecore_Job *_e_int_menus_quit_job = NULL;
+
+static Evas_Hash *_e_int_menus_augmentation = NULL;
 
 /* externally accessible functions */
 E_Menu *
@@ -134,7 +140,7 @@ e_int_menus_main_new(void)
 	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);
      }
 
-   subm = e_int_menus_config_apps_new();
+   subm = e_int_menus_config_new();
    dat->config = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Configuration"));
@@ -200,13 +206,13 @@ e_int_menus_favorite_apps_new(void)
 }
 
 E_Menu *
-e_int_menus_config_apps_new(void)
+e_int_menus_config_new(void)
 {
    E_Menu *m;
-   char buf[4096];
    
-   snprintf(buf, sizeof(buf), "%s/config-apps", e_prefix_data_get());
-   m = e_int_menus_apps_new(buf);
+   m = e_menu_new();
+   e_menu_pre_activate_callback_set(m, _e_int_menus_config_pre_cb, NULL);
+
    return m;
 }
 
@@ -248,6 +254,53 @@ e_int_menus_lost_clients_new(void)
    m = e_menu_new();
    e_menu_pre_activate_callback_set(m, _e_int_menus_lost_clients_pre_cb, NULL);
    return m;
+}
+
+E_Int_Menu_Augmentation *
+e_int_menus_menu_augmentation_add(const char *menu,
+				  void (*func_add) (void *data, E_Menu *m),
+				  void *data_add,
+				  void (*func_del) (void *data, E_Menu *m),
+				  void *data_del)
+{
+   E_Int_Menu_Augmentation *maug;
+   Evas_List *l;
+
+   maug = E_NEW(E_Int_Menu_Augmentation, 1);
+   if (!maug) return NULL;
+
+   maug->add.func = func_add;
+   maug->add.data = data_add;
+
+   maug->del.func = func_del;
+   maug->del.data = data_del;
+
+   l = evas_hash_find(_e_int_menus_augmentation, menu);
+   l = evas_list_append(l, maug);
+   _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, menu, l);
+
+   return maug;
+}
+
+void
+e_int_menus_menu_augmentation_del(const char *menu, E_Int_Menu_Augmentation *maug)
+{
+   Evas_List *l;
+
+   l = evas_hash_find(_e_int_menus_augmentation, menu);
+   if (l)
+     {
+	/*
+	 * We should always add the list to the hash, in case the list
+	 * becomes empty, or the first element is removed.
+	 */
+	_e_int_menus_augmentation = evas_hash_del(_e_int_menus_augmentation, menu, l);
+
+	l = evas_list_remove(l, maug);
+	if (l)
+	  _e_int_menus_augmentation = evas_hash_add(_e_int_menus_augmentation, menu, l);
+     }
+   free(maug);
 }
 
 /* local subsystem functions */
@@ -508,6 +561,44 @@ _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Desk *desk = data;
 
    e_desk_show(desk);
+}
+
+static void
+_e_int_menus_config_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu *subm;
+   E_Menu_Item *mi;
+   char buf[4096];
+
+   e_menu_pre_activate_callback_set(m, NULL, NULL);
+   
+   snprintf(buf, sizeof(buf), "%s/config-apps", e_prefix_data_get());
+   subm = e_int_menus_apps_new(buf);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Applications"));
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   _e_int_menus_augmentation_add(m, evas_hash_find(_e_int_menus_augmentation, "config"));
+
+   e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_config_free_hook);
+   e_object_data_set(E_OBJECT(m), subm);
+}
+
+static void
+_e_int_menus_config_free_hook(void *obj)
+{
+   E_Menu *m, *subm;
+
+   m = obj;
+   subm = e_object_data_get(E_OBJECT(obj));
+   if (subm)
+     e_object_del(E_OBJECT(subm));
+
+   _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "config"));
 }
 
 static void
@@ -870,4 +961,46 @@ _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    e_border_move(bd, bd->zone->x + ((bd->zone->w - bd->w) / 2), bd->zone->y + ((bd->zone->h - bd->h) / 2));
    e_border_raise(bd);
    e_border_focus_set(bd, 1, 1);
+}
+
+static void
+_e_int_menus_augmentation_add(E_Menu *m, Evas_List *augmentation)
+{
+   Evas_List *l;
+   E_Menu_Item *mi;
+   int i = 0;
+
+   for (l = augmentation; l; l = l->next)
+     {
+	E_Int_Menu_Augmentation *aug;
+
+	aug = l->data;
+
+	if (i)
+	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_separator_set(mi, 1);
+	  }
+	else
+	  i++;
+
+	if (aug->add.func)
+	  aug->add.func(aug->add.data, m);
+     }
+}
+
+static void
+_e_int_menus_augmentation_del(E_Menu *m, Evas_List *augmentation)
+{
+   Evas_List *l;
+
+   for (l = augmentation; l; l = l->next)
+     {
+	E_Int_Menu_Augmentation *aug;
+
+	aug = l->data;
+
+	if (aug->del.func)
+	  aug->del.func(aug->del.data, m);
+     }
 }

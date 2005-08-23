@@ -5,42 +5,23 @@
 #define E_MOD_MAIN_H
 
 typedef struct _Config      Config;
-typedef struct _Config_Face Config_Face;
 typedef struct _Randr       Randr;
-typedef struct _Randr_Face  Randr_Face;
 
 struct _Config
 {
-   Evas_List *faces;
-};
-
-struct _Config_Face
-{
-   unsigned char enabled;
+   int store;
+   int width;
+   int height;
 };
 
 struct _Randr
 {
-   Evas_List   *faces;
-   E_Menu      *config_menu;
-   
-   Config      *conf;
-};
-
-struct _Randr_Face
-{
-   E_Container *con;
    E_Menu      *config_menu;
    E_Menu      *resolution_menu;
 
-   Config_Face *conf;
-   
-   Evas_Object *button_object;
-   Evas_Object *event_object;
+   E_Int_Menu_Augmentation *augmentation;
 
-   Ecore_Event_Handler *randr_handler;
-   
-   E_Gadman_Client *gmc;
+   Config      *conf;
 };
 
 EAPI void *e_modapi_init     (E_Module *m);
