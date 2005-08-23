@@ -5048,8 +5048,8 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 	else if ((bd->client.icccm.max_aspect != 0.0) &&
 		 (a > bd->client.icccm.max_aspect))
 	  {
-	     th = tw / bd->client.icccm.max_aspect;
-	     *h = th + bd->client.icccm.base_h;
+	     tw = th * bd->client.icccm.max_aspect;
+	     *w = tw + bd->client.icccm.base_w;
 	  }
      }
    else
@@ -5060,7 +5060,7 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 	  *h = *w / bd->client.icccm.min_aspect;
 	else if ((bd->client.icccm.max_aspect != 0.0) &&
 		 (a > bd->client.icccm.max_aspect))
-	  *h = *w / bd->client.icccm.max_aspect;
+	  *w = *h * bd->client.icccm.max_aspect;
      }
    if (bd->client.icccm.base_w >= 0)
      *w = bd->client.icccm.base_w +
