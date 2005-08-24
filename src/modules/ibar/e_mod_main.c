@@ -970,10 +970,8 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
 {
    Evas_Coord w, h, bw, bh;
    /* Not finished loading config yet! */
-   if ((ibb->x == -1)
-       || (ibb->y == -1)
-       || (ibb->w == -1)
-       || (ibb->h == -1))
+   if ((ibb->x == -1) || (ibb->y == -1) ||
+       (ibb->w == -1) || (ibb->h == -1))
      return;
 
    evas_event_freeze(ibb->evas);
