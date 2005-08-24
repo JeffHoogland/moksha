@@ -105,7 +105,7 @@ e_module_new(char *name)
 	free(m);
 	return NULL;
      }
-   m->handle = dlopen(modpath, RTLD_NOW | RTLD_LOCAL);
+   m->handle = dlopen(modpath, RTLD_NOW | RTLD_GLOBAL);
    if (!m->handle)
      {
 	e_error_dialog_show(_("Error loading Module"),
@@ -113,7 +113,7 @@ e_module_new(char *name)
 			      "The full path to this module is:\n"
 			      "%s\n"
 			      "The error reported was:\n"
-			      "%s"),
+			      "dlopen: %s"),
 			    name, buf, dlerror());
 	free(m);
 	return NULL;
@@ -135,7 +135,7 @@ e_module_new(char *name)
 			      "The full path to this module is:\n"
 			      "%s\n"
 			      "The error reported was:\n"
-			      "%s"),
+			      "dlsym: %s"),
 			    name, buf, dlerror());
 	dlclose(m->handle);
 	free(m);
