@@ -18,3 +18,5 @@ stamp-h
 stamp-h.in
 *.tar.gz
 ltmain.sh
+config.guess
+config.sub
