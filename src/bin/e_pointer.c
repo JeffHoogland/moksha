@@ -56,28 +56,19 @@ e_pointer_window_set(Ecore_X_Window win)
      {
 	if (!e_theme_edje_object_set(o,
 				     "base/theme/pointer",
-				     "pointer/enlightenment/default"))
-	  {
-	     /* error */
-	     printf("ERROR: No default theme for pointer!\n");
-	     if (!e_theme_edje_object_set(o,
-					  "base/theme/pointer",
-					  "pointer/enlightenment/mono"))
-	       {
-		  /* error */
-		  printf("ERROR: No mono theme for pointer!\n");
-	       }
-	  }
+				     "pointer/enlightenment/default/color"))
+	  e_theme_edje_object_set(o,
+				  "base/theme/pointer",
+				  "pointer/enlightenment/default/mono");
      }
    else
      {
 	if (!e_theme_edje_object_set(o,
 				     "base/theme/pointer",
-				     "pointer/enlightenment/mono"))
-	  {
-	     /* error */
-	     printf("ERROR: No mono theme for pointer!\n");
-	  }
+				     "pointer/enlightenment/default/mono"))
+	  e_theme_edje_object_set(o,
+				  "base/theme/pointer",
+				  "pointer/enlightenment/default/color");
      }
 
    /* Create the hotspot object */
@@ -109,15 +100,15 @@ e_pointer_idler_before(void)
 
 	p = l->data;
 	updates = evas_render_updates(p->evas);
-	if (updates)
+	if ((updates) || (p->hot.update))
 	  {
 	     Ecore_X_Cursor cur;
 
 	     cur = ecore_x_cursor_new(p->win, p->pixels, p->w, p->h, p->hot.x, p->hot.y);
 	     ecore_x_window_cursor_set(p->win, cur);
 	     ecore_x_cursor_free(cur);
-
 	     evas_render_updates_free(updates);
+	     p->hot.update = 0;
 	  }
      }
 }
@@ -131,8 +122,12 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
 
    p = data;
    evas_object_geometry_get(p->hot_object, &x, &y, NULL, NULL);
-   p->hot.x = x;
-   p->hot.y = y;
+   if ((p->hot.x != x) || (p->hot.y != y))
+     {
+	p->hot.x = x;
+	p->hot.y = y;
+	p->hot.update = 1;
+     }
 }
 
 static void

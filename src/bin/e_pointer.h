@@ -13,20 +13,18 @@ typedef struct _E_Pointer E_Pointer;
 
 struct _E_Pointer
 {
-     E_Object e_obj_inherit;
-
-     Evas *evas;
-     Evas_Object *pointer_object;
-     Evas_Object *hot_object;
-     int *pixels;
-
-     Ecore_X_Window win;
-
-     int w, h;
-
-     struct {
-	  int x, y;
-     } hot;
+   E_Object e_obj_inherit;
+   
+   Evas             *evas;
+   Evas_Object      *pointer_object;
+   Evas_Object      *hot_object;
+   int              *pixels;
+   Ecore_X_Window    win;
+   int               w, h;
+   struct {
+      int            x, y;
+      unsigned char  update : 1;
+   } hot;
 };
 
 EAPI E_Pointer *e_pointer_window_set(Ecore_X_Window win);

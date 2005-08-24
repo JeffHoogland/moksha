@@ -57,7 +57,6 @@ struct _E_Container
 
    struct {
 	E_Pointer *root;
-	E_Pointer *win;
    } pointer;
 };
 

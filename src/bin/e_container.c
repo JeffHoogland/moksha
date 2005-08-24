@@ -123,7 +123,6 @@ e_container_new(E_Manager *man)
    evas_object_show(o);
    
    con->pointer.root = e_pointer_window_set(con->manager->root);
-   con->pointer.win = e_pointer_window_set(con->win);
 
    con->num = container_num;
    container_num++;
@@ -892,7 +891,6 @@ _e_container_free(E_Container *con)
    int i;
 
    if (con->pointer.root) e_object_del(E_OBJECT(con->pointer.root));
-   if (con->pointer.win) e_object_del(E_OBJECT(con->pointer.win));
 
    ecore_x_window_del(con->event_win);
    if (con->gadman) e_object_del(E_OBJECT(con->gadman));

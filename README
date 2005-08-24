@@ -9,3 +9,17 @@ of its own (recommended) like:
   ./configure --prefix=/usr/local/e17
 
 You will, as usual need to add the subsequent bin dir to your $PATH etc.
+
+NOTES:
+
+* do NOT use -mfpmath=sse in CFLAGS - we are not sure, but it may have bugds
+and screws up things in edje, evas and e17. if your gcc uses this by default
+(which apparently gcc4.x does on amd64), turn it off with a -fpmath=387 in
+your CFLAGS.
+
+* your freetype2 version must be > 2.1.7
+
+* i remember hearing of bugs with later versions of freetype on some
+distributions (2.1.9 and 2.1.10) with certain patches or missing certain
+patches. be aware of this as a possible font problem.
+
