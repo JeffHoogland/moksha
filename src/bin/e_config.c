@@ -455,7 +455,7 @@ e_config_init(void)
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	     em = E_NEW(E_Config_Module, 1);
 	     em->name = strdup("randr");
-	     em->enabled = 0;
+	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
 	  }
 	  {
