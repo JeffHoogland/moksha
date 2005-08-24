@@ -24,6 +24,21 @@ group {
 	       normal: "e17_pointer.png";
 	    }
 	 }
+/*
+	 description {
+	    state: "faded" 0.0;
+	    inherit: "default" 0.0;
+            rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0   0;
+	    }
+	    rel2 {
+	       relative: 0.34375 0.5;
+	       offset:   -1      -1;
+	    }
+	    color: 255 255 255 128;
+	 }
+*/
 	 description {
 	    state: "test" 0.0;
 	    aspect: 0.75 1.0;
@@ -85,6 +100,24 @@ group {
 	 action:  STATE_SET "test" 0.0;
 	 target:  "pointer";
       }
+/*      
+      program {
+	 name:    "anim1";
+	 signal:  "show";
+	 source:  "";
+	 action:  STATE_SET "default" 1.0;
+	 transition: DECELERATE 0.2;
+	 target:  "pointer";
+	 after:   "anim2";
+      }
+      program {
+	 name:    "anim2";
+	 action:  STATE_SET "faded" 1.0;
+	 transition: ACCELERATE 0.5;
+	 target:  "pointer";
+	 after:   "anim1";
+      }
+ */
    }
 }
 
