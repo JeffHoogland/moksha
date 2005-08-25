@@ -182,7 +182,7 @@ _randr_config_menu_new(Randr *e)
    e->config_menu = m;
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Store"));
+   e_menu_item_label_set(mi, _("Remember Resolution on Startup"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, e->conf->store);
    e_menu_item_callback_set(mi, _randr_menu_cb_store, e);
