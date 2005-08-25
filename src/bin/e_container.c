@@ -240,6 +240,24 @@ e_container_current_get(E_Manager *man)
    return (E_Container *)l->data;
 }
 
+E_Container *
+e_container_number_get(E_Manager *man, int num)
+{
+   Evas_List *l;
+
+   E_OBJECT_CHECK_RETURN(man, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
+   for (l = man->containers; l; l = l->next)
+     {
+	E_Container *con;
+	
+	con = l->data;
+	if (con->num == num)
+	  return con;
+     }
+   return NULL;
+}
+
 void
 e_container_move(E_Container *con, int x, int y)
 {

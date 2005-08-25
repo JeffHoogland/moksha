@@ -36,7 +36,7 @@ e_dialog_new(E_Container *con)
 	man = e_manager_current_get();
 	if (!man) return NULL;
 	con = e_container_current_get(man);
-	if (!con) con = e_manager_container_number_get(man, 0);
+	if (!con) con = e_container_number_get(man, 0);
 	if (!con) return NULL;
      }
    dia = E_OBJECT_ALLOC(E_Dialog, E_DIALOG_TYPE, _e_dialog_free);

@@ -141,7 +141,7 @@ e_manager_manage_windows(E_Manager *man)
 						       E_ATOM_CONTAINER,
 						       &id, 1);
 		  if (ret == 1)
-		    con = e_manager_container_number_get(man, id);
+		    con = e_container_number_get(man, id);
 		  if (!con)
 		    con = e_container_current_get(man);
 		  
@@ -356,20 +356,19 @@ e_manager_current_get(void)
    return managers->data;
 }
 
-E_Container *
-e_manager_container_number_get(E_Manager *man, int num)
+E_Manager *
+e_manager_number_get(int num)
 {
    Evas_List *l;
-
-   E_OBJECT_CHECK_RETURN(man, NULL);
-   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
-   for (l = man->containers; l; l = l->next)
+   E_Manager *man;
+   int current;
+   
+   if (!managers) return NULL;
+   for (l = managers, current = 0; l; l = l->next, current++)
      {
-	E_Container *con;
-	
-	con = l->data;
-	if (con->num == num)
-	  return con;
+	man = l->data;
+	if (current == num)
+	  return man;
      }
    return NULL;
 }

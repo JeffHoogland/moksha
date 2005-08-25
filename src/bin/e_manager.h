@@ -38,8 +38,7 @@ EAPI void            e_manager_move_resize(E_Manager *man, int x, int y, int w, 
 EAPI void            e_manager_raise(E_Manager *man);
 EAPI void            e_manager_lower(E_Manager *man);
 EAPI E_Manager      *e_manager_current_get(void);
-
-EAPI E_Container    *e_manager_container_number_get(E_Manager *man, int num);
+EAPI E_Manager      *e_manager_number_get(int num);
 
 EAPI void            e_managers_keys_grab(void);
 EAPI void            e_managers_keys_ungrab(void);

@@ -98,6 +98,7 @@ EAPI E_Container *e_container_new(E_Manager *man);
 EAPI void         e_container_show(E_Container *con);
 EAPI void         e_container_hide(E_Container *con);
 EAPI E_Container *e_container_current_get(E_Manager *man);
+EAPI E_Container *e_container_number_get(E_Manager *man, int num);
 EAPI void         e_container_move(E_Container *con, int x, int y);
 EAPI void         e_container_resize(E_Container *con, int w, int h);
 EAPI void         e_container_move_resize(E_Container *con, int x, int y, int w, int h);

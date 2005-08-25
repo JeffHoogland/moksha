@@ -144,7 +144,7 @@ e_util_container_number_get(int num)
 	E_Container *con;
 	
 	man = l->data;
-	con = e_manager_container_number_get(man, num);
+	con = e_container_number_get(man, num);
 	if (con) return con;
      }
    return NULL;
