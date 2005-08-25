@@ -321,9 +321,11 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 
    /* This shouldn't be done here. We should add a resize callback to the e_win,
     * and position us when we know the real width and height */
+#if 0
    e_win_move(e->dialog->win,
 	      m->zone->x + (m->zone->w - e->dialog->win->min_w) / 2,
 	      m->zone->y + (m->zone->h - e->dialog->win->min_h) / 2);
+#endif
 
    e->timer = ecore_timer_add(15.0, _randr_timer_cb, res);
 
