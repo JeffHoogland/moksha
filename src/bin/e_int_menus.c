@@ -568,6 +568,7 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu *subm;
    E_Menu_Item *mi;
+   Evas_List *l;
    char buf[4096];
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
@@ -579,10 +580,14 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Applications"));
    e_menu_item_submenu_set(mi, subm);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   l = evas_hash_find(_e_int_menus_augmentation, "config");
+   if (l)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
 
-   _e_int_menus_augmentation_add(m, evas_hash_find(_e_int_menus_augmentation, "config"));
+	_e_int_menus_augmentation_add(m, l);
+     }
 
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_config_free_hook);
    e_object_data_set(E_OBJECT(m), subm);
