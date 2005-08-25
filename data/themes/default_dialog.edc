@@ -245,7 +245,7 @@ group {
       }
       program {
 	 name:   "button_unclick2";
-	 signal: "mouse,clicked";
+	 signal: "mouse,clicked,1";
 	 source: "button_image";
 	 action: SIGNAL_EMIT "click" "";
       }
