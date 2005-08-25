@@ -13,7 +13,6 @@ typedef struct _Gadman_Client_Config Gadman_Client_Config;
 
 struct _Gadman_Client_Config
 {
-//   double ax, ay;
    struct {
       int x, y, w, h;
    } pos;
@@ -21,6 +20,10 @@ struct _Gadman_Client_Config
    int edge;
    int zone;
    int use_autow, use_autoh;
+   struct {
+      int w, h;
+      Evas_List *others;
+   } res;
 };
 
 static void _e_gadman_free(E_Gadman *gm);
@@ -70,6 +73,9 @@ static void _e_gadman_cb_center_vert(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void _e_gadman_config_free(Gadman_Client_Config *cf);
+static void _e_gadman_client_geom_store(E_Gadman_Client *gmc);
+
 static E_Config_DD *gadman_config_edd = NULL;
 
 /* externally accessible functions */
@@ -81,8 +87,6 @@ e_gadman_init(void)
 #undef D
 #define T Gadman_Client_Config
 #define D gadman_config_edd
-//   E_CONFIG_VAL(D, T, ax, DOUBLE);
-//   E_CONFIG_VAL(D, T, ay, DOUBLE);
    E_CONFIG_VAL(D, T, pos.x, INT);
    E_CONFIG_VAL(D, T, pos.y, INT);
    E_CONFIG_VAL(D, T, pos.w, INT);
@@ -93,6 +97,9 @@ e_gadman_init(void)
    E_CONFIG_VAL(D, T, zone, INT);
    E_CONFIG_VAL(D, T, use_autow, INT);
    E_CONFIG_VAL(D, T, use_autoh, INT);
+   E_CONFIG_VAL(D, T, res.w, INT);
+   E_CONFIG_VAL(D, T, res.h, INT);
+   E_CONFIG_LIST(D, T, res.others, gadman_config_edd);
    return 1;
 }
 
@@ -155,6 +162,21 @@ e_gadman_mode_get(E_Gadman *gm)
 }
 
 void
+e_gadman_all_save(E_Gadman *gm)
+{
+   Evas_List *l;
+   
+   E_OBJECT_CHECK(gm);
+   for (l = gm->clients; l; l = l->next)
+     {
+	E_Gadman_Client *gmc;
+	
+	gmc = l->data;
+	e_gadman_client_save(gmc);
+     }
+}
+
+void
 e_gadman_container_resize(E_Gadman *gm)
 {
    Evas_List *l;
@@ -165,22 +187,7 @@ e_gadman_container_resize(E_Gadman *gm)
 	E_Gadman_Client *gmc;
 	
 	gmc = l->data;
-	if (gmc->use_autow)
-	  {
-	     gmc->w = gmc->autow;
-	     gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
-	  }
-	if (gmc->use_autoh)
-	  {
-	     gmc->h = gmc->autoh;
-	     gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
-	  }
-	if (gmc->w > gmc->zone->w) gmc->w = gmc->zone->w;
-	if (gmc->h > gmc->zone->h) gmc->h = gmc->zone->h;
-	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
-	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
-	_e_gadman_client_overlap_deny(gmc);
-	_e_gadman_client_callback_call(gmc, E_GADMAN_CHANGE_MOVE_RESIZE);
+	e_gadman_client_load(gmc);
      }
 }
 
@@ -212,40 +219,77 @@ e_gadman_client_new(E_Gadman *gm)
 void
 e_gadman_client_save(E_Gadman_Client *gmc)
 {
-   Gadman_Client_Config cf;
+   Gadman_Client_Config *cf, *cf2;
+   Evas_List *l;
    char buf[1024];
+   int found_res = 0;
    
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    /* save all values */
-   cf.pos.x = gmc->x - gmc->zone->x;
-   cf.pos.y = gmc->y - gmc->zone->y;
-   cf.pos.w = gmc->zone->w;
-   cf.pos.h = gmc->zone->h;
-   cf.w = gmc->w;
-   cf.h = gmc->h;
-   cf.edge = gmc->edge;
-   cf.zone = gmc->zone->num;
-   cf.use_autow = gmc->use_autow;
-   cf.use_autoh = gmc->use_autoh;
+   if (!gmc->config)
+     {
+	cf = calloc(1, sizeof(Gadman_Client_Config));
+	gmc->config = cf;
+     }
+   cf = gmc->config;
+   _e_gadman_client_geom_store(gmc);
+   cf->res.w = gmc->zone->w;
+   cf->res.h = gmc->zone->h;
    snprintf(buf, sizeof(buf), "gadman.%s.%i", gmc->domain, gmc->instance);
-   e_config_domain_save(buf, gadman_config_edd, &cf);
+   for (l = cf->res.others; l; l = l->next)
+     {
+	cf2 = (Gadman_Client_Config *)l->data;
+	if ((cf2->res.w == cf->res.w) && (cf2->res.h == cf->res.h))
+	  {
+	     *cf2 = *cf;
+	     cf2->res.others = NULL;
+	     found_res = 1;
+	     break;
+	  }
+     }
+   if (!found_res)
+     {
+	cf2 = calloc(1, sizeof(Gadman_Client_Config));
+	cf->res.others = evas_list_prepend(cf->res.others, cf2);
+	*cf2 = *cf;
+	cf2->res.others = NULL;
+     }
+   e_config_domain_save(buf, gadman_config_edd, cf);
 }
 
 void
 e_gadman_client_load(E_Gadman_Client *gmc)
 {
-   Gadman_Client_Config *cf;
+   Gadman_Client_Config *cf, *cf2;
+   Evas_List *l;
    char buf[1024];
    
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
+   if (gmc->config)
+     {
+	_e_gadman_config_free(gmc->config);
+	gmc->config = NULL;
+     }
    snprintf(buf, sizeof(buf), "gadman.%s.%i", gmc->domain, gmc->instance);
    cf = e_config_domain_load(buf, gadman_config_edd);
    if (cf)
      {
 	E_Zone *zone;
 	
+	for (l = cf->res.others; l; l = l->next)
+	  {
+	     cf2 = (Gadman_Client_Config *)l->data;
+	     zone = e_container_zone_number_get(gmc->zone->container, cf2->zone);
+	     if ((zone->w == cf2->res.w) && (zone->h == cf2->res.h))
+	       {
+		  l = cf->res.others;
+		  *cf = *cf2;
+		  cf->res.others = l;
+		  break;
+	       }
+	  }
 	E_CONFIG_LIMIT(cf->pos.x, 0, 10000);
 	E_CONFIG_LIMIT(cf->pos.y, 0, 10000);
 	E_CONFIG_LIMIT(cf->pos.w, 1, 10000);
@@ -290,10 +334,13 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	  gmc->y = gmc->zone->y + ((cf->pos.y * (gmc->zone->h - gmc->h)) / (cf->pos.h - gmc->h));
 	else
 	  gmc->y = gmc->zone->y;
-	free(cf);
+	gmc->config = cf;
      }
    else
      {
+	cf = calloc(1, sizeof(Gadman_Client_Config));
+	gmc->config = cf;
+	_e_gadman_client_geom_store(gmc);
      }
    _e_gadman_client_overlap_deny(gmc);
    e_object_ref(E_OBJECT(gmc));
@@ -655,6 +702,7 @@ _e_gadman_client_free(E_Gadman_Client *gmc)
    if (gmc->event_object) evas_object_del(gmc->event_object);
    gmc->gadman->clients = evas_list_remove(gmc->gadman->clients, gmc);
    if (gmc->domain) free(gmc->domain);
+   _e_gadman_config_free(gmc->config);
    free(gmc);
 }
 
@@ -1889,4 +1937,33 @@ _e_gadman_cb_end_edit_mode(void *data, E_Menu *m, E_Menu_Item *mi)
 
    gmc = data;
    e_gadman_mode_set(gmc->gadman, E_GADMAN_MODE_NORMAL);
+}
+
+static void
+_e_gadman_config_free(Gadman_Client_Config *cf)
+{
+   while (cf->res.others)
+     {
+	_e_gadman_config_free(cf->res.others->data);
+	cf->res.others = evas_list_remove_list(cf->res.others, cf->res.others);
+     }
+   free(cf);
+}
+
+static void
+_e_gadman_client_geom_store(E_Gadman_Client *gmc)
+{
+   Gadman_Client_Config *cf;
+   
+   cf = gmc->config;
+   cf->pos.x = gmc->x - gmc->zone->x;
+   cf->pos.y = gmc->y - gmc->zone->y;
+   cf->pos.w = gmc->zone->w;
+   cf->pos.h = gmc->zone->h;
+   cf->w = gmc->w;
+   cf->h = gmc->h;
+   cf->edge = gmc->edge;
+   cf->zone = gmc->zone->num;
+   cf->use_autow = gmc->use_autow;
+   cf->use_autoh = gmc->use_autoh;
 }

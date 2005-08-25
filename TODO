@@ -160,8 +160,6 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
-* make gadman remember positions PER resolution so if you switch to a res it
-  uses that res's layout if it exists
 * screensaver/lock module
 * tip/hint/suggestion dialog app (textblock etc.)
 * add tooltips

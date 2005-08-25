@@ -1094,6 +1094,8 @@ _e_container_resize_handle(E_Container *con)
    
    ev = calloc(1, sizeof(E_Event_Container_Resize));
    ev->container = con;
+   
+   e_gadman_all_save(con->gadman);
 
    e_xinerama_update();
    

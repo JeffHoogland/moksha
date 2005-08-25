@@ -2290,8 +2290,8 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 
    bd = data;
    e = ev;
-   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
-	  e->win, e->w, e->h, e->x, e->y);
+//   printf("##- CONF REQ 0x%x , %iX%i+%i+%i\n",
+//	  e->win, e->w, e->h, e->x, e->y);
    bd = e_border_find_by_client_window(e->win);
    if (!bd)
      {
