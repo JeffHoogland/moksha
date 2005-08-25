@@ -2,11 +2,11 @@ MAINTAINERCLEANFILES = Makefile.in
 MODULE = randr
 
 # data files for the module
-filesdir = $(libdir)/enlightenment/modules/$(MODULE)
+#filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 #files_DATA = \
 #module_icon.png
 
-EXTRA_DIST = $(files_DATA)
+#EXTRA_DIST = $(files_DATA)
 
 # the module .so file
 INCLUDES               = -I. \
