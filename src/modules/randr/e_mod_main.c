@@ -72,8 +72,10 @@ e_modapi_info(E_Module *m)
    char buf[4096];
    
    m->label = strdup(_("Randr"));
+   /*
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
+   */
    return 1;
 }
 
