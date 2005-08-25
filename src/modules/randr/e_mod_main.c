@@ -22,6 +22,7 @@ static void _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item 
 static void _randr_dialog_cb_ok(void *data, E_Dialog *dia);
 static void _randr_dialog_cb_cancel(void *data, E_Dialog *dia);
 static int  _randr_timer_cb(void *data);
+static void _randr_save_res(Randr_Resolution *res);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_manager_edd;
@@ -301,8 +302,6 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Randr *e;
    Randr_Resolution *res;
-   Config_Manager *cm = NULL;
-   Evas_List *l;
    
    e = data;
    res = e_object_data_get(E_OBJECT(mi));
@@ -328,34 +327,6 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 #endif
 
    e->timer = ecore_timer_add(15.0, _randr_timer_cb, res);
-
-   /* Find this manager config */
-   for (l = e->conf->managers; l; l = l->next)
-     {
-	Config_Manager *current;
-
-	current = l->data;
-	if (current->manager == res->manager->num)
-	  {
-	     cm = current;
-	     break;
-	  }
-     }
-   /* If not found, create new config */
-   if (!cm)
-     {
-	cm = E_NEW(Config_Manager, 1);
-	if (cm)
-	  e->conf->managers = evas_list_append(e->conf->managers, cm);
-     }
-   /* Save config */
-   if (cm)
-     {
-	cm->manager = res->manager->num;
-	cm->width = res->next.width;
-	cm->height = res->next.height;
-     }
-   e_config_save_queue();
 }
 
 static void
@@ -365,6 +336,7 @@ _randr_dialog_cb_ok(void *data, E_Dialog *dia)
 
    /* Do nothing */
    res = data;
+   _randr_save_res(res);
    e_object_unref(E_OBJECT(res->manager));
    e_object_del(E_OBJECT(res->randr->dialog));
    res->randr->dialog = NULL;
@@ -409,4 +381,39 @@ _randr_timer_cb(void *data)
    res->randr->timer = NULL;
    free(res);
    return 0;
+}
+
+static void
+_randr_save_res(Randr_Resolution *res)
+{
+   Config_Manager *cm = NULL;
+   Evas_List *l;
+
+   /* Find this manager config */
+   for (l = res->randr->conf->managers; l; l = l->next)
+     {
+	Config_Manager *current;
+
+	current = l->data;
+	if (current->manager == res->manager->num)
+	  {
+	     cm = current;
+	     break;
+	  }
+     }
+   /* If not found, create new config */
+   if (!cm)
+     {
+	cm = E_NEW(Config_Manager, 1);
+	if (cm)
+	  res->randr->conf->managers = evas_list_append(res->randr->conf->managers, cm);
+     }
+   /* Save config */
+   if (cm)
+     {
+	cm->manager = res->manager->num;
+	cm->width = res->next.width;
+	cm->height = res->next.height;
+     }
+   e_config_save_queue();
 }
