@@ -4,12 +4,19 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-typedef struct _Config      Config;
-typedef struct _Randr       Randr;
+typedef struct _Config         Config;
+typedef struct _Config_Manager Config_Manager;
+typedef struct _Randr          Randr;
 
 struct _Config
 {
    int store;
+   Evas_List *managers;
+};
+
+struct _Config_Manager
+{
+   int manager;
    int width;
    int height;
 };

@@ -20,6 +20,7 @@ static void _randr_menu_cb_store(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static E_Config_DD *conf_edd;
+static E_Config_DD *conf_manager_edd;
 
 void *
 e_modapi_init(E_Module *m)
@@ -69,7 +70,9 @@ e_modapi_save(E_Module *m)
 int
 e_modapi_info(E_Module *m)
 {
+   /*
    char buf[4096];
+   */
    
    m->label = strdup(_("Randr"));
    /*
@@ -95,17 +98,50 @@ _randr_new(void)
    e = E_NEW(Randr, 1);
    if (!e) return NULL;
    
+   conf_manager_edd = E_CONFIG_DD_NEW("Randr_Config_Manager", Config_Manager);
+#undef T
+#undef D
+#define T Config_Manager
+#define D conf_manager_edd
+   E_CONFIG_VAL(D, T, manager, INT);
+   E_CONFIG_VAL(D, T, width, INT);
+   E_CONFIG_VAL(D, T, height, INT);
+
    conf_edd = E_CONFIG_DD_NEW("Randr_Config", Config);
 #undef T
 #undef D
 #define T Config
 #define D conf_edd
    E_CONFIG_VAL(D, T, store, INT);
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_LIST(D, T, managers, conf_manager_edd);
    
    e->conf = e_config_domain_load("module.randr", conf_edd);
-   if (!e->conf) e->conf = E_NEW(Config, 1);
+   if (!e->conf)
+     {
+       	e->conf = E_NEW(Config, 1);
+	e->conf->store = 1;
+     }
+   else if ((e->conf->store) && (e->conf->managers))
+     {
+	/* Restore resoultion */
+	Evas_List *l;
+	Ecore_X_Screen_Size size;
+
+	for (l = e->conf->managers; l; l = l->next)
+	  {
+	     E_Manager *man;
+	     Config_Manager *cm;
+
+	     cm = l->data;
+	     man = e_manager_number_get(cm->manager);
+	     if (man)
+	       {
+		  size.width = cm->width;
+		  size.height = cm->height;
+		  ecore_x_randr_screen_size_set(man->root, size);
+	       }
+	  }
+     }
    
    _randr_config_menu_new(e);
 
@@ -119,13 +155,19 @@ _randr_new(void)
 static void
 _randr_free(Randr *e)
 {
+   Evas_List *l;
+
    E_CONFIG_DD_FREE(conf_edd);
+   E_CONFIG_DD_FREE(conf_manager_edd);
    
    e_object_del(E_OBJECT(e->config_menu));
    if (e->resolution_menu)
      e_object_del(E_OBJECT(e->resolution_menu));
    
    e_int_menus_menu_augmentation_del("config", e->augmentation);
+   for (l = e->conf->managers; l; l = l->next)
+     free(l->data);
+   evas_list_free(e->conf->managers);
    free(e->conf);
    free(e);
 }
@@ -221,11 +263,38 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Randr *e;
    Ecore_X_Screen_Size size;
+   Config_Manager *cm = NULL;
+   Evas_List *l;
    
    e = data;
    if (sscanf(mi->label, "%dx%d", &size.width, &size.height) != 2) return;
    ecore_x_randr_screen_size_set(m->zone->container->manager->root, size);
 
-   e->conf->width = size.width;
-   e->conf->height = size.height;
+   /* Find this manager config */
+   for (l = e->conf->managers; l; l = l->next)
+     {
+	Config_Manager *current;
+
+	current = l->data;
+	if (current->manager == m->zone->container->manager->num)
+	  {
+	     cm = current;
+	     break;
+	  }
+     }
+   /* If not found, create new config */
+   if (!cm)
+     {
+	cm = E_NEW(Config_Manager, 1);
+	if (cm)
+	  e->conf->managers = evas_list_append(e->conf->managers, cm);
+     }
+   /* Save config */
+   if (cm)
+     {
+	cm->manager = m->zone->container->manager->num;
+	cm->width = size.width;
+	cm->height = size.height;
+     }
+   e_config_save_queue();
 }
