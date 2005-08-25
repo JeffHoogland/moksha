@@ -71,6 +71,7 @@ e_dialog_new(E_Container *con)
 		 fname, fsize);
 	evas_object_textblock_format_insert(o, format);
 	evas_object_textblock_format_insert(o, "color=#000");
+#if 0
 	evas_object_textblock_format_insert(o, "\n");
 	evas_object_textblock_text_insert(o, "Here is some text");
 	evas_object_textblock_format_insert(o, "\n");
@@ -83,6 +84,7 @@ e_dialog_new(E_Container *con)
 	evas_object_textblock_text_insert(o, "Aaardvaaarks On!");
 	evas_object_textblock_format_insert(o, "\n");
 	evas_object_textblock_format_insert(o, "\n");
+#endif
      }
    
    o = e_box_add(e_win_evas_get(dia->win));
@@ -137,6 +139,7 @@ e_dialog_title_set(E_Dialog *dia, char *title)
 void
 e_dialog_text_set(E_Dialog *dia, char *text)
 {
+   evas_object_textblock_text_insert(dia->text_object, text);
 }
 
 void

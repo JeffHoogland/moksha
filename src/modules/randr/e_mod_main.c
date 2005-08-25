@@ -8,7 +8,8 @@
  * TODO:
  * * Check if randr is available. It might be disabled in
  *   ecore_x, or not available on screen
- * * Restore screen res if the user wants it
+ * * Make a clock ticking down on the dialog
+ * * Add destroy callback for dialog
  */
 
 static Randr *_randr_new(void);
@@ -18,6 +19,9 @@ static void _randr_menu_resolution_add(void *data, E_Menu *m);
 static void _randr_menu_resolution_del(void *data, E_Menu *m);
 static void _randr_menu_cb_store(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _randr_dialog_cb_ok(void *data, E_Dialog *dia);
+static void _randr_dialog_cb_cancel(void *data, E_Dialog *dia);
+static int  _randr_timer_cb(void *data);
 
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_manager_edd;
@@ -134,7 +138,8 @@ _randr_new(void)
 
 	     cm = l->data;
 	     man = e_manager_number_get(cm->manager);
-	     if (man)
+	     size = ecore_x_randr_current_screen_size_get(man->root);
+	     if ((man) && ((cm->width != size.width) || (cm->height != size.height)))
 	       {
 		  size.width = cm->width;
 		  size.height = cm->height;
@@ -142,7 +147,7 @@ _randr_new(void)
 	       }
 	  }
      }
-   
+ 
    _randr_config_menu_new(e);
 
    e->augmentation = e_int_menus_menu_augmentation_add("config",
@@ -159,6 +164,11 @@ _randr_free(Randr *e)
 
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(conf_manager_edd);
+
+   if (e->timer)
+     ecore_timer_del(e->timer);
+   if (e->dialog)
+     e_object_del(E_OBJECT(e->dialog));
    
    e_object_del(E_OBJECT(e->config_menu));
    if (e->resolution_menu)
@@ -182,7 +192,7 @@ _randr_config_menu_new(Randr *e)
    e->config_menu = m;
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remember Resolution on Startup"));
+   e_menu_item_label_set(mi, _("Restore Resolution on Startup"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, e->conf->store);
    e_menu_item_callback_set(mi, _randr_menu_cb_store, e);
@@ -214,14 +224,26 @@ _randr_menu_resolution_add(void *data, E_Menu *m)
    else
      man = root->zone->container->manager;
 
+   /* Get the size and possible sizes for the manager */
    sizes = ecore_x_randr_screen_sizes_get(man->root, &n);
    size = ecore_x_randr_current_screen_size_get(man->root);
+
    if (sizes)
      {
+	Randr_Resolution *res;
 	char buf[16];
 
 	for (i = 0; i < n; i++)
 	  {
+	     res = E_NEW(Randr_Resolution, 1);
+	     if (!res) continue;
+
+	     res->prev = size;
+	     res->next = sizes[i];
+	     e_object_ref(E_OBJECT(man));
+	     res->manager = man;
+	     res->randr = e;
+
 	     snprintf(buf, sizeof(buf), "%dx%d", sizes[i].width, sizes[i].height);
 	     mi = e_menu_item_new(subm);
 	     e_menu_item_radio_set(mi, 1);
@@ -230,6 +252,9 @@ _randr_menu_resolution_add(void *data, E_Menu *m)
 	       e_menu_item_toggle_set(mi, 1);
 	     e_menu_item_label_set(mi, buf);
 	     e_menu_item_callback_set(mi, _randr_menu_cb_resolution_change, e);
+
+	     e_object_data_set(E_OBJECT(mi), res);
+
 	  }
 	free(sizes);
      }
@@ -244,6 +269,19 @@ _randr_menu_resolution_del(void *data, E_Menu *m)
 
    if (e->resolution_menu)
      {
+	Evas_List *l;
+
+	for (l = e->resolution_menu->items; l; l = l->next)
+	  {
+	     E_Object *obj;
+	     void *data;
+
+	     obj = l->data;
+	     data = e_object_data_get(obj);
+	     if (data)
+	       free(data);
+	  }
+
 	e_object_del(E_OBJECT(e->resolution_menu));
 	e->resolution_menu = NULL;
      }
@@ -262,13 +300,32 @@ static void
 _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Randr *e;
-   Ecore_X_Screen_Size size;
+   Randr_Resolution *res;
    Config_Manager *cm = NULL;
    Evas_List *l;
    
    e = data;
-   if (sscanf(mi->label, "%dx%d", &size.width, &size.height) != 2) return;
-   ecore_x_randr_screen_size_set(m->zone->container->manager->root, size);
+   res = e_object_data_get(E_OBJECT(mi));
+   e_object_data_set(E_OBJECT(mi), NULL);
+   if (!res) return;
+
+   ecore_x_randr_screen_size_set(res->manager->root, res->next);
+
+   e->dialog = e_dialog_new(m->zone->container);
+   e_dialog_title_set(e->dialog, "Resolution change");
+   e_dialog_text_set(e->dialog, "Keep new resolution?");
+   e_dialog_button_add(e->dialog, "OK", NULL, _randr_dialog_cb_ok, res);
+   e_dialog_button_add(e->dialog, "Cancel", NULL, _randr_dialog_cb_cancel, res);
+   e_win_borderless_set(e->dialog->win, 1);
+   e_dialog_show(e->dialog);
+
+   /* This shouldn't be done here. We should add a resize callback to the e_win,
+    * and position us when we know the real width and height */
+   e_win_move(e->dialog->win,
+	      m->zone->x + (m->zone->w - e->dialog->win->min_w) / 2,
+	      m->zone->y + (m->zone->h - e->dialog->win->min_h) / 2);
+
+   e->timer = ecore_timer_add(15.0, _randr_timer_cb, res);
 
    /* Find this manager config */
    for (l = e->conf->managers; l; l = l->next)
@@ -276,7 +333,7 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 	Config_Manager *current;
 
 	current = l->data;
-	if (current->manager == m->zone->container->manager->num)
+	if (current->manager == res->manager->num)
 	  {
 	     cm = current;
 	     break;
@@ -292,9 +349,62 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
    /* Save config */
    if (cm)
      {
-	cm->manager = m->zone->container->manager->num;
-	cm->width = size.width;
-	cm->height = size.height;
+	cm->manager = res->manager->num;
+	cm->width = res->next.width;
+	cm->height = res->next.height;
      }
    e_config_save_queue();
+}
+
+static void
+_randr_dialog_cb_ok(void *data, E_Dialog *dia)
+{
+   Randr_Resolution *res;
+
+   /* Do nothing */
+   res = data;
+   e_object_unref(E_OBJECT(res->manager));
+   e_object_del(E_OBJECT(res->randr->dialog));
+   res->randr->dialog = NULL;
+   if (res->randr->timer)
+     {
+	ecore_timer_del(res->randr->timer);
+	res->randr->timer = NULL;
+     }
+   free(res);
+}
+
+static void
+_randr_dialog_cb_cancel(void *data, E_Dialog *dia)
+{
+   Randr_Resolution *res;
+
+   /* Restore old resolution */
+   res = data;
+   ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+   e_object_unref(E_OBJECT(res->manager));
+   e_object_del(E_OBJECT(res->randr->dialog));
+   res->randr->dialog = NULL;
+   if (res->randr->timer)
+     {
+	ecore_timer_del(res->randr->timer);
+	res->randr->timer = NULL;
+     }
+   free(res);
+}
+
+static int
+_randr_timer_cb(void *data)
+{
+   Randr_Resolution *res;
+
+   /* Restore old resolution */
+   res = data;
+   ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+   e_object_unref(E_OBJECT(res->manager));
+   e_object_del(E_OBJECT(res->randr->dialog));
+   res->randr->dialog = NULL;
+   res->randr->timer = NULL;
+   free(res);
+   return 0;
 }

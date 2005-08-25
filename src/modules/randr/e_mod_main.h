@@ -4,9 +4,10 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-typedef struct _Config         Config;
-typedef struct _Config_Manager Config_Manager;
-typedef struct _Randr          Randr;
+typedef struct _Config           Config;
+typedef struct _Config_Manager   Config_Manager;
+typedef struct _Randr            Randr;
+typedef struct _Randr_Resolution Randr_Resolution;
 
 struct _Config
 {
@@ -28,7 +29,17 @@ struct _Randr
 
    E_Int_Menu_Augmentation *augmentation;
 
+   Ecore_Timer *timer;
+   E_Dialog    *dialog;
+
    Config      *conf;
+};
+
+struct _Randr_Resolution
+{
+   E_Manager *manager;
+   Randr     *randr;
+   Ecore_X_Screen_Size prev, next;
 };
 
 EAPI void *e_modapi_init     (E_Module *m);
