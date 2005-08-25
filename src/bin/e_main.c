@@ -760,11 +760,10 @@ _e_main_screens_init(void)
 	E_Manager *man;
 	E_Container *con;
 	
-	man = e_manager_new(roots[i]);
+	man = e_manager_new(roots[i], i);
 	e_init_show();
 	if (man)
 	  {
-	     man->num = i;
 	     e_manager_show(man);
 	  }
 	else

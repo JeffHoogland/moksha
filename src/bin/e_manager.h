@@ -28,7 +28,7 @@ EAPI int        e_manager_init(void);
 EAPI int        e_manager_shutdown(void);
 EAPI Evas_List *e_manager_list(void);
     
-EAPI E_Manager      *e_manager_new(Ecore_X_Window root);
+EAPI E_Manager      *e_manager_new(Ecore_X_Window root, int num);
 EAPI void            e_manager_manage_windows(E_Manager *man);
 EAPI void            e_manager_show(E_Manager *man);
 EAPI void            e_manager_hide(E_Manager *man);

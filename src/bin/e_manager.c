@@ -56,7 +56,7 @@ e_manager_list(void)
 }
 
 E_Manager *
-e_manager_new(Ecore_X_Window root)
+e_manager_new(Ecore_X_Window root, int num)
 {
    E_Manager *man;
    Ecore_Event_Handler *h;
@@ -66,6 +66,7 @@ e_manager_new(Ecore_X_Window root)
    if (!man) return NULL;
    managers = evas_list_append(managers, man);
    man->root = root;
+   man->num = num;
    ecore_x_window_size_get(man->root, &(man->w), &(man->h));
    if (e_config->use_virtual_roots)
      {
@@ -361,13 +362,12 @@ e_manager_number_get(int num)
 {
    Evas_List *l;
    E_Manager *man;
-   int current;
    
    if (!managers) return NULL;
-   for (l = managers, current = 0; l; l = l->next, current++)
+   for (l = managers; l; l = l->next)
      {
 	man = l->data;
-	if (current == num)
+	if (man->num == num)
 	  return man;
      }
    return NULL;
