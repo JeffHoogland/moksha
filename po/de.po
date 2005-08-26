@@ -91,6 +91,10 @@ msgstr "50°C"
 msgid "50 mins"
 msgstr "50 Minuten"
 
+#: src/bin/e_int_menus.c:580
+msgid "Applications"
+msgstr "Anwendungen"
+
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
 msgstr "60°C"
@@ -786,6 +790,18 @@ msgstr "Halbe Bildschirmbreite"
 msgid "High"
 msgstr "Hoch"
 
+#: src/modules/dropshadow/e_mod_main.c:448
+msgid "High Quality"
+msgstr "Hohe Qualität"
+
+#: src/modules/dropshadow/e_mod_main.c:458
+msgid "Medium Quality"
+msgstr "Normale Qualität"
+
+#: src/modules/dropshadow/e_mod_main.c:468
+msgid "Low Quality"
+msgstr "Niedrige Qualität"
+
 #: src/modules/temperature/e_mod_main.c:192
 #: src/modules/temperature/e_mod_main.c:616
 msgid "High Temperature"
@@ -986,6 +1002,26 @@ msgstr ""
 "\t-Psychotisch\n"
 "\t\tSei psychotisch.\n"
 
+#: src/modules/randr/e_mod_main.c:82
+msgid "Randr"
+msgstr "Randr"
+
+#: src/modules/randr/e_mod_main.c:93
+msgid "Enlightenment Randr Module"
+msgstr "Enlightenment Randr Modul"
+
+#: src/modules/randr/e_mod_main.c:94
+msgid "Module to change screen resolution for E17"
+msgstr "Eion Modul um unter E17 die Bildschirmauflösung zu ändern."
+
+#: src/modules/randr/e_mod_main.c:196
+msgid "Restore Resolution on Startup"
+msgstr "Bildschirmauflösung beim Start wiederherstellen"
+
+#: src/modules/randr/e_mod_main.c:219
+msgid "Resolution"
+msgstr "Bildschirmauflösung"
+
 #: src/modules/desktopname/e_mod_main.c:77
 msgid "DesktopName"
 msgstr "Arbeitsflächenname"
@@ -997,6 +1033,22 @@ msgstr "Enlightenment Arbeitsflächenname Modul"
 #: src/modules/desktopname/e_mod_main.c:87
 msgid "Experimental module for E17: display desktop name on screen."
 msgstr "Experimentelles Modul für E17: Den Arbeitsflächennamen auf dem Bildschirm ausgeben"
+
+#: src/modules/desktopname/e_mod_main.c:135
+msgid "Very Slow"
+msgstr "Sehr langsam"
+
+#: src/modules/desktopname/e_mod_main.c:142
+msgid "Slow"
+msgstr "Langsam"
+
+#: src/modules/desktopname/e_mod_main.c:156
+msgid "Fast"
+msgstr "Schnell"
+
+#: src/modules/desktopname/e_mod_main.c:163
+msgid "Very Fast"
+msgstr "Sehr schnell"
 
 #: src/modules/pager/e_mod_main.c:126
 msgid "Pager"
