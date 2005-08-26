@@ -298,8 +298,8 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->client.icccm.max_h = 32767;
    bd->client.icccm.base_w = 0;
    bd->client.icccm.base_h = 0;
-   bd->client.icccm.step_w = 1;
-   bd->client.icccm.step_h = 1;
+   bd->client.icccm.step_w = -1;
+   bd->client.icccm.step_h = -1;
    bd->client.icccm.min_aspect = 0.0;
    bd->client.icccm.max_aspect = 0.0;
    bd->client.icccm.accepts_focus = 1;
@@ -4058,8 +4058,8 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.max_h > 32767) bd->client.icccm.max_h = 32767;
 	if (bd->client.icccm.base_w > 32767) bd->client.icccm.base_w = 32767;
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
-	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
-	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
+//	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
+//	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
 //	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i\n",
 //	       bd->client.win,
 //	       bd->client.icccm.min_w, bd->client.icccm.min_h,
@@ -5062,22 +5062,28 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 		 (a > bd->client.icccm.max_aspect))
 	  *w = *h * bd->client.icccm.max_aspect;
      }
-   if (bd->client.icccm.base_w >= 0)
-     *w = bd->client.icccm.base_w +
-     (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
-      bd->client.icccm.step_w);
-   else
-     *w = bd->client.icccm.min_w +
-     (((*w - bd->client.icccm.min_w) / bd->client.icccm.step_w) *
-      bd->client.icccm.step_w);
-   if (bd->client.icccm.base_h >= 0)
-     *h = bd->client.icccm.base_h +
-     (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
-      bd->client.icccm.step_h);
-   else
-     *h = bd->client.icccm.min_h +
-     (((*h - bd->client.icccm.min_h) / bd->client.icccm.step_h) *
-      bd->client.icccm.step_h);
+   if (bd->client.icccm.step_w > 0)
+     {
+	if (bd->client.icccm.base_w >= 0)
+	  *w = bd->client.icccm.base_w +
+	  (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
+	   bd->client.icccm.step_w);
+	else
+	  *w = bd->client.icccm.min_w +
+	  (((*w - bd->client.icccm.min_w) / bd->client.icccm.step_w) *
+	   bd->client.icccm.step_w);
+     }
+   if (bd->client.icccm.step_h > 0)
+     {
+	if (bd->client.icccm.base_h >= 0)
+	  *h = bd->client.icccm.base_h +
+	  (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
+	   bd->client.icccm.step_h);
+	else
+	  *h = bd->client.icccm.min_h +
+	  (((*h - bd->client.icccm.min_h) / bd->client.icccm.step_h) *
+	   bd->client.icccm.step_h);
+     }
 
    if (*h < 1) *h = 1;
    if (*w < 1) *w = 1;
@@ -6621,13 +6627,25 @@ _e_border_resize_begin(E_Border *bd)
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
      {
-	w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
-	h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
+	if (bd->client.icccm.step_w > 0)
+	  w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
+	else
+	  w = bd->client.w;
+	if (bd->client.icccm.step_h > 0)
+	  h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
+	else
+	  h = bd->client.h;
      }
    else
      {
-	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
-	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+	if (bd->client.icccm.step_w > 0)
+	  w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
+	else
+	  w = bd->client.w;
+	if (bd->client.icccm.step_h > 0)
+	  h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+	else
+	  h = bd->client.h;
      }
    if (grabbed)
      ecore_x_pointer_grab(bd->win);
@@ -6676,13 +6694,25 @@ _e_border_resize_update(E_Border *bd)
    if ((bd->client.icccm.base_w >= 0) &&
        (bd->client.icccm.base_h >= 0))
      {
-	w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
-	h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
+	if (bd->client.icccm.step_w > 0)
+	  w = (bd->client.w - bd->client.icccm.base_w) / bd->client.icccm.step_w;
+	else
+	  w = bd->client.w;
+	if (bd->client.icccm.step_h > 0)
+	  h = (bd->client.h - bd->client.icccm.base_h) / bd->client.icccm.step_h;
+	else
+	  h = bd->client.h;
      }
    else
      {
-	w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
-	h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+	if (bd->client.icccm.step_w > 0)
+	  w = (bd->client.w - bd->client.icccm.min_w) / bd->client.icccm.step_w;
+	else
+	  w = bd->client.w;
+	if (bd->client.icccm.step_h > 0)
+	  h = (bd->client.h - bd->client.icccm.min_h) / bd->client.icccm.step_h;
+	else
+	  h = bd->client.h;
      }
    if (e_config->resize_info_follows)
      e_move_resize_object_coords_set(bd->x, bd->y, bd->w, bd->h);
