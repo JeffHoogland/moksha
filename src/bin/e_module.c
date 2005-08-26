@@ -180,6 +180,7 @@ e_module_save(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
+   if (!m->enabled) return 0;
    return m->func.save(m);
 }
 
