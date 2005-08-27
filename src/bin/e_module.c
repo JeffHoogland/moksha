@@ -113,7 +113,7 @@ e_module_new(char *name)
 			      "The full path to this module is:\n"
 			      "%s\n"
 			      "The error reported was:\n"
-			      "dlopen: %s"),
+			      "%s"),
 			    name, buf, dlerror());
 	free(m);
 	return NULL;
@@ -135,7 +135,7 @@ e_module_new(char *name)
 			      "The full path to this module is:\n"
 			      "%s\n"
 			      "The error reported was:\n"
-			      "dlsym: %s"),
+			      "%s"),
 			    name, buf, dlerror());
 	dlclose(m->handle);
 	free(m);
