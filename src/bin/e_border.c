@@ -3,8 +3,8 @@
  */
 #include "e.h"
 
-//#define INOUTDEBUG_MOUSE 1
-//#define INOUTDEBUG_FOCUS 1
+#define INOUTDEBUG_MOUSE 1
+#define INOUTDEBUG_FOCUS 1
 
 /* These are compatible with netwm */
 #define RESIZE_TL   0
@@ -863,6 +863,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
    if ((bd->visible) && (bd->changes.visible))
      {  
 	if ((bd->want_focus) && (set) && (!focus))
@@ -964,8 +965,16 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	e_hints_active_window_set(bd->zone->container->manager, NULL);
      }
 #endif
-   if (bd->focused) focused = bd;
-   else if ((!bd->focused) && (focused == bd)) focused = NULL;
+   if (bd->focused)
+     {
+	focused = bd;
+	printf("set focused to %p\n", focused);
+     }
+   else if ((!bd->focused) && (focused == bd))
+     {
+	focused = NULL;
+	printf("set focused to %p\n", focused);
+     }
 }
 
 void
@@ -2848,7 +2857,8 @@ _e_border_cb_window_focus_out(void *data, int ev_type, void *ev)
    else if (e->mode == ECORE_X_EVENT_MODE_UNGRAB)
      {
 	/* for firefox/thunderbird (xul) menu walking */
-//	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
+	/* NB: why did i disable this before? */
+	if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return 1;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
      {
