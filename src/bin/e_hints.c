@@ -515,32 +515,29 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 e_border_iconify(bd);
 	 break;
       case ECORE_X_WINDOW_STATE_MODAL:
-	 changed = 0;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       if (bd->client.netwm.state.modal)
 		 {
 		    bd->client.netwm.state.modal = 0;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
 	       if (!bd->client.netwm.state.modal)
 		 {
 		    bd->client.netwm.state.modal = 1;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       bd->client.netwm.state.modal = !bd->client.netwm.state.modal;
-	       changed = 1;
+	       bd->client.netwm.update.state = 1;
+	       bd->changed = 1;
 	       break;
-	   }
-	 if (changed)
-	   {
-	      bd->client.netwm.update.state = 1;
-	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_STICKY:
@@ -563,6 +560,10 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
 	 if (bd->lock_client_maximize) return;
+	 /* We might end up in a state where maximized_h or maximized_v is
+	  * set. This doesn't matter, because E only checks if both are
+	  * set for maximization.
+	  */
 	 changed = 0;
 	 switch (action)
 	   {
@@ -599,6 +600,10 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 break;
       case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
 	 if (bd->lock_client_maximize) return;
+	 /* We might end up in a state where maximized_h or maximized_v is
+	  * set. This doesn't matter, because E only checks if both are
+	  * set for maximization.
+	  */
 	 changed = 0;
 	 switch (action)
 	   {
@@ -652,61 +657,55 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
-	 changed = 0;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       if (bd->client.netwm.state.skip_taskbar)
 		 {
 		    bd->client.netwm.state.skip_taskbar = 0;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
 	       if (!bd->client.netwm.state.skip_taskbar)
 		 {
 		    bd->client.netwm.state.skip_taskbar = 1;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       bd->client.netwm.state.skip_taskbar = !bd->client.netwm.state.skip_taskbar;
-	       changed = 1;
+	       bd->client.netwm.update.state = 1;
+	       bd->changed = 1;
 	       break;
-	   }
-	 if (changed)
-	   {
-	      bd->client.netwm.update.state = 1;
-	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_SKIP_PAGER:
-	 changed = 0;
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
 	       if (bd->client.netwm.state.skip_pager)
 		 {
 		    bd->client.netwm.state.skip_pager = 0;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
 	       if (!bd->client.netwm.state.skip_pager)
 		 {
 		    bd->client.netwm.state.skip_pager = 1;
-		    changed = 1;
+		    bd->client.netwm.update.state = 1;
+		    bd->changed = 1;
 		 }
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       bd->client.netwm.state.skip_pager = !bd->client.netwm.state.skip_pager;
-	       changed = 1;
+	       bd->client.netwm.update.state = 1;
+	       bd->changed = 1;
 	       break;
-	   }
-	 if (changed)
-	   {
-	      bd->client.netwm.update.state = 1;
-	      bd->changed = 1;
 	   }
 	 break;
       case ECORE_X_WINDOW_STATE_HIDDEN:

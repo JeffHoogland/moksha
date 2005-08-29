@@ -3,8 +3,8 @@
  */
 #include "e.h"
 
-#define INOUTDEBUG_MOUSE 1
-#define INOUTDEBUG_FOCUS 1
+//#define INOUTDEBUG_MOUSE 1
+//#define INOUTDEBUG_FOCUS 1
 
 /* These are compatible with netwm */
 #define RESIZE_TL   0
@@ -863,7 +863,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
+   //printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
    if ((bd->visible) && (bd->changes.visible))
      {  
 	if ((bd->want_focus) && (set) && (!focus))
@@ -968,12 +968,12 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    if (bd->focused)
      {
 	focused = bd;
-	printf("set focused to %p\n", focused);
+	//printf("set focused to %p\n", focused);
      }
    else if ((!bd->focused) && (focused == bd))
      {
 	focused = NULL;
-	printf("set focused to %p\n", focused);
+	//printf("set focused to %p\n", focused);
      }
 }
 
