@@ -771,40 +771,62 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 void
 e_border_raise(E_Border *bd)
 {
+   E_Border *above;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
  
-   e_container_border_raise(bd);
-
+   above = e_container_border_raise(bd);
+   if (above)
      {
 	E_Event_Border_Raise *ev;
-	
 	ev = calloc(1, sizeof(E_Event_Border_Raise));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
-	ev->above = NULL;
+	ev->above = above;
+	e_object_ref(E_OBJECT(above));
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
+     }
+   else
+     {
+	/* If the border hasn't been raised above anything, it is actually lowered */
+	E_Event_Border_Lower *ev;
+	ev = calloc(1, sizeof(E_Event_Border_Lower));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->below = NULL;
+	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
      }
 }
 
 void
 e_border_lower(E_Border *bd)
 {
+   E_Border *below;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   e_container_border_lower(bd);
-
+   below = e_container_border_lower(bd);
+   if (below)
      {
 	E_Event_Border_Lower *ev;
-	
 	ev = calloc(1, sizeof(E_Event_Border_Lower));
 	ev->border = bd;
 	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
-	ev->below = NULL;
+	ev->below = below;
+	e_object_ref(E_OBJECT(below));
 	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
+     }
+   else
+     {
+	/* If the border hasn't been lowered below anything, it is actually raised */
+	E_Event_Border_Raise *ev;
+	ev = calloc(1, sizeof(E_Event_Border_Raise));
+	ev->border = bd;
+	e_object_ref(E_OBJECT(bd));
+	ev->above = NULL;
+	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
      }
 }
 
@@ -6292,7 +6314,7 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
 	bd->layer = 150;
 	e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
      }
-   e_container_border_raise(bd);
+   e_border_raise(bd);
 }
 
 static void
@@ -6306,7 +6328,7 @@ _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
 	bd->layer = 50;
 	e_hints_window_stacking_set(bd, E_STACKING_BELOW);
      }
-   e_container_border_raise(bd);
+   e_border_raise(bd);
 }
 
 static void
@@ -6320,7 +6342,7 @@ _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
 	bd->layer = 100;
 	e_hints_window_stacking_set(bd, E_STACKING_NONE);
      }
-   e_container_border_raise(bd);
+   e_border_raise(bd);
 }
 
 static void

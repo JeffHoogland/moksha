@@ -645,9 +645,11 @@ e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 			    con->layers[pos].win, ECORE_X_WINDOW_STACK_ABOVE);
 }
 
-void
+E_Border *
 e_container_border_raise(E_Border *bd)
 {
+   E_Border *above = NULL;
+   Evas_List *l;
    int pos, i;
 
    /* Remove from old layer */
@@ -674,12 +676,33 @@ e_container_border_raise(E_Border *bd)
    bd->zone->container->layers[pos - 1].clients =
       evas_list_append(bd->zone->container->layers[pos - 1].clients, bd);
 
+   /* Find the window below this one */
+   l = evas_list_find_list(bd->zone->container->layers[pos - 1].clients, bd);
+   if (l->prev)
+     above = l->prev->data;
+   else
+     {
+	/* Need to check the layers below */
+	for (i = pos - 2; i >= 0; i--)
+	  {
+	     if ((bd->zone->container->layers[i].clients) &&
+		 (l = evas_list_last(bd->zone->container->layers[i].clients)))
+	       {
+		  above = l->data;
+		  break;
+	       }
+	  }
+     }
+
    e_hints_client_stacking_set();
+   return above;
 }
 
-void
+E_Border *
 e_container_border_lower(E_Border *bd)
 {
+   E_Border *below = NULL;
+   Evas_List *l;
    int pos, i;
    
    /* Remove from old layer */
@@ -706,7 +729,25 @@ e_container_border_lower(E_Border *bd)
    bd->zone->container->layers[pos].clients =
       evas_list_prepend(bd->zone->container->layers[pos].clients, bd);
 
+   /* Find the window above this one */
+   l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
+   if (l->next)
+     below = l->next->data;
+   else
+     {
+	/* Need to check the layers above */
+	for (i = pos + 1; i < 7; i++)
+	  {
+	     if (bd->zone->container->layers[i].clients)
+	       {
+		  below = bd->zone->container->layers[i].clients->data;
+		  break;
+	       }
+	  }
+     }
+
    e_hints_client_stacking_set();
+   return below;
 }
 
 void
