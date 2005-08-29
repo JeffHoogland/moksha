@@ -91,8 +91,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add key input focus control for desktop modules
 * finish off icccm support
 * finish complete netwm support
-* make the cursors an edje buffer canvas for changing cursor depending on
-  context
 * different cursors for different parts of the screen
 * add a "taskbar" module
 * add cpu load module
