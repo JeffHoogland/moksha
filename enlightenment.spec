@@ -1,6 +1,6 @@
 Summary: The Enlightenment window manager
 Name: enlightenment
-Version: 0.16.999.012
+Version: 0.16.999.013
 Release: NOT_RELEASE_1.%(date '+%Y%m%d')
 License: BSD
 Group: User Interface/Desktops
@@ -56,6 +56,7 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/locale/*
+%{_datadir}/xsessions/*
 
 %files devel
 %defattr(-, root, root)
