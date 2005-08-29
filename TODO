@@ -36,7 +36,6 @@ Some of the things (in very short form) that need to be done to E17...
 * if a parent window is "on top" child dialog windows should also be "on top"
 * in addition to smart place should add manual placement and place at pointer
   and maybe a few others.
-* support xrandr to change res from e itself (and save it etc.)
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
@@ -72,7 +71,6 @@ Some of the things (in very short form) that need to be done to E17...
   to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
-* break out ipc to set names for desktops (and get names/list them)
 * some sort of gui display of a desktop name (in the pager?)
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around (and remember this).
