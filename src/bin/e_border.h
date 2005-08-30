@@ -259,6 +259,18 @@ struct _E_Border
 	      unsigned char state : 1;
 	 } update;
       } netwm;
+
+      /* Extra e stuff */
+      struct {
+	 struct {
+	    unsigned char centered : 1;
+	 } state;
+
+	 struct {
+	    unsigned char state : 1;
+	 } fetch;
+      } e;
+
       Ecore_X_Window_Attributes initial_attributes;
    } client;
    

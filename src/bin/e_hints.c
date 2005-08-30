@@ -442,6 +442,14 @@ e_hints_window_init(E_Border *bd)
     * show it! */
    else if (bd->desk == e_desk_current_get(bd->zone))
      e_border_show(bd);
+   /* e hints */
+   if (bd->client.e.state.centered)
+     {
+	e_border_move(bd,
+		      bd->zone->x + (bd->zone->w - bd->w) / 2,
+		      bd->zone->y + (bd->zone->h - bd->h) / 2);
+		      
+     }
 
    /* Update stacking */
    e_hints_client_list_set();
@@ -452,9 +460,7 @@ void
 e_hints_window_state_set(E_Border *bd)
 {
    Ecore_X_Window_State state[10];
-   int num;
-
-   num = 0;
+   int num = 0;
 
    if (bd->client.netwm.state.modal)
      state[num++] = ECORE_X_WINDOW_STATE_MODAL;
@@ -1073,4 +1079,30 @@ e_hints_window_desktop_set(E_Border *bd)
    ecore_x_netwm_desktop_set(bd->client.win, current);
 #endif
    bd->client.netwm.desktop = (bd->desk->y * bd->zone->desk_x_count) + bd->desk->x;
+}
+
+void
+e_hints_window_e_state_get(E_Border *bd)
+{
+   /* Remember to update the count if we add more states! */
+   Ecore_X_Atom state[1];
+   int num;
+
+   memset(state, 0, sizeof(state));
+   num = ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_WINDOW_STATE, state, 1);
+   if (num)
+     {
+	int i;
+	for (i = 0; i < num; i++)
+	  {
+	     if (state[i] == E_ATOM_WINDOW_STATE_CENTERED)
+	       bd->client.e.state.centered = 1;
+	  }
+     }
+}
+
+void
+e_hints_window_e_state_set(E_Border *bd)
+{
+   /* TODO */
 }

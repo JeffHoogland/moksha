@@ -401,6 +401,14 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		       bd->client.netwm.fetch.state = 1;
 		    }
 	       }
+	     /* loop to check for own atoms */
+	     for (i = 0; i < at_num; i++)
+	       {
+		  if (atoms[i] == E_ATOM_WINDOW_STATE)
+		    {
+		       bd->client.e.fetch.state = 1;
+		    }
+	       }
 	     free(atoms);
 	  }
      }
@@ -3997,6 +4005,11 @@ _e_border_eval(E_Border *bd)
 	e_hints_window_state_get(bd);
 	bd->client.netwm.fetch.state = 0;
      }
+   if (bd->client.e.fetch.state)
+     {
+	e_hints_window_e_state_get(bd);
+	bd->client.e.fetch.state = 0;
+     }
    if (bd->client.netwm.fetch.type)
      {
 	e_hints_window_type_get(bd);
@@ -4689,11 +4702,11 @@ _e_border_eval(E_Border *bd)
 		    }
 	       }
 	     free(pnd);
-	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
+	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize,
+							     bd->pending_move_resize);
 	  }
 
      	/* Recreate state */
-	/* FIXME: this should be split into property fetches and state setup */
 	e_hints_window_init(bd);
 
 	ecore_x_icccm_move_resize_send(bd->client.win,
