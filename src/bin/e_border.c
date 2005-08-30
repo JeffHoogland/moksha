@@ -1207,7 +1207,9 @@ e_border_maximize(E_Border *bd, E_Maximize max)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->fullscreen) || (bd->shaded) || (bd->shading)) return;
+   if ((bd->shaded) || (bd->shading)) return;
+   if (bd->fullscreen)
+     e_border_unfullscreen(bd);
    if (!bd->maximized)
      {
 	int x1, y1, x2, y2;
@@ -1319,7 +1321,7 @@ e_border_unmaximize(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || (bd->shaded) || (bd->shading)) return;
+   if ((bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
      {
 //	printf("UNMAXIMIZE!!\n");
@@ -1383,8 +1385,9 @@ e_border_fullscreen(E_Border *bd)
     * Black background!
     */
 
-   /* FIXME: Some types of maximized might allow this */
-   if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;
+   if ((bd->shaded) || (bd->shading)) return;
+   if (bd->maximized)
+     e_border_unmaximize(bd);
    if (!bd->fullscreen)
      {
 	int x, y, w, h;
@@ -1432,8 +1435,7 @@ e_border_unfullscreen(E_Border *bd)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   /* FIXME: Some types of maximized might allow this */
-   if ((bd->maximized) || (bd->shaded) || (bd->shading)) return;
+   if ((bd->shaded) || (bd->shading)) return;
    if (bd->fullscreen)
      {
 //	printf("UNFULLSCREEEN!\n");
