@@ -316,15 +316,10 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_add(e->dialog, "OK", NULL, _randr_dialog_cb_ok, res);
    e_dialog_button_add(e->dialog, "Cancel", NULL, _randr_dialog_cb_cancel, res);
    e_win_borderless_set(e->dialog->win, 1);
+   e_win_layer_set(e->dialog->win, 6);
+   e_win_centered_set(e->dialog->win, 1);
+   e_win_sticky_set(e->dialog->win, 1);
    e_dialog_show(e->dialog);
-
-   /* This shouldn't be done here. We should add a resize callback to the e_win,
-    * and position us when we know the real width and height */
-#if 0
-   e_win_move(e->dialog->win,
-	      m->zone->x + (m->zone->w - e->dialog->win->min_w) / 2,
-	      m->zone->y + (m->zone->h - e->dialog->win->min_h) / 2);
-#endif
 
    e->timer = ecore_timer_add(15.0, _randr_timer_cb, res);
 }
