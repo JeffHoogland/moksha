@@ -856,11 +856,6 @@ _battery_linux_acpi_check(Battery *ef)
      {
 	FILE *f;
 
-	if ((!strcmp(name, ".")) || (!strcmp(name, "..")))
-	  {
-	     free(name);
-	     continue;
-	  }
 	snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
 	f = fopen(buf, "r");
 	if (f)
