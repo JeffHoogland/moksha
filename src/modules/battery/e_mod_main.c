@@ -36,6 +36,8 @@ static void          _battery_config_menu_new(Battery *e);
 static int           _battery_cb_check(void *data);
 static Status       *_battery_linux_acpi_check(Battery *ef);
 static Status       *_battery_linux_apm_check(Battery *ef);
+/* linux on powerbook */
+static Status       *_battery_linux_powerbook_check(Battery *ef);
 /* Should these be  #ifdef'd ?  */
 #ifdef __FreeBSD__
 static Status       *_battery_bsd_acpi_check(Battery *ef);
@@ -706,6 +708,8 @@ _battery_cb_check(void *data)
 	  ef->battery_check_mode = CHECK_ACPI;
 	else if (ecore_file_exists("/proc/apm"))
 	  ef->battery_check_mode = CHECK_APM;
+	else if (ecore_file_is_dir("/proc/pmu"))
+	  ef->battery_check_mode = CHECK_PMU;
      }
    switch (ef->battery_check_mode)
      {
@@ -714,6 +718,9 @@ _battery_cb_check(void *data)
 	break;
       case CHECK_APM:
 	ret = _battery_linux_apm_check(ef);
+	break;
+      case CHECK_PMU:
+	ret = _battery_linux_powerbook_check(ef);
 	break;
       default:
 	break;
@@ -849,6 +856,7 @@ _battery_linux_acpi_check(Battery *ef)
    Status *stat;
 
    stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
 
    /* Read some information on first run. */
    bats = ecore_file_ls("/proc/acpi/battery");
@@ -930,6 +938,7 @@ _battery_linux_acpi_check(Battery *ef)
    if (discharging) minutes = (60 * bat_level) / bat_drain;
    else
      {
+	/* FIXME: Batteries charge in paralell! */
 	if (bat_filled > 0)
 	  minutes = (60 * (bat_filled - bat_level)) / bat_drain;
 	else
@@ -1027,6 +1036,7 @@ _battery_linux_apm_check(Battery *ef)
    fclose(f);
 
    stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
 
    if ((bat_flags != 0xff) && (bat_flags & 0x80))
      {
@@ -1095,6 +1105,158 @@ _battery_linux_apm_check(Battery *ef)
    return stat;
 }
 
+static Status *
+_battery_linux_powerbook_check(Battery *ef)
+{
+   Ecore_List *bats;
+   char buf[4096], buf2[4096];
+   char *name;
+
+   FILE *f;
+
+   int discharging = 0;
+   int charging = 0;
+
+   int battery = 0;
+   int ac = 0;
+   int seconds = 0;
+   int hours, minutes;
+
+   int charge;
+   int max_charge;
+
+   Status *stat;
+
+   stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
+
+   /* Read some information. */
+   f = fopen("/proc/pmu/info", "r");
+   if (f)
+     {
+	/* Skip driver */
+	fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+	/* Skip firmware */
+	fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+	/* Read ac */
+	fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+	sscanf(buf2, "%*[^:]: %d", &ac);
+	fclose(f);
+     }
+
+   bats = ecore_file_ls("/proc/pmu");
+   if (bats)
+     {
+	while ((name = ecore_list_next(bats)))
+	  {
+	     if (strncmp(name, "battery", 7))
+	       {
+		  free(name);
+		  continue;
+	       }
+
+	     snprintf(buf, sizeof(buf), "/proc/pmu/%s", name);
+	     f = fopen(buf, "r");
+	     if (f)
+	       {
+		  int tmp = 0;
+		  int time = 0;
+		  int current = 0;
+
+		  /* Skip flag; */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  /* Read charge */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %d", &tmp);
+		  charge += tmp;
+		  /* Read max charge */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %d", &tmp);
+		  max_charge += tmp;
+		  /* Read current */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %d", &current);
+		  /* Skip voltage */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  /* Get time remaining */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %d", &time);
+		  fclose(f);
+
+		  battery++;
+		  if (!current)
+		    {
+		       /* Neither charging nor discharging */
+		    }
+		  else if (!ac)
+		    {
+		       /* When on dc, we are discharging */
+		       discharging++;
+		       seconds += time;
+		    }
+		  else
+		    {
+		       /* Charging */
+		       charging++;
+		       /* Charging works in paralell */
+		       seconds = MAX(time, seconds);
+		    }
+	       }
+	     free(name);
+	  }
+	ecore_list_destroy(bats);
+     }
+
+   hours = seconds / (60 * 60);
+   seconds -= hours * (60 * 60);
+   minutes = seconds / 60;
+   seconds -= minutes * 60;
+
+   if (hours < 0) hours = 0;
+   if (minutes < 0) minutes = 0;
+
+   if (!battery)
+     {
+	stat->has_battery = 0;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("NO BAT"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   else if ((charging) || (discharging))
+     {
+	stat->has_battery = 1;
+        if (charging)
+          {
+	     stat->state = BATTERY_STATE_CHARGING;
+	     ef->alarm_triggered = 0;
+          }
+	else if (discharging)
+	  {
+	     stat->state = BATTERY_STATE_DISCHARGING;
+	     if (stat->level < 0.1)
+	       {
+		  if (((hours * 60) + minutes) <= ef->conf->alarm)
+		    stat->alarm = 1;
+	       }
+	  }
+	stat->level = (double)charge / (double)max_charge;
+	snprintf(buf, sizeof(buf), "%.0f%%", stat->level * 100.0);
+	stat->reading = strdup(buf);
+	snprintf(buf, sizeof(buf), "%i:%02i", hours, minutes);
+	stat->time = strdup(buf);
+     }
+   else
+     {
+	stat->has_battery = 1;
+	stat->state = BATTERY_STATE_NONE;
+	stat->reading = strdup(_("FULL"));
+	stat->time = strdup("--:--");
+	stat->level = 1.0;
+     }
+   return stat;
+}
+
 #ifdef __FreeBSD__
 static Status *
 _battery_bsd_acpi_check(Battery *ef)
@@ -1138,6 +1300,7 @@ _battery_bsd_acpi_check(Battery *ef)
    Status *stat;
 
    stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
 
    /* Read some information on first run. */
    len = 4;
@@ -1288,6 +1451,7 @@ _battery_bsd_apm_check(Battery *ef)
      }
 
    stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
 
    if (info.ai_batteries == 1) /* ai_batteries == 1 means NO battery,
 				  ai_batteries == 2 means 1 battery */
@@ -1375,6 +1539,7 @@ _battery_darwin_check(Battery *ef)
    Status *stat;
 
    stat = E_NEW(Status, 1);
+   if (!stat) return NULL;
 
    /*
     * Retrieve the power source data and the array of sources.

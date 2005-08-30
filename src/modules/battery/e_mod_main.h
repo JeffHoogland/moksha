@@ -13,7 +13,8 @@ typedef struct _Status       Status;
 
 #define CHECK_NONE 0
 #define CHECK_ACPI 1
-#define CHECK_APM 2
+#define CHECK_APM  2
+#define CHECK_PMU  3
 
 struct _Config
 {
