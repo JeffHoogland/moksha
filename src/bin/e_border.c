@@ -2028,6 +2028,17 @@ e_border_immortal_windows_get(void)
    return list;
 }
 
+const char *
+e_border_name_get(E_Border *bd)
+{
+   if (bd->client.netwm.name)
+     return bd->client.netwm.name;
+   else if (bd->client.icccm.title)
+     return bd->client.icccm.title;
+   else
+     return "";
+}
+
 /* local subsystem functions */
 static void
 _e_border_free(E_Border *bd)

@@ -1652,13 +1652,12 @@ _ibar_bar_cb_drop_border(void *data, const char *type, void *event)
    IBar_Icon *ic;
 
    E_Border *bd;
-   char *title = "";
+   const char *title;
 
    ev = event;
    ibb = data;
    bd = ev->data;
-   if (bd->client.netwm.name) title = bd->client.netwm.name;
-   else title = bd->client.icccm.title;
+   title = e_border_name_get(bd);
    app = e_app_window_name_class_title_role_find(bd->client.icccm.name,
 						 bd->client.icccm.class,
 						 title, bd->client.icccm.window_role);

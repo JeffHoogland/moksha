@@ -535,6 +535,8 @@ EAPI void e_border_resize_cancel(void);
 EAPI void e_border_frame_recalc(E_Border *bd);
 EAPI Evas_List *e_border_immortal_windows_get(void);
 
+const char *e_border_name_get(E_Border *bd);
+
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;

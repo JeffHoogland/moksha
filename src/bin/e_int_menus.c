@@ -640,16 +640,13 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
      {
 	E_Border *bd = l->data;
 	E_App *a;
-	char *title = "";
+	const char *title;
 	
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else title = bd->client.icccm.title;
+	title = e_border_name_get(bd);
 	mi = e_menu_item_new(m);
 	e_menu_item_check_set(mi, 1);
-	if (bd->client.netwm.name)
-	  e_menu_item_label_set(mi, bd->client.netwm.name);
-	else if (bd->client.icccm.title)
-	  e_menu_item_label_set(mi, bd->client.icccm.title);
+	if ((title) && (title[0]))
+	  e_menu_item_label_set(mi, title);
 	else
 	  e_menu_item_label_set(mi, _("No name!!"));
 	/* ref the border as we implicitly unref it in the callback */
@@ -910,15 +907,12 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
      {
 	E_Border *bd = l->data;
 	E_App *a;
-	char *title = "";
+	const char *title = "";
 	
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else title = bd->client.icccm.title;
+	title = e_border_name_get(bd);
 	mi = e_menu_item_new(m);
-	if (bd->client.netwm.name)
-	  e_menu_item_label_set(mi, bd->client.netwm.name);
-	else if (bd->client.icccm.title)
-	  e_menu_item_label_set(mi, bd->client.icccm.title);
+	if ((title) && (title[0]))
+	  e_menu_item_label_set(mi, title);
 	else
 	  e_menu_item_label_set(mi, _("No name!!"));
 	/* ref the border as we implicitly unref it in the callback */

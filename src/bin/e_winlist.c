@@ -414,10 +414,7 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
 	ww->bg_object = o;
 	e_theme_edje_object_set(o, "base/theme/winlist",
 				"widgets/winlist/item");
-	if (bd->client.netwm.name)
-	  edje_object_part_text_set(o, "title_text", bd->client.netwm.name);
-	else if (bd->client.icccm.title)
-	  edje_object_part_text_set(o, "title_text", bd->client.icccm.title);
+	edje_object_part_text_set(o, "title_text", e_border_name_get(ww->border));
 	evas_object_show(o);
 	if (edje_object_part_exists(ww->bg_object, "icon_swallow"))
 	  {
@@ -561,10 +558,7 @@ _e_winlist_activate(void)
 	if (!ww->border->lock_focus_out)
 	  e_border_focus_set(ww->border, 1, 1);
      }
-   if (ww->border->client.netwm.name)
-     edje_object_part_text_set(bg_object, "title_text", ww->border->client.netwm.name);
-   else if (ww->border->client.icccm.title)
-     edje_object_part_text_set(bg_object, "title_text", ww->border->client.icccm.title);
+   edje_object_part_text_set(bg_object, "title_text", e_border_name_get(ww->border));
    if (icon_object)
      {
 	evas_object_del(icon_object);
