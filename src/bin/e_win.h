@@ -29,6 +29,10 @@ struct _E_Win
    void               (*cb_resize) (E_Win *win);
    void               (*cb_delete) (E_Win *win);
    void                *data;
+
+   struct {
+	unsigned char   centered : 1;
+   } state;
 };
 
 EAPI int    e_win_init               (void);
@@ -46,6 +50,8 @@ EAPI Evas  *e_win_evas_get           (E_Win *win);
 EAPI void   e_win_shaped_set         (E_Win *win, int shaped);
 EAPI void   e_win_avoid_damage_set   (E_Win *win, int avoid);
 EAPI void   e_win_borderless_set     (E_Win *win, int borderless);
+EAPI void   e_win_layer_set          (E_Win *win, int layer);
+EAPI void   e_win_sticky_set         (E_Win *win, int sticky);
 EAPI void   e_win_move_callback_set  (E_Win *win, void (*func) (E_Win *win));
 EAPI void   e_win_resize_callback_set(E_Win *win, void (*func) (E_Win *win));
 EAPI void   e_win_delete_callback_set(E_Win *win, void (*func) (E_Win *win));
@@ -55,6 +61,8 @@ EAPI void   e_win_size_base_set      (E_Win *win, int w, int h);
 EAPI void   e_win_step_set           (E_Win *win, int x, int y);
 EAPI void   e_win_name_class_set     (E_Win *win, char *name, char *class);
 EAPI void   e_win_title_set          (E_Win *win, char *title);
+
+EAPI void   e_win_centered_set       (E_Win *win, int centered);
 
 #endif
 #endif

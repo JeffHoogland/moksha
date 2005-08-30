@@ -6,6 +6,7 @@
 /* local subsystem functions */
 static void _e_win_free(E_Win *win);
 static void _e_win_prop_update(E_Win *win);
+static void _e_win_state_update(E_Win *win);
 static void _e_win_cb_move(Ecore_Evas *ee);
 static void _e_win_cb_resize(Ecore_Evas *ee);
 static void _e_win_cb_delete(Ecore_Evas *ee);
@@ -40,6 +41,7 @@ e_win_new(E_Container *con)
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
    win->container = con;
+   /* TODO: Maybe use an own config for windows? */
    if (e_canvas_engine_decide(e_config->evas_engine_errors) ==
        E_EVAS_ENGINE_GL_X11)
      {
@@ -185,42 +187,72 @@ e_win_evas_get(E_Win *win)
 void
 e_win_move_callback_set(E_Win *win, void (*func) (E_Win *win))
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->cb_move = func;
 }
 
 void
 e_win_resize_callback_set(E_Win *win, void (*func) (E_Win *win))
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->cb_resize = func;
 }
 
 void
 e_win_delete_callback_set(E_Win *win, void (*func) (E_Win *win))
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->cb_delete = func;
 }
 
 void
 e_win_shaped_set(E_Win *win, int shaped)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    ecore_evas_shaped_set(win->ecore_evas, shaped);
 }
 
 void
 e_win_avoid_damage_set(E_Win *win, int avoid)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    ecore_evas_avoid_damage_set(win->ecore_evas, avoid);
 }
 
 void
 e_win_borderless_set(E_Win *win, int borderless)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    ecore_evas_borderless_set(win->ecore_evas, borderless);
+}
+
+void
+e_win_layer_set(E_Win *win, int layer)
+{
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
+   ecore_evas_layer_set(win->ecore_evas, layer);
+}
+
+void
+e_win_sticky_set(E_Win *win, int sticky)
+{
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
+   ecore_evas_sticky_set(win->ecore_evas, sticky);
 }
 
 void
 e_win_size_min_set(E_Win *win, int w, int h)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->min_w = w;
    win->min_h = h;   
    if (win->border)
@@ -230,6 +262,8 @@ e_win_size_min_set(E_Win *win, int w, int h)
 void
 e_win_size_max_set(E_Win *win, int w, int h)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->max_w = w;
    win->max_h = h;   
    if (win->border)
@@ -239,6 +273,8 @@ e_win_size_max_set(E_Win *win, int w, int h)
 void
 e_win_size_base_set(E_Win *win, int w, int h)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->base_w = w;
    win->base_h = h;   
    if (win->border)
@@ -248,6 +284,8 @@ e_win_size_base_set(E_Win *win, int w, int h)
 void
 e_win_step_set(E_Win *win, int x, int y)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->step_x = x;
    win->step_y = y;
    if (win->border)
@@ -257,13 +295,39 @@ e_win_step_set(E_Win *win, int x, int y)
 void
 e_win_name_class_set(E_Win *win, char *name, char *class)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    ecore_evas_name_class_set(win->ecore_evas, name, class);
 }
 
 void
 e_win_title_set(E_Win *win, char *title)
 {
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    ecore_evas_title_set(win->ecore_evas, title);
+}
+
+void
+e_win_centered_set(E_Win *win, int centered)
+{
+   /* TODO:
+    * if win->border is set the window is shown, so we have to tell
+    * e to center this window by message, now it is checked at
+    * border creation.
+    */
+   E_OBJECT_CHECK(win);
+   E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
+   if ((win->state.centered) && (!centered))
+     {
+	win->state.centered = 0;
+	_e_win_state_update(win);
+     }
+   else if ((!win->state.centered) && (centered))
+     {
+	win->state.centered = 1;
+	_e_win_state_update(win);
+     }
 }
 
 /* local subsystem functions */
@@ -287,6 +351,25 @@ _e_win_prop_update(E_Win *win)
 				    win->base_w, win->base_h,
 				    win->step_x, win->step_y,
 				    win->min_aspect, win->max_aspect);
+}
+
+static void
+_e_win_state_update(E_Win *win)
+{
+   Ecore_X_Atom state[1];
+   int num = 0;
+
+   if (win->state.centered)
+     state[num++] = E_ATOM_WINDOW_STATE_CENTERED;
+
+   if (num)
+     {
+	ecore_x_window_prop_card32_set(win->evas_win, E_ATOM_WINDOW_STATE, state, num);
+     }
+   else
+     {
+	ecore_x_window_prop_property_del(win->evas_win, E_ATOM_WINDOW_STATE);
+     }
 }
 
 static void
