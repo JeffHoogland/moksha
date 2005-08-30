@@ -1,3 +1,6 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include <Ecore.h>
 #include <errno.h>
 #include <ctype.h>
@@ -21,6 +24,7 @@ static void     _cpufreq_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_normal(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_slow(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi);
+static void     _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_menu_frequency(void *data, E_Menu *m, E_Menu_Item *mi);
 static void     _cpufreq_config_menu_new(Cpufreq *cpufreq);
@@ -92,6 +96,10 @@ e_modapi_shutdown(E_Module *module)
 int
 e_modapi_save(E_Module *module)
 {
+   Cpufreq *e;
+
+   e = module->data;
+   e_config_domain_save("module.cpufreq", conf_edd, e->conf);
    return 1;
 }
 
@@ -141,12 +149,16 @@ _cpufreq_new(E_Module *module)
 #define D conf_edd
    E_CONFIG_VAL(D, T, poll_time, DOUBLE);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
+   E_CONFIG_VAL(D, T, restore_governor, INT);
+   E_CONFIG_VAL(D, T, governor, STR);
    
    e->conf = e_config_domain_load("module.cpufreq", conf_edd);
    if (!e->conf)
      {
 	e->conf = E_NEW(Config, 1);
 	e->conf->poll_time = 2.0;
+	e->conf->restore_governor = 0;
+	e->conf->governor = NULL;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 60.0);
 #ifdef __FreeBSD__	
@@ -161,6 +173,15 @@ _cpufreq_new(E_Module *module)
    e->status = _cpufreq_status_new();
 
    _cpufreq_status_check_available(e->status);
+   if ((e->conf->restore_governor) && (e->conf->governor))
+     {
+	/* If the governor is available, restore it */
+	for (l = e->status->governors; l; l = l->next)
+	  {
+	     if (!strcmp(l->data, e->conf->governor))
+	       _cpufreq_set_governor(e, e->conf->governor);
+	  }
+     }
    _cpufreq_config_menu_new(e);
 	
    managers = e_manager_list();
@@ -202,6 +223,12 @@ _cpufreq_new(E_Module *module)
 
 		  if (e->menu_governor)
 		    {
+		       mi = e_menu_item_new(ef->menu);
+		       e_menu_item_label_set(mi, _("Restore Controller on Startup"));
+		       e_menu_item_check_set(mi, 1);
+		       e_menu_item_toggle_set(mi, e->conf->restore_governor);
+		       e_menu_item_callback_set(mi, _cpufreq_menu_restore_governor, e);
+
 		       /* Add governors menu to this face */
 		       mi = e_menu_item_new(ef->menu);
 		       e_menu_item_label_set(mi, _("Set Controller"));
@@ -264,6 +291,7 @@ _cpufreq_free(Cpufreq *e)
 static void
 _cpufreq_set_governor(Cpufreq *e, const char *governor)
 {
+   /* TODO: Use ecore_exe */
    char buf[4096];
    int ret;
 
@@ -359,15 +387,37 @@ _cpufreq_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Cpufreq *e;
+
+   e = data;
+   e->conf->restore_governor = e_menu_item_toggle_get(mi);
+   if ((!e->conf->governor) || strcmp(e->status->cur_governor, e->conf->governor))
+     {
+	if (e->conf->governor)
+	  free(e->conf->governor);
+	e->conf->governor = strdup(e->status->cur_governor);
+     }
+   e_config_save_queue();
+}
+
+static void
 _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+   Cpufreq *e;
    char *governor;
-   
+
+   e = data;
    governor = e_object_data_get(E_OBJECT(mi));
    if (governor)
      {
-	_cpufreq_set_governor(data, governor);
+	_cpufreq_set_governor(e, governor);
+	if (e->conf->governor)
+	  free(e->conf->governor);
+	e->conf->governor = strdup(governor);
      }
+   e_config_save_queue();
 }
 
 static void
@@ -432,7 +482,7 @@ _cpufreq_config_menu_new(Cpufreq *e)
    if (e->status->governors)
      {
 	mn = e_menu_new();
-	
+
 	for (l = e->status->governors; l; l = l->next)
 	  {
 	     mi = e_menu_item_new(mn);
@@ -490,6 +540,12 @@ _cpufreq_config_menu_new(Cpufreq *e)
 
    if (e->menu_governor)
      {
+	mi = e_menu_item_new(mn);
+	e_menu_item_label_set(mi, _("Restore Governor on Startup"));
+	e_menu_item_check_set(mi, 1);
+	e_menu_item_toggle_set(mi, e->conf->restore_governor);
+	e_menu_item_callback_set(mi, _cpufreq_menu_restore_governor, e);
+
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Set Controller"));
 	e_menu_item_submenu_set(mi, e->menu_governor);

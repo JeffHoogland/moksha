@@ -24,6 +24,9 @@ struct _Config
 {
    double poll_time;
    Evas_List *faces;
+
+   int   restore_governor;
+   char *governor;
 };
 
 struct _Config_Face
