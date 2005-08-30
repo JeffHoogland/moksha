@@ -619,8 +619,7 @@ e_border_move(E_Border *bd, int x, int y)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   /* FIXME: Some types of maximized might allow this */
-   if ((bd->fullscreen) || (bd->maximized)) return;
+   if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -667,7 +666,7 @@ e_border_resize(E_Border *bd, int w, int h)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    /* FIXME: Some types of maximized might allow this */
-   if ((bd->fullscreen) || (bd->maximized)) return;
+   if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -720,7 +719,7 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
    /* FIXME: Some types of maximized might allow this */
-   if ((bd->fullscreen) || (bd->maximized)) return;
+   if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
@@ -2964,8 +2963,8 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return 1;
 
-   if ((bd->shaded) || (bd->shading) || (bd->maximized) ||
-       (bd->moving) || (bd->resize_mode != RESIZE_NONE))
+   if ((bd->shaded) || (bd->shading) || (bd->maximized == E_MAXIMIZE_FULLSCREEN) ||
+       (bd->fullscreen) || (bd->moving) || (bd->resize_mode != RESIZE_NONE))
      return 1;
 
    if ((e->button >= 1) && (e->button <= 3))
@@ -6694,7 +6693,7 @@ _e_border_resize_begin(E_Border *bd)
 
    if (!bd->lock_user_stacking)
      e_border_raise(bd);
-   if ((bd->shaded) || (bd->shading) || (bd->maximized) || (bd->fullscreen) ||
+   if ((bd->shaded) || (bd->shading) || (bd->maximized == E_MAXIMIZE_FULLSCREEN) || (bd->fullscreen) ||
        (bd->lock_user_size))
      return 0;
 
@@ -6742,11 +6741,6 @@ _e_border_resize_begin(E_Border *bd)
 static int
 _e_border_resize_end(E_Border *bd)
 {
-   /* This shouldn't happend, and if, we should be able to end
-   if ((bd->shaded) || (bd->shading) ||
-       (bd->maximized) || (bd->fullscreen))
-     return 0;
-     */
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;
@@ -6800,7 +6794,7 @@ _e_border_move_begin(E_Border *bd)
 {
    if (!bd->lock_user_stacking)
      e_border_raise(bd);
-   if ((bd->maximized) || (bd->fullscreen) || (bd->lock_user_location))
+   if ((bd->maximized == E_MAXIMIZE_FULLSCREEN) || (bd->fullscreen) || (bd->lock_user_location))
      return 0;
 
    if (grabbed)
@@ -6826,12 +6820,6 @@ _e_border_move_begin(E_Border *bd)
 static int
 _e_border_move_end(E_Border *bd)
 {
-   /* This shouldn't happend, and if, we should be able to end
-   if ((bd->shaded) || (bd->shading) ||
-       (bd->maximized) || (bd->fullscreen))
-     return 0;
-   */
-
    if (grabbed)
      ecore_x_pointer_ungrab();
    grabbed = 0;
