@@ -4833,14 +4833,14 @@ _e_border_eval(E_Border *bd)
 	       {
 		  if (bd->shade.dir == E_DIRECTION_UP)
 		    ecore_x_window_move_resize(bd->client.win, 0,
-		       bd->h - (bd->client_inset.t + bd->client_inset.b) -
-		       bd->client.h,
-		       bd->client.w, bd->client.h);
+					       bd->h - (bd->client_inset.t + bd->client_inset.b) -
+					       bd->client.h,
+					       bd->client.w, bd->client.h);
 		  else if (bd->shade.dir == E_DIRECTION_LEFT)
 		    ecore_x_window_move_resize(bd->client.win,
-		       bd->w - (bd->client_inset.l + bd->client_inset.r) -
-		       bd->client.h,
-		       0, bd->client.w, bd->client.h);
+					       bd->w - (bd->client_inset.l + bd->client_inset.r) -
+					       bd->client.h,
+					       0, bd->client.w, bd->client.h);
 		  else
 		    ecore_x_window_move_resize(bd->client.win, 0, 0,
 					       bd->client.w, bd->client.h);
@@ -4890,14 +4890,14 @@ _e_border_eval(E_Border *bd)
 	       {
 		  if (bd->shade.dir == E_DIRECTION_UP)
 		    ecore_x_window_move_resize(bd->client.win, 0,
-		       bd->h - (bd->client_inset.t + bd->client_inset.b) -
-		       bd->client.h,
-		       bd->client.w, bd->client.h);
+					       bd->h - (bd->client_inset.t + bd->client_inset.b) -
+					       bd->client.h,
+					       bd->client.w, bd->client.h);
 		  else if (bd->shade.dir == E_DIRECTION_LEFT)
 		    ecore_x_window_move_resize(bd->client.win,
-		       bd->w - (bd->client_inset.l + bd->client_inset.r) -
-		       bd->client.h,
-		       0, bd->client.w, bd->client.h);
+					       bd->w - (bd->client_inset.l + bd->client_inset.r) -
+					       bd->client.h,
+					       0, bd->client.w, bd->client.h);
 		  else
 		    ecore_x_window_move_resize(bd->client.win, 0, 0,
 					       bd->client.w, bd->client.h);
