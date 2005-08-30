@@ -619,7 +619,6 @@ e_border_move(E_Border *bd, int x, int y)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
@@ -666,7 +665,6 @@ e_border_resize(E_Border *bd, int w, int h)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
@@ -719,7 +717,6 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
    if (bd->new_client)
      {
@@ -1014,7 +1011,6 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized)) return;
    if (!strcmp("borderless", bd->client.border.name)) return;
    if (!bd->shaded)
@@ -1101,7 +1097,6 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   /* FIXME: Some types of maximized might allow this */
    if ((bd->fullscreen) || (bd->maximized)) return;
    if (bd->shaded)
      {
@@ -1955,13 +1950,14 @@ e_border_lost_windows_get(E_Zone *zone)
 void
 e_border_ping(E_Border *bd)
 {
+   if (!e_config->ping_clients) return;
+
    bd->ping_ok = 0;
    ecore_x_netwm_ping_send(bd->client.win);
    bd->ping = ecore_time_get();
    if (bd->ping_timer) ecore_timer_del(bd->ping_timer);
-   if (e_config->ping_clients)
-     bd->ping_timer = ecore_timer_add(e_config->ping_clients_wait,
-				      _e_border_cb_ping_timer, bd);
+   bd->ping_timer = ecore_timer_add(e_config->ping_clients_wait,
+				    _e_border_cb_ping_timer, bd);
 }
 
 void
