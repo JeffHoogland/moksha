@@ -277,6 +277,7 @@ struct _E_Border
    E_Container_Shape *shape;
    
    unsigned int    visible : 1;
+   unsigned int    await_hide_event;
    unsigned int    moving : 1;
    unsigned int    focused : 1;
    unsigned int    new_client : 1;

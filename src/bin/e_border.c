@@ -545,7 +545,7 @@ e_border_show(E_Border *bd)
    e_hints_window_visible_set(bd);
    bd->visible = 1;
    bd->changes.visible = 1;
-   
+
    visible = 1;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MANAGED, &visible, 1);
@@ -574,7 +574,7 @@ e_border_hide(E_Border *bd, int manage)
 	bd->resize_mode = RESIZE_NONE;
 	_e_border_resize_end(bd);
      }
-   
+
    e_container_shape_hide(bd->shape);
    /* FIXME: If the client unmaps itself, the border should be
     * withdrawn, not iconic */
@@ -591,6 +591,11 @@ e_border_hide(E_Border *bd, int manage)
 	     e_border_focus_set(bd, 0, 1);
 	     if (e_config->focus_revert_on_hide_or_close)
 	       e_desk_last_focused_focus(bd->desk);
+	  }
+	if (manage)
+	  {
+	     /* Make sure that this border isn't deleted */
+	     bd->await_hide_event++;
 	  }
 	ecore_x_window_hide(bd->client.win);
      }
@@ -2308,9 +2313,13 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
-   if ((bd->iconic) || (!bd->visible))
+   if ((bd->iconic) || (!bd->visible) || (bd->await_hide_event))
      {
-	e_border_hide(bd, 1);
+	if (bd->await_hide_event)
+	  bd->await_hide_event--;
+	/* Only hide the border if it is visible */
+	if (bd->visible)
+	  e_border_hide(bd, 1);
      }
    else
      {
