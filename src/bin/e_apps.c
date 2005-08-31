@@ -520,7 +520,8 @@ e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), 
 }
 
 E_App *
-e_app_window_name_class_title_role_find(char *name, char *class, char *title, char *role)
+e_app_window_name_class_title_role_find(const char *name, const char *class,
+					const char *title, const char *role)
 {
    Evas_List *l;
    

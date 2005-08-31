@@ -121,7 +121,7 @@ e_util_utils_installed(void)
 }
 
 int
-e_util_glob_match(char *str, char *glob)
+e_util_glob_match(const char *str, const char *glob)
 {
    if (glob[0] == 0)
      {

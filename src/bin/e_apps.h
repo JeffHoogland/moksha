@@ -79,7 +79,8 @@ EAPI void   e_app_remove(E_App *remove);
 EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 
-EAPI E_App *e_app_window_name_class_title_role_find(char *name, char *class, char *title, char *role);
+EAPI E_App *e_app_window_name_class_title_role_find(const char *name, const char *class,
+						    const char *title, const char *role);
 EAPI E_App *e_app_file_find(char *file);
 EAPI E_App *e_app_name_find(char *name);
 EAPI E_App *e_app_generic_find(char *generic);

@@ -13,7 +13,7 @@ EAPI void         e_util_env_set(const char *var, const char *val);
 EAPI E_Zone      *e_util_zone_current_get(E_Manager *man);
 EAPI int          e_util_utils_installed(void);
 EAPI int          e_util_app_installed(char *app);
-EAPI int          e_util_glob_match(char *str, char *glob);
+EAPI int          e_util_glob_match(const char *str, const char *glob);
 EAPI E_Container *e_util_container_number_get(int num);
 EAPI E_Zone      *e_util_container_zone_number_get(int con_num, int zone_num);
 EAPI int          e_util_head_exec(int head, char *cmd);
