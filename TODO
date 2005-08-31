@@ -14,12 +14,6 @@ Some of the things (in very short form) that need to be done to E17...
   desktop switches for the desk a fullscreened window is on, nor allow windows
   to be raised above the fs win etc. ie the app must seem to be entirely fs for
   that zone.
-* BUG: if i downclock my machine to like 400mhz (make it sloooow) or load it
-  down with lots of load and then hold down ctrl+alt+right for a while
-  windows on desktops vanish... there must be a race condition with a
-  map/unmap event and something else... they still are around in x- just e
-  hides them and never shows them again
-  fullscreen. is this correct?
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
