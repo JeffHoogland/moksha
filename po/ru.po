@@ -8,327 +8,493 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-05-02 21:50+0300\n"
-"PO-Revision-Date: 2005-05-02 22:45+0200\n"
+"POT-Creation-Date: 2005-08-31 17:05+0300\n"
+"PO-Revision-Date: 2005-08-31 18:18+0200\n"
 "Last-Translator: Danny Moshnakov <admin@moshnakov.org>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/modules/cpufreq/e_mod_main.c:460
+#: src/bin/e_apps.c:270 src/bin/e_apps.c:1025 src/bin/e_utils.c:200
+msgid "Run Error"
+msgstr "Ошибка Запуска"
+
+#: src/bin/e_apps.c:271 src/bin/e_utils.c:201
 #, c-format
-msgid "%i Mhz"
-msgstr "%i Мгц"
+msgid ""
+"Enlightenment was unable fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"Enlightenment не смог запустить дочерний процесс:\n"
+"\n"
+"%s\n"
+"\n"
 
-#: src/modules/cpufreq/e_mod_main.c:463
+#: src/bin/e_apps.c:1026
 #, c-format
-msgid "%i.%i Ghz"
-msgstr "%i.%i Ггц"
-
-#: src/bin/e_int_menus.c:643
-msgid "(Empty)"
-msgstr "(Пусто)"
-
-#: src/bin/e_int_menus.c:302
-msgid "(No Applications)"
-msgstr "(Нет приложений)"
-
-#: src/bin/e_int_menus.c:475
-msgid "(No Windows)"
-msgstr "(Нет окон)"
-
-#: src/bin/e_int_menus.c:551
-msgid "(Unused)"
-msgstr "(Не используется)"
-
-#: src/modules/battery/e_mod_main.c:418
-msgid "1 hour"
-msgstr "1 час"
-
-#: src/modules/temperature/e_mod_main.c:596
-msgid "100C"
-msgstr "100C"
-
-#: src/modules/temperature/e_mod_main.c:500
-msgid "10C"
-msgstr "10C"
-
-#: src/modules/temperature/e_mod_main.c:507
-#: src/modules/temperature/e_mod_main.c:540
-msgid "20C"
-msgstr "20C"
-
-#: src/modules/temperature/e_mod_main.c:514
-#: src/modules/temperature/e_mod_main.c:547
-msgid "30C"
-msgstr "30C"
-
-#: src/modules/temperature/e_mod_main.c:521
-#: src/modules/temperature/e_mod_main.c:554
-msgid "40C"
-msgstr "40C"
-
-#: src/modules/temperature/e_mod_main.c:528
-#: src/modules/temperature/e_mod_main.c:561
-msgid "50C"
-msgstr "50C"
-
-#: src/modules/temperature/e_mod_main.c:568
-msgid "60C"
-msgstr "60C"
-
-#: src/modules/temperature/e_mod_main.c:575
-msgid "70C"
-msgstr "70C"
-
-#: src/modules/temperature/e_mod_main.c:582
-msgid "80C"
-msgstr "80C"
-
-#: src/modules/temperature/e_mod_main.c:589
-msgid "90C"
-msgstr "90C"
-
-#: src/modules/battery/e_mod_main.c:99
 msgid ""
-"A basic battery meter that uses either ACPI or APM\n"
-"on Linux to monitor your battery and AC power adaptor\n"
-"status. This will only work under Linux and is only\n"
-"as accurate as your BIOS or kernel drivers."
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
 msgstr ""
-"Базовый измеритель уровня зарядки батареи, который использует\n"
-"ACPI или APM на Linux, чтобы контролировать батарею и её статус.\n"
-"Это работает только под Linux и столь же точен как ваш BIOS или\n"
-"драйвер ядра"
+"Enlightenment не смог запустить программу:\n"
+"\n"
+"%s\n"
+"\n"
+"Комманда не найдена\n"
 
-#: src/modules/temperature/e_mod_main.c:97
-msgid ""
-"A module to measure the ACPI Thermal sensor on Linux.\n"
-"It is especially useful for modern Laptops with high speed\n"
-"CPUs that generate a lot of heat."
-msgstr ""
-"Модуль измерения теплового датчика ACPI на Linux.\n"
-"Особенно полезен для современных портативных компьютеров\n"
-"с высокой скоростью ЦПУ, которые производят большую температуру."
+#: src/bin/e_border.c:5907 src/bin/e_border.c:5920
+msgid "Position"
+msgstr "Позиция"
 
-#: src/modules/pager/e_mod_main.c:138
-msgid "A pager module to navigate virtual desktops."
-msgstr "Модуль пейджера для переключения виртуальных рабочих столов."
+#: src/bin/e_border.c:5908 src/bin/e_border.c:5921
+#: src/modules/ibar/e_mod_main.c:288 src/modules/ibar/e_mod_main.c:903
+#: src/modules/ibox/e_mod_main.c:693
+msgid "Size"
+msgstr "Размер"
 
-#: src/modules/cpufreq/e_mod_main.c:108
-msgid ""
-"A simple module to control the frequency of the system CPU. This is "
-"especially useful to save power on laptops."
-msgstr ""
-"Простой модуль контоля частоты центрального процессора."
-"Особенно полезен на портативных компьютерах."
+#: src/bin/e_border.c:5909 src/bin/e_border.c:5922 src/bin/e_border.c:6125
+msgid "Stacking"
+msgstr "Штабелирование"
 
-#: src/modules/clock/e_mod_main.c:96
-msgid "A simple module to give E17 a clock."
-msgstr "Простой модуль часов в E17"
+#: src/bin/e_border.c:5910 src/bin/e_border.c:5923 src/bin/e_border.c:6061
+msgid "Iconify"
+msgstr "Опустить"
 
-#: src/bin/e_int_menus.c:118 src/bin/e_int_menus.c:240
-msgid "About Enlightenment"
-msgstr "О Enlightenment"
+#: src/bin/e_border.c:5912 src/bin/e_border.c:5925 src/bin/e_border.c:6114
+msgid "Sticky"
+msgstr "Липкий"
 
-#: src/bin/e_module.c:380
-msgid "About..."
-msgstr "О..."
+#: src/bin/e_border.c:5913 src/bin/e_border.c:5926
+#, fuzzy
+msgid "Shade"
+msgstr "Свернуть"
 
-#: src/bin/e_main.c:385
-msgid "Artificially slowing startup so you can see it all."
-msgstr "Искусственно замедленный запуск, так что вы можете увидеть всё"
+#: src/bin/e_border.c:5914 src/bin/e_border.c:5927
+#, fuzzy
+msgid "Maximize"
+msgstr "Увеличить"
 
-#: src/modules/ibar/e_mod_main.c:720
-msgid "Auto fit icons"
-msgstr "Автоматическое вмещение иконок"
+#: src/bin/e_border.c:5915 src/bin/e_border.c:5928 src/bin/e_border.c:6147
+#, fuzzy
+msgid "Fullscreen"
+msgstr "Полный Экран"
 
-#: src/modules/cpufreq/e_mod_main.c:434
-msgid "Automatic"
-msgstr "Автоматически"
+#: src/bin/e_border.c:5934
+msgid "User"
+msgstr "Пользователь"
 
-#: src/bin/e_gadman.c:530
-msgid "Automatic Height"
-msgstr "Автоматическая высота"
+#: src/bin/e_border.c:5942
+#, fuzzy
+msgid "Application"
+msgstr "Приложение"
 
-#: src/bin/e_gadman.c:483
-msgid "Automatic Width"
-msgstr "Автоматическая ширина"
+#: src/bin/e_border.c:5952
+msgid "Border"
+msgstr "Граница"
 
-#: src/modules/battery/e_mod_main.c:903
-msgid "BAD DRIVER"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:89
-msgid "Battery"
-msgstr "Батарея"
-
-#: src/modules/battery/e_mod_main.c:686
-msgid "Battery Running Low"
-msgstr "Заряд батареи низок."
-
-#: src/modules/cpufreq/e_mod_main.c:107
-msgid "CPU Frequency Controller Module"
-msgstr "Модуль Контоля Частоты ЦПУ"
-
-#: src/modules/cpufreq/e_mod_main.c:270 src/modules/cpufreq/e_mod_main.c:287
-msgid "CPU Frequency ERROR"
-msgstr "ОШИБКА Контоля Частоты ЦПУ"
-
-#: src/bin/e_gadman.c:512
-msgid "Center Horizontally"
-msgstr "Выровнять по горизонтали"
-
-#: src/bin/e_gadman.c:559
-msgid "Center Vertically"
-msgstr "Выровнять по вертикали"
-
-#: src/modules/battery/e_mod_main.c:999
-msgid "Charging"
-msgstr "Зарядка"
-
-#: src/modules/cpufreq/e_mod_main.c:388
-msgid "Check Fast (0.5 sec)"
-msgstr "Проверять Быстро (0.5 сек)"
-
-#: src/modules/battery/e_mod_main.c:430
-msgid "Check Fast (1 sec)"
-msgstr "Проверять Быстро (1 сек)"
-
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:608
-msgid "Check Interval"
-msgstr "Интервал обновления"
-
-#: src/modules/cpufreq/e_mod_main.c:395
-msgid "Check Medium (1 sec)"
-msgstr "Проверять Умеренно (1 сек)"
-
-#: src/modules/battery/e_mod_main.c:437
-msgid "Check Medium (5 sec)"
-msgstr "Проверять Умеренно (5 сек)"
-
-#: src/modules/battery/e_mod_main.c:444
-msgid "Check Normal (10 sec)"
-msgstr "Проверять Нормально (10 сек)"
-
-#: src/modules/cpufreq/e_mod_main.c:402
-msgid "Check Normal (2 sec)"
-msgstr "Проверять Нормально (2 сек)"
-
-#: src/modules/battery/e_mod_main.c:451
-msgid "Check Slow (30 sec)"
-msgstr "Проверять Медленно (30 сек)"
-
-#: src/modules/cpufreq/e_mod_main.c:409
-msgid "Check Slow (5 sec)"
-msgstr "Проверять Медленно (5 сек)"
-
-#: src/modules/cpufreq/e_mod_main.c:416
-msgid "Check Very Slow (30 sec)"
-msgstr "Проверять Очень Медленно (30 сек)"
-
-#: src/modules/battery/e_mod_main.c:458
-msgid "Check Very Slow (60 sec)"
-msgstr "Проверять Очень Медленно (60 сек)"
-
-#: src/modules/clock/e_mod_main.c:86
-msgid "Clock"
-msgstr "Часы"
-
-#: src/bin/e_border.c:3588
+#: src/bin/e_border.c:5953 src/bin/e_border.c:6050
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/bin/e_module.c:395
-msgid "Configuration"
-msgstr "Настройка"
-
-#: src/modules/cpufreq/e_mod_main.c:98
-msgid "CpuFreq"
+#: src/bin/e_border.c:5956
+msgid "Lifespan"
 msgstr ""
 
-#: src/bin/e_border.c:3682
-msgid "Create Icon"
-msgstr "Создать Иконку"
+#: src/bin/e_border.c:5970
+msgid "Remember This Window"
+msgstr "Запомнить Это Окно"
 
-#: src/modules/battery/e_mod_main.c:995
-msgid "Danger"
-msgstr "Опасность"
+#: src/bin/e_border.c:5977
+msgid "Remember This Instance Only"
+msgstr "Запомнить только Этот Случай"
 
-#: src/modules/dropshadow/e_mod_main.c:316
-msgid "Dark"
-msgstr "Тёмная"
+#: src/bin/e_border.c:5980
+msgid "Match by Name"
+msgstr "Находить по Имени"
 
-#: src/bin/e_int_menus.c:81
-msgid "Desktops"
-msgstr "Рабочие столы"
+#: src/bin/e_border.c:5981
+msgid "Match by Class"
+msgstr "Находить по Классу"
 
-#: src/modules/dropshadow/e_mod_main.c:139
-msgid "Dropshadow"
-msgstr "Тень"
+#: src/bin/e_border.c:5982
+msgid "Match by Title"
+msgstr "Находить по Названию"
 
-#: src/bin/e_border.c:3656
+#: src/bin/e_border.c:5983
+msgid "Match by Role"
+msgstr "Находить по Роли"
+
+#: src/bin/e_border.c:5984
+msgid "Match by Window Type"
+msgstr "Находить по Типу Окна"
+
+#: src/bin/e_border.c:5985
+msgid "Match by Transient Status"
+msgstr "Находить по Статусу"
+
+#: src/bin/e_border.c:5988
+msgid "Remember Position"
+msgstr "Запомнить Позицию"
+
+#: src/bin/e_border.c:5989
+msgid "Remember Size"
+msgstr "Запомнить Размер"
+
+#: src/bin/e_border.c:5990
+msgid "Remember Stacking"
+msgstr "Запомнить Штабелирование"
+
+#: src/bin/e_border.c:5991
+msgid "Remember Locks"
+msgstr "Запомнить Замки"
+
+#: src/bin/e_border.c:5992
+msgid "Remember Border"
+msgstr "Запомнить Границу"
+
+#: src/bin/e_border.c:5993
+msgid "Remember Stickiness"
+msgstr "Запомнить Липкость"
+
+#: src/bin/e_border.c:5994
+#, fuzzy
+msgid "Remember Desktop"
+msgstr "Запомнить Рабочий Стол"
+
+#: src/bin/e_border.c:5995
+msgid "Remember Shaded State"
+msgstr "Запомнить Свернутое Состояние"
+
+#: src/bin/e_border.c:5996
+msgid "Remember Zone"
+msgstr "Запомнить Зону"
+
+#: src/bin/e_border.c:5997
+msgid "Remember Skip Window List"
+msgstr "Запомнить Список Пропуска Окон"
+
+#: src/bin/e_border.c:6011
+msgid "Always On Top"
+msgstr "Всегда Поверху"
+
+#: src/bin/e_border.c:6021 src/modules/clock/e_mod_main.c:341
+#: src/modules/desktopname/e_mod_main.c:145
+msgid "Normal"
+msgstr "Нормально"
+
+#: src/bin/e_border.c:6031
+msgid "Always Below"
+msgstr "Всегда Понизу"
+
+#: src/bin/e_border.c:6075
+msgid "Kill"
+msgstr "Убить"
+
+#: src/bin/e_border.c:6088
+msgid "Shaded"
+msgstr "Свёрнут"
+
+#: src/bin/e_border.c:6101
+msgid "Maximized"
+msgstr "Увеличен"
+
+#: src/bin/e_border.c:6134
+msgid "Borderless"
+msgstr ""
+
+#: src/bin/e_border.c:6161
+#, fuzzy
+msgid "Skip Window List"
+msgstr "Список Пропуска Окон"
+
+#: src/bin/e_border.c:6175
+#, fuzzy
+msgid "Locks"
+msgstr "Замки"
+
+#: src/bin/e_border.c:6182
+msgid "Remember"
+msgstr "Запомнить"
+
+#: src/bin/e_border.c:6192
+msgid "Send To"
+msgstr "Послать"
+
+#: src/bin/e_border.c:6214
 msgid "Edit Icon"
 msgstr "Редактировать Иконку"
 
-#: src/bin/e_int_menus.c:545 src/modules/cpufreq/e_mod_main.c:814
-#: src/modules/pager/e_mod_main.c:420 src/modules/ibar/e_mod_main.c:564
-#: src/modules/battery/e_mod_main.c:561 src/modules/clock/e_mod_main.c:309
-#: src/modules/temperature/e_mod_main.c:721
-msgid "Edit Mode"
-msgstr "Режим редактирования"
+#: src/bin/e_border.c:6240
+msgid "Create Icon"
+msgstr "Создать Иконку"
 
-#: src/bin/e_module.c:384
-msgid "Enabled"
-msgstr "Включено"
+#: src/bin/e_border.c:6328
+msgid "Icon Edit Error"
+msgstr "Ошибка редактирования иконки"
 
-#: src/bin/e_gadman.c:571
+#: src/bin/e_border.c:6329
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"Ошибка при запуске редактора иконок\n"
+"\n"
+"пожалуйста, установите e_util_eapp_edit\n"
+"или убедитесь, что он находится в переменной PATH\n"
+
+#: src/bin/e_config.c:313
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new configuration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"Данные конфигурации нуждались в модернизации. Ваша старая\n"
+"конфигурация была стерта, и переписана новой. Это будет\n"
+"происходить регулярно в течении разработки, так что не сообщайте\n"
+"об ошибке. Это просто означает, что Enlightenment нуждается\n"
+"в новых данных конфигурации по умолчанию для функциональных\n"
+"возможностей годных к употреблению, в которых ваша старая конфигурация\n"
+"просто испытывала недостаток. Теперь Вы можете всё повторно настроить.\n"
+"Извините за икание в вашей конфигурации.\n"
+
+#: src/bin/e_config.c:327
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your configuration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"Ваша конфигурация БОЛЕЕ НОВА чем Enlightenment. Это очень странно.\n"
+"Это не должно случиться, если Вы не понизили Enlightenment или\n"
+"скопировали конфигурацию с места, где была более новая версия "
+"Enlightenment.\n"
+"Это плохо, и ваша конфигурация была восстановлена на стандартную.\n"
+"Извините за неудобство.\n"
+
+#: src/bin/e_config.c:1401
+#, fuzzy
+msgid "Configuration Upgraded"
+msgstr "Настройки Изменились"
+
+#: src/bin/e_container.c:129
+#, c-format
+msgid "Container %d"
+msgstr "Контейнер %d"
+
+#: src/bin/e_error.c:208 src/bin/e_error.c:217
+msgid "OK"
+msgstr ""
+
+#: src/bin/e_error.c:363
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: Ошибка!"
+
+#: src/bin/e_gadman.c:597
+msgid "Automatic Width"
+msgstr "Автоматическая ширина"
+
+#: src/bin/e_gadman.c:608
+msgid "Half Screen Width"
+msgstr "Ширина на половину экрана"
+
+#: src/bin/e_gadman.c:614
+msgid "Full Screen Width"
+msgstr "Ширина в полный Экран"
+
+#: src/bin/e_gadman.c:626
+msgid "Center Horizontally"
+msgstr "Выровнять по горизонтали"
+
+#: src/bin/e_gadman.c:644
+msgid "Automatic Height"
+msgstr "Автоматическая высота"
+
+#: src/bin/e_gadman.c:655
+msgid "Half Screen Height"
+msgstr "Высота на половину экрана"
+
+#: src/bin/e_gadman.c:661
+msgid "Full Screen Height"
+msgstr "Высота в полный Экран"
+
+#: src/bin/e_gadman.c:672
+msgid "Center Vertically"
+msgstr "Выровнять по вертикали"
+
+#: src/bin/e_gadman.c:684
 msgid "End Edit Mode"
 msgstr "Завершить режим редактирования"
 
-#: src/bin/e_main.c:369
-msgid "Enlightenment"
-msgstr "Enlightenment"
+#: src/bin/e_init.c:38
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "X уведомляет, что нет корневых окон и %i экранов!\n"
 
-#: src/modules/battery/e_mod_main.c:98
-msgid "Enlightenment Battery Module"
-msgstr "Модуль батареи Enlightenment"
+#: src/bin/e_init.c:112
+msgid "Disable this splash screen in the future?"
+msgstr "Выключить этот глюк в будущем?"
 
-#: src/modules/clock/e_mod_main.c:95
-msgid "Enlightenment Clock Module"
-msgstr "Модуль часов Enlightenment"
+#: src/bin/e_int_menus.c:78
+msgid "Favorite Applications"
+msgstr "Любимые Приложения"
 
-#: src/modules/dropshadow/e_mod_main.c:148
-msgid "Enlightenment Dropshadow Module"
-msgstr "Модуль тени Enlightenment"
+#: src/bin/e_int_menus.c:88
+msgid "Modules"
+msgstr "Модули"
 
-#: src/modules/ibar/e_mod_main.c:165
-msgid "Enlightenment IBar Module"
-msgstr "Модуль IBar Enlightenment"
+#: src/bin/e_int_menus.c:95
+msgid "Desktops"
+msgstr "Рабочие столы"
 
-#: src/bin/e_main.c:352
-msgid "Enlightenment IPC setup error!"
-msgstr "Ошибка в настройке Enlightenment IPC"
+#: src/bin/e_int_menus.c:102
+msgid "Windows"
+msgstr "Окна"
 
-#: src/modules/pager/e_mod_main.c:137
-msgid "Enlightenment Pager Module"
-msgstr "Модуль Пейджер Enlightenment"
+#: src/bin/e_int_menus.c:109
+#, fuzzy
+msgid "Lost Windows"
+msgstr "Потерянные Окна"
 
-#: src/bin/e_main.c:371
-msgid "Enlightenment Starting. Please wait."
-msgstr "Запуск Enlightenment. Пожалуйста, подождите."
+#: src/bin/e_int_menus.c:116
+msgid "Gadgets"
+msgstr "Гаджеты"
 
-#: src/modules/temperature/e_mod_main.c:96
-msgid "Enlightenment Temperature Module"
-msgstr "Модуль температуры Enlightenment"
+#: src/bin/e_int_menus.c:123
+msgid "Themes"
+msgstr "Темы"
 
-#: src/modules/test/e_mod_main.c:66
-msgid "Enlightenment Test Module"
-msgstr "Тестовый модуль Enlightenment"
+#: src/bin/e_int_menus.c:131 src/bin/e_int_menus.c:349
+msgid "About Enlightenment"
+msgstr "О Enlightenment"
 
-#: src/bin/e_main.c:153
+#: src/bin/e_int_menus.c:138
+msgid "Run Command"
+msgstr "Запустить Комманду"
+
+#: src/bin/e_int_menus.c:146 src/bin/e_module.c:407
+msgid "Configuration"
+msgstr "Настройка"
+
+#: src/bin/e_int_menus.c:154
+#, fuzzy
+msgid "Restart Enlightenment"
+msgstr "Перезапустить Enlightenment"
+
+#: src/bin/e_int_menus.c:159
+msgid "Exit Enlightenment"
+msgstr "Выйти из Enlightenment"
+
+#: src/bin/e_int_menus.c:350
+#, c-format
+msgid ""
+"This is Enlightenment %s.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+"\n"
+"We hope you enjoy using this software as much as we enjoyed writing it.\n"
+"\n"
+"Please think of the aardvarks. They need some love too."
+msgstr ""
+"Это Enlightenment %s.\n"
+"Авторское право © 1999-2005, Команда разработчиков Enlightenment.\n"
+"\n"
+"Мы надеемся, что Вы любите использовать эту программу также, как мы любим писать её\n"
+"Пожалуйста, подумайте о муравьедах. Они также нуждаются в небольшом количестве любви."
+
+#: src/bin/e_int_menus.c:419
+msgid "(No Applications)"
+msgstr "(Нет приложений)"
+
+#: src/bin/e_int_menus.c:501
+msgid "New Row of Desktops"
+msgstr "Новая вертикаль Рабочих Столов"
+
+#: src/bin/e_int_menus.c:505
+msgid "Remove Row of Desktops"
+msgstr "Удалить вертикаль Рабочих Столов"
+
+#: src/bin/e_int_menus.c:509
+msgid "New Column of Desktops"
+msgstr "Новая горизонталь Рабочих Столов"
+
+#: src/bin/e_int_menus.c:513
+msgid "Remove Column of Desktops"
+msgstr "Удалить горизонталь Рабочих Столов"
+
+#: src/bin/e_int_menus.c:580
+#, fuzzy
+msgid "Applications"
+msgstr "Приложения"
+
+#: src/bin/e_int_menus.c:636 src/bin/e_int_menus.c:903
+msgid "(No Windows)"
+msgstr "(Нет окон)"
+
+#: src/bin/e_int_menus.c:651 src/bin/e_int_menus.c:917
+msgid "No name!!"
+msgstr "Нет Имени!!"
+
+#: src/bin/e_int_menus.c:667
+#, fuzzy
+msgid "Cleanup Windows"
+msgstr "Расчистить Окна"
+
+#: src/bin/e_int_menus.c:740 src/modules/battery/e_mod_main.c:592
+#: src/modules/clock/e_mod_main.c:320 src/modules/ibar/e_mod_main.c:620
+#: src/modules/ibox/e_mod_main.c:457 src/modules/pager/e_mod_main.c:437
+#: src/modules/temperature/e_mod_main.c:820
+#: src/modules/cpufreq/e_mod_main.c:944 src/modules/start/e_mod_main.c:233
+msgid "Edit Mode"
+msgstr "Редактировать"
+
+#: src/bin/e_int_menus.c:746
+msgid "(Unused)"
+msgstr "(Не используется)"
+
+#: src/bin/e_int_menus.c:847
+msgid "(Empty)"
+msgstr "(Пусто)"
+
+#: src/bin/e_main.c:203
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+
+#: src/bin/e_main.c:271
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -336,63 +502,7 @@ msgstr ""
 "Enlightenment не может инициализировать Ecore!\n"
 "Возможно, у вас недостаточно памяти?"
 
-#: src/bin/e_main.c:239
-msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
-"Perhaps you have no home directory or the disk is full?"
-msgstr ""
-"Enlightenment не может создать директории в вашем домашнем каталоге.\n"
-"Возможно, у вас нет домашнего католога или диск заполнен?"
-
-#: src/bin/e_main.c:180
-msgid ""
-"Enlightenment cannot initialize its X connection.\n"
-"Have you set your DISPLAY variable?"
-msgstr ""
-"Enlightenment не может инициализировать подключение к X.\n"
-"Бы настроили переменную DISPLAY?"
-
-#: src/bin/e_main.c:219
-msgid ""
-"Enlightenment cannot initialize the Evas system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может инициализировать систему Evas.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:227
-msgid ""
-"Enlightenment cannot initialize the File system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может инициализировать файловую систему.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:211
-msgid ""
-"Enlightenment cannot initialize the IPC system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может инициализировать систему IPC.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:203
-msgid ""
-"Enlightenment cannot initialize the connections system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может инициализировать систему подключений.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:169
-msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может настроить указатель сигнала HUP.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:163
+#: src/bin/e_main.c:281
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -400,69 +510,32 @@ msgstr ""
 "Enlightenment не может настроить указатель сигнала выхода.\n"
 "Возможно, у вас недостаточно памяти?"
 
-#: src/bin/e_main.c:290
+#: src/bin/e_main.c:287
 msgid ""
-"Enlightenment cannot set up init screen.\n"
+"Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment не может настроить экран инициализации.\n"
+"Enlightenment не может настроить указатель сигнала HUP.\n"
 "Возможно, у вас недостаточно памяти?"
 
-#: src/bin/e_main.c:262
-msgid "Enlightenment cannot set up its actions system."
-msgstr "Enlightenment не может настроить свою систему действий."
+#: src/bin/e_main.c:298
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment не может инициализировать подключение к X.\n"
+"Вы настроили переменную DISPLAY?"
 
 #: src/bin/e_main.c:306
-msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenment не может настроить свою систему приложений."
-
-#: src/bin/e_main.c:269
-msgid "Enlightenment cannot set up its bindings system."
-msgstr "Enlightenment не может настроить свою систему привязок."
-
-#: src/bin/e_main.c:255
-msgid "Enlightenment cannot set up its config system."
-msgstr "Enlightenment не может настроить свою систему настроек."
-
-#: src/bin/e_main.c:346
-msgid "Enlightenment cannot set up its dnd system."
-msgstr "Enlightenment не может настроить свою систему ДНД."
-
-#: src/bin/e_main.c:280
-msgid "Enlightenment cannot set up its font system."
-msgstr "Enlightenment не может настроить свою систему шрифтов."
-
-#: src/bin/e_main.c:338
-msgid "Enlightenment cannot set up its module system."
-msgstr "Enlightenment не может настроить свою систему модулей."
+#, fuzzy
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment не может инициализировать аварийную систему сообщений.\n"
+"Вы настроили переменную DISPLAY?"
 
 #: src/bin/e_main.c:313
-msgid "Enlightenment cannot set up its theme system."
-msgstr "Enlightenment не может настроить свою систему тем."
-
-#: src/bin/e_main.c:247
-msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment не может настроить пути для поиска файлов.\n"
-"Возможно, у вас недостаточно памяти?"
-
-#: src/bin/e_main.c:325 src/bin/e_main.c:353
-msgid ""
-"Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
-"Double check to see if Enlightenment is not already on this display,\n"
-"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-"and try running again."
-msgstr ""
-"Enlightenment не может настроить сокет IPC.\n"
-"Возможно он уже используетса существующей копией Enlightenment.\n"
-"Убедитесь, что Enlightenment не запущен уже на етом экране.\n"
-"Также, попробуйте удалить все файлы в ~/.ecore/enlightenment-*\n"
-"и попробуйте запустить снова."
-
-#: src/bin/e_main.c:187
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -470,21 +543,260 @@ msgstr ""
 "Enlightenment не может настроить оболочку xinerama.\n"
 "Этого не должно случаться."
 
-#: src/bin/e_main.c:298
+#: src/bin/e_main.c:329
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может инициализировать систему подключений.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:337
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может инициализировать систему IPC.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:345
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может инициализировать систему Evas.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:351
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment обнаружил, что ecore_evas не поддерживает Software X11\n"
+"предоставление в Evas. Пожалуйста проверьте вашу установку Evas и Ecore\n"
+"и проверьте, что они поддерживают предоставление Software X11."
+
+#: src/bin/e_main.c:360
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может инициализировать файловую систему.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:372
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment не может создать директории в вашем домашнем каталоге.\n"
+"Возможно, у вас нет домашнего католога или диск заполнен?"
+
+#: src/bin/e_main.c:380
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenment не может настроить свою систему настроек."
+
+#: src/bin/e_main.c:387
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может настроить пути для поиска файлов.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:395
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment не может настроить свою систему действий."
+
+#: src/bin/e_main.c:402
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment не может настроить свою систему привязок."
+
+#: src/bin/e_main.c:409
+#, fuzzy
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment не может настроить свою систему подсказок."
+
+#: src/bin/e_main.c:420
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenment не может настроить свою систему шрифтов."
+
+#: src/bin/e_main.c:430
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenment не может настроить свою систему приложений."
+
+#: src/bin/e_main.c:437
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenment не может настроить свою систему тем."
+
+#: src/bin/e_main.c:446
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment не может настроить экран инициализации.\n"
+"Возможно, у вас недостаточно памяти?"
+
+#: src/bin/e_main.c:455
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
+"Настройка управления окнами для всех экранов на вашей системе провалена.\n"
+"Возможно бежит другой менеджер окон?\n"
 
-#: src/bin/e_error.c:346
-msgid "Enlightenment: Error!"
-msgstr "Enlightenment: Ошибка!"
 
-#: src/modules/ibar/e_mod_main.c:792
-msgid "Enormous"
-msgstr "Громадный"
+#: src/bin/e_main.c:462
+#, fuzzy
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenment не может настроить систему запоминания настроек."
 
-#: src/modules/battery/e_mod_main.c:46
+#: src/bin/e_main.c:478
+#, fuzzy
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again.\n"
+"\n"
+"If you use AFS then maybe you might want to make a symlink from\n"
+"~/.ecore to /tmp/my_directory/ecore where sockets can be made."
+msgstr ""
+"Enlightenment не может настроить сокет IPC.\n"
+"Возможно он уже используется существующей копией Enlightenment.\n"
+"Убедитесь, что Enlightenment уже не запущен на этом экране.\n"
+"Также, попробуйте удалить все файлы в ~/.ecore/enlightenment-*\n"
+"и попробуйте запустить снова.\n"
+"\n"
+"Если Вы используете AFS тогда возможно, Вы могли бы сделать symlink\n"
+"из ~/.ecore к /tmp/my_directory/ecore, где гнезда могут быть сделаны."
+
+#: src/bin/e_main.c:494
+#, fuzzy
+msgid "Enlightenment cannot set up its msg system."
+msgstr "Enlightenment не может настроить свою систему сообщений."
+
+#: src/bin/e_main.c:501
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenment не может настроить свою систему ДНД."
+
+#: src/bin/e_main.c:508
+#, fuzzy
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr "Enlightenment не может настроить свою систему обработки захвата ввода."
+
+#: src/bin/e_main.c:515
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenment не может настроить свою систему модулей."
+
+#: src/bin/e_main.c:522
+#, fuzzy
+msgid "Enlightenment cannot set up its window list system."
+msgstr "Enlightenment не может настроить свою систему списка окон."
+
+#: src/bin/e_main.c:528
+msgid "Enlightenment IPC setup error!"
+msgstr "Ошибка в настройке Enlightenment IPC"
+
+#: src/bin/e_main.c:529
+#, fuzzy
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+"Enlightenment не может настроить сокет IPC.\n"
+"Возможно он уже используется существующей копией Enlightenment.\n"
+"Убедитесь, что Enlightenment не запущен уже на этом экране.\n"
+"Также, попробуйте удалить все файлы в ~/.ecore/enlightenment-*\n"
+"и попробуйте запустить снова."
+
+#: src/bin/e_main.c:545
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/bin/e_main.c:547
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment Стартует. Пожалуйста, подождите."
+
+#: src/bin/e_module.c:100 src/bin/e_module.c:111 src/bin/e_module.c:133
+msgid "Error loading Module"
+msgstr "Ошибка загрузки модуля"
+
+#: src/bin/e_module.c:101
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"No module named %s could be found in the\n"
+"module search directories\n"
+msgstr ""
+"Ошибка загрузки модуля с именем: %s\n"
+"Модуль с именем %s не был найден в \n"
+"директориях поиска модулей\n"
+
+#: src/bin/e_module.c:112 src/bin/e_module.c:134
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"The full path to this module is:\n"
+"%s\n"
+"The error reported was:\n"
+"%s"
+msgstr ""
+"Ошибка загрузки модуля с именем: %s\n"
+"Полный путь до этого модуля:\n"
+"%s\n"
+"Сообщение ошибки:\n"
+"%s"
+
+#: src/bin/e_module.c:336
+#, fuzzy
+msgid "(No Loaded Modules)"
+msgstr "(Нет Загруженных Модулей)"
+
+#: src/bin/e_module.c:392
+msgid "About..."
+msgstr "О..."
+
+#: src/bin/e_module.c:396
+msgid "Enabled"
+msgstr "Включено"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "Запускаю %s"
+
+#: src/bin/e_utils.c:246
+msgid "Cannot exit - immortal windows."
+msgstr "Не могу выйти - бессмертные окна."
+
+#: src/bin/e_utils.c:247
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+
+#: src/bin/e_winlist.c:115
+msgid "Select a window"
+msgstr "Выбрать Окно"
+
+#: src/modules/battery/e_mod_main.c:76 src/modules/clock/e_mod_main.c:49
+#: src/modules/dropshadow/e_mod_main.c:100 src/modules/ibar/e_mod_main.c:121
+#: src/modules/ibox/e_mod_main.c:103 src/modules/pager/e_mod_main.c:84
+#: src/modules/temperature/e_mod_main.c:48 src/modules/test/e_mod_main.c:9
+#: src/modules/cpufreq/e_mod_main.c:66 src/modules/start/e_mod_main.c:28
+#: src/modules/desktopname/e_mod_main.c:30 src/modules/randr/e_mod_main.c:36
+msgid "Module API Error"
+msgstr "Ошибка API Модуля"
+
+#: src/modules/battery/e_mod_main.c:77
 #, c-format
 msgid ""
 "Error initializing Module: Battery\n"
@@ -497,7 +809,132 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/clock/e_mod_main.c:41
+#: src/modules/battery/e_mod_main.c:120
+msgid "Battery"
+msgstr "Батарея"
+
+#: src/modules/battery/e_mod_main.c:129
+msgid "Enlightenment Battery Module"
+msgstr "Модуль батареи Enlightenment"
+
+#: src/modules/battery/e_mod_main.c:130
+#, fuzzy
+msgid ""
+"A basic battery meter that uses either ACPI or APM\n"
+"on Linux to monitor your battery and AC power adaptor\n"
+"status. This will work under Linux and FreeBSD and is only\n"
+"as accurate as your BIOS or kernel drivers."
+msgstr ""
+"Базовый измеритель уровня зарядки батареи, который использует\n"
+"ACPI или APM на Linux, чтобы контролировать батарею и её статус.\n"
+"Это работает только под Linux и столь же точен как ваш BIOS или\n"
+"драйвер ядра"
+
+#: src/modules/battery/e_mod_main.c:221 src/modules/battery/e_mod_main.c:500
+#: src/modules/cpufreq/e_mod_main.c:221 src/modules/cpufreq/e_mod_main.c:538
+msgid "Set Poll Time"
+msgstr "Установить время проверок"
+
+#: src/modules/battery/e_mod_main.c:225 src/modules/battery/e_mod_main.c:504
+msgid "Set Alarm"
+msgstr "Установить Сигнал"
+
+#: src/modules/battery/e_mod_main.c:407
+msgid "Disable"
+msgstr "Отключить"
+
+#: src/modules/battery/e_mod_main.c:414
+msgid "10 mins"
+msgstr "10 мин."
+
+#: src/modules/battery/e_mod_main.c:421
+msgid "20 mins"
+msgstr "20 мин."
+
+#: src/modules/battery/e_mod_main.c:428
+msgid "30 mins"
+msgstr "30 мин."
+
+#: src/modules/battery/e_mod_main.c:435
+msgid "40 mins"
+msgstr "40 мин."
+
+#: src/modules/battery/e_mod_main.c:442
+msgid "50 mins"
+msgstr "50 мин."
+
+#: src/modules/battery/e_mod_main.c:449
+msgid "1 hour"
+msgstr "1 час"
+
+#: src/modules/battery/e_mod_main.c:461
+msgid "Check Fast (1 sec)"
+msgstr "Проверять Быстро (1 сек)"
+
+#: src/modules/battery/e_mod_main.c:468
+msgid "Check Medium (5 sec)"
+msgstr "Проверять Умеренно (5 сек)"
+
+#: src/modules/battery/e_mod_main.c:475
+msgid "Check Normal (10 sec)"
+msgstr "Проверять Нормально (10 сек)"
+
+#: src/modules/battery/e_mod_main.c:482
+msgid "Check Slow (30 sec)"
+msgstr "Проверять Медленно (30 сек)"
+
+#: src/modules/battery/e_mod_main.c:489
+msgid "Check Very Slow (60 sec)"
+msgstr "Проверять Очень Медленно (60 сек)"
+
+#: src/modules/battery/e_mod_main.c:759
+msgid "Battery Running Low"
+msgstr "Заряд батареи низок."
+
+#: src/modules/battery/e_mod_main.c:760
+msgid ""
+"Your battery is running low.\n"
+"You may wish to switch to an AC source."
+msgstr ""
+"Заряд батареи низок.\n"
+"Вам лучше подключиться к источнику питания."
+
+#: src/modules/battery/e_mod_main.c:821
+msgid "NO INFO"
+msgstr "НЕТ ИНФО"
+
+#: src/modules/battery/e_mod_main.c:957 src/modules/battery/e_mod_main.c:1222
+#: src/modules/battery/e_mod_main.c:1371
+msgid "NO BAT"
+msgstr "НЕТ БАТ"
+
+#: src/modules/battery/e_mod_main.c:981 src/modules/battery/e_mod_main.c:1396
+msgid "BAD DRIVER"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1005 src/modules/battery/e_mod_main.c:1253
+#: src/modules/battery/e_mod_main.c:1420
+msgid "FULL"
+msgstr "ПОЛНАЯ"
+
+#: src/modules/battery/e_mod_main.c:1066 src/modules/battery/e_mod_main.c:1480
+msgid "High"
+msgstr "Высокий"
+
+#: src/modules/battery/e_mod_main.c:1070 src/modules/battery/e_mod_main.c:1484
+msgid "Low"
+msgstr "Низкий"
+
+#: src/modules/battery/e_mod_main.c:1074 src/modules/battery/e_mod_main.c:1488
+msgid "Danger"
+msgstr "Опасность"
+
+#: src/modules/battery/e_mod_main.c:1078 src/modules/battery/e_mod_main.c:1492
+#: src/modules/battery/e_mod_main.c:1656
+msgid "Charging"
+msgstr "Зарядка"
+
+#: src/modules/clock/e_mod_main.c:50
 #, c-format
 msgid ""
 "Error initializing Module: Clock\n"
@@ -510,7 +947,32 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/dropshadow/e_mod_main.c:92
+#: src/modules/clock/e_mod_main.c:95
+msgid "Clock"
+msgstr "Часы"
+
+#: src/modules/clock/e_mod_main.c:104
+msgid "Enlightenment Clock Module"
+msgstr "Модуль часов Enlightenment"
+
+#: src/modules/clock/e_mod_main.c:105
+msgid "A simple module to give E17 a clock."
+msgstr "Простой модуль часов в E17"
+
+#: src/modules/clock/e_mod_main.c:330
+msgid "No Digital Display"
+msgstr "Нет Цифрового Показа"
+
+#: src/modules/clock/e_mod_main.c:352
+#, fuzzy
+msgid "24 Hour"
+msgstr "1 час"
+
+#: src/modules/clock/e_mod_main.c:364
+msgid "Digital Display"
+msgstr "Цифровой Показ"
+
+#: src/modules/dropshadow/e_mod_main.c:101
 #, c-format
 msgid ""
 "Error initializing Module: Dropshadow\n"
@@ -523,7 +985,98 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/ibar/e_mod_main.c:113
+#: src/modules/dropshadow/e_mod_main.c:184
+msgid "Dropshadow"
+msgstr "Тень"
+
+#: src/modules/dropshadow/e_mod_main.c:193
+msgid "Enlightenment Dropshadow Module"
+msgstr "Модуль тени Enlightenment"
+
+#: src/modules/dropshadow/e_mod_main.c:194
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast\n"
+"on the desktop background - without special X-Server extensions\n"
+"or hardware acceleration."
+msgstr ""
+"Это модуль тени, который позволяет отбрасывать тень на фон рабочего стола\n"
+"без специальных расширений X-Server или аппаратной акселерации."
+
+#: src/modules/dropshadow/e_mod_main.c:304
+msgid "Very Fuzzy"
+msgstr "Очень Размытая"
+
+#: src/modules/dropshadow/e_mod_main.c:313
+msgid "Fuzzy"
+msgstr "Размытая"
+
+#: src/modules/dropshadow/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:849
+#: src/modules/ibox/e_mod_main.c:639
+msgid "Medium"
+msgstr "Средне"
+
+#: src/modules/dropshadow/e_mod_main.c:331
+msgid "Sharp"
+msgstr "Резкая"
+
+#: src/modules/dropshadow/e_mod_main.c:340
+msgid "Very Sharp"
+msgstr "Очень Резкая"
+
+#: src/modules/dropshadow/e_mod_main.c:352
+msgid "Very Dark"
+msgstr "Очень Тёмная"
+
+#: src/modules/dropshadow/e_mod_main.c:361
+msgid "Dark"
+msgstr "Тёмная"
+
+#: src/modules/dropshadow/e_mod_main.c:370
+msgid "Light"
+msgstr "Светлая"
+
+#: src/modules/dropshadow/e_mod_main.c:379
+msgid "Very Light"
+msgstr "Очень Светлая"
+
+#: src/modules/dropshadow/e_mod_main.c:391
+msgid "Very Far"
+msgstr "Очень Далеко"
+
+#: src/modules/dropshadow/e_mod_main.c:400
+msgid "Far"
+msgstr "Далеко"
+
+#: src/modules/dropshadow/e_mod_main.c:409
+msgid "Near"
+msgstr "Рядом"
+
+#: src/modules/dropshadow/e_mod_main.c:418
+msgid "Very Near"
+msgstr "Очень Близко"
+
+#: src/modules/dropshadow/e_mod_main.c:427
+msgid "Extremely Near"
+msgstr "Чрезвычайно Близко"
+
+#: src/modules/dropshadow/e_mod_main.c:436
+msgid "Immediately Underneath"
+msgstr "Сразу Внизу"
+
+#: src/modules/dropshadow/e_mod_main.c:448
+msgid "High Quality"
+msgstr "Высокое Качество"
+
+#: src/modules/dropshadow/e_mod_main.c:458
+#, fuzzy
+msgid "Medium Quality"
+msgstr "Среднее Качество"
+
+#: src/modules/dropshadow/e_mod_main.c:468
+msgid "Low Quality"
+msgstr "Низкое Качество"
+
+#: src/modules/ibar/e_mod_main.c:122
 #, c-format
 msgid ""
 "Error initializing Module: IBar\n"
@@ -536,7 +1089,107 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/pager/e_mod_main.c:82
+#: src/modules/ibar/e_mod_main.c:165
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibar/e_mod_main.c:174
+msgid "Enlightenment IBar Module"
+msgstr "Модуль IBar Enlightenment"
+
+#: src/modules/ibar/e_mod_main.c:175
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+
+
+#: src/modules/ibar/e_mod_main.c:284 src/modules/ibar/e_mod_main.c:899
+#: src/modules/ibox/e_mod_main.c:689
+msgid "Options"
+msgstr "Опции"
+
+#: src/modules/ibar/e_mod_main.c:806 src/modules/ibox/e_mod_main.c:602
+msgid "Auto fit icons"
+msgstr "Авто вмещение иконок"
+
+#: src/modules/ibar/e_mod_main.c:812
+msgid "Follower"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:611
+msgid "Microscopic"
+msgstr "Микроскопический"
+
+#: src/modules/ibar/e_mod_main.c:828 src/modules/ibox/e_mod_main.c:618
+msgid "Tiny"
+msgstr "Мелкий"
+
+#: src/modules/ibar/e_mod_main.c:835 src/modules/ibox/e_mod_main.c:625
+msgid "Very Small"
+msgstr "Очень Маленький"
+
+#: src/modules/ibar/e_mod_main.c:842 src/modules/ibox/e_mod_main.c:632
+msgid "Small"
+msgstr "Маленький"
+
+#: src/modules/ibar/e_mod_main.c:856 src/modules/ibox/e_mod_main.c:646
+msgid "Large"
+msgstr "Большой"
+
+#: src/modules/ibar/e_mod_main.c:863 src/modules/ibox/e_mod_main.c:653
+msgid "Very Large"
+msgstr "Очень Большой"
+
+#: src/modules/ibar/e_mod_main.c:870 src/modules/ibox/e_mod_main.c:660
+msgid "Extremely Large"
+msgstr "Чрезвычайно Большой"
+
+#: src/modules/ibar/e_mod_main.c:877 src/modules/ibox/e_mod_main.c:667
+msgid "Huge"
+msgstr "Огромный"
+
+#: src/modules/ibar/e_mod_main.c:884 src/modules/ibox/e_mod_main.c:674
+msgid "Enormous"
+msgstr "Громадный"
+
+#: src/modules/ibar/e_mod_main.c:891 src/modules/ibox/e_mod_main.c:681
+msgid "Gigantic"
+msgstr "Гигантский"
+
+#: src/modules/ibox/e_mod_main.c:104
+#, fuzzy, c-format
+msgid ""
+"Error initializing Module: IBox\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Ошибка инициализации Модуля: IBox\n"
+"Он требует минимальную версию API модулей: %i.\n"
+"Версия API модулей объявленная для Enlightenment: %i.\n"
+"Завершаем работу модуля."
+
+#: src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
+msgstr ""
+
+#: src/modules/ibox/e_mod_main.c:157
+#, fuzzy
+msgid "Enlightenment IBox Module"
+msgstr "Модуль IBox Enlightenment"
+
+#: src/modules/ibox/e_mod_main.c:158
+msgid ""
+"This is the IBox Application Launcher box module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+
+#: src/modules/pager/e_mod_main.c:85
 #, c-format
 msgid ""
 "Error initializing Module: Pager\n"
@@ -549,7 +1202,19 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/temperature/e_mod_main.c:44
+#: src/modules/pager/e_mod_main.c:131
+msgid "Pager"
+msgstr "Пейджер"
+
+#: src/modules/pager/e_mod_main.c:140
+msgid "Enlightenment Pager Module"
+msgstr "Модуль Пейджер Enlightenment"
+
+#: src/modules/pager/e_mod_main.c:141
+msgid "A pager module to navigate virtual desktops."
+msgstr "Модуль пейджера для переключения виртуальных рабочих столов."
+
+#: src/modules/temperature/e_mod_main.c:49
 #, c-format
 msgid ""
 "Error initializing Module: Temperature\n"
@@ -562,17 +1227,119 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/modules/cpufreq/e_mod_main.c:58
+#: src/modules/temperature/e_mod_main.c:92
+msgid "Temperature"
+msgstr "Температура"
+
+#: src/modules/temperature/e_mod_main.c:101
+msgid "Enlightenment Temperature Module"
+msgstr "Модуль температуры Enlightenment"
+
+#: src/modules/temperature/e_mod_main.c:102
 msgid ""
-"Error initializing Module: cpufreq\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is %i.\n"
-"Aborting module."
+"A module to measure the ACPI Thermal sensor on Linux.\n"
+"It is especially useful for modern Laptops with high speed\n"
+"CPUs that generate a lot of heat."
 msgstr ""
-"Ошибка инициализации Модуля: cpufreq\n"
-"Он требует минимальную версию API модулей: %i.\n"
-"Версия API модулей объявленная для Enlightenment: %i.\n"
-"Завершаем работу модуля."
+"Модуль измерения теплового датчика ACPI на Linux.\n"
+"Особенно полезен для современных портативных компьютеров\n"
+"с высокой скоростью ЦПУ, которые производят большую температуру."
+
+#: src/modules/temperature/e_mod_main.c:191
+#: src/modules/temperature/e_mod_main.c:700
+msgid "Check Interval"
+msgstr "Интервал Проверок"
+
+#: src/modules/temperature/e_mod_main.c:195
+#: src/modules/temperature/e_mod_main.c:704
+msgid "Low Temperature"
+msgstr "Низкая Температура"
+
+#: src/modules/temperature/e_mod_main.c:199
+#: src/modules/temperature/e_mod_main.c:708
+msgid "High Temperature"
+msgstr "Высокая температура"
+
+#: src/modules/temperature/e_mod_main.c:505
+msgid "Fast (1 sec)"
+msgstr "Быстрый (1 сек)"
+
+#: src/modules/temperature/e_mod_main.c:512
+msgid "Medium (5 sec)"
+msgstr "Средний (5 сек)"
+
+#: src/modules/temperature/e_mod_main.c:519
+msgid "Normal (10 sec)"
+msgstr "Нормальный (10 сек)"
+
+#: src/modules/temperature/e_mod_main.c:526
+msgid "Slow (30 sec)"
+msgstr "Медленный (30 сек)"
+
+#: src/modules/temperature/e_mod_main.c:533
+msgid "Very Slow (60 sec)"
+msgstr "Очень Медленный (60 сек)"
+
+#: src/modules/temperature/e_mod_main.c:545
+msgid "10C"
+msgstr "10C"
+
+#: src/modules/temperature/e_mod_main.c:552
+#: src/modules/temperature/e_mod_main.c:585
+msgid "20C"
+msgstr "20C"
+
+#: src/modules/temperature/e_mod_main.c:559
+#: src/modules/temperature/e_mod_main.c:592
+msgid "30C"
+msgstr "30C"
+
+#: src/modules/temperature/e_mod_main.c:566
+#: src/modules/temperature/e_mod_main.c:599
+msgid "40C"
+msgstr "40C"
+
+#: src/modules/temperature/e_mod_main.c:573
+#: src/modules/temperature/e_mod_main.c:606
+msgid "50C"
+msgstr "50C"
+
+#: src/modules/temperature/e_mod_main.c:613
+msgid "60C"
+msgstr "60C"
+
+#: src/modules/temperature/e_mod_main.c:620
+msgid "70C"
+msgstr "70C"
+
+#: src/modules/temperature/e_mod_main.c:627
+msgid "80C"
+msgstr "80C"
+
+#: src/modules/temperature/e_mod_main.c:634
+msgid "90C"
+msgstr "90C"
+
+#: src/modules/temperature/e_mod_main.c:641
+msgid "100C"
+msgstr "100C"
+
+#: src/modules/temperature/e_mod_main.c:669
+msgid "Temp1"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:676
+msgid "Temp2"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:683
+msgid "Temp3"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:714
+#, fuzzy
+msgid "Sensor"
+msgstr "Сенсор"
 
 #: src/modules/test/e_mod_main.c:10
 #, c-format
@@ -587,159 +1354,6 @@ msgstr ""
 "Версия API модулей объявленная для Enlightenment: %i.\n"
 "Завершаем работу модуля."
 
-#: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
-msgid "Error loading Module"
-msgstr "Ошибка при загрузке модуля"
-
-#: src/bin/e_border.c:3759
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Ошибка при запуске редактора иконок\n"
-"\n"
-"пожалуйста, установите e_util_eapp_edit\n"
-"или убедитесь, что он находится в переменной PATH\n"
-
-#: src/bin/e_int_menus.c:135
-msgid "Exit Enlightenment"
-msgstr "Выйти из Enlightenment"
-
-#: src/modules/ibar/e_mod_main.c:778
-msgid "Extremely Large"
-msgstr "Чрезвычайно Большой"
-
-#: src/modules/dropshadow/e_mod_main.c:382
-msgid "Extremely Near"
-msgstr "Чрезвычайно Близко"
-
-#: src/modules/battery/e_mod_main.c:927
-msgid "FULL"
-msgstr "ПОЛНАЯ"
-
-#: src/modules/dropshadow/e_mod_main.c:355
-msgid "Far"
-msgstr "Далеко"
-
-#: src/modules/temperature/e_mod_main.c:460
-msgid "Fast (1 sec)"
-msgstr "Быстро (1 сек)"
-
-#: src/bin/e_int_menus.c:60
-msgid "Favorite Applications"
-msgstr "Любимые Приложения"
-
-#: src/bin/e_gadman.c:547
-msgid "Full Screen Height"
-msgstr "Высота в полный Экран"
-
-#: src/bin/e_gadman.c:500
-msgid "Full Screen Width"
-msgstr "Ширина в полный Экран"
-
-#: src/modules/dropshadow/e_mod_main.c:268
-msgid "Fuzzy"
-msgstr "Размытая"
-
-#: src/bin/e_int_menus.c:99
-msgid "Gadgets"
-msgstr "Гаджеты"
-
-#: src/modules/ibar/e_mod_main.c:799
-msgid "Gigantic"
-msgstr "Гигантский"
-
-#: src/bin/e_gadman.c:541
-msgid "Half Screen Height"
-msgstr "Высота на половину экрана"
-
-#: src/bin/e_gadman.c:494
-msgid "Half Screen Width"
-msgstr "Ширина на половину экрана"
-
-#: src/modules/battery/e_mod_main.c:987
-msgid "High"
-msgstr "Высокий"
-
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:616
-msgid "High Temperature"
-msgstr "Высокая температура"
-
-#: src/modules/ibar/e_mod_main.c:785
-msgid "Huge"
-msgstr "Огромный"
-
-#: src/modules/ibar/e_mod_main.c:156
-msgid "IBar"
-msgstr "IBar"
-
-#: src/bin/e_border.c:3758
-msgid "Icon Edit Error"
-msgstr "Ошибка редактирования иконки"
-
-#: src/bin/e_border.c:3596
-msgid "Iconify"
-msgstr "Свернуть"
-
-#: src/modules/dropshadow/e_mod_main.c:391
-msgid "Immediately Underneath"
-msgstr "Сразу Внизу"
-
-#: src/modules/ibar/e_mod_main.c:764
-msgid "Large"
-msgstr "Большой"
-
-#: src/modules/dropshadow/e_mod_main.c:325
-msgid "Light"
-msgstr "Светлая"
-
-#: src/modules/battery/e_mod_main.c:991
-msgid "Low"
-msgstr "Низок"
-
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:612
-msgid "Low Temperature"
-msgstr "Низкая Температура"
-
-#: src/modules/cpufreq/e_mod_main.c:432
-msgid "Manual"
-msgstr "Ручная"
-
-#: src/bin/e_border.c:3617
-msgid "Maximized"
-msgstr "Увеличен"
-
-#: src/modules/cpufreq/e_mod_main.c:438
-msgid "Maximum Speed"
-msgstr "Максимальная Скорость"
-
-#: src/modules/dropshadow/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:757
-msgid "Medium"
-msgstr "Средне"
-
-#: src/modules/temperature/e_mod_main.c:467
-msgid "Medium (5 sec)"
-msgstr "Средний (5 сек)"
-
-#: src/modules/ibar/e_mod_main.c:729
-msgid "Microscopic"
-msgstr "Микроскопический"
-
-#: src/modules/cpufreq/e_mod_main.c:436
-msgid "Minimum Speed"
-msgstr "Минимальная Скорость"
-
-#: src/modules/dropshadow/e_mod_main.c:91 src/modules/cpufreq/e_mod_main.c:57
-#: src/modules/pager/e_mod_main.c:81 src/modules/ibar/e_mod_main.c:112
-#: src/modules/battery/e_mod_main.c:45 src/modules/clock/e_mod_main.c:40
-#: src/modules/temperature/e_mod_main.c:43 src/modules/test/e_mod_main.c:9
-msgid "Module API Error"
-msgstr "Ошибка API Модуля"
-
 #: src/modules/test/e_mod_main.c:24
 msgid "Module Config Menu Item 1"
 msgstr ""
@@ -752,281 +1366,258 @@ msgstr ""
 msgid "Module Config Menu Item 3"
 msgstr ""
 
-#: src/bin/e_int_menus.c:72
-msgid "Modules"
-msgstr "Модули"
-
-#: src/bin/e_main.c:387
-msgid "Most features do not work yet, and those that do are buggy."
-msgstr ""
-"Большинство особенностей не работает, а то что работает - работает с "
-"ошибками."
-
-#: src/modules/battery/e_mod_main.c:879
-msgid "NO BAT"
-msgstr "НЕТ БАТ"
-
-#: src/modules/battery/e_mod_main.c:748
-msgid "NO INFO"
-msgstr "НЕТ ИНФО"
-
-#: src/modules/dropshadow/e_mod_main.c:364
-msgid "Near"
-msgstr "Рядом"
-
-#: src/bin/e_int_menus.c:392
-msgid "New Column of Desktops"
-msgstr "Новая горизонталь Рабочих Столов"
-
-#: src/bin/e_int_menus.c:384
-msgid "New Row of Desktops"
-msgstr "Новая вертикаль Рабочих Столов"
-
-#: src/modules/temperature/e_mod_main.c:474
-msgid "Normal (10 sec)"
-msgstr "Нормальный (10 сек)"
-
-#: src/bin/e_error.c:187 src/bin/e_error.c:196
-msgid "OK"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:807
-msgid "Options"
-msgstr "Опции"
-
-#: src/bin/e_main.c:108
-#, c-format
-msgid ""
-"Options:\n"
-"\t-display DISPLAY\n"
-"\t\tConnect to display named DISPLAY.\n"
-"\t\tEG: -display :1.0\n"
-"\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
-"\t\tgiven the geometry. Add as many as you like. They all\n"
-"\t\treplace the real xinerama screens, if any. This can\n"
-"\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
-msgstr ""
-
-#: src/modules/pager/e_mod_main.c:128
-msgid "Pager"
-msgstr "Пейджер"
-
-#: src/bin/e_int_menus.c:396
-msgid "Remove Column of Desktops"
-msgstr "Удалить горизонталь Рабочих Столов"
-
-#: src/bin/e_int_menus.c:388
-msgid "Remove Row of Desktops"
-msgstr "Удалить вертикаль Рабочих Столов"
-
-#: src/bin/e_int_menus.c:128
-msgid "Restart Enlightement"
-msgstr "Перезапустить Enlightenment"
-
-#: src/bin/e_border.c:3640
-msgid "Send To"
-msgstr "Послать"
-
-#: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
-msgid "Set Alarm"
-msgstr "Установить Сигнал"
-
-#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:484
-msgid "Set Controller"
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:478
-#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
-msgid "Set Poll Time"
-msgstr "Установить время проверок"
-
-#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:491
-msgid "Set Speed"
-msgstr "Установить Скорость"
-
-#: src/bin/e_border.c:3607
-msgid "Shaded"
-msgstr "Свёрнут"
-
-#: src/modules/dropshadow/e_mod_main.c:286
-msgid "Sharp"
-msgstr "Резкая"
-
-#: src/modules/ibar/e_mod_main.c:811
-msgid "Size"
-msgstr "Размер"
-
-#: src/modules/temperature/e_mod_main.c:481
-msgid "Slow (30 sec)"
-msgstr "Медленно (30 сек)"
-
-#: src/modules/ibar/e_mod_main.c:750
-msgid "Small"
-msgstr "Маленький"
-
 #: src/modules/test/e_mod_main.c:32
 msgid "Something Else"
 msgstr "Что-то другое"
-
-#: src/bin/e_border.c:3627
-msgid "Sticky"
-msgstr "Липкий"
-
-#: src/modules/temperature/e_mod_main.c:87
-msgid "Temperature"
-msgstr "Температура"
 
 #: src/modules/test/e_mod_main.c:59
 msgid "Test!!!"
 msgstr "Тест!!!"
 
-#: src/bin/e_int_menus.c:108
-msgid "Themes"
-msgstr "Темы"
-
-#: src/bin/e_module.c:98
-#, c-format
-msgid ""
-"There was an error loading module named: %s\n"
-"No module named %s could be found in the\n"
-"module search directories\n"
-msgstr ""
-"Ошибка в загрузке модуля с именем: %s\n"
-"Модуль с именем %s не был найден в \n"
-"директориях поиска модулей\n"
-
-#: src/bin/e_module.c:109 src/bin/e_module.c:131
-#, c-format
-msgid ""
-"There was an error loading module named: %s\n"
-"The full path to this module is:\n"
-"%s\n"
-"The error reported was:\n"
-"%s"
-msgstr ""
-"Ошибка в загрузке модуля с именем: %s\n"
-"Полный путь до етого модуля:\n"
-"%s\n"
-"Сообщение ошибки:\n"
-"%s"
-
-#: src/modules/cpufreq/e_mod_main.c:271
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"governor via the module's setfreq utility."
-msgstr ""
-
-#: src/modules/cpufreq/e_mod_main.c:288
-msgid ""
-"There was an error trying to set the cpu frequency\n"
-"setting via the module's setfreq utility."
-msgstr ""
-
-#: src/bin/e_int_menus.c:241
-msgid ""
-"This is Enlightenment %s.\n"
-"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
-"\n"
-"We hope you enjoy using this software as much as we enjoyed writing it.\n"
-"\n"
-"Please think of the aardvarks. They need some love too."
-msgstr ""
-"Это Enlightenment %s.\n"
-"Авторское право © 1999-2005, Команда разработчиков Enlightenment.\n"
-"\n"
-"Мы надеемся, что Вам нравитса использовать эту программу настолько, "
-"насколько нам нравитса писать её\n"
-"Пожалуйста, подумайте о муравьедах. Они также нуждаются в небольшом "
-"количестве любви."
-
-#: src/bin/e_main.c:386
-msgid "This is development code, so be warned."
-msgstr "Предупреждаем, эта программа в стадии разработки"
-
-#: src/modules/ibar/e_mod_main.c:166
-msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
-msgstr ""
-
-#: src/modules/dropshadow/e_mod_main.c:149
-msgid ""
-"This is the dropshadow module that allows dropshadows to be cast\n"
-"on the desktop background - without special X-Server extensions\n"
-"or hardware acceleration."
-msgstr ""
-"Это модуль тени, который позволяет отбрасывать\n"
-"тень на фон рабочего стола - без специальных расширений X-Server\n"
-"или аппаратной акселерации."
+#: src/modules/test/e_mod_main.c:66
+msgid "Enlightenment Test Module"
+msgstr "Тестовый модуль Enlightenment"
 
 #: src/modules/test/e_mod_main.c:67
+#, fuzzy
 msgid ""
 "This module is VERY simple and is only used to test the basic\n"
 "interface of the Enlightenment 0.17.0 module system. Please\n"
-"Ignore this module unless you are working on the module system."
+"ignore this module unless you are working on the module system."
 msgstr ""
 "Этот модуль ОЧЕНЬ простой, и используется только для проверки основного\n"
 "интерфейса модульной системы Enlightenment 0.17.0. Пожалуйста\n"
 "игнорируйте этот модуль пока вы работаете в модульной системе."
 
-#: src/modules/ibar/e_mod_main.c:736
-msgid "Tiny"
-msgstr "Мелкий"
-
-#: src/modules/dropshadow/e_mod_main.c:307
-msgid "Very Dark"
-msgstr "Очень Тёмная"
-
-#: src/modules/dropshadow/e_mod_main.c:346
-msgid "Very Far"
-msgstr "Очень Далеко"
-
-#: src/modules/dropshadow/e_mod_main.c:259
-msgid "Very Fuzzy"
-msgstr "Очень Размытая"
-
-#: src/modules/ibar/e_mod_main.c:771
-msgid "Very Large"
-msgstr "Очень Большой"
-
-#: src/modules/dropshadow/e_mod_main.c:334
-msgid "Very Light"
-msgstr "Очень Светлая"
-
-#: src/modules/dropshadow/e_mod_main.c:373
-msgid "Very Near"
-msgstr "Очень Близко"
-
-#: src/modules/dropshadow/e_mod_main.c:295
-msgid "Very Sharp"
-msgstr "Очень Резкая"
-
-#: src/modules/temperature/e_mod_main.c:488
-msgid "Very Slow (60 sec)"
-msgstr "Очень Медленный (60 сек)"
-
-#: src/modules/ibar/e_mod_main.c:743
-msgid "Very Small"
-msgstr "Очень Маленький"
-
-#: src/bin/e_int_menus.c:90
-msgid "Windows"
-msgstr "Окна"
-
-#: src/bin/e_init.c:34
+#: src/modules/cpufreq/e_mod_main.c:67
 #, c-format
-msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X уведомляет, что нет корневых окон и %i экранов!\n"
-
-#: src/modules/battery/e_mod_main.c:687
 msgid ""
-"Your battery is running low.\n"
-"You may wish to switch to an AC source."
+"Error initializing Module: cpufreq\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is %i.\n"
+"Aborting module."
 msgstr ""
-"Заряд батареи низок.\n"
-"Вам лучше подключиться к источнику питания."
+"Ошибка инициализации Модуля: cpufreq\n"
+"Он требует минимальную версию API модулей: %i.\n"
+"Версия API модулей объявленная для Enlightenment: %i.\n"
+"Завершаем работу модуля."
+
+#: src/modules/cpufreq/e_mod_main.c:111
+msgid "CpuFreq"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:120
+msgid "CPU Frequency Controller Module"
+msgstr "Модуль Контоля Частоты ЦПУ"
+
+#: src/modules/cpufreq/e_mod_main.c:121
+msgid ""
+"A simple module to control the frequency of the system CPU. This is "
+"especially useful to save power on laptops."
+msgstr ""
+"Простой модуль контоля частоты центрального процессора. Особенно полезен на"
+"портативных компьютерах."
+
+#: src/modules/cpufreq/e_mod_main.c:227
+#, fuzzy
+msgid "Restore Controller on Startup"
+msgstr "Восстанавливать резолюцию при старте"
+
+#: src/modules/cpufreq/e_mod_main.c:234 src/modules/cpufreq/e_mod_main.c:550
+msgid "Set Controller"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:557
+msgid "Set Speed"
+msgstr "Установить Скорость"
+
+#: src/modules/cpufreq/e_mod_main.c:303 src/modules/cpufreq/e_mod_main.c:323
+msgid "CPU Frequency ERROR"
+msgstr "ОШИБКА Контоля Частоты ЦПУ"
+
+#: src/modules/cpufreq/e_mod_main.c:304
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:324
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"setting via the module's setfreq utility."
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:446
+msgid "Check Fast (0.5 sec)"
+msgstr "Проверять Быстро (0.5 сек)"
+
+#: src/modules/cpufreq/e_mod_main.c:453
+msgid "Check Medium (1 sec)"
+msgstr "Проверять Умеренно (1 сек)"
+
+#: src/modules/cpufreq/e_mod_main.c:460
+msgid "Check Normal (2 sec)"
+msgstr "Проверять Нормально (2 сек)"
+
+#: src/modules/cpufreq/e_mod_main.c:467
+msgid "Check Slow (5 sec)"
+msgstr "Проверять Медленно (5 сек)"
+
+#: src/modules/cpufreq/e_mod_main.c:474
+msgid "Check Very Slow (30 sec)"
+msgstr "Проверять Очень Медленно (30 сек)"
+
+#: src/modules/cpufreq/e_mod_main.c:490
+msgid "Manual"
+msgstr "Ручная"
+
+#: src/modules/cpufreq/e_mod_main.c:492
+msgid "Automatic"
+msgstr "Автоматически"
+
+#: src/modules/cpufreq/e_mod_main.c:494
+#, fuzzy
+msgid "Lower Power Automatic"
+msgstr "Автоматически Снижать Скорость"
+
+#: src/modules/cpufreq/e_mod_main.c:496
+msgid "Minimum Speed"
+msgstr "Минимальная Скорость"
+
+#: src/modules/cpufreq/e_mod_main.c:498
+msgid "Maximum Speed"
+msgstr "Максимальная Скорость"
+
+#: src/modules/cpufreq/e_mod_main.c:520
+#, c-format
+msgid "%i Mhz"
+msgstr "%i Мгц"
+
+#: src/modules/cpufreq/e_mod_main.c:523
+#, c-format
+msgid "%i.%i Ghz"
+msgstr "%i.%i Ггц"
+
+#: src/modules/cpufreq/e_mod_main.c:544
+#, fuzzy
+msgid "Restore Governor on Startup"
+msgstr "Восстанавливать при старте"
+
+#: src/modules/start/e_mod_main.c:29
+#, fuzzy, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Ошибка инициализации Модуля: test\n"
+"Он требует минимальную версию API модулей: %i.\n"
+"Версия API модулей объявленная для Enlightenment: %i.\n"
+"Завершаем работу модуля."
+
+#: src/modules/start/e_mod_main.c:72
+#, fuzzy
+msgid "Start"
+msgstr "Запуск"
+
+#: src/modules/start/e_mod_main.c:81
+#, fuzzy
+msgid "Enlightenment Start Module"
+msgstr "Модуль Запуск Enlightenment"
+
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Экспериментальный модуль Кнопки для E17"
+
+#: src/modules/desktopname/e_mod_main.c:31
+#, fuzzy, c-format
+msgid ""
+"Error initializing Module: desktop\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Ошибка инициализации Модуля: desktop\n"
+"Он требует минимальную версию API модулей: %i.\n"
+"Версия API модулей объявленная для Enlightenment: %i.\n"
+"Завершаем работу модуля."
+
+#: src/modules/desktopname/e_mod_main.c:77
+#, fuzzy
+msgid "DesktopName"
+msgstr "Имя Десктопа"
+
+#: src/modules/desktopname/e_mod_main.c:86
+#, fuzzy
+msgid "Enlightenment DesktopName Module"
+msgstr "Модуль Имя Рабочего Стола"
+
+#: src/modules/desktopname/e_mod_main.c:87
+msgid "Experimental module for E17: display desktop name on screen."
+msgstr ""
+"Експериментальный модуль для E17: показать имя рабочего стола на экране"
+
+#: src/modules/desktopname/e_mod_main.c:131
+#, fuzzy
+msgid "Very Slow"
+msgstr "Очень Медленно"
+
+#: src/modules/desktopname/e_mod_main.c:138
+msgid "Slow"
+msgstr "Медленно"
+
+#: src/modules/desktopname/e_mod_main.c:152
+msgid "Fast"
+msgstr "Быстро"
+
+#: src/modules/desktopname/e_mod_main.c:159
+#, fuzzy
+msgid "Very Fast"
+msgstr "Очень Быстро"
+
+#: src/modules/randr/e_mod_main.c:37
+#, fuzzy, c-format
+msgid ""
+"Error initializing Module: randr\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Ошибка инициализации Модуля: randr\n"
+"Он требует минимальную версию API модулей: %i.\n"
+"Версия API модулей объявленная для Enlightenment: %i.\n"
+"Завершаем работу модуля."
+
+#: src/modules/randr/e_mod_main.c:82
+msgid "Randr"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:93
+#, fuzzy
+msgid "Enlightenment Randr Module"
+msgstr "Модуль Randr"
+
+#: src/modules/randr/e_mod_main.c:94
+msgid "Module to change screen resolution for E17"
+msgstr "Модуль смены резолюции в E17"
+
+#: src/modules/randr/e_mod_main.c:196
+msgid "Restore Resolution on Startup"
+msgstr "Восстанавливать резолюцию при старте"
+
+#: src/modules/randr/e_mod_main.c:219
+msgid "Resolution"
+msgstr "Резолюция"
+
+#~ msgid "Artificially slowing startup so you can see it all."
+#~ msgstr "Искусственно замедленный запуск, так что вы можете увидеть всё"
+
+#~ msgid "Most features do not work yet, and those that do are buggy."
+#~ msgstr ""
+#~ "Большинство особенностей не работает, а то что работает - работает с "
+#~ "ошибками."
+
+#~ msgid "This is development code, so be warned."
+#~ msgstr "Предупреждаем, эта программа в стадии разработки"
+
