@@ -4746,7 +4746,7 @@ _e_border_eval(E_Border *bd)
 	if ((bd->client.icccm.transient_for) && (bd->client.icccm.client_leader))
 	  {
 	     e_error_dialog_show(_("ICCCM error"),
-				 _("Weird, this window is transient and has a leader: %s\n",
+				 ("Weird, this window is transient and has a leader: %s\n",
 				   e_border_name_get(bd)));
 	  }
 	if (bd->client.icccm.transient_for)
