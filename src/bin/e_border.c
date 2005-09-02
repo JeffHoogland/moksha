@@ -782,6 +782,7 @@ void
 e_border_raise(E_Border *bd)
 {
    E_Border *above;
+   Evas_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -806,6 +807,13 @@ e_border_raise(E_Border *bd)
 	e_object_ref(E_OBJECT(bd));
 	ev->below = NULL;
 	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
+     }
+   for (l = bd->children; l; l = l->next)
+     {
+	E_Border *child;
+
+	child = l->data;
+	e_border_stack_above(child, bd);
      }
 }
 
@@ -2209,6 +2217,17 @@ _e_border_del(E_Border *bd)
 	e_object_ref(E_OBJECT(bd));
 	// e_object_breadcrumb_add(E_OBJECT(bd), "border_remove_event");
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
+     }
+
+   if (bd->parent)
+     bd->parent->children = evas_list_remove(bd->parent->children, bd);
+   while (bd->children)
+     {
+	E_Border *child;
+
+	child = bd->children->data;
+	child->parent = NULL;
+	bd->children = evas_list_remove_list(bd->children, bd->children);
      }
 }
 
@@ -4596,6 +4615,17 @@ _e_border_eval(E_Border *bd)
    if (bd->new_client)
      {
 	bd->new_client = 0;
+	if (bd->client.icccm.transient_for)
+	  {
+	     E_Border *bd_parent;
+
+	     bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
+	     if (bd_parent)
+	       {
+		  bd_parent->children = evas_list_append(bd_parent->children, bd);
+		  bd->parent = bd_parent;
+	       }
+	  }
 //	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);
 	if (bd->re_manage)
 	  {
@@ -4658,22 +4688,13 @@ _e_border_eval(E_Border *bd)
 		  
 		  /* FIXME: special placement for dialogs etc. etc. etc goes
 		   * here */
-		  if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG) &&
-		      ((bd->client.icccm.transient_for != 0)))
+		  /* FIXME: what if parent is not on this desktop - or zone? */
+		  if ((bd->parent) && (bd->parent->visible))
 		    {
-		       E_Border *bd_parent;
-		       
-		       bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
-//		       if (!bd_parent)
-//			 bd_parent = e_border_find_by_client_window(bd->client.icccm.client_leader);
-		       /* FIXME: what if parent is not on this desktop - or zone? */
-		       if ((bd_parent) && (bd_parent->visible))
-			 {
-			    bd->x = bd_parent->x + ((bd_parent->w - bd->w) / 2);
-			    bd->y = bd_parent->y + ((bd_parent->h - bd->h) / 2);
-			    bd->changes.pos = 1;
-			    placed = 1;
-			 }
+		       bd->x = bd->parent->x + ((bd->parent->w - bd->w) / 2);
+		       bd->y = bd->parent->y + ((bd->parent->h - bd->h) / 2);
+		       bd->changes.pos = 1;
+		       placed = 1;
 		    }
 		  if (!placed)
 		    {

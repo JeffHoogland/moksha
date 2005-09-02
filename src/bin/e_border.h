@@ -385,7 +385,8 @@ struct _E_Border
    Ecore_X_Rectangle *shape_rects;
    E_Remember *remember;
 
-//   Ecore_Timer *dangling_ref_check;
+   E_Border *parent;
+   Evas_List *children;
 };
 
 struct _E_Border_Pending_Move_Resize 
