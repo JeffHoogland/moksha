@@ -301,7 +301,14 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, cursor_size, INT); /**/
    E_CONFIG_VAL(D, T, menu_autoscroll_margin, INT); /**/
    E_CONFIG_VAL(D, T, menu_autoscroll_cursor_margin, INT); /**/
-   
+   E_CONFIG_VAL(D, T, transient.move, INT); /* FIXME: implement */
+   E_CONFIG_VAL(D, T, transient.resize, INT); /* FIXME: implement */
+   E_CONFIG_VAL(D, T, transient.raise, INT); /**/
+   E_CONFIG_VAL(D, T, transient.lower, INT); /**/
+   E_CONFIG_VAL(D, T, transient.layer, INT); /**/
+   E_CONFIG_VAL(D, T, transient.desktop, INT); /**/
+   E_CONFIG_VAL(D, T, transient.iconify, INT); /**/
+
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -409,6 +416,13 @@ e_config_init(void)
 	e_config->cursor_size = 32;
 	e_config->menu_autoscroll_margin = 0;
 	e_config->menu_autoscroll_cursor_margin = 1;
+	e_config->transient.move = 1;
+	e_config->transient.resize = 0;
+	e_config->transient.raise = 1;
+	e_config->transient.lower = 1;
+	e_config->transient.layer = 1;
+	e_config->transient.desktop = 1;
+	e_config->transient.iconify = 1;
 	
 	  {
 	     E_Config_Module *em;

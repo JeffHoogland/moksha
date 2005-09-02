@@ -1476,10 +1476,9 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
    desk = e_desk_at_xy_get(face->zone, x, y);
    bd = ev->data;
 
-   if ((bd) && (desk) && (bd->desk != desk))
+   if ((bd) && (desk))
      {
 	e_border_desk_set(bd, desk);
-	e_border_hide(bd, 1);
      }
 
    for (l = face->desks; l; l = l->next)

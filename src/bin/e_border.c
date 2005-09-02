@@ -528,6 +528,23 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    ev->desk = desk;
    e_object_ref(E_OBJECT(desk));
    ecore_event_add(E_EVENT_BORDER_DESK_SET, ev, _e_border_event_border_desk_set_free, NULL);
+
+   if (bd->desk->visible)
+     e_border_show(bd);
+   else
+     e_border_hide(bd, 1);
+
+   if (e_config->transient.desktop)
+     {
+	Evas_List *l;
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     e_border_desk_set(child, bd->desk);
+	  }
+     }
 }
 
 void
@@ -779,10 +796,42 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 }
 
 void
+e_border_layer_set(E_Border *bd, int layer)
+{
+   int raise;
+
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   raise = e_config->transient.raise;
+   
+   bd->layer = layer;
+   if (e_config->transient.layer)
+     {
+	Evas_List *l;
+
+	/* We need to set raise to one, else the child wont
+	 * follow to the new layer. It should be like this,
+	 * even if the user usually doesn't want to raise
+	 * the children.
+	 */
+	e_config->transient.raise = 1;
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     child->layer = layer;
+	  }
+     }
+   e_border_raise(bd);
+   e_config->transient.raise = raise;
+}
+
+void
 e_border_raise(E_Border *bd)
 {
    E_Border *above;
-   Evas_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -808,12 +857,21 @@ e_border_raise(E_Border *bd)
 	ev->below = NULL;
 	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
      }
-   for (l = bd->children; l; l = l->next)
-     {
-	E_Border *child;
 
-	child = l->data;
-	e_border_stack_above(child, bd);
+   if (e_config->transient.raise)
+     {
+	Evas_List *l;
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     /* Don't raise iconic children. If the user wants these shown,
+	      * thats another option.
+	      */
+	     if (!child->iconic)
+	       e_border_stack_above(child, bd);
+	  }
      }
 }
 
@@ -845,6 +903,17 @@ e_border_lower(E_Border *bd)
 	e_object_ref(E_OBJECT(bd));
 	ev->above = NULL;
 	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
+     }
+   if (e_config->transient.lower)
+     {
+	Evas_List *l;
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     e_border_stack_above(child, bd);
+	  }
      }
 }
 
@@ -1411,8 +1480,7 @@ e_border_fullscreen(E_Border *bd)
 
 	e_zone_fullscreen_set(bd->zone, 1);
 
-	bd->layer = 200;
-	e_border_raise(bd);
+	e_border_layer_set(bd, 200);
 	x = bd->zone->x;
 	y = bd->zone->y;
 	w = bd->zone->w;
@@ -1453,8 +1521,7 @@ e_border_unfullscreen(E_Border *bd)
 	ecore_evas_show(bd->bg_ecore_evas);
 
 	/* FIXME: Find right layer */
-	bd->layer = 100;
-	e_border_raise(bd);
+	e_border_layer_set(bd, 100);
 
 	e_hints_window_fullscreen_set(bd, 0);
 	edje_object_signal_emit(bd->bg_object, "unfullscreen", "");
@@ -1485,6 +1552,19 @@ e_border_iconify(E_Border *bd)
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_iconify_event");
    ecore_event_add(E_EVENT_BORDER_ICONIFY, ev, _e_border_event_border_iconify_free, NULL);
+
+   if (e_config->transient.iconify)
+     {
+	Evas_List *l;
+
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     e_border_iconify(child);
+	  }
+     }
 }
 
 void
@@ -1499,10 +1579,9 @@ e_border_uniconify(E_Border *bd)
    if ((bd->fullscreen) || (bd->shading)) return;
    if (bd->iconic)
      {
+	bd->iconic = 0;
 	desk = e_desk_current_get(bd->desk->zone);
 	e_border_desk_set(bd, desk);
-	bd->iconic = 0;
-	e_border_show(bd);
 	e_border_raise(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
@@ -1515,6 +1594,18 @@ e_border_uniconify(E_Border *bd)
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_uniconify_event");
    ecore_event_add(E_EVENT_BORDER_UNICONIFY, ev, _e_border_event_border_uniconify_free, NULL);
 
+   if (e_config->transient.iconify)
+     {
+	Evas_List *l;
+
+	for (l = bd->children; l; l = l->next)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     e_border_uniconify(child);
+	  }
+     }
 }
 
 void
@@ -6373,10 +6464,9 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->layer != 150)
      {
-	bd->layer = 150;
+	e_border_layer_set(bd, 150);
 	e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
      }
-   e_border_raise(bd);
 }
 
 static void
@@ -6387,10 +6477,9 @@ _e_border_menu_cb_below(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->layer != 50)
      {
-	bd->layer = 50;
+	e_border_layer_set(bd, 50);
 	e_hints_window_stacking_set(bd, E_STACKING_BELOW);
      }
-   e_border_raise(bd);
 }
 
 static void
@@ -6401,10 +6490,9 @@ _e_border_menu_cb_normal(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->layer != 100)
      {
-	bd->layer = 100;
+	e_border_layer_set(bd, 100);
 	e_hints_window_stacking_set(bd, E_STACKING_NONE);
      }
-   e_border_raise(bd);
 }
 
 static void
@@ -6497,10 +6585,9 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi)
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
-   if ((bd) && (desk) && (bd->desk != desk))
+   if ((bd) && (desk))
      {
 	e_border_desk_set(bd, desk);
-	e_border_hide(bd, 1);
      }
 }
 

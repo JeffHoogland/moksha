@@ -26,7 +26,10 @@ Some of the things (in very short form) that need to be done to E17...
 
 * desktopname could reaally be part of pager - and display a full pager layout
   of all desktops and whihc one of them just got selected
+* some sort of gui display of a desktop name (in the pager?)
 * if a parent window is "on top" child dialog windows should also be "on top"
+* transients should have option to always follow parent
+  (move/resize/raise/lower) (and remember this).
 * in addition to smart place should add manual placement and place at pointer
   and maybe a few others.
 * emit signal to submenu entries if they have a submenu shown for them or not
@@ -64,11 +67,8 @@ Some of the things (in very short form) that need to be done to E17...
   to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
-* some sort of gui display of a desktop name (in the pager?)
 * window icons should be able to be chosen if e eapp icon overrides netwm
   icon or the other way around (and remember this).
-* transients should have option to always follow parent
-  (move/resize/raise/lower) (and remember this).
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in

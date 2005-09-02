@@ -4703,3 +4703,283 @@ break;
 		 END_INT;
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_MOVE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-move-set", 1, "Set if transients should move with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.move = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_MOVE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-move-get", 0, "Get if transients should move with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.move, E_IPC_OP_TRANSIENT_MOVE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_MOVE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RESIZE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-resize-set", 1, "Set if transients should move when it's parent resizes", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.resize = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RESIZE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-resize-get", 0, "Get if transients should move when it's parent resizes", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.resize, E_IPC_OP_TRANSIENT_RESIZE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RESIZE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RAISE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-raise-set", 1, "Set if transients should raise with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.raise = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RAISE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-raise-get", 0, "Get if transients should raise with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.raise, E_IPC_OP_TRANSIENT_RAISE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_RAISE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LOWER_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-lower-set", 1, "Set if transients should lower with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.lower = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LOWER_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-lower-get", 0, "Get if transients should lower with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.lower, E_IPC_OP_TRANSIENT_LOWER_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LOWER_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LAYER_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-layer-set", 1, "Set if transients should change layer with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.layer = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LAYER_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-layer-get", 0, "Get if transients should change layer with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.layer, E_IPC_OP_TRANSIENT_LAYER_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_LAYER_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_DESKTOP_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-desktop-set", 1, "Set if transients should change desktop with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.desktop = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_DESKTOP_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-desktop-get", 0, "Get if transients should change desktop with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.desktop, E_IPC_OP_TRANSIENT_DESKTOP_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_DESKTOP_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_ICONIFY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-iconify-set", 1, "Set if transients should iconify with it's parent", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->transient.iconify = val;
+   /* TODO: Activate changes! */
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_ICONIFY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transient-iconify-get", 0, "Get if transients should iconify with it's parent", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->transient.iconify, E_IPC_OP_TRANSIENT_ICONIFY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSIENT_ICONIFY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL

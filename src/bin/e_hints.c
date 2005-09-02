@@ -349,17 +349,21 @@ e_hints_window_init(E_Border *bd)
    if (!bd->lock_client_stacking)
      {
 	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
-	  bd->layer = 0;
+	  e_border_layer_set(bd, 0);
 	else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-	  bd->layer = 50;
+	  e_border_layer_set(bd, 50);
 	else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-	  bd->layer = 150;
+	  e_border_layer_set(bd, 150);
 	else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
-	  bd->layer = 150;
+	  e_border_layer_set(bd, 150);
 	else
-	  bd->layer = 100;
+	  e_border_layer_set(bd, 100);
      }
-   e_border_raise(bd);
+   else
+     e_border_raise(bd);
+
+   if ((bd->parent) && (e_config->transient.layer))
+     e_border_layer_set(bd, bd->parent->layer);
 
 #if 0
    /* Ignore this, E has incompatible desktop setup */
@@ -438,6 +442,8 @@ e_hints_window_init(E_Border *bd)
 	else
 	  e_hints_window_visible_set(bd);
      }
+   else if ((bd->parent) && (e_config->transient.iconify) && (bd->parent->iconic))
+     e_border_iconify(bd);
    /* If a window isn't iconic, and is one the current desk,
     * show it! */
    else if (bd->desk == e_desk_current_get(bd->zone))
@@ -742,19 +748,16 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       bd->layer = 100;
-	       e_border_raise(bd);
+	       e_border_layer_set(bd, 100);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       bd->layer = 150;
-	       e_border_raise(bd);
+	       e_border_layer_set(bd, 150);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       if (bd->layer == 150)
-		 bd->layer = 100;
+		 e_border_layer_set(bd, 100);
 	       else
-		 bd->layer = 150;
-	       e_border_raise(bd);
+		 e_border_layer_set(bd, 150);
 	       break;
 	   }
 	 break;
@@ -765,19 +768,16 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	 switch (action)
 	   {
 	    case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-	       bd->layer = 100;
-	       e_border_raise(bd);
+	       e_border_layer_set(bd, 100);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       bd->layer = 50;
-	       e_border_raise(bd);
+	       e_border_layer_set(bd, 50);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       if (bd->layer == 50)
-		 bd->layer = 100;
+		 e_border_layer_set(bd, 100);
 	       else
-		 bd->layer = 50;
-	       e_border_raise(bd);
+		 e_border_layer_set(bd, 50);
 	       break;
 	   }
 	 break;

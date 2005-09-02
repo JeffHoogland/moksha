@@ -194,6 +194,10 @@ e_desk_show(E_Desk *desk)
 	  }
      }
 
+   desk->zone->desk_x_current = desk->x;
+   desk->zone->desk_y_current = desk->y;
+   desk->visible = 1;
+
    bl = e_container_border_list_first(desk->zone->container);
    if (desk->zone->bg_object) was_zone = 1;
    while ((bd = e_container_border_list_next(bl)))
@@ -227,10 +231,6 @@ e_desk_show(E_Desk *desk)
    if (e_config->focus_last_focused_per_desktop)
      e_desk_last_focused_focus(desk);
 	
-   desk->zone->desk_x_current = desk->x;
-   desk->zone->desk_y_current = desk->y;
-   desk->visible = 1;
-
    if (was_zone)
      e_bg_zone_update(desk->zone, E_BG_TRANSITION_DESK);
    else

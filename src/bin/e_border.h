@@ -488,6 +488,7 @@ EAPI void      e_border_hide(E_Border *bd, int manage);
 EAPI void      e_border_move(E_Border *bd, int x, int y);
 EAPI void      e_border_resize(E_Border *bd, int w, int h);
 EAPI void      e_border_move_resize(E_Border *bd, int x, int y, int w, int h);
+EAPI void      e_border_layer_set(E_Border *bd, int layer);
 EAPI void      e_border_raise(E_Border *bd);
 EAPI void      e_border_lower(E_Border *bd);
 EAPI void      e_border_stack_above(E_Border *bd, E_Border *above);
