@@ -4751,7 +4751,7 @@ _e_border_eval(E_Border *bd)
 	     E_Border *bd_parent;
 
 	     bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
-	     if (bd_parent)
+	     if ((bd_parent) && (bd_parent != bd))
 	       {
 		  bd_parent->transients = evas_list_append(bd_parent->transients, bd);
 		  bd->parent = bd_parent;
@@ -4764,8 +4764,12 @@ _e_border_eval(E_Border *bd)
 	     E_Border *bd_leader;
 
 	     bd_leader = e_border_find_by_client_window(bd->client.icccm.client_leader);
-	     /* If this border is the leader of the group, don't register itself */
-	     if ((bd_leader) && (bd_leader != bd))
+	     /* 
+	      * If this border is the leader of the group, don't register itself
+	      * If this window is transient, don't register if the leader is the
+	      * same as the parent
+	      */
+	     if ((bd_leader) && (bd_leader != bd) && (bd_leader != bd->parent))
 	       {
 		  bd_leader->group = evas_list_append(bd_leader->group, bd);
 		  bd->leader = bd_leader;
