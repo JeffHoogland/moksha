@@ -973,12 +973,12 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    //printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
-   if (bd->modal)
+   if ((bd->modal) && (bd->modal != bd))
      {
 	e_border_focus_set(bd->modal, focus, set);
 	return;
      }
-   else if ((bd->leader) && (bd->leader->modal))
+   else if ((bd->leader) && (bd->leader->modal) && (bd->leader->modal != bd))
      {
 	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
@@ -2345,8 +2345,11 @@ _e_border_del(E_Border *bd)
 	if (bd->leader->modal == bd)
 	  {
 	     bd->leader->modal = NULL;
+	     /* TODO Should we focus leader when this window closes? */
+#if 0
 	     if (bd->focused)
 	       e_border_focus_set(bd->leader, 1, 1);
+#endif
 	  }
      }
    while (bd->group)
@@ -4743,12 +4746,6 @@ _e_border_eval(E_Border *bd)
    if (bd->new_client)
      {
 	bd->new_client = 0;
-	if ((bd->client.icccm.transient_for) && (bd->client.icccm.client_leader))
-	  {
-	     e_error_dialog_show(_("ICCCM error"),
-				 _("Weird, this window is transient and has a leader: %s\n"),
-				   e_border_name_get(bd));
-	  }
 	if (bd->client.icccm.transient_for)
 	  {
 	     E_Border *bd_parent;
@@ -4767,7 +4764,8 @@ _e_border_eval(E_Border *bd)
 	     E_Border *bd_leader;
 
 	     bd_leader = e_border_find_by_client_window(bd->client.icccm.client_leader);
-	     if (bd_leader)
+	     /* If this border is the leader of the group, don't register itself */
+	     if ((bd_leader) && (bd_leader != bd))
 	       {
 		  bd_leader->group = evas_list_append(bd_leader->group, bd);
 		  bd->leader = bd_leader;
