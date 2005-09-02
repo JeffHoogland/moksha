@@ -537,7 +537,7 @@ e_border_desk_set(E_Border *bd, E_Desk *desk)
    if (e_config->transient.desktop)
      {
 	Evas_List *l;
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
@@ -813,10 +813,10 @@ e_border_layer_set(E_Border *bd, int layer)
 	/* We need to set raise to one, else the child wont
 	 * follow to the new layer. It should be like this,
 	 * even if the user usually doesn't want to raise
-	 * the children.
+	 * the transients.
 	 */
 	e_config->transient.raise = 1;
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
@@ -861,12 +861,12 @@ e_border_raise(E_Border *bd)
    if (e_config->transient.raise)
      {
 	Evas_List *l;
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
 	     child = l->data;
-	     /* Don't raise iconic children. If the user wants these shown,
+	     /* Don't raise iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
 	     if (!child->iconic)
@@ -907,7 +907,7 @@ e_border_lower(E_Border *bd)
    if (e_config->transient.lower)
      {
 	Evas_List *l;
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
@@ -976,6 +976,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    if (bd->modal)
      {
 	e_border_focus_set(bd->modal, focus, set);
+	return;
+     }
+   else if ((bd->leader) && (bd->leader->modal))
+     {
+	e_border_focus_set(bd->leader->modal, focus, set);
 	return;
      }
    if ((bd->visible) && (bd->changes.visible))
@@ -1562,7 +1567,7 @@ e_border_iconify(E_Border *bd)
      {
 	Evas_List *l;
 
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
@@ -1603,7 +1608,7 @@ e_border_uniconify(E_Border *bd)
      {
 	Evas_List *l;
 
-	for (l = bd->children; l; l = l->next)
+	for (l = bd->transients; l; l = l->next)
 	  {
 	     E_Border *child;
 
@@ -2317,7 +2322,7 @@ _e_border_del(E_Border *bd)
 
    if (bd->parent)
      {
-	bd->parent->children = evas_list_remove(bd->parent->children, bd);
+	bd->parent->transients = evas_list_remove(bd->parent->transients, bd);
 	if (bd->parent->modal == bd)
 	  {
 	     bd->parent->modal = NULL;
@@ -2325,13 +2330,32 @@ _e_border_del(E_Border *bd)
 	       e_border_focus_set(bd->parent, 1, 1);
 	  }
      }
-   while (bd->children)
+   while (bd->transients)
      {
 	E_Border *child;
 
-	child = bd->children->data;
+	child = bd->transients->data;
 	child->parent = NULL;
-	bd->children = evas_list_remove_list(bd->children, bd->children);
+	bd->transients = evas_list_remove_list(bd->transients, bd->transients);
+     }
+
+   if (bd->leader)
+     {
+	bd->leader->group = evas_list_remove(bd->leader->group, bd);
+	if (bd->leader->modal == bd)
+	  {
+	     bd->leader->modal = NULL;
+	     if (bd->focused)
+	       e_border_focus_set(bd->leader, 1, 1);
+	  }
+     }
+   while (bd->group)
+     {
+	E_Border *child;
+
+	child = bd->group->data;
+	child->leader = NULL;
+	bd->group = evas_list_remove_list(bd->group, bd->group);
      }
 }
 
@@ -4719,6 +4743,12 @@ _e_border_eval(E_Border *bd)
    if (bd->new_client)
      {
 	bd->new_client = 0;
+	if ((bd->client.icccm.transient_for) && (bd->client.icccm.client_leader))
+	  {
+	     e_error_dialog_show(_("ICCCM error"),
+				 _("Weird, this window is transient and has a leader: %s\n",
+				   e_border_name_get(bd)));
+	  }
 	if (bd->client.icccm.transient_for)
 	  {
 	     E_Border *bd_parent;
@@ -4726,10 +4756,23 @@ _e_border_eval(E_Border *bd)
 	     bd_parent = e_border_find_by_client_window(bd->client.icccm.transient_for);
 	     if (bd_parent)
 	       {
-		  bd_parent->children = evas_list_append(bd_parent->children, bd);
+		  bd_parent->transients = evas_list_append(bd_parent->transients, bd);
 		  bd->parent = bd_parent;
 		  if (bd->client.netwm.state.modal)
 		    bd->parent->modal = bd;
+	       }
+	  }
+	if (bd->client.icccm.client_leader)
+	  {
+	     E_Border *bd_leader;
+
+	     bd_leader = e_border_find_by_client_window(bd->client.icccm.client_leader);
+	     if (bd_leader)
+	       {
+		  bd_leader->group = evas_list_append(bd_leader->group, bd);
+		  bd->leader = bd_leader;
+		  if (bd->client.netwm.state.modal)
+		    bd->leader->modal = bd;
 	       }
 	  }
 //	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);

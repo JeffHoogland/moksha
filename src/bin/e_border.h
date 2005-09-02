@@ -385,9 +385,13 @@ struct _E_Border
    Ecore_X_Rectangle *shape_rects;
    E_Remember *remember;
 
-   E_Border *parent;
    E_Border *modal;
-   Evas_List *children;
+
+   E_Border  *leader;
+   Evas_List *group;
+
+   E_Border  *parent;
+   Evas_List *transients;
 };
 
 struct _E_Border_Pending_Move_Resize 
@@ -515,7 +519,7 @@ EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);
 
-EAPI Evas_List *e_border_clients_get();
+EAPI Evas_List *e_border_clients_get(void);
 
 EAPI void e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev);
 EAPI void e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev);

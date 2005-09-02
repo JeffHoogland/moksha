@@ -16,6 +16,7 @@ EAPI void        e_theme_file_set(char *category, char *file);
 EAPI void	 e_theme_config_set(const char *category, const char *file);
 EAPI E_Config_Theme *e_theme_config_get(const char *category);
 EAPI void	 e_theme_config_remove(const char *category);
+EAPI void        e_theme_about(E_Zone *zone, const char *file);
 EAPI Evas_List	*e_theme_config_list(void);
     
 #endif
