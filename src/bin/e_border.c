@@ -973,6 +973,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    //printf("e_border_focus_set(%p, %i %i);\n", bd, focus, set);
+   if (bd->modal)
+     {
+	e_border_focus_set(bd->modal, focus, set);
+	return;
+     }
    if ((bd->visible) && (bd->changes.visible))
      {  
 	if ((bd->want_focus) && (set) && (!focus))
@@ -2311,7 +2316,15 @@ _e_border_del(E_Border *bd)
      }
 
    if (bd->parent)
-     bd->parent->children = evas_list_remove(bd->parent->children, bd);
+     {
+	bd->parent->children = evas_list_remove(bd->parent->children, bd);
+	if (bd->parent->modal == bd)
+	  {
+	     bd->parent->modal = NULL;
+	     if (bd->focused)
+	       e_border_focus_set(bd->parent, 1, 1);
+	  }
+     }
    while (bd->children)
      {
 	E_Border *child;
@@ -4715,6 +4728,8 @@ _e_border_eval(E_Border *bd)
 	       {
 		  bd_parent->children = evas_list_append(bd_parent->children, bd);
 		  bd->parent = bd_parent;
+		  if (bd->client.netwm.state.modal)
+		    bd->parent->modal = bd;
 	       }
 	  }
 //	printf("##- NEW CLIENT SETUP 0x%x\n", bd->client.win);

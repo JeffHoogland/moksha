@@ -386,6 +386,7 @@ struct _E_Border
    E_Remember *remember;
 
    E_Border *parent;
+   E_Border *modal;
    Evas_List *children;
 };
 
