@@ -4713,7 +4713,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.move = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4753,7 +4752,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.resize = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4793,7 +4791,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.raise = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4833,7 +4830,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.lower = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4873,7 +4869,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.layer = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4913,7 +4908,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.desktop = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
@@ -4953,7 +4947,6 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->transient.iconify = val;
-   /* TODO: Activate changes! */
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)
