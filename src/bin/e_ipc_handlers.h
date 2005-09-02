@@ -4591,8 +4591,8 @@ break;
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
    e_config->cursor_size = val;
-   /* TODO: Update cursor size on screen! */
    E_CONFIG_LIMIT(e_config->cursor_size, 0, 1024);
+   e_pointers_size_set(e_config->cursor_size);
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)

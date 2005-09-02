@@ -34,7 +34,7 @@ e_pointer_window_set(Ecore_X_Window win)
    evas_output_size_set(p->evas, p->w, p->h);
    evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
    
-   p->pixels = calloc(p->w * p->h, sizeof(int));
+   p->pixels = malloc(p->w * p->h * sizeof(int));
    
    einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
    if (einfo)
@@ -86,6 +86,37 @@ e_pointer_window_set(Ecore_X_Window win)
 
    _e_pointers = evas_list_append(_e_pointers, p);
    return p;
+}
+
+void
+e_pointers_size_set(int size)
+{
+   Evas_List *l;
+
+   for (l = _e_pointers; l; l = l->next)
+     {
+	E_Pointer *p;
+	Evas_Engine_Info_Buffer *einfo;
+
+	p = l->data;
+
+	p->w = p->h = size;
+	evas_output_size_set(p->evas, p->w, p->h);
+	evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
+
+	p->pixels = realloc(p->pixels, p->w * p->h * sizeof(int));
+
+	einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+	if (einfo)
+	  {
+	     einfo->info.dest_buffer = p->pixels;
+	     einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
+	     evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
+	  }
+
+	evas_object_move(p->pointer_object, 0, 0);
+	evas_object_resize(p->pointer_object, p->w, p->h);
+     }
 }
 
 void
