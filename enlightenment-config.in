@@ -40,7 +40,7 @@ while test $# -gt 0; do
       ;;
     --cflags)
       includes="-I@includedir@ -I@includedir@/enlightenment"
-      echo $includes
+      echo $includes @e_cflags@
       ;;
     --libs)
       libdirs="-L@libdir@ -le"
