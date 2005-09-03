@@ -1015,6 +1015,9 @@ _e_apps_cb_exit(void *data, int type, void *event)
    Ecore_Event_Exe_Exit *ev;
    E_App *a;
    
+   /* FIXME: Check if we launched this exe, else it isn't sure that
+    * the exe data is an E_App!
+    */
    ev = event;
    if (ev->exe)
      {
