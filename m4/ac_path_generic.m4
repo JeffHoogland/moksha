@@ -66,11 +66,11 @@ AC_ARG_WITH(DOWN-exec-prefix,[  --with-]DOWN[-exec-prefix=PFX Exec prefix where 
      UP[]_LIBS="`$UP[]_CONFIG $DOWN[]_config_args --libs`"
      ifelse([$2], , ,[
         DOWN[]_config_major_version=`$UP[]_CONFIG $DOWN[]_config_args \
-         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\).*/\1/'`
         DOWN[]_config_minor_version=`$UP[]_CONFIG $DOWN[]_config_args \
-         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\).*/\2/'`
         DOWN[]_config_micro_version=`$UP[]_CONFIG $DOWN[]_config_args \
-         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+         --version | sed 's/[[^0-9]]*\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\).*/\3/'`
         DOWN[]_wanted_major_version="regexp($2, [\<\([0-9]*\)], [\1])"
         DOWN[]_wanted_minor_version="regexp($2, [\<\([0-9]*\)\.\([0-9]*\)], [\2])"
         DOWN[]_wanted_micro_version="regexp($2, [\<\([0-9]*\).\([0-9]*\).\([0-9]*\)], [\3])"
