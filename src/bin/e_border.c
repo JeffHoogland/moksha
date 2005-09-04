@@ -1592,6 +1592,7 @@ e_border_uniconify(E_Border *bd)
 	bd->iconic = 0;
 	desk = e_desk_current_get(bd->desk->zone);
 	e_border_desk_set(bd, desk);
+	e_border_show(bd);
 	e_border_raise(bd);
 	edje_object_signal_emit(bd->bg_object, "uniconify", "");
      }
@@ -2320,6 +2321,7 @@ _e_border_del(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
      }
 
+   /* TODO: Should this be here or in _e_border_free? */
    if (bd->parent)
      {
 	bd->parent->transients = evas_list_remove(bd->parent->transients, bd);
