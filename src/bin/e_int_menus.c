@@ -667,7 +667,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Cleanup Windows"));
    s = e_path_find(path_icons, "default.edj");
    e_menu_item_icon_edje_set(mi, s, "windows");
-   IF_FREE(s);
+   E_FREE(s);
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
    
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_clients_free_hook);
@@ -860,9 +860,9 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	if (!strcmp(et->category, "theme"))
 	  {
 	     e_config->themes = evas_list_remove_list(e_config->themes, l);
-	     IF_FREE(et->category);
-	     IF_FREE(et->file);
-	     IF_FREE(et);
+	     E_FREE(et->category);
+	     E_FREE(et->file);
+	     E_FREE(et);
 	     break;
 	  }
      }

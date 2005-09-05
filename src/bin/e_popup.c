@@ -216,7 +216,7 @@ e_popup_idler_before(void)
 		    }
 		  if (changed)
 		    {
-		       IF_FREE(pop->shape_rects);
+		       E_FREE(pop->shape_rects);
 		       pop->shape_rects = rects;
 		       pop->shape_rects_num = num;
 		       e_container_shape_rects_set(pop->shape, rects, num);
@@ -226,7 +226,7 @@ e_popup_idler_before(void)
 	       }
 	     else
 	       {
-		  IF_FREE(pop->shape_rects);
+		  E_FREE(pop->shape_rects);
 		  pop->shape_rects = NULL;
 		  pop->shape_rects_num = 0;
 		  e_container_shape_rects_set(pop->shape, NULL, 0);
@@ -243,7 +243,7 @@ e_popup_idler_before(void)
 static void
 _e_popup_free(E_Popup *pop)
 {
-   IF_FREE(pop->shape_rects);
+   E_FREE(pop->shape_rects);
    pop->shape_rects_num = 0;
    e_container_shape_hide(pop->shape);
    e_object_del(E_OBJECT(pop->shape));

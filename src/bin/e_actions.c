@@ -1004,7 +1004,7 @@ static void
 _e_action_free(E_Action *act)
 {
    actions = evas_hash_del(actions, act->name, act);
-   IF_FREE(act->name);
+   E_FREE(act->name);
    free(act);
 }
 

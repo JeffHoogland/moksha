@@ -527,7 +527,7 @@ e_drag_idler_before(void)
 		    }
 		  if (changed)
 		    {
-		       IF_FREE(drag->shape_rects);
+		       E_FREE(drag->shape_rects);
 		       drag->shape_rects = rects;
 		       drag->shape_rects_num = num;
 		       e_container_shape_rects_set(drag->shape, rects, num);
@@ -537,7 +537,7 @@ e_drag_idler_before(void)
 	       }
 	     else
 	       {
-		  IF_FREE(drag->shape_rects);
+		  E_FREE(drag->shape_rects);
 		  drag->shape_rects = NULL;
 		  drag->shape_rects_num = 0;
 		  e_container_shape_rects_set(drag->shape, NULL, 0);
@@ -556,7 +556,7 @@ _e_drag_free(E_Drag *drag)
 {
    _drag_list = evas_list_remove(_drag_list, drag);
 
-   IF_FREE(drag->shape_rects);
+   E_FREE(drag->shape_rects);
    drag->shape_rects_num = 0;
    e_object_unref(E_OBJECT(drag->container));
    e_container_shape_hide(drag->shape);

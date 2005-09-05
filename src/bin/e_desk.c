@@ -109,7 +109,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
 	  {
 	     e_config->desktop_names = evas_list_remove_list(e_config->desktop_names, l);
-	     IF_FREE(cfname->name);
+	     E_FREE(cfname->name);
 	     free(cfname);
 	     break;
 	  }

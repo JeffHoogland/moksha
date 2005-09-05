@@ -108,7 +108,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_image_add(e);
 	s = e_path_find(path_images, "e.png");
 	evas_object_image_file_set(o, s, NULL);
-	IF_FREE(s);
+	E_FREE(s);
 	evas_object_move(o, 16, 16);
 	evas_object_resize(o, 64, 64);
 	evas_object_image_fill_set(o, 0, 0, 64, 64);
@@ -193,7 +193,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_image_add(e);
 	s = e_path_find(path_images, "button_out.png");
 	evas_object_image_file_set(o, s, NULL);
-	IF_FREE(s);
+	E_FREE(s);
 	evas_object_move(o, (error_w - 64) / 2, error_h - 16 - 32);
 	evas_object_resize(o, 64, 32);
 	evas_object_image_fill_set(o, 0, 0, 64, 32);
@@ -223,7 +223,7 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	o = evas_object_image_add(e);
 	s = e_path_find(path_images, "error_bg.png");
 	evas_object_image_file_set(o, s, NULL);
-	IF_FREE(s);
+	E_FREE(s);
 	evas_object_move(o, 0, 0);
 	evas_object_image_fill_set(o, 0, 0, error_w, error_h);
 	evas_object_resize(o, error_w, error_h);
@@ -375,7 +375,7 @@ _e_error_cb_ok_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ee = data;
    s = e_path_find(path_images, "button_in.png");
    evas_object_image_file_set(obj, s, NULL);
-   IF_FREE(s);
+   E_FREE(s);
 }
 
 static void
@@ -391,7 +391,7 @@ _e_error_cb_ok_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ee = data;
    s = e_path_find(path_images, "button_out.png");
    evas_object_image_file_set(obj, s, NULL);
-   IF_FREE(s);
+   E_FREE(s);
    o = evas_object_name_find(ecore_evas_get(ee), "allocated");
    if (o)
      {

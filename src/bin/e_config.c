@@ -1002,7 +1002,7 @@ e_config_init(void)
 int
 e_config_shutdown(void)
 {
-   IF_FREE(_e_config_profile);
+   E_FREE(_e_config_profile);
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
@@ -1055,7 +1055,7 @@ e_config_profile_get(void)
 
 void e_config_profile_set(char *prof)
 {
-   IF_FREE(_e_config_profile);
+   E_FREE(_e_config_profile);
    _e_config_profile = strdup(prof);
 }
 

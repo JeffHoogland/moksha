@@ -263,7 +263,7 @@ e_hints_client_list_set(void)
 	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }
-   IF_FREE(clients);
+   E_FREE(clients);
 }
 
 /* Client list is already in stacking order, so this function is nearly
@@ -322,7 +322,7 @@ e_hints_client_stacking_set(void)
 	     ecore_x_netwm_client_list_stacking_set(m->root, NULL, 0);
 	  }
      }
-   IF_FREE(clients);
+   E_FREE(clients);
 }
 
 void

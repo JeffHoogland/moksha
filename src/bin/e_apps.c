@@ -726,7 +726,7 @@ _e_app_free(E_App *a)
 	_e_apps = evas_hash_del(_e_apps, a->path, a);
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
 	_e_app_fields_empty(a);
-	IF_FREE(a->path);
+	E_FREE(a->path);
 	free(a);
      }
 }
@@ -874,15 +874,15 @@ _e_app_fields_fill(E_App *a, const char *path)
 static void
 _e_app_fields_empty(E_App *a)
 {
-   IF_FREE(a->name);
-   IF_FREE(a->generic);
-   IF_FREE(a->comment);
-   IF_FREE(a->exe);
-   IF_FREE(a->icon_class);
-   IF_FREE(a->win_name);
-   IF_FREE(a->win_class);
-   IF_FREE(a->win_title);
-   IF_FREE(a->win_role);
+   E_FREE(a->name);
+   E_FREE(a->generic);
+   E_FREE(a->comment);
+   E_FREE(a->exe);
+   E_FREE(a->icon_class);
+   E_FREE(a->win_name);
+   E_FREE(a->win_class);
+   E_FREE(a->win_title);
+   E_FREE(a->win_role);
 }
 
 static Ecore_List *

@@ -166,7 +166,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
 	  {
 	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
-	     IF_FREE(cfbg->file);
+	     E_FREE(cfbg->file);
 	     free(cfbg);
 	     break;
 	  }

@@ -80,11 +80,11 @@ e_intl_init(void)
 int
 e_intl_shutdown(void)
 {
-   IF_FREE(_e_intl_language);
-   IF_FREE(_e_intl_orig_lc_messages);
-   IF_FREE(_e_intl_orig_language);
-   IF_FREE(_e_intl_orig_lc_all);
-   IF_FREE(_e_intl_orig_lang);
+   E_FREE(_e_intl_language);
+   E_FREE(_e_intl_orig_lc_messages);
+   E_FREE(_e_intl_orig_language);
+   E_FREE(_e_intl_orig_lc_all);
+   E_FREE(_e_intl_orig_lang);
    evas_list_free(_e_intl_languages);
    return 1;
 }

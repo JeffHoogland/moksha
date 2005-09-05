@@ -22,12 +22,12 @@ e_prefix_determine(char *argv0)
 {
    char *p;
 
-   IF_FREE(_exe_path);
-   IF_FREE(_prefix_path);
-   IF_FREE(_prefix_path_locale);
-   IF_FREE(_prefix_path_bin);
-   IF_FREE(_prefix_path_data);
-   IF_FREE(_prefix_path_lib);
+   E_FREE(_exe_path);
+   E_FREE(_prefix_path);
+   E_FREE(_prefix_path_locale);
+   E_FREE(_prefix_path_bin);
+   E_FREE(_prefix_path_data);
+   E_FREE(_prefix_path_lib);
    
    if (!_e_prefix_try_proc())
      {
@@ -104,12 +104,12 @@ e_prefix_determine(char *argv0)
 void
 e_prefix_fallback(void)
 {
-   IF_FREE(_exe_path);
-   IF_FREE(_prefix_path);
-   IF_FREE(_prefix_path_locale);
-   IF_FREE(_prefix_path_bin);
-   IF_FREE(_prefix_path_data);
-   IF_FREE(_prefix_path_lib);
+   E_FREE(_exe_path);
+   E_FREE(_prefix_path);
+   E_FREE(_prefix_path_locale);
+   E_FREE(_prefix_path_bin);
+   E_FREE(_prefix_path_data);
+   E_FREE(_prefix_path_lib);
    _e_prefix_fallbacks();
 }
 

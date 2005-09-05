@@ -137,12 +137,12 @@ e_remember_find(E_Border *bd)
 void
 e_remember_update(E_Remember *rem, E_Border *bd)
 {
-   IF_FREE(rem->name);
-   IF_FREE(rem->class);
-   IF_FREE(rem->title);
-   IF_FREE(rem->role);
-   IF_FREE(rem->prop.border);
-   IF_FREE(rem->prop.command);
+   E_FREE(rem->name);
+   E_FREE(rem->class);
+   E_FREE(rem->title);
+   E_FREE(rem->role);
+   E_FREE(rem->prop.border);
+   E_FREE(rem->prop.command);
    
    if (bd->client.icccm.name)
      rem->name = strdup(bd->client.icccm.name);
@@ -198,7 +198,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_focus_out = bd->lock_focus_out;
    rem->prop.lock_life = bd->lock_life;
 
-   IF_FREE(rem->prop.border);
+   E_FREE(rem->prop.border);
    if (bd->client.border.name)
      rem->prop.border = strdup(bd->client.border.name);
    
@@ -214,7 +214,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    
    rem->prop.head = bd->zone->container->manager->num;
 /* FIXME: e17 doesn't fetch WM_COMMAND property yet
-   IF_FREE(rem->prop.command);
+   E_FREE(rem->prop.command);
  */
    
    e_config_save_queue();
@@ -225,11 +225,11 @@ static void
 _e_remember_free(E_Remember *rem)
 {
    e_config->remembers = evas_list_remove(e_config->remembers, rem);
-   IF_FREE(rem->name);
-   IF_FREE(rem->class);
-   IF_FREE(rem->title);
-   IF_FREE(rem->role);
-   IF_FREE(rem->prop.border);
-   IF_FREE(rem->prop.command);
+   E_FREE(rem->name);
+   E_FREE(rem->class);
+   E_FREE(rem->title);
+   E_FREE(rem->role);
+   E_FREE(rem->prop.border);
+   E_FREE(rem->prop.command);
    free(rem);
 }

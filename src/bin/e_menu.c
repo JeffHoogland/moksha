@@ -799,7 +799,7 @@ e_menu_idler_before(void)
 		    }
 		  if (changed)
 		    {
-		       IF_FREE(m->shape_rects);
+		       E_FREE(m->shape_rects);
 		       m->shape_rects = rects;
 		       m->shape_rects_num = num;
 		       e_container_shape_rects_set(m->shape, rects, num);
@@ -809,7 +809,7 @@ e_menu_idler_before(void)
 	       }
 	     else
 	       {
-                  IF_FREE(m->shape_rects);
+                  E_FREE(m->shape_rects);
 		  m->shape_rects = NULL;
 		  m->shape_rects_num = 0;
 		  e_container_shape_rects_set(m->shape, NULL, 0);
@@ -849,7 +849,7 @@ _e_menu_free(E_Menu *m)
    Evas_List *l, *tmp;
    
    _e_menu_unrealize(m);
-   IF_FREE(m->shape_rects);
+   E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
    for (l = m->items; l;)
      {

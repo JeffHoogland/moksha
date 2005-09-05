@@ -182,8 +182,8 @@ _e_dialog_free(E_Dialog *dia)
 	
 	db = dia->buttons->data;
 	dia->buttons = evas_list_remove_list(dia->buttons, dia->buttons);
-	IF_FREE(db->label);
-	IF_FREE(db->icon);
+	E_FREE(db->label);
+	E_FREE(db->icon);
 	evas_object_del(db->obj);
 	free(db);
      }

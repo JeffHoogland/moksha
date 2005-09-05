@@ -2180,7 +2180,7 @@ _e_border_free(E_Border *bd)
 	bd->cur_mouse_action = NULL;
      }
    
-   IF_FREE(bd->shape_rects);
+   E_FREE(bd->shape_rects);
    bd->shape_rects_num = 0;
 /*   
    if (bd->dangling_ref_check)
@@ -4534,7 +4534,7 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_BORDER)
 	       {
-		  IF_FREE(bd->client.border.name);
+		  E_FREE(bd->client.border.name);
 		  if (rem->prop.border)
 		    bd->client.border.name = strdup(rem->prop.border);
 		  bd->client.border.changed = 1;
@@ -5206,7 +5206,7 @@ _e_border_eval(E_Border *bd)
 		    e_container_shape_solid_rect_set(bd->shape, 0, 0, 0, 0);
 		  else
 		    e_container_shape_solid_rect_set(bd->shape, bd->client_inset.l, bd->client_inset.t, bd->client.w, bd->client.h);
-		  IF_FREE(bd->shape_rects);
+		  E_FREE(bd->shape_rects);
 		  bd->shape_rects = rects;
 		  bd->shape_rects_num = num;
 		  e_container_shape_rects_set(bd->shape, rects, num);
@@ -5216,7 +5216,7 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
-	     IF_FREE(bd->shape_rects);
+	     E_FREE(bd->shape_rects);
 	     bd->shape_rects = NULL;
 	     bd->shape_rects_num = 0;
 	     e_container_shape_rects_set(bd->shape, NULL, 0);

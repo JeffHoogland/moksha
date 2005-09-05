@@ -1148,7 +1148,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   IF_FREE(e_config->language);
+   E_FREE(e_config->language);
    e_config->language = strdup(s);
    if ((e_config->language) && (strlen(e_config->language) > 0))
      e_intl_language_set(e_config->language);
@@ -2285,9 +2285,9 @@ break;
    if (eb)
      {
 	e_config->mouse_bindings = evas_list_remove(e_config->mouse_bindings, eb);
-        IF_FREE(eb->action);
-        IF_FREE(eb->params);
-        IF_FREE(eb);
+        E_FREE(eb->action);
+        E_FREE(eb->params);
+        E_FREE(eb);
         e_border_button_bindings_ungrab_all();
         e_bindings_mouse_del(bind.context, bind.button, bind.modifiers,
                 bind.any_mod, bind.action, bind.params);
@@ -2603,10 +2603,10 @@ break;
    if (eb)
      {
        e_config->key_bindings = evas_list_remove(e_config->key_bindings, eb);
-       IF_FREE(eb->key);
-       IF_FREE(eb->action);
-       IF_FREE(eb->params);
-       IF_FREE(eb);
+       E_FREE(eb->key);
+       E_FREE(eb->action);
+       E_FREE(eb->params);
+       E_FREE(eb);
        e_managers_keys_ungrab();
        e_bindings_key_del(bind.context, bind.key, bind.modifiers,
 			  bind.any_mod, bind.action, bind.params);

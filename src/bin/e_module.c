@@ -53,8 +53,8 @@ e_module_init(void)
 	  }
 	else
 	  {
-	     IF_FREE(em->name);
-	     IF_FREE(em);
+	     E_FREE(em->name);
+	     E_FREE(em);
 	     e_config->modules = evas_list_remove_list(e_config->modules, pl);
 	     e_config_save_queue();
 	  }
