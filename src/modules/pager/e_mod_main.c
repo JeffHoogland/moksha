@@ -476,12 +476,10 @@ static void
 _pager_face_zone_set(Pager_Face *face, E_Zone *zone)
 {
    int          desks_x, desks_y, x, y;
-   E_Desk      *current;
 
    face->zone = zone;
    e_object_ref(E_OBJECT(zone));
    e_zone_desk_count_get(zone, &desks_x, &desks_y);
-   current = e_desk_current_get(zone);
    face->xnum = desks_x;
    face->ynum = desks_y;
    for (x = 0; x < desks_x; x++)
@@ -493,7 +491,12 @@ _pager_face_zone_set(Pager_Face *face, E_Zone *zone)
 	     
 	     desk = e_desk_at_xy_get(zone, x, y);
 	     pd = _pager_desk_new(face, desk, x, y);
-	     if (pd) face->desks = evas_list_append(face->desks, pd);
+	     if (pd)
+	       {
+		  face->desks = evas_list_append(face->desks, pd);
+		  if (desk->visible)
+		    _pager_face_desk_select(pd);
+	       }
 	  }
      }
 //   e_gadman_client_aspect_set(face->gmc, 
@@ -559,8 +562,6 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    edje_object_part_swallow(pd->desk_object, "items", pd->layout_object);
    evas_object_show(o);
    
-   if (desk == e_desk_current_get(desk->zone)) _pager_face_desk_select(pd);
-
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
