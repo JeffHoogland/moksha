@@ -10,13 +10,16 @@
 
 static void _e_desk_free(E_Desk *desk);
 static void _e_border_event_desk_show_free(void *data, void *ev);
+static void _e_border_event_desk_name_change_free(void *data, void *ev);
 
 int E_EVENT_DESK_SHOW = 0;
+int E_EVENT_DESK_NAME_CHANGE = 0;
 
 int
 e_desk_init(void)
 {
    E_EVENT_DESK_SHOW = ecore_event_type_new();
+   E_EVENT_DESK_NAME_CHANGE = ecore_event_type_new();
    return 1;
 }
 
@@ -74,10 +77,17 @@ e_desk_new(E_Zone *zone, int x, int y)
 void
 e_desk_name_set(E_Desk *desk, const char *name)
 {
+   E_Event_Desk_Name_Change *ev;
+
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    E_FREE(desk->name);
    desk->name = strdup(name);
+
+   ev = E_NEW(E_Event_Desk_Name_Change, 1);
+   ev->desk = desk;
+   e_object_ref(E_OBJECT(desk));
+   ecore_event_add(E_EVENT_DESK_NAME_CHANGE, ev, _e_border_event_desk_name_change_free, NULL);
 }
 
 void
@@ -402,3 +412,12 @@ _e_border_event_desk_show_free(void *data, void *event)
    free(ev);
 }
 
+static void
+_e_border_event_desk_name_change_free(void *data, void *event)
+{
+   E_Event_Desk_Name_Change *ev;
+
+   ev = event;
+   e_object_unref(E_OBJECT(ev->desk));
+   free(ev);
+}

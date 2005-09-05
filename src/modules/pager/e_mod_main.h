@@ -16,9 +16,17 @@ typedef struct _Pager_Win   Pager_Win;
 #define PAGER_RESIZE_VERT 2
 #define PAGER_RESIZE_BOTH 3
 
+#define PAGER_DESKNAME_NONE   0
+#define PAGER_DESKNAME_TOP    1
+#define PAGER_DESKNAME_BOTTOM 2
+#define PAGER_DESKNAME_LEFT   3
+#define PAGER_DESKNAME_RIGHT  4
+
 struct _Config
 {
    Evas_List *faces;
+   /* Position of desktop name */
+   unsigned int deskname_pos;
 };
 
 struct _Config_Face
@@ -35,6 +43,7 @@ struct _Pager
 {
    Evas_List   *faces;
    E_Menu      *config_menu;
+   E_Menu      *config_menu_deskname;
    Evas_List   *menus;
 
    Config      *conf;
@@ -42,6 +51,7 @@ struct _Pager
 
 struct _Pager_Face
 {
+   Pager           *pager;
    E_Gadman_Client *gmc;
    E_Menu          *menu;
    Evas            *evas;
@@ -76,6 +86,7 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_border_icon_change;
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
    Ecore_Event_Handler *ev_handler_desk_show;
+   Ecore_Event_Handler *ev_handler_desk_name_change;
    Ecore_Event_Handler *ev_handler_container_resize;
 
    E_Drop_Handler *drop_handler;

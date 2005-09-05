@@ -14,7 +14,7 @@ static Pager      *_pager_new();
 static void        _pager_free(Pager *pager);
 static void        _pager_config_menu_new(Pager *pager);
 
-static Pager_Face *_pager_face_new(E_Zone *zone);
+static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone);
 static void        _pager_face_free(Pager_Face *face);
 static void        _pager_face_menu_new(Pager_Face *face);
 static void        _pager_face_enable(Pager_Face *face);
@@ -49,6 +49,7 @@ static int         _pager_face_cb_event_border_lower(void *data, int type, void 
 static int         _pager_face_cb_event_border_icon_change(void *data, int type, void *event);
 static int         _pager_face_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int         _pager_face_cb_event_desk_show(void *data, int type, void *event);
+static int         _pager_face_cb_event_desk_name_change(void *data, int type, void *event);
 static int         _pager_face_cb_event_container_resize(void *data, int type, void *event);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -66,6 +67,13 @@ static void        _pager_face_cb_enter(void *data, const char *type, void *drop
 static void        _pager_face_cb_move(void *data, const char *type, void *drop);
 static void        _pager_face_cb_leave(void *data, const char *type, void *drop);
 static void        _pager_face_cb_drop(void *data, const char *type, void *drop);
+
+static void        _pager_face_cb_deskname_none(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_cb_deskname_top(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_cb_deskname_bottom(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_cb_deskname_left(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_cb_deskname_right(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_face_deskname_position_change(Pager_Face *face);
 
 static int         _pager_count;
 
@@ -176,6 +184,7 @@ _pager_new()
 #define T Config
 #define D _conf_edd
    E_CONFIG_LIST(D, T, faces, _conf_face_edd);
+   E_CONFIG_VAL(D, T, deskname_pos, UINT);
 
    pager->conf = e_config_domain_load("module.pager", _conf_edd);
    if (!pager->conf)
@@ -206,7 +215,7 @@ _pager_new()
 	       {
 		  zone = l3->data;
 
-		  face = _pager_face_new(zone);
+		  face = _pager_face_new(pager, zone);
 		  if (face)
 		    {
 		       pager->faces = evas_list_append(pager->faces, face);
@@ -269,11 +278,66 @@ _pager_free(Pager *pager)
 static void
 _pager_config_menu_new(Pager *pager)
 {
-   pager->config_menu = e_menu_new();
+   E_Menu *mn;
+   E_Menu_Item *mi;
+
+   mn = e_menu_new();
+   pager->config_menu = mn;
+
+   mn = e_menu_new();
+   pager->config_menu_deskname = mn;
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("None"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (pager->conf->deskname_pos == PAGER_DESKNAME_NONE)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_face_cb_deskname_none, pager);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Top"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (pager->conf->deskname_pos == PAGER_DESKNAME_TOP)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_face_cb_deskname_top, pager);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Bottom"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (pager->conf->deskname_pos == PAGER_DESKNAME_BOTTOM)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_face_cb_deskname_bottom, pager);
+
+   /* FIXME: implement this in the theme, then re-enable */
+   /*
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Left"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (pager->conf->deskname_pos == PAGER_DESKNAME_LEFT)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_face_cb_deskname_left, pager);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Right"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 2);
+   if (pager->conf->deskname_pos == PAGER_DESKNAME_RIGHT)
+     e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_face_cb_deskname_right, pager);
+   */
+
+   /* Submenus */
+   mi = e_menu_item_new(pager->config_menu);
+   e_menu_item_label_set(mi, _("Desktop Name"));
+   e_menu_item_submenu_set(mi, pager->config_menu_deskname);
 }
 
 static Pager_Face *
-_pager_face_new(E_Zone *zone)
+_pager_face_new(Pager *pager, E_Zone *zone)
 {
    Pager_Face  *face;
    Evas_Object *o;
@@ -281,6 +345,8 @@ _pager_face_new(E_Zone *zone)
 
    face = E_NEW(Pager_Face, 1);
    if (!face) return NULL;
+
+   face->pager = pager;
 
    /* store what evas we live in */
    face->evas = zone->container->bg_evas;
@@ -328,6 +394,9 @@ _pager_face_new(E_Zone *zone)
    face->ev_handler_desk_show =
       ecore_event_handler_add(E_EVENT_DESK_SHOW,
 			      _pager_face_cb_event_desk_show, face);
+   face->ev_handler_desk_name_change =
+      ecore_event_handler_add(E_EVENT_DESK_NAME_CHANGE,
+			      _pager_face_cb_event_desk_name_change, face);
    face->ev_handler_container_resize =
       ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
 			      _pager_face_cb_event_container_resize, face);
@@ -379,6 +448,8 @@ _pager_face_new(E_Zone *zone)
    e_gadman_client_change_func_set(face->gmc, _pager_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 
+   _pager_face_deskname_position_change(face);
+
    return face;
 }
 
@@ -407,6 +478,7 @@ _pager_face_free(Pager_Face *face)
    ecore_event_handler_del(face->ev_handler_border_icon_change);
    ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
    ecore_event_handler_del(face->ev_handler_desk_show);
+   ecore_event_handler_del(face->ev_handler_desk_name_change);
    ecore_event_handler_del(face->ev_handler_container_resize);
 
    e_object_del(E_OBJECT(face->menu));
@@ -436,6 +508,11 @@ _pager_face_menu_new(Pager_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _pager_face_cb_menu_edit, face);
+   
+   /* Submenus */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Desktop Name"));
+   e_menu_item_submenu_set(mi, face->pager->config_menu_deskname);
 }
 
 static void
@@ -723,6 +800,7 @@ _pager_face_desk_select(Pager_Desk *pd)
 	       }
 	  }
      }
+   edje_object_part_text_set(pd->face->pager_object, "desktop_name", pd->desk->name);
 }
 
 static void
@@ -1231,6 +1309,32 @@ _pager_face_cb_event_desk_show(void *data, int type, void *event)
 }
 
 static int
+_pager_face_cb_event_desk_name_change(void *data, int type, void *event)
+{
+   Pager_Face        *face;
+   E_Event_Desk_Show *ev;
+   Evas_List *l;
+
+   face = data;
+   ev = event;
+   if (face->zone != ev->desk->zone) return 1;
+
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	pd = l->data;
+
+        if ( (pd->desk == ev->desk) && pd->current)
+	  {
+	     edje_object_part_text_set(pd->face->pager_object, "desktop_name", ev->desk->name);
+	     break;
+	  }
+	
+     }
+   return 1;
+}
+
+static int
 _pager_face_cb_event_container_resize(void *data, int type, void *event)
 {
    Pager_Face               *face;
@@ -1489,3 +1593,117 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
 	edje_object_signal_emit(pd->desk_object, "drag", "out");
      }
 }
+
+static void
+_pager_face_cb_deskname_none(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+   pager->conf->deskname_pos = PAGER_DESKNAME_NONE;
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+
+	face = l->data;
+	_pager_face_deskname_position_change(face);
+     }
+   e_config_save_queue();
+}
+
+static void
+_pager_face_cb_deskname_top(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+   pager->conf->deskname_pos = PAGER_DESKNAME_TOP;
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+
+	face = l->data;
+	_pager_face_deskname_position_change(face);
+     }
+   e_config_save_queue();
+}
+
+static void
+_pager_face_cb_deskname_bottom(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+   pager->conf->deskname_pos = PAGER_DESKNAME_BOTTOM;
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+
+	face = l->data;
+	_pager_face_deskname_position_change(face);
+     }
+   e_config_save_queue();
+}
+
+static void
+_pager_face_cb_deskname_left(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+   pager->conf->deskname_pos = PAGER_DESKNAME_LEFT;
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+
+	face = l->data;
+	_pager_face_deskname_position_change(face);
+     }
+   e_config_save_queue();
+}
+
+static void
+_pager_face_cb_deskname_right(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+   pager->conf->deskname_pos = PAGER_DESKNAME_RIGHT;
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+
+	face = l->data;
+	_pager_face_deskname_position_change(face);
+     }
+   e_config_save_queue();
+}
+
+static void
+_pager_face_deskname_position_change(Pager_Face *face)
+{
+   switch (face->pager->conf->deskname_pos)
+     {
+      case PAGER_DESKNAME_NONE:
+	 edje_object_signal_emit(face->pager_object, "desktop_name,none", "");
+	 break;
+      case PAGER_DESKNAME_TOP:
+	 edje_object_signal_emit(face->pager_object, "desktop_name,top", "");
+	 break;
+      case PAGER_DESKNAME_BOTTOM:
+	 edje_object_signal_emit(face->pager_object, "desktop_name,bottom", "");
+	 break;
+      case PAGER_DESKNAME_LEFT:
+	 edje_object_signal_emit(face->pager_object, "desktop_name,left", "");
+	 break;
+      case PAGER_DESKNAME_RIGHT:
+	 edje_object_signal_emit(face->pager_object, "desktop_name,right", "");
+	 break;
+     }
+}
+
