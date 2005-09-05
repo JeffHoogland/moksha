@@ -1324,12 +1324,12 @@ _pager_face_cb_event_desk_name_change(void *data, int type, void *event)
 	Pager_Desk *pd;
 	pd = l->data;
 
-        if ( (pd->desk == ev->desk) && pd->current)
+	if ((pd->desk == ev->desk) && (pd->current))
 	  {
 	     edje_object_part_text_set(pd->face->pager_object, "desktop_name", ev->desk->name);
 	     break;
 	  }
-	
+
      }
    return 1;
 }
