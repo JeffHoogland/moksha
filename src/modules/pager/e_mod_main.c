@@ -494,7 +494,7 @@ _pager_face_zone_set(Pager_Face *face, E_Zone *zone)
 	     if (pd)
 	       {
 		  face->desks = evas_list_append(face->desks, pd);
-		  if (desk->visible)
+		  if (desk == e_desk_current_get(desk->zone))
 		    _pager_face_desk_select(pd);
 	       }
 	  }
