@@ -4976,3 +4976,42 @@ break;
    END_INT;
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MODAL_WINDOWS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-modal-windows-set", 1, "Set if enlightenment should honour modal windows", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->modal_windows = val;
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MODAL_WINDOWS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-modal-windows-get", 0, "Get if enlightenment should honour modal windows", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->modal_windows, E_IPC_OP_MODAL_WINDOWS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MODAL_WINDOWS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL

@@ -154,6 +154,7 @@ struct _E_Config
 	int    desktop;
 	int    iconify;
    } transient;
+   int         modal_windows;
 };
 
 struct _E_Config_Module

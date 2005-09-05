@@ -308,6 +308,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transient.layer, INT); /**/
    E_CONFIG_VAL(D, T, transient.desktop, INT); /**/
    E_CONFIG_VAL(D, T, transient.iconify, INT); /**/
+   E_CONFIG_VAL(D, T, modal_windows, INT); /**/
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -423,6 +424,7 @@ e_config_init(void)
 	e_config->transient.layer = 1;
 	e_config->transient.desktop = 1;
 	e_config->transient.iconify = 1;
+	e_config->modal_windows = 1;
 	
 	  {
 	     E_Config_Module *em;

@@ -4757,7 +4757,7 @@ _e_border_eval(E_Border *bd)
 	       {
 		  bd_parent->transients = evas_list_append(bd_parent->transients, bd);
 		  bd->parent = bd_parent;
-		  if (bd->client.netwm.state.modal)
+		  if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
 		    bd->parent->modal = bd;
 	       }
 	  }
@@ -4771,7 +4771,7 @@ _e_border_eval(E_Border *bd)
 	       {
 		  bd_leader->group = evas_list_append(bd_leader->group, bd);
 		  bd->leader = bd_leader;
-		  if (bd->client.netwm.state.modal)
+		  if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
 		    bd->leader->modal = bd;
 	       }
 	  }
