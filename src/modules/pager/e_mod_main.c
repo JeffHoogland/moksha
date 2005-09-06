@@ -1417,6 +1417,8 @@ _pager_desk_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    desk = data;
+
+   edje_object_part_text_set(desk->face->pager_object, "desktop_name", desk->desk->name);
 }
 
 static void
@@ -1424,9 +1426,22 @@ _pager_desk_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info
 {
    Evas_Event_Mouse_Out *ev;
    Pager_Desk *desk;
+   Evas_List *l;
    
    ev = event_info;
    desk = data;
+
+   for(l = desk->face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;
+	pd = l->data;
+	if (pd->current)
+	  {
+	   edje_object_part_text_set(pd->face->pager_object, "desktop_name", pd->desk->name);
+	   break;
+	  }
+     }
+
 }
 
 static void
