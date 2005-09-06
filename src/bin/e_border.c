@@ -2210,6 +2210,7 @@ _e_border_free(E_Border *bd)
 	bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize, bd->pending_move_resize);
      }
 
+   if (bd->shade.anim) ecore_animator_del(bd->shade.anim);
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
    _e_border_menus_del(bd);
@@ -5539,6 +5540,7 @@ _e_border_shade_animator(void *data)
 	bd->changes.shaded = 1;
 	bd->changes.shading = 1;
 	bd->changed = 1;
+	bd->shade.anim = NULL;
 
 	if (bd->shaded)
 	  {
