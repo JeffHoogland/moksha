@@ -14,7 +14,8 @@ static Pager      *_pager_new();
 static void        _pager_free(Pager *pager);
 static void        _pager_config_menu_new(Pager *pager);
 
-static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone);
+static Pager_Face *_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas);
+static void        _pager_face_events_init(Pager_Face *face);
 static void        _pager_face_free(Pager_Face *face);
 static void        _pager_face_menu_new(Pager_Face *face);
 static void        _pager_face_enable(Pager_Face *face);
@@ -74,6 +75,13 @@ static void        _pager_face_cb_deskname_bottom(void *data, E_Menu *m, E_Menu_
 static void        _pager_face_cb_deskname_left(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_deskname_right(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_deskname_position_change(Pager_Face *face);
+static int         _pager_popup_cb_timeout(void *data);
+
+static void        _pager_menu_cb_speed_very_slow(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_menu_cb_speed_slow(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_menu_cb_speed_normal(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_menu_cb_speed_fast(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_menu_cb_speed_very_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int         _pager_count;
 
@@ -185,11 +193,14 @@ _pager_new()
 #define D _conf_edd
    E_CONFIG_LIST(D, T, faces, _conf_face_edd);
    E_CONFIG_VAL(D, T, deskname_pos, UINT);
+   E_CONFIG_VAL(D, T, speed, UINT);
 
    pager->conf = e_config_domain_load("module.pager", _conf_edd);
    if (!pager->conf)
      {
 	pager->conf = E_NEW(Config, 1);
+	pager->conf->deskname_pos = PAGER_DESKNAME_NONE;
+	pager->conf->speed = 12;
      }
 
    _pager_config_menu_new(pager);
@@ -215,10 +226,11 @@ _pager_new()
 	       {
 		  zone = l3->data;
 
-		  face = _pager_face_new(pager, zone);
+		  face = _pager_face_new(pager, zone, zone->container->bg_evas);
 		  if (face)
 		    {
 		       pager->faces = evas_list_append(pager->faces, face);
+		       _pager_face_events_init(face);
 
 		       /* Config */
 		       if (!cl)
@@ -269,6 +281,8 @@ _pager_free(Pager *pager)
      e_object_del(E_OBJECT(l->data));
    evas_list_free(pager->menus);
    e_object_del(E_OBJECT(pager->config_menu));
+   e_object_del(E_OBJECT(pager->config_menu_deskname));
+   e_object_del(E_OBJECT(pager->config_menu_speed));
 
    evas_list_free(pager->conf->faces);
    free(pager->conf);
@@ -330,14 +344,57 @@ _pager_config_menu_new(Pager *pager)
    e_menu_item_callback_set(mi, _pager_face_cb_deskname_right, pager);
    */
 
+   mn = e_menu_new();
+   pager->config_menu_speed = mn;
+
+   /* Desktopname speed */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Very Slow"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (pager->conf->speed == 60) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_menu_cb_speed_very_slow, pager);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Slow"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (pager->conf->speed == 40) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_menu_cb_speed_slow, pager);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Normal"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (pager->conf->speed == 12) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_menu_cb_speed_normal, pager);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Fast"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (pager->conf->speed == 7) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_menu_cb_speed_fast, pager);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Very Fast"));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (pager->conf->speed == 3) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _pager_menu_cb_speed_very_fast, pager);
+
    /* Submenus */
    mi = e_menu_item_new(pager->config_menu);
    e_menu_item_label_set(mi, _("Desktop Name"));
    e_menu_item_submenu_set(mi, pager->config_menu_deskname);
+
+   mi = e_menu_item_new(pager->config_menu);
+   e_menu_item_label_set(mi, _("Desktop Speed"));
+   e_menu_item_submenu_set(mi, pager->config_menu_speed);
 }
 
 static Pager_Face *
-_pager_face_new(Pager *pager, E_Zone *zone)
+_pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 {
    Pager_Face  *face;
    Evas_Object *o;
@@ -349,57 +406,7 @@ _pager_face_new(Pager *pager, E_Zone *zone)
    face->pager = pager;
 
    /* store what evas we live in */
-   face->evas = zone->container->bg_evas;
-   
-   /* set up event handles for when windows change and desktops */
-   face->ev_handler_border_resize =
-      ecore_event_handler_add(E_EVENT_BORDER_RESIZE,
-			      _pager_face_cb_event_border_resize, face);
-   face->ev_handler_border_move =
-      ecore_event_handler_add(E_EVENT_BORDER_MOVE,
-			      _pager_face_cb_event_border_move, face);
-   face->ev_handler_border_add =
-      ecore_event_handler_add(E_EVENT_BORDER_ADD,
-			      _pager_face_cb_event_border_add, face);
-   face->ev_handler_border_remove =
-      ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
-			      _pager_face_cb_event_border_remove, face);
-   face->ev_handler_border_iconify =
-      ecore_event_handler_add(E_EVENT_BORDER_ICONIFY,
-			      _pager_face_cb_event_border_iconify, face);
-   face->ev_handler_border_uniconify =
-      ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY,
-			      _pager_face_cb_event_border_uniconify, face);
-   face->ev_handler_border_stick =
-      ecore_event_handler_add(E_EVENT_BORDER_STICK,
-			      _pager_face_cb_event_border_stick, face);
-   face->ev_handler_border_unstick =
-      ecore_event_handler_add(E_EVENT_BORDER_UNSTICK,
-			      _pager_face_cb_event_border_unstick, face);
-   face->ev_handler_border_desk_set =
-      ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
-			      _pager_face_cb_event_border_desk_set, face);
-   face->ev_handler_border_raise =
-      ecore_event_handler_add(E_EVENT_BORDER_RAISE,
-			      _pager_face_cb_event_border_raise, face);
-   face->ev_handler_border_lower =
-      ecore_event_handler_add(E_EVENT_BORDER_LOWER,
-			      _pager_face_cb_event_border_lower, face);
-   face->ev_handler_border_icon_change =
-      ecore_event_handler_add(E_EVENT_BORDER_ICON_CHANGE,
-			      _pager_face_cb_event_border_icon_change, face);
-   face->ev_handler_zone_desk_count_set =
-      ecore_event_handler_add(E_EVENT_ZONE_DESK_COUNT_SET,
-			      _pager_face_cb_event_zone_desk_count_set, face);
-   face->ev_handler_desk_show =
-      ecore_event_handler_add(E_EVENT_DESK_SHOW,
-			      _pager_face_cb_event_desk_show, face);
-   face->ev_handler_desk_name_change =
-      ecore_event_handler_add(E_EVENT_DESK_NAME_CHANGE,
-			      _pager_face_cb_event_desk_name_change, face);
-   face->ev_handler_container_resize =
-      ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
-			      _pager_face_cb_event_container_resize, face);
+   face->evas = evas;
 
    /* the bg */
    o = edje_object_add(face->evas);
@@ -453,6 +460,60 @@ _pager_face_new(Pager *pager, E_Zone *zone)
    return face;
 }
 
+static void
+_pager_face_events_init(Pager_Face *face)
+{
+   /* set up event handles for when windows change and desktops */
+   face->ev_handler_border_resize =
+      ecore_event_handler_add(E_EVENT_BORDER_RESIZE,
+			      _pager_face_cb_event_border_resize, face);
+   face->ev_handler_border_move =
+      ecore_event_handler_add(E_EVENT_BORDER_MOVE,
+			      _pager_face_cb_event_border_move, face);
+   face->ev_handler_border_add =
+      ecore_event_handler_add(E_EVENT_BORDER_ADD,
+			      _pager_face_cb_event_border_add, face);
+   face->ev_handler_border_remove =
+      ecore_event_handler_add(E_EVENT_BORDER_REMOVE,
+			      _pager_face_cb_event_border_remove, face);
+   face->ev_handler_border_iconify =
+      ecore_event_handler_add(E_EVENT_BORDER_ICONIFY,
+			      _pager_face_cb_event_border_iconify, face);
+   face->ev_handler_border_uniconify =
+      ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY,
+			      _pager_face_cb_event_border_uniconify, face);
+   face->ev_handler_border_stick =
+      ecore_event_handler_add(E_EVENT_BORDER_STICK,
+			      _pager_face_cb_event_border_stick, face);
+   face->ev_handler_border_unstick =
+      ecore_event_handler_add(E_EVENT_BORDER_UNSTICK,
+			      _pager_face_cb_event_border_unstick, face);
+   face->ev_handler_border_desk_set =
+      ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
+			      _pager_face_cb_event_border_desk_set, face);
+   face->ev_handler_border_raise =
+      ecore_event_handler_add(E_EVENT_BORDER_RAISE,
+			      _pager_face_cb_event_border_raise, face);
+   face->ev_handler_border_lower =
+      ecore_event_handler_add(E_EVENT_BORDER_LOWER,
+			      _pager_face_cb_event_border_lower, face);
+   face->ev_handler_border_icon_change =
+      ecore_event_handler_add(E_EVENT_BORDER_ICON_CHANGE,
+			      _pager_face_cb_event_border_icon_change, face);
+   face->ev_handler_zone_desk_count_set =
+      ecore_event_handler_add(E_EVENT_ZONE_DESK_COUNT_SET,
+			      _pager_face_cb_event_zone_desk_count_set, face);
+   face->ev_handler_desk_show =
+      ecore_event_handler_add(E_EVENT_DESK_SHOW,
+			      _pager_face_cb_event_desk_show, face);
+   face->ev_handler_desk_name_change =
+      ecore_event_handler_add(E_EVENT_DESK_NAME_CHANGE,
+			      _pager_face_cb_event_desk_name_change, face);
+   face->ev_handler_container_resize =
+      ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
+			      _pager_face_cb_event_container_resize, face);
+}
+
 void
 _pager_face_free(Pager_Face *face)
 {
@@ -464,24 +525,41 @@ _pager_face_free(Pager_Face *face)
    e_drop_handler_del(face->drop_handler);
 
    _pager_face_zone_unset(face);
-   ecore_event_handler_del(face->ev_handler_border_resize);
-   ecore_event_handler_del(face->ev_handler_border_move);
-   ecore_event_handler_del(face->ev_handler_border_add);
-   ecore_event_handler_del(face->ev_handler_border_remove);
-   ecore_event_handler_del(face->ev_handler_border_iconify);
-   ecore_event_handler_del(face->ev_handler_border_uniconify);
-   ecore_event_handler_del(face->ev_handler_border_stick);
-   ecore_event_handler_del(face->ev_handler_border_unstick);
-   ecore_event_handler_del(face->ev_handler_border_desk_set);
-   ecore_event_handler_del(face->ev_handler_border_raise);
-   ecore_event_handler_del(face->ev_handler_border_lower);
-   ecore_event_handler_del(face->ev_handler_border_icon_change);
-   ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
-   ecore_event_handler_del(face->ev_handler_desk_show);
-   ecore_event_handler_del(face->ev_handler_desk_name_change);
-   ecore_event_handler_del(face->ev_handler_container_resize);
+   if (face->ev_handler_border_resize)
+     ecore_event_handler_del(face->ev_handler_border_resize);
+   if (face->ev_handler_border_move)
+     ecore_event_handler_del(face->ev_handler_border_move);
+   if (face->ev_handler_border_add)
+     ecore_event_handler_del(face->ev_handler_border_add);
+   if (face->ev_handler_border_remove)
+     ecore_event_handler_del(face->ev_handler_border_remove);
+   if (face->ev_handler_border_iconify)
+     ecore_event_handler_del(face->ev_handler_border_iconify);
+   if (face->ev_handler_border_uniconify)
+     ecore_event_handler_del(face->ev_handler_border_uniconify);
+   if (face->ev_handler_border_stick)
+     ecore_event_handler_del(face->ev_handler_border_stick);
+   if (face->ev_handler_border_unstick)
+     ecore_event_handler_del(face->ev_handler_border_unstick);
+   if (face->ev_handler_border_desk_set)
+     ecore_event_handler_del(face->ev_handler_border_desk_set);
+   if (face->ev_handler_border_raise)
+     ecore_event_handler_del(face->ev_handler_border_raise);
+   if (face->ev_handler_border_lower)
+     ecore_event_handler_del(face->ev_handler_border_lower);
+   if (face->ev_handler_border_icon_change)
+     ecore_event_handler_del(face->ev_handler_border_icon_change);
+   if (face->ev_handler_zone_desk_count_set)
+     ecore_event_handler_del(face->ev_handler_zone_desk_count_set);
+   if (face->ev_handler_desk_show)
+     ecore_event_handler_del(face->ev_handler_desk_show);
+   if (face->ev_handler_desk_name_change)
+     ecore_event_handler_del(face->ev_handler_desk_name_change);
+   if (face->ev_handler_container_resize)
+     ecore_event_handler_del(face->ev_handler_container_resize);
 
-   e_object_del(E_OBJECT(face->menu));
+   if (face->menu)
+     e_object_del(E_OBJECT(face->menu));
 
    free(face->conf);
    free(face);
@@ -513,6 +591,10 @@ _pager_face_menu_new(Pager_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Desktop Name"));
    e_menu_item_submenu_set(mi, face->pager->config_menu_deskname);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Desktop Speed"));
+   e_menu_item_submenu_set(mi, face->pager->config_menu_speed);
 }
 
 static void
@@ -1303,11 +1385,68 @@ _pager_face_cb_event_desk_show(void *data, int type, void *event)
    face = data;
    ev = event;
    if (face->zone != ev->desk->zone) return 1;
+
    desk = _pager_face_desk_find(face, ev->desk);
-   if (desk) _pager_face_desk_select(desk);
+   if (desk)
+     {
+	Pager_Popup *pp;
+	Evas_Coord   w, h;
+	char         buf[1024];
+
+	_pager_face_desk_select(desk);
+
+	pp = E_NEW(Pager_Popup, 1);
+	if (!pp) return 1;
+
+	/* Show popup */
+	pp->popup = e_popup_new(face->zone, 0, 0, 1, 1);
+	if (!pp->popup)
+	  {
+	     free(pp);
+	     return 1;
+	  }
+	e_popup_layer_set(pp->popup, 999);
+
+	/* FIXME, this doesn't resize nicely when the name is shown! */
+	evas_object_geometry_get(face->pager_object, NULL, NULL, &w, &h);
+	w *= 3;
+	h *= 3;
+
+	pp->face = _pager_face_new(face->pager, face->zone, pp->popup->evas);
+	evas_object_move(pp->face->pager_object, 0, 0);
+	evas_object_resize(pp->face->pager_object, w, h);
+
+	snprintf(buf, sizeof(buf), desk->desk->name);
+	edje_object_part_text_set(pp->face->pager_object, "desktop_name", buf);
+	edje_object_signal_emit(pp->face->pager_object, "desktop_name,top", "");
+
+	e_popup_edje_bg_object_set(pp->popup, pp->face->pager_object);
+	e_popup_move_resize(pp->popup,
+			    pp->popup->zone->x + ((pp->popup->zone->w - w) / 2),
+			    pp->popup->zone->y + ((pp->popup->zone->h - h) / 2),
+			    w, h);
+	e_popup_show(pp->popup);
+
+	ecore_timer_add(face->pager->conf->speed / 10.0, _pager_popup_cb_timeout, pp);
+     }
+
    return 1;
 }
 
+static int
+_pager_popup_cb_timeout(void *data)
+{
+   Pager_Popup *pp;
+
+   pp = data;
+
+   pp->face->pager->faces = evas_list_remove(pp->face->pager->faces, pp->face);
+   _pager_face_free(pp->face);
+   e_object_del(E_OBJECT(pp->popup));
+   free(pp);
+
+   return 0;
+} 
 static int
 _pager_face_cb_event_desk_name_change(void *data, int type, void *event)
 {
@@ -1431,17 +1570,16 @@ _pager_desk_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info
    ev = event_info;
    desk = data;
 
-   for(l = desk->face->desks; l; l = l->next)
+   for (l = desk->face->desks; l; l = l->next)
      {
 	Pager_Desk *pd;
 	pd = l->data;
 	if (pd->current)
 	  {
-	   edje_object_part_text_set(pd->face->pager_object, "desktop_name", pd->desk->name);
-	   break;
+	     edje_object_part_text_set(pd->face->pager_object, "desktop_name", pd->desk->name);
+	     break;
 	  }
      }
-
 }
 
 static void
@@ -1452,7 +1590,7 @@ _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
    
    ev = event_info;
    pd = data;
-   if (ev->button == 3)
+   if ((ev->button == 3) && (pd->face->menu))
      {
 	e_menu_activate_mouse(pd->face->menu, pd->face->zone,
 			      ev->output.x, ev->output.y, 1, 1,
@@ -1722,3 +1860,47 @@ _pager_face_deskname_position_change(Pager_Face *face)
      }
 }
 
+static void
+_pager_menu_cb_speed_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->speed = 60;
+   e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_speed_slow(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->speed = 40;
+   e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_speed_normal(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->speed = 12;
+   e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_speed_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->speed = 7;
+   e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_speed_very_fast(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->speed = 3;
+   e_config_save_queue();
+}

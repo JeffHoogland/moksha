@@ -32,7 +32,6 @@ default_start.edc \
 default_winlist.edc \
 default_transitions.edc \
 default_dialog.edc \
-default_desktopname.edc \
 default_icons.edc \
 default_pointer.edc \
 default_randr.edc

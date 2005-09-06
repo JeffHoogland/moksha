@@ -10,6 +10,7 @@ typedef struct _Pager       Pager;
 typedef struct _Pager_Face  Pager_Face;
 typedef struct _Pager_Desk  Pager_Desk;
 typedef struct _Pager_Win   Pager_Win;
+typedef struct _Pager_Popup Pager_Popup;
 
 #define PAGER_RESIZE_NONE 0
 #define PAGER_RESIZE_HORZ 1
@@ -27,6 +28,8 @@ struct _Config
    Evas_List *faces;
    /* Position of desktop name */
    unsigned int deskname_pos;
+   /* How the popup is shown on desk change */
+   unsigned int speed;
 };
 
 struct _Config_Face
@@ -44,6 +47,7 @@ struct _Pager
    Evas_List   *faces;
    E_Menu      *config_menu;
    E_Menu      *config_menu_deskname;
+   E_Menu      *config_menu_speed;
    Evas_List   *menus;
 
    Config      *conf;
@@ -114,6 +118,12 @@ struct _Pager_Win
 
    Evas_Object *window_object;
    Evas_Object *icon_object;
+};
+
+struct _Pager_Popup
+{
+   E_Popup     *popup;
+   Pager_Face  *face;
 };
 
 EAPI void *e_modapi_init     (E_Module *module);

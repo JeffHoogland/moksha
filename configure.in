@@ -266,7 +266,6 @@ src/modules/temperature/Makefile
 src/modules/cpufreq/Makefile
 src/modules/ibox/Makefile
 src/modules/start/Makefile
-src/modules/desktopname/Makefile
 src/modules/randr/Makefile
 src/preload/Makefile
 data/Makefile

@@ -40,7 +40,6 @@ collections {
 #include "default_winlist.edc"
 #include "default_transitions.edc"
 #include "default_dialog.edc"
-#include "default_desktopname.edc"
 #include "default_icons.edc"
 #include "default_randr.edc"
 #include "default_pointer.edc"
