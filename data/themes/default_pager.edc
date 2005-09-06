@@ -6,6 +6,9 @@ images {
 
 group {
    name: "modules/pager/main";
+   data {
+      item: "shaped" "1";
+   }
    parts {
       part {
 	 name:          "background";
