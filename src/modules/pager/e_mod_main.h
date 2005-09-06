@@ -29,7 +29,7 @@ struct _Config
    /* Position of desktop name */
    unsigned int deskname_pos;
    /* How the popup is shown on desk change */
-   unsigned int speed;
+   double popup_speed;
    /* Show popup? */
    unsigned int popup;
 };
@@ -96,6 +96,8 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_container_resize;
 
    E_Drop_Handler *drop_handler;
+   
+   Pager_Popup *current_popup;
 };
 
 struct _Pager_Desk
@@ -125,7 +127,9 @@ struct _Pager_Win
 struct _Pager_Popup
 {
    E_Popup     *popup;
-   Pager_Face  *face;
+   Pager_Face  *src_face, *face;
+   Evas_Object *bg_object;
+   Ecore_Timer *timer;
 };
 
 EAPI void *e_modapi_init     (E_Module *module);
