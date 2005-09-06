@@ -30,6 +30,8 @@ struct _Config
    unsigned int deskname_pos;
    /* How the popup is shown on desk change */
    unsigned int speed;
+   /* Show popup? */
+   unsigned int popup;
 };
 
 struct _Config_Face

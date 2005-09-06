@@ -10,7 +10,7 @@
  */
 
 /* module private routines */
-static Pager      *_pager_new();
+static Pager      *_pager_new(void);
 static void        _pager_free(Pager *pager);
 static void        _pager_config_menu_new(Pager *pager);
 
@@ -83,6 +83,8 @@ static void        _pager_menu_cb_speed_normal(void *data, E_Menu *m, E_Menu_Ite
 static void        _pager_menu_cb_speed_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_menu_cb_speed_very_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void        _pager_menu_cb_popup_enable(void *data, E_Menu *m, E_Menu_Item *mi);
+
 static int         _pager_count;
 
 static E_Config_DD *_conf_edd;
@@ -107,7 +109,7 @@ e_modapi_init(E_Module *module)
 	return NULL;
      }
    /* actually init pager */
-   pager = _pager_new(module);
+   pager = _pager_new();
    module->config_menu = pager->config_menu;
 
    return pager;
@@ -160,7 +162,7 @@ e_modapi_about(E_Module *module)
 
 /* module private routines */
 static Pager *
-_pager_new()
+_pager_new(void)
 {
    Pager       *pager;
    Pager_Face  *face;
@@ -194,6 +196,7 @@ _pager_new()
    E_CONFIG_LIST(D, T, faces, _conf_face_edd);
    E_CONFIG_VAL(D, T, deskname_pos, UINT);
    E_CONFIG_VAL(D, T, speed, UINT);
+   E_CONFIG_VAL(D, T, popup, UINT);
 
    pager->conf = e_config_domain_load("module.pager", _conf_edd);
    if (!pager->conf)
@@ -201,6 +204,7 @@ _pager_new()
 	pager->conf = E_NEW(Config, 1);
 	pager->conf->deskname_pos = PAGER_DESKNAME_NONE;
 	pager->conf->speed = 12;
+	pager->conf->popup = 1;
      }
 
    _pager_config_menu_new(pager);
@@ -389,7 +393,13 @@ _pager_config_menu_new(Pager *pager)
    e_menu_item_submenu_set(mi, pager->config_menu_deskname);
 
    mi = e_menu_item_new(pager->config_menu);
-   e_menu_item_label_set(mi, _("Desktop Speed"));
+   e_menu_item_label_set(mi, _("Enable Popup"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, pager->conf->popup);
+   e_menu_item_callback_set(mi, _pager_menu_cb_popup_enable, pager);
+
+   mi = e_menu_item_new(pager->config_menu);
+   e_menu_item_label_set(mi, _("Popup Speed"));
    e_menu_item_submenu_set(mi, pager->config_menu_speed);
 }
 
@@ -591,6 +601,12 @@ _pager_face_menu_new(Pager_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Desktop Name"));
    e_menu_item_submenu_set(mi, face->pager->config_menu_deskname);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Enable Popup"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, face->pager->conf->popup);
+   e_menu_item_callback_set(mi, _pager_menu_cb_popup_enable, face->pager);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Desktop Speed"));
@@ -1395,6 +1411,8 @@ _pager_face_cb_event_desk_show(void *data, int type, void *event)
 
 	_pager_face_desk_select(desk);
 
+	if (!face->pager->conf->popup) return 1;
+
 	pp = E_NEW(Pager_Popup, 1);
 	if (!pp) return 1;
 
@@ -1902,5 +1920,14 @@ _pager_menu_cb_speed_very_fast(void *data, E_Menu *m, E_Menu_Item *mi)
    Pager *pager;
    pager = data;
    pager->conf->speed = 3;
+   e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_popup_enable(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   pager = data;
+   pager->conf->popup = e_menu_item_toggle_get(mi);
    e_config_save_queue();
 }
