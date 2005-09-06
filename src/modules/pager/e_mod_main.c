@@ -573,6 +573,9 @@ _pager_face_free(Pager_Face *face)
    if (face->ev_handler_container_resize)
      ecore_event_handler_del(face->ev_handler_container_resize);
 
+   if (face->current_popup)
+     _pager_popup_free(face->current_popup);
+
    if (face->menu)
      e_object_del(E_OBJECT(face->menu));
 
