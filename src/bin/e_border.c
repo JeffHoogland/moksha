@@ -1648,7 +1648,6 @@ e_border_unstick(E_Border *bd)
    /* Set the desk before we unstick the border */
    if (!bd->sticky) return;
 //   printf("UNSTICK!\n");
-   e_border_desk_set(bd, e_desk_current_get(bd->zone));
    bd->sticky = 0;
    e_hints_window_sticky_set(bd, 0);
 
@@ -1657,6 +1656,8 @@ e_border_unstick(E_Border *bd)
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_unstick_event");
    ecore_event_add(E_EVENT_BORDER_UNSTICK, ev, _e_border_event_border_unstick_free, NULL);
+
+   e_border_desk_set(bd, e_desk_current_get(bd->zone));
 }
 
 E_Border *
