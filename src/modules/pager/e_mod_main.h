@@ -53,31 +53,7 @@ struct _Pager
    Evas_List   *menus;
 
    Config      *conf;
-};
 
-struct _Pager_Face
-{
-   Pager           *pager;
-   E_Gadman_Client *gmc;
-   E_Menu          *menu;
-   Evas            *evas;
-   
-   E_Zone          *zone;
-   Evas_List       *desks;
-   
-   Evas_Object  *pager_object;
-   Evas_Object  *table_object;
-   
-   Evas_Coord    fx, fy, fw, fh;
-   struct {
-	Evas_Coord l, r, t, b;
-   } inset;
-
-   /* Current nr. of desktops */
-   int           xnum, ynum;
-
-   Config_Face  *conf;
-   
    Ecore_Event_Handler *ev_handler_border_resize;
    Ecore_Event_Handler *ev_handler_border_move;
    Ecore_Event_Handler *ev_handler_border_add;
@@ -94,9 +70,33 @@ struct _Pager_Face
    Ecore_Event_Handler *ev_handler_desk_show;
    Ecore_Event_Handler *ev_handler_desk_name_change;
    Ecore_Event_Handler *ev_handler_container_resize;
+};
+
+struct _Pager_Face
+{
+   Pager           *pager;
+   E_Gadman_Client *gmc;
+   E_Menu          *menu;
+   Evas            *evas;
+
+   E_Zone          *zone;
+   Evas_List       *desks;
+
+   Evas_Object  *pager_object;
+   Evas_Object  *table_object;
+
+   Evas_Coord    fx, fy, fw, fh;
+   struct {
+	Evas_Coord l, r, t, b;
+   } inset;
+
+   /* Current nr. of desktops */
+   int           xnum, ynum;
+
+   Config_Face  *conf;
 
    E_Drop_Handler *drop_handler;
-   
+
    Pager_Popup *current_popup;
 };
 
