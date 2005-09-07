@@ -847,7 +847,6 @@ e_border_raise(E_Border *bd)
 	      */
 	     if (!child->iconic)
 	       {
-		  printf("raise: %p %p\n", child, last);
 		  if (last)
 		    e_border_stack_below(child, last);
 		  else
@@ -882,7 +881,6 @@ e_border_raise(E_Border *bd)
 
    if (last)
      {
-	printf("below: %p %p\n", bd, last);
 	e_container_border_stack_below(bd, last);
 	ev->stack = last;
 	e_object_ref(E_OBJECT(last));
@@ -890,7 +888,6 @@ e_border_raise(E_Border *bd)
      }
    else
      {
-	printf("above: %p %p\n", bd, last);
 	E_Border *above;
 
 	/* If we don't have any children, raise this border */
