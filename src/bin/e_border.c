@@ -98,8 +98,7 @@ static void _e_border_event_border_add_free(void *data, void *ev);
 static void _e_border_event_border_remove_free(void *data, void *ev);
 static void _e_border_event_border_zone_set_free(void *data, void *ev);
 static void _e_border_event_border_desk_set_free(void *data, void *ev);
-static void _e_border_event_border_raise_free(void *data, void *ev);
-static void _e_border_event_border_lower_free(void *data, void *ev);
+static void _e_border_event_border_stack_free(void *data, void *ev);
 static void _e_border_event_border_icon_change_free(void *data, void *ev);
 static void _e_border_event_border_resize_free(void *data, void *ev);
 static void _e_border_event_border_move_free(void *data, void *ev);
@@ -150,8 +149,7 @@ int E_EVENT_BORDER_ICONIFY = 0;
 int E_EVENT_BORDER_UNICONIFY = 0;
 int E_EVENT_BORDER_STICK = 0;
 int E_EVENT_BORDER_UNSTICK = 0;
-int E_EVENT_BORDER_RAISE = 0;
-int E_EVENT_BORDER_LOWER = 0;
+int E_EVENT_BORDER_STACK = 0;
 int E_EVENT_BORDER_ICON_CHANGE = 0;
 
 #define GRAV_SET(bd, grav) \
@@ -199,8 +197,7 @@ e_border_init(void)
    E_EVENT_BORDER_UNICONIFY = ecore_event_type_new();
    E_EVENT_BORDER_STICK = ecore_event_type_new();
    E_EVENT_BORDER_UNSTICK = ecore_event_type_new();
-   E_EVENT_BORDER_RAISE = ecore_event_type_new();
-   E_EVENT_BORDER_LOWER = ecore_event_type_new();
+   E_EVENT_BORDER_STACK = ecore_event_type_new();
    E_EVENT_BORDER_ICON_CHANGE = ecore_event_type_new();
 
    return 1;
@@ -831,133 +828,282 @@ e_border_layer_set(E_Border *bd, int layer)
 void
 e_border_raise(E_Border *bd)
 {
-   E_Border *above;
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL;
+   Evas_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
- 
-   above = e_container_border_raise(bd);
-   if (above)
-     {
-	E_Event_Border_Raise *ev;
-	ev = calloc(1, sizeof(E_Event_Border_Raise));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ev->above = above;
-	e_object_ref(E_OBJECT(above));
-	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
-     }
-   else
-     {
-	/* If the border hasn't been raised above anything, it is actually lowered */
-	E_Event_Border_Lower *ev;
-	ev = calloc(1, sizeof(E_Event_Border_Lower));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ev->below = NULL;
-	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
-     }
 
    if (e_config->transient.raise)
      {
-	Evas_List *l;
-	for (l = bd->transients; l; l = l->next)
+	for (l = evas_list_last(bd->transients); l; l = l->prev)
 	  {
 	     E_Border *child;
 
 	     child = l->data;
-	     /* Don't raise iconic transients. If the user wants these shown,
+	     /* Don't stack iconic transients. If the user wants these shown,
 	      * thats another option.
 	      */
 	     if (!child->iconic)
-	       e_border_stack_above(child, bd);
+	       {
+		  printf("raise: %p %p\n", child, last);
+		  if (last)
+		    e_border_stack_below(child, last);
+		  else
+		    {
+		       E_Border *above;
+
+		       /* First raise the border to find out which border we will end up above */
+		       above = e_container_border_raise(child);
+
+		       if (above)
+			 {
+			    /* We ended up above a border, now we must stack this border to
+			     * generate the stacking event, and to check if this transient
+			     * has other transients etc.
+			     */
+			    e_border_stack_above(child, above);
+			 }
+		       else
+			 {
+			    /* If we didn't end up above any border, we are on the bottom! */
+			    e_border_lower(child);
+			 }
+		    }
+		  last = child;
+	       }
 	  }
      }
+
+   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+
+   if (last)
+     {
+	printf("below: %p %p\n", bd, last);
+	e_container_border_stack_below(bd, last);
+	ev->stack = last;
+	e_object_ref(E_OBJECT(last));
+	ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+	printf("above: %p %p\n", bd, last);
+	E_Border *above;
+
+	/* If we don't have any children, raise this border */
+	above = e_container_border_raise(bd);
+	if (above)
+	  {
+	     /* We ended up above a border */
+	     ev->stack = above;
+	     e_object_ref(E_OBJECT(above));
+	     ev->type = E_STACKING_ABOVE;
+	  }
+	else
+	  {
+	     /* No border to raise above, same as a lower! */
+	     ev->stack = NULL;
+	     ev->type = E_STACKING_BELOW;
+	  }
+     }
+
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
 }
 
 void
 e_border_lower(E_Border *bd)
 {
-   E_Border *below;
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL;
+   Evas_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   below = e_container_border_lower(bd);
-   if (below)
-     {
-	E_Event_Border_Lower *ev;
-	ev = calloc(1, sizeof(E_Event_Border_Lower));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ev->below = below;
-	e_object_ref(E_OBJECT(below));
-	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
-     }
-   else
-     {
-	/* If the border hasn't been lowered below anything, it is actually raised */
-	E_Event_Border_Raise *ev;
-	ev = calloc(1, sizeof(E_Event_Border_Raise));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-	ev->above = NULL;
-	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
-     }
    if (e_config->transient.lower)
      {
-	Evas_List *l;
-	for (l = bd->transients; l; l = l->next)
+	for (l = evas_list_last(bd->transients); l; l = l->prev)
 	  {
 	     E_Border *child;
 
 	     child = l->data;
-	     e_border_stack_above(child, bd);
+	     /* Don't stack iconic transients. If the user wants these shown,
+	      * thats another option.
+	      */
+	     if (!child->iconic)
+	       {
+		  if (last)
+		    e_border_stack_below(child, last);
+		  else
+		    {
+		       E_Border *below;
+
+		       /* First lower the border to find out which border we will end up below */
+		       below = e_container_border_lower(child);
+
+		       if (below)
+			 {
+			    /* We ended up below a border, now we must stack this border to
+			     * generate the stacking event, and to check if this transient
+			     * has other transients etc.
+			     */
+			    e_border_stack_below(child, below);
+			 }
+		       else
+			 {
+			    /* If we didn't end up below any border, we are on top! */
+			    e_border_raise(child);
+			 }
+		    }
+		  last = child;
+	       }
 	  }
      }
+
+   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+
+   if (last)
+     {
+	e_container_border_stack_below(bd, last);
+	ev->stack = last;
+	e_object_ref(E_OBJECT(last));
+	ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+	E_Border *below;
+
+	/* If we don't have any children, lower this border */
+	below = e_container_border_lower(bd);
+	if (below)
+	  {
+	     /* We ended up below a border */
+	     ev->stack = below;
+	     e_object_ref(E_OBJECT(below));
+	     ev->type = E_STACKING_BELOW;
+	  }
+	else
+	  {
+	     /* No border to hide under, same as a raise! */
+	     ev->stack = NULL;
+	     ev->type = E_STACKING_ABOVE;
+	  }
+     }
+
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
 }
 
 void
 e_border_stack_above(E_Border *bd, E_Border *above)
 {
+   /* TODO: Should stack above allow the border to change level */
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL;
+   Evas_List *l;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   e_container_border_stack_above(bd, above);
-
+   if (e_config->transient.raise)
      {
-	E_Event_Border_Raise *ev;
-	
-	ev = calloc(1, sizeof(E_Event_Border_Raise));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_raise_event");
-	ev->above = above;
-	e_object_ref(E_OBJECT(above));
-//	e_object_breadcrumb_add(E_OBJECT(above), "border_raise_event.above");
-	ecore_event_add(E_EVENT_BORDER_RAISE, ev, _e_border_event_border_raise_free, NULL);
+	for (l = evas_list_last(bd->transients); l; l = l->prev)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     /* Don't stack iconic transients. If the user wants these shown,
+	      * thats another option.
+	      */
+	     if (!child->iconic)
+	       {
+		  if (last)
+		    e_border_stack_below(child, last);
+		  else
+		    e_border_stack_above(child, above);
+		  last = child;
+	       }
+	  }
      }
+
+   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+
+   if (last)
+     {
+	e_container_border_stack_below(bd, last);
+	ev->stack = last;
+	e_object_ref(E_OBJECT(last));
+	ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+	e_container_border_stack_above(bd, above);
+	ev->stack = above;
+	e_object_ref(E_OBJECT(above));
+	ev->type = E_STACKING_ABOVE;
+     }
+
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
 }
 
 void
 e_border_stack_below(E_Border *bd, E_Border *below)
 {
+   /* TODO: Should stack below allow the border to change level */
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL;
+   Evas_List *l;
+
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   e_container_border_stack_below(bd, below);
+   if (e_config->transient.lower)
      {
-	E_Event_Border_Lower *ev;
-	
-	ev = calloc(1, sizeof(E_Event_Border_Lower));
-	ev->border = bd;
-	e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_lower_event");
-	ev->below = below;
-	e_object_ref(E_OBJECT(below));
-//	e_object_breadcrumb_add(E_OBJECT(below), "border_lower_event.below");
-	ecore_event_add(E_EVENT_BORDER_LOWER, ev, _e_border_event_border_lower_free, NULL);
+	for (l = evas_list_last(bd->transients); l; l = l->prev)
+	  {
+	     E_Border *child;
+
+	     child = l->data;
+	     /* Don't stack iconic transients. If the user wants these shown,
+	      * thats another option.
+	      */
+	     if (!child->iconic)
+	       {
+		  if (last)
+		    e_border_stack_below(child, last);
+		  else
+		    e_border_stack_below(child, below);
+		  last = child;
+	       }
+	  }
      }
+
+   ev = calloc(1, sizeof(E_Event_Border_Stack));
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
+
+   if (last)
+     {
+	e_container_border_stack_below(bd, last);
+	ev->stack = last;
+	e_object_ref(E_OBJECT(last));
+	ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+	e_container_border_stack_below(bd, below);
+	ev->stack = below;
+	e_object_ref(E_OBJECT(below));
+	ev->type = E_STACKING_BELOW;
+     }
+
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
 }
 
 void
@@ -6787,33 +6933,17 @@ _e_border_event_border_desk_set_free(void *data, void *ev)
 }
 
 static void
-_e_border_event_border_raise_free(void *data, void *ev)
+_e_border_event_border_stack_free(void *data, void *ev)
 {
-   E_Event_Border_Raise *e;
+   E_Event_Border_Stack *e;
 
    e = ev;
 //   e_object_breadcrumb_del(E_OBJECT(e->border), "border_raise_event");
    e_object_unref(E_OBJECT(e->border));
-   if (e->above)
+   if (e->stack)
      {
 //	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
-	e_object_unref(E_OBJECT(e->above));
-     }
-   free(e);
-}
-
-static void
-_e_border_event_border_lower_free(void *data, void *ev)
-{
-   E_Event_Border_Lower *e;
-
-   e = ev;
-//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_lower_event");
-   e_object_unref(E_OBJECT(e->border));
-   if (e->below)
-     {
-//	e_object_breadcrumb_del(E_OBJECT(e->below), "border_lower_event.below");
-	e_object_unref(E_OBJECT(e->below));
+	e_object_unref(E_OBJECT(e->stack));
      }
    free(e);
 }

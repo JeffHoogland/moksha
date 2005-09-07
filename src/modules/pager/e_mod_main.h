@@ -63,8 +63,7 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_border_stick;
    Ecore_Event_Handler *ev_handler_border_unstick;
    Ecore_Event_Handler *ev_handler_border_desk_set;
-   Ecore_Event_Handler *ev_handler_border_raise;
-   Ecore_Event_Handler *ev_handler_border_lower;
+   Ecore_Event_Handler *ev_handler_border_stack;
    Ecore_Event_Handler *ev_handler_border_icon_change;
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
    Ecore_Event_Handler *ev_handler_desk_show;

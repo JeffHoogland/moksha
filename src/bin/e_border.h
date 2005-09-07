@@ -74,8 +74,7 @@ typedef struct _E_Event_Border_Stick         E_Event_Border_Stick;
 typedef struct _E_Event_Border_Unstick       E_Event_Border_Unstick;
 typedef struct _E_Event_Border_Zone_Set      E_Event_Border_Zone_Set;
 typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
-typedef struct _E_Event_Border_Raise         E_Event_Border_Raise;
-typedef struct _E_Event_Border_Lower         E_Event_Border_Lower;
+typedef struct _E_Event_Border_Stack         E_Event_Border_Stack;
 typedef struct _E_Event_Border_Icon_Change   E_Event_Border_Icon_Change;
 
 #else
@@ -463,14 +462,10 @@ struct _E_Event_Border_Desk_Set
    E_Desk   *desk;
 };
 
-struct _E_Event_Border_Raise
+struct _E_Event_Border_Stack
 {
-   E_Border *border, *above;
-};
-
-struct _E_Event_Border_Lower
-{
-   E_Border *border, *below;
+   E_Border *border, *stack;
+   E_Stacking type;
 };
 
 struct _E_Event_Border_Icon_Change
@@ -557,8 +552,7 @@ extern EAPI int E_EVENT_BORDER_STICK;
 extern EAPI int E_EVENT_BORDER_UNSTICK;
 extern EAPI int E_EVENT_BORDER_ZONE_SET;
 extern EAPI int E_EVENT_BORDER_DESK_SET;
-extern EAPI int E_EVENT_BORDER_RAISE;
-extern EAPI int E_EVENT_BORDER_LOWER;
+extern EAPI int E_EVENT_BORDER_STACK;
 extern EAPI int E_EVENT_BORDER_ICON_CHANGE;
 
 #endif

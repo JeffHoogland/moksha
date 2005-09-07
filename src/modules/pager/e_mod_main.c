@@ -44,8 +44,7 @@ static int         _pager_cb_event_border_uniconify(void *data, int type, void *
 static int         _pager_cb_event_border_stick(void *data, int type, void *event);
 static int         _pager_cb_event_border_unstick(void *data, int type, void *event);
 static int         _pager_cb_event_border_desk_set(void *data, int type, void *event);
-static int         _pager_cb_event_border_raise(void *data, int type, void *event);
-static int         _pager_cb_event_border_lower(void *data, int type, void *event);
+static int         _pager_cb_event_border_stack(void *data, int type, void *event);
 static int         _pager_cb_event_border_icon_change(void *data, int type, void *event);
 static int         _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int         _pager_cb_event_desk_show(void *data, int type, void *event);
@@ -299,12 +298,9 @@ _pager_new(void)
    pager->ev_handler_border_desk_set =
       ecore_event_handler_add(E_EVENT_BORDER_DESK_SET,
 			      _pager_cb_event_border_desk_set, pager);
-   pager->ev_handler_border_raise =
-      ecore_event_handler_add(E_EVENT_BORDER_RAISE,
-			      _pager_cb_event_border_raise, pager);
-   pager->ev_handler_border_lower =
-      ecore_event_handler_add(E_EVENT_BORDER_LOWER,
-			      _pager_cb_event_border_lower, pager);
+   pager->ev_handler_border_stack =
+      ecore_event_handler_add(E_EVENT_BORDER_STACK,
+			      _pager_cb_event_border_stack, pager);
    pager->ev_handler_border_icon_change =
       ecore_event_handler_add(E_EVENT_BORDER_ICON_CHANGE,
 			      _pager_cb_event_border_icon_change, pager);
@@ -360,10 +356,8 @@ _pager_free(Pager *pager)
      ecore_event_handler_del(pager->ev_handler_border_unstick);
    if (pager->ev_handler_border_desk_set)
      ecore_event_handler_del(pager->ev_handler_border_desk_set);
-   if (pager->ev_handler_border_raise)
-     ecore_event_handler_del(pager->ev_handler_border_raise);
-   if (pager->ev_handler_border_lower)
-     ecore_event_handler_del(pager->ev_handler_border_lower);
+   if (pager->ev_handler_border_stack)
+     ecore_event_handler_del(pager->ev_handler_border_stack);
    if (pager->ev_handler_border_icon_change)
      ecore_event_handler_del(pager->ev_handler_border_icon_change);
    if (pager->ev_handler_zone_desk_count_set)
@@ -1290,45 +1284,9 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 }
 
 static int
-_pager_cb_event_border_raise(void *data, int type, void *event)
+_pager_cb_event_border_stack(void *data, int type, void *event)
 {
-   E_Event_Border_Raise  *ev;
-   Pager                 *pager;
-   Evas_List             *l, *l2;
-
-   pager = data;
-   ev = event;
-   for (l = pager->faces; l; l = l->next)
-     {
-	Pager_Face *face;
-
-	face = l->data;
-	if (face->zone != ev->border->zone) continue;
-	for (l2 = face->desks; l2; l2 = l2->next)
-	  {
-	     Pager_Desk *pd;
-	     Pager_Win *pw, *pw2 = NULL;
-
-	     pd = l2->data;
-	     pw = _pager_desk_border_find(pd, ev->border);	
-	     if (pw)
-	       {
-		  if (ev->above)
-		    pw2 = _pager_desk_border_find(pd, ev->above);
-		  if (pw2)
-		    e_layout_child_raise_above(pw->window_object, pw2->window_object);
-		  else
-		    e_layout_child_raise(pw->window_object);
-	       }
-	  }
-     }
-   return 1;
-}
-
-static int
-_pager_cb_event_border_lower(void *data, int type, void *event)
-{
-   E_Event_Border_Lower  *ev;
+   E_Event_Border_Stack  *ev;
    Pager                 *pager;
    Evas_List             *l, *l2;
 
@@ -1349,12 +1307,22 @@ _pager_cb_event_border_lower(void *data, int type, void *event)
 	     pw = _pager_desk_border_find(pd, ev->border);
 	     if (pw)
 	       {
-		  if (ev->below)
-		    pw2 = _pager_desk_border_find(pd, ev->below);
-		  if (pw2)
-		    e_layout_child_lower_below(pw->window_object, pw2->window_object);
-		  else
-		    e_layout_child_lower(pw->window_object);
+		  if (ev->stack)
+		    pw2 = _pager_desk_border_find(pd, ev->stack);
+		  if (ev->type == E_STACKING_ABOVE)
+		    {
+		       if (pw2)
+			 e_layout_child_raise_above(pw->window_object, pw2->window_object);
+		       else
+			 e_layout_child_raise(pw->window_object);
+		    }
+		  else if (ev->type == E_STACKING_BELOW)
+		    {
+		       if (pw2)
+			 e_layout_child_lower_below(pw->window_object, pw2->window_object);
+		       else
+			 e_layout_child_lower(pw->window_object);
+		    }
 	       }
 	  }
      }
