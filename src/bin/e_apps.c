@@ -525,7 +525,7 @@ e_app_window_name_class_title_role_find(const char *name, const char *class,
 {
    Evas_List *l;
    
-   if (!name && !class)
+   if ((!name) && (!class) && (!title) && (!role))
      return NULL;
 
    for (l = _e_apps_list; l; l = l->next)
