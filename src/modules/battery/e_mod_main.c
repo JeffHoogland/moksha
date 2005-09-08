@@ -871,11 +871,14 @@ _battery_linux_acpi_check(Battery *ef)
 	     int design_cap = 0;
 	     int last_full = 0;
 
+	     /* present */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+	     /* design capacity */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
+	     /* last full capacity */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) last_full_unknown = 1;
@@ -894,16 +897,21 @@ _battery_linux_acpi_check(Battery *ef)
 	     int rate = 1;
 	     int level = 0;
 
+	     /* present */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", present);
+	     /* capacity state */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", capacity_state);
+	     /* charging state */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s", charging_state);
+	     /* present rate */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) rate_unknown = 1;
 	     else sscanf(buf2, "%*[^:]: %i %*s", &rate);
+	     /* remaining capacity */
 	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
 	     if (!strcmp(buf, "unknown")) level_unknown = 1;
@@ -934,7 +942,7 @@ _battery_linux_acpi_check(Battery *ef)
 
    if (bat_filled > 0) bat_val = (100 * bat_level) / bat_filled;
    else bat_val = 100;
-
+   
    if (discharging) minutes = (60 * bat_level) / bat_drain;
    else
      {
