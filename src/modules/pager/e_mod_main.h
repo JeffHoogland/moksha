@@ -97,6 +97,8 @@ struct _Pager_Face
    E_Drop_Handler *drop_handler;
 
    Pager_Popup *current_popup;
+
+   unsigned char dragging:1;
 };
 
 struct _Pager_Desk
@@ -121,6 +123,12 @@ struct _Pager_Win
 
    Evas_Object *window_object;
    Evas_Object *icon_object;
+   Evas_Object *event_object;
+
+   struct {
+	unsigned char start : 1;
+	int x, y;
+   } drag;
 };
 
 struct _Pager_Popup
