@@ -534,12 +534,12 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 					   "enlightenment/border",
 					   face->fx, face->fy, face->fw, face->fh);
    
-   face->drop_handler = e_drop_handler_add(face,
+   face->drop_handler_win = e_drop_handler_add(face,
 					   _pager_face_cb_enter, _pager_face_cb_move,
 					   _pager_face_cb_leave, _pager_face_cb_drop,
 					   "enlightenment/pager_win",
 					   face->fx, face->fy, face->fw, face->fh);
-
+  
    face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
    
@@ -574,6 +574,7 @@ _pager_face_free(Pager_Face *face)
    e_object_del(E_OBJECT(face->gmc));
 
    e_drop_handler_del(face->drop_handler);
+   e_drop_handler_del(face->drop_handler_win);
 
    _pager_face_zone_unset(face);
 
@@ -957,6 +958,10 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    face->fw = w;
    face->fh = h;
    e_drop_handler_geometry_set(face->drop_handler,
+			       face->fx + face->inset.l, face->fy + face->inset.t,
+			       face->fw - (face->inset.l + face->inset.r),
+			       face->fh - (face->inset.t + face->inset.b));
+   e_drop_handler_geometry_set(face->drop_handler_win,
 			       face->fx + face->inset.l, face->fy + face->inset.t,
 			       face->fw - (face->inset.l + face->inset.r),
 			       face->fh - (face->inset.t + face->inset.b));
@@ -1867,8 +1872,8 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    if (!pw) return;
    if (pw->drag.start)
      {
-#if 0
-	printf("DRAG: %d\n", pw);
+#if 1
+//	printf("DRAG: %d\n", pw);
 	if ((pw->drag.x == -1) && (pw->drag.y == -1))
 	  {
 	     pw->drag.x = ev->cur.output.x;
@@ -1916,7 +1921,8 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 		       e_drag_start(drag, pw->drag.x, pw->drag.y);
 	
 		       /* this prevents the desk from switching on drags */
-		       pw->desk->face->dragging = 1;
+		       pw->drag.from_face = pw->desk->face;
+		       pw->drag.from_face->dragging = 1;
 		       evas_event_feed_mouse_up(pw->desk->face->evas, 1,
 			     EVAS_BUTTON_NONE, ecore_time_get(), NULL);
 		    }
@@ -1938,7 +1944,7 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 
    if (pw && pw->desk && pw->desk->face)
      {
-	pw->desk->face->dragging = 0;
+	pw->drag.from_face->dragging = 0;
      }
 
 }
@@ -2033,6 +2039,7 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
 
    desk = e_desk_at_xy_get(face->zone, x, y);
 
+   //printf("drop %s\n", type);
 
    if (!strcmp(type, "enlightenment/pager_win"))
      {
