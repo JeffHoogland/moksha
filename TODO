@@ -17,6 +17,11 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
+* BUG: the pager doesn't show any windows if you disable and re-enable it. this
+  also causes the deskname / pager view popup to not show any windows.
+* BUG: the pager doesn't properly show stacking order when a window is moved to
+  a different desktop. (it places the window on top in the pager, regardless of
+  where it is on the actual desktop)
 ]]]
 
 [[[
@@ -24,9 +29,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* desktopname could reaally be part of pager - and display a full pager layout
-  of all desktops and whihc one of them just got selected
-* some sort of gui display of a desktop name (in the pager?)
 * if a parent window is "on top" child dialog windows should also be "on top"
 * transients should have option to always follow parent
   (move/resize/raise/lower) (and remember this).
