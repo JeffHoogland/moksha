@@ -1834,7 +1834,7 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    /* make this configurable */
    if ((ev->button == 1))
      {
-	printf("DN: %d\n", pw);
+//	printf("DN: %d\n", pw);
 	pw->drag.start = 1;
 	pw->drag.x = -1;
 	pw->drag.y = -1;
@@ -1851,7 +1851,7 @@ _pager_window_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_inf
    pw = data;
    if (!pw) return;
 
-   printf("UP: %d\n", pw);
+//   printf("UP: %d\n", pw);
    pw->drag.start = 0;
 }
 
@@ -1867,6 +1867,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
    if (!pw) return;
    if (pw->drag.start)
      {
+#if 0
 	printf("DRAG: %d\n", pw);
 	if ((pw->drag.x == -1) && (pw->drag.y == -1))
 	  {
@@ -1924,6 +1925,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 	       }
 	  }
 
+#endif
      }
 }
 
