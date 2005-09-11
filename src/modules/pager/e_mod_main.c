@@ -815,14 +815,18 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    
    o = evas_object_rectangle_add(pd->face->evas);
    pw->event_object = o;
-   evas_object_layer_set(o, 2);
+   
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
+//   evas_object_color_set(o, rand()%255, rand()%255, rand()%255, 255);
+   
+   
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  _pager_window_cb_mouse_in,  pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _pager_window_cb_mouse_out, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _pager_window_cb_mouse_down, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _pager_window_cb_mouse_up, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _pager_window_cb_mouse_move, pw);
+ 
    evas_object_show(o);
    e_layout_pack(pd->layout_object, pw->event_object);
    e_layout_child_raise(pw->event_object);
@@ -1293,7 +1297,7 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		  pd->wins = evas_list_append(pd->wins, pw);
 		  e_layout_pack(pd->layout_object, pw->window_object);
 		  e_layout_pack(pd->layout_object, pw->event_object);
-		  e_layout_child_raise(pw->window_object);
+		  e_border_raise(pw->border);
 		  _pager_window_move(face, pw);
 	       }
 	  }
@@ -1360,12 +1364,13 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 		       if (pw2)
 			 {
 			    e_layout_child_raise_above(pw->window_object, pw2->window_object);
-			    e_layout_child_raise_above(pw->event_object, pw2->event_object);
+			    e_layout_child_raise_above(pw->event_object, pw->window_object);
+			    e_layout_child_raise_above(pw2->event_object, pw2->window_object);
 			 }
 		       else
 			 {
 			    e_layout_child_raise(pw->window_object);
-			    e_layout_child_raise(pw->event_object);
+			    e_layout_child_raise_above(pw->event_object, pw->window_object);
 			 }
 		    }
 		  else if (ev->type == E_STACKING_BELOW)
@@ -1373,12 +1378,12 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 		       if (pw2)
 			 {
 			    e_layout_child_lower_below(pw->window_object, pw2->window_object);
-			    e_layout_child_lower_below(pw->event_object, pw2->event_object);
+			    e_layout_child_raise_above(pw->event_object, pw->window_object);
 			 }
 		       else
 			 {
 			    e_layout_child_lower(pw->window_object);
-			    e_layout_child_lower(pw->event_object);
+			    e_layout_child_raise_above(pw->event_object, pw->window_object);
 			 }
 		    }
 	       }
