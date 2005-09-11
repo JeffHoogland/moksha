@@ -837,6 +837,7 @@ _pager_window_free(Pager_Win *pw)
 {
    if (pw->window_object) evas_object_del(pw->window_object);
    if (pw->icon_object) evas_object_del(pw->icon_object);
+   if (pw->event_object) evas_object_del(pw->event_object);
    e_object_unref(E_OBJECT(pw->border));
    free(pw);
 }
