@@ -60,6 +60,7 @@ static void        _pager_desk_cb_mouse_out(void *data, Evas *e, Evas_Object *ob
 static void        _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void        _pager_desk_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void        _pager_desk_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void        _pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 static void        _pager_desk_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void        _pager_desk_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -736,6 +737,7 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _pager_desk_cb_mouse_down, pd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _pager_desk_cb_mouse_up, pd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _pager_desk_cb_mouse_move, pd);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL, _pager_desk_cb_mouse_wheel, pd);
    evas_object_show(o);
    
    o = e_layout_add(face->evas);
@@ -1129,7 +1131,10 @@ _pager_cb_event_border_iconify(void *data, int type, void *event)
 	     pd = l2->data;
 	     pw = _pager_desk_border_find(pd, ev->border);
 	     if (pw)
-	       evas_object_hide(pw->window_object);
+	       {
+		  evas_object_hide(pw->window_object);
+		  evas_object_hide(pw->event_object);
+	       }
 	  }
      }
    return 1;
@@ -1158,7 +1163,10 @@ _pager_cb_event_border_uniconify(void *data, int type, void *event)
 	     pd = l2->data;
 	     pw = _pager_desk_border_find(pd, ev->border);
 	     if (pw)
-	       evas_object_show(pw->window_object);
+	       {
+		  evas_object_show(pw->window_object);
+		  evas_object_show(pw->event_object);
+	       }
 	  }
      }
    return 1;
@@ -1955,6 +1963,61 @@ _pager_window_cb_drag_finished(E_Drag *drag, int dropped)
 
 }
 
+static void
+_pager_desk_cb_mouse_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Wheel *ev;
+   Evas_List              *l;
+   Pager_Desk             *desk;
+   Pager_Face             *face;
+   
+   ev = event_info;
+   desk = data;
+   face = desk->face;
+   l = face->desks;
+   
+   for (l = face->desks; l; l = l->next)
+     {
+	Pager_Desk *pd;	
+	pd = l->data;
+	if (pd->current)
+	  {
+	     /* Mouse wheel up, scroll back through desks */
+	     if (ev->z < 0)
+	       {
+		  if (l->prev) 
+		    {
+		       pd = l->prev->data;
+		       e_desk_show(pd->desk);
+		    }
+		  else
+		    {
+		       /* We've looped around, go to the last desk. Not sure if there's a better way. */
+		       Evas_List  *l2;
+		       for (l2 = face->desks; l2->next; l2 = l2->next);
+		       pd = l2->data;
+		       e_desk_show(pd->desk);
+		    }
+	       }
+	     /* Mouse wheel down, scroll forward through desks */
+	     else if (ev->z > 0)
+	       {
+		  if (l->next) 
+		    {
+		       pd = l->next->data;
+		       e_desk_show(pd->desk);
+		    }
+		  else
+		    {
+		       /* We've looped around, start back at the first desk */
+		       pd = face->desks->data;
+		       e_desk_show(pd->desk);
+		    }
+	       }
+	     break;
+	  }
+     }
+}
 /*****/
 
 static void
