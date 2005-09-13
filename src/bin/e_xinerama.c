@@ -81,7 +81,6 @@ _e_xinerama_update(void)
    Ecore_X_Window *roots;
    Evas_List *l;
    
-   _e_xinerama_clean();
    roots = ecore_x_window_root_list(&n);
    if (roots)
      {
