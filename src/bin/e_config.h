@@ -99,6 +99,7 @@ struct _E_Config
    Evas_List  *path_append_icons;
    Evas_List  *path_append_modules;
    Evas_List  *path_append_backgrounds;
+   int         window_placement_policy;
    int         focus_policy;
    int         focus_setting;
    int         pass_click_on;

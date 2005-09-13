@@ -255,6 +255,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_icons, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_modules, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
+   E_CONFIG_VAL(D, T, window_placement_policy, INT);
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
@@ -372,6 +373,7 @@ e_config_init(void)
 	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
+	e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
 	e_config->focus_policy = E_FOCUS_MOUSE;
 	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
 	e_config->pass_click_on = 1;
@@ -946,6 +948,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
+   E_CONFIG_LIMIT(e_config->window_placement_policy, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
    E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
    E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);

@@ -449,3 +449,19 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
    *ry += zone->y;
    return 1;
 }
+
+int
+e_place_zone_cursor(E_Zone *zone, int x, int w, int it, int *rx, int *ry)
+{
+   int cursor_x = 0, cursor_y = 0;
+
+   E_OBJECT_CHECK(zone);
+
+   ecore_x_pointer_xy_get(zone->container->win, &cursor_x, &cursor_y);
+   *rx = cursor_x - ((w - x) >> 1);
+   *ry = cursor_y - (it >> 1);
+   return 1;
+}
+
+
+

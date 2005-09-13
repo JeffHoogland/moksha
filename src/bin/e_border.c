@@ -5004,12 +5004,20 @@ _e_border_eval(E_Border *bd)
 			 new_y = bd->zone->y + (rand() % (bd->zone->h - bd->h));
 		       else
 			 new_y = bd->zone->y;
-		       
-		       skiplist = evas_list_append(skiplist, bd);
-		       e_place_zone_region_smart(bd->zone, skiplist,
-						 bd->x, bd->y, bd->w, bd->h,
-						 &new_x, &new_y);
-		       evas_list_free(skiplist);
+
+		       if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART)
+			 {
+			    skiplist = evas_list_append(skiplist, bd);
+			    e_place_zone_region_smart(bd->zone, skiplist,
+						      bd->x, bd->y, bd->w, bd->h,
+						      &new_x, &new_y);
+			    evas_list_free(skiplist);
+			 }
+		       else
+			 {
+			    e_place_zone_cursor(bd->zone, bd->x, bd->w, bd->client_inset.t,
+						&new_x, &new_y);
+			 }
 		       bd->x = new_x;
 		       bd->y = new_y;
 		       bd->changes.pos = 1;

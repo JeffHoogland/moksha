@@ -5015,3 +5015,57 @@ break;
    END_INT;
 #endif
 #undef HDL
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINDOW_PLACEMENT_POLICY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-window-placement-policy-set", 1, "Set the window placement policy. OPT1 = SMART or CURSOR", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "SMART")) value = E_WINDOW_PLACEMENT_SMART;
+   else if (!strcmp(params[0], "CURSOR")) value = E_WINDOW_PLACEMENT_CURSOR;
+   else
+     {
+	 printf("window placement policy must be SMART or CURSOR\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->window_placement_policy = value;
+   E_CONFIG_LIMIT(e_config->window_placement_policy, 0, 1);
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINDOW_PLACEMENT_POLICY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-window-placement-policy-get", 0, "Get window placement policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->window_placement_policy, E_IPC_OP_WINDOW_PLACEMENT_POLICY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINDOW_PLACEMENT_POLICY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == E_WINDOW_PLACEMENT_SMART)
+     printf("REPLY: SMART\n");
+   else if (policy == E_WINDOW_PLACEMENT_CURSOR)
+     printf("REPLY: CURSOR\n");
+   END_INT
+#endif
+#undef HDL
+
