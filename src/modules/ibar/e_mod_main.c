@@ -1322,17 +1322,10 @@ _ibar_icon_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info
    ic = data;
    if (ev->button == 1)
      {
-#if 0
-	edje_object_signal_emit(ic->bg_object, "start", "");
-	edje_object_signal_emit(ic->overlay_object, "start", "");
-	edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
-	e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
-#else
 	drag_x = ev->output.x;
 	drag_y = ev->output.y;
 	drag_start = 1; 
 	drag = 0; 
-#endif
      }
 }
 
@@ -1346,16 +1339,9 @@ _ibar_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    if (ev->button == 1)
      {
-#if 0
-	edje_object_signal_emit(ic->bg_object, "start_end", "");
-	edje_object_signal_emit(ic->overlay_object, "start_end", "");
-	edje_object_signal_emit(ic->ibb->overlay_object, "start_end", "");
-#else
-	if (!drag)
-	  e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
+	if (!drag) e_zone_app_exec(ic->ibb->gmc->zone, ic->app);
 	drag = 0;
 	drag_start = 0;
-#endif
      }
 }
 
