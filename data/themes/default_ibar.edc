@@ -270,9 +270,23 @@ group {
    }
    parts {
       part {
+	 name:          "item_clip";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+	 description {
+	    state:    "faded" 0.0;
+	    color: 255 255 255 64;
+	 }
+      }
+      part {
 	 name:          "item";
 	 type:          SWALLOW;
 	 mouse_events:  0;
+	 clip_to:       "item_clip";
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
@@ -285,6 +299,32 @@ group {
 	    }
 	    color: 0 0 0 0;
 	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "exec_start";
+	 signal:  "start";
+	 source:  "";
+	 action:  STATE_SET "faded" 0.0;
+         transition: LINEAR 0.5;
+	 target:  "item_clip";
+      }
+      program {
+	 name:    "exec_exec";
+	 signal:  "exec";
+	 source:  "";
+	 action:  STATE_SET "faded" 0.0;
+         transition: LINEAR 0.5;
+	 target:  "item_clip";
+	 after:   "exec_stop";
+      }
+      program {
+	 name:    "exec_stop";
+	 signal:  "stop";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "item_clip";
       }
    }
 }
@@ -302,11 +342,9 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  0.0;
 	       offset:   4    4;
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
 	       offset:   -5   -5;
 	    }
 	    color: 255 255 255 0;
@@ -320,13 +358,9 @@ group {
 	    state:    "default" 0.0;
 	    visible: 0;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "base";
 	    }
 	    color: 255 255 255 0;
@@ -335,13 +369,9 @@ group {
 	    state:    "visible" 0.0;
 	    visible: 1;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "base";
 	    }
 	    color: 255 255 255 255;
@@ -351,12 +381,23 @@ group {
 	    visible: 1;
 	    rel1 {
 	       relative: -0.5  -0.5;
-	       offset:   0    0;
 	       to:       "base";
 	    }
 	    rel2 {
 	       relative: 1.5  1.5;
-	       offset:   -1   -1;
+	       to:       "base";
+	    }
+	    color: 255 255 255 0;
+	 }
+	 description {
+	    state:    "huge" 0.0;
+	    visible: 1;
+	    rel1 {
+	       relative: -2.0  -2.0;
+	       to:       "base";
+	    }
+	    rel2 {
+	       relative: 3.0  3.0;
 	       to:       "base";
 	    }
 	    color: 255 255 255 0;
@@ -370,13 +411,9 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
 	       to:       "background";
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
 	       to:       "background";
 	    }
 	    color: 0 0 0 0;
@@ -416,6 +453,43 @@ group {
 	 source:  "";
 	 action:  STATE_SET "default" 0.0;
 	 target:  "background";
+      }
+      program {
+	 name:    "go_big";
+	 action:  STATE_SET "visible" 0.0;
+	 target:  "background";
+	 after:   "go_big2";
+      }
+      program {
+	 name:    "go_big2";
+	 action:  STATE_SET "huge" 0.0;
+	 transition: LINEAR 0.5;
+	 target:  "background";
+      }
+      program {
+	 name:    "exec_start";
+	 signal:  "start";
+	 source:  "";
+	 action:  ACTION_STOP;
+	 target:  "go_active";
+	 target:  "go_active2";
+	 target:  "go_passive";
+	 target:  "go_passive2";
+	 target:  "go_big";
+	 target:  "go_big2";
+	 after:   "go_big";
+      }
+      program {
+	 name:    "exec_exec";
+	 signal:  "exec";
+	 source:  "";
+	 after:   "exec_start";
+      }
+      program {
+	 name:    "exec_stop";
+	 signal:  "stop";
+	 source:  "";
+//	 action:  SIGNAL_EMIT "active" 0.0;
       }
    }
 }

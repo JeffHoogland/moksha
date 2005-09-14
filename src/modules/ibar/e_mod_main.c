@@ -406,10 +406,56 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	       }
 	     break;
 	   case E_APP_EXEC:
+	     if (e_app_is_parent(ib->apps, a))
+	       {
+		  IBar_Icon *ic;
+		  
+		  ic = _ibar_icon_find(ibb, a);
+		  if (ic)
+		    {
+		       Evas_List *l;
+		       
+		       if (a->startup_notify)
+			 {
+			    edje_object_signal_emit(ic->icon_object, "start", "");
+			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "start", "");
+			    edje_object_signal_emit(ic->bg_object, "start", "");
+			    edje_object_signal_emit(ic->overlay_object, "start", "");
+			    edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
+			 }
+		       else
+			 {
+			    edje_object_signal_emit(ic->icon_object, "exec", "");
+			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "exec", "");
+			    edje_object_signal_emit(ic->bg_object, "exec", "");
+			    edje_object_signal_emit(ic->overlay_object, "exec", "");
+			    edje_object_signal_emit(ic->ibb->overlay_object, "exec", "");
+			 }
+		    }
+	       }
 	     break;
 	   case E_APP_READY:
-	     break;
+	   case E_APP_READY_EXPIRE:
 	   case E_APP_EXIT:
+	     if (e_app_is_parent(ib->apps, a))
+	       {
+		  if (a->startup_notify)
+		    {
+		       IBar_Icon *ic;
+		       
+		       ic = _ibar_icon_find(ibb, a);
+		       if (ic)
+			 {
+			    Evas_List *l;
+			    
+			    edje_object_signal_emit(ic->icon_object, "stop", "");
+			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "stop", "");
+			    edje_object_signal_emit(ic->bg_object, "stop", "");
+			    edje_object_signal_emit(ic->overlay_object, "stop", "");
+			    edje_object_signal_emit(ic->ibb->overlay_object, "stop", "");
+			 }
+		    }
+	       }
 	     break;
 	   default:
 	     break;

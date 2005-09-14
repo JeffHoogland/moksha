@@ -42,6 +42,8 @@ static void      _e_app_subdir_rescan      (E_App *app);
 static int       _e_app_is_eapp            (const char *path);
 static int       _e_app_copy               (E_App *dst, E_App *src);
 static void      _e_app_save_order         (E_App *app);
+static int       _e_app_cb_event_border_add(void *data, int type, void *event);
+static int       _e_app_cb_expire_timer    (void *data);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -50,10 +52,12 @@ static int          _e_apps_callbacks_walking = 0;
 static int          _e_apps_callbacks_delete_me = 0;
 static Evas_List   *_e_apps_change_callbacks = NULL;
 static Ecore_Event_Handler *_e_apps_exit_handler = NULL;
+static Ecore_Event_Handler *_e_apps_border_add_handler = NULL;
 static Evas_List   *_e_apps_repositories = NULL;
 static E_App       *_e_apps_all = NULL;
 static char        *_e_apps_path_all = NULL;
 static char        *_e_apps_path_trash = NULL;
+static Evas_List   *_e_apps_start_pending = NULL;
 
 /* externally accessible functions */
 int
@@ -70,6 +74,7 @@ e_app_init(void)
    free(home);
    _e_apps_repositories = evas_list_append(_e_apps_repositories, strdup(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_apps_cb_exit, NULL);
+   _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    _e_apps_all = e_app_new(buf, 1);
    return 1;
 }
@@ -77,6 +82,7 @@ e_app_init(void)
 int
 e_app_shutdown(void)
 {
+   _e_apps_start_pending = evas_list_free(_e_apps_start_pending);
    if (_e_apps_all)
      {
 	e_object_unref(E_OBJECT(_e_apps_all));
@@ -91,6 +97,11 @@ e_app_shutdown(void)
      {
 	ecore_event_handler_del(_e_apps_exit_handler);
 	_e_apps_exit_handler = NULL;
+     }
+   if (_e_apps_border_add_handler)
+     {
+	ecore_event_handler_del(_e_apps_border_add_handler);
+	_e_apps_border_add_handler = NULL;
      }
    free(_e_apps_path_trash);
    free(_e_apps_path_all);
@@ -255,9 +266,10 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 }
 
 int
-e_app_exec(E_App *a)
+e_app_exec(E_App *a, int launch_id)
 {
    Ecore_Exe *exe;
+   E_App_Instance *inst;
    
    E_OBJECT_CHECK_RETURN(a, 0);
    E_OBJECT_TYPE_CHECK_RETURN(a, E_APP_TYPE, 0);
@@ -275,10 +287,17 @@ e_app_exec(E_App *a)
 			    a->exe);
 	return 0;
      }
-   a->instances = evas_list_append(a->instances, exe);
+   inst = calloc(1, sizeof(E_App_Instance));
+   inst->app = a;
+   inst->exe = exe;
+   inst->launch_id = launch_id;
+   inst->launch_time = ecore_time_get();
+   inst->expire_timer = ecore_timer_add(10.0, _e_app_cb_expire_timer, inst);
+   a->instances = evas_list_append(a->instances, inst);
    e_object_ref(E_OBJECT(a));
    if (a->startup_notify) a->starting = 1;
    _e_app_change(a, E_APP_EXEC);
+   _e_apps_start_pending = evas_list_append(_e_apps_start_pending, a);
    return 1;
 }
 
@@ -672,14 +691,26 @@ e_app_exe_find(char *exe)
 static void
 _e_app_free(E_App *a)
 {
+   while (evas_list_find(_e_apps_start_pending, a))
+     _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
    if (a->orig)
      {
 	while (a->instances)
 	  {
-	     Ecore_Exe *exe;
+	     E_App_Instance *inst;
 
-	     exe = a->instances->data;
-	     ecore_exe_free(exe);
+	     inst = a->instances->data;
+	     if (inst->expire_timer)
+	       {
+		  ecore_timer_del(inst->expire_timer);
+		  inst->expire_timer = NULL;
+	       }
+	     if (inst->exe)
+	       {
+		  ecore_exe_free(inst->exe);
+		  inst->exe = NULL;
+	       }
+	     free(inst);
 	     a->instances = evas_list_remove_list(a->instances, a->instances);
 	  }
 	/* If this is a copy, it shouldn't have any references! */
@@ -695,10 +726,20 @@ _e_app_free(E_App *a)
      {
 	while (a->instances)
 	  {
-	     Ecore_Exe *exe;
+	     E_App_Instance *inst;
 
-	     exe = a->instances->data;
-	     ecore_exe_free(exe);
+	     inst = a->instances->data;
+	     if (inst->expire_timer)
+	       {
+		  ecore_timer_del(inst->expire_timer);
+		  inst->expire_timer = NULL;
+	       }
+	     if (inst->exe)
+	       {
+		  ecore_exe_free(inst->exe);
+		  inst->exe = NULL;
+	       }
+	     free(inst);
 	     a->instances = evas_list_remove_list(a->instances, a->instances);
 	  }
 	while (a->subapps)
@@ -1024,6 +1065,8 @@ _e_apps_cb_exit(void *data, int type, void *event)
 	a = ecore_exe_data_get(ev->exe);
 	if (a)
 	  {
+	     Evas_List *l;
+	     
 	     if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
 	       e_error_dialog_show(_("Run Error"),
 				   _("Enlightenment was unable run the program:\n"
@@ -1031,8 +1074,25 @@ _e_apps_cb_exit(void *data, int type, void *event)
 				     "%s\n"
 				     "\n"
 				     "The command was not found\n"),
-				   a->exe);	
-	     a->instances = evas_list_remove(a->instances, ev->exe);
+				   a->exe);
+	     for (l = a->instances; l; l = l->next)
+	       {
+		  E_App_Instance *inst;
+		  
+		  inst = l->data;
+		  if (ev->exe == inst->exe)
+		    {
+		       if (inst->expire_timer)
+			 {
+			    ecore_timer_del(inst->expire_timer);
+			    inst->expire_timer = NULL;
+			 }
+		       inst->exe = NULL;
+		       a->instances = evas_list_remove_list(a->instances, l);
+		       free(inst);
+		       break;
+		    }
+	       }
 	     _e_app_change(a, E_APP_EXIT);
 	     e_object_unref(E_OBJECT(a));
 	  }
@@ -1360,4 +1420,62 @@ _e_app_save_order(E_App *app)
 	fprintf(f, "%s\n", ecore_file_get_file(a->path));
      }
    fclose(f);
+}
+
+static int
+_e_app_cb_event_border_add(void *data, int type, void *event)
+{
+   E_Event_Border_Add *ev;
+   Evas_List *l, *ll, *removes = NULL;
+   E_App *a;
+   E_App_Instance *inst;
+   
+   ev = event;
+   printf("BD ADD %i\n", ev->border->client.netwm.e_start_launch_id);
+   if (ev->border->client.netwm.e_start_launch_id <= 0) return 1;
+   for (l = _e_apps_start_pending; l; l = l->next)
+     {
+	a = l->data;
+	for (ll = a->instances; ll; ll = ll->next)
+	  {
+	     inst = ll->data;
+	     printf("%i == %i\n", inst->launch_id, ev->border->client.netwm.e_start_launch_id);
+	     if (inst->launch_id == ev->border->client.netwm.e_start_launch_id)
+	       {
+		  if (inst->expire_timer)
+		    {
+		       ecore_timer_del(inst->expire_timer);
+		       inst->expire_timer = NULL;
+		    }
+		  removes = evas_list_append(removes, a);
+		  e_object_ref(E_OBJECT(a));
+		  break;
+	       }
+	  }
+     }
+   while (removes)
+     {
+	a = removes->data;
+	printf("APP [%s] popped up!\n", a->exe);
+        _e_app_change(a, E_APP_READY);
+	_e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
+	removes = evas_list_remove_list(removes, removes);
+        e_object_unref(E_OBJECT(a));
+     }
+   return 1;
+}
+
+static int
+_e_app_cb_expire_timer(void *data)
+{
+   E_App_Instance *inst;
+   E_App *a;
+   
+   inst = data;
+   a = inst->app;
+   printf("APP [%s] expired!\n", a->exe);
+   _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
+   inst->expire_timer = NULL;
+   _e_app_change(a, E_APP_READY_EXPIRE);
+   return 0;
 }

@@ -11,10 +11,12 @@ typedef enum _E_App_Change
    E_APP_ORDER,
    E_APP_EXEC,
    E_APP_READY,
-   E_APP_EXIT
+   E_APP_EXIT,
+   E_APP_READY_EXPIRE
 } E_App_Change;
 
 typedef struct _E_App          E_App;
+typedef struct _E_App_Instance E_App_Instance;
 
 #else
 #ifndef E_APPS_H
@@ -61,13 +63,22 @@ struct _E_App
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
 };
 
+struct _E_App_Instance
+{
+   E_App       *app;
+   Ecore_Exe   *exe;
+   int          launch_id;
+   double       launch_time;
+   Ecore_Timer *expire_timer;
+};
+
 EAPI int    e_app_init(void);
 EAPI int    e_app_shutdown(void);
 
 EAPI E_App *e_app_new(const char *path, int scan_subdirs);
 EAPI int    e_app_is_parent(E_App *parent, E_App *app);
 EAPI void   e_app_subdir_scan(E_App *a, int scan_subdirs);
-EAPI int    e_app_exec(E_App *a);
+EAPI int    e_app_exec(E_App *a, int launch_id);
 EAPI int    e_app_starting_get(E_App *a);
 EAPI int    e_app_running_get(E_App *a);
 EAPI void   e_app_prepend_relative(E_App *add, E_App *before);

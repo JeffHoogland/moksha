@@ -243,6 +243,8 @@ struct _E_Border
 
 	 Ecore_X_Window_Type type;
 	 
+	 int e_start_launch_id;
+	 
 	 struct {
 	    unsigned char name : 1;
 	    unsigned char icon_name : 1;

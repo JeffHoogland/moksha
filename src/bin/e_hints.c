@@ -395,6 +395,24 @@ e_hints_window_init(E_Border *bd)
      }
 #endif
 
+     {
+	char *str = NULL;
+	
+	if (
+	    (ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
+	    ((bd->client.icccm.client_leader > 0) && ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
+	    )
+	  {
+	     if (!strncmp(str, "E_START|", 8))
+	       {
+		  int id;
+		  
+		  id = atoi(str + 8);
+		  if (id > 0) bd->client.netwm.e_start_launch_id = id;
+	       }
+	     free(str);
+	  }
+     }
    /* It's ok not to have fetch flag, should only be set on startup
     * and not changed. */
    if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
