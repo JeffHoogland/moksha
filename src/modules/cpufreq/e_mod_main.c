@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include "e_mod_main.h"
+#include "config.h"
 
 #ifdef __FreeBSD__   
 #include <sys/types.h>

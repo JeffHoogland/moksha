@@ -4,8 +4,6 @@
 #ifndef E_H
 #define E_H
 
-#include "config.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
