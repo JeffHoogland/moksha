@@ -61,7 +61,6 @@ main(int argc, char **argv)
 	     i++;
 	     lang = argv[i];
              valid_args++;
-             write_ops++;
 	  }
 	else if ((!strcmp(argv[i], "-set-name")) && (i < (argc - 1)))
 	  {
