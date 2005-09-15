@@ -1391,6 +1391,9 @@ _e_app_copy(E_App *dst, E_App *src)
    dst->path = src->path;
    dst->win_name = src->win_name;
    dst->win_class = src->win_class;
+   dst->win_title = src->win_title;
+   dst->win_role = src->win_role;
+   dst->icon_class = src->icon_class;
    dst->startup_notify = src->startup_notify;
    dst->wait_exit = src->wait_exit;
    dst->starting = src->starting;

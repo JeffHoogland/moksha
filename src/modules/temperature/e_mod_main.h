@@ -8,6 +8,8 @@ typedef struct _Config           Config;
 typedef struct _Config_Face      Config_Face;
 typedef struct _Temperature      Temperature;
 typedef struct _Temperature_Face Temperature_Face;
+	
+typedef enum _unit {celcius=0, fahrenheit} unit;
 
 struct _Config
 {
@@ -15,6 +17,7 @@ struct _Config
    int low, high;
    Evas_List *faces;
    char *sensor_name;
+   unit units;
 };
 
 struct _Config_Face
@@ -29,6 +32,7 @@ struct _Temperature
    E_Menu           *config_menu_high;
    E_Menu           *config_menu_poll;
    E_Menu           *config_menu_sensor;
+   E_Menu           *config_menu_unit;
    Evas_List        *faces;
 
    Config           *conf;

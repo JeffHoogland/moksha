@@ -952,8 +952,7 @@ _e_container_free(E_Container *con)
    if (con->pointer.root) e_object_del(E_OBJECT(con->pointer.root));
 
    ecore_x_window_del(con->event_win);
-   if (con->gadman) e_object_del(E_OBJECT(con->gadman));
-   /* We can't use e_object_del here, because border adds a ref to itself
+    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
    for (i = 0; i < 7; i++)
      {
@@ -970,6 +969,7 @@ _e_container_free(E_Container *con)
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
      }
+   if (con->gadman) e_object_del(E_OBJECT(con->gadman));
    con->manager->containers = evas_list_remove(con->manager->containers, con);
    e_canvas_del(con->bg_ecore_evas);
    ecore_evas_free(con->bg_ecore_evas);
@@ -977,8 +977,7 @@ _e_container_free(E_Container *con)
      {
 	ecore_x_window_del(con->win);
      }
-   if (con->name)
-     free(con->name);
+   if (con->name) free(con->name);
    free(con);
 }
 

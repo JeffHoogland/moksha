@@ -17,6 +17,7 @@
 /* module private routines */
 static Temperature *_temperature_new();
 static void     _temperature_free(Temperature *e);
+static void     _temperature_config_menu_boundaries_new(Temperature *e);
 static void     _temperature_config_menu_new(Temperature *e);
 static int      _temperature_cb_check(void *data);
 
@@ -134,6 +135,7 @@ _temperature_new()
    E_CONFIG_VAL(D, T, high, INT);
    E_CONFIG_LIST(D, T, faces, conf_face_edd);
    E_CONFIG_VAL(D, T, sensor_name, STR);
+   E_CONFIG_VAL(D,T,units,INT);
 
    e->conf = e_config_domain_load("module.temperature", conf_edd);
    if (!e->conf)
@@ -143,10 +145,12 @@ _temperature_new()
 	e->conf->low = 30;
 	e->conf->high = 80;
         e->conf->sensor_name = "temp1";
+	e->conf->units = celcius;
      }
    E_CONFIG_LIMIT(e->conf->poll_time, 0.5, 1000.0);
    E_CONFIG_LIMIT(e->conf->low, 0, 100);
-   E_CONFIG_LIMIT(e->conf->high, 0, 200);
+   E_CONFIG_LIMIT(e->conf->high, 0, 220);
+   E_CONFIG_LIMIT(e->conf->units, 0, 1);
 
    _temperature_config_menu_new(e);
    e->have_temp = -1;
@@ -198,6 +202,10 @@ _temperature_new()
 		  mi = e_menu_item_new(ef->menu);
 		  e_menu_item_label_set(mi, _("High Temperature"));
 		  e_menu_item_submenu_set(mi, e->config_menu_high);
+		    
+		  mi = e_menu_item_new(ef->menu);
+		  e_menu_item_label_set(mi, _("Unit"));
+		  e_menu_item_submenu_set(mi, e->config_menu_unit);
 
 		  mi = e_menu_item_new(e->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -232,6 +240,7 @@ _temperature_free(Temperature *e)
    e_object_del(E_OBJECT(e->config_menu_poll));
    e_object_del(E_OBJECT(e->config_menu_low));
    e_object_del(E_OBJECT(e->config_menu_high));
+   e_object_del(E_OBJECT(e->config_menu_unit));
 
    ecore_timer_del(e->temperature_check_timer);
 
@@ -308,7 +317,7 @@ _temperature_menu_low_10(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->low = 10;
+   e->conf->low = (10 + (30*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -319,7 +328,7 @@ _temperature_menu_low_20(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->low = 20;
+   e->conf->low = (20 + (40*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -330,7 +339,7 @@ _temperature_menu_low_30(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->low = 30;
+   e->conf->low = (30 + (50*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -341,7 +350,7 @@ _temperature_menu_low_40(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->low = 40;
+   e->conf->low = (40 + (60*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -352,7 +361,7 @@ _temperature_menu_low_50(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->low = 50;
+   e->conf->low = (50 + (70*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -363,7 +372,7 @@ _temperature_menu_high_20(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 20;
+   e->conf->high = (20 + (40*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -374,7 +383,7 @@ _temperature_menu_high_30(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 30;
+   e->conf->high = (30 + (50*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -385,7 +394,7 @@ _temperature_menu_high_40(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 40;
+   e->conf->high = (40 + (60*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -396,7 +405,7 @@ _temperature_menu_high_50(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 50;
+   e->conf->high = (50 + (70*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -407,7 +416,7 @@ _temperature_menu_high_60(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 60;
+   e->conf->high = (60 + (80*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -418,7 +427,7 @@ _temperature_menu_high_70(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 70;
+   e->conf->high = (70 + (90*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -429,7 +438,7 @@ _temperature_menu_high_80(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 80;
+   e->conf->high = (80 + (100*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -440,7 +449,7 @@ _temperature_menu_high_90(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 90;
+   e->conf->high = (90 + (120*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -451,7 +460,7 @@ _temperature_menu_high_100(void *data, E_Menu *m, E_Menu_Item *mi)
    Temperature *e;
 
    e = data;
-   e->conf->high = 100;
+   e->conf->high = (100 + (140*(e->conf->units)));
    _temperature_cb_check(e);
    e_config_save_queue();
 }
@@ -487,6 +496,173 @@ _temperature_menu_sensor_3(void *data, E_Menu *m, E_Menu_Item *mi)
    e->conf->sensor_name = "temp3";
    _temperature_cb_check(e);
    e_config_save_queue();
+}
+
+static void
+_temperature_menu_unit_fahrenheit(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Temperature *e;
+	
+   e = data;	
+   e->conf->units = fahrenheit;
+   _temperature_cb_check(e);
+   e_config_save_queue();
+}
+
+static void
+_temperature_menu_unit_celcius(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Temperature *e;
+
+   e = data;	
+   e->conf->units = celcius;
+   _temperature_cb_check(e);
+   e_config_save_queue();
+}
+
+static void
+_temperature_config_menu_boundaries_new(Temperature *e)
+{
+   E_Menu *mn;
+   E_Menu_Item *mi;
+	
+   char* unit_str[10];
+   int unit_int[10];
+	
+   if(e->conf->units == fahrenheit) 
+   {
+	int i;
+	char s[6];
+	
+	for(i=0; i < 10; ++i)
+        {
+	   unit_int[i] = ((i+2)*20);
+	   sprintf(s, "%u F", unit_int[i]);
+	   unit_str[i] = calloc(strlen(s)+1, sizeof(char));
+	   strcpy(unit_str[i], s);
+	}      
+   }
+   else if(e->conf->units == celcius)	
+   {
+	int i;
+	char s[6];
+	
+	for(i=0; i < 10; ++i)
+	{
+	   unit_int[i] = ((i+1)*10);
+	   sprintf(s, "%u C", unit_int[i]);
+	   unit_str[i] = calloc(strlen(s)+1, sizeof(char));
+	   strcpy(unit_str[i], s);
+	}
+   }
+   
+   /* Low temperature */
+   mn = e_menu_new();
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, unit_str[0]);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->low == unit_int[0]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_low_10, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, unit_str[1]);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->low == unit_int[1]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_low_20, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, unit_str[2]);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->low == unit_int[2]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_low_30, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, unit_str[3]);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->low == unit_int[3]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_low_40, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, unit_str[4]);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->low == unit_int[4]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_low_50, e);
+
+   e->config_menu_low = mn;
+
+   /* High temperature */
+   mn = e_menu_new();
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[1]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[1]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_20, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[2]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[2]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_30, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[3]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[3]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_40, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[4]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[4]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_50, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[5]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[5]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_60, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[6]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[6]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_70, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[7]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[7]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_80, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[8]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[8]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_90, e);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _(unit_str[9]));
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_radio_group_set(mi, 1);
+   if (e->conf->high == unit_int[9]) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_high_100, e);
+
+   e->config_menu_high = mn;
 }
 
 static void
@@ -537,114 +713,26 @@ _temperature_config_menu_new(Temperature *e)
    e_menu_item_callback_set(mi, _temperature_menu_very_slow, e);
 
    e->config_menu_poll = mn;
-
-   /* Low temperature */
+   
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("10C"));
+   e_menu_item_label_set(mi, _("Fahrenheit"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->low == 10) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_low_10, e);
+   if (e->conf->units == fahrenheit) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_unit_fahrenheit, e);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("20C"));
+   e_menu_item_label_set(mi, _("Celcius"));
    e_menu_item_radio_set(mi, 1);
    e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->low == 20) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_low_20, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("30C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->low == 30) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_low_30, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("40C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->low == 40) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_low_40, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("50C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->low == 50) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_low_50, e);
-
-   e->config_menu_low = mn;
-
-   /* High temperature */
-   mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("20C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 20) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_20, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("30C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 30) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_30, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("40C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 40) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_40, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("50C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 50) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_50, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("60C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 60) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_60, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("70C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 70) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_70, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("80C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 80) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_80, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("90C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 90) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_90, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("100C"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->high == 100) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _temperature_menu_high_100, e);
-
-   e->config_menu_high = mn;
+   if (e->conf->units == celcius) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _temperature_menu_unit_celcius, e);
+   
+   e->config_menu_unit = mn;
+   
+   _temperature_config_menu_boundaries_new(e);
 
    /* Sensor */
 #ifndef __FreeBSD__
@@ -692,13 +780,17 @@ _temperature_config_menu_new(Temperature *e)
      }
    if (therms) ecore_list_destroy(therms);
 #endif
-
+   
    /* Main */
    mn = e_menu_new();
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Check Interval"));
    e_menu_item_submenu_set(mi, e->config_menu_poll);
+   
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Unit"));
+   e_menu_item_submenu_set(mi, e->config_menu_unit);
 
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Low Temperature"));
@@ -716,6 +808,14 @@ _temperature_config_menu_new(Temperature *e)
      }
 
    e->config_menu = mn;
+     
+/*   int i,j;
+   
+   for(i=0; i < 10; ++i)
+   {
+	free(unit_str[i]);
+   }
+*/
 }
 
 static Temperature_Face *
@@ -957,8 +1057,9 @@ _temperature_cb_check(void *data)
 	  {
 	     char units[32];
 	     FILE *f;
+		  
 
-	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
+	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/TZ2/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
 	       {
@@ -973,6 +1074,10 @@ _temperature_cb_check(void *data)
      }
    if (therms) ecore_list_destroy(therms);
 #endif   
+   
+   if(ef->conf->units == fahrenheit)
+	temp = (temp*9/5)+32;
+   
    if (ret)
      {
 	if (ef->have_temp != 1)
@@ -992,7 +1097,12 @@ _temperature_cb_check(void *data)
 	     _temperature_face_level_set(face,
 				    (double)(temp - ef->conf->low) /
 				    (double)(ef->conf->high - ef->conf->low));
-	     snprintf(buf, sizeof(buf), "%i°C", temp);
+		  
+	     if(ef->conf->units == fahrenheit) 
+		snprintf(buf, sizeof(buf), "%i°F", temp);
+	     else
+	        snprintf(buf, sizeof(buf), "%i°C", temp);               
+	    
 	     edje_object_part_text_set(face->temp_object, "reading", buf);
 	  }
      }
