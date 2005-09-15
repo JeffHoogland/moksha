@@ -2,6 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
+#include "config.h"
 
 /* E_Zone is a child object of E_Container. There is one zone per screen
  * in a xinerama setup. Each zone has one or more desktops.
@@ -540,6 +541,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    char *penv_ld_preload_path;
    char buf[4096], buf2[32];
    
+   if (!a) return 0;
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
