@@ -1059,7 +1059,7 @@ _temperature_cb_check(void *data)
 	     FILE *f;
 		  
 
-	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/TZ2/temperature", name);
+	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
 	       {
