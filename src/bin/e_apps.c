@@ -1431,7 +1431,6 @@ _e_app_cb_event_border_add(void *data, int type, void *event)
    E_App_Instance *inst;
    
    ev = event;
-   printf("BD ADD %i\n", ev->border->client.netwm.e_start_launch_id);
    if (ev->border->client.netwm.e_start_launch_id <= 0) return 1;
    for (l = _e_apps_start_pending; l; l = l->next)
      {
@@ -1439,7 +1438,6 @@ _e_app_cb_event_border_add(void *data, int type, void *event)
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
 	     inst = ll->data;
-	     printf("%i == %i\n", inst->launch_id, ev->border->client.netwm.e_start_launch_id);
 	     if (inst->launch_id == ev->border->client.netwm.e_start_launch_id)
 	       {
 		  if (inst->expire_timer)
@@ -1456,7 +1454,6 @@ _e_app_cb_event_border_add(void *data, int type, void *event)
    while (removes)
      {
 	a = removes->data;
-	printf("APP [%s] popped up!\n", a->exe);
         _e_app_change(a, E_APP_READY);
 	_e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
 	removes = evas_list_remove_list(removes, removes);
@@ -1473,7 +1470,6 @@ _e_app_cb_expire_timer(void *data)
    
    inst = data;
    a = inst->app;
-   printf("APP [%s] expired!\n", a->exe);
    _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
    inst->expire_timer = NULL;
    _e_app_change(a, E_APP_READY_EXPIRE);

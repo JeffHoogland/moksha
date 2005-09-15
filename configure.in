@@ -218,7 +218,7 @@ embryo_cflags=`$EMBRYO_CONFIG --cflags`
 embryo_libs=`$EMBRYO_CONFIG --libs`
 
 e_libs=$evas_libs" "$ecore_libs" "$edje_libs" "$eet_libs" "$embryo_libs" "$LIBINTL" "$fnmatch_libs" "
-e_cflags=$evas_cflags" "$ecore_cflags" "$edje_cflags" "$eet_cflags" "$embryo_cflags" "
+e_cflags="-DUSE_E_CONFIG_H "$evas_cflags" "$ecore_cflags" "$edje_cflags" "$eet_cflags" "$embryo_cflags" "
 AC_SUBST(e_libs)
 AC_SUBST(e_cflags)
 
