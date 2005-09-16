@@ -65,6 +65,10 @@ e17_ibar_lamp_d.png \
 e17_ibar_lamp_l.png \
 e17_ibar_lamp_r.png \
 e17_ibar_lamp_u.png \
+e17_ibar_lamp_exec_d.png \
+e17_ibar_lamp_exec_l.png \
+e17_ibar_lamp_exec_r.png \
+e17_ibar_lamp_exec_u.png \
 e17_ibar_over_h.png \
 e17_ibar_over_v.png \
 e17_clock_bg.png \

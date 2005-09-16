@@ -11,6 +11,10 @@ images {
    image: "e17_ibar_arrow_l.png" COMP;
    image: "e17_ibar_arrow_r.png" COMP;
    image: "e17_ibar_arrow_u.png" COMP;
+   image: "e17_ibar_lamp_exec_d.png" COMP;
+   image: "e17_ibar_lamp_exec_l.png" COMP;
+   image: "e17_ibar_lamp_exec_r.png" COMP;
+   image: "e17_ibar_lamp_exec_u.png" COMP;
    image: "e17_pager_desk.png" COMP;
 }
 group {
@@ -170,6 +174,9 @@ group {
    data {
       //	 item: "item_list", "item item2 item3";
    }
+   script {
+      public orient;
+   }
    parts {
       part {
 	 name:          "top";
@@ -231,33 +238,353 @@ group {
 	    }
 	 }
       }
+      part {
+	 name:          "glow";
+	 mouse_events:  0;
+	 /***/
+	 description {
+	    state:    "default" 0.0;
+	    visible:  0;
+	    align:    0.5 1.0;
+	    min:      115 64;
+	    rel1 {
+	       to: "top";
+	       relative: 0.0 1.0;
+	       offset:   0   -6;
+	    }
+	    rel2 {
+	       to: "top";
+	       relative: 1.0  1.0;
+	       offset:   -1   -6;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_exec_d.png";
+	    }
+	 }
+	 description {
+	    state:    "default2" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+	 description {
+	    state:    "default3" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
+	    min:      230 128;
+	    color:    255 255 255 0;
+	 }
+	 /***/
+	 description {
+	    state:    "top" 0.0;
+	    visible:  0;
+	    align:    0.5 0.0;
+	    min:      115 64;
+	    rel1 {
+	       to: "top";
+	       relative: 0.0 0.0;
+	       offset:   0   5;
+	    }
+	    rel2 {
+	       to: "top";
+	       relative: 1.0  0.0;
+	       offset:   -1   5;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_exec_u.png";
+	    }
+	 }
+	 description {
+	    state:    "top2" 0.0;
+	    inherit:  "top" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+	 description {
+	    state:    "top3" 0.0;
+	    inherit:  "top" 0.0;
+	    visible:  1;
+	    min:      230 128;
+	    color:    255 255 255 0;
+	 }
+	 /***/
+	 description {
+	    state:    "left" 0.0;
+	    visible:  0;
+	    align:    0.0 0.5;
+	    min:      64 115;
+	    rel1 {
+	       to: "top";
+	       relative: 0.0 0.0;
+	       offset:   5   0;
+	    }
+	    rel2 {
+	       to: "top";
+	       relative: 0.0  1.0;
+	       offset:   5   -1;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_exec_l.png";
+	    }
+	 }
+	 description {
+	    state:    "left2" 0.0;
+	    inherit:  "left" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+	 description {
+	    state:    "left3" 0.0;
+	    inherit:  "left" 0.0;
+	    visible:  1;
+	    min:      128 230;
+	    color:    255 255 255 0;
+	 }
+	 /***/
+	 description {
+	    state:    "right" 0.0;
+	    visible:  0;
+	    align:    1.0 0.5;
+	    min:      64 115;
+	    rel1 {
+	       to: "top";
+	       relative: 1.0 0.0;
+	       offset:   -6  0;
+	    }
+	    rel2 {
+	       to: "top";
+	       relative: 1.0  1.0;
+	       offset:   -5   -1;
+	    }
+	    image {
+	       normal: "e17_ibar_lamp_exec_r.png";
+	    }
+	 }
+	 description {
+	    state:    "right2" 0.0;
+	    inherit:  "right" 0.0;
+	    visible:  1;
+	    color:    255 255 255 255;
+	 }
+	 description {
+	    state:    "right3" 0.0;
+	    inherit:  "right" 0.0;
+	    visible:  1;
+	    min:      128 230;
+	    color:    255 255 255 0;
+	 }
+      }
+
+/* generic signal handler s for exec feedback */      
+      program {
+	 name:    "exec_start";
+	 signal:  "start";
+	 source:  "";
+	 script {
+	    new ori = get_int(orient);
+	    if      (ori == 0) run_program(PROGRAM:"ord_exec_start");
+	    else if (ori == 1) run_program(PROGRAM:"oru_exec_start");
+	    else if (ori == 2) run_program(PROGRAM:"orr_exec_start");
+	    else if (ori == 3) run_program(PROGRAM:"orl_exec_start");
+	 }
+      }
+      program {
+	 name:    "exec_exec";
+	 signal:  "exec";
+	 source:  "";
+	 script {
+	    new ori = get_int(orient);
+	    if      (ori == 0) run_program(PROGRAM:"ord_exec_exec");
+	    else if (ori == 1) run_program(PROGRAM:"oru_exec_exec");
+	    else if (ori == 2) run_program(PROGRAM:"orr_exec_exec");
+	    else if (ori == 3) run_program(PROGRAM:"orl_exec_exec");
+	 }
+      }
+      program {
+	 name:    "exec_stop";
+	 signal:  "stop";
+	 source:  "";
+	 script {
+	    new ori = get_int(orient);
+	    stop_programs_on(PART:"glow");
+	    if      (ori == 0) set_state(PART:"glow", "default", 0.0);
+	    else if (ori == 1) set_state(PART:"glow", "top", 0.0);
+	    else if (ori == 2) set_state(PART:"glow", "right", 0.0);
+	    else if (ori == 3) set_state(PART:"glow", "left", 0.0);
+	 }
+      }
+/* bottom progs */      
+      program {
+	 name:    "ord_exec_start";
+	 action:  STATE_SET "default2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "ord_exec_start2";
+      }
+      program {
+	 name:    "ord_exec_start2";
+	 action:  STATE_SET "default3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "ord_exec_start3";
+      }
+      program {
+	 name:    "ord_exec_start3";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "glow";
+	 after:   "ord_exec_start";
+      }
+      
+      program {
+	 name:    "ord_exec_exec";
+	 action:  STATE_SET "default2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "ord_exec_exec2";
+      }
+      program {
+	 name:    "ord_exec_exec2";
+	 action:  STATE_SET "default3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "exec_stop";
+      }
+
+      program {
+	 name:    "oru_exec_start";
+	 action:  STATE_SET "top2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "oru_exec_start2";
+      }
+      program {
+	 name:    "oru_exec_start2";
+	 action:  STATE_SET "top3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "oru_exec_start3";
+      }
+      program {
+	 name:    "oru_exec_start3";
+	 action:  STATE_SET "top" 0.0;
+	 target:  "glow";
+	 after:   "oru_exec_start";
+      }
+      
+      program {
+	 name:    "oru_exec_exec";
+	 action:  STATE_SET "top2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "oru_exec_exec2";
+      }
+      program {
+	 name:    "oru_exec_exec2";
+	 action:  STATE_SET "top3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "exec_stop";
+      }
+      
+      program {
+	 name:    "orr_exec_start";
+	 action:  STATE_SET "right2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "orr_exec_start2";
+      }
+      program {
+	 name:    "orr_exec_start2";
+	 action:  STATE_SET "right3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "orr_exec_start3";
+      }
+      program {
+	 name:    "orr_exec_start3";
+	 action:  STATE_SET "right" 0.0;
+	 target:  "glow";
+	 after:   "orr_exec_start";
+      }
+      
+      program {
+	 name:    "orr_exec_exec";
+	 action:  STATE_SET "right2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "orr_exec_exec2";
+      }
+      program {
+	 name:    "orr_exec_exec2";
+	 action:  STATE_SET "right3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "exec_stop";
+      }
+      
+      program {
+	 name:    "orl_exec_start";
+	 action:  STATE_SET "left2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "orl_exec_start2";
+      }
+      program {
+	 name:    "orl_exec_start2";
+	 action:  STATE_SET "left3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "orl_exec_start3";
+      }
+      program {
+	 name:    "orl_exec_start3";
+	 action:  STATE_SET "left" 0.0;
+	 target:  "glow";
+	 after:   "orl_exec_start";
+      }
+      
+      program {
+	 name:    "orl_exec_exec";
+	 action:  STATE_SET "left2" 0.0;
+         transition: DECELERATE 0.1;
+	 target:  "glow";
+	 after:   "orl_exec_exec2";
+      }
+      program {
+	 name:    "orl_exec_exec2";
+	 action:  STATE_SET "left3" 0.0;
+         transition: ACCELERATE 1.0;
+	 target:  "glow";
+	 after:   "exec_stop";
+      }
+      
       program {
 	 name:    "orient";
 	 signal:  "set_orientation";
-	 source:  "bottom";
-	 action:  STATE_SET "default" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient2";
-	 signal:  "set_orientation";
-	 source:  "top";
-	 action:  STATE_SET "top" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient3";
-	 signal:  "set_orientation";
-	 source:  "left";
-	 action:  STATE_SET "left" 0.0;
-	 target:  "top";
-      }
-      program {
-	 name:    "orient4";
-	 signal:  "set_orientation";
-	 source:  "right";
-	 action:  STATE_SET "right" 0.0;
-	 target:  "top";
+	 source:  "*";
+	 script {
+	    // sig, src
+	    if (!strcmp(src, "left")) {
+	       set_int(orient, 3);
+	       set_state(PART:"top", "left", 0.0);
+	       set_state(PART:"glow", "left", 0.0);
+	    }
+	    else if (!strcmp(src, "right")) {
+	       set_int(orient, 2);
+	       set_state(PART:"top", "right", 0.0);
+	       set_state(PART:"glow", "right", 0.0);
+	    }
+	    else if (!strcmp(src, "top")) {
+	       set_int(orient, 1);
+	       set_state(PART:"top", "top", 0.0);
+	       set_state(PART:"glow", "top", 0.0);
+	    }
+	    else if (!strcmp(src, "bottom")) {
+	       set_int(orient, 0);
+	       set_state(PART:"top", "default", 0.0);
+	       set_state(PART:"glow", "default", 0.0);
+	    }
+	 }
       }
    }
 }
