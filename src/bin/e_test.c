@@ -281,7 +281,7 @@ _e_test_internal(E_Container *con)
 	ecore_timer_add(0.02, _e_test_timer, m);
      }
 }
-#elif 1
+#elif 0
 static void
 _e_test_dialog_del(void *obj)
 {
