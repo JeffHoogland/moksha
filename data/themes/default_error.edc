@@ -117,7 +117,7 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -17   -1;
 	       to_y:     "e";
 	    }
 	    color:    0   0   0 255;
@@ -126,7 +126,7 @@ group {
 	       text:     "Title";
 	       font:     "Edje-Vera-Bold";
 	       size:     12;
-	       min:      0 0;
+	       min:      1 1;
 	       align:    0.0 0.5;
 	    }
 	 }
