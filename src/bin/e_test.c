@@ -281,7 +281,7 @@ _e_test_internal(E_Container *con)
 	ecore_timer_add(0.02, _e_test_timer, m);
      }
 }
-#elif 0
+#elif 1
 static void
 _e_test_dialog_del(void *obj)
 {
@@ -299,6 +299,7 @@ _e_test_internal(E_Container *con)
    dia = e_dialog_new(con);
    e_object_del_attach_func_set(E_OBJECT(dia), _e_test_dialog_del);
    e_dialog_title_set(dia, "A Test Dialog");
+   e_dialog_text_set(dia, "A Test Dialog<br>And another line<br><hilight>Hilighted Text</hilight>");
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_dialog_button_add(dia, "Apply", NULL, NULL, NULL);
    e_dialog_button_add(dia, "Cancel", NULL, NULL, NULL);

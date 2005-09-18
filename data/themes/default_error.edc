@@ -4,6 +4,17 @@ images {
    image: "e17_button.png" COMP;
 }
 
+styles
+{
+   style {
+      name: "error_style";
+      base: "font=Edje-Vera font_size=10 align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      
+      tag:  "br" "\n";
+      tag:  "hilight" "+ font_size=10 font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+   }
+}
+
 group {
    name: "error/main";
    min: 400 200;
@@ -113,7 +124,7 @@ group {
 	    color3: 255 255 255 128;
 	    text {
 	       text:     "Title";
-	       font:     "Edje Vera Bold";
+	       font:     "Edje-Vera-Bold";
 	       size:     12;
 	       min:      0 0;
 	       align:    0.0 0.5;
@@ -122,7 +133,7 @@ group {
       }
       part {
 	 name:          "text";
-	 type:          SWALLOW;
+	 type:          TEXTBLOCK;
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
@@ -133,10 +144,14 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0  0.0;
-	       offset:   -1   -16;
+	       offset:   -17   -17;
 	       to_y:     "button_image";
 	    }
-	    color: 0 0 0 0;
+	    text {
+	       style:    "error_style";
+	       min:      1 1;
+	       text:     "An Error<br>Goes Here.";
+	    }
 	 }
       }
       part {
@@ -199,7 +214,7 @@ group {
 	    color3: 255 255 255 128;
 	    text {
 	       text:     "OK";
-	       font:     "Edje Vera";
+	       font:     "Edje-Vera";
 	       size:     10;
 	       min:      0 0;
 	       align:    0.5 0.5;

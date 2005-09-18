@@ -115,7 +115,7 @@ group {
 	    color3: 0 0 0 22;
 	    text {
 	       text: "Title goes here";
-	       font: "Edje Vera Bold";
+	       font: "Edje-Vera-Bold";
 	       size: 12;
 	       min:  1 1;
 	       align: 0.5 0.5;

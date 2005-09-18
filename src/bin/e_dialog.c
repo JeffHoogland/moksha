@@ -56,36 +56,12 @@ e_dialog_new(E_Container *con)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
-   o = evas_object_textblock_add(e_win_evas_get(dia->win));
+   o = edje_object_add(e_win_evas_get(dia->win));
    dia->text_object = o;
+   e_theme_edje_object_set(o, "base/theme/dialog",
+			   "widgets/dialog/text");
    edje_object_part_swallow(dia->bg_object, "content_swallow", o);
    evas_object_show(o);
-     {
-        char format[1024];
-	char *fname;
-	int fsize;
-	
-	fname = (char *)e_font_default_string_get("default", &fsize);
-	snprintf(format, sizeof(format),
-		 "font='%s' size=%i wrap=word",
-		 fname, fsize);
-	evas_object_textblock_format_insert(o, format);
-	evas_object_textblock_format_insert(o, "color=#000");
-#if 0
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_text_insert(o, "Here is some text");
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_text_insert(o, "Here is some more text");
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_text_insert(o, "And even more text on this line to make it really long for testing");
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_text_insert(o, "Short");
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_text_insert(o, "Aaardvaaarks On!");
-	evas_object_textblock_format_insert(o, "\n");
-	evas_object_textblock_format_insert(o, "\n");
-#endif
-     }
    
    o = e_box_add(e_win_evas_get(dia->win));
    dia->box_object = o;
@@ -139,7 +115,7 @@ e_dialog_title_set(E_Dialog *dia, char *title)
 void
 e_dialog_text_set(E_Dialog *dia, char *text)
 {
-   evas_object_textblock_text_insert(dia->text_object, text);
+   edje_object_part_text_set(dia->text_object, "text", text);
 }
 
 void
@@ -154,9 +130,8 @@ e_dialog_show(E_Dialog *dia)
    Evas_Object *o;
    
    o = dia->text_object;
-//   evas_object_textblock_format_size_get(o, &mw, &mh);
-   evas_object_textblock_native_size_get(o, &mw, &mh);
-   edje_extern_object_min_size_set(o, mw + 2, mh + 2);
+   edje_object_size_min_calc(o, &mw, &mh);
+   edje_extern_object_min_size_set(o, mw, mh);
    edje_object_part_swallow(dia->bg_object, "content_swallow", o);
 
    o = dia->box_object;

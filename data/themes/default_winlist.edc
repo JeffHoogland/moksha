@@ -180,7 +180,7 @@ group {
 	    color3: 0 0 0 22;
 	    text {
 	       text: "Title goes here";
-	       font: "Edje Vera Bold";
+	       font: "Edje-Vera-Bold";
 	       size: 10;
 	       min:  0 1;
 	       align: 0.5 0.0;
@@ -226,7 +226,7 @@ group {
 	    color3: 0 0 0 22;
 	    text {
 	       text: "Title goes here";
-	       font: "Edje Vera Bold";
+	       font: "Edje-Vera-Bold";
 	       size: 10;
 	       min:  0 1;
 	       align: 0.0 0.5;
@@ -525,7 +525,7 @@ group {
 	    color3: 255 255 255 128;
 	    text {
 	       text:     "Item Label";
-	       font:     "Edje Vera";
+	       font:     "Edje-Vera";
 	       size:     10;
 	       min:      0 1;
 	       align:    0.0 0.5;

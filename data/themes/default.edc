@@ -17,8 +17,8 @@
 #endif
 
 fonts {
-   font: "Vera.ttf"   "Edje Vera";
-   font: "VeraBd.ttf" "Edje Vera Bold";
+   font: "Vera.ttf"   "Edje-Vera";
+   font: "VeraBd.ttf" "Edje-Vera-Bold";
 }
 
 collections {

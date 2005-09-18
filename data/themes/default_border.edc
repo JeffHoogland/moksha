@@ -788,7 +788,7 @@ group {
 	    color3: 255 255 255 128;
 	    text {
 	       text:     "";
-	       font:     "Edje Vera";
+	       font:     "Edje-Vera";
 	       size:     10;
 	       min:      0 1;
 	       align:    0.0 0.5;

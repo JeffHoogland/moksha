@@ -690,7 +690,7 @@ group {
 	    color3: 0 0 0 32;
 	    text {
 	       text:     "00:00:00 AM";
-	       font:     "Edje Vera";
+	       font:     "Edje-Vera";
 	       size:     15;
 	       fit:      0 1;
 	       align:    0.0 0.5;

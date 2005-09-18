@@ -268,9 +268,9 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    else
      {
 	char format[1024];
-	Evas_Object *text;
-	int x, y, w, h, nw, nh;
-	char *fname;
+	int x, y, w, h;
+	Evas_Coord ow, oh;
+	char *fname, *newstr;
 	int fsize;
 	
 	evas_object_move(o, 0, 0);
@@ -280,41 +280,45 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
 	evas_object_show(o);
 
 	edje_object_part_text_set(o, "title", title);
-
-	fname = (char *)e_font_default_string_get("default", &fsize);
-	snprintf(format, sizeof(format), 
-		 "font='%s' size=%i wrap=word",
-		 fname, fsize);
-	text = evas_object_textblock_add(e);
-	evas_object_color_set(text, 0, 0, 0, 255);
-	evas_object_textblock_format_insert(text, format);
+	
 	  {
-	     char *pp, *newstr, *p;
+	     char *pp, *newstr, *p, *markup = NULL;
+	     
 	     newstr = strdup(txt);
 	     p = newstr;
 	     while (p)
 	       {
 		  pp = strchr(p, '\n');
 		  if (pp) *pp = 0;
-		  evas_object_textblock_text_insert(text, p);
+		  if (markup)
+		    {
+		       markup = realloc(markup, strlen(markup) + strlen(p) + 1);
+		       strcat(markup, p);
+		    }
+		  else
+		    markup = strdup(p);
 		  if (pp)
 		    {
 		       p = pp + 1;
-		       evas_object_textblock_format_insert(text, "\n");
+		       if (markup)
+			 {
+			    markup = realloc(markup, strlen(markup) + strlen("<br>") + 1);
+			    strcat(markup, "<br>");
+			 }
+		       else
+			 markup = strdup("<br>");
 		    }
 		  else
 		    p = NULL;
 	       }
+	     edje_object_part_text_set(o, "text", markup);
+	     free(markup);
 	     free(newstr);
 	  }
-	edje_object_part_swallow(o, "text", text);
-	evas_object_show(text);
-
-	edje_object_part_geometry_get(o, "text", &x, &y, &w, &h);
-	evas_object_textblock_format_size_get(text, &nw, &nh);
-	/* FIXME: How to handle the width of the text? */
-	error_h += (nh - h);
-
+	edje_object_size_min_calc(o, &ow, &oh);
+	error_w = ow;
+	error_h = oh;
+	
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, error_w, error_h);
 	evas_object_show(o);
