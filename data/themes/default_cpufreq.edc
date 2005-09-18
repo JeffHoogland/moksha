@@ -305,7 +305,7 @@ group {
 	    color3: 0 0 0 32;
 	    text {
 	       text: "??? Ghz";
-	       font: "Edje Vera";
+	       font: "Edje-Vera";
 	       size: 7;
 	       align: 0.5 0.5;
 	       min: 1 1;

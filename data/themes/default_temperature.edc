@@ -86,7 +86,7 @@ group {
 	    color3: 0 0 0 32;
 	    text {
 	       text:     "99^C";
-	       font:     "Edje Vera";
+	       font:     "Edje-Vera";
 	       size:     7;
 	       min:      1 1;
 	       align:    0.0 0.0;
