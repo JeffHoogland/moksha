@@ -905,7 +905,7 @@ ACT_FN_GO(exit)
 		       "<br>"
 		       "Are you sure you want to exit?"
 		       ));
-   e_dialog_icon_set(dia, "enlightenment/exit", 32);
+   e_dialog_icon_set(dia, "enlightenment/exit", 64);
    e_dialog_button_add(dia, _("Yes"), NULL, _e_actions_cb_exit_dialog_ok, NULL);
    e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);

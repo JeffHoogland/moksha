@@ -1,9 +1,10 @@
 images {
    image: "e17_menu_bg.png" COMP;
-   image: "e17_winlist_top.png" COMP;
+//   image: "e17_winlist_top.png" COMP;
    image: "e17_winlist_bottom.png" COMP;
    image: "e17_button2.png" COMP;
    image: "e17_button.png" COMP;
+   image: "e17_dialog_watermark.png" COMP;
 }
 
 styles
@@ -36,6 +37,27 @@ group {
 	       offset:   -2   -2;
 	    }
 	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    min:      200 138;
+	    max:      200 138;
+	    align:    1.0 1.0;
+	    rel1 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_dialog_watermark.png";
+	    }
 	 }
       }
       /*
@@ -147,6 +169,7 @@ group {
 	    }
 	 }
       }
+ */      
       part {
 	 name:          "bottom";
 	 mouse_events:  0;
@@ -170,7 +193,6 @@ group {
 	    }
 	 }
       }
- */
       part {
 	 name: "buttons_swallow";
 	 type: SWALLOW;

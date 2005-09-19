@@ -312,4 +312,5 @@ e17_icon_theme_glow_0.png \
 e17_icon_windows.png \
 e17_icon_lost_windows.png \
 e17_pointer.png \
-e17_pointer_mono.png
+e17_pointer_mono.png \
+e17_dialog_watermark.png
