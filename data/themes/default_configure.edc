@@ -1,0 +1,188 @@
+images {
+   image: "e17_menu_bg.png" COMP;
+   image: "e17_logo.png" COMP;
+}
+
+group {
+   name: "configure/main";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 type:          IMAGE;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal:   "e17_menu_bg.png";
+	       border:   1 1 1 1;
+	       middle:   0;
+	    }
+	    fill {
+	       smooth:   0;
+	    }
+	    color:      255 255 255 255;
+	 }
+      }
+      part {
+	 name:          "logo";
+	 type: 	        IMAGE;
+	 mouse_events:  0;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   -50    -80;
+	    }
+	    rel2 {
+	       relative: 0.0  0.0;
+	       offset:   110   80;
+	    }
+	    image {
+	       normal:   "e17_logo.png";
+	    }
+	    color:      255 255 255 64;
+	 }
+      }
+      part {
+	 name:          "title";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 description {
+	    state:      "default" 0.0;
+	    align:      0.0 0.0;
+	    color:      255 255 255 128;
+	    color3:     0 0 0 255;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   16 12;
+	    }
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset:   -17 34;
+	    }
+	    text {
+	       text:     "Enlightenment Configuration";
+	       size:     22;
+	       font:     "Edje-Vera"; 
+	       align:    0.0 0.0;
+	    }
+	 }
+      }
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 0.5;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   16  44;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -16  -16;
+	    }
+	 }
+      }
+   }
+}
+
+group {
+   name: "configure/icon";
+   min:  24 24;
+   max:  128 128;
+   parts {
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -15;
+	    }
+	 }
+      }
+      part {
+	 name:          "icon_event";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	       to:       "icon_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	       to:       "icon_swallow";
+	    }
+	    color:      0 0 0 0;
+	 }
+      }
+      part {
+	 name:          "title";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 description {
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   0 -15;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	    }
+	    color:      255 255 255 128;
+	    color3:     0 0 0 255;
+	    text {
+	       text:     "No Title";
+	       align:    0.0 0.0;
+	       size:     14;
+	       font:     "Edje-Vera"; 
+	    }
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:   "button_click";
+	 signal: "mouse,down,1";
+	 source: "icon_event";
+	 action: SIGNAL_EMIT "clicked" "";
+      }
+   }
+}

@@ -34,6 +34,7 @@ static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
+static void _e_int_menus_config_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -573,19 +574,14 @@ _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
-   E_Menu *subm;
    E_Menu_Item *mi;
    Evas_List *l;
-   char buf[4096];
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    
-   snprintf(buf, sizeof(buf), "%s/config-apps", e_prefix_data_get());
-   subm = e_int_menus_apps_new(buf);
-
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Applications"));
-   e_menu_item_submenu_set(mi, subm);
+   e_menu_item_label_set(mi, _("Configuration Panel"));
+   e_menu_item_callback_set(mi, _e_int_menus_config_item_cb, NULL);
 
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
@@ -597,20 +593,22 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
      }
 
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_config_free_hook);
-   e_object_data_set(E_OBJECT(m), subm);
 }
 
 static void
 _e_int_menus_config_free_hook(void *obj)
 {
-   E_Menu *m, *subm;
+   E_Menu *m;
 
    m = obj;
-   subm = e_object_data_get(E_OBJECT(obj));
-   if (subm)
-     e_object_del(E_OBJECT(subm));
 
    _e_int_menus_augmentation_del(m, evas_hash_find(_e_int_menus_augmentation, "config"));
+}
+
+static void
+_e_int_menus_config_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   e_configure_show(m->zone->container);
 }
 
 static void
