@@ -168,6 +168,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 0.0;
+	    fixed: 0 1;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:  16 16;
@@ -214,6 +215,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 1.0;
+	    fixed: 0 1;
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:  26 -24;
@@ -268,6 +270,7 @@ group {
 	    aspect: 1.0 1.0;
 	    align: 0.5 1.0;
 	    min: 32 32;
+	    fixed: 1 1;
 	    aspect_preference: VERTICAL;
 	    rel1 {
 	       relative: 0.0 0.0;
@@ -488,6 +491,7 @@ group {
 	   state: "default" 0.0;
 	   align: 1.0 0.0;
 	   visible: 0;
+	   fixed: 1 1;
 	   rel1 {
 	      relative: 0.0  0.0;
 	      offset:   0    6;
