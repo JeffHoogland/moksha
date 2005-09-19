@@ -91,6 +91,7 @@ group {
 	    state: "default" 0.0;
 	    align: 0.0 0.5;
 	    color: 0 0 0 0;
+	    fixed: 1 0;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:   16  16;

@@ -131,6 +131,14 @@ e_dialog_text_set(E_Dialog *dia, char *text)
 void
 e_dialog_icon_set(E_Dialog *dia, char *icon)
 {
+   if (icon)
+     {
+	dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
+	e_util_edje_icon_set(dia->icon_object, icon);
+	edje_extern_object_min_size_set(dia->icon_object, 64, 64);
+	edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+	evas_object_show(dia->icon_object);
+     }
 }
 
 void
