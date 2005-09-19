@@ -5070,9 +5070,9 @@ break;
 #undef HDL
 
 /****************************************************************************/
-#define HDL E_IPC_OP_CONFIGURATION_PANEL_SHOW
+#define HDL E_IPC_OP_CONFIG_PANEL_SHOW
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-configuration-panel-show", 0, "Show the configuration panel", 0, HDL)
+   OP("-config-panel-show", 0, "Show the configuration panel", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_NULL(HDL)
 #elif (TYPE == E_WM_IN)

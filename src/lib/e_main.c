@@ -197,9 +197,9 @@ e_lib_quit(void)
 }
 
 void
-e_lib_configuration_panel_show(void)
+e_lib_config_panel_show(void)
 {
-   _e_ipc_call(E_IPC_OP_CONFIGURATION_PANEL_SHOW, NULL);
+   _e_ipc_call(E_IPC_OP_CONFIG_PANEL_SHOW, NULL);
 }
 
 void
