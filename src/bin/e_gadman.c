@@ -282,12 +282,15 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	  {
 	     cf2 = (Gadman_Client_Config *)l->data;
 	     zone = e_container_zone_number_get(gmc->zone->container, cf2->zone);
-	     if ((zone->w == cf2->res.w) && (zone->h == cf2->res.h))
+	     if (zone)
 	       {
-		  l = cf->res.others;
-		  *cf = *cf2;
-		  cf->res.others = l;
-		  break;
+		  if ((zone->w == cf2->res.w) && (zone->h == cf2->res.h))
+		    {
+		       l = cf->res.others;
+		       *cf = *cf2;
+		       cf->res.others = l;
+		       break;
+		    }
 	       }
 	  }
 	E_CONFIG_LIMIT(cf->pos.x, 0, 10000);

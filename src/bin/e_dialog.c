@@ -8,7 +8,7 @@ typedef struct _E_Dialog_Button E_Dialog_Button;
 struct _E_Dialog_Button
 {
    E_Dialog *dialog;
-   Evas_Object *obj;
+   Evas_Object *obj, *obj_icon;
    char *label;
    char *icon;
    void (*func) (void *data, E_Dialog *dia);
@@ -92,6 +92,16 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
    edje_object_signal_callback_add(db->obj, "click", "",
 				   _e_dialog_cb_button_clicked, db);
    edje_object_part_text_set(db->obj, "button_text", db->label);
+   if (icon)
+     {
+	db->obj_icon = edje_object_add(e_win_evas_get(dia->win));
+	e_util_edje_icon_set(db->obj_icon, icon);
+	edje_object_part_swallow(db->obj, "icon_swallow", db->obj_icon);
+	edje_object_signal_emit(db->obj, "icon_visible", "");
+	edje_object_message_signal_process(db->obj);
+	evas_object_show(db->obj_icon);
+     }
+   edje_object_calc_force(db->obj);
    edje_object_size_min_calc(db->obj, &mw, &mh);
    e_box_pack_end(dia->box_object, db->obj);
    e_box_pack_options_set(db->obj,
@@ -160,6 +170,7 @@ _e_dialog_free(E_Dialog *dia)
 	E_FREE(db->label);
 	E_FREE(db->icon);
 	evas_object_del(db->obj);
+	if (db->obj_icon) evas_object_del(db->obj_icon);
 	free(db);
      }
    if (dia->text_object) evas_object_del(dia->text_object);
