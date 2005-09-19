@@ -106,7 +106,7 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
    e_box_pack_end(dia->box_object, db->obj);
    e_box_pack_options_set(db->obj,
 			  1, 1, /* fill */
-			  0, 1, /* expand */
+			  1, 1, /* expand */
 			  0.5, 0.5, /* align */
 			  mw, mh, /* min */
 			  9999, mh /* max */

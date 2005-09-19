@@ -103,6 +103,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.5 0.0;
+	    fixed: 0 1;
 	    rel1 {
 	       relative: 0.0 0.0;
 	       offset:  26 24;

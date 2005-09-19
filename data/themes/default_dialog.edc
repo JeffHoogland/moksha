@@ -13,7 +13,7 @@ styles
       base: "font=Edje-Vera font_size=10 align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
       
       tag:  "br" "\n";
-      tag:  "hilight" "+ font_size=10 font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+      tag:  "hilight" "+ font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
    }
 }
 
@@ -173,6 +173,7 @@ group {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;
 	    align: 0.5 1.0;
+	    fixed: 0 1;
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   16   -9;
@@ -211,6 +212,43 @@ group {
 	 }
       }
       part {
+	 name: "icon_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 0.5;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0  0;
+	       to: "button_image";
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   0  -7;
+	       to: "button_image";
+	    }
+	 }
+	 description {
+	    state: "visible" 0.0;
+	    inherit: "default" 0.0;
+	    aspect: 1.0 1.0;
+	    aspect_preference: VERTICAL;
+	    align: 0.0 0.5;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   6  6;
+	       to: "button_image";
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   5   -7;
+	       to: "button_image";
+	    }
+	 }
+      }
+      part {
 	 name:          "button_text";
 	 type:          TEXT;
 	 effect:        SHADOW;
@@ -218,9 +256,10 @@ group {
 	 description {
 	    state:    "default" 0.0;
 	    rel1 {
-	       relative: 0.0  0.0;
+	       relative: 1.0  0.0;
 	       offset:   6    6;
-	       to:     "button_image";
+	       to_x:   "icon_swallow";
+	       to_y:   "button_image";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -233,7 +272,7 @@ group {
 	       text:     "OK";
 	       font:     "Edje-Vera";
 	       size:     10;
-	       min:      0 0;
+	       min:      1 1;
 	       align:    0.5 0.5;
 	    }
 	 }
@@ -259,6 +298,13 @@ group {
 	 signal: "mouse,clicked,1";
 	 source: "button_image";
 	 action: SIGNAL_EMIT "click" "";
+      }
+      program {
+	 name:   "icon_visible";
+	 signal: "icon_visible";
+	 source: "";
+	 action: STATE_SET "visible" 0.0;
+	 target: "icon_swallow";
       }
    }
 }
