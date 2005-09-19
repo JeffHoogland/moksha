@@ -150,6 +150,8 @@ extern "C" {
    EAPI void         e_lib_restart                    (void);
    EAPI void         e_lib_quit                       (void);
 
+   EAPI void         e_lib_configuration_panel_show   (void);
+
    /* E module manipulation */
    EAPI void         e_lib_module_enabled_set         (const char *module, int enable);
    EAPI void         e_lib_module_loaded_set          (const char *module, int load);

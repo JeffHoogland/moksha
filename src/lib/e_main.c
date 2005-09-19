@@ -197,6 +197,12 @@ e_lib_quit(void)
 }
 
 void
+e_lib_configuration_panel_show(void)
+{
+   _e_ipc_call(E_IPC_OP_CONFIGURATION_PANEL_SHOW, NULL);
+}
+
+void
 e_lib_module_enabled_set(const char *module, int enable)
 {
    char *tmp;
