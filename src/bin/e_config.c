@@ -908,15 +908,24 @@ e_config_init(void)
 	     eb->params = strdup("");
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
-   /* should do these - can't yet due to other things missing... */
-   
-   /* need a yes/no dialog for these - to stop accidental logouts. for this
-    * i'd make a special case that can ask u to log out, restart or shut down
-    * or even reboot (if you have permissions to do so)
-    */
-   /* CTRL+ALT Delete - logout */
-   /* CTRL+ALT End    - restart */
-   
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("End");
+	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("restart");
+	     eb->params = strdup("");
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("Delete");
+	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("exit");
+	     eb->params = strdup("");
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
    /* need to support fullscreen anyway for this - ie netwm and the border
     * system need to handle this as well as possibly using xrandr/xvidmode
     */

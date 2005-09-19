@@ -10,7 +10,7 @@ styles
 {
    style {
       name: "dialog_style";
-      base: "font=Edje-Vera font_size=10 align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      base: "font=Edje-Vera font_size=10 align=center color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
       
       tag:  "br" "\n";
       tag:  "hilight" "+ font=Edje-Vera-Bold style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
@@ -319,6 +319,12 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
+	    rel1 {
+	       offset: 8 8;
+	    }
+	    rel2 {
+	       offset: -9 -9;
+	    }
 	    text {
 	       style:    "dialog_style";
 	       min:      1 1;

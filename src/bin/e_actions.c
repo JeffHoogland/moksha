@@ -887,6 +887,38 @@ ACT_FN_GO(edit_mode_toggle)
      e_gadman_mode_set(((E_Container *)obj)->gadman, E_GADMAN_MODE_NORMAL);
 }
 
+/***************************************************************************/
+static void
+_e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
+{
+   ecore_main_loop_quit();
+}
+
+ACT_FN_GO(exit)
+{
+   E_Dialog *dia;
+      
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   e_dialog_title_set(dia, _("Are you sure you want to exit?"));
+   e_dialog_text_set(dia,
+		     _("You requested to exit Enlightenment.<br>"
+		       "<br>"
+		       "Are you sure you want to exit?"
+		       ));
+   e_dialog_icon_set(dia, "enlightenment/exit", 32);
+   e_dialog_button_add(dia, _("Yes"), NULL, _e_actions_cb_exit_dialog_ok, NULL);
+   e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+}
+
+/***************************************************************************/
+ACT_FN_GO(restart)
+{
+   restart = 1;
+   ecore_main_loop_quit();
+}
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 
@@ -957,6 +989,9 @@ e_actions_init(void)
    ACT_END(edit_mode);
    
    ACT_GO(edit_mode_toggle);
+
+   ACT_GO(restart);
+   ACT_GO(exit);
    
    return 1;
 }

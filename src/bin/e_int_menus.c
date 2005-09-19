@@ -319,7 +319,11 @@ _e_int_menus_quit(void)
 static void
 _e_int_menus_quit_cb(void *data)
 {
-   ecore_main_loop_quit();
+   E_Action *a;
+   
+   a = e_action_find("exit");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   _e_int_menus_quit_job = NULL;
 }
 
 static void
@@ -369,8 +373,10 @@ _e_int_menus_main_run(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   restart = 1;
-   _e_int_menus_quit();
+   E_Action *a;
+   
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void
