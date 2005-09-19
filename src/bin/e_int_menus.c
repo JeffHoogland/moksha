@@ -858,7 +858,8 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Config_Theme *et;
    Evas_List *l;
-
+   E_Action *a;
+	
    for (l = e_config->themes; l; l = l->next)
      {
 	et = l->data;
@@ -882,8 +883,8 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    
    e_config_save_queue();
 
-   restart = 1;
-   _e_int_menus_quit();   
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void

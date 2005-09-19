@@ -32,11 +32,6 @@ e_configure_show(E_Container *con)
    app->con = con;
    _e_configure_gui_show(app);
 
-   app->apps = e_app_new(PACKAGE_DATA_DIR "/config-apps", 0);
-   app->icons = NULL;
-   app->app_ref = NULL;
-   _e_configure_apps_load(app);
-
    return app;
 }
 
@@ -58,6 +53,8 @@ _e_configure_cb_resize(E_Win *win)
 static void
 _e_configure_gui_show(E_Configure *app)
 {
+   Evas_Coord w, h;
+	
    app->win = e_win_new(app->con);
    e_win_delete_callback_set(app->win, _e_configure_gui_hide);
 
@@ -65,20 +62,38 @@ _e_configure_gui_show(E_Configure *app)
    e_win_name_class_set(app->win, "EConfigure", "EConfigure");
    app->evas = e_win_evas_get(app->win);
    ecore_evas_data_set(app->win->ecore_evas, "App", app);
+	
+   e_win_resize(app->win, 370, 200);	
+	
    e_win_resize_callback_set(app->win, _e_configure_cb_resize);
 
-   e_win_resize(app->win, 370, 200);
+
    app->edje = edje_object_add(app->evas);
 
    e_theme_edje_object_set(app->edje, "base/theme/configure", "configure/main");
 
    app->box = e_box_add(app->evas);
+	
+   e_box_homogenous_set (app->box, 0);
+	
+   app->apps = e_app_new(PACKAGE_DATA_DIR "/config-apps", 0);
+   app->icons = NULL;
+   app->app_ref = NULL;
+   _e_configure_apps_load(app);	
+
    e_box_orientation_set(app->box, 1);
-   e_box_align_set(app->box, 0.0, 0.0);
+   e_box_align_set(app->box, 0.0, 0.0);	
+			
+   e_box_min_size_get(app->box, &w, &h);
+   edje_extern_object_min_size_set(app->box, w, h);
+   e_win_size_base_set (app->win, w, h);
+   e_win_size_min_set (app->win, w, h);
+		
    edje_object_part_swallow(app->edje, "icon_swallow", app->box);
    evas_object_show(app->box);
    
    evas_object_show(app->edje);
+		
    e_win_show(app->win);
 }
 
@@ -105,6 +120,7 @@ _e_configure_apps_load(E_Configure *app)
    E_App     *a;
    Evas_List *l;
    Evas_Object *o, *icon;
+   Evas_Coord w, h;
 
    e_app_subdir_scan(app->apps, 0);
    for (l = app->apps->subapps; l; l = l->next)
@@ -117,16 +133,19 @@ _e_configure_apps_load(E_Configure *app)
 	e_theme_edje_object_set(o, "base/theme/configure", "configure/icon");
 	icon = edje_object_add(app->evas);
 	edje_object_file_set(icon, a->path, "icon");
-	edje_object_part_swallow(o, "icon_swallow", icon);
+	     	     	     
+	edje_extern_object_min_size_set (icon, 64, 64);	     
+	     
+	edje_object_part_swallow(o, "icon_swallow", icon);	     
 	edje_object_part_text_set(o, "title", a->name);
-	evas_object_show(icon);
-	
+	evas_object_show(icon);	     	     	     
+	     
 	e_box_pack_end(app->box, o);
 	e_box_pack_options_set(o,
 			       1, 0, /* fill */
 			       1, 0, /* expand */
 			       0.0, 0.0, /* align */
-			       72, 72, /* min */
+			       64, 64, /* min */
 			       999, 999 //172, 72 /* max */
 			       );
 
