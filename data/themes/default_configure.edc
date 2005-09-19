@@ -87,7 +87,7 @@ group {
 	    }
 	    text {
 	       text:     "Enlightenment Configuration";
-	       size:     22;
+	       size:     18;
 	       font:     "Edje-Vera"; 
 	       align:    0.0 0.0;
 	    }
@@ -171,7 +171,7 @@ group {
 	    text {
 	       text:     "No Title";
 	       align:    0.0 0.0;
-	       size:     14;
+	       size:     10;
 	       font:     "Edje-Vera"; 
 	    }
 	 }
