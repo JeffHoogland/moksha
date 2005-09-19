@@ -5069,3 +5069,17 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_CONFIGURATION_PANEL_SHOW
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-configuration-panel-show", 0, "Show the configuration panel", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   e_configure_show(e_container_current_get(e_manager_current_get()));
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
