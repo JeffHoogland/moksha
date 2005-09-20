@@ -77,7 +77,7 @@ e_about_new(E_Container *con)
 	f = fopen(buf, "r");
 	if (f)
 	  {
-	     tbuf = strdup(_("<title>Authors</title>"));
+	     tbuf = strdup(_("<title>The Team</title>"));
 	     while (fgets(buf, sizeof(buf), f))
 	       {
 		  int len;
@@ -142,7 +142,7 @@ e_about_show(E_About *about)
      {
 	if (w < mw) w = mw;
 	if (h < mh) h = mh;
-	e_win_size_max_set(about->win, mw, mh);
+//	e_win_size_max_set(about->win, mw, mh);
      }
    e_win_show(about->win);
 }
