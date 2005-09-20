@@ -2,11 +2,16 @@
 
 typedef struct _E_Configure E_Configure;
 
+#else
 #ifndef E_CONFIGURE_H
 #define E_CONFIGURE_H
 
+#define E_CONFIGURE_TYPE 0xE0b01014
+
 struct _E_Configure
 {
+   E_Object             e_obj_inherit;
+      
    E_Container *con;
    E_Win       *win;
    Evas        *evas;
