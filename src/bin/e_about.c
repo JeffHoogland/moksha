@@ -52,11 +52,19 @@ e_about_new(E_Container *con)
    edje_object_part_text_set
      (about->bg_object, "about",
       _(
-	"Copyright © 1999-2005, by the Enlightenment Dev Team.<br>"
+	"Copyright © 1999-2005, by the Enlightenment Deelopment Team.<br>"
 	"<br>"
-	"We hope you enjoy using this software as much as we enjoyed writing it.<br>"
+	"We hope you enjoy using this software as much as we enjoyed "
+	"writing it.<br>"
 	"<br>"
-	"Please think of the aardvarks. They need some love too."
+	"This software is provided as-is with no explicit or implied "
+	"warranty. This software is goverened by licensing conditions, "
+	"so please see the COPYING and COPYING-PLAING licence files "
+	"installed on your system by this software.<br>"
+	"<br>"
+	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+	"is not stable. Many features are incomplete or even non-existant "
+	"yet and may have many bugs. You have been warned!"
 	)
       );
    edje_object_signal_callback_add(about->bg_object, "close", "",

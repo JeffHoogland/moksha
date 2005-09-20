@@ -293,13 +293,14 @@ group {
 	    max: 200 1000;
 	    min: 200 0;
 	    rel1 {
-	       to_y: "logo";
+	       to_y: "version";
 	       relative: 0.0 1.0;
 	       offset: 8 8;
 	    }
 	    rel2 {
 	       to_y: "sky";
-	       relative: 0.5 0.4;
+	       to_x: "logo";
+	       relative: 0.0 0.4;
 	       offset:   -9 -9;
 	    }
 	    text {
@@ -317,8 +318,9 @@ group {
 	    max: 1000 1000;
 	    min: 200  0;
 	    rel1 {
-	       to_y: "logo";
-	       relative: 0.5 1.0;
+	       to_y: "version";
+	       to_x: "logo";
+	       relative: 1.0 1.0;
 	       offset: 8 8;
 	    }
 	    rel2 {
@@ -376,12 +378,10 @@ group {
 	    fixed:    0 1;
 	    align:    0.5 0.0;
 	    rel1 {
-	       to_y: "logo";
 	       relative: 0.0  0.0;
-	       offset:   6    0;
+	       offset:   6    6;
 	    }
 	    rel2 {
-	       to_y: "logo";
 	       relative: 1.0  0.0;
 	       offset:   -7   6;
 	    }
@@ -434,15 +434,17 @@ group {
 	    state:      "default" 0.0;
 	    min:        63 63;
 	    max:        63 63;
-	    align:      0.0 0.0;
+	    align:      0.5 0.5;
 	    fixed:      1 1;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   8    8;
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to_y:     "about";
 	    }
 	    rel2 {
-	       relative: 0.5  0.0;
-	       offset:   8    8;
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to_y:     "about";
 	    }
 	    image {
 	       normal:   "e17_logo.png";
