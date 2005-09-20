@@ -142,7 +142,7 @@ e_about_show(E_About *about)
      {
 	if (w < mw) w = mw;
 	if (h < mh) h = mh;
-//	e_win_size_max_set(about->win, mw, mh);
+	e_win_size_max_set(about->win, mw, mh);
      }
    e_win_show(about->win);
 }
