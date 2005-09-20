@@ -58,13 +58,13 @@ e_about_new(E_Container *con)
 	"writing it.<br>"
 	"<br>"
 	"This software is provided as-is with no explicit or implied "
-	"warranty. This software is goverened by licensing conditions, "
+	"warranty. This software is governed by licensing conditions, "
 	"so please see the COPYING and COPYING-PLAIN licence files "
-	"installed on your system by this software.<br>"
+	"installed on your system.<br>"
 	"<br>"
 	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
 	"is not stable. Many features are incomplete or even non-existant "
-	"yet and may have many bugs. You have been warned!"
+	"yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
 	)
       );
    edje_object_signal_callback_add(about->bg_object, "close", "",

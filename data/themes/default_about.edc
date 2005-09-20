@@ -11,6 +11,7 @@ images {
    image: "e17_about_sky2.png" LOSSY 70;
    image: "e17_about_sky3.png" LOSSY 70;
    image: "e17_about_sky4.png" LOSSY 70;
+   image: "e17_about_sky5.png" LOSSY 70;
    image: "e17_about_sky_overlay.png" COMP;
 }
 
@@ -190,6 +191,22 @@ group {
 	       origin {
 		  relative: -2.1325 0.0;
 	       }
+	    }
+	 }
+      }
+      part {
+	 name:          "sky5";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to: "sky";
+	    }
+	    rel2 {
+	       to: "sky";
+	    }
+	    image {
+	       normal: "e17_about_sky5.png";
 	    }
 	 }
       }
