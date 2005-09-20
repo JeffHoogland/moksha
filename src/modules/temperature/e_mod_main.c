@@ -1074,6 +1074,8 @@ _temperature_cb_check(void *data)
    
    if (ret)
      {
+	char *utf8;
+
 	if (ef->have_temp != 1)
 	  {
 	     /* enable therm object */
@@ -1085,6 +1087,12 @@ _temperature_cb_check(void *data)
 	     ef->have_temp = 1;
 	  }
 
+	if (ef->conf->units == FAHRENHEIT) 
+	  snprintf(buf, sizeof(buf), "%i°F", temp);
+	else
+	  snprintf(buf, sizeof(buf), "%i°C", temp);               
+	utf8 = ecore_txt_convert("iso-8859-1", "utf-8", buf);
+
 	for (l = ef->faces; l; l = l->next)
 	  {
 	     face = l->data;
@@ -1092,13 +1100,9 @@ _temperature_cb_check(void *data)
 				    (double)(temp - ef->conf->low) /
 				    (double)(ef->conf->high - ef->conf->low));
 		  
-	     if (ef->conf->units == FAHRENHEIT) 
-		snprintf(buf, sizeof(buf), "%i°F", temp);
-	     else
-	        snprintf(buf, sizeof(buf), "%i°C", temp);               
-	    
-	     edje_object_part_text_set(face->temp_object, "reading", buf);
+	     edje_object_part_text_set(face->temp_object, "reading", utf8);
 	  }
+	free(utf8);
      }
    else
      {
