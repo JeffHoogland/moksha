@@ -3,10 +3,11 @@ images {
    image: "e17_button2.png" COMP;
    image: "e17_button.png" COMP;
    image: "e17_dialog_watermark.png" COMP;
-   image: "e17_about_bg_v.png" COMP;
+   image: "e17_ibar_bg_v.png" COMP;
    image: "e17_about_over_v.png" COMP;
    image: "e17_logo.png" COMP;
    image: "e17_menu_bg.png" COMP;
+   image: "e17_ibar_over_v.png" COMP;
 }
 
 group {
@@ -43,7 +44,7 @@ group {
 	       offset:   6 6;
 	    }
 	    image {
-	       normal: "e17_about_bg_v.png";
+	       normal: "e17_ibar_bg_v.png";
 	       border: 7 7 7 7;
 	    }
 	 }
@@ -117,7 +118,7 @@ group {
 	       to:       "conf_bg";
 	    }
 	    image {
-	       normal: "e17_about_over_v.png";
+	       normal: "e17_ibar_over_v.png";
 	       border: 13 13 13 13;
 	    }
 	 }
@@ -246,7 +247,7 @@ group {
       part {
 	 name:          "title";
 	 type:          TEXT;
-	 effect:        SOFT_SHADOW;
+	 effect:        NONE;
 	 description {
 	    rel1 {
 	       relative: 0.0 1.0;
@@ -256,8 +257,8 @@ group {
 	       relative: 1.0 1.0;
 	       offset:   -1 -1;
 	    }
-	    color:      255 255 255 255;
-	    color3:     0 0 0 32;
+	    color:      0 0 0 255;
+	    //color3:     0 0 0 32;
 	    text {
 	       text:     "No Title";
 	       align:    0.0 0.0;
