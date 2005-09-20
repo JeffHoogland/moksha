@@ -49,29 +49,6 @@ group {
 	    }
 	 }
       }
-
-      part {
-	 name:          "base2";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    min:      200 138;
-	    max:      200 138;
-	    align:    1.0 1.0;
-	    fixed:    1 1;
-	    rel1 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_dialog_watermark.png";
-	    }
-	 }
-      }
       part {
 	 name:          "base3";
 	 mouse_events:  0;
@@ -93,7 +70,7 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-	    max: 1000 1000;
+//	    max: 1000 1000;
 	    min: 400 100;
 	    rel1 {
 	       to_y: "logo";
@@ -103,6 +80,28 @@ group {
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -9 -9;
+	    }
+	 }
+      }
+      part {
+	 name:          "watermark";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    min:      200 138;
+	    max:      200 138;
+	    align:    1.0 1.0;
+	    fixed:    1 1;
+	    rel1 {
+	       relative: 1.0  1.0;
+	       offset:   29   9;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   29   9;
+	    }
+	    image {
+	       normal: "e17_dialog_watermark.png";
 	    }
 	 }
       }
