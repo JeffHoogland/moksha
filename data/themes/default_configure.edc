@@ -177,7 +177,7 @@ group {
 	    }
 	 }
       }
-part {
+      part {
 	 name:          "icon_swallow";
 	 type:          SWALLOW;
 	 description {
@@ -186,12 +186,12 @@ part {
 	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   16  16;
+	       offset:   11  11;
 	       to: "conf_bg";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   -16  -16;
+	       offset:   -12  -12;
 	       to: "conf_bg";
 	    }
 	 }
@@ -217,11 +217,11 @@ group {
 	    state:      "default" 0.0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   0 0;
+	       offset:   5 5;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   -1 -15;
+	       offset:   -6 -20;
 	    }
 	 }
       }
@@ -251,11 +251,11 @@ group {
 	 description {
 	    rel1 {
 	       relative: 0.0 1.0;
-	       offset:   0 -15;
+	       offset:   5 -20;
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   -1 -1;
+	       offset:   -6 -6;
 	    }
 	    color:      0 0 0 255;
 	    //color3:     0 0 0 32;

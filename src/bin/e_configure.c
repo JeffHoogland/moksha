@@ -142,13 +142,9 @@ _e_configure_apps_load(E_Configure *app)
 	edje_object_part_swallow(o, "icon_swallow", icon);	     
 	edje_object_part_text_set(o, "title", a->name);
 	evas_object_show(icon);
-	     
-	     
-		     
-	     edje_object_size_min_calc (o, &w, &h);	     
-	     edje_extern_object_min_size_set (o, w, h);
-	     
-	     
+
+	edje_object_size_min_calc (o, &w, &h);	     
+	edje_extern_object_min_size_set (o, w, h);
 	e_box_pack_end(app->box, o);
 	e_box_pack_options_set(o,
 			       1, 0, /* fill */
