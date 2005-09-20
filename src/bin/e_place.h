@@ -8,7 +8,7 @@
 
 EAPI void e_place_zone_region_smart_cleanup(E_Zone *zone);
 EAPI int e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w, int h, int *rx, int *ry);
-EAPI int e_place_zone_cursor(E_Zone *zone, int x, int w, int it, int *rx, int *ry);
+EAPI int e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, int *ry);
     
 #endif
 #endif

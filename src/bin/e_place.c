@@ -451,15 +451,32 @@ e_place_zone_region_smart(E_Zone *zone, Evas_List *skiplist, int x, int y, int w
 }
 
 int
-e_place_zone_cursor(E_Zone *zone, int x, int w, int it, int *rx, int *ry)
+e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, int *ry)
 {
    int cursor_x = 0, cursor_y = 0;
+   int zone_right, zone_bottom;
 
    E_OBJECT_CHECK(zone);
 
    ecore_x_pointer_xy_get(zone->container->win, &cursor_x, &cursor_y);
    *rx = cursor_x - ((w - x) >> 1);
    *ry = cursor_y - (it >> 1);
+
+   if (*rx < zone->x) 
+     *rx = zone->x;
+
+   if (*ry < zone->y) 
+     *ry = zone->y;
+
+   zone_right = zone->x + zone->w;
+   zone_bottom = zone->y + zone->h;
+
+   if ((*rx + w) > zone_right) 
+     *rx = zone_right - w;
+
+   if ((*ry + h) > zone_bottom) 
+     *ry = zone_bottom - h;
+
    return 1;
 }
 

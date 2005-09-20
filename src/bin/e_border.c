@@ -5015,8 +5015,8 @@ _e_border_eval(E_Border *bd)
 			 }
 		       else
 			 {
-			    e_place_zone_cursor(bd->zone, bd->x, bd->w, bd->client_inset.t,
-						&new_x, &new_y);
+			    e_place_zone_cursor(bd->zone, bd->x, bd->y, bd->w, bd->h, 
+						bd->client_inset.t, &new_x, &new_y);
 			 }
 		       bd->x = new_x;
 		       bd->y = new_y;
