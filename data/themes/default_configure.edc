@@ -1,6 +1,12 @@
 images {
-   image: "e17_menu_bg.png" COMP;
+   image: "e17_menu_bg_border.png" COMP;
+   image: "e17_button2.png" COMP;
+   image: "e17_button.png" COMP;
+   image: "e17_dialog_watermark.png" COMP;
+   image: "e17_about_bg_v.png" COMP;
+   image: "e17_about_over_v.png" COMP;
    image: "e17_logo.png" COMP;
+   image: "e17_menu_bg.png" COMP;
 }
 
 group {
@@ -14,87 +20,163 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       offset:   1    1;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1   -1;
+	       offset:   -2   -2;
 	    }
 	    color: 221 221 221 255;
 	 }
       }
       part {
+	 name:          "conf_bg";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "conf";
+	       offset:   -7 -7;
+	    }
+	    rel2 {
+	       to:       "conf";
+	       offset:   6 6;
+	    }
+	    image {
+	       normal: "e17_about_bg_v.png";
+	       border: 7 7 7 7;
+	    }
+	 }
+      }
+
+      part {
 	 name:          "base2";
 	 mouse_events:  0;
-	 type:          IMAGE;
 	 description {
-	    state:      "default" 0.0;
+	    state:    "default" 0.0;
+	    min:      200 138;
+	    max:      200 138;
+	    align:    1.0 1.0;
+	    fixed:    1 1;
 	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   0    0;
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
 	       offset:   -1   -1;
 	    }
 	    image {
-	       normal:   "e17_menu_bg.png";
-	       border:   1 1 1 1;
-	       middle:   0;
+	       normal: "e17_dialog_watermark.png";
 	    }
-	    fill {
-	       smooth:   0;
-	    }
-	    color:      255 255 255 255;
 	 }
       }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    image {
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "conf";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max: 1000 1000;
+	    min: 400 100;
+	    rel1 {
+	       to_y: "logo";
+	       relative: 0.0 1.0;
+	       offset: 8 8;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -9 -9;
+	    }
+	 }
+      }
+      part {
+	 name:          "conf_over";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "conf_bg";
+	    }
+	    rel2 {
+	       to:       "conf_bg";
+	    }
+	    image {
+	       normal: "e17_about_over_v.png";
+	       border: 13 13 13 13;
+	    }
+	 }
+      }
+      part {
+	 name:          "title";
+	 type:          TEXT;
+	 effect:        SOFT_SHADOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    fixed:    0 1;
+	    align:    0.5 0.0;
+	    rel1 {
+	       to_y: "logo";
+	       relative: 0.0  0.0;
+	       offset:   6    0;
+	    }
+	    rel2 {
+	       to_y: "logo";
+	       relative: 1.0  0.0;
+	       offset:   -7   6;
+	    }
+	    color: 255 255 255 255;
+	    color3: 0 0 0 32;
+	    text {
+	       text:     "Enlightenment Configuration";
+	       font:     "Edje-Vera-Bold";
+	       size:     16;
+	       min:      1 1;
+	       align:    0.5 0.5;
+	    }
+	 }
+      }
+
       part {
 	 name:          "logo";
 	 type: 	        IMAGE;
 	 mouse_events:  0;
 	 description {
 	    state:      "default" 0.0;
+	    min:        63 63;
+	    max:        63 63;
+	    align:      0.0 0.0;
+	    fixed:      1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   -50    -80;
+	       offset:   8    8;
 	    }
 	    rel2 {
-	       relative: 0.0  0.0;
-	       offset:   110   80;
+	       relative: 0.5  0.0;
+	       offset:   8    8;
 	    }
 	    image {
 	       normal:   "e17_logo.png";
 	    }
-	    color:      255 255 255 64;
 	 }
       }
-      part {
-	 name:          "title";
-	 type:          TEXT;
-	 effect:        SHADOW;
-	 description {
-	    state:      "default" 0.0;
-	    align:      0.0 0.0;
-	    color:      255 255 255 128;
-	    color3:     0 0 0 255;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   16 12;
-	    }
-	    rel2 {
-	       relative: 1.0 0.0;
-	       offset:   -17 34;
-	    }
-	    text {
-	       text:     "Enlightenment Configuration";
-	       size:     18;
-	       font:     "Edje-Vera"; 
-	       align:    0.0 0.0;
-	       min: 1 1;
-	    }
-	 }
-      }
-      part {
+part {
 	 name:          "icon_swallow";
 	 type:          SWALLOW;
 	 description {
@@ -103,17 +185,24 @@ group {
 	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   16  44;
+	       offset:   16  16;
+	       to: "conf_bg";
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -16  -16;
+	       to: "conf_bg";
 	    }
 	 }
-      }
+      }	   
+   }
+   programs {
+      
+
+
    }
 }
-
+       
 group {
    name: "configure/icon";
    min:  24 24;
@@ -157,7 +246,7 @@ group {
       part {
 	 name:          "title";
 	 type:          TEXT;
-	 effect:        SHADOW;
+	 effect:        SOFT_SHADOW;
 	 description {
 	    rel1 {
 	       relative: 0.0 1.0;
@@ -167,8 +256,8 @@ group {
 	       relative: 1.0 1.0;
 	       offset:   -1 -1;
 	    }
-	    color:      255 255 255 128;
-	    color3:     0 0 0 255;
+	    color:      255 255 255 255;
+	    color3:     0 0 0 32;
 	    text {
 	       text:     "No Title";
 	       align:    0.0 0.0;
