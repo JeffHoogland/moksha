@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: dnd from knoqueror on zone 0 to another knoq on zone 1 with xinerama (2
+  zones) causes segv
 * BUG: e often forgets what window is focused so ctrl+alt+x for example doesnt
   close the current focused window... hmmmm
 * BUG: in general fullscreen needs work, cleaning and testing. dont allow
@@ -32,8 +34,6 @@ Some of the things (in very short form) that need to be done to E17...
 * if a parent window is "on top" child dialog windows should also be "on top"
 * transients should have option to always follow parent
   (move/resize/raise/lower) (and remember this).
-* in addition to smart place should add manual placement and place at pointer
-  and maybe a few others.
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
@@ -61,7 +61,6 @@ Some of the things (in very short form) that need to be done to E17...
   adjusted size) is smaller that screen max size, fill in space in between
   with black. for 3. we want to fill the inbewteen space with some theme
   defined image data
-* implement a better dialog for things like "do you want to do X - yes or no?"
 * dialogs for generic contents too
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
@@ -104,7 +103,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add sliders, radio and check buttons for clientinfo pane
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
-* add really nice "about" box with theme, authors credits list etc etc.
 * theme about data/box
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
@@ -119,6 +117,10 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
+* move all modules in e to use new e_dialog not error dialogs.
+* find all other instances of using e_error dialogs and use them only with low
+  level errors than need attention no matter what.
+* cannot load module error - make that a "shall i unload this module" dialog
 * winlist should support place for window "screenshot" in list as well as
   app icon
 * winlist should in theory allow horizontal list layout not just vertical (set
@@ -157,8 +159,6 @@ Some of the things (in very short form) that need to be done to E17...
 * check evas has eet support early on.
 * pagers should be able to be configured to control more than the current zone
   (select which zone they control)
-* start module needs to have a way to alert users to "click here" and back
-  off alerting users as they learn what it is (over time)
 * non opaque move/resize
 * add window tabs (multiple clients in 1 border)
 * add a button area expansion for borders ???
