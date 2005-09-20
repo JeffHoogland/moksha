@@ -90,6 +90,7 @@ group {
 	       size:     18;
 	       font:     "Edje-Vera"; 
 	       align:    0.0 0.0;
+	       min: 1 1;
 	    }
 	 }
       }
@@ -172,7 +173,8 @@ group {
 	       text:     "No Title";
 	       align:    0.0 0.0;
 	       size:     10;
-	       font:     "Edje-Vera"; 
+	       font:     "Edje-Vera";
+	       min: 1 1;
 	    }
 	 }
       }
