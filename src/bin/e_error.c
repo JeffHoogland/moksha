@@ -267,12 +267,9 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
      }
    else
      {
-	char format[1024];
-	int x, y, w, h;
+	int x, y;
 	Evas_Coord ow, oh;
-	char *fname, *newstr;
-	int fsize;
-	
+
 	evas_object_move(o, 0, 0);
 	evas_object_resize(o, error_w, error_h);
 	edje_object_signal_callback_add(o, "close", "",
