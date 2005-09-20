@@ -553,10 +553,10 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 					   face->fx, face->fy, face->fw, face->fh);
    
    face->drop_handler_win = e_drop_handler_add(face,
-					   _pager_face_cb_enter, _pager_face_cb_move,
-					   _pager_face_cb_leave, _pager_face_cb_drop,
-					   "enlightenment/pager_win",
-					   face->fx, face->fy, face->fw, face->fh);
+					       _pager_face_cb_enter, _pager_face_cb_move,
+					       _pager_face_cb_leave, _pager_face_cb_drop,
+					       "enlightenment/pager_win",
+					       face->fx, face->fy, face->fw, face->fh);
   
    face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
