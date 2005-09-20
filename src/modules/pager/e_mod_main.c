@@ -7,6 +7,7 @@
 /* TODO
  * which options should be in main menu, and which in face menu?
  * check if a new desk is in the current zone
+ * check if padding changes on resize
  */
 
 /* module private routines */
@@ -93,6 +94,9 @@ static void        _pager_menu_cb_speed_fast(void *data, E_Menu *m, E_Menu_Item 
 static void        _pager_menu_cb_speed_very_fast(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void        _pager_menu_cb_popup_enable(void *data, E_Menu *m, E_Menu_Item *mi);
+
+static void        _pager_menu_cb_aspect_keep_height(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _pager_menu_cb_aspect_keep_width(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int         _pager_count;
 
@@ -491,6 +495,14 @@ _pager_config_menu_new(Pager *pager)
    mi = e_menu_item_new(pager->config_menu);
    e_menu_item_label_set(mi, _("Popup Speed"));
    e_menu_item_submenu_set(mi, pager->config_menu_speed);
+
+   mi = e_menu_item_new(pager->config_menu);
+   e_menu_item_label_set(mi, _("Fix Aspect (Keep Height)"));
+   e_menu_item_callback_set(mi, _pager_menu_cb_aspect_keep_height, pager);
+
+   mi = e_menu_item_new(pager->config_menu);
+   e_menu_item_label_set(mi, _("Fix Aspect (Keep Width)"));
+   e_menu_item_callback_set(mi, _pager_menu_cb_aspect_keep_width, pager);
 }
 
 static Pager_Face *
@@ -528,6 +540,11 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    face->inset.r = 1000 - (x + w);
    face->inset.t = y;
    face->inset.b = 1000 - (y + h);
+
+   face->desk_inset.l = -1;
+   face->desk_inset.r = -1;
+   face->desk_inset.t = -1;
+   face->desk_inset.b = -1;
 
    face->drop_handler = e_drop_handler_add(face,
 					   _pager_face_cb_enter, _pager_face_cb_move,
@@ -625,6 +642,14 @@ _pager_face_menu_new(Pager_Face *face)
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Desktop Speed"));
    e_menu_item_submenu_set(mi, face->pager->config_menu_speed);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Fix Aspect (Keep Height)"));
+   e_menu_item_callback_set(mi, _pager_menu_cb_aspect_keep_height, face->pager);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Fix Aspect (Keep Width)"));
+   e_menu_item_callback_set(mi, _pager_menu_cb_aspect_keep_width, face->pager);
 }
 
 static void
@@ -708,6 +733,7 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    Evas_Object   *o;
    E_Border_List *bl;
    E_Border      *bd;
+   Evas_Coord     x, y, w, h;
 
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
@@ -726,7 +752,22 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    e_table_pack(face->table_object, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);   
    evas_object_show(o);
-   
+
+   if ((face->desk_inset.l == -1) &&
+       (face->desk_inset.r == -1) &&
+       (face->desk_inset.t == -1) &&
+       (face->desk_inset.b == -1))
+     {
+	evas_object_resize(pd->desk_object, 1000, 1000);
+	edje_object_calc_force(pd->desk_object);
+	edje_object_part_geometry_get(pd->desk_object, "items", &x, &y, &w, &h);
+
+	face->desk_inset.l = x;
+	face->desk_inset.r = 1000 - (x + w);
+	face->desk_inset.t = y;
+	face->desk_inset.b = 1000 - (y + h);
+     }
+
    o = evas_object_rectangle_add(face->evas);
    pd->event_object = o;
    evas_object_layer_set(o, 2);
@@ -748,7 +789,7 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    e_layout_virtual_size_set(o, desk->zone->w, desk->zone->h);
    edje_object_part_swallow(pd->desk_object, "items", pd->layout_object);
    evas_object_show(o);
-   
+
    bl = e_container_border_list_first(desk->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -2025,18 +2066,9 @@ _pager_face_cb_enter(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Enter *ev;
    Pager_Face *face;
-   int x, y;
-   double w, h;
 
    ev = event_info;
    face = data;
-
-   /* FIXME, check if the pager module has border */
-   w = face->fw / (double) face->xnum;
-   h = face->fh / (double) face->ynum;
-
-   x = (ev->x - face->fx) / w;
-   y = (ev->y - face->fy) / h;
 }
 
 static void
@@ -2301,4 +2333,58 @@ _pager_menu_cb_popup_enable(void *data, E_Menu *m, E_Menu_Item *mi)
    pager = data;
    pager->conf->popup = e_menu_item_toggle_get(mi);
    e_config_save_queue();
+}
+
+static void
+_pager_menu_cb_aspect_keep_height(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+	int w, h;
+
+	face = l->data;
+
+	h = ((face->fh - (face->inset.t + face->inset.b)) / face->ynum) -
+	     (face->desk_inset.t + face->desk_inset.b);
+
+	w = h * face->zone->w / (double)face->zone->h;
+	w += (face->desk_inset.l + face->desk_inset.r);
+	w *= face->xnum;
+	w += (face->inset.l + face->inset.r);
+
+	e_gadman_client_resize(face->gmc, w, face->fh);
+     }
+}
+
+static void
+_pager_menu_cb_aspect_keep_width(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Pager *pager;
+   Evas_List *l;
+
+   pager = data;
+
+   for (l = pager->faces; l; l = l->next)
+     {
+	Pager_Face *face;
+	int w, h;
+
+	face = l->data;
+
+	w = ((face->fw - (face->inset.l + face->inset.r)) / face->xnum) -
+	     (face->desk_inset.l + face->desk_inset.r);
+
+	h = w * face->zone->h / (double)face->zone->w;
+	h += (face->desk_inset.t + face->desk_inset.b);
+	h *= face->ynum;
+	h += (face->inset.t + face->inset.b);
+
+	e_gadman_client_resize(face->gmc, face->fw, h);
+     }
 }
