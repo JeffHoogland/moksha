@@ -9,7 +9,11 @@ typedef struct _Config_Face      Config_Face;
 typedef struct _Temperature      Temperature;
 typedef struct _Temperature_Face Temperature_Face;
 	
-typedef enum _unit {celcius=0, fahrenheit} unit;
+typedef enum _Unit
+{
+   CELCIUS,
+   FAHRENHEIT
+} Unit;
 
 struct _Config
 {
@@ -17,7 +21,7 @@ struct _Config
    int low, high;
    Evas_List *faces;
    char *sensor_name;
-   unit units;
+   Unit units;
 };
 
 struct _Config_Face
