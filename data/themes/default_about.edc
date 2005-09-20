@@ -295,7 +295,7 @@ group {
 	    rel1 {
 	       to_y: "version";
 	       relative: 0.0 1.0;
-	       offset: 8 8;
+	       offset: 16 8;
 	    }
 	    rel2 {
 	       to_y: "sky";
@@ -326,7 +326,7 @@ group {
 	    rel2 {
 	       to_y: "sky";
 	       relative: 1.0 0.4;
-	       offset:   -9 -9;
+	       offset:   -17 -9;
 	    }
 	    text {
 	       style:    "about_style";
