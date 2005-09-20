@@ -59,7 +59,7 @@ e_about_new(E_Container *con)
 	"<br>"
 	"This software is provided as-is with no explicit or implied "
 	"warranty. This software is goverened by licensing conditions, "
-	"so please see the COPYING and COPYING-PLAING licence files "
+	"so please see the COPYING and COPYING-PLAIN licence files "
 	"installed on your system by this software.<br>"
 	"<br>"
 	"Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
