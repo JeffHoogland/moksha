@@ -1,5 +1,6 @@
 images {
-   image: "e17_menu_bg.png" COMP;
+   image: "e17_menu_bg_border.png" COMP;
+//   image: "e17_menu_bg.png" COMP;
 //   image: "e17_winlist_top.png" COMP;
    image: "e17_winlist_bottom.png" COMP;
    image: "e17_button2.png" COMP;
@@ -47,6 +48,7 @@ group {
 	    min:      200 138;
 	    max:      200 138;
 	    align:    1.0 1.0;
+	    fixed:    1 1;
 	    rel1 {
 	       relative: 1.0  1.0;
 	       offset:   -1   -1;

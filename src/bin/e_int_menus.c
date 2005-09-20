@@ -352,14 +352,10 @@ _e_int_menus_main_del_hook(void *obj)
 static void
 _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   e_error_dialog_show(_("About Enlightenment"),
-		       _("This is Enlightenment %s.\n"
-			 "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
-			 "\n"
-			 "We hope you enjoy using this software as much as we enjoyed writing it.\n\n"
-			 "Please think of the aardvarks. They need some love too."),
-		       VERSION
-		       );
+   E_About *about;
+   
+   about = e_about_new(e_container_current_get(e_manager_current_get()));
+   if (about) e_about_show(about);
 }
 
 static void

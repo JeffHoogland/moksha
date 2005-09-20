@@ -56,3 +56,5 @@
 #include "e_win.h"
 #include "e_pan.h"
 #include "e_dialog.h"
+#include "e_configure.h"
+#include "e_about.h"

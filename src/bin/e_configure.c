@@ -1,18 +1,5 @@
 #include "e.h"
 
-typedef struct E_Configure
-{
-   E_Container *con;
-   E_Win       *win;
-   Evas        *evas;
-   Evas_Object *edje;
-   Evas_Object *box;
-   E_App       *apps;
-   Evas_List   *icons;
-   Evas_List   *app_ref;
-
-} E_Configure;
-
 static void _e_configure_gui_show(E_Configure *app);
 static void _e_configure_gui_hide(E_Win *win);
 static void _e_configure_apps_load(E_Configure *app);
@@ -20,18 +7,14 @@ static void _e_configure_apps_unload(E_Configure *app);
 
 static void _e_configure_apps_click(void *data, Evas_Object *obj, const char *emission, const char *source);
 
-E_Path *path_themes;
-
 E_Configure *
 e_configure_show(E_Container *con)
 {
    E_Configure *app;
 
-   app = malloc(sizeof(E_Configure));
-
+   app = calloc(1, sizeof(E_Configure));
    app->con = con;
    _e_configure_gui_show(app);
-
    return app;
 }
 
@@ -122,6 +105,7 @@ _e_configure_apps_load(E_Configure *app)
    Evas_Object *o, *icon;
    Evas_Coord w, h;
 
+   if (!app->apps) return;
    e_app_subdir_scan(app->apps, 0);
    for (l = app->apps->subapps; l; l = l->next)
      {
@@ -172,7 +156,7 @@ _e_configure_apps_unload(E_Configure *app)
 	app->icons = evas_list_remove(app->icons, icon);
 	evas_object_free(icon);
      }*/
-   while(app->app_ref)
+   while (app->app_ref)
      {
 	a = evas_list_data(app->app_ref);
 

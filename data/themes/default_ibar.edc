@@ -48,6 +48,9 @@ group {
 	 description {
 	    state:    "vert" 0.0;
 	    inherit:  "default" 0.0;
+	    image {
+	       normal: "e17_ibar_bg_v.png";
+	    }
 	 }
       }
       part {

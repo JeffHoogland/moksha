@@ -34,7 +34,8 @@ default_transitions.edc \
 default_dialog.edc \
 default_icons.edc \
 default_pointer.edc \
-default_randr.edc
+default_randr.edc \
+default_about.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

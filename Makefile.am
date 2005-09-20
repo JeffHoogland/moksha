@@ -8,3 +8,6 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 config.guess \
 bin_SCRIPTS = enlightenment-config
 
 EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN enlightenment.spec
+
+filesdir = $(datadir)/enlightenment/
+files_DATA = AUTHORS COPYING 

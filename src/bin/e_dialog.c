@@ -19,7 +19,7 @@ struct _E_Dialog_Button
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_dialog_cb_delete(E_Win *win);
-    
+
 /* local subsystem globals */
 
 /* externally accessible functions */
@@ -47,6 +47,7 @@ e_dialog_new(E_Container *con)
 	free(dia);
 	return NULL;
      }
+   e_win_delete_callback_set(dia->win, _e_dialog_cb_delete);
    dia->win->data = dia;
    e_win_name_class_set(dia->win, "E", "_dialog");
    o = edje_object_add(e_win_evas_get(dia->win));

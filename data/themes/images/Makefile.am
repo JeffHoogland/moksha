@@ -313,4 +313,12 @@ e17_icon_windows.png \
 e17_icon_lost_windows.png \
 e17_pointer.png \
 e17_pointer_mono.png \
-e17_dialog_watermark.png
+e17_dialog_watermark.png \
+e17_about_bg_v.png \
+e17_about_over_v.png \
+e17_about_sky0.png \
+e17_about_sky1.png \
+e17_about_sky2.png \
+e17_about_sky3.png \
+e17_about_sky4.png \
+e17_about_sky_overlay.png
