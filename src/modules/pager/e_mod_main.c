@@ -1380,7 +1380,10 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		       /* create it and add it */
 		       pw = _pager_window_new(pd, ev->border);
 		       if (pw)
-			 pd->wins = evas_list_append(pd->wins, pw);
+			 {
+			    pd->wins = evas_list_append(pd->wins, pw);
+			    e_border_raise(pw->border);
+			 }
 		    }
 	       }
 	     else
@@ -1392,7 +1395,10 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		       /* create it and add it */
 		       pw = _pager_window_new(pd, ev->border);
 		       if (pw)
-			 pd->wins = evas_list_append(pd->wins, pw);
+			 {
+			    pd->wins = evas_list_append(pd->wins, pw);
+			    e_border_raise(pw->border);
+			 }
 		    }
 	       }
 	  }
@@ -1425,7 +1431,22 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 	     if (pw)
 	       {
 		  if (ev->stack)
-		    pw2 = _pager_desk_border_find(pd, ev->stack);
+		    {
+		       pw2 = _pager_desk_border_find(pd, ev->stack);
+		       if (!pw2)
+			 {
+			    /* This border is on another desk... */
+			    E_Border *bd = NULL;
+
+			    if (ev->type == E_STACKING_ABOVE)
+			      bd = e_util_desk_border_below(ev->border);
+			    else if (ev->type == E_STACKING_BELOW)
+			      bd = e_util_desk_border_above(ev->border);
+
+			    if (bd)
+			      pw2 = _pager_desk_border_find(pd, bd);
+			 }
+		    }
 		  if (ev->type == E_STACKING_ABOVE)
 		    {
 		       if (pw2)
