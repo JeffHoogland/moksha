@@ -53,9 +53,9 @@ e_modapi_init(E_Module *module)
 	if (!dia) return NULL;
 
 	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: Clock<br>"
-		"It requires a minimum module API version of: %i.<br>"
-		"The module API advertized by Enlightenment is: %i.<br>"), 
-		E_MODULE_API_VERSION, module->api->version);
+				     "It requires a minimum module API version of: %i.<br>"
+				     "The module API advertized by Enlightenment is: %i.<br>"), 
+				   E_MODULE_API_VERSION, module->api->version);
 
 	e_dialog_title_set(dia, "Enlightenment Clock Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -111,17 +111,17 @@ e_modapi_info(E_Module *module)
 int
 e_modapi_about(E_Module *module)
 {
-	E_Dialog *dia;
+   E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return 0;
-	e_dialog_title_set(dia, "Enlightenment Clock Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, _("A simple module to give E17 a clock."));
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
-	return 1;
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!dia) return 0;
+   e_dialog_title_set(dia, "Enlightenment Clock Module");
+   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_text_set(dia, _("A simple module to give E17 a clock."));
+   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   return 1;
 }
 
 /* module private routines */

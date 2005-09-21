@@ -80,9 +80,9 @@ e_modapi_init(E_Module *m)
 	if (!dia) return NULL;
 
 	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: Battery<br>"
-		"It requires a minimum module API version of: %i.<br>"
-		"The module API advertized by Enlightenment is: %i.<br>"), 
-		E_MODULE_API_VERSION, m->api->version);
+				     "It requires a minimum module API version of: %i.<br>"
+				     "The module API advertized by Enlightenment is: %i.<br>"), 
+				   E_MODULE_API_VERSION, m->api->version);
 
 	e_dialog_title_set(dia, "Enlightenment Battery Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -136,21 +136,21 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
-	E_Dialog *dia;
+   E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return 0;
-	e_dialog_title_set(dia, "Enlightenment Battery Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, _("A basic battery meter that uses either"
-			"<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
-			"on Linux to monitor your battery and AC power adaptor<br>"
-			"status. This will work under Linux and FreeBSD and is only<br>"
-			"as accurate as your BIOS or kernel drivers."));
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
-	return 1;
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!dia) return 0;
+   e_dialog_title_set(dia, "Enlightenment Battery Module");
+   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_text_set(dia, _("A basic battery meter that uses either"
+			    "<hilight>ACPI</hilight> or <hilight>APM</hilight><br>"
+			    "on Linux to monitor your battery and AC power adaptor<br>"
+			    "status. This will work under Linux and FreeBSD and is only<br>"
+			    "as accurate as your BIOS or kernel drivers."));
+   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   return 1;
 }
 
 /* module private routines */
@@ -775,17 +775,18 @@ _battery_cb_check(void *data)
 			 {
 			    if (!ef->alarm_triggered)
 			      {
-				E_Dialog *dia;
+				 E_Dialog *dia;
 
-				dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-				if (!dia) return 0;
-				e_dialog_title_set(dia, "Enlightenment Battery Module");
-				e_dialog_icon_set(dia, "enlightenment/e", 64);
-				e_dialog_text_set(dia, _("Battery Running Low<br>Your battery is running low.<br>"
-									       "You may wish to switch to an AC source."));
-				e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-				e_win_centered_set(dia->win, 1);
-				e_dialog_show(dia);
+				 dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+				 if (!dia) return 0;
+				 e_dialog_title_set(dia, "Enlightenment Battery Module");
+				 e_dialog_icon_set(dia, "enlightenment/e", 64);
+				 e_dialog_text_set(dia, _("Battery Running Low<br>"
+							  "Your battery is running low.<br>"
+							  "You may wish to switch to an AC source."));
+				 e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+				 e_win_centered_set(dia->win, 1);
+				 e_dialog_show(dia);
 			      }
 			    edje_object_signal_emit(face->bat_object, "pulse", "");
 			 }

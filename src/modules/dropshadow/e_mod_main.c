@@ -104,9 +104,9 @@ e_modapi_init(E_Module *m)
 	if (!dia) return NULL;
 
 	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: Dropshadow<br>"
-		"It requires a minimum module API version of: %i.<br>"
-		"The module API advertized by Enlightenment is: %i.<br>"), 
-		E_MODULE_API_VERSION, m->api->version);
+		 		     "It requires a minimum module API version of: %i.<br>"
+		 		     "The module API advertized by Enlightenment is: %i.<br>"), 
+		 		   E_MODULE_API_VERSION, m->api->version);
 
 	e_dialog_title_set(dia, "Enlightenment Dropshadow Module");
 	e_dialog_icon_set(dia, "enlightenment/e", 64);
@@ -200,19 +200,19 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
-	E_Dialog *dia;
+   E_Dialog *dia;
 
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return 0;
-	e_dialog_title_set(dia, "Enlightenment Dropshadow Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, _("This is the dropshadow module that allows dropshadows to be cast<br>"
-			 "on the desktop background - without special X-Server extensions<br>"
-			 "or hardware acceleration."));
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
-	return 1;
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!dia) return 0;
+   e_dialog_title_set(dia, "Enlightenment Dropshadow Module");
+   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_text_set(dia, _("This is the dropshadow module that allows dropshadows to be cast<br>"
+			    "on the desktop background - without special X-Server extensions<br>"
+			    "or hardware acceleration."));
+   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   return 1;
 }
 
 /* module private routines */
