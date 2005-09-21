@@ -813,7 +813,7 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
      {
 	Pager_Win   *pw;
 	
-	if ((bd->new_client) || (bd->desk != desk) || (!bd->sticky)) continue;
+	if ((bd->new_client) || ((bd->desk != desk) && (!bd->sticky))) continue;
 	pw = _pager_window_new(pd, bd);
 	if (pw)
 	  pd->wins = evas_list_append(pd->wins, pw);
