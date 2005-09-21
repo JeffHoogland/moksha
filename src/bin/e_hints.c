@@ -467,6 +467,7 @@ e_hints_window_init(E_Border *bd)
    else if (bd->desk == e_desk_current_get(bd->zone))
      e_border_show(bd);
    /* e hints */
+/*   
    if (bd->client.e.state.centered)
      {
 	e_border_move(bd,
@@ -474,7 +475,7 @@ e_hints_window_init(E_Border *bd)
 		      bd->zone->y + (bd->zone->h - bd->h) / 2);
 		      
      }
-
+ */
    /* Update stacking */
    e_hints_client_list_set();
    e_hints_client_stacking_set();

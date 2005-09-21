@@ -1889,7 +1889,8 @@ e_border_idler_before(void)
 	     bl = e_container_border_list_last(con);
 	     while ((bd = e_container_border_list_prev(bl)))
 	       {
-		  if ((bd->changes.visible) && (bd->visible))
+		  if ((bd->changes.visible) && (bd->visible) && 
+		      (!bd->new_client))
 		    {
 		       ecore_evas_show(bd->bg_ecore_evas);
 		       ecore_x_window_show(bd->win);
@@ -4892,7 +4893,6 @@ _e_border_eval(E_Border *bd)
    
    if (bd->new_client)
      {
-	bd->new_client = 0;
 	if (bd->client.icccm.transient_for)
 	  {
 	     E_Border *bd_parent;
@@ -5056,7 +5056,15 @@ _e_border_eval(E_Border *bd)
 
      	/* Recreate state */
 	e_hints_window_init(bd);
-
+	
+        if (bd->client.e.state.centered)
+	  {
+	     bd->x = bd->zone->x + (bd->zone->w - bd->w) / 2;
+	     bd->y = bd->zone->y + (bd->zone->h - bd->h) / 2;
+	     bd->placed = 1;
+	     bd->changes.pos = 1;
+	  }
+	
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->client_inset.l,
 				       bd->y + bd->client_inset.t,
@@ -5377,6 +5385,14 @@ _e_border_eval(E_Border *bd)
 	bd->need_shape_export = 0;
      }
 
+   if ((bd->changes.visible) && (bd->visible) && (bd->new_client))
+     {
+	ecore_evas_show(bd->bg_ecore_evas);
+	ecore_x_window_show(bd->win);
+	bd->changes.visible = 0;
+     }
+   bd->new_client = 0;
+   
    bd->changed = 0;
 
    bd->changes.stack = 0;

@@ -90,6 +90,7 @@ e_win_show(E_Win *win)
    if (!win->border)
      {
 	_e_win_prop_update(win);
+	ecore_evas_lower(win->ecore_evas);
 	win->border = e_border_new(win->container, win->evas_win, 1);
 	if (!win->placed)
 	  win->border->re_manage = 0;
