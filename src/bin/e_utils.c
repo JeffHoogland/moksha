@@ -396,3 +396,87 @@ e_util_container_window_find(Ecore_X_Window win)
      }
    return NULL;
 }
+
+E_Border *
+e_util_desk_border_above(E_Border *bd)
+{
+   E_Border *above = NULL;
+   Evas_List *l;
+   int pos, i;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   for (l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
+	(l) && (l->next) && (!above);
+	l = l->next)
+     {
+	above = l->next->data;
+	if ((above->desk != bd->desk) && (!above->sticky))
+	  above = NULL;
+     }
+   if (!above)
+     {
+	/* Need to check the layers above */
+	for (i = pos + 1; (i < 7) && (!above); i++)
+	  {
+	     for (l = bd->zone->container->layers[i].clients;
+		  (l) && (!above);
+		  l = l->next)
+	       {
+		  above = l->data;
+		  if ((above->desk != bd->desk) && (!above->sticky))
+		    above = NULL;
+	       }
+	  }
+     }
+   return above;
+}
+
+E_Border *
+e_util_desk_border_below(E_Border *bd)
+{
+   E_Border *below = NULL;
+   Evas_List *l;
+   int pos, i;
+
+   if (bd->layer == 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
+
+   for (l = evas_list_find_list(bd->zone->container->layers[pos].clients, bd);
+	(l) && (l->prev) && (!below);
+	l = l->prev)
+     {
+	below = l->prev->data;
+	if ((below->desk != bd->desk) && (!below->sticky))
+	  below = NULL;
+     }
+   if (!below)
+     {
+	/* Need to check the layers below */
+	for (i = pos - 1; (i >= 0) && (!below); i--)
+	  {
+	     if (bd->zone->container->layers[i].clients)
+	       {
+		  for (l = evas_list_last(bd->zone->container->layers[i].clients);
+		       (l) && (!below);
+		       l = l->prev)
+		    {
+		       below = l->data;
+		       if ((below->desk != bd->desk) && (!below->sticky))
+			 below = NULL;
+		    }
+	       }
+	  }
+     }
+
+   return below;
+}
