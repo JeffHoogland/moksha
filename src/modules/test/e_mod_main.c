@@ -6,14 +6,24 @@ e_modapi_init(E_Module *m)
 {
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	e_error_dialog_show(_("Module API Error"),
-			    _("Error initializing Module: test\n"
-			      "It requires a minimum module API version of: %i.\n"
-			      "The module API advertized by Enlightenment is: %i.\n"
-			      "Aborting module."),
-			    E_MODULE_API_VERSION,
-			    m->api->version);
-	return NULL;
+		E_Dialog *dia;
+		char buf[4096];
+
+		dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+		if (!dia) return NULL;
+
+		snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: Test<br>"
+			"It requires a minimum module API version of: %i.<br>"
+			"The module API advertized by Enlightenment is: %i.<br>"), 
+			E_MODULE_API_VERSION, m->api->version);
+
+		e_dialog_title_set(dia, "Enlightenment Test Module");
+		e_dialog_icon_set(dia, "enlightenment/e", 64);
+		e_dialog_text_set(dia, buf);
+		e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+		e_win_centered_set(dia->win, 1);
+		e_dialog_show(dia);
+		return NULL;
      }
      {
 	E_Menu *mn;
@@ -63,9 +73,17 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
-   e_error_dialog_show(_("Enlightenment Test Module"),
-		       _("This module is VERY simple and is only used to test the basic\n"
-			 "interface of the Enlightenment 0.17.0 module system. Please\n"
+	E_Dialog *dia;
+
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	if (!dia) return 0;
+	e_dialog_title_set(dia, "Enlightenment Test Module");
+	e_dialog_icon_set(dia, "enlightenment/e", 64);
+	e_dialog_text_set(dia, _("This module is VERY simple and is only used to test the basic<br>"
+			 "interface of the Enlightenment 0.17.0 module system. Please<br>"
 			 "ignore this module unless you are working on the module system."));
-   return 1;
+	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+	e_win_centered_set(dia->win, 1);
+	e_dialog_show(dia);
+	return 1;
 }
