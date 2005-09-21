@@ -110,8 +110,8 @@ _e_configure_gui_hide(E_Win *win)
 	_e_configure_apps_unload(app);
 
 	edje_object_part_unswallow(app->edje, app->box);
-	evas_object_free(app->box);
-	evas_object_free(app->edje);
+	evas_object_del(app->box);
+	evas_object_del(app->edje);
 	e_object_del(E_OBJECT(app->win));
      }
 }
@@ -164,9 +164,7 @@ _e_configure_apps_load(E_Configure *app)
 static void
 _e_configure_apps_unload(E_Configure *app)
 {
-   Evas_List   *l;
    E_App       *a;
-   Evas_Object *icon;
 
 /*   while(app->icons)
      {
@@ -174,7 +172,7 @@ _e_configure_apps_unload(E_Configure *app)
 // FIXME unswallow icon and free
 
 	app->icons = evas_list_remove(app->icons, icon);
-	evas_object_free(icon);
+	evas_object_del(icon);
      }*/
    while (app->app_ref)
      {
