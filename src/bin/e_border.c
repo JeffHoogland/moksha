@@ -1246,7 +1246,7 @@ e_border_shade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || (bd->maximized)) return;
+   if ((bd->fullscreen) || (bd->maximized) || (bd->shading)) return;
    if (!strcmp("borderless", bd->client.border.name)) return;
    if (!bd->shaded)
      {
@@ -1332,7 +1332,7 @@ e_border_unshade(E_Border *bd, E_Direction dir)
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-   if ((bd->fullscreen) || (bd->maximized)) return;
+   if ((bd->fullscreen) || (bd->maximized) || (bd->shading)) return;
    if (bd->shaded)
      {
 //	printf("UNSHADE!\n");
