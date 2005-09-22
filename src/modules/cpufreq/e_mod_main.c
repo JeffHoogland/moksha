@@ -64,23 +64,13 @@ e_modapi_init(E_Module *module)
    
    if (module->api->version < E_MODULE_API_VERSION)
      {
-	E_Dialog *dia;
 	char buf[4096];
-
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return NULL;
-
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: Cpufreq<br>"
+	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
 				     "It requires a minimum module API version of: %i.<br>"
 				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   E_MODULE_API_VERSION, module->api->version);
+				   _("Cpufreq"), E_MODULE_API_VERSION, module->api->version);
 
-	e_dialog_title_set(dia, "Enlightenment Cpufreq Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, buf);
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
+	e_module_dialog_show(_("Enlightenment Cpufreq Module"), buf);
 	return NULL;
      }
 
@@ -128,17 +118,9 @@ e_modapi_info(E_Module *module)
 int
 e_modapi_about(E_Module *module)
 {
-   E_Dialog *dia;
-
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-   if (!dia) return 0;
-   e_dialog_title_set(dia, "CPU Frequency Controller Module");
-   e_dialog_icon_set(dia, "enlightenment/e", 64);
-   e_dialog_text_set(dia, _("A simple module to control the frequency of the system CPU.<br>"
-			    "This is especially useful to save power on laptops."));
-   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
+   e_module_dialog_show(_("CPU Frequency Controller Module"), 
+			_("A simple module to control the frequency of the system CPU.<br>"
+			  "This is especially useful to save power on laptops."));
    return 1;
 }
 

@@ -65,6 +65,7 @@ EAPI int          e_module_save_all(void);
 EAPI E_Module    *e_module_find(char *name);
 EAPI Evas_List   *e_module_list(void);
 EAPI E_Menu      *e_module_menu_new(void);
+EAPI void         e_module_dialog_show(char *title, char *body);
 
 #endif
 #endif

@@ -456,3 +456,22 @@ _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
      }
    e_menu_item_toggle_set(mi, e_module_enabled_get(mod));
 }
+
+void
+e_module_dialog_show(char *title, char *body)
+{
+   E_Dialog *dia;
+
+   dia = e_dialog_new (e_container_current_get (e_manager_current_get ()));
+   if (!dia) return;
+
+   e_dialog_title_set (dia, title);
+   e_dialog_icon_set (dia, "enlightenment/e", 64);
+   e_dialog_text_set (dia, body);
+   e_dialog_button_add (dia, _("Ok"), NULL, NULL, NULL);
+   e_win_centered_set (dia->win, 1);
+   e_dialog_show (dia);
+}
+
+
+

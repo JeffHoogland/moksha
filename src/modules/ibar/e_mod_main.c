@@ -118,23 +118,13 @@ e_modapi_init(E_Module *m)
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	E_Dialog *dia;
 	char buf[4096];
-
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return NULL;
-
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: IBar<br>"
+	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
 				     "It requires a minimum module API version of: %i.<br>"
 				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   E_MODULE_API_VERSION, m->api->version);
+				   _("IBar"), E_MODULE_API_VERSION, m->api->version);
 
-	e_dialog_title_set(dia, "Enlightenment IBar Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, buf);
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
+	e_module_dialog_show(_("Enlightenment IBar Module"), buf);
 	return NULL;
      }
    /* actually init ibar */
@@ -181,19 +171,11 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
-   E_Dialog *dia;
-
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-   if (!dia) return 0;
-   e_dialog_title_set(dia, "Enlightenment IBar Module");
-   e_dialog_icon_set(dia, "enlightenment/e", 64);
-   e_dialog_text_set(dia, _("This is the IBar Application Launcher bar module for Enlightenment.<br>"
-			    "It is a first example module and is being used to flesh out several<br>"
-			    "interfaces in Enlightenment 0.17.0. It is under heavy development,<br>"
-			    "so expect it to <hilight>break often</hilight> and change as it improves."));
-   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
+   e_module_dialog_show(_("Enlightenment IBar Module"), 
+			_("This is the IBar Application Launcher bar module for Enlightenment.<br>"
+			  "It is a first example module and is being used to flesh out several<br>"
+			  "interfaces in Enlightenment 0.17.0. It is under heavy development,<br>"
+			  "so expect it to <hilight>break often</hilight> and change as it improves."));
    return 1;
 }
 

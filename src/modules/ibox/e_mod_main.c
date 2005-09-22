@@ -100,23 +100,13 @@ e_modapi_init(E_Module *m)
    /* check module api version */
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	E_Dialog *dia;
 	char buf[4096];
-
-	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-	if (!dia) return NULL;
-
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: IBox<br>"
+	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
 				     "It requires a minimum module API version of: %i.<br>"
 				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   E_MODULE_API_VERSION, m->api->version);
+				   _("IBox"), E_MODULE_API_VERSION, m->api->version);
 
-	e_dialog_title_set(dia, "Enlightenment IBox Module");
-	e_dialog_icon_set(dia, "enlightenment/e", 64);
-	e_dialog_text_set(dia, buf);
-	e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-	e_win_centered_set(dia->win, 1);
-	e_dialog_show(dia);
+	e_module_dialog_show(_("Enlightenment IBox Module"), buf);
 	return NULL;
      }
    /* actually init ibox */
@@ -163,17 +153,9 @@ e_modapi_info(E_Module *m)
 int
 e_modapi_about(E_Module *m)
 {
-   E_Dialog *dia;
-
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-   if (!dia) return 0;
-   e_dialog_title_set(dia, "Enlightenment IBox Module");
-   e_dialog_icon_set(dia, "enlightenment/e", 64);
-   e_dialog_text_set(dia, _("This is the IBox Iconified Application module for Enlightenment.<br>"
-			    "It will hold minimized applications"));
-   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
+   e_module_dialog_show(_("Enlightenment IBox Module"), 
+			_("This is the IBox Iconified Application module for Enlightenment.<br>"
+			  "It will hold minimized applications"));
    return 1;
 }
 
