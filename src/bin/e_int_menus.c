@@ -24,6 +24,7 @@ static void _e_int_menus_quit                (void);
 static void _e_int_menus_quit_cb             (void *data);
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_theme_about    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -133,6 +134,11 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("About Enlightenment"));   
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("About This Theme"));   
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/theme");
+   e_menu_item_callback_set(mi, _e_int_menus_main_theme_about, NULL);
 
    if (ecore_file_app_installed("exige"))
      {
@@ -356,6 +362,15 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
    
    about = e_about_new(e_container_current_get(e_manager_current_get()));
    if (about) e_about_show(about);
+}
+
+static void
+_e_int_menus_main_theme_about(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Theme_About *about;
+   
+   about = e_theme_about_new(e_container_current_get(e_manager_current_get()));
+   if (about) e_theme_about_show(about);
 }
 
 static void

@@ -6,7 +6,7 @@
 /* local subsystem functions */
 static void _e_about_free(E_About *about);
 static void _e_about_cb_delete(E_Win *win);
-static void _e_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 /* local subsystem globals */
 
@@ -68,7 +68,7 @@ e_about_new(E_Container *con)
 	)
       );
    edje_object_signal_callback_add(about->bg_object, "close", "",
-				   _e_dialog_cb_close, about);
+				   _e_about_cb_close, about);
      {
 	FILE *f;
 	char buf[4096], buf2[4096], *tbuf;
@@ -166,7 +166,7 @@ _e_about_cb_delete(E_Win *win)
 }
 
 static void
-_e_dialog_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_about_cb_close(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_About *about;
    

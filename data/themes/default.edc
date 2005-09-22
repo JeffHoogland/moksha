@@ -45,5 +45,6 @@ collections {
 #include "default_randr.edc"
 #include "default_pointer.edc"
 #include "default_about.edc"
+#include "default_theme_about.edc"
 }
 
