@@ -18,6 +18,13 @@
    }
 #define ACT_FN_GO_MOUSE(act) \
    static void _e_actions_act_##act##_go_mouse(E_Object *obj, char *params, Ecore_X_Event_Mouse_Button_Down *ev)
+#define ACT_GO_WHEEL(name) \
+   { \
+      act = e_action_add(#name); \
+      if (act) act->func.go_wheel = _e_actions_act_##name##_go_wheel; \
+   }
+#define ACT_FN_GO_WHEEL(act) \
+   static void _e_actions_act_##act##_go_wheel(E_Object *obj, char *params, Ecore_X_Event_Mouse_Wheel *ev)
 #define ACT_GO_KEY(name) \
    { \
       act = e_action_add(#name); \
@@ -395,13 +402,28 @@ ACT_FN_GO(resize)
 }
 
 /***************************************************************************/
+static E_Zone *
+_e_actions_zone_get(E_Object *obj)
+{
+   if (obj)
+     {
+	if (obj->type == E_MANAGER_TYPE)
+	  return e_util_zone_current_get((E_Manager *)obj);
+	else if (obj->type == E_CONTAINER_TYPE)
+	  return e_util_zone_current_get(((E_Container *)obj)->manager);
+	else if (obj->type == E_ZONE_TYPE)
+	  return e_util_zone_current_get(((E_Zone *)obj)->container->manager);
+	else
+	  return e_util_zone_current_get(e_manager_current_get());
+     }
+   return e_util_zone_current_get(e_manager_current_get());
+}
+	  
 ACT_FN_GO(desk_flip_by)
 {
    E_Zone *zone;
-   
-   if (!obj) return;
-   if (obj->type != E_MANAGER_TYPE) return;
-   zone = e_util_zone_current_get((E_Manager *)obj);
+
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -418,10 +440,8 @@ ACT_FN_GO(desk_flip_by)
 ACT_FN_GO(desk_flip_to)
 {
    E_Zone *zone;
-   
-   if (!obj) return;
-   if (obj->type != E_MANAGER_TYPE) return;
-   zone = e_util_zone_current_get((E_Manager *)obj);
+
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -438,10 +458,8 @@ ACT_FN_GO(desk_flip_to)
 ACT_FN_GO(desk_linear_flip_by)
 {
    E_Zone *zone;
-   
-   if (!obj) return;
-   if (obj->type != E_MANAGER_TYPE) return;
-   zone = e_util_zone_current_get((E_Manager *)obj);
+
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -458,10 +476,8 @@ ACT_FN_GO(desk_linear_flip_by)
 ACT_FN_GO(desk_linear_flip_to)
 {
    E_Zone *zone;
-   
-   if (!obj) return;
-   if (obj->type != E_MANAGER_TYPE) return;
-   zone = e_util_zone_current_get((E_Manager *)obj);
+
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -589,15 +605,11 @@ _e_actions_menu_find(char *name)
 }
 ACT_FN_GO(menu_show)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -622,15 +634,11 @@ ACT_FN_GO(menu_show)
 }
 ACT_FN_GO_MOUSE(menu_show)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -658,15 +666,11 @@ ACT_FN_GO_MOUSE(menu_show)
 }
 ACT_FN_GO_KEY(menu_show)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
 
    /* menu is active - abort */
    if (e_menu_grab_window_get()) return;
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -706,9 +710,7 @@ ACT_FN_GO(app)
 {
    E_Zone *zone;
    
-   if (!obj) return;
-   if (obj->type != E_MANAGER_TYPE) return;
-   zone = e_util_zone_current_get((E_Manager *)obj);
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -743,13 +745,9 @@ ACT_FN_GO(app)
 /***************************************************************************/
 ACT_FN_GO(winlist)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
    
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -774,13 +772,9 @@ ACT_FN_GO(winlist)
 }
 ACT_FN_GO_MOUSE(winlist)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
    
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)
@@ -811,13 +805,9 @@ ACT_FN_GO_MOUSE(winlist)
 }
 ACT_FN_GO_KEY(winlist)
 {
-   E_Zone *zone = NULL;
+   E_Zone *zone;
    
-   if (!obj) return;
-   if (obj->type == E_MANAGER_TYPE)
-     zone = e_util_zone_current_get((E_Manager *)obj);
-   else if (obj->type == E_ZONE_TYPE)
-     zone = (E_Zone *)obj;
+   zone = _e_actions_zone_get(obj);
    if (zone)
      {
 	if (params)

@@ -13,6 +13,7 @@ typedef enum _E_Binding_Context
    E_BINDING_CONTEXT_MANAGER,
    E_BINDING_CONTEXT_MENU,
    E_BINDING_CONTEXT_WINLIST,
+   E_BINDING_CONTEXT_POPUP,
    E_BINDING_CONTEXT_ANY
 } E_Binding_Context;
 
@@ -32,6 +33,7 @@ typedef enum _E_Binding_Modifier
 typedef struct _E_Binding_Mouse  E_Binding_Mouse;
 typedef struct _E_Binding_Key    E_Binding_Key;
 typedef struct _E_Binding_Signal E_Binding_Signal;
+typedef struct _E_Binding_Wheel  E_Binding_Wheel;
 
 #else
 #ifndef E_BINDINGS_H
@@ -62,6 +64,19 @@ struct _E_Binding_Signal
    E_Binding_Context ctxt;
    char *sig;
    char *src;
+   E_Binding_Modifier mod;
+   unsigned char any_mod : 1;
+   char *action;
+   char *params;
+};
+
+struct _E_Binding_Wheel
+{
+   E_Binding_Context ctxt;
+   int direction;
+   int z;
+   E_Binding_Modifier mod;
+   unsigned char any_mod : 1;
    char *action;
    char *params;
 };
@@ -85,7 +100,17 @@ EAPI void        e_bindings_key_ungrab(E_Binding_Context ctxt, Ecore_X_Window wi
 EAPI E_Action   *e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Down *ev);
 EAPI E_Action   *e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Key_Up *ev);
 
-EAPI int         e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src);
+EAPI void        e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI void        e_bindings_signal_del(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI E_Action   *e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src, E_Binding_Signal **bind_ret);
+EAPI E_Action   *e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char *src);
 					 
+EAPI void        e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI void        e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, char *action, char *params);
+EAPI void        e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win);
+EAPI void        e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win);
+EAPI E_Action   *e_bindings_wheel_find(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev, E_Binding_Wheel **bind_ret);
+EAPI E_Action   *e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Event_Mouse_Wheel *ev);
+
 #endif
 #endif

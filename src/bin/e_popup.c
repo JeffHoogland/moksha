@@ -6,9 +6,16 @@
 /* local subsystem functions */
 static void _e_popup_free(E_Popup *pop);
 static int  _e_popup_cb_window_shape(void *data, int ev_type, void *ev);
+static E_Popup *_e_popup_find_by_window(Ecore_X_Window win);
+static int _e_popup_cb_mouse_down(void *data, int type, void *event);
+static int _e_popup_cb_mouse_up(void *data, int type, void *event);
+static int _e_popup_cb_mouse_wheel(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Ecore_Event_Handler *_e_popup_window_shape_handler = NULL;
+static Ecore_Event_Handler *_e_popup_mouse_down_handler = NULL;
+static Ecore_Event_Handler *_e_popup_mouse_up_handler = NULL;
+static Ecore_Event_Handler *_e_popup_mouse_wheel_handler = NULL;
 static Evas_List *_e_popup_list = NULL;
 
 /* externally accessible functions */
@@ -18,6 +25,12 @@ e_popup_init(void)
 {
    _e_popup_window_shape_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 							   _e_popup_cb_window_shape, NULL);
+   _e_popup_mouse_down_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_DOWN,
+							 _e_popup_cb_mouse_down, NULL);
+   _e_popup_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
+						       _e_popup_cb_mouse_up, NULL);
+   _e_popup_mouse_wheel_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+							  _e_popup_cb_mouse_wheel, NULL);
    return 1;
 }
 
@@ -25,6 +38,9 @@ int
 e_popup_shutdown(void)
 {
    E_FN_DEL(ecore_event_handler_del, _e_popup_window_shape_handler);
+   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_down_handler);
+   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_up_handler);
+   E_FN_DEL(ecore_event_handler_del, _e_popup_mouse_wheel_handler);
    return 1;
 }
 
@@ -269,6 +285,75 @@ _e_popup_cb_window_shape(void *data, int ev_type, void *ev)
 	pop = l->data;
 	if (pop->evas_win == e->win)
 	  pop->need_shape_export = 1;
+     }
+   return 1;
+}
+
+static E_Popup *
+_e_popup_find_by_window(Ecore_X_Window win)
+{
+   E_Popup *pop;
+   Evas_List *l;
+   
+   for (l = _e_popup_list; l; l = l->next)
+     {
+	pop = l->data;
+	if (pop->evas_win == win) return pop;
+     }
+   return NULL;
+}
+
+static int
+_e_popup_cb_mouse_down(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Down *ev;
+   E_Popup *pop;
+   
+   ev = event;
+   pop = _e_popup_find_by_window(ev->event_win);
+   if (pop)
+     {
+	Evas_Button_Flags flags = EVAS_BUTTON_NONE;
+	
+	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_POPUP,
+					   E_OBJECT(pop), ev);
+	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
+	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	evas_event_feed_mouse_down(pop->evas, ev->button, flags, ev->time, NULL);
+     }
+   return 1;
+}
+
+static int
+_e_popup_cb_mouse_up(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Button_Up *ev;
+   E_Popup *pop;
+   
+   ev = event;
+   pop = _e_popup_find_by_window(ev->event_win);
+   if (pop)
+     {
+	evas_event_feed_mouse_up(pop->evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
+	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_POPUP,
+					 E_OBJECT(pop), ev);
+     }
+   return 1;
+}
+
+static int
+_e_popup_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   E_Popup *pop;
+   
+   ev = event;
+   pop = _e_popup_find_by_window(ev->event_win);
+   if (pop)
+     {
+	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_POPUP,
+				      E_OBJECT(pop), ev);
+	evas_event_feed_mouse_wheel(pop->evas, ev->direction, ev->z, ev->time, NULL);
      }
    return 1;
 }

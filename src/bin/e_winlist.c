@@ -769,6 +769,8 @@ _e_winlist_cb_mouse_wheel(void *data, int type, void *event)
    
    ev = event;
    if (ev->win != input_window) return 1;
+   e_bindings_wheel_event_handle(E_BINDING_CONTEXT_WINLIST,
+				 E_OBJECT(winlist->zone), ev);
    if (ev->z < 0) /* up */
      {
 	int i;

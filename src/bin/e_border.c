@@ -63,10 +63,10 @@ static void _e_border_cb_signal_action(void *data, Evas_Object *obj, const char 
 static void _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source);
 static int  _e_border_cb_mouse_in(void *data, int type, void *event);
 static int  _e_border_cb_mouse_out(void *data, int type, void *event);
+static int  _e_border_cb_mouse_wheel(void *data, int type, void *event);
 static int  _e_border_cb_mouse_down(void *data, int type, void *event);
 static int  _e_border_cb_mouse_up(void *data, int type, void *event);
 static int  _e_border_cb_mouse_move(void *data, int type, void *event);
-static int  _e_border_cb_mouse_wheel(void *data, int type, void *event);
 static int  _e_border_cb_grab_replay(void *data, int type, void *event);
 
 static void _e_border_eval(E_Border *bd);
@@ -234,6 +234,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
    ecore_x_window_shape_events_select(bd->win, 1);
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_focus_setup(bd);
    if (e_canvas_engine_decide(e_config->evas_engine_borders) ==
        E_EVAS_ENGINE_GL_X11)
@@ -271,6 +272,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 	ecore_evas_free(bd->bg_ecore_evas);
 	ecore_x_window_del(bd->client.shell_win);
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
 	ecore_x_window_del(bd->win);
 	free(bd);
 	return NULL;
@@ -2122,6 +2124,7 @@ e_border_button_bindings_ungrab_all(void)
 	bd = l->data;
 	e_focus_setdown(bd);
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
      }
 }
 
@@ -2136,6 +2139,7 @@ e_border_button_bindings_grab_all(void)
 	
 	bd = l->data;
 	e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
 	e_focus_setup(bd);
      }
 }
@@ -2405,6 +2409,7 @@ _e_border_free(E_Border *bd)
    ecore_x_window_del(bd->client.shell_win);
    e_focus_setdown(bd);
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
    e_container_border_remove(bd);
@@ -3809,7 +3814,6 @@ _e_border_cb_mouse_in(void *data, int type, void *event)
 #endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
    evas_event_feed_mouse_in(bd->bg_evas, ev->time, NULL);
    return 1;
 }
@@ -3881,8 +3885,27 @@ _e_border_cb_mouse_out(void *data, int type, void *event)
 #endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
    evas_event_feed_mouse_out(bd->bg_evas, ev->time, NULL);
+   return 1;
+}
+
+static int
+_e_border_cb_mouse_wheel(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   E_Border *bd;
+
+   ev = event;
+   bd = data;
+   if (ev->event_win == bd->win)
+     {
+	bd->mouse.current.mx = ev->root.x;
+	bd->mouse.current.my = ev->root.y;
+	if (!bd->cur_mouse_action)
+	  e_bindings_wheel_event_handle(E_BINDING_CONTEXT_BORDER,
+					E_OBJECT(bd), ev);
+     }
+   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, ev->time, NULL);
    return 1;
 }
 
@@ -3973,7 +3996,6 @@ _e_border_cb_mouse_down(void *data, int type, void *event)
 
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
 	evas_event_feed_mouse_down(bd->bg_evas, ev->button, flags, ev->time, NULL);
      }
    return 1;
@@ -4030,7 +4052,6 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 
    bd->drag.start = 0;
 
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
    evas_event_feed_mouse_up(bd->bg_evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
    return 1;
 }
@@ -4153,22 +4174,6 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 	  }
 	evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
      }
-   return 1;
-}
-
-static int
-_e_border_cb_mouse_wheel(void *data, int type, void *event)
-{
-   Ecore_X_Event_Mouse_Wheel *ev;
-   E_Border *bd;
-
-   ev = event;
-   bd = data;
-   if (ev->win != bd->event_win) return 1;
-   bd->mouse.current.mx = ev->root.x;
-   bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_move(bd->bg_evas, ev->x, ev->y, ev->time, NULL);
-   evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, ev->time, NULL);
    return 1;
 }
 

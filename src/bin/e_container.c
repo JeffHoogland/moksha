@@ -1017,7 +1017,6 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
      {
 	bd = e_border_focused_get();
 	if (bd) e_focus_event_mouse_out(bd);
-	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
         evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
      }
    return 1;
@@ -1033,7 +1032,6 @@ _e_container_cb_mouse_out(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
-	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
         evas_event_feed_mouse_out(con->bg_evas, ev->time, NULL);
      }
    return 1;
@@ -1055,7 +1053,6 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
 					   E_OBJECT(con), ev);
 	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
 	evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
      }
    return 1;
@@ -1071,7 +1068,6 @@ _e_container_cb_mouse_up(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
-	evas_event_feed_mouse_move(con->bg_evas, ev->x, ev->y, ev->time, NULL);
         evas_event_feed_mouse_up(con->bg_evas, ev->button, EVAS_BUTTON_NONE, ev->time, NULL);
 	e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_CONTAINER,
 					 E_OBJECT(con), ev);
@@ -1104,6 +1100,8 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
+	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_CONTAINER,
+				      E_OBJECT(con), ev);
 	evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
      }
    return 1;

@@ -1007,6 +1007,8 @@ _pager_popup_free(Pager_Popup *pp)
    pp->face->pager->faces = evas_list_remove(pp->face->pager->faces, pp->face);
    evas_object_del(pp->bg_object);
    _pager_face_free(pp->face);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
    e_object_del(E_OBJECT(pp->popup));
    free(pp);
 }
@@ -1668,6 +1670,8 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 				 pp->popup->zone->x + ((pp->popup->zone->w - w) / 2),
 				 pp->popup->zone->y + ((pp->popup->zone->h - h) / 2),
 				 w, h);
+	     e_bindings_mouse_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
+	     e_bindings_wheel_grab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
 	     e_popup_show(pp->popup);
 
 	     pp->timer = ecore_timer_add(face->pager->conf->popup_speed,

@@ -8,7 +8,9 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
-* BUG: dnd from knoqueror on zone 0 to another knoq on zone 1 with xinerama (2
+* BUG: race condition on winlist activate via keypress and the key grab thus
+  missing the alt key raise sometimes.
+* BUG: dnd from konqueror on zone 0 to another konq on zone 1 with xinerama (2
   zones) causes segv
 * BUG: e often forgets what window is focused so ctrl+alt+x for example doesnt
   close the current focused window... hmmmm
