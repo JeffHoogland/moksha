@@ -4232,8 +4232,8 @@ _e_border_eval(E_Border *bd)
 	     bd->client.icccm.urgent = is_urgent;
 
 	     /* If this is a new window, set the state as requested. */
-	     if ((bd->new_client
-		 && (bd->client.icccm.initial_state == ECORE_X_WINDOW_STATE_HINT_ICONIC)))
+	     if ((bd->new_client) &&
+		 (bd->client.icccm.initial_state == ECORE_X_WINDOW_STATE_HINT_ICONIC))
 	       e_border_iconify(bd);
 	  }
 	bd->client.icccm.fetch.hints = 0;
@@ -5245,6 +5245,8 @@ _e_border_eval(E_Border *bd)
 		       grabbed = 1;
 		       e_object_ref(E_OBJECT(bd->cur_mouse_action));
 		       bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
+		       e_border_raise(bd);
+		       e_border_focus_set(bd, 1, 1);
 		    }
 	       }
 	  }
