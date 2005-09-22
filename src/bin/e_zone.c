@@ -224,13 +224,15 @@ e_zone_current_get(E_Container *con)
    
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
+/*   
    bd = e_border_focused_get();
    if (bd)
      {
-	/* the current zone is whatever zone has the focused window */
 	return bd->zone;
      }
-   else if (!starting)
+   else 
+ */
+  if (!starting)
      {
 	int x, y;
 
