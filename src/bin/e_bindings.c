@@ -46,6 +46,7 @@ e_bindings_init(void)
    /* FIXME: these need to be come normal e_config bindings that you can
     * modify via ipc and are saved/loaded to/from the user's config
     */
+   /* wheel events.. anywhere! :) */
    e_bindings_wheel_add(E_BINDING_CONTEXT_CONTAINER,
 			0, -1, E_BINDING_MODIFIER_NONE, 1,
 			"desk_linear_flip_by", "-1");
@@ -82,7 +83,88 @@ e_bindings_init(void)
    e_bindings_wheel_add(E_BINDING_CONTEXT_BORDER,
 			1, 1, E_BINDING_MODIFIER_ALT, 0, 
 			"desk_linear_flip_by", "1");
+
+   /* these now let you bind your own actions to a border */
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1,double", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_shaded_toggle", "up");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,2", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_shaded_toggle", "up");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,wheel,?,1", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_shaded", "0 up");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,wheel,?,-1", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_shaded", "1 up");
    
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,3", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_menu", "");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,?", "icon", E_BINDING_MODIFIER_NONE, 1, 
+			"window_menu", "");
+
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,[12]", "close", E_BINDING_MODIFIER_NONE, 1, 
+			"window_close", "");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,3", "close", E_BINDING_MODIFIER_NONE, 1, 
+			"window_kill", "");
+   
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,1", "maximize", E_BINDING_MODIFIER_NONE, 1, 
+			"window_maximized_toggle", "");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,2", "maximize", E_BINDING_MODIFIER_NONE, 1, 
+			"window_maximized_toggle", "smart");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,3", "maximize", E_BINDING_MODIFIER_NONE, 1, 
+			"window_maximized_toggle", "expand");
+   
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,clicked,?", "minimize", E_BINDING_MODIFIER_NONE, 1, 
+			"window_iconic_toggle", "");
+   
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "icon", E_BINDING_MODIFIER_NONE, 1, 
+			"window_drag_icon", "");
+
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_move", "");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,up,1", "title", E_BINDING_MODIFIER_NONE, 1, 
+			"window_move", "end");
+
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_tl", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "tl");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_t", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "t");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_tr", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "tr");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_r", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "r");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_br", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "br");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_b", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "b");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_bl", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "bl");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,1", "resize_l", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "l");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,up,1", "resize_*", E_BINDING_MODIFIER_NONE, 1, 
+			"window_resize", "end");
+
    return 1;
 }
 
@@ -562,7 +644,9 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char 
    act = e_bindings_signal_find(ctxt, obj, sig, src, &bind);
    if (act)
      {
-	if (act->func.go)
+	if (act->func.go_signal)
+	  act->func.go_signal(obj, bind->params, sig, src);
+	else if (act->func.go)
 	  act->func.go(obj, bind->params);
 	return act;
      }

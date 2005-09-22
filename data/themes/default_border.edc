@@ -349,7 +349,7 @@ group {
 	    rel1 {
 	       relative: 0.0  0.0;
 	       offset:   0   0;
-	       to_x:     "button_2";
+	       to_x:     "minimize";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
@@ -1110,9 +1110,9 @@ group {
 	 }
       }
 
-      BORDER_BUTTON_ADV("button_0","close",0.0,0.0, 0,0,"whole", "whole",1.0,1.0,-1,5,"whole", "title2")
-      BORDER_BUTTON("button_1","maximize",0.0,0.0,3,0,"button_0",0.0,1.0,3,-1,"button_0")
-      BORDER_BUTTON("button_2","minimize",0.0,0.0,3,0,"button_1",0.0,1.0,3,-1,"button_1")
+      BORDER_BUTTON_ADV("close","close",0.0,0.0, 0,0,"whole", "whole",1.0,1.0,-1,5,"whole", "title2")
+      BORDER_BUTTON("maximize","maximize",0.0,0.0,3,0,"close",0.0,1.0,3,-1,"close")
+      BORDER_BUTTON("minimize","minimize",0.0,0.0,3,0,"maximize",0.0,1.0,3,-1,"maximize")
 
       part {
 	 name:          "icon";
@@ -1144,177 +1144,6 @@ group {
       }
    }
    programs {
-/*
-	 program {
-	    name:    "TESTIES";
-	    signal:  "show";
-	    source:  "";
-	    action:  SIGNAL_EMIT "active" "";
-	 }
- */
-      program {
-	 name:    "move_window1";
-	 signal:  "mouse,down,1";
-	 source:  "title";
-	 action:  SIGNAL_EMIT "move_start" "mouse,1";
-      }
-      program {
-	 name:    "move_window2";
-	 signal:  "mouse,up,1";
-	 source:  "title";
-	 action:  SIGNAL_EMIT "move_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_tl1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_tl";
-	 action:  SIGNAL_EMIT "resize_tl_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_tl2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_tl";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_t1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_t";
-	 action:  SIGNAL_EMIT "resize_t_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_t2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_t";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_tr1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_tr";
-	 action:  SIGNAL_EMIT "resize_tr_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_tr2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_tr";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_r1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_r";
-	 action:  SIGNAL_EMIT "resize_r_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_r2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_r";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_br1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_br";
-	 action:  SIGNAL_EMIT "resize_br_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_br2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_br";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_b1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_b";
-	 action:  SIGNAL_EMIT "resize_b_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_b2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_b";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_bl1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_bl";
-	 action:  SIGNAL_EMIT "resize_bl_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_bl2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_bl";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_l1";
-	 signal:  "mouse,down,1";
-	 source:  "resize_l";
-	 action:  SIGNAL_EMIT "resize_l_start" "mouse,1";
-      }
-      program {
-	 name:    "resize_window_l2";
-	 signal:  "mouse,up,1";
-	 source:  "resize_l";
-	 action:  SIGNAL_EMIT "resize_stop" "mouse,1";
-      }
-      program {
-	 name:    "menu_action_icon1";
-	 signal:  "mouse,clicked,1";
-	 source:  "icon";
-	 action:  SIGNAL_EMIT "action" "menu";
-      }
-      program {
-	 name:    "menu_action_icon3";
-	 signal:  "mouse,clicked,3";
-	 source:  "icon";
-	 action:  SIGNAL_EMIT "action" "menu";
-      }
-      program {
-	 name:    "menu_action_icon4";
-	 signal:  "mouse,down,1";
-	 source:  "icon";
-	 action:  SIGNAL_EMIT "drag" "icon";
-      }
-      program {
-	  name:    "menu_action_title3";
-	  signal:  "mouse,clicked,3";
-	  source:  "title";
-	  action:  SIGNAL_EMIT "action" "menu";
-      }
-      program {
-	  name:    "menu_action_title4";
-	  signal:  "mouse,clicked,2";
-	  source:  "title";
-	  action:  SIGNAL_EMIT "action" "lower";
-      }
-      program {
-	 name:    "close_action";
-	 signal:  "mouse,clicked,1";
-	 source:  "button_0";
-	 action:  SIGNAL_EMIT "action" "close";
-      }
-      program {
-	 name:    "maximize_action";
-	 signal:  "mouse,clicked,1";
-	 source:  "button_1";
-	 action:  SIGNAL_EMIT "action" "maximize";
-      }
-      program {
-	 name:    "iconify_action";
-	 signal:  "mouse,clicked,1";
-	 source:  "button_2";
-	 action:  SIGNAL_EMIT "action" "iconify";
-      }
-      program {
-	 name:    "shade_action";
-	 signal:  "mouse,down,1,double";
-	 source:  "title";
-	 action:  SIGNAL_EMIT "action" "shade";
-      }
-
       program {
 	 name:    "go_active_pre";
 	 signal:  "active";
@@ -1426,197 +1255,197 @@ group {
       }
 
       program {
-	 name:    "button_0_active_pre";
+	 name:    "close_active_pre";
 	 signal:  "mouse,down,1";
-	 source:  "button_0";
+	 source:  "close";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_0_shadow1";
-	 target:  "button_0_shadow2";
-	 target:  "button_0_bg";
-	 target:  "button_0_detail";
-	 after:   "button_0_active";
-	 after:   "button_0_active_p";
+	 target:  "close_shadow1";
+	 target:  "close_shadow2";
+	 target:  "close_bg";
+	 target:  "close_detail";
+	 after:   "close_active";
+	 after:   "close_active_p";
       }
       program {
-	 name:    "button_0_active";
+	 name:    "close_active";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_0_shadow2";
+	 target:  "close_shadow2";
 	 transition: LINEAR 0.05;
-	 after:   "button_0_active2";
+	 after:   "close_active2";
       }
       program {
-	 name:    "button_0_active2";
+	 name:    "close_active2";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_0_shadow1";
+	 target:  "close_shadow1";
 	 transition: LINEAR 0.05;
       }
       program {
-	 name:    "button_0_active_p";
+	 name:    "close_active_p";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_0_bg";
-	 target:  "button_0_detail";
+	 target:  "close_bg";
+	 target:  "close_detail";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_0_passive_pre";
+	 name:    "close_passive_pre";
 	 signal:  "mouse,up,1";
-	 source:  "button_0";
+	 source:  "close";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_0_shadow1";
-	 target:  "button_0_shadow2";
-	 target:  "button_0_bg";
-	 target:  "button_0_detail";
-	 after:   "button_0_passive";
-	 after:   "button_0_passive_p";
+	 target:  "close_shadow1";
+	 target:  "close_shadow2";
+	 target:  "close_bg";
+	 target:  "close_detail";
+	 after:   "close_passive";
+	 after:   "close_passive_p";
       }
       program {
-	 name:    "button_0_passive";
+	 name:    "close_passive";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_0_shadow2";
+	 target:  "close_shadow2";
 	 transition: LINEAR 0.1;
-	 after:   "button_0_passive2";
+	 after:   "close_passive2";
       }
       program {
-	 name:    "button_0_passive2";
+	 name:    "close_passive2";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_0_shadow1";
+	 target:  "close_shadow1";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_0_passive_p";
+	 name:    "close_passive_p";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_0_bg";
-	 target:  "button_0_detail";
+	 target:  "close_bg";
+	 target:  "close_detail";
 	 transition: LINEAR 0.2;
       }
 
       program {
-	 name:    "button_1_active_pre";
+	 name:    "maximize_active_pre";
 	 signal:  "mouse,down,1";
-	 source:  "button_1";
+	 source:  "maximize";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_1_shadow1";
-	 target:  "button_1_shadow2";
-	 target:  "button_1_bg";
-	 target:  "button_1_detail";
-	 after:   "button_1_active";
-	 after:   "button_1_active_p";
+	 target:  "maximize_shadow1";
+	 target:  "maximize_shadow2";
+	 target:  "maximize_bg";
+	 target:  "maximize_detail";
+	 after:   "maximize_active";
+	 after:   "maximize_active_p";
       }
       program {
-	 name:    "button_1_active";
+	 name:    "maximize_active";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_1_shadow2";
+	 target:  "maximize_shadow2";
 	 transition: LINEAR 0.05;
-	 after:   "button_1_active2";
+	 after:   "maximize_active2";
       }
       program {
-	 name:    "button_1_active2";
+	 name:    "maximize_active2";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_1_shadow1";
+	 target:  "maximize_shadow1";
 	 transition: LINEAR 0.05;
       }
       program {
-	 name:    "button_1_active_p";
+	 name:    "maximize_active_p";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_1_bg";
-	 target:  "button_1_detail";
+	 target:  "maximize_bg";
+	 target:  "maximize_detail";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_1_passive_pre";
+	 name:    "maximize_passive_pre";
 	 signal:  "mouse,up,1";
-	 source:  "button_1";
+	 source:  "maximize";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_1_shadow1";
-	 target:  "button_1_shadow2";
-	 target:  "button_1_bg";
-	 target:  "button_1_detail";
-	 after:   "button_1_passive";
-	 after:   "button_1_passive_p";
+	 target:  "maximize_shadow1";
+	 target:  "maximize_shadow2";
+	 target:  "maximize_bg";
+	 target:  "maximize_detail";
+	 after:   "maximize_passive";
+	 after:   "maximize_passive_p";
       }
       program {
-	 name:    "button_1_passive";
+	 name:    "maximize_passive";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_1_shadow2";
+	 target:  "maximize_shadow2";
 	 transition: LINEAR 0.1;
-	 after:   "button_1_passive2";
+	 after:   "maximize_passive2";
       }
       program {
-	 name:    "button_1_passive2";
+	 name:    "maximize_passive2";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_1_shadow1";
+	 target:  "maximize_shadow1";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_1_passive_p";
+	 name:    "maximize_passive_p";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_1_bg";
-	 target:  "button_1_detail";
+	 target:  "maximize_bg";
+	 target:  "maximize_detail";
 	 transition: LINEAR 0.2;
       }
 
       program {
-	 name:    "button_2_active_pre";
+	 name:    "minimize_active_pre";
 	 signal:  "mouse,down,1";
-	 source:  "button_2";
+	 source:  "minimize";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_2_shadow1";
-	 target:  "button_2_shadow2";
-	 target:  "button_2_bg";
-	 target:  "button_2_detail";
-	 after:   "button_2_active";
-	 after:   "button_2_active_p";
+	 target:  "minimize_shadow1";
+	 target:  "minimize_shadow2";
+	 target:  "minimize_bg";
+	 target:  "minimize_detail";
+	 after:   "minimize_active";
+	 after:   "minimize_active_p";
       }
       program {
-	 name:    "button_2_active";
+	 name:    "minimize_active";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_2_shadow2";
+	 target:  "minimize_shadow2";
 	 transition: LINEAR 0.05;
-	 after:   "button_2_active2";
+	 after:   "minimize_active2";
       }
       program {
-	 name:    "button_2_active2";
+	 name:    "minimize_active2";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_2_shadow1";
+	 target:  "minimize_shadow1";
 	 transition: LINEAR 0.05;
       }
       program {
-	 name:    "button_2_active_p";
+	 name:    "minimize_active_p";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_2_bg";
-	 target:  "button_2_detail";
+	 target:  "minimize_bg";
+	 target:  "minimize_detail";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_2_passive_pre";
+	 name:    "minimize_passive_pre";
 	 signal:  "mouse,up,1";
-	 source:  "button_2";
+	 source:  "minimize";
 	 action:  STATE_SET "active" 0.0;
-	 target:  "button_2_shadow1";
-	 target:  "button_2_shadow2";
-	 target:  "button_2_bg";
-	 target:  "button_2_detail";
-	 after:   "button_2_passive";
-	 after:   "button_2_passive_p";
+	 target:  "minimize_shadow1";
+	 target:  "minimize_shadow2";
+	 target:  "minimize_bg";
+	 target:  "minimize_detail";
+	 after:   "minimize_passive";
+	 after:   "minimize_passive_p";
       }
       program {
-	 name:    "button_2_passive";
+	 name:    "minimize_passive";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_2_shadow2";
+	 target:  "minimize_shadow2";
 	 transition: LINEAR 0.1;
-	 after:   "button_2_passive2";
+	 after:   "minimize_passive2";
       }
       program {
-	 name:    "button_2_passive2";
+	 name:    "minimize_passive2";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_2_shadow1";
+	 target:  "minimize_shadow1";
 	 transition: LINEAR 0.1;
       }
       program {
-	 name:    "button_2_passive_p";
+	 name:    "minimize_passive_p";
 	 action:  STATE_SET "default" 0.0;
-	 target:  "button_2_bg";
-	 target:  "button_2_detail";
+	 target:  "minimize_bg";
+	 target:  "minimize_detail";
 	 transition: LINEAR 0.2;
       }
       program {

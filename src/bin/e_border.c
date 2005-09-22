@@ -46,21 +46,8 @@ static int _e_border_cb_window_move_resize_request(void *data, int ev_type, void
 static int _e_border_cb_desktop_change(void *data, int ev_type, void *ev);
 static int _e_border_cb_sync_alarm(void *data, int ev_type, void *ev);
 
-static int _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
-
-static void _e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source);
+static int  _e_border_cb_pointer_warp(void *data, int ev_type, void *ev);
+static void _e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, const char *source);
 static int  _e_border_cb_mouse_in(void *data, int type, void *event);
 static int  _e_border_cb_mouse_out(void *data, int type, void *event);
 static int  _e_border_cb_mouse_wheel(void *data, int type, void *event);
@@ -1954,7 +1941,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	  {
 	     char source[256];
 	     
-	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
+	     snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
 	     _e_border_moveinfo_gather(bd, source);
 	  }
      }
@@ -2008,7 +1995,7 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 	  {
 	     char source[256];
 	     
-	     snprintf(source, sizeof(source) - 1, "mouse,%i", ev->button);
+	     snprintf(source, sizeof(source) - 1, "mouse,down,%i", ev->button);
 	     _e_border_moveinfo_gather(bd, source);
 	  }
      }
@@ -3511,26 +3498,18 @@ _e_border_cb_pointer_warp(void *data, int ev_type, void *ev)
    return 1;
 }
 
-static void
-_e_border_cb_signal_move_start(void *data, Evas_Object *obj, const char *emission, const char *source)
+void
+e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
 {
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_move_begin(bd))
-     return;
+   if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
    e_zone_flip_win_disable();
-   _e_border_moveinfo_gather(bd, source);
+   _e_border_moveinfo_gather(bd, sig);
 }
 
-static void
-_e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
+void
+e_border_signal_move_end(E_Border *bd, char *sig, char *src)
 {
-   E_Border *bd;
-
-   bd = data;
    if (!bd->moving) return;
    bd->moving = 0;
    e_zone_flip_win_restore();
@@ -3538,124 +3517,69 @@ _e_border_cb_signal_move_stop(void *data, Evas_Object *obj, const char *emission
    e_zone_flip_coords_handle(bd->zone, -1, -1);
 }
 
-static void
-_e_border_cb_signal_resize_tl_start(void *data, Evas_Object *obj, const char *emission, const char *source)
+int
+e_border_resizing_get(E_Border *bd)
 {
-   E_Border *bd;
+   if (bd->resize_mode == RESIZE_NONE) return 0;
+   return 1;
+}
 
-   bd = data;
+void
+e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
+{
+   Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
+   int resize_mode = RESIZE_BR;
 
    if (!_e_border_resize_begin(bd))
      return;
-   bd->resize_mode = RESIZE_TL;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_SE);
+   if (!strcmp(dir, "tl"))
+     {
+	resize_mode = RESIZE_TL;
+	grav = ECORE_X_GRAVITY_SE;
+     }
+   else if (!strcmp(dir, "t"))
+     {
+	resize_mode = RESIZE_T;
+	grav = ECORE_X_GRAVITY_S;
+     }
+   else if (!strcmp(dir, "tr"))
+     {
+	resize_mode = RESIZE_TR;
+	grav = ECORE_X_GRAVITY_SW;
+     }
+   else if (!strcmp(dir, "r"))
+     {
+	resize_mode = RESIZE_R;
+	grav = ECORE_X_GRAVITY_W;
+     }
+   else if (!strcmp(dir, "br"))
+     {
+	resize_mode = RESIZE_BR;
+	grav = ECORE_X_GRAVITY_NW;
+     }
+   else if (!strcmp(dir, "b"))
+     {
+	resize_mode = RESIZE_B;
+	grav = ECORE_X_GRAVITY_N;
+     }
+   else if (!strcmp(dir, "bl"))
+     {
+	resize_mode = RESIZE_BL;
+	grav = ECORE_X_GRAVITY_NE;
+     }
+   else if (!strcmp(dir, "l"))
+     {
+	resize_mode = RESIZE_L;
+	grav = ECORE_X_GRAVITY_E;
+     }
+   bd->resize_mode = resize_mode;
+   _e_border_moveinfo_gather(bd, sig);
+   GRAV_SET(bd, grav);
 }
 
-static void
-_e_border_cb_signal_resize_t_start(void *data, Evas_Object *obj, const char *emission, const char *source)
+void
+e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
 {
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_T;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_S);
-}
-
-static void
-_e_border_cb_signal_resize_tr_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_TR;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_SW);
-}
-
-static void
-_e_border_cb_signal_resize_r_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_R;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_W);
-}
-
-static void
-_e_border_cb_signal_resize_br_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_BR;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_NW);
-}
-
-static void
-_e_border_cb_signal_resize_b_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_B;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_N);
-}
-
-static void
-_e_border_cb_signal_resize_bl_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_BL;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_NE);
-}
-
-static void
-_e_border_cb_signal_resize_l_start(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   bd->resize_mode = RESIZE_L;
-   _e_border_moveinfo_gather(bd, source);
-   GRAV_SET(bd, ECORE_X_GRAVITY_E);
-}
-
-static void
-_e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   bd = data;
    if (bd->resize_mode == RESIZE_NONE) return;
    _e_border_resize_handle(bd);
    bd->resize_mode = RESIZE_NONE;
@@ -3665,98 +3589,14 @@ _e_border_cb_signal_resize_stop(void *data, Evas_Object *obj, const char *emissi
 }
 
 static void
-_e_border_cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_border_cb_signal_bind(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    E_Border *bd;
 
    bd = data;
-
    if (e_dnd_active()) return;
-
-   if (!strcmp(source, "close"))
-     {
-	if (!bd->lock_close)
-	  e_border_act_close_begin(bd);
-     }
-   else if (!strcmp(source, "shade_up") || !strcmp(source, "shade"))
-     {
-	if (!bd->lock_user_shade)
-	  {
-	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_UP);
-	     else e_border_shade(bd, E_DIRECTION_UP);
-	  }
-     }
-   else if (!strcmp(source, "shade_down"))
-     {
-	if (!bd->lock_user_shade)
-	  {
-	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_DOWN);
-	     else e_border_shade(bd, E_DIRECTION_DOWN);
-	  }
-     }
-   else if (!strcmp(source, "shade_left"))
-     {
-	if (!bd->lock_user_shade)
-	  {
-	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_LEFT);
-	     else e_border_shade(bd, E_DIRECTION_LEFT);
-	  }
-     }
-   else if (!strcmp(source, "shade_right"))
-     {
-	if (!bd->lock_user_shade)
-	  {
-	     if (bd->shaded) e_border_unshade(bd, E_DIRECTION_RIGHT);
-	     else e_border_shade(bd, E_DIRECTION_RIGHT);
-	  }
-     }
-   else if (!strcmp(source, "maximize"))
-     {
-	if (!bd->lock_user_maximize)
-	  {
-	     if (bd->maximized) e_border_unmaximize(bd);
-	     else e_border_maximize(bd, e_config->maximize_policy);
-	  }
-     }
-   else if (!strcmp(source, "iconify"))
-     {
-	if (!bd->lock_user_iconify)
-	  {
-	     if (bd->iconic) e_border_uniconify(bd);
-	     else e_border_iconify(bd);
-	  }
-     }
-   else if (!strcmp(source, "menu"))
-     {
-	Evas_Coord x, y;
-
-	evas_pointer_canvas_xy_get(bd->bg_evas , &x, &y);
-	_e_border_menu_show(bd, x + bd->x, y + bd->y, 0, 0);
-     }
-   else if (!strcmp(source, "raise"))
-     {
-	if (!bd->lock_user_stacking)
-	  e_border_raise(bd);
-     }
-   else if (!strcmp(source, "lower"))
-     {
-	if (!bd->lock_user_stacking)
-	  e_border_lower(bd);
-     }
-}
-
-static void
-_e_border_cb_signal_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
-{
-   E_Border *bd;
-
-   if (!strcmp(source, "icon"))
-     {
-	bd = data;
-	bd->drag.start = 1;
-	bd->drag.x = -1;
-	bd->drag.y = -1;
-     }
+   e_bindings_signal_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), 
+			    (char *)emission, (char *)source);
 }
 
 static int
@@ -4829,32 +4669,8 @@ _e_border_eval(E_Border *bd)
 	ecore_x_window_move(bd->client.shell_win, l, t);
 	if (bd->bg_object)
 	  {
-	     edje_object_signal_callback_add(bd->bg_object, "move_start", "*",
-					     _e_border_cb_signal_move_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "move_stop", "*",
-					     _e_border_cb_signal_move_stop, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_tl_start", "*",
-					     _e_border_cb_signal_resize_tl_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_t_start", "*",
-					     _e_border_cb_signal_resize_t_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_tr_start", "*",
-					     _e_border_cb_signal_resize_tr_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_r_start", "*",
-					     _e_border_cb_signal_resize_r_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_br_start", "*",
-					     _e_border_cb_signal_resize_br_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_b_start", "*",
-					     _e_border_cb_signal_resize_b_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_bl_start", "*",
-					     _e_border_cb_signal_resize_bl_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_l_start", "*",
-					     _e_border_cb_signal_resize_l_start, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "resize_stop", "*",
-					     _e_border_cb_signal_resize_stop, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "action", "*",
-					     _e_border_cb_signal_action, bd);
-	     edje_object_signal_callback_add(bd->bg_object, "drag", "*",
-					     _e_border_cb_signal_drag, bd);
+	     edje_object_signal_callback_add(bd->bg_object, "*", "*",
+					     _e_border_cb_signal_bind, bd);
 	     if (bd->focused)
 	       edje_object_signal_emit(bd->bg_object, "active", "");
 	     if (bd->shaded)
@@ -5518,9 +5334,9 @@ _e_border_resize_limit(E_Border *bd, int *w, int *h)
 static void
 _e_border_moveinfo_gather(E_Border *bd, const char *source)
 {
-   if (!strcmp(source, "mouse,1")) bd->moveinfo.down.button = 1;
-   else if (!strcmp(source, "mouse,2")) bd->moveinfo.down.button = 2;
-   else if (!strcmp(source, "mouse,3")) bd->moveinfo.down.button = 3;
+   if (e_util_glob_match(source, "mouse,*,1")) bd->moveinfo.down.button = 1;
+   else if (e_util_glob_match(source, "mouse,*,2")) bd->moveinfo.down.button = 2;
+   else if (e_util_glob_match(source, "mouse,*,3")) bd->moveinfo.down.button = 3;
    else bd->moveinfo.down.button = 0;
    if ((bd->moveinfo.down.button >= 1) && (bd->moveinfo.down.button <= 3))
      {

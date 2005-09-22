@@ -64,7 +64,6 @@ typedef enum _E_Window_Placement
    E_WINDOW_PLACEMENT_CURSOR
 } E_Window_Placement;
 
-
 typedef struct _E_Border                     E_Border;
 typedef struct _E_Border_Pending_Move_Resize E_Border_Pending_Move_Resize;
 typedef struct _E_Event_Border_Resize        E_Event_Border_Resize;
@@ -545,8 +544,14 @@ EAPI void e_border_resize_cancel(void);
 EAPI void e_border_frame_recalc(E_Border *bd);
 EAPI Evas_List *e_border_immortal_windows_get(void);
 
-const char *e_border_name_get(E_Border *bd);
+EAPI const char *e_border_name_get(E_Border *bd);
 
+EAPI void e_border_signal_move_begin(E_Border *bd, char *sig, char *src);
+EAPI void e_border_signal_move_end(E_Border *bd, char *sig, char *src);
+EAPI int  e_border_resizing_get(E_Border *bd);
+EAPI void e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src);
+EAPI void e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src);
+    
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;
