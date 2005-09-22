@@ -98,7 +98,6 @@ Some of the things (in very short form) that need to be done to E17...
 * add sliders, radio and check buttons for clientinfo pane
 * make xrandr support get rotation and store it
 * add separate app menu bars at top of screen support
-* theme about data/box
 * gui config tools for bg's, keybindings, etc. etc. etc.
 * "control panel" app to launch the gui config tools
 * make it possible to disable border buttons/actions (tell theme what is
