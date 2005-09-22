@@ -1,10 +1,6 @@
 images {
-   image: "e17_menu_bg_border.png" COMP;
    image: "e17_button2.png" COMP;
    image: "e17_button.png" COMP;
-   image: "e17_dialog_watermark.png" COMP;
-   image: "e17_about_bg_v.png" COMP;
-   image: "e17_about_over_v.png" COMP;
    image: "e17_logo.png" COMP;
    image: "e17_about_sky0.png" LOSSY 70;
    image: "e17_about_sky1.png" LOSSY 70;
@@ -32,25 +28,6 @@ group {
    min: 400 160;
    max: 400 160;
    parts {
-/*      
-      part {
-	 name:          "base";
-	 mouse_events:  0;
-	 type:          RECT;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       relative: 0.0  0.0;
-	       offset:   1    1;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -2   -2;
-	    }
-	    color: 221 221 221 255;
-	 }
-      }
- */
       part {
 	 name:          "sky";
 	 mouse_events:  0;
@@ -141,8 +118,6 @@ group {
 	 mouse_events:  0;
 	 description {
 	    state:    "default" 0.0;
-//	    max: 200 1000;
-//	    min: 200 0;
 	    rel1 {
 	       to_x: "logo";
 	       relative: 1.0 0.0;
@@ -269,99 +244,6 @@ group {
 	    }
 	 }
       }
-/*      
-      part {
-	 name:          "sky_over";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to: "sky";
-	    }
-	    rel2 {
-	       to: "sky";
-	    }
-	    image {
-	       normal: "e17_about_sky_overlay.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "about_bg";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to:       "about";
-	       offset:   -7 -7;
-	    }
-	    rel2 {
-	       to:       "about";
-	       offset:   6 6;
-	    }
-	    image {
-	       normal: "e17_about_bg_v.png";
-	       border: 7 7 7 7;
-	    }
-	 }
-      }
-      part {
-	 name:          "base2";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    min:      200 138;
-	    max:      200 138;
-	    align:    1.0 1.0;
-	    fixed:    1 1;
-	    rel1 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -1   -1;
-	    }
-	    image {
-	       normal: "e17_dialog_watermark.png";
-	    }
-	 }
-      }
-      part {
-	 name:          "base3";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    image {
-	       normal: "e17_menu_bg_border.png";
-	       border: 1 1 1 1;
-	       middle: 0;
-	    }
-	    fill {
-	       smooth: 0;
-	    }
-	 }
-      }
-*/
-/*      
-      part {
-	 name:          "about_over";
-	 mouse_events:  0;
-	 description {
-	    state:    "default" 0.0;
-	    rel1 {
-	       to:       "about_bg";
-	    }
-	    rel2 {
-	       to:       "about_bg";
-	    }
-	    image {
-	       normal: "e17_about_over_v.png";
-	       border: 13 13 13 13;
-	    }
-	 }
-      }
- */
       part {
 	 name:          "button";
 	 type:          IMAGE;
