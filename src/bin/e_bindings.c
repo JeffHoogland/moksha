@@ -165,6 +165,13 @@ e_bindings_init(void)
 			"mouse,up,1", "resize_*", E_BINDING_MODIFIER_NONE, 1, 
 			"window_resize", "end");
 
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,down,3", "resize_*", E_BINDING_MODIFIER_NONE, 1, 
+			"window_move", "");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER,
+			"mouse,up,3", "resize_*", E_BINDING_MODIFIER_NONE, 1, 
+			"window_move", "end");
+   
    return 1;
 }
 
