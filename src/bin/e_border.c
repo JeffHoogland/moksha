@@ -1773,6 +1773,7 @@ e_border_stick(E_Border *bd)
 //   printf("STICK!\n");
    bd->sticky = 1;
    e_hints_window_sticky_set(bd, 1);
+   e_border_show(bd);
 
    ev = E_NEW(E_Event_Border_Stick, 1);
    ev->border = bd;
