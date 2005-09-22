@@ -61,7 +61,8 @@ typedef enum _E_Fullscreen
 typedef enum _E_Window_Placement
 {
    E_WINDOW_PLACEMENT_SMART,
-   E_WINDOW_PLACEMENT_CURSOR
+   E_WINDOW_PLACEMENT_CURSOR,
+   E_WINDOW_PLACEMENT_MANUAL
 } E_Window_Placement;
 
 typedef struct _E_Border                     E_Border;

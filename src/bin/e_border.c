@@ -3421,11 +3421,6 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
      }
    else if (e->direction == MOVE)
      {
-	if (!_e_border_move_begin(bd))
-	  return 1;
-	bd->moving = 1;
-	e_zone_flip_win_disable();
-	
 	bd->cur_mouse_action = e_action_find("window_move");
 	if (bd->cur_mouse_action)
 	  {
@@ -3433,7 +3428,10 @@ _e_border_cb_window_move_resize_request(void *data, int ev_type, void *ev)
 		 (!bd->cur_mouse_action->func.end))
 	       bd->cur_mouse_action = NULL;
 	     if (bd->cur_mouse_action)
-	       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	       {
+		  e_object_ref(E_OBJECT(bd->cur_mouse_action));
+		  bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
+	       }
 	  }
      }
    return 1;
@@ -3860,8 +3858,6 @@ _e_border_cb_mouse_up(void *data, int type, void *event)
 	  }
 	bd->mouse.current.mx = ev->root.x;
 	bd->mouse.current.my = ev->root.y;
-	/* bug/problem. this action COULD be deleted during a move */
-	/* ... VERY unlikely though... VERY */
 	/* also we dont pass the same params that went in - then again that */
 	/* should be ok as we are just ending the action if it has an end */
 	if (bd->cur_mouse_action)
@@ -4835,6 +4831,11 @@ _e_border_eval(E_Border *bd)
 						      &new_x, &new_y);
 			    evas_list_free(skiplist);
 			 }
+		       else if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL)
+			 {
+			    e_place_zone_manual(bd->zone, bd->x, bd->w, bd->client_inset.t,
+						&new_x, &new_y);
+			 }
 		       else
 			 {
 			    e_place_zone_cursor(bd->zone, bd->x, bd->y, bd->w, bd->h, 
@@ -4886,7 +4887,7 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	     bd->changes.pos = 1;
 	  }
-	
+
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->client_inset.l,
 				       bd->y + bd->client_inset.t,
@@ -5211,6 +5212,42 @@ _e_border_eval(E_Border *bd)
      {
 	ecore_evas_show(bd->bg_ecore_evas);
 	ecore_x_window_show(bd->win);
+	if ((!bd->re_manage) &&
+	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
+	    (!move) && (!resize))
+	  {
+	     /* Set this window into moving state */
+	     int x, y;
+
+	     bd->cur_mouse_action = e_action_find("window_move");
+	     if (bd->cur_mouse_action)
+	       {
+		  if ((!bd->cur_mouse_action->func.end_mouse) &&
+			(!bd->cur_mouse_action->func.end))
+		    bd->cur_mouse_action = NULL;
+		  if (bd->cur_mouse_action)
+		    {
+		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
+
+		       bd->x = x - bd->w / 2;
+		       bd->y = y - bd->client_inset.t / 2;
+
+		       bd->moveinfo.down.x = bd->x;
+		       bd->moveinfo.down.y = bd->y;
+		       bd->moveinfo.down.w = bd->w;
+		       bd->moveinfo.down.h = bd->h;
+		       bd->mouse.current.mx = x;
+		       bd->mouse.current.my = y;
+		       bd->moveinfo.down.button = 0;
+		       bd->moveinfo.down.mx = x;
+		       bd->moveinfo.down.my = y;
+
+		       grabbed = 1;
+		       e_object_ref(E_OBJECT(bd->cur_mouse_action));
+		       bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
+		    }
+	       }
+	  }
 	bd->changes.visible = 0;
      }
    bd->new_client = 0;
@@ -6835,8 +6872,8 @@ _e_border_resize_begin(E_Border *bd)
 
    if (!bd->lock_user_stacking)
      e_border_raise(bd);
-   if ((bd->shaded) || (bd->shading) || (bd->maximized == E_MAXIMIZE_FULLSCREEN) || (bd->fullscreen) ||
-       (bd->lock_user_size))
+   if ((bd->shaded) || (bd->shading) || (bd->maximized == E_MAXIMIZE_FULLSCREEN) ||
+       (bd->fullscreen) || (bd->lock_user_size))
      return 0;
 
    if ((bd->client.icccm.base_w >= 0) &&
@@ -6863,7 +6900,7 @@ _e_border_resize_begin(E_Border *bd)
 	  h = bd->client.h;
      }
    if (grabbed)
-     ecore_x_pointer_grab(bd->win);
+     e_grabinput_get(bd->win, 0, bd->win);
    if (bd->client.netwm.sync.request)
      {
 	bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
@@ -6884,7 +6921,7 @@ static int
 _e_border_resize_end(E_Border *bd)
 {
    if (grabbed)
-     ecore_x_pointer_ungrab();
+     e_grabinput_release(bd->win, bd->win);
    grabbed = 0;
    if (bd->client.netwm.sync.alarm)
      {
@@ -6939,8 +6976,9 @@ _e_border_move_begin(E_Border *bd)
    if ((bd->maximized == E_MAXIMIZE_FULLSCREEN) || (bd->fullscreen) || (bd->lock_user_location))
      return 0;
 
+   printf("Grabbed: %d\n", grabbed);
    if (grabbed)
-     ecore_x_pointer_grab(bd->win);
+     e_grabinput_get(bd->win, 0, bd->win);
 #if 0
    if (bd->client.netwm.sync.request)
      {
@@ -6963,7 +7001,7 @@ static int
 _e_border_move_end(E_Border *bd)
 {
    if (grabbed)
-     ecore_x_pointer_ungrab();
+     e_grabinput_release(bd->win, bd->win);
    grabbed = 0;
 #if 0
    if (bd->client.netwm.sync.alarm)

@@ -957,7 +957,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);
    E_CONFIG_LIMIT(e_config->edge_flip_timeout, 0.0, 2.0);
-   E_CONFIG_LIMIT(e_config->window_placement_policy, 0, 1);
+   E_CONFIG_LIMIT(e_config->window_placement_policy, E_WINDOW_PLACEMENT_SMART, E_WINDOW_PLACEMENT_MANUAL);
    E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
    E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
    E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
