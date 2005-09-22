@@ -1830,7 +1830,7 @@ _pager_desk_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	e_menu_activate_mouse(pd->face->menu, pd->face->zone,
 			      ev->output.x, ev->output.y, 1, 1,
 			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-	e_util_container_fake_mouse_up_all_later(pd->face->zone->container);
+	e_util_container_fake_mouse_up_later(pd->face->zone->container, 3);
      }
 }
 
@@ -1843,7 +1843,7 @@ _pager_desk_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    desk = data;
 
-   if ((ev->button == 1) && !(desk->face->dragging))
+   if ((ev->button == 1) && (!desk->face->dragging))
      {
 	e_desk_show(desk->desk);
      }
@@ -1917,7 +1917,7 @@ _pager_window_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_i
    if (!pw) return;
 
    /* make this configurable */
-   if ((ev->button == 1))
+   if (ev->button == 1)
      {
 //	printf("DN: %d\n", pw);
 	pw->drag.start = 1;
