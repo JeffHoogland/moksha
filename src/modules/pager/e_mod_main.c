@@ -1338,6 +1338,9 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 	     pd = _pager_face_desk_find(face, ev->border->desk);
 	     if (pd)
 	       {
+		  Pager_Win *pw2 = NULL;
+		  E_Border *bd;
+
 		  /* remove it from whatever desk it was on */
 		  pw->desk->wins = evas_list_remove(pw->desk->wins, pw);
 		  e_layout_unpack(pw->window_object);
@@ -1348,7 +1351,21 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		  pd->wins = evas_list_append(pd->wins, pw);
 		  e_layout_pack(pd->layout_object, pw->window_object);
 		  e_layout_pack(pd->layout_object, pw->event_object);
-		  e_border_raise(pw->border);
+
+		  bd = e_util_desk_border_above(pw->border);
+		  if (bd)
+		    pw2 = _pager_desk_border_find(pd, bd);
+		  if (pw2)
+		    {
+		       e_layout_child_lower_below(pw->window_object, pw2->window_object);
+		       e_layout_child_raise_above(pw->event_object, pw->window_object);
+		    }
+		  else
+		    {
+		       e_layout_child_raise(pw->window_object);
+		       e_layout_child_raise_above(pw->event_object, pw->window_object);
+		    }
+
 		  _pager_window_move(face, pw);
 	       }
 	  }
@@ -1365,8 +1382,25 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		       pw = _pager_window_new(pd, ev->border);
 		       if (pw)
 			 {
+			    Pager_Win *pw2 = NULL;
+			    E_Border *bd;
+
 			    pd->wins = evas_list_append(pd->wins, pw);
-			    e_border_raise(pw->border);
+			    bd = e_util_desk_border_above(pw->border);
+			    if (bd)
+			      pw2 = _pager_desk_border_find(pd, bd);
+			    if (pw2)
+			      {
+				 e_layout_child_lower_below(pw->window_object, pw2->window_object);
+				 e_layout_child_raise_above(pw->event_object, pw->window_object);
+			      }
+			    else
+			      {
+				 e_layout_child_raise(pw->window_object);
+				 e_layout_child_raise_above(pw->event_object, pw->window_object);
+			      }
+
+			    _pager_window_move(face, pw);
 			 }
 		    }
 	       }
@@ -1380,8 +1414,25 @@ _pager_cb_event_border_desk_set(void *data, int type, void *event)
 		       pw = _pager_window_new(pd, ev->border);
 		       if (pw)
 			 {
+			    Pager_Win *pw2 = NULL;
+			    E_Border *bd;
+
 			    pd->wins = evas_list_append(pd->wins, pw);
-			    e_border_raise(pw->border);
+			    bd = e_util_desk_border_above(pw->border);
+			    if (bd)
+			      pw2 = _pager_desk_border_find(pd, bd);
+			    if (pw2)
+			      {
+				 e_layout_child_lower_below(pw->window_object, pw2->window_object);
+				 e_layout_child_raise_above(pw->event_object, pw->window_object);
+			      }
+			    else
+			      {
+				 e_layout_child_raise(pw->window_object);
+				 e_layout_child_raise_above(pw->event_object, pw->window_object);
+			      }
+
+			    _pager_window_move(face, pw);
 			 }
 		    }
 	       }
@@ -1441,7 +1492,8 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 			 }
 		       else
 			 {
-			    e_layout_child_raise(pw->window_object);
+			    /* If we aren't above any window, we are at the bottom */
+			    e_layout_child_lower(pw->window_object);
 			    e_layout_child_raise_above(pw->event_object, pw->window_object);
 			 }
 		    }
@@ -1454,7 +1506,8 @@ _pager_cb_event_border_stack(void *data, int type, void *event)
 			 }
 		       else
 			 {
-			    e_layout_child_lower(pw->window_object);
+			    /* If we aren't below any window, we are at the top */
+			    e_layout_child_raise(pw->window_object);
 			    e_layout_child_raise_above(pw->event_object, pw->window_object);
 			 }
 		    }
