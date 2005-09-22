@@ -54,6 +54,10 @@ typedef struct _E_Response_Binding_Mouse_List E_Response_Binding_Mouse_List;
 typedef struct _E_Response_Binding_Mouse_Data E_Response_Binding_Mouse_Data;
 typedef struct _E_Response_Binding_Key_List E_Response_Binding_Key_List;
 typedef struct _E_Response_Binding_Key_Data E_Response_Binding_Key_Data;
+typedef struct _E_Response_Binding_Signal_List E_Response_Binding_Signal_List;
+typedef struct _E_Response_Binding_Signal_Data E_Response_Binding_Signal_Data;
+typedef struct _E_Response_Binding_Wheel_List E_Response_Binding_Wheel_List;
+typedef struct _E_Response_Binding_Wheel_Data E_Response_Binding_Wheel_Data;
 
 struct _E_Response_Module_List
 {
@@ -121,6 +125,41 @@ struct _E_Response_Binding_Mouse_Data
    char *params;
 };
 
+struct _E_Response_Binding_Signal_List
+{
+    E_Response_Binding_Signal_Data **bindings;
+    int				     count;
+};
+
+struct _E_Response_Binding_Signal_Data
+{
+   E_Lib_Binding_Context ctx;
+   char *signal;
+   char *source;
+   E_Lib_Binding_Modifier mod;
+   unsigned char any_mod : 1;
+   char *action;
+   char *params;
+};
+
+struct _E_Response_Binding_Wheel_List
+{
+    E_Response_Binding_Wheel_Data  **bindings;
+    int				     count;
+};
+
+struct _E_Response_Binding_Wheel_Data
+{
+   E_Lib_Binding_Context ctx;
+   int direction;
+   int z;
+   E_Lib_Binding_Modifier mod;
+   unsigned char any_mod : 1;
+   char *action;
+   char *params;
+};
+
+
 extern EAPI int E_RESPONSE_MODULE_LIST;
 extern EAPI int E_RESPONSE_BACKGROUND_GET;
 extern EAPI int E_RESPONSE_LANGUAGE_GET;
@@ -137,6 +176,8 @@ extern EAPI int E_RESPONSE_BACKGROUND_DIRS_LIST;
 
 extern EAPI int E_RESPONSE_BINDING_KEY_LIST;
 extern EAPI int E_RESPONSE_BINDING_MOUSE_LIST;
+extern EAPI int E_RESPONSE_BINDING_SIGNAL_LIST;
+extern EAPI int E_RESPONSE_BINDING_WHEEL_LIST;
 
 #ifdef __cplusplus
 extern "C" {

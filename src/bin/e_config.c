@@ -28,6 +28,8 @@ static E_Config_DD *_e_config_font_default_edd = NULL;
 static E_Config_DD *_e_config_theme_edd = NULL;
 static E_Config_DD *_e_config_bindings_mouse_edd = NULL;
 static E_Config_DD *_e_config_bindings_key_edd = NULL;
+static E_Config_DD *_e_config_bindings_signal_edd = NULL;
+static E_Config_DD *_e_config_bindings_wheel_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
@@ -158,6 +160,32 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
 
+   _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal", E_Config_Binding_Signal);
+#undef T
+#undef D
+#define T E_Config_Binding_Signal
+#define D _e_config_bindings_signal_edd
+   E_CONFIG_VAL(D, T, context, INT);
+   E_CONFIG_VAL(D, T, signal, STR);
+   E_CONFIG_VAL(D, T, source, STR);
+   E_CONFIG_VAL(D, T, modifiers, INT);
+   E_CONFIG_VAL(D, T, any_mod, UCHAR);
+   E_CONFIG_VAL(D, T, action, STR);
+   E_CONFIG_VAL(D, T, params, STR);
+
+   _e_config_bindings_wheel_edd = E_CONFIG_DD_NEW("E_Config_Binding_Wheel", E_Config_Binding_Wheel);
+#undef T
+#undef D
+#define T E_Config_Binding_Wheel
+#define D _e_config_bindings_wheel_edd
+   E_CONFIG_VAL(D, T, context, INT);
+   E_CONFIG_VAL(D, T, direction, INT);
+   E_CONFIG_VAL(D, T, z, INT);
+   E_CONFIG_VAL(D, T, modifiers, INT);
+   E_CONFIG_VAL(D, T, any_mod, UCHAR);
+   E_CONFIG_VAL(D, T, action, STR);
+   E_CONFIG_VAL(D, T, params, STR);
+
    _e_config_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
 #undef T
 #undef D
@@ -247,6 +275,8 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, themes, _e_config_theme_edd); /**/
    E_CONFIG_LIST(D, T, mouse_bindings, _e_config_bindings_mouse_edd); /**/
    E_CONFIG_LIST(D, T, key_bindings, _e_config_bindings_key_edd); /**/
+   E_CONFIG_LIST(D, T, signal_bindings, _e_config_bindings_signal_edd); /**/
+   E_CONFIG_LIST(D, T, wheel_bindings, _e_config_bindings_wheel_edd); /**/
    E_CONFIG_LIST(D, T, path_append_data, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_images, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_fonts, _e_config_path_append_edd); /**/
@@ -931,6 +961,372 @@ e_config_init(void)
     */
    /* ALT Return      - fullscreen window */
 	  }
+	  {
+	     E_Config_Binding_Signal *eb;
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1,double");
+	     eb->source= strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_shaded_toggle");
+	     eb->params = strdup("up");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,2");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_shaded_toggle");
+	     eb->params = strdup("up");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,wheel,?,1");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_shaded");
+	     eb->params = strdup("0 up");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,wheel,?,-1");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_shaded");
+	     eb->params = strdup("1 up");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,?");
+	     eb->source = strdup("icon");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_menu");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,[12]");
+	     eb->source = strdup("close");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_close");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,3");
+	     eb->source = strdup("close");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_kill");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,1");
+	     eb->source = strdup("maximize");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_maximized_toggle");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,2");
+	     eb->source = strdup("maximize");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_maximized_toggle");
+	     eb->params = strdup("smart");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,3");
+	     eb->source = strdup("maximize");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_maximized_toggle");
+	     eb->params = strdup("expand");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,?");
+	     eb->source = strdup("minimize");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_iconic_toggle");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("icon");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_drag_icon");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_move");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,up,1");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_move");
+	     eb->params = strdup("end");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_tl");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("tl");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_t");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("t");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_tr");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("tr");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_r");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("r");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_br");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("br");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_b");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("b");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_bl");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("bl");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,1");
+	     eb->source = strdup("resize_l");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("l");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,up,1");
+	     eb->source = strdup("resize_*");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_resize");
+	     eb->params = strdup("end");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,down,3");
+	     eb->source = strdup("resize_*");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_move");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,up,3");
+	     eb->source = strdup("resize_*");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_move");
+	     eb->params = strdup("end");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+	  }
+	  {
+	     E_Config_Binding_Wheel *eb;
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_CONTAINER;
+	     eb->direction = 0;
+	     eb->z = -1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("-1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_CONTAINER;
+	     eb->direction = 0;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_CONTAINER;
+	     eb->direction = 1;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_POPUP;
+	     eb->direction = 0;
+	     eb->z = -1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("-1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_POPUP;
+	     eb->direction = 1;
+	     eb->z = -1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("-1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_POPUP;
+	     eb->direction = 0;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_POPUP;
+	     eb->direction = 1;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->direction = 0;
+	     eb->z = -1;
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("-1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->direction = 1;
+	     eb->z = -1;
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("-1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->direction = 0;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+
+	     eb = E_NEW(E_Config_Binding_Wheel, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->direction = 1;
+	     eb->z = 1;
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup("desk_linear_flip_by");
+	     eb->params = strdup("1");
+	     e_config->wheel_bindings = evas_list_append(e_config->wheel_bindings, eb);
+	  }
 	e_config_save_queue();
      }
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
@@ -1020,6 +1416,8 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_theme_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_mouse_edd);
    E_CONFIG_DD_FREE(_e_config_bindings_key_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_signal_edd);
+   E_CONFIG_DD_FREE(_e_config_bindings_wheel_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
@@ -1242,7 +1640,7 @@ e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
 	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->action, eb_in->action)))
+	    (!strcmp(eb->params, eb_in->params)))
 	  return eb;
      }
    return NULL;
@@ -1263,7 +1661,51 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 	    (eb->any_mod == eb_in->any_mod) &&
 	    (!strcmp(eb->key, eb_in->key)) &&
 	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->action, eb_in->action)))
+	    (!strcmp(eb->params, eb_in->params)))
+	  return eb;
+     }
+   return NULL;
+}
+
+E_Config_Binding_Signal *
+e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
+{
+   Evas_List *l;
+   
+   for (l = e_config->signal_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Signal *eb;
+	
+	eb = l->data;
+	if ((eb->context == eb_in->context) &&
+	    (eb->modifiers == eb_in->modifiers) &&
+	    (eb->any_mod == eb_in->any_mod) &&
+	    (!strcmp(eb->signal, eb_in->signal)) &&
+	    (!strcmp(eb->source, eb_in->source)) &&
+	    (!strcmp(eb->action, eb_in->action)) &&
+	    (!strcmp(eb->params, eb_in->params)))
+	  return eb;
+     }
+   return NULL;
+}
+
+E_Config_Binding_Wheel *
+e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
+{
+   Evas_List *l;
+   
+   for (l = e_config->wheel_bindings; l; l = l->next)
+     {
+	E_Config_Binding_Wheel *eb;
+	
+	eb = l->data;
+	if ((eb->context == eb_in->context) &&
+	    (eb->direction == eb_in->direction) &&
+	    (eb->z == eb_in->z) &&
+	    (eb->modifiers == eb_in->modifiers) &&
+	    (eb->any_mod == eb_in->any_mod) &&
+	    (!strcmp(eb->action, eb_in->action)) &&
+	    (!strcmp(eb->params, eb_in->params)))
 	  return eb;
      }
    return NULL;
@@ -1339,6 +1781,28 @@ _e_config_free(void)
 	     eb = e_config->key_bindings->data;
 	     e_config->key_bindings  = evas_list_remove_list(e_config->key_bindings, e_config->key_bindings);
 	     E_FREE(eb->key);
+	     E_FREE(eb->action);
+	     E_FREE(eb->params);
+	     E_FREE(eb);
+	  }
+	while (e_config->signal_bindings)
+	  {
+	     E_Config_Binding_Signal *eb;
+	     
+	     eb = e_config->signal_bindings->data;
+	     e_config->signal_bindings  = evas_list_remove_list(e_config->signal_bindings, e_config->signal_bindings);
+	     E_FREE(eb->signal);
+	     E_FREE(eb->source);
+	     E_FREE(eb->action);
+	     E_FREE(eb->params);
+	     E_FREE(eb);
+	  }
+	while (e_config->wheel_bindings)
+	  {
+	     E_Config_Binding_Wheel *eb;
+	     
+	     eb = e_config->wheel_bindings->data;
+	     e_config->wheel_bindings  = evas_list_remove_list(e_config->wheel_bindings, e_config->wheel_bindings);
 	     E_FREE(eb->action);
 	     E_FREE(eb->params);
 	     E_FREE(eb);

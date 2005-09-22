@@ -220,18 +220,9 @@ E_Zone *
 e_zone_current_get(E_Container *con)
 {
    Evas_List *l;
-   E_Border *bd;
-   
+ 
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-/*   
-   bd = e_border_focused_get();
-   if (bd)
-     {
-	return bd->zone;
-     }
-   else 
- */
   if (!starting)
      {
 	int x, y;

@@ -36,6 +36,8 @@ typedef struct _E_Config_Module             E_Config_Module;
 typedef struct _E_Config_Theme              E_Config_Theme;
 typedef struct _E_Config_Binding_Mouse      E_Config_Binding_Mouse;
 typedef struct _E_Config_Binding_Key        E_Config_Binding_Key;
+typedef struct _E_Config_Binding_Signal     E_Config_Binding_Signal;
+typedef struct _E_Config_Binding_Wheel      E_Config_Binding_Wheel;
 typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
 typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef Eet_Data_Descriptor                 E_Config_DD;
@@ -48,7 +50,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 124
+#define E_CONFIG_FILE_VERSION 125
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -91,6 +93,8 @@ struct _E_Config
    Evas_List  *themes;
    Evas_List  *mouse_bindings;
    Evas_List  *key_bindings;
+   Evas_List  *signal_bindings;
+   Evas_List  *wheel_bindings;
    Evas_List  *path_append_data;
    Evas_List  *path_append_images;
    Evas_List  *path_append_fonts;
@@ -190,6 +194,28 @@ struct _E_Config_Binding_Key
    unsigned char  any_mod;
 };
 
+struct _E_Config_Binding_Signal
+{
+   int            context;
+   char          *signal;
+   char          *source;
+   int            modifiers;
+   unsigned char  any_mod;
+   char          *action;
+   char          *params;
+};
+
+struct _E_Config_Binding_Wheel
+{
+   int            context;
+   int            direction;
+   int            z;
+   int            modifiers;
+   unsigned char  any_mod;
+   char          *action;
+   char          *params;
+};
+
 struct _E_Config_Desktop_Background
 {
    int            container;
@@ -228,8 +254,10 @@ EAPI void      *e_config_domain_load(char *domain, E_Config_DD *edd);
 EAPI int        e_config_profile_save(void);
 EAPI int        e_config_domain_save(char *domain, E_Config_DD *edd, void *data);
 
-EAPI E_Config_Binding_Mouse *e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in);
-EAPI E_Config_Binding_Key   *e_config_binding_key_match(E_Config_Binding_Key *eb_in);
+EAPI E_Config_Binding_Mouse  *e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in);
+EAPI E_Config_Binding_Key    *e_config_binding_key_match(E_Config_Binding_Key *eb_in);
+EAPI E_Config_Binding_Signal *e_config_binding_signal_match(E_Config_Binding_Signal *eb_in);
+EAPI E_Config_Binding_Wheel  *e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in);
     
 extern EAPI E_Config *e_config;
 

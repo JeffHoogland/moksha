@@ -18,6 +18,10 @@ static Eet_Data_Descriptor *_e_ipc_2str_int_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_2str_int_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_4int_2str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_4int_2str_list_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_5int_2str_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_5int_2str_list_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_3int_4str_edd = NULL;
+static Eet_Data_Descriptor *_e_ipc_3int_4str_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_list_edd = NULL;
 
@@ -74,6 +78,30 @@ e_ipc_codec_init(void)
    _e_ipc_4int_2str_list_edd = E_CONFIG_DD_NEW("4int_2str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_4int_2str_list_edd, E_Ipc_List, list, _e_ipc_4int_2str_edd);
 
+   _e_ipc_5int_2str_edd = E_CONFIG_DD_NEW("5int_2str", E_Ipc_5Int_2Str);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val1, INT);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val2, INT);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val3, INT);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val4, INT);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val5, INT);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, str1, STR);
+   E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, str2, STR);
+
+   _e_ipc_5int_2str_list_edd = E_CONFIG_DD_NEW("5int_2str_list", E_Ipc_List);
+   E_CONFIG_LIST(_e_ipc_5int_2str_list_edd, E_Ipc_List, list, _e_ipc_5int_2str_edd);
+
+   _e_ipc_3int_4str_edd = E_CONFIG_DD_NEW("3int_4str", E_Ipc_3Int_4Str);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val1, INT);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val2, INT);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val3, INT);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str1, STR);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str2, STR);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str3, STR);
+   E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str4, STR);
+
+   _e_ipc_3int_4str_list_edd = E_CONFIG_DD_NEW("3int_4str_list", E_Ipc_List);
+   E_CONFIG_LIST(_e_ipc_3int_4str_list_edd, E_Ipc_List, list, _e_ipc_3int_4str_edd);
+
    _e_ipc_3int_3str_edd = E_CONFIG_DD_NEW("3int_3str", E_Ipc_3Int_3Str);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, val1, INT);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, val2, INT);
@@ -103,6 +131,8 @@ e_ipc_codec_shutdown(void)
    E_CONFIG_DD_FREE(_e_ipc_2str_int_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_4int_2str_edd);
    E_CONFIG_DD_FREE(_e_ipc_4int_2str_list_edd);
+   E_CONFIG_DD_FREE(_e_ipc_3int_4str_edd);
+   E_CONFIG_DD_FREE(_e_ipc_3int_4str_list_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_3str_edd);
    E_CONFIG_DD_FREE(_e_ipc_3int_3str_list_edd);
 }
@@ -423,6 +453,102 @@ e_ipc_codec_4int_2str_list_enc(Evas_List *list, int *size_ret)
    E_Ipc_List dat;
    dat.list = list;
    return eet_data_descriptor_encode(_e_ipc_4int_2str_list_edd, &dat, size_ret);
+}
+
+int
+e_ipc_codec_5int_2str_dec(char *data, int bytes, E_Ipc_5Int_2Str **dest)
+{
+   E_Ipc_5Int_2Str *dat;
+
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_5int_2str_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat;
+   return 1;
+}
+
+void *
+e_ipc_codec_5int_2str_enc(int val1, int val2, int val3, int val4, int val5, char *str1, char *str2, int *size_ret)
+{
+   E_Ipc_5Int_2Str dat;
+
+   dat.val1 = val1;
+   dat.val2 = val2;
+   dat.val3 = val3;
+   dat.val4 = val4;
+   dat.val5 = val5;
+   dat.str1 = str1;
+   dat.str2 = str2;
+   return eet_data_descriptor_encode(_e_ipc_5int_2str_edd, &dat, size_ret);   
+}
+
+int
+e_ipc_codec_5int_2str_list_dec(char *data, int bytes, Evas_List **dest)
+{
+   E_Ipc_List *dat;
+
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_5int_2str_list_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat->list;
+   free(dat);
+   return 1;
+}
+
+void *
+e_ipc_codec_5int_2str_list_enc(Evas_List *list, int *size_ret)
+{
+   E_Ipc_List dat;
+   dat.list = list;
+   return eet_data_descriptor_encode(_e_ipc_5int_2str_list_edd, &dat, size_ret);
+}
+
+int
+e_ipc_codec_3int_4str_dec(char *data, int bytes, E_Ipc_3Int_4Str **dest)
+{
+   E_Ipc_3Int_4Str *dat;
+
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_3int_4str_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat;
+   return 1;
+}
+
+void *
+e_ipc_codec_3int_4str_enc(int val1, int val2, int val3, char *str1, char *str2, char *str3, char *str4, int *size_ret)
+{
+   E_Ipc_3Int_4Str dat;
+
+   dat.val1 = val1;
+   dat.val2 = val2;
+   dat.val3 = val3;
+   dat.str1 = str1;
+   dat.str2 = str2;
+   dat.str3 = str3;
+   dat.str4 = str4;
+   return eet_data_descriptor_encode(_e_ipc_3int_4str_edd, &dat, size_ret);   
+}
+
+int
+e_ipc_codec_3int_4str_list_dec(char *data, int bytes, Evas_List **dest)
+{
+   E_Ipc_List *dat;
+
+   if (!data) return 0;
+   dat = eet_data_descriptor_decode(_e_ipc_3int_4str_list_edd, data, bytes);
+   if (!dat) return 0;
+   if (dest) *dest = dat->list;
+   free(dat);
+   return 1;
+}
+
+void *
+e_ipc_codec_3int_4str_list_enc(Evas_List *list, int *size_ret)
+{
+   E_Ipc_List dat;
+   dat.list = list;
+   return eet_data_descriptor_encode(_e_ipc_3int_4str_list_edd, &dat, size_ret);
 }
 
 int
