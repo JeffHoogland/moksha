@@ -24,7 +24,6 @@ static void _e_int_menus_quit                (void);
 static void _e_int_menus_quit_cb             (void *data);
 static void _e_int_menus_main_del_hook       (void *obj);
 static void _e_int_menus_main_about          (void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_int_menus_main_theme_about    (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_run            (void *data, E_Menu *m, E_Menu_Item*mi);
 static void _e_int_menus_main_restart        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_main_exit           (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -35,7 +34,7 @@ static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
-static void _e_int_menus_config_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_clients_free_hook   (void *obj);
 static void _e_int_menus_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -50,6 +49,7 @@ static void _e_int_menus_gadgets_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_gadgets_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_themes_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_themes_edit_mode_cb (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_themes_about        (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_lost_clients_pre_cb      (void *data, E_Menu *m);
 static void _e_int_menus_lost_clients_free_hook   (void *obj);
 static void _e_int_menus_lost_clients_item_cb     (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -134,11 +134,6 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("About Enlightenment"));   
    e_util_menu_item_edje_icon_set(mi, "enlightenment/e");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("About This Theme"));   
-   e_util_menu_item_edje_icon_set(mi, "enlightenment/theme");
-   e_menu_item_callback_set(mi, _e_int_menus_main_theme_about, NULL);
 
    if (ecore_file_app_installed("exige"))
      {
@@ -365,7 +360,7 @@ _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_e_int_menus_main_theme_about(void *data, E_Menu *m, E_Menu_Item *mi)
+_e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Theme_About *about;
    
@@ -789,6 +784,15 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    root = e_menu_root_get(m);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("About This Theme"));   
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/theme");
+   e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
    if ((root) && (root->zone))
      {
 	char buf[4096];
@@ -856,11 +860,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  ecore_list_destroy(themes);
 	       }
 	  }
-     }
-   if (num == 0)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("(Empty)"));
      }
 }
 
