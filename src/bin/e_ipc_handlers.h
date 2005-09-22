@@ -5476,8 +5476,6 @@ break;
    bind.params = v->str4;
 
    eb = e_config_binding_signal_match(&bind);
-   printf("add: %p\n", eb);
-   printf("param: %d %s %s %d %d %s %s\n", bind.context, bind.signal, bind.source, bind.modifiers, bind.any_mod, bind.action, bind.params);
    if (!eb)
      {
         eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -5585,8 +5583,6 @@ break;
    bind.params = v->str4;
    
    eb = e_config_binding_signal_match(&bind);
-   printf("del: %p\n", eb);
-   printf("param: %d %s %s %d %d %s %s\n", bind.context, bind.signal, bind.source, bind.modifiers, bind.any_mod, bind.action, bind.params);
    if (eb)
      {
 	e_config->signal_bindings = evas_list_remove(e_config->signal_bindings, eb);

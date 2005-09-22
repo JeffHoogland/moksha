@@ -6978,7 +6978,6 @@ _e_border_move_begin(E_Border *bd)
    if ((bd->maximized == E_MAXIMIZE_FULLSCREEN) || (bd->fullscreen) || (bd->lock_user_location))
      return 0;
 
-   printf("Grabbed: %d\n", grabbed);
    if (grabbed)
      e_grabinput_get(bd->win, 0, bd->win);
 #if 0
