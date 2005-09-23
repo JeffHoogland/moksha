@@ -46,7 +46,7 @@ install: build
 
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp/
 
-	$(INSTALL) -d debian/$(package)-dev/usr/share/doc/$(package)-dev/html
+	#$(INSTALL) -d debian/$(package)-dev/usr/share/doc/$(package)-dev/html
 
 binary-indep: build install
 
@@ -58,7 +58,7 @@ binary-arch: build install
 	dh_installdocs AUTHORS README
 	dh_installchangelogs
 	dh_link
-	dh_strip
+#	dh_strip
 	dh_compress
 	dh_fixperms
 	dh_makeshlibs
