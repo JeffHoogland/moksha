@@ -140,13 +140,16 @@ e_module_new(char *name)
      }
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	char buf[4096];
+	char buf[4096], title[1024];
 	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
 				     "It requires a minimum module API version of: %i.<br>"
 				     "The module API advertized by Enlightenment is: %i.<br>"), 
 				   _(m->api->name), E_MODULE_API_VERSION, m->api->version);
 
-	e_module_dialog_show(_("Enlightenment Clock Module"), buf);
+	snprintf(title, sizeof(title), _("Enlightenment %s Module"), _(m->api->name));
+
+	e_module_dialog_show(title, buf);
+
 	dlclose(m->handle);
 	free(m);
 	return NULL;
