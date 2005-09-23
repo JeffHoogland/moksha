@@ -5214,6 +5214,7 @@ _e_border_eval(E_Border *bd)
 	ecore_x_window_show(bd->win);
 	if ((!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
+	    (!bd->client.icccm.transient_for) &&
 	    (!move) && (!resize))
 	  {
 	     /* Set this window into moving state */
