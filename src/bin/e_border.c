@@ -57,7 +57,6 @@ static int  _e_border_cb_mouse_move(void *data, int type, void *event);
 static int  _e_border_cb_grab_replay(void *data, int type, void *event);
 
 static void _e_border_eval(E_Border *bd);
-static void _e_border_resize_limit(E_Border *bd, int *w, int *h);
 static void _e_border_moveinfo_gather(E_Border *bd, const char *source);
 static void _e_border_resize_handle(E_Border *bd);
 
@@ -1476,7 +1475,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 	      w = bd->zone->w;
 	      h = bd->zone->h;
 	      /* center x-direction */
-	      _e_border_resize_limit(bd, &w, &h);
+	      e_border_resize_limit(bd, &w, &h);
 	      x1 = bd->zone->x + (bd->zone->w - w) / 2;
 	      /* center y-direction */
 	      y1 = bd->zone->y + (bd->zone->h - h) / 2;
@@ -1497,7 +1496,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 
 	      w = x2 - x1;
 	      h = y2 - y1;
-	      _e_border_resize_limit(bd, &w, &h);
+	      e_border_resize_limit(bd, &w, &h);
 	      e_border_move_resize(bd, x1, y1, w, h);
 	      edje_object_signal_emit(bd->bg_object, "maximize", "");
 	      break;
@@ -1515,7 +1514,7 @@ e_border_maximize(E_Border *bd, E_Maximize max)
 
 	      w = x2 - x1;
 	      h = y2 - y1;
-	      _e_border_resize_limit(bd, &w, &h);
+	      e_border_resize_limit(bd, &w, &h);
 	      e_border_move_resize(bd, x1, y1, w, h);
 	      break;
 	  }
@@ -1627,7 +1626,7 @@ e_border_fullscreen(E_Border *bd)
 	y = bd->zone->y;
 	w = bd->zone->w;
 	h = bd->zone->h;
-	_e_border_resize_limit(bd, &w, &h);
+	e_border_resize_limit(bd, &w, &h);
 	/* center */
 	x = x + (bd->zone->w - w) / 2;
 	y = y + (bd->zone->h - h) / 2;
@@ -2294,6 +2293,174 @@ e_border_name_get(E_Border *bd)
      return bd->client.icccm.title;
    else
      return "";
+}
+
+
+void
+e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
+{
+   if (!_e_border_move_begin(bd)) return;
+   bd->moving = 1;
+   e_zone_flip_win_disable();
+   _e_border_moveinfo_gather(bd, sig);
+}
+
+void
+e_border_signal_move_end(E_Border *bd, char *sig, char *src)
+{
+   if (!bd->moving) return;
+   bd->moving = 0;
+   e_zone_flip_win_restore();
+   _e_border_move_end(bd);
+   e_zone_flip_coords_handle(bd->zone, -1, -1);
+}
+
+int
+e_border_resizing_get(E_Border *bd)
+{
+   if (bd->resize_mode == RESIZE_NONE) return 0;
+   return 1;
+}
+
+void
+e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
+{
+   Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
+   int resize_mode = RESIZE_BR;
+
+   if (!_e_border_resize_begin(bd))
+     return;
+   if (!strcmp(dir, "tl"))
+     {
+	resize_mode = RESIZE_TL;
+	grav = ECORE_X_GRAVITY_SE;
+     }
+   else if (!strcmp(dir, "t"))
+     {
+	resize_mode = RESIZE_T;
+	grav = ECORE_X_GRAVITY_S;
+     }
+   else if (!strcmp(dir, "tr"))
+     {
+	resize_mode = RESIZE_TR;
+	grav = ECORE_X_GRAVITY_SW;
+     }
+   else if (!strcmp(dir, "r"))
+     {
+	resize_mode = RESIZE_R;
+	grav = ECORE_X_GRAVITY_W;
+     }
+   else if (!strcmp(dir, "br"))
+     {
+	resize_mode = RESIZE_BR;
+	grav = ECORE_X_GRAVITY_NW;
+     }
+   else if (!strcmp(dir, "b"))
+     {
+	resize_mode = RESIZE_B;
+	grav = ECORE_X_GRAVITY_N;
+     }
+   else if (!strcmp(dir, "bl"))
+     {
+	resize_mode = RESIZE_BL;
+	grav = ECORE_X_GRAVITY_NE;
+     }
+   else if (!strcmp(dir, "l"))
+     {
+	resize_mode = RESIZE_L;
+	grav = ECORE_X_GRAVITY_E;
+     }
+   bd->resize_mode = resize_mode;
+   _e_border_moveinfo_gather(bd, sig);
+   GRAV_SET(bd, grav);
+}
+
+void
+e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
+{
+   if (bd->resize_mode == RESIZE_NONE) return;
+   _e_border_resize_handle(bd);
+   bd->resize_mode = RESIZE_NONE;
+   _e_border_resize_end(bd);
+   bd->changes.reset_gravity = 1;
+   bd->changed = 1;
+}
+
+void
+e_border_resize_limit(E_Border *bd, int *w, int *h)
+{
+   double a;
+
+   *w -= bd->client_inset.l + bd->client_inset.r;
+   *h -= bd->client_inset.t + bd->client_inset.b;
+   if (*h < 1) *h = 1;
+   if (*w < 1) *w = 1;
+   if ((bd->client.icccm.base_w >= 0) &&
+       (bd->client.icccm.base_h >= 0))
+     {
+	int tw, th;
+	
+	tw = *w - bd->client.icccm.base_w;
+	th = *h - bd->client.icccm.base_h;
+	if (tw < 1) tw = 1;
+	if (th < 1) th = 1;
+	a = (double)(tw) / (double)(th);
+	if ((bd->client.icccm.min_aspect != 0.0) &&
+	    (a < bd->client.icccm.min_aspect))
+	  {
+	     th = tw / bd->client.icccm.max_aspect;
+	     *h = th + bd->client.icccm.base_h;
+	  }
+	else if ((bd->client.icccm.max_aspect != 0.0) &&
+		 (a > bd->client.icccm.max_aspect))
+	  {
+	     tw = th * bd->client.icccm.max_aspect;
+	     *w = tw + bd->client.icccm.base_w;
+	  }
+     }
+   else
+     {
+	a = (double)*w / (double)*h;
+	if ((bd->client.icccm.min_aspect != 0.0) &&
+	    (a < bd->client.icccm.min_aspect))
+	  *h = *w / bd->client.icccm.min_aspect;
+	else if ((bd->client.icccm.max_aspect != 0.0) &&
+		 (a > bd->client.icccm.max_aspect))
+	  *w = *h * bd->client.icccm.max_aspect;
+     }
+   if (bd->client.icccm.step_w > 0)
+     {
+	if (bd->client.icccm.base_w >= 0)
+	  *w = bd->client.icccm.base_w +
+	  (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
+	   bd->client.icccm.step_w);
+	else
+	  *w = bd->client.icccm.min_w +
+	  (((*w - bd->client.icccm.min_w) / bd->client.icccm.step_w) *
+	   bd->client.icccm.step_w);
+     }
+   if (bd->client.icccm.step_h > 0)
+     {
+	if (bd->client.icccm.base_h >= 0)
+	  *h = bd->client.icccm.base_h +
+	  (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
+	   bd->client.icccm.step_h);
+	else
+	  *h = bd->client.icccm.min_h +
+	  (((*h - bd->client.icccm.min_h) / bd->client.icccm.step_h) *
+	   bd->client.icccm.step_h);
+     }
+
+   if (*h < 1) *h = 1;
+   if (*w < 1) *w = 1;
+
+   if      (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
+   else if (*w < bd->client.icccm.min_w) *w = bd->client.icccm.min_w;
+   if      (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
+   else if (*h < bd->client.icccm.min_h) *h = bd->client.icccm.min_h;
+
+   *w += bd->client_inset.l + bd->client_inset.r;
+   *h += bd->client_inset.t + bd->client_inset.b;
 }
 
 /* local subsystem functions */
@@ -3494,96 +3661,6 @@ _e_border_cb_pointer_warp(void *data, int ev_type, void *ev)
    if (!move) return 1;
    e_border_move(move, move->x + (e->curr.x - e->prev.x), move->y + (e->curr.y - e->prev.y));
    return 1;
-}
-
-void
-e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
-{
-   if (!_e_border_move_begin(bd)) return;
-   bd->moving = 1;
-   e_zone_flip_win_disable();
-   _e_border_moveinfo_gather(bd, sig);
-}
-
-void
-e_border_signal_move_end(E_Border *bd, char *sig, char *src)
-{
-   if (!bd->moving) return;
-   bd->moving = 0;
-   e_zone_flip_win_restore();
-   _e_border_move_end(bd);
-   e_zone_flip_coords_handle(bd->zone, -1, -1);
-}
-
-int
-e_border_resizing_get(E_Border *bd)
-{
-   if (bd->resize_mode == RESIZE_NONE) return 0;
-   return 1;
-}
-
-void
-e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
-{
-   Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
-   int resize_mode = RESIZE_BR;
-
-   if (!_e_border_resize_begin(bd))
-     return;
-   if (!strcmp(dir, "tl"))
-     {
-	resize_mode = RESIZE_TL;
-	grav = ECORE_X_GRAVITY_SE;
-     }
-   else if (!strcmp(dir, "t"))
-     {
-	resize_mode = RESIZE_T;
-	grav = ECORE_X_GRAVITY_S;
-     }
-   else if (!strcmp(dir, "tr"))
-     {
-	resize_mode = RESIZE_TR;
-	grav = ECORE_X_GRAVITY_SW;
-     }
-   else if (!strcmp(dir, "r"))
-     {
-	resize_mode = RESIZE_R;
-	grav = ECORE_X_GRAVITY_W;
-     }
-   else if (!strcmp(dir, "br"))
-     {
-	resize_mode = RESIZE_BR;
-	grav = ECORE_X_GRAVITY_NW;
-     }
-   else if (!strcmp(dir, "b"))
-     {
-	resize_mode = RESIZE_B;
-	grav = ECORE_X_GRAVITY_N;
-     }
-   else if (!strcmp(dir, "bl"))
-     {
-	resize_mode = RESIZE_BL;
-	grav = ECORE_X_GRAVITY_NE;
-     }
-   else if (!strcmp(dir, "l"))
-     {
-	resize_mode = RESIZE_L;
-	grav = ECORE_X_GRAVITY_E;
-     }
-   bd->resize_mode = resize_mode;
-   _e_border_moveinfo_gather(bd, sig);
-   GRAV_SET(bd, grav);
-}
-
-void
-e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
-{
-   if (bd->resize_mode == RESIZE_NONE) return;
-   _e_border_resize_handle(bd);
-   bd->resize_mode = RESIZE_NONE;
-   _e_border_resize_end(bd);
-   bd->changes.reset_gravity = 1;
-   bd->changed = 1;
 }
 
 static void
@@ -5295,83 +5372,6 @@ _e_border_eval(E_Border *bd)
 }
 
 static void
-_e_border_resize_limit(E_Border *bd, int *w, int *h)
-{
-   double a;
-
-   *w -= bd->client_inset.l + bd->client_inset.r;
-   *h -= bd->client_inset.t + bd->client_inset.b;
-   if (*h < 1) *h = 1;
-   if (*w < 1) *w = 1;
-   if ((bd->client.icccm.base_w >= 0) &&
-       (bd->client.icccm.base_h >= 0))
-     {
-	int tw, th;
-	
-	tw = *w - bd->client.icccm.base_w;
-	th = *h - bd->client.icccm.base_h;
-	if (tw < 1) tw = 1;
-	if (th < 1) th = 1;
-	a = (double)(tw) / (double)(th);
-	if ((bd->client.icccm.min_aspect != 0.0) &&
-	    (a < bd->client.icccm.min_aspect))
-	  {
-	     th = tw / bd->client.icccm.max_aspect;
-	     *h = th + bd->client.icccm.base_h;
-	  }
-	else if ((bd->client.icccm.max_aspect != 0.0) &&
-		 (a > bd->client.icccm.max_aspect))
-	  {
-	     tw = th * bd->client.icccm.max_aspect;
-	     *w = tw + bd->client.icccm.base_w;
-	  }
-     }
-   else
-     {
-	a = (double)*w / (double)*h;
-	if ((bd->client.icccm.min_aspect != 0.0) &&
-	    (a < bd->client.icccm.min_aspect))
-	  *h = *w / bd->client.icccm.min_aspect;
-	else if ((bd->client.icccm.max_aspect != 0.0) &&
-		 (a > bd->client.icccm.max_aspect))
-	  *w = *h * bd->client.icccm.max_aspect;
-     }
-   if (bd->client.icccm.step_w > 0)
-     {
-	if (bd->client.icccm.base_w >= 0)
-	  *w = bd->client.icccm.base_w +
-	  (((*w - bd->client.icccm.base_w) / bd->client.icccm.step_w) *
-	   bd->client.icccm.step_w);
-	else
-	  *w = bd->client.icccm.min_w +
-	  (((*w - bd->client.icccm.min_w) / bd->client.icccm.step_w) *
-	   bd->client.icccm.step_w);
-     }
-   if (bd->client.icccm.step_h > 0)
-     {
-	if (bd->client.icccm.base_h >= 0)
-	  *h = bd->client.icccm.base_h +
-	  (((*h - bd->client.icccm.base_h) / bd->client.icccm.step_h) *
-	   bd->client.icccm.step_h);
-	else
-	  *h = bd->client.icccm.min_h +
-	  (((*h - bd->client.icccm.min_h) / bd->client.icccm.step_h) *
-	   bd->client.icccm.step_h);
-     }
-
-   if (*h < 1) *h = 1;
-   if (*w < 1) *w = 1;
-
-   if      (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
-   else if (*w < bd->client.icccm.min_w) *w = bd->client.icccm.min_w;
-   if      (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
-   else if (*h < bd->client.icccm.min_h) *h = bd->client.icccm.min_h;
-
-   *w += bd->client_inset.l + bd->client_inset.r;
-   *h += bd->client_inset.t + bd->client_inset.b;
-}
-
-static void
 _e_border_moveinfo_gather(E_Border *bd, const char *source)
 {
    if (e_util_glob_match(source, "mouse,*,1")) bd->moveinfo.down.button = 1;
@@ -5470,7 +5470,7 @@ _e_border_resize_handle(E_Border *bd)
 
    w = new_w;
    h = new_h;
-   _e_border_resize_limit(bd, &new_w, &new_h);
+   e_border_resize_limit(bd, &new_w, &new_h);
    if ((bd->resize_mode == RESIZE_TL) ||
        (bd->resize_mode == RESIZE_L) ||
        (bd->resize_mode == RESIZE_BL))

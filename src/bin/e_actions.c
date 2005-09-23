@@ -591,22 +591,26 @@ ACT_FN_GO(window_resize_by)
        obj = E_OBJECT(e_border_focused_get());
        if (!obj) return;
      }
-
+   
    if (params)
      {
 	int dw, dh;
-
-	if (sscanf(params, "%i %i", &dw, &dh) == 2) {
+	
+	if (sscanf(params, "%i %i", &dw, &dh) == 2)
+	  {
 	     E_Border *bd;
 	     bd = (E_Border *)obj;
-
-	     e_border_resize(bd, bd->w + dw, bd->h + dh);
-
+	     
+	     dw += bd->w;
+	     dh += bd->h;
+	     e_border_resize_limit(bd, &dw, &dh);
+	     e_border_resize(bd, dw, dh);
+	     
 	     if (e_config->focus_policy != E_FOCUS_CLICK)
 	       ecore_x_pointer_warp(bd->zone->container->win,
-				    bd->x + (bd->w / 2),
-				    bd->y + (bd->h / 2));
-	}
+				    bd->x + (dw / 2),
+				    bd->y + (dh / 2));
+	  }
      }
 }
 
