@@ -332,7 +332,10 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 		  else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
 		    bd->client.mwm.fetch.hints = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
-		    bd->client.icccm.fetch.transient_for = 1;
+		    {
+		       bd->client.icccm.fetch.transient_for = 1;
+		       bd->client.netwm.fetch.type = 1;
+		    }
 		  else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
 		    bd->client.icccm.fetch.client_leader = 1;
 		  else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
@@ -5291,7 +5294,7 @@ _e_border_eval(E_Border *bd)
 	ecore_x_window_show(bd->win);
 	if ((!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
-	    (!bd->client.icccm.transient_for) &&
+	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG) &&
 	    (!move) && (!resize))
 	  {
 	     /* Set this window into moving state */
@@ -5350,10 +5353,9 @@ _e_border_eval(E_Border *bd)
 	  }
 	else
 	  {
-	     if (bd->client.icccm.transient_for != 0)
+	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
 	       {
 		  if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
-		      
 		      ((e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED) &&
 		       (e_border_find_by_client_window(bd->client.icccm.transient_for) ==
 			e_border_focused_get())))

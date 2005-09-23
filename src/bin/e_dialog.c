@@ -47,7 +47,7 @@ e_dialog_new(E_Container *con)
 	free(dia);
 	return NULL;
      }
-   ecore_x_icccm_transient_for_set(dia->win->evas_win, con->win);
+   ecore_x_netwm_window_type_set(dia->win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
    e_win_delete_callback_set(dia->win, _e_dialog_cb_delete);
    dia->win->data = dia;
    e_win_name_class_set(dia->win, "E", "_dialog");
