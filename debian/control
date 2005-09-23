@@ -2,7 +2,7 @@ Source: enlightenment
 Section: x11
 Priority: optional
 Maintainer: Blake Barnett <shadoi@soulmachine.net>
-Build-Depends: libevas0-dev, libecore0-dev, libeet0-dev, libembryo0-dev, libedje0-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Build-Depends: libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Standards-Version: 3.5.7.0
 
 Package: enlightenment
@@ -10,7 +10,7 @@ Architecture: any
 Section: x11
 Recommends: examine, engage, entice, elicit
 Suggests: entrance
-Depends: libe, enlightenment-data, libevas0, libecore0, libeet0, libembryo0, embryo0-bin, libedje0, libimlib2
+Depends: libe, enlightenment-data (>= 0.16.999), libevas, libecore, libeet, libembryo, embryo-bin, libedje, libimlib2
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -21,6 +21,7 @@ Package: enlightenment-data
 Architecture: any
 Section: x11
 Depends: enlightenment (= ${Source-Version})
+Conflicts: enlightenment-data (< 0.16.999)
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -39,7 +40,7 @@ Package: libe-dev
 Architecture: any
 Section: devel
 Architecture: any
-Depends: enlightenment (= ${Source-Version}), libc6-dev | libc-dev, libevas0-dev, libecore0-dev, libeet0-dev | libembryo0-dev | libedje0-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Depends: enlightenment (= ${Source-Version}), libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Conflicts: libenlightenment-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
