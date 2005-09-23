@@ -88,9 +88,6 @@ struct _Pager_Face
    struct {
 	Evas_Coord l, r, t, b;
    } inset;
-   struct {
-	Evas_Coord l, r, t, b;
-   } desk_inset;
 
    /* Current nr. of desktops */
    int           xnum, ynum;

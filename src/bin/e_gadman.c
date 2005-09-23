@@ -16,6 +16,9 @@ struct _Gadman_Client_Config
    struct {
       int x, y, w, h;
    } pos;
+   struct {
+      int l, r, t, b;
+   } pad;
    int w, h;
    int edge;
    int zone;
@@ -91,6 +94,10 @@ e_gadman_init(void)
    E_CONFIG_VAL(D, T, pos.y, INT);
    E_CONFIG_VAL(D, T, pos.w, INT);
    E_CONFIG_VAL(D, T, pos.h, INT);
+   E_CONFIG_VAL(D, T, pad.l, INT);
+   E_CONFIG_VAL(D, T, pad.r, INT);
+   E_CONFIG_VAL(D, T, pad.t, INT);
+   E_CONFIG_VAL(D, T, pad.b, INT);
    E_CONFIG_VAL(D, T, w, INT);
    E_CONFIG_VAL(D, T, h, INT);
    E_CONFIG_VAL(D, T, edge, INT);
@@ -297,19 +304,27 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 	E_CONFIG_LIMIT(cf->pos.y, 0, 10000);
 	E_CONFIG_LIMIT(cf->pos.w, 1, 10000);
 	E_CONFIG_LIMIT(cf->pos.h, 1, 10000);
+	E_CONFIG_LIMIT(cf->pad.l, 0, 1000);
+	E_CONFIG_LIMIT(cf->pad.r, 0, 1000);
+	E_CONFIG_LIMIT(cf->pad.t, 0, 1000);
+	E_CONFIG_LIMIT(cf->pad.b, 0, 1000);
 	E_CONFIG_LIMIT(cf->w, 0, 10000);
 	E_CONFIG_LIMIT(cf->h, 0, 10000);
 	E_CONFIG_LIMIT(cf->edge, E_GADMAN_EDGE_LEFT, E_GADMAN_EDGE_BOTTOM);
 	if (cf->pos.w != cf->w)
-	  gmc->ax = (double)(cf->pos.x - cf->w) / (double)(cf->pos.w - cf->w);
+	  gmc->ax = (double)(cf->pos.x) / (double)(cf->pos.w - cf->w);
 	else
 	  gmc->ax = 0.0;
 	if (cf->pos.h != cf->h)
-	  gmc->ay = (double)(cf->pos.y - cf->h) / (double)(cf->pos.h - cf->h);
+	  gmc->ay = (double)(cf->pos.y) / (double)(cf->pos.h - cf->h);
 	else
 	  gmc->ay = 0.0;
 	gmc->w = cf->w;
+	gmc->w -= (cf->pad.l + cf->pad.r);
+	gmc->w += (gmc->pad.l + gmc->pad.r);
 	gmc->h = cf->h;
+	gmc->h -= (cf->pad.t + cf->pad.b);
+	gmc->h += (gmc->pad.t + gmc->pad.b);
 	gmc->edge = cf->edge;
 	gmc->use_autow = cf->use_autow;
 	gmc->use_autoh = cf->use_autoh;
@@ -330,11 +345,11 @@ e_gadman_client_load(E_Gadman_Client *gmc)
 //	gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
 //	gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) * gmc->ay);
 	if (cf->pos.w != cf->w)
-	  gmc->x = gmc->zone->x + ((cf->pos.x * (gmc->zone->w - gmc->w)) / (cf->pos.w - gmc->w));
+	  gmc->x = gmc->zone->x + ((gmc->zone->w - gmc->w) * gmc->ax);
 	else
 	  gmc->x = gmc->zone->x;
 	if (cf->pos.h != cf->h)
-	  gmc->y = gmc->zone->y + ((cf->pos.y * (gmc->zone->h - gmc->h)) / (cf->pos.h - gmc->h));
+	  gmc->y = gmc->zone->y + ((gmc->zone->h - gmc->h) *  gmc->ay);
 	else
 	  gmc->y = gmc->zone->y;
 	gmc->config = cf;
@@ -473,6 +488,17 @@ e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa)
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
    gmc->mina = mina;
    gmc->maxa = maxa;
+}
+
+void
+e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b)
+{
+   E_OBJECT_CHECK(gmc);
+   E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
+   gmc->pad.l = l;
+   gmc->pad.r = r;
+   gmc->pad.t = t;
+   gmc->pad.b = b;
 }
 
 void
@@ -1069,30 +1095,33 @@ _e_gadman_client_aspect_enforce(E_Gadman_Client *gmc, double cx, double cy, int 
    double aspect;
    int change = 0;
    
+   neww = gmc->w - (gmc->pad.l + gmc->pad.r);
+   newh = gmc->h - (gmc->pad.t + gmc->pad.b);
    if (gmc->h > 0)
-     aspect = (double)gmc->w / (double) gmc->h;
+     aspect = (double)neww / (double)newh;
    else
      aspect = 0.0;
-   neww = gmc->w;
-   newh = gmc->h;
+
    if (aspect > gmc->maxa)
      {
 	if (use_horiz)
-	  newh = gmc->w / gmc->maxa;
+	  newh = neww / gmc->maxa;
 	else
-	  neww = gmc->h * gmc->mina;
+	  neww = newh * gmc->mina;
 	change = 1;
      }
    else if (aspect < gmc->mina)
      {
 	if (use_horiz)
-	  newh = gmc->w / gmc->maxa;
+	  newh = neww / gmc->maxa;
 	else
-	  neww = gmc->h * gmc->mina;
+	  neww = newh * gmc->mina;
 	change = 1;
      }
    if (change)
      {
+	neww += (gmc->pad.l + gmc->pad.r);
+	newh += (gmc->pad.t + gmc->pad.b);
 	gmc->x = gmc->x + ((gmc->w - neww) * cx);
 	gmc->y = gmc->y + ((gmc->h - newh) * cy);
 	gmc->w = neww;
@@ -1963,6 +1992,10 @@ _e_gadman_client_geom_store(E_Gadman_Client *gmc)
    cf->pos.y = gmc->y - gmc->zone->y;
    cf->pos.w = gmc->zone->w;
    cf->pos.h = gmc->zone->h;
+   cf->pad.l = gmc->pad.l;
+   cf->pad.r = gmc->pad.r;
+   cf->pad.t = gmc->pad.t;
+   cf->pad.b = gmc->pad.b;
    cf->w = gmc->w;
    cf->h = gmc->h;
    cf->edge = gmc->edge;

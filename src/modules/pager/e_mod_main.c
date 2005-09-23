@@ -8,6 +8,7 @@
  * which options should be in main menu, and which in face menu?
  * check if a new desk is in the current zone
  * check if padding changes on resize
+ * include deskname in padding
  */
 
 /* module private routines */
@@ -505,6 +506,7 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    Pager_Face  *face;
    Evas_Object *o;
    Evas_Coord   x, y, w, h;
+   double       aspect;
 
    face = E_NEW(Pager_Face, 1);
    if (!face) return NULL;
@@ -535,11 +537,6 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    face->inset.t = y;
    face->inset.b = 1000 - (y + h);
 
-   face->desk_inset.l = -1;
-   face->desk_inset.r = -1;
-   face->desk_inset.t = -1;
-   face->desk_inset.b = -1;
-
    face->drop_handler = e_drop_handler_add(face,
 					   _pager_face_cb_enter, _pager_face_cb_move,
 					   _pager_face_cb_leave, _pager_face_cb_drop,
@@ -566,9 +563,18 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
 			      E_GADMAN_POLICY_VSIZE);
    e_gadman_client_min_size_set(face->gmc, 8, 8);
    e_gadman_client_max_size_set(face->gmc, 600, 600);
-   e_gadman_client_auto_size_set(face->gmc, 186, 40);
+   e_gadman_client_auto_size_set(face->gmc,
+				 (face->xnum * 40) + (face->inset.l + face->inset.r),
+				 (face->ynum * 30) + (face->inset.t + face->inset.b));
    e_gadman_client_align_set(face->gmc, 0.0, 1.0);
-   e_gadman_client_resize(face->gmc, 186, 40);
+   aspect = (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h);
+   e_gadman_client_aspect_set(face->gmc, aspect, aspect);
+   e_gadman_client_padding_set(face->gmc,
+			       face->inset.l, face->inset.r,
+			       face->inset.t, face->inset.b);
+   e_gadman_client_resize(face->gmc,
+			  (face->xnum * 40) + (face->inset.l + face->inset.r),
+			  (face->ynum * 30) + (face->inset.t + face->inset.b));
    e_gadman_client_change_func_set(face->gmc, _pager_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 
@@ -727,7 +733,6 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    Evas_Object   *o;
    E_Border_List *bl;
    E_Border      *bd;
-   Evas_Coord     x, y, w, h;
 
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
@@ -746,21 +751,6 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    e_table_pack(face->table_object, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);   
    evas_object_show(o);
-
-   if ((face->desk_inset.l == -1) &&
-       (face->desk_inset.r == -1) &&
-       (face->desk_inset.t == -1) &&
-       (face->desk_inset.b == -1))
-     {
-	evas_object_resize(pd->desk_object, 1000, 1000);
-	edje_object_calc_force(pd->desk_object);
-	edje_object_part_geometry_get(pd->desk_object, "items", &x, &y, &w, &h);
-
-	face->desk_inset.l = x;
-	face->desk_inset.r = 1000 - (x + w);
-	face->desk_inset.t = y;
-	face->desk_inset.b = 1000 - (y + h);
-     }
 
    o = evas_object_rectangle_add(face->evas);
    pd->event_object = o;
@@ -2422,11 +2412,9 @@ _pager_menu_cb_aspect_keep_height(void *data, E_Menu *m, E_Menu_Item *mi)
 
 	face = l->data;
 
-	h = ((face->fh - (face->inset.t + face->inset.b)) / face->ynum) -
-	     (face->desk_inset.t + face->desk_inset.b);
+	h = ((face->fh - (face->inset.t + face->inset.b)) / face->ynum);
 
 	w = h * face->zone->w / (double)face->zone->h;
-	w += (face->desk_inset.l + face->desk_inset.r);
 	w *= face->xnum;
 	w += (face->inset.l + face->inset.r);
 
@@ -2449,11 +2437,9 @@ _pager_menu_cb_aspect_keep_width(void *data, E_Menu *m, E_Menu_Item *mi)
 
 	face = l->data;
 
-	w = ((face->fw - (face->inset.l + face->inset.r)) / face->xnum) -
-	     (face->desk_inset.l + face->desk_inset.r);
+	w = ((face->fw - (face->inset.l + face->inset.r)) / face->xnum);
 
 	h = w * face->zone->h / (double)face->zone->w;
-	h += (face->desk_inset.t + face->desk_inset.b);
 	h *= face->ynum;
 	h += (face->inset.t + face->inset.b);
 

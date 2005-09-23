@@ -83,6 +83,9 @@ struct _E_Gadman_Client
    Evas_Coord           autow, autoh;
    double               ax, ay;
    double               mina, maxa;
+   struct {
+	int l, r, t, b;
+   } pad;
    void               (*func) (void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
    void                *data;
    void                *config;
@@ -106,6 +109,7 @@ EAPI void             e_gadman_client_min_size_set(E_Gadman_Client *gmc, Evas_Co
 EAPI void             e_gadman_client_max_size_set(E_Gadman_Client *gmc, Evas_Coord maxw, Evas_Coord maxh);
 EAPI void             e_gadman_client_align_set(E_Gadman_Client *gmc, double xalign, double yalign);
 EAPI void             e_gadman_client_aspect_set(E_Gadman_Client *gmc, double mina, double maxa);
+EAPI void             e_gadman_client_padding_set(E_Gadman_Client *gmc, int l, int r, int t, int b);
 EAPI void             e_gadman_client_auto_size_set(E_Gadman_Client *gmc, Evas_Coord autow, Evas_Coord autoh);
 EAPI void             e_gadman_client_edge_set(E_Gadman_Client *gmc, E_Gadman_Edge edge);
 EAPI E_Gadman_Edge    e_gadman_client_edge_get(E_Gadman_Client *gmc);
