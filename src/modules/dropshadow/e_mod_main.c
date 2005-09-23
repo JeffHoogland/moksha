@@ -90,22 +90,17 @@ static void        _tilebuf_free_render_rects(Evas_List *rects);
 #define TILE(tb, x, y) ((tb)->tiles.tiles[((y) * (tb)->tiles.w) + (x)])
 
 /* public module routines. all modules must have these */
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "Dropshadow"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
    Dropshadow *ds;
    
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-		 		     "It requires a minimum module API version of: %i.<br>"
-		 		     "The module API advertized by Enlightenment is: %i.<br>"), 
-		 		   _("Dropshadow"), E_MODULE_API_VERSION, m->api->version);
-
-	e_module_dialog_show(_("Enlightenment Dropshadow Module"), buf);
-	return NULL;
-     }
    ds = _ds_init(m);
    m->config_menu = _ds_config_menu_new(ds);
 #if 0

@@ -104,23 +104,17 @@ static E_Config_DD *_conf_edd;
 static E_Config_DD *_conf_face_edd;
 
 /* public module routines. all modules must have these */
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "Pager"
+};
+
 void *
 e_modapi_init(E_Module *module)
 {
    Pager *pager = NULL;
 
-   /* check module api version */
-   if (module->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("Pager"), E_MODULE_API_VERSION, module->api->version);
-
-	e_module_dialog_show(_("Enlightenment Pager Module"), buf);
-	return NULL;
-     }
    /* actually init pager */
    pager = _pager_new();
    module->config_menu = pager->config_menu;

@@ -110,23 +110,17 @@ static void    _ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coo
 static void    _ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
 /* public module routines. all modules must have these */
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "IBar"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
    IBar *ib;
 
-   /* check module api version */
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("IBar"), E_MODULE_API_VERSION, m->api->version);
-
-	e_module_dialog_show(_("Enlightenment IBar Module"), buf);
-	return NULL;
-     }
    /* actually init ibar */
    ib = _ibar_new();
    m->config_menu = ib->config_menu;

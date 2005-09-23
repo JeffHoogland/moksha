@@ -92,23 +92,17 @@ static void    _ibox_box_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
 static void    _ibox_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "IBox"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
    IBox *ib;
 
-   /* check module api version */
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("IBox"), E_MODULE_API_VERSION, m->api->version);
-
-	e_module_dialog_show(_("Enlightenment IBox Module"), buf);
-	return NULL;
-     }
    /* actually init ibox */
    ib = _ibox_new();
    m->config_menu = ib->config_menu;

@@ -65,23 +65,17 @@ static E_Config_DD *conf_face_edd;
 static int battery_count;
 
 /* public module routines. all modules must have these */
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "Battery"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
    Battery *e;
 
-   /* check module api version */
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("Battery"), E_MODULE_API_VERSION, m->api->version);
-
-	e_module_dialog_show(_("Enlightenment Battery Module"), buf);
-	return NULL;
-     }
    /* actually init battery */
    e = _battery_new();
    m->config_menu = e->config_menu;

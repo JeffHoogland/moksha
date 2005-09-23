@@ -28,11 +28,6 @@ static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *m
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
 
-static E_Module_Api _e_module_api =
-{
-   E_MODULE_API_VERSION
-};
-
 /* externally accessible functions */
 int
 e_module_init(void)
@@ -88,7 +83,6 @@ e_module_new(char *name)
 
    if (!name) return NULL;
    m = E_OBJECT_ALLOC(E_Module, E_MODULE_TYPE, _e_module_free);
-   m->api = &_e_module_api;
    if (name[0] != '/')
      {
 	snprintf(buf, sizeof(buf), "%s/%s/module.so", name, MODULE_ARCH);
@@ -119,6 +113,7 @@ e_module_new(char *name)
 	free(m);
 	return NULL;
      }
+   m->api = dlsym(m->handle, "e_module_api");
    m->func.init = dlsym(m->handle, "e_modapi_init");
    m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
    m->func.save = dlsym(m->handle, "e_modapi_save");
@@ -128,7 +123,8 @@ e_module_new(char *name)
        (!m->func.shutdown) ||
        (!m->func.save) ||
        (!m->func.info) ||
-       (!m->func.about)
+       (!m->func.about) ||
+       (!m->api)
        )
      {
 	e_error_dialog_show(_("Error loading Module"),
@@ -142,6 +138,20 @@ e_module_new(char *name)
 	free(m);
 	return NULL;
      }
+   if (m->api->version < E_MODULE_API_VERSION)
+     {
+	char buf[4096];
+	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
+				     "It requires a minimum module API version of: %i.<br>"
+				     "The module API advertized by Enlightenment is: %i.<br>"), 
+				   _(m->api->name), E_MODULE_API_VERSION, m->api->version);
+
+	e_module_dialog_show(_("Enlightenment Clock Module"), buf);
+	dlclose(m->handle);
+	free(m);
+	return NULL;
+     }
+
    _e_modules = evas_list_append(_e_modules, m);
    m->name = strdup(name);
    s = ecore_file_get_dir(modpath);

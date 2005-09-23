@@ -4,38 +4,31 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "Test"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
+   E_Menu *mn;
+   E_Menu_Item *mi;
 
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("Test"), E_MODULE_API_VERSION, m->api->version);
+   mn = e_menu_new();
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Module Config Menu Item 1"));
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Module Config Menu Item 2"));
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Module Config Menu Item 3"));
+   mi = e_menu_item_new(mn);
+   e_menu_item_separator_set(mi, 1);
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Something Else"));
+   m->config_menu = mn;
 
-	e_module_dialog_show(_("Enlightenment Test Module"), buf);
-	return NULL;
-     }
-     {
-	E_Menu *mn;
-	E_Menu_Item *mi;
-	
-	mn = e_menu_new();
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Module Config Menu Item 1"));
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Module Config Menu Item 2"));
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Module Config Menu Item 3"));
-	mi = e_menu_item_new(mn);
-	e_menu_item_separator_set(mi, 1);
-	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, _("Something Else"));
-	m->config_menu = mn;
-     }
    return e_modapi_init; /* bogus pointer - just to say we worked */
 }
 

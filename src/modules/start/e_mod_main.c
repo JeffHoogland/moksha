@@ -22,22 +22,16 @@ static int button_count;
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
+E_Module_Api e_module_api = 
+{
+   E_MODULE_API_VERSION,
+   "Start"
+};
+
 void *
 e_modapi_init(E_Module *m)
 {
    Start *e;
-   
-   if (m->api->version < E_MODULE_API_VERSION)
-     {
-	char buf[4096];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _("Start"), E_MODULE_API_VERSION, m->api->version);
-
-	e_module_dialog_show(_("Enlightenment Start Module"), buf);
-	return NULL;
-     }
    
    /* Create the button */
    e = _start_new();

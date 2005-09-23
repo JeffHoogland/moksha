@@ -97,6 +97,8 @@ struct _Tilebuf_Tile
    int redraw : 1;
 };
 
+extern E_Module_Api e_module_api;
+
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);

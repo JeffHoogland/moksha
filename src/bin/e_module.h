@@ -17,7 +17,7 @@ typedef struct _E_Module_Api E_Module_Api;
 struct _E_Module
 {
    E_Object             e_obj_inherit;
-   
+
    E_Module_Api        *api;
    
    char                *name;
@@ -49,7 +49,8 @@ struct _E_Module
 
 struct _E_Module_Api
 {
-   int    version;
+   int         version;
+   const char *name;
 };
 
 EAPI int          e_module_init(void);

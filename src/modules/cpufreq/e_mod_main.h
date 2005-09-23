@@ -64,6 +64,8 @@ struct _Cpufreq_Face
    E_Gadman_Client *gmc;
 };
 
+extern E_Module_Api e_module_api;
+
 EAPI void *e_modapi_init     (E_Module *module);
 EAPI int   e_modapi_shutdown (E_Module *module);
 EAPI int   e_modapi_save     (E_Module *module);
