@@ -74,6 +74,8 @@ int E_RESPONSE_BACKGROUND_DIRS_LIST = 0;
 
 int E_RESPONSE_BINDING_KEY_LIST = 0;
 int E_RESPONSE_BINDING_MOUSE_LIST = 0;
+int E_RESPONSE_BINDING_WHEEL_LIST = 0;
+int E_RESPONSE_BINDING_SIGNAL_LIST = 0;
 
 /*
  * initialise connection to the current E running on "display".
