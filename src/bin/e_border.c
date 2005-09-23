@@ -892,7 +892,7 @@ e_border_raise(E_Border *bd)
 	  {
 	     /* No border to raise above, same as a lower! */
 	     ev->stack = NULL;
-	     ev->type = E_STACKING_BELOW;
+	     ev->type = E_STACKING_ABOVE;
 	  }
      }
 
@@ -977,7 +977,7 @@ e_border_lower(E_Border *bd)
 	  {
 	     /* No border to hide under, same as a raise! */
 	     ev->stack = NULL;
-	     ev->type = E_STACKING_ABOVE;
+	     ev->type = E_STACKING_BELOW;
 	  }
      }
 
