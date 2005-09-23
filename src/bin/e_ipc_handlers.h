@@ -2210,6 +2210,7 @@ break;
       else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
       else if (v->val1 == E_BINDING_CONTEXT_MENU) context = "MENU";
       else if (v->val1 == E_BINDING_CONTEXT_WINLIST) context = "WINLIST";
+      else if (v->val1 == E_BINDING_CONTEXT_POPUP) context = "POPUP";
       else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
       else context = "";
  
@@ -2299,11 +2300,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.button = atoi(params[1]);
@@ -2404,11 +2406,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.button = atoi(params[1]);
@@ -2531,6 +2534,7 @@ break;
       else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
       else if (v->val1 == E_BINDING_CONTEXT_MENU) context = "MENU";
       else if (v->val1 == E_BINDING_CONTEXT_WINLIST) context = "WINLIST";
+      else if (v->val1 == E_BINDING_CONTEXT_POPUP) context = "POPUP";
       else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
       else context = "";
  
@@ -2619,11 +2623,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.key = params[1];
@@ -2723,11 +2728,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY POPUP\n");
         exit(-1);
      }
    eb.key = params[1];
@@ -5318,6 +5324,7 @@ break;
       else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
       else if (v->val1 == E_BINDING_CONTEXT_MENU) context = "MENU";
       else if (v->val1 == E_BINDING_CONTEXT_WINLIST) context = "WINLIST";
+      else if (v->val1 == E_BINDING_CONTEXT_POPUP) context = "POPUP";
       else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
       else context = "";
  
@@ -5409,11 +5416,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.signal = params[1];
@@ -5515,11 +5523,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.signal = params[1];
@@ -5644,6 +5653,7 @@ break;
       else if (v->val1 == E_BINDING_CONTEXT_MANAGER) context = "MANAGER";
       else if (v->val1 == E_BINDING_CONTEXT_MENU) context = "MENU";
       else if (v->val1 == E_BINDING_CONTEXT_WINLIST) context = "WINLIST";
+      else if (v->val1 == E_BINDING_CONTEXT_POPUP) context = "POPUP";
       else if (v->val1 == E_BINDING_CONTEXT_ANY) context = "ANY";
       else context = "";
  
@@ -5735,11 +5745,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.direction = atoi(params[1]);
@@ -5841,11 +5852,12 @@ break;
    else if (!strcmp(params[0], "MANAGER")) eb.context = E_BINDING_CONTEXT_MANAGER;
    else if (!strcmp(params[0], "MENU")) eb.context = E_BINDING_CONTEXT_MENU;
    else if (!strcmp(params[0], "WINLIST")) eb.context = E_BINDING_CONTEXT_WINLIST;
+   else if (!strcmp(params[0], "POPUP")) eb.context = E_BINDING_CONTEXT_POPUP;
    else if (!strcmp(params[0], "ANY")) eb.context = E_BINDING_CONTEXT_ANY;
    else
      {
         printf("OPT1 (CONTEXT) is not a valid context. Must be:\n"
-               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST ANY\n");
+               "  NONE UNKNOWN BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY\n");
         exit(-1);
      }
    eb.direction = atoi(params[1]);
