@@ -72,7 +72,8 @@ e_pan.h \
 e_dialog.h \
 e_configure.h \
 e_about.h \
-e_theme_about.h
+e_theme_about.h \
+e_apps_cache.h
 
 enlightenment_SOURCES = \
 e_main.c \
@@ -133,6 +134,7 @@ e_dialog.c \
 e_configure.c \
 e_about.c \
 e_theme_about.c \
+e_apps_cache.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@

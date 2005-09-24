@@ -59,3 +59,4 @@
 #include "e_configure.h"
 #include "e_about.h"
 #include "e_theme_about.h"
+#include "e_apps_cache.h"

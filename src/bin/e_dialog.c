@@ -31,6 +31,7 @@ e_dialog_new(E_Container *con)
    E_Dialog *dia;
    E_Manager *man;
    Evas_Object *o;
+   Evas_Modifier_Mask mask;
    
    if (!con)
      {
@@ -76,9 +77,15 @@ e_dialog_new(E_Container *con)
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
    dia->event_object = o;
-   evas_object_key_grab(o, "Tab", 0, 0, 0);
-   evas_object_key_grab(o, "Return", 0, 0, 0);
-   evas_object_key_grab(o, "space", 0, 0, 0);
+   mask = 0;
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = evas_key_modifier_mask_get(e_win_evas_get(dia->win), "Shift");
+   evas_object_key_grab(o, "Tab", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   mask = 0;
+   evas_object_key_grab(o, "space", mask, ~mask, 0);
+   
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
 
    dia->focused = NULL;
@@ -252,28 +259,22 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
      {
 	if (dia->focused && dia->buttons)
 	  {
-	     if (dia->focused->next)
+	     E_Dialog_Button *db;
+	     
+	     db = dia->focused->data;	 
+	     edje_object_signal_emit(db->obj, "unfocus", "");
+	     if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
 	       {
-		  E_Dialog_Button *db;
-
-		  db = dia->focused->data;	 
-		  edje_object_signal_emit(db->obj, "unfocus", "");
-
-		  dia->focused = dia->focused->next;	    	    
-		  db = dia->focused->data;	    
-		  edje_object_signal_emit(db->obj, "focus", "");
+		  if (dia->focused->prev) dia->focused = dia->focused->prev;
+		  else dia->focused = evas_list_last(dia->buttons);
 	       }
 	     else
 	       {
-		  E_Dialog_Button *db;
-
-		  db = dia->focused->data;	    
-		  edje_object_signal_emit(db->obj, "unfocus", "");
-
-		  dia->focused = dia->buttons;	 
-		  db = evas_list_data(dia->focused);
-		  edje_object_signal_emit(db->obj, "focus", "");
+		  if (dia->focused->next) dia->focused = dia->focused->next;
+		  else dia->focused = dia->buttons;	 
 	       }
+	     db = evas_list_data(dia->focused);
+	     edje_object_signal_emit(db->obj, "focus", "");
 	  }
        	else
 	  {
