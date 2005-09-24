@@ -19,7 +19,7 @@ struct _E_Dialog_Button
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_dialog_cb_delete(E_Win *win);
-static int  _e_dialog_key_down_cb(void *data, int type, void *event);
+static void _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
 /* local subsystem globals */
 
@@ -74,9 +74,13 @@ e_dialog_new(E_Container *con)
    edje_object_part_swallow(dia->bg_object, "buttons_swallow", o);
    evas_object_show(o);
 
+   o = evas_object_rectangle_add(e_win_evas_get(dia->win));
+   dia->event_object = o;
+   evas_object_key_grab(o, "Tab", 0, ~0, 0);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
+
    dia->focused = NULL;
-   dia->key_down_handler = ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN, _e_dialog_key_down_cb, dia);
-   
+ 
    return dia;
 }
 
@@ -215,7 +219,7 @@ _e_dialog_free(E_Dialog *dia)
    if (dia->icon_object) evas_object_del(dia->icon_object);
    if (dia->box_object) evas_object_del(dia->box_object);
    if (dia->bg_object) evas_object_del(dia->bg_object);
-   ecore_event_handler_del(dia->key_down_handler);
+   if (dia->event_object) evas_object_del(dia->event_object);
    e_object_del(E_OBJECT(dia->win));
    free(dia);
 }
@@ -233,10 +237,10 @@ _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, 
 }
 
 /* TODO: Implement shift-tab and left arrow */
-static int
-_e_dialog_key_down_cb(void *data, int type, void *event)
+static void
+_e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Evas_Event_Key_Down *ev;
    E_Dialog *dia;
 
    ev = event;
@@ -278,19 +282,15 @@ _e_dialog_key_down_cb(void *data, int type, void *event)
 	     db = dia->focused->data;
 	     edje_object_signal_emit(db->obj, "focus", "");
 	  }
-	return 1;
      }
-
-   if ((!strcmp(ev->keyname, "Enter") || !strcmp(ev->keyname, "Return") ||
-	!strcmp(ev->keyname, "Space")) && dia->focused)
+   else if ((!strcmp(ev->keyname, "Enter") || !strcmp(ev->keyname, "Return") ||
+	     !strcmp(ev->keyname, "Space")) && dia->focused)
      {
 	E_Dialog_Button *db;
 
 	db = evas_list_data(dia->focused);
 	edje_object_signal_emit(db->obj, "click", "");      
      }
-
-   return 1;
 }
 
 static void

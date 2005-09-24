@@ -20,9 +20,9 @@ struct _E_Dialog
    Evas_Object         *box_object;
    Evas_Object         *text_object;
    Evas_Object         *icon_object;
+   Evas_Object         *event_object;
    Evas_List           *buttons;
    Evas_List           *focused;
-   Ecore_Event_Handler *key_down_handler;
    void                *data;
 };
 
