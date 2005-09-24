@@ -96,6 +96,11 @@ EAPI E_App *e_app_file_find(char *file);
 EAPI E_App *e_app_name_find(char *name);
 EAPI E_App *e_app_generic_find(char *generic);
 EAPI E_App *e_app_exe_find(char *exe);
+
+EAPI void e_app_fields_fill(E_App *a, const char *path);
+EAPI E_App *e_app_raw_new(void);
+EAPI Ecore_List *e_app_dir_file_list_get(E_App *a);
+EAPI void e_app_fields_empty(E_App *a);
     
 #endif
 #endif
