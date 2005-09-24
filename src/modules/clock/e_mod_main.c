@@ -213,6 +213,7 @@ _clock_face_new(E_Container *con)
 {
    Clock_Face *face;
    Evas_Object *o;
+   Evas_Coord x, y, w, h;
 
    face = E_NEW(Clock_Face, 1);
    if (!face) return NULL;
@@ -236,6 +237,14 @@ _clock_face_new(E_Container *con)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _clock_face_cb_mouse_down, face);
    evas_object_show(o);
 
+   evas_object_resize(face->clock_object, 200, 200);
+   edje_object_calc_force(face->clock_object);
+   edje_object_part_geometry_get(face->clock_object, "main", &x, &y, &w, &h);
+   face->inset.l = x;
+   face->inset.r = 200 - (x + w);
+   face->inset.t = y;
+   face->inset.b = 200 - (y + h);
+
    face->gmc = e_gadman_client_new(con->gadman);
    e_gadman_client_domain_set(face->gmc, "module.clock", _clock_count++);
    e_gadman_client_policy_set(face->gmc,
@@ -246,10 +255,17 @@ _clock_face_new(E_Container *con)
 			      E_GADMAN_POLICY_VSIZE);
    e_gadman_client_min_size_set(face->gmc, 4, 4);
    e_gadman_client_max_size_set(face->gmc, 512, 512);
-   e_gadman_client_auto_size_set(face->gmc, 40, 40);
+   e_gadman_client_auto_size_set(face->gmc,
+				 40 + (face->inset.l + face->inset.r),
+				 40 + (face->inset.t + face->inset.b));
    e_gadman_client_align_set(face->gmc, 1.0, 1.0);
    e_gadman_client_aspect_set(face->gmc, 1.0, 1.0);
-   e_gadman_client_resize(face->gmc, 40, 40);
+   e_gadman_client_padding_set(face->gmc,
+			       face->inset.l, face->inset.r,
+			       face->inset.t, face->inset.b);
+   e_gadman_client_resize(face->gmc,
+			  40 + (face->inset.l + face->inset.r),
+			  40 + (face->inset.t + face->inset.b));
    e_gadman_client_change_func_set(face->gmc, _clock_face_cb_gmc_change, face);
    e_gadman_client_load(face->gmc);
 

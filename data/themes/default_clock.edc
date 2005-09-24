@@ -577,7 +577,7 @@ group {
 	 HAND("59")
       }
       part {
-	 name: "fg";
+	 name: "main";
 	 mouse_events: 0;
 	 description {
 	    state: "default" 0.0;

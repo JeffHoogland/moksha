@@ -37,6 +37,10 @@ struct _Clock_Face
    E_Menu      *digital_menu;
    Config_Face *conf;
    
+   struct {
+	Evas_Coord l, r, t, b;
+   } inset;
+
    Evas_Object *clock_object;
    Evas_Object *event_object;
    
