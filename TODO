@@ -108,7 +108,6 @@ Some of the things (in very short form) that need to be done to E17...
   CLEANUPS
 -------------------------------------------------------------------------------
 
-* move all modules in e to use new e_dialog not error dialogs.
 * find all other instances of using e_error dialogs and use them only with low
   level errors than need attention no matter what.
 * cannot load module error - make that a "shall i unload this module" dialog
