@@ -1563,6 +1563,7 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 	int                          desks_x, desks_y;
 	int                          x, y;
 	Evas_Coord                   lw, lh, dw, dh;
+	double                       aspect;
 
 	face = l->data;
 
