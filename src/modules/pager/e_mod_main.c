@@ -8,6 +8,7 @@
  * which options should be in main menu, and which in face menu?
  * check if a new desk is in the current zone
  * check if padding changes on resize
+ * include deskname in padding
  */
 
 /* module private routines */
