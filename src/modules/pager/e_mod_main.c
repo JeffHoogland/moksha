@@ -1614,6 +1614,8 @@ _pager_cb_event_zone_desk_count_set(void *data, int type, void *event)
 
 	face->xnum = desks_x;
 	face->ynum = desks_y;
+	aspect = (double)(face->xnum * face->zone->w) / (double)(face->ynum * face->zone->h);
+	e_gadman_client_aspect_set(face->gmc, aspect, aspect);
 	e_gadman_client_resize(face->gmc, face->fw + dw, face->fh + dh);
      }
    return 1;
