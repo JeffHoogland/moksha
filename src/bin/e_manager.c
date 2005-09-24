@@ -550,7 +550,6 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	key = border;
      }
 
-
    signal = NULL;
    ecore_x_netwm_window_state_get(e->win, &state, &num);
    if (state)
@@ -635,8 +634,8 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 		  extents->b = 0;
 	       }
 	     evas_object_del(o);
+	     frame_extents = evas_hash_add(frame_extents, key, extents);
 	  }
-	frame_extents = evas_hash_add(frame_extents, key, extents);
      }
 
    if (extents)
