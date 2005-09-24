@@ -76,7 +76,9 @@ e_dialog_new(E_Container *con)
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
    dia->event_object = o;
-   evas_object_key_grab(o, "Tab", 0, ~0, 0);
+   evas_object_key_grab(o, "Tab", 0, 0, 0);
+   evas_object_key_grab(o, "Return", 0, 0, 0);
+   evas_object_key_grab(o, "space", 0, 0, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
 
    dia->focused = NULL;
@@ -246,7 +248,7 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
    ev = event;
    dia = data;
 
-   if (!strcmp(ev->keyname, "Tab") || !strcmp(ev->keyname, "Right"))
+   if (!strcmp(ev->keyname, "Tab"))
      {
 	if (dia->focused && dia->buttons)
 	  {
@@ -283,8 +285,8 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	     edje_object_signal_emit(db->obj, "focus", "");
 	  }
      }
-   else if ((!strcmp(ev->keyname, "Enter") || !strcmp(ev->keyname, "Return") ||
-	     !strcmp(ev->keyname, "Space")) && dia->focused)
+   else if (((!strcmp(ev->keyname, "Return")) || 
+	     (!strcmp(ev->keyname, "space"))) && dia->focused)
      {
 	E_Dialog_Button *db;
 
