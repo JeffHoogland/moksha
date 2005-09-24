@@ -28,9 +28,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* if a parent window is "on top" child dialog windows should also be "on top"
-* transients should have option to always follow parent
-  (move/resize/raise/lower) (and remember this).
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
