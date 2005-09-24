@@ -21,11 +21,14 @@ struct _E_Dialog
    Evas_Object         *text_object;
    Evas_Object         *icon_object;
    Evas_List           *buttons;
+   Evas_List           *focused;
+   Ecore_Event_Handler *key_down_handler;
    void                *data;
 };
 
 EAPI E_Dialog *e_dialog_new        (E_Container *con);
 EAPI void      e_dialog_button_add (E_Dialog *dia, char *label, char *icon, void (*func) (void *data, E_Dialog *dia), void *data);
+EAPI int       e_dialog_button_focus(E_Dialog *dia, int button);
 EAPI void      e_dialog_title_set  (E_Dialog *dia, char *title);
 EAPI void      e_dialog_text_set   (E_Dialog *dia, char *text);
 EAPI void      e_dialog_icon_set   (E_Dialog *dia, char *icon, Evas_Coord size);
