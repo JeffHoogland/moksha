@@ -1017,7 +1017,7 @@ _e_container_cb_mouse_in(void *data, int type, void *event)
      {
 	bd = e_border_focused_get();
 	if (bd) e_focus_event_mouse_out(bd);
-        evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
+	evas_event_feed_mouse_in(con->bg_evas, ev->time, NULL);
      }
    return 1;
 }

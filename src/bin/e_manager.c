@@ -480,7 +480,7 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
    
    man = data;
    e = ev;
-//   printf("KEY %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
+   printf("KEY %s [win=%x event_win=%x]\n", e->keyname, e->win, e->event_win);
    if (e->event_win != man->root) return 1;
    if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
      return 0;

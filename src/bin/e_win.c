@@ -42,8 +42,8 @@ e_win_new(E_Container *con)
    if (!win) return NULL;
    win->container = con;
    /* TODO: Maybe use an own config for windows? */
-   if (e_canvas_engine_decide(e_config->evas_engine_errors) ==
-       E_EVAS_ENGINE_GL_X11)
+   win->engine = e_canvas_engine_decide(e_config->evas_engine_errors);
+   if (win->engine == E_EVAS_ENGINE_GL_X11)
      {
 	win->ecore_evas = ecore_evas_gl_x11_new(NULL, con->manager->root,
 						0, 0, 1, 1);
@@ -95,6 +95,16 @@ e_win_show(E_Win *win)
 	if (!win->placed)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;
+	if (win->engine == E_EVAS_ENGINE_GL_X11)
+	  {
+	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->win);
+	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
+	  }
+	else 
+	  {
+	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->win);
+	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
+	  }
      }
    e_border_show(win->border);
    ecore_evas_show(win->ecore_evas);

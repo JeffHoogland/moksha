@@ -16,6 +16,7 @@ struct _E_Win
    E_Object             e_obj_inherit;
    
    int                  x, y, w, h;
+   int                  engine;
    E_Container         *container;
    E_Border            *border;
    Ecore_Evas          *ecore_evas;

@@ -7,10 +7,11 @@
 static void _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method);
 
 /* local subsystem globals */
-Ecore_X_Window grab_mouse_win = 0;
-Ecore_X_Window grab_key_win = 0;
-Ecore_X_Window focus_win = 0;
-E_Focus_Method focus_method = E_FOCUS_METHOD_NO_INPUT;
+static Ecore_X_Window grab_mouse_win = 0;
+static Ecore_X_Window grab_key_win = 0;
+static Ecore_X_Window focus_win = 0;
+static E_Focus_Method focus_method = E_FOCUS_METHOD_NO_INPUT;
+static double last_focus_time = 0.0;
 
 /* externally accessible functions */
 int
@@ -87,6 +88,12 @@ e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
      _e_grabinput_focus(win, method);
 }
 
+double
+e_grabinput_last_focus_time_get(void)
+{
+   return last_focus_time;
+}
+
 /* local subsystem functions */
 static void
 _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
@@ -108,4 +115,5 @@ _e_grabinput_focus(Ecore_X_Window win, E_Focus_Method method)
       default:
 	break;
      }
+   last_focus_time = ecore_time_get();
 }

@@ -1155,18 +1155,25 @@ e_border_focus_set(E_Border *bd, int focus, int set)
      {
 	if (bd->focused)
 	  {
-	     if ((!bd->client.icccm.accepts_focus) &&
-		 (!bd->client.icccm.take_focus))
-	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_NO_INPUT);
-	     else if ((bd->client.icccm.accepts_focus) &&
-		      (bd->client.icccm.take_focus))
-	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
-	     else if ((!bd->client.icccm.accepts_focus) &&
-		      (bd->client.icccm.take_focus))
-	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
-	     else if ((bd->client.icccm.accepts_focus) &&
+	     if (bd->internal)
+	       {
+		  e_grabinput_focus(bd->win, E_FOCUS_METHOD_PASSIVE);
+	       }
+	     else
+	       {
+		  if ((!bd->client.icccm.accepts_focus) &&
 		      (!bd->client.icccm.take_focus))
-	       e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+		    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_NO_INPUT);
+		  else if ((bd->client.icccm.accepts_focus) &&
+			   (bd->client.icccm.take_focus))
+		    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+		  else if ((!bd->client.icccm.accepts_focus) &&
+			   (bd->client.icccm.take_focus))
+		    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
+		  else if ((bd->client.icccm.accepts_focus) &&
+			   (!bd->client.icccm.take_focus))
+		    e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+	       }
 	  }
 	else
 	  {
