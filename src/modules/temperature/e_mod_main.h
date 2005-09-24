@@ -57,7 +57,7 @@ struct _Temperature_Face
    E_Gadman_Client *gmc;
 };
 
-extern E_Module_Api e_module_api;
+extern E_Module_Api e_modapi;
 
 EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);

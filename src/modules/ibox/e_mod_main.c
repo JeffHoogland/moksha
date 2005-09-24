@@ -92,7 +92,7 @@ static void    _ibox_box_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
 static void    _ibox_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 /* public module routines. all modules must have these */
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "IBox"
@@ -138,7 +138,6 @@ e_modapi_info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup(_("IBox"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;

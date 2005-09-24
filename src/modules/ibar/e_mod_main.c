@@ -110,7 +110,7 @@ static void    _ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coo
 static void    _ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
 /* public module routines. all modules must have these */
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "IBar"
@@ -156,7 +156,6 @@ e_modapi_info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup(_("IBar"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;

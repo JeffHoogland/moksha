@@ -38,7 +38,7 @@ static E_Config_DD *conf_face_edd;
 static int temperature_count;
 
 /* public module routines. all modules must have these */
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Temperature"
@@ -84,7 +84,6 @@ e_modapi_info(E_Module *m)
 {
    char buf[4096];
 
-   m->label = strdup(_("Temperature"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;

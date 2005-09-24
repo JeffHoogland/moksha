@@ -110,7 +110,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * find all other instances of using e_error dialogs and use them only with low
   level errors than need attention no matter what.
-* cannot load module error - make that a "shall i unload this module" dialog
 * winlist should support place for window "screenshot" in list as well as
   app icon
 * winlist should in theory allow horizontal list layout not just vertical (set

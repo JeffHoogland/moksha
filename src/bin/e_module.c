@@ -24,6 +24,8 @@ static E_Menu *_e_module_control_menu_new(E_Module *mod);
 static void _e_module_menu_free(void *obj);
 static void _e_module_control_menu_about(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_module_dialog_disable_show(char *title, char *body, E_Module *m);
+static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 
 /* local subsystem globals */
 static Evas_List *_e_modules = NULL;
@@ -77,6 +79,7 @@ e_module_new(char *name)
 {
    E_Module *m;
    char buf[4096];
+   char body[4096], title[1024];
    char *modpath, *s;
    Evas_List *l;
    int in_list = 0;
@@ -92,28 +95,28 @@ e_module_new(char *name)
      modpath = strdup(name);
    if (!modpath)
      {
-	e_error_dialog_show(_("Error loading Module"),
-			    _("There was an error loading module named: %s\n"
-			      "No module named %s could be found in the\n"
-			      "module search directories\n"),
-			    name, buf);
-	free(m);
-	return NULL;
+	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
+				       "No module named %s could be found in the<br>"
+				       "module search directories.<br>"),
+				     name, buf);
+	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
+	m->error = 1;
+	goto init_done;
      }
    m->handle = dlopen(modpath, RTLD_NOW | RTLD_GLOBAL);
    if (!m->handle)
      {
-	e_error_dialog_show(_("Error loading Module"),
-			    _("There was an error loading module named: %s\n"
-			      "The full path to this module is:\n"
-			      "%s\n"
-			      "The error reported was:\n"
-			      "%s"),
-			    name, buf, dlerror());
-	free(m);
-	return NULL;
+	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
+				       "The full path to this module is:<br>"
+				       "%s<br>"
+				       "The error reported was:<br>"
+				       "%s<br>"),
+				     name, buf, dlerror());
+	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
+	m->error = 1;
+	goto init_done;
      }
-   m->api = dlsym(m->handle, "e_module_api");
+   m->api = dlsym(m->handle, "e_modapi");
    m->func.init = dlsym(m->handle, "e_modapi_init");
    m->func.shutdown = dlsym(m->handle, "e_modapi_shutdown");
    m->func.save = dlsym(m->handle, "e_modapi_save");
@@ -127,33 +130,42 @@ e_module_new(char *name)
        (!m->api)
        )
      {
-	e_error_dialog_show(_("Error loading Module"),
-			    _("There was an error loading module named: %s\n"
-			      "The full path to this module is:\n"
-			      "%s\n"
-			      "The error reported was:\n"
-			      "%s"),
-			    name, buf, dlerror());
+	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
+				       "The full path to this module is:<br>"
+				       "%s<br>"
+				       "The error reported was:<br>"
+				       "%s<br>"),
+				     name, buf, dlerror());
+	_e_module_dialog_disable_show(_("Error loading Module"), body, m);
+	m->api = NULL;
+	m->func.init = NULL;
+	m->func.shutdown = NULL;
+	m->func.save = NULL;
+	m->func.info = NULL;
+	m->func.about = NULL;
 	dlclose(m->handle);
-	free(m);
-	return NULL;
+	m->handle = NULL;
+	m->error = 1;
+	goto init_done;
      }
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	char buf[4096], title[1024];
-	snprintf(buf, sizeof(buf), _("Module API Error<br>Error initializing Module: %s<br>"
-				     "It requires a minimum module API version of: %i.<br>"
-				     "The module API advertized by Enlightenment is: %i.<br>"), 
-				   _(m->api->name), E_MODULE_API_VERSION, m->api->version);
+	snprintf(body, sizeof(body), _("Module API Error<br>Error initializing Module: %s<br>"
+				       "It requires a minimum module API version of: %i.<br>"
+				       "The module API advertized by Enlightenment is: %i.<br>"), 
+				     _(m->api->name), E_MODULE_API_VERSION, m->api->version);
 
 	snprintf(title, sizeof(title), _("Enlightenment %s Module"), _(m->api->name));
 
-	e_module_dialog_show(title, buf);
+	_e_module_dialog_disable_show(title, body, m);
 
 	dlclose(m->handle);
-	free(m);
-	return NULL;
+	m->handle = NULL;
+	m->error = 1;
+	goto init_done;
      }
+
+init_done:
 
    _e_modules = evas_list_append(_e_modules, m);
    m->name = strdup(name);
@@ -163,7 +175,8 @@ e_module_new(char *name)
 	m->dir = ecore_file_get_dir(s);
 	free(s);
      }
-   m->func.info(m);
+   if (m->func.info)
+     m->func.info(m);
    for (l = e_config->modules; l; l = l->next)
      {
 	E_Config_Module *em;
@@ -194,7 +207,7 @@ e_module_save(E_Module *m)
 {
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
-   if (!m->enabled) return 0;
+   if ((!m->enabled) || (m->error)) return 0;
    return m->func.save(m);
 }
 
@@ -213,7 +226,7 @@ e_module_enable(E_Module *m)
    
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
-   if (m->enabled) return 0;
+   if ((m->enabled) || (m->error)) return 0;
    m->data = m->func.init(m);
    if (m->data) m->enabled = 1;
    for (l = e_config->modules; l; l = l->next)
@@ -239,7 +252,7 @@ e_module_disable(E_Module *m)
    
    E_OBJECT_CHECK_RETURN(m, 0);
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
-   if (!m->enabled) return 0;
+   if ((!m->enabled) || (m->error)) return 0;
    ret = m->func.shutdown(m);
    m->data = NULL;
    m->enabled = 0;
@@ -278,7 +291,7 @@ e_module_save_all(void)
 	E_Module *m;
 	
 	m = l->data;
-	if (m->enabled)
+	if ((m->enabled) && (!m->error))
 	  {
 	     if (!m->func.save(m)) ret = 0;
 	  }
@@ -328,7 +341,7 @@ e_module_menu_new(void)
 	
 	mod = l->data;
 	mi = e_menu_item_new(m);
-	if (mod->label) e_menu_item_label_set(mi, mod->label);
+	if ((mod->api) && (mod->api->name)) e_menu_item_label_set(mi, mod->api->name);
 	else e_menu_item_label_set(mi, mod->name);
 	if (mod->edje_icon_file)
 	  {
@@ -340,8 +353,11 @@ e_module_menu_new(void)
 	else if (mod->icon_file)
 	  e_menu_item_icon_file_set(mi, mod->icon_file);
 	subm = _e_module_control_menu_new(mod);
-	e_menu_item_submenu_set(mi, subm);
-	dat->submenus = evas_list_append(dat->submenus, subm);
+	if (subm)
+	  {
+	     e_menu_item_submenu_set(mi, subm);
+	     dat->submenus = evas_list_append(dat->submenus, subm);
+	  }
 	++mod_count;
      }
    if (mod_count == 0)
@@ -350,6 +366,22 @@ e_module_menu_new(void)
 	e_menu_item_label_set(mi, _("(No Loaded Modules)"));
      }
    return m;
+}
+
+void
+e_module_dialog_show(char *title, char *body)
+{
+   E_Dialog *dia;
+
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!dia) return;
+
+   e_dialog_title_set(dia, title);
+   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_text_set(dia, body);
+   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
 }
 
 /* local subsystem functions */
@@ -378,16 +410,15 @@ _e_module_free(E_Module *m)
 	  }
      }
    
-   if (m->enabled)
+   if ((m->enabled) && (!m->error))
      {
 	m->func.save(m);
 	m->func.shutdown(m);
      }
    if (m->name) free(m->name);
    if (m->dir) free(m->dir);
-   dlclose(m->handle);
+   if (m->handle) dlclose(m->handle);
    _e_modules = evas_list_remove(_e_modules, m);
-   if (m->label) free(m->label);
    if (m->icon_file) free(m->icon_file);
    if (m->edje_icon_file) free(m->edje_icon_file);
    if (m->edje_icon_key) free(m->edje_icon_key);
@@ -399,6 +430,8 @@ _e_module_control_menu_new(E_Module *mod)
 {
    E_Menu *m;
    E_Menu_Item *mi;
+
+   if (mod->error) return NULL;
    
    m = e_menu_new();
    
@@ -470,21 +503,35 @@ _e_module_control_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
    e_menu_item_toggle_set(mi, e_module_enabled_get(mod));
 }
 
-void
-e_module_dialog_show(char *title, char *body)
+static void
+_e_module_dialog_disable_show(char *title, char *body, E_Module *m)
 {
    E_Dialog *dia;
+   char buf[4096];
 
-   dia = e_dialog_new (e_container_current_get (e_manager_current_get ()));
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
    if (!dia) return;
 
-   e_dialog_title_set (dia, title);
-   e_dialog_icon_set (dia, "enlightenment/e", 64);
-   e_dialog_text_set (dia, body);
-   e_dialog_button_add (dia, _("Ok"), NULL, NULL, NULL);
-   e_win_centered_set (dia->win, 1);
-   e_dialog_show (dia);
+   snprintf(buf, sizeof(buf), "%s<br>%s", body,
+					  _("Would you like to unload this module?<br>"));
+
+   e_dialog_title_set(dia, title);
+   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_text_set(dia, buf);
+   e_dialog_button_add(dia, _("Yes"), NULL, _e_module_cb_dialog_disable, m);
+   e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
 }
 
+static void
+_e_module_cb_dialog_disable(void *data, E_Dialog *dia)
+{
+   E_Module *m;
 
-
+   m = data;
+   e_module_disable(m);
+   e_object_del(E_OBJECT(m));
+   e_object_del(E_OBJECT(dia));
+   e_config_save_queue();
+}

@@ -57,7 +57,7 @@ static E_Config_DD *conf_face_edd;
 static int cpufreq_count;
 
 /* public module routines */
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Cpufreq"
@@ -103,7 +103,6 @@ e_modapi_info(E_Module *module)
 {
    char buf[4096];
    
-   module->label = strdup(_("CpuFreq"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
    module->icon_file = strdup(buf);
    return 1;

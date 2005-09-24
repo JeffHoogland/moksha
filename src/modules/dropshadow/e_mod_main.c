@@ -90,7 +90,7 @@ static void        _tilebuf_free_render_rects(Evas_List *rects);
 #define TILE(tb, x, y) ((tb)->tiles.tiles[((y) * (tb)->tiles.w) + (x)])
 
 /* public module routines. all modules must have these */
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "Dropshadow"
@@ -176,7 +176,6 @@ e_modapi_info(E_Module *m)
 {
    char buf[4096];
    
-   m->label = strdup(_("Dropshadow"));
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    return 1;

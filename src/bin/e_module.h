@@ -3,7 +3,7 @@
  */
 #ifdef E_TYPEDEFS
 
-#define E_MODULE_API_VERSION 1
+#define E_MODULE_API_VERSION 2
 
 typedef struct _E_Module     E_Module;
 typedef struct _E_Module_Api E_Module_Api;
@@ -33,6 +33,7 @@ struct _E_Module
    } func;
    
    unsigned char        enabled : 1;
+   unsigned char        error : 1;
    
    /* the module is allowed to modify these */
    void                *data;
@@ -41,7 +42,6 @@ struct _E_Module
    /* modify these but only set them up when the info func is called */
    /* e_module will free them when the module is freed. */
    /* note you will need to malloc (strdup) these fields due to the free */
-   char                *label;
    char                *icon_file;
    char                *edje_icon_file;
    char                *edje_icon_key;

@@ -27,7 +27,7 @@ static void _randr_save_res(Randr_Resolution *res);
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_manager_edd;
 
-E_Module_Api e_module_api = 
+E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
    "RandR"
@@ -72,10 +72,7 @@ e_modapi_info(E_Module *m)
 {
    /*
    char buf[4096];
-   */
    
-   m->label = strdup(_("Randr"));
-   /*
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(m));
    m->icon_file = strdup(buf);
    */
