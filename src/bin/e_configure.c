@@ -35,8 +35,8 @@ e_configure_show(E_Container *con)
    app->con = con;
    
    e_win_delete_callback_set(app->win, _e_configure_gui_hide);
-   e_win_title_set(app->win, "Enlightenment Configuration");
-   e_win_name_class_set(app->win, "EConfigure", "EConfigure");
+   e_win_title_set(app->win, _("Enlightenment Configuration"));
+   e_win_name_class_set(app->win, "E", "_configure");
    app->evas = e_win_evas_get(app->win);
    ecore_evas_data_set(app->win->ecore_evas, "App", app);		
    e_win_resize_callback_set(app->win, _e_configure_cb_resize);   

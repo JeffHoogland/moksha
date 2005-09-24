@@ -640,7 +640,7 @@ _pager_face_menu_new(Pager_Face *face)
    e_menu_item_callback_set(mi, _pager_menu_cb_popup_enable, face->pager);
 
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Desktop Speed"));
+   e_menu_item_label_set(mi, _("Popup Speed"));
    e_menu_item_submenu_set(mi, face->pager->config_menu_speed);
 
    mi = e_menu_item_new(mn);

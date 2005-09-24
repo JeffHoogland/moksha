@@ -1,4 +1,4 @@
-# This is the Japanese locale definition for Enlightenment DR 17 
+# This is the Japanese locale definition for Enlightenment DR 17
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,622 +7,444 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-12 06:59+0900\n"
-"PO-Revision-Date: 2005-04-30 12:00+0900\n"
+"POT-Creation-Date: 2005-09-23 11:44+0900\n"
+"PO-Revision-Date: 2005-09-23 13:00+0700\n"
 "Last-Translator: David Stevenson <david.35472@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_int_menus.c:272
-msgid "(No Applications)"
-msgstr "(アプリケーション無し)"
+#: src/bin/e_actions.c:1121
+msgid "Are you sure you want to exit?"
+msgstr "本当に終了しますか。"
 
-#: src/bin/e_int_menus.c:445
-msgid "(No Windows)"
-msgstr "(ウインドウ無し)"
-
-#: src/bin/e_int_menus.c:521
-msgid "(Unused)"
-msgstr "(未使用)"
-
-#: src/modules/battery/e_mod_main.c:418
-msgid "1 hour"
-msgstr "1時間"
-
-#: src/modules/temperature/e_mod_main.c:596
-msgid "100C"
-msgstr "100℃"
-
-#: src/modules/temperature/e_mod_main.c:500
-msgid "10C"
-msgstr "10℃"
-
-#: src/modules/temperature/e_mod_main.c:507
-#: src/modules/temperature/e_mod_main.c:540
-msgid "20C"
-msgstr "20℃"
-
-#: src/modules/temperature/e_mod_main.c:514
-#: src/modules/temperature/e_mod_main.c:547
-msgid "30C"
-msgstr "30℃"
-
-#: src/modules/temperature/e_mod_main.c:521
-#: src/modules/temperature/e_mod_main.c:554
-msgid "40C"
-msgstr "40℃"
-
-#: src/modules/temperature/e_mod_main.c:528
-#: src/modules/temperature/e_mod_main.c:561
-msgid "50C"
-msgstr "50℃"
-
-#: src/modules/temperature/e_mod_main.c:568
-msgid "60C"
-msgstr "60℃"
-
-#: src/modules/temperature/e_mod_main.c:575
-msgid "70C"
-msgstr "70℃"
-
-#: src/modules/temperature/e_mod_main.c:582
-msgid "80C"
-msgstr "80℃"
-
-#: src/modules/temperature/e_mod_main.c:589
-msgid "90C"
-msgstr "90℃"
-
-#: src/modules/battery/e_mod_main.c:99
+#: src/bin/e_actions.c:1123
 msgid ""
-"A basic battery meter that uses either ACPI or APM\n"
-"on Linux to monitor your battery and AC power adaptor\n"
-"status. This will only work under Linux and is only\n"
-"as accurate as your BIOS or kernel drivers."
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
+"Enlightenmentを終了しようとしています。<br><br>本当に終了しますか。"
 
-#: src/modules/temperature/e_mod_main.c:97
+#: src/bin/e_actions.c:1128
+msgid "Yes"
+msgstr "はい"
+
+#: src/bin/e_actions.c:1129
+msgid "No"
+msgstr "いいえ"
+
+#: src/bin/e_apps.c:282 src/bin/e_apps.c:1071 src/bin/e_utils.c:200
+msgid "Run Error"
+msgstr "実行エラー"
+
+#: src/bin/e_apps.c:283 src/bin/e_utils.c:201
+#, c-format
 msgid ""
-"A module to measure the ACPI Thermal sensor on Linux.\n"
-"It is especially useful for modern Laptops with high speed\n"
-"CPUs that generate a lot of heat."
+"Enlightenment was unable fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
 msgstr ""
+"Enlightenmentは子プロセスをforkできませんでした:\n"
+"\n"
+"%s\n"
+"\n"
 
-#: src/modules/pager/e_mod_main.c:136
-msgid "A pager module to navigate virtual desktops."
-msgstr "仮想デスクトップを切替えるためのページャモジュール。"
-
-#: src/modules/clock/e_mod_main.c:96
-msgid "A simple module to give E17 a clock."
-msgstr "E17用のシンプルな時計モジュール"
-
-#: src/bin/e_int_menus.c:102 src/bin/e_int_menus.c:210
-msgid "About Enlightenment"
-msgstr "Enlightenment について"
-
-#: src/bin/e_module.c:381
-msgid "About..."
-msgstr "情報"
-
-#: src/bin/e_main.c:360
-msgid "Artificially slowing startup so you can see it all."
-msgstr "すべてが見えるように起動が故意に減速されています。"
-
-#: src/modules/ibar/e_mod_main.c:717
-msgid "Auto fit icons"
+#: src/bin/e_apps.c:1072
+#, c-format
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
 msgstr ""
+"Enlightenmentはプログラムを実行できませんでした:\n"
+"\n"
+"%s\n"
+"\n"
+"コマンドが見つかりませんでした。\n"
 
-#: src/bin/e_gadman.c:526
-msgid "Automatic Height"
-msgstr "高さの自動整理"
+#: src/bin/e_border.c:6108 src/bin/e_border.c:6121
+msgid "Position"
+msgstr "位置"
 
-#: src/bin/e_gadman.c:483
-msgid "Automatic Width"
-msgstr "広さの自動整理"
+#: src/bin/e_border.c:6109 src/bin/e_border.c:6122
+#: src/modules/ibar/e_mod_main.c:288 src/modules/ibar/e_mod_main.c:949
+#: src/modules/ibox/e_mod_main.c:690
+msgid "Size"
+msgstr "サイズ"
 
-#: src/modules/battery/e_mod_main.c:906
-msgid "BAD DRIVER"
-msgstr ""
+#: src/bin/e_border.c:6110 src/bin/e_border.c:6123 src/bin/e_border.c:6326
+msgid "Stacking"
+msgstr "積み重ね順"
 
-#: src/modules/battery/e_mod_main.c:89
-msgid "Battery"
-msgstr "電池"
+#: src/bin/e_border.c:6111 src/bin/e_border.c:6124 src/bin/e_border.c:6262
+msgid "Iconify"
+msgstr "アイコン化"
 
-#: src/modules/battery/e_mod_main.c:688
-msgid "Battery Running Low"
-msgstr ""
+#: src/bin/e_border.c:6113 src/bin/e_border.c:6126 src/bin/e_border.c:6315
+msgid "Sticky"
+msgstr "Stick"
 
-#: src/bin/e_gadman.c:509
-msgid "Center Horizontally"
-msgstr "水平に中央揃え"
+#: src/bin/e_border.c:6114 src/bin/e_border.c:6127
+msgid "Shade"
+msgstr "シェード"
 
-#: src/bin/e_gadman.c:552
-msgid "Center Vertically"
-msgstr "垂直に中央揃え"
+#: src/bin/e_border.c:6115 src/bin/e_border.c:6128
+msgid "Maximize"
+msgstr "最大化"
 
-#: src/modules/battery/e_mod_main.c:1002
-msgid "Charging"
-msgstr "充電中"
+#: src/bin/e_border.c:6116 src/bin/e_border.c:6129 src/bin/e_border.c:6348
+msgid "Fullscreen"
+msgstr "全面表示"
 
-#: src/modules/battery/e_mod_main.c:430
-msgid "Check Fast (1 sec)"
-msgstr "速く (1秒毎)"
+#: src/bin/e_border.c:6135
+msgid "User"
+msgstr "ユーザー"
 
-#: src/modules/temperature/e_mod_main.c:184
-#: src/modules/temperature/e_mod_main.c:608
-msgid "Check Interval"
-msgstr "観察間隔"
+#: src/bin/e_border.c:6143
+msgid "Application"
+msgstr "アプリケーション"
 
-#: src/modules/battery/e_mod_main.c:437
-msgid "Check Medium (5 sec)"
-msgstr ""
+#: src/bin/e_border.c:6153
+msgid "Border"
+msgstr "ボーダー"
 
-#: src/modules/battery/e_mod_main.c:444
-msgid "Check Normal (10 sec)"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:451
-msgid "遅く (30秒毎)"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:458
-msgid "Check Very Slow (60 sec)"
-msgstr "とても遅く (60秒毎)"
-
-#: src/modules/clock/e_mod_main.c:86
-msgid "Clock"
-msgstr "時計"
-
-#: src/bin/e_border.c:3213 src/modules/dropshadow/e_mod_main.c:344
+#: src/bin/e_border.c:6154 src/bin/e_border.c:6251
 msgid "Close"
 msgstr "閉じる"
 
-#: src/bin/e_module.c:396
-msgid "Configuration"
-msgstr "設定"
+#: src/bin/e_border.c:6157
+msgid "Lifespan"
+msgstr "不滅"
 
-#: src/bin/e_border.c:3281
-msgid "Create Icon"
-msgstr "アイコン作成"
+#: src/bin/e_border.c:6171
+msgid "Remember This Window"
+msgstr "このウィンドウを覚える"
 
-#: src/modules/battery/e_mod_main.c:998
-msgid "Danger"
+#: src/bin/e_border.c:6178
+msgid "Remember This Instance Only"
+msgstr "このインスタンスだけを覚える"
+
+#: src/bin/e_border.c:6181
+msgid "Match by Name"
+msgstr "Nameで比較する"
+
+#: src/bin/e_border.c:6182
+msgid "Match by Class"
+msgstr "Classで比較する"
+
+#: src/bin/e_border.c:6183
+msgid "Match by Title"
+msgstr "Titleで比較する"
+
+#: src/bin/e_border.c:6184
+msgid "Match by Role"
+msgstr "Roleで比較する"
+
+#: src/bin/e_border.c:6185
+msgid "Match by Window Type"
+msgstr "Window Typeで比較する"
+
+#: src/bin/e_border.c:6186
+msgid "Match by Transient Status"
+msgstr "Transient Statusで比較する"
+
+#: src/bin/e_border.c:6189
+msgid "Remember Position"
+msgstr "位置を覚える"
+
+#: src/bin/e_border.c:6190
+msgid "Remember Size"
+msgstr "サイズを覚える"
+
+#: src/bin/e_border.c:6191
+msgid "Remember Stacking"
+msgstr "積み重ね順を覚える"
+
+#: src/bin/e_border.c:6192
+msgid "Remember Locks"
+msgstr "ロックを覚える"
+
+#: src/bin/e_border.c:6193
+msgid "Remember Border"
+msgstr "ボーダーを覚える"
+
+#: src/bin/e_border.c:6194
+msgid "Remember Stickiness"
+msgstr "Stick値を覚える"
+
+#: src/bin/e_border.c:6195
+msgid "Remember Desktop"
+msgstr "デスクトップを覚える"
+
+#: src/bin/e_border.c:6196
+msgid "Remember Shaded State"
+msgstr "シェード設定を覚える"
+
+#: src/bin/e_border.c:6197
+msgid "Remember Zone"
+msgstr "ゾーンを覚える"
+
+#: src/bin/e_border.c:6198
+msgid "Remember Skip Window List"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:296
-msgid "Dark"
+#: src/bin/e_border.c:6212
+msgid "Always On Top"
+msgstr "常に一番手前に"
+
+#: src/bin/e_border.c:6222 src/modules/clock/e_mod_main.c:341
+#: src/modules/pager/e_mod_main.c:464
+msgid "Normal"
+msgstr "普通"
+
+#: src/bin/e_border.c:6232
+msgid "Always Below"
+msgstr "常に一番奥に"
+
+#: src/bin/e_border.c:6276
+msgid "Kill"
+msgstr "強制終了"
+
+#: src/bin/e_border.c:6289
+msgid "Shaded"
+msgstr "シェード"
+
+#: src/bin/e_border.c:6302
+msgid "Maximized"
+msgstr "最大化"
+
+#: src/bin/e_border.c:6335
+msgid "Borderless"
+msgstr "ボーダー無し"
+
+#: src/bin/e_border.c:6362
+msgid "Skip Window List"
 msgstr ""
 
-#: src/bin/e_int_menus.c:77
-msgid "Desktops"
-msgstr "デスクトップ"
+#: src/bin/e_border.c:6376
+msgid "Locks"
+msgstr "ロック"
 
-#: src/modules/dropshadow/e_mod_main.c:125
-msgid "Dropshadow"
+#: src/bin/e_border.c:6383
+msgid "Remember"
+msgstr "記憶"
+
+#: src/bin/e_border.c:6393
+msgid "Send To"
 msgstr ""
 
-#: src/bin/e_border.c:3255
+#: src/bin/e_border.c:6415
 msgid "Edit Icon"
 msgstr "アイコン編集"
 
-#: src/bin/e_int_menus.c:515 src/modules/clock/e_mod_main.c:311
-#: src/modules/temperature/e_mod_main.c:723
-#: src/modules/battery/e_mod_main.c:563
-msgid "Edit Mode"
-msgstr "編集モード"
+#: src/bin/e_border.c:6441
+msgid "Create Icon"
+msgstr "アイコン作成"
 
-#: src/bin/e_module.c:385
-msgid "Enabled"
-msgstr "有効にする"
+#: src/bin/e_border.c:6529
+msgid "Icon Edit Error"
+msgstr "アイコン編集エラー"
 
-#: src/bin/e_gadman.c:563
-msgid "End Edit Mode"
-msgstr "編集モード終了"
-
-#: src/bin/e_main.c:344
-msgid "Enlightenment"
-msgstr "Enlightenment"
-
-#: src/modules/battery/e_mod_main.c:98
-msgid "Enlightenment Battery Module"
-msgstr "Enlightenment 電池モジュール"
-
-#: src/modules/clock/e_mod_main.c:95
-msgid "Enlightenment Clock Module"
-msgstr "Enlightenment 時計モジュール"
-
-#: src/modules/dropshadow/e_mod_main.c:134
-msgid "Enlightenment Dropshadow Module"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:158
-msgid "Enlightenment IBar Module"
-msgstr "Enlightenment IBar モジュール"
-
-#: src/bin/e_main.c:329
-msgid "Enlightenment IPC setup error!"
-msgstr ""
-
-#: src/modules/pager/e_mod_main.c:135
-msgid "Enlightenment Pager Module"
-msgstr "Enlightenment ページャモジュール"
-
-#: src/bin/e_main.c:346
-msgid "Enlightenment Starting. Please wait."
-msgstr "Enlightenment は起動しています。少々お待ち下さい。"
-
-#: src/modules/temperature/e_mod_main.c:96
-msgid "Enlightenment Temperature Module"
-msgstr "Enlightenment 温度計モジュール"
-
-#: src/modules/test/e_mod_main.c:66
-msgid "Enlightenment Test Module"
-msgstr "Enlightenment テストモジュール"
-
-#: src/bin/e_main.c:157
-msgid ""
-"Enlightenment cannot Initialize Ecore!\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment は Ecore を初期化できません！\n"
-"メモリー資源が低下していますか。"
-
-#: src/bin/e_main.c:235
-msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
-"Perhaps you have no home directory or the disk is full?"
-msgstr ""
-
-#: src/bin/e_main.c:184
-msgid ""
-"Enlightenment cannot initialize its X connection.\n"
-"Have you set your DISPLAY variable?"
-msgstr ""
-"Enlightenment は X への接続を初期化できません。\n"
-"環境変数 DISPLAY の指定をご確認ください。"
-
-#: src/bin/e_main.c:223
-msgid ""
-"Enlightenment cannot initialize the Evas system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment は Evas システムを初期化できません！\n"
-"メモリー資源が低下していますか。"
-
-#: src/bin/e_main.c:215
-msgid ""
-"Enlightenment cannot initialize the IPC system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment は IPC システムを初期化できません！\n"
-"メモリー資源が低下していますか。"
-
-#: src/bin/e_main.c:207
-msgid ""
-"Enlightenment cannot initialize the connections system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:173
-msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:167
-msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:272
-msgid ""
-"Enlightenment cannot set up init screen.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:288
-msgid "Enlightenment cannot set up its app system."
-msgstr ""
-
-#: src/bin/e_main.c:251
-msgid "Enlightenment cannot set up its config system."
-msgstr ""
-
-#: src/bin/e_main.c:262
-msgid "Enlightenment cannot set up its font system."
-msgstr ""
-
-#: src/bin/e_main.c:312
-msgid "Enlightenment cannot set up its module system."
-msgstr ""
-
-#: src/bin/e_main.c:243
-msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-
-#: src/bin/e_main.c:299 src/bin/e_main.c:330
-msgid ""
-"Enlightenment cannot set up the IPC socket.\n"
-"It likely is already in use by an exisiting copy of Enlightenment.\n"
-"Double check to see if Enlightenment is not already on this display,\n"
-"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-"and try running again."
-msgstr ""
-
-#: src/bin/e_main.c:191
-msgid ""
-"Enlightenment cannot setup xinerama wrapping.\n"
-"This should not happen."
-msgstr ""
-
-#: src/bin/e_main.c:280
-msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
-"failed. Perhaps another window manager is running?\n"
-msgstr ""
-
-#: src/bin/e_error.c:354
-msgid "Enlightenment: Error!"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:789
-msgid "Enormous"
-msgstr "莫大"
-
-#: src/modules/battery/e_mod_main.c:46
-#, c-format
-msgid ""
-"Error initializing Module: Battery\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/clock/e_mod_main.c:41
-#, c-format
-msgid ""
-"Error initializing Module: Clock\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/dropshadow/e_mod_main.c:78
-#, c-format
-msgid ""
-"Error initializing Module: Dropshadow\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:106
-#, c-format
-msgid ""
-"Error initializing Module: IBar\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/pager/e_mod_main.c:80
-#, c-format
-msgid ""
-"Error initializing Module: Pager\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/temperature/e_mod_main.c:44
-#, c-format
-msgid ""
-"Error initializing Module: Temperature\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:10
-#, c-format
-msgid ""
-"Error initializing Module: test\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-
-#: src/bin/e_module.c:98 src/bin/e_module.c:109 src/bin/e_module.c:131
-msgid "Error loading Module"
-msgstr ""
-
-#: src/bin/e_border.c:3355
+#: src/bin/e_border.c:6530
 msgid ""
 "Error starting icon editor\n"
 "\n"
 "please install e_util_eapp_edit\n"
 "or make sure it is in your PATH\n"
 msgstr ""
+"アイコンエディターを起動できません\n"
+"\n"
+"e_util_eapp_editをインストールし、\n"
+"環境変数PATHへ追加してください\n"
 
-#: src/bin/e_int_menus.c:117
-msgid "Exit Enlightenment"
-msgstr "Enlightenment 終了"
-
-#: src/modules/ibar/e_mod_main.c:775
-msgid "Extremely Large"
-msgstr "とっても大きい"
-
-#: src/modules/dropshadow/e_mod_main.c:362
-msgid "Extremely Close"
+#: src/bin/e_config.c:352
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new configuration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:930
-msgid "FULL"
+#: src/bin/e_config.c:366
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your configuration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:335
-msgid "Far"
+#: src/bin/e_config.c:1889
+msgid "Configuration Upgraded"
+msgstr "設定をアップグレードしました"
+
+#: src/bin/e_container.c:129
+#, c-format
+msgid "Container %d"
+msgstr "コンテナ %d"
+
+#: src/bin/e_error.c:208 src/bin/e_error.c:217
+msgid "OK"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:460
-msgid "Fast (1 sec)"
-msgstr "速い(1秒毎)"
+#: src/bin/e_error.c:364
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: エラー!"
 
-#: src/bin/e_int_menus.c:58
+#: src/bin/e_gadman.c:600
+msgid "Automatic Width"
+msgstr "広さの自動整理"
+
+#: src/bin/e_gadman.c:611
+msgid "Half Screen Width"
+msgstr "半画面の広さ"
+
+#: src/bin/e_gadman.c:617
+msgid "Full Screen Width"
+msgstr "全画面の広さ"
+
+#: src/bin/e_gadman.c:629
+msgid "Center Horizontally"
+msgstr "水平に中央揃え"
+
+#: src/bin/e_gadman.c:647
+msgid "Automatic Height"
+msgstr "高さの自動整理"
+
+#: src/bin/e_gadman.c:658
+msgid "Half Screen Height"
+msgstr "半画面の高さ"
+
+#: src/bin/e_gadman.c:664
+msgid "Full Screen Height"
+msgstr "全画面の高さ"
+
+#: src/bin/e_gadman.c:675
+msgid "Center Vertically"
+msgstr "垂直に中央揃え"
+
+#: src/bin/e_gadman.c:687
+msgid "End Edit Mode"
+msgstr "編集モード終了"
+
+#: src/bin/e_init.c:38
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr ""
+
+#: src/bin/e_init.c:112
+msgid "Disable this splash screen in the future?"
+msgstr "今後この開始シーケンスをスキップする"
+
+#: src/bin/e_int_menus.c:81
 msgid "Favorite Applications"
 msgstr "アプリケーション"
 
-#: src/bin/e_gadman.c:541
-msgid "Full Screen Height"
-msgstr ""
-
-#: src/bin/e_gadman.c:498
-msgid "Full Screen Width"
-msgstr ""
-
-#: src/modules/dropshadow/e_mod_main.c:248
-msgid "Fuzzy"
-msgstr ""
-
-#: src/bin/e_int_menus.c:93
-msgid "Gadgets"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:796
-msgid "Gigantic"
-msgstr "巨大"
-
-#: src/bin/e_gadman.c:536
-msgid "Half Screen Height"
-msgstr ""
-
-#: src/bin/e_gadman.c:493
-msgid "Half Screen Width"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:990
-msgid "High"
-msgstr ""
-
-#: src/modules/temperature/e_mod_main.c:192
-#: src/modules/temperature/e_mod_main.c:616
-msgid "High Temperature"
-msgstr "高温度"
-
-#: src/modules/ibar/e_mod_main.c:782
-msgid "Huge"
-msgstr "極めて大きい"
-
-#: src/modules/ibar/e_mod_main.c:149
-msgid "IBar"
-msgstr ""
-
-#: src/bin/e_border.c:3354
-msgid "Icon Edit Error"
-msgstr ""
-
-#: src/bin/e_border.c:3218
-msgid "Iconify"
-msgstr "アイコン化"
-
-#: src/modules/dropshadow/e_mod_main.c:371
-msgid "Immediately Underneath"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:761
-msgid "Large"
-msgstr "大きい"
-
-#: src/modules/dropshadow/e_mod_main.c:305
-msgid "Light"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:994
-msgid "Low"
-msgstr ""
-
-#: src/modules/temperature/e_mod_main.c:188
-#: src/modules/temperature/e_mod_main.c:612
-msgid "Low Temperature"
-msgstr "低温度"
-
-#: src/bin/e_border.c:3233
-msgid "Maximized"
-msgstr "最大化"
-
-#: src/modules/dropshadow/e_mod_main.c:257 src/modules/ibar/e_mod_main.c:754
-msgid "Medium"
-msgstr "中"
-
-#: src/modules/temperature/e_mod_main.c:467
-msgid "Medium (5 sec)"
-msgstr ""
-
-#: src/modules/ibar/e_mod_main.c:726
-msgid "Microscopic"
-msgstr "極めて小さい"
-
-#: src/modules/test/e_mod_main.c:9 src/modules/dropshadow/e_mod_main.c:77
-#: src/modules/clock/e_mod_main.c:40 src/modules/temperature/e_mod_main.c:43
-#: src/modules/ibar/e_mod_main.c:105 src/modules/battery/e_mod_main.c:45
-#: src/modules/pager/e_mod_main.c:79
-msgid "Module API Error"
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:24
-msgid "Module Config Menu Item 1"
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:26
-msgid "Module Config Menu Item 2"
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:28
-msgid "Module Config Menu Item 3"
-msgstr ""
-
-#: src/bin/e_int_menus.c:69
+#: src/bin/e_int_menus.c:91
 msgid "Modules"
 msgstr "モジュール"
 
-#: src/bin/e_main.c:362
-msgid "Most features do not work yet, and those that do are buggy."
-msgstr "ほとんどの機能はまだ動作しないし、動作する機能にはバッグがある。"
+#: src/bin/e_int_menus.c:98
+msgid "Desktops"
+msgstr "デスクトップ"
 
-#: src/modules/battery/e_mod_main.c:882
-msgid "NO BAT"
-msgstr ""
+#: src/bin/e_int_menus.c:105
+msgid "Windows"
+msgstr "ウィンドウ"
 
-#: src/modules/battery/e_mod_main.c:750
-msgid "NO INFO"
-msgstr ""
+#: src/bin/e_int_menus.c:112
+msgid "Lost Windows"
+msgstr "迷子なウィンドウ"
 
-#: src/bin/e_int_menus.c:362
-msgid "New Column of Desktops"
-msgstr "仮想デスクトップを横に広げる"
+#: src/bin/e_int_menus.c:119
+msgid "Gadgets"
+msgstr "ガジェット"
 
-#: src/bin/e_int_menus.c:354
+#: src/bin/e_int_menus.c:126
+msgid "Themes"
+msgstr "テーマ"
+
+#: src/bin/e_int_menus.c:134 src/bin/e_about.c:41
+msgid "About Enlightenment"
+msgstr "Enlightenment について"
+
+#: src/bin/e_int_menus.c:141
+msgid "Run Command"
+msgstr "コマンドの実行"
+
+#: src/bin/e_int_menus.c:149 src/bin/e_module.c:408
+msgid "Configuration"
+msgstr "設定"
+
+#: src/bin/e_int_menus.c:157
+msgid "Restart Enlightenment"
+msgstr "Enlightenment 再起動"
+
+#: src/bin/e_int_menus.c:162
+msgid "Exit Enlightenment"
+msgstr "Enlightenment 終了"
+
+#: src/bin/e_int_menus.c:433
+msgid "(No Applications)"
+msgstr "(アプリケーション無し)"
+
+#: src/bin/e_int_menus.c:515
 msgid "New Row of Desktops"
 msgstr "仮想デスクトップを縦に広げる"
 
-#: src/modules/temperature/e_mod_main.c:474
-msgid "Normal (10 sec)"
+#: src/bin/e_int_menus.c:519
+msgid "Remove Row of Desktops"
+msgstr "仮想デスクトップを縦に狭める"
+
+#: src/bin/e_int_menus.c:523
+msgid "New Column of Desktops"
+msgstr "仮想デスクトップを横に広げる"
+
+#: src/bin/e_int_menus.c:527
+msgid "Remove Column of Desktops"
+msgstr "仮想デスクトップを横に狭める"
+
+#: src/bin/e_int_menus.c:589
+msgid "Configuration Panel"
+msgstr "設定パンネル"
+
+#: src/bin/e_int_menus.c:647 src/bin/e_int_menus.c:919
+msgid "(No Windows)"
+msgstr "(ウインドウ無し)"
+
+#: src/bin/e_int_menus.c:662 src/bin/e_int_menus.c:933
+msgid "No name!!"
 msgstr ""
 
-#: src/bin/e_error.c:188 src/bin/e_error.c:197
-msgid "OK"
-msgstr "了解"
+#: src/bin/e_int_menus.c:678
+msgid "Cleanup Windows"
+msgstr "ウィンドウ整え直し"
 
-#: src/modules/ibar/e_mod_main.c:804
-msgid "Options"
-msgstr "オプション"
+#: src/bin/e_int_menus.c:751 src/modules/battery/e_mod_main.c:593
+#: src/modules/clock/e_mod_main.c:320 src/modules/cpufreq/e_mod_main.c:961
+#: src/modules/ibar/e_mod_main.c:666 src/modules/ibox/e_mod_main.c:454
+#: src/modules/pager/e_mod_main.c:628 src/modules/start/e_mod_main.c:237
+#: src/modules/temperature/e_mod_main.c:914
+msgid "Edit Mode"
+msgstr "編集モード"
 
-#: src/bin/e_main.c:112
+#: src/bin/e_int_menus.c:757
+msgid "(Unused)"
+msgstr "(未使用)"
+
+#: src/bin/e_int_menus.c:789 src/bin/e_theme_about.c:41
+msgid "About This Theme"
+msgstr "このテーマについて"
+
+#: src/bin/e_main.c:204
 #, c-format
 msgid ""
 "Options:\n"
@@ -636,77 +458,257 @@ msgid ""
 "\t\tbe used to simulate xinerama.\n"
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+"オプション:\n"
+"\t-display DISPLAY\n"
+"\t\tDISPLAYというディスプレーに接続する\n"
+"\t\t例: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\t良くしてて\n"
+"\t-evil\n"
+"\t\t悪くしてて\n"
+"\t-psychotic\n"
+"\t\t精神病様にしてて\n"
+
+#: src/bin/e_main.c:272
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment は Ecore を初期化できません!\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:282
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment は終了シグナル・ハンドラーを初期化できません!\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:288
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment はHUPシグナル・ハンドラーを初期化できません!\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:299
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment は X への接続を初期化できません。\n"
+"環境変数DISPLAYの定義を確認してください。"
+
+#: src/bin/e_main.c:307
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment は緊急アラートシステムを初期化できません。\n"
+"環境変数DISPLAYの定義を確認してください。"
+
+#: src/bin/e_main.c:314
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:126
-msgid "Pager"
-msgstr "ページャ"
+#: src/bin/e_main.c:330
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment は接続システムを初期化できません。\n"
+"メモリー資源が低下していますか。"
 
-#: src/bin/e_int_menus.c:366
-msgid "Remove Column of Desktops"
-msgstr "仮想デスクトップを横に狭める"
+#: src/bin/e_main.c:338
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment はIPCシステムを初期化できません。\n"
+"メモリー資源が低下していますか。"
 
-#: src/bin/e_int_menus.c:358
-msgid "Remove Row of Desktops"
-msgstr "仮想デスクトップを縦に狭める"
+#: src/bin/e_main.c:346
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment はEvasシステムを初期化できません。\n"
+"メモリー資源が低下していますか。"
 
-#: src/bin/e_int_menus.c:111
-msgid "Restart Enlightenment"
-msgstr "Enlightenment 再始動"
-
-#: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
-msgid "Set Alarm"
+#: src/bin/e_main.c:352
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
-msgid "Set Poll Time"
+#: src/bin/e_main.c:361
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment はファイルシステムを初期化できません。\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:373
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment はあなたのホームディレクトリーの中にディレクトリーを"
+"追加できません。\n"
+"ホームディレクトリーの存在とディスクの残り容量を確認してください。"
+
+#: src/bin/e_main.c:381
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenmentはコンフィグシステムを初期化できません。"
+
+#: src/bin/e_main.c:388
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentはファイルを検索するためのパスを初期化できません。\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:396
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenmentはアクションのシステムを初期化できません。"
+
+#: src/bin/e_main.c:403
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenmentはバインディングのシステムを初期化できません。"
+
+#: src/bin/e_main.c:410
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenmentはポップアップのシステムを初期化できません。"
+
+#: src/bin/e_main.c:421
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenmentはフォントのシステムを初期化できません。"
+
+#: src/bin/e_main.c:431
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenmentはテーマのシステムを初期化できません。"
+
+#: src/bin/e_main.c:440
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenmentは初期スクリーンを初期化できません。\n"
+"メモリー資源が低下していますか。"
+
+#: src/bin/e_main.c:449
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Enlightenmentあなたのシステムすべてのスクリーンに対して"
+"ウィンドウマネージメントを初期化できません。\n"
+"別のウィンドウマネージャが稼働していますか。\n"
+
+#: src/bin/e_main.c:456
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenmentはアプリケーションのシステムを初期化できません。"
+
+#: src/bin/e_main.c:463
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenmentは記憶の設定を初期化できません。"
+
+#: src/bin/e_main.c:479
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again.\n"
+"\n"
+"If you use AFS then maybe you might want to make a symlink from\n"
+"~/.ecore to /tmp/my_directory/ecore where sockets can be made."
 msgstr ""
 
-#: src/bin/e_border.c:3226
-msgid "Shaded"
-msgstr "シェード"
+#: src/bin/e_main.c:495
+msgid "Enlightenment cannot set up its msg system."
+msgstr "Enlightenmentはmsgシステムを初期化できません。"
 
-#: src/modules/dropshadow/e_mod_main.c:266
-msgid "Sharp"
+#: src/bin/e_main.c:502
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenmentはdndシステムを初期化できません。"
+
+#: src/bin/e_main.c:509
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr "Enlightenmentは入力グラブ処理のシステムを初期化できません。"
+
+#: src/bin/e_main.c:516
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenmentはモジュールのシステムを初期化できません。"
+
+#: src/bin/e_main.c:523
+msgid "Enlightenment cannot set up its window list system."
+msgstr "Enlightenmentはウィンドウリストのシステムを初期化できません。"
+
+#: src/bin/e_main.c:529
+msgid "Enlightenment IPC setup error!"
+msgstr "Enlightenment IPC初期化エラー!"
+
+#: src/bin/e_main.c:530
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:808
-msgid "Size"
-msgstr "サイズ"
+#: src/bin/e_main.c:546 src/bin/e_about.c:50
+msgid "Enlightenment"
+msgstr "Enlightenment"
 
-#: src/modules/temperature/e_mod_main.c:481
-msgid "Slow (30 sec)"
-msgstr "遅い(30秒毎)"
+#: src/bin/e_main.c:548
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenmentは起動しています。お待ちください。"
 
-#: src/modules/ibar/e_mod_main.c:747
-msgid "Small"
-msgstr "小さい"
+#: src/bin/e_module.c:101 src/bin/e_module.c:112 src/bin/e_module.c:134
+msgid "Error loading Module"
+msgstr "モジュール取り込みエラー"
 
-#: src/modules/test/e_mod_main.c:32
-msgid "Something Else"
-msgstr ""
-
-#: src/bin/e_border.c:3240
-msgid "Sticky"
-msgstr "Stick"
-
-#: src/modules/temperature/e_mod_main.c:87
-msgid "Temperature"
-msgstr "温度計"
-
-#: src/modules/test/e_mod_main.c:59
-msgid "Test!!!"
-msgstr ""
-
-#: src/bin/e_module.c:99
+#: src/bin/e_module.c:102
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
 "No module named %s could be found in the\n"
 "module search directories\n"
 msgstr ""
+"%sというモジュールの取り込みにあたってエラーが発生しました。\n"
+"%sというモジュールがモジュールの検索パスには\n"
+"見つかりません。\n"
 
-#: src/bin/e_module.c:110 src/bin/e_module.c:132
+#: src/bin/e_module.c:113 src/bin/e_module.c:135
 #, c-format
 msgid ""
 "There was an error loading module named: %s\n"
@@ -715,108 +717,712 @@ msgid ""
 "The error reported was:\n"
 "%s"
 msgstr ""
+"%sというモジュールの取り込みにあたってエラーが発生しました。\n"
+"このモジュールのフルパスは:\n"
+"%s\n"
+"エラーの内容は以下のとおりです:\n"
+"%s"
 
-#: src/bin/e_int_menus.c:211
+#: src/bin/e_module.c:337
+msgid "(No Loaded Modules)"
+msgstr "(取り込みモジュール無し)"
+
+#: src/bin/e_module.c:393
+msgid "About..."
+msgstr "情報"
+
+#: src/bin/e_module.c:397
+msgid "Enabled"
+msgstr "有効にする"
+
+#: src/bin/e_module.c:471 src/modules/battery/e_mod_main.c:769
+#: src/modules/cpufreq/e_mod_main.c:312 src/modules/cpufreq/e_mod_main.c:340
+msgid "Ok"
+msgstr ""
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr ""
+
+#: src/bin/e_utils.c:246
+msgid "Cannot exit - immortal windows."
+msgstr "終了不可能 - 不滅ウィンドウ"
+
+#: src/bin/e_utils.c:247
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+"「不滅」ロックが設定してあるウィンドウが存在します。\n"
+"該当するウィンドウを閉じたり、「不滅」ロックを解除したりするまで、\n"
+"Enlightenmentを終了することが不可能です。\n"
+
+#: src/bin/e_winlist.c:115
+msgid "Select a window"
+msgstr "ウィンドウの選択"
+
+#: src/bin/e_about.c:55
+msgid ""
+"Copyright © 1999-2005, by the Enlightenment Development Team.<br><br>We hope "
+"you enjoy using this software as much as we enjoyed writing it.<br><br>This "
+"software is provided as-is with no explicit or implied warranty. This "
+"software is governed by licensing conditions, so please see the COPYING and "
+"COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment "
+"is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many "
+"features are incomplete or even non-existant yet and may have many bugs. You "
+"have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:80
+msgid "<title>The Team</title>"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:77 src/modules/clock/e_mod_main.c:50
+#: src/modules/cpufreq/e_mod_main.c:68 src/modules/dropshadow/e_mod_main.c:101
+#: src/modules/ibar/e_mod_main.c:122 src/modules/ibox/e_mod_main.c:104
+#: src/modules/pager/e_mod_main.c:116 src/modules/start/e_mod_main.c:33
+#: src/modules/temperature/e_mod_main.c:50 src/modules/test/e_mod_main.c:14
+#: src/modules/randr/e_mod_main.c:38
 #, c-format
 msgid ""
-"This is Enlightenment %s.\n"
-"Copyright © 1999-2004, by the Enlightenment Dev Team.\n"
-"\n"
-"We hope you enjoy using this software as much as we enjoyed writing it.\n"
-"\n"
-"Please think of the aardvarks. They need some love too."
+"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
+"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"%i.<br>"
 msgstr ""
+"Module API Error<br>モジュール初期化エラー: %s<br>モジュールAPIバージョンの"
+"最小限は: %i です。<br>Enlightenmentが提供しているモジュールAPIバージョンは: "
+"%i です。<br>"
 
-#: src/bin/e_main.c:361
-msgid "This is development code, so be warned."
-msgstr "これは開発コード、従って警告される。"
+#: src/modules/battery/e_mod_main.c:80 src/modules/battery/e_mod_main.c:120
+msgid "Battery"
+msgstr "電池"
 
-#: src/bin/e_main.c:321
+#: src/modules/battery/e_mod_main.c:82 src/modules/battery/e_mod_main.c:129
+msgid "Enlightenment Battery Module"
+msgstr "Enlightenment 電池モジュール"
+
+#: src/modules/battery/e_mod_main.c:130
 msgid ""
-"This is program has barely been started on, so it is not complete by a long\n"
-"shot. Please do NOT expect anything to work properly at this stage. It's\n"
-"being worked on.\n"
-"\n"
-"Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
+"A basic battery meter that uses either<hilight>ACPI</hilight> or "
+"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
+"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+"accurate as your BIOS or kernel drivers."
+msgstr ""
+"単純な電池メーターです。Linux上での<hilight>ACPI</hilight>または"
+"<hilight>APM</hilight>を利用し、<br>電池及びAC電源アダプターの状況を"
+"表示します。<br>本モジュールの正確性はBIOSとカーネルのドライバーに"
+"よります。<br>Linux以外のOSでは利用が不可能です。"
+
+#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
+#: src/modules/cpufreq/e_mod_main.c:222 src/modules/cpufreq/e_mod_main.c:555
+msgid "Set Poll Time"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:159
+#: src/modules/battery/e_mod_main.c:226 src/modules/battery/e_mod_main.c:505
+msgid "Set Alarm"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:408
+msgid "Disable"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:415
+msgid "10 mins"
+msgstr "10分"
+
+#: src/modules/battery/e_mod_main.c:422
+msgid "20 mins"
+msgstr "20分"
+
+#: src/modules/battery/e_mod_main.c:429
+msgid "30 mins"
+msgstr "30分"
+
+#: src/modules/battery/e_mod_main.c:436
+msgid "40 mins"
+msgstr "40分"
+
+#: src/modules/battery/e_mod_main.c:443
+msgid "50 mins"
+msgstr "50分"
+
+#: src/modules/battery/e_mod_main.c:450
+msgid "1 hour"
+msgstr "1時間"
+
+#: src/modules/battery/e_mod_main.c:462
+msgid "Check Fast (1 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:469
+msgid "Check Medium (5 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:476
+msgid "Check Normal (10 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:483
+msgid "Check Slow (30 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:490
+msgid "Check Very Slow (60 sec)"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:766
 msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:135
+#: src/modules/battery/e_mod_main.c:831
+msgid "NO INFO"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:975 src/modules/battery/e_mod_main.c:1240
+#: src/modules/battery/e_mod_main.c:1389
+msgid "NO BAT"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:999 src/modules/battery/e_mod_main.c:1414
+msgid "BAD DRIVER"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1023 src/modules/battery/e_mod_main.c:1271
+#: src/modules/battery/e_mod_main.c:1438
+msgid "FULL"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1084 src/modules/battery/e_mod_main.c:1498
+msgid "High"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1088 src/modules/battery/e_mod_main.c:1502
+msgid "Low"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1092 src/modules/battery/e_mod_main.c:1506
+msgid "Danger"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:1096 src/modules/battery/e_mod_main.c:1510
+#: src/modules/battery/e_mod_main.c:1674
+msgid "Charging"
+msgstr "充電中"
+
+#: src/modules/clock/e_mod_main.c:53 src/modules/clock/e_mod_main.c:95
+msgid "Clock"
+msgstr "時計"
+
+#: src/modules/clock/e_mod_main.c:55 src/modules/clock/e_mod_main.c:104
+msgid "Enlightenment Clock Module"
+msgstr "Enlightenment 時計モジュール"
+
+#: src/modules/clock/e_mod_main.c:105
+msgid "A simple module to give E17 a clock."
+msgstr "E17用のシンプルな時計モジュール。"
+
+#: src/modules/clock/e_mod_main.c:330
+msgid "No Digital Display"
+msgstr "デジタル表示無し"
+
+#: src/modules/clock/e_mod_main.c:352
+msgid "24 Hour"
+msgstr "24時間表示"
+
+#: src/modules/clock/e_mod_main.c:364
+msgid "Digital Display"
+msgstr "デジタル表示"
+
+#: src/modules/cpufreq/e_mod_main.c:71
+msgid "Cpufreq"
+msgstr "Cpufreq"
+
+#: src/modules/cpufreq/e_mod_main.c:73
+msgid "Enlightenment Cpufreq Module"
+msgstr "Enlightenment Cpufreq モジュール"
+
+#: src/modules/cpufreq/e_mod_main.c:112
+msgid "CpuFreq"
+msgstr "CpuFreq"
+
+#: src/modules/cpufreq/e_mod_main.c:121
+msgid "CPU Frequency Controller Module"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:122
 msgid ""
-"This is the dropshadow module that allows dropshadows to be cast\n"
-"on the desktop background - without special X-Server extensions\n"
-"or hardware acceleration."
+"A simple module to control the frequency of the system CPU.<br>This is "
+"especially useful to save power on laptops."
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:67
+#: src/modules/cpufreq/e_mod_main.c:228
+msgid "Restore Controller on Startup"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:567
+msgid "Set Controller"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:243 src/modules/cpufreq/e_mod_main.c:574
+msgid "Set Speed"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:310
 msgid ""
-"This module is VERY simple and is only used to test the basic\n"
-"interface of the Enlightenment 0.17.0 module system. Please\n"
-"Ignore this module unless you are working on the module system."
+"There was an error trying to set the cpu frequency<br>governor via the "
+"module's setfreq utility."
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:733
-msgid "Tiny"
-msgstr "とっても小さい"
-
-#: src/modules/dropshadow/e_mod_main.c:353
-msgid "Very Close"
+#: src/modules/cpufreq/e_mod_main.c:338
+msgid ""
+"There was an error trying to set the cpu frequency<br>setting via the "
+"module's setfreq utility."
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:287
-msgid "Very Dark"
+#: src/modules/cpufreq/e_mod_main.c:463
+msgid "Check Fast (0.5 sec)"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:326
-msgid "Very Far"
+#: src/modules/cpufreq/e_mod_main.c:470
+msgid "Check Medium (1 sec)"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:239
+#: src/modules/cpufreq/e_mod_main.c:477
+msgid "Check Normal (2 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:484
+msgid "Check Slow (5 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:491
+msgid "Check Very Slow (30 sec)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:507
+msgid "Manual"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:509
+msgid "Automatic"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:511
+msgid "Lower Power Automatic"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:513
+msgid "Minimum Speed"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:515
+msgid "Maximum Speed"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:537
+#, c-format
+msgid "%i Mhz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:540
+#, c-format
+msgid "%i.%i Ghz"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:561
+msgid "Restore Governor on Startup"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:104
+#: src/modules/dropshadow/e_mod_main.c:184
+msgid "Dropshadow"
+msgstr "ドロップシャドウ"
+
+#: src/modules/dropshadow/e_mod_main.c:106
+#: src/modules/dropshadow/e_mod_main.c:193
+msgid "Enlightenment Dropshadow Module"
+msgstr "Enlightenment ドロップシャドウ モジュール"
+
+#: src/modules/dropshadow/e_mod_main.c:194
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast<br>on the "
+"desktop background - without special X-Server extensions<br>or hardware "
+"acceleration."
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:304
 msgid "Very Fuzzy"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:768
-msgid "Very Large"
-msgstr "とても大きい"
-
-#: src/modules/dropshadow/e_mod_main.c:314
-msgid "Very Light"
+#: src/modules/dropshadow/e_mod_main.c:313
+msgid "Fuzzy"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_main.c:275
+#: src/modules/dropshadow/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:895
+#: src/modules/ibox/e_mod_main.c:636
+msgid "Medium"
+msgstr "普通"
+
+#: src/modules/dropshadow/e_mod_main.c:331
+msgid "Sharp"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:340
 msgid "Very Sharp"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:488
-msgid "Very Slow (60 sec)"
+#: src/modules/dropshadow/e_mod_main.c:352
+msgid "Very Dark"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:740
+#: src/modules/dropshadow/e_mod_main.c:361
+msgid "Dark"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:370
+msgid "Light"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:379
+msgid "Very Light"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:391
+msgid "Very Far"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:400
+msgid "Far"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:409
+msgid "Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:418
+msgid "Very Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:427
+msgid "Extremely Near"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:436
+msgid "Immediately Underneath"
+msgstr ""
+
+#: src/modules/dropshadow/e_mod_main.c:448
+msgid "High Quality"
+msgstr "高質"
+
+#: src/modules/dropshadow/e_mod_main.c:458
+msgid "Medium Quality"
+msgstr "中質"
+
+#: src/modules/dropshadow/e_mod_main.c:468
+msgid "Low Quality"
+msgstr "低質"
+
+#: src/modules/ibar/e_mod_main.c:125 src/modules/ibar/e_mod_main.c:165
+msgid "IBar"
+msgstr "IBar"
+
+#: src/modules/ibar/e_mod_main.c:127 src/modules/ibar/e_mod_main.c:174
+msgid "Enlightenment IBar Module"
+msgstr "Enlightenment IBar モジュール"
+
+#: src/modules/ibar/e_mod_main.c:175
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+"a first example module and is being used to flesh out several<br>interfaces "
+"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+"<hilight>break often</hilight> and change as it improves."
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:284 src/modules/ibar/e_mod_main.c:945
+#: src/modules/ibox/e_mod_main.c:686
+msgid "Options"
+msgstr "オプション"
+
+#: src/modules/ibar/e_mod_main.c:852 src/modules/ibox/e_mod_main.c:599
+msgid "Auto fit icons"
+msgstr "アイコンの自動調整"
+
+#: src/modules/ibar/e_mod_main.c:858
+msgid "Follower"
+msgstr "追跡ランプ"
+
+#: src/modules/ibar/e_mod_main.c:867 src/modules/ibox/e_mod_main.c:608
+msgid "Microscopic"
+msgstr "極めて小さい"
+
+#: src/modules/ibar/e_mod_main.c:874 src/modules/ibox/e_mod_main.c:615
+msgid "Tiny"
+msgstr "とっても小さい"
+
+#: src/modules/ibar/e_mod_main.c:881 src/modules/ibox/e_mod_main.c:622
 msgid "Very Small"
 msgstr "とても小さい"
 
-#: src/bin/e_main.c:320
-msgid "Welcome to Enlightenment 0.17"
+#: src/modules/ibar/e_mod_main.c:888 src/modules/ibox/e_mod_main.c:629
+msgid "Small"
+msgstr "小さい"
+
+#: src/modules/ibar/e_mod_main.c:902 src/modules/ibox/e_mod_main.c:643
+msgid "Large"
+msgstr "大きい"
+
+#: src/modules/ibar/e_mod_main.c:909 src/modules/ibox/e_mod_main.c:650
+msgid "Very Large"
+msgstr "とても大きい"
+
+#: src/modules/ibar/e_mod_main.c:916 src/modules/ibox/e_mod_main.c:657
+msgid "Extremely Large"
+msgstr "とっても大きい"
+
+#: src/modules/ibar/e_mod_main.c:923 src/modules/ibox/e_mod_main.c:664
+msgid "Huge"
+msgstr "極めて大きい"
+
+#: src/modules/ibar/e_mod_main.c:930 src/modules/ibox/e_mod_main.c:671
+msgid "Enormous"
+msgstr "莫大"
+
+#: src/modules/ibar/e_mod_main.c:937 src/modules/ibox/e_mod_main.c:678
+msgid "Gigantic"
+msgstr "巨大"
+
+#: src/modules/ibox/e_mod_main.c:107 src/modules/ibox/e_mod_main.c:147
+msgid "IBox"
 msgstr ""
 
-#: src/bin/e_int_menus.c:85
-msgid "Windows"
-msgstr "ウインドウ"
+#: src/modules/ibox/e_mod_main.c:109 src/modules/ibox/e_mod_main.c:156
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox モジュール"
 
-#: src/bin/e_init.c:34
-#, c-format
-msgid "X reports there are no root windows and %i screens!\n"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:689
+#: src/modules/ibox/e_mod_main.c:157
 msgid ""
-"Your battery is running low.\n"
-"You may wish to switch to an AC source."
+"This is the IBox Iconified Application module for Enlightenment.<br>It will "
+"hold minimized applications"
 msgstr ""
+
+#: src/modules/pager/e_mod_main.c:119 src/modules/pager/e_mod_main.c:162
+msgid "Pager"
+msgstr "ページャ"
+
+#: src/modules/pager/e_mod_main.c:121 src/modules/pager/e_mod_main.c:171
+msgid "Enlightenment Pager Module"
+msgstr "Enlightenment ページャモジュール"
+
+#: src/modules/pager/e_mod_main.c:172
+msgid "A pager module to navigate virtual desktops."
+msgstr "仮想デスクトップを切替えるためのページャモジュール。"
+
+#: src/modules/pager/e_mod_main.c:403
+msgid "None"
+msgstr "無し"
+
+#: src/modules/pager/e_mod_main.c:411
+msgid "Top"
+msgstr "上に"
+
+#: src/modules/pager/e_mod_main.c:419
+msgid "Bottom"
+msgstr "下に"
+
+#: src/modules/pager/e_mod_main.c:450
+msgid "Very Slow"
+msgstr "とても遅い"
+
+#: src/modules/pager/e_mod_main.c:457
+msgid "Slow"
+msgstr "遅い"
+
+#: src/modules/pager/e_mod_main.c:471
+msgid "Fast"
+msgstr "速い"
+
+#: src/modules/pager/e_mod_main.c:478
+msgid "Very Fast"
+msgstr "とても速い"
+
+#: src/modules/pager/e_mod_main.c:486 src/modules/pager/e_mod_main.c:633
+msgid "Desktop Name"
+msgstr "デスクトップ名"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:637
+msgid "Enable Popup"
+msgstr "ポップアップを有効にする"
+
+#: src/modules/pager/e_mod_main.c:496
+msgid "Popup Speed"
+msgstr "ポップアップの速度"
+
+#: src/modules/pager/e_mod_main.c:500 src/modules/pager/e_mod_main.c:647
+msgid "Fix Aspect (Keep Height)"
+msgstr "寸法を直す(広さ)"
+
+#: src/modules/pager/e_mod_main.c:504 src/modules/pager/e_mod_main.c:651
+msgid "Fix Aspect (Keep Width)"
+msgstr "寸法を直す(高さ)"
+
+#: src/modules/pager/e_mod_main.c:643
+msgid "Desktop Speed"
+msgstr ""
+
+#: src/modules/start/e_mod_main.c:36 src/modules/start/e_mod_main.c:76
+msgid "Start"
+msgstr "スタート"
+
+#: src/modules/start/e_mod_main.c:38 src/modules/start/e_mod_main.c:85
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment スタート モジュール"
+
+#: src/modules/start/e_mod_main.c:86
+msgid "Experimental Button module for E17"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:53
+#: src/modules/temperature/e_mod_main.c:93
+msgid "Temperature"
+msgstr "温度計"
+
+#: src/modules/temperature/e_mod_main.c:55
+#: src/modules/temperature/e_mod_main.c:102
+msgid "Enlightenment Temperature Module"
+msgstr "Enlightenment 温度計モジュール"
+
+#: src/modules/temperature/e_mod_main.c:103
+msgid ""
+"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
+"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
+"generate a lot of heat."
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:195
+#: src/modules/temperature/e_mod_main.c:790
+msgid "Check Interval"
+msgstr "観察間隔"
+
+#: src/modules/temperature/e_mod_main.c:199
+#: src/modules/temperature/e_mod_main.c:798
+msgid "Low Temperature"
+msgstr "低温度"
+
+#: src/modules/temperature/e_mod_main.c:203
+#: src/modules/temperature/e_mod_main.c:802
+msgid "High Temperature"
+msgstr "高温度"
+
+#: src/modules/temperature/e_mod_main.c:207
+#: src/modules/temperature/e_mod_main.c:794
+msgid "Unit"
+msgstr "単位"
+
+#: src/modules/temperature/e_mod_main.c:683
+msgid "Fast (1 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:690
+msgid "Medium (5 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:697
+msgid "Normal (10 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:704
+msgid "Slow (30 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:711
+msgid "Very Slow (60 sec)"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:722
+msgid "Fahrenheit"
+msgstr "カ氏"
+
+#: src/modules/temperature/e_mod_main.c:729
+msgid "Celcius"
+msgstr "セ氏"
+
+#: src/modules/temperature/e_mod_main.c:759
+msgid "Temp1"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:766
+msgid "Temp2"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:773
+msgid "Temp3"
+msgstr ""
+
+#: src/modules/temperature/e_mod_main.c:808
+msgid "Sensor"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:17
+msgid "Test"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:19 src/modules/test/e_mod_main.c:70
+msgid "Enlightenment Test Module"
+msgstr "Enlightenment テストモジュール"
+
+#: src/modules/test/e_mod_main.c:28
+msgid "Module Config Menu Item 1"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:30
+msgid "Module Config Menu Item 2"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:32
+msgid "Module Config Menu Item 3"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:36
+msgid "Something Else"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:63
+msgid "Test!!!"
+msgstr ""
+
+#: src/modules/test/e_mod_main.c:71
+msgid ""
+"This module is VERY simple and is only used to test the basic<br>interface "
+"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+"unless you are working on the module system."
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:41
+msgid "RandR"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:43 src/modules/randr/e_mod_main.c:94
+msgid "Enlightenment Randr Module"
+msgstr "Enlightenment Randr モジュール"
+
+#: src/modules/randr/e_mod_main.c:83
+msgid "Randr"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:95
+msgid "Module to change screen resolution for E17"
+msgstr "解像度を変更するためのモジュール"
+
+#: src/modules/randr/e_mod_main.c:197
+msgid "Restore Resolution on Startup"
+msgstr ""
+
+#: src/modules/randr/e_mod_main.c:220
+msgid "Resolution"
+msgstr "解像度"
