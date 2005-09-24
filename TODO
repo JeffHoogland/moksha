@@ -58,8 +58,6 @@ Some of the things (in very short form) that need to be done to E17...
 * dialogs for generic contents too
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
-* netwm frame extents request (_e_manager_cb_frame_extents_request) needs
-  to properly choose the border based on client window properties.
 * do something with the icccm urgency field hint
 * different borders for non-resizable windows, shaped windows etc.
 * window icons should be able to be chosen if e eapp icon overrides netwm

@@ -11,6 +11,10 @@ static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
 static int _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static int _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 static int _e_manager_cb_ping(void *data, int ev_type, void *ev);
+
+static Evas_Bool _e_manager_frame_extents_free_cb(Evas_Hash *hash __UNUSED__,
+						  const char *key __UNUSED__,
+						  void *data, void *fdata __UNUSED__);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -27,7 +31,16 @@ static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 #endif
 
 /* local subsystem globals */
+
+typedef struct _Frame_Extents Frame_Extents;
+
+struct _Frame_Extents
+{
+   int l, r, t, b;
+};
+
 static Evas_List *managers = NULL;
+static Evas_Hash *frame_extents = NULL;
     
 /* externally accessible functions */
 int
@@ -45,6 +58,12 @@ e_manager_shutdown(void)
 	tmp = l;
 	l = l->next;
 	e_object_del(E_OBJECT(tmp->data));
+     }
+   if (frame_extents)
+     {
+	evas_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);
+	evas_hash_free(frame_extents);
+	frame_extents = NULL;
      }
    return 1;
 }
@@ -493,34 +512,135 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    E_Manager *man;
    E_Container *con;
    Ecore_X_Event_Frame_Extents_Request *e;
-   Evas_Object *o;
+   Ecore_X_Window_Type type;
+   Ecore_X_MWM_Hint_Decor decor;
+   Ecore_X_Window_State *state;
+   Frame_Extents *extents;
+   const char *border, *signal, *key;
    int ok;
+   unsigned int i, num;
    
    man = data;
    con = e_container_current_get(man);
    e = ev;
 
    if (ecore_x_window_parent_get(e->win) != man->root) return 1;
-   /* FIXME: this is definitely not perfect - we need to handle a border guess here */
-   o = edje_object_add(con->bg_evas);
-   ok = e_theme_edje_object_set(o, "base/theme/borders",
-				"widgets/border/default/border");
-   if (ok)
+
+   /* TODO:
+    * * We need to check if we remember this window, and border locking is set
+    */
+   border = "default";
+   key = border;
+   ok = ecore_x_mwm_hints_get(e->win, NULL, &decor, NULL);
+   if ((ok) &&
+       (!(decor & ECORE_X_MWM_HINT_DECOR_ALL)) &&
+       (!(decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
+       (!(decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
      {
-	Evas_Coord x, y, w, h;
-	int l, r, t, b;
-
-	evas_object_resize(o, 1000, 1000);
-	edje_object_calc_force(o);
-	edje_object_part_geometry_get(o, "client", &x, &y, &w, &h);
-	l = x;
-	r = 1000 - (x + w);
-	t = y;
-	b = 1000 - (y + h);
-
-	ecore_x_netwm_frame_size_set(e->win, l, r, t, b);
+	border = "borderless";
+	key = border;
      }
-   evas_object_del(o);
+
+   ok = ecore_x_netwm_window_type_get(e->win, &type);
+   if ((ok) &&
+       ((type == ECORE_X_WINDOW_TYPE_DESKTOP) || 
+	(type == ECORE_X_WINDOW_TYPE_DOCK)))
+     {
+	border = "borderless";
+	key = border;
+     }
+
+
+   signal = NULL;
+   ecore_x_netwm_window_state_get(e->win, &state, &num);
+   if (state)
+     {
+	int maximized = 0;
+	int fullscreen = 0;
+
+	for (i = 0; i < num; i++)
+	  {
+	     switch (state[i])
+	       {
+		case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
+		  maximized++;
+		  break;
+		case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
+		  maximized++;
+		  break;
+		case ECORE_X_WINDOW_STATE_FULLSCREEN:
+		  fullscreen = 1;
+		  border = "borderless";
+		  key = border;
+		  break;
+		case ECORE_X_WINDOW_STATE_SHADED:
+		case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
+		case ECORE_X_WINDOW_STATE_SKIP_PAGER:
+		case ECORE_X_WINDOW_STATE_HIDDEN:
+		case ECORE_X_WINDOW_STATE_ICONIFIED:
+		case ECORE_X_WINDOW_STATE_MODAL:
+		case ECORE_X_WINDOW_STATE_STICKY:
+		case ECORE_X_WINDOW_STATE_ABOVE:
+		case ECORE_X_WINDOW_STATE_BELOW:
+		case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
+		case ECORE_X_WINDOW_STATE_UNKNOWN:
+		  break;
+	       }
+	  }
+	if ((maximized == 2) &&
+	    (e_config->maximize_policy == E_MAXIMIZE_FULLSCREEN))
+	  {
+	     signal = "maximize,fullscreen";
+	     key = "maximize,fullscreen";
+	  }
+	free(state);
+     }
+
+   if (frame_extents)
+     extents = evas_hash_find(frame_extents, key);
+   if (!extents)
+     {
+	extents = E_NEW(Frame_Extents, 1);
+	if (extents)
+	  {
+	     Evas_Object *o;
+	     char buf[1024];
+
+	     o = edje_object_add(con->bg_evas);
+	     snprintf(buf, sizeof(buf), "widgets/border/%s/border", border);
+	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
+	     if (ok)
+	       {
+		  Evas_Coord x, y, w, h;
+
+		  if (signal)
+		    {
+		       edje_object_signal_emit(o, signal, "");
+		       edje_object_message_signal_process(o);
+		    }
+
+		  evas_object_resize(o, 1000, 1000);
+		  edje_object_calc_force(o);
+		  edje_object_part_geometry_get(o, "client", &x, &y, &w, &h);
+		  extents->l = x;
+		  extents->r = 1000 - (x + w);
+		  extents->t = y;
+		  extents->b = 1000 - (y + h);
+	       }
+	     else
+	       {
+		  extents->l = 0;
+		  extents->r = 0;
+		  extents->t = 0;
+		  extents->b = 0;
+	       }
+	     evas_object_del(o);
+	  }
+	frame_extents = evas_hash_add(frame_extents, key, extents);
+     }
+
+   if (extents)
+     ecore_x_netwm_frame_size_set(e->win, extents->l, extents->r, extents->t, extents->b);
 
    return 1;
 }
@@ -541,6 +661,14 @@ _e_manager_cb_ping(void *data, int ev_type __UNUSED__, void *ev)
    if (!bd) return 1;
 
    bd->ping_ok = 1;
+   return 1;
+}
+
+static Evas_Bool
+_e_manager_frame_extents_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
+				 void *data, void *fdata __UNUSED__)
+{
+   free(data);
    return 1;
 }
 
