@@ -661,7 +661,9 @@ static void _e_editable_text_smart_add(Evas_Object *object)
    evas_object_smart_data_set(object, editable_text_sd);
 
    cursor = (Evas_Textblock_Cursor *)evas_object_textblock2_cursor_get(editable_text_sd->text_object);
-	evas_textblock2_cursor_node_first(cursor);   
+	evas_textblock2_cursor_node_first(cursor);
+   
+   evas_font_path_append (evas, PACKAGE_DATA_DIR"/data/fonts");
 }
 
 /* Called when the object is deleted */

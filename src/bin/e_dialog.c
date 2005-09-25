@@ -18,8 +18,10 @@ struct _E_Dialog_Button
 /* local subsystem functions */
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_dialog_button_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_dialog_cb_delete(E_Win *win);
 static void _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
+
 
 /* local subsystem globals */
 
@@ -111,6 +113,9 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
    edje_object_signal_callback_add(db->obj, "click", "",
 				   _e_dialog_cb_button_clicked, db);
    edje_object_part_text_set(db->obj, "button_text", db->label);
+   
+   evas_object_event_callback_add(db->obj, EVAS_CALLBACK_MOUSE_IN, _e_dialog_button_cb_mouse_in, dia);
+   
    if (icon)
      {
 	db->obj_icon = edje_object_add(e_win_evas_get(dia->win));
@@ -245,6 +250,12 @@ _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, 
      e_object_del(E_OBJECT(db->dialog));
 }
 
+static void
+_e_dialog_button_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event)
+{        
+   edje_object_signal_emit(obj, "enter", "");  
+}
+
 /* TODO: Implement shift-tab and left arrow */
 static void
 _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
@@ -262,7 +273,7 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	     E_Dialog_Button *db;
 	     
 	     db = dia->focused->data;	 
-	     edje_object_signal_emit(db->obj, "unfocus", "");
+	     edje_object_signal_emit(db->obj, "unfocus", "");	     
 	     if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
 	       {
 		  if (dia->focused->prev) dia->focused = dia->focused->prev;
@@ -275,6 +286,8 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	       }
 	     db = evas_list_data(dia->focused);
 	     edje_object_signal_emit(db->obj, "focus", "");
+	     edje_object_signal_emit(db->obj, "enter", "");
+	     
 	  }
        	else
 	  {
@@ -284,6 +297,7 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 
 	     db = dia->focused->data;
 	     edje_object_signal_emit(db->obj, "focus", "");
+	     edje_object_signal_emit(db->obj, "enter", "");	     
 	  }
      }
    else if (((!strcmp(ev->keyname, "Return")) || 
