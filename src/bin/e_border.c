@@ -4215,7 +4215,11 @@ _e_border_eval(E_Border *bd)
 	  }
 	if (!ecore_x_netwm_icons_get(bd->client.win,
 				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
-	  printf("ERROR: Fetch icon from client\n");
+	  {
+	     printf("ERROR: Fetch icon from client\n");
+	     bd->client.netwm.icons = NULL;
+	     bd->client.netwm.num_icons = 0;
+	  }
 	else
 	  bd->changes.icon = 1;
 	bd->client.netwm.fetch.icon = 0;
