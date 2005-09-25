@@ -2562,6 +2562,7 @@ _e_border_free(E_Border *bd)
    if (bd->stick_desks) evas_list_free(bd->stick_desks);
    if (bd->client.netwm.icons)
      {
+	int i;
 	for (i = 0; i < bd->client.netwm.num_icons; i++)
 	  free(bd->client.netwm.icons[i].data);
 	free(bd->client.netwm.icons);
@@ -4212,6 +4213,7 @@ _e_border_eval(E_Border *bd)
      {
 	if (bd->client.netwm.icons)
 	  {
+	     int i;
 	     for (i = 0; i < bd->client.netwm.num_icons; i++)
 	       free(bd->client.netwm.icons[i].data);
 	     free(bd->client.netwm.icons);
