@@ -124,8 +124,7 @@ static void _e_entry_smart_del(Evas_Object *object)
    E_Entry_Smart_Data *e_entry_sd;
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;
-         
+     return;   
 }
 
 static void _e_entry_smart_raise(Evas_Object *object)
@@ -133,7 +132,9 @@ static void _e_entry_smart_raise(Evas_Object *object)
    E_Entry_Smart_Data *e_entry_sd;
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;   
+     return;
+   
+   evas_object_raise(e_entry_sd->edje_object);   
 }
 
 static void _e_entry_smart_lower(Evas_Object *object)
@@ -141,7 +142,9 @@ static void _e_entry_smart_lower(Evas_Object *object)
    E_Entry_Smart_Data *e_entry_sd;
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;   
+     return;
+   
+   evas_object_lower(e_entry_sd->edje_object);
 }
 
 static void _e_entry_smart_stack_above(Evas_Object *object, Evas_Object *above)
@@ -150,6 +153,8 @@ static void _e_entry_smart_stack_above(Evas_Object *object, Evas_Object *above)
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
      return;   
+   
+   evas_object_stack_above(e_entry_sd->edje_object, above);
 }
 
 static void _e_entry_smart_stack_below(Evas_Object *object, Evas_Object *below)
@@ -157,7 +162,9 @@ static void _e_entry_smart_stack_below(Evas_Object *object, Evas_Object *below)
    E_Entry_Smart_Data *e_entry_sd;
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;   
+     return;
+   
+   evas_object_stack_below(e_entry_sd->edje_object, below);
 }
 
 static void _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
@@ -196,6 +203,8 @@ static void _e_entry_smart_hide(Evas_Object *object)
       
    if (!object || !(e_entry_sd = evas_object_smart_data_get(object)))
      return;   
+   
+   evas_object_hide (e_entry_sd->edje_object);
 }
 
 /* Called when the user presses a key */
@@ -225,9 +234,6 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
    else
      e_editable_text_insert(obj, key_event->string);
 }
-
-
-
 
 Evas_Object *e_editable_text_add(Evas *evas)
 {
