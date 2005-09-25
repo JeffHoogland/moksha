@@ -2097,12 +2097,13 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	       edje_object_file_set(o, a->path, "icon");
 	  }
      }
-   else if (bd->client.netwm.icon.data)
+   else if (bd->client.netwm.icons)
      {
+	/* TODO: Use the right icon */
 	o = e_icon_add(evas);
-	e_icon_data_set(o, bd->client.netwm.icon.data,
-			bd->client.netwm.icon.width,
-			bd->client.netwm.icon.height);
+	e_icon_data_set(o, bd->client.netwm.icons[0].data,
+			bd->client.netwm.icons[0].width,
+			bd->client.netwm.icons[0].height);
 	e_icon_alpha_set(o, 1);
      }
    return o;
@@ -4200,10 +4201,9 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.netwm.fetch.icon)
      {
-	if (bd->client.netwm.icon.data) free(bd->client.netwm.icon.data);
-	if (!ecore_x_netwm_icon_get(bd->client.win,
-				    &bd->client.netwm.icon.width, &bd->client.netwm.icon.height,
-				    &bd->client.netwm.icon.data, &bd->client.netwm.icon.size))
+	E_FREE(bd->client.netwm.icons);
+	if (!ecore_x_netwm_icons_get(bd->client.win,
+				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
 	  printf("ERROR: Fetch icon from client\n");
 	else
 	  bd->changes.icon = 1;

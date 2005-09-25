@@ -196,12 +196,8 @@ struct _E_Border
 	 unsigned int desktop;
 	 char *name;
 	 char *icon_name;
-	 struct {
-	      unsigned int *data;
-	      int width;
-	      int height;
-	      int size;
-	 } icon;
+	 Ecore_X_Icon *icons;
+	 int num_icons;
 	 unsigned int user_time;
 	 struct {
 	      int left;
