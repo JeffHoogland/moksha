@@ -1,0 +1,97 @@
+images {
+   image: "entry.png" COMP;
+   image: "entry_focus.png" COMP;
+}
+
+group {
+   name: "widgets/entry";
+   min: 120 18;
+   parts {
+      part {
+         name: "entry";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.5;
+               offset: 0 -9;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: -1 8;
+            }
+            image {
+               normal: "entry.png";
+               border: 8 8 8 8;
+            }
+         }
+         description {
+            state: "focus" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "entry_focus.png";
+            }
+         }
+      }
+      part {
+         name: "entry_focus";
+         description {
+            state: "default" 0.0;
+            visible: 0;
+            color: 255 255 255 0;
+            rel1 {
+               relative: 0.0 0.5;
+               offset: 0 -9;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: -1 8;
+            }
+            image {
+               normal: "entry_focus.png";
+               border: 8 8 8 8;
+            }
+         }
+         description {
+            state: "focus" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+            color: 255 255 255 255;
+         }
+      }
+      part {
+         name: "text_area";
+         type: SWALLOW;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.0;
+               offset: 4 3;
+               to: "entry";
+            }
+            rel2 {
+               relative: 1.0 1.0;
+               offset: -5 -3;
+               to: "entry";
+            }
+         }
+      }
+   }
+   programs {
+      program {
+         name: "entry_focus";
+         signal: "focus";
+         source: "";
+         action: STATE_SET "focus" 0.0;
+         transition: LINEAR 0.2;
+         target: "entry_focus";
+      }
+      program {
+         name: "button_unfocus";
+         signal: "unfocus";
+         source: "";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 0.2;
+         target: "entry_focus";
+      }
+   }
+}

@@ -32,6 +32,7 @@ e_menu.h \
 e_object.h \
 e_icon.h \
 e_box.h \
+e_entry.h \
 e_int_menus.h \
 e_module.h \
 e_apps.h \
@@ -93,6 +94,7 @@ e_menu.c \
 e_object.c \
 e_icon.c \
 e_box.c \
+e_entry.c \
 e_int_menus.c \
 e_module.c \
 e_apps.c \
