@@ -2557,6 +2557,12 @@ _e_border_free(E_Border *bd)
 	ecore_x_window_save_set_del(bd->client.win);
 	bd->already_unparented = 1;
      }
+   if (bd->client.netwm.icons)
+     {
+	for (i = 0; i < bd->client.netwm.num_icons; i++)
+	  free(bd->client.netwm.icons[i].data);
+	free(bd->client.netwm.icons);
+     }
    if (bd->client.border.name) free(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
@@ -4201,7 +4207,12 @@ _e_border_eval(E_Border *bd)
      }
    if (bd->client.netwm.fetch.icon)
      {
-	E_FREE(bd->client.netwm.icons);
+	if (bd->client.netwm.icons)
+	  {
+	     for (i = 0; i < bd->client.netwm.num_icons; i++)
+	       free(bd->client.netwm.icons[i].data);
+	     free(bd->client.netwm.icons);
+	  }
 	if (!ecore_x_netwm_icons_get(bd->client.win,
 				     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
 	  printf("ERROR: Fetch icon from client\n");
