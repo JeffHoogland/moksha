@@ -134,7 +134,7 @@ _cpufreq_new(E_Module *module)
 #undef D
 #define T Config_Face
 #define D conf_face_edd
-   E_CONFIG_VAL(D, T, enabled, INT);
+   E_CONFIG_VAL(D, T, enabled, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("Cpufreq_Config", Config);
 #undef T

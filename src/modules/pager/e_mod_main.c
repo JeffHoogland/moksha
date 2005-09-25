@@ -796,11 +796,11 @@ _pager_desk_free(Pager_Desk *pd)
    if (pd->desk_object) evas_object_del(pd->desk_object);
    if (pd->layout_object) evas_object_del(pd->layout_object);
    if (pd->event_object) evas_object_del(pd->event_object);
-   e_object_unref(E_OBJECT(pd->desk));
 
    for (l = pd->wins; l; l = l->next)
      _pager_window_free(l->data);
-   evas_list_free(pd->wins);
+   pd->wins = evas_list_free(pd->wins);
+   e_object_unref(E_OBJECT(pd->desk));
    free(pd);
 }
 
