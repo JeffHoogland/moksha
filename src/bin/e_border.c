@@ -2557,6 +2557,9 @@ _e_border_free(E_Border *bd)
 	ecore_x_window_save_set_del(bd->client.win);
 	bd->already_unparented = 1;
      }
+   if (bd->group) evas_list_free(bd->group);
+   if (bd->transients) evas_list_free(bd->transients);
+   if (bd->stick_desks) evas_list_free(bd->stick_desks);
    if (bd->client.netwm.icons)
      {
 	for (i = 0; i < bd->client.netwm.num_icons; i++)
