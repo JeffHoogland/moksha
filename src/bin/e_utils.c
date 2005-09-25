@@ -3,6 +3,19 @@
  */
 #include "e.h"
 
+E_Path *path_data    = NULL;
+E_Path *path_images  = NULL;
+E_Path *path_fonts   = NULL;
+E_Path *path_themes  = NULL;
+E_Path *path_init    = NULL;
+E_Path *path_icons   = NULL;
+E_Path *path_modules = NULL;
+E_Path *path_backgrounds = NULL;
+int     restart      = 0;
+int     good         = 0;
+int     evil         = 0;
+int     starting     = 1;
+
 typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
 
 struct _E_Util_Fake_Mouse_Up_Info

@@ -16,6 +16,7 @@
 /* local subsystem functions */
 typedef struct _E_App_Change_Info E_App_Change_Info;
 typedef struct _E_App_Callback    E_App_Callback;
+typedef struct _E_App_Scan_Cache  E_App_Scan_Cache;
 
 struct _E_App_Change_Info
 {
@@ -28,6 +29,16 @@ struct _E_App_Callback
    void (*func) (void *data, E_App *a, E_App_Change ch);
    void  *data;
    unsigned char delete_me : 1;
+};
+
+struct _E_App_Scan_Cache
+{
+   char          *path;
+   E_App_Cache   *cache;
+   E_App         *app;
+   Ecore_List    *files;
+   Ecore_Timer   *timer;
+   unsigned char  need_rewrite : 1;
 };
 
 static void      _e_app_free               (E_App *a);
@@ -143,12 +154,92 @@ _e_app_cache_copy(E_App_Cache *ac, E_App *a)
    a->wait_exit = ac->wait_exit;
 }
 
+Evas_Bool 
+_e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *fdata)
+{
+   E_App_Scan_Cache *sc;
+   E_App_Cache *ac;
+   char *s;
+   char buf[4096];
+   
+   sc = fdata;
+   s = (char *)key;
+   ac = data;
+   /* file "s" has been deleted */
+   printf("Cache %s - DELETED\n", s);
+   sc->need_rewrite = 1;
+   return 1;
+}
+
+static int
+_e_app_cb_scan_cache_timer(void *data)
+{
+   E_App_Scan_Cache *sc;
+   char *s;
+   char buf[4096];
+   E_App_Cache *ac;
+   int is_dir = 0;
+   
+   sc = data;
+   s = ecore_list_next(sc->files);
+   if (!s)
+     {
+	evas_hash_foreach(sc->cache->subapps_hash, _e_app_cb_scan_hash_foreach, sc);
+	if (sc->need_rewrite)
+	  _e_app_subdir_rescan(sc->app);
+	sc->app->monitor = ecore_file_monitor_add(sc->app->path, _e_app_cb_monitor, sc->app);
+	e_object_unref(E_OBJECT(sc->app));
+	ecore_list_destroy(sc->files);
+	e_app_cache_free(sc->cache);
+	ecore_timer_del(sc->timer);
+	free(sc->path);
+	free(sc);
+	printf("Cache scan finish.\n");
+	return 0;
+     }
+   snprintf(buf, sizeof(buf), "%s/%s", sc->path, s);
+   is_dir = ecore_file_is_dir(buf);
+   if (e_util_glob_match(s, "*.eap") || is_dir)
+     {
+	ac = evas_hash_find(sc->cache->subapps_hash, s);
+	if (ac)
+	  {
+	     if (is_dir != ac->is_dir)
+	       {
+		  printf("Cache %s - CHANGED TYPE\n", s);
+		  sc->need_rewrite =1 ;
+	       }
+	     else if (!is_dir)
+	       {
+		  unsigned long long mtime;
+		  
+		  mtime = ecore_file_mod_time(buf);
+		  if (mtime != ac->file_mod_time)
+		    {
+		       /* file "s" has changed */
+		       printf("Cache %s - MODIFIED\n", s);
+		       sc->need_rewrite = 1;
+		    }
+	       }
+	     sc->cache->subapps_hash = evas_hash_del(sc->cache->subapps_hash, s, ac);
+	  }
+	else
+	  {
+	     /* file "s" has been added */
+	     printf("Cache %s - MODIFIED\n", s);
+	     sc->need_rewrite = 1;
+	  }
+     }
+   return 1;
+}
+
 static E_App *
 _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 {
    Evas_List *l;
    E_App *a;
    char buf[PATH_MAX];
+   E_App_Scan_Cache *sc;
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    _e_app_cache_copy(ac, a);
@@ -158,12 +249,10 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
      {
 	E_App_Cache *ac2;
 	E_App *a2;
-	int is_dir;
 	
 	ac2 = l->data;
 	snprintf(buf, sizeof(buf), "%s/%s", path, ac2->file);
-	is_dir = ecore_file_is_dir(buf);
-	if ((is_dir) && (scan_subdirs))
+	if ((ac2->is_dir) && (scan_subdirs))
 	  {
 	     a2 = e_app_new(buf, scan_subdirs);
 	     a2->parent = a;
@@ -171,11 +260,11 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 	  }
 	else
 	  {
-	     if (ecore_file_exists(buf))
+	     if (!ac2->is_link)
 	       {
 		  a2 = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
 		  _e_app_cache_copy(ac2, a2);
-		  if (is_dir)
+		  if (ac2->is_dir)
 		    {
 		       E_FREE(a2->exe);
 		    }
@@ -216,11 +305,19 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 	       }
 	  }
      }
-   
-   /* FIXME: create timer object to scan this slowly and fixup */
-   
-   // and at the end of the slow scan add this:
-   // a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
+
+   sc = calloc(1, sizeof(E_App_Scan_Cache));
+   if (sc)
+     {
+	sc->path = strdup(path);
+	sc->cache = ac;
+	sc->app = a;
+	sc->files = e_app_dir_file_list_get(a);
+	sc->timer = ecore_timer_add(0.001, _e_app_cb_scan_cache_timer, sc);
+	e_object_ref(E_OBJECT(sc->app));
+     }
+   else
+     e_app_cache_free(ac);
    return a;
 }
 
@@ -239,20 +336,19 @@ e_app_new(const char *path, int scan_subdirs)
 	e_object_ref(E_OBJECT(a));
 	return a;
      }
-/*   
+
    ac = e_app_cache_load((char *)path);
    if (ac)
      {
-	a = _e_app_cache_new(ac, path, scan_subdirs);
+	a = _e_app_cache_new(ac, (char *)path, scan_subdirs);
 	if (a)
 	  {
 	     _e_apps = evas_hash_add(_e_apps, a->path, a);
 	     _e_apps_list = evas_list_prepend(_e_apps_list, a);
 	  }
-	e_app_cache_free(ac);
+//	e_app_cache_free(ac);
      }
    else
- */
      {
 	if (ecore_file_exists(path))
 	  {
@@ -1479,6 +1575,14 @@ _e_app_subdir_rescan(E_App *app)
 	_e_app_change(ch->app, ch->change);
 	e_object_unref(E_OBJECT(ch->app));
 	free(ch);
+     }
+   if (changes)
+     {
+	E_App_Cache *ac;
+	
+	ac = e_app_cache_generate(app);
+	e_app_cache_save(ac, app->path);
+	e_app_cache_free(ac);
      }
    evas_list_free(changes);
 }

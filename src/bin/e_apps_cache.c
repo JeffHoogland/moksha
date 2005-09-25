@@ -46,6 +46,8 @@ e_app_cache_init(void)
    NEWL("ap", subapps, _e_app_cache_edd);
    NEWI("sn", startup_notify, EET_T_UCHAR);
    NEWI("wx", wait_exit, EET_T_UCHAR);
+   NEWI("il", is_link, EET_T_UCHAR);
+   NEWI("id", is_dir, EET_T_UCHAR);
    return 1;
 }
 
@@ -69,6 +71,18 @@ e_app_cache_load(char *path)
    if (!ef) return NULL;
    ac = eet_data_read(ef, _e_app_cache_edd, "cache");
    eet_close(ef);
+   if (ac)
+     {
+	Evas_List *l;
+	
+	for (l = ac->subapps; l; l = l->next)
+	  {
+	     E_App_Cache *ac2;
+	     
+	     ac2 = l->data;
+	     ac->subapps_hash = evas_hash_add(ac->subapps_hash, ac2->file, ac2);
+	  }
+     }
    return ac;
 }
 
@@ -77,6 +91,7 @@ e_app_cache_generate(E_App *a)
 {
    E_App_Cache *ac;
    Evas_List *l;
+   char buf[PATH_MAX];
    
    if (!a) return NULL;
    ac = calloc(1, sizeof(E_App_Cache));
@@ -92,74 +107,15 @@ e_app_cache_generate(E_App *a)
 	if (ac2)
 	  {
 	     _e_eapp_cache_fill(ac2, a2);
+	     ac2->is_dir = ecore_file_is_dir(a2->path);
+	     snprintf(buf, sizeof(buf), "%s/%s", a->path, ecore_file_get_file(a2->path));
+	     if (a2->orig) ac2->is_link = 1;
+	     if ((!ac2->is_link) && (!ac2->is_dir))
+	       ac2->file_mod_time = ecore_file_mod_time(buf);
 	     ac->subapps = evas_list_append(ac->subapps, ac2);
 	     ac->subapps_hash = evas_hash_add(ac->subapps_hash, ac2->file, ac2);
 	  }
      }
-   return ac;
-}
-
-E_App_Cache *
-e_app_cache_path_generate(char *path)
-{
-   E_App_Cache *ac;
-   E_App *a;
-   char buf[PATH_MAX];
-   Ecore_List *files;
-
-   if (!path) return NULL;
-   ac = calloc(1, sizeof(E_App_Cache));
-   if (!ac) return NULL;
-   a = e_app_raw_new();
-   a->path = strdup(path);
-   _e_eapp_cache_fill(ac, a);
-   if (ecore_file_is_dir(a->path))
-     {
-	snprintf(buf, sizeof(buf), "%s/.directory.eap", path);
-	if (ecore_file_exists(buf))
-	  e_app_fields_fill(a, buf);
-	else
-	  a->name = strdup(ecore_file_get_file(a->path));
-	
-	files = e_app_dir_file_list_get(a);
-	if (files)
-	  {
-	     char *s = NULL;
-	     
-	     while ((s = ecore_list_next(files)))
-	       {
-		  E_App *a2;
-		  E_App_Cache *ac2;
-		  
-		  ac2 = calloc(1, sizeof(E_App_Cache));
-		  if (ac2)
-		    {
-		       a2 = e_app_raw_new();
-		       if (a2)
-			 {
-			    snprintf(buf, sizeof(buf), "%s/%s", a->path, s);
-			    a2->path = strdup(buf);
-			    if (ecore_file_is_dir(a2->path))
-			      {
-				 snprintf(buf, sizeof(buf), "%s/.directory.eap", a2->path);
-				 e_app_fields_fill(a2, buf);
-			      }
-			    else
-			      e_app_fields_fill(a2, a2->path);
-			    _e_eapp_cache_fill(ac2, a2);
-			    e_app_fields_empty(a2);
-			    free(a2);
-			 }
-		       ac->subapps = evas_list_append(ac->subapps, ac2);
-		       ac->subapps_hash = evas_hash_add(ac->subapps_hash, ac2->file, ac2);
-		    }
-	       }
-	     ecore_list_destroy(files);
-	  }
-     }
-   e_app_fields_empty(a);
-   free(a);
-   
    return ac;
 }
 
@@ -189,8 +145,6 @@ e_app_cache_free(E_App_Cache *ac)
    free(ac);
 }
 
-
-
 int
 e_app_cache_save(E_App_Cache *ac, char *path)
 {
@@ -218,7 +172,6 @@ _e_eapp_cache_fill(E_App_Cache *ac, E_App *a)
    IF_DUP(comment);
    IF_DUP(exe);
    ac->file = strdup(ecore_file_get_file(a->path));
-   ac->file_mod_time = ecore_file_mod_time(a->path);
    IF_DUP(win_name);
    IF_DUP(win_class);
    IF_DUP(win_title);
@@ -227,4 +180,3 @@ _e_eapp_cache_fill(E_App_Cache *ac, E_App *a)
    ac->startup_notify = a->startup_notify;
    ac->wait_exit = a->wait_exit;
 }
-

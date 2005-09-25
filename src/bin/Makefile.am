@@ -8,7 +8,11 @@ INCLUDES = -I$(includedir) \
 	   @cf_cflags@ \
 	   @EDJE_DEF@
 
-bin_PROGRAMS = enlightenment enlightenment_remote enlightenment_eapp
+bin_PROGRAMS = \
+enlightenment \
+enlightenment_remote \
+enlightenment_eapp \
+enlightenment_eapp_cache_gen
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -32,7 +36,6 @@ e_menu.h \
 e_object.h \
 e_icon.h \
 e_box.h \
-e_entry.h \
 e_int_menus.h \
 e_module.h \
 e_apps.h \
@@ -74,10 +77,10 @@ e_dialog.h \
 e_configure.h \
 e_about.h \
 e_theme_about.h \
-e_apps_cache.h
+e_apps_cache.h \
+e_entry.h
 
-enlightenment_SOURCES = \
-e_main.c \
+enlightenment_src = \
 e_user.c \
 e_manager.c \
 e_path.c \
@@ -94,7 +97,6 @@ e_menu.c \
 e_object.c \
 e_icon.c \
 e_box.c \
-e_entry.c \
 e_int_menus.c \
 e_module.c \
 e_apps.c \
@@ -137,7 +139,12 @@ e_configure.c \
 e_about.c \
 e_theme_about.c \
 e_apps_cache.c \
+e_entry.c \
 $(ENLIGHTENMENTHEADERS)
+
+enlightenment_SOURCES = \
+e_main.c \
+$(enlightenment_src)
 
 enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@
 
@@ -153,6 +160,13 @@ e.h \
 e_eapp_main.c
 
 enlightenment_eapp_LDFLAGS = @e_libs@ @dlopen_libs@
+
+enlightenment_eapp_cache_gen_SOURCES = \
+e_eapp_cache_gen_main.c \
+$(enlightenment_src)
+
+enlightenment_eapp_cache_gen_LDFLAGS = @e_libs@ @dlopen_libs@
+
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)

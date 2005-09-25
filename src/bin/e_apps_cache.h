@@ -30,6 +30,9 @@ struct _E_App_Cache
    
    unsigned char       startup_notify; /* disable while starting etc. */
    unsigned char       wait_exit; /* wait for app to exit before execing next */
+
+   unsigned char       is_link; /* cached .order logic info */
+   unsigned char       is_dir; /* cached stat info */
    
    /* these are generated post-load */
    Evas_Hash          *subapps_hash; /* a quick lookup hash */
@@ -40,7 +43,6 @@ EAPI int          e_app_cache_shutdown(void);
 
 EAPI E_App_Cache *e_app_cache_load(char *path);
 EAPI E_App_Cache *e_app_cache_generate(E_App *a);
-EAPI E_App_Cache *e_app_cache_path_generate(char *path);
 EAPI void         e_app_cache_free(E_App_Cache *ac);
 EAPI int          e_app_cache_save(E_App_Cache *ac, char *path);
 

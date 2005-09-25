@@ -30,19 +30,6 @@ static int  _e_main_cb_startup_fake_end(void *data);
 static void _e_main_desk_save(void);
 static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 
-E_Path *path_data    = NULL;
-E_Path *path_images  = NULL;
-E_Path *path_fonts   = NULL;
-E_Path *path_themes  = NULL;
-E_Path *path_init    = NULL;
-E_Path *path_icons   = NULL;
-E_Path *path_modules = NULL;
-E_Path *path_backgrounds = NULL;
-int     restart      = 0;
-int     good         = 0;
-int     evil         = 0;
-int     starting     = 1;
-
 /* local subsystem globals */
 #define MAX_LEVEL 32
 static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
