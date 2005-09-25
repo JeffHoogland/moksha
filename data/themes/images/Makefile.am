@@ -322,4 +322,7 @@ e17_about_sky2.png \
 e17_about_sky3.png \
 e17_about_sky4.png \
 e17_about_sky5.png \
-e17_about_sky_overlay.png
+e17_about_sky_overlay.png \
+focus.png \
+entry.png \
+entry_focus.png
