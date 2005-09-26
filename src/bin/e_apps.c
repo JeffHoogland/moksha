@@ -1646,7 +1646,7 @@ _e_apps_cb_exit(void *data, int type, void *event)
    E_App *a;
    
    /* FIXME: Check if we launched this exe, else it isn't sure that
-    * the exe data is an E_App!
+    * the exe data is an E_App! (see 8 lines down also)
     */
    ev = event;
    if (ev->exe)
@@ -1654,6 +1654,9 @@ _e_apps_cb_exit(void *data, int type, void *event)
 	E_App_Instance *ai;
 	
 	ai = ecore_exe_data_get(ev->exe);
+	if (!ai) /* related to FIXME above */
+	  return 1;
+
 	a = ai->app;
 	if (a)
 	  {
