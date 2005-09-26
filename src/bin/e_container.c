@@ -122,7 +122,13 @@ e_container_new(E_Manager *man)
    evas_object_data_set(o, "e_container", con);
    evas_object_show(o);
    
-   con->pointer.root = e_pointer_window_set(con->manager->root);
+   if (e_config->use_e_cursor)
+     con->pointer.root = e_pointer_window_set(con->manager->root);
+   else
+     {
+	ecore_x_window_cursor_set (con->manager->root,
+		ecore_x_cursor_shape_get (ECORE_X_CURSOR_LEFT_PTR));
+     }
 
    con->num = container_num;
    container_num++;

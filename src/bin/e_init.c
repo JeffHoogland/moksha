@@ -61,7 +61,16 @@ e_init_init(void)
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
    ecore_evas_name_class_set(_e_init_ecore_evas, "E", "Init_Window");
    ecore_evas_title_set(_e_init_ecore_evas, "Enlightenment Init");
-   _e_init_pointer = e_pointer_window_set(_e_init_win);
+
+   if (e_config->use_e_cursor)
+     _e_init_pointer = e_pointer_window_set(_e_init_win);
+   else
+     {
+	_e_init_pointer = NULL;
+	ecore_x_window_cursor_set (_e_init_win,
+		ecore_x_cursor_shape_get (ECORE_X_CURSOR_LEFT_PTR));
+     }
+
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
 
@@ -145,12 +154,17 @@ e_init_hide(void)
    evas_object_del(_e_init_object);
    e_canvas_del(_e_init_ecore_evas);
    ecore_evas_free(_e_init_ecore_evas);
-   e_object_del(E_OBJECT(_e_init_pointer));
+
+   if (_e_init_pointer)
+     {
+	e_object_del(E_OBJECT(_e_init_pointer));
+	_e_init_pointer = NULL;
+     }
+
    _e_init_ecore_evas = NULL;
    _e_init_evas = NULL;
    _e_init_win = 0;
    _e_init_object = NULL;
-   _e_init_pointer = NULL;
    e_canvas_cache_flush();
 }
 

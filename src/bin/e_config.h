@@ -147,6 +147,7 @@ struct _E_Config
    int         resize_info_follows;
    int         focus_last_focused_per_desktop;
    int         focus_revert_on_hide_or_close;
+   int         use_e_cursor;
    int         cursor_size;
    int         menu_autoscroll_margin;
    int         menu_autoscroll_cursor_margin;

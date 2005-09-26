@@ -4818,6 +4818,48 @@ break;
 #undef HDL
 
 /****************************************************************************/
+
+#define HDL E_IPC_OP_USE_E_CURSOR_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-e-cursor-set", 1, "Set whether E's cursor should be used", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->use_e_cursor = val;
+   E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_E_CURSOR_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-use-e-cursor-get", 0, "Get whether E's cursor should be used", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->use_e_cursor, E_IPC_OP_CURSOR_SIZE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_USE_E_CURSOR_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
 #define HDL E_IPC_OP_MENU_AUTOSCROLL_MARGIN_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-menu-autoscroll-margin-set", 1, "Set the distance from the edge of the screen the menu will autoscroll to", 0, HDL)
