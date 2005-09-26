@@ -6,19 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-09-01 21:13+0800\n"
-"PO-Revision-Date: 2005-09-05 22:10+0800\n"
+"POT-Creation-Date: 2005-09-26 12:00+0800\n"
+"PO-Revision-Date: 2005-09-26 12:22+0800\n"
 "Last-Translator: Emfox Zhou <emfox@zju.edu.cn>\n"
 "Language-Team: Emfox Zhou <emfox@zju.edu.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_apps.c:270 src/bin/e_apps.c:1025 src/bin/e_utils.c:200
+#: src/bin/e_apps.c:509 src/bin/e_apps.c:1298 src/bin/e_utils.c:213
 msgid "Run Error"
 msgstr "运行时错误"
 
-#: src/bin/e_apps.c:271 src/bin/e_utils.c:201
+#: src/bin/e_apps.c:510 src/bin/e_utils.c:214
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -31,7 +31,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1026
+#: src/bin/e_apps.c:1299
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -46,11 +46,11 @@ msgstr ""
 "\n"
 "程序找不到\n"
 
-#: src/bin/e_utils.c:246
+#: src/bin/e_utils.c:259
 msgid "Cannot exit - immortal windows."
 msgstr "不能退出 － 固化的窗口。"
 
-#: src/bin/e_utils.c:247
+#: src/bin/e_utils.c:260
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
@@ -61,190 +61,190 @@ msgstr ""
 "Enlightenment不允许它自己退出，除非这些窗口已经被关闭，\n"
 "或者被去除生命周期锁。\n"
 
-#: src/bin/e_border.c:5907 src/bin/e_border.c:5920
+#: src/bin/e_border.c:6139 src/bin/e_border.c:6152
 msgid "Position"
 msgstr "位置"
 
-#: src/bin/e_border.c:5908 src/bin/e_border.c:5921
-#: src/modules/ibar/e_mod_main.c:288 src/modules/ibar/e_mod_main.c:903
-#: src/modules/ibox/e_mod_main.c:693
+#: src/bin/e_border.c:6140 src/bin/e_border.c:6153
+#: src/modules/ibar/e_mod_main.c:281 src/modules/ibar/e_mod_main.c:942
+#: src/modules/ibox/e_mod_main.c:683
 msgid "Size"
 msgstr "大小"
 
-#: src/bin/e_border.c:5909 src/bin/e_border.c:5922 src/bin/e_border.c:6125
+#: src/bin/e_border.c:6141 src/bin/e_border.c:6154 src/bin/e_border.c:6357
 msgid "Stacking"
 msgstr "堆叠"
 
-#: src/bin/e_border.c:5910 src/bin/e_border.c:5923 src/bin/e_border.c:6061
+#: src/bin/e_border.c:6142 src/bin/e_border.c:6155 src/bin/e_border.c:6293
 msgid "Iconify"
 msgstr "最小化"
 
-#: src/bin/e_border.c:5912 src/bin/e_border.c:5925 src/bin/e_border.c:6114
+#: src/bin/e_border.c:6144 src/bin/e_border.c:6157 src/bin/e_border.c:6346
 msgid "Sticky"
 msgstr "粘住"
 
-#: src/bin/e_border.c:5913 src/bin/e_border.c:5926
+#: src/bin/e_border.c:6145 src/bin/e_border.c:6158
 msgid "Shade"
 msgstr "卷起"
 
-#: src/bin/e_border.c:5914 src/bin/e_border.c:5927
+#: src/bin/e_border.c:6146 src/bin/e_border.c:6159
 msgid "Maximize"
 msgstr "最大化"
 
-#: src/bin/e_border.c:5915 src/bin/e_border.c:5928 src/bin/e_border.c:6147
+#: src/bin/e_border.c:6147 src/bin/e_border.c:6160 src/bin/e_border.c:6379
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: src/bin/e_border.c:5934
+#: src/bin/e_border.c:6166
 msgid "User"
 msgstr "用户"
 
-#: src/bin/e_border.c:5942
+#: src/bin/e_border.c:6174
 msgid "Application"
 msgstr "应用程序"
 
-#: src/bin/e_border.c:5952
+#: src/bin/e_border.c:6184
 msgid "Border"
 msgstr "边框"
 
-#: src/bin/e_border.c:5953 src/bin/e_border.c:6050
+#: src/bin/e_border.c:6185 src/bin/e_border.c:6282
 msgid "Close"
 msgstr "关闭"
 
-#: src/bin/e_border.c:5956
+#: src/bin/e_border.c:6188
 msgid "Lifespan"
 msgstr "生命周期"
 
-#: src/bin/e_border.c:5970
+#: src/bin/e_border.c:6202
 msgid "Remember This Window"
 msgstr "记住该窗口"
 
-#: src/bin/e_border.c:5977
+#: src/bin/e_border.c:6209
 msgid "Remember This Instance Only"
 msgstr "只记住这个实例"
 
-#: src/bin/e_border.c:5980
+#: src/bin/e_border.c:6212
 msgid "Match by Name"
 msgstr "名称匹配"
 
-#: src/bin/e_border.c:5981
+#: src/bin/e_border.c:6213
 msgid "Match by Class"
 msgstr "类匹配"
 
-#: src/bin/e_border.c:5982
+#: src/bin/e_border.c:6214
 msgid "Match by Title"
 msgstr "标题匹配"
 
-#: src/bin/e_border.c:5983
+#: src/bin/e_border.c:6215
 msgid "Match by Role"
 msgstr "角色匹配"
 
-#: src/bin/e_border.c:5984
+#: src/bin/e_border.c:6216
 msgid "Match by Window Type"
 msgstr "窗口类型匹配"
 
-#: src/bin/e_border.c:5985
+#: src/bin/e_border.c:6217
 msgid "Match by Transient Status"
 msgstr "瞬态匹配"
 
-#: src/bin/e_border.c:5988
+#: src/bin/e_border.c:6220
 msgid "Remember Position"
 msgstr "记住位置"
 
-#: src/bin/e_border.c:5989
+#: src/bin/e_border.c:6221
 msgid "Remember Size"
 msgstr "记住大小"
 
-#: src/bin/e_border.c:5990
+#: src/bin/e_border.c:6222
 msgid "Remember Stacking"
 msgstr "记住堆叠"
 
-#: src/bin/e_border.c:5991
+#: src/bin/e_border.c:6223
 msgid "Remember Locks"
 msgstr "记住锁定"
 
-#: src/bin/e_border.c:5992
+#: src/bin/e_border.c:6224
 msgid "Remember Border"
 msgstr "记住边框"
 
-#: src/bin/e_border.c:5993
+#: src/bin/e_border.c:6225
 msgid "Remember Stickiness"
 msgstr "记住粘住状态"
 
-#: src/bin/e_border.c:5994
+#: src/bin/e_border.c:6226
 msgid "Remember Desktop"
 msgstr "记住桌面"
 
-#: src/bin/e_border.c:5995
+#: src/bin/e_border.c:6227
 msgid "Remember Shaded State"
 msgstr "记住卷起状态"
 
-#: src/bin/e_border.c:5996
+#: src/bin/e_border.c:6228
 msgid "Remember Zone"
 msgstr "记住区域"
 
-#: src/bin/e_border.c:5997
+#: src/bin/e_border.c:6229
 msgid "Remember Skip Window List"
 msgstr "记住跳过窗口列表"
 
-#: src/bin/e_border.c:6011
+#: src/bin/e_border.c:6243
 msgid "Always On Top"
 msgstr "置顶"
 
-#: src/bin/e_border.c:6021 src/modules/clock/e_mod_main.c:341
-#: src/modules/desktopname/e_mod_main.c:145
+#: src/bin/e_border.c:6253 src/modules/clock/e_mod_main.c:349
+#: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "正常"
 
-#: src/bin/e_border.c:6031
+#: src/bin/e_border.c:6263
 msgid "Always Below"
 msgstr "置底"
 
-#: src/bin/e_border.c:6075
+#: src/bin/e_border.c:6307
 msgid "Kill"
 msgstr "杀死"
 
-#: src/bin/e_border.c:6088
+#: src/bin/e_border.c:6320
 msgid "Shaded"
 msgstr "卷起"
 
-#: src/bin/e_border.c:6101
+#: src/bin/e_border.c:6333
 msgid "Maximized"
 msgstr "最大化"
 
-#: src/bin/e_border.c:6134
+#: src/bin/e_border.c:6366
 msgid "Borderless"
 msgstr "无边框"
 
-#: src/bin/e_border.c:6161
+#: src/bin/e_border.c:6393
 msgid "Skip Window List"
 msgstr "跳过窗口列表"
 
-#: src/bin/e_border.c:6175
+#: src/bin/e_border.c:6407
 msgid "Locks"
 msgstr "锁定"
 
-#: src/bin/e_border.c:6182
+#: src/bin/e_border.c:6414
 msgid "Remember"
 msgstr "记住"
 
-#: src/bin/e_border.c:6192
+#: src/bin/e_border.c:6424
 msgid "Send To"
 msgstr "发送到"
 
-#: src/bin/e_border.c:6214
+#: src/bin/e_border.c:6446
 msgid "Edit Icon"
 msgstr "编辑图标"
 
-#: src/bin/e_border.c:6240
+#: src/bin/e_border.c:6472
 msgid "Create Icon"
 msgstr "创建图标"
 
-#: src/bin/e_border.c:6328
+#: src/bin/e_border.c:6560
 msgid "Icon Edit Error"
 msgstr "图标编辑错误"
 
-#: src/bin/e_border.c:6329
+#: src/bin/e_border.c:6561
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -256,7 +256,24 @@ msgstr ""
 "请安装 e_util_eapp_edit\n"
 "或者确认它已经在你的路径设置中\n"
 
-#: src/bin/e_config.c:313
+#: src/bin/e_actions.c:1125
+msgid "Are you sure you want to exit?"
+msgstr "您确定要退出吗？"
+
+#: src/bin/e_actions.c:1127
+msgid ""
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "您要求退出 Enlightenment。<br><br>您是否确定要退出？"
+
+#: src/bin/e_actions.c:1132 src/bin/e_module.c:521
+msgid "Yes"
+msgstr "是"
+
+#: src/bin/e_actions.c:1133 src/bin/e_module.c:522
+msgid "No"
+msgstr "否"
+
+#: src/bin/e_config.c:352
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -276,7 +293,7 @@ msgstr ""
 "配置您的桌面设置。\n"
 "很抱歉打断了您的配置。\n"
 
-#: src/bin/e_config.c:327
+#: src/bin/e_config.c:366
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -292,7 +309,7 @@ msgstr ""
 "配置文件已经被恢复到默认状态。\n"
 "对任何的不便表示歉意。\n"
 
-#: src/bin/e_config.c:1401
+#: src/bin/e_config.c:1889
 msgid "Configuration Upgraded"
 msgstr "配置已经升级"
 
@@ -305,43 +322,43 @@ msgstr "容器 %d"
 msgid "OK"
 msgstr "确定"
 
-#: src/bin/e_error.c:363
+#: src/bin/e_error.c:364
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
 
-#: src/bin/e_gadman.c:597
+#: src/bin/e_gadman.c:626
 msgid "Automatic Width"
 msgstr "自动调整宽度"
 
-#: src/bin/e_gadman.c:608
+#: src/bin/e_gadman.c:637
 msgid "Half Screen Width"
 msgstr "半屏幕宽度"
 
-#: src/bin/e_gadman.c:614
+#: src/bin/e_gadman.c:643
 msgid "Full Screen Width"
 msgstr "全屏幕宽度"
 
-#: src/bin/e_gadman.c:626
+#: src/bin/e_gadman.c:655
 msgid "Center Horizontally"
 msgstr "水平居中"
 
-#: src/bin/e_gadman.c:644
+#: src/bin/e_gadman.c:673
 msgid "Automatic Height"
 msgstr "自动调整高度"
 
-#: src/bin/e_gadman.c:655
+#: src/bin/e_gadman.c:684
 msgid "Half Screen Height"
 msgstr "半屏幕高度"
 
-#: src/bin/e_gadman.c:661
+#: src/bin/e_gadman.c:690
 msgid "Full Screen Height"
 msgstr "全屏幕高度"
 
-#: src/bin/e_gadman.c:672
+#: src/bin/e_gadman.c:701
 msgid "Center Vertically"
 msgstr "垂直居中"
 
-#: src/bin/e_gadman.c:684
+#: src/bin/e_gadman.c:713
 msgid "End Edit Mode"
 msgstr "结束编辑模式"
 
@@ -358,124 +375,107 @@ msgstr "以后不显示这个启动屏幕？"
 msgid "Select a window"
 msgstr "选择一个窗口"
 
-#: src/bin/e_int_menus.c:78
+#: src/bin/e_int_menus.c:81
 msgid "Favorite Applications"
 msgstr "常用程序"
 
-#: src/bin/e_int_menus.c:88
+#: src/bin/e_int_menus.c:91
 msgid "Modules"
 msgstr "模块"
 
-#: src/bin/e_int_menus.c:95
+#: src/bin/e_int_menus.c:98
 msgid "Desktops"
 msgstr "桌面"
 
-#: src/bin/e_int_menus.c:102
+#: src/bin/e_int_menus.c:105
 msgid "Windows"
 msgstr "窗口"
 
-#: src/bin/e_int_menus.c:109
+#: src/bin/e_int_menus.c:112
 msgid "Lost Windows"
 msgstr "丢失的窗口"
 
-#: src/bin/e_int_menus.c:116
+#: src/bin/e_int_menus.c:119
 msgid "Gadgets"
 msgstr "附件"
 
-#: src/bin/e_int_menus.c:123
+#: src/bin/e_int_menus.c:126
 msgid "Themes"
 msgstr "主题"
 
-#: src/bin/e_int_menus.c:131 src/bin/e_int_menus.c:349
+#: src/bin/e_int_menus.c:134 src/bin/e_about.c:41
 msgid "About Enlightenment"
 msgstr "关于 Enlightenment"
 
-#: src/bin/e_int_menus.c:138
+#: src/bin/e_int_menus.c:141
 msgid "Run Command"
 msgstr "运行命令"
 
-#: src/bin/e_int_menus.c:146 src/bin/e_module.c:407
+#: src/bin/e_int_menus.c:149 src/bin/e_module.c:454
 msgid "Configuration"
 msgstr "配置"
 
-#: src/bin/e_int_menus.c:154
+#: src/bin/e_int_menus.c:157
 msgid "Restart Enlightenment"
 msgstr "重启 Enlightenment"
 
-#: src/bin/e_int_menus.c:159
+#: src/bin/e_int_menus.c:162
 msgid "Exit Enlightenment"
 msgstr "退出 Enlightenment"
 
-#: src/bin/e_int_menus.c:350
-#, c-format
-msgid ""
-"This is Enlightenment %s.\n"
-"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
-"\n"
-"We hope you enjoy using this software as much as we enjoyed writing it.\n"
-"\n"
-"Please think of the aardvarks. They need some love too."
-msgstr ""
-"这是 Enlightenment %s 。\n"
-"版权所有 © 1999-2005，Enlightenment 开发小组。\n"
-"\n"
-"我们希望你能像我们开发这个软件一样开心地使用它。\n"
-"\n"
-"请想想土豚们。它们也需要关爱。"
-
-#: src/bin/e_int_menus.c:419
+#: src/bin/e_int_menus.c:433
 msgid "(No Applications)"
 msgstr "（无应用程序）"
 
-#: src/bin/e_int_menus.c:501
+#: src/bin/e_int_menus.c:515
 msgid "New Row of Desktops"
 msgstr "新建一行桌面"
 
-#: src/bin/e_int_menus.c:505
+#: src/bin/e_int_menus.c:519
 msgid "Remove Row of Desktops"
 msgstr "删除一行桌面"
 
-#: src/bin/e_int_menus.c:509
+#: src/bin/e_int_menus.c:523
 msgid "New Column of Desktops"
 msgstr "新建一列桌面"
 
-#: src/bin/e_int_menus.c:513
+#: src/bin/e_int_menus.c:527
 msgid "Remove Column of Desktops"
 msgstr "删除一列桌面"
 
-#: src/bin/e_int_menus.c:580
-msgid "Applications"
-msgstr "应用程序"
+#: src/bin/e_int_menus.c:589
+msgid "Configuration Panel"
+msgstr "配置面板"
 
-#: src/bin/e_int_menus.c:636 src/bin/e_int_menus.c:903
+#: src/bin/e_int_menus.c:647 src/bin/e_int_menus.c:925
 msgid "(No Windows)"
 msgstr "（无窗口）"
 
-#: src/bin/e_int_menus.c:651 src/bin/e_int_menus.c:917
+#: src/bin/e_int_menus.c:662 src/bin/e_int_menus.c:939
 msgid "No name!!"
 msgstr "无名！！"
 
-#: src/bin/e_int_menus.c:667
+#: src/bin/e_int_menus.c:678
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
-#: src/bin/e_int_menus.c:740 src/modules/battery/e_mod_main.c:592
-#: src/modules/clock/e_mod_main.c:320 src/modules/cpufreq/e_mod_main.c:944
-#: src/modules/ibar/e_mod_main.c:620 src/modules/pager/e_mod_main.c:437
-#: src/modules/temperature/e_mod_main.c:820 src/modules/ibox/e_mod_main.c:457
-#: src/modules/start/e_mod_main.c:233
+#: src/bin/e_int_menus.c:757 src/modules/battery/e_mod_main.c:586
+#: src/modules/clock/e_mod_main.c:328 src/modules/cpufreq/e_mod_main.c:954
+#: src/modules/ibar/e_mod_main.c:659 src/modules/pager/e_mod_main.c:627
+#: src/modules/temperature/e_mod_main.c:907 src/modules/ibox/e_mod_main.c:447
+#: src/modules/start/e_mod_main.c:230
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: src/bin/e_int_menus.c:746
+#: src/bin/e_int_menus.c:763
 msgid "(Unused)"
 msgstr "（未使用）"
 
-#: src/bin/e_int_menus.c:847
-msgid "(Empty)"
-msgstr "（空）"
+#: src/bin/e_int_menus.c:795 src/bin/e_theme_about.c:41
+msgid "About This Theme"
+msgstr "关于本主题"
 
-#: src/bin/e_main.c:203
+#: src/bin/e_main.c:191
 #, c-format
 msgid ""
 "Options:\n"
@@ -519,7 +519,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病。\n"
 
-#: src/bin/e_main.c:271
+#: src/bin/e_main.c:259
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -527,7 +527,7 @@ msgstr ""
 "Enlightenment 无法启动Ecore！\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:281
+#: src/bin/e_main.c:269
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -535,7 +535,7 @@ msgstr ""
 "Enlightenment 无法建立一个退出信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:287
+#: src/bin/e_main.c:275
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -543,7 +543,7 @@ msgstr ""
 "Enlightenment 无法建立一个HUP信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:298
+#: src/bin/e_main.c:286
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -551,7 +551,7 @@ msgstr ""
 "Enlightenment 无法启动X连接。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:306
+#: src/bin/e_main.c:294
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -559,7 +559,7 @@ msgstr ""
 "Enlightenment 无法启动紧急警报系统。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:301
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -567,7 +567,7 @@ msgstr ""
 "Enlightenment 无法建立xinerama wrapping。\n"
 "这种情况不该发生。"
 
-#: src/bin/e_main.c:329
+#: src/bin/e_main.c:317
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -575,7 +575,7 @@ msgstr ""
 "Enlightenment 无法启动连接系统。\n"
 "可能您的内存用完了？<"
 
-#: src/bin/e_main.c:337
+#: src/bin/e_main.c:325
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -583,7 +583,7 @@ msgstr ""
 "Enlightenment 无法启动IPC系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:345
+#: src/bin/e_main.c:333
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -591,7 +591,7 @@ msgstr ""
 "Enlightenment 无法启动Evas系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:351
+#: src/bin/e_main.c:339
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -601,7 +601,7 @@ msgstr ""
 "渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
 "件X11渲染。"
 
-#: src/bin/e_main.c:360
+#: src/bin/e_main.c:348
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -609,7 +609,7 @@ msgstr ""
 "Enlightenment 无法启动文件系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:372
+#: src/bin/e_main.c:360
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -617,11 +617,11 @@ msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
 "可能您没有主目录或者磁盘已满？"
 
-#: src/bin/e_main.c:380
+#: src/bin/e_main.c:368
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:375
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -629,31 +629,27 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:383
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 无法建立它的动作系统。"
 
-#: src/bin/e_main.c:402
+#: src/bin/e_main.c:390
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
-#: src/bin/e_main.c:409
+#: src/bin/e_main.c:397
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 无法建立它的弹出系统。"
 
-#: src/bin/e_main.c:420
+#: src/bin/e_main.c:408
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:430
-msgid "Enlightenment cannot set up its app system."
-msgstr "Enlightenment 无法建立它的应用系统。"
-
-#: src/bin/e_main.c:437
+#: src/bin/e_main.c:418
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 无法建立它的主题系统。"
 
-#: src/bin/e_main.c:446
+#: src/bin/e_main.c:427
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -661,7 +657,7 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:436
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -669,11 +665,15 @@ msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
 
-#: src/bin/e_main.c:462
+#: src/bin/e_main.c:443
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenment 无法建立它的应用系统。"
+
+#: src/bin/e_main.c:450
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment 无法设定它的记忆设置。"
 
-#: src/bin/e_main.c:478
+#: src/bin/e_main.c:466
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -693,31 +693,31 @@ msgstr ""
 "如果您使用AFS，那么你可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/ecore\n"
 "的符号链接，以便套接字的建立。"
 
-#: src/bin/e_main.c:494
+#: src/bin/e_main.c:482
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment 无法建立它的消息系统。"
 
-#: src/bin/e_main.c:501
+#: src/bin/e_main.c:489
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
-#: src/bin/e_main.c:508
+#: src/bin/e_main.c:496
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment 无法建立它的输入捕获处理系统。"
 
-#: src/bin/e_main.c:515
+#: src/bin/e_main.c:503
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
-#: src/bin/e_main.c:522
+#: src/bin/e_main.c:510
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment 无法建立它的窗口列表系统。"
 
-#: src/bin/e_main.c:528
+#: src/bin/e_main.c:516
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
-#: src/bin/e_main.c:529
+#: src/bin/e_main.c:517
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -731,874 +731,877 @@ msgstr ""
 "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 "然后再试着运行一遍。"
 
-#: src/bin/e_main.c:545
+#: src/bin/e_main.c:533 src/bin/e_about.c:50
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:547
+#: src/bin/e_main.c:535
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
-#: src/bin/e_module.c:100 src/bin/e_module.c:111 src/bin/e_module.c:133
+#: src/bin/e_module.c:98
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>No module named %s could be "
+"found in the<br>module search directories.<br>"
+msgstr "导入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名叫 %s 的模块。\n"
+
+#: src/bin/e_module.c:102 src/bin/e_module.c:115 src/bin/e_module.c:139
 msgid "Error loading Module"
 msgstr "装入模块错误"
 
-#: src/bin/e_module.c:101
+#: src/bin/e_module.c:109 src/bin/e_module.c:133
 #, c-format
 msgid ""
-"There was an error loading module named: %s\n"
-"No module named %s could be found in the\n"
-"module search directories\n"
-msgstr ""
-"导入模块 %s 时发生错误。\n"
-"在模块搜索路径中没有找到名叫 %s 的模块。\n"
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgstr "导入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>%s<br>"
 
-#: src/bin/e_module.c:112 src/bin/e_module.c:134
+#: src/bin/e_module.c:153
 #, c-format
 msgid ""
-"There was an error loading module named: %s\n"
-"The full path to this module is:\n"
-"%s\n"
-"The error reported was:\n"
-"%s"
-msgstr ""
-"导入模块 %s 时发生错误。\n"
-"该模块的全路径是：\n"
-"%s\n"
-"错误报告如下：\n"
-"%s"
+"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
+"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"%i.<br>"
+msgstr "模块 API 错误<br>启动模块错误：%s<br>要求最小的模块 API 版本号：%i。<br>Enlightenment给的模块版本号：%i。<br>"
 
-#: src/bin/e_module.c:336
+#: src/bin/e_module.c:158
+#, c-format
+msgid "Enlightenment %s Module"
+msgstr "Enlightenment %s 模块"
+
+#: src/bin/e_module.c:366
 msgid "(No Loaded Modules)"
 msgstr "（没有模块装入）"
 
-#: src/bin/e_module.c:392
+#: src/bin/e_module.c:382 src/modules/battery/e_mod_main.c:762
+#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
+msgid "Ok"
+msgstr "OK"
+
+#: src/bin/e_module.c:439
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_module.c:396
+#: src/bin/e_module.c:443
 msgid "Enabled"
 msgstr "启用"
+
+#: src/bin/e_module.c:516
+msgid "Would you like to unload this module?<br>"
+msgstr "您是否要卸载这个模块？<br>"
+
+#: src/bin/e_about.c:55
+msgid ""
+"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
+"hope you enjoy using this software as much as we enjoyed writing it."
+"<br><br>This software is provided as-is with no explicit or implied "
+"warranty. This software is governed by licensing conditions, so please see "
+"the COPYING and COPYING-PLAIN licence files installed on your system."
+"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+"is not stable. Many features are incomplete or even non-existant yet and may "
+"have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:80
+msgid "<title>The Team</title>"
+msgstr "<title>开发组</title>"
 
 #: src/bin/e_startup.c:68
 #, c-format
 msgid "Starting %s"
 msgstr "启动 %s"
 
-#: src/modules/battery/e_mod_main.c:76 src/modules/clock/e_mod_main.c:49
-#: src/modules/cpufreq/e_mod_main.c:66 src/modules/dropshadow/e_mod_main.c:100
-#: src/modules/ibar/e_mod_main.c:121 src/modules/pager/e_mod_main.c:84
-#: src/modules/temperature/e_mod_main.c:48 src/modules/test/e_mod_main.c:9
-#: src/modules/ibox/e_mod_main.c:103 src/modules/start/e_mod_main.c:28
-#: src/modules/desktopname/e_mod_main.c:30 src/modules/randr/e_mod_main.c:36
-msgid "Module API Error"
-msgstr "模块API错误"
+#: src/bin/e_configure.c:38
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment 配置"
 
-#: src/modules/battery/e_mod_main.c:77
-#, c-format
-msgid ""
-"Error initializing Module: Battery\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：电池\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/battery/e_mod_main.c:120
-msgid "Battery"
-msgstr "电池"
-
-#: src/modules/battery/e_mod_main.c:129
+#: src/modules/battery/e_mod_main.c:122
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment电池模块"
 
-#: src/modules/battery/e_mod_main.c:130
+#: src/modules/battery/e_mod_main.c:123
 msgid ""
-"A basic battery meter that uses either ACPI or APM\n"
-"on Linux to monitor your battery and AC power adaptor\n"
-"status. This will work under Linux and FreeBSD and is only\n"
-"as accurate as your BIOS or kernel drivers."
-msgstr ""
-"一个简单的电池指示计，使用Linux下的ACPI或者APM模块来\n"
-"监视您的电池和交流电源适配器状态。\n"
-"它能在Linux和FreeBSD下工作，且能和您的BIOS或内核驱动\n"
-"一样精确地工作。"
+"A basic battery meter that uses either<hilight>ACPI</hilight> or "
+"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
+"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+"accurate as your BIOS or kernel drivers."
+msgstr "一个简单的电池指示计，使用Linux下的 <hilight>ACPI</hilight> 或者 <hilight>APM</hilight> <br>模块来监视您的电池和交流电源适配器状态。<br>它能在 Linux 和 FreeBSD 下工作，且能和您的 BIOS 或内核驱动<br>一样精确地工作。"
 
-#: src/modules/battery/e_mod_main.c:221 src/modules/battery/e_mod_main.c:500
-#: src/modules/cpufreq/e_mod_main.c:221 src/modules/cpufreq/e_mod_main.c:538
+#: src/modules/battery/e_mod_main.c:215 src/modules/battery/e_mod_main.c:494
+#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
 msgid "Set Poll Time"
 msgstr "设置检查时间"
 
-#: src/modules/battery/e_mod_main.c:225 src/modules/battery/e_mod_main.c:504
+#: src/modules/battery/e_mod_main.c:219 src/modules/battery/e_mod_main.c:498
 msgid "Set Alarm"
 msgstr "设定警报"
 
-#: src/modules/battery/e_mod_main.c:407
+#: src/modules/battery/e_mod_main.c:401
 msgid "Disable"
 msgstr "禁用"
 
-#: src/modules/battery/e_mod_main.c:414
+#: src/modules/battery/e_mod_main.c:408
 msgid "10 mins"
 msgstr "10分钟"
 
-#: src/modules/battery/e_mod_main.c:421
+#: src/modules/battery/e_mod_main.c:415
 msgid "20 mins"
 msgstr "20分钟"
 
-#: src/modules/battery/e_mod_main.c:428
+#: src/modules/battery/e_mod_main.c:422
 msgid "30 mins"
 msgstr "30分钟"
 
-#: src/modules/battery/e_mod_main.c:435
+#: src/modules/battery/e_mod_main.c:429
 msgid "40 mins"
 msgstr "40分钟"
 
-#: src/modules/battery/e_mod_main.c:442
+#: src/modules/battery/e_mod_main.c:436
 msgid "50 mins"
 msgstr "50分钟"
 
-#: src/modules/battery/e_mod_main.c:449
+#: src/modules/battery/e_mod_main.c:443
 msgid "1 hour"
 msgstr "一小时"
 
-#: src/modules/battery/e_mod_main.c:461
+#: src/modules/battery/e_mod_main.c:455
 msgid "Check Fast (1 sec)"
 msgstr "频繁检查（1秒）"
 
-#: src/modules/battery/e_mod_main.c:468
+#: src/modules/battery/e_mod_main.c:462
 msgid "Check Medium (5 sec)"
 msgstr "一般检查（5秒）"
 
-#: src/modules/battery/e_mod_main.c:475
+#: src/modules/battery/e_mod_main.c:469
 msgid "Check Normal (10 sec)"
 msgstr "一般检查（10秒）"
 
-#: src/modules/battery/e_mod_main.c:482
+#: src/modules/battery/e_mod_main.c:476
 msgid "Check Slow (30 sec)"
 msgstr "缓慢检查（30秒）"
 
-#: src/modules/battery/e_mod_main.c:489
+#: src/modules/battery/e_mod_main.c:483
 msgid "Check Very Slow (60 sec)"
 msgstr "极缓慢检查（60秒）"
 
 #: src/modules/battery/e_mod_main.c:759
-msgid "Battery Running Low"
-msgstr "电池电量低"
-
-#: src/modules/battery/e_mod_main.c:760
 msgid ""
-"Your battery is running low.\n"
-"You may wish to switch to an AC source."
-msgstr ""
-"您的电池电量低。\n"
-"您可能需要切换到使用交流电源。"
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr "电池电量低<br>您的电池电量低。<br>您可能需要切换到使用交流电源。"
 
-#: src/modules/battery/e_mod_main.c:821
+#: src/modules/battery/e_mod_main.c:824
 msgid "NO INFO"
 msgstr "没有信息"
 
-#: src/modules/battery/e_mod_main.c:957 src/modules/battery/e_mod_main.c:1222
-#: src/modules/battery/e_mod_main.c:1371
+#: src/modules/battery/e_mod_main.c:968 src/modules/battery/e_mod_main.c:1233
+#: src/modules/battery/e_mod_main.c:1382
 msgid "NO BAT"
 msgstr "没有电池"
 
-#: src/modules/battery/e_mod_main.c:981 src/modules/battery/e_mod_main.c:1396
+#: src/modules/battery/e_mod_main.c:992 src/modules/battery/e_mod_main.c:1407
 msgid "BAD DRIVER"
 msgstr "错误的驱动"
 
-#: src/modules/battery/e_mod_main.c:1005 src/modules/battery/e_mod_main.c:1253
-#: src/modules/battery/e_mod_main.c:1420
+#: src/modules/battery/e_mod_main.c:1016 src/modules/battery/e_mod_main.c:1264
+#: src/modules/battery/e_mod_main.c:1431
 msgid "FULL"
 msgstr "满"
 
-#: src/modules/battery/e_mod_main.c:1066 src/modules/battery/e_mod_main.c:1480
+#: src/modules/battery/e_mod_main.c:1077 src/modules/battery/e_mod_main.c:1491
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:1070 src/modules/battery/e_mod_main.c:1484
+#: src/modules/battery/e_mod_main.c:1081 src/modules/battery/e_mod_main.c:1495
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:1074 src/modules/battery/e_mod_main.c:1488
+#: src/modules/battery/e_mod_main.c:1085 src/modules/battery/e_mod_main.c:1499
 msgid "Danger"
 msgstr "危险"
 
-#: src/modules/battery/e_mod_main.c:1078 src/modules/battery/e_mod_main.c:1492
-#: src/modules/battery/e_mod_main.c:1656
+#: src/modules/battery/e_mod_main.c:1089 src/modules/battery/e_mod_main.c:1503
+#: src/modules/battery/e_mod_main.c:1667
 msgid "Charging"
 msgstr "充电中"
 
-#: src/modules/clock/e_mod_main.c:50
-#, c-format
-msgid ""
-"Error initializing Module: Clock\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：时钟\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/clock/e_mod_main.c:95
-msgid "Clock"
-msgstr "时钟"
-
-#: src/modules/clock/e_mod_main.c:104
+#: src/modules/clock/e_mod_main.c:96
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment时钟模块"
 
-#: src/modules/clock/e_mod_main.c:105
+#: src/modules/clock/e_mod_main.c:97
 msgid "A simple module to give E17 a clock."
 msgstr "一个给E17提供时钟的简单模块。"
 
-#: src/modules/clock/e_mod_main.c:330
+#: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "无数字显示"
 
-#: src/modules/clock/e_mod_main.c:352
+#: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"
 msgstr "24小时"
 
-#: src/modules/clock/e_mod_main.c:364
+#: src/modules/clock/e_mod_main.c:372
 msgid "Digital Display"
 msgstr "数字显示"
 
-#: src/modules/cpufreq/e_mod_main.c:67
-#, c-format
-msgid ""
-"Error initializing Module: cpufreq\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：CPU频率\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/cpufreq/e_mod_main.c:111
-msgid "CpuFreq"
-msgstr "CPU频率"
-
-#: src/modules/cpufreq/e_mod_main.c:120
+#: src/modules/cpufreq/e_mod_main.c:114
 msgid "CPU Frequency Controller Module"
 msgstr "CPU频率控制模块"
 
-#: src/modules/cpufreq/e_mod_main.c:121
+#: src/modules/cpufreq/e_mod_main.c:115
 msgid ""
-"A simple module to control the frequency of the system CPU. This is "
+"A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
-msgstr ""
-"一个控制系统CPU频率的简单模块。\n"
-"在为笔记本电脑节省电力时很有用。"
+msgstr "一个控制系统CPU频率的简单模块。<br>在为笔记本电脑节省电力时特别有用。"
 
-#: src/modules/cpufreq/e_mod_main.c:227
+#: src/modules/cpufreq/e_mod_main.c:221
 msgid "Restore Controller on Startup"
 msgstr "开机时重设控制器"
 
-#: src/modules/cpufreq/e_mod_main.c:234 src/modules/cpufreq/e_mod_main.c:550
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:560
 msgid "Set Controller"
 msgstr "设定控制器"
 
-#: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:557
+#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:567
 msgid "Set Speed"
 msgstr "设定速度"
 
-#: src/modules/cpufreq/e_mod_main.c:303 src/modules/cpufreq/e_mod_main.c:323
-msgid "CPU Frequency ERROR"
-msgstr "CPU频率错误"
-
-#: src/modules/cpufreq/e_mod_main.c:304
+#: src/modules/cpufreq/e_mod_main.c:303
 msgid ""
-"There was an error trying to set the cpu frequency\n"
-"governor via the module's setfreq utility."
-msgstr ""
-"试着通过模块的 setfreq 功能设定CPU频率调节器时\n"
-"时发生一个错误。"
+"There was an error trying to set the cpu frequency<br>governor via the "
+"module's setfreq utility."
+msgstr "试着通过模块的 setfreq 功能设定CPU频率调节器<br>时发生一个错误。"
 
-#: src/modules/cpufreq/e_mod_main.c:324
+#: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
-"There was an error trying to set the cpu frequency\n"
-"setting via the module's setfreq utility."
-msgstr ""
-"试着通过模块的 setfreq 功能设定CPU频率设置时\n"
-"时发生一个错误。"
+"There was an error trying to set the cpu frequency<br>setting via the "
+"module's setfreq utility."
+msgstr "试着通过模块的 setfreq 功能设定CPU频率设置<br>时发生一个错误。"
 
-#: src/modules/cpufreq/e_mod_main.c:446
+#: src/modules/cpufreq/e_mod_main.c:456
 msgid "Check Fast (0.5 sec)"
 msgstr "频繁检查（0.5秒）"
 
-#: src/modules/cpufreq/e_mod_main.c:453
+#: src/modules/cpufreq/e_mod_main.c:463
 msgid "Check Medium (1 sec)"
 msgstr "一般检查（1秒）"
 
-#: src/modules/cpufreq/e_mod_main.c:460
+#: src/modules/cpufreq/e_mod_main.c:470
 msgid "Check Normal (2 sec)"
 msgstr "一般检查（2秒）"
 
-#: src/modules/cpufreq/e_mod_main.c:467
+#: src/modules/cpufreq/e_mod_main.c:477
 msgid "Check Slow (5 sec)"
 msgstr "缓慢检查（5秒）"
 
-#: src/modules/cpufreq/e_mod_main.c:474
+#: src/modules/cpufreq/e_mod_main.c:484
 msgid "Check Very Slow (30 sec)"
 msgstr "极缓慢检查（30秒）"
 
-#: src/modules/cpufreq/e_mod_main.c:490
+#: src/modules/cpufreq/e_mod_main.c:500
 msgid "Manual"
 msgstr "手动"
 
-#: src/modules/cpufreq/e_mod_main.c:492
+#: src/modules/cpufreq/e_mod_main.c:502
 msgid "Automatic"
 msgstr "自动"
 
-#: src/modules/cpufreq/e_mod_main.c:494
+#: src/modules/cpufreq/e_mod_main.c:504
 msgid "Lower Power Automatic"
 msgstr "自动低电源消耗"
 
-#: src/modules/cpufreq/e_mod_main.c:496
+#: src/modules/cpufreq/e_mod_main.c:506
 msgid "Minimum Speed"
 msgstr "最低速"
 
-#: src/modules/cpufreq/e_mod_main.c:498
+#: src/modules/cpufreq/e_mod_main.c:508
 msgid "Maximum Speed"
 msgstr "最高速"
 
-#: src/modules/cpufreq/e_mod_main.c:520
+#: src/modules/cpufreq/e_mod_main.c:530
 #, c-format
 msgid "%i Mhz"
 msgstr "%i 兆赫兹"
 
-#: src/modules/cpufreq/e_mod_main.c:523
+#: src/modules/cpufreq/e_mod_main.c:533
 #, c-format
 msgid "%i.%i Ghz"
 msgstr "%i.%i 吉赫兹"
 
-#: src/modules/cpufreq/e_mod_main.c:544
+#: src/modules/cpufreq/e_mod_main.c:554
 msgid "Restore Governor on Startup"
 msgstr "启动时恢复控制器"
 
-#: src/modules/dropshadow/e_mod_main.c:101
-#, c-format
-msgid ""
-"Error initializing Module: Dropshadow\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：阴影\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/dropshadow/e_mod_main.c:184
-msgid "Dropshadow"
-msgstr "阴影"
-
-#: src/modules/dropshadow/e_mod_main.c:193
+#: src/modules/dropshadow/e_mod_main.c:187
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment阴影模块"
 
-#: src/modules/dropshadow/e_mod_main.c:194
+#: src/modules/dropshadow/e_mod_main.c:188
 msgid ""
-"This is the dropshadow module that allows dropshadows to be cast\n"
-"on the desktop background - without special X-Server extensions\n"
-"or hardware acceleration."
-msgstr ""
-"这是 阴影 模块，它使得可以在桌面背景上产生投影。\n"
-"不需要特殊的X服务器扩展，\n"
-"或是硬件加速。"
+"This is the dropshadow module that allows dropshadows to be cast<br>on the "
+"desktop background - without special X-Server extensions<br>or hardware "
+"acceleration."
+msgstr "这是 阴影 模块，它使得可以在桌面背景上产生投影。<br>不需要特殊的X服务器扩展，或是硬件加速。"
 
-#: src/modules/dropshadow/e_mod_main.c:304
+#: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
 msgstr "很模糊"
 
-#: src/modules/dropshadow/e_mod_main.c:313
+#: src/modules/dropshadow/e_mod_main.c:307
 msgid "Fuzzy"
 msgstr "模糊"
 
-#: src/modules/dropshadow/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:849
-#: src/modules/ibox/e_mod_main.c:639
+#: src/modules/dropshadow/e_mod_main.c:316 src/modules/ibar/e_mod_main.c:888
+#: src/modules/ibox/e_mod_main.c:629
 msgid "Medium"
 msgstr "中等"
 
-#: src/modules/dropshadow/e_mod_main.c:331
+#: src/modules/dropshadow/e_mod_main.c:325
 msgid "Sharp"
 msgstr "清晰"
 
-#: src/modules/dropshadow/e_mod_main.c:340
+#: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Sharp"
 msgstr "很清晰"
 
-#: src/modules/dropshadow/e_mod_main.c:352
+#: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Dark"
 msgstr "很暗"
 
-#: src/modules/dropshadow/e_mod_main.c:361
+#: src/modules/dropshadow/e_mod_main.c:355
 msgid "Dark"
 msgstr "暗"
 
-#: src/modules/dropshadow/e_mod_main.c:370
+#: src/modules/dropshadow/e_mod_main.c:364
 msgid "Light"
 msgstr "亮"
 
-#: src/modules/dropshadow/e_mod_main.c:379
+#: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Light"
 msgstr "很亮"
 
-#: src/modules/dropshadow/e_mod_main.c:391
+#: src/modules/dropshadow/e_mod_main.c:385
 msgid "Very Far"
 msgstr "很远"
 
-#: src/modules/dropshadow/e_mod_main.c:400
+#: src/modules/dropshadow/e_mod_main.c:394
 msgid "Far"
 msgstr "远"
 
-#: src/modules/dropshadow/e_mod_main.c:409
+#: src/modules/dropshadow/e_mod_main.c:403
 msgid "Near"
 msgstr "近"
 
-#: src/modules/dropshadow/e_mod_main.c:418
+#: src/modules/dropshadow/e_mod_main.c:412
 msgid "Very Near"
 msgstr "很近"
 
-#: src/modules/dropshadow/e_mod_main.c:427
+#: src/modules/dropshadow/e_mod_main.c:421
 msgid "Extremely Near"
 msgstr "极近"
 
-#: src/modules/dropshadow/e_mod_main.c:436
+#: src/modules/dropshadow/e_mod_main.c:430
 msgid "Immediately Underneath"
 msgstr "就在下面"
 
-#: src/modules/dropshadow/e_mod_main.c:448
+#: src/modules/dropshadow/e_mod_main.c:442
 msgid "High Quality"
 msgstr "高质量"
 
-#: src/modules/dropshadow/e_mod_main.c:458
+#: src/modules/dropshadow/e_mod_main.c:452
 msgid "Medium Quality"
 msgstr "中等质量"
 
-#: src/modules/dropshadow/e_mod_main.c:468
+#: src/modules/dropshadow/e_mod_main.c:462
 msgid "Low Quality"
 msgstr "低质量"
 
-#: src/modules/ibar/e_mod_main.c:122
-#, c-format
-msgid ""
-"Error initializing Module: IBar\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：IBar\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/ibar/e_mod_main.c:165
-msgid "IBar"
-msgstr "IBar"
-
-#: src/modules/ibar/e_mod_main.c:174
+#: src/modules/ibar/e_mod_main.c:167
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar 模块"
 
-#: src/modules/ibar/e_mod_main.c:175
+#: src/modules/ibar/e_mod_main.c:168
 msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
-msgstr ""
-"这是为Enlightenment设计的 IBar应用程序启动栏 模块。\n"
-"它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
-"里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
-"因为它在增强。"
+"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+"a first example module and is being used to flesh out several<br>interfaces "
+"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+"<hilight>break often</hilight> and change as it improves."
+msgstr "这是为 Enlightenment 设计的 IBar 应用程序启动栏 模块。<br>它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0<br>里的接口。它正处理活跃开发之中，所以请注意它可能经常<hilight>坏掉</hilight>或发生变化，<br>因为它在增强。"
 
-#: src/modules/ibar/e_mod_main.c:284 src/modules/ibar/e_mod_main.c:899
-#: src/modules/ibox/e_mod_main.c:689
+#: src/modules/ibar/e_mod_main.c:277 src/modules/ibar/e_mod_main.c:938
+#: src/modules/ibox/e_mod_main.c:679
 msgid "Options"
 msgstr "选项"
 
-#: src/modules/ibar/e_mod_main.c:806 src/modules/ibox/e_mod_main.c:602
+#: src/modules/ibar/e_mod_main.c:845 src/modules/ibox/e_mod_main.c:592
 msgid "Auto fit icons"
 msgstr "自动缩放图标"
 
-#: src/modules/ibar/e_mod_main.c:812
+#: src/modules/ibar/e_mod_main.c:851
 msgid "Follower"
 msgstr "跟踪块"
 
-#: src/modules/ibar/e_mod_main.c:821 src/modules/ibox/e_mod_main.c:611
+#: src/modules/ibar/e_mod_main.c:860 src/modules/ibox/e_mod_main.c:601
 msgid "Microscopic"
 msgstr "极小"
 
-#: src/modules/ibar/e_mod_main.c:828 src/modules/ibox/e_mod_main.c:618
+#: src/modules/ibar/e_mod_main.c:867 src/modules/ibox/e_mod_main.c:608
 msgid "Tiny"
 msgstr "微小"
 
-#: src/modules/ibar/e_mod_main.c:835 src/modules/ibox/e_mod_main.c:625
+#: src/modules/ibar/e_mod_main.c:874 src/modules/ibox/e_mod_main.c:615
 msgid "Very Small"
 msgstr "很小"
 
-#: src/modules/ibar/e_mod_main.c:842 src/modules/ibox/e_mod_main.c:632
+#: src/modules/ibar/e_mod_main.c:881 src/modules/ibox/e_mod_main.c:622
 msgid "Small"
 msgstr "小"
 
-#: src/modules/ibar/e_mod_main.c:856 src/modules/ibox/e_mod_main.c:646
+#: src/modules/ibar/e_mod_main.c:895 src/modules/ibox/e_mod_main.c:636
 msgid "Large"
 msgstr "大"
 
-#: src/modules/ibar/e_mod_main.c:863 src/modules/ibox/e_mod_main.c:653
+#: src/modules/ibar/e_mod_main.c:902 src/modules/ibox/e_mod_main.c:643
 msgid "Very Large"
 msgstr "很大"
 
-#: src/modules/ibar/e_mod_main.c:870 src/modules/ibox/e_mod_main.c:660
+#: src/modules/ibar/e_mod_main.c:909 src/modules/ibox/e_mod_main.c:650
 msgid "Extremely Large"
 msgstr "极大"
 
-#: src/modules/ibar/e_mod_main.c:877 src/modules/ibox/e_mod_main.c:667
+#: src/modules/ibar/e_mod_main.c:916 src/modules/ibox/e_mod_main.c:657
 msgid "Huge"
 msgstr "巨大"
 
-#: src/modules/ibar/e_mod_main.c:884 src/modules/ibox/e_mod_main.c:674
+#: src/modules/ibar/e_mod_main.c:923 src/modules/ibox/e_mod_main.c:664
 msgid "Enormous"
 msgstr "庞大"
 
-#: src/modules/ibar/e_mod_main.c:891 src/modules/ibox/e_mod_main.c:681
+#: src/modules/ibar/e_mod_main.c:930 src/modules/ibox/e_mod_main.c:671
 msgid "Gigantic"
 msgstr "超大"
 
-#: src/modules/pager/e_mod_main.c:85
-#, c-format
-msgid ""
-"Error initializing Module: Pager\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：Pager\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/pager/e_mod_main.c:131
-msgid "Pager"
-msgstr "桌面切换器"
-
-#: src/modules/pager/e_mod_main.c:140
+#: src/modules/pager/e_mod_main.c:165
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment桌面切换器模块"
 
-#: src/modules/pager/e_mod_main.c:141
+#: src/modules/pager/e_mod_main.c:166
 msgid "A pager module to navigate virtual desktops."
 msgstr "一个定位虚拟桌面的桌面切换器模块"
 
-#: src/modules/temperature/e_mod_main.c:49
-#, c-format
-msgid ""
-"Error initializing Module: Temperature\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：温度\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
+#: src/modules/pager/e_mod_main.c:397
+msgid "None"
+msgstr "无"
 
-#: src/modules/temperature/e_mod_main.c:92
-msgid "Temperature"
-msgstr "温度"
+#: src/modules/pager/e_mod_main.c:405
+msgid "Top"
+msgstr "顶部"
 
-#: src/modules/temperature/e_mod_main.c:101
-msgid "Enlightenment Temperature Module"
-msgstr "Enlightenment 温度模块"
+#: src/modules/pager/e_mod_main.c:413
+msgid "Bottom"
+msgstr "底部"
 
-#: src/modules/temperature/e_mod_main.c:102
-msgid ""
-"A module to measure the ACPI Thermal sensor on Linux.\n"
-"It is especially useful for modern Laptops with high speed\n"
-"CPUs that generate a lot of heat."
-msgstr ""
-"一个Linux下报告ACPI温度监视器状态的模块。\n"
-"尤其对于有着产生大量热量的高速CPU的现代笔记本电脑来说，\n"
-"这个模块特别有用。"
-
-#: src/modules/temperature/e_mod_main.c:191
-#: src/modules/temperature/e_mod_main.c:700
-msgid "Check Interval"
-msgstr "检查间隔"
-
-#: src/modules/temperature/e_mod_main.c:195
-#: src/modules/temperature/e_mod_main.c:704
-msgid "Low Temperature"
-msgstr "低温"
-
-#: src/modules/temperature/e_mod_main.c:199
-#: src/modules/temperature/e_mod_main.c:708
-msgid "High Temperature"
-msgstr "高温"
-
-#: src/modules/temperature/e_mod_main.c:505
-msgid "Fast (1 sec)"
-msgstr "快 （1秒）"
-
-#: src/modules/temperature/e_mod_main.c:512
-msgid "Medium (5 sec)"
-msgstr "中等 （5秒）"
-
-#: src/modules/temperature/e_mod_main.c:519
-msgid "Normal (10 sec)"
-msgstr "正常 （10秒）"
-
-#: src/modules/temperature/e_mod_main.c:526
-msgid "Slow (30 sec)"
-msgstr "慢 （30秒）"
-
-#: src/modules/temperature/e_mod_main.c:533
-msgid "Very Slow (60 sec)"
-msgstr "很慢 （60秒）"
-
-#: src/modules/temperature/e_mod_main.c:545
-msgid "10C"
-msgstr "10度"
-
-#: src/modules/temperature/e_mod_main.c:552
-#: src/modules/temperature/e_mod_main.c:585
-msgid "20C"
-msgstr "20度"
-
-#: src/modules/temperature/e_mod_main.c:559
-#: src/modules/temperature/e_mod_main.c:592
-msgid "30C"
-msgstr "30度"
-
-#: src/modules/temperature/e_mod_main.c:566
-#: src/modules/temperature/e_mod_main.c:599
-msgid "40C"
-msgstr "40度"
-
-#: src/modules/temperature/e_mod_main.c:573
-#: src/modules/temperature/e_mod_main.c:606
-msgid "50C"
-msgstr "50度"
-
-#: src/modules/temperature/e_mod_main.c:613
-msgid "60C"
-msgstr "60度"
-
-#: src/modules/temperature/e_mod_main.c:620
-msgid "70C"
-msgstr "70度"
-
-#: src/modules/temperature/e_mod_main.c:627
-msgid "80C"
-msgstr "80度"
-
-#: src/modules/temperature/e_mod_main.c:634
-msgid "90C"
-msgstr "90度"
-
-#: src/modules/temperature/e_mod_main.c:641
-msgid "100C"
-msgstr "100度"
-
-#: src/modules/temperature/e_mod_main.c:669
-msgid "Temp1"
-msgstr "温度一"
-
-#: src/modules/temperature/e_mod_main.c:676
-msgid "Temp2"
-msgstr "温度二"
-
-#: src/modules/temperature/e_mod_main.c:683
-msgid "Temp3"
-msgstr "温度三"
-
-#: src/modules/temperature/e_mod_main.c:714
-msgid "Sensor"
-msgstr "检测器"
-
-#: src/modules/test/e_mod_main.c:10
-#, c-format
-msgid ""
-"Error initializing Module: test\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：测试模块\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/test/e_mod_main.c:24
-msgid "Module Config Menu Item 1"
-msgstr "模块配置菜单 1"
-
-#: src/modules/test/e_mod_main.c:26
-msgid "Module Config Menu Item 2"
-msgstr "模块配置菜单 2"
-
-#: src/modules/test/e_mod_main.c:28
-msgid "Module Config Menu Item 3"
-msgstr "模块配置菜单 3"
-
-#: src/modules/test/e_mod_main.c:32
-msgid "Something Else"
-msgstr "一些其它东西"
-
-#: src/modules/test/e_mod_main.c:59
-msgid "Test!!!"
-msgstr "测试！！！"
-
-#: src/modules/test/e_mod_main.c:66
-msgid "Enlightenment Test Module"
-msgstr "Enlightenment 测试模块"
-
-#: src/modules/test/e_mod_main.c:67
-msgid ""
-"This module is VERY simple and is only used to test the basic\n"
-"interface of the Enlightenment 0.17.0 module system. Please\n"
-"ignore this module unless you are working on the module system."
-msgstr ""
-"这是一个非常简单的模块，它仅供测试 Enlightenment 0.17.0 的模块\n"
-"系统。\n"
-"请忽略这个模块，除非您正在为模块系统开发东西。"
-
-#: src/modules/ibox/e_mod_main.c:104
-#, c-format
-msgid ""
-"Error initializing Module: IBox\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：IBox\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/ibox/e_mod_main.c:147
-msgid "IBox"
-msgstr "IBox"
-
-#: src/modules/ibox/e_mod_main.c:157
-msgid "Enlightenment IBox Module"
-msgstr "Enlightenment IBox 模块"
-
-#: src/modules/ibox/e_mod_main.c:158
-msgid ""
-"This is the IBox Application Launcher box module for Enlightenment.\n"
-"It is a first example module and is being used to flesh out several\n"
-"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
-"so expect it to break often and change as it improves."
-msgstr ""
-"这是为Enlightenment设计的 IBox应用程序启动栏 模块。\n"
-"它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
-"里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
-"因为它在增强。"
-
-#: src/modules/start/e_mod_main.c:29
-#, c-format
-msgid ""
-"Error initializing Module: start\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：开始菜单模块\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/start/e_mod_main.c:72
-msgid "Start"
-msgstr "开始菜单"
-
-#: src/modules/start/e_mod_main.c:81
-msgid "Enlightenment Start Module"
-msgstr "Enlightenment开始菜单模块"
-
-#: src/modules/start/e_mod_main.c:82
-msgid "Experimental Button module for E17"
-msgstr "E17的试验性的按键模块"
-
-#: src/modules/desktopname/e_mod_main.c:31
-#, c-format
-msgid ""
-"Error initializing Module: desktop\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
-msgstr ""
-"启动模块错误：桌面\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
-
-#: src/modules/desktopname/e_mod_main.c:77
-msgid "DesktopName"
-msgstr "桌面名"
-
-#: src/modules/desktopname/e_mod_main.c:86
-msgid "Enlightenment DesktopName Module"
-msgstr "Enlightenment 桌面名模块"
-
-#: src/modules/desktopname/e_mod_main.c:87
-msgid "Experimental module for E17: display desktop name on screen."
-msgstr "试验性的E17模块：在屏幕上显示的桌面名"
-
-#: src/modules/desktopname/e_mod_main.c:131
+#: src/modules/pager/e_mod_main.c:444
 msgid "Very Slow"
 msgstr "很慢"
 
-#: src/modules/desktopname/e_mod_main.c:138
+#: src/modules/pager/e_mod_main.c:451
 msgid "Slow"
 msgstr "慢"
 
-#: src/modules/desktopname/e_mod_main.c:152
+#: src/modules/pager/e_mod_main.c:465
 msgid "Fast"
 msgstr "快"
 
-#: src/modules/desktopname/e_mod_main.c:159
+#: src/modules/pager/e_mod_main.c:472
 msgid "Very Fast"
 msgstr "很快"
 
-#: src/modules/randr/e_mod_main.c:37
-#, c-format
-msgid ""
-"Error initializing Module: randr\n"
-"It requires a minimum module API version of: %i.\n"
-"The module API advertized by Enlightenment is: %i.\n"
-"Aborting module."
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:632
+msgid "Desktop Name"
+msgstr "桌面名"
+
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:636
+msgid "Enable Popup"
+msgstr "启用弹出"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:642
+msgid "Popup Speed"
+msgstr "弹出速度"
+
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:646
+msgid "Fix Aspect (Keep Height)"
 msgstr ""
-"启动模块错误：randr\n"
-"要求最小的模块API版本号：%i 。\n"
-"Enlightenment给的模块版本号：%i 。\n"
-"中止模块。"
 
-#: src/modules/randr/e_mod_main.c:82
-msgid "Randr"
-msgstr "Randr"
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:650
+msgid "Fix Aspect (Keep Width)"
+msgstr ""
 
-#: src/modules/randr/e_mod_main.c:93
+#: src/modules/temperature/e_mod_main.c:95
+msgid "Enlightenment Temperature Module"
+msgstr "Enlightenment 温度模块"
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid ""
+"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
+"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
+"generate a lot of heat."
+msgstr "一个 Linux 下报告 <hilight>ACPI 温度监视器</hilight>状态的模块。<br>尤其对于有着产生大量热量的高速 CPU 的现代笔记本电脑来说，<br>这个模块特别有用。"
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:783
+msgid "Check Interval"
+msgstr "检查间隔"
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:791
+msgid "Low Temperature"
+msgstr "低温"
+
+#: src/modules/temperature/e_mod_main.c:196
+#: src/modules/temperature/e_mod_main.c:795
+msgid "High Temperature"
+msgstr "高温"
+
+#: src/modules/temperature/e_mod_main.c:200
+#: src/modules/temperature/e_mod_main.c:787
+msgid "Unit"
+msgstr "单元"
+
+#: src/modules/temperature/e_mod_main.c:676
+msgid "Fast (1 sec)"
+msgstr "快 （1秒）"
+
+#: src/modules/temperature/e_mod_main.c:683
+msgid "Medium (5 sec)"
+msgstr "中等 （5秒）"
+
+#: src/modules/temperature/e_mod_main.c:690
+msgid "Normal (10 sec)"
+msgstr "正常 （10秒）"
+
+#: src/modules/temperature/e_mod_main.c:697
+msgid "Slow (30 sec)"
+msgstr "慢 （30秒）"
+
+#: src/modules/temperature/e_mod_main.c:704
+msgid "Very Slow (60 sec)"
+msgstr "很慢 （60秒）"
+
+#: src/modules/temperature/e_mod_main.c:715
+msgid "Fahrenheit"
+msgstr "华氏"
+
+#: src/modules/temperature/e_mod_main.c:722
+msgid "Celcius"
+msgstr "摄氏"
+
+#: src/modules/temperature/e_mod_main.c:752
+msgid "Temp1"
+msgstr "温度一"
+
+#: src/modules/temperature/e_mod_main.c:759
+msgid "Temp2"
+msgstr "温度二"
+
+#: src/modules/temperature/e_mod_main.c:766
+msgid "Temp3"
+msgstr "温度三"
+
+#: src/modules/temperature/e_mod_main.c:801
+msgid "Sensor"
+msgstr "检测器"
+
+#: src/modules/test/e_mod_main.c:21
+msgid "Module Config Menu Item 1"
+msgstr "模块配置菜单 1"
+
+#: src/modules/test/e_mod_main.c:23
+msgid "Module Config Menu Item 2"
+msgstr "模块配置菜单 2"
+
+#: src/modules/test/e_mod_main.c:25
+msgid "Module Config Menu Item 3"
+msgstr "模块配置菜单 3"
+
+#: src/modules/test/e_mod_main.c:29
+msgid "Something Else"
+msgstr "一些其它东西"
+
+#: src/modules/test/e_mod_main.c:62
+msgid "Enlightenment Test Module"
+msgstr "Enlightenment 测试模块"
+
+#: src/modules/test/e_mod_main.c:63
+msgid ""
+"This module is VERY simple and is only used to test the basic<br>interface "
+"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+"unless you are working on the module system."
+msgstr "这是一个非常简单的模块，它仅供测试 Enlightenment 0.17.0 的模块<br>系统。请忽略这个模块，除非您正在为模块系统开发东西。"
+
+#: src/modules/ibox/e_mod_main.c:149
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox 模块"
+
+#: src/modules/ibox/e_mod_main.c:150
+msgid ""
+"This is the IBox Iconified Application module for Enlightenment.<br>It will "
+"hold minimized applications"
+msgstr ""
+
+#: src/modules/start/e_mod_main.c:78
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment开始菜单模块"
+
+#: src/modules/start/e_mod_main.c:79
+msgid "Experimental Button module for E17"
+msgstr "E17的试验性的按键模块"
+
+#: src/modules/randr/e_mod_main.c:85
 msgid "Enlightenment Randr Module"
 msgstr "Enlightenment Randr 模块"
 
-#: src/modules/randr/e_mod_main.c:94
+#: src/modules/randr/e_mod_main.c:86
 msgid "Module to change screen resolution for E17"
 msgstr "改变屏幕分辨率的E17模块"
 
-#: src/modules/randr/e_mod_main.c:196
+#: src/modules/randr/e_mod_main.c:188
 msgid "Restore Resolution on Startup"
 msgstr "启动时恢复分辨率"
 
-#: src/modules/randr/e_mod_main.c:219
+#: src/modules/randr/e_mod_main.c:211
 msgid "Resolution"
 msgstr "分辨率"
+
+#~ msgid ""
+#~ "This is Enlightenment %s.\n"
+#~ "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+#~ "\n"
+#~ "We hope you enjoy using this software as much as we enjoyed writing it.\n"
+#~ "\n"
+#~ "Please think of the aardvarks. They need some love too."
+#~ msgstr ""
+#~ "这是 Enlightenment %s 。\n"
+#~ "版权所有 © 1999-2005，Enlightenment 开发小组。\n"
+#~ "\n"
+#~ "我们希望你能像我们开发这个软件一样开心地使用它。\n"
+#~ "\n"
+#~ "请想想土豚们。它们也需要关爱。"
+
+#~ msgid "Applications"
+#~ msgstr "应用程序"
+
+#~ msgid "(Empty)"
+#~ msgstr "（空）"
+
+#~ msgid "Module API Error"
+#~ msgstr "模块API错误"
+
+#~ msgid ""
+#~ "Error initializing Module: Battery\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：电池\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Battery"
+#~ msgstr "电池"
+
+#~ msgid "Battery Running Low"
+#~ msgstr "电池电量低"
+
+#~ msgid ""
+#~ "Error initializing Module: Clock\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：时钟\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Clock"
+#~ msgstr "时钟"
+
+#~ msgid ""
+#~ "Error initializing Module: cpufreq\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：CPU频率\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "CpuFreq"
+#~ msgstr "CPU频率"
+
+#~ msgid "CPU Frequency ERROR"
+#~ msgstr "CPU频率错误"
+
+#~ msgid ""
+#~ "Error initializing Module: Dropshadow\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：阴影\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Dropshadow"
+#~ msgstr "阴影"
+
+#~ msgid ""
+#~ "Error initializing Module: IBar\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：IBar\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "IBar"
+#~ msgstr "IBar"
+
+#~ msgid ""
+#~ "Error initializing Module: Pager\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：Pager\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Pager"
+#~ msgstr "桌面切换器"
+
+#~ msgid ""
+#~ "Error initializing Module: Temperature\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：温度\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Temperature"
+#~ msgstr "温度"
+
+#~ msgid "10C"
+#~ msgstr "10度"
+
+#~ msgid "20C"
+#~ msgstr "20度"
+
+#~ msgid "30C"
+#~ msgstr "30度"
+
+#~ msgid "40C"
+#~ msgstr "40度"
+
+#~ msgid "50C"
+#~ msgstr "50度"
+
+#~ msgid "60C"
+#~ msgstr "60度"
+
+#~ msgid "70C"
+#~ msgstr "70度"
+
+#~ msgid "80C"
+#~ msgstr "80度"
+
+#~ msgid "90C"
+#~ msgstr "90度"
+
+#~ msgid "100C"
+#~ msgstr "100度"
+
+#~ msgid ""
+#~ "Error initializing Module: test\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：测试模块\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Test!!!"
+#~ msgstr "测试！！！"
+
+#~ msgid ""
+#~ "Error initializing Module: IBox\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：IBox\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "IBox"
+#~ msgstr "IBox"
+
+#~ msgid ""
+#~ "This is the IBox Application Launcher box module for Enlightenment.\n"
+#~ "It is a first example module and is being used to flesh out several\n"
+#~ "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+#~ "so expect it to break often and change as it improves."
+#~ msgstr ""
+#~ "这是为Enlightenment设计的 IBox应用程序启动栏 模块。\n"
+#~ "它是第一个示例模块且被用来充实了其它几个 Enlightenment 0.17.0\n"
+#~ "里的接口。它正处理活跃开发之中，所以请注意它可能经常坏掉或变了，\n"
+#~ "因为它在增强。"
+
+#~ msgid "Start"
+#~ msgstr "开始菜单"
+
+#~ msgid ""
+#~ "Error initializing Module: desktop\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：桌面\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Enlightenment DesktopName Module"
+#~ msgstr "Enlightenment 桌面名模块"
+
+#~ msgid "Experimental module for E17: display desktop name on screen."
+#~ msgstr "试验性的E17模块：在屏幕上显示的桌面名"
+
+#~ msgid ""
+#~ "Error initializing Module: randr\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "启动模块错误：randr\n"
+#~ "要求最小的模块API版本号：%i 。\n"
+#~ "Enlightenment给的模块版本号：%i 。\n"
+#~ "中止模块。"
+
+#~ msgid "Randr"
+#~ msgstr "Randr"
