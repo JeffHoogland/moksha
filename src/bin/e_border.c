@@ -4850,6 +4850,7 @@ _e_border_eval(E_Border *bd)
 	     bd->x -= bd->client_inset.l;
 	     bd->y -= bd->client_inset.t;
 	     bd->changes.pos = 1;
+	     bd->placed = 1;
 	  }
 	else if (!bd->placed)
 	  {
@@ -4898,11 +4899,10 @@ _e_border_eval(E_Border *bd)
 		       bd->y = att->y;
 		    }
 		  bd->changes.pos = 1;
+		  bd->placed = 1;
 	       }
 	     else
 	       {
-		  int placed = 0;
-		  
 		  /* FIXME: special placement for dialogs etc. etc. etc goes
 		   * here */
 		  /* FIXME: what if parent is not on this desktop - or zone? */
@@ -4911,9 +4911,9 @@ _e_border_eval(E_Border *bd)
 		       bd->x = bd->parent->x + ((bd->parent->w - bd->w) / 2);
 		       bd->y = bd->parent->y + ((bd->parent->h - bd->h) / 2);
 		       bd->changes.pos = 1;
-		       placed = 1;
+		       bd->placed = 1;
 		    }
-		  if (!placed)
+		  if (!bd->placed)
 		    {
 		       Evas_List *skiplist = NULL;
 		       int new_x, new_y;
@@ -4957,25 +4957,20 @@ _e_border_eval(E_Border *bd)
 	     E_Border_Pending_Move_Resize *pnd;
 
 	     pnd = bd->pending_move_resize->data;
-	     if (!bd->lock_client_location)
+	     if ((!bd->lock_client_location) && (pnd->move))
 	       {
-		  if (pnd->move)
-		    {
-		       bd->x = pnd->x;
-		       bd->y = pnd->y;
-		       bd->changes.pos = 1;
-		    }
+		  bd->x = pnd->x;
+		  bd->y = pnd->y;
+		  bd->changes.pos = 1;
+		  bd->placed = 1;
 	       }
-	     if (!bd->lock_client_size)
+	     if ((!bd->lock_client_size) && (pnd->resize))
 	       {
-		  if (pnd->resize)
-		    {
-		       bd->w = pnd->w + (bd->client_inset.l + bd->client_inset.r);
-		       bd->h = pnd->h + (bd->client_inset.t + bd->client_inset.b);
-		       bd->client.w = pnd->w;
-		       bd->client.h = pnd->h;
-		       bd->changes.size = 1;
-		    }
+		  bd->w = pnd->w + (bd->client_inset.l + bd->client_inset.r);
+		  bd->h = pnd->h + (bd->client_inset.t + bd->client_inset.b);
+		  bd->client.w = pnd->w;
+		  bd->client.h = pnd->h;
+		  bd->changes.size = 1;
 	       }
 	     free(pnd);
 	     bd->pending_move_resize = evas_list_remove_list(bd->pending_move_resize,
@@ -4989,8 +4984,8 @@ _e_border_eval(E_Border *bd)
 	  {
 	     bd->x = bd->zone->x + (bd->zone->w - bd->w) / 2;
 	     bd->y = bd->zone->y + (bd->zone->h - bd->h) / 2;
-	     bd->placed = 1;
 	     bd->changes.pos = 1;
+	     bd->placed = 1;
 	  }
 
 	ecore_x_icccm_move_resize_send(bd->client.win,
@@ -5317,7 +5312,7 @@ _e_border_eval(E_Border *bd)
      {
 	int x, y;
 
-	if ((!bd->re_manage) &&
+	if ((!bd->placed) && (!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG) &&
 	    (!move) && (!resize))
