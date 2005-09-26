@@ -126,8 +126,8 @@ e_container_new(E_Manager *man)
      con->pointer.root = e_pointer_window_set(con->manager->root);
    else
      {
-	ecore_x_window_cursor_set (con->manager->root,
-		ecore_x_cursor_shape_get (ECORE_X_CURSOR_LEFT_PTR));
+	ecore_x_window_cursor_set(con->manager->root,
+				  ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
      }
 
    con->num = container_num;

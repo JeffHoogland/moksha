@@ -67,8 +67,8 @@ e_init_init(void)
    else
      {
 	_e_init_pointer = NULL;
-	ecore_x_window_cursor_set (_e_init_win,
-		ecore_x_cursor_shape_get (ECORE_X_CURSOR_LEFT_PTR));
+	ecore_x_window_cursor_set(_e_init_win,
+				  ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
      }
 
    ecore_evas_raise(_e_init_ecore_evas);
