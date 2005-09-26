@@ -5333,8 +5333,8 @@ _e_border_eval(E_Border *bd)
 		  if (bd->cur_mouse_action)
 		    {
 		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
-		       bd->x = x - (bd->w >> 1);
-		       bd->y = y - (bd->client_inset.t >> 1);
+		       bd->x = (x - bd->zone->x) - (bd->w >> 1);
+		       bd->y = (y - bd->zone->y) - (bd->client_inset.t >> 1);
 		       bd->changed = 1;
 		       bd->changes.pos = 1;
 		       ecore_x_icccm_move_resize_send(bd->client.win,

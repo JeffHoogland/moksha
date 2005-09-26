@@ -488,8 +488,8 @@ e_place_zone_manual(E_Zone *zone, int w, int h, int *rx, int *ry)
    E_OBJECT_CHECK_RETURN(zone, 0);
 
    ecore_x_pointer_xy_get(zone->container->win, &cursor_x, &cursor_y);
-   *rx = cursor_x - (w >> 1);
-   *ry = cursor_y - (h >> 1);
+   if (rx) *rx = (cursor_x - zone->x) - (w >> 1);
+   if (ry) *ry = (cursor_y - zone->y) - (h >> 1);
 
    return 1;
 }

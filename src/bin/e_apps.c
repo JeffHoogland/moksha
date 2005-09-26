@@ -177,7 +177,7 @@ _e_app_cb_scan_cache_timer(void *data)
    char buf[4096];
    E_App_Cache *ac;
    int is_dir = 0;
-   
+
    sc = data;
    s = ecore_list_next(sc->files);
    if (!s)
