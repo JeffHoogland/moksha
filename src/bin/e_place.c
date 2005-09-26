@@ -459,8 +459,8 @@ e_place_zone_cursor(E_Zone *zone, int x, int y, int w, int h, int it, int *rx, i
    E_OBJECT_CHECK(zone);
 
    ecore_x_pointer_xy_get(zone->container->win, &cursor_x, &cursor_y);
-   *rx = cursor_x - ((w - x) >> 1);
-   *ry = cursor_y - (it >> 1);
+   *rx = (cursor_x - zone->x) - (w >> 1);
+   *ry = (cursor_y - zone->y) - (it >> 1);
 
    if (*rx < zone->x) 
      *rx = zone->x;
