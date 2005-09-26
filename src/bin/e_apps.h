@@ -77,6 +77,7 @@ EAPI int    e_app_shutdown(void);
 
 EAPI E_App *e_app_new(const char *path, int scan_subdirs);
 EAPI int    e_app_is_parent(E_App *parent, E_App *app);
+EAPI int    e_app_equals(E_App *app1, E_App *app2);
 EAPI void   e_app_subdir_scan(E_App *a, int scan_subdirs);
 EAPI int    e_app_exec(E_App *a, int launch_id);
 EAPI int    e_app_starting_get(E_App *a);

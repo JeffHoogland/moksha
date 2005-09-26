@@ -415,6 +415,13 @@ e_app_is_parent(E_App *parent, E_App *app)
    return 0;
 }
 
+int
+e_app_equals(E_App *app1, E_App *app2)
+{
+   return ((app1 == app2) || (app1->orig == app2) ||
+	   (app1 == app2->orig) || (app1->orig == app2->orig));
+}
+
 void
 e_app_subdir_scan(E_App *a, int scan_subdirs)
 {

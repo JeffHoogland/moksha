@@ -406,8 +406,6 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 		  ic = _ibar_icon_find(ibb, a);
 		  if (ic)
 		    {
-		       Evas_List *l;
-		       
 		       if (a->startup_notify)
 			 {
 			    edje_object_signal_emit(ic->icon_object, "start", "");
@@ -439,8 +437,6 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 		       ic = _ibar_icon_find(ibb, a);
 		       if (ic)
 			 {
-			    Evas_List *l;
-			    
 			    edje_object_signal_emit(ic->icon_object, "stop", "");
 			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "stop", "");
 			    edje_object_signal_emit(ic->bg_object, "stop", "");
@@ -795,8 +791,7 @@ _ibar_icon_find(IBar_Bar *ibb, E_App *a)
 	IBar_Icon *ic;
 
 	ic = l->data;
-	if ((ic->app == a) || (ic->app->orig == a) ||
-	    (ic->app == a->orig) || (ic->app->orig == a->orig)) 
+	if (e_app_equals(ic->app, a))
 	  return ic;
      }
    return NULL;
