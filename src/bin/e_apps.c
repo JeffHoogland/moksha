@@ -160,7 +160,6 @@ _e_app_cb_scan_hash_foreach(Evas_Hash *hash, const char *key, void *data, void *
    E_App_Scan_Cache *sc;
    E_App_Cache *ac;
    char *s;
-   char buf[4096];
    
    sc = fdata;
    s = (char *)key;

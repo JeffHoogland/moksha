@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-typedef struct _E_Dialog_Button E_Dialog_Button;
-
 struct _E_Dialog_Button
 {
    E_Dialog *dialog;
