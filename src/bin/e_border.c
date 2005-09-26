@@ -5315,15 +5315,14 @@ _e_border_eval(E_Border *bd)
 
    if ((bd->changes.visible) && (bd->visible) && (bd->new_client))
      {
-	ecore_evas_show(bd->bg_ecore_evas);
-	ecore_x_window_show(bd->win);
+	int x, y;
+
 	if ((!bd->re_manage) &&
 	    (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL) &&
 	    (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG) &&
 	    (!move) && (!resize))
 	  {
 	     /* Set this window into moving state */
-	     int x, y;
 
 	     bd->cur_mouse_action = e_action_find("window_move");
 	     if (bd->cur_mouse_action)
@@ -5336,24 +5335,34 @@ _e_border_eval(E_Border *bd)
 		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
 		       bd->x = x - (bd->w >> 1);
 		       bd->y = y - (bd->client_inset.t >> 1);
-
-		       bd->moveinfo.down.x = bd->x;
-		       bd->moveinfo.down.y = bd->y;
-		       bd->moveinfo.down.w = bd->w;
-		       bd->moveinfo.down.h = bd->h;
-		       bd->mouse.current.mx = x;
-		       bd->mouse.current.my = y;
-		       bd->moveinfo.down.button = 0;
-		       bd->moveinfo.down.mx = x;
-		       bd->moveinfo.down.my = y;
-
-		       grabbed = 1;
-		       e_object_ref(E_OBJECT(bd->cur_mouse_action));
-		       bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
-		       e_border_raise(bd);
-		       e_border_focus_set(bd, 1, 1);
+		       bd->changed = 1;
+		       bd->changes.pos = 1;
+		       ecore_x_icccm_move_resize_send(bd->client.win,
+						      bd->x + bd->client_inset.l,
+						      bd->y + bd->client_inset.t,
+						      bd->client.w, bd->client.h);
 		    }
 	       }
+	  }
+	ecore_evas_show(bd->bg_ecore_evas);
+	ecore_x_window_show(bd->win);
+	if (bd->cur_mouse_action)
+	  {
+	     bd->moveinfo.down.x = bd->x;
+	     bd->moveinfo.down.y = bd->y;
+	     bd->moveinfo.down.w = bd->w;
+	     bd->moveinfo.down.h = bd->h;
+	     bd->mouse.current.mx = x;
+	     bd->mouse.current.my = y;
+	     bd->moveinfo.down.button = 0;
+	     bd->moveinfo.down.mx = x;
+	     bd->moveinfo.down.my = y;
+
+	     grabbed = 1;
+	     e_object_ref(E_OBJECT(bd->cur_mouse_action));
+	     bd->cur_mouse_action->func.go(E_OBJECT(bd), NULL); 
+	     e_border_raise(bd);
+	     e_border_focus_set(bd, 1, 1);
 	  }
 	bd->changes.visible = 0;
      }
