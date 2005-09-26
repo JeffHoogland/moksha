@@ -103,7 +103,7 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *y1, int *x2, int *y2)
 	     RIGHT,
 	     BOTTOM,
 	     LEFT
-	} edge;
+	} edge = TOP;
 
 	if ((bd2->zone != bd->zone) || (bd2 == bd) ||
 	    (bd2->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK))

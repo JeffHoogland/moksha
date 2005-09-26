@@ -42,7 +42,6 @@ struct _E_App_Scan_Cache
 };
 
 static void      _e_app_free               (E_App *a);
-static void      _e_app_fields_fill        (E_App *a, const char *path);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
 static void      _e_app_change             (E_App *a, E_App_Change ch);
 static int       _e_apps_cb_exit           (void *data, int type, void *event);
