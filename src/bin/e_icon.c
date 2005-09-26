@@ -140,6 +140,16 @@ e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
    evas_object_image_data_copy_set(sd->obj, data);
 }
 
+void *
+e_icon_data_get(Evas_Object *obj, int *w, int *h)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   evas_object_image_size_get(sd->obj, w, h);
+   return evas_object_image_data_get(sd->obj, 0);
+}
+
 /* local subsystem globals */
 static void
 _e_icon_smart_reconfigure(E_Smart_Data *sd)

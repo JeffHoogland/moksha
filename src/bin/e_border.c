@@ -2077,11 +2077,11 @@ Evas_Object *
 e_border_icon_add(E_Border *bd, Evas *evas)
 {
    Evas_Object *o;
+   E_App *a = NULL;
 
    o = NULL;
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
-	E_App *a;
 	char *title = "";
 	
 	if (bd->client.netwm.name) title = bd->client.netwm.name;
@@ -2090,11 +2090,18 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 						    bd->client.icccm.class,
 						    title,
 						    bd->client.icccm.window_role);
-	if (a)
+     }
+   if (!a)
+     {
+	a = e_app_launch_id_pid_find(bd->client.netwm.e_start_launch_id,
+				     bd->client.netwm.pid);
+     }
+   if (a)
+     {
+	o = edje_object_add(evas);
+	if (!e_util_edje_icon_list_set(o, a->icon_class))
 	  {
-	     o = edje_object_add(evas);
-	     if (!e_util_edje_icon_list_set(o, a->icon_class))
-	       edje_object_file_set(o, a->path, "icon");
+	     edje_object_file_set(o, a->path, "icon");
 	  }
      }
    else if (bd->client.netwm.icons)
@@ -2792,9 +2799,9 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
 	return 1;
      }
    /* Don't delete hidden or iconified windows */
-   if ((bd->iconic) || (!bd->visible) || (bd->await_hide_event))
+   if ((bd->iconic) || (!bd->visible) || (bd->await_hide_event > 0))
      {
-	if (bd->await_hide_event)
+	if (bd->await_hide_event > 0)
 	  bd->await_hide_event--;
 	/* Only hide the border if it is visible */
 	if (bd->visible)
@@ -4083,17 +4090,38 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 		       if (bd->icon_object)
 			 {
 			    E_Drag *drag;
-			    Evas_Object *o;
+			    Evas_Object *o = NULL;
 			    Evas_Coord x, y, w, h;
-			    const char *file, *part;
+			    const char *file = NULL, *part = NULL;
 
 			    evas_object_geometry_get(bd->icon_object,
 						     &x, &y, &w, &h);
 			    drag = e_drag_new(bd->zone->container, bd->x + x, bd->y + y,
 					      "enlightenment/border", bd, NULL);
-			    o = edje_object_add(drag->evas);
 			    edje_object_file_get(bd->icon_object, &file, &part);
-			    edje_object_file_set(o, file, part);
+			    if ((file) && (part))
+			      {
+				 o = edje_object_add(drag->evas);
+				 edje_object_file_set(o, file, part);
+			      }
+			    else
+			      {
+				 int iw, ih;
+				 void *data;
+				 
+				 data = e_icon_data_get(bd->icon_object, &iw, &ih);
+				 if (data)
+				   {
+				      o = e_icon_add(drag->evas);
+				      e_icon_data_set(o, data, iw, ih);
+				   }
+			      }
+			    if (!o)
+			      {
+				 /* FIXME: fallback icon for drag */
+				 o = evas_object_rectangle_add(drag->evas);
+				 evas_object_color_set(o, 255, 255, 255, 255);
+			      }
 			    e_drag_object_set(drag, o);
 
 			    e_drag_resize(drag, w, h);
@@ -4478,37 +4506,6 @@ _e_border_eval(E_Border *bd)
 	bd->client.netwm.update.state = 0;
      }
 
-   if (bd->changes.icon)
-     {
-	if (bd->icon_object)
-	  {
-	     evas_object_del(bd->icon_object);
-	     bd->icon_object = NULL;
-	  }
-
-	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
-	if (bd->bg_object)
-	  {
-	     evas_object_show(bd->icon_object);
-	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
-	  }
-	else
-	  {
-	     evas_object_hide(bd->icon_object);
-	  }
-
-	  {
-	     E_Event_Border_Icon_Change *ev;
-
-	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
-	     ev->border = bd;
-	     e_object_ref(E_OBJECT(bd));
-//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
-	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
-			     _e_border_event_border_icon_change_free, NULL);
-	  }
-	bd->changes.icon = 0;
-     }
    if (bd->changes.shape)
      {
 	Ecore_X_Rectangle *rects;
@@ -5029,7 +5026,7 @@ _e_border_eval(E_Border *bd)
 	       e_border_zone_set(bd, zone);
 	  }
      }
-
+   
    /* effect changes to the window border itself */
    if ((bd->changes.shading))
      {
@@ -5361,6 +5358,38 @@ _e_border_eval(E_Border *bd)
 	  }
 	bd->changes.visible = 0;
      }
+
+   if (bd->changes.icon)
+     {
+	if (bd->icon_object)
+	  {
+	     evas_object_del(bd->icon_object);
+	     bd->icon_object = NULL;
+	  }
+	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+	if (bd->bg_object)
+	  {
+	     evas_object_show(bd->icon_object);
+	     edje_object_part_swallow(bd->bg_object, "icon_swallow", bd->icon_object);
+	  }
+	else
+	  {
+	     evas_object_hide(bd->icon_object);
+	  }
+
+	  {
+	     E_Event_Border_Icon_Change *ev;
+
+	     ev = calloc(1, sizeof(E_Event_Border_Icon_Change));
+	     ev->border = bd;
+	     e_object_ref(E_OBJECT(bd));
+//	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
+	     ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
+			     _e_border_event_border_icon_change_free, NULL);
+	  }
+	bd->changes.icon = 0;
+     }
+   
    bd->new_client = 0;
    
    bd->changed = 0;

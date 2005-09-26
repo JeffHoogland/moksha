@@ -795,7 +795,9 @@ _ibar_icon_find(IBar_Bar *ibb, E_App *a)
 	IBar_Icon *ic;
 
 	ic = l->data;
-	if (ic->app == a) return ic;
+	if ((ic->app == a) || (ic->app->orig == a) ||
+	    (ic->app == a->orig) || (ic->app->orig == a->orig)) 
+	  return ic;
      }
    return NULL;
 }
