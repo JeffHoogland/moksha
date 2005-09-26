@@ -744,7 +744,7 @@ msgstr "Enlightenment 正在启动。请稍候。"
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
-msgstr "导入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名叫 %s 的模块。\n"
+msgstr "导入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名叫 %s 的模块。<br>"
 
 #: src/bin/e_module.c:102 src/bin/e_module.c:115 src/bin/e_module.c:139
 msgid "Error loading Module"
