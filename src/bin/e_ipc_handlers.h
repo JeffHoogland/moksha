@@ -2047,7 +2047,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DESKS_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-desks-set", 1, "Set the number of virtual desktops (X x Y. OPT1 = X, OPT2 = Y)", 0, HDL)
+   OP("-desks-set", 2, "Set the number of virtual desktops (X x Y desks OPT1 = X, OPT2 = Y)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_2INT(atoi(params[0]), atoi(params[1]), HDL);
 #elif (TYPE == E_WM_IN)
