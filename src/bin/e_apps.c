@@ -140,7 +140,7 @@ e_app_raw_new(void)
 static void
 _e_app_cache_copy(E_App_Cache *ac, E_App *a)
 {
-#define IF_DUP(x) if (ac->x) a->x = strdup(ac->x)
+#define IF_DUP(x) if ((ac->x) && (strlen(ac->x) > 0)) a->x = strdup(ac->x)
    IF_DUP(name);
    IF_DUP(generic);
    IF_DUP(comment);
