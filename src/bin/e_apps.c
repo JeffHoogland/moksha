@@ -52,6 +52,7 @@ static int       _e_app_copy               (E_App *dst, E_App *src);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
+static E_App    *_e_app_ecore_exe_find     (Ecore_Exe *exe);
 
 /* local subsystem globals */
 static Evas_Hash   *_e_apps = NULL;
@@ -510,7 +511,8 @@ e_app_exec(E_App *a, int launch_id)
    if (!a->exe) return 0;
    /* FIXME: set up locale, encoding and input method env vars if they are in
     * the eapp file */
-   inst = calloc(1, sizeof(E_App_Instance));
+   inst = E_NEW(E_App_Instance, 1);
+   if (!inst) return 0;
    exe = ecore_exe_run(a->exe, inst);
    if (!exe)
      {
@@ -1643,56 +1645,42 @@ static int
 _e_apps_cb_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
+   Evas_List *l;
    E_App *a;
-   
-   /* FIXME: Check if we launched this exe, else it isn't sure that
-    * the exe data is an E_App! (see 8 lines down also)
-    */
-   ev = event;
-   if (ev->exe)
-     {
-	E_App_Instance *ai;
-	
-	ai = ecore_exe_data_get(ev->exe);
-	if (!ai) /* related to FIXME above */
-	  return 1;
 
-	a = ai->app;
-	if (a)
+   ev = event;
+   if (!ev->exe) return 1;
+   a = _e_app_ecore_exe_find(ev->exe);
+   if (!a) return 1;
+
+   if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
+     e_error_dialog_show(_("Run Error"),
+			 _("Enlightenment was unable run the program:\n"
+			   "\n"
+			   "%s\n"
+			   "\n"
+			   "The command was not found\n"),
+			 a->exe);
+   for (l = a->instances; l; l = l->next)
+     {
+	E_App_Instance *inst;
+
+	inst = l->data;
+	if (ev->exe == inst->exe)
 	  {
-	     Evas_List *l;
-	     
-	     if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
-	       e_error_dialog_show(_("Run Error"),
-				   _("Enlightenment was unable run the program:\n"
-				     "\n"
-				     "%s\n"
-				     "\n"
-				     "The command was not found\n"),
-				   a->exe);
-	     for (l = a->instances; l; l = l->next)
+	     if (inst->expire_timer)
 	       {
-		  E_App_Instance *inst;
-		  
-		  inst = l->data;
-		  if (ev->exe == inst->exe)
-		    {
-		       if (inst->expire_timer)
-			 {
-			    ecore_timer_del(inst->expire_timer);
-			    inst->expire_timer = NULL;
-			 }
-		       inst->exe = NULL;
-		       a->instances = evas_list_remove_list(a->instances, l);
-		       free(inst);
-		       _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
-//		       e_object_unref(E_OBJECT(a));
-		       break;
-		    }
+		  ecore_timer_del(inst->expire_timer);
+		  inst->expire_timer = NULL;
 	       }
-	     _e_app_change(a, E_APP_EXIT);
+	     inst->exe = NULL;
+	     a->instances = evas_list_remove_list(a->instances, l);
+	     free(inst);
+	     _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
+	     break;
 	  }
      }
+   _e_app_change(a, E_APP_EXIT);
    return 1;
 }
 
@@ -1748,4 +1736,26 @@ _e_app_cb_expire_timer(void *data)
    inst->expire_timer = NULL;
    _e_app_change(a, E_APP_READY_EXPIRE);
    return 0;
+}
+
+static E_App *
+_e_app_ecore_exe_find(Ecore_Exe *exe)
+{
+   Evas_List *l, *l2;
+
+   for (l = _e_apps_start_pending; l; l = l->next)
+     {
+	E_App *a;
+
+	a = l->data;
+	for (l2 = a->instances; l2; l2 = l2->next)
+	  {
+	     E_App_Instance *inst;
+
+	     inst = l2->data;
+	     if (inst->exe == exe)
+	       return a;
+	  }
+     }
+   return NULL;
 }
