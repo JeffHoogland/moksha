@@ -302,6 +302,7 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 
    ecore_x_randr_screen_size_set(res->manager->root, res->next);
 
+   if (e->dialog) e_object_del(E_OBJECT(e->dialog));
    e->dialog = e_dialog_new(m->zone->container);
    e_dialog_title_set(e->dialog, "Resolution change");
    e_dialog_text_set(e->dialog, "Keep new resolution?");
