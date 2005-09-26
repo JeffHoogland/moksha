@@ -4938,7 +4938,7 @@ _e_border_eval(E_Border *bd)
 			 }
 		       else if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL)
 			 {
-			    e_place_zone_manual(bd->zone, bd->x, bd->w, bd->client_inset.t,
+			    e_place_zone_manual(bd->zone, bd->w, bd->client_inset.t,
 						&new_x, &new_y);
 			 }
 		       else
@@ -5333,8 +5333,9 @@ _e_border_eval(E_Border *bd)
 		    bd->cur_mouse_action = NULL;
 		  if (bd->cur_mouse_action)
 		    {
-		       e_place_zone_manual(bd->zone, bd->x, bd->w,
-					   bd->client_inset.t, &bd->x, &bd->y);
+		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
+		       bd->x = x - (bd->w >> 1);
+		       bd->y = y - (bd->client_inset.t >> 1);
 
 		       bd->moveinfo.down.x = bd->x;
 		       bd->moveinfo.down.y = bd->y;
