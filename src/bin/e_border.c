@@ -5333,10 +5333,8 @@ _e_border_eval(E_Border *bd)
 		    bd->cur_mouse_action = NULL;
 		  if (bd->cur_mouse_action)
 		    {
-		       ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
-
-		       bd->x = x - bd->w / 2;
-		       bd->y = y - bd->client_inset.t / 2;
+		       e_place_zone_manual(bd->zone, bd->x, bd->w,
+					   bd->client_inset.t, &bd->x, &bd->y);
 
 		       bd->moveinfo.down.x = bd->x;
 		       bd->moveinfo.down.y = bd->y;
