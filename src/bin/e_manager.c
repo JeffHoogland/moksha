@@ -595,8 +595,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	free(state);
      }
 
-   if (frame_extents)
-     extents = evas_hash_find(frame_extents, key);
+   extents = evas_hash_find(frame_extents, key);
    if (!extents)
      {
 	extents = E_NEW(Frame_Extents, 1);
