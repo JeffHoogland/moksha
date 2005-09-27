@@ -33,6 +33,7 @@ _enlightenment_remote() {
 		COMPREPLY=($(compgen -W "${opts/-h -help --help}" -- "${cur}"))
 		return 0
 		;;
+	-always-click-to-focus-set| \
 	-always-click-to-raise-set| \
 	-border-shade-animate-set| \
 	-edge-flip-set| \
