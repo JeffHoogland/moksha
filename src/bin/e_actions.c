@@ -299,7 +299,7 @@ ACT_FN_GO(window_sticky)
 	  {
 	     if (atoi(params) == 1)
 	       e_border_stick(bd);  	
-	     else if (atoi(params) == 1)
+	     else if (atoi(params) == 0)
 	       e_border_unstick(bd);
 	  }
      }
