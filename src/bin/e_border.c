@@ -4114,6 +4114,7 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 				   {
 				      o = e_icon_add(drag->evas);
 				      e_icon_data_set(o, data, iw, ih);
+				      e_icon_alpha_set(o, 1);
 				   }
 			      }
 			    if (!o)

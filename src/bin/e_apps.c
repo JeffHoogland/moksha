@@ -345,6 +345,7 @@ e_app_new(const char *path, int scan_subdirs)
 	  {
 	     _e_apps = evas_hash_add(_e_apps, a->path, a);
 	     _e_apps_list = evas_list_prepend(_e_apps_list, a);
+	     a->scanned = 1;
 	  }
 //	e_app_cache_free(ac);
      }
@@ -560,6 +561,7 @@ e_app_prepend_relative(E_App *add, E_App *before)
 {
    char buf[PATH_MAX];
 
+   if ((!add) || (!before)) return;
    if (!before->parent) return;
 
    before->parent->subapps = evas_list_prepend_relative(before->parent->subapps,
@@ -588,6 +590,7 @@ e_app_append(E_App *add, E_App *parent)
 {
    char buf[PATH_MAX];
 
+   if ((!add) || (!parent)) return;
    parent->subapps = evas_list_append(parent->subapps, add);
    add->parent = parent;
 
@@ -612,6 +615,7 @@ e_app_files_prepend_relative(Evas_List *files, E_App *before)
 {
    Evas_List *l;
 
+   if (!before) return;
    if (!before->parent) return;
 
    for (l = files; l; l = l->next)
@@ -667,6 +671,7 @@ e_app_files_append(Evas_List *files, E_App *parent)
 {
    Evas_List *l, *subapps;
 
+   if (!parent) return;
    subapps = parent->subapps;
 
    for (l = files; l; l = l->next)
@@ -718,6 +723,7 @@ e_app_remove(E_App *remove)
 {
    char buf[PATH_MAX];
 
+   if (!remove) return;
    if (!remove->parent) return;
 
    remove->parent->subapps = evas_list_remove(remove->parent->subapps, remove);

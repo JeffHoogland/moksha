@@ -1683,10 +1683,33 @@ _ibar_bar_cb_drop_border(void *data, const char *type, void *event)
    app = e_app_window_name_class_title_role_find(bd->client.icccm.name,
 						 bd->client.icccm.class,
 						 title, bd->client.icccm.window_role);
-
+   if (!app)
+     {
+	app = e_app_launch_id_pid_find(bd->client.netwm.e_start_launch_id,
+				       bd->client.netwm.pid);
+     }
+   if (!app)
+     {
+	E_Dialog *dia;
+	
+	dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
+	e_dialog_title_set(dia, _("Cannot add icon"));
+	e_dialog_text_set(dia,
+			  _("You tried to drop an icon of an application that<br>"
+			    "does not have a matching application file.<br>"
+			    "<br>"
+			    "The icon cannot be added to IBar."
+			    ));
+	e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+	e_dialog_button_focus_num(dia, 1);
+	e_win_centered_set(dia->win, 1);
+	e_dialog_show(dia);
+	return;
+     }
    /* add dropped element */
    ic = _ibar_icon_pos_find(ibb, ev->x, ev->y);
-
+   if (!ic) return;
+   
    /* remove drag marker */
    e_box_freeze(ibb->box_object);
    e_box_unpack(ibb->drag_object);
