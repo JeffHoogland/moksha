@@ -2665,6 +2665,7 @@ _e_border_del(E_Border *bd)
 	     if (bd->focused)
 	       e_border_focus_set(bd->parent, 1, 1);
 	  }
+	bd->parent = NULL;
      }
    while (bd->transients)
      {
@@ -2687,6 +2688,7 @@ _e_border_del(E_Border *bd)
 	       e_border_focus_set(bd->leader, 1, 1);
 #endif
 	  }
+	bd->leader = NULL;
      }
    while (bd->group)
      {
