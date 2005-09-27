@@ -4847,11 +4847,7 @@ break;
    profiles = e_config_profile_list();
    ENCODE(profiles, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_PROFILE_LIST_REPLY);
-   while (profiles)
-     {
-	free(profiles->data);
-	profiles = evas_list_remove_list(profiles, profiles);
-     }
+   FREE_LIST(profiles);
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -6141,5 +6137,88 @@ break;
      }
    END_INT5_STRING2(v);
 #elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_FOCUS_WHILE_SELECTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-focus-while-selecting-set", 1, "Set winlist (alt+tab) focus while selecting policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_focus_while_selecting = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_focus_while_selecting, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_FOCUS_WHILE_SELECTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-focus-while-selecting-get", 0, "Get winlist (alt+tab) focus while selecting policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_focus_while_selecting, E_IPC_OP_WINLIST_LIST_FOCUS_WHILE_SELECTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_FOCUS_WHILE_SELECTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_WINLIST_LIST_RAISE_WHILE_SELECTING_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-raise-while-selecting-set", 1, "Set winlist (alt+tab) raise while selecting policy", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->winlist_list_raise_while_selecting = policy;
+   E_CONFIG_LIMIT(e_config->winlist_list_raise_while_selecting, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_RAISE_WHILE_SELECTING_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-winlist-list-raise-while-selecting-get", 0, "Get winlist (alt+tab) raise while selecting policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->winlist_list_raise_while_selecting, E_IPC_OP_WINLIST_LIST_RAISE_WHILE_SELECTING_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_WINLIST_LIST_RAISE_WHILE_SELECTING_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
 #endif
 #undef HDL

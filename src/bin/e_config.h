@@ -50,7 +50,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 125
+#define E_CONFIG_FILE_VERSION 126
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -126,6 +126,8 @@ struct _E_Config
    int         winlist_list_show_other_screen_windows;
    int         winlist_list_uncover_while_selecting;
    int         winlist_list_jump_desk_while_selecting;
+   int         winlist_list_focus_while_selecting;
+   int         winlist_list_raise_while_selecting;
    double      winlist_pos_align_x;
    double      winlist_pos_align_y;
    double      winlist_pos_size_w;

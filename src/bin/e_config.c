@@ -308,6 +308,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, winlist_list_show_other_screen_windows, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_uncover_while_selecting, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_jump_desk_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_focus_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_raise_while_selecting, INT); /**/
    E_CONFIG_VAL(D, T, winlist_pos_align_x, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_pos_align_y, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_pos_size_w, DOUBLE); /**/
@@ -430,6 +432,8 @@ e_config_init(void)
 	e_config->winlist_list_show_other_screen_windows = 0;
 	e_config->winlist_list_uncover_while_selecting = 0;
 	e_config->winlist_list_jump_desk_while_selecting = 0;
+	e_config->winlist_list_focus_while_selecting = 1;
+	e_config->winlist_list_raise_while_selecting = 1;
 	e_config->winlist_pos_align_x = 0.5;
 	e_config->winlist_pos_align_y = 0.5;
 	e_config->winlist_pos_size_w = 0.5;

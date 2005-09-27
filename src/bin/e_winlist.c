@@ -553,9 +553,9 @@ _e_winlist_activate(void)
 	     if (!animator)
 	       animator = ecore_animator_add(_e_winlist_animator, NULL);
 	  }
-	if (!ww->border->lock_user_stacking)
+	if ((!ww->border->lock_user_stacking) && (e_config->winlist_list_raise_while_selecting))
 	  e_border_raise(ww->border);
-	if (!ww->border->lock_focus_out)
+	if ((!ww->border->lock_focus_out) && (e_config->winlist_list_focus_while_selecting))
 	  e_border_focus_set(ww->border, 1, 1);
      }
    edje_object_part_text_set(bg_object, "title_text", e_border_name_get(ww->border));
