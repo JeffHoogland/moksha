@@ -1434,7 +1434,7 @@ break;
    DECODE(e_ipc_codec_str_list_dec) {
      FOR(dat) {
        if (dat == l)
-	 printf("REPLY: Listing for \"%s\"\n", (char *)(l->data));
+	 printf("REPLY Listing for \"%s\"\n", (char *)(l->data));
        else
 	 printf("REPLY: \"%s\"\n", (char *)(l->data));
      }
