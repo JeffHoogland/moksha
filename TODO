@@ -8,6 +8,10 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
+  (from a window border) to either the very start or end of the ibar.
+* BUG: some bug if u flip desktops fast enough window s vanish (how the hell
+  can this still happen? we are tracking unmap event counts!)
 * BUG: race condition on winlist activate via keypress and the key grab thus
   missing the alt key raise sometimes.
 * BUG: dnd from konqueror on zone 0 to another konq on zone 1 with xinerama (2
