@@ -4850,7 +4850,6 @@ break;
    SEND_DATA(E_IPC_OP_PROFILE_LIST_REPLY);
    while (profiles)
      {
-	printf("%s\n", profiles->data);
 	free(profiles->data);
 	profiles = evas_list_remove_list(profiles, profiles);
      }
