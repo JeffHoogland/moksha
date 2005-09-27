@@ -13,78 +13,86 @@ E_Pointer *
 e_pointer_window_set(Ecore_X_Window win)
 {
    Evas_Engine_Info_Buffer *einfo;
-   E_Pointer *p;
+   E_Pointer *p = NULL;
    Evas_Object *o;
    int rmethod;
 
-   rmethod = evas_render_method_lookup("buffer");
-   if (!rmethod) return NULL;
-
-   p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
-   if (!p) return NULL;
-
-   p->win = win;
-
-   p->w = e_config->cursor_size;
-   p->h = e_config->cursor_size;
-
-   /* create evas */
-   p->evas = evas_new();
-   evas_output_method_set(p->evas, rmethod);
-   evas_output_size_set(p->evas, p->w, p->h);
-   evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
-   
-   p->pixels = malloc(p->w * p->h * sizeof(int));
-   
-   einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
-   if (einfo)
+   if (e_config->use_e_cursor)
      {
-	einfo->info.depth_type = EVAS_ENGINE_BUFFER_DEPTH_ARGB32;
-	einfo->info.dest_buffer = p->pixels;
-	einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
-	einfo->info.use_color_key = 0;
-	einfo->info.alpha_threshold = 0;
-	einfo->info.func.new_update_region = NULL;
-	einfo->info.func.free_update_region = NULL;
-	evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
-     }
+	rmethod = evas_render_method_lookup("buffer");
+	if (!rmethod) return NULL;
 
-   /* set the pointer edje */
-   o = edje_object_add(p->evas);
-   p->pointer_object = o;
-   if (ecore_x_cursor_color_supported_get())
-     {
-	if (!e_theme_edje_object_set(o,
-				     "base/theme/pointer",
-				     "pointer/enlightenment/default/color"))
-	  e_theme_edje_object_set(o,
-				  "base/theme/pointer",
-				  "pointer/enlightenment/default/mono");
+	p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
+	if (!p) return NULL;
+
+	p->win = win;
+
+	p->w = e_config->cursor_size;
+	p->h = e_config->cursor_size;
+
+	/* create evas */
+	p->evas = evas_new();
+	evas_output_method_set(p->evas, rmethod);
+	evas_output_size_set(p->evas, p->w, p->h);
+	evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
+
+	p->pixels = malloc(p->w * p->h * sizeof(int));
+
+	einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+	if (einfo)
+	  {
+	     einfo->info.depth_type = EVAS_ENGINE_BUFFER_DEPTH_ARGB32;
+	     einfo->info.dest_buffer = p->pixels;
+	     einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
+	     einfo->info.use_color_key = 0;
+	     einfo->info.alpha_threshold = 0;
+	     einfo->info.func.new_update_region = NULL;
+	     einfo->info.func.free_update_region = NULL;
+	     evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
+	  }
+
+	/* set the pointer edje */
+	o = edje_object_add(p->evas);
+	p->pointer_object = o;
+	if (ecore_x_cursor_color_supported_get())
+	  {
+	     if (!e_theme_edje_object_set(o,
+					  "base/theme/pointer",
+					  "pointer/enlightenment/default/color"))
+	       e_theme_edje_object_set(o,
+				       "base/theme/pointer",
+				       "pointer/enlightenment/default/mono");
+	  }
+	else
+	  {
+	     if (!e_theme_edje_object_set(o,
+					  "base/theme/pointer",
+					  "pointer/enlightenment/default/mono"))
+	       e_theme_edje_object_set(o,
+				       "base/theme/pointer",
+				       "pointer/enlightenment/default/color");
+	  }
+
+	/* Create the hotspot object */
+	o = evas_object_rectangle_add(p->evas);
+	p->hot_object = o;
+	evas_object_event_callback_add(o,
+				       EVAS_CALLBACK_MOVE,
+				       _e_pointer_cb_move, p);
+	edje_object_part_swallow(p->pointer_object, "hotspot", o);
+
+	/* init edje */
+	evas_object_move(p->pointer_object, 0, 0);
+	evas_object_resize(p->pointer_object, p->w, p->h);
+	evas_object_show(p->pointer_object);
+
+	_e_pointers = evas_list_append(_e_pointers, p);
      }
    else
      {
-	if (!e_theme_edje_object_set(o,
-				     "base/theme/pointer",
-				     "pointer/enlightenment/default/mono"))
-	  e_theme_edje_object_set(o,
-				  "base/theme/pointer",
-				  "pointer/enlightenment/default/color");
+	ecore_x_window_cursor_set(win,
+				  ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
      }
-
-   /* Create the hotspot object */
-   o = evas_object_rectangle_add(p->evas);
-   p->hot_object = o;
-   evas_object_event_callback_add(o,
-				  EVAS_CALLBACK_MOVE,
-				  _e_pointer_cb_move, p);
-   edje_object_part_swallow(p->pointer_object, "hotspot", o);
-
-   /* init edje */
-   evas_object_move(p->pointer_object, 0, 0);
-   evas_object_resize(p->pointer_object, p->w, p->h);
-   evas_object_show(p->pointer_object);
-
-   _e_pointers = evas_list_append(_e_pointers, p);
    return p;
 }
 

@@ -62,14 +62,7 @@ e_init_init(void)
    ecore_evas_name_class_set(_e_init_ecore_evas, "E", "Init_Window");
    ecore_evas_title_set(_e_init_ecore_evas, "Enlightenment Init");
 
-   if (e_config->use_e_cursor)
-     _e_init_pointer = e_pointer_window_set(_e_init_win);
-   else
-     {
-	_e_init_pointer = NULL;
-	ecore_x_window_cursor_set(_e_init_win,
-				  ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
-     }
+   _e_init_pointer = e_pointer_window_set(_e_init_win);
 
    ecore_evas_raise(_e_init_ecore_evas);
    ecore_evas_show(_e_init_ecore_evas);
