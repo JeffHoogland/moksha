@@ -1490,13 +1490,14 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DIRS_APPEND
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-dirs-list-append", 1, "Append the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+   OP("-dirs-list-append", 2, "Append the directory of type specified by 'OPT2' to the list in 'OPT1'", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   { E_PATH_GET(path, s1)
-     e_path_user_path_append(path, s2);
+   {
+      E_PATH_GET(path, s1)
+      e_path_user_path_append(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)
@@ -1508,13 +1509,14 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DIRS_PREPEND
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-dirs-list-prepend", 1, "Prepend the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+   OP("-dirs-list-prepend", 2, "Prepend the directory of type specified by 'OPT2' to the list in 'OPT1'", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   { E_PATH_GET(path, s1)
-     e_path_user_path_prepend(path, s2);
+   {
+      E_PATH_GET(path, s1)
+      e_path_user_path_prepend(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)
@@ -1526,13 +1528,14 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DIRS_REMOVE
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-dirs-list-remove", 1, "Remove the directory of type specified by 'OPT2 to the list in 'OPT1'", 0, HDL)
+   OP("-dirs-list-remove", 2, "Remove the directory of type specified by 'OPT2' from the list in 'OPT1'", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_2STRING(params[0], params[1], HDL);
 #elif (TYPE == E_WM_IN)
    STRING2(s1, s2, e_2str, HDL);
-   { E_PATH_GET(path, s1)
-     e_path_user_path_remove(path, s2);
+   {
+      E_PATH_GET(path, s1)
+      e_path_user_path_remove(path, s2);
    }
    SAVE;
    END_STRING2(e_2str)
@@ -4828,6 +4831,49 @@ break;
    STRING(s, HDL);
    printf("REPLY: \"%s\"\n", s);
    END_STRING(s);
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-profile-list", 0, "List all existing profiles", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   Evas_List *profiles;
+   profiles = e_config_profile_list();
+   printf("%p\n", profiles);
+   ENCODE(profiles, e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_PROFILE_LIST_REPLY);
+   while (profiles)
+     {
+	printf("%s\n", profiles->data);
+	free(profiles->data);
+	profiles = evas_list_remove_list(profiles, profiles);
+     }
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
 #endif
 #undef HDL
 
