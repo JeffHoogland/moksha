@@ -1,23 +1,142 @@
 # $Id$
 # bash-completion script for enlightenment_remote
 # By Justin Rocha (Xenith)
+# Additions by Sebastian Dransfeld
 
 _enlightenment_remote() {
 	local cur prev opts
 	COMPREPLY=()
 	cur=${COMP_WORDS[COMP_CWORD]}
 	prev=${COMP_WORDS[COMP_CWORD-1]}
+	action=${COMP_WORDS[1]}
 	opts=`enlightenment_remote -h | awk '{print $1}' | grep -v "OPTIONS:" | xargs`
+	CONTEXT="NONE BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY"
+	MODIFIERS="NONE SHIFT| SHIFT CONTROL| CONTROL ALT| ALT WIN| WIN"
+
+
+	case "${action}" in
+	-h|-help|--help)
+		COMPREPLY=($(compgen -W "${opts/-h -help --help}" -- "${cur}"))
+		return 0
+		;;
+	-always-click-to-raise-set| \
+	-border-shade-animate-set| \
+	-edge-flip-set| \
+	-kill-if-close-not-possible-set| \
+	-kill-process-set| \
+	-modal-windows-set| \
+	-move-info-follows-set| \
+	-pass-click-on-set| \
+	-ping-clients-set| \
+	-resize-info-follows-set| \
+	-transient-*-set| \
+	-use-*-set| \
+	-winlist-list-*-set| \
+	-winlist-warp-at-end-set| \
+	-winlist-warp-while-selecting-set)
+		COMPREPLY=($(compgen -W " 0 1" -- "${cur}"))
+		return 0
+		;;
+	-binding-key-add)
+		if [[ ${COMP_CWORD} -eq 2 ]]; then
+			COMPREPLY=($(compgen -W "${CONTEXT}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 3 ]]; then
+			COMPREPLY=()
+		elif [[ ${COMP_CWORD} -eq 4 ]]; then
+			# Find the selected modifiers
+			selected=${cur#\'}
+			selected=$(echo $selected | sed -e 's/\(.*|\)\?.*/\1/')
+			# create updated modifier list
+			if [[ "${selected}" ]]; then
+				for modifier in ${MODIFIERS}; do
+					if ! echo $selected | grep -q $modifier; then
+						curmod="${curmod} ${selected}${modifier}"
+					fi
+				done
+			else
+				curmod=${MODIFIERS}
+			fi
+			
+			COMPREPLY=($(compgen -P "'" -S "'" -W "${curmod}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 5 ]]; then
+			COMPREPLY=($(compgen -W "0 1" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 6 ]]; then
+			COMPREPLY=()
+		elif [[ ${COMP_CWORD} -eq 7 ]]; then
+			COMPREPLY=()
+		fi
+		return 0
+		;;
+	-binding-key-del)
+		context=${COMP_WORDS[2]}
+		key=${COMP_WORDS[3]}
+		modifiers=${COMP_WORDS[4]}
+		modifiers=${modifiers#\'}
+		modifiers=${modifiers%\'}
+		any_mod=${COMP_WORDS[5]}
+		action=${COMP_WORDS[6]}
+		params=${COMP_WORDS[7]}
+		if [[ ${COMP_CWORD} -eq 2 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 3 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 4 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -P "'" -S "'" -W "${binding}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 5 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 6 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 7 ]]; then
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\"${action}\"\s\+PARAMS=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
+		fi
+		return 0
+		;;
+	-border-shade-transition-set)
+		COMPREPLY=($(compgen -W " 0 1 2 3" -- "${cur}"))
+		return 0
+		;;
+	-focus-policy-set)
+		COMPREPLY=($(compgen -W "CLICK MOUSE SLOPPY" -- "${cur}"))
+		return 0
+		;;
+	-focus-setting-set)
+		COMPREPLY=($(compgen -W "NONE NEW_WINDOW NEW_DIALOG NEW_DIALOG_IF_OWNER_FOCUSED" -- "${cur}"))
+		return 0
+		;;
+	-maximize-policy-set)
+		COMPREPLY=($(compgen -W "FULLSCREEN SMART EXPAND FILL" -- "${cur}"))
+		return 0
+		;;
+	-module-enable)
+		modules=$(enlightenment_remote -module-list|grep REPLY:|grep 0$|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${modules}" -- "${cur}"))
+		return 0
+		;;
+	-module-disable)
+		modules=$(enlightenment_remote -module-list|grep REPLY:|grep 1$|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${modules}" -- "${cur}"))
+		return 0
+		;;
+	-module-unload)
+		modules=$(enlightenment_remote -module-list|grep REPLY:|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${modules}" -- "${cur}"))
+		return 0
+		;;
+	-window-placement-policy-set)
+		COMPREPLY=($(compgen -W "SMART CURSOR MANUAL" -- "${cur}"))
+		return 0
+		;;
+	esac
 
 	if [[ "${cur}" == -* ]] || [[ ${COMP_CWORD} -eq 1 ]]; then
     	COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
 	fi
-
-	case "${prev}" in
-		-h|-help|--help)
-			COMPREPLY=($(compgen -W "${opts/-h -help --help}" -- "${cur}"))
-			;;
-	esac		
 }
 complete -F _enlightenment_remote enlightenment_remote
 
