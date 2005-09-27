@@ -318,16 +318,6 @@ e_theme_config_list(void)
    return e_config->themes;
 }
 
-void
-e_theme_about(E_Zone *zone, const char *file)
-{
-   static E_Popup *pop = NULL;
-   
-   if (pop) return;
-   pop = e_popup_new(zone, zone->w / 2, zone->h / 2, 1, 1);
-   e_popup_show(pop);
-}
-
 /* local subsystem functions */
 
 static Evas_Bool
