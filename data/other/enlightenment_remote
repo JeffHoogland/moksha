@@ -76,25 +76,28 @@ _enlightenment_remote() {
 		any_mod=${COMP_WORDS[5]}
 		action=${COMP_WORDS[6]}
 		params=${COMP_WORDS[7]}
+		SIFS=$IFS
+		IFS=$'\n'
 		if [[ ${COMP_CWORD} -eq 2 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=\(\S\+\)\s\+KEY=\"\(\S\+\)\"\s\+MODIFIERS=\(\S\+\)\s\+ANY_MOD=\(\S\+\)\s\+ACTION=\"\(\S\+\)\"\s\+PARAMS=\"\(\S\+\)\".*/'\1 \2 \3 \4 \5 \6'/"|grep -v 'REPLY:')
 			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 3 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"\(\S\+\)\"\s\+MODIFIERS=\(\S\+\)\s\+ANY_MOD=\(\S\+\)\s\+ACTION=\"\(\S\+\)\"\s\+PARAMS=\"\(\S\+\)\".*/'\1 \2 \3 \4 \5'/"|grep -v 'REPLY:')
 			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 4 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=\(\S\+\).*/\1/"|grep -v 'REPLY:')
-			COMPREPLY=($(compgen -P "'" -S "'" -W "${binding}" -- "${cur}"))
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=\(\S\+\)\s\+ANY_MOD=\(\S\+\)\s\+ACTION=\"\(\S\+\)\"\s\+PARAMS=\"\(\S\+\)\".*/'\1 \2 \3 \4'/"|grep -v 'REPLY:')
+			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 5 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=\(\S\+\)\s\+ACTION=\"\(\S\+\)\"\s\+PARAMS=\"\(\S\+\)\".*/'\1 \2 \3'/"|grep -v 'REPLY:')
 			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 6 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\"\(\S\+\)\"\s\+PARAMS=\"\(\S\+\)\".*/'\1 \2'/"|grep -v 'REPLY:')
 			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 7 ]]; then
-			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\"${action}\"\s\+PARAMS=\(\S\+\).*/\1/"|grep -v 'REPLY:')
+			binding=$(enlightenment_remote -binding-key-list|grep 'REPLY:'|sed -e "s/.*CONTEXT=${context}\s\+KEY=\"${key}\"\s\+MODIFIERS=${modifiers}\s\+ANY_MOD=${any_mod}\s\+ACTION=\"${action}\"\s\+PARAMS=\"\(\S\+\)\".*/'\1'/"|grep -v 'REPLY:')
 			COMPREPLY=($(compgen -W "${binding}" -- "${cur}"))
 		fi
+		IFS=$SIFS
 		return 0
 		;;
 	-border-shade-transition-set)
