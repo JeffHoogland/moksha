@@ -4845,7 +4845,6 @@ break;
    LIST_DATA();
    Evas_List *profiles;
    profiles = e_config_profile_list();
-   printf("%p\n", profiles);
    ENCODE(profiles, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_PROFILE_LIST_REPLY);
    while (profiles)
