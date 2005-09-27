@@ -88,6 +88,11 @@ e_focus_event_mouse_down(E_Border* bd)
 	if (!bd->lock_user_stacking)
 	  e_border_raise(bd);
      }
+   else if (e_config->always_click_to_focus)
+     {
+	if (!bd->lock_focus_out)
+	  e_border_focus_set(bd, 1, 1);
+     }
 }
 
 void
@@ -99,7 +104,8 @@ void
 e_focus_event_focus_in(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) &&
-       (!e_config->always_click_to_raise))
+       (!e_config->always_click_to_raise) &&
+       (!e_config->always_click_to_focus))
      {
 	if (!bd->button_grabbed) return;
 	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
@@ -117,7 +123,8 @@ void
 e_focus_event_focus_out(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) &&
-       (!e_config->always_click_to_raise))
+       (!e_config->always_click_to_raise) &&
+       (!e_config->always_click_to_focus))
      {
 	if (bd->button_grabbed) return;
 	ecore_x_window_button_grab(bd->win, 1,
@@ -140,7 +147,8 @@ void
 e_focus_setup(E_Border *bd)
 {
    if ((e_config->focus_policy == E_FOCUS_CLICK) ||
-       (e_config->always_click_to_raise))
+       (e_config->always_click_to_raise) ||
+       (e_config->always_click_to_focus))
      {
 	if (bd->button_grabbed) return;
 	ecore_x_window_button_grab(bd->win, 1,

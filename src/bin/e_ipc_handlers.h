@@ -2854,6 +2854,46 @@ break;
 #undef HDL
 
 /****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_FOCUS_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-always-click-to-focus-set", 1, "Set the always click to focus policy, 1 for enabled 0 for disabled", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(policy, HDL);
+   e_config->always_click_to_focus = policy;
+   E_CONFIG_LIMIT(e_config->always_click_to_focus, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_FOCUS_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-always-click-to-focus-get", 0, "Get the always click to focus policy, 1 for enabled 0 for disabled", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->always_click_to_focus, E_IPC_OP_ALWAYS_CLICK_TO_FOCUS_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ALWAYS_CLICK_TO_FOCUS_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   printf("REPLY: POLICY=%d\n", policy);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
 #define HDL E_IPC_OP_USE_AUTO_RAISE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-use-auto-raise-set", 1, "Set use auto raise policy, 1 for enabled 0 for disabled", 0, HDL)

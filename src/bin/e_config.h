@@ -108,6 +108,7 @@ struct _E_Config
    int         focus_setting;
    int         pass_click_on;
    int         always_click_to_raise;
+   int         always_click_to_focus;
    int         use_auto_raise;
    double      auto_raise_delay;
    int         use_resist;

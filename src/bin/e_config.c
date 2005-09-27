@@ -290,6 +290,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
    E_CONFIG_VAL(D, T, always_click_to_raise, INT); /**/
+   E_CONFIG_VAL(D, T, always_click_to_focus, INT); /**/
    E_CONFIG_VAL(D, T, use_auto_raise, INT); /**/
    E_CONFIG_VAL(D, T, auto_raise_delay, DOUBLE); /**/
    E_CONFIG_VAL(D, T, use_resist, INT); /**/
@@ -411,6 +412,7 @@ e_config_init(void)
 	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
+	e_config->always_click_to_focus = 1;
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
 	e_config->use_resist = 1;
@@ -1364,6 +1366,7 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
    E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
    E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
+   E_CONFIG_LIMIT(e_config->always_click_to_focus, 0, 1);
    E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);
    E_CONFIG_LIMIT(e_config->auto_raise_delay, 0.0, 5.0);
    E_CONFIG_LIMIT(e_config->use_resist, 0, 1);
