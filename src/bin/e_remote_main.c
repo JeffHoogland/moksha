@@ -229,13 +229,16 @@ _e_ipc_cb_server_data(void *data, int type, void *event)
    
    e = event;
    printf("REPLY <- BEGIN\n");
-   switch (e->minor)
+   if (data)
      {
+	switch (e->minor)
+	  {
 #define TYPE  E_REMOTE_IN
 #include      "e_ipc_handlers.h"
 #undef TYPE
-      default:
-	break;
+	   default:
+	      break;
+	  }
      }
    printf("REPLY <- END\n");
    reply_count++;
