@@ -4584,6 +4584,88 @@ break;
 
 /****************************************************************************/
 
+#define HDL E_IPC_OP_MOVE_INFO_VISIBLE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-move-info-visible-set", 1, "Set whether the move dialog should be visible", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->move_info_visible = val;
+   E_CONFIG_LIMIT(e_config->move_info_visible, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MOVE_INFO_VISIBLE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-move-info-visible-get", 0, "Get whether the move dialog should be visible", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->move_info_visible, E_IPC_OP_MOVE_INFO_VISIBLE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MOVE_INFO_VISIBLE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+
+#define HDL E_IPC_OP_RESIZE_INFO_VISIBLE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-resize-info-visible-set", 1, "Set whether the resize dialog should be visible", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->resize_info_visible = val;
+   E_CONFIG_LIMIT(e_config->resize_info_visible, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_RESIZE_INFO_VISIBLE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-resize-info-visible-get", 0, "Set whether the resize dialog should be visible", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->resize_info_visible, E_IPC_OP_RESIZE_INFO_VISIBLE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_RESIZE_INFO_VISIBLE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+   
 #define HDL E_IPC_OP_FOCUS_LAST_FOCUSED_PER_DESKTOP_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-focus-last-focused-per-desktop-set", 1, "Set whether E should remember focused windows when switching desks", 0, HDL)

@@ -327,6 +327,8 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
    E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
    E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
+   E_CONFIG_VAL(D, T, move_info_visible, INT); /**/
+   E_CONFIG_VAL(D, T, resize_info_visible, INT); /**/
    E_CONFIG_VAL(D, T, focus_last_focused_per_desktop, INT); /**/
    E_CONFIG_VAL(D, T, focus_revert_on_hide_or_close, INT); /**/
    E_CONFIG_VAL(D, T, use_e_cursor, INT); /**/
@@ -445,6 +447,8 @@ e_config_init(void)
 	e_config->transition_change = strdup("crossfade");
 	e_config->move_info_follows = 1;
 	e_config->resize_info_follows = 1;
+	e_config->move_info_visible = 1;
+	e_config->resize_info_visible = 1;
 	e_config->focus_last_focused_per_desktop = 1;
 	e_config->focus_revert_on_hide_or_close = 1;
 	e_config->use_e_cursor = 1;
@@ -1393,6 +1397,8 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->ping_clients_wait, 0.0, 120.0);
    E_CONFIG_LIMIT(e_config->move_info_follows, 0, 1);
    E_CONFIG_LIMIT(e_config->resize_info_follows, 0, 1);
+   E_CONFIG_LIMIT(e_config->move_info_visible, 0, 1);
+   E_CONFIG_LIMIT(e_config->resize_info_visible, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_last_focused_per_desktop, 0, 1);
    E_CONFIG_LIMIT(e_config->focus_revert_on_hide_or_close, 0, 1);
    E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);

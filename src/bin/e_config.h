@@ -145,6 +145,8 @@ struct _E_Config
    Evas_List  *remembers;
    int         move_info_follows;
    int         resize_info_follows;
+   int         move_info_visible;
+   int         resize_info_visible;
    int         focus_last_focused_per_desktop;
    int         focus_revert_on_hide_or_close;
    int         use_e_cursor;
