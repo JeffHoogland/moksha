@@ -335,7 +335,7 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	       {
 		  IBar_Icon *ic;
 
-		  if (e_app_valid_exe_get(a))
+		  if (e_app_valid_exe_get(a) || (!a->exe))
 		    {
 		       ic = _ibar_icon_new(ibb, a);
 		       if (ic)
@@ -520,7 +520,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 	     IBar_Icon *ic;
 
 	     a = l->data;
-	     if (e_app_valid_exe_get(a))
+	     if (e_app_valid_exe_get(a) || (!a->exe))
 	       {
 		  ic = _ibar_icon_new(ibb, a);
 	       }

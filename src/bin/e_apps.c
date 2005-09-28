@@ -1520,11 +1520,14 @@ _e_apps_cb_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
    Evas_List *l;
+   E_App_Instance *ai;
    E_App *a;
 
    ev = event;
    if (!ev->exe) return 1;
-   a = _e_app_ecore_exe_find(ev->exe);
+   ai = ecore_exe_data_get(ev->exe);
+   if (!ai) return 1;
+   a = ai->app;
    if (!a) return 1;
 
    if (ev->exit_code == 127) /* /bin/sh uses this if cmd not found */
@@ -1535,25 +1538,10 @@ _e_apps_cb_exit(void *data, int type, void *event)
 			   "\n"
 			   "The command was not found\n"),
 			 a->exe);
-   for (l = a->instances; l; l = l->next)
-     {
-	E_App_Instance *inst;
-
-	inst = l->data;
-	if (ev->exe == inst->exe)
-	  {
-	     if (inst->expire_timer)
-	       {
-		  ecore_timer_del(inst->expire_timer);
-		  inst->expire_timer = NULL;
-	       }
-	     inst->exe = NULL;
-	     a->instances = evas_list_remove_list(a->instances, l);
-	     free(inst);
-	     _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
-	     break;
-	  }
-     }
+   if (ai->expire_timer) ecore_timer_del(ai->expire_timer);
+   free(ai);
+   a->instances = evas_list_remove(a->instances, ai);
+   _e_apps_start_pending = evas_list_remove(_e_apps_start_pending, a);
    _e_app_change(a, E_APP_EXIT);
    return 1;
 }
