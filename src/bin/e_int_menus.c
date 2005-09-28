@@ -634,7 +634,7 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
    /* get the current clients */
    if (root)
      zone = root->zone;
-   for (l = e_border_clients_get(); l; l = l->next)
+   for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *border;
 

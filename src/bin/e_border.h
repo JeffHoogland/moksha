@@ -519,7 +519,7 @@ EAPI E_Border *e_border_focused_get(void);
 
 EAPI void      e_border_idler_before(void);
 
-EAPI Evas_List *e_border_clients_get(void);
+EAPI Evas_List *e_border_client_list(void);
 
 EAPI void e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev);
 EAPI void e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev);

@@ -1933,7 +1933,7 @@ e_border_idler_before(void)
 }
 
 Evas_List *
-e_border_clients_get()
+e_border_client_list()
 {
    /* FIXME: This should be a somewhat ordered list */
    return borders;

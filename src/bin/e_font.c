@@ -79,7 +79,7 @@ e_font_apply(void)
      }
 
    /* Update borders */
-   for (l = e_border_clients_get(); l; l = l->next)
+   for (l = e_border_client_list(); l; l = l->next)
      {
 	E_Border *bd;
 
