@@ -328,7 +328,9 @@ e_theme_config_set(const char *category, const char *file)
    Evas_List *next;
 
    /* Don't accept unused categories */
+#if 0
    if (!e_theme_category_find(category)) return 0;
+#endif
 
    /* search for the category */
    for (next = e_config->themes; next; next = next->next)
