@@ -115,19 +115,28 @@ e_theme_init(void)
  * the desktop... :)
  * 
  * other possible categories...
+ *  e_theme_file_set("base/theme/about", "default.edj");
  *  e_theme_file_set("base/theme/borders", "default.edj");
  *  e_theme_file_set("base/theme/background", "default.edj");
+ *  e_theme_file_set("base/theme/configure", "default.edj");
+ *  e_theme_file_set("base/theme/dialog", "default.edj");
  *  e_theme_file_set("base/theme/menus", "default.edj");
  *  e_theme_file_set("base/theme/error", "default.edj");
  *  e_theme_file_set("base/theme/gadman", "default.edj");
  *  e_theme_file_set("base/theme/dnd", "default.edj");
  *  e_theme_file_set("base/theme/icons", "default.edj");
+ *  e_theme_file_set("base/theme/pointer", "default.edj");
+ *  e_theme_file_set("base/theme/transitions", "default.edj");
+ *  e_theme_file_set("base/theme/widgets", "default.edj");
+ *  e_theme_file_set("base/theme/winlist", "default.edj");
  *  e_theme_file_set("base/theme/modules", "default.edj");
  *  e_theme_file_set("base/theme/modules/pager", "default.edj");
  *  e_theme_file_set("base/theme/modules/ibar", "default.edj");
+ *  e_theme_file_set("base/theme/modules/ibox", "default.edj");
  *  e_theme_file_set("base/theme/modules/clock", "default.edj");
  *  e_theme_file_set("base/theme/modules/battery", "default.edj");
  *  e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
+ *  e_theme_file_set("base/theme/modules/start", "default.edj");
  *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
  */
 
