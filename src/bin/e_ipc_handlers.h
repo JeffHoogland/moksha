@@ -6282,7 +6282,6 @@ break;
 #endif
 #undef HDL
 
-
 /****************************************************************************/
 #define HDL E_IPC_OP_TRANSITION_LIST
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -6301,6 +6300,40 @@ break;
      
 /****************************************************************************/
 #define HDL E_IPC_OP_TRANSITION_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ACTION_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-action-list", 0, "List all available actions", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   ENCODE(e_action_name_list(), e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_ACTION_LIST_REPLY);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_ACTION_LIST_REPLY
 #if (TYPE == E_REMOTE_OPTIONS)
 #elif (TYPE == E_REMOTE_OUT)
 #elif (TYPE == E_WM_IN)

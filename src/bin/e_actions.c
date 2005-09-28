@@ -1143,8 +1143,37 @@ ACT_FN_GO(restart)
    ecore_main_loop_quit();
 }
 
+/***************************************************************************/
+ACT_FN_GO_SIGNAL(cursor)
+{
+   E_Manager *man = NULL;
+   E_Border  *bd = NULL;
+
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE) return;
+
+   bd = (E_Border *)obj;
+   if ((!bd->zone) || (!bd->zone->container)) return;
+   man = bd->zone->container->manager;
+   if (!man) return;
+
+   if (params)
+     {
+	if (!strcmp(params, "end"))
+	  e_pointer_window_default_set(man->pointer, man->root);
+	else
+	  e_pointer_window_set(man->pointer, man->root, params);
+     }
+   else 
+     {
+	e_pointer_window_default_set(man->pointer, man->root);
+     }
+}
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
+static Evas_List *action_names = NULL;
 
 /* externally accessible functions */
 
@@ -1228,6 +1257,8 @@ e_actions_init(void)
 
    ACT_GO(restart);
    ACT_GO(exit);
+
+   ACT_GO_SIGNAL(cursor);
    
    return 1;
 }
@@ -1235,6 +1266,7 @@ e_actions_init(void)
 int
 e_actions_shutdown(void)
 {
+   action_names = evas_list_free(action_names);
    if (actions)
      {
 	evas_hash_foreach(actions, _e_actions_cb_free, NULL);
@@ -1242,6 +1274,12 @@ e_actions_shutdown(void)
 	actions = NULL;
      }
    return 1;
+}
+
+Evas_List *
+e_action_name_list(void)
+{
+   return action_names;
 }
 
 E_Action *
@@ -1256,6 +1294,7 @@ e_action_add(char *name)
 	if (!act) return NULL;
 	act->name = strdup(name);
 	actions = evas_hash_add(actions, name, act);
+	action_names = evas_list_append(action_names, name);
      }
    return act;
 }
@@ -1275,6 +1314,7 @@ static void
 _e_action_free(E_Action *act)
 {
    actions = evas_hash_del(actions, act->name, act);
+   action_names = evas_list_remove(action_names, act->name);
    E_FREE(act->name);
    free(act);
 }
