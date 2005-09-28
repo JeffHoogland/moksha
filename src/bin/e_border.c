@@ -2532,11 +2532,6 @@ _e_border_free(E_Border *bd)
 	ecore_timer_del(bd->ping_timer);
 	bd->ping_timer = NULL;
      }
-   if (bd->raise_timer)
-     {
-	ecore_timer_del(bd->raise_timer);
-	bd->raise_timer = NULL;
-     }
    while (bd->pending_move_resize)
      {
 	free(bd->pending_move_resize->data);
@@ -2640,10 +2635,11 @@ _e_border_del(E_Border *bd)
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
    _e_border_menus_del(bd);
-/*   
-   if (!bd->dangling_ref_check)
-     bd->dangling_ref_check = ecore_timer_add(1.0, _e_border_del_dangling_ref_check, bd);
- */
+   if (bd->raise_timer)
+     {
+	ecore_timer_del(bd->raise_timer);
+	bd->raise_timer = NULL;
+     }
    if (!bd->already_unparented)
      {
 	ecore_x_window_reparent(bd->client.win,
