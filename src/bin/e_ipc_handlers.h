@@ -189,6 +189,9 @@ break;
 #define END_RESPONSE(__res, __type) \
    } \
    ecore_event_add(__type, __res, NULL, NULL);
+#define END_RESPONSE_CALLBACK(__res, __type, __callback) \
+   } \
+   ecore_event_add(__type, __res, __callback, NULL);
 
 # define SAVE e_config_save_queue()
 
@@ -947,15 +950,7 @@ break;
 	 r->modules[count] = md;
 	 count++;
       }
-      END_RESPONSE(r, E_RESPONSE_MODULE_LIST);
-#if 0
-      if (r->count)
-	{
-	   for (count = 0; count < r->count; count++)
-	     free(r->modules[count]);
-	   free(r->modules);
-	}
-#endif
+      END_RESPONSE_CALLBACK(r, E_RESPONSE_MODULE_LIST, _e_cb_module_list_free);
    }
    END_GENERIC();
 #endif
@@ -1492,10 +1487,7 @@ break;
 	res = E_RESPONSE_MODULE_DIRS_LIST;
       else if (!strcmp(type, "backgrounds"))
 	res = E_RESPONSE_BACKGROUND_DIRS_LIST;
-      END_RESPONSE(r, res);
-#if 0
-      if (r->dirs) free(r->dirs);
-#endif
+      END_RESPONSE_CALLBACK(r, res, _e_cb_dir_list_free);
    }
    END_GENERIC();
 #endif
