@@ -408,7 +408,7 @@ _e_int_menus_apps_scan(E_Menu *m)
 	  {
 	     a = l->data;
 	     
-             if (e_app_valid_exe_get(a))
+             if (e_app_valid_exe_get(a) || (!a->exe))
 	       {
 		  mi = e_menu_item_new(m);
 		  e_menu_item_label_set(mi, a->name);
