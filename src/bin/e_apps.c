@@ -1020,9 +1020,15 @@ e_app_dir_file_list_get(E_App *a)
 int
 e_app_valid_exe_get(E_App *a)
 {
+   char *exe;
+   int ok = 1;
+
    if (!a->exe) return 0;
-//   if (!ecore_file_app_installed(a->exe)) return 0;
-   return 1;
+   exe = ecore_file_app_exe_get(a->exe);
+   if (!exe) return 0;
+   ok = ecore_file_app_installed(exe);
+   free(exe);
+   return ok;
 }
 
 
