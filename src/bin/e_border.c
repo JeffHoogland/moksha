@@ -2082,6 +2082,12 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 {
    Evas_Object *o;
    E_App *a = NULL;
+   
+   if (bd->app)
+     {
+	e_object_unref(E_OBJECT(bd->app));
+	bd->app = NULL;
+     }
 
    o = NULL;
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
