@@ -635,6 +635,62 @@ ACT_FN_GO(window_drag_icon)
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_desk_move_by)
+{
+   E_Border *bd;
+   int x, y;
+
+   if (!params) return;
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+       obj = E_OBJECT(e_border_focused_get());
+       if (!obj) return;
+     }
+
+   bd = (E_Border *)obj;
+   if ((!bd->zone) || (!bd->desk)) return;
+   if (sscanf(params, "%d %d", &x, &y) == 2)
+     {
+	E_Desk *desk;
+	int dx, dy;
+
+	e_desk_xy_get(bd->desk, &dx, &dy);
+	desk = e_desk_at_xy_get(bd->zone, dx + x, dy + y);
+	if (desk)
+	  e_border_desk_set(bd, desk);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_desk_move_to)
+{
+   E_Border *bd;
+   int x, y;
+
+   if (!params) return;
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+       obj = E_OBJECT(e_border_focused_get());
+       if (!obj) return;
+     }
+
+   bd = (E_Border *)obj;
+   if ((!bd->zone) || (!bd->desk)) return;
+   if (sscanf(params, "%d %d", &x, &y) == 2)
+     {
+	E_Desk *desk;
+
+	desk = e_desk_at_xy_get(bd->zone, x, y);
+	if (desk)
+	  e_border_desk_set(bd, desk);
+     }
+}
+
+/***************************************************************************/
 static E_Zone *
 _e_actions_zone_get(E_Object *obj)
 {
@@ -1209,6 +1265,9 @@ e_actions_init(void)
    ACT_GO(window_resize_by);
    
    ACT_GO(window_drag_icon);
+
+   ACT_GO(window_desk_move_by);
+   ACT_GO(window_desk_move_to);
 
    ACT_GO(menu_show);
    ACT_GO_MOUSE(menu_show);
