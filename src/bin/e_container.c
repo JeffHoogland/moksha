@@ -122,8 +122,6 @@ e_container_new(E_Manager *man)
    evas_object_data_set(o, "e_container", con);
    evas_object_show(o);
    
-   con->pointer.root = e_pointer_window_set(con->manager->root);
-
    con->num = container_num;
    container_num++;
    snprintf(name, sizeof(name), _("Container %d"), con->num);
@@ -948,8 +946,6 @@ _e_container_free(E_Container *con)
 {
    Evas_List *l, *tmp;
    int i;
-
-   if (con->pointer.root) e_object_del(E_OBJECT(con->pointer.root));
 
    ecore_x_window_del(con->event_win);
     /* We can't use e_object_del here, because border adds a ref to itself

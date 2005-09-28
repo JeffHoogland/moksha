@@ -27,7 +27,7 @@ struct _E_Pointer
    } hot;
 };
 
-EAPI E_Pointer *e_pointer_window_set(Ecore_X_Window win);
+EAPI E_Pointer *e_pointer_window_new(Ecore_X_Window win);
 EAPI void       e_pointers_size_set(int size);
 EAPI void       e_pointer_idler_before(void);
 

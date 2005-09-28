@@ -10,7 +10,7 @@ static void _e_pointer_free(E_Pointer *p);
 
 /* externally accessible functions */
 E_Pointer *
-e_pointer_window_set(Ecore_X_Window win)
+e_pointer_window_new(Ecore_X_Window win)
 {
    Evas_Engine_Info_Buffer *einfo;
    E_Pointer *p = NULL;

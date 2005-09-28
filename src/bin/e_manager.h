@@ -22,6 +22,8 @@ struct _E_Manager
    Ecore_X_Window       root;
    Evas_List           *handlers;
    Evas_List           *containers;
+
+   E_Pointer           *pointer;
 };
 
 EAPI int        e_manager_init(void);

@@ -54,10 +54,6 @@ struct _E_Container
       Ecore_X_Window win;
       Evas_List *clients;
    } layers[7];
-
-   struct {
-	E_Pointer *root;
-   } pointer;
 };
 
 struct _E_Border_List

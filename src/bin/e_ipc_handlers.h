@@ -4988,8 +4988,16 @@ break;
    REQ_INT(atoi(params[0]), HDL);
 #elif (TYPE == E_WM_IN)
    START_INT(val, HDL);
+   Evas_List *ml;
    e_config->use_e_cursor = val;
    E_CONFIG_LIMIT(e_config->use_e_cursor, 0, 1);
+   for (ml = e_manager_list(); ml; ml = ml->next)
+     {
+	E_Manager *man;
+	man = ml->data;
+	if (man->pointer) e_object_del(E_OBJECT(man->pointer));
+	man->pointer = e_pointer_window_new(man->root);
+     }
    SAVE;
    END_INT;
 #elif (TYPE == E_REMOTE_IN)

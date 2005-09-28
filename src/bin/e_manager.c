@@ -119,6 +119,8 @@ e_manager_new(Ecore_X_Window root, int num)
    h = ecore_event_handler_add(ECORE_X_EVENT_PING, _e_manager_cb_ping, man);
    if (h) man->handlers = evas_list_append(man->handlers, h);
 
+   man->pointer = e_pointer_window_new(man->root);
+
    return man;
 }
 
@@ -444,6 +446,7 @@ _e_manager_free(E_Manager *man)
      {
 	ecore_x_window_del(man->win);
      }
+   if (man->pointer) e_object_del(E_OBJECT(man->pointer));
    managers = evas_list_remove(managers, man);   
    free(man);
 }
