@@ -32,6 +32,8 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
+* return from ipc if the command failed or not
+* ipc should give more feedback wheter the options are accepted or not.
 * emit signal to submenu entries if they have a submenu shown for them or not
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
