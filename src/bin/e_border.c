@@ -2107,6 +2107,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	  {
 	     edje_object_file_set(o, a->path, "icon");
 	     bd->app = a;
+	     e_object_ref(E_OBJECT(bd->app));
 	  }
      }
    else if (bd->client.netwm.icons)
@@ -2505,6 +2506,11 @@ _e_border_free(E_Border *bd)
      {
 	e_object_unref(E_OBJECT(bd->cur_mouse_action));
 	bd->cur_mouse_action = NULL;
+     }
+   if (bd->app)
+     {
+	e_object_unref(E_OBJECT(bd->app));
+	bd->app = NULL;
      }
    
    E_FREE(bd->shape_rects);
@@ -7178,6 +7184,9 @@ _e_border_app_change(void *data, E_App *app, E_App_Change change)
 	bd = l->data;
 	if (e_app_equals(bd->app, app))
 	  {
+	     e_object_unref(E_OBJECT(bd->app));
+	     bd->app = NULL;
+
 	     bd->changes.icon = 1;
 	     bd->changed = 1;
 	  }

@@ -626,7 +626,7 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
    for (l = _e_apps_list; l; l = l->next)
      {
 	E_App *a;
-	
+
 	a = l->data;
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
