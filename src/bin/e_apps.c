@@ -1021,7 +1021,8 @@ int
 e_app_valid_exe_get(E_App *a)
 {
    if (!a->exe) return 0;
-   if (!ecore_file_app_installed(a->exe)) return 0;
+//   if (!ecore_file_app_installed(a->exe)) return 0;
+   return 1;
 }
 
 

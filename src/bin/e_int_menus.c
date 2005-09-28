@@ -408,22 +408,25 @@ _e_int_menus_apps_scan(E_Menu *m)
 	  {
 	     a = l->data;
 	     
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, a->name);
-	     if (a->exe)
+             if (e_app_valid_exe_get(a))
 	       {
-		  e_menu_item_icon_edje_set(mi, a->path, "icon");
-		  e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
-		  app_count++;
-	       }
-	     else
-	       {
-		  char buf[4096];
-		  
-		  snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
-		  e_menu_item_icon_edje_set(mi, buf, "icon");
-		  e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
-		  app_count++;
+		  mi = e_menu_item_new(m);
+		  e_menu_item_label_set(mi, a->name);
+		  if (a->exe)
+		    {
+		       e_menu_item_icon_edje_set(mi, a->path, "icon");
+		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
+		       app_count++;
+		    }
+		  else
+		    {
+		       char buf[4096];
+		       
+		       snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
+		       e_menu_item_icon_edje_set(mi, buf, "icon");
+		       e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
+		       app_count++;
+		    }
 	       }
 	  }
      }

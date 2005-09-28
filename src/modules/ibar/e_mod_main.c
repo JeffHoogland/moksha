@@ -335,18 +335,21 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 	       {
 		  IBar_Icon *ic;
 
-		  ic = _ibar_icon_new(ibb, a);
-		  if (ic)
+		  if (e_app_valid_exe_get(a))
 		    {
-		       for (ll = ib->apps->subapps; ll; ll = ll->next)
+		       ic = _ibar_icon_new(ibb, a);
+		       if (ic)
 			 {
-			    E_App *a2;
-
-			    a2 = ll->data;
-			    ic = _ibar_icon_find(ibb, a2);
-			    if (ic) _ibar_icon_reorder_after(ic, NULL);
+			    for (ll = ib->apps->subapps; ll; ll = ll->next)
+			      {
+				 E_App *a2;
+				 
+				 a2 = ll->data;
+				 ic = _ibar_icon_find(ibb, a2);
+				 if (ic) _ibar_icon_reorder_after(ic, NULL);
+			      }
+			    _ibar_bar_frame_resize(ibb);
 			 }
-		       _ibar_bar_frame_resize(ibb);
 		    }
 	       }
 	     break;
@@ -517,7 +520,10 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 	     IBar_Icon *ic;
 
 	     a = l->data;
-	     ic = _ibar_icon_new(ibb, a);
+	     if (e_app_valid_exe_get(a))
+	       {
+		  ic = _ibar_icon_new(ibb, a);
+	       }
 	  }
      }
    ibb->align_req = 0.5;
