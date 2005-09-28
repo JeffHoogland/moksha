@@ -373,7 +373,7 @@ e_app_new(const char *path, int scan_subdirs)
 		  e_app_fields_fill(a, path);
 		  
 		  /* no exe field.. not valid. drop it */
-		  if (!a->exe)
+		  if ((!a->exe) || (!ecore_file_app_installed(a->exe)))
 		    goto error;
 	       }
 	     else
@@ -1368,24 +1368,41 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
      {
 	if (event == ECORE_FILE_EVENT_MODIFIED)
 	  {
-	     E_App *a2;
+	     E_App *a;
 
-	     a2 = _e_app_subapp_file_find(app, file);
-	     if (a2)
+	     a = _e_app_subapp_file_find(app, file);
+	     if (a)
 	       {
 		  Evas_List *l;
 
-		  e_app_fields_empty(a2);
-		  e_app_fields_fill(a2, path);
-		  _e_app_change(a2, E_APP_CHANGE);
-
-		  for (l = a2->references; l; l = l->next)
+		  e_app_fields_empty(a);
+		  e_app_fields_fill(a, path);
+		  if ((!a->exe) || (!ecore_file_app_installed(a->exe)))
 		    {
-		       E_App *a3;
+		       a->deleted = 1;
+		       for (l = a->references; l;)
+			 {
+			    E_App *a2;
 
-		       a3 = l->data;
-		       if (_e_app_copy(a3, a2))
-			 _e_app_change(a3, E_APP_CHANGE);
+			    a2 = l->data;
+			    l = l->next;
+			    if (a2->parent)
+			      _e_app_subdir_rescan(a2->parent);
+			 }
+		       _e_app_subdir_rescan(app);
+		    }
+		  else
+		    {
+		       _e_app_change(a, E_APP_CHANGE);
+
+		       for (l = a->references; l; l = l->next)
+			 {
+			    E_App *a2;
+
+			    a2 = l->data;
+			    if (_e_app_copy(a2, a))
+			      _e_app_change(a2, E_APP_CHANGE);
+			 }
 		    }
 	       }
 	  }
