@@ -52,7 +52,6 @@ static int       _e_app_copy               (E_App *dst, E_App *src);
 static void      _e_app_save_order         (E_App *app);
 static int       _e_app_cb_event_border_add(void *data, int type, void *event);
 static int       _e_app_cb_expire_timer    (void *data);
-static E_App    *_e_app_ecore_exe_find     (Ecore_Exe *exe);
 static void      _e_app_cache_copy         (E_App_Cache *ac, E_App *a);
 static int       _e_app_cb_scan_cache_timer(void *data);
 static E_App    *_e_app_cache_new          (E_App_Cache *ac, char *path, int scan_subdirs);
@@ -1602,29 +1601,6 @@ _e_app_cb_expire_timer(void *data)
    _e_app_change(a, E_APP_READY_EXPIRE);
    return 0;
 }
-
-static E_App *
-_e_app_ecore_exe_find(Ecore_Exe *exe)
-{
-   Evas_List *l, *l2;
-
-   for (l = _e_apps_start_pending; l; l = l->next)
-     {
-	E_App *a;
-
-	a = l->data;
-	for (l2 = a->instances; l2; l2 = l2->next)
-	  {
-	     E_App_Instance *inst;
-
-	     inst = l2->data;
-	     if (inst->exe == exe)
-	       return a;
-	  }
-     }
-   return NULL;
-}
-
 
 static void
 _e_app_cache_copy(E_App_Cache *ac, E_App *a)
