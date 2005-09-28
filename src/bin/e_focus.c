@@ -36,6 +36,7 @@ e_focus_event_mouse_in(E_Border* bd)
 	if (!bd->lock_focus_out)
 	  e_border_focus_set(bd, 1, 1);
      }
+   if (bd->raise_timer) ecore_timer_del(bd->raise_timer);
    bd->raise_timer = NULL;
    if (e_config->use_auto_raise)
      {
