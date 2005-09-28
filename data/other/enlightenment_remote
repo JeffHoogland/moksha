@@ -10,10 +10,6 @@
 # -binding-wheel-add, -binding-wheel-del
 # -desktop-bg-add, -desktop-bg-del
 # -desktop-name-add, -desktop-name-del
-# -exec-action
-#
-# Add in enlightenment_remote
-# -action-list
 
 _enlightenment_remote() {
 	local cur prev opts
@@ -78,7 +74,8 @@ _enlightenment_remote() {
 		elif [[ ${COMP_CWORD} -eq 5 ]]; then
 			COMPREPLY=($(compgen -W "0 1" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 6 ]]; then
-			COMPREPLY=()
+			actions=$(enlightenment_remote -action-list|grep REPLY:|awk '{print $2}')
+			COMPREPLY=($(compgen -W "${actions}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 7 ]]; then
 			COMPREPLY=()
 		fi
@@ -156,6 +153,15 @@ _enlightenment_remote() {
 	-display)
 		displays=$(/bin/ls $HOME/.ecore/enlightenment-\(*\)/0|sed -e 's+.*enlightenment-(\(.*\))/.*+\1+')
 		COMPREPLY=($(compgen -W "${displays}" -- "${cur}"))
+		return 0
+		;;
+	-exec-action)
+		if [[ ${COMP_CWORD} -eq 2 ]]; then
+			actions=$(enlightenment_remote -action-list|grep REPLY:|awk '{print $2}')
+			COMPREPLY=($(compgen -W "${actions}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 3 ]]; then
+			COMPREPLY=()
+		fi
 		return 0
 		;;
 	-focus-policy-set)
