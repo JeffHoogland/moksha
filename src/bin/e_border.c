@@ -2102,6 +2102,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	if (!e_util_edje_icon_list_set(o, a->icon_class))
 	  {
 	     edje_object_file_set(o, a->path, "icon");
+	     bd->app = a;
 	  }
      }
    else if (bd->client.netwm.icons)
@@ -6158,7 +6159,6 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 {
    E_Menu *m;
    E_Menu_Item *mi;
-   E_App *a;
 
    if (bd->border_menu) return;
 
@@ -6472,16 +6472,12 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	else title = bd->client.icccm.title;
 	mi = e_menu_item_new(m);
 	e_menu_item_separator_set(mi, 1);
-	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-						    bd->client.icccm.class,
-						    title,
-						    bd->client.icccm.window_role);
-	if (a)
+	if (bd->app)
 	  {
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, a->path);
-	     e_menu_item_icon_edje_set(mi, a->path, "icon");
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app);
+	     e_menu_item_icon_edje_set(mi, bd->app->path, "icon");
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
 	  {
