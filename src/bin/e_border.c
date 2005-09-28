@@ -109,6 +109,8 @@ static int  _e_border_cb_ping_timer(void *data);
 static int  _e_border_cb_kill_timer(void *data);
 
 static char *_e_border_winid_str_get(Ecore_X_Window win);
+
+static void _e_border_app_change(void *data, E_App *app, E_App_Change change);
     
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -170,6 +172,8 @@ e_border_init(void)
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
    handlers = evas_list_append(handlers, ecore_event_handler_add(E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL));
+
+   e_app_change_callback_add(_e_border_app_change, NULL);
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
    E_EVENT_BORDER_REMOVE = ecore_event_type_new();
@@ -7162,3 +7166,20 @@ _e_border_winid_str_get(Ecore_X_Window win)
    return id;
 }
 
+static void
+_e_border_app_change(void *data, E_App *app, E_App_Change change)
+{
+   Evas_List *l;
+   
+   for (l = borders; l; l = l->next)
+     {
+	E_Border *bd;
+
+	bd = l->data;
+	if (e_app_equals(bd->app, app))
+	  {
+	     bd->changes.icon = 1;
+	     bd->changed = 1;
+	  }
+     }
+}
