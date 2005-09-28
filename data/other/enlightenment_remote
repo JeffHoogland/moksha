@@ -25,7 +25,6 @@ _enlightenment_remote() {
 	CONTEXT="NONE BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY"
 	MODIFIERS="NONE SHIFT| SHIFT CONTROL| CONTROL ALT| ALT WIN| WIN"
 	DIRS="data images fonts themes init icons modules backgrounds"
-	THEME_CATEGORIES="theme"
 
 
 	case "${action}" in
@@ -222,16 +221,23 @@ _enlightenment_remote() {
 		return 0
 		;;
 	-theme-get|-theme-remove)
-		COMPREPLY=($(compgen -W "${THEME_CATEGORIES}" -- "${cur}"))
+		theme_categories=$(enlightenment_remote -theme-category-list|grep REPLY:|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${theme_categories}" -- "${cur}"))
 		return 0
 		;;
 	-theme-set)
 		if [[ ${COMP_CWORD} -eq 2 ]]; then
-			COMPREPLY=($(compgen -W "${THEME_CATEGORIES}" -- "${cur}"))
+			theme_categories=$(enlightenment_remote -theme-category-list|grep REPLY:|awk '{print $2}')
+			COMPREPLY=($(compgen -W "${theme_categories}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 3 ]]; then
 			# TODO Add filename expansion, and only match dirs and .edj files
 			COMPREPLY=()
 		fi
+		return 0
+		;;
+	-transition-*-set)
+		transitions=$(enlightenment_remote -transition-list|grep REPLY:|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${transitions}" -- "${cur}"))
 		return 0
 		;;
 	-window-placement-policy-set)
