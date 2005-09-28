@@ -13,10 +13,15 @@ struct _E_Theme_Result
 };
 
 static Evas_Bool _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static void      _e_theme_category_register(const char *category);
+static void      _e_theme_transition_register(const char *transition);
 
 /* local subsystem globals */
 static Evas_Hash *mappings = NULL;
 static Evas_Hash *group_cache = NULL;
+
+static Evas_List *categories = NULL;
+static Evas_List *transitions = NULL;
 
 /* externally accessible functions */
 
@@ -24,6 +29,8 @@ int
 e_theme_init(void)
 {
    Evas_List *l;
+   E_Theme_Result *res;
+   char *category, *p;
    
    /* this is a fallback that is ALWAYS there - if all fails things will */
    /* always fall back to the default theme. the rest after this are config */
@@ -39,6 +46,66 @@ e_theme_init(void)
 	snprintf(buf, sizeof(buf), "base/%s", et->category);
 	e_theme_file_set(buf, et->file);
      }
+
+   /* Find transitions */
+   category = strdup("base/theme/transitions");
+   if (category)
+     {
+	do
+	  {
+	     res = evas_hash_find(mappings, category);
+	     if (res)
+	       {
+		  char *str;
+
+		  /* if found check cached path */
+		  str = res->cache;
+		  if (!str)
+		    {
+		       /* no cached path */
+		       str = res->file;
+		       /* if its not an absolute path find it */
+		       if (str[0] != '/')
+			 str = e_path_find(path_themes, str);
+		       /* save cached value */
+		       if (str) res->cache = str;
+		    }
+		  if (str)
+		    {
+		       Evas_List *coll, *l;
+		       coll = edje_file_collection_list(str);
+		       if (coll)
+			 {
+			    for (l = coll; l; l = l->next)
+			      {
+				 if (!strncmp(l->data, "transitions", 11))
+				   {
+				      char *trans;
+
+				      trans = strdup(l->data);
+				      p = strchr(trans, '/');
+				      if (p)
+					{
+					   p++;
+					   _e_theme_transition_register(p);
+					}
+				      free(trans);
+				   }
+			      }
+			    edje_file_collection_list_free(coll);
+			 }
+		    }
+	       }
+	     p = strrchr(category, '/');
+	     if (p) *p = 0;
+	  }
+	while (p);
+	free(category);
+     }
+
+   return 1;
+}
+
 /*
  * this is used to sewt the theme for a CATEGORY of e17. "base" is always set
  * to the default theme - because if a selected theme for lest say base/theme
@@ -63,8 +130,6 @@ e_theme_init(void)
  *  e_theme_file_set("base/theme/modules/cpufreq", "default.edj");
  *  e_theme_file_set("base/theme/modules/temperature", "default.edj");
  */
- return 1;
-}
 
 int
 e_theme_shutdown(void)
@@ -80,6 +145,16 @@ e_theme_shutdown(void)
 	evas_hash_free(group_cache);
 	group_cache = NULL;
      }
+   while (categories)
+     {
+	free(categories->data);
+	categories = evas_list_remove_list(categories, categories);
+     }
+   while (transitions)
+     {
+	free(transitions->data);
+	transitions = evas_list_remove_list(transitions, transitions);
+     }
    return 1;
 }
 
@@ -91,6 +166,7 @@ e_theme_edje_object_set(Evas_Object *o, char *category, char *group)
    char *p;
 
    /* find category -> edje mapping */
+   _e_theme_category_register(category);
    res = evas_hash_find(mappings, category);
    if (res)
      {
@@ -156,6 +232,7 @@ e_theme_edje_file_get(char *category, char *group)
    char *p;
 
    /* find category -> edje mapping */
+   _e_theme_category_register(category);
    res = evas_hash_find(mappings, category);
    if (res)
      {
@@ -230,6 +307,7 @@ e_theme_file_set(char *category, char *file)
 	evas_hash_free(group_cache);
 	group_cache = NULL;
      }
+   _e_theme_category_register(category);
    res = evas_hash_find(mappings, category);
    if (res)
      {
@@ -243,11 +321,14 @@ e_theme_file_set(char *category, char *file)
    mappings = evas_hash_add(mappings, category, res);
 }
 
-void
+int
 e_theme_config_set(const char *category, const char *file)
 {
    E_Config_Theme *ect;
    Evas_List *next;
+
+   /* Don't accept unused categories */
+   if (!e_theme_category_find(category)) return 0;
 
    /* search for the category */
    for (next = e_config->themes; next; next = next->next)
@@ -257,7 +338,7 @@ e_theme_config_set(const char *category, const char *file)
 	  {
 	     E_FREE(ect->file);
 	     ect->file = strdup(file);
-	     return;
+	     return 1;
 	  }
      }
 
@@ -267,6 +348,7 @@ e_theme_config_set(const char *category, const char *file)
    ect->file = strdup(file);
    
    e_config->themes = evas_list_append(e_config->themes, ect);
+   return 1;
 }
 
 /*
@@ -290,7 +372,7 @@ e_theme_config_get(const char *category)
    return NULL;
 }
 
-void
+int
 e_theme_config_remove(const char *category)
 {
    E_Config_Theme *ect;
@@ -307,15 +389,54 @@ e_theme_config_remove(const char *category)
 	     E_FREE(ect->category);
 	     E_FREE(ect->file);
 	     E_FREE(ect);
-	     return;
+	     return 1;
 	  }
     }
+   return 1;
 }
 
 Evas_List *
 e_theme_config_list(void)
 {
    return e_config->themes;
+}
+
+int
+e_theme_category_find(const char *category)
+{
+   Evas_List *l;
+
+   for (l = categories; l; l = l->next)
+     {
+	if (!strcmp(category, l->data))
+	  return 1;
+     }
+   return 0;
+}
+
+Evas_List *
+e_theme_category_list(void)
+{
+   return categories;
+}
+
+int
+e_theme_transition_find(const char *transition)
+{
+   Evas_List *l;
+
+   for (l = transitions; l; l = l->next)
+     {
+	if (!strcmp(transition, l->data))
+	  return 1;
+     }
+   return 0;
+}
+
+Evas_List *
+e_theme_transition_list(void)
+{
+   return transitions;
 }
 
 /* local subsystem functions */
@@ -330,4 +451,32 @@ _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fd
    E_FREE(res->cache);
    free(res);
    return 1;
+}
+
+static void
+_e_theme_category_register(const char *category)
+{
+   Evas_List *l;
+
+   for (l = categories; l; l = l->next)
+     {
+	if (!strcmp(category, l->data))
+	  return;
+     }
+
+   categories = evas_list_append(categories, strdup(category));
+}
+
+static void
+_e_theme_transition_register(const char *transition)
+{
+   Evas_List *l;
+
+   for (l = transitions; l; l = l->next)
+     {
+	if (!strcmp(transition, l->data))
+	  return;
+     }
+
+   transitions = evas_list_append(transitions, strdup(transition));
 }

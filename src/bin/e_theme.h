@@ -13,10 +13,15 @@ EAPI int         e_theme_edje_object_set(Evas_Object *o, char *category, char *g
 EAPI const char *e_theme_edje_file_get(char *category, char *group);
 EAPI void        e_theme_file_set(char *category, char *file);
 
-EAPI void	 e_theme_config_set(const char *category, const char *file);
+EAPI int             e_theme_config_set(const char *category, const char *file);
 EAPI E_Config_Theme *e_theme_config_get(const char *category);
-EAPI void	 e_theme_config_remove(const char *category);
-EAPI Evas_List	*e_theme_config_list(void);
+EAPI int             e_theme_config_remove(const char *category);
+EAPI Evas_List      *e_theme_config_list(void);
+
+EAPI int        e_theme_category_find(const char *category);
+EAPI Evas_List *e_theme_category_list(void);
+EAPI int        e_theme_transition_find(const char *transition);
+EAPI Evas_List *e_theme_transition_list(void);
     
 #endif
 #endif
