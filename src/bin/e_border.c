@@ -7176,7 +7176,7 @@ _e_border_app_change(void *data, E_App *app, E_App_Change change)
 	E_Border *bd;
 
 	bd = l->data;
-	if ((bd->app) && (e_app_equals(bd->app, app)))
+	if (e_app_equals(bd->app, app))
 	  {
 	     bd->changes.icon = 1;
 	     bd->changed = 1;
