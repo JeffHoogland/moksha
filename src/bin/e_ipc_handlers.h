@@ -947,7 +947,13 @@ break;
 	 r->modules[count] = md;
 	 count++;
       }
-      END_RESPONSE(r, E_RESPONSE_MODULE_LIST); /* FIXME - need a custom free */
+      END_RESPONSE(r, E_RESPONSE_MODULE_LIST);
+      if (r->count)
+	{
+	   for (count = 0; count < r->count; count++)
+	     free(r->modules[count]);
+	   free(r->modules);
+	}
    }
    END_GENERIC();
 #endif
@@ -961,6 +967,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
+   /* TODO: Check if file exists */
    E_FREE(e_config->desktop_default_background);
    e_config->desktop_default_background = strdup(s);
    e_bg_update();
@@ -1159,6 +1166,7 @@ break;
    REQ_2STRING_INT(params[0], params[1], atoi(params[2]), HDL) 
 #elif (TYPE == E_WM_IN)
    STRING2_INT(text_class, font_name, font_size, e_2str_int, HDL);
+   /* TODO: Check if font_name (and text_class?) exists */
    e_font_default_set(text_class, font_name, font_size);
    SAVE;   
    END_STRING2_INT(e_2str_int);
@@ -1336,6 +1344,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
+   /* TODO: Check if language exists */
    E_FREE(e_config->language);
    e_config->language = strdup(s);
    if ((e_config->language) && (strlen(e_config->language) > 0))
@@ -1481,7 +1490,8 @@ break;
 	res = E_RESPONSE_MODULE_DIRS_LIST;
       else if (!strcmp(type, "backgrounds"))
 	res = E_RESPONSE_BACKGROUND_DIRS_LIST;
-      END_RESPONSE(r, res); /* FIXME - need a custom free */
+      END_RESPONSE(r, res);
+      if (r->dirs) free(r->dirs);
    }
    END_GENERIC();
 #endif
@@ -4231,9 +4241,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   E_FREE(e_config->transition_start);
-   e_config->transition_start = strdup(s);
-   SAVE;
+   if (e_theme_transition_find(s))
+     {
+	E_FREE(e_config->transition_start);
+	e_config->transition_start = strdup(s);
+	SAVE;
+     }
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -4272,9 +4285,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   E_FREE(e_config->transition_desk);
-   e_config->transition_desk = strdup(s);
-   SAVE;
+   if (e_theme_transition_find(s))
+     {
+	E_FREE(e_config->transition_desk);
+       	e_config->transition_desk = strdup(s);
+       	SAVE;
+     }
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -4313,9 +4329,12 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
-   E_FREE(e_config->transition_change);
-   e_config->transition_change = strdup(s);
-   SAVE;
+   if (e_theme_transition_find(s))
+     {
+       	E_FREE(e_config->transition_change);
+       	e_config->transition_change = strdup(s);
+       	SAVE;
+     }
    END_STRING(s);
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -4476,6 +4495,7 @@ break;
    REQ_2STRING(params[0], params[1], HDL) 
 #elif (TYPE == E_WM_IN)
    STRING2(category, file, e_2str, HDL);
+   /* TODO: Check if category is sane and file exists */
    e_theme_config_set(category, file);
    SAVE;   
    END_STRING2(e_2str);
@@ -4799,6 +4819,7 @@ break;
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
+   /* TODO: Check if profile exists (or create profile?) */
    e_config_save_flush();
    e_config_profile_set(s);
    e_config_profile_save();
@@ -6230,3 +6251,73 @@ break;
    END_INT;
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_THEME_CATEGORY_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-theme-category-list", 0, "List all available theme categories", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   ENCODE(e_theme_category_list(), e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_THEME_CATEGORY_LIST_REPLY);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_THEME_CATEGORY_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
+
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-transition-list", 0, "List all available transitions", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   ENCODE(e_theme_transition_list(), e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_TRANSITION_LIST_REPLY);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_TRANSITION_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL
+
