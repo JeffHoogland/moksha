@@ -363,6 +363,7 @@ e_app_exec(E_App *a, int launch_id)
 			    a->exe);
 	return 0;
      }
+   ecore_exe_tag_set(exe, "E/app");
    inst->app = a;
    inst->exe = exe;
    inst->launch_id = launch_id;
@@ -1525,6 +1526,8 @@ _e_apps_cb_exit(void *data, int type, void *event)
 
    ev = event;
    if (!ev->exe) return 1;
+   if (!(ecore_exe_tag_get(ev->exe) && 
+	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/app")))) return 1;
    ai = ecore_exe_data_get(ev->exe);
    if (!ai) return 1;
    a = ai->app;
