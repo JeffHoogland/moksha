@@ -2605,7 +2605,6 @@ _e_border_free(E_Border *bd)
    e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
    ecore_x_window_del(bd->win);
 
-   e_container_border_remove(bd);
    borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->client.win), bd);
    borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->bg_win), bd);
    borders_hash = evas_hash_del(borders_hash, _e_border_winid_str_get(bd->win), bd);
@@ -2666,7 +2665,7 @@ _e_border_del(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
      }
 
-   /* TODO: Should this be here or in _e_border_free? */
+   e_container_border_remove(bd);
    if (bd->parent)
      {
 	bd->parent->transients = evas_list_remove(bd->parent->transients, bd);
