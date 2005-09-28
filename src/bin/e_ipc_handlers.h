@@ -948,12 +948,14 @@ break;
 	 count++;
       }
       END_RESPONSE(r, E_RESPONSE_MODULE_LIST);
+#if 0
       if (r->count)
 	{
 	   for (count = 0; count < r->count; count++)
 	     free(r->modules[count]);
 	   free(r->modules);
 	}
+#endif
    }
    END_GENERIC();
 #endif
@@ -1491,7 +1493,9 @@ break;
       else if (!strcmp(type, "backgrounds"))
 	res = E_RESPONSE_BACKGROUND_DIRS_LIST;
       END_RESPONSE(r, res);
+#if 0
       if (r->dirs) free(r->dirs);
+#endif
    }
    END_GENERIC();
 #endif
