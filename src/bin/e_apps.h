@@ -72,37 +72,37 @@ struct _E_App_Instance
    Ecore_Timer *expire_timer;
 };
 
-EAPI int    e_app_init(void);
-EAPI int    e_app_shutdown(void);
+EAPI int         e_app_init                              (void);
+EAPI int         e_app_shutdown                          (void);
 
-EAPI E_App *e_app_new(const char *path, int scan_subdirs);
-EAPI int    e_app_is_parent(E_App *parent, E_App *app);
-EAPI int    e_app_equals(E_App *app1, E_App *app2);
-EAPI void   e_app_subdir_scan(E_App *a, int scan_subdirs);
-EAPI int    e_app_exec(E_App *a, int launch_id);
-EAPI int    e_app_starting_get(E_App *a);
-EAPI int    e_app_running_get(E_App *a);
-EAPI void   e_app_prepend_relative(E_App *add, E_App *before);
-EAPI void   e_app_append(E_App *add, E_App *parent);
-EAPI void   e_app_files_prepend_relative(Evas_List *files, E_App *before);
-EAPI void   e_app_files_append(Evas_List *files, E_App *parent);
-EAPI void   e_app_remove(E_App *remove);
+EAPI E_App      *e_app_new                               (const char *path, int scan_subdirs);
+EAPI int         e_app_is_parent                         (E_App *parent, E_App *app);
+EAPI int         e_app_equals                            (E_App *app1, E_App *app2);
+EAPI void        e_app_subdir_scan                       (E_App *a, int scan_subdirs);
+EAPI int         e_app_exec                              (E_App *a, int launch_id);
+EAPI int         e_app_starting_get                      (E_App *a);
+EAPI int         e_app_running_get                       (E_App *a);
+EAPI void        e_app_prepend_relative                  (E_App *add, E_App *before);
+EAPI void        e_app_append                            (E_App *add, E_App *parent);
+EAPI void        e_app_files_prepend_relative            (Evas_List *files, E_App *before);
+EAPI void        e_app_files_append                      (Evas_List *files, E_App *parent);
+EAPI void        e_app_remove                            (E_App *a);
     
-EAPI void   e_app_change_callback_add(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
-EAPI void   e_app_change_callback_del(void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
+EAPI void        e_app_change_callback_add               (void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
+EAPI void        e_app_change_callback_del               (void (*func) (void *data, E_App *a, E_App_Change ch), void *data);
 
-EAPI E_App *e_app_launch_id_pid_find(int launch_id, pid_t pid);
-EAPI E_App *e_app_window_name_class_title_role_find(const char *name, const char *class,
-						    const char *title, const char *role);
-EAPI E_App *e_app_file_find(char *file);
-EAPI E_App *e_app_name_find(char *name);
-EAPI E_App *e_app_generic_find(char *generic);
-EAPI E_App *e_app_exe_find(char *exe);
+EAPI E_App      *e_app_launch_id_pid_find                (int launch_id, pid_t pid);
+EAPI E_App      *e_app_window_name_class_title_role_find (const char *name, const char *class, const char *title, const char *role);
+EAPI E_App      *e_app_file_find                         (char *file);
+EAPI E_App      *e_app_name_find                         (char *name);
+EAPI E_App      *e_app_generic_find                      (char *generic);
+EAPI E_App      *e_app_exe_find                          (char *exe);
 
-EAPI void e_app_fields_fill(E_App *a, const char *path);
-EAPI E_App *e_app_raw_new(void);
-EAPI Ecore_List *e_app_dir_file_list_get(E_App *a);
-EAPI void e_app_fields_empty(E_App *a);
+EAPI void        e_app_fields_fill                       (E_App *a, const char *path);
+EAPI E_App      *e_app_raw_new                           (void);
+EAPI Ecore_List *e_app_dir_file_list_get                 (E_App *a);
+EAPI void        e_app_fields_empty                      (E_App *a);
+EAPI int         e_app_valid_exe_get                     (E_App *a);
     
 #endif
 #endif
