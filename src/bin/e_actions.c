@@ -1143,34 +1143,6 @@ ACT_FN_GO(restart)
    ecore_main_loop_quit();
 }
 
-/***************************************************************************/
-ACT_FN_GO_SIGNAL(cursor)
-{
-   E_Manager *man = NULL;
-   E_Border  *bd = NULL;
-
-   if (!obj) obj = E_OBJECT(e_border_focused_get());
-   if (!obj) return;
-   if (obj->type != E_BORDER_TYPE) return;
-
-   bd = (E_Border *)obj;
-   if ((!bd->zone) || (!bd->zone->container)) return;
-   man = bd->zone->container->manager;
-   if (!man) return;
-
-   if (params)
-     {
-	if (!strcmp(params, "end"))
-	  e_pointer_window_default_set(man->pointer, man->root);
-	else
-	  e_pointer_window_set(man->pointer, man->root, params);
-     }
-   else 
-     {
-	e_pointer_window_default_set(man->pointer, man->root);
-     }
-}
-
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 static Evas_List *action_names = NULL;
@@ -1257,8 +1229,6 @@ e_actions_init(void)
 
    ACT_GO(restart);
    ACT_GO(exit);
-
-   ACT_GO_SIGNAL(cursor);
    
    return 1;
 }
