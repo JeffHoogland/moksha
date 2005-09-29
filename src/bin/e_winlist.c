@@ -81,6 +81,10 @@ e_winlist_show(E_Zone *zone)
    
    if (winlist) return 0;
 
+   input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
+   ecore_x_window_show(input_window);
+   e_grabinput_get(input_window, 0, input_window);
+
    w = (double)zone->w * e_config->winlist_pos_size_w;
    if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
    else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
@@ -142,9 +146,6 @@ e_winlist_show(E_Zone *zone)
    evas_event_thaw(winlist->evas);
    _e_winlist_size_adjust();
 
-   input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
-   ecore_x_window_show(input_window);
-   e_grabinput_get(input_window, 0, input_window);
    handlers = evas_list_append
      (handlers, ecore_event_handler_add
       (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
