@@ -72,6 +72,11 @@ _e_xinerama_clean(void)
      {
 	chosen_screens = evas_list_remove_list(chosen_screens, chosen_screens);
      }
+   while (fake_screens)
+     {
+	free(fake_screens->data);
+	fake_screens = evas_list_remove_list(fake_screens, fake_screens);
+     }
 }
 
 static void
