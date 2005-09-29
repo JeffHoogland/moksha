@@ -158,7 +158,12 @@ e_module_new(char *name)
 	snprintf(title, sizeof(title), _("Enlightenment %s Module"), _(m->api->name));
 
 	_e_module_dialog_disable_show(title, body, m);
-
+	m->api = NULL;
+	m->func.init = NULL;
+	m->func.shutdown = NULL;
+	m->func.save = NULL;
+	m->func.info = NULL;
+	m->func.about = NULL;
 	dlclose(m->handle);
 	m->handle = NULL;
 	m->error = 1;
