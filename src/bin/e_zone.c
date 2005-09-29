@@ -27,6 +27,8 @@ int E_EVENT_POINTER_WARP = 0;
 #define E_ZONE_FLIP_DOWN(zone) (((zone)->desk_y_current + 1) < (zone)->desk_y_count)
 #define E_ZONE_FLIP_LEFT(zone) ((zone)->desk_x_current > 0)
 
+static int startup_id = 0;
+
 int
 e_zone_init(void)
 {
@@ -39,6 +41,9 @@ e_zone_init(void)
 int
 e_zone_shutdown(void)
 {
+   char buf[256];
+   snprintf(buf, sizeof(buf), "%i", startup_id);
+   e_util_env_set("E_STARTUP_ID", buf);
    return 1;
 }
 
@@ -527,7 +532,6 @@ e_zone_flip_win_restore(void)
 int
 e_zone_app_exec(E_Zone *zone, E_App *a)
 {
-   static int startup_id = 1;
    int ret;
    char *p1, *p2;
    char *penv_display;
@@ -536,6 +540,14 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    char buf[4096], buf2[32];
    
    if (!a) return 0;
+   if (!startup_id)
+     {
+	p1 = getenv("E_STARTUP_ID");
+	if (p1)
+	  startup_id = atoi(p1);
+     }
+   else
+     startup_id = 1;
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
@@ -581,11 +593,11 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    e_util_env_set("LD_PRELOAD_PATH", buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_hack.so", e_prefix_lib_get());
  */
-   if (startup_id < 1) startup_id = 1;
-   snprintf(buf, sizeof(buf), "E_START|%i", startup_id++);
+   snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
    /* execute */
    ret = e_app_exec(a, startup_id);
+   if (++startup_id < 1) startup_id = 1;
  
    /* reset env vars */
    if (penv_display)
