@@ -1691,7 +1691,7 @@ _ibar_bar_cb_drop_border(void *data, const char *type, void *event)
 						 title, bd->client.icccm.window_role);
    if (!app)
      {
-	app = e_app_launch_id_pid_find(bd->client.netwm.e_start_launch_id,
+	app = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
 				       bd->client.netwm.pid);
      }
    if (!app)

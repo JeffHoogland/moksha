@@ -1519,7 +1519,6 @@ static int
 _e_apps_cb_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
-   Evas_List *l;
    E_App_Instance *ai;
    E_App *a;
 
@@ -1557,14 +1556,14 @@ _e_app_cb_event_border_add(void *data, int type, void *event)
    E_App_Instance *inst;
    
    ev = event;
-   if (ev->border->client.netwm.e_start_launch_id <= 0) return 1;
+   if (ev->border->client.netwm.startup_id <= 0) return 1;
    for (l = _e_apps_start_pending; l; l = l->next)
      {
 	a = l->data;
 	for (ll = a->instances; ll; ll = ll->next)
 	  {
 	     inst = ll->data;
-	     if (inst->launch_id == ev->border->client.netwm.e_start_launch_id)
+	     if (inst->launch_id == ev->border->client.netwm.startup_id)
 	       {
 		  if (inst->expire_timer)
 		    {

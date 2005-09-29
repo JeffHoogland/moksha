@@ -403,12 +403,13 @@ e_hints_window_init(E_Border *bd)
 	    ((bd->client.icccm.client_leader > 0) && ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
 	    )
 	  {
+	     printf("launch_id: %s %s\n", e_border_name_get(bd), str);
 	     if (!strncmp(str, "E_START|", 8))
 	       {
 		  int id;
 		  
 		  id = atoi(str + 8);
-		  if (id > 0) bd->client.netwm.e_start_launch_id = id;
+		  if (id > 0) bd->client.netwm.startup_id = id;
 	       }
 	     free(str);
 	  }

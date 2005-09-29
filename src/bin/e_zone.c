@@ -527,7 +527,8 @@ e_zone_flip_win_restore(void)
 int
 e_zone_app_exec(E_Zone *zone, E_App *a)
 {
-   static int launch_id = 1;
+   static int startup_id = 1;
+   int ret;
    char *p1, *p2;
    char *penv_display;
    char *penv_ld_preload;
@@ -574,19 +575,17 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    e_util_env_set("E_CONTAINER", buf);
    snprintf(buf, sizeof(buf), "%i", zone->container->manager->num);
    e_util_env_set("E_MANAGER", buf);
-   snprintf(buf, sizeof(buf), "%i", launch_id);
+   snprintf(buf, sizeof(buf), "%i", startup_id);
    e_util_env_set("E_LAUNCH_ID", buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/preload", e_prefix_lib_get());
    e_util_env_set("LD_PRELOAD_PATH", buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_hack.so", e_prefix_lib_get());
  */
-   snprintf(buf, sizeof(buf), "E_START|%i", launch_id);
+   snprintf(buf, sizeof(buf), "E_START|%i", startup_id++);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
-   if (launch_id == 0) launch_id = 1;
    /* execute */
-   if (!e_app_exec(a, launch_id)) launch_id = 0;
-   launch_id++;
-   
+   ret = e_app_exec(a, startup_id);
+ 
    /* reset env vars */
    if (penv_display)
      {
@@ -605,7 +604,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	free(penv_ld_preload_path);
      }
  */
-   return launch_id;
+   return ret;
 }
 
 /* local subsystem functions */

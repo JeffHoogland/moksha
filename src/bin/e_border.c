@@ -2103,7 +2103,7 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      }
    if (!a)
      {
-	a = e_app_launch_id_pid_find(bd->client.netwm.e_start_launch_id,
+	a = e_app_launch_id_pid_find(bd->client.netwm.startup_id,
 				     bd->client.netwm.pid);
      }
    if (a)

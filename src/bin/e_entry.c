@@ -69,8 +69,6 @@ static Evas_Smart *e_entry_smart = NULL;
 
 Evas_Object *e_entry_add (Evas *evas)
 {
-   Evas_Object *o;
-   
    if (!e_entry_smart)
    {
       e_entry_smart = evas_smart_new("e_entry",
