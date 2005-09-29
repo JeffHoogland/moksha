@@ -581,6 +581,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    e_util_env_set("LD_PRELOAD_PATH", buf);
    snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_hack.so", e_prefix_lib_get());
  */
+   if (startup_id < 1) startup_id = 1;
    snprintf(buf, sizeof(buf), "E_START|%i", startup_id++);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
    /* execute */
