@@ -3,6 +3,8 @@
  */
 #include "e.h"
 
+static E_Dialog *exit_dialog = NULL;
+
 #define INITS 
 #define ACT_GO(name) \
    { \
@@ -1167,29 +1169,40 @@ ACT_FN_GO(edit_mode_toggle)
 }
 
 /***************************************************************************/
+
 static void
 _e_actions_cb_exit_dialog_ok(void *data, E_Dialog *dia)
 {
    ecore_main_loop_quit();
+   e_object_del(E_OBJECT(exit_dialog));
+   exit_dialog = NULL;
+}
+
+static void
+_e_actions_cb_exit_dialog_cancel(void *data, E_Dialog *dia)
+{
+   e_object_del(E_OBJECT(exit_dialog));
+   exit_dialog = NULL;
 }
 
 ACT_FN_GO(exit)
 {
-   E_Dialog *dia;
-      
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
-   e_dialog_title_set(dia, _("Are you sure you want to exit?"));
-   e_dialog_text_set(dia,
+   if (exit_dialog) e_object_del(E_OBJECT(exit_dialog));
+   exit_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()));
+   if (!exit_dialog) return;
+   e_dialog_title_set(exit_dialog, _("Are you sure you want to exit?"));
+   e_dialog_text_set(exit_dialog,
 		     _("You requested to exit Enlightenment.<br>"
 		       "<br>"
 		       "Are you sure you want to exit?"
 		       ));
-   e_dialog_icon_set(dia, "enlightenment/exit", 64);
-   e_dialog_button_add(dia, _("Yes"), NULL, _e_actions_cb_exit_dialog_ok, NULL);
-   e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
-   e_dialog_button_focus_num(dia, 1);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
+   e_dialog_icon_set(exit_dialog, "enlightenment/exit", 64);
+   e_dialog_button_add(exit_dialog, _("Yes"), NULL,
+		       _e_actions_cb_exit_dialog_ok, _e_actions_cb_exit_dialog_cancel);
+   e_dialog_button_add(exit_dialog, _("No"), NULL, NULL, NULL);
+   e_dialog_button_focus_num(exit_dialog, 1);
+   e_win_centered_set(exit_dialog->win, 1);
+   e_dialog_show(exit_dialog);
 }
 
 /***************************************************************************/
