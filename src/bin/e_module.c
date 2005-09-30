@@ -174,7 +174,7 @@ init_done:
 
    _e_modules = evas_list_append(_e_modules, m);
    m->name = strdup(name);
-   s = ecore_file_get_dir(modpath);
+   s = modpath ? ecore_file_get_dir(modpath) : NULL;
    if (s)
      {
 	m->dir = ecore_file_get_dir(s);
