@@ -93,7 +93,7 @@ static void        _tilebuf_free_render_rects(Evas_List *rects);
 E_Module_Api e_modapi = 
 {
    E_MODULE_API_VERSION,
-   _("Dropshadow")
+   "Dropshadow"
 };
 
 void *
