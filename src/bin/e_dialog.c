@@ -85,6 +85,8 @@ e_dialog_new(E_Container *con)
    mask = 0;
    evas_object_key_grab(o, "Return", mask, ~mask, 0);
    mask = 0;
+   evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   mask = 0;
    evas_object_key_grab(o, "space", mask, ~mask, 0);
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_dialog_cb_key_down, dia);
@@ -348,6 +350,7 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 	  }
      }
    else if (((!strcmp(ev->keyname, "Return")) || 
+	     (!strcmp(ev->keyname, "KP_Enter")) || 
 	     (!strcmp(ev->keyname, "space"))) && dia->focused)
      {
 	E_Dialog_Button *db;
