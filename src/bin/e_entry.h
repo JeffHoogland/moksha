@@ -17,3 +17,16 @@ void e_editable_text_cursor_show(Evas_Object *object);
 void e_editable_text_cursor_hide(Evas_Object *object);
 
 Evas_Object *e_entry_add(Evas *evas);
+void e_entry_text_set (Evas_Object *entry, const char *text);
+void e_entry_text_insert (Evas_Object *entry, const char *text);
+void e_entry_delete_char_before(Evas_Object *object);
+void e_entry_delete_char_after(Evas_Object *object);
+void e_entry_cursor_move_at_start(Evas_Object *object);
+void e_entry_cursor_move_at_end(Evas_Object *object);
+void e_entry_cursor_move_left(Evas_Object *object);
+void e_entry_cursor_move_right(Evas_Object *object);
+void e_entry_cursor_show(Evas_Object *object);
+void e_entry_cursor_hide(Evas_Object *object);
+
+    
+    
