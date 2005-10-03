@@ -434,6 +434,7 @@ main(int argc, char **argv)
               str[size] = 0;
               free(v);
               printf("%s\n", str);
+              free(str);
           }
      }
    if (get_generic)
@@ -454,6 +455,7 @@ main(int argc, char **argv)
               str[size] = 0;
               free(v);
               printf("%s\n", str);
+              free(str);
           }
      }
    if (get_comment)
@@ -474,6 +476,7 @@ main(int argc, char **argv)
               str[size] = 0;
               free(v);
               printf("%s\n", str);
+              free(str);
           }
      }
    if (get_exe)
@@ -486,6 +489,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_win_name)
@@ -498,6 +502,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_win_class)
@@ -510,6 +515,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_win_title)
@@ -522,6 +528,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_win_role)
@@ -534,6 +541,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_icon_class)
@@ -546,6 +554,7 @@ main(int argc, char **argv)
              str[size] = 0;
              free(v);
              printf("%s\n", str);
+             free(str);
           }
      }
    if (get_startup_notify)
