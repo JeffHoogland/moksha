@@ -42,6 +42,12 @@ e_canvas_engine_decide(int engine)
 	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_GL_X11))
 	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
      }
+   if (engine == E_EVAS_ENGINE_XRENDER_X11)
+     {
+	/* if we dont - fall back to software x11 */
+	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
+	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
+     }
    return engine;
 }
 
@@ -101,8 +107,10 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     Ecore_X_Window *subwin_ret)
 {
    Ecore_Evas *ee;
+   int engine;
    
-   if (e_canvas_engine_decide(engine_hint) == E_EVAS_ENGINE_GL_X11)
+   engine = e_canvas_engine_decide(engine_hint);
+   if (engine == E_EVAS_ENGINE_GL_X11)
      {
 	ee = ecore_evas_gl_x11_new(NULL, win, x, y, w, h);
 	if (ee)
@@ -113,7 +121,7 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
 	     if (subwin_ret) *subwin_ret = ecore_evas_gl_x11_subwindow_get(ee);
 	  }
      }
-   else if (e_canvas_engine_decide(engine_hint) == E_EVAS_ENGINE_XRENDER_X11)
+   else if (engine == E_EVAS_ENGINE_XRENDER_X11)
      {
 	ee = ecore_evas_xrender_x11_new(NULL, win, x, y, w, h);
 	if (ee)

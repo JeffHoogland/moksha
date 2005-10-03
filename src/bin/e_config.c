@@ -1343,6 +1343,7 @@ e_config_init(void)
 	  }
 	e_config_save_queue();
      }
+//   e_config->evas_engine_default = E_EVAS_ENGINE_XRENDER_X11;
 //   e_config->evas_engine_container = E_EVAS_ENGINE_GL_X11;
 
 // TESTING OPTIONS
