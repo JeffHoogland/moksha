@@ -6473,7 +6473,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	  {
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app);
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app->path);
 	     e_menu_item_icon_edje_set(mi, bd->app->path, "icon");
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
@@ -6583,7 +6583,6 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    full = malloc(strlen(file) + strlen(command) + 1);
    strcpy(full, command);
    strcat(full, file);
-//   printf("EXEC %s\n", full);
    process = ecore_exe_run(full, NULL);
    if (!process || !ecore_exe_pid_get(process))
      e_error_dialog_show(_("Icon Edit Error"),
