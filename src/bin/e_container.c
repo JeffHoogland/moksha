@@ -88,24 +88,12 @@ e_container_new(E_Manager *man)
      {
 	con->win = con->manager->win;
      }
-   if (e_canvas_engine_decide(e_config->evas_engine_container) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	con->bg_ecore_evas = ecore_evas_gl_x11_new(NULL, con->win, 0, 0, con->w, con->h);
-	ecore_evas_gl_x11_direct_resize_set(con->bg_ecore_evas, 1);
-	ecore_evas_override_set(con->bg_ecore_evas, 1);
-	con->bg_win = ecore_evas_gl_x11_window_get(con->bg_ecore_evas);
-     }
-   else
-     {
-	con->bg_ecore_evas = ecore_evas_software_x11_new(NULL, con->win, 0, 0, con->w, con->h);
-	ecore_evas_software_x11_direct_resize_set(con->bg_ecore_evas, 1);
-	ecore_evas_override_set(con->bg_ecore_evas, 1);
-	con->bg_win = ecore_evas_software_x11_window_get(con->bg_ecore_evas);
-     }
+   con->bg_ecore_evas = e_canvas_new(e_config->evas_engine_container, con->win,
+				     0, 0, con->w, con->h, 1, 1,
+				     &(con->bg_win), NULL);
+   e_canvas_add(con->bg_ecore_evas);
    con->event_win = ecore_x_window_input_new(con->bg_win, 0, 0, con->w, con->h);
    ecore_x_window_show(con->event_win);
-   e_canvas_add(con->bg_ecore_evas);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
    ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");

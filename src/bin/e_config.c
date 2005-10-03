@@ -408,6 +408,8 @@ e_config_init(void)
 	e_config->evas_engine_errors = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_popups = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_win = E_EVAS_ENGINE_DEFAULT;
+	e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
 	e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
 	e_config->focus_policy = E_FOCUS_MOUSE;

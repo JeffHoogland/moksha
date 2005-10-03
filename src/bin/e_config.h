@@ -55,6 +55,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
 #define E_EVAS_ENGINE_GL_X11       2
+#define E_EVAS_ENGINE_XRENDER_X11  3
 
 struct _E_Config
 {
@@ -86,6 +87,8 @@ struct _E_Config
    int         evas_engine_errors;
    int         evas_engine_popups;
    int         evas_engine_drag;
+   int         evas_engine_win;
+   int         evas_engine_zone;
    char       *language;
    Evas_List  *modules;
    Evas_List  *font_fallbacks;

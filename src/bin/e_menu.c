@@ -1157,23 +1157,9 @@ _e_menu_realize(E_Menu *m)
    
    if (m->realized) return;
    m->realized = 1;
-   if (e_canvas_engine_decide(e_config->evas_engine_menus) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	m->ecore_evas = ecore_evas_gl_x11_new(NULL, m->zone->container->win, 
-					      m->cur.x, m->cur.y, 
-					      m->cur.w, m->cur.h);
-	ecore_evas_gl_x11_direct_resize_set(m->ecore_evas, 1);
-	m->evas_win = ecore_evas_gl_x11_window_get(m->ecore_evas);
-     }
-   else
-     {
-	m->ecore_evas = ecore_evas_software_x11_new(NULL, m->zone->container->win, 
-						    m->cur.x, m->cur.y, 
-						    m->cur.w, m->cur.h);
-	ecore_evas_software_x11_direct_resize_set(m->ecore_evas, 1);
-	m->evas_win = ecore_evas_software_x11_window_get(m->ecore_evas);
-     }
+   m->ecore_evas = e_canvas_new(e_config->evas_engine_menus, m->zone->container->win,
+				m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
+				&(m->evas_win), NULL);
    e_canvas_add(m->ecore_evas);
    m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);

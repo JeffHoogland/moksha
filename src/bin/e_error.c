@@ -70,24 +70,12 @@ e_error_message_manager_show(E_Manager *man, char *title, char *txt)
    error_h = 200;
    x = (man->w - error_w) / 2;
    y = (man->h - error_h) / 2;
-   if (e_canvas_engine_decide(e_config->evas_engine_errors) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	ee = ecore_evas_gl_x11_new(NULL, man->win, x, y, error_w, error_h);
-	ecore_evas_gl_x11_direct_resize_set(ee, 1);
-	ecore_evas_override_set(ee, 1);
-	win = ecore_evas_gl_x11_window_get(ee);
-	e_container_window_raise(con, win, 999);
-     }
-   else
-     {
-	ee = ecore_evas_software_x11_new(NULL, man->win, x, y, error_w, error_h);
-	ecore_evas_software_x11_direct_resize_set(ee, 1);
-	ecore_evas_override_set(ee, 1);
-	win = ecore_evas_software_x11_window_get(ee);
-	e_container_window_raise(con, win, 999);
-     }
+   ee = e_canvas_new(e_config->evas_engine_errors, man->win,
+		     x, y, error_w, error_h, 1, 0,
+		     &win, NULL);
    e_canvas_add(ee);
+   ecore_evas_override_set(ee, 1);
+   e_container_window_raise(con, win, 999);
 
    ecore_evas_name_class_set(ee, "E", "Low_Level_Dialog");
    ecore_evas_title_set(ee, "Enlightenment: Low Level Dialog");

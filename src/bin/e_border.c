@@ -226,23 +226,9 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_focus_setup(bd);
-   if (e_canvas_engine_decide(e_config->evas_engine_borders) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	bd->bg_ecore_evas = ecore_evas_gl_x11_new(NULL, bd->win,
-						  0, 0, bd->w, bd->h);
-	ecore_evas_gl_x11_direct_resize_set(bd->bg_ecore_evas, 1);
-	bd->bg_win = ecore_evas_gl_x11_window_get(bd->bg_ecore_evas);
-	bd->bg_subwin = ecore_evas_gl_x11_subwindow_get(bd->bg_ecore_evas);
-     }
-   else
-     {
-	bd->bg_ecore_evas = ecore_evas_software_x11_new(NULL, bd->win,
-							0, 0, bd->w, bd->h);
-	ecore_evas_software_x11_direct_resize_set(bd->bg_ecore_evas, 1);
-	bd->bg_win = ecore_evas_software_x11_window_get(bd->bg_ecore_evas);
-	bd->bg_subwin = ecore_evas_software_x11_subwindow_get(bd->bg_ecore_evas);
-     }
+   bd->bg_ecore_evas = e_canvas_new(e_config->evas_engine_borders, bd->win,
+				    0, 0, bd->w, bd->h, 1, 0,
+				    &(bd->bg_win), &(bd->bg_subwin));
    e_canvas_add(bd->bg_ecore_evas);
    bd->event_win = ecore_x_window_input_new(bd->win, 0, 0, bd->w, bd->h);
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);

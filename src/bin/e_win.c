@@ -43,24 +43,15 @@ e_win_new(E_Container *con)
    win->container = con;
    /* TODO: Maybe use an own config for windows? */
    win->engine = e_canvas_engine_decide(e_config->evas_engine_errors);
-   if (win->engine == E_EVAS_ENGINE_GL_X11)
-     {
-	win->ecore_evas = ecore_evas_gl_x11_new(NULL, con->manager->root,
-						0, 0, 1, 1);
-	win->evas_win = ecore_evas_gl_x11_window_get(win->ecore_evas);
-     }
-   else
-     {
-	win->ecore_evas = ecore_evas_software_x11_new(NULL, con->manager->root,
-						      0, 0, 1, 1);
-	win->evas_win = ecore_evas_software_x11_window_get(win->ecore_evas);
-     }
+   win->ecore_evas =  e_canvas_new(e_config->evas_engine_win, con->manager->root,
+				   0, 0, 1, 1, 0, 0,
+				   &(win->evas_win), NULL);
+   e_canvas_add(win->ecore_evas);
    ecore_evas_data_set(win->ecore_evas, "E_Win", win);
    ecore_evas_callback_move_set(win->ecore_evas, _e_win_cb_move);
    ecore_evas_callback_resize_set(win->ecore_evas, _e_win_cb_resize);
    ecore_evas_callback_delete_request_set(win->ecore_evas, _e_win_cb_delete);
    win->evas = ecore_evas_get(win->ecore_evas);
-   e_canvas_add(win->ecore_evas);
    ecore_evas_name_class_set(win->ecore_evas, "E", "_e_internal_window");
    ecore_evas_title_set(win->ecore_evas, "E");
    win->x = 0;

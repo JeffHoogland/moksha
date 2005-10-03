@@ -57,27 +57,9 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
    pop->w = w;
    pop->h = h;
    pop->layer = 250;
-   if (e_canvas_engine_decide(e_config->evas_engine_popups) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	pop->ecore_evas = ecore_evas_gl_x11_new(NULL,
-						pop->zone->container->win,
-						pop->zone->x + pop->x,
-						pop->zone->y + pop->y,
-						pop->w, pop->h);
-	ecore_evas_gl_x11_direct_resize_set(pop->ecore_evas, 1);
-	pop->evas_win = ecore_evas_gl_x11_window_get(pop->ecore_evas);
-     }
-   else
-     {
-	pop->ecore_evas = ecore_evas_software_x11_new(NULL,
-						      pop->zone->container->win,
-						      pop->zone->x + pop->x,
-						      pop->zone->y + pop->y,
-						      pop->w, pop->h);
-	ecore_evas_software_x11_direct_resize_set(pop->ecore_evas, 1);
-	pop->evas_win = ecore_evas_software_x11_window_get(pop->ecore_evas);
-     }
+   pop->ecore_evas = e_canvas_new(e_config->evas_engine_popups, pop->zone->container->win,
+				  pop->zone->x + pop->x, pop->zone->y + pop->y, pop->w, pop->h, 1, 1,
+				  &(pop->evas_win), NULL);
    e_canvas_add(pop->ecore_evas);
    pop->shape = e_container_shape_add(pop->zone->container);
    e_container_shape_move(pop->shape, pop->zone->x + pop->x, pop->zone->y + pop->y);

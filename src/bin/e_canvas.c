@@ -94,3 +94,46 @@ e_canvas_cache_reload(void)
 	evas_image_cache_reload(e);
      }
 }
+
+Ecore_Evas *
+e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
+	     int direct_resize, int override, Ecore_X_Window *win_ret,
+	     Ecore_X_Window *subwin_ret)
+{
+   Ecore_Evas *ee;
+   
+   if (e_canvas_engine_decide(engine_hint) == E_EVAS_ENGINE_GL_X11)
+     {
+	ee = ecore_evas_gl_x11_new(NULL, win, x, y, w, h);
+	if (ee)
+	  {
+	     ecore_evas_override_set(ee, override);
+	     if (direct_resize) ecore_evas_gl_x11_direct_resize_set(ee, 1);
+	     if (win_ret) *win_ret = ecore_evas_gl_x11_window_get(ee);
+	     if (subwin_ret) *subwin_ret = ecore_evas_gl_x11_subwindow_get(ee);
+	  }
+     }
+   else if (e_canvas_engine_decide(engine_hint) == E_EVAS_ENGINE_XRENDER_X11)
+     {
+	ee = ecore_evas_xrender_x11_new(NULL, win, x, y, w, h);
+	if (ee)
+	  {
+	     ecore_evas_override_set(ee, override);
+	     if (direct_resize) ecore_evas_xrender_x11_direct_resize_set(ee, 1);
+	     if (win_ret) *win_ret = ecore_evas_xrender_x11_window_get(ee);
+	     if (subwin_ret) *subwin_ret = ecore_evas_xrender_x11_subwindow_get(ee);
+	  }
+     }
+   else
+     {
+	ee = ecore_evas_software_x11_new(NULL, win, x, y, w, h);
+	if (ee)
+	  {
+	     ecore_evas_override_set(ee, override);
+	     if (direct_resize) ecore_evas_software_x11_direct_resize_set(ee, 1);
+	     if (win_ret) *win_ret = ecore_evas_software_x11_window_get(ee);
+	     if (subwin_ret) *subwin_ret = ecore_evas_software_x11_subwindow_get(ee);
+	  }
+     }
+   return ee;
+}

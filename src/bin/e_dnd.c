@@ -151,25 +151,9 @@ e_drag_new(E_Container *container, int x, int y,
    drag->layer = 250;
    drag->container = container;
    e_object_ref(E_OBJECT(drag->container));
-   if (e_canvas_engine_decide(e_config->evas_engine_drag) ==
-       E_EVAS_ENGINE_GL_X11)
-     {
-	drag->ecore_evas = ecore_evas_gl_x11_new(NULL,
-						 drag->container->win,
-						 drag->x, drag->y,
-						 drag->w, drag->h);
-	ecore_evas_gl_x11_direct_resize_set(drag->ecore_evas, 1);
-	drag->evas_win = ecore_evas_gl_x11_window_get(drag->ecore_evas);
-     }
-   else
-     {
-	drag->ecore_evas = ecore_evas_software_x11_new(NULL,
-						      drag->container->win,
-						      drag->x, drag->y,
-						      drag->w, drag->h);
-	ecore_evas_software_x11_direct_resize_set(drag->ecore_evas, 1);
-	drag->evas_win = ecore_evas_software_x11_window_get(drag->ecore_evas);
-     }
+   drag->ecore_evas = e_canvas_new(e_config->evas_engine_drag, drag->container->win,
+				   drag->x, drag->y, drag->w, drag->h, 1, 1,
+				   &(drag->evas_win), NULL);
    e_canvas_add(drag->ecore_evas);
    drag->shape = e_container_shape_add(drag->container);
    e_container_shape_move(drag->shape, drag->x, drag->y);
