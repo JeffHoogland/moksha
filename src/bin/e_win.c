@@ -41,11 +41,10 @@ e_win_new(E_Container *con)
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
    win->container = con;
-   /* TODO: Maybe use an own config for windows? */
    win->engine = e_canvas_engine_decide(e_config->evas_engine_errors);
-   win->ecore_evas =  e_canvas_new(e_config->evas_engine_win, con->manager->root,
-				   0, 0, 1, 1, 0, 0,
-				   &(win->evas_win), NULL);
+   win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
+				  0, 0, 1, 1, 0, 0,
+				  &(win->evas_win), NULL);
    e_canvas_add(win->ecore_evas);
    ecore_evas_data_set(win->ecore_evas, "E_Win", win);
    ecore_evas_callback_move_set(win->ecore_evas, _e_win_cb_move);

@@ -5232,7 +5232,7 @@ _e_border_eval(E_Border *bd)
 	     y = 0;
 	     if ((bd->shading) || (bd->shaded))
 	       {
-		  if (bd->shade.dir ==  E_DIRECTION_UP)
+		  if (bd->shade.dir == E_DIRECTION_UP)
 		    y = bd->h - bd->client_inset.t - bd->client_inset.b - bd->client.h;
 		  else if (bd->shade.dir == E_DIRECTION_LEFT)
 		    x = bd->w - bd->client_inset.l - bd->client_inset.r - bd->client.w;
@@ -5593,7 +5593,7 @@ _e_border_shade_animator(void *data)
    if (bd->shade.val < 0.001) bd->shade.val = 0.0;
    else if (bd->shade.val > .999) bd->shade.val = 1.0;
 
-   if (bd->shade.dir ==  E_DIRECTION_UP)
+   if (bd->shade.dir == E_DIRECTION_UP)
      {
 	bd->h = bd->client_inset.t + bd->client_inset.b + bd->client.h * bd->shade.val;
      }
