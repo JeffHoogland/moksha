@@ -90,6 +90,11 @@ e_win_show(E_Win *win)
 	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->win);
 	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
 	  }
+	else if (win->engine == E_EVAS_ENGINE_XRENDER_X11)
+	  {
+	     ecore_evas_xrender_x11_extra_event_window_add(win->ecore_evas, win->border->win);
+	     ecore_evas_xrender_x11_extra_event_window_add(win->ecore_evas, win->border->event_win);
+	  }
 	else 
 	  {
 	     ecore_evas_software_x11_extra_event_window_add(win->ecore_evas, win->border->win);
