@@ -1,0 +1,529 @@
+images {
+   image: "e17_hscrollbar_trough.png" COMP;
+   image: "e17_scrollbar_left_arrow.png" COMP;
+   image: "e17_scrollbar_left_arrow_down.png" COMP;
+   image: "e17_scrollbar_right_arrow.png" COMP;
+   image: "e17_scrollbar_right_arrow_down.png" COMP;
+   image: "e17_scrollbar_left_arrow.png" COMP;
+   image: "e17_scrollbar_left_arrow_down.png" COMP;
+   image: "e17_hhandle.png" COMP;
+   image: "e17_hhandle_down.png" COMP;
+   image: "e17_hhandle_thumb.png" COMP;
+   image: "e17_vscrollbar_trough.png" COMP;
+   image: "e17_scrollbar_top_arrow.png" COMP;
+   image: "e17_scrollbar_top_arrow_down.png" COMP;
+   image: "e17_scrollbar_bottom_arrow.png" COMP;
+   image: "e17_scrollbar_bottom_arrow_down.png" COMP;
+   image: "e17_scrollbar_top_arrow.png" COMP;
+   image: "e17_scrollbar_top_arrow_down.png" COMP;
+   image: "e17_vhandle.png" COMP;
+   image: "e17_vhandle_down.png" COMP;
+   image: "e17_vhandle_thumb.png" COMP;      
+}
+
+group {
+   name: "widgets/hscrollbar";
+   min: 40 16;
+   parts {
+      part {
+         name: "trough";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.5;
+               offset: 0 -8;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: -1 9;
+            }
+            image {
+               normal: "e17_hscrollbar_trough.png";
+               border: 6 6 6 6;
+            }
+         }
+      }
+      part {
+         name: "left_left_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.5;
+               offset: -1 -8;
+            }
+            rel2 {
+               relative: 0.0 0.5;
+               offset: 16 9;
+            }
+            image {
+               normal: "e17_scrollbar_left_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_left_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "right_right_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 1.0 0.5;
+               offset: -17 -8;
+            }
+            rel2 {
+               relative: 1.0 0.5;
+               offset: 0 9;
+            }
+            image {
+               normal: "e17_scrollbar_right_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_right_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "right_left_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.0;
+               offset: -18 0;
+               to: "right_right_arrow";
+            }
+            rel2 {
+               relative: 0.0 1.0;
+               offset: -1 -1;
+               to: "right_right_arrow";
+            }
+            image {
+               normal: "e17_scrollbar_left_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_left_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "scrollbar_bar_confine";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            visible: 0;
+            rel1 {
+               relative: 1.0 0.5;
+               offset: 0 9;
+               to_x: "left_left_arrow";
+            }
+            rel2 {
+               relative: 0.0 0.5;
+               offset: 0 10;
+               to_x: "right_left_arrow";
+            }
+         }
+      }
+      part {
+         name: "drag";
+         dragable {
+            confine: "scrollbar_bar_confine";
+            x: 1 1 1;
+            y: 0 0 0;
+         }
+         description {
+            state: "default" 0.0;
+            min: 58 18;
+            max: 58 18;
+            image {
+               normal: "e17_hhandle.png";
+               border: 10 10 0 0;
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_hhandle_down.png";
+            }
+         }
+      }
+      part {
+         name: "drag_thumb";
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.5 0.5;
+               offset: -9 -4;
+               to: "drag";
+            }
+            rel2 {
+               relative: 0.5 0.5;
+               offset: 6 1;
+               to: "drag";
+            }
+            image {
+               normal: "e17_hhandle_thumb.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            rel1 {
+               offset: -8 -3;
+            }
+            rel2 {
+               offset: 7 2;
+            }
+         }
+      }
+   }
+   programs {
+      program {
+         name: "hscrollbar_drag_down";
+         signal: "mouse,down,1";
+         source: "drag";
+         action: STATE_SET "down" 0.0;
+         target: "drag";
+         target: "drag_thumb";
+      }
+      program {
+         name: "hscrollbar_drag_up";
+         signal: "mouse,up,1";
+         source: "drag";
+         action: STATE_SET "default" 0.0;
+         target: "drag";
+         target: "drag_thumb";
+      }
+      program {
+         name: "left_left_arrow_down";
+         signal: "mouse,down,1";
+         source: "left_left_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "left_left_arrow";
+         after: "emit_scroll_left_start";
+      }
+      program {
+         name: "left_left_arrow_up";
+         signal: "mouse,up,1";
+         source: "left_left_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "left_left_arrow";
+         after: "emit_scroll_left_stop";
+      }
+      program {
+         name: "right_left_arrow_down";
+         signal: "mouse,down,1";
+         source: "right_left_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "right_left_arrow";
+         after: "emit_scroll_left_start";
+      }
+      program {
+         name: "right_left_arrow_up";
+         signal: "mouse,up,1";
+         source: "right_left_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "right_left_arrow";
+         after: "emit_scroll_left_stop";
+      }
+      program {
+         name: "right_right_arrow_down";
+         signal: "mouse,down,1";
+         source: "right_right_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "right_right_arrow";
+         after: "emit_scroll_right_start";
+      }
+      program {
+         name: "right_right_arrow_up";
+         signal: "mouse,up,1";
+         source: "right_right_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "right_right_arrow";
+         after: "emit_scroll_right_stop";
+      }
+      program {
+         name: "emit_scroll_left_start";
+         action: SIGNAL_EMIT "scroll_left_start" "";
+      }
+      program {
+         name: "emit_scroll_left_stop";
+         action: SIGNAL_EMIT "scroll_left_stop" "";
+      }
+      program {
+         name: "emit_scroll_right_start";
+         action: SIGNAL_EMIT "scroll_right_start" "";
+      }
+      program {
+         name: "emit_scroll_right_stop";
+         action: SIGNAL_EMIT "scroll_right_stop" "";
+      }
+   }
+}
+
+
+group {
+   name: "widgets/vscrollbar";
+   min: 16 40;
+   parts {
+      part {
+         name: "trough";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.5 0.0;
+               offset: -8 0;
+            }
+            rel2 {
+               relative: 0.5 1.0;
+               offset: 9 -1;
+            }
+            image {
+               normal: "e17_vscrollbar_trough.png";
+               border: 6 6 6 6;
+            }
+         }
+      }
+      part {
+         name: "top_top_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.5 0.0;
+               offset: -8 -1;
+            }
+            rel2 {
+               relative: 0.5 0.0;
+               offset: 9 16;
+            }
+            image {
+               normal: "e17_scrollbar_top_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_top_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "bottom_bottom_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.5 1.0;
+               offset: -8 -17;
+            }
+            rel2 {
+               relative: 0.5 1.0;
+               offset: 9 0;
+            }
+            image {
+               normal: "e17_scrollbar_bottom_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_bottom_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "bottom_top_arrow";
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.0 0.0;
+               offset: 0 -18;
+               to: "bottom_bottom_arrow";
+            }
+            rel2 {
+               relative: 1.0 0.0;
+               offset: -1 -1;
+               to: "bottom_bottom_arrow";
+            }
+            image {
+               normal: "e17_scrollbar_top_arrow.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_scrollbar_top_arrow_down.png";
+            }
+         }
+      }
+      part {
+         name: "scrollbar_bar_confine";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            visible: 0;
+            rel1 {
+               relative: 0.5 1.0;
+               offset: 9 0;
+               to_y: "top_top_arrow";
+            }
+            rel2 {
+               relative: 0.5 0.0;
+               offset: 10 0;
+               to_y: "bottom_top_arrow";
+            }
+         }
+      }
+      part {
+         name: "drag";
+         dragable {
+            confine: "scrollbar_bar_confine";
+            x: 0 0 0;
+            y: 1 1 1;
+         }
+         description {
+            state: "default" 0.0;
+            min: 18 58;
+            max: 18 58;
+            image {
+               normal: "e17_vhandle.png";
+               border: 0 0 10 10;
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            image {
+               normal: "e17_vhandle_down.png";
+            }
+         }
+      }
+      part {
+         name: "drag_thumb";
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0.5 0.5;
+               offset: -4 -9;
+               to: "drag";
+            }
+            rel2 {
+               relative: 0.5 0.5;
+               offset: 1 6;
+               to: "drag";
+            }
+            image {
+               normal: "e17_vhandle_thumb.png";
+            }
+         }
+         description {
+            state: "down" 0.0;
+            inherit: "default" 0.0;
+            rel1 {
+               offset: -3 -8;
+            }
+            rel2 {
+               offset: 2 7;
+            }
+         }
+      }
+   }
+   programs {
+      program {
+         name: "vscrollbar_drag_down";
+         signal: "mouse,down,1";
+         source: "drag";
+         action: STATE_SET "down" 0.0;
+         target: "drag";
+         target: "drag_thumb";
+      }
+      program {
+         name: "vscrollbar_drag_up";
+         signal: "mouse,up,1";
+         source: "drag";
+         action: STATE_SET "default" 0.0;
+         target: "drag";
+         target: "drag_thumb";
+      }
+      program {
+         name: "top_top_arrow_down";
+         signal: "mouse,down,1";
+         source: "top_top_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "top_top_arrow";
+         after: "emit_scroll_top_start";
+      }
+      program {
+         name: "top_top_arrow_up";
+         signal: "mouse,up,1";
+         source: "top_top_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "top_top_arrow";
+         after: "emit_scroll_top_stop";
+      }
+      program {
+         name: "bottom_top_arrow_down";
+         signal: "mouse,down,1";
+         source: "bottom_top_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "bottom_top_arrow";
+         after: "emit_scroll_top_start";
+      }
+      program {
+         name: "bottom_top_arrow_up";
+         signal: "mouse,up,1";
+         source: "bottom_top_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "bottom_top_arrow";
+         after: "emit_scroll_top_stop";
+      }
+      program {
+         name: "bottom_bottom_arrow_down";
+         signal: "mouse,down,1";
+         source: "bottom_bottom_arrow";
+         action: STATE_SET "down" 0.0;
+         target: "bottom_bottom_arrow";
+         after: "emit_scroll_bottom_start";
+      }
+      program {
+         name: "bottom_bottom_arrow_up";
+         signal: "mouse,up,1";
+         source: "bottom_bottom_arrow";
+         action: STATE_SET "default" 0.0;
+         target: "bottom_bottom_arrow";
+         after: "emit_scroll_bottom_stop";
+      }
+      program {
+         name: "emit_scroll_top_start";
+         action: SIGNAL_EMIT "scroll_top_start" "";
+      }
+      program {
+         name: "emit_scroll_top_stop";
+         action: SIGNAL_EMIT "scroll_top_stop" "";
+      }
+      program {
+         name: "emit_scroll_bottom_start";
+         action: SIGNAL_EMIT "scroll_bottom_start" "";
+      }
+      program {
+         name: "emit_scroll_bottom_stop";
+         action: SIGNAL_EMIT "scroll_bottom_stop" "";
+      }
+   }
+}
