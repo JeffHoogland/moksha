@@ -61,3 +61,4 @@
 #include "e_about.h"
 #include "e_theme_about.h"
 #include "e_apps_cache.h"
+#include "e_scrollbar.h"
