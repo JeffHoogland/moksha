@@ -961,6 +961,7 @@ e_app_dir_file_list_get(E_App *a)
    if (f)
      {
 	files2 = ecore_list_new();
+	ecore_list_set_free_cb(files2, free);
 	while (fgets(buf, sizeof(buf), f))
 	  {
 	     int len;
