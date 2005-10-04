@@ -41,7 +41,7 @@ e_win_new(E_Container *con)
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
    win->container = con;
-   win->engine = e_canvas_engine_decide(e_config->evas_engine_errors);
+   win->engine = e_canvas_engine_decide(e_config->evas_engine_win);
    win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
 				  0, 0, 1, 1, 0, 0,
 				  &(win->evas_win), NULL);
@@ -312,11 +312,6 @@ e_win_title_set(E_Win *win, char *title)
 void
 e_win_centered_set(E_Win *win, int centered)
 {
-   /* TODO:
-    * if win->border is set the window is shown, so we have to tell
-    * e to center this window by message, now it is checked at
-    * border creation.
-    */
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if ((win->state.centered) && (!centered))
@@ -329,7 +324,7 @@ e_win_centered_set(E_Win *win, int centered)
 	win->state.centered = 1;
 	_e_win_state_update(win);
      }
-   if (win->border)
+   if ((win->border) && (centered))
      {
 	/* The window is visible, move it to the right spot */
 	e_border_move(win->border,
