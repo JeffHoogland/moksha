@@ -5,7 +5,7 @@
 
 typedef enum _E_Scrollbar_Direction 
 {
-   E_SCROLLBAR_HORISONTAL,
+   E_SCROLLBAR_HORIZONTAL,
    E_SCROLLBAR_VERTICAL
 } E_Scrollbar_Direction;
 

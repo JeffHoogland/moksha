@@ -74,7 +74,7 @@ e_scrollbar_direction_set(Evas_Object *object, E_Scrollbar_Direction dir)
 
    switch (dir)
      {
-      case E_SCROLLBAR_HORISONTAL:
+      case E_SCROLLBAR_HORIZONTAL:
 	 e_theme_edje_object_set(scrollbar_sd->edje_object, 
 				 "base/theme/widgets/hscrollbar",
 				 "widgets/hscrollbar");       
@@ -94,7 +94,7 @@ e_scrollbar_direction_get(Evas_Object *object)
    E_Scrollbar_Smart_Data *scrollbar_sd;
    
    if ((!object) || !(scrollbar_sd = evas_object_smart_data_get(object)))
-     return E_SCROLLBAR_HORISONTAL;
+     return E_SCROLLBAR_HORIZONTAL;
    
    return scrollbar_sd->direction;   
 }
@@ -122,7 +122,7 @@ _e_scrollbar_smart_add(Evas_Object *object)
 			   "base/theme/widgets/hscrollbar",
 			   "widgets/hscrollbar");
 
-   scrollbar_sd->direction = E_SCROLLBAR_HORISONTAL;
+   scrollbar_sd->direction = E_SCROLLBAR_HORIZONTAL;
    
    evas_object_smart_member_add(scrollbar_sd->edje_object, object);
    

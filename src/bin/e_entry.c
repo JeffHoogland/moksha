@@ -5,13 +5,9 @@
 
 /*
  * TODO:
- * - get text
- * - review everything, was sleepy when i wrote this
- * - look at theme / how its being set
  * - implement missing _e_entry_smart_*, very easy
  * - free / delete properly
  * - implement focus and interact with theme
- * - e style
  */
 
 typedef struct _E_Editable_Text_Smart_Data E_Editable_Text_Smart_Data;
@@ -96,6 +92,19 @@ e_editable_text_add(Evas *evas)
    return evas_object_smart_add(evas, e_editable_text_smart);
 }
 
+const char*
+e_editable_text_text_get(Evas_Object *object)
+{
+   E_Editable_Text_Smart_Data *editable_text_sd;
+   Evas_Textblock_Cursor *cursor;
+   
+   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+     return;   
+   
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock2_cursor_get(editable_text_sd->text_object);
+   return evas_textblock2_cursor_node_text_get(cursor);
+}
+
 /**
  * @brief Sets the text of the object
  * @param object an editable text object
@@ -109,7 +118,6 @@ e_editable_text_text_set(Evas_Object *object, const char *text)
    if ((!object) || (!text) || !(editable_text_sd = evas_object_smart_data_get(object)))
      return;
    
-   printf("Text set: %s\n", text);
    evas_object_textblock2_text_markup_set(editable_text_sd->text_object, text);
    editable_text_sd->cursor_at_the_end = 1;
    _e_editable_text_size_update(object);
@@ -351,6 +359,17 @@ e_entry_text_set(Evas_Object *entry, const char *text)
      return;
    
    e_editable_text_text_set(e_entry_sd->entry_object, text);
+}
+
+const char*
+e_entry_text_get(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *e_entry_sd;
+   
+   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+     return;
+   
+   return e_editable_text_text_get(e_entry_sd->entry_object);
 }
 
 void 

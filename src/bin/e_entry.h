@@ -9,6 +9,7 @@
 EAPI Evas_Object *e_editable_text_add(Evas *evas);
 
 EAPI void e_editable_text_text_set(Evas_Object *object, const char *text);
+EAPI const char *e_entry_text_get(Evas_Object *object);
 EAPI void e_editable_text_insert(Evas_Object *object, const char *text);
 
 EAPI void e_editable_text_delete_char_before(Evas_Object *object);
@@ -24,6 +25,7 @@ EAPI void e_editable_text_cursor_hide(Evas_Object *object);
 
 EAPI Evas_Object *e_entry_add(Evas *evas);
 EAPI void e_entry_text_set (Evas_Object *entry, const char *text);
+EAPI const char* e_editable_text_text_get(Evas_Object *object);    
 EAPI void e_entry_text_insert (Evas_Object *entry, const char *text);
 EAPI void e_entry_delete_char_before(Evas_Object *object);
 EAPI void e_entry_delete_char_after(Evas_Object *object);
