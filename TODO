@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: when moving e_win its resize callbacks get called with alternating
+  width and height (this is why we have flickering in the conf panel)
 * BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
 * BUG: some bug if u flip desktops fast enough window s vanish (how the hell
