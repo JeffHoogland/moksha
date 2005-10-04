@@ -327,7 +327,6 @@ e_app_subdir_scan(E_App *a, int scan_subdirs)
 			 }
 		    }
 	       }
-	     free(s);
 	  }
 	ecore_list_destroy(files);
      }
@@ -1387,7 +1386,6 @@ _e_app_subdir_rescan(E_App *app)
 			 }
 		    }
 	       }
-	     free(s);
 	  }
 	ecore_list_destroy(files);
      }
