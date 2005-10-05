@@ -543,7 +543,7 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	p1 = getenv("E_STARTUP_ID");
 	if (p1) startup_id = atoi(p1);
      }
-   startup_id++;
+   if (++startup_id < 1) startup_id = 1;
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
