@@ -6393,7 +6393,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/stacking"),
 			     "widgets/border/default/stacking");
-   if ((!bd->shaded) && (!bd->lock_border))
+   if ((!bd->shaded) && (!bd->fullscreen) && (!bd->lock_border))
      {
 	mi = e_menu_item_new(m);
 	e_menu_item_label_set(mi, _("Borderless"));
