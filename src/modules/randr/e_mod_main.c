@@ -135,7 +135,7 @@ _randr_new(void)
 	       {
 		  size.width = cm->width;
 		  size.height = cm->height;
-		  //ecore_x_randr_screen_size_set(man->root, size);
+		  ecore_x_randr_screen_size_set(man->root, size);
 	       }
 	  }
      }
@@ -300,7 +300,7 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
    e_object_data_set(E_OBJECT(mi), NULL);
    if (!res) return;
 
-   //ecore_x_randr_screen_size_set(res->manager->root, res->next);
+   ecore_x_randr_screen_size_set(res->manager->root, res->next);
 
    if (e->dialog) e_object_del(E_OBJECT(e->dialog));
    if (e->timer) ecore_timer_del(e->timer);
@@ -352,7 +352,7 @@ _randr_dialog_cb_cancel(void *data, E_Dialog *dia)
 
    /* Restore old resolution */
    res = data;
-   //ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+   ecore_x_randr_screen_size_set(res->manager->root, res->prev);
    e_object_unref(E_OBJECT(res->manager));
    e_object_del(E_OBJECT(res->randr->dialog));
    res->randr->dialog = NULL;
@@ -398,7 +398,7 @@ _randr_timer_cb(void *data)
    else
      {
 	/* Restore old resolution */
-	//ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+	ecore_x_randr_screen_size_set(res->manager->root, res->prev);
 	e_object_unref(E_OBJECT(res->manager));
 	e_object_del(E_OBJECT(res->randr->dialog));
 	res->randr->dialog = NULL;
