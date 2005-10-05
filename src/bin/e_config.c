@@ -1608,6 +1608,8 @@ e_config_profile_save(void)
    homedir = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/config/profile.cfg",
 	    homedir);
+   free(homedir);
+
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (ef)
      {

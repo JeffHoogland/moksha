@@ -6497,6 +6497,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	     snprintf(buf, sizeof(buf),
 		      "--win-class \"%s\" %s/.e/e/applications/all/%s.eap",
 		      bd->client.icccm.class, homedir, name);
+	     free(homedir);
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
