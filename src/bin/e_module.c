@@ -382,9 +382,10 @@ e_module_dialog_show(char *title, char *body)
    if (!dia) return;
 
    e_dialog_title_set(dia, title);
-   e_dialog_icon_set(dia, "enlightenment/e", 64);
+   e_dialog_icon_set(dia, "enlightenment/modules", 64);
    e_dialog_text_set(dia, body);
-   e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   e_dialog_button_focus_num(dia, 0);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }
