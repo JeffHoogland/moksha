@@ -5067,12 +5067,6 @@ _e_border_eval(E_Border *bd)
 	bd->changes.shaded = 0;
      }
 
-   if (bd->need_maximize)
-     {
-	e_border_maximize(bd, e_config->maximize_policy);
-	bd->need_maximize = 0;
-     }
-   
    if ((bd->changes.pos) && (bd->changes.size))
      {
 //	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
@@ -5430,7 +5424,13 @@ _e_border_eval(E_Border *bd)
 	       }
 	  }
      }
-   
+
+   if (bd->need_maximize)
+     {
+	e_border_maximize(bd, e_config->maximize_policy);
+	bd->need_maximize = 0;
+     }
+ 
    if (bd->remember)
      e_remember_update(bd->remember, bd);
 }
