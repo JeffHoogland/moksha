@@ -36,7 +36,7 @@ static void _e_scrollbar_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coor
 static void _e_scrollbar_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void _e_scrollbar_smart_show(Evas_Object *object);
 static void _e_scrollbar_smart_hide(Evas_Object *object);
-static void _e_scrollbar_drag_cb (void *data, Evas_Object *object, const char *emission, const char *source);
+static void _e_scrollbar_drag_cb(void *data, Evas_Object *object, const char *emission, const char *source);
     
 static Evas_Smart *e_scrollbar_smart = NULL;
 
@@ -104,7 +104,7 @@ e_scrollbar_direction_get(Evas_Object *object)
 }
 
 void
-e_scrollbar_callback_drag_add (Evas_Object *object, void (*func) (Evas_Object *obj, double value, void *data), void *data)
+e_scrollbar_callback_drag_add(Evas_Object *object, void (*func)(Evas_Object *obj, double value, void *data), void *data)
 {    
    E_Scrollbar_Smart_Data *scrollbar_sd;
    E_Scrollbar_Drag_Handler *handler;
@@ -121,7 +121,7 @@ e_scrollbar_callback_drag_add (Evas_Object *object, void (*func) (Evas_Object *o
 }
 
 void
-e_scrollbar_value_set (Evas_Object *object, double value)
+e_scrollbar_value_set(Evas_Object *object, double value)
 {    
    E_Scrollbar_Smart_Data *scrollbar_sd;
    
@@ -131,25 +131,25 @@ e_scrollbar_value_set (Evas_Object *object, double value)
    scrollbar_sd->value.current = value;
    
    if (scrollbar_sd->direction == E_SCROLLBAR_HORIZONTAL)
-     edje_object_part_drag_value_set (scrollbar_sd->edje_object, "drag", value, 0);
+     edje_object_part_drag_value_set(scrollbar_sd->edje_object, "drag", value, 0);
    else
-     edje_object_part_drag_value_set (scrollbar_sd->edje_object, "drag", 0, value);
+     edje_object_part_drag_value_set(scrollbar_sd->edje_object, "drag", 0, value);
 }
 
 double
-e_scrollbar_value_get (Evas_Object *object)
+e_scrollbar_value_get(Evas_Object *object)
 {
    E_Scrollbar_Smart_Data *scrollbar_sd;
    double dx, dy;
    
    if ((!object) || !(scrollbar_sd = evas_object_smart_data_get(object)))
-     return;
+     return 0.0;
 
    /* FIXME:
     * we have a problem here. if we printf the dx and dy we get 0 
     */
    
-   edje_object_part_drag_value_get (scrollbar_sd->edje_object, "drag", &dx, &dy);
+   edje_object_part_drag_value_get(scrollbar_sd->edje_object, "drag", &dx, &dy);
    
    if (scrollbar_sd->direction == E_SCROLLBAR_HORIZONTAL)     
      scrollbar_sd->value.current = dx;
@@ -160,7 +160,7 @@ e_scrollbar_value_get (Evas_Object *object)
 }
 
 void
-e_scrollbar_increments_set (Evas_Object *object, double step, double page)
+e_scrollbar_increments_set(Evas_Object *object, double step, double page)
 {
    E_Scrollbar_Smart_Data *scrollbar_sd;
    
@@ -169,16 +169,16 @@ e_scrollbar_increments_set (Evas_Object *object, double step, double page)
    
    if (scrollbar_sd->direction == E_SCROLLBAR_HORIZONTAL)
     {
-       edje_object_part_drag_step_set (scrollbar_sd->edje_object, "drag", step, 0);
-       edje_object_part_drag_page_set (scrollbar_sd->edje_object, "drag", page, 0);
+       edje_object_part_drag_step_set(scrollbar_sd->edje_object, "drag", step, 0);
+       edje_object_part_drag_page_set(scrollbar_sd->edje_object, "drag", page, 0);
     } else {
-       edje_object_part_drag_step_set (scrollbar_sd->edje_object, "drag", 0, step);
-       edje_object_part_drag_page_set (scrollbar_sd->edje_object, "drag", 0, page);
+       edje_object_part_drag_step_set(scrollbar_sd->edje_object, "drag", 0, step);
+       edje_object_part_drag_page_set(scrollbar_sd->edje_object, "drag", 0, page);
     }
 }
 
 void
-e_scrollbar_increments_get (Evas_Object *object, double *step, double *page)
+e_scrollbar_increments_get(Evas_Object *object, double *step, double *page)
 {
    E_Scrollbar_Smart_Data *scrollbar_sd;
    double stepx; double stepy;
@@ -187,8 +187,8 @@ e_scrollbar_increments_get (Evas_Object *object, double *step, double *page)
    if ((!object) || !(scrollbar_sd = evas_object_smart_data_get(object)))
      return;
    
-   edje_object_part_drag_step_get (scrollbar_sd->edje_object, "drag", &stepx, &stepy);
-   edje_object_part_drag_page_get (scrollbar_sd->edje_object, "drag", &pagex, &pagey);   
+   edje_object_part_drag_step_get(scrollbar_sd->edje_object, "drag", &stepx, &stepy);
+   edje_object_part_drag_page_get(scrollbar_sd->edje_object, "drag", &pagex, &pagey);   
    
    if (scrollbar_sd->direction == E_SCROLLBAR_HORIZONTAL)
     {
@@ -225,7 +225,7 @@ _e_scrollbar_smart_add(Evas_Object *object)
 			   "base/theme/widgets/hscrollbar",
 			   "widgets/hscrollbar");
    edje_object_signal_callback_add(scrollbar_sd->edje_object, "drag", "*", _e_scrollbar_drag_cb, scrollbar_sd);
-   evas_object_data_set (scrollbar_sd->edje_object, "smart", object);
+   evas_object_data_set(scrollbar_sd->edje_object, "smart", object);
    evas_object_smart_member_add(scrollbar_sd->edje_object, object);
    
    evas_object_smart_data_set(object, scrollbar_sd);
@@ -336,7 +336,7 @@ _e_scrollbar_smart_hide(Evas_Object *object)
 }
 
 static void
-_e_scrollbar_drag_cb (void *data, Evas_Object *object, const char *emission, const char *source)
+_e_scrollbar_drag_cb(void *data, Evas_Object *object, const char *emission, const char *source)
 {    
    E_Scrollbar_Smart_Data *scrollbar_sd;
    Evas_Object *smart_object;
@@ -349,13 +349,13 @@ _e_scrollbar_drag_cb (void *data, Evas_Object *object, const char *emission, con
    if (!scrollbar_sd)
      return;
    
-   scrollbar_sd->value.current = e_scrollbar_value_get (object);
+   scrollbar_sd->value.current = e_scrollbar_value_get(object);
    
    for (l = scrollbar_sd->callbacks; l; l = l->next)
     {
        E_Scrollbar_Drag_Handler *handler;
        
        handler = l->data;
-       handler->cb.drag (smart_object, scrollbar_sd->value.current, handler->data);
+       handler->cb.drag(smart_object, scrollbar_sd->value.current, handler->data);
     }
 }
