@@ -1198,8 +1198,9 @@ ACT_FN_GO(exit)
 		       ));
    e_dialog_icon_set(exit_dialog, "enlightenment/exit", 64);
    e_dialog_button_add(exit_dialog, _("Yes"), NULL,
-		       _e_actions_cb_exit_dialog_ok, _e_actions_cb_exit_dialog_cancel);
-   e_dialog_button_add(exit_dialog, _("No"), NULL, NULL, NULL);
+		       _e_actions_cb_exit_dialog_ok, NULL);
+   e_dialog_button_add(exit_dialog, _("No"), NULL,
+		       _e_actions_cb_exit_dialog_cancel, NULL);
    e_dialog_button_focus_num(exit_dialog, 1);
    e_win_centered_set(exit_dialog->win, 1);
    e_dialog_show(exit_dialog);
