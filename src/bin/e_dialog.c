@@ -317,12 +317,11 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 
    if (!strcmp(ev->keyname, "Tab"))
      {
-	if (dia->focused && dia->buttons)
+	if ((dia->focused) && (dia->buttons))
 	  {
-	     E_Dialog_Button *db;
+	     E_Dialog_Button *db, *ndb;
 	     
 	     db = dia->focused->data;	 
-	     edje_object_signal_emit(db->obj, "unfocus", "");	     
 	     if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
 	       {
 		  if (dia->focused->prev) dia->focused = dia->focused->prev;
@@ -333,9 +332,13 @@ _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 		  if (dia->focused->next) dia->focused = dia->focused->next;
 		  else dia->focused = dia->buttons;	 
 	       }
-	     db = evas_list_data(dia->focused);
-	     edje_object_signal_emit(db->obj, "focus", "");
-	     edje_object_signal_emit(db->obj, "enter", "");
+	     ndb = dia->focused->data;
+	     if (ndb != db)
+	       {
+		  edje_object_signal_emit(db->obj, "unfocus", "");
+		  edje_object_signal_emit(ndb->obj, "focus", "");
+		  edje_object_signal_emit(ndb->obj, "enter", "");
+	       }
 	     
 	  }
        	else
