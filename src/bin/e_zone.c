@@ -117,6 +117,8 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_color_set(o, 0, 0, 0, 255);
+   evas_object_show(o);
+
    ecore_evas_name_class_set(zone->black_ecore_evas, "E", "Black_Window");
    snprintf(name, sizeof(name), "Enlightenment Black Zone (%d)", zone->num);
    ecore_evas_title_set(zone->black_ecore_evas, name);
