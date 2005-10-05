@@ -506,6 +506,7 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    Evas_Object *o;
    Evas_Coord   x, y, w, h;
    double       aspect;
+   const char  *drop[] = { "enlightenment/border", "enlightenment/pager_win" };
 
    face = E_NEW(Pager_Face, 1);
    if (!face) return NULL;
@@ -539,15 +540,9 @@ _pager_face_new(Pager *pager, E_Zone *zone, Evas *evas)
    face->drop_handler = e_drop_handler_add(face,
 					   _pager_face_cb_enter, _pager_face_cb_move,
 					   _pager_face_cb_leave, _pager_face_cb_drop,
-					   "enlightenment/border",
+					   drop, 2,
 					   face->fx, face->fy, face->fw, face->fh);
    
-   face->drop_handler_win = e_drop_handler_add(face,
-					       _pager_face_cb_enter, _pager_face_cb_move,
-					       _pager_face_cb_leave, _pager_face_cb_drop,
-					       "enlightenment/pager_win",
-					       face->fx, face->fy, face->fw, face->fh);
-  
    face->gmc = e_gadman_client_new(zone->container->gadman);
    _pager_face_zone_set(face, zone);
    
@@ -591,7 +586,6 @@ _pager_face_free(Pager_Face *face)
    e_object_del(E_OBJECT(face->gmc));
 
    e_drop_handler_del(face->drop_handler);
-   e_drop_handler_del(face->drop_handler_win);
 
    _pager_face_zone_unset(face);
 
@@ -991,10 +985,6 @@ _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    face->fw = w;
    face->fh = h;
    e_drop_handler_geometry_set(face->drop_handler,
-			       face->fx + face->inset.l, face->fy + face->inset.t,
-			       face->fw - (face->inset.l + face->inset.r),
-			       face->fh - (face->inset.t + face->inset.b));
-   e_drop_handler_geometry_set(face->drop_handler_win,
 			       face->fx + face->inset.l, face->fy + face->inset.t,
 			       face->fw - (face->inset.l + face->inset.r),
 			       face->fh - (face->inset.t + face->inset.b));
@@ -2204,7 +2194,7 @@ _pager_face_cb_drop(void *data, const char *type, void *event_info)
 
    desk = e_desk_at_xy_get(face->zone, x, y);
 
-   //printf("drop %s\n", type);
+   printf("drop %s\n", type);
 
    if (!strcmp(type, "enlightenment/pager_win"))
      {

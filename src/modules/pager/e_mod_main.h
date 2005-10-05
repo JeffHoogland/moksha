@@ -95,7 +95,6 @@ struct _Pager_Face
    Config_Face  *conf;
 
    E_Drop_Handler *drop_handler;
-   E_Drop_Handler *drop_handler_win;
 
    Pager_Popup *current_popup;
 

@@ -46,14 +46,17 @@ struct _E_Drag
 
 struct _E_Drop_Handler
 {
-   void *data;
    struct {
 	void (*enter)(void *data, const char *type, void *event);
 	void (*move)(void *data, const char *type, void *event);
 	void (*leave)(void *data, const char *type, void *event);
 	void (*drop)(void *data, const char *type, void *event);
+	void *data;
    } cb;
-   char *type;
+
+   char         **types;
+   unsigned int   num_types;
+
    int x, y, w, h;
    unsigned char active : 1;
    unsigned char entered : 1;
@@ -106,7 +109,8 @@ EAPI E_Drop_Handler *e_drop_handler_add(void *data,
 					void (*move_cb)(void *data, const char *type, void *event),
 					void (*leave_cb)(void *data, const char *type, void *event),
 					void (*drop_cb)(void *data, const char *type, void *event),
-				       	const char *type, int x, int y, int w, int h);
+				       	const char **types, unsigned int num_types,
+					int x, int y, int w, int h);
 EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
 EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 

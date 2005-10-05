@@ -38,7 +38,7 @@ static Evas_List *_drop_handlers = NULL;
 static Ecore_X_Window _drag_win = 0;
 
 static Evas_List *_drag_list = NULL;
-static E_Drag *_drag_current = NULL;
+static E_Drag    *_drag_current = NULL;
 
 static XDnd *_xdnd;
 
@@ -253,6 +253,7 @@ void
 e_drag_start(E_Drag *drag, int x, int y)
 {
    Evas_List *l;
+   int i;
 
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
@@ -270,7 +271,12 @@ e_drag_start(E_Drag *drag, int x, int y)
 
 	h = l->data;
 	
-	h->active = !strcmp(h->type, drag->type);
+	h->active = 0;
+	for (i = 0; i < h->num_types; i++)
+	  {
+	     if (!strcmp(h->types[i], drag->type))
+	       h->active = 1;
+	  }
 	h->entered = 0;
      }
 
@@ -317,18 +323,18 @@ e_drag_update(int x, int y)
 	     if (!h->entered)
 	       {
 		  if (h->cb.enter)
-		    h->cb.enter(h->data, h->type, enter_ev);
+		    h->cb.enter(h->cb.data, _drag_current->type, enter_ev);
 		  h->entered = 1;
 	       }
 	     if (h->cb.move)
-	       h->cb.move(h->data, h->type, move_ev);
+	       h->cb.move(h->cb.data, _drag_current->type, move_ev);
 	  }
 	else
 	  {
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->data, h->type, leave_ev);
+		    h->cb.leave(h->cb.data, _drag_current->type, leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -344,6 +350,7 @@ e_drag_end(int x, int y)
 {
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
+   const char *type;
 
    if (_drag_current)
      {
@@ -357,9 +364,15 @@ e_drag_end(int x, int y)
 
    ev = E_NEW(E_Event_Dnd_Drop, 1);
    if (_drag_current)
-     ev->data = _drag_current->data;
+     {
+	ev->data = _drag_current->data;
+	type = _drag_current->type;
+     }
    else if (_xdnd)
-     ev->data = _xdnd->data;
+     {
+	ev->data = _xdnd->data;
+	type = _xdnd->type;
+     }
    ev->x = x;
    ev->y = y;
 
@@ -380,7 +393,7 @@ e_drag_end(int x, int y)
 	     if ((h->cb.drop)
 		   && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	       {
-		  h->cb.drop(h->data, h->type, ev);
+		  h->cb.drop(h->cb.data, type, ev);
 		  dropped = 1;
 	       }
 	  }
@@ -414,7 +427,7 @@ e_drag_end(int x, int y)
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->data, h->type, leave_ev);
+		    h->cb.leave(h->cb.data, type, leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -429,19 +442,26 @@ e_drop_handler_add(void *data,
 		   void (*move_cb)(void *data, const char *type, void *event),
 		   void (*leave_cb)(void *data, const char *type, void *event),
 		   void (*drop_cb)(void *data, const char *type, void *event),
-		   const char *type, int x, int y, int w, int h)
+		   const char **types, unsigned int num_types, int x, int y, int w, int h)
 {
    E_Drop_Handler *handler;
+   int i;
 
    handler = E_NEW(E_Drop_Handler, 1);
    if (!handler) return NULL;
 
-   handler->data = data;
+   handler->cb.data = data;
    handler->cb.enter = enter_cb;
    handler->cb.move = move_cb;
    handler->cb.leave = leave_cb;
    handler->cb.drop = drop_cb;
-   handler->type = strdup(type);
+   handler->num_types = num_types;
+   if (num_types)
+     {
+	handler->types = malloc(num_types * sizeof(char *));
+	for (i = 0; i < num_types; i++)
+	  handler->types[i] = strdup(types[i]);
+     }
    handler->x = x;
    handler->y = y;
    handler->w = w;
@@ -464,8 +484,15 @@ e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h)
 void
 e_drop_handler_del(E_Drop_Handler *handler)
 {
+   int i;
+
    _drop_handlers = evas_list_remove(_drop_handlers, handler);
-   free(handler->type);
+   if (handler->types)
+     {
+	for (i = 0; i < handler->num_types; i++)
+	  free(handler->types[i]);
+	free(handler->types);
+     }
    free(handler);
 }
 
@@ -602,7 +629,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    Ecore_X_Event_Xdnd_Enter *ev;
    E_Container *con;
    Evas_List *l;
-   int i;
+   int i, j;
 
    ev = event;
    con = data;
@@ -630,7 +657,13 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
 
 		  h = l->data;
 
-		  h->active = !strcmp(h->type, "enlightenment/x-file");
+		  h->active = 0;
+		  for (j = 0; j < h->num_types; j++)
+		    {
+		       if (!strcmp(h->types[j], _xdnd->type))
+			 h->active = 1;
+		    }
+
 		  h->entered = 0;
 	       }
 	     break;
@@ -674,25 +707,25 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    leave_ev->x = 0;
    leave_ev->y = 0;
 
-   for (l = _drop_handlers; l; l = l->next)
-     {
-	E_Drop_Handler *h;
-
-	h = l->data;
-
-	if (!h->active)
-	  continue;
-	
-	if (h->entered)
-	  {
-	     if (h->cb.leave)
-	       h->cb.leave(h->data, h->type, leave_ev);
-	     h->entered = 0;
-	  }
-     }
-
    if (_xdnd)
      {
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->cb.data, _xdnd->type, leave_ev);
+		  h->entered = 0;
+	       }
+	  }
+
 	free(_xdnd->type);
 	free(_xdnd);
 	_xdnd = NULL;
@@ -780,7 +813,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 
 	files = ev->data;
 	for (i = 0; i < files->num_files; i++)
-	  l = evas_list_append(l, files->files[i]);
+	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
 	_xdnd->data = l;
 	e_drag_end(_xdnd->x, _xdnd->y);
 	evas_list_free(l);
