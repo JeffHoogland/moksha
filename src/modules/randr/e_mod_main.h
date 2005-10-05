@@ -30,6 +30,7 @@ struct _Randr
    E_Int_Menu_Augmentation *augmentation;
 
    Ecore_Timer *timer;
+   int          timer_iterations;
    E_Dialog    *dialog;
 
    Config      *conf;

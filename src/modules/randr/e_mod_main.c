@@ -8,7 +8,6 @@
  * TODO:
  * * Check if randr is available. It might be disabled in
  *   ecore_x, or not available on screen
- * * Make a clock ticking down on the dialog
  * * Add destroy callback for dialog
  */
 
@@ -136,7 +135,7 @@ _randr_new(void)
 	       {
 		  size.width = cm->width;
 		  size.height = cm->height;
-		  ecore_x_randr_screen_size_set(man->root, size);
+		  //ecore_x_randr_screen_size_set(man->root, size);
 	       }
 	  }
      }
@@ -294,28 +293,37 @@ _randr_menu_cb_resolution_change(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    Randr *e;
    Randr_Resolution *res;
+   char buf[PATH_MAX];
    
    e = data;
    res = e_object_data_get(E_OBJECT(mi));
    e_object_data_set(E_OBJECT(mi), NULL);
    if (!res) return;
 
-   ecore_x_randr_screen_size_set(res->manager->root, res->next);
+   //ecore_x_randr_screen_size_set(res->manager->root, res->next);
 
    if (e->dialog) e_object_del(E_OBJECT(e->dialog));
    if (e->timer) ecore_timer_del(e->timer);
+   e->timer_iterations = 15;
    e->dialog = e_dialog_new(m->zone->container);
-   e_dialog_title_set(e->dialog, "Resolution change");
-   e_dialog_text_set(e->dialog, "Keep new resolution?");
-   e_dialog_button_add(e->dialog, "OK", NULL, _randr_dialog_cb_ok, res);
-   e_dialog_button_add(e->dialog, "Cancel", NULL, _randr_dialog_cb_cancel, res);
+   e_dialog_title_set(e->dialog, _("Resolution change"));
+   snprintf(buf, sizeof(buf),
+	    _("Keep new resolution <hilight>%dx%d</hilight>?<br><br>"
+	      "Restoring old resolution %dx%d in %d seconds."),
+	    res->next.width, res->next.height,
+	    res->prev.width, res->prev.height,
+	    e->timer_iterations);
+   e_dialog_text_set(e->dialog, buf);
+   e_dialog_button_add(e->dialog, _("Yes"), NULL, _randr_dialog_cb_ok, res);
+   e_dialog_button_add(e->dialog, _("No"), NULL, _randr_dialog_cb_cancel, res);
+   e_dialog_button_focus_num(e->dialog, 1);
    e_win_borderless_set(e->dialog->win, 1);
    e_win_layer_set(e->dialog->win, 6);
    e_win_centered_set(e->dialog->win, 1);
    e_win_sticky_set(e->dialog->win, 1);
    e_dialog_show(e->dialog);
 
-   e->timer = ecore_timer_add(15.0, _randr_timer_cb, res);
+   e->timer = ecore_timer_add(1.0, _randr_timer_cb, res);
 }
 
 static void
@@ -344,7 +352,7 @@ _randr_dialog_cb_cancel(void *data, E_Dialog *dia)
 
    /* Restore old resolution */
    res = data;
-   ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+   //ecore_x_randr_screen_size_set(res->manager->root, res->prev);
    e_object_unref(E_OBJECT(res->manager));
    e_object_del(E_OBJECT(res->randr->dialog));
    res->randr->dialog = NULL;
@@ -361,15 +369,43 @@ _randr_timer_cb(void *data)
 {
    Randr_Resolution *res;
 
-   /* Restore old resolution */
    res = data;
-   ecore_x_randr_screen_size_set(res->manager->root, res->prev);
-   e_object_unref(E_OBJECT(res->manager));
-   e_object_del(E_OBJECT(res->randr->dialog));
-   res->randr->dialog = NULL;
-   res->randr->timer = NULL;
-   free(res);
-   return 0;
+   
+   if (res->randr->timer_iterations > 0)
+     {
+	char buf[PATH_MAX];
+
+	if (--res->randr->timer_iterations > 0)
+	  {
+	     snprintf(buf, sizeof(buf),
+		      _("Keep new resolution <hilight>%dx%d</hilight>?<br><br>"
+			"Restoring old resolution %dx%d in %d seconds."),
+		      res->next.width, res->next.height,
+		      res->prev.width, res->prev.height,
+		      res->randr->timer_iterations);
+	  }
+	else
+	  {
+	     snprintf(buf, sizeof(buf),
+		      _("Keep new resolution <hilight>%dx%d</hilight>?<br><br>"
+			"Restoring old resolution %dx%d NOW!"),
+		      res->next.width, res->next.height,
+		      res->prev.width, res->prev.height);
+	  }
+	e_dialog_text_set(res->randr->dialog, buf);
+	return 1;
+     }
+   else
+     {
+	/* Restore old resolution */
+	//ecore_x_randr_screen_size_set(res->manager->root, res->prev);
+	e_object_unref(E_OBJECT(res->manager));
+	e_object_del(E_OBJECT(res->randr->dialog));
+	res->randr->dialog = NULL;
+	res->randr->timer = NULL;
+	free(res);
+	return 0;
+     }
 }
 
 static void
