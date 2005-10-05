@@ -635,6 +635,9 @@ e_app_launch_id_pid_find(int launch_id, pid_t pid)
 	     if (((launch_id > 0) && (ai->launch_id > 0) && (ai->launch_id == launch_id)) ||
 		 ((pid > 1) && (ai->exe) && (ecore_exe_pid_get(ai->exe) == pid)))
 	       {
+		  printf("IC: ai->launch_id [%i] == launch_id [%i] | ai->exe->pid [%i] == pid [%i]\n",
+			 ai->launch_id, launch_id, ecore_exe_pid_get(ai->exe), pid);
+		  printf("  RET %s\n", a->name);
 		  _e_apps_list = evas_list_remove_list(_e_apps_list, l);
 		  _e_apps_list = evas_list_prepend(_e_apps_list, a);
 		  return a;

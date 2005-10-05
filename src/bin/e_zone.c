@@ -538,14 +538,12 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    char buf[4096], buf2[32];
    
    if (!a) return 0;
-   if (!startup_id)
+   if (!startup_id == 0)
      {
 	p1 = getenv("E_STARTUP_ID");
-	if (p1)
-	  startup_id = atoi(p1);
+	if (p1) startup_id = atoi(p1);
      }
-   else
-     startup_id = 1;
+   startup_id++;
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
