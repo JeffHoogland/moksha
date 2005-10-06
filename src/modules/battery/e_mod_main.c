@@ -935,7 +935,6 @@ _battery_linux_acpi_check(Battery *ef)
 	     bat_drain += rate;
 	     bat_level += level;
 	  }
-	free(name);
      }
    if (bats) ecore_list_destroy(bats);
 
@@ -1161,10 +1160,7 @@ _battery_linux_powerbook_check(Battery *ef)
 	while ((name = ecore_list_next(bats)))
 	  {
 	     if (strncmp(name, "battery", 7))
-	       {
-		  free(name);
-		  continue;
-	       }
+	       continue;
 
 	     snprintf(buf, sizeof(buf), "/proc/pmu/%s", name);
 	     f = fopen(buf, "r");
@@ -1213,7 +1209,6 @@ _battery_linux_powerbook_check(Battery *ef)
 		       seconds = MAX(time, seconds);
 		    }
 	       }
-	     free(name);
 	  }
 	ecore_list_destroy(bats);
      }
