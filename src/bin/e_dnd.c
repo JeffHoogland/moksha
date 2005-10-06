@@ -350,7 +350,7 @@ e_drag_end(int x, int y)
 {
    Evas_List *l;
    E_Event_Dnd_Drop *ev;
-   const char *type;
+   const char *type = NULL;
 
    if (_drag_current)
      {
