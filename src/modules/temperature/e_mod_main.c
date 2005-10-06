@@ -987,7 +987,7 @@ _temperature_cb_check(void *data)
      }
 #else  
    therms = ecore_file_ls("/proc/acpi/thermal_zone");
-   if (!therms || ecore_list_is_empty(therms))
+   if ((!therms) || ecore_list_is_empty(therms))
      {
 	FILE *f;
 
@@ -1001,6 +1001,7 @@ _temperature_cb_check(void *data)
 	  }
 	else
 	  {
+	     if (therms) ecore_list_destroy(therms);
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
 	     if ((therms) && (!ecore_list_is_empty(therms)))
 	       {
@@ -1034,6 +1035,7 @@ _temperature_cb_check(void *data)
 			      }
 			 }
 		    }
+		  ecore_list_destroy(therms);
 	       }
 	  }
      }
@@ -1056,10 +1058,9 @@ _temperature_cb_check(void *data)
 		    ret = 1;
 		  fclose(f);
 	       }
-	     free(name);
 	  }
+	ecore_list_destroy(therms);
      }
-   if (therms) ecore_list_destroy(therms);
 #endif   
    
    if (ef->conf->units == FAHRENHEIT)

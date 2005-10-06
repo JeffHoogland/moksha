@@ -1006,9 +1006,7 @@ e_app_dir_file_list_get(E_App *a)
 	while ((file = ecore_list_next(files)))
 	  {
 	     if (file[0] != '.')
-	       ecore_list_append(files2, file);
-	     else
-	       free(file);
+	       ecore_list_append(files2, strdup(file));
 	  }
 	ecore_list_destroy(files);
      }
