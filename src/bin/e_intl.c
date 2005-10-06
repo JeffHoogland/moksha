@@ -103,7 +103,6 @@ _e_intl_dir_scan(char *dir)
    ecore_list_goto_first(files);
    while ((file = ecore_list_current(files)))
      {
-	free(file);
 	ecore_list_remove(files);
 	ecore_list_next(files);
      }
