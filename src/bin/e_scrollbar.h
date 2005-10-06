@@ -20,8 +20,8 @@ struct _E_Scrollbar_Drag_Handler
 
 enum _E_Scrollbar_Direction
 {
-   E_SCROLLBAR_HORIZONTAL,
-   E_SCROLLBAR_VERTICAL
+   E_SCROLLBAR_HORIZONTAL = 0,
+   E_SCROLLBAR_VERTICAL = 1
 };
 
 EAPI Evas_Object          *e_scrollbar_add(Evas *evas);
