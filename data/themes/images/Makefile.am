@@ -325,4 +325,20 @@ e17_about_sky5.png \
 e17_about_sky_overlay.png \
 focus.png \
 entry.png \
-entry_focus.png
+entry_focus.png \
+e17_hscrollbar_trough.png \
+e17_scrollbar_bottom_arrow_down.png \
+e17_scrollbar_bottom_arrow.png \
+e17_scrollbar_left_arrow_down.png \
+e17_scrollbar_left_arrow.png \
+e17_scrollbar_right_arrow_down.png \
+e17_scrollbar_right_arrow.png \
+e17_scrollbar_top_arrow_down.png \
+e17_scrollbar_top_arrow.png \
+e17_vscrollbar_trough.png \
+e17_hhandle_down.png \
+e17_hhandle.png \
+e17_hhandle_thumb.png \
+e17_vhandle_down.png \
+e17_vhandle.png \
+e17_vhandle_thumb.png
