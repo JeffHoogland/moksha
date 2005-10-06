@@ -4,6 +4,10 @@
 #include "e.h"
 #include "config.h"
 
+#ifdef HAVE_VALGRIND
+# include <memcheck.h>
+#endif
+
 /* TODO List:
  * 
  * * add module types/classes
@@ -65,6 +69,14 @@ int
 e_module_shutdown(void)
 {
    Evas_List *l, *tmp;
+
+#ifdef HAVE_VALGRIND
+   /* do a leak check now before we dlclose() all those plugins, cause
+    * that means we won't get a decent backtrace to leaks in there
+    */
+   VALGRIND_DO_LEAK_CHECK
+#endif
+
    for (l = _e_modules; l;)
      {
 	tmp = l;

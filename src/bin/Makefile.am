@@ -6,6 +6,7 @@ INCLUDES = -I$(includedir) \
 	   @e_cflags@ \
 	   @x_cflags@ \
 	   @cf_cflags@ \
+	   @VALGRIND_CFLAGS@ \
 	   @EDJE_DEF@
 
 bin_PROGRAMS = \
@@ -148,7 +149,7 @@ enlightenment_SOURCES = \
 e_main.c \
 $(enlightenment_src)
 
-enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@
+enlightenment_LDFLAGS = -export-dynamic @e_libs@ @x_libs@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@
 
 enlightenment_remote_SOURCES = \
 e.h \
