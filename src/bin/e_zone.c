@@ -535,8 +535,8 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    int ret;
    char *p1, *p2;
    char *penv_display;
-   char *penv_ld_preload;
-   char *penv_ld_preload_path;
+   /*char *penv_ld_preload;
+   char *penv_ld_preload_path;*/
    char buf[4096], buf2[32];
    
    if (!a) return 0;
@@ -549,10 +549,10 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
-   penv_ld_preload = getenv("LD_PRELOAD");
+   /*penv_ld_preload = getenv("LD_PRELOAD");
    if (penv_ld_preload) penv_ld_preload = strdup(penv_ld_preload);
    penv_ld_preload_path = getenv("LD_PRELOAD_PATH");
-   if (penv_ld_preload_path) penv_ld_preload_path = strdup(penv_ld_preload_path);
+   if (penv_ld_preload_path) penv_ld_preload_path = strdup(penv_ld_preload_path);*/
    
    /* set env vars */
    p1 = strrchr(penv_display, ':');
