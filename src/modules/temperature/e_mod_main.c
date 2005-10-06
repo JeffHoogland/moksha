@@ -736,44 +736,54 @@ _temperature_config_menu_new(Temperature *e)
      {
 	FILE *f;
 	
+	if (therms) ecore_list_destroy(therms);
+
 	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
 	if (f) fclose(f);
 	
 	if (!f)
 	  {
-	     if (therms) ecore_list_destroy(therms);
 	     
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if (therms && !ecore_list_is_empty(therms))
+	     if (therms)
 	       {
-		  mn = e_menu_new();
-		  
-		  mi = e_menu_item_new(mn);
-		  e_menu_item_label_set(mi, _("Temp1"));
-		  e_menu_item_radio_set(mi, 1);
-		  e_menu_item_radio_group_set(mi, 1);
-		  if ((!e->conf->sensor_name) || (!strcmp(e->conf->sensor_name, "temp1"))) e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_callback_set(mi, _temperature_menu_sensor_1, e);
-		  
-		  mi = e_menu_item_new(mn);
-		  e_menu_item_label_set(mi, _("Temp2"));
-		  e_menu_item_radio_set(mi, 1);
-		  e_menu_item_radio_group_set(mi, 1);
-		  if ((e->conf->sensor_name) && (!strcmp(e->conf->sensor_name, "temp2"))) e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_callback_set(mi, _temperature_menu_sensor_2, e);
-		  
-		  mi = e_menu_item_new(mn);
-		  e_menu_item_label_set(mi, _("Temp3"));
-		  e_menu_item_radio_set(mi, 1);
-		  e_menu_item_radio_group_set(mi, 1);
-		  if ((e->conf->sensor_name) && (!strcmp(e->conf->sensor_name, "temp3"))) e_menu_item_toggle_set(mi, 1);
-		  e_menu_item_callback_set(mi, _temperature_menu_sensor_3, e);
-		  
-		  e->config_menu_sensor = mn;
+		  if (!ecore_list_is_empty(therms))
+		    {
+		       mn = e_menu_new();
+
+		       mi = e_menu_item_new(mn);
+		       e_menu_item_label_set(mi, _("Temp1"));
+		       e_menu_item_radio_set(mi, 1);
+		       e_menu_item_radio_group_set(mi, 1);
+		       if ((!e->conf->sensor_name) ||
+			   (!strcmp(e->conf->sensor_name, "temp1")))
+			 e_menu_item_toggle_set(mi, 1);
+		       e_menu_item_callback_set(mi, _temperature_menu_sensor_1, e);
+
+		       mi = e_menu_item_new(mn);
+		       e_menu_item_label_set(mi, _("Temp2"));
+		       e_menu_item_radio_set(mi, 1);
+		       e_menu_item_radio_group_set(mi, 1);
+		       if ((e->conf->sensor_name) &&
+			   (!strcmp(e->conf->sensor_name, "temp2")))
+			 e_menu_item_toggle_set(mi, 1);
+		       e_menu_item_callback_set(mi, _temperature_menu_sensor_2, e);
+
+		       mi = e_menu_item_new(mn);
+		       e_menu_item_label_set(mi, _("Temp3"));
+		       e_menu_item_radio_set(mi, 1);
+		       e_menu_item_radio_group_set(mi, 1);
+		       if ((e->conf->sensor_name) &&
+			   (!strcmp(e->conf->sensor_name, "temp3")))
+			 e_menu_item_toggle_set(mi, 1);
+		       e_menu_item_callback_set(mi, _temperature_menu_sensor_3, e);
+
+		       e->config_menu_sensor = mn;
+		    }
+		  ecore_list_destroy(therms);
 	       }
 	  }
      }
-   if (therms) ecore_list_destroy(therms);
 #endif
    
    /* Main */
@@ -991,6 +1001,8 @@ _temperature_cb_check(void *data)
      {
 	FILE *f;
 
+	if (therms) ecore_list_destroy(therms);
+
 	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
 	if (f)
 	  {
@@ -1001,31 +1013,30 @@ _temperature_cb_check(void *data)
 	  }
 	else
 	  {
-	     if (therms) ecore_list_destroy(therms);
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
-	     if ((therms) && (!ecore_list_is_empty(therms)))
+	     if (therms)
 	       {
 		  char *name, *sensor;
 
-                  sensor = ef->conf->sensor_name;
-                  if (!sensor) sensor = "temp1";
-		  
+		  sensor = ef->conf->sensor_name;
+		  if (!sensor) sensor = "temp1";
+
 		  while ((name = ecore_list_next(therms)))
 		    {
 		       char fname[1024];
-		       
+
 		       sprintf(fname, "/sys/bus/i2c/devices/%s/%s_input",
 			       name, sensor);
 		       if (ecore_file_exists(fname))
 			 {
 			    FILE *f;
-			    
+
 			    f = fopen(fname,"r");
 			    if (f) 
 			      {
 				 fgets(buf, sizeof(buf), f);
 				 buf[sizeof(buf) - 1] = 0;
-				 
+
 				 /* actuallty read the temp */
 				 if (sscanf(buf, "%i", &temp) == 1)
 				   ret = 1;
@@ -1042,6 +1053,7 @@ _temperature_cb_check(void *data)
    else
      {
 	char *name;
+
 	while ((name = ecore_list_next(therms)))
 	  {
 	     char units[32];
