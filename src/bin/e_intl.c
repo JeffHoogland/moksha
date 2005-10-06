@@ -101,10 +101,13 @@ _e_intl_dir_scan(char *dir)
    if (!files) return NULL;
    
    ecore_list_goto_first(files);
-   while ((file = ecore_list_current(files)))
+   if (files)
      {
-	ecore_list_remove(files);
-	ecore_list_next(files);
+	while ((file = ecore_list_next(files)))
+	  {
+	     /* Do something! */
+	  }
+	ecore_list_destroy(files);
      }
    return NULL;
 }
