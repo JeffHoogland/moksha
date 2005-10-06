@@ -863,80 +863,83 @@ _battery_linux_acpi_check(Battery *ef)
 
    /* Read some information on first run. */
    bats = ecore_file_ls("/proc/acpi/battery");
-   while ((bats) && (name = ecore_list_next(bats)))
+   if (bats)
      {
-	FILE *f;
-
-	snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
-	f = fopen(buf, "r");
-	if (f)
+	while ((name = ecore_list_next(bats)))
 	  {
-	     int design_cap = 0;
-	     int last_full = 0;
+	     FILE *f;
 
-	     /* present */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     /* design capacity */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
-	     if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
-	     else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
-	     /* last full capacity */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
-	     if (!strcmp(buf, "unknown")) last_full_unknown = 1;
-	     else sscanf(buf2, "%*[^:]: %i %*s", &last_full);
-	     fclose(f);
-	     bat_max += design_cap;
-	     bat_filled += last_full;
-	  }
-	snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
-	f = fopen(buf, "r");
-	if (f)
-	  {
-	     char present[256];
-	     char capacity_state[256];
-	     char charging_state[256];
-	     int rate = 1;
-	     int level = 0;
+	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
+	     f = fopen(buf, "r");
+	     if (f)
+	       {
+		  int design_cap = 0;
+		  int last_full = 0;
 
-	     /* present */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s", present);
-	     /* capacity state */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s", capacity_state);
-	     /* charging state */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s", charging_state);
-	     /* present rate */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
-	     if (!strcmp(buf, "unknown")) rate_unknown = 1;
-	     else sscanf(buf2, "%*[^:]: %i %*s", &rate);
-	     /* remaining capacity */
-	     fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	     sscanf(buf2, "%*[^:]: %250s %*s", buf);
-	     if (!strcmp(buf, "unknown")) level_unknown = 1;
-	     else sscanf(buf2, "%*[^:]: %i %*s", &level);
-	     fclose(f);
-	     if (!strcmp(present, "yes")) battery++;
-	     if (!strcmp(charging_state, "discharging"))
-	       {
-		  discharging++;
-		  if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		  /* present */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  /* design capacity */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
+		  if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
+		  else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
+		  /* last full capacity */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
+		  if (!strcmp(buf, "unknown")) last_full_unknown = 1;
+		  else sscanf(buf2, "%*[^:]: %i %*s", &last_full);
+		  fclose(f);
+		  bat_max += design_cap;
+		  bat_filled += last_full;
 	       }
-	     if (!strcmp(charging_state, "charging"))
+	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/state", name);
+	     f = fopen(buf, "r");
+	     if (f)
 	       {
-		  charging++;
-		  if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		  char present[256];
+		  char capacity_state[256];
+		  char charging_state[256];
+		  int rate = 1;
+		  int level = 0;
+
+		  /* present */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s", present);
+		  /* capacity state */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s", capacity_state);
+		  /* charging state */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s", charging_state);
+		  /* present rate */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
+		  if (!strcmp(buf, "unknown")) rate_unknown = 1;
+		  else sscanf(buf2, "%*[^:]: %i %*s", &rate);
+		  /* remaining capacity */
+		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
+		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
+		  if (!strcmp(buf, "unknown")) level_unknown = 1;
+		  else sscanf(buf2, "%*[^:]: %i %*s", &level);
+		  fclose(f);
+		  if (!strcmp(present, "yes")) battery++;
+		  if (!strcmp(charging_state, "discharging"))
+		    {
+		       discharging++;
+		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		    }
+		  if (!strcmp(charging_state, "charging"))
+		    {
+		       charging++;
+		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		    }
+		  if (!strcmp(charging_state, "charged")) rate_unknown = 0;
+		  bat_drain += rate;
+		  bat_level += level;
 	       }
-	     if (!strcmp(charging_state, "charged")) rate_unknown = 0;
-	     bat_drain += rate;
-	     bat_level += level;
 	  }
+	ecore_list_destroy(bats);
      }
-   if (bats) ecore_list_destroy(bats);
 
    if (ef->battery_prev_drain < 1) ef->battery_prev_drain = 1;
    if (bat_drain < 1) bat_drain = ef->battery_prev_drain;
