@@ -136,11 +136,15 @@ e_dnd_shutdown(void)
 
 E_Drag*
 e_drag_new(E_Container *container, int x, int y,
-	   const char *type, void *data,
+	   const char **types, unsigned int num_types,
+	   void *data, int size,
 	   void (*finished_cb)(E_Drag *drag, int dropped))
 {
    E_Drag *drag;
+   int i;
 
+   /* No need to create a drag object without type */
+   if (!num_types) return NULL;
    drag = E_OBJECT_ALLOC(E_Drag, E_DRAG_TYPE, _e_drag_free);
    if (!drag) return NULL;
 
@@ -175,8 +179,12 @@ e_drag_new(E_Container *container, int x, int y,
    evas_object_resize(drag->object, drag->w, drag->h);
    ecore_evas_resize(drag->ecore_evas, drag->w, drag->h);
 
-   drag->type = strdup(type);
+   drag->types = malloc(num_types * sizeof(char *));
+   for (i = 0; i < num_types; i++)
+     drag->types[i] = strdup(types[i]);
+   drag->num_types = num_types;
    drag->data = data;
+   drag->data_size = size;
    drag->cb.finished = finished_cb;
 
    _drag_list = evas_list_append(_drag_list, drag);
@@ -274,7 +282,7 @@ e_drag_start(E_Drag *drag, int x, int y)
 	h->active = 0;
 	for (i = 0; i < h->num_types; i++)
 	  {
-	     if (!strcmp(h->types[i], drag->type))
+	     if (!strcmp(h->types[i], drag->types[0]))
 	       h->active = 1;
 	  }
 	h->entered = 0;
@@ -323,18 +331,18 @@ e_drag_update(int x, int y)
 	     if (!h->entered)
 	       {
 		  if (h->cb.enter)
-		    h->cb.enter(h->cb.data, _drag_current->type, enter_ev);
+		    h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
 		  h->entered = 1;
 	       }
 	     if (h->cb.move)
-	       h->cb.move(h->cb.data, _drag_current->type, move_ev);
+	       h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
 	  }
 	else
 	  {
 	     if (h->entered)
 	       {
 		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, _drag_current->type, leave_ev);
+		    h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
 		  h->entered = 0;
 	       }
 	  }
@@ -366,7 +374,7 @@ e_drag_end(int x, int y)
    if (_drag_current)
      {
 	ev->data = _drag_current->data;
-	type = _drag_current->type;
+	type = _drag_current->types[0];
      }
    else if (_xdnd)
      {
@@ -565,6 +573,8 @@ e_drag_idler_before(void)
 static void
 _e_drag_free(E_Drag *drag)
 {
+   int i;
+
    _drag_list = evas_list_remove(_drag_list, drag);
 
    E_FREE(drag->shape_rects);
@@ -575,7 +585,9 @@ _e_drag_free(E_Drag *drag)
    evas_object_del(drag->object);
    e_canvas_del(drag->ecore_evas);
    ecore_evas_free(drag->ecore_evas);
-   free(drag->type);
+   for (i = 0; i < drag->num_types; i++)
+     free(drag->types[i]);
+   free(drag->types);
    free(drag);
 }
 

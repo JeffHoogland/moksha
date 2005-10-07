@@ -1345,14 +1345,15 @@ _ibar_icon_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info
 	     E_Drag *d;
 	     Evas_Object *o;
 	     Evas_Coord x, y, w, h;
+	     const char *drag_types[] = { "enlightenment/eapp" };
 
 	     drag = 1;
 	     drag_start = 0;
 
 	     evas_object_geometry_get(ic->icon_object,
 				      &x, &y, &w, &h);
-	     d = e_drag_new(ic->ibb->con, x, y, "enlightenment/eapp",
-			    ic->app, _ibar_bar_cb_finished);
+	     d = e_drag_new(ic->ibb->con, x, y, drag_types, 1,
+			    ic->app, -1, _ibar_bar_cb_finished);
 	     o = edje_object_add(e_drag_evas_get(d));
 	     edje_object_file_set(o, ic->app->path, "icon");
 	     e_drag_object_set(d, o);

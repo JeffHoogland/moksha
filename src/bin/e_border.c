@@ -4093,11 +4093,12 @@ _e_border_cb_mouse_move(void *data, int type, void *event)
 			    Evas_Object *o = NULL;
 			    Evas_Coord x, y, w, h;
 			    const char *file = NULL, *part = NULL;
+			    const char *drag_types[] = { "enlightenment/border" };
 
 			    evas_object_geometry_get(bd->icon_object,
 						     &x, &y, &w, &h);
 			    drag = e_drag_new(bd->zone->container, bd->x + x, bd->y + y,
-					      "enlightenment/border", bd, NULL);
+					      drag_types, 1, bd, -1, NULL);
 			    edje_object_file_get(bd->icon_object, &file, &part);
 			    if ((file) && (part))
 			      {

@@ -21,8 +21,10 @@ struct _E_Drag
 {
    E_Object             e_obj_inherit;
 
-   char         *type;
-   void         *data;
+   char         **types;
+   unsigned int   num_types;
+   void          *data;
+   int            data_size;
 
    struct {
 	void (*finished)(E_Drag *drag, int dropped);
@@ -91,7 +93,9 @@ EAPI int  e_dnd_shutdown(void);
 EAPI int  e_dnd_active(void);
 
 /* x and y are the top left coords of the object that is to be dragged */
-EAPI E_Drag *e_drag_new(E_Container *container, int x, int y, const char *type, void *data,
+EAPI E_Drag *e_drag_new(E_Container *container, int x, int y,
+			const char **types, unsigned int num_types,
+			void *data, int size,
 			void (*finished_cb)(E_Drag *drag, int dropped));
 EAPI Evas   *e_drag_evas_get(E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);

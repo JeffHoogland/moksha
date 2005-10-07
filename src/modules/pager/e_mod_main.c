@@ -2005,14 +2005,14 @@ _pager_window_cb_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_i
 		       Evas_Object *o, *oo;
 		       Evas_Coord x, y, w, h;
 		       const char *file, *part;
+		       const char *drag_types[] = { "enlightenment/pager_win" };
 
 		       evas_object_geometry_get(pw->window_object,
-			     &x, &y, &w, &h);
+						&x, &y, &w, &h);
 
-		       drag = e_drag_new(pw->desk->face->zone->container,
-					 x,
-					 y, "enlightenment/pager_win",
-					 pw, _pager_window_cb_drag_finished);
+		       drag = e_drag_new(pw->desk->face->zone->container, x, y,
+					 drag_types, 1, pw, -1,
+					 _pager_window_cb_drag_finished);
 
 		       o = edje_object_add(drag->evas);
 		       edje_object_file_get(pw->window_object, &file, &part);
