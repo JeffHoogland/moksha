@@ -176,7 +176,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 void
 e_bg_update(void)
 {
-   Evas_List *l, *ll;
+   Evas_List *l, *ll, *lll;
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
@@ -187,8 +187,11 @@ e_bg_update(void)
 	for (ll = man->containers; ll; ll = ll->next)
 	  {
 	     con = ll->data;
-	     zone = e_zone_current_get(con);
-	     e_zone_bg_reconfigure(zone);
+	     for (lll = con->zones; lll; lll = lll->next)
+	       {
+		  zone = lll->data;
+		  e_zone_bg_reconfigure(zone);
+	       }
 	  }
      }
 }
