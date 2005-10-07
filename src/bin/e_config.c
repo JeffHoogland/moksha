@@ -1020,6 +1020,16 @@ e_config_init(void)
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
 	     eb->context = E_BINDING_CONTEXT_BORDER;
+	     eb->signal = strdup("mouse,clicked,3");
+	     eb->source = strdup("title");
+	     eb->modifiers = E_BINDING_MODIFIER_NONE;
+	     eb->any_mod = 1;
+	     eb->action = strdup("window_menu");
+	     eb->params = strdup("");
+	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
+	     
+	     eb = E_NEW(E_Config_Binding_Signal, 1);
+	     eb->context = E_BINDING_CONTEXT_BORDER;
 	     eb->signal = strdup("mouse,clicked,?");
 	     eb->source = strdup("icon");
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
