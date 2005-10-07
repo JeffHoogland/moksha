@@ -1033,11 +1033,13 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
      {
         Evas_Button_Flags flags = EVAS_BUTTON_NONE;
 
-	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
-					   E_OBJECT(con), ev);
-	if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
-	if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
-	evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
+	if (!e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
+						E_OBJECT(con), ev))
+	  {
+	     if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
+	     if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
+	     evas_event_feed_mouse_down(con->bg_evas, ev->button, flags, ev->time, NULL);
+	  }
      }
    return 1;
 }
@@ -1084,9 +1086,9 @@ _e_container_cb_mouse_wheel(void *data, int type, void *event)
    con = _e_container_find_by_event_window(ev->event_win);
    if (con)
      {
-	e_bindings_wheel_event_handle(E_BINDING_CONTEXT_CONTAINER,
-				      E_OBJECT(con), ev);
-	evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
+	if (!e_bindings_wheel_event_handle(E_BINDING_CONTEXT_CONTAINER,
+					   E_OBJECT(con), ev))
+	    evas_event_feed_mouse_wheel(con->bg_evas, ev->direction, ev->z, ev->time, NULL);
      }
    return 1;
 }
