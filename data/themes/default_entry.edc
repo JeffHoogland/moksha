@@ -5,7 +5,7 @@ images {
 
 group {
    name: "widgets/entry";
-   min: 120 18;
+   min: 18 18;
    parts {
       part {
          name: "entry";
