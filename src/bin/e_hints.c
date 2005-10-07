@@ -114,6 +114,8 @@ e_hints_init(void)
  */
 /*	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");*/
 	     ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
+/* this makes openoffice.org read gtk settings so it doesnt look like shit */
+	     e_hints_openoffice_gnome_fake(roots[i]);
 
 	     ecore_x_netwm_supported_set(roots[i], supported, supported_num);
 	  }
@@ -1124,4 +1126,25 @@ void
 e_hints_window_e_state_set(E_Border *bd)
 {
    /* TODO */
+}
+
+void
+e_hints_openoffice_gnome_fake(Ecore_X_Window root)
+{
+   Ecore_X_Atom gnome_atom, string_atom;
+   const char *string = "GNOME_SM_PROXY";
+   
+   gnome_atom = ecore_x_atom_get("GNOME_SM_PROXY");
+   string_atom = ecore_x_atom_get("STRING");
+   ecore_x_window_prop_property_set(root, gnome_atom, string_atom, 
+				    8, (void *)string, strlen(string));
+}
+
+void
+e_hints_openoffice_kde_fake(Ecore_X_Window root)
+{
+   Ecore_X_Window win2;
+   
+   win2 = ecore_x_window_new(root, -20, -20, 1, 1);
+   ecore_x_netwm_wm_identify(root, win2, "KWin");
 }

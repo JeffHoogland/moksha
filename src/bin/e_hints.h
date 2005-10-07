@@ -45,5 +45,8 @@ EAPI void e_hints_window_desktop_set(E_Border *bd);
 EAPI void e_hints_window_e_state_set(E_Border *bd);
 EAPI void e_hints_window_e_state_get(E_Border *bd);
 
+EAPI void e_hints_openoffice_gnome_fake(Ecore_X_Window root);
+EAPI void e_hints_openoffice_kde_fake(Ecore_X_Window root);
+    
 #endif
 #endif
