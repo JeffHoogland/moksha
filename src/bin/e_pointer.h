@@ -14,13 +14,17 @@ typedef struct _E_Pointer E_Pointer;
 struct _E_Pointer
 {
    E_Object e_obj_inherit;
-   
+
    Evas             *evas;
    Evas_Object      *pointer_object;
    Evas_Object      *hot_object;
    int              *pixels;
    Ecore_X_Window    win;
    int               w, h;
+
+   char             *type;
+   Evas_List        *stack;
+
    struct {
       int            x, y;
       unsigned char  update : 1;
