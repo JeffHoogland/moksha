@@ -738,6 +738,7 @@ _ds_shadow_obj_init(Shadow *sh)
    for (i = 0; i < 4; i++)
      {
 	sh->object[i] = evas_object_image_add(con->bg_evas);
+	evas_object_image_alpha_set(sh->object[i], 1);
 	evas_object_layer_set(sh->object[i], 10);
 	evas_object_pass_events_set(sh->object[i], 1);
 	evas_object_move(sh->object[i], 0, 0);
@@ -770,6 +771,7 @@ _ds_shadow_obj_init_rects(Shadow *sh, Evas_List *rects)
 	if (so)
 	  {
 	     o = evas_object_image_add(con->bg_evas);
+	     evas_object_image_alpha_set(o, 1);
 	     evas_object_layer_set(o, 10);
 	     evas_object_pass_events_set(o, 1);
 	     evas_object_move(o, r->x, r->y);
@@ -2332,9 +2334,9 @@ static void
 _ds_shstore_object_set(Shstore *st, Evas_Object *o)
 {
    evas_object_image_size_set(o, st->w, st->h);
+   evas_object_image_alpha_set(o, 1);
    evas_object_image_data_set(o, st->pix);
    evas_object_image_data_update_add(o, 0, 0, st->w, st->h);
-   evas_object_image_alpha_set(o, 1);
 }
 
 static void
