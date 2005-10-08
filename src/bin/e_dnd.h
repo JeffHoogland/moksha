@@ -4,6 +4,8 @@
 
 #ifdef E_TYPEDEFS
 
+typedef enum   _E_Drag_Type        E_Drag_Type;
+
 typedef struct _E_Drag             E_Drag;
 typedef struct _E_Drop_Handler     E_Drop_Handler;
 typedef struct _E_Event_Dnd_Enter  E_Event_Dnd_Enter;
@@ -17,6 +19,13 @@ typedef struct _E_Event_Dnd_Drop   E_Event_Dnd_Drop;
 
 #define E_DRAG_TYPE 0xE0b0100f
 
+enum _E_Drag_Type
+{
+   E_DRAG_NONE,
+   E_DRAG_INTERNAL,
+   E_DRAG_XDND
+};
+
 struct _E_Drag
 {
    E_Object             e_obj_inherit;
@@ -25,6 +34,8 @@ struct _E_Drag
    unsigned int   num_types;
    void          *data;
    int            data_size;
+
+   E_Drag_Type    type;
 
    struct {
 	void (*finished)(E_Drag *drag, int dropped);
@@ -99,16 +110,12 @@ EAPI E_Drag *e_drag_new(E_Container *container, int x, int y,
 			void (*finished_cb)(E_Drag *drag, int dropped));
 EAPI Evas   *e_drag_evas_get(E_Drag *drag);
 EAPI void    e_drag_object_set(E_Drag *drag, Evas_Object *object);
-EAPI void    e_drag_show(E_Drag *drag);
-EAPI void    e_drag_hide(E_Drag *drag);
-EAPI void    e_drag_move(E_Drag *drag, int x, int y);
 EAPI void    e_drag_resize(E_Drag *drag, int w, int h);
 EAPI void    e_drag_idler_before(void);
 
 /* x and y are the coords where the mouse is when dragging starts */
-EAPI void e_drag_start(E_Drag *drag, int x, int y);
-EAPI void e_drag_update(int x, int y);
-EAPI void e_drag_end(int x, int y);
+EAPI int  e_drag_start(E_Drag *drag, int x, int y);
+EAPI int  e_drag_xdnd_start(E_Drag *drag, int x, int y);
 
 EAPI E_Drop_Handler *e_drop_handler_add(void *data,
 					void (*enter_cb)(void *data, const char *type, void *event),

@@ -5,12 +5,21 @@
 
 /*
  * TODO:
- * Better system to let a drop target support several drop types
+ * - Let an internal drag work with several types.
+ * - Let a drag be both internal and external, or allow internal xdnd
+ *   (internal xdnd is unecessary load)
  */
 
 /* local subsystem functions */
 
+static void _e_drag_show(E_Drag *drag);
+static void _e_drag_hide(E_Drag *drag);
+static void _e_drag_move(E_Drag *drag, int x, int y);
+static void _e_drag_update(int x, int y);
+static void _e_drag_end(int x, int y);
+static void _e_drag_xdnd_end(int x, int y);
 static void _e_drag_free(E_Drag *drag);
+
 static int  _e_dnd_cb_window_shape(void *data, int type, void *event);
 
 static int  _e_dnd_cb_mouse_up(void *data, int type, void *event);
@@ -18,6 +27,8 @@ static int  _e_dnd_cb_mouse_move(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_enter(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_leave(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_position(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_status(void *data, int type, void *event);
+static int  _e_dnd_cb_event_dnd_finished(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_drop(void *data, int type, void *event);
 static int  _e_dnd_cb_event_dnd_selection(void *data, int type, void *event);
 
@@ -81,6 +92,14 @@ e_dnd_init(void)
 	     _event_handlers = evas_list_append(_event_handlers,
 						ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION,
 									_e_dnd_cb_event_dnd_position,
+									con));
+	     _event_handlers = evas_list_append(_event_handlers,
+						ecore_event_handler_add(ECORE_X_EVENT_XDND_STATUS,
+									_e_dnd_cb_event_dnd_status,
+									con));
+	     _event_handlers = evas_list_append(_event_handlers,
+						ecore_event_handler_add(ECORE_X_EVENT_XDND_FINISHED,
+									_e_dnd_cb_event_dnd_finished,
 									con));
 	     _event_handlers = evas_list_append(_event_handlers,
 						ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP,
@@ -168,6 +187,7 @@ e_drag_new(E_Container *container, int x, int y,
    ecore_x_window_shape_events_select(drag->evas_win, 1);
    ecore_evas_name_class_set(drag->ecore_evas, "E", "_e_drag_window");
    ecore_evas_title_set(drag->ecore_evas, "E Drag");
+   ecore_evas_ignore_events_set(drag->ecore_evas, 1);
 
    ecore_evas_shaped_set(drag->ecore_evas, 1);
 
@@ -178,6 +198,8 @@ e_drag_new(E_Container *container, int x, int y,
    evas_object_move(drag->object, 0, 0);
    evas_object_resize(drag->object, drag->w, drag->h);
    ecore_evas_resize(drag->ecore_evas, drag->w, drag->h);
+
+   drag->type = E_DRAG_NONE;
 
    drag->types = malloc(num_types * sizeof(char *));
    for (i = 0; i < num_types; i++)
@@ -207,40 +229,6 @@ e_drag_object_set(E_Drag *drag, Evas_Object *object)
 }
 
 void
-e_drag_show(E_Drag *drag)
-{
-   if (drag->visible) return;
-   drag->visible = 1;
-   evas_object_show(drag->object);
-   ecore_evas_show(drag->ecore_evas);
-   e_container_shape_show(drag->shape);
-}
-
-void
-e_drag_hide(E_Drag *drag)
-{
-   if (!drag->visible) return;
-   drag->visible = 0;
-   evas_object_hide(drag->object);
-   ecore_evas_hide(drag->ecore_evas);
-   e_container_shape_hide(drag->shape);
-}
-
-void
-e_drag_move(E_Drag *drag, int x, int y)
-{
-   if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
-   drag->x = x - drag->dx;
-   drag->y = y - drag->dy;
-   ecore_evas_move(drag->ecore_evas,
-		   drag->x, 
-		   drag->y);
-   e_container_shape_move(drag->shape,
-			  drag->x, 
-			  drag->y);
-}
-
-void
 e_drag_resize(E_Drag *drag, int w, int h)
 {
    if ((drag->w == w) && (drag->h == h)) return;
@@ -257,18 +245,21 @@ e_dnd_active(void)
    return (_drag_win != 0);
 }
 
-void
+int
 e_drag_start(E_Drag *drag, int x, int y)
 {
    Evas_List *l;
    int i;
 
+   if (_drag_win) return 0;
    _drag_win = ecore_x_window_input_new(drag->container->win, 
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
    ecore_x_window_show(_drag_win);
    ecore_x_pointer_confine_grab(_drag_win);
    ecore_x_keyboard_grab(_drag_win);
+
+   drag->type = E_DRAG_INTERNAL;
 
    drag->dx = x - drag->x;
    drag->dy = y - drag->y;
@@ -289,159 +280,31 @@ e_drag_start(E_Drag *drag, int x, int y)
      }
 
    _drag_current = drag;
+   return 1;
 }
 
-void
-e_drag_update(int x, int y)
+int
+e_drag_xdnd_start(E_Drag *drag, int x, int y)
 {
-   Evas_List *l;
-   E_Event_Dnd_Enter *enter_ev;
-   E_Event_Dnd_Move *move_ev;
-   E_Event_Dnd_Leave *leave_ev;
+   if (_drag_win) return 0;
+   _drag_win = ecore_x_window_input_new(drag->container->win, 
+					drag->container->x, drag->container->y,
+					drag->container->w, drag->container->h);
+   ecore_x_window_show(_drag_win);
+   ecore_x_pointer_confine_grab(_drag_win);
+   ecore_x_keyboard_grab(_drag_win);
 
-   if (_drag_current)
-     {
-	e_drag_show(_drag_current);
-	e_drag_move(_drag_current, x, y);
-     }
+   drag->type = E_DRAG_XDND;
 
-   enter_ev = E_NEW(E_Event_Dnd_Enter, 1);
-   enter_ev->x = x;
-   enter_ev->y = y;
-   
-   move_ev = E_NEW(E_Event_Dnd_Move, 1);
-   move_ev->x = x;
-   move_ev->y = y;
+   drag->dx = x - drag->x;
+   drag->dy = y - drag->y;
 
-   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
-   leave_ev->x = x;
-   leave_ev->y = y;
+   ecore_x_dnd_aware_set(_drag_win, 1);
+   ecore_x_dnd_types_set(_drag_win, drag->types, drag->num_types);
+   ecore_x_dnd_begin(_drag_win, drag->data, drag->data_size);
 
-   for (l = _drop_handlers; l; l = l->next)
-     {
-	E_Drop_Handler *h;
-
-	h = l->data;
-
-	if (!h->active)
-	  continue;
-	
-	if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
-	  {
-	     if (!h->entered)
-	       {
-		  if (h->cb.enter)
-		    h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
-		  h->entered = 1;
-	       }
-	     if (h->cb.move)
-	       h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
-	  }
-	else
-	  {
-	     if (h->entered)
-	       {
-		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
-		  h->entered = 0;
-	       }
-	  }
-     }
-
-   free(enter_ev);
-   free(move_ev);
-   free(leave_ev);
-}
-
-void
-e_drag_end(int x, int y)
-{
-   Evas_List *l;
-   E_Event_Dnd_Drop *ev;
-   const char *type = NULL;
-
-   if (_drag_current)
-     {
-	e_drag_hide(_drag_current);
-
-	ecore_x_pointer_ungrab();
-	ecore_x_keyboard_ungrab();
-	ecore_x_window_del(_drag_win);
-	_drag_win = 0;
-     }
-
-   ev = E_NEW(E_Event_Dnd_Drop, 1);
-   if (_drag_current)
-     {
-	ev->data = _drag_current->data;
-	type = _drag_current->types[0];
-     }
-   else if (_xdnd)
-     {
-	ev->data = _xdnd->data;
-	type = _xdnd->type;
-     }
-   ev->x = x;
-   ev->y = y;
-
-   if (ev->data)
-     {
-	int dropped;
-
-	dropped = 0;
-	for (l = _drop_handlers; l; l = l->next)
-	  {
-	     E_Drop_Handler *h;
-
-	     h = l->data;
-
-	     if (!h->active)
-	       continue;
-
-	     if ((h->cb.drop)
-		   && E_INSIDE(x, y, h->x, h->y, h->w, h->h))
-	       {
-		  h->cb.drop(h->cb.data, type, ev);
-		  dropped = 1;
-	       }
-	  }
-	if (_drag_current)
-	  {
-	     if (_drag_current->cb.finished)
-	       _drag_current->cb.finished(_drag_current, dropped);
-	     e_object_del(E_OBJECT(_drag_current));
-	     _drag_current = NULL;
-	  }
-     }
-   else
-     {
-	/* Just leave */
-	E_Event_Dnd_Leave *leave_ev;
-
-	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
-	/* FIXME: We don't need x and y in leave */
-	leave_ev->x = 0;
-	leave_ev->y = 0;
-
-	for (l = _drop_handlers; l; l = l->next)
-	  {
-	     E_Drop_Handler *h;
-
-	     h = l->data;
-
-	     if (!h->active)
-	       continue;
-
-	     if (h->entered)
-	       {
-		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, type, leave_ev);
-		  h->entered = 0;
-	       }
-	  }
-     }
-
-   free(ev);
+   _drag_current = drag;
+   return 1;
 }
 
 E_Drop_Handler *
@@ -571,6 +434,261 @@ e_drag_idler_before(void)
 /* local subsystem functions */
 
 static void
+_e_drag_show(E_Drag *drag)
+{
+   if (drag->visible) return;
+   drag->visible = 1;
+   evas_object_show(drag->object);
+   ecore_evas_show(drag->ecore_evas);
+   e_container_shape_show(drag->shape);
+}
+
+static void
+_e_drag_hide(E_Drag *drag)
+{
+   if (!drag->visible) return;
+   drag->visible = 0;
+   evas_object_hide(drag->object);
+   ecore_evas_hide(drag->ecore_evas);
+   e_container_shape_hide(drag->shape);
+}
+
+static void
+_e_drag_move(E_Drag *drag, int x, int y)
+{
+   if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
+   drag->x = x - drag->dx;
+   drag->y = y - drag->dy;
+   ecore_evas_move(drag->ecore_evas,
+		   drag->x, 
+		   drag->y);
+   e_container_shape_move(drag->shape,
+			  drag->x, 
+			  drag->y);
+}
+
+static void
+_e_drag_update(int x, int y)
+{
+   Evas_List *l;
+   E_Event_Dnd_Enter *enter_ev;
+   E_Event_Dnd_Move *move_ev;
+   E_Event_Dnd_Leave *leave_ev;
+
+   if (_drag_current)
+     {
+	_e_drag_show(_drag_current);
+	_e_drag_move(_drag_current, x, y);
+     }
+
+   enter_ev = E_NEW(E_Event_Dnd_Enter, 1);
+   enter_ev->x = x;
+   enter_ev->y = y;
+   
+   move_ev = E_NEW(E_Event_Dnd_Move, 1);
+   move_ev->x = x;
+   move_ev->y = y;
+
+   leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
+   leave_ev->x = x;
+   leave_ev->y = y;
+
+   for (l = _drop_handlers; l; l = l->next)
+     {
+	E_Drop_Handler *h;
+
+	h = l->data;
+
+	if (!h->active)
+	  continue;
+	
+	if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	  {
+	     if (!h->entered)
+	       {
+		  if (h->cb.enter)
+		    h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
+		  h->entered = 1;
+	       }
+	     if (h->cb.move)
+	       h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
+	  }
+	else
+	  {
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
+		  h->entered = 0;
+	       }
+	  }
+     }
+
+   free(enter_ev);
+   free(move_ev);
+   free(leave_ev);
+}
+
+static void
+_e_drag_end(int x, int y)
+{
+   Evas_List *l;
+   E_Event_Dnd_Drop *ev;
+   const char *type = NULL;
+
+   if (!_drag_current) return;
+
+   _e_drag_hide(_drag_current);
+
+   ecore_x_pointer_ungrab();
+   ecore_x_keyboard_ungrab();
+   if (_drag_current->type == E_DRAG_XDND)
+     {
+	e_object_del(E_OBJECT(_drag_current));
+	_drag_current = NULL;
+	if (!ecore_x_dnd_drop())
+	  {
+	     ecore_x_window_del(_drag_win);
+	     _drag_win = 0;
+	  }
+	return;
+     }
+
+   ecore_x_window_del(_drag_win);
+   _drag_win = 0;
+
+   ev = E_NEW(E_Event_Dnd_Drop, 1);
+   ev->data = _drag_current->data;
+   type = _drag_current->types[0];
+   ev->x = x;
+   ev->y = y;
+
+   if (ev->data)
+     {
+	int dropped;
+
+	dropped = 0;
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if ((h->cb.drop) &&
+		   E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	       {
+		  h->cb.drop(h->cb.data, type, ev);
+		  dropped = 1;
+	       }
+	  }
+	if (_drag_current->cb.finished)
+	  _drag_current->cb.finished(_drag_current, dropped);
+	e_object_del(E_OBJECT(_drag_current));
+	_drag_current = NULL;
+     }
+   else
+     {
+	/* Just leave */
+	E_Event_Dnd_Leave *leave_ev;
+
+	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
+	/* FIXME: We don't need x and y in leave */
+	leave_ev->x = 0;
+	leave_ev->y = 0;
+
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->cb.data, type, leave_ev);
+		  h->entered = 0;
+	       }
+	  }
+     }
+
+   free(ev);
+}
+
+static void
+_e_drag_xdnd_end(int x, int y)
+{
+   Evas_List *l;
+   E_Event_Dnd_Drop *ev;
+   const char *type = NULL;
+
+   if (!_xdnd) return;
+
+   ev = E_NEW(E_Event_Dnd_Drop, 1);
+   ev->data = _xdnd->data;
+   type = _xdnd->type;
+   ev->x = x;
+   ev->y = y;
+
+   if (ev->data)
+     {
+	int dropped;
+
+	dropped = 0;
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if ((h->cb.drop) &&
+		 E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	       {
+		  h->cb.drop(h->cb.data, type, ev);
+		  dropped = 1;
+	       }
+	  }
+     }
+   else
+     {
+	/* Just leave */
+	E_Event_Dnd_Leave *leave_ev;
+
+	leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
+	/* FIXME: We don't need x and y in leave */
+	leave_ev->x = 0;
+	leave_ev->y = 0;
+
+	for (l = _drop_handlers; l; l = l->next)
+	  {
+	     E_Drop_Handler *h;
+
+	     h = l->data;
+
+	     if (!h->active)
+	       continue;
+
+	     if (h->entered)
+	       {
+		  if (h->cb.leave)
+		    h->cb.leave(h->cb.data, type, leave_ev);
+		  h->entered = 0;
+	       }
+	  }
+     }
+
+   free(ev);
+}
+
+static void
 _e_drag_free(E_Drag *drag)
 {
    int i;
@@ -618,7 +736,7 @@ _e_dnd_cb_mouse_up(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   e_drag_end(ev->x, ev->y);
+   _e_drag_end(ev->x, ev->y);
 
    return 1;
 }
@@ -631,7 +749,7 @@ _e_dnd_cb_mouse_move(void *data, int type, void *event)
    ev = event;
    if (ev->win != _drag_win) return 1;
 
-   e_drag_update(ev->x, ev->y);
+   _e_drag_update(ev->x, ev->y);
    return 1;
 }
 
@@ -646,6 +764,7 @@ _e_dnd_cb_event_dnd_enter(void *data, int type, void *event)
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
+   if (ev->source == _drag_win) return 1;
    printf("Xdnd enter\n");
    for (l = _drop_handlers; l; l = l->next)
      {
@@ -712,6 +831,7 @@ _e_dnd_cb_event_dnd_leave(void *data, int type, void *event)
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
+   if (ev->source == _drag_win) return 1;
    printf("Xdnd leave\n");
 
    leave_ev = E_NEW(E_Event_Dnd_Leave, 1);
@@ -759,6 +879,7 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
+   if (ev->source == _drag_win) return 1;
 
    rect.x = 0;
    rect.y = 0;
@@ -780,10 +901,44 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
      }
    else
      {
-	e_drag_update(ev->position.x, ev->position.y);
+	_e_drag_update(ev->position.x, ev->position.y);
 
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_status(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Status *ev;
+
+   ev = event;
+   if (ev->win != _drag_win) return 1;
+
+   return 1;
+}
+
+static int
+_e_dnd_cb_event_dnd_finished(void *data, int type, void *event)
+{
+   Ecore_X_Event_Xdnd_Finished *ev;
+
+   /*
+    * TODO:
+    * - Check action
+    * - Do something if not completed
+    */
+
+   ev = event;
+   if (ev->win != _drag_win) return 1;
+   printf("Xdnd finished\n");
+
+   if (!ev->completed)
+     printf("FIXME: XDnd not completed, need to delay deleting _drag_win!!\n");
+
+   ecore_x_window_del(_drag_win);
+   _drag_win = 0;
    return 1;
 }
 
@@ -796,6 +951,7 @@ _e_dnd_cb_event_dnd_drop(void *data, int type, void *event)
    ev = event;
    con = data;
    if (con->bg_win != ev->win) return 1;
+   if (ev->source == _drag_win) return 1;
    printf("Xdnd drop\n");
 
    ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
@@ -827,7 +983,7 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	for (i = 0; i < files->num_files; i++)
 	  l = evas_list_append(l, files->files[i]), printf("file: %s\n", files->files[i]);
 	_xdnd->data = l;
-	e_drag_end(_xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else if (!strcmp("text/x-moz-url", _xdnd->type))
@@ -866,12 +1022,12 @@ _e_dnd_cb_event_dnd_selection(void *data, int type, void *event)
 	l = evas_list_append(l, file);
 
 	_xdnd->data = l;
-	e_drag_end(_xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_xdnd->x, _xdnd->y);
 	evas_list_free(l);
      }
    else
      {
-	e_drag_end(_xdnd->x, _xdnd->y);
+	_e_drag_xdnd_end(_xdnd->x, _xdnd->y);
      }
    /* FIXME: When to execute this? It could be executed in ecore_x after getting
     * the drop property... */
