@@ -671,7 +671,7 @@ static IBar_Icon *
 _ibar_icon_new(IBar_Bar *ibb, E_App *a)
 {
    IBar_Icon *ic;
-   char *str;
+//   char *str;
    Evas_Object *o;
    Evas_Coord w, h;
 
@@ -739,12 +739,13 @@ _ibar_icon_new(IBar_Bar *ibb, E_App *a)
 			  w, h /* max */
 			  );
 
+/*
    str = (char *)edje_object_data_get(ic->icon_object, "raise_on_hilight");
    if (str)
      {
 	if (atoi(str) == 1) ic->raise_on_hilight = 1;
      }
-
+*/
    edje_object_signal_emit(ic->bg_object, "passive", "");
    edje_object_signal_emit(ic->overlay_object, "passive", "");
    return ic;
@@ -1469,12 +1470,13 @@ _ibar_bar_cb_animator(void *data)
    Evas_Coord x, y, w, h, mw, mh;
 
    ibb = data;
-   if (!ibb->overlay_object)
+
+/*   if (!ibb->overlay_object)
      {
 	ibb->animator = NULL;
 	return 0;
      }
-
+*/
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
      {
