@@ -1033,8 +1033,10 @@ _e_container_cb_mouse_down(void *data, int type, void *event)
      {
         Evas_Button_Flags flags = EVAS_BUTTON_NONE;
 
-	if (!e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
-						E_OBJECT(con), ev))
+	e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
+					   E_OBJECT(con), ev);
+//	if (!e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_CONTAINER,
+//						E_OBJECT(con), ev))
 	  {
 	     if (ev->double_click) flags |= EVAS_BUTTON_DOUBLE_CLICK;
 	     if (ev->triple_click) flags |= EVAS_BUTTON_TRIPLE_CLICK;
