@@ -91,6 +91,8 @@ static void    _ibox_box_cb_iconsize_gigantic(void *data, E_Menu *m, E_Menu_Item
 static void    _ibox_box_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibox_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static void    _ibox_box_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi);
+
 /* public module routines. all modules must have these */
 E_Module_Api e_modapi = 
 {
@@ -175,6 +177,7 @@ _ibox_new()
 #undef D
 #define T Config
 #define D conf_edd
+   E_CONFIG_VAL(D, T, follower, INT);
    E_CONFIG_VAL(D, T, follow_speed, DOUBLE);
    E_CONFIG_VAL(D, T, autoscroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, iconsize, INT);
@@ -185,6 +188,7 @@ _ibox_new()
    if (!ib->conf)
      {
 	ib->conf = E_NEW(Config, 1);
+	ib->conf->follower = 1;
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
 	ib->conf->iconsize = 24;
@@ -297,12 +301,15 @@ _ibox_box_new(IBox *ib, E_Container *con)
 			   "modules/ibox/main");
    evas_object_show(o);
 
-   o = edje_object_add(ibb->evas);
-   ibb->overlay_object = o;
-   evas_object_layer_set(o, 1);
-   e_theme_edje_object_set(o, "base/theme/modules/ibox",
-			   "modules/ibox/follower");
-   evas_object_show(o);
+   if (ibb->ibox->conf->follower)
+     {
+	o = edje_object_add(ibb->evas);
+	ibb->overlay_object = o;
+	evas_object_layer_set(o, 1);
+	e_theme_edje_object_set(o, "base/theme/modules/ibox",
+				"modules/ibox/follower");
+	evas_object_show(o);
+     }
 
    o = evas_object_rectangle_add(ibb->evas);
    ibb->event_object = o;
@@ -593,6 +600,12 @@ _ibox_config_menu_new(IBox *ib)
    e_menu_item_check_set(mi, 1);
    if (ib->conf->width == IBOX_WIDTH_AUTO) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _ibox_box_cb_width_auto, ib);
+
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Follower"));
+   e_menu_item_check_set(mi, 1);
+   if (ib->conf->follower) e_menu_item_toggle_set(mi, 1);
+   e_menu_item_callback_set(mi, _ibox_box_cb_follower, ib);
 
    mn = e_menu_new();
    ib->config_menu_size = mn;
@@ -1483,4 +1496,45 @@ _ibox_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 
    ibb = data;
    e_gadman_mode_set(ibb->gmc->gadman, E_GADMAN_MODE_EDIT);
+}
+
+static void
+_ibox_box_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   IBox          *ib;
+   IBox_Box      *ibb;
+   unsigned char  enabled;
+   Evas_List     *l;
+
+   ib = data;
+   enabled = e_menu_item_toggle_get(mi);
+   if ((enabled) && (!ib->conf->follower))
+     {
+	ib->conf->follower = 1;
+	for (l = ib->boxes; l; l = l->next)
+	  {
+	     Evas_Object *o;
+
+	     ibb = l->data;
+	     if (ibb->overlay_object) continue;
+	     o = edje_object_add(ibb->evas);
+	     ibb->overlay_object = o;
+	     evas_object_layer_set(o, 1);
+	     e_theme_edje_object_set(o, "base/theme/modules/ibox",
+				     "modules/ibox/follower");
+	     evas_object_show(o);
+	  }
+     }
+   else if (!(enabled) && (ib->conf->follower))
+     {
+	ib->conf->follower = 0;
+	for (l = ib->boxes; l; l = l->next)
+	  {
+	     ibb = l->data;
+	     if (!ibb->overlay_object) continue;
+	     evas_object_del(ibb->overlay_object);
+	     ibb->overlay_object = NULL;
+	  }
+     }
+   e_config_save_queue();
 }

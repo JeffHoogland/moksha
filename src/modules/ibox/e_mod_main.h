@@ -16,6 +16,7 @@ typedef struct _IBox_Icon   IBox_Icon;
 struct _Config
 {
    double        follow_speed;
+   int           follower;
    double        autoscroll_speed;
    int           iconsize;
    int           width;
