@@ -417,7 +417,7 @@ _ibox_box_free(IBox_Box *ibb)
    if (ibb->timer) ecore_timer_del(ibb->timer);
    if (ibb->animator) ecore_animator_del(ibb->animator);
    evas_object_del(ibb->box_object);
-   evas_object_del(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_del(ibb->overlay_object);
    evas_object_del(ibb->item_object);
    evas_object_del(ibb->event_object);
 
@@ -460,7 +460,7 @@ _ibox_box_enable(IBox_Box *ibb)
 {
    ibb->conf->enabled = 1;
    evas_object_show(ibb->box_object);
-   evas_object_show(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_show(ibb->overlay_object);
    evas_object_show(ibb->item_object);
    evas_object_show(ibb->event_object);
    e_config_save_queue();
@@ -471,7 +471,7 @@ _ibox_box_disable(IBox_Box *ibb)
 {
    ibb->conf->enabled = 0;
    evas_object_hide(ibb->box_object);
-   evas_object_hide(ibb->overlay_object);
+   if (ibb->overlay_object) evas_object_hide(ibb->overlay_object);
    evas_object_hide(ibb->item_object);
    evas_object_hide(ibb->event_object);
    e_config_save_queue();
@@ -702,10 +702,10 @@ _ibox_box_frame_resize(IBox_Box *ibb)
 {
    Evas_Coord w, h, bw, bh;
    /* Not finished loading config yet! */
-   if ((ibb->x == -1)
-       || (ibb->y == -1)
-       || (ibb->w == -1)
-       || (ibb->h == -1))
+   if ((ibb->x == -1) ||
+       (ibb->y == -1) ||
+       (ibb->w == -1) ||
+       (ibb->h == -1))
      return;
 
    evas_event_freeze(ibb->evas);
@@ -734,14 +734,14 @@ _ibox_box_frame_resize(IBox_Box *ibb)
      }
    else
      {
-	if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT)
-	    || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
+	if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
+	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
 	  {
 	     /* h is the width of the box */
 	     e_gadman_client_resize(ibb->gmc, bw, ibb->h);
 	  }
-	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP)
-		 || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
+	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP) ||
+	         (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
 	  {
 	     /* w is the width of the box */
 	     e_gadman_client_resize(ibb->gmc, ibb->w, bh);
@@ -763,9 +763,12 @@ _ibox_box_edge_change(IBox_Box *ibb, int edge)
    edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[edge]);
    edje_object_message_signal_process(o);
 
-   o = ibb->overlay_object;
-   edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[edge]);
-   edje_object_message_signal_process(o);
+   if (ibb->overlay_object)
+     {
+	o = ibb->overlay_object;
+	edje_object_signal_emit(o, "set_orientation", _ibox_main_orientation[edge]);
+	edje_object_message_signal_process(o);
+     }
 
    e_box_freeze(ibb->item_object);
 
@@ -896,6 +899,8 @@ _ibox_box_follower_reset(IBox_Box *ibb)
 {
    Evas_Coord ww, hh, bx, by, bw, bh, d1, d2, mw, mh;
 
+   if (!ibb->overlay_object) return;
+
    evas_output_viewport_get(ibb->evas, NULL, NULL, &ww, &hh);
    evas_object_geometry_get(ibb->item_object, &bx, &by, &bw, &bh);
    edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
@@ -986,7 +991,8 @@ _ibox_icon_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_event_thaw(ic->ibb->evas);
    edje_object_signal_emit(ic->bg_object, "active", "");
    edje_object_signal_emit(ic->overlay_object, "active", "");
-   edje_object_signal_emit(ic->ibb->overlay_object, "active", "");
+   if (ic->ibb->overlay_object)
+     edje_object_signal_emit(ic->ibb->overlay_object, "active", "");
 }
 
 static void
@@ -999,7 +1005,8 @@ _ibox_icon_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    edje_object_signal_emit(ic->bg_object, "passive", "");
    edje_object_signal_emit(ic->overlay_object, "passive", "");
-   edje_object_signal_emit(ic->ibb->overlay_object, "passive", "");
+   if (ic->ibb->overlay_object)
+     edje_object_signal_emit(ic->ibb->overlay_object, "passive", "");
 }
 
 static void
@@ -1022,7 +1029,8 @@ _ibox_box_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    ibb = data;
-   edje_object_signal_emit(ibb->overlay_object, "active", "");
+   if (ibb->overlay_object)
+     edje_object_signal_emit(ibb->overlay_object, "active", "");
    _ibox_box_motion_handle(ibb, ev->canvas.x, ev->canvas.y);
    _ibox_box_timer_handle(ibb);
 }
@@ -1035,7 +1043,8 @@ _ibox_box_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    ev = event_info;
    ibb = data;
-   edje_object_signal_emit(ibb->overlay_object, "passive", "");
+   if (ibb->overlay_object)
+     edje_object_signal_emit(ibb->overlay_object, "passive", "");
    _ibox_box_follower_reset(ibb);
    _ibox_box_timer_handle(ibb);
 }
@@ -1121,20 +1130,26 @@ _ibox_box_cb_animator(void *data)
      {
 	e_box_align_set(ibb->item_object, ibb->align, 0.5);
 
-	evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
-	edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
-	evas_object_resize(ibb->overlay_object, mw, h);
-	evas_object_move(ibb->overlay_object, x + (w * ibb->follow) - (mw / 2), y);
+	if (ibb->overlay_object)
+	  {
+	     evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
+	     edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
+	     evas_object_resize(ibb->overlay_object, mw, h);
+	     evas_object_move(ibb->overlay_object, x + (w * ibb->follow) - (mw / 2), y);
+	  }
      }
    else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
 	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
      {
 	e_box_align_set(ibb->item_object, 0.5, ibb->align);
 
-	evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
-	edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
-	evas_object_resize(ibb->overlay_object, w, mh);
-	evas_object_move(ibb->overlay_object, x, y + (h * ibb->follow) - (mh / 2));
+	if (ibb->overlay_object)
+	  {
+	     evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
+	     edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
+	     evas_object_resize(ibb->overlay_object, w, mh);
+	     evas_object_move(ibb->overlay_object, x, y + (h * ibb->follow) - (mh / 2));
+	  }
      }
    if (ibb->timer) return 1;
    ibb->animator = NULL;
@@ -1191,9 +1206,11 @@ _ibox_box_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	 edje_object_part_swallow(ibb->box_object, "items", ibb->item_object);
 
 	 evas_object_move(ibb->box_object, ibb->x, ibb->y);
-	 evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
+	 if (ibb->overlay_object)
+	   evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
 	 evas_object_resize(ibb->box_object, ibb->w, ibb->h);
-	 evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
+	 if (ibb->overlay_object)
+	   evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
 
 	 _ibox_box_follower_reset(ibb);
 	 _ibox_box_timer_handle(ibb);
