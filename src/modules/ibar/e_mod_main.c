@@ -413,7 +413,8 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "start", "");
 			    edje_object_signal_emit(ic->bg_object, "start", "");
 			    edje_object_signal_emit(ic->overlay_object, "start", "");
-			    edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
+			    if (ic->ibb->overlay_object)
+			      edje_object_signal_emit(ic->ibb->overlay_object, "start", "");
 			 }
 		       else
 			 {
@@ -421,7 +422,8 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "exec", "");
 			    edje_object_signal_emit(ic->bg_object, "exec", "");
 			    edje_object_signal_emit(ic->overlay_object, "exec", "");
-			    edje_object_signal_emit(ic->ibb->overlay_object, "exec", "");
+			    if (ic->ibb->overlay_object)
+			      edje_object_signal_emit(ic->ibb->overlay_object, "exec", "");
 			 }
 		    }
 	       }
@@ -442,7 +444,8 @@ _ibar_app_change(void *data, E_App *a, E_App_Change ch)
 			    for (ll = ic->extra_icons; ll; ll = ll->next) edje_object_signal_emit(ll->data, "stop", "");
 			    edje_object_signal_emit(ic->bg_object, "stop", "");
 			    edje_object_signal_emit(ic->overlay_object, "stop", "");
-			    edje_object_signal_emit(ic->ibb->overlay_object, "stop", "");
+			    if (ic->ibb->overlay_object)
+			      edje_object_signal_emit(ic->ibb->overlay_object, "stop", "");
 			 }
 		    }
 	       }
@@ -1019,14 +1022,14 @@ _ibar_bar_frame_resize(IBar_Bar *ibb)
      }
    else
      {
-	if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT)
-	    || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
+	if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
+	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
 	  {
 	     /* h is the width of the bar */
 	     e_gadman_client_resize(ibb->gmc, bw, ibb->h);
 	  }
-	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP)
-		 || (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
+	else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP) ||
+		 (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
 	  {
 	     /* w is the width of the bar */
 	     e_gadman_client_resize(ibb->gmc, ibb->w, bh);
@@ -1276,7 +1279,8 @@ _ibar_icon_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_event_thaw(ic->ibb->evas);
    edje_object_signal_emit(ic->bg_object, "active", "");
    edje_object_signal_emit(ic->overlay_object, "active", "");
-   edje_object_signal_emit(ic->ibb->overlay_object, "active", "");
+   if (ic->ibb->overlay_object)
+     edje_object_signal_emit(ic->ibb->overlay_object, "active", "");
 }
 
 static void
@@ -1289,7 +1293,8 @@ _ibar_icon_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ic = data;
    edje_object_signal_emit(ic->bg_object, "passive", "");
    edje_object_signal_emit(ic->overlay_object, "passive", "");
-   edje_object_signal_emit(ic->ibb->overlay_object, "passive", "");
+   if (ic->ibb->overlay_object)
+     edje_object_signal_emit(ic->ibb->overlay_object, "passive", "");
 }
 
 static void
@@ -1471,31 +1476,31 @@ _ibar_bar_cb_animator(void *data)
 
    ibb = data;
 
-/*   if (!ibb->overlay_object)
-     {
-	ibb->animator = NULL;
-	return 0;
-     }
-*/
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
      {
 	e_box_align_set(ibb->box_object, ibb->align, 0.5);
 
-	evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
-	edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
-	evas_object_resize(ibb->overlay_object, mw, h);
-	evas_object_move(ibb->overlay_object, x + (w * ibb->follow) - (mw / 2), y);
+	if (ibb->overlay_object)
+	  {
+	     evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
+	     edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
+	     evas_object_resize(ibb->overlay_object, mw, h);
+	     evas_object_move(ibb->overlay_object, x + (w * ibb->follow) - (mw / 2), y);
+	  }
      }
    else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
 	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
      {
 	e_box_align_set(ibb->box_object, 0.5, ibb->align);
 
-	evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
-	edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
-	evas_object_resize(ibb->overlay_object, w, mh);
-	evas_object_move(ibb->overlay_object, x, y + (h * ibb->follow) - (mh / 2));
+	if (ibb->overlay_object)
+	  {
+	     evas_object_geometry_get(ibb->box_object, &x, &y, &w, &h);
+	     edje_object_size_min_get(ibb->overlay_object, &mw, &mh);
+	     evas_object_resize(ibb->overlay_object, w, mh);
+	     evas_object_move(ibb->overlay_object, x, y + (h * ibb->follow) - (mh / 2));
+	  }
      }
    if (ibb->timer) return 1;
    ibb->animator = NULL;
