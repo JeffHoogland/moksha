@@ -736,14 +736,17 @@ _temperature_config_menu_new(Temperature *e)
      {
 	FILE *f;
 	
-	if (therms) ecore_list_destroy(therms);
+	if (therms)
+	  {
+	     ecore_list_destroy(therms);
+	     therms = NULL;
+	  }
 
 	f = fopen("/sys/devices/temperatures/cpu_temperature", "rb");
 	if (f) fclose(f);
 	
 	if (!f)
 	  {
-	     
 	     therms = ecore_file_ls("/sys/bus/i2c/devices");
 	     if (therms)
 	       {
@@ -781,9 +784,11 @@ _temperature_config_menu_new(Temperature *e)
 		       e->config_menu_sensor = mn;
 		    }
 		  ecore_list_destroy(therms);
+		  therms = NULL;
 	       }
 	  }
      }
+   if (therms) ecore_list_destroy(therms);
 #endif
    
    /* Main */
