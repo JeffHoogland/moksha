@@ -337,7 +337,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	o = p->pointer_object;
 	if (p->color)
 	  {
-	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", p->type);
+	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", type);
 	     if (!e_theme_edje_object_set(o,
 					  "base/theme/pointer",
 					  cursor))
@@ -347,7 +347,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	  }
 	else
 	  {
-	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", p->type);
+	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", type);
 	     if (!e_theme_edje_object_set(o,
 					  "base/theme/pointer",
 					  cursor))
@@ -361,75 +361,75 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
    else
      {
 	Ecore_X_Cursor cursor;
-	if (!strcmp(p->type, "move"))
+	if (!strcmp(type, "move"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize"))
+	else if (!strcmp(type, "resize"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_SIZING);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_tl"))
+	else if (!strcmp(type, "resize_tl"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_LEFT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_t"))
+	else if (!strcmp(type, "resize_t"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_tr"))
+	else if (!strcmp(type, "resize_tr"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_RIGHT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_r"))
+	else if (!strcmp(type, "resize_r"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_RIGHT_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_br"))
+	else if (!strcmp(type, "resize_br"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_RIGHT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_b"))
+	else if (!strcmp(type, "resize_b"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_bl"))
+	else if (!strcmp(type, "resize_bl"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_LEFT_CORNER);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "resize_l"))
+	else if (!strcmp(type, "resize_l"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_SIDE);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
-	else if (!strcmp(p->type, "default"))
+	else if (!strcmp(type, "default"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
-	     if (!cursor) printf("X Cursor for %s is missing\n", p->type);
+	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
 	else
 	  {
-	     printf("Unknown pointer p->type: %s\n", p->type);
+	     printf("Unknown pointer type: %s\n", type);
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
 	     if (!cursor) printf("X Cursor for default is missing\n");
 	     ecore_x_window_cursor_set(p->win, cursor);
