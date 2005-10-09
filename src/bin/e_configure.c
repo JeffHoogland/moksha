@@ -16,22 +16,22 @@ e_configure_show(E_Container *con)
    Evas_Coord w, h, ew, eh;   
    
    if (!con)
-   {
-      man = e_manager_current_get();
-      if (!man) return NULL;
-      con = e_container_current_get(man);
-      if (!con) con = e_container_number_get(man, 0);
-      if (!con) return NULL;
-   }
+     {
+	man = e_manager_current_get();
+	if (!man) return NULL;
+	con = e_container_current_get(man);
+	if (!con) con = e_container_number_get(man, 0);
+	if (!con) return NULL;
+     }
    app = E_OBJECT_ALLOC(E_Configure, E_CONFIGURE_TYPE, _e_configure_free);
    if (!app) return NULL;
    app->win = e_win_new(con);   
    if (!app->win)
-   {
-      free(app);
-      return NULL;
-   }
-            
+     {
+	free(app);
+	return NULL;
+     }
+   
    app->con = con;
    
    e_win_delete_callback_set(app->win, _e_configure_gui_hide);
@@ -62,10 +62,10 @@ e_configure_show(E_Container *con)
    e_box_min_size_get(app->box, &w, &h);
 	
    if (ew > w )
-      w = ew;
+     w = ew;
    if (eh > h)
-      h = eh;
-	
+     h = eh;
+   
    edje_extern_object_min_size_set(app->box, w, h);
    e_win_size_base_set (app->win, w , h + eh);
    e_win_size_min_set (app->win, w, h + eh);
@@ -91,8 +91,8 @@ _e_configure_cb_resize(E_Win *win)
    if (win)
      {
 	ecore_evas_geometry_get(win->ecore_evas, NULL, NULL, &w, &h);
-
-	app = (E_Configure *) ecore_evas_data_get(win->ecore_evas, "App");
+ 
+	app = (E_Configure *)ecore_evas_data_get(win->ecore_evas, "App");
 	evas_object_resize(app->edje, w, h);
      }
 }
