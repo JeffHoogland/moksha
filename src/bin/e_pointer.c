@@ -22,7 +22,7 @@ static Evas_List *_e_pointers = NULL;
 
 static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_pointer_free(E_Pointer *p);
-static int  _e_pointer_type_set(E_Pointer *p);
+static int  _e_pointer_type_set(E_Pointer *p, const char *type);
 
 /* externally accessible functions */
 E_Pointer *
@@ -171,19 +171,19 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 {
    E_Pointer_Stack *stack;
 
-   if (p->type) free(p->type);
-   p->type = strdup(type);
-   p->obj = obj;
-
-   if (!_e_pointer_type_set(p))
+   if (!_e_pointer_type_set(p, type))
      {
 	p->e_cursor = !p->e_cursor;
-	if (!_e_pointer_type_set(p))
+	if (!_e_pointer_type_set(p, type))
 	  {
 	     printf("BUG: Can't set cursor!\n");
 	     return;
 	  }
      }
+
+   if (p->type) free(p->type);
+   p->type = strdup(type);
+   p->obj = obj;
 
    stack = E_NEW(E_Pointer_Stack, 1);
    if (stack)
@@ -233,20 +233,20 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 	return;
      }
 
-   if (p->type) free(p->type);
-   p->type = strdup(stack->type);
-   p->obj = stack->obj;
-
    p->e_cursor = stack->e_cursor;
-   if (!_e_pointer_type_set(p))
+   if (!_e_pointer_type_set(p, stack->type))
      {
 	p->e_cursor = !p->e_cursor;
-	if (!_e_pointer_type_set(p))
+	if (!_e_pointer_type_set(p, stack->type))
 	  {
 	     printf("BUG: Can't set cursor!\n");
 	     return;
 	  }
      }
+
+   if (p->type) free(p->type);
+   p->type = strdup(stack->type);
+   p->obj = stack->obj;
 
    /* try the default cursor next time */
    p->e_cursor = e_config->use_e_cursor;
@@ -324,8 +324,11 @@ _e_pointer_free(E_Pointer *p)
 }
 
 static int
-_e_pointer_type_set(E_Pointer *p)
+_e_pointer_type_set(E_Pointer *p, const char *type)
 {
+   /* Check if this pointer is already set */
+   if ((p->type) && (!strcmp(p->type, type))) return 1;
+
    if (p->e_cursor)
      {
 	Evas_Object *o;
