@@ -256,6 +256,8 @@ EAPI Evas_List *e_config_profile_list(void);
 EAPI void       e_config_profile_add(char *prof);
 EAPI void       e_config_profile_del(char *prof);
 
+EAPI Evas_List *e_config_engine_list(void);
+
 EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);
     

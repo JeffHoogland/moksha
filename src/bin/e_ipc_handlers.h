@@ -6380,3 +6380,97 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DEFAULT_ENGINE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE, GLor XRENDER)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "SOFTWARE")) value = E_EVAS_ENGINE_SOFTWARE_X11;
+   else if (!strcmp(params[0], "GL")) value = E_EVAS_ENGINE_GL_X11;
+   else if (!strcmp(params[0], "XRENDER")) value = E_EVAS_ENGINE_XRENDER_X11;
+   else
+     {
+	 printf("engine must be SOFTWARE, GL or XRENDER\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->evas_engine_default = value;
+   E_CONFIG_LIMIT(e_config->evas_engine_default, E_EVAS_ENGINE_SOFTWARE_X11, E_EVAS_ENGINE_XRENDER_X11);
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_DEFAULT_ENGINE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-default-engine-get", 0, "Get the default rendering engine", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->evas_engine_default, E_IPC_OP_DEFAULT_ENGINE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_DEFAULT_ENGINE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(engine, HDL);
+   if (engine == E_EVAS_ENGINE_SOFTWARE_X11)
+     printf("REPLY: SOFTWARE\n");
+   else if (engine == E_EVAS_ENGINE_GL_X11)
+     printf("REPLY: GL\n");
+   else if (engine == E_EVAS_ENGINE_XRENDER_X11)
+     printf("REPLY: XRENDER\n");
+   else
+     printf("REPLY: UNKNOWN ENGINE: %d\n", engine);
+   END_INT
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ENGINE_LIST
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-engine-list", 0, "List all existing rendering engines", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   GENERIC(HDL);
+   LIST_DATA();
+   Evas_List *engines;
+   engines = e_config_engine_list();
+   ENCODE(engines, e_ipc_codec_str_list_enc);
+   SEND_DATA(E_IPC_OP_ENGINE_LIST_REPLY);
+   FREE_LIST(engines);
+   END_GENERIC();
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ENGINE_LIST_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   GENERIC(HDL);
+   LIST();
+   DECODE(e_ipc_codec_str_list_dec) {
+      FOR(dat) {
+	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+      }
+      FREE_LIST(dat);
+   }
+   END_GENERIC();
+#endif
+#undef HDL

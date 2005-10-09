@@ -1567,6 +1567,16 @@ e_config_profile_del(char *prof)
    E_FREE(homedir);
 }
 
+Evas_List *
+e_config_engine_list(void)
+{
+   Evas_List *l = NULL;
+   l = evas_list_append(l, strdup("SOFTWARE"));
+   l = evas_list_append(l, strdup("GL"));
+   l = evas_list_append(l, strdup("XRENDER"));
+   return l;
+}
+
 void
 e_config_save_block_set(int block)
 {
