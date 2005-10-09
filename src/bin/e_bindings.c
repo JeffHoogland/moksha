@@ -24,11 +24,11 @@ int
 e_bindings_init(void)
 {
    Evas_List *l;
-   
+
    for (l = e_config->mouse_bindings; l; l = l->next)
      {
 	E_Config_Binding_Mouse *eb;
-	
+
 	eb = l->data;
 	e_bindings_mouse_add(eb->context, eb->button, eb->modifiers,
 			     eb->any_mod, eb->action, eb->params);
@@ -37,30 +37,35 @@ e_bindings_init(void)
    for (l = e_config->key_bindings; l; l = l->next)
      {
 	E_Config_Binding_Key *eb;
-	
+
 	eb = l->data;
 	e_bindings_key_add(eb->context, eb->key, eb->modifiers,
 			   eb->any_mod, eb->action, eb->params);
      }
 
-    for (l = e_config->signal_bindings; l; l = l->next)
+   for (l = e_config->signal_bindings; l; l = l->next)
      {
 	E_Config_Binding_Signal *eb;
-	
+
 	eb = l->data;
 	e_bindings_signal_add(eb->context, eb->signal, eb->source, eb->modifiers,
 			      eb->any_mod, eb->action, eb->params);
      }
 
-    for (l = e_config->wheel_bindings; l; l = l->next)
+   for (l = e_config->wheel_bindings; l; l = l->next)
      {
 	E_Config_Binding_Wheel *eb;
-	
+
 	eb = l->data;
 	e_bindings_wheel_add(eb->context, eb->direction, eb->z, eb->modifiers,
 			     eb->any_mod, eb->action, eb->params);
      }
-   
+
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER, "mouse,in", "resize_br",
+			 E_BINDING_MODIFIER_NONE, 1, "pointer", "resize_br");
+   e_bindings_signal_add(E_BINDING_CONTEXT_BORDER, "mouse,out", "resize_br",
+			 E_BINDING_MODIFIER_NONE, 1, "pointer", "default");
+
    return 1;
 }
 

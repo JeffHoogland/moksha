@@ -15,6 +15,9 @@ struct _E_Pointer
 {
    E_Object e_obj_inherit;
 
+   unsigned char     e_cursor : 1;
+   unsigned char     color : 1;
+
    Evas             *evas;
    Evas_Object      *pointer_object;
    Evas_Object      *hot_object;
@@ -32,6 +35,7 @@ struct _E_Pointer
 };
 
 EAPI E_Pointer *e_pointer_window_new(Ecore_X_Window win);
+EAPI void       e_pointer_type_set(E_Pointer *p, const char *type);
 EAPI void       e_pointers_size_set(int size);
 EAPI void       e_pointer_idler_before(void);
 

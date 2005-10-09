@@ -3,8 +3,6 @@
  */
 #include "e.h"
 
-static E_Dialog *exit_dialog = NULL;
-
 #define INITS 
 #define ACT_GO(name) \
    { \
@@ -66,6 +64,8 @@ static E_Dialog *exit_dialog = NULL;
 /* local subsystem functions */
 static void _e_action_free(E_Action *act);
 static Evas_Bool _e_actions_cb_free(Evas_Hash *hash, const char *key, void *data, void *fdata);
+
+static E_Dialog *exit_dialog = NULL;
 
 /* to save writing this in N places - the sctions are defined here */
 /***************************************************************************/
@@ -1213,6 +1213,29 @@ ACT_FN_GO(restart)
    ecore_main_loop_quit();
 }
 
+ACT_FN_GO(pointer)
+{
+   /* TODO: Check for valid pointer types? */
+   E_Manager *man = NULL;
+
+   if (!obj) obj = E_OBJECT(e_manager_current_get());
+   if (!obj) return;
+   if (obj->type == E_BORDER_TYPE)
+     {
+	E_Border *bd;
+	bd = (E_Border *)obj;
+	if (bd->zone)
+	  obj = bd->zone->container->manager;
+     }
+   if (obj->type != E_MANAGER_TYPE)
+     {
+	obj = E_OBJECT(e_manager_current_get());
+	if (!obj) return;
+     }
+   man = (E_Manager *)obj;
+   e_pointer_type_set(man->pointer, params);
+}
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 static Evas_List *action_names = NULL;
@@ -1302,6 +1325,8 @@ e_actions_init(void)
 
    ACT_GO(restart);
    ACT_GO(exit);
+
+   ACT_GO(pointer);
    
    return 1;
 }

@@ -3,6 +3,11 @@
  */
 #include "e.h"
 
+/*
+ * TODO
+ * - Make fallback user controlable.
+ */
+
 static Evas_List *_e_pointers = NULL;
 
 static void _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
@@ -25,6 +30,7 @@ e_pointer_window_new(Ecore_X_Window win)
 
 	p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
 	if (!p) return NULL;
+	p->e_cursor = 1;
 
 	p->type = strdup("default");
 	if (!p->type)
@@ -84,18 +90,38 @@ e_pointer_window_new(Ecore_X_Window win)
 	     if (!e_theme_edje_object_set(o,
 					  "base/theme/pointer",
 					  "pointer/enlightenment/default/color"))
-	       e_theme_edje_object_set(o,
-				       "base/theme/pointer",
-				       "pointer/enlightenment/default/mono");
+	       {
+		  /* fallback on x cursor */
+		  p->e_cursor = 0;
+		  free(p->type);
+		  p->type = strdup("");
+		  free(p->evas);
+		  p->evas = NULL;
+		  free(p->pixels);
+		  p->evas = NULL;
+		  e_pointer_type_set(p, "default");
+		  return p;
+	       }
+	     p->color = 1;
 	  }
 	else
 	  {
 	     if (!e_theme_edje_object_set(o,
 					  "base/theme/pointer",
 					  "pointer/enlightenment/default/mono"))
-	       e_theme_edje_object_set(o,
-				       "base/theme/pointer",
-				       "pointer/enlightenment/default/color");
+	       {
+		  /* fallback on x cursor */
+		  p->e_cursor = 0;
+		  free(p->type);
+		  p->type = strdup("");
+		  free(p->evas);
+		  p->evas = NULL;
+		  free(p->pixels);
+		  p->evas = NULL;
+		  e_pointer_type_set(p, "default");
+		  return p;
+	       }
+	     p->color = 0;
 	  }
 
 	/* Create the hotspot object */
@@ -122,6 +148,7 @@ e_pointer_window_new(Ecore_X_Window win)
      {
 	p = E_OBJECT_ALLOC(E_Pointer, E_POINTER_TYPE, _e_pointer_free);
 	if (!p) return NULL;
+	p->e_cursor = 0;
 
 	p->type = strdup("default");
 	if (!p->type)
@@ -129,6 +156,8 @@ e_pointer_window_new(Ecore_X_Window win)
 	     e_object_del(E_OBJECT(p));
 	     return NULL;
 	  }
+
+	p->win = win;
 
 	ecore_x_window_cursor_set(win,
 				  ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
@@ -149,7 +178,7 @@ e_pointers_size_set(int size)
 	Evas_Engine_Info_Buffer *einfo;
 
 	p = l->data;
-	if (!p->evas) continue;
+	if (!p->e_cursor) continue;
 
 	p->w = p->h = size;
 	evas_output_size_set(p->evas, p->w, p->h);
@@ -171,6 +200,106 @@ e_pointers_size_set(int size)
 }
 
 void
+e_pointer_type_set(E_Pointer *p, const char *type)
+{
+   if (!strcmp(p->type, type)) return;
+
+   if (p->e_cursor)
+     {
+	Evas_Object *o;
+	char         cursor[1024];
+
+	o = p->pointer_object;
+	if (p->color)
+	  {
+	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/color", type);
+	     if (!e_theme_edje_object_set(o,
+					  "base/theme/pointer",
+					  cursor))
+	       {
+		  /* fallback on x cursor */
+		  p->e_cursor = 0;
+		  e_pointer_type_set(p, type);
+		  return;
+	       }
+	  }
+	else
+	  {
+	     snprintf(cursor, sizeof(cursor), "pointer/enlightenment/%s/mono", type);
+	     if (!e_theme_edje_object_set(o,
+					  "base/theme/pointer",
+					  cursor))
+	       {
+		  /* fallback on x cursor */
+		  p->e_cursor = 0;
+		  e_pointer_type_set(p, type);
+		  return;
+	       }
+	  }
+	edje_object_part_swallow(p->pointer_object, "hotspot", p->hot_object);
+	p->hot.update = 1;
+     }
+   else
+     {
+	if (!strcmp(type, "move"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_FLEUR));
+	  }
+	else if (!strcmp(type, "resize_tl"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_LEFT_CORNER));
+	  }
+	else if (!strcmp(type, "resize_t"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_SIDE));
+	  }
+	else if (!strcmp(type, "resize_tr"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_RIGHT_CORNER));
+	  }
+	else if (!strcmp(type, "resize_r"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_RIGHT_SIDE));
+	  }
+	else if (!strcmp(type, "resize_br"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_RIGHT_CORNER));
+	  }
+	else if (!strcmp(type, "resize_b"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_SIDE));
+	  }
+	else if (!strcmp(type, "resize_bl"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_BOTTOM_LEFT_CORNER));
+	  }
+	else if (!strcmp(type, "resize_l"))
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_SIDE));
+	  }
+	else
+	  {
+	     ecore_x_window_cursor_set(p->win,
+				       ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR));
+	  }
+     }
+   /* try the default cursor next time */
+   p->e_cursor = e_config->use_e_cursor;
+
+   if (p->type) free(p->type);
+   p->type = strdup(type);
+}
+
+void
 e_pointer_idler_before(void)
 {
    Evas_List *l;
@@ -181,7 +310,7 @@ e_pointer_idler_before(void)
 	Evas_List *updates;
 
 	p = l->data;
-	if (!p->evas) continue;
+	if (!p->e_cursor) continue;
 
 	updates = evas_render_updates(p->evas);
 	if ((updates) || (p->hot.update))
@@ -205,7 +334,7 @@ _e_pointer_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
    Evas_Coord x, y;
 
    p = data;
-   if (!p->evas) return;
+   if (!p->e_cursor) return;
    evas_object_geometry_get(p->hot_object, &x, &y, NULL, NULL);
    if ((p->hot.x != x) || (p->hot.y != y))
      {
