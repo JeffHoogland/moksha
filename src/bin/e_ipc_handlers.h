@@ -6413,7 +6413,7 @@ break;
    e_config->evas_engine_default = value;
    E_CONFIG_LIMIT(e_config->evas_engine_default, E_EVAS_ENGINE_SOFTWARE_X11, E_EVAS_ENGINE_XRENDER_X11);
    SAVE;
-   END_INT
+   END_INT;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
@@ -6513,7 +6513,7 @@ break;
    else if (!strcmp(params[1], "XRENDER")) engine = E_EVAS_ENGINE_XRENDER_X11;
    else
      {
-	 printf("engine must be DEAFULT, SOFTWARE, GL or XRENDER\n");
+	 printf("engine must be DEFAULT, SOFTWARE, GL or XRENDER\n");
 	 exit(-1);
      }
    REQ_2INT_END(context, engine, HDL);
