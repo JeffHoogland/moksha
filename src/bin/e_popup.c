@@ -147,6 +147,12 @@ e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
 }
 
 void
+e_popup_ignore_events_set(E_Popup *pop, int ignore)
+{
+   ecore_evas_ignore_events_set(pop->ecore_evas, ignore);
+}
+
+void
 e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 {
    const char *shape_option;

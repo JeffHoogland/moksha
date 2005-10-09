@@ -1677,6 +1677,7 @@ _pager_cb_event_desk_show(void *data, int type, void *event)
 	     evas_object_move(pp->bg_object, 0, 0);
 	     evas_object_resize(pp->bg_object, w, h);
 	     e_popup_edje_bg_object_set(pp->popup, pp->bg_object);
+	     e_popup_ignore_events_set(pp->popup, 1);
 	     e_popup_move_resize(pp->popup,
 				 pp->popup->zone->x + ((pp->popup->zone->w - w) / 2),
 				 pp->popup->zone->y + ((pp->popup->zone->h - h) / 2),

@@ -39,7 +39,7 @@ EAPI void        e_popup_hide(E_Popup *pop);
 EAPI void        e_popup_move(E_Popup *pop, int x, int y);
 EAPI void        e_popup_resize(E_Popup *pop, int w, int h);
 EAPI void        e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h);
-EAPI void        e_popup_(E_Popup *pop, int x, int y);
+EAPI void        e_popup_ignore_events_set(E_Popup *pop, int ignore);
 EAPI void        e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o);
 EAPI void        e_popup_layer_set(E_Popup *pop, int layer);
 EAPI void        e_popup_idler_before(void);
