@@ -226,6 +226,11 @@ _enlightenment_remote() {
 		COMPREPLY=($(compgen -W "${modules}" -- "${cur}"))
 		return 0
 		;;
+	-profile-del)
+		profiles=$(enlightenment_remote -profile-list|grep REPLY:|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${profiles}" -- "${cur}"))
+		return 0
+		;;
 	-theme-get|-theme-remove)
 		theme_categories=$(enlightenment_remote -theme-category-list|grep REPLY:|awk '{print $2}')
 		COMPREPLY=($(compgen -W "${theme_categories}" -- "${cur}"))
