@@ -4806,8 +4806,6 @@ break;
 #undef HDL
 
 /****************************************************************************/
-
-/****************************************************************************/
 #define HDL E_IPC_OP_PROFILE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-default-profile-set", 1, "Set the default configuration profile to OPT1", 0, HDL)
@@ -4826,7 +4824,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
 #endif
 #undef HDL
-     
+
 /****************************************************************************/
 #define HDL E_IPC_OP_PROFILE_GET
 #if (TYPE == E_REMOTE_OPTIONS)
@@ -6350,3 +6348,35 @@ break;
 #endif
 #undef HDL
 
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_ADD
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-profile-add", 1, "Add profile named OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   e_config_profile_add(s);
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_PROFILE_DEL
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-profile-add", 1, "Delete profile named OPT1", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   if (!strcmp(e_config_profile_get(), s))
+     {
+	printf("Can't delete active profile\n");
+	exit(-1);
+     }
+   e_config_profile_del(s);
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
