@@ -62,9 +62,9 @@ e_bindings_init(void)
      }
 
    e_bindings_signal_add(E_BINDING_CONTEXT_BORDER, "mouse,in", "resize_br",
-			 E_BINDING_MODIFIER_NONE, 1, "pointer", "resize_br");
+			 E_BINDING_MODIFIER_NONE, 1, "pointer_push", "resize_br");
    e_bindings_signal_add(E_BINDING_CONTEXT_BORDER, "mouse,out", "resize_br",
-			 E_BINDING_MODIFIER_NONE, 1, "pointer", "default");
+			 E_BINDING_MODIFIER_NONE, 1, "pointer_pop", "resize_br");
 
    return 1;
 }

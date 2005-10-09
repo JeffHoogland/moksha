@@ -1213,27 +1213,38 @@ ACT_FN_GO(restart)
    ecore_main_loop_quit();
 }
 
-ACT_FN_GO(pointer)
+ACT_FN_GO(pointer_push)
 {
-   /* TODO: Check for valid pointer types? */
    E_Manager *man = NULL;
 
-   if (!obj) obj = E_OBJECT(e_manager_current_get());
    if (!obj) return;
    if (obj->type == E_BORDER_TYPE)
      {
 	E_Border *bd;
 	bd = (E_Border *)obj;
 	if (bd->zone)
-	  obj = bd->zone->container->manager;
+	  man = bd->zone->container->manager;
      }
-   if (obj->type != E_MANAGER_TYPE)
+   if (!man) man = e_manager_current_get();
+   if (!man) return;
+   e_pointer_type_push(man->pointer, obj, params);
+}
+
+ACT_FN_GO(pointer_pop)
+{
+   E_Manager *man = NULL;
+
+   if (!obj) return;
+   if (obj->type == E_BORDER_TYPE)
      {
-	obj = E_OBJECT(e_manager_current_get());
-	if (!obj) return;
+	E_Border *bd;
+	bd = (E_Border *)obj;
+	if (bd->zone)
+	  man = (E_Manager *)bd->zone->container->manager;
      }
-   man = (E_Manager *)obj;
-   e_pointer_type_set(man->pointer, params);
+   if (!man) man = e_manager_current_get();
+   if (!man) return;
+   e_pointer_type_pop(man->pointer, obj, params);
 }
 
 /* local subsystem globals */
@@ -1326,7 +1337,8 @@ e_actions_init(void)
    ACT_GO(restart);
    ACT_GO(exit);
 
-   ACT_GO(pointer);
+   ACT_GO(pointer_push);
+   ACT_GO(pointer_pop);
    
    return 1;
 }

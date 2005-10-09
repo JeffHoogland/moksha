@@ -32,6 +32,7 @@ static void _e_int_menus_apps_start          (void *data, E_Menu *m);
 static void _e_int_menus_apps_del_hook       (void *obj);
 static void _e_int_menus_apps_free_hook      (void *obj);
 static void _e_int_menus_apps_run            (void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_int_menus_main_fm             (void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_int_menus_config_pre_cb       (void *data, E_Menu *m);
 static void _e_int_menus_config_free_hook    (void *obj);
 static void _e_int_menus_config_item_cb      (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -142,6 +143,11 @@ e_int_menus_main_new(void)
 	e_util_menu_item_edje_icon_set(mi, "enlightenment/run");
 	e_menu_item_callback_set(mi, _e_int_menus_main_run, NULL);
      }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("File Manager"));
+   e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
+   e_menu_item_callback_set(mi, _e_int_menus_main_fm, NULL);   
 
    subm = e_int_menus_config_new();
    dat->config = subm;
@@ -375,6 +381,15 @@ _e_int_menus_main_run(void *data, E_Menu *m, E_Menu_Item *mi)
 
    exe = ecore_exe_run("exige", NULL);
    if (exe) ecore_exe_free(exe);
+}
+
+static void
+_e_int_menus_main_fm(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fileman_Canvas *canvas;
+
+   canvas = e_fileman_new(m->zone->container);
+   e_fileman_show(canvas);
 }
 
 static void
