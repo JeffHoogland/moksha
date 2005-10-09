@@ -18,7 +18,8 @@ _enlightenment_remote() {
 	prev=${COMP_WORDS[COMP_CWORD-1]}
 	action=${COMP_WORDS[1]}
 	opts=`enlightenment_remote -h | awk '{print $1}' | grep -v "OPTIONS:" | xargs`
-	CONTEXT="NONE BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY"
+	BINDING_CONTEXT="NONE BORDER ZONE CONTAINER MANAGER MENU WINLIST POPUP ANY"
+	ENGINE_CONTEXT="CONTAINER INIT MENU BORDER ERROR POPUP DRAG WIN ZONE"
 	MODIFIERS="NONE SHIFT| SHIFT CONTROL| CONTROL ALT| ALT WIN| WIN"
 	DIRS="data images fonts themes init icons modules backgrounds"
 
@@ -52,7 +53,7 @@ _enlightenment_remote() {
 		;;
 	-binding-key-add)
 		if [[ ${COMP_CWORD} -eq 2 ]]; then
-			COMPREPLY=($(compgen -W "${CONTEXT}" -- "${cur}"))
+			COMPREPLY=($(compgen -W "${BINDING_CONTEXT}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 3 ]]; then
 			COMPREPLY=()
 		elif [[ ${COMP_CWORD} -eq 4 ]]; then
@@ -122,6 +123,11 @@ _enlightenment_remote() {
 		# TODO Add filename expansion, and only match dirs and .edj files
 		return 0
 		;;
+	-default-engine-set)
+		engines=$(enlightenment_remote -engine-list|grep REPLY:|awk '{print $2}')
+		COMPREPLY=($(compgen -W "${engines}" -- "${cur}"))
+		return 0
+		;;
 	-default-profile-set)
 		profiles=$(enlightenment_remote -profile-list|grep REPLY:|awk '{print $2}')
 		COMPREPLY=($(compgen -W "${profiles}" -- "${cur}"))
@@ -153,6 +159,15 @@ _enlightenment_remote() {
 	-display)
 		displays=$(/bin/ls $HOME/.ecore/enlightenment-\(*\)/0|sed -e 's+.*enlightenment-(\(.*\))/.*+\1+')
 		COMPREPLY=($(compgen -W "${displays}" -- "${cur}"))
+		return 0
+		;;
+	-engine-set)
+		if [[ ${COMP_CWORD} -eq 2 ]]; then
+			COMPREPLY=($(compgen -W "${ENGINE_CONTEXT}" -- "${cur}"))
+		elif [[ ${COMP_CWORD} -eq 3 ]]; then
+			engines=$(enlightenment_remote -engine-list|grep REPLY:|awk '{print $2}')
+			COMPREPLY=($(compgen -W "${engines}" -- "${cur}"))
+		fi
 		return 0
 		;;
 	-exec-action)
