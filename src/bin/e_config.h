@@ -57,6 +57,19 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 #define E_EVAS_ENGINE_GL_X11       2
 #define E_EVAS_ENGINE_XRENDER_X11  3
 
+typedef enum _E_Engine_Context
+{
+   E_ENGINE_CONTEXT_INIT,
+   E_ENGINE_CONTEXT_CONTAINER,
+   E_ENGINE_CONTEXT_ZONE,
+   E_ENGINE_CONTEXT_BORDER,
+   E_ENGINE_CONTEXT_MENU,
+   E_ENGINE_CONTEXT_ERROR,
+   E_ENGINE_CONTEXT_WIN,
+   E_ENGINE_CONTEXT_POPUP,
+   E_ENGINE_CONTEXT_DRAG
+} E_Engine_Context;
+
 struct _E_Config
 {
    int         config_version;

@@ -215,6 +215,18 @@ case HDL: { void *data; int bytes; \
 } \
 break;
 
+#define REQ_2INT_START(HDL) \
+case HDL: { void *data; int bytes; \
+
+#define REQ_2INT_END(__val1, __val2, HDL) \
+   data = e_ipc_codec_2int_enc(__val1, __val2, &bytes); \
+   if (data) { \
+      ecore_ipc_server_send(e->server, E_IPC_DOMAIN_REQUEST, HDL, 0, 0, 0, data, bytes); \
+      free(data); \
+   } \
+} \
+break;
+
 #define REQ_3INT_3STRING_START(HDL) \
 case HDL: { void *data; int bytes; \
 
@@ -226,7 +238,6 @@ case HDL: { void *data; int bytes; \
    } \
 } \
 break;
-
 
 #define REQ_4INT_2STRING_START(HDL) \
 case HDL: { void *data; int bytes; \
@@ -6384,7 +6395,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DEFAULT_ENGINE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE, GLor XRENDER)", 0, HDL)
+   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE, GL or XRENDER)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
@@ -6474,3 +6485,158 @@ break;
    END_GENERIC();
 #endif
 #undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ENGINE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-engine-set", 2, "Set the rendering engine for OPT1 to OPT2 (SOFTWARE, GL or XRENDER)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_2INT_START(HDL)
+   int context = 0, engine = 0;
+   if (!strcmp(params[0], "INIT")) context = E_ENGINE_CONTEXT_INIT;
+   else if (!strcmp(params[0], "CONTAINER")) context = E_ENGINE_CONTEXT_CONTAINER;
+   else if (!strcmp(params[0], "ZONE")) context = E_ENGINE_CONTEXT_ZONE;
+   else if (!strcmp(params[0], "BORDER")) context = E_ENGINE_CONTEXT_BORDER;
+   else if (!strcmp(params[0], "MENU")) context = E_ENGINE_CONTEXT_MENU;
+   else if (!strcmp(params[0], "ERROR")) context = E_ENGINE_CONTEXT_ERROR;
+   else if (!strcmp(params[0], "WIN")) context = E_ENGINE_CONTEXT_WIN;
+   else if (!strcmp(params[0], "POPUP")) context = E_ENGINE_CONTEXT_POPUP;
+   else if (!strcmp(params[0], "DRAG")) context = E_ENGINE_CONTEXT_DRAG;
+   else
+     {
+	 printf("context must be INIT, CONTAINER, ZONE, BORDER, MENU, ERROR, WIN, POPUP or DRAG\n");
+	 exit(-1);
+     }
+   if (!strcmp(params[1], "DEFAULT")) engine = E_EVAS_ENGINE_DEFAULT;
+   else if (!strcmp(params[1], "SOFTWARE")) engine = E_EVAS_ENGINE_SOFTWARE_X11;
+   else if (!strcmp(params[1], "GL")) engine = E_EVAS_ENGINE_GL_X11;
+   else if (!strcmp(params[1], "XRENDER")) engine = E_EVAS_ENGINE_XRENDER_X11;
+   else
+     {
+	 printf("engine must be DEAFULT, SOFTWARE, GL or XRENDER\n");
+	 exit(-1);
+     }
+   REQ_2INT_END(context, engine, HDL);
+#elif (TYPE == E_WM_IN)
+   START_2INT(context, engine, HDL);
+   switch (context)
+     {
+      case E_ENGINE_CONTEXT_INIT:
+	 e_config->evas_engine_init = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_init, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_CONTAINER:
+	 e_config->evas_engine_container = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_container, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_ZONE:
+	 e_config->evas_engine_zone = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_zone, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_BORDER:
+	 e_config->evas_engine_borders = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_borders, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_MENU:
+	 e_config->evas_engine_menus = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_menus, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_ERROR:
+	 e_config->evas_engine_errors = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_errors, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_WIN:
+	 e_config->evas_engine_win = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_win, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_POPUP:
+	 e_config->evas_engine_popups = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_popups, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      case E_ENGINE_CONTEXT_DRAG:
+	 e_config->evas_engine_drag = engine;
+	 E_CONFIG_LIMIT(e_config->evas_engine_drag, E_EVAS_ENGINE_DEFAULT, E_EVAS_ENGINE_XRENDER_X11);
+	 break;
+      default:
+	 printf("Unknown context: %d\n", context);
+	 break;
+     }
+   SAVE;
+   END_2INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_ENGINE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-engine-get", 1, "Get the rendering engine for OPT1", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(context, HDL);
+   int engine = 0;
+   /* TODO, this should come from a define */
+   int bytes = 0;
+   switch (context)
+     {
+      case E_ENGINE_CONTEXT_INIT:
+	 engine = e_config->evas_engine_init;
+	 break;
+      case E_ENGINE_CONTEXT_CONTAINER:
+	 engine = e_config->evas_engine_container;
+	 break;
+      case E_ENGINE_CONTEXT_ZONE:
+	 engine = e_config->evas_engine_zone;
+	 break;
+      case E_ENGINE_CONTEXT_BORDER:
+	 engine = e_config->evas_engine_borders;
+	 break;
+      case E_ENGINE_CONTEXT_MENU:
+	 engine = e_config->evas_engine_menus;
+	 break;
+      case E_ENGINE_CONTEXT_ERROR:
+	 engine = e_config->evas_engine_errors;
+	 break;
+      case E_ENGINE_CONTEXT_WIN:
+	 engine = e_config->evas_engine_win;
+	 break;
+      case E_ENGINE_CONTEXT_POPUP:
+	 engine = e_config->evas_engine_popups;
+	 break;
+      case E_ENGINE_CONTEXT_DRAG:
+	 engine = e_config->evas_engine_drag;
+	 break;
+      default:
+	 printf("Unknown context: %d\n", context);
+	 break;
+     }
+   ENCODE(engine, e_ipc_codec_int_enc);
+   SEND_DATA(E_IPC_OP_ENGINE_GET_REPLY);
+
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+     
+/****************************************************************************/
+#define HDL E_IPC_OP_ENGINE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(engine, HDL);
+   if (engine == E_EVAS_ENGINE_DEFAULT)
+     printf("REPLY: DEFAULT\n");
+   else if (engine == E_EVAS_ENGINE_SOFTWARE_X11)
+     printf("REPLY: SOFTWARE\n");
+   else if (engine == E_EVAS_ENGINE_GL_X11)
+     printf("REPLY: GL\n");
+   else if (engine == E_EVAS_ENGINE_XRENDER_X11)
+     printf("REPLY: XRENDER\n");
+   else
+     printf("REPLY: UNKNOWN ENGINE: %d\n", engine);
+   END_INT;
+#endif
+#undef HDL
+
