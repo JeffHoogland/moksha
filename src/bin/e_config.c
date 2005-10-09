@@ -268,6 +268,16 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
    E_CONFIG_VAL(D, T, use_edge_flip, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_timeout, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, evas_engine_default, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_container, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_init, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_menus, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_borders, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_errors, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_popups, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_drag, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_win, INT); /**/
+   E_CONFIG_VAL(D, T, evas_engine_zone, INT); /**/
    E_CONFIG_VAL(D, T, language, STR); /**/
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd); /**/
