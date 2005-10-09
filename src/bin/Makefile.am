@@ -80,8 +80,7 @@ e_about.h \
 e_theme_about.h \
 e_apps_cache.h \
 e_entry.h \
-e_scrollbar.h \
-e_fileman.h
+e_scrollbar.h
 
 enlightenment_src = \
 e_user.c \
@@ -144,7 +143,6 @@ e_theme_about.c \
 e_apps_cache.c \
 e_entry.c \
 e_scrollbar.c \
-e_fileman.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
