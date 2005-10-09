@@ -430,7 +430,7 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	else
 	  {
 	     printf("Unknown pointer type: %s\n", type);
-	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
+	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_ARROW);
 	     if (!cursor) printf("X Cursor for default is missing\n");
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
