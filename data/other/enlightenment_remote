@@ -166,7 +166,7 @@ _enlightenment_remote() {
 			COMPREPLY=($(compgen -W "${ENGINE_CONTEXT}" -- "${cur}"))
 		elif [[ ${COMP_CWORD} -eq 3 ]]; then
 			engines=$(enlightenment_remote -engine-list|grep REPLY:|awk '{print $2}')
-			COMPREPLY=($(compgen -W "${engines}" -- "${cur}"))
+			COMPREPLY=($(compgen -W "DEFAULT ${engines}" -- "${cur}"))
 		fi
 		return 0
 		;;
