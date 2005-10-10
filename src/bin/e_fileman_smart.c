@@ -65,6 +65,11 @@ struct _E_Fileman_File
       Evas_Object *bg;
       Evas_List *objects;
    } prop;
+
+   struct {
+      unsigned char clicked : 1;
+      unsigned char selected : 1;
+   } state;   
    
    void *data;
 };
@@ -148,8 +153,12 @@ struct _E_Fileman_Smart_Data
    struct {
       int w;
       int h;
-   } max;
+   } max;   
    
+   struct {
+      Evas_List *files;
+      E_Fileman_File *current_file;
+   } selection;
 };
 
 static void _e_fm_smart_add(Evas_Object *object);
@@ -181,6 +190,8 @@ static Evas_Object        *_e_fm_file_icon_mime_get (E_Fileman_File *file);
 static Evas_Object        *_e_fm_file_icon_get (E_Fileman_File *file);
 static void                _e_fm_file_icon_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_file_icon_mouse_up_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void                _e_fm_file_icon_mouse_in_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void                _e_fm_file_icon_mouse_out_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_file_menu_open (void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_file_menu_copy (void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_file_menu_cut (void *data, E_Menu *m, E_Menu_Item *mi);
@@ -487,7 +498,9 @@ _e_fm_redraw_update (E_Fileman_Smart_Data *sd)
 
       evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_file_icon_mouse_down_cb, file);
       evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_UP, _e_fm_file_icon_mouse_up_cb, file);
-      evas_object_repeat_events_set(file->event, FALSE);
+      evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_IN, _e_fm_file_icon_mouse_in_cb, file);
+      evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_OUT, _e_fm_file_icon_mouse_out_cb, file);
+      evas_object_repeat_events_set(file->event, TRUE);
       
       sd->files = evas_list_append (sd->files, file);      
       
@@ -863,13 +876,14 @@ _e_fm_redraw_new (E_Fileman_Smart_Data *sd)
 
       evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_file_icon_mouse_down_cb, file);
       evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_UP, _e_fm_file_icon_mouse_up_cb, file);
+      evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_IN, _e_fm_file_icon_mouse_in_cb, file);
+      evas_object_event_callback_add (file->event, EVAS_CALLBACK_MOUSE_OUT, _e_fm_file_icon_mouse_out_cb, file);      
       evas_object_repeat_events_set(file->event, FALSE);
       
       sd->files = evas_list_append (sd->files, file);      
       
       sd->file_offset++;
       sd->visible_files++;
-      printf("visible files: %d\n", sd->visible_files);
       dirs = dirs->next;
    }   
 }
@@ -1010,7 +1024,10 @@ _e_fm_dir_set (E_Fileman_Smart_Data *sd, const char *dir)
       
    sd->dir = calloc (/*strlen(dir) + 1*/PATH_MAX, sizeof (char));
    snprintf (sd->dir, PATH_MAX/*strlen(dir) + 1*/, "%s", dir);
-      
+   
+   if(sd->selection.current_file)
+     sd->selection.current_file = NULL;
+   
    _e_fm_redraw_new (sd);   
 }
 
@@ -1052,7 +1069,9 @@ _e_fm_files_free (E_Fileman_Smart_Data *sd)
    
    sd->files = NULL;
    sd->drag.file = NULL;
-   //sd = NULL;
+   
+   if(sd->selection.current_file)
+     sd->selection.current_file = NULL;
 }
 
 static void 
@@ -1868,17 +1887,30 @@ static void
 _e_fm_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Fileman_Smart_Data *sd;
-   Evas_Event_Mouse_Down *ev;
+   Evas_Event_Mouse_Down *ev;   
+   E_Menu      *mn;
+   E_Menu_Item *mi;
+   int x, y, w, h;
+   
    
    ev = (Evas_Event_Mouse_Down *)event_info;
    sd = data;
    
-   if (ev->button == 3)
+   switch(ev->button)
     {
-       E_Menu      *mn;
-       E_Menu_Item *mi;
-       int x, y, w, h;
+     case 1:
        
+       /* todo: multiple selections */
+       if(sd->selection.current_file)
+	{
+	   edje_object_signal_emit(sd->selection.current_file->icon, "unclicked", "");
+	   edje_object_signal_emit(sd->selection.current_file->icon_img, "unclicked", "");
+	   sd->selection.current_file->state.clicked = 0;
+	}
+       
+       break;
+       
+     case 3:       
        if (!sd->win) return;
        
        mn = e_menu_new ();
@@ -1968,6 +2000,7 @@ _e_fm_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 			     ev->output.x + x, ev->output.y + y, 1, 1,
 			     E_MENU_POP_DIRECTION_DOWN,ev->timestamp);
        _e_fileman_fake_mouse_up_all_later (sd->win->evas);	
+       break;
     }
 }
 
@@ -2043,7 +2076,23 @@ _e_fm_file_icon_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *even
 	   file->sd->drag.y = -1;
 	   file->sd->drag.x = -1;	   
 	   file->sd->drag.file = file;
-	   printf("drag file: %s\n", file->dir_entry->d_name);	   
+	   printf("drag file: %s\n", file->dir_entry->d_name);
+
+	   if(!file->state.clicked)
+	    {
+	       /* todo multiple selection with control or shift */
+	       if(file->sd->selection.current_file)
+		{
+		   edje_object_signal_emit(file->sd->selection.current_file->icon, "unclicked", "");
+		   edje_object_signal_emit(file->sd->selection.current_file->icon_img, "unclicked", "");
+		   file->sd->selection.current_file->state.clicked = 0;
+		}
+	       
+	       edje_object_signal_emit(file->icon, "clicked", "");
+	       edje_object_signal_emit(file->icon_img, "clicked", "");
+	       file->sd->selection.current_file = file;
+	       file->state.clicked = 1;	       
+	    }
 	} 
 
     }
@@ -2125,6 +2174,32 @@ _e_fm_file_icon_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *even
 	  _e_fileman_fake_mouse_up_all_later (file->sd->win->evas);
        }	  
    }  
+}
+
+static void
+_e_fm_file_icon_mouse_in_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Fileman_File *file;
+   Evas_Event_Mouse_Move *ev;
+   
+   ev = (Evas_Event_Mouse_Move *)event_info;
+   file = data;
+   
+   edje_object_signal_emit(file->icon, "hilight", "");
+   edje_object_signal_emit(file->icon_img, "hilight", "");   
+}
+
+static void
+_e_fm_file_icon_mouse_out_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   E_Fileman_File *file;
+   Evas_Event_Mouse_Move *ev;
+   
+   ev = (Evas_Event_Mouse_Move *)event_info;
+   file = data;
+   
+   edje_object_signal_emit(file->icon, "default", "");
+   edje_object_signal_emit(file->icon_img, "default", "");   
 }
 
 static void

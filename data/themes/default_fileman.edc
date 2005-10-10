@@ -41,11 +41,56 @@ group { \
       } \
    } \
 } \
+   
+#define FILEMAN_ICON_CLICKABLE(TYPE) \
+group { \
+   name: "fileman/icons/"TYPE; \
+   max:  64 64; \
+   parts { \
+      part { \
+	 name:          "icon"; \
+	 mouse_events:  0; \
+	 description { \
+	    state:    "default" 0.0; \
+	    aspect:   1.0 1.0; \
+	    max:      64 64; \
+	    image { \
+	       normal: "e17_icon_fileman_"TYPE".png"; \
+	    } \
+	 } \
+	 description { \
+	    state:    "clicked" 0.0; \
+	    aspect:   1.0 1.0; \
+	    max:      64 64; \
+	    image { \
+	       normal: "e17_icon_fileman_"TYPE"_clicked.png"; \
+	    } \
+	 } \	 
+      } \
+   } \
+   programs { \
+      program { \
+	 name:   "clicked"; \
+	 signal: "clicked"; \
+	 source: ""; \
+	 action: STATE_SET "clicked" 0.0; \
+	 target: "icon"; \
+      } \
+      program { \
+	 name:   "unclicked"; \
+	 signal: "unclicked"; \
+	 source: ""; \
+	 action: STATE_SET "default" 0.0; \
+	 target: "icon"; \
+      } \
+   } \
+} \
 
 images
 {
    image: "e17_fileman_bg.png" COMP;   
    image: "e17_icon_fileman_folder.png" COMP;
+   image: "e17_icon_fileman_folder_clicked.png" COMP;   
    image: "e17_icon_fileman_file.png" COMP;
    image: "e17_icon_fileman_pdf.png" COMP;
    image: "e17_icon_fileman_c.png" COMP;
@@ -219,10 +264,6 @@ group {
 	 name:          "icon_swallow";
 	 type:          SWALLOW;
 	 mouse_events:  1;
-	 dragable {
-	    x:        1 1 0;
-	    y:        1 1 0;
-	 }	 
 	 description {
 	    min: 48 48;
 	    max: 128 128;
@@ -238,7 +279,6 @@ group {
 	    color: 0 0 0 255;
 	 }
       }
-
       part {
 	 name:          "icon_title";
 	 type:          TEXT;
@@ -307,10 +347,10 @@ group {
       program {
 	 name:   "button_click";
 	 signal: "mouse,down,1";
-	 source: "icon_event";
+	 source: "";
 	 action: SIGNAL_EMIT "clicked" "";
-      }      
-   }
+      }            
+   }   
 }
 
 
@@ -482,7 +522,7 @@ group {
 }
 
 
-FILEMAN_ICON("folder");
+FILEMAN_ICON_CLICKABLE("folder");
 FILEMAN_ICON("file");
 FILEMAN_ICON("pdf");
 FILEMAN_ICON("c");
