@@ -190,6 +190,7 @@ static void                _e_fm_redraw (E_Fileman_Smart_Data *sd);
 static void                _e_fm_selections_clear(E_Fileman_Smart_Data *sd);
 static void                _e_fm_selections_add(E_Fileman_File *file);
 static void                _e_fm_selections_del(E_Fileman_File *file);
+static void                _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
 static void                _e_fm_files_free (E_Fileman_Smart_Data *sd);
 static char               *_e_fm_file_stripext(char *path);
 static Evas_Bool           _e_fm_file_can_preview (E_Fileman_File *file);
@@ -1070,6 +1071,26 @@ _e_fm_selections_add(E_Fileman_File *file)
    file->sd->selection.current_file = file;
    file->state.clicked = 1;
    file->sd->selection.files = evas_list_append(file->sd->selection.files, file);
+}
+
+static void
+_e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+{
+   /*
+   Evas_List *l;
+   
+   for (l = sd->selection.files; l; l = l->next)
+    {
+       E_Fileman_File *file;
+       Evas_Coord x, y, w, h;
+       
+       file = l->data;
+       if(!file) continue;
+       
+       evas_object_geometry_get(file->icon, &x, &y, &w, &h);
+       
+    }
+   */
 }
 
 static void                
@@ -1988,6 +2009,7 @@ _e_fm_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
    if(sd->selection.band.enabled)
     {
        Evas_Coord x, y, w, h;
+       Evas_List *objects;
      
        printf("enabled!!\n");
        
@@ -2037,7 +2059,10 @@ _e_fm_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
 	   evas_object_resize(sd->selection.band.obj,
 			      sd->selection.band.x - ev->cur.canvas.x,
 			      ev->cur.canvas.y - sd->selection.band.y);
-	}       
+	}
+       
+       evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
+       _e_fm_selections_add_rect(sd, x, y, w, h);
     }      
 }
 
@@ -2560,7 +2585,9 @@ _e_fm_drop_selection_cb (void *data, int type, void *event)
       
        snprintf (new_file, PATH_MAX, "%s/%s", sd->dir,
 		 ecore_file_get_file (files->files[i]));
-       ecore_file_cp (strstr (files->files[i],"/"), new_file);
+       // look into this.
+       //ecore_file_cp (strstr (files->files[i],"/"), new_file);
+       printf("we should copy the file now.");
     }
    
    ecore_x_dnd_send_finished();
