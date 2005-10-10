@@ -113,6 +113,7 @@ images
    image: "e17_button_detail_view_details.png" COMP;
    image: "e17_button_detail_view_name.png" COMP;
    image: "e17_button_detail_view.png" COMP;     
+   image: "e17_fileman_rubberband.png" COMP;
    
    image: "e17_menu_bg_border.png" COMP;
    image: "e17_button2.png" COMP;
@@ -171,7 +172,8 @@ group {
                offset: 0 0;
             }
             image {
-               normal: "e17_fileman_bg.png";
+               //normal: "e17_fileman_bg.png";
+	       normal: "e17_brushed.png";
             }
             fill {
                smooth: 0;
@@ -519,6 +521,32 @@ group {
       }	   
    }
    programs {      
+   }
+}
+
+group {
+   name: "fileman/rubberband";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_fileman_rubberband.png";
+	       border: 2 2 2 2;
+	    }
+	    color: 255 255 255 128;
+	 }
+      }
    }
 }
 
