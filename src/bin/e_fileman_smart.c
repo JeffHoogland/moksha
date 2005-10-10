@@ -2540,8 +2540,15 @@ _e_fm_file_thumb_create(char *file)
    Ecore_Evas *buf;
    Evas *evasbuf;
 
+   thumbpath = _e_fm_file_thumb_path_get(file);
+
    ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
-   if (!ef) return -1;
+   if (!ef)
+     {
+	free(thumpath);
+       	return -1;
+     }
+   free(thumbpath);
 
    // we need to remove the hardcode somehow.
    //buf = ecore_evas_buffer_new(file->sd->icon_info.w,file->sd->icon_info.h);
@@ -2554,12 +2561,10 @@ _e_fm_file_thumb_create(char *file)
    evas_object_show(im);
    data = ecore_evas_buffer_pixels_get(buf);
 
-   thumbpath = _e_fm_file_thumb_path_get(file);
    if ((size = eet_data_image_write(ef, "/thumbnail/data", (void *)data, 48, 48, 1, 0, 70, 1)) < 0)
      {
 	printf("BUG: Couldn't write thumb db\n");
      }
-   free(thumbpath);
 
    eet_close(ef);
 
@@ -2577,14 +2582,22 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
    unsigned int w, h;
    int a, c, q, l;
 
-   ef = eet_open(thumb, EET_FILE_MODE_READ);
-   if (!ef) return NULL;
 
    fullname = _e_fm_file_fullname(file);
    if (!_e_fm_file_thumb_exists(fullname))
      _e_fm_file_thumb_create(fullname);
 
    thumb = _e_fm_file_thumb_path_get(fullname);
+
+   ef = eet_open(thumb, EET_FILE_MODE_READ);
+   if (!ef)
+     {
+	free(fullname);
+	free(thumb);
+       	return NULL;
+     }
+   free(fullname);
+   free(thumb);
 
    data = eet_data_image_read(ef, "/thumbnail/data", &w, &h, &a, &c, &q, &l);
    if (data)
@@ -2600,8 +2613,6 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
        free(data);
     }
    eet_close(ef);
-   free(fullname);
-   free(thumb);
    return im;
 }
 
