@@ -51,6 +51,7 @@ e_bindings_init(void)
 	e_bindings_signal_add(eb->context, eb->signal, eb->source, eb->modifiers,
 			      eb->any_mod, eb->action, eb->params);
 	/* FIXME: Can this be solved in a generic way? */
+#if 0
 	if ((!strcmp(eb->action, "window_resize")) &&
 	    (!strncmp(eb->signal, "mouse,down,", 11)) &&
 	    (!strncmp(eb->source, "resize_", 7)))
@@ -60,6 +61,7 @@ e_bindings_init(void)
 	     e_bindings_signal_add(eb->context, "mouse,out", eb->source, eb->modifiers,
 				   eb->any_mod, "pointer_pop", eb->params);
 	  }
+#endif
      }
 
    for (l = e_config->wheel_bindings; l; l = l->next)
