@@ -8,6 +8,9 @@
 #include <grp.h>
 
 /* TODO:
+ * - when we drop something onto an efm from an efm we might not be releasing
+ *   the mouse grab.
+ * 
  * - checking wether events belong to us (ecore events)
  *
  * - scrolling
