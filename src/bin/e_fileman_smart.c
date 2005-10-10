@@ -2098,12 +2098,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	      }
 	    else
 	      {
-		 char path[PATH_MAX];
-		 if (!strcmp(file->sd->dir, "/"))
-		   snprintf(path, sizeof(path), "/%s", file->dir_entry->d_name);
-		 else
-		   snprintf(path, sizeof(path), "%s/%s", file->sd->dir, file->dir_entry->d_name);
-		 fullname = strdup(path);
+		 fullname = _e_fm_file_fullname(file);
 	      }
 
 	    /* FIXME: we need to fix this, uber hack alert */
@@ -2646,7 +2641,10 @@ _e_fm_file_fullname(E_Fileman_File *file)
 {
    char fullname[PATH_MAX];
 
-   snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->dir_entry->d_name);
+   if (!strcmp(file->sd->dir, "/"))
+     snprintf(fullname, sizeof(fullname), "/%s", file->dir_entry->d_name);
+   else
+     snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->dir_entry->d_name);
 
    return strdup(fullname);
 }
