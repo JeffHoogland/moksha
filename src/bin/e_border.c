@@ -111,6 +111,11 @@ static int  _e_border_cb_kill_timer(void *data);
 static char *_e_border_winid_str_get(Ecore_X_Window win);
 
 static void _e_border_app_change(void *data, E_App *app, E_App_Change change);
+
+static void _e_border_pointer_resize_begin(E_Border *bd);
+static void _e_border_pointer_resize_end(E_Border *bd);
+static void _e_border_pointer_move_begin(E_Border *bd);
+static void _e_border_pointer_move_end(E_Border *bd);
     
 /* local subsystem globals */
 static Evas_List *handlers = NULL;
@@ -566,6 +571,7 @@ e_border_hide(E_Border *bd, int manage)
      e_border_unfullscreen(bd);
    if (bd->resize_mode != RESIZE_NONE)
      {
+	_e_border_pointer_resize_end(bd);
 	bd->resize_mode = RESIZE_NONE;
 	_e_border_resize_end(bd);
      }
@@ -1936,6 +1942,7 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 
 	e_zone_flip_win_disable();
 	bd->moving = 1;
+	_e_border_pointer_move_begin(bd);
 	if (ev)
 	  {
 	     char source[256];
@@ -1951,6 +1958,7 @@ e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    if (!bd->moving) return;
    bd->moving = 0;
+   _e_border_pointer_move_end(bd);
    e_zone_flip_win_restore();
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
@@ -1990,6 +1998,7 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 		  GRAV_SET(bd, ECORE_X_GRAVITY_NW);
 	       }
 	  }
+	_e_border_pointer_resize_begin(bd);
 	if (ev)
 	  {
 	     char source[256];
@@ -2005,6 +2014,7 @@ e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
    if (bd->resize_mode != RESIZE_NONE)
      {
+	_e_border_pointer_resize_end(bd);
 	bd->resize_mode = RESIZE_NONE;
 	_e_border_resize_end(bd);
 	bd->changes.reset_gravity = 1;
@@ -2317,6 +2327,7 @@ e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
 {
    if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
+   _e_border_pointer_move_begin(bd);
    e_zone_flip_win_disable();
    _e_border_moveinfo_gather(bd, sig);
 }
@@ -2326,6 +2337,7 @@ e_border_signal_move_end(E_Border *bd, char *sig, char *src)
 {
    if (!bd->moving) return;
    bd->moving = 0;
+   _e_border_pointer_move_end(bd);
    e_zone_flip_win_restore();
    _e_border_move_end(bd);
    e_zone_flip_coords_handle(bd->zone, -1, -1);
@@ -2387,6 +2399,7 @@ e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
 	grav = ECORE_X_GRAVITY_E;
      }
    bd->resize_mode = resize_mode;
+   _e_border_pointer_resize_begin(bd);
    _e_border_moveinfo_gather(bd, sig);
    GRAV_SET(bd, grav);
 }
@@ -2396,6 +2409,7 @@ e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
 {
    if (bd->resize_mode == RESIZE_NONE) return;
    _e_border_resize_handle(bd);
+   _e_border_pointer_resize_end(bd);
    bd->resize_mode = RESIZE_NONE;
    _e_border_resize_end(bd);
    bd->changes.reset_gravity = 1;
@@ -2653,6 +2667,8 @@ _e_border_del(E_Border *bd)
 	ecore_event_add(E_EVENT_BORDER_REMOVE, ev, _e_border_event_border_remove_free, NULL);
      }
 
+   /* remove all pointers for this win. */
+   e_pointer_type_pop(bd->zone->container->manager->pointer, bd, NULL);
    e_container_border_remove(bd);
    if (bd->parent)
      {
@@ -7179,4 +7195,80 @@ _e_border_app_change(void *data, E_App *app, E_App_Change change)
 	     bd->changed = 1;
 	  }
      }
+}
+
+static void
+_e_border_pointer_resize_begin(E_Border *bd)
+{
+   switch (bd->resize_mode)
+     {
+      case RESIZE_TL:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_tl");
+	 break;
+      case RESIZE_T:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_t");
+	 break;
+      case RESIZE_TR:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_tr");
+	 break;
+      case RESIZE_R:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_r");
+	 break;
+      case RESIZE_BR:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_br");
+	 break;
+      case RESIZE_B:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_b");
+	 break;
+      case RESIZE_BL:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_bl");
+	 break;
+      case RESIZE_L:
+	 e_pointer_type_push(bd->zone->container->manager->pointer, bd, "resize_l");
+	 break;
+     }
+}
+
+static void
+_e_border_pointer_resize_end(E_Border *bd)
+{
+   switch (bd->resize_mode)
+     {
+      case RESIZE_TL:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_tl");
+	 break;
+      case RESIZE_T:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_t");
+	 break;
+      case RESIZE_TR:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_tr");
+	 break;
+      case RESIZE_R:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_r");
+	 break;
+      case RESIZE_BR:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_br");
+	 break;
+      case RESIZE_B:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_b");
+	 break;
+      case RESIZE_BL:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_bl");
+	 break;
+      case RESIZE_L:
+	 e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "resize_l");
+	 break;
+     }
+}
+
+static void
+_e_border_pointer_move_begin(E_Border *bd)
+{
+   e_pointer_type_push(bd->zone->container->manager->pointer, bd, "move");
+}
+
+static void
+_e_border_pointer_move_end(E_Border *bd)
+{
+   e_pointer_type_pop(bd->zone->container->manager->pointer, bd, "move");
 }
