@@ -62,3 +62,5 @@
 #include "e_theme_about.h"
 #include "e_apps_cache.h"
 #include "e_scrollbar.h"
+#include "e_fileman.h"
+#include "e_fileman_smart.h"
