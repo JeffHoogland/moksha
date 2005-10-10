@@ -2644,13 +2644,11 @@ _e_fm_file_exec(E_Fileman_File *file)
 static char *
 _e_fm_file_fullname(E_Fileman_File *file)
 {
-   char *fullname;
+   char fullname[PATH_MAX];
 
-   fullname = E_NEW(char, PATH_MAX);
-   if (fullname)
-     snprintf(fullname, PATH_MAX, "%s/%s", file->sd->dir, file->dir_entry->d_name);
+   snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->dir_entry->d_name);
 
-   return fullname;
+   return strdup(fullname);
 }
 
 static char *
