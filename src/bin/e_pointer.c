@@ -127,7 +127,7 @@ e_pointer_window_new(Ecore_X_Window win)
 	p->e_cursor = 0;
 	p->win = win;
 
-	ecore_x_cursor_size_set(e_config->cursor_size);
+	ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
 	e_pointer_type_push(p, p, "default");
 
 	_e_pointers = evas_list_append(_e_pointers, p);
@@ -169,7 +169,7 @@ e_pointers_size_set(int size)
 	  {
 	     char *type;
 
-	     ecore_x_cursor_size_set(e_config->cursor_size);
+	     ecore_x_cursor_size_set(e_config->cursor_size * 3 / 4);
 	     type = p->type;
 	     p->type = NULL;
 	     _e_pointer_type_set(p, type);
