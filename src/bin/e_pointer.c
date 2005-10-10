@@ -127,6 +127,7 @@ e_pointer_window_new(Ecore_X_Window win)
 	p->e_cursor = 0;
 	p->win = win;
 
+	ecore_x_cursor_size_set(e_config->cursor_size);
 	e_pointer_type_push(p, p, "default");
 
 	_e_pointers = evas_list_append(_e_pointers, p);
@@ -145,24 +146,35 @@ e_pointers_size_set(int size)
 	Evas_Engine_Info_Buffer *einfo;
 
 	p = l->data;
-	if (!p->e_cursor) continue;
-
-	p->w = p->h = size;
-	evas_output_size_set(p->evas, p->w, p->h);
-	evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
-
-	p->pixels = realloc(p->pixels, p->w * p->h * sizeof(int));
-
-	einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
-	if (einfo)
+	if (p->e_cursor)
 	  {
-	     einfo->info.dest_buffer = p->pixels;
-	     einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
-	     evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
-	  }
+	     p->w = p->h = size;
+	     evas_output_size_set(p->evas, p->w, p->h);
+	     evas_output_viewport_set(p->evas, 0, 0, p->w, p->h);
 
-	evas_object_move(p->pointer_object, 0, 0);
-	evas_object_resize(p->pointer_object, p->w, p->h);
+	     p->pixels = realloc(p->pixels, p->w * p->h * sizeof(int));
+
+	     einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+	     if (einfo)
+	       {
+		  einfo->info.dest_buffer = p->pixels;
+		  einfo->info.dest_buffer_row_bytes = p->w * sizeof(int);
+		  evas_engine_info_set(p->evas, (Evas_Engine_Info *)einfo);
+	       }
+
+	     evas_object_move(p->pointer_object, 0, 0);
+	     evas_object_resize(p->pointer_object, p->w, p->h);
+	  }
+	else
+	  {
+	     char *type;
+
+	     ecore_x_cursor_size_set(e_config->cursor_size);
+	     type = p->type;
+	     p->type = NULL;
+	     _e_pointer_type_set(p, type);
+	     p->type = type;
+	  }
      }
 }
 
