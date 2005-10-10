@@ -341,4 +341,26 @@ e17_hhandle.png \
 e17_hhandle_thumb.png \
 e17_vhandle_down.png \
 e17_vhandle.png \
-e17_vhandle_thumb.png
+e17_vhandle_thumb.png \
+e17_fileman_bg.png \
+e17_icon_fileman_c.png \
+e17_icon_fileman_file.png \
+e17_icon_fileman_folder.png \
+e17_icon_fileman_h.png \
+e17_icon_fileman_jpg.png \
+e17_icon_fileman_pdf.png \
+e17_icon_fileman_png.png \
+e17_button_detail_paste.png \
+e17_button_detail_arrange_name.png \
+e17_button_detail_properties.png \
+e17_button_detail_arrange.png \
+e17_button_detail_refresh.png \
+e17_button_detail_arrange_time.png \
+e17_button_detail_rename.png \
+e17_button_detail_copy.png \
+e17_button_detail_cut.png \
+e17_button_detail_delete.png \ 
+e17_button_detail_view_details.png \
+e17_button_detail_view_name.png \
+e17_button_detail_view.png \
+e17_button_detail_open.png
