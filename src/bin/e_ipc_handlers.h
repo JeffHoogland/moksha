@@ -6400,12 +6400,18 @@ break;
    REQ_INT_START(HDL)
    int value = 0;
    if (!strcmp(params[0], "SOFTWARE")) value = E_EVAS_ENGINE_SOFTWARE_X11;
-   else if (!strcmp(params[0], "GL")) value = E_EVAS_ENGINE_GL_X11;
+   else if (!strcmp(params[0], "GL"))
+     {
+	value = E_EVAS_ENGINE_GL_X11;
+	printf("GL engine is disabled as default engine.\n");
+	exit(-1);
+
+     }
    else if (!strcmp(params[0], "XRENDER")) value = E_EVAS_ENGINE_XRENDER_X11;
    else
      {
-	 printf("engine must be SOFTWARE, GL or XRENDER\n");
-	 exit(-1);
+	printf("engine must be SOFTWARE, GL or XRENDER\n");
+	exit(-1);
      }
    REQ_INT_END(value, HDL);
 #elif (TYPE == E_WM_IN)
