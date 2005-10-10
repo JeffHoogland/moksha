@@ -309,6 +309,7 @@ _e_test_internal(E_Container *con)
 }
 #elif 0
 static int my_val = 0;
+static int my_rval = 1;
 
 static void
 _e_test_internal(E_Container *con)
@@ -320,12 +321,29 @@ _e_test_internal(E_Container *con)
      {
 	Evas_Object *o;
 	Evas_Coord mw, mh;
+	E_Radio_Group *rg;
+	Evas *e;
 	
-	o = e_widget_checkbox_add(e_win_evas_get(dia->win),
-				  "My checkbox widget which on toggles is modifying my_val",
-				  &my_val);
+	e = e_win_evas_get(dia->win);
+	o = e_widget_framelist_add(e, "My Checklist", 0);
+	
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 1", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 2", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 3", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox and some long text", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 7", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Koneko", &my_val));
+	
+	rg = e_widget_radio_group_new(&my_rval);
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 0", 0, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 1", 1, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 2", 2, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 3", 3, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 4", 4, rg));
+	
 	e_widget_min_size_get(o, &mw, &mh);
 	e_dialog_content_set(dia, o, mw, mh);
+	evas_object_show(o);
 //	e_theme_edje_object_set(o, "base/theme/dialog",
 //				"widgets/frame");
      }

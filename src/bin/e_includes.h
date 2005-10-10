@@ -66,3 +66,5 @@
 #include "e_fileman_smart.h"
 #include "e_widget.h"
 #include "e_widget_check.h"
+#include "e_widget_radio.h"
+#include "e_widget_framelist.h"

@@ -16,11 +16,11 @@ group {
 	    fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   1    1;
+	       offset:   4    4;
 	    }
 	    rel2 {
-	       relative: 1.0  1.0;
-	       offset:   -2   -2;
+	       relative: 0.0  1.0;
+	       offset:   4    -5;
 	    }
 	    image {
 	       normal: "e17_menu_radio1.png";
@@ -60,14 +60,15 @@ group {
 	 mouse_events:   0;
 	 description {
 	    state: "default" 0.0;
+	    min:      16 16;
 	    rel1 {
 	       to_x:     "outline";
 	       relative: 1.0  0.0;
-	       offset:   1 1;
+	       offset:   4 4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -1 -2;
+	       offset:   -5 -5;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -108,20 +109,13 @@ group {
 	 name:    "click";
 	 signal:  "mouse,down,1";
 	 source:  "event";
-	 script {
-	    new buf[100];
-	    new Float:val;
-	    
-	    get_state(PART:"item1", buf, sizeof(buf), val);
-	    if (!strcmp(buf, "default")) {
-	       set_state(PART:"item1", "active", 0.0);
-	       emit("toggled", "on");
-	    }
-	    else {
-	       set_state(PART:"item1", "default", 0.0);
-	       emit("toggled", "off");
-	    }
-	 }
+         action:  STATE_SET "active" 0.0;
+	 target:  "item1";
+	 after:   "click2";
+      }
+      program {
+	 name:    "click2";
+         action:  SIGNAL_EMIT "toggled" "on";
       }
    }
 }

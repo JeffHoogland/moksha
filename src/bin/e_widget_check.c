@@ -15,7 +15,7 @@ static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission
 
 /* externally accessible functions */
 Evas_Object *
-e_widget_checkbox_add(Evas *evas, char *label, int *val)
+e_widget_check_add(Evas *evas, char *label, int *val)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;

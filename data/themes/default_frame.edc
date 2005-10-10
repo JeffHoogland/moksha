@@ -81,6 +81,7 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    align: 0.0 0.0;
+            fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
 	       offset:   16   6;

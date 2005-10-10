@@ -60,10 +60,11 @@ group {
 	 mouse_events:   0;
 	 description {
 	    state: "default" 0.0;
+	    min:      16 16;
 	    rel1 {
 	       to_x:     "outline";
 	       relative: 1.0  0.0;
-	       offset:   2 4;
+	       offset:   4 4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;

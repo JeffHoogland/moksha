@@ -6,7 +6,7 @@
 #ifndef E_WIDGET_CHECK_H
 #define E_WIDGET_CHECK_H
 
-EAPI Evas_Object *e_widget_checkbox_add(Evas *evas, char *label, int *val);
+EAPI Evas_Object *e_widget_check_add(Evas *evas, char *label, int *val);
 
 #endif
 #endif
