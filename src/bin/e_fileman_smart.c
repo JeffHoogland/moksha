@@ -73,7 +73,6 @@ struct _E_Fileman_File
    } prop;
 
    struct {
-	unsigned char clicked : 1;
 	unsigned char selected : 1;
    } state;
 
@@ -977,7 +976,6 @@ _e_fm_selections_clear(E_Fileman_Smart_Data *sd)
 	if (!file) continue;
 	edje_object_signal_emit(file->icon, "unclicked", "");
 	edje_object_signal_emit(file->icon_img, "unclicked", "");
-	file->state.clicked = 0;
 	file->state.selected = 0;
      }
    sd->selection.files = evas_list_free(sd->selection.files);
@@ -993,7 +991,7 @@ _e_fm_selections_add(E_Fileman_File *file)
    edje_object_signal_emit(file->icon, "clicked", "");
    edje_object_signal_emit(file->icon_img, "clicked", "");
    file->sd->selection.current_file = file;
-   file->state.clicked = 1;
+   file->state.selected = 1;
    file->sd->selection.files = evas_list_append(file->sd->selection.files, file);
 }
 
@@ -1001,16 +999,26 @@ static void
 _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
    Evas_List *l;
-
+      
    for (l = sd->files; l; l = l->next)
      {
 	E_Fileman_File *file;
-	Evas_Coord x, y, w, h;
+	Evas_Coord xx, yy, ww, hh;
 
 	file = l->data;
 	if (!file) continue;
 
-	evas_object_geometry_get(file->icon, &x, &y, &w, &h);
+	evas_object_geometry_get(file->icon, &xx, &yy, &ww, &hh);
+	if(E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
+	 {
+	    if(!file->state.selected)
+	     {
+		_e_fm_selections_add(file);
+	     }
+	 } else {
+	    if(file->state.selected) // todo: add control+rubberband
+	      _e_fm_selections_del(file);
+	 }
      }
 }
 
@@ -1022,7 +1030,7 @@ _e_fm_selections_del(E_Fileman_File *file)
 
    edje_object_signal_emit(file->icon, "unclicked", "");
    edje_object_signal_emit(file->icon_img, "unclicked", "");
-   file->state.clicked = 0;
+   file->state.selected = 0;
    file->sd->selection.files = evas_list_remove(file->sd->selection.files, file);
    file->sd->selection.current_file = evas_list_nth(file->sd->selection.files, 0);
 }
@@ -1881,8 +1889,6 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      {
 	Evas_Coord x, y, w, h;
 
-	printf("enabled!!\n");
-
 	evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
 
 	if ((ev->cur.canvas.x > sd->selection.band.x) &&
@@ -2129,7 +2135,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	    file->sd->drag.file = file;
 	    printf("drag file: %s\n", file->dir_entry->d_name);
 
-	    if (!file->state.clicked)
+	    if (!file->state.selected)
 	      {
 		 if (evas_key_modifier_is_set(evas_key_modifier_get(file->sd->evas), "Control"))
 		   file->sd->selection.files =
