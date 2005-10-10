@@ -1076,10 +1076,10 @@ _e_fm_selections_add(E_Fileman_File *file)
 static void
 _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
-   /*
+
    Evas_List *l;
    
-   for (l = sd->selection.files; l; l = l->next)
+   for (l = sd->files; l; l = l->next)
     {
        E_Fileman_File *file;
        Evas_Coord x, y, w, h;
@@ -1090,7 +1090,7 @@ _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, 
        evas_object_geometry_get(file->icon, &x, &y, &w, &h);
        
     }
-   */
+
 }
 
 static void                
@@ -2585,9 +2585,7 @@ _e_fm_drop_selection_cb (void *data, int type, void *event)
       
        snprintf (new_file, PATH_MAX, "%s/%s", sd->dir,
 		 ecore_file_get_file (files->files[i]));
-       // look into this.
-       //ecore_file_cp (strstr (files->files[i],"/"), new_file);
-       printf("we should copy the file now.");
+       ecore_file_cp (strstr (files->files[i],"/"), new_file);
     }
    
    ecore_x_dnd_send_finished();
