@@ -308,6 +308,34 @@ _e_test_internal(E_Container *con)
    e_dialog_show(dia);
 }
 #elif 0
+static int my_val = 0;
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+     {
+	Evas_Object *o;
+	Evas_Coord mw, mh;
+	
+	o = e_widget_checkbox_add(e_win_evas_get(dia->win),
+				  "My checkbox widget which on toggles is modifying my_val",
+				  &my_val);
+	e_widget_min_size_get(o, &mw, &mh);
+	e_dialog_content_set(dia, o, mw, mh);
+//	e_theme_edje_object_set(o, "base/theme/dialog",
+//				"widgets/frame");
+     }
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_button_add(dia, "Apply", "enlightenment/reset", NULL, NULL);
+   e_dialog_button_add(dia, "Cancel", "enlightenment/exit", NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+}
+#elif 0
 #else
 static void
 _e_test_internal(E_Container *con)

@@ -49,5 +49,8 @@ collections {
 #include "default_entry.edc"   
 #include "default_fileman.edc"
 #include "default_scrollbar.edc"   
+#include "default_check.edc"
+#include "default_radio.edc"
+#include "default_frame.edc"
 }
 

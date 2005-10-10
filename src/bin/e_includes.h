@@ -64,3 +64,5 @@
 #include "e_scrollbar.h"
 #include "e_fileman.h"
 #include "e_fileman_smart.h"
+#include "e_widget.h"
+#include "e_widget_check.h"

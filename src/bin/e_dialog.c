@@ -61,13 +61,6 @@ e_dialog_new(E_Container *con)
    evas_object_move(o, 0, 0);
    evas_object_show(o);
    
-   o = edje_object_add(e_win_evas_get(dia->win));
-   dia->text_object = o;
-   e_theme_edje_object_set(o, "base/theme/dialog",
-			   "widgets/dialog/text");
-   edje_object_part_swallow(dia->bg_object, "content_swallow", o);
-   evas_object_show(o);
-   
    o = e_box_add(e_win_evas_get(dia->win));
    dia->box_object = o;
    e_box_orientation_set(o, 1);
@@ -207,20 +200,38 @@ e_dialog_title_set(E_Dialog *dia, char *title)
 void
 e_dialog_text_set(E_Dialog *dia, char *text)
 {
+   if (!dia->text_object)
+     {
+	Evas_Object *o;
+	
+	o = edje_object_add(e_win_evas_get(dia->win));
+	dia->text_object = o;
+	e_theme_edje_object_set(o, "base/theme/dialog",
+				"widgets/dialog/text");
+	edje_object_part_swallow(dia->bg_object, "content_swallow", o);
+	evas_object_show(o);
+     }
    edje_object_part_text_set(dia->text_object, "text", text);
 }
 
 void
 e_dialog_icon_set(E_Dialog *dia, char *icon, Evas_Coord size)
 {
-   if (icon)
-     {
-	dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
-	e_util_edje_icon_set(dia->icon_object, icon);
-	edje_extern_object_min_size_set(dia->icon_object, size, size);
-	edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
-	evas_object_show(dia->icon_object);
-     }
+   if (!icon) return;
+   
+   dia->icon_object = edje_object_add(e_win_evas_get(dia->win));
+   e_util_edje_icon_set(dia->icon_object, icon);
+   edje_extern_object_min_size_set(dia->icon_object, size, size);
+   edje_object_part_swallow(dia->bg_object, "icon_swallow", dia->icon_object);
+   evas_object_show(dia->icon_object);
+}
+
+void
+e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
+{
+   edje_extern_object_min_size_set(obj, minw, minh);
+   edje_object_part_swallow(dia->bg_object, "content_swallow", obj);
+   evas_object_show(obj);
 }
 
 void
@@ -230,9 +241,12 @@ e_dialog_show(E_Dialog *dia)
    Evas_Object *o;
    
    o = dia->text_object;
-   edje_object_size_min_calc(o, &mw, &mh);
-   edje_extern_object_min_size_set(o, mw, mh);
-   edje_object_part_swallow(dia->bg_object, "content_swallow", o);
+   if (o)
+     {
+	edje_object_size_min_calc(o, &mw, &mh);
+	edje_extern_object_min_size_set(o, mw, mh);
+	edje_object_part_swallow(dia->bg_object, "content_swallow", o);
+     }
 
    o = dia->box_object;
    e_box_min_size_get(o, &mw, &mh);
@@ -305,7 +319,6 @@ _e_dialog_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *even
    e_dialog_button_focus_button(dia, db);
 }
 
-/* TODO: Implement shift-tab and left arrow */
 static void
 _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event)
 {

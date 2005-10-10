@@ -1,0 +1,127 @@
+images {
+   image: "e17_frame_label_over.png" COMP;
+   image: "e17_frame_label_under.png" COMP;
+   image: "e17_frame_outline.png" COMP;
+}
+group {
+   name: "widgets/frame";
+   parts {
+      part {
+	 name:          "items";
+	 mouse_events:  0;
+	 type:          SWALLOW;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to_x: "outline";
+	       to_y: "label_over";
+	       relative: 0.0  1.0;
+	       offset:   4    2;
+	    }
+	    rel2 {
+	       to: "outline";
+	       relative: 1.0  1.0;
+	       offset:   -5   -5;
+	    }
+	    color:       0 0 0 0;
+	 }
+      }
+      part {
+	 name:          "outline";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to_y: "label";
+	       relative: 0.0  0.5;
+	       offset:   3    -1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -4   -4;
+	    }
+	    image {
+	       normal: "e17_frame_outline.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+               smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "label_under";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "label_over";
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       to:       "label_over";
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_frame_label_under.png";
+	       border: 3 3 3 3;
+	    }
+	    fill {
+               smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:           "label";
+	 type:           TEXT;
+	 mouse_events:   0;
+	 description {
+	    state: "default" 0.0;
+	    align: 0.0 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   16   6;
+	    }
+	    rel2 {
+	       relative: 0.0  0.0;
+	       offset:   16   6;
+	    }
+	    color: 0 0 0 80;
+	    text {
+	       text:     "Frame Label";
+	       font:     "Edje-Vera-Bold";
+	       size:     10;
+	       min:      1 1;
+	       align:    0.0 0.5;
+	    }
+	 }
+      }
+      part {
+	 name:          "label_over";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       to:       "label";
+	       relative: 0.0  0.0;
+	       offset:   -4   -4;
+	    }
+	    rel2 {
+	       to:       "label";
+	       relative: 1.0  1.0;
+	       offset:   5    3;
+	    }
+	    image {
+	       normal: "e17_frame_label_over.png";
+	       border: 7 7 7 7;
+	    }
+	    fill {
+               smooth: 0;
+	    }
+	 }
+      }
+   }
+}

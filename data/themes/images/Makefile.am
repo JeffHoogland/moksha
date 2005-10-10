@@ -363,4 +363,8 @@ e17_button_detail_delete.png \
 e17_button_detail_view_details.png \
 e17_button_detail_view_name.png \
 e17_button_detail_view.png \
-e17_button_detail_open.png
+e17_button_detail_open.png \
+e17_frame_label_over.png \
+e17_frame_label_under.png \
+e17_frame_outline.png
+
