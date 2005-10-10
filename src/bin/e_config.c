@@ -1582,7 +1582,11 @@ e_config_engine_list(void)
 {
    Evas_List *l = NULL;
    l = evas_list_append(l, strdup("SOFTWARE"));
-   l = evas_list_append(l, strdup("GL"));
+// DISABLE GL as an accessible engine - it does have problems, ESPECIALLY with
+// shaped windows (it can't do them), and multiple gl windows and shared
+// contexts, so for now just disable it. xrender is much more complete in
+// this regard.
+//   l = evas_list_append(l, strdup("GL"));
    l = evas_list_append(l, strdup("XRENDER"));
    return l;
 }
