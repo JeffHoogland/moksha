@@ -981,7 +981,6 @@ _e_fm_selections_clear(E_Fileman_Smart_Data *sd)
 	file->state.selected = 0;
      }
    sd->selection.files = evas_list_free(sd->selection.files);
-   sd->selection.files = NULL;
    sd->selection.current_file = NULL;
 }
 
@@ -1125,8 +1124,8 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 	// dir_entry2->d_off = dir_entry->d_off; // not portable
 	// dir_entry2->d_reclen = dir_entry->d_reclen; // note portable
 	dir_entry2->d_type = dir_entry->d_type;
-	memcpy(dir_entry2->d_name, dir_entry->d_name, NAME_MAX);
-	dir_entry2->d_name[NAME_MAX] = 0;
+	strncpy(dir_entry2->d_name, dir_entry->d_name, NAME_MAX);
+	printf("%s %s\n", dir_entry2->d_name, dir_entry->d_name);
 
 	files = evas_list_append(files, dir_entry2);
      }
@@ -2088,7 +2087,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
     {
        if ((file->dir_entry->d_type == 4) && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
 	 {
-	    char *fullname;
+	    char *fullname = NULL;
 
 	    file->sd->drag.start = 0;
 
@@ -2102,9 +2101,9 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	      {
 		 char path[PATH_MAX];
 		 if (!strcmp(file->sd->dir, "/"))
-		   snprintf(fullname, sizeof(path), "/%s", file->dir_entry->d_name);
+		   snprintf(path, sizeof(path), "/%s", file->dir_entry->d_name);
 		 else
-		   snprintf(fullname, sizeof(path), "%s/%s", file->sd->dir, file->dir_entry->d_name);
+		   snprintf(path, sizeof(path), "%s/%s", file->sd->dir, file->dir_entry->d_name);
 		 fullname = strdup(path);
 	      }
 
@@ -2136,7 +2135,6 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	    file->sd->drag.file = file;
 	    printf("drag file: %s\n", file->dir_entry->d_name);
 
-#if 0
 	    if (!file->state.clicked)
 	      {
 		 if (evas_key_modifier_is_set(evas_key_modifier_get(file->sd->evas), "Control"))
@@ -2157,7 +2155,6 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 		      _e_fm_selections_add(file);
 		   }
 	      }
-#endif
 	 }
     }
    else if (ev->button == 3)
