@@ -1125,7 +1125,6 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 	// dir_entry2->d_reclen = dir_entry->d_reclen; // note portable
 	dir_entry2->d_type = dir_entry->d_type;
 	strncpy(dir_entry2->d_name, dir_entry->d_name, NAME_MAX);
-	printf("%s %s\n", dir_entry2->d_name, dir_entry->d_name);
 
 	files = evas_list_append(files, dir_entry2);
      }
