@@ -92,6 +92,7 @@ images
    image: "e17_icon_fileman_folder.png" COMP;
    image: "e17_icon_fileman_folder_clicked.png" COMP;   
    image: "e17_icon_fileman_file.png" COMP;
+   image: "e17_icon_fileman_file_clicked.png" COMP;   
    image: "e17_icon_fileman_pdf.png" COMP;
    image: "e17_icon_fileman_c.png" COMP;
    image: "e17_icon_fileman_h.png" COMP;
@@ -523,7 +524,7 @@ group {
 
 
 FILEMAN_ICON_CLICKABLE("folder");
-FILEMAN_ICON("file");
+FILEMAN_ICON_CLICKABLE("file");
 FILEMAN_ICON("pdf");
 FILEMAN_ICON("c");
 FILEMAN_ICON("h");

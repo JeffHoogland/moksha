@@ -8,6 +8,8 @@
 #include <grp.h>
 
 /* TODO:
+ * - checking wether events belong to us (ecore events)
+ * 
  * - scrolling
  * 
  * - we need a redraw function that will just re-arrange and not do 
@@ -178,6 +180,9 @@ static void                _e_fm_redraw_new (E_Fileman_Smart_Data *sd);
 static void                _e_fm_redraw_update (E_Fileman_Smart_Data *sd);
 static void                _e_fm_size_calc (E_Fileman_Smart_Data *sd);    
 static void                _e_fm_redraw (E_Fileman_Smart_Data *sd);
+static void                _e_fm_selections_clear(E_Fileman_Smart_Data *sd);
+static void                _e_fm_selections_add(E_Fileman_File *file);
+static void                _e_fm_selections_del(E_Fileman_File *file);
 static void                _e_fm_files_free (E_Fileman_Smart_Data *sd);
 static char               *_e_fm_file_stripext(char *path);
 static Evas_Bool           _e_fm_file_can_preview (E_Fileman_File *file);
@@ -592,7 +597,7 @@ _e_fm_smart_add(Evas_Object *object)
    sd->event_handlers = evas_list_append (sd->event_handlers,
 					  ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								  _e_fm_mouse_move_cb,
-								  sd));   
+								  sd));
    evas_object_smart_data_set(object, sd);
    
    dir = get_current_dir_name();
@@ -1009,6 +1014,58 @@ _e_fm_redraw (E_Fileman_Smart_Data *sd)
 }
 
 static void
+_e_fm_selections_clear(E_Fileman_Smart_Data *sd)
+{
+   Evas_List *l;
+   
+   for (l = sd->selection.files; l; l = l->next)
+    {	 
+       E_Fileman_File *file;
+       
+       file = l->data;
+       if(!file) continue;
+       edje_object_signal_emit(file->icon, "unclicked", "");
+       edje_object_signal_emit(file->icon_img, "unclicked", "");
+       file->state.clicked = 0;
+       file->state.selected = 0;	       
+    }
+   
+   sd->selection.files = evas_list_free(sd->selection.files);   
+   
+   if(sd->selection.current_file)
+    {   
+       sd->selection.files = NULL;
+       sd->selection.current_file = NULL;
+    }   
+}
+
+static void                
+_e_fm_selections_add(E_Fileman_File *file)
+{
+   if(!file)
+     return;
+   
+   edje_object_signal_emit(file->icon, "clicked", "");
+   edje_object_signal_emit(file->icon_img, "clicked", "");
+   file->sd->selection.current_file = file;
+   file->state.clicked = 1;
+   file->sd->selection.files = evas_list_append(file->sd->selection.files, file);
+}
+
+static void                
+_e_fm_selections_del(E_Fileman_File *file)
+{   
+   if(!file)
+     return;
+   
+   edje_object_signal_emit(file->icon, "unclicked", "");
+   edje_object_signal_emit(file->icon_img, "unclicked", "");   
+   file->state.clicked = 0;
+   file->sd->selection.files = evas_list_remove(file->sd->selection.files, file);
+   file->sd->selection.current_file = evas_list_nth(file->sd->selection.files, 0);
+}
+
+static void
 _e_fm_dir_set (E_Fileman_Smart_Data *sd, const char *dir)
 {
    if(!sd || !dir)
@@ -1025,8 +1082,7 @@ _e_fm_dir_set (E_Fileman_Smart_Data *sd, const char *dir)
    sd->dir = calloc (/*strlen(dir) + 1*/PATH_MAX, sizeof (char));
    snprintf (sd->dir, PATH_MAX/*strlen(dir) + 1*/, "%s", dir);
    
-   if(sd->selection.current_file)
-     sd->selection.current_file = NULL;
+   _e_fm_selections_clear(sd);  
    
    _e_fm_redraw_new (sd);   
 }
@@ -1070,8 +1126,7 @@ _e_fm_files_free (E_Fileman_Smart_Data *sd)
    sd->files = NULL;
    sd->drag.file = NULL;
    
-   if(sd->selection.current_file)
-     sd->selection.current_file = NULL;
+   _e_fm_selections_clear(sd);
 }
 
 static void 
@@ -1080,8 +1135,6 @@ _e_fm_dir_monitor_cb (void *data, Ecore_File_Monitor *ecore_file_monitor,  Ecore
    E_Fileman_Smart_Data *sd;
    
    sd = data;
-
-   printf("MONITOR!!!!\n");
    
    if (event == ECORE_FILE_EVENT_DELETED_SELF)
     {
@@ -1899,15 +1952,7 @@ _e_fm_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *event_info)
    switch(ev->button)
     {
      case 1:
-       
-       /* todo: multiple selections */
-       if(sd->selection.current_file)
-	{
-	   edje_object_signal_emit(sd->selection.current_file->icon, "unclicked", "");
-	   edje_object_signal_emit(sd->selection.current_file->icon_img, "unclicked", "");
-	   sd->selection.current_file->state.clicked = 0;
-	}
-       
+       _e_fm_selections_clear(sd);       	
        break;
        
      case 3:       
@@ -2077,24 +2122,36 @@ _e_fm_file_icon_mouse_down_cb (void *data, Evas *e, Evas_Object *obj, void *even
 	   file->sd->drag.x = -1;	   
 	   file->sd->drag.file = file;
 	   printf("drag file: %s\n", file->dir_entry->d_name);
-
+	   	   
 	   if(!file->state.clicked)
 	    {
-	       /* todo multiple selection with control or shift */
-	       if(file->sd->selection.current_file)
-		{
-		   edje_object_signal_emit(file->sd->selection.current_file->icon, "unclicked", "");
-		   edje_object_signal_emit(file->sd->selection.current_file->icon_img, "unclicked", "");
-		   file->sd->selection.current_file->state.clicked = 0;
-		}
+	       //Evas_Modifier_Mask mask;
 	       
-	       edje_object_signal_emit(file->icon, "clicked", "");
-	       edje_object_signal_emit(file->icon_img, "clicked", "");
-	       file->sd->selection.current_file = file;
-	       file->state.clicked = 1;	       
+	       //mask = evas_key_modifier_mask_get(file->sd->evas, "Control");
+	       
+	       if(evas_key_modifier_is_set(evas_key_modifier_get(file->sd->evas), "Control"))
+		 file->sd->selection.files = evas_list_append(file->sd->selection.files,
+							      file);
+	       else
+		 _e_fm_selections_clear(file->sd);
+	       
+	       _e_fm_selections_add(file);	       	   	   
 	    }
-	} 
+	   else
+	    {
+	       //Evas_Modifier_Mask mask;
+	       
+	       //mask = evas_key_modifier_mask_get(file->sd->evas, "Control");
 
+	       if(evas_key_modifier_is_set(evas_key_modifier_get(file->sd->evas), "Control"))
+		 _e_fm_selections_del(file);
+	       else
+		{
+		   _e_fm_selections_clear(file->sd);
+		   _e_fm_selections_add(file);
+		}		   
+	    }
+	}
     }
    else if (ev->button == 3) {
        {
