@@ -2545,7 +2545,7 @@ _e_fm_file_thumb_create(char *file)
    ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
    if (!ef)
      {
-	free(thumpath);
+	free(thumbpath);
        	return -1;
      }
    free(thumbpath);
