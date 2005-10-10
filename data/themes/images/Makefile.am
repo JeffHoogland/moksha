@@ -359,7 +359,7 @@ e17_button_detail_arrange_time.png \
 e17_button_detail_rename.png \
 e17_button_detail_copy.png \
 e17_button_detail_cut.png \
-e17_button_detail_delete.png \ 
+e17_button_detail_delete.png \
 e17_button_detail_view_details.png \
 e17_button_detail_view_name.png \
 e17_button_detail_view.png \
