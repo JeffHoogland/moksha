@@ -2,8 +2,8 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-#include <dirent.h>
 #include <sys/types.h>
+#include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -1106,8 +1106,8 @@ _e_fm_dir_files_get (char *dirname, E_Fileman_File_Type type)
 	      
 	      dir_entry2 = calloc( 1, sizeof(struct dirent));
 	      dir_entry2->d_ino = dir_entry->d_ino;
-	      dir_entry2->d_off = dir_entry->d_off;
-	      dir_entry2->d_reclen = dir_entry->d_reclen;
+	      // dir_entry2->d_off = dir_entry->d_off; // not portable
+	      // dir_entry2->d_reclen = dir_entry->d_reclen; // note portable
 	      dir_entry2->d_type = dir_entry->d_type;
 	      snprintf (dir_entry2->d_name, NAME_MAX+1, dir_entry->d_name);
 	      
