@@ -1009,16 +1009,18 @@ _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, 
 	if (!file) continue;
 
 	evas_object_geometry_get(file->icon, &xx, &yy, &ww, &hh);
-	if(E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
-	 {
-	    if(!file->state.selected)
-	     {
-		_e_fm_selections_add(file);
-	     }
-	 } else {
-	    if(file->state.selected) // todo: add control+rubberband
-	      _e_fm_selections_del(file);
-	 }
+	if (E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
+	  {
+	     if (!file->state.selected)
+	       {
+		  _e_fm_selections_add(file);
+	       }
+	  }
+	else
+	  {
+	     if (file->state.selected) // todo: add control+rubberband
+	       _e_fm_selections_del(file);
+	  }
      }
 }
 
