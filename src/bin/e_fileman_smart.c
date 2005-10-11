@@ -164,15 +164,15 @@ struct _E_Fileman_Smart_Data
    } max;
 
    struct {
-      Evas_List *files;
-      E_Fileman_File *current_file;
+	Evas_List *files;
+	E_Fileman_File *current_file;
 
-      struct {
-	 unsigned char enabled : 1;
-	 Evas_Coord x, y;
-	 Evas_Object *obj;
-	 Evas_List *files;
-      } band;
+	struct {
+	     unsigned char enabled : 1;
+	     Evas_Coord x, y;
+	     Evas_Object *obj;
+	     Evas_List *files;
+	} band;
 
    } selection;
 };
@@ -1016,23 +1016,25 @@ _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, 
 	evas_object_geometry_get(file->icon, &xx, &yy, &ww, &hh);
 	if (E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
 	  {
-	     if(!evas_list_find(file->sd->selection.band.files, file))
-	      {		 
-		 if(file->state.selected)
-		   _e_fm_selections_del(file);
-		 else
-		   _e_fm_selections_add(file);
-		 file->sd->selection.band.files = evas_list_append(file->sd->selection.band.files, file);
-	      }
-	  } else {
-	     if(evas_list_find(file->sd->selection.band.files, file))
-	      {
-		 if(file->state.selected)
-		   _e_fm_selections_del(file);
-		 else
-		   _e_fm_selections_add(file);
-		 file->sd->selection.band.files = evas_list_remove(file->sd->selection.band.files, file);
-	      }
+	     if (!evas_list_find(file->sd->selection.band.files, file))
+	       {		 
+		  if (file->state.selected)
+		    _e_fm_selections_del(file);
+		  else
+		    _e_fm_selections_add(file);
+		  file->sd->selection.band.files = evas_list_append(file->sd->selection.band.files, file);
+	       }
+	  }
+	else
+	  {
+	     if (evas_list_find(file->sd->selection.band.files, file))
+	       {
+		  if (file->state.selected)
+		    _e_fm_selections_del(file);
+		  else
+		    _e_fm_selections_add(file);
+		  file->sd->selection.band.files = evas_list_remove(file->sd->selection.band.files, file);
+	       }
 	  }
      }
 }
