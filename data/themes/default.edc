@@ -52,5 +52,6 @@ collections {
 #include "default_check.edc"
 #include "default_radio.edc"
 #include "default_frame.edc"
+#include "default_button.edc"
 }
 

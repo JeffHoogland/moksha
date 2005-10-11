@@ -16,7 +16,6 @@ struct _E_Dialog_Button
 /* local subsystem functions */
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_dialog_button_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_dialog_button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_dialog_cb_delete(E_Win *win);
 static void _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
@@ -108,7 +107,6 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
 				   _e_dialog_cb_button_clicked, db);
    edje_object_part_text_set(db->obj, "button_text", db->label);
    
-   evas_object_event_callback_add(db->obj, EVAS_CALLBACK_MOUSE_IN, _e_dialog_button_cb_mouse_in, dia);
    evas_object_event_callback_add(db->obj, EVAS_CALLBACK_MOUSE_DOWN, _e_dialog_button_cb_mouse_down, db);
    
    if (icon)
@@ -120,7 +118,6 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
 	edje_object_message_signal_process(db->obj);
 	evas_object_show(db->obj_icon);
      }
-   edje_object_calc_force(db->obj);
    edje_object_size_min_calc(db->obj, &mw, &mh);
    e_box_pack_end(dia->box_object, db->obj);
    e_box_pack_options_set(db->obj,
@@ -293,18 +290,12 @@ _e_dialog_cb_button_clicked(void *data, Evas_Object *obj, const char *emission, 
    
    db = data;
    if (db->func) 
-   {
-      edje_object_signal_emit(db->obj, "focus", "");
-      db->func(db->data, db->dialog);
-   }
+     {
+	edje_object_signal_emit(db->obj, "focus", "");
+	db->func(db->data, db->dialog);
+     }
    else
      e_object_del(E_OBJECT(db->dialog));
-}
-
-static void
-_e_dialog_button_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event)
-{        
-   edje_object_signal_emit(obj, "enter", "");  
 }
 
 static void

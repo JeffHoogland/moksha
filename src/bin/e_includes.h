@@ -68,3 +68,5 @@
 #include "e_widget_check.h"
 #include "e_widget_radio.h"
 #include "e_widget_framelist.h"
+#include "e_widget_list.h"
+#include "e_widget_button.h"

@@ -53,6 +53,7 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
 			   "widgets/radio");
    edje_object_signal_callback_add(o, "toggled", "*", _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "label", label);
+   evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
    if ((wd->group) && (wd->group->valptr))

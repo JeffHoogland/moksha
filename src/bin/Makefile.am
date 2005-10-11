@@ -86,7 +86,9 @@ e_fileman_smart.h \
 e_widget.h \
 e_widget_check.h \
 e_widget_radio.h \
-e_widget_framelist.h
+e_widget_framelist.h \
+e_widget_list.h \
+e_widget_button.h
 
 enlightenment_src = \
 e_user.c \
@@ -155,6 +157,8 @@ e_widget.c \
 e_widget_check.c \
 e_widget_radio.c \
 e_widget_framelist.c \
+e_widget_list.c \
+e_widget_button.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

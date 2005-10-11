@@ -319,12 +319,17 @@ _e_test_internal(E_Container *con)
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
      {
-	Evas_Object *o;
+	Evas_Object *o, *ol, *hb;
 	Evas_Coord mw, mh;
 	E_Radio_Group *rg;
 	Evas *e;
 	
 	e = e_win_evas_get(dia->win);
+	
+	ol = e_widget_list_add(e, 0);
+	
+	hb = e_widget_list_add(e, 1);
+	
 	o = e_widget_framelist_add(e, "My Checklist", 0);
 	
 	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 1", &my_val));
@@ -340,12 +345,27 @@ _e_test_internal(E_Container *con)
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 2", 2, rg));
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 3", 3, rg));
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 4", 4, rg));
+
+	e_widget_list_object_append(hb, o, 1, 1, 0.5);
+
+	o = e_widget_framelist_add(e, "My Checklist on the right", 0);
 	
-	e_widget_min_size_get(o, &mw, &mh);
-	e_dialog_content_set(dia, o, mw, mh);
-	evas_object_show(o);
-//	e_theme_edje_object_set(o, "base/theme/dialog",
-//				"widgets/frame");
+	rg = e_widget_radio_group_new(&my_rval);
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 0", 0, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 1", 1, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 2", 2, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 3", 3, rg));
+	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 4", 4, rg));
+
+	e_widget_list_object_append(hb, o, 0, 0, 0.0);
+	
+	e_widget_list_object_append(ol, hb, 1, 1, 0.5);
+	
+	o = e_widget_button_add(e, "Button", "enlightenment/exit", NULL, NULL, NULL);
+	e_widget_list_object_append(ol, o, 0, 0, 1.0);
+	
+	e_widget_min_size_get(ol, &mw, &mh);
+	e_dialog_content_set(dia, ol, mw, mh);
      }
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_dialog_button_add(dia, "Apply", "enlightenment/reset", NULL, NULL);
