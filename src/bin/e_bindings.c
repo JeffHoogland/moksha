@@ -59,9 +59,9 @@ e_bindings_init(void)
 	     char params[32];
 	     snprintf(params, sizeof(params), "resize_%s", eb->params);
 	     e_bindings_signal_add(eb->context, "mouse,in", eb->source, eb->modifiers,
-				   eb->any_mod, "pointer_push", params);
+				   eb->any_mod, "pointer_resize_push", params);
 	     e_bindings_signal_add(eb->context, "mouse,out", eb->source, eb->modifiers,
-				   eb->any_mod, "pointer_pop", params);
+				   eb->any_mod, "pointer_resize_pop", params);
 	  }
      }
 

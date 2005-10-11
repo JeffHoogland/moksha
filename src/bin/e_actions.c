@@ -1213,7 +1213,7 @@ ACT_FN_GO(restart)
    ecore_main_loop_quit();
 }
 
-ACT_FN_GO(pointer_push)
+ACT_FN_GO(pointer_resize_push)
 {
    E_Manager *man = NULL;
 
@@ -1222,6 +1222,9 @@ ACT_FN_GO(pointer_push)
      {
 	E_Border *bd;
 	bd = (E_Border *)obj;
+	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
+	    (bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN))
+	  return;
 	if (bd->zone)
 	  man = bd->zone->container->manager;
      }
@@ -1230,7 +1233,7 @@ ACT_FN_GO(pointer_push)
    e_pointer_type_push(man->pointer, obj, params);
 }
 
-ACT_FN_GO(pointer_pop)
+ACT_FN_GO(pointer_resize_pop)
 {
    E_Manager *man = NULL;
 
@@ -1239,6 +1242,9 @@ ACT_FN_GO(pointer_pop)
      {
 	E_Border *bd;
 	bd = (E_Border *)obj;
+	if ((bd->lock_user_size) || (bd->shaded) || (bd->shading) ||
+	    (bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN))
+	  return;
 	if (bd->zone)
 	  man = (E_Manager *)bd->zone->container->manager;
      }
@@ -1337,8 +1343,8 @@ e_actions_init(void)
    ACT_GO(restart);
    ACT_GO(exit);
 
-   ACT_GO(pointer_push);
-   ACT_GO(pointer_pop);
+   ACT_GO(pointer_resize_push);
+   ACT_GO(pointer_resize_pop);
    
    return 1;
 }

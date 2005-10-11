@@ -671,7 +671,9 @@ e_border_resize(E_Border *bd, int w, int h)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-   if ((bd->fullscreen) || (bd->maximized == E_MAXIMIZE_FULLSCREEN)) return;
+   if ((bd->shaded) || (bd->shading) || (bd->fullscreen) ||
+       (bd->maximized == E_MAXIMIZE_FULLSCREEN))
+     return;
    if (bd->new_client)
      {
 	E_Border_Pending_Move_Resize  *pnd;
