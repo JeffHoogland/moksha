@@ -65,7 +65,7 @@ group { \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE"_clicked.png"; \
 	    } \
-	 } \	 
+	 } \
       } \
    } \
    programs { \
@@ -177,6 +177,10 @@ group {
             }
             fill {
                smooth: 0;
+	       size {
+		  relative: 0 0;
+		  offset:   400 300;
+	       }	       
             }
          }
       }
