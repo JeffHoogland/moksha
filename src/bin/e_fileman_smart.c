@@ -1972,17 +1972,17 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    switch (ev->button)
      {
       case 1:
-	
-	if (!evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
-	  _e_fm_selections_clear(sd);
-	      
-	sd->selection.band.enabled = 1;
-	evas_object_move(sd->selection.band.obj, ev->canvas.x, ev->canvas.y);
-	evas_object_resize(sd->selection.band.obj, 1, 1);
-	evas_object_show(sd->selection.band.obj);
-	sd->selection.band.x = ev->canvas.x;
-	sd->selection.band.y = ev->canvas.y;
-	break;
+
+	 if (!evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	   _e_fm_selections_clear(sd);
+
+	 sd->selection.band.enabled = 1;
+	 evas_object_move(sd->selection.band.obj, ev->canvas.x, ev->canvas.y);
+	 evas_object_resize(sd->selection.band.obj, 1, 1);
+	 evas_object_show(sd->selection.band.obj);
+	 sd->selection.band.x = ev->canvas.x;
+	 sd->selection.band.y = ev->canvas.y;
+	 break;
 
       case 3:
 	 if (!sd->win) break;
