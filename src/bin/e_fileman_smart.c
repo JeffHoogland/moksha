@@ -9,7 +9,8 @@
 
 /* TODO:
  * - when we drop something onto an efm from an efm we might not be releasing
- *   the mouse grab.
+ *   the mouse grab. (also onto the e17 desktop, or anything that doesnt
+ *   accept the drop
  * 
  * - checking wether events belong to us (ecore events)
  *
@@ -1953,8 +1954,6 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    sd = data;
 
-   printf("mouse down!!\n");
-
    switch (ev->button)
      {
       case 1:
@@ -2165,6 +2164,9 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	E_Menu_Item *mi;
 	int x, y, w, h;
 
+	_e_fm_selections_clear(file->sd);
+	_e_fm_selections_add(file);	
+	
 	mn = e_menu_new();
 
 	mi = e_menu_item_new(mn);
