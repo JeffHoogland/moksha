@@ -16,11 +16,11 @@ struct _E_Scrollbar_Smart_Data
    Evas_Object *edje_object;
 
    struct {
-      double min;
-      double max;
-      double current;
+	double min;
+	double max;
+	double current;
    } value;
-   
+
    E_Scrollbar_Direction direction;
 
    Evas_List *callbacks;
@@ -79,18 +79,18 @@ e_scrollbar_direction_set(Evas_Object *object, E_Scrollbar_Direction dir)
    switch (dir)
      {
       case E_SCROLLBAR_HORIZONTAL:
-	e_theme_edje_object_set(sd->edje_object, 
-				"base/theme/widgets/hscrollbar",
-				"widgets/hscrollbar");
-	sd->direction = dir;
-	break;
+	 e_theme_edje_object_set(sd->edje_object, 
+				 "base/theme/widgets/hscrollbar",
+				 "widgets/hscrollbar");
+	 sd->direction = dir;
+	 break;
 
       case E_SCROLLBAR_VERTICAL:
-	e_theme_edje_object_set(sd->edje_object, 
-				"base/theme/widgets/vscrollbar",
-				"widgets/vscrollbar");
-	sd->direction = dir;	
-	break;
+	 e_theme_edje_object_set(sd->edje_object, 
+				 "base/theme/widgets/vscrollbar",
+				 "widgets/vscrollbar");
+	 sd->direction = dir;	
+	 break;
      }
 }
 
@@ -131,7 +131,7 @@ e_scrollbar_value_set(Evas_Object *object, double value)
      return;
    
    sd->value.current = value;
-   
+
    if (sd->direction == E_SCROLLBAR_HORIZONTAL)
      edje_object_part_drag_value_set(sd->edje_object, "drag", value, 0);
    else
@@ -166,13 +166,15 @@ e_scrollbar_increments_set(Evas_Object *object, double step, double page)
      return;
    
    if (sd->direction == E_SCROLLBAR_HORIZONTAL)
-    {
-       edje_object_part_drag_step_set(sd->edje_object, "drag", step, 0);
-       edje_object_part_drag_page_set(sd->edje_object, "drag", page, 0);
-    } else {
-       edje_object_part_drag_step_set(sd->edje_object, "drag", 0, step);
-       edje_object_part_drag_page_set(sd->edje_object, "drag", 0, page);
-    }
+     {
+	edje_object_part_drag_step_set(sd->edje_object, "drag", step, 0);
+	edje_object_part_drag_page_set(sd->edje_object, "drag", page, 0);
+     }
+   else
+     {
+	edje_object_part_drag_step_set(sd->edje_object, "drag", 0, step);
+	edje_object_part_drag_page_set(sd->edje_object, "drag", 0, page);
+     }
 }
 
 void
@@ -189,13 +191,15 @@ e_scrollbar_increments_get(Evas_Object *object, double *step, double *page)
    edje_object_part_drag_page_get(sd->edje_object, "drag", &pagex, &pagey);   
    
    if (sd->direction == E_SCROLLBAR_HORIZONTAL)
-    {
-       *step = stepx;
-       *page = pagex;
-    } else {
-       *step = stepy;
-       *page = pagey;
-    }      
+     {
+	if (step) *step = stepx;
+	if (page) *page = pagex;
+     }
+   else
+     {
+	if (step) *step = stepy;
+	if (page) *page = pagey;
+     }      
 }
 
 
