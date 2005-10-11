@@ -228,6 +228,7 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 	    ((!type) || (!strcmp(stack->type, type))))
 	  {
 	     p->stack = evas_list_remove_list(p->stack, l2);
+	     if (type) break;
 	  }
      }
 
@@ -379,12 +380,14 @@ _e_pointer_type_set(E_Pointer *p, const char *type)
 	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
+#if 0
 	else if (!strcmp(type, "resize"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_SIZING);
 	     if (!cursor) printf("X Cursor for %s is missing\n", type);
 	     ecore_x_window_cursor_set(p->win, cursor);
 	  }
+#endif
 	else if (!strcmp(type, "resize_tl"))
 	  {
 	     cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_TOP_LEFT_CORNER);

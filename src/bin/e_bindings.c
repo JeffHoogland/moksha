@@ -51,17 +51,18 @@ e_bindings_init(void)
 	e_bindings_signal_add(eb->context, eb->signal, eb->source, eb->modifiers,
 			      eb->any_mod, eb->action, eb->params);
 	/* FIXME: Can this be solved in a generic way? */
-#if 0
+	/* FIXME: Only change cursor if action is allowed! */
 	if ((!strcmp(eb->action, "window_resize")) &&
 	    (!strncmp(eb->signal, "mouse,down,", 11)) &&
 	    (!strncmp(eb->source, "resize_", 7)))
 	  {
+	     char params[32];
+	     snprintf(params, sizeof(params), "resize_%s", eb->params);
 	     e_bindings_signal_add(eb->context, "mouse,in", eb->source, eb->modifiers,
-				   eb->any_mod, "pointer_push", eb->params);
+				   eb->any_mod, "pointer_push", params);
 	     e_bindings_signal_add(eb->context, "mouse,out", eb->source, eb->modifiers,
-				   eb->any_mod, "pointer_pop", eb->params);
+				   eb->any_mod, "pointer_pop", params);
 	  }
-#endif
      }
 
    for (l = e_config->wheel_bindings; l; l = l->next)
