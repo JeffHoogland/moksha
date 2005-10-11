@@ -11,10 +11,14 @@
  * - when we drop something onto an efm from an efm we might not be releasing
  *   the mouse grab. (also onto the e17 desktop, or anything that doesnt
  *   accept the drop
+ *
+ * - scrolling 
  * 
  * - checking wether events belong to us (ecore events)
  *
- * - scrolling
+ * - when we select multiple items, the right click menu on the icons needs
+ *   to display some group related things and its actions need to work
+ *   on the group.
  *
  * - we need a redraw function that will just re-arrange and not do
  *   the whole thing. for example, when we resize, we should just
@@ -30,8 +34,6 @@
  * - add typebuffer like in evidence.
  *
  * - keyboard shortcuts for directory and file navigation.
- *
- * - multi select
  *
  * - allow for icon movement inside the canvas
  *
@@ -162,14 +164,15 @@ struct _E_Fileman_Smart_Data
    } max;
 
    struct {
-	Evas_List *files;
-	E_Fileman_File *current_file;
+      Evas_List *files;
+      E_Fileman_File *current_file;
 
-	struct {
-	     unsigned char enabled : 1;
-	     Evas_Coord x, y;
-	     Evas_Object *obj;
-	} band;
+      struct {
+	 unsigned char enabled : 1;
+	 Evas_Coord x, y;
+	 Evas_Object *obj;
+	 Evas_List *files;
+      } band;
 
    } selection;
 };
@@ -981,6 +984,7 @@ _e_fm_selections_clear(E_Fileman_Smart_Data *sd)
      }
    sd->selection.files = evas_list_free(sd->selection.files);
    sd->selection.current_file = NULL;
+   sd->selection.band.files = evas_list_free(sd->selection.band.files);
 }
 
 static void
@@ -1012,15 +1016,23 @@ _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, 
 	evas_object_geometry_get(file->icon, &xx, &yy, &ww, &hh);
 	if (E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
 	  {
-	     if (!file->state.selected)
-	       {
-		  _e_fm_selections_add(file);
-	       }
-	  }
-	else
-	  {
-	     if (file->state.selected) // todo: add control+rubberband
-	       _e_fm_selections_del(file);
+	     if(!evas_list_find(file->sd->selection.band.files, file))
+	      {		 
+		 if(file->state.selected)
+		   _e_fm_selections_del(file);
+		 else
+		   _e_fm_selections_add(file);
+		 file->sd->selection.band.files = evas_list_append(file->sd->selection.band.files, file);
+	      }
+	  } else {
+	     if(evas_list_find(file->sd->selection.band.files, file))
+	      {
+		 if(file->state.selected)
+		   _e_fm_selections_del(file);
+		 else
+		   _e_fm_selections_add(file);
+		 file->sd->selection.band.files = evas_list_remove(file->sd->selection.band.files, file);
+	      }
 	  }
      }
 }
@@ -1873,6 +1885,7 @@ _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	sd->selection.band.enabled = 0;
 	evas_object_resize(sd->selection.band.obj, 1, 1);
 	evas_object_hide(sd->selection.band.obj);
+	sd->selection.band.files = evas_list_free(sd->selection.band.files);
      }
 }
 
@@ -1957,26 +1970,22 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    switch (ev->button)
      {
       case 1:
-	 if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
-	   {
-
-	   }
-	 else
-	   {
-	      _e_fm_selections_clear(sd);
-	      sd->selection.band.enabled = 1;
-	      evas_object_move(sd->selection.band.obj, ev->canvas.x, ev->canvas.y);
-	      evas_object_resize(sd->selection.band.obj, 1, 1);
-	      evas_object_show(sd->selection.band.obj);
-	      sd->selection.band.x = ev->canvas.x;
-	      sd->selection.band.y = ev->canvas.y;
-	   }
-	 break;
+	
+	if (!evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	  _e_fm_selections_clear(sd);
+	      
+	sd->selection.band.enabled = 1;
+	evas_object_move(sd->selection.band.obj, ev->canvas.x, ev->canvas.y);
+	evas_object_resize(sd->selection.band.obj, 1, 1);
+	evas_object_show(sd->selection.band.obj);
+	sd->selection.band.x = ev->canvas.x;
+	sd->selection.band.y = ev->canvas.y;
+	break;
 
       case 3:
 	 if (!sd->win) break;
 
-	 mn = e_menu_new();
+	 mn = e_menu_new();	
 
 	 sd->menu = mn;
 
