@@ -124,8 +124,7 @@ styles
 {
       style {
 	 name: "fileman_icon_style"; 
-	 base: "font=Edje-Vera color=#000  font_size=10 align=center wrap=char";
-	 //style=soft_shadow shadow_color=#cccccc
+	 base: "font=Edje-Vera color=#000 style=shadow shadow_color=#cccccc font_size=10 align=center wrap=char";	 
 	 tag:  "br" "\n";
 	 tag:  "hilight" "+ font=Edje-Vera-Bold";
 	 tag:  "invisible" "+ font=Edje-Vera font_size=7 style=none color=#0002";
@@ -283,7 +282,7 @@ group {
       part {
 	 name:          "icon_title";
 	 type:          TEXT;
-	 effect:        NONE;
+	 effect:        SHADOW;
 	 description {
 	    rel1 {
 	       relative: 0.0 1.0;
@@ -294,6 +293,7 @@ group {
 	       offset:   -6 -6;
 	    }
 	    color:      0 0 0 255;
+	    color3: 255 255 255 128;	    
 	    text {
 	       text: "No Title";
 	       align:    0.0 0.0;	       
