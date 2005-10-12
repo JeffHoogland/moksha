@@ -95,9 +95,7 @@ struct _E_Fileman_File
 
    E_Menu *menu;
    struct {
-	Evas_Object *table;
-	E_Win *win;
-	Evas_Object *bg;
+        E_Dialog *dia;
 	Evas_List *objects;
    } prop;
 
@@ -128,7 +126,8 @@ enum _E_Fileman_File_Type
    E_FILEMAN_FILETYPE_DIRECTORY = 2,
    E_FILEMAN_FILETYPE_FILE = 3,
    E_FILEMAN_FILETYPE_HIDDEN = 4,
-   E_FILEMAN_FILETYPE_UNKNOWN = 5
+   E_FILEMAN_FILETYPE_SYMLINK = 5,
+   E_FILEMAN_FILETYPE_UNKNOWN = 6
 };
 
 enum _E_Fileman_Arrange
@@ -296,6 +295,10 @@ static Ecore_Event_Handler *_e_fm_mouse_up_handler = NULL;
 static char *thumb_path;
 static double _e_fm_grab_time = 0;
 static Evas_Smart *e_fm_smart = NULL;
+
+
+static int my_val;
+
 
 /* externally accessible functions */
 
@@ -1631,6 +1634,7 @@ _e_fm_file_delete_no_cb(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(dia));
 }
 
+/* TODO: This isnt needed any more. Where do we clean the properties dia? */
 static void
 _e_fm_file_menu_properties_del_cb(E_Win *win)
 {
@@ -1638,23 +1642,11 @@ _e_fm_file_menu_properties_del_cb(E_Win *win)
    Evas_List *l;
 
    file = win->data;
-   evas_object_del(file->prop.table);
 
    for (l = file->prop.objects; l; l = l->next)
      evas_object_del(l->data);
 
-   evas_object_del(file->prop.bg);
-
    e_object_del(E_OBJECT(win));
-}
-
-static void
-_e_fm_file_menu_properties_resize_cb(E_Win *win)
-{
-   E_Fileman_File *file;
-
-   file = win->data;
-   evas_object_resize(file->prop.bg, win->w, win->h);
 }
 
 static void
@@ -1671,9 +1663,15 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    struct tm *t;
    char *fullname;
    char *size, *username, *groupname, *lastaccess, *lastmod, *permissions;
-
+   char text[512];
+   E_Dialog *dia;
+   Evas_Object *o, *ol, *hb;
+   Evas_Coord mw, mh;
+   E_Radio_Group *rg;	   
+   Evas *e;
+   
    file = data;
-
+         	               
    size = E_NEW(char, 64);
    snprintf(size, 64, "%ld KB", file->attr->size / 1024);
 
@@ -1697,241 +1695,97 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 
    permissions = E_NEW(char, 128); // todo
    snprintf(permissions, 128, "%s", "");
+    
+   dia = e_dialog_new(file->sd->win->container);
+   e_dialog_title_set(dia, "Properties");   		   
+   e = e_win_evas_get(dia->win);   
+   
+   ol = e_widget_list_add(e, 0, 0);
+   
+   hb = e_widget_list_add(e, 1, 1);
+   
+   o = e_widget_framelist_add(e, "General", 0);
+   
+   snprintf(text, 512, "Name:");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   snprintf(text, 512, "%s", file->attr->name);
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   
+   snprintf(text, 512, "Owner:");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   snprintf(text, 512, "%s", username);
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   
+   snprintf(text, 512, "Group:");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   snprintf(text, 512, "%s", groupname);
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   
+   snprintf(text, 512, "Type:");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   switch(_e_fm_file_type(file))
+    {
+     case E_FILEMAN_FILETYPE_DIRECTORY:
+       snprintf(text, 512, "Directory");
+       break;
+     case E_FILEMAN_FILETYPE_FILE:
+       snprintf(text, 512, "File");
+       break;
+     case E_FILEMAN_FILETYPE_SYMLINK:
+       snprintf(text, 512, "Symlink");
+       break;
+     default:
+       snprintf(text, 512, "Unknown");
+       break;
+    }       
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   
+   snprintf(text, 512, "Last Access:");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   snprintf(text, 512, "%s", lastaccess);
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   
+   snprintf(text, 512, "Last Modification");
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   snprintf(text, 512, "%s", lastmod);
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+      
+   e_widget_list_object_append(hb, o, 0, 1, 0.0);
+   
+   o = e_widget_framelist_add(e, "Permissions", 0);
+   
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "User:", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));
+								     
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "Group:", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));
+   
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "World:", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));   
 
-   win = e_win_new(file->sd->win->container);
-   e_win_delete_callback_set(win, _e_fm_file_menu_properties_del_cb);
-   e_win_resize_callback_set(win, _e_fm_file_menu_properties_resize_cb);
-   win->data = file;
+   e_widget_list_object_append(hb, o, 0, 0, 0.0);
+      
+   e_widget_list_object_append(ol, hb, 1, 0, 0.0);
+   
+   e_widget_min_size_get(ol, &w, &h);
+   
+   e_dialog_content_set(dia, ol, w, h);
+        
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_dialog_button_add(dia, "Apply", "enlightenment/reset", NULL, NULL);
+   e_dialog_button_add(dia, "Cancel", "enlightenment/exit", NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
 
-   bg = edje_object_add(win->evas);
-   e_theme_edje_object_set(bg, "base/theme/fileman/properties", "fileman/properties");
-   edje_object_part_text_set(bg, "title", file->attr->name);
-   evas_object_move(bg, 0, 0);
-   evas_object_show(bg);
-
-   table = e_table_add(win->evas);
-   e_table_homogenous_set(table, 1);
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Name");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 0, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Owner");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 1, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Group");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 2, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Size");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 3, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Last Accessed");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 4, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Last Modified");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 5, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, "Permissions");
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 0, 6, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, file->attr->name);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 0, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, username);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 1, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, groupname);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 2, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, size);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 3, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, lastaccess);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 4, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, lastmod);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 5, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   name = evas_object_text_add(win->evas);
-   evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, permissions);
-   evas_object_color_set(name, 0, 0, 0, 255);
-   evas_object_geometry_get(name, NULL, NULL, &w, &h);
-   evas_object_show(name);
-   file->prop.objects = evas_list_append(file->prop.objects, name);
-   e_table_pack(table, name, 1, 6, 1, 1);
-   e_table_pack_options_set(name,
-			    1, 1, 1, 1, /* fill */
-			    0, 0.5,     /* align */
-			    w, h,       /* min w, h */
-			    w, h);      /* max w, h */
-
-   file->prop.table = table;;
-   file->prop.win = win;
-   file->prop.bg = bg;
-
-   edje_object_part_swallow(file->prop.bg, "content_swallow", file->prop.table);
-
-   evas_object_show(table);
-
-   e_box_min_size_get(table, &w, &h);
-   evas_object_resize(table, w, h);
-
-   // do proper calculation
-   w += 20;
-   h += 50;
-
-   if (w < 223) w = 223;
-   if (h < 209) h = 209;
-
-   e_win_title_set(win, "Properties");
-   e_win_resize(win, w, h);
-   e_win_size_min_set(win, w, h);
-   e_win_size_base_set(win, w, h);
-   e_win_size_max_set(win, w, h);
-   e_win_show(win);
+   file->prop.dia = dia;
+   
+   return;   
 }
 
 static void
