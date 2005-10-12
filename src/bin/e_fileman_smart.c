@@ -54,8 +54,10 @@
 typedef struct _E_Fileman_Smart_Data         E_Fileman_Smart_Data;
 typedef struct _E_Fileman_File_Attributes    E_Fileman_File_Attributes;
 typedef struct _E_Fileman_File               E_Fileman_File;
+typedef struct _E_Fm_Config                  E_Fm_Config;
 typedef struct _E_Fileman_Thumb_Pending      E_Fileman_Thumb_Pending;
 typedef struct _E_Fileman_Fake_Mouse_Up_Info E_Fileman_Fake_Mouse_Up_Info;
+typedef struct _E_Fileman_Assoc_App          E_Fileman_Assoc_App;
 typedef enum   _E_Fileman_File_Type          E_Fileman_File_Type;
 typedef enum   _E_Fileman_Arrange            E_Fileman_Arrange;
 
@@ -106,6 +108,13 @@ struct _E_Fileman_File
    void *data;
 };
 
+struct _E_Fm_Config
+{
+   int width;
+   int height;
+   Evas_List *apps;
+};
+
 struct _E_Fileman_Thumb_Pending
 {
    E_Fileman_File *file;
@@ -133,6 +142,12 @@ struct _E_Fileman_Fake_Mouse_Up_Info
 {
    Evas *canvas;
    int button;
+};
+
+struct _E_Fileman_Assoc_App
+{
+   char *mime;
+   char *app;
 };
 
 struct _E_Fileman_Smart_Data
@@ -199,6 +214,12 @@ struct _E_Fileman_Smart_Data
 	} band;
 
    } selection;
+   
+   struct {
+      E_Config_DD *main_edd;
+      E_Config_DD *assoc_app_edd;
+      E_Fm_Config *main;      
+   } conf;
 };
 
 static void _e_fm_smart_add(Evas_Object *object);
@@ -215,6 +236,7 @@ static void _e_fm_smart_hide(Evas_Object *object);
 static void                _e_fm_redraw_new(E_Fileman_Smart_Data *sd);
 static void                _e_fm_redraw_update(E_Fileman_Smart_Data *sd);
 static void                _e_fm_size_calc(E_Fileman_Smart_Data *sd);
+static void                _e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name);
 static void                _e_fm_selections_clear(E_Fileman_Smart_Data *sd);
 static void                _e_fm_selections_add(E_Fileman_File *file);
 static void                _e_fm_selections_del(E_Fileman_File *file);
@@ -224,6 +246,7 @@ static Evas_Bool           _e_fm_file_can_preview(E_Fileman_File *file);
 static void                _e_fm_file_delete(E_Fileman_File *file);
 static void                _e_fm_file_exec(E_Fileman_File *file);
 static E_Fileman_File_Type _e_fm_file_type(E_Fileman_File *file);
+static Evas_Bool           _e_fm_file_open_assoc(E_Fileman_File *file);    
 static char               *_e_fm_file_fullname(E_Fileman_File *file);
 static Evas_Object        *_e_fm_file_icon_mime_get(E_Fileman_File *file);
 static Evas_Object        *_e_fm_file_icon_get(E_Fileman_File *file);
@@ -637,6 +660,49 @@ _e_fm_smart_add(Evas_Object *object)
 					 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								 _e_fm_win_mouse_move_cb,
 								 sd));
+   
+   sd->conf.main_edd = E_CONFIG_DD_NEW("E_Fm_Config", E_Fm_Config);
+   sd->conf.assoc_app_edd = E_CONFIG_DD_NEW("E_Fileman_Assoc_App",E_Fileman_Assoc_App);
+   
+#undef T
+#undef DD
+#define T E_Fileman_Assoc_App
+#define DD sd->conf.assoc_app_edd
+   E_CONFIG_VAL(DD, T, mime, STR);
+   E_CONFIG_VAL(DD, T, app, STR);
+#undef T
+#undef DD
+#define T E_Fm_Config
+#define DD sd->conf.main_edd
+   E_CONFIG_VAL(DD, T, width, INT);
+   E_CONFIG_VAL(DD, T, height, INT);
+   E_CONFIG_LIST(DD, T, apps, sd->conf.assoc_app_edd);
+   
+   sd->conf.main = e_config_domain_load("efm", sd->conf.main_edd);
+   if(!sd->conf.main)
+    {
+       /* no saved config */
+       sd->conf.main = E_NEW(E_Fm_Config, 1);
+       sd->conf.main->width = 640;
+       sd->conf.main->height = 480;
+       sd->conf.main->apps = NULL;
+       
+       
+       /* some test values not meant for everyone */
+       /*
+	{
+	   E_Fileman_Assoc_App *assoc;
+	   
+	   assoc = E_NEW(E_Fileman_Assoc_App, 1);
+	   assoc->mime = E_NEW(char *, 5);
+	   snprintf(assoc->mime, 5, "%s", ".jpg");
+	   assoc->app = E_NEW(char *, 7);
+	   snprintf(assoc->app, 7, "gqview");
+	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
+	}
+       */
+    }
+   
    evas_object_smart_data_set(object, sd);
 
    if (getcwd(dir, sizeof(dir)))
@@ -651,7 +717,9 @@ _e_fm_smart_del(Evas_Object *object)
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
+   
+   e_config_domain_save("efm", sd->conf.main_edd, sd->conf.main);
+   
    _e_fm_files_free(sd);
 
    for (l = sd->event_handlers; l; l = l->next)
@@ -772,6 +840,8 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 
    evas_object_resize(sd->bg, w, h);
    evas_object_resize(sd->clip, w, h);
+   sd->conf.main->width = w;
+   sd->conf.main->height = h;
    // optimize
    _e_fm_redraw_new(sd); // no new
 }
@@ -1148,7 +1218,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 }
 
 static void
-_e_fileman_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
+_e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
 {
    if(!attr) return;
    
@@ -1199,7 +1269,7 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 	
 	attr = E_NEW(E_Fileman_File_Attributes, 1);
 	
-	_e_fileman_stat_to_attr(st, attr, dir_entry->d_name);
+	_e_fm_stat_to_attr(st, attr, dir_entry->d_name);
 	
 	files = evas_list_append(files, attr);
      }
@@ -1459,7 +1529,13 @@ _e_fm_file_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 	 _e_fm_dir_set(file->sd, fullname);
 	 free(fullname);
 	 break;
-      case E_FILEMAN_FILETYPE_FILE:
+      case E_FILEMAN_FILETYPE_FILE:	
+	fullname = _e_fm_file_fullname(file);
+	if(!_e_fm_file_open_assoc(file))
+	  if (ecore_file_can_exec(fullname))
+	    _e_fm_file_exec(file);
+	free(fullname);	
+	break;
       case E_FILEMAN_FILETYPE_ALL:
       case E_FILEMAN_FILETYPE_NORMAL:
       case E_FILEMAN_FILETYPE_HIDDEN:
@@ -2178,8 +2254,9 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	    file->sd->drag.start = 0;
 
 	    fullname = _e_fm_file_fullname(file);
-	    if (ecore_file_can_exec(fullname))
-	      _e_fm_file_exec(file);
+	    if(!_e_fm_file_open_assoc(file))
+	      if (ecore_file_can_exec(fullname))
+		_e_fm_file_exec(file);
 	    free(fullname);
 	 }
        else
@@ -2222,10 +2299,9 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	_e_fm_selections_add(file);	
 	
 	mn = e_menu_new();
-
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, "Open");
-	e_menu_item_callback_set(mi, _e_fm_file_menu_open, file);
+	e_menu_item_callback_set(mi, _e_fm_file_menu_open, file);	
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
 								"fileman/button/open"),
@@ -2639,7 +2715,7 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
    void *data;
    unsigned int w, h;
    int a, c, q, l;
-
+   
 
    fullname = _e_fm_file_fullname(file);
    if (!_e_fm_file_thumb_exists(fullname))
@@ -2685,6 +2761,46 @@ _e_fm_file_type(E_Fileman_File *file)
      return E_FILEMAN_FILETYPE_FILE;
    
    return E_FILEMAN_FILETYPE_UNKNOWN;     
+}
+
+
+static Evas_Bool
+_e_fm_file_open_assoc(E_Fileman_File *file)
+{
+   char fullname[PATH_MAX * 2];
+   Evas_List *l;
+   E_Fileman_Assoc_App *assoc;
+   Ecore_Exe *exe;   
+   
+   for (l = file->sd->conf.main->apps; l; l = l->next)
+    {
+       char *ext; 
+       
+       assoc = l->data;       
+       ext = strrchr(file->attr->name, '.');       
+       if(!strcmp(ext, assoc->mime))	
+	 break;
+       assoc = NULL;
+    }
+     
+   if(!assoc) return FALSE;
+   
+   snprintf(fullname, PATH_MAX * 2, "%s %s", assoc->app, _e_fm_file_fullname(file));
+   printf("running: %s\n", fullname);
+   exe = ecore_exe_run(fullname, NULL);
+
+   if (!exe)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable fork a child process:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    fullname);
+	return TRUE;
+     }
+   ecore_exe_tag_set(exe, "E/app");
+   return TRUE;
 }
 
 static void
