@@ -3,6 +3,8 @@
  */
 #include "e.h"
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <time.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
@@ -43,17 +45,43 @@
  *   wrap on wrap=char
  */
 
+#ifdef EFM_DEBUG
+# define D(x)  do {printf(__FILE__ ":%d:  ", __LINE__); printf x; fflush(stdout);} while (0)
+#else
+# define D(x)  ((void) 0)
+#endif
+
 typedef struct _E_Fileman_Smart_Data         E_Fileman_Smart_Data;
+typedef struct _E_Fileman_File_Attributes    E_Fileman_File_Attributes;
 typedef struct _E_Fileman_File               E_Fileman_File;
 typedef struct _E_Fileman_Thumb_Pending      E_Fileman_Thumb_Pending;
 typedef struct _E_Fileman_Fake_Mouse_Up_Info E_Fileman_Fake_Mouse_Up_Info;
-
 typedef enum   _E_Fileman_File_Type          E_Fileman_File_Type;
 typedef enum   _E_Fileman_Arrange            E_Fileman_Arrange;
 
+
+struct _E_Fileman_File_Attributes
+{
+   char      name[PATH_MAX];  /* file name without parent directories */
+   dev_t     device;          /* ID of device containing file */
+   ino_t     inode;           /* inode number */
+   mode_t    mode;            /* protection */
+   nlink_t   nlink;           /* number of hard links */
+   uid_t     owner;           /* user ID of owner */
+   gid_t     group;           /* group ID of owner */
+   dev_t     rdev;            /* device ID (if special file) */
+   off_t     size;            /* total size, in bytes */   
+   //blksize_t blksize;         /* blocksize for filesystem I/O */
+   blkcnt_t  blocks;          /* number of blocks allocated */
+   time_t    atime;           /* time of last access */
+   time_t    mtime;           /* time of last modification */
+   time_t    ctime;           /* time of last status change */
+};
+
 struct _E_Fileman_File
 {
-   struct dirent *dir_entry;
+   
+   E_Fileman_File_Attributes *attr;;
 
    Evas_Object *icon;
    Evas_Object *icon_img;
@@ -460,14 +488,14 @@ _e_fm_redraw_update(E_Fileman_Smart_Data *sd)
 
    while (dirs)
      {
-	struct dirent *dir_entry;
+	E_Fileman_File_Attributes *attr;
 	int icon_w, icon_h;
 	Evas_Object *icon;
 
 	if (y > (yo + h))
 	  return;
 
-	dir_entry = evas_list_data (dirs);
+	attr = evas_list_data (dirs);
 
 	icon = edje_object_add(sd->evas);
 	e_theme_edje_object_set(icon, "base/theme/fileman",
@@ -475,11 +503,11 @@ _e_fm_redraw_update(E_Fileman_Smart_Data *sd)
 
 	file = E_NEW(E_Fileman_File, 1);
 	file->icon = icon;
-	file->dir_entry = dir_entry;
+	file->attr = attr;
 	file->sd = sd;
 	file->icon_img = _e_fm_file_icon_get(file);
 	edje_object_part_swallow(icon, "icon_swallow", file->icon_img);
-	edje_object_part_text_set(icon, "icon_title", dir_entry->d_name);
+	edje_object_part_text_set(icon, "icon_title", attr->name);
 	file->event = evas_object_rectangle_add(sd->evas);
 	evas_object_color_set(file->event, 0, 0, 0, 0);
 
@@ -778,7 +806,7 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
    Evas_Coord xo, yo;
 
    E_Fileman_File *file;
-   struct dirent *dir_entry;
+   E_Fileman_File_Attributes *attr;
 
    if (!sd->dir)
      return;
@@ -800,11 +828,11 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
      ecore_file_monitor_del(sd->monitor);
    sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
 
-   dir_entry = E_NEW(struct dirent, 1);
-   dir_entry->d_type = 4;
-   snprintf(dir_entry->d_name, NAME_MAX + 1, "..");
+   attr = E_NEW(E_Fileman_File_Attributes, 1);
+   attr->mode = 0040000;
+   snprintf(attr->name, PATH_MAX, "..");
 
-   dirs = evas_list_prepend(dirs, dir_entry);
+   dirs = evas_list_prepend(dirs, attr);
 
    //sd->file_offset = 0;
    //sd->visible_files = 0;
@@ -821,14 +849,13 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
    //_e_fm_size_calc(sd);
 
    while (dirs)
-     {
-	struct dirent *dir_entry;
+     {	
 	int icon_w, icon_h;
 	Evas_Object *icon;
 
 	if (y > (yo + h)) break;
 
-	dir_entry = (struct dirent*)evas_list_data(dirs);
+	attr = evas_list_data(dirs);
 
 	icon = edje_object_add(sd->evas);
 	e_theme_edje_object_set(icon, "base/theme/fileman",
@@ -836,11 +863,11 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 
 	file = E_NEW(E_Fileman_File, 1);
 	file->icon = icon;
-	file->dir_entry = dir_entry;
+	file->attr = attr;
 	file->sd = sd;
 	file->icon_img = _e_fm_file_icon_get(file);
 	edje_object_part_swallow(icon, "icon_swallow", file->icon_img);
-	edje_object_part_text_set(icon, "icon_title", dir_entry->d_name);
+	edje_object_part_text_set(icon, "icon_title", attr->name);
 	file->event = evas_object_rectangle_add(sd->evas);
 	evas_object_color_set(file->event, 0, 0, 0, 0);
 
@@ -853,7 +880,7 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 
 	     file->title = evas_object_textblock2_add(sd->evas);
 	     evas_object_textblock2_style_set(file->title, e_editable_text_style);
-	     evas_object_textblock2_text_markup_set(file->title, dir_entry->d_name);
+	     evas_object_textblock2_text_markup_set(file->title, attr->name);
 
 	     evas_object_resize(file->title,  sd->icon_info.w*2, 1);
 	     evas_object_textblock2_size_formatted_get(file->title, &fw, &fh);
@@ -906,7 +933,7 @@ _e_fm_size_calc(E_Fileman_Smart_Data *sd)
    Evas_List *dirs = NULL;
    Evas_Coord x, y, w, h;
    E_Fileman_File *file;
-   struct dirent *dir_entry;
+   E_Fileman_File_Attributes *attr;
 
    if (!sd->dir)
      return;
@@ -918,30 +945,29 @@ _e_fm_size_calc(E_Fileman_Smart_Data *sd)
 
    dirs = sd->files_raw;
 
-   dir_entry = E_NEW(struct dirent, 1);
-   dir_entry->d_type = 4;
-   snprintf(dir_entry->d_name, NAME_MAX + 1, "..");
+   attr = E_NEW(E_Fileman_File_Attributes, 1);
+   attr->mode = 0040000;
+   snprintf(attr->name, PATH_MAX, "..");
 
-   dirs = evas_list_prepend(dirs, dir_entry);
+   dirs = evas_list_prepend(dirs, attr);
 
    while (dirs)
      {
-	struct dirent *dir_entry;
 	int icon_w, icon_h;
 	Evas_Object *icon;
 
-	dir_entry = (struct dirent*)evas_list_data(dirs);
+	attr = evas_list_data(dirs);
 
 	icon = edje_object_add(sd->evas);
 	e_theme_edje_object_set(icon, "base/theme/fileman", "fileman/icon");
 
 	file = E_NEW(E_Fileman_File, 1);
 	file->icon = icon;
-	file->dir_entry = dir_entry;
+	file->attr = attr;
 	file->sd = sd;
 	file->icon_img = _e_fm_file_icon_get(file); // this might be causing borkage
 	edje_object_part_swallow(icon, "icon_swallow", file->icon_img);
-	edje_object_part_text_set(icon, "icon_title", dir_entry->d_name);
+	edje_object_part_text_set(icon, "icon_title", attr->name);
 	edje_object_size_min_calc(icon, &icon_w, &icon_h);
 
 	if ((x > w) || ((x + icon_w) > w))
@@ -1080,7 +1106,7 @@ _e_fm_files_free(E_Fileman_Smart_Data *sd)
 	evas_object_del(file->event);
 	file->sd = NULL;
 
-	E_FREE(file->dir_entry);
+	E_FREE(file->attr);
 	if (file->menu)
 	  e_object_del(E_OBJECT(file->menu));
 	free(file);
@@ -1121,10 +1147,32 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
    _e_fm_redraw_new(sd);
 }
 
+static void
+_e_fileman_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
+{
+   if(!attr) return;
+   
+   snprintf(attr->name, PATH_MAX, "%s", name);
+   attr->device = st.st_dev;
+   attr->inode = st.st_ino;
+   attr->mode = st.st_mode;
+   attr->nlink = st.st_nlink;
+   attr->owner = st.st_uid;
+   attr->group = st.st_gid;
+   attr->rdev = st.st_rdev;
+   attr->size = st.st_size;
+   //attr->st_blksize = st.st_blksize;
+   attr->blocks = st.st_blocks;
+   attr->atime = st.st_atime;
+   attr->mtime = st.st_mtime;
+   attr->ctime = st.st_ctime;
+}
+
 static Evas_List *
 _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 {
    DIR *dir;
+   char fullname[PATH_MAX];
    struct dirent *dir_entry;
    Evas_List *files;
 
@@ -1135,19 +1183,25 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 
    while ((dir_entry = readdir(dir)) != NULL)
      {
-	struct dirent *dir_entry2;
+	E_Fileman_File_Attributes *attr;
+	struct stat st;
 
 	if ((!strcmp(dir_entry->d_name, ".") || (!strcmp (dir_entry->d_name, "..")))) continue;
 	if ((dir_entry->d_name[0] == '.') && (type != E_FILEMAN_FILETYPE_HIDDEN)) continue;
-
-	dir_entry2 = E_NEW(struct dirent, 1);
-	dir_entry2->d_ino = dir_entry->d_ino;
-	// dir_entry2->d_off = dir_entry->d_off; // not portable
-	// dir_entry2->d_reclen = dir_entry->d_reclen; // note portable
-	dir_entry2->d_type = dir_entry->d_type;
-	strncpy(dir_entry2->d_name, dir_entry->d_name, NAME_MAX);
-
-	files = evas_list_append(files, dir_entry2);
+	
+	snprintf(fullname, PATH_MAX, "%s/%s", dirname, dir_entry->d_name);
+		
+	if(stat(fullname, &st) == -1)
+	 {
+	    D(("stat(%s, &st) failed -- %d", errno));
+	    continue;
+	 }
+	
+	attr = E_NEW(E_Fileman_File_Attributes, 1);
+	
+	_e_fileman_stat_to_attr(st, attr, dir_entry->d_name);
+	
+	files = evas_list_append(files, attr);
      }
 
    closedir(dir);
@@ -1192,11 +1246,11 @@ _e_fm_file_can_preview(E_Fileman_File *file)
 {
    if (!file) return 0;
 
-   if (file->dir_entry->d_type == 8)
+   if (S_ISREG(file->attr->mode) || S_ISLNK(file->attr->mode))
      {
 	char *ext;
 
-	ext = strrchr(file->dir_entry->d_name, '.');
+	ext = strrchr(file->attr->name, '.');
 	if (!ext) return 0;
 	return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"));
      }
@@ -1212,7 +1266,7 @@ _e_fm_file_rename(E_Fileman_File *file, const char* name)
      return;
 
    edje_object_part_text_set(file->icon, "icon_title", name);
-   snprintf(old_name, PATH_MAX, "%s/%s", file->sd->dir, file->dir_entry->d_name);
+   snprintf(old_name, PATH_MAX, "%s/%s", file->sd->dir, file->attr->name);
    snprintf(new_name, PATH_MAX, "%s/%s", file->sd->dir, name);
    ecore_file_mv(old_name, new_name);
 }
@@ -1226,7 +1280,7 @@ _e_fm_file_delete(E_Fileman_File *file)
    if (!file)
      return;
 
-   snprintf(full_name, PATH_MAX, "%s/%s", file->sd->dir, file->dir_entry->d_name);
+   snprintf(full_name, PATH_MAX, "%s/%s", file->sd->dir, file->attr->name);
    if (!ecore_file_unlink(full_name))
      {
 	E_Dialog *dia;
@@ -1239,7 +1293,7 @@ _e_fm_file_delete(E_Fileman_File *file)
 	e_dialog_button_focus_num(dia, 1);
 	e_dialog_title_set(dia, "Error");
 	text = E_NEW(char, PATH_MAX + 256);
-	snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b> ?", file->dir_entry->d_name);
+	snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b> ?", file->attr->name);
 	e_dialog_text_set(dia, text);
 
 	e_dialog_show(dia);
@@ -1256,7 +1310,7 @@ _e_fm_file_icon_mime_get(E_Fileman_File *file)
 
    icon_img = edje_object_add(file->sd->evas);
 
-   if (file->dir_entry->d_type == 4)
+   if (_e_fm_file_type(file) == E_FILEMAN_FILETYPE_DIRECTORY)
      {
 	e_theme_edje_object_set(icon_img, "base/theme/fileman",
 				"fileman/icons/folder");
@@ -1265,7 +1319,7 @@ _e_fm_file_icon_mime_get(E_Fileman_File *file)
      {
 	char *ext;
 
-	ext = strrchr(file->dir_entry->d_name, '.');
+	ext = strrchr(file->attr->name, '.');
 	if (ext)
 	  {
 	     if (!strcasecmp(ext, ".pdf"))
@@ -1452,7 +1506,7 @@ _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    evas_object_focus_set(file->entry, 1);
    evas_object_show(file->entry);
    e_entry_cursor_show(file->entry);
-   e_entry_text_set(file->entry, file->dir_entry->d_name);
+   e_entry_text_set(file->entry, file->attr->name);
    e_entry_cursor_move_at_end(file->entry);
    e_entry_cursor_move_at_start(file->entry);
 
@@ -1478,7 +1532,7 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_focus_num(dia, 1);
    e_dialog_title_set(dia, "Confirm");
    text = E_NEW(char, PATH_MAX + 256);
-   snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", file->dir_entry->d_name);
+   snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", file->attr->name);
    e_dialog_text_set(dia, text);
    e_dialog_show(dia);
 }
@@ -1580,7 +1634,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 
    bg = edje_object_add(win->evas);
    e_theme_edje_object_set(bg, "base/theme/fileman/properties", "fileman/properties");
-   edje_object_part_text_set(bg, "title", file->dir_entry->d_name);
+   edje_object_part_text_set(bg, "title", file->attr->name);
    evas_object_move(bg, 0, 0);
    evas_object_show(bg);
 
@@ -1687,7 +1741,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 
    name = evas_object_text_add(win->evas);
    evas_object_text_font_set(name, "Vera", 10);
-   evas_object_text_text_set(name, file->dir_entry->d_name);
+   evas_object_text_text_set(name, file->attr->name);
    evas_object_color_set(name, 0, 0, 0, 255);
    evas_object_geometry_get(name, NULL, NULL, &w, &h);
    evas_object_show(name);
@@ -2098,15 +2152,15 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 
    if (ev->button == 1)
     {
-       if ((file->dir_entry->d_type == 4) && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
+       if (_e_fm_file_type(file) == E_FILEMAN_FILETYPE_DIRECTORY && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
 	 {
 	    char *fullname = NULL;
-
+	    
 	    file->sd->drag.start = 0;
+	    
+	    if (!strcmp(file->attr->name, ".")) return;
 
-	    if (!strcmp(file->dir_entry->d_name, ".")) return;
-
-	    if (!strcmp(file->dir_entry->d_name, ".."))
+	    if (!strcmp(file->attr->name, ".."))
 	      {
 		 fullname = _e_fm_dir_pop(file->sd->dir);
 	      }
@@ -2124,7 +2178,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 		 free(fullname);
 	      }
 	 }
-       else if ((file->dir_entry->d_type == 8) && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
+       else if (_e_fm_file_type(file) == E_FILEMAN_FILETYPE_FILE && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
 	 {
 	    char *fullname;
 
@@ -2141,7 +2195,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	    file->sd->drag.y = -1;
 	    file->sd->drag.x = -1;
 	    file->sd->drag.file = file;
-	    printf("drag file: %s\n", file->dir_entry->d_name);
+	    printf("drag file: %s\n", file->attr->name);
 
 	    if (!file->state.selected)
 	      {
@@ -2340,7 +2394,7 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 		  const char *path = NULL, *part = NULL;
 		  const char *drop_types[] = { "text/uri-list" };
 
-		  snprintf(data, sizeof(data), "file://%s/%s", sd->dir, file->dir_entry->d_name);
+		  snprintf(data, sizeof(data), "file://%s/%s", sd->dir, file->attr->name);
 
 		  ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
 		  evas_object_geometry_get(file->icon_img, &x, &y, &w, &h);
@@ -2630,15 +2684,14 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
 static E_Fileman_File_Type
 _e_fm_file_type(E_Fileman_File *file)
 {
-   switch (file->dir_entry->d_type)
-     {
-      case 8:
-	 return E_FILEMAN_FILETYPE_DIRECTORY;
-      case 4:
-	 return E_FILEMAN_FILETYPE_FILE;
-      default:
-	 return E_FILEMAN_FILETYPE_UNKNOWN;
-     }
+   if(S_ISDIR(file->attr->mode))
+     return E_FILEMAN_FILETYPE_DIRECTORY;
+   
+   /* TODO: Handle links differently */
+   if(S_ISREG(file->attr->mode) || S_ISLNK(file->attr->mode))
+     return E_FILEMAN_FILETYPE_FILE;
+   
+   return E_FILEMAN_FILETYPE_UNKNOWN;     
 }
 
 static void
@@ -2670,9 +2723,9 @@ _e_fm_file_fullname(E_Fileman_File *file)
    char fullname[PATH_MAX];
 
    if (!strcmp(file->sd->dir, "/"))
-     snprintf(fullname, sizeof(fullname), "/%s", file->dir_entry->d_name);
+     snprintf(fullname, sizeof(fullname), "/%s", file->attr->name);
    else
-     snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->dir_entry->d_name);
+     snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->attr->name);
 
    return strdup(fullname);
 }
