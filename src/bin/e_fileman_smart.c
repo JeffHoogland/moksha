@@ -1590,7 +1590,6 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    Evas_Object *name;
    Evas_Object *bg;
    Evas_Coord w, h;
-   struct stat st;
    struct group *grp;
    struct passwd *usr;
    struct tm *t;
@@ -1599,28 +1598,24 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 
    file = data;
 
-   fullname = _e_fm_file_fullname(file);
-   stat(fullname, &st);
-   free(fullname);
-
    size = E_NEW(char, 64);
-   snprintf(size, 64, "%ld KB", st.st_size / 1024);
+   snprintf(size, 64, "%ld KB", file->attr->size / 1024);
 
    username = E_NEW(char, 128); // max length of username?
-   usr = getpwuid(st.st_uid);
+   usr = getpwuid(file->attr->owner);
    snprintf(username, 128, "%s", usr->pw_name);
    //free(usr);
 
    groupname = E_NEW(char, 128); // max length of group?
-   grp = getgrgid(st.st_gid);
+   grp = getgrgid(file->attr->group);
    snprintf(groupname, 128, "%s", grp->gr_name);
    //free(grp);
 
-   t = gmtime(&st.st_atime);
+   t = gmtime(&file->attr->atime);
    lastaccess = E_NEW(char, 128);
    strftime(lastaccess, 128, "%a %b %d %T %Y", t);
 
-   t = gmtime(&st.st_mtime);
+   t = gmtime(&file->attr->mtime);
    lastmod = E_NEW(char, 128);
    strftime(lastmod, 128, "%a %b %d %T %Y", t);
 
@@ -1899,25 +1894,23 @@ _e_fm_fake_mouse_up_all_later(Evas *evas)
 static int
 _e_fm_dir_files_sort_name_cb(void *d1, void *d2)
 {
-   struct dirent *de1, *de2;
+   E_Fileman_File_Attributes *de1, *de2;
 
-   de1 = (struct dirent*)d1;
-   de2 = (struct dirent*)d2;
+   de1 = d1;
+   de2 = d2;
 
-   return (strcmp(de1->d_name, de2->d_name));
+   return (strcmp(de1->name, de2->name));
 }
 
 static int
 _e_fm_dir_files_sort_modtime_cb(void *d1, void *d2)
 {
-   struct dirent *de1, *de2;
-
-   /* FIXME! */
-
-   de1 = (struct dirent*)d1;
-   de2 = (struct dirent*)d2;
-
-   return (strcmp(de1->d_name, de2->d_name));
+   E_Fileman_File_Attributes *de1, *de2;
+   
+   de1 = (E_Fileman_File_Attributes*)d1;
+   de2 = (E_Fileman_File_Attributes*)d2;
+   
+   return (de1->mtime > de2->mtime);   
 }
 
 static void
