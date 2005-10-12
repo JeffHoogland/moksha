@@ -70,3 +70,4 @@
 #include "e_widget_framelist.h"
 #include "e_widget_list.h"
 #include "e_widget_button.h"
+#include "e_widget_label.h"

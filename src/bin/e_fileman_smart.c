@@ -296,9 +296,8 @@ static char *thumb_path;
 static double _e_fm_grab_time = 0;
 static Evas_Smart *e_fm_smart = NULL;
 
-
-static int my_val;
-
+/* dumym for now */
+static int dummy_val;
 
 /* externally accessible functions */
 
@@ -1707,22 +1706,22 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    o = e_widget_framelist_add(e, "General", 0);
    
    snprintf(text, 512, "Name:");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", file->attr->name);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
    snprintf(text, 512, "Owner:");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", username);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
    snprintf(text, 512, "Group:");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", groupname);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
    snprintf(text, 512, "Type:");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    switch(_e_fm_file_type(file))
     {
      case E_FILEMAN_FILETYPE_DIRECTORY:
@@ -1738,36 +1737,36 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
        snprintf(text, 512, "Unknown");
        break;
     }       
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
    snprintf(text, 512, "Last Access:");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", lastaccess);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
    snprintf(text, 512, "Last Modification");
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", lastmod);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text, &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
       
    e_widget_list_object_append(hb, o, 0, 1, 0.0);
    
    o = e_widget_framelist_add(e, "Permissions", 0);
    
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "User:", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "User:"));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));
 								     
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "Group:", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "Group:"));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));
    
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "World:", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &my_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &my_val));   
+   e_widget_framelist_object_append(o, e_widget_label_add(e, "World:"));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));   
 
    e_widget_list_object_append(hb, o, 0, 0, 0.0);
       

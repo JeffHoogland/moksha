@@ -85,9 +85,15 @@ _e_wid_focus_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
-     edje_object_signal_emit(wd->o_button, "focus_in", "");
+     {
+	edje_object_signal_emit(wd->o_button, "focus_in", "");
+	evas_object_focus_set(wd->o_button, 1);
+     }
    else
-     edje_object_signal_emit(wd->o_button, "focus_out", "");
+     {
+	edje_object_signal_emit(wd->o_button, "focus_out", "");
+	evas_object_focus_set(wd->o_button, 0);
+     }
 }
 
 static void
