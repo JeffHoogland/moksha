@@ -15,7 +15,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 
 /* externally accessible functions */
 Evas_Object *
-e_widget_list_add(Evas *evas, int horiz)
+e_widget_list_add(Evas *evas, int homogenous, int horiz)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -29,7 +29,7 @@ e_widget_list_add(Evas *evas, int horiz)
    o = e_box_add(evas);
    wd->o_box = o;
    e_box_orientation_set(o, horiz);
-   e_box_homogenous_set(o, 0);
+   e_box_homogenous_set(o, homogenous);
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);

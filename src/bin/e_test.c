@@ -309,7 +309,13 @@ _e_test_internal(E_Container *con)
 }
 #elif 0
 static int my_val = 0;
+static int my_val2 = 0;
+static int my_val3 = 0;
+static int my_val4 = 0;
+static int my_val5 = 0;
+static int my_val6 = 0;
 static int my_rval = 1;
+static int my_rval2 = 1;
 
 static void
 _e_test_internal(E_Container *con)
@@ -326,18 +332,18 @@ _e_test_internal(E_Container *con)
 	
 	e = e_win_evas_get(dia->win);
 	
-	ol = e_widget_list_add(e, 0);
+	ol = e_widget_list_add(e, 0, 0);
 	
-	hb = e_widget_list_add(e, 1);
+	hb = e_widget_list_add(e, 1, 1);
 	
 	o = e_widget_framelist_add(e, "My Checklist", 0);
 	
 	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 1", &my_val));
-	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 2", &my_val));
-	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 3", &my_val));
-	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox and some long text", &my_val));
-	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 7", &my_val));
-	e_widget_framelist_object_append(o, e_widget_check_add(e, "Koneko", &my_val));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 2", &my_val2));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 3", &my_val3));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox and some long text", &my_val4));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Checkbox 7", &my_val5));
+	e_widget_framelist_object_append(o, e_widget_check_add(e, "Koneko", &my_val6));
 	
 	rg = e_widget_radio_group_new(&my_rval);
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 0", 0, rg));
@@ -350,7 +356,7 @@ _e_test_internal(E_Container *con)
 
 	o = e_widget_framelist_add(e, "My Checklist on the right", 0);
 	
-	rg = e_widget_radio_group_new(&my_rval);
+	rg = e_widget_radio_group_new(&my_rval2);
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 0", 0, rg));
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 1", 1, rg));
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 2", 2, rg));

@@ -4,6 +4,7 @@ images {
    image: "e17_titlebar_glint1.png" COMP;
    image: "e17_titlebar_glint2.png" COMP;
    image: "e17_titlebar_glint3.png" COMP;
+   image: "focus.png" COMP;
 }
 
 group {
@@ -15,6 +16,7 @@ group {
 	 mouse_events:  1;
 	 description {
 	    state:    "default" 0.0;
+	    min:      64 16;
 	    image {
 	       normal: "e17_button.png";
 	       border: 8 8 8 8;
@@ -37,12 +39,12 @@ group {
 	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   0   11;
+	       offset:   7   11;
 	       to: "button_image";
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
-	       offset:   0  -12;
+	       offset:   6  -12;
 	       to: "button_image";
 	    }
 	 }
@@ -245,6 +247,29 @@ group {
 	    color: 255 255 255 255;
 	 }
       }
+      part {
+	 name: "focus";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 255 255 255 0;
+	    image {
+	       normal: "focus.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state: "focused" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 255;
+	 }
+      }
    }
    programs {
       program {
@@ -331,5 +356,21 @@ group {
 	 target: "glint2";
 	 target: "glint3";
       }      
+      program {
+	 name: "focus_in";
+	 signal: "focus_in";
+	 source: "";
+         action: STATE_SET "focused" 0.0;
+	 transition: DECELERATE 0.2;
+	 target: "focus";
+      }
+      program {
+	 name: "focus_out";
+	 signal: "focus_out";
+	 source: "";
+         action: STATE_SET "default" 0.0;
+	 transition: ACCELERATE 0.5;
+	 target: "focus";
+      }
    }
 }

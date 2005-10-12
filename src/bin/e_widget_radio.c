@@ -18,7 +18,11 @@ struct _E_Widget_Data
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
+static void _e_wid_focus_hook(Evas_Object *obj);
+static void _e_wid_do(Evas_Object *obj);
+static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 /* local subsystem functions */
 
 /* externally accessible functions */
@@ -42,6 +46,8 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
    obj = e_widget_add(evas);
    
    e_widget_del_hook_set(obj, _e_wid_del_hook);
+   e_widget_focus_hook_set(obj, _e_wid_focus_hook);
+   e_widget_activate_hook_set(obj, _e_wid_activate_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->group = group;
    wd->valnum = valnum;
@@ -66,6 +72,7 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
      }
    
    e_widget_sub_object_add(obj, o);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
    
    return obj;
@@ -86,11 +93,23 @@ _e_wid_del_hook(Evas_Object *obj)
 }
 
 static void
-_e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
    
-   wd = e_widget_data_get(data);
+   wd = e_widget_data_get(obj);
+   if (e_widget_focus_get(obj))
+     edje_object_signal_emit(wd->o_radio, "focus_in", "");
+   else
+     edje_object_signal_emit(wd->o_radio, "focus_out", "");
+}
+
+static void
+_e_wid_do(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
    if ((wd->group) && (wd->group->valptr))
      {
 	Evas_List *l;
@@ -99,7 +118,7 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
 	for (l = wd->group->radios; l; l = l->next)
 	  {
 	     wd = e_widget_data_get(l->data);
-	     if (l->data != data)
+	     if (l->data != obj)
 	       {
 		  wd = e_widget_data_get(l->data);
 		  if (wd->valnum == *(wd->group->valptr))
@@ -111,7 +130,29 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
 	       }
 	  }
 	if (!toggled) return;
-	wd = e_widget_data_get(data);
-	if (!strcmp(source, "on")) *(wd->group->valptr) = wd->valnum;
+	wd = e_widget_data_get(obj);
+	*(wd->group->valptr) = wd->valnum;
      }
+}
+
+static void 
+_e_wid_activate_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   _e_wid_do(obj);
+   edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+}
+
+static void
+_e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
+{
+   _e_wid_do(data);
+}
+
+static void
+_e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   e_widget_focus_steal(data);
 }
