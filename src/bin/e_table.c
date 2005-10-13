@@ -3,11 +3,6 @@
  */
 #include "e.h"
 
-/*
- * FIXME: multiple column/row spans dont work properly in homogenous
- * FIXME: non-homogenous doesnt work at all
- */
-
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Table_Item E_Table_Item;
 
@@ -343,18 +338,18 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 	y += (h - minh) / 2;
 	h = minh;
      }
-   xx = x;
-   yy = y;
-   for (l = sd->items; l; l = l->next)
+   x = sd->x;
+   y = sd->y;
+   if (sd->homogenous)
      {
-	E_Table_Item *ti;
-	Evas_Object *obj;
-	
-	obj = l->data;
-	ti = evas_object_data_get(obj, "e_table_data");
-	if (sd->homogenous)
+	for (l = sd->items; l; l = l->next)
 	  {
+	     E_Table_Item *ti;
+	     Evas_Object *obj;
 	     Evas_Coord ww, hh, ow, oh;
+	     
+	     obj = l->data;
+	     ti = evas_object_data_get(obj, "e_table_data");
 	     
 	     xx = x + ((ti->col) * (w / (Evas_Coord)sd->size.cols));
 	     yy = y + ((ti->row) * (h / (Evas_Coord)sd->size.rows));
@@ -371,9 +366,195 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 			      yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
 	     evas_object_resize(obj, ow, oh);
 	  }
-	else
+     }
+   else
+     {
+	int mw, mh, i, ex, tot, need, num, dif, left, nx;
+	for (l = sd->items; l; l = l->next)
 	  {
-	     /* FIXME: not done - this is fucked atm */
+	     E_Table_Item *ti;
+	     Evas_Object *obj;
+	     
+	     obj = l->data;
+	     ti = evas_object_data_get(obj, "e_table_data");	
+	     if (sd->size.cols < (ti->col + ti->colspan))
+	       sd->size.cols = ti->col + ti->colspan;
+	     if (sd->size.rows < (ti->row + ti->rowspan))
+	       sd->size.rows = ti->row + ti->rowspan;
+	  }
+	if ((sd->size.cols > 0) && (sd->size.rows > 0))
+	  {
+	     int *cols, *rows, *colsx, *rowsx;
+	     
+	     cols = calloc(sd->size.cols, sizeof(int));
+	     rows = calloc(sd->size.rows, sizeof(int));
+	     colsx = calloc(sd->size.cols, sizeof(int));
+	     rowsx = calloc(sd->size.rows, sizeof(int));
+	     
+	     for (l = sd->items; l; l = l->next)
+	       {
+		  E_Table_Item *ti;
+		  Evas_Object *obj;
+
+		  obj = l->data;
+		  ti = evas_object_data_get(obj, "e_table_data");
+		  for (i = ti->col; i < (ti->col + ti->colspan); i++)
+		    colsx[i] |= ti->expand_w;
+		  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
+		    rowsx[i] |= ti->expand_h;
+	       }
+	     
+	     for (l = sd->items; l; l = l->next)
+	       {
+		  E_Table_Item *ti;
+		  Evas_Object *obj;
+		  
+		  obj = l->data;
+		  ti = evas_object_data_get(obj, "e_table_data");
+		  
+		  /* handle horizontal */
+		  ex = 0;
+		  tot = 0;
+		  num = ti->colspan;
+		  for (i = ti->col; i < (ti->col + num); i++)
+		    {
+		       if (colsx[i]) ex++;
+		       tot += cols[i];
+		    }
+		  need = ti->min.w;
+		  if (tot < need)
+		    {
+		       dif = need - tot;
+		       left = dif;
+		       if (ex == 0)
+			 {
+			    nx = num;
+			    for (i = ti->col; i < (ti->col + num); i++)
+			      {
+				 if (nx > 1)
+				   {
+				      cols[i] += dif / num;
+				      left -= dif / num;
+				   }
+				 else
+				   {
+				      cols[i] += left;
+				      left = 0;
+				   }
+				 nx--;
+			      }
+			 }
+		       else
+			 {
+			    nx = ex;
+			    for (i = ti->col; i < (ti->col + num); i++)
+			      {
+				 if (colsx[i])
+				   {
+				      if (nx > 1)
+					{
+					   cols[i] += dif / ex;
+					   left -= dif / ex;
+					}
+				      else
+					{
+					   cols[i] += left;
+					   left = 0;
+					}
+				      nx--;
+				   }
+			      }
+			 }
+		    }
+		  
+		  /* handle vertical */
+		  ex = 0;
+		  tot = 0;
+		  num = ti->rowspan;
+		  for (i = ti->row; i < (ti->row + num); i++)
+		    {
+		       if (rowsx[i]) ex++;
+		       tot += rows[i];
+		    }
+		  need = ti->min.h;
+		  if (tot < need)
+		    {
+		       dif = need - tot;
+		       left = dif;
+		       if (ex == 0)
+			 {
+			    nx = num;
+			    for (i = ti->row; i < (ti->row + num); i++)
+			      {
+				 if (nx > 1)
+				   {
+				      rows[i] += dif / num;
+				      left -= dif / num;
+				   }
+				 else
+				   {
+				      rows[i] += left;
+				      left = 0;
+				   }
+				 nx--;
+			      }
+			 }
+		       else
+			 {
+			    nx = ex;
+			    for (i = ti->row; i < (ti->row + num); i++)
+			      {
+				 if (rowsx[i])
+				   {
+				      if (nx > 1)
+					{
+					   rows[i] += dif / ex;
+					   left -= dif / ex;
+					}
+				      else
+					{
+					   rows[i] += left;
+					   left = 0;
+					}
+				      nx--;
+				   }
+			      }
+			 }
+		    }
+	       }
+	     for (l = sd->items; l; l = l->next)
+	       {
+		  E_Table_Item *ti;
+		  Evas_Object *obj;
+		  Evas_Coord ww, hh, ow, oh, i;
+		  
+		  obj = l->data;
+		  ti = evas_object_data_get(obj, "e_table_data");
+		  
+		  xx = x;
+		  for (i = 0; i < ti->col; i++) xx += cols[i];
+		  ww = 0;
+		  for (i = ti->col; i < (ti->col + ti->colspan); i++) ww += cols[i];
+		  yy = y;
+		  for (i = 0; i < ti->row; i++) yy += rows[i];
+		  hh = 0;
+		  for (i = ti->row; i < (ti->row + ti->rowspan); i++) hh += rows[i];
+
+		  ow = ti->min.w;
+		  if (ti->expand_w) ow = ww;
+		  if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
+		  oh = ti->min.h;
+		  if (ti->expand_h) oh = hh;
+		  if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
+		  evas_object_move(obj, 
+				   xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),
+				   yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
+		  evas_object_resize(obj, ow, oh);
+	       }
+	     free(rows);
+	     free(cols);
+	     free(rowsx);
+	     free(colsx);
 	  }
      }
    sd->changed = 0;
@@ -385,7 +566,6 @@ _e_table_smart_extents_calcuate(E_Smart_Data *sd)
    Evas_List *l;
    int minw, minh;
 
-   /* FIXME: need to calc max */
    sd->max.w = -1; /* max < 0 == unlimited */
    sd->max.h = -1;
    sd->size.cols = 0;
@@ -399,6 +579,7 @@ _e_table_smart_extents_calcuate(E_Smart_Data *sd)
 	  {
 	     E_Table_Item *ti;
 	     Evas_Object *obj;
+	     int mw, mh;
 	     
 	     obj = l->data;
 	     ti = evas_object_data_get(obj, "e_table_data");	
@@ -406,16 +587,176 @@ _e_table_smart_extents_calcuate(E_Smart_Data *sd)
 	       sd->size.cols = ti->col + ti->colspan;
 	     if (sd->size.rows < (ti->row + ti->rowspan))
 	       sd->size.rows = ti->row + ti->rowspan;
-	     /* FIXME: does not handle colspan or rowspan > 1 */
-	     if (minw < ti->min.w) minw = ti->min.w;
-	     if (minh < ti->min.h) minh = ti->min.h;
+	     mw = (ti->min.w + (ti->colspan - 1)) / ti->colspan;
+	     mh = (ti->min.h + (ti->rowspan - 1)) / ti->rowspan;
+	     if (minw < mw) minw = mw;
+	     if (minh < mh) minh = mh;
 	  }
 	minw *= sd->size.cols;
 	minh *= sd->size.rows;
      }
    else
      {
-	/* FIXME: non homogenous does not work */
+	int mw, mh, i, ex, tot, need, num, dif, left, nx;
+	for (l = sd->items; l; l = l->next)
+	  {
+	     E_Table_Item *ti;
+	     Evas_Object *obj;
+	     
+	     obj = l->data;
+	     ti = evas_object_data_get(obj, "e_table_data");	
+	     if (sd->size.cols < (ti->col + ti->colspan))
+	       sd->size.cols = ti->col + ti->colspan;
+	     if (sd->size.rows < (ti->row + ti->rowspan))
+	       sd->size.rows = ti->row + ti->rowspan;
+	  }
+	if ((sd->size.cols > 0) && (sd->size.rows > 0))
+	  {
+	     int *cols, *rows, *colsx, *rowsx;
+	     
+	     cols = calloc(sd->size.cols, sizeof(int));
+	     rows = calloc(sd->size.rows, sizeof(int));
+	     colsx = calloc(sd->size.cols, sizeof(int));
+	     rowsx = calloc(sd->size.rows, sizeof(int));
+	     
+	     for (l = sd->items; l; l = l->next)
+	       {
+		  E_Table_Item *ti;
+		  Evas_Object *obj;
+
+		  obj = l->data;
+		  ti = evas_object_data_get(obj, "e_table_data");
+		  for (i = ti->col; i < (ti->col + ti->colspan); i++)
+		    colsx[i] |= ti->expand_w;
+		  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
+		    rowsx[i] |= ti->expand_h;
+	       }
+	     
+	     for (l = sd->items; l; l = l->next)
+	       {
+		  E_Table_Item *ti;
+		  Evas_Object *obj;
+		  
+		  obj = l->data;
+		  ti = evas_object_data_get(obj, "e_table_data");
+		  
+		  /* handle horizontal */
+		  ex = 0;
+		  tot = 0;
+		  num = ti->colspan;
+		  for (i = ti->col; i < (ti->col + num); i++)
+		    {
+		       if (colsx[i]) ex++;
+		       tot += cols[i];
+		    }
+		  need = ti->min.w;
+		  if (tot < need)
+		    {
+		       dif = need - tot;
+		       left = dif;
+		       if (ex == 0)
+			 {
+			    nx = num;
+			    for (i = ti->col; i < (ti->col + num); i++)
+			      {
+				 if (nx > 1)
+				   {
+				      cols[i] += dif / num;
+				      left -= dif / num;
+				   }
+				 else
+				   {
+				      cols[i] += left;
+				      left = 0;
+				   }
+				 nx--;
+			      }
+			 }
+		       else
+			 {
+			    nx = ex;
+			    for (i = ti->col; i < (ti->col + num); i++)
+			      {
+				 if (colsx[i])
+				   {
+				      if (nx > 1)
+					{
+					   cols[i] += dif / ex;
+					   left -= dif / ex;
+					}
+				      else
+					{
+					   cols[i] += left;
+					   left = 0;
+					}
+				      nx--;
+				   }
+			      }
+			 }
+		    }
+		  
+		  /* handle vertical */
+		  ex = 0;
+		  tot = 0;
+		  num = ti->rowspan;
+		  for (i = ti->row; i < (ti->row + num); i++)
+		    {
+		       if (rowsx[i]) ex++;
+		       tot += rows[i];
+		    }
+		  need = ti->min.h;
+		  if (tot < need)
+		    {
+		       dif = need - tot;
+		       left = dif;
+		       if (ex == 0)
+			 {
+			    nx = num;
+			    for (i = ti->row; i < (ti->row + num); i++)
+			      {
+				 if (nx > 1)
+				   {
+				      rows[i] += dif / num;
+				      left -= dif / num;
+				   }
+				 else
+				   {
+				      rows[i] += left;
+				      left = 0;
+				   }
+				 nx--;
+			      }
+			 }
+		       else
+			 {
+			    nx = ex;
+			    for (i = ti->row; i < (ti->row + num); i++)
+			      {
+				 if (rowsx[i])
+				   {
+				      if (nx > 1)
+					{
+					   rows[i] += dif / ex;
+					   left -= dif / ex;
+					}
+				      else
+					{
+					   rows[i] += left;
+					   left = 0;
+					}
+				      nx--;
+				   }
+			      }
+			 }
+		    }
+	       }
+	     for (i = 0; i < sd->size.cols; i++) minw += cols[i];
+	     for (i = 0; i < sd->size.rows; i++) minh += rows[i];
+	     free(rows);
+	     free(cols);
+	     free(rowsx);
+	     free(colsx);
+	  }
      }
    sd->min.w = minw;
    sd->min.h = minh;

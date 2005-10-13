@@ -365,22 +365,27 @@ _e_test_internal(E_Container *con)
 
 	e_widget_list_object_append(hb, o, 0, 0, 0.0);
 	
-	o = e_widget_frametable_add(e, "My Frame Table", 1);
+	o = e_widget_frametable_add(e, "My Frame Table", 0);
 	
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 1"),
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "L1", &my_val),
 					  0, 0, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 2"),
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "L2", &my_val),
 					  1, 0, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "3"),
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "L3", &my_val),
 					  2, 0, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "A Long Label 4"),
+	
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "One", &my_val),
 					  0, 1, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "Span 2 columns at the end"),
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "This spans 2", &my_val),
 					  1, 1, 2, 1, 
+					  1, 1, 1, 1);
+
+	e_widget_frametable_object_append(o, e_widget_check_add(e, "A Really Long Checkbox at the bottom", &my_val),
+					  0, 2, 3, 1, 
 					  1, 1, 1, 1);
 	
 	e_widget_list_object_append(hb, o, 0, 0, 0.5);
