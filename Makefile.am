@@ -11,7 +11,7 @@ EXTRA_DIST = README AUTHORS COPYING COPYING-PLAIN enlightenment.spec \
 	     debian/changelog debian/changelog.in debian/copyright \
 	     debian/rules debian/enlightenment.install debian/enlightenment.docs \
 	     debian/enlightenment-data.install debian/libe.install \
-	     debian/libe-dev.install
+	     debian/libe-dev.install debian/control
 
 filesdir = $(datadir)/enlightenment/
 files_DATA = AUTHORS COPYING 
