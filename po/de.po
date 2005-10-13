@@ -291,6 +291,10 @@ msgstr "Uhr"
 msgid "Close"
 msgstr "Schließen"
 
+#: src/bin/e_configure.c:38
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment Konfiguration"
+
 #: src/bin/e_module.c:395
 msgid "Configuration"
 msgstr "Konfiguration"
@@ -377,6 +381,15 @@ msgstr "Icon bearbeiten"
 #: src/modules/ibar/e_mod_main.c:554
 msgid "Edit Mode"
 msgstr "Bearbeitungsmodus"
+
+#: src/bin/e_int_menus.c:813 src/bin/e_theme_about.c:41
+msgid "About This Theme"
+msgstr "Über dieses Theme"
+
+#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2781
+#: src/bin/e_utils.c:213
+msgid "Run Error"
+msgstr "Laufzeitfehler"
 
 #: src/bin/e_module.c:384
 msgid "Enabled"
@@ -1117,6 +1130,10 @@ msgstr "Zeile mit Arbeitsflächen entfernen"
 #: src/bin/e_int_menus.c:130
 msgid "Run Command"
 msgstr "Befehl ausführen ..."
+
+#: src/bin/e_int_menus.c:148
+msgid "File Manager"
+msgstr "Dateimanager"
 
 #: src/bin/e_int_menus.c:110
 msgid "Restart Enlightenment"
