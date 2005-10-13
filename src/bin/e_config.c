@@ -422,7 +422,7 @@ e_config_init(void)
 	e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
 	e_config->language = strdup("");
 	e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
-	e_config->focus_policy = E_FOCUS_MOUSE;
+	e_config->focus_policy = E_FOCUS_SLOPPY;
 	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
