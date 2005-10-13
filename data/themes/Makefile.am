@@ -44,6 +44,7 @@ default_fileman.edc \
 default_check.edc \
 default_radio.edc \
 default_frame.edc \
+default_label.edc \
 default_button.edc
 
 default.edj: Makefile $(EXTRA_DIST)
