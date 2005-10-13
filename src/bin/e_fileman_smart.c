@@ -691,7 +691,7 @@ _e_fm_smart_add(Evas_Object *object)
        
        
        /* some test values not meant for everyone */
-       /*
+       
 	{
 	   E_Fileman_Assoc_App *assoc;
 	   
@@ -701,8 +701,15 @@ _e_fm_smart_add(Evas_Object *object)
 	   assoc->app = E_NEW(char *, 7);
 	   snprintf(assoc->app, 7, "gqview");
 	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
+	 
+	   assoc = E_NEW(E_Fileman_Assoc_App, 1);
+	   assoc->mime = E_NEW(char *, 5);
+	   snprintf(assoc->mime, 5, "%s", ".png");
+	   assoc->app = E_NEW(char *, 7);
+	   snprintf(assoc->app, 7, "gqview");
+	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
 	}
-       */
+       
     }
    
    evas_object_smart_data_set(object, sd);

@@ -20,7 +20,6 @@ struct _E_Fileman
 
    Evas *evas;
    Evas_Object *main;
-   Evas_Object *hscrollbar;
    Evas_Object *vscrollbar;   
 
    Evas_Object *smart;   

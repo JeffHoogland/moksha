@@ -88,7 +88,8 @@ group { \
 
 images
 {
-   image: "e17_fileman_bg.png" COMP;   
+   image: "e17_fileman_bg.png" COMP;
+   image: "e17_fileman_bg_shadow.png" COMP;   
    image: "e17_icon_fileman_folder.png" COMP;
    image: "e17_icon_fileman_folder_clicked.png" COMP;   
    image: "e17_icon_fileman_file.png" COMP;
@@ -117,7 +118,7 @@ images
    image: "e17_menu_bg_border.png" COMP;
    image: "e17_button2.png" COMP;
    image: "e17_button.png" COMP;
-   image: "e17_logo.png" COMP;
+   image: "e17_logo.png" COMP;   
 }
 
 styles
@@ -199,6 +200,25 @@ group {
          }
       }
       part {
+         name: "background_border";
+         mouse_events: 1;
+         description {
+            state: "default" 0.0;
+            rel1 {
+               relative: 0 0;
+               offset: 0 0;
+            }
+            rel2 {
+               relative: 1.0 1.0;
+               offset: -1 -1;
+            }
+            image {
+	       normal: "e17_fileman_bg_shadow.png";
+            }
+	    color: 255 255 255 138;
+         }
+      }      
+      part {
          name: "icon_area";
 	 type: SWALLOW;
          mouse_events: 1;
@@ -215,24 +235,6 @@ group {
          }
       }      
       part {
-	 name: "hscrollbar";
-	 type: "SWALLOW";
-	 mouse_events: 1;
-	 description {
-	    min: 40 16;
-	    state:      "default" 0.0;
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   0 -16;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -16 -1;
-	    }
-	    color: 0 0 0 255;	    
-	 }
-      }
-      part {
 	 name: "vscrollbar";
 	 type: "SWALLOW";
 	 mouse_events: 1;
@@ -245,7 +247,7 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0 1.0;
-	       offset:   0 -16;
+	       offset:   0 -1;
 	    }
 	    color:  0 0 0 255;	    
 	 }

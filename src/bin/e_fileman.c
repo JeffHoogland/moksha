@@ -13,7 +13,6 @@
  * - create x, y, w, h in canvas struct and make them auto update
  ****/
 
-static void _e_fileman_hscrollbar_drag_cb(Evas_Object *object, double value, void *data);
 static void _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data);
 static void _e_fileman_cb_resize(E_Win *win);
 static void _e_fileman_cb_delete(E_Win *win);
@@ -65,10 +64,6 @@ e_fileman_new(E_Container *con)
    e_theme_edje_object_set(fileman->main, "base/theme/fileman/main",
 			   "fileman/main");
 
-   fileman->hscrollbar = e_scrollbar_add(fileman->evas);
-   e_scrollbar_callback_drag_add(fileman->hscrollbar, _e_fileman_hscrollbar_drag_cb, fileman);
-   edje_object_part_swallow(fileman->main, "hscrollbar", fileman->hscrollbar);
-
    fileman->vscrollbar = e_scrollbar_add(fileman->evas);
    e_scrollbar_direction_set(fileman->vscrollbar, E_SCROLLBAR_VERTICAL);
    e_scrollbar_callback_drag_add(fileman->vscrollbar, _e_fileman_vscrollbar_drag_cb, fileman);
@@ -109,7 +104,6 @@ static void
 _e_fileman_free(E_Fileman *fileman)
 {
    e_object_unref(E_OBJECT(fileman->con));
-   evas_object_del(fileman->hscrollbar);
    evas_object_del(fileman->vscrollbar);
    evas_object_del(fileman->smart);
    evas_object_del(fileman->main);
@@ -133,14 +127,6 @@ _e_fileman_cb_delete(E_Win *win)
    fileman = win->data;
    e_object_del(E_OBJECT(fileman));
    e_object_del(E_OBJECT(win));
-}
-
-static void
-_e_fileman_hscrollbar_drag_cb(Evas_Object *object, double value, void *data)
-{
-   E_Fileman *fileman;
-
-   fileman = data;
 }
 
 static void
