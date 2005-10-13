@@ -344,9 +344,12 @@ e17_vhandle.png \
 e17_vhandle_thumb.png \
 e17_fileman_bg.png \
 e17_fileman_bg_shadow.png \
+e17_fileman_rubberband.png \
 e17_icon_fileman_c.png \
 e17_icon_fileman_file.png \
+e17_icon_fileman_file_clicked.png \
 e17_icon_fileman_folder.png \
+e17_icon_fileman_folder_clicked.png \
 e17_icon_fileman_h.png \
 e17_icon_fileman_jpg.png \
 e17_icon_fileman_pdf.png \
