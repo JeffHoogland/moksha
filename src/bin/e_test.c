@@ -405,6 +405,81 @@ _e_test_internal(E_Container *con)
    e_dialog_show(dia);
 }
 #elif 0
+
+typedef struct _B_CFData {
+   int val;
+} B_CFData;
+typedef struct _A_CFData {
+   int val2;
+} A_CFData;
+
+static void *_b_create_data(void *cfdata_other, E_Config_Dialog_CFData_Type type_other);
+static void _b_free_data(B_CFData *cfdata);
+static void _b_apply_data(B_CFData *cfdata);
+static Evas_Object *_b_create_widgets(Evas *evas, B_CFData *cfdata);
+static void *_a_create_data(void *cfdata_other, E_Config_Dialog_CFData_Type type_other);
+static void _a_free_data(A_CFData *cfdata);
+static void _a_apply_data(A_CFData *cfdata);
+static Evas_Object *_a_create_widgets(Evas *evas, A_CFData *cfdata);
+
+static void *_b_create_data(void *cfdata_other, E_Config_Dialog_CFData_Type type_other) {
+   B_CFData *cfdata;
+   cfdata = E_NEW(B_CFData, 1);
+   if (cfdata_other) cfdata->val = ((A_CFData *)cfdata_other)->val2;
+   return cfdata;
+}
+static void _b_free_data(B_CFData *cfdata) {
+   printf("FREE BASIC\n");
+   free(cfdata);
+}
+static void _b_apply_data(B_CFData *cfdata) {
+   printf("APPLY BASIC %i\n", cfdata->val);
+}
+static Evas_Object *_b_create_widgets(Evas *evas, B_CFData *cfdata) {
+   Evas_Object *o, *ob;
+   o = e_widget_framelist_add(evas, "Basic Options", 0);
+   ob = e_widget_check_add(evas, "Basic Checkbox", &(cfdata->val));
+   e_widget_framelist_object_append(o, ob);
+   return o;
+}
+
+static void *_a_create_data(void *cfdata_other, E_Config_Dialog_CFData_Type type_other) {
+   A_CFData *cfdata;
+   cfdata = E_NEW(A_CFData, 1);
+   if (cfdata_other) cfdata->val2 = ((B_CFData *)cfdata_other)->val;
+   return cfdata;
+}
+static void _a_free_data(A_CFData *cfdata) {
+   printf("FREE ADVANCED\n");
+   free(cfdata);
+}
+static void _a_apply_data(A_CFData *cfdata) {
+   printf("APPLY ADVANCED %i\n", cfdata->val2);
+}
+static Evas_Object *_a_create_widgets(Evas *evas, A_CFData *cfdata) {
+   Evas_Object *o, *ob;
+   o = e_widget_framelist_add(evas, "Advanced Options", 0);
+   ob = e_widget_check_add(evas, "Advanced Checkbox", &(cfdata->val2));
+   e_widget_framelist_object_append(o, ob);
+   return o;
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_View a, b;
+   
+   b.create_cfdata  = _b_create_data;
+   b.free_cfdata    = _b_free_data;
+   b.apply_cfdata   = _b_apply_data;
+   b.create_widgets = _b_create_widgets;
+   a.create_cfdata  = _a_create_data;
+   a.free_cfdata    = _a_free_data;
+   a.apply_cfdata   = _a_apply_data;
+   a.create_widgets = _a_create_widgets;
+   cfd = e_config_dialog_new(con, "A test dialog", &b, &a);
+}
 #else
 static void
 _e_test_internal(E_Container *con)
