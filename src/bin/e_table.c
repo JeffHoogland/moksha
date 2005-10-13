@@ -3,6 +3,11 @@
  */
 #include "e.h"
 
+/*
+ * FIXME: multiple column/row spans dont work properly in homogenous
+ * FIXME: non-homogenous doesnt work at all
+ */
+
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Table_Item E_Table_Item;
 

@@ -307,7 +307,7 @@ _e_test_internal(E_Container *con)
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }
-#elif 1
+#elif 0
 static int my_val = 0;
 static int my_val2 = 0;
 static int my_val3 = 0;
@@ -373,11 +373,14 @@ _e_test_internal(E_Container *con)
 	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 2"),
 					  1, 0, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 3"),
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "3"),
 					  2, 0, 1, 1, 
 					  1, 1, 1, 1);
-	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 4"),
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "A Long Label 4"),
 					  0, 1, 1, 1, 
+					  1, 1, 1, 1);
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "Span 2 columns at the end"),
+					  1, 1, 2, 1, 
 					  1, 1, 1, 1);
 	
 	e_widget_list_object_append(hb, o, 0, 0, 0.5);
