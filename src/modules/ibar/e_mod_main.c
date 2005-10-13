@@ -1662,6 +1662,15 @@ _ibar_bar_cb_drop(void *data, const char *type, void *event)
 	  {
 	     E_Dialog *dia;
 
+	     e_box_freeze(ibb->box_object);
+	     e_box_unpack(ibb->drag_object);
+	     evas_object_del(ibb->drag_object);
+	     ibb->drag_object = NULL;
+	     evas_object_del(ibb->drag_object_overlay);
+	     ibb->drag_object_overlay = NULL;
+	     e_box_thaw(ibb->box_object);
+	     _ibar_bar_frame_resize(ibb);
+
 	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()));
 	     e_dialog_title_set(dia, _("Cannot add icon"));
 	     e_dialog_text_set(dia,
