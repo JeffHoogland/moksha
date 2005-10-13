@@ -74,7 +74,7 @@ struct _E_Fileman_File_Attributes
    dev_t     rdev;            /* device ID (if special file) */
    off_t     size;            /* total size, in bytes */   
    //blksize_t blksize;         /* blocksize for filesystem I/O */
-   blkcnt_t  blocks;          /* number of blocks allocated */
+   //blkcnt_t  blocks;          /* number of blocks allocated */
    time_t    atime;           /* time of last access */
    time_t    mtime;           /* time of last modification */
    time_t    ctime;           /* time of last status change */
@@ -1240,8 +1240,9 @@ _e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
    attr->group = st.st_gid;
    attr->rdev = st.st_rdev;
    attr->size = st.st_size;
+   // check portability of the following 2 fields
    //attr->st_blksize = st.st_blksize;
-   attr->blocks = st.st_blocks;
+   //attr->blocks = st.st_blocks;
    attr->atime = st.st_atime;
    attr->mtime = st.st_mtime;
    attr->ctime = st.st_ctime;
