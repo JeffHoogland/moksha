@@ -307,7 +307,7 @@ _e_test_internal(E_Container *con)
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }
-#elif 0
+#elif 1
 static int my_val = 0;
 static int my_val2 = 0;
 static int my_val3 = 0;
@@ -364,6 +364,23 @@ _e_test_internal(E_Container *con)
 	e_widget_framelist_object_append(o, e_widget_radio_add(e, "Rad 4", 4, rg));
 
 	e_widget_list_object_append(hb, o, 0, 0, 0.0);
+	
+	o = e_widget_frametable_add(e, "My Frame Table", 1);
+	
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 1"),
+					  0, 0, 1, 1, 
+					  1, 1, 1, 1);
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 2"),
+					  1, 0, 1, 1, 
+					  1, 1, 1, 1);
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 3"),
+					  2, 0, 1, 1, 
+					  1, 1, 1, 1);
+	e_widget_frametable_object_append(o, e_widget_label_add(e, "Label 4"),
+					  0, 1, 1, 1, 
+					  1, 1, 1, 1);
+	
+	e_widget_list_object_append(hb, o, 0, 0, 0.5);
 	
 	e_widget_list_object_append(ol, hb, 1, 1, 0.5);
 	

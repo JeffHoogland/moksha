@@ -89,7 +89,8 @@ e_widget_radio.h \
 e_widget_framelist.h \
 e_widget_list.h \
 e_widget_button.h \
-e_widget_label.h
+e_widget_label.h \
+e_widget_frametable.h
 
 enlightenment_src = \
 e_user.c \
@@ -161,6 +162,7 @@ e_widget_framelist.c \
 e_widget_list.c \
 e_widget_button.c \
 e_widget_label.c \
+e_widget_frametable.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
