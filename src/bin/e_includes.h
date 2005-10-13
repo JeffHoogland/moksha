@@ -72,3 +72,4 @@
 #include "e_widget_button.h"
 #include "e_widget_label.h"
 #include "e_widget_frametable.h"
+#include "e_widget_table.h"

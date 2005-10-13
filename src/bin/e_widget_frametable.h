@@ -8,7 +8,6 @@
 
 EAPI Evas_Object *e_widget_frametable_add(Evas *evas, char *label, int homogenous);
 EAPI void e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h);
-    
 
 #endif
 #endif
