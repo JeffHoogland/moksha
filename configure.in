@@ -307,6 +307,7 @@ doc/Makefile
 po/Makefile
 intl/Makefile
 enlightenment-config
+debian/changelog
 ],[
 chmod +x enlightenment-config
 ])
