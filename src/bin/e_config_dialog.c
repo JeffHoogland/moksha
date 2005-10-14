@@ -81,7 +81,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->basic.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
-				      "Advanced...", NULL,
+				      _("Advanced..."), NULL,
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -98,7 +98,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->advanced.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
-				      "Basic...", NULL,
+				      _("Basic..."), NULL,
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -109,9 +109,9 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_widget_min_size_get(o, &mw, &mh);
    e_dialog_content_set(cfd->dia, o, mw, mh);
    
-   e_dialog_button_add(cfd->dia, "OK", NULL, _e_config_dialog_cb_ok, cfd);
-   e_dialog_button_add(cfd->dia, "Apply", NULL, _e_config_dialog_cb_apply, cfd);
-   e_dialog_button_add(cfd->dia, "Cancel", NULL, NULL, NULL);
+   e_dialog_button_add(cfd->dia, _("OK"), NULL, _e_config_dialog_cb_ok, cfd);
+   e_dialog_button_add(cfd->dia, _("Apply"), NULL, _e_config_dialog_cb_apply, cfd);
+   e_dialog_button_add(cfd->dia, _("Cancel"), NULL, NULL, NULL);
    e_win_centered_set(cfd->dia->win, 1);
    e_dialog_show(cfd->dia);
    cfd->view_type = type;
