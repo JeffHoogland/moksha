@@ -3,9 +3,16 @@
  */
 #ifdef E_TYPEDEFS
 
+typedef struct _E_Fm_Event_Reconfigure E_Fm_Event_Reconfigure;
+
 #else
 #ifndef E_FM_SMART_H
 #define E_FM_SMART_H
+
+struct _E_Fm_Event_Reconfigure
+{
+   Evas_Coord w, h;   
+};
 
 EAPI Evas_Object          *e_fm_add(Evas *evas);
 EAPI void                  e_fm_dir_set(Evas_Object *object, const char *dir);
@@ -16,6 +23,8 @@ EAPI void                  e_fm_menu_set(Evas_Object *object, E_Menu *menu);
 EAPI E_Menu               *e_fm_menu_get(Evas_Object *object);
 EAPI void                  e_fm_scroll_horizontal(Evas_Object *object, double percent);
 EAPI void                  e_fm_scroll_vertical(Evas_Object *object, double percent);
-
+EAPI void                  e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h);
+EAPI void                  e_fm_reconfigure_callback_add(Evas_Object *object, void (*func)(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev), void *data);
+    
 #endif
 #endif

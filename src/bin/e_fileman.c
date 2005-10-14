@@ -14,6 +14,7 @@
  ****/
 
 static void _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data);
+static void _e_fileman_reconf_cb(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev);
 static void _e_fileman_cb_resize(E_Win *win);
 static void _e_fileman_cb_delete(E_Win *win);
 static void _e_fileman_free(E_Fileman *fileman);
@@ -67,18 +68,19 @@ e_fileman_new(E_Container *con)
    fileman->vscrollbar = e_scrollbar_add(fileman->evas);
    e_scrollbar_direction_set(fileman->vscrollbar, E_SCROLLBAR_VERTICAL);
    e_scrollbar_callback_drag_add(fileman->vscrollbar, _e_fileman_vscrollbar_drag_cb, fileman);
-   edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
 
    e_win_resize_callback_set(fileman->win, _e_fileman_cb_resize);
    e_win_resize(fileman->win, 640, 480);
 
    fileman->smart = e_fm_add(fileman->evas);
    e_fm_e_win_set(fileman->smart, fileman->win);
-   e_fm_dir_set(fileman->smart, dir);
+   //e_fm_dir_set(fileman->smart, dir);
    edje_object_part_swallow(fileman->main, "icon_area", fileman->smart);
 
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
 
+   e_fm_reconfigure_callback_add(fileman->smart, _e_fileman_reconf_cb, fileman);
+   
    return fileman;
 }
 
@@ -110,13 +112,23 @@ _e_fileman_free(E_Fileman *fileman)
    e_object_del(E_OBJECT(fileman->win));
    free(fileman);
 }
+
 static void
 _e_fileman_cb_resize(E_Win *win)
 {
    E_Fileman *fileman;
-
+   Evas_Coord w, h;
+   
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
+   e_fm_geometry_virtual_get(fileman->smart, &w, &h);
+   if(h > win->h)
+     edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+   else 
+    {
+       edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
+       evas_object_hide(fileman->vscrollbar);
+    }
 }
 
 static void
@@ -138,3 +150,17 @@ _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data)
    e_fm_scroll_vertical(fileman->smart, value);
 }
 
+static void
+_e_fileman_reconf_cb(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev)
+{   
+   E_Fileman *fileman;
+   
+   fileman = data;
+   
+   if(ev->h > fileman->win->h)
+     edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+   else {
+      edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
+      evas_object_hide(fileman->vscrollbar);
+   }
+}
