@@ -265,7 +265,7 @@ group {
       part {
 	 name:          "icon_swallow";
 	 type:          SWALLOW;
-	 mouse_events:  1;
+	 mouse_events:  0;
 	 description {
 	    min: 48 48;
 	    max: 128 128;
@@ -282,7 +282,7 @@ group {
 	 }
       }
       part {
-	 name:          "icon_title";
+	 name:          "icon_title";      
 	 type:          TEXT;
 	 effect:        SHADOW;
 	 description {
@@ -305,7 +305,25 @@ group {
 	    }
 	 }
       }
-
+      part {
+	 name:          "icon_event";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {
+	    state:      "default" 0.0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	       //to:       "icon_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	       //to:       "icon_swallow";
+	    }
+	    color:      0 0 0 0;
+	 }
+      }      
 /*
       part {
 	 name:          "icon_title";
