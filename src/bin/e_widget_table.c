@@ -19,7 +19,6 @@ e_widget_table_add(Evas *evas, char *label, int homogenous)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;
    
    obj = e_widget_add(evas);
    
