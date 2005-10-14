@@ -305,6 +305,8 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
 		  free(buf);
 		  return 1;
 	       }
+	     free(buf);
+	     return 0;
 	  }
      }
    free(buf);

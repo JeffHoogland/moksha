@@ -3,6 +3,13 @@
  */
 #include "e.h"
 
+/* FIXME:
+ * * Having 2 cfdata creates is useless. roll the basic and advanced into 1 and
+ *   simply have 2 different views on the same dataset
+ * * We have no way of associating this config data WITH another object (like
+ *   a window border) so we need a way to pass that in.
+ */
+
 /* local subsystem functions */
 static void _e_config_dialog_free(E_Config_Dialog *cfd);
 static void _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type);
