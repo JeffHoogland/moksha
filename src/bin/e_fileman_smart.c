@@ -1271,11 +1271,11 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 	
 	snprintf(fullname, PATH_MAX, "%s/%s", dirname, dir_entry->d_name);
 		
-	if(stat(fullname, &st) == -1)
-	 {
-	    D(("stat(%s, &st) failed -- %d", errno));
-	    continue;
-	 }
+	if (stat(fullname, &st) == -1)
+	  {
+	     D(("stat(%s, &st) failed -- %d", errno));
+	     continue;
+	  }
 	
 	attr = E_NEW(E_Fileman_File_Attributes, 1);
 	
@@ -2614,16 +2614,15 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
 static E_Fileman_File_Type
 _e_fm_file_type(E_Fileman_File *file)
 {
-   if(S_ISDIR(file->attr->mode))
+   if (S_ISDIR(file->attr->mode))
      return E_FILEMAN_FILETYPE_DIRECTORY;
-   
+
    /* TODO: Handle links differently */
-   if(S_ISREG(file->attr->mode) || S_ISLNK(file->attr->mode))
+   if (S_ISREG(file->attr->mode) || S_ISLNK(file->attr->mode))
      return E_FILEMAN_FILETYPE_FILE;
-   
+
    return E_FILEMAN_FILETYPE_UNKNOWN;     
 }
-
 
 static Evas_Bool
 _e_fm_file_open_assoc(E_Fileman_File *file)
