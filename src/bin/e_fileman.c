@@ -122,13 +122,13 @@ _e_fileman_cb_resize(E_Win *win)
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
    e_fm_geometry_virtual_get(fileman->smart, &w, &h);
-   if(h > win->h)
+   if (h > win->h)
      edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
    else 
-    {
-       edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
-       evas_object_hide(fileman->vscrollbar);
-    }
+     {
+	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
+	evas_object_hide(fileman->vscrollbar);
+     }
 }
 
 static void
@@ -157,10 +157,11 @@ _e_fileman_reconf_cb(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev)
    
    fileman = data;
    
-   if(ev->h > fileman->win->h)
+   if (ev->h > fileman->win->h)
      edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
-   else {
-      edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
-      evas_object_hide(fileman->vscrollbar);
-   }
+   else
+     {
+	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
+	evas_object_hide(fileman->vscrollbar);
+     }
 }
