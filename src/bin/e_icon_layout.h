@@ -18,6 +18,8 @@ EAPI void         e_icon_layout_child_stack_below (Evas_Object *obj, Evas_Object
 EAPI void         e_icon_layout_unpack            (Evas_Object *obj);
 EAPI void         e_icon_layout_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys);
 EAPI void         e_icon_layout_redraw_force      (Evas_Object *obj);
+EAPI void         e_icon_layout_clip_freeze       (Evas_Object *obj);
+EAPI void         e_icon_layout_clip_thaw         (Evas_Object *obj);
 
 #endif
 #endif
