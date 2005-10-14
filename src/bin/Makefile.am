@@ -93,7 +93,8 @@ e_widget_label.h \
 e_widget_frametable.h \
 e_widget_table.h \
 e_config_dialog.h \
-e_int_config_focus.h
+e_int_config_focus.h \
+e_icon_layout.h
 
 enlightenment_src = \
 e_user.c \
@@ -169,6 +170,7 @@ e_widget_frametable.c \
 e_widget_table.c \
 e_config_dialog.c \
 e_int_config_focus.c \
+e_icon_layout.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
