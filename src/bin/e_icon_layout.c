@@ -337,8 +337,8 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
    
    x = sd->x + sd->xs;
    y = sd->y + sd->ys;
-   w = sd->w;
-   h = sd->h;
+   w = sd->vw;
+   h = sd->vh;
    
    for (l = sd->items; l; l = l->next)
     {
