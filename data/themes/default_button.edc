@@ -16,7 +16,7 @@ group {
 	 mouse_events:  1;
 	 description {
 	    state:    "default" 0.0;
-	    min:      64 16;
+	    min:      56 16;
 	    image {
 	       normal: "e17_button.png";
 	       border: 8 8 8 8;
@@ -39,12 +39,12 @@ group {
 	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   7   11;
+	       offset:   4   8;
 	       to: "button_image";
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
-	       offset:   6  -12;
+	       offset:   3  -9;
 	       to: "button_image";
 	    }
 	 }
@@ -57,12 +57,12 @@ group {
 	    color: 0 0 0 0;
 	    rel1 {
 	       relative: 0.0 0.0;
-	       offset:   11  11;
+	       offset:   8  8;
 	       to: "button_image";
 	    }
 	    rel2 {
 	       relative: 0.0 1.0;
-	       offset:   10   -12;
+	       offset:   7   -9;
 	       to: "button_image";
 	    }
 	 }
@@ -76,13 +76,13 @@ group {
 	    state:    "default" 0.0;
 	    rel1 {
 	       relative: 1.0  0.0;
-	       offset:   5    11;
+	       offset:   4    8;
 	       to_x:   "icon_swallow";
 	       to_y:   "button_image";
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -12   -12;
+	       offset:   -9   -9;
 	       to:     "button_image";
 	    }
 	    color:    0   0   0 255;

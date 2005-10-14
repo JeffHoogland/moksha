@@ -16,12 +16,12 @@ group {
 	       to_x: "outline";
 	       to_y: "label_over";
 	       relative: 0.0  1.0;
-	       offset:   4    2;
+	       offset:   3    2;
 	    }
 	    rel2 {
 	       to: "outline";
 	       relative: 1.0  1.0;
-	       offset:   -5   -5;
+	       offset:   -4   -4;
 	    }
 	    color:       0 0 0 0;
 	 }
@@ -34,11 +34,11 @@ group {
 	    rel1 {
 	       to_y: "label";
 	       relative: 0.0  0.5;
-	       offset:   3    -1;
+	       offset:   2    -1;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -4   -4;
+	       offset:   -3   -3;
 	    }
 	    image {
 	       normal: "e17_frame_outline.png";
@@ -84,11 +84,11 @@ group {
             fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   16   6;
+	       offset:   16   5;
 	    }
 	    rel2 {
 	       relative: 0.0  0.0;
-	       offset:   16   6;
+	       offset:   16   5;
 	    }
 	    color: 0 0 0 80;
 	    text {

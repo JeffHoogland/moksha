@@ -17,11 +17,11 @@ group {
 	    fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   4    4;
+	       offset:   2    2;
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
-	       offset:   4   -5;
+	       offset:   2   -3;
 	    }
 	    image {
 	       normal: "e17_menu_check1.png";
@@ -65,11 +65,11 @@ group {
 	    rel1 {
 	       to_x:     "outline";
 	       relative: 1.0  0.0;
-	       offset:   4 4;
+	       offset:   2 2;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -5 -5;
+	       offset:   -3 -3;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
