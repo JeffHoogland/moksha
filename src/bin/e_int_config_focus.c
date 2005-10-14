@@ -3,16 +3,17 @@
  */
 #include "e.h"
 
-/* PROTOTYPES */
+/* PROTOTYPES - same all the time */
 typedef struct _CFData CFData;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static void _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static void _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
+static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
+static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 
+/* Actual config data we will be playing with whil the dialog is active */
 struct _CFData
 {
    /*- BASIC -*/
@@ -25,7 +26,9 @@ struct _CFData
    int always_click_to_focus;
 };
 
-void e_int_config_focus(E_Container *con)
+/* a nice easy setup function that does the dirty work */
+void
+e_int_config_focus(E_Container *con)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
@@ -45,6 +48,10 @@ void e_int_config_focus(E_Container *con)
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
+   /* Create cfdata - cfdata is a temporary block of config data that this
+    * dialog will be dealing with while configuring. it will be applied to
+    * the running systems/config in the apply methods
+    */
    CFData *cfdata;
    
    cfdata = E_NEW(CFData, 1);
@@ -62,13 +69,15 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   /* Free the cfdata */
    free(cfdata);
 }
 
 /**--APPLY--**/
-static void
+static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   /* Actually take our cfdata settings and apply them in real life */
    e_border_button_bindings_ungrab_all();
    if (cfdata->mode == E_FOCUS_CLICK)
      {
@@ -96,11 +105,13 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      }
    e_border_button_bindings_grab_all();
    e_config_save_queue();
+   return 1; /* Apply was OK */
 }
 
-static void
+static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   /* Actually take our cfdata settings and apply them in real life */
    e_border_button_bindings_ungrab_all();
    e_config->focus_policy = cfdata->focus_policy;
    e_config->focus_setting = cfdata->focus_setting;
@@ -109,14 +120,17 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config->always_click_to_focus = cfdata->always_click_to_focus;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
+   return 1; /* Apply was OK */
 }
 
 /**--GUI--**/
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
+   /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
+   
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Click Window to Focus"), E_FOCUS_CLICK, rg);
@@ -131,6 +145,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
+   /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
    

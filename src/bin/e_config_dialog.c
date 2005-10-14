@@ -130,13 +130,14 @@ static void
 _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog *cfd;
-
+   int ok = 0;
+   
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+     ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
    else
-     cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
-   e_object_del(E_OBJECT(cfd));
+     ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+   if (ok) e_object_del(E_OBJECT(cfd));
 }
 
 static void
