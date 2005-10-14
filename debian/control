@@ -10,7 +10,7 @@ Architecture: any
 Section: x11
 Recommends: examine, engage, entice, elicit
 Suggests: entrance
-Depends: libe, enlightenment-data (>= 0.16.999), libevas, libecore, libeet, libembryo, embryo-bin, libedje, libimlib2
+Depends: ${shlibs:Depends}, libe, enlightenment-data (>= 0.16.999), libevas, libecore, libeet, libembryo, embryo-bin, libedje
 Description: Enlightenment themes, etc.
  Enlightenment is an advanced window manager for X11. Unique
  features include: a fully animated background, nice drop shadows
@@ -31,7 +31,7 @@ Description: Enlightenment themes, etc.
 Package: libe
 Section: libs
 Architecture: any
-Depends: enlightenment (= ${Source-Version})
+Depends: ${shlibs:Depends}
 Conflicts: libenlightenment
 Description: Enlightenment library.
  Enlightenment library that provides functions for module development, etc.
@@ -40,7 +40,7 @@ Package: libe-dev
 Architecture: any
 Section: devel
 Architecture: any
-Depends: enlightenment (= ${Source-Version}), libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
+Depends: libc6-dev | libc-dev, libevas-dev, libecore-dev, libeet-dev, libembryo-dev, libedje-dev, libimlib2-dev, xlibs-dev, automake1.7 | automaken, libtool, debhelper (>= 4.0)
 Conflicts: libenlightenment-dev
 Description: Enlightenment headers, static libraries and documentation
  Headers, static libraries and documentation for enlightenment.
