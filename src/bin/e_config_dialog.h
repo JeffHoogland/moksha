@@ -20,10 +20,12 @@ typedef struct _E_Config_Dialog_View E_Config_Dialog_View;
 
 struct _E_Config_Dialog_View
 {
-   void        *(*create_cfdata)  (void *cfdata_other, E_Config_Dialog_CFData_Type type_other);
-   void         (*free_cfdata)    (void *cfdata);
-   void         (*apply_cfdata)   (void *cfdata);
-   Evas_Object *(*create_widgets) (Evas *evas, void *cfdata);
+   void           *(*create_cfdata)     (E_Config_Dialog *cfd);
+   void            (*free_cfdata)       (E_Config_Dialog *cfd, void *cfdata);
+   struct {
+      void         (*apply_cfdata)      (E_Config_Dialog *cfd, void *cfdata);
+      Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, void *cfdata);
+   } basic, advanced;
 };
 
 struct _E_Config_Dialog
@@ -31,14 +33,15 @@ struct _E_Config_Dialog
    E_Object                     e_obj_inherit;
    
    E_Config_Dialog_CFData_Type  view_type;
-   E_Config_Dialog_View         basic, advanced;
+   E_Config_Dialog_View         view;
    void                        *cfdata;
    E_Container                 *con;
    char                        *title;
    E_Dialog                    *dia;
+   void                        *data;
 };
 
-EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *basic, E_Config_Dialog_View *advanced);
+EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *view, void *data);
 
 #endif
 #endif

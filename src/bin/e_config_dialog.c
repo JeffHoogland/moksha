@@ -3,13 +3,6 @@
  */
 #include "e.h"
 
-/* FIXME:
- * * Having 2 cfdata creates is useless. roll the basic and advanced into 1 and
- *   simply have 2 different views on the same dataset
- * * We have no way of associating this config data WITH another object (like
- *   a window border) so we need a way to pass that in.
- */
-
 /* local subsystem functions */
 static void _e_config_dialog_free(E_Config_Dialog *cfd);
 static void _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type);
@@ -24,15 +17,15 @@ static void _e_config_dialog_cb_basic(void *data, void *data2);
 /* externally accessible functions */
 
 E_Config_Dialog *
-e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *basic, E_Config_Dialog_View *advanced)
+e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
    
    cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, _e_config_dialog_free);
-   cfd->basic = *basic;
-   if (advanced) cfd->advanced = *advanced;
+   cfd->view = *view;
    cfd->con = con;
    cfd->title = strdup(title);
+   cfd->data = data;
    
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
    
@@ -47,10 +40,7 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
    E_FREE(cfd->title);
    if (cfd->cfdata)
      {
-	if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-	  cfd->basic.free_cfdata(cfd->cfdata);
-	else
-	  cfd->advanced.free_cfdata(cfd->cfdata);
+	cfd->view.free_cfdata(cfd, cfd->cfdata);
 	cfd->cfdata = NULL;
      }
    if (cfd->dia)
@@ -65,52 +55,47 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
 static void
 _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 {
-   void *pdata;
    E_Dialog *pdia;
    Evas_Object *o, *ob;
    Evas_Coord mw = 0, mh = 0;
    
-   pdata = cfd->cfdata;
    pdia = cfd->dia;
-   
    cfd->dia = e_dialog_new(cfd->con);
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
+
+   if (!cfd->cfdata) cfd->cfdata = cfd->view.create_cfdata(cfd);
    
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
      {
-	cfd->cfdata = cfd->basic.create_cfdata(pdata, cfd->view_type);
-	if (cfd->advanced.free_cfdata)
+	if (cfd->view.advanced.create_widgets)
 	  {
-	     if (pdata) cfd->advanced.free_cfdata(pdata);
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->basic.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     ob = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
-				      _("Advanced..."), NULL,
+				      _("Advanced Settings"), NULL,
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->basic.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  o = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
      }
    else
      {
-	cfd->cfdata = cfd->advanced.create_cfdata(pdata, cfd->view_type);
-	if (cfd->basic.free_cfdata)
+	if (cfd->view.basic.create_widgets)
 	  {
-	     if (pdata) cfd->basic.free_cfdata(pdata);
 	     o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
-	     ob = cfd->advanced.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	     ob = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
-				      _("Basic..."), NULL,
+				      _("Basic Settings"), NULL,
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
 	else
-	  o = cfd->advanced.create_widgets(e_win_evas_get(cfd->dia->win), cfd->cfdata);
+	  o = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
      }
    
    e_widget_min_size_get(o, &mw, &mh);
@@ -148,9 +133,9 @@ _e_config_dialog_cb_ok(void *data, E_Dialog *dia)
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     cfd->basic.apply_cfdata(cfd->cfdata);
+     cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
    else
-     cfd->advanced.apply_cfdata(cfd->cfdata);
+     cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
    e_object_del(E_OBJECT(cfd));
 }
 
@@ -161,9 +146,9 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     cfd->basic.apply_cfdata(cfd->cfdata);
+     cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
    else
-     cfd->advanced.apply_cfdata(cfd->cfdata);
+     cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
 }
 
 static void
