@@ -137,7 +137,7 @@ _e_configure_apps_load(E_Configure *app)
 	icon = edje_object_add(app->evas);
 	edje_object_file_set(icon, a->path, "icon");
 	     	     	     
-	edje_extern_object_min_size_set (icon, 64, 64);	     
+	edje_extern_object_min_size_set(icon, 48, 48);
 	     
 	edje_object_part_swallow(o, "icon_swallow", icon);	     
 	edje_object_part_text_set(o, "title", a->name);
