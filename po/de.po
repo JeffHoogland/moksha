@@ -361,6 +361,91 @@ msgstr "Arbeitsflächen"
 msgid "Disable"
 msgstr "Deaktiviert"
 
+#: src/bin/e_config_dialog.c:112 src/bin/e_module.c:399 src/bin/e_error.c:196
+#: src/bin/e_error.c:205 src/modules/ibar/e_mod_main.c:1682
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_config_dialog.c:113
+msgid "Apply"
+msgstr "Übernehmen"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/bin/e_config_dialog.c:84
+msgid "Advanced..."
+msgstr "Erweitert..."
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic..."
+msgstr "Grundsätzlich..."
+
+#: src/bin/e_int_config_focus.c:103
+msgid "Click Window to Focus"
+msgstr "Fenster zum aktivieren anklicken"
+
+#: src/bin/e_int_config_focus.c:105
+msgid "Window under the Mouse"
+msgstr "Fenster unter dem Mauszeiger aktivieren"
+
+#: src/bin/e_int_config_focus.c:107
+msgid "Most recent Window under the Mouse"
+msgstr "Neuste Fenster unter dem Mauszeiger aktivieren"
+
+#: src/bin/e_int_config_focus.c:142
+msgid "Focus"
+msgstr "Aktivieren"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click to focus"
+msgstr "Zum Aktivieren klicken"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Pointer focus"
+msgstr "Zeigeraktivierung"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Sloppy focus"
+msgstr "Schludrige Aktivierung"
+
+#: src/bin/e_int_config_focus.c:152
+msgid "New Window Focus"
+msgstr "Neue Fensteraktivierung"
+
+#: src/bin/e_int_config_focus.c:154
+msgid "No new windows get focus"
+msgstr "Neue Fenster werden nicht aktiviert"
+
+#: src/bin/e_int_config_focus.c:156
+msgid "All new windows get focus"
+msgstr "Alle neuen Fenster werden aktiviert"
+
+#: src/bin/e_int_config_focus.c:158
+msgid "Only new dialogs get focus"
+msgstr "Nur neue Dialoge werden aktiviert"
+
+#: src/bin/e_int_config_focus.c:160
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "Nur neue Dialoge werden aktiviert wenn das Hauptfenster aktiviert ist"
+
+#: src/bin/e_int_config_focus.c:164
+msgid "Other Settings"
+msgstr "Andere Einstellungen"
+
+#: src/bin/e_int_config_focus.c:165
+msgid "Always pass on caught click events to programs"
+msgstr "Immer versteckte Klicks an Programme weiterleiten"
+
+#: src/bin/e_int_config_focus.c:167
+msgid "A click on a window always raises it"
+msgstr "Ein Klick in ein Fenster hebt es immer ab"
+
+#: src/bin/e_int_config_focus.c:169
+msgid "A click in a window always focuses it"
+msgstr "Ein Klick in ein Fenster aktiviert es immer"
+
 #: src/bin/e_init.c:110
 msgid "Disable this splash screen in the future?"
 msgstr "Diesen Bildschirm in Zukunft nicht mehr anzeigen?"
@@ -751,6 +836,14 @@ msgstr "Weit"
 msgid "Fast (1 sec)"
 msgstr "Oft (1 sek)"
 
+#: src/bin/e_int_menus.c:608
+msgid "Configuration Panel"
+msgstr "Konfigurations Konsole"
+
+#: src/bin/e_int_menus.c:612 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Aktivierungs Einstellungen"
+
 #: src/bin/e_int_menus.c:57
 msgid "Favorite Applications"
 msgstr "Bevorzugte Anwendungen"
@@ -967,10 +1060,6 @@ msgstr "Neue Zeile mit Arbeitsflächen"
 #: src/modules/temperature/e_mod_main.c:474
 msgid "Normal (10 sec)"
 msgstr "Normal (10 sek)"
-
-#: src/bin/e_error.c:188 src/bin/e_error.c:197
-msgid "OK"
-msgstr "OK"
 
 #: src/modules/ibar/e_mod_main.c:804
 msgid "Options"
