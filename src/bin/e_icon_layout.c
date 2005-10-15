@@ -84,10 +84,7 @@ e_icon_layout_thaw(Evas_Object *obj)
      return -1;
          
    sd->frozen--;
-   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);
-   
-   printf("virtual size is: %d %d\n", sd->vw, sd->vh);
-   
+   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);     
    
    return sd->frozen;
 }
@@ -342,9 +339,7 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
    x = sd->x + sd->xs;
    y = sd->y + sd->ys;
    w = sd->vw;
-   h = sd->vh;
-   
-   printf("reconfigure: w = %d\n", w);
+   h = sd->vh;   
    
    for (l = sd->items; l; l = l->next)
     {
