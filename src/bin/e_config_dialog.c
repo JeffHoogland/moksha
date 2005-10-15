@@ -17,7 +17,7 @@ static void _e_config_dialog_cb_basic(void *data, void *data2);
 /* externally accessible functions */
 
 E_Config_Dialog *
-e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *view, void *data)
+e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
    
@@ -25,6 +25,11 @@ e_config_dialog_new(E_Container *con, char *title, E_Config_Dialog_View *view, v
    cfd->view = *view;
    cfd->con = con;
    cfd->title = strdup(title);
+   if (icon)
+     {
+	cfd->icon = strdup(icon);
+	cfd->icon_size = icon_size;
+     }
    cfd->data = data;
    
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
@@ -38,6 +43,7 @@ static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
    E_FREE(cfd->title);
+   E_FREE(cfd->icon);
    if (cfd->cfdata)
      {
 	cfd->view.free_cfdata(cfd, cfd->cfdata);
@@ -64,7 +70,8 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    cfd->dia->data = cfd;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
-
+   if (cfd->icon) e_dialog_icon_set(cfd->dia, cfd->icon, cfd->icon_size);
+   
    if (!cfd->cfdata) cfd->cfdata = cfd->view.create_cfdata(cfd);
    
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
