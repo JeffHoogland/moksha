@@ -6650,3 +6650,125 @@ break;
 #endif
 #undef HDL
 
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_NAME_SHOW_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-name-show-set", 1, "Set whether to show eapps' name field in menus", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->menu_eap_name_show = val;
+   E_CONFIG_LIMIT(e_config->menu_eap_name_show, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_NAME_SHOW_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-name-show-get", 0, "Get whether eapps' name field is shown in menus", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->menu_eap_name_show, E_IPC_OP_MENU_EAP_NAME_SHOW_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_NAME_SHOW_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_GENERIC_SHOW_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-generic-show-set", 1, "Set whether to show eapps' generic field in menus", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->menu_eap_generic_show = val;
+   E_CONFIG_LIMIT(e_config->menu_eap_generic_show, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_GENERIC_SHOW_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-generic-show-get", 0, "Get whether eapps' generic field is shown in menus", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->menu_eap_generic_show, E_IPC_OP_MENU_EAP_GENERIC_SHOW_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_GENERIC_SHOW_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_COMMENT_SHOW_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-comment-show-set", 1, "Set whether to show eapps' comment field in menus", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->menu_eap_comment_show = val;
+   E_CONFIG_LIMIT(e_config->menu_eap_comment_show, 0, 1);
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_COMMENT_SHOW_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-menu-eap-comment-show-get", 0, "Get whether eapps' comment field is shown in menus", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->menu_eap_comment_show, E_IPC_OP_MENU_EAP_COMMENT_SHOW_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_MENU_EAP_COMMENT_SHOW_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL);
+   printf("REPLY: %d\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/

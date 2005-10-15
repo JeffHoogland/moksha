@@ -50,7 +50,7 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
  * defaults for e to work - started at 100 when we introduced this config
  * versioning feature
  */
-#define E_CONFIG_FILE_VERSION 126
+#define E_CONFIG_FILE_VERSION 127
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -182,6 +182,9 @@ struct _E_Config
 	int    iconify;
    } transient;
    int         modal_windows;
+   int         menu_eap_name_show;
+   int         menu_eap_generic_show;
+   int         menu_eap_comment_show;
 };
 
 struct _E_Config_Module

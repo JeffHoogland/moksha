@@ -426,8 +426,22 @@ _e_int_menus_apps_scan(E_Menu *m)
 	     
              if (e_app_valid_exe_get(a) || (!a->exe))
 	       {
+		  int opt = 0;
+		  char label[4096];
+		  
 		  mi = e_menu_item_new(m);
-		  e_menu_item_label_set(mi, a->name);
+		  if (e_config->menu_eap_name_show && a->name) opt |= 0x4;
+		  if (e_config->menu_eap_generic_show && a->generic) opt |= 0x2;
+		  if (e_config->menu_eap_comment_show && a->comment) opt |= 0x1;
+		  if      (opt == 0x7) snprintf(label, sizeof(label), "%s (%s) [%s]", a->name, a->generic, a->comment);
+		  else if (opt == 0x6) snprintf(label, sizeof(label), "%s (%s)", a->name, a->generic);
+		  else if (opt == 0x5) snprintf(label, sizeof(label), "%s [%s]", a->name, a->comment);
+		  else if (opt == 0x4) snprintf(label, sizeof(label), "%s", a->name);
+		  else if (opt == 0x3) snprintf(label, sizeof(label), "%s [%s]", a->generic, a->comment);
+		  else if (opt == 0x2) snprintf(label, sizeof(label), "%s", a->generic);
+		  else if (opt == 0x1) snprintf(label, sizeof(label), "%s", a->comment);
+		  else snprintf(label, sizeof(label), "%s", a->name);
+		  e_menu_item_label_set(mi, label);
 		  if (a->exe)
 		    {
 		       e_menu_item_icon_edje_set(mi, a->path, "icon");

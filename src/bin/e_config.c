@@ -356,7 +356,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, transient.desktop, INT); /**/
    E_CONFIG_VAL(D, T, transient.iconify, INT); /**/
    E_CONFIG_VAL(D, T, modal_windows, INT); /**/
-
+   E_CONFIG_VAL(D, T, menu_eap_name_show, INT); /**/
+   E_CONFIG_VAL(D, T, menu_eap_generic_show, INT); /**/
+   E_CONFIG_VAL(D, T, menu_eap_comment_show, INT); /**/
+   
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -481,6 +484,9 @@ e_config_init(void)
 	e_config->transient.desktop = 1;
 	e_config->transient.iconify = 1;
 	e_config->modal_windows = 1;
+	e_config->menu_eap_name_show = 1;
+	e_config->menu_eap_generic_show = 1;
+	e_config->menu_eap_comment_show = 0;
 	
 	  {
 	     E_Config_Module *em;
@@ -1435,6 +1441,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->cursor_size, 0, 1024);
    E_CONFIG_LIMIT(e_config->menu_autoscroll_margin, 0, 50);
    E_CONFIG_LIMIT(e_config->menu_autoscroll_cursor_margin, 0, 50);
+   E_CONFIG_LIMIT(e_config->menu_eap_name_show, 0, 1);
+   E_CONFIG_LIMIT(e_config->menu_eap_generic_show, 0, 1);
+   E_CONFIG_LIMIT(e_config->menu_eap_comment_show, 0, 1);
    
    /* apply lang config - exception because config is loaded after intl setup */
    
