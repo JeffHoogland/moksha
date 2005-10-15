@@ -67,6 +67,7 @@ e_intl_init(void)
    ADD_LANG("da_DK.UTF-8");
    ADD_LANG("sk_SK.UTF-8");
    ADD_LANG("sv_SV.UTF-8");
+   ADD_LANG("nb_NO.UTF-8");
 
    if ((s = getenv("LC_MESSAGES"))) _e_intl_orig_lc_messages = strdup(s);
    if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
