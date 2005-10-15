@@ -82,7 +82,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view.basic.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win),
-				      _("Advanced Settings"), NULL,
+				      _("Advanced Settings"), "widget/new_dialog",
 				      _e_config_dialog_cb_advanced, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }
@@ -97,7 +97,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	     ob = cfd->view.advanced.create_widgets(cfd, e_win_evas_get(cfd->dia->win), cfd->cfdata);
 	     e_widget_list_object_append(o, ob, 1, 1, 0.0);
 	     ob = e_widget_button_add(e_win_evas_get(cfd->dia->win), 
-				      _("Basic Settings"), NULL,
+				      _("Basic Settings"), "widget/new_dialog",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
 	  }

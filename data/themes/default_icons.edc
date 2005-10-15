@@ -25,6 +25,8 @@ images {
 
    image: "e17_icon_configuration.png" LOSSY 90;
    image: "e17_icon_run.png" LOSSY 90;
+
+   image: "e17_icon_right_arrow.png" COMP;
 }
 
    group {
@@ -425,6 +427,23 @@ images {
 	       max:      64 64;
 	       image {
 		  normal: "e17_icon_fileman_folder.png";
+	       }
+	    }
+	 }
+      }
+   }
+   group {
+      name: "icons/widget/new_dialog";
+      parts {
+	 part {
+	    name:          "icon";
+	    mouse_events:  0;
+	    description {
+	       state:    "default" 0.0;
+	       aspect:   0.83333333333 0.83333333333;
+	       max:      10 12;
+	       image {
+		  normal: "e17_icon_right_arrow.png";
 	       }
 	    }
 	 }

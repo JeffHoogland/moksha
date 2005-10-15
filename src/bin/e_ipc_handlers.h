@@ -6395,7 +6395,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_DEFAULT_ENGINE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE, GL or XRENDER)", 0, HDL)
+   OP("-default-engine-set", 1, "Set the default rendering engine to OPT1 (SOFTWARE or XRENDER)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_INT_START(HDL)
    int value = 0;
@@ -6405,12 +6405,11 @@ break;
 	value = E_EVAS_ENGINE_GL_X11;
 	printf("GL engine is disabled as default engine.\n");
 	exit(-1);
-
      }
    else if (!strcmp(params[0], "XRENDER")) value = E_EVAS_ENGINE_XRENDER_X11;
    else
      {
-	printf("engine must be SOFTWARE, GL or XRENDER\n");
+	printf("engine must be SOFTWARE or XRENDER\n");
 	exit(-1);
      }
    REQ_INT_END(value, HDL);
@@ -6495,7 +6494,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_ENGINE_SET
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-engine-set", 2, "Set the rendering engine for OPT1 to OPT2 (SOFTWARE, GL or XRENDER)", 0, HDL)
+   OP("-engine-set", 2, "Set the rendering engine for OPT1 to OPT2 (SOFTWARE or XRENDER)", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_2INT_START(HDL)
    int context = 0, engine = 0;
@@ -6515,11 +6514,16 @@ break;
      }
    if (!strcmp(params[1], "DEFAULT")) engine = E_EVAS_ENGINE_DEFAULT;
    else if (!strcmp(params[1], "SOFTWARE")) engine = E_EVAS_ENGINE_SOFTWARE_X11;
-   else if (!strcmp(params[1], "GL")) engine = E_EVAS_ENGINE_GL_X11;
+   else if (!strcmp(params[1], "GL"))
+     {
+	engine = E_EVAS_ENGINE_GL_X11;
+	printf("GL engine is disabled as default engine.\n");
+	exit(-1);
+     }
    else if (!strcmp(params[1], "XRENDER")) engine = E_EVAS_ENGINE_XRENDER_X11;
    else
      {
-	 printf("engine must be DEFAULT, SOFTWARE, GL or XRENDER\n");
+	 printf("engine must be DEFAULT, SOFTWARE or XRENDER\n");
 	 exit(-1);
      }
    REQ_2INT_END(context, engine, HDL);
