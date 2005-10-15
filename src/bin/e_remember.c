@@ -65,14 +65,15 @@ void
 e_remember_unuse(E_Remember *rem)
 {
    rem->used_count--;
-   if ((rem->used_count <= 0) && (rem->delete_me))
+   if ((rem->used_count == 0) && (rem->delete_me))
      _e_remember_free(rem);
 }
 
 void
 e_remember_del(E_Remember *rem)
 {
-   if (rem->used_count > 0)
+   if (rem->delete_me) return;
+   if (rem->used_count != 0)
      {
 	rem->delete_me = 1;
 	return;
