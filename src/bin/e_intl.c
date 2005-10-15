@@ -6,8 +6,6 @@
 
 /* TODO List:
  * 
- * * load/save language in config so u can change language runtime via a gui and/or ipc
- * * add ipc to get/set/list languages, get language name, simplified language string, etc. (so a config tool can be written to display supported languages and be able to select from them)
  * * add more language names to the language name list list in e_intl_language_name_get()
  * * as we get translations add languages to the simplified lang list (C and en are currently the same, ja is a test translation - incomplete)
  */
@@ -19,12 +17,21 @@ static char *_e_intl_orig_lang = NULL;
 static char *_e_intl_language = NULL;
 static Evas_List *_e_intl_languages = NULL;
 
+static char *_e_intl_orig_gtk_im_module_file = NULL;
+static char *_e_intl_orig_xmodifiers = NULL;
+static char *_e_intl_orig_qt_im_module = NULL; 
+static char *_e_intl_orig_gtk_im_module = NULL;
+static char *_e_intl_input_method = NULL;
+static Evas_List *_e_intl_input_methods = NULL;
+
 #define ADD_LANG(lang) _e_intl_languages = evas_list_append(_e_intl_languages, lang)
+#define ADD_IM(method) _e_intl_input_methods = evas_list_append(_e_intl_input_methods, method)
 
 int
 e_intl_init(void)
 {
    char *s;
+   E_Language_Pack *elp;
    
    if (_e_intl_languages) return 1;
 
@@ -73,9 +80,38 @@ e_intl_init(void)
    if ((s = getenv("LANGUAGE"))) _e_intl_orig_language = strdup(s);
    if ((s = getenv("LC_ALL"))) _e_intl_orig_lc_all = strdup(s);
    if ((s = getenv("LANG"))) _e_intl_orig_lang = strdup(s);
+
+   if ((s = getenv("GTK_IM_MODULE"))) _e_intl_orig_gtk_im_module = strdup(s);
+   if ((s = getenv("QT_IM_MODULE"))) _e_intl_orig_qt_im_module = strdup(s);
+   if ((s = getenv("XMODIFIERS"))) _e_intl_orig_xmodifiers = strdup(s);
+   if ((s = getenv("GTK_IM_MODULE_FILE"))) _e_intl_orig_gtk_im_module_file = strdup(s);
    
-   /* FIXME: NULL == use LANG. make this read a config value if it exists */
+   
+   /* Exception: NULL == use LANG. this will get setup in e_config */
    e_intl_language_set(NULL);
+
+   elp = malloc(sizeof(E_Language_Pack));
+   elp->version = 1;
+   elp->e_im_name = strdup("scim");
+   elp->gtk_im_module = strdup("scim");
+   elp->qt_im_module = strdup("scim");
+   elp->xmodifiers = strdup("@im=SCIM");
+   elp->e_im_exec = strdup("scim");
+   elp->gtk_im_module_file = NULL;
+
+   ADD_IM(elp);
+
+   elp = malloc(sizeof(E_Language_Pack));
+   elp->version = 1;
+   elp->e_im_name = strdup("uim");
+   elp->gtk_im_module = strdup("uim");
+   elp->qt_im_module = strdup("uim");
+   elp->xmodifiers = strdup("@im=uim");
+   elp->gtk_im_module_file = NULL;
+   elp->e_im_exec = strdup("uim-xim");
+
+   ADD_IM(elp);
+   
    return 1;
 }
 
@@ -172,3 +208,71 @@ e_intl_language_list(void)
    /* FIXME: hunt dirs for locales */
    return _e_intl_languages;
 }
+
+void
+e_intl_input_method_set(const char *method)
+{
+   E_Language_Pack *elp;
+   Evas_List *next;
+
+   if (_e_intl_input_method) free(_e_intl_input_method);
+
+   if (!method)
+     {
+	e_util_env_set("GTK_IM_MODULE", _e_intl_orig_gtk_im_module);
+        e_util_env_set("QT_IM_MODULE", _e_intl_orig_qt_im_module);
+        e_util_env_set("XMODIFIERS", _e_intl_orig_xmodifiers);
+        e_util_env_set("GTK_IM_MODULE_FILE", _e_intl_orig_gtk_im_module_file);	 	
+     }	
+   
+   if (method) 
+     {   
+	_e_intl_input_method = strdup(method);   
+	for (next = _e_intl_input_methods; next; next = next->next)     
+	  {	
+	     elp = next->data;	
+	     if (!strcmp(elp->e_im_name, _e_intl_input_method)) 	  
+	       {	     
+	          e_util_env_set("GTK_IM_MODULE", elp->gtk_im_module);
+	          e_util_env_set("QT_IM_MODULE", elp->qt_im_module);
+	          e_util_env_set("XMODIFIERS", elp->xmodifiers);
+	          e_util_env_set("GTK_IM_MODULE_FILE", elp->gtk_im_module_file);
+		  if (elp->e_im_exec != NULL) 
+		    {
+		       /* FIXME: first check ok exec availability */
+		       ecore_exe_run(elp->e_im_exec, NULL);
+		    }
+		  break; 
+	       }	
+	  }     
+     }   
+   else
+     {
+	_e_intl_input_method = NULL;
+     }   
+}
+
+const char *
+e_intl_input_method_get(void)
+{
+   return _e_intl_input_method;   
+}
+
+const Evas_List *
+e_intl_input_method_list(void)
+{
+   Evas_List *im_list;
+   Evas_List *next;
+   E_Language_Pack *elp;
+
+   im_list = NULL;
+   
+   for (next = _e_intl_input_methods; next; next = next->next)
+     {
+	elp = next->data;
+	im_list = evas_list_append(im_list, elp->e_im_name);
+     }
+
+   return im_list;
+}
+ 

@@ -172,6 +172,7 @@ struct _E_Config
    int         cursor_size;
    int         menu_autoscroll_margin;
    int         menu_autoscroll_cursor_margin;
+   char	      *input_method;
    struct {
 	int    move;
 	int    resize;

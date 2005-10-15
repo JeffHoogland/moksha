@@ -359,6 +359,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_eap_name_show, INT); /**/
    E_CONFIG_VAL(D, T, menu_eap_generic_show, INT); /**/
    E_CONFIG_VAL(D, T, menu_eap_comment_show, INT); /**/
+   E_CONFIG_VAL(D, T, input_method, STR); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -487,6 +488,7 @@ e_config_init(void)
 	e_config->menu_eap_name_show = 1;
 	e_config->menu_eap_generic_show = 1;
 	e_config->menu_eap_comment_show = 0;
+	e_config->input_method = NULL;
 	
 	  {
 	     E_Config_Module *em;
@@ -1449,6 +1451,9 @@ e_config_init(void)
    
    if ((e_config->language) && (strlen(e_config->language) > 0))
      e_intl_language_set(e_config->language);
+   
+   if ((e_config->input_method) && (strlen(e_config->input_method) > 0))
+     e_intl_input_method_set(e_config->input_method);
    
    return 1;
 }
