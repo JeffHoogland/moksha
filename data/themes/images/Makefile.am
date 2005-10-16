@@ -370,5 +370,6 @@ e17_button_detail_view.png \
 e17_button_detail_open.png \
 e17_frame_label_over.png \
 e17_frame_label_under.png \
-e17_frame_outline.png
+e17_frame_outline.png \
+e17_icon_right_arrow.png
 
