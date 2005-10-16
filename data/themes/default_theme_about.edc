@@ -1,6 +1,6 @@
 images {
-   image: "e17_button2.png" COMP;
-   image: "e17_button.png" COMP;
+   image: "e17_button_sm.png" COMP;
+   image: "e17_button_sm2.png" COMP;
    image: "e17_logo.png" COMP;
    image: "e17_about_sky0.png" LOSSY 70;
    image: "e17_about_sky1.png" LOSSY 70;
@@ -262,7 +262,7 @@ group {
 	       offset:   -7    -7;
 	    }
 	    image {
-	       normal: "e17_button.png";
+	       normal: "e17_button_sm.png";
 	       border: 8 8 8 8;
 	    }
 	 }
@@ -270,7 +270,7 @@ group {
 	    state:    "clicked" 0.0;
 	    inherit:  "default" 0.0;
 	    image {
-	       normal: "e17_button2.png";
+	       normal: "e17_button_sm2.png";
 	    }
 	 }
       }
