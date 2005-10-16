@@ -1333,20 +1333,25 @@ _e_fm_file_icon_mime_get(E_Fileman_File *file)
 	char *ext;
 
 	ext = strrchr(file->attr->name, '.');
+			
 	if (ext)
 	  {
-	     if (!strcasecmp(ext, ".pdf"))
-	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/pdf");
-	     else if (!strcasecmp(ext, ".c"))
-	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/c");
-	     else if (!strcasecmp(ext, ".h"))
-	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/h");
-	     else if (!strcasecmp(ext, ".jpg"))
-	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/jpg");
-	     else if (!strcasecmp(ext, ".png"))
-	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/png");
-	     else
+	     char part[PATH_MAX];
+	     char *ext2;
+	     
+	     ext = strdup(ext);
+	     ext2 = ext;
+	     for(;*ext2;ext2++)
+	       *ext2 = (unsigned char)tolower((unsigned char)*ext2);
+	     	     	     
+	     snprintf(part, PATH_MAX, "fileman/icons/%s", (ext + 1));
+	     
+	     printf("searching for %s (%s)\n", part, ext);
+	     
+	     if(!e_theme_edje_object_set(icon_img, "base/theme/fileman", part))
 	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/file");
+	     
+	     free(ext);
 	  }
 	else
 	  e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/file");
