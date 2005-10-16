@@ -1299,11 +1299,11 @@ _e_fm_file_delete(E_Fileman_File *file)
 
 	fileman = file->data;
 	dia = e_dialog_new(fileman->con);
-	e_dialog_button_add(dia, "Ok", NULL, _e_fm_file_delete_no_cb, file);
+	e_dialog_button_add(dia, _("Ok"), NULL, _e_fm_file_delete_no_cb, file);
 	e_dialog_button_focus_num(dia, 1);
-	e_dialog_title_set(dia, "Error");
+	e_dialog_title_set(dia, _("Error"));
 	text = E_NEW(char, PATH_MAX + 256);
-	snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b> ?", file->attr->name);
+	snprintf(text, PATH_MAX + 256, _("Could not delete  <br><b>%s</b> ?"), file->attr->name);
 	e_dialog_text_set(dia, text);
 
 	e_dialog_show(dia);
@@ -1549,12 +1549,12 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 
    file = data;
    dia = e_dialog_new(file->sd->win->container);
-   e_dialog_button_add(dia, "Yes", NULL, _e_fm_file_delete_yes_cb, file);
-   e_dialog_button_add(dia, "No", NULL, _e_fm_file_delete_no_cb, file);
+   e_dialog_button_add(dia, _("Yes"), NULL, _e_fm_file_delete_yes_cb, file);
+   e_dialog_button_add(dia, _("No"), NULL, _e_fm_file_delete_no_cb, file);
    e_dialog_button_focus_num(dia, 1);
-   e_dialog_title_set(dia, "Confirm");
+   e_dialog_title_set(dia, _("Confirm"));
    text = E_NEW(char, PATH_MAX + 256);
-   snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", file->attr->name);
+   snprintf(text, PATH_MAX + 256, _(" Are you sure you want to delete <br><b>%s</b> ?"), file->attr->name);
    e_dialog_text_set(dia, text);
    e_dialog_show(dia);
 }
@@ -1641,16 +1641,16 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    snprintf(permissions, 128, "%s", "");
     
    dia = e_dialog_new(file->sd->win->container);
-   e_dialog_title_set(dia, "Properties");   		   
+   e_dialog_title_set(dia, _("Properties"));   		   
    e = e_win_evas_get(dia->win);   
    
    ol = e_widget_list_add(e, 0, 0);
    
    hb = e_widget_list_add(e, 1, 1);
    
-   o = e_widget_frametable_add(e, "General", 0);
+   o = e_widget_frametable_add(e, _("General"), 0);
    
-   snprintf(text, 512, "File:");
+   snprintf(text, 512, _("File:"));
    e_widget_frametable_object_append(o, e_widget_label_add(e, text),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
@@ -1659,7 +1659,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 				    1, 0, 1, 1,
 				    1, 1, 1, 1);
    
-   snprintf(text, 512, "Size:");
+   snprintf(text, 512, _("Size:"));
    e_widget_frametable_object_append(o, e_widget_label_add(e, text),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
@@ -1668,7 +1668,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 				    1, 1, 1, 1,
 				    1, 1, 1, 1);
    
-   snprintf(text, 512, "Type:");
+   snprintf(text, 512, _("Type:"));
    e_widget_frametable_object_append(o, e_widget_label_add(e, text),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
@@ -1677,57 +1677,57 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 				    1, 2, 1, 1,
 				    1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_check_add(e, "Protect this file", &dummy_val),
+   e_widget_frametable_object_append(o, e_widget_check_add(e, _("Protect this file"), &dummy_val),
 			    0, 3, 2, 1,
 			    1, 1, 1, 1);
    
    rg = e_widget_radio_group_new(&dummy_val);
    
-   e_widget_frametable_object_append(o, e_widget_radio_add(e, "Let others see this file", 0, rg),
+   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others see this file"), 0, rg),
 				     0, 4, 2, 1,
 				     1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_radio_add(e, "Let others modify this file", 0, rg),
+   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others modify this file"), 0, rg),
 				     0, 5, 2, 1,
 				     1, 1, 1, 1);   
    
 /* Use those in advanced dialog.
    
-   snprintf(text, 512, "Owner:");
+   snprintf(text, 512, _("Owner:"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", username);
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
-   snprintf(text, 512, "Group:");
+   snprintf(text, 512, _("Group:"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", groupname);
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
-   snprintf(text, 512, "Type:");
+   snprintf(text, 512, _("Type:"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    switch(_e_fm_file_type(file))
     {
      case E_FILEMAN_FILETYPE_DIRECTORY:
-       snprintf(text, 512, "Directory");
+       snprintf(text, 512, _("Directory"));
        break;
      case E_FILEMAN_FILETYPE_FILE:
-       snprintf(text, 512, "File");
+       snprintf(text, 512, _("File"));
        break;
      case E_FILEMAN_FILETYPE_SYMLINK:
-       snprintf(text, 512, "Symlink");
+       snprintf(text, 512, _("Symlink"));
        break;
      default:
-       snprintf(text, 512, "Unknown");
+       snprintf(text, 512, _("Unknown"));
        break;
     }       
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
-   snprintf(text, 512, "Last Access:");
+   snprintf(text, 512, _("Last Access:"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", lastaccess);
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
-   snprintf(text, 512, "Last Modification");
+   snprintf(text, 512, _("Last Modification"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    snprintf(text, 512, "%s", lastmod);
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
@@ -1738,22 +1738,22 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    
 /*   use those in the advanced dialog
    
-   o = e_widget_framelist_add(e, "Permissions", 0);
+   o = e_widget_framelist_add(e, _("Permissions"), 0);
    
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "User:"));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, _("User:")));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Read"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Write"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Execute"), &dummy_val));
 								     
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "Group:"));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_label_add(e, _("Group:")));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Read"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Write"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Execute"), &dummy_val));
    
-   e_widget_framelist_object_append(o, e_widget_label_add(e, "World:"));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Read", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Write", &dummy_val));
-   e_widget_framelist_object_append(o, e_widget_check_add(e, "Execute", &dummy_val));   
+   e_widget_framelist_object_append(o, e_widget_label_add(e, _("World:")));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Read"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Write"), &dummy_val));
+   e_widget_framelist_object_append(o, e_widget_check_add(e, _("Execute"), &dummy_val));   
 
    e_widget_list_object_append(hb, o, 0, 0, 0.0);
   
@@ -1761,7 +1761,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
  
    e_widget_list_object_append(ol, hb, 1, 0, 0.0);
    
-   o = e_widget_button_add(e, "Advanced", "enlightenment/configuration", NULL, NULL, NULL);
+   o = e_widget_button_add(e, _("Advanced"), "enlightenment/configuration", NULL, NULL, NULL);
    e_widget_list_object_append(ol, o, 0, 0, 1.0);
    
    
@@ -1769,9 +1769,9 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    
    e_dialog_content_set(dia, ol, w, h);
         
-   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
-   //e_dialog_button_add(dia, "Apply", "enlightenment/reset", NULL, NULL);
-   e_dialog_button_add(dia, "Cancel", "enlightenment/exit", NULL, NULL);
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   //e_dialog_button_add(dia, _("Apply"), "enlightenment/reset", NULL, NULL);
+   e_dialog_button_add(dia, _("Cancel"), "enlightenment/exit", NULL, NULL);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 
@@ -1957,7 +1957,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	 sd->menu = mn;
 
 	 mi = e_menu_item_new(mn);
-	 e_menu_item_label_set(mi, "Arrange Icons");
+	 e_menu_item_label_set(mi, _("Arrange Icons"));
 	 e_menu_item_icon_edje_set(mi,
 				   (char *)e_theme_edje_file_get("base/theme/fileman",
 								 "fileman/button/arrange"),
@@ -1967,7 +1967,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	 e_menu_item_submenu_set(mi, mn);
 
 	 mi = e_menu_item_new(mn);
-	 e_menu_item_label_set(mi, "By Name");
+	 e_menu_item_label_set(mi, _("By Name"));
 	 e_menu_item_radio_set(mi, 1);
 	 e_menu_item_radio_group_set(mi, 2);
 	 if (sd->arrange == E_FILEMAN_CANVAS_ARRANGE_NAME) e_menu_item_toggle_set(mi, 1);
@@ -1978,7 +1978,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   "fileman/button/arrange_name");
 
 	 mi = e_menu_item_new(mn);
-	 e_menu_item_label_set(mi, "By Mod Time");
+	 e_menu_item_label_set(mi, _("By Mod Time"));
 	 e_menu_item_radio_set(mi, 1);
 	 e_menu_item_radio_group_set(mi, 2);
 	 if (sd->arrange == E_FILEMAN_CANVAS_ARRANGE_MODTIME) e_menu_item_toggle_set(mi, 1);
@@ -1989,7 +1989,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   "fileman/button/arrange_time");
 
 	 mi = e_menu_item_new(sd->menu);
-	 e_menu_item_label_set(mi, "View");
+	 e_menu_item_label_set(mi, _("View"));
 	 e_menu_item_icon_edje_set(mi,
 				   (char *)e_theme_edje_file_get("base/theme/fileman",
 								 "fileman/button/view"),
@@ -1999,7 +1999,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	 e_menu_item_submenu_set(mi, mn);
 
 	 mi = e_menu_item_new(mn);
-	 e_menu_item_label_set(mi, "Name Only");
+	 e_menu_item_label_set(mi, _("Name Only"));
 	 e_menu_item_radio_set(mi, 1);
 	 e_menu_item_radio_group_set(mi, 2);
 	 e_menu_item_icon_edje_set(mi,
@@ -2008,7 +2008,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   "fileman/button/view_name");
 
 	 mi = e_menu_item_new(mn);
-	 e_menu_item_label_set(mi, "Details");
+	 e_menu_item_label_set(mi, _("Details"));
 	 e_menu_item_radio_set(mi, 1);
 	 e_menu_item_radio_group_set(mi, 2);
 	 e_menu_item_icon_edje_set(mi,
@@ -2017,7 +2017,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   "fileman/button/view_details");
 
 	 mi = e_menu_item_new(sd->menu);
-	 e_menu_item_label_set(mi, "Refresh");
+	 e_menu_item_label_set(mi, _("Refresh"));
 	 e_menu_item_callback_set(mi, _e_fm_menu_refresh_cb, sd);
 	 e_menu_item_icon_edje_set(mi,
 				   (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2025,7 +2025,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				   "fileman/button/refresh");
 
 	 mi = e_menu_item_new(sd->menu);
-	 e_menu_item_label_set(mi, "Properties");
+	 e_menu_item_label_set(mi, _("Properties"));
 	 e_menu_item_icon_edje_set(mi,
 				   (char *)e_theme_edje_file_get("base/theme/fileman",
 								 "fileman/button/properties"),
@@ -2145,7 +2145,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	
 	mn = e_menu_new();
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Open");
+	e_menu_item_label_set(mi, _("Open"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_open, file);	
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2156,7 +2156,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	e_menu_item_separator_set(mi, 1);
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Copy");
+	e_menu_item_label_set(mi, _("Copy"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_copy, file);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2164,7 +2164,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 				  "fileman/button/copy");
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Cut");
+	e_menu_item_label_set(mi, _("Cut"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_cut, file);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2175,7 +2175,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	e_menu_item_separator_set(mi, 1);
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Rename");
+	e_menu_item_label_set(mi, _("Rename"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_rename, file);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2183,7 +2183,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 				  "fileman/button/rename");
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Delete");
+	e_menu_item_label_set(mi, _("Delete"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_delete, file);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2194,7 +2194,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	e_menu_item_separator_set(mi, 1);
 
 	mi = e_menu_item_new(mn);
-	e_menu_item_label_set(mi, "Properties");
+	e_menu_item_label_set(mi, _("Properties"));
 	e_menu_item_callback_set(mi, _e_fm_file_menu_properties, file);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
