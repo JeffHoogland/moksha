@@ -45,6 +45,18 @@ e_int_config_focus(E_Container *con)
 }
 
 /**--CREATE--**/
+static void
+_fill_data(CFData *cfdata)
+{
+   cfdata->focus_policy = e_config->focus_policy;
+   cfdata->focus_setting = e_config->focus_setting;
+   cfdata->pass_click_on = e_config->pass_click_on;
+   cfdata->always_click_to_raise = e_config->always_click_to_raise;
+   cfdata->always_click_to_focus = e_config->always_click_to_focus;
+
+   cfdata->mode = cfdata->focus_policy;
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
@@ -55,14 +67,7 @@ _create_data(E_Config_Dialog *cfd)
    CFData *cfdata;
    
    cfdata = E_NEW(CFData, 1);
-   cfdata->focus_policy = e_config->focus_policy;
-   cfdata->focus_setting = e_config->focus_setting;
-   cfdata->pass_click_on = e_config->pass_click_on;
-   cfdata->always_click_to_raise = e_config->always_click_to_raise;
-   cfdata->always_click_to_focus = e_config->always_click_to_focus;
-
-   cfdata->mode = cfdata->focus_policy;
-   
+   _fill_data(cfdata);
    return cfdata;
 }
 
@@ -131,6 +136,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
    
+   _fill_data(cfdata);
+   
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Click Window to Focus"), E_FOCUS_CLICK, rg);
@@ -148,6 +155,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
    E_Radio_Group *rg;
+   
+   _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    

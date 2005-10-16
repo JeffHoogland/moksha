@@ -371,5 +371,9 @@ e17_button_detail_open.png \
 e17_frame_label_over.png \
 e17_frame_label_under.png \
 e17_frame_outline.png \
-e17_icon_right_arrow.png
-
+e17_icon_right_arrow.png \
+e17_button_sm.png \
+e17_button_sm2.png \
+e17_button_sm_disabled.png \
+e17_menu_check0.png \
+e17_menu_radio0.png

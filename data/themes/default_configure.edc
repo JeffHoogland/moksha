@@ -1,7 +1,5 @@
 images {
    image: "e17_menu_bg_border.png" COMP;
-   image: "e17_button2.png" COMP;
-   image: "e17_button.png" COMP;
    image: "e17_dialog_watermark.png" COMP;
    image: "e17_ibar_bg_v.png" COMP;
    image: "e17_about_over_v.png" COMP;

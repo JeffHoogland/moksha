@@ -21,6 +21,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_do(Evas_Object *obj);
 static void _e_wid_activate_hook(Evas_Object *obj);
+static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 /* local subsystem functions */
@@ -48,6 +49,7 @@ e_widget_radio_add(Evas *evas, char *label, int valnum, E_Radio_Group *group)
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    e_widget_activate_hook_set(obj, _e_wid_activate_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->group = group;
    wd->valnum = valnum;
@@ -149,6 +151,18 @@ _e_wid_activate_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    _e_wid_do(obj);
    edje_object_signal_emit(wd->o_radio, "toggle_on", "");
+}
+
+static void
+_e_wid_disable_hook(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   if (e_widget_disabled_get(obj))
+     edje_object_signal_emit(wd->o_radio, "disabled", "");
+   else
+     edje_object_signal_emit(wd->o_radio, "enabled", "");
 }
 
 static void

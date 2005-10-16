@@ -11,6 +11,7 @@ static void _e_config_dialog_cb_ok(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_apply(void *data, E_Dialog *dia);
 static void _e_config_dialog_cb_advanced(void *data, void *data2);
 static void _e_config_dialog_cb_basic(void *data, void *data2);
+static void _e_config_dialog_cb_changed(void *data, Evas_Object *obj);
 
 /* local subsystem globals */
 
@@ -106,11 +107,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      }
    
    e_widget_min_size_get(o, &mw, &mh);
+   e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
    
    e_dialog_button_add(cfd->dia, _("OK"), NULL, _e_config_dialog_cb_ok, cfd);
    e_dialog_button_add(cfd->dia, _("Apply"), NULL, _e_config_dialog_cb_apply, cfd);
    e_dialog_button_add(cfd->dia, _("Cancel"), NULL, NULL, NULL);
+   e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+   e_dialog_button_disable_num_set(cfd->dia, 1, 1);
    e_win_centered_set(cfd->dia->win, 1);
    e_dialog_show(cfd->dia);
    cfd->view_type = type;
@@ -157,6 +161,8 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
      cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
    else
      cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+   e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+   e_dialog_button_disable_num_set(cfd->dia, 1, 1);
 }
 
 static void
@@ -175,4 +181,14 @@ _e_config_dialog_cb_basic(void *data, void *data2)
    
    cfd = data;
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
+}
+
+static void
+_e_config_dialog_cb_changed(void *data, Evas_Object *obj)
+{
+   E_Config_Dialog *cfd;
+   
+   cfd = data;
+   e_dialog_button_disable_num_set(cfd->dia, 0, 0);
+   e_dialog_button_disable_num_set(cfd->dia, 1, 0);
 }

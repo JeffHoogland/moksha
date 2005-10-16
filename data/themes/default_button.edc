@@ -1,6 +1,7 @@
 images {
-   image: "e17_button2.png" COMP;
-   image: "e17_button.png" COMP;
+   image: "e17_button_sm.png" COMP;
+   image: "e17_button_sm2.png" COMP;
+   image: "e17_button_sm_disabled.png" COMP;
    image: "e17_titlebar_glint1.png" COMP;
    image: "e17_titlebar_glint2.png" COMP;
    image: "e17_titlebar_glint3.png" COMP;
@@ -18,7 +19,7 @@ group {
 	    state:    "default" 0.0;
 	    min:      56 16;
 	    image {
-	       normal: "e17_button.png";
+	       normal: "e17_button_sm.png";
 	       border: 8 8 8 8;
 	    }
 	 }
@@ -26,8 +27,36 @@ group {
 	    state:    "clicked" 0.0;
 	    inherit:  "default" 0.0;
 	    image {
-	       normal: "e17_button2.png";
+	       normal: "e17_button_sm2.png";
 	    }
+	 }
+	 description {
+	    state:    "disabled" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  0;
+	 }
+      }
+      part {
+	 name:          "button_image2";
+	 type:          IMAGE;
+	 mouse_events:  1;
+	 description {
+	    state:    "default" 0.0;
+	    visible:  0;
+	    rel1 {
+	       to: "button_image";
+	    }
+	    rel2 {
+	       to: "button_image";
+	    }
+	    image {
+	       normal: "e17_button_sm_disabled.png";
+	    }
+	 }
+	 description {
+	    state:    "disabled" 0.0;
+	    inherit:  "default" 0.0;
+	    visible:  1;
 	 }
       }
       part {
@@ -94,6 +123,12 @@ group {
 	       min:      1 1;
 	       align:    0.5 0.5;
 	    }
+	 }
+	 description {
+	    state:    "disabled" 0.0;
+	    inherit:  "default" 0.0;
+	    color:    0   0   0 128;
+	    color3: 255 255 255 64;
 	 }
       }
       part {
@@ -372,5 +407,23 @@ group {
 	 transition: ACCELERATE 0.5;
 	 target: "focus";
       }
+      program {
+	 name: "disable";
+	 signal: "disabled";
+	 source: "";
+         action: STATE_SET "disabled" 0.0;
+	 target: "button_image";
+	 target: "button_image2";
+	 target: "label"; 
+      }
+      program {
+	 name: "enable";
+	 signal: "enabled";
+	 source: "";
+         action: STATE_SET "default" 0.0;
+	 target: "button_image";
+	 target: "button_image2"; 
+	 target: "label"; 
+     }
    }
 }

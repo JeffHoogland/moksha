@@ -116,8 +116,6 @@ images
    image: "e17_button_detail_view.png" COMP;     
    image: "e17_fileman_rubberband.png" COMP;   
    image: "e17_menu_bg_border.png" COMP;
-   image: "e17_button2.png" COMP;
-   image: "e17_button.png" COMP;
    image: "e17_logo.png" COMP;   
 }
 

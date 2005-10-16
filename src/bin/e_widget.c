@@ -202,9 +202,7 @@ int
 e_widget_focus_jump(Evas_Object *obj, int forward)
 {
    API_ENTRY return 0;
-   if ((!e_widget_can_focus_get(obj)) ||
-       (e_widget_disabled_get(obj)))
-     return 0;
+   if (!e_widget_can_focus_get(obj)) return 0;
        
    /* if it has a focus func its an end-point widget like a button */
    if (sd->focus_func)
@@ -235,10 +233,10 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 	       {
 		  for (l = sd->subobjs; l; l = l->next)
 		    {
-		       if ((e_widget_can_focus_get(l->data)) &&
-			   (!e_widget_disabled_get(l->data)))
+		       if (e_widget_can_focus_get(l->data))
 			 {
-			    if (focus_next)
+			    if ((focus_next) &&
+				(!e_widget_disabled_get(l->data)))
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
@@ -262,10 +260,10 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 	       {
 		  for (l = evas_list_last(sd->subobjs); l; l = l->prev)
 		    {
-		       if ((e_widget_can_focus_get(l->data)) &&
-			   (!e_widget_disabled_get(l->data)))
+		       if (e_widget_can_focus_get(l->data))
 			 {
-			    if (focus_next)
+			    if ((focus_next) &&
+				(!e_widget_disabled_get(l->data)))
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
@@ -405,13 +403,31 @@ e_widget_change(Evas_Object *obj)
 {
    API_ENTRY return;
    if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
+   else e_widget_change(e_widget_parent_get(obj));
 }
 
 void
 e_widget_disabled_set(Evas_Object *obj, int disabled)
 {
    API_ENTRY return;
+   if (((sd->disabled) && (disabled)) ||
+       ((!sd->disabled) && (!disabled))) return;
    sd->disabled = disabled;
+   if (sd->focused)
+     {
+	Evas_Object *o, *parent;
+
+	printf("disable focused %p!\n", obj);
+	parent = obj;
+        for (;;)
+          {
+	     o = e_widget_parent_get(parent);
+	     if (!o) break;
+	     parent = o;
+	  }
+	printf("jump %p\n", parent);
+	e_widget_focus_jump(parent, 1);
+     }
    if (sd->disable_func) sd->disable_func(obj);
 }
 
