@@ -1940,14 +1940,28 @@ _e_config_free(void)
 	     E_FREE(epd->dir);
 	     E_FREE(epd);
 	  }
-
+	while (e_config->remembers)
+	  {
+	     E_Remember *rem;
+	     rem = e_config->remembers->data;
+	     e_config->remembers = evas_list_remove_list(e_config->remembers, e_config->remembers);
+	     
+	     E_FREE(rem->name);
+	     E_FREE(rem->class);
+	     E_FREE(rem->title);		   
+	     E_FREE(rem->role);
+	     E_FREE(rem->prop.border);
+	     E_FREE(rem->prop.command);
+	     
+	     E_FREE(rem);
+	  }
 	E_FREE(e_config->desktop_default_background);
 	E_FREE(e_config->desktop_default_name);
 	E_FREE(e_config->language);
 	E_FREE(e_config->transition_start);
 	E_FREE(e_config->transition_desk);
 	E_FREE(e_config->transition_change);
-	/* FIXME: free e_config->remembers */
+	E_FREE(e_config->input_method);
 	E_FREE(e_config);
      }
 }
