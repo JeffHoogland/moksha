@@ -108,12 +108,12 @@ group {
 	    rel1 {
 	       to:       "label";
 	       relative: 0.0  0.0;
-	       offset:   -4   -4;
+	       offset:   -5   -4;
 	    }
 	    rel2 {
 	       to:       "label";
 	       relative: 1.0  1.0;
-	       offset:   5    3;
+	       offset:   2    2;
 	    }
 	    image {
 	       normal: "e17_frame_label_over.png";
