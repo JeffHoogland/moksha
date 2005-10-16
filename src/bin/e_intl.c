@@ -222,7 +222,7 @@ e_intl_input_method_set(const char *method)
 	e_util_env_set("GTK_IM_MODULE", _e_intl_orig_gtk_im_module);
         e_util_env_set("QT_IM_MODULE", _e_intl_orig_qt_im_module);
         e_util_env_set("XMODIFIERS", _e_intl_orig_xmodifiers);
-        e_util_env_set("GTK_IM_MODULE_FILE", _e_intl_orig_gtk_im_module_file);	 	
+        e_util_env_set("GTk_IM_MODULE_FILE", _e_intl_orig_gtk_im_module_file);	 	
      }	
    
    if (method) 
@@ -236,7 +236,7 @@ e_intl_input_method_set(const char *method)
 	          e_util_env_set("GTK_IM_MODULE", elp->gtk_im_module);
 	          e_util_env_set("QT_IM_MODULE", elp->qt_im_module);
 	          e_util_env_set("XMODIFIERS", elp->xmodifiers);
-	          e_util_env_set("GTK_IM_MODULE_FILE", elp->gtk_im_module_file);
+	          e_util_env_set("GTk_IM_MODULE_FILE", elp->gtk_im_module_file);
 		  if (elp->e_im_exec != NULL) 
 		    {
 		       /* FIXME: first check ok exec availability */
@@ -258,7 +258,7 @@ e_intl_input_method_get(void)
    return _e_intl_input_method;   
 }
 
-const Evas_List *
+Evas_List *
 e_intl_input_method_list(void)
 {
    Evas_List *im_list;
@@ -270,7 +270,7 @@ e_intl_input_method_list(void)
    for (next = _e_intl_input_methods; next; next = next->next)
      {
 	elp = next->data;
-	im_list = evas_list_append(im_list, elp->e_im_name);
+	im_list = evas_list_append(im_list, strdup(elp->e_im_name));
      }
 
    return im_list;

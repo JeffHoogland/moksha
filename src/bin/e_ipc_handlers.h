@@ -5457,8 +5457,11 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    LIST_DATA();
-   ENCODE((Evas_List *)e_intl_input_method_list(), e_ipc_codec_str_list_enc);
+   Evas_List *iml;
+   iml = e_intl_input_method_list();
+   ENCODE(iml, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_IM_LIST_REPLY);
+   FREE_LIST(iml);
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif

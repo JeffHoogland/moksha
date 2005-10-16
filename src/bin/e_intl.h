@@ -35,7 +35,7 @@ EAPI const Evas_List	*e_intl_language_list(void);
 /* Setting & Getting Input Method */
 EAPI void                e_intl_input_method_set(const char *method);
 EAPI const char         *e_intl_input_method_get(void);
-EAPI const Evas_List    *e_intl_input_method_list(void);
+EAPI Evas_List		*e_intl_input_method_list(void);
     
 #endif
 #endif

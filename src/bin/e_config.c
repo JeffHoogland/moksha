@@ -488,7 +488,7 @@ e_config_init(void)
 	e_config->menu_eap_name_show = 1;
 	e_config->menu_eap_generic_show = 1;
 	e_config->menu_eap_comment_show = 0;
-	e_config->input_method = NULL;
+	e_config->input_method = NULL;	
 	
 	  {
 	     E_Config_Module *em;
