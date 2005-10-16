@@ -111,7 +111,7 @@ group {
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -9   -9;
+	       offset:   -8   -8;
 	       to:     "button_image";
 	    }
 	    color:    0   0   0 255;

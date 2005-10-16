@@ -403,7 +403,7 @@ e_widget_change(Evas_Object *obj)
 {
    API_ENTRY return;
    if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
-   else e_widget_change(e_widget_parent_get(obj));
+   e_widget_change(e_widget_parent_get(obj));
 }
 
 void
