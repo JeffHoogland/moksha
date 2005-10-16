@@ -1345,9 +1345,7 @@ _e_fm_file_icon_mime_get(E_Fileman_File *file)
 	       *ext2 = (unsigned char)tolower((unsigned char)*ext2);
 	     	     	     
 	     snprintf(part, PATH_MAX, "fileman/icons/%s", (ext + 1));
-	     
-	     printf("searching for %s (%s)\n", part, ext);
-	     
+	     	     
 	     if(!e_theme_edje_object_set(icon_img, "base/theme/fileman", part))
 	       e_theme_edje_object_set(icon_img, "base/theme/fileman", "fileman/icons/file");
 	     
