@@ -593,12 +593,13 @@ e_border_hide(E_Border *bd, int manage)
 	     if (e_config->focus_revert_on_hide_or_close)
 	       e_desk_last_focused_focus(bd->desk);
 	  }
-	if (manage)
+	if (manage == 1)
 	  {
 	     /* Make sure that this border isn't deleted */
 	     bd->await_hide_event++;
 	  }
-	ecore_x_window_hide(bd->client.win);
+	if (manage != 2)
+	  ecore_x_window_hide(bd->client.win);
      }
    
    visible = 0;
@@ -2822,9 +2823,11 @@ _e_border_cb_window_hide(void *data, int ev_type, void *ev)
      {
 	if (bd->await_hide_event > 0)
 	  bd->await_hide_event--;
-	/* Only hide the border if it is visible */
-	if (bd->visible)
-	  e_border_hide(bd, 1);
+	else
+	  {
+	     /* Only hide the border if it is visible */
+	     if (bd->visible) e_border_hide(bd, 1);
+	  }
      }
    else
      {

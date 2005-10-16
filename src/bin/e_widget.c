@@ -18,12 +18,16 @@ struct _E_Smart_Data
    void         (*del_func) (Evas_Object *obj);
    void         (*focus_func) (Evas_Object *obj);
    void         (*activate_func) (Evas_Object *obj);
+   void         (*disable_func) (Evas_Object *obj);
    void         (*on_focus_func) (void *data, Evas_Object *obj);
    void          *on_focus_data;
+   void         (*on_change_func) (void *data, Evas_Object *obj);
+   void          *on_change_data;
    void          *data;
    unsigned char  can_focus : 1;
    unsigned char  child_can_focus : 1;
    unsigned char  focused : 1;
+   unsigned char  disabled : 1;
 }; 
 
 /* local subsystem functions */
@@ -77,11 +81,26 @@ e_widget_activate_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
 }
 
 void
+e_widget_disable_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
+{
+   API_ENTRY return;
+   sd->disable_func = func;
+}
+
+void
 e_widget_on_focus_hook_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
 {
    API_ENTRY return;
    sd->on_focus_func = func;
    sd->on_focus_data = data;
+}
+
+void
+e_widget_on_change_hook_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
+{
+   API_ENTRY return;
+   sd->on_change_func = func;
+   sd->on_change_data = data;
 }
 
 void
@@ -183,7 +202,10 @@ int
 e_widget_focus_jump(Evas_Object *obj, int forward)
 {
    API_ENTRY return 0;
-   if (!e_widget_can_focus_get(obj)) return 0;
+   if ((!e_widget_can_focus_get(obj)) ||
+       (e_widget_disabled_get(obj)))
+     return 0;
+       
    /* if it has a focus func its an end-point widget like a button */
    if (sd->focus_func)
      {
@@ -213,7 +235,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 	       {
 		  for (l = sd->subobjs; l; l = l->next)
 		    {
-		       if (e_widget_can_focus_get(l->data))
+		       if ((e_widget_can_focus_get(l->data)) &&
+			   (!e_widget_disabled_get(l->data)))
 			 {
 			    if (focus_next)
 			      {
@@ -239,7 +262,8 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 	       {
 		  for (l = evas_list_last(sd->subobjs); l; l = l->prev)
 		    {
-		       if (e_widget_can_focus_get(l->data))
+		       if ((e_widget_can_focus_get(l->data)) &&
+			   (!e_widget_disabled_get(l->data)))
 			 {
 			    if (focus_next)
 			      {
@@ -290,7 +314,8 @@ e_widget_focus_set(Evas_Object *obj, int first)
 	  {
 	     for (l = sd->subobjs; l; l = l->next)
 	       {
-		  if (e_widget_can_focus_get(l->data))
+		  if ((e_widget_can_focus_get(l->data)) &&
+		      (!e_widget_disabled_get(l->data)))
 		    {
 		       e_widget_focus_set(l->data, first);
 		       break;
@@ -301,7 +326,8 @@ e_widget_focus_set(Evas_Object *obj, int first)
 	  {
 	     for (l = evas_list_last(sd->subobjs); l; l = l->prev)
 	       {
-		  if (e_widget_can_focus_get(l->data))
+		  if ((e_widget_can_focus_get(l->data)) &&
+		      (!e_widget_disabled_get(l->data)))
 		    {
 		       e_widget_focus_set(l->data, first);
 		       break;
@@ -342,6 +368,7 @@ e_widget_focus_steal(Evas_Object *obj)
    Evas_Object *parent, *o;
    API_ENTRY return;
    if (sd->focused) return;
+   if (sd->disabled) return;
    parent = obj;
    for (;;)
      {
@@ -370,6 +397,29 @@ e_widget_activate(Evas_Object *obj)
 {
    API_ENTRY return;
    if (sd->activate_func) sd->activate_func(obj);
+   e_widget_change(obj);
+}
+
+void
+e_widget_change(Evas_Object *obj)
+{
+   API_ENTRY return;
+   if (sd->on_change_func) sd->on_change_func(sd->on_change_data, obj);
+}
+
+void
+e_widget_disabled_set(Evas_Object *obj, int disabled)
+{
+   API_ENTRY return;
+   sd->disabled = disabled;
+   if (sd->disable_func) sd->disable_func(obj);
+}
+
+int
+e_widget_disabled_get(Evas_Object *obj)
+{
+   API_ENTRY return 0;
+   return sd->disabled;
 }
 
 /* local subsystem functions */

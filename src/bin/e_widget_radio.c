@@ -155,6 +155,7 @@ static void
 _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    _e_wid_do(data);
+   e_widget_change(data);
 }
 
 static void

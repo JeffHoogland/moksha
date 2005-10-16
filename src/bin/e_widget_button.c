@@ -110,6 +110,7 @@ _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char
 {
    e_widget_focus_steal(data);
    _e_wid_activate_hook(data);
+   e_widget_change(data);
 }
 
 static void

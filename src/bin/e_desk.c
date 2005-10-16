@@ -232,7 +232,7 @@ e_desk_show(E_Desk *desk)
 		   */
 		  if (bd->fullscreen)
 		    bd->want_fullscreen = 1;
-		  e_border_hide(bd, 1);
+		  e_border_hide(bd, 2);
 	       }
 	  }
      }
