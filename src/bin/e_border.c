@@ -1243,7 +1243,8 @@ e_border_shade(E_Border *bd, E_Direction dir)
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->fullscreen) || (bd->maximized) || (bd->shading)) return;
-   if (!strcmp("borderless", bd->client.border.name)) return;
+   if ((bd->client.border.name) && 
+       (!strcmp("borderless", bd->client.border.name))) return;
    if (!bd->shaded)
      {
 //	printf("SHADE!\n");
@@ -4658,8 +4659,10 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_SHADE)
 	       {
-		  /* FIXME: determine shade dir */
-		  e_border_shade(bd, E_DIRECTION_UP);
+		  if (rem->prop.shaded >= 100)
+		    e_border_shade(bd, rem->prop.shaded - 100);
+		  else if (rem->prop.shaded >= 50)
+		    e_border_unshade(bd, rem->prop.shaded - 50);
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_LOCKS)
 	       {

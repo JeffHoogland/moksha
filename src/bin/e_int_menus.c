@@ -146,7 +146,7 @@ e_int_menus_main_new(void)
      }
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("File Manager"));
+   e_menu_item_label_set(mi, _("Files"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/fileman");
    e_menu_item_callback_set(mi, _e_int_menus_main_fm, NULL);   
       

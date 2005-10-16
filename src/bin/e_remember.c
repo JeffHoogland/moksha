@@ -205,7 +205,10 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    
    rem->prop.sticky = bd->sticky;
    
-   rem->prop.shaded = bd->shaded;
+   if (bd->shaded)
+     rem->prop.shaded = 100 + bd->shade.dir;
+   else
+     rem->prop.shaded = 50 + bd->shade.dir;
    
    rem->prop.skip_winlist = bd->user_skip_winlist;
    
