@@ -1,4 +1,4 @@
-# Swedish translation of Enlightenment.
+# Swedish translation of PACKAGE.
 # This file is put in the public domain.
 # Anders Trobäck <enlightenment@troback.com>, 2005.
 # , fuzzy
@@ -6,10 +6,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Enlightenment e17\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-13 09:59+0200\n"
-"PO-Revision-Date: 2005-10-13 14:19+0200\n"
+"POT-Creation-Date: 2005-10-17 09:15+0200\n"
+"PO-Revision-Date: 2005-10-17 10:32+0200\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr "Kontrollera mycket sällan (60 sek)"
 #: src/modules/temperature/e_mod_main.c:922 src/modules/clock/e_mod_main.c:328
 #: src/modules/cpufreq/e_mod_main.c:954 src/modules/start/e_mod_main.c:230
 #: src/modules/ibar/e_mod_main.c:647 src/modules/ibox/e_mod_main.c:454
-#: src/modules/pager/e_mod_main.c:621 src/bin/e_int_menus.c:775
+#: src/modules/pager/e_mod_main.c:621 src/bin/e_int_menus.c:800
 msgid "Edit Mode"
 msgstr "Redigeringsläge"
 
@@ -106,7 +106,7 @@ msgstr ""
 "Ditt batteri börjar ta slut. Du bör byta till nätdrift."
 
 #: src/modules/battery/e_mod_main.c:762 src/modules/cpufreq/e_mod_main.c:305
-#: src/modules/cpufreq/e_mod_main.c:333
+#: src/modules/cpufreq/e_mod_main.c:333 src/bin/e_fileman_smart.c:1302
 msgid "Ok"
 msgstr "Ok"
 
@@ -266,7 +266,7 @@ msgid "No Digital Display"
 msgstr "Ingen digital visning"
 
 #: src/modules/clock/e_mod_main.c:349 src/modules/pager/e_mod_main.c:458
-#: src/bin/e_border.c:6305
+#: src/bin/e_border.c:6311
 msgid "Normal"
 msgstr "Normal"
 
@@ -403,7 +403,7 @@ msgstr "Inställningar"
 
 #: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
 #: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
-#: src/bin/e_border.c:6192 src/bin/e_border.c:6205
+#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
 msgid "Size"
 msgstr "Storlek"
 
@@ -474,7 +474,8 @@ msgstr ""
 "Ikonen kan inte läggas till i IBar."
 
 #: src/modules/ibar/e_mod_main.c:1682 src/bin/e_error.c:196
-#: src/bin/e_error.c:205 src/bin/e_module.c:399
+#: src/bin/e_error.c:205 src/bin/e_module.c:399 src/bin/e_fileman_smart.c:1772
+#: src/bin/e_config_dialog.c:113
 msgid "OK"
 msgstr "OK"
 
@@ -576,12 +577,12 @@ msgstr ""
 "Återställer tidigare upplösning %dx%d om %d sekunder."
 
 #: src/modules/randr/e_mod_main.c:317 src/bin/e_actions.c:1200
-#: src/bin/e_module.c:539
+#: src/bin/e_module.c:539 src/bin/e_fileman_smart.c:1552
 msgid "Yes"
 msgstr "Ja"
 
 #: src/modules/randr/e_mod_main.c:318 src/bin/e_actions.c:1202
-#: src/bin/e_module.c:540
+#: src/bin/e_module.c:540 src/bin/e_fileman_smart.c:1553
 msgid "No"
 msgstr "Nej"
 
@@ -689,12 +690,12 @@ msgstr ""
 "Är du säker på att du vill avsluta?"
 
 #: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_utils.c:213
-#: src/bin/e_fileman_smart.c:2654 src/bin/e_fileman_smart.c:2676
+#: src/bin/e_fileman_smart.c:2638 src/bin/e_fileman_smart.c:2660
 msgid "Run Error"
 msgstr "Kör fel"
 
-#: src/bin/e_apps.c:357 src/bin/e_utils.c:214 src/bin/e_fileman_smart.c:2655
-#: src/bin/e_fileman_smart.c:2677
+#: src/bin/e_apps.c:357 src/bin/e_utils.c:214 src/bin/e_fileman_smart.c:2639
+#: src/bin/e_fileman_smart.c:2661
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -722,179 +723,179 @@ msgstr ""
 "\n"
 "Kommandot gick inte att hitta\n"
 
-#: src/bin/e_border.c:6191 src/bin/e_border.c:6204
+#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
 msgid "Position"
 msgstr "Position"
 
-#: src/bin/e_border.c:6193 src/bin/e_border.c:6206 src/bin/e_border.c:6409
+#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6415
 msgid "Stacking"
 msgstr "Stapla"
 
-#: src/bin/e_border.c:6194 src/bin/e_border.c:6207 src/bin/e_border.c:6345
+#: src/bin/e_border.c:6200 src/bin/e_border.c:6213 src/bin/e_border.c:6351
 msgid "Iconify"
 msgstr "Minimera"
 
-#: src/bin/e_border.c:6196 src/bin/e_border.c:6209 src/bin/e_border.c:6398
+#: src/bin/e_border.c:6202 src/bin/e_border.c:6215 src/bin/e_border.c:6404
 msgid "Sticky"
 msgstr "Klibbig"
 
-#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
+#: src/bin/e_border.c:6203 src/bin/e_border.c:6216
 msgid "Shade"
 msgstr "Skymma"
 
-#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
+#: src/bin/e_border.c:6204 src/bin/e_border.c:6217
 msgid "Maximize"
 msgstr "Maximera"
 
-#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6431
+#: src/bin/e_border.c:6205 src/bin/e_border.c:6218 src/bin/e_border.c:6437
 msgid "Fullscreen"
 msgstr "Helskärm"
 
-#: src/bin/e_border.c:6218
+#: src/bin/e_border.c:6224
 msgid "User"
 msgstr "Användare"
 
-#: src/bin/e_border.c:6226
+#: src/bin/e_border.c:6232
 msgid "Application"
 msgstr "Applikation"
 
-#: src/bin/e_border.c:6236
+#: src/bin/e_border.c:6242
 msgid "Border"
 msgstr "Ram"
 
-#: src/bin/e_border.c:6237 src/bin/e_border.c:6334
+#: src/bin/e_border.c:6243 src/bin/e_border.c:6340
 msgid "Close"
 msgstr "Stäng"
 
-#: src/bin/e_border.c:6240
+#: src/bin/e_border.c:6246
 msgid "Lifespan"
 msgstr "Livslängd"
 
-#: src/bin/e_border.c:6254
+#: src/bin/e_border.c:6260
 msgid "Remember This Window"
 msgstr "Komihåg detta fönster"
 
-#: src/bin/e_border.c:6261
+#: src/bin/e_border.c:6267
 msgid "Remember This Instance Only"
 msgstr "Komihåg endast denna instans"
 
-#: src/bin/e_border.c:6264
+#: src/bin/e_border.c:6270
 msgid "Match by Name"
 msgstr "Anpassa efter Namn"
 
-#: src/bin/e_border.c:6265
+#: src/bin/e_border.c:6271
 msgid "Match by Class"
 msgstr "Anpassa efter Klass"
 
-#: src/bin/e_border.c:6266
+#: src/bin/e_border.c:6272
 msgid "Match by Title"
 msgstr "Anpassa efter Titel"
 
-#: src/bin/e_border.c:6267
+#: src/bin/e_border.c:6273
 msgid "Match by Role"
 msgstr "Anpassa efter Roll"
 
-#: src/bin/e_border.c:6268
+#: src/bin/e_border.c:6274
 msgid "Match by Window Type"
 msgstr "Anpassa efter Fönstertyp"
 
-#: src/bin/e_border.c:6269
+#: src/bin/e_border.c:6275
 msgid "Match by Transient Status"
 msgstr "Anpassa efter Transient status"
 
-#: src/bin/e_border.c:6272
+#: src/bin/e_border.c:6278
 msgid "Remember Position"
 msgstr "Komihåg position"
 
-#: src/bin/e_border.c:6273
+#: src/bin/e_border.c:6279
 msgid "Remember Size"
 msgstr "Komihåg storlek"
 
-#: src/bin/e_border.c:6274
+#: src/bin/e_border.c:6280
 msgid "Remember Stacking"
 msgstr "Komihåg Stapellager"
 
-#: src/bin/e_border.c:6275
+#: src/bin/e_border.c:6281
 msgid "Remember Locks"
 msgstr "Komihåg Lås"
 
-#: src/bin/e_border.c:6276
+#: src/bin/e_border.c:6282
 msgid "Remember Border"
 msgstr "Komihåg Ram"
 
-#: src/bin/e_border.c:6277
+#: src/bin/e_border.c:6283
 msgid "Remember Stickiness"
 msgstr "Komihåg Klibba"
 
-#: src/bin/e_border.c:6278
+#: src/bin/e_border.c:6284
 msgid "Remember Desktop"
 msgstr "Komihåg Skrivbord"
 
-#: src/bin/e_border.c:6279
+#: src/bin/e_border.c:6285
 msgid "Remember Shaded State"
 msgstr "Komihåg Skymt läge"
 
-#: src/bin/e_border.c:6280
+#: src/bin/e_border.c:6286
 msgid "Remember Zone"
 msgstr "Komihåg Zon"
 
-#: src/bin/e_border.c:6281
+#: src/bin/e_border.c:6287
 msgid "Remember Skip Window List"
 msgstr "Komihåg Ignorera fönsterlist"
 
-#: src/bin/e_border.c:6295
+#: src/bin/e_border.c:6301
 msgid "Always On Top"
 msgstr "Alltid överst"
 
-#: src/bin/e_border.c:6315
+#: src/bin/e_border.c:6321
 msgid "Always Below"
 msgstr "Alltid underst"
 
-#: src/bin/e_border.c:6359
+#: src/bin/e_border.c:6365
 msgid "Kill"
 msgstr "Döda"
 
-#: src/bin/e_border.c:6372
+#: src/bin/e_border.c:6378
 msgid "Shaded"
 msgstr "Skymt"
 
-#: src/bin/e_border.c:6385
+#: src/bin/e_border.c:6391
 msgid "Maximized"
 msgstr "Maximerat"
 
-#: src/bin/e_border.c:6418
+#: src/bin/e_border.c:6424
 msgid "Borderless"
 msgstr "Ramlöst"
 
-#: src/bin/e_border.c:6445
+#: src/bin/e_border.c:6451
 msgid "Skip Window List"
 msgstr "Ignorera Fönsterlist"
 
-#: src/bin/e_border.c:6459
+#: src/bin/e_border.c:6465
 msgid "Locks"
 msgstr "Lås"
 
-#: src/bin/e_border.c:6466
+#: src/bin/e_border.c:6472
 msgid "Remember"
 msgstr "Komihåg"
 
-#: src/bin/e_border.c:6476
+#: src/bin/e_border.c:6482
 msgid "Send To"
 msgstr "Skicka till"
 
-#: src/bin/e_border.c:6494
+#: src/bin/e_border.c:6500
 msgid "Edit Icon"
 msgstr "Ändra ikon"
 
-#: src/bin/e_border.c:6521
+#: src/bin/e_border.c:6527
 msgid "Create Icon"
 msgstr "Skapa ikon"
 
-#: src/bin/e_border.c:6608
+#: src/bin/e_border.c:6614
 msgid "Icon Edit Error"
 msgstr "Fel vid ändrande av ikon"
 
-#: src/bin/e_border.c:6609
+#: src/bin/e_border.c:6615
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -906,7 +907,7 @@ msgstr ""
 "Installera e_util_eapp_edit\n"
 "eller kontrollera att den finns i din sökväg (PATH)\n"
 
-#: src/bin/e_config.c:368
+#: src/bin/e_config.c:372
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -923,7 +924,7 @@ msgstr ""
 "detta som ett fel. Du kan nu konfigurera allt som du vill ha det.\n"
 "Beklagar detta.\n"
 
-#: src/bin/e_config.c:382
+#: src/bin/e_config.c:386
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -939,7 +940,7 @@ msgstr ""
 "Detta är inte bra och som en säkerhetsåtgärd så har din\n"
 "konfiguration återställts till standard. Beklagar detta.\n"
 
-#: src/bin/e_config.c:1944
+#: src/bin/e_config.c:1972
 msgid "Configuration Upgraded"
 msgstr "Konfigurationen uppgraderad"
 
@@ -997,99 +998,103 @@ msgstr "X rapporterar att det inte finns något root fönster och %i skärmar!\n
 msgid "Disable this splash screen in the future?"
 msgstr "Visa inte denna startbild i framtiden?"
 
-#: src/bin/e_int_menus.c:82
+#: src/bin/e_int_menus.c:83
 msgid "Favorite Applications"
 msgstr "Favorit Program"
 
-#: src/bin/e_int_menus.c:92
+#: src/bin/e_int_menus.c:93
 msgid "Modules"
 msgstr "Moduler"
 
-#: src/bin/e_int_menus.c:99
+#: src/bin/e_int_menus.c:100
 msgid "Desktops"
 msgstr "Skrivbord"
 
-#: src/bin/e_int_menus.c:106
+#: src/bin/e_int_menus.c:107
 msgid "Windows"
 msgstr "Fönster"
 
-#: src/bin/e_int_menus.c:113
+#: src/bin/e_int_menus.c:114
 msgid "Lost Windows"
 msgstr "Förlorade fönster"
 
-#: src/bin/e_int_menus.c:120
+#: src/bin/e_int_menus.c:121
 msgid "Gadgets"
 msgstr "Tillbehör"
 
-#: src/bin/e_int_menus.c:127
+#: src/bin/e_int_menus.c:128
 msgid "Themes"
 msgstr "Teman"
 
-#: src/bin/e_int_menus.c:135 src/bin/e_about.c:41
+#: src/bin/e_int_menus.c:136 src/bin/e_about.c:41
 msgid "About Enlightenment"
 msgstr "Om Enlightenment"
 
-#: src/bin/e_int_menus.c:142
+#: src/bin/e_int_menus.c:143
 msgid "Run Command"
 msgstr "Kör kommando"
 
-#: src/bin/e_int_menus.c:148
-msgid "File Manager"
-msgstr "Filhanterare"
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "Filer"
 
-#: src/bin/e_int_menus.c:155 src/bin/e_module.c:472
+#: src/bin/e_int_menus.c:156 src/bin/e_module.c:472
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: src/bin/e_int_menus.c:163
+#: src/bin/e_int_menus.c:164
 msgid "Restart Enlightenment"
 msgstr "Starta om Enlightenment"
 
-#: src/bin/e_int_menus.c:168
+#: src/bin/e_int_menus.c:169
 msgid "Exit Enlightenment"
 msgstr "Avsluta·Enlightenment"
 
-#: src/bin/e_int_menus.c:451
+#: src/bin/e_int_menus.c:466
 msgid "(No Applications)"
 msgstr "(Inga program)"
 
-#: src/bin/e_int_menus.c:533
+#: src/bin/e_int_menus.c:548
 msgid "New Row of Desktops"
 msgstr "Ny skrivbords rad"
 
-#: src/bin/e_int_menus.c:537
+#: src/bin/e_int_menus.c:552
 msgid "Remove Row of Desktops"
 msgstr "Ta bort skrivbords rad"
 
-#: src/bin/e_int_menus.c:541
+#: src/bin/e_int_menus.c:556
 msgid "New Column of Desktops"
 msgstr "Ny skrivbords kolumn"
 
-#: src/bin/e_int_menus.c:545
+#: src/bin/e_int_menus.c:560
 msgid "Remove Column of Desktops"
 msgstr "Ta bort skrivbords kolumn"
 
-#: src/bin/e_int_menus.c:607
+#: src/bin/e_int_menus.c:622
 msgid "Configuration Panel"
 msgstr "Konfigurationspanel"
 
-#: src/bin/e_int_menus.c:665 src/bin/e_int_menus.c:943
+#: src/bin/e_int_menus.c:626 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Fokus inställningar"
+
+#: src/bin/e_int_menus.c:690 src/bin/e_int_menus.c:968
 msgid "(No Windows)"
 msgstr "(Inga fönster)"
 
-#: src/bin/e_int_menus.c:680 src/bin/e_int_menus.c:957
+#: src/bin/e_int_menus.c:705 src/bin/e_int_menus.c:982
 msgid "No name!!"
 msgstr "Inget namn!!!"
 
-#: src/bin/e_int_menus.c:696
+#: src/bin/e_int_menus.c:721
 msgid "Cleanup Windows"
 msgstr "Städa upp fönster"
 
-#: src/bin/e_int_menus.c:781
+#: src/bin/e_int_menus.c:806
 msgid "(Unused)"
 msgstr "(Används ej)"
 
-#: src/bin/e_int_menus.c:813 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:838 src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "Om detta tema"
 
@@ -1117,6 +1122,26 @@ msgid ""
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
 msgstr ""
+"Valmöjlighter:\n"
+"\t-display DISPLAY\n"
+"\t\tAnslut till bildskärmen med namn DISPLAY.\n"
+"\t\tEx: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tLägg till en falsk xinerama skärm (istället för de äkta)\n"
+"\t\tmed angiven geometri. Lägg till så många du vill. De kommer\n"
+"\t\talla att ersätta de äkta xinerama skärmarna, om det finns några.\n"
+"\t\tDetta kan användas för att simulera xinerama.\n"
+"\t\tEx: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tAnvänd konfigurationen CONF_PROFILE i stället för användarstandard "
+"eller bara \"default\".\n"
+"\t-good\n"
+"\t\tVar snäll.\n"
+"\t-evil\n"
+"\t\tVar elak.\n"
+"\t-psychotic\n"
+"\t\tVar psykotisk.\n"
 
 #: src/bin/e_main.c:259
 msgid ""
@@ -1438,4 +1463,190 @@ msgstr "<title>The Team</title>"
 #: src/bin/e_configure.c:38
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment Konfiguration"
+
+#: src/bin/e_fileman_smart.c:1304
+msgid "Error"
+msgstr "Fel"
+
+#: src/bin/e_fileman_smart.c:1306
+#, c-format
+msgid "Could not delete  <br><b>%s</b> ?"
+msgstr "Kunde inte ta bort  <br><br>%s</b> ?"
+
+#: src/bin/e_fileman_smart.c:1555
+msgid "Confirm"
+msgstr "Bekräffta"
+
+#: src/bin/e_fileman_smart.c:1557
+#, c-format
+msgid " Are you sure you want to delete <br><b>%s</b> ?"
+msgstr " Är du säker på att ta bort <br><b>%s</b> ?"
+
+#: src/bin/e_fileman_smart.c:1644 src/bin/e_fileman_smart.c:2028
+#: src/bin/e_fileman_smart.c:2197
+msgid "Properties"
+msgstr "Egenskaper"
+
+#: src/bin/e_fileman_smart.c:1651
+msgid "General"
+msgstr "Allmänt"
+
+#: src/bin/e_fileman_smart.c:1653
+#, c-format
+msgid "File:"
+msgstr "Fil:"
+
+#: src/bin/e_fileman_smart.c:1662
+#, c-format
+msgid "Size:"
+msgstr "Storlek:"
+
+#: src/bin/e_fileman_smart.c:1671
+#, c-format
+msgid "Type:"
+msgstr "Typ:"
+
+#: src/bin/e_fileman_smart.c:1680
+msgid "Protect this file"
+msgstr "Skydda denna fil"
+
+#: src/bin/e_fileman_smart.c:1686
+msgid "Let others see this file"
+msgstr "Låt andra se denna fil"
+
+#: src/bin/e_fileman_smart.c:1690
+msgid "Let others modify this file"
+msgstr "Låt andra ändra denna fil"
+
+#: src/bin/e_fileman_smart.c:1764
+msgid "Advanced"
+msgstr "Avancerat"
+
+#: src/bin/e_fileman_smart.c:1774 src/bin/e_config_dialog.c:115
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: src/bin/e_fileman_smart.c:1960
+msgid "Arrange Icons"
+msgstr "Ordna ikoner"
+
+#: src/bin/e_fileman_smart.c:1970
+msgid "By Name"
+msgstr "Efter namn"
+
+#: src/bin/e_fileman_smart.c:1981
+msgid "By Mod Time"
+msgstr "Efter mod tid"
+
+#: src/bin/e_fileman_smart.c:1992
+msgid "View"
+msgstr "visa"
+
+#: src/bin/e_fileman_smart.c:2002
+msgid "Name Only"
+msgstr "Endast namn"
+
+#: src/bin/e_fileman_smart.c:2011
+msgid "Details"
+msgstr "Detaljer"
+
+#: src/bin/e_fileman_smart.c:2020
+msgid "Refresh"
+msgstr "Uppdatera"
+
+#: src/bin/e_fileman_smart.c:2148
+msgid "Open"
+msgstr "Öppna"
+
+#: src/bin/e_fileman_smart.c:2159
+msgid "Copy"
+msgstr "Kopiera"
+
+#: src/bin/e_fileman_smart.c:2167
+msgid "Cut"
+msgstr "Klipp ut"
+
+#: src/bin/e_fileman_smart.c:2178
+msgid "Rename"
+msgstr "Byt namn"
+
+#: src/bin/e_fileman_smart.c:2186
+msgid "Delete"
+msgstr "Ta bort"
+
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "Avancerade inställningar"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "Grundinställningar"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "Verkställ"
+
+#: src/bin/e_int_config_focus.c:143
+msgid "Click Window to Focus"
+msgstr "Klicka på fönster för fokus"
+
+#: src/bin/e_int_config_focus.c:145
+msgid "Window under the Mouse"
+msgstr "Fönster under musen"
+
+#: src/bin/e_int_config_focus.c:147
+msgid "Most recent Window under the Mouse"
+msgstr "Senaste fönser under musen"
+
+#: src/bin/e_int_config_focus.c:163
+msgid "Focus"
+msgstr "Fokus"
+
+#: src/bin/e_int_config_focus.c:165
+msgid "Click to focus"
+msgstr "Klicka för fokus"
+
+#: src/bin/e_int_config_focus.c:167
+msgid "Pointer focus"
+msgstr "Pekar fokus"
+
+#: src/bin/e_int_config_focus.c:169
+msgid "Sloppy focus"
+msgstr "Slarvig fokus"
+
+#: src/bin/e_int_config_focus.c:173
+msgid "New Window Focus"
+msgstr "Ny fönster fokus"
+
+#: src/bin/e_int_config_focus.c:175
+msgid "No new windows get focus"
+msgstr "Ingen ny fönster fokus"
+
+#: src/bin/e_int_config_focus.c:177
+msgid "All new windows get focus"
+msgstr "Alla nya fönster får fokus"
+
+#: src/bin/e_int_config_focus.c:179
+msgid "Only new dialogs get focus"
+msgstr "Bara nya dialoger får fokus"
+
+#: src/bin/e_int_config_focus.c:181
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "Bara nya dialoger får fokus om moderfönstret har fokus"
+
+#: src/bin/e_int_config_focus.c:185
+msgid "Other Settings"
+msgstr "Andra inställnigar"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Always pass on caught click events to programs"
+msgstr "Skicka alltid vidare fångade klick till program"
+
+#: src/bin/e_int_config_focus.c:188
+msgid "A click on a window always raises it"
+msgstr "Ett klick på ett fönster höjer alltid det"
+
+#: src/bin/e_int_config_focus.c:190
+msgid "A click in a window always focuses it"
+msgstr "Ett klick på ett fönster ger alltid det fokus"
 
