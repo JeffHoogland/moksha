@@ -2551,6 +2551,12 @@ _e_border_free(E_Border *bd)
    if (bd->shade.anim) ecore_animator_del(bd->shade.anim);
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
+   if (bd->border_locks_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_locks_dialog));
+	bd->border_locks_dialog = NULL;
+     }
+   
    _e_border_menus_del(bd);
 
    if (focused == bd)
@@ -2644,6 +2650,12 @@ _e_border_del(E_Border *bd)
 
    if (bd->border_menu) e_menu_deactivate(bd->border_menu);
 
+   if (bd->border_locks_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_locks_dialog));
+	bd->border_locks_dialog = NULL;
+     }
+   
    _e_border_menus_del(bd);
    if (bd->raise_timer)
      {
@@ -2723,11 +2735,6 @@ _e_border_menus_del(E_Border *bd)
 {
    int was_menu = 0;
 
-   if (bd->border_locks_dialog)
-     {
-	e_object_del(E_OBJECT(bd->border_locks_dialog));
-	bd->border_locks_dialog = NULL;
-     }
    if (bd->border_remember_menu)
      {
 	e_object_del(E_OBJECT(bd->border_remember_menu));
@@ -6133,7 +6140,9 @@ static void
 _e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
+   
    bd = data;
+   if (bd->border_locks_dialog) return;
    e_int_border_locks(bd);
 }
 					  

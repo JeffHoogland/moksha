@@ -63,6 +63,7 @@ e_int_border_locks(E_Border *bd)
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(bd->zone->container, 
 			     _("Window Locks"), NULL, 0, &v, bd);
+   bd->border_locks_dialog = cfd;
 }
 
 /**--CREATE--**/
