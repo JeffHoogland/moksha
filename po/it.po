@@ -6,103 +6,107 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-13 13:11+0200\n"
-"PO-Revision-Date: 2005-10-13 13:16+0200\n"
+"POT-Creation-Date: 2005-10-16 14:26+0200\n"
+"PO-Revision-Date: 2005-10-16 14:51+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: src/bin/e_int_menus.c:82
+#: src/bin/e_int_menus.c:83
 msgid "Favorite Applications"
 msgstr "Applicazioni preferite"
 
-#: src/bin/e_int_menus.c:92
+#: src/bin/e_int_menus.c:93
 msgid "Modules"
 msgstr "Moduli"
 
-#: src/bin/e_int_menus.c:99
+#: src/bin/e_int_menus.c:100
 msgid "Desktops"
 msgstr "Desktop"
 
-#: src/bin/e_int_menus.c:106
+#: src/bin/e_int_menus.c:107
 msgid "Windows"
 msgstr "Lista finestre"
 
-#: src/bin/e_int_menus.c:113
+#: src/bin/e_int_menus.c:114
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
-#: src/bin/e_int_menus.c:120
+#: src/bin/e_int_menus.c:121
 msgid "Gadgets"
 msgstr "Gadget"
 
-#: src/bin/e_int_menus.c:127
+#: src/bin/e_int_menus.c:128
 msgid "Themes"
 msgstr "Temi"
 
-#: src/bin/e_int_menus.c:135 src/bin/e_about.c:41
+#: src/bin/e_int_menus.c:136 src/bin/e_about.c:41
 msgid "About Enlightenment"
 msgstr "Informazioni su Enlightenment"
 
-#: src/bin/e_int_menus.c:142
+#: src/bin/e_int_menus.c:143
 msgid "Run Command"
 msgstr "Esegui comando"
 
-#: src/bin/e_int_menus.c:148
-msgid "File Manager"
-msgstr "File Manager"
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "File"
 
-#: src/bin/e_int_menus.c:155 src/bin/e_module.c:472
+#: src/bin/e_int_menus.c:156 src/bin/e_module.c:472
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: src/bin/e_int_menus.c:163
+#: src/bin/e_int_menus.c:164
 msgid "Restart Enlightenment"
 msgstr "Riavvia Enlightement"
 
-#: src/bin/e_int_menus.c:168
+#: src/bin/e_int_menus.c:169
 msgid "Exit Enlightenment"
 msgstr "Esci da Enlightenment"
 
-#: src/bin/e_int_menus.c:451
+#: src/bin/e_int_menus.c:466
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:533
+#: src/bin/e_int_menus.c:548
 msgid "New Row of Desktops"
 msgstr "Nuova riga di desktop"
 
-#: src/bin/e_int_menus.c:537
+#: src/bin/e_int_menus.c:552
 msgid "Remove Row of Desktops"
 msgstr "Rimuovi riga di desktop"
 
-#: src/bin/e_int_menus.c:541
+#: src/bin/e_int_menus.c:556
 msgid "New Column of Desktops"
 msgstr "Nuova colonna di desktop"
 
-#: src/bin/e_int_menus.c:545
+#: src/bin/e_int_menus.c:560
 msgid "Remove Column of Desktops"
 msgstr "Rimuovi colonna di desktop"
 
-#: src/bin/e_int_menus.c:607
+#: src/bin/e_int_menus.c:622
 msgid "Configuration Panel"
 msgstr "Pannello di configurazione"
 
-#: src/bin/e_int_menus.c:665 src/bin/e_int_menus.c:943
+#: src/bin/e_int_menus.c:626 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Impostazioni del fuoco"
+
+#: src/bin/e_int_menus.c:690 src/bin/e_int_menus.c:968
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:680 src/bin/e_int_menus.c:957
+#: src/bin/e_int_menus.c:705 src/bin/e_int_menus.c:982
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:696
+#: src/bin/e_int_menus.c:721
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
-#: src/bin/e_int_menus.c:775 src/modules/ibar/e_mod_main.c:647
+#: src/bin/e_int_menus.c:800 src/modules/ibar/e_mod_main.c:647
 #: src/modules/ibox/e_mod_main.c:454 src/modules/cpufreq/e_mod_main.c:954
 #: src/modules/clock/e_mod_main.c:328 src/modules/pager/e_mod_main.c:621
 #: src/modules/start/e_mod_main.c:230 src/modules/temperature/e_mod_main.c:922
@@ -110,21 +114,21 @@ msgstr "Ordina Finestre"
 msgid "Edit Mode"
 msgstr "Modalità modifica"
 
-#: src/bin/e_int_menus.c:781
+#: src/bin/e_int_menus.c:806
 msgid "(Unused)"
 msgstr "(Inutilizzato)"
 
-#: src/bin/e_int_menus.c:813 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:838 src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2655
-#: src/bin/e_fileman_smart.c:2677 src/bin/e_utils.c:213
+#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2635
+#: src/bin/e_fileman_smart.c:2657 src/bin/e_utils.c:213
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2656
-#: src/bin/e_fileman_smart.c:2678 src/bin/e_utils.c:214
+#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2636
+#: src/bin/e_fileman_smart.c:2658 src/bin/e_utils.c:214
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -156,6 +160,213 @@ msgstr ""
 #: src/bin/e_configure.c:38
 msgid "Enlightenment Configuration"
 msgstr "Configurazione di Enlightenment"
+
+#: src/bin/e_int_config_focus.c:143
+msgid "Click Window to Focus"
+msgstr "Sulla finestra cliccata"
+
+#: src/bin/e_int_config_focus.c:145
+msgid "Window under the Mouse"
+msgstr "Sulla finestra sotto il mouse"
+
+#: src/bin/e_int_config_focus.c:147
+msgid "Most recent Window under the Mouse"
+msgstr "Sulla finestra più recente sotto il mouse"
+
+#: src/bin/e_int_config_focus.c:163
+msgid "Focus"
+msgstr "Fuoco"
+
+#: src/bin/e_int_config_focus.c:165
+msgid "Click to focus"
+msgstr "Il fuoco segue i click del mouse"
+
+#: src/bin/e_int_config_focus.c:167
+msgid "Pointer focus"
+msgstr "Il fuoco segue il puntatore"
+
+#: src/bin/e_int_config_focus.c:169
+msgid "Sloppy focus"
+msgstr "Il fuoco segue le finestre sotto il puntatore"
+
+#: src/bin/e_int_config_focus.c:173
+msgid "New Window Focus"
+msgstr "Fuoco delle finestre nuove"
+
+#: src/bin/e_int_config_focus.c:175
+msgid "No new windows get focus"
+msgstr "Nessuna finestra nuova prende il fuoco"
+
+#: src/bin/e_int_config_focus.c:177
+msgid "All new windows get focus"
+msgstr "Tutte le finestre nuove prendono il fuoco"
+
+#: src/bin/e_int_config_focus.c:179
+msgid "Only new dialogs get focus"
+msgstr "Solo le finestre di dialogo prendono il fuoco"
+
+#: src/bin/e_int_config_focus.c:181
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "Solo le finestre di dialogo prendono il fuoco se il genitore lo ha"
+
+#: src/bin/e_int_config_focus.c:185
+msgid "Other Settings"
+msgstr "Altre impostazioni"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Always pass on caught click events to programs"
+msgstr "Passa sempre gli eventi click ai programmi"
+
+#: src/bin/e_int_config_focus.c:188
+msgid "A click on a window always raises it"
+msgstr "Un click sulla finestra la pone sempre in primo piano"
+
+#: src/bin/e_int_config_focus.c:190
+msgid "A click in a window always focuses it"
+msgstr "Un click sulla finestra le dà sempre il fuoco"
+
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "Impostazioni avanzate"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "Impostazioni di base"
+
+#: src/bin/e_config_dialog.c:113 src/bin/e_fileman_smart.c:1769
+#: src/bin/e_module.c:399 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/modules/ibar/e_mod_main.c:1682
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "Applica"
+
+#: src/bin/e_config_dialog.c:115 src/bin/e_fileman_smart.c:1771
+msgid "Cancel"
+msgstr "Annulla"
+
+#: src/bin/e_fileman_smart.c:1302 src/modules/cpufreq/e_mod_main.c:305
+#: src/modules/cpufreq/e_mod_main.c:333 src/modules/battery/e_mod_main.c:762
+msgid "Ok"
+msgstr "Ok"
+
+#: src/bin/e_fileman_smart.c:1304
+msgid "Error"
+msgstr "Errore"
+
+#: src/bin/e_fileman_smart.c:1306
+#, c-format
+msgid "Could not delete  <br><b>%s</b> ?"
+msgstr "Impossibile cancellare  <br><b>%s</b> ?"
+
+#: src/bin/e_fileman_smart.c:1549 src/bin/e_module.c:539
+#: src/bin/e_actions.c:1200 src/modules/randr/e_mod_main.c:317
+msgid "Yes"
+msgstr "Sì"
+
+#: src/bin/e_fileman_smart.c:1550 src/bin/e_module.c:540
+#: src/bin/e_actions.c:1202 src/modules/randr/e_mod_main.c:318
+msgid "No"
+msgstr "No"
+
+#: src/bin/e_fileman_smart.c:1552
+msgid "Confirm"
+msgstr "Conferma"
+
+#: src/bin/e_fileman_smart.c:1554
+#, c-format
+msgid " Are you sure you want to delete <br><b>%s</b> ?"
+msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
+
+#: src/bin/e_fileman_smart.c:1641 src/bin/e_fileman_smart.c:2025
+#: src/bin/e_fileman_smart.c:2194
+msgid "Properties"
+msgstr "Proprietà"
+
+#: src/bin/e_fileman_smart.c:1648
+msgid "General"
+msgstr "Generale"
+
+#: src/bin/e_fileman_smart.c:1650
+#, c-format
+msgid "File:"
+msgstr "File:"
+
+#: src/bin/e_fileman_smart.c:1659
+#, c-format
+msgid "Size:"
+msgstr "Dimensione:"
+
+#: src/bin/e_fileman_smart.c:1668
+#, c-format
+msgid "Type:"
+msgstr "Tipo:"
+
+#: src/bin/e_fileman_smart.c:1677
+msgid "Protect this file"
+msgstr "Proteggi questo file"
+
+#: src/bin/e_fileman_smart.c:1683
+msgid "Let others see this file"
+msgstr "Consenti che gli altri vedano il file"
+
+#: src/bin/e_fileman_smart.c:1687
+msgid "Let others modify this file"
+msgstr "Consenti che gli altri modifichino il file"
+
+#: src/bin/e_fileman_smart.c:1761
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: src/bin/e_fileman_smart.c:1957
+msgid "Arrange Icons"
+msgstr "Ordina icone"
+
+#: src/bin/e_fileman_smart.c:1967
+msgid "By Name"
+msgstr "Per nome"
+
+#: src/bin/e_fileman_smart.c:1978
+msgid "By Mod Time"
+msgstr "Per data di modifica"
+
+#: src/bin/e_fileman_smart.c:1989
+msgid "View"
+msgstr "Vista"
+
+#: src/bin/e_fileman_smart.c:1999
+msgid "Name Only"
+msgstr "Solo nome"
+
+#: src/bin/e_fileman_smart.c:2008
+msgid "Details"
+msgstr "Dettagli"
+
+#: src/bin/e_fileman_smart.c:2017
+msgid "Refresh"
+msgstr "Aggiorna"
+
+#: src/bin/e_fileman_smart.c:2145
+msgid "Open"
+msgstr "Apri"
+
+#: src/bin/e_fileman_smart.c:2156
+msgid "Copy"
+msgstr "Copia"
+
+#: src/bin/e_fileman_smart.c:2164
+msgid "Cut"
+msgstr "Taglia"
+
+#: src/bin/e_fileman_smart.c:2175
+msgid "Rename"
+msgstr "Rinomina"
+
+#: src/bin/e_fileman_smart.c:2183
+msgid "Delete"
+msgstr "Cancella"
 
 #: src/bin/e_init.c:38
 #, c-format
@@ -502,11 +713,6 @@ msgstr "Modulo %s di Enlightenment"
 msgid "(No Loaded Modules)"
 msgstr "(Nessun Modulo Caricato)"
 
-#: src/bin/e_module.c:399 src/bin/e_error.c:196 src/bin/e_error.c:205
-#: src/modules/ibar/e_mod_main.c:1682
-msgid "OK"
-msgstr "OK"
-
 #: src/bin/e_module.c:457
 msgid "About..."
 msgstr "Informazioni su..."
@@ -518,16 +724,6 @@ msgstr "Abilitato"
 #: src/bin/e_module.c:534
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete scaricare questo modulo?<br>"
-
-#: src/bin/e_module.c:539 src/bin/e_actions.c:1200
-#: src/modules/randr/e_mod_main.c:317
-msgid "Yes"
-msgstr "Sì"
-
-#: src/bin/e_module.c:540 src/bin/e_actions.c:1202
-#: src/modules/randr/e_mod_main.c:318
-msgid "No"
-msgstr "No"
 
 #: src/bin/e_startup.c:68
 #, c-format
@@ -550,7 +746,7 @@ msgstr ""
 "Avete chiesto di uscire da Enlightenment.<br><br>Siete sicuri di voler "
 "uscire?"
 
-#: src/bin/e_config.c:368
+#: src/bin/e_config.c:372
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -572,7 +768,7 @@ msgstr ""
 "Adesso è possibile riconfigurare le cose a proprio piacimento.\n"
 "Ci scusiamo per il disagio.\n"
 
-#: src/bin/e_config.c:382
+#: src/bin/e_config.c:386
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -589,7 +785,7 @@ msgstr ""
 "stata ripristinata a scopo precauzionale ai valori predefiniti. Ci\n"
 "scusiamo per l'inconveniente.\n"
 
-#: src/bin/e_config.c:1944
+#: src/bin/e_config.c:1972
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -677,190 +873,190 @@ msgstr ""
 "Questo significa che Enlightenment non uscirà finche queste finestre\n"
 "non saranno chiuse o avranno il blocco Perpetua disabilitato.\n"
 
-#: src/bin/e_border.c:6191 src/bin/e_border.c:6204
+#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
 msgid "Position"
 msgstr "Posizione"
 
-#: src/bin/e_border.c:6192 src/bin/e_border.c:6205
+#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
 #: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
 #: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
 msgid "Size"
 msgstr "Dimensione"
 
-#: src/bin/e_border.c:6193 src/bin/e_border.c:6206 src/bin/e_border.c:6409
+#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6415
 msgid "Stacking"
 msgstr "Livello"
 
-#: src/bin/e_border.c:6194 src/bin/e_border.c:6207 src/bin/e_border.c:6345
+#: src/bin/e_border.c:6200 src/bin/e_border.c:6213 src/bin/e_border.c:6351
 msgid "Iconify"
 msgstr "Iconifica"
 
-#: src/bin/e_border.c:6196 src/bin/e_border.c:6209 src/bin/e_border.c:6398
+#: src/bin/e_border.c:6202 src/bin/e_border.c:6215 src/bin/e_border.c:6404
 msgid "Sticky"
 msgstr "Appiccicata"
 
-#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
+#: src/bin/e_border.c:6203 src/bin/e_border.c:6216
 msgid "Shade"
 msgstr "Arrotolata"
 
-#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
+#: src/bin/e_border.c:6204 src/bin/e_border.c:6217
 msgid "Maximize"
 msgstr "Massimizzata"
 
-#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6431
+#: src/bin/e_border.c:6205 src/bin/e_border.c:6218 src/bin/e_border.c:6437
 msgid "Fullscreen"
 msgstr "A tutto schermo"
 
-#: src/bin/e_border.c:6218
+#: src/bin/e_border.c:6224
 msgid "User"
 msgstr "Per utente"
 
-#: src/bin/e_border.c:6226
+#: src/bin/e_border.c:6232
 msgid "Application"
 msgstr "Per applicazione"
 
-#: src/bin/e_border.c:6236
+#: src/bin/e_border.c:6242
 msgid "Border"
 msgstr "Bordo"
 
-#: src/bin/e_border.c:6237 src/bin/e_border.c:6334
+#: src/bin/e_border.c:6243 src/bin/e_border.c:6340
 msgid "Close"
 msgstr "Chiudi"
 
-#: src/bin/e_border.c:6240
+#: src/bin/e_border.c:6246
 msgid "Lifespan"
 msgstr "Perpetua"
 
-#: src/bin/e_border.c:6254
+#: src/bin/e_border.c:6260
 msgid "Remember This Window"
 msgstr "Ricorda per questa finestra"
 
-#: src/bin/e_border.c:6261
+#: src/bin/e_border.c:6267
 msgid "Remember This Instance Only"
 msgstr "Ricorda solo per questa istanza"
 
-#: src/bin/e_border.c:6264
+#: src/bin/e_border.c:6270
 msgid "Match by Name"
 msgstr "Identifica per nome"
 
-#: src/bin/e_border.c:6265
+#: src/bin/e_border.c:6271
 msgid "Match by Class"
 msgstr "Identifica per classe"
 
-#: src/bin/e_border.c:6266
+#: src/bin/e_border.c:6272
 msgid "Match by Title"
 msgstr "Identifica per titolo"
 
-#: src/bin/e_border.c:6267
+#: src/bin/e_border.c:6273
 msgid "Match by Role"
 msgstr "Identifica per ruolo"
 
-#: src/bin/e_border.c:6268
+#: src/bin/e_border.c:6274
 msgid "Match by Window Type"
 msgstr "Identifica per tipo finestra"
 
-#: src/bin/e_border.c:6269
+#: src/bin/e_border.c:6275
 msgid "Match by Transient Status"
 msgstr "Identifica per stato transitorio"
 
-#: src/bin/e_border.c:6272
+#: src/bin/e_border.c:6278
 msgid "Remember Position"
 msgstr "Ricorda posizione"
 
-#: src/bin/e_border.c:6273
+#: src/bin/e_border.c:6279
 msgid "Remember Size"
 msgstr "Ricorda dimensione"
 
-#: src/bin/e_border.c:6274
+#: src/bin/e_border.c:6280
 msgid "Remember Stacking"
 msgstr "Ricorda livello"
 
-#: src/bin/e_border.c:6275
+#: src/bin/e_border.c:6281
 msgid "Remember Locks"
 msgstr "Ricorda blocchi"
 
-#: src/bin/e_border.c:6276
+#: src/bin/e_border.c:6282
 msgid "Remember Border"
 msgstr "Ricorda bordo"
 
-#: src/bin/e_border.c:6277
+#: src/bin/e_border.c:6283
 msgid "Remember Stickiness"
 msgstr "Ricorda stato appiccicata"
 
-#: src/bin/e_border.c:6278
+#: src/bin/e_border.c:6284
 msgid "Remember Desktop"
 msgstr "Ricorda desktop"
 
-#: src/bin/e_border.c:6279
+#: src/bin/e_border.c:6285
 msgid "Remember Shaded State"
 msgstr "Ricorda stato arrotolata"
 
-#: src/bin/e_border.c:6280
+#: src/bin/e_border.c:6286
 msgid "Remember Zone"
 msgstr "Ricorda zona"
 
-#: src/bin/e_border.c:6281
+#: src/bin/e_border.c:6287
 msgid "Remember Skip Window List"
 msgstr "Ricorda fuori lista finestre"
 
-#: src/bin/e_border.c:6295
+#: src/bin/e_border.c:6301
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_border.c:6305 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_border.c:6311 src/modules/clock/e_mod_main.c:349
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normale"
 
-#: src/bin/e_border.c:6315
+#: src/bin/e_border.c:6321
 msgid "Always Below"
 msgstr "Sempre sotto le altre"
 
-#: src/bin/e_border.c:6359
+#: src/bin/e_border.c:6365
 msgid "Kill"
 msgstr "Uccidi"
 
-#: src/bin/e_border.c:6372
+#: src/bin/e_border.c:6378
 msgid "Shaded"
 msgstr "Arrotolata"
 
-#: src/bin/e_border.c:6385
+#: src/bin/e_border.c:6391
 msgid "Maximized"
 msgstr "Massimizzata"
 
-#: src/bin/e_border.c:6418
+#: src/bin/e_border.c:6424
 msgid "Borderless"
 msgstr "Senza bordo"
 
-#: src/bin/e_border.c:6445
+#: src/bin/e_border.c:6451
 msgid "Skip Window List"
 msgstr "Fuori lista finestre"
 
-#: src/bin/e_border.c:6459
+#: src/bin/e_border.c:6465
 msgid "Locks"
 msgstr "Blocchi"
 
-#: src/bin/e_border.c:6466
+#: src/bin/e_border.c:6472
 msgid "Remember"
 msgstr "Ricorda"
 
-#: src/bin/e_border.c:6476
+#: src/bin/e_border.c:6482
 msgid "Send To"
 msgstr "Invia a"
 
-#: src/bin/e_border.c:6494
+#: src/bin/e_border.c:6500
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_border.c:6521
+#: src/bin/e_border.c:6527
 msgid "Create Icon"
 msgstr "Crea icona"
 
-#: src/bin/e_border.c:6608
+#: src/bin/e_border.c:6614
 msgid "Icon Edit Error"
 msgstr "Errore dell'editor di icone"
 
-#: src/bin/e_border.c:6609
+#: src/bin/e_border.c:6615
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -1037,11 +1233,6 @@ msgid ""
 msgstr ""
 "C'è stato un errore nell'impostazione del governor<br>della frequenza della "
 "cpu attraverso l'utilità <br>setfreq del modulo."
-
-#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
-#: src/modules/battery/e_mod_main.c:762
-msgid "Ok"
-msgstr "Ok"
 
 #: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
