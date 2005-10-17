@@ -351,9 +351,7 @@ struct _E_Border
    
    Evas_List *stick_desks;
    E_Menu *border_menu;
-   E_Menu *border_locks_menu;
-   E_Menu *border_locks_user_menu;
-   E_Menu *border_locks_application_menu;
+   E_Config_Dialog *border_locks_dialog;
    E_Menu *border_remember_menu;
    E_Menu *border_stacking_menu;
    Evas_List *pending_move_resize;

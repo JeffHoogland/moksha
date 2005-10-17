@@ -417,7 +417,6 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
      {
 	Evas_Object *o, *parent;
 
-	printf("disable focused %p!\n", obj);
 	parent = obj;
         for (;;)
           {
@@ -425,7 +424,6 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
 	     if (!o) break;
 	     parent = o;
 	  }
-	printf("jump %p\n", parent);
 	e_widget_focus_jump(parent, 1);
      }
    if (sd->disable_func) sd->disable_func(obj);

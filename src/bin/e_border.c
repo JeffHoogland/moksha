@@ -2723,23 +2723,10 @@ _e_border_menus_del(E_Border *bd)
 {
    int was_menu = 0;
 
-   if (bd->border_locks_menu)
+   if (bd->border_locks_dialog)
      {
-	e_object_del(E_OBJECT(bd->border_locks_menu));
-	bd->border_locks_menu = NULL;
-	was_menu = 1;
-     }
-   if (bd->border_locks_user_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_locks_user_menu));
-	bd->border_locks_user_menu = NULL;
-	was_menu = 1;
-     }
-   if (bd->border_locks_application_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_locks_application_menu));
-	bd->border_locks_application_menu = NULL;
-	was_menu = 1;
+	e_object_del(E_OBJECT(bd->border_locks_dialog));
+	bd->border_locks_dialog = NULL;
      }
    if (bd->border_remember_menu)
      {
@@ -5699,40 +5686,6 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
      }
 }
 
-#define NEW_LOCK_FN(var) \
-static void \
-_e_border_menu_cb_##var(void *data, E_Menu *m, E_Menu_Item *mi) \
-{ \
-   E_Border *bd; \
-   bd = data; \
-   bd->var = e_menu_item_toggle_get(mi); \
-   bd->changed = 1; \
-}
-
-NEW_LOCK_FN(lock_user_location)
-NEW_LOCK_FN(lock_client_location)
-NEW_LOCK_FN(lock_user_size)
-NEW_LOCK_FN(lock_client_size)
-NEW_LOCK_FN(lock_user_stacking)
-NEW_LOCK_FN(lock_client_stacking)
-NEW_LOCK_FN(lock_user_iconify)
-NEW_LOCK_FN(lock_client_iconify)
-NEW_LOCK_FN(lock_user_desk)
-NEW_LOCK_FN(lock_client_desk)
-NEW_LOCK_FN(lock_user_sticky)
-NEW_LOCK_FN(lock_client_sticky)
-NEW_LOCK_FN(lock_user_shade)
-NEW_LOCK_FN(lock_client_shade)
-NEW_LOCK_FN(lock_user_maximize)
-NEW_LOCK_FN(lock_client_maximize)
-NEW_LOCK_FN(lock_user_fullscreen)
-NEW_LOCK_FN(lock_client_fullscreen)
-NEW_LOCK_FN(lock_border)
-NEW_LOCK_FN(lock_close)
-/*NEW_LOCK_FN(lock_focus_in)*/
-/*NEW_LOCK_FN(lock_focus_out)*/
-NEW_LOCK_FN(lock_life)
-
 static void
 _e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -6177,73 +6130,20 @@ _e_border_menu_cb_remember_apply_run(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 					  
 static void
+_e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   e_int_border_locks(bd);
+}
+					  
+static void
 _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
 {
    E_Menu *m;
    E_Menu_Item *mi;
 
    if (bd->border_menu) return;
-
-   m = e_menu_new();
-   bd->border_locks_user_menu = m;
-
-#define NEW_LOCK_MI(txt, var) \
-   mi = e_menu_item_new(m); \
-   e_menu_item_label_set(mi, txt); \
-   e_menu_item_check_set(mi, 1); \
-   e_menu_item_toggle_set(mi, bd->var); \
-   e_menu_item_callback_set(mi, _e_border_menu_cb_##var, bd);
-
-   NEW_LOCK_MI(_("Position"), lock_user_location);
-   NEW_LOCK_MI(_("Size"), lock_user_size);
-   NEW_LOCK_MI(_("Stacking"), lock_user_stacking);
-   NEW_LOCK_MI(_("Iconify"), lock_user_iconify);
-/*   NEW_LOCK_MI(_("Virtual Desktop)"), lock_user_desk);*/
-   NEW_LOCK_MI(_("Sticky"), lock_user_sticky);
-   NEW_LOCK_MI(_("Shade"), lock_user_shade);
-   NEW_LOCK_MI(_("Maximize"), lock_user_maximize);
-   NEW_LOCK_MI(_("Fullscreen"), lock_user_fullscreen);
-
-   m = e_menu_new();
-   bd->border_locks_application_menu = m;
-
-   NEW_LOCK_MI(_("Position"), lock_client_location);
-   NEW_LOCK_MI(_("Size"), lock_client_size);
-   NEW_LOCK_MI(_("Stacking"), lock_client_stacking);
-   NEW_LOCK_MI(_("Iconify"), lock_client_iconify);
-/*   NEW_LOCK_MI(_("Virtual Desktop"), lock_client_desk);*/
-   NEW_LOCK_MI(_("Sticky"), lock_client_sticky);
-   NEW_LOCK_MI(_("Shade"), lock_client_shade);
-   NEW_LOCK_MI(_("Maximize"), lock_client_maximize);
-   NEW_LOCK_MI(_("Fullscreen"), lock_client_fullscreen);
-
-   m = e_menu_new();
-   bd->border_locks_menu = m;
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("User"));
-   e_menu_item_submenu_set(mi, bd->border_locks_user_menu);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/locks_user"),
-			     "widgets/border/default/locks_user");
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Application"));
-   e_menu_item_submenu_set(mi, bd->border_locks_application_menu);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/locks_application"),
-			     "widgets/border/default/locks_application");
-
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   NEW_LOCK_MI(_("Border"), lock_border);
-   NEW_LOCK_MI(_("Close"), lock_close);
-/*   NEW_LOCK_MI(_("Focus In"), lock_focus_in);*/
-/*   NEW_LOCK_MI(_("Focus Out"), lock_focus_out);*/
-   NEW_LOCK_MI(_("Lifespan"), lock_life);
 
    m = e_menu_new();
    bd->border_remember_menu = m;
@@ -6462,8 +6362,8 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Locks"));
-   e_menu_item_submenu_set(mi, bd->border_locks_menu);
+   e_menu_item_label_set(mi, _("Window Locks"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_locks, bd);
    e_menu_item_icon_edje_set(mi,
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/locks"),
