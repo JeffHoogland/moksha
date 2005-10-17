@@ -136,6 +136,7 @@ static void
 _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    /* Free the cfdata */
+   cfdata->border->border_locks_dialog = NULL;
    free(cfdata);
 }
 
