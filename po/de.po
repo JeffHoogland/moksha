@@ -34,6 +34,38 @@ msgstr "(Keine Anwendung)"
 msgid "(No Windows)"
 msgstr "(Keine Fenster)"
 
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
+msgid "Desktop Name"
+msgstr "Arbeitsflächenname"
+
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
+msgid "Enable Popup"
+msgstr "Arbeitsflächenname anzeigen"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
+msgid "Popup Speed"
+msgstr "Anzeigegeschwindigkeite Arbeitsflächenname"
+
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
+msgid "Fix Aspect (Keep Height)"
+msgstr "Feste Größe (Höhe behalten)"
+
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
+msgid "Fix Aspect (Keep Width)"
+msgstr "Feste Größe (Breite behalten)"
+
+#: src/modules/pager/e_mod_main.c:397
+msgid "None"
+msgstr "Nichts"
+
+#: src/modules/pager/e_mod_main.c:405
+msgid "Top"
+msgstr "Oben"
+
+#: src/modules/pager/e_mod_main.c:413
+msgid "Bottom"
+msgstr "Unten"
+
 #: src/bin/e_int_menus.c:520
 msgid "(Unused)"
 msgstr "(Unbenutzt)"
@@ -94,6 +126,10 @@ msgstr "50 Minuten"
 #: src/bin/e_int_menus.c:580
 msgid "Applications"
 msgstr "Anwendungen"
+
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "Dateien"
 
 #: src/modules/temperature/e_mod_main.c:568
 msgid "60C"
