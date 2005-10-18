@@ -6456,7 +6456,7 @@ break;
 /****************************************************************************/
 #define HDL E_IPC_OP_PROFILE_DEL
 #if (TYPE == E_REMOTE_OPTIONS)
-   OP("-profile-add", 1, "Delete profile named OPT1", 0, HDL)
+   OP("-profile-del", 1, "Delete profile named OPT1", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
    REQ_STRING(params[0], HDL);
 #elif (TYPE == E_WM_IN)
