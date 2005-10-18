@@ -77,3 +77,4 @@
 #include "e_int_config_focus.h"
 #include "e_icon_layout.h"
 #include "e_int_border_locks.h"
+#include "e_thumb.h"

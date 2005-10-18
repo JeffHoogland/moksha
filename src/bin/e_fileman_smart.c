@@ -10,15 +10,12 @@
 #include <grp.h>
 
 /* TODO:
- * - scrolling 
+ * - scrolling
  * 
  * - checking wether events belong to us (ecore events)
  *
  * - add ability to have icons on desktop (this works, but we need some fixes)
  *   files should go on ~/.e/e/desktop for example.
- *
- * - add eap support. load eaps and exec them on double click. this would
- *   allow us to embed E's control panel for example.
  *
  * - when we select multiple items, the right click menu on the icons needs
  *   to display some group related things and its actions need to work
@@ -199,8 +196,6 @@ struct _E_Fm_Smart_Data
    int visible_files;
    double position;
 
-   char *thumb_path;
-
    struct {
 	unsigned char start : 1;
 	int x, y;
@@ -293,11 +288,6 @@ static void                _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_
 static void                _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia);
 static void                _e_fm_file_delete_no_cb(void *data, E_Dialog *dia);
-static char               *_e_fm_file_thumb_path_get(char *file);
-static Evas_Bool           _e_fm_file_thumb_exists(char *file);
-static Evas_Bool           _e_fm_file_thumb_create(char *file);
-static Evas_Object        *_e_fm_file_thumb_get(E_Fm_File *file);
-static char               *_e_fm_file_id(char *file);
 static void                _e_fm_fake_mouse_up_cb(void *data);
 static void                _e_fm_fake_mouse_up_later(Evas *evas, int button);
 static void                _e_fm_fake_mouse_up_all_later(Evas *evas);
@@ -323,7 +313,7 @@ static int                 _e_fm_drop_drop_cb(void *data, int type, void *event)
 static int                 _e_fm_thumbnailer_exit(void *data, int type, void *event);
 
 static Ecore_Event_Handler *_e_fm_mouse_up_handler = NULL;
-static char *thumb_path;
+
 static double _e_fm_grab_time = 0;
 static Evas_Smart *e_fm_smart = NULL;
 
@@ -541,16 +531,8 @@ _e_fm_smart_add(Evas_Object *object)
    sd->icon_info.x_space = 15;
    sd->icon_info.y_space = 15;
 
-   homedir = e_user_homedir_get();
-   if (homedir)
-     {
-	thumb_path = E_NEW(char, PATH_MAX);
-	snprintf(thumb_path, PATH_MAX, "%s/.e/e/fileman/thumbnails", homedir);
-	if (!ecore_file_exists(thumb_path))
-	  ecore_file_mkpath(thumb_path);
-	free(homedir);
-     }
-
+   e_thumb_init();
+   
    sd->monitor = NULL;
    sd->file_offset = 0;
    sd->position = 0;
@@ -676,6 +658,8 @@ _e_fm_smart_del(Evas_Object *object)
 
    free(sd->dir);
    free(sd);
+   
+   e_thumb_shutdown();
 }
 
 static void
@@ -1383,15 +1367,20 @@ _e_fm_thumbnailer_exit(void *data, int type, void *event)
    Ecore_Event_Exe_Exit *ev;
    E_Fm_Smart_Data *sd;
    Evas_List *l;
-
+   char *fullname;
+   
    ev = event;
    sd = data;
 
+
+   D(("_e_fm_thumbnailer_exit: %s\n", "searching for thumbnail.."));
+   
    for (l = sd->pending_thumbs; l; l = l->next)
      {
 	E_Fm_Thumb_Pending *pthumb;
 	Evas_Object *thumb;
 
+	
 	pthumb = l->data;
 	if (pthumb->pid != ev->pid) continue;
 
@@ -1402,9 +1391,16 @@ _e_fm_thumbnailer_exit(void *data, int type, void *event)
 	     pthumb->file->icon_img = NULL;
 	  }
 
-	thumb = _e_fm_file_thumb_get(pthumb->file);
+	fullname = _e_fm_file_fullname(pthumb->file);
+	thumb = e_thumb_evas_object_get(fullname,
+					pthumb->file->sd->evas, 
+					pthumb->file->sd->icon_info.w, 
+					pthumb->file->sd->icon_info.h);
+	free(fullname);
+	
 	if (thumb)
 	  {
+	     D(("_e_fm_thumbnailer_exit: thumb found for%s\n",pthumb->file->attr->name));
 	     pthumb->file->icon_img = thumb;
 	     edje_object_part_swallow(pthumb->file->icon, "icon_swallow", pthumb->file->icon_img);
 	  }
@@ -1423,34 +1419,34 @@ _e_fm_file_thumb_generate_job(void *data)
    pid_t pid;
    E_Fm_File *file;
 
+   if (!data)
+     return;   
    file = data;
-   if (!file)
-     return;
 
    pthumb = E_NEW(E_Fm_Thumb_Pending, 1);
    pthumb->file = file;
 
    pid = fork();
-
+   
    if (pid == 0)
-     {
+    {
 	/* child */
 	char *fullname;
-
-	fullname = _e_fm_file_fullname(file);
+	
+	fullname = _e_fm_file_fullname(pthumb->file);
 	if (fullname)
-	  {
-	     if (!_e_fm_file_thumb_exists(fullname))
-	       _e_fm_file_thumb_create(fullname);
+	 {
+	     if (!e_thumb_exists(fullname))
+	       e_thumb_create(fullname, pthumb->file->sd->icon_info.w, pthumb->file->sd->icon_info.h);
 	     free(fullname);
 	  }
 	exit(0);
      }
    else if (pid > 0)
-     {
-	/* parent */
-	pthumb->pid = pid;
-	file->sd->pending_thumbs = evas_list_append(file->sd->pending_thumbs, pthumb);
+    {
+       /* parent */
+       pthumb->pid = pid;
+       pthumb->file->sd->pending_thumbs = evas_list_append(pthumb->file->sd->pending_thumbs, pthumb);
      }
 }
 
@@ -1469,12 +1465,12 @@ _e_fm_file_icon_get(E_Fm_File *file)
    if (fullname)
      {
 	Evas_Object *o = NULL;
-	if (_e_fm_file_thumb_exists(fullname))
-	  o = _e_fm_file_thumb_get(file);
+	if (e_thumb_exists(fullname))
+	  o = e_thumb_evas_object_get(fullname, file->sd->evas, file->sd->icon_info.w, file->sd->icon_info.h);
 	free(fullname);
 	if (o) return o;
      }
-
+   
    ecore_job_add(_e_fm_file_thumb_generate_job, file);
    return _e_fm_file_icon_mime_get(file);
 }
@@ -2658,138 +2654,6 @@ _e_fm_grabbed_mouse_up_cb(void *data, int type, void *event)
    return 0;
 }
 
-static char *
-_e_fm_file_thumb_path_get(char *file)
-{
-   char *id;
-   char thumb[PATH_MAX];
-   id = _e_fm_file_id(file);
-   snprintf(thumb, sizeof(thumb), "%s/%s", thumb_path, id);
-   free(id);
-   return strdup(thumb);
-}
-
-static Evas_Bool
-_e_fm_file_thumb_exists(char *file)
-{
-   char *thumb;
-   Evas_Bool ret;
-
-   thumb = _e_fm_file_thumb_path_get(file);
-   ret = ecore_file_exists(thumb);
-   free(thumb);
-
-   return ret;
-}
-
-static Evas_Bool
-_e_fm_file_thumb_create(char *file)
-{
-   Eet_File *ef;
-   char *thumbpath;
-   Evas_Object *im;
-   const int *data;
-   int size;
-   Ecore_Evas *buf;
-   Evas *evasbuf;
-
-   thumbpath = _e_fm_file_thumb_path_get(file);
-
-   ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
-   if (!ef)
-     {
-	free(thumbpath);
-       	return -1;
-     }
-   free(thumbpath);
-
-   // we need to remove the hardcode somehow.
-   //buf = ecore_evas_buffer_new(file->sd->icon_info.w,file->sd->icon_info.h);
-   buf = ecore_evas_buffer_new(48, 48);
-   evasbuf = ecore_evas_get(buf);
-   im = evas_object_image_add(evasbuf);
-   evas_object_image_file_set(im, file, NULL);
-   evas_object_image_fill_set(im, 0, 0, 48, 48);
-   evas_object_resize(im, 48, 48);
-   evas_object_show(im);
-   data = ecore_evas_buffer_pixels_get(buf);
-
-   if ((size = eet_data_image_write(ef, "/thumbnail/data", (void *)data, 48, 48, 1, 0, 70, 1)) < 0)
-     {
-	printf("BUG: Couldn't write thumb db\n");
-     }
-
-   eet_close(ef);
-
-   ecore_evas_free(buf);
-   return 1;
-}
-
-static Evas_Object *
-_e_fm_file_thumb_get(E_Fm_File *file)
-{
-   Eet_File *ef;
-   char *thumb, *fullname, *ext;
-   Evas_Object *im = NULL;
-   void *data;
-   unsigned int w, h;
-   int a, c, q, l;
-   
-
-   fullname = _e_fm_file_fullname(file);
-   
-   ext = strrchr(file->attr->name, '.');   
-   if(ext)
-    {
-       if(!strcasecmp(ext, ".eap"))
-	{
-	   E_App *app;
-	   
-	   app = e_app_new(fullname, 0);
-	   
-	   if(!app)
-	    { /* fallback icon */ }
-	   
-	   im = edje_object_add(file->sd->evas);
-	   edje_object_file_set(im, fullname, "icon");
-	   free(fullname);
-	   e_object_unref(E_OBJECT(a));       
-	   return im;       
-	}
-    }      
-   
-   if (!_e_fm_file_thumb_exists(fullname))
-     _e_fm_file_thumb_create(fullname);
-
-   thumb = _e_fm_file_thumb_path_get(fullname);
-
-   ef = eet_open(thumb, EET_FILE_MODE_READ);
-   if (!ef)
-     {
-	free(fullname);
-	free(thumb);
-       	return NULL;
-     }
-   free(fullname);
-   free(thumb);
-
-   data = eet_data_image_read(ef, "/thumbnail/data", &w, &h, &a, &c, &q, &l);
-   if (data)
-    {
-       im = evas_object_image_add(file->sd->evas);
-       evas_object_image_alpha_set(im, 0);
-       evas_object_image_size_set(im, w, h);
-       evas_object_image_smooth_scale_set(im, 0);
-       evas_object_image_data_copy_set(im, data);
-       evas_object_image_data_update_add(im, 0, 0, w, h);
-       evas_object_image_fill_set(im, 0, 0, w, h);
-       evas_object_resize(im, w, h);
-       free(data);
-    }
-   eet_close(ef);
-   return im;
-}
-
 static E_Fm_File_Type
 _e_fm_file_type(E_Fm_File *file)
 {
@@ -2922,36 +2786,4 @@ _e_fm_file_fullname(E_Fm_File *file)
      snprintf(fullname, sizeof(fullname), "%s/%s", file->sd->dir, file->attr->name);
 
    return strdup(fullname);
-}
-
-static char *
-_e_fm_file_id(char *file)
-{
-   char                s[256];
-   const char         *chmap =
-     "0123456789abcdefghijklmnopqrstuvwxyz€‚ƒ„…†‡ˆŠ‹Œ‘’“-_";
-   int                 id[2];
-   struct stat         st;
-
-   if (stat(file, &st) < 0)
-     return NULL;
-   id[0] = (int)st.st_ino;
-   id[1] = (int)st.st_dev;
-
-   sprintf(s,
-	   "%c%c%c%c%c%c"
-	   "%c%c%c%c%c%c",
-	   chmap[(id[0] >> 0) & 0x3f],
-	   chmap[(id[0] >> 6) & 0x3f],
-	   chmap[(id[0] >> 12) & 0x3f],
-	   chmap[(id[0] >> 18) & 0x3f],
-	   chmap[(id[0] >> 24) & 0x3f],
-	   chmap[(id[0] >> 28) & 0x3f],
-	   chmap[(id[1] >> 0) & 0x3f],
-	   chmap[(id[1] >> 6) & 0x3f],
-	   chmap[(id[1] >> 12) & 0x3f],
-	   chmap[(id[1] >> 18) & 0x3f],
-	   chmap[(id[1] >> 24) & 0x3f], chmap[(id[1] >> 28) & 0x3f]);
-
-   return strdup(s);
 }
