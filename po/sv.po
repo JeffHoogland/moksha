@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-17 09:15+0200\n"
-"PO-Revision-Date: 2005-10-17 10:32+0200\n"
+"POT-Creation-Date: 2005-10-18 10:23+0200\n"
+"PO-Revision-Date: 2005-10-18 12:12+0200\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -266,7 +266,7 @@ msgid "No Digital Display"
 msgstr "Ingen digital visning"
 
 #: src/modules/clock/e_mod_main.c:349 src/modules/pager/e_mod_main.c:458
-#: src/bin/e_border.c:6311
+#: src/bin/e_border.c:6220
 msgid "Normal"
 msgstr "Normal"
 
@@ -403,7 +403,7 @@ msgstr "Inställningar"
 
 #: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
 #: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
-#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
+#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
 msgid "Size"
 msgstr "Storlek"
 
@@ -723,179 +723,152 @@ msgstr ""
 "\n"
 "Kommandot gick inte att hitta\n"
 
-#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
-msgid "Position"
-msgstr "Position"
-
-#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6415
-msgid "Stacking"
-msgstr "Stapla"
-
-#: src/bin/e_border.c:6200 src/bin/e_border.c:6213 src/bin/e_border.c:6351
-msgid "Iconify"
-msgstr "Minimera"
-
-#: src/bin/e_border.c:6202 src/bin/e_border.c:6215 src/bin/e_border.c:6404
-msgid "Sticky"
-msgstr "Klibbig"
-
-#: src/bin/e_border.c:6203 src/bin/e_border.c:6216
-msgid "Shade"
-msgstr "Skymma"
-
-#: src/bin/e_border.c:6204 src/bin/e_border.c:6217
-msgid "Maximize"
-msgstr "Maximera"
-
-#: src/bin/e_border.c:6205 src/bin/e_border.c:6218 src/bin/e_border.c:6437
-msgid "Fullscreen"
-msgstr "Helskärm"
-
-#: src/bin/e_border.c:6224
-msgid "User"
-msgstr "Användare"
-
-#: src/bin/e_border.c:6232
-msgid "Application"
-msgstr "Applikation"
-
-#: src/bin/e_border.c:6242
-msgid "Border"
-msgstr "Ram"
-
-#: src/bin/e_border.c:6243 src/bin/e_border.c:6340
-msgid "Close"
-msgstr "Stäng"
-
-#: src/bin/e_border.c:6246
-msgid "Lifespan"
-msgstr "Livslängd"
-
-#: src/bin/e_border.c:6260
+#: src/bin/e_border.c:6169
 msgid "Remember This Window"
 msgstr "Komihåg detta fönster"
 
-#: src/bin/e_border.c:6267
+#: src/bin/e_border.c:6176
 msgid "Remember This Instance Only"
 msgstr "Komihåg endast denna instans"
 
-#: src/bin/e_border.c:6270
+#: src/bin/e_border.c:6179
 msgid "Match by Name"
 msgstr "Anpassa efter Namn"
 
-#: src/bin/e_border.c:6271
+#: src/bin/e_border.c:6180
 msgid "Match by Class"
 msgstr "Anpassa efter Klass"
 
-#: src/bin/e_border.c:6272
+#: src/bin/e_border.c:6181
 msgid "Match by Title"
 msgstr "Anpassa efter Titel"
 
-#: src/bin/e_border.c:6273
+#: src/bin/e_border.c:6182
 msgid "Match by Role"
 msgstr "Anpassa efter Roll"
 
-#: src/bin/e_border.c:6274
+#: src/bin/e_border.c:6183
 msgid "Match by Window Type"
 msgstr "Anpassa efter Fönstertyp"
 
-#: src/bin/e_border.c:6275
+#: src/bin/e_border.c:6184
 msgid "Match by Transient Status"
 msgstr "Anpassa efter Transient status"
 
-#: src/bin/e_border.c:6278
+#: src/bin/e_border.c:6187
 msgid "Remember Position"
-msgstr "Komihåg position"
+msgstr "Komihåg Position"
 
-#: src/bin/e_border.c:6279
+#: src/bin/e_border.c:6188
 msgid "Remember Size"
-msgstr "Komihåg storlek"
+msgstr "Komihåg Storlek"
 
-#: src/bin/e_border.c:6280
+#: src/bin/e_border.c:6189
 msgid "Remember Stacking"
 msgstr "Komihåg Stapellager"
 
-#: src/bin/e_border.c:6281
+#: src/bin/e_border.c:6190
 msgid "Remember Locks"
 msgstr "Komihåg Lås"
 
-#: src/bin/e_border.c:6282
+#: src/bin/e_border.c:6191
 msgid "Remember Border"
 msgstr "Komihåg Ram"
 
-#: src/bin/e_border.c:6283
+#: src/bin/e_border.c:6192
 msgid "Remember Stickiness"
 msgstr "Komihåg Klibba"
 
-#: src/bin/e_border.c:6284
+#: src/bin/e_border.c:6193
 msgid "Remember Desktop"
 msgstr "Komihåg Skrivbord"
 
-#: src/bin/e_border.c:6285
+#: src/bin/e_border.c:6194
 msgid "Remember Shaded State"
 msgstr "Komihåg Skymt läge"
 
-#: src/bin/e_border.c:6286
+#: src/bin/e_border.c:6195
 msgid "Remember Zone"
 msgstr "Komihåg Zon"
 
-#: src/bin/e_border.c:6287
+#: src/bin/e_border.c:6196
 msgid "Remember Skip Window List"
 msgstr "Komihåg Ignorera fönsterlist"
 
-#: src/bin/e_border.c:6301
+#: src/bin/e_border.c:6210
 msgid "Always On Top"
 msgstr "Alltid överst"
 
-#: src/bin/e_border.c:6321
+#: src/bin/e_border.c:6230
 msgid "Always Below"
 msgstr "Alltid underst"
 
-#: src/bin/e_border.c:6365
+#: src/bin/e_border.c:6249
+msgid "Close"
+msgstr "Stäng"
+
+#: src/bin/e_border.c:6260
+msgid "Iconify"
+msgstr "Minimera"
+
+#: src/bin/e_border.c:6274
 msgid "Kill"
 msgstr "Döda"
 
-#: src/bin/e_border.c:6378
+#: src/bin/e_border.c:6287
 msgid "Shaded"
 msgstr "Skymt"
 
-#: src/bin/e_border.c:6391
+#: src/bin/e_border.c:6300
 msgid "Maximized"
 msgstr "Maximerat"
 
-#: src/bin/e_border.c:6424
+#: src/bin/e_border.c:6313
+msgid "Sticky"
+msgstr "Klibbig"
+
+#: src/bin/e_border.c:6324 src/bin/e_int_border_locks.c:320
+#: src/bin/e_int_border_locks.c:339
+msgid "Stacking"
+msgstr "Stapla"
+
+#: src/bin/e_border.c:6333
 msgid "Borderless"
 msgstr "Ramlöst"
 
-#: src/bin/e_border.c:6451
+#: src/bin/e_border.c:6346
+msgid "Fullscreen"
+msgstr "Helskärm"
+
+#: src/bin/e_border.c:6360
 msgid "Skip Window List"
 msgstr "Ignorera Fönsterlist"
 
-#: src/bin/e_border.c:6465
-msgid "Locks"
-msgstr "Lås"
+#: src/bin/e_border.c:6374 src/bin/e_int_border_locks.c:65
+msgid "Window Locks"
+msgstr "Fönster Lås"
 
-#: src/bin/e_border.c:6472
+#: src/bin/e_border.c:6381
 msgid "Remember"
 msgstr "Komihåg"
 
-#: src/bin/e_border.c:6482
+#: src/bin/e_border.c:6391
 msgid "Send To"
 msgstr "Skicka till"
 
-#: src/bin/e_border.c:6500
+#: src/bin/e_border.c:6409
 msgid "Edit Icon"
 msgstr "Ändra ikon"
 
-#: src/bin/e_border.c:6527
+#: src/bin/e_border.c:6436
 msgid "Create Icon"
 msgstr "Skapa ikon"
 
-#: src/bin/e_border.c:6614
+#: src/bin/e_border.c:6523
 msgid "Icon Edit Error"
 msgstr "Fel vid ändrande av ikon"
 
-#: src/bin/e_border.c:6615
+#: src/bin/e_border.c:6524
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -1000,7 +973,7 @@ msgstr "Visa inte denna startbild i framtiden?"
 
 #: src/bin/e_int_menus.c:83
 msgid "Favorite Applications"
-msgstr "Favorit Program"
+msgstr "Favorit program"
 
 #: src/bin/e_int_menus.c:93
 msgid "Modules"
@@ -1532,15 +1505,15 @@ msgstr "Ordna ikoner"
 
 #: src/bin/e_fileman_smart.c:1970
 msgid "By Name"
-msgstr "Efter namn"
+msgstr "Efter Namn"
 
 #: src/bin/e_fileman_smart.c:1981
 msgid "By Mod Time"
-msgstr "Efter mod tid"
+msgstr "Efter Ändringsdatum"
 
 #: src/bin/e_fileman_smart.c:1992
 msgid "View"
-msgstr "visa"
+msgstr "Visa"
 
 #: src/bin/e_fileman_smart.c:2002
 msgid "Name Only"
@@ -1596,7 +1569,7 @@ msgstr "Fönster under musen"
 
 #: src/bin/e_int_config_focus.c:147
 msgid "Most recent Window under the Mouse"
-msgstr "Senaste fönser under musen"
+msgstr "Senaste fönster under musen"
 
 #: src/bin/e_int_config_focus.c:163
 msgid "Focus"
@@ -1640,7 +1613,7 @@ msgstr "Andra inställnigar"
 
 #: src/bin/e_int_config_focus.c:186
 msgid "Always pass on caught click events to programs"
-msgstr "Skicka alltid vidare fångade klick till program"
+msgstr "Skicka alltid vidare fångade musklick till program"
 
 #: src/bin/e_int_config_focus.c:188
 msgid "A click on a window always raises it"
@@ -1649,4 +1622,82 @@ msgstr "Ett klick på ett fönster höjer alltid det"
 #: src/bin/e_int_config_focus.c:190
 msgid "A click in a window always focuses it"
 msgstr "Ett klick på ett fönster ger alltid det fokus"
+
+#: src/bin/e_int_border_locks.c:289
+msgid "Generic Locks"
+msgstr "Almänna Lås"
+
+#: src/bin/e_int_border_locks.c:290
+msgid "Lock the Window so it does only what I tell it to"
+msgstr "Lås fönstret så det endast gör som jag säger"
+
+#: src/bin/e_int_border_locks.c:292
+msgid "Protect this window from me accidentally changing it"
+msgstr "Skydda detta fönster mot att jag oavsiktligt ändrar det"
+
+#: src/bin/e_int_border_locks.c:294
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr ""
+"Skydda detta fönster från att stängas för att det är viktigt"
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Do not allow the border to change on this window"
+msgstr "Tillåt inte att ramen ändras på detta fönster"
+
+#: src/bin/e_int_border_locks.c:299
+msgid "Remember these Locks for this window next time it appears"
+msgstr "Kommihåg dessa Lås för detta fönster nästa gång det visas"
+
+#: src/bin/e_int_border_locks.c:315
+msgid "Lock program changing:"
+msgstr "Hindra program att ändra:"
+
+#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
+msgid "Position"
+msgstr "Position"
+
+#: src/bin/e_int_border_locks.c:322 src/bin/e_int_border_locks.c:341
+msgid "Iconified state"
+msgstr "Minimerad"
+
+#: src/bin/e_int_border_locks.c:324 src/bin/e_int_border_locks.c:343
+msgid "Stickiness"
+msgstr "Klibbigt"
+
+#: src/bin/e_int_border_locks.c:326 src/bin/e_int_border_locks.c:345
+msgid "Shaded state"
+msgstr "Skuggat"
+
+#: src/bin/e_int_border_locks.c:328 src/bin/e_int_border_locks.c:347
+msgid "Maximized state"
+msgstr "Maximerat"
+
+#: src/bin/e_int_border_locks.c:330 src/bin/e_int_border_locks.c:349
+msgid "Fullscreen state"
+msgstr "Fullskärm"
+
+#: src/bin/e_int_border_locks.c:334
+msgid "Lock me from changing:"
+msgstr "Hindra mig att ändra:"
+
+#: src/bin/e_int_border_locks.c:351
+msgid "The border style"
+msgstr "Ramstil"
+
+#: src/bin/e_int_border_locks.c:355
+msgid "Stop me from:"
+msgstr "Hindra mig från att:"
+
+#: src/bin/e_int_border_locks.c:356
+msgid "Closing the window"
+msgstr "Stänga fönstret"
+
+#: src/bin/e_int_border_locks.c:358
+msgid "Exiting my login with this window open"
+msgstr "Logga ut med detta fönster öppet"
+
+#: src/bin/e_int_border_locks.c:362
+msgid "Remember these Locks"
+msgstr "Kommihåg dessa Lås"
 
