@@ -14,6 +14,12 @@
  * 
  * - checking wether events belong to us (ecore events)
  *
+ * - add ability to have icons on desktop (this works, but we need some fixes)
+ *   files should go on ~/.e/e/desktop for example.
+ *
+ * - add eap support. load eaps and exec them on double click. this would
+ *   allow us to embed E's control panel for example.
+ *
  * - when we select multiple items, the right click menu on the icons needs
  *   to display some group related things and its actions need to work
  *   on the group.
@@ -51,19 +57,20 @@
 # define D(x)  ((void) 0)
 #endif
 
-typedef struct _E_Fileman_Smart_Data            E_Fileman_Smart_Data;
-typedef struct _E_Fileman_File_Attributes       E_Fileman_File_Attributes;
-typedef struct _E_Fileman_File                  E_Fileman_File;
-typedef struct _E_Fm_Config                     E_Fm_Config;
-typedef struct _E_Fileman_Thumb_Pending         E_Fileman_Thumb_Pending;
-typedef struct _E_Fileman_Fake_Mouse_Up_Info    E_Fileman_Fake_Mouse_Up_Info;
-typedef struct _E_Fileman_Assoc_App             E_Fileman_Assoc_App;
+typedef struct _E_Fm_Smart_Data            E_Fm_Smart_Data;
+typedef struct _E_Fm_File_Attributes       E_Fm_File_Attributes;
+typedef struct _E_Fm_File                  E_Fm_File;
+typedef struct _E_Fm_Icon_CFData           E_Fm_Icon_CFData;
+typedef struct _E_Fm_Config                E_Fm_Config;
+typedef struct _E_Fm_Thumb_Pending         E_Fm_Thumb_Pending;
+typedef struct _E_Fm_Fake_Mouse_Up_Info    E_Fm_Fake_Mouse_Up_Info;
+typedef struct _E_Fm_Assoc_App             E_Fm_Assoc_App;
 typedef struct _E_Fm_Event_Reconfigure_Internal E_Fm_Event_Reconfigure_Internal;
-typedef enum   _E_Fileman_File_Type             E_Fileman_File_Type;
-typedef enum   _E_Fileman_Arrange               E_Fileman_Arrange;
+typedef enum   _E_Fm_File_Type             E_Fm_File_Type;
+typedef enum   _E_Fm_Arrange               E_Fm_Arrange;
 
 
-struct _E_Fileman_File_Attributes
+struct _E_Fm_File_Attributes
 {
    char      name[PATH_MAX];  /* file name without parent directories */
    dev_t     device;          /* ID of device containing file */
@@ -81,10 +88,10 @@ struct _E_Fileman_File_Attributes
    time_t    ctime;           /* time of last status change */
 };
 
-struct _E_Fileman_File
+struct _E_Fm_File
 {
    
-   E_Fileman_File_Attributes *attr;;
+   E_Fm_File_Attributes *attr;;
 
    Evas_Object *icon;
    Evas_Object *icon_img;
@@ -92,7 +99,7 @@ struct _E_Fileman_File
    Evas_Object *event;
    Evas_Object *title;
 
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    E_Menu *menu;
    struct {
@@ -103,8 +110,17 @@ struct _E_Fileman_File
    struct {
 	unsigned char selected : 1;
    } state;
-
+   
+   E_Fm_Icon_CFData *cfdata;
+   
    void *data;
+};
+
+struct _E_Fm_Icon_CFData
+{
+   E_Fm_File *file;
+   int readwrite;
+   int protect;
 };
 
 struct _E_Fm_Config
@@ -114,9 +130,9 @@ struct _E_Fm_Config
    Evas_List *apps;
 };
 
-struct _E_Fileman_Thumb_Pending
+struct _E_Fm_Thumb_Pending
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    pid_t pid;
 };
 
@@ -127,7 +143,7 @@ struct _E_Fm_Event_Reconfigure_Internal
    void (*func)(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev);
 };
 
-enum _E_Fileman_File_Type
+enum _E_Fm_File_Type
 {
    E_FILEMAN_FILETYPE_ALL = 0,
    E_FILEMAN_FILETYPE_NORMAL = 1,
@@ -138,26 +154,26 @@ enum _E_Fileman_File_Type
    E_FILEMAN_FILETYPE_UNKNOWN = 6
 };
 
-enum _E_Fileman_Arrange
+enum _E_Fm_Arrange
 {
    E_FILEMAN_CANVAS_ARRANGE_NAME = 0,
    E_FILEMAN_CANVAS_ARRANGE_MODTIME = 1,
    E_FILEMAN_CANVAS_ARRANGE_SIZE = 2,
 };
 
-struct _E_Fileman_Fake_Mouse_Up_Info
+struct _E_Fm_Fake_Mouse_Up_Info
 {
    Evas *canvas;
    int button;
 };
 
-struct _E_Fileman_Assoc_App
+struct _E_Fm_Assoc_App
 {
    char *mime;
    char *app;
 };
 
-struct _E_Fileman_Smart_Data
+struct _E_Fm_Smart_Data
 {
    Evas_Object *bg;
    Evas_Object *clip;
@@ -189,7 +205,7 @@ struct _E_Fileman_Smart_Data
 	unsigned char start : 1;
 	int x, y;
 	double time;
-	E_Fileman_File *file;
+	E_Fm_File *file;
 	Ecore_Evas *ecore_evas;
 	Evas *evas;
 	Ecore_X_Window win;
@@ -215,7 +231,7 @@ struct _E_Fileman_Smart_Data
 
    struct {
 	Evas_List *files;
-	E_Fileman_File *current_file;
+	E_Fm_File *current_file;
 
 	struct {
 	     unsigned char enabled : 1;
@@ -244,25 +260,26 @@ static void _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void _e_fm_smart_show(Evas_Object *object);
 static void _e_fm_smart_hide(Evas_Object *object);
 
-static void                _e_fm_redraw_new(E_Fileman_Smart_Data *sd);
-static void                _e_fm_redraw(E_Fileman_Smart_Data *sd);
-static void                _e_fm_size_calc(E_Fileman_Smart_Data *sd);
-static void                _e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name);
-static void                _e_fm_event_reconfigure_raise(E_Fileman_Smart_Data *sd);
-static void                _e_fm_selections_clear(E_Fileman_Smart_Data *sd);
-static void                _e_fm_selections_add(E_Fileman_File *file);
-static void                _e_fm_selections_del(E_Fileman_File *file);
-static void                _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
-static void                _e_fm_file_free(E_Fileman_File *file);
-static void                _e_fm_files_free(E_Fileman_Smart_Data *sd);
-static Evas_Bool           _e_fm_file_can_preview(E_Fileman_File *file);
-static void                _e_fm_file_delete(E_Fileman_File *file);
-static void                _e_fm_file_exec(E_Fileman_File *file);
-static E_Fileman_File_Type _e_fm_file_type(E_Fileman_File *file);
-static Evas_Bool           _e_fm_file_open_assoc(E_Fileman_File *file);    
-static char               *_e_fm_file_fullname(E_Fileman_File *file);
-static Evas_Object        *_e_fm_file_icon_mime_get(E_Fileman_File *file);
-static Evas_Object        *_e_fm_file_icon_get(E_Fileman_File *file);
+static void                _e_fm_redraw_new(E_Fm_Smart_Data *sd);
+static void                _e_fm_redraw(E_Fm_Smart_Data *sd);
+static void                _e_fm_size_calc(E_Fm_Smart_Data *sd);
+static void                _e_fm_stat_to_attr(struct stat st, E_Fm_File_Attributes *attr, char *name);
+static void                _e_fm_event_reconfigure_raise(E_Fm_Smart_Data *sd);
+static void                _e_fm_selections_clear(E_Fm_Smart_Data *sd);
+static void                _e_fm_selections_add(E_Fm_File *file);
+static void                _e_fm_selections_del(E_Fm_File *file);
+static void                _e_fm_selections_add_rect(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+static void                _e_fm_file_free(E_Fm_File *file);
+static void                _e_fm_files_free(E_Fm_Smart_Data *sd);
+static Evas_Bool           _e_fm_file_can_preview(E_Fm_File *file);
+static void                _e_fm_file_delete(E_Fm_File *file);
+static Evas_Bool           _e_fm_file_can_exec(E_Fm_File *file);
+static void                _e_fm_file_exec(E_Fm_File *file);
+static E_Fm_File_Type _e_fm_file_type(E_Fm_File *file);
+static Evas_Bool           _e_fm_file_open_assoc(E_Fm_File *file);    
+static char               *_e_fm_file_fullname(E_Fm_File *file);
+static Evas_Object        *_e_fm_file_icon_mime_get(E_Fm_File *file);
+static Evas_Object        *_e_fm_file_icon_get(E_Fm_File *file);
 static void                _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_file_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_file_icon_mouse_in_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -279,16 +296,16 @@ static void                _e_fm_file_delete_no_cb(void *data, E_Dialog *dia);
 static char               *_e_fm_file_thumb_path_get(char *file);
 static Evas_Bool           _e_fm_file_thumb_exists(char *file);
 static Evas_Bool           _e_fm_file_thumb_create(char *file);
-static Evas_Object        *_e_fm_file_thumb_get(E_Fileman_File *file);
+static Evas_Object        *_e_fm_file_thumb_get(E_Fm_File *file);
 static char               *_e_fm_file_id(char *file);
 static void                _e_fm_fake_mouse_up_cb(void *data);
 static void                _e_fm_fake_mouse_up_later(Evas *evas, int button);
 static void                _e_fm_fake_mouse_up_all_later(Evas *evas);
 static int                 _e_fm_dir_files_sort_name_cb(void *d1, void *d2);
 static int                 _e_fm_dir_files_sort_modtime_cb(void *d1, void *d2);
-static void                _e_fm_dir_set(E_Fileman_Smart_Data *sd, const char *dir);
+static void                _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir);
 static void                _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,  Ecore_File_Event event, const char *path);
-static Evas_List          *_e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type);
+static Evas_List          *_e_fm_dir_files_get(char *dirname, E_Fm_File_Type type);
 static char               *_e_fm_dir_pop(const char *path);
 static void                _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -320,7 +337,7 @@ e_fm_add(Evas *evas)
 {
    if (!e_fm_smart)
      {
-	e_fm_smart = evas_smart_new("e_fileman",
+	e_fm_smart = evas_smart_new("e_fm",
 				    _e_fm_smart_add, /* add */
 				    _e_fm_smart_del, /* del */
 				    NULL, /* layer_set */
@@ -343,7 +360,7 @@ e_fm_add(Evas *evas)
 void
 e_fm_dir_set(Evas_Object *object, const char *dir)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -354,7 +371,7 @@ e_fm_dir_set(Evas_Object *object, const char *dir)
 char *
 e_fm_dir_get(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return NULL;
@@ -365,7 +382,7 @@ e_fm_dir_get(Evas_Object *object)
 void
 e_fm_e_win_set(Evas_Object *object, E_Win *win)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -376,7 +393,7 @@ e_fm_e_win_set(Evas_Object *object, E_Win *win)
 E_Win *
 e_fm_e_win_get(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return NULL;
@@ -387,7 +404,7 @@ e_fm_e_win_get(Evas_Object *object)
 void
 e_fm_menu_set(Evas_Object *object, E_Menu *menu)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -399,7 +416,7 @@ e_fm_menu_set(Evas_Object *object, E_Menu *menu)
 E_Menu *
 e_fm_menu_get(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return NULL;
@@ -416,7 +433,7 @@ e_fm_scroll_horizontal(Evas_Object *object, double percent)
 void
 e_fm_scroll_vertical(Evas_Object *object, double percent)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    int offsetpx;
    Evas_Coord bx, by, bw, bh;
 
@@ -448,7 +465,7 @@ e_fm_scroll_vertical(Evas_Object *object, double percent)
 void
 e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
 {  
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -463,7 +480,7 @@ e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
 void
 e_fm_reconfigure_callback_add(Evas_Object *object, void (*func)(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev), void *data)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    E_Fm_Event_Reconfigure_Internal *event;
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -485,12 +502,12 @@ _e_fm_smart_add(Evas_Object *object)
    Evas *evas;
    char *homedir;
    char dir[PATH_MAX];
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
-   sd = E_NEW(E_Fileman_Smart_Data, 1);
+   sd = E_NEW(E_Fm_Smart_Data, 1);
    if (!sd) return;
 
    sd->bg = evas_object_rectangle_add(evas); // this should become an edje
@@ -576,11 +593,11 @@ _e_fm_smart_add(Evas_Object *object)
 								 sd));
    
    sd->conf.main_edd = E_CONFIG_DD_NEW("E_Fm_Config", E_Fm_Config);
-   sd->conf.assoc_app_edd = E_CONFIG_DD_NEW("E_Fileman_Assoc_App",E_Fileman_Assoc_App);
+   sd->conf.assoc_app_edd = E_CONFIG_DD_NEW("E_Fm_Assoc_App",E_Fm_Assoc_App);
    
 #undef T
 #undef DD
-#define T E_Fileman_Assoc_App
+#define T E_Fm_Assoc_App
 #define DD sd->conf.assoc_app_edd
    E_CONFIG_VAL(DD, T, mime, STR);
    E_CONFIG_VAL(DD, T, app, STR);
@@ -605,16 +622,16 @@ _e_fm_smart_add(Evas_Object *object)
        /* some test values not meant for everyone */
        
 	{
-	   E_Fileman_Assoc_App *assoc;
+	   E_Fm_Assoc_App *assoc;
 	   
-	   assoc = E_NEW(E_Fileman_Assoc_App, 1);
+	   assoc = E_NEW(E_Fm_Assoc_App, 1);
 	   assoc->mime = E_NEW(char *, 5);
 	   snprintf(assoc->mime, 5, "%s", ".jpg");
 	   assoc->app = E_NEW(char *, 7);
 	   snprintf(assoc->app, 7, "gqview");
 	   sd->conf.main->apps = evas_list_append(sd->conf.main->apps, assoc);
 	 
-	   assoc = E_NEW(E_Fileman_Assoc_App, 1);
+	   assoc = E_NEW(E_Fm_Assoc_App, 1);
 	   assoc->mime = E_NEW(char *, 5);
 	   snprintf(assoc->mime, 5, "%s", ".png");
 	   assoc->app = E_NEW(char *, 7);
@@ -633,7 +650,7 @@ _e_fm_smart_add(Evas_Object *object)
 static void
 _e_fm_smart_del(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -664,7 +681,7 @@ _e_fm_smart_del(Evas_Object *object)
 static void
 _e_fm_smart_raise(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -673,7 +690,7 @@ _e_fm_smart_raise(Evas_Object *object)
    evas_object_raise(sd->bg);
    for (l = sd->files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 
 	file = l->data;
 	evas_object_stack_above(file->icon, sd->bg);
@@ -683,7 +700,7 @@ _e_fm_smart_raise(Evas_Object *object)
 static void
 _e_fm_smart_lower(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -692,7 +709,7 @@ _e_fm_smart_lower(Evas_Object *object)
    evas_object_lower (sd->bg);
    for (l = sd->files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 
 	file = l->data;
 	evas_object_stack_above(file->icon, sd->bg);
@@ -702,7 +719,7 @@ _e_fm_smart_lower(Evas_Object *object)
 static void
 _e_fm_smart_stack_above(Evas_Object *object, Evas_Object *above)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -711,7 +728,7 @@ _e_fm_smart_stack_above(Evas_Object *object, Evas_Object *above)
    evas_object_stack_above(sd->bg, above);
    for (l = sd->files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 
 	file = l->data;
 	evas_object_stack_above(file->icon, sd->bg);
@@ -721,7 +738,7 @@ _e_fm_smart_stack_above(Evas_Object *object, Evas_Object *above)
 static void
 _e_fm_smart_stack_below(Evas_Object *object, Evas_Object *below)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
@@ -730,7 +747,7 @@ _e_fm_smart_stack_below(Evas_Object *object, Evas_Object *below)
    evas_object_stack_below(sd->bg, below);
    for (l = sd->files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 
 	file = l->data;
 	evas_object_stack_above(file->icon, sd->bg);
@@ -740,7 +757,7 @@ _e_fm_smart_stack_below(Evas_Object *object, Evas_Object *below)
 static void
 _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -754,7 +771,7 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 static void
 _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -778,7 +795,7 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 static void
 _e_fm_smart_show(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -789,7 +806,7 @@ _e_fm_smart_show(Evas_Object *object)
 static void
 _e_fm_smart_hide(Evas_Object *object)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -798,14 +815,14 @@ _e_fm_smart_hide(Evas_Object *object)
 }
 
 static void
-_e_fm_redraw_new(E_Fileman_Smart_Data *sd)
+_e_fm_redraw_new(E_Fm_Smart_Data *sd)
 {
    Evas_List *dirs = NULL;
    Evas_Coord x, y, w, h;
    Evas_Coord xo, yo;
 
-   E_Fileman_File *file;
-   E_Fileman_File_Attributes *attr;
+   E_Fm_File *file;
+   E_Fm_File_Attributes *attr;
 
    if (!sd->dir)
      return;
@@ -820,7 +837,7 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
      ecore_file_monitor_del(sd->monitor);
    sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
 
-   attr = E_NEW(E_Fileman_File_Attributes, 1);
+   attr = E_NEW(E_Fm_File_Attributes, 1);
    attr->mode = 0040000;
    snprintf(attr->name, PATH_MAX, "..");
 
@@ -837,7 +854,7 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 
 
 
-	file = E_NEW(E_Fileman_File, 1);
+	file = E_NEW(E_Fm_File, 1);
 	file->icon = edje_object_add(sd->evas);
 	e_theme_edje_object_set(file->icon, "base/theme/fileman",
 				"fileman/icon");	
@@ -847,8 +864,9 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 	edje_object_part_swallow(file->icon, "icon_swallow", file->icon_img);
 	edje_object_part_text_set(file->icon, "icon_title", attr->name);
 
-#if 0
+/*
 	  {
+	     Evas_Coord fw, fh, il, ir, it, ib;
 	     Evas_Textblock_Style *e_editable_text_style;
 
 	     e_editable_text_style = evas_textblock2_style_new();
@@ -863,9 +881,9 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 	     evas_object_textblock2_style_insets_get(file->title, &il, &ir, &it, &ib);
 	     evas_object_resize(file->title, sd->icon_info.w*2, fh + it + ib);
 	     edje_extern_object_min_size_set(file->title, sd->icon_info.w*2, fh + it + ib);
-	     edje_object_part_swallow(icon, "icon_title", file->title);
+	     edje_object_part_swallow(file->icon, "icon_title", file->title);
 	  }
-#endif
+*/
 
 	edje_object_size_min_calc(file->icon, &icon_w, &icon_h);
 	evas_object_resize(file->icon, icon_w, icon_h);
@@ -891,7 +909,7 @@ _e_fm_redraw_new(E_Fileman_Smart_Data *sd)
 
 
 static void
-_e_fm_redraw(E_Fileman_Smart_Data *sd)
+_e_fm_redraw(E_Fm_Smart_Data *sd)
 {
    e_icon_layout_redraw_force(sd->layout);
    
@@ -902,12 +920,12 @@ _e_fm_redraw(E_Fileman_Smart_Data *sd)
 // when this is enabled, the thumbnailer is broken, double check if its
 // still broken. seems ok.
 static void
-_e_fm_size_calc(E_Fileman_Smart_Data *sd)
+_e_fm_size_calc(E_Fm_Smart_Data *sd)
 {
    Evas_List *dirs = NULL;
    Evas_Coord xbg, x, y, w, h;
-   E_Fileman_File *file;
-   E_Fileman_File_Attributes *attr;
+   E_Fm_File *file;
+   E_Fm_File_Attributes *attr;
 
    if (!sd->dir)
      return;
@@ -919,7 +937,7 @@ _e_fm_size_calc(E_Fileman_Smart_Data *sd)
 
    dirs = sd->files_raw;
 
-   attr = E_NEW(E_Fileman_File_Attributes, 1);
+   attr = E_NEW(E_Fm_File_Attributes, 1);
    attr->mode = 0040000;
    snprintf(attr->name, PATH_MAX, "..");
 
@@ -935,7 +953,7 @@ _e_fm_size_calc(E_Fileman_Smart_Data *sd)
 	icon = edje_object_add(sd->evas);
 	e_theme_edje_object_set(icon, "base/theme/fileman", "fileman/icon");
 
-	file = E_NEW(E_Fileman_File, 1);
+	file = E_NEW(E_Fm_File, 1);
 	file->icon = icon;
 	file->attr = attr;
 	file->sd = sd;
@@ -964,7 +982,7 @@ _e_fm_size_calc(E_Fileman_Smart_Data *sd)
 }
 
 static void
-_e_fm_event_reconfigure_raise(E_Fileman_Smart_Data *sd)
+_e_fm_event_reconfigure_raise(E_Fm_Smart_Data *sd)
 {
    Evas_List *l;
    
@@ -992,13 +1010,13 @@ _e_fm_event_reconfigure_raise(E_Fileman_Smart_Data *sd)
 }
 
 static void
-_e_fm_selections_clear(E_Fileman_Smart_Data *sd)
+_e_fm_selections_clear(E_Fm_Smart_Data *sd)
 {
    Evas_List *l;
 
    for (l = sd->selection.files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 
 	file = l->data;
 	if (!file) continue;
@@ -1012,7 +1030,7 @@ _e_fm_selections_clear(E_Fileman_Smart_Data *sd)
 }
 
 static void
-_e_fm_selections_add(E_Fileman_File *file)
+_e_fm_selections_add(E_Fm_File *file)
 {
    if (!file)
      return;
@@ -1025,13 +1043,13 @@ _e_fm_selections_add(E_Fileman_File *file)
 }
 
 static void
-_e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+_e_fm_selections_add_rect(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
    Evas_List *l;
       
    for (l = sd->files; l; l = l->next)
      {
-	E_Fileman_File *file;
+	E_Fm_File *file;
 	Evas_Coord xx, yy, ww, hh;
 
 	file = l->data;
@@ -1064,7 +1082,7 @@ _e_fm_selections_add_rect(E_Fileman_Smart_Data *sd, Evas_Coord x, Evas_Coord y, 
 }
 
 static void                
-_e_fm_selections_del(E_Fileman_File *file)
+_e_fm_selections_del(E_Fm_File *file)
 {
    if (!file)
      return;
@@ -1077,7 +1095,7 @@ _e_fm_selections_del(E_Fileman_File *file)
 }
 
 static void
-_e_fm_dir_set(E_Fileman_Smart_Data *sd, const char *dir)
+_e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 {
    if ((!sd) || (!dir)) return;
    if ((sd->dir) && (!strcmp(sd->dir, dir))) return;
@@ -1090,7 +1108,7 @@ _e_fm_dir_set(E_Fileman_Smart_Data *sd, const char *dir)
 }
 
 static void
-_e_fm_file_free(E_Fileman_File *file)
+_e_fm_file_free(E_Fm_File *file)
 {   
    e_icon_layout_unpack(file);
    evas_object_del(file->icon_img);
@@ -1107,9 +1125,9 @@ _e_fm_file_free(E_Fileman_File *file)
 }
 
 static void
-_e_fm_files_free(E_Fileman_Smart_Data *sd)
+_e_fm_files_free(E_Fm_Smart_Data *sd)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    Evas_List *l;
 
    if (!sd->files)
@@ -1133,7 +1151,7 @@ static void
 _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 		     Ecore_File_Event event, const char *path)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    sd = data;
 
@@ -1158,7 +1176,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 }
 
 static void
-_e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
+_e_fm_stat_to_attr(struct stat st, E_Fm_File_Attributes *attr, char *name)
 {
    if(!attr) return;
    
@@ -1180,7 +1198,7 @@ _e_fm_stat_to_attr(struct stat st, E_Fileman_File_Attributes *attr, char *name)
 }
 
 static Evas_List *
-_e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
+_e_fm_dir_files_get(char *dirname, E_Fm_File_Type type)
 {
    DIR *dir;
    char fullname[PATH_MAX];
@@ -1194,7 +1212,7 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 
    while ((dir_entry = readdir(dir)) != NULL)
      {
-	E_Fileman_File_Attributes *attr;
+	E_Fm_File_Attributes *attr;
 	struct stat st;
 
 	if ((!strcmp(dir_entry->d_name, ".") || (!strcmp (dir_entry->d_name, "..")))) continue;
@@ -1208,7 +1226,7 @@ _e_fm_dir_files_get(char *dirname, E_Fileman_File_Type type)
 	     continue;
 	  }
 	
-	attr = E_NEW(E_Fileman_File_Attributes, 1);
+	attr = E_NEW(E_Fm_File_Attributes, 1);
 	
 	_e_fm_stat_to_attr(st, attr, dir_entry->d_name);
 	
@@ -1253,7 +1271,7 @@ _e_fm_dir_pop(const char *path)
 }
 
 static Evas_Bool
-_e_fm_file_can_preview(E_Fileman_File *file)
+_e_fm_file_can_preview(E_Fm_File *file)
 {
    if (!file) return 0;
 
@@ -1263,13 +1281,14 @@ _e_fm_file_can_preview(E_Fileman_File *file)
 
 	ext = strrchr(file->attr->name, '.');
 	if (!ext) return 0;
-	return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"));
+	return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"))
+	  || (!strcasecmp(ext, ".eap"));
      }
    return 0;
 }
 
 static void
-_e_fm_file_rename(E_Fileman_File *file, const char* name)
+_e_fm_file_rename(E_Fm_File *file, const char* name)
 {
    char old_name[PATH_MAX], new_name[PATH_MAX];
 
@@ -1283,7 +1302,7 @@ _e_fm_file_rename(E_Fileman_File *file, const char* name)
 }
 
 static void
-_e_fm_file_delete(E_Fileman_File *file)
+_e_fm_file_delete(E_Fm_File *file)
 {
    char full_name[PATH_MAX];
 
@@ -1315,7 +1334,7 @@ _e_fm_file_delete(E_Fileman_File *file)
 
 // TODO: overhaul
 static Evas_Object *
-_e_fm_file_icon_mime_get(E_Fileman_File *file)
+_e_fm_file_icon_mime_get(E_Fm_File *file)
 {
    Evas_Object *icon_img;
 
@@ -1335,7 +1354,7 @@ _e_fm_file_icon_mime_get(E_Fileman_File *file)
 	ext = strrchr(file->attr->name, '.');
 			
 	if (ext)
-	  {
+	  {	     
 	     char part[PATH_MAX];
 	     char *ext2;
 	     
@@ -1362,7 +1381,7 @@ static int
 _e_fm_thumbnailer_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_List *l;
 
    ev = event;
@@ -1370,7 +1389,7 @@ _e_fm_thumbnailer_exit(void *data, int type, void *event)
 
    for (l = sd->pending_thumbs; l; l = l->next)
      {
-	E_Fileman_Thumb_Pending *pthumb;
+	E_Fm_Thumb_Pending *pthumb;
 	Evas_Object *thumb;
 
 	pthumb = l->data;
@@ -1400,15 +1419,15 @@ _e_fm_thumbnailer_exit(void *data, int type, void *event)
 static void
 _e_fm_file_thumb_generate_job(void *data)
 {
-   E_Fileman_Thumb_Pending *pthumb;
+   E_Fm_Thumb_Pending *pthumb;
    pid_t pid;
-   E_Fileman_File *file;
+   E_Fm_File *file;
 
    file = data;
    if (!file)
      return;
 
-   pthumb = E_NEW(E_Fileman_Thumb_Pending, 1);
+   pthumb = E_NEW(E_Fm_Thumb_Pending, 1);
    pthumb->file = file;
 
    pid = fork();
@@ -1436,7 +1455,7 @@ _e_fm_file_thumb_generate_job(void *data)
 }
 
 static Evas_Object *
-_e_fm_file_icon_get(E_Fileman_File *file)
+_e_fm_file_icon_get(E_Fm_File *file)
 {
    char *fullname;
 
@@ -1463,7 +1482,7 @@ _e_fm_file_icon_get(E_Fileman_File *file)
 static void
 _e_fm_file_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    char *fullname;
 
    file = data;
@@ -1476,11 +1495,9 @@ _e_fm_file_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 	 free(fullname);
 	 break;
       case E_FILEMAN_FILETYPE_FILE:	
-	fullname = _e_fm_file_fullname(file);
 	if(!_e_fm_file_open_assoc(file))
-	  if (ecore_file_can_exec(fullname))
+	  if (_e_fm_file_can_exec(file))
 	    _e_fm_file_exec(file);
-	free(fullname);	
 	break;
       case E_FILEMAN_FILETYPE_ALL:
       case E_FILEMAN_FILETYPE_NORMAL:
@@ -1493,7 +1510,7 @@ _e_fm_file_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_menu_copy(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
 
    file = data;
 }
@@ -1501,7 +1518,7 @@ _e_fm_file_menu_copy(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_menu_cut(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
 
    file = data;
 }
@@ -1509,7 +1526,7 @@ _e_fm_file_menu_cut(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_menu_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
 
    file = data;
 }
@@ -1519,7 +1536,7 @@ _e_fm_file_menu_paste(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
 
    file = data;
    file->entry = e_entry_add(file->sd->evas);
@@ -1543,7 +1560,7 @@ _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    E_Dialog *dia;
    char *text;
 
@@ -1562,8 +1579,8 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia)
 {
-   E_Fileman_File *file;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_File *file;
+   E_Fm_Smart_Data *sd;
    
    file = data;
    sd = file->sd;
@@ -1578,25 +1595,182 @@ _e_fm_file_delete_no_cb(void *data, E_Dialog *dia)
    e_object_del(E_OBJECT(dia));
 }
 
-/* TODO: This isnt needed any more. Where do we clean the properties dia? */
+#if 0
 static void
-_e_fm_file_menu_properties_del_cb(E_Win *win)
+_e_fm_icon_prop_fill_data( E_Fm_Icon_CFData *cfdata)
 {
-   E_Fileman_File *file;
-   Evas_List *l;
+   cfdata->protect = 1
+   cfdata->readwrite = 0;
+}
 
-   file = win->data;
+static void *
+_e_fm_icon_prop_create_data(E_Config_Dialog *cfd)
+{
+   E_Fm_Icon_CFData *cfdata;
+   
+   cfdata = E_NEW(CFData, 1);
+   _fill_data(cfdata);
+   return cfdata;   
+}
 
-   for (l = file->prop.objects; l; l = l->next)
-     evas_object_del(l->data);
+static void
+_e_fm_icon_prop_free_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
+{   
+   free(cfdata);
+}
 
-   e_object_del(E_OBJECT(win));
+static int
+_e_fm_icon_prop_basic_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
+{
+   return 1;
+}
+   
+static int
+_e_fm_icon_prop_advanced_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
+{
+   return 1;
+}
+
+static Evas_Object *
+_e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon_CFData *cfdata)
+{
+   E_Fm_File *file;
+   E_Win *win;
+   Evas_Object *table;
+   Evas_Object *name;
+   Evas_Coord w, h;
+   struct group *grp;
+   struct passwd *usr;
+   struct tm *t;
+   char *fullname;
+   char *size, *username, *groupname, *lastaccess, *lastmod, *permissions;
+   char text[512];
+   E_Dialog *dia;
+   Evas_Object *o, *ol, *hb;
+   Evas_Coord mw, mh;
+   E_Radio_Group *rg;	   
+   Evas *e;
+   
+   file = cfdata->file;
+
+   _e_fm_icon_prop_fill_data(cfdata);
+   
+   
+   size = E_NEW(char, 64);
+   snprintf(size, 64, "%ld KB", file->attr->size / 1024);
+
+   username = E_NEW(char, 128); // max length of username?
+   usr = getpwuid(file->attr->owner);
+   snprintf(username, 128, "%s", usr->pw_name);
+   //free(usr);
+
+   groupname = E_NEW(char, 128); // max length of group?
+   grp = getgrgid(file->attr->group);
+   snprintf(groupname, 128, "%s", grp->gr_name);
+   //free(grp);
+
+   t = gmtime(&file->attr->atime);
+   lastaccess = E_NEW(char, 128);
+   strftime(lastaccess, 128, "%a %b %d %T %Y", t);
+
+   t = gmtime(&file->attr->mtime);
+   lastmod = E_NEW(char, 128);
+   strftime(lastmod, 128, "%a %b %d %T %Y", t);
+
+   permissions = E_NEW(char, 128); // todo
+   snprintf(permissions, 128, "%s", "");
+    
+   dia = e_dialog_new(file->sd->win->container);
+   e_dialog_title_set(dia, _("Properties"));   		   
+   e = e_win_evas_get(dia->win);   
+   
+   ol = e_widget_list_add(e, 0, 0);
+   
+   hb = e_widget_list_add(e, 1, 1);
+   
+   o = e_widget_frametable_add(e, _("General"), 0);
+   
+   snprintf(text, 512, _("File:"));
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				     0, 0, 1, 1,
+				     1, 1, 1, 1);
+   snprintf(text, 512, "%s", file->attr->name);
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				    1, 0, 1, 1,
+				    1, 1, 1, 1);
+   
+   snprintf(text, 512, _("Size:"));
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				     0, 1, 1, 1,
+				     1, 1, 1, 1);
+   snprintf(text, 512, "%s Kb", size);
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				    1, 1, 1, 1,
+				    1, 1, 1, 1);
+   
+   snprintf(text, 512, _("Type:"));
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				     0, 2, 1, 1,
+				     1, 1, 1, 1);
+   snprintf(text, 512, "%s", "An Image");
+   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+				    1, 2, 1, 1,
+				    1, 1, 1, 1);
+   
+   e_widget_frametable_object_append(o, e_widget_check_add(e, _("Protect this file"), &dummy_val),
+			    0, 3, 2, 1,
+			    1, 1, 1, 1);
+   
+   rg = e_widget_radio_group_new(&dummy_val);
+   
+   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others see this file"), 0, rg),
+				     0, 4, 2, 1,
+				     1, 1, 1, 1);
+   
+   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others modify this file"), 0, rg),
+				     0, 5, 2, 1,
+				     1, 1, 1, 1);
+   
+   e_widget_list_object_append(ol, hb, 1, 0, 0.0);
+   
+   e_widget_min_size_get(ol, &w, &h);
+   
+   return ol;
+   
+}
+
+static Evas_Object *
+_e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon_CFData *cfdata)
+{
+   
 }
 
 static void
 _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;   
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_View v;
+   
+   file = data;
+   
+   
+   /* methods */
+   v.create_cfdata           = _e_fm_icon_prop_create_data;
+   v.free_cfdata             = _e_fm_icon_prop_free_data;
+   v.basic.apply_cfdata      = _e_fm_icon_prop_basic_apply_data;
+   v.basic.create_widgets    = _e_fm_icon_prop_basic_create_widgets;
+   v.advanced.apply_cfdata   = _e_fm_icon_prop_advanced_apply_data;
+   v.advanced.create_widgets = _e_fm_icon_prop_advanced_create_widgets;
+   /* create config diaolg for NULL object/data */
+   cfd = e_config_dialog_new(file->sd->win->container, _("Properties"), NULL, 0, &v, NULL);
+   
+}
+#endif
+static void
+_e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Fm_File *file;
    E_Win *win;
    Evas_Object *table;
    Evas_Object *name;
@@ -1689,7 +1863,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    
    e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others modify this file"), 0, rg),
 				     0, 5, 2, 1,
-				     1, 1, 1, 1);   
+				     1, 1, 1, 1);
    
 /* Use those in advanced dialog.
    
@@ -1783,7 +1957,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_fake_mouse_up_cb(void *data)
 {
-   E_Fileman_Fake_Mouse_Up_Info *info;
+   E_Fm_Fake_Mouse_Up_Info *info;
 
    info = data;
    if (!info) return;
@@ -1795,9 +1969,9 @@ _e_fm_fake_mouse_up_cb(void *data)
 static void
 _e_fm_fake_mouse_up_later(Evas *evas, int button)
 {
-   E_Fileman_Fake_Mouse_Up_Info *info;
+   E_Fm_Fake_Mouse_Up_Info *info;
 
-   info = E_NEW(E_Fileman_Fake_Mouse_Up_Info, 1);
+   info = E_NEW(E_Fm_Fake_Mouse_Up_Info, 1);
    if (!info) return;
 
    info->canvas = evas;
@@ -1816,7 +1990,7 @@ _e_fm_fake_mouse_up_all_later(Evas *evas)
 static int
 _e_fm_dir_files_sort_name_cb(void *d1, void *d2)
 {
-   E_Fileman_File_Attributes *de1, *de2;
+   E_Fm_File_Attributes *de1, *de2;
 
    de1 = d1;
    de2 = d2;
@@ -1827,10 +2001,10 @@ _e_fm_dir_files_sort_name_cb(void *d1, void *d2)
 static int
 _e_fm_dir_files_sort_modtime_cb(void *d1, void *d2)
 {
-   E_Fileman_File_Attributes *de1, *de2;
+   E_Fm_File_Attributes *de1, *de2;
    
-   de1 = (E_Fileman_File_Attributes*)d1;
-   de2 = (E_Fileman_File_Attributes*)d2;
+   de1 = (E_Fm_File_Attributes*)d1;
+   de2 = (E_Fm_File_Attributes*)d2;
    
    return (de1->mtime > de2->mtime);   
 }
@@ -1838,7 +2012,7 @@ _e_fm_dir_files_sort_modtime_cb(void *d1, void *d2)
 static void
 _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_Event_Mouse_Up *ev;
 
    sd = data;
@@ -1859,7 +2033,7 @@ _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_Event_Mouse_Move *ev;
 
    ev = event_info;
@@ -1925,7 +2099,7 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Evas_Event_Mouse_Down *ev;
    E_Menu      *mn;
    E_Menu_Item *mi;
@@ -2044,7 +2218,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 static void
 _e_fm_file_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    Evas_Event_Mouse_Move *ev;
 
    ev = event_info;
@@ -2058,7 +2232,7 @@ _e_fm_file_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_i
 static void
 _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    Evas_Event_Mouse_Down *ev;
 
    ev = event_info;
@@ -2100,7 +2274,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 
 	    fullname = _e_fm_file_fullname(file);
 	    if(!_e_fm_file_open_assoc(file))
-	      if (ecore_file_can_exec(fullname))
+	      if (_e_fm_file_can_exec(file))
 		_e_fm_file_exec(file);
 	    free(fullname);
 	 }
@@ -2217,7 +2391,7 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 static void
 _e_fm_file_icon_mouse_in_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    Evas_Event_Mouse_In *ev;
 
    ev = event_info;
@@ -2230,7 +2404,7 @@ _e_fm_file_icon_mouse_in_cb(void *data, Evas *e, Evas_Object *obj, void *event_i
 static void
 _e_fm_file_icon_mouse_out_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   E_Fileman_File *file;
+   E_Fm_File *file;
    Evas_Event_Mouse_Out *ev;
 
    ev = event_info;
@@ -2243,7 +2417,7 @@ _e_fm_file_icon_mouse_out_cb(void *data, Evas *e, Evas_Object *obj, void *event_
 static void
 _e_fm_menu_arrange_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    sd = data;
 
@@ -2274,8 +2448,8 @@ _e_fm_drop_cb(E_Drag *drag, int dropped)
 static int
 _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 {
-   E_Fileman_Smart_Data *sd;
-   E_Fileman_File *file;
+   E_Fm_Smart_Data *sd;
+   E_Fm_File *file;
    Ecore_X_Event_Mouse_Move *ev;
 
    ev = event;
@@ -2357,7 +2531,7 @@ static int
 _e_fm_drop_enter_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Enter *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    ev = event;
    sd = data;
@@ -2370,7 +2544,7 @@ static int
 _e_fm_drop_leave_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Leave *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    ev = event;
    sd = data;
@@ -2383,7 +2557,7 @@ static int
 _e_fm_drop_position_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Position *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Ecore_X_Rectangle rect;
 
    ev = event;
@@ -2404,7 +2578,7 @@ static int
 _e_fm_drop_drop_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Xdnd_Drop *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    ev = event;
    sd = data;
@@ -2419,7 +2593,7 @@ static int
 _e_fm_drop_selection_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Selection_Notify *ev;
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
    Ecore_X_Selection_Data_Files *files;
    int i;
 
@@ -2447,7 +2621,7 @@ _e_fm_drop_selection_cb(void *data, int type, void *event)
 static void
 _e_fm_menu_refresh_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fileman_Smart_Data *sd;
+   E_Fm_Smart_Data *sd;
 
    sd = data;
    // optimize!!
@@ -2459,7 +2633,7 @@ _e_fm_grabbed_mouse_up_cb(void *data, int type, void *event)
 {
    Ecore_X_Event_Mouse_Button_Up *ev;
    double t;
-   E_Fileman_File *file;
+   E_Fm_File *file;
    const char *name;
 
    ev = event;
@@ -2552,10 +2726,10 @@ _e_fm_file_thumb_create(char *file)
 }
 
 static Evas_Object *
-_e_fm_file_thumb_get(E_Fileman_File *file)
+_e_fm_file_thumb_get(E_Fm_File *file)
 {
    Eet_File *ef;
-   char *thumb, *fullname;
+   char *thumb, *fullname, *ext;
    Evas_Object *im = NULL;
    void *data;
    unsigned int w, h;
@@ -2563,6 +2737,27 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
    
 
    fullname = _e_fm_file_fullname(file);
+   
+   ext = strrchr(file->attr->name, '.');   
+   if(ext)
+    {
+       if(!strcasecmp(ext, ".eap"))
+	{
+	   E_App *app;
+	   
+	   app = e_app_new(fullname, 0);
+	   
+	   if(!app)
+	    { /* fallback icon */ }
+	   
+	   im = edje_object_add(file->sd->evas);
+	   edje_object_file_set(im, fullname, "icon");
+	   free(fullname);
+	   e_object_unref(E_OBJECT(a));       
+	   return im;       
+	}
+    }      
+   
    if (!_e_fm_file_thumb_exists(fullname))
      _e_fm_file_thumb_create(fullname);
 
@@ -2595,8 +2790,8 @@ _e_fm_file_thumb_get(E_Fileman_File *file)
    return im;
 }
 
-static E_Fileman_File_Type
-_e_fm_file_type(E_Fileman_File *file)
+static E_Fm_File_Type
+_e_fm_file_type(E_Fm_File *file)
 {
    if (S_ISDIR(file->attr->mode))
      return E_FILEMAN_FILETYPE_DIRECTORY;
@@ -2609,11 +2804,11 @@ _e_fm_file_type(E_Fileman_File *file)
 }
 
 static Evas_Bool
-_e_fm_file_open_assoc(E_Fileman_File *file)
+_e_fm_file_open_assoc(E_Fm_File *file)
 {
    char fullname[PATH_MAX * 2];
    Evas_List *l;
-   E_Fileman_Assoc_App *assoc;
+   E_Fm_Assoc_App *assoc;
    Ecore_Exe *exe;   
    
    for (l = file->sd->conf.main->apps; l; l = l->next)
@@ -2622,7 +2817,7 @@ _e_fm_file_open_assoc(E_Fileman_File *file)
        
        assoc = l->data;       
        ext = strrchr(file->attr->name, '.');       
-       if(!strcmp(ext, assoc->mime))	
+       if(!strcasecmp(ext, assoc->mime))	
 	 break;
        assoc = NULL;
     }
@@ -2647,12 +2842,58 @@ _e_fm_file_open_assoc(E_Fileman_File *file)
    return TRUE;
 }
 
+static Evas_Bool
+_e_fm_file_can_exec(E_Fm_File *file)
+{
+   char *ext;
+   char *fullname;
+         
+   ext = strrchr(file->attr->name, '.');
+   if(ext)
+    {
+       if(!strcasecmp(ext, ".eap"))
+	 return TRUE;      
+    }
+   
+   fullname = _e_fm_file_fullname(file);     
+   if(ecore_file_can_exec(fullname))
+    {
+       free(fullname);
+       return TRUE;
+    }
+
+   free(fullname);   
+   return FALSE;      
+}
+
 static void
-_e_fm_file_exec(E_Fileman_File *file)
+_e_fm_file_exec(E_Fm_File *file)
 {
    Ecore_Exe *exe;
-   char *fullname;
-
+   char *fullname, *ext;
+   
+   
+   ext = strrchr(file->attr->name, '.');   
+   if(ext)
+    {
+       if(!strcasecmp(ext, ".eap"))
+	{
+	   E_App *e_app;
+	   Ecore_Exe *exe;
+	   
+	   fullname = _e_fm_file_fullname(file);	   
+	   e_app = e_app_new(fullname, NULL);
+	   free(fullname);
+	   
+	   if(!e_app) return;
+	   
+	   exe = ecore_exe_run(e_app->exe, NULL);
+	   if (exe) ecore_exe_free(exe);
+	   e_object_unref(E_OBJECT(e_app));
+	   return;
+	}
+    }
+   
    fullname = _e_fm_file_fullname(file);
    exe = ecore_exe_run(fullname, NULL);
    if (!exe)
@@ -2671,7 +2912,7 @@ _e_fm_file_exec(E_Fileman_File *file)
 }
 
 static char *
-_e_fm_file_fullname(E_Fileman_File *file)
+_e_fm_file_fullname(E_Fm_File *file)
 {
    char fullname[PATH_MAX];
 
