@@ -185,8 +185,7 @@ struct _E_Fm_Smart_Data
    Ecore_File_Monitor *monitor;
    int arrange;
 
-   int file_offset;
-   int visible_files;
+   int frozen;
    double position;
 
    Evas_Coord x, y, w, h;
@@ -252,7 +251,6 @@ static void _e_fm_smart_hide(Evas_Object *object);
 
 static void                _e_fm_redraw_new(E_Fm_Smart_Data *sd);
 static void                _e_fm_redraw(E_Fm_Smart_Data *sd);
-static void                _e_fm_size_calc(E_Fm_Smart_Data *sd);
 static void                _e_fm_stat_to_attr(struct stat st, E_Fm_File_Attributes *attr, char *name);
 static void                _e_fm_selections_clear(E_Fm_Smart_Data *sd);
 static void                _e_fm_selections_add(E_Fm_File *file);
@@ -435,31 +433,47 @@ e_fm_scroll_vertical(Evas_Object *object, double percent)
 {
    E_Fm_Smart_Data *sd;
    int offsetpx;
-   Evas_Coord bx, by, bw, bh;
+   Evas_Coord x, y, w, h;   
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   
-   offsetpx = (sd->position - percent) * (sd->max.h - sd->h);
+
    sd->position = percent;
    
-   if (offsetpx > 0) // moving up
-    {       
-       Evas_Coord x, y, w, h;
-       evas_object_geometry_get(sd->layout, &x, &h, NULL, NULL);
-       offsetpx = abs(offsetpx);       
-       e_icon_layout_clip_freeze(sd->layout);
-       evas_object_move(sd->layout, x, h + offsetpx);
-       e_icon_layout_clip_thaw(sd->layout);       
-    } else if (offsetpx < 0) // moving down
-	{
-	   Evas_Coord x, y, w, h;
-	   evas_object_geometry_get(sd->layout, &x, &h, NULL, NULL);
-	   offsetpx = abs(offsetpx);
-	   e_icon_layout_clip_freeze(sd->layout);	   
-	   evas_object_move(sd->layout, x, h - offsetpx);
-	   e_icon_layout_clip_thaw(sd->layout);	   
-	}      
+   offsetpx = (percent) * (sd->max.h - sd->h);   
+   
+   evas_object_geometry_get(sd->layout, &x, &y, &w, &h);
+   e_icon_layout_clip_freeze(sd->layout);
+   evas_object_move(sd->layout, x, sd->y - offsetpx);       
+   e_icon_layout_clip_thaw(sd->layout);           
+}
+
+int
+e_fm_freeze(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   sd->frozen++;
+   evas_event_freeze(sd->evas);   
+   return sd->frozen;
+}
+
+int
+e_fm_thaw(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   if(!sd->frozen) return 0;
+   
+   sd->frozen--;
+   evas_event_thaw(sd->evas);
+   return sd->frozen;
 }
 
 void
@@ -494,6 +508,8 @@ _e_fm_smart_add(Evas_Object *object)
    if (!sd) return;
 
    sd->object = object;   
+
+   sd->frozen = 0;
    
    sd->bg = evas_object_rectangle_add(evas); // this should become an edje
    evas_object_color_set(sd->bg, 0, 0, 0, 0);
@@ -527,7 +543,6 @@ _e_fm_smart_add(Evas_Object *object)
    sd->icon_info.y_space = 15;
    
    sd->monitor = NULL;
-   sd->file_offset = 0;
    sd->position = 0;
    sd->evas = evas;
    sd->pending_thumbs = NULL;
@@ -768,9 +783,11 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
    // optimize
    //   _e_fm_redraw(sd); // no new
    
-   if(sd->position > 0)
+   if(sd->position > 0.0)
      e_fm_scroll_vertical(object, sd->position);
    
+   if(sd->frozen)
+     return;   
    
    ev = E_NEW(E_Event_Fm_Reconfigure, 1);
    if (ev)
@@ -778,12 +795,11 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
        Evas_Coord w, h;
        
        evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
-       
        ev->object = sd->object;
        ev->w = sd->max.w;
        ev->h = sd->max.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
-    }      
+    }
 }
 
 static void
@@ -897,6 +913,9 @@ _e_fm_redraw_new(E_Fm_Smart_Data *sd)
      }
    
    e_icon_layout_thaw(sd->layout);
+
+   if(sd->frozen)
+     return;
       
    ev = E_NEW(E_Event_Fm_Reconfigure, 1);
    if (ev)
@@ -904,7 +923,6 @@ _e_fm_redraw_new(E_Fm_Smart_Data *sd)
        Evas_Coord w, h;
        
        evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
-       
        ev->object = sd->object;
        ev->w = sd->max.w;
        ev->h = sd->max.h;
@@ -919,12 +937,14 @@ _e_fm_redraw(E_Fm_Smart_Data *sd)
    E_Event_Fm_Reconfigure *ev;
    
    e_icon_layout_redraw_force(sd->layout);
-   
+
+   if(sd->frozen)
+     return;
+      
    ev = E_NEW(E_Event_Fm_Reconfigure, 1);
    if (ev)
     {
        Evas_Coord w, h;
-       
        evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
        
        ev->object = sd->object;
@@ -932,70 +952,6 @@ _e_fm_redraw(E_Fm_Smart_Data *sd)
        ev->h = sd->max.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }   
-}
-
-// when this is enabled, the thumbnailer is broken, double check if its
-// still broken. seems ok.
-static void
-_e_fm_size_calc(E_Fm_Smart_Data *sd)
-{
-   Evas_List *dirs = NULL;
-   Evas_Coord xbg, x, y, w, h;
-   E_Fm_File *file;
-   E_Fm_File_Attributes *attr;
-
-   if (!sd->dir)
-     return;
-
-   evas_object_geometry_get(sd->bg, &x, &y, &w, &h);
-   xbg = x;
-   x = 0;
-   y = 0;
-
-   dirs = sd->files_raw;
-
-   attr = E_NEW(E_Fm_File_Attributes, 1);
-   attr->mode = 0040000;
-   snprintf(attr->name, PATH_MAX, "..");
-
-   dirs = evas_list_prepend(dirs, attr);
-
-   while (dirs)
-     {
-	int icon_w, icon_h;
-
-	attr = evas_list_data(dirs);
-      
-	file = E_NEW(E_Fm_File, 1);
-	file->icon = edje_object_add(sd->evas);;
-	e_theme_edje_object_set(file->icon, "base/theme/fileman", "fileman/icon");
-	file->attr = attr;
-	file->sd = sd;
-	file->icon_img = _e_fm_file_icon_get(file); // this might be causing borkage
-	edje_object_part_swallow(file->icon, "icon_swallow", file->icon_img);
-	edje_object_part_text_set(file->icon, "icon_title", attr->name);
-	edje_object_size_min_calc(file->icon, &icon_w, &icon_h);
-
-	if ((x > w) || ((x + icon_w) > w))
-	  {
-	     x = sd->icon_info.x_space;
-	     y += icon_h + sd->icon_info.y_space;
-	  }
-
-	x += icon_w + sd->icon_info.x_space;
-
-	edje_object_part_unswallow(file->icon, file->icon_img);
-	evas_object_del(file->icon_img);	
-	evas_object_del(file->icon);
-	file->attr = NULL;
-	file->sd = NULL;
-	free(file);
-
-	dirs = dirs->next;
-     }
-
-   sd->max.w = xbg;
-   sd->max.h = y;
 }
 
 static void
@@ -2286,7 +2242,6 @@ _e_fm_file_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event
 	    file->sd->drag.y = -1;
 	    file->sd->drag.x = -1;
 	    file->sd->drag.file = file;
-	    printf("drag file: %s\n", file->attr->name);
 
 	    if (!file->state.selected)
 	      {

@@ -26,6 +26,8 @@ EAPI void                  e_fm_scroll_horizontal(Evas_Object *object, double pe
 EAPI void                  e_fm_scroll_vertical(Evas_Object *object, double percent);
 EAPI void                  e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h);
 EAPI void                  e_fm_reconfigure_callback_add(Evas_Object *object, void (*func)(void *data, Evas_Object *obj, E_Event_Fm_Reconfigure *ev), void *data);
+EAPI int                   e_fm_freeze(Evas_Object *freeze);
+EAPI int                   e_fm_thaw(Evas_Object *freeze);
     
 extern int E_EVENT_FM_RECONFIGURE;
 #endif
