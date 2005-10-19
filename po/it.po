@@ -6,13 +6,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-16 14:26+0200\n"
-"PO-Revision-Date: 2005-10-16 14:51+0200\n"
+"POT-Creation-Date: 2005-10-18 21:01+0200\n"
+"PO-Revision-Date: 2005-10-18 21:26+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
+
+#: src/bin/e_int_border_locks.c:65 src/bin/e_border.c:6374
+msgid "Window Locks"
+msgstr "Blocchi finestre"
+
+#: src/bin/e_int_border_locks.c:289
+msgid "Generic Locks"
+msgstr "Blocchi generici"
+
+#: src/bin/e_int_border_locks.c:290
+msgid "Lock the Window so it does only what I tell it to"
+msgstr "Blocca la finestra in modo da controllarne il comportamento"
+
+#: src/bin/e_int_border_locks.c:292
+msgid "Protect this window from me accidentally changing it"
+msgstr "Proteggi questa finestra da modifiche accidentali"
+
+#: src/bin/e_int_border_locks.c:294
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr "Proteggi questa finestra dalla chiusura accidentale"
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Do not allow the border to change on this window"
+msgstr "Non consentire modifiche ai bordi su questa finestra"
+
+#: src/bin/e_int_border_locks.c:299
+msgid "Remember these Locks for this window next time it appears"
+msgstr "Ricorda questi blocchi alla prossima apertura della finestra"
+
+#: src/bin/e_int_border_locks.c:315
+msgid "Lock program changing:"
+msgstr "Impedisci al programma di cambiarne:"
+
+#: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
+msgid "Position"
+msgstr "Posizione"
+
+#: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
+#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
+#: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
+msgid "Size"
+msgstr "Dimensione"
+
+#: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
+#: src/bin/e_border.c:6324
+msgid "Stacking"
+msgstr "Livello"
+
+#: src/bin/e_int_border_locks.c:322 src/bin/e_int_border_locks.c:341
+msgid "Iconified state"
+msgstr "Stato di iconificata"
+
+#: src/bin/e_int_border_locks.c:324 src/bin/e_int_border_locks.c:343
+msgid "Stickiness"
+msgstr "Stato di appiccicata"
+
+#: src/bin/e_int_border_locks.c:326 src/bin/e_int_border_locks.c:345
+msgid "Shaded state"
+msgstr "Stato di arrotolata"
+
+#: src/bin/e_int_border_locks.c:328 src/bin/e_int_border_locks.c:347
+msgid "Maximized state"
+msgstr "Stato di massimizzata"
+
+#: src/bin/e_int_border_locks.c:330 src/bin/e_int_border_locks.c:349
+msgid "Fullscreen state"
+msgstr "Stato a tutto schermo"
+
+#: src/bin/e_int_border_locks.c:334
+msgid "Lock me from changing:"
+msgstr "Impedisci all'utente di cambiarne:"
+
+#: src/bin/e_int_border_locks.c:351
+msgid "The border style"
+msgstr "Stile di bordo"
+
+#: src/bin/e_int_border_locks.c:355
+msgid "Stop me from:"
+msgstr "Impedisci all'utente di:"
+
+#: src/bin/e_int_border_locks.c:356
+msgid "Closing the window"
+msgstr "Chiudere la finestra"
+
+#: src/bin/e_int_border_locks.c:358
+msgid "Exiting my login with this window open"
+msgstr "Uscire dalla sessione con questa finestra aperta"
+
+#: src/bin/e_int_border_locks.c:362
+msgid "Remember these Locks"
+msgstr "Ricorda questi blocchi"
 
 #: src/bin/e_int_menus.c:83
 msgid "Favorite Applications"
@@ -122,13 +214,13 @@ msgstr "(Inutilizzato)"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2635
-#: src/bin/e_fileman_smart.c:2657 src/bin/e_utils.c:213
+#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2833
+#: src/bin/e_fileman_smart.c:2901 src/bin/e_utils.c:213
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2636
-#: src/bin/e_fileman_smart.c:2658 src/bin/e_utils.c:214
+#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2834
+#: src/bin/e_fileman_smart.c:2902 src/bin/e_utils.c:214
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -233,7 +325,7 @@ msgstr "Impostazioni avanzate"
 msgid "Basic Settings"
 msgstr "Impostazioni di base"
 
-#: src/bin/e_config_dialog.c:113 src/bin/e_fileman_smart.c:1769
+#: src/bin/e_config_dialog.c:113 src/bin/e_fileman_smart.c:1946
 #: src/bin/e_module.c:399 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/modules/ibar/e_mod_main.c:1682
 msgid "OK"
@@ -243,128 +335,129 @@ msgstr "OK"
 msgid "Apply"
 msgstr "Applica"
 
-#: src/bin/e_config_dialog.c:115 src/bin/e_fileman_smart.c:1771
+#: src/bin/e_config_dialog.c:115 src/bin/e_fileman_smart.c:1948
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_fileman_smart.c:1302 src/modules/cpufreq/e_mod_main.c:305
+#: src/bin/e_fileman_smart.c:1321 src/modules/cpufreq/e_mod_main.c:305
 #: src/modules/cpufreq/e_mod_main.c:333 src/modules/battery/e_mod_main.c:762
 msgid "Ok"
 msgstr "Ok"
 
-#: src/bin/e_fileman_smart.c:1304
+#: src/bin/e_fileman_smart.c:1323
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fileman_smart.c:1306
+#: src/bin/e_fileman_smart.c:1325
 #, c-format
 msgid "Could not delete  <br><b>%s</b> ?"
 msgstr "Impossibile cancellare  <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1549 src/bin/e_module.c:539
+#: src/bin/e_fileman_smart.c:1569 src/bin/e_module.c:539
 #: src/bin/e_actions.c:1200 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_fileman_smart.c:1550 src/bin/e_module.c:540
+#: src/bin/e_fileman_smart.c:1570 src/bin/e_module.c:540
 #: src/bin/e_actions.c:1202 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "No"
 
-#: src/bin/e_fileman_smart.c:1552
+#: src/bin/e_fileman_smart.c:1572
 msgid "Confirm"
 msgstr "Conferma"
 
-#: src/bin/e_fileman_smart.c:1554
+#: src/bin/e_fileman_smart.c:1574
 #, c-format
 msgid " Are you sure you want to delete <br><b>%s</b> ?"
 msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
 
-#: src/bin/e_fileman_smart.c:1641 src/bin/e_fileman_smart.c:2025
-#: src/bin/e_fileman_smart.c:2194
+#: src/bin/e_fileman_smart.c:1684 src/bin/e_fileman_smart.c:1766
+#: src/bin/e_fileman_smart.c:1818 src/bin/e_fileman_smart.c:2202
+#: src/bin/e_fileman_smart.c:2371
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fileman_smart.c:1648
+#: src/bin/e_fileman_smart.c:1691 src/bin/e_fileman_smart.c:1825
 msgid "General"
 msgstr "Generale"
 
-#: src/bin/e_fileman_smart.c:1650
+#: src/bin/e_fileman_smart.c:1693 src/bin/e_fileman_smart.c:1827
 #, c-format
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fileman_smart.c:1659
+#: src/bin/e_fileman_smart.c:1702 src/bin/e_fileman_smart.c:1836
 #, c-format
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: src/bin/e_fileman_smart.c:1668
+#: src/bin/e_fileman_smart.c:1711 src/bin/e_fileman_smart.c:1845
 #, c-format
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_fileman_smart.c:1677
+#: src/bin/e_fileman_smart.c:1720 src/bin/e_fileman_smart.c:1854
 msgid "Protect this file"
 msgstr "Proteggi questo file"
 
-#: src/bin/e_fileman_smart.c:1683
+#: src/bin/e_fileman_smart.c:1726 src/bin/e_fileman_smart.c:1860
 msgid "Let others see this file"
 msgstr "Consenti che gli altri vedano il file"
 
-#: src/bin/e_fileman_smart.c:1687
+#: src/bin/e_fileman_smart.c:1730 src/bin/e_fileman_smart.c:1864
 msgid "Let others modify this file"
 msgstr "Consenti che gli altri modifichino il file"
 
-#: src/bin/e_fileman_smart.c:1761
+#: src/bin/e_fileman_smart.c:1938
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_fileman_smart.c:1957
+#: src/bin/e_fileman_smart.c:2134
 msgid "Arrange Icons"
 msgstr "Ordina icone"
 
-#: src/bin/e_fileman_smart.c:1967
+#: src/bin/e_fileman_smart.c:2144
 msgid "By Name"
 msgstr "Per nome"
 
-#: src/bin/e_fileman_smart.c:1978
+#: src/bin/e_fileman_smart.c:2155
 msgid "By Mod Time"
 msgstr "Per data di modifica"
 
-#: src/bin/e_fileman_smart.c:1989
+#: src/bin/e_fileman_smart.c:2166
 msgid "View"
 msgstr "Vista"
 
-#: src/bin/e_fileman_smart.c:1999
+#: src/bin/e_fileman_smart.c:2176
 msgid "Name Only"
 msgstr "Solo nome"
 
-#: src/bin/e_fileman_smart.c:2008
+#: src/bin/e_fileman_smart.c:2185
 msgid "Details"
 msgstr "Dettagli"
 
-#: src/bin/e_fileman_smart.c:2017
+#: src/bin/e_fileman_smart.c:2194
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: src/bin/e_fileman_smart.c:2145
+#: src/bin/e_fileman_smart.c:2322
 msgid "Open"
 msgstr "Apri"
 
-#: src/bin/e_fileman_smart.c:2156
+#: src/bin/e_fileman_smart.c:2333
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fileman_smart.c:2164
+#: src/bin/e_fileman_smart.c:2341
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fileman_smart.c:2175
+#: src/bin/e_fileman_smart.c:2352
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fileman_smart.c:2183
+#: src/bin/e_fileman_smart.c:2360
 msgid "Delete"
 msgstr "Cancella"
 
@@ -873,190 +966,148 @@ msgstr ""
 "Questo significa che Enlightenment non uscirà finche queste finestre\n"
 "non saranno chiuse o avranno il blocco Perpetua disabilitato.\n"
 
-#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
-msgid "Position"
-msgstr "Posizione"
-
-#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
-#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
-#: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
-msgid "Size"
-msgstr "Dimensione"
-
-#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6415
-msgid "Stacking"
-msgstr "Livello"
-
-#: src/bin/e_border.c:6200 src/bin/e_border.c:6213 src/bin/e_border.c:6351
-msgid "Iconify"
-msgstr "Iconifica"
-
-#: src/bin/e_border.c:6202 src/bin/e_border.c:6215 src/bin/e_border.c:6404
-msgid "Sticky"
-msgstr "Appiccicata"
-
-#: src/bin/e_border.c:6203 src/bin/e_border.c:6216
-msgid "Shade"
-msgstr "Arrotolata"
-
-#: src/bin/e_border.c:6204 src/bin/e_border.c:6217
-msgid "Maximize"
-msgstr "Massimizzata"
-
-#: src/bin/e_border.c:6205 src/bin/e_border.c:6218 src/bin/e_border.c:6437
-msgid "Fullscreen"
-msgstr "A tutto schermo"
-
-#: src/bin/e_border.c:6224
-msgid "User"
-msgstr "Per utente"
-
-#: src/bin/e_border.c:6232
-msgid "Application"
-msgstr "Per applicazione"
-
-#: src/bin/e_border.c:6242
-msgid "Border"
-msgstr "Bordo"
-
-#: src/bin/e_border.c:6243 src/bin/e_border.c:6340
-msgid "Close"
-msgstr "Chiudi"
-
-#: src/bin/e_border.c:6246
-msgid "Lifespan"
-msgstr "Perpetua"
-
-#: src/bin/e_border.c:6260
+#: src/bin/e_border.c:6169
 msgid "Remember This Window"
 msgstr "Ricorda per questa finestra"
 
-#: src/bin/e_border.c:6267
+#: src/bin/e_border.c:6176
 msgid "Remember This Instance Only"
 msgstr "Ricorda solo per questa istanza"
 
-#: src/bin/e_border.c:6270
+#: src/bin/e_border.c:6179
 msgid "Match by Name"
 msgstr "Identifica per nome"
 
-#: src/bin/e_border.c:6271
+#: src/bin/e_border.c:6180
 msgid "Match by Class"
 msgstr "Identifica per classe"
 
-#: src/bin/e_border.c:6272
+#: src/bin/e_border.c:6181
 msgid "Match by Title"
 msgstr "Identifica per titolo"
 
-#: src/bin/e_border.c:6273
+#: src/bin/e_border.c:6182
 msgid "Match by Role"
 msgstr "Identifica per ruolo"
 
-#: src/bin/e_border.c:6274
+#: src/bin/e_border.c:6183
 msgid "Match by Window Type"
 msgstr "Identifica per tipo finestra"
 
-#: src/bin/e_border.c:6275
+#: src/bin/e_border.c:6184
 msgid "Match by Transient Status"
 msgstr "Identifica per stato transitorio"
 
-#: src/bin/e_border.c:6278
+#: src/bin/e_border.c:6187
 msgid "Remember Position"
 msgstr "Ricorda posizione"
 
-#: src/bin/e_border.c:6279
+#: src/bin/e_border.c:6188
 msgid "Remember Size"
 msgstr "Ricorda dimensione"
 
-#: src/bin/e_border.c:6280
+#: src/bin/e_border.c:6189
 msgid "Remember Stacking"
 msgstr "Ricorda livello"
 
-#: src/bin/e_border.c:6281
+#: src/bin/e_border.c:6190
 msgid "Remember Locks"
 msgstr "Ricorda blocchi"
 
-#: src/bin/e_border.c:6282
+#: src/bin/e_border.c:6191
 msgid "Remember Border"
 msgstr "Ricorda bordo"
 
-#: src/bin/e_border.c:6283
+#: src/bin/e_border.c:6192
 msgid "Remember Stickiness"
 msgstr "Ricorda stato appiccicata"
 
-#: src/bin/e_border.c:6284
+#: src/bin/e_border.c:6193
 msgid "Remember Desktop"
 msgstr "Ricorda desktop"
 
-#: src/bin/e_border.c:6285
+#: src/bin/e_border.c:6194
 msgid "Remember Shaded State"
 msgstr "Ricorda stato arrotolata"
 
-#: src/bin/e_border.c:6286
+#: src/bin/e_border.c:6195
 msgid "Remember Zone"
 msgstr "Ricorda zona"
 
-#: src/bin/e_border.c:6287
+#: src/bin/e_border.c:6196
 msgid "Remember Skip Window List"
 msgstr "Ricorda fuori lista finestre"
 
-#: src/bin/e_border.c:6301
+#: src/bin/e_border.c:6210
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_border.c:6311 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_border.c:6220 src/modules/clock/e_mod_main.c:349
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normale"
 
-#: src/bin/e_border.c:6321
+#: src/bin/e_border.c:6230
 msgid "Always Below"
 msgstr "Sempre sotto le altre"
 
-#: src/bin/e_border.c:6365
+#: src/bin/e_border.c:6249
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/bin/e_border.c:6260
+msgid "Iconify"
+msgstr "Iconifica"
+
+#: src/bin/e_border.c:6274
 msgid "Kill"
 msgstr "Uccidi"
 
-#: src/bin/e_border.c:6378
+#: src/bin/e_border.c:6287
 msgid "Shaded"
 msgstr "Arrotolata"
 
-#: src/bin/e_border.c:6391
+#: src/bin/e_border.c:6300
 msgid "Maximized"
 msgstr "Massimizzata"
 
-#: src/bin/e_border.c:6424
+#: src/bin/e_border.c:6313
+msgid "Sticky"
+msgstr "Appiccicata"
+
+#: src/bin/e_border.c:6333
 msgid "Borderless"
 msgstr "Senza bordo"
 
-#: src/bin/e_border.c:6451
+#: src/bin/e_border.c:6346
+msgid "Fullscreen"
+msgstr "A tutto schermo"
+
+#: src/bin/e_border.c:6360
 msgid "Skip Window List"
 msgstr "Fuori lista finestre"
 
-#: src/bin/e_border.c:6465
-msgid "Locks"
-msgstr "Blocchi"
-
-#: src/bin/e_border.c:6472
+#: src/bin/e_border.c:6381
 msgid "Remember"
 msgstr "Ricorda"
 
-#: src/bin/e_border.c:6482
+#: src/bin/e_border.c:6391
 msgid "Send To"
 msgstr "Invia a"
 
-#: src/bin/e_border.c:6500
+#: src/bin/e_border.c:6409
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_border.c:6527
+#: src/bin/e_border.c:6436
 msgid "Create Icon"
 msgstr "Crea icona"
 
-#: src/bin/e_border.c:6614
+#: src/bin/e_border.c:6523
 msgid "Icon Edit Error"
 msgstr "Errore dell'editor di icone"
 
-#: src/bin/e_border.c:6615
+#: src/bin/e_border.c:6524
 msgid ""
 "Error starting icon editor\n"
 "\n"
