@@ -37,6 +37,9 @@ e_util_container_fake_mouse_up_later(E_Container *con, int button)
 {
    E_Util_Fake_Mouse_Up_Info *info;
    
+   E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+   
    info = calloc(1, sizeof(E_Util_Fake_Mouse_Up_Info));
    if (info)
      {
@@ -50,6 +53,9 @@ e_util_container_fake_mouse_up_later(E_Container *con, int button)
 void
 e_util_container_fake_mouse_up_all_later(E_Container *con)
 {
+   E_OBJECT_CHECK(con);
+   E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
+   
    e_util_container_fake_mouse_up_later(con, 1);
    e_util_container_fake_mouse_up_later(con, 2);
    e_util_container_fake_mouse_up_later(con, 3);
@@ -94,6 +100,8 @@ e_util_zone_current_get(E_Manager *man)
 {
    E_Container *con;
    
+   E_OBJECT_CHECK_RETURN(man, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
    con = e_container_current_get(man);
    if (con)
      {
@@ -419,6 +427,9 @@ e_util_desk_border_above(E_Border *bd)
    Evas_List *l;
    int pos, i;
 
+   E_OBJECT_CHECK_RETURN(bd, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
+   
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
@@ -459,6 +470,9 @@ e_util_desk_border_below(E_Border *bd)
    Evas_List *l;
    int pos, i;
 
+   E_OBJECT_CHECK_RETURN(bd, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
+   
    if (bd->layer == 0) pos = 0;
    else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
    else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;

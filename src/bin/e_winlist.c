@@ -79,6 +79,9 @@ e_winlist_show(E_Zone *zone)
    E_Desk *desk;
    E_Border *bd;
    
+   E_OBJECT_CHECK_RETURN(zone, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
+   
    if (winlist) return 0;
 
    input_window = ecore_x_window_input_new(zone->container->win, 0, 0, 1, 1);
@@ -277,6 +280,7 @@ e_winlist_active_get(void)
 void
 e_winlist_next(void)
 {
+   if (!winlist) return;
    if (evas_list_count(wins) == 1)
      {
 	if (!win_selected)
@@ -300,6 +304,7 @@ e_winlist_next(void)
 void
 e_winlist_prev(void)
 {
+   if (!winlist) return;
    if (evas_list_count(wins) == 1)
      {
 	if (!win_selected)
@@ -323,6 +328,7 @@ e_winlist_prev(void)
 void
 e_winlist_modifiers_set(int mod)
 {
+   if (!winlist) return;
    hold_mod = mod;
    hold_count = 0;
    if (hold_mod & ECORE_X_MODIFIER_SHIFT) hold_count++;

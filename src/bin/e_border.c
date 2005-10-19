@@ -669,6 +669,7 @@ void
 e_border_resize(E_Border *bd, int w, int h)
 {
    E_Event_Border_Resize *ev;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
@@ -1683,8 +1684,8 @@ void
 e_border_iconify(E_Border *bd)
 {
    E_Event_Border_Iconify *ev;
-
    unsigned int iconic;
+   
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if ((bd->fullscreen) || (bd->shading)) return;
@@ -1938,6 +1939,8 @@ e_border_client_list()
 void
 e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->lock_user_location) return;
    if (!bd->moving)
      {
@@ -1960,6 +1963,8 @@ e_border_act_move_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 void
 e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->moving) return;
    bd->moving = 0;
    _e_border_pointer_move_end(bd);
@@ -1971,6 +1976,8 @@ e_border_act_move_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 void
 e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->lock_user_size) return;
    if (bd->resize_mode == RESIZE_NONE)
      {
@@ -2016,6 +2023,8 @@ e_border_act_resize_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev)
 void
 e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->resize_mode != RESIZE_NONE)
      {
 	_e_border_pointer_resize_end(bd);
@@ -2029,6 +2038,8 @@ e_border_act_resize_end(E_Border *bd, Ecore_X_Event_Mouse_Button_Up *ev)
 void
 e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int key)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (ev)
      {
 	_e_border_menu_show(bd,
@@ -2048,6 +2059,8 @@ e_border_act_menu_begin(E_Border *bd, Ecore_X_Event_Mouse_Button_Down *ev, int k
 void
 e_border_act_close_begin(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->lock_close) return;
    if (bd->client.icccm.delete_request)
      {
@@ -2063,6 +2076,8 @@ e_border_act_close_begin(E_Border *bd)
 void
 e_border_act_kill_begin(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->internal) return;
    if (bd->lock_close) return;
    if ((bd->client.netwm.pid > 1) && (e_config->kill_process))
@@ -2083,6 +2098,8 @@ e_border_icon_add(E_Border *bd, Evas *evas)
    Evas_Object *o;
    E_App *a = NULL;
    
+   E_OBJECT_CHECK_RETURN(bd, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
    if (bd->app)
      {
 	e_object_unref(E_OBJECT(bd->app));
@@ -2172,6 +2189,8 @@ e_border_lost_windows_get(E_Zone *zone)
    Evas_List *list = NULL, *l;
    int loss_overlap = 5;
    
+   E_OBJECT_CHECK_RETURN(zone, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, NULL);
    for (l = borders; l; l = l->next)
      {
 	E_Border *bd;
@@ -2231,8 +2250,9 @@ e_border_lost_windows_get(E_Zone *zone)
 void
 e_border_ping(E_Border *bd)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!e_config->ping_clients) return;
-
    bd->ping_ok = 0;
    ecore_x_netwm_ping_send(bd->client.win);
    bd->ping = ecore_time_get();
@@ -2317,18 +2337,21 @@ e_border_immortal_windows_get(void)
 const char *
 e_border_name_get(E_Border *bd)
 {
+   E_OBJECT_CHECK_RETURN(bd, "");
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, "");
    if (bd->client.netwm.name)
      return bd->client.netwm.name;
    else if (bd->client.icccm.title)
      return bd->client.icccm.title;
-   else
-     return "";
+   return "";
 }
 
 
 void
 e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
    _e_border_pointer_move_begin(bd);
@@ -2339,6 +2362,8 @@ e_border_signal_move_begin(E_Border *bd, char *sig, char *src)
 void
 e_border_signal_move_end(E_Border *bd, char *sig, char *src)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!bd->moving) return;
    bd->moving = 0;
    _e_border_pointer_move_end(bd);
@@ -2350,6 +2375,8 @@ e_border_signal_move_end(E_Border *bd, char *sig, char *src)
 int
 e_border_resizing_get(E_Border *bd)
 {
+   E_OBJECT_CHECK_RETURN(bd, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, 0);
    if (bd->resize_mode == RESIZE_NONE) return 0;
    return 1;
 }
@@ -2360,6 +2387,8 @@ e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
    Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
    int resize_mode = RESIZE_BR;
 
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!_e_border_resize_begin(bd))
      return;
    if (!strcmp(dir, "tl"))
@@ -2411,6 +2440,8 @@ e_border_signal_resize_begin(E_Border *bd, char *dir, char *sig, char *src)
 void
 e_border_signal_resize_end(E_Border *bd, char *dir, char *sig, char *src)
 {
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (bd->resize_mode == RESIZE_NONE) return;
    _e_border_resize_handle(bd);
    _e_border_pointer_resize_end(bd);
@@ -2425,6 +2456,8 @@ e_border_resize_limit(E_Border *bd, int *w, int *h)
 {
    double a;
 
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    *w -= bd->client_inset.l + bd->client_inset.r;
    *h -= bd->client_inset.t + bd->client_inset.b;
    if (*h < 1) *h = 1;

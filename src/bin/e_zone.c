@@ -208,6 +208,9 @@ e_zone_move_resize(E_Zone *zone, int x, int y, int w, int h)
 void
 e_zone_fullscreen_set(E_Zone *zone, int on)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    if ((!zone->fullscreen) && (on))
      {
 	ecore_evas_show(zone->black_ecore_evas);
@@ -228,7 +231,7 @@ e_zone_current_get(E_Container *con)
  
    E_OBJECT_CHECK_RETURN(con, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
-  if (!starting)
+   if (!starting)
      {
 	int x, y;
 
@@ -260,6 +263,9 @@ e_zone_bg_reconfigure(E_Zone *zone)
 void
 e_zone_flip_coords_handle(E_Zone *zone, int x, int y)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    if ((y == 0) && E_ZONE_FLIP_UP(zone))
      {
 	/* top */
@@ -306,6 +312,9 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
    E_Border  *bd;
    E_Event_Zone_Desk_Count_Set *ev;
    E_Border_List *bl;
+   
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
    xx = x_count;
    if (xx < 1) xx = 1;
@@ -403,6 +412,9 @@ e_zone_desk_count_set(E_Zone *zone, int x_count, int y_count)
 void
 e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    *x_count = zone->desk_x_count;
    *y_count = zone->desk_y_count;
 }
@@ -410,6 +422,9 @@ e_zone_desk_count_get(E_Zone *zone, int *x_count, int *y_count)
 void
 e_zone_update_flip(E_Zone *zone)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    _e_zone_update_flip(zone);
 }
 
@@ -437,6 +452,9 @@ e_zone_update_flip_all(void)
 void
 e_zone_desk_flip_by(E_Zone *zone, int dx, int dy)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    dx = zone->desk_x_current + dx;
    dy = zone->desk_y_current + dy;
    e_zone_desk_flip_to(zone, dx, dy);
@@ -446,6 +464,9 @@ void
 e_zone_desk_flip_to(E_Zone *zone, int x, int y)
 {
    E_Desk *desk;
+   
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    
    if (x < 0) x = 0;
    else if (x >= zone->desk_x_count) x = zone->desk_x_count - 1;
@@ -458,6 +479,9 @@ e_zone_desk_flip_to(E_Zone *zone, int x, int y)
 void
 e_zone_desk_linear_flip_by(E_Zone *zone, int dx)
 {
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    dx = zone->desk_x_current + 
      (zone->desk_y_current * zone->desk_x_count) + dx;
    dx = dx % (zone->desk_x_count * zone->desk_y_count);
@@ -471,6 +495,9 @@ e_zone_desk_linear_flip_to(E_Zone *zone, int x)
 {
    int y;
 
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
+   
    if (x < 0) return;
    y = x / zone->desk_x_count;
    x = x - (y * zone->desk_x_count);
@@ -538,6 +565,9 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    /*char *penv_ld_preload;
    char *penv_ld_preload_path;*/
    char buf[4096], buf2[32];
+   
+   E_OBJECT_CHECK_RETURN(zone, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
    
    if (!a) return 0;
    if (startup_id == 0)
