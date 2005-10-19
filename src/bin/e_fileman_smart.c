@@ -455,7 +455,7 @@ e_fm_freeze(Evas_Object *object)
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   
+
    sd->frozen++;
    evas_event_freeze(sd->evas);   
    return sd->frozen;
@@ -469,7 +469,7 @@ e_fm_thaw(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   if(!sd->frozen) return 0;
+   if(!sd->frozen) return 0;   
    
    sd->frozen--;
    evas_event_thaw(sd->evas);
@@ -914,8 +914,8 @@ _e_fm_redraw_new(E_Fm_Smart_Data *sd)
    
    e_icon_layout_thaw(sd->layout);
 
-   if(sd->frozen)
-     return;
+   if(sd->frozen) 
+     return;   
       
    ev = E_NEW(E_Event_Fm_Reconfigure, 1);
    if (ev)

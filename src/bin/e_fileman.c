@@ -18,6 +18,7 @@ static void _e_fileman_reconf_cb(void *data, int type, void *event);
 static void _e_fileman_cb_resize(E_Win *win);
 static void _e_fileman_cb_delete(E_Win *win);
 static void _e_fileman_vscrollbar_show_cb(void *data, Evas_Object *obj, void *ev);
+static void _e_fileman_vscrollbar_hide_cb(void *data, Evas_Object *obj, void *ev);
 static void _e_fileman_free(E_Fileman *fileman);
 
 E_Fileman *
@@ -70,6 +71,7 @@ e_fileman_new(E_Container *con)
    e_scrollbar_direction_set(fileman->vscrollbar, E_SCROLLBAR_VERTICAL);
    e_scrollbar_callback_drag_add(fileman->vscrollbar, _e_fileman_vscrollbar_drag_cb, fileman);
    evas_object_event_callback_add(fileman->vscrollbar, EVAS_CALLBACK_SHOW, _e_fileman_vscrollbar_show_cb,fileman);
+   evas_object_event_callback_add(fileman->vscrollbar, EVAS_CALLBACK_HIDE, _e_fileman_vscrollbar_show_cb,fileman);
 
    e_win_resize_callback_set(fileman->win, _e_fileman_cb_resize);
    e_win_resize(fileman->win, 640, 480);
@@ -193,5 +195,15 @@ _e_fileman_vscrollbar_show_cb(void *data, Evas_Object *obj, void *ev)
    
    fileman = data;
    
-   e_fm_thaw(fileman->smart);      
+   e_fm_thaw(fileman->smart);
+}
+
+static void
+_e_fileman_vscrollbar_hide_cb(void *data, Evas_Object *obj, void *ev)
+{
+   E_Fileman *fileman;
+   
+   fileman = data;
+   
+   e_fm_thaw(fileman->smart);
 }
