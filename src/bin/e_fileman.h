@@ -15,17 +15,21 @@ struct _E_Fileman
 {
    E_Object e_obj_inherit;
 
-   E_Container *con;
-   E_Win       *win;
+   E_Container  *con;
+   E_Win        *win;
 
-   Evas *evas;
-   Evas_Object *main;
-   Evas_Object *vscrollbar;   
+   Evas         *evas;
+   Evas_Object  *main;
+   Evas_Object  *vscrollbar;   
 
-   Evas_Object *smart;   
+   Evas_Object  *smart;   
 
-   double xpos;
-   double ypos;
+   double        xpos;
+   double        ypos;
+
+   int          swallowed;
+   
+   Evas_List    *event_handlers;
 };
 
 EAPI E_Fileman *e_fileman_new(E_Container *con);

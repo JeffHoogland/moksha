@@ -11,6 +11,8 @@ EAPI int          e_icon_layout_freeze            (Evas_Object *obj);
 EAPI int          e_icon_layout_thaw              (Evas_Object *obj);
 EAPI void         e_icon_layout_virtual_size_set  (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 EAPI void         e_icon_layout_virtual_size_get  (Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+EAPI void         e_icon_layout_width_fix         (Evas_Object *obj, Evas_Coord w);
+EAPI void         e_icon_layout_height_fix        (Evas_Object *obj, Evas_Coord h);    
 EAPI void         e_icon_layout_pack              (Evas_Object *obj, Evas_Object *child);
 EAPI void         e_icon_layout_child_resize      (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 EAPI void         e_icon_layout_child_stack_above (Evas_Object *obj, Evas_Object *above);

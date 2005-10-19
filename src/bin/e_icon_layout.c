@@ -17,6 +17,7 @@ struct _E_Smart_Data
    Evas_Object     *obj;
    int              frozen;
    int              clip_frozen;
+   int              fixed;
    unsigned char    changed : 1;
    Evas_List       *items;
 };
@@ -89,24 +90,6 @@ e_icon_layout_thaw(Evas_Object *obj)
    return sd->frozen;
 }
 
-
-void
-e_icon_layout_virtual_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
-{
-   E_Smart_Data *sd;
-   
-   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
-     return;
-   
-   if (w < 1) w = 1;
-   if (h < 1) h = 1;
-   if ((sd->vw == w) && (sd->vh == h)) return;
-   sd->vw = w;
-   sd->vh = h;
-   sd->changed = 1;
-   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);
-}
-
 void
 e_icon_layout_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
@@ -117,6 +100,40 @@ e_icon_layout_virtual_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    
    if (w) *w = sd->vw;
    if (h) *h = sd->vh;
+}
+
+void
+e_icon_layout_width_fix(Evas_Object *obj, Evas_Coord w)
+{
+   E_Smart_Data *sd;
+   
+   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
+     return;
+   
+   if(w < 1) w = 1;
+   if (sd->vw == w) return;
+   sd->fixed = 0;
+   sd->vw = w;
+   sd->vh = 0;
+   sd->changed = 1;
+   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
+}
+
+void
+e_icon_layout_height_fix(Evas_Object *obj, Evas_Coord h)
+{
+   E_Smart_Data *sd;
+   
+   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
+     return;
+   
+   if(h < 1) h = 1;
+   if (sd->vh == h) return;
+   sd->fixed = 1;
+   sd->vw = 0;
+   sd->vh = h;
+   sd->changed = 1;
+   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
 
 void
@@ -341,31 +358,62 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
    w = sd->vw;
    h = sd->vh;   
    
-   for (l = sd->items; l; l = l->next)
+   if (sd->fixed == 0)
     {
-       E_Icon_Layout_Item *li;
-       Evas_Object *obj;
-       
-       obj = l->data;
-       li = evas_object_data_get(obj, "e_icon_layout_data");
-
-       if(x > w || x + li->w > w)
+       for (l = sd->items; l; l = l->next)
 	{
-	   x = sd->x + sd->xs;
-	   y += li->h + sd->ys;
-	}
+	   E_Icon_Layout_Item *li;
+	   Evas_Object *obj;
+	   
+	   obj = l->data;
+	   li = evas_object_data_get(obj, "e_icon_layout_data");
 
-       li->x = x;
-       li->y = y;
+	   if(x > sd->x + w || x + li->w > sd->x + w)
+	    {
+	       x = sd->x + sd->xs;
+	       y += li->h + sd->ys;
+	    }
+	   
+	   li->x = x;
+	   li->y = y;
+
+	   _e_icon_layout_smart_move_resize_item(li);
+	   
+	   x += li->w + sd->xs;
+	   
+	}
        
-       _e_icon_layout_smart_move_resize_item(li);
-              
-       x += li->w + sd->xs;
+       sd->vh = y - sd->y;
+    }
+   else
+    {
+       for (l = sd->items; l; l = l->next)
+	{
+	   E_Icon_Layout_Item *li;
+	   Evas_Object *obj;
+	   
+	   obj = l->data;
+	   li = evas_object_data_get(obj, "e_icon_layout_data");
+	   
+	   if(y > sd->y + h || y + li->h > sd->y + h)
+	    {
+	       y = sd->y + sd->ys;
+	       x += li->w + sd->xs;
+	    }
+	   
+	   li->x = x;
+	   li->y = y;
+	   
+	   _e_icon_layout_smart_move_resize_item(li);
+	   
+	   y += li->h + sd->ys;	   
+	}
        
+       sd->vw = x - sd->x;
     }
    
    sd->xc = x;
-   sd->yc = y;
+   sd->yc = y;      
    
    sd->changed = 0;
 }
@@ -373,7 +421,7 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_icon_layout_smart_move_resize_item(E_Icon_Layout_Item *li)
 {				       
-   if(li->w == 0 || li->h == 0)
+   if(li->w == 0 || li->h == 0)    
      evas_object_geometry_get(li->obj, NULL, NULL, &li->w, &li->h);
    
    evas_object_move(li->obj, li->x, li->y);
@@ -420,6 +468,7 @@ _e_icon_layout_smart_add(Evas_Object *obj)
    sd->ys = 0;
    sd->xc = 0;
    sd->yc = 0;
+   sd->fixed = 0;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_smart_member_add(sd->clip, obj);
    evas_object_move(sd->clip, 0, 0);

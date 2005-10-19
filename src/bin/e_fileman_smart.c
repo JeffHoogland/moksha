@@ -48,6 +48,8 @@
  *   wrap on wrap=char
  */
 
+int E_EVENT_FM_RECONFIGURE;
+
 #ifdef EFM_DEBUG
 # define D(x)  do {printf(__FILE__ ":%d:  ", __LINE__); printf x; fflush(stdout);} while (0)
 #else
@@ -133,13 +135,6 @@ struct _E_Fm_Thumb_Pending
    pid_t pid;
 };
 
-struct _E_Fm_Event_Reconfigure_Internal
-{
-   void *data;
-   Evas_Object *obj;
-   void (*func)(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev);
-};
-
 enum _E_Fm_File_Type
 {
    E_FILEMAN_FILETYPE_ALL = 0,
@@ -175,16 +170,14 @@ struct _E_Fm_Smart_Data
    Evas_Object *bg;
    Evas_Object *clip;
    Evas_Object *layout;
+   Evas_Object *object;
    
    E_Menu *menu;
    E_Win *win;
    Evas *evas;
 
    Evas_List *event_handlers;
-   Evas_List *reconf_event_handlers;
    Evas_List *pending_thumbs;
-
-   unsigned char reconf_event_raised : 1;   
    
    char *dir;
    Evas_List *files;
@@ -196,6 +189,8 @@ struct _E_Fm_Smart_Data
    int visible_files;
    double position;
 
+   Evas_Coord x, y, w, h;
+   
    struct {
 	unsigned char start : 1;
 	int x, y;
@@ -259,7 +254,6 @@ static void                _e_fm_redraw_new(E_Fm_Smart_Data *sd);
 static void                _e_fm_redraw(E_Fm_Smart_Data *sd);
 static void                _e_fm_size_calc(E_Fm_Smart_Data *sd);
 static void                _e_fm_stat_to_attr(struct stat st, E_Fm_File_Attributes *attr, char *name);
-static void                _e_fm_event_reconfigure_raise(E_Fm_Smart_Data *sd);
 static void                _e_fm_selections_clear(E_Fm_Smart_Data *sd);
 static void                _e_fm_selections_add(E_Fm_File *file);
 static void                _e_fm_selections_del(E_Fm_File *file);
@@ -322,28 +316,44 @@ static int dummy_val;
 
 /* externally accessible functions */
 
+
+int
+e_fm_init(void)
+{
+   if (!e_fm_smart)
+    {
+       e_fm_smart = evas_smart_new("e_fm",
+				   _e_fm_smart_add, /* add */
+				   _e_fm_smart_del, /* del */
+				   NULL, /* layer_set */
+				   _e_fm_smart_raise, /* raise */
+				   _e_fm_smart_lower, /* lower */
+				   _e_fm_smart_stack_above, /* stack_above */
+				   _e_fm_smart_stack_below, /* stack_below */
+				   _e_fm_smart_move, /* move */
+				   _e_fm_smart_resize, /* resize */
+				   _e_fm_smart_show, /* show */
+				   _e_fm_smart_hide, /* hide */
+				   NULL, /* color_set */
+				   NULL, /* clip_set */
+				   NULL, /* clip_unset */
+				   NULL); /* data*/
+    }
+   E_EVENT_FM_RECONFIGURE = ecore_event_type_new();
+   return 1;   
+}
+
+int
+e_fm_shutdown(void)
+{
+   evas_smart_free(e_fm_smart);
+   return 1;
+}
+
+
 Evas_Object *
 e_fm_add(Evas *evas)
 {
-   if (!e_fm_smart)
-     {
-	e_fm_smart = evas_smart_new("e_fm",
-				    _e_fm_smart_add, /* add */
-				    _e_fm_smart_del, /* del */
-				    NULL, /* layer_set */
-				    _e_fm_smart_raise, /* raise */
-				    _e_fm_smart_lower, /* lower */
-				    _e_fm_smart_stack_above, /* stack_above */
-				    _e_fm_smart_stack_below, /* stack_below */
-				    _e_fm_smart_move, /* move */
-				    _e_fm_smart_resize, /* resize */
-				    _e_fm_smart_show, /* show */
-				    _e_fm_smart_hide, /* hide */
-				    NULL, /* color_set */
-				    NULL, /* clip_set */
-				    NULL, /* clip_unset */
-				    NULL); /* data*/
-     }
    return evas_object_smart_add(evas, e_fm_smart);
 }
 
@@ -430,7 +440,7 @@ e_fm_scroll_vertical(Evas_Object *object, double percent)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   offsetpx = (sd->position - percent) * sd->max.h;
+   offsetpx = (sd->position - percent) * (sd->max.h - sd->h);
    sd->position = percent;
    
    if (offsetpx > 0) // moving up
@@ -467,23 +477,6 @@ e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
      *h = sd->max.h;   
 }
 
-void
-e_fm_reconfigure_callback_add(Evas_Object *object, void (*func)(void *data, Evas_Object *obj, E_Fm_Event_Reconfigure *ev), void *data)
-{
-   E_Fm_Smart_Data *sd;
-   E_Fm_Event_Reconfigure_Internal *event;
-   
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   
-   event = E_NEW(E_Fm_Event_Reconfigure_Internal, 1);
-   event->data = data;
-   event->func = func;
-   event->obj = object;
-   
-   sd->reconf_event_handlers = evas_list_append(sd->reconf_event_handlers, event);
-}
-
 /* local subsystem functions */
 
 static void
@@ -500,6 +493,8 @@ _e_fm_smart_add(Evas_Object *object)
    sd = E_NEW(E_Fm_Smart_Data, 1);
    if (!sd) return;
 
+   sd->object = object;   
+   
    sd->bg = evas_object_rectangle_add(evas); // this should become an edje
    evas_object_color_set(sd->bg, 0, 0, 0, 0);
    evas_object_show(sd->bg);
@@ -749,6 +744,8 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
    evas_object_move(sd->bg, x, y);
    evas_object_move(sd->clip, x, y);
    evas_object_move(sd->layout, x, y);
+   sd->x = x;
+   sd->y = y;
 //   _e_fm_redraw(sd); // no new
 }
 
@@ -756,24 +753,41 @@ static void
 _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
    E_Fm_Smart_Data *sd;
-
+   E_Event_Fm_Reconfigure *ev;
+   
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
    evas_object_resize(sd->bg, w, h);
    evas_object_resize(sd->clip, w, h);   
-   _e_fm_size_calc(sd);
-   evas_object_resize(sd->layout, w, h);   
-   e_icon_layout_virtual_size_set(sd->layout, w, sd->max.h);
+   evas_object_resize(sd->layout, w, h);
+   e_icon_layout_width_fix(sd->layout, w);
+   e_icon_layout_virtual_size_get(sd->layout, &sd->max.w, &sd->max.h);
    sd->conf.main->width = w;
    sd->conf.main->height = h;
+
+   sd->w = w;
+   sd->h = h;
    
    // optimize
    //   _e_fm_redraw(sd); // no new
    
-   if(!sd->reconf_event_raised)
-     _e_fm_event_reconfigure_raise(sd);
+   if(sd->position > 0)
+     e_fm_scroll_vertical(object, sd->position);
    
+   
+   ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+   if (ev)
+    {
+       Evas_Coord w, h;
+       
+       evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
+       
+       ev->object = sd->object;
+       ev->w = sd->max.w;
+       ev->h = sd->max.h;
+       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+    }      
 }
 
 static void
@@ -807,6 +821,7 @@ _e_fm_redraw_new(E_Fm_Smart_Data *sd)
 
    E_Fm_File *file;
    E_Fm_File_Attributes *attr;
+   E_Event_Fm_Reconfigure *ev;   
 
    if (!sd->dir)
      return;
@@ -886,19 +901,41 @@ _e_fm_redraw_new(E_Fm_Smart_Data *sd)
      }
    
    e_icon_layout_thaw(sd->layout);
-   
-   if(!sd->reconf_event_raised)
-     _e_fm_event_reconfigure_raise(sd);
+      
+   ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+   if (ev)
+    {
+       Evas_Coord w, h;
+       
+       evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
+       
+       ev->object = sd->object;
+       ev->w = sd->max.w;
+       ev->h = sd->max.h;
+       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+    }      
 }
 
 
 static void
 _e_fm_redraw(E_Fm_Smart_Data *sd)
 {
+   E_Event_Fm_Reconfigure *ev;
+   
    e_icon_layout_redraw_force(sd->layout);
    
-   if(!sd->reconf_event_raised)
-     _e_fm_event_reconfigure_raise(sd);
+   ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+   if (ev)
+    {
+       Evas_Coord w, h;
+       
+       evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
+       
+       ev->object = sd->object;
+       ev->w = sd->max.w;
+       ev->h = sd->max.h;
+       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+    }   
 }
 
 // when this is enabled, the thumbnailer is broken, double check if its
@@ -930,21 +967,18 @@ _e_fm_size_calc(E_Fm_Smart_Data *sd)
    while (dirs)
      {
 	int icon_w, icon_h;
-	Evas_Object *icon;
 
 	attr = evas_list_data(dirs);
-
-	icon = edje_object_add(sd->evas);
-	e_theme_edje_object_set(icon, "base/theme/fileman", "fileman/icon");
-
+      
 	file = E_NEW(E_Fm_File, 1);
-	file->icon = icon;
+	file->icon = edje_object_add(sd->evas);;
+	e_theme_edje_object_set(file->icon, "base/theme/fileman", "fileman/icon");
 	file->attr = attr;
 	file->sd = sd;
 	file->icon_img = _e_fm_file_icon_get(file); // this might be causing borkage
-	edje_object_part_swallow(icon, "icon_swallow", file->icon_img);
-	edje_object_part_text_set(icon, "icon_title", attr->name);
-	edje_object_size_min_calc(icon, &icon_w, &icon_h);
+	edje_object_part_swallow(file->icon, "icon_swallow", file->icon_img);
+	edje_object_part_text_set(file->icon, "icon_title", attr->name);
+	edje_object_size_min_calc(file->icon, &icon_w, &icon_h);
 
 	if ((x > w) || ((x + icon_w) > w))
 	  {
@@ -954,8 +988,11 @@ _e_fm_size_calc(E_Fm_Smart_Data *sd)
 
 	x += icon_w + sd->icon_info.x_space;
 
+	edje_object_part_unswallow(file->icon, file->icon_img);
+	evas_object_del(file->icon_img);	
 	evas_object_del(file->icon);
-	evas_object_del(file->icon_img);
+	file->attr = NULL;
+	file->sd = NULL;
 	free(file);
 
 	dirs = dirs->next;
@@ -963,34 +1000,6 @@ _e_fm_size_calc(E_Fm_Smart_Data *sd)
 
    sd->max.w = xbg;
    sd->max.h = y;
-}
-
-static void
-_e_fm_event_reconfigure_raise(E_Fm_Smart_Data *sd)
-{
-   Evas_List *l;
-   
-   if(sd->reconf_event_raised == 1)
-     return;
-   
-   sd->reconf_event_raised = 1;
-   
-   for (l = sd->reconf_event_handlers; l; l = l->next)
-    {
-       E_Fm_Event_Reconfigure_Internal *ri;
-       E_Fm_Event_Reconfigure *ev;
-       
-       ev = E_NEW(E_Fm_Event_Reconfigure, 1);
-       
-       ri = l->data;
-       
-       ev->w = sd->max.w;
-       ev->h = sd->max.h;
-       
-       ri->func(ri->data, ri->obj, ev);       
-    }
-   
-   sd->reconf_event_raised = 0;   
 }
 
 static void
@@ -1087,6 +1096,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    if (sd->dir) free (sd->dir);
    sd->dir = strdup(dir);
 
+   sd->position = 0;
    _e_fm_selections_clear(sd);
    _e_fm_redraw_new(sd);   
 }
