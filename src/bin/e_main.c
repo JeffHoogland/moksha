@@ -731,6 +731,8 @@ _e_main_screens_init(void)
    if (!e_desk_init()) return 0;
    if (!e_gadman_init()) return 0;
    if (!e_menu_init()) return 0;
+   if (!e_thumb_init()) return 0;
+   if (!e_fm_init()) return 0;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -785,6 +787,8 @@ _e_main_screens_init(void)
 static int
 _e_main_screens_shutdown(void)
 {
+   e_fm_shutdown();
+   e_thumb_shutdown();   
    e_win_shutdown();
    e_border_shutdown();
    e_focus_shutdown();

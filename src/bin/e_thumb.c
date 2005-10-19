@@ -31,7 +31,7 @@ e_thumb_init(void)
 int
 e_thumb_shutdown(void)
 {
-   free(thumb_path);
+   E_FREE(thumb_path);
    return 1;
 }
 

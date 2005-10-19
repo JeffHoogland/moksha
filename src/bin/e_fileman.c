@@ -72,7 +72,7 @@ e_fileman_new(E_Container *con)
    e_win_resize_callback_set(fileman->win, _e_fileman_cb_resize);
    e_win_resize(fileman->win, 640, 480);
 
-   e_fm_init(); // this needs to move to e's global init
+   evas_event_freeze(fileman->evas);   
    
    fileman->smart = e_fm_add(fileman->evas);
    e_fm_e_win_set(fileman->smart, fileman->win);
@@ -84,7 +84,9 @@ e_fileman_new(E_Container *con)
    fileman->event_handlers = evas_list_append(fileman->event_handlers,
 					      ecore_event_handler_add(E_EVENT_FM_RECONFIGURE,
 								      _e_fileman_reconf_cb,
-								      fileman));   
+								      fileman));
+   evas_event_thaw(fileman->evas);
+   
    return fileman;
 }
 
@@ -125,7 +127,10 @@ _e_fileman_cb_resize(E_Win *win)
    
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
-   e_fm_geometry_virtual_get(fileman->smart, &w, &h);
+   e_fm_geometry_virtual_get(fileman->smart, &w, &h);    
+   
+   evas_event_freeze(fileman->evas);
+       
    if (h > win->h)
      edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
    else 
@@ -133,6 +138,8 @@ _e_fileman_cb_resize(E_Win *win)
 	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
 	evas_object_hide(fileman->vscrollbar);
      }
+   
+   evas_event_thaw(fileman->evas);   
 }
 
 static void
@@ -162,7 +169,9 @@ _e_fileman_reconf_cb(void *data, int type, void *event)
    
    fileman = data;
    ev = event;
-
+   
+   return;
+   
    evas_event_freeze(fileman->evas);
    
    if (ev->h > fileman->win->h)

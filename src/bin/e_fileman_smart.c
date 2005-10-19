@@ -525,8 +525,6 @@ _e_fm_smart_add(Evas_Object *object)
    sd->icon_info.h = 48;
    sd->icon_info.x_space = 15;
    sd->icon_info.y_space = 15;
-
-   e_thumb_init();
    
    sd->monitor = NULL;
    sd->file_offset = 0;
@@ -652,9 +650,7 @@ _e_fm_smart_del(Evas_Object *object)
    evas_object_del(sd->bg);
 
    free(sd->dir);
-   free(sd);
-   
-   e_thumb_shutdown();
+   free(sd);   
 }
 
 static void
