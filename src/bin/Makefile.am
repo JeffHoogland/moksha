@@ -13,7 +13,8 @@ bin_PROGRAMS = \
 enlightenment \
 enlightenment_remote \
 enlightenment_eapp \
-enlightenment_eapp_cache_gen
+enlightenment_eapp_cache_gen \
+enlightenment_imc
 
 ENLIGHTENMENTHEADERS = \
 e.h \
@@ -202,6 +203,12 @@ $(enlightenment_src)
 
 enlightenment_eapp_cache_gen_LDFLAGS = @e_libs@ @dlopen_libs@
 
+enlightenment_imc_SOURCES = \
+e.h \
+e_imc_main.c \
+$(enlightenment_src)
+
+enlightenment_imc_LDFLAGS = @e_libs@ @dlopen_libs@
 
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)

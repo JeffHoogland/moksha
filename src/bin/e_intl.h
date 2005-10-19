@@ -9,20 +9,32 @@
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
 
+typedef struct _E_Input_Method_Config E_Input_Method_Config;
 typedef struct _E_Language_Pack E_Language_Pack;
 
 #else
 #ifndef E_INTL_H
 #define E_INTL_H
 
+#define E_INTL_LANGUAGE_PACK_VERSION 1
+#define E_INTL_INPUT_METHOD_CONFIG_VERSION 1
+
 struct _E_Language_Pack
+{
+   int version;
+   char *e_lp_name;
+   char *lang;
+   char *input_method;
+   char *font_fallbacks;
+};
+
+struct _E_Input_Method_Config
 {
    int version;
    char *e_im_name;
    char *gtk_im_module;
    char *qt_im_module;
    char *xmodifiers;
-   char *gtk_im_module_file;
    char *e_im_exec;
 };
 
@@ -36,6 +48,8 @@ EAPI const Evas_List	*e_intl_language_list(void);
 EAPI void                e_intl_input_method_set(const char *method);
 EAPI const char         *e_intl_input_method_get(void);
 EAPI Evas_List		*e_intl_input_method_list(void);
-    
+EAPI E_Input_Method_Config *e_intl_input_method_config_read (Eet_File *imc_file);
+EAPI int		 e_intl_input_method_config_write (Eet_File *imc_file, E_Input_Method_Config *imc);
+EAPI void		 e_intl_input_method_config_free (E_Input_Method_Config *imc);
 #endif
 #endif
