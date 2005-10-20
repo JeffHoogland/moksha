@@ -35,12 +35,14 @@ e_thumb_shutdown(void)
    return 1;
 }
 
+/* return dir where thumbs are saved */
 char *
 e_thumb_dir_get(void)
 {
    return strdup(thumb_path);
 }
 
+/* return hashed path of thumb */
 char *
 e_thumb_file_get(char *file)
 {
@@ -48,12 +50,13 @@ e_thumb_file_get(char *file)
    char thumb[PATH_MAX];
    
    id = _e_thumb_file_id(file);   
-   if(!thumb) { free(id); return NULL; }
+   if(!id) { return NULL; }
    snprintf(thumb, sizeof(thumb), "%s/%s", thumb_path, id);
    free(id);
    return strdup(thumb);   
 }
 
+/* check wether a file has a saved thumb */
 int
 e_thumb_exists(char *file)
 {
@@ -67,6 +70,7 @@ e_thumb_exists(char *file)
    return ret;     
 }
 
+/* create and save a thumb to disk */
 int
 e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 {
@@ -112,6 +116,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    return 1;
 }
 
+/* get evas object containing image of the thumb */
 Evas_Object *
 e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height)
 {
@@ -180,7 +185,7 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    if (data)
     {
        im = evas_object_image_add(evas);
-       evas_object_image_alpha_set(im, 0);
+       evas_object_image_alpha_set(im, 1);
        evas_object_image_size_set(im, w, h);
        evas_object_image_smooth_scale_set(im, 0);
        evas_object_image_data_copy_set(im, data);
@@ -198,6 +203,7 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    return im;
 }
 
+/* return hash for a file */
 static char *
 _e_thumb_file_id(char *file)
 {

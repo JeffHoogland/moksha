@@ -5,18 +5,24 @@
 
 /****
  * TODO:
+ * - reset scrollbar positions on dir changes
  * - dont allow for menus on ".."
- * - add scrollers.
  * - xdnd
- * - thumb fork / cache
  * - proper mime system
  * - create x, y, w, h in canvas struct and make them auto update
  ****/
 
+#ifdef EFM_DEBUG
+# define D(x)  do {printf(__FILE__ ":%d:  ", __LINE__); printf x; fflush(stdout);} while (0)
+#else
+# define D(x)  ((void) 0)
+#endif
+
 static void _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data);
 static void _e_fileman_reconf_cb(void *data, int type, void *event);
-static void _e_fileman_cb_resize(E_Win *win);
-static void _e_fileman_cb_delete(E_Win *win);
+static void _e_fileman_dir_change_cb(void *data, int type, void *event);
+static void _e_fileman_resize_cb(E_Win *win);
+static void _e_fileman_delete_cb(E_Win *win);
 static void _e_fileman_vscrollbar_show_cb(void *data, Evas_Object *obj, void *ev);
 static void _e_fileman_vscrollbar_hide_cb(void *data, Evas_Object *obj, void *ev);
 static void _e_fileman_free(E_Fileman *fileman);
@@ -27,7 +33,7 @@ e_fileman_new(E_Container *con)
    E_Fileman *fileman;
    E_Manager *man;
    char dir[PATH_MAX];
-
+   
    if (!con)
      {
 	man = e_manager_current_get();
@@ -55,7 +61,7 @@ e_fileman_new(E_Container *con)
    fileman->xpos = 0;
    fileman->ypos = 0;
 
-   e_win_delete_callback_set(fileman->win, _e_fileman_cb_delete);
+   e_win_delete_callback_set(fileman->win, _e_fileman_delete_cb);
    fileman->win->data = fileman;
 
    fileman->evas = e_win_evas_get(fileman->win);
@@ -73,14 +79,13 @@ e_fileman_new(E_Container *con)
    evas_object_event_callback_add(fileman->vscrollbar, EVAS_CALLBACK_SHOW, _e_fileman_vscrollbar_show_cb,fileman);
    evas_object_event_callback_add(fileman->vscrollbar, EVAS_CALLBACK_HIDE, _e_fileman_vscrollbar_show_cb,fileman);
 
-   e_win_resize_callback_set(fileman->win, _e_fileman_cb_resize);
+   e_win_resize_callback_set(fileman->win, _e_fileman_resize_cb);
    e_win_resize(fileman->win, 640, 480);
 
    evas_event_freeze(fileman->evas);   
    
    fileman->smart = e_fm_add(fileman->evas);
    e_fm_e_win_set(fileman->smart, fileman->win);
-   //e_fm_dir_set(fileman->smart, dir);
    edje_object_part_swallow(fileman->main, "icon_area", fileman->smart);
 
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
@@ -89,7 +94,15 @@ e_fileman_new(E_Container *con)
 					      ecore_event_handler_add(E_EVENT_FM_RECONFIGURE,
 								      _e_fileman_reconf_cb,
 								      fileman));
+   
+   fileman->event_handlers = evas_list_append(fileman->event_handlers,
+					      ecore_event_handler_add(E_EVENT_FM_DIRECTORY_CHANGE,
+								      _e_fileman_dir_change_cb,
+								      fileman));
+   
    evas_event_thaw(fileman->evas);
+   
+   D(("e_fileman_new: ok\n"));
    
    return fileman;
 }
@@ -98,7 +111,8 @@ void
 e_fileman_show(E_Fileman *fileman)
 {
    if (!fileman) return;
-
+   
+   D(("e_fileman_show: (%p)\n", fileman));
    e_win_show(fileman->win);
    evas_object_show(fileman->main);
 }
@@ -108,6 +122,7 @@ e_fileman_hide(E_Fileman *fileman)
 {
    if (!fileman) return;
 
+   D(("e_fileman_hide: (%p)\n", fileman));
    e_win_hide(fileman->win);
    evas_object_hide(fileman->main);
 }
@@ -115,6 +130,7 @@ e_fileman_hide(E_Fileman *fileman)
 static void
 _e_fileman_free(E_Fileman *fileman)
 {
+   D(("e_fileman_free: (%p)\n", fileman));
    evas_object_del(fileman->vscrollbar);
    evas_object_del(fileman->smart);
    evas_object_del(fileman->main);
@@ -124,34 +140,43 @@ _e_fileman_free(E_Fileman *fileman)
 }
 
 static void
-_e_fileman_cb_resize(E_Win *win)
+_e_fileman_resize_cb(E_Win *win)
 {
    E_Fileman *fileman;
    Evas_Coord w, h;
+   int frozen;
    
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
    e_fm_geometry_virtual_get(fileman->smart, &w, &h);    
    
-   e_fm_freeze(fileman->smart);
+   D(("_e_fileman_resize_cb: e_fm_freeze\n"));
+   frozen = e_fm_freeze(fileman->smart);
+   if(frozen > 1)
+     e_fm_thaw(fileman->smart);
+   
+
        
    if (h > win->h)
-     edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+    {
+       D(("e_fileman_resize_cb: show (%p)\n", fileman));
+       edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+    }
    else 
      {
+	D(("e_fileman_resize_cb: hide (%p)\n", fileman));
 	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
 	evas_object_hide(fileman->vscrollbar);
-     }
-   
-   e_fm_thaw(fileman->smart);
+     }   
 }
 
 static void
-_e_fileman_cb_delete(E_Win *win)
+_e_fileman_delete_cb(E_Win *win)
 {
    E_Fileman *fileman;
 
    fileman = win->data;
+   D(("e_fileman_delete_cb: (%p)\n", fileman));   
    e_object_del(E_OBJECT(fileman));
    e_object_del(E_OBJECT(win));
 }
@@ -162,6 +187,7 @@ _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data)
    E_Fileman *fileman;
 
    fileman = data;
+   D(("e_fileman_vscrollbar_drag_cb: %f (%p)\n", value, fileman));
    e_fm_scroll_vertical(fileman->smart, value);
 }
 
@@ -170,22 +196,46 @@ _e_fileman_reconf_cb(void *data, int type, void *event)
 {   
    E_Event_Fm_Reconfigure *ev;
    E_Fileman *fileman;
-
+   int frozen;
+   
    if(!data || !event)
      return;
    
    fileman = data;
    ev = event;
 
-   e_fm_freeze(fileman->smart);
+   D(("_e_fileman_reconf_cb: e_fm_freeze\n"));
+   frozen = e_fm_freeze(fileman->smart);
+   if(frozen > 1)
+     e_fm_thaw(fileman->smart);
    
    if (ev->h > fileman->win->h)
-     edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+    {
+       D(("e_fileman_reconf_cb: show (%p)\n", fileman));
+       edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+    }
    else
      {
+	D(("e_fileman_reconf_cb: hide (%p)\n", fileman));	
 	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
 	evas_object_hide(fileman->vscrollbar);
      }   
+}
+
+static void
+_e_fileman_dir_change_cb(void *data, int type, void *event)
+{
+   E_Event_Fm_Directory_Change *ev;
+   E_Fileman *fileman;
+   
+   if(!data || !event)
+     return;
+      
+   fileman = data;
+   ev = event;
+   
+   D(("_e_fileman_dir_change_cb:\n"));
+   e_scrollbar_value_set(fileman->vscrollbar,  0.0);
 }
 
 static void
@@ -195,6 +245,7 @@ _e_fileman_vscrollbar_show_cb(void *data, Evas_Object *obj, void *ev)
    
    fileman = data;
    
+   D(("_e_fileman_vscrollbar_show_cb: thaw (%p)\n", fileman));
    e_fm_thaw(fileman->smart);
 }
 
@@ -205,5 +256,6 @@ _e_fileman_vscrollbar_hide_cb(void *data, Evas_Object *obj, void *ev)
    
    fileman = data;
    
+   D(("_e_fileman_vscrollbar_hide_cb: thaw (%p)\n", fileman));
    e_fm_thaw(fileman->smart);
 }

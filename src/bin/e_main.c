@@ -732,6 +732,7 @@ _e_main_screens_init(void)
    if (!e_gadman_init()) return 0;
    if (!e_menu_init()) return 0;
    if (!e_thumb_init()) return 0;
+   if (!e_fm_icon_init()) return 0;
    if (!e_fm_init()) return 0;
    
    num = 0;
@@ -788,6 +789,7 @@ static int
 _e_main_screens_shutdown(void)
 {
    e_fm_shutdown();
+   e_fm_icon_shutdown();
    e_thumb_shutdown();   
    e_win_shutdown();
    e_border_shutdown();
