@@ -42,14 +42,8 @@
  */
 
 /* BUGS:
- * - Go to a directory with a few files, resize window so that scrollbar shows.
- *   change into a dir with a lot of times, the scrollbar moves according to
- *   the first dir and not the new dir.
  * 
- * - Same as above, but after resizing the window, maximize it. Items get
- *   drawn on the bottom of the window.
- * 
- * - Resizing / maximizing windows with thumbs sometimes causes a segv
+ * - Closing Efm window while its thumbnailing causes a segv
  * 
  * - Deleting a dir causes a segv
  */
@@ -203,7 +197,7 @@ static void                _e_fm_file_free           (E_Fm_Icon *icon);
 static void                _e_fm_dir_monitor_cb      (void *data, Ecore_File_Monitor *ecore_file_monitor,  Ecore_File_Event event, const char *path);
 static void                _e_fm_selections_clear    (E_Fm_Smart_Data *sd);
 static void                _e_fm_selections_add      (E_Fm_Icon *icon);
-static void                _e_fm_selections_add_rect (E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+static void                _e_fm_selections_rect_add (E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
 static void                _e_fm_selections_del      (E_Fm_Icon *icon);
 
 static void                _e_fm_fake_mouse_up_later     (Evas *evas, int button);
@@ -1492,6 +1486,7 @@ _e_fm_selections_clear(E_Fm_Smart_Data *sd)
 {
    Evas_List *l;
    
+   D(("_e_fm_selections_clear:\n"));
    for (l = sd->selection.files; l; l = l->next)
     {
        E_Fm_Icon *icon;
@@ -1501,6 +1496,7 @@ _e_fm_selections_clear(E_Fm_Smart_Data *sd)
        icon->state.selected = 0;
     }
    sd->selection.files = evas_list_free(sd->selection.files);
+   sd->selection.band.files = evas_list_free(sd->selection.band.files);
    sd->selection.current_file = NULL;
 }
 
@@ -1515,7 +1511,7 @@ _e_fm_selections_add(E_Fm_Icon *icon)
 }
 
 static void
-_e_fm_selections_add_rect(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+_e_fm_selections_rect_add(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
    Evas_List *l;
    
@@ -1529,16 +1525,27 @@ _e_fm_selections_add_rect(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_
        evas_object_geometry_get(icon->icon_object, &xx, &yy, &ww, &hh);
        if (E_INTERSECTS(x, y, w, h, xx, yy, ww, hh))
 	{
-	   if (icon->state.selected)
-	     _e_fm_selections_add(icon);
-	   else
-	     _e_fm_selections_del(icon);
+	   if (!evas_list_find(icon->sd->selection.band.files, icon))
+	    {
+	       if (icon->state.selected)
+		 _e_fm_selections_del(icon);
+	       else
+		 _e_fm_selections_add(icon);
+	       icon->sd->selection.band.files = evas_list_append(icon->sd->selection.band.files, icon);
+	    }
 	}
        else
 	{
-	   _e_fm_selections_del(icon);
+	   if (evas_list_find(icon->sd->selection.band.files, icon))
+	    {
+	       if (icon->state.selected)
+		 _e_fm_selections_del(icon);
+	       else
+		 _e_fm_selections_add(icon);
+	       icon->sd->selection.band.files = evas_list_remove(icon->sd->selection.band.files, icon);
+	    }
 	}
-    }
+    }   
 }
 
 static void
@@ -1772,7 +1779,7 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	
 	evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
-	_e_fm_selections_add_rect(sd, x, y, w, h);
+	_e_fm_selections_rect_add(sd, x, y, w, h);
      }
 }
 
@@ -1790,6 +1797,7 @@ _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	sd->selection.band.enabled = 0;
 	evas_object_resize(sd->selection.band.obj, 1, 1);
 	evas_object_hide(sd->selection.band.obj);
+	sd->selection.band.files = evas_list_free(sd->selection.band.files);
      }
 }
 
