@@ -258,10 +258,29 @@ e_intl_input_method_set(const char *method)
 	          e_util_env_set("GTK_IM_MODULE", imc->gtk_im_module);
 	          e_util_env_set("QT_IM_MODULE", imc->qt_im_module);
 	          e_util_env_set("XMODIFIERS", imc->xmodifiers);
+		  
+		  if (_e_intl_input_method_exec != NULL) 
+		    {
+		       ecore_exe_terminate(_e_intl_input_method_exec);
+		       ecore_exe_free(_e_intl_input_method_exec);
+		       _e_intl_input_method_exec = NULL;
+		    }
+		  
 		  if (imc->e_im_exec != NULL) 
 		    {
-		       /* FIXME: first check ok exec availability */
 		       _e_intl_input_method_exec = ecore_exe_run(imc->e_im_exec, NULL);
+		       ecore_exe_tag_set(_e_intl_input_method_exec, "E/im_exec");
+		
+		       if (  !_e_intl_input_method_exec || 
+			     !ecore_exe_pid_get(_e_intl_input_method_exec))    
+			 e_error_dialog_show(_("Input Method Error"),
+					_( "Error starting the input method "
+					   "executable\n\n"
+					   
+					"please make sure that your input\n"
+					"method configuration is correct and\n"
+					"that your configuration's\n" 
+					"executable is in your PATH\n"));  
 		    }
 		  break; 
 	       }	
