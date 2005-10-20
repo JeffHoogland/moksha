@@ -42,7 +42,7 @@ static void _e_fm_icon_smart_clip_unset  (Evas_Object *obj);
 /* Create icons */
 static void  _e_fm_icon_icon_mime_get(E_Smart_Data *sd);
 
-static void  _e_fm_icon_thumb_job_generate(void *data);
+static void  _e_fm_icon_thumb_generate(void);
 static int   _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event);
 
 /* local subsystem globals */
@@ -50,7 +50,6 @@ static Evas_Smart *e_smart = NULL;
 
 static pid_t       pid = -1;
 static Evas_List  *thumb_files = NULL;
-static Ecore_Job  *thumb_job = NULL;
 
 static Evas_List  *event_handlers = NULL;
 
@@ -345,8 +344,7 @@ _e_fm_icon_smart_show(Evas_Object *obj)
 	else
 	  {
 	     thumb_files = evas_list_append(thumb_files, sd);
-	     if (thumb_job) ecore_job_del(thumb_job);
-	     thumb_job = ecore_job_add(_e_fm_icon_thumb_job_generate, NULL);
+	     if (pid == -1) _e_fm_icon_thumb_generate();
 	     _e_fm_icon_icon_mime_get(sd);
 	  }
      }
@@ -460,67 +458,46 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 }
 
 static void
-_e_fm_icon_thumb_job_generate(void *data)
+_e_fm_icon_thumb_generate(void)
 {
-   if ((!thumb_files) || (pid != -1))return;
+   E_Smart_Data *sd;
+   
+   if ((!thumb_files) || (pid != -1)) return;
 
    pid = fork();
-   thumb_job = NULL;
-   
    if (pid == 0)
-    {
-       /* child */
-       Evas_List *l;
-       for (l = thumb_files; l; l = l->next)
-	{
-	   E_Smart_Data *sd;
-	   sd = l->data;
-	   if(!e_thumb_exists(sd->file->path))
-	     e_thumb_create(sd->file->path, sd->w, sd->h);
-	}
+     {
+	sd = thumb_files->data;
+	if (!e_thumb_exists(sd->file->path))
+	  e_thumb_create(sd->file->path, 48, 48); // thumbnail size
 	exit(0);
-    }
+     }
 }
 
 static int
 _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
-   Evas_List            *l;
+   E_Smart_Data         *sd;
 
    ev = event;
    if (ev->pid != pid) return 1;
-   for (l = thumb_files; l;)
+   if (!thumb_files) return 1;
+   
+   sd = thumb_files->data;
+   thumb_files = evas_list_remove_list(thumb_files, thumb_files);
+   
+   if (ecore_file_exists(sd->thumb_path))
      {
-	E_Smart_Data *sd;
-
-	sd = l->data;
-	if (ecore_file_exists(sd->thumb_path))
-	  {
-	     Evas_List *tmp;
-	     if (sd->image_object) evas_object_del(sd->image_object);
-	     sd->image_object = NULL;
-	     sd->image_object = e_thumb_evas_object_get(sd->file->path,
-							sd->evas,
-							sd->w, sd->h);
-	     edje_object_part_swallow(sd->icon_object, "icon_swallow",
-				      sd->image_object);
-	     tmp = l;
-	     l = l->next;
-	     thumb_files = evas_list_remove_list(thumb_files, tmp);
-	  }
-	else
-	  {
-	     l = l->next;
-	  }
+	if (sd->image_object) evas_object_del(sd->image_object);
+	sd->image_object = e_thumb_evas_object_get(sd->file->path,
+						   sd->evas,
+						   sd->w, sd->h);
+	edje_object_part_swallow(sd->icon_object, "icon_swallow",
+				 sd->image_object);
      }
 
    pid = -1;
-   if (thumb_files)
-     {
-	if (thumb_job) ecore_job_del(thumb_job);
-	thumb_job = ecore_job_add(_e_fm_icon_thumb_job_generate, NULL);
-     }
-
+   _e_fm_icon_thumb_generate();
    return 1;
 }

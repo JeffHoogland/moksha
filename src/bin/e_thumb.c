@@ -78,19 +78,24 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    char *thumbpath;
    Evas_Object *im;
    const int *data;
-   int size;
+   int size, iw, ih, ww, hh;
    Ecore_Evas *buf;
    Evas *evasbuf;
+   int alpha;
    
    thumbpath = e_thumb_file_get(file);
-   if(!thumbpath) { free(thumbpath); return -1; }
+   if (!thumbpath)
+     {
+	free(thumbpath);
+	return -1;
+     }
    
    ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
    if (!ef)
-    {
-       free(thumbpath);
-       return -1;
-    }
+     {
+	free(thumbpath);
+	return -1;
+     }
    
    free(thumbpath);
    
@@ -98,20 +103,32 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    evasbuf = ecore_evas_get(buf);
    im = evas_object_image_add(evasbuf);
    evas_object_image_file_set(im, file, NULL);
-   evas_object_image_fill_set(im, 0, 0, w, h);
-   evas_object_resize(im, w, h);
+   iw = 0; ih = 0;
+   evas_object_image_size_get(im, &iw, &ih);
+   alpha = evas_object_image_alpha_get(im);
+   ww = w;
+   hh = (w * ih) / iw;
+   if (hh > h)
+     {
+	hh = h;
+	ww = (h * iw) / ih;
+     }
+   ecore_evas_resize(buf, ww, hh);
+   evas_object_image_fill_set(im, 0, 0, ww, hh);
+   evas_object_resize(im, ww, hh);
    evas_object_show(im);
    data = ecore_evas_buffer_pixels_get(buf);
    
-   if ((size = eet_data_image_write(ef, "/thumbnail/data", (void *)data, w, h, 1, 0, 70, 1)) < 0)
+   eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
+   if ((size = eet_data_image_write(ef, "/thumbnail/data",
+				    (void *)data, ww, hh, alpha,
+				    0, 91, 1)) <= 0)
     {
-       printf("e_thumb: BUG: Couldn't write thumb db\n");
        eet_close(ef);
        return -1;
     }
-   
+   evas_object_del(im);
    eet_close(ef);
-   
    ecore_evas_free(buf);
    return 1;
 }
@@ -159,47 +176,32 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    /* saved thumb */
    /* TODO: add ability to fetch thumbs from freedesktop dirs */
    if (!e_thumb_exists(file))
-    {
-       if(!e_thumb_create(file, width, height))
-	{
-	   DEF_THUMB_RETURN;
-	}
-    }
-      
+     {
+	if (!e_thumb_create(file, width, height))
+	  {
+	     DEF_THUMB_RETURN;
+	  }
+     }
+   
    thumb = e_thumb_file_get(file);
-   if(!thumb)
-    {
-       DEF_THUMB_RETURN;
-    }
+   if (!thumb)
+     {
+	DEF_THUMB_RETURN;
+     }
    
    ef = eet_open(thumb, EET_FILE_MODE_READ);
    if (!ef)
-    {
-       free(thumb);
-       DEF_THUMB_RETURN;
-    }
+     {
+	eet_close(ef);
+	free(thumb);
+	DEF_THUMB_RETURN;
+     }
    
+   
+   im = e_icon_add(evas);
+   e_icon_file_key_set(im, thumb, "/thumbnail/data");
+   e_icon_fill_inside_set(im, 1);
    free(thumb);
-   
-   data = eet_data_image_read(ef, "/thumbnail/data", &w, &h, &a, &c, &q, &l);
-   if (data)
-    {
-       im = evas_object_image_add(evas);
-       evas_object_image_alpha_set(im, 1);
-       evas_object_image_size_set(im, w, h);
-       evas_object_image_smooth_scale_set(im, 0);
-       evas_object_image_data_copy_set(im, data);
-       evas_object_image_data_update_add(im, 0, 0, w, h);
-       evas_object_image_fill_set(im, 0, 0, w, h);
-       evas_object_resize(im, w, h);
-       free(data);
-    }
-   else
-    {
-       DEF_THUMB_RETURN;
-    }
-   
-   eet_close(ef);
    return im;
 }
 
@@ -207,10 +209,13 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
 static char *
 _e_thumb_file_id(char *file)
 {
-   char                s[256];
+   char                s[256], *sp;
    const char         *chmap =
-     "0123456789abcdefghijklmnopqrstuvwxyz€‚ƒ„…†‡ˆŠ‹ŒŽ‘’“-_";
-   int                 id[2];
+     "0123456789abcdef"
+     "ghijklmnopqrstuv"
+     "wxyz`~!@#$%^&*()"
+     "[];',.{}<>?-=_+|";
+   unsigned int        id[6], i;
    struct stat         st;
 
    if (stat(file, &st) < 0)
@@ -218,21 +223,28 @@ _e_thumb_file_id(char *file)
    
    id[0] = (int)st.st_ino;
    id[1] = (int)st.st_dev;
+   id[2] = (int)(st.st_size & 0xffffffff);
+   id[3] = (int)((st.st_size >> 32) & 0xffffffff);
+   id[4] = (int)(st.st_mtime & 0xffffffff);
+   id[5] = (int)((st.st_mtime >> 32) & 0xffffffff);
 
-   sprintf(s,
-	   "%c%c%c%c%c%c"
-	   "%c%c%c%c%c%c",
-	   chmap[(id[0] >> 0) & 0x3f],
-	   chmap[(id[0] >> 6) & 0x3f],
-	   chmap[(id[0] >> 12) & 0x3f],
-	   chmap[(id[0] >> 18) & 0x3f],
-	   chmap[(id[0] >> 24) & 0x3f],
-	   chmap[(id[0] >> 28) & 0x3f],
-	   chmap[(id[1] >> 0) & 0x3f],
-	   chmap[(id[1] >> 6) & 0x3f],
-	   chmap[(id[1] >> 12) & 0x3f],
-	   chmap[(id[1] >> 18) & 0x3f],
-	   chmap[(id[1] >> 24) & 0x3f], chmap[(id[1] >> 28) & 0x3f]);
-
+   sp = s;
+   for (i = 0; i < 6; i++)
+     {
+	unsigned int t, tt;
+	int j;
+	
+	t = id[i];
+	j = 32;
+	while (j > 0)
+	  {
+	     tt = t & ((1 << 6) - 1);
+	     *sp = chmap[tt];
+	     t >>= 6;
+	     j -= 6;
+	     sp++;
+	  }
+     }
+   *sp = 0;
    return strdup(s);
 }
