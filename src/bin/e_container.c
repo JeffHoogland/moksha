@@ -938,6 +938,10 @@ _e_container_free(E_Container *con)
    ecore_x_window_del(con->event_win);
     /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
+/* FIXME: had to disable this as it was freeing already freed items during
+ * looping (particularly remember/lock config dialogs). this is just
+ * disabled until we put in some special handling for this
+ *
    for (i = 0; i < 7; i++)
      {
 	for (l = con->layers[i].clients; l;)
@@ -947,6 +951,7 @@ _e_container_free(E_Container *con)
 	     e_object_free(E_OBJECT(tmp->data));
 	  }
      }
+ */   
    for (l = con->zones; l;)
      {
 	tmp = l;

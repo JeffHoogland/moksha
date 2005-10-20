@@ -2589,6 +2589,11 @@ _e_border_free(E_Border *bd)
 	e_object_del(E_OBJECT(bd->border_locks_dialog));
 	bd->border_locks_dialog = NULL;
      }
+   if (bd->border_remember_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_remember_dialog));
+	bd->border_remember_dialog = NULL;
+     }
    
    _e_border_menus_del(bd);
 
@@ -2609,8 +2614,11 @@ _e_border_free(E_Border *bd)
      }
    if (bd->remember)
      {
-	e_remember_unuse(bd->remember);
+	E_Remember *rem;
+	
+	rem = bd->remember;
 	bd->remember = NULL;
+	e_remember_unuse(rem);
      }
    if (!bd->already_unparented)
      {
@@ -2687,6 +2695,11 @@ _e_border_del(E_Border *bd)
      {
 	e_object_del(E_OBJECT(bd->border_locks_dialog));
 	bd->border_locks_dialog = NULL;
+     }
+   if (bd->border_remember_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_remember_dialog));
+	bd->border_remember_dialog = NULL;
      }
    
    _e_border_menus_del(bd);
@@ -2768,12 +2781,6 @@ _e_border_menus_del(E_Border *bd)
 {
    int was_menu = 0;
 
-   if (bd->border_remember_menu)
-     {
-	e_object_del(E_OBJECT(bd->border_remember_menu));
-	bd->border_remember_menu = NULL;
-	was_menu = 1;
-     }
    if (bd->border_stacking_menu)
      {
 	e_object_del(E_OBJECT(bd->border_stacking_menu));
@@ -5727,449 +5734,6 @@ _e_border_cb_border_menu_end(void *data, E_Menu *m)
 }
 
 static void
-_e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-     }
-   else
-     {
-	Evas_List *l;
-	
-	e_remember_unuse(bd->remember);
-	e_remember_del(bd->remember);
-	bd->remember = NULL;
-	for (l = bd->border_remember_menu->items; l; l = l->next)
-	  {
-	     E_Menu_Item *mi2;
-	     
-	     mi2 = l->data;
-	     e_menu_item_toggle_set(mi2, 0);
-	  }
-     }
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_first(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   bd->remember->apply_first_only = e_menu_item_toggle_get(mi);
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_name(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_NAME;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_NAME;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_class(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_CLASS;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_CLASS;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_title(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_TITLE;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_TITLE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_role(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_ROLE;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_ROLE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_type(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_TYPE;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_TYPE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_match_transient(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->match |= E_REMEMBER_MATCH_TRANSIENT;
-   else
-     bd->remember->match &= ~E_REMEMBER_MATCH_TRANSIENT;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_pos(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_POS;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_POS;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_size(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_SIZE;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_SIZE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_layer(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_LAYER;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_LAYER;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_locks(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_LOCKS;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_LOCKS;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_border(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_BORDER;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_BORDER;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_sticky(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_STICKY;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_STICKY;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_desktop(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_DESKTOP;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_DESKTOP;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_shade(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_SHADE;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_SHADE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_zone(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_ZONE;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_ZONE;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_skip_winlist(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_SKIP_WINLIST;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_SKIP_WINLIST;
-   e_config_save_queue();
-}
-					  
-static void
-_e_border_menu_cb_remember_apply_run(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   E_Border *bd;
-   bd = data;
-   if (!bd->remember)
-     {
-	bd->remember = e_remember_new();
-	if (bd->remember)
-	  {
-	     e_remember_use(bd->remember);
-	     e_remember_update(bd->remember, bd);
-	  }
-	else
-	  return;
-     }
-   if (e_menu_item_toggle_get(mi))
-     bd->remember->apply |= E_REMEMBER_APPLY_RUN;
-   else
-     bd->remember->apply &= ~E_REMEMBER_APPLY_RUN;
-   e_config_save_queue();
-}
-					  
-static void
 _e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
@@ -6180,59 +5744,22 @@ _e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 					  
 static void
+_e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   if (bd->border_remember_dialog) return;
+   e_int_border_remember(bd);
+}
+   
+static void
 _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_Time timestamp)
 {
    E_Menu *m;
    E_Menu_Item *mi;
 
    if (bd->border_menu) return;
-
-   m = e_menu_new();
-   bd->border_remember_menu = m;
    
-#define NEW_REMEMBER_MI(txt, flag, var, cb) \
-   mi = e_menu_item_new(m); \
-   e_menu_item_label_set(mi, txt); \
-   e_menu_item_check_set(mi, 1); \
-   if ((bd->remember) && (bd->remember->flag & var)) \
-     e_menu_item_toggle_set(mi, 1); \
-   e_menu_item_callback_set(mi, cb, bd);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remember This Window")); \
-   e_menu_item_check_set(mi, 1);
-   if (bd->remember)
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Remember This Instance Only"), apply_first_only, 1, _e_border_menu_cb_remember_first);
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Match by Name"), match, E_REMEMBER_MATCH_NAME, _e_border_menu_cb_remember_match_name);
-   NEW_REMEMBER_MI(_("Match by Class"), match, E_REMEMBER_MATCH_CLASS, _e_border_menu_cb_remember_match_class);
-   NEW_REMEMBER_MI(_("Match by Title"), match, E_REMEMBER_MATCH_TITLE, _e_border_menu_cb_remember_match_title);
-   NEW_REMEMBER_MI(_("Match by Role"), match, E_REMEMBER_MATCH_ROLE, _e_border_menu_cb_remember_match_role);
-   NEW_REMEMBER_MI(_("Match by Window Type"), match, E_REMEMBER_MATCH_TYPE, _e_border_menu_cb_remember_match_type);
-   NEW_REMEMBER_MI(_("Match by Transient Status"), match, E_REMEMBER_MATCH_TRANSIENT, _e_border_menu_cb_remember_match_transient);
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Remember Position"), apply, E_REMEMBER_APPLY_POS, _e_border_menu_cb_remember_apply_pos);
-   NEW_REMEMBER_MI(_("Remember Size"), apply, E_REMEMBER_APPLY_SIZE, _e_border_menu_cb_remember_apply_size);
-   NEW_REMEMBER_MI(_("Remember Stacking"), apply, E_REMEMBER_APPLY_LAYER, _e_border_menu_cb_remember_apply_layer);
-   NEW_REMEMBER_MI(_("Remember Locks"), apply, E_REMEMBER_APPLY_LOCKS, _e_border_menu_cb_remember_apply_locks);
-   NEW_REMEMBER_MI(_("Remember Border"), apply, E_REMEMBER_APPLY_BORDER, _e_border_menu_cb_remember_apply_border);
-   NEW_REMEMBER_MI(_("Remember Stickiness"), apply, E_REMEMBER_APPLY_STICKY, _e_border_menu_cb_remember_apply_sticky);
-   NEW_REMEMBER_MI(_("Remember Desktop"), apply, E_REMEMBER_APPLY_DESKTOP, _e_border_menu_cb_remember_apply_desktop);
-   NEW_REMEMBER_MI(_("Remember Shaded State"), apply, E_REMEMBER_APPLY_SHADE, _e_border_menu_cb_remember_apply_shade);
-   NEW_REMEMBER_MI(_("Remember Zone"), apply, E_REMEMBER_APPLY_ZONE, _e_border_menu_cb_remember_apply_zone);
-   NEW_REMEMBER_MI(_("Remember Skip Window List"), apply, E_REMEMBER_APPLY_SKIP_WINLIST, _e_border_menu_cb_remember_apply_skip_winlist);
-/*   
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   NEW_REMEMBER_MI(_("Run this porgram on login"), apply, E_REMEMBER_APPLY_RUN, _e_border_menu_cb_remember_apply_run);
- */ 
-
    m = e_menu_new();
    bd->border_stacking_menu = m;
    /* Only allow to change layer for windows in "normal" layers */
@@ -6412,7 +5939,7 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 			     "widgets/border/default/locks");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Remember"));
-   e_menu_item_submenu_set(mi, bd->border_remember_menu);
+   e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
    e_menu_item_icon_edje_set(mi,
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/remember"),

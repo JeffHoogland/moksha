@@ -155,14 +155,18 @@ static void
 _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
 {
    E_Config_Dialog *cfd;
+   int ok = 0;
 
    cfd = dia->data;
    if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
+     ok = cfd->view.basic.apply_cfdata(cfd, cfd->cfdata);
    else
-     cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
-   e_dialog_button_disable_num_set(cfd->dia, 0, 1);
-   e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+     ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
+   if (ok)
+     {
+	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
+	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+     }
 }
 
 static void

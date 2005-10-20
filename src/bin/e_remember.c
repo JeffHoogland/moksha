@@ -75,7 +75,20 @@ e_remember_del(E_Remember *rem)
    if (rem->delete_me) return;
    if (rem->used_count != 0)
      {
+	Evas_List *l;
+	
 	rem->delete_me = 1;
+	for (l = e_border_client_list(); l; l = l->next)
+	  {
+	     E_Border *bd;
+	     
+	     bd = l->data;
+	     if (bd->remember == rem)
+	       {
+		  bd->remember = NULL;
+		  e_remember_unuse(rem);
+	       }
+	  }
 	return;
      }
    _e_remember_free(rem);

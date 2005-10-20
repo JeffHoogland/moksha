@@ -97,7 +97,8 @@ e_config_dialog.h \
 e_int_config_focus.h \
 e_icon_layout.h \
 e_int_border_locks.h \
-e_thumb.h
+e_thumb.h \
+e_int_border_remember.h
 
 enlightenment_src = \
 e_user.c \
@@ -176,6 +177,7 @@ e_int_config_focus.c \
 e_icon_layout.c \
 e_int_border_locks.c \
 e_thumb.c \
+e_int_border_remember.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
