@@ -145,7 +145,8 @@ e_fm_file_is_image(E_Fm_File *file)
    if (!ext) return 0;
    
    D(("e_fm_file_is_image: (%p)\n", file));
-   return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"));
+   return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"))
+     || (!strcasecmp(ext, ".jpeg")) || (!strcasecmp(ext, ".eap"));
 }
 
 int
@@ -160,18 +161,18 @@ e_fm_file_can_exec(E_Fm_File *file)
        if(!strcasecmp(ext, ".eap"))
 	{
 	   D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
-	   return TRUE;
+	   return 1;
 	}
     }
    
    if(ecore_file_can_exec(file->path))
     {
        D(("e_fm_file_can_exec: true (%p) (%s)\n", file, file->name));
-       return TRUE;
+       return 1;
     }
    
    D(("e_fm_file_can_exec: false (%p) (%s)\n", file, file->name));
-   return FALSE;
+   return 0;
 }
 
 int

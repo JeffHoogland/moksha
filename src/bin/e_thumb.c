@@ -4,6 +4,12 @@
 
 #include "e.h"
 
+#ifdef EFM_DEBUG
+# define D(x)  do {printf(__FILE__ ":%d:  ", __LINE__); printf x; fflush(stdout);} while (0)
+#else
+# define D(x)  ((void) 0)
+#endif
+
 static char       *_e_thumb_file_id(char *file);
 
 static char       *thumb_path = NULL;
@@ -56,18 +62,26 @@ e_thumb_file_get(char *file)
    return strdup(thumb);   
 }
 
-/* check wether a file has a saved thumb */
+/* return true if the saved thumb exists OR if its an eap */
 int
 e_thumb_exists(char *file)
 {
    char *thumb;
-   int ret;
+   char *ext;
+   
+   ext = strrchr(file, '.');
+   if(ext)
+     if(!strcasecmp(ext, ".eap"))       
+	 return 1;
    
    thumb = e_thumb_file_get(file);
-   ret = ecore_file_exists(thumb);
-   free(thumb);
+   if(ecore_file_exists(thumb))
+    {
+       free(thumb);
+       return 1;
+    }
    
-   return ret;     
+   return 0;
 }
 
 /* create and save a thumb to disk */
@@ -75,13 +89,20 @@ int
 e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 {
    Eet_File *ef;
-   char *thumbpath;
+   char *thumbpath, *ext;
    Evas_Object *im;
    const int *data;
    int size, iw, ih, ww, hh;
    Ecore_Evas *buf;
    Evas *evasbuf;
    int alpha;
+   
+   ext = strrchr(file, '.');
+   if(ext)
+    {
+       if(!strcasecmp(ext, ".eap"))
+	 return 1;
+    }
    
    thumbpath = e_thumb_file_get(file);
    if (!thumbpath)
@@ -155,6 +176,8 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
 	       evas_object_resize(im, width, height); \
 	       return im 
    
+   D(("e_thumb_evas_object_get: (%s)\n", file));
+     
    /* eap thumbnailer */
    ext = strrchr(file, '.');
    if(ext)
@@ -162,18 +185,22 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
        if(!strcasecmp(ext, ".eap"))
 	{
 	   E_App *app;
-	   
+
+	   D(("e_thumb_evas_object_get: eap found\n"));
 	   app = e_app_new(file, 0);
-	   
+	   D(("e_thumb_evas_object_get: eap loaded\n"));
 	   if(!app)	     
 	    { 
+	       D(("e_thumb_evas_object_get: invalid eap\n"));
 	       DEF_THUMB_RETURN;
 	    }
 	   else
 	    {
+	       D(("e_thumb_evas_object_get: creating eap thumb\n"));
 	       im = edje_object_add(evas);
 	       edje_object_file_set(im, file, "icon");
 	       e_object_unref(E_OBJECT(app));	       
+	       D(("e_thumb_evas_object_get: returning eap thumb\n"));
 	       return im;
 	    }
 	}

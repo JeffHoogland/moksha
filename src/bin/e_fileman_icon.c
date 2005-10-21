@@ -336,7 +336,7 @@ _e_fm_icon_smart_show(Evas_Object *obj)
    if (e_fm_file_is_image(sd->file))
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
-	if (ecore_file_exists(sd->thumb_path))
+	if (e_thumb_exists(sd->file->path))
 	  sd->image_object = e_thumb_evas_object_get(sd->file->path,
 						     sd->evas,
 						     sd->w,
@@ -485,7 +485,8 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
 {
    Ecore_Event_Exe_Exit *ev;
    E_Smart_Data         *sd;
-
+   char                 *ext;
+   
    ev = event;
    if (ev->pid != pid) return 1;
    if (!thumb_files) return 1;
@@ -493,7 +494,12 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
    sd = thumb_files->data;
    thumb_files = evas_list_remove_list(thumb_files, thumb_files);
    
-   if (ecore_file_exists(sd->thumb_path))
+   ext = strrchr(sd->file->name, ".");
+   if(ext)
+     if(strcasecmp(ext, ".eap"))
+       ext = NULL;
+   
+   if (ecore_file_exists(sd->thumb_path) || ext)
      {
 	if (sd->image_object) evas_object_del(sd->image_object);
 	sd->image_object = e_thumb_evas_object_get(sd->file->path,
