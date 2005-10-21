@@ -555,7 +555,7 @@ _e_fm_smart_del(Evas_Object *object)
    
    e_config_domain_save("efm", sd->conf.main_edd, sd->conf.main);
    
-  if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+//  if (sd->monitor) ecore_file_monitor_del(sd->monitor);
    sd->monitor = NULL;
    
    while (sd->files)
@@ -1302,8 +1302,8 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    
    /* Get new files */
    sd->files = _e_fm_dir_files_get(sd, E_FM_FILE_TYPE_NORMAL);
-   if (sd->monitor) ecore_file_monitor_del(sd->monitor);
-   sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
+//   if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+//   sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
    /* Get special prev dir */
    if (strcmp(sd->dir, "/"))
     {
@@ -1850,12 +1850,11 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	 }
        else
 	 {
-#if 0	    
 	    icon->sd->drag.start = 1;
 	    icon->sd->drag.y = -1;
 	    icon->sd->drag.x = -1;
 	    icon->sd->drag.icon_object = icon;
-#endif
+
 	    if (!icon->state.selected)
 	      {
 		 if (evas_key_modifier_is_set(evas_key_modifier_get(icon->sd->evas), "Control"))
@@ -2000,17 +1999,17 @@ static int
 _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 {
    E_Fm_Smart_Data *sd;
-   E_Fm_File *file;
+   E_Fm_Icon *icon;
    Ecore_X_Event_Mouse_Move *ev;
 
    ev = event;
    sd = data;
    
-/* TODO */
-/*
-   file = sd->drag.file;
+/* TODO - rethink this code */
 
-   if (!file) return 1;
+   icon = sd->drag.icon_object;
+
+   if (!icon) return 1;
 
    if (sd->drag.start)
      {
@@ -2036,15 +2035,21 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 		  const char *path = NULL, *part = NULL;
 		  const char *drop_types[] = { "text/uri-list" };
 
-		  snprintf(data, sizeof(data), "file://%s/%s", sd->dir, file->attr->name);
+		  snprintf(data, sizeof(data), "file://%s", icon->file->path);
 
 		  ecore_evas_geometry_get(sd->win->ecore_evas, &cx, &cy, NULL, NULL);
-		  evas_object_geometry_get(file->icon_img, &x, &y, &w, &h);
+		  evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
 		  drag = e_drag_new(sd->win->container, cx + x, cy + y,
 				    drop_types, 1, strdup(data), strlen(data),
-				    _e_fm_drop_cb);
-
-		  edje_object_file_get(file->icon_img, &path, &part);
+				    _e_fm_drop_done_cb);
+		  
+		  o = e_fm_icon_add(drag->evas);
+		  e_fm_icon_file_set(o, icon->file);
+		  e_fm_icon_title_set(o, "");
+		  evas_object_resize(o, w, h);		  
+		  
+/* This shouldnt be needed anymore
+		  edje_object_file_get(icon->icon_object, &path, &part);
 		  if ((path) && (part))
 		    {
 		       o = edje_object_add(drag->evas);
@@ -2055,13 +2060,14 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 		       int iw, ih;
 
 		       o = evas_object_image_add(drag->evas);
-		       evas_object_image_size_get(file->icon_img, &iw, &ih);
+		       evas_object_image_size_get(icon->icon_object, &iw, &ih);
 		       evas_object_image_size_set(o, iw, ih);
-		       evas_object_image_data_copy_set(o, evas_object_image_data_get(file->icon_img, 0));
+		       evas_object_image_data_copy_set(o, evas_object_image_data_get(icon->icon_object, 0));
 		       evas_object_image_data_update_add(o, 0, 0, iw, ih);
 		       evas_object_image_fill_set(o, 0, 0, iw, ih);
 		       evas_object_resize(o, iw, ih);
 		    }
+ */ 
 		  if (!o)
 		    {
 		       // FIXME: fallback icon for drag
@@ -2077,7 +2083,7 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 	       }
 	  }
      }
- */
+
    return 1;
 }
 

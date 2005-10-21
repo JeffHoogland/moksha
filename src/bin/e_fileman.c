@@ -135,8 +135,7 @@ _e_fileman_free(E_Fileman *fileman)
    evas_object_del(fileman->smart);
    evas_object_del(fileman->main);
    e_object_del(E_OBJECT(fileman->win));
-   return;   
-   //free(fileman);
+   free(fileman);
 }
 
 static void
@@ -176,9 +175,8 @@ _e_fileman_delete_cb(E_Win *win)
    E_Fileman *fileman;
 
    fileman = win->data;
-   D(("e_fileman_delete_cb: (%p)\n", fileman));   
+   D(("e_fileman_delete_cb: (%p)\n", fileman));
    e_object_del(E_OBJECT(fileman));
-   e_object_del(E_OBJECT(win));
 }
 
 static void
