@@ -5803,43 +5803,41 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
    bd->border_menu = m;
    e_menu_post_deactivate_callback_set(m, _e_border_cb_border_menu_end, NULL);
 
-   if (!bd->lock_close)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Close"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
-	e_menu_item_icon_edje_set(mi, 
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/close"), 
-				  "widgets/border/default/close");
-     }
-
-   if (!bd->lock_user_iconify)
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Iconify"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
-	e_menu_item_icon_edje_set(mi,
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/minimize"),
-				  "widgets/border/default/minimize");
-     }
-   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Window Locks"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_locks, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/locks"),
+			     "widgets/border/default/locks");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Remember"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/remember"),
+			     "widgets/border/default/remember");
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if ((!bd->lock_close) && (!bd->internal))
-     {
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Kill"));
-	e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
-	e_menu_item_icon_edje_set(mi, 
-				  (char *)e_theme_edje_file_get("base/theme/borders",
-								"widgets/border/default/kill"),
-				  "widgets/border/default/kill");
-	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-     }
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Send to Desktop"));
+   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/sendto"),
+			     "widgets/border/default/sendto");
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Stacking"));
+   e_menu_item_submenu_set(mi, bd->border_stacking_menu);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/stacking"),
+			     "widgets/border/default/stacking");
    
    if ((!bd->lock_user_shade) && (!(!strcmp("borderless", bd->client.border.name))))
      {
@@ -5880,13 +5878,6 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 				  "widgets/border/default/stick");
      }
   
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Stacking"));
-   e_menu_item_submenu_set(mi, bd->border_stacking_menu);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/stacking"),
-			     "widgets/border/default/stacking");
    if ((!bd->shaded) && (!bd->fullscreen) && (!bd->lock_border))
      {
 	mi = e_menu_item_new(m);
@@ -5927,34 +5918,6 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 				  "widgets/border/default/skip_winlist");
      }
    
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Window Locks"));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_locks, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/locks"),
-			     "widgets/border/default/locks");
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Remember"));
-   e_menu_item_callback_set(mi, _e_border_menu_cb_remember, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/remember"),
-			     "widgets/border/default/remember");
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Send To"));
-   e_menu_item_submenu_pre_callback_set(mi, _e_border_menu_cb_sendto_pre, bd);
-   e_menu_item_icon_edje_set(mi,
-			     (char *)e_theme_edje_file_get("base/theme/borders",
-							   "widgets/border/default/sendto"),
-			     "widgets/border/default/sendto");
-
    if (ecore_file_app_installed("e_util_eapp_edit"))
      {
 	char *title = "";
@@ -5965,6 +5928,9 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	e_menu_item_separator_set(mi, 1);
 	if (bd->app)
 	  {
+	     mi = e_menu_item_new(m);
+	     e_menu_item_separator_set(mi, 1);
+
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app->path);
@@ -5996,6 +5962,44 @@ _e_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_X_T
 	     e_menu_item_label_set(mi, _("Create Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
 	  }
+     }
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   if ((!bd->lock_close) && (!bd->internal))
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Kill"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_kill, bd);
+	e_menu_item_icon_edje_set(mi, 
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/kill"),
+				  "widgets/border/default/kill");
+	mi = e_menu_item_new(m);
+	e_menu_item_separator_set(mi, 1);
+     }
+   
+   if (!bd->lock_user_iconify)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Iconify"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_iconify, bd);
+	e_menu_item_icon_edje_set(mi,
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/minimize"),
+				  "widgets/border/default/minimize");
+     }
+   
+   if (!bd->lock_close)
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Close"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_close, bd);
+	e_menu_item_icon_edje_set(mi, 
+				  (char *)e_theme_edje_file_get("base/theme/borders",
+								"widgets/border/default/close"), 
+				  "widgets/border/default/close");
      }
 
    if (key)
