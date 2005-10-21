@@ -90,45 +90,51 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 	return -1;
      }
    
-   ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
-   if (!ef)
-     {
-	free(thumbpath);
-	return -1;
-     }
-   
-   free(thumbpath);
-   
-   buf = ecore_evas_buffer_new(w, h);
+   buf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(buf);
    im = evas_object_image_add(evasbuf);
    evas_object_image_file_set(im, file, NULL);
    iw = 0; ih = 0;
    evas_object_image_size_get(im, &iw, &ih);
    alpha = evas_object_image_alpha_get(im);
-   ww = w;
-   hh = (w * ih) / iw;
-   if (hh > h)
+   if ((iw > 0) && (ih > 0))
      {
-	hh = h;
-	ww = (h * iw) / ih;
-     }
-   ecore_evas_resize(buf, ww, hh);
-   evas_object_image_fill_set(im, 0, 0, ww, hh);
-   evas_object_resize(im, ww, hh);
-   evas_object_show(im);
-   data = ecore_evas_buffer_pixels_get(buf);
+	ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
+	if (!ef)
+	  {
+	     free(thumbpath);
+	     evas_object_del(im);
+	     ecore_evas_free(buf);
+	     return -1;
+	  }
+	free(thumbpath);
    
-   eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
-   if ((size = eet_data_image_write(ef, "/thumbnail/data",
-				    (void *)data, ww, hh, alpha,
-				    0, 91, 1)) <= 0)
-    {
-       eet_close(ef);
-       return -1;
-    }
+	ww = w;
+	hh = (w * ih) / iw;
+	if (hh > h)
+	  {
+	     hh = h;
+	     ww = (h * iw) / ih;
+	  }
+	ecore_evas_resize(buf, ww, hh);
+	evas_object_image_fill_set(im, 0, 0, ww, hh);
+	evas_object_resize(im, ww, hh);
+	evas_object_show(im);
+	data = ecore_evas_buffer_pixels_get(buf);
+	
+	eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
+	if ((size = eet_data_image_write(ef, "/thumbnail/data",
+					 (void *)data, ww, hh, alpha,
+					 0, 91, 1)) <= 0)
+	  {
+	     evas_object_del(im);
+	     ecore_evas_free(buf);
+	     eet_close(ef);
+	     return -1;
+	  }
+	eet_close(ef);
+     }
    evas_object_del(im);
-   eet_close(ef);
    ecore_evas_free(buf);
    return 1;
 }
