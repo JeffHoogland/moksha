@@ -197,11 +197,11 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
 	DEF_THUMB_RETURN;
      }
    
-   
    im = e_icon_add(evas);
    e_icon_file_key_set(im, thumb, "/thumbnail/data");
    e_icon_fill_inside_set(im, 1);
    free(thumb);
+   eet_close(ef);
    return im;
 }
 
