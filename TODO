@@ -10,8 +10,6 @@ Some of the things (in very short form) that need to be done to E17...
 
 * BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
-* BUG: some bug if u flip desktops fast enough window s vanish (how the hell
-  can this still happen? we are tracking unmap event counts!)
 * BUG: race condition on winlist activate via keypress and the key grab thus
   missing the alt key raise sometimes.
 * BUG: dnd from konqueror on zone 0 to another konq on zone 1 with xinerama (2
@@ -61,7 +59,6 @@ Some of the things (in very short form) that need to be done to E17...
   adjusted size) is smaller that screen max size, fill in space in between
   with black. for 3. we want to fill the inbewteen space with some theme
   defined image data
-* dialogs for generic contents too
 * netwm window types and states need addressing (do special/appropriate things)
   for each of them.
 * do something with the icccm urgency field hint
@@ -94,15 +91,13 @@ Some of the things (in very short form) that need to be done to E17...
 * ibar should support subdirs with pop-up icons...
 * borders need to be able to change border theme on the fly by menu or app
   properties
-* add window glueing
 * add setup/install wizard to seed eap files etc. etc.
 * support text and color classes
 * add clientinfo pane/popdown for borders
-* add sliders, radio and check buttons for clientinfo pane
 * make xrandr support get rotation and store it
-* add separate app menu bars at top of screen support
-* gui config tools for bg's, keybindings, etc. etc. etc.
-* "control panel" app to launch the gui config tools
+* gui config dialogs for all config
+* "control panel" dialog need to be better to allow config dialogs to launch
+  from it
 * make it possible to disable border buttons/actions (tell theme what is
   disabled)
 * modules need config dialogs instead of long winded menus
@@ -143,7 +138,7 @@ Some of the things (in very short form) that need to be done to E17...
 -------------------------------------------------------------------------------
 
 * screensaver/lock module
-* tip/hint/suggestion dialog app (textblock etc.)
+* tip/hint/suggestion dialog
 * add tooltips
 * add locale and encoding fields to eapp files (to launch eapp in that
   locale+encoding)
