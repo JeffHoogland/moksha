@@ -467,6 +467,12 @@ _e_fm_icon_thumb_generate(void)
    pid = fork();
    if (pid == 0)
      {
+	/* reset signal handlers for the child */
+	signal(SIGSEGV, SIG_DFL);
+	signal(SIGILL, SIG_DFL);
+	signal(SIGFPE, SIG_DFL);
+	signal(SIGBUS, SIG_DFL);
+	
 	sd = thumb_files->data;
 	if (!e_thumb_exists(sd->file->path))
 	  e_thumb_create(sd->file->path, 48, 48); // thumbnail size
