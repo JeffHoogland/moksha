@@ -84,6 +84,151 @@ e_thumb_exists(char *file)
    return 0;
 }
 
+int *
+_e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
+{
+   Evas *evasbuf;
+   int size, iw, ih;
+   
+   *buf = ecore_evas_buffer_new(1, 1);
+   evasbuf = ecore_evas_get(*buf);
+   *im = evas_object_image_add(evasbuf);
+   evas_object_image_file_set(*im, file, NULL);
+   iw = 0; ih = 0;
+   evas_object_image_size_get(*im, &iw, &ih);
+   *alpha = evas_object_image_alpha_get(im);
+   if ((iw > 0) && (ih > 0))
+    {
+       *ww = w;
+       *hh = (w * ih) / iw;
+       if (*hh > h)
+	{
+	   *hh = h;
+	   *ww = (h * iw) / ih;
+	}
+       ecore_evas_resize(*buf, *ww, *hh);
+       evas_object_image_fill_set(*im, 0, 0, *ww, *hh);
+       evas_object_resize(*im, *ww, *hh);
+       evas_object_move(*im, 0, 0);
+       evas_object_show(*im);
+       
+       return ecore_evas_buffer_pixels_get(*buf);
+    }
+   return NULL;
+}
+
+/* thumbnail an e17 background and return pixel data */
+int *
+_e_thumb_ebg_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
+{
+   Evas *evasbuf;   
+   Evas_Object *wallpaper;
+   int *pixels;   
+
+   *ww = 640;
+   *hh = 480;
+   *alpha = 0;   
+   
+   w = 640;
+   h = 480;
+   
+   *buf = ecore_evas_buffer_new(w, h);
+   evasbuf = ecore_evas_get(*buf);
+   
+   wallpaper = edje_object_add(evasbuf);
+
+      
+   edje_object_file_set(wallpaper, file, "desktop/background");
+      
+   /* wallpaper */
+   evas_object_move(wallpaper, 0, 0);
+   evas_object_resize(wallpaper, w, h);   
+      
+   evas_object_show(wallpaper);
+   
+   pixels = ecore_evas_buffer_pixels_get(*buf);
+   
+   evas_object_del(wallpaper);   
+   return pixels;
+}
+
+/* thumbnail an e17 theme and return pixel data */
+int *
+_e_thumb_etheme_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
+{
+   Evas *evasbuf;   
+   Evas_Object *wallpaper, *window, *clock, *start, **pager;
+   int *pixels;   
+
+   *ww = 640;
+   *hh = 480;
+   *alpha = 0;   
+   
+   w = 640;
+   h = 480;
+   
+   *buf = ecore_evas_buffer_new(w, h);
+   evasbuf = ecore_evas_get(*buf);
+   
+   wallpaper = edje_object_add(evasbuf);
+   window    = edje_object_add(evasbuf);
+   clock     = edje_object_add(evasbuf);
+   start     = edje_object_add(evasbuf);
+   pager     = E_NEW(Evas_Object*, 3);
+   pager[0]  = edje_object_add(evasbuf);
+   pager[1]  = edje_object_add(evasbuf);
+   pager[2]  = edje_object_add(evasbuf);
+   
+   edje_object_file_set(wallpaper, file, "desktop/background");   
+   edje_object_file_set(window,	file, "widgets/border/default/border");
+   edje_object_file_set(clock, file, "modules/clock/main");   
+   edje_object_file_set(clock, file, "modules/clock/main");   
+   edje_object_file_set(start, file, "modules/start/main");   
+   edje_object_file_set(pager[0], file, "modules/pager/main");
+   edje_object_file_set(pager[1], file, "modules/pager/desk");
+   edje_object_file_set(pager[2], file, "modules/pager/window");   
+   edje_object_part_text_set(window, "title_text", file);   
+   edje_object_part_swallow(pager[0], "items", pager[1]);
+   edje_object_part_swallow(pager[1], "items", pager[2]);
+      
+   /* wallpaper */
+   evas_object_move(wallpaper, 0, 0);
+   evas_object_resize(wallpaper, w, h);   
+   /* main window */
+   evas_object_move(window, (w * 0.1), (h * 0.05));
+   evas_object_resize(window, w * 0.8, h * 0.75);   
+   /* clock */
+   evas_object_move(clock, (w * 0.9), (h * 0.9));
+   evas_object_resize(clock, w * 0.1, h * 0.1);
+   /* start */
+   evas_object_move(start, (w * 0.9), (h * 0.9));
+   evas_object_resize(start, w * 0.1, h * 0.1);   
+   /* pager */
+   evas_object_move(pager[0], (w * 0.3), (h * 0.9));
+   evas_object_resize(pager[0], w * 0.1, h * 0.1);
+      
+   evas_object_show(wallpaper);
+   evas_object_show(window);
+   evas_object_show(clock);
+   evas_object_show(start);
+   evas_object_show(pager[0]);
+   evas_object_show(pager[1]);
+   evas_object_show(pager[2]);
+   
+   pixels = ecore_evas_buffer_pixels_get(*buf);
+   
+   evas_object_del(wallpaper);
+   evas_object_del(window);
+   evas_object_del(clock);
+   evas_object_del(start);
+   evas_object_del(pager[0]);
+   evas_object_del(pager[1]);
+   evas_object_del(pager[2]);   
+   free(pager);
+   
+   return pixels;
+}
+
 /* create and save a thumb to disk */
 int
 e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
@@ -111,14 +256,20 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 	return -1;
      }
    
-   buf = ecore_evas_buffer_new(1, 1);
-   evasbuf = ecore_evas_get(buf);
-   im = evas_object_image_add(evasbuf);
-   evas_object_image_file_set(im, file, NULL);
-   iw = 0; ih = 0;
-   evas_object_image_size_get(im, &iw, &ih);
-   alpha = evas_object_image_alpha_get(im);
-   if ((iw > 0) && (ih > 0))
+   if(ext)
+    {
+       if(!strcasecmp(ext, ".edj"))
+	{
+	   /* for now, this function does both the bg and theme previews */
+	   data = _e_thumb_etheme_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
+	}
+       else
+	 data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);	 
+    }
+   else
+     data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
+   
+   if (data)
      {
 	ef = eet_open(thumbpath, EET_FILE_MODE_WRITE);
 	if (!ef)
@@ -129,19 +280,6 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 	     return -1;
 	  }
 	free(thumbpath);
-   
-	ww = w;
-	hh = (w * ih) / iw;
-	if (hh > h)
-	  {
-	     hh = h;
-	     ww = (h * iw) / ih;
-	  }
-	ecore_evas_resize(buf, ww, hh);
-	evas_object_image_fill_set(im, 0, 0, ww, hh);
-	evas_object_resize(im, ww, hh);
-	evas_object_show(im);
-	data = ecore_evas_buffer_pixels_get(buf);
 	
 	eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
 	if ((size = eet_data_image_write(ef, "/thumbnail/data",

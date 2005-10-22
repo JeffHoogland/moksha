@@ -53,6 +53,12 @@ e_fm_file_new(const char *filename)
    if (file->name[0] == '.')
      file->type |= E_FM_FILE_TYPE_HIDDEN;
 
+   file->preview_funcs = E_NEW(E_Fm_File_Preview_Function, 4);
+   file->preview_funcs[0] = e_fm_file_is_image;
+   file->preview_funcs[1] = e_fm_file_is_etheme;
+   file->preview_funcs[2] = e_fm_file_is_ebg;
+   file->preview_funcs[3] = e_fm_file_is_eap;
+   
    D(("e_fm_file_new: %s\n", filename));
    return file;
 
@@ -131,6 +137,22 @@ e_fm_file_copy(E_Fm_File *file, const char *name)
 }
 
 int
+e_fm_file_can_preview(E_Fm_File *file)
+{
+   int i;
+      
+   D(("e_fm_file_can_preview: (%s) (%p)\n", file->name, file));
+   for (i = 0; i < sizeof(file->preview_funcs); i++)
+    {
+       E_Fm_File_Preview_Function func;
+       func = file->preview_funcs[i];
+       if(func(file))
+	 return 1;
+    }
+   return 0;
+}
+
+int
 e_fm_file_is_image(E_Fm_File *file)
 {
    /* We need to check if it is a filetype supported by evas.
@@ -138,15 +160,99 @@ e_fm_file_is_image(E_Fm_File *file)
     * canvas.
     */
    char *ext;
+   
+   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;   
+   
+   ext = strrchr(file->name, '.');
+   if (!ext) return 0;
 
-   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;
+   D(("e_fm_file_is_image: (%p)\n", file));
+   return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"))
+     || (!strcasecmp(ext, ".jpeg")); 
+}
 
+int
+e_fm_file_is_etheme(E_Fm_File *file)
+{
+   int          val;
+   char        *ext;
+   Evas_List   *groups, *l;
+   
+   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;   
+   
    ext = strrchr(file->name, '.');
    if (!ext) return 0;
    
-   D(("e_fm_file_is_image: (%p)\n", file));
-   return (!strcasecmp(ext, ".jpg")) || (!strcasecmp(ext, ".png"))
-     || (!strcasecmp(ext, ".jpeg")) || (!strcasecmp(ext, ".eap"));
+   if(strcasecmp(ext, ".edj"))
+     return 0;
+     
+   val = 0;
+   groups = edje_file_collection_list(file->path);
+   if(!groups)
+     return 0;
+   
+   for (l = groups; l; l = l->next)    
+     if(!strcmp(l->data, "widgets/border/default/border"))
+      {
+	 val = 1;
+	 break;
+      }
+   edje_file_collection_list_free(groups);
+   return val;
+}
+
+int
+e_fm_file_is_ebg(E_Fm_File *file)
+{
+   int          val;
+   char        *ext;
+   Evas_List   *groups, *l;
+   
+   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;   
+   
+   ext = strrchr(file->name, '.');
+   if (!ext) return 0;
+   
+   if(strcasecmp(ext, ".edj"))
+     return 0;
+     
+   val = 0;
+   groups = edje_file_collection_list(file->path);
+   if(!groups)
+     return 0;
+   
+   for (l = groups; l; l = l->next)    
+     if(!strcmp(l->data, "desktop/background"))
+      {
+	 val = 1;
+	 break;
+      }
+   edje_file_collection_list_free(groups);
+   return val;     
+}
+
+int
+e_fm_file_is_eap(E_Fm_File *file)
+{
+   char *ext;
+   E_App *app;
+   
+   if ((file->type != E_FM_FILE_TYPE_FILE) && (file->type != E_FM_FILE_TYPE_SYMLINK)) return 0;   
+   
+   ext = strrchr(file->name, '.');
+   if (!ext) return 0;
+   
+   if(strcasecmp(ext, ".eap"))
+     return 0;
+   
+   app = e_app_new(file->path, 0);
+   if(!app)
+    {
+       e_object_unref(E_OBJECT(app));
+       return 0;
+    }
+   e_object_unref(E_OBJECT(app));
+   return 1;   
 }
 
 int
@@ -226,6 +332,7 @@ static void
 _e_fm_file_free(E_Fm_File *file)
 {
    D(("_e_fm_file_free: (%p) (%s)\n", file, file->name));   
+   free(file->preview_funcs);
    if (file->path) free(file->path);
    if (file->name) free(file->name);
    free(file);

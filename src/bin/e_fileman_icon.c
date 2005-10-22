@@ -333,7 +333,7 @@ _e_fm_icon_smart_show(Evas_Object *obj)
                            "fileman/icon");
    evas_object_smart_member_add(sd->icon_object, obj);
 
-   if (e_fm_file_is_image(sd->file))
+   if (e_fm_file_can_preview(sd->file))
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
 	if (e_thumb_exists(sd->file->path))

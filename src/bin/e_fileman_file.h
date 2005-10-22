@@ -5,6 +5,7 @@
 
 typedef struct _E_Fm_File            E_Fm_File;
 typedef struct _E_Fm_File_Attributes E_Fm_File_Attributes;
+typedef int(*E_Fm_File_Preview_Function) (E_Fm_File*);
 
 #define E_FM_FILE_TYPE_FILE      (1 << 8)
 #define E_FM_FILE_TYPE_DIRECTORY (1 << 9)
@@ -48,16 +49,22 @@ struct _E_Fm_File
    time_t    atime;           /* time of last access */
    time_t    mtime;           /* time of last modification */
    time_t    ctime;           /* time of last status change */
+   
+   E_Fm_File_Preview_Function *preview_funcs;
 };
 
-EAPI E_Fm_File *e_fm_file_new        (const char *filename);
-EAPI int        e_fm_file_rename     (E_Fm_File *file, const char *name);
-EAPI int        e_fm_file_delete     (E_Fm_File *file);
-EAPI int        e_fm_file_copy       (E_Fm_File *file, const char *name);
-EAPI int        e_fm_file_is_image   (E_Fm_File *file);
-EAPI int        e_fm_file_exec       (E_Fm_File *file);
-EAPI int        e_fm_file_assoc_set  (E_Fm_File *file, const char *assoc);
-EAPI int        e_fm_file_assoc_exec (E_Fm_File *file);
+EAPI E_Fm_File *e_fm_file_new         (const char *filename);
+EAPI int        e_fm_file_rename      (E_Fm_File *file, const char *name);
+EAPI int        e_fm_file_delete      (E_Fm_File *file);
+EAPI int        e_fm_file_copy        (E_Fm_File *file, const char *name);
+EAPI int        e_fm_file_can_preview (E_Fm_File *file);
+EAPI int        e_fm_file_is_image    (E_Fm_File *file);
+EAPI int        e_fm_file_is_etheme   (E_Fm_File *file);
+EAPI int        e_fm_file_is_ebg      (E_Fm_File *file);
+EAPI int        e_fm_file_is_eap      (E_Fm_File *file);
+EAPI int        e_fm_file_exec        (E_Fm_File *file);
+EAPI int        e_fm_file_assoc_set   (E_Fm_File *file, const char *assoc);
+EAPI int        e_fm_file_assoc_exec  (E_Fm_File *file);
 
 #endif
 #endif

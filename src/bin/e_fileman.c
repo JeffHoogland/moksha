@@ -19,8 +19,9 @@
 #endif
 
 static void _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data);
-static void _e_fileman_reconf_cb(void *data, int type, void *event);
-static void _e_fileman_dir_change_cb(void *data, int type, void *event);
+static int _e_fileman_reconf_cb(void *data, int type, void *event);
+static int _e_fileman_dir_change_cb(void *data, int type, void *event);
+static int _e_fileman_mouse_wheel_cb(void *data, int type, void *event);
 static void _e_fileman_resize_cb(E_Win *win);
 static void _e_fileman_delete_cb(E_Win *win);
 static void _e_fileman_vscrollbar_show_cb(void *data, Evas_Object *obj, void *ev);
@@ -99,6 +100,11 @@ e_fileman_new(E_Container *con)
 					      ecore_event_handler_add(E_EVENT_FM_DIRECTORY_CHANGE,
 								      _e_fileman_dir_change_cb,
 								      fileman));
+   
+   fileman->event_handlers = evas_list_append(fileman->event_handlers,
+					      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_WHEEL,
+								      _e_fileman_mouse_wheel_cb,
+								      fileman));   
    
    evas_event_thaw(fileman->evas);
    
@@ -194,7 +200,7 @@ _e_fileman_vscrollbar_drag_cb(Evas_Object *object, double value, void *data)
    e_fm_scroll_vertical(fileman->smart, value);
 }
 
-static void
+static int
 _e_fileman_reconf_cb(void *data, int type, void *event)
 {   
    E_Event_Fm_Reconfigure *ev;
@@ -222,10 +228,11 @@ _e_fileman_reconf_cb(void *data, int type, void *event)
 	D(("e_fileman_reconf_cb: hide (%p)\n", fileman));	
 	edje_object_part_unswallow(fileman->main, fileman->vscrollbar);
 	evas_object_hide(fileman->vscrollbar);
-     }   
+     }
+   return 1;
 }
 
-static void
+static int
 _e_fileman_dir_change_cb(void *data, int type, void *event)
 {
    E_Event_Fm_Directory_Change *ev;
@@ -239,6 +246,38 @@ _e_fileman_dir_change_cb(void *data, int type, void *event)
    
    D(("_e_fileman_dir_change_cb:\n"));
    e_scrollbar_value_set(fileman->vscrollbar,  0.0);
+   return 1;
+}
+
+static int
+_e_fileman_mouse_wheel_cb(void *data, int type, void *event)
+{
+   Ecore_X_Event_Mouse_Wheel *ev;
+   E_Fileman *fileman;
+   double pos;
+   
+   ev = event;   
+   fileman = data;
+   
+   pos = e_scrollbar_value_get(fileman->vscrollbar);
+
+   if(ev->z < 0)
+    {
+       pos -= 0.05;
+       if(pos < 0.0)
+	 pos = 0.0;       
+    }
+     
+   if(ev->z > 0)
+    {
+       pos += 0.05;
+       if(pos > 1.0)
+	 pos = 1.0;
+    }  
+   
+   e_scrollbar_value_set(fileman->vscrollbar,  pos);   
+   e_fm_scroll_vertical(fileman->smart, pos);
+   return 1;
 }
 
 static void

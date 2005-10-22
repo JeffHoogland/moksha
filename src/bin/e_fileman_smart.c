@@ -903,6 +903,7 @@ _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia)
 static void
 _e_fm_icon_prop_fill_data(E_Fm_Icon_CFData *cfdata)
 {
+   /*- BASIC -*/
    if((cfdata->icon->file->mode & (S_IWUSR|S_IWGRP|S_IWOTH)))
      cfdata->protect = 0;
    else
@@ -915,6 +916,9 @@ _e_fm_icon_prop_fill_data(E_Fm_Icon_CFData *cfdata)
      cfdata->readwrite = 1;
    else if(!(cfdata->icon->file->mode & (S_IRGRP|S_IROTH|S_IWGRP|S_IWOTH)))
      cfdata->readwrite = 2;
+   
+   /*- ADVANCED -*/
+//   if((cfdata->icon->file->mode & 
 }
 
 static void *
