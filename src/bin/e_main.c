@@ -563,10 +563,11 @@ main(int argc, char **argv)
    /* Store current selected desktops */
    _e_main_desk_save();
 
+   /* shutdown intl before ecore to clean up exe */
+   e_intl_shutdown();
+   
    /* unroll our stack of shutdown functions with exit code of 0 */
    _e_main_shutdown(0);
-   
-   e_intl_shutdown();
    
    /* if we were flagged to restart, then  restart. */
    if (restart)

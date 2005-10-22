@@ -10,6 +10,9 @@
  * * as we get translations add languages to the simplified lang list (C and en are currently the same, ja is a test translation - incomplete)
  */
 
+static Ecore_Exe *_e_intl_input_method_exec = NULL;
+static Ecore_Event_Handler *_e_intl_exit_handler = NULL;
+
 static char *_e_intl_orig_lc_messages = NULL;
 static char *_e_intl_orig_language = NULL;
 static char *_e_intl_orig_lc_all = NULL;
@@ -22,12 +25,17 @@ static char *_e_intl_orig_qt_im_module = NULL;
 static char *_e_intl_orig_gtk_im_module = NULL;
 static char *_e_intl_input_method = NULL;
 static Evas_List *_e_intl_input_methods = NULL;
-static Ecore_Exe *_e_intl_input_method_exec = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 
 #define ADD_LANG(lang) _e_intl_languages = evas_list_append(_e_intl_languages, lang)
 #define ADD_IM(method) _e_intl_input_methods = evas_list_append(_e_intl_input_methods, method)
+
+#define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
+#define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (strlen(EXE) == 0)))
+
+static int _e_intl_exe_valid_get(char *exe);
+static int _e_intl_cb_exit(void *data, int type, void *event);
 
 int
 e_intl_init(void)
@@ -119,6 +127,8 @@ e_intl_init(void)
    imc->e_im_exec = strdup("uim-xim");
 
    ADD_IM(imc);
+  
+   _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
    
    return 1;
 }
@@ -147,6 +157,15 @@ e_intl_shutdown(void)
      }
 
    E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);
+  
+   E_EXE_STOP(_e_intl_input_method_exec);
+   
+   if (_e_intl_exit_handler)
+     {
+	ecore_event_handler_del(_e_intl_exit_handler);
+	_e_intl_exit_handler = NULL;			          
+     }
+
    return 1;
 }
 
@@ -258,18 +277,16 @@ e_intl_input_method_set(const char *method)
 	          e_util_env_set("GTK_IM_MODULE", imc->gtk_im_module);
 	          e_util_env_set("QT_IM_MODULE", imc->qt_im_module);
 	          e_util_env_set("XMODIFIERS", imc->xmodifiers);
+		 
+		  E_EXE_STOP(_e_intl_input_method_exec); 
 		  
-		  if (_e_intl_input_method_exec != NULL) 
+		  if (E_EXE_IS_VALID(imc->e_im_exec)) 
 		    {
-		       ecore_exe_terminate(_e_intl_input_method_exec);
-		       ecore_exe_free(_e_intl_input_method_exec);
-		       _e_intl_input_method_exec = NULL;
-		    }
-		  
-		  if (imc->e_im_exec != NULL) 
-		    {
+
+		       printf("E_INTL: START IN (%x)", _e_intl_input_method_exec);
 		       _e_intl_input_method_exec = ecore_exe_run(imc->e_im_exec, NULL);
 		       ecore_exe_tag_set(_e_intl_input_method_exec, "E/im_exec");
+		       printf("E_INTL: START OUT (%x)", _e_intl_input_method_exec);
 		
 		       if (  !_e_intl_input_method_exec || 
 			     !ecore_exe_pid_get(_e_intl_input_method_exec))    
@@ -357,3 +374,17 @@ e_intl_input_method_config_free (E_Input_Method_Config *imc)
      }
 }
 
+static int
+_e_intl_cb_exit(void *data, int type, void *event)
+{
+   Ecore_Event_Exe_Exit *ev;
+   
+   ev = event;
+   if (!ev->exe) return 1;
+   
+   if (!(ecore_exe_tag_get(ev->exe) && 
+	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/im_exec")))) return 1;
+
+   _e_intl_input_method_exec = NULL;
+   return 1;
+}
