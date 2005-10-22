@@ -43,9 +43,13 @@
 
 /* BUGS:
  * 
+ * - we need to look at the deletion / free'ing routines.
+ * 
  * - Closing Efm window while its thumbnailing causes a segv
  * 
  * - Deleting a dir causes a segv
+ * 
+ * - redo monitor code
  */
 
 int E_EVENT_FM_RECONFIGURE;
@@ -82,6 +86,21 @@ struct _E_Fm_Icon
    } state;
    
    E_Menu *menu;
+};
+
+struct _E_Fm_Icon_CFData
+{
+   /*- BASIC -*/
+   int protect;
+   int readwrite;
+   /*- ADVANCED -*/
+   struct {
+      int r;
+      int w;
+      int x;
+   } user, group, world;
+   /*- common -*/
+   E_Fm_Icon *icon;
 };
 
 enum _E_Fm_Arrange
@@ -128,7 +147,7 @@ struct _E_Fm_Smart_Data
       Ecore_Evas *ecore_evas;
       Evas *evas;
       Ecore_X_Window win;
-      Evas_Object *icon_object;
+      E_Fm_Icon *icon_object;
       Evas_Object *image_object;
    } drag;
    
@@ -558,16 +577,16 @@ _e_fm_smart_del(Evas_Object *object)
 //  if (sd->monitor) ecore_file_monitor_del(sd->monitor);
    sd->monitor = NULL;
    
-   while (sd->files)
-    {
-       _e_fm_file_free(sd->files->data);
-       sd->files = evas_list_remove_list(sd->files, sd->files);
-    }
-   
    while (sd->event_handlers)
     {
        ecore_event_handler_del(sd->event_handlers->data);
        sd->event_handlers = evas_list_remove_list(sd->event_handlers, sd->event_handlers);
+    }   
+   
+   while (sd->files)
+    {
+       _e_fm_file_free(sd->files->data);
+       sd->files = evas_list_remove_list(sd->files, sd->files);
     }   
 
    evas_object_del(sd->selection.band.obj);
@@ -881,12 +900,21 @@ _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia)
     */
 }
    
-#if 0
 static void
-_e_fm_icon_prop_fill_data( E_Fm_Icon_CFData *cfdata)
+_e_fm_icon_prop_fill_data(E_Fm_Icon_CFData *cfdata)
 {
-   cfdata->protect = 1
-   cfdata->readwrite = 0;
+   if((cfdata->icon->file->mode & (S_IWUSR|S_IWGRP|S_IWOTH)))
+     cfdata->protect = 0;
+   else
+     cfdata->protect = 1;
+   
+   if((cfdata->icon->file->mode & (S_IRGRP|S_IROTH)) &&
+      !(cfdata->icon->file->mode & (S_IWGRP|S_IWOTH)))
+     cfdata->readwrite = 0;
+   else if((cfdata->icon->file->mode & (S_IWGRP|S_IWOTH)))
+     cfdata->readwrite = 1;
+   else if(!(cfdata->icon->file->mode & (S_IRGRP|S_IROTH|S_IWGRP|S_IWOTH)))
+     cfdata->readwrite = 2;
 }
 
 static void *
@@ -894,20 +922,56 @@ _e_fm_icon_prop_create_data(E_Config_Dialog *cfd)
 {
    E_Fm_Icon_CFData *cfdata;
    
-   cfdata = E_NEW(CFData, 1);
-   _fill_data(cfdata);
-   return cfdata;   
+   cfdata = E_NEW(E_Fm_Icon_CFData, 1);
+   printf("CREATING DATA! %p\n", cfd->data);
+   cfdata->icon = cfd->data;
+   _e_fm_icon_prop_fill_data(cfdata);
+   return cfdata;
 }
 
 static void
 _e_fm_icon_prop_free_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
-{   
+{
    free(cfdata);
 }
 
 static int
 _e_fm_icon_prop_basic_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
 {
+   E_Fm_Icon *icon;
+   
+   icon = cfdata->icon;
+   
+   switch(cfdata->readwrite)
+    {
+     case 0:
+       D(("_e_fm_icon_prop_basic_apply_data: read (%s)\n", icon->file->name));
+       icon->file->mode |= (S_IRGRP | S_IROTH);
+       icon->file->mode &= (~S_IWGRP & ~S_IWOTH);
+       break;
+     case 1:
+       D(("_e_fm_icon_prop_basic_apply_data: write (%s)\n", icon->file->name));
+       icon->file->mode |= (S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
+       break;
+     case 2:
+       D(("_e_fm_icon_prop_basic_apply_data: hide (%s)\n", icon->file->name));
+       icon->file->mode &= (~S_IRGRP & ~S_IROTH & ~S_IWGRP & ~S_IWOTH);
+       break;
+    }
+   
+   if(cfdata->protect)
+    {
+       D(("_e_fm_icon_prop_basic_apply_data: protect (%s)\n", icon->file->name));
+       icon->file->mode &= (~S_IWUSR & ~S_IWGRP & ~S_IWOTH);
+    }
+   else
+    {
+       D(("_e_fm_icon_prop_basic_apply_data: unprotect (%s)\n", icon->file->name));
+       icon->file->mode |= S_IWUSR;
+    }   
+   
+   chmod(icon->file->path, icon->file->mode);
+   
    return 1;
 }
    
@@ -920,7 +984,7 @@ _e_fm_icon_prop_advanced_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfda
 static Evas_Object *
 _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon_CFData *cfdata)
 {
-   E_Fm_File *file;
+   E_Fm_Icon *icon;
    E_Win *win;
    Evas_Object *table;
    Evas_Object *name;
@@ -935,110 +999,182 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon
    Evas_Object *o, *ol, *hb;
    Evas_Coord mw, mh;
    E_Radio_Group *rg;	   
-   Evas *e;
-   
-   file = cfdata->file;
 
+   icon = cfdata->icon;
+   
    _e_fm_icon_prop_fill_data(cfdata);
-   
-   
+      
    size = E_NEW(char, 64);
-   snprintf(size, 64, "%ld KB", file->attr->size / 1024);
+   snprintf(size, 64, "%d KB", icon->file->size / 1024);
 
    username = E_NEW(char, 128); // max length of username?
-   usr = getpwuid(file->attr->owner);
+   usr = getpwuid(icon->file->owner);
    snprintf(username, 128, "%s", usr->pw_name);
    //free(usr);
 
    groupname = E_NEW(char, 128); // max length of group?
-   grp = getgrgid(file->attr->group);
+   grp = getgrgid(icon->file->group);
    snprintf(groupname, 128, "%s", grp->gr_name);
    //free(grp);
 
-   t = gmtime(&file->attr->atime);
+   t = gmtime(&icon->file->atime);
    lastaccess = E_NEW(char, 128);
    strftime(lastaccess, 128, "%a %b %d %T %Y", t);
 
-   t = gmtime(&file->attr->mtime);
+   t = gmtime(&icon->file->mtime);
    lastmod = E_NEW(char, 128);
    strftime(lastmod, 128, "%a %b %d %T %Y", t);
 
    permissions = E_NEW(char, 128); // todo
-   snprintf(permissions, 128, "%s", "");
-    
-   dia = e_dialog_new(file->sd->win->container);
-   e_dialog_title_set(dia, _("Properties"));   		   
-   e = e_win_evas_get(dia->win);   
+   snprintf(permissions, 128, "%s", "");    
    
-   ol = e_widget_list_add(e, 0, 0);
-   
-   hb = e_widget_list_add(e, 1, 1);
-   
-   o = e_widget_frametable_add(e, _("General"), 0);
+   ol = e_widget_list_add(evas, 0, 0);
+     
+   o = e_widget_frametable_add(evas, _("General"), 0);
    
    snprintf(text, 512, _("File:"));
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
-   snprintf(text, 512, "%s", file->attr->name);
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
-				    1, 0, 1, 1,
-				    1, 1, 1, 1);
+   snprintf(text, 512, "%s", icon->file->name);
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
+				     1, 0, 1, 1,
+				     1, 1, 1, 1);
    
    snprintf(text, 512, _("Size:"));
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
    snprintf(text, 512, "%s Kb", size);
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
-				    1, 1, 1, 1,
-				    1, 1, 1, 1);
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
+				     1, 1, 1, 1,
+				     1, 1, 1, 1);
    
    snprintf(text, 512, _("Type:"));
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
    snprintf(text, 512, "%s", "An Image");
-   e_widget_frametable_object_append(o, e_widget_label_add(e, text),
-				    1, 2, 1, 1,
-				    1, 1, 1, 1);
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
+				     1, 2, 1, 1,
+				     1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_check_add(e, _("Protect this file"), &dummy_val),
-			    0, 3, 2, 1,
-			    1, 1, 1, 1);
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Protect this file"), &(cfdata->protect)),
+				     0, 3, 2, 1,
+				     1, 1, 1, 1);
    
-   rg = e_widget_radio_group_new(&dummy_val);
+   rg = e_widget_radio_group_new(&(cfdata->readwrite));
    
-   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others see this file"), 0, rg),
+   e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Let others see this file"), 0, rg),
 				     0, 4, 2, 1,
 				     1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_radio_add(e, _("Let others modify this file"), 0, rg),
+   e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Let others modify this file"), 1, rg),
 				     0, 5, 2, 1,
 				     1, 1, 1, 1);
    
-   e_widget_list_object_append(ol, hb, 1, 0, 0.0);
+   e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Dont let others see or modify this file"), 2, rg),
+				     0, 6, 2, 1,
+				     1, 1, 1, 1);   
    
-   e_widget_min_size_get(ol, &w, &h);
+   e_widget_list_object_append(ol, o, 1, 1, 0.5);
    
    return ol;
-   
 }
 
 static Evas_Object *
 _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon_CFData *cfdata)
 {
+   Evas_Object *o, *ob, *of;
+   E_Radio_Group *rg;
+   E_Fm_Icon *icon;
+   struct group *grp;
+   struct passwd *usr;
+   struct tm *t;
+   char *lastaccess, *lastmod;
    
+   icon = cfdata->icon;
+   
+   _e_fm_icon_prop_fill_data(cfdata);
+
+   usr = getpwuid(icon->file->owner);
+
+   grp = getgrgid(icon->file->group);
+
+   t = gmtime(&icon->file->atime);
+   lastaccess = E_NEW(char, 128);
+   strftime(lastaccess, 128, "%a %b %d %T %Y", t);
+   
+   t = gmtime(&icon->file->mtime);
+   lastmod = E_NEW(char, 128);
+   strftime(lastmod, 128, "%a %b %d %T %Y", t);   
+      
+   o = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_frametable_add(evas, _("File Info:"), 0);
+   ob = e_widget_label_add(evas, "Owner:");
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, strdup(usr->pw_name));
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   
+   ob = e_widget_label_add(evas, "Group:");
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, strdup(grp->gr_name));
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   
+   ob = e_widget_label_add(evas, "Last Access:");
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, lastaccess);
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   
+   ob = e_widget_label_add(evas, "Last Modified:");
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_label_add(evas, lastmod);
+   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);   
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+      
+   of = e_widget_frametable_add(evas, _("Permissions:"), 0);   
+   ob = e_widget_label_add(evas, "Me");
+   e_widget_frametable_object_append(of, ob, 0, 0, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("r"), &(cfdata->user.r));
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("w"), &(cfdata->user.w));
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("x"), &(cfdata->user.x));
+   e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 1, 1);
+   
+   ob = e_widget_label_add(evas, "My Group");
+   e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("r"), &(cfdata->group.r));
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("w"), &(cfdata->group.w));
+   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("x"), &(cfdata->group.x));
+   e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 1, 1);
+   
+   ob = e_widget_label_add(evas, "Everyone");
+   e_widget_frametable_object_append(of, ob, 0, 4, 3, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("r"), &(cfdata->world.r));
+   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("w"), &(cfdata->world.w));
+   e_widget_frametable_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("x"), &(cfdata->world.x));
+   e_widget_frametable_object_append(of, ob, 2, 5, 1, 1, 1, 1, 1, 1);   
+   
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   return o;
 }
 
 static void
 _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-   E_Fm_File *file;   
+   E_Fm_Icon *icon;   
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
    
-   file = data;
+   icon = data;
    
    
    /* methods */
@@ -1049,12 +1185,11 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    v.advanced.apply_cfdata   = _e_fm_icon_prop_advanced_apply_data;
    v.advanced.create_widgets = _e_fm_icon_prop_advanced_create_widgets;
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(file->sd->win->container, _("Properties"), NULL, 0, &v, NULL);
-   
+   cfd = e_config_dialog_new(icon->sd->win->container, _("Properties"), NULL, 0, &v, icon);   
 }
-
+#if 0
 static void
-_e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
+__e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm_File *file;
    E_Win *win;
@@ -1074,28 +1209,12 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Radio_Group *rg;	   
    Evas *e;
    
-   file = data;
+   icon = data;
          	               
    size = E_NEW(char, 64);
-   snprintf(size, 64, "%ld KB", file->attr->size / 1024);
+   snprintf(size, 64, "%ld KB", icon->file->size / 1024);
 
-   username = E_NEW(char, 128); // max length of username?
-   usr = getpwuid(file->attr->owner);
-   snprintf(username, 128, "%s", usr->pw_name);
-   //free(usr);
 
-   groupname = E_NEW(char, 128); // max length of group?
-   grp = getgrgid(file->attr->group);
-   snprintf(groupname, 128, "%s", grp->gr_name);
-   //free(grp);
-
-   t = gmtime(&file->attr->atime);
-   lastaccess = E_NEW(char, 128);
-   strftime(lastaccess, 128, "%a %b %d %T %Y", t);
-
-   t = gmtime(&file->attr->mtime);
-   lastmod = E_NEW(char, 128);
-   strftime(lastmod, 128, "%a %b %d %T %Y", t);
 
    permissions = E_NEW(char, 128); // todo
    snprintf(permissions, 128, "%s", "");
@@ -1114,7 +1233,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
    e_widget_frametable_object_append(o, e_widget_label_add(e, text),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
-   snprintf(text, 512, "%s", file->attr->name);
+   snprintf(text, 512, "%s", icon->file->name);
    e_widget_frametable_object_append(o, e_widget_label_add(e, text),
 				    1, 0, 1, 1,
 				    1, 1, 1, 1);
@@ -1152,17 +1271,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 				     1, 1, 1, 1);
    
 /* Use those in advanced dialog.
-   
-   snprintf(text, 512, _("Owner:"));
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   snprintf(text, 512, "%s", username);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   
-   snprintf(text, 512, _("Group:"));
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   snprintf(text, 512, "%s", groupname);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   
+      
    snprintf(text, 512, _("Type:"));
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    switch(_e_fm_file_type(file))
@@ -1182,15 +1291,7 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
     }       
    e_widget_framelist_object_append(o, e_widget_label_add(e, text));
    
-   snprintf(text, 512, _("Last Access:"));
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   snprintf(text, 512, "%s", lastaccess);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   
-   snprintf(text, 512, _("Last Modification"));
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
-   snprintf(text, 512, "%s", lastmod);
-   e_widget_framelist_object_append(o, e_widget_label_add(e, text));
+
   
  */ 
  
@@ -1699,14 +1800,14 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/refresh"),
 				 "fileman/button/refresh");
-#if 0       
+
        mi = e_menu_item_new(sd->menu);
        e_menu_item_label_set(mi, "Properties");
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/properties"),
 				 "fileman/button/properties");
-#endif
+
        ecore_evas_geometry_get(sd->win->ecore_evas, &x, &y, &w, &h);
        
        e_menu_activate_mouse(sd->menu, sd->win->border->zone,
@@ -1939,7 +2040,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 
 	mi = e_menu_item_new(mn);
 	e_menu_item_label_set(mi, _("Properties"));
-	//e_menu_item_callback_set(mi, _e_fm_file_menu_properties, icon);
+	e_menu_item_callback_set(mi, _e_fm_file_menu_properties, icon);
 	e_menu_item_icon_edje_set(mi,
 				  (char *)e_theme_edje_file_get("base/theme/fileman",
 								"fileman/button/properties"),
@@ -2004,6 +2105,10 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 
    ev = event;
    sd = data;
+
+   /* this shouldnt be here if we clean up properly */
+   if(!ev || !sd)
+     return 0;
    
 /* TODO - rethink this code */
 

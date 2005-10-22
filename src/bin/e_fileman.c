@@ -131,11 +131,16 @@ static void
 _e_fileman_free(E_Fileman *fileman)
 {
    D(("e_fileman_free: (%p)\n", fileman));
+   while (fileman->event_handlers)
+    {
+       ecore_event_handler_del(fileman->event_handlers->data);
+       fileman->event_handlers = evas_list_remove_list(fileman->event_handlers, fileman->event_handlers);
+    }
    evas_object_del(fileman->vscrollbar);
    evas_object_del(fileman->smart);
    evas_object_del(fileman->main);
    e_object_del(E_OBJECT(fileman->win));
-   free(fileman);
+   //free(fileman);
 }
 
 static void
