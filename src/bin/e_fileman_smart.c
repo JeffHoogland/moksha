@@ -1094,7 +1094,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon
    _e_fm_icon_prop_fill_data(cfdata);
       
    size = E_NEW(char, 64);
-   snprintf(size, 64, "%d KB", icon->file->size / 1024);
+   snprintf(size, 64, "%d", icon->file->size / 1024);
 
    username = E_NEW(char, 128); // max length of username?
    usr = getpwuid(icon->file->owner);
