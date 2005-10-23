@@ -2179,12 +2179,12 @@ _e_fm_win_mouse_up_cb(void *data, int type, void *event)
    evas_object_del(icon->sd->entry_object);
    icon->sd->entry_object = NULL;
    
-   e_fm_file_rename(icon->file, name);
+   _e_fm_file_rename(icon, name);
    
    ecore_event_handler_del(e_fm_mouse_up_handler);
    e_fm_mouse_up_handler = NULL;
    
-          e_grabinput_release(icon->sd->win->evas_win, icon->sd->win->evas_win);
+   e_grabinput_release(icon->sd->win->evas_win, icon->sd->win->evas_win);
    return 0;
 }
 
