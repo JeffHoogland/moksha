@@ -88,7 +88,7 @@ int *
 _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
 {
    Evas *evasbuf;
-   int size, iw, ih;
+   int iw, ih;
    
    *buf = ecore_evas_buffer_new(1, 1);
    evasbuf = ecore_evas_get(*buf);
@@ -96,8 +96,7 @@ _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, 
    evas_object_image_file_set(*im, file, NULL);
    iw = 0; ih = 0;
    evas_object_image_size_get(*im, &iw, &ih);
-   //*alpha = evas_object_image_alpha_get(im);
-   *alpha = 1; //why doesnt the above one work?
+   *alpha = evas_object_image_alpha_get(*im);
    if ((iw > 0) && (ih > 0))
     {
        *ww = w;
@@ -238,9 +237,8 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    char *thumbpath, *ext;
    Evas_Object *im;
    const int *data;
-   int size, iw, ih, ww, hh;
+   int size, ww, hh;
    Ecore_Evas *buf;
-   Evas *evasbuf;
    int alpha;
    
    ext = strrchr(file, '.');
@@ -306,10 +304,7 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    Eet_File *ef;
    char *thumb, *ext;
    Evas_Object *im = NULL;
-   void *data;
-   unsigned int w, h;
-   int a, c, q, l;
-   
+
 #define DEF_THUMB_RETURN im = evas_object_rectangle_add(evas); \
 	       evas_object_color_set(im, 255, 255, 255, 255); \
 	       evas_object_resize(im, width, height); \
@@ -387,21 +382,19 @@ _e_thumb_file_id(char *file)
      "ghijklmnopqrstuv"
      "wxyz`~!@#$%^&*()"
      "[];',.{}<>?-=_+|";
-   unsigned int        id[6], i;
+   unsigned int        id[4], i;
    struct stat         st;
 
    if (stat(file, &st) < 0)
      return NULL;
    
-   id[0] = (int)st.st_ino;
-   id[1] = (int)st.st_dev;
-   id[2] = (int)(st.st_size & 0xffffffff);
-   id[3] = (int)((st.st_size >> 32) & 0xffffffff);
-   id[4] = (int)(st.st_mtime & 0xffffffff);
-   id[5] = (int)((st.st_mtime >> 32) & 0xffffffff);
+   id[0] = st.st_ino;
+   id[1] = st.st_dev;
+   id[2] = (st.st_size & 0xffffffff);
+   id[3] = (st.st_mtime & 0xffffffff);
 
    sp = s;
-   for (i = 0; i < 6; i++)
+   for (i = 0; i < 4; i++)
      {
 	unsigned int t, tt;
 	int j;
