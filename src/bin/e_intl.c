@@ -42,8 +42,7 @@ int
 e_intl_init(void)
 {
    char *s;
-   E_Input_Method_Config *imc;
-   
+ 
    if (_e_intl_languages) return 1;
 
    /* supporeted languages - as we get translations - add them here
@@ -139,6 +138,7 @@ e_intl_post_init(void)
      e_intl_input_method_set(e_config->input_method); 
 
    _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
+   return 1;
 }
 
 int
@@ -153,6 +153,7 @@ e_intl_post_shutdown(void)
    e_intl_input_method_set(NULL);
    e_intl_language_set(NULL);
    E_EXE_STOP(_e_intl_input_method_exec);
+   return 1;
 }
 
 static Evas_List *
