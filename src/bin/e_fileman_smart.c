@@ -47,7 +47,7 @@
  * 
  * - Deleting a dir causes a segv
  * 
- * - redo monitor code
+ * - redo monitor code (incremental changes)
  */
 
 int E_EVENT_FM_RECONFIGURE;
@@ -196,11 +196,10 @@ static void                _e_fm_file_menu_cut(void *data, E_Menu *m, E_Menu_Ite
 static void                _e_fm_file_menu_paste(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
-#if 0
 static void                _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi);
-#endif
 static void                _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia);
 
+static void                _e_fm_menu_new_dir_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_menu_arrange_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                _e_fm_menu_refresh_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -572,7 +571,7 @@ _e_fm_smart_del(Evas_Object *object)
    
    e_config_domain_save("efm", sd->conf.main_edd, sd->conf.main);
    
-//  if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+   //if (sd->monitor) ecore_file_monitor_del(sd->monitor);
    sd->monitor = NULL;
    
    while (sd->event_handlers)
@@ -1282,6 +1281,14 @@ _e_fm_file_menu_properties(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_fm_menu_new_dir_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+      E_Fm_Smart_Data *sd;
+          
+      sd = data;
+}
+
+static void
 _e_fm_menu_arrange_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm_Smart_Data *sd;
@@ -1341,8 +1348,9 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    
    /* Get new files */
    sd->files = _e_fm_dir_files_get(sd, E_FM_FILE_TYPE_NORMAL);
-//   if (sd->monitor) ecore_file_monitor_del(sd->monitor);
-//   sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
+   //if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+   //sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
+   
    /* Get special prev dir */
    if (strcmp(sd->dir, "/"))
     {
@@ -1504,7 +1512,8 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
        return;
     }
    
-   _e_fm_redraw(sd);
+   //_e_fm_redraw(sd);
+   _e_fm_dir_set(sd, sd->dir);
 }
 
 static void
@@ -1671,6 +1680,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
        
        sd->menu = mn;
        
+       /*- Arrange -*/
        mi = e_menu_item_new(mn);
        e_menu_item_label_set(mi, "Arrange Icons");
        e_menu_item_icon_edje_set(mi,
@@ -1702,13 +1712,31 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/arrange_time"),
 				 "fileman/button/arrange_time");
+       /*- New -*/
+       mi = e_menu_item_new(sd->menu);
+       e_menu_item_label_set(mi, "New");
+       e_menu_item_icon_edje_set(mi,
+				 (char *)e_theme_edje_file_get("base/theme/fileman",
+							       "fileman/button/new"),
+				 "fileman/button/new");
        
+       mn = e_menu_new();
+       e_menu_item_submenu_set(mi, mn);
+       
+       mi = e_menu_item_new(mn);
+       e_menu_item_label_set(mi, "Directory");
+       e_menu_item_callback_set(mi, _e_fm_menu_new_dir_cb, sd);
+       e_menu_item_icon_edje_set(mi,
+				 (char *)e_theme_edje_file_get("base/theme/fileman",
+							       "fileman/button/new_dir"),
+				 "fileman/button/new_dir");
+       /*- View -*/
        mi = e_menu_item_new(sd->menu);
        e_menu_item_label_set(mi, "View");
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/view"),
-				 "fileman/button/view");
+				 "fileman/button/view");       
        
        mn = e_menu_new();
        e_menu_item_submenu_set(mi, mn);
@@ -1731,6 +1759,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 							       "fileman/button/view_details"),
 				 "fileman/button/view_details");
        
+       /*- Refresh -*/
        mi = e_menu_item_new(sd->menu);
        e_menu_item_label_set(mi, "Refresh");
        e_menu_item_callback_set(mi, _e_fm_menu_refresh_cb, sd);
@@ -1738,7 +1767,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/refresh"),
 				 "fileman/button/refresh");
-
+       /*- Properties -*/
        mi = e_menu_item_new(sd->menu);
        e_menu_item_label_set(mi, "Properties");
        e_menu_item_icon_edje_set(mi,
