@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-18 21:01+0200\n"
-"PO-Revision-Date: 2005-10-18 21:26+0200\n"
+"POT-Creation-Date: 2005-10-22 21:47+0200\n"
+"PO-Revision-Date: 2005-10-22 22:25+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: src/bin/e_int_border_locks.c:65 src/bin/e_border.c:6374
+#: src/bin/e_int_border_locks.c:65 src/bin/e_border.c:5807
 msgid "Window Locks"
 msgstr "Blocchi finestre"
 
@@ -48,17 +48,19 @@ msgid "Lock program changing:"
 msgstr "Impedisci al programma di cambiarne:"
 
 #: src/bin/e_int_border_locks.c:316 src/bin/e_int_border_locks.c:335
+#: src/bin/e_int_border_remember.c:463
 msgid "Position"
 msgstr "Posizione"
 
 #: src/bin/e_int_border_locks.c:318 src/bin/e_int_border_locks.c:337
-#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
-#: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
+#: src/bin/e_int_border_remember.c:465 src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
+#: src/modules/ibox/e_mod_main.c:696
 msgid "Size"
 msgstr "Dimensione"
 
 #: src/bin/e_int_border_locks.c:320 src/bin/e_int_border_locks.c:339
-#: src/bin/e_border.c:6324
+#: src/bin/e_int_border_remember.c:467 src/bin/e_border.c:5835
 msgid "Stacking"
 msgstr "Livello"
 
@@ -67,10 +69,12 @@ msgid "Iconified state"
 msgstr "Stato di iconificata"
 
 #: src/bin/e_int_border_locks.c:324 src/bin/e_int_border_locks.c:343
+#: src/bin/e_int_border_remember.c:473
 msgid "Stickiness"
 msgstr "Stato di appiccicata"
 
 #: src/bin/e_int_border_locks.c:326 src/bin/e_int_border_locks.c:345
+#: src/bin/e_int_border_remember.c:477
 msgid "Shaded state"
 msgstr "Stato di arrotolata"
 
@@ -214,13 +218,13 @@ msgstr "(Inutilizzato)"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2833
-#: src/bin/e_fileman_smart.c:2901 src/bin/e_utils.c:213
+#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2270
+#: src/bin/e_fileman_file.c:208 src/bin/e_utils.c:221
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
-#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2834
-#: src/bin/e_fileman_smart.c:2902 src/bin/e_utils.c:214
+#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2271
+#: src/bin/e_fileman_file.c:209 src/bin/e_utils.c:222
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -317,6 +321,165 @@ msgstr "Un click sulla finestra la pone sempre in primo piano"
 msgid "A click in a window always focuses it"
 msgstr "Un click sulla finestra le dà sempre il fuoco"
 
+#: src/bin/e_int_border_remember.c:67
+msgid "Window Remember"
+msgstr "Ricorda finestra"
+
+#: src/bin/e_int_border_remember.c:219
+msgid "Window properties are not a unique match"
+msgstr "La finestra non ha proprietà univoche"
+
+#: src/bin/e_int_border_remember.c:222
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+"State cercando di chiedere ad Enlightenment di ricordarsi di<br>"
+"applicare caratteristiche (come dimensione, locazione, stile<br>"
+"di bordo ecc.) ad una finestra che <hilight>non ha proprietà<br>"
+"univoche</hilight>.<br><br>"
+"Questo significa che condivide proprietà come nome/classe,<br>"
+"transitorietà, ruolo, eccetera con più di un'altra finestra<br>"
+"presente sullo schermo, e quindi le stesse caratteristiche<br>"
+"saranno ricordate anche per le altre finestre con le stesse<br>"
+"proprietà.<br><br>"
+"Questo è solo un avvertimento per il caso in cui non si voglia<br>"
+"che questo accada. Se lo si desidera, basta premere il bottone<br>"
+"<hilight>Applica</hilight> o <hilight>OK</hilight> e le impostazioni saranno accettate. Nel dubbio<br>"
+"premere <hilight>Annulla</hilight> e nulla cambierà."
+
+#: src/bin/e_int_border_remember.c:236 src/bin/e_int_border_remember.c:310
+#: src/bin/e_int_border_remember.c:352 src/bin/e_config_dialog.c:113
+#: src/bin/e_fileman_smart.c:1232 src/bin/e_module.c:399 src/bin/e_error.c:196
+#: src/bin/e_error.c:205 src/modules/ibar/e_mod_main.c:1682
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_int_border_remember.c:301 src/bin/e_int_border_remember.c:331
+msgid "No match properties set"
+msgstr "Nessuna corrispondenza impostata"
+
+#: src/bin/e_int_border_remember.c:304
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+"State cercando di chiedere ad Enlightenment di ricordarsi di<br>"
+"applicare caratteristiche (come dimensione, locazione, stile<br>"
+"di bordo ecc.) ad una finestra <hilight>senza specificare come farlo</hilight>.<br><br>"
+"Occorre specificare almeno un modo per ricordare questa finestra."
+
+#: src/bin/e_int_border_remember.c:334
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+"State cercando di chiedere ad Enlightenment di ricordarsi di<br>"
+"applicare caratteristiche (come dimensione, locazione, stile<br>"
+"di bordo ecc.) ad una finestra che <hilight>non ha proprietà<br>"
+"univoche</hilight>.<br><br>"
+"Questo significa che condivide proprietà come nome/classe,<br>"
+"transitorietà, ruolo, eccetera con più di un'altra finestra<br>"
+"presente sullo schermo, e quindi le stesse caratteristiche<br>"
+"saranno ricordate anche per le altre finestre con le stesse<br>"
+"proprietà.<br><br>"
+"Si può abilitare l'opzione <hilight>Ricorda solo una finestra</hilight> se si<br>"
+"desidera che venga modificata una sola istanza di questa finestra<br>"
+"invece che tutte le istanze.<br><br>"
+"Questo è solo un avvertimento per il caso in cui non si voglia<br>"
+"che questo accada. Se lo si desidera, basta premere il bottone<br>"
+"<hilight>Applica</hilight> o <hilight>OK</hilight> e le impostazioni saranno accettate. Nel dubbio<br>"
+"premere <hilight>Annulla</hilight> e nulla cambierà."
+
+#: src/bin/e_int_border_remember.c:407
+msgid "Nothing"
+msgstr "Nulla"
+
+#: src/bin/e_int_border_remember.c:409
+msgid "Size and Position"
+msgstr "Dimensione e posizione"
+
+#: src/bin/e_int_border_remember.c:411 src/bin/e_int_border_remember.c:469
+msgid "Locks"
+msgstr "Blocchi"
+
+#: src/bin/e_int_border_remember.c:413
+msgid "Size, Position and Locks"
+msgstr "Dimensione, posizione e blocchi"
+
+#: src/bin/e_int_border_remember.c:415
+msgid "Everything"
+msgstr "Tutto"
+
+#: src/bin/e_int_border_remember.c:430
+msgid "Remember using"
+msgstr "Ricorda per mezzo di:"
+
+#: src/bin/e_int_border_remember.c:431
+msgid "Window name and class"
+msgstr "Nome e classe"
+
+#: src/bin/e_int_border_remember.c:435
+msgid "Title"
+msgstr "Titolo"
+
+#: src/bin/e_int_border_remember.c:443
+msgid "Window Role"
+msgstr "Ruolo"
+
+#: src/bin/e_int_border_remember.c:450
+msgid "Window type"
+msgstr "Tipo"
+
+#: src/bin/e_int_border_remember.c:455
+msgid "Transience"
+msgstr "Transitorietà"
+
+#: src/bin/e_int_border_remember.c:459
+msgid "Match only one window"
+msgstr "Ricorda solo una istanza"
+
+#: src/bin/e_int_border_remember.c:462
+msgid "Properties to remember"
+msgstr "Proprietà da ricordare:"
+
+#: src/bin/e_int_border_remember.c:471
+msgid "Border style"
+msgstr "Stile di bordo"
+
+#: src/bin/e_int_border_remember.c:475
+msgid "Virtual Desktop"
+msgstr "Desktop virtuale"
+
+#: src/bin/e_int_border_remember.c:479
+msgid "Screen zone"
+msgstr "Zona dello schermo"
+
+#: src/bin/e_int_border_remember.c:481
+msgid "Window list skip"
+msgstr "Fuori lista finestre"
+
 #: src/bin/e_config_dialog.c:86
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
@@ -325,139 +488,71 @@ msgstr "Impostazioni avanzate"
 msgid "Basic Settings"
 msgstr "Impostazioni di base"
 
-#: src/bin/e_config_dialog.c:113 src/bin/e_fileman_smart.c:1946
-#: src/bin/e_module.c:399 src/bin/e_error.c:196 src/bin/e_error.c:205
-#: src/modules/ibar/e_mod_main.c:1682
-msgid "OK"
-msgstr "OK"
-
 #: src/bin/e_config_dialog.c:114
 msgid "Apply"
 msgstr "Applica"
 
-#: src/bin/e_config_dialog.c:115 src/bin/e_fileman_smart.c:1948
+#: src/bin/e_config_dialog.c:115 src/bin/e_fileman_smart.c:1234
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_fileman_smart.c:1321 src/modules/cpufreq/e_mod_main.c:305
-#: src/modules/cpufreq/e_mod_main.c:333 src/modules/battery/e_mod_main.c:762
-msgid "Ok"
-msgstr "Ok"
-
-#: src/bin/e_fileman_smart.c:1323
-msgid "Error"
-msgstr "Errore"
-
-#: src/bin/e_fileman_smart.c:1325
-#, c-format
-msgid "Could not delete  <br><b>%s</b> ?"
-msgstr "Impossibile cancellare  <br><b>%s</b> ?"
-
-#: src/bin/e_fileman_smart.c:1569 src/bin/e_module.c:539
-#: src/bin/e_actions.c:1200 src/modules/randr/e_mod_main.c:317
-msgid "Yes"
-msgstr "Sì"
-
-#: src/bin/e_fileman_smart.c:1570 src/bin/e_module.c:540
-#: src/bin/e_actions.c:1202 src/modules/randr/e_mod_main.c:318
-msgid "No"
-msgstr "No"
-
-#: src/bin/e_fileman_smart.c:1572
-msgid "Confirm"
-msgstr "Conferma"
-
-#: src/bin/e_fileman_smart.c:1574
-#, c-format
-msgid " Are you sure you want to delete <br><b>%s</b> ?"
-msgstr "Siete sicuri di voler cancellare <br><b>%s</b> ?"
-
-#: src/bin/e_fileman_smart.c:1684 src/bin/e_fileman_smart.c:1766
-#: src/bin/e_fileman_smart.c:1818 src/bin/e_fileman_smart.c:2202
-#: src/bin/e_fileman_smart.c:2371
+#: src/bin/e_fileman_smart.c:970 src/bin/e_fileman_smart.c:1052
+#: src/bin/e_fileman_smart.c:1104 src/bin/e_fileman_smart.c:1941
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fileman_smart.c:1691 src/bin/e_fileman_smart.c:1825
+#: src/bin/e_fileman_smart.c:977 src/bin/e_fileman_smart.c:1111
 msgid "General"
 msgstr "Generale"
 
-#: src/bin/e_fileman_smart.c:1693 src/bin/e_fileman_smart.c:1827
+#: src/bin/e_fileman_smart.c:979 src/bin/e_fileman_smart.c:1113
 #, c-format
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fileman_smart.c:1702 src/bin/e_fileman_smart.c:1836
+#: src/bin/e_fileman_smart.c:988 src/bin/e_fileman_smart.c:1122
 #, c-format
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: src/bin/e_fileman_smart.c:1711 src/bin/e_fileman_smart.c:1845
+#: src/bin/e_fileman_smart.c:997 src/bin/e_fileman_smart.c:1131
 #, c-format
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_fileman_smart.c:1720 src/bin/e_fileman_smart.c:1854
+#: src/bin/e_fileman_smart.c:1006 src/bin/e_fileman_smart.c:1140
 msgid "Protect this file"
 msgstr "Proteggi questo file"
 
-#: src/bin/e_fileman_smart.c:1726 src/bin/e_fileman_smart.c:1860
+#: src/bin/e_fileman_smart.c:1012 src/bin/e_fileman_smart.c:1146
 msgid "Let others see this file"
 msgstr "Consenti che gli altri vedano il file"
 
-#: src/bin/e_fileman_smart.c:1730 src/bin/e_fileman_smart.c:1864
+#: src/bin/e_fileman_smart.c:1016 src/bin/e_fileman_smart.c:1150
 msgid "Let others modify this file"
 msgstr "Consenti che gli altri modifichino il file"
 
-#: src/bin/e_fileman_smart.c:1938
+#: src/bin/e_fileman_smart.c:1224
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: src/bin/e_fileman_smart.c:2134
-msgid "Arrange Icons"
-msgstr "Ordina icone"
-
-#: src/bin/e_fileman_smart.c:2144
-msgid "By Name"
-msgstr "Per nome"
-
-#: src/bin/e_fileman_smart.c:2155
-msgid "By Mod Time"
-msgstr "Per data di modifica"
-
-#: src/bin/e_fileman_smart.c:2166
-msgid "View"
-msgstr "Vista"
-
-#: src/bin/e_fileman_smart.c:2176
-msgid "Name Only"
-msgstr "Solo nome"
-
-#: src/bin/e_fileman_smart.c:2185
-msgid "Details"
-msgstr "Dettagli"
-
-#: src/bin/e_fileman_smart.c:2194
-msgid "Refresh"
-msgstr "Aggiorna"
-
-#: src/bin/e_fileman_smart.c:2322
+#: src/bin/e_fileman_smart.c:1892
 msgid "Open"
 msgstr "Apri"
 
-#: src/bin/e_fileman_smart.c:2333
+#: src/bin/e_fileman_smart.c:1903
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fileman_smart.c:2341
+#: src/bin/e_fileman_smart.c:1911
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fileman_smart.c:2352
+#: src/bin/e_fileman_smart.c:1922
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fileman_smart.c:2360
+#: src/bin/e_fileman_smart.c:1930
 msgid "Delete"
 msgstr "Cancella"
 
@@ -469,6 +564,26 @@ msgstr "X sostiene che non vi è root window e schermi %i!\n"
 #: src/bin/e_init.c:102
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
+
+#: src/bin/e_intl.c:276
+msgid "Input Method Error"
+msgstr "Errore del metodo di input"
+
+#: src/bin/e_intl.c:277
+msgid ""
+"Error starting the input method executable\n"
+"\n"
+"please make sure that your input\n"
+"method configuration is correct and\n"
+"that your configuration's\n"
+"executable is in your PATH\n"
+msgstr ""
+"Errore nell'esecuzione del metodo di input\n"
+"\n"
+"Si prega di assicurarsi che la configurazione\n"
+"del metodo di input sia giusta e che\n"
+"l'eseguibile di configurazione sia nel\n"
+"proprio PATH\n"
 
 #: src/bin/e_main.c:191
 #, c-format
@@ -818,6 +933,16 @@ msgstr "Abilitato"
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete scaricare questo modulo?<br>"
 
+#: src/bin/e_module.c:539 src/bin/e_actions.c:1200
+#: src/modules/randr/e_mod_main.c:317
+msgid "Yes"
+msgstr "Sì"
+
+#: src/bin/e_module.c:540 src/bin/e_actions.c:1202
+#: src/modules/randr/e_mod_main.c:318
+msgid "No"
+msgstr "No"
+
 #: src/bin/e_startup.c:68
 #, c-format
 msgid "Starting %s"
@@ -947,15 +1072,15 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>Il Team</title>"
 
-#: src/bin/e_winlist.c:119
+#: src/bin/e_winlist.c:122
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
-#: src/bin/e_utils.c:259
+#: src/bin/e_utils.c:267
 msgid "Cannot exit - immortal windows."
 msgstr "Impossibile uscire - finestre immortali."
 
-#: src/bin/e_utils.c:260
+#: src/bin/e_utils.c:268
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
@@ -966,148 +1091,76 @@ msgstr ""
 "Questo significa che Enlightenment non uscirà finche queste finestre\n"
 "non saranno chiuse o avranno il blocco Perpetua disabilitato.\n"
 
-#: src/bin/e_border.c:6169
-msgid "Remember This Window"
-msgstr "Ricorda per questa finestra"
-
-#: src/bin/e_border.c:6176
-msgid "Remember This Instance Only"
-msgstr "Ricorda solo per questa istanza"
-
-#: src/bin/e_border.c:6179
-msgid "Match by Name"
-msgstr "Identifica per nome"
-
-#: src/bin/e_border.c:6180
-msgid "Match by Class"
-msgstr "Identifica per classe"
-
-#: src/bin/e_border.c:6181
-msgid "Match by Title"
-msgstr "Identifica per titolo"
-
-#: src/bin/e_border.c:6182
-msgid "Match by Role"
-msgstr "Identifica per ruolo"
-
-#: src/bin/e_border.c:6183
-msgid "Match by Window Type"
-msgstr "Identifica per tipo finestra"
-
-#: src/bin/e_border.c:6184
-msgid "Match by Transient Status"
-msgstr "Identifica per stato transitorio"
-
-#: src/bin/e_border.c:6187
-msgid "Remember Position"
-msgstr "Ricorda posizione"
-
-#: src/bin/e_border.c:6188
-msgid "Remember Size"
-msgstr "Ricorda dimensione"
-
-#: src/bin/e_border.c:6189
-msgid "Remember Stacking"
-msgstr "Ricorda livello"
-
-#: src/bin/e_border.c:6190
-msgid "Remember Locks"
-msgstr "Ricorda blocchi"
-
-#: src/bin/e_border.c:6191
-msgid "Remember Border"
-msgstr "Ricorda bordo"
-
-#: src/bin/e_border.c:6192
-msgid "Remember Stickiness"
-msgstr "Ricorda stato appiccicata"
-
-#: src/bin/e_border.c:6193
-msgid "Remember Desktop"
-msgstr "Ricorda desktop"
-
-#: src/bin/e_border.c:6194
-msgid "Remember Shaded State"
-msgstr "Ricorda stato arrotolata"
-
-#: src/bin/e_border.c:6195
-msgid "Remember Zone"
-msgstr "Ricorda zona"
-
-#: src/bin/e_border.c:6196
-msgid "Remember Skip Window List"
-msgstr "Ricorda fuori lista finestre"
-
-#: src/bin/e_border.c:6210
+#: src/bin/e_border.c:5770
 msgid "Always On Top"
 msgstr "Sempre sulle altre"
 
-#: src/bin/e_border.c:6220 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_border.c:5780 src/modules/clock/e_mod_main.c:349
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normale"
 
-#: src/bin/e_border.c:6230
+#: src/bin/e_border.c:5790
 msgid "Always Below"
 msgstr "Sempre sotto le altre"
 
-#: src/bin/e_border.c:6249
-msgid "Close"
-msgstr "Chiudi"
-
-#: src/bin/e_border.c:6260
-msgid "Iconify"
-msgstr "Iconifica"
-
-#: src/bin/e_border.c:6274
-msgid "Kill"
-msgstr "Uccidi"
-
-#: src/bin/e_border.c:6287
-msgid "Shaded"
-msgstr "Arrotolata"
-
-#: src/bin/e_border.c:6300
-msgid "Maximized"
-msgstr "Massimizzata"
-
-#: src/bin/e_border.c:6313
-msgid "Sticky"
-msgstr "Appiccicata"
-
-#: src/bin/e_border.c:6333
-msgid "Borderless"
-msgstr "Senza bordo"
-
-#: src/bin/e_border.c:6346
-msgid "Fullscreen"
-msgstr "A tutto schermo"
-
-#: src/bin/e_border.c:6360
-msgid "Skip Window List"
-msgstr "Fuori lista finestre"
-
-#: src/bin/e_border.c:6381
+#: src/bin/e_border.c:5814
 msgid "Remember"
 msgstr "Ricorda"
 
-#: src/bin/e_border.c:6391
-msgid "Send To"
-msgstr "Invia a"
+#: src/bin/e_border.c:5824
+msgid "Send to Desktop"
+msgstr "Invia al desktop"
 
-#: src/bin/e_border.c:6409
+#: src/bin/e_border.c:5845
+msgid "Shaded"
+msgstr "Arrotolata"
+
+#: src/bin/e_border.c:5858
+msgid "Maximized"
+msgstr "Massimizzata"
+
+#: src/bin/e_border.c:5871
+msgid "Sticky"
+msgstr "Appiccicata"
+
+#: src/bin/e_border.c:5884
+msgid "Borderless"
+msgstr "Senza bordo"
+
+#: src/bin/e_border.c:5897
+msgid "Fullscreen"
+msgstr "A tutto schermo"
+
+#: src/bin/e_border.c:5911
+msgid "Skip Window List"
+msgstr "Fuori lista finestre"
+
+#: src/bin/e_border.c:5935
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_border.c:6436
+#: src/bin/e_border.c:5962
 msgid "Create Icon"
 msgstr "Crea icona"
 
-#: src/bin/e_border.c:6523
+#: src/bin/e_border.c:5973
+msgid "Kill"
+msgstr "Uccidi"
+
+#: src/bin/e_border.c:5986
+msgid "Iconify"
+msgstr "Iconifica"
+
+#: src/bin/e_border.c:5997
+msgid "Close"
+msgstr "Chiudi"
+
+#: src/bin/e_border.c:6087
 msgid "Icon Edit Error"
 msgstr "Errore dell'editor di icone"
 
-#: src/bin/e_border.c:6524
+#: src/bin/e_border.c:6088
 msgid ""
 "Error starting icon editor\n"
 "\n"
@@ -1284,6 +1337,11 @@ msgid ""
 msgstr ""
 "C'è stato un errore nell'impostazione del governor<br>della frequenza della "
 "cpu attraverso l'utilità <br>setfreq del modulo."
+
+#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
+#: src/modules/battery/e_mod_main.c:762
+msgid "Ok"
+msgstr "Ok"
 
 #: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
