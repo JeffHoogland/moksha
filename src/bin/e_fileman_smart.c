@@ -476,7 +476,9 @@ _e_fm_smart_add(Evas_Object *object)
    e_theme_edje_object_set(sd->selection.band.obj,
 			   "base/theme/fileman/rubberband",
 			   "fileman/rubberband");
-
+   
+   sd->event_handlers = NULL;
+   
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_XDND_ENTER,
 								 _e_fm_drop_enter_cb,
@@ -500,11 +502,9 @@ _e_fm_smart_add(Evas_Object *object)
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								 _e_fm_win_mouse_move_cb,
-								 sd));
-   
+								 sd));   
    sd->monitor = NULL;
    sd->position = 0.0;
-   sd->event_handlers = NULL;
 
    sd->conf.main_edd = E_CONFIG_DD_NEW("E_Fm_Config", E_Fm_Config);
    sd->conf.assoc_app_edd = E_CONFIG_DD_NEW("E_Fm_Assoc_App",E_Fm_Assoc_App);
@@ -2045,7 +2045,7 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
    sd = data;
 
    /* this shouldnt be here if we clean up properly */
-   if(!ev || !sd)
+   if(!ev->win || !ev->event_win || !sd)
      return 0;
    
 /* TODO - rethink this code */

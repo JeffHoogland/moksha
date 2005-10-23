@@ -146,7 +146,7 @@ _e_fileman_free(E_Fileman *fileman)
    evas_object_del(fileman->smart);
    evas_object_del(fileman->main);
    e_object_del(E_OBJECT(fileman->win));
-   //free(fileman);
+   free(fileman);
 }
 
 static void
