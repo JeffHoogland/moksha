@@ -1451,27 +1451,63 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 		     Ecore_File_Event event, const char *path)
 {
    E_Fm_Smart_Data *sd;
-
+   char *dir;
+   E_Fm_Icon *icon;
+   Evas_List *l;
+   
    sd = data;
-
-   /* FIXME! */
-   return;
-
-   if (event == ECORE_FILE_EVENT_DELETED_SELF)
+   
+   switch(event)
     {
-       char *dir;
-
+     case ECORE_FILE_EVENT_DELETED_SELF:		          
        dir = _e_fm_dir_pop(sd->dir);
        /* FIXME: we need to fix this, uber hack alert */
        if (sd->win)
 	 e_win_title_set(sd->win, dir);
        _e_fm_dir_set(sd, dir);
        free(dir);
-       return;
-    }
-
-   //_e_fm_redraw(sd);
-   _e_fm_dir_set(sd, sd->dir);
+       break;
+       
+     case ECORE_FILE_EVENT_CREATED_FILE:
+     case ECORE_FILE_EVENT_CREATED_DIRECTORY:       
+       icon = E_NEW(E_Fm_Icon, 1);
+       if (!icon) break;
+       icon->file = e_fm_file_new(path);
+       icon->icon_object = e_fm_icon_add(sd->evas);
+       icon->sd = sd;
+       e_icon_layout_freeze(sd->layout);
+       e_fm_icon_file_set(icon->icon_object, icon->file);
+       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       evas_object_show(icon->icon_object);
+       e_icon_layout_pack(sd->layout, icon->icon_object);
+       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
+       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
+       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
+       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
+       e_icon_layout_thaw(sd->layout);
+       sd->files = evas_list_prepend(sd->files, icon);
+       _e_fm_redraw(sd);
+       break;
+       
+     case ECORE_FILE_EVENT_DELETED_FILE:
+     case ECORE_FILE_EVENT_DELETED_DIRECTORY:
+       for(l=sd->files; l; l = l->next)
+	{
+	   icon = l->data;
+	   if(!strcmp(icon->file->path, path))
+	    {
+	       sd->files = evas_list_remove_list(sd->files, l);
+	       e_icon_layout_freeze(sd->layout);
+	       e_icon_layout_unpack(icon->icon_object);
+	       e_icon_layout_thaw(sd->layout);
+	       _e_fm_file_free(icon);	       
+	       _e_fm_redraw(sd);	       
+	       break;
+	    }
+	}       
+       break;
+    }   
 }
 
 static void
