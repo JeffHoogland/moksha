@@ -571,7 +571,7 @@ _e_fm_smart_del(Evas_Object *object)
    
    e_config_domain_save("efm", sd->conf.main_edd, sd->conf.main);
    
-   //if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+   if (sd->monitor) ecore_file_monitor_del(sd->monitor);
    sd->monitor = NULL;
    
    while (sd->event_handlers)
@@ -1348,8 +1348,8 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    
    /* Get new files */
    sd->files = _e_fm_dir_files_get(sd, E_FM_FILE_TYPE_NORMAL);
-   //if (sd->monitor) ecore_file_monitor_del(sd->monitor);
-   //sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
+   if (sd->monitor) ecore_file_monitor_del(sd->monitor);
+   sd->monitor = ecore_file_monitor_add(sd->dir, _e_fm_dir_monitor_cb, sd);
    
    /* Get special prev dir */
    if (strcmp(sd->dir, "/"))
@@ -1495,7 +1495,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
    E_Fm_Smart_Data *sd;
    
    sd = data;
-   
+
    /* FIXME! */
    return;
    

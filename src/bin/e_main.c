@@ -261,6 +261,16 @@ main(int argc, char **argv)
 	exit(-1);
      }
    _e_main_shutdown_push(ecore_shutdown);
+   
+    /* init the file system */
+   if (!ecore_file_init())
+     {
+	e_error_message_show(_("Enlightenment cannot initialize the File system.\n"
+			       "Perhaps you are out of memory?"));
+	_e_main_shutdown(-1);
+     }
+   _e_main_shutdown_push(ecore_file_shutdown);   
+   
    /* setup my args */
    ecore_app_args_set(argc, (const char **)argv);
    /* setup a handler for when e is asked to exit via a system signal */
@@ -341,17 +351,27 @@ main(int argc, char **argv)
 			       "Ecore and check they support Software X11 rendering."));
 	_e_main_shutdown(-1);
      }
-   _e_main_shutdown_push(ecore_evas_shutdown);
-    /* init the file system */
-   if (!ecore_file_init())
-     {
-	e_error_message_show(_("Enlightenment cannot initialize the File system.\n"
-			       "Perhaps you are out of memory?"));
-	_e_main_shutdown(-1);
-     }
-   _e_main_shutdown_push(ecore_file_shutdown);
+   _e_main_shutdown_push(ecore_evas_shutdown);        
    
-	 
+   /* init the enlightenment thumbnailing system */
+   if (!e_thumb_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the Thumbnailing system.\n"));
+       _e_main_shutdown(-1);
+    }
+   _e_main_shutdown_push(e_thumb_shutdown);
+   
+   
+   /* init the enlightenment file manager */
+   if (!e_fm_icon_init() || !e_fm_init())
+    {
+       e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
+       _e_main_shutdown(-1);
+    }
+   _e_main_shutdown_push(e_fm_shutdown);
+   _e_main_shutdown_push(e_fm_icon_shutdown);
+   
+   
    /*** Finished loading subsystems, Loading WM Specifics ***/
 	 
    /* setup directories we will be using for configurations storage etc. */
@@ -739,9 +759,6 @@ _e_main_screens_init(void)
    if (!e_desk_init()) return 0;
    if (!e_gadman_init()) return 0;
    if (!e_menu_init()) return 0;
-   if (!e_thumb_init()) return 0;
-   if (!e_fm_icon_init()) return 0;
-   if (!e_fm_init()) return 0;
    
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -796,9 +813,6 @@ _e_main_screens_init(void)
 static int
 _e_main_screens_shutdown(void)
 {
-   e_fm_shutdown();
-   e_fm_icon_shutdown();
-   e_thumb_shutdown();   
    e_win_shutdown();
    e_border_shutdown();
    e_focus_shutdown();
