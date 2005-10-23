@@ -681,7 +681,8 @@ _e_main_dirs_init(void)
 	"%s/.e/e/applications/trash",
 	"%s/.e/e/modules",
 	"%s/.e/e/config",
-	"%s/.e/e/locale"
+	"%s/.e/e/locale",
+	"%s/.e/e/input_methods"
      };
    int i;
    
@@ -921,8 +922,8 @@ _e_main_path_init(void)
 	e_error_message_show("Cannot allocate path for path_input_methods\n");
 	return 0;
      }
-   e_path_default_path_append(path_input_methods, "~/.e/e/intl");
-   snprintf(buf, sizeof(buf), "%s/enlightenment/intl", e_prefix_lib_get());
+   e_path_default_path_append(path_input_methods, "~/.e/e/input_methods");
+   snprintf(buf, sizeof(buf), "%s/data/input_methods", e_prefix_data_get());
    e_path_default_path_append(path_input_methods, buf);
    e_path_user_path_set(path_input_methods, &(e_config->path_append_input_methods));
 
