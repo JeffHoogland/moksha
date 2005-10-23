@@ -96,7 +96,8 @@ _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, 
    evas_object_image_file_set(*im, file, NULL);
    iw = 0; ih = 0;
    evas_object_image_size_get(*im, &iw, &ih);
-   *alpha = evas_object_image_alpha_get(im);
+   //*alpha = evas_object_image_alpha_get(im);
+   *alpha = 1; //why doesnt the above one work?
    if ((iw > 0) && (ih > 0))
     {
        *ww = w;
