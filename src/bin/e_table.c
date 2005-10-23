@@ -369,7 +369,7 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
      }
    else
      {
-	int mw, mh, i, ex, tot, need, num, dif, left, nx;
+	int i, ex, tot, need, num, dif, left, nx;
 	for (l = sd->items; l; l = l->next)
 	  {
 	     E_Table_Item *ti;
@@ -597,7 +597,7 @@ _e_table_smart_extents_calcuate(E_Smart_Data *sd)
      }
    else
      {
-	int mw, mh, i, ex, tot, need, num, dif, left, nx;
+	int i, ex, tot, need, num, dif, left, nx;
 	for (l = sd->items; l; l = l->next)
 	  {
 	     E_Table_Item *ti;
