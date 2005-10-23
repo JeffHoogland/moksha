@@ -272,10 +272,10 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
    
-   if (!((cfdata->remember.apply_pos) || (cfdata->remember.apply_size) && 
-	 (cfdata->remember.apply_locks) || (cfdata->remember.apply_layer) &&
-	 (cfdata->remember.apply_border) || (cfdata->remember.apply_sticky) &&
-	 (cfdata->remember.apply_desktop) || (cfdata->remember.apply_shade) &&
+   if (!((cfdata->remember.apply_pos) || (cfdata->remember.apply_size) || 
+	 (cfdata->remember.apply_locks) || (cfdata->remember.apply_layer) ||
+	 (cfdata->remember.apply_border) || (cfdata->remember.apply_sticky) ||
+	 (cfdata->remember.apply_desktop) || (cfdata->remember.apply_shade) ||
 	 (cfdata->remember.apply_zone) || (cfdata->remember.apply_skip_winlist)))
      {
 	if (cfdata->border->remember)
@@ -422,8 +422,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
-   E_Radio_Group *rg;
-   
+
    _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    
