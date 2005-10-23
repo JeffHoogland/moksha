@@ -40,6 +40,8 @@ struct _E_Input_Method_Config
 
 EAPI int		 e_intl_init(void);
 EAPI int		 e_intl_shutdown(void);
+EAPI int		 e_intl_post_init(void);
+EAPI int		 e_intl_post_shutdown(void);
 /* Setting & Getting Language */
 EAPI void		 e_intl_language_set(const char *lang);
 EAPI const char		*e_intl_language_get(void);

@@ -24,18 +24,19 @@ static char *_e_intl_orig_xmodifiers = NULL;
 static char *_e_intl_orig_qt_im_module = NULL; 
 static char *_e_intl_orig_gtk_im_module = NULL;
 static char *_e_intl_input_method = NULL;
-static Evas_List *_e_intl_input_methods = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 
 #define ADD_LANG(lang) _e_intl_languages = evas_list_append(_e_intl_languages, lang)
-#define ADD_IM(method) _e_intl_input_methods = evas_list_append(_e_intl_input_methods, method)
 
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (strlen(EXE) == 0)))
 
-static int _e_intl_exe_valid_get(char *exe);
 static int _e_intl_cb_exit(void *data, int type, void *event);
+static Evas_List *_e_intl_imc_path_scan(E_Path *path);
+static Evas_List *_e_intl_imc_dir_scan(char *dir);
+static E_Input_Method_Config *_e_intl_imc_find(Evas_List *imc_list, char *name);
+
 
 int
 e_intl_init(void)
@@ -80,7 +81,7 @@ e_intl_init(void)
    ADD_LANG("hu_HU.UTF-8");
    ADD_LANG("sl_SI.UTF-8");
    ADD_LANG("it_IT.UTF-8");
-   ADD_LANG("cs_CS.UTF-8");
+   ADD_LANG("cs_CZ.UTF-8");
    ADD_LANG("da_DK.UTF-8");
    ADD_LANG("sk_SK.UTF-8");
    ADD_LANG("sv_SV.UTF-8");
@@ -104,32 +105,6 @@ e_intl_init(void)
    if ((s = getenv("QT_IM_MODULE"))) _e_intl_orig_qt_im_module = strdup(s);
    if ((s = getenv("XMODIFIERS"))) _e_intl_orig_xmodifiers = strdup(s);
    
-   
-   /* Exception: NULL == use LANG. this will get setup in e_config */
-   e_intl_language_set(NULL);
-
-   imc = malloc(sizeof(E_Input_Method_Config));
-   imc->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
-   imc->e_im_name = strdup("scim");
-   imc->gtk_im_module = strdup("scim");
-   imc->qt_im_module = strdup("scim");
-   imc->xmodifiers = strdup("@im=SCIM");
-   imc->e_im_exec = strdup("scim");
-
-   ADD_IM(imc);
-
-   imc = malloc(sizeof(E_Input_Method_Config));
-   imc->version = E_INTL_INPUT_METHOD_CONFIG_VERSION;
-   imc->e_im_name = strdup("uim");
-   imc->gtk_im_module = strdup("uim");
-   imc->qt_im_module = strdup("uim");
-   imc->xmodifiers = strdup("@im=uim");
-   imc->e_im_exec = strdup("uim-xim");
-
-   ADD_IM(imc);
-  
-   _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
-   
    return 1;
 }
 
@@ -148,46 +123,136 @@ e_intl_shutdown(void)
    
    evas_list_free(_e_intl_languages);
    
-   while (_e_intl_input_methods)
-     {     
-	E_Input_Method_Config *imc;
-	imc = _e_intl_input_methods->data;
-	_e_intl_input_methods = evas_list_remove_list(_e_intl_input_methods, _e_intl_input_methods);
-	e_intl_input_method_config_free(imc);	
-     }
-
    E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);
   
-   E_EXE_STOP(_e_intl_input_method_exec);
+   return 1;
+}
+
+/* Setup configuration settings and start services */
+int
+e_intl_post_init(void)
+{
+   if ((e_config->language) && (strlen(e_config->language) > 0))
+     e_intl_language_set(e_config->language);
    
+   if ((e_config->input_method) && (strlen(e_config->input_method) > 0))
+     e_intl_input_method_set(e_config->input_method); 
+
+   _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
+}
+
+int
+e_intl_post_shutdown(void)
+{
    if (_e_intl_exit_handler)
      {
 	ecore_event_handler_del(_e_intl_exit_handler);
 	_e_intl_exit_handler = NULL;			          
      }
-
-   return 1;
+   
+   e_intl_input_method_set(NULL);
+   e_intl_language_set(NULL);
+   E_EXE_STOP(_e_intl_input_method_exec);
 }
 
-/* FIXME: finish this */
 static Evas_List *
-_e_intl_dir_scan(char *dir)
+_e_intl_imc_path_scan(E_Path *path)
 {
+
+   Evas_List *next;
+   Evas_List *dir_list;
+   Evas_List *all_imcs;
+  
+   if (!path) return NULL; 
+   
+   all_imcs = NULL; 
+   dir_list = e_path_dir_list_get(path);
+   
+   for (next = dir_list ; next ; next = next->next)
+     {
+	E_Path_Dir *epd;
+	Evas_List *dir_imcs;
+	
+	epd = next->data;
+
+	dir_imcs = _e_intl_imc_dir_scan(epd->dir);
+	
+	while (dir_imcs)
+	  {
+	     E_Input_Method_Config *imc;
+
+	     imc = dir_imcs->data;
+	     dir_imcs = evas_list_remove_list(dir_imcs, dir_imcs);
+
+	     if (_e_intl_imc_find(all_imcs, imc->e_im_name))
+	       {
+		  e_intl_input_method_config_free(imc);
+	       }
+	     else
+	       {
+		  all_imcs = evas_list_append(all_imcs, imc);
+	       }
+	  }
+     }
+   
+   e_path_dir_list_free(dir_list);  
+
+   return all_imcs;
+}
+   
+static Evas_List *
+_e_intl_imc_dir_scan(char *dir)
+{
+   Evas_List *imcs;
    Ecore_List *files;
    char *file;
    
+   imcs = NULL;
+   
    files = ecore_file_ls(dir);
    if (!files) return NULL;
-   
+  
    ecore_list_goto_first(files);
    if (files)
      {
 	while ((file = ecore_list_next(files)))
 	  {
-	     /* Do something! */
+	     E_Input_Method_Config *imc;
+	     Eet_File *imc_file;
+	     char buf[PATH_MAX]; 
+	     
+	     snprintf(buf, sizeof(buf), "%s/%s", dir, file);	     
+	     imc_file = eet_open(buf, EET_FILE_MODE_READ);
+	     if (imc_file)
+	       {
+		  imc = e_intl_input_method_config_read (imc_file);
+		  if (imc)
+		    {
+		       imcs = evas_list_append(imcs, imc);
+		    }
+	       }
 	  }
 	ecore_list_destroy(files);
      }
+   return imcs;
+}
+
+static E_Input_Method_Config *
+_e_intl_imc_find(Evas_List *imc_list, char * name)
+{
+   Evas_List *l;
+   
+   if (!imc_list) return NULL;
+   if (!name) return NULL;
+
+   for (l = imc_list; l; l = l->next)
+     {
+	E_Input_Method_Config *imc;
+
+	imc = l->data;
+	if (!strcmp(imc->e_im_name, name)) return imc;
+     }
+   
    return NULL;
 }
 
@@ -202,10 +267,10 @@ e_intl_language_set(const char *lang)
    /* NULL lang means set everything back to the original environemtn defaults */
    if (!lang)
      {
-	if (_e_intl_orig_lc_messages) e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
-	if (_e_intl_orig_language) e_util_env_set("LANGUAGE", _e_intl_orig_language);
-	if (_e_intl_orig_lc_all) e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
-	if (_e_intl_orig_lang) e_util_env_set("LANG", _e_intl_orig_lang);
+	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
+	e_util_env_set("LANGUAGE", _e_intl_orig_language);
+	e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
+	e_util_env_set("LANG", _e_intl_orig_lang);
      }
    if (!lang) lang = getenv("LC_MESSAGES");
    if (!lang) lang = getenv("LANGUAGE");
@@ -254,13 +319,11 @@ e_intl_language_list(void)
 void
 e_intl_input_method_set(const char *method)
 {
-   E_Input_Method_Config *imc;
-   Evas_List *next;
-
    if (_e_intl_input_method) free(_e_intl_input_method);
 
    if (!method)
      {
+	E_EXE_STOP(_e_intl_input_method_exec); 
 	e_util_env_set("GTK_IM_MODULE", _e_intl_orig_gtk_im_module);
         e_util_env_set("QT_IM_MODULE", _e_intl_orig_qt_im_module);
         e_util_env_set("XMODIFIERS", _e_intl_orig_xmodifiers);
@@ -268,11 +331,15 @@ e_intl_input_method_set(const char *method)
    
    if (method) 
      {   
-	_e_intl_input_method = strdup(method);   
-	for (next = _e_intl_input_methods; next; next = next->next)     
-	  {	
-	     imc = next->data;	
-	     if (!strcmp(imc->e_im_name, _e_intl_input_method)) 	  
+	Evas_List * input_methods;
+	E_Input_Method_Config *imc;
+
+	input_methods = _e_intl_imc_path_scan(path_input_methods);
+	_e_intl_input_method = strdup(method);
+	
+	imc = _e_intl_imc_find (input_methods, _e_intl_input_method);	
+	
+	     if (imc) 	  
 	       {	     
 	          e_util_env_set("GTK_IM_MODULE", imc->gtk_im_module);
 	          e_util_env_set("QT_IM_MODULE", imc->qt_im_module);
@@ -282,12 +349,9 @@ e_intl_input_method_set(const char *method)
 		  
 		  if (E_EXE_IS_VALID(imc->e_im_exec)) 
 		    {
-
-		       printf("E_INTL: START IN (%x)", _e_intl_input_method_exec);
 		       _e_intl_input_method_exec = ecore_exe_run(imc->e_im_exec, NULL);
-		       ecore_exe_tag_set(_e_intl_input_method_exec, "E/im_exec");
-		       printf("E_INTL: START OUT (%x)", _e_intl_input_method_exec);
-		
+		       ecore_exe_tag_set(_e_intl_input_method_exec,"E/im_exec");
+	       	       
 		       if (  !_e_intl_input_method_exec || 
 			     !ecore_exe_pid_get(_e_intl_input_method_exec))    
 			 e_error_dialog_show(_("Input Method Error"),
@@ -299,9 +363,17 @@ e_intl_input_method_set(const char *method)
 					"that your configuration's\n" 
 					"executable is in your PATH\n"));  
 		    }
-		  break; 
 	       }	
-	  }     
+
+	/* Need to free up the directory listing */
+       	while (input_methods)
+	  {
+	     E_Input_Method_Config *imc;
+	     
+	     imc = input_methods->data;	     
+	     input_methods = evas_list_remove_list(input_methods,input_methods);
+	     e_intl_input_method_config_free (imc); 
+	  }
      }   
    else
      {
@@ -318,18 +390,29 @@ e_intl_input_method_get(void)
 Evas_List *
 e_intl_input_method_list(void)
 {
+   Evas_List *input_methods;
    Evas_List *im_list;
-   Evas_List *next;
+   Evas_List *l;
    E_Input_Method_Config *imc;
 
    im_list = NULL;
    
-   for (next = _e_intl_input_methods; next; next = next->next)
+   input_methods = _e_intl_imc_path_scan(path_input_methods);
+   for (l = input_methods; l; l = l->next)
      {
-	imc = next->data;
+	imc = l->data;
 	im_list = evas_list_append(im_list, strdup(imc->e_im_name));
      }
 
+   /* Need to free up the directory listing */
+   while (input_methods)
+     {
+	E_Input_Method_Config *imc;
+	     
+	imc = input_methods->data;	     
+	input_methods = evas_list_remove_list(input_methods, input_methods);
+	e_intl_input_method_config_free (imc);
+     }
    return im_list;
 }
 

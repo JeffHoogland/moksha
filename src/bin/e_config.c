@@ -360,6 +360,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_eap_generic_show, INT); /**/
    E_CONFIG_VAL(D, T, menu_eap_comment_show, INT); /**/
    E_CONFIG_VAL(D, T, input_method, STR); /**/
+   E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
    
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
@@ -1446,15 +1447,6 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->menu_eap_name_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_eap_generic_show, 0, 1);
    E_CONFIG_LIMIT(e_config->menu_eap_comment_show, 0, 1);
-   
-   /* apply lang config - exception because config is loaded after intl setup */
-   
-   if ((e_config->language) && (strlen(e_config->language) > 0))
-     e_intl_language_set(e_config->language);
-   
-   if ((e_config->input_method) && (strlen(e_config->input_method) > 0))
-     e_intl_input_method_set(e_config->input_method);
-   
    return 1;
 }
 
@@ -1937,6 +1929,14 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_backgrounds->data;
 	     e_config->path_append_backgrounds = evas_list_remove_list(e_config->path_append_backgrounds, e_config->path_append_backgrounds);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_input_methods)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_input_methods->data;
+	     e_config->path_append_input_methods = evas_list_remove_list(e_config->path_append_input_methods, e_config->path_append_input_methods);
 	     E_FREE(epd->dir);
 	     E_FREE(epd);
 	  }

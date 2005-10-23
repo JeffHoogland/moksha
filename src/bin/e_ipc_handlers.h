@@ -805,7 +805,9 @@ break;
    else if (!strcmp(__str, "modules")) \
      __path = path_modules; \
    else if (!strcmp(__str, "backgrounds")) \
-     __path = path_backgrounds; 
+     __path = path_backgrounds; \
+   else if (!strcmp(__str, "input_methods")) \
+     __path = path_input_methods; 
 
 
 #endif
@@ -1424,6 +1426,9 @@ break;
      dir_list = e_path_dir_list_get(path_modules);
    else if (!strcmp(s, "backgrounds"))
      dir_list = e_path_dir_list_get(path_backgrounds);
+   else if (!strcmp(s, "input_methods"))
+     dir_list = e_path_dir_list_get(path_input_methods);
+
    E_Path_Dir *p;
    dat = evas_list_append(dat, strdup(s));
    FOR(dir_list) { p = l->data;
