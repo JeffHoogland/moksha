@@ -22,13 +22,13 @@ e_thumb_init(void)
    
    homedir = e_user_homedir_get();
    if (homedir)
-    {
-       snprintf(path, sizeof(path), "%s/.e/e/fileman/thumbnails", homedir);
-       if (!ecore_file_exists(path))
-	 ecore_file_mkpath(path);
-       thumb_path = strdup(path);
-       free(homedir);
-    }
+     {
+	snprintf(path, sizeof(path), "%s/.e/e/fileman/thumbnails", homedir);
+	if (!ecore_file_exists(path))
+	  ecore_file_mkpath(path);
+	thumb_path = strdup(path);
+	free(homedir);
+     }
    else return 0;
    
    return 1;
@@ -42,10 +42,10 @@ e_thumb_shutdown(void)
 }
 
 /* return dir where thumbs are saved */
-char *
+const char *
 e_thumb_dir_get(void)
 {
-   return strdup(thumb_path);
+   return thumb_path;
 }
 
 /* return hashed path of thumb */
@@ -56,7 +56,7 @@ e_thumb_file_get(char *file)
    char thumb[PATH_MAX];
    
    id = _e_thumb_file_id(file);   
-   if(!id) { return NULL; }
+   if (!id) return NULL;
    snprintf(thumb, sizeof(thumb), "%s/%s", thumb_path, id);
    free(id);
    return strdup(thumb);   
@@ -68,19 +68,17 @@ e_thumb_exists(char *file)
 {
    char *thumb;
    char *ext;
-   
+
    ext = strrchr(file, '.');
-   if(ext)
-     if(!strcasecmp(ext, ".eap"))       
-	 return 1;
-   
+   if ((ext) && (!strcasecmp(ext, ".eap")))
+     return 1;
+
    thumb = e_thumb_file_get(file);
-   if(ecore_file_exists(thumb))
-    {
-       free(thumb);
-       return 1;
-    }
-   
+   if (ecore_file_exists(thumb))
+     {
+	free(thumb);
+	return 1;
+     }
    return 0;
 }
 
@@ -98,22 +96,22 @@ _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, 
    evas_object_image_size_get(*im, &iw, &ih);
    *alpha = evas_object_image_alpha_get(*im);
    if ((iw > 0) && (ih > 0))
-    {
-       *ww = w;
-       *hh = (w * ih) / iw;
-       if (*hh > h)
-	{
-	   *hh = h;
-	   *ww = (h * iw) / ih;
-	}
-       ecore_evas_resize(*buf, *ww, *hh);
-       evas_object_image_fill_set(*im, 0, 0, *ww, *hh);
-       evas_object_resize(*im, *ww, *hh);
-       evas_object_move(*im, 0, 0);
-       evas_object_show(*im);
-       
-       return ecore_evas_buffer_pixels_get(*buf);
-    }
+     {
+	*ww = w;
+	*hh = (w * ih) / iw;
+	if (*hh > h)
+	  {
+	     *hh = h;
+	     *ww = (h * iw) / ih;
+	  }
+	ecore_evas_resize(*buf, *ww, *hh);
+	evas_object_image_fill_set(*im, 0, 0, *ww, *hh);
+	evas_object_resize(*im, *ww, *hh);
+	evas_object_move(*im, 0, 0);
+	evas_object_show(*im);
+
+	return ecore_evas_buffer_pixels_get(*buf);
+     }
    return NULL;
 }
 
@@ -137,7 +135,6 @@ _e_thumb_ebg_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, in
    
    wallpaper = edje_object_add(evasbuf);
 
-      
    edje_object_file_set(wallpaper, file, "desktop/background");
       
    /* wallpaper */
@@ -242,29 +239,23 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
    int alpha;
    
    ext = strrchr(file, '.');
-   if(ext)
-    {
-       if(!strcasecmp(ext, ".eap"))
-	 return 1;
-    }
+   if ((ext) && (!strcasecmp(ext, ".eap")))
+     return 1;
    
    thumbpath = e_thumb_file_get(file);
    if (!thumbpath)
-     {
-	free(thumbpath);
-	return -1;
-     }
+     return -1;
    
-   if(ext)
-    {
-       if(!strcasecmp(ext, ".edj"))
-	{
-	   /* for now, this function does both the bg and theme previews */
-	   data = _e_thumb_etheme_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
-	}
-       else
-	 data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);	 
-    }
+   if (ext)
+     {
+	if(!strcasecmp(ext, ".edj"))
+	  {
+	     /* for now, this function does both the bg and theme previews */
+	     data = _e_thumb_etheme_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
+	  }
+	else
+	  data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);	 
+     }
    else
      data = _e_thumb_image_create(file, w, h, &ww, &hh, &alpha, &im, &buf);
    
@@ -279,7 +270,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 	     return -1;
 	  }
 	free(thumbpath);
-	
+
 	eet_write(ef, "/thumbnail/orig_path", file, strlen(file), 1);
 	if ((size = eet_data_image_write(ef, "/thumbnail/data",
 					 (void *)data, ww, hh, alpha,
@@ -314,31 +305,31 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
      
    /* eap thumbnailer */
    ext = strrchr(file, '.');
-   if(ext)
-    {
-       if(!strcasecmp(ext, ".eap"))
-	{
-	   E_App *app;
+   if (ext)
+     {
+	if (!strcasecmp(ext, ".eap"))
+	  {
+	     E_App *app;
 
-	   D(("e_thumb_evas_object_get: eap found\n"));
-	   app = e_app_new(file, 0);
-	   D(("e_thumb_evas_object_get: eap loaded\n"));
-	   if(!app)	     
-	    { 
-	       D(("e_thumb_evas_object_get: invalid eap\n"));
-	       DEF_THUMB_RETURN;
-	    }
-	   else
-	    {
-	       D(("e_thumb_evas_object_get: creating eap thumb\n"));
-	       im = edje_object_add(evas);
-	       edje_object_file_set(im, file, "icon");
-	       e_object_unref(E_OBJECT(app));	       
-	       D(("e_thumb_evas_object_get: returning eap thumb\n"));
-	       return im;
-	    }
-	}
-    }
+	     D(("e_thumb_evas_object_get: eap found\n"));
+	     app = e_app_new(file, 0);
+	     D(("e_thumb_evas_object_get: eap loaded\n"));
+	     if (!app)	     
+	       { 
+		  D(("e_thumb_evas_object_get: invalid eap\n"));
+		  DEF_THUMB_RETURN;
+	       }
+	     else
+	       {
+		  D(("e_thumb_evas_object_get: creating eap thumb\n"));
+		  im = edje_object_add(evas);
+		  edje_object_file_set(im, file, "icon");
+		  e_object_unref(E_OBJECT(app));	       
+		  D(("e_thumb_evas_object_get: returning eap thumb\n"));
+		  return im;
+	       }
+	  }
+     }
      
    /* saved thumb */
    /* TODO: add ability to fetch thumbs from freedesktop dirs */
@@ -398,7 +389,7 @@ _e_thumb_file_id(char *file)
      {
 	unsigned int t, tt;
 	int j;
-	
+
 	t = id[i];
 	j = 32;
 	while (j > 0)

@@ -62,6 +62,7 @@ EAPI int        e_fm_file_is_image    (E_Fm_File *file);
 EAPI int        e_fm_file_is_etheme   (E_Fm_File *file);
 EAPI int        e_fm_file_is_ebg      (E_Fm_File *file);
 EAPI int        e_fm_file_is_eap      (E_Fm_File *file);
+EAPI int        e_fm_file_can_exec    (E_Fm_File *file);
 EAPI int        e_fm_file_exec        (E_Fm_File *file);
 EAPI int        e_fm_file_assoc_set   (E_Fm_File *file, const char *assoc);
 EAPI int        e_fm_file_assoc_exec  (E_Fm_File *file);

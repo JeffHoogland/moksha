@@ -57,9 +57,6 @@ static Evas_List  *event_handlers = NULL;
 int
 e_fm_icon_init(void)
 {
-   char *homedir;
-   char  path[PATH_MAX];
-
    event_handlers = evas_list_append(event_handlers,
                                      ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
                                                              _e_fm_icon_thumb_cb_exe_exit,
@@ -439,17 +436,17 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 	  {
 	     char part[PATH_MAX];
 	     char *ext2;
-	     
+
 	     ext = strdup(ext);
 	     ext2 = ext;
-	     for(;*ext2;ext2++)
-	       *ext2 = (unsigned char)tolower((unsigned char)*ext2);
-	     
+	     for (; *ext2; ext2++)
+	       *ext2 = tolower(*ext2);
+
 	     snprintf(part, PATH_MAX, "fileman/icons/%s", (ext + 1));
-	     
-	     if(!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
+
+	     if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
 	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "fileman/icons/file");
-	     
+
 	     free(ext);		     	     
 	  }
 	else
@@ -494,12 +491,11 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
    sd = thumb_files->data;
    thumb_files = evas_list_remove_list(thumb_files, thumb_files);
    
-   ext = strrchr(sd->file->name, ".");
-   if(ext)
-     if(strcasecmp(ext, ".eap"))
-       ext = NULL;
+   ext = strrchr(sd->file->name, '.');
+   if ((ext) && (strcasecmp(ext, ".eap")))
+     ext = NULL;
    
-   if (ecore_file_exists(sd->thumb_path) || ext)
+   if ((ext) || (ecore_file_exists(sd->thumb_path)))
      {
 	if (sd->image_object) evas_object_del(sd->image_object);
 	sd->image_object = e_thumb_evas_object_get(sd->file->path,

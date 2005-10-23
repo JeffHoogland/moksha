@@ -5,7 +5,6 @@
 
 typedef struct _E_Event_Fm_Reconfigure      E_Event_Fm_Reconfigure;
 typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
-typedef struct _E_Fm_Assoc_App              E_Fm_Assoc_App;
 
 #else
 #ifndef E_FM_SMART_H
@@ -21,12 +20,6 @@ struct _E_Event_Fm_Directory_Change
 {
    Evas_Object *object;
    Evas_Coord w, h;  
-};
-
-struct _E_Fm_Assoc_App
-{
-   char *mime;
-   char *app;
 };
 
 EAPI int                   e_fm_init(void);
