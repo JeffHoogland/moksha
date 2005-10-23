@@ -29,7 +29,8 @@ struct _E_Fm_Assoc_App
    char *app;
 };
 
-
+EAPI int                   e_fm_init(void);
+EAPI int                   e_fm_shutdown(void);
 EAPI Evas_Object          *e_fm_add(Evas *evas);
 EAPI void                  e_fm_dir_set(Evas_Object *object, const char *dir);
 EAPI char                 *e_fm_dir_get(Evas_Object *object);
