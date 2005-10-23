@@ -129,7 +129,7 @@ e_fm_file_rename(E_Fm_File *file, const char *name)
 int
 e_fm_file_delete(E_Fm_File *file)
 {
-   if (ecore_file_unlink(file->path))
+   if (ecore_file_recursive_rm(file->path))
      {
 	free(file->path);
 	file->path = NULL;

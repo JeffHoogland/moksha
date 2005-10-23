@@ -730,29 +730,27 @@ _e_fm_file_rename(E_Fm_Icon *icon, const char* name)
 static void
 _e_fm_file_delete(E_Fm_Icon *icon)
 {
-   /* TODO */
-#if 0
    if (!e_fm_file_delete(icon->file))
     {
        E_Dialog *dia;
-       E_Fm *fileman;
        char *text;
 
-       fileman = icon->sd->fileman;
-       dia = e_dialog_new(fileman->con);
+       dia = e_dialog_new(icon->sd->win->container);
        e_dialog_button_add(dia, "Ok", NULL, NULL, NULL);
        e_dialog_button_focus_num(dia, 1);
        e_dialog_title_set(dia, "Error");
        text = E_NEW(char, PATH_MAX + 256);
        snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b> ?", icon->file->path);
        e_dialog_text_set(dia, text);
-
-               e_dialog_show(dia);
+       e_dialog_show(dia);
     }
-
+   
    icon->sd->files = evas_list_remove(icon->sd->files, icon);
-   _e_fm_file_free(icon);
-#endif
+   e_icon_layout_freeze(icon->sd->layout);
+   e_icon_layout_unpack(icon);
+   e_icon_layout_thaw(icon->sd->layout);   
+   _e_fm_redraw(icon->sd);
+   _e_fm_file_free(icon);   
 }
 
 static void
@@ -839,7 +837,7 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_focus_num(dia, 1);
    e_dialog_title_set(dia, "Confirm");
    text = E_NEW(char, PATH_MAX + 256);
-      snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", icon->file->name);
+   snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", icon->file->name);
    e_dialog_text_set(dia, text);
    free(text);
    e_dialog_show(dia);
@@ -849,16 +847,11 @@ static void
 _e_fm_file_delete_yes_cb(void *data, E_Dialog *dia)
 {
    E_Fm_Icon *icon;
-   E_Fm_Smart_Data *sd;
 
    icon = data;
-   sd = icon->sd;
-   /*
-    * TODO
-    _e_fm_file_delete(file);
-    e_object_del(E_OBJECT(dia));
-    _e_fm_redraw(sd); // no_new
-    */
+   
+   _e_fm_file_delete(icon);
+   e_object_del(E_OBJECT(dia));  
 }
 
 static void
