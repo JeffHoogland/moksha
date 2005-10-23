@@ -340,7 +340,9 @@ e_fm_scroll_vertical(Evas_Object *object, double percent)
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
+   
+   if(sd->max.h <= sd->h) return;
+   
    sd->position = percent;
 
    offsetpx = (percent) * (sd->max.h - sd->h);
