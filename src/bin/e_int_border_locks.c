@@ -306,8 +306,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
-   E_Radio_Group *rg;
-   
+
    _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
