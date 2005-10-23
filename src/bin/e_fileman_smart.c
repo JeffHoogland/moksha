@@ -23,8 +23,6 @@
  *
  * - emit all sorts of signals on double click, right click, single click...
  *
- * - aspect ratio on thumbnails.
- *
  * - add typebuffer like in evidence.
  *
  * - keyboard shortcuts for directory and file navigation.
@@ -909,16 +907,59 @@ _e_fm_icon_prop_fill_data(E_Fm_Icon_CFData *cfdata)
    else
      cfdata->protect = 1;
    
-   if((cfdata->icon->file->mode & (S_IRGRP|S_IROTH)) &&
-      !(cfdata->icon->file->mode & (S_IWGRP|S_IWOTH)))
+   if((cfdata->icon->file->mode&S_IRGRP) &&
+      (cfdata->icon->file->mode&S_IROTH) &&
+      !(cfdata->icon->file->mode&S_IWGRP) &&
+      !(cfdata->icon->file->mode&S_IWOTH))
      cfdata->readwrite = 0;
-   else if((cfdata->icon->file->mode & (S_IWGRP|S_IWOTH)))
+   else if((cfdata->icon->file->mode&S_IWGRP) &&
+	   (cfdata->icon->file->mode&S_IWOTH))
      cfdata->readwrite = 1;
-   else if(!(cfdata->icon->file->mode & (S_IRGRP|S_IROTH|S_IWGRP|S_IWOTH)))
+   else if(!(cfdata->icon->file->mode & (S_IROTH|S_IWOTH|S_IRGRP|S_IWGRP)))
      cfdata->readwrite = 2;
+   else
+     cfdata->readwrite = 3;
    
    /*- ADVANCED -*/
-//   if((cfdata->icon->file->mode & 
+   /*- user -*/
+   if((cfdata->icon->file->mode & S_IRUSR))
+     cfdata->user.r = 1;
+   else 
+     cfdata->user.r = 0;   
+   if((cfdata->icon->file->mode & S_IWUSR))
+     cfdata->user.w = 1;
+   else 
+     cfdata->user.w = 0;   
+   if((cfdata->icon->file->mode & S_IXUSR))
+     cfdata->user.x = 1;
+   else 
+     cfdata->user.x = 0;
+   /*- group -*/
+   if((cfdata->icon->file->mode & S_IRGRP))
+     cfdata->group.r = 1;
+   else 
+     cfdata->group.r = 0;   
+   if((cfdata->icon->file->mode & S_IWGRP))
+     cfdata->group.w = 1;
+   else 
+     cfdata->group.w = 0;   
+      if((cfdata->icon->file->mode & S_IXGRP))
+     cfdata->group.x = 1;
+   else 
+     cfdata->group.x = 0;   
+   /*- world -*/
+   if((cfdata->icon->file->mode & S_IROTH))
+     cfdata->world.r = 1;
+   else 
+     cfdata->world.r = 0;   
+   if((cfdata->icon->file->mode & S_IWOTH))
+     cfdata->world.w = 1;
+   else 
+     cfdata->world.w = 0;   
+      if((cfdata->icon->file->mode & S_IXOTH))
+     cfdata->world.x = 1;
+   else 
+     cfdata->world.x = 0;   
 }
 
 static void *
@@ -927,7 +968,6 @@ _e_fm_icon_prop_create_data(E_Config_Dialog *cfd)
    E_Fm_Icon_CFData *cfdata;
    
    cfdata = E_NEW(E_Fm_Icon_CFData, 1);
-   printf("CREATING DATA! %p\n", cfd->data);
    cfdata->icon = cfd->data;
    _e_fm_icon_prop_fill_data(cfdata);
    return cfdata;
@@ -982,6 +1022,51 @@ _e_fm_icon_prop_basic_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
 static int
 _e_fm_icon_prop_advanced_apply_data(E_Config_Dialog *cfd, E_Fm_Icon_CFData *cfdata)
 {
+   E_Fm_Icon *icon;
+   
+   icon = cfdata->icon;
+   
+   if(cfdata->user.r)
+     icon->file->mode |= S_IRUSR;
+   else
+     icon->file->mode &= ~S_IRUSR;
+   if(cfdata->user.w)
+     icon->file->mode |= S_IWUSR;
+   else
+     icon->file->mode &= ~S_IWUSR;
+   if(cfdata->user.x)
+     icon->file->mode |= S_IXUSR;
+   else
+     icon->file->mode &= ~S_IXUSR;
+   
+   if(cfdata->group.r)
+     icon->file->mode |= S_IRGRP;
+   else
+     icon->file->mode &= ~S_IRGRP;
+   if(cfdata->group.w)
+     icon->file->mode |= S_IWGRP;
+   else
+     icon->file->mode &= ~S_IWGRP;
+   if(cfdata->group.x)
+     icon->file->mode |= S_IXGRP;
+   else
+     icon->file->mode &= ~S_IXGRP;
+   
+   if(cfdata->world.r)
+     icon->file->mode |= S_IROTH;
+   else
+     icon->file->mode &= ~S_IROTH;
+   if(cfdata->world.w)
+     icon->file->mode |= S_IWOTH;
+   else
+     icon->file->mode &= ~S_IWOTH;
+   if(cfdata->world.x)
+     icon->file->mode |= S_IXOTH;
+   else
+     icon->file->mode &= ~S_IXOTH;
+   
+   chmod(icon->file->path, icon->file->mode);
+   
    return 1;
 }
 
@@ -1079,6 +1164,10 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Fm_Icon
    
    e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Dont let others see or modify this file"), 2, rg),
 				     0, 6, 2, 1,
+				     1, 1, 1, 1);
+   
+   e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Custom settings"), 3, rg),
+				     0, 7, 2, 1,
 				     1, 1, 1, 1);   
    
    e_widget_list_object_append(ol, o, 1, 1, 0.5);
