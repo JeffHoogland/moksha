@@ -17,6 +17,7 @@
 #include <math.h>
 #include <fnmatch.h>
 #include <limits.h>
+#include <ctype.h>
 
 #include <Evas.h>
 #include <Evas_Engine_Buffer.h>
