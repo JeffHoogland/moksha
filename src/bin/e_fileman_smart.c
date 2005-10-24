@@ -740,9 +740,10 @@ _e_fm_file_delete(E_Fm_Icon *icon)
        e_dialog_button_focus_num(dia, 1);
        e_dialog_title_set(dia, "Error");
        text = E_NEW(char, PATH_MAX + 256);
-       snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b> ?", icon->file->path);
+       snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b>", icon->file->path);
        e_dialog_text_set(dia, text);
        e_dialog_show(dia);
+       return;
     }
    
    icon->sd->files = evas_list_remove(icon->sd->files, icon);
