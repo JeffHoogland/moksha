@@ -95,6 +95,8 @@ e_widget_button.h \
 e_widget_label.h \
 e_widget_frametable.h \
 e_widget_table.h \
+e_widget_entry.h \
+e_widget_image.h \
 e_config_dialog.h \
 e_int_config_focus.h \
 e_icon_layout.h \
@@ -176,6 +178,8 @@ e_widget_button.c \
 e_widget_label.c \
 e_widget_frametable.c \
 e_widget_table.c \
+e_widget_entry.c \
+e_widget_image.c \
 e_config_dialog.c \
 e_int_config_focus.c \
 e_icon_layout.c \

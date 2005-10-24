@@ -75,6 +75,7 @@
 #include "e_widget_label.h"
 #include "e_widget_frametable.h"
 #include "e_widget_table.h"
+#include "e_widget_entry.h"
 #include "e_config_dialog.h"
 #include "e_int_config_focus.h"
 #include "e_icon_layout.h"
