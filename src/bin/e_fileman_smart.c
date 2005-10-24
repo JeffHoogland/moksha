@@ -1391,6 +1391,7 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
    while ((dir_entry = readdir(dir)) != NULL)
     {
        E_Fm_Icon *icon;
+       
        if ((!strcmp(dir_entry->d_name, ".") || (!strcmp (dir_entry->d_name, "..")))) continue;
        if ((dir_entry->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
 
@@ -1398,11 +1399,18 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
        if (!icon) continue;
        snprintf(path, sizeof(path), "%s/%s", sd->dir, dir_entry->d_name);
        icon->file = e_fm_file_new(path);
-       icon->icon_object = e_fm_icon_add(sd->evas);
-       icon->sd = sd;
-       e_fm_icon_file_set(icon->icon_object, icon->file);
-       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-       files = evas_list_append(files, icon);
+       if (!icon->file)
+	 {
+	    E_FREE(icon);
+	 }
+       else
+	 {
+	    icon->icon_object = e_fm_icon_add(sd->evas);
+	    icon->sd = sd;
+	    e_fm_icon_file_set(icon->icon_object, icon->file);
+	    evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	    files = evas_list_append(files, icon);
+	 }
     }
    closedir(dir);
 

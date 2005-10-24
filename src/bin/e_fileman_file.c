@@ -51,7 +51,13 @@ e_fm_file_new(const char *filename)
    struct stat st;
 
    if (stat(filename, &st) == -1) return NULL;
-
+   /* FIXME: stat above will fail if the file is a BROKEN SYMLINK - maybe we
+    * should not fail, but do an lstat here and see if it is a symlink (or
+    * just a race condition where the file was deleted as we scan), and
+    * if so mark it as a broken synlink. we should do an lstat ANYWAY
+    * so we know if a file is a symlink or not regardless what it points
+    * to.
+    */
    file = E_OBJECT_ALLOC(E_Fm_File, E_FM_FILE_TYPE, _e_fm_file_free);
    if (!file) return NULL;
    file->path = strdup(filename);
