@@ -83,3 +83,4 @@
 #include "e_int_border_locks.h"
 #include "e_thumb.h"
 #include "e_int_border_remember.h"
+#include "e_eap_editor.h"

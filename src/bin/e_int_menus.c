@@ -611,6 +611,17 @@ _e_int_menus_desktops_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   /* This is temporarily put here so we can test the eap editor */
+   E_App_Edit *eap_edit;
+   E_App *a;
+   
+   a = e_app_empty_new("/tmp/foo.eap");
+   eap_edit = e_eap_edit_show(m->zone->container, a);
+}
+
+static void
 _e_int_menus_config_pre_cb(void *data, E_Menu *m)
 {
    E_Menu_Item *mi;
@@ -625,6 +636,10 @@ _e_int_menus_config_pre_cb(void *data, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Focus Settings"));
    e_menu_item_callback_set(mi, _e_int_menus_config_generic_cb, "focus");
+   
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Eap Editor"));
+   e_menu_item_callback_set(mi, _e_int_menus_eapedit_item_cb, NULL);   
 
    l = evas_hash_find(_e_int_menus_augmentation, "config");
    if (l)
