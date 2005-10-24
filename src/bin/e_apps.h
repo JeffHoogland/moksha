@@ -61,6 +61,8 @@ struct _E_App
    unsigned char       scanned : 1; /* have we scanned a subdir app yet */
 
    unsigned char       deleted : 1; /* this app's file is deleted from disk */
+   
+   char               *image; /* used when we're saving a image into the eap */
 };
 
 struct _E_App_Instance
@@ -76,6 +78,7 @@ EAPI int         e_app_init                              (void);
 EAPI int         e_app_shutdown                          (void);
 
 EAPI E_App      *e_app_new                               (const char *path, int scan_subdirs);
+EAPI E_App      *e_app_empty_new                         (const char *path);
 EAPI int         e_app_is_parent                         (E_App *parent, E_App *app);
 EAPI int         e_app_equals                            (E_App *app1, E_App *app2);
 EAPI void        e_app_subdir_scan                       (E_App *a, int scan_subdirs);
@@ -99,6 +102,7 @@ EAPI E_App      *e_app_generic_find                      (char *generic);
 EAPI E_App      *e_app_exe_find                          (char *exe);
 
 EAPI void        e_app_fields_fill                       (E_App *a, const char *path);
+EAPI void        e_app_fields_save                       (E_App *a);
 EAPI E_App      *e_app_raw_new                           (void);
 EAPI Ecore_List *e_app_dir_file_list_get                 (E_App *a);
 EAPI void        e_app_fields_empty                      (E_App *a);

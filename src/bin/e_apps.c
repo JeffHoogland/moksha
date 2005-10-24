@@ -189,6 +189,9 @@ e_app_new(const char *path, int scan_subdirs)
 	if (ecore_file_exists(path))
 	  {
 	     a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
+	     
+	     /* no image for now */
+	     a->image = NULL;
 	     /* record the path */
 	     a->path = strdup(path);
 	     
@@ -231,6 +234,17 @@ error:
    e_app_fields_empty(a);
    free(a);
    return NULL;
+}
+
+E_App *
+e_app_empty_new(const char *path)
+{
+   E_App *a;
+   
+   a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
+   a->image = NULL;
+   a->path = strdup(path);   
+   return a;      
 }
 
 int
@@ -929,6 +943,116 @@ e_app_fields_fill(E_App *a, const char *path)
 	a->wait_exit = *v;
 	free(v);
      }
+   eet_close(ef);
+}
+
+/* If we are saving a new non-existant .eap, we need to add more info
+ * so edje can decompile it. Image saving doesnt work yet with newly
+ * created eaps.
+ * 
+ * We also need to fix startup-notify and wait-exit as they currently
+ * dont save too.
+ */
+void
+e_app_fields_save(E_App *a)
+{
+   Eet_File *ef;
+   char buf[PATH_MAX];
+   char *str, *v;
+   char *lang;
+   int size;
+   unsigned char tmp[1];   
+   
+   /* get our current language */
+   lang = getenv("LANG");
+   /* if its "C" its the default - so drop it */
+   if ((lang) && (!strcmp(lang, "C")))
+     lang = NULL;
+   if(ecore_file_exists(a->path))
+     ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
+   else
+     ef = eet_open(a->path, EET_FILE_MODE_WRITE);     
+   if (!ef) return;
+   
+   
+   printf("opened %s\n", a->path);
+   
+   if(a->name)
+     {
+	/*if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);  
+	 else */snprintf(buf, sizeof(buf), "app/info/name");
+	eet_write(ef, buf, a->name, strlen(a->name), 0);
+     }
+   
+   if(a->generic)
+     {
+	/*if (lang) snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
+	 else */snprintf(buf, sizeof(buf), "app/info/generic");
+	eet_write(ef, buf, a->generic, strlen(a->generic), 0);
+     }
+   
+   if(a->comment)
+     {
+	/*if (lang) snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
+	 else*/ snprintf(buf, sizeof(buf), "app/info/comment");
+	eet_write(ef, buf, a->comment, strlen(a->comment), 0);
+     }
+   
+   if(a->exe)
+     eet_write(ef, "app/info/exe", a->exe, strlen(a->exe), 0);
+   if(a->win_name)
+     eet_write(ef, "app/window/name", a->win_name, strlen(a->win_name), 0);
+   if(a->win_class)
+     eet_write(ef, "app/window/class", a->win_class, strlen(a->win_class), 0);
+   if(a->win_title)
+     eet_write(ef, "app/window/title", a->win_title, strlen(a->win_title), 0);
+   if(a->win_role)
+     eet_write(ef, "app/window/role", a->win_role, strlen(a->win_role), 0);
+   if(a->icon_class)
+     eet_write(ef, "app/icon/class", a->icon_class, strlen(a->icon_class), 0);
+   
+   if(a->startup_notify)
+     tmp[0] = 1;
+   else
+     tmp[0] = 0;
+   eet_write(ef, "app/info/startup_notify", tmp, 1, 0);
+   
+   if(a->wait_exit)
+     tmp[0] = 1;
+     else
+     tmp[0] = 0;   
+   eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
+
+   if(a->image)
+     {
+	int alpha;
+	Ecore_Evas *buf;
+	Evas *evasbuf;
+	Evas_Coord iw, ih;
+	Evas_Object *im;
+	int *data;
+	
+	buf = ecore_evas_buffer_new(1, 1);
+	evasbuf = ecore_evas_get(buf);
+	im = evas_object_image_add(evasbuf);
+	evas_object_image_file_set(im, a->image, NULL);
+	iw = 0; ih = 0;
+	evas_object_image_size_get(im, &iw, &ih);
+	alpha = evas_object_image_alpha_get(im);
+	if ((iw > 0) && (ih > 0))
+	  {
+	     /* we need to change the sizes */
+	     ecore_evas_resize(buf, 48, 48);
+	     evas_object_image_fill_set(im, 0, 0, 48, 48);
+	     evas_object_resize(im, 48, 48);
+	     evas_object_move(im, 0, 0);
+	     evas_object_show(im);	     
+	     data =  ecore_evas_buffer_pixels_get(buf);
+	     eet_data_image_write(ef, "images/0", data, 48, 48, alpha, 1, 0, 0);
+	  }
+     }
+   
+   
    eet_close(ef);
 }
 

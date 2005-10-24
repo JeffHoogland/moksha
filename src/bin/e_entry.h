@@ -34,6 +34,6 @@ EAPI void e_entry_cursor_move_at_end(Evas_Object *object);
 EAPI void e_entry_cursor_move_left(Evas_Object *object);
 EAPI void e_entry_cursor_move_right(Evas_Object *object);
 EAPI void e_entry_cursor_show(Evas_Object *object);
-EAPI void e_entry_cursor_hide(Evas_Object *object);
+EAPI void e_entry_cursor_hide(Evas_Object *object);   
 
 #endif
