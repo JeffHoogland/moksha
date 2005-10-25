@@ -22,13 +22,16 @@ struct _E_Editable_Text_Smart_Data
    Ecore_Timer *cursor_timer;
 
    Evas_Bool cursor_at_the_end;
-   Evas_Bool show_cursor;
+   Evas_Bool show_cursor;   
 };
 
 struct _E_Entry_Smart_Data
 {
    Evas_Object *entry_object;
    Evas_Object *edje_object;
+   
+   void (*change_func) (void *data, Evas_Object *entry, char *key);
+   void  *change_data;   
 };
 
 static Evas_Bool _e_editable_text_is_empty(Evas_Object *object);
@@ -328,26 +331,36 @@ e_editable_text_cursor_hide(Evas_Object *object)
 Evas_Object *
 e_entry_add(Evas *evas)
 {
-   if (!e_entry_smart)
-     {
-	e_entry_smart = evas_smart_new("e_entry",
-				       _e_entry_smart_add, /* add */
-				       _e_entry_smart_del, /* del */
-				       NULL, /* layer_set */
-				       _e_entry_smart_raise, /* raise */
-				       _e_entry_smart_lower, /* lower */
-				       _e_entry_smart_stack_above, /* stack_above */
-				       _e_entry_smart_stack_below, /* stack_below */
-				       _e_entry_smart_move, /* move */
-				       _e_entry_smart_resize, /* resize */
-				       _e_entry_smart_show, /* show */
-				       _e_entry_smart_hide, /* hide */
-				       NULL, /* color_set */
-				       NULL, /* clip_set */
-				       NULL, /* clip_unset */
-				       NULL); /* data*/
-     }
+   if(!e_entry_smart)
+     e_entry_smart = evas_smart_new("e_entry",
+				    _e_entry_smart_add, /* add */
+				    _e_entry_smart_del, /* del */
+				    NULL, /* layer_set */
+				    _e_entry_smart_raise, /* raise */
+				    _e_entry_smart_lower, /* lower */
+				    _e_entry_smart_stack_above, /* stack_above */
+				    _e_entry_smart_stack_below, /* stack_below */
+				    _e_entry_smart_move, /* move */
+				    _e_entry_smart_resize, /* resize */
+				    _e_entry_smart_show, /* show */
+				    _e_entry_smart_hide, /* hide */
+				    NULL, /* color_set */
+				    NULL, /* clip_set */
+				    NULL, /* clip_unset */
+				    NULL); /* data*/   
    return evas_object_smart_add(evas, e_entry_smart);
+}
+
+void
+e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data)
+{
+   E_Entry_Smart_Data *e_entry_sd;
+   
+   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+     return;
+   
+   e_entry_sd->change_func = func;
+   e_entry_sd->change_data = data;
 }
 
 void
@@ -522,7 +535,7 @@ _e_editable_text_cursor_position_update(Evas_Object *object)
 
    if (_e_editable_text_is_empty(object))
      {
-	evas_object_move(editable_text_sd->cursor_object, ox, oy);
+	evas_object_move(editable_text_sd->cursor_object, tx, ty);
 	evas_object_resize(editable_text_sd->cursor_object, 1, oh);
 	return;
      }
@@ -545,7 +558,7 @@ _e_editable_text_cursor_position_update(Evas_Object *object)
 	cx = ox + 20;
      }
    else if (cx < ox)
-     {
+     {	
 	evas_object_move(editable_text_sd->text_object, tx + ox - cx, ty);
 	cx = ox;
      }
@@ -561,7 +574,7 @@ _e_editable_text_cursor_position_update(Evas_Object *object)
      }
 
    evas_object_move(editable_text_sd->cursor_object, cx, ty + cy);
-   evas_object_resize(editable_text_sd->cursor_object, 1, ch);
+   evas_object_resize(editable_text_sd->cursor_object, 1, ch);   
 }
 
 /* Updates the visibility state of the cursor */
@@ -822,7 +835,15 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
    else if (strcmp(key_event->keyname, "End") == 0)
      e_editable_text_cursor_move_at_end(obj);
    else
-     e_editable_text_insert(obj, key_event->string);
+     {	
+	e_editable_text_insert(obj, key_event->string);
+	
+	if(key_event->string && strcmp(key_event->keyname, "Escape"))
+	  {
+	     if(*(key_event->string) >= 32 && *(key_event->string) <= 126)
+	       e_entry_sd->change_func(e_entry_sd->change_data, obj, key_event->string);
+	  }
+     }
 }
 
 /* Called when the entry is focused */
@@ -940,8 +961,9 @@ _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 
    if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
      return;
-
+      
    evas_object_move(e_entry_sd->edje_object, x, y);
+   e_entry_cursor_move_at_start(object);
 }
 
 static void

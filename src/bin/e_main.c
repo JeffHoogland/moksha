@@ -371,7 +371,6 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_fm_shutdown);
    _e_main_shutdown_push(e_fm_icon_shutdown);
    
-   
    /*** Finished loading subsystems, Loading WM Specifics ***/
 	 
    /* setup directories we will be using for configurations storage etc. */

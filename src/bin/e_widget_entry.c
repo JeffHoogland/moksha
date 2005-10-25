@@ -8,7 +8,8 @@ typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    Evas_Object *o_entry;
-   int *valptr;
+   char **valptr;
+   Ecore_Event_Handler *change_handler;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -18,7 +19,8 @@ static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
-
+static int  _e_wid_text_change(void *data, Evas_Object *entry, char *key);
+    
 /* local subsystem functions */
 
 static void
@@ -108,9 +110,36 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
    e_widget_focus_steal(data);
 }
 
+static int
+_e_wid_text_change(void *data, Evas_Object *entry, char *key)
+{
+   E_Widget_Data *wd;
+   int size;
+   
+   wd = data;      
+   
+   if(*(wd->valptr) == NULL) 
+     {
+	size = (strlen(key) + 1) * sizeof(char);
+	*(wd->valptr) = realloc(*(wd->valptr), size);   
+	snprintf(*(wd->valptr), size, "%s", key);
+     }
+   else
+     {
+	char *tmp;
+	
+	size = (strlen(*(wd->valptr)) + strlen(key) + 1) * sizeof(char);
+	tmp = E_NEW(char *, strlen(*(wd->valptr)) + 1);
+	snprintf(tmp, strlen(*(wd->valptr)) + 1, "%s", *(wd->valptr));	
+	*(wd->valptr) = realloc(*(wd->valptr), size);   
+	snprintf(*(wd->valptr), size, "%s%s\0", tmp, key);
+	E_FREE(tmp);
+     }
+}
+
 /* externally accessible functions */
 Evas_Object *
-e_widget_entry_add(Evas *evas, char *val)
+e_widget_entry_add(Evas *evas, char **val)
 {   
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -133,20 +162,21 @@ e_widget_entry_add(Evas *evas, char *val)
    evas_object_show(o);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_min_size_set(obj, mw, mh);
-   if (wd->valptr)
-     {
-	
-     }
+   
+   if (*(wd->valptr))     
+     e_entry_text_set(wd->o_entry, *(wd->valptr));
    
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
+
+   e_entry_change_handler_set(wd->o_entry, _e_wid_text_change, wd);
    
    return obj;         
 }
 
 
-
+#if 0
 void             
 e_widget_entry_text_set(Evas_Object *entry, const char *text)
 {
@@ -212,3 +242,4 @@ e_widget_entry_cursor_hide(Evas_Object *entry)
 {
    e_entry_cursor_hide(entry);
 }
+#endif

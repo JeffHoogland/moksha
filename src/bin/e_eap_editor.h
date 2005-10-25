@@ -20,12 +20,16 @@ struct _E_App_Edit
    E_App       *eap;
    
    struct {
+      char *image;
       char *name;
       char *generic;
-      char *comments;
+      char *comment;
       char *exe;
       char *wname;
       char *wclass;
+      char *wtitle;
+      char *wrole;
+      char *iclass;
       char *path;
       int   startup_notify;
       int   wait_exit;

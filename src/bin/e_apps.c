@@ -106,6 +106,11 @@ static Evas_List   *_e_apps_start_pending = NULL;
 "   }\n" \
 "}\n"
 
+#define EAP_EDC_TMPL_EMPTY \
+"images {\n " \
+"}\n" \
+"collections {\n" \
+"}\n"
 
 
 /* externally accessible functions */
@@ -1002,6 +1007,9 @@ e_app_fields_save(E_App *a)
    unsigned char tmp[1];
    int img;
 
+   if(!a->path)
+     return;
+   
    if(!ecore_file_exists(a->path))
      {
 	_e_app_new_save(a);
@@ -1230,31 +1238,38 @@ _e_app_new_save(E_App *a)
      }
    
    i = 0;
-   start = strchr(a->image, '/');
-   end = strrchr(a->image ,'/');
    
-   if (start == end)
+   if(a->image)
      {
-	imgdir = strdup("/");;
-     }
-   else if ((!start) || (!end))
-     {
-	imgdir = strdup("");
-     }
-   else
-     {
-	imgdir = malloc((end - start + 1));
-	if (imgdir)
+	start = strchr(a->image, '/');
+	end = strrchr(a->image ,'/');
+	
+	if (start == end)
 	  {
-	     memcpy(imgdir, start, end - start);
-	     imgdir[end - start] = 0;
+	     imgdir = strdup("/");;
 	  }
-     }
+	else if ((!start) || (!end))
+	  {
+	     imgdir = strdup("");
+	  }
+	else
+	  {
+	     imgdir = malloc((end - start + 1));
+	     if (imgdir)
+	       {
+		  memcpy(imgdir, start, end - start);
+		  imgdir[end - start] = 0;
+	       }
+	  }
+     }     
             
    if (imgdir) snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
    else ipart[0] = '\0';
    
-   fprintf(out, EAP_EDC_TMPL, a->image, "48", "48", a->image);
+   if(a->image)
+     fprintf(out, EAP_EDC_TMPL, a->image, "48", "48", a->image);
+   else
+     fprintf(out, EAP_EDC_TMPL_EMPTY);
    fclose(out);
    
    snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, a->path);

@@ -810,9 +810,6 @@ _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    evas_object_focus_set(icon->sd->entry_object, 1);
    evas_object_show(icon->sd->entry_object);
    e_entry_cursor_show(icon->sd->entry_object);
-   e_entry_text_set(icon->sd->entry_object, icon->file->name);
-   e_entry_cursor_move_at_end(icon->sd->entry_object);
-   e_entry_cursor_move_at_start(icon->sd->entry_object);
 
    e_fm_icon_edit_entry_set(icon->icon_object, icon->sd->entry_object);
    e_fm_icon_title_set(icon->icon_object, "");
@@ -820,6 +817,9 @@ _e_fm_file_menu_rename(void *data, E_Menu *m, E_Menu_Item *mi)
    e_fm_mouse_up_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_BUTTON_UP,
 						   _e_fm_win_mouse_up_cb, icon);
    e_grabinput_get(icon->sd->win->evas_win, 1, icon->sd->win->evas_win);
+   e_entry_cursor_move_at_start(icon->sd->entry_object);   
+   e_entry_text_set(icon->sd->entry_object, icon->file->name);
+
    e_fm_grab_time = ecore_time_get();
 }
 
