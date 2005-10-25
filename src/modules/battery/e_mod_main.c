@@ -59,6 +59,9 @@ static void          _battery_face_level_set(Battery_Face *ef, double level);
 static void          _battery_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static int           _battery_int_get(char *buf);
+static char         *_battery_string_get(char *buf);
+
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
@@ -868,6 +871,7 @@ _battery_linux_acpi_check(Battery *ef)
 	while ((name = ecore_list_next(bats)))
 	  {
 	     FILE *f;
+	     char *tmp;
 
 	     snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
 	     f = fopen(buf, "r");
@@ -880,14 +884,22 @@ _battery_linux_acpi_check(Battery *ef)
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* design capacity */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
-		  if (!strcmp(buf, "unknown")) design_cap_unknown = 1;
-		  else sscanf(buf2, "%*[^:]: %i %*s", &design_cap);
+		  tmp = _battery_string_get(buf2);
+		  if (tmp)
+		    {
+		       if (!strcmp(tmp, "unknown")) design_cap_unknown = 1;
+		       else design_cap = atoi(tmp);
+		       free(tmp);
+		    }
 		  /* last full capacity */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
-		  if (!strcmp(buf, "unknown")) last_full_unknown = 1;
-		  else sscanf(buf2, "%*[^:]: %i %*s", &last_full);
+		  tmp = _battery_string_get(buf2);
+		  if (tmp)
+		    {
+		       if (!strcmp(tmp, "unknown")) last_full_unknown = 1;
+		       else last_full = atoi(tmp);
+		       free(tmp);
+		    }
 		  fclose(f);
 		  bat_max += design_cap;
 		  bat_filled += last_full;
@@ -896,44 +908,64 @@ _battery_linux_acpi_check(Battery *ef)
 	     f = fopen(buf, "r");
 	     if (f)
 	       {
-		  char present[256];
-		  char capacity_state[256];
-		  char charging_state[256];
+		  char *present;
+		  char *capacity_state;
+		  char *charging_state;
+		  char *tmp;
 		  int rate = 1;
 		  int level = 0;
 
 		  /* present */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s", present);
+		  present = _battery_string_get(buf2);
 		  /* capacity state */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s", capacity_state);
+		  capacity_state = _battery_string_get(buf2);
 		  /* charging state */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s", charging_state);
+		  charging_state = _battery_string_get(buf2);
 		  /* present rate */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
-		  if (!strcmp(buf, "unknown")) rate_unknown = 1;
-		  else sscanf(buf2, "%*[^:]: %i %*s", &rate);
+		  tmp = _battery_string_get(buf2);
+		  if (tmp)
+		    {
+		       if (!strcmp(tmp, "unknown")) rate_unknown = 1;
+		       else rate = atoi(tmp);
+		       free(tmp);
+		    }
 		  /* remaining capacity */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %250s %*s", buf);
-		  if (!strcmp(buf, "unknown")) level_unknown = 1;
-		  else sscanf(buf2, "%*[^:]: %i %*s", &level);
+		  tmp = _battery_string_get(buf2);
+		  if (tmp)
+		    {
+		       if (!strcmp(tmp, "unknown")) level_unknown = 1;
+		       else level = atoi(tmp);
+		       free(tmp);
+		    }
 		  fclose(f);
-		  if (!strcmp(present, "yes")) battery++;
-		  if (!strcmp(charging_state, "discharging"))
+		  if (present)
 		    {
-		       discharging++;
-		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		       if (!strcmp(present, "yes")) battery++;
+		       free(present);
 		    }
-		  if (!strcmp(charging_state, "charging"))
+		  if (charging_state)
 		    {
-		       charging++;
-		       if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+		       if (!strcmp(charging_state, "discharging"))
+			 {
+			    discharging++;
+			    if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+			 }
+		       else if (!strcmp(charging_state, "charging"))
+			 {
+			    charging++;
+			    if ((rate == 0) && (rate_unknown == 0)) rate_unknown = 1;
+			 }
+		       else if (!strcmp(charging_state, "charged"))
+			 rate_unknown = 0;
+		       free(charging_state);
 		    }
-		  if (!strcmp(charging_state, "charged")) rate_unknown = 0;
+		  E_FREE(capacity_state);
+
 		  bat_drain += rate;
 		  bat_level += level;
 	       }
@@ -1153,7 +1185,7 @@ _battery_linux_powerbook_check(Battery *ef)
 	fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 	/* Read ac */
 	fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-	sscanf(buf2, "%*[^:]: %d", &ac);
+	ac = _battery_int_get(buf2);
 	fclose(f);
      }
 
@@ -1177,20 +1209,20 @@ _battery_linux_powerbook_check(Battery *ef)
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* Read charge */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %d", &tmp);
+		  tmp = _battery_int_get(buf2);
 		  charge += tmp;
 		  /* Read max charge */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %d", &tmp);
+		  tmp = _battery_int_get(buf2);
 		  max_charge += tmp;
 		  /* Read current */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %d", &current);
+		  current = _battery_int_get(buf2);
 		  /* Skip voltage */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
 		  /* Get time remaining */
 		  fgets(buf2, sizeof(buf2), f); buf2[sizeof(buf2) - 1] = 0;
-		  sscanf(buf2, "%*[^:]: %d", &time);
+		  time = _battery_int_get(buf2);
 		  fclose(f);
 
 		  battery++;
@@ -1722,4 +1754,34 @@ _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 
    face = data;
    e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
+}
+
+static int
+_battery_int_get(char *buf)
+{
+   char *p, *q;
+
+   p = strchr(buf, ':');
+   if (!p) return 0;
+   p++;
+   while (*p == ' ') p++;
+   q = p;
+   while ((*q != ' ') && (*q != '\n')) q++;
+   if (q) *q = 0;
+   return atoi(p);
+}
+
+static char *
+_battery_string_get(char *buf)
+{
+   char *p, *q;
+
+   p = strchr(buf, ':');
+   if (!p) return NULL;
+   p++;
+   while (*p == ' ') p++;
+   q = p;
+   while ((*q != ' ') && (*q != '\n')) q++;
+   if (q) *q = 0;
+   return strdup(p);
 }

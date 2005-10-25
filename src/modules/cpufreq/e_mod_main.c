@@ -662,7 +662,7 @@ _cpufreq_status_check_available(Status *e)
    char buf[4096];
    Evas_List *l;
 #ifdef __FreeBSD__
-   int freq, num, i;
+   int freq, i;
    size_t len = 0;
    char *freqs, *pos, *q;
 
@@ -671,33 +671,26 @@ _cpufreq_status_check_available(Status *e)
    if (sysctlbyname("dev.cpu.0.freq_levels", buf, &len, NULL, 0) == 0)
      {    
 	/* sysctl returns 0 on success */
-	
 	if (e->frequencies)
 	  {
 	     evas_list_free(e->frequencies);
 	     e->frequencies = NULL;
 	  }
-	
-	/* go through freqs and cound them */
-	num = 1;
-	for (pos = buf; *pos != 0; pos++)
-	  {
-	     if (*pos == ' ')
-	       {
-		  num++;
-	       }
-	  }
-	
+
 	/* parse freqs and store the frequencies in e->frequencies */ 
-	for (i = 0, pos=buf; i < num; i++)
+	pos = buf;
+	while (pos)
 	  {
-	     q = strchr(pos, ' ');
-	     if (q != NULL) *q = '\0';
-	     
-	     sscanf(pos, "%d/%*d", &freq);
-	     freq*=1000;
+	     q = strchr(pos, '/');
+	     if (!q) break;
+
+	     *q = '\0';
+	     freq = atoi(pos);
+	     freq *= 1000;
 	     e->frequencies = evas_list_append(e->frequencies, (void *)freq);
+
 	     pos = q + 1;
+	     pos = strchr(pos, ' ');
 	  }
      }
    
