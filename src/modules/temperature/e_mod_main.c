@@ -1059,21 +1059,29 @@ _temperature_cb_check(void *data)
      {
 	char *name;
 
+	ret = 1;
 	while ((name = ecore_list_next(therms)))
 	  {
-	     char units[32];
+	     char *p, *q;
 	     FILE *f;
-		  
 
 	     snprintf(buf, sizeof(buf), "/proc/acpi/thermal_zone/%s/temperature", name);
 	     f = fopen(buf, "rb");
 	     if (f)
 	       {
 		  fgets(buf, sizeof(buf), f); buf[sizeof(buf) - 1] = 0;
-		  units[0] = 0;
-		  if (sscanf(buf, "%*[^:]: %i %20s", &temp, units) == 2)
-		    ret = 1;
 		  fclose(f);
+		  p = strchr(buf, ':');
+		  if (!p)
+		    {
+		       ret = 0;
+		       continue;
+		    }
+		  p++;
+		  while (*p == ' ') p++;
+		  q = strchr(p, ' ');
+		  if (q) *q = 0;
+		  temp = atoi(p);
 	       }
 	  }
 	ecore_list_destroy(therms);
