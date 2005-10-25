@@ -20,8 +20,8 @@ struct _E_Fm_Assoc_App
 static void _e_fm_file_free(E_Fm_File *file);
 
 /* TODO Make init and shutdown func that populates the assoc */
-static E_Config_DD *assoc_app_edd;
-static Evas_List   *assoc_apps;
+static E_Config_DD *assoc_app_edd = NULL;
+static Evas_List   *assoc_apps = NULL;
 
 #if 0
 	{
@@ -380,6 +380,8 @@ e_fm_file_assoc_exec(E_Fm_File *file)
    E_Fm_Assoc_App *assoc;
    Ecore_Exe *exe;
 
+   if (!assoc_apps) return 0;
+   
    for (l = assoc_apps; l; l = l->next)
      {
 	char *ext;
