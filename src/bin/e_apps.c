@@ -2,7 +2,7 @@
  * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
  */
 #include "e.h"
-
+#include <errno.h>
 /* TODO List:
  * 
  * - We assume only .eap files in 'all', no subdirs
@@ -43,6 +43,7 @@ struct _E_App_Scan_Cache
 
 static void      _e_app_free               (E_App *a);
 static E_App     *_e_app_subapp_file_find  (E_App *a, const char *file);
+static int        _e_app_new_save          (E_App *a);    
 static void      _e_app_change             (E_App *a, E_App_Change ch);
 static int       _e_apps_cb_exit           (void *data, int type, void *event);
 static void      _e_app_cb_monitor         (void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
@@ -70,6 +71,42 @@ static E_App       *_e_apps_all = NULL;
 static char        *_e_apps_path_all = NULL;
 static char        *_e_apps_path_trash = NULL;
 static Evas_List   *_e_apps_start_pending = NULL;
+
+#define EAP_EDC_TMPL \
+"images {\n"  \
+"   image: \"%s\" COMP;\n" \
+"}\n" \
+"collections {\n" \
+"   group {\n" \ 
+"      name: \"icon\";\n" \
+"      max: %s %s;\n" \
+"      parts {\n" \
+"	 part {\n" \
+"	    name: \"image\";\n" \
+"	    type: IMAGE;\n" \
+"	    mouse_events: 0;\n" \
+"	    description {\n" \
+"	       state: \"default\" 0.00;\n" \
+"	       visible: 1;\n" \
+"	       aspect: 1.00 1.00;\n" \
+"	       rel1 {\n" \
+"		  relative: 0.00 0.00;\n" \
+"		  offset: 0 0;\n" \
+"	       }\n" \
+"	       rel2 {\n" \
+"		  relative: 1.00 1.00;\n" \
+"		  offset: -1 -1;\n" \
+"	       }\n" \
+"	       image {\n" \
+"		  normal: \"%s\";\n" \
+"	       }\n" \
+"	    }\n" \
+"	 }\n" \
+"      }\n" \
+"   }\n" \
+"}\n"
+
+
 
 /* externally accessible functions */
 int
@@ -243,7 +280,8 @@ e_app_empty_new(const char *path)
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
-   a->path = strdup(path);   
+   if(path)
+     a->path = strdup(path);   
    return a;      
 }
 
@@ -961,22 +999,26 @@ e_app_fields_save(E_App *a)
    char *str, *v;
    char *lang;
    int size;
-   unsigned char tmp[1];   
-   
+   unsigned char tmp[1];
+   int img;
+
+   if(!ecore_file_exists(a->path))
+     {
+	_e_app_new_save(a);
+	img = 0;
+     }
+   else
+     img = 1;
+      
    /* get our current language */
    lang = getenv("LANG");
    /* if its "C" its the default - so drop it */
    if ((lang) && (!strcmp(lang, "C")))
      lang = NULL;
-   if(ecore_file_exists(a->path))
+   
      ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
-   else
-     ef = eet_open(a->path, EET_FILE_MODE_WRITE);     
    if (!ef) return;
-   
-   
-   printf("opened %s\n", a->path);
-   
+      
    if(a->name)
      {
 	/*if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);  
@@ -1023,7 +1065,7 @@ e_app_fields_save(E_App *a)
      tmp[0] = 0;   
    eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
 
-   if(a->image)
+   if(a->image && img)
      {
 	int alpha;
 	Ecore_Evas *buf;
@@ -1156,6 +1198,78 @@ e_app_valid_exe_get(E_App *a)
 
 
 /* local subsystem functions */
+
+/* write out a new eap, code borrowed from Engrave */
+static int
+_e_app_new_save(E_App *a)
+{
+   static char tmpn[1024];
+   int fd = 0, ret = 0;
+   char cmd[2048];  
+   char ipart[512];
+   FILE *out = NULL;
+   char *start, *end, *imgdir;
+   int i;   
+      
+   if(!a->path)
+     return 0;      
+   
+   strcpy(tmpn, "/tmp/eapp_edit_cc.edc-tmp-XXXXXX");
+   fd = mkstemp(tmpn);
+   if (fd < 0) {
+      fprintf(stderr, "Unable to create tmp file: %s\n", strerror(errno));
+      return 0;
+   }
+   close(fd);
+   
+   out = fopen(tmpn, "w");
+   if (!out)
+     {
+	printf("can't open %s for writing\n", tmpn);
+	return 0;
+     }
+   
+   i = 0;
+   start = strchr(a->image, '/');
+   end = strrchr(a->image ,'/');
+   
+   if (start == end)
+     {
+	imgdir = strdup("/");;
+     }
+   else if ((!start) || (!end))
+     {
+	imgdir = strdup("");
+     }
+   else
+     {
+	imgdir = malloc((end - start + 1));
+	if (imgdir)
+	  {
+	     memcpy(imgdir, start, end - start);
+	     imgdir[end - start] = 0;
+	  }
+     }
+            
+   if (imgdir) snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
+   else ipart[0] = '\0';
+   
+   fprintf(out, EAP_EDC_TMPL, a->image, "48", "48", a->image);
+   fclose(out);
+   
+   snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, a->path);
+   ret = system(cmd);
+   
+   if (ret < 0) {
+      fprintf(stderr, "Unable to execute edje_cc on tmp file: %s\n",
+	      strerror(errno));
+      return 0;
+   }
+   
+   unlink(tmpn);
+   return 1;   
+}
+
 static void
 _e_app_free(E_App *a)
 {

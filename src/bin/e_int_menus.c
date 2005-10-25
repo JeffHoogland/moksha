@@ -617,7 +617,7 @@ _e_int_menus_eapedit_item_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    E_App_Edit *eap_edit;
    E_App *a;
    
-   a = e_app_empty_new("/tmp/foo.eap");
+   a = e_app_empty_new(NULL);
    eap_edit = e_eap_edit_show(m->zone->container, a);
 }
 

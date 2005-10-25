@@ -4,7 +4,7 @@
 
 static void _e_eap_edit_save_cb(void *data, E_Dialog *dia);
 static void _e_eap_edit_cancel_cb(void *data, E_Dialog *dia);
-static void _e_eap_edit_browse_cb(void *data, E_Dialog *dia);
+static void _e_eap_edit_browse_cb(void *data1, void *data2);
 static void _e_eap_edit_free(E_App_Edit *app);
 
 
@@ -33,73 +33,79 @@ e_eap_edit_show(E_Container *con, E_App *a)
    
    ol = e_widget_list_add(app->evas, 0, 0);
    o = e_widget_table_add(app->evas, _("Eap Info"), 0);
+
+   e_widget_table_object_append(o, e_widget_button_add(app->evas, "Set Icon",
+						       NULL, _e_eap_edit_browse_cb,
+						       app, NULL),
+				1, 0, 1, 1,
+				0, 0, 0, 0);
    
    e_widget_table_object_append(o, e_widget_label_add(app->evas, "App name"),
-				     0, 0, 1, 1,
+				     0, 1, 1, 1,
 				     1, 1, 1, 1);
      {
 	Evas_Object *entry;
 	entry = e_widget_entry_add(app->evas, NULL);
 	e_widget_min_size_set(entry, 100, 1);
 	e_widget_table_object_append(o, entry,
-				     1, 0, 1, 1,
+				     1, 1, 1, 1,
 				     1, 1, 1, 1);
      }
    
    e_widget_table_object_append(o, e_widget_label_add(app->evas, "Generic Info"),
-				     0, 1, 1, 1,
-				     1, 1, 1, 1);
-   e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
-				     1, 1, 1, 1,
-				     1, 1, 1, 1);
-   
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Comments"),
 				     0, 2, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
 				     1, 2, 1, 1,
 				     1, 1, 1, 1);
    
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Executable"),
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Comments"),
 				     0, 3, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
 				     1, 3, 1, 1,
 				     1, 1, 1, 1);
    
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Window Name"),
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Executable"),
 				     0, 4, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
 				     1, 4, 1, 1,
-				     1, 1, 1, 1);   
+				     1, 1, 1, 1);
    
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Window Class"),
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Window Name"),
 				     0, 5, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
 				     1, 5, 1, 1,
-				     1, 1, 1, 1);
+				     1, 1, 1, 1);   
    
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Path"),
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Window Class"),
 				     0, 6, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
 				     1, 6, 1, 1,
+				     1, 1, 1, 1);
+   
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Path"),
+				     0, 7, 1, 1,
+				     1, 1, 1, 1);
+   e_widget_table_object_append(o, e_widget_entry_add(app->evas, NULL),
+				     1, 7, 1, 1,
 				     1, 1, 1, 1);   
    
    e_widget_table_object_append(o, e_widget_label_add(app->evas, "Startup notify"),
-				     0, 7, 1, 1,
-				     1, 1, 1, 1);
-   e_widget_table_object_append(o, e_widget_check_add(app->evas, "", NULL),
-				     1, 7, 1, 1,
-				     1, 1, 1, 1);
-   
-   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Wait exit"),
 				     0, 8, 1, 1,
 				     1, 1, 1, 1);
    e_widget_table_object_append(o, e_widget_check_add(app->evas, "", NULL),
 				     1, 8, 1, 1,
+				     1, 1, 1, 1);
+   
+   e_widget_table_object_append(o, e_widget_label_add(app->evas, "Wait exit"),
+				     0, 9, 1, 1,
+				     1, 1, 1, 1);
+   e_widget_table_object_append(o, e_widget_check_add(app->evas, "", NULL),
+				     1, 9, 1, 1,
 				     1, 1, 1, 1);
    
    e_widget_list_object_append(ol, o, 1, 1, 0.5);
@@ -120,7 +126,13 @@ e_eap_edit_show(E_Container *con, E_App *a)
 
 static void 
 _e_eap_edit_save_cb(void *data, E_Dialog *dia)
-{}
+{
+   E_App_Edit *app;
+   E_App *a;
+   
+   app = data;
+   a = app->eap;
+}
 
 static void 
 _e_eap_edit_cancel_cb(void *data, E_Dialog *dia)
@@ -129,7 +141,7 @@ _e_eap_edit_cancel_cb(void *data, E_Dialog *dia)
 }
 
 static void 
-_e_eap_edit_browse_cb(void *data, E_Dialog *dia)
+_e_eap_edit_browse_cb(void *data1, void *data2)
 {}
 
 static void _e_eap_edit_free(E_App_Edit *app)

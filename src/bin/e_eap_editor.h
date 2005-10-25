@@ -18,6 +18,18 @@ struct _E_App_Edit
    E_Dialog    *dia;
    
    E_App       *eap;
+   
+   struct {
+      char *name;
+      char *generic;
+      char *comments;
+      char *exe;
+      char *wname;
+      char *wclass;
+      char *path;
+      int   startup_notify;
+      int   wait_exit;
+   } data;
 };
 
 E_App_Edit *e_eap_edit_show(E_Container *con, E_App *a);
