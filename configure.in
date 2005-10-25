@@ -277,6 +277,7 @@ AC_SUBST(edje_cc)
 
 AC_OUTPUT([
 Makefile
+enlightenment.spec
 src/Makefile
 src/lib/Makefile
 src/bin/Makefile
