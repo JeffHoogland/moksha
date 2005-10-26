@@ -118,23 +118,19 @@ _e_wid_text_change(void *data, Evas_Object *entry, char *key)
    
    wd = data;      
    
-   if(*(wd->valptr) == NULL) 
+   if (*(wd->valptr) == NULL) 
      {
 	size = (strlen(key) + 1) * sizeof(char);
-	*(wd->valptr) = realloc(*(wd->valptr), size);   
+	*(wd->valptr) = malloc(size);   
 	snprintf(*(wd->valptr), size, "%s", key);
      }
    else
      {
-	char *tmp;
-	
 	size = (strlen(*(wd->valptr)) + strlen(key) + 1) * sizeof(char);
-	tmp = E_NEW(char *, strlen(*(wd->valptr)) + 1);
-	snprintf(tmp, strlen(*(wd->valptr)) + 1, "%s", *(wd->valptr));	
 	*(wd->valptr) = realloc(*(wd->valptr), size);   
-	snprintf(*(wd->valptr), size, "%s%s\0", tmp, key);
-	E_FREE(tmp);
+	strcat(*(wd->valptr), key);
      }
+   return 1;
 }
 
 /* externally accessible functions */
