@@ -26,7 +26,6 @@ Evas_Object *
 e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
 {   
    Evas_Object *obj, *o;
-   Evas_Coord mw, mh;
    
    obj = e_widget_add(evas);
    

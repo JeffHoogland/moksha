@@ -1001,9 +1001,7 @@ e_app_fields_save(E_App *a)
 {
    Eet_File *ef;
    char buf[PATH_MAX];
-   char *str, *v;
    char *lang;
-   int size;
    unsigned char tmp[1];
    int img;
 
@@ -1099,7 +1097,7 @@ e_app_fields_save(E_App *a)
 	     evas_object_resize(im, 48, 48);
 	     evas_object_move(im, 0, 0);
 	     evas_object_show(im);	     
-	     data =  ecore_evas_buffer_pixels_get(buf);
+	     data = ecore_evas_buffer_pixels_get(buf);
 	     eet_data_image_write(ef, "images/0", data, 48, 48, alpha, 1, 0, 0);
 	  }
      }
