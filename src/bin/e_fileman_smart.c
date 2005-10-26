@@ -1063,6 +1063,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    char text[512];
    Evas_Object *o, *ol;
    E_Radio_Group *rg;
+   Evas_Object *img;
 
    cfdata = data;
    icon = cfdata->icon;
@@ -1094,7 +1095,14 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    ol = e_widget_list_add(evas, 0, 0);
 
    o = e_widget_frametable_add(evas, _("General"), 0);
-
+   
+   img = e_fm_icon_add(evas);
+   e_fm_icon_file_set(img, e_fm_file_new(icon->file->path));
+   e_fm_icon_title_set(img, "");
+   e_widget_frametable_object_append(o, e_widget_image_add_from_object(evas, img, 48, 48),
+				     2, 1, 2, 2,
+				     0, 0, 0, 0);
+      
    snprintf(text, 512, _("File:"));
    e_widget_frametable_object_append(o, e_widget_label_add(evas, text),
 				     0, 0, 1, 1,
@@ -1129,19 +1137,19 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    rg = e_widget_radio_group_new(&(cfdata->readwrite));
 
    e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Let others see this file"), 0, rg),
-				     0, 4, 2, 1,
+				     0, 4, 3, 1,
 				     1, 1, 1, 1);
 
    e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Let others modify this file"), 1, rg),
-				     0, 5, 2, 1,
+				     0, 5, 3, 1,
 				     1, 1, 1, 1);
 
    e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Dont let others see or modify this file"), 2, rg),
-				     0, 6, 2, 1,
+				     0, 6, 3, 1,
 				     1, 1, 1, 1);
 
    e_widget_frametable_object_append(o, e_widget_radio_add(evas, _("Custom settings"), 3, rg),
-				     0, 7, 2, 1,
+				     0, 7, 3, 1,
 				     1, 1, 1, 1);
 
    e_widget_list_object_append(ol, o, 1, 1, 0.5);

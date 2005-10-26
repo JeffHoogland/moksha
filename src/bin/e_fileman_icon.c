@@ -13,6 +13,7 @@ struct _E_Smart_Data
    Evas_Object     *obj;
 
    char            *thumb_path;
+   char            *saved_title;
    
    Evas_Object     *event_object;
    Evas_Object     *icon_object;
@@ -20,7 +21,7 @@ struct _E_Smart_Data
    Evas_Object     *entry_object;
 
    E_Fm_File       *file;
-
+      
    unsigned char    visible : 1;
 };
 
@@ -126,6 +127,9 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   E_FREE(sd->saved_title);
+   sd->saved_title = E_NEW(char *, strlen(title) + 1);
+   snprintf(sd->saved_title, strlen(title) + 1, "%s", title);
    if (sd->icon_object) edje_object_part_text_set(sd->icon_object, "icon_title", title);
 }
 
@@ -179,7 +183,7 @@ _e_fm_icon_smart_add(Evas_Object *obj)
 
    sd->evas = evas_object_evas_get(obj);
    sd->obj = obj;
-
+   sd->saved_title = NULL;
    sd->event_object = evas_object_rectangle_add(sd->evas);
    evas_object_color_set(sd->event_object, 0, 0, 0, 0);
    evas_object_smart_member_add(sd->event_object, obj);
@@ -211,6 +215,7 @@ _e_fm_icon_smart_del(Evas_Object *obj)
 	evas_object_smart_member_del(sd->image_object);
 	evas_object_del(sd->image_object);
      }
+   E_FREE(sd->saved_title);
    if (sd->file) e_object_unref(E_OBJECT(sd->file));
    free(sd);
 }
@@ -355,7 +360,10 @@ _e_fm_icon_smart_show(Evas_Object *obj)
 	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
 	evas_object_smart_member_add(sd->image_object, obj);
      }
-   edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
+   if(sd->saved_title)
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
+   else
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
    
    evas_object_show(sd->icon_object);
    

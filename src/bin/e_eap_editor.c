@@ -266,14 +266,14 @@ _e_eap_edit_selector_cb(E_Fileman *fileman, char *file, void *data)
    evas_object_del(editor->img);
    editor->img = evas_object_image_add(editor->evas);
    evas_object_image_file_set(editor->img, file, NULL);
-   evas_object_image_fill_set(editor->img, 0, 0, 48, 48);
    evas_object_resize(editor->img, 48, 48);
+   evas_object_image_fill_set(editor->img, 0, 0, 48, 48);
    evas_object_show(editor->img);
    e_widget_resize_object_set(editor->img_widget, editor->img);
    e_widget_sub_object_add(editor->img_widget, editor->img);
-   e_widget_min_size_set(editor->img_widget, 48, 48);   
-   e_widget_change(editor->img_widget);
-   
+   e_widget_min_size_set(editor->img_widget, 48, 48);
+   evas_object_resize(editor->img, 48, 48); //temp hack
+      
    e_object_del(fileman);
 }
 
