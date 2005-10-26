@@ -285,7 +285,7 @@ e_app_empty_new(const char *path)
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
-   if(path)
+   if (path)
      a->path = strdup(path);   
    return a;      
 }
@@ -1007,73 +1007,75 @@ e_app_fields_save(E_App *a)
    unsigned char tmp[1];
    int img;
 
-   if(!a->path)
-     return;
-   
-   if(!ecore_file_exists(a->path))
+   if (!a->path) return;
+
+   if (!ecore_file_exists(a->path))
      {
 	_e_app_new_save(a);
 	img = 0;
      }
    else
      img = 1;
-      
+
    /* get our current language */
    lang = getenv("LANG");
    /* if its "C" its the default - so drop it */
    if ((lang) && (!strcmp(lang, "C")))
      lang = NULL;
-   
-     ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
+
+   ef = eet_open(a->path, EET_FILE_MODE_READ_WRITE);
    if (!ef) return;
-      
-   if(a->name)
+
+   if (a->name)
      {
 	/*if (lang) snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);  
-	 else */snprintf(buf, sizeof(buf), "app/info/name");
+	  else */
+	snprintf(buf, sizeof(buf), "app/info/name");
 	eet_write(ef, buf, a->name, strlen(a->name), 0);
      }
    
-   if(a->generic)
+   if (a->generic)
      {
 	/*if (lang) snprintf(buf, sizeof(buf), "app/info/generic[%s]", lang);
-	 else */snprintf(buf, sizeof(buf), "app/info/generic");
+	  else */
+	snprintf(buf, sizeof(buf), "app/info/generic");
 	eet_write(ef, buf, a->generic, strlen(a->generic), 0);
      }
-   
-   if(a->comment)
+
+   if (a->comment)
      {
 	/*if (lang) snprintf(buf, sizeof(buf), "app/info/comment[%s]", lang);
-	 else*/ snprintf(buf, sizeof(buf), "app/info/comment");
+	  else*/
+	snprintf(buf, sizeof(buf), "app/info/comment");
 	eet_write(ef, buf, a->comment, strlen(a->comment), 0);
      }
-   
-   if(a->exe)
+
+   if (a->exe)
      eet_write(ef, "app/info/exe", a->exe, strlen(a->exe), 0);
-   if(a->win_name)
+   if (a->win_name)
      eet_write(ef, "app/window/name", a->win_name, strlen(a->win_name), 0);
-   if(a->win_class)
+   if (a->win_class)
      eet_write(ef, "app/window/class", a->win_class, strlen(a->win_class), 0);
-   if(a->win_title)
+   if (a->win_title)
      eet_write(ef, "app/window/title", a->win_title, strlen(a->win_title), 0);
-   if(a->win_role)
+   if (a->win_role)
      eet_write(ef, "app/window/role", a->win_role, strlen(a->win_role), 0);
-   if(a->icon_class)
+   if (a->icon_class)
      eet_write(ef, "app/icon/class", a->icon_class, strlen(a->icon_class), 0);
    
-   if(a->startup_notify)
+   if (a->startup_notify)
      tmp[0] = 1;
    else
      tmp[0] = 0;
    eet_write(ef, "app/info/startup_notify", tmp, 1, 0);
    
-   if(a->wait_exit)
+   if (a->wait_exit)
      tmp[0] = 1;
-     else
+   else
      tmp[0] = 0;   
    eet_write(ef, "app/info/wait_exit", tmp, 1, 0);
 
-   if(a->image && img)
+   if ((a->image) && (img))
      {
 	int alpha;
 	Ecore_Evas *buf;
@@ -1081,7 +1083,7 @@ e_app_fields_save(E_App *a)
 	Evas_Coord iw, ih;
 	Evas_Object *im;
 	int *data;
-	
+
 	buf = ecore_evas_buffer_new(1, 1);
 	evasbuf = ecore_evas_get(buf);
 	im = evas_object_image_add(evasbuf);
@@ -1101,8 +1103,7 @@ e_app_fields_save(E_App *a)
 	     eet_data_image_write(ef, "images/0", data, 48, 48, alpha, 1, 0, 0);
 	  }
      }
-   
-   
+
    eet_close(ef);
 }
 
@@ -1219,15 +1220,15 @@ _e_app_new_save(E_App *a)
    char *start, *end, *imgdir;
    int i;   
       
-   if(!a->path)
-     return 0;      
+   if (!a->path) return 0;      
    
    strcpy(tmpn, "/tmp/eapp_edit_cc.edc-tmp-XXXXXX");
    fd = mkstemp(tmpn);
-   if (fd < 0) {
-      fprintf(stderr, "Unable to create tmp file: %s\n", strerror(errno));
-      return 0;
-   }
+   if (fd < 0)
+     {
+	fprintf(stderr, "Unable to create tmp file: %s\n", strerror(errno));
+	return 0;
+     }
    close(fd);
    
    out = fopen(tmpn, "w");
@@ -1239,11 +1240,11 @@ _e_app_new_save(E_App *a)
    
    i = 0;
    
-   if(a->image)
+   if (a->image)
      {
 	start = strchr(a->image, '/');
 	end = strrchr(a->image ,'/');
-	
+
 	if (start == end)
 	  {
 	     imgdir = strdup("/");;
@@ -1262,11 +1263,11 @@ _e_app_new_save(E_App *a)
 	       }
 	  }
      }     
-            
+
    if (imgdir) snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
    else ipart[0] = '\0';
    
-   if(a->image)
+   if (a->image)
      fprintf(out, EAP_EDC_TMPL, a->image, "48", "48", a->image);
    else
      fprintf(out, EAP_EDC_TMPL_EMPTY);
@@ -1275,11 +1276,12 @@ _e_app_new_save(E_App *a)
    snprintf(cmd, sizeof(cmd), "edje_cc -v %s %s %s", ipart, tmpn, a->path);
    ret = system(cmd);
    
-   if (ret < 0) {
-      fprintf(stderr, "Unable to execute edje_cc on tmp file: %s\n",
-	      strerror(errno));
-      return 0;
-   }
+   if (ret < 0)
+     {
+	fprintf(stderr, "Unable to execute edje_cc on tmp file: %s\n",
+		strerror(errno));
+	return 0;
+     }
    
    unlink(tmpn);
    return 1;   
