@@ -37,7 +37,8 @@ EAPI void                  e_fm_geometry_virtual_get(Evas_Object *object, Evas_C
 EAPI void                  e_fm_reconfigure_callback_add(Evas_Object *object, void (*func)(void *data, Evas_Object *obj, E_Event_Fm_Reconfigure *ev), void *data);
 EAPI int                   e_fm_freeze(Evas_Object *freeze);
 EAPI int                   e_fm_thaw(Evas_Object *freeze);
-    
+EAPI void                  e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void *data);
+
 extern int E_EVENT_FM_RECONFIGURE;
 extern int E_EVENT_FM_DIRECTORY_CHANGE;
 #endif

@@ -18,6 +18,9 @@ struct _E_App_Edit
    E_Dialog    *dia;
    
    E_App       *eap;
+
+   Evas_Object *img;
+   Evas_Object *img_widget;
    
    struct {
       char *image;

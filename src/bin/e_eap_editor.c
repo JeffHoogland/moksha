@@ -6,7 +6,8 @@ static void _e_eap_edit_save_cb(void *data, E_Dialog *dia);
 static void _e_eap_edit_cancel_cb(void *data, E_Dialog *dia);
 static void _e_eap_edit_browse_cb(void *data1, void *data2);
 static void _e_eap_edit_free(E_App_Edit *app);
-
+static void _e_eap_edit_selector_cb(E_Fileman *fileman, char *file, void *data);
+  
 #define IFDUP(src, dst) if(src) dst = strdup(src); else dst = NULL
 
 /* externally accessible functions */
@@ -15,7 +16,7 @@ e_eap_edit_show(E_Container *con, E_App *a)
 {
    E_Manager *man;
    E_App_Edit *app;
-   Evas_Object *o, *ol, *img;  
+   Evas_Object *o, *ol;
    
    app = E_OBJECT_ALLOC(E_App_Edit, E_EAP_EDIT_TYPE, _e_eap_edit_free);
    if (!app) return NULL;
@@ -47,16 +48,18 @@ e_eap_edit_show(E_Container *con, E_App *a)
    
    if(a->path)
      {
-	img = edje_object_add(app->evas);	
-	edje_object_file_set(img, a->path, "icon");
+	app->img = edje_object_add(app->evas);	
+	edje_object_file_set(app->img, a->path, "icon");
+	
      }
    else
      {
-	img = edje_object_add(app->evas);
-	e_theme_edje_object_set(img, "base/theme/icons/enlightenment/e", "icons/enlightenment/e");
+	app->img = edje_object_add(app->evas);
+	e_theme_edje_object_set(app->img, "base/theme/icons/enlightenment/e", "icons/enlightenment/e");
      }
-   
-   e_widget_table_object_append(o, e_widget_image_add_from_object(app->evas, img, 48, 48),
+
+   app->img_widget = e_widget_image_add_from_object(app->evas, app->img, 48, 48);
+   e_widget_table_object_append(o, app->img_widget,
 				0, 0, 1, 1,
 				1, 1, 1, 1);
    
@@ -212,6 +215,8 @@ _e_eap_edit_save_cb(void *data, E_Dialog *dia)
    IFDUP(editor->data.iclass, eap->icon_class);
    IFDUP(editor->data.path, eap->path);
    IFDUP(editor->data.image, eap->image);
+   
+   printf("image is: %s\n", eap->image);
 
    printf("eap path: %s\n", eap->path);
    
@@ -228,7 +233,49 @@ _e_eap_edit_cancel_cb(void *data, E_Dialog *dia)
 
 static void 
 _e_eap_edit_browse_cb(void *data1, void *data2)
-{}
+{
+   E_Fileman *fileman;
+   E_App_Edit *editor;
+   
+   editor = data1;
+   fileman = e_fileman_new (editor->dia->win->container);
+   e_fileman_selector_enable(fileman, _e_eap_edit_selector_cb, editor);
+   e_win_resize(fileman->win, 640, 300);
+   e_fileman_show (fileman);
+}
+
+/* need to make sure we can load the image */
+static void 
+_e_eap_edit_selector_cb(E_Fileman *fileman, char *file, void *data)
+{
+   E_App_Edit *editor;
+   char *ext;
+   Evas_Object *img;
+   
+   ext = strrchr(file, '.');
+   if(!ext)
+     return;
+   if(strcasecmp(ext, ".png") && strcasecmp(ext, ".jpg") &&
+      strcasecmp(ext, ".jpeg"))
+     return;
+
+   editor = data;
+   E_FREE(editor->eap->image);
+   editor->data.image = strdup(file);
+   e_widget_sub_object_del(editor->img_widget, editor->img);
+   evas_object_del(editor->img);
+   editor->img = evas_object_image_add(editor->evas);
+   evas_object_image_file_set(editor->img, file, NULL);
+   evas_object_image_fill_set(editor->img, 0, 0, 48, 48);
+   evas_object_resize(editor->img, 48, 48);
+   evas_object_show(editor->img);
+   e_widget_resize_object_set(editor->img_widget, editor->img);
+   e_widget_sub_object_add(editor->img_widget, editor->img);
+   e_widget_min_size_set(editor->img_widget, 48, 48);   
+   e_widget_change(editor->img_widget);
+   
+   e_object_del(fileman);
+}
 
 static void _e_eap_edit_free(E_App_Edit *app)
 {

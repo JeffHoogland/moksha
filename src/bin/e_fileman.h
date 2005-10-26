@@ -30,11 +30,17 @@ struct _E_Fileman
    int          swallowed;
    
    Evas_List    *event_handlers;
+   
+   struct {
+      void (*func)(E_Fileman *fileman, char *file, void *data);
+      void  *data;
+   } selector;
 };
 
 EAPI E_Fileman *e_fileman_new(E_Container *con);
 EAPI void       e_fileman_show(E_Fileman *fileman);
 EAPI void       e_fileman_hide(E_Fileman *fileman);
+EAPI void       e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, char *file, void *data), void *data);
 
 #endif
 #endif

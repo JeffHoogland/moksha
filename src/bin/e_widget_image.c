@@ -41,5 +41,3 @@ e_widget_image_add_from_file(Evas *evas, char *file, int minw, int minh)
    
    return obj;
 }
-
-    

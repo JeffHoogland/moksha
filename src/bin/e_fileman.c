@@ -24,6 +24,7 @@ static int _e_fileman_dir_change_cb(void *data, int type, void *event);
 static int _e_fileman_mouse_wheel_cb(void *data, int type, void *event);
 static void _e_fileman_resize_cb(E_Win *win);
 static void _e_fileman_delete_cb(E_Win *win);
+static void _e_fileman_selector_cb(Evas_Object *object, char *file, void *data);
 static void _e_fileman_vscrollbar_show_cb(void *data, Evas *e, Evas_Object *obj, void *ev);
 static void _e_fileman_vscrollbar_hide_cb(void *data, Evas *e, Evas_Object *obj, void *ev);
 static void _e_fileman_free(E_Fileman *fileman);
@@ -111,6 +112,14 @@ e_fileman_new(E_Container *con)
    D(("e_fileman_new: ok\n"));
    
    return fileman;
+}
+
+void
+e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, char *file, void *data), void *data)
+{   
+   fileman->selector.func = func;
+   fileman->selector.data = data;
+   e_fm_selector_enable(fileman->smart, _e_fileman_selector_cb, fileman);
 }
 
 void
@@ -274,6 +283,16 @@ _e_fileman_mouse_wheel_cb(void *data, int type, void *event)
    e_scrollbar_value_set(fileman->vscrollbar,  pos);   
    e_fm_scroll_vertical(fileman->smart, pos);
    return 1;
+}
+
+static void 
+_e_fileman_selector_cb(Evas_Object *object, char *file, void *data)
+{
+   E_Fileman *fileman;
+   
+   fileman = data;
+   fileman->selector.func(fileman, file, fileman->selector.data);
+   //e_object_del(E_OBJECT(fileman));
 }
 
 static void

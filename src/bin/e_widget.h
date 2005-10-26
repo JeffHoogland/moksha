@@ -18,6 +18,7 @@ EAPI void *e_widget_data_get(Evas_Object *obj);
 EAPI void e_widget_min_size_set(Evas_Object *obj, Evas_Coord minw, Evas_Coord minh);
 EAPI void e_widget_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh);
 EAPI void e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj);
+EAPI void e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj);  
 EAPI void e_widget_resize_object_set(Evas_Object *obj, Evas_Object *sobj);
 EAPI void e_widget_can_focus_set(Evas_Object *obj, int can_focus);
 EAPI int e_widget_can_focus_get(Evas_Object *obj);

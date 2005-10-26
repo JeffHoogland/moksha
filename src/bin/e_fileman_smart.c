@@ -136,6 +136,10 @@ struct _E_Fm_Smart_Data
    int frozen;
    double position;
 
+   int is_selector;
+   void (*selector_func) (Evas_Object *object, char *file, void *data);
+   void  *selector_data;
+   
    Evas_Coord x, y, w, h;
 
    struct {
@@ -237,6 +241,8 @@ static void                _e_fm_drop_done_cb      (E_Drag *drag, int dropped);
 
 static int                 _e_fm_files_sort_name_cb    (void *d1, void *d2);
 static int                 _e_fm_files_sort_modtime_cb (void *d1, void *d2);
+
+static void                _e_fm_selector_send_file (E_Fm_Icon *icon);
 
 static Ecore_Event_Handler *e_fm_mouse_up_handler = NULL;
 static double               e_fm_grab_time = 0;
@@ -421,6 +427,19 @@ e_fm_thaw(Evas_Object *object)
    return sd->frozen;
 }
 
+void
+e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void *data)
+{
+   E_Fm_Smart_Data *sd;        
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   sd->is_selector = 1;
+   sd->selector_func = func;
+   sd->selector_data = data;
+}
+
 /* local subsystem functions */
 
 static void
@@ -440,7 +459,7 @@ _e_fm_smart_add(Evas_Object *object)
 
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
-
+   sd->is_selector = 0;
    sd->bg = evas_object_rectangle_add(sd->evas); // this should become an edje
    evas_object_color_set(sd->bg, 0, 0, 0, 0);
    evas_object_show(sd->bg);
@@ -1909,7 +1928,13 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
        else if (icon->file->type == E_FM_FILE_TYPE_FILE && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
 	 {
 	    icon->sd->drag.start = 0;
-
+	    
+	    if(icon->sd->is_selector)
+	      {
+		 _e_fm_selector_send_file(icon);
+		 return;
+	      }
+	    
 	    if ((!e_fm_file_assoc_exec(icon->file)) &&
 		(e_fm_file_can_exec(icon->file)))
 	      e_fm_file_exec(icon->file);
@@ -2286,4 +2311,10 @@ _e_fm_files_sort_modtime_cb(void *d1, void *d2)
    e2 = d2;
 
    return (e1->file->mtime > e2->file->mtime);
+}
+
+static void
+_e_fm_selector_send_file(E_Fm_Icon *icon)
+{
+   icon->sd->selector_func(icon->sd->object, strdup(icon->file->path), icon->sd->selector_data);
 }

@@ -150,6 +150,17 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 }
 
 void
+e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj)
+{
+   API_ENTRY return;
+   sd->subobjs = evas_list_remove(sd->subobjs, sobj);
+   if (!sd->child_can_focus)
+     {
+	if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 0;
+     }
+}
+
+void
 e_widget_resize_object_set(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
