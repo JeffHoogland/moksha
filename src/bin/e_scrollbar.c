@@ -9,6 +9,9 @@
  * - add functions to set / get values and min / max
  */
 
+#define MIN_VAL 0.0
+#define MAX_VAL 1.0
+
 typedef struct _E_Scrollbar_Smart_Data E_Scrollbar_Smart_Data;
 
 struct _E_Scrollbar_Smart_Data
@@ -49,6 +52,33 @@ static void _e_scrollbar_drag_mouse_down_cb(void *data, Evas *evas, Evas_Object 
 
 static Evas_Smart *e_scrollbar_smart = NULL;
 
+/* we need to keep those until raster fixes smarts allowing them to
+ * show / hide without them */
+static void
+_e_scrollbar_smart_show(Evas_Object *object)
+{
+   E_Scrollbar_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return E_SCROLLBAR_HORIZONTAL;
+   
+   evas_object_show(sd->edje.object);
+   evas_object_show(sd->drag.object);   
+}
+
+static void
+_e_scrollbar_smart_hide(Evas_Object *object)
+{
+   E_Scrollbar_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return E_SCROLLBAR_HORIZONTAL;
+   
+   evas_object_hide(sd->edje.object);
+   evas_object_hide(sd->drag.object);   
+}
+
+
 Evas_Object *
 e_scrollbar_add(Evas *evas)
 {
@@ -60,8 +90,8 @@ e_scrollbar_add(Evas *evas)
 					   NULL, NULL, NULL, NULL, NULL,
 					   _e_scrollbar_smart_move, /* move */
 					   _e_scrollbar_smart_resize, /* resize */
-					   NULL, /* show */
-					   NULL, /* hide */
+					   _e_scrollbar_smart_show, /* show */
+					   _e_scrollbar_smart_hide, /* hide */
 					   NULL, /* color_set */
 					   NULL, /* clip_set */
 					   NULL, /* clip_unset */
@@ -141,12 +171,21 @@ e_scrollbar_value_set(Evas_Object *object, double value)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
+   if(sd->value.current == value || value < MIN_VAL || value > MAX_VAL)
+     return;
+   
    sd->value.current = value;
 
    if (sd->direction == E_SCROLLBAR_HORIZONTAL)
-     edje_object_part_drag_value_set(sd->edje.object, "drag", value, 0);
+     {
+	sd->drag.h = sd->confine.x + (double)sd->confine.w * value;
+     }
    else
-     edje_object_part_drag_value_set(sd->edje.object, "drag", 0, value);
+     {
+	sd->drag.y = sd->confine.y + (double)sd->confine.h * value;
+     }
+   
+   evas_object_move(sd->drag.object, sd->drag.x, sd->drag.y);   
 }
 
 double
