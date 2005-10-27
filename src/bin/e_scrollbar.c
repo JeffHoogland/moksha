@@ -41,8 +41,6 @@ static void _e_scrollbar_smart_add(Evas_Object *object);
 static void _e_scrollbar_smart_del(Evas_Object *object);
 static void _e_scrollbar_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void _e_scrollbar_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
-static void _e_scrollbar_smart_show(Evas_Object *object);
-static void _e_scrollbar_smart_hide(Evas_Object *object);
 static void _e_scrollbar_drag_cb(void *data, Evas_Object *object, const char *emission, const char *source);
 
 static void _e_scrollbar_drag_mouse_move_cb(void *data, Evas *evas, Evas_Object *object, void *event_info);
@@ -62,8 +60,8 @@ e_scrollbar_add(Evas *evas)
 					   NULL, NULL, NULL, NULL, NULL,
 					   _e_scrollbar_smart_move, /* move */
 					   _e_scrollbar_smart_resize, /* resize */
-					   _e_scrollbar_smart_show, /* show */
-					   _e_scrollbar_smart_hide, /* hide */
+					   NULL, /* show */
+					   NULL, /* hide */
 					   NULL, /* color_set */
 					   NULL, /* clip_set */
 					   NULL, /* clip_unset */
@@ -171,50 +169,24 @@ e_scrollbar_value_get(Evas_Object *object)
 }
 
 void
-e_scrollbar_increments_set(Evas_Object *object, double step, double page)
+e_scrollbar_drag_resize(Evas_Object *object, int percent)
 {
    E_Scrollbar_Smart_Data *sd;
+   Evas_Coord w, h;
+   int size;
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
+     return;   
    
-   if (sd->direction == E_SCROLLBAR_HORIZONTAL)
-     {
-	edje_object_part_drag_step_set(sd->edje.object, "drag", step, 0);
-	edje_object_part_drag_page_set(sd->edje.object, "drag", page, 0);
-     }
+   if(sd->direction == E_SCROLLBAR_HORIZONTAL)
+     sd->drag.w = percent * sd->confine.w / 100;
    else
-     {
-	edje_object_part_drag_step_set(sd->edje.object, "drag", 0, step);
-	edje_object_part_drag_page_set(sd->edje.object, "drag", 0, page);
-     }
+     sd->drag.h = percent * sd->confine.h / 100;
+   
+   printf("drag_resize: %d%% %d px\n", percent, sd->drag.h);
+   
+   evas_object_resize(sd->drag.object, sd->drag.w, sd->drag.h);   
 }
-
-void
-e_scrollbar_increments_get(Evas_Object *object, double *step, double *page)
-{
-   E_Scrollbar_Smart_Data *sd;
-   double stepx; double stepy;
-   double pagex; double pagey;
-   
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   
-   edje_object_part_drag_step_get(sd->edje.object, "drag", &stepx, &stepy);
-   edje_object_part_drag_page_get(sd->edje.object, "drag", &pagex, &pagey);   
-   
-   if (sd->direction == E_SCROLLBAR_HORIZONTAL)
-     {
-	if (step) *step = stepx;
-	if (page) *page = pagex;
-     }
-   else
-     {
-	if (step) *step = stepy;
-	if (page) *page = pagey;
-     }      
-}
-
 
 /************************** 
  * Private functions 
@@ -238,14 +210,17 @@ _e_scrollbar_smart_add(Evas_Object *object)
    sd->direction = E_SCROLLBAR_HORIZONTAL;
    
    sd->edje.object = edje_object_add(evas);
+   evas_object_smart_member_add(sd->edje.object, object);   
    sd->edje.x = 0;
    sd->edje.y = 0;
    sd->edje.w = 0;
    sd->edje.h = 0;
    e_theme_edje_object_set(sd->edje.object, "base/theme/widgets/hscrollbar",
 			      "widgets/hscrollbar");
+   evas_object_show(sd->edje.object);
    
    sd->drag.object = edje_object_add(evas);
+   evas_object_smart_member_add(sd->drag.object, object);   
    sd->drag.x = 0;
    sd->drag.y = 0;
    sd->drag.w = 0;
@@ -253,6 +228,7 @@ _e_scrollbar_smart_add(Evas_Object *object)
    e_theme_edje_object_set(sd->drag.object,
 			   "base/theme/widgets/hscrollbar",
 			   "widgets/hscrollbar_drag");
+   evas_object_show(sd->drag.object);
    
    edje_object_part_geometry_get(sd->drag.object, "confine",
 				 &sd->confine.x, &sd->confine.y,
@@ -262,14 +238,8 @@ _e_scrollbar_smart_add(Evas_Object *object)
    evas_object_event_callback_add(sd->drag.object, EVAS_CALLBACK_MOUSE_UP, _e_scrollbar_drag_mouse_up_cb, sd);
    evas_object_event_callback_add(sd->drag.object, EVAS_CALLBACK_MOUSE_DOWN, _e_scrollbar_drag_mouse_down_cb, sd);
    
-   evas_object_data_set(sd->edje.object, "smart", object);
-   evas_object_smart_member_add(sd->edje.object, object);
-   evas_object_smart_member_add(sd->drag.object, object);   
-   
-   evas_object_smart_data_set(object, sd);
-   
-   evas_object_show(sd->edje.object);
-   evas_object_show(sd->drag.object);
+   evas_object_data_set(sd->edje.object, "smart", object);   
+   evas_object_smart_data_set(object, sd);   
 }
 
 static void
@@ -330,31 +300,6 @@ _e_scrollbar_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
    evas_object_resize(sd->drag.object, sd->confine.w, 20);
    sd->drag.w = sd->confine.w;
    sd->drag.h = 20;   
-}
-
-static void
-_e_scrollbar_smart_show(Evas_Object *object)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-      return;
-
-   evas_object_show(sd->edje.object);
-   evas_object_show(sd->drag.object);   
-
-}
-
-static void
-_e_scrollbar_smart_hide(Evas_Object *object)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-      return;
-
-   evas_object_hide(sd->edje.object);
-   evas_object_hide(sd->drag.object);
 }
 
 static void

@@ -167,7 +167,7 @@ _e_fileman_resize_cb(E_Win *win)
    
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
-   e_fm_geometry_virtual_get(fileman->smart, &w, &h);    
+   e_fm_geometry_virtual_get(fileman->smart, &w, &h);
    
    D(("_e_fileman_resize_cb: e_fm_freeze\n"));
    frozen = e_fm_freeze(fileman->smart);
@@ -176,8 +176,9 @@ _e_fileman_resize_cb(E_Win *win)
        
    if (h > win->h)
      {
-	D(("e_fileman_resize_cb: show (%p)\n", fileman));
-	edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);
+	D(("e_fileman_resize_cb: show (%p)\n", fileman));	
+	edje_object_part_swallow(fileman->main, "vscrollbar", fileman->vscrollbar);	
+	e_fm_geometry_virtual_get(fileman->smart, &w, &h);
      }
    else 
      {
@@ -212,6 +213,7 @@ _e_fileman_reconf_cb(void *data, int type, void *event)
 {   
    E_Event_Fm_Reconfigure *ev;
    E_Fileman *fileman;
+   Evas_Coord w, h;
    int frozen;
 
    if (!data) return 1;
@@ -243,6 +245,7 @@ _e_fileman_dir_change_cb(void *data, int type, void *event)
 {
    E_Event_Fm_Directory_Change *ev;
    E_Fileman *fileman;
+   Evas_Coord w, h;
    
    if (!data) return 1;
       
@@ -251,6 +254,7 @@ _e_fileman_dir_change_cb(void *data, int type, void *event)
    
    D(("_e_fileman_dir_change_cb:\n"));
    e_scrollbar_value_set(fileman->vscrollbar,  0.0);
+         
    return 1;
 }
 
