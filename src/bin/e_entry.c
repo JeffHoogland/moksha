@@ -42,10 +42,6 @@ static void      _e_editable_text_size_update(Evas_Object *object);
 
 static void      _e_editable_text_smart_add(Evas_Object *object);
 static void      _e_editable_text_smart_del(Evas_Object *object);
-static void      _e_editable_text_smart_raise(Evas_Object *object);
-static void      _e_editable_text_smart_lower(Evas_Object *object);
-static void      _e_editable_text_smart_stack_above(Evas_Object *object, Evas_Object *above);
-static void      _e_editable_text_smart_stack_below(Evas_Object *object, Evas_Object *below);
 static void      _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void      _e_editable_text_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void      _e_editable_text_smart_show(Evas_Object *object);
@@ -55,10 +51,6 @@ static void      _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, voi
 
 static void      _e_entry_smart_add(Evas_Object *object);
 static void      _e_entry_smart_del(Evas_Object *object);
-static void      _e_entry_smart_raise(Evas_Object *object);
-static void      _e_entry_smart_lower(Evas_Object *object);
-static void      _e_entry_smart_stack_above(Evas_Object *object, Evas_Object *above);
-static void      _e_entry_smart_stack_below(Evas_Object *object, Evas_Object *below);
 static void      _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void      _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void      _e_entry_smart_show(Evas_Object *object);
@@ -75,14 +67,10 @@ e_editable_text_add(Evas *evas)
 {
    if (!e_editable_text_smart)
      {
-	e_editable_text_smart = evas_smart_new("e_entry",
+	e_editable_text_smart = evas_smart_new("e_editable_entry",
 					       _e_editable_text_smart_add, /* add */
 					       _e_editable_text_smart_del, /* del */
-					       NULL, /* layer_set */
-					       _e_editable_text_smart_raise, /* raise */
-					       _e_editable_text_smart_lower, /* lower */
-					       _e_editable_text_smart_stack_above, /* stack_above */
-					       _e_editable_text_smart_stack_below, /* stack_below */
+					       NULL, NULL, NULL, NULL, NULL,
 					       _e_editable_text_smart_move, /* move */
 					       _e_editable_text_smart_resize, /* resize */
 					       _e_editable_text_smart_show, /* show */
@@ -335,11 +323,7 @@ e_entry_add(Evas *evas)
      e_entry_smart = evas_smart_new("e_entry",
 				    _e_entry_smart_add, /* add */
 				    _e_entry_smart_del, /* del */
-				    NULL, /* layer_set */
-				    _e_entry_smart_raise, /* raise */
-				    _e_entry_smart_lower, /* lower */
-				    _e_entry_smart_stack_above, /* stack_above */
-				    _e_entry_smart_stack_below, /* stack_below */
+				    NULL, NULL, NULL, NULL, NULL,
 				    _e_entry_smart_move, /* move */
 				    _e_entry_smart_resize, /* resize */
 				    _e_entry_smart_show, /* show */
@@ -701,62 +685,6 @@ _e_editable_text_smart_del(Evas_Object *object)
      }
 }
 
-/* Called when the object is stacked above all the other objects */
-static void
-_e_editable_text_smart_raise(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *editable_text_sd;
-
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
-      return;
-
-   evas_object_raise(editable_text_sd->clip);
-   evas_object_raise(editable_text_sd->text_object);
-   evas_object_raise(editable_text_sd->cursor_object);
-}
-
-/* Called when the object is stacked below all the other objects */
-static void
-_e_editable_text_smart_lower(Evas_Object *object)
-{
-   E_Editable_Text_Smart_Data *editable_text_sd;
-
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_lower(editable_text_sd->cursor_object);
-   evas_object_lower(editable_text_sd->text_object);
-   evas_object_lower(editable_text_sd->clip);
-}
-
-/* Called when the object is stacked above another object */
-static void
-_e_editable_text_smart_stack_above(Evas_Object *object, Evas_Object *above)
-{
-   E_Editable_Text_Smart_Data *editable_text_sd;
-
-   if ((!object) || (!above) || !(editable_text_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_above(editable_text_sd->clip, above);
-   evas_object_stack_above(editable_text_sd->text_object, editable_text_sd->clip);
-   evas_object_stack_above(editable_text_sd->cursor_object, editable_text_sd->text_object);
-}
-
-/* Called when the object is stacked below another object */
-static void
-_e_editable_text_smart_stack_below(Evas_Object *object, Evas_Object *below)
-{
-   E_Editable_Text_Smart_Data *editable_text_sd;
-
-   if ((!object) || (!below) || !(editable_text_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_below(editable_text_sd->cursor_object, below);
-   evas_object_stack_below(editable_text_sd->text_object, editable_text_sd->cursor_object);
-   evas_object_stack_below(editable_text_sd->clip, editable_text_sd->text_object);
-}
-
 /* Called when the object is moved */
 static void _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
@@ -908,50 +836,6 @@ _e_entry_smart_del(Evas_Object *object)
    evas_object_del(e_entry_sd->entry_object);
    evas_object_del(e_entry_sd->edje_object);
    E_FREE(e_entry_sd);
-}
-
-static void
-_e_entry_smart_raise(Evas_Object *object)
-{
-   E_Entry_Smart_Data *e_entry_sd;
-
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_raise(e_entry_sd->edje_object);
-}
-
-static void
-_e_entry_smart_lower(Evas_Object *object)
-{
-   E_Entry_Smart_Data *e_entry_sd;
-
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_lower(e_entry_sd->edje_object);
-}
-
-static void
-_e_entry_smart_stack_above(Evas_Object *object, Evas_Object *above)
-{
-   E_Entry_Smart_Data *e_entry_sd;
-
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_above(e_entry_sd->edje_object, above);
-}
-
-static void
-_e_entry_smart_stack_below(Evas_Object *object, Evas_Object *below)
-{
-   E_Entry_Smart_Data *e_entry_sd;
-
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_below(e_entry_sd->edje_object, below);
 }
 
 static void

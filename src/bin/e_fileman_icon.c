@@ -28,11 +28,6 @@ struct _E_Smart_Data
 /* local subsystem functions */
 static void _e_fm_icon_smart_add         (Evas_Object *obj);
 static void _e_fm_icon_smart_del         (Evas_Object *obj);
-static void _e_fm_icon_smart_layer_set   (Evas_Object *obj, int l);
-static void _e_fm_icon_smart_raise       (Evas_Object *obj);
-static void _e_fm_icon_smart_lower       (Evas_Object *obj);
-static void _e_fm_icon_smart_stack_above (Evas_Object *obj, Evas_Object *above);
-static void _e_fm_icon_smart_stack_below (Evas_Object *obj, Evas_Object *below);
 static void _e_fm_icon_smart_move        (Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_fm_icon_smart_resize      (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_fm_icon_smart_show        (Evas_Object *obj);
@@ -88,11 +83,7 @@ e_fm_icon_add(Evas *evas)
 	e_smart = evas_smart_new("e_fm_icon_smart",
 	                         _e_fm_icon_smart_add,
 	                         _e_fm_icon_smart_del,
-	                         _e_fm_icon_smart_layer_set,
-	                         _e_fm_icon_smart_raise,
-	                         _e_fm_icon_smart_lower,
-	                         _e_fm_icon_smart_stack_above,
-	                         _e_fm_icon_smart_stack_below,
+				 NULL, NULL, NULL, NULL, NULL,
 	                         _e_fm_icon_smart_move,
 	                         _e_fm_icon_smart_resize,
 	                         _e_fm_icon_smart_show,
@@ -218,71 +209,6 @@ _e_fm_icon_smart_del(Evas_Object *obj)
    E_FREE(sd->saved_title);
    if (sd->file) e_object_unref(E_OBJECT(sd->file));
    free(sd);
-}
-
-static void
-_e_fm_icon_smart_layer_set(Evas_Object *obj, int l)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-   evas_object_layer_set(sd->event_object, l);
-   if (sd->icon_object) evas_object_layer_set(sd->icon_object, l);
-   if (sd->image_object) evas_object_layer_set(sd->image_object, l);
-}
-
-static void
-_e_fm_icon_smart_raise(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-   evas_object_raise(sd->event_object);
-   if (sd->icon_object) evas_object_stack_below(sd->icon_object, sd->event_object);
-   if (sd->image_object) evas_object_stack_below(sd->image_object, sd->event_object);
-}
-
-static void
-_e_fm_icon_smart_lower(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-   evas_object_lower(sd->event_object);
-   if (sd->icon_object) evas_object_stack_below(sd->icon_object, sd->event_object);
-   if (sd->image_object) evas_object_stack_below(sd->image_object, sd->event_object);
-}
-
-static void
-_e_fm_icon_smart_stack_above(Evas_Object *obj, Evas_Object *above)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-   evas_object_stack_above(sd->event_object, above);
-   if (sd->icon_object) evas_object_stack_below(sd->icon_object, sd->event_object);
-   if (sd->image_object) evas_object_stack_below(sd->image_object, sd->event_object);
-}
-
-static void
-_e_fm_icon_smart_stack_below(Evas_Object *obj, Evas_Object *below)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-   evas_object_stack_below(sd->event_object, below);
-   if (sd->icon_object) evas_object_stack_below(sd->icon_object, sd->event_object);
-   if (sd->image_object) evas_object_stack_below(sd->image_object, sd->event_object);
 }
 
 static void

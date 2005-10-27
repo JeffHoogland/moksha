@@ -50,11 +50,6 @@ static void        _e_box_smart_extents_calcuate(E_Smart_Data *sd);
 static void _e_box_smart_init(void);
 static void _e_box_smart_add(Evas_Object *obj);
 static void _e_box_smart_del(Evas_Object *obj);
-static void _e_box_smart_layer_set(Evas_Object *obj, int layer);
-static void _e_box_smart_raise(Evas_Object *obj);
-static void _e_box_smart_lower(Evas_Object *obj);
-static void _e_box_smart_stack_above(Evas_Object *obj, Evas_Object * above);
-static void _e_box_smart_stack_below(Evas_Object *obj, Evas_Object * below);
 static void _e_box_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_box_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_box_smart_show(Evas_Object *obj);
@@ -350,12 +345,10 @@ _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    bi->max.w = 0;
    bi->max.h = 0;
    evas_object_clip_set(obj, sd->clip);
-   evas_object_stack_above(obj, sd->obj);
    evas_object_smart_member_add(obj, bi->sd->obj);
    evas_object_data_set(obj, "e_box_data", bi);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_box_smart_item_del_hook, NULL);
-   evas_object_stack_below(obj, sd->obj);
    if (!evas_object_visible_get(sd->clip))
      evas_object_show(sd->clip);
    return bi;
@@ -613,11 +606,7 @@ _e_box_smart_init(void)
    _e_smart = evas_smart_new("e_box",
 			     _e_box_smart_add,
 			     _e_box_smart_del,
-			     _e_box_smart_layer_set,
-			     _e_box_smart_raise,
-			     _e_box_smart_lower,
-			     _e_box_smart_stack_above,
-			     _e_box_smart_stack_below,
+			     NULL, NULL, NULL, NULL, NULL,
 			     _e_box_smart_move,
 			     _e_box_smart_resize,
 			     _e_box_smart_show,
@@ -664,96 +653,6 @@ _e_box_smart_del(Evas_Object *obj)
      }
    evas_object_del(sd->clip);
    free(sd);
-}
-   
-static void
-_e_box_smart_layer_set(Evas_Object *obj, int layer)
-{
-   E_Smart_Data *sd;
-      
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   
-     {
-	Evas_List *l;
-	
-	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_layer_set(l->data, layer);
-	  }
-     }
-}
-
-static void
-_e_box_smart_raise(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-     {
-	Evas_List *l;
-	
-	for (l = evas_list_last(sd->items); l; l = l->prev)
-	  {
-	     evas_object_raise(l->data);
-	  }
-     }
-}
-
-static void
-_e_box_smart_lower(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return; 
-   
-     {
-	Evas_List *l;
-	
-	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_lower(l->data);
-	  }
-     }
-}
-                                                             
-static void
-_e_box_smart_stack_above(Evas_Object *obj, Evas_Object *above)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-     {
-	Evas_List *l;
-	
-	for (l = sd->items; l; l = l->next)
-	  {
-	     evas_object_stack_above(l->data, above);
-	  }
-     }
-}
-   
-static void
-_e_box_smart_stack_below(Evas_Object *obj, Evas_Object *below)
-{
-   E_Smart_Data *sd;
-      
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-
-     {
-	Evas_List *l;
-	
-	for (l = evas_list_last(sd->items); l; l = l->prev)
-	  {
-	     evas_object_stack_below(l->data, below);
-	  }
-     }
 }
 
 static void

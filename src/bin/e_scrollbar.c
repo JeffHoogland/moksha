@@ -28,10 +28,6 @@ struct _E_Scrollbar_Smart_Data
 
 static void _e_scrollbar_smart_add(Evas_Object *object);
 static void _e_scrollbar_smart_del(Evas_Object *object);
-static void _e_scrollbar_smart_raise(Evas_Object *object);
-static void _e_scrollbar_smart_lower(Evas_Object *object);
-static void _e_scrollbar_smart_stack_above(Evas_Object *object, Evas_Object *above);
-static void _e_scrollbar_smart_stack_below(Evas_Object *object, Evas_Object *below);
 static void _e_scrollbar_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void _e_scrollbar_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void _e_scrollbar_smart_show(Evas_Object *object);
@@ -48,11 +44,7 @@ e_scrollbar_add(Evas *evas)
 	e_scrollbar_smart = evas_smart_new("e_entry",
 					   _e_scrollbar_smart_add, /* add */
 					   _e_scrollbar_smart_del, /* del */
-					   NULL, /* layer_set */
-					   _e_scrollbar_smart_raise, /* raise */
-					   _e_scrollbar_smart_lower, /* lower */
-					   _e_scrollbar_smart_stack_above, /* stack_above */
-					   _e_scrollbar_smart_stack_below, /* stack_below */
+					   NULL, NULL, NULL, NULL, NULL,
 					   _e_scrollbar_smart_move, /* move */
 					   _e_scrollbar_smart_resize, /* resize */
 					   _e_scrollbar_smart_show, /* show */
@@ -244,51 +236,6 @@ _e_scrollbar_smart_del(Evas_Object *object)
    evas_object_del(sd->edje_object);
 
    free(sd);
-}
-
-static void
-_e_scrollbar_smart_raise(Evas_Object *object)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_raise(sd->edje_object);
-}
-
-static void
-_e_scrollbar_smart_lower(Evas_Object *object)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_lower(sd->edje_object);
-}
-
-static void
-_e_scrollbar_smart_stack_above(Evas_Object *object, Evas_Object *above)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || (!above) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_above(sd->edje_object, above);
-}
-
-/* Called when the object is stacked below another object */
-static void
-_e_scrollbar_smart_stack_below(Evas_Object *object, Evas_Object *below)
-{
-   E_Scrollbar_Smart_Data *sd;
-
-   if ((!object) || (!below) || !(sd = evas_object_smart_data_get(object)))
-     return;
-
-   evas_object_stack_below(sd->edje_object, below);
 }
 
 /* Called when the object is moved */

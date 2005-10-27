@@ -488,7 +488,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
      {
 	o = edje_object_add(ibb->evas);
 	ibb->overlay_object = o;
-	evas_object_layer_set(o, 1);
+	evas_object_layer_set(o, 2);
 	e_theme_edje_object_set(o, "base/theme/modules/ibar",
 				"modules/ibar/follower");
 	evas_object_show(o);
@@ -496,7 +496,7 @@ _ibar_bar_new(IBar *ib, E_Container *con)
 
    o = evas_object_rectangle_add(ibb->evas);
    ibb->event_object = o;
-   evas_object_layer_set(o, 2);
+   evas_object_layer_set(o, 3);
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  _ibar_bar_cb_mouse_in,  ibb);
@@ -1826,7 +1826,7 @@ _ibar_bar_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi)
 	     if (ibb->overlay_object) continue;
 	     o = edje_object_add(ibb->evas);
 	     ibb->overlay_object = o;
-	     evas_object_layer_set(o, 1);
+	     evas_object_layer_set(o, 2);
 	     e_theme_edje_object_set(o, "base/theme/modules/ibar",
 				     "modules/ibar/follower");
 	     evas_object_show(o);

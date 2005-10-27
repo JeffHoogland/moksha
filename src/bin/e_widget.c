@@ -34,11 +34,6 @@ struct _E_Smart_Data
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_add(Evas_Object *obj);
 static void _e_smart_del(Evas_Object *obj);
-static void _e_smart_layer_set(Evas_Object *obj, int layer);
-static void _e_smart_raise(Evas_Object *obj);
-static void _e_smart_lower(Evas_Object *obj);
-static void _e_smart_stack_above(Evas_Object *obj, Evas_Object *above);
-static void _e_smart_stack_below(Evas_Object *obj, Evas_Object *below);
 static void _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_smart_show(Evas_Object *obj);
@@ -485,41 +480,6 @@ _e_smart_del(Evas_Object *obj)
      }
    free(sd);
 }
-   
-static void
-_e_smart_layer_set(Evas_Object *obj, int layer)
-{
-   INTERNAL_ENTRY;
-   evas_object_layer_set(sd->resize_obj, layer);
-}
-
-static void
-_e_smart_raise(Evas_Object *obj)
-{
-   INTERNAL_ENTRY;
-   evas_object_raise(sd->resize_obj);
-}
-
-static void
-_e_smart_lower(Evas_Object *obj)
-{
-   INTERNAL_ENTRY;
-   evas_object_lower(sd->resize_obj);
-}
-                                                             
-static void
-_e_smart_stack_above(Evas_Object *obj, Evas_Object *above)
-{
-   INTERNAL_ENTRY;
-   evas_object_stack_above(sd->resize_obj, above);
-}
-   
-static void
-_e_smart_stack_below(Evas_Object *obj, Evas_Object *below)
-{
-   INTERNAL_ENTRY;
-   evas_object_stack_below(sd->resize_obj, below);
-}
 
 static void
 _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
@@ -580,10 +540,16 @@ static void
 _e_smart_init(void)
 {
    if (_e_smart) return;
-   _e_smart = evas_smart_new
-     (SMART_NAME, _e_smart_add, _e_smart_del, _e_smart_layer_set,
-      _e_smart_raise, _e_smart_lower, _e_smart_stack_above,
-      _e_smart_stack_below, _e_smart_move, _e_smart_resize,
-      _e_smart_show, _e_smart_hide, _e_smart_color_set,
-      _e_smart_clip_set, _e_smart_clip_unset, NULL);
+   _e_smart = evas_smart_new(SMART_NAME,
+			     _e_smart_add,
+			     _e_smart_del, 
+			     NULL, NULL, NULL, NULL, NULL,
+			     _e_smart_move,
+			     _e_smart_resize,
+			     _e_smart_show,
+			     _e_smart_hide,
+			     _e_smart_color_set,
+			     _e_smart_clip_set,
+			     _e_smart_clip_unset,
+			     NULL);
 }

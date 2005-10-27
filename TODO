@@ -8,6 +8,8 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: if iconified window quits qhile iconified and ibox is being used then
+  e segv's
 * BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
 * BUG: race condition on winlist activate via keypress and the key grab thus

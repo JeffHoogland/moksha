@@ -15,8 +15,6 @@ EAPI void         e_icon_layout_width_fix         (Evas_Object *obj, Evas_Coord 
 EAPI void         e_icon_layout_height_fix        (Evas_Object *obj, Evas_Coord h);    
 EAPI void         e_icon_layout_pack              (Evas_Object *obj, Evas_Object *child);
 EAPI void         e_icon_layout_child_resize      (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
-EAPI void         e_icon_layout_child_stack_above (Evas_Object *obj, Evas_Object *above);
-EAPI void         e_icon_layout_child_stack_below (Evas_Object *obj, Evas_Object *below);
 EAPI void         e_icon_layout_unpack            (Evas_Object *obj);
 EAPI void         e_icon_layout_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys);
 EAPI void         e_icon_layout_redraw_force      (Evas_Object *obj);

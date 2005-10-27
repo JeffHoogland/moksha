@@ -23,11 +23,6 @@ static void _e_smart_child_resize_hook(void *data, Evas *e, Evas_Object *obj, vo
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_add(Evas_Object *obj);
 static void _e_smart_del(Evas_Object *obj);
-static void _e_smart_layer_set(Evas_Object *obj, int layer);
-static void _e_smart_raise(Evas_Object *obj);
-static void _e_smart_lower(Evas_Object *obj);
-static void _e_smart_stack_above(Evas_Object *obj, Evas_Object *above);
-static void _e_smart_stack_below(Evas_Object *obj, Evas_Object *below);
 static void _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_smart_show(Evas_Object *obj);
@@ -73,8 +68,6 @@ e_pan_child_set(Evas_Object *obj, Evas_Object *child)
 	sd->child_h = h;
 	evas_object_event_callback_add(child, EVAS_CALLBACK_FREE, _e_smart_child_del_hook, sd);
 	evas_object_event_callback_add(child, EVAS_CALLBACK_RESIZE, _e_smart_child_resize_hook, sd);
-	evas_object_layer_set(sd->child_obj, evas_object_layer_get(sd->smart_obj));
-	evas_object_stack_above(sd->child_obj, sd->smart_obj);
 	evas_object_color_get(sd->smart_obj, &r, &g, &b, &a);
 	evas_object_color_set(sd->child_obj, r, g, b, a);
 	evas_object_clip_set(sd->child_obj, evas_object_clip_get(sd->smart_obj));
@@ -195,41 +188,6 @@ _e_smart_del(Evas_Object *obj)
    e_pan_child_set(obj, NULL);
    free(sd);
 }
-   
-static void
-_e_smart_layer_set(Evas_Object *obj, int layer)
-{
-   INTERNAL_ENTRY;
-   evas_object_layer_set(sd->child_obj, layer);
-}
-
-static void
-_e_smart_raise(Evas_Object *obj)
-{
-   INTERNAL_ENTRY;
-   evas_object_raise(sd->child_obj);
-}
-
-static void
-_e_smart_lower(Evas_Object *obj)
-{
-   INTERNAL_ENTRY;
-   evas_object_lower(sd->child_obj);
-}
-                                                             
-static void
-_e_smart_stack_above(Evas_Object *obj, Evas_Object *above)
-{
-   INTERNAL_ENTRY;
-   evas_object_stack_above(sd->child_obj, above);
-}
-   
-static void
-_e_smart_stack_below(Evas_Object *obj, Evas_Object *below)
-{
-   INTERNAL_ENTRY;
-   evas_object_stack_below(sd->child_obj, below);
-}
 
 static void
 _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
@@ -291,11 +249,17 @@ static void
 _e_smart_init(void)
 {
    if (_e_smart) return;
-   _e_smart = evas_smart_new
-     (SMART_NAME, _e_smart_add, _e_smart_del, _e_smart_layer_set,
-      _e_smart_raise, _e_smart_lower, _e_smart_stack_above,
-      _e_smart_stack_below, _e_smart_move, _e_smart_resize,
-      _e_smart_show, _e_smart_hide, _e_smart_color_set,
-      _e_smart_clip_set, _e_smart_clip_unset, NULL);
+   _e_smart = evas_smart_new(SMART_NAME,
+			     _e_smart_add,
+			     _e_smart_del, 
+			     NULL, NULL, NULL, NULL, NULL,
+			     _e_smart_move,
+			     _e_smart_resize,
+			     _e_smart_show,
+			     _e_smart_hide,
+			     _e_smart_color_set,
+			     _e_smart_clip_set,
+			     _e_smart_clip_unset,
+			     NULL);
 }
 

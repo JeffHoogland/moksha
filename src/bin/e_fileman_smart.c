@@ -181,10 +181,6 @@ struct _E_Fm_Smart_Data
 
 static void                _e_fm_smart_add(Evas_Object *object);
 static void                _e_fm_smart_del(Evas_Object *object);
-static void                _e_fm_smart_raise(Evas_Object *object);
-static void                _e_fm_smart_lower(Evas_Object *object);
-static void                _e_fm_smart_stack_above(Evas_Object *object, Evas_Object *above);
-static void                _e_fm_smart_stack_below(Evas_Object *object, Evas_Object *below);
 static void                _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void                _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 static void                _e_fm_smart_show(Evas_Object *object);
@@ -255,11 +251,7 @@ e_fm_init(void)
    e_fm_smart = evas_smart_new("e_fm",
 			       _e_fm_smart_add, /* add */
 			       _e_fm_smart_del, /* del */
-			       NULL, /* layer_set */
-			       _e_fm_smart_raise, /* raise */
-			       _e_fm_smart_lower, /* lower */
-			       _e_fm_smart_stack_above, /* stack_above */
-			       _e_fm_smart_stack_below, /* stack_below */
+			       NULL, NULL, NULL, NULL, NULL,
 			       _e_fm_smart_move, /* move */
 			       _e_fm_smart_resize, /* resize */
 			       _e_fm_smart_show, /* show */
@@ -578,58 +570,6 @@ _e_fm_smart_del(Evas_Object *object)
 
    free(sd->dir);
    free(sd);
-}
-
-static void
-_e_fm_smart_raise(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_raise(sd->clip);
-   evas_object_stack_below(sd->bg, sd->clip);
-   evas_object_stack_below(sd->layout, sd->clip);
-}
-
-static void
-_e_fm_smart_lower(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_lower(sd->clip);
-   evas_object_stack_below(sd->bg, sd->clip);
-   evas_object_stack_below(sd->layout, sd->clip);
-}
-
-static void
-_e_fm_smart_stack_above(Evas_Object *object, Evas_Object *above)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_stack_above(sd->clip, above);
-   evas_object_stack_below(sd->bg, sd->clip);
-   evas_object_stack_below(sd->layout, sd->clip);
-}
-
-static void
-_e_fm_smart_stack_below(Evas_Object *object, Evas_Object *below)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_stack_below(sd->clip, below);
-   evas_object_stack_below(sd->bg, sd->clip);
-   evas_object_stack_below(sd->layout, sd->clip);
 }
 
 static void
