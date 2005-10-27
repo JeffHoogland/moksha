@@ -19,7 +19,7 @@ struct _E_Smart_Data
    int              clip_frozen;
    int              fixed;
    unsigned char    changed : 1;
-   Evas_List       *items;
+   Evas_List       *items;         
 };
 
 struct _E_Icon_Layout_Item
@@ -42,8 +42,6 @@ static void _e_icon_layout_smart_add(Evas_Object *obj);
 static void _e_icon_layout_smart_del(Evas_Object *obj);
 static void _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
-static void _e_icon_layout_smart_show(Evas_Object *obj);
-static void _e_icon_layout_smart_hide(Evas_Object *obj);
 static void _e_icon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_icon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_icon_layout_smart_clip_unset(Evas_Object *obj);
@@ -270,6 +268,7 @@ _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    li->h = 0;
    evas_object_clip_set(obj, sd->clip);
    evas_object_smart_member_add(obj, li->sd->obj);
+   evas_object_show(obj);
    evas_object_data_set(obj, "e_icon_layout_data", li);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_icon_layout_smart_item_del_hook, NULL);
@@ -397,8 +396,8 @@ _e_icon_layout_smart_init(void)
 			     NULL, NULL, NULL, NULL, NULL,
 			     _e_icon_layout_smart_move,
 			     _e_icon_layout_smart_resize,
-			     _e_icon_layout_smart_show,
-			     _e_icon_layout_smart_hide,
+			     NULL,
+			     NULL,
 			     _e_icon_layout_smart_color_set,
 			     _e_icon_layout_smart_clip_set,
 			     _e_icon_layout_smart_clip_unset,
@@ -425,11 +424,12 @@ _e_icon_layout_smart_add(Evas_Object *obj)
    sd->yc = 0;
    sd->fixed = 0;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
-   evas_object_smart_member_add(sd->clip, obj);
    evas_object_move(sd->clip, 0, 0);
    evas_object_resize(sd->clip, 0, 0);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
    evas_object_smart_data_set(obj, sd);
+   evas_object_smart_member_add(sd->clip, obj);   
+   evas_object_show(sd->clip);
 }
 
 static void
@@ -493,29 +493,9 @@ _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->w = w;
    sd->h = h;
    sd->changed = 1;
-   _e_icon_layout_smart_reconfigure(sd);
+   _e_icon_layout_smart_reconfigure(sd);        
 }
-
-static void
-_e_icon_layout_smart_show(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (sd->items) evas_object_show(sd->clip);
-}
-
-static void
-_e_icon_layout_smart_hide(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   evas_object_hide(sd->clip);
-}
-
+ 
 static void
 _e_icon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {

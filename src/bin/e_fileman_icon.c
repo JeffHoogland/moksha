@@ -30,8 +30,6 @@ static void _e_fm_icon_smart_add         (Evas_Object *obj);
 static void _e_fm_icon_smart_del         (Evas_Object *obj);
 static void _e_fm_icon_smart_move        (Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_fm_icon_smart_resize      (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
-static void _e_fm_icon_smart_show        (Evas_Object *obj);
-static void _e_fm_icon_smart_hide        (Evas_Object *obj);
 static void _e_fm_icon_smart_clip_set    (Evas_Object *obj, Evas_Object *clip);
 static void _e_fm_icon_smart_clip_unset  (Evas_Object *obj);
 
@@ -86,8 +84,8 @@ e_fm_icon_add(Evas *evas)
 				 NULL, NULL, NULL, NULL, NULL,
 	                         _e_fm_icon_smart_move,
 	                         _e_fm_icon_smart_resize,
-	                         _e_fm_icon_smart_show,
-	                         _e_fm_icon_smart_hide,
+	                         NULL,
+	                         NULL,
 	                         NULL,
 	                         _e_fm_icon_smart_clip_set,
 	                         _e_fm_icon_smart_clip_unset,
@@ -109,6 +107,39 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    e_object_ref(E_OBJECT(file));
    sd->file = file;
    file->icon_object = obj;
+   
+   if (e_fm_file_can_preview(sd->file))
+     {
+	sd->thumb_path = e_thumb_file_get(sd->file->path);
+	if (e_thumb_exists(sd->file->path))
+	  sd->image_object = e_thumb_evas_object_get(sd->file->path,
+						     sd->evas,
+						     sd->w,
+						     sd->h);
+	else
+	  {
+	     thumb_files = evas_list_append(thumb_files, sd);
+	     if (pid == -1) _e_fm_icon_thumb_generate();
+	     _e_fm_icon_icon_mime_get(sd);
+	  }
+     }
+   else
+     {
+	_e_fm_icon_icon_mime_get(sd);
+     }
+   
+   if (sd->image_object)
+     {
+	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
+	evas_object_smart_member_add(sd->image_object, obj);
+	evas_object_show(sd->image_object);
+     }
+   
+   if(sd->saved_title)
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
+   else
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
+   
 }
 
 void
@@ -178,8 +209,25 @@ _e_fm_icon_smart_add(Evas_Object *obj)
    sd->event_object = evas_object_rectangle_add(sd->evas);
    evas_object_color_set(sd->event_object, 0, 0, 0, 0);
    evas_object_smart_member_add(sd->event_object, obj);
-
+   evas_object_show(sd->event_object);
    evas_object_smart_data_set(obj, sd);
+     
+   sd->visible = 1;
+   sd->icon_object = edje_object_add(sd->evas);
+   e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
+                           "fileman/icon");
+   evas_object_smart_member_add(sd->icon_object, obj);
+   
+   evas_object_show(sd->icon_object);
+   evas_object_show(sd->event_object);
+   
+    {
+       Evas_Coord icon_w, icon_h;
+       edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
+       evas_object_resize(sd->icon_object, icon_w, icon_h);
+       evas_object_resize(sd->event_object, icon_w, icon_h);
+       evas_object_resize(sd->obj, icon_w, icon_h);       
+    }
 }
 
 
@@ -246,90 +294,6 @@ _e_fm_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 static void
-_e_fm_icon_smart_show(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if ((!sd) && (!sd->file)) return;
-   if (sd->visible) return;
-
-   evas_object_show(sd->event_object);
-   sd->visible = 1;
-   sd->icon_object = edje_object_add(sd->evas);
-   e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
-                           "fileman/icon");
-   evas_object_smart_member_add(sd->icon_object, obj);
-
-   if (e_fm_file_can_preview(sd->file))
-     {
-	sd->thumb_path = e_thumb_file_get(sd->file->path);
-	if (e_thumb_exists(sd->file->path))
-	  sd->image_object = e_thumb_evas_object_get(sd->file->path,
-						     sd->evas,
-						     sd->w,
-						     sd->h);
-	else
-	  {
-	     thumb_files = evas_list_append(thumb_files, sd);
-	     if (pid == -1) _e_fm_icon_thumb_generate();
-	     _e_fm_icon_icon_mime_get(sd);
-	  }
-     }
-   else
-     {
-	_e_fm_icon_icon_mime_get(sd);
-     }
-
-   if (sd->image_object)
-     {
-	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
-	evas_object_smart_member_add(sd->image_object, obj);
-     }
-   if(sd->saved_title)
-     edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
-   else
-     edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
-   
-   evas_object_show(sd->icon_object);
-   
-    {
-       Evas_Coord icon_w, icon_h;
-       edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
-       evas_object_resize(sd->icon_object, icon_w, icon_h);
-       evas_object_resize(sd->event_object, icon_w, icon_h);
-       evas_object_resize(sd->obj, icon_w, icon_h);       
-    }       
-}
-
-static void
-_e_fm_icon_smart_hide(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (!sd->visible) return;
-
-   evas_object_hide(sd->event_object);
-   sd->visible = 0;
-   if (sd->icon_object)
-     {
-	evas_object_smart_member_del(sd->icon_object);
-       	evas_object_del(sd->icon_object);
-     }
-   sd->icon_object = NULL;
-   if (sd->image_object)
-     {
-	evas_object_smart_member_del(sd->image_object);
-       	evas_object_del(sd->image_object);
-     }
-   sd->image_object = NULL;
-   if (sd->thumb_path) free(sd->thumb_path);
-   sd->thumb_path = NULL;
-}
-
-static void
 _e_fm_icon_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    E_Smart_Data *sd;
@@ -338,6 +302,7 @@ _e_fm_icon_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    if (!sd) return;
 
    evas_object_clip_set(sd->event_object, clip);
+   evas_object_clip_set(sd->icon_object, clip);   
 }
 
 static void
@@ -359,7 +324,7 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
    if (sd->file->type ==  E_FM_FILE_TYPE_DIRECTORY)
      {
 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
-	                        "fileman/icons/folder");
+	                        "icons/fileman/folder");
      }
    else
      {
@@ -376,15 +341,15 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 	     for (; *ext2; ext2++)
 	       *ext2 = tolower(*ext2);
 
-	     snprintf(part, PATH_MAX, "fileman/icons/%s", (ext + 1));
+	     snprintf(part, PATH_MAX, "icons/fileman/%s", (ext + 1));
 
 	     if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
-	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "fileman/icons/file");
+	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
 
 	     free(ext);		     	     
 	  }
 	else
-	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "fileman/icons/file");
+	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
      }
 }
 

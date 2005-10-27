@@ -183,8 +183,6 @@ static void                _e_fm_smart_add(Evas_Object *object);
 static void                _e_fm_smart_del(Evas_Object *object);
 static void                _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void                _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
-static void                _e_fm_smart_show(Evas_Object *object);
-static void                _e_fm_smart_hide(Evas_Object *object);
 
 static void                _e_fm_redraw(E_Fm_Smart_Data *sd);
 
@@ -254,8 +252,8 @@ e_fm_init(void)
 			       NULL, NULL, NULL, NULL, NULL,
 			       _e_fm_smart_move, /* move */
 			       _e_fm_smart_resize, /* resize */
-			       _e_fm_smart_show, /* show */
-			       _e_fm_smart_hide, /* hide */
+			       NULL,/* show */
+			       NULL,/* hide */
 			       NULL, /* color_set */
 			       NULL, /* clip_set */
 			       NULL, /* clip_unset */
@@ -432,6 +430,17 @@ e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char
    sd->selector_data = data;
 }
 
+void
+e_fm_background_set(Evas_Object *object, Evas_Object *bg)
+{  
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   sd->bg = bg;
+}
+
 /* local subsystem functions */
 
 static void
@@ -452,25 +461,29 @@ _e_fm_smart_add(Evas_Object *object)
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
    sd->is_selector = 0;
-   sd->bg = evas_object_rectangle_add(sd->evas); // this should become an edje
-   evas_object_color_set(sd->bg, 0, 0, 0, 0);
-   evas_object_show(sd->bg);
-
+   sd->bg = edje_object_add(sd->evas);
+   evas_object_smart_member_add(sd->bg, object); 
+   evas_object_show(sd->bg);   
+   e_theme_edje_object_set(sd->selection.band.obj,
+			   "base/theme/fileman/background",
+			   "fileman/background");
    evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_DOWN,
 				  _e_fm_mouse_down_cb, sd);
    evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_UP,
 				  _e_fm_mouse_up_cb, sd);
    evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_MOVE,
 				  _e_fm_mouse_move_cb, sd);
-   evas_object_smart_member_add(sd->bg, object);
+
 
    sd->layout = e_icon_layout_add(sd->evas);
+   evas_object_smart_member_add(sd->layout, object);   
    e_icon_layout_spacing_set(sd->layout, sd->icon_info.x_space, sd->icon_info.y_space);
    evas_object_stack_above(sd->layout, sd->bg);
    evas_object_show(sd->layout);
 
    sd->clip = evas_object_rectangle_add(sd->evas);
    evas_object_smart_member_add(sd->clip, object);
+   evas_object_show(sd->clip);
    evas_object_move(sd->clip, -100000, -100000);
    evas_object_resize(sd->clip, 200000, 200000);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
@@ -479,6 +492,7 @@ _e_fm_smart_add(Evas_Object *object)
    evas_object_clip_set(sd->layout, sd->clip);
 
    sd->selection.band.obj = edje_object_add(sd->evas);
+   evas_object_smart_member_add(sd->selection.band.obj, object);
    e_theme_edje_object_set(sd->selection.band.obj,
 			   "base/theme/fileman/rubberband",
 			   "fileman/rubberband");
@@ -627,28 +641,6 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
        ev->h = sd->max.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
-}
-
-static void
-_e_fm_smart_show(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_show(sd->clip);
-}
-
-static void
-_e_fm_smart_hide(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-
-   sd = evas_object_smart_data_get(object);
-   if (!sd) return;
-
-   evas_object_hide(sd->clip);
 }
 
 static void
