@@ -24,7 +24,7 @@ group { \
 
 #define FILEMAN_ICON(TYPE) \
 group { \
-   name: "fileman/icons/"TYPE; \
+   name: "icons/fileman/"TYPE; \
    max:  64 64; \
    parts { \
       part { \
@@ -44,7 +44,7 @@ group { \
    
 #define FILEMAN_ICON_CLICKABLE(TYPE) \
 group { \
-   name: "fileman/icons/"TYPE; \
+   name: "icons/fileman/"TYPE; \
    max:  64 64; \
    parts { \
       part { \
@@ -93,7 +93,9 @@ images
    image: "e17_icon_fileman_folder.png" COMP;
    image: "e17_icon_fileman_folder_clicked.png" COMP;   
    image: "e17_icon_fileman_file.png" COMP;
-   image: "e17_icon_fileman_file_clicked.png" COMP;   
+   image: "e17_icon_fileman_file_clicked.png" COMP;
+   image: "e17_icon_fileman_home.png" COMP;
+   image: "e17_icon_fileman_desktop.png" COMP;   
    image: "e17_icon_fileman_pdf.png" COMP;
    image: "e17_icon_fileman_c.png" COMP;
    image: "e17_icon_fileman_h.png" COMP;
@@ -401,6 +403,29 @@ group {
 }
 
 group {
+   name: "fileman/background";
+   parts {
+      part {
+	 name:          "base";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    color: 255 255 255 0;
+	 }
+      }
+   }
+}
+
+group {
    name: "fileman/rubberband";
    parts {
       part {
@@ -429,6 +454,8 @@ group {
 
 FILEMAN_ICON_CLICKABLE("folder");
 FILEMAN_ICON_CLICKABLE("file");
+FILEMAN_ICON("home");
+FILEMAN_ICON("desktop");
 FILEMAN_ICON("pdf");
 FILEMAN_ICON("c");
 FILEMAN_ICON("h");
