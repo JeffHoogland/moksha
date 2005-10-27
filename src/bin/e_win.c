@@ -5,6 +5,7 @@
 
 /* local subsystem functions */
 static void _e_win_free(E_Win *win);
+static void _e_win_del(void *obj);
 static void _e_win_prop_update(E_Win *win);
 static void _e_win_state_update(E_Win *win);
 static void _e_win_cb_move(Ecore_Evas *ee);
@@ -40,6 +41,7 @@ e_win_new(E_Container *con)
    
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
+   e_object_del_func_set(E_OBJECT(win), _e_win_del);
    win->container = con;
    win->engine = e_canvas_engine_decide(e_config->evas_engine_win);
    win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
@@ -344,9 +346,22 @@ _e_win_free(E_Win *win)
 {
    e_canvas_del(win->ecore_evas);
    ecore_evas_free(win->ecore_evas);
-   if (win->border) e_object_del(E_OBJECT(win->border));
+   if (win->border)
+     {
+	e_border_hide(win->border, 1);
+	e_object_del(E_OBJECT(win->border));
+     }
    wins = evas_list_remove(wins, win);
    free(win);
+}
+
+static void
+_e_win_del(void *obj)
+{
+   E_Win *win;
+   
+   win = obj;
+   if (win->border) e_border_hide(win->border, 1);
 }
 
 static void
