@@ -211,7 +211,16 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      }
    if (!cfdata->warned)
      {
-	if (_check_matches(cfdata->border, E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT) > 1)
+	int matches = 0;
+	
+	if ((cfdata->border->client.icccm.name) &&
+	    (cfdata->border->client.icccm.class) &&
+	    (strlen(cfdata->border->client.icccm.name) > 0) &&
+	    (strlen(cfdata->border->client.icccm.class) > 0))
+	  matches = _check_matches(cfdata->border, E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT);
+	else
+	  matches = _check_matches(cfdata->border, E_REMEMBER_MATCH_TITLE | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT);
+	if (matches > 1)
 	  {
 	     E_Dialog *dia;
 	     
@@ -251,7 +260,13 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      }
    if (cfdata->border->remember)
      {
-	cfdata->border->remember->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
+	if ((cfdata->border->client.icccm.name) &&
+	    (cfdata->border->client.icccm.class) &&
+	    (strlen(cfdata->border->client.icccm.name) > 0) &&
+	    (strlen(cfdata->border->client.icccm.class) > 0))
+	  cfdata->border->remember->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
+	else
+	  cfdata->border->remember->match = E_REMEMBER_MATCH_TITLE | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
 	if (cfdata->mode == MODE_GEOMETRY)
 	  cfdata->border->remember->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
 	else if (cfdata->mode == MODE_LOCKS)
@@ -427,15 +442,28 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    o = e_widget_list_add(evas, 0, 0);
    
    of = e_widget_framelist_add(evas, _("Remember using"), 0);
-   ob = e_widget_check_add(evas, _("Window name and class"), &(cfdata->remember.match_name));
-   e_widget_framelist_object_append(of, ob);
+   if ((cfdata->border->client.icccm.name) &&
+       (cfdata->border->client.icccm.class) &&
+       (strlen(cfdata->border->client.icccm.name) > 0) &&
+       (strlen(cfdata->border->client.icccm.class) > 0))
+     {
+	ob = e_widget_check_add(evas, _("Window name and class"), &(cfdata->remember.match_name));
+	e_widget_framelist_object_append(of, ob);
+     }
+   else
+     {
+	cfdata->remember.match_name = 0;
+	cfdata->remember.match_class = 0;
+     }
    if (strlen(e_border_name_get(cfdata->border)) > 0)
      {
 	ob = e_widget_check_add(evas, _("Title"), &(cfdata->remember.match_title));
 	e_widget_framelist_object_append(of, ob);
      }
    else
-     cfdata->remember.match_title = 0;
+     {
+	cfdata->remember.match_title = 0;
+     }
    if ((cfdata->border->client.icccm.window_role) && 
        (strlen(cfdata->border->client.icccm.window_role) > 0))
      {
@@ -443,14 +471,18 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	e_widget_framelist_object_append(of, ob);
      }
    else
-     cfdata->remember.match_role = 0;
+     {
+	cfdata->remember.match_role = 0;
+     }
    if (cfdata->border->client.netwm.type != ECORE_X_WINDOW_TYPE_UNKNOWN)
      {
 	ob = e_widget_check_add(evas, _("Window type"), &(cfdata->remember.match_type));
 	e_widget_framelist_object_append(of, ob);
      }
    else
-     cfdata->remember.match_type = 0;
+     {
+	cfdata->remember.match_type = 0;
+     }
    ob = e_widget_check_add(evas, _("Transience"), &(cfdata->remember.match_transient));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
