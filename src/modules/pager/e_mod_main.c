@@ -745,9 +745,18 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);
    evas_object_show(o);
 
+   o = e_layout_add(face->evas);
+   pd->layout_object = o;
+   evas_object_intercept_move_callback_add(o, _pager_desk_cb_intercept_move, pd);
+   evas_object_intercept_resize_callback_add(o, _pager_desk_cb_intercept_resize, pd);
+
+   e_layout_virtual_size_set(o, desk->zone->w, desk->zone->h);
+   edje_object_part_swallow(pd->desk_object, "items", pd->layout_object);
+   evas_object_show(o);
+
    o = evas_object_rectangle_add(face->evas);
    pd->event_object = o;
-   evas_object_layer_set(o, 2);
+   evas_object_layer_set(o, 1);
    evas_object_repeat_events_set(o, 1);
    evas_object_color_set(o, 0, 0, 0, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,  _pager_desk_cb_mouse_in,  pd);
@@ -756,15 +765,6 @@ _pager_desk_new(Pager_Face *face, E_Desk *desk, int xpos, int ypos)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _pager_desk_cb_mouse_up, pd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _pager_desk_cb_mouse_move, pd);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL, _pager_desk_cb_mouse_wheel, pd);
-   evas_object_show(o);
-
-   o = e_layout_add(face->evas);
-   pd->layout_object = o;
-   evas_object_intercept_move_callback_add(o, _pager_desk_cb_intercept_move, pd);
-   evas_object_intercept_resize_callback_add(o, _pager_desk_cb_intercept_resize, pd);
-
-   e_layout_virtual_size_set(o, desk->zone->w, desk->zone->h);
-   edje_object_part_swallow(pd->desk_object, "items", pd->layout_object);
    evas_object_show(o);
 
    bl = e_container_border_list_first(desk->zone->container);
