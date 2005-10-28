@@ -3,19 +3,22 @@
  */
 #include "e.h"
     
+/*- DESCRIPTION -*/
+/* This widget simply wraps e_file_selector into a widget. When a file is 
+ * selected, the assigned value to valptr changes and contains the new file.
+ */ 
 
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    Evas_Object *o_fm;
    char **valptr;
-   Ecore_Event_Handler *change_handler;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int  _e_wid_text_change(void *data, Evas_Object *entry, char *key);
-    
+static void _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data);
+        
 /* local subsystem functions */
 
 static void
@@ -33,33 +36,18 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
    e_widget_focus_steal(data);
 }
 
-static int
-_e_wid_text_change(void *data, Evas_Object *entry, char *key)
+static void
+_e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
 {
-#if 0   
    E_Widget_Data *wd;
    int size;
    
-   wd = data;      
+   wd = data;
    
-   if(*(wd->valptr) == NULL) 
-     {
-	size = (strlen(key) + 1) * sizeof(char);
-	*(wd->valptr) = realloc(*(wd->valptr), size);   
-	snprintf(*(wd->valptr), size, "%s", key);
-     }
-   else
-     {
-	char *tmp;
-	
-	size = (strlen(*(wd->valptr)) + strlen(key) + 1) * sizeof(char);
-	tmp = E_NEW(char *, strlen(*(wd->valptr)) + 1);
-	snprintf(tmp, strlen(*(wd->valptr)) + 1, "%s", *(wd->valptr));	
-	*(wd->valptr) = realloc(*(wd->valptr), size);   
-	snprintf(*(wd->valptr), size, "%s%s\0", tmp, key);
-	E_FREE(tmp);
-     }
-#endif   
+   E_FREE(*(wd->valptr));
+   size = (strlen(file) + 1) * sizeof(char);
+   *(wd->valptr) = E_NEW(char *, size);
+   snprintf(*(wd->valptr), size, "%s", file);      
 }
 
 /* externally accessible functions */
@@ -78,26 +66,15 @@ e_widget_fileman_add(Evas *evas, char **val)
    wd->valptr = val;
    e_widget_data_set(obj, wd);
    
-   bg = edje_object_add(evas);
-   e_theme_edje_object_set(bg, "base/theme/widgets/fileselector",
-			   "widgets/fileselector/main");   
-   evas_object_show(bg);
-   
-   o = e_fm_add(evas);
-   wd->o_fm = o;
-   
-   scrollbar = e_scrollbar_add(evas);
-   e_scrollbar_direction_set(scrollbar, E_SCROLLBAR_VERTICAL);
-   
-   edje_object_part_swallow(bg, "items", wd->o_fm);
-   edje_object_part_swallow(bg, "vscrollbar", scrollbar);
-   evas_object_show(bg);
-   evas_object_resize(bg, 300, 200);
+   wd->o_fm = e_file_selector_add(evas);
+   e_file_selector_callback_add(wd->o_fm, _e_wid_fileman_selected_cb, wd);
+   evas_object_show(wd->o_fm);   
+   evas_object_resize(wd->o_fm, 300, 200);
    e_widget_min_size_set(obj, 300, 200);
-      
-   e_widget_sub_object_add(obj, bg);
-   evas_object_event_callback_add(bg, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
-   e_widget_resize_object_set(obj, bg);
+   
+   e_widget_sub_object_add(obj, wd->o_fm);
+   evas_object_event_callback_add(wd->o_fm, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
+   e_widget_resize_object_set(obj, wd->o_fm);
    
    return obj;         
 }

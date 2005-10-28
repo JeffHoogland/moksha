@@ -155,51 +155,14 @@ static void
 _e_wid_activate_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   E_Fileman *fileman;
-   E_Popup *popup;
-   E_Zone *zone;
-   E_Dialog *dia;
-   Evas_Object *table;
-   Evas_Object *button;
-   Evas *evas;
-   Evas_Object *ol;
-   Evas_Coord w, h;
+   E_File_Dialog *dia;
    
    wd = e_widget_data_get(obj);
    
-   dia = e_dialog_new(wd->con);
-   
-   evas = dia->win->evas;   
-   
-   ol = e_widget_list_add(evas, 0, 1);
-   
-   table = e_widget_frametable_add(evas, "Places", 0);
-      
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, "Home", "fileman/home", NULL,
-							   NULL, NULL),
-				     0, 0, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, " Desktop", "fileman/desktop", NULL,
-							   NULL, NULL),
-				     0, 1, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, " Icons", "fileman/folder", NULL,
-							   NULL, NULL),
-				     0, 2, 1, 1, 1, 0, 1, 0);   
-   
-   e_widget_list_object_append(ol, table, 1, 1, 0.0);
-   
-   table = e_widget_frametable_add(evas, "Select File", 0);   
-   
-   e_widget_frametable_object_append(table, e_widget_fileman_add(evas, NULL),
-				     0, 0, 4, 4, 1, 1, 1, 1);
-
-   e_widget_list_object_append(ol, table, 1, 1, 0.0);
-   
-   e_widget_min_size_get(ol, &w, &h);
-   e_dialog_content_set(dia, ol, w, h);
-   e_dialog_title_set(dia, "Select File");
-   e_dialog_show(dia);   
+   dia = e_file_dialog_new(wd->con);
+   if(!dia) return;
+   e_file_dialog_title_set(dia, "Select File");
+   e_file_dialog_show(dia);
 }
 
 static void

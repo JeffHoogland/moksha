@@ -105,7 +105,9 @@ e_thumb.h \
 e_int_border_remember.h \
 e_eap_editor.h \
 e_widget_iconsel.h \
-e_widget_fileman.h
+e_widget_fileman.h \
+e_file_selector.h \
+e_file_dialog.h 
 
 enlightenment_src = \
 e_user.c \
@@ -192,6 +194,8 @@ e_int_border_remember.c \
 e_eap_editor.c \
 e_widget_iconsel.c \
 e_widget_fileman.c \
+e_file_selector.c \
+e_file_dialog.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
