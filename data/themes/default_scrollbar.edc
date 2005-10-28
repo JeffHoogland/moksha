@@ -368,9 +368,9 @@ group {
       SCROLLBAR_BUTTON("right_right_arrow", 1.0, 0.5, -18, -8, "e17_scrollbar_arrow_right.png")
    }
    programs {
-      SCROLLBAR_BUTTON_PROG("left_left_arrow", "left")
-      SCROLLBAR_BUTTON_PROG("right_left_arrow", "left")
-      SCROLLBAR_BUTTON_PROG("right_right_arrow", "right")
+      SCROLLBAR_BUTTON_PROG("left_left_arrow","left")
+      SCROLLBAR_BUTTON_PROG("right_left_arrow","left")
+      SCROLLBAR_BUTTON_PROG("right_right_arrow","right")
    }
 }
 group {
@@ -428,9 +428,9 @@ group {
 	  SCROLLBAR_BUTTON("down_down_arrow", 0.5, 1.0, -8, -18, "e17_scrollbar_arrow_down.png")
    }
    programs {
-      SCROLLBAR_BUTTON_PROG("up_up_arrow", "up")
-	SCROLLBAR_BUTTON_PROG("down_up_arrow", "up")
-	  SCROLLBAR_BUTTON_PROG("down_down_arrow", "down")
+      SCROLLBAR_BUTTON_PROG("up_up_arrow","up")
+	SCROLLBAR_BUTTON_PROG("down_up_arrow","up")
+	  SCROLLBAR_BUTTON_PROG("down_down_arrow","down")
    }
 }
 group {
