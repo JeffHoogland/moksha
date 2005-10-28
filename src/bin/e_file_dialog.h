@@ -19,11 +19,15 @@ struct _E_File_Dialog
    E_Dialog            *dia;
    
    char                *file;
+   
+   void (*select_func)(E_File_Dialog *dia, char *file, void *data);
+   void  *select_data;
 };
 
 EAPI E_File_Dialog  *e_file_dialog_new               (E_Container *con);
 EAPI void            e_file_dialog_show              (E_File_Dialog *dia);
 EAPI void            e_file_dialog_title_set         (E_File_Dialog *dia, const char *title);
-    
+EAPI void            e_file_dialog_select_callback_add(E_File_Dialog *dia, void (*func)(E_File_Dialog *dia, char *file, void *data), void *data);
+
 #endif
 #endif

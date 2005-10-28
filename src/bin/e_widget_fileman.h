@@ -7,6 +7,7 @@
 #define E_WIDGET_FM_H
 
 EAPI Evas_Object     *e_widget_fileman_add(Evas *evas, char **val);
+EAPI void             e_widget_fileman_select_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data);
 
 #endif
 #endif

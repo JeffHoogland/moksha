@@ -86,3 +86,4 @@
 #include "e_eap_editor.h"
 #include "e_file_selector.h"
 #include "e_file_dialog.h"
+#include "e_widget_fileman.h"

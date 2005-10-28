@@ -39,6 +39,8 @@ static void                _e_icon_layout_smart_move_resize_item(E_Icon_Layout_I
 
 static void _e_icon_layout_smart_init(void);
 static void _e_icon_layout_smart_add(Evas_Object *obj);
+static void _e_icon_layout_smart_show(Evas_Object *obj);
+static void _e_icon_layout_smart_hide(Evas_Object *obj);
 static void _e_icon_layout_smart_del(Evas_Object *obj);
 static void _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
@@ -396,13 +398,35 @@ _e_icon_layout_smart_init(void)
 			     NULL, NULL, NULL, NULL, NULL,
 			     _e_icon_layout_smart_move,
 			     _e_icon_layout_smart_resize,
-			     NULL,
-			     NULL,
+			     _e_icon_layout_smart_show,
+			     _e_icon_layout_smart_hide,
 			     _e_icon_layout_smart_color_set,
 			     _e_icon_layout_smart_clip_set,
 			     _e_icon_layout_smart_clip_unset,
 			     NULL);
 }
+
+static void
+_e_icon_layout_smart_show(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   evas_object_show(sd->clip);
+}
+
+static void
+_e_icon_layout_smart_hide(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   evas_object_hide(sd->clip);
+}
+   
+
 
 static void
 _e_icon_layout_smart_add(Evas_Object *obj)

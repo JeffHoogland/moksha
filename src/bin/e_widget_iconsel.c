@@ -7,9 +7,13 @@ typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    E_Container *con;
+   Evas_Object *obj;
    Evas_Object *o_button;
    Evas_Object *o_icon;
    char **valptr;
+   
+   void (*select_func) (Evas_Object *obj, char *file, void *data);
+   void  *select_data;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -19,6 +23,8 @@ static void _e_wid_active_hook_cb(E_Fileman *fileman, char *file, void *data);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_select_cb(E_File_Dialog *dia, char *file, void *data);
+    
 /* local subsystem functions */
 
 /* externally accessible functions */
@@ -38,6 +44,9 @@ e_widget_iconsel_add(Evas *evas, Evas_Object *icon, Evas_Coord minw, Evas_Coord 
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->valptr = file;
+   wd->select_func = NULL;
+   wd->select_data = NULL;
+   wd->obj = obj;
    e_widget_data_set(obj, wd);
    
    man = e_manager_current_get();
@@ -91,6 +100,9 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->valptr = file;
+   wd->select_func = NULL;
+   wd->select_data = NULL;   
+   wd->obj = obj;
    e_widget_data_set(obj, wd);
    
    o = edje_object_add(evas);
@@ -122,6 +134,16 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
    e_widget_min_size_set(obj, mw, mh);
    
    return obj;
+}
+
+void
+e_widget_iconsel_select_callback_add(Evas_Object *obj, void (*func)(Evas_Object *obj, char *file, void *data), void *data)
+{    
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   wd->select_func = func;
+   wd->select_data = data;     
 }
 
 static void
@@ -162,6 +184,7 @@ _e_wid_activate_hook(Evas_Object *obj)
    dia = e_file_dialog_new(wd->con);
    if(!dia) return;
    e_file_dialog_title_set(dia, "Select File");
+   e_file_dialog_select_callback_add(dia, _e_wid_select_cb, wd);
    e_file_dialog_show(dia);
 }
 
@@ -213,4 +236,28 @@ static void
 _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    e_widget_focus_steal(data);
+}
+
+static void
+_e_wid_select_cb(E_File_Dialog *dia, char *file, void *data)
+{
+   E_Widget_Data *wd;
+   char *ext;
+   
+   wd = data;
+   
+   ext = strrchr(file, '.');
+   if(!ext)
+     return;
+   if(strcasecmp(ext, ".png") && strcasecmp(ext, ".jpg") &&
+	 strcasecmp(ext, ".jpeg"))
+     return;   
+   
+   if(wd->select_func)
+     wd->select_func(wd->obj, file, wd->select_data);
+      
+   e_icon_file_set(wd->o_icon, file);
+   E_FREE(*(wd->valptr));
+   *(wd->valptr) = strdup(file);
+   e_object_del(dia);
 }

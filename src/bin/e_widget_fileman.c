@@ -11,8 +11,11 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
+   Evas_Object *wid;
    Evas_Object *o_fm;
    char **valptr;
+   void (*select_func) (Evas_Object *obj, char *file, void *data);
+   void  *select_data;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -43,11 +46,21 @@ _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
    int size;
    
    wd = data;
+
+/* this is crashing, see why */
+#if 0
+   if(*(wd->valptr) != NULL)
+     E_FREE(*(wd->valptr));
    
-   E_FREE(*(wd->valptr));
    size = (strlen(file) + 1) * sizeof(char);
    *(wd->valptr) = E_NEW(char *, size);
-   snprintf(*(wd->valptr), size, "%s", file);      
+   snprintf(*(wd->valptr), size, "%s", file);
+#endif   
+   if(wd->select_func)
+     wd->select_func(wd->wid, file, wd->select_data);
+   
+   
+   printf("e_widget_fileman: %s\n", file);
 }
 
 /* externally accessible functions */
@@ -64,6 +77,8 @@ e_widget_fileman_add(Evas *evas, char **val)
 
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->valptr = val;
+   wd->select_func = NULL;
+   wd->select_data = NULL;
    e_widget_data_set(obj, wd);
    
    wd->o_fm = e_file_selector_add(evas);
@@ -76,5 +91,16 @@ e_widget_fileman_add(Evas *evas, char **val)
    evas_object_event_callback_add(wd->o_fm, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, wd->o_fm);
    
+   wd->wid = obj;
    return obj;         
+}
+
+void
+e_widget_fileman_select_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data)
+{
+   E_Widget_Data *wd;   
+   
+   wd = e_widget_data_get(obj);
+   wd->select_func = func;
+   wd->select_data = data;
 }

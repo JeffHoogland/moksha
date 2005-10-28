@@ -181,6 +181,8 @@ struct _E_Fm_Smart_Data
 
 static void                _e_fm_smart_add(Evas_Object *object);
 static void                _e_fm_smart_del(Evas_Object *object);
+static void                _e_fm_smart_show(Evas_Object *object);
+static void                _e_fm_smart_hide(Evas_Object *object);
 static void                _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void                _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
 
@@ -252,8 +254,8 @@ e_fm_init(void)
 			       NULL, NULL, NULL, NULL, NULL,
 			       _e_fm_smart_move, /* move */
 			       _e_fm_smart_resize, /* resize */
-			       NULL,/* show */
-			       NULL,/* hide */
+			       _e_fm_smart_show,/* show */
+			       _e_fm_smart_hide,/* hide */
 			       NULL, /* color_set */
 			       NULL, /* clip_set */
 			       NULL, /* clip_unset */
@@ -444,6 +446,30 @@ e_fm_background_set(Evas_Object *object, Evas_Object *bg)
 /* local subsystem functions */
 
 static void
+_e_fm_smart_show(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_show(sd->bg);
+   evas_object_show(sd->layout);
+   evas_object_show(sd->clip);
+}
+
+static void
+_e_fm_smart_hide(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_hide(sd->clip);
+}
+
+static void
 _e_fm_smart_add(Evas_Object *object)
 {
    char dir[PATH_MAX];
@@ -476,6 +502,7 @@ _e_fm_smart_add(Evas_Object *object)
 
 
    sd->layout = e_icon_layout_add(sd->evas);
+   evas_object_repeat_events_set(sd->layout, 1);
    evas_object_smart_member_add(sd->layout, object);   
    e_icon_layout_spacing_set(sd->layout, sd->icon_info.x_space, sd->icon_info.y_space);
    evas_object_stack_above(sd->layout, sd->bg);
@@ -1611,7 +1638,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    E_Menu      *mn;
    E_Menu_Item *mi;
    int x, y, w, h;
-
+   
    ev = event_info;
    sd = data;
 
