@@ -408,9 +408,10 @@ e_hints_window_init(E_Border *bd)
 	     if (!strncmp(str, "E_START|", 8))
 	       {
 		  int id;
-		  
+
 		  id = atoi(str + 8);
 		  if (id > 0) bd->client.netwm.startup_id = id;
+		  e_util_env_set("DESKTOP_STARTUP_ID", NULL);
 	       }
 	     free(str);
 	  }
