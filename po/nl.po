@@ -1,0 +1,1534 @@
+# translation of nl.po to Dutch
+# Dutch translation of E17
+# Enlightenment dutch translation.
+# This file is put in the public domain.
+# Aboe <niels.abspoel@wanadoo.nl> 2005
+# 
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: nl\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2005-04-17 14:47+0200\n"
+"PO-Revision-Date: 2005-10-25 12:01+0200\n"
+"Last-Translator: aboe <niels.abspoel@wanadoo.nl>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
+
+#: src/modules/cpufreq/e_mod_main.c:455
+#, c-format
+msgid "%i MHz"
+msgstr "%i MHz"
+
+#: src/modules/cpufreq/e_mod_main.c:457
+#, c-format
+msgid "%i.%i GHz"
+msgstr "%i.%i GHz"
+
+#: src/bin/e_int_menus.c:271
+msgid "(No Applications)"
+msgstr "(Geen toepassing )"
+
+#: src/bin/e_int_menus.c:444
+msgid "(No Windows)"
+msgstr "(Geen Venster)"
+
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
+msgid "Desktop Name"
+msgstr "Bureaubladnaam"
+
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
+msgid "Enable Popup"
+msgstr "Popup aanzetten"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
+msgid "Popup Speed"
+msgstr "Popup snelheid "
+
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
+msgid "Fix Aspect (Keep Height)"
+msgstr "Vaste Grootte (Hoogte Behouden)"
+
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
+msgid "Fix Aspect (Keep Width)"
+msgstr "Vaste Grootte (breedte behouden)"
+
+#: src/modules/pager/e_mod_main.c:397
+msgid "None"
+msgstr "Niets"
+
+#: src/modules/pager/e_mod_main.c:405
+msgid "Top"
+msgstr "boven"
+
+#: src/modules/pager/e_mod_main.c:413
+msgid "Bottom"
+msgstr "Onder"
+
+#: src/bin/e_int_menus.c:520
+msgid "(Unused)"
+msgstr "(Ongebruikt)"
+
+#: src/modules/battery/e_mod_main.c:418
+msgid "1 hour"
+msgstr "1 uur"
+
+#: src/modules/battery/e_mod_main.c:383
+msgid "10 mins"
+msgstr "10 Minuten"
+
+#: src/modules/temperature/e_mod_main.c:596
+msgid "100C"
+msgstr "100°C"
+
+#: src/modules/temperature/e_mod_main.c:500
+msgid "10C"
+msgstr "10°C"
+
+#: src/modules/battery/e_mod_main.c:390
+msgid "20 mins"
+msgstr "20 Minuten"
+
+#: src/modules/temperature/e_mod_main.c:507
+#: src/modules/temperature/e_mod_main.c:540
+msgid "20C"
+msgstr "20°C"
+
+#: src/modules/battery/e_mod_main.c:397
+msgid "30 mins"
+msgstr "30 Minuten"
+
+#: src/modules/temperature/e_mod_main.c:514
+#: src/modules/temperature/e_mod_main.c:547
+msgid "30C"
+msgstr "30°C"
+
+#: src/modules/temperature/e_mod_main.c:521
+#: src/modules/temperature/e_mod_main.c:554
+msgid "40C"
+msgstr "40°C"
+
+#: src/modules/battery/e_mod_main.c:404
+msgid "40 mins"
+msgstr "40 Minuten"
+
+#: src/modules/temperature/e_mod_main.c:528
+#: src/modules/temperature/e_mod_main.c:561
+msgid "50C"
+msgstr "50°C"
+
+#: src/modules/temperature/e_mod_main.c:530
+#: src/modules/temperature/e_mod_main.c:563
+msgid "50 mins"
+msgstr "50 Minuten"
+
+#: src/bin/e_int_menus.c:580
+msgid "Applications"
+msgstr "Toepassingen"
+
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "Bestanden"
+
+#: src/modules/temperature/e_mod_main.c:568
+msgid "60C"
+msgstr "60°C"
+
+#: src/modules/temperature/e_mod_main.c:575
+msgid "70C"
+msgstr "70°C"
+
+#: src/modules/temperature/e_mod_main.c:582
+msgid "80C"
+msgstr "80°C"
+
+#: src/modules/temperature/e_mod_main.c:589
+msgid "90C"
+msgstr "90°C"
+
+#: src/modules/battery/e_mod_main.c:99
+msgid ""
+"A basic battery meter that uses either ACPI or APM\n"
+"on Linux to monitor your battery and AC power adaptor\n"
+"status. This will only work under Linux and is only\n"
+"as accurate as your BIOS or kernel drivers."
+msgstr ""
+"Een batterij-meter die ACPI of APM gebruikt\n"
+"om de batterij-stand en Netspanning aangeeft.\n"
+"Dit werkt alleen onder Linux; de nauwkeurigheid hangt "
+"af van je BIOS of Kerneldriver."
+
+#: src/modules/temperature/e_mod_main.c:97
+msgid ""
+"A module to measure the ACPI Thermal sensor on Linux.\n"
+"It is especially useful for modern Laptops with high speed\n"
+"CPUs that generate a lot of heat."
+msgstr ""
+"Een module om de ACPI Thermosensor te meten in Linux.\n"
+"Het is in bijzonder handig voor moderne Laptops met snelle\n"
+"Processoren die veel warmte afgeven."
+
+#: src/modules/pager/e_mod_main.c:136
+msgid "A pager module to navigate virtual desktops."
+msgstr "Een pager module om tussen je virtuele bureaubladen te wisselen."
+
+#: src/modules/cpufreq/e_mod_main.c:108
+msgid ""
+"A simple module to control the frequency of the system CPU. This is "
+"especially useful to save power on laptops."
+msgstr ""
+"Een simpele module om de frequentie van je systeem Processor te controleren "
+"Speciaal handig om energie te sparen in Laptops."
+
+#: src/modules/clock/e_mod_main.c:96
+msgid "A simple module to give E17 a clock."
+msgstr "Een eenvoudige klok voor E17."
+
+#: src/modules/clock/e_mod_main.c:330
+msgid "No Digital Display"
+msgstr "Geen Digitale Klok"
+
+#: src/modules/clock/e_mod_main.c:352
+msgid "24 Hour"
+msgstr "24 uren"
+
+#: src/modules/clock/e_mod_main.c:364
+msgid "Digital Display"
+msgstr "Digitale Klok"
+
+#: src/bin/e_int_menus.c:101 src/bin/e_int_menus.c:209
+msgid "About Enlightenment"
+msgstr "Over Enlightenment"
+
+#: src/bin/e_module.c:380
+msgid "About..."
+msgstr "Over..."
+
+#: src/bin/e_border.c:4280
+msgid "Always On Top"
+msgstr "Altijd op Voorgrond"
+
+#: src/bin/e_border.c:5757
+msgid "Always Below"
+msgstr "Altijd op Achtergrond"
+
+#: src/bin/e_main.c:366
+msgid "Artificially slowing startup so you can see it all."
+msgstr "Kunstmatig vertragen zodat u alles kunt zien."
+
+#: src/modules/ibar/e_mod_main.c:717
+msgid "Auto fit icons"
+msgstr "Icons automatisch aanpassen"
+
+#: src/modules/cpufreq/e_mod_main.c:433
+msgid "Automatic"
+msgstr "Automatisch"
+
+#: src/bin/e_gadman.c:526
+msgid "Automatic Height"
+msgstr "Automatisch Hoogte"
+
+#: src/bin/e_gadman.c:483
+msgid "Automatic Width"
+msgstr "Automatische Breedte"
+
+#: src/modules/battery/e_mod_main.c:905
+msgid "BAD DRIVER"
+msgstr "Foutief Stuurprogramma"
+
+#: src/modules/battery/e_mod_main.c:89
+msgid "Battery"
+msgstr "Batterij"
+
+#: src/modules/battery/e_mod_main.c:688
+msgid "Battery Running Low"
+msgstr "Batterij is bijna leeg"
+
+#: src/bin/e_border.c:5586
+msgid "Border"
+msgstr "Vensterraam"
+
+#: src/bin/e_border.c:4475
+msgid "Borderless"
+msgstr "Raamloos"
+
+#: src/modules/cpufreq/e_mod_main.c:107
+msgid "CPU Frequency Controller Module"
+msgstr "CPU Frequentie Controle module"
+
+#: src/bin/e_gadman.c:509
+msgid "Center Horizontally"
+msgstr "Horizontaal Centreren"
+
+#: src/bin/e_gadman.c:552
+msgid "Center Vertically"
+msgstr "Verticaal Centreren"
+
+#: src/modules/battery/e_mod_main.c:1001
+msgid "Charging"
+msgstr "Laden"
+
+#: src/modules/cpufreq/e_mod_main.c:387
+msgid "Check Fast (0.5 sec)"
+msgstr "Snel opvragen (0.5 sec)"
+
+#: src/modules/battery/e_mod_main.c:430
+msgid "Check Fast (1 sec)"
+msgstr "Snel opvragen (1 sec)"
+
+#: src/modules/temperature/e_mod_main.c:184
+#: src/modules/temperature/e_mod_main.c:608
+msgid "Check Interval"
+msgstr "Opvraag interval"
+
+#: src/modules/cpufreq/e_mod_main.c:394
+msgid "Check Medium (1 sec)"
+msgstr "Normaal opvragen (1 sec)"
+
+#: src/modules/battery/e_mod_main.c:437
+msgid "Check Medium (5 sec)"
+msgstr "Normaal opvragen (5 sec)"
+
+#: src/modules/battery/e_mod_main.c:444
+msgid "Check Normal (10 sec)"
+msgstr "Normaal opvragen (10 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:401
+msgid "Check Normal (2 sec)"
+msgstr "Normaal opvragen (2 sec)"
+
+#: src/modules/battery/e_mod_main.c:451
+msgid "Check Slow (30 sec)"
+msgstr "Langzaam opvragen (30 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:408
+msgid "Check Slow (5 sec)"
+msgstr "langzaam opvragen (5 sec)"
+
+#: src/modules/cpufreq/e_mod_main.c:415
+msgid "Check Very Slow (30 sec)"
+msgstr "Zeer langzaam opvragen (30 sec)"
+
+#: src/modules/battery/e_mod_main.c:458
+msgid "Check Very Slow (60 sec)"
+msgstr "Zeer langzaam opvragen (60 sec)"
+
+#: src/bin/e_int_menus.c:496
+msgid "Cleanup Windows"
+msgstr "Vensters Opruimen"
+
+#: src/modules/clock/e_mod_main.c:86
+msgid "Clock"
+msgstr "Klok"
+
+#: src/bin/e_border.c:3483
+msgid "Close"
+msgstr "Sluiten"
+
+#: src/bin/e_configure.c:38
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment configuratie"
+
+#: src/bin/e_module.c:395
+msgid "Configuration"
+msgstr "Configuratie"
+
+#: src/bin/e_config.c:875
+msgid "Configuration Upgraded"
+msgstr "Configuratie Vernieuwd"
+
+#: src/bin/e_config.c:135
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new confiugration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"Uw configuratie moet vernieuwd worden. Uw oude configuratie\n"
+"instellingen worden door Standaardwaarde overschreven. Dit gebeurt\n"
+"regelmatig tijdens de Ontwikkelingsfase Dus rapporteer dit,\n"
+"als een fout! Dit betekent simpel weg Enlightenment heeft nieuwe instellingen\n"
+"nodig om nieuwe functies te gebruiken\n"
+"De nieuwe configuratie maakt dit mogelijk.\n"
+"U kan daarna uw instellingen weer wijzigen naar u believen.\n"
+"Het spijt ons dat u uw aanpassingen opnieuw moet uitvoeren.\n"
+
+#: src/bin/e_container.c:102
+#, c-format
+msgid "Container %d"
+msgstr "Container %d"
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Near"
+msgstr "Dichtbij"
+
+#: src/modules/cpufreq/e_mod_main.c:98
+msgid "CpuFreq"
+msgstr "CpuFreq"
+
+#: src/bin/e_border.c:3459
+msgid "Create Icon"
+msgstr "Icon maken"
+
+#: src/modules/battery/e_mod_main.c:997
+msgid "Danger"
+msgstr "Gevaar"
+
+#: src/modules/dropshadow/e_mod_main.c:300
+msgid "Dark"
+msgstr "Donker"
+
+#: src/bin/e_desk.c:44
+#, c-format
+msgid "Desktop %d, %d"
+msgstr "Bureaublad %d, %d"
+
+#: src/bin/e_int_menus.c:76
+msgid "Desktops"
+msgstr "Bureaubladen"
+
+#: src/modules/battery/e_mod_main.c:376
+msgid "Disable"
+msgstr "Uit"
+
+#: src/bin/e_config_dialog.c:112 src/bin/e_module.c:399 src/bin/e_error.c:196
+#: src/bin/e_error.c:205 src/modules/ibar/e_mod_main.c:1682
+msgid "OK"
+msgstr "OK"
+
+#: src/bin/e_config_dialog.c:113
+msgid "Apply"
+msgstr "Overnemen"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Cancel"
+msgstr "Afbreken"
+
+#: src/bin/e_config_dialog.c:84
+msgid "Advanced..."
+msgstr "volgende..."
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic..."
+msgstr "Basis..."
+
+#: src/bin/e_int_config_focus.c:103
+msgid "Click Window to Focus"
+msgstr "Venster aanklikken voor activatie"
+
+#: src/bin/e_int_config_focus.c:105
+msgid "Window under the Mouse"
+msgstr "Venster onder muis activeren"
+
+#: src/bin/e_int_config_focus.c:107
+msgid "Most recent Window under the Mouse"
+msgstr "Nieuwste Venster onder de muis activeren"
+
+#: src/bin/e_int_config_focus.c:142
+msgid "Focus"
+msgstr "Activeren"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click to focus"
+msgstr "Klikken om te activeren"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Pointer focus"
+msgstr "Aanwijsactivatie"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Sloppy focus"
+msgstr "Slordige Activatie"
+
+#: src/bin/e_int_config_focus.c:152
+msgid "New Window Focus"
+msgstr "Nieuw Venster activatie"
+
+#: src/bin/e_int_config_focus.c:154
+msgid "No new windows get focus"
+msgstr "Nieuw venster wordt niet actief"
+
+#: src/bin/e_int_config_focus.c:156
+msgid "All new windows get focus"
+msgstr "Alle nieuwe vensters worden actief"
+
+#: src/bin/e_int_config_focus.c:158
+msgid "Only new dialogs get focus"
+msgstr "Alleen nieuwe dialogen worden actief"
+
+#: src/bin/e_int_config_focus.c:160
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "Alleen nieuwe dialogen worden actief als het hoofdvenster actief is"
+
+#: src/bin/e_int_config_focus.c:164
+msgid "Other Settings"
+msgstr "Andere instellingen"
+
+#: src/bin/e_int_config_focus.c:165
+msgid "Always pass on caught click events to programs"
+msgstr "Altijd gevangen klikken aan programma doorgeven"
+
+#: src/bin/e_int_config_focus.c:167
+msgid "A click on a window always raises it"
+msgstr "Een klik op het venster haalt het omhoog"
+
+#: src/bin/e_int_config_focus.c:169
+msgid "A click in a window always focuses it"
+msgstr "Een klik op het venster activeert het"
+
+#: src/bin/e_init.c:110
+msgid "Disable this splash screen in the future?"
+msgstr "Dit splash-scherm in de toekomst niet meer weergeven?"
+
+#: src/modules/dropshadow/e_mod_main.c:125
+msgid "Dropshadow"
+msgstr "Schaduw"
+
+#: src/bin/e_border.c:3433
+msgid "Edit Icon"
+msgstr "Icon bewerken"
+
+#: src/bin/e_int_menus.c:514 src/modules/clock/e_mod_main.c:311
+#: src/modules/temperature/e_mod_main.c:723
+#: src/modules/battery/e_mod_main.c:563
+#: src/modules/pager/e_mod_main.c:420
+#: src/modules/cpufreq/e_mod_main.c:814
+#: src/modules/ibar/e_mod_main.c:554
+msgid "Edit Mode"
+msgstr "Bewerkmodus"
+
+#: src/bin/e_int_menus.c:813 src/bin/e_theme_about.c:41
+msgid "About This Theme"
+msgstr "Over dit Thema"
+
+#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2781
+#: src/bin/e_utils.c:213
+msgid "Run Error"
+msgstr "bewerkingsfout"
+
+#: src/bin/e_module.c:384
+msgid "Enabled"
+msgstr "Aan"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "%s starten"
+
+#: src/bin/e_gadman.c:563
+msgid "End Edit Mode"
+msgstr "Bewerkmodus beeindigen"
+
+#: src/bin/e_main.c:350
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/modules/battery/e_mod_main.c:98
+msgid "Enlightenment Battery Module"
+msgstr "Enlightenment Batterij-Module"
+
+#: src/modules/clock/e_mod_main.c:95
+msgid "Enlightenment Clock Module"
+msgstr "Enlightenment Klok-Module"
+
+#: src/modules/dropshadow/e_mod_main.c:134
+msgid "Enlightenment Dropshadow Module"
+msgstr "Enlightenment Schaduw-Module"
+
+#: src/modules/ibar/e_mod_main.c:158
+msgid "Enlightenment IBar Module"
+msgstr "Enlightenment IBar-Module"
+
+#: src/bin/e_main.c:335
+msgid "Enlightenment IPC setup error!"
+msgstr "Enlightenment Fout in de IPC-Instellingen!"
+
+#: src/modules/pager/e_mod_main.c:135
+msgid "Enlightenment Pager Module"
+msgstr "Enlightenment Pager-Module"
+
+#: src/modules/start/e_mod_main.c:81
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment Startknop-Module"
+
+#: src/bin/e_main.c:352
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment start. een moment."
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid "Enlightenment Temperature Module"
+msgstr "Enlightenment Temperatuur-Module"
+
+#: src/modules/test/e_mod_main.c:66
+msgid "Enlightenment Test Module"
+msgstr "Enlightenment Test-Module"
+
+#: src/bin/e_main.c:155
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het ECore-Subsysteem niet\n"
+"initialiseren! Is het Geheugen vol?"
+
+#: src/bin/e_main.c:241
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment kan geen Mappen in  Home-map maken.\n"
+"Misschien heeft u geen Home-map, of de Harde Schijf is vol?"
+
+#: src/bin/e_main.c:182
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment kan de Verbinding met de X-Server niet initialiseren.\n"
+"Heeft U de DISPLAY-Variabele ingesteld?"
+
+#: src/bin/e_main.c:221
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het Evas Systeem niet initialiseren.\n"
+"Misschien heeft u niet genoeg vrij geheugen?"
+
+#: src/bin/e_main.c:229
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het Bestandsubsysteem niet initialiseren.\n"
+"Misschien heeft u niet genoeg vrij geheugen?"
+
+#: src/bin/e_main.c:213
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het IPC-Subsysteem niet initialiseren.\n"
+"Misschien heeft u niet genoeg vrij geheugen?"
+
+#: src/bin/e_main.c:205
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het Verbindingssysteem niet initialiseren.\n"
+"Misschien heeft u niet genoeg geheugen?"
+
+#: src/bin/e_main.c:171
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het HUP-Signaalbeheerder niet initialiseren.\n"
+"Misschien heeft u niet genoeg geheugen?"
+
+#: src/bin/e_main.c:165
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het Exit-Signaalbeheer niet initialiseren.\n"
+"Misschien heeft u niet genoeg geheugen?"
+
+#: src/bin/e_main.c:278
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan het Startscherm niet initialiseren.\n"
+"Misschien heeft u niet genoeg geheugen?"
+
+#: src/bin/e_main.c:294
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenment kan zijn Programma-Subsysteem niet initialiseren."
+
+#: src/bin/e_main.c:257
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenment kan zijn Configuratie-Subsysteem niet initialiseren."
+
+#: src/bin/e_main.c:268
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenment kan zijn Font-Subsysteem niet initialiseren."
+
+#: src/bin/e_main.c:318
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenment kan zijn Module-Subsysteem niet initialiseren."
+
+#: src/bin/e_main.c:249
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment kan zijn zoekpad niet initialiseren.\n"
+"Misschien heeft u niet genoeg geheugen?"
+
+#: src/bin/e_main.c:305 src/bin/e_main.c:336
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an exisiting copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+"Enlightenment kan het IPC-Socket niet initialiseren.\n"
+"Het wordt mogelijk al door een ander Enlightenment gebruikt.\n"
+"Controleer of Enlightenment niet misschien al op dit Scherm loopt.\n"
+"Als dit niet werkt kunt u alle bestanden in ~/.ecore/enlightenment-*\n"
+"wissen en opnieuw opstarten."
+
+#: src/bin/e_main.c:189
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Enlightenment kan Xinerama niet gebruiken.\n"
+"Dit moet niet gebeuren."
+
+#: src/bin/e_main.c:286
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Enlightenment kon zich voor geen enkel Beeldscherm als venster Manager\n"
+"aanbieden. Misschien loopt er al een andere venster Manager?\n"
+
+#: src/bin/e_error.c:354
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment: fout!"
+
+#: src/modules/ibar/e_mod_main.c:789n
+msgid "Enormous"
+msgstr "Enorm groot"
+
+#: src/modules/battery/e_mod_main.c:46
+#, c-format
+msgid ""
+"Error initializing Module: Battery\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: Batterij\n"
+"Het heeft een minimale Versie nodig van de Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/clock/e_mod_main.c:41
+#, c-format
+msgid ""
+"Error initializing Module: Clock\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: Klok\n"
+"Het heeft een minimale Versie nodig van de Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/dropshadow/e_mod_main.c:78
+#, c-format
+msgid ""
+"Error initializing Module: Dropshadow\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: Schaduw\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/ibar/e_mod_main.c:106
+#, c-format
+msgid ""
+"Error initializing Module: IBar\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: IBar\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/pager/e_mod_main.c:80
+#, c-format
+msgid ""
+"Error initializing Module: Pager\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: Pager\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/temperature/e_mod_main.c:44
+#, c-format
+msgid ""
+"Error initializing Module: Temperature\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: Temperatuur\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/cpufreq/e_mod_main.c:58
+#, c-format
+msgid ""
+"Error initializing Module: cpufreq\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: CpuFreq\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/start/e_mod_main.c:29
+#, c-format
+msgid ""
+"Error initializing Module: start\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: start\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/modules/test/e_mod_main.c:10
+#, c-format
+msgid ""
+"Error initializing Module: test\n"
+"It requires a minimum module API version of: %i.\n"
+"The module API advertized by Enlightenment is: %i.\n"
+"Aborting module."
+msgstr ""
+"Fout bij het Initialiseren van de Module: test\n"
+"Het heeft een minimale Versie nodig van Module-API van: %i.\n"
+"De bij Enlightenment bekende Module-API is: %i.\n"
+"Laden van de Module word afgebroken."
+
+#: src/bin/e_module.c:97 src/bin/e_module.c:108 src/bin/e_module.c:130
+msgid "Error loading Module"
+msgstr "Fout bij het Laden van de Module"
+
+#: src/bin/e_border.c:3533
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"Fout bij het starten van de Icon-Editor\n"
+"\n"
+"Installeer e_util_eapp_edit\n"
+"of verzekert U er zich van dat het in PATH zit.\n"
+
+#: src/bin/e_int_menus.c:116
+msgid "Exit Enlightenment"
+msgstr "Enlightenment verlaten"
+
+#: src/modules/start/e_mod_main.c:82
+msgid "Experimental Button module for E17"
+msgstr "Experimentele Startknop-Module voor E17"
+
+#: src/modules/dropshadow/e_mod_main.c:366
+msgid "Extremely Near"
+msgstr "Extreem dichtbij"
+
+#: src/modules/ibar/e_mod_main.c:775
+msgid "Extremely Large"
+msgstr "Extreem Groot"
+
+#: src/modules/battery/e_mod_main.c:929
+msgid "FULL"
+msgstr "VOL"
+
+#: src/modules/dropshadow/e_mod_main.c:339
+msgid "Far"
+msgstr "Ver"
+
+#: src/modules/temperature/e_mod_main.c:460
+msgid "Fast (1 sec)"
+msgstr "Vaak (1 sek)"
+
+#: src/bin/e_int_menus.c:608
+msgid "Configuration Panel"
+msgstr "Configuratie Paneel"
+
+#: src/bin/e_int_menus.c:612 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Activerings Instellingen"
+
+#: src/bin/e_int_menus.c:57
+msgid "Favorite Applications"
+msgstr "Favoriete Toepassingen"
+
+#: src/modules/ibar/e_mod_main.c:802
+msgid "Follower"
+msgstr "Volger"
+
+#: src/bin/e_gadman.c:541
+msgid "Full Screen Height"
+msgstr "Volledige Scherm Hoogte"
+
+#: src/bin/e_gadman.c:498
+msgid "Full Screen Width"
+msgstr "Volledige Scherm Breedte"
+
+#: src/bin/e_border.c:4682
+msgid "Fullscreen"
+msgstr "Volledig Scherm"
+
+#: src/bin/e_border.c:5621
+msgid "User"
+msgstr "Gebruiker"
+
+#: src/bin/e_border.c:5629
+msgid "Application"
+msgstr "Toepassing"
+
+#: src/modules/dropshadow/e_mod_main.c:252
+msgid "Fuzzy"
+msgstr "Vaag"
+
+#: src/bin/e_int_menus.c:92
+msgid "Gadgets"
+msgstr "Gadgets"
+
+#: src/modules/ibar/e_mod_main.c:796
+msgid "Gigantic"
+msgstr "Gigantisch"
+
+#: src/bin/e_gadman.c:536
+msgid "Half Screen Height"
+msgstr "Halve scherm Hoogte"
+
+#: src/bin/e_gadman.c:493
+msgid "Half Screen Width"
+msgstr "Halve Scherm Breedte"
+
+#: src/modules/battery/e_mod_main.c:989
+msgid "High"
+msgstr "Hoog"
+
+#: src/modules/dropshadow/e_mod_main.c:448
+msgid "High Quality"
+msgstr "Hoge Kwaliteit"
+
+#: src/modules/dropshadow/e_mod_main.c:458
+msgid "Medium Quality"
+msgstr "Normale kwaliteit"
+
+#: src/modules/dropshadow/e_mod_main.c:468
+msgid "Low Quality"
+msgstr "Lage kwaliteit"
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:616
+msgid "High Temperature"
+msgstr "Hoge Temperatuur"
+
+#: src/modules/ibar/e_mod_main.c:782
+msgid "Huge"
+msgstr "Reusachtig"
+
+#: src/modules/ibar/e_mod_main.c:149
+msgid "IBar"
+msgstr "IBar"
+
+#: src/bin/e_border.c:3532
+msgid "Icon Edit Error"
+msgstr "Icon Bewerkingsfout"
+
+#: src/bin/e_border.c:3396
+msgid "Iconify"
+msgstr "Minimaliseren"
+
+#: src/modules/dropshadow/e_mod_main.c:375
+msgid "Immediately Underneath"
+msgstr "Direct eronder"
+
+#: src/bin/e_border.c:5670
+msgid "Kill"
+msgstr "Doden"
+
+#: src/modules/ibar/e_mod_main.c:761
+msgid "Large"
+msgstr "Groot"
+
+#: src/bin/e_border.c:5590
+msgid "Lifespan"
+msgstr "Levensloop"
+
+#: src/modules/dropshadow/e_mod_main.c:309
+msgid "Light"
+msgstr "Licht"
+
+#: src/bin/e_int_menus.c:107
+msgid "Lost Windows"
+msgstr "Verloren Venster"
+
+#: src/bin/e_border.c:5776
+msgid "Locks"
+msgstr "vergrendelen"
+
+#: src/modules/battery/e_mod_main.c:993
+msgid "Low"
+msgstr "Laag"
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:612
+msgid "Low Temperature"
+msgstr "Lage Temperatuur"
+
+#: src/modules/cpufreq/e_mod_main.c:431
+msgid "Manual"
+msgstr "Handmatig"
+
+#: src/bin/e_border.c:5615
+msgid "Match by Class"
+msgstr "Bij Klasse passend"
+
+#: src/bin/e_border.c:5614
+msgid "Match by Name"
+msgstr "Bij Namen passend"
+
+#: src/bin/e_border.c:5617
+msgid "Match by Role"
+msgstr "Bij rol passend"
+
+#: src/bin/e_border.c:5616
+msgid "Match by Title"
+msgstr "Bij Titel passend"
+
+#: src/bin/e_border.c:5619
+msgid "Match by Transient Status"
+msgstr "Bij voorbijgaande Status passend"
+
+#: src/bin/e_border.c:5618
+msgid "Match by Window Type"
+msgstr "Bij Venstertype passend"
+
+#: src/modules/cpufreq/e_mod_main.c:434
+msgid "Maximum Speed"
+msgstr "Maximale Snelheid"
+
+#: src/bin/e_border.c:3411
+msgid "Maximized"
+msgstr "Maximaliseren"
+
+#: src/modules/ibar/e_mod_main.c:754 src/modules/dropshadow/e_mod_main.c:261
+msgid "Medium"
+msgstr "Middel"
+
+#: src/modules/temperature/e_mod_main.c:467
+msgid "Medium (5 sec)"
+msgstr "Middel (5 sek)"
+
+#: src/modules/ibar/e_mod_main.c:726
+msgid "Microscopic"
+msgstr "Microscopisch"
+
+#: src/modules/ibar/e_mod_main.c:105 src/modules/test/e_mod_main.c:9
+#: src/modules/cpufreq/e_mod_main.c:57 src/modules/clock/e_mod_main.c:40
+#: src/modules/pager/e_mod_main.c:79 src/modules/temperature/e_mod_main.c:43
+#: src/modules/dropshadow/e_mod_main.c:77 src/modules/battery/e_mod_main.c:45
+msgid "Module API Error"
+msgstr "Module API Fout"
+
+#: src/modules/test/e_mod_main.c:24
+msgid "Module Config Menu Item 1"
+msgstr "Module Configuratie Menu item 1"
+
+#: src/modules/test/e_mod_main.c:26
+msgid "Module Config Menu Item  2"
+msgstr "Module Configuratie Menu item 2"
+
+#: src/modules/test/e_mod_main.c:28
+msgid "Module Config Menu Item  3"
+msgstr "Module Configuratie Menu item 3"
+
+#: src/bin/e_int_menus.c:68
+msgid "Modules"
+msgstr "Modules"
+
+#: src/bin/e_main.c:368
+msgid "Most features do not work yet, and those that do are buggy."
+msgstr "Vele mogelijkheden werken nog niet, en die wel werken, zijn meestal onstabiel."
+
+#: src/modules/battery/e_mod_main.c:881
+msgid "NO BAT"
+msgstr "GEEN BATTERIJ"
+
+#: src/modules/battery/e_mod_main.c:750
+msgid "NO INFO"
+msgstr "GEEN INFORMATIE"
+
+#: src/bin/e_int_menus.c:361
+msgid "New Column of Desktops"
+msgstr "Nieuwe kolom van Bureaubladen"
+
+#: src/bin/e_int_menus.c:353
+msgid "New Row of Desktops"
+msgstr "Nieuwe Regel van Bureaubladen"
+
+#: src/modules/temperature/e_mod_main.c:474
+msgid "Normal (10 sec)"
+msgstr "Normaal (10 sec)"
+
+#: src/modules/ibar/e_mod_main.c:804
+msgid "Options"
+msgstr "Opties"
+
+#: src/bin/e_main.c:110
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+"Opties:\n"
+"\t-display DISPLAY\n"
+"\t\tMet Beeldscherm DISPLAY verbinden.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tEen nep Xinerama Beeldscherm met de aangegeven Geometrie word\n"
+"\t\tbijgevoegd. U kunt er zoveel bijvoegen als u wilt; elke\n"
+"\t\tvervangt een echt Xinerama-Beeldscherm (ipv. de echte).\n"
+"\t\tHierdoor kunt u. Xinerama nabootsen.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-Goed\n"
+"\t\tZeer Goed.\n"
+"\t-Slecht\n"
+"\t\tZeer Slecht.\n"
+"\t-Psychotisch\n"
+"\t\tZeer psychotisch.\n"
+
+#: src/modules/randr/e_mod_main.c:82
+msgid "Randr"
+msgstr "Randr"
+
+#: src/modules/randr/e_mod_main.c:93
+msgid "Enlightenment Randr Module"
+msgstr "Enlightenment Randr Module"
+
+#: src/modules/randr/e_mod_main.c:94
+msgid "Module to change screen resolution for E17"
+msgstr "Een Module om in E17 de Beeldscherm resolutie te veranderen"
+
+#: src/modules/randr/e_mod_main.c:196
+msgid "Restore Resolution on Startup"
+msgstr "Beeldscherm Resolutie bij het opstarten herstellen"
+
+#: src/modules/randr/e_mod_main.c:219
+msgid "Resolution"
+msgstr "Beeldscherm Resolutie"
+
+#: src/modules/desktopname/e_mod_main.c:77
+msgid "DesktopName"
+msgstr "Bureaubladnaam"
+
+#: src/modules/desktopname/e_mod_main.c:86
+msgid "Enlightenment DesktopName Module"
+msgstr "Enlightenment Bureaubladnaam Module"
+
+#: src/modules/desktopname/e_mod_main.c:87
+msgid "Experimental module for E17: display desktop name on screen."
+msgstr "Experimentele Module voor E17: om de bureaublad namen op het Beeldscherm tonen."
+
+#: src/modules/desktopname/e_mod_main.c:135
+msgid "Very Slow"
+msgstr "Zeer Langzaam"
+
+#: src/modules/desktopname/e_mod_main.c:142
+msgid "Slow"
+msgstr "Langzaam"
+
+#: src/modules/desktopname/e_mod_main.c:156
+msgid "Fast"
+msgstr "Snel"
+
+#: src/modules/desktopname/e_mod_main.c:163
+msgid "Very Fast"
+msgstr "Zeer Snel"
+
+#: src/modules/pager/e_mod_main.c:126
+msgid "Pager"
+msgstr "Pager"
+
+#: src/bin/e_border.c:5783
+msgid "Remember"
+msgstr "Herinneren"
+
+#: src/bin/e_border.c:5626
+msgid "Remember Border"
+msgstr "Vensterraam herinneren"
+
+#: src/bin/e_border.c:5628
+msgid "Remember Desktop"
+msgstr "Bureaublad Herinneren"
+
+#: src/bin/e_border.c:5625
+msgid "Remember Locks"
+msgstr "Vergrendeling herinneren"
+
+#: src/bin/e_border.c:5622
+msgid "Remember Position"
+msgstr "Positie Herinneren"
+
+#: src/bin/e_border.c:5629
+msgid "Remember Shaded State"
+msgstr "Inklapstatus herinneren"
+
+#: src/bin/e_border.c:5623
+msgid "Remember Size"
+msgstr "Grote Herinneren"
+
+#: src/bin/e_border.c:5631
+msgid "Remember Skip Window List"
+msgstr "Overgeslagen Venster lijst herinneren"
+
+#: src/bin/e_border.c:5624
+msgid "Remember Stacking"
+msgstr "Volgorde Herinneren"
+
+#: src/bin/e_border.c:5627
+msgid "Remember Stickiness"
+msgstr "Kleefstatus herinneren"
+
+#: src/bin/e_border.c:5611
+msgid "Remember This Instance Only"
+msgstr "Alleen deze keer herinneren"
+
+#: src/bin/e_border.c:5604
+msgid "Remember This Window"
+msgstr "Alleen dit Venster herinneren"
+
+#: src/bin/e_border.c:5630
+msgid "Remember Zone"
+msgstr "Zone herinneren"
+
+#: src/bin/e_int_menus.c:365
+msgid "Remove Column of Desktops"
+msgstr "Verwijder kolom van Bureaubladen"
+
+#: src/bin/e_int_menus.c:357
+msgid "Remove Row of Desktops"
+msgstr "Verwijder regel van Bureaubladen"
+
+#: src/bin/e_int_menus.c:130
+msgid "Run Command"
+msgstr "Commando uitvoeren"
+
+#: src/bin/e_int_menus.c:148
+msgid "File Manager"
+msgstr "Bestandsbeheer"
+
+#: src/bin/e_int_menus.c:110
+msgid "Restart Enlightenment"
+msgstr "Herstart Enlightenment"
+
+#: src/bin/e_border.c:3536
+msgid "Send To"
+msgstr "Stuur Naar"
+
+#: src/modules/battery/e_mod_main.c:194 src/modules/battery/e_mod_main.c:473
+msgid "Set Alarm"
+msgstr "Alarm instellen"
+
+#: src/modules/cpufreq/e_mod_main.c:198 src/modules/cpufreq/e_mod_main.c:478
+msgid "Set Controller"
+msgstr "Regelaar instellen"
+
+#: src/modules/cpufreq/e_mod_main.c:191 src/modules/cpufreq/e_mod_main.c:472
+#: src/modules/battery/e_mod_main.c:190 src/modules/battery/e_mod_main.c:469
+msgid "Set Poll Time"
+msgstr "Tussentijd instellen"
+
+#: src/modules/cpufreq/e_mod_main.c:206 src/modules/cpufreq/e_mod_main.c:485
+msgid "Set Speed"
+msgstr "Snelheid instellen"
+
+#: src/bin/e_border.c:3404
+msgid "Shaded"
+msgstr "Ingeklapt"
+
+#: src/modules/dropshadow/e_mod_main.c:270
+msgid "Sharp"
+msgstr "Scherp"
+
+#: src/modules/ibar/e_mod_main.c:808
+msgid "Size"
+msgstr "Grote"
+
+#: src/bin/e_border.c:5762
+msgid "Skip Window List"
+msgstr "Vensterlijst overslaan"
+
+#: src/modules/temperature/e_mod_main.c:481
+msgid "Slow (30 sec)"
+msgstr "Langzaam (30 sec)"
+
+#: src/modules/ibar/e_mod_main.c:747
+msgid "Small"
+msgstr "Klein"
+
+#: src/modules/test/e_mod_main.c:32
+msgid "Something Else"
+msgstr "Iets anders"
+
+#: src/modules/start/e_mod_main.c:72
+msgid "Start"
+msgstr "Start"
+
+#: src/bin/e_border.c:3418
+msgid "Sticky"
+msgstr "Plakkerig"
+
+#: src/bin/e_border.c:5600 src/bin/e_border.c:5613
+msgid "Shade"
+msgstr "Inklapstatus"
+
+#: src/bin/e_border.c:5601 src/bin/e_border.c:5614
+msgid "Maximize"
+msgstr "Maximaliseren"
+
+#: src/bin/e_border.c:5790
+msgid "Stacking"
+msgstr "Gestapeld"
+
+#: src/modules/temperature/e_mod_main.c:87
+msgid "Temperature"
+msgstr "Temperatuur"
+
+#: src/modules/test/e_mod_main.c:59
+msgid "Test!!!"
+msgstr "Test!!!"
+
+#: src/bin/e_int_menus.c:108
+msgid "Themes"
+msgstr "Thema's"
+
+#: src/bin/e_module.c:98
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"No module named %s could be found in the\n"
+"module search directories\n"
+msgstr ""
+"Bij het Laden van Module %s is een Fout opgetreden.\n"
+"Er was geen Module met de Naam %s in de\n"
+"Module-map gevonden.\n"
+
+#: src/modules/cpufreq/e_mod_main.c:270
+#: src/modules/cpufreq/e_mod_main.c:288
+msgid "CPU Frequency ERROR"
+msgstr "CPU Frequentie FOUT"
+
+#: src/modules/cpufreq/e_mod_main.c:271
+#: src/modules/cpufreq/e_mod_main.c:279
+msgid ""
+"There was an error trying to set the cpu frequency\n"
+"governor via the module's setfreq utility."
+msgstr ""
+"Er is een Fout bij het instellen van de CPU-Frequentie\n"
+"via het module eigen setfreq Hulpprogramma."
+
+#: src/bin/e_module.c:109 src/bin/e_module.c:131
+#, c-format
+msgid ""
+"There was an error loading module named: %s\n"
+"The full path to this module is:\n"
+"%s\n"
+"The error reported was:\n"
+"%s"
+msgstr ""
+"Bij het Laden van Module %s is een Fout opgetreden.\n"
+"Het volledige Pad naar de Module is:\n"
+"%s\n"
+"De gemelde fout was:\n"
+"%s"
+
+#: src/bin/e_int_menus.c:210
+#, c-format
+msgid ""
+"This is Enlightenment %s.\n"
+"Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+"\n"
+"We hope you enjoy using this software as much as we enjoyed writing it.\n"
+"\n"
+"Please think of the aardvarks. They need some love too."
+msgstr ""
+"Dit is Enlightenment %s.\n"
+"Copyright © 1999-2005: Het Enlightenment ontwikkelingsteam.\n"
+"\n"
+"Wij hopen dat u met het gebruik van de Software net zoveel plezier heeft als, wij hadden met het schrijven ervan.\n"
+"\n"
+"En denk aan de Aardvarkens . Die hebben ook wat liefde nodig?"
+
+#: src/bin/e_main.c:367
+msgid "This is development code, so be warned."
+msgstr "Dit is ontwikkelingscode dus wees gewaarschuwd."
+
+#: src/bin/e_main.c:327
+msgid ""
+"This is program has barely been started on, so it is not complete by a long\n"
+"shot. Please do NOT expect anything to work properly at this stage. It's\n"
+"being worked on.\n"
+"\n"
+"Hit \"OK\" to dismiss this dialog and continue using Enlightenment 0.17."
+msgstr ""
+"Wij zijn pas begonnen aan dit Programma het is nog niet compleet\n"
+"Verwacht in dit Stadium dat nog niet alles feilloos werkt. \n"
+"Veel mist er nog, Veel functioneert nog niet, maar wij werken eraan.\n"
+"\n"
+"Klik op \"OK\", om Enlightenment 0.17 verder te gebruiken."
+
+#: src/modules/ibar/e_mod_main.c:159
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.\n"
+"It is a first example module and is being used to flesh out several\n"
+"Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+"so expect it to break often and change as it improves."
+msgstr ""
+"De IBar-Module stelt een Programmastartlijst voor.\n"
+"Het is eerste opzet module en word gebruikt\n"
+"om in Enlightenment 0.17 bediening uit te proberen. Het is dan ook\n"
+"vanzelfsprekend dat Versie naar Versie sterke veranderingen mogelijk zijn\n"
+"Zo ga ervan uit dat het vaak breekt, als we bezig zijn ."
+
+#: src/modules/dropshadow/e_mod_main.c:135
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast\n"
+"on the desktop background - without special X-Server extensions\n"
+"or hardware acceleration."
+msgstr ""
+"Dit is de schaduw-Module. Met zijn Hulp kunnen Vensters schaduwen\n"
+"op het bureaublad werpen -- zonder extra X-Server-uitbreidingen\n"
+"of Hardware-versnelling."
+
+#: src/modules/test/e_mod_main.c:67
+msgid ""
+"This module is VERY simple and is only used to test the basic\n"
+"interface of the Enlightenment 0.17.0 module system. Please\n"
+"Ignore this module unless you are working on the module system."
+msgstr ""
+"Dit is een simpele Module, om de Modulebediening in\n"
+"Enlightenment 0.17.0 te testen. Het is alleen voor Ontwikkelaars\n"
+"om  Ontwikkelingen te gebruiken; doet u dit niet, negeer deze module dan."
+
+#: src/modules/ibar/e_mod_main.c:733
+msgid "Tiny"
+msgstr "Klein"
+
+#: src/modules/dropshadow/e_mod_main.c:357
+msgid "Very Near"
+msgstr "Zeer dichtbij"
+
+#: src/modules/dropshadow/e_mod_main.c:291
+msgid "Very Dark"
+msgstr "Zeer Donker"
+
+#: src/modules/dropshadow/e_mod_main.c:330
+msgid "Very Far"
+msgstr "Zeer Ver"
+
+#: src/modules/dropshadow/e_mod_main.c:243
+msgid "Very Fuzzy"
+msgstr "Zeer Vaag"
+
+#: src/modules/ibar/e_mod_main.c:768
+msgid "Very Large"
+msgstr "Zeer Groot"
+
+#: src/modules/dropshadow/e_mod_main.c:318
+msgid "Very Light"
+msgstr "Zeer Licht"
+
+#: src/modules/dropshadow/e_mod_main.c:279
+msgid "Very Sharp"
+msgstr "Zeer Scherp"
+
+#: src/modules/temperature/e_mod_main.c:488
+msgid "Very Slow (60 sec)"
+msgstr "Zeer Langzaam (60 sec)"
+
+#: src/modules/ibar/e_mod_main.c:740
+msgid "Very Small"
+msgstr "Zeer Klein"
+
+#: src/bin/e_main.c:326
+msgid "Welcome to Enlightenment 0.17"
+msgstr "Welkom bij Enlightenment 0.17"
+
+#: src/bin/e_int_menus.c:84
+msgid "Windows"
+msgstr "Venster"
+
+#: src/bin/e_init.c:34
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "De X-Server deelt mee, dat het geen Root-Venster heeft, maar %i Beeldschermen!\n"
+
+#: src/modules/battery/e_mod_main.c:689
+msgid ""
+"Your battery is running low.\n"
+"You may wish to switch to an AC source."
+msgstr ""
+"De batterij is bijna leeg.\n"
+"Misschien wilt u overstappen op net stroom."
+
+#: src/bin/e_config.c:149
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your confiugration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"Uw configuratie is Nieuwer dan die van Enlightenment. Dat is onverwacht.\n"
+"Dit mag niet voorkomen, het is alleen mogelijk als je naar een oudere Versie\n"
+"van Enlightenment er overheen hebt gezet of een Configuratie bestand geïnstalleerd\n"
+"die van een nieuwere Verse afkomt. Dit kan tot slechte\n"
+"Effecten zorgen; daarom word zekerheidshalve de Standaardinstellingen\n"
+"gebruikt. Wij verontschuldigen ons hiervoor.\n"
+
