@@ -411,7 +411,6 @@ e_hints_window_init(E_Border *bd)
 
 		  id = atoi(str + 8);
 		  if (id > 0) bd->client.netwm.startup_id = id;
-		  e_util_env_set("DESKTOP_STARTUP_ID", NULL);
 	       }
 	     free(str);
 	  }

@@ -139,6 +139,8 @@ main(int argc, char **argv)
    if (getenv("NOSTARTUP")) nostartup = 1;
    if (getenv("RESTART")) after_restart = 1;
    
+   if (getenv("DESKTOP_STARTUP_ID")) e_util_env_set("DESKTOP_STARTUP_ID", NULL);
+   
    e_util_env_set("RESTART", "1");
 
    e_intl_init();
