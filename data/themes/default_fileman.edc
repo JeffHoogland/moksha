@@ -258,7 +258,7 @@ group {
             }
             rel2 {
                relative: 1.0 1.0;
-               offset: 0 0;            
+               offset: -16 0;            
             }
          }
       }      
@@ -286,7 +286,7 @@ group {
 }
 
 group {
-   name: "fileman/icon";
+   name: "fileman/icon_normal";
    min:  48 48;
    max:  128 128;
    parts {
@@ -388,6 +388,118 @@ group {
 	    rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -6 -6;
+	    }
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:   "button_click";
+	 signal: "mouse,down,1";
+	 source: "";
+	 action: SIGNAL_EMIT "clicked" "";
+      }            
+   }   
+}
+
+group {
+   name: "fileman/icon_list";
+//   min:  12 12;
+//   max:  12 12;
+   parts {
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {	 
+	    state:    "default" 0.0;
+	    min:      16 16;
+	    max:      16 16;
+	    align:    1.0 1.0;
+	    fixed:    1 1;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2    2;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   2   -3;
+	    }
+	 }	 
+      }
+      part {
+	 name:          "icon_title";      
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 description {	 
+	    state: "default" 0.0;
+	    min:      16 16;
+	    rel1 {
+	       to_x:     "icon_swallow";
+	       relative: 1.0  0.0;
+	       offset:   2 2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2 -2;
+	    }
+	    color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text:     "No Title";
+	       font:     "Edje-Vera";
+	       size:     10;
+	       //min:      1 1;
+	       align:    0.0 1.0;
+	    }
+	 }	 
+      }
+      part {
+	 name:          "icon_event";
+	 type:          RECT;
+	 mouse_events:  1;
+	 description {	 
+	   state: "default" 0.0;
+	   color: 0 0 0 0;
+	}	 
+      }      
+/*
+      part {
+	 name:          "icon_title";
+	 type:          TEXTBLOCK;
+	 effect:        NONE;
+	 description {
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   5 -20;
+	    }	   
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -6 1000;
+	    }	    
+	    color:      0 0 0 255;
+	    //color3:     0 0 0 32;
+	    text {
+	       text:     "No Title";
+	       style:    "fileman_icon_style";
+	       min: 1 1;
+	    }
+	 }
+      }
+*/
+      part {
+	 name:          "icon_title_edit_swallow";
+	 type:          SWALLOW;
+	 effect:        NONE;
+	 description {
+	    rel1 {
+	       to_x:     "icon_swallow";
+	       relative: 1.0  0.0;
+	       offset:   2 2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2 -2;
 	    }
 	 }
       }
