@@ -89,11 +89,12 @@ e_fm_file_new(const char *filename)
    if (file->name[0] == '.')
      file->type |= E_FM_FILE_TYPE_HIDDEN;
 
-   file->preview_funcs = E_NEW(E_Fm_File_Preview_Function, 4);
+   file->preview_funcs = E_NEW(E_Fm_File_Preview_Function, 5);
    file->preview_funcs[0] = e_fm_file_is_image;
    file->preview_funcs[1] = e_fm_file_is_etheme;
    file->preview_funcs[2] = e_fm_file_is_ebg;
    file->preview_funcs[3] = e_fm_file_is_eap;
+   file->preview_funcs[4] = NULL;
 
    D(("e_fm_file_new: %s\n", filename));
    return file;
@@ -178,9 +179,10 @@ e_fm_file_can_preview(E_Fm_File *file)
    int i;
 
    D(("e_fm_file_can_preview: (%s) (%p)\n", file->name, file));
-   for (i = 0; i < sizeof(file->preview_funcs)/sizeof(E_Fm_File_Preview_Function); i++)
+   for (i = 0; file->preview_funcs[i]; i++)
      {
 	E_Fm_File_Preview_Function func;
+	printf("%d\n", i);
 	func = file->preview_funcs[i];
 	if (func(file))
 	  return 1;
