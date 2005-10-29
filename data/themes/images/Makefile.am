@@ -403,4 +403,18 @@ e17_button_sm.png \
 e17_button_sm2.png \
 e17_button_sm_disabled.png \
 e17_menu_check0.png \
-e17_menu_radio0.png
+e17_menu_radio0.png \
+e17_sb_barh1.png \
+e17_sb_barh2.png \
+e17_sb_barv1.png \
+e17_sb_barv2.png \
+e17_sb_btd1.png \
+e17_sb_btd2.png \
+e17_sb_btl1.png \
+e17_sb_btl2.png \
+e17_sb_btr1.png \
+e17_sb_btr2.png \
+e17_sb_btu1.png \
+e17_sb_btu2.png \
+e17_sb_runnerh.png \
+e17_sb_runnerv.png

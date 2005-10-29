@@ -54,6 +54,7 @@ collections {
 #include "default_radio.edc"
 #include "default_frame.edc"
 #include "default_button.edc"
-#include "default_label.edc"   
+#include "default_label.edc"
+#include "default_scrollframe.edc"
 }
 

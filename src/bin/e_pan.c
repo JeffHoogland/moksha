@@ -89,13 +89,13 @@ void
 e_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    API_ENTRY return;
-   sd->px = x;
-   sd->py = y;
-   if (x > (sd->w - sd->child_w)) x = sd->w - sd->child_w;
-   if (y > (sd->h - sd->child_h)) y = sd->h - sd->child_h;
+   if (x > (sd->child_w - sd->w)) x = sd->child_w - sd->w;
+   if (y > (sd->child_h - sd->h)) y = sd->child_h - sd->h;
    if (x < 0) x = 0;
    if (y < 0) y = 0;
    if ((x == sd->px) && (y == sd->py)) return;
+   sd->px = x;
+   sd->py = y;
    _e_smart_reconfigure(sd);
    evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
@@ -114,12 +114,12 @@ e_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
    API_ENTRY return;
    if (x)
      {
-	if (sd->w > sd->child_w) *x = sd->w - sd->child_w;
+	if (sd->w < sd->child_w) *x = sd->child_w - sd->w;
 	else *x = 0;
      }
    if (y)
      {
-	if (sd->h > sd->child_h) *y = sd->h - sd->child_h;
+	if (sd->h < sd->child_h) *y = sd->child_h - sd->h;
 	else *y = 0;
      }
 }

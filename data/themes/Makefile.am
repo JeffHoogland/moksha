@@ -45,7 +45,8 @@ default_check.edc \
 default_radio.edc \
 default_frame.edc \
 default_label.edc \
-default_button.edc
+default_button.edc \
+default_scrollframe.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

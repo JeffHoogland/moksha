@@ -307,6 +307,31 @@ _e_test_internal(E_Container *con)
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }
+#elif 0
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o, *o2;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+   
+   o = e_icon_add(dia->win->evas);
+   e_icon_file_set(o, "/home/raster/t.png");
+   evas_object_resize(o, 1024, 768);
+   evas_object_show(o);
+   
+   o2 = e_scrollframe_add(dia->win->evas);
+   evas_object_resize(o2, 200, 300);
+   evas_object_show(o2);
+   e_scrollframe_child_set(o2, o);
+
+   e_dialog_content_set(dia, o2, 500, 300);
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+}
 #else
 static void
 _e_test_internal(E_Container *con)
