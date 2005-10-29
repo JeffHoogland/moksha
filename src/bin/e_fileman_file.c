@@ -182,7 +182,7 @@ e_fm_file_can_preview(E_Fm_File *file)
    for (i = 0; file->preview_funcs[i]; i++)
      {
 	E_Fm_File_Preview_Function func;
-	printf("%d\n", i);
+	
 	func = file->preview_funcs[i];
 	if (func(file))
 	  return 1;
