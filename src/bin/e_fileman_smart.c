@@ -432,10 +432,13 @@ e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char
    sd->selector_data = data;
 }
 
+/* This isnt working yet */
 void
 e_fm_background_set(Evas_Object *object, Evas_Object *bg)
 {  
    E_Fm_Smart_Data *sd;
+   
+   return;
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -487,7 +490,9 @@ _e_fm_smart_add(Evas_Object *object)
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
    sd->is_selector = 0;
-   sd->bg = edje_object_add(sd->evas);
+   //sd->bg = edje_object_add(sd->evas);
+   sd->bg = evas_object_rectangle_add(sd->evas);
+   evas_object_color_set(sd->bg, 0, 0, 0, 0);
    evas_object_smart_member_add(sd->bg, object); 
    evas_object_show(sd->bg);   
    e_theme_edje_object_set(sd->selection.band.obj,
