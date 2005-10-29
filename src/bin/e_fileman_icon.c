@@ -23,6 +23,8 @@ struct _E_Smart_Data
    E_Fm_File       *file;
       
    unsigned char    visible : 1;
+   
+   int              type;
 };
 
 /* local subsystem functions */
@@ -38,6 +40,9 @@ static void  _e_fm_icon_icon_mime_get(E_Smart_Data *sd);
 
 static void  _e_fm_icon_thumb_generate(void);
 static int   _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event);
+
+static void  _e_fm_icon_type_set(E_Smart_Data *sd);
+    
 
 /* local subsystem globals */
 static Evas_Smart *e_smart = NULL;
@@ -98,16 +103,29 @@ e_fm_icon_add(Evas *evas)
 }
 
 void
+e_fm_icon_type_set(Evas_Object *obj, int type)
+{
+   E_Smart_Data *sd;
+   
+   if(sd->type == type)
+     return;
+   
+   sd->type = type;
+   _e_fm_icon_type_set(sd);
+}
+
+void
 e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 {
    E_Smart_Data *sd;
+   Evas_Coord icon_w, icon_h;   
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    e_object_ref(E_OBJECT(file));
    sd->file = file;
    file->icon_object = obj;
-   
+        
    if (e_fm_file_can_preview(sd->file))
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
@@ -128,18 +146,12 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	_e_fm_icon_icon_mime_get(sd);
      }
    
-   if (sd->image_object)
-     {
-	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
-	evas_object_smart_member_add(sd->image_object, obj);
-	evas_object_show(sd->image_object);
-     }
+   _e_fm_icon_type_set(sd);
    
-   if(sd->saved_title)
-     edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
-   else
-     edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
-   
+   edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
+   evas_object_resize(sd->icon_object, icon_w, icon_h);
+   evas_object_resize(sd->event_object, icon_w, icon_h);
+   evas_object_resize(sd->obj, icon_w, icon_h);   
 }
 
 void
@@ -206,6 +218,7 @@ _e_fm_icon_smart_add(Evas_Object *obj)
    sd->evas = evas_object_evas_get(obj);
    sd->obj = obj;
    sd->saved_title = NULL;
+   sd->type = E_FM_ICON_NORMAL;
    sd->event_object = evas_object_rectangle_add(sd->evas);
    evas_object_color_set(sd->event_object, 0, 0, 0, 0);
    evas_object_smart_member_add(sd->event_object, obj);
@@ -214,20 +227,10 @@ _e_fm_icon_smart_add(Evas_Object *obj)
      
    sd->visible = 1;
    sd->icon_object = edje_object_add(sd->evas);
-   e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
-                           "fileman/icon");
    evas_object_smart_member_add(sd->icon_object, obj);
    
    evas_object_show(sd->icon_object);
-   evas_object_show(sd->event_object);
-   
-    {
-       Evas_Coord icon_w, icon_h;
-       edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
-       evas_object_resize(sd->icon_object, icon_w, icon_h);
-       evas_object_resize(sd->event_object, icon_w, icon_h);
-       evas_object_resize(sd->obj, icon_w, icon_h);       
-    }
+   evas_object_show(sd->event_object);   
 }
 
 
@@ -407,4 +410,38 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
    pid = -1;
    _e_fm_icon_thumb_generate();
    return 1;
+}
+
+static void
+_e_fm_icon_type_set(E_Smart_Data *sd)
+{
+   switch(sd->type)
+     {
+      case E_FM_ICON_NORMAL:	
+	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
+				"fileman/icon_normal");	
+	break;
+	
+      case E_FM_ICON_LIST:
+	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
+				"fileman/icon_list");
+	break;
+	
+      default:
+	e_theme_edje_object_set(sd->icon_object, "base/theme/fileman",
+				"fileman/icon_normal");
+	break;
+     }   
+   
+   if (sd->image_object)
+     {
+	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
+	evas_object_smart_member_add(sd->image_object, sd->obj);	
+	evas_object_show(sd->image_object);
+     }
+   
+   if(sd->saved_title)
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
+   else
+     edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
 }
