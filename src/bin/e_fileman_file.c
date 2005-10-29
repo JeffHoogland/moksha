@@ -178,7 +178,7 @@ e_fm_file_can_preview(E_Fm_File *file)
    int i;
 
    D(("e_fm_file_can_preview: (%s) (%p)\n", file->name, file));
-   for (i = 0; i < sizeof(file->preview_funcs); i++)
+   for (i = 0; i < sizeof(file->preview_funcs)/sizeof(E_Fm_File_Preview_Function); i++)
      {
 	E_Fm_File_Preview_Function func;
 	func = file->preview_funcs[i];
