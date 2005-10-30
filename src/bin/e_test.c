@@ -330,6 +330,7 @@ _e_test_internal(E_Container *con)
    e_icon_file_set(o, "/home/raster/t.png");
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_test_click, NULL);
    evas_object_resize(o, 1024, 768);
+   evas_object_focus_set(o, 1);
    evas_object_show(o);
       
    o2 = e_scrollframe_add(dia->win->evas);
@@ -348,6 +349,8 @@ _e_test_internal(E_Container *con)
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   
+   evas_object_focus_set(o, 1);
 }
 #else
 static void

@@ -43,6 +43,7 @@ struct _E_Smart_Data
 static void _e_smart_child_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_info);
 static void _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_edje_drag_v(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_smart_edje_drag_h(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_smart_scrollbar_read(E_Smart_Data *sd);
@@ -314,6 +315,47 @@ _e_smart_event_wheel(void *data, Evas *e, Evas_Object *obj, void *event_info)
 }
 
 static void
+_e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Key_Down *ev;
+   E_Smart_Data *sd;
+   Evas_Coord x = 0, y = 0, vw = 0, vh = 0, mx = 0, my = 0;
+   
+   sd = data;
+   ev = event_info;
+   e_scrollframe_child_pos_get(sd->smart_obj, &x, &y);
+   sd->pan_func.max_get(sd->pan_obj, &mx, &my);
+   evas_object_geometry_get(sd->pan_obj, NULL, NULL, &vw, &vh);
+   if (!strcmp(ev->keyname, "Left"))
+     x -= sd->step.x;
+   else if (!strcmp(ev->keyname, "Right"))
+     x += sd->step.x;
+   else if (!strcmp(ev->keyname, "Up"))
+     y -= sd->step.y;
+   else if (!strcmp(ev->keyname, "Home"))
+     y = 0;
+   else if (!strcmp(ev->keyname, "End"))
+     y = my;
+   else if (!strcmp(ev->keyname, "Down"))
+     y += sd->step.y;
+   else if (!strcmp(ev->keyname, "Prior"))
+     {
+	if (sd->page.y < 0)
+	  y -= -(sd->page.y * vh) / 100;
+	else
+	  y -= sd->page.y;
+     }
+   else if (!strcmp(ev->keyname, "Next"))
+     {
+	if (sd->page.y < 0)
+	  y += -(sd->page.y * vh) / 100;
+	else
+	  y += sd->page.y;
+     }
+   e_scrollframe_child_pos_set(sd->smart_obj, x, y);
+}
+
+static void
 _e_smart_scrollbar_read(E_Smart_Data *sd)
 {
    Evas_Coord x, y, mx = 0, my = 0;
@@ -572,6 +614,9 @@ _e_smart_add(Evas_Object *obj)
    sd->vbar_flags = E_SCROLLFRAME_POLICY_AUTO;
    sd->hbar_visible = 1;
    sd->vbar_visible = 1;
+   
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_smart_event_key_down, sd);
+   evas_object_propagate_events_set(obj, 0);
    
    o = edje_object_add(evas_object_evas_get(obj));
    sd->edje_obj = o;
