@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-10-28 22:44+0200\n"
-"PO-Revision-Date: 2005-10-30 19:05+0100\n"
+"PO-Revision-Date: 2005-10-30 23:11+0100\n"
 "Last-Translator: aboe <niels.abspoel@wanadoo.nl>\n"
 "Language-Team: Nederlands <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "Geminimaliseerde staat"
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 #: src/bin/e_int_border_remember.c:504
 msgid "Stickiness"
-msgstr "Plakkerig"
+msgstr "Vastzetten"
 
 #: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
 #: src/bin/e_int_border_remember.c:508
@@ -239,7 +239,7 @@ msgid ""
 "%s\n"
 "\n"
 msgstr ""
-"Enlightenment kon geen splitsing van child process:\n"
+"Enlightenment kon het child proces niet splitsen:\n"
 "\n"
 "%s\n"
 "\n"
@@ -435,7 +435,7 @@ msgstr "Match alleen een venster"
 
 #: src/bin/e_int_border_remember.c:493
 msgid "Properties to remember"
-msgstr "Eigenschappen om te herrinneren"
+msgstr "Eigenschappen om te herinneren"
 
 #: src/bin/e_int_border_remember.c:502
 msgid "Border style"
@@ -463,7 +463,7 @@ msgstr "basisinstellingen"
 
 #: src/bin/e_config_dialog.c:114
 msgid "Apply"
-msgstr "Overnemen"
+msgstr "Toepassen"
 
 #: src/bin/e_config_dialog.c:115
 msgid "Cancel"
@@ -619,11 +619,11 @@ msgstr ""
 "\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
 "\t-Goed\n"
-"\t\tZeer Goed.\n"
+"\t\tBen Goed.\n"
 "\t-Slecht\n"
-"\t\tZeer Slecht.\n"
+"\t\tBen Slecht.\n"
 "\t-Psychotisch\n"
-"\t\tZeer psychotisch.\n"
+"\t\tBen psychotisch.\n"
 
 #: src/bin/e_main.c:261
 msgid ""
@@ -1099,7 +1099,7 @@ msgstr "Maximaliseren"
 
 #: src/bin/e_border.c:5871
 msgid "Sticky"
-msgstr "Plakkerig"
+msgstr "Vastgezet"
 
 #: src/bin/e_border.c:5884
 msgid "Borderless"
@@ -1123,7 +1123,7 @@ msgstr "Icon aanmaken"
 
 #: src/bin/e_border.c:5973
 msgid "Kill"
-msgstr "Doden"
+msgstr "Vernietigen"
 
 #: src/bin/e_border.c:5986
 msgid "Iconify"
@@ -1213,7 +1213,7 @@ msgstr "Reusachtig"
 
 #: src/modules/ibar/e_mod_main.c:913 src/modules/ibox/e_mod_main.c:677
 msgid "Enormous"
-msgstr "Enorm groot"
+msgstr "Enorm"
 
 #: src/modules/ibar/e_mod_main.c:920 src/modules/ibox/e_mod_main.c:684
 msgid "Gigantic"
@@ -1237,7 +1237,7 @@ msgstr "Enlightenment IBox Module"
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
-msgstr "Dit is de Ibox Minimaliseer Programmamodule voor Enlightenment.<br> Het houdt geminimaliseerde programmaen vast."
+msgstr "Dit is de Ibox Minimaliseer Programmamodule voor Enlightenment.<br> Het houdt geminimaliseerde programma's vast."
 
 #: src/modules/test/e_mod_main.c:21
 msgid "Module Config Menu Item 1"
