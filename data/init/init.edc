@@ -22,7 +22,7 @@
 #  define VSIZE 10
 # elif E17_PROFILE == SLOW_PC
 #  define HALFFRAMES
-#  define SM
+#  define SM "sm_"
 #  define FRAME LOSSY 90
 #  define LOGOSZ 320 240
 #  define TSIZE 16
