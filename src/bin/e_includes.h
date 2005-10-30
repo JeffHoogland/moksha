@@ -61,7 +61,6 @@
 #include "e_about.h"
 #include "e_theme_about.h"
 #include "e_apps_cache.h"
-#include "e_scrollbar.h"
 #include "e_fileman.h"
 #include "e_fileman_smart.h"
 #include "e_fileman_file.h"
@@ -88,3 +87,4 @@
 #include "e_file_selector.h"
 #include "e_file_dialog.h"
 #include "e_widget_fileman.h"
+#include "e_int_border_menu.h"

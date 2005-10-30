@@ -32,7 +32,6 @@ Some of the things (in very short form) that need to be done to E17...
   ESSENTIAL FEATURES
 -------------------------------------------------------------------------------
 
-* emit signal to submenu entries if they have a submenu shown for them or not
 * add fullscreen support (e16 xvidmode or xrandr style)
 * implement thees maximise/fullscreen modes:
   Which of these should be different modes, and which should be options for
@@ -68,16 +67,12 @@ Some of the things (in very short form) that need to be done to E17...
 * actions to make current zone different (warp mouse to there)
 * actions to make the current container different
 * titlebar/border expansion/gadget panel for modules to put window widgets in
-* break out desks x/y size config so you can have a different desktop size
-  per zone - right now there is a signle global (use this later as the default
-  for new/unconfigured zones)
 * language packs: need to have a tool to load/setup a language pack (which
   means .mo compiled files from a .po, an optional font and a config file that
   specifies the locale and font) and then install the font(s) either as a user
   or superuser, and the .mo in the system or a user locales dir.
 * all menus need icons if they dont have them  yet:)
 * gadget containers (shelves?) using popups as well as in-line in a canvas
-* add key input focus control for desktop modules
 * finish off icccm support
 * finish complete netwm support
 * different cursors for different parts of the screen
@@ -139,6 +134,11 @@ Some of the things (in very short form) that need to be done to E17...
   "NICE TO HAVE" FEATURES
 -------------------------------------------------------------------------------
 
+* add key input focus control for desktop modules
+* break out desks x/y size config so you can have a different desktop size
+  per zone - right now there is a signle global (use this later as the default
+  for new/unconfigured zones)
+* emit signal to submenu entries if they have a submenu shown for them or not
 * screensaver/lock module
 * tip/hint/suggestion dialog
 * add tooltips

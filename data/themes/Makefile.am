@@ -39,7 +39,6 @@ default_configure.edc \
 default_about.edc \
 default_theme_about.edc \
 default_entry.edc \
-default_scrollbar.edc \
 default_fileman.edc \
 default_check.edc \
 default_radio.edc \

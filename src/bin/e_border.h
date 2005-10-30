@@ -135,6 +135,7 @@ struct _E_Border
       
       struct {
 	 unsigned char changed : 1;
+	 unsigned char user_selected : 1;
 	 char *name;
       } border;
       

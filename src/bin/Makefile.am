@@ -107,7 +107,8 @@ e_widget_iconsel.h \
 e_widget_fileman.h \
 e_scrollframe.h \
 e_file_selector.h \
-e_file_dialog.h
+e_file_dialog.h \
+e_int_border_menu.h
 
 enlightenment_src = \
 e_user.c \
@@ -196,6 +197,7 @@ e_widget_fileman.c \
 e_scrollframe.c \
 e_file_selector.c \
 e_file_dialog.c \
+e_int_border_menu.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
