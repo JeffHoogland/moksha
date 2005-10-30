@@ -82,7 +82,6 @@ e_theme_about.h \
 e_apps_cache.h \
 e_entry.h \
 e_fileman.h \
-e_scrollbar.h \
 e_fileman_smart.h \
 e_fileman_file.h \
 e_fileman_icon.h \
@@ -171,7 +170,6 @@ e_theme_about.c \
 e_apps_cache.c \
 e_entry.c \
 e_fileman.c \
-e_scrollbar.c \
 e_fileman_smart.c \
 e_fileman_file.c \
 e_fileman_icon.c \
