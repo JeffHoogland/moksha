@@ -108,7 +108,7 @@ e_widget_iconsel.h \
 e_widget_fileman.h \
 e_scrollframe.h \
 e_file_selector.h \
-e_file_dialog.h 
+e_file_dialog.h
 
 enlightenment_src = \
 e_user.c \

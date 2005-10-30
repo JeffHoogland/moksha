@@ -102,15 +102,17 @@ _e_smart_add(Evas_Object *obj)
    sd->view = E_FILE_SELECTOR_ICONVIEW;
    
    evas = evas_object_evas_get(obj);   
-   sd->theme = edje_object_add(evas);
+//   sd->theme = edje_object_add(evas);
+   sd->theme = e_scrollframe_add(evas);   
    evas_object_smart_member_add(sd->theme, obj);   
-   THEME_SET(sd->theme, "main");
+//   THEME_SET(sd->theme, "main");
       
    sd->files = e_fm_add(evas);
    e_fm_selector_enable(sd->files, _e_file_selector_selected_cb, sd);
    evas_object_smart_member_add(sd->files, obj);
 
-   edje_object_part_swallow(sd->theme, "items", sd->files);
+   //edje_object_part_swallow(sd->theme, "items", sd->files);
+    e_scrollframe_child_set(sd->theme, sd->files);
    
    evas_object_smart_data_set(obj, sd);
    

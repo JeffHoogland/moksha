@@ -157,8 +157,8 @@ struct _E_Fm_Smart_Data
    } icon_info;
 
    struct {
-      Evas_Coord w, h;
-   } max;
+      Evas_Coord x, y, w, h;
+   } child;
 
    struct {
 	Evas_List *files;
@@ -324,32 +324,61 @@ e_fm_e_win_get(Evas_Object *object)
 }
 
 void
-e_fm_scroll_horizontal(Evas_Object *object, double percent)
+e_fm_scroll_set(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
-
+   E_Fm_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(object);
+   if (!sd) return NULL;
+      
+   if (x > (sd->child.w - sd->w)) x = sd->child.w - sd->w;
+   if (y > (sd->child.h - sd->h)) y = sd->child.h - sd->h;
+   if (x < 0) x = 0;
+   if (y < 0) y = 0;
+   if ((x == sd->child.x) && (y == sd->child.y)) return;
+   sd->child.x = x;
+   sd->child.y = y;
+   
+   e_icon_layout_clip_freeze(sd->layout);
+   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);
+   e_icon_layout_clip_thaw(sd->layout);
+   
+   evas_object_smart_callback_call(sd->object, "changed", NULL);
 }
 
 void
-e_fm_scroll_vertical(Evas_Object *object, double percent)
+e_fm_scroll_max_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
 {
    E_Fm_Smart_Data *sd;
-   int offsetpx;
-   Evas_Coord x, y, w, h;
-
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
    
-   if(sd->max.h <= sd->h) return;
+   sd = evas_object_smart_data_get(object);
+   if (!sd) return NULL;
    
-   sd->position = percent;
-
-   offsetpx = (percent) * (sd->max.h - sd->h);
-
-   evas_object_geometry_get(sd->layout, &x, &y, &w, &h);
-   e_icon_layout_clip_freeze(sd->layout);
-   evas_object_move(sd->layout, x, sd->y - offsetpx);
-   e_icon_layout_clip_thaw(sd->layout);
+   if (x)
+     {
+	if (sd->w < sd->child.w) *x = sd->child.w - sd->w;
+	else *x = 0;
+     }
+   if (y)
+     {
+	if (sd->h < sd->child.h) *y = sd->child.h - sd->h;
+	else *y = 0;
+     }
+   
 }
+
+void
+e_fm_scroll_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
+{
+   E_Fm_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(object);
+   if (!sd) return NULL;
+   
+   if (x) *x = sd->child.x;
+   if (y) *y = sd->child.y;   
+}
+
 
 void
 e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
@@ -360,10 +389,10 @@ e_fm_geometry_virtual_get(Evas_Object *object, Evas_Coord *w, Evas_Coord *h)
      return;
 
    if(w)
-     *w = sd->max.w;
+     *w = sd->child.w;
 
    if(h)
-     *h = sd->max.h;
+     *h = sd->child.h;
 }
 
 void
@@ -626,12 +655,12 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
    sd = evas_object_smart_data_get(object);
    if (!sd) return;
 
-   evas_object_move(sd->bg, x, y);
-   evas_object_move(sd->clip, x, y);
-   evas_object_move(sd->layout, x, y);
-
    sd->x = x;
-   sd->y = y;
+   sd->y = y;   
+   
+   evas_object_move(sd->bg, x, y);
+   evas_object_move(sd->clip, x, y); 
+   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);   
 }
 
 static void
@@ -647,18 +676,15 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
    evas_object_resize(sd->clip, w, h);
    evas_object_resize(sd->layout, w, h);
    e_icon_layout_width_fix(sd->layout, w);
-   e_icon_layout_virtual_size_get(sd->layout, &sd->max.w, &sd->max.h);
+   e_icon_layout_virtual_size_get(sd->layout, &sd->child.w, &sd->child.h);
    sd->conf.main->width = w;
    sd->conf.main->height = h;
 
    sd->w = w;
    sd->h = h;
 
-   if(sd->position > 0.0 && sd->max.h > sd->h)
-     e_fm_scroll_vertical(object, sd->position);
-   else
-     sd->position = 0.0;
-
+   evas_object_smart_callback_call(sd->object, "changed", NULL);
+      
    if(sd->frozen)
      return;
 
@@ -669,8 +695,8 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 
        evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
        ev->object = sd->object;
-       ev->w = sd->max.w;
-       ev->h = sd->max.h;
+       ev->w = sd->child.w;
+       ev->h = sd->child.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
 }
@@ -692,8 +718,8 @@ _e_fm_redraw(E_Fm_Smart_Data *sd)
        evas_object_geometry_get(sd->layout, NULL, NULL, &w, &h);
 
        ev->object = sd->object;
-       ev->w = sd->max.w;
-       ev->h = sd->max.h;
+       ev->w = sd->child.w;
+       ev->h = sd->child.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
 }
@@ -1053,7 +1079,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
    lastmod = E_NEW(char, 128);
    strftime(lastmod, 128, "%a %b %d %T %Y", t);
 
-   permissions = E_NEW(char, 128); // todo
+   permissions = E_NEW(char, 128);
    snprintf(permissions, 128, "%s", "");
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -1248,13 +1274,13 @@ _e_fm_menu_arrange_cb(void *data, E_Menu *m, E_Menu_Item *mi)
      case E_FILEMAN_CANVAS_ARRANGE_NAME:
        sd->files = evas_list_sort(sd->files, evas_list_count(sd->files), _e_fm_files_sort_name_cb);
        sd->arrange = E_FILEMAN_CANVAS_ARRANGE_NAME;
-       _e_fm_redraw(sd); // no_new
+       _e_fm_redraw(sd); 
        break;
 
      case E_FILEMAN_CANVAS_ARRANGE_MODTIME:
        sd->files = evas_list_sort(sd->files, evas_list_count(sd->files), _e_fm_files_sort_modtime_cb);
        sd->arrange = E_FILEMAN_CANVAS_ARRANGE_MODTIME;
-       _e_fm_redraw(sd); // no new
+       _e_fm_redraw(sd); 
        break;
     }
 }
@@ -1350,8 +1376,8 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    if (ev)
      {
 	ev->object = sd->object;
-	ev->w = sd->max.w;
-	ev->h = sd->max.h;
+	ev->w = sd->child.w;
+	ev->h = sd->child.h;
 	ecore_event_add(E_EVENT_FM_DIRECTORY_CHANGE, ev, NULL, NULL);
      }
 
@@ -1359,13 +1385,16 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
      return;
 
    /* raise reconfigure event */
+   e_icon_layout_virtual_size_get(sd->layout, &sd->child.w, &sd->child.h);   
+   evas_object_smart_callback_call(sd->object, "changed", NULL);
+   
    ev = E_NEW(E_Event_Fm_Reconfigure, 1);
    if (ev)
      {
-	e_icon_layout_virtual_size_get(sd->layout, &sd->max.w, &sd->max.h);
+	e_icon_layout_virtual_size_get(sd->layout, &sd->child.w, &sd->child.h);
 	ev->object = sd->object;
-	ev->w = sd->max.w;
-	ev->h = sd->max.h;
+	ev->w = sd->child.w;
+	ev->h = sd->child.h;
 	ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
      }
 }
@@ -1502,7 +1531,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 	    }
 	}       
        break;
-    }   
+    }
 }
 
 static void
