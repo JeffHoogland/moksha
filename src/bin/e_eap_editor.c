@@ -108,6 +108,7 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_App_Edit_CFData, 1);
    if (!cfdata) return NULL;
    cfdata->editor = cfd->data;
+   cfdata->image = NULL;
    _e_eap_edit_fill_data(cfdata);
    return cfdata;
 }
@@ -214,16 +215,11 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    
    o = e_widget_frametable_add(evas, _("Icon"), 0);
    
+   editor->img = e_icon_add(evas);
    if(eap->path)
      {      
-	editor->img = e_icon_add(evas);
 	e_icon_file_key_set(editor->img, eap->path, "images/0");
 	e_icon_fill_inside_set(editor->img, 1);	
-     }
-   else
-     {
-	editor->img = edje_object_add(evas);
-	e_theme_edje_object_set(editor->img, "base/theme/icons/enlightenment/e", "icons/enlightenment/e");
      }
    
    editor->img_widget = e_widget_iconsel_add(evas, editor->img, 48, 48, 

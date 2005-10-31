@@ -3,6 +3,13 @@
  */
 #include "e.h"
 
+/*- DESCRIPTION -*/
+/* Adds a pushable button with an icon preview which serves as an icon
+ * selector (could be extended to select certain file tyes.
+ * NOTE: The Evas_Object *icon object in the *_add functions is expected to
+ * be an e_icon.
+ */
+
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
