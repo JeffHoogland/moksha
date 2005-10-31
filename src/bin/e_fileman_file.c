@@ -62,7 +62,7 @@ e_fm_file_new(const char *filename)
    if (!file) return NULL;
    file->path = strdup(filename);
    if (!file->path) goto error;
-   file->name = strdup(ecore_file_get_file(filename));
+   file->name = strdup(ecore_file_get_file((char *)filename));
    if (!file->name) goto error;
    /* Get attributes */
    file->device = st.st_dev;

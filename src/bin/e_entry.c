@@ -769,7 +769,7 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	if(key_event->string && strcmp(key_event->keyname, "Escape"))
 	  {
 	     if(*(key_event->string) >= 32 && *(key_event->string) <= 126)
-	       e_entry_sd->change_func(e_entry_sd->change_data, obj, key_event->string);
+	       e_entry_sd->change_func(e_entry_sd->change_data, obj, (char *)key_event->string);
 	  }
      }
 }

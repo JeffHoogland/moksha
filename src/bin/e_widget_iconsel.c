@@ -122,7 +122,6 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
 	o = edje_object_add(evas);
 	wd->o_icon = o;
 	e_util_edje_icon_set(o, icon);
-	evas_object_pass_events_set(icon, 1);	
 	edje_object_part_swallow(wd->o_button, "icon_swallow", o);
 	edje_object_signal_emit(wd->o_button, "icon_visible", "");
 	edje_object_message_signal_process(wd->o_button);
@@ -208,7 +207,7 @@ _e_wid_active_hook_cb(E_Fileman *fileman, char *file, void *data)
    e_icon_file_set(wd->o_icon, file);
    E_FREE(*(wd->valptr));
    *(wd->valptr) = strdup(file);
-   e_object_del(fileman);
+   e_object_del(E_OBJECT(fileman));
 }
 
 
@@ -259,5 +258,5 @@ _e_wid_select_cb(E_File_Dialog *dia, char *file, void *data)
    e_icon_file_set(wd->o_icon, file);
    E_FREE(*(wd->valptr));
    *(wd->valptr) = strdup(file);
-   e_object_del(dia);
+   e_object_del(E_OBJECT(dia));
 }

@@ -65,7 +65,7 @@ e_file_dialog_new(E_Container *con)
    
    table = e_widget_table_add(evas, "Select File", 0);
    
-   fm = e_widget_fileman_add(evas, dia->file);
+   fm = e_widget_fileman_add(evas, &(dia->file));
    e_widget_table_object_append(table, fm, 0, 0, 4, 4, 1, 1, 1, 1);
    
    e_widget_fileman_select_callback_add(fm, _e_file_dialog_file_select_cb, dia);
@@ -90,7 +90,7 @@ e_file_dialog_show(E_File_Dialog *dia)
 void
 e_file_dialog_title_set(E_File_Dialog *dia, const char *title)
 {
-   e_dialog_title_set(dia->dia, title);
+   e_dialog_title_set(dia->dia, (char *)title);
 }
 
 void

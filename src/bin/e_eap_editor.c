@@ -227,7 +227,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
      }
    
    editor->img_widget = e_widget_iconsel_add(evas, editor->img, 48, 48, 
-					     &cfdata->image);
+					     &(cfdata->image));
    e_widget_iconsel_select_callback_add(editor->img_widget, _e_eap_edit_select_cb, editor);
    e_widget_frametable_object_append(o, editor->img_widget,
 				0, 0, 1, 1,

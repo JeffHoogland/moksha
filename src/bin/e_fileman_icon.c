@@ -162,7 +162,7 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    E_FREE(sd->saved_title);
-   sd->saved_title = E_NEW(char *, strlen(title) + 1);
+   sd->saved_title = E_NEW(char, strlen(title) + 1);
    snprintf(sd->saved_title, strlen(title) + 1, "%s", title);
    if (sd->icon_object) edje_object_part_text_set(sd->icon_object, "icon_title", title);
 }

@@ -19,7 +19,7 @@ static void _e_wid_activate_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int  _e_wid_text_change(void *data, Evas_Object *entry, char *key);
+static void  _e_wid_text_change(void *data, Evas_Object *entry, char *key);
     
 /* local subsystem functions */
 
@@ -110,7 +110,7 @@ _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info)
    e_widget_focus_steal(data);
 }
 
-static int
+static void
 _e_wid_text_change(void *data, Evas_Object *entry, char *key)
 {
    E_Widget_Data *wd;
@@ -130,7 +130,6 @@ _e_wid_text_change(void *data, Evas_Object *entry, char *key)
 	*(wd->valptr) = realloc(*(wd->valptr), size);   
 	strcat(*(wd->valptr), key);
      }
-   return 1;
 }
 
 /* externally accessible functions */

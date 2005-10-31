@@ -329,7 +329,7 @@ e_fm_scroll_set(Evas_Object *object, Evas_Coord x, Evas_Coord y)
    E_Fm_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(object);
-   if (!sd) return NULL;
+   if (!sd) return;
       
    if (x > (sd->child.w - sd->w)) x = sd->child.w - sd->w;
    if (y > (sd->child.h - sd->h)) y = sd->child.h - sd->h;
@@ -352,7 +352,7 @@ e_fm_scroll_max_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
    E_Fm_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(object);
-   if (!sd) return NULL;
+   if (!sd) return;
    
    if (x)
      {
@@ -373,7 +373,7 @@ e_fm_scroll_get(Evas_Object *object, Evas_Coord *x, Evas_Coord *y)
    E_Fm_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(object);
-   if (!sd) return NULL;
+   if (!sd) return;
    
    if (x) *x = sd->child.x;
    if (y) *y = sd->child.y;   
@@ -757,7 +757,7 @@ _e_fm_file_delete(E_Fm_Icon *icon)
    
    icon->sd->files = evas_list_remove(icon->sd->files, icon);
    e_icon_layout_freeze(icon->sd->layout);
-   e_icon_layout_unpack(icon);
+   e_icon_layout_unpack(icon->icon_object);
    e_icon_layout_thaw(icon->sd->layout);   
    _e_fm_redraw(icon->sd);
    _e_fm_file_free(icon);   
@@ -1300,6 +1300,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 {
    Evas_List *l;
    E_Event_Fm_Reconfigure *ev;
+   E_Event_Fm_Directory_Change *ev2;
 
    if (!dir) return;
    if ((sd->dir) && (!strcmp(sd->dir, dir))) return;
@@ -1372,13 +1373,13 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    _e_fm_redraw(sd);
 
    /* raise dir change event */
-   ev = E_NEW(E_Event_Fm_Directory_Change, 1);
-   if (ev)
+   ev2 = E_NEW(E_Event_Fm_Directory_Change, 1);
+   if (ev2)
      {
-	ev->object = sd->object;
-	ev->w = sd->child.w;
-	ev->h = sd->child.h;
-	ecore_event_add(E_EVENT_FM_DIRECTORY_CHANGE, ev, NULL, NULL);
+	ev2->object = sd->object;
+	ev2->w = sd->child.w;
+	ev2->h = sd->child.h;
+	ecore_event_add(E_EVENT_FM_DIRECTORY_CHANGE, ev2, NULL, NULL);
      }
 
    if (sd->frozen)

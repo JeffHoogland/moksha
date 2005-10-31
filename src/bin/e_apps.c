@@ -1077,7 +1077,7 @@ e_app_fields_save(E_App *a)
 	Evas *evasbuf;
 	Evas_Coord iw, ih;
 	Evas_Object *im;
-	int *data;
+	const int *data;
 
 	buf = ecore_evas_buffer_new(1, 1);
 	evasbuf = ecore_evas_get(buf);
@@ -1095,7 +1095,7 @@ e_app_fields_save(E_App *a)
 	     evas_object_move(im, 0, 0);
 	     evas_object_show(im);	     
 	     data = ecore_evas_buffer_pixels_get(buf);
-	     eet_data_image_write(ef, "images/0", data, 48, 48, alpha, 1, 0, 0);
+	     eet_data_image_write(ef, "images/0", (void *)data, 48, 48, alpha, 1, 0, 0);
 	  }
      }
 

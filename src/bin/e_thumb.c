@@ -110,18 +110,18 @@ _e_thumb_image_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, 
 	evas_object_move(*im, 0, 0);
 	evas_object_show(*im);
 
-	return ecore_evas_buffer_pixels_get(*buf);
+	return (int *)ecore_evas_buffer_pixels_get(*buf);
      }
    return NULL;
 }
 
 /* thumbnail an e17 background and return pixel data */
-int *
+const int *
 _e_thumb_ebg_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
 {
    Evas *evasbuf;   
    Evas_Object *wallpaper;
-   int *pixels;   
+   const int *pixels;   
 
    *ww = 640;
    *hh = 480;
@@ -150,12 +150,12 @@ _e_thumb_ebg_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, in
 }
 
 /* thumbnail an e17 theme and return pixel data */
-int *
+const int *
 _e_thumb_etheme_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh, int *alpha, Evas_Object **im, Ecore_Evas **buf)
 {
    Evas *evasbuf;   
    Evas_Object *wallpaper, *window, *clock, *start, **pager;
-   int *pixels;   
+   const int *pixels;   
 
    *ww = 640;
    *hh = 480;
