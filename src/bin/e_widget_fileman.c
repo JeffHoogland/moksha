@@ -57,7 +57,7 @@ _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
    snprintf(*(wd->valptr), size, "%s", file);
 #endif   
    if(wd->select_func)
-     wd->select_func(wd->wid, strdup(file), wd->select_data);
+     wd->select_func(wd->wid, file, wd->select_data);
    
    
    printf("e_widget_fileman: %s\n", file);
