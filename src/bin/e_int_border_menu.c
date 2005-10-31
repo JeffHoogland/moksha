@@ -208,6 +208,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	  }
 	else if (bd->client.icccm.class) /* icons with no class useless to borders */
 	  {
+#if 0	     
 	     static char buf[PATH_MAX + 50];
 	     char *name, *homedir;
 	     int i, l;
@@ -229,9 +230,10 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 		      bd->client.icccm.class, homedir, name);
 	     free(homedir);
 	     free(name);
+#endif	     
 	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Create Icon"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, buf);
+	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, strdup(bd->client.icccm.class));
 	  }
      }
 
@@ -399,6 +401,40 @@ _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
+  E_App *a;
+
+   if(ecore_file_exists(data))
+     {
+	a = e_app_new(data, 0);
+     }
+   else
+     {
+	static char buf[PATH_MAX + 50];
+	char *name, *homedir;
+	int i, l;
+
+	buf[0] = '\0';
+	/* generate a reasonable file name from the window class */
+	/* FIXME - I think there could be duplicates - how better to do this? */
+	name = strdup(data);
+	l = strlen(name);
+	for (i = 0; i < l; i++)
+	  {
+		  if (name[i] == ' ') name[i] = '_';
+	       }
+	/* previously this could be null, but it will exist now */
+	homedir = e_user_homedir_get();
+	
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s.eap",
+		 homedir, name);
+	free(homedir);
+	free(name);
+	a = e_app_empty_new(buf);
+	a->win_class = strdup(data);
+	free(data);
+     }
+   e_eap_edit_show(m->zone->container, a);
+#if 0   
    char *file;
    char *command;
    char *full;
@@ -415,6 +451,7 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 			   _("Error starting icon editor\n\n"
 			     "please install e_util_eapp_edit\n"
 			     "or make sure it is in your PATH\n"));
+#endif   
 }
 
 static void

@@ -989,10 +989,7 @@ e_app_fields_fill(E_App *a, const char *path)
    eet_close(ef);
 }
 
-/* If we are saving a new non-existant .eap, we need to add more info
- * so edje can decompile it. Image saving doesnt work yet with newly
- * created eaps.
- * 
+/* 
  * We also need to fix startup-notify and wait-exit as they currently
  * dont save too.
  */

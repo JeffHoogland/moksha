@@ -130,13 +130,12 @@ _e_file_dialog_file_select_cb(Evas_Object *obj, char *file, void *data)
    
    printf("e_file_dialog: %s\n", file);
    
-   _e_file_dialog_free(dia);
 }
 
 static void
 _e_file_dialog_free(E_File_Dialog *dia)
 {
-   e_object_del(E_OBJECT(dia->dia));
+   e_object_unref(E_OBJECT(dia->dia));
    E_FREE(dia->file);
    free(dia);
 }

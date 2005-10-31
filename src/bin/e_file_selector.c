@@ -11,14 +11,13 @@
 #define SMART_NAME "e_fileselector"
 #define API_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
 #define INTERNAL_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
-#define THEME_SET(OBJ, GROUP) e_theme_edje_object_set(OBJ, "base/theme/widgets/fileselector", "widgets/fileselector/"GROUP)
 
 typedef struct _E_Smart_Data E_Smart_Data;
 
 struct _E_Smart_Data
 { 
    Evas_Object   *parent;
-   Evas_Object   *theme; /* theme object */
+   Evas_Object   *frame; /* scrollframe object */
    Evas_Object   *files; /* file view object */
 
    int            view;  /* view type, icons, list */
@@ -41,6 +40,11 @@ static void _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_init(void);
 static void _e_file_selector_selected_cb(Evas_Object *obj, char *file, void *data);
+static void _e_file_selector_scroll_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+static void _e_file_selector_scroll_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _e_file_selector_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+static void _e_file_selector_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -83,6 +87,31 @@ e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, c
    sd->func_data = data;
 }
 
+static void
+_e_file_selector_scroll_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+   e_fm_scroll_set(obj, x, y);
+}
+
+static void 
+_e_file_selector_scroll_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   e_fm_scroll_get(obj, x, y);
+}
+
+static void
+_e_file_selector_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   e_fm_scroll_max_get(obj, x, y);
+}
+
+static void
+  _e_file_selector_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   e_fm_geometry_virtual_get(obj, x, y);
+}
+
+
 /* local subsystem functions */
 static void
 _e_smart_add(Evas_Object *obj)
@@ -102,21 +131,23 @@ _e_smart_add(Evas_Object *obj)
    sd->view = E_FILE_SELECTOR_ICONVIEW;
    
    evas = evas_object_evas_get(obj);   
-//   sd->theme = edje_object_add(evas);
-   sd->theme = e_scrollframe_add(evas);   
-   evas_object_smart_member_add(sd->theme, obj);   
-//   THEME_SET(sd->theme, "main");
+
+   sd->frame = e_scrollframe_add(evas);   
+   evas_object_smart_member_add(sd->frame, obj);      
       
    sd->files = e_fm_add(evas);
    e_fm_selector_enable(sd->files, _e_file_selector_selected_cb, sd);
    evas_object_smart_member_add(sd->files, obj);
 
-   //edje_object_part_swallow(sd->theme, "items", sd->files);
-    e_scrollframe_child_set(sd->theme, sd->files);
+   e_scrollframe_extern_pan_set(sd->frame, sd->files,
+				_e_file_selector_scroll_set,
+				_e_file_selector_scroll_get,
+				_e_file_selector_scroll_max_get,
+				_e_file_selector_scroll_child_size_get);
    
    evas_object_smart_data_set(obj, sd);
    
-   evas_object_show(sd->theme);
+   evas_object_show(sd->frame);
 }
 
 static void
@@ -124,7 +155,7 @@ _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
  
-   evas_object_del(sd->theme);
+   evas_object_del(sd->frame);
    evas_object_del(sd->files);
    
    free(sd);
@@ -136,7 +167,7 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    INTERNAL_ENTRY;
    sd->x = x;
    sd->y = y;
-   evas_object_move(sd->theme, x, y);
+   evas_object_move(sd->frame, x, y);
 }
 
 static void
@@ -145,42 +176,42 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    INTERNAL_ENTRY;
    sd->w = w;
    sd->h = h;
-   evas_object_resize(sd->theme, w, h);
+   evas_object_resize(sd->frame, w, h);
 }
 
 static void
 _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_show(sd->theme);
+   evas_object_show(sd->frame);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_hide(sd->theme);
+   evas_object_hide(sd->frame);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    INTERNAL_ENTRY;
-   evas_object_color_set(sd->theme, r, g, b, a);
+   evas_object_color_set(sd->frame, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_set(sd->theme, clip);
+   evas_object_clip_set(sd->frame, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_unset(sd->theme);
+   evas_object_clip_unset(sd->frame);
 }  
 
 static void
