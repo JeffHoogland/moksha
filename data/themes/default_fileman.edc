@@ -938,6 +938,7 @@ group {
 	 type:          TEXT;
 	 effect:        SHADOW;
 	 description {
+	    state: "default" 0.0;
 	    rel1 {
 	       relative: 0.0 1.0;
 	       offset:   5 -6;
@@ -955,6 +956,13 @@ group {
 	       size: 10;
 	      // min: 1 1;
 	    }
+	 }
+	 description {
+	    state:   "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    text {
+	       font: "Edje-Vera-Bold";
+	    }	    
 	 }
       }
       part {
@@ -1018,11 +1026,19 @@ group {
    }
    programs {
       program {
-	 name:   "button_click";
-	 signal: "mouse,down,1";
-	 source: "";
-	 action: SIGNAL_EMIT "clicked" "";
-      }            
+	 name:   "clicked"; 
+	 signal: "clicked"; 
+	 source: ""; 
+	 action: STATE_SET "clicked" 0.0; 
+	 target: "icon_title"; 
+      } 
+      program { 
+	 name:   "unclicked"; 
+	 signal: "unclicked"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0; 
+	 target: "icon_title"; 
+      }      
    }   
 }
 
