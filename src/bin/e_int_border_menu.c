@@ -199,9 +199,6 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 	if (bd->app)
 	  {
 	     mi = e_menu_item_new(m);
-	     e_menu_item_separator_set(mi, 1);
-
-	     mi = e_menu_item_new(m);
 	     e_menu_item_label_set(mi, _("Edit Icon"));
 	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app->path);
 	     e_menu_item_icon_edje_set(mi, bd->app->path, "icon");
