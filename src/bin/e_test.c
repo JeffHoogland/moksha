@@ -356,36 +356,9 @@ _e_test_internal(E_Container *con)
 static E_Dialog *
 _e_test_dia(E_Container *con)
 {
-   E_Dialog *dia;
-   Evas_Object *o, *o2, *o3;
+   E_Config_Dialog *dia;
    
-   dia = e_dialog_new(con);
-   e_dialog_title_set(dia, "A Test Dialog");
-   
-   o = e_icon_add(dia->win->evas);
-//   e_icon_file_set(o, "/home/raster/t.png");
-   evas_object_resize(o, 1024, 768);
-   evas_object_focus_set(o, 1);
-   evas_object_show(o);
-      
-   o2 = e_scrollframe_add(dia->win->evas);
-//   e_scrollframe_custom_theme_set(o2, "base/theme/widgets", "widgets/scrollframe");
-   evas_object_resize(o2, 200, 300);
-   evas_object_show(o2);
-#if 0   
-   o3 = e_pan_add(dia->win->evas);
-   e_pan_child_set(o3, o);
-   e_scrollframe_extern_pan_set(o2, o3, e_pan_set, e_pan_get, e_pan_max_get, e_pan_child_size_get);
-#else
-   e_scrollframe_child_set(o2, o);
-#endif
-   
-   e_dialog_content_set(dia, o2, 500, 300);
-   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
-   e_win_centered_set(dia->win, 1);
-   e_dialog_show(dia);
-   
-   evas_object_focus_set(o, 1);
+   dia = e_int_config_focus(con);
    return dia;
 }
 
@@ -394,18 +367,18 @@ static E_Container *tcon = NULL;
 static int
 _e_test_timer(void *data)
 {
-   E_Dialog *dia;
+   E_Config_Dialog *dia;
 	
    if (data == NULL)
      {
 	dia = _e_test_dia(tcon);
-	ecore_timer_add(0.5, _e_test_timer, dia);
+	ecore_timer_add(0.2, _e_test_timer, dia);
      }
    else
      {
 	dia = data;
 	e_object_del(E_OBJECT(dia));
-	ecore_timer_add(0.5, _e_test_timer, NULL);
+	ecore_timer_add(0.2, _e_test_timer, NULL);
      }
    return 0;
 }

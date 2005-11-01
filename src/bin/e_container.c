@@ -97,7 +97,10 @@ e_container_new(E_Manager *man)
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
    ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");
-   ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
+   if (getenv("REDRAW_DEBUG"))
+     ecore_evas_avoid_damage_set(con->bg_ecore_evas, !atoi(getenv("REDRAW_DEBUG")));
+   else
+     ecore_evas_avoid_damage_set(con->bg_ecore_evas, 1);
    ecore_x_window_lower(con->bg_win);
 
    o = evas_object_rectangle_add(con->bg_evas);

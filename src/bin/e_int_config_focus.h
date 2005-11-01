@@ -6,7 +6,7 @@
 #ifndef E_INT_CONFIG_FOCUS_H
 #define E_INT_CONFIG_FOCUS_H
 
-EAPI void e_int_config_focus(E_Container *con);
+EAPI E_Config_Dialog *e_int_config_focus(E_Container *con);
 
 #endif
 #endif

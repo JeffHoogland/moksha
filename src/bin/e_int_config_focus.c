@@ -27,7 +27,7 @@ struct _CFData
 };
 
 /* a nice easy setup function that does the dirty work */
-void
+E_Config_Dialog *
 e_int_config_focus(E_Container *con)
 {
    E_Config_Dialog *cfd;
@@ -42,6 +42,7 @@ e_int_config_focus(E_Container *con)
    v.advanced.create_widgets = _advanced_create_widgets;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Focus Settings"), NULL, 0, &v, NULL);
+   return cfd;
 }
 
 /**--CREATE--**/
