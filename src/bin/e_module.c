@@ -245,20 +245,24 @@ e_module_enable(E_Module *m)
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MODULE_TYPE, 0);
    if ((m->enabled) || (m->error)) return 0;
    m->data = m->func.init(m);
-   if (m->data) m->enabled = 1;
-   for (l = e_config->modules; l; l = l->next)
+   if (m->data)
      {
-	E_Config_Module *em;
-	
-	em = l->data;
-	if (!strcmp(em->name, m->name))
+	m->enabled = 1;
+	for (l = e_config->modules; l; l = l->next)
 	  {
-	     em->enabled = 1;
-	     e_config_save_queue();
-	     break;
+	     E_Config_Module *em;
+	     
+	     em = l->data;
+	     if (!strcmp(em->name, m->name))
+	       {
+		  em->enabled = 1;
+		  e_config_save_queue();
+		  break;
+	       }
 	  }
+	return 1;
      }
-   return 1;
+   return 0;
 }
 
 int
