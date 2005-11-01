@@ -253,7 +253,7 @@ e_module_enable(E_Module *m)
 	     E_Config_Module *em;
 	     
 	     em = l->data;
-	     if (!strcmp(em->name, m->name))
+	     if (!e_util_strcmp(em->name, m->name))
 	       {
 		  em->enabled = 1;
 		  e_config_save_queue();
@@ -282,7 +282,7 @@ e_module_disable(E_Module *m)
 	E_Config_Module *em;
 	
 	em = l->data;
-	if (!strcmp(em->name, m->name))
+	if (!e_util_strcmp(em->name, m->name))
 	  {
 	     em->enabled = 0;
 	     e_config_save_queue();
