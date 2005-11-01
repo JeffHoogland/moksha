@@ -513,8 +513,8 @@ _e_fm_smart_add(Evas_Object *object)
 
    sd->icon_info.w = 48;
    sd->icon_info.h = 48;
-   sd->icon_info.x_space = 15;
-   sd->icon_info.y_space = 15;
+   sd->icon_info.x_space = 25;
+   sd->icon_info.y_space = 25;
 
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
