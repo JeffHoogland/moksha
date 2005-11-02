@@ -499,7 +499,7 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 	Evas_Coord fw, fh, il, ir, it, ib;
 	
 	e_editable_text_style = evas_textblock_style_new();
-	evas_textblock_style_set(e_editable_text_style, "DEFAULT='font=Vera font_size=10 align=center color=#000000 wrap=char'");
+	evas_textblock_style_set(e_editable_text_style, "DEFAULT='font=Vera font_size=10 style=shadow shadow_color=#ffffff80  align=center color=#000000 wrap=char'");
 	
 
 	evas_object_textblock_style_set(sd->title_object, e_editable_text_style);
@@ -523,7 +523,7 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 	Evas_Coord fw, fh, il, ir, it, ib;
 	
 	e_editable_text_style = evas_textblock_style_new();
-	evas_textblock_style_set(e_editable_text_style, "DEFAULT='font=Vera font_size=10 align=center color=#000000 wrap=char'");
+	evas_textblock_style_set(e_editable_text_style, "DEFAULT='font=Vera font_size=10 style=shadow shadow_color=#ffffff80 align=center color=#000000 wrap=char'");
 	
 
 	evas_object_textblock_style_set(sd->title_object, e_editable_text_style);
