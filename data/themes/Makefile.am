@@ -40,6 +40,7 @@ default_about.edc \
 default_theme_about.edc \
 default_entry.edc \
 default_fileman.edc \
+default_filesel.edc \
 default_check.edc \
 default_radio.edc \
 default_frame.edc \
