@@ -21,8 +21,6 @@
  * - is the offset code working properly? i have a feeling we're displayin
  *   more icons that the visible space can take and they are being hidden.
  *
- * - emit all sorts of signals on double click, right click, single click...
- *
  * - add typebuffer like in evidence.
  *
  * - keyboard shortcuts for directory and file navigation.
@@ -35,8 +33,6 @@
  * - double check dir monitoring. note: when we are in a dir that is constantly
  *   changing, we cant keep calling redraw_new as it will kill us.
  *
- * - we need to fix the icon edc to allow us to have icon labels what will
- *   wrap on wrap=char
  */
 
 /* BUGS:
@@ -161,16 +157,20 @@ struct _E_Fm_Smart_Data
    } child;
 
    struct {
-	Evas_List *files;
-	E_Fm_Icon *current_file;
-
-	struct {
-	     unsigned char enabled : 1;
-	     Evas_Coord x, y;
-	     Evas_Object *obj;
-	     Evas_List *files;
-	} band;
-
+      Evas_List *files;
+      
+      struct {
+	 E_Fm_Icon *file;
+	 Evas_List *ptr;
+      } current;
+      
+      struct {
+	 unsigned char enabled : 1;
+	 Evas_Coord x, y;
+	 Evas_Object *obj;
+	 Evas_List *files;
+      } band;
+      
    } selection;
 
    struct {
@@ -207,15 +207,16 @@ static void                _e_fm_menu_refresh_cb(void *data, E_Menu *m, E_Menu_I
 static void                _e_fm_file_rename         (E_Fm_Icon *icon, const char *name);
 static void                _e_fm_file_delete         (E_Fm_Icon *icon);
 
-static void                _e_fm_dir_set             (E_Fm_Smart_Data *sd, const char *dir);
-static Evas_List          *_e_fm_dir_files_get       (E_Fm_Smart_Data *sd, int type);
-static char               *_e_fm_dir_pop             (const char *path);
-static void                _e_fm_file_free           (E_Fm_Icon *icon);
-static void                _e_fm_dir_monitor_cb      (void *data, Ecore_File_Monitor *ecore_file_monitor,  Ecore_File_Event event, const char *path);
-static void                _e_fm_selections_clear    (E_Fm_Smart_Data *sd);
-static void                _e_fm_selections_add      (E_Fm_Icon *icon);
-static void                _e_fm_selections_rect_add (E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
-static void                _e_fm_selections_del      (E_Fm_Icon *icon);
+static void                _e_fm_dir_set                (E_Fm_Smart_Data *sd, const char *dir);
+static Evas_List          *_e_fm_dir_files_get          (E_Fm_Smart_Data *sd, int type);
+static char               *_e_fm_dir_pop                (const char *path);
+static void                _e_fm_file_free              (E_Fm_Icon *icon);
+static void                _e_fm_dir_monitor_cb         (void *data, Ecore_File_Monitor *ecore_file_monitor,  Ecore_File_Event event, const char *path);
+static void                _e_fm_selections_clear       (E_Fm_Smart_Data *sd);
+static void                _e_fm_selections_add         (E_Fm_Icon *icon, Evas_List *icon_ptr);
+static void                _e_fm_selections_current_set (E_Fm_Icon *icon, Evas_List *icon_ptr);
+static void                _e_fm_selections_rect_add    (E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+static void                _e_fm_selections_del         (E_Fm_Icon *icon);
 
 static void                _e_fm_fake_mouse_up_later     (Evas *evas, int button);
 static void                _e_fm_fake_mouse_up_all_later (Evas *evas);
@@ -230,6 +231,7 @@ static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_move_cb  (void *data, int type, void *event);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
+static int                 _e_fm_win_key_down_cb    (void *data, int type, void *event);
 
 static int                 _e_fm_drop_enter_cb     (void *data, int type, void *event);
 static int                 _e_fm_drop_leave_cb     (void *data, int type, void *event);
@@ -562,6 +564,11 @@ _e_fm_smart_add(Evas_Object *object)
 					 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								 _e_fm_win_mouse_move_cb,
 								 sd));
+   sd->event_handlers = evas_list_append(sd->event_handlers,
+					 ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
+								 _e_fm_win_key_down_cb,
+								 sd));
+   
    sd->monitor = NULL;
    sd->position = 0.0;
 
@@ -1604,17 +1611,28 @@ _e_fm_selections_clear(E_Fm_Smart_Data *sd)
     }
    sd->selection.files = evas_list_free(sd->selection.files);
    sd->selection.band.files = evas_list_free(sd->selection.band.files);
-   sd->selection.current_file = NULL;
+   sd->selection.current.file = NULL;
+   sd->selection.current.ptr = NULL;
 }
 
 static void
-_e_fm_selections_add(E_Fm_Icon *icon)
+_e_fm_selections_add(E_Fm_Icon *icon, Evas_List *icon_ptr)
 {
+   icon->sd->selection.current.file = icon;
+   icon->sd->selection.current.ptr = icon_ptr;   
    if (icon->state.selected) return;
    e_fm_icon_signal_emit(icon->icon_object, "clicked", "");
-   icon->sd->selection.current_file = icon;
    icon->sd->selection.files = evas_list_append(icon->sd->selection.files, icon);
    icon->state.selected = 1;
+}
+
+static void
+_e_fm_selections_current_set(E_Fm_Icon *icon, Evas_List *icon_ptr)
+{
+   icon->sd->selection.current.file = icon;
+   icon->sd->selection.current.ptr = icon_ptr;   
+   if (icon->state.selected) return;
+   e_fm_icon_signal_emit(icon->icon_object, "hilight", "");
 }
 
 static void
@@ -1637,7 +1655,7 @@ _e_fm_selections_rect_add(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_
 	       if (icon->state.selected)
 		 _e_fm_selections_del(icon);
 	       else
-		 _e_fm_selections_add(icon);
+		 _e_fm_selections_add(icon, l);
 	       icon->sd->selection.band.files = evas_list_append(icon->sd->selection.band.files, icon);
 	    }
 	}
@@ -1648,7 +1666,7 @@ _e_fm_selections_rect_add(E_Fm_Smart_Data *sd, Evas_Coord x, Evas_Coord y, Evas_
 	       if (icon->state.selected)
 		 _e_fm_selections_del(icon);
 	       else
-		 _e_fm_selections_add(icon);
+		 _e_fm_selections_add(icon, l);
 	       icon->sd->selection.band.files = evas_list_remove(icon->sd->selection.band.files, icon);
 	    }
 	}
@@ -1661,11 +1679,11 @@ _e_fm_selections_del(E_Fm_Icon *icon)
    if (!icon->state.selected) return;
    e_fm_icon_signal_emit(icon->icon_object, "unclicked", "");
    icon->sd->selection.files = evas_list_remove(icon->sd->selection.files, icon);
-   if (icon->sd->selection.current_file == icon)
+   if (icon->sd->selection.current.file == icon)
     {
-       icon->sd->selection.current_file = NULL;
+       icon->sd->selection.current.file = NULL;
        if (icon->sd->selection.files)
-	 icon->sd->selection.current_file = icon->sd->selection.files->data;
+	 icon->sd->selection.current.file = icon->sd->selection.files->data;
     }
    icon->state.selected = 0;
 }
@@ -1996,7 +2014,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		 else
 		   _e_fm_selections_clear(icon->sd);
 
-		 _e_fm_selections_add(icon);
+		 _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
 	      }
 	    else
 	      {
@@ -2005,7 +2023,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		 else
 		   {
 		      _e_fm_selections_clear(icon->sd);
-		      _e_fm_selections_add(icon);
+		      _e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
 		   }
 	      }
 
@@ -2018,7 +2036,7 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	int x, y, w, h;
 
 	_e_fm_selections_clear(icon->sd);
-	_e_fm_selections_add(icon);
+	_e_fm_selections_add(icon, evas_list_find_list(icon->sd->files, icon));
 
 	mn = e_menu_new();
 	mi = e_menu_item_new(mn);
@@ -2229,6 +2247,192 @@ _e_fm_win_mouse_up_cb(void *data, int type, void *event)
 
    e_grabinput_release(icon->sd->win->evas_win, icon->sd->win->evas_win);
    return 0;
+}
+
+static void
+_e_fm_icon_select_up(E_Fm_Smart_Data *sd)
+{
+   Evas_List *l;
+   
+   if(sd->selection.current.ptr)
+     {
+	E_Fm_Icon *icon;
+	Evas_Coord x, y, x2, y2;
+	
+	l = sd->selection.current.ptr;
+	icon = l->data;
+	evas_object_geometry_get(icon->icon_object, &x, &y, NULL, NULL);
+	x2 = x + 1;
+	l = l->prev;
+	while(l && x != x2)
+	  {
+	     icon = l->data;
+	     evas_object_geometry_get(icon->icon_object, &x2, &y2, NULL, NULL);
+	     if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       {
+		  if(icon->state.selected)
+		    {
+		       _e_fm_selections_del(l->data);
+		       _e_fm_selections_current_set(l->data, l);
+		    }
+		  else
+		    _e_fm_selections_add(l->data, l);
+	       }	      
+	     l = l->prev;
+	  }
+	if(l && !evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	  {
+	     if(l->next) l = l->next;
+	     if(!l) return;
+	     _e_fm_selections_clear(sd);
+	     _e_fm_selections_add(l->data, l);
+	  }
+     }
+   else
+     _e_fm_selections_add(sd->files->data, sd->files);   
+}
+
+static void
+_e_fm_icon_select_down(E_Fm_Smart_Data *sd)
+{
+   Evas_List *l;
+   
+   if(sd->selection.current.ptr)
+     {
+	E_Fm_Icon *icon;
+	Evas_Coord x, y, x2, y2;
+	
+	l = sd->selection.current.ptr;
+	icon = l->data;
+	evas_object_geometry_get(icon->icon_object, &x, &y, NULL, NULL);
+	x2 = x + 1;
+	l = l->next;
+	while(l && x != x2)
+	  {
+	     icon = l->data;
+	     evas_object_geometry_get(icon->icon_object, &x2, &y2, NULL, NULL);
+	     if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       {
+		  if(icon->state.selected)
+		    {
+		       _e_fm_selections_del(l->data);
+		       _e_fm_selections_current_set(l->data, l);
+		    }
+		  else
+		    _e_fm_selections_add(l->data, l);
+	       }	      
+	     l = l->next;
+	  }
+	if(l && !evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	  {
+	     if(l->prev) l = l->prev;
+	     if(!l) return;
+	     _e_fm_selections_clear(sd);
+	     _e_fm_selections_add(l->data, l);
+	  }
+     }
+   else
+     _e_fm_selections_add(sd->files->data, sd->files);
+}
+
+static void
+_e_fm_icon_select_left(E_Fm_Smart_Data *sd)
+{
+   Evas_List *prev;
+   
+   if(sd->selection.current.ptr)
+     {
+	if(sd->selection.current.ptr->prev)
+	  {
+	     prev = sd->selection.current.ptr->prev;
+	     if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       {
+		  E_Fm_Icon *icon;
+		  
+		  icon = prev->data;
+		  if(icon->state.selected)
+		    {
+		       _e_fm_selections_del(prev->data);
+		       _e_fm_selections_current_set(prev->data, prev);
+		    }
+		  else		       
+		    _e_fm_selections_add(prev->data, prev);
+	       }
+	     else
+	       {
+		  _e_fm_selections_clear(sd);
+		  _e_fm_selections_add(prev->data, prev);
+	       }
+	  }
+     }
+   else
+     _e_fm_selections_add(sd->files->data, sd->files);   
+}
+
+static void
+_e_fm_icon_select_right(E_Fm_Smart_Data *sd)
+{
+   Evas_List *next;
+   
+   if(sd->selection.current.ptr)
+     {
+	if(sd->selection.current.ptr->next)
+	  {
+	     next = sd->selection.current.ptr->next;
+	     if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       {
+		  E_Fm_Icon *icon;
+		  
+		  icon = next->data;
+		  if(icon->state.selected)
+		    {		      
+		       _e_fm_selections_del(next->data);
+		       _e_fm_selections_current_set(next->data, next);
+		    }
+		  else		       
+		    _e_fm_selections_add(next->data, next);
+	       }
+	     else
+	       {
+		  _e_fm_selections_clear(sd);
+		  _e_fm_selections_add(next->data, next);
+	       }
+	  }
+     }
+   else
+     _e_fm_selections_add(sd->files->data, sd->files);
+}
+
+static void
+_e_fm_icon_run(E_Fm_Smart_Data *sd)
+{
+   
+}
+
+
+static int
+_e_fm_win_key_down_cb(void *data, int type, void *event)
+{
+   Ecore_X_Event_Key_Down *ev;
+   E_Fm_Smart_Data *sd;
+   
+   ev = event;
+   sd = data;
+   
+   // make this call generic
+   if (ev->win != ecore_evas_software_x11_subwindow_get(sd->win->ecore_evas)) 
+     return 1;
+   
+   if(!strcmp(ev->keysymbol, "Up"))
+     _e_fm_icon_select_up(sd);
+   else if(!strcmp(ev->keysymbol, "Down"))
+     _e_fm_icon_select_down(sd);
+   else if(!strcmp(ev->keysymbol, "Left"))
+     _e_fm_icon_select_left(sd);
+   else if(!strcmp(ev->keysymbol, "Right"))
+     _e_fm_icon_select_right(sd);
+   else if(!strcmp(ev->keysymbol, "Return"))
+     _e_fm_icon_run(sd);      
 }
 
  static int
