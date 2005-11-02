@@ -2406,9 +2406,46 @@ _e_fm_icon_select_right(E_Fm_Smart_Data *sd)
 static void
 _e_fm_icon_run(E_Fm_Smart_Data *sd)
 {
-   
+   E_Fm_Icon *icon;
+   if(sd->selection.current.ptr)
+     {
+	icon = sd->selection.current.file;
+	if (icon->file->type == E_FM_FILE_TYPE_DIRECTORY)
+	  {	     
+	     char *fullname;
+	     
+	     printf("dir!\n");
+	     
+	     if (!strcmp(icon->file->name, ".."))
+	       {
+		  fullname = _e_fm_dir_pop(icon->sd->dir);
+	       }
+	     else
+	       {
+		  fullname = strdup(icon->file->path);
+	       }
+	     if (fullname)
+	       {
+		  if (icon->sd->win)
+		    e_win_title_set(icon->sd->win, fullname);
+		  _e_fm_dir_set(icon->sd, fullname);
+		  free(fullname);
+	       }
+	  }
+	else if (icon->file->type == E_FM_FILE_TYPE_FILE)
+	  {	     
+	     if(icon->sd->is_selector)
+	       {
+		  _e_fm_selector_send_file(icon);
+		  return;
+	       }
+	     
+	     if ((!e_fm_file_assoc_exec(icon->file)) &&
+		 (e_fm_file_can_exec(icon->file)))
+	       e_fm_file_exec(icon->file);
+	  }	
+     }
 }
-
 
 static int
 _e_fm_win_key_down_cb(void *data, int type, void *event)
