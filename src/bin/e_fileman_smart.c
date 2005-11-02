@@ -786,6 +786,7 @@ _e_fm_file_delete(E_Fm_Icon *icon)
        text = E_NEW(char, PATH_MAX + 256);
        snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b>", icon->file->path);
        e_dialog_text_set(dia, text);
+       free(text);
        e_dialog_show(dia);
        return;
     }

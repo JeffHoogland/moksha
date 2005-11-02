@@ -274,7 +274,8 @@ _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_data_set(obj, "e_icon_layout_data", li);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_icon_layout_smart_item_del_hook, NULL);
-   if (!evas_object_visible_get(sd->clip))
+   if ((!evas_object_visible_get(sd->clip)) &&
+       (evas_object_visible_get(sd->obj)))
      evas_object_show(sd->clip);
    return li;
 }
