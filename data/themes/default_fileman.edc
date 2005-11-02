@@ -150,6 +150,8 @@ images
    image: "e17_fileman_rubberband.png" COMP;   
    image: "e17_menu_bg_border.png" COMP;
    image: "e17_logo.png" COMP;   
+   
+   image: "e17_button.png" COMP;
 }
 
 styles
@@ -939,6 +941,31 @@ group {
 	 }
       }
       part {
+	 name:          "icon_overlay";
+	 mouse_events:  1;
+	 description {
+	    state:      "default" 0.0;
+	    visible:     0;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0 0;
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1 -1;
+	    }
+	    image {
+	       normal: "e17_button.png";
+	    }
+	    color:      255 255 255 128;
+	 }
+	 description {
+	    state: "clicked" 0.0;
+            inherit: "default" 0.0;
+	    visible: 1;
+	 }	       
+      }
+      part {
 	 name:          "icon_title";      
 	 type:          SWALLOW;
 	 description {
@@ -948,7 +975,7 @@ group {
 	    rel1 {
 	       to: "icon_swallow";
 	       relative: 0.0 1.0;
-	       offset:   -1 -1;
+	       offset:   1 -1;
 	    }
 	    rel2 {
 	       to: "icon_swallow";
@@ -960,7 +987,7 @@ group {
 	    state:   "clicked" 0.0;
 	    inherit: "default" 0.0;
 	 }
-      }
+      }      
       part {
 	 name:          "icon_event";
 	 type:          RECT;
@@ -977,7 +1004,7 @@ group {
 	    }
 	    color:      0 0 0 0;
 	 }
-      }      
+      }
 /*
       part {
 	 name:          "icon_title";
@@ -1025,6 +1052,7 @@ group {
 	 source: ""; 
 	 action: STATE_SET "clicked" 0.0; 
 	 target: "icon_title"; 
+	 target: "icon_overlay";
       } 
       program { 
 	 name:   "unclicked"; 
@@ -1032,6 +1060,7 @@ group {
 	 source: ""; 
 	 action: STATE_SET "default" 0.0; 
 	 target: "icon_title"; 
+         target: "icon_overlay";	 
       }      
    }   
 }
