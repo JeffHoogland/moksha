@@ -25,14 +25,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
-* FIX: Esmart_textarea has been disabled until it is updated to the new 
-  textblock API.  Affected files are -
-    e17/libs/esmart/configure.in
-    e17/libs/esmart/src/lib/Makefile.am
-    e17/apps/e_modules/src/modules/Makefile.am
-    e17/apps/e_modules/src/modules/notes/Makefile.am
-    e17/apps/e_utils/src/bin/exige/Makefile.am
-    e17/apps/eclair/src/eclair_subtitles.c
 ]]]
 
 [[[
