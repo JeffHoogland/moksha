@@ -23,6 +23,7 @@ EAPI void         e_fm_icon_title_set(Evas_Object *obj, const char *title);
 EAPI void         e_fm_icon_type_set(Evas_Object *obj, int type);
 EAPI void         e_fm_icon_edit_entry_set(Evas_Object *obj, Evas_Object *entry);
 EAPI void         e_fm_icon_signal_emit(Evas_Object *obj, const char *source, const char *emission);
+EAPI void         e_fm_icon_image_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 
 #endif
 #endif

@@ -308,7 +308,7 @@ _e_icon_layout_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *
 static void
 _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 {
-   Evas_Coord x, y, w, h;
+   Evas_Coord x, y, w, h, maxw, maxh;
    Evas_List *l;
    
    //if (!sd->changed) return;
@@ -317,6 +317,8 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
    y = sd->y + sd->ys;
    w = sd->vw;
    h = sd->vh;   
+   maxw = 0;
+   maxh = 0;
    
    if (sd->fixed == 0)
     {
@@ -327,11 +329,14 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 	   
 	   obj = l->data;
 	   li = evas_object_data_get(obj, "e_icon_layout_data");
+	   
+	   if(li->h > maxh) maxh = li->h;
 
 	   if(x > sd->x + w || x + li->w > sd->x + w)
 	    {
 	       x = sd->x + sd->xs;
-	       y += li->h + sd->ys;
+	       y += maxh + sd->ys;
+	       maxh = 0;
 	    }
 	   
 	   li->x = x;
@@ -355,10 +360,13 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 	   obj = l->data;
 	   li = evas_object_data_get(obj, "e_icon_layout_data");
 	   
+	   if(li->w > maxw) maxw = li->w;	   
+	   
 	   if(y > sd->y + h || y + li->h > sd->y + h)
 	    {
 	       y = sd->y + sd->ys;
-	       x += li->w + sd->xs;
+	       x += maxw + sd->xs;
+	       maxw = 0;
 	    }
 	   
 	   li->x = x;

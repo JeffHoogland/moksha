@@ -513,8 +513,8 @@ _e_fm_smart_add(Evas_Object *object)
 
    sd->icon_info.w = 48;
    sd->icon_info.h = 48;
-   sd->icon_info.x_space = 25;
-   sd->icon_info.y_space = 25;
+   sd->icon_info.x_space = 12;
+   sd->icon_info.y_space = 10;
 
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
@@ -1352,10 +1352,12 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
      {
 	E_Fm_Icon *icon;
 	Evas_Coord icon_w, icon_h;
-
+	Evas_Coord w, h;
+	
 	icon = l->data;
 
-	evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	//evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);	
 	evas_object_show(icon->icon_object);
 	evas_object_geometry_get(icon->icon_object, NULL, NULL, &icon_w, &icon_h);
 	D(("_e_fm_dir_set: Icon, w=%d h=%d\n", icon_w, icon_h));
@@ -1427,10 +1429,12 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
 	 }
        else
 	 {
+	    Evas_Coord w, h;
+	    
 	    icon->icon_object = e_fm_icon_add(sd->evas);
 	    icon->sd = sd;
 	    e_fm_icon_file_set(icon->icon_object, icon->file);
-	    evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	    e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
 	    files = evas_list_append(files, icon);
 	 }
     }
@@ -1479,6 +1483,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
    char *dir;
    E_Fm_Icon *icon;
    Evas_List *l;
+   Evas_Coord w, h;
    
    sd = data;
    
@@ -1502,8 +1507,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
        icon->sd = sd;
        e_icon_layout_freeze(sd->layout);
        e_fm_icon_file_set(icon->icon_object, icon->file);
-       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
        evas_object_show(icon->icon_object);
        e_icon_layout_pack(sd->layout, icon->icon_object);
        evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
@@ -2073,7 +2077,6 @@ _e_fm_icon_mouse_in_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    icon = data;
 
    e_fm_icon_signal_emit(icon->icon_object, "hilight", "");
-
 }
 
 static void
