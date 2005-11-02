@@ -2420,6 +2420,8 @@ _e_fm_win_key_down_cb(void *data, int type, void *event)
    sd = data;
    
    // make this call generic
+   if(!sd->win)
+     return;
    if (ev->win != ecore_evas_software_x11_subwindow_get(sd->win->ecore_evas)) 
      return 1;
    
