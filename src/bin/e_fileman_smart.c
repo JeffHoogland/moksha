@@ -181,10 +181,13 @@ struct _E_Fm_Smart_Data
 
 static void                _e_fm_smart_add(Evas_Object *object);
 static void                _e_fm_smart_del(Evas_Object *object);
-static void                _e_fm_smart_show(Evas_Object *object);
-static void                _e_fm_smart_hide(Evas_Object *object);
 static void                _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y);
 static void                _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h);
+static void                _e_fm_smart_show(Evas_Object *object);
+static void                _e_fm_smart_hide(Evas_Object *object);
+static void                _e_fm_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
+static void                _e_fm_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
+static void                _e_fm_smart_clip_unset(Evas_Object *obj);
 
 static void                _e_fm_redraw(E_Fm_Smart_Data *sd);
 
@@ -256,9 +259,9 @@ e_fm_init(void)
 			       _e_fm_smart_resize, /* resize */
 			       _e_fm_smart_show,/* show */
 			       _e_fm_smart_hide,/* hide */
-			       NULL, /* color_set */
-			       NULL, /* clip_set */
-			       NULL, /* clip_unset */
+			       _e_fm_smart_color_set, /* color_set */
+			       _e_fm_smart_clip_set, /* clip_set */
+			       _e_fm_smart_clip_unset, /* clip_unset */
 			       NULL); /* data*/
 
    E_EVENT_FM_RECONFIGURE = ecore_event_type_new();
@@ -476,31 +479,6 @@ e_fm_background_set(Evas_Object *object, Evas_Object *bg)
 }
 
 /* local subsystem functions */
-
-static void
-_e_fm_smart_show(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-   
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   
-   evas_object_show(sd->bg);
-   evas_object_show(sd->layout);
-   evas_object_show(sd->clip);
-}
-
-static void
-_e_fm_smart_hide(Evas_Object *object)
-{
-   E_Fm_Smart_Data *sd;
-   
-   if ((!object) || !(sd = evas_object_smart_data_get(object)))
-     return;
-   
-   evas_object_hide(sd->clip);
-}
-
 static void
 _e_fm_smart_add(Evas_Object *object)
 {
@@ -699,6 +677,63 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
        ev->h = sd->child.h;
        ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
+}
+
+static void
+_e_fm_smart_show(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_show(sd->bg);
+   evas_object_show(sd->layout);
+   evas_object_show(sd->clip);
+}
+
+static void
+_e_fm_smart_hide(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_hide(sd->clip);
+}
+
+static void
+_e_fm_smart_color_set(Evas_Object *object, int r, int g, int b, int a)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_color_set(sd->clip, r, g, b, a);
+}
+
+static void
+_e_fm_smart_clip_set(Evas_Object *object, Evas_Object *clip)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_clip_set(sd->clip, clip);
+}
+   
+static void
+_e_fm_smart_clip_unset(Evas_Object *object)
+{
+   E_Fm_Smart_Data *sd;
+   
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   
+   evas_object_clip_unset(sd->clip);
 }
 
 static void
