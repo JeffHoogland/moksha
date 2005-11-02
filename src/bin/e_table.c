@@ -252,7 +252,8 @@ _e_table_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
 				  _e_table_smart_item_del_hook, NULL);
    evas_object_stack_below(obj, sd->obj);
-   if (!evas_object_visible_get(sd->clip))
+   if ((!evas_object_visible_get(sd->clip)) &&
+       (evas_object_visible_get(sd->obj)))
      evas_object_show(sd->clip);
    return ti;
 }
@@ -789,8 +790,8 @@ _e_table_smart_add(Evas_Object *obj)
    sd->h = 0;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_smart_member_add(sd->clip, obj);
-   evas_object_move(sd->clip, -100000, -100000);
-   evas_object_resize(sd->clip, 200000, 200000);
+   evas_object_move(sd->clip, -100002, -100002);
+   evas_object_resize(sd->clip, 200004, 200004);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
    evas_object_smart_data_set(obj, sd);
 }

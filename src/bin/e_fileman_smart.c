@@ -545,8 +545,8 @@ _e_fm_smart_add(Evas_Object *object)
    sd->clip = evas_object_rectangle_add(sd->evas);
    evas_object_smart_member_add(sd->clip, object);
    evas_object_show(sd->clip);
-   evas_object_move(sd->clip, -100000, -100000);
-   evas_object_resize(sd->clip, 200000, 200000);
+   evas_object_move(sd->clip, -100003, -100003);
+   evas_object_resize(sd->clip, 200006, 200006);
    evas_object_color_set(sd->clip, 255, 255, 255, 255);
 
    evas_object_clip_set(sd->bg, sd->clip);
