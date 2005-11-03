@@ -30,13 +30,12 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
 	E_Desk *desk;
 	
 	cfbg = l->data;
-	if ((cfbg->container >= 0) &&
-	    (zone->container->num != cfbg->container)) continue;
-	if ((cfbg->zone >= 0) &&
-	    (zone->num != cfbg->zone)) continue;
+	if ((cfbg->container >= 0) && (zone->container->num != cfbg->container)) continue;
+	if ((cfbg->zone >= 0) && (zone->num != cfbg->zone)) continue;
 	desk = e_desk_current_get(zone);
 	if (!desk) continue;
-	if ((cfbg->desk_x != desk->x) || (cfbg->desk_y != desk->y)) continue;
+	if ((cfbg->desk_x >= 0) && (cfbg->desk_x != desk->x)) continue;
+	if ((cfbg->desk_y >= 0) && (cfbg->desk_y != desk->y)) continue;
 	entries = edje_file_collection_list(cfbg->file);
 	if (entries)
 	  {

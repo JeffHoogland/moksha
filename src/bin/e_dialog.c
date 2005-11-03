@@ -7,6 +7,7 @@
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_del_func_cb(void *data, E_Dialog *dia);
 static void _e_dialog_cb_delete(E_Win *win);
+static void _e_dialog_cb_resize(E_Win *win);
 static void _e_dialog_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 static void _e_dialog_cb_wid_on_focus(void *data, Evas_Object *obj);
 
@@ -40,6 +41,7 @@ e_dialog_new(E_Container *con)
      }
    ecore_x_netwm_window_type_set(dia->win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
    e_win_delete_callback_set(dia->win, _e_dialog_cb_delete);
+   e_win_resize_callback_set(dia->win, _e_dialog_cb_resize);
    dia->win->data = dia;
    e_win_name_class_set(dia->win, "E", "_dialog");
    o = edje_object_add(e_win_evas_get(dia->win));
@@ -79,7 +81,7 @@ e_dialog_button_add(E_Dialog *dia, char *label, char *icon, void (*func) (void *
 
    if (!func) func = _e_dialog_del_func_cb;
    o = e_widget_button_add(e_win_evas_get(dia->win), label, icon, func, data, dia);
-   e_widget_list_object_append(dia->box_object, o, 1, 1, 0.5);
+   e_widget_list_object_append(dia->box_object, o, 1, 0, 0.5);
    dia->buttons = evas_list_append(dia->buttons, o);
 }
 
@@ -275,6 +277,15 @@ _e_dialog_cb_delete(E_Win *win)
    
    dia = win->data;
    e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_dialog_cb_resize(E_Win *win)
+{
+   E_Dialog *dia;
+   
+   dia = win->data;
+   evas_object_resize(dia->bg_object, dia->win->w, dia->win->h);
 }
 
 static void

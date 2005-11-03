@@ -45,7 +45,7 @@ e_win_new(E_Container *con)
    win->container = con;
    win->engine = e_canvas_engine_decide(e_config->evas_engine_win);
    win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
-				  0, 0, 1, 1, 0, 0,
+				  0, 0, 1, 1, 1, 0,
 				  &(win->evas_win), NULL);
    e_canvas_add(win->ecore_evas);
    ecore_evas_data_set(win->ecore_evas, "E_Win", win);
@@ -87,6 +87,7 @@ e_win_show(E_Win *win)
 	if (!win->placed)
 	  win->border->re_manage = 0;
 	win->border->internal = 1;
+	win->border->internal_ecore_evas = win->ecore_evas;
 	if (win->engine == E_EVAS_ENGINE_GL_X11)
 	  {
 	     ecore_evas_gl_x11_extra_event_window_add(win->ecore_evas, win->border->win);

@@ -331,6 +331,8 @@ struct _E_Border
    unsigned int    lock_life : 1; /*DONE*/
    unsigned int    internal : 1;
    
+   Ecore_Evas     *internal_ecore_evas;
+   
    double          ping;
  
    unsigned char   changed : 1;

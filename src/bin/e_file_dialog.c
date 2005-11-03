@@ -18,7 +18,7 @@ e_file_dialog_new(E_Container *con)
    Evas_Coord     w, h, ew, eh;
    E_Manager     *man;
    Evas          *evas;
-   Evas_Object   *table, *ol, *fm;
+   Evas_Object   *list, *ol, *fm;
    
    if (!con)
      {
@@ -46,31 +46,16 @@ e_file_dialog_new(E_Container *con)
    
    ol = e_widget_list_add(evas, 0, 1);
    
-   table = e_widget_frametable_add(evas, "Places", 0);
-   
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, strdup("Home"), "fileman/home", NULL,
-								NULL, NULL),
-				     0, 0, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, strdup("Desktop"), "fileman/desktop", NULL,
-								NULL, NULL),
-				     0, 1, 1, 1, 1, 0, 1, 0);
-   
-   e_widget_frametable_object_append(table, e_widget_button_add(evas, strdup("Icons"), "fileman/folder", NULL,
-								NULL, NULL),
-				     0, 2, 1, 1, 1, 0, 1, 0);
-
-   
-   e_widget_list_object_append(ol, table, 1, 1, 0.0);
-   
-   table = e_widget_table_add(evas, "Select File", 0);
+   list = e_widget_framelist_add(evas, "Places", 0);
+   e_widget_framelist_content_align_set(list, 0.5, 0.0);
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Home"), "fileman/home", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Desktop"), "fileman/desktop", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Icons"), "fileman/folder", NULL, NULL, NULL));
+   e_widget_list_object_append(ol, list, 1, 0, 0.0);
    
    fm = e_widget_fileman_add(evas, &(dia->file));
-   e_widget_table_object_append(table, fm, 0, 0, 4, 4, 1, 1, 1, 1);
-   
    e_widget_fileman_select_callback_add(fm, _e_file_dialog_file_select_cb, dia);
-   
-   e_widget_list_object_append(ol, table, 1, 1, 0.0);
+   e_widget_list_object_append(ol, fm, 1, 1, 0.0);
    
    e_widget_min_size_get(ol, &w, &h);
    e_dialog_content_set(dia->dia, ol, w, h);
@@ -85,6 +70,7 @@ void
 e_file_dialog_show(E_File_Dialog *dia)
 {
    e_dialog_show(dia->dia);
+   e_win_size_max_set(dia->dia->win, 9999, 9999);
 }
 
 void

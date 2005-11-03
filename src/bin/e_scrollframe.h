@@ -20,6 +20,7 @@ EAPI void e_scrollframe_extern_pan_set          (Evas_Object *obj, Evas_Object *
 EAPI void e_scrollframe_custom_theme_set        (Evas_Object *obj, char *custom_category, char *custom_group);
 EAPI void e_scrollframe_child_pos_set           (Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void e_scrollframe_child_pos_get           (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
+EAPI void e_scrollframe_child_region_show       (Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
 EAPI void e_scrollframe_child_viewport_size_get (Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
 EAPI void e_scrollframe_step_size_set           (Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 EAPI void e_scrollframe_step_size_get           (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);

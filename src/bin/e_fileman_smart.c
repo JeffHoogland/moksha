@@ -1546,6 +1546,11 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
        icon = E_NEW(E_Fm_Icon, 1);
        if (!icon) break;
        icon->file = e_fm_file_new(path);
+       if (!icon->file)
+	 {
+	    free(icon);
+	    return;
+	 }
        icon->icon_object = e_fm_icon_add(sd->evas);
        icon->sd = sd;
        e_icon_layout_freeze(sd->layout);

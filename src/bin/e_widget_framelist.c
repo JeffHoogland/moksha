@@ -76,6 +76,16 @@ e_widget_framelist_object_append(Evas_Object *obj, Evas_Object *sobj)
    evas_object_show(sobj);
 }
 
+void
+e_widget_framelist_content_align_set(Evas_Object *obj, double halign, double valign)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_box_align_set(wd->o_box, halign, valign);
+}
+
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {

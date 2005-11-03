@@ -194,6 +194,13 @@ e_scrollframe_child_pos_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 }
 
 void
+e_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+{
+   API_ENTRY return;
+   /* FIXME: do this code */
+}
+
+void
 e_scrollframe_child_viewport_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
    API_ENTRY return;

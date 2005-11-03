@@ -15,7 +15,7 @@ static void _e_wid_del_hook(Evas_Object *obj);
 
 /* externally accessible functions */
 Evas_Object *
-e_widget_table_add(Evas *evas, char *label, int homogenous)
+e_widget_table_add(Evas *evas, int homogenous)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;

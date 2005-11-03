@@ -387,7 +387,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
    Evas_List *l;
-   int minw, minh;
+   int minw, minh, wdif, hdif;
    int count, expand;
 
    if (!sd->changed) return;
@@ -432,15 +432,17 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
      {
 	if (sd->horizontal)
 	  {
-	     x += (w - minw) / 2;
+	     x += (double)(w - minw) * sd->align.x;
 	     w = minw;
 	  }
 	else
 	  {
-	     y += (h - minh) / 2;
+	     y += (double)(h - minh) * sd->align.y;
 	     h = minh;
 	  }
      }
+   wdif = w - minw;
+   hdif = h - minh;
    xx = x;
    yy = y;
    for (l = sd->items; l; l = l->next)
@@ -472,10 +474,16 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 	       }
 	     else
 	       {
-		  /* FIXME: not done - this is fucked atm */
 		  Evas_Coord ww, hh, ow, oh;
 		  
 		  ww = bi->min.w;
+		  if ((expand > 0) && (bi->expand_w))
+		    {
+		       if (expand == 1) ow = wdif;
+		       else ow = (w - minw) / expand;
+		       wdif -= ow;
+		       ww += ow;
+		    }
 		  hh = h;
 		  ow = bi->min.w;
 		  if (bi->fill_w) ow = ww;
@@ -512,11 +520,17 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 	       }
 	     else
 	       {
-		  /* FIXME: not done - this is fucked atm */
 		  Evas_Coord ww, hh, ow, oh;
 		  
 		  ww = w;
 		  hh = bi->min.h;
+		  if ((expand > 0) && (bi->expand_h))
+		    {
+		       if (expand == 1) oh = hdif;
+		       else oh = (h - minh) / expand;
+		       hdif -= oh;
+		       hh += oh;
+		    }
 		  ow = bi->min.w;
 		  if (bi->expand_w) ow = ww;
 		  if ((bi->max.w >= 0) && (bi->max.w < ow)) ow = bi->max.w;
@@ -630,6 +644,8 @@ _e_box_smart_add(Evas_Object *obj)
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
+   sd->align.x = 0.5;
+   sd->align.y = 0.5;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_smart_member_add(sd->clip, obj);
    evas_object_move(sd->clip, -100004, -100004);

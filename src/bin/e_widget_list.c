@@ -50,7 +50,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    if (e_box_orientation_get(wd->o_box) == 1)
      e_box_pack_options_set(sobj,
 			    1, fill, /* fill */
-			    0, expand, /* expand */
+			    expand, expand, /* expand */
 			    0.5, align, /* align */
 			    mw, mh, /* min */
 			    99999, 99999 /* max */
@@ -58,7 +58,7 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    else
      e_box_pack_options_set(sobj,
 			    fill, 1, /* fill */
-			    expand, 0, /* expand */
+			    expand, expand, /* expand */
 			    align, 0.5, /* align */
 			    mw, mh, /* min */
 			    99999, 99999 /* max */
