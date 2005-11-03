@@ -35,6 +35,7 @@ static void _e_main_desk_restore(E_Manager *man, E_Container *con);
 #define MAX_LEVEL 32
 static int (*_e_main_shutdown_func[MAX_LEVEL]) (void);
 static int _e_main_level = 0;
+static int _e_cacheburst = 0;
 
 static Evas_List *_e_main_idler_before_list = NULL;
 
@@ -267,8 +268,9 @@ main(int argc, char **argv)
    _e_main_shutdown_push(ecore_shutdown);
    
 /* disabled for now - seems to break config loading??? */   
-/*   eet_cacheburst(1);*/
-   ecore_timer_add(1.0, _e_main_cb_eet_cacheburst_end, NULL);
+   _e_cacheburst++;
+   eet_cacheburst(_e_cacheburst);
+   ecore_timer_add(5.0, _e_main_cb_eet_cacheburst_end, NULL);
    
     /* init the file system */
    if (!ecore_file_init())
@@ -1089,6 +1091,8 @@ _e_main_cb_idler_before(void *data __UNUSED__)
 	     free(eb);
 	  }
      }
+   _e_cacheburst--;
+   eet_cacheburst(_e_cacheburst);
    edje_thaw();
 //   printf("IN to idle... %3.3f\n", ecore_time_get());
    return 1;
@@ -1099,13 +1103,16 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 {
 //   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
+   _e_cacheburst++;
+   eet_cacheburst(_e_cacheburst);
    return 1;
 }
 
 static int
 _e_main_cb_eet_cacheburst_end(void *data __UNUSED__)
 {
-   eet_cacheburst(0);
+   _e_cacheburst--;
+   eet_cacheburst(_e_cacheburst);
    return 0;
 }
 
