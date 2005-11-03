@@ -632,6 +632,10 @@ e_border_move(E_Border *bd, int x, int y)
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
 #endif
+   if (bd->internal_ecore_evas)
+     ecore_evas_managed_move(bd->internal_ecore_evas,
+			     bd->x + bd->client_inset.l,
+			     bd->y + bd->client_inset.t);
    ecore_x_icccm_move_resize_send(bd->client.win,
 				  bd->x + bd->client_inset.l,
 				  bd->y + bd->client_inset.t,
@@ -686,6 +690,10 @@ e_border_resize(E_Border *bd, int w, int h)
 	bd->client.netwm.sync.wait++;
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
+   if (bd->internal_ecore_evas)
+     ecore_evas_managed_move(bd->internal_ecore_evas,
+			     bd->x + bd->client_inset.l,
+			     bd->y + bd->client_inset.t);
    ecore_x_icccm_move_resize_send(bd->client.win,
 				  bd->x + bd->client_inset.l,
 				  bd->y + bd->client_inset.t,
@@ -744,6 +752,10 @@ e_border_move_resize(E_Border *bd, int x, int y, int w, int h)
 	bd->client.netwm.sync.wait++;
 	ecore_x_netwm_sync_request_send(bd->client.win, bd->client.netwm.sync.serial++);
      }
+   if (bd->internal_ecore_evas)
+     ecore_evas_managed_move(bd->internal_ecore_evas,
+			     bd->x + bd->client_inset.l,
+			     bd->y + bd->client_inset.t);
    ecore_x_icccm_move_resize_send(bd->client.win,
 				  bd->x + bd->client_inset.l,
 				  bd->y + bd->client_inset.t,
@@ -2294,6 +2306,10 @@ e_border_frame_recalc(E_Border *bd)
 	bd->need_shape_merge = 1;
 	bd->need_shape_export = 1;
      }
+   if (bd->internal_ecore_evas)
+     ecore_evas_managed_move(bd->internal_ecore_evas,
+			     bd->x + bd->client_inset.l,
+			     bd->y + bd->client_inset.t);
    ecore_x_icccm_move_resize_send(bd->client.win,
 				  bd->x + bd->client_inset.l,
 				  bd->y + bd->client_inset.t,
@@ -5011,6 +5027,10 @@ _e_border_eval(E_Border *bd)
 	     bd->placed = 1;
 	  }
 
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->client_inset.l,
+				  bd->y + bd->client_inset.t);
 	ecore_x_icccm_move_resize_send(bd->client.win,
 				       bd->x + bd->client_inset.l,
 				       bd->y + bd->client_inset.t,
@@ -5090,6 +5110,10 @@ _e_border_eval(E_Border *bd)
 
    if ((bd->changes.pos) && (bd->changes.size))
      {
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->client_inset.l,
+				  bd->y + bd->client_inset.t);
 //	printf("##- BORDER NEEDS POS/SIZE CHANGE 0x%x\n", bd->client.win);
 	if ((bd->shaded) && (!bd->shading))
 	  {
@@ -5175,12 +5199,20 @@ _e_border_eval(E_Border *bd)
     }
    else if (bd->changes.pos)
      {
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->client_inset.l,
+				  bd->y + bd->client_inset.t);
 	ecore_x_window_move(bd->win, bd->x, bd->y);
 	e_container_shape_move(bd->shape, bd->x, bd->y);
 	bd->changes.pos = 0;
      }
    else if (bd->changes.size)
      {
+	if (bd->internal_ecore_evas)
+	  ecore_evas_managed_move(bd->internal_ecore_evas,
+				  bd->x + bd->client_inset.l,
+				  bd->y + bd->client_inset.t);
 //	printf("##- BORDER NEEDS SIZE CHANGE 0x%x\n", bd->client.win);
 	if (bd->shaded && !bd->shading)
 	  {
@@ -5411,6 +5443,10 @@ _e_border_eval(E_Border *bd)
 		       bd->y = y - (bd->client_inset.t >> 1);
 		       bd->changed = 1;
 		       bd->changes.pos = 1;
+		       if (bd->internal_ecore_evas)
+			 ecore_evas_managed_move(bd->internal_ecore_evas,
+						 bd->x + bd->client_inset.l,
+						 bd->y + bd->client_inset.t);
 		       ecore_x_icccm_move_resize_send(bd->client.win,
 						      bd->x + bd->client_inset.l,
 						      bd->y + bd->client_inset.t,

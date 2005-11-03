@@ -311,10 +311,14 @@ _e_test_internal(E_Container *con)
 static void
 _e_test_click(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
+#if 1
    double size;
    
    size = (double)(rand() % 1000) / 999;
    evas_object_resize(obj, size * 1024, size * 768);
+#else
+   e_scrollframe_child_region_show(data, 1024, 768, 100, 100);
+#endif
 }
 
 static void
@@ -327,13 +331,13 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_icon_add(dia->win->evas);
-//   e_icon_file_set(o, "/home/raster/t.png");
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_test_click, NULL);
+   e_icon_file_set(o, "/home/raster/t.png");
    evas_object_resize(o, 1024, 768);
    evas_object_focus_set(o, 1);
    evas_object_show(o);
       
    o2 = e_scrollframe_add(dia->win->evas);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_test_click, o2);
 //   e_scrollframe_custom_theme_set(o2, "base/theme/widgets", "widgets/scrollframe");
    evas_object_resize(o2, 200, 300);
    evas_object_show(o2);

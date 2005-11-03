@@ -196,8 +196,21 @@ e_scrollframe_child_pos_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 void
 e_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
 {
+   Evas_Coord mx = 0, my = 0, cw = 0, ch = 0, px = 0, py = 0, nx, ny;
+   
    API_ENTRY return;
-   /* FIXME: do this code */
+   sd->pan_func.max_get(sd->pan_obj, &mx, &my);
+   sd->pan_func.child_size_get(sd->pan_obj, &cw, &ch);
+   sd->pan_func.get(sd->pan_obj, &px, &py);
+   
+   nx = px;
+   if (x < px) nx = x;
+   else if ((x + w) > (px + (cw - mx))) nx = x + w - (cw - mx);
+   ny = py;
+   if (y < py) ny = y;
+   else if ((y + h) > (py + (ch - my))) ny = y + h - (ch - my);
+   if ((nx == px) && (ny == py)) return;
+   e_scrollframe_child_pos_set(obj, nx, ny);
 }
 
 void
