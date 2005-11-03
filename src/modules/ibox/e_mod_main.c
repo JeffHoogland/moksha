@@ -1128,8 +1128,13 @@ _ibox_box_cb_animator(void *data)
    if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM) ||
        (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_TOP))
      {
-	e_box_align_set(ibb->item_object, ibb->align, 0.5);
-
+        e_box_min_size_get(ibb->box_object, &mw, &mh);
+	evas_object_geometry_get(ibb->box_object, NULL, NULL, &w, &h);
+	if (mw > w)
+	  e_box_align_set(ibb->box_object, ibb->align, 0.5);
+	else
+	  e_box_align_set(ibb->box_object, 0.5, 0.5);
+	
 	if (ibb->overlay_object)
 	  {
 	     evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
@@ -1141,8 +1146,13 @@ _ibox_box_cb_animator(void *data)
    else if ((e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_LEFT) ||
 	    (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_RIGHT))
      {
-	e_box_align_set(ibb->item_object, 0.5, ibb->align);
-
+        e_box_min_size_get(ibb->box_object, &mw, &mh);
+	evas_object_geometry_get(ibb->box_object, NULL, NULL, &w, &h);
+	if (mh > h)
+	  e_box_align_set(ibb->box_object, 0.5, ibb->align);
+	else
+	  e_box_align_set(ibb->box_object, 0.5, 0.5);
+	
 	if (ibb->overlay_object)
 	  {
 	     evas_object_geometry_get(ibb->item_object, &x, &y, &w, &h);
