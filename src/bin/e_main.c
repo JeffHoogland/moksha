@@ -266,7 +266,8 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_shutdown);
    
-   eet_cacheburst(1);
+/* disabled for now - seems to break config loading??? */   
+/*   eet_cacheburst(1);*/
    ecore_timer_add(1.0, _e_main_cb_eet_cacheburst_end, NULL);
    
     /* init the file system */
