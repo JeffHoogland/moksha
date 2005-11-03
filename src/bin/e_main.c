@@ -24,6 +24,7 @@ static int  _e_main_cb_signal_hup(void *data, int ev_type, void *ev);
 static int  _e_main_cb_x_flusher(void *data);
 static int  _e_main_cb_idler_before(void *data);
 static int  _e_main_cb_idler_after(void *data);
+static int  _e_main_cb_eet_cacheburst_end(void *data);
 
 static int  _e_main_cb_startup_fake_end(void *data);
 
@@ -251,6 +252,7 @@ main(int argc, char **argv)
 	  }
      }
    
+   
    /* init edje and set it up in frozen mode */
    edje_init();
    edje_freeze();
@@ -263,6 +265,9 @@ main(int argc, char **argv)
 	exit(-1);
      }
    _e_main_shutdown_push(ecore_shutdown);
+   
+   eet_cacheburst(1);
+   ecore_timer_add(1.0, _e_main_cb_eet_cacheburst_end, NULL);
    
     /* init the file system */
    if (!ecore_file_init())
@@ -1094,6 +1099,13 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 //   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
    return 1;
+}
+
+static int
+_e_main_cb_eet_cacheburst_end(void *data __UNUSED__)
+{
+   eet_cacheburst(0);
+   return 0;
 }
 
 static int
