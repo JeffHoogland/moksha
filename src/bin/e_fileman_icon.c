@@ -20,6 +20,7 @@ struct _E_Smart_Data
    Evas_Object     *image_object;
    Evas_Object     *entry_object;
    Evas_Object     *title_object;
+   Evas_Object     *thumb_object;
 
    E_Fm_File       *file;
       
@@ -131,10 +132,20 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
      {
 	sd->thumb_path = e_thumb_file_get(sd->file->path);
 	if (e_thumb_exists(sd->file->path))
-	  sd->image_object = e_thumb_evas_object_get(sd->file->path,
-						     sd->evas,
-						     sd->iw,
-						     sd->ih);
+	  {	     
+	     sd->thumb_object = e_thumb_evas_object_get(sd->file->path, 
+							sd->evas,
+							sd->iw,
+							sd->ih);
+	     evas_object_smart_member_add(sd->thumb_object, sd->obj);
+	     
+	     sd->image_object = edje_object_add(sd->evas);
+	     edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+	     e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
+				     "fileman/icon_thumb");
+	     edje_object_part_swallow(sd->image_object, "icon_swallow",
+				      sd->thumb_object);
+	  }
 	else
 	  {
 	     thumb_files = evas_list_append(thumb_files, sd);
@@ -307,6 +318,11 @@ _e_fm_icon_smart_del(Evas_Object *obj)
 	evas_object_smart_member_del(sd->title_object);
 	evas_object_del(sd->title_object);
      }
+   if (sd->thumb_object)
+     {
+	evas_object_smart_member_del(sd->thumb_object);
+	evas_object_del(sd->thumb_object);
+     }   
    E_FREE(sd->saved_title);
    if (sd->file) e_object_unref(E_OBJECT(sd->file));
    free(sd);
@@ -453,11 +469,23 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
    if ((ext) || (ecore_file_exists(sd->thumb_path)))
      {
 	if (sd->image_object) evas_object_del(sd->image_object);
-	sd->image_object = e_thumb_evas_object_get(sd->file->path,
+	
+	sd->thumb_object = e_thumb_evas_object_get(sd->file->path, 
 						   sd->evas,
-						   sd->iw, sd->ih);
+						   sd->iw,
+						   sd->ih);
+	evas_object_smart_member_add(sd->thumb_object, sd->obj);
+	
+	sd->image_object = edje_object_add(sd->evas);
+	edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
+				"fileman/icon_thumb");
+	edje_object_part_swallow(sd->image_object, "icon_swallow",
+				 sd->thumb_object);
 	edje_object_part_swallow(sd->icon_object, "icon_swallow",
 				 sd->image_object);
+	edje_object_part_swallow(sd->icon_object, "icon_title",
+					 sd->title_object);
      }
 
    pid = -1;

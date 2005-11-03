@@ -1858,7 +1858,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/properties");
 
        ecore_evas_geometry_get(sd->win->ecore_evas, &x, &y, &w, &h);
-
+       
        e_menu_activate_mouse(sd->menu, sd->win->border->zone,
 			     ev->output.x + x, ev->output.y + y, 1, 1,
 			     E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
