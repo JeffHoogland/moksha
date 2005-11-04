@@ -25,7 +25,6 @@ group { \
 #define FILEMAN_ICON(TYPE) \
 group { \
    name: "icons/fileman/"TYPE; \
-   max:  48 48; \
    parts { \
       part { \
 	 name:          "icon"; \
@@ -34,7 +33,6 @@ group { \
 	    state:    "default" 0.0; \
 	    aspect:   1.0 1.0; \
             align: 0.5 0.0; \
-	    max:      48 48; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE".png"; \
 	    } \
@@ -46,7 +44,6 @@ group { \
 #define FILEMAN_ICON_CLICKABLE(TYPE) \
 group { \
    name: "icons/fileman/"TYPE; \
-   max:  48 48; \
    parts { \
       part { \
 	 name:          "icon"; \
@@ -55,7 +52,6 @@ group { \
 	    state:    "default" 0.0; \
       	    align: 0.5 0.0; \
 	    aspect:   1.0 1.0; \
-	    max:      48 48; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE".png"; \
 	    } \
@@ -64,7 +60,6 @@ group { \
 	    state:    "clicked" 0.0; \
 	    align: 0.5 0.0; \
 	    aspect:   1.0 1.0; \
-	    max:      48 48; \
 	    image { \
 	       normal: "e17_icon_fileman_"TYPE"_clicked.png"; \
 	    } \

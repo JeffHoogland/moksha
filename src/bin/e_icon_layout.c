@@ -394,7 +394,7 @@ _e_icon_layout_smart_move_resize_item(E_Icon_Layout_Item *li)
      evas_object_geometry_get(li->obj, NULL, NULL, &li->w, &li->h);
    
    evas_object_move(li->obj, li->x, li->y);
-   evas_object_resize(li->obj, li->w, li->h);      
+   //evas_object_resize(li->obj, li->w, li->h);
 }
 				       
 static void

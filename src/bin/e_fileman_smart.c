@@ -491,8 +491,8 @@ _e_fm_smart_add(Evas_Object *object)
    if (!sd) return;
    sd->object = object;
 
-   sd->icon_info.w = 48;
-   sd->icon_info.h = 48;
+   sd->icon_info.w = 64;
+   sd->icon_info.h = 64;
    sd->icon_info.x_space = 12;
    sd->icon_info.y_space = 10;
 
@@ -1385,9 +1385,10 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	     icon->file->type = E_FM_FILE_TYPE_DIRECTORY;
 	     icon->icon_object = e_fm_icon_add(sd->evas);
 	     icon->sd = sd;
-	     e_fm_icon_file_set(icon->icon_object, icon->file);
-	     e_fm_icon_size_min_calc(icon->icon_object, &w, &h);	     
-	     evas_object_resize(icon->icon_object, 64, 64);
+	     e_fm_icon_file_set(icon->icon_object, icon->file);	     
+	     //evas_object_resize(icon->icon_object, 
+	     //sd->icon_info.w,
+	     //sd->icon_info.h);
 	     sd->files = evas_list_prepend(sd->files, icon);
 	  }
      }
@@ -1402,14 +1403,11 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	
 	icon = l->data;
 
-	evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-	//e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	//evas_object_resize(icon->icon_object, 
+	//		   sd->icon_info.w, 
+	//		   sd->icon_info.h);
 	evas_object_show(icon->icon_object);
-	evas_object_geometry_get(icon->icon_object, NULL, NULL, &icon_w, &icon_h);
-	D(("_e_fm_dir_set: Icon, w=%d h=%d\n", icon_w, icon_h));
-
 	e_icon_layout_pack(sd->layout, icon->icon_object);
-
 	evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
 	evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
 	evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
@@ -1480,10 +1478,9 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
 	    icon->icon_object = e_fm_icon_add(sd->evas);
 	    icon->sd = sd;
 	    e_fm_icon_file_set(icon->icon_object, icon->file);
-	    e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-	    e_fm_icon_size_min_calc(icon->icon_object, &w, &h);
-	    printf("icon size: %d %d\n", w, h);
-	    //evas_object_resize(icon->icon_object, w, h);
+	    //evas_object_resize(icon->icon_object,
+	    //sd->icon_info.w,
+	    //sd->icon_info.h);
 	    files = evas_list_append(files, icon);
 	 }
     }
@@ -1561,9 +1558,7 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
        icon->sd = sd;
        e_icon_layout_freeze(sd->layout);
        e_fm_icon_file_set(icon->icon_object, icon->file);
-       //e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-       e_fm_icon_size_min_calc(icon->icon_object, &w, &h);	     
-       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       //evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
        evas_object_show(icon->icon_object);
        e_icon_layout_pack(sd->layout, icon->icon_object);
        evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
@@ -2426,8 +2421,6 @@ _e_fm_icon_run(E_Fm_Smart_Data *sd)
 	if (icon->file->type == E_FM_FILE_TYPE_DIRECTORY)
 	  {	     
 	     char *fullname;
-	     
-	     printf("dir!\n");
 	     
 	     if (!strcmp(icon->file->name, ".."))
 	       {

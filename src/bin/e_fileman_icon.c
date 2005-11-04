@@ -139,10 +139,7 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 							sd->ih,
 							1);
 	     evas_object_smart_member_add(sd->thumb_object, sd->obj);
-	     
 	     sd->image_object = edje_object_add(sd->evas);
-	     edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
-	     edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
 	     e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
 				     "fileman/icon_thumb");
 	     edje_object_part_swallow(sd->image_object, "icon_swallow",
@@ -161,12 +158,9 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
      }
    
    _e_fm_icon_type_set(sd);
-   
-   edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
-   printf("INTERNAL SIZE: %d %d\n", icon_w, icon_h);
-   //evas_object_resize(sd->icon_object, icon_w, icon_h);
-   //evas_object_resize(sd->event_object, icon_w, icon_h);
-   //evas_object_resize(sd->obj, icon_w, icon_h);
+   evas_object_resize(sd->icon_object, 64, 64);
+   evas_object_resize(sd->event_object, 64, 64);
+   evas_object_resize(sd->obj, 64, 64);
 }
 
 void
@@ -438,7 +432,9 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 	else
 	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
      }
+   evas_object_resize(sd->image_object, sd->iw, sd->ih);
    edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+   edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
 }
 
 static void
