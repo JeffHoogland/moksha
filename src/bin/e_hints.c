@@ -449,7 +449,7 @@ e_hints_window_init(E_Border *bd)
 	if (!bd->lock_client_fullscreen)
 	  {
 	     e_hints_window_size_get(bd);
-	     e_border_fullscreen(bd);
+	     e_border_fullscreen(bd, e_config->fullscreen_policy);
 	  }
 	else
 	  e_hints_window_fullscreen_set(bd, 0);
@@ -752,13 +752,13 @@ e_hints_window_state_update(E_Border *bd, Ecore_X_Window_State state,
 	       e_border_unfullscreen(bd);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_ADD:
-	       e_border_fullscreen(bd);
+	       e_border_fullscreen(bd, e_config->fullscreen_policy);
 	       break;
 	    case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
 	       if (bd->fullscreen)
 		 e_border_unfullscreen(bd);
 	       else
-		 e_border_fullscreen(bd);
+		 e_border_fullscreen(bd, e_config->fullscreen_policy);
 	       break;
 	   }
 	 break;

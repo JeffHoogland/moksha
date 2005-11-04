@@ -187,6 +187,7 @@ struct _E_Config
    int         menu_eap_name_show;
    int         menu_eap_generic_show;
    int         menu_eap_comment_show;
+   int         fullscreen_policy;
 };
 
 struct _E_Config_Module

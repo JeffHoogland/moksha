@@ -111,6 +111,8 @@ static int grabbed = 0;
 
 static Evas_List *focus_stack = NULL;
 
+static Ecore_X_Screen_Size screen_size = { -1, -1 };
+
 int E_EVENT_BORDER_ADD = 0;
 int E_EVENT_BORDER_REMOVE = 0;
 int E_EVENT_BORDER_ZONE_SET = 0;
@@ -1591,15 +1593,10 @@ e_border_unmaximize(E_Border *bd)
      }
 }
 void
-e_border_fullscreen(E_Border *bd)
+e_border_fullscreen(E_Border *bd, E_Fullscreen policy)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
-
-   /* FIXME:
-    * Implement both fullscreen modes!
-    * Black background!
-    */
 
    if ((bd->shaded) || (bd->shading)) return;
    if (bd->maximized)
@@ -1639,7 +1636,53 @@ e_border_fullscreen(E_Border *bd)
 	y = y + (bd->zone->h - h) / 2;
 	e_border_move_resize(bd, x, y, w, h);
 #endif
-	e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
+	if ((evas_list_count(bd->zone->container->zones) > 1) || (policy == E_FULLSCREEN_RESIZE))
+	  {
+	     e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
+	  }
+	else if (policy == E_FULLSCREEN_ZOOM)
+	  {
+	     Ecore_X_Screen_Size *sizes;
+	     int                  num_sizes, i;
+
+	     screen_size = ecore_x_randr_current_screen_size_get(bd->zone->container->manager->root);
+	     sizes = ecore_x_randr_screen_sizes_get(bd->zone->container->manager->root, &num_sizes);
+	     if (sizes)
+	       {
+		  Ecore_X_Screen_Size best_size = { -1, -1 };
+		  int best_dist = INT_MAX, dist;
+
+		  for (i = 0; i < num_sizes; i++)
+		    {
+		       if ((sizes[i].width > bd->w) && (sizes[i].height > bd->h))
+			 {
+			    dist = (sizes[i].width * sizes[i].height) - (bd->w * bd->h);
+			    if (dist < best_dist)
+			      {
+				 best_size = sizes[i];
+				 best_dist = dist;
+			      }
+			 }
+		    }
+		  if (((best_size.width != -1) && (best_size.height != -1)) &&
+		      ((best_size.width != screen_size.width) ||
+		       (best_size.height != screen_size.height)))
+		    {
+		       ecore_x_randr_screen_size_set(bd->zone->container->manager->root,
+						     best_size);
+		       e_border_move_resize(bd, 0, 0, best_size.width, best_size.height);
+		    }
+		  else
+		    {
+		       screen_size.width = -1;
+		       screen_size.height = -1;
+		       e_border_move_resize(bd, 0, 0, bd->zone->w, bd->zone->h);
+		    }
+		  free(sizes);
+	       }
+	     else
+	       e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
+	  }
 	ecore_evas_hide(bd->bg_ecore_evas);
 
 	bd->fullscreen = 1;
@@ -1667,6 +1710,12 @@ e_border_unfullscreen(E_Border *bd)
 
 	/* e_zone_fullscreen_set(bd->zone, 0); */
 
+	if ((screen_size.width != -1) && (screen_size.height != -1))
+	  {
+	     ecore_x_randr_screen_size_set(bd->zone->container->manager->root, screen_size);
+	     screen_size.width = -1;
+	     screen_size.height = -1;
+	  }
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	ecore_evas_show(bd->bg_ecore_evas);
 

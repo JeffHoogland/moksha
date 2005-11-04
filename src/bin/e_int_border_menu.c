@@ -538,7 +538,7 @@ _e_border_menu_cb_fullscreen(void *data, E_Menu *m, E_Menu_Item *mi)
      {
 	toggle = e_menu_item_toggle_get(mi);
 	if (toggle)
-	  e_border_fullscreen(bd);
+	  e_border_fullscreen(bd, e_config->fullscreen_policy);
 	else
 	  e_border_unfullscreen(bd);
      }

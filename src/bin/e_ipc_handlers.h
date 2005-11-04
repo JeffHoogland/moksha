@@ -6857,3 +6857,54 @@ break;
 #undef HDL
 
 /****************************************************************************/
+#define HDL E_IPC_OP_FULLSCREEN_POLICY_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-fullscreen-policy-set", 1, "Set the fullscreen policy. OPT1 = RESIZE or ZOOM", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT_START(HDL)
+   int value = 0;
+   if (!strcmp(params[0], "RESIZE")) value = E_FULLSCREEN_RESIZE;
+   else if (!strcmp(params[0], "ZOOM")) value = E_FULLSCREEN_ZOOM;
+   else
+     {
+	 printf("fullscreen must be RESIZE or ZOOM\n");
+	 exit(-1);
+     }
+   REQ_INT_END(value, HDL);
+#elif (TYPE == E_WM_IN)
+   START_INT(value, HDL);
+   e_config->fullscreen_policy = value;
+   E_CONFIG_LIMIT(e_config->fullscreen_policy, E_FULLSCREEN_RESIZE, E_FULLSCREEN_ZOOM);
+   SAVE;
+   END_INT
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FULLSCREEN_POLICY_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-fullscreen-policy-get", 0, "Get fullscreen policy", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->fullscreen_policy, E_IPC_OP_FULLSCREEN_POLICY_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_FULLSCREEN_POLICY_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(policy, HDL);
+   if (policy == E_FULLSCREEN_RESIZE)
+     printf("REPLY: RESIZE\n");
+   else if (policy == E_FULLSCREEN_ZOOM)
+     printf("REPLY: ZOOM\n");
+   END_INT
+#endif
+#undef HDL
+/****************************************************************************/

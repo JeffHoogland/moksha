@@ -209,6 +209,10 @@ _enlightenment_remote() {
 		COMPREPLY=($(compgen -W "${fonts}" -- "${cur}"))
 		return 0
 		;;
+	-fullscreen-policy-set)
+		COMPREPLY=($(compgen -W "RESIZE ZOOM" -- "${cur}"))
+		return 0
+		;;
 	-lang-set)
 		languages=$(enlightenment_remote -lang-list|grep REPLY:|awk '{print $2}')
 		COMPREPLY=($(compgen -W "${languages}" -- "${cur}"))

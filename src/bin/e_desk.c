@@ -219,7 +219,7 @@ e_desk_show(E_Desk *desk)
 		  e_border_show(bd);
 		  if (bd->want_fullscreen)
 		    {
-		       e_border_fullscreen(bd);
+		       e_border_fullscreen(bd, e_config->fullscreen_policy);
 		       bd->want_fullscreen = 0;
 		    }
 	       }

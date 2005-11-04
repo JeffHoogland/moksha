@@ -359,6 +359,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_eap_name_show, INT); /**/
    E_CONFIG_VAL(D, T, menu_eap_generic_show, INT); /**/
    E_CONFIG_VAL(D, T, menu_eap_comment_show, INT); /**/
+   E_CONFIG_VAL(D, T, fullscreen_policy, INT); /**/
    E_CONFIG_VAL(D, T, input_method, STR); /**/
    E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
    
@@ -489,6 +490,7 @@ e_config_init(void)
 	e_config->menu_eap_name_show = 1;
 	e_config->menu_eap_generic_show = 1;
 	e_config->menu_eap_comment_show = 0;
+	e_config->fullscreen_policy = E_FULLSCREEN_RESIZE;
 	e_config->input_method = NULL;	
 	
 	  {
