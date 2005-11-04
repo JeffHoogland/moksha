@@ -615,6 +615,7 @@ _e_fm_smart_del(Evas_Object *object)
        sd->event_handlers = evas_list_remove_list(sd->event_handlers, sd->event_handlers);
     }
 
+   evas_event_freeze(evas_object_evas_get(object));
    while (sd->files)
     {
        _e_fm_file_free(sd->files->data);
@@ -628,6 +629,8 @@ _e_fm_smart_del(Evas_Object *object)
    if (sd->entry_object) evas_object_del(sd->entry_object);
    if (sd->menu) e_object_del(E_OBJECT(sd->menu));
 
+   evas_event_thaw(evas_object_evas_get(object));
+   
    free(sd->dir);
    free(sd);
 }

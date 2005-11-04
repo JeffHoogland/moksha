@@ -357,9 +357,10 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    
    im = e_icon_add(evas);
    e_icon_file_key_set(im, thumb, "/thumbnail/data");
-     if (shrink)
+   if (shrink)
      {
 	Evas_Coord sw, sh;
+	
 	e_icon_size_get(im, &sw, &sh);
 	evas_object_resize(im, sw, sh);
      }
