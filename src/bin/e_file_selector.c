@@ -65,17 +65,17 @@ e_file_selector_view_set(Evas_Object *obj, int type)
    switch(type)
      {
       case E_FILE_SELECTOR_ICONVIEW:
-	break;
-	
+	 break;
+
       case E_FILE_SELECTOR_LISTVIEW:
-	break;
+	 break;
      }   
 }
 
 int
 e_file_selector_view_get(Evas_Object *obj)
 {
-   API_ENTRY return;
+   API_ENTRY return 0;
    return sd->view;
 }
 
