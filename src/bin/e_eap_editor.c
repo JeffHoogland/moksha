@@ -36,10 +36,6 @@ struct _E_App_Edit_CFData
 
 /* local subsystem functions */
 
-static void           _e_eap_edit_save_cb(void *data, E_Dialog *dia);
-static void           _e_eap_edit_cancel_cb(void *data, E_Dialog *dia);
-static void           _e_eap_edit_browse_cb(void *data1, void *data2);
-static void           _e_eap_edit_free(E_App_Edit *app);
 static void           _e_eap_edit_fill_data(E_App_Edit_CFData *cdfata);
 static void          *_e_eap_edit_create_data(E_Config_Dialog *cfd);
 static void           _e_eap_edit_free_data(E_Config_Dialog *cfd, void *data);
@@ -59,10 +55,8 @@ e_eap_edit_show(E_Container *con, E_App *a)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;   
    E_App_Edit *editor;
-   Evas_Object *o, *ol;
 
-   if(!con)
-     return;
+   if (!con) return;
    
    editor = E_NEW(E_App_Edit, 1);
    if (!editor) return;
