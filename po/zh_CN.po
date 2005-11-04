@@ -711,7 +711,7 @@ msgstr ""
 
 #: src/bin/e_main.c:369
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment 无法建立它的缩略图系统。"
+msgstr "Enlightenment 无法建立它的缩略图系统。\n"
 
 #: src/bin/e_main.c:378
 msgid "Enlightenment cannot initialize the File manager.\n"
