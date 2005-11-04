@@ -2432,10 +2432,7 @@ _e_fm_win_key_down_cb(void *data, int type, void *event)
    
    // make this call generic
    if (!sd->win) return 1;
-   // this doesnt work:
-   //if (ev->win != sd->win->evas_win) return 1;
-   if(ev->win != ecore_evas_software_x11_subwindow_get(sd->win->ecore_evas))
-     return 1;
+   if (ev->win != sd->win->evas_sub_win) return 1;
    
    if (!strcmp(ev->keysymbol, "Up"))
      _e_fm_icon_select_up(sd);
