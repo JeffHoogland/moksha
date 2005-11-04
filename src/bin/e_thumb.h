@@ -14,7 +14,7 @@ EAPI const char           *e_thumb_dir_get(void);
 EAPI char                 *e_thumb_file_get(char *file);
 EAPI int                   e_thumb_exists(char *file);
 EAPI int                   e_thumb_create(char *file, Evas_Coord w, Evas_Coord h);
-EAPI Evas_Object          *e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height);
+EAPI Evas_Object          *e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height, int shrink);
 
 #endif
 #endif

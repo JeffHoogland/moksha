@@ -918,135 +918,133 @@ group {
 
 group {
    name: "fileman/icon_normal";
-   min:  48 48;
-   max:  128 9999;
-   parts {
-      part {
-	 /* this is used for debugging */
-	 name: "ghost";
-	 type: RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    color: 128 128 128 128;
-	 }
-      }
-      part {
-	 name:          "icon_swallow";
-	 type:          SWALLOW;
-	 mouse_events:  0;
-	 description {
-	    min: 48 48;
-	    max: 48 48;
-	    align: 0.5 0.0;
-	    state:      "default" 0.0;
-	 }
-      }
-      part {
-	 name:          "icon_overlay";
-	 mouse_events:  1;
-	 description {
-	    state:      "default" 0.0;
-	    visible:     0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0 0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1 -1;
-	    }
-	    image {
-	       normal: "e17_button.png";
-	    }
-	    color:      255 255 255 128;
-	 }
-	 description {
-	    state: "clicked" 0.0;
-            inherit: "default" 0.0;
-	    visible: 1;
-	 }	       
-      }
-      part {
-	 name:          "icon_title";      
-	 type:          SWALLOW;
-	 description {
-	    fixed: 1 1;
-	    align: 0.5 0.0; 
-	    state: "default" 0.0;
-	    rel1 {
-	       to: "icon_swallow";
-	       relative: 0.0 1.0;
-	       offset:   1 -1;
-	    }
-	    rel2 {
-	       to: "icon_swallow";
-	       relative: 1.0 1.0;
-	       offset:   -1  -1;
-	    }	    
-	 }
-	 description {
-	    state:   "clicked" 0.0;
-	    inherit: "default" 0.0;
-	 }
-      }      
-      part {
-	 name:          "icon_event";
-	 type:          RECT;
-	 mouse_events:  1;
-	 description {
-	    state:      "default" 0.0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   0 0;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -1 -1;
-	    }
-	    color:      0 0 0 0;
-	 }
-      }
-/*
-      part {
-	 name:          "icon_title";
-	 type:          TEXTBLOCK;
-	 effect:        NONE;
-	 description {
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   5 -20;
-	    }	   
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -6 1000;
-	    }	    
-	    color:      0 0 0 255;
-	    //color3:     0 0 0 32;
-	    text {
-	       text:     "No Title";
-	       style:    "fileman_icon_style";
-	       min: 1 1;
+      parts {
+	 part {
+	    name: "icon_box";
+	    type: RECT;
+	    mouse_events:  0;
+	    description {	       
+	       state: "default" 0.0;
+	       visible: 1;
+	       color: 128 128 128 128;
+	       aspect: 1.0 1.0;
+	       color:  0 0 0 0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset: 0 0;
+	       }
+	       rel2 {
+		  to_y: "icon_title";
+		  relative: 1.0 0.0;
+		  offset: -1 -1;
+	       }
 	    }
 	 }
-      }
-*/
-      part {
-	 name:          "icon_title_edit_swallow";
-	 type:          SWALLOW;
-	 effect:        NONE;
-	 description {
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   5 -20;
+	 part {
+	    name:          "icon_swallow";
+	    type:          SWALLOW;
+	    mouse_events:  0;
+	    description {
+	       state: "default" 0.0;
+	       fixed: 1 1;
+	       rel1 {
+		  to: "icon_box";
+		  relative: 0.0 0.0;
+		  offset: 2 2;
+	       }
+	       rel2 {
+		  to: "icon_box";
+		  relative: 1.0 1.0;
+		  offset: -3 -3;
+	       }
 	    }
-	    rel2 {
+	 }
+	 part {
+	    name:          "icon_title";
+	    type:          TEXT;
+	    effect:        SHADOW;
+	    description {
+	       state: "default" 0.0;
+	       align: 0.5 1.0;
+	       fixed: 0 1;
+	       rel1 {
+		  relative: 0.0 1.0;
+		  offset:   0 -1;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	       
+	       color:      0 0 0 255;
+	       color3: 255 255 255 128;
+	       text {
+		  text:     "No Title";
+		  align:    0.0 0.0;
+		  size:     10;
+		  font:     "Vera";
+		  min: 0 1;
+	       }
+	    }
+	 }	 
+	 part {      
+	    name:          "icon_overlay";
+	    mouse_events:  1;
+	    description {
+	       state:      "default" 0.0;
+	       visible:     0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   0 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	       image {
+		  normal: "e17_button.png";
+	       }
+	       color:      255 255 255 128;
+	    }
+	    description {
+	       state: "clicked" 0.0;
+	       inherit: "default" 0.0;
+	       visible: 1;
+	    }
+	 }      	 
+	 part {
+	    name:          "icon_event";
+	    type:          RECT;
+	    mouse_events:  1;
+	    description {
+	       state:      "default" 0.0;
+	       rel1 {
+		  relative: 0.0 0.0;
+		  offset:   0 0;
+	       }
+	       rel2 {
+		  relative: 1.0 1.0;
+		  offset:   -1 -1;
+	       }
+	       color:      0 0 0 0;
+	    }
+	 }         
+	 part {
+	    name:          "icon_title_edit_swallow";
+	    type:          SWALLOW;
+	    effect:        NONE;
+	    description {
+	       rel1 {
+		  relative: 0.0 1.0;
+		  offset:   5 -20;
+	       }
+	       rel2 {
 	       relative: 1.0 1.0;
 	       offset:   -6 -6;
 	    }
 	 }
+	 }
       }
-   }
    programs {
       program {
 	 name:   "clicked"; 
@@ -1154,248 +1152,6 @@ group {
    }
 }
 
-group {
-   name: "fileman/icon_thumb_normal2";
-   min:  48 48;
-   max:  128 9999;
-   parts {
-      part {
-	 /* this is used for debugging */
-	 name: "ghost";
-	 type: RECT;
-	 description {
-	    state: "default" 0.0;
-	    visible: 0;
-	    color: 128 128 128 128;
-	 }
-      }
-/*      
-      part {
-	 name:          "icon_bg";
-	 mouse_events:  0;
-	 description {
-	    min: 48 48;
-	    max: 48 48;
-	    align: 0.5 0.0;
-	    state:      "default" 0.0;
-	    rel1 {
-	       to: "icon_swallow";
-	       offset: 5 5;
-	    }
-	    image {
-	       normal: "e17_fileman_thumb_bg.png";
-	    }
-	 }
-      }
-*/
-      part {
-	 name:          "icon_box_shadow";
-	 mouse_events:  0;
-	 description {
-	    min: 56 56;
-	    max: 56 56;
-	    state:      "default" 0.0;
-	    rel1 {
-	       to: "icon_box";
-	       relative: 0.0 0.0;
-	       offset: 2 2;
-	    }
-	    rel2 {
-	       to: "icon_box";
-	       relative: 1.0 1.0;
-	       offset: 3 3;
-	    }	    
-            image {
-	       normal: "e17_mini_button_shadow2.png";
-	       border: 6 6 6 6;
-	    }
-	 }
-      }      
-      part {
-	 name:          "icon_box";
-	 type:          RECT;
-	 mouse_events:  0;
-	 description {
-	    min: 52 52;
-	    max: 52 52;
-	    state:      "default" 0.0;
-	    rel1 {
-	       to: "icon_swallow";
-	       relative: 0.0 0.0;
-	       offset: -2 -2;
-	    }
-	    rel2 {
-	       to: "icon_swallow";
-	       relative: 1.0 1.0;
-	       offset: 2 2;
-	    }	    
-	    color: 0 0 0 255;
-	 }
-      }            
-      part {
-	 name:          "icon_box_bg";
-	 mouse_events:  0;
-	 description {
-	    min: 50 50;
-	    max: 50 50;
-	    state:      "default" 0.0;
-	    rel1 {
-	       to: "icon_swallow";
-	       relative: 0.0 0.0;
-	       offset: -1 -1;
-	    }
-	    rel2 {
-	       to: "icon_swallow";
-	       relative: 1.0 1.0;
-	       offset: 1 1;
-	    }	    
-            image {
-	       normal: "e17_fileman_thumb_bg.png";
-	    }	    	       
-	    fill {	    
-	       smooth: 0;
-	       size {
-		  relative: 0 0;
-		  offset:   32 32;
-	       }
-	    }	    
-	 }
-      }
-      part {
-	 name:          "icon_swallow";
-	 type:          SWALLOW;
-	 mouse_events:  0;
-	 description {
-	    min: 48 48;
-	    max: 48 48;
-	    align: 0.5 0.0;
-	    state:      "default" 0.0;
-	 }
-      }      
-      part {
-	 name:          "icon_overlay";
-	 mouse_events:  1;
-	 description {
-	    state:      "default" 0.0;
-	    visible:     0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   -3 -4;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   3 6;
-	    }
-	    image {
-	       normal: "e17_button.png";
-	    }
-	    color:      255 255 255 128;
-	 }
-	 description {
-	    state: "clicked" 0.0;
-            inherit: "default" 0.0;
-	    visible: 1;
-	 }	       
-      }
-      part {
-	 name:          "icon_title";      
-	 type:          SWALLOW;
-	 description {
-	    fixed: 1 1;
-	    align: 0.5 0.0; 
-	    state: "default" 0.0;
-	    rel1 {
-	       to: "icon_box";
-	       relative: 0.0 1.0;
-	       offset:   1 2;
-	    }
-	    rel2 {
-	       to: "icon_box";
-	       relative: 1.0 1.0;
-	       offset:   -1  2;
-	    }	    
-	 }
-	 description {
-	    state:   "clicked" 0.0;
-	    inherit: "default" 0.0;
-	 }
-      }      
-      part {
-	 name:          "icon_event";
-	 type:          RECT;
-	 mouse_events:  1;
-	 description {
-	    state:      "default" 0.0;
-	    rel1 {
-	       relative: 0.0 0.0;
-	       offset:   -3 -4;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   3 6;
-	    }
-	    color:      0 0 0 0;
-	 }
-      }
-/*
-      part {
-	 name:          "icon_title";
-	 type:          TEXTBLOCK;
-	 effect:        NONE;
-	 description {
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   5 -20;
-	    }	   
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -6 1000;
-	    }	    
-	    color:      0 0 0 255;
-	    //color3:     0 0 0 32;
-	    text {
-	       text:     "No Title";
-	       style:    "fileman_icon_style";
-	       min: 1 1;
-	    }
-	 }
-      }
-*/
-      part {
-	 name:          "icon_title_edit_swallow";
-	 type:          SWALLOW;
-	 effect:        NONE;
-	 description {
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   5 -20;
-	    }
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -6 -6;
-	    }
-	 }
-      }
-   }
-   programs {
-      program {
-	 name:   "clicked"; 
-	 signal: "clicked"; 
-	 source: ""; 
-	 action: STATE_SET "clicked" 0.0; 
-	 target: "icon_title"; 
-	 target: "icon_overlay";
-      } 
-      program { 
-	 name:   "unclicked"; 
-	 signal: "unclicked"; 
-	 source: ""; 
-	 action: STATE_SET "default" 0.0; 
-	 target: "icon_title"; 
-         target: "icon_overlay";	 
-      }      
-   }   
-}
 
 group {
    name: "fileman/icon_list";
@@ -1408,8 +1164,8 @@ group {
 	 mouse_events:  0;
 	 description {	 
 	    state:    "default" 0.0;
-	    min:      16 16;
-	    max:      16 16;
+	    //min:      16 16;
+	    //max:      16 16;
 	    align:    1.0 1.0;
 	    fixed:    1 1;
 	    rel1 {
@@ -1428,7 +1184,7 @@ group {
 	 effect:        SHADOW;
 	 description {	 
 	    state: "default" 0.0;
-	    min:      16 16;
+	    //min:      16 16;
 	    rel1 {
 	       to_x:     "icon_swallow";
 	       relative: 1.0  0.0;
@@ -1610,3 +1366,4 @@ FULL_SIZE_FILEMAN_BUTTON("refresh");
 FULL_SIZE_FILEMAN_BUTTON("view_details");
 FULL_SIZE_FILEMAN_BUTTON("view_name");
 FULL_SIZE_FILEMAN_BUTTON("view");
+

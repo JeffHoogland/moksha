@@ -1378,6 +1378,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	icon = E_NEW(E_Fm_Icon, 1);
 	if (icon)
 	  {
+	     Evas_Coord w, h;
 	     snprintf(path, sizeof(path), "%s/..", sd->dir);
 	     icon->file = e_fm_file_new(path);
 	     icon->file->mode = 0040000;
@@ -1385,6 +1386,8 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	     icon->icon_object = e_fm_icon_add(sd->evas);
 	     icon->sd = sd;
 	     e_fm_icon_file_set(icon->icon_object, icon->file);
+	     e_fm_icon_size_min_calc(icon->icon_object, &w, &h);	     
+	     evas_object_resize(icon->icon_object, 64, 64);
 	     sd->files = evas_list_prepend(sd->files, icon);
 	  }
      }
@@ -1399,8 +1402,8 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	
 	icon = l->data;
 
-	//evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-	e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);	
+	evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	//e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
 	evas_object_show(icon->icon_object);
 	evas_object_geometry_get(icon->icon_object, NULL, NULL, &icon_w, &icon_h);
 	D(("_e_fm_dir_set: Icon, w=%d h=%d\n", icon_w, icon_h));
@@ -1478,6 +1481,9 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
 	    icon->sd = sd;
 	    e_fm_icon_file_set(icon->icon_object, icon->file);
 	    e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	    e_fm_icon_size_min_calc(icon->icon_object, &w, &h);
+	    printf("icon size: %d %d\n", w, h);
+	    //evas_object_resize(icon->icon_object, w, h);
 	    files = evas_list_append(files, icon);
 	 }
     }
@@ -1555,7 +1561,9 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
        icon->sd = sd;
        e_icon_layout_freeze(sd->layout);
        e_fm_icon_file_set(icon->icon_object, icon->file);
-       e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       //e_fm_icon_image_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+       e_fm_icon_size_min_calc(icon->icon_object, &w, &h);	     
+       evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
        evas_object_show(icon->icon_object);
        e_icon_layout_pack(sd->layout, icon->icon_object);
        evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);

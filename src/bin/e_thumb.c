@@ -290,7 +290,7 @@ e_thumb_create(char *file, Evas_Coord w, Evas_Coord h)
 
 /* get evas object containing image of the thumb */
 Evas_Object *
-e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height)
+e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord height, int shrink)
 {
    Eet_File *ef;
    char *thumb, *ext;
@@ -322,8 +322,8 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
 	     else
 	       {
 		  D(("e_thumb_evas_object_get: creating eap thumb\n"));
-		  im = edje_object_add(evas);
-		  edje_object_file_set(im, file, "icon");
+		  im = e_icon_add(evas);
+		  e_icon_file_edje_set(im, file, "icon");
 		  e_object_unref(E_OBJECT(app));	       
 		  D(("e_thumb_evas_object_get: returning eap thumb\n"));
 		  return im;
@@ -357,6 +357,12 @@ e_thumb_evas_object_get(char *file, Evas *evas, Evas_Coord width, Evas_Coord hei
    
    im = e_icon_add(evas);
    e_icon_file_key_set(im, thumb, "/thumbnail/data");
+     if (shrink)
+     {
+	Evas_Coord sw, sh;
+	e_icon_size_get(im, &sw, &sh);
+	evas_object_resize(im, sw, sh);
+     }
    e_icon_fill_inside_set(im, 1);
    free(thumb);
    eet_close(ef);

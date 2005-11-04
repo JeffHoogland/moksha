@@ -136,11 +136,13 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	     sd->thumb_object = e_thumb_evas_object_get(sd->file->path, 
 							sd->evas,
 							sd->iw,
-							sd->ih);
+							sd->ih,
+							1);
 	     evas_object_smart_member_add(sd->thumb_object, sd->obj);
 	     
 	     sd->image_object = edje_object_add(sd->evas);
 	     edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+	     edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
 	     e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
 				     "fileman/icon_thumb");
 	     edje_object_part_swallow(sd->image_object, "icon_swallow",
@@ -160,7 +162,8 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    
    _e_fm_icon_type_set(sd);
    
-   //edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
+   edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
+   printf("INTERNAL SIZE: %d %d\n", icon_w, icon_h);
    //evas_object_resize(sd->icon_object, icon_w, icon_h);
    //evas_object_resize(sd->event_object, icon_w, icon_h);
    //evas_object_resize(sd->obj, icon_w, icon_h);
@@ -179,6 +182,7 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
    //if (sd->icon_object) edje_object_part_text_set(sd->icon_object, "icon_title", title);
    if(sd->icon_object)
      {
+#if 0	
 	Evas_Textblock_Style *e_editable_text_style;
 	Evas_Coord fw, fh, il, ir, it, ib;
 	
@@ -187,7 +191,7 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
 	
 
 	evas_object_textblock_style_set(sd->title_object, e_editable_text_style);
-	evas_object_textblock_text_markup_set(sd->title_object, sd->file->name);
+	evas_object_textblock_text_markup_set(sd->title_object, title);
 	
 	evas_object_resize(sd->title_object,  sd->w, 1);
 	evas_object_textblock_size_formatted_get(sd->title_object, &fw, &fh);
@@ -200,6 +204,8 @@ e_fm_icon_title_set(Evas_Object *obj, const char *title)
 	evas_object_resize(sd->icon_object, sd->w, sd->h);
         evas_object_resize(sd->obj, sd->w, sd->h);
 	edje_object_part_swallow(sd->icon_object, "icon_title", sd->title_object);
+#endif
+	edje_object_part_text_set(sd->icon_object, "icon_title", title);
      }
 }
 
@@ -253,7 +259,16 @@ e_fm_icon_image_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->ih = h;
    evas_object_resize(sd->image_object, w, h);
 }
+
+void
+e_fm_icon_size_min_calc(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
    
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   edje_object_size_min_calc(sd->icon_object, w, h);
+}
 
 /* local subsystem functions */
 static void
@@ -361,7 +376,7 @@ _e_fm_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    evas_object_resize(sd->event_object, sd->w, sd->h);
    if (sd->icon_object) evas_object_resize(sd->icon_object, sd->w, sd->h);
-
+   printf("resize to %d %d\n", sd->w, sd->h);
    //if (sd->image_object) evas_object_resize(sd->image_object, w, h);
 }
 
@@ -417,12 +432,13 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 
 	     if (!e_theme_edje_object_set(sd->image_object, "base/theme/fileman", part))
 	       e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
-
+	     
 	     free(ext);		     	     
 	  }
 	else
 	  e_theme_edje_object_set(sd->image_object, "base/theme/fileman", "icons/fileman/file");
      }
+   edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
 }
 
 static void
@@ -473,19 +489,21 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
 	sd->thumb_object = e_thumb_evas_object_get(sd->file->path, 
 						   sd->evas,
 						   sd->iw,
-						   sd->ih);
+						   sd->ih,
+						   1);
 	evas_object_smart_member_add(sd->thumb_object, sd->obj);
 	
 	sd->image_object = edje_object_add(sd->evas);
-	edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
 				"fileman/icon_thumb");
 	edje_object_part_swallow(sd->image_object, "icon_swallow",
 				 sd->thumb_object);
+	edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+	edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);
 	edje_object_part_swallow(sd->icon_object, "icon_swallow",
 				 sd->image_object);
-	edje_object_part_swallow(sd->icon_object, "icon_title",
-					 sd->title_object);
+//	edje_object_part_swallow(sd->icon_object, "icon_title",
+//					 sd->title_object);
      }
 
    pid = -1;
@@ -516,6 +534,8 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
    
    if (sd->image_object)
      {
+	edje_extern_object_min_size_set(sd->image_object, sd->iw, sd->ih);
+	edje_extern_object_max_size_set(sd->image_object, sd->iw, sd->ih);	
 	edje_object_part_swallow(sd->icon_object, "icon_swallow", sd->image_object);
 	evas_object_smart_member_add(sd->image_object, sd->obj);	
 	evas_object_show(sd->image_object);
@@ -523,6 +543,7 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
    
    if(sd->saved_title) 
      {
+#if 0	
 	Evas_Textblock_Style *e_editable_text_style;
 	Evas_Coord fw, fh, il, ir, it, ib;
 	
@@ -531,7 +552,7 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 	
 
 	evas_object_textblock_style_set(sd->title_object, e_editable_text_style);
-	evas_object_textblock_text_markup_set(sd->title_object, sd->file->name);
+	evas_object_textblock_text_markup_set(sd->title_object, sd->saved_title);
 	
 	evas_object_resize(sd->title_object,  sd->w, 1);
 	evas_object_textblock_size_formatted_get(sd->title_object, &fw, &fh);
@@ -544,9 +565,12 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 	evas_object_resize(sd->icon_object, sd->w, sd->h);
         evas_object_resize(sd->obj, sd->w, sd->h);
 	edje_object_part_swallow(sd->icon_object, "icon_title", sd->title_object);
+#endif	
+	edje_object_part_text_set(sd->icon_object, "icon_title", sd->saved_title);
      }
    else
      {
+#if 0	
 	Evas_Textblock_Style *e_editable_text_style;
 	Evas_Coord fw, fh, il, ir, it, ib;
 	
@@ -568,5 +592,7 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 	evas_object_resize(sd->icon_object, sd->w, sd->h);
         evas_object_resize(sd->obj, sd->w, sd->h);
 	edje_object_part_swallow(sd->icon_object, "icon_title", sd->title_object);
+#endif
+	edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
      }   
 }
