@@ -787,16 +787,14 @@ _e_fm_file_delete(E_Fm_Icon *icon)
    if (!e_fm_file_delete(icon->file))
     {
        E_Dialog *dia;
-       char *text;
+       char text[PATH_MAX + 256];
 
        dia = e_dialog_new(icon->sd->win->container);
        e_dialog_button_add(dia, "Ok", NULL, NULL, NULL);
        e_dialog_button_focus_num(dia, 1);
        e_dialog_title_set(dia, "Error");
-       text = E_NEW(char, PATH_MAX + 256);
        snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b>", icon->file->path);
        e_dialog_text_set(dia, text);
-       free(text);
        e_dialog_show(dia);
        return;
     }
@@ -883,7 +881,7 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Fm_Icon *icon;
    E_Dialog *dia;
-   char *text;
+   char text[PATH_MAX + 256];
 
    icon = data;
 
@@ -892,10 +890,8 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    e_dialog_button_add(dia, "No", NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 1);
    e_dialog_title_set(dia, "Confirm");
-   text = E_NEW(char, PATH_MAX + 256);
    snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", icon->file->name);
    e_dialog_text_set(dia, text);
-   free(text);
    e_dialog_show(dia);
 }
 
@@ -1092,10 +1088,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
 {
    E_Fm_Icon *icon;
    E_Fm_Icon_CFData *cfdata;
-   struct group *grp;
-   struct passwd *usr;
-   struct tm *t;
-   char *size, *username, *groupname, *lastaccess, *lastmod, *permissions;
+   char size[64];
    char text[512];
    Evas_Object *o, *ol;
    E_Radio_Group *rg;
@@ -1106,27 +1099,7 @@ _e_fm_icon_prop_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *dat
 
    _e_fm_icon_prop_fill_data(cfdata);
 
-   size = E_NEW(char, 64);
    snprintf(size, 64, "%ld", icon->file->size / 1024);
-
-   username = E_NEW(char, 128); // max length of username?
-   usr = getpwuid(icon->file->owner);
-   snprintf(username, 128, "%s", usr->pw_name);
-
-   groupname = E_NEW(char, 128); // max length of group?
-   grp = getgrgid(icon->file->group);
-   snprintf(groupname, 128, "%s", grp->gr_name);
-
-   t = gmtime(&icon->file->atime);
-   lastaccess = E_NEW(char, 128);
-   strftime(lastaccess, 128, "%a %b %d %T %Y", t);
-
-   t = gmtime(&icon->file->mtime);
-   lastmod = E_NEW(char, 128);
-   strftime(lastmod, 128, "%a %b %d %T %Y", t);
-
-   permissions = E_NEW(char, 128);
-   snprintf(permissions, 128, "%s", "");
 
    ol = e_widget_list_add(evas, 0, 0);
 
@@ -1202,7 +1175,7 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    struct group *grp;
    struct passwd *usr;
    struct tm *t;
-   char *lastaccess, *lastmod;
+   char lastaccess[128], lastmod[128];
 
    cfdata = data;
    icon = cfdata->icon;
@@ -1214,11 +1187,9 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    grp = getgrgid(icon->file->group);
 
    t = gmtime(&icon->file->atime);
-   lastaccess = E_NEW(char, 128);
    strftime(lastaccess, 128, "%a %b %d %T %Y", t);
 
    t = gmtime(&icon->file->mtime);
-   lastmod = E_NEW(char, 128);
    strftime(lastmod, 128, "%a %b %d %T %Y", t);
 
    o = e_widget_list_add(evas, 0, 0);
@@ -1381,7 +1352,6 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	icon = E_NEW(E_Fm_Icon, 1);
 	if (icon)
 	  {
-	     Evas_Coord w, h;
 	     snprintf(path, sizeof(path), "%s/..", sd->dir);
 	     icon->file = e_fm_file_new(path);
 	     icon->file->mode = 0040000;
@@ -1401,9 +1371,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    for (l = sd->files; l; l = l->next)
      {
 	E_Fm_Icon *icon;
-	Evas_Coord icon_w, icon_h;
-	Evas_Coord w, h;
-	
+
 	icon = l->data;
 
 	//evas_object_resize(icon->icon_object, 
@@ -1476,8 +1444,6 @@ _e_fm_dir_files_get(E_Fm_Smart_Data *sd, int type)
 	 }
        else
 	 {
-	    Evas_Coord w, h;
-	    
 	    icon->icon_object = e_fm_icon_add(sd->evas);
 	    icon->sd = sd;
 	    e_fm_icon_file_set(icon->icon_object, icon->file);
@@ -1532,65 +1498,64 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
    char *dir;
    E_Fm_Icon *icon;
    Evas_List *l;
-   Evas_Coord w, h;
-   
+
    sd = data;
    
-   switch(event)
-    {
-     case ECORE_FILE_EVENT_DELETED_SELF:		          
-       dir = _e_fm_dir_pop(sd->dir);
-       /* FIXME: we need to fix this, uber hack alert */
-       if (sd->win)
-	 e_win_title_set(sd->win, dir);
-       _e_fm_dir_set(sd, dir);
-       free(dir);
-       break;
-       
-     case ECORE_FILE_EVENT_CREATED_FILE:
-     case ECORE_FILE_EVENT_CREATED_DIRECTORY:       
-       icon = E_NEW(E_Fm_Icon, 1);
-       if (!icon) break;
-       icon->file = e_fm_file_new(path);
-       if (!icon->file)
-	 {
-	    free(icon);
-	    return;
-	 }
-       icon->icon_object = e_fm_icon_add(sd->evas);
-       icon->sd = sd;
-       e_icon_layout_freeze(sd->layout);
-       e_fm_icon_file_set(icon->icon_object, icon->file);
-       //evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
-       evas_object_show(icon->icon_object);
-       e_icon_layout_pack(sd->layout, icon->icon_object);
-       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
-       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
-       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
-       evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
-       e_icon_layout_thaw(sd->layout);
-       sd->files = evas_list_prepend(sd->files, icon);
-       _e_fm_redraw(sd);
-       break;
-       
-     case ECORE_FILE_EVENT_DELETED_FILE:
-     case ECORE_FILE_EVENT_DELETED_DIRECTORY:
-       for(l=sd->files; l; l = l->next)
-	{
-	   icon = l->data;
-	   if(!strcmp(icon->file->path, path))
-	    {
-	       sd->files = evas_list_remove_list(sd->files, l);
-	       e_icon_layout_freeze(sd->layout);
-	       e_icon_layout_unpack(icon->icon_object);
-	       e_icon_layout_thaw(sd->layout);
-	       _e_fm_file_free(icon);	       
-	       _e_fm_redraw(sd);	       
-	       break;
-	    }
-	}       
-       break;
-    }
+   switch (event)
+     {
+      case ECORE_FILE_EVENT_DELETED_SELF:		          
+	 dir = _e_fm_dir_pop(sd->dir);
+	 /* FIXME: we need to fix this, uber hack alert */
+	 if (sd->win)
+	   e_win_title_set(sd->win, dir);
+	 _e_fm_dir_set(sd, dir);
+	 free(dir);
+	 break;
+
+      case ECORE_FILE_EVENT_CREATED_FILE:
+      case ECORE_FILE_EVENT_CREATED_DIRECTORY:       
+	 icon = E_NEW(E_Fm_Icon, 1);
+	 if (!icon) break;
+	 icon->file = e_fm_file_new(path);
+	 if (!icon->file)
+	   {
+	      free(icon);
+	      return;
+	   }
+	 icon->icon_object = e_fm_icon_add(sd->evas);
+	 icon->sd = sd;
+	 e_icon_layout_freeze(sd->layout);
+	 e_fm_icon_file_set(icon->icon_object, icon->file);
+	 //evas_object_resize(icon->icon_object, sd->icon_info.w, sd->icon_info.h);
+	 evas_object_show(icon->icon_object);
+	 e_icon_layout_pack(sd->layout, icon->icon_object);
+	 evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
+	 evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
+	 evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
+	 evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
+	 e_icon_layout_thaw(sd->layout);
+	 sd->files = evas_list_prepend(sd->files, icon);
+	 _e_fm_redraw(sd);
+	 break;
+
+      case ECORE_FILE_EVENT_DELETED_FILE:
+      case ECORE_FILE_EVENT_DELETED_DIRECTORY:
+	 for (l = sd->files; l; l = l->next)
+	   {
+	      icon = l->data;
+	      if (!strcmp(icon->file->path, path))
+		{
+		   sd->files = evas_list_remove_list(sd->files, l);
+		   e_icon_layout_freeze(sd->layout);
+		   e_icon_layout_unpack(icon->icon_object);
+		   e_icon_layout_thaw(sd->layout);
+		   _e_fm_file_free(icon);	       
+		   _e_fm_redraw(sd);	       
+		   break;
+		}
+	   }       
+	 break;
+     }
 }
 
 static void
@@ -2466,21 +2431,21 @@ _e_fm_win_key_down_cb(void *data, int type, void *event)
    sd = data;
    
    // make this call generic
-   if(!sd->win)
-     return;
-   if (ev->win != ecore_evas_software_x11_subwindow_get(sd->win->ecore_evas)) 
-     return 1;
+   if (!sd->win) return 1;
+   if (ev->win != sd->win->evas_win) return 1;
    
-   if(!strcmp(ev->keysymbol, "Up"))
+   if (!strcmp(ev->keysymbol, "Up"))
      _e_fm_icon_select_up(sd);
-   else if(!strcmp(ev->keysymbol, "Down"))
+   else if (!strcmp(ev->keysymbol, "Down"))
      _e_fm_icon_select_down(sd);
-   else if(!strcmp(ev->keysymbol, "Left"))
+   else if (!strcmp(ev->keysymbol, "Left"))
      _e_fm_icon_select_left(sd);
-   else if(!strcmp(ev->keysymbol, "Right"))
+   else if (!strcmp(ev->keysymbol, "Right"))
      _e_fm_icon_select_right(sd);
-   else if(!strcmp(ev->keysymbol, "Return"))
+   else if (!strcmp(ev->keysymbol, "Return"))
      _e_fm_icon_run(sd);      
+
+   return 1;
 }
 
  static int
