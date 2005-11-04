@@ -171,7 +171,8 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    _e_fm_icon_type_set(sd);
    edje_object_size_min_calc(sd->icon_object, &icon_w, &icon_h);
    evas_object_resize(sd->obj, 0, 0); // because it still thinks its the same size
-   evas_object_resize(sd->obj, 64, icon_h);
+   // 96 is an aritary width - should be user configurable
+   evas_object_resize(sd->obj, 80, icon_h);
 }
 
 void
