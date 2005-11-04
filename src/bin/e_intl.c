@@ -30,7 +30,7 @@ static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 #define ADD_LANG(lang) _e_intl_languages = evas_list_append(_e_intl_languages, lang)
 
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
-#define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (strlen(EXE) == 0)))
+#define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
 
 static int _e_intl_cb_exit(void *data, int type, void *event);
 static Evas_List *_e_intl_imc_path_scan(E_Path *path);
@@ -132,10 +132,10 @@ e_intl_shutdown(void)
 int
 e_intl_post_init(void)
 {
-   if ((e_config->language) && (strlen(e_config->language) > 0))
+   if ((e_config->language) && (e_config->language[0] != 0))
      e_intl_language_set(e_config->language);
    
-   if ((e_config->input_method) && (strlen(e_config->input_method) > 0))
+   if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method); 
 
    _e_intl_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_intl_cb_exit, NULL);
