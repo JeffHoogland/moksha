@@ -18,6 +18,7 @@ enum E_File_Selector_View
 EAPI Evas_Object *e_file_selector_add(Evas *evas);
 EAPI void         e_file_selector_view_set(Evas_Object *object, int view);
 EAPI int          e_file_selector_view_get(Evas_Object *object);
+EAPI void         e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data);
     
 #endif
 #endif
