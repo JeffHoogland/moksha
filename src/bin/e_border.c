@@ -1606,7 +1606,9 @@ e_border_fullscreen(E_Border *bd)
      e_border_unmaximize(bd);
    if (!bd->fullscreen)
      {
+#if 0
 	int x, y, w, h;
+#endif
 
 	bd->saved.x = bd->x;
 	bd->saved.y = bd->y;
@@ -1623,9 +1625,10 @@ e_border_fullscreen(E_Border *bd)
 	bd->client_inset.t = 0;
 	bd->client_inset.b = 0;
 
-	e_zone_fullscreen_set(bd->zone, 1);
+	/* e_zone_fullscreen_set(bd->zone, 1); */
 
 	e_border_layer_set(bd, 200);
+#if 0
 	x = bd->zone->x;
 	y = bd->zone->y;
 	w = bd->zone->w;
@@ -1635,6 +1638,8 @@ e_border_fullscreen(E_Border *bd)
 	x = x + (bd->zone->w - w) / 2;
 	y = y + (bd->zone->h - h) / 2;
 	e_border_move_resize(bd, x, y, w, h);
+#endif
+	e_border_move_resize(bd, bd->zone->x, bd->zone->y, bd->zone->w, bd->zone->h);
 	ecore_evas_hide(bd->bg_ecore_evas);
 
 	bd->fullscreen = 1;
@@ -1660,7 +1665,7 @@ e_border_unfullscreen(E_Border *bd)
 	bd->client_inset.t = bd->client_inset.st;
 	bd->client_inset.b = bd->client_inset.sb;
 
-	e_zone_fullscreen_set(bd->zone, 0);
+	/* e_zone_fullscreen_set(bd->zone, 0); */
 
 	e_border_move_resize(bd, bd->saved.x, bd->saved.y, bd->saved.w, bd->saved.h);
 	ecore_evas_show(bd->bg_ecore_evas);
@@ -2887,19 +2892,21 @@ _e_border_cb_window_configure_request(void *data, int ev_type, void *ev)
 				   e->abovewin, e->detail);
 	return 1;
      }
-//   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
-//	  e->win,
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y) ? 'Y':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ? 'W':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H) ? 'H':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_BORDER_WIDTH) ? 'B':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
-//	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
-//	  );
+#if 0
+   printf("##- CONFIGURE REQ 0x%0x mask: %c%c%c%c%c%c%c\n",
+	  e->win,
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ? 'X':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y) ? 'Y':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_W) ? 'W':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_H) ? 'H':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_BORDER_WIDTH) ? 'B':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING) ? 'C':' ',
+	  (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE) ? 'S':' '
+	  );
+#endif
 
    if ((e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_X) ||
-	 (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
+       (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_Y))
      {
 	int x, y;
 
@@ -4442,12 +4449,15 @@ _e_border_eval(E_Border *bd)
 	if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
 //	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
 //	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
-//	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i\n",
-//	       bd->client.win,
-//	       bd->client.icccm.min_w, bd->client.icccm.min_h,
-//	       bd->client.icccm.max_w, bd->client.icccm.max_h,
-//	       bd->client.icccm.base_w, bd->client.icccm.base_h,
-//	       bd->client.icccm.step_w, bd->client.icccm.step_h);
+#if 0
+	printf("##- SIZE HINTS for 0x%x: min %ix%i, max %ix%i, base %ix%i, step %ix%i, aspect (%f, %f)\n",
+	       bd->client.win,
+	       bd->client.icccm.min_w, bd->client.icccm.min_h,
+	       bd->client.icccm.max_w, bd->client.icccm.max_h,
+	       bd->client.icccm.base_w, bd->client.icccm.base_h,
+	       bd->client.icccm.step_w, bd->client.icccm.step_h,
+	       bd->client.icccm.min_aspect, bd->client.icccm.max_aspect);
+#endif
 
 	bd->client.icccm.fetch.size_pos_hints = 0;
      }
