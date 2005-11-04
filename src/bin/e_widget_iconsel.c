@@ -188,7 +188,7 @@ _e_wid_activate_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    
    dia = e_file_dialog_new(wd->con);
-   if(!dia) return;
+   if (!dia) return;
    e_file_dialog_title_set(dia, "Select File");
    e_file_dialog_select_callback_add(dia, _e_wid_select_cb, wd);
    e_file_dialog_show(dia);
@@ -198,17 +198,15 @@ static void
 _e_wid_active_hook_cb(E_Fileman *fileman, char *file, void *data)
 {  
    char *ext;
-   Evas *evas;
    E_Widget_Data *wd;
-   
-   
+ 
    wd = e_widget_data_get(data);
    
    ext = strrchr(file, '.');
-   if(!ext)
-     return;
-   if(strcasecmp(ext, ".png") && strcasecmp(ext, ".jpg") &&
-	 strcasecmp(ext, ".jpeg"))
+   if (!ext) return;
+   if ((strcasecmp(ext, ".png")) &&
+       (strcasecmp(ext, ".jpg")) &&
+       (strcasecmp(ext, ".jpeg")))
      return;
         
    e_icon_file_set(wd->o_icon, file);
@@ -253,13 +251,13 @@ _e_wid_select_cb(E_File_Dialog *dia, char *file, void *data)
    wd = data;
    
    ext = strrchr(file, '.');
-   if(!ext)
-     return;
-   if(strcasecmp(ext, ".png") && strcasecmp(ext, ".jpg") &&
-	 strcasecmp(ext, ".jpeg"))
+   if (!ext) return;
+   if ((strcasecmp(ext, ".png")) &&
+       (strcasecmp(ext, ".jpg")) &&
+       (strcasecmp(ext, ".jpeg")))
      return;   
    
-   if(wd->select_func)
+   if (wd->select_func)
      wd->select_func(wd->obj, file, wd->select_data);
       
    e_icon_file_set(wd->o_icon, file);
