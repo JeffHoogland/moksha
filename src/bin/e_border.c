@@ -3251,12 +3251,12 @@ _e_border_cb_window_property(void *data, int ev_type, void *ev)
 	bd->client.icccm.fetch.window_role = 1;
 	bd->changed = 1;
      }
-   /*
    else if (e->atom == ECORE_X_ATOM_NET_WM_ICON)
      {
 	bd->client.netwm.fetch.icon = 1;
 	bd->changed = 1;
      }
+   /*
    else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
      {
 	bd->client.netwm.fetch.user_time = 1;
