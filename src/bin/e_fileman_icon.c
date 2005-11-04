@@ -375,8 +375,6 @@ _e_fm_icon_smart_clip_unset(Evas_Object *obj)
 static void
 _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 {
-   Evas_Coord icon_w, icon_h;
-   
    sd->image_object = edje_object_add(sd->evas);
    if (sd->file->type ==  E_FM_FILE_TYPE_DIRECTORY)
      e_theme_edje_object_set(sd->image_object, "base/theme/fileman",

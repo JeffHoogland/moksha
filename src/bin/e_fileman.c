@@ -168,9 +168,7 @@ static void
 _e_fileman_resize_cb(E_Win *win)
 {
    E_Fileman *fileman;
-   Evas_Coord w, h;
-   int frozen;
-   
+ 
    fileman = win->data;
    evas_object_resize(fileman->main, win->w, win->h);
 }

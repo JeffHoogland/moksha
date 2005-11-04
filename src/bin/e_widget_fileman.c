@@ -43,23 +43,18 @@ static void
 _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
 {
    E_Widget_Data *wd;
-   int size;
    
    wd = data;
 
 /* this is crashing, see why */
 #if 0
-   if(*(wd->valptr) != NULL)
-     E_FREE(*(wd->valptr));
-   
-   size = (strlen(file) + 1) * sizeof(char);
-   *(wd->valptr) = E_NEW(char *, size);
-   snprintf(*(wd->valptr), size, "%s", file);
-#endif   
-   if(wd->select_func)
+   E_FREE(*(wd->valptr));
+   *(wd->valptr) = strdup(file);
+#endif
+
+   if (wd->select_func)
      wd->select_func(wd->wid, file, wd->select_data);
-   
-   
+
    printf("e_widget_fileman: %s\n", file);
 }
 
@@ -67,9 +62,8 @@ _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
 Evas_Object *
 e_widget_fileman_add(Evas *evas, char **val)
 {   
-   Evas_Object *obj, *o, *bg, *scrollbar;
+   Evas_Object *obj;
    E_Widget_Data *wd;
-   Evas_Coord mw, mh;   
    
    obj = e_widget_add(evas);
    

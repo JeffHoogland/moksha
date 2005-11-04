@@ -15,7 +15,7 @@ E_File_Dialog *
 e_file_dialog_new(E_Container *con)
 {
    E_File_Dialog *dia;
-   Evas_Coord     w, h, ew, eh;
+   Evas_Coord     w, h;
    E_Manager     *man;
    Evas          *evas;
    Evas_Object   *list, *ol, *fm;
