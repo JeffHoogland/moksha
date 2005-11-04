@@ -208,7 +208,7 @@ group {
 	    color3: 0 0 0 15;
 	    text {
 	       text: "Desktop Name";
-	       font: "Vera";
+	       font: "Edje-Vera";
 	       size: 8;
 	       min: 1 1;
 	       align: 0.5 0.5;
