@@ -1357,7 +1357,7 @@ break;
    /* TODO: Check if language exists */
    E_FREE(e_config->language);
    e_config->language = strdup(s);
-   if ((e_config->language) && (strlen(e_config->language) > 0))
+   if ((e_config->language) && (e_config->language[0] != 0))
      e_intl_language_set(e_config->language);
    else
      e_intl_language_set(NULL);
@@ -2349,7 +2349,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2364,7 +2364,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2455,7 +2455,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2470,7 +2470,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2672,7 +2672,7 @@ break;
 		  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-		  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
 		    {
 		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2687,7 +2687,7 @@ break;
 		  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
 		  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-		  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
 		    {
 		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2777,7 +2777,7 @@ break;
 		  else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
 		  else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-		  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
 		    {
 		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -2792,7 +2792,7 @@ break;
 		  else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
 		  else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
 		  else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-		  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
 		    {
 		       printf("OPT3 moidifier unknown. Must be or mask of:\n"
 			      "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -5500,7 +5500,7 @@ break;
    STRING(s, HDL);
    E_FREE(e_config->input_method);
    e_config->input_method = strdup(s);
-   if ((e_config->input_method) && (strlen(e_config->input_method) > 0))
+   if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method);
    else
      e_intl_input_method_set(NULL);
@@ -5764,7 +5764,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT4 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -5779,7 +5779,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT4 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -5871,7 +5871,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -5886,7 +5886,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -6093,7 +6093,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT4 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -6108,7 +6108,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT4 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -6200,7 +6200,7 @@ break;
                   else if (!strncmp(pp, "CTRL|", 5)) eb.modifiers |= E_BINDING_MODIFIER_CTRL;
                   else if (!strncmp(pp, "ALT|", 4)) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strncmp(pp, "WIN|", 4)) eb.modifiers |= E_BINDING_MODIFIER_WIN;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");
@@ -6215,7 +6215,7 @@ break;
                   else if (!strcmp(pp, "ALT")) eb.modifiers |= E_BINDING_MODIFIER_ALT;
                   else if (!strcmp(pp, "WIN")) eb.modifiers |= E_BINDING_MODIFIER_WIN;
                   else if (!strcmp(pp, "NONE")) eb.modifiers = E_BINDING_MODIFIER_NONE;
-                  else if (strlen(pp) > 0)
+                  else if (pp[0] != 0)
                     {
                        printf("OPT3 moidifier unknown. Must be or mask of:\n"
                               "  SHIFT CTRL ALT WIN (eg SHIFT|CTRL or ALT|SHIFT|CTRL or ALT or just NONE)\n");

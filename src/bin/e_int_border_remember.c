@@ -215,8 +215,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	
 	if ((cfdata->border->client.icccm.name) &&
 	    (cfdata->border->client.icccm.class) &&
-	    (strlen(cfdata->border->client.icccm.name) > 0) &&
-	    (strlen(cfdata->border->client.icccm.class) > 0))
+	    (cfdata->border->client.icccm.name[0] != 0) &&
+	    (cfdata->border->client.icccm.class[0] != 0))
 	  matches = _check_matches(cfdata->border, E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT);
 	else
 	  matches = _check_matches(cfdata->border, E_REMEMBER_MATCH_TITLE | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT);
@@ -262,8 +262,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      {
 	if ((cfdata->border->client.icccm.name) &&
 	    (cfdata->border->client.icccm.class) &&
-	    (strlen(cfdata->border->client.icccm.name) > 0) &&
-	    (strlen(cfdata->border->client.icccm.class) > 0))
+	    (cfdata->border->client.icccm.name[0] != 0) &&
+	    (cfdata->border->client.icccm.class[0] != 0))
 	  cfdata->border->remember->match = E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
 	else
 	  cfdata->border->remember->match = E_REMEMBER_MATCH_TITLE | E_REMEMBER_MATCH_ROLE | E_REMEMBER_MATCH_TYPE | E_REMEMBER_MATCH_TRANSIENT;
@@ -444,8 +444,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    of = e_widget_framelist_add(evas, _("Remember using"), 0);
    if ((cfdata->border->client.icccm.name) &&
        (cfdata->border->client.icccm.class) &&
-       (strlen(cfdata->border->client.icccm.name) > 0) &&
-       (strlen(cfdata->border->client.icccm.class) > 0))
+       (cfdata->border->client.icccm.name[0] != 0) &&
+       (cfdata->border->client.icccm.class[0] != 0))
      {
 	ob = e_widget_check_add(evas, _("Window name and class"), &(cfdata->remember.match_name));
 	e_widget_framelist_object_append(of, ob);
@@ -455,7 +455,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	cfdata->remember.match_name = 0;
 	cfdata->remember.match_class = 0;
      }
-   if (strlen(e_border_name_get(cfdata->border)) > 0)
+   if ((e_border_name_get(cfdata->border))[0] != 0)
      {
 	ob = e_widget_check_add(evas, _("Title"), &(cfdata->remember.match_title));
 	e_widget_framelist_object_append(of, ob);
@@ -465,7 +465,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	cfdata->remember.match_title = 0;
      }
    if ((cfdata->border->client.icccm.window_role) && 
-       (strlen(cfdata->border->client.icccm.window_role) > 0))
+       (cfdata->border->client.icccm.window_role[0] != 0))
      {
 	ob = e_widget_check_add(evas, _("Window Role"), &(cfdata->remember.match_role));
 	e_widget_framelist_object_append(of, ob);

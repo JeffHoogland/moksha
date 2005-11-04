@@ -1851,7 +1851,7 @@ _e_app_cb_expire_timer(void *data)
 static void
 _e_app_cache_copy(E_App_Cache *ac, E_App *a)
 {
-#define IF_DUP(x) if ((ac->x) && (strlen(ac->x) > 0)) a->x = strdup(ac->x)
+#define IF_DUP(x) if ((ac->x) && (ac->x[0] != 0)) a->x = strdup(ac->x)
    IF_DUP(name);
    IF_DUP(generic);
    IF_DUP(comment);
@@ -2019,7 +2019,6 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 static int
 _e_app_exe_valid_get(char *exe)
 {
-   if (!exe) return 0;
-   if (strlen(exe) == 0) return 0;
+   if ((!exe) || (!exe[0])) return 0;
    return 1;
 }
