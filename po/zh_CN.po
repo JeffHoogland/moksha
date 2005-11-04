@@ -6,13 +6,109 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-10-17 01:06+0800\n"
-"PO-Revision-Date: 2005-10-17 01:19+0800\n"
+"POT-Creation-Date: 2005-11-04 11:02+0800\n"
+"PO-Revision-Date: 2005-11-04 11:16+0800\n"
 "Last-Translator: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "Language-Team: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/e_int_border_locks.c:65 src/bin/e_int_border_menu.c:77
+msgid "Window Locks"
+msgstr "窗口锁"
+
+#: src/bin/e_int_border_locks.c:289
+msgid "Generic Locks"
+msgstr "通用锁"
+
+#: src/bin/e_int_border_locks.c:290
+msgid "Lock the Window so it does only what I tell it to"
+msgstr "锁定这个窗口，只做我让它做的事"
+
+#: src/bin/e_int_border_locks.c:292
+msgid "Protect this window from me accidentally changing it"
+msgstr "保护这个窗口，以免我不小心改动了它"
+
+#: src/bin/e_int_border_locks.c:294
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr "保护这个窗口以免我不小心关闭了它，它很重要"
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Do not allow the border to change on this window"
+msgstr "不允许这个窗口的边框发生改变"
+
+#: src/bin/e_int_border_locks.c:299
+msgid "Remember these Locks for this window next time it appears"
+msgstr "为这个窗口记住这些锁定，以便下次继续使用"
+
+#: src/bin/e_int_border_locks.c:314
+msgid "Lock program changing:"
+msgstr "锁定程序改变："
+
+#: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
+#: src/bin/e_int_border_remember.c:494
+msgid "Position"
+msgstr "位置"
+
+#: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
+#: src/bin/e_int_border_remember.c:496 src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
+#: src/modules/ibox/e_mod_main.c:696
+msgid "Size"
+msgstr "大小"
+
+#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:498 src/bin/e_int_border_menu.c:105
+msgid "Stacking"
+msgstr "堆叠"
+
+#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+msgid "Iconified state"
+msgstr "最小化状态"
+
+#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_remember.c:504
+msgid "Stickiness"
+msgstr "粘住状态"
+
+#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+#: src/bin/e_int_border_remember.c:508
+msgid "Shaded state"
+msgstr "卷起状态"
+
+#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+msgid "Maximized state"
+msgstr "最大化状态"
+
+#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+msgid "Fullscreen state"
+msgstr "全屏状态"
+
+#: src/bin/e_int_border_locks.c:333
+msgid "Lock me from changing:"
+msgstr "锁住我以防更改："
+
+#: src/bin/e_int_border_locks.c:350
+msgid "The border style"
+msgstr "边框样式"
+
+#: src/bin/e_int_border_locks.c:354
+msgid "Stop me from:"
+msgstr "停止我以防："
+
+#: src/bin/e_int_border_locks.c:355
+msgid "Closing the window"
+msgstr "正在关闭窗口"
+
+#: src/bin/e_int_border_locks.c:357
+msgid "Exiting my login with this window open"
+msgstr "退出登录，不管这个开着的窗口"
+
+#: src/bin/e_int_border_locks.c:361
+msgid "Remember these Locks"
+msgstr "记住这些锁"
 
 #: src/bin/e_int_menus.c:83
 msgid "Favorite Applications"
@@ -54,7 +150,7 @@ msgstr "运行命令"
 msgid "Files"
 msgstr "文件"
 
-#: src/bin/e_int_menus.c:156 src/bin/e_module.c:472
+#: src/bin/e_int_menus.c:156 src/bin/e_module.c:476
 msgid "Configuration"
 msgstr "配置"
 
@@ -86,49 +182,53 @@ msgstr "新建一列桌面"
 msgid "Remove Column of Desktops"
 msgstr "删除一列桌面"
 
-#: src/bin/e_int_menus.c:622
+#: src/bin/e_int_menus.c:632
 msgid "Configuration Panel"
 msgstr "配置面板"
 
-#: src/bin/e_int_menus.c:626 src/bin/e_int_config_focus.c:44
+#: src/bin/e_int_menus.c:636 src/bin/e_int_config_focus.c:44
 msgid "Focus Settings"
 msgstr "焦点设置"
 
-#: src/bin/e_int_menus.c:690 src/bin/e_int_menus.c:968
+#: src/bin/e_int_menus.c:640 src/bin/e_eap_editor.c:80
+msgid "Eap Editor"
+msgstr "Eap 编辑器"
+
+#: src/bin/e_int_menus.c:704 src/bin/e_int_menus.c:982
 msgid "(No Windows)"
 msgstr "（无窗口）"
 
-#: src/bin/e_int_menus.c:705 src/bin/e_int_menus.c:982
+#: src/bin/e_int_menus.c:719 src/bin/e_int_menus.c:996
 msgid "No name!!"
 msgstr "无名！！"
 
-#: src/bin/e_int_menus.c:721
+#: src/bin/e_int_menus.c:735
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
-#: src/bin/e_int_menus.c:800 src/modules/ibar/e_mod_main.c:647
-#: src/modules/ibox/e_mod_main.c:454 src/modules/cpufreq/e_mod_main.c:954
+#: src/bin/e_int_menus.c:814 src/modules/ibar/e_mod_main.c:647
+#: src/modules/ibox/e_mod_main.c:454 src/modules/cpufreq/e_mod_main.c:947
 #: src/modules/clock/e_mod_main.c:328 src/modules/pager/e_mod_main.c:621
 #: src/modules/start/e_mod_main.c:230 src/modules/temperature/e_mod_main.c:922
-#: src/modules/battery/e_mod_main.c:586
+#: src/modules/battery/e_mod_main.c:589
 msgid "Edit Mode"
 msgstr "编辑模式"
 
-#: src/bin/e_int_menus.c:806
+#: src/bin/e_int_menus.c:820
 msgid "(Unused)"
 msgstr "（未使用）"
 
-#: src/bin/e_int_menus.c:838 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:852 src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "关于本主题"
 
-#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_fileman_smart.c:2638
-#: src/bin/e_fileman_smart.c:2660 src/bin/e_utils.c:213
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1782 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
 msgid "Run Error"
 msgstr "运行时错误"
 
-#: src/bin/e_apps.c:357 src/bin/e_fileman_smart.c:2639
-#: src/bin/e_fileman_smart.c:2661 src/bin/e_utils.c:214
+#: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -141,7 +241,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1533
+#: src/bin/e_apps.c:1783
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -160,69 +260,195 @@ msgstr ""
 msgid "Enlightenment Configuration"
 msgstr "Enlightenment 配置"
 
-#: src/bin/e_int_config_focus.c:143
+#: src/bin/e_int_config_focus.c:144
 msgid "Click Window to Focus"
 msgstr "点击窗口得到焦点"
 
-#: src/bin/e_int_config_focus.c:145
+#: src/bin/e_int_config_focus.c:146
 msgid "Window under the Mouse"
 msgstr "鼠标所在窗口得到焦点"
 
-#: src/bin/e_int_config_focus.c:147
+#: src/bin/e_int_config_focus.c:148
 msgid "Most recent Window under the Mouse"
 msgstr "鼠标下的最近的窗口得到焦点"
 
-#: src/bin/e_int_config_focus.c:163
+#: src/bin/e_int_config_focus.c:164
 msgid "Focus"
 msgstr "焦点"
 
-#: src/bin/e_int_config_focus.c:165
+#: src/bin/e_int_config_focus.c:166
 msgid "Click to focus"
 msgstr "点击焦点"
 
-#: src/bin/e_int_config_focus.c:167
+#: src/bin/e_int_config_focus.c:168
 msgid "Pointer focus"
 msgstr "指针焦点"
 
-#: src/bin/e_int_config_focus.c:169
+#: src/bin/e_int_config_focus.c:170
 msgid "Sloppy focus"
 msgstr "随意焦点"
 
-#: src/bin/e_int_config_focus.c:173
+#: src/bin/e_int_config_focus.c:174
 msgid "New Window Focus"
 msgstr "新窗口焦点"
 
-#: src/bin/e_int_config_focus.c:175
+#: src/bin/e_int_config_focus.c:176
 msgid "No new windows get focus"
 msgstr "没有新窗口得到焦点"
 
-#: src/bin/e_int_config_focus.c:177
+#: src/bin/e_int_config_focus.c:178
 msgid "All new windows get focus"
 msgstr "所有新窗口得到焦点"
 
-#: src/bin/e_int_config_focus.c:179
+#: src/bin/e_int_config_focus.c:180
 msgid "Only new dialogs get focus"
 msgstr "只有新的对话框得到焦点"
 
-#: src/bin/e_int_config_focus.c:181
+#: src/bin/e_int_config_focus.c:182
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "只有当主窗口有焦点时对话框得到焦点"
 
-#: src/bin/e_int_config_focus.c:185
+#: src/bin/e_int_config_focus.c:186
 msgid "Other Settings"
 msgstr "其它设置"
 
-#: src/bin/e_int_config_focus.c:186
+#: src/bin/e_int_config_focus.c:187
 msgid "Always pass on caught click events to programs"
 msgstr "总是不管对于程序的点击操作"
 
-#: src/bin/e_int_config_focus.c:188
+#: src/bin/e_int_config_focus.c:189
 msgid "A click on a window always raises it"
 msgstr "点击窗口总是使它提升"
 
-#: src/bin/e_int_config_focus.c:190
+#: src/bin/e_int_config_focus.c:191
 msgid "A click in a window always focuses it"
 msgstr "点击一个窗口总是得到焦点"
+
+#: src/bin/e_int_border_remember.c:67
+msgid "Window Remember"
+msgstr "记住窗口"
+
+#: src/bin/e_int_border_remember.c:228
+msgid "Window properties are not a unique match"
+msgstr "窗口属性不唯一匹配"
+
+#: src/bin/e_int_border_remember.c:231
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
+#: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:113
+#: src/bin/e_module.c:403 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/modules/ibar/e_mod_main.c:1692
+msgid "OK"
+msgstr "确定"
+
+#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+msgid "No match properties set"
+msgstr "没有匹配的属性被设定"
+
+#: src/bin/e_int_border_remember.c:319
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:349
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:422
+msgid "Nothing"
+msgstr "没有东西"
+
+#: src/bin/e_int_border_remember.c:424
+msgid "Size and Position"
+msgstr "大小和位置"
+
+#: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
+msgid "Locks"
+msgstr "锁定"
+
+#: src/bin/e_int_border_remember.c:428
+msgid "Size, Position and Locks"
+msgstr "大小，位置和锁"
+
+#: src/bin/e_int_border_remember.c:430
+msgid "Everything"
+msgstr "任何东西"
+
+#: src/bin/e_int_border_remember.c:444
+msgid "Remember using"
+msgstr "记住使用"
+
+#: src/bin/e_int_border_remember.c:450
+msgid "Window name and class"
+msgstr "窗口的名字和类"
+
+#: src/bin/e_int_border_remember.c:460
+msgid "Title"
+msgstr "标题"
+
+#: src/bin/e_int_border_remember.c:470
+msgid "Window Role"
+msgstr "窗口角色"
+
+#: src/bin/e_int_border_remember.c:479
+msgid "Window type"
+msgstr "窗口类型"
+
+#: src/bin/e_int_border_remember.c:486
+msgid "Transience"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:490
+msgid "Match only one window"
+msgstr "匹配单个窗口"
+
+#: src/bin/e_int_border_remember.c:493
+msgid "Properties to remember"
+msgstr "记住属性"
+
+#: src/bin/e_int_border_remember.c:502
+msgid "Border style"
+msgstr "边框样式"
+
+#: src/bin/e_int_border_remember.c:506
+msgid "Virtual Desktop"
+msgstr "虚拟桌面"
+
+#: src/bin/e_int_border_remember.c:510
+msgid "Screen zone"
+msgstr "屏幕区域"
+
+#: src/bin/e_int_border_remember.c:512
+msgid "Window list skip"
+msgstr "跳过窗口列表"
 
 #: src/bin/e_config_dialog.c:86
 msgid "Advanced Settings"
@@ -232,11 +458,6 @@ msgstr "高级设置"
 msgid "Basic Settings"
 msgstr "基本设置"
 
-#: src/bin/e_config_dialog.c:113 src/bin/e_module.c:399 src/bin/e_error.c:196
-#: src/bin/e_error.c:205 src/modules/ibar/e_mod_main.c:1682
-msgid "OK"
-msgstr "确定"
-
 #: src/bin/e_config_dialog.c:114
 msgid "Apply"
 msgstr "应用"
@@ -244,6 +465,92 @@ msgstr "应用"
 #: src/bin/e_config_dialog.c:115
 msgid "Cancel"
 msgstr "取消"
+
+#: src/bin/e_fileman_smart.c:1130 src/bin/e_eap_editor.c:278
+msgid "General"
+msgstr "通用"
+
+#: src/bin/e_fileman_smart.c:1139
+#, c-format
+msgid "File:"
+msgstr "文件："
+
+#: src/bin/e_fileman_smart.c:1148
+#, c-format
+msgid "Size:"
+msgstr "大小："
+
+#: src/bin/e_fileman_smart.c:1157
+#, c-format
+msgid "Type:"
+msgstr "类型："
+
+#: src/bin/e_fileman_smart.c:1166
+msgid "Protect this file"
+msgstr "保护这个文件"
+
+#: src/bin/e_fileman_smart.c:1172
+msgid "Let others see this file"
+msgstr "让其他人能看到这个文件"
+
+#: src/bin/e_fileman_smart.c:1176
+msgid "Let others modify this file"
+msgstr "让其他人能修改这个文件"
+
+#: src/bin/e_fileman_smart.c:1180
+msgid "Dont let others see or modify this file"
+msgstr "不让其他看到和修改这个文件"
+
+#: src/bin/e_fileman_smart.c:1184
+msgid "Custom settings"
+msgstr "自定义设置"
+
+#: src/bin/e_fileman_smart.c:1223
+msgid "File Info:"
+msgstr "文件信息："
+
+#: src/bin/e_fileman_smart.c:1246
+msgid "Permissions:"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1249 src/bin/e_fileman_smart.c:1258
+#: src/bin/e_fileman_smart.c:1267
+msgid "r"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1251 src/bin/e_fileman_smart.c:1260
+#: src/bin/e_fileman_smart.c:1269
+msgid "w"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1253 src/bin/e_fileman_smart.c:1262
+#: src/bin/e_fileman_smart.c:1271
+msgid "x"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1297 src/bin/e_fileman_smart.c:2097
+msgid "Properties"
+msgstr "属性"
+
+#: src/bin/e_fileman_smart.c:2048
+msgid "Open"
+msgstr "打开"
+
+#: src/bin/e_fileman_smart.c:2059
+msgid "Copy"
+msgstr "复制"
+
+#: src/bin/e_fileman_smart.c:2067
+msgid "Cut"
+msgstr "剪切"
+
+#: src/bin/e_fileman_smart.c:2078
+msgid "Rename"
+msgstr "改名"
+
+#: src/bin/e_fileman_smart.c:2086
+msgid "Delete"
+msgstr "删除"
 
 #: src/bin/e_init.c:38
 #, c-format
@@ -254,7 +561,21 @@ msgstr "X报告没有找到窗口和屏幕 %i ！\n"
 msgid "Disable this splash screen in the future?"
 msgstr "以后不显示这个启动屏幕？"
 
-#: src/bin/e_main.c:191
+#: src/bin/e_intl.c:359
+msgid "Input Method Error"
+msgstr "输入法错误"
+
+#: src/bin/e_intl.c:360
+msgid ""
+"Error starting the input method executable\n"
+"\n"
+"please make sure that your input\n"
+"method configuration is correct and\n"
+"that your configuration's\n"
+"executable is in your PATH\n"
+msgstr ""
+
+#: src/bin/e_main.c:195
 #, c-format
 msgid ""
 "Options:\n"
@@ -298,7 +619,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病。\n"
 
-#: src/bin/e_main.c:259
+#: src/bin/e_main.c:264
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -306,7 +627,15 @@ msgstr ""
 "Enlightenment 无法启动Ecore！\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:269
+#: src/bin/e_main.c:278
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 无法启动文件系统。\n"
+"可能您的内存用完了？"
+
+#: src/bin/e_main.c:289
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -314,7 +643,7 @@ msgstr ""
 "Enlightenment 无法建立一个退出信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:275
+#: src/bin/e_main.c:295
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -322,7 +651,7 @@ msgstr ""
 "Enlightenment 无法建立一个HUP信号处理句柄。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:286
+#: src/bin/e_main.c:306
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -330,7 +659,7 @@ msgstr ""
 "Enlightenment 无法启动X连接。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:294
+#: src/bin/e_main.c:314
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -338,7 +667,7 @@ msgstr ""
 "Enlightenment 无法启动紧急警报系统。\n"
 "您设定了DISPLAY环境变量吗？"
 
-#: src/bin/e_main.c:301
+#: src/bin/e_main.c:321
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -346,7 +675,7 @@ msgstr ""
 "Enlightenment 无法建立xinerama wrapping。\n"
 "这种情况不该发生。"
 
-#: src/bin/e_main.c:317
+#: src/bin/e_main.c:337
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -354,7 +683,7 @@ msgstr ""
 "Enlightenment 无法启动连接系统。\n"
 "可能您的内存用完了？<"
 
-#: src/bin/e_main.c:325
+#: src/bin/e_main.c:345
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -362,7 +691,7 @@ msgstr ""
 "Enlightenment 无法启动IPC系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:333
+#: src/bin/e_main.c:353
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -370,7 +699,7 @@ msgstr ""
 "Enlightenment 无法启动Evas系统。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:339
+#: src/bin/e_main.c:359
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -380,15 +709,15 @@ msgstr ""
 "渲染。请检查你的Evas和Ecore的安装并确认他们支持软\n"
 "件X11渲染。"
 
-#: src/bin/e_main.c:348
-msgid ""
-"Enlightenment cannot initialize the File system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment 无法启动文件系统。\n"
-"可能您的内存用完了？"
+#: src/bin/e_main.c:369
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment 无法建立它的缩略图系统。"
 
-#: src/bin/e_main.c:360
+#: src/bin/e_main.c:378
+msgid "Enlightenment cannot initialize the File manager.\n"
+msgstr "Enlightenment 无法启动文件管理器。\n"
+
+#: src/bin/e_main.c:389
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -396,11 +725,11 @@ msgstr ""
 "Enlightenment 无法在您的主目录创建目录。\n"
 "可能您没有主目录或者磁盘已满？"
 
-#: src/bin/e_main.c:368
+#: src/bin/e_main.c:397
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment 无法建立它的配置系统。"
 
-#: src/bin/e_main.c:375
+#: src/bin/e_main.c:404
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -408,27 +737,31 @@ msgstr ""
 "Enlightenment 无法建立路径以打开文件。\\n\"\n"
 "\"可能您的内存用完了？"
 
-#: src/bin/e_main.c:383
+#: src/bin/e_main.c:412
+msgid "Enlightenment cannot set up its intl system."
+msgstr "Enlightenment 无法建立它的国际化系统。"
+
+#: src/bin/e_main.c:419
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment 无法建立它的动作系统。"
 
-#: src/bin/e_main.c:390
+#: src/bin/e_main.c:426
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment 无法建立它的绑定系统。"
 
-#: src/bin/e_main.c:397
+#: src/bin/e_main.c:433
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment 无法建立它的弹出系统。"
 
-#: src/bin/e_main.c:408
+#: src/bin/e_main.c:444
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment 无法建立它的字体系统。"
 
-#: src/bin/e_main.c:418
+#: src/bin/e_main.c:454
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment 无法建立它的主题系统。"
 
-#: src/bin/e_main.c:427
+#: src/bin/e_main.c:463
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -436,7 +769,7 @@ msgstr ""
 "Enlightenment 无法建立启动屏幕。\n"
 "可能您的内存用完了？"
 
-#: src/bin/e_main.c:436
+#: src/bin/e_main.c:472
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -444,15 +777,15 @@ msgstr ""
 "Enlightenment 在您的所有的screen上建立窗口管理失败。\n"
 "可能有另外一个窗口管理器在运行？\n"
 
-#: src/bin/e_main.c:443
+#: src/bin/e_main.c:479
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment 无法建立它的应用系统。"
 
-#: src/bin/e_main.c:450
+#: src/bin/e_main.c:486
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment 无法设定它的记忆设置。"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:502
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -472,31 +805,31 @@ msgstr ""
 "如果您使用AFS，那么你可能需要创建一个从 ~/.ecore 到 /tmp/my_directory/ecore\n"
 "的符号链接，以便套接字的建立。"
 
-#: src/bin/e_main.c:482
+#: src/bin/e_main.c:518
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment 无法建立它的消息系统。"
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:525
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment 无法建立它的拖放系统。"
 
-#: src/bin/e_main.c:496
+#: src/bin/e_main.c:532
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment 无法建立它的输入捕获处理系统。"
 
-#: src/bin/e_main.c:503
+#: src/bin/e_main.c:539
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment 无法建立它的模块系统。"
 
-#: src/bin/e_main.c:510
+#: src/bin/e_main.c:546
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment 无法建立它的窗口列表系统。"
 
-#: src/bin/e_main.c:516
+#: src/bin/e_main.c:552
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC设置错误！"
 
-#: src/bin/e_main.c:517
+#: src/bin/e_main.c:553
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -510,11 +843,11 @@ msgstr ""
 "如果没有，试着删除 ~/.ecore/enlightenment-* 下的所有文件，\n"
 "然后再试着运行一遍。"
 
-#: src/bin/e_main.c:533 src/bin/e_about.c:50
+#: src/bin/e_main.c:569 src/bin/e_about.c:50
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:535
+#: src/bin/e_main.c:571
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment 正在启动。请稍候。"
 
@@ -554,28 +887,28 @@ msgstr ""
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s 模块"
 
-#: src/bin/e_module.c:383
+#: src/bin/e_module.c:387
 msgid "(No Loaded Modules)"
 msgstr "（没有模块装入）"
 
-#: src/bin/e_module.c:457
+#: src/bin/e_module.c:461
 msgid "About..."
 msgstr "关于……"
 
-#: src/bin/e_module.c:461
+#: src/bin/e_module.c:465
 msgid "Enabled"
 msgstr "启用"
 
-#: src/bin/e_module.c:534
+#: src/bin/e_module.c:538
 msgid "Would you like to unload this module?<br>"
 msgstr "您是否要卸载这个模块？<br>"
 
-#: src/bin/e_module.c:539 src/bin/e_actions.c:1200
+#: src/bin/e_module.c:543 src/bin/e_actions.c:1200
 #: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "是"
 
-#: src/bin/e_module.c:540 src/bin/e_actions.c:1202
+#: src/bin/e_module.c:544 src/bin/e_actions.c:1202
 #: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "否"
@@ -585,7 +918,88 @@ msgstr "否"
 msgid "Starting %s"
 msgstr "启动 %s"
 
-#: src/bin/e_container.c:115
+#: src/bin/e_int_border_menu.c:40
+msgid "Always On Top"
+msgstr "置顶"
+
+#: src/bin/e_int_border_menu.c:50 src/modules/clock/e_mod_main.c:349
+#: src/modules/pager/e_mod_main.c:458
+msgid "Normal"
+msgstr "正常"
+
+#: src/bin/e_int_border_menu.c:60
+msgid "Always Below"
+msgstr "置底"
+
+#: src/bin/e_int_border_menu.c:84
+msgid "Remember"
+msgstr "记住"
+
+#: src/bin/e_int_border_menu.c:94
+msgid "Send to Desktop"
+msgstr "发送到桌面"
+
+#: src/bin/e_int_border_menu.c:115
+msgid "Shaded"
+msgstr "卷起"
+
+#: src/bin/e_int_border_menu.c:128
+msgid "Maximized"
+msgstr "最大化"
+
+#: src/bin/e_int_border_menu.c:141
+msgid "Sticky"
+msgstr "粘住"
+
+#: src/bin/e_int_border_menu.c:154
+msgid "Borderless"
+msgstr "无边框"
+
+#: src/bin/e_int_border_menu.c:167
+msgid "Fullscreen"
+msgstr "全屏"
+
+#: src/bin/e_int_border_menu.c:181
+msgid "Skip Window List"
+msgstr "跳过窗口列表"
+
+#: src/bin/e_int_border_menu.c:202
+msgid "Edit Icon"
+msgstr "编辑图标"
+
+#: src/bin/e_int_border_menu.c:232
+msgid "Create Icon"
+msgstr "创建图标"
+
+#: src/bin/e_int_border_menu.c:243
+msgid "Kill"
+msgstr "杀死"
+
+#: src/bin/e_int_border_menu.c:256
+msgid "Iconify"
+msgstr "最小化"
+
+#: src/bin/e_int_border_menu.c:267
+msgid "Close"
+msgstr "关闭"
+
+#: src/bin/e_int_border_menu.c:447
+msgid "Icon Edit Error"
+msgstr "图标编辑错误"
+
+#: src/bin/e_int_border_menu.c:448
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"启动图标编辑器错误\n"
+"\n"
+"请安装 e_util_eapp_edit\n"
+"或者确认它已经在你的路径设置中\n"
+
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
 msgstr "容器 %d"
@@ -599,7 +1013,7 @@ msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "您要求退出 Enlightenment。<br><br>您是否确定要退出？"
 
-#: src/bin/e_config.c:372
+#: src/bin/e_config.c:373
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -619,7 +1033,7 @@ msgstr ""
 "配置您的桌面设置。\n"
 "很抱歉打断了您的配置。\n"
 
-#: src/bin/e_config.c:386
+#: src/bin/e_config.c:387
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -642,6 +1056,22 @@ msgstr "配置已经升级"
 #: src/bin/e_error.c:352
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment：错误！"
+
+#: src/bin/e_eap_editor.c:216 src/bin/e_eap_editor.c:338
+msgid "Icon"
+msgstr "图标"
+
+#: src/bin/e_eap_editor.c:237
+msgid "Basic Info"
+msgstr "基本信息"
+
+#: src/bin/e_eap_editor.c:302
+msgid "Window"
+msgstr "窗口"
+
+#: src/bin/e_eap_editor.c:362
+msgid "Misc"
+msgstr "杂项"
 
 #: src/bin/e_gadman.c:626
 msgid "Automatic Width"
@@ -695,15 +1125,15 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>开发组</title>"
 
-#: src/bin/e_winlist.c:119
+#: src/bin/e_winlist.c:122
 msgid "Select a window"
 msgstr "选择一个窗口"
 
-#: src/bin/e_utils.c:259
+#: src/bin/e_utils.c:268
 msgid "Cannot exit - immortal windows."
 msgstr "不能退出 － 固化的窗口。"
 
-#: src/bin/e_utils.c:260
+#: src/bin/e_utils.c:269
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
@@ -713,201 +1143,6 @@ msgstr ""
 "一些窗口仍然处在被生命周期锁定之中。这意味着\n"
 "Enlightenment不允许它自己退出，除非这些窗口已经被关闭，\n"
 "或者被去除生命周期锁。\n"
-
-#: src/bin/e_border.c:6197 src/bin/e_border.c:6210
-msgid "Position"
-msgstr "位置"
-
-#: src/bin/e_border.c:6198 src/bin/e_border.c:6211
-#: src/modules/ibar/e_mod_main.c:279 src/modules/ibar/e_mod_main.c:932
-#: src/modules/ibox/e_mod_main.c:242 src/modules/ibox/e_mod_main.c:696
-msgid "Size"
-msgstr "大小"
-
-#: src/bin/e_border.c:6199 src/bin/e_border.c:6212 src/bin/e_border.c:6415
-msgid "Stacking"
-msgstr "堆叠"
-
-#: src/bin/e_border.c:6200 src/bin/e_border.c:6213 src/bin/e_border.c:6351
-msgid "Iconify"
-msgstr "最小化"
-
-#: src/bin/e_border.c:6202 src/bin/e_border.c:6215 src/bin/e_border.c:6404
-msgid "Sticky"
-msgstr "粘住"
-
-#: src/bin/e_border.c:6203 src/bin/e_border.c:6216
-msgid "Shade"
-msgstr "卷起"
-
-#: src/bin/e_border.c:6204 src/bin/e_border.c:6217
-msgid "Maximize"
-msgstr "最大化"
-
-#: src/bin/e_border.c:6205 src/bin/e_border.c:6218 src/bin/e_border.c:6437
-msgid "Fullscreen"
-msgstr "全屏"
-
-#: src/bin/e_border.c:6224
-msgid "User"
-msgstr "用户"
-
-#: src/bin/e_border.c:6232
-msgid "Application"
-msgstr "应用程序"
-
-#: src/bin/e_border.c:6242
-msgid "Border"
-msgstr "边框"
-
-#: src/bin/e_border.c:6243 src/bin/e_border.c:6340
-msgid "Close"
-msgstr "关闭"
-
-#: src/bin/e_border.c:6246
-msgid "Lifespan"
-msgstr "生命周期"
-
-#: src/bin/e_border.c:6260
-msgid "Remember This Window"
-msgstr "记住该窗口"
-
-#: src/bin/e_border.c:6267
-msgid "Remember This Instance Only"
-msgstr "只记住这个实例"
-
-#: src/bin/e_border.c:6270
-msgid "Match by Name"
-msgstr "名称匹配"
-
-#: src/bin/e_border.c:6271
-msgid "Match by Class"
-msgstr "类匹配"
-
-#: src/bin/e_border.c:6272
-msgid "Match by Title"
-msgstr "标题匹配"
-
-#: src/bin/e_border.c:6273
-msgid "Match by Role"
-msgstr "角色匹配"
-
-#: src/bin/e_border.c:6274
-msgid "Match by Window Type"
-msgstr "窗口类型匹配"
-
-#: src/bin/e_border.c:6275
-msgid "Match by Transient Status"
-msgstr "瞬态匹配"
-
-#: src/bin/e_border.c:6278
-msgid "Remember Position"
-msgstr "记住位置"
-
-#: src/bin/e_border.c:6279
-msgid "Remember Size"
-msgstr "记住大小"
-
-#: src/bin/e_border.c:6280
-msgid "Remember Stacking"
-msgstr "记住堆叠"
-
-#: src/bin/e_border.c:6281
-msgid "Remember Locks"
-msgstr "记住锁定"
-
-#: src/bin/e_border.c:6282
-msgid "Remember Border"
-msgstr "记住边框"
-
-#: src/bin/e_border.c:6283
-msgid "Remember Stickiness"
-msgstr "记住粘住状态"
-
-#: src/bin/e_border.c:6284
-msgid "Remember Desktop"
-msgstr "记住桌面"
-
-#: src/bin/e_border.c:6285
-msgid "Remember Shaded State"
-msgstr "记住卷起状态"
-
-#: src/bin/e_border.c:6286
-msgid "Remember Zone"
-msgstr "记住区域"
-
-#: src/bin/e_border.c:6287
-msgid "Remember Skip Window List"
-msgstr "记住跳过窗口列表"
-
-#: src/bin/e_border.c:6301
-msgid "Always On Top"
-msgstr "置顶"
-
-#: src/bin/e_border.c:6311 src/modules/clock/e_mod_main.c:349
-#: src/modules/pager/e_mod_main.c:458
-msgid "Normal"
-msgstr "正常"
-
-#: src/bin/e_border.c:6321
-msgid "Always Below"
-msgstr "置底"
-
-#: src/bin/e_border.c:6365
-msgid "Kill"
-msgstr "杀死"
-
-#: src/bin/e_border.c:6378
-msgid "Shaded"
-msgstr "卷起"
-
-#: src/bin/e_border.c:6391
-msgid "Maximized"
-msgstr "最大化"
-
-#: src/bin/e_border.c:6424
-msgid "Borderless"
-msgstr "无边框"
-
-#: src/bin/e_border.c:6451
-msgid "Skip Window List"
-msgstr "跳过窗口列表"
-
-#: src/bin/e_border.c:6465
-msgid "Locks"
-msgstr "锁定"
-
-#: src/bin/e_border.c:6472
-msgid "Remember"
-msgstr "记住"
-
-#: src/bin/e_border.c:6482
-msgid "Send To"
-msgstr "发送到"
-
-#: src/bin/e_border.c:6500
-msgid "Edit Icon"
-msgstr "编辑图标"
-
-#: src/bin/e_border.c:6527
-msgid "Create Icon"
-msgstr "创建图标"
-
-#: src/bin/e_border.c:6614
-msgid "Icon Edit Error"
-msgstr "图标编辑错误"
-
-#: src/bin/e_border.c:6615
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"启动图标编辑器错误\n"
-"\n"
-"请安装 e_util_eapp_edit\n"
-"或者确认它已经在你的路径设置中\n"
 
 #: src/modules/ibar/e_mod_main.c:165
 msgid "Enlightenment IBar Module"
@@ -982,11 +1217,11 @@ msgstr "庞大"
 msgid "Gigantic"
 msgstr "超大"
 
-#: src/modules/ibar/e_mod_main.c:1675
+#: src/modules/ibar/e_mod_main.c:1685
 msgid "Cannot add icon"
 msgstr "不能加入图标"
 
-#: src/modules/ibar/e_mod_main.c:1677
+#: src/modules/ibar/e_mod_main.c:1687
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
@@ -1042,7 +1277,7 @@ msgid ""
 msgstr "一个控制系统CPU频率的简单模块。<br>在为笔记本电脑节省电力时特别有用。"
 
 #: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
-#: src/modules/battery/e_mod_main.c:215 src/modules/battery/e_mod_main.c:494
+#: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
 msgid "Set Poll Time"
 msgstr "设置检查时间"
 
@@ -1065,7 +1300,7 @@ msgid ""
 msgstr "试着通过模块的 setfreq 功能设定CPU频率调节器<br>时发生一个错误。"
 
 #: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
-#: src/modules/battery/e_mod_main.c:762
+#: src/modules/battery/e_mod_main.c:765
 msgid "Ok"
 msgstr "OK"
 
@@ -1405,11 +1640,11 @@ msgstr "中等质量"
 msgid "Low Quality"
 msgstr "低质量"
 
-#: src/modules/battery/e_mod_main.c:122
+#: src/modules/battery/e_mod_main.c:125
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment电池模块"
 
-#: src/modules/battery/e_mod_main.c:123
+#: src/modules/battery/e_mod_main.c:126
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -1420,98 +1655,161 @@ msgstr ""
 "<hilight>APM</hilight> <br>模块来监视您的电池和交流电源适配器状态。<br>它能"
 "在 Linux 和 FreeBSD 下工作，且能和您的 BIOS 或内核驱动<br>一样精确地工作。"
 
-#: src/modules/battery/e_mod_main.c:219 src/modules/battery/e_mod_main.c:498
+#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
 msgid "Set Alarm"
 msgstr "设定警报"
 
-#: src/modules/battery/e_mod_main.c:401
+#: src/modules/battery/e_mod_main.c:404
 msgid "Disable"
 msgstr "禁用"
 
-#: src/modules/battery/e_mod_main.c:408
+#: src/modules/battery/e_mod_main.c:411
 msgid "10 mins"
 msgstr "10分钟"
 
-#: src/modules/battery/e_mod_main.c:415
+#: src/modules/battery/e_mod_main.c:418
 msgid "20 mins"
 msgstr "20分钟"
 
-#: src/modules/battery/e_mod_main.c:422
+#: src/modules/battery/e_mod_main.c:425
 msgid "30 mins"
 msgstr "30分钟"
 
-#: src/modules/battery/e_mod_main.c:429
+#: src/modules/battery/e_mod_main.c:432
 msgid "40 mins"
 msgstr "40分钟"
 
-#: src/modules/battery/e_mod_main.c:436
+#: src/modules/battery/e_mod_main.c:439
 msgid "50 mins"
 msgstr "50分钟"
 
-#: src/modules/battery/e_mod_main.c:443
+#: src/modules/battery/e_mod_main.c:446
 msgid "1 hour"
 msgstr "一小时"
 
-#: src/modules/battery/e_mod_main.c:455
+#: src/modules/battery/e_mod_main.c:458
 msgid "Check Fast (1 sec)"
 msgstr "频繁检查（1秒）"
 
-#: src/modules/battery/e_mod_main.c:462
+#: src/modules/battery/e_mod_main.c:465
 msgid "Check Medium (5 sec)"
 msgstr "一般检查（5秒）"
 
-#: src/modules/battery/e_mod_main.c:469
+#: src/modules/battery/e_mod_main.c:472
 msgid "Check Normal (10 sec)"
 msgstr "一般检查（10秒）"
 
-#: src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:479
 msgid "Check Slow (30 sec)"
 msgstr "缓慢检查（30秒）"
 
-#: src/modules/battery/e_mod_main.c:483
+#: src/modules/battery/e_mod_main.c:486
 msgid "Check Very Slow (60 sec)"
 msgstr "极缓慢检查（60秒）"
 
-#: src/modules/battery/e_mod_main.c:759
+#: src/modules/battery/e_mod_main.c:762
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
 msgstr "电池电量低<br>您的电池电量低。<br>您可能需要切换到使用交流电源。"
 
-#: src/modules/battery/e_mod_main.c:824
+#: src/modules/battery/e_mod_main.c:827
 msgid "NO INFO"
 msgstr "没有信息"
 
-#: src/modules/battery/e_mod_main.c:970 src/modules/battery/e_mod_main.c:1231
-#: src/modules/battery/e_mod_main.c:1380
+#: src/modules/battery/e_mod_main.c:1002 src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:1412
 msgid "NO BAT"
 msgstr "没有电池"
 
-#: src/modules/battery/e_mod_main.c:994 src/modules/battery/e_mod_main.c:1405
+#: src/modules/battery/e_mod_main.c:1026 src/modules/battery/e_mod_main.c:1437
 msgid "BAD DRIVER"
 msgstr "错误的驱动"
 
-#: src/modules/battery/e_mod_main.c:1018 src/modules/battery/e_mod_main.c:1262
-#: src/modules/battery/e_mod_main.c:1429
+#: src/modules/battery/e_mod_main.c:1050 src/modules/battery/e_mod_main.c:1294
+#: src/modules/battery/e_mod_main.c:1461
 msgid "FULL"
 msgstr "满"
 
-#: src/modules/battery/e_mod_main.c:1079 src/modules/battery/e_mod_main.c:1489
+#: src/modules/battery/e_mod_main.c:1111 src/modules/battery/e_mod_main.c:1521
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:1083 src/modules/battery/e_mod_main.c:1493
+#: src/modules/battery/e_mod_main.c:1115 src/modules/battery/e_mod_main.c:1525
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:1087 src/modules/battery/e_mod_main.c:1497
+#: src/modules/battery/e_mod_main.c:1119 src/modules/battery/e_mod_main.c:1529
 msgid "Danger"
 msgstr "危险"
 
-#: src/modules/battery/e_mod_main.c:1091 src/modules/battery/e_mod_main.c:1501
-#: src/modules/battery/e_mod_main.c:1665
+#: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1533
+#: src/modules/battery/e_mod_main.c:1697
 msgid "Charging"
 msgstr "充电中"
+
+#~ msgid "Shade"
+#~ msgstr "卷起"
+
+#~ msgid "Maximize"
+#~ msgstr "最大化"
+
+#~ msgid "User"
+#~ msgstr "用户"
+
+#~ msgid "Application"
+#~ msgstr "应用程序"
+
+#~ msgid "Border"
+#~ msgstr "边框"
+
+#~ msgid "Lifespan"
+#~ msgstr "生命周期"
+
+#~ msgid "Remember This Window"
+#~ msgstr "记住该窗口"
+
+#~ msgid "Remember This Instance Only"
+#~ msgstr "只记住这个实例"
+
+#~ msgid "Match by Name"
+#~ msgstr "名称匹配"
+
+#~ msgid "Match by Class"
+#~ msgstr "类匹配"
+
+#~ msgid "Match by Title"
+#~ msgstr "标题匹配"
+
+#~ msgid "Match by Role"
+#~ msgstr "角色匹配"
+
+#~ msgid "Match by Transient Status"
+#~ msgstr "瞬态匹配"
+
+#~ msgid "Remember Position"
+#~ msgstr "记住位置"
+
+#~ msgid "Remember Size"
+#~ msgstr "记住大小"
+
+#~ msgid "Remember Border"
+#~ msgstr "记住边框"
+
+#~ msgid "Remember Desktop"
+#~ msgstr "记住桌面"
+
+#~ msgid "Remember Shaded State"
+#~ msgstr "记住卷起状态"
+
+#~ msgid "Remember Zone"
+#~ msgstr "记住区域"
+
+#~ msgid "Remember Skip Window List"
+#~ msgstr "记住跳过窗口列表"
+
+#~ msgid "Send To"
+#~ msgstr "发送到"
 
 #~ msgid ""
 #~ "This is Enlightenment %s.\n"
