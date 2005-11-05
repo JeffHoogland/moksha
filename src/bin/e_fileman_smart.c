@@ -222,6 +222,7 @@ static void                _e_fm_fake_mouse_up_later     (Evas *evas, int button
 static void                _e_fm_fake_mouse_up_all_later (Evas *evas);
 static void                _e_fm_fake_mouse_up_cb        (void *data);
 
+static void                _e_fm_key_down_cb        (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_down_cb      (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_move_cb      (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_mouse_up_cb        (void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -231,7 +232,6 @@ static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_move_cb  (void *data, int type, void *event);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
-static int                 _e_fm_win_key_down_cb    (void *data, int type, void *event);
 
 static int                 _e_fm_drop_enter_cb     (void *data, int type, void *event);
 static int                 _e_fm_drop_leave_cb     (void *data, int type, void *event);
@@ -519,7 +519,6 @@ _e_fm_smart_add(Evas_Object *object)
    evas_object_repeat_events_set(sd->layout, 1);
    evas_object_smart_member_add(sd->layout, object);   
    e_icon_layout_spacing_set(sd->layout, sd->icon_info.x_space, sd->icon_info.y_space);
-   evas_object_stack_above(sd->layout, sd->bg);
    evas_object_show(sd->layout);
 
    sd->clip = evas_object_rectangle_add(sd->evas);
@@ -538,6 +537,11 @@ _e_fm_smart_add(Evas_Object *object)
 			   "base/theme/fileman/rubberband",
 			   "fileman/rubberband");
 
+   evas_object_focus_set(sd->object, 1);
+   evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN,_e_fm_key_down_cb, sd);
+   
+   evas_object_stack_below(sd->bg, sd->layout);
+   
    sd->event_handlers = NULL;
 
    sd->event_handlers = evas_list_append(sd->event_handlers,
@@ -563,10 +567,6 @@ _e_fm_smart_add(Evas_Object *object)
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
 								 _e_fm_win_mouse_move_cb,
-								 sd));
-   sd->event_handlers = evas_list_append(sd->event_handlers,
-					 ecore_event_handler_add(ECORE_X_EVENT_KEY_DOWN,
-								 _e_fm_win_key_down_cb,
 								 sd));
    
    sd->monitor = NULL;
@@ -647,7 +647,7 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
    sd->y = y;   
    evas_object_move(sd->bg, x, y);
    evas_object_move(sd->clip, x, y); 
-   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);   
+   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);
 }
 
 static void
@@ -2354,7 +2354,7 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	     if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
 	       {
 		  E_Event_Fm_Reconfigure *ev;
-		  
+		  printf("!E_CONTAINS %s\n", icon->file->name);
 		  ev = E_NEW(E_Event_Fm_Reconfigure, 1);
 		  if (ev)
 		    {			    
@@ -2524,32 +2524,24 @@ _e_fm_icon_run(E_Fm_Smart_Data *sd)
      }
 }
 
-static int
-_e_fm_win_key_down_cb(void *data, int type, void *event)
+static void
+_e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Ecore_X_Event_Key_Down *ev;
+   Evas_Event_Key_Up *ev;
    E_Fm_Smart_Data *sd;
    
-   ev = event;
+   ev = event_info;
    sd = data;
-
-   /* FIXME: do NOT use ecore_x key events. NOT! use evas key callbacks on
-    * a focused onject!!!!
-    */
-   return 1;
-   // make this call generic
-   if (!sd->win) return 1;
-   if (ev->win != sd->win->evas_sub_win) return 1;
    
-   if (!strcmp(ev->keysymbol, "Up"))
+   if (!strcmp(ev->keyname, "Up"))
      _e_fm_icon_select_up(sd);
-   else if (!strcmp(ev->keysymbol, "Down"))
+   else if (!strcmp(ev->keyname, "Down"))
      _e_fm_icon_select_down(sd);
-   else if (!strcmp(ev->keysymbol, "Left"))
+   else if (!strcmp(ev->keyname, "Left"))
      _e_fm_icon_select_left(sd);
-   else if (!strcmp(ev->keysymbol, "Right"))
+   else if (!strcmp(ev->keyname, "Right"))
      _e_fm_icon_select_right(sd);
-   else if (!strcmp(ev->keysymbol, "Return"))
+   else if (!strcmp(ev->keyname, "Return"))
      _e_fm_icon_run(sd);      
 
    return 1;

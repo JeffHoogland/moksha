@@ -72,7 +72,7 @@ e_fileman_new(E_Container *con)
    e_win_title_set(fileman->win, dir);
 
    evas_event_freeze(fileman->evas);   
-   fileman->smart = e_fm_add(fileman->evas);
+   fileman->smart = e_fm_add(fileman->evas); 
    e_fm_e_win_set(fileman->smart, fileman->win);
    
    fileman->main = e_scrollframe_add(fileman->evas);
@@ -90,6 +90,10 @@ e_fileman_new(E_Container *con)
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
    
    evas_event_thaw(fileman->evas);
+   
+   evas_object_focus_set(fileman->main, 0);
+   //evas_object_focus_set(fileman->smart, 1);
+   evas_object_propagate_events_set(fileman->smart, 0);
    
    fileman->event_handlers = evas_list_append(fileman->event_handlers,
 					      ecore_event_handler_add(E_EVENT_FM_RECONFIGURE,
