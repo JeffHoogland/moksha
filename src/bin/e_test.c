@@ -339,7 +339,6 @@ _e_test_internal(E_Container *con)
    o2 = e_scrollframe_add(dia->win->evas);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_test_click, o2);
 //   e_scrollframe_custom_theme_set(o2, "base/theme/widgets", "widgets/scrollframe");
-   evas_object_resize(o2, 200, 300);
    evas_object_show(o2);
 #if 0   
    o3 = e_pan_add(dia->win->evas);
@@ -392,6 +391,94 @@ _e_test_internal(E_Container *con)
 {
    tcon = con;
    _e_test_timer(NULL);
+}
+#elif 0
+
+struct _tmp
+{
+   Evas_Object *ilist, *scrollframe;
+};
+
+static struct _tmp tmp = {NULL, NULL};
+
+static void
+_e_test_sel(void *data)
+{
+   Evas_Coord x, y, w, h;
+   
+   printf("SEL:\n");
+   e_ilist_selected_geometry_get(tmp.ilist, &x, &y, &w, &h);
+   e_scrollframe_child_region_show(tmp.scrollframe, x, y, w, h);
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Coord mw, mh, vw, vh;
+   Evas_Object *o, *o2, *o3;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+   
+   o = e_ilist_add(dia->win->evas);
+   
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/star_office.png");
+   e_ilist_append(o, o3, "Item 1", _e_test_sel, NULL);
+   
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/palette.png");
+   e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", _e_test_sel, NULL);
+   
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/mozilla.png");
+   e_ilist_append(o, o3, "Item 3 (Medium length)", _e_test_sel, NULL);
+   
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/trash_open.png");
+   e_ilist_append(o, o3, "Item POOP", _e_test_sel, NULL);
+
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/watch.png");
+   e_ilist_append(o, o3, "Item BLING BLING", _e_test_sel, NULL);
+
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/quake3.png");
+   e_ilist_append(o, o3, "Sukebelinth", _e_test_sel, NULL);
+
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
+   e_ilist_append(o, o3, "Panties", _e_test_sel, NULL);
+
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/drawer_open.png");
+   e_ilist_append(o, o3, "Flimbert the cagey", _e_test_sel, NULL);
+
+   o3 = e_icon_add(dia->win->evas);
+   e_icon_file_set(o3, "/home/raster/C/stuff/icons/cd.png");
+   e_ilist_append(o, o3, "Norbert", _e_test_sel, NULL);
+   
+   e_ilist_min_size_get(o, &mw, &mh);
+   evas_object_resize(o, mw, mh);
+   evas_object_focus_set(o, 1);
+   evas_object_show(o);
+      
+   o2 = e_scrollframe_add(dia->win->evas);
+   evas_object_resize(o2, mw, 150);
+   evas_object_show(o2);
+   e_scrollframe_child_set(o2, o);
+
+   e_scrollframe_child_viewport_size_get(o2, &vw, &vh);
+   e_dialog_content_set(dia, o2, mw + (mw - vw), 150);
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   
+   tmp.ilist = o;
+   tmp.scrollframe = o2;
+   
+   evas_object_focus_set(o, 1);
 }
 #else
 static void

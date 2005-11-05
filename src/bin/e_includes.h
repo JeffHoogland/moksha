@@ -89,3 +89,4 @@
 #include "e_file_dialog.h"
 #include "e_widget_fileman.h"
 #include "e_int_border_menu.h"
+#include "e_ilist.h"

@@ -61,6 +61,9 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;
+	    rel1 {
+	       offset: 3 3;
+	    }
 	    rel2 {
 	       relative: 0.0  0.0;
 	       offset:   -1   -1;

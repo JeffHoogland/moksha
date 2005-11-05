@@ -1,0 +1,102 @@
+images {
+   image: "focus.png" COMP;
+}
+group {
+   name: "widgets/ilist";
+   parts {
+      part {
+	 name:          "icon_swallow";
+	 type:          SWALLOW;
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    align:    0.0 0.5;
+	    aspect:   1.0 1.0;
+	    aspect_preference: VERTICAL;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   2    2;
+	    }
+	    rel2 {
+	       relative: 0.0  1.0;
+	       offset:   2   -3;
+	    }
+	 }
+      }
+      part {
+	 name:           "label";
+	 type:           TEXT;
+	 effect:         SHADOW;
+	 mouse_events:   0;
+	 description {
+	    state: "default" 0.0;
+	    min:      16 16;
+	    rel1 {
+	       to_x:     "icon_swallow";
+	       relative: 1.0  0.0;
+	       offset:   2 2;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2 -2;
+	    }
+	    color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text:     "Item Label";
+	       font:     "Edje-Vera";
+	       size:     10;
+	       min:      1 1;
+	       align:    0.0 0.5;
+	    }
+	 }
+      }
+      part {
+	 name: "overlay";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 32;
+	    image {
+	       normal: "focus.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state: "active" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 255;
+	 }
+      }
+      part {
+	 name:           "event";
+	 type:           RECT;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+   }
+   programs {
+      program {
+	 name:    "go_active";
+	 signal:  "active";
+	 source:  "";
+	 action:  STATE_SET "active" 0.0;
+	 target:  "overlay";
+      }
+      program {
+	 name:    "go_passive";
+	 signal:  "passive";
+	 source:  "";
+	 action:  STATE_SET "default" 0.0;
+	 target:  "overlay";
+      }
+   }
+}
