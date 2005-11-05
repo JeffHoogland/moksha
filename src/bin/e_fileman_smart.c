@@ -2262,6 +2262,11 @@ _e_fm_icon_select_up(E_Fm_Smart_Data *sd)
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
 	  }
+	else
+	  {
+	     _e_fm_selections_clear(sd);	     
+	     _e_fm_selections_add(sd->files->data, sd->files);
+	  }
 	if(l)
 	  {
 	     E_Fm_Icon *icon;		  
@@ -2326,6 +2331,11 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	     if(!l) return;
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
+	  }
+	else
+	  {
+	     _e_fm_selections_clear(sd);	     
+	     _e_fm_selections_add((evas_list_last(sd->files))->data, evas_list_last(sd->files));
 	  }
 	if(l)
 	  {
