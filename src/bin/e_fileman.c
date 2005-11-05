@@ -205,7 +205,7 @@ _e_fileman_selector_cb(Evas_Object *object, char *file, void *data)
 }
 
 static int
-  _e_fileman_reconfigure_cb(void *data, int type, void *event)
+_e_fileman_reconfigure_cb(void *data, int type, void *event)
 {
    E_Event_Fm_Reconfigure *ev;
    E_Fileman *fileman;
@@ -214,4 +214,5 @@ static int
    ev = event;
    
    e_scrollframe_child_region_show(fileman->main, ev->x, ev->y, ev->w, ev->h);
+   return 1;
 }

@@ -538,7 +538,7 @@ _e_fm_smart_add(Evas_Object *object)
 			   "fileman/rubberband");
 
    evas_object_focus_set(sd->object, 1);
-   evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN,_e_fm_key_down_cb, sd);
+   evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN, _e_fm_key_down_cb, sd);
    
    evas_object_stack_below(sd->bg, sd->layout);
    
@@ -2432,17 +2432,17 @@ _e_fm_icon_select_right(E_Fm_Smart_Data *sd)
 {
    Evas_List *next;
    
-   if(sd->selection.current.ptr)
+   if (sd->selection.current.ptr)
      {
-	if(sd->selection.current.ptr->next)
+	if (sd->selection.current.ptr->next)
 	  {
 	     next = sd->selection.current.ptr->next;
 	     if (evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
 	       {
 		  E_Fm_Icon *icon;
-		  
+
 		  icon = next->data;
-		  if(icon->state.selected)
+		  if (icon->state.selected)
 		    {		      
 		       _e_fm_selections_del(next->data);
 		       _e_fm_selections_current_set(next->data, next);
@@ -2460,10 +2460,10 @@ _e_fm_icon_select_right(E_Fm_Smart_Data *sd)
 		  Evas_Coord x, y, w, h;
 		  icon = next->data;
 		  evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
-		  if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+		  if (!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
 		    {
 		       E_Event_Fm_Reconfigure *ev;
-		       
+
 		       ev = E_NEW(E_Event_Fm_Reconfigure, 1);
 		       if (ev)
 			 {			    
@@ -2486,13 +2486,14 @@ static void
 _e_fm_icon_run(E_Fm_Smart_Data *sd)
 {
    E_Fm_Icon *icon;
-   if(sd->selection.current.ptr)
+
+   if (sd->selection.current.ptr)
      {
 	icon = sd->selection.current.file;
 	if (icon->file->type == E_FM_FILE_TYPE_DIRECTORY)
 	  {	     
 	     char *fullname;
-	     
+
 	     if (!strcmp(icon->file->name, ".."))
 	       {
 		  fullname = _e_fm_dir_pop(icon->sd->dir);
@@ -2511,12 +2512,12 @@ _e_fm_icon_run(E_Fm_Smart_Data *sd)
 	  }
 	else if (icon->file->type == E_FM_FILE_TYPE_FILE)
 	  {	     
-	     if(icon->sd->is_selector)
+	     if (icon->sd->is_selector)
 	       {
 		  _e_fm_selector_send_file(icon);
 		  return;
 	       }
-	     
+
 	     if ((!e_fm_file_assoc_exec(icon->file)) &&
 		 (e_fm_file_can_exec(icon->file)))
 	       e_fm_file_exec(icon->file);
@@ -2527,7 +2528,7 @@ _e_fm_icon_run(E_Fm_Smart_Data *sd)
 static void
 _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
-   Evas_Event_Key_Up *ev;
+   Evas_Event_Key_Down *ev;
    E_Fm_Smart_Data *sd;
    
    ev = event_info;
@@ -2543,8 +2544,6 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      _e_fm_icon_select_right(sd);
    else if (!strcmp(ev->keyname, "Return"))
      _e_fm_icon_run(sd);      
-
-   return 1;
 }
 
  static int
