@@ -92,7 +92,7 @@ e_fileman_new(E_Container *con)
    evas_event_thaw(fileman->evas);
    
    evas_object_focus_set(fileman->main, 0);
-   //evas_object_focus_set(fileman->smart, 1);
+   evas_object_focus_set(fileman->smart, 1);
    evas_object_propagate_events_set(fileman->smart, 0);
    
    fileman->event_handlers = evas_list_append(fileman->event_handlers,
