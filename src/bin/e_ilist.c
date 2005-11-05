@@ -97,10 +97,10 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
    si = E_NEW(E_Smart_Item, 1);
    si->sd = sd;
    si->base_obj = edje_object_add(evas_object_evas_get(sd->smart_obj));
-//   if (evas_list_count(sd->items) & 0x1)
-//     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
-//			     "widgets/ilist_odd");
-//   else
+   if (evas_list_count(sd->items) & 0x1)
+     e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
+			     "widgets/ilist_odd");
+   else
      e_theme_edje_object_set(si->base_obj, "base/theme/widgets",
 			     "widgets/ilist");
    edje_object_part_text_set(si->base_obj, "label", label);
@@ -128,6 +128,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
 	edje_object_signal_emit(si->base_obj, "active", "");
 	if (si->func) si->func(si->data);
      }
+   evas_object_lower(si->base_obj);
    evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, si);
    evas_object_show(si->base_obj);
 }
@@ -148,6 +149,7 @@ e_ilist_select_set(Evas_Object *obj, int n)
    si = evas_list_nth(sd->items, sd->selected);
    if (si)
      {
+	evas_object_raise(si->base_obj);
 	edje_object_signal_emit(si->base_obj, "active", "");
 	if (si->func) si->func(si->data);
      }

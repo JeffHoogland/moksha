@@ -406,4 +406,6 @@ e17_sb_btr2.png \
 e17_sb_btu1.png \
 e17_sb_btu2.png \
 e17_sb_runnerh.png \
-e17_sb_runnerv.png
+e17_sb_runnerv.png \
+e17_ilist_bg0.png \
+e17_ilist_bg1.png

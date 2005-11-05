@@ -392,7 +392,7 @@ _e_test_internal(E_Container *con)
    tcon = con;
    _e_test_timer(NULL);
 }
-#elif 0
+#elif 1
 
 struct _tmp
 {
