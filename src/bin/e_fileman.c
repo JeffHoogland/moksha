@@ -26,7 +26,8 @@ static void _e_fileman_scroll_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_fileman_scroll_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _e_fileman_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _e_fileman_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
-  
+static int  _e_fileman_reconfigure_cb(void *data, int type, void *event);
+
   
 E_Fileman *
 e_fileman_new(E_Container *con)
@@ -89,6 +90,12 @@ e_fileman_new(E_Container *con)
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
    
    evas_event_thaw(fileman->evas);
+   
+   fileman->event_handlers = evas_list_append(fileman->event_handlers,
+					      ecore_event_handler_add(E_EVENT_FM_RECONFIGURE,
+								      _e_fileman_reconfigure_cb,
+								      fileman));
+   
    
    D(("e_fileman_new: ok\n"));
    
@@ -191,4 +198,16 @@ _e_fileman_selector_cb(Evas_Object *object, char *file, void *data)
    fileman = data;
    fileman->selector.func(fileman, file, fileman->selector.data);
    //e_object_del(E_OBJECT(fileman));
+}
+
+static int
+  _e_fileman_reconfigure_cb(void *data, int type, void *event)
+{
+   E_Event_Fm_Reconfigure *ev;
+   E_Fileman *fileman;
+   
+   fileman = data;
+   ev = event;
+   
+   e_scrollframe_child_region_show(fileman->main, ev->x, ev->y, ev->w, ev->h);
 }

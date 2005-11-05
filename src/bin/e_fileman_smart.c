@@ -645,7 +645,6 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 
    sd->x = x;
    sd->y = y;   
-   
    evas_object_move(sd->bg, x, y);
    evas_object_move(sd->clip, x, y); 
    evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);   
@@ -685,7 +684,7 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
        ev->object = sd->object;
        ev->w = sd->child.w;
        ev->h = sd->child.h;
-       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+       //ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
 }
 
@@ -765,7 +764,7 @@ _e_fm_redraw(E_Fm_Smart_Data *sd)
        ev->object = sd->object;
        ev->w = sd->child.w;
        ev->h = sd->child.h;
-       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+       //ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
     }
 }
 
@@ -1413,7 +1412,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	ev->object = sd->object;
 	ev->w = sd->child.w;
 	ev->h = sd->child.h;
-	ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+	//ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
      }
 }
 
@@ -2263,6 +2262,28 @@ _e_fm_icon_select_up(E_Fm_Smart_Data *sd)
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
 	  }
+	if(l)
+	  {
+	     E_Fm_Icon *icon;		  
+	     Evas_Coord x, y, w, h;
+	     icon = l->data;
+	     evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+	     if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+	       {
+		  E_Event_Fm_Reconfigure *ev;
+		  
+		  ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+		  if (ev)
+		    {			    
+		       ev->object = sd->object;
+		       ev->x = sd->x;
+		       ev->y = sd->child.y - (sd->y - (y - sd->icon_info.y_space));
+		       ev->w = sd->w;
+		       ev->h = sd->h;
+		       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+		    }
+	       }
+	  }	
      }
    else
      _e_fm_selections_add(sd->files->data, sd->files);   
@@ -2306,6 +2327,28 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
 	  }
+	if(l)
+	  {
+	     E_Fm_Icon *icon;		  
+	     Evas_Coord x, y, w, h;
+	     icon = l->data;
+	     evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+	     if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+	       {
+		  E_Event_Fm_Reconfigure *ev;
+		  
+		  ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+		  if (ev)
+		    {			    
+		       ev->object = sd->object;
+		       ev->x = sd->x;
+		       ev->y = sd->child.y + y + h + sd->icon_info.y_space - (sd->y + sd->h);
+		       ev->w = sd->w;
+		       ev->h = sd->h;
+		       ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+		    }
+	       }
+	  }	
      }
    else
      _e_fm_selections_add(sd->files->data, sd->files);
@@ -2338,6 +2381,27 @@ _e_fm_icon_select_left(E_Fm_Smart_Data *sd)
 	       {
 		  _e_fm_selections_clear(sd);
 		  _e_fm_selections_add(prev->data, prev);
+	       }
+	       {
+		  E_Fm_Icon *icon;		  
+		  Evas_Coord x, y, w, h;
+		  icon = prev->data;
+		  evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+		  if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+		    {
+		       E_Event_Fm_Reconfigure *ev;
+		       
+		       ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+		       if (ev)
+			 {			    
+			    ev->object = sd->object;
+			    ev->x = sd->x;
+			    ev->y = sd->child.y - (sd->y - (y - sd->icon_info.y_space));
+			    ev->w = sd->w;
+			    ev->h = sd->h;
+			    ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+			 }
+		    }
 	       }
 	  }
      }
@@ -2372,6 +2436,27 @@ _e_fm_icon_select_right(E_Fm_Smart_Data *sd)
 	       {
 		  _e_fm_selections_clear(sd);
 		  _e_fm_selections_add(next->data, next);
+	       }	     
+	       {
+		  E_Fm_Icon *icon;		  
+		  Evas_Coord x, y, w, h;
+		  icon = next->data;
+		  evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+		  if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+		    {
+		       E_Event_Fm_Reconfigure *ev;
+		       
+		       ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+		       if (ev)
+			 {			    
+			    ev->object = sd->object;
+			    ev->x = sd->x;
+			    ev->y = sd->child.y + y + h + sd->icon_info.y_space - (sd->y + sd->h);
+			    ev->w = sd->w;
+			    ev->h = sd->h;
+			    ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+			 }
+		    }
 	       }
 	  }
      }

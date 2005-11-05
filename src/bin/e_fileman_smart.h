@@ -13,7 +13,7 @@ typedef struct _E_Event_Fm_Directory_Change E_Event_Fm_Directory_Change;
 struct _E_Event_Fm_Reconfigure  
 {
    Evas_Object *object;
-   Evas_Coord w, h;   
+   Evas_Coord x, y, w, h;   
 };
 
 struct _E_Event_Fm_Directory_Change
