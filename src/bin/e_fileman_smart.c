@@ -2130,9 +2130,15 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
    ev = event;
    sd = data;
 
+   /* FIXME: use evas callbacks here - not ecore_x events. ONLY use the 
+    * ecore_x events ONCE you GRAB the mouse TO some other window to track 
+    * its motion all over the desktop and then use an ecore_x mouse up
+    * event to get the mouse up on THAT GRABBEd WINDOW
+    */
+   return 1;
    /* this shouldnt be here if we clean up properly */
-   if(!ev->win || !ev->event_win || !sd)
-     return 0;
+   if (!ev->win || !ev->event_win || !sd)
+     return 1;
 
 /* TODO - rethink this code */
 
@@ -2203,6 +2209,8 @@ _e_fm_win_mouse_up_cb(void *data, int type, void *event)
    double t;
    const char *name;
 
+   /* FIXME: DONT use ecore_x events for this. use evas callbacks! */
+   return 1;
    ev = event;
    icon = data;
 
@@ -2524,7 +2532,11 @@ _e_fm_win_key_down_cb(void *data, int type, void *event)
    
    ev = event;
    sd = data;
-   
+
+   /* FIXME: do NOT use ecore_x key events. NOT! use evas key callbacks on
+    * a focused onject!!!!
+    */
+   return 1;
    // make this call generic
    if (!sd->win) return 1;
    if (ev->win != sd->win->evas_sub_win) return 1;
