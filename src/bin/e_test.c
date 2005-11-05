@@ -402,11 +402,10 @@ struct _tmp
 static struct _tmp tmp = {NULL, NULL};
 
 static void
-_e_test_sel(void *data)
+_e_test_sel(void *data, void *data2)
 {
    Evas_Coord x, y, w, h;
    
-   printf("SEL:\n");
    e_ilist_selected_geometry_get(tmp.ilist, &x, &y, &w, &h);
    e_scrollframe_child_region_show(tmp.scrollframe, x, y, w, h);
 }
@@ -425,39 +424,39 @@ _e_test_internal(E_Container *con)
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/star_office.png");
-   e_ilist_append(o, o3, "Item 1", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Item 1", _e_test_sel, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/palette.png");
-   e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", _e_test_sel, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/mozilla.png");
-   e_ilist_append(o, o3, "Item 3 (Medium length)", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Item 3 (Medium length)", _e_test_sel, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/trash_open.png");
-   e_ilist_append(o, o3, "Item POOP", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Item POOP", _e_test_sel, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/watch.png");
-   e_ilist_append(o, o3, "Item BLING BLING", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Item BLING BLING", _e_test_sel, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/quake3.png");
-   e_ilist_append(o, o3, "Sukebelinth", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Sukebelinth", _e_test_sel, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
-   e_ilist_append(o, o3, "Panties", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Panties", _e_test_sel, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/drawer_open.png");
-   e_ilist_append(o, o3, "Flimbert the cagey", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Flimbert the cagey", _e_test_sel, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
    e_icon_file_set(o3, "/home/raster/C/stuff/icons/cd.png");
-   e_ilist_append(o, o3, "Norbert", _e_test_sel, NULL);
+   e_ilist_append(o, o3, "Norbert", _e_test_sel, NULL, NULL);
    
    e_ilist_min_size_get(o, &mw, &mh);
    evas_object_resize(o, mw, mh);

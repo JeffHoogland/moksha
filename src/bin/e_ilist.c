@@ -25,8 +25,9 @@ struct _E_Smart_Item
    E_Smart_Data  *sd;
    Evas_Object   *base_obj;
    Evas_Object   *icon_obj;
-   void         (*func) (void *data);
+   void         (*func) (void *data, void *data2);
    void          *data;
+   void          *data2;
 };
 
 /* local subsystem functions */
@@ -88,7 +89,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 }
 
 void
-e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (void *data), void *data)
+e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (void *data, void *data2), void *data, void *data2)
 {
    E_Smart_Item *si;
    Evas_Coord mw = 0, mh = 0;
@@ -113,6 +114,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
      }
    si->func = func;
    si->data = data;
+   si->data2 = data2;
    sd->items = evas_list_append(sd->items, si);
    edje_object_size_min_calc(si->base_obj, &mw, &mh);
    e_box_pack_end(sd->box_obj, si->base_obj);
@@ -126,7 +128,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
    if (sd->selected == (evas_list_count(sd->items) - 1))
      {
 	edje_object_signal_emit(si->base_obj, "active", "");
-	if (si->func) si->func(si->data);
+	if (si->func) si->func(si->data, si->data2);
      }
    evas_object_lower(si->base_obj);
    evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, si);
@@ -151,7 +153,7 @@ e_ilist_select_set(Evas_Object *obj, int n)
      {
 	evas_object_raise(si->base_obj);
 	edje_object_signal_emit(si->base_obj, "active", "");
-	if (si->func) si->func(si->data);
+	if (si->func) si->func(si->data, si->data2);
      }
 }
 
@@ -172,6 +174,18 @@ e_ilist_select_data_get(Evas_Object *obj)
    if (!sd->items) return NULL;
    si = evas_list_nth(sd->items, sd->selected);
    if (si) return si->data;
+   return NULL;
+}
+
+void *
+e_ilist_select_data2_get(Evas_Object *obj)
+{
+   E_Smart_Item *si;
+   
+   API_ENTRY return NULL;
+   if (!sd->items) return NULL;
+   si = evas_list_nth(sd->items, sd->selected);
+   if (si) return si->data2;
    return NULL;
 }
 
