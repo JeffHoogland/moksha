@@ -116,23 +116,35 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob, *oi;
+   Evas_Object *o, *ob, *oi, *oj, *orect;
    Evas_Coord wmw, wmh;
    
    _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    
-   oi = e_widget_ilist_add(evas, 48, 48);
+   oi = e_widget_ilist_add(evas, 80, 48);
+
+   ob = e_livethumb_add(evas);
+   e_livethumb_vsize_set(ob, 160, 96);
+   oj = edje_object_add(e_livethumb_evas_get(ob));
+   e_theme_edje_object_set(oj, "base/theme/borders", "widgets/border/default/border");
+   e_livethumb_thumb_set(ob, oj);
+   orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
+   evas_object_color_set(orect, 255, 255, 255, 128);
+   evas_object_show(orect);
+   edje_object_part_swallow(oj, "client", orect);
+   e_widget_ilist_append(oi, ob, "default", NULL, NULL);
    
-   ob = e_icon_add(evas);
-   e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
-   e_widget_ilist_append(oi, ob, "Item 1", NULL, NULL);
+   orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
+   evas_object_color_set(orect, 255, 255, 255, 128);
+   e_widget_ilist_append(oi, orect, "borderless", NULL, NULL);
+   
    ob = e_icon_add(evas);
    e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
    e_widget_ilist_append(oi, ob, "Item 2", NULL, NULL);
    ob = e_icon_add(evas);
    e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
-   e_widget_ilist_append(oi, ob, "Item 3 (With some very logn text after it to make it stretch out)", NULL, NULL);
+   e_widget_ilist_append(oi, ob, "Item 3", NULL, NULL);
    ob = e_icon_add(evas);
    e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
    e_widget_ilist_append(oi, ob, "Item 4", NULL, NULL);
