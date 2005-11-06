@@ -146,13 +146,14 @@ group {
 	    align:    0.0 0.5;
 	    aspect:   1.0 1.0;
 	    aspect_preference: VERTICAL;
+//	    fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   4    4;
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
-	       offset:   2   -3;
+	       offset:   4   -5;
 	    }
 	 }
       }
@@ -167,11 +168,11 @@ group {
 	    rel1 {
 	       to_x:     "icon_swallow";
 	       relative: 1.0  0.0;
-	       offset:   2 2;
+	       offset:   4 4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -2 -2;
+	       offset:   -5 -5;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
@@ -611,13 +612,14 @@ group {
 	    align:    0.0 0.5;
 	    aspect:   1.0 1.0;
 	    aspect_preference: VERTICAL;
+//	    fixed:    1 1;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   2    2;
+	       offset:   4    4;
 	    }
 	    rel2 {
 	       relative: 0.0  1.0;
-	       offset:   2   -3;
+	       offset:   4   -5;
 	    }
 	 }
       }
@@ -632,11 +634,11 @@ group {
 	    rel1 {
 	       to_x:     "icon_swallow";
 	       relative: 1.0  0.0;
-	       offset:   2 2;
+	       offset:   4 4;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -2 -2;
+	       offset:   -5 -5;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
