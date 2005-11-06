@@ -437,7 +437,7 @@ _e_test_internal(E_Container *con)
    o = e_ilist_add(dia->win->evas);
    e_ilist_icon_size_set(o, 80, 48);
    
-   o3 = e_livethumb_add(dia->win->ecore_evas);
+   o3 = e_livethumb_add(dia->win->evas);
    e_livethumb_vsize_set(o3, 160, 96);
    o4 = edje_object_add(e_livethumb_evas_get(o3));
    e_theme_edje_object_set(o4, "base/theme/borders",

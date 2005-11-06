@@ -38,21 +38,10 @@ static Evas_Smart *_e_smart = NULL;
 
 /* externally accessible functions */
 Evas_Object *
-e_livethumb_add(Ecore_Evas *ee)
+e_livethumb_add(Evas *e)
 {
-   Evas_Object *obj;
-   E_Smart_Data *sd;
-   
-   
    _e_smart_init();
-   obj = evas_object_smart_add(ecore_evas_get(ee), _e_smart);
-   sd = evas_object_smart_data_get(obj);
-   sd->evas_obj = ecore_evas_object_image_new(ee);
-   evas_object_smart_member_add(sd->evas_obj, obj);
-   evas_object_image_size_set(sd->evas_obj, sd->vw, sd->vh);
-   sd->evas = ecore_evas_get(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
-   e_canvas_add(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
-   return obj;
+   return evas_object_smart_add(e, _e_smart);
 }
 
 Evas *
@@ -130,6 +119,12 @@ _e_smart_add(Evas_Object *obj)
    sd->h = 0;
    sd->vw = 1;
    sd->vh = 1;
+
+   sd->evas_obj = ecore_evas_object_image_new(ecore_evas_ecore_evas_get(evas_object_evas_get(obj)));
+   evas_object_smart_member_add(sd->evas_obj, obj);
+   evas_object_image_size_set(sd->evas_obj, sd->vw, sd->vh);
+   sd->evas = ecore_evas_get(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
+   e_canvas_add(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
 }
 
 static void

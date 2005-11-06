@@ -47,9 +47,6 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h)
    
    evas_object_resize(obj, 32, 32);
    e_widget_min_size_set(obj, 32, 32);
-//   edje_object_size_min_calc(wd->o_frame, &mw, &mh);
-//   e_widget_min_size_set(obj, mw, mh);
-   
    return obj;
 }
 
@@ -60,6 +57,7 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
    Evas_Coord mw, mh, vw, vh, w, h;
    
    wd = e_widget_data_get(obj);
+   /* FIXME: need to actually store the callback and call it */
    e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, wd, data);
    if (icon) evas_object_show(icon);
    e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
