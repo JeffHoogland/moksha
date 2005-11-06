@@ -2595,7 +2595,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    E_Fm_Smart_Data *sd;
    
    ev = event_info;
-   sd = data;
+   sd = data;   
    
    if (!strcmp(ev->keyname, "Up"))
      _e_fm_icon_select_up(sd);
@@ -2607,6 +2607,19 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      _e_fm_icon_select_right(sd);
    else if (!strcmp(ev->keyname, "Return"))
      _e_fm_icon_run(sd);
+   else if (!strcmp(ev->keyname, "BackSpace"))
+     {
+	char *fullname;
+	
+	fullname = _e_fm_dir_pop(sd->dir);
+	if (fullname)
+	  {
+	     if (sd->win)
+	       e_win_title_set(sd->win, fullname);
+	     _e_fm_dir_set(sd, fullname);
+	     free(fullname);
+	  }	
+     }
    else if(strlen(ev->keyname) == 1)
      _e_fm_icon_goto_key(sd, ev->string);
 }
