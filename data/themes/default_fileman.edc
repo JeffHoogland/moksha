@@ -995,10 +995,11 @@ group {
 	       color3: 255 255 255 128;
 	       text {
 		  text:     "No Title";
-		  align:    0.0 0.0;
 		  size:     10;
 		  font:     "Edje-Vera";
 		  min:      0 1;
+		  align:    0.5 1.0;
+		  elipsis:  0.0;
 	       }
 	    }
 	 }	 
@@ -1191,7 +1192,8 @@ group {
 	       font:     "Edje-Vera";
 	       size:     10;
 	       //min:      1 1;
-	       align:    0.0 1.0;
+	       align:    0.5 1.0;
+	       elipsis:  0.0;
 	    }
 	 }	 
       }

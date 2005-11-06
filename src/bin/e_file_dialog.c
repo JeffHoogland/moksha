@@ -69,8 +69,8 @@ e_file_dialog_new(E_Container *con)
 void
 e_file_dialog_show(E_File_Dialog *dia)
 {
+   e_dialog_resizable_set(dia->dia, 1);
    e_dialog_show(dia->dia);
-   e_win_size_max_set(dia->dia->win, 9999, 9999);
 }
 
 void

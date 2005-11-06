@@ -77,7 +77,7 @@ static Evas_List   *_e_apps_start_pending = NULL;
 "   image: \"%s\" COMP;\n" \
 "}\n" \
 "collections {\n" \
-"   group {\n" \ 
+"   group {\n" \
 "      name: \"icon\";\n" \
 "      max: %s %s;\n" \
 "      parts {\n" \
@@ -1430,7 +1430,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
    if (!app->scanned)
      return;
 
-   file = ecore_file_get_file((char *)path);
+   file = (char *)ecore_file_get_file((char *)path);
    if (!strcmp(file, ".order"))
      {
 	if ((event == ECORE_FILE_EVENT_CREATED_FILE)

@@ -151,6 +151,24 @@ e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coor
 }
 
 void
+e_dialog_resizable_set(E_Dialog *dia, int resizable)
+{
+   dia->resizable = resizable;
+   if (dia->win)
+     {
+	if (resizable)
+	  {
+	     e_win_size_max_set(dia->win, 99999, 99999);
+	  }
+	else
+	  {
+	     e_win_resize(dia->win, dia->min_w, dia->min_h);
+	     e_win_size_max_set(dia->win, dia->min_w, dia->min_h);
+	  }
+     }
+}
+
+void
 e_dialog_show(E_Dialog *dia)
 {
    Evas_Coord mw, mh;
@@ -173,7 +191,10 @@ e_dialog_show(E_Dialog *dia)
    evas_object_resize(dia->bg_object, mw, mh);
    e_win_resize(dia->win, mw, mh);
    e_win_size_min_set(dia->win, mw, mh);
-   e_win_size_max_set(dia->win, mw, mh);
+   dia->min_w = mw;
+   dia->min_h = mh;
+   if (!dia->resizable) e_win_size_max_set(dia->win, mw, mh);
+   else e_win_size_max_set(dia->win, 99999, 99999);
    e_win_show(dia->win);
    
    if (!e_widget_focus_get(dia->box_object))

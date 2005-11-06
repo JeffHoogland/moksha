@@ -25,6 +25,8 @@ struct _E_Dialog
    Evas_Object         *event_object;
    Evas_List           *buttons;
    void                *data;
+   int                  min_w, min_h;
+   unsigned char        resizable : 1;
 };
 
 EAPI E_Dialog *e_dialog_new                    (E_Container *con);
@@ -35,6 +37,7 @@ EAPI void      e_dialog_title_set              (E_Dialog *dia, char *title);
 EAPI void      e_dialog_text_set               (E_Dialog *dia, char *text);
 EAPI void      e_dialog_icon_set               (E_Dialog *dia, char *icon, Evas_Coord size);
 EAPI void      e_dialog_content_set            (E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh);
+EAPI void      e_dialog_resizable_set          (E_Dialog *dia, int resizable);
 EAPI void      e_dialog_show                   (E_Dialog *dia);
     
 #endif

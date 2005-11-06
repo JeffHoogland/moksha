@@ -80,7 +80,7 @@ e_icon_file_get(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      {
-	edje_object_file_get(sd->obj, &file, NULL);
+	edje_object_file_get(sd->obj, (const char **)&file, NULL);
 	return file;
      }
    evas_object_image_file_get(sd->obj, &file, NULL);

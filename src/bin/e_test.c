@@ -411,6 +411,20 @@ _e_test_sel(void *data, void *data2)
 }
 
 static void
+_e_test_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord mw, mh, vw, vh, w, h;
+   
+   e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
+   e_ilist_min_size_get(data, &mw, &mh);
+   evas_object_geometry_get(data, NULL, NULL, &w, &h);
+   if (vw >= mw)
+     {
+	if (w != vw) evas_object_resize(data, vw, h);
+     }
+}
+
+static void
 _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
@@ -464,14 +478,16 @@ _e_test_internal(E_Container *con)
    evas_object_show(o);
       
    o2 = e_scrollframe_add(dia->win->evas);
+   evas_object_event_callback_add(o2, EVAS_CALLBACK_RESIZE, _e_test_resize, o);
    evas_object_resize(o2, mw, 150);
    evas_object_show(o2);
    e_scrollframe_child_set(o2, o);
 
    e_scrollframe_child_viewport_size_get(o2, &vw, &vh);
-   e_dialog_content_set(dia, o2, mw + (mw - vw), 150);
+   e_dialog_content_set(dia, o2, 200, 150);
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);
+   e_dialog_resizable_set(dia, 1);
    e_dialog_show(dia);
    
    tmp.ilist = o;
