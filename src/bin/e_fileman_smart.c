@@ -237,11 +237,12 @@ static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
 
+static void                _e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c);
 static void                _e_fm_icon_select_up(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_down(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_left(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_right(E_Fm_Smart_Data *sd);
-static void                _e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c);
+static void                _e_fm_icon_run(E_Fm_Smart_Data *sd);    
     
 
 static int                 _e_fm_drop_enter_cb     (void *data, int type, void *event);
@@ -2334,11 +2335,12 @@ _e_fm_icon_select_up(E_Fm_Smart_Data *sd)
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
 	  }
-	else
+	else if(!l)
 	  {
-	     _e_fm_selections_clear(sd);	     
-	     _e_fm_selections_add(sd->files->data, sd->files);
-	  }
+	     if(!evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       _e_fm_selections_clear(sd);
+	       _e_fm_selections_add(sd->files->data, sd->files);	   
+	  }		
 	if(l)
 	  {
 	     E_Fm_Icon *icon;		  
@@ -2370,7 +2372,7 @@ static void
 _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 {
    Evas_List *l;
-   
+      
    if(sd->selection.current.ptr)
      {
 	E_Fm_Icon *icon;
@@ -2404,9 +2406,10 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	     _e_fm_selections_clear(sd);
 	     _e_fm_selections_add(l->data, l);
 	  }
-	else
+	else if(!l)
 	  {
-	     _e_fm_selections_clear(sd);	     
+	     if(!evas_key_modifier_is_set(evas_key_modifier_get(sd->evas), "Control"))
+	       _e_fm_selections_clear(sd);
 	     _e_fm_selections_add((evas_list_last(sd->files))->data, evas_list_last(sd->files));
 	  }
 	if(l)
@@ -2414,6 +2417,7 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon *icon;		  
 	     Evas_Coord x, y, w, h;
 	     icon = l->data;
+	     printf("going to %s\n", icon->file->name);
 	     evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
 	     if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
 	       {
