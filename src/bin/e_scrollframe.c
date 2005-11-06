@@ -205,10 +205,18 @@ e_scrollframe_child_region_show(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Ev
    
    nx = px;
    if (x < px) nx = x;
-   else if ((x + w) > (px + (cw - mx))) nx = x + w - (cw - mx);
+   else if ((x + w) > (px + (cw - mx)))
+     {
+	nx = x + w - (cw - mx);
+	if (nx > x) nx = x;
+     }
    ny = py;
    if (y < py) ny = y;
-   else if ((y + h) > (py + (ch - my))) ny = y + h - (ch - my);
+   else if ((y + h) > (py + (ch - my))) 
+     {
+	ny = y + h - (ch - my);
+	if (ny > y) ny = y;
+     }
    if ((nx == px) && (ny == py)) return;
    e_scrollframe_child_pos_set(obj, nx, ny);
 }

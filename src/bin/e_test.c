@@ -429,15 +429,20 @@ _e_test_internal(E_Container *con)
 {
    E_Dialog *dia;
    Evas_Coord mw, mh, vw, vh;
-   Evas_Object *o, *o2, *o3;
+   Evas_Object *o, *o2, *o3, *o4;
    
    dia = e_dialog_new(con);
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_ilist_add(dia->win->evas);
+   e_ilist_icon_size_set(o, 80, 48);
    
-   o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/star_office.png");
+   o3 = e_livethumb_add(dia->win->ecore_evas);
+   e_livethumb_vsize_set(o3, 160, 96);
+   o4 = edje_object_add(e_livethumb_evas_get(o3));
+   e_theme_edje_object_set(o4, "base/theme/borders",
+			   "widgets/border/default/border");
+   e_livethumb_thumb_set(o3, o4);
    e_ilist_append(o, o3, "Item 1", _e_test_sel, NULL, NULL);
    
    o3 = e_icon_add(dia->win->evas);

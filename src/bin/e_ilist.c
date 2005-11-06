@@ -295,6 +295,16 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
+   while (sd->items)
+     {
+	E_Smart_Item *si;
+
+	si = sd->items->data;
+	sd->items = evas_list_remove_list(sd->items, sd->items);
+	if (si->icon_obj) evas_object_del(si->icon_obj);
+	evas_object_del(si->base_obj);
+	free(si);
+     }
    evas_object_del(sd->box_obj);
    free(sd);
 }

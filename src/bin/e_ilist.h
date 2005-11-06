@@ -7,6 +7,7 @@
 #define E_ILIST_H
 
 EAPI Evas_Object *e_ilist_add                   (Evas *evas);
+EAPI void         e_ilist_icon_size_set         (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 EAPI void         e_ilist_append                (Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data, void *data2), void *data, void *data2);
 EAPI void         e_ilist_select_set            (Evas_Object *obj, int n);
 EAPI int          e_ilist_select_get            (Evas_Object *obj);

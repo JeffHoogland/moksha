@@ -62,7 +62,7 @@ group {
 	    state: "default" 0.0;
 	    color: 0 0 0 0;
 	    rel1 {
-	       offset: 3 3;
+	       offset: 4 4;
 	    }
 	    rel2 {
 	       relative: 0.0  0.0;
