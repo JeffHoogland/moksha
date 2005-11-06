@@ -283,6 +283,13 @@ e_scrollframe_policy_get(Evas_Object *obj, E_Scrollframe_Policy *hbar, E_Scrollf
    if (vbar) *vbar = sd->vbar_flags;
 }
 
+Evas_Object *
+e_scrollframe_edje_object_get(Evas_Object *obj)
+{
+   API_ENTRY return NULL;
+   return sd->edje_obj;
+}
+
 /* local subsystem functions */
 static void
 _e_smart_edje_drag_v(void *data, Evas_Object *obj, const char *emission, const char *source)

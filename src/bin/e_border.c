@@ -2647,6 +2647,11 @@ _e_border_free(E_Border *bd)
 	e_object_del(E_OBJECT(bd->border_remember_dialog));
 	bd->border_remember_dialog = NULL;
      }
+   if (bd->border_border_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_border_dialog));
+	bd->border_border_dialog = NULL;
+     }
    
    e_int_border_menu_del(bd);
 
@@ -2753,6 +2758,11 @@ _e_border_del(E_Border *bd)
      {
 	e_object_del(E_OBJECT(bd->border_remember_dialog));
 	bd->border_remember_dialog = NULL;
+     }
+   if (bd->border_border_dialog)
+     {
+	e_object_del(E_OBJECT(bd->border_border_dialog));
+	bd->border_border_dialog = NULL;
      }
 
    e_int_border_menu_del(bd);

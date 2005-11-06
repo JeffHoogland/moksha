@@ -6,6 +6,7 @@
 static void _e_border_cb_border_menu_end(void *data, E_Menu *m);
 static void _e_border_menu_cb_locks(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi);
+static void _e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_close(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_iconify(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_kill(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -87,6 +88,13 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 			     (char *)e_theme_edje_file_get("base/theme/borders",
 							   "widgets/border/default/remember"),
 			     "widgets/border/default/remember");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Borders"));
+   e_menu_item_callback_set(mi, _e_border_menu_cb_border, bd);
+   e_menu_item_icon_edje_set(mi,
+			     (char *)e_theme_edje_file_get("base/theme/borders",
+							   "widgets/border/default/borders"),
+			     "widgets/border/default/borders");
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
@@ -334,6 +342,15 @@ _e_border_menu_cb_remember(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    if (bd->border_remember_dialog) return;
    e_int_border_remember(bd);
+}
+   
+static void
+_e_border_menu_cb_border(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Border *bd;
+   bd = data;
+   if (bd->border_border_dialog) return;
+   e_int_border_border(bd);
 }
    
 static void

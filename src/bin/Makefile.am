@@ -110,7 +110,9 @@ e_file_selector.h \
 e_file_dialog.h \
 e_int_border_menu.h \
 e_ilist.h \
-e_livethumb.h
+e_livethumb.h \
+e_int_border_border.h \
+e_widget_ilist.h
 
 enlightenment_src = \
 e_user.c \
@@ -202,6 +204,8 @@ e_file_dialog.c \
 e_int_border_menu.c \
 e_ilist.c \
 e_livethumb.c \
+e_int_border_border.c \
+e_widget_ilist.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

@@ -179,6 +179,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      {
 	cfdata->border->lock_border = 1;
      }
+   /* FIXME: need to check if the remember stuff will actually work or not
+    * (see e_int_border_remember.c where it checks and warns) */
    if (cfdata->remember_locks)
      {
 	if (!cfdata->border->remember)
@@ -241,6 +243,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    cfdata->border->lock_focus_in = cfdata->lock.focus_in;
    cfdata->border->lock_focus_out = cfdata->lock.focus_out;
    cfdata->border->lock_life = cfdata->lock.life;
+   /* FIXME: need to check if the remember stuff will actually work or not 
+    * (see e_int_border_remember.c where it checks and warns) */
    if (cfdata->lock.remember)
      {
 	if (!cfdata->border->remember)

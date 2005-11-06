@@ -18,6 +18,7 @@ images {
    image: "e17_sb_runnerv.png" COMP;
    image: "e17_scrollbar_hdrag_thumb.png" COMP;
    image: "e17_scrollbar_vdrag_thumb.png" COMP;
+   image: "focus.png" COMP;
 }
 
 group {
@@ -565,6 +566,29 @@ group {
 	    }
 	 }
       }
+      part {
+	 name: "focus";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 255 255 255 0;
+	    image {
+	       normal: "focus.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state: "focused" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 255;
+	 }
+      }
    }
    programs {	 
       program {
@@ -735,6 +759,22 @@ group {
 	 source: "hbar_bar";
          action:  STATE_SET "default" 0.0;
 	 target: "hbar_bar";
+      }
+      program {
+	 name: "focus_in";
+	 signal: "focus_in";
+	 source: "";
+         action: STATE_SET "focused" 0.0;
+	 transition: DECELERATE 0.2;
+	 target: "focus";
+      }
+      program {
+	 name: "focus_out";
+	 signal: "focus_out";
+	 source: "";
+         action: STATE_SET "default" 0.0;
+	 transition: ACCELERATE 0.5;
+	 target: "focus";
       }
    }
 }
