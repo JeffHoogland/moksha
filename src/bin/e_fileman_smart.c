@@ -234,7 +234,7 @@ static void                _e_fm_icon_mouse_down_cb (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_up_cb   (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_in_cb   (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_Object *obj, void *event_info);
-static int                 _e_fm_win_mouse_move_cb  (void *data, int type, void *event);
+static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
 
 static int                 _e_fm_drop_enter_cb     (void *data, int type, void *event);
@@ -570,12 +570,7 @@ _e_fm_smart_add(Evas_Object *object)
    sd->event_handlers = evas_list_append(sd->event_handlers,
 					 ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
 								 _e_fm_drop_selection_cb,
-								 sd));
-   sd->event_handlers = evas_list_append(sd->event_handlers,
-					 ecore_event_handler_add(ECORE_X_EVENT_MOUSE_MOVE,
-								 _e_fm_win_mouse_move_cb,
-								 sd));
-   
+								 sd));   
    sd->monitor = NULL;
    sd->position = 0.0;
 
@@ -1381,7 +1376,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	     evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_DOWN, _e_fm_icon_mouse_down_cb, icon);
 	     evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
 	     evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
-	     evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);	     
+	     evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
 	  }
      }   
    
@@ -1435,6 +1430,7 @@ _e_fm_dir_files_get(void *data)
 	    evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_UP, _e_fm_icon_mouse_up_cb, icon);
 	    evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_IN, _e_fm_icon_mouse_in_cb, icon);
 	    evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_OUT, _e_fm_icon_mouse_out_cb, icon);
+	    evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_MOVE, _e_fm_icon_mouse_move_cb, sd);
 	    evas_object_show(icon->icon_object);	    
 	    e_icon_layout_pack(sd->layout, icon->icon_object);	    	    
 	 }
@@ -1854,19 +1850,19 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Fm_Smart_Data *sd;
    Evas_Event_Mouse_Move *ev;
-
+     
    ev = event_info;
    sd = data;
-
+   
    if (!sd->selection.band.obj)
      return;
-
+     	
    if (sd->selection.band.enabled)
      {
 	Evas_Coord x, y, w, h;
-
+	
 	evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
-
+	
 	if ((ev->cur.canvas.x > sd->selection.band.x) &&
 	    (ev->cur.canvas.y < sd->selection.band.y))
 	  {
@@ -1884,7 +1880,7 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     /* growing towards bottom right */
 	     w = ev->cur.canvas.x - sd->selection.band.x;
 	     h = ev->cur.canvas.y - sd->selection.band.y;
-
+	     
 	     evas_object_resize(sd->selection.band.obj, w, h);
 	  }
 	else if ((ev->cur.canvas.x < sd->selection.band.x) &&
@@ -1909,7 +1905,7 @@ _e_fm_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				sd->selection.band.x - ev->cur.canvas.x,
 				ev->cur.canvas.y - sd->selection.band.y);
 	  }
-
+	
 	evas_object_geometry_get(sd->selection.band.obj, &x, &y, &w, &h);
 	_e_fm_selections_rect_add(sd, x, y, w, h);
      }
@@ -2132,27 +2128,15 @@ _e_fm_icon_mouse_out_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    e_fm_icon_signal_emit(icon->icon_object, "default", "");
 }
 
-static int
-_e_fm_win_mouse_move_cb(void *data, int type, void *event)
+static void
+_e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Fm_Smart_Data *sd;
    E_Fm_Icon *icon;
-   Ecore_X_Event_Mouse_Move *ev;
+   Evas_Event_Mouse_Move *ev;   
 
-   ev = event;
+   ev = event_info;   
    sd = data;
-
-   /* FIXME: use evas callbacks here - not ecore_x events. ONLY use the 
-    * ecore_x events ONCE you GRAB the mouse TO some other window to track 
-    * its motion all over the desktop and then use an ecore_x mouse up
-    * event to get the mouse up on THAT GRABBEd WINDOW
-    */
-   return 1;
-   /* this shouldnt be here if we clean up properly */
-   if (!ev->win || !ev->event_win || !sd)
-     return 1;
-
-/* TODO - rethink this code */
 
    icon = sd->drag.icon_object;
 
@@ -2162,15 +2146,15 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
      {
 	if ((sd->drag.x == -1) && (sd->drag.y == -1))
 	  {
-	     sd->drag.x = ev->root.x;
-	     sd->drag.y = ev->root.y;
+	     sd->drag.x = ev->cur.output.x;
+	     sd->drag.y = ev->cur.output.y;
 	  }
 	else
 	  {
 	     int dx, dy;
 
-	     dx = sd->drag.x - ev->root.x;
-	     dy = sd->drag.y - ev->root.y;
+	     dx = sd->drag.x - ev->cur.output.x;
+	     dy = sd->drag.y - ev->cur.output.y;
 
 	     if (((dx * dx) + (dy * dy)) > (100))
 	       {
@@ -2204,13 +2188,11 @@ _e_fm_win_mouse_move_cb(void *data, int type, void *event)
 
 		  e_drag_resize(drag, w, h);
 		  e_drag_xdnd_start(drag, sd->drag.x, sd->drag.y);
-		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->time, NULL);
+		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 		  sd->drag.start = 0;
 	       }
 	  }
-     }
-
-   return 1;
+     }   
 }
 
 static int
