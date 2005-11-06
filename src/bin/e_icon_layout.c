@@ -13,6 +13,7 @@ struct _E_Smart_Data
    Evas_Coord       vw, vh;
    Evas_Coord       xs, ys;
    Evas_Coord       xc, yc;
+   Evas_Coord       mw, mh;
    Evas_Object     *clip;
    Evas_Object     *obj;
    int              frozen;
@@ -143,8 +144,40 @@ e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
    _e_icon_layout_smart_adopt(sd, child);
    sd->items = evas_list_append(sd->items, child);
    li = evas_object_data_get(child, "e_icon_layout_data");
-   li->x = sd->xc;
-   li->y = sd->yc;
+
+   if (sd->fixed == 0)
+    {	   
+       if(li->h > sd->mh) sd->mh = li->h;
+       if(sd->xc > sd->x + sd->vw || sd->xc + li->w > sd->x + sd->vw)
+	 {
+	    sd->xc = sd->x + sd->xs;
+	    sd->yc += sd->mh + sd->ys;
+	    sd->mh = 0;
+	 }
+       
+       li->x = sd->xc;
+       li->y = sd->yc;
+       	   
+       sd->xc += li->w + sd->xs;              
+       sd->vh = sd->yc - sd->y;	 
+    }       
+   else
+     {
+	if(li->w > sd->mw) sd->mw = li->w;	   
+	
+	if(sd->yc > sd->y + sd->vh || sd->yc + li->h > sd->y + sd->vh)
+	  {
+	     sd->yc = sd->y + sd->ys;
+	     sd->xc += sd->mw + sd->xs;
+	     sd->mw = 0;
+	  }
+	
+	li->x = sd->xc;
+	li->y = sd->yc;
+		
+	sd->yc += li->h + sd->ys;
+	sd->vw = sd->xc - sd->x;	
+     }
    _e_icon_layout_smart_move_resize_item(li);
 }
 
@@ -171,8 +204,8 @@ e_icon_layout_unpack(Evas_Object *obj)
    
    li = evas_object_data_get(obj, "e_icon_layout_data");
    if (!li) return;
-   sd = li->sd;
-   sd->items = evas_list_remove(sd->items, obj);
+   sd = li->sd;         
+   sd->items = evas_list_remove(sd->items, obj);         
    _e_icon_layout_smart_disown(obj);
 }
 
@@ -221,6 +254,8 @@ e_icon_layout_reset(Evas_Object *obj)
    
    sd->xc = sd->x + sd->xs;
    sd->yc = sd->y + sd->ys;
+   sd->mw = 0;
+   sd->mh = 0;
    
    while (sd->items)
     {
@@ -258,16 +293,16 @@ static E_Icon_Layout_Item *
 _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
    E_Icon_Layout_Item *li;
+   Evas_Coord w, h;
    
    li = calloc(1, sizeof(E_Icon_Layout_Item));
    if (!li) return NULL;
    li->sd = sd;
    li->obj = obj;
+   evas_object_geometry_get(obj, NULL, NULL, &li->w, &li->h);
    /* defaults */
    li->x = 0;
    li->y = 0;
-   li->w = 0;
-   li->h = 0;
    evas_object_clip_set(obj, sd->clip);
    evas_object_smart_member_add(obj, li->sd->obj);
    evas_object_show(obj);
@@ -312,7 +347,7 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
    Evas_Coord x, y, w, h, maxw, maxh;
    Evas_List *l;
    
-   //if (!sd->changed) return;
+   if (!sd->changed) return;
    
    x = sd->x + sd->xs;
    y = sd->y + sd->ys;
@@ -390,11 +425,13 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_icon_layout_smart_move_resize_item(E_Icon_Layout_Item *li)
 {				       
-   if(li->w == 0 || li->h == 0)    
-     evas_object_geometry_get(li->obj, NULL, NULL, &li->w, &li->h);
+   if(li->w == 0 || li->h == 0)
+     {
+	evas_object_geometry_get(li->obj, NULL, NULL, &li->w, &li->h);
+	evas_object_resize(li->obj, li->w, li->h);
+     }
    
-   evas_object_move(li->obj, li->x, li->y);
-   //evas_object_resize(li->obj, li->w, li->h);
+   evas_object_move(li->obj, li->x, li->y);   
 }
 				       
 static void
@@ -455,6 +492,8 @@ _e_icon_layout_smart_add(Evas_Object *obj)
    sd->ys = 0;
    sd->xc = 0;
    sd->yc = 0;
+   sd->mw = 0;
+   sd->mh = 0;
    sd->fixed = 0;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_move(sd->clip, 0, 0);
