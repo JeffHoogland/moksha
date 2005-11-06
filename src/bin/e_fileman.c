@@ -85,7 +85,7 @@ e_fileman_new(E_Container *con)
 				_e_fileman_scroll_child_size_get);
 
    e_win_resize_callback_set(fileman->win, _e_fileman_resize_cb);
-   e_win_resize(fileman->win, 640, 480);
+   e_win_resize(fileman->win, 570, 355);
    
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
    
