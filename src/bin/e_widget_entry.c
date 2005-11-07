@@ -88,7 +88,7 @@ _e_wid_text_change(void *data, Evas_Object *entry, char *key)
    
    wd = data;         
    E_FREE(*(wd->valptr));
-   *(wd->valptr) = strdup(e_entry_text_get(entry));
+   *(wd->valptr) = strdup(e_entry_text_get(wd->o_entry));
    e_widget_change(wd->obj);   
 }
 
