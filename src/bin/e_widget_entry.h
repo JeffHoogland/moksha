@@ -18,6 +18,7 @@ EAPI void             e_widget_entry_cursor_move_left(Evas_Object *entry);
 EAPI void             e_widget_entry_cursor_move_right(Evas_Object *entry);
 EAPI void             e_widget_entry_cursor_show(Evas_Object *entry);
 EAPI void             e_widget_entry_cursor_hide(Evas_Object *entry);
+EAPI void             e_widget_entry_on_change_callback_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data);
 
 #endif
 #endif

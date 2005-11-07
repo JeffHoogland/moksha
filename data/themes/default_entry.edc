@@ -79,7 +79,7 @@ group {
    programs {
       program {
          name: "entry_focus";
-         signal: "focus";
+         signal: "focus_in";
          source: "";
          action: STATE_SET "focus" 0.0;
          transition: LINEAR 0.2;
@@ -87,7 +87,7 @@ group {
       }
       program {
          name: "button_unfocus";
-         signal: "unfocus";
+         signal: "focus_out";
          source: "";
          action: STATE_SET "default" 0.0;
          transition: LINEAR 0.2;

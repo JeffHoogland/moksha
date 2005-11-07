@@ -45,6 +45,8 @@ EAPI void         e_entry_cursor_move_right(Evas_Object *object);
 EAPI void         e_entry_cursor_show(Evas_Object *object);
 EAPI void         e_entry_cursor_hide(Evas_Object *object);   
 EAPI void         e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data);
-
+EAPI void         e_entry_focus(Evas_Object *object);
+EAPI void         e_entry_focus(Evas_Object *object);
+    
 #endif
 #endif

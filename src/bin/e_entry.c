@@ -86,13 +86,13 @@ e_editable_text_add(Evas *evas)
 const char*
 e_editable_text_text_get(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return "";
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
    return evas_textblock_cursor_node_text_get(cursor);
 }
 
@@ -104,13 +104,13 @@ e_editable_text_text_get(Evas_Object *object)
 void
 e_editable_text_text_set(Evas_Object *object, const char *text)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || (!text) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || (!text) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_textblock_text_markup_set(editable_text_sd->text_object, text);
-   editable_text_sd->cursor_at_the_end = 1;
+   evas_object_textblock_text_markup_set(sd->text_object, text);
+   sd->cursor_at_the_end = 1;
    _e_editable_text_size_update(object);
    _e_editable_text_cursor_position_update(object);
 }
@@ -123,18 +123,18 @@ e_editable_text_text_set(Evas_Object *object, const char *text)
 void
 e_editable_text_insert(Evas_Object *object, const char *text)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    if ((!text) || ((strlen(text) <= 1) && (*text < 0x20)))
      return;
 
    printf("Insert: \"%s\", %c\n", text, *text);
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
-   if (editable_text_sd->cursor_at_the_end)
+   if (sd->cursor_at_the_end)
      evas_textblock_cursor_text_append(cursor, text);
    else
      evas_textblock_cursor_text_prepend(cursor, text);
@@ -149,17 +149,17 @@ e_editable_text_insert(Evas_Object *object, const char *text)
 void
 e_editable_text_delete_char_before(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
    if ((!object) ||
-       (!(editable_text_sd = evas_object_smart_data_get(object))) ||
+       (!(sd = evas_object_smart_data_get(object))) ||
        (_e_editable_text_is_empty(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
-   if ((editable_text_sd->cursor_at_the_end) || (evas_textblock_cursor_char_prev(cursor)))
+   if ((sd->cursor_at_the_end) || (evas_textblock_cursor_char_prev(cursor)))
      evas_textblock_cursor_char_delete(cursor);
 
    _e_editable_text_size_update(object);
@@ -173,20 +173,20 @@ e_editable_text_delete_char_before(Evas_Object *object)
 void
 e_editable_text_delete_char_after(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
    if ((!object) ||
-       (!(editable_text_sd = evas_object_smart_data_get(object))) ||
+       (!(sd = evas_object_smart_data_get(object))) ||
        (_e_editable_text_is_empty(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
-   if (!editable_text_sd->cursor_at_the_end)
+   if (!sd->cursor_at_the_end)
      {
 	if (!evas_textblock_cursor_char_next(cursor))
-	  editable_text_sd->cursor_at_the_end = 1;
+	  sd->cursor_at_the_end = 1;
 	else
 	  evas_textblock_cursor_char_prev(cursor);
 	evas_textblock_cursor_char_delete(cursor);
@@ -203,16 +203,16 @@ e_editable_text_delete_char_after(Evas_Object *object)
 void
 e_editable_text_cursor_move_at_start(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
    if ((!object) ||
-       (!(editable_text_sd = evas_object_smart_data_get(object))) ||
+       (!(sd = evas_object_smart_data_get(object))) ||
        (_e_editable_text_is_empty(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
-   editable_text_sd->cursor_at_the_end = 0;
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
+   sd->cursor_at_the_end = 0;
    evas_textblock_cursor_char_first(cursor);
 
    _e_editable_text_cursor_position_update(object);
@@ -225,16 +225,16 @@ e_editable_text_cursor_move_at_start(Evas_Object *object)
 void
 e_editable_text_cursor_move_at_end(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
    if ((!object) ||
-       (!(editable_text_sd = evas_object_smart_data_get(object))) ||
+       (!(sd = evas_object_smart_data_get(object))) ||
        (_e_editable_text_is_empty(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
-   editable_text_sd->cursor_at_the_end = 1;
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
+   sd->cursor_at_the_end = 1;
    evas_textblock_cursor_char_last(cursor);
 
    _e_editable_text_cursor_position_update(object);
@@ -247,15 +247,15 @@ e_editable_text_cursor_move_at_end(Evas_Object *object)
 void
 e_editable_text_cursor_move_left(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
-   if (editable_text_sd->cursor_at_the_end)
-     editable_text_sd->cursor_at_the_end = 0;
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
+   if (sd->cursor_at_the_end)
+     sd->cursor_at_the_end = 0;
    else
      evas_textblock_cursor_char_prev(cursor);
 
@@ -270,15 +270,15 @@ e_editable_text_cursor_move_left(Evas_Object *object)
 void
 e_editable_text_cursor_move_right(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
    if (!evas_textblock_cursor_char_next(cursor))
-     editable_text_sd->cursor_at_the_end = 1;
+     sd->cursor_at_the_end = 1;
 
    _e_editable_text_size_update(object);
    _e_editable_text_cursor_position_update(object);
@@ -291,12 +291,12 @@ e_editable_text_cursor_move_right(Evas_Object *object)
 void
 e_editable_text_cursor_show(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   editable_text_sd->show_cursor = 1;
+   sd->show_cursor = 1;
    _e_editable_text_cursor_visibility_update(object);
 }
 
@@ -307,12 +307,12 @@ e_editable_text_cursor_show(Evas_Object *object)
 void
 e_editable_text_cursor_hide(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   editable_text_sd->show_cursor = 0;
+   sd->show_cursor = 0;
    _e_editable_text_cursor_visibility_update(object);
 }
 
@@ -338,135 +338,158 @@ e_entry_add(Evas *evas)
 void
 e_entry_change_handler_set(Evas_Object *object, void (*func)(void *data, Evas_Object *entry, char *key), void *data)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
    
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   e_entry_sd->change_func = func;
-   e_entry_sd->change_data = data;
+   sd->change_func = func;
+   sd->change_data = data;
 }
 
 void
 e_entry_text_set(Evas_Object *entry, const char *text)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_text_set(e_entry_sd->entry_object, text);
+   e_editable_text_text_set(sd->entry_object, text);
 }
 
 const char*
 e_entry_text_get(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return "";
 
-   return e_editable_text_text_get(e_entry_sd->entry_object);
+   return e_editable_text_text_get(sd->entry_object);
 }
 
 void
 e_entry_text_insert(Evas_Object *entry, const char *text)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_insert(e_entry_sd->entry_object, text);
+   e_editable_text_insert(sd->entry_object, text);
 }
 
 void
 e_entry_delete_char_before(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_delete_char_before(e_entry_sd->entry_object);
+   e_editable_text_delete_char_before(sd->entry_object);
 }
 
 void
 e_entry_delete_char_after(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_delete_char_after(e_entry_sd->entry_object);
+   e_editable_text_delete_char_after(sd->entry_object);
 }
 
 void
 e_entry_cursor_move_at_start(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_move_at_start(e_entry_sd->entry_object);
+   e_editable_text_cursor_move_at_start(sd->entry_object);
 }
 
 void
 e_entry_cursor_move_at_end(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_move_at_end(e_entry_sd->entry_object);
+   e_editable_text_cursor_move_at_end(sd->entry_object);
 }
 
 void
 e_entry_cursor_move_left(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_move_left(e_entry_sd->entry_object);
+   e_editable_text_cursor_move_left(sd->entry_object);
 }
 
 void
 e_entry_cursor_move_right(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_move_right(e_entry_sd->entry_object);
+   e_editable_text_cursor_move_right(sd->entry_object);
 }
 
 void
 e_entry_cursor_show(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_show(e_entry_sd->entry_object);
+   e_editable_text_cursor_show(sd->entry_object);
 }
 
 void
 e_entry_cursor_hide(Evas_Object *entry)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!entry) || !(e_entry_sd = evas_object_smart_data_get(entry)))
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
      return;
 
-   e_editable_text_cursor_hide(e_entry_sd->entry_object);
+   e_editable_text_cursor_hide(sd->entry_object);
 }
+
+void
+e_entry_focus(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+     return;
+   
+   edje_object_signal_emit(sd->edje_object, "focus_in", "");
+}
+
+void
+e_entry_unfocus(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+   
+   if ((!entry) || !(sd = evas_object_smart_data_get(entry)))
+     return;
+   
+   edje_object_signal_emit(sd->edje_object, "focus_out", "");
+}
+   
 
 /**************************
  *
@@ -478,13 +501,13 @@ e_entry_cursor_hide(Evas_Object *entry)
 static Evas_Bool
 _e_editable_text_is_empty(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return 1;
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
    return (evas_textblock_cursor_node_text_length_get(cursor) <= 0);
 }
 
@@ -492,38 +515,38 @@ _e_editable_text_is_empty(Evas_Object *object)
 static void
 _e_editable_text_size_update(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    int w, h;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_textblock_size_native_get(editable_text_sd->text_object, &w, &h);
-   evas_object_resize(editable_text_sd->text_object, w, h);
+   evas_object_textblock_size_native_get(sd->text_object, &w, &h);
+   evas_object_resize(sd->text_object, w, h);
 }
 
 /* Updates the cursor position: to be called when the cursor or the object are moved */
 static void
 _e_editable_text_cursor_position_update(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
    Evas_Coord tx, ty, tw, th, cx, cy, cw, ch, ox, oy, ow, oh;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_geometry_get(editable_text_sd->text_object, &tx, &ty, &tw, &th);
+   evas_object_geometry_get(sd->text_object, &tx, &ty, &tw, &th);
    evas_object_geometry_get(object, &ox, &oy, &ow, &oh);
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
 
    if (_e_editable_text_is_empty(object))
      {
-	evas_object_move(editable_text_sd->cursor_object, tx, ty);
-	evas_object_resize(editable_text_sd->cursor_object, 1, oh);
+	evas_object_move(sd->cursor_object, tx, ty);
+	evas_object_resize(sd->cursor_object, 1, oh);
 	return;
      }
-   else if (editable_text_sd->cursor_at_the_end)
+   else if (sd->cursor_at_the_end)
      {
 	evas_textblock_cursor_char_last(cursor);
 	evas_textblock_cursor_char_geometry_get(cursor, &cx, &cy, &cw, &ch);
@@ -538,53 +561,53 @@ _e_editable_text_cursor_position_update(Evas_Object *object)
    /* TODO: fix */
    if ((cx < ox + 20) && (cx - tx > 20))
      {
-	evas_object_move(editable_text_sd->text_object, tx + ox + 20 - cx, ty);
+	evas_object_move(sd->text_object, tx + ox + 20 - cx, ty);
 	cx = ox + 20;
      }
    else if (cx < ox)
      {	
-	evas_object_move(editable_text_sd->text_object, tx + ox - cx, ty);
+	evas_object_move(sd->text_object, tx + ox - cx, ty);
 	cx = ox;
      }
    else if ((cx > ox + ow - 20) && (tw - (cx - tx) > 20))
      {
-	evas_object_move(editable_text_sd->text_object, tx - cx + ox + ow - 20, ty);
+	evas_object_move(sd->text_object, tx - cx + ox + ow - 20, ty);
 	cx = ox + ow - 20;
      }
    else if (cx > ox + ow)
      {
-	evas_object_move(editable_text_sd->text_object, tx - cx + ox + ow, ty);
+	evas_object_move(sd->text_object, tx - cx + ox + ow, ty);
 	cx = ox + ow;
      }
 
-   evas_object_move(editable_text_sd->cursor_object, cx, ty + cy);
-   evas_object_resize(editable_text_sd->cursor_object, 1, ch);   
+   evas_object_move(sd->cursor_object, cx, ty + cy);
+   evas_object_resize(sd->cursor_object, 1, ch);   
 }
 
 /* Updates the visibility state of the cursor */
 static void
 _e_editable_text_cursor_visibility_update(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
       return;
 
-   if (!editable_text_sd->show_cursor)
+   if (!sd->show_cursor)
      {
-	if (editable_text_sd->cursor_timer)
+	if (sd->cursor_timer)
 	  {
-	     ecore_timer_del(editable_text_sd->cursor_timer);
-	     editable_text_sd->cursor_timer = NULL;
+	     ecore_timer_del(sd->cursor_timer);
+	     sd->cursor_timer = NULL;
 	  }
-	evas_object_hide(editable_text_sd->cursor_object);
+	evas_object_hide(sd->cursor_object);
      }
    else
      {
-	if (!editable_text_sd->cursor_timer)
+	if (!sd->cursor_timer)
 	  {
-	     editable_text_sd->cursor_timer = ecore_timer_add(0.75, _e_editable_text_cursor_timer_cb, object);
-	     evas_object_show(editable_text_sd->cursor_object);
+	     sd->cursor_timer = ecore_timer_add(0.75, _e_editable_text_cursor_timer_cb, object);
+	     evas_object_show(sd->cursor_object);
 	  }
      }
 }
@@ -594,22 +617,22 @@ static int
 _e_editable_text_cursor_timer_cb(void *data)
 {
    Evas_Object *object;
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
    object = data;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return 1;
 
-   if (evas_object_visible_get(editable_text_sd->cursor_object))
+   if (evas_object_visible_get(sd->cursor_object))
      {
-	evas_object_hide(editable_text_sd->cursor_object);
-	ecore_timer_interval_set(editable_text_sd->cursor_timer, 0.25);
+	evas_object_hide(sd->cursor_object);
+	ecore_timer_interval_set(sd->cursor_timer, 0.25);
      }
    else
      {
-	evas_object_show(editable_text_sd->cursor_object);
-	ecore_timer_interval_set(editable_text_sd->cursor_timer, 0.75);
+	evas_object_show(sd->cursor_object);
+	ecore_timer_interval_set(sd->cursor_timer, 0.75);
      }
 
    return 1;
@@ -620,7 +643,7 @@ static void
 _e_editable_text_smart_add(Evas_Object *object)
 {
    Evas *evas;
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
    Evas_Textblock_Cursor *cursor;
 
    if ((!object) || !(evas = evas_object_evas_get(object)))
@@ -633,28 +656,28 @@ _e_editable_text_smart_add(Evas_Object *object)
 	e_editable_text_style_use_count = 0;
      }
 
-   editable_text_sd = malloc(sizeof(E_Editable_Text_Smart_Data));
-   if (!editable_text_sd) return;
-   editable_text_sd->show_cursor = 0;
-   editable_text_sd->cursor_at_the_end = 1;
-   editable_text_sd->cursor_timer = NULL;
+   sd = malloc(sizeof(E_Editable_Text_Smart_Data));
+   if (!sd) return;
+   sd->show_cursor = 0;
+   sd->cursor_at_the_end = 1;
+   sd->cursor_timer = NULL;
 
-   editable_text_sd->text_object = evas_object_textblock_add(evas);
-   evas_object_textblock_style_set(editable_text_sd->text_object, e_editable_text_style);
+   sd->text_object = evas_object_textblock_add(evas);
+   evas_object_textblock_style_set(sd->text_object, e_editable_text_style);
    e_editable_text_style_use_count++;
-   evas_object_smart_member_add(editable_text_sd->text_object, object);
+   evas_object_smart_member_add(sd->text_object, object);
 
-   editable_text_sd->clip = evas_object_rectangle_add(evas);
-   evas_object_clip_set(editable_text_sd->text_object, editable_text_sd->clip);
-   evas_object_smart_member_add(editable_text_sd->clip, object);
+   sd->clip = evas_object_rectangle_add(evas);
+   evas_object_clip_set(sd->text_object, sd->clip);
+   evas_object_smart_member_add(sd->clip, object);
 
-   editable_text_sd->cursor_object = evas_object_rectangle_add(evas);
-   evas_object_color_set(editable_text_sd->cursor_object, 0, 0, 0, 255);
-   evas_object_smart_member_add(editable_text_sd->cursor_object, object);
+   sd->cursor_object = evas_object_rectangle_add(evas);
+   evas_object_color_set(sd->cursor_object, 0, 0, 0, 255);
+   evas_object_smart_member_add(sd->cursor_object, object);
 
-   evas_object_smart_data_set(object, editable_text_sd);
+   evas_object_smart_data_set(object, sd);
 
-   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(editable_text_sd->text_object);
+   cursor = (Evas_Textblock_Cursor *)evas_object_textblock_cursor_get(sd->text_object);
    evas_textblock_cursor_node_first(cursor);
 
    evas_font_path_append (evas, PACKAGE_DATA_DIR"/data/fonts");
@@ -664,18 +687,18 @@ _e_editable_text_smart_add(Evas_Object *object)
 static void
 _e_editable_text_smart_del(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   if (editable_text_sd->cursor_timer)
-     ecore_timer_del(editable_text_sd->cursor_timer);
-   evas_object_del(editable_text_sd->text_object);
+   if (sd->cursor_timer)
+     ecore_timer_del(sd->cursor_timer);
+   evas_object_del(sd->text_object);
 
-   evas_object_del(editable_text_sd->clip);
-   evas_object_del(editable_text_sd->cursor_object);
-   free(editable_text_sd);
+   evas_object_del(sd->clip);
+   evas_object_del(sd->cursor_object);
+   free(sd);
 
    e_editable_text_style_use_count--;
    if ((e_editable_text_style_use_count <= 0) && (e_editable_text_style))
@@ -688,13 +711,13 @@ _e_editable_text_smart_del(Evas_Object *object)
 /* Called when the object is moved */
 static void _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_move(editable_text_sd->clip, x, y);
-   evas_object_move(editable_text_sd->text_object, x, y);
+   evas_object_move(sd->clip, x, y);
+   evas_object_move(sd->text_object, x, y);
    _e_editable_text_cursor_position_update(object);
 }
 
@@ -702,25 +725,25 @@ static void _e_editable_text_smart_move(Evas_Object *object, Evas_Coord x, Evas_
 static void
 _e_editable_text_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_resize(editable_text_sd->clip, w, h);
+   evas_object_resize(sd->clip, w, h);
 }
 
 /* Called when the object is shown */
 static void
 _e_editable_text_smart_show(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_show(editable_text_sd->text_object);
-   evas_object_show(editable_text_sd->clip);
+   evas_object_show(sd->text_object);
+   evas_object_show(sd->clip);
    _e_editable_text_cursor_visibility_update(object);
 }
 
@@ -728,27 +751,27 @@ _e_editable_text_smart_show(Evas_Object *object)
 static void
 _e_editable_text_smart_hide(Evas_Object *object)
 {
-   E_Editable_Text_Smart_Data *editable_text_sd;
+   E_Editable_Text_Smart_Data *sd;
 
-   if ((!object) || !(editable_text_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_hide(editable_text_sd->cursor_object);
-   evas_object_hide(editable_text_sd->text_object);
-   evas_object_hide(editable_text_sd->clip);
+   evas_object_hide(sd->cursor_object);
+   evas_object_hide(sd->text_object);
+   evas_object_hide(sd->clip);
 }
 
 /* Called when the user presses a key */
 static void
 _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
    Evas_Event_Key_Down *key_event = event;
 
-   if ((!obj) || !(e_entry_sd = evas_object_smart_data_get(obj)))
+   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
      return;
 
-   obj = e_entry_sd->entry_object;
+   obj = sd->entry_object;
 
    if (strcmp(key_event->keyname, "BackSpace") == 0)
      e_editable_text_delete_char_before(obj);
@@ -769,7 +792,7 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	if(key_event->string && strcmp(key_event->keyname, "Escape"))
 	  {
 	     if(*(key_event->string) >= 32 && *(key_event->string) <= 126)
-	       e_entry_sd->change_func(e_entry_sd->change_data, obj, (char *)key_event->string);
+	       sd->change_func(sd->change_data, obj, (char *)key_event->string);
 	  }
      }
 }
@@ -801,26 +824,26 @@ static void
 _e_entry_smart_add(Evas_Object *object)
 {
    Evas *evas;
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
-   e_entry_sd = malloc(sizeof(E_Entry_Smart_Data));
-   if (!e_entry_sd) return;
+   sd = malloc(sizeof(E_Entry_Smart_Data));
+   if (!sd) return;
 
-   e_entry_sd->entry_object = e_editable_text_add(evas);
-   evas_object_smart_member_add(e_entry_sd->entry_object, object);
+   sd->entry_object = e_editable_text_add(evas);
+   evas_object_smart_member_add(sd->entry_object, object);
 
 
-   e_entry_sd->edje_object = edje_object_add(evas);
-   e_theme_edje_object_set(e_entry_sd->edje_object, "base/theme/widgets",
+   sd->edje_object = edje_object_add(evas);
+   e_theme_edje_object_set(sd->edje_object, "base/theme/widgets",
 			   "widgets/entry");
 
-   edje_object_part_swallow(e_entry_sd->edje_object, "text_area", e_entry_sd->entry_object);
-   evas_object_smart_member_add(e_entry_sd->edje_object, object);
+   edje_object_part_swallow(sd->edje_object, "text_area", sd->entry_object);
+   evas_object_smart_member_add(sd->edje_object, object);
 
-   evas_object_smart_data_set(object, e_entry_sd);
+   evas_object_smart_data_set(object, sd);
 
    evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN, _e_entry_key_down_cb, NULL);
 }
@@ -828,58 +851,58 @@ _e_entry_smart_add(Evas_Object *object)
 static void
 _e_entry_smart_del(Evas_Object *object)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_del(e_entry_sd->entry_object);
-   evas_object_del(e_entry_sd->edje_object);
-   E_FREE(e_entry_sd);
+   evas_object_del(sd->entry_object);
+   evas_object_del(sd->edje_object);
+   E_FREE(sd);
 }
 
 static void
 _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
       
-   evas_object_move(e_entry_sd->edje_object, x, y);
+   evas_object_move(sd->edje_object, x, y);
    e_entry_cursor_move_at_start(object);
 }
 
 static void
 _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_resize(e_entry_sd->edje_object, w, h);
+   evas_object_resize(sd->edje_object, w, h);
 }
 
 static void
 _e_entry_smart_show(Evas_Object *object)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_show(e_entry_sd->edje_object);
+   evas_object_show(sd->edje_object);
 }
 
 static void
 _e_entry_smart_hide(Evas_Object *object)
 {
-   E_Entry_Smart_Data *e_entry_sd;
+   E_Entry_Smart_Data *sd;
 
-   if ((!object) || !(e_entry_sd = evas_object_smart_data_get(object)))
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_hide(e_entry_sd->edje_object);
+   evas_object_hide(sd->edje_object);
 }
 
