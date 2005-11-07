@@ -774,9 +774,17 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
    obj = sd->entry_object;
 
    if (strcmp(key_event->keyname, "BackSpace") == 0)
-     e_editable_text_delete_char_before(obj);
+     {
+	e_editable_text_delete_char_before(obj);
+	if(sd->change_func)
+	  sd->change_func(sd->change_data, obj, "");
+     }
    else if (strcmp(key_event->keyname, "Delete") == 0)
-     e_editable_text_delete_char_after(obj);
+     {
+	e_editable_text_delete_char_after(obj);
+	if(sd->change_func)
+	  sd->change_func(sd->change_data, obj, "");
+     }
    else if (strcmp(key_event->keyname, "Left") == 0)
      e_editable_text_cursor_move_left(obj);
    else if (strcmp(key_event->keyname, "Right") == 0)
@@ -792,7 +800,8 @@ _e_entry_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event)
 	if(key_event->string && strcmp(key_event->keyname, "Escape"))
 	  {
 	     if(*(key_event->string) >= 32 && *(key_event->string) <= 126)
-	       sd->change_func(sd->change_data, obj, (char *)key_event->string);
+	       if(sd->change_func)
+		 sd->change_func(sd->change_data, obj, (char *)key_event->string);
 	  }
      }
 }
@@ -832,6 +841,9 @@ _e_entry_smart_add(Evas_Object *object)
    sd = malloc(sizeof(E_Entry_Smart_Data));
    if (!sd) return;
 
+   sd->change_func = NULL;
+   sd->change_data = NULL;
+   
    sd->entry_object = e_editable_text_add(evas);
    evas_object_smart_member_add(sd->entry_object, object);
 
