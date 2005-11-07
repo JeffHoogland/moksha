@@ -2416,8 +2416,8 @@ _e_fm_icon_select_down(E_Fm_Smart_Data *sd)
 	  {
 	     E_Fm_Icon *icon;		  
 	     Evas_Coord x, y, w, h;
+	     
 	     icon = l->data;
-	     printf("going to %s\n", icon->file->name);
 	     evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
 	     if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
 	       {
