@@ -403,6 +403,7 @@ _e_win_cb_move(Ecore_Evas *ee)
    
    win = ecore_evas_data_get(ee, "E_Win");
    if (!win) return;
+   ecore_evas_geometry_get(win->ecore_evas, &win->x, &win->y, &win->w, &win->h);   
    if (win->cb_move) win->cb_move(win);
 }
 

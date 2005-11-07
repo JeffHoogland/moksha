@@ -115,8 +115,9 @@ struct _E_Fm_Smart_Data
    E_Win *win;
    Evas *evas;
 
-   Evas_Object *bg;
-   Evas_Object *clip;
+   Evas_Object *edje_obj;
+   Evas_Object *event_obj;   
+   Evas_Object *clip_obj;
    Evas_Object *layout;
    Evas_Object *object;
    Evas_Object *entry_object;
@@ -254,6 +255,7 @@ static void                _e_fm_drop_done_cb      (E_Drag *drag, int dropped);
 
 static int                 _e_fm_files_sort_name_cb    (void *d1, void *d2);
 static int                 _e_fm_files_sort_modtime_cb (void *d1, void *d2);
+static int                 _e_fm_files_sort_layout_name_cb    (void *d1, void *d2);
 
 static void                _e_fm_selector_send_file (E_Fm_Icon *icon);
 
@@ -483,13 +485,18 @@ void
 e_fm_background_set(Evas_Object *object, Evas_Object *bg)
 {  
    E_Fm_Smart_Data *sd;
+   Evas_Object *swallow;
    
    return;
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   sd->bg = bg;
+   swallow = NULL;
+   swallow = edje_object_part_swallow_get(sd->edje_obj, "background");
+   if(swallow)
+     edje_object_part_unswallow(sd->edje_obj, swallow);
+   edje_object_part_swallow(sd->edje_obj, "background", bg);
 }
 
 /* local subsystem functions */
@@ -514,38 +521,41 @@ _e_fm_smart_add(Evas_Object *object)
    sd->evas = evas_object_evas_get(object);
    sd->frozen = 0;
    sd->is_selector = 0;
-   //sd->bg = edje_object_add(sd->evas);
-   sd->bg = evas_object_rectangle_add(sd->evas);
-   evas_object_color_set(sd->bg, 0, 0, 0, 0);
-   evas_object_smart_member_add(sd->bg, object); 
-   evas_object_show(sd->bg);   
-   e_theme_edje_object_set(sd->selection.band.obj,
-			   "base/theme/fileman/background",
-			   "fileman/background");
-   evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_DOWN,
+   sd->edje_obj = edje_object_add(sd->evas);
+   evas_object_repeat_events_set(sd->edje_obj, 1);
+   e_theme_edje_object_set(sd->edje_obj,
+			   "base/theme/fileman",
+			   "fileman/smart");   
+   evas_object_smart_member_add(sd->edje_obj, object);
+   evas_object_show(sd->edje_obj);
+   
+   sd->event_obj = evas_object_rectangle_add(sd->evas);
+   evas_object_smart_member_add(sd->event_obj, object);   
+   evas_object_color_set(sd->event_obj, 0, 0, 0, 0);
+   evas_object_stack_below(sd->event_obj, sd->edje_obj);
+   evas_object_show(sd->event_obj);
+   evas_object_event_callback_add(sd->event_obj, EVAS_CALLBACK_MOUSE_DOWN,
 				  _e_fm_mouse_down_cb, sd);
-   evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_UP,
+   evas_object_event_callback_add(sd->event_obj, EVAS_CALLBACK_MOUSE_UP,
 				  _e_fm_mouse_up_cb, sd);
-   evas_object_event_callback_add(sd->bg, EVAS_CALLBACK_MOUSE_MOVE,
+   evas_object_event_callback_add(sd->event_obj, EVAS_CALLBACK_MOUSE_MOVE,
 				  _e_fm_mouse_move_cb, sd);
 
-
    sd->layout = e_icon_layout_add(sd->evas);
-   evas_object_repeat_events_set(sd->layout, 1);
-   evas_object_smart_member_add(sd->layout, object);   
    e_icon_layout_spacing_set(sd->layout, sd->icon_info.x_space, sd->icon_info.y_space);
    evas_object_show(sd->layout);
 
-   sd->clip = evas_object_rectangle_add(sd->evas);
-   evas_object_smart_member_add(sd->clip, object);
-   evas_object_show(sd->clip);
-   evas_object_move(sd->clip, -100003, -100003);
-   evas_object_resize(sd->clip, 200006, 200006);
-   evas_object_color_set(sd->clip, 255, 255, 255, 255);
+   sd->clip_obj = evas_object_rectangle_add(sd->evas);
+   evas_object_smart_member_add(sd->clip_obj, object);
+   evas_object_show(sd->clip_obj);
+   evas_object_move(sd->clip_obj, -100003, -100003);
+   evas_object_resize(sd->clip_obj, 200006, 200006);
+   evas_object_color_set(sd->clip_obj, 255, 255, 255, 255);
 
-   evas_object_clip_set(sd->bg, sd->clip);
-   evas_object_clip_set(sd->layout, sd->clip);
+   evas_object_clip_set(sd->edje_obj, sd->clip_obj);
 
+   edje_object_part_swallow(sd->edje_obj, "icons", sd->layout);
+   
    sd->selection.band.obj = edje_object_add(sd->evas);
    evas_object_smart_member_add(sd->selection.band.obj, object);
    e_theme_edje_object_set(sd->selection.band.obj,
@@ -553,9 +563,9 @@ _e_fm_smart_add(Evas_Object *object)
 			   "fileman/rubberband");
 
    evas_object_focus_set(sd->object, 1);
-   evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN, _e_fm_key_down_cb, sd);
+   evas_object_event_callback_add(sd->object, EVAS_CALLBACK_KEY_DOWN, _e_fm_key_down_cb, sd);      
+
    
-   evas_object_stack_below(sd->bg, sd->layout);
    
    sd->event_handlers = NULL;
 
@@ -641,8 +651,8 @@ _e_fm_smart_del(Evas_Object *object)
     }
    
    evas_object_del(sd->selection.band.obj);
-   evas_object_del(sd->clip);
-   evas_object_del(sd->bg);
+   evas_object_del(sd->clip_obj);
+   evas_object_del(sd->edje_obj);
    evas_object_del(sd->layout);
    if (sd->entry_object) evas_object_del(sd->entry_object);
    if (sd->menu) e_object_del(E_OBJECT(sd->menu));
@@ -663,9 +673,10 @@ _e_fm_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 
    sd->x = x;
    sd->y = y;   
-   evas_object_move(sd->bg, x, y);
-   evas_object_move(sd->clip, x, y); 
-   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);
+   evas_object_move(sd->edje_obj, x, y);
+   evas_object_move(sd->clip_obj, x, y);
+   evas_object_move(sd->event_obj, x, y);   
+//   evas_object_move(sd->layout, sd->x - sd->child.x, sd->y - sd->child.y);
 }
 
 static void
@@ -677,9 +688,10 @@ _e_fm_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-   evas_object_resize(sd->bg, w, h);
-   evas_object_resize(sd->clip, w, h);
-   evas_object_resize(sd->layout, w, h);
+   evas_object_resize(sd->edje_obj, w, h);
+   evas_object_resize(sd->clip_obj, w, h);
+   evas_object_resize(sd->event_obj, w, h);   
+//   evas_object_resize(sd->layout, w, h);
    e_icon_layout_width_fix(sd->layout, w);
    e_icon_layout_virtual_size_get(sd->layout, &sd->child.w, &sd->child.h);
    sd->conf.main->width = w;
@@ -714,9 +726,9 @@ _e_fm_smart_show(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   evas_object_show(sd->bg);
-   evas_object_show(sd->layout);
-   evas_object_show(sd->clip);
+   evas_object_show(sd->edje_obj);
+//   evas_object_show(sd->layout);
+   evas_object_show(sd->clip_obj);
 }
 
 static void
@@ -727,7 +739,7 @@ _e_fm_smart_hide(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   evas_object_hide(sd->clip);
+   evas_object_hide(sd->clip_obj);
 }
 
 static void
@@ -738,7 +750,7 @@ _e_fm_smart_color_set(Evas_Object *object, int r, int g, int b, int a)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   evas_object_color_set(sd->clip, r, g, b, a);
+   evas_object_color_set(sd->clip_obj, r, g, b, a);
 }
 
 static void
@@ -749,7 +761,7 @@ _e_fm_smart_clip_set(Evas_Object *object, Evas_Object *clip)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   evas_object_clip_set(sd->clip, clip);
+   evas_object_clip_set(sd->clip_obj, clip);
 }
    
 static void
@@ -760,7 +772,7 @@ _e_fm_smart_clip_unset(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    
-   evas_object_clip_unset(sd->clip);
+   evas_object_clip_unset(sd->clip_obj);
 }
 
 static void
@@ -1451,11 +1463,14 @@ _e_fm_dir_files_get(void *data)
    evas_object_smart_callback_call(sd->object, "changed", NULL);   
    
    if(!dir_entry) {
-      closedir(sd->dir2);
+      closedir(sd->dir2);      
+      
       sd->files = evas_list_sort(sd->files, 
 				 evas_list_count(sd->files),
 				 _e_fm_files_sort_name_cb);
-      
+      e_icon_layout_sort(sd->layout, _e_fm_files_sort_layout_name_cb);
+
+/*
       e_icon_layout_freeze(sd->layout);      
       e_icon_layout_reset(sd->layout);
       
@@ -1465,6 +1480,7 @@ _e_fm_dir_files_get(void *data)
 	   e_icon_layout_pack(sd->layout, icon->icon_object);
 	}
       e_icon_layout_thaw(sd->layout);
+*/      
       sd->timer = NULL;
       return 0;
    }
@@ -1954,7 +1970,8 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	 {
 	    char *fullname;
 
-	    icon->sd->drag.start = 0;
+	    if(icon->sd->win)
+	      icon->sd->drag.start = 0;
 
 	    if (!strcmp(icon->file->name, ".")) return;
 
@@ -1978,7 +1995,8 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	 }
        else if (icon->file->type == E_FM_FILE_TYPE_FILE && (ev->flags == EVAS_BUTTON_DOUBLE_CLICK))
 	 {
-	    icon->sd->drag.start = 0;
+	    if(icon->sd->win)
+	      icon->sd->drag.start = 0;
 	    
 	    if(icon->sd->is_selector)
 	      {
@@ -1992,10 +2010,13 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	 }
        else
 	 {
-	    icon->sd->drag.start = 1;
-	    icon->sd->drag.y = -1;
-	    icon->sd->drag.x = -1;
-	    icon->sd->drag.icon_object = icon;
+	    if(icon->sd->win)
+	      {
+		 icon->sd->drag.start = 1;
+		 icon->sd->drag.x = icon->sd->win->x + ev->canvas.x;	    
+		 icon->sd->drag.y = icon->sd->win->y + ev->canvas.y;
+		 icon->sd->drag.icon_object = icon;
+	      }
 
 	    if (!icon->state.selected)
 	      {
@@ -2109,7 +2130,8 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    icon = data;
 
-   icon->sd->drag.start = 0;
+   if(icon->sd->win)
+     icon->sd->drag.start = 0;
 }
 
 static void
@@ -2146,11 +2168,12 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
    ev = event_info;   
    sd = data;
 
-   icon = sd->drag.icon_object;
+   if(sd->win)
+     icon = sd->drag.icon_object;
 
-   if (!icon) return 1;
+   if (!icon) return;
 
-   if (sd->drag.start)
+   if (sd->drag.start && sd->win)
      {
 	if ((sd->drag.x == -1) && (sd->drag.y == -1))
 	  {
@@ -2195,6 +2218,7 @@ _e_fm_icon_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 		  e_drag_object_set(drag, o);
 
 		  e_drag_resize(drag, w, h);
+		  		  		  
 		  e_drag_xdnd_start(drag, sd->drag.x, sd->drag.y);
 		  evas_event_feed_mouse_up(sd->evas, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
 		  sd->drag.start = 0;
@@ -2600,6 +2624,8 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    sd = data;   
+
+   edje_object_signal_emit(sd->object, "typebuf_show", "");
    
    if (!strcmp(ev->keyname, "Up"))
      _e_fm_icon_select_up(sd);
@@ -2738,6 +2764,21 @@ _e_fm_files_sort_name_cb(void *d1, void *d2)
    e2 = d2;
 
    return (strcmp(e1->file->name, e2->file->name));
+}
+
+static int
+_e_fm_files_sort_layout_name_cb(void *d1, void *d2)
+{
+   Evas_Object *e1, *e2;
+   E_Fm_File *f1, *f2;
+   
+   e1 = d1;
+   e2 = d2;
+   
+   f1 = e_fm_icon_file_get(e1);
+   f2 = e_fm_icon_file_get(e2);
+
+   return (strcmp(f1->name, f2->name));
 }
 
 static int

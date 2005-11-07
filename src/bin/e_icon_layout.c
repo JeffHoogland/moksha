@@ -48,6 +48,10 @@ static void _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coo
 static void _e_icon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_icon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_icon_layout_smart_clip_unset(Evas_Object *obj);
+static void _e_icon_layout_smart_raise(Evas_Object *obj);
+static void _e_icon_layout_smart_lower(Evas_Object *obj);
+static void _e_icon_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below);
+static void _e_icon_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -131,6 +135,19 @@ e_icon_layout_height_fix(Evas_Object *obj, Evas_Coord h)
    sd->changed = 1;
    if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
 }
+
+void
+e_icon_layout_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
+{
+   E_Smart_Data *sd;
+   
+   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
+     return;
+   
+   sd->items = evas_list_sort(sd->items, evas_list_count(sd->items), func);
+   _e_icon_layout_smart_reconfigure(sd);   
+}
+   
 
 void
 e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
@@ -441,7 +458,11 @@ _e_icon_layout_smart_init(void)
    _e_smart = evas_smart_new("e_icon_layout",
 			     _e_icon_layout_smart_add,
 			     _e_icon_layout_smart_del,
-			     NULL, NULL, NULL, NULL, NULL,
+			     NULL, 
+			     _e_icon_layout_smart_raise, 
+			     _e_icon_layout_smart_lower,
+			     _e_icon_layout_smart_stack_above, 
+			     _e_icon_layout_smart_stack_below,
 			     _e_icon_layout_smart_move,
 			     _e_icon_layout_smart_resize,
 			     _e_icon_layout_smart_show,
@@ -520,6 +541,58 @@ _e_icon_layout_smart_del(Evas_Object *obj)
     }
    evas_object_del(sd->clip);
    free(sd);
+}
+
+static void 
+_e_icon_layout_smart_raise(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   if (!sd) return;
+   for(l = sd->items; l; l = l->next)
+     evas_object_raise(l->data);
+}
+
+static void 
+_e_icon_layout_smart_lower(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   if (!sd) return;
+   for(l = sd->items; l; l = l->next)
+     evas_object_lower(l->data);
+}  
+
+static void
+_e_icon_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   if (!sd) return;
+   for(l = sd->items; l; l = l->next)
+     evas_object_stack_above(l->data, above);
+}
+
+static void
+_e_icon_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below)
+{
+   E_Smart_Data *sd;
+   Evas_List *l;
+   
+   sd = evas_object_smart_data_get(obj);
+   
+   if (!sd) return;
+   for(l = sd->items; l; l = l->next)
+     evas_object_stack_above(l->data, below);
 }
 
 static void

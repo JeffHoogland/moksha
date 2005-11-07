@@ -18,6 +18,7 @@ enum E_Fm_Icon_Type
 EAPI int          e_fm_icon_init(void);
 EAPI int          e_fm_icon_shutdown(void);
 EAPI Evas_Object *e_fm_icon_add(Evas *evas);
+EAPI E_Fm_File   *e_fm_icon_file_get(Evas_Object *obj);    
 EAPI void         e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file);
 EAPI void         e_fm_icon_title_set(Evas_Object *obj, const char *title);
 EAPI void         e_fm_icon_type_set(Evas_Object *obj, int type);

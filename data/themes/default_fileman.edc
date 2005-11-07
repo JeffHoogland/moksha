@@ -149,6 +149,7 @@ images
    image: "e17_button.png" COMP;
    image: "e17_fileman_thumb_bg.png" COMP;
    image: "e17_mini_button_shadow2.png" COMP;
+   image: "e17_fileman_typebuf.png" COMP;
 }
 
 styles
@@ -162,6 +163,67 @@ styles
       }
 }
 
+group {
+   name: "fileman/smart";
+   parts {
+      part {
+	 name: "background";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	 }
+      }
+      
+      part {
+	 name: "icons";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	 }
+      }
+      
+      part {
+	 name:         "typebuffer";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 96 64;
+	    max: 384 64;	    
+	    visible: 0;
+	    align: 0.5 0.5;
+	    image {
+	       normal: "e17_fileman_typebuf.png";
+	       border: 17 17 17 17;
+	    }
+	 }
+	 description {
+	    state: "shown" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	 }
+      }     
+   }
+   
+   programs {   
+      program {
+	 name: "typebuf_show";
+	 signal: "typebuf_show";
+	 source: "";
+	 action: STATE_SET "shown" 0.0;
+	 transition: LINEAR 0.2;
+	 target: "typebuffer";
+      }
+      program {
+	 name: "typebuf_hide";
+	 signal: "typebuf_hide";
+	 source: "";
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.2;
+	 target: "typebuffer";
+      }
+   }
+}
+	 
 
 group {
    name: "fileman/main";

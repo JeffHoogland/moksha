@@ -86,7 +86,7 @@ group {
          target: "entry_focus";
       }
       program {
-         name: "button_unfocus";
+         name: "entry_unfocus";
          signal: "focus_out";
          source: "";
          action: STATE_SET "default" 0.0;

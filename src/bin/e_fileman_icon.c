@@ -117,6 +117,17 @@ e_fm_icon_type_set(Evas_Object *obj, int type)
    _e_fm_icon_type_set(sd);
 }
 
+E_Fm_File *
+e_fm_icon_file_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   
+   return sd->file;
+}
+
 void
 e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 {

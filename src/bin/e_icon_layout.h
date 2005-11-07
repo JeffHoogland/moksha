@@ -20,6 +20,7 @@ EAPI void         e_icon_layout_spacing_set(Evas_Object *obj, Evas_Coord xs, Eva
 EAPI void         e_icon_layout_redraw_force      (Evas_Object *obj);
 EAPI void         e_icon_layout_clip_freeze       (Evas_Object *obj);
 EAPI void         e_icon_layout_clip_thaw         (Evas_Object *obj);
+EAPI void         e_icon_layout_sort              (Evas_Object *obj, int (*func)(void *d1, void *d2));    
 
 #endif
 #endif
