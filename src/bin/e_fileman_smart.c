@@ -8,6 +8,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
+#include <regex.h>
 
 /* TODO:
  *
@@ -238,7 +239,7 @@ static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
 
-static void                _e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c);
+static void                _e_fm_icon_select_regex(E_Fm_Smart_Data *sd, char *glob);
 static void                _e_fm_icon_select_up(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_down(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_left(E_Fm_Smart_Data *sd);
@@ -1468,9 +1469,9 @@ _e_fm_dir_files_get(void *data)
       sd->files = evas_list_sort(sd->files, 
 				 evas_list_count(sd->files),
 				 _e_fm_files_sort_name_cb);
-      e_icon_layout_sort(sd->layout, _e_fm_files_sort_layout_name_cb);
+//      e_icon_layout_sort(sd->layout, _e_fm_files_sort_layout_name_cb);
 
-/*
+
       e_icon_layout_freeze(sd->layout);      
       e_icon_layout_reset(sd->layout);
       
@@ -1480,7 +1481,7 @@ _e_fm_dir_files_get(void *data)
 	   e_icon_layout_pack(sd->layout, icon->icon_object);
 	}
       e_icon_layout_thaw(sd->layout);
-*/      
+      
       sd->timer = NULL;
       return 0;
    }
@@ -2258,11 +2259,104 @@ _e_fm_win_mouse_up_cb(void *data, int type, void *event)
    return 0;
 }
 
+static void 
+_e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize)
+{
+   size_t resultlen;
+   size_t keylen;
+   
+   if(resultsize < 0) return;
+   
+   /* special case to prevent infinite loop if key==replacement=="" */
+   if(strcmp(key, replacement) == 0)
+     {
+	snprintf(result, resultsize, "%s", src);
+	return;
+     }
+   
+   keylen = strlen(key);
+   
+   resultlen = 0;
+   while(*src != '\0' && resultlen+1 < resultsize)
+     {
+	if(strncmp(src, key, keylen) == 0)
+	  {
+	     snprintf(result+resultlen, resultsize-resultlen, "%s", replacement);
+	     resultlen += strlen(result+resultlen);
+	     src += keylen;
+	  }
+	else
+	  {
+	     result[resultlen++] = *src++;
+	  }
+     }
+   result[resultlen] = '\0';
+}
+
+
 static void
-_e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c)
+_e_fm_icon_select_regex(E_Fm_Smart_Data *sd, char *glob)
 {
    E_Fm_Icon *icon;
    Evas_List *l;
+   char *regex, *tregex;
+   regex_t reg, *creg;
+   int stars, i;
+   
+   stars = 0;
+   for(i = 0; i < strlen(glob); i++)
+     if(glob[i] == '*')
+       stars++;
+         
+   tregex = calloc(strlen(glob) + stars + 1, sizeof(char));
+   _e_fm_string_replace(glob, "*", ".*", tregex, (strlen(glob) + stars + 1)*sizeof(char));
+   regex = calloc(strlen(tregex) + 3, sizeof(char));
+   snprintf(regex, (strlen(tregex) + 3)*sizeof(char), "^%s$", tregex);
+   regcomp(&reg, regex, REG_NOSUB | REG_EXTENDED);   
+   _e_fm_selections_clear(sd);   
+   for (l = sd->files; l; l = l->next)
+     {
+	icon = l->data;
+	creg = &reg;
+	if(!regexec(creg, icon->file->name, 0, NULL, 0))
+	  {	     
+	     _e_fm_selections_add(l->data, l);	     
+	  }
+     }
+
+   return;
+#if 0   
+position:
+     {	
+	Evas_Coord x, y, w, h;
+	icon = l->data;
+	evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+	if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+	  {
+	     E_Event_Fm_Reconfigure *ev;
+
+	     ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+	     if (ev)
+	       {			    
+		  ev->object = sd->object;
+		  ev->x = sd->x;
+		  ev->y = sd->child.y - (sd->y - (y - sd->icon_info.y_space));
+		  ev->w = sd->w;
+		  ev->h = sd->h;
+		  ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
+	       }
+	  }
+     }
+#endif   
+}
+
+static void
+__e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c)
+{
+   E_Fm_Icon *icon;
+   Evas_List *l;
+
+   return;
    
    if(sd->selection.current.ptr)   
      {
@@ -2624,8 +2718,6 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    sd = data;   
-
-   edje_object_signal_emit(sd->object, "typebuf_show", "");
    
    if (!strcmp(ev->keyname, "Up"))
      _e_fm_icon_select_up(sd);
@@ -2635,23 +2727,81 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
      _e_fm_icon_select_left(sd);
    else if (!strcmp(ev->keyname, "Right"))
      _e_fm_icon_select_right(sd);
+   else if (!strcmp(ev->keyname, "Escape"))
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {
+	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
+	     edje_object_part_text_set(sd->edje_obj, "text", "");
+	  }
+     }
    else if (!strcmp(ev->keyname, "Return"))
-     _e_fm_icon_run(sd);
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {
+	     char *buf;
+	     
+	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");
+	     buf = strdup(edje_object_part_text_get(sd->edje_obj, "text"));
+	     edje_object_part_text_set(sd->edje_obj, "text", "");
+	     if(strcmp(buf, ""))
+	       _e_fm_icon_select_regex(sd, buf);
+	  }
+	else
+	  _e_fm_icon_run(sd);
+     }
    else if (!strcmp(ev->keyname, "BackSpace"))
      {
-	char *fullname;
-	
-	fullname = _e_fm_dir_pop(sd->dir);
-	if (fullname)
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
 	  {
-	     if (sd->win)
-	       e_win_title_set(sd->win, fullname);
-	     _e_fm_dir_set(sd, fullname);
-	     free(fullname);
-	  }	
+	     char *str;
+	     str = NULL;
+	     str = edje_object_part_text_get(sd->edje_obj, "text");
+	     if(str)
+	       {
+		  char *buf;
+		  int size;
+		  size = strlen(str);
+		  buf = calloc(size , sizeof(char));
+		  snprintf(buf, size, "%s", str);
+		  edje_object_part_text_set(sd->edje_obj, "text", buf);
+	       }	     
+	  }
+	else
+	  {
+	     char *fullname;
+	     
+	     fullname = _e_fm_dir_pop(sd->dir);
+	     if (fullname)
+	       {
+		  if (sd->win)
+		    e_win_title_set(sd->win, fullname);
+		  _e_fm_dir_set(sd, fullname);
+		  free(fullname);
+	       }
+	  }
      }
    else if(strlen(ev->keyname) == 1)
-     _e_fm_icon_goto_key(sd, ev->string);
+     {
+	char *str;
+	str = NULL;
+	str = edje_object_part_text_get(sd->edje_obj, "text");
+	if(str)
+	  {
+	     char *buf;
+	     int size;
+	     size = strlen(str) + strlen(ev->string) + 2;
+	     buf = calloc(size, sizeof(char));
+	     snprintf(buf, size, "%s%s", str, ev->string);
+	     edje_object_part_text_set(sd->edje_obj, "text", buf);
+	  }
+	else
+	  {
+	     edje_object_part_text_set(sd->edje_obj, "text", ev->key);	     
+	  }
+	if(strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  edje_object_signal_emit(sd->edje_obj, "typebuf_show", "");
+     }   
 }
 
  static int

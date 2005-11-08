@@ -332,6 +332,7 @@ e17_fileman_bg.png \
 e17_fileman_bg_shadow.png \
 e17_fileman_rubberband.png \
 e17_fileman_thumb_bg.png \
+e17_fileman_typebuf.png \
 e17_icon_fileman_c.png \
 e17_icon_fileman_file.png \
 e17_icon_fileman_file_clicked.png \

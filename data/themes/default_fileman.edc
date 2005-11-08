@@ -188,9 +188,13 @@ group {
 	 description {
 	    state: "default" 0.0;
 	    min: 96 64;
-	    max: 384 64;	    
-	    visible: 0;
+	    max: 384 64;
+	    /* if we enable this, then we will zoom in / out */
+	    //min: 24 16;
+	    //max: 24 16;
+	    visible: 1;
 	    align: 0.5 0.5;
+	    color: 255 255 255 0;
 	    image {
 	       normal: "e17_fileman_typebuf.png";
 	       border: 17 17 17 17;
@@ -199,31 +203,60 @@ group {
 	 description {
 	    state: "shown" 0.0;
 	    inherit: "default" 0.0;
+	    min: 96 64;
+	    max: 384 64;
 	    visible: 1;
+	    color: 255 255 255 255;
 	 }
-      }     
-   }
-   
-   programs {   
-      program {
-	 name: "typebuf_show";
-	 signal: "typebuf_show";
-	 source: "";
-	 action: STATE_SET "shown" 0.0;
-	 transition: LINEAR 0.2;
-	 target: "typebuffer";
       }
-      program {
-	 name: "typebuf_hide";
-	 signal: "typebuf_hide";
-	 source: "";
-	 action: STATE_SET "default" 0.0;
-	 transition: LINEAR 0.2;
-	 target: "typebuffer";
+      part {
+	 name:          "text";
+	 type:          TEXT;
+	 effect:        SHADOW;
+	 description {
+	    state: "default" 0.0;
+	    fixed: 1 1;
+	    align: 0.5 0.5;
+	    color: 0 0 0 0;
+	    color3: 255 255 255 0;
+	    text {
+	       text:     "No Title";
+	       size:     12;
+	       font:     "Edje-Vera";
+	       align:    0.5 0.5;
+	       elipsis:  0.0;
+	       min: 1 1;
+	    }	    
+	 }
+	 description {
+	    state: "shown" 0.0;
+	    inherit: "default" 0.0;
+	    color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	 }	    
+      }         
+      programs {   
+	 program {
+	    name: "typebuf_show";
+	    signal: "typebuf_show";
+	    source: "";
+	    action: STATE_SET "shown" 0.0;
+	    transition: LINEAR 0.2;
+	    target: "typebuffer";
+	    target: "text";
+	 }
+	 program {
+	    name: "typebuf_hide";
+	    signal: "typebuf_hide";
+	    source: "";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.2;
+	    target: "typebuffer";
+	    target: "text";	    
+	 }
       }
    }
 }
-	 
 
 group {
    name: "fileman/main";
