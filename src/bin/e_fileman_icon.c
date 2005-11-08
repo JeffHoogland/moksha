@@ -438,6 +438,7 @@ _e_fm_icon_thumb_generate(void)
 	sd = thumb_files->data;
 	if (!e_thumb_exists(sd->file->path))
 	  e_thumb_create(sd->file->path, 48, 48); // thumbnail size
+	eet_cacheburst(0);
 	exit(0);
      }
 }
