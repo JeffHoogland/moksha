@@ -1437,7 +1437,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	    || (event == ECORE_FILE_EVENT_DELETED_FILE)
 	    || (event == ECORE_FILE_EVENT_MODIFIED))
 	  {
-	      _e_app_subdir_rescan(app);
+	     _e_app_subdir_rescan(app);
 	  }
 	else
 	  {
@@ -1502,6 +1502,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 			    if (_e_app_copy(a2, a))
 			      _e_app_change(a2, E_APP_CHANGE);
 			 }
+		       _e_app_subdir_rescan(app);
 		    }
 	       }
 	  }
@@ -1901,7 +1902,7 @@ _e_app_cb_scan_cache_timer(void *data)
 	     if (is_dir != ac->is_dir)
 	       {
 		  printf("Cache %s - CHANGED TYPE\n", s);
-		  sc->need_rewrite =1 ;
+		  sc->need_rewrite = 1;
 	       }
 	     else if (!is_dir)
 	       {
