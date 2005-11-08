@@ -8,7 +8,6 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
-#include <regex.h>
 #include <glob.h>
 
 /* TODO:
