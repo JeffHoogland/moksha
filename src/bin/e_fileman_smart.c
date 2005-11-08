@@ -2797,7 +2797,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  }
 	else
 	  {
-	     edje_object_part_text_set(sd->edje_obj, "text", ev->key);	     
+	     edje_object_part_text_set(sd->edje_obj, "text", ev->string);
 	  }
 	if(strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
 	  edje_object_signal_emit(sd->edje_obj, "typebuf_show", "");
