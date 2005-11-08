@@ -2721,13 +2721,39 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    sd = data;   
    
    if (!strcmp(ev->keyname, "Up"))
-     _e_fm_icon_select_up(sd);
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {
+	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
+	     edje_object_part_text_set(sd->edje_obj, "text", "");	     
+	  }
+	else          
+	  _e_fm_icon_select_up(sd);
+     }
    else if (!strcmp(ev->keyname, "Down"))
-     _e_fm_icon_select_down(sd);
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {
+	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
+	     edje_object_part_text_set(sd->edje_obj, "text", "");	     
+	  }
+	else     
+	  _e_fm_icon_select_down(sd);
+     }
    else if (!strcmp(ev->keyname, "Left"))
-     _e_fm_icon_select_left(sd);
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {}
+	else
+	  _e_fm_icon_select_left(sd);
+     }
    else if (!strcmp(ev->keyname, "Right"))
-     _e_fm_icon_select_right(sd);
+     {
+	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {}
+	else
+	  _e_fm_icon_select_right(sd);
+     }
    else if (!strcmp(ev->keyname, "Escape"))
      {
 	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
