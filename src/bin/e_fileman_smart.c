@@ -2312,7 +2312,8 @@ _e_fm_icon_select_regex(E_Fm_Smart_Data *sd, char *glob)
    _e_fm_string_replace(glob, "*", ".*", tregex, (strlen(glob) + stars + 1)*sizeof(char));
    regex = calloc(strlen(tregex) + 3, sizeof(char));
    snprintf(regex, (strlen(tregex) + 3)*sizeof(char), "^%s$", tregex);
-   regcomp(&reg, regex, REG_NOSUB | REG_EXTENDED);   
+   if(regcomp(&reg, regex, REG_NOSUB | REG_EXTENDED))
+     return;
    _e_fm_selections_clear(sd);   
    for (l = sd->files; l; l = l->next)
      {
