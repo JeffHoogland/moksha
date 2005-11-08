@@ -1739,6 +1739,12 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    sd = data;
 
+   if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+     {
+	edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
+	edje_object_part_text_set(sd->edje_obj, "text", "");	     
+     }      
+   
    switch (ev->button)
     {
      case 1:
@@ -1940,7 +1946,7 @@ _e_fm_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    sd = data;
    ev = event_info;
-
+   
    if (sd->selection.band.enabled)
      {
 	sd->selection.band.enabled = 0;
@@ -2127,6 +2133,12 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    icon = data;
 
+   if(!strcmp(edje_object_part_state_get(icon->sd->edje_obj, "typebuffer", NULL), "shown"))
+     {
+	edje_object_signal_emit(icon->sd->edje_obj, "typebuf_hide", "");
+	edje_object_part_text_set(icon->sd->edje_obj, "text", "");
+     }   
+   
    if(icon->sd->win)
      icon->sd->drag.start = 0;
 }
