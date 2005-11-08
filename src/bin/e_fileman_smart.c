@@ -22,10 +22,6 @@
  * - is the offset code working properly? i have a feeling we're displayin
  *   more icons that the visible space can take and they are being hidden.
  *
- * - add typebuffer like in evidence.
- *
- * - keyboard shortcuts for directory and file navigation.
- *
  * - allow for icon movement inside the canvas
  *
  * - add metadata system which allows us to save icon positions and will
