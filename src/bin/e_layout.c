@@ -263,7 +263,7 @@ _e_layout_smart_disown(Evas_Object *obj)
    evas_object_event_callback_del(obj,
 				  EVAS_CALLBACK_FREE,
 				  _e_layout_smart_item_del_hook);
-   evas_object_smart_member_del(li->sd->obj);
+   evas_object_smart_member_del(obj);
    evas_object_data_del(obj, "e_layout_data");
    free(li);
 }

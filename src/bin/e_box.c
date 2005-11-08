@@ -370,7 +370,7 @@ _e_box_smart_disown(Evas_Object *obj)
    evas_object_event_callback_del(obj,
 				  EVAS_CALLBACK_FREE,
 				  _e_box_smart_item_del_hook);
-   evas_object_smart_member_del(bi->sd->obj);
+   evas_object_smart_member_del(obj);
    evas_object_clip_unset(obj);
    evas_object_data_del(obj, "e_box_data");
    free(bi);

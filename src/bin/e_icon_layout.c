@@ -48,10 +48,6 @@ static void _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coo
 static void _e_icon_layout_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_icon_layout_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_icon_layout_smart_clip_unset(Evas_Object *obj);
-static void _e_icon_layout_smart_raise(Evas_Object *obj);
-static void _e_icon_layout_smart_lower(Evas_Object *obj);
-static void _e_icon_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below);
-static void _e_icon_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -347,7 +343,7 @@ _e_icon_layout_smart_disown(Evas_Object *obj)
    evas_object_event_callback_del(obj,
 				  EVAS_CALLBACK_FREE,
 				  _e_icon_layout_smart_item_del_hook);
-   evas_object_smart_member_del(li->sd->obj);
+   evas_object_smart_member_del(obj);
    evas_object_data_del(obj, "e_icon_layout_data");
    free(li);
 }
@@ -442,6 +438,7 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_icon_layout_smart_move_resize_item(E_Icon_Layout_Item *li)
 {				       
+   /* FIXME: this will get slow with 1000's of objects. be smarter. */
    if(li->w == 0 || li->h == 0)
      {
 	evas_object_geometry_get(li->obj, NULL, NULL, &li->w, &li->h);
@@ -458,11 +455,7 @@ _e_icon_layout_smart_init(void)
    _e_smart = evas_smart_new("e_icon_layout",
 			     _e_icon_layout_smart_add,
 			     _e_icon_layout_smart_del,
-			     NULL, 
-			     _e_icon_layout_smart_raise, 
-			     _e_icon_layout_smart_lower,
-			     _e_icon_layout_smart_stack_above, 
-			     _e_icon_layout_smart_stack_below,
+			     NULL, NULL, NULL, NULL, NULL,
 			     _e_icon_layout_smart_move,
 			     _e_icon_layout_smart_resize,
 			     _e_icon_layout_smart_show,
@@ -543,58 +536,6 @@ _e_icon_layout_smart_del(Evas_Object *obj)
    free(sd);
 }
 
-static void 
-_e_icon_layout_smart_raise(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   Evas_List *l;
-   
-   sd = evas_object_smart_data_get(obj);
-   
-   if (!sd) return;
-   for(l = sd->items; l; l = l->next)
-     evas_object_raise(l->data);
-}
-
-static void 
-_e_icon_layout_smart_lower(Evas_Object *obj)
-{
-   E_Smart_Data *sd;
-   Evas_List *l;
-   
-   sd = evas_object_smart_data_get(obj);
-   
-   if (!sd) return;
-   for(l = sd->items; l; l = l->next)
-     evas_object_lower(l->data);
-}  
-
-static void
-_e_icon_layout_smart_stack_above(Evas_Object *obj, Evas_Object *above)
-{
-   E_Smart_Data *sd;
-   Evas_List *l;
-   
-   sd = evas_object_smart_data_get(obj);
-   
-   if (!sd) return;
-   for(l = sd->items; l; l = l->next)
-     evas_object_stack_above(l->data, above);
-}
-
-static void
-_e_icon_layout_smart_stack_below(Evas_Object *obj, Evas_Object *below)
-{
-   E_Smart_Data *sd;
-   Evas_List *l;
-   
-   sd = evas_object_smart_data_get(obj);
-   
-   if (!sd) return;
-   for(l = sd->items; l; l = l->next)
-     evas_object_stack_above(l->data, below);
-}
-
 static void
 _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
@@ -605,23 +546,25 @@ _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
    if ((x == sd->x) && (y == sd->y)) return;
-    {
-       Evas_List *l;
-       Evas_Coord dx, dy;
-       
-       if(!sd->clip_frozen)
-	 evas_object_move(sd->clip, x, y);
-       
-       dx = x - sd->x;
-       dy = y - sd->y;
-       for (l = sd->items; l; l = l->next)
-	{
-	   Evas_Coord ox, oy;
-	   
-	   evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
-	   evas_object_move(l->data, ox + dx, oy + dy);
-	}
-    }
+   
+   /* FIXME: this will get slow with 1000's of objects. be smarter. */
+     {
+	Evas_List *l;
+	Evas_Coord dx, dy;
+	
+	if (!sd->clip_frozen)
+	  evas_object_move(sd->clip, x, y);
+	
+	dx = x - sd->x;
+	dy = y - sd->y;
+	for (l = sd->items; l; l = l->next)
+	  {
+	     Evas_Coord ox, oy;
+	     
+	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
+	     evas_object_move(l->data, ox + dx, oy + dy);
+	  }
+     }
    sd->x = x;
    sd->y = y;
 }

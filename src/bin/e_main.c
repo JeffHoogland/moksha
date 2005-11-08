@@ -267,9 +267,8 @@ main(int argc, char **argv)
      }
    _e_main_shutdown_push(ecore_shutdown);
    
-/* disabled for now - seems to break config loading??? */   
    _e_cacheburst++;
-   eet_cacheburst(_e_cacheburst);
+//   eet_cacheburst(_e_cacheburst);
    ecore_timer_add(5.0, _e_main_cb_eet_cacheburst_end, NULL);
    
     /* init the file system */
@@ -1092,7 +1091,7 @@ _e_main_cb_idler_before(void *data __UNUSED__)
 	  }
      }
    _e_cacheburst--;
-   eet_cacheburst(_e_cacheburst);
+//   eet_cacheburst(_e_cacheburst);
    edje_thaw();
 //   printf("IN to idle... %3.3f\n", ecore_time_get());
    return 1;
@@ -1104,7 +1103,7 @@ _e_main_cb_idler_after(void *data __UNUSED__)
 //   printf("OUT of idle... %3.3f\n", ecore_time_get());
    edje_freeze();
    _e_cacheburst++;
-   eet_cacheburst(_e_cacheburst);
+//   eet_cacheburst(_e_cacheburst);
    return 1;
 }
 
@@ -1112,7 +1111,7 @@ static int
 _e_main_cb_eet_cacheburst_end(void *data __UNUSED__)
 {
    _e_cacheburst--;
-   eet_cacheburst(_e_cacheburst);
+//   eet_cacheburst(_e_cacheburst);
    return 0;
 }
 
