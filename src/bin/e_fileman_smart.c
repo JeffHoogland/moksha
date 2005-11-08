@@ -9,6 +9,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <regex.h>
+#include <glob.h>
 
 /* TODO:
  *
@@ -235,7 +236,9 @@ static void                _e_fm_icon_mouse_out_cb  (void *data, Evas *e, Evas_O
 static void                _e_fm_icon_mouse_move_cb (void *data, Evas *e, Evas_Object *obj, void *event_info);
 static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void *event);
 
-static void                _e_fm_icon_select_regex(E_Fm_Smart_Data *sd, char *glob);
+static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
+
+static void                _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb);
 static void                _e_fm_icon_select_up(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_down(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_left(E_Fm_Smart_Data *sd);
@@ -2301,64 +2304,65 @@ _e_fm_string_replace(const char *src, const char *key, const char *replacement, 
    result[resultlen] = '\0';
 }
 
-
 static void
-_e_fm_icon_select_regex(E_Fm_Smart_Data *sd, char *glob)
+_e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb)
 {
-   E_Fm_Icon *icon;
+   E_Fm_Icon *icon, *anchor;
    Evas_List *l;
-   char *regex, *tregex;
-   regex_t reg, *creg;
-   int stars, i;
+   char *glbpath;
+   Evas_Coord x, y, w, h;
+   E_Event_Fm_Reconfigure *ev;   
+   int i;
+   glob_t globbuf;
    
-   stars = 0;
-   for(i = 0; i < strlen(glob); i++)
-     if(glob[i] == '*')
-       stars++;
-         
-   tregex = calloc(strlen(glob) + stars + 1, sizeof(char));
-   _e_fm_string_replace(glob, "*", ".*", tregex, (strlen(glob) + stars + 1)*sizeof(char));
-   regex = calloc(strlen(tregex) + 3, sizeof(char));
-   snprintf(regex, (strlen(tregex) + 3)*sizeof(char), "^%s$", tregex);
-   if(regcomp(&reg, regex, REG_NOSUB | REG_EXTENDED))
+   anchor = NULL;
+   ev = NULL;
+   glbpath = E_NEW(char, strlen(sd->dir) + strlen(glb) + 2);
+   snprintf(glbpath, strlen(sd->dir) + strlen(glb) + 2, "%s/%s", sd->dir, glb);
+   if(glob(glbpath, 0, NULL, &globbuf))
      return;
-   _e_fm_selections_clear(sd);   
+   
+   _e_fm_selections_clear(sd);
    for (l = sd->files; l; l = l->next)
      {
-	icon = l->data;
-	creg = &reg;
-	if(!regexec(creg, icon->file->name, 0, NULL, 0))
-	  {	     
-	     _e_fm_selections_add(l->data, l);	     
-	  }
-     }
-
-   return;
-#if 0   
-position:
-     {	
-	Evas_Coord x, y, w, h;
-	icon = l->data;
-	evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
-	if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+	icon = l->data;	
+	for(i = 0; i < globbuf.gl_pathc; i++)
 	  {
-	     E_Event_Fm_Reconfigure *ev;
-
-	     ev = E_NEW(E_Event_Fm_Reconfigure, 1);
-	     if (ev)
-	       {			    
-		  ev->object = sd->object;
-		  ev->x = sd->x;
-		  ev->y = sd->child.y - (sd->y - (y - sd->icon_info.y_space));
-		  ev->w = sd->w;
-		  ev->h = sd->h;
-		  ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
-	       }
+	     char *file;
+	     
+	     file = ecore_file_get_file(globbuf.gl_pathv[i]);
+	     if(!strcmp(icon->file->name, file))
+		{
+		   _e_fm_selections_add(l->data, l);
+		   if(!anchor)
+		     {
+			evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
+			
+			if(!E_CONTAINS(sd->x, sd->y, sd->w, sd->h, x, y, w, h))
+			  {		  
+			     ev = E_NEW(E_Event_Fm_Reconfigure, 1);
+			     if (ev)
+			       {
+				  anchor = icon;
+				  ev->object = sd->object;
+				  ev->x = sd->x;
+				  ev->y = sd->child.y - (sd->y - (y - sd->icon_info.y_space));
+				  ev->w = sd->w;
+				  ev->h = sd->h;
+			       }
+			  }
+		     }
+		}
 	  }
      }
-#endif   
+   
+   if(anchor && ev)
+     ecore_event_add(E_EVENT_FM_RECONFIGURE, ev, NULL, NULL);
 }
 
+/* do we keep this? might come in handy if we need to jump to a file starting
+ * with a certain char
+ */
 static void
 __e_fm_icon_goto_key(E_Fm_Smart_Data *sd, char *c)
 {
@@ -2727,7 +2731,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    
    ev = event_info;
    sd = data;   
-   
+
    if (!strcmp(ev->keyname, "Up"))
      {
 	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
@@ -2780,7 +2784,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     buf = strdup(edje_object_part_text_get(sd->edje_obj, "text"));
 	     edje_object_part_text_set(sd->edje_obj, "text", "");
 	     if(strcmp(buf, ""))
-	       _e_fm_icon_select_regex(sd, buf);
+	       _e_fm_icon_select_glob(sd, buf);
 	  }
 	else
 	  _e_fm_icon_run(sd);
@@ -2816,7 +2820,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	       }
 	  }
      }
-   else if(strlen(ev->keyname) == 1)
+   else if (ev->string)
      {
 	char *str;
 	str = NULL;
@@ -2834,6 +2838,7 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     edje_object_part_text_set(sd->edje_obj, "text", ev->string);
 	  }
+	
 	if(strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
 	  edje_object_signal_emit(sd->edje_obj, "typebuf_show", "");
      }   
