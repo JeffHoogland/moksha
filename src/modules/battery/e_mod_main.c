@@ -1468,6 +1468,7 @@ _battery_bsd_acpi_check(Battery *ef)
 static Status *
 _battery_bsd_apm_check(Battery *ef)
 {
+#ifdef __i386__
    int  ac_stat, bat_stat, bat_val, time_val;
    char buf[4096];
    int  hours, minutes;
@@ -1556,6 +1557,9 @@ _battery_bsd_apm_check(Battery *ef)
      }
    
    return stat;
+#else
+   return NULL;
+#endif
 }
 #endif
 
