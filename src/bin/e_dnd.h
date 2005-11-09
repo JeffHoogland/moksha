@@ -129,3 +129,8 @@ EAPI void e_drop_handler_del(E_Drop_Handler *handler);
 
 #endif
 #endif
+
+#ifndef MIN
+#define MIN(x, y) (((x) > (y)) ? (y) : (x))
+#endif
+
