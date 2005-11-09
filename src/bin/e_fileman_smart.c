@@ -1735,6 +1735,8 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Fm_Smart_Data *sd;
    Evas_Event_Mouse_Down *ev;
+   E_Fm_Icon *icon;
+   Evas_List *l;
    E_Menu      *mn;
    E_Menu_Item *mi;
    int x, y, w, h;
@@ -1745,7 +1747,13 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
      {
 	edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
-	edje_object_part_text_set(sd->edje_obj, "text", "");	     
+	edje_object_part_text_set(sd->edje_obj, "text", "");
+	for (l = sd->files; l; l = l->next)
+	  {
+	     icon = l->data;
+	     e_fm_icon_signal_emit(icon->icon_object, "default", "");
+	  }	
+	edje_object_signal_emit(sd->edje_obj, "default", "");	
      }      
    
    switch (ev->button)
@@ -2132,16 +2140,24 @@ _e_fm_icon_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    E_Fm_Icon *icon;
    Evas_Event_Mouse_Move *ev;
+   Evas_List *l;
 
-   ev = event_info;
+   ev = event_info;  
    icon = data;
-
+   
    if(!strcmp(edje_object_part_state_get(icon->sd->edje_obj, "typebuffer", NULL), "shown"))
-     {
+     {	
+	E_Fm_Icon *i;
 	edje_object_signal_emit(icon->sd->edje_obj, "typebuf_hide", "");
 	edje_object_part_text_set(icon->sd->edje_obj, "text", "");
+	for (l = icon->sd->files; l; l = l->next)
+	  {
+	     i = l->data;
+	     e_fm_icon_signal_emit(i->icon_object, "default", "");
+	  }	
+	edje_object_signal_emit(icon->sd->edje_obj, "default", "");	
      }   
-   
+
    if(icon->sd->win)
      icon->sd->drag.start = 0;
 }

@@ -429,8 +429,19 @@ group {
             }
             rel2 {
                relative: 1.0 1.0;
-               offset: -16 0;            
+               offset: -16 -1;
             }
+         }
+	 description {
+            state: "hidden" 0.0;
+            rel1 {
+               relative: 0 0;
+               offset: 0 0;
+            }
+            rel2 {
+               relative: 1.0 1.0;
+               offset: -1 -1;
+            }	    
          }
       }      
       part {
@@ -914,6 +925,7 @@ group {
 	 source: "show";
 	 action:  STATE_SET "default" 0.0;
 	 target: "sb_vbar";
+	 target: "item";	 
       }
       program {
 	 name: "sb_vbar_hide";
@@ -921,6 +933,7 @@ group {
 	 source: "hide";
 	 action:  STATE_SET "hidden" 0.0;
 	 target: "sb_vbar";
+	 target: "item";
       }
       program {
 	 name: "sb_hbar_show";
@@ -928,6 +941,7 @@ group {
 	 source: "show";
 	 action:  STATE_SET "default" 0.0;
 	 target: "sb_hbar";
+         target: "item";	 
       }
       program {
 	 name: "sb_hbar_hide";
@@ -935,6 +949,7 @@ group {
 	 source: "hide";
 	 action:  STATE_SET "hidden" 0.0;
 	 target: "sb_hbar";
+	 target: "item";	 
       }
       
       program {
