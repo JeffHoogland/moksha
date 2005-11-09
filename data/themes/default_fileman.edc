@@ -37,6 +37,29 @@ group { \
 	       normal: "e17_icon_fileman_"TYPE".png"; \
 	    } \
 	 } \
+	 description { \	    
+	    state:    "disabled" 0.0; \
+            inherit: "default" 0.0; \
+            color: 128 128 128 255; \
+	 } \
+      } \
+   } \
+   programs { \
+      program { \
+	 name:   "disable"; \
+	 signal: "disable"; \
+	 source: ""; \
+	 action: STATE_SET "disabled" 0.0; \
+	 transition:  LINEAR 0.1; \
+	 target: "icon"; \
+      } \
+      program { \
+	 name:   "default"; \
+	 signal: "default"; \
+	 source: ""; \
+	 action: STATE_SET "default" 0.0; \
+	 transition:  LINEAR 0.1; \
+	 target: "icon"; \
       } \
    } \
 } \
@@ -64,6 +87,11 @@ group { \
 	       normal: "e17_icon_fileman_"TYPE"_clicked.png"; \
 	    } \
 	 } \
+	 description { \	    
+	    state:    "disabled" 0.0; \
+            inherit: "default" 0.0; \
+            color: 128 128 128 255; \
+	 } \	 
       } \
    } \
    programs { \
@@ -79,6 +107,22 @@ group { \
 	 signal: "unclicked"; \
 	 source: ""; \
 	 action: STATE_SET "default" 0.0; \
+	 target: "icon"; \
+      } \
+      program { \
+	 name:   "disable"; \
+	 signal: "disable"; \
+	 source: ""; \
+	 action: STATE_SET "disabled" 0.0; \
+	 transition:  LINEAR 0.1; \
+	 target: "icon"; \
+      } \
+      program { \
+	 name:   "default"; \
+	 signal: "default"; \
+	 source: ""; \
+	 action: STATE_SET "default" 0.0; \
+	 transition:  LINEAR 0.1; \
 	 target: "icon"; \
       } \
    } \
@@ -171,17 +215,30 @@ group {
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
-	 }
+	 }	    
+      }      
+      part {
+	 name: "background_overlay";
+	 type: RECT;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	 }	    
+	 description {
+	    state: "selecting" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;	    
+	    color: 0 0 0 128;
+	 }      
       }
-      
       part {
 	 name: "icons";
 	 type: SWALLOW;
 	 description {
 	    state: "default" 0.0;
 	 }
-      }
-      
+      }      
       part {
 	 name:         "typebuffer";
 	 mouse_events: 0;
@@ -252,8 +309,24 @@ group {
 	    action: STATE_SET "default" 0.0;
 	    transition: LINEAR 0.2;
 	    target: "typebuffer";
-	    target: "text";	    
+	    target: "text";
 	 }
+	 program {
+	    name: "default";
+	    signal: "default";
+	    source: "";
+	    action: STATE_SET "default" 0.0;
+	    transition: LINEAR 0.1;
+	    target: "background_overlay";
+	 }
+	 program {
+	    name: "selecting";
+	    signal: "selecting";
+	    source: "";
+	    action: STATE_SET "selecting" 0.0;
+	    transition: LINEAR 0.1;
+	    target: "background_overlay";
+	 }	 
       }
    }
 }
@@ -1015,7 +1088,6 @@ group {
 	    mouse_events:  1;
 	    description {
 	       state:      "default" 0.0;
-	       visible:     0;
 	       rel1 {
 		  relative: 0.0 0.0;
 		  offset:   0 0;
@@ -1028,11 +1100,12 @@ group {
 		  normal: "e17_button.png";
 		  border: 8 8 8 8;
 	       }
+	       color: 255 255 255 0;	       
 	    }
 	    description {
 	       state: "clicked" 0.0;
 	       inherit: "default" 0.0;
-	       visible: 1;
+	       color: 255 255 255 255;
 	    }
 	 }      	 
 	 part {
@@ -1138,6 +1211,7 @@ group {
 	 signal: "clicked"; 
 	 source: ""; 
 	 action: STATE_SET "clicked" 0.0; 
+         transition: LINEAR 0.2;
 	 target: "icon_title"; 
 	 target: "icon_overlay";
       } 
@@ -1145,7 +1219,8 @@ group {
 	 name:   "unclicked"; 
 	 signal: "unclicked"; 
 	 source: ""; 
-	 action: STATE_SET "default" 0.0; 
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.2;	 
 	 target: "icon_title"; 
          target: "icon_overlay";	 
       }      
@@ -1235,15 +1310,52 @@ group {
 	       to: "icon_box_bg";
 	    }	    
 	 }
+      }
+      part {
+	 name:          "icon_overlay";
+	 type:          RECT;
+	 mouse_events:  0;
+	 description {
+	    state:      "default" 0.0;
+	    visible: 0;
+	    rel1 {
+	       to: "icon_box_bg";
+	    }
+	    rel2 {
+	       to: "icon_box_bg";
+	    }	    
+	 }
+	 description {
+	    state: "disabled" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 0 0 0 128;
+	 }
       }      
+   }
+   programs {
+      program { 
+	 name:   "disable"; 
+	 signal: "disable"; 
+	 source: ""; 
+	 action: STATE_SET "disabled" 0.0;
+	 transition: LINEAR 0.1;
+	 target: "icon_overlay";
+      } 
+      program { 
+	 name:   "default"; 
+	 signal: "default"; 
+	 source: ""; 
+	 action: STATE_SET "default" 0.0;
+	 transition: LINEAR 0.1;	 
+	 target: "icon_overlay";
+      }
    }
 }
 
 
 group {
    name: "fileman/icon_list";
-//   min:  12 12;
-//   max:  12 12;
    parts {
       part {
 	 name:          "icon_swallow";
@@ -1251,8 +1363,6 @@ group {
 	 mouse_events:  0;
 	 description {	 
 	    state:    "default" 0.0;
-	    //min:      16 16;
-	    //max:      16 16;
 	    align:    1.0 1.0;
 	    fixed:    1 1;
 	    rel1 {
@@ -1271,7 +1381,6 @@ group {
 	 effect:        SHADOW;
 	 description {	 
 	    state: "default" 0.0;
-	    //min:      16 16;
 	    rel1 {
 	       to_x:     "icon_swallow";
 	       relative: 1.0  0.0;
@@ -1301,31 +1410,7 @@ group {
 	   state: "default" 0.0;
 	   color: 0 0 0 0;
 	}	 
-      }      
-/*
-      part {
-	 name:          "icon_title";
-	 type:          TEXTBLOCK;
-	 effect:        NONE;
-	 description {
-	    rel1 {
-	       relative: 0.0 1.0;
-	       offset:   5 -20;
-	    }	   
-	    rel2 {
-	       relative: 1.0 1.0;
-	       offset:   -6 1000;
-	    }	    
-	    color:      0 0 0 255;
-	    //color3:     0 0 0 32;
-	    text {
-	       text:     "No Title";
-	       style:    "fileman_icon_style";
-	       min: 1 1;
-	    }
-	 }
       }
-*/
       part {
 	 name:          "icon_title_edit_swallow";
 	 type:          SWALLOW;

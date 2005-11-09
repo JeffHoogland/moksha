@@ -28,9 +28,19 @@ static void _e_fileman_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coor
 static void _e_fileman_scroll_child_size_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static int  _e_fileman_reconfigure_cb(void *data, int type, void *event);
 
-  
 E_Fileman *
 e_fileman_new(E_Container *con)
+{
+   char dir[PATH_MAX];
+   
+   if (!getcwd(dir, sizeof(dir)))
+     return NULL;
+   
+   return e_fileman_new_to_dir(con, dir);
+}
+
+E_Fileman *
+e_fileman_new_to_dir(E_Container *con, char *path)
 {
    E_Fileman *fileman;
    E_Manager *man;
@@ -44,8 +54,12 @@ e_fileman_new(E_Container *con)
 	if (!con) con = e_container_number_get(man, 0);
 	if (!con) return NULL;
      }
-   if (!getcwd(dir, sizeof(dir)))
-     return NULL;
+
+   snprintf(dir, PATH_MAX, "%s", path);
+   
+   if(!ecore_file_is_dir(dir))
+     if (!getcwd(dir, sizeof(dir)))
+       return NULL;
 
    fileman = E_OBJECT_ALLOC(E_Fileman, E_FILEMAN_TYPE, _e_fileman_free);
    if (!fileman) return NULL;
@@ -72,8 +86,9 @@ e_fileman_new(E_Container *con)
    e_win_title_set(fileman->win, dir);
 
    evas_event_freeze(fileman->evas);   
-   fileman->smart = e_fm_add(fileman->evas); 
+   fileman->smart = e_fm_add(fileman->evas);
    e_fm_e_win_set(fileman->smart, fileman->win);
+   e_fm_dir_set(fileman->smart, dir);   
    
    fileman->main = e_scrollframe_add(fileman->evas);
    e_scrollframe_custom_theme_set(fileman->main, "base/themes/fileman",

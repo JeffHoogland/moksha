@@ -840,7 +840,21 @@ break;
  * E_LIB_IN
  *   ...
  */
-   
+/****************************************************************************/
+#define HDL E_IPC_EFM_START
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-start-efm", 1, "Starts the E File Manager in Directory 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+     REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   E_Fileman *fileman;
+   fileman = e_fileman_new_to_dir(e_container_current_get(e_manager_current_get()), s);
+   e_fileman_show (fileman);
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
 /****************************************************************************/
 #define HDL E_IPC_OP_MODULE_LOAD
 #if (TYPE == E_REMOTE_OPTIONS)

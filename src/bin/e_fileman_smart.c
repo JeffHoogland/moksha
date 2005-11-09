@@ -237,6 +237,7 @@ static int                 _e_fm_win_mouse_up_cb    (void *data, int type, void 
 
 static void                _e_fm_string_replace(const char *src, const char *key, const char *replacement, char *result, size_t resultsize);
 
+static void                _e_fm_autocomplete(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb);
 static void                _e_fm_icon_select_up(E_Fm_Smart_Data *sd);
 static void                _e_fm_icon_select_down(E_Fm_Smart_Data *sd);
@@ -2154,7 +2155,7 @@ _e_fm_icon_mouse_in_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    icon = data;
 
-   e_fm_icon_signal_emit(icon->icon_object, "hilight", "");
+   e_fm_icon_signal_emit(icon->icon_object, "mousein", "");
 }
 
 static void
@@ -2166,7 +2167,7 @@ _e_fm_icon_mouse_out_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
    ev = event_info;
    icon = data;
 
-   e_fm_icon_signal_emit(icon->icon_object, "default", "");
+   e_fm_icon_signal_emit(icon->icon_object, "mouseout", "");
 }
 
 static void
@@ -2304,6 +2305,12 @@ _e_fm_string_replace(const char *src, const char *key, const char *replacement, 
 }
 
 static void
+_e_fm_autocomplete(E_Fm_Smart_Data *sd)
+{
+   /* TODO */
+}
+
+static void
 _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb)
 {
    E_Fm_Icon *icon, *anchor;
@@ -2318,10 +2325,21 @@ _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb)
    ev = NULL;
    glbpath = E_NEW(char, strlen(sd->dir) + strlen(glb) + 2);
    snprintf(glbpath, strlen(sd->dir) + strlen(glb) + 2, "%s/%s", sd->dir, glb);
-   if(glob(glbpath, 0, NULL, &globbuf))
-     return;
    
    _e_fm_selections_clear(sd);
+
+   edje_object_signal_emit(sd->edje_obj, "selecting", "");
+   
+   if(glob(glbpath, 0, NULL, &globbuf))
+     {
+	for (l = sd->files; l; l = l->next)
+	  {
+	     icon = l->data;
+	     e_fm_icon_signal_emit(icon->icon_object, "disable", "");
+	  }
+	return;
+     }
+   
    for (l = sd->files; l; l = l->next)
      {
 	icon = l->data;	
@@ -2333,6 +2351,7 @@ _e_fm_icon_select_glob(E_Fm_Smart_Data *sd, char *glb)
 	     if(!strcmp(icon->file->name, file))
 		{
 		   _e_fm_selections_add(l->data, l);
+		   e_fm_icon_signal_emit(icon->icon_object, "default", "");
 		   if(!anchor)
 		     {
 			evas_object_geometry_get(icon->icon_object, &x, &y, &w, &h);
@@ -2727,16 +2746,32 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    Evas_Event_Key_Down *ev;
    E_Fm_Smart_Data *sd;
+   Evas_List *l;
+   E_Fm_Icon *icon;
    
    ev = event_info;
    sd = data;   
 
+   if (!strcmp(ev->keyname, "Tab"))
+     {   
+	if(strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
+	  {
+	     
+	     _e_fm_autocomplete(sd);
+	  }
+     }
    if (!strcmp(ev->keyname, "Up"))
      {
 	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
-	  {
+	  {	     
 	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
-	     edje_object_part_text_set(sd->edje_obj, "text", "");	     
+	     edje_object_part_text_set(sd->edje_obj, "text", "");
+	     for (l = sd->files; l; l = l->next)
+	       {
+		  icon = l->data;
+		  e_fm_icon_signal_emit(icon->icon_object, "default", "");
+	       }
+	     edje_object_signal_emit(sd->edje_obj, "default", "");	     
 	  }
 	else          
 	  _e_fm_icon_select_up(sd);
@@ -2746,7 +2781,13 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
 	  {
 	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
-	     edje_object_part_text_set(sd->edje_obj, "text", "");	     
+	     edje_object_part_text_set(sd->edje_obj, "text", "");
+	     for (l = sd->files; l; l = l->next)
+	       {
+		  icon = l->data;
+		  e_fm_icon_signal_emit(icon->icon_object, "default", "");
+	       }
+	     edje_object_signal_emit(sd->edje_obj, "default", "");	     
 	  }
 	else     
 	  _e_fm_icon_select_down(sd);
@@ -2771,19 +2812,26 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	  {
 	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");	     
 	     edje_object_part_text_set(sd->edje_obj, "text", "");
+	     for (l = sd->files; l; l = l->next)
+	       {
+		  icon = l->data;
+		  e_fm_icon_signal_emit(icon->icon_object, "default", "");
+	       }
+	     edje_object_signal_emit(sd->edje_obj, "default", "");	     
 	  }
      }
    else if (!strcmp(ev->keyname, "Return"))
      {
 	if(!strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))
 	  {
-	     char *buf;
-	     
 	     edje_object_signal_emit(sd->edje_obj, "typebuf_hide", "");
-	     buf = strdup(edje_object_part_text_get(sd->edje_obj, "text"));
 	     edje_object_part_text_set(sd->edje_obj, "text", "");
-	     if(strcmp(buf, ""))
-	       _e_fm_icon_select_glob(sd, buf);
+	     for (l = sd->files; l; l = l->next)
+	       {
+		  icon = l->data;
+		  e_fm_icon_signal_emit(icon->icon_object, "default", "");
+	       }
+	     edje_object_signal_emit(sd->edje_obj, "default", "");	     
 	  }
 	else
 	  _e_fm_icon_run(sd);
@@ -2803,6 +2851,8 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 		  buf = calloc(size , sizeof(char));
 		  snprintf(buf, size, "%s", str);
 		  edje_object_part_text_set(sd->edje_obj, "text", buf);
+		  _e_fm_icon_select_glob(sd, buf);
+		  E_FREE(buf);
 	       }	     
 	  }
 	else
@@ -2832,10 +2882,13 @@ _e_fm_key_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	     buf = calloc(size, sizeof(char));
 	     snprintf(buf, size, "%s%s", str, ev->string);
 	     edje_object_part_text_set(sd->edje_obj, "text", buf);
+	     _e_fm_icon_select_glob(sd, buf);	     
+	     E_FREE(buf);
 	  }
 	else
 	  {
 	     edje_object_part_text_set(sd->edje_obj, "text", ev->string);
+	     _e_fm_icon_select_glob(sd, ev->string);	     
 	  }
 	
 	if(strcmp(edje_object_part_state_get(sd->edje_obj, "typebuffer", NULL), "shown"))

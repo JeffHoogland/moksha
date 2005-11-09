@@ -38,6 +38,7 @@ struct _E_Fileman
 };
 
 EAPI E_Fileman *e_fileman_new(E_Container *con);
+EAPI E_Fileman *e_fileman_new_to_dir(E_Container *con, char *path);
 EAPI void       e_fileman_show(E_Fileman *fileman);
 EAPI void       e_fileman_hide(E_Fileman *fileman);
 EAPI void       e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, char *file, void *data), void *data);
