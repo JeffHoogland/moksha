@@ -85,10 +85,15 @@ static void
 _e_wid_text_change(void *data, Evas_Object *entry, char *key)
 {
    E_Widget_Data *wd;
+   const char *text;
    
    wd = data;         
    E_FREE(*(wd->valptr));
-   *(wd->valptr) = strdup(e_entry_text_get(wd->o_entry));
+   text = e_entry_text_get(wd->o_entry);
+   if (!text)
+     *(wd->valptr) = strdup("");
+   else
+     *(wd->valptr) = strdup(text);
    e_widget_change(wd->obj);   
 }
 
