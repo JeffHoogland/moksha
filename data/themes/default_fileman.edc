@@ -100,6 +100,7 @@ group { \
 	 signal: "clicked"; \
 	 source: ""; \
 	 action: STATE_SET "clicked" 0.0; \
+	 transition:  LINEAR 0.1; \
 	 target: "icon"; \
       } \
       program { \
@@ -107,6 +108,7 @@ group { \
 	 signal: "unclicked"; \
 	 source: ""; \
 	 action: STATE_SET "default" 0.0; \
+	 transition:  LINEAR 0.1; \
 	 target: "icon"; \
       } \
       program { \

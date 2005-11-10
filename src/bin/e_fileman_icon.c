@@ -3,6 +3,26 @@
  */
 #include "e.h"
 
+#define NEWD(str, typ) \
+   eet_data_descriptor_new(str, sizeof(typ), \
+			      (void *(*) (void *))evas_list_next, \
+			      (void *(*) (void *, void *))evas_list_append, \
+			      (void *(*) (void *))evas_list_data, \
+			      (void *(*) (void *))evas_list_free, \
+			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
+			      (void *(*) (void *, const char *, void *))evas_hash_add, \
+			      (void  (*) (void *))evas_hash_free)
+
+#define FREED(eed) \
+   if (eed) \
+       { \
+	  eet_data_descriptor_free((eed)); \
+	  (eed) = NULL; \
+       }
+#define NEWI(str, it, type) \
+   EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm_icon_meta_edd, E_Fm_Icon_Metadata, str, it, type)
+
+
 typedef struct _E_Smart_Data       E_Smart_Data;
 
 struct _E_Smart_Data
@@ -46,6 +66,7 @@ static int   _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event);
 
 static void  _e_fm_icon_type_set(E_Smart_Data *sd);
     
+static void _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd);
 
 /* local subsystem globals */
 static Evas_Smart *e_smart = NULL;
@@ -55,10 +76,19 @@ static Evas_List  *thumb_files = NULL;
 
 static Evas_List  *event_handlers = NULL;
 
+static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
+
 /* externally accessible functions */
 int
 e_fm_icon_init(void)
 {
+   _e_fm_icon_meta_edd = NEWD("E_Fm_Icon_Metadata", E_Fm_Icon_Metadata);
+   NEWI("x", x, EET_T_INT);
+   NEWI("y", y, EET_T_INT);
+   NEWI("w", w, EET_T_INT);
+   NEWI("h", h, EET_T_INT);
+   NEWI("nm", name, EET_T_STRING);
+   
    event_handlers = evas_list_append(event_handlers,
                                      ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
                                                              _e_fm_icon_thumb_cb_exe_exit,
@@ -69,6 +99,7 @@ e_fm_icon_init(void)
 int
 e_fm_icon_shutdown(void)
 {
+   FREED(_e_fm_icon_meta_edd);
    while (event_handlers)
      {
 	ecore_event_handler_del(event_handlers->data);
@@ -109,7 +140,10 @@ void
 e_fm_icon_type_set(Evas_Object *obj, int type)
 {
    E_Smart_Data *sd;
-   
+
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+      
    if(sd->type == type)
      return;
    
@@ -136,7 +170,8 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   e_object_ref(E_OBJECT(file));
+   if(!sd->file)
+     e_object_ref(E_OBJECT(file));
    sd->file = file;
    file->icon_object = obj;
         
@@ -184,6 +219,51 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
    evas_object_resize(sd->obj, 0, 0); // because it still thinks its the same size
    // 96 is an aritary width - should be user configurable
    evas_object_resize(sd->obj, 80, icon_h);
+}
+
+void
+e_fm_icon_appear_cb(Evas_Object *obj, void *data)
+{    
+   E_Smart_Data *sd;
+
+   evas_object_show(obj);
+   return;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;   
+   if(sd->visible) return;
+   sd->visible = 1;
+   
+   sd->icon_object = edje_object_add(sd->evas);
+   evas_object_smart_member_add(sd->icon_object, obj);
+   
+   sd->event_object = evas_object_rectangle_add(sd->evas);
+   evas_object_color_set(sd->event_object, 0, 0, 0, 0);
+   evas_object_smart_member_add(sd->event_object, obj);
+   evas_object_smart_data_set(obj, sd);
+      
+   e_fm_icon_file_set(obj, sd->file);
+   evas_object_show(obj);
+}
+
+void
+e_fm_icon_disappear_cb(Evas_Object *obj, void *data)
+{
+   E_Smart_Data *sd;
+
+   evas_object_hide(obj);
+   return;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   if(!sd->visible) return;
+   sd->visible = 0;
+   
+   if (sd->event_object) evas_object_del(sd->event_object);
+   if (sd->icon_object) evas_object_del(sd->icon_object);
+   if (sd->image_object) evas_object_del(sd->image_object);
+   if (sd->thumb_object) evas_object_del(sd->thumb_object);
+   E_FREE(sd->saved_title);   
 }
 
 void
@@ -256,6 +336,32 @@ e_fm_icon_signal_emit(Evas_Object *obj, const char *source, const char *emission
    if (sd->image_object) edje_object_signal_emit(sd->image_object, source, emission);
 }
 
+E_Fm_Icon_Metadata *
+e_fm_icon_meta_generate(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   E_Fm_Icon_Metadata *m;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;   
+     
+   m = calloc(1, sizeof(E_Fm_Icon_Metadata));
+   if (!m) return NULL;
+   _e_fm_icon_meta_fill(m, sd);
+
+   return m;
+}
+
+void
+e_fm_icon_meta_free(E_Fm_Icon_Metadata *m)
+{
+   if (!m) return;
+   E_FREE(m->name);
+
+   free(m);
+}
+
+
 int
 e_fm_icon_assoc_set(Evas_Object *obj, const char *assoc)
 {
@@ -282,6 +388,7 @@ _e_fm_icon_smart_add(Evas_Object *obj)
    sd->h = 64;
    sd->iw = 48;
    sd->ih = 48;
+   sd->file = NULL;
    
    sd->icon_object = edje_object_add(sd->evas);
    evas_object_smart_member_add(sd->icon_object, obj);
@@ -321,8 +428,10 @@ _e_fm_icon_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((sd->x == x) && (sd->y == y)) return;
    sd->x = x;
    sd->y = y;
-   evas_object_move(sd->event_object, x, y);
-   evas_object_move(sd->icon_object, x, y);
+   if(sd->event_object)
+     evas_object_move(sd->event_object, x, y);
+   if(sd->icon_object)
+     evas_object_move(sd->icon_object, x, y);
 }
 
 static void
@@ -335,7 +444,9 @@ _e_fm_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if ((sd->w == w) && (sd->h == h)) return;   
    sd->w = w;
    sd->h = h;
-   evas_object_resize(sd->event_object, sd->w, sd->h);
+   if(sd->event_object)     
+     evas_object_resize(sd->event_object, sd->w, sd->h);
+   if(sd->icon_object)     
    evas_object_resize(sd->icon_object, sd->w, sd->h);
 }
 
@@ -346,7 +457,9 @@ _e_fm_icon_smart_show(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   evas_object_show(sd->icon_object);
+   if(sd->event_object)     
+     evas_object_show(sd->icon_object);
+   if(sd->icon_object)     
    evas_object_show(sd->event_object);   
 }
 
@@ -357,8 +470,10 @@ _e_fm_icon_smart_hide(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if(sd->event_object)     
    evas_object_hide(sd->icon_object);
-   evas_object_hide(sd->event_object);   
+   if(sd->icon_object)     
+     evas_object_hide(sd->event_object);   
 }
 
 static void
@@ -582,4 +697,14 @@ _e_fm_icon_type_set(E_Smart_Data *sd)
 #endif
 	edje_object_part_text_set(sd->icon_object, "icon_title", sd->file->name);
      }   
+}
+
+static void
+_e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd)
+{
+   m->x = sd->x;
+   m->y = sd->y;
+   m->w = sd->w;
+   m->h = sd->h;
+   m->name = strdup(sd->file->name);
 }

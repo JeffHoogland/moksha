@@ -1,8 +1,4 @@
-#include <Evas.h>
-#include <Ecore.h>
-#include <Ecore_Evas.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "e.h"
 
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Icon_Layout_Item E_Icon_Layout_Item;
@@ -20,7 +16,12 @@ struct _E_Smart_Data
    int              clip_frozen;
    int              fixed;
    unsigned char    changed : 1;
-   Evas_List       *items;         
+   Evas_List       *items;
+   
+   struct {
+      Evas_Object *obj;
+      Evas_Coord   x, y, w, h;
+   } viewport;
 };
 
 struct _E_Icon_Layout_Item
@@ -28,6 +29,9 @@ struct _E_Icon_Layout_Item
    E_Smart_Data    *sd;
    Evas_Coord       x, y, w, h;
    Evas_Object     *obj;
+   void (*appear_func)(Evas_Object *obj, void *data);
+   void (*disappear_func)(Evas_Object *obj, void *data);
+   void  *data;
 };
 
 /* local subsystem functions */
@@ -144,6 +148,17 @@ e_icon_layout_sort(Evas_Object *obj, int (*func)(void *d1, void *d2))
    _e_icon_layout_smart_reconfigure(sd);   
 }
    
+void e_icon_layout_icon_callbacks_set(Evas_Object *child, void (*appear)(Evas_Object *obj, void *data), void (*disappear)(Evas_Object *obj, void *data), void *data)
+{
+   E_Icon_Layout_Item *li;
+   
+   li = evas_object_data_get(child, "e_icon_layout_data");
+   if (!li) return;
+   
+   li->appear_func = appear;
+   li->disappear_func = disappear;
+   li->data = data;
+}
 
 void
 e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
@@ -191,6 +206,27 @@ e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
 	sd->yc += li->h + sd->ys;
 	sd->vw = sd->xc - sd->x;	
      }
+   
+   if(sd->viewport.obj && li->appear_func && li->disappear_func)
+     {
+	if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,	
+			sd->viewport.w, sd->viewport.h, 
+			li->x, li->y, li->w, li->h))
+	  {
+	     li->appear_func(obj, li->data);
+	     printf("appear!  %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+		    sd->viewport.w, sd->viewport.h,
+		    li->x, li->y, li->w, li->h);
+	  }
+	else
+	  {
+	     li->disappear_func(obj, li->data);
+	     printf("disappear!  %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+		    sd->viewport.w, sd->viewport.h,
+		    li->x, li->y, li->w, li->h);
+	  }
+     }
+   
    _e_icon_layout_smart_move_resize_item(li);
 }
 
@@ -301,6 +337,28 @@ e_icon_layout_clip_thaw(Evas_Object *obj)
    sd->clip_frozen = 0;
 }
 
+void
+e_icon_layout_viewport_set(Evas_Object *obj, Evas_Object *viewport)
+{
+   E_Smart_Data *sd;
+
+   if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
+     return;
+   
+   if(!viewport) return;
+   sd->viewport.obj = viewport;
+   evas_object_geometry_get(sd->viewport.obj, &(sd->viewport.x), &(sd->viewport.y),
+			    &(sd->viewport.w), &(sd->viewport.h));
+   if (sd->frozen <= 0) _e_icon_layout_smart_reconfigure(sd);   
+}
+
+Evas_Object *
+e_icon_layout_viewport_get(Evas_Object *obj)
+{
+   /* TODO */
+}
+
+
 /* local subsystem functions */
 static E_Icon_Layout_Item *
 _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
@@ -312,6 +370,9 @@ _e_icon_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    if (!li) return NULL;
    li->sd = sd;
    li->obj = obj;
+   li->appear_func = NULL;
+   li->disappear_func = NULL;
+   li->data = NULL;
    evas_object_geometry_get(obj, NULL, NULL, &li->w, &li->h);
    /* defaults */
    li->x = 0;
@@ -390,7 +451,26 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 	   
 	   li->x = x;
 	   li->y = y;
-
+	   
+	   if(sd->viewport.obj && li->appear_func && li->disappear_func)
+	     {
+		if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,	
+				sd->viewport.w, sd->viewport.h, 
+				li->x, li->y, li->w, li->h))
+		  {
+		     printf("appear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+			    sd->viewport.w, sd->viewport.h,
+			    li->x, li->y, li->w, li->h);
+		     li->appear_func(obj, li->data);
+		  }
+		else
+		  {
+		     li->disappear_func(obj, li->data);
+		     printf("disappear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+			    sd->viewport.w, sd->viewport.h,
+			    li->x, li->y, li->w, li->h);
+		  }
+	     }
 	   _e_icon_layout_smart_move_resize_item(li);
 	   
 	   x += li->w + sd->xs;
@@ -509,6 +589,7 @@ _e_icon_layout_smart_add(Evas_Object *obj)
    sd->mw = 0;
    sd->mh = 0;
    sd->fixed = 0;
+   sd->viewport.obj = NULL;
    sd->clip = evas_object_rectangle_add(evas_object_evas_get(obj));
    evas_object_move(sd->clip, 0, 0);
    evas_object_resize(sd->clip, 0, 0);
@@ -546,6 +627,10 @@ _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
    if ((x == sd->x) && (y == sd->y)) return;
+   if(sd->viewport.obj)
+     evas_object_geometry_get(sd->viewport.obj, 
+			      &(sd->viewport.x), &(sd->viewport.y),
+			      &(sd->viewport.w), &(sd->viewport.h));   
    
    /* FIXME: this will get slow with 1000's of objects. be smarter. */
      {
@@ -560,9 +645,30 @@ _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 	for (l = sd->items; l; l = l->next)
 	  {
 	     Evas_Coord ox, oy;
+	     E_Icon_Layout_Item *li;
 	     
-	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);
+	     li = evas_object_data_get(l->data, "e_icon_layout_data");
+	     evas_object_geometry_get(l->data, &ox, &oy, NULL, NULL);	     
 	     evas_object_move(l->data, ox + dx, oy + dy);
+	     if(sd->viewport.obj && li->appear_func && li->disappear_func)
+	       {
+		  if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,	
+				  sd->viewport.w, sd->viewport.h, 
+				  ox + dx, oy + dy, li->w, li->h))
+		    {
+		       printf("appear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+			      sd->viewport.w, sd->viewport.h,
+			      li->x, li->y, li->w, li->h);
+		       li->appear_func(li->obj, li->data);
+		    }
+		  else
+		    {
+		       li->disappear_func(li->obj, li->data);
+		       printf("disappear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+			      sd->viewport.w, sd->viewport.h,
+			      ox + dx, oy + dy, li->w, li->h);
+		    }
+	       }	     
 	  }
      }
    sd->x = x;
@@ -581,6 +687,10 @@ _e_icon_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->w = w;
    sd->h = h;
    sd->changed = 1;
+   if(sd->viewport.obj)
+     evas_object_geometry_get(sd->viewport.obj, 
+			      &(sd->viewport.x), &(sd->viewport.y),
+			      &(sd->viewport.w), &(sd->viewport.h));
    _e_icon_layout_smart_reconfigure(sd);        
 }
  
