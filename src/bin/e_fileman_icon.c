@@ -3,26 +3,6 @@
  */
 #include "e.h"
 
-#define NEWD(str, typ) \
-   eet_data_descriptor_new(str, sizeof(typ), \
-			      (void *(*) (void *))evas_list_next, \
-			      (void *(*) (void *, void *))evas_list_append, \
-			      (void *(*) (void *))evas_list_data, \
-			      (void *(*) (void *))evas_list_free, \
-			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
-			      (void *(*) (void *, const char *, void *))evas_hash_add, \
-			      (void  (*) (void *))evas_hash_free)
-
-#define FREED(eed) \
-   if (eed) \
-       { \
-	  eet_data_descriptor_free((eed)); \
-	  (eed) = NULL; \
-       }
-#define NEWI(str, it, type) \
-   EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm_icon_meta_edd, E_Fm_Icon_Metadata, str, it, type)
-
-
 typedef struct _E_Smart_Data       E_Smart_Data;
 
 struct _E_Smart_Data
@@ -82,13 +62,6 @@ static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
 int
 e_fm_icon_init(void)
 {
-   _e_fm_icon_meta_edd = NEWD("E_Fm_Icon_Metadata", E_Fm_Icon_Metadata);
-   NEWI("x", x, EET_T_INT);
-   NEWI("y", y, EET_T_INT);
-   NEWI("w", w, EET_T_INT);
-   NEWI("h", h, EET_T_INT);
-   NEWI("nm", name, EET_T_STRING);
-   
    event_handlers = evas_list_append(event_handlers,
                                      ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
                                                              _e_fm_icon_thumb_cb_exe_exit,
@@ -99,7 +72,6 @@ e_fm_icon_init(void)
 int
 e_fm_icon_shutdown(void)
 {
-   FREED(_e_fm_icon_meta_edd);
    while (event_handlers)
      {
 	ecore_event_handler_del(event_handlers->data);
@@ -706,5 +678,5 @@ _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd)
    m->y = sd->y;
    m->w = sd->w;
    m->h = sd->h;
-   m->name = strdup(sd->file->name);
+   m->name = strdup(sd->file->name);   
 }

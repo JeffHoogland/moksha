@@ -73,7 +73,7 @@ int E_EVENT_FM_DIRECTORY_CHANGE;
 #define NEWI(str, it, type) \
    EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm_dir_meta_edd, E_Fm_Dir_Metadata, str, it, type)
 #define NEWL(str, it, type) \
-   EET_DATA_DESCRIPTOR_ADD_LIST(_e_fm_icon_meta_edd, E_Fm_Dir_Metadata, str, it, type)
+   EET_DATA_DESCRIPTOR_ADD_LIST(_e_fm_dir_meta_edd, E_Fm_Dir_Metadata, str, it, type)
 
 typedef struct _E_Fm_Smart_Data            E_Fm_Smart_Data;
 typedef struct _E_Fm_Icon                  E_Fm_Icon;
@@ -165,6 +165,7 @@ struct _E_Fm_Smart_Data
    Evas_List *event_handlers;
 
    Evas_List *files;
+   Evas_List *files_raw;
    Ecore_File_Monitor *monitor;
    E_Fm_Arrange arrange;
 
@@ -1424,15 +1425,43 @@ _e_fm_menu_refresh_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 {
-   Evas_List *l;
+   Evas_List              *l;
+   Ecore_List             *list;
+   Ecore_Sheap            *heap;
+   char                   *f;
+   int                     type;
+   DIR                    *dir2;
+   struct dirent          *dp;   
    E_Event_Fm_Reconfigure *ev;
    E_Event_Fm_Directory_Change *ev2;
-   DIR           *dir2;
 
    if (!dir) return;
    if ((sd->dir) && (!strcmp(sd->dir, dir))) return;
 
    if (!(dir2 = opendir(dir))) return;
+   
+   type = E_FM_FILE_TYPE_NORMAL;   
+   list = ecore_list_new();
+   ecore_list_set_free_cb(list, free);
+   /* TODO: use sorting function here */
+   heap = ecore_sheap_new(ECORE_COMPARE_CB(strcmp), ecore_list_nodes(list));
+   while(dp = readdir(dir2))
+     {
+	if ((!strcmp(dp->d_name, ".") || (!strcmp (dp->d_name, "..")))) continue;
+	if ((dp->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
+	f = strdup(dp->d_name);
+	ecore_list_append(list, f);	  
+     }   
+   closedir(dir2);
+   
+   heap = ecore_sheap_new(ECORE_COMPARE_CB(strcasecmp), ecore_list_nodes(list));
+   while ((f = ecore_list_remove_first(list)))     
+     ecore_sheap_insert(heap, f);     
+   
+   while ((f = ecore_sheap_extract(heap)))     
+     sd->files_raw = evas_list_append(sd->files_raw, f);     
+
+   ecore_sheap_destroy(heap);
    
    if (sd->dir) free (sd->dir);
    sd->dir = strdup(dir);
@@ -1456,9 +1485,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 	     printf("META: file = %s\n", im->name);
 	  }
      }
-     
-     
-   
+             
    /* Reset position */
    sd->position = 0.0;
 
@@ -1520,24 +1547,21 @@ _e_fm_dir_files_get(void *data)
    int              i;
    int              type;
 
-   /* FIXME: This needs to be passed in to decide what file types to show */  
-   type = E_FM_FILE_TYPE_NORMAL; 
    i = 0;
    sd = data;
    
    e_icon_layout_freeze(sd->layout);   
 
    while (i < 2)
-    {     
-       dir_entry = readdir(sd->dir2);
-       if(!dir_entry)
-	 break;
-       if ((!strcmp(dir_entry->d_name, ".") || (!strcmp (dir_entry->d_name, "..")))) continue;
-       if ((dir_entry->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
+    {  
+       char *f;
 
+       if(!sd->files_raw)
+	 break;
+       f = sd->files_raw->data;
        icon = E_NEW(E_Fm_Icon, 1);
        if (!icon) continue;
-       snprintf(path, sizeof(path), "%s/%s", sd->dir, dir_entry->d_name);
+       snprintf(path, sizeof(path), "%s/%s", sd->dir, f);
        icon->file = e_fm_file_new(path);
        if (!icon->file)
 	 {
@@ -1556,9 +1580,10 @@ _e_fm_dir_files_get(void *data)
 	    evas_object_event_callback_add(icon->icon_object, EVAS_CALLBACK_MOUSE_MOVE, _e_fm_icon_mouse_move_cb, sd);
 	    evas_object_show(icon->icon_object);	    
 	    e_icon_layout_pack(sd->layout, icon->icon_object);
-	    e_icon_layout_icon_callbacks_set(icon->icon_object, e_fm_icon_appear_cb, e_fm_icon_disappear_cb, NULL);	    
+	    e_icon_layout_icon_callbacks_set(icon->icon_object, e_fm_icon_appear_cb, e_fm_icon_disappear_cb, NULL);
 	 }
        i++;
+       sd->files_raw = evas_list_remove_list(sd->files_raw, sd->files_raw);
     }
 
    e_icon_layout_thaw(sd->layout);
@@ -1566,28 +1591,8 @@ _e_fm_dir_files_get(void *data)
    e_icon_layout_virtual_size_get(sd->layout, &sd->child.w, &sd->child.h);   
    evas_object_smart_callback_call(sd->object, "changed", NULL);   
    
-   if(!dir_entry) {
-      closedir(sd->dir2);      
-      
-      sd->files = evas_list_sort(sd->files, 
-				 evas_list_count(sd->files),
-				 _e_fm_files_sort_name_cb);
-//      e_icon_layout_sort(sd->layout, _e_fm_files_sort_layout_name_cb);
-
-
-      e_icon_layout_freeze(sd->layout);      
-      e_icon_layout_reset(sd->layout);
-      
-      for(l = sd->files; l; l = l->next)
-	{
-	   icon = l->data;
-	   e_icon_layout_pack(sd->layout, icon->icon_object);
-	   e_icon_layout_icon_callbacks_set(icon->icon_object, e_fm_icon_appear_cb, e_fm_icon_disappear_cb, NULL);	   
-	}
-      e_icon_layout_thaw(sd->layout);
-      
-      sd->timer = NULL;
-      
+   if(!sd->files_raw) {
+      sd->timer = NULL;      
       if(!sd->meta)
 	{
 	   printf("Generating Meta!\n");
@@ -3237,8 +3242,6 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
 	     E_Fm_Icon_Metadata *im;
 
 	     im = l->data;
-	     printf("loading %s\n", im->name);	     
-	     m->files = evas_list_append(m->files, im);
 	     m->files_hash = evas_hash_add(m->files_hash, im->name, im);
 	  }
      }
@@ -3255,6 +3258,7 @@ _e_fm_dir_meta_generate(E_Fm_Smart_Data *sd)
    
    if (!sd->dir) return 0;
    m = calloc(1, sizeof(E_Fm_Dir_Metadata));
+   m->files = NULL;
    if (!m) return 0;
    _e_fm_dir_meta_fill(m, sd);
    for (l = sd->files; l; l = l->next)
@@ -3266,7 +3270,6 @@ _e_fm_dir_meta_generate(E_Fm_Smart_Data *sd)
 	im = e_fm_icon_meta_generate(icon->icon_object);
 	if (im)
 	  {
-	     printf("adding %s\n", im->name);
 	     m->files = evas_list_append(m->files, im);
 	     m->files_hash = evas_hash_add(m->files_hash, icon->file->name, im);
 	  }

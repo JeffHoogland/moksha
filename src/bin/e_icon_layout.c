@@ -214,16 +214,20 @@ e_icon_layout_pack(Evas_Object *obj, Evas_Object *child)
 			li->x, li->y, li->w, li->h))
 	  {
 	     li->appear_func(obj, li->data);
+/*
 	     printf("appear!  %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 		    sd->viewport.w, sd->viewport.h,
 		    li->x, li->y, li->w, li->h);
+*/ 
 	  }
 	else
 	  {
 	     li->disappear_func(obj, li->data);
+/*
 	     printf("disappear!  %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 		    sd->viewport.w, sd->viewport.h,
 		    li->x, li->y, li->w, li->h);
+*/ 
 	  }
      }
    
@@ -458,17 +462,20 @@ _e_icon_layout_smart_reconfigure(E_Smart_Data *sd)
 				sd->viewport.w, sd->viewport.h, 
 				li->x, li->y, li->w, li->h))
 		  {
-		     printf("appear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
+/*		     printf("appear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 			    sd->viewport.w, sd->viewport.h,
 			    li->x, li->y, li->w, li->h);
+*/ 
 		     li->appear_func(obj, li->data);
 		  }
 		else
 		  {
 		     li->disappear_func(obj, li->data);
+/*
 		     printf("disappear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 			    sd->viewport.w, sd->viewport.h,
 			    li->x, li->y, li->w, li->h);
+*/ 
 		  }
 	     }
 	   _e_icon_layout_smart_move_resize_item(li);
@@ -656,17 +663,21 @@ _e_icon_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 				  sd->viewport.w, sd->viewport.h, 
 				  ox + dx, oy + dy, li->w, li->h))
 		    {
+/*
 		       printf("appear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 			      sd->viewport.w, sd->viewport.h,
 			      li->x, li->y, li->w, li->h);
+*/ 
 		       li->appear_func(li->obj, li->data);
 		    }
 		  else
 		    {
 		       li->disappear_func(li->obj, li->data);
+/*
 		       printf("disappear! %d %d %d %d - %d %d %d %d\n",sd->viewport.x, sd->viewport.y,
 			      sd->viewport.w, sd->viewport.h,
 			      ox + dx, oy + dy, li->w, li->h);
+*/ 
 		    }
 	       }	     
 	  }
