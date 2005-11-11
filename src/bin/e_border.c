@@ -4808,6 +4808,9 @@ _e_border_eval(E_Border *bd)
 	snprintf(buf, sizeof(buf), "widgets/border/%s/border",
 		 bd->client.border.name);
 	ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
+	if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
+	  ok = e_theme_edje_object_set(o, "base/theme/borders",
+				       "widgets/border/default/border");
 	if (ok)
 	  {
 	     const char *shape_option;

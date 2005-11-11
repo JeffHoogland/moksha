@@ -5,6 +5,7 @@
 
 /* PROTOTYPES - same all the time */
 typedef struct _CFData CFData;
+typedef struct _CFBorder CFBorder;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
@@ -15,7 +16,15 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
 struct _CFData
 {
    E_Border *border;
+   char *bordername;
    int remember_border;
+   Evas_List *cfblist;
+};
+
+struct _CFBorder
+{
+   CFData     *cfdata;
+   const char *bordername;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -45,6 +54,7 @@ _fill_data(CFData *cfdata)
    if ((cfdata->border->remember) &&
        (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))
      cfdata->remember_border = 1;
+   cfdata->bordername = strdup(cfdata->border->client.border.name);
 }
 
 static void *
@@ -67,6 +77,12 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    /* Free the cfdata */
    cfdata->border->border_border_dialog = NULL;
+   E_FREE(cfdata->bordername);
+   while (cfdata->cfblist)
+     {
+	E_FREE(cfdata->cfblist->data);
+	cfdata->cfblist = evas_list_remove_list(cfdata->cfblist, cfdata->cfblist);
+     }
    free(cfdata);
 }
 
@@ -107,6 +123,13 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	       }
 	  }
      }
+   if ((!cfdata->border->lock_border) && (!cfdata->border->shaded))
+     {  
+	if (cfdata->border->client.border.name) free(cfdata->border->client.border.name);
+	cfdata->border->client.border.name = strdup(cfdata->bordername);
+	cfdata->border->client.border.changed = 1;
+	cfdata->border->changed = 1;
+     }
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -118,53 +141,58 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *oi, *oj, *orect;
    Evas_Coord wmw, wmh;
+   Evas_List *borders, *l;
+   int sel, n;
+   CFBorder *cfb;
    
    _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    
-   oi = e_widget_ilist_add(evas, 80, 48);
+   oi = e_widget_ilist_add(evas, 80, 48, &(cfdata->bordername));
 
-   ob = e_livethumb_add(evas);
-   e_livethumb_vsize_set(ob, 160, 96);
-   oj = edje_object_add(e_livethumb_evas_get(ob));
-   e_theme_edje_object_set(oj, "base/theme/borders", "widgets/border/default/border");
-   e_livethumb_thumb_set(ob, oj);
-   orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
-   evas_object_color_set(orect, 255, 255, 255, 128);
-   evas_object_show(orect);
-   edje_object_part_swallow(oj, "client", orect);
-   e_widget_ilist_append(oi, ob, "default", NULL, NULL);
+   sel = 0;
+   borders = e_theme_border_list();
+
+   cfb = E_NEW(CFBorder, 1);
+   cfb->cfdata = cfdata;
+   cfb->bordername = "borderless";
+   cfdata->cfblist = evas_list_append(cfdata->cfblist, cfb);
+   orect = evas_object_rectangle_add(evas);
+   evas_object_color_set(orect, 0, 0, 0, 128);
+   e_widget_ilist_append(oi, orect, "borderless", NULL, NULL, "borderless");
    
-   orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
-   evas_object_color_set(orect, 255, 255, 255, 128);
-   e_widget_ilist_append(oi, orect, "borderless", NULL, NULL);
+   for (n = 1, l = borders; l; l = l->next, n++)
+     {
+	char buf[4096];
+	
+	cfb = E_NEW(CFBorder, 1);
+	cfb->cfdata = cfdata;
+	cfb->bordername = l->data;
+	cfdata->cfblist = evas_list_append(cfdata->cfblist, cfb);
+	ob = e_livethumb_add(evas);
+	e_livethumb_vsize_set(ob, 160, 96);
+	oj = edje_object_add(e_livethumb_evas_get(ob));
+        snprintf(buf, sizeof(buf), "widgets/border/%s/border",
+		 (char *)l->data);
+	e_theme_edje_object_set(oj, "base/theme/borders", buf);
+	e_livethumb_thumb_set(ob, oj);
+	orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
+	evas_object_color_set(orect, 0, 0, 0, 128);
+	evas_object_show(orect);
+	edje_object_part_swallow(oj, "client", orect);
+	e_widget_ilist_append(oi, ob, (char *)l->data, NULL, NULL, l->data);
+	if (!strcmp(cfdata->border->client.border.name, (char *)l->data))
+	  sel = n;
+     }
+   e_widget_ilist_select_set(oi, sel);
    
-   ob = e_icon_add(evas);
-   e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
-   e_widget_ilist_append(oi, ob, "Item 2", NULL, NULL);
-   ob = e_icon_add(evas);
-   e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
-   e_widget_ilist_append(oi, ob, "Item 3", NULL, NULL);
-   ob = e_icon_add(evas);
-   e_icon_file_set(ob, "/home/raster/C/stuff/icons/cd.png");
-   e_widget_ilist_append(oi, ob, "Item 4", NULL, NULL);
    e_widget_min_size_get(oi, &wmw, &wmh);
-   e_widget_min_size_set(oi, wmw, 150);
+   e_widget_min_size_set(oi, wmw, 250);
    
    e_widget_ilist_go(oi);
+   
    e_widget_list_object_append(o, oi, 1, 1, 0.5);
-/*   
-   of = e_widget_framelist_add(evas, _("Generic Locks"), 0);
-   ob = e_widget_check_add(evas, _("Lock the Window so it does only what I tell it to"), &(cfdata->do_what_i_say));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Protect this window from me accidentally changing it"), &(cfdata->protect_from_me));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Protect this window from being accidentally closed because it is important"), &(cfdata->important_window));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Do not allow the border to change on this window"), &(cfdata->keep_my_border));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
- */
+   
    ob = e_widget_check_add(evas, _("Remember this Border for this window next time it appears"), &(cfdata->remember_border));
    e_widget_list_object_append(o, ob, 0, 0, 1.0);
    return o;

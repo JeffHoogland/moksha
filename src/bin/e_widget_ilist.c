@@ -4,9 +4,18 @@
 #include "e.h"
 
 typedef struct _E_Widget_Data E_Widget_Data;
+typedef struct _E_Widget_Callback E_Widget_Callback;
 struct _E_Widget_Data
 {
    Evas_Object *o_widget, *o_scrollframe, *o_ilist;
+   Evas_List *callbacks;
+   char **value;
+};
+struct _E_Widget_Callback
+{
+   void (*func) (void *data);
+   void  *data;
+   char  *value;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -17,7 +26,7 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 
 /* externally accessible functions */
 Evas_Object *
-e_widget_ilist_add(Evas *evas, int icon_w, int icon_h)
+e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, char **value)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -29,6 +38,8 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h)
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
+
+   wd->value = value;
    
    o = e_scrollframe_add(evas);
    wd->o_scrollframe = o;
@@ -51,14 +62,19 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h)
 }
 
 void
-e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data)
+e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*func) (void *data), void *data, char *val)
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh, vw, vh, w, h;
+   E_Widget_Callback *wcb;
    
    wd = e_widget_data_get(obj);
-   /* FIXME: need to actually store the callback and call it */
-   e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, wd, data);
+   wcb = E_NEW(E_Widget_Callback, 1);
+   wcb->func = func;
+   wcb->data = data;
+   if (val) wcb->value = strdup(val);
+   wd->callbacks = evas_list_append(wd->callbacks, wcb);
+   e_ilist_append(wd->o_ilist, icon, label, _e_wid_cb_item_sel, wd, wcb);
    if (icon) evas_object_show(icon);
    e_ilist_min_size_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_ilist, mw, mh);
@@ -71,6 +87,15 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
 	e_widget_min_size_get(obj, &wmw, &wmh);
 	e_widget_min_size_set(obj, mw + (w - vw), wmh);
      }
+}
+
+void
+e_widget_ilist_select_set(Evas_Object *obj, int n)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_select_set(wd->o_ilist, n);
 }
 
 void
@@ -88,6 +113,15 @@ _e_wid_del_hook(Evas_Object *obj)
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
+   while (wd->callbacks)
+     {
+	E_Widget_Callback *wcb;
+	
+	wcb = wd->callbacks->data;
+	if (wcb->value) free(wcb->value);
+	free(wcb);
+	wd->callbacks = evas_list_remove_list(wd->callbacks, wd->callbacks);
+     }
    free(wd);
 }
 
@@ -128,11 +162,25 @@ _e_wid_cb_item_sel(void *data, void *data2)
 {
    E_Widget_Data *wd;
    Evas_Coord x, y, w, h;
-
+   E_Widget_Callback *wcb;
+   
    wd = data;
+   wcb = data2;
    e_ilist_selected_geometry_get(wd->o_ilist, &x, &y, &w, &h);
    e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
-   if (wd->o_widget) e_widget_change(wd->o_widget);
+   if (wd->o_widget)
+     {
+	e_widget_change(wd->o_widget);
+	if (wd->value)
+	  {
+	     if (*(wd->value)) free(*(wd->value));
+	     if (wcb->value)
+	       *(wd->value) = strdup(wcb->value);
+	     else
+	       *(wd->value) = NULL;
+	  }
+	if (wcb->func) wcb->func(wcb->data);
+     }
 }
 
 static void
