@@ -1129,12 +1129,16 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  e_border_focus_latest_set(bd);
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "active", "");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "active", "");
 	e_focus_event_focus_in(bd);
      }
    else if ((!focus) && (bd->focused))
      {
 //	printf("EMIT 0x%x passive\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "passive", "");
+	if (bd->icon_object)
+	  edje_object_signal_emit(bd->icon_object, "passive", "");
 	e_focus_event_focus_out(bd);
 	/* FIXME: Sometimes we should leave the window fullscreen! */
 	if (bd->fullscreen)
@@ -1183,6 +1187,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  {
 //	     printf("unfocus previous\n");
 	     edje_object_signal_emit(focused->bg_object, "passive", "");
+	     if (focused->icon_object)
+	       edje_object_signal_emit(focused->icon_object, "passive", "");
 	     e_focus_event_focus_out(focused);
 	     /* FIXME: Sometimes we should leave the window fullscreen! */
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
@@ -1206,6 +1212,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  {
 //	     printf("unfocus previous 2\n");
 	     edje_object_signal_emit(focused->bg_object, "passive", "");
+	     if (focused->icon_object)
+	       edje_object_signal_emit(focused->icon_object, "passive", "");
 	     e_focus_event_focus_out(focused);
 	     /* FIXME: Sometimes we should leave the window fullscreen! */
 	     if (focused->fullscreen) e_border_unfullscreen(focused);
@@ -2156,6 +2164,12 @@ e_border_icon_add(E_Border *bd, Evas *evas)
      }
 
    o = NULL;
+   if (bd->internal)
+     {
+	o = edje_object_add(evas);
+	e_util_edje_icon_set(o, "enlightenment/e");
+	return o;
+     }
    if ((bd->client.icccm.name) && (bd->client.icccm.class))
      {
 	char *title = "";
@@ -2181,15 +2195,22 @@ e_border_icon_add(E_Border *bd, Evas *evas)
 	     bd->app = a;
 	     e_object_ref(E_OBJECT(bd->app));
 	  }
+	return o;
      }
    else if (bd->client.netwm.icons)
      {
-	/* TODO: Use the right icon */
 	o = e_icon_add(evas);
 	e_icon_data_set(o, bd->client.netwm.icons[0].data,
 			bd->client.netwm.icons[0].width,
 			bd->client.netwm.icons[0].height);
 	e_icon_alpha_set(o, 1);
+	return o;
+     }
+   if (!o)
+     {
+	o = edje_object_add(evas);
+	e_util_edje_icon_set(o, "enlightenment/unknown");
+	return o;
      }
    return o;
 }
@@ -4883,7 +4904,11 @@ _e_border_eval(E_Border *bd)
 	     edje_object_signal_callback_add(bd->bg_object, "*", "*",
 					     _e_border_cb_signal_bind, bd);
 	     if (bd->focused)
-	       edje_object_signal_emit(bd->bg_object, "active", "");
+	       {
+		  edje_object_signal_emit(bd->bg_object, "active", "");
+		  if (bd->icon_object)
+		    edje_object_signal_emit(bd->icon_object, "active", "");
+	       }
 	     if (bd->shaded)
 	       edje_object_signal_emit(bd->bg_object, "shaded", "");
 	     if (bd->maximized == E_MAXIMIZE_FULLSCREEN)
@@ -5557,6 +5582,8 @@ _e_border_eval(E_Border *bd)
 	     bd->icon_object = NULL;
 	  }
 	bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+	if ((bd->focused) && (bd->icon_object))
+	  edje_object_signal_emit(bd->icon_object, "active", "");
 	if (bd->bg_object)
 	  {
 	     evas_object_show(bd->icon_object);

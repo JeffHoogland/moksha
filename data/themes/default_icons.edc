@@ -26,468 +26,488 @@ images {
    image: "e17_icon_configuration.png" LOSSY 90;
    image: "e17_icon_run.png" LOSSY 90;
 
+   image: "e17_pager_window.png" COMP;
+   
    image: "e17_icon_right_arrow.png" COMP;
 }
 
-   group {
-      name: "icons/enlightenment/e";
-      max:  64 64;
-      parts {
-	 part {      
-	    name:          "e";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_e_0.png";
-	       }
-	    }
-	 }
-	 part {
-	    name:          "e_glow";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       visible:   0;
-	       rel1 {
-		  to:       "e";
-	       }
-	       rel2 {
-		  to:       "e";
-	       }
-	       color:       255 255 255 0;
-	       image {
-		  normal: "e17_icon_e_glow_0.png";
-	       }
-	    }
-	    description {
-	       state:    "hilited" 0.0;
-	       inherit:  "default"  0.0;
-	       visible:   1;
-	       color:     255 255 255 255;
+group {
+   name: "icons/enlightenment/e";
+   max:  64 64;
+   parts {
+      part {      
+	 name:          "e";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_e_0.png";
 	    }
 	 }
       }
-      programs {
-         program {	 
-	    name:       "e_in";
-	    signal:     "active";
-	    source:     "";
-	    action:     STATE_SET "hilited" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "e_glow";
+      part {
+	 name:          "e_glow";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    visible:   0;
+	    rel1 {
+	       to:       "e";
+	    }
+	    rel2 {
+	       to:       "e";
+	    }
+	    color:       255 255 255 0;
+	    image {
+	       normal: "e17_icon_e_glow_0.png";
+	    }
 	 }
-	 program {
-	    name:       "e_out";
-	    signal:     "passive";
-	    source:     "";
-	    action:     STATE_SET "default" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "e_glow";
+	 description {
+	    state:    "hilited" 0.0;
+	    inherit:  "default"  0.0;
+	    visible:   1;
+	    color:     255 255 255 255;
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/exit";
-      max:  64 64;
-      parts {
-	 part {      
-	    name:          "power_button";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_power_button_0.png";
-	       }
-	    }
-	 }
-	 part {
-	    name:          "power_button_glow";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       visible:   0;
-	       rel1 {
-		  to:       "power_button";
-	       }
-	       rel2 {
-		  to:       "power_button";
-	       }
-	       color:       255 255 255 0;
-	       image {
-		  normal: "e17_icon_power_button_glow_0.png";
-	       }
-	    }
-	    description {
-	       state:    "hilited" 0.0;
-	       inherit:  "default"  0.0;
-	       visible:   1;
-	       color:     255 255 255 255;
+   programs {
+      program {	 
+	 name:       "e_in";
+	 signal:     "active";
+	 source:     "";
+	 action:     STATE_SET "hilited" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "e_glow";
+      }
+      program {
+	 name:       "e_out";
+	 signal:     "passive";
+	 source:     "";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "e_glow";
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/exit";
+   max:  64 64;
+   parts {
+      part {      
+	 name:          "power_button";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_power_button_0.png";
 	    }
 	 }
       }
-      programs {
-         program {	 
-	    name:       "power_button_in";
-	    signal:     "active";
-	    source:     "";
-	    action:     STATE_SET "hilited" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "power_button_glow";
+      part {
+	 name:          "power_button_glow";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    visible:   0;
+	    rel1 {
+	       to:       "power_button";
+	    }
+	    rel2 {
+	       to:       "power_button";
+	    }
+	    color:       255 255 255 0;
+	    image {
+	       normal: "e17_icon_power_button_glow_0.png";
+	    }
 	 }
-	 program {
-	    name:       "power_button_out";
-	    signal:     "passive";
-	    source:     "";
-	    action:     STATE_SET "default" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "power_button_glow";
+	 description {
+	    state:    "hilited" 0.0;
+	    inherit:  "default"  0.0;
+	    visible:   1;
+	    color:     255 255 255 255;
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/reset";
-      max:  64 64;
-      parts {
-	 part {      
-	    name:          "reset_button";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_reset_button_0.png";
-	       }
-	    }
-	 }
-	 part {
-	    name:          "reset_button_glow";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       visible:   0;
-	       rel1 {
-		  to:       "reset_button";
-	       }
-	       rel2 {
-		  to:       "reset_button";
-	       }
-	       color:       255 255 255 0;
-	       image {
-		  normal: "e17_icon_reset_button_glow_0.png";
-	       }
-	    }
-	    description {
-	       state:    "hilited" 0.0;
-	       inherit:  "default"  0.0;
-	       visible:   1;
-	       color:     255 255 255 255;
+   programs {
+      program {	 
+	 name:       "power_button_in";
+	 signal:     "active";
+	 source:     "";
+	 action:     STATE_SET "hilited" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "power_button_glow";
+      }
+      program {
+	 name:       "power_button_out";
+	 signal:     "passive";
+	 source:     "";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "power_button_glow";
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/reset";
+   max:  64 64;
+   parts {
+      part {      
+	 name:          "reset_button";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_reset_button_0.png";
 	    }
 	 }
       }
-      programs {
-         program {	 
-	    name:       "reset_button_in";
-	    signal:     "active";
-	    source:     "";
-	    action:     STATE_SET "hilited" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "reset_button_glow";
+      part {
+	 name:          "reset_button_glow";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    visible:   0;
+	    rel1 {
+	       to:       "reset_button";
+	    }
+	    rel2 {
+	       to:       "reset_button";
+	    }
+	    color:       255 255 255 0;
+	    image {
+	       normal: "e17_icon_reset_button_glow_0.png";
+	    }
 	 }
-	 program {
-	    name:       "reset_button_out";
-	    signal:     "passive";
-	    source:     "";
-	    action:     STATE_SET "default" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "reset_button_glow";
+	 description {
+	    state:    "hilited" 0.0;
+	    inherit:  "default"  0.0;
+	    visible:   1;
+	    color:     255 255 255 255;
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/themes";
-      max:  64 64;
-      parts {
-	 part {      
-	    name:          "theme_button";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_theme_0.png";
-	       }
-	    }
-	 }
-	 part {
-	    name:          "theme_button_glow";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       visible:   0;
-	       rel1 {
-		  to:       "theme_button";
-	       }
-	       rel2 {
-		  to:       "theme_button";
-	       }
-	       color:       255 255 255 0;
-	       image {
-		  normal: "e17_icon_theme_glow_0.png";
-	       }
-	    }
-	    description {
-	       state:    "hilited" 0.0;
-	       inherit:  "default"  0.0;
-	       visible:   1;
-	       color:     255 255 255 255;
+   programs {
+      program {	 
+	 name:       "reset_button_in";
+	 signal:     "active";
+	 source:     "";
+	 action:     STATE_SET "hilited" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "reset_button_glow";
+      }
+      program {
+	 name:       "reset_button_out";
+	 signal:     "passive";
+	 source:     "";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "reset_button_glow";
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/themes";
+   max:  64 64;
+   parts {
+      part {      
+	 name:          "theme_button";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_theme_0.png";
 	    }
 	 }
       }
-      programs {
-         program {	 
-	    name:       "theme_button_in";
-	    signal:     "active";
-	    source:     "";
-	    action:     STATE_SET "hilited" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "theme_button_glow";
-	 }
-	 program {
-	    name:       "theme_button_out";
-	    signal:     "passive";
-	    source:     "";
-	    action:     STATE_SET "default" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "theme_button_glow";
-	 }
-      }
-   }   
-   group {
-      name: "icons/enlightenment/windows";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_windows.png";
-	       }
+      part {
+	 name:          "theme_button_glow";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    visible:   0;
+	    rel1 {
+	       to:       "theme_button";
 	    }
+	    rel2 {
+	       to:       "theme_button";
+	    }
+	    color:       255 255 255 0;
+	    image {
+	       normal: "e17_icon_theme_glow_0.png";
+	    }
+	 }
+	 description {
+	    state:    "hilited" 0.0;
+	    inherit:  "default"  0.0;
+	    visible:   1;
+	    color:     255 255 255 255;
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/lost_windows";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_lost_windows.png";
-	       }
+   programs {
+      program {	 
+	 name:       "theme_button_in";
+	 signal:     "active";
+	 source:     "";
+	 action:     STATE_SET "hilited" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "theme_button_glow";
+      }
+      program {
+	 name:       "theme_button_out";
+	 signal:     "passive";
+	 source:     "";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "theme_button_glow";
+      }
+   }
+}   
+group {
+   name: "icons/enlightenment/windows";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_windows.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/modules";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_module.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/lost_windows";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_lost_windows.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/favorites";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_favorites.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/modules";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_module.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/desktops";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_desktop.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/favorites";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_favorites.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/gadgets";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_gadget.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/desktops";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_desktop.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/configuration";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_configuration.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/gadgets";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_gadget.png";
 	    }
 	 }
       }
    }
-   group {
-      name: "icons/enlightenment/run";
-      max:  64 64;
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_run.png";
-	       }
+}
+group {
+   name: "icons/enlightenment/configuration";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_configuration.png";
 	    }
 	 }
       }
    }
+}
+group {
+   name: "icons/enlightenment/run";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_run.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/fileman";
+   max:  64 64;
+   parts {
+      part {      
+	 name:          "fileman_button";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      64 64;
+	    image {
+	       normal: "e17_icon_fileman_folder.png";
+	    }
+	 }
+      }
+      part {
+	 name:          "fileman_button_glow";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    visible:   0;
+	    rel1 {
+	       to:       "fileman_button";
+	    }
+	    rel2 {
+	       to:       "fileman_button";
+	    }
+	    color:       255 255 255 0;
+	    image {
+	       normal: "e17_icon_fileman_folder_clicked.png";
+	    }
+	 }
+	 description {
+	    state:    "hilited" 0.0;
+	    inherit:  "default"  0.0;
+	    visible:   1;
+	    color:     255 255 255 255;
+	 }
+      }
+   }
+   programs {
+      program {	 
+	 name:       "fileman_button_in";
+	 signal:     "active";
+	 source:     "";
+	 action:     STATE_SET "hilited" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "fileman_button_glow";
+      }
+      program {
+	 name:       "fileman_button_out";
+	 signal:     "passive";
+	 source:     "";
+	 action:     STATE_SET "default" 0.0;
+	 transition: LINEAR 0.5;
+	 target:     "fileman_button_glow";
+      }
+   }
+}
+group {
+   name: "icons/enlightenment/unknown";
+   max:  64 64;
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   1.0 1.0;
+	    max:      28 28;
+	    image {
+	       normal: "e17_pager_window.png";
+	    }
+	 }
+      }
+   }
+}
+group {
+   name: "icons/widget/new_dialog";
+   parts {
+      part {
+	 name:          "icon";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    aspect:   0.83333333333 0.83333333333;
+	    max:      10 12;
+	    image {
+	       normal: "e17_icon_right_arrow.png";
+	    }
+	 }
+      }
+   }
+}
 
-   group {
-      name: "icons/enlightenment/fileman";
-      max:  64 64;
-      parts {
-	 part {      
-	    name:          "fileman_button";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   1.0 1.0;
-	       max:      64 64;
-	       image {
-		  normal: "e17_icon_fileman_folder.png";
-	       }
-	    }
-	 }
-	 part {
-	    name:          "fileman_button_glow";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       visible:   0;
-	       rel1 {
-		  to:       "fileman_button";
-	       }
-	       rel2 {
-		  to:       "fileman_button";
-	       }
-	       color:       255 255 255 0;
-	       image {
-		  normal: "e17_icon_fileman_folder_clicked.png";
-	       }
-	    }
-	    description {
-	       state:    "hilited" 0.0;
-	       inherit:  "default"  0.0;
-	       visible:   1;
-	       color:     255 255 255 255;
-	    }
-	 }
-      }
-      programs {
-         program {	 
-	    name:       "fileman_button_in";
-	    signal:     "active";
-	    source:     "";
-	    action:     STATE_SET "hilited" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "fileman_button_glow";
-	 }
-	 program {
-	    name:       "fileman_button_out";
-	    signal:     "passive";
-	    source:     "";
-	    action:     STATE_SET "default" 0.0;
-	    transition: LINEAR 0.5;
-	    target:     "fileman_button_glow";
-	 }
-      }
-   }
-   group {
-      name: "icons/widget/new_dialog";
-      parts {
-	 part {
-	    name:          "icon";
-	    mouse_events:  0;
-	    description {
-	       state:    "default" 0.0;
-	       aspect:   0.83333333333 0.83333333333;
-	       max:      10 12;
-	       image {
-		  normal: "e17_icon_right_arrow.png";
-	       }
-	    }
-	 }
-      }
-   }
