@@ -388,6 +388,7 @@ e_border_new(E_Container *con, Ecore_X_Window win, int first_map)
 
    bd->resize_mode = RESIZE_NONE;
    bd->layer = 100;
+   bd->changes.icon = 1;
    bd->changes.size = 1;
    bd->changes.shape = 1;
 
