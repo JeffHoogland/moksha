@@ -18,6 +18,7 @@ struct _E_Smart_Data
    Evas_List     *items;
    int            selected;
    Evas_Coord     icon_w, icon_h;
+   unsigned char  selector : 1;
 }; 
 
 struct _E_Smart_Item
@@ -32,6 +33,7 @@ struct _E_Smart_Item
 
 /* local subsystem functions */
 static void _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_add(Evas_Object *obj);
@@ -125,13 +127,9 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label,  void (*func) (
 			  mw, mh, /* min */
 			  99999, 99999 /* max */
 			  );
-   if (sd->selected == (evas_list_count(sd->items) - 1))
-     {
-	edje_object_signal_emit(si->base_obj, "active", "");
-	if (si->func) si->func(si->data, si->data2);
-     }
    evas_object_lower(si->base_obj);
    evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_DOWN, _e_smart_event_mouse_down, si);
+   evas_object_event_callback_add(si->base_obj, EVAS_CALLBACK_MOUSE_UP, _e_smart_event_mouse_up, si);
    evas_object_show(si->base_obj);
 }
 
@@ -153,7 +151,10 @@ e_ilist_select_set(Evas_Object *obj, int n)
      {
 	evas_object_raise(si->base_obj);
 	edje_object_signal_emit(si->base_obj, "active", "");
-	if (si->func) si->func(si->data, si->data2);
+	if (!sd->selector)
+	  {
+	     if (si->func) si->func(si->data, si->data2);
+	  }
      }
 }
 
@@ -211,6 +212,20 @@ e_ilist_min_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    e_box_min_size_get(sd->box_obj, w, h);
 }
 
+void
+e_ilist_selector_set(Evas_Object *obj, int selector)
+{
+   API_ENTRY return;
+   sd->selector = selector;
+}
+
+int
+e_ilist_selector_get(Evas_Object *obj)
+{
+   API_ENTRY return 0;
+   return sd->selector;
+}
+
 /* local subsystem functions */
 static void 
 _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
@@ -228,6 +243,24 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 	  {
 	     e_ilist_select_set(si->sd->smart_obj, i);
 	     break;
+	  }
+     }
+}
+
+static void 
+_e_smart_event_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Event_Mouse_Up *ev;
+   E_Smart_Item *si;
+   
+   si = data;
+   ev = event_info;
+   if (si->sd->selector)
+     {
+	si = evas_list_nth(si->sd->items, si->sd->selected);
+	if (si)
+	  {
+	     if (si->func) si->func(si->data, si->data2);
 	  }
      }
 }
@@ -253,6 +286,17 @@ _e_smart_event_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 	
 	n = e_ilist_select_get(sd->smart_obj);
 	e_ilist_select_set(sd->smart_obj, n + 1);
+     }
+   else if ((!strcmp(ev->keyname, "Return")) ||
+	    (!strcmp(ev->keyname, "space")))
+     {
+	E_Smart_Item *si;
+
+	si = evas_list_nth(sd->items, sd->selected);
+	if (si)
+	  {
+	     if (si->func) si->func(si->data, si->data2);
+	  }
      }
 }
 
@@ -281,6 +325,8 @@ _e_smart_add(Evas_Object *obj)
    
    sd->icon_w = 24;
    sd->icon_h = 24;
+   
+   sd->selected = -1;
    
    sd->box_obj = e_box_add(evas_object_evas_get(obj));
    e_box_align_set(sd->box_obj, 0.0, 0.0);

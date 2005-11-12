@@ -15,6 +15,8 @@ EAPI void        *e_ilist_select_data_get       (Evas_Object *obj);
 EAPI void        *e_ilist_select_data2_get      (Evas_Object *obj);
 EAPI void         e_ilist_selected_geometry_get (Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 EAPI void         e_ilist_min_size_get          (Evas_Object *obj, Evas_Coord *w, Evas_Coord *h);
+EAPI void         e_ilist_selector_set          (Evas_Object *obj, int selector);
+EAPI int          e_ilist_selector_get          (Evas_Object *obj);
     
 #endif
 #endif

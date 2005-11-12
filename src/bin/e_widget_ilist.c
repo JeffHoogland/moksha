@@ -99,6 +99,15 @@ e_widget_ilist_select_set(Evas_Object *obj, int n)
 }
 
 void
+e_widget_ilist_selector_set(Evas_Object *obj, int selector)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_selector_set(wd->o_ilist, selector);
+}
+
+void
 e_widget_ilist_go(Evas_Object *obj)
 {
    E_Widget_Data *wd;

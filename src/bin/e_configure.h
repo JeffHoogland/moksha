@@ -16,13 +16,13 @@ struct _E_Configure
    E_Win       *win;
    Evas        *evas;
    Evas_Object *edje;
-   Evas_Object *box;
-   E_App       *apps;
-   Evas_List   *icons;
-   Evas_List   *app_ref;
+   Evas_Object *ilist;
+   
+   Evas_List *cblist;
 };
 
-E_Configure *e_configure_show(E_Container *con);
-
+EAPI E_Configure *e_configure_show(E_Container *con);
+EAPI void         e_configure_standard_item_add(E_Configure *eco, char *icon, char *label, E_Config_Dialog *(*func) (E_Container *con));
+    
 #endif
 #endif
