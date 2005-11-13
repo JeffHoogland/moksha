@@ -714,7 +714,7 @@ msgstr ""
 
 #: src/bin/e_main.c:368
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment kan zijn Thumbnailing systeem niet instellen"
+msgstr "Enlightenment kan zijn Thumbnailing systeem niet instellen\n"
 
 #: src/bin/e_main.c:377
 msgid "Enlightenment cannot initialize the File manager.\n"
