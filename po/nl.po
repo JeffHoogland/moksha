@@ -112,7 +112,7 @@ msgstr "Herinneren Sloten"
 
 #: src/bin/e_int_menus.c:82
 msgid "Favorite Applications"
-msgstr "Priljubljeni Programi"
+msgstr "Favoriete Programma's"
 
 #: src/bin/e_int_menus.c:92
 msgid "Modules"
@@ -1760,4 +1760,5 @@ msgstr "Gevaar"
 #: src/modules/battery/e_mod_main.c:1701
 msgid "Charging"
 msgstr "Laden "
+
 
