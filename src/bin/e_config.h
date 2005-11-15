@@ -121,11 +121,11 @@ struct _E_Config
    Evas_List  *path_append_backgrounds;
    Evas_List  *path_append_input_methods;
    int         window_placement_policy;
-   int         focus_policy;
-   int         focus_setting;
-   int         pass_click_on;
-   int         always_click_to_raise;
-   int         always_click_to_focus;
+   int         focus_policy; // GUI
+   int         focus_setting; // GUI
+   int         pass_click_on; // GUI
+   int         always_click_to_raise; // GUI
+   int         always_click_to_focus; // GUI
    int         use_auto_raise;
    double      auto_raise_delay;
    int         use_resist;
