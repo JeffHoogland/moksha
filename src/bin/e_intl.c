@@ -86,6 +86,7 @@ e_intl_init(void)
    ADD_LANG("sv_SV.UTF-8");
    ADD_LANG("nb_NO.UTF-8");
    ADD_LANG("nl_NL.UTF-8");
+   ADD_LANG("zh_TW.UTF-8");
 
    _e_intl_input_method_config_edd = E_CONFIG_DD_NEW("input_method_config", E_Input_Method_Config);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, version, INT);

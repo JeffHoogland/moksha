@@ -1,0 +1,2064 @@
+# Enlightenment 0.17 Tranditional Chinese Translation
+# This file is put in the public domain.
+# Sam Xu <joepasscheng@gmail.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enlightenment 0.17\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2005-11-04 11:02+0800\n"
+"PO-Revision-Date: 2005-11-04 11:16+0800\n"
+"Last-Translator: Sam Xu <joepasscheng@gmail.com>\n"
+"Language-Team: Sam Xu <joepasscheng@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/e_int_border_locks.c:65 src/bin/e_int_border_menu.c:77
+msgid "Window Locks"
+msgstr "鎖定視窗"
+
+#: src/bin/e_int_border_locks.c:289
+msgid "Generic Locks"
+msgstr "一般鎖定"
+
+#: src/bin/e_int_border_locks.c:290
+msgid "Lock the Window so it does only what I tell it to"
+msgstr "鎖定視窗讓他只做我要他做的"
+
+#: src/bin/e_int_border_locks.c:292
+msgid "Protect this window from me accidentally changing it"
+msgstr "保護這個視窗，以免我不小心改變了他"
+
+#: src/bin/e_int_border_locks.c:294
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr "保護這個視窗以免我不小心關閉了這個重要的視窗"
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Do not allow the border to change on this window"
+msgstr "不允許這個視窗改變邊框"
+
+#: src/bin/e_int_border_locks.c:299
+msgid "Remember these Locks for this window next time it appears"
+msgstr "記住這個視窗的這些鎖定供下次使用"
+
+#: src/bin/e_int_border_locks.c:314
+msgid "Lock program changing:"
+msgstr "鎖定程式改變："
+
+#: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
+#: src/bin/e_int_border_remember.c:494
+msgid "Position"
+msgstr "位置"
+
+#: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
+#: src/bin/e_int_border_remember.c:496 src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
+#: src/modules/ibox/e_mod_main.c:696
+msgid "Size"
+msgstr "大小"
+
+#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:498 src/bin/e_int_border_menu.c:105
+msgid "Stacking"
+msgstr "堆疊"
+
+#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+msgid "Iconified state"
+msgstr "最小化狀態"
+
+#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_remember.c:504
+msgid "Stickiness"
+msgstr "釘住狀態"
+
+#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+#: src/bin/e_int_border_remember.c:508
+msgid "Shaded state"
+msgstr "捲起狀態"
+
+#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+msgid "Maximized state"
+msgstr "最大化狀態"
+
+#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+msgid "Fullscreen state"
+msgstr "全螢幕狀態"
+
+#: src/bin/e_int_border_locks.c:333
+msgid "Lock me from changing:"
+msgstr "鎖住我以防改變："
+
+#: src/bin/e_int_border_locks.c:350
+msgid "The border style"
+msgstr "邊框樣式"
+
+#: src/bin/e_int_border_locks.c:354
+msgid "Stop me from:"
+msgstr "停止我以防："
+
+#: src/bin/e_int_border_locks.c:355
+msgid "Closing the window"
+msgstr "正在關閉視窗"
+
+#: src/bin/e_int_border_locks.c:357
+msgid "Exiting my login with this window open"
+msgstr "退出我的登入，不管這個開啟的視窗"
+
+#: src/bin/e_int_border_locks.c:361
+msgid "Remember these Locks"
+msgstr "記住這些鎖定"
+
+#: src/bin/e_int_menus.c:83
+msgid "Favorite Applications"
+msgstr "常用程式"
+
+#: src/bin/e_int_menus.c:93
+msgid "Modules"
+msgstr "模組"
+
+#: src/bin/e_int_menus.c:100
+msgid "Desktops"
+msgstr "桌面"
+
+#: src/bin/e_int_menus.c:107
+msgid "Windows"
+msgstr "視窗"
+
+#: src/bin/e_int_menus.c:114
+msgid "Lost Windows"
+msgstr "遺失的視窗"
+
+#: src/bin/e_int_menus.c:121
+msgid "Gadgets"
+msgstr "附件"
+
+#: src/bin/e_int_menus.c:128
+msgid "Themes"
+msgstr "主題"
+
+#: src/bin/e_int_menus.c:136 src/bin/e_about.c:41
+msgid "About Enlightenment"
+msgstr "關於 Enlightenment"
+
+#: src/bin/e_int_menus.c:143
+msgid "Run Command"
+msgstr "執行指令"
+
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "文件"
+
+#: src/bin/e_int_menus.c:156 src/bin/e_module.c:476
+msgid "Configuration"
+msgstr "配置"
+
+#: src/bin/e_int_menus.c:164
+msgid "Restart Enlightenment"
+msgstr "重新啟動 Enlightenment"
+
+#: src/bin/e_int_menus.c:169
+msgid "Exit Enlightenment"
+msgstr "離開 Enlightenment"
+
+#: src/bin/e_int_menus.c:466
+msgid "(No Applications)"
+msgstr "（沒有程式）"
+
+#: src/bin/e_int_menus.c:548
+msgid "New Row of Desktops"
+msgstr "新增一行桌面"
+
+#: src/bin/e_int_menus.c:552
+msgid "Remove Row of Desktops"
+msgstr "刪除一行桌面"
+
+#: src/bin/e_int_menus.c:556
+msgid "New Column of Desktops"
+msgstr "新增一列桌面"
+
+#: src/bin/e_int_menus.c:560
+msgid "Remove Column of Desktops"
+msgstr "删除一列桌面"
+
+#: src/bin/e_int_menus.c:632
+msgid "Configuration Panel"
+msgstr "配置面板"
+
+#: src/bin/e_int_menus.c:636 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "焦點配置"
+
+#: src/bin/e_int_menus.c:640 src/bin/e_eap_editor.c:80
+msgid "Eap Editor"
+msgstr "Eap 編輯器"
+
+#: src/bin/e_int_menus.c:704 src/bin/e_int_menus.c:982
+msgid "(No Windows)"
+msgstr "（無視窗）"
+
+#: src/bin/e_int_menus.c:719 src/bin/e_int_menus.c:996
+msgid "No name!!"
+msgstr "無名稱！！"
+
+#: src/bin/e_int_menus.c:735
+msgid "Cleanup Windows"
+msgstr "清除視窗"
+
+#: src/bin/e_int_menus.c:814 src/modules/ibar/e_mod_main.c:647
+#: src/modules/ibox/e_mod_main.c:454 src/modules/cpufreq/e_mod_main.c:947
+#: src/modules/clock/e_mod_main.c:328 src/modules/pager/e_mod_main.c:621
+#: src/modules/start/e_mod_main.c:230 src/modules/temperature/e_mod_main.c:922
+#: src/modules/battery/e_mod_main.c:589
+msgid "Edit Mode"
+msgstr "編輯模式"
+
+#: src/bin/e_int_menus.c:820
+msgid "(Unused)"
+msgstr "（未使用）"
+
+#: src/bin/e_int_menus.c:852 src/bin/e_theme_about.c:41
+msgid "About This Theme"
+msgstr "關於這個主題"
+
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1782 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
+msgid "Run Error"
+msgstr "執行時錯誤"
+
+#: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
+#, c-format
+msgid ""
+"Enlightenment was unable fork a child process:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+"Enlightenment無法建立一個子程序：\n"
+"\n"
+"%s\n"
+"\n"
+
+#: src/bin/e_apps.c:1783
+#, c-format
+msgid ""
+"Enlightenment was unable run the program:\n"
+"\n"
+"%s\n"
+"\n"
+"The command was not found\n"
+msgstr ""
+"Enlightenment無法執行程式：\n"
+"\n"
+"%s\n"
+"\n"
+"程式找不到\n"
+
+#: src/bin/e_configure.c:38
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment 配置"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click Window to Focus"
+msgstr "點擊視窗取得聚焦"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Window under the Mouse"
+msgstr "滑鼠指標所在視窗"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Most recent Window under the Mouse"
+msgstr "最接近滑鼠指標的視窗"
+
+#: src/bin/e_int_config_focus.c:164
+msgid "Focus"
+msgstr "聚焦"
+
+#: src/bin/e_int_config_focus.c:166
+msgid "Click to focus"
+msgstr "點擊聚焦"
+
+#: src/bin/e_int_config_focus.c:168
+msgid "Pointer focus"
+msgstr "指示聚焦"
+
+#: src/bin/e_int_config_focus.c:170
+msgid "Sloppy focus"
+msgstr "隨意聚焦"
+
+#: src/bin/e_int_config_focus.c:174
+msgid "New Window Focus"
+msgstr "新視窗聚焦"
+
+#: src/bin/e_int_config_focus.c:176
+msgid "No new windows get focus"
+msgstr "沒有新視窗得到聚焦"
+
+#: src/bin/e_int_config_focus.c:178
+msgid "All new windows get focus"
+msgstr "所有新視窗得到聚焦"
+
+#: src/bin/e_int_config_focus.c:180
+msgid "Only new dialogs get focus"
+msgstr "只有新的對話框得到聚焦"
+
+#: src/bin/e_int_config_focus.c:182
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "只有當主視窗得到聚焦時對話框得到聚焦"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Other Settings"
+msgstr "其他設定"
+
+#: src/bin/e_int_config_focus.c:187
+msgid "Always pass on caught click events to programs"
+msgstr "總是忽略此程式的點擊事件"
+
+#: src/bin/e_int_config_focus.c:189
+msgid "A click on a window always raises it"
+msgstr "點擊視窗總是使他提升"
+
+#: src/bin/e_int_config_focus.c:191
+msgid "A click in a window always focuses it"
+msgstr "點擊一個視窗總是取得聚焦"
+
+#: src/bin/e_int_border_remember.c:67
+msgid "Window Remember"
+msgstr "記住視窗"
+
+#: src/bin/e_int_border_remember.c:228
+msgid "Window properties are not a unique match"
+msgstr "視窗屬性不是唯一配對"
+
+#: src/bin/e_int_border_remember.c:231
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
+#: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:113
+#: src/bin/e_module.c:403 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/modules/ibar/e_mod_main.c:1692
+msgid "OK"
+msgstr "確定"
+
+#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+msgid "No match properties set"
+msgstr "沒有吻合的屬性被設定"
+
+#: src/bin/e_int_border_remember.c:319
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:349
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:422
+msgid "Nothing"
+msgstr "無"
+
+#: src/bin/e_int_border_remember.c:424
+msgid "Size and Position"
+msgstr "大小與位置"
+
+#: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
+msgid "Locks"
+msgstr "鎖定"
+
+#: src/bin/e_int_border_remember.c:428
+msgid "Size, Position and Locks"
+msgstr "大小，位置與鎖定"
+
+#: src/bin/e_int_border_remember.c:430
+msgid "Everything"
+msgstr "任何"
+
+#: src/bin/e_int_border_remember.c:444
+msgid "Remember using"
+msgstr "記住使用"
+
+#: src/bin/e_int_border_remember.c:450
+msgid "Window name and class"
+msgstr "視窗的名稱與類別"
+
+#: src/bin/e_int_border_remember.c:460
+msgid "Title"
+msgstr "標題"
+
+#: src/bin/e_int_border_remember.c:470
+msgid "Window Role"
+msgstr "視窗腳色"
+
+#: src/bin/e_int_border_remember.c:479
+msgid "Window type"
+msgstr "視窗類型"
+
+#: src/bin/e_int_border_remember.c:486
+msgid "Transience"
+msgstr "頃刻"
+
+#: src/bin/e_int_border_remember.c:490
+msgid "Match only one window"
+msgstr "只匹配單一視窗"
+
+#: src/bin/e_int_border_remember.c:493
+msgid "Properties to remember"
+msgstr "記住屬性"
+
+#: src/bin/e_int_border_remember.c:502
+msgid "Border style"
+msgstr "邊框樣式"
+
+#: src/bin/e_int_border_remember.c:506
+msgid "Virtual Desktop"
+msgstr "虛擬桌面"
+
+#: src/bin/e_int_border_remember.c:510
+msgid "Screen zone"
+msgstr "螢幕區域"
+
+#: src/bin/e_int_border_remember.c:512
+msgid "Window list skip"
+msgstr "略過視窗列表"
+
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "進階設定"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "基本設定"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "套用"
+
+#: src/bin/e_config_dialog.c:115
+msgid "Cancel"
+msgstr "取消"
+
+#: src/bin/e_fileman_smart.c:1130 src/bin/e_eap_editor.c:278
+msgid "General"
+msgstr "一般"
+
+#: src/bin/e_fileman_smart.c:1139
+#, c-format
+msgid "File:"
+msgstr "文件："
+
+#: src/bin/e_fileman_smart.c:1148
+#, c-format
+msgid "Size:"
+msgstr "大小："
+
+#: src/bin/e_fileman_smart.c:1157
+#, c-format
+msgid "Type:"
+msgstr "類型："
+
+#: src/bin/e_fileman_smart.c:1166
+msgid "Protect this file"
+msgstr "保護這個文件"
+
+#: src/bin/e_fileman_smart.c:1172
+msgid "Let others see this file"
+msgstr "讓其他人可看見此文件"
+
+#: src/bin/e_fileman_smart.c:1176
+msgid "Let others modify this file"
+msgstr "讓其他人可修改此文件"
+
+#: src/bin/e_fileman_smart.c:1180
+msgid "Dont let others see or modify this file"
+msgstr "不讓其他人看見或修改此文件"
+
+#: src/bin/e_fileman_smart.c:1184
+msgid "Custom settings"
+msgstr "自訂的設定"
+
+#: src/bin/e_fileman_smart.c:1223
+msgid "File Info:"
+msgstr "文件資訊："
+
+#: src/bin/e_fileman_smart.c:1246
+msgid "Permissions:"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1249 src/bin/e_fileman_smart.c:1258
+#: src/bin/e_fileman_smart.c:1267
+msgid "r"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1251 src/bin/e_fileman_smart.c:1260
+#: src/bin/e_fileman_smart.c:1269
+msgid "w"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1253 src/bin/e_fileman_smart.c:1262
+#: src/bin/e_fileman_smart.c:1271
+msgid "x"
+msgstr ""
+
+#: src/bin/e_fileman_smart.c:1297 src/bin/e_fileman_smart.c:2097
+msgid "Properties"
+msgstr "屬性"
+
+#: src/bin/e_fileman_smart.c:2048
+msgid "Open"
+msgstr "開啟"
+
+#: src/bin/e_fileman_smart.c:2059
+msgid "Copy"
+msgstr "複製"
+
+#: src/bin/e_fileman_smart.c:2067
+msgid "Cut"
+msgstr "剪下"
+
+#: src/bin/e_fileman_smart.c:2078
+msgid "Rename"
+msgstr "更名"
+
+#: src/bin/e_fileman_smart.c:2086
+msgid "Delete"
+msgstr "刪除"
+
+#: src/bin/e_init.c:38
+#, c-format
+msgid "X reports there are no root windows and %i screens!\n"
+msgstr "X報告找不到root視窗與screen %i ！\n"
+
+#: src/bin/e_init.c:102
+msgid "Disable this splash screen in the future?"
+msgstr "以後不顯示這個啟動畫面？"
+
+#: src/bin/e_intl.c:359
+msgid "Input Method Error"
+msgstr "輸入法錯誤"
+
+#: src/bin/e_intl.c:360
+msgid ""
+"Error starting the input method executable\n"
+"\n"
+"please make sure that your input\n"
+"method configuration is correct and\n"
+"that your configuration's\n"
+"executable is in your PATH\n"
+msgstr ""
+
+#: src/bin/e_main.c:195
+#, c-format
+msgid ""
+"Options:\n"
+"\t-display DISPLAY\n"
+"\t\tConnect to display named DISPLAY.\n"
+"\t\tEG: -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\tAdd a FAKE xinerama screen (instead of the real ones)\n"
+"\t\tgiven the geometry. Add as many as you like. They all\n"
+"\t\treplace the real xinerama screens, if any. This can\n"
+"\t\tbe used to simulate xinerama.\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
+"selected default or just \"default\".\n"
+"\t-good\n"
+"\t\tBe good.\n"
+"\t-evil\n"
+"\t\tBe evil.\n"
+"\t-psychotic\n"
+"\t\tBe psychotic.\n"
+msgstr ""
+"選項：\n"
+"\t-display DISPLAY\n"
+"\t\t連接到一個稱為DISPLAY的一個顯示終端。\n"
+"\t\t例如： -display :1.0\n"
+"\t-fake-xinerama-screen WxH+X+Y\n"
+"\t\t加入一個偽xinerama螢幕（代替真實的那個），\n"
+"\t\t並給定尺寸。只要你願意，就可以一直加上去。\n"
+"\t\t他們都會替代真實的xinerama螢幕，如果有存在\n"
+"\t\t的話。這個功能可以拿來模擬xinerama。\n"
+"\t\t例如： -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600"
+"+800+0\n"
+"\t-profile CONF_PROFILE\n"
+"\t\t使用配置文件CONF_PROFILE代替用户選擇的配置文件，或者就使用“default”。\n"
+"\t-good\n"
+"\t\t好。\n"
+"\t-evil\n"
+"\t\t不好。\n"
+"\t-psychotic\n"
+"\t\t精神病。\n"
+
+#: src/bin/e_main.c:264
+msgid ""
+"Enlightenment cannot Initialize Ecore!\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法啟動Ecore！\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:278
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法啟動文件系統。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:289
+msgid ""
+"Enlightenment cannot set up an exit signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法建立一個離開的訊號處理。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:295
+msgid ""
+"Enlightenment cannot set up a HUP signal handler.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法建立一個HUP訊號處理。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:306
+msgid ""
+"Enlightenment cannot initialize its X connection.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment 無法初始與X的連接。\n"
+"您設定了DISPLAY環境變數了嗎？"
+
+#: src/bin/e_main.c:314
+msgid ""
+"Enlightenment cannot initialize its emergency alert system.\n"
+"Have you set your DISPLAY variable?"
+msgstr ""
+"Enlightenment 無法初始緊急警報系統。\n"
+"您設定了DISPLAY環境變數了嗎？"
+
+#: src/bin/e_main.c:321
+msgid ""
+"Enlightenment cannot setup xinerama wrapping.\n"
+"This should not happen."
+msgstr ""
+"Enlightenment 無法建立xinerama wrapping。\n"
+"這種情況不應發生。"
+
+#: src/bin/e_main.c:337
+msgid ""
+"Enlightenment cannot initialize the connections system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法啟動連接系統。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:345
+msgid ""
+"Enlightenment cannot initialize the IPC system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法啟動IPC系統。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:353
+msgid ""
+"Enlightenment cannot initialize the Evas system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法啟動Evas系統。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:359
+msgid ""
+"Enlightenment found ecore_evas doesnt support Software X11\n"
+"rendering in Evas. Please check your installation of Evas and\n"
+"Ecore and check they support Software X11 rendering."
+msgstr ""
+"Enlightenment 發現 ecore_evas 不支援Evas以X11顯示。\n"
+"請檢查您的Evas和Ecore的安裝\n"
+"並確定他們支援X11顯示。"
+
+#: src/bin/e_main.c:369
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment 無法初始略圖系統。\n"
+
+#: src/bin/e_main.c:378
+msgid "Enlightenment cannot initialize the File manager.\n"
+msgstr "Enlightenment 無法初始文件管理器。\n"
+
+#: src/bin/e_main.c:389
+msgid ""
+"Enlightenment cannot create directories in your home directory.\n"
+"Perhaps you have no home directory or the disk is full?"
+msgstr ""
+"Enlightenment 無法在你的家目錄建立目錄。\n"
+"可能你沒有家目錄或是磁碟已滿？"
+
+#: src/bin/e_main.c:397
+msgid "Enlightenment cannot set up its config system."
+msgstr "Enlightenment 無法設定他的配置系統。"
+
+#: src/bin/e_main.c:404
+msgid ""
+"Enlightenment cannot set up paths for finding files.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法為找到的文件建立路徑。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:412
+msgid "Enlightenment cannot set up its intl system."
+msgstr "Enlightenment 無法建立他的語系系統。"
+
+#: src/bin/e_main.c:419
+msgid "Enlightenment cannot set up its actions system."
+msgstr "Enlightenment 無法建立他的動作系統。"
+
+#: src/bin/e_main.c:426
+msgid "Enlightenment cannot set up its bindings system."
+msgstr "Enlightenment 無法建立他的連接系統。"
+
+#: src/bin/e_main.c:433
+msgid "Enlightenment cannot set up its popup system."
+msgstr "Enlightenment 無法建立他的彈出系統。"
+
+#: src/bin/e_main.c:444
+msgid "Enlightenment cannot set up its font system."
+msgstr "Enlightenment 無法建立他的字形系統。"
+
+#: src/bin/e_main.c:454
+msgid "Enlightenment cannot set up its theme system."
+msgstr "Enlightenment 無法建立他的主題系統。"
+
+#: src/bin/e_main.c:463
+msgid ""
+"Enlightenment cannot set up init screen.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment 無法建立初始螢幕。\n"
+"可能您的記憶體用完了？"
+
+#: src/bin/e_main.c:472
+msgid ""
+"Enlightenment set up window management for all the screens on your system\n"
+"failed. Perhaps another window manager is running?\n"
+msgstr ""
+"Enlightenment 在你所有的screen上建立視窗管理都失敗。\n"
+"可能有另一個視窗管理程式正在執行？\n"
+
+#: src/bin/e_main.c:479
+msgid "Enlightenment cannot set up its app system."
+msgstr "Enlightenment 無法建立他的應用程式系統。"
+
+#: src/bin/e_main.c:486
+msgid "Enlightenment cannot setup remember settings."
+msgstr "Enlightenment 無法設定他的設定記憶系統。"
+
+#: src/bin/e_main.c:502
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again.\n"
+"\n"
+"If you use AFS then maybe you might want to make a symlink from\n"
+"~/.ecore to /tmp/my_directory/ecore where sockets can be made."
+msgstr ""
+"Enlightenment 無法建立IPC socket。\n"
+"看起來已經有另一個Enlightenment正在使用。\n"
+"請確定沒有其他Enlightenment在同一個display上執行，\n"
+"如果沒有，請試著刪除 ~/.ecore/enlightenment-* 下的所有文件，\n"
+"然後在試著執行一遍。\n"
+"\n"
+"如果您使用AFS，那麼你可能需要建立一個以 ~/.ecore 到 /tmp/my_directory/ecore\n"
+"的symlink，以便建立socket。"
+
+#: src/bin/e_main.c:518
+msgid "Enlightenment cannot set up its msg system."
+msgstr "Enlightenment 無法建立他的訊息系統。"
+
+#: src/bin/e_main.c:525
+msgid "Enlightenment cannot set up its dnd system."
+msgstr "Enlightenment 無法建立他的拖拉系統。"
+
+#: src/bin/e_main.c:532
+msgid "Enlightenment cannot set up its input grab handling system."
+msgstr "Enlightenment 無法建立他的輸入擷取處理系統。"
+
+#: src/bin/e_main.c:539
+msgid "Enlightenment cannot set up its module system."
+msgstr "Enlightenment 無法建立他的模組系統。"
+
+#: src/bin/e_main.c:546
+msgid "Enlightenment cannot set up its window list system."
+msgstr "Enlightenment 無法建立他的視窗列表系統。"
+
+#: src/bin/e_main.c:552
+msgid "Enlightenment IPC setup error!"
+msgstr "Enlightenment IPC設定錯誤！"
+
+#: src/bin/e_main.c:553
+msgid ""
+"Enlightenment cannot set up the IPC socket.\n"
+"It likely is already in use by an existing copy of Enlightenment.\n"
+"Double check to see if Enlightenment is not already on this display,\n"
+"but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
+"and try running again."
+msgstr ""
+"Enlightenment 無法建立IPC socket。\n"
+"看來已經有一個Enlightenment正在執行。\n"
+"請確定沒有其他Enlightenment在同一個display上執行，\n"
+"如果沒有，請試著刪除 ~/.ecore/enlightenment-* 下的所有文件，\n"
+"然後在試著執行一遍。"
+
+#: src/bin/e_main.c:569 src/bin/e_about.c:50
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/bin/e_main.c:571
+msgid "Enlightenment Starting. Please wait."
+msgstr "Enlightenment 正在啟動。請稍後。"
+
+#: src/bin/e_module.c:110
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>No module named %s could be "
+"found in the<br>module search directories.<br>"
+msgstr ""
+"載入模組 %s 時發生錯誤。<br>在模組的搜尋路徑<br>沒有找到名為 %s 的模組。<br>"
+
+#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+msgid "Error loading Module"
+msgstr "載入模組錯誤"
+
+#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#, c-format
+msgid ""
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgstr ""
+"載入模組 %s 時發生錯誤。<br>該模組的完整路徑是：<br>%s<br>錯誤報告如下：<br>%"
+"s<br>"
+
+#: src/bin/e_module.c:165
+#, c-format
+msgid ""
+"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
+"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"%i.<br>"
+msgstr ""
+"模組 API 錯誤<br>模組初始化錯誤：%s<br>要求最小的模組 API 版本號：%i。"
+"<br>Enlightenment給的模組版本化：%i。<br>"
+
+#: src/bin/e_module.c:170
+#, c-format
+msgid "Enlightenment %s Module"
+msgstr "Enlightenment %s 模組"
+
+#: src/bin/e_module.c:387
+msgid "(No Loaded Modules)"
+msgstr "（沒有載入的模組）"
+
+#: src/bin/e_module.c:461
+msgid "About..."
+msgstr "關於……"
+
+#: src/bin/e_module.c:465
+msgid "Enabled"
+msgstr "啟用"
+
+#: src/bin/e_module.c:538
+msgid "Would you like to unload this module?<br>"
+msgstr "您是否要卸載這個模組？<br>"
+
+#: src/bin/e_module.c:543 src/bin/e_actions.c:1200
+#: src/modules/randr/e_mod_main.c:317
+msgid "Yes"
+msgstr "是"
+
+#: src/bin/e_module.c:544 src/bin/e_actions.c:1202
+#: src/modules/randr/e_mod_main.c:318
+msgid "No"
+msgstr "否"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "啟動 %s"
+
+#: src/bin/e_int_border_menu.c:40
+msgid "Always On Top"
+msgstr "總是置於頂端"
+
+#: src/bin/e_int_border_menu.c:50 src/modules/clock/e_mod_main.c:349
+#: src/modules/pager/e_mod_main.c:458
+msgid "Normal"
+msgstr "正常"
+
+#: src/bin/e_int_border_menu.c:60
+msgid "Always Below"
+msgstr "總是置於底部"
+
+#: src/bin/e_int_border_menu.c:84
+msgid "Remember"
+msgstr "記住"
+
+#: src/bin/e_int_border_menu.c:94
+msgid "Send to Desktop"
+msgstr "送到桌面"
+
+#: src/bin/e_int_border_menu.c:115
+msgid "Shaded"
+msgstr "捲起"
+
+#: src/bin/e_int_border_menu.c:128
+msgid "Maximized"
+msgstr "最大化"
+
+#: src/bin/e_int_border_menu.c:141
+msgid "Sticky"
+msgstr "釘住"
+
+#: src/bin/e_int_border_menu.c:154
+msgid "Borderless"
+msgstr "無邊框"
+
+#: src/bin/e_int_border_menu.c:167
+msgid "Fullscreen"
+msgstr "全螢幕"
+
+#: src/bin/e_int_border_menu.c:181
+msgid "Skip Window List"
+msgstr "跳過視窗列表"
+
+#: src/bin/e_int_border_menu.c:202
+msgid "Edit Icon"
+msgstr "編輯圖示"
+
+#: src/bin/e_int_border_menu.c:232
+msgid "Create Icon"
+msgstr "建立圖示"
+
+#: src/bin/e_int_border_menu.c:243
+msgid "Kill"
+msgstr "結束"
+
+#: src/bin/e_int_border_menu.c:256
+msgid "Iconify"
+msgstr "最小化"
+
+#: src/bin/e_int_border_menu.c:267
+msgid "Close"
+msgstr "關閉"
+
+#: src/bin/e_int_border_menu.c:447
+msgid "Icon Edit Error"
+msgstr "圖示編輯錯誤"
+
+#: src/bin/e_int_border_menu.c:448
+msgid ""
+"Error starting icon editor\n"
+"\n"
+"please install e_util_eapp_edit\n"
+"or make sure it is in your PATH\n"
+msgstr ""
+"啟動圖示編輯器錯誤\n"
+"\n"
+"請安裝 e_util_eapp_edit\n"
+"或確定他已在你的PATH環境變數中\n"
+
+#: src/bin/e_container.c:118
+#, c-format
+msgid "Container %d"
+msgstr "容器 %d"
+
+#: src/bin/e_actions.c:1193
+msgid "Are you sure you want to exit?"
+msgstr "您確定要退出嗎？"
+
+#: src/bin/e_actions.c:1195
+msgid ""
+"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "您要求退出 Enlightenment。<br><br>您是否確定要退出？"
+
+#: src/bin/e_config.c:373
+msgid ""
+"Configuration data needed upgrading. Your old configuration\n"
+"has been wiped and a new set of defaults initialized. This\n"
+"will happen regularly during development, so don't report a\n"
+"bug. This simply means Enlightenment needs new configuration\n"
+"data by default for usable functionality that your old\n"
+"configuration simply lacks. This new set of defaults will fix\n"
+"that by adding it in. You can re-configure things now to your\n"
+"liking. Sorry for the hiccup in your configuration.\n"
+msgstr ""
+"配置資料需要更新。\n"
+"您舊的配置已被移除，新的配置已被初始。\n"
+"這種情況在開發中是正常的，所以請不要報告錯誤。\n"
+"這只是意味Enlightenment需要新的配置資料，而您的就配置\n"
+"沒有這些資料。\n"
+"新預設配置文件會加入這些資料以修復這個問題。現在您可以重新\n"
+"配置您的桌面設定。\n"
+"抱歉打斷您的配置。\n"
+
+#: src/bin/e_config.c:387
+msgid ""
+"Your configuration is NEWER than Enlightenment. This is very\n"
+"strange. This should not happen unless you downgraded\n"
+"Enlightenment or copied the configuration from a place where\n"
+"a newer version of Enlightenment was running. This is bad and\n"
+"as a precaution your configuration has been now restored to\n"
+"defaults. Sorry for the inconvenience.\n"
+msgstr ""
+"您的配置檔比目前的Enlightenment更新。\n"
+"這非常奇怪。除非您降級Enlightenment否則不會發生\n"
+"或是從其它地方複製較新的配置檔\n"
+"這是不好的，為防萬一\n"
+"您的配置文件以回存到預設值。\n"
+"對任何不便感到抱歉。\n"
+
+#: src/bin/e_config.c:1972
+msgid "Configuration Upgraded"
+msgstr "配置已經更新"
+
+#: src/bin/e_error.c:352
+msgid "Enlightenment: Error!"
+msgstr "Enlightenment：錯誤！"
+
+#: src/bin/e_eap_editor.c:216 src/bin/e_eap_editor.c:338
+msgid "Icon"
+msgstr "圖示"
+
+#: src/bin/e_eap_editor.c:237
+msgid "Basic Info"
+msgstr "基本訊息"
+
+#: src/bin/e_eap_editor.c:302
+msgid "Window"
+msgstr "視窗"
+
+#: src/bin/e_eap_editor.c:362
+msgid "Misc"
+msgstr "雜項"
+
+#: src/bin/e_gadman.c:626
+msgid "Automatic Width"
+msgstr "自動調整寬度"
+
+#: src/bin/e_gadman.c:637
+msgid "Half Screen Width"
+msgstr "半螢幕寬度"
+
+#: src/bin/e_gadman.c:643
+msgid "Full Screen Width"
+msgstr "全螢幕寬度"
+
+#: src/bin/e_gadman.c:655
+msgid "Center Horizontally"
+msgstr "水平置中"
+
+#: src/bin/e_gadman.c:673
+msgid "Automatic Height"
+msgstr "自動調整高度"
+
+#: src/bin/e_gadman.c:684
+msgid "Half Screen Height"
+msgstr "半螢幕高度"
+
+#: src/bin/e_gadman.c:690
+msgid "Full Screen Height"
+msgstr "全螢幕高度"
+
+#: src/bin/e_gadman.c:701
+msgid "Center Vertically"
+msgstr "垂直置中"
+
+#: src/bin/e_gadman.c:713
+msgid "End Edit Mode"
+msgstr "結束編輯模式"
+
+#: src/bin/e_about.c:55
+msgid ""
+"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
+"hope you enjoy using this software as much as we enjoyed writing it."
+"<br><br>This software is provided as-is with no explicit or implied "
+"warranty. This software is governed by licensing conditions, so please see "
+"the COPYING and COPYING-PLAIN licence files installed on your system."
+"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+"is not stable. Many features are incomplete or even non-existant yet and may "
+"have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:80
+msgid "<title>The Team</title>"
+msgstr "<title>開發組</title>"
+
+#: src/bin/e_winlist.c:122
+msgid "Select a window"
+msgstr "選擇一個視窗"
+
+#: src/bin/e_utils.c:268
+msgid "Cannot exit - immortal windows."
+msgstr "無法退出 － 固化的視窗。"
+
+#: src/bin/e_utils.c:269
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+"一些視窗仍處再生命周期鎖定之中。\n"
+"這意味著"
+"Enlightenment不允許自己退出，除非這些視窗已被關閉，\n"
+"或者去除生命周期鎖定。\n"
+
+#: src/modules/ibar/e_mod_main.c:165
+msgid "Enlightenment IBar Module"
+msgstr "Enlightenment IBar 模組"
+
+#: src/modules/ibar/e_mod_main.c:166
+msgid ""
+"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
+"a first example module and is being used to flesh out several<br>interfaces "
+"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
+"<hilight>break often</hilight> and change as it improves."
+msgstr ""
+"這是為了 Enlightenment 設計的 IBar 程式啟動模組。<br>它是第一個範例模組"
+"且被用來建構 Enlightenment 0.17.0<br>裡的介面。"
+"它正在緊密開發中"
+"所以它會執行錯誤以及隨著改進會改變。"
+
+#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
+#: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
+msgid "Options"
+msgstr "選項"
+
+#: src/modules/ibar/e_mod_main.c:835 src/modules/ibox/e_mod_main.c:599
+msgid "Auto fit icons"
+msgstr "自動縮放圖示"
+
+#: src/modules/ibar/e_mod_main.c:841 src/modules/ibox/e_mod_main.c:605
+msgid "Follower"
+msgstr "跟隨"
+
+#: src/modules/ibar/e_mod_main.c:850 src/modules/ibox/e_mod_main.c:614
+msgid "Microscopic"
+msgstr "極小"
+
+#: src/modules/ibar/e_mod_main.c:857 src/modules/ibox/e_mod_main.c:621
+msgid "Tiny"
+msgstr "微小"
+
+#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:628
+msgid "Very Small"
+msgstr "很小"
+
+#: src/modules/ibar/e_mod_main.c:871 src/modules/ibox/e_mod_main.c:635
+msgid "Small"
+msgstr "小"
+
+#: src/modules/ibar/e_mod_main.c:878 src/modules/ibox/e_mod_main.c:642
+#: src/modules/dropshadow/e_mod_main.c:316
+msgid "Medium"
+msgstr "中等"
+
+#: src/modules/ibar/e_mod_main.c:885 src/modules/ibox/e_mod_main.c:649
+msgid "Large"
+msgstr "大"
+
+#: src/modules/ibar/e_mod_main.c:892 src/modules/ibox/e_mod_main.c:656
+msgid "Very Large"
+msgstr "很大"
+
+#: src/modules/ibar/e_mod_main.c:899 src/modules/ibox/e_mod_main.c:663
+msgid "Extremely Large"
+msgstr "極大"
+
+#: src/modules/ibar/e_mod_main.c:906 src/modules/ibox/e_mod_main.c:670
+msgid "Huge"
+msgstr "巨大"
+
+#: src/modules/ibar/e_mod_main.c:913 src/modules/ibox/e_mod_main.c:677
+msgid "Enormous"
+msgstr "龐大"
+
+#: src/modules/ibar/e_mod_main.c:920 src/modules/ibox/e_mod_main.c:684
+msgid "Gigantic"
+msgstr "超大"
+
+#: src/modules/ibar/e_mod_main.c:1685
+msgid "Cannot add icon"
+msgstr "不能加入圖示"
+
+#: src/modules/ibar/e_mod_main.c:1687
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+"您試著拖拉一個程式圖示<br>並不匹配"
+"程式檔案。<br><br>圖示無法加入IBar"
+
+#: src/modules/ibox/e_mod_main.c:151
+msgid "Enlightenment IBox Module"
+msgstr "Enlightenment IBox 模組"
+
+#: src/modules/ibox/e_mod_main.c:152
+msgid ""
+"This is the IBox Iconified Application module for Enlightenment.<br>It will "
+"hold minimized applications"
+msgstr ""
+"這是Enlightenment的IBox程式圖示化模組。<br>它將"
+"持有最小化的程式"
+
+#: src/modules/test/e_mod_main.c:21
+msgid "Module Config Menu Item 1"
+msgstr "模組配置選單項目 1"
+
+#: src/modules/test/e_mod_main.c:23
+msgid "Module Config Menu Item 2"
+msgstr "模組配置選單項目 2"
+
+#: src/modules/test/e_mod_main.c:25
+msgid "Module Config Menu Item 3"
+msgstr "模組配置選單項目 3"
+
+#: src/modules/test/e_mod_main.c:29
+msgid "Something Else"
+msgstr "其他"
+
+#: src/modules/test/e_mod_main.c:62
+msgid "Enlightenment Test Module"
+msgstr "Enlightenment 測試模組"
+
+#: src/modules/test/e_mod_main.c:63
+msgid ""
+"This module is VERY simple and is only used to test the basic<br>interface "
+"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
+"unless you are working on the module system."
+msgstr ""
+"這是一個非常簡單且只用來測試Enlightenment 0.17.0<br>介面的模組。"
+"請忽略這個模組。"
+"除非您正在做模組系統"
+
+#: src/modules/cpufreq/e_mod_main.c:114
+msgid "CPU Frequency Controller Module"
+msgstr "CPU頻率控制模組"
+
+#: src/modules/cpufreq/e_mod_main.c:115
+msgid ""
+"A simple module to control the frequency of the system CPU.<br>This is "
+"especially useful to save power on laptops."
+msgstr ""
+"一個控制系統CPU頻率的簡單模組。"
+"它在節約筆記型電腦電力特別有用。"
+
+#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
+#: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
+msgid "Set Poll Time"
+msgstr "設置輪詢時間"
+
+#: src/modules/cpufreq/e_mod_main.c:221
+msgid "Restore Controller on Startup"
+msgstr "啟動時的回復控制器"
+
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:560
+msgid "Set Controller"
+msgstr "設定控制器"
+
+#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:567
+msgid "Set Speed"
+msgstr "設定速度"
+
+#: src/modules/cpufreq/e_mod_main.c:303
+msgid ""
+"There was an error trying to set the cpu frequency<br>governor via the "
+"module's setfreq utility."
+msgstr ""
+"當試著經由模組的setfreq功能來設定cpu頻率<br>調節"
+"時發生錯誤。"
+
+#: src/modules/cpufreq/e_mod_main.c:305 src/modules/cpufreq/e_mod_main.c:333
+#: src/modules/battery/e_mod_main.c:765
+msgid "Ok"
+msgstr "OK"
+
+#: src/modules/cpufreq/e_mod_main.c:331
+msgid ""
+"There was an error trying to set the cpu frequency<br>setting via the "
+"module's setfreq utility."
+msgstr ""
+"當試著經由模組的setfreq功能來設定cpu頻率設定"
+"時發生錯誤。"
+
+#: src/modules/cpufreq/e_mod_main.c:456
+msgid "Check Fast (0.5 sec)"
+msgstr "快速檢查（0.5秒）"
+
+#: src/modules/cpufreq/e_mod_main.c:463
+msgid "Check Medium (1 sec)"
+msgstr "中速檢查（1秒）"
+
+#: src/modules/cpufreq/e_mod_main.c:470
+msgid "Check Normal (2 sec)"
+msgstr "正常檢查（2秒）"
+
+#: src/modules/cpufreq/e_mod_main.c:477
+msgid "Check Slow (5 sec)"
+msgstr "慢速檢查（5秒）"
+
+#: src/modules/cpufreq/e_mod_main.c:484
+msgid "Check Very Slow (30 sec)"
+msgstr "非常慢速檢查（30秒）"
+
+#: src/modules/cpufreq/e_mod_main.c:500
+msgid "Manual"
+msgstr "手動"
+
+#: src/modules/cpufreq/e_mod_main.c:502
+msgid "Automatic"
+msgstr "自動"
+
+#: src/modules/cpufreq/e_mod_main.c:504
+msgid "Lower Power Automatic"
+msgstr "自動低電源消耗"
+
+#: src/modules/cpufreq/e_mod_main.c:506
+msgid "Minimum Speed"
+msgstr "最低速"
+
+#: src/modules/cpufreq/e_mod_main.c:508
+msgid "Maximum Speed"
+msgstr "最高速"
+
+#: src/modules/cpufreq/e_mod_main.c:530
+#, c-format
+msgid "%i Mhz"
+msgstr "%i Mhz"
+
+#: src/modules/cpufreq/e_mod_main.c:533
+#, c-format
+msgid "%i.%i Ghz"
+msgstr "%i.%i Ghz"
+
+#: src/modules/cpufreq/e_mod_main.c:554
+msgid "Restore Governor on Startup"
+msgstr "啟動時的回復控制器"
+
+#: src/modules/clock/e_mod_main.c:96
+msgid "Enlightenment Clock Module"
+msgstr "Enlightenment時鐘模組"
+
+#: src/modules/clock/e_mod_main.c:97
+msgid "A simple module to give E17 a clock."
+msgstr "一個提供E17時鐘的簡單模組。"
+
+#: src/modules/clock/e_mod_main.c:338
+msgid "No Digital Display"
+msgstr "無數字時間顯示"
+
+#: src/modules/clock/e_mod_main.c:360
+msgid "24 Hour"
+msgstr "24小時"
+
+#: src/modules/clock/e_mod_main.c:372
+msgid "Digital Display"
+msgstr "數字時間顯示"
+
+#: src/modules/pager/e_mod_main.c:165
+msgid "Enlightenment Pager Module"
+msgstr "Enlightenment虛擬桌面切換器模組"
+
+#: src/modules/pager/e_mod_main.c:166
+msgid "A pager module to navigate virtual desktops."
+msgstr "一個定位虛擬桌面的切換器模組"
+
+#: src/modules/pager/e_mod_main.c:397
+msgid "None"
+msgstr "無"
+
+#: src/modules/pager/e_mod_main.c:405
+msgid "Top"
+msgstr "頂部"
+
+#: src/modules/pager/e_mod_main.c:413
+msgid "Bottom"
+msgstr "底部"
+
+#: src/modules/pager/e_mod_main.c:444
+msgid "Very Slow"
+msgstr "很慢"
+
+#: src/modules/pager/e_mod_main.c:451
+msgid "Slow"
+msgstr "慢"
+
+#: src/modules/pager/e_mod_main.c:465
+msgid "Fast"
+msgstr "快"
+
+#: src/modules/pager/e_mod_main.c:472
+msgid "Very Fast"
+msgstr "很快"
+
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
+msgid "Desktop Name"
+msgstr "桌面名稱"
+
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
+msgid "Enable Popup"
+msgstr "允許彈出"
+
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
+msgid "Popup Speed"
+msgstr "彈出速度"
+
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
+msgid "Fix Aspect (Keep Height)"
+msgstr "固定方向(保持高度)"
+
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
+msgid "Fix Aspect (Keep Width)"
+msgstr "固定方向(保持寬度)"
+
+#: src/modules/randr/e_mod_main.c:84
+msgid "Enlightenment Randr Module"
+msgstr "Enlightenment Randr 模組"
+
+#: src/modules/randr/e_mod_main.c:85
+msgid "Module to change screen resolution for E17"
+msgstr "改變螢幕解析度的E17模組"
+
+#: src/modules/randr/e_mod_main.c:187
+msgid "Restore Resolution on Startup"
+msgstr "啟動時恢復解析度"
+
+#: src/modules/randr/e_mod_main.c:210
+msgid "Resolution"
+msgstr "解析度"
+
+#: src/modules/randr/e_mod_main.c:309
+msgid "Resolution change"
+msgstr "解析度改變"
+
+#: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d in %d seconds."
+msgstr ""
+"保持新解析度<hilight>%dx%d</hilight>？<br><br>"
+"回復舊解析度%dx%d在%d秒之後"
+
+#: src/modules/randr/e_mod_main.c:390
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d NOW!"
+msgstr ""
+"保持新解析度<hilight>%dx%d</hilight>？<br><br>"
+"馬上回復舊解析度%dx%d"
+
+#: src/modules/start/e_mod_main.c:78
+msgid "Enlightenment Start Module"
+msgstr "Enlightenment開始模組"
+
+#: src/modules/start/e_mod_main.c:79
+msgid "Experimental Button module for E17"
+msgstr "E17的實驗性按鈕模組"
+
+#: src/modules/temperature/e_mod_main.c:95
+msgid "Enlightenment Temperature Module"
+msgstr "Enlightenment 溫度模組"
+
+#: src/modules/temperature/e_mod_main.c:96
+msgid ""
+"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
+"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
+"generate a lot of heat."
+msgstr ""
+"一個在linux下測量 <hilight>ACPI 溫度監視器</hilight>狀況的模組。"
+"<br>尤其對於高速產生高熱CPU的現代筆記型電腦來說，"
+"<br>這個模組特別有用"
+
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:798
+msgid "Check Interval"
+msgstr "檢查區間"
+
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:806
+msgid "Low Temperature"
+msgstr "低溫"
+
+#: src/modules/temperature/e_mod_main.c:196
+#: src/modules/temperature/e_mod_main.c:810
+msgid "High Temperature"
+msgstr "高温"
+
+#: src/modules/temperature/e_mod_main.c:200
+#: src/modules/temperature/e_mod_main.c:802
+msgid "Unit"
+msgstr "單位"
+
+#: src/modules/temperature/e_mod_main.c:676
+msgid "Fast (1 sec)"
+msgstr "快 （1秒）"
+
+#: src/modules/temperature/e_mod_main.c:683
+msgid "Medium (5 sec)"
+msgstr "中等 （5秒）"
+
+#: src/modules/temperature/e_mod_main.c:690
+msgid "Normal (10 sec)"
+msgstr "正常 （10秒）"
+
+#: src/modules/temperature/e_mod_main.c:697
+msgid "Slow (30 sec)"
+msgstr "慢 （30秒）"
+
+#: src/modules/temperature/e_mod_main.c:704
+msgid "Very Slow (60 sec)"
+msgstr "很慢 （60秒）"
+
+#: src/modules/temperature/e_mod_main.c:715
+msgid "Fahrenheit"
+msgstr "華氏"
+
+#: src/modules/temperature/e_mod_main.c:722
+msgid "Celcius"
+msgstr "攝氏"
+
+#: src/modules/temperature/e_mod_main.c:758
+msgid "Temp1"
+msgstr "温度一"
+
+#: src/modules/temperature/e_mod_main.c:767
+msgid "Temp2"
+msgstr "温度二"
+
+#: src/modules/temperature/e_mod_main.c:776
+msgid "Temp3"
+msgstr "温度三"
+
+#: src/modules/temperature/e_mod_main.c:816
+msgid "Sensor"
+msgstr "感應器"
+
+#: src/modules/dropshadow/e_mod_main.c:187
+msgid "Enlightenment Dropshadow Module"
+msgstr "Enlightenment視窗陰影模組"
+
+#: src/modules/dropshadow/e_mod_main.c:188
+msgid ""
+"This is the dropshadow module that allows dropshadows to be cast<br>on the "
+"desktop background - without special X-Server extensions<br>or hardware "
+"acceleration."
+msgstr ""
+"這是允許視窗在桌面背景產生投影的陰影模組。<br>"
+"不需要特殊的X擴充套件"
+"或是硬體加速。"
+
+#: src/modules/dropshadow/e_mod_main.c:298
+msgid "Very Fuzzy"
+msgstr "很模糊"
+
+#: src/modules/dropshadow/e_mod_main.c:307
+msgid "Fuzzy"
+msgstr "模糊"
+
+#: src/modules/dropshadow/e_mod_main.c:325
+msgid "Sharp"
+msgstr "清晰"
+
+#: src/modules/dropshadow/e_mod_main.c:334
+msgid "Very Sharp"
+msgstr "很清晰"
+
+#: src/modules/dropshadow/e_mod_main.c:346
+msgid "Very Dark"
+msgstr "很暗"
+
+#: src/modules/dropshadow/e_mod_main.c:355
+msgid "Dark"
+msgstr "暗"
+
+#: src/modules/dropshadow/e_mod_main.c:364
+msgid "Light"
+msgstr "亮"
+
+#: src/modules/dropshadow/e_mod_main.c:373
+msgid "Very Light"
+msgstr "很亮"
+
+#: src/modules/dropshadow/e_mod_main.c:385
+msgid "Very Far"
+msgstr "很遠"
+
+#: src/modules/dropshadow/e_mod_main.c:394
+msgid "Far"
+msgstr "遠"
+
+#: src/modules/dropshadow/e_mod_main.c:403
+msgid "Near"
+msgstr "近"
+
+#: src/modules/dropshadow/e_mod_main.c:412
+msgid "Very Near"
+msgstr "很近"
+
+#: src/modules/dropshadow/e_mod_main.c:421
+msgid "Extremely Near"
+msgstr "極近"
+
+#: src/modules/dropshadow/e_mod_main.c:430
+msgid "Immediately Underneath"
+msgstr "就在下面"
+
+#: src/modules/dropshadow/e_mod_main.c:442
+msgid "High Quality"
+msgstr "高品質"
+
+#: src/modules/dropshadow/e_mod_main.c:452
+msgid "Medium Quality"
+msgstr "中等品質"
+
+#: src/modules/dropshadow/e_mod_main.c:462
+msgid "Low Quality"
+msgstr "低品質"
+
+#: src/modules/battery/e_mod_main.c:125
+msgid "Enlightenment Battery Module"
+msgstr "Enlightenment電池模組"
+
+#: src/modules/battery/e_mod_main.c:126
+msgid ""
+"A basic battery meter that uses either<hilight>ACPI</hilight> or "
+"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
+"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
+"accurate as your BIOS or kernel drivers."
+msgstr ""
+"一個簡單的電池指示器，使用Linux下的 <hilight>ACPI</hilight> 或者 "
+"<hilight>APM</hilight> <br>模組來監視您的電池和交流電源轉接器狀態。<br>它能"
+"在 Linux 和 FreeBSD 下工作，且在您的 BIOS 或核心驅動<br>"
+"都一樣精準"
+
+#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
+msgid "Set Alarm"
+msgstr "設定警告"
+
+#: src/modules/battery/e_mod_main.c:404
+msgid "Disable"
+msgstr "禁用"
+
+#: src/modules/battery/e_mod_main.c:411
+msgid "10 mins"
+msgstr "10分鐘"
+
+#: src/modules/battery/e_mod_main.c:418
+msgid "20 mins"
+msgstr "20分鐘"
+
+#: src/modules/battery/e_mod_main.c:425
+msgid "30 mins"
+msgstr "30分鐘"
+
+#: src/modules/battery/e_mod_main.c:432
+msgid "40 mins"
+msgstr "40分鐘"
+
+#: src/modules/battery/e_mod_main.c:439
+msgid "50 mins"
+msgstr "50分鐘"
+
+#: src/modules/battery/e_mod_main.c:446
+msgid "1 hour"
+msgstr "一小時"
+
+#: src/modules/battery/e_mod_main.c:458
+msgid "Check Fast (1 sec)"
+msgstr "快速檢查（1秒）"
+
+#: src/modules/battery/e_mod_main.c:465
+msgid "Check Medium (5 sec)"
+msgstr "中速檢查（5秒）"
+
+#: src/modules/battery/e_mod_main.c:472
+msgid "Check Normal (10 sec)"
+msgstr "正常檢查（10秒）"
+
+#: src/modules/battery/e_mod_main.c:479
+msgid "Check Slow (30 sec)"
+msgstr "慢速檢查（30秒）"
+
+#: src/modules/battery/e_mod_main.c:486
+msgid "Check Very Slow (60 sec)"
+msgstr "極慢速檢查（60秒）"
+
+#: src/modules/battery/e_mod_main.c:762
+msgid ""
+"Battery Running Low<br>Your battery is running low.<br>You may wish to "
+"switch to an AC source."
+msgstr "電池電量低<br>你的電池電量太低。<br>您可能需要"
+"切換到交流電源"
+
+#: src/modules/battery/e_mod_main.c:827
+msgid "NO INFO"
+msgstr "沒有訊息"
+
+#: src/modules/battery/e_mod_main.c:1002 src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:1412
+msgid "NO BAT"
+msgstr "沒有電池"
+
+#: src/modules/battery/e_mod_main.c:1026 src/modules/battery/e_mod_main.c:1437
+msgid "BAD DRIVER"
+msgstr "錯誤的驅動程式"
+
+#: src/modules/battery/e_mod_main.c:1050 src/modules/battery/e_mod_main.c:1294
+#: src/modules/battery/e_mod_main.c:1461
+msgid "FULL"
+msgstr "滿"
+
+#: src/modules/battery/e_mod_main.c:1111 src/modules/battery/e_mod_main.c:1521
+msgid "High"
+msgstr "高"
+
+#: src/modules/battery/e_mod_main.c:1115 src/modules/battery/e_mod_main.c:1525
+msgid "Low"
+msgstr "低"
+
+#: src/modules/battery/e_mod_main.c:1119 src/modules/battery/e_mod_main.c:1529
+msgid "Danger"
+msgstr "危險"
+
+#: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1533
+#: src/modules/battery/e_mod_main.c:1697
+msgid "Charging"
+msgstr "充電中"
+
+#~ msgid "Shade"
+#~ msgstr "捲起"
+
+#~ msgid "Maximize"
+#~ msgstr "最大化"
+
+#~ msgid "User"
+#~ msgstr "使用者"
+
+#~ msgid "Application"
+#~ msgstr "應用程式"
+
+#~ msgid "Border"
+#~ msgstr "邊框"
+
+#~ msgid "Lifespan"
+#~ msgstr "生命周期"
+
+#~ msgid "Remember This Window"
+#~ msgstr "記住這個視窗"
+
+#~ msgid "Remember This Instance Only"
+#~ msgstr "只記住這個實體"
+
+#~ msgid "Match by Name"
+#~ msgstr "由名稱匹配"
+
+#~ msgid "Match by Class"
+#~ msgstr "由類別匹配"
+
+#~ msgid "Match by Title"
+#~ msgstr "由標題匹配"
+
+#~ msgid "Match by Role"
+#~ msgstr "由角色匹配"
+
+#~ msgid "Match by Transient Status"
+#~ msgstr "由瞬間狀態匹配"
+
+#~ msgid "Remember Position"
+#~ msgstr "記住位置"
+
+#~ msgid "Remember Size"
+#~ msgstr "記住大小"
+
+#~ msgid "Remember Border"
+#~ msgstr "記住邊框"
+
+#~ msgid "Remember Desktop"
+#~ msgstr "記住桌面"
+
+#~ msgid "Remember Shaded State"
+#~ msgstr "記住捲起狀態"
+
+#~ msgid "Remember Zone"
+#~ msgstr "記住區域"
+
+#~ msgid "Remember Skip Window List"
+#~ msgstr "記住跳過視窗列表"
+
+#~ msgid "Send To"
+#~ msgstr "送到"
+
+#~ msgid ""
+#~ "This is Enlightenment %s.\n"
+#~ "Copyright © 1999-2005, by the Enlightenment Dev Team.\n"
+#~ "\n"
+#~ "We hope you enjoy using this software as much as we enjoyed writing it.\n"
+#~ "\n"
+#~ "Please think of the aardvarks. They need some love too."
+#~ msgstr ""
+#~ "這是 Enlightenment %s 。\n"
+#~ "版權所有 © 1999-2005，Enlightenment 開發小組。\n"
+#~ "\n"
+#~ "我們希望你們能像我們開發這個軟體一樣開心地使用它。\n"
+#~ "\n"
+#~ "請想想土豚。他們也需要關愛。"
+
+#~ msgid "Applications"
+#~ msgstr "應用程式"
+
+#~ msgid "(Empty)"
+#~ msgstr "（空）"
+
+#~ msgid "Module API Error"
+#~ msgstr "模組API錯誤"
+
+#~ msgid ""
+#~ "Error initializing Module: Battery\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：電池\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Battery"
+#~ msgstr "電池"
+
+#~ msgid "Battery Running Low"
+#~ msgstr "電池電量低"
+
+#~ msgid ""
+#~ "Error initializing Module: Clock\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：時鐘\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Clock"
+#~ msgstr "時鐘"
+
+#~ msgid ""
+#~ "Error initializing Module: cpufreq\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：CPU頻率\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "CpuFreq"
+#~ msgstr "CPU頻率"
+
+#~ msgid "CPU Frequency ERROR"
+#~ msgstr "CPU頻率錯誤"
+
+#~ msgid ""
+#~ "Error initializing Module: Dropshadow\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：視窗陰影\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Dropshadow"
+#~ msgstr "視窗陰影"
+
+#~ msgid ""
+#~ "Error initializing Module: IBar\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：IBar\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "IBar"
+#~ msgstr "IBar"
+
+#~ msgid ""
+#~ "Error initializing Module: Pager\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：Pager\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Pager"
+#~ msgstr "桌面切換器"
+
+#~ msgid ""
+#~ "Error initializing Module: Temperature\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：温度\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Temperature"
+#~ msgstr "温度"
+
+#~ msgid "10C"
+#~ msgstr "10度"
+
+#~ msgid "20C"
+#~ msgstr "20度"
+
+#~ msgid "30C"
+#~ msgstr "30度"
+
+#~ msgid "40C"
+#~ msgstr "40度"
+
+#~ msgid "50C"
+#~ msgstr "50度"
+
+#~ msgid "60C"
+#~ msgstr "60度"
+
+#~ msgid "70C"
+#~ msgstr "70度"
+
+#~ msgid "80C"
+#~ msgstr "80度"
+
+#~ msgid "90C"
+#~ msgstr "90度"
+
+#~ msgid "100C"
+#~ msgstr "100度"
+
+#~ msgid ""
+#~ "Error initializing Module: test\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：測試模組\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Test!!!"
+#~ msgstr "測試！！！"
+
+#~ msgid ""
+#~ "Error initializing Module: IBox\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：IBox\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "IBox"
+#~ msgstr "IBox"
+
+#~ msgid ""
+#~ "This is the IBox Application Launcher box module for Enlightenment.\n"
+#~ "It is a first example module and is being used to flesh out several\n"
+#~ "Interfaces in Enlightenment 0.17.0. It is under heavy development,\n"
+#~ "so expect it to break often and change as it improves."
+#~ msgstr ""
+#~ "這是為了 Enlightenment 設計的 IBar 程式啟動模組。<br>它是第一個範例模組"
+#~ "且被用來建構 Enlightenment 0.17.0<br>裡的介面。"
+#~ "它正在緊密開發中"
+#~ "所以它會執行錯誤以及隨著改進會改變。"
+
+#~ msgid "Start"
+#~ msgstr "開始"
+
+#~ msgid ""
+#~ "Error initializing Module: desktop\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：桌面\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Enlightenment DesktopName Module"
+#~ msgstr "Enlightenment 桌面名稱模組"
+
+#~ msgid "Experimental module for E17: display desktop name on screen."
+#~ msgstr "試驗性的E17模組：在螢幕上顯示桌面名稱"
+
+#~ msgid ""
+#~ "Error initializing Module: randr\n"
+#~ "It requires a minimum module API version of: %i.\n"
+#~ "The module API advertized by Enlightenment is: %i.\n"
+#~ "Aborting module."
+#~ msgstr ""
+#~ "啟動模組錯誤：randr\n"
+#~ "需要最小的模組API版本號：%i 。\n"
+#~ "Enlightenment給的模組版本號：%i 。\n"
+#~ "中止模組。"
+
+#~ msgid "Randr"
+#~ msgstr "Randr"
