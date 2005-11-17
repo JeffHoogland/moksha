@@ -500,6 +500,38 @@ _e_test_internal(E_Container *con)
    
    evas_object_focus_set(o, 1);
 }
+#elif 0
+static void
+_e_test_cb_e_smart_pan_changed_hook(void *data, Evas_Object *obj, void *event_info)
+{
+   printf("VAL: %3.3f\n", e_slider_value_get(obj));
+}
+
+static void
+_e_test_internal(E_Container *con)
+{
+   E_Dialog *dia;
+   Evas_Object *o;
+   
+   dia = e_dialog_new(con);
+   e_dialog_title_set(dia, "A Test Dialog");
+   
+   o = e_slider_add(dia->win->evas);
+   e_slider_orientation_set(o, 1);
+   e_slider_value_set(o, 0.5);
+   e_slider_value_step_count_set(o, 4);
+   e_slider_value_format_display_set(o, "%1.1f V");
+   evas_object_smart_callback_add(o, "changed", _e_test_cb_e_smart_pan_changed_hook, NULL);
+   evas_object_show(o);
+   
+   e_dialog_content_set(dia, o, 240, 16);
+   
+   e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+   
+   evas_object_focus_set(o, 1);
+}
 #else
 static void
 _e_test_internal(E_Container *con)

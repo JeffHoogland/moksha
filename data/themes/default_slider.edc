@@ -1,0 +1,383 @@
+images {
+   image: "e17_ibar_bg_v.png" COMP;
+   image: "e17_ibar_over_v.png" COMP;
+   image: "e17_sb_btd1.png" COMP;
+   image: "e17_sb_btd2.png" COMP;
+   image: "e17_sb_btu1.png" COMP;
+   image: "e17_sb_btu2.png" COMP;
+   image: "e17_sb_btl1.png" COMP;
+   image: "e17_sb_btl2.png" COMP;
+   image: "e17_sb_btr1.png" COMP;
+   image: "e17_sb_btr2.png" COMP;
+   image: "e17_sb_btu1.png" COMP;
+   image: "e17_sb_barh1.png" COMP;
+   image: "e17_sb_barh2.png" COMP;
+   image: "e17_sb_barv1.png" COMP;
+   image: "e17_sb_barv2.png" COMP;
+   image: "e17_sb_runnerh.png" COMP;
+   image: "e17_sb_runnerv.png" COMP;
+   image: "e17_scrollbar_hdrag_thumb.png" COMP;
+   image: "e17_scrollbar_vdrag_thumb.png" COMP;
+   image: "focus.png" COMP;
+}
+
+group {
+   name: "widgets/slider_vertical";
+   parts {
+      part {
+	 name: "sb_vbar";
+	 type: RECT;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 16 16;
+	 }	
+      }
+      part {
+	 name: "sb_vbar_base";
+	 type: RECT;
+	 clip_to: "sb_vbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+      part {
+	 name: "sb_vbar_runner";
+	 clip_to: "sb_vbar";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    max: 2 99999;
+	    rel1 {
+	       to:       "sb_vbar_base";
+	    }
+	    rel2 {
+	       to:       "sb_vbar_base";
+	    }
+	    image {
+	       normal: "e17_sb_runnerv.png";
+	       border: 0 0 4 4;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "sb_vbar_p1";
+	 type: RECT;
+	 clip_to: "sb_vbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset:   -1  -1;
+	       to:       "slider";
+	    }
+	 }
+      }
+      part {
+	 name: "sb_vbar_p2";
+	 type: RECT;
+	 clip_to: "sb_vbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   0   0;
+	       to:       "slider";
+	    }
+	 }
+      }
+      part {
+	 name: "slider";
+	 clip_to: "sb_vbar";
+	 mouse_events: 1;
+	 dragable {
+	    x: 0 0 0;
+	    y: 1 1 0;
+	    confine: "sb_vbar_base";
+	 }
+	 description {
+	    state: "default" 0.0;
+	    min: 16 16;
+	    rel1 {
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to: "sb_vbar_base";
+	    }
+	    rel2 {
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to: "sb_vbar_base";
+	    }
+	    image {
+	       normal: "e17_sb_barv1.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_sb_barv2.png";
+	    }
+	 }
+      }
+      part {
+	 name: "focus";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 255 255 255 0;
+	    image {
+	       normal: "focus.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state: "focused" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 255;
+	 }
+      }
+   }
+   programs {	 
+      program {
+	 name: "sb_vbar_p1_down";
+	 signal: "mouse,down,1";
+	 source: "sb_vbar_p1";
+	 action:  DRAG_VAL_PAGE 0.0 -1.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_vbar_p2_down";
+	 signal: "mouse,down,1";
+	 source: "sb_vbar_p2";
+	 action:  DRAG_VAL_PAGE  0.0 1.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_vbar_down";
+	 signal: "mouse,down,1";
+	 source: "slider";
+         action:  STATE_SET "clicked" 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_vbar_up";
+	 signal: "mouse,up,1";
+	 source: "slider";
+         action:  STATE_SET "default" 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "focus_in";
+	 signal: "focus_in";
+	 source: "";
+         action: STATE_SET "focused" 0.0;
+	 transition: DECELERATE 0.2;
+	 target: "focus";
+      }
+      program {
+	 name: "focus_out";
+	 signal: "focus_out";
+	 source: "";
+         action: STATE_SET "default" 0.0;
+	 transition: ACCELERATE 0.5;
+	 target: "focus";
+      }
+   }
+}
+group {
+   name: "widgets/slider_horizontal";
+   parts {
+      part {
+	 name: "sb_hbar";
+	 type: RECT;
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 16 16;
+	 }
+      }
+      part {
+	 name: "sb_hbar_base";
+	 type: RECT;
+	 clip_to: "sb_hbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	 }
+      }
+      part {
+	 name: "sb_hbar_runner";
+	 clip_to: "sb_hbar";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    max: 99999 2;
+	    rel1 {
+	       to:       "sb_hbar_base";
+	    }
+	    rel2 {
+	       to:       "sb_hbar_base";
+	    }
+	    image {
+	       normal: "e17_sb_runnerh.png";
+	       border: 4 4 0 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "sb_hbar_p1";
+	 type: RECT;
+	 clip_to: "sb_hbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   -1  -1;
+	       to:       "slider";
+	    }
+	 }
+      }
+      part {
+	 name: "sb_hbar_p2";
+	 type: RECT;
+	 clip_to: "sb_hbar";
+	 mouse_events: 1;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   0   0;
+	       to:       "slider";
+	    }
+	 }
+      }
+      part {
+	 name: "slider";
+	 clip_to: "sb_hbar";
+	 mouse_events: 1;
+	 dragable {
+	    x: 1 1 0;
+	    y: 0 0 0;
+	    confine: "sb_hbar_base";
+	 }
+	 description {
+	    state: "default" 0.0;
+	    min: 16 16;
+	    rel1 {
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to: "sb_hbar_base";
+	    }
+	    rel2 {
+	       relative: 0.5  0.5;
+	       offset:   0    0;
+	       to: "sb_hbar_base";
+	    }
+	    image {
+	       normal: "e17_sb_barh1.png";
+	       border: 5 5 5 5;
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_sb_barh2.png";
+	    }
+	 }
+      }
+      part {
+	 name: "focus";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    visible: 0;
+	    color: 255 255 255 0;
+	    image {
+	       normal: "focus.png";
+	       border: 7 7 7 7;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+	 description {
+	    state: "focused" 0.0;
+	    inherit: "default" 0.0;
+	    visible: 1;
+	    color: 255 255 255 255;
+	 }
+      }
+   }
+   programs {	 
+      program {
+	 name: "sb_hbar_p1_down";
+	 signal: "mouse,down,1";
+	 source: "sb_hbar_p1";
+	 action:  DRAG_VAL_PAGE -1.0 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_hbar_p2_down";
+	 signal: "mouse,down,1";
+	 source: "sb_hbar_p2";
+	 action:  DRAG_VAL_PAGE  1.0 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_hbar_down";
+	 signal: "mouse,down,1";
+	 source: "slider";
+         action:  STATE_SET "clicked" 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "sb_hbar_up";
+	 signal: "mouse,up,1";
+	 source: "slider";
+         action:  STATE_SET "default" 0.0;
+	 target: "slider";
+      }
+      program {
+	 name: "focus_in";
+	 signal: "focus_in";
+	 source: "";
+         action: STATE_SET "focused" 0.0;
+	 transition: DECELERATE 0.2;
+	 target: "focus";
+      }
+      program {
+	 name: "focus_out";
+	 signal: "focus_out";
+	 source: "";
+         action: STATE_SET "default" 0.0;
+	 transition: ACCELERATE 0.5;
+	 target: "focus";
+      }
+   }
+}

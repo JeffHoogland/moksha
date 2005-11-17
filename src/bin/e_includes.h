@@ -93,3 +93,4 @@
 #include "e_livethumb.h"
 #include "e_int_border_border.h"
 #include "e_widget_ilist.h"
+#include "e_slider.h"
