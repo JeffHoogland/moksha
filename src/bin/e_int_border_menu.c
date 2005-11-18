@@ -424,6 +424,10 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	     if (bd->client.icccm.window_role)
 	       a->win_role = strdup(bd->client.icccm.window_role);
 	     a->icon_class = strdup(bd->client.icccm.class);
+	     a->name = strdup(bd->client.icccm.class);
+	     a->exe = strdup(bd->client.icccm.name);
+	     if (bd->client.netwm.startup_id > 0)
+	       a->startup_notify = 1;
 	  }
      }
    if (!a) return;
