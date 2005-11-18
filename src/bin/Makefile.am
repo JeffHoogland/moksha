@@ -113,7 +113,8 @@ e_ilist.h \
 e_livethumb.h \
 e_int_border_border.h \
 e_widget_ilist.h \
-e_slider.h
+e_slider.h \
+e_widget_slider.h
 
 enlightenment_src = \
 e_user.c \
@@ -208,6 +209,7 @@ e_livethumb.c \
 e_int_border_border.c \
 e_widget_ilist.c \
 e_slider.c \
+e_widget_slider.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \

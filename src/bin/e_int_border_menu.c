@@ -196,50 +196,21 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 				  "widgets/border/default/skip_winlist");
      }
    
-   if (ecore_file_app_installed("e_util_eapp_edit"))
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   
+   if (bd->app)
      {
-	char *title = "";
-	
-	if (bd->client.netwm.name) title = bd->client.netwm.name;
-	else title = bd->client.icccm.title;
 	mi = e_menu_item_new(m);
-	e_menu_item_separator_set(mi, 1);
-	if (bd->app)
-	  {
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Edit Icon"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd->app->path);
-	     e_menu_item_icon_edje_set(mi, bd->app->path, "icon");
-	  }
-	else if (bd->client.icccm.class) /* icons with no class useless to borders */
-	  {
-#if 0	     
-	     static char buf[PATH_MAX + 50];
-	     char *name, *homedir;
-	     int i, l;
-
-	     buf[0] = '\0';
-	     /* generate a reasonable file name from the window class */
-	     /* FIXME - I think there could be duplicates - how better to do this? */
-	     name = strdup(bd->client.icccm.class);
-	     l = strlen(name);
-	     for (i = 0; i < l; i++)
-	       {
-		  if (name[i] == ' ') name[i] = '_';
-	       }
-	     /* previously this could be null, but it will exist now */
-	     homedir = e_user_homedir_get();
-
-	     snprintf(buf, sizeof(buf),
-		      "--win-class \"%s\" %s/.e/e/applications/all/%s.eap",
-		      bd->client.icccm.class, homedir, name);
-	     free(homedir);
-	     free(name);
-#endif	     
-	     mi = e_menu_item_new(m);
-	     e_menu_item_label_set(mi, _("Create Icon"));
-	     e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, strdup(bd->client.icccm.class));
-	  }
+	e_menu_item_label_set(mi, _("Edit Icon"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
+	e_menu_item_icon_edje_set(mi, bd->app->path, "icon");
+     }
+   else if (bd->client.icccm.class) /* icons with no class useless to borders */
+     {
+	mi = e_menu_item_new(m);
+	e_menu_item_label_set(mi, _("Create Icon"));
+	e_menu_item_callback_set(mi, _e_border_menu_cb_icon_edit, bd);
      }
 
    mi = e_menu_item_new(m);
@@ -415,57 +386,48 @@ _e_border_menu_cb_shade(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
-  E_App *a;
-
-   if(ecore_file_exists(data))
+   E_App *a;
+   E_Border *bd;
+   
+   bd = data;
+   a = bd->app;
+   if (!a)
      {
-	a = e_app_new(data, 0);
-     }
-   else
-     {
-	static char buf[PATH_MAX + 50];
-	char *name, *homedir;
-	int i, l;
+	static char buf[PATH_MAX];
+	char *name, *homedir, *p;
+	int instance;
 
-	buf[0] = '\0';
-	/* generate a reasonable file name from the window class */
-	/* FIXME - I think there could be duplicates - how better to do this? */
-	name = strdup(data);
-	l = strlen(name);
-	for (i = 0; i < l; i++)
+	name = strdup(bd->client.icccm.class);
+	p = name;
+	while (*p)
 	  {
-		  if (name[i] == ' ') name[i] = '_';
-	       }
-	/* previously this could be null, but it will exist now */
+	     if (*p == ' ') *p = '_';
+	     else if (*p == '/') *p = '_';
+	     else if (*p == '.') *p = '_';
+	     p++;
+	  }
 	homedir = e_user_homedir_get();
-	
-	snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s.eap",
-		 homedir, name);
+	snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s.eap", homedir, name);
+	instance = 0;
+	while (ecore_file_exists(buf))
+	  {
+	     snprintf(buf, sizeof(buf), "%s/.e/e/applications/all/%s-%i.eap", homedir, name, instance);
+	     instance++;
+	  }
 	free(homedir);
 	free(name);
 	a = e_app_empty_new(buf);
-	a->win_class = strdup(data);
-	free(data);
+	if (a)
+	  {
+	     a->win_name = strdup(bd->client.icccm.name);
+	     a->win_class = strdup(bd->client.icccm.class);
+	     if (bd->client.icccm.window_role)
+	       a->win_role = strdup(bd->client.icccm.window_role);
+	     a->icon_class = strdup(bd->client.icccm.class);
+	  }
      }
+   if (!a) return;
    e_eap_edit_show(m->zone->container, a);
-#if 0   
-   char *file;
-   char *command;
-   char *full;
-   Ecore_Exe *process;
-
-   file = data;
-   command = "e_util_eapp_edit ";
-   full = malloc(strlen(file) + strlen(command) + 1);
-   strcpy(full, command);
-   strcat(full, file);
-   process = ecore_exe_run(full, NULL);
-   if (!process || !ecore_exe_pid_get(process))
-     e_error_dialog_show(_("Icon Edit Error"),
-			   _("Error starting icon editor\n\n"
-			     "please install e_util_eapp_edit\n"
-			     "or make sure it is in your PATH\n"));
-#endif   
 }
 
 static void

@@ -1,23 +1,10 @@
 images {
-   image: "e17_ibar_bg_v.png" COMP;
-   image: "e17_ibar_over_v.png" COMP;
-   image: "e17_sb_btd1.png" COMP;
-   image: "e17_sb_btd2.png" COMP;
-   image: "e17_sb_btu1.png" COMP;
-   image: "e17_sb_btu2.png" COMP;
-   image: "e17_sb_btl1.png" COMP;
-   image: "e17_sb_btl2.png" COMP;
-   image: "e17_sb_btr1.png" COMP;
-   image: "e17_sb_btr2.png" COMP;
-   image: "e17_sb_btu1.png" COMP;
    image: "e17_sb_barh1.png" COMP;
    image: "e17_sb_barh2.png" COMP;
    image: "e17_sb_barv1.png" COMP;
    image: "e17_sb_barv2.png" COMP;
    image: "e17_sb_runnerh.png" COMP;
    image: "e17_sb_runnerv.png" COMP;
-   image: "e17_scrollbar_hdrag_thumb.png" COMP;
-   image: "e17_scrollbar_vdrag_thumb.png" COMP;
    image: "focus.png" COMP;
 }
 
