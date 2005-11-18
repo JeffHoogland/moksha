@@ -169,6 +169,8 @@ e_slider_value_format_display_set(Evas_Object *obj, const char *format)
 	  edje_object_signal_emit(sd->edje_obj, "hide_label", "");
      }
    _e_smart_format_update(sd);
+   edje_object_message_signal_process(sd->edje_obj);
+   edje_object_size_min_calc(sd->edje_obj, &(sd->minw), &(sd->minh));
 }
 
 const char *
@@ -200,6 +202,14 @@ e_slider_min_size_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
    if (minw) *minw = sd->minw;
    if (minh) *minh = sd->minh;
 }
+
+Evas_Object *
+e_slider_edje_object_get(Evas_Object *obj)
+{
+   API_ENTRY return NULL;
+   return sd->edje_obj;
+}
+
 
 /* local subsystem functions */
 static int

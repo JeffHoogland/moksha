@@ -6,7 +6,7 @@
 #ifndef E_WIDGET_SLIDER_H
 #define E_WIDGET_SLIDER_H
 
-EAPI Evas_Object *e_widget_slider_add(Evas *evas);
+EAPI Evas_Object *e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, double max, double step, int count, double *dval, int *ival, Evas_Coord sizex);
     
 #endif
 #endif
