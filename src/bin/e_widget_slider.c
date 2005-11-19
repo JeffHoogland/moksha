@@ -41,10 +41,10 @@ e_widget_slider_add(Evas *evas, int horiz, int rev, char *fmt, double min, doubl
    
    e_slider_orientation_set(o, horiz);
    e_slider_direction_set(o, rev);
+   e_slider_value_range_set(o, min, max);
    e_slider_value_format_display_set(o, fmt);
    e_slider_value_step_count_set(o, count);
    e_slider_value_step_size_set(o, step);
-   e_slider_value_range_set(o, min, max);
    if (dval) e_slider_value_set(o, *dval);
    else if (ival) e_slider_value_set(o, *ival);
    

@@ -81,9 +81,9 @@ struct _E_Config
    double      menus_scroll_speed;
    double      menus_fast_mouse_move_threshhold;
    double      menus_click_drag_timeout;
-   int         border_shade_animate;
-   int         border_shade_transition;
-   double      border_shade_speed;
+   int         border_shade_animate; // GUI
+   int         border_shade_transition; // GUI
+   double      border_shade_speed; // GUI
    double      framerate;
    int         image_cache;
    int         font_cache;
@@ -120,19 +120,19 @@ struct _E_Config
    Evas_List  *path_append_modules;
    Evas_List  *path_append_backgrounds;
    Evas_List  *path_append_input_methods;
-   int         window_placement_policy;
+   int         window_placement_policy; //
    int         focus_policy; // GUI
    int         focus_setting; // GUI
    int         pass_click_on; // GUI
    int         always_click_to_raise; // GUI
    int         always_click_to_focus; // GUI
-   int         use_auto_raise;
-   double      auto_raise_delay;
-   int         use_resist;
+   int         use_auto_raise; // GUI
+   double      auto_raise_delay; // GUI
+   int         use_resist; // GUI
    int         drag_resist;
-   int         desk_resist;
-   int         window_resist;
-   int         gadget_resist;
+   int         desk_resist; // GUI
+   int         window_resist; // GUI
+   int         gadget_resist; // GUI
    int         winlist_warp_while_selecting;
    int         winlist_warp_at_end;
    double      winlist_warp_speed;
@@ -153,7 +153,7 @@ struct _E_Config
    int         winlist_pos_min_h;
    int         winlist_pos_max_w;
    int         winlist_pos_max_h;
-   int         maximize_policy;
+   int         maximize_policy; // GUI
    int         kill_if_close_not_possible;
    int         kill_process;
    double      kill_timer_wait;
@@ -163,10 +163,10 @@ struct _E_Config
    char       *transition_desk;
    char       *transition_change;
    Evas_List  *remembers;
-   int         move_info_follows;
-   int         resize_info_follows;
-   int         move_info_visible;
-   int         resize_info_visible;
+   int         move_info_follows; // GUI
+   int         resize_info_follows; // GUI
+   int         move_info_visible; // GUI
+   int         resize_info_visible; // GUI
    int         focus_last_focused_per_desktop;
    int         focus_revert_on_hide_or_close;
    int         use_e_cursor;

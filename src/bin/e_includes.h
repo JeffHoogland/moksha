@@ -95,3 +95,5 @@
 #include "e_widget_ilist.h"
 #include "e_slider.h"
 #include "e_widget_slider.h"
+#include "e_int_config_window_manipulation.h"
+#include "e_int_config_window_display.h"

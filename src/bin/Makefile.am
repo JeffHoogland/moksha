@@ -114,7 +114,9 @@ e_livethumb.h \
 e_int_border_border.h \
 e_widget_ilist.h \
 e_slider.h \
-e_widget_slider.h
+e_widget_slider.h \
+e_int_config_window_manipulation.h \
+e_int_config_window_display.h
 
 enlightenment_src = \
 e_user.c \
@@ -210,6 +212,8 @@ e_int_border_border.c \
 e_widget_ilist.c \
 e_slider.c \
 e_widget_slider.c \
+e_int_config_window_manipulation.c \
+e_int_config_window_display.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
