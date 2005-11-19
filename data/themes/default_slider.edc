@@ -1,8 +1,7 @@
 images {
-   image: "e17_sb_barh1.png" COMP;
-   image: "e17_sb_barh2.png" COMP;
-   image: "e17_sb_barv1.png" COMP;
-   image: "e17_sb_barv2.png" COMP;
+   image: "e17_slider_bt0.png" COMP;
+   image: "e17_slider_bt1.png" COMP;
+   image: "e17_slider_bt_glow.png" COMP;
    image: "e17_sb_runnerh.png" COMP;
    image: "e17_sb_runnerv.png" COMP;
    image: "focus.png" COMP;
@@ -14,7 +13,7 @@ group {
    name: "widgets/slider_vertical";
    parts {
       part {
-	 name: "sb_vbar";
+	 name: "sld";
 	 type: RECT;
 	 mouse_events: 0;
 	 description {
@@ -23,9 +22,9 @@ group {
 	 }	
       }
       part {
-	 name: "sb_vbar_base";
+	 name: "sld_base";
 	 type: RECT;
-	 clip_to: "sb_vbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -42,17 +41,17 @@ group {
 	 }
       }
       part {
-	 name: "sb_vbar_runner";
-	 clip_to: "sb_vbar";
+	 name: "sld_runner";
+	 clip_to: "sld";
 	 mouse_events: 0;
 	 description {
 	    state: "default" 0.0;
 	    max: 2 99999;
 	    rel1 {
-	       to:       "sb_vbar_base";
+	       to:       "sld_base";
 	    }
 	    rel2 {
-	       to:       "sb_vbar_base";
+	       to:       "sld_base";
 	    }
 	    image {
 	       normal: "e17_sb_runnerv.png";
@@ -155,9 +154,9 @@ group {
 	 }
       }
       part {
-	 name: "sb_vbar_p1";
+	 name: "sld_p1";
 	 type: RECT;
-	 clip_to: "sb_vbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -170,9 +169,9 @@ group {
 	 }
       }
       part {
-	 name: "sb_vbar_p2";
+	 name: "sld_p2";
 	 type: RECT;
-	 clip_to: "sb_vbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -186,12 +185,12 @@ group {
       }
       part {
 	 name: "slider";
-	 clip_to: "sb_vbar";
+	 type: RECT;
 	 mouse_events: 1;
 	 dragable {
 	    x: 0 0 0;
 	    y: 1 1 0;
-	    confine: "sb_vbar_base";
+	    confine: "sld_base";
 	 }
 	 description {
 	    state: "default" 0.0;
@@ -200,24 +199,14 @@ group {
 	    rel1 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to: "sb_vbar_base";
+	       to: "sld_base";
 	    }
 	    rel2 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to: "sb_vbar_base";
+	       to: "sld_base";
 	    }
-	    image {
-	       normal: "e17_sb_barv1.png";
-	       border: 5 5 5 5;
-	    }
-	 }
-	 description {
-	    state: "clicked" 0.0;
-	    inherit: "default" 0.0;
-	    image {
-	       normal: "e17_sb_barv2.png";
-	    }
+	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -243,35 +232,108 @@ group {
 	    color: 255 255 255 255;
 	 }
       }
+      part {
+	 name: "slider_img";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 32 32;
+	    fixed: 1 1;
+	    rel1 {
+	       to: "slider";
+	    }
+	    rel2 {
+	       to: "slider";
+	    }
+	    image {
+	       normal: "e17_slider_bt0.png";
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_slider_bt1.png";
+	    }
+	 }
+      }
+      part {
+	 name: "slider_glow";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 32 32;
+	    fixed: 1 1;
+	    rel1 {
+	       to: "slider_img";
+	    }
+	    rel2 {
+	       to: "slider_img";
+	    }
+	    image {
+	       normal: "e17_slider_bt_glow.png";
+	    }
+	    color: 255 255 255 0;
+	 }
+	 description {
+	    state: "visible" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+      }
    }
    programs {	 
       program {
-	 name: "sb_vbar_p1_down";
+	 name: "sld_p1_down";
 	 signal: "mouse,down,1";
-	 source: "sb_vbar_p1";
+	 source: "sld_p1";
 	 action:  DRAG_VAL_PAGE 0.0 -1.0;
 	 target: "slider";
       }
       program {
-	 name: "sb_vbar_p2_down";
+	 name: "sld_p2_down";
 	 signal: "mouse,down,1";
-	 source: "sb_vbar_p2";
+	 source: "sld_p2";
 	 action:  DRAG_VAL_PAGE  0.0 1.0;
 	 target: "slider";
       }
       program {
-	 name: "sb_vbar_down";
+	 name: "sld_down";
 	 signal: "mouse,down,1";
 	 source: "slider";
          action:  STATE_SET "clicked" 0.0;
-	 target: "slider";
+	 target: "slider_img";
       }
       program {
-	 name: "sb_vbar_up";
+	 name: "sld_up";
 	 signal: "mouse,up,1";
 	 source: "slider";
          action:  STATE_SET "default" 0.0;
-	 target: "slider";
+	 target: "slider_img";
+      }
+      program {
+	 name: "sld_in";
+	 signal: "mouse,in";
+	 source: "slider";
+         action:  STATE_SET "visible" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
+	 after: "sld_in2";
+      }
+      program {
+	 name: "sld_in2";
+         action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
+	 after: "sld_in";
+      }
+      program {
+	 name: "sld_out";
+	 signal: "mouse,out";
+	 source: "slider";
+         action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
       }
       program {
 	 name: "focus_in";
@@ -294,7 +356,7 @@ group {
 	 signal: "show_label";
 	 source: "";
          action: STATE_SET "active" 0.0;
-	 target: "sb_vbar_base";
+	 target: "sld_base";
 	 target: "label_under";
 	 target: "label";
 	 target: "label_over";
@@ -304,18 +366,19 @@ group {
 	 signal: "hide_label";
 	 source: "";
          action: STATE_SET "default" 0.0;
-	 target: "sb_vbar_base";
+	 target: "sld_base";
 	 target: "label_under";
 	 target: "label";
 	 target: "label_over";
       }
    }
 }
+
 group {
    name: "widgets/slider_horizontal";
    parts {
       part {
-	 name: "sb_hbar";
+	 name: "sld";
 	 type: RECT;
 	 mouse_events: 0;
 	 description {
@@ -324,9 +387,9 @@ group {
 	 }
       }
       part {
-	 name: "sb_hbar_base";
+	 name: "sld_base";
 	 type: RECT;
-	 clip_to: "sb_hbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -343,17 +406,17 @@ group {
 	 }
       }
       part {
-	 name: "sb_hbar_runner";
-	 clip_to: "sb_hbar";
+	 name: "sld_runner";
+	 clip_to: "sld";
 	 mouse_events: 0;
 	 description {
 	    state: "default" 0.0;
 	    max: 99999 2;
 	    rel1 {
-	       to:       "sb_hbar_base";
+	       to:       "sld_base";
 	    }
 	    rel2 {
-	       to:       "sb_hbar_base";
+	       to:       "sld_base";
 	    }
 	    image {
 	       normal: "e17_sb_runnerh.png";
@@ -456,9 +519,9 @@ group {
 	 }
       }
       part {
-	 name: "sb_hbar_p1";
+	 name: "sld_p1";
 	 type: RECT;
-	 clip_to: "sb_hbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -471,9 +534,9 @@ group {
 	 }
       }
       part {
-	 name: "sb_hbar_p2";
+	 name: "sld_p2";
 	 type: RECT;
-	 clip_to: "sb_hbar";
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 description {
 	    state: "default" 0.0;
@@ -487,12 +550,13 @@ group {
       }
       part {
 	 name: "slider";
-	 clip_to: "sb_hbar";
+	 type: RECT;
+	 clip_to: "sld";
 	 mouse_events: 1;
 	 dragable {
 	    x: 1 1 0;
 	    y: 0 0 0;
-	    confine: "sb_hbar_base";
+	    confine: "sld_base";
 	 }
 	 description {
 	    state: "default" 0.0;
@@ -501,24 +565,14 @@ group {
 	    rel1 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to: "sb_hbar_base";
+	       to: "sld_base";
 	    }
 	    rel2 {
 	       relative: 0.5  0.5;
 	       offset:   0    0;
-	       to: "sb_hbar_base";
+	       to: "sld_base";
 	    }
-	    image {
-	       normal: "e17_sb_barh1.png";
-	       border: 5 5 5 5;
-	    }
-	 }
-	 description {
-	    state: "clicked" 0.0;
-	    inherit: "default" 0.0;
-	    image {
-	       normal: "e17_sb_barh2.png";
-	    }
+	    color: 0 0 0 0;
 	 }
       }
       part {
@@ -544,35 +598,108 @@ group {
 	    color: 255 255 255 255;
 	 }
       }
+      part {
+	 name: "slider_img";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 32 32;
+	    fixed: 1 1;
+	    rel1 {
+	       to: "slider";
+	    }
+	    rel2 {
+	       to: "slider";
+	    }
+	    image {
+	       normal: "e17_slider_bt0.png";
+	    }
+	 }
+	 description {
+	    state: "clicked" 0.0;
+	    inherit: "default" 0.0;
+	    image {
+	       normal: "e17_slider_bt1.png";
+	    }
+	 }
+      }
+      part {
+	 name: "slider_glow";
+	 mouse_events: 0;
+	 description {
+	    state: "default" 0.0;
+	    min: 32 32;
+	    fixed: 1 1;
+	    rel1 {
+	       to: "slider_img";
+	    }
+	    rel2 {
+	       to: "slider_img";
+	    }
+	    image {
+	       normal: "e17_slider_bt_glow.png";
+	    }
+	    color: 255 255 255 0;
+	 }
+	 description {
+	    state: "visible" 0.0;
+	    inherit: "default" 0.0;
+	    color: 255 255 255 255;
+	 }
+      }
    }
    programs {	 
       program {
-	 name: "sb_hbar_p1_down";
+	 name: "sld_p1_down";
 	 signal: "mouse,down,1";
-	 source: "sb_hbar_p1";
+	 source: "sld_p1";
 	 action:  DRAG_VAL_PAGE -1.0 0.0;
 	 target: "slider";
       }
       program {
-	 name: "sb_hbar_p2_down";
+	 name: "sld_p2_down";
 	 signal: "mouse,down,1";
-	 source: "sb_hbar_p2";
+	 source: "sld_p2";
 	 action:  DRAG_VAL_PAGE  1.0 0.0;
 	 target: "slider";
       }
       program {
-	 name: "sb_hbar_down";
+	 name: "sld_down";
 	 signal: "mouse,down,1";
 	 source: "slider";
          action:  STATE_SET "clicked" 0.0;
-	 target: "slider";
+	 target: "slider_img";
       }
       program {
-	 name: "sb_hbar_up";
+	 name: "sld_up";
 	 signal: "mouse,up,1";
 	 source: "slider";
          action:  STATE_SET "default" 0.0;
-	 target: "slider";
+	 target: "slider_img";
+      }
+      program {
+	 name: "sld_in";
+	 signal: "mouse,in";
+	 source: "slider";
+         action:  STATE_SET "visible" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
+	 after: "sld_in2";
+      }
+      program {
+	 name: "sld_in2";
+         action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
+	 after: "sld_in";
+      }
+      program {
+	 name: "sld_out";
+	 signal: "mouse,out";
+	 source: "slider";
+         action:  STATE_SET "default" 0.0;
+	 transition: SINUSOIDAL 1.0;
+	 target: "slider_glow";
       }
       program {
 	 name: "focus_in";
@@ -595,7 +722,7 @@ group {
 	 signal: "show_label";
 	 source: "";
          action: STATE_SET "active" 0.0;
-	 target: "sb_hbar_base";
+	 target: "sld_base";
 	 target: "label_under";
 	 target: "label";
 	 target: "label_over";
@@ -605,7 +732,7 @@ group {
 	 signal: "hide_label";
 	 source: "";
          action: STATE_SET "default" 0.0;
-	 target: "sb_hbar_base";
+	 target: "sld_base";
 	 target: "label_under";
 	 target: "label";
 	 target: "label_over";

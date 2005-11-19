@@ -518,15 +518,15 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
    
    o = e_slider_add(dia->win->evas);
-   e_slider_orientation_set(o, 0);
+   e_slider_orientation_set(o, 1);
    e_slider_value_set(o, 0.5);
    e_slider_value_step_count_set(o, 4);
-//   e_slider_value_format_display_set(o, "%1.2f V");
+   e_slider_value_format_display_set(o, "%1.2f V");
    e_slider_min_size_get(o, &mw, &mh);
    evas_object_smart_callback_add(o, "changed", _e_test_cb_e_smart_pan_changed_hook, NULL);
    evas_object_show(o);
    
-   e_dialog_content_set(dia, o, mw, 240 + mh);
+   e_dialog_content_set(dia, o, 240 + mw, mh);
    
    e_dialog_button_add(dia, "OK", NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);
