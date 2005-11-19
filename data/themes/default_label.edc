@@ -1,6 +1,3 @@
-images {
-   image: "focus.png" COMP;
-}
 group {
    name: "widgets/label";
    parts {
@@ -11,19 +8,18 @@ group {
 	 mouse_events:   0;
 	 description {
 	    state: "default" 0.0;
-	    min:      16 16;
 	    rel1 {
 	       relative: 0.0  0.0;
-	       offset:   4    4;
+	       offset:   2 2;
 	    }
 	    rel2 {
 	       relative: 1.0  1.0;
-	       offset:   -5 -5;
+	       offset:   -3 -3;
 	    }
 	    color: 0 0 0 255;
 	    color3: 255 255 255 128;
 	    text {
-	       text:     "Check Button";
+	       text:     "Label";
 	       font:     "Edje-Vera";
 	       size:     10;
 	       min:      1 1;
