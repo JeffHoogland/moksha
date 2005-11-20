@@ -152,20 +152,7 @@ group {
 	 name:    "click";
 	 signal:  "mouse,down,1";
 	 source:  "event";
-	 script {
-	    new buf[100];
-	    new Float:val;
-	    
-	    get_state(PART:"item1", buf, sizeof(buf), val);
-	    if (!strcmp(buf, "default")) {
-	       set_state(PART:"item1", "active", 0.0);
-	       emit("toggled", "on");
-	    }
-	    else {
-	       set_state(PART:"item1", "default", 0.0);
-	       emit("toggled", "off");
-	    }
-	 }
+   action: SIGNAL_EMIT "toggled" "";
       }
       program {
 	 name: "focus_in";
