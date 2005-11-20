@@ -94,8 +94,16 @@ _e_wid_do(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (wd->valptr)
      {
-	if (*(wd->valptr) == 0) *(wd->valptr) = 1;
-	else *(wd->valptr) = 0;
+	if (*(wd->valptr) == 0) 
+	  {
+	     *(wd->valptr) = 1;
+	     edje_object_signal_emit(wd->o_check, "toggle_on", "");
+	  }
+	else 
+	  {
+	     *(wd->valptr) = 0;
+	     edje_object_signal_emit(wd->o_check, "toggle_off", "");
+	  }
      }
 }
 
@@ -106,11 +114,6 @@ _e_wid_activate_hook(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    _e_wid_do(obj);
-   if (wd->valptr)
-     {
-	if (*(wd->valptr)) edje_object_signal_emit(wd->o_check, "toggle_on", "");
-	else edje_object_signal_emit(wd->o_check, "toggle_off", "");
-     }
 }
 
 static void
