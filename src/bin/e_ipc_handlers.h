@@ -1284,6 +1284,7 @@ break;
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-font-fallback-clear", 0, "Clear list of fallback fonts", 0, HDL)
 #elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    e_font_fallback_clear();
