@@ -152,12 +152,6 @@ group {
 	 name:    "click";
 	 signal:  "mouse,down,1";
 	 source:  "event";
-         action:  STATE_SET "active" 0.0;
-	 target:  "item1";
-	 after:   "click2";
-      }
-      program {
-	 name:    "click2";
          action:  SIGNAL_EMIT "toggled" "on";
       }
       program {
