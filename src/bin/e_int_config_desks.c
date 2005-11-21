@@ -153,7 +153,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    ob = e_widget_label_add(evas, _("Delay before flipping:"));
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 4.9, 0.1, 0, &(cfdata->resistance), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.11f sec"), 0.0, 2.0, 0.01, 0, &(cfdata->resistance), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
