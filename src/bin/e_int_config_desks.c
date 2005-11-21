@@ -127,9 +127,9 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, CFData *cfdata)
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Number of desktops"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f wide"), 0.0, 10.0, 1.0, 0, NULL, &(cfdata->x), 100);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f wide"), 1.0, 10.0, 1.0, 0, NULL, &(cfdata->x), 100);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f high"), 0.0, 10.0, 1.0, 0, NULL, &(cfdata->y), 100);
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f high"), 1.0, 10.0, 1.0, 0, NULL, &(cfdata->y), 100);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
