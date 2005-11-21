@@ -59,6 +59,7 @@ e_configure_show(E_Container *con)
 
    /* add items here */
    e_configure_standard_item_add(eco, "enlightenment/e", _("Focus Settings"), e_int_config_focus);
+   e_configure_standard_item_add(eco, "enlightenment/e", _("Desktop Settings"), e_int_config_desks);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Window Manipulation"), e_int_config_window_manipulation);
    e_configure_standard_item_add(eco, "enlightenment/e", _("Window Display"), e_int_config_window_display);
    

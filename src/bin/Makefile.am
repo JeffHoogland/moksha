@@ -76,7 +76,6 @@ e_remember.h \
 e_win.h \
 e_pan.h \
 e_dialog.h \
-e_configure.h \
 e_about.h \
 e_theme_about.h \
 e_apps_cache.h \
@@ -98,6 +97,8 @@ e_widget_entry.h \
 e_widget_image.h \
 e_config_dialog.h \
 e_int_config_focus.h \
+e_int_config_desks.h \
+e_configure.h \
 e_icon_layout.h \
 e_int_border_locks.h \
 e_thumb.h \
@@ -173,7 +174,6 @@ e_remember.c \
 e_win.c \
 e_pan.c \
 e_dialog.c \
-e_configure.c \
 e_about.c \
 e_theme_about.c \
 e_apps_cache.c \
@@ -195,6 +195,8 @@ e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
 e_int_config_focus.c \
+e_int_config_desks.c \
+e_configure.c \
 e_icon_layout.c \
 e_int_border_locks.c \
 e_thumb.c \

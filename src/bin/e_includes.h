@@ -79,6 +79,7 @@
 #include "e_widget_iconsel.h"
 #include "e_config_dialog.h"
 #include "e_int_config_focus.h"
+#include "e_int_config_desks.h"
 #include "e_icon_layout.h"
 #include "e_int_border_locks.h"
 #include "e_thumb.h"
