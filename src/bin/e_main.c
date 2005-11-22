@@ -949,7 +949,16 @@ _e_main_path_init(void)
    e_path_default_path_append(path_input_methods, buf);
    e_path_user_path_set(path_input_methods, &(e_config->path_append_input_methods));
 
-
+   path_messages = e_path_new();
+   if (!path_messages) 
+     {
+	e_error_message_show("Cannot allocate path for path_messages\n");
+	return 0;
+     }
+   e_path_default_path_append(path_messages, "~/.e/e/locale");   
+   e_path_default_path_append(path_messages, e_prefix_locale_get());
+   e_path_user_path_set(path_messages, &(e_config->path_append_messages));
+   
    return 1;
 }
 
@@ -1000,6 +1009,11 @@ _e_main_path_shutdown(void)
      {
 	e_object_del(E_OBJECT(path_input_methods));
         path_input_methods = NULL;
+     }
+   if (path_messages)
+     {
+	e_object_del(E_OBJECT(path_messages));
+	path_messages = NULL;			          
      }
    return 1;
 }

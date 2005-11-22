@@ -807,8 +807,9 @@ break;
    else if (!strcmp(__str, "backgrounds")) \
      __path = path_backgrounds; \
    else if (!strcmp(__str, "input_methods")) \
-     __path = path_input_methods; 
-
+     __path = path_input_methods; \
+   else if (!strcmp(__str, "messages")) \
+     __path = path_messages; 
 
 #endif
 
@@ -1336,8 +1337,11 @@ break;
 #elif (TYPE == E_WM_IN)
    GENERIC(HDL);
    LIST_DATA();
-   ENCODE((Evas_List *)e_intl_language_list(), e_ipc_codec_str_list_enc);
+   Evas_List *languages;
+   languages = e_intl_language_list();
+   ENCODE(languages, e_ipc_codec_str_list_enc);
    SEND_DATA(E_IPC_OP_LANG_LIST_REPLY);
+   FREE_LIST(languages); 
    END_GENERIC();
 #elif (TYPE == E_REMOTE_IN)
 #endif
@@ -1425,25 +1429,9 @@ break;
    STRING(s, HDL);
    LIST_DATA()
    Evas_List *dir_list = NULL;
-   if (!strcmp(s, "data"))
-     dir_list = e_path_dir_list_get(path_data);
-   else if (!strcmp(s, "images"))
-     dir_list = e_path_dir_list_get(path_images);
-   else if (!strcmp(s, "fonts"))
-     dir_list = e_path_dir_list_get(path_fonts);
-   else if (!strcmp(s, "themes"))
-     dir_list = e_path_dir_list_get(path_themes);
-   else if (!strcmp(s, "init"))
-     dir_list = e_path_dir_list_get(path_init);
-   else if (!strcmp(s, "icons"))
-     dir_list = e_path_dir_list_get(path_icons);
-   else if (!strcmp(s, "modules"))
-     dir_list = e_path_dir_list_get(path_modules);
-   else if (!strcmp(s, "backgrounds"))
-     dir_list = e_path_dir_list_get(path_backgrounds);
-   else if (!strcmp(s, "input_methods"))
-     dir_list = e_path_dir_list_get(path_input_methods);
-
+   E_PATH_GET(path, s);
+   dir_list = e_path_dir_list_get(path);
+     
    E_Path_Dir *p;
    dat = evas_list_append(dat, strdup(s));
    FOR(dir_list) { p = l->data;

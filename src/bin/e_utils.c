@@ -12,6 +12,7 @@ E_Path *path_icons   = NULL;
 E_Path *path_modules = NULL;
 E_Path *path_backgrounds = NULL;
 E_Path *path_input_methods = NULL;
+E_Path *path_messages = NULL;
 int     restart      = 0;
 int     good         = 0;
 int     evil         = 0;

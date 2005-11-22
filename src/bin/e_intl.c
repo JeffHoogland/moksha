@@ -18,7 +18,6 @@ static char *_e_intl_orig_language = NULL;
 static char *_e_intl_orig_lc_all = NULL;
 static char *_e_intl_orig_lang = NULL;
 static char *_e_intl_language = NULL;
-static Evas_List *_e_intl_languages = NULL;
 
 static char *_e_intl_orig_xmodifiers = NULL;
 static char *_e_intl_orig_qt_im_module = NULL; 
@@ -27,14 +26,18 @@ static char *_e_intl_input_method = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
 
-#define ADD_LANG(lang) _e_intl_languages = evas_list_append(_e_intl_languages, lang)
-
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
 
+static Evas_Hash *_e_intl_language_path_scan(E_Path *path);
+static void _e_intl_language_hash_free(Evas_Hash *language_hash);
+static char *_e_intl_language_hash_find(Evas_Hash *language_hash, char *language);
+static int _e_intl_language_list_find(Evas_List *language_list, char *language);
+Evas_Bool _e_intl_cb_free_language_hash(Evas_Hash *hash, const char *key, void *data, void *fdata);
+static Evas_List *_e_intl_language_dir_scan(const char *dir);
 static int _e_intl_cb_exit(void *data, int type, void *event);
 static Evas_List *_e_intl_imc_path_scan(E_Path *path);
-static Evas_List *_e_intl_imc_dir_scan(char *dir);
+static Evas_List *_e_intl_imc_dir_scan(const char *dir);
 static E_Input_Method_Config *_e_intl_imc_find(Evas_List *imc_list, char *name);
 
 
@@ -42,8 +45,6 @@ int
 e_intl_init(void)
 {
    char *s;
- 
-   if (_e_intl_languages) return 1;
 
    /* supporeted languages - as we get translations - add them here
     * 
@@ -62,32 +63,7 @@ e_intl_init(void)
     *       vs. traditional chinese) we may refer to them as separate languages
     *       entirely.
     */
-   /* FIXME: remove this - hunt locale dirs (a user one in ~/.e/e/ too for
-    * user installed locale support
-    */
-   ADD_LANG("");
-   ADD_LANG("en_US.UTF-8");
-   ADD_LANG("ja_JP.UTF-8");
-   ADD_LANG("fr_FR.UTF-8");
-   ADD_LANG("es_AR.UTF-8");
-   ADD_LANG("pt_BR.UTF-8");
-   ADD_LANG("fi_FI.UTF-8");
-   ADD_LANG("ru_RU.UTF-8");
-   ADD_LANG("bg_BG.UTF-8");
-   ADD_LANG("de_DE.UTF-8");
-   ADD_LANG("pl_PL.UTF-8");
-   ADD_LANG("zh_CN.UTF-8");
-   ADD_LANG("hu_HU.UTF-8");
-   ADD_LANG("sl_SI.UTF-8");
-   ADD_LANG("it_IT.UTF-8");
-   ADD_LANG("cs_CZ.UTF-8");
-   ADD_LANG("da_DK.UTF-8");
-   ADD_LANG("sk_SK.UTF-8");
-   ADD_LANG("sv_SV.UTF-8");
-   ADD_LANG("nb_NO.UTF-8");
-   ADD_LANG("nl_NL.UTF-8");
-   ADD_LANG("zh_TW.UTF-8");
-
+   
    _e_intl_input_method_config_edd = E_CONFIG_DD_NEW("input_method_config", E_Input_Method_Config);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, version, INT);
    E_CONFIG_VAL(_e_intl_input_method_config_edd, E_Input_Method_Config, e_im_name, STR);
@@ -121,8 +97,6 @@ e_intl_shutdown(void)
    E_FREE(_e_intl_orig_gtk_im_module);
    E_FREE(_e_intl_orig_qt_im_module);
    E_FREE(_e_intl_orig_xmodifiers);
-   
-   evas_list_free(_e_intl_languages);
    
    E_CONFIG_DD_FREE(_e_intl_input_method_config_edd);
   
@@ -158,114 +132,9 @@ e_intl_post_shutdown(void)
    return 1;
 }
 
-static Evas_List *
-_e_intl_imc_path_scan(E_Path *path)
-{
-
-   Evas_List *next;
-   Evas_List *dir_list;
-   Evas_List *all_imcs;
-  
-   if (!path) return NULL; 
-   
-   all_imcs = NULL; 
-   dir_list = e_path_dir_list_get(path);
-   
-   for (next = dir_list ; next ; next = next->next)
-     {
-	E_Path_Dir *epd;
-	Evas_List *dir_imcs;
-	
-	epd = next->data;
-
-	dir_imcs = _e_intl_imc_dir_scan(epd->dir);
-	
-	while (dir_imcs)
-	  {
-	     E_Input_Method_Config *imc;
-
-	     imc = dir_imcs->data;
-	     dir_imcs = evas_list_remove_list(dir_imcs, dir_imcs);
-
-	     if (_e_intl_imc_find(all_imcs, imc->e_im_name))
-	       {
-		  e_intl_input_method_config_free(imc);
-	       }
-	     else
-	       {
-		  all_imcs = evas_list_append(all_imcs, imc);
-	       }
-	  }
-     }
-   
-   e_path_dir_list_free(dir_list);  
-
-   return all_imcs;
-}
-   
-static Evas_List *
-_e_intl_imc_dir_scan(char *dir)
-{
-   Evas_List *imcs;
-   Ecore_List *files;
-   char *file;
-   
-   imcs = NULL;
-   
-   files = ecore_file_ls(dir);
-   if (!files) return NULL;
-  
-   ecore_list_goto_first(files);
-   if (files)
-     {
-	while ((file = ecore_list_next(files)))
-	  {
-	     E_Input_Method_Config *imc;
-	     Eet_File *imc_file;
-	     char buf[PATH_MAX]; 
-	     
-	     snprintf(buf, sizeof(buf), "%s/%s", dir, file);	     
-	     imc_file = eet_open(buf, EET_FILE_MODE_READ);
-	     if (imc_file)
-	       {
-		  imc = e_intl_input_method_config_read (imc_file);
-		  if (imc)
-		    {
-		       imcs = evas_list_append(imcs, imc);
-		    }
-	       }
-	  }
-	ecore_list_destroy(files);
-     }
-   return imcs;
-}
-
-static E_Input_Method_Config *
-_e_intl_imc_find(Evas_List *imc_list, char * name)
-{
-   Evas_List *l;
-   
-   if (!imc_list) return NULL;
-   if (!name) return NULL;
-
-   for (l = imc_list; l; l = l->next)
-     {
-	E_Input_Method_Config *imc;
-
-	imc = l->data;
-	if (!strcmp(imc->e_im_name, name)) return imc;
-     }
-   
-   return NULL;
-}
-
 void
 e_intl_language_set(const char *lang)
 {
-   /* 1 list ~/.e/e/locale contents */
-   /* 2 list e_preifx_locale_get() contents */
-   
-   /* FIXME: determine if in user or system locale dir */
    if (_e_intl_language) free(_e_intl_language);
    /* NULL lang means set everything back to the original environemtn defaults */
    if (!lang)
@@ -291,6 +160,7 @@ e_intl_language_set(const char *lang)
      {
 	_e_intl_language = NULL;
      }
+
    if (setlocale(LC_ALL, _e_intl_language) == NULL)
      {
 	perror("setlocale() :");
@@ -300,10 +170,20 @@ e_intl_language_set(const char *lang)
 	else
 	  printf("An error occured trying to use the default locale\n");
      }
-   bindtextdomain(PACKAGE, e_prefix_locale_get());
-   textdomain(PACKAGE);
+  
+   if (_e_intl_language) 
+     { 
+	Evas_Hash *language_hash;
+	char *locale_path;
+   
+	language_hash = _e_intl_language_path_scan(path_messages);
+	locale_path = _e_intl_language_hash_find(language_hash, _e_intl_language);
+	bindtextdomain(PACKAGE, locale_path);
+	_e_intl_language_hash_free(language_hash);
+	textdomain(PACKAGE);
 //   XSetLocaleModifiers("");
-   bind_textdomain_codeset(PACKAGE, "UTF-8");
+	bind_textdomain_codeset(PACKAGE, "UTF-8");
+     }
 }
 
 const char *
@@ -312,13 +192,63 @@ e_intl_language_get(void)
    return _e_intl_language;
 }
 
-const Evas_List *
+Evas_List *
 e_intl_language_list(void)
 {
-   /* FIXME: hunt dirs for locales */
-   return _e_intl_languages;
+   Evas_List *next;
+   Evas_List *dir_list;
+   Evas_List *all_languages;
+
+   all_languages = NULL;
+   dir_list = e_path_dir_list_get(path_messages);
+   for (next = dir_list ; next ; next = next->next)
+     {
+	E_Path_Dir *epd;        
+	Evas_List *dir_languages;
+	        
+	epd = next->data;		        
+	dir_languages = _e_intl_language_dir_scan(epd->dir);
+	while (dir_languages)
+	  {
+	     char *language;
+
+	     language = dir_languages->data;
+	     dir_languages = evas_list_remove_list(dir_languages, dir_languages);
+
+	     if (_e_intl_language_list_find(all_languages, language))
+	       {
+		  free(language);
+	       }
+	     else
+	       {
+		  all_languages = evas_list_append(all_languages, language);
+	       }
+	  }
+     }
+   
+   e_path_dir_list_free(dir_list);
+
+   return all_languages;
 }
 
+static int
+_e_intl_language_list_find(Evas_List *language_list, char * language)
+{
+   Evas_List *l;
+   
+   if (!language_list) return 0;
+   if (!language) return 0;
+
+   for (l = language_list; l; l = l->next)
+     {
+	char *lang;
+
+	lang = l->data;
+	if (!strcmp(lang, language)) return 1;
+     }
+   
+   return 0;
+}
 void
 e_intl_input_method_set(const char *method)
 {
@@ -473,4 +403,318 @@ _e_intl_cb_exit(void *data, int type, void *event)
 
    _e_intl_input_method_exec = NULL;
    return 1;
+}
+
+/* 
+ * Scan the path for languages. Return a hash of languages found in 
+ * the path. The hash is a Evas_Hash<String, String> the keys of the 
+ * hash are the languages (e.i. zh_CN) and the path is the direcory 
+ * where this locale was found. The directory is used to send to the locale
+ * function bindtextdomain().  
+ * Example Hash:
+ *	en -> ~/e/e/locale
+ *      zh_CN -> ~/my_messages  
+ *
+ * @path E_Path to scan
+ * @return hash of languages to path
+ */
+static Evas_Hash *
+_e_intl_language_path_scan(E_Path *path)
+{
+   Evas_List *next;
+   Evas_List *dir_list;
+   Evas_Hash *all_languages;
+   
+   if (!path) return NULL;
+
+   all_languages = NULL;
+   dir_list = e_path_dir_list_get(path);
+   for (next = dir_list ; next ; next = next->next)
+     {
+	E_Path_Dir *epd;        
+	Evas_List *dir_languages;
+	        
+	epd = next->data;		        
+	dir_languages = _e_intl_language_dir_scan(epd->dir);
+	while (dir_languages)
+	  {
+	     char *language;
+
+	     language = dir_languages->data;
+	     dir_languages = evas_list_remove_list(dir_languages, dir_languages);
+
+	     if (evas_hash_find(all_languages, language))
+	       {
+		  free(language);
+	       }
+	     else
+	       {
+		  all_languages = evas_hash_add(all_languages, language, strdup(epd->dir));
+		  free(language);
+	       }
+	  }
+     }
+   
+   e_path_dir_list_free(dir_list);  
+
+   return all_languages;
+}
+
+static void
+_e_intl_language_hash_free(Evas_Hash *language_hash)
+{
+   if(!language_hash) return;
+   evas_hash_foreach(language_hash, _e_intl_cb_free_language_hash, NULL);
+   evas_hash_free(language_hash);
+}
+
+Evas_Bool
+_e_intl_cb_free_language_hash(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+{
+   free(data);
+   return 1;
+}
+
+
+/* 
+ * get the directory associated with the language.  
+ */
+static char *
+_e_intl_language_hash_find(Evas_Hash *language_hash, char *language)
+{
+   Evas_List *l;
+   Evas_List *all_languages;
+   char *best_language;
+   char *directory;
+   int state;
+   
+   if (!language_hash) return NULL;
+   if (!language) return NULL;
+
+   best_language = NULL;
+   all_languages = e_intl_language_list();
+   
+   /* Do a best match:
+    * If language is ja_JP.UTF-8 we should match ja 
+    * If language is zh we should match the first in the list, of zh_CN and zh_TW
+    */
+   for ( l = all_languages ; l ; l = l->next )
+     {
+	char *lang;
+	int comp_len;
+        int lang_len;
+        int language_len;	
+	
+	lang = l->data;
+	lang_len = strlen(lang);
+	language_len = strlen(language);
+	/* return shorter */
+	comp_len = lang_len > language_len ? language_len : lang_len;
+	
+	if ( !strncmp(lang, language, comp_len) )
+	  {
+	     if ( best_language == NULL ) 
+	       {
+		  best_language = lang;
+		  if ( lang_len > language_len ) 
+		    state = 1; /* looking for shorter */
+		  else 
+		    state = 0; /* looking for longer */
+	       }
+	     else if ( (state == 1 && lang_len > language_len) ||
+		       (state == 0 && lang_len < language_len) )
+	       best_language = lang;
+	     
+	     if ( strlen(best_language) == language_len ) break;	  
+	  }
+     }
+   
+   directory = evas_hash_find(language_hash, best_language);
+   
+   while (all_languages)
+     {
+	char *lang;
+
+	lang = all_languages->data;
+	all_languages = evas_list_remove_list(all_languages, all_languages);
+	free(lang);
+     }
+   
+   return directory;
+}
+
+static Evas_List *
+_e_intl_language_dir_scan(const char *dir)
+{
+   Evas_List *languages;
+   Ecore_List *files;
+   char *file;
+   
+   languages = NULL;
+   
+   files = ecore_file_ls(dir);
+   if (!files) return NULL;
+  
+   ecore_list_goto_first(files);
+   if (files)
+     {
+	while ((file = ecore_list_next(files)))
+	  {
+	     char file_path[PATH_MAX];
+	     
+	     snprintf(file_path, sizeof(file_path),"%s/%s", dir, file);
+	     if (ecore_file_is_dir(file_path))
+	       {
+		  /* look for LC_MESSAGES */
+		  Ecore_List *level_one_files;
+		  char *level_one_file;
+		  
+		  level_one_files = ecore_file_ls(file_path);
+		  if (!level_one_files) continue;
+		  
+		  ecore_list_goto_first(level_one_files);
+		  if (level_one_files)
+		    {
+		       while ((level_one_file = ecore_list_next(level_one_files)))
+			 {
+			    char level_one_file_path[PATH_MAX];
+
+			    snprintf(level_one_file_path, sizeof(level_one_file_path),"%s/%s", file_path, level_one_file);
+			    if (  !strcmp(level_one_file, "LC_MESSAGES") && 
+				  ecore_file_is_dir(level_one_file_path))
+			      {
+				 /* Find any enlightenment.mo files */
+				 Ecore_List *level_two_files;
+				 char *level_two_file;
+				 
+				 level_two_files = ecore_file_ls(level_one_file_path);
+				 if (!level_two_files) continue;
+				 
+				 ecore_list_goto_first(level_two_files);
+				 if (level_two_files)
+				   {
+				      while ((level_two_file = ecore_list_next(level_two_files)))
+					{
+					   char level_two_file_path[PATH_MAX];
+
+					   snprintf(level_two_file_path, sizeof(level_two_file_path),"%s/%s", level_one_file_path, level_two_file);
+					   if (  !strcmp(level_two_file, PACKAGE".mo") &&
+						 !ecore_file_is_dir(level_two_file_path))
+					     {
+						languages = evas_list_append(languages, strdup(file));
+						break;
+					     }
+					}
+				      ecore_list_destroy(level_two_files);
+				   }
+			      }			    
+			 }
+		       ecore_list_destroy(level_one_files);
+		    }
+	       }
+	  }
+	ecore_list_destroy(files);
+     }
+   return languages;
+}
+
+static Evas_List *
+_e_intl_imc_path_scan(E_Path *path)
+{
+
+   Evas_List *next;
+   Evas_List *dir_list;
+   Evas_List *all_imcs;
+  
+   if (!path) return NULL; 
+   
+   all_imcs = NULL; 
+   dir_list = e_path_dir_list_get(path);
+   
+   for (next = dir_list ; next ; next = next->next)
+     {
+	E_Path_Dir *epd;
+	Evas_List *dir_imcs;
+	
+	epd = next->data;
+
+	dir_imcs = _e_intl_imc_dir_scan(epd->dir);
+	
+	while (dir_imcs)
+	  {
+	     E_Input_Method_Config *imc;
+
+	     imc = dir_imcs->data;
+	     dir_imcs = evas_list_remove_list(dir_imcs, dir_imcs);
+
+	     if (_e_intl_imc_find(all_imcs, imc->e_im_name))
+	       {
+		  e_intl_input_method_config_free(imc);
+	       }
+	     else
+	       {
+		  all_imcs = evas_list_append(all_imcs, imc);
+	       }
+	  }
+     }
+   
+   e_path_dir_list_free(dir_list);  
+
+   return all_imcs;
+}
+   
+static Evas_List *
+_e_intl_imc_dir_scan(const char *dir)
+{
+   Evas_List *imcs;
+   Ecore_List *files;
+   char *file;
+   
+   imcs = NULL;
+   
+   files = ecore_file_ls(dir);
+   if (!files) return NULL;
+  
+   ecore_list_goto_first(files);
+   if (files)
+     {
+	while ((file = ecore_list_next(files)))
+	  {
+	     E_Input_Method_Config *imc;
+	     Eet_File *imc_file;
+	     char buf[PATH_MAX]; 
+	     
+	     snprintf(buf, sizeof(buf), "%s/%s", dir, file);	     
+	     imc_file = eet_open(buf, EET_FILE_MODE_READ);
+	     if (imc_file)
+	       {
+		  imc = e_intl_input_method_config_read (imc_file);
+		  if (imc)
+		    {
+		       imcs = evas_list_append(imcs, imc);
+		    }
+	       }
+	  }
+	ecore_list_destroy(files);
+     }
+   return imcs;
+}
+
+static E_Input_Method_Config *
+_e_intl_imc_find(Evas_List *imc_list, char * name)
+{
+   Evas_List *l;
+   
+   if (!imc_list) return NULL;
+   if (!name) return NULL;
+
+   for (l = imc_list; l; l = l->next)
+     {
+	E_Input_Method_Config *imc;
+
+	imc = l->data;
+	if (!strcmp(imc->e_im_name, name)) return imc;
+     }
+   
+   return NULL;
 }

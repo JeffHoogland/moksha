@@ -125,7 +125,7 @@ void
 e_font_fallback_clear(void)
 {
    E_Font_Fallback *eff;
-   
+    
    while (e_config->font_fallbacks)
      {	
 	eff = e_config->font_fallbacks->data;

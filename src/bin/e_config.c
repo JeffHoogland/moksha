@@ -362,7 +362,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, fullscreen_policy, INT); /**/
    E_CONFIG_VAL(D, T, input_method, STR); /**/
    E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
-   
+   E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -1939,6 +1939,14 @@ _e_config_free(void)
 	     E_Path_Dir *epd;
 	     epd = e_config->path_append_input_methods->data;
 	     e_config->path_append_input_methods = evas_list_remove_list(e_config->path_append_input_methods, e_config->path_append_input_methods);
+	     E_FREE(epd->dir);
+	     E_FREE(epd);
+	  }
+	while (e_config->path_append_messages)
+	  {
+	     E_Path_Dir *epd;
+	     epd = e_config->path_append_messages->data;
+	     e_config->path_append_messages = evas_list_remove_list(e_config->path_append_messages, e_config->path_append_messages);
 	     E_FREE(epd->dir);
 	     E_FREE(epd);
 	  }

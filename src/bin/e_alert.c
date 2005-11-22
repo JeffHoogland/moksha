@@ -30,7 +30,8 @@ e_alert_init(char *disp)
    font = XLoadFont(dd, "fixed");
    fs = XQueryFont(dd, font);
    
-   /* dont i18n this - i dont want gettext doing anything as this is caleld from a segv */
+   /* dont i18n this - i dont want gettext doing anything as this is called 
+      from a segv */
    title = "Enlightenment Error";
    str1 = "(F1) Ignore";
    str2 = "(F2) Restart";

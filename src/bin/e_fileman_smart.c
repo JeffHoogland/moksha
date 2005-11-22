@@ -951,7 +951,6 @@ _e_fm_file_menu_open(void *data, E_Menu *m, E_Menu_Item *mi)
    E_Fm_Icon *icon;
 
    icon = data;
-
    switch (icon->file->type)
     {
      case E_FM_FILE_TYPE_DIRECTORY:
