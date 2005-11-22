@@ -100,3 +100,4 @@
 #include "e_int_config_window_manipulation.h"
 #include "e_int_config_window_display.h"
 #include "e_int_config_background.h"
+#include "e_deskpreview.h"
