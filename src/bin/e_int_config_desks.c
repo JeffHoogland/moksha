@@ -19,9 +19,12 @@ struct _CFData
    /*- BASIC -*/
    int x;
    int y;
+   int flip;
    /*- ADVANCED -*/
-   int edge_flip;
-   double resistance;
+   int zone_desks_x_count;
+   int zone_desks_y_count;
+   int use_edge_flip;
+   double edge_flip_timeout;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -47,10 +50,14 @@ e_int_config_desks(E_Container *con)
 static void
 _fill_data(CFData *cfdata)
 {
-   cfdata->x = e_config->zone_desks_x_count;
-   cfdata->y = e_config->zone_desks_y_count;
-   cfdata->edge_flip = e_config->use_edge_flip;
-   cfdata->resistance = e_config->edge_flip_timeout;
+   cfdata->zone_desks_x_count = e_config->zone_desks_x_count;
+   cfdata->zone_desks_x_count = e_config->zone_desks_x_count;
+   cfdata->use_edge_flip = e_config->use_edge_flip;
+   cfdata->edge_flip_timeout = e_config->edge_flip_timeout;
+   
+   cfdata->x = cfdata->zone_desks_x_count;
+   cfdata->y = cfdata->zone_desks_x_count;
+   cfdata->flip = cfdata->use_edge_flip;
 }
 
 static void *
@@ -97,6 +104,8 @@ _basic_apply_data(E_Config_Dialog *cdd, CFData *cfdata)
 	       }
 	  }
      }
+   
+   e_config->use_edge_flip = cfdata->flip;
 
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -106,8 +115,27 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    /* Actually take our cfdata settings and apply them in real life */
-   e_config->use_edge_flip = cfdata->edge_flip;
-   e_config->edge_flip_timeout = cfdata->resistance;
+   Evas_List *l, *ll, *lll;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+
+   for (l = e_manager_list(); l; l = l->next)
+     {
+	man = l->data;
+	for (ll = man->containers; ll; ll = ll->next)
+	  {
+	     con = ll->data;
+	     for (lll = con ->zones; lll; lll = lll->next)
+	       {
+		  zone = lll->data;
+		  e_zone_desk_count_set(zone, cfdata->zone_desks_x_count, cfdata->zone_desks_y_count);
+	       }
+	  }
+     }
+
+   e_config->use_edge_flip = cfdata->use_edge_flip;
+   e_config->edge_flip_timeout = cfdata->edge_flip_timeout;
 
    e_zone_update_flip_all();
    e_config_save_queue();
@@ -119,19 +147,28 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
    
    _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("Number of desktops"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f wide"), 1.0, 10.0, 1.0, 0, NULL, &(cfdata->x), 100);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f high"), 1.0, 10.0, 1.0, 0, NULL, &(cfdata->y), 100);
+   of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
+   
+   ot = e_widget_table_add(evas, 0);
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_framelist_object_append(of, ot);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
+   ob = e_widget_check_add(evas, _("Flip desktops when the mouse at screen edge"), &(cfdata->flip));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    return o;
 }
 
@@ -139,21 +176,30 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *ot;
    E_Radio_Group *rg;
    
    _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    
-   of = e_widget_framelist_add(evas, _("Edge Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip desktops when mouse leaves the screen"), &(cfdata->edge_flip));
+   of = e_widget_framelist_add(evas, _("Number of Desktops"), 0);
+   
+   ot = e_widget_table_add(evas, 0);
+   ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->y), 150);
+   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 0, 1, 0, 1);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 8.0, 1.0, 0, NULL, &(cfdata->x), 200);
+   e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_framelist_object_append(of, ot);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
+   ob = e_widget_check_add(evas, _("Flip desktops when the mouse is at screen edge"), &(cfdata->use_edge_flip));
    e_widget_framelist_object_append(of, ob);
 
-   ob = e_widget_label_add(evas, _("Delay before flipping:"));
+   ob = e_widget_label_add(evas, _("Time the mouse is at the edge before flipping:"));
    e_widget_framelist_object_append(of, ob);
-
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.11f sec"), 0.0, 2.0, 0.01, 0, &(cfdata->resistance), NULL, 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 2.0, 0.05, 0, &(cfdata->edge_flip_timeout), NULL, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
