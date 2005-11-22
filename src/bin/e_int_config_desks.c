@@ -56,7 +56,7 @@ _fill_data(CFData *cfdata)
    cfdata->edge_flip_timeout = e_config->edge_flip_timeout;
    
    cfdata->x = cfdata->zone_desks_x_count;
-   cfdata->y = cfdata->zone_desks_x_count;
+   cfdata->y = cfdata->zone_desks_y_count;
    cfdata->flip = cfdata->use_edge_flip;
 }
 
