@@ -51,7 +51,7 @@ static void
 _fill_data(CFData *cfdata)
 {
    cfdata->zone_desks_x_count = e_config->zone_desks_x_count;
-   cfdata->zone_desks_x_count = e_config->zone_desks_x_count;
+   cfdata->zone_desks_y_count = e_config->zone_desks_y_count;
    cfdata->use_edge_flip = e_config->use_edge_flip;
    cfdata->edge_flip_timeout = e_config->edge_flip_timeout;
    
