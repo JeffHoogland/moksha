@@ -10,9 +10,26 @@
 # define D(x)  ((void) 0)
 #endif
 
+typedef struct _E_Thumb_Item E_Thumb_Item;
+
 static char       *_e_thumb_file_id(char *file);
+static void        _e_thumb_generate(void);
+static int         _e_thumb_cb_exe_exit(void *data, int type, void *event);
 
 static char       *thumb_path = NULL;
+static Evas_List  *thumb_files = NULL;
+static Evas_List  *event_handlers = NULL;
+static pid_t       pid = -1;
+
+struct _E_Thumb_Item
+{
+   char           path[PATH_MAX];
+   Evas_Object   *obj;
+   Evas          *evas;
+   Evas_Coord     w, h;
+   void (*cb)(Evas_Object *obj, void *data);
+   void  *data;
+};
 
 int
 e_thumb_init(void)
@@ -31,6 +48,11 @@ e_thumb_init(void)
      }
    else return 0;
    
+   event_handlers = 
+     evas_list_append(event_handlers,
+		      ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
+					      _e_thumb_cb_exe_exit,
+					      NULL));      
    return 1;
 }
 
@@ -38,6 +60,13 @@ int
 e_thumb_shutdown(void)
 {
    E_FREE(thumb_path);
+   while (event_handlers)     
+     {   
+	ecore_event_handler_del(event_handlers->data);
+	event_handlers = evas_list_remove_list(event_handlers, event_handlers);
+     }
+   evas_list_free(thumb_files);
+   
    return 1;
 }
 
@@ -46,6 +75,53 @@ const char *
 e_thumb_dir_get(void)
 {
    return thumb_path;
+}
+
+/* queue an image for thumbnailing or return the thumb if it exists */
+Evas_Object *
+e_thumb_generate_begin(char *path, Evas_Coord w, Evas_Coord h, Evas *evas, Evas_Object **tmp, void (*cb)(Evas_Object *obj, void *data), void *data)
+{
+   E_Thumb_Item *t;
+   
+   if(!ecore_file_exists(path)) return *tmp;   
+   if (e_thumb_exists(path))
+     {
+	evas_object_del(*tmp);
+	*tmp = e_thumb_evas_object_get(path, evas, w, h, 1);
+	return *tmp;
+     }
+   
+   t = E_NEW(E_Thumb_Item, 1);
+   t->w = w;
+   t->h = h;
+   t->evas = evas;
+   t->cb = cb;
+   t->data = data;
+   *tmp = e_icon_add(evas);
+   t->obj = *tmp;
+   snprintf(t->path, sizeof(t->path), "%s", path);
+   thumb_files = evas_list_append(thumb_files, t);
+   if (pid == -1) _e_thumb_generate();
+   
+   return *tmp;   
+}
+
+/* delete an image from the thumb queue */
+void
+e_thumb_generate_end(char *path)
+{
+   Evas_List *l;
+   E_Thumb_Item *t;
+   
+   for(l = thumb_files; l; l = l->next)
+     {
+	t = l->data;
+	if(!strcmp(path, t->path))
+	   {
+	      thumb_files = evas_list_remove_list(thumb_files, l);
+	      break;
+	   }
+     }
 }
 
 /* return hashed path of thumb */
@@ -410,4 +486,71 @@ _e_thumb_file_id(char *file)
      }
    *sp = 0;
    return strdup(s);
+}
+
+/* generate a thumb from the list of queued thumbs */
+static void
+_e_thumb_generate(void)
+{
+   E_Thumb_Item *t;
+   
+   if ((!thumb_files) || (pid != -1)) return;
+   pid = fork();
+   if (pid == 0)
+     {
+	/* reset signal handlers for the child */
+	signal(SIGSEGV, SIG_DFL);
+	signal(SIGILL, SIG_DFL);
+	signal(SIGFPE, SIG_DFL);
+	signal(SIGBUS, SIG_DFL);
+	
+	t = thumb_files->data;
+	if (!e_thumb_exists(t->path))
+	  e_thumb_create(t->path, t->w, t->h);
+	eet_cacheburst(0);
+	exit(0);
+     }   
+}
+
+/* called when a thumb is generated */
+static int
+_e_thumb_cb_exe_exit(void *data, int type, void *event)
+{
+   Ecore_Event_Exe_Exit *ev;
+   E_Thumb_Item         *t;
+   char                 *ext;
+   
+   ev = event;
+   if (ev->pid != pid) return 1;
+   if (!thumb_files) return 1;
+   
+   t = thumb_files->data;
+   thumb_files = evas_list_remove_list(thumb_files, thumb_files);
+   
+   ext = strrchr(t->path, '.');
+   if ((ext) && (strcasecmp(ext, ".eap")))
+     ext = NULL;
+   
+   if ((ext) || (ecore_file_exists(t->path)))
+     {
+	Evas_Coord w, h;
+	Evas_Object *tmp;
+	void *data;
+	
+	tmp = e_thumb_evas_object_get(t->path,
+				      t->evas,
+				      t->w,
+				      t->h,
+				      1);
+	data = e_icon_data_get(tmp, &w, &h);
+	e_icon_data_set(t->obj, data, w, h);
+	evas_object_del(tmp);
+	if(t->cb)
+	  t->cb(t->obj, t->data);
+	free(t);
+     }
+   
+   pid = -1;
+   _e_thumb_generate();
+   return 1;
 }

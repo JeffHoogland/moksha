@@ -865,6 +865,10 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 	     if (themes)
 	       {
 		  char *theme, *deftheme = NULL;
+		  char fulltheme[PATH_MAX];
+		  Evas_Object *o;
+		  Ecore_Evas *eebuf;
+		  Evas *evasbuf;
 		  Evas_List *l;
 		  
 		  for (l = e_config->themes; l; l = l->next)
@@ -886,14 +890,20 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
 		  num++;
 		  
+		  eebuf = ecore_evas_buffer_new(1, 1);
+		  evasbuf = ecore_evas_get(eebuf);
+		  o = edje_object_add(evasbuf);
+		  
 		  while ((theme = ecore_list_next(themes)))
 		    {
-		       char *ext;
+		       char *ext;		      
 		       
-		       ext = strrchr(theme, '.');
-		       if (ecore_file_is_dir(theme) || (!ext))
+		       snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, theme);
+		       if (ecore_file_is_dir(fulltheme))
 			 continue;
-		       if (!strcasecmp(ext, ".edj"))
+		       
+		       /* minimum theme requirements */
+		       if(edje_object_file_set(o, fulltheme, "widgets/border/default/border"))
 			 {
 			    mi = e_menu_item_new(m);
 			    e_menu_item_radio_set(mi, 1);
@@ -903,12 +913,14 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 				 if (!strcmp(theme, deftheme))
 				   e_menu_item_toggle_set(mi, 1);
 			      }
-			    *ext = 0;
 			    e_menu_item_label_set(mi, theme);
 			    e_menu_item_callback_set(mi, _e_int_menus_themes_edit_mode_cb, NULL);
 			    num++;
 			 }
 		    }
+		  
+		  evas_object_del(o);
+		  ecore_evas_free(eebuf);
 		  ecore_list_destroy(themes);
 	       }
 	  }

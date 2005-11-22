@@ -26,6 +26,8 @@ struct _E_Smart_Data
    unsigned char    visible : 1;
    
    int              type;
+   
+   E_Fm_Icon_Metadata *meta;
 };
 
 /* local subsystem functions */
@@ -40,13 +42,9 @@ static void _e_fm_icon_smart_clip_unset  (Evas_Object *obj);
 
 /* Create icons */
 static void  _e_fm_icon_icon_mime_get(E_Smart_Data *sd);
-
-static void  _e_fm_icon_thumb_generate(void);
-static int   _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event);
-
-static void  _e_fm_icon_type_set(E_Smart_Data *sd);
-    
-static void _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd);
+static void  _e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data);
+static void  _e_fm_icon_type_set(E_Smart_Data *sd);    
+static void  _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd);
 
 /* local subsystem globals */
 static Evas_Smart *e_smart = NULL;
@@ -62,10 +60,6 @@ static Eet_Data_Descriptor *_e_fm_icon_meta_edd = NULL;
 int
 e_fm_icon_init(void)
 {
-   event_handlers = evas_list_append(event_handlers,
-                                     ecore_event_handler_add(ECORE_EVENT_EXE_EXIT,
-                                                             _e_fm_icon_thumb_cb_exe_exit,
-                                                              NULL));
    return 1;
 }
 
@@ -177,8 +171,12 @@ e_fm_icon_file_set(Evas_Object *obj, E_Fm_File *file)
 	  }
 	else
 	  {
-	     thumb_files = evas_list_append(thumb_files, sd);
-	     if (pid == -1) _e_fm_icon_thumb_generate();
+	     sd->thumb_object = e_thumb_generate_begin(sd->file->path, sd->iw,
+						       sd->ih, sd->evas,
+						       &sd->thumb_object,
+						       _e_fm_icon_thumb_generate_cb,
+						       sd);
+
 	     _e_fm_icon_icon_mime_get(sd);
 	  }
      }
@@ -236,6 +234,17 @@ e_fm_icon_disappear_cb(Evas_Object *obj, void *data)
    if (sd->image_object) evas_object_del(sd->image_object);
    if (sd->thumb_object) evas_object_del(sd->thumb_object);
    E_FREE(sd->saved_title);   
+}
+
+char *
+e_fm_icon_title_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
+   
+   return edje_object_part_text_get(sd->icon_object, "icon_title");
 }
 
 void
@@ -321,6 +330,8 @@ e_fm_icon_meta_generate(Evas_Object *obj)
    if (!m) return NULL;
    _e_fm_icon_meta_fill(m, sd);
 
+   sd->meta = m;
+   
    return m;
 }
 
@@ -361,6 +372,7 @@ _e_fm_icon_smart_add(Evas_Object *obj)
    sd->iw = 48;
    sd->ih = 48;
    sd->file = NULL;
+   sd->meta = NULL;
    
    sd->icon_object = edje_object_add(sd->evas);
    evas_object_smart_member_add(sd->icon_object, obj);
@@ -404,6 +416,12 @@ _e_fm_icon_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
      evas_object_move(sd->event_object, x, y);
    if(sd->icon_object)
      evas_object_move(sd->icon_object, x, y);
+   if(sd->meta)
+     {
+        //printf("update meta for %s: x=%d y=%d\n", sd->file->name, x, y);
+	sd->meta->x = x;
+	sd->meta->y = y;
+     }   
 }
 
 static void
@@ -419,7 +437,13 @@ _e_fm_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if(sd->event_object)     
      evas_object_resize(sd->event_object, sd->w, sd->h);
    if(sd->icon_object)     
-   evas_object_resize(sd->icon_object, sd->w, sd->h);
+     evas_object_resize(sd->icon_object, sd->w, sd->h);   
+   if(sd->meta)
+     {
+	printf("update meta: w=%d h=%d\n", w, h);
+	sd->meta->w = w;
+	sd->meta->h = h;
+     }
 }
 
 static void
@@ -506,43 +530,13 @@ _e_fm_icon_icon_mime_get(E_Smart_Data *sd)
 			    sd->image_object);
 }
 
-static void
-_e_fm_icon_thumb_generate(void)
+void
+_e_fm_icon_thumb_generate_cb(Evas_Object *obj, void *data)
 {
-   E_Smart_Data *sd;
-   
-   if ((!thumb_files) || (pid != -1)) return;
-
-   pid = fork();
-   if (pid == 0)
-     {
-	/* reset signal handlers for the child */
-	signal(SIGSEGV, SIG_DFL);
-	signal(SIGILL, SIG_DFL);
-	signal(SIGFPE, SIG_DFL);
-	signal(SIGBUS, SIG_DFL);
-	
-	sd = thumb_files->data;
-	if (!e_thumb_exists(sd->file->path))
-	  e_thumb_create(sd->file->path, 48, 48); // thumbnail size
-	eet_cacheburst(0);
-	exit(0);
-     }
-}
-
-static int
-_e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
-{
-   Ecore_Event_Exe_Exit *ev;
    E_Smart_Data         *sd;
    char                 *ext;
    
-   ev = event;
-   if (ev->pid != pid) return 1;
-   if (!thumb_files) return 1;
-   
-   sd = thumb_files->data;
-   thumb_files = evas_list_remove_list(thumb_files, thumb_files);
+   sd = data;
    
    ext = strrchr(sd->file->name, '.');
    if ((ext) && (strcasecmp(ext, ".eap")))
@@ -559,9 +553,7 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
 						   sd->iw,
 						   sd->ih,
 						   1);
-//	evas_object_geometry_get(sd->thumb_object, NULL, NULL, &icon_w, &icon_h);
-//	sd->iw = icon_w;
-//	sd->ih = icon_h;
+
 	sd->image_object = edje_object_add(sd->evas);
 	e_theme_edje_object_set(sd->image_object, "base/theme/fileman",
 				"fileman/icon_thumb");
@@ -579,10 +571,6 @@ _e_fm_icon_thumb_cb_exe_exit(void *data, int type, void *event)
 	edje_object_part_swallow(sd->icon_object, "icon_swallow",
 				 sd->image_object);
      }
-
-   pid = -1;
-   _e_fm_icon_thumb_generate();
-   return 1;
 }
 
 static void
@@ -678,5 +666,5 @@ _e_fm_icon_meta_fill(E_Fm_Icon_Metadata *m, E_Smart_Data *sd)
    m->y = sd->y;
    m->w = sd->w;
    m->h = sd->h;
-   m->name = strdup(sd->file->name);   
+   m->name = strdup(sd->file->name);
 }

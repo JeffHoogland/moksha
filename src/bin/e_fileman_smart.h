@@ -46,6 +46,9 @@ EAPI int                   e_fm_thaw(Evas_Object *freeze);
 EAPI void                  e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void *data);
 EAPI void                  e_fm_background_set(Evas_Object *object, Evas_Object *bg);
 
+EAPI Evas_Object          *e_fm_icon_create(void *data);
+EAPI void                  e_fm_icon_destroy(Evas_Object *obj, void *data);
+
 extern int E_EVENT_FM_RECONFIGURE;
 extern int E_EVENT_FM_DIRECTORY_CHANGE;
 #endif

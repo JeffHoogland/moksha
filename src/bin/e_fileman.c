@@ -88,7 +88,6 @@ e_fileman_new_to_dir(E_Container *con, char *path)
    evas_event_freeze(fileman->evas);   
    fileman->smart = e_fm_add(fileman->evas);
    e_fm_e_win_set(fileman->smart, fileman->win);
-   e_fm_dir_set(fileman->smart, dir);   
    
    fileman->main = e_scrollframe_add(fileman->evas);
    e_scrollframe_custom_theme_set(fileman->main, "base/themes/fileman",
@@ -101,6 +100,8 @@ e_fileman_new_to_dir(E_Container *con, char *path)
 
    e_win_resize_callback_set(fileman->win, _e_fileman_resize_cb);
    e_win_resize(fileman->win, 570, 355);
+   
+   e_fm_dir_set(fileman->smart, dir);
    
    ecore_x_dnd_aware_set(fileman->win->evas_win, 1);
    

@@ -71,6 +71,18 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
    _e_icon_smart_reconfigure(sd);
 }
 
+void
+e_icon_object_set(Evas_Object *obj, Evas_Object *o)
+{
+   E_Smart_Data *sd;
+   
+   sd = evas_object_smart_data_get(obj);
+   /* smart code here */
+   if (sd->obj) evas_object_del(sd->obj);
+   sd->obj = o;
+   _e_icon_smart_reconfigure(sd);   
+}
+
 const char *
 e_icon_file_get(Evas_Object *obj)
 {

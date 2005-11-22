@@ -97,9 +97,10 @@ e_widget_entry.h \
 e_widget_image.h \
 e_config_dialog.h \
 e_int_config_focus.h \
+e_icon_grid.h \
+e_icon_canvas.h \
 e_int_config_desks.h \
 e_configure.h \
-e_icon_layout.h \
 e_int_border_locks.h \
 e_thumb.h \
 e_int_border_remember.h \
@@ -117,7 +118,8 @@ e_widget_ilist.h \
 e_slider.h \
 e_widget_slider.h \
 e_int_config_window_manipulation.h \
-e_int_config_window_display.h
+e_int_config_window_display.h \
+e_int_config_background.h 
 
 enlightenment_src = \
 e_user.c \
@@ -195,9 +197,10 @@ e_widget_entry.c \
 e_widget_image.c \
 e_config_dialog.c \
 e_int_config_focus.c \
+e_icon_grid.c \
+e_icon_canvas.c \
 e_int_config_desks.c \
 e_configure.c \
-e_icon_layout.c \
 e_int_border_locks.c \
 e_thumb.c \
 e_int_border_remember.c \
@@ -216,6 +219,7 @@ e_slider.c \
 e_widget_slider.c \
 e_int_config_window_manipulation.c \
 e_int_config_window_display.c \
+e_int_config_background.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
