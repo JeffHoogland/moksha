@@ -25,6 +25,7 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if you have 2 zones and you fill up zone 2 (right) mostly and then run
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
+* BUG: if you alt-click on a module to move it, and the mouse happens to be right where a resize handle for a neighboring module is, it will resize that instead. We should probably just go to edit mode for the single module instead of _all_ modules.
 ]]]
 
 [[[
@@ -97,6 +98,7 @@ Some of the things (in very short form) that need to be done to E17...
   disabled)
 * modules need config dialogs instead of long winded menus
 * remove module config menus (make them part of the module control panel etc.)
+* alt-middle should go into resize mode on modules. (right now you have to guess where the resize handle will appear and alt-click there, or go into full edit mode.
 ]]]
 
 [[[
