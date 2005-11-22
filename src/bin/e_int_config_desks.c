@@ -165,7 +165,7 @@ _basic_create_widgets(E_Config_Dialog *cdd, Evas *evas, CFData *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip desktops when the mouse at screen edge"), &(cfdata->flip));
+   ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->flip));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -194,7 +194,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Desktop Mouse Flip"), 0);
-   ob = e_widget_check_add(evas, _("Flip desktops when the mouse is at screen edge"), &(cfdata->use_edge_flip));
+   ob = e_widget_check_add(evas, _("Flip desktops when mouse at screen edge"), &(cfdata->use_edge_flip));
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Time the mouse is at the edge before flipping:"));
