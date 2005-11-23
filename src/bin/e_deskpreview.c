@@ -7,12 +7,27 @@
 #define API_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
 #define INTERNAL_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
 typedef struct _E_Smart_Data E_Smart_Data;
+typedef struct _E_Smart_Item E_Smart_Item;
 
 struct _E_Smart_Data
 { 
    Evas_Coord   x, y, w, h;
    
    Evas_Object   *smart_obj;
+   Evas_Object   *table_obj;
+   Evas_Object   *scrollframe_obj;
+   struct {
+      int x, y, w, h;
+      int zone, container;
+   } region;
+   Evas_List     *items;
+};
+
+struct _E_Smart_Item
+{
+   Evas_Object *edje_obj;
+   Evas_Object *desk_obj;
+   int          x, y, container, zone;
 };
 
 /* local subsystem functions */
