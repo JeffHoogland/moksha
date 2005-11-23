@@ -400,7 +400,7 @@ e_config_init(void)
 	e_config = E_NEW(E_Config, 1);
 	e_config->config_version = E_CONFIG_FILE_VERSION;
 	e_config->show_splash = 1;
-	e_config->desktop_default_background = strdup("");
+	e_config->desktop_default_background = NULL;
 	e_config->desktop_default_name = strdup("Desktop %i, %i");
 	e_config->menus_scroll_speed = 1000.0;
 	e_config->menus_fast_mouse_move_threshhold = 300.0;
@@ -426,7 +426,7 @@ e_config_init(void)
 	e_config->evas_engine_drag = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_win = E_EVAS_ENGINE_DEFAULT;
 	e_config->evas_engine_zone = E_EVAS_ENGINE_DEFAULT;
-	e_config->language = strdup("");
+	e_config->language = NULL;
 	e_config->window_placement_policy = E_WINDOW_PLACEMENT_SMART;
 	e_config->focus_policy = E_FOCUS_SLOPPY;
 	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
@@ -466,7 +466,7 @@ e_config_init(void)
 	e_config->kill_timer_wait = 10.0;
 	e_config->ping_clients = 1;
 	e_config->ping_clients_wait = 10.0;
-	e_config->transition_start = strdup("");
+	e_config->transition_start = NULL;
 	e_config->transition_desk = strdup("vswipe");
 	e_config->transition_change = strdup("crossfade");
 	e_config->move_info_follows = 1;
@@ -589,7 +589,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_move");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Mouse, 1);
@@ -598,7 +598,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_resize");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Mouse, 1);
@@ -607,7 +607,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_menu");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Mouse, 1);
@@ -643,7 +643,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("edit_mode");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->mouse_bindings = evas_list_append(e_config->mouse_bindings, eb);
 	  }
 	  {
@@ -691,7 +691,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_raise");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -700,7 +700,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_lower");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -709,7 +709,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_close");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -718,7 +718,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_kill");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -727,7 +727,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_menu");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -736,7 +736,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_sticky_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -745,7 +745,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_iconic_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -754,7 +754,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_maximized_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -763,7 +763,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("window_shaded_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -970,7 +970,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("edit_mode_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -979,7 +979,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("restart");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
 	     eb = E_NEW(E_Config_Binding_Key, 1);
@@ -988,7 +988,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
 	     eb->any_mod = 0;
 	     eb->action = strdup("exit");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
    /* need to support fullscreen anyway for this - ie netwm and the border
@@ -1046,7 +1046,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_menu");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 	     
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1056,7 +1056,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_menu");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1066,7 +1066,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_close");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1076,7 +1076,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_kill");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1086,7 +1086,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_maximized_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1116,7 +1116,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_iconic_toggle");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1126,7 +1126,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_drag_icon");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1136,7 +1136,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_move");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);
@@ -1246,7 +1246,7 @@ e_config_init(void)
 	     eb->modifiers = E_BINDING_MODIFIER_NONE;
 	     eb->any_mod = 1;
 	     eb->action = strdup("window_move");
-	     eb->params = strdup("");
+	     eb->params = NULL;
 	     e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
 
 	     eb = E_NEW(E_Config_Binding_Signal, 1);

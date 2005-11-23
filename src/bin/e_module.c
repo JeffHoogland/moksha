@@ -48,7 +48,8 @@ e_module_init(void)
 	em = l->data;
 	pl = l;
 	l = l->next;
-	m = e_module_new(em->name);
+	m = NULL;
+	if (em->name) m = e_module_new(em->name);
 	if (m)
 	  {
 	     if (em->enabled) e_module_enable(m);

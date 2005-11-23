@@ -21,7 +21,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
    if (transition == E_BG_TRANSITION_START) trans = e_config->transition_start;
    else if (transition == E_BG_TRANSITION_DESK) trans = e_config->transition_desk;
    else if (transition == E_BG_TRANSITION_CHANGE) trans = e_config->transition_change;
-   if (strlen(trans) < 1) transition = E_BG_TRANSITION_NONE;
+   if ((!trans) || (strlen(trans) < 1)) transition = E_BG_TRANSITION_NONE;
 
    ok = 0;
    for (l = e_config->desktop_backgrounds; l; l = l->next)

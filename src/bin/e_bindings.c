@@ -52,7 +52,8 @@ e_bindings_init(void)
 			      eb->any_mod, eb->action, eb->params);
 	/* FIXME: Can this be solved in a generic way? */
 	/* FIXME: Only change cursor if action is allowed! */
-	if ((!strcmp(eb->action, "window_resize")) &&
+	if ((eb->action) && (eb->signal) && (eb->source) &&
+	    (!strcmp(eb->action, "window_resize")) &&
 	    (!strncmp(eb->signal, "mouse,down,", 11)) &&
 	    (!strncmp(eb->source, "resize_", 7)))
 	  {
@@ -125,8 +126,8 @@ e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
    bind->button = button;
    bind->mod = mod;
    bind->any_mod = any_mod;
-   bind->action = strdup(action);
-   bind->params = strdup(params);
+   if (action) bind->action = strdup(action);
+   if (params) bind->params = strdup(params);
    mouse_bindings = evas_list_append(mouse_bindings, bind);
 }
 
@@ -144,8 +145,10 @@ e_bindings_mouse_del(E_Binding_Context ctxt, int button, E_Binding_Modifier mod,
 	    (bind->button == button) &&
 	    (bind->mod == mod) &&
 	    (bind->any_mod == any_mod) &&
-	    (!strcmp(bind->action, action)) &&
-	    (!strcmp(bind->params, params)))
+	    (((bind->action) && (action) && (!strcmp(bind->action, action))) ||
+	     ((!bind->action) && (!action))) &&
+	    (((bind->params) && (params) && (!strcmp(bind->params, params))) ||
+	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_mouse_free(bind);
 	     mouse_bindings = evas_list_remove_list(mouse_bindings, l);
@@ -315,8 +318,8 @@ e_bindings_key_add(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, in
    bind->key = strdup(key);
    bind->mod = mod;
    bind->any_mod = any_mod;
-   bind->action = strdup(action);
-   bind->params = strdup(params);
+   if (action) bind->action = strdup(action);
+   if (params) bind->params = strdup(params);
    key_bindings = evas_list_append(key_bindings, bind);
 }
 
@@ -331,11 +334,13 @@ e_bindings_key_del(E_Binding_Context ctxt, char *key, E_Binding_Modifier mod, in
 	
 	bind = l->data;
 	if ((bind->ctxt == ctxt) &&
-	    (!strcmp(bind->key, key)) &&
+	    (key) && (bind->key) && (!strcmp(bind->key, key)) &&
 	    (bind->mod == mod) &&
 	    (bind->any_mod == any_mod) &&
-	    (!strcmp(bind->action, action)) &&
-	    (!strcmp(bind->params, params)))
+	    (((bind->action) && (action) && (!strcmp(bind->action, action))) ||
+	     ((!bind->action) && (!action))) &&
+	    (((bind->params) && (params) && (!strcmp(bind->params, params))) ||
+	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_key_free(bind);
 	     key_bindings = evas_list_remove_list(key_bindings, l);
@@ -409,7 +414,7 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_
 	E_Binding_Key *bind;
 	
 	bind = l->data;
-	if ((!strcmp(bind->key, ev->keyname)) &&
+	if ((bind->key) && (!strcmp(bind->key, ev->keyname)) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -447,7 +452,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_X_Ev
 	E_Binding_Key *bind;
 	
 	bind = l->data;
-	if ((!strcmp(bind->key, ev->keyname)) &&
+	if ((bind->key) && (!strcmp(bind->key, ev->keyname)) &&
 	    ((bind->any_mod) || (bind->mod == mod)))
 	  {
 	     if (_e_bindings_context_match(bind->ctxt, ctxt))
@@ -478,12 +483,12 @@ e_bindings_signal_add(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Mo
    
    bind = calloc(1, sizeof(E_Binding_Signal));
    bind->ctxt = ctxt;
-   bind->sig = strdup(sig);
-   bind->src = strdup(src);
+   if (sig) bind->sig = strdup(sig);
+   if (src) bind->src = strdup(src);
    bind->mod = mod;
    bind->any_mod = any_mod;
-   bind->action = strdup(action);
-   bind->params = strdup(params);
+   if (action) bind->action = strdup(action);
+   if (params) bind->params = strdup(params);
    signal_bindings = evas_list_append(signal_bindings, bind);
 }
 
@@ -498,12 +503,16 @@ e_bindings_signal_del(E_Binding_Context ctxt, char *sig, char *src, E_Binding_Mo
 	
 	bind = l->data;
 	if ((bind->ctxt == ctxt) &&
-	    (!strcmp(bind->sig, sig)) &&
-	    (!strcmp(bind->src, src)) &&
+	    (((bind->sig) && (sig) && (!strcmp(bind->sig, sig))) ||
+	     ((!bind->sig) && (!sig))) &&
+	    (((bind->src) && (src) && (!strcmp(bind->src, src))) ||
+	     ((!bind->src) && (!src))) &&
 	    (bind->mod == mod) &&
 	    (bind->any_mod == any_mod) &&
-	    (!strcmp(bind->action, action)) &&
-	    (!strcmp(bind->params, params)))
+	    (((bind->action) && (action) && (!strcmp(bind->action, action))) ||
+	     ((!bind->action) && (!action))) &&
+	    (((bind->params) && (params) && (!strcmp(bind->params, params))) ||
+	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_signal_free(bind);
 	     signal_bindings = evas_list_remove_list(signal_bindings, l);
@@ -549,7 +558,9 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, char *sig, char 
 {
    E_Action *act;
    E_Binding_Signal *bind;
-   
+
+   if (sig[0] == 0) sig = NULL;
+   if (src[0] == 0) src = NULL;
    act = e_bindings_signal_find(ctxt, obj, sig, src, &bind);
    if (act)
      {
@@ -574,8 +585,8 @@ e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
    bind->z = z;
    bind->mod = mod;
    bind->any_mod = any_mod;
-   bind->action = strdup(action);
-   bind->params = strdup(params);
+   if (action) bind->action = strdup(action);
+   if (params) bind->params = strdup(params);
    wheel_bindings = evas_list_append(wheel_bindings, bind);
 }
 
@@ -594,8 +605,10 @@ e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Mod
 	    (bind->z == z) &&
 	    (bind->mod == mod) &&
 	    (bind->any_mod == any_mod) &&
-	    (!strcmp(bind->action, action)) &&
-	    (!strcmp(bind->params, params)))
+	    (((bind->action) && (action) && (!strcmp(bind->action, action))) ||
+	     ((!bind->action) && (!action))) &&
+	    (((bind->params) && (params) && (!strcmp(bind->params, params))) ||
+	     ((!bind->params) && (!params))))
 	  {
 	     _e_bindings_wheel_free(bind);
 	     wheel_bindings = evas_list_remove_list(wheel_bindings, l);
