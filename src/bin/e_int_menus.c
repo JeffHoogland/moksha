@@ -947,12 +947,10 @@ _e_int_menus_themes_edit_mode_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 	  }
      }
 
-   /* FIXME: EVIL... relies on label + .edj being the filename! */
    et = E_NEW(E_Config_Theme, 1);
    et->category = strdup("theme");
-   et->file = E_NEW(char, strlen(mi->label) + 4 + 1);
+   et->file = E_NEW(char, strlen(mi->label) + 1);
    strcpy(et->file, mi->label);
-   strcat(et->file, ".edj");
    e_config->themes = evas_list_append(e_config->themes, et);
    
    e_config_save_queue();
