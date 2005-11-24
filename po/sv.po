@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-11-21 08:29+0100\n"
-"PO-Revision-Date: 2005-11-21 14:04+0100\n"
+"POT-Creation-Date: 2005-11-22 21:29+0100\n"
+"PO-Revision-Date: 2005-11-23 09:21+0100\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -63,12 +63,12 @@ msgid "No"
 msgstr "Nej"
 
 #: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
-#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:223
 msgid "Run Error"
 msgstr "Körfel"
 
 #: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
-#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:224
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -152,7 +152,7 @@ msgstr ""
 "Detta är inte bra och som en säkerhetsåtgärd så har din\n"
 "konfiguration återställts till standard. Beklagar detta.\n"
 
-#: src/bin/e_config.c:1974
+#: src/bin/e_config.c:1982
 msgid "Configuration Upgraded"
 msgstr "Konfigurationen uppgraderad"
 
@@ -168,11 +168,15 @@ msgstr "Konfigurationspanel"
 msgid "Focus Settings"
 msgstr "Fokus inställningar"
 
-#: src/bin/e_configure.c:62 src/bin/e_int_config_window_manipulation.c:48
+#: src/bin/e_configure.c:62 src/bin/e_int_config_desks.c:45
+msgid "Desktop Settings"
+msgstr "Skrivbordsinställningar"
+
+#: src/bin/e_configure.c:63 src/bin/e_int_config_window_manipulation.c:48
 msgid "Window Manipulation"
 msgstr "Hantera Fönster"
 
-#: src/bin/e_configure.c:63 src/bin/e_int_config_window_display.c:49
+#: src/bin/e_configure.c:64 src/bin/e_int_config_window_display.c:49
 msgid "Window Display"
 msgstr "Visa Fönster"
 
@@ -193,7 +197,7 @@ msgstr "Ikon"
 msgid "Basic Info"
 msgstr "Grund Info"
 
-#: src/bin/e_eap_editor.c:272 src/bin/e_fileman_smart.c:1216
+#: src/bin/e_eap_editor.c:272 src/bin/e_fileman_smart.c:1243
 msgid "General"
 msgstr "Allmänt"
 
@@ -209,85 +213,85 @@ msgstr "Övrigt"
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment: Fel!"
 
-#: src/bin/e_fileman_smart.c:1225
+#: src/bin/e_fileman_smart.c:1252
 #, c-format
 msgid "File:"
 msgstr "Fil:"
 
-#: src/bin/e_fileman_smart.c:1234
+#: src/bin/e_fileman_smart.c:1261
 #, c-format
 msgid "Size:"
 msgstr "Storlek:"
 
-#: src/bin/e_fileman_smart.c:1243
+#: src/bin/e_fileman_smart.c:1270
 #, c-format
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/bin/e_fileman_smart.c:1252
+#: src/bin/e_fileman_smart.c:1279
 msgid "Protect this file"
 msgstr "Skydda denna fil"
 
-#: src/bin/e_fileman_smart.c:1258
+#: src/bin/e_fileman_smart.c:1285
 msgid "Let others see this file"
 msgstr "Låt andra se denna fil"
 
-#: src/bin/e_fileman_smart.c:1262
+#: src/bin/e_fileman_smart.c:1289
 msgid "Let others modify this file"
 msgstr "Låt andra ändra denna fil"
 
-#: src/bin/e_fileman_smart.c:1266
+#: src/bin/e_fileman_smart.c:1293
 msgid "Dont let others see or modify this file"
 msgstr "Låt inte andra se eller ändra denna fil"
 
-#: src/bin/e_fileman_smart.c:1270
+#: src/bin/e_fileman_smart.c:1297
 msgid "Custom settings"
 msgstr "Anpassade inställningar"
 
-#: src/bin/e_fileman_smart.c:1307
+#: src/bin/e_fileman_smart.c:1334
 msgid "File Info:"
 msgstr "Fil info:"
 
-#: src/bin/e_fileman_smart.c:1330
+#: src/bin/e_fileman_smart.c:1357
 msgid "Permissions:"
 msgstr "Rättigheter:"
 
-#: src/bin/e_fileman_smart.c:1333 src/bin/e_fileman_smart.c:1342
-#: src/bin/e_fileman_smart.c:1351
+#: src/bin/e_fileman_smart.c:1360 src/bin/e_fileman_smart.c:1369
+#: src/bin/e_fileman_smart.c:1378
 msgid "r"
 msgstr "r"
 
-#: src/bin/e_fileman_smart.c:1335 src/bin/e_fileman_smart.c:1344
-#: src/bin/e_fileman_smart.c:1353
+#: src/bin/e_fileman_smart.c:1362 src/bin/e_fileman_smart.c:1371
+#: src/bin/e_fileman_smart.c:1380
 msgid "w"
 msgstr "w"
 
-#: src/bin/e_fileman_smart.c:1337 src/bin/e_fileman_smart.c:1346
-#: src/bin/e_fileman_smart.c:1355
+#: src/bin/e_fileman_smart.c:1364 src/bin/e_fileman_smart.c:1373
+#: src/bin/e_fileman_smart.c:1382
 msgid "x"
 msgstr "x"
 
-#: src/bin/e_fileman_smart.c:1381 src/bin/e_fileman_smart.c:2237
+#: src/bin/e_fileman_smart.c:1408 src/bin/e_fileman_smart.c:2289
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: src/bin/e_fileman_smart.c:2188
+#: src/bin/e_fileman_smart.c:2240
 msgid "Open"
 msgstr "Öppna"
 
-#: src/bin/e_fileman_smart.c:2199
+#: src/bin/e_fileman_smart.c:2251
 msgid "Copy"
 msgstr "Kopiera"
 
-#: src/bin/e_fileman_smart.c:2207
+#: src/bin/e_fileman_smart.c:2259
 msgid "Cut"
 msgstr "Klipp ut"
 
-#: src/bin/e_fileman_smart.c:2218
+#: src/bin/e_fileman_smart.c:2270
 msgid "Rename"
 msgstr "Byt namn"
 
-#: src/bin/e_fileman_smart.c:2226
+#: src/bin/e_fileman_smart.c:2278
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -512,11 +516,11 @@ msgstr "Minimera"
 msgid "Close"
 msgstr "Stäng"
 
-#: src/bin/e_intl.c:360
+#: src/bin/e_intl.c:290
 msgid "Input Method Error"
 msgstr "Inmatningsfel"
 
-#: src/bin/e_intl.c:361
+#: src/bin/e_intl.c:291
 msgid ""
 "Error starting the input method executable\n"
 "\n"
@@ -810,11 +814,11 @@ msgstr "Ny skrivbords kolumn"
 msgid "Remove Column of Desktops"
 msgstr "Ta bort skrivbords kolumn"
 
-#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:971
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:983
 msgid "(No Windows)"
 msgstr "(Inga fönster)"
 
-#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:985
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:997
 msgid "No name!!"
 msgstr "Inget namn!!!"
 
@@ -1173,11 +1177,11 @@ msgstr "Vill du stänga av denna modulen?<br>"
 msgid "Starting %s"
 msgstr "Startar %s"
 
-#: src/bin/e_utils.c:268
+#: src/bin/e_utils.c:269
 msgid "Cannot exit - immortal windows."
 msgstr "Kan inte avsluta - odödliga fönster"
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:270
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
@@ -1187,6 +1191,10 @@ msgstr ""
 "Några fönster är kvarlämnade med livslängdslås. Detta betyder att\n"
 "Enlightenment inte tillåter sig själv att avsluta förrän dessa fönster\n"
 "är stängda eller livslängdslåset är borttaget.\n"
+
+#: src/bin/e_int_config_background.c:47
+msgid "Background Settings"
+msgstr "Bakgrundsinställningar"
 
 #: src/bin/e_winlist.c:122
 msgid "Select a window"
@@ -1316,6 +1324,7 @@ msgid "Delay before raising:"
 msgstr "Fördröjning innan höjning"
 
 #: src/bin/e_int_config_window_manipulation.c:168
+#: src/bin/e_int_config_desks.c:202
 #, c-format
 msgid "%1.1f sec"
 msgstr "%1.1f sek"
@@ -1346,6 +1355,28 @@ msgstr "Resistens vid kanten på skärmen:"
 #: src/bin/e_int_config_window_manipulation.c:183
 msgid "Resistance to desktop gadgets:"
 msgstr "Resistens för skrivbordstillbehör"
+
+#: src/bin/e_int_config_desks.c:157 src/bin/e_int_config_desks.c:186
+msgid "Number of Desktops"
+msgstr "Antal Skrivbord"
+
+#: src/bin/e_int_config_desks.c:160 src/bin/e_int_config_desks.c:162
+#: src/bin/e_int_config_desks.c:189 src/bin/e_int_config_desks.c:191
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:196
+msgid "Desktop Mouse Flip"
+msgstr "Skrivbordsbyte Med Mus"
+
+#: src/bin/e_int_config_desks.c:168 src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "Byt skrivbord när musen kommer till kanten på skärmen"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "Tid innan skrivbordet byts:"
 
 #: src/modules/battery/e_mod_main.c:125
 msgid "Enlightenment Battery Module"
