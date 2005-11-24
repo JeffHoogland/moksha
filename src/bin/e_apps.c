@@ -1212,7 +1212,7 @@ _e_app_new_save(E_App *a)
    char cmd[2048];  
    char ipart[512];
    FILE *out = NULL;
-   char *start, *end, *imgdir;
+   char *start, *end, *imgdir = NULL;
    int i;   
       
    if (!a->path) return 0;      
@@ -1259,7 +1259,11 @@ _e_app_new_save(E_App *a)
 	  }
      }     
 
-   if (imgdir) snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
+   if (imgdir)
+     {
+	snprintf(ipart, sizeof(ipart), "-id %s", imgdir);
+	free(imgdir);
+     }
    else ipart[0] = '\0';
    
    if (a->image)

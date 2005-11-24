@@ -950,7 +950,8 @@ break;
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    STRING_INT_LIST(v, HDL);
-   printf("REPLY: \"%s\" ENABLED %i\n", v->str, v->val);
+   if (v->str) printf("REPLY: \"%s\" ENABLED %i\n", v->str, v->val);
+   else printf("REPLY: \"\" ENABLED %i\n", v->val);
    END_STRING_INT_LIST(v);
 #elif (TYPE == E_LIB_IN)
    GENERIC(HDL);
@@ -994,7 +995,7 @@ break;
    STRING(s, HDL);
    /* TODO: Check if file exists */
    E_FREE(e_config->desktop_default_background);
-   e_config->desktop_default_background = strdup(s);
+   if (s) e_config->desktop_default_background = strdup(s);
    e_bg_update();
    SAVE;
    END_STRING(s);
@@ -1021,12 +1022,13 @@ break;
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    STRING(s, HDL);
-   printf("REPLY: \"%s\"\n", s);
+   if (s) printf("REPLY: \"%s\"\n", s);
+   else printf("REPLY: \"\"\n");
    END_STRING(s);
 #elif (TYPE == E_LIB_IN)
    STRING(s, HDL);
    RESPONSE(r, E_Response_Background_Get);
-   r->file = strdup(s);
+   if (s) r->file = strdup(s);
    END_RESPONSE(r, E_RESPONSE_BACKGROUND_GET);
    END_STRING(s);
 #endif
@@ -1066,7 +1068,8 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 else printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1160,7 +1163,8 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 else printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1232,7 +1236,7 @@ break;
 #elif (TYPE == E_REMOTE_IN)
    STRING2_INT(text_class, font_name, font_size, e_2str_int, HDL);
    printf("REPLY: DEFAULT TEXT_CLASS=\"%s\" NAME=\"%s\" SIZE=%d\n",
-                    text_class, font_name, font_size); 
+	  text_class, font_name, font_size); 
    END_STRING2_INT(e_2str_int);
 #endif
 #undef HDL
@@ -1357,7 +1361,8 @@ break;
    LIST();
    DECODE(e_ipc_codec_str_list_dec) {
       FOR(dat) {
-	 printf("REPLY: \"%s\"\n", (char *)(l->data));
+	 if (l->data) printf("REPLY: \"%s\"\n", (char *)(l->data));
+         else printf("REPLY: \"\"\n");
       }
       FREE_LIST(dat);
    }
@@ -1375,7 +1380,7 @@ break;
    STRING(s, HDL);
    /* TODO: Check if language exists */
    E_FREE(e_config->language);
-   e_config->language = strdup(s);
+   if (s) e_config->language = strdup(s);
    if ((e_config->language) && (e_config->language[0] != 0))
      e_intl_language_set(e_config->language);
    else
@@ -1405,12 +1410,13 @@ break;
 #elif (TYPE == E_WM_IN)
 #elif (TYPE == E_REMOTE_IN)
    STRING(s, HDL);
-   printf("REPLY: \"%s\"\n", s);
+   if (s) printf("REPLY: \"%s\"\n", s);
+   else printf("REPLY: \"\"\n");
    END_STRING(s);
 #elif (TYPE == E_LIB_IN)
    STRING(s, HDL);
    RESPONSE(r, E_Response_Language_Get);
-   r->lang = strdup(s);
+   if (s) r->lang = strdup(s);
    END_RESPONSE(r, E_RESPONSE_LANGUAGE_GET);
    END_STRING(s);
 #endif
@@ -1433,9 +1439,11 @@ break;
    dir_list = e_path_dir_list_get(path);
      
    E_Path_Dir *p;
-   dat = evas_list_append(dat, strdup(s));
-   FOR(dir_list) { p = l->data;
-     dat = evas_list_append(dat, p->dir);
+   if (s) {
+      dat = evas_list_append(dat, strdup(s));
+      FOR(dir_list) { p = l->data;
+	 dat = evas_list_append(dat, p->dir);
+      }
    }
 
    ENCODE(dat, e_ipc_codec_str_list_enc);
@@ -2402,8 +2410,8 @@ break;
         eb->button = bind.button;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        eb->action = strdup(bind.action);
-        eb->params = strdup(bind.params);
+        if (bind.action) eb->action = strdup(bind.action);
+        if (bind.params) eb->params = strdup(bind.params);
         e_border_button_bindings_ungrab_all();
         e_bindings_mouse_add(bind.context, bind.button, bind.modifiers,
                         bind.any_mod, bind.action, bind.params);
@@ -2724,9 +2732,9 @@ break;
         eb->context = bind.context;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        eb->key = strdup(bind.key);
-        eb->action = strdup(bind.action);
-        eb->params = strdup(bind.params);
+        if (bind.key) eb->key = strdup(bind.key);
+        if (bind.action) eb->action = strdup(bind.action);
+        if (bind.params) eb->params = strdup(bind.params);
         e_managers_keys_ungrab();
         e_bindings_key_add(bind.context, bind.key, bind.modifiers,
                 bind.any_mod, bind.action, bind.params);
@@ -4259,7 +4267,7 @@ break;
    if (e_theme_transition_find(s))
      {
 	E_FREE(e_config->transition_start);
-	e_config->transition_start = strdup(s);
+	if (s) e_config->transition_start = strdup(s);
 	SAVE;
      }
    END_STRING(s);
@@ -4303,7 +4311,7 @@ break;
    if (e_theme_transition_find(s))
      {
 	E_FREE(e_config->transition_desk);
-       	e_config->transition_desk = strdup(s);
+	if (s) e_config->transition_desk = strdup(s);
        	SAVE;
      }
    END_STRING(s);
@@ -4347,7 +4355,7 @@ break;
    if (e_theme_transition_find(s))
      {
        	E_FREE(e_config->transition_change);
-       	e_config->transition_change = strdup(s);
+	if (s) e_config->transition_change = strdup(s);
        	SAVE;
      }
    END_STRING(s);
@@ -4556,7 +4564,7 @@ break;
 #elif (TYPE == E_LIB_IN)
    STRING2(category, file, e_2str, HDL);
    RESPONSE(r, E_Response_Theme_Get);
-   r->file = strdup(file);
+   if (file) r->file = strdup(file);
    r->category = strdup(category);
    END_RESPONSE(r, E_RESPONSE_THEME_GET);
    END_STRING2(e_2str);
@@ -5502,7 +5510,7 @@ break;
 #elif (TYPE == E_WM_IN)
    STRING(s, HDL);
    E_FREE(e_config->input_method);
-   e_config->input_method = strdup(s);
+   if (s) e_config->input_method = strdup(s);
    if ((e_config->input_method) && (e_config->input_method[0] != 0))
      e_intl_input_method_set(e_config->input_method);
    else
@@ -5815,12 +5823,12 @@ break;
         eb = E_NEW(E_Config_Binding_Signal, 1);
         e_config->signal_bindings = evas_list_append(e_config->signal_bindings, eb);
         eb->context = bind.context;
-        eb->signal = strdup(bind.signal);
-        eb->source = strdup(bind.source);
+        if (bind.signal) eb->signal = strdup(bind.signal);
+        if (bind.source) eb->source = strdup(bind.source);
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        eb->action = strdup(bind.action);
-        eb->params = strdup(bind.params);
+        if (bind.action) eb->action = strdup(bind.action);
+        if (bind.params) eb->params = strdup(bind.params);
         e_bindings_signal_add(bind.context, bind.signal, bind.source, bind.modifiers,
 			      bind.any_mod, bind.action, bind.params);
         e_config_save_queue();  
@@ -6148,8 +6156,8 @@ break;
         eb->z = bind.z;
         eb->modifiers = bind.modifiers;
         eb->any_mod = bind.any_mod;
-        eb->action = strdup(bind.action);
-        eb->params = strdup(bind.params);
+        if (bind.action) eb->action = strdup(bind.action);
+        if (bind.params) eb->params = strdup(bind.params);
         e_bindings_wheel_add(bind.context, bind.direction, bind.z, bind.modifiers,
 			     bind.any_mod, bind.action, bind.params);
         e_config_save_queue();  
