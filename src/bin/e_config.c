@@ -263,6 +263,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, framerate, DOUBLE); /**/
    E_CONFIG_VAL(D, T, image_cache, INT); /**/
    E_CONFIG_VAL(D, T, font_cache, INT); /**/
+   E_CONFIG_VAL(D, T, edje_cache, INT); /**/
+   E_CONFIG_VAL(D, T, edje_collection_cache, INT); /**/
+   E_CONFIG_VAL(D, T, cache_flush_interval, DOUBLE); /**/
    E_CONFIG_VAL(D, T, zone_desks_x_count, INT); /**/
    E_CONFIG_VAL(D, T, zone_desks_y_count, INT); /**/
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
@@ -411,6 +414,9 @@ e_config_init(void)
 	e_config->framerate = 30.0;
 	e_config->image_cache = 4096;
 	e_config->font_cache = 512;
+	e_config->edje_cache = 32;
+	e_config->edje_collection_cache = 64;
+	e_config->cache_flush_interval = 60.0;
 	e_config->zone_desks_x_count = 4;
 	e_config->zone_desks_y_count = 1;
 	e_config->use_virtual_roots = 0;
@@ -1395,6 +1401,9 @@ e_config_init(void)
    E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
    E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
    E_CONFIG_LIMIT(e_config->font_cache, 0, 32 * 1024);
+   E_CONFIG_LIMIT(e_config->edje_cache, 0, 256);
+   E_CONFIG_LIMIT(e_config->edje_collection_cache, 0, 512);
+   E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
    E_CONFIG_LIMIT(e_config->zone_desks_x_count, 1, 64);
    E_CONFIG_LIMIT(e_config->zone_desks_y_count, 1, 64);
    E_CONFIG_LIMIT(e_config->use_edge_flip, 0, 1);

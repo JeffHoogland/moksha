@@ -48,9 +48,10 @@ typedef Eet_Data_Descriptor                 E_Config_DD;
 
 /* increment this whenever we change config enough that you need new 
  * defaults for e to work - started at 100 when we introduced this config
- * versioning feature
+ * versioning feature. the value of this is really irrelevant - just as
+ * long as it increases every time we change something
  */
-#define E_CONFIG_FILE_VERSION 129
+#define E_CONFIG_FILE_VERSION 132
 
 #define E_EVAS_ENGINE_DEFAULT      0
 #define E_EVAS_ENGINE_SOFTWARE_X11 1
@@ -87,6 +88,9 @@ struct _E_Config
    double      framerate;
    int         image_cache;
    int         font_cache;
+   int         edje_cache;
+   int         edje_collection_cache;
+   double      cache_flush_interval;
    int         zone_desks_x_count;
    int         zone_desks_y_count;
    int         use_virtual_roots;

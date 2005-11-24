@@ -4,9 +4,11 @@
 #include "e.h"
 
 /* local subsystem functions */
+static int _e_canvas_cb_flush(void *data);
 
 /* local subsystem globals */
 static Evas_List *_e_canvases = NULL;
+static Ecore_Timer *_e_canvas_cache_flush_timer = NULL;
 
 /* externally accessible functions */
 void
@@ -66,6 +68,19 @@ e_canvas_recache(void)
 	evas_image_cache_set(e, e_config->image_cache * 1024);
 	evas_font_cache_set(e, e_config->font_cache * 1024);
      }
+   edje_file_cache_set(e_config->edje_cache);
+   edje_collection_cache_set(e_config->edje_cache);
+   if (_e_canvas_cache_flush_timer)
+     {
+	ecore_timer_del(_e_canvas_cache_flush_timer);
+	_e_canvas_cache_flush_timer = NULL;
+     }
+   if (e_config->cache_flush_interval > 0.0)
+     {
+	_e_canvas_cache_flush_timer = 
+	  ecore_timer_add(e_config->cache_flush_interval, _e_canvas_cb_flush,
+			  NULL);
+     }
 }
 
 void
@@ -83,6 +98,8 @@ e_canvas_cache_flush(void)
 	evas_image_cache_flush(e);
 	evas_font_cache_flush(e);
      }
+   edje_file_cache_flush();
+   edje_collection_cache_flush();
 }
 
 void
@@ -145,3 +162,12 @@ e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
      }
    return ee;
 }
+
+/* local subsystem functions */
+static int
+_e_canvas_cb_flush(void *data)
+{
+   e_canvas_cache_flush();
+   return 1;
+}
+

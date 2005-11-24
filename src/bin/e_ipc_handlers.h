@@ -1881,6 +1881,129 @@ break;
 #undef HDL
 
 /****************************************************************************/
+#define HDL E_IPC_OP_EDJE_CACHE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edje-cache-set", 1, "Set the edje cache size (items)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL)
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->edje_cache = val;
+   E_CONFIG_LIMIT(e_config->edje_cache, 0, 256);
+   e_canvas_recache();
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDJE_CACHE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edje-cache-get", 0, "Get the speculative edje cache size (items)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->edje_cache, E_IPC_OP_EDJE_CACHE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDJE_CACHE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDJE_COLLECTION_CACHE_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edje-collection-cache-set", 1, "Set the edje collection cache size (items)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_INT(atoi(params[0]), HDL)
+#elif (TYPE == E_WM_IN)
+   START_INT(val, HDL);
+   e_config->edje_collection_cache = val;
+   E_CONFIG_LIMIT(e_config->edje_collection_cache, 0, 512);
+   e_canvas_recache();
+   SAVE;
+   END_INT;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDJE_COLLECTION_CACHE_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-edje-collection-cache-get", 0, "Get the speculative edje collection cache size (items)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL)
+#elif (TYPE == E_WM_IN)
+   SEND_INT(e_config->edje_collection_cache, E_IPC_OP_EDJE_COLLECTION_CACHE_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_EDJE_COLLECTION_CACHE_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_INT(val, HDL)
+   printf("REPLY: %i\n", val);
+   END_INT;
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_SET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cache-flush-interval-set", 1, "Set the cache flush interval (sec) (0.0 = off)", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_DOUBLE(atof(params[0]), HDL);
+#elif (TYPE == E_WM_IN)
+   START_DOUBLE(dbl, HDL);
+   e_config->cache_flush_interval = dbl;
+   E_CONFIG_LIMIT(e_config->cache_flush_interval, 0.0, 600.0);
+   e_canvas_recache();
+   SAVE;
+   END_DOUBLE;
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_GET
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-cache-flush-interval-get", 0, "Get the interval between cache flushed (sec)", 1, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+   REQ_NULL(HDL);
+#elif (TYPE == E_WM_IN)
+   SEND_DOUBLE(e_config->cache_flush_interval, E_IPC_OP_CACHE_FLUSH_INTERVAL_GET_REPLY, HDL);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+
+/****************************************************************************/
+#define HDL E_IPC_OP_CACHE_FLUSH_INTERVAL_GET_REPLY
+#if (TYPE == E_REMOTE_OPTIONS)
+#elif (TYPE == E_REMOTE_OUT)
+#elif (TYPE == E_WM_IN)
+#elif (TYPE == E_REMOTE_IN)
+   START_DOUBLE(fint, HDL);
+   printf("REPLY: %3.3f\n", fint);
+   END_DOUBLE;
+#endif
+#undef HDL
+
+/****************************************************************************/
 #define HDL E_IPC_OP_MENUS_FAST_MOVE_THRESHOLD_SET
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-menus-fast-move-threshold-set", 1, "Set the mouse speed (pixels/second) that is considered a 'fast move'", 0, HDL)
