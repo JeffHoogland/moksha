@@ -2360,6 +2360,7 @@ break;
    {
       char *context;
       char modifier[256];
+      char *s1, *s2;
       
       if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
       else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
@@ -2397,13 +2398,17 @@ break;
       if (v->val2 == E_BINDING_MODIFIER_NONE)
          strcpy(modifier, "NONE");
 
+      s1 = v->str1;
+      s2 = v->str2;
+      if (!s1) s1 = "";
+      if (!s2) s2 = "";
       printf("REPLY: BINDING CONTEXT=%s BUTTON=%i MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
 		context,
                 v->val3,
 		modifier,
                 v->val4,
-                v->str1,
-                v->str2
+                s1,
+                s2
         );
    }
    END_INT4_STRING2_LIST(v);
@@ -2684,6 +2689,7 @@ break;
    {
       char *context;
       char modifier[256];
+      char *s1, *s2, *s3;
       
       if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
       else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
@@ -2721,13 +2727,19 @@ break;
       if (v->val2 == E_BINDING_MODIFIER_NONE)
          strcpy(modifier, "NONE");
 
+      s1 = v->str1;
+      s2 = v->str2;
+      s3 = v->str3;
+      if (!s1) s1 = "";
+      if (!s2) s2 = "";
+      if (!s3) s3 = "";
       printf("REPLY: BINDING CONTEXT=%s KEY=\"%s\" MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
 		context,
-                v->str1,
+                s1,
 		modifier,
                 v->val3,
-                v->str2,
-                v->str3
+                s2,
+                s3
         );
    }
    END_INT3_STRING3_LIST(v);
@@ -5772,6 +5784,7 @@ break;
    {
       char *context;
       char modifier[256];
+      char *s1, *s2, *s3, *s4;
       
       if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
       else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
@@ -5809,14 +5822,22 @@ break;
       if (v->val2 == E_BINDING_MODIFIER_NONE)
          strcpy(modifier, "NONE");
 
+      s1 = v->str1;
+      s2 = v->str2;
+      s3 = v->str3;
+      s4 = v->str4;
+      if (!s1) s1 = "";
+      if (!s2) s2 = "";
+      if (!s3) s3 = "";
+      if (!s4) s4 = "";
       printf("REPLY: BINDING CONTEXT=%s SIGNAL=%s SOURCE=%s MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
 		context,
-		v->str1,
-		v->str2,
+		s1,
+		s2,
 		modifier,
                 v->val3,
-                v->str3,
-                v->str4
+                s3,
+                s4
         );
    }
    END_INT3_STRING4_LIST(v);
@@ -6101,6 +6122,7 @@ break;
    {
       char *context;
       char modifier[256];
+      char *s1, *s2;
       
       if (v->val1 == E_BINDING_CONTEXT_NONE) context = "NONE";
       else if (v->val1 == E_BINDING_CONTEXT_UNKNOWN) context = "UNKNOWN";
@@ -6138,14 +6160,18 @@ break;
       if (v->val4 == E_BINDING_MODIFIER_NONE)
          strcpy(modifier, "NONE");
 
+      s1 = v->str1;
+      s2 = v->str2;
+      if (!s1) s1 = "";
+      if (!s2) s2 = "";
       printf("REPLY: BINDING CONTEXT=%s DIRECTION=%i Z=%i MODIFIERS=%s ANY_MOD=%i ACTION=\"%s\" PARAMS=\"%s\"\n",
 		context,
                 v->val2,
                 v->val3,
 		modifier,
                 v->val5,
-                v->str1,
-                v->str2
+                s1,
+                s2
         );
    }
    END_INT5_STRING2_LIST(v);
