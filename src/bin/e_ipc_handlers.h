@@ -727,10 +727,10 @@ free(data);
 
 
 #define SEND_STRING(__str, __op, HDL) \
-case HDL: { void *data; int bytes; \
+case HDL: { void *data; int bytes = 0; \
    data = e_ipc_codec_str_enc(__str, &bytes); \
+   ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
    if (data) { \
-      ecore_ipc_client_send(e->client, E_IPC_DOMAIN_REPLY, __op, 0, 0, 0, data, bytes); \
       free(data); \
    } \
 } \
