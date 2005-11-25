@@ -1711,8 +1711,10 @@ e_config_binding_mouse_match(E_Config_Binding_Mouse *eb_in)
 	    (eb->button == eb_in->button) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
-	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->params, eb_in->params)))
+	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
+	     ((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
+	     ((!eb->params) && (!eb_in->params))))
 	  return eb;
      }
    return NULL;
@@ -1731,9 +1733,12 @@ e_config_binding_key_match(E_Config_Binding_Key *eb_in)
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
-	    (!strcmp(eb->key, eb_in->key)) &&
-	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->params, eb_in->params)))
+	    (((eb->key) && (eb_in->key) && (!strcmp(eb->key, eb_in->key))) ||
+	     ((!eb->key) && (!eb_in->key))) &&
+	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
+	     ((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
+	     ((!eb->params) && (!eb_in->params))))
 	  return eb;
      }
    return NULL;
@@ -1752,10 +1757,14 @@ e_config_binding_signal_match(E_Config_Binding_Signal *eb_in)
 	if ((eb->context == eb_in->context) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
-	    (!strcmp(eb->signal, eb_in->signal)) &&
-	    (!strcmp(eb->source, eb_in->source)) &&
-	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->params, eb_in->params)))
+	    (((eb->signal) && (eb_in->signal) && (!strcmp(eb->signal, eb_in->signal))) ||
+	     ((!eb->signal) && (!eb_in->signal))) &&
+	    (((eb->source) && (eb_in->source) && (!strcmp(eb->source, eb_in->source))) ||
+	     ((!eb->source) && (!eb_in->source))) &&
+	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
+	     ((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
+	     ((!eb->params) && (!eb_in->params))))
 	  return eb;
      }
    return NULL;
@@ -1776,8 +1785,10 @@ e_config_binding_wheel_match(E_Config_Binding_Wheel *eb_in)
 	    (eb->z == eb_in->z) &&
 	    (eb->modifiers == eb_in->modifiers) &&
 	    (eb->any_mod == eb_in->any_mod) &&
-	    (!strcmp(eb->action, eb_in->action)) &&
-	    (!strcmp(eb->params, eb_in->params)))
+	    (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
+	     ((!eb->action) && (!eb_in->action))) &&
+	    (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
+	     ((!eb->params) && (!eb_in->params))))
 	  return eb;
      }
    return NULL;

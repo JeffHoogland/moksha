@@ -152,6 +152,7 @@ e_intl_language_set(const char *lang)
      {
 	_e_intl_language = strdup(lang);
 	e_util_env_set("LANGUAGE", _e_intl_language);
+	/* FIXME: maybe we should set these anyway? */
 	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
 	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
 	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
