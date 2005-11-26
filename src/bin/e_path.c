@@ -334,7 +334,7 @@ e_path_evas_append(E_Path *ep, Evas *evas)
    if (dir_list) evas_list_free(dir_list);
 }
 
-/* compine default_list and and user_list int and easy to use list */
+/* combine default_list and and user_list in and easy to use list */
 Evas_List *
 e_path_dir_list_get(E_Path *ep)
 {
@@ -345,14 +345,6 @@ e_path_dir_list_get(E_Path *ep)
 
    dir_list = NULL;
 
-   for (l = ep->default_dir_list; l; l = l->next)
-     {
-	epd = l->data;
-	new_epd = malloc(sizeof(E_Path_Dir));
-	new_epd->dir = strdup(epd->dir);
-	dir_list = evas_list_append(dir_list, new_epd);
-     }
-
    if (ep->user_dir_list)
      {
 	for (l = *(ep->user_dir_list); l; l = l->next)
@@ -362,6 +354,14 @@ e_path_dir_list_get(E_Path *ep)
 	     new_epd->dir = strdup(epd->dir);
 	     dir_list = evas_list_append(dir_list, new_epd);
 	  }
+     }
+
+   for (l = ep->default_dir_list; l; l = l->next)
+     {
+	epd = l->data;
+	new_epd = malloc(sizeof(E_Path_Dir));
+	new_epd->dir = strdup(epd->dir);
+	dir_list = evas_list_append(dir_list, new_epd);
      }
 
    return dir_list;

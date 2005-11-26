@@ -33,6 +33,7 @@ static Evas_Hash *_e_intl_language_path_scan(E_Path *path);
 static void _e_intl_language_hash_free(Evas_Hash *language_hash);
 static char *_e_intl_language_hash_find(Evas_Hash *language_hash, char *language);
 static int _e_intl_language_list_find(Evas_List *language_list, char *language);
+static Evas_List *_e_intl_language_system_locales_get(void);
 Evas_Bool _e_intl_cb_free_language_hash(Evas_Hash *hash, const char *key, void *data, void *fdata);
 static Evas_List *_e_intl_language_dir_scan(const char *dir);
 static int _e_intl_cb_exit(void *data, int type, void *event);
@@ -483,53 +484,57 @@ _e_intl_cb_free_language_hash(Evas_Hash *hash __UNUSED__, const char *key __UNUS
 static char *
 _e_intl_language_hash_find(Evas_Hash *language_hash, char *language)
 {
-   Evas_List *l;
-   Evas_List *all_languages;
-   char *best_language;
-   char *directory;
-   int state;
+   Evas_List	*l;
+   Evas_List	*all_languages;
+   char		*best_language;
+   int		 best_chars;
+   char		*directory;
    
    if (!language_hash) return NULL;
    if (!language) return NULL;
 
    best_language = NULL;
+   best_chars = 0;
    all_languages = e_intl_language_list();
    
    /* Do a best match:
     * If language is ja_JP.UTF-8 we should match ja 
-    * If language is zh we should match the first in the list, of zh_CN and zh_TW
+    * If language is zh we should match the first in the list of zh_CN and zh_TW
     */
    for ( l = all_languages ; l ; l = l->next )
      {
-	char *lang;
-	int comp_len;
-        int lang_len;
-        int language_len;	
+	char	*list_lang;
+	int	 cmp_ret;
 	
-	lang = l->data;
-	lang_len = strlen(lang);
-	language_len = strlen(language);
-	/* return shorter */
-	comp_len = lang_len > language_len ? language_len : lang_len;
-	
-	if ( !strncmp(lang, language, comp_len) )
+	list_lang = l->data;	
+	cmp_ret = strncmp(list_lang, language, 2);
+        if ( cmp_ret == 0 )
 	  {
-	     if ( best_language == NULL ) 
-	       {
-		  best_language = lang;
-		  if ( lang_len > language_len ) 
-		    state = 1; /* looking for shorter */
-		  else 
-		    state = 0; /* looking for longer */
-	       }
-	     else if ( (state == 1 && lang_len > language_len) ||
-		       (state == 0 && lang_len < language_len) )
-	       best_language = lang;
+	     int list_lang_len;
+	     int language_len;
+	     int compare_len;
 	     
-	     if ( strlen(best_language) == language_len ) break;	  
+	     if (best_language == NULL) 
+	       {
+		  best_language = list_lang;
+		  best_chars = 2;
+		  continue;
+	       }
+	     
+	     list_lang_len = strlen(list_lang);
+	     language_len = strlen(language);
+	     compare_len = list_lang_len < language_len ?	list_lang_len : 
+								language_len;
+	     if ( (compare_len > best_chars ) && 
+		   !strncmp(list_lang, language, compare_len)
+		)
+	       {
+		  best_language = list_lang;
+		  best_chars = compare_len;
+	       }
 	  }
      }
-   
+  
    directory = evas_hash_find(language_hash, best_language);
    
    while (all_languages)
@@ -617,6 +622,27 @@ _e_intl_language_dir_scan(const char *dir)
 	ecore_list_destroy(files);
      }
    return languages;
+}
+
+static Evas_List *
+_e_intl_language_system_locales_get(void)
+{
+   Evas_List	*locales;
+   FILE		*output;
+
+   locales = NULL;
+   output = popen("locale -a", "r");
+   if ( output ) 
+     {
+	char line[32];
+	while ( fscanf(output, "%[^\n]\n", line) == 1)
+	  {
+	     locales = evas_list_append(locales, strdup(line));
+	  }
+	          
+	pclose(output);
+     }
+   return locales;
 }
 
 static Evas_List *
