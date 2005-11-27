@@ -230,7 +230,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    
    o = e_widget_frametable_add(evas, _("Basic Info"), 0);
       
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "App name"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("App name")),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
     
@@ -240,7 +240,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
 				     1, 0, 1, 1,
 				     1, 1, 1, 1);
 
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Executable"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Executable")),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->exe)),
@@ -272,7 +272,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    o = e_widget_frametable_add(evas, _("General"), 0);
 
    /*- general info -*/
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Generic Info"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Generic Info")),
 				0, 0, 1, 1,
 				1, 1, 1, 1);
    entry = e_widget_entry_add(evas, &(cfdata->generic));
@@ -281,7 +281,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				1, 0, 1, 1,
 				1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Comment"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Comment")),
 				0, 1, 1, 1,
 				1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->comment)),
@@ -295,7 +295,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    
    o = e_widget_frametable_add(evas, _("Window"), 0);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Window Name"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Name")),
 				0, 0, 1, 1,
 				1, 1, 1, 1);
    entry = e_widget_entry_add(evas, &(cfdata->wname));
@@ -304,21 +304,21 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				1, 0, 1, 1,
 				1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Window Class"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Class")),
 				0, 1, 1, 1,
 				1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wclass)),
 				1, 1, 1, 1,
 				1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Window Title"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Title")),
 				0, 2, 1, 1,
 				1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wtitle)),
 				1, 2, 1, 1,
 				1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Window Role"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Window Role")),
 				0, 3, 1, 1,
 				1, 1, 1, 1);
    e_widget_frametable_object_append(o, e_widget_entry_add(evas, &(cfdata->wrole)),
@@ -331,7 +331,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    
    o = e_widget_frametable_add(evas, _("Icon"), 0);
       
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Icon Class"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Icon Class")),
 				0, 0, 1, 1,
 				1, 1, 1, 1);
    entry = e_widget_entry_add(evas, &(cfdata->iclass));
@@ -340,7 +340,7 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
 				1, 0, 1, 1,
 				1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_label_add(evas, "Path"),
+   e_widget_frametable_object_append(o, e_widget_label_add(evas, _("Path")),
 				0, 1, 1, 1,
 				1, 1, 1, 1);
    
@@ -355,11 +355,11 @@ _e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data
    
    o = e_widget_frametable_add(evas, _("Misc"), 0);     
    
-   e_widget_frametable_object_append(o, e_widget_check_add(evas, "Startup Notify", &(cfdata->startup_notify)),
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Startup Notify"), &(cfdata->startup_notify)),
 				     0, 0, 1, 1,
 				     1, 1, 1, 1);
    
-   e_widget_frametable_object_append(o, e_widget_check_add(evas, "Wait Exit", &(cfdata->wait_exit)),
+   e_widget_frametable_object_append(o, e_widget_check_add(evas, _("Wait Exit"), &(cfdata->wait_exit)),
 				     0, 1, 1, 1,
 				     1, 1, 1, 1);
    
