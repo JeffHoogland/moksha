@@ -1,4 +1,4 @@
-# translation of enlightenment.po to Dutch
+# translation of enlightenment.po to
 # This file is put in the public domain.
 #
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-11-12 18:34+0100\n"
-"PO-Revision-Date: 2005-11-13 01:25+0100\n"
+"POT-Creation-Date: 2005-11-27 11:42+0100\n"
+"PO-Revision-Date: 2005-11-27 12:48+0100\n"
 "Last-Translator: Niels Abspoel <niels.abspoel@wanadoo.nl>\n"
-"Language-Team: E17-Dutch\n"
+"Language-Team:  <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,15 +25,15 @@ msgstr "Algemeen slot"
 
 #: src/bin/e_int_border_locks.c:294
 msgid "Lock the Window so it does only what I tell it to"
-msgstr "Vergrendel het Venster zodat het alleen doet wat ik zeg "
+msgstr "Vergrendel het Venster zodat het alleen doet wat ik zeg"
 
 #: src/bin/e_int_border_locks.c:296
 msgid "Protect this window from me accidentally changing it"
-msgstr "Bescherm dit venster tegen mijn veranderingen die per ongeluk gebeuren "
+msgstr "Bescherm dit venster tegen mijn veranderingen die per ongeluk gebeuren"
 
 #: src/bin/e_int_border_locks.c:298
 msgid "Protect this window from being accidentally closed because it is important"
-msgstr "Bescherm dit venster tegen per ongeluk afsluiten omdat het belangrijk is "
+msgstr "Bescherm dit venster tegen per ongeluk afsluiten omdat het belangrijk is"
 
 #: src/bin/e_int_border_locks.c:300
 msgid "Do not allow the border to change on this window"
@@ -41,32 +41,32 @@ msgstr "Sta niet toe dat het raamwerk verandert op dit venster"
 
 #: src/bin/e_int_border_locks.c:303
 msgid "Remember these Locks for this window next time it appears"
-msgstr "Herinneren Sloten "
+msgstr "Onthoud deze Sloten voor dit venster de volgende keer dat het opkomt"
 
 #: src/bin/e_int_border_locks.c:318
 msgid "Lock program changing:"
-msgstr "Vergrendel programma verandering: "
+msgstr "Vergrendel programma verandering:"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
 #: src/bin/e_int_border_remember.c:494
 msgid "Position"
-msgstr "Positie "
+msgstr "Positie"
 
 #: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
 #: src/bin/e_int_border_remember.c:496 src/modules/ibar/e_mod_main.c:279
 #: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
 #: src/modules/ibox/e_mod_main.c:696
 msgid "Size"
-msgstr "Grote "
+msgstr "Grote"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 #: src/bin/e_int_border_remember.c:498 src/bin/e_int_border_menu.c:113
 msgid "Stacking"
-msgstr "Gestapeld "
+msgstr "Gestapeld"
 
 #: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
 msgid "Iconified state"
-msgstr "Geminimaliseerde staat "
+msgstr "Geminimaliseerde staat"
 
 #: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
 #: src/bin/e_int_border_remember.c:504
@@ -88,7 +88,7 @@ msgstr "Volledig Scherm"
 
 #: src/bin/e_int_border_locks.c:337
 msgid "Lock me from changing:"
-msgstr "Vergrendel mij van verandering:"
+msgstr "Sluit mij uit van verandering:"
 
 #: src/bin/e_int_border_locks.c:354
 msgid "The border style"
@@ -108,7 +108,7 @@ msgstr "Sluit mijn aanmelding met dit venster open"
 
 #: src/bin/e_int_border_locks.c:365
 msgid "Remember these Locks"
-msgstr "Herinneren Sloten"
+msgstr "Onthoud deze Sloten"
 
 #: src/bin/e_int_menus.c:82
 msgid "Favorite Applications"
@@ -124,7 +124,7 @@ msgstr "Bureaubladen"
 
 #: src/bin/e_int_menus.c:106
 msgid "Windows"
-msgstr "Venster"
+msgstr "Vensters"
 
 #: src/bin/e_int_menus.c:113
 msgid "Lost Windows"
@@ -150,7 +150,7 @@ msgstr "Commando Uitvoeren"
 msgid "Files"
 msgstr "Bestanden"
 
-#: src/bin/e_int_menus.c:155 src/bin/e_module.c:476
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:477
 msgid "Configuration"
 msgstr "Configuratie"
 
@@ -164,23 +164,23 @@ msgstr "Enlightenment Verlaten"
 
 #: src/bin/e_int_menus.c:465
 msgid "(No Applications)"
-msgstr "(Geen toepassing)"
+msgstr "(Geen toepassingen)"
 
 #: src/bin/e_int_menus.c:547
 msgid "New Row of Desktops"
-msgstr "Nieuwe Regel Bureaubladen"
+msgstr "Nieuwe Regel van Bureaubladen"
 
 #: src/bin/e_int_menus.c:551
 msgid "Remove Row of Desktops"
-msgstr "Wis Regel Bureaubladen"
+msgstr "Wis Regel van Bureaubladen"
 
 #: src/bin/e_int_menus.c:555
 msgid "New Column of Desktops"
-msgstr "Nieuwe kolom Bureaubladen"
+msgstr "Nieuwe kolom van Bureaubladen"
 
 #: src/bin/e_int_menus.c:559
 msgid "Remove Column of Desktops"
-msgstr "Wis Kolom Bureaubladen"
+msgstr "Wis Kolom van Bureaubladen"
 
 #: src/bin/e_int_menus.c:631 src/bin/e_configure.c:58
 msgid "Configuration Panel"
@@ -190,11 +190,11 @@ msgstr "Configuratie Paneel"
 msgid "Eap Editor"
 msgstr "Eap Bewerker"
 
-#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:971
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:981
 msgid "(No Windows)"
-msgstr "(Geen Venster)"
+msgstr "(Geen Vensters)"
 
-#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:985
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:995
 msgid "No name!!"
 msgstr "Geen naam!!"
 
@@ -218,13 +218,13 @@ msgstr "(Ongebruikt)"
 msgid "About This Theme"
 msgstr "Over dit Thema"
 
-#: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
-#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1787 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:223
 msgid "Run Error"
 msgstr "Start Fout"
 
 #: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
-#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:224
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -232,12 +232,12 @@ msgid ""
 "%s\n"
 "\n"
 msgstr ""
-"Enlightenment was niet in staat het childprocess te splitsen:\n"
+"Enlightenment was niet in staat het child proces te splitsen:\n"
 "\n"
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1784
+#: src/bin/e_apps.c:1788
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -246,7 +246,7 @@ msgid ""
 "\n"
 "The command was not found\n"
 msgstr ""
-"Enlightenment kon  het programma:\n"
+"Enlightenment kon het programma:\n"
 "\n"
 "%s\n"
 "\n"
@@ -260,6 +260,18 @@ msgstr "Enlightenment Configuratie"
 msgid "Focus Settings"
 msgstr "Activerings Instellingen"
 
+#: src/bin/e_configure.c:62 src/bin/e_int_config_desks.c:45
+msgid "Desktop Settings"
+msgstr "aangepaste instellingen"
+
+#: src/bin/e_configure.c:63 src/bin/e_int_config_window_manipulation.c:48
+msgid "Window Manipulation"
+msgstr "Venster manipulatie"
+
+#: src/bin/e_configure.c:64 src/bin/e_int_config_window_display.c:49
+msgid "Window Display"
+msgstr "Venster Uiterlijk"
+
 #: src/bin/e_int_config_focus.c:144
 msgid "Click Window to Focus"
 msgstr "Klik venster voor Activatie"
@@ -270,7 +282,7 @@ msgstr "Vensters onder de Muis"
 
 #: src/bin/e_int_config_focus.c:148
 msgid "Most recent Window under the Mouse"
-msgstr "Nieuwste Venster onder de Muis activeren"
+msgstr "Meest recente Venster onder de Muis activeren"
 
 #: src/bin/e_int_config_focus.c:164
 msgid "Focus"
@@ -314,7 +326,7 @@ msgstr "Andere Instellingen"
 
 #: src/bin/e_int_config_focus.c:187
 msgid "Always pass on caught click events to programs"
-msgstr "Altijd gevangen klikken aan programma doorgeven"
+msgstr "Altijd gevangen muisklikken aan programma doorgeven"
 
 #: src/bin/e_int_config_focus.c:189
 msgid "A click on a window always raises it"
@@ -324,9 +336,13 @@ msgstr "Een klik op het venster haalt het omhoog"
 msgid "A click in a window always focuses it"
 msgstr "Een klik op het venster activeert het"
 
+#: src/bin/e_int_config_background.c:47
+msgid "Background Settings"
+msgstr "Achtergrond instellingen"
+
 #: src/bin/e_int_border_remember.c:67
 msgid "Window Remember"
-msgstr "Herinneren"
+msgstr "Venster Onthouden"
 
 #: src/bin/e_int_border_remember.c:228
 msgid "Window properties are not a unique match"
@@ -344,14 +360,14 @@ msgid ""
 "<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
-msgstr "Je probeert Enlightenment het toepassen van eigenschappen<br>(zoals grote, locatie, raam stijl, etc)op<br>een venster dat <hilight>geen unieke eigenschappen</hilight>heeft te herinneren<br><br>Dit betekent dat het Naam/klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 ander venster op het scherm en het herinneren<br>van deze eigenschappen zal dan op alle vensters van programma zijn<br>die overeenkomen hiermee.<br><br>Dit is een waarschuwing voor als je niet wilt dat dit gebeurt.<br>Als dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</hilight> knoppen<br>en je instellingen worden geaccepteerd. Druk <hilight>Annuleer</hilight> als je<br>niet zeker bent en niets veranderd."
+msgstr "Je probeert Enlightenment het toepassen van<br>eigenschappen (zoals grote, locatie, raam stijl, etc)op<br>een venster dat <hilight>geen unieke eigenschappen</hilight>heeft te onthouden<br><br>Dit betekent dat het Naam/klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 ander venster op het scherm en het herinneren<br>van deze eigenschappen zal dan op alle vensters van programma zijn<br>die overeenkomen hiermee.<br><br>Dit is een waarschuwing voor als je niet wilt dat dit gebeurt.<br>Als dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</hilight> knoppen<br>en je instellingen worden geaccepteerd. Druk <hilight>Annuleer</hilight> als je<br>niet zeker bent en niets veranderd."
 
 #: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
 #: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:113
-#: src/bin/e_module.c:403 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/bin/e_module.c:404 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/modules/ibar/e_mod_main.c:1692
 msgid "OK"
-msgstr "OK"
+msgstr "OK "
 
 #: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
 msgid "No match properties set"
@@ -363,7 +379,7 @@ msgid ""
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
-msgstr "Je probeert Enlightenment te laten herinneren van eigenschappen die toegepast moeten worden<br> (zoals grote, locatie, raam stijl, etc) op<br>een venster<hilight>zonder aan te geven wat</hilight>.<br><br>Geef alsjeblieft 1 manier aan hoe dit venster herinnerd moet worden"
+msgstr "Je probeert Enlightenment te laten herinneren van eigenschappen die toegepast moeten worden<br> (zoals grote, locatie, raam stijl, etc.) op<br>een venster<hilight>zonder aan te geven wat</hilight>.<br><br>Geef alsjeblieft 1 manier aan hoe dit venster herinnerd moet worden"
 
 #: src/bin/e_int_border_remember.c:349
 msgid ""
@@ -380,7 +396,7 @@ msgid ""
 "<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
 "<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
 "affected."
-msgstr "Je probeert Enlightenment het toepassen van eigenschappen <br> (zoals grote, locatie, raam stijl, etc) op <br> een venster dat <hilight>geen unieke eigenschappen</hilight> heeft te herinneren<br><br>Dit betekent dat het Naam/klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 ander venster op het scherm en het herinneren<br>van deze eigenschappen zal dan op alle vensters van toepassing zijn<br>die overeenkomen hiermee.<br><br>Je kan <hilight>Match alleen dit Venster</hilight> optie aanzetten als<br>je alleen deze versie van dit venster wilt aanpassen<br>andere versies zullen niet aangepast worden<br><br>Dit is een waarschuwing voor als je niet wilt dat dit gebeurt.<br>Als dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</hilight> knoppen<br>en je  instellingen worden geaccepteerd. Druk  <hilight>Annuleer</hilight>als je<br>niet zeker  bent  en niets wilt veranderd."
+msgstr "Je probeert Enlightenment het toepassen van eigenschappen <br> (zoals grote, locatie, raam stijl, etc) op <br> een venster dat <hilight>geen unieke eigenschappen</hilight> heeft te herinneren<br><br>Dit betekent dat het Naam/klasse, Doorlopendheid, Rol, etc. eigenschappen deelt met<br>met meer dan 1 ander venster op het scherm en het herinneren<br>van deze eigenschappen zal dan op alle vensters van toepassing zijn<br>die overeenkomen hiermee.<br><br>Je kan <hilight>Match alleen dit Venster</hilight> optie aanzetten als<br> je alleen deze versie van dit venster wilt aanpassen<br>andere versies zullen niet aangepast worden<br><br>Dit is een waarschuwing voor als je niet wilt dat dit gebeurt.<br>Als dit wel de bedoeling is druk op<hilight>Toepassen</hilight> of <hilight>OK</hilight> knoppen<br>en je  instellingen worden geaccepteerd. Druk  <hilight>Annuleer</hilight>als je<br>niet zeker  bent  en niets wilt veranderd."
 
 #: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
@@ -388,7 +404,7 @@ msgstr "Niets"
 
 #: src/bin/e_int_border_remember.c:424
 msgid "Size and Position"
-msgstr "Grote"
+msgstr "Grote en Positie"
 
 #: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
 msgid "Locks"
@@ -404,7 +420,7 @@ msgstr "Alles"
 
 #: src/bin/e_int_border_remember.c:444
 msgid "Remember using"
-msgstr "Herinneren"
+msgstr "Onthouden gebruiken"
 
 #: src/bin/e_int_border_remember.c:450
 msgid "Window name and class"
@@ -432,11 +448,11 @@ msgstr "Match alleen een venster"
 
 #: src/bin/e_int_border_remember.c:493
 msgid "Properties to remember"
-msgstr "Eigenschappen om te herinneren"
+msgstr "Eigenschappen om te onthouden"
 
 #: src/bin/e_int_border_remember.c:502
 msgid "Border style"
-msgstr "Vensterraam"
+msgstr "Vensterraam stijl"
 
 #: src/bin/e_int_border_remember.c:506
 msgid "Virtual Desktop"
@@ -449,6 +465,86 @@ msgstr "Scherm zone"
 #: src/bin/e_int_border_remember.c:512
 msgid "Window list skip"
 msgstr "Venster oversla lijst"
+
+#: src/bin/e_int_config_window_manipulation.c:130
+msgid "Miscellaneous Options"
+msgstr "Uitgebreide Opties"
+
+#: src/bin/e_int_config_window_manipulation.c:131
+#: src/bin/e_int_config_window_manipulation.c:164
+msgid "Automatically raise windows on mouse over"
+msgstr "Een klik op het venster haalt het omhoog"
+
+#: src/bin/e_int_config_window_manipulation.c:133
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr "Bij verplaatsen of aanpassen van het venster, Weerstand bieden bij grenzen"
+
+#: src/bin/e_int_config_window_manipulation.c:137
+#: src/bin/e_int_config_window_manipulation.c:189
+msgid "Maximize Policy"
+msgstr "Maximaliseer beleid"
+
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:191
+#: src/bin/e_int_border_menu.c:175
+msgid "Fullscreen"
+msgstr "Volledig Scherm"
+
+#: src/bin/e_int_config_window_manipulation.c:141
+#: src/bin/e_int_config_window_manipulation.c:193
+msgid "Smart expansion"
+msgstr "Slim uitbreiden"
+
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Expand the window"
+msgstr "Breid venster uit"
+
+#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:197
+msgid "Fill available space"
+msgstr "Gebruik beschikbare ruimte"
+
+#: src/bin/e_int_config_window_manipulation.c:163
+msgid "Autoraise"
+msgstr "Auto omhoog halen"
+
+#: src/bin/e_int_config_window_manipulation.c:166
+msgid "Delay before raising:"
+msgstr "Vertraging voor Omhoog halen:"
+
+#: src/bin/e_int_config_window_manipulation.c:168
+#: src/bin/e_int_config_desks.c:202
+#, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f sec"
+
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Resistance"
+msgstr "Weerstand"
+
+#: src/bin/e_int_config_window_manipulation.c:173
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr "Biedt weerstand bij het verplaatsen of aanpassen van een venster over een obstakel"
+
+#: src/bin/e_int_config_window_manipulation.c:175
+msgid "Resistance between windows:"
+msgstr "Weerstand tussen vensters:"
+
+#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:181
+#: src/bin/e_int_config_window_manipulation.c:185
+#, c-format
+msgid "%2.0f pixels"
+msgstr "%2.0f pixels"
+
+#: src/bin/e_int_config_window_manipulation.c:179
+msgid "Resistance at the edge of the screen:"
+msgstr "Weerstand bij rand van het scherm:"
+
+#: src/bin/e_int_config_window_manipulation.c:183
+msgid "Resistance to desktop gadgets:"
+msgstr "Weerstand bij bureaublad hulpmiddelen:"
 
 #: src/bin/e_config_dialog.c:86
 msgid "Advanced Settings"
@@ -466,89 +562,89 @@ msgstr "Toepassen"
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: src/bin/e_fileman_smart.c:1216 src/bin/e_eap_editor.c:272
+#: src/bin/e_fileman_smart.c:1243 src/bin/e_eap_editor.c:272
 msgid "General"
 msgstr "Algemeen"
 
-#: src/bin/e_fileman_smart.c:1225
+#: src/bin/e_fileman_smart.c:1252
 #, c-format
 msgid "File:"
 msgstr "Bestand:"
 
-#: src/bin/e_fileman_smart.c:1234
+#: src/bin/e_fileman_smart.c:1261
 #, c-format
 msgid "Size:"
 msgstr "Grote:"
 
-#: src/bin/e_fileman_smart.c:1243
+#: src/bin/e_fileman_smart.c:1270
 #, c-format
 msgid "Type:"
 msgstr "Type:"
 
-#: src/bin/e_fileman_smart.c:1252
+#: src/bin/e_fileman_smart.c:1279
 msgid "Protect this file"
 msgstr "Bescherm dit bestand"
 
-#: src/bin/e_fileman_smart.c:1258
+#: src/bin/e_fileman_smart.c:1285
 msgid "Let others see this file"
 msgstr "Laat andere dit bestand zien"
 
-#: src/bin/e_fileman_smart.c:1262
+#: src/bin/e_fileman_smart.c:1289
 msgid "Let others modify this file"
 msgstr "Laat andere dit bestand aanpassen"
 
-#: src/bin/e_fileman_smart.c:1266
+#: src/bin/e_fileman_smart.c:1293
 msgid "Dont let others see or modify this file"
 msgstr "Laat andere dit bestand niet zien of aanpassen"
 
-#: src/bin/e_fileman_smart.c:1270
+#: src/bin/e_fileman_smart.c:1297
 msgid "Custom settings"
 msgstr "aangepaste instellingen"
 
-#: src/bin/e_fileman_smart.c:1307
+#: src/bin/e_fileman_smart.c:1334
 msgid "File Info:"
 msgstr "Bestandsinformatie:"
 
-#: src/bin/e_fileman_smart.c:1330
+#: src/bin/e_fileman_smart.c:1357
 msgid "Permissions:"
 msgstr "Toestemming:"
 
-#: src/bin/e_fileman_smart.c:1333 src/bin/e_fileman_smart.c:1342
-#: src/bin/e_fileman_smart.c:1351
+#: src/bin/e_fileman_smart.c:1360 src/bin/e_fileman_smart.c:1369
+#: src/bin/e_fileman_smart.c:1378
 msgid "r"
 msgstr "r"
 
-#: src/bin/e_fileman_smart.c:1335 src/bin/e_fileman_smart.c:1344
-#: src/bin/e_fileman_smart.c:1353
+#: src/bin/e_fileman_smart.c:1362 src/bin/e_fileman_smart.c:1371
+#: src/bin/e_fileman_smart.c:1380
 msgid "w"
 msgstr "w"
 
-#: src/bin/e_fileman_smart.c:1337 src/bin/e_fileman_smart.c:1346
-#: src/bin/e_fileman_smart.c:1355
+#: src/bin/e_fileman_smart.c:1364 src/bin/e_fileman_smart.c:1373
+#: src/bin/e_fileman_smart.c:1382
 msgid "x"
 msgstr "x"
 
-#: src/bin/e_fileman_smart.c:1381 src/bin/e_fileman_smart.c:2237
+#: src/bin/e_fileman_smart.c:1408 src/bin/e_fileman_smart.c:2289
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: src/bin/e_fileman_smart.c:2188
+#: src/bin/e_fileman_smart.c:2240
 msgid "Open"
 msgstr "Open"
 
-#: src/bin/e_fileman_smart.c:2199
+#: src/bin/e_fileman_smart.c:2251
 msgid "Copy"
 msgstr "Kopieer"
 
-#: src/bin/e_fileman_smart.c:2207
+#: src/bin/e_fileman_smart.c:2259
 msgid "Cut"
 msgstr "knip"
 
-#: src/bin/e_fileman_smart.c:2218
+#: src/bin/e_fileman_smart.c:2270
 msgid "Rename"
 msgstr "Hernoem"
 
-#: src/bin/e_fileman_smart.c:2226
+#: src/bin/e_fileman_smart.c:2278
 msgid "Delete"
 msgstr "Wis"
 
@@ -559,13 +655,13 @@ msgstr "De X-Server deelt mee, dat het geen Root-Venster heeft, maar %i Beeldsch
 
 #: src/bin/e_init.c:102
 msgid "Disable this splash screen in the future?"
-msgstr "Dit splash-scherm in de toekomst niet meer weergeven?"
+msgstr "Dit splash scherm in de toekomst niet meer weergeven?"
 
-#: src/bin/e_intl.c:359
+#: src/bin/e_intl.c:292
 msgid "Input Method Error"
 msgstr "Invoeg Methode Fout"
 
-#: src/bin/e_intl.c:360
+#: src/bin/e_intl.c:293
 msgid ""
 "Error starting the input method executable\n"
 "\n"
@@ -613,8 +709,7 @@ msgstr ""
 "\t\tbijgevoegd. U kunt er zoveel bijvoegen als u wilt; elke\n"
 "\t\tvervangt een echt Xinerama-Beeldscherm (ipv. de echte).\n"
 "\t\tHierdoor kunt u. Xinerama nabootsen.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-Goed\n"
 "\t\tBen Goed.\n"
 "\t-Slecht\n"
@@ -786,7 +881,7 @@ msgstr "Enlightenment kan zijn Programma-Subsysteem niet initialiseren."
 
 #: src/bin/e_main.c:485
 msgid "Enlightenment cannot setup remember settings."
-msgstr "Enlightenment kan zijn herinnerings instellingen niet initialiseren."
+msgstr "Enlightenment kan zijn herinneringinstellingen niet initialiseren."
 
 #: src/bin/e_main.c:501
 msgid ""
@@ -861,18 +956,18 @@ msgstr "Vensterraam selectie"
 msgid "Remember this Border for this window next time it appears"
 msgstr "Vensterraam herinneren de volgende keer dat het verschijnt"
 
-#: src/bin/e_module.c:110
+#: src/bin/e_module.c:111
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
 msgstr "Bij het Laden van Module %s is een Fout opgetreden.<br>Er was geen Module met de Naam %s in de<br>Module-map gevonden.<br>"
 
-#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+#: src/bin/e_module.c:115 src/bin/e_module.c:128 src/bin/e_module.c:152
 msgid "Error loading Module"
 msgstr "Fout bij het Laden van de Module"
 
-#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#: src/bin/e_module.c:122 src/bin/e_module.c:146
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -881,44 +976,41 @@ msgstr ""
 "Bij het Laden van Module %s is een Fout opgetreden.<br>Het volledige Pad naar de Module is:\n"
 "%s<br>De gemelde fout was:<br>%s<br>"
 
-#: src/bin/e_module.c:165
+#: src/bin/e_module.c:166
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Enlightenment is: "
 "%i.<br>"
-msgstr ""
-"Fout bij Module API<br>Fout bij opstarten van module: %s<br>Het heeft een minimum versie "
-"van Module API nodig van %i.<br>De module API die Enlightenment aangeeft is: "
-" %i.<br>"
+msgstr "Fout bij Module API<br>Fout bij opstarten van module: %s<br>Het heeft een minimum versie van Module API nodig van %i.<br>De module API die Enlightenment aangeeft is:  %i.<br>"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:171
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s Module"
 
-#: src/bin/e_module.c:387
+#: src/bin/e_module.c:388
 msgid "(No Loaded Modules)"
 msgstr "(Geen Geladen Modules)"
 
-#: src/bin/e_module.c:461
+#: src/bin/e_module.c:462
 msgid "About..."
 msgstr "Over..."
 
-#: src/bin/e_module.c:465
+#: src/bin/e_module.c:466
 msgid "Enabled"
 msgstr "Aan"
 
-#: src/bin/e_module.c:538
+#: src/bin/e_module.c:539
 msgid "Would you like to unload this module?<br>"
 msgstr "Wil je deze module ontladen?<br>"
 
-#: src/bin/e_module.c:543 src/bin/e_actions.c:1200
+#: src/bin/e_module.c:544 src/bin/e_actions.c:1200
 #: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Ja"
 
-#: src/bin/e_module.c:544 src/bin/e_actions.c:1202
+#: src/bin/e_module.c:545 src/bin/e_actions.c:1202
 #: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "Nee"
@@ -943,7 +1035,7 @@ msgstr "Altijd op Achtergrond"
 
 #: src/bin/e_int_border_menu.c:85
 msgid "Remember"
-msgstr "Herinneren"
+msgstr "Onthouden"
 
 #: src/bin/e_int_border_menu.c:92
 msgid "Borders"
@@ -969,49 +1061,29 @@ msgstr "Vastgezet"
 msgid "Borderless"
 msgstr "Raamloos"
 
-#: src/bin/e_int_border_menu.c:175
-msgid "Fullscreen"
-msgstr "Volledig Scherm"
-
 #: src/bin/e_int_border_menu.c:189
 msgid "Skip Window List"
 msgstr "Vensterlijst overslaan"
 
-#: src/bin/e_int_border_menu.c:210
+#: src/bin/e_int_border_menu.c:205
 msgid "Edit Icon"
 msgstr "Icon bewerken"
 
-#: src/bin/e_int_border_menu.c:240
+#: src/bin/e_int_border_menu.c:212
 msgid "Create Icon"
 msgstr "Icon maken"
 
-#: src/bin/e_int_border_menu.c:251
+#: src/bin/e_int_border_menu.c:222
 msgid "Kill"
 msgstr "Vernietigen"
 
-#: src/bin/e_int_border_menu.c:264
+#: src/bin/e_int_border_menu.c:235
 msgid "Iconify"
 msgstr "Minimaliseren"
 
-#: src/bin/e_int_border_menu.c:275
+#: src/bin/e_int_border_menu.c:246
 msgid "Close"
 msgstr "Sluiten"
-
-#: src/bin/e_int_border_menu.c:464
-msgid "Icon Edit Error"
-msgstr "Icon Bewerkingsfout"
-
-#: src/bin/e_int_border_menu.c:465
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Fout bij het starten van de Icon-Editor\n"
-"\n"
-"Installeer e_util_eapp_edit\n"
-"of verzekert U er zich van dat het in PATH zit.\n"
 
 #: src/bin/e_container.c:118
 #, c-format
@@ -1026,7 +1098,7 @@ msgstr "Weet je zeker dat je wilt afsluiten?"
 msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr "Je vroeg Enlightenment om af te sluiten.<br><br>Weet je zeker dat je wilt afsluiten?"
 
-#: src/bin/e_config.c:374
+#: src/bin/e_config.c:377
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -1046,7 +1118,7 @@ msgstr ""
 "dit maken. Je kan nu alles weer opnieuw instellen zoals jij het wilt.\n"
 "Het spijt ons voor deze onderbreking van je instellingen.\n"
 
-#: src/bin/e_config.c:388
+#: src/bin/e_config.c:391
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -1062,7 +1134,7 @@ msgstr ""
 "als een voorzorgsmaatregel word je configuratie nu teruggezet naar\n"
 "de standaard instellingen. Excuses voor het ongemak.\n"
 
-#: src/bin/e_config.c:1974
+#: src/bin/e_config.c:2002
 msgid "Configuration Upgraded"
 msgstr "Configuratie Vernieuwd"
 
@@ -1138,15 +1210,119 @@ msgstr "Copyright &copy; 1999-2005, door het Enlightenment Ontwikkel Team.<br><b
 msgid "<title>The Team</title>"
 msgstr "<title>Het Team</title>"
 
+#: src/bin/e_int_config_desks.c:157 src/bin/e_int_config_desks.c:186
+msgid "Number of Desktops"
+msgstr "Nieuwe Regel Bureaubladen"
+
+#: src/bin/e_int_config_desks.c:160 src/bin/e_int_config_desks.c:162
+#: src/bin/e_int_config_desks.c:189 src/bin/e_int_config_desks.c:191
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:196
+msgid "Desktop Mouse Flip"
+msgstr "Bureaublad Muis Wissel"
+
+#: src/bin/e_int_config_desks.c:168 src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "Wissel bureaubladen als muis bij schermrand is"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "Tijd voordat muis bij de rand is voor het wisselen:"
+
+#: src/bin/e_int_config_window_display.c:136
+msgid "Display"
+msgstr "Display"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "Laat venster geometrie informatie zien bij verplaatsen of aanpassen"
+
+#: src/bin/e_int_config_window_display.c:139
+msgid "Animate the shading and unshading of windows"
+msgstr "Animeer de shaduwen en ontschaduwen van vensters"
+
+#: src/bin/e_int_config_window_display.c:143
+#: src/bin/e_int_config_window_display.c:197
+msgid "Automatic New Window Placement"
+msgstr "Automatisch Nieuw Venster Plaatsing"
+
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:199
+msgid "Smart Placement"
+msgstr "Slimme plaatsing"
+
+#: src/bin/e_int_config_window_display.c:147
+#: src/bin/e_int_config_window_display.c:201
+msgid "Place at mouse pointer"
+msgstr "Plaats bij muis aanwijzer"
+
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
+msgid "Place manually with the mouse"
+msgstr "Plaats handmatig met de muis"
+
+#: src/bin/e_int_config_window_display.c:167
+msgid "Window Move Geometry"
+msgstr "Venster Bewegingsgeometrie"
+
+#: src/bin/e_int_config_window_display.c:168
+#: src/bin/e_int_config_window_display.c:175
+msgid "Display information"
+msgstr "Display informatie"
+
+#: src/bin/e_int_config_window_display.c:170
+msgid "Follow the window as it moves"
+msgstr "Volg de vensters als het beweegt"
+
+#: src/bin/e_int_config_window_display.c:174
+msgid "Window Resize Geometry"
+msgstr "Venster aanpasgeometrie"
+
+#: src/bin/e_int_config_window_display.c:177
+msgid "Follow the window as it resizes"
+msgstr "Volg het venster als het aanpast"
+
+#: src/bin/e_int_config_window_display.c:181
+msgid "Window Shading"
+msgstr "Venster Schaduwen"
+
+#: src/bin/e_int_config_window_display.c:182
+msgid "Animate shading and unshading of windows"
+msgstr "Animeer shaduwen en ontschaduwen van Vensters"
+
+#: src/bin/e_int_config_window_display.c:184
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr "%4.0f pixels/sec"
+
+#: src/bin/e_int_config_window_display.c:187
+msgid "Linear"
+msgstr "Lineair"
+
+#: src/bin/e_int_config_window_display.c:189
+msgid "Smooth accelerate and decelerate"
+msgstr "Nette versnelling en vertraging"
+
+#: src/bin/e_int_config_window_display.c:191
+msgid "Accelerate"
+msgstr "Versnelling"
+
+#: src/bin/e_int_config_window_display.c:193
+msgid "Decelerate"
+msgstr "Vertraging"
+
 #: src/bin/e_winlist.c:122
 msgid "Select a window"
 msgstr "Selecteer een venster"
 
-#: src/bin/e_utils.c:268
+#: src/bin/e_utils.c:269
 msgid "Cannot exit - immortal windows."
 msgstr "Kan niet afsluiten - onsterfelijke vensters."
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:270
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
@@ -1167,14 +1343,7 @@ msgid ""
 "a first example module and is being used to flesh out several<br>interfaces "
 "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
 "<hilight>break often</hilight> and change as it improves."
-msgstr ""
-"Dit is de IBar programma start balk module voor "
-"Enlightenment.<br>Het is "
-"ten eerste een test module and wordt gebruikt om "
-"verschillende<br>interfaces te proberen"
-"in enlightenmnet 0.17.0. Het is in hevige ontwikkeling,<br>ga ervan uit "
-"dat het "
-"<hilight>vaak breekt</hilight>en verandert als het verbeterd."
+msgstr "Dit is de IBar programma start balk module voor Enlightenment.<br>Het is ten eerste een test module and wordt gebruikt om verschillende<br>interfaces te proberenin enlightenmnet 0.17.0. Het is in hevige ontwikkeling,<br>ga ervan uit dat het <hilight>vaak breekt</hilight>en verandert als het verbeterd."
 
 #: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
 #: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
@@ -1195,7 +1364,7 @@ msgstr "Microscopisch"
 
 #: src/modules/ibar/e_mod_main.c:857 src/modules/ibox/e_mod_main.c:621
 msgid "Tiny"
-msgstr "Klein"
+msgstr "Mini "
 
 #: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:628
 msgid "Very Small"
@@ -1272,14 +1441,18 @@ msgstr "Iets anders"
 
 #: src/modules/test/e_mod_main.c:62
 msgid "Enlightenment Test Module"
-msgstr "Enlightenment Test-Module"
+msgstr "Enlightenment Test Module"
 
 #: src/modules/test/e_mod_main.c:63
 msgid ""
 "This module is VERY simple and is only used to test the basic<br>interface "
 "of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
 "unless you are working on the module system."
-msgstr "<br> Enlightenment<br>."
+msgstr ""
+"Deze module is erg simpel en wordt alleen gebruik tijdens het testen van basis<br>interface "
+"van Enlightenment 0.17.0 module systeem. "
+"Alsjeblieft<br>negeer deze module "
+"als je niet werkt aan het module systeem. "
 
 #: src/modules/cpufreq/e_mod_main.c:114
 msgid "CPU Frequency Controller Module"
@@ -1290,8 +1463,8 @@ msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
 msgstr ""
-"Een simpele module om de frequentie van je systeem Processor te controleren "
-"Speciaal handig om energie te sparen in Laptops."
+"Een simpele module om de frequentie van je systeem Processor te controleren<br>Dit is "
+"speciaal handig om energie te sparen in Laptops."
 
 #: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
 #: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
@@ -1300,7 +1473,7 @@ msgstr "Tussentijd instellen"
 
 #: src/modules/cpufreq/e_mod_main.c:221
 msgid "Restore Controller on Startup"
-msgstr "Beeldscherm Resolutie bij het opstarten herstellen"
+msgstr "Herstel regelaar bij opstarten"
 
 #: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:560
 msgid "Set Controller"
@@ -1471,11 +1644,11 @@ msgstr "Beeldscherm Resolutie bij het opstarten herstellen"
 
 #: src/modules/randr/e_mod_main.c:210
 msgid "Resolution"
-msgstr "Beeldscherm Resolutie"
+msgstr "Resolutie"
 
 #: src/modules/randr/e_mod_main.c:309
 msgid "Resolution change"
-msgstr "Beeldscherm Resolutie"
+msgstr " Resolutie veranderen"
 
 #: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
 #, c-format
@@ -1532,11 +1705,11 @@ msgstr "Eenheid"
 
 #: src/modules/temperature/e_mod_main.c:676
 msgid "Fast (1 sec)"
-msgstr "Vaak (1 sek)"
+msgstr "Vaak (1 sec)"
 
 #: src/modules/temperature/e_mod_main.c:683
 msgid "Medium (5 sec)"
-msgstr "Middel (5 sek)"
+msgstr "Middel (5 sec)"
 
 #: src/modules/temperature/e_mod_main.c:690
 msgid "Normal (10 sec)"
@@ -1663,10 +1836,7 @@ msgid ""
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
 "adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
 "accurate as your BIOS or kernel drivers."
-msgstr ""
-"Een batterij-meter die <hilight>ACPI</hilight> of <hilight>APM </hilight><br>gebruikt om de batterij-stand en Netspanning<br>status aangeeft."
-"Dit werkt alleen onder Linux; de nauwkeurigheid hangt "
-"af van je BIOS of Kerneldriver."
+msgstr "Een batterij-meter die <hilight>ACPI</hilight> of <hilight>APM </hilight><br>gebruikt om de batterij-stand en Netspanning<br>status aangeeft.Dit werkt alleen onder Linux; de nauwkeurigheid hangt af van je BIOS of Kerneldriver."
 
 #: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
 msgid "Set Alarm"
@@ -1759,6 +1929,5 @@ msgstr "Gevaar"
 #: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1534
 #: src/modules/battery/e_mod_main.c:1701
 msgid "Charging"
-msgstr "Laden "
-
+msgstr "Laden"
 
