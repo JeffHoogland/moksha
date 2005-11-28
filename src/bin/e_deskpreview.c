@@ -54,13 +54,25 @@ e_deskpreview_add(Evas *evas)
    return evas_object_smart_add(evas, _e_smart);
 }
 
+void
+e_deskpreview_mini_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
+{
+   API_ENTRY return;
+}
+
+void
+e_deskpreview_region_set(Evas_Object *obj, int x, int y, int w, int h, int zone, int container)
+{
+   API_ENTRY return;
+}
+
 /* local subsystem functions */
 
 static void
 _e_smart_reconfigure(E_Smart_Data *sd)
 {
-//   evas_object_move(sd->edje_obj, sd->x, sd->y);
-//   evas_object_resize(sd->edje_obj, sd->w, sd->h);
+   evas_object_move(sd->scrollframe_obj, sd->x, sd->y);
+   evas_object_resize(sd->scrollframe_obj, sd->w, sd->h);
 }
 
 static void
@@ -78,13 +90,20 @@ _e_smart_add(Evas_Object *obj)
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
+   
+   sd->scrollframe_obj = e_scrollframe_add(evas_object_evas_get(obj));
+   evas_object_smart_member_add(sd->scrollframe_obj, obj);
+   sd->table_obj = e_table_add(evas_object_evas_get(obj));
+   e_table_homogenous_set(sd->table_obj, 1);
+   e_scrollframe_child_set(sd->scrollframe_obj, sd->table_obj);
 }
 
 static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-//   evas_object_del(sd->edje_obj);
+   evas_object_del(sd->table_obj);
+   evas_object_del(sd->scrollframe_obj);
    free(sd);
 }
 
@@ -112,35 +131,35 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-//   evas_object_show(sd->edje_obj);
+   evas_object_show(sd->scrollframe_obj);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-//   evas_object_hide(sd->edje_obj);
+   evas_object_hide(sd->scrollframe_obj);
 }
 
 static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    INTERNAL_ENTRY;
-//   evas_object_color_set(sd->edje_obj, r, g, b, a);
+   evas_object_color_set(sd->scrollframe_obj, r, g, b, a);
 }
 
 static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
 {
    INTERNAL_ENTRY;
-//   evas_object_clip_set(sd->edje_obj, clip);
+   evas_object_clip_set(sd->scrollframe_obj, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-//   evas_object_clip_unset(sd->edje_obj);
+   evas_object_clip_unset(sd->scrollframe_obj);
 }  
 
 /* never need to touch this */
