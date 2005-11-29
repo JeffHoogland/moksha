@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-11-13 18:44+0100\n"
-"PO-Revision-Date: 2005-11-08 21:57+0100\n"
+"POT-Creation-Date: 2005-11-29 12:27+0100\n"
+"PO-Revision-Date: 2005-11-29 12:35+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@inwind.it>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "Esegui comando"
 msgid "Files"
 msgstr "File"
 
-#: src/bin/e_int_menus.c:155 src/bin/e_module.c:476
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:477
 msgid "Configuration"
 msgstr "Configurazione"
 
@@ -190,11 +190,11 @@ msgstr "Pannello di configurazione"
 msgid "Eap Editor"
 msgstr "Editor di file .eap"
 
-#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:971
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:981
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:985
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:995
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
@@ -218,13 +218,13 @@ msgstr "(Inutilizzato)"
 msgid "About This Theme"
 msgstr "Informazioni su questo tema"
 
-#: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
-#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:222
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1787 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:223
 msgid "Run Error"
 msgstr "Errore di esecuzione"
 
 #: src/bin/e_apps.c:414 src/bin/e_fileman_file.c:355
-#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:223
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:224
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -238,7 +238,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1784
+#: src/bin/e_apps.c:1788
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -260,6 +260,18 @@ msgstr "Configurazione di Enlightenment"
 #: src/bin/e_configure.c:61 src/bin/e_int_config_focus.c:44
 msgid "Focus Settings"
 msgstr "Impostazioni del fuoco"
+
+#: src/bin/e_configure.c:62 src/bin/e_int_config_desks.c:45
+msgid "Desktop Settings"
+msgstr "Impostazioni del desktop"
+
+#: src/bin/e_configure.c:63 src/bin/e_int_config_window_manipulation.c:48
+msgid "Window Manipulation"
+msgstr "Manipolazione finestre"
+
+#: src/bin/e_configure.c:64 src/bin/e_int_config_window_display.c:49
+msgid "Window Display"
+msgstr "Visualizzazione finestre"
 
 #: src/bin/e_int_config_focus.c:144
 msgid "Click Window to Focus"
@@ -325,6 +337,10 @@ msgstr "Un click sulla finestra la pone sempre in primo piano"
 msgid "A click in a window always focuses it"
 msgstr "Un click sulla finestra le dà sempre il fuoco"
 
+#: src/bin/e_int_config_background.c:47
+msgid "Background Settings"
+msgstr "Impostazioni dello sfondo"
+
 #: src/bin/e_int_border_remember.c:67
 msgid "Window Remember"
 msgstr "Ricorda finestra"
@@ -360,7 +376,7 @@ msgstr ""
 
 #: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
 #: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:113
-#: src/bin/e_module.c:403 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/bin/e_module.c:404 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/modules/ibar/e_mod_main.c:1692
 msgid "OK"
 msgstr "OK"
@@ -443,7 +459,7 @@ msgstr "Nome e classe"
 msgid "Title"
 msgstr "Titolo"
 
-#: src/bin/e_int_border_remember.c:470
+#: src/bin/e_int_border_remember.c:470 src/bin/e_eap_editor.c:321
 msgid "Window Role"
 msgstr "Ruolo"
 
@@ -479,6 +495,86 @@ msgstr "Zona dello schermo"
 msgid "Window list skip"
 msgstr "Fuori lista finestre"
 
+#: src/bin/e_int_config_window_manipulation.c:130
+msgid "Miscellaneous Options"
+msgstr "Opzioni varie"
+
+#: src/bin/e_int_config_window_manipulation.c:131
+#: src/bin/e_int_config_window_manipulation.c:164
+msgid "Automatically raise windows on mouse over"
+msgstr "Eleva automaticamente finestra al passaggio del mouse"
+
+#: src/bin/e_int_config_window_manipulation.c:133
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr "Resisti sui confini in spostamento/ridimensionamento finestra"
+
+#: src/bin/e_int_config_window_manipulation.c:137
+#: src/bin/e_int_config_window_manipulation.c:189
+msgid "Maximize Policy"
+msgstr "Regole di massimizzazione"
+
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:191
+#: src/bin/e_int_border_menu.c:175
+msgid "Fullscreen"
+msgstr "A tutto schermo"
+
+#: src/bin/e_int_config_window_manipulation.c:141
+#: src/bin/e_int_config_window_manipulation.c:193
+msgid "Smart expansion"
+msgstr "Espansione intelligente"
+
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Expand the window"
+msgstr "Espansione della finestra"
+
+#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:197
+msgid "Fill available space"
+msgstr "Riempimento dello spazio disponibile"
+
+#: src/bin/e_int_config_window_manipulation.c:163
+msgid "Autoraise"
+msgstr "Elevazione automatica"
+
+#: src/bin/e_int_config_window_manipulation.c:166
+msgid "Delay before raising:"
+msgstr "Ritardo nell'elevazione"
+
+#: src/bin/e_int_config_window_manipulation.c:168
+#: src/bin/e_int_config_desks.c:202
+#, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f sec"
+
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Resistance"
+msgstr "Resistenza"
+
+#: src/bin/e_int_config_window_manipulation.c:173
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr "Resisti nello spostamento o ridimensionamento oltre un ostacolo"
+
+#: src/bin/e_int_config_window_manipulation.c:175
+msgid "Resistance between windows:"
+msgstr "Resistenza tra finestre:"
+
+#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:181
+#: src/bin/e_int_config_window_manipulation.c:185
+#, c-format
+msgid "%2.0f pixels"
+msgstr "%2.0f pixel"
+
+#: src/bin/e_int_config_window_manipulation.c:179
+msgid "Resistance at the edge of the screen:"
+msgstr "Resistenza al confine dello schermo:"
+
+#: src/bin/e_int_config_window_manipulation.c:183
+msgid "Resistance to desktop gadgets:"
+msgstr "Resistenza ai gadget del desktop:"
+
 #: src/bin/e_config_dialog.c:86
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
@@ -495,89 +591,89 @@ msgstr "Applica"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_fileman_smart.c:1216 src/bin/e_eap_editor.c:272
+#: src/bin/e_fileman_smart.c:1243 src/bin/e_eap_editor.c:272
 msgid "General"
 msgstr "Generale"
 
-#: src/bin/e_fileman_smart.c:1225
+#: src/bin/e_fileman_smart.c:1252
 #, c-format
 msgid "File:"
 msgstr "File:"
 
-#: src/bin/e_fileman_smart.c:1234
+#: src/bin/e_fileman_smart.c:1261
 #, c-format
 msgid "Size:"
 msgstr "Dimensione:"
 
-#: src/bin/e_fileman_smart.c:1243
+#: src/bin/e_fileman_smart.c:1270
 #, c-format
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_fileman_smart.c:1252
+#: src/bin/e_fileman_smart.c:1279
 msgid "Protect this file"
 msgstr "Proteggi questo file"
 
-#: src/bin/e_fileman_smart.c:1258
+#: src/bin/e_fileman_smart.c:1285
 msgid "Let others see this file"
 msgstr "Consenti agli altri di vedere il file"
 
-#: src/bin/e_fileman_smart.c:1262
+#: src/bin/e_fileman_smart.c:1289
 msgid "Let others modify this file"
 msgstr "Consenti agli altri di modificare il file"
 
-#: src/bin/e_fileman_smart.c:1266
+#: src/bin/e_fileman_smart.c:1293
 msgid "Dont let others see or modify this file"
 msgstr "Non consentire ad altri di vedere o modificare il file"
 
-#: src/bin/e_fileman_smart.c:1270
+#: src/bin/e_fileman_smart.c:1297
 msgid "Custom settings"
 msgstr "Impostazioni personalizzate"
 
-#: src/bin/e_fileman_smart.c:1307
+#: src/bin/e_fileman_smart.c:1334
 msgid "File Info:"
 msgstr "Informazioni sul file:"
 
-#: src/bin/e_fileman_smart.c:1330
+#: src/bin/e_fileman_smart.c:1357
 msgid "Permissions:"
 msgstr "Permessi:"
 
-#: src/bin/e_fileman_smart.c:1333 src/bin/e_fileman_smart.c:1342
-#: src/bin/e_fileman_smart.c:1351
+#: src/bin/e_fileman_smart.c:1360 src/bin/e_fileman_smart.c:1369
+#: src/bin/e_fileman_smart.c:1378
 msgid "r"
 msgstr "lettura"
 
-#: src/bin/e_fileman_smart.c:1335 src/bin/e_fileman_smart.c:1344
-#: src/bin/e_fileman_smart.c:1353
+#: src/bin/e_fileman_smart.c:1362 src/bin/e_fileman_smart.c:1371
+#: src/bin/e_fileman_smart.c:1380
 msgid "w"
 msgstr "scrittura"
 
-#: src/bin/e_fileman_smart.c:1337 src/bin/e_fileman_smart.c:1346
-#: src/bin/e_fileman_smart.c:1355
+#: src/bin/e_fileman_smart.c:1364 src/bin/e_fileman_smart.c:1373
+#: src/bin/e_fileman_smart.c:1382
 msgid "x"
 msgstr "esecuzione"
 
-#: src/bin/e_fileman_smart.c:1381 src/bin/e_fileman_smart.c:2237
+#: src/bin/e_fileman_smart.c:1408 src/bin/e_fileman_smart.c:2289
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fileman_smart.c:2188
+#: src/bin/e_fileman_smart.c:2240
 msgid "Open"
 msgstr "Apri"
 
-#: src/bin/e_fileman_smart.c:2199
+#: src/bin/e_fileman_smart.c:2251
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_fileman_smart.c:2207
+#: src/bin/e_fileman_smart.c:2259
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_fileman_smart.c:2218
+#: src/bin/e_fileman_smart.c:2270
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fileman_smart.c:2226
+#: src/bin/e_fileman_smart.c:2278
 msgid "Delete"
 msgstr "Cancella"
 
@@ -590,11 +686,11 @@ msgstr "X sostiene che non vi è root window e schermi %i!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "Disabilitare questo splash screen nel futuro?"
 
-#: src/bin/e_intl.c:359
+#: src/bin/e_intl.c:292
 msgid "Input Method Error"
 msgstr "Errore del metodo di input"
 
-#: src/bin/e_intl.c:360
+#: src/bin/e_intl.c:293
 msgid ""
 "Error starting the input method executable\n"
 "\n"
@@ -928,7 +1024,7 @@ msgstr "Selezione bordo della finestra"
 msgid "Remember this Border for this window next time it appears"
 msgstr "Ricorda questo bordo alla prossima apertura della finestra"
 
-#: src/bin/e_module.c:110
+#: src/bin/e_module.c:111
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
@@ -937,11 +1033,11 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Non ho potuto trovare "
 "nessun modulo di nome %s nelle<br>directory di ricerca dei moduli.<br>"
 
-#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+#: src/bin/e_module.c:115 src/bin/e_module.c:128 src/bin/e_module.c:152
 msgid "Error loading Module"
 msgstr "Errore nel caricamento del modulo"
 
-#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#: src/bin/e_module.c:122 src/bin/e_module.c:146
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
@@ -950,7 +1046,7 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Il percorso completo "
 "del modulo è:<br>%s<br>L'errore riportato è stato:<br>%s<br>"
 
-#: src/bin/e_module.c:165
+#: src/bin/e_module.c:166
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -961,33 +1057,33 @@ msgstr ""
 "richiede una versione minima dell'API dei moduli di: %i.<br>L'API dei moduli "
 "dichiarata da Enlightenment è: %i.<br>"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:171
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Modulo %s di Enlightenment"
 
-#: src/bin/e_module.c:387
+#: src/bin/e_module.c:388
 msgid "(No Loaded Modules)"
 msgstr "(Nessun Modulo Caricato)"
 
-#: src/bin/e_module.c:461
+#: src/bin/e_module.c:462
 msgid "About..."
 msgstr "Informazioni su..."
 
-#: src/bin/e_module.c:465
+#: src/bin/e_module.c:466
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: src/bin/e_module.c:538
+#: src/bin/e_module.c:539
 msgid "Would you like to unload this module?<br>"
 msgstr "Volete scaricare questo modulo?<br>"
 
-#: src/bin/e_module.c:543 src/bin/e_actions.c:1200
+#: src/bin/e_module.c:544 src/bin/e_actions.c:1200
 #: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Sì"
 
-#: src/bin/e_module.c:544 src/bin/e_actions.c:1202
+#: src/bin/e_module.c:545 src/bin/e_actions.c:1202
 #: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "No"
@@ -1038,49 +1134,29 @@ msgstr "Appiccicata"
 msgid "Borderless"
 msgstr "Senza bordo"
 
-#: src/bin/e_int_border_menu.c:175
-msgid "Fullscreen"
-msgstr "A tutto schermo"
-
 #: src/bin/e_int_border_menu.c:189
 msgid "Skip Window List"
 msgstr "Fuori lista finestre"
 
-#: src/bin/e_int_border_menu.c:210
+#: src/bin/e_int_border_menu.c:205
 msgid "Edit Icon"
 msgstr "Modifica icona"
 
-#: src/bin/e_int_border_menu.c:240
+#: src/bin/e_int_border_menu.c:212
 msgid "Create Icon"
 msgstr "Crea icona"
 
-#: src/bin/e_int_border_menu.c:251
+#: src/bin/e_int_border_menu.c:222
 msgid "Kill"
 msgstr "Uccidi"
 
-#: src/bin/e_int_border_menu.c:264
+#: src/bin/e_int_border_menu.c:235
 msgid "Iconify"
 msgstr "Iconifica"
 
-#: src/bin/e_int_border_menu.c:275
+#: src/bin/e_int_border_menu.c:246
 msgid "Close"
 msgstr "Chiudi"
-
-#: src/bin/e_int_border_menu.c:464
-msgid "Icon Edit Error"
-msgstr "Errore dell'editor di icone"
-
-#: src/bin/e_int_border_menu.c:465
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Errore nell'avvio dell'editor delle icone\n"
-"\n"
-"si prega di installare e_util_eapp_edit o\n"
-"di assicurarsi che sia nel proprio PATH\n"
 
 #: src/bin/e_container.c:118
 #, c-format
@@ -1098,7 +1174,7 @@ msgstr ""
 "Avete chiesto di uscire da Enlightenment.<br><br>Siete sicuri di voler "
 "uscire?"
 
-#: src/bin/e_config.c:374
+#: src/bin/e_config.c:377
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -1120,7 +1196,7 @@ msgstr ""
 "Adesso è possibile riconfigurare le cose a proprio piacimento.\n"
 "Ci scusiamo per il disagio.\n"
 
-#: src/bin/e_config.c:388
+#: src/bin/e_config.c:391
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -1137,7 +1213,7 @@ msgstr ""
 "stata ripristinata a scopo precauzionale ai valori predefiniti. Ci\n"
 "scusiamo per l'inconveniente.\n"
 
-#: src/bin/e_config.c:1974
+#: src/bin/e_config.c:2002
 msgid "Configuration Upgraded"
 msgstr "Aggiornamento configurazione"
 
@@ -1153,13 +1229,57 @@ msgstr "Icona"
 msgid "Basic Info"
 msgstr "Informazioni di base"
 
+#: src/bin/e_eap_editor.c:233
+msgid "App name"
+msgstr "Nome"
+
+#: src/bin/e_eap_editor.c:243
+msgid "Executable"
+msgstr "Eseguibile"
+
+#: src/bin/e_eap_editor.c:275
+msgid "Generic Info"
+msgstr "Descrizione"
+
+#: src/bin/e_eap_editor.c:284
+msgid "Comment"
+msgstr "Commento"
+
 #: src/bin/e_eap_editor.c:296
 msgid "Window"
 msgstr "Finestra"
 
+#: src/bin/e_eap_editor.c:298
+msgid "Window Name"
+msgstr "Nome"
+
+#: src/bin/e_eap_editor.c:307
+msgid "Window Class"
+msgstr "Classe"
+
+#: src/bin/e_eap_editor.c:314
+msgid "Window Title"
+msgstr "Titolo"
+
+#: src/bin/e_eap_editor.c:334
+msgid "Icon Class"
+msgstr "Classe"
+
+#: src/bin/e_eap_editor.c:343
+msgid "Path"
+msgstr "Percorso"
+
 #: src/bin/e_eap_editor.c:356
 msgid "Misc"
 msgstr "Varie"
+
+#: src/bin/e_eap_editor.c:358
+msgid "Startup Notify"
+msgstr "Notifica avvio"
+
+#: src/bin/e_eap_editor.c:362
+msgid "Wait Exit"
+msgstr "Attesa uscita"
 
 #: src/bin/e_gadman.c:626
 msgid "Automatic Width"
@@ -1222,15 +1342,119 @@ msgstr ""
 msgid "<title>The Team</title>"
 msgstr "<title>Il Team</title>"
 
+#: src/bin/e_int_config_desks.c:157 src/bin/e_int_config_desks.c:186
+msgid "Number of Desktops"
+msgstr "Numero di desktop"
+
+#: src/bin/e_int_config_desks.c:160 src/bin/e_int_config_desks.c:162
+#: src/bin/e_int_config_desks.c:189 src/bin/e_int_config_desks.c:191
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:196
+msgid "Desktop Mouse Flip"
+msgstr "Cambio desktop con mouse"
+
+#: src/bin/e_int_config_desks.c:168 src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "Cambia desktop se il mouse è al limite dello schermo"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "Tempo di permanenza sul limite prima del cambio:"
+
+#: src/bin/e_int_config_window_display.c:136
+msgid "Display"
+msgstr "Visualizzazioni"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "Mostra geometria finestra durante spostamento o ridimensionamento"
+
+#: src/bin/e_int_config_window_display.c:139
+msgid "Animate the shading and unshading of windows"
+msgstr "Anima l'arrotolamento/srotolamento della finestra"
+
+#: src/bin/e_int_config_window_display.c:143
+#: src/bin/e_int_config_window_display.c:197
+msgid "Automatic New Window Placement"
+msgstr "Posizionamento automatico delle nuove finestre"
+
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:199
+msgid "Smart Placement"
+msgstr "Posizionamento intelligente"
+
+#: src/bin/e_int_config_window_display.c:147
+#: src/bin/e_int_config_window_display.c:201
+msgid "Place at mouse pointer"
+msgstr "Posiziona sotto il puntatore del mouse"
+
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
+msgid "Place manually with the mouse"
+msgstr "Posiziona manualmente col mouse"
+
+#: src/bin/e_int_config_window_display.c:167
+msgid "Window Move Geometry"
+msgstr "Geometria spostamento finestra"
+
+#: src/bin/e_int_config_window_display.c:168
+#: src/bin/e_int_config_window_display.c:175
+msgid "Display information"
+msgstr "Visualizza informazioni"
+
+#: src/bin/e_int_config_window_display.c:170
+msgid "Follow the window as it moves"
+msgstr "Segui il movimento della finestra"
+
+#: src/bin/e_int_config_window_display.c:174
+msgid "Window Resize Geometry"
+msgstr "Geometria ridimensionamento finestra"
+
+#: src/bin/e_int_config_window_display.c:177
+msgid "Follow the window as it resizes"
+msgstr "Segui il ridimensionamento della finestra"
+
+#: src/bin/e_int_config_window_display.c:181
+msgid "Window Shading"
+msgstr "Arrotolamento finestra"
+
+#: src/bin/e_int_config_window_display.c:182
+msgid "Animate shading and unshading of windows"
+msgstr "Anima l'arrotolamento/srotolamento della finestra"
+
+#: src/bin/e_int_config_window_display.c:184
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr "%4.0f pixel/sec"
+
+#: src/bin/e_int_config_window_display.c:187
+msgid "Linear"
+msgstr "Costante"
+
+#: src/bin/e_int_config_window_display.c:189
+msgid "Smooth accelerate and decelerate"
+msgstr "Addolcisci accellerazione e decellerazione"
+
+#: src/bin/e_int_config_window_display.c:191
+msgid "Accelerate"
+msgstr "Accellera fino a velocità impostata"
+
+#: src/bin/e_int_config_window_display.c:193
+msgid "Decelerate"
+msgstr "Decellera dalla velocità impostata"
+
 #: src/bin/e_winlist.c:122
 msgid "Select a window"
 msgstr "Seleziona una finestra"
 
-#: src/bin/e_utils.c:268
+#: src/bin/e_utils.c:269
 msgid "Cannot exit - immortal windows."
 msgstr "Impossibile uscire - finestre immortali."
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:270
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means\n"
