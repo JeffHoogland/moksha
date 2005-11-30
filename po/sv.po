@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-11-22 21:29+0100\n"
-"PO-Revision-Date: 2005-11-23 09:21+0100\n"
+"POT-Creation-Date: 2005-11-30 14:41+0100\n"
+"PO-Revision-Date: 2005-11-30 15:56+0100\n"
 "Last-Translator: Anders Trobäck <enlightenment@troback.com>\n"
 "Language-Team: Swedish\n"
 "MIME-Version: 1.0\n"
@@ -48,21 +48,20 @@ msgstr "Är du säker på att du vill avsluta?"
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
-"Du har bett om att avsluta Enlightenment.<br>"
-"<br>"
-"Är du säker på att du vill avsluta?"
+"Du har bett om att avsluta Enlightenment.<br><br>Är du säker på att du vill "
+"avsluta?"
 
-#: src/bin/e_actions.c:1200 src/bin/e_module.c:543
+#: src/bin/e_actions.c:1200 src/bin/e_module.c:544
 #: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Ja"
 
-#: src/bin/e_actions.c:1202 src/bin/e_module.c:544
+#: src/bin/e_actions.c:1202 src/bin/e_module.c:545
 #: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "Nej"
 
-#: src/bin/e_apps.c:413 src/bin/e_apps.c:1783 src/bin/e_fileman_file.c:354
+#: src/bin/e_apps.c:413 src/bin/e_apps.c:1787 src/bin/e_fileman_file.c:354
 #: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:223
 msgid "Run Error"
 msgstr "Körfel"
@@ -81,7 +80,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1784
+#: src/bin/e_apps.c:1788
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -106,7 +105,7 @@ msgstr "Grundinställningar"
 
 #: src/bin/e_config_dialog.c:113 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
-#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:403
+#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:404
 #: src/modules/ibar/e_mod_main.c:1692
 msgid "OK"
 msgstr "OK"
@@ -119,7 +118,7 @@ msgstr "Verkställ"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/bin/e_config.c:374
+#: src/bin/e_config.c:377
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -136,7 +135,7 @@ msgstr ""
 "detta som ett fel. Du kan nu konfigurera allt som du vill ha det.\n"
 "Beklagar detta.\n"
 
-#: src/bin/e_config.c:388
+#: src/bin/e_config.c:391
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -152,7 +151,7 @@ msgstr ""
 "Detta är inte bra och som en säkerhetsåtgärd så har din\n"
 "konfiguration återställts till standard. Beklagar detta.\n"
 
-#: src/bin/e_config.c:1982
+#: src/bin/e_config.c:2002
 msgid "Configuration Upgraded"
 msgstr "Konfigurationen uppgraderad"
 
@@ -197,17 +196,65 @@ msgstr "Ikon"
 msgid "Basic Info"
 msgstr "Grund Info"
 
+#: src/bin/e_eap_editor.c:233
+msgid "App name"
+msgstr "Program namn"
+
+#: src/bin/e_eap_editor.c:243
+msgid "Executable"
+msgstr "Exekverbar"
+
 #: src/bin/e_eap_editor.c:272 src/bin/e_fileman_smart.c:1243
 msgid "General"
 msgstr "Allmänt"
+
+#: src/bin/e_eap_editor.c:275
+msgid "Generic Info"
+msgstr "Almänn Information"
+
+#: src/bin/e_eap_editor.c:284
+msgid "Comment"
+msgstr "Kommentar"
 
 #: src/bin/e_eap_editor.c:296
 msgid "Window"
 msgstr "Fönster"
 
+#: src/bin/e_eap_editor.c:298
+msgid "Window Name"
+msgstr "Fönsternamn"
+
+#: src/bin/e_eap_editor.c:307
+msgid "Window Class"
+msgstr "Fönsterklass"
+
+#: src/bin/e_eap_editor.c:314
+msgid "Window Title"
+msgstr "Fönstertitel"
+
+#: src/bin/e_eap_editor.c:321 src/bin/e_int_border_remember.c:470
+msgid "Window Role"
+msgstr "Fönsterroll"
+
+#: src/bin/e_eap_editor.c:334
+msgid "Icon Class"
+msgstr "Ikonklass"
+
+#: src/bin/e_eap_editor.c:343
+msgid "Path"
+msgstr "Sökväg"
+
 #: src/bin/e_eap_editor.c:356
 msgid "Misc"
 msgstr "Övrigt"
+
+#: src/bin/e_eap_editor.c:358
+msgid "Startup Notify"
+msgstr "Uppstartsindikering"
+
+#: src/bin/e_eap_editor.c:362
+msgid "Wait Exit"
+msgstr "Vänta på avslut"
 
 #: src/bin/e_error.c:352
 msgid "Enlightenment: Error!"
@@ -367,8 +414,7 @@ msgstr "Skydda detta fönster mot att jag oavsiktligt ändrar det"
 #: src/bin/e_int_border_locks.c:298
 msgid ""
 "Protect this window from being accidentally closed because it is important"
-msgstr ""
-"Skydda detta fönster från att stängas för att det är viktigt"
+msgstr "Skydda detta fönster från att stängas för att det är viktigt"
 
 #: src/bin/e_int_border_locks.c:300
 msgid "Do not allow the border to change on this window"
@@ -516,11 +562,11 @@ msgstr "Minimera"
 msgid "Close"
 msgstr "Stäng"
 
-#: src/bin/e_intl.c:290
+#: src/bin/e_intl.c:292
 msgid "Input Method Error"
 msgstr "Inmatningsfel"
 
-#: src/bin/e_intl.c:291
+#: src/bin/e_intl.c:293
 msgid ""
 "Error starting the input method executable\n"
 "\n"
@@ -557,16 +603,16 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så som "
-"storlek, plats, ramstil etc.) på<br>ett fönster <hilight>som inte har"
-"unika egenskaper</hilight>.<br><br>Detta betyder att det delar egenskaper för "
-"Namn/Klass, Transience, Roll etc.<br>med mer är ett annat fönster på "
+"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så "
+"som storlek, plats, ramstil etc.) på<br>ett fönster <hilight>som inte "
+"harunika egenskaper</hilight>.<br><br>Detta betyder att det delar egenskaper "
+"för Namn/Klass, Transience, Roll etc.<br>med mer är ett annat fönster på "
 "skärmen och minnes<br>egenskaper för detta fönster kommer att alla andra "
-"fönster<br>som matchar dessa egenskaper.<br><br>Detta är bara en varning för"
-"att bekräfta om detta var vad du ville skulle hända.<br>Om det var, tryck bara på "
-"<hilight>Verkställ</hilight> eller <hilight>OK</hilight> knapparna<br>och dina "
-"inställningar kommer att accepteras. Tryck <hilight>Avbryt</hilight> om du<br>inte är "
-"säker, då kommer enget att ändras."
+"fönster<br>som matchar dessa egenskaper.<br><br>Detta är bara en varning "
+"föratt bekräfta om detta var vad du ville skulle hända.<br>Om det var, tryck "
+"bara på <hilight>Verkställ</hilight> eller <hilight>OK</hilight> "
+"knapparna<br>och dina inställningar kommer att accepteras. Tryck "
+"<hilight>Avbryt</hilight> om du<br>inte är säker, då kommer enget att ändras."
 
 #: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
 msgid "No match properties set"
@@ -579,10 +625,10 @@ msgid ""
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så som "
-"storlek, plats, ramstil etc.) på<br>ett fönster <hilight>utan "
-"att specificera hur den ska minnas det</hilight>.<br><br>Du måste specificera minst ett "
-"sätt att minnas detta fönster."
+"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så "
+"som storlek, plats, ramstil etc.) på<br>ett fönster <hilight>utan att "
+"specificera hur den ska minnas det</hilight>.<br><br>Du måste specificera "
+"minst ett sätt att minnas detta fönster."
 
 #: src/bin/e_int_border_remember.c:349
 msgid ""
@@ -600,19 +646,19 @@ msgid ""
 "<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
 "affected."
 msgstr ""
-"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så som "
-"storlek, plats, ramstil etc.) på<br>ett fönster <hilight>som inte har"
-"unika egenskaper</hilight>.<br><br>Detta betyder att det delar egenskaper för "
-"Namn/Klass, Transience, Roll etc.<br>med mer är ett annat fönster på "
+"Du försöker få Enlightenment att minnas att konfigurera<br>egenskaper (så "
+"som storlek, plats, ramstil etc.) på<br>ett fönster <hilight>som inte "
+"harunika egenskaper</hilight>.<br><br>Detta betyder att det delar egenskaper "
+"för Namn/Klass, Transience, Roll etc.<br>med mer är ett annat fönster på "
 "skärmen och minnes<br>egenskaper för detta fönster kommer att alla andra "
 "fönster<br>som matchar dessa egenskaper.<br><br>Du vill kanske aktivera "
-"<hilight>Matcha bara ett fönster</hilight> om<br>du bara vill att denna"
-"instansen av detta fönster ska ändras, och<br>ytterligare instanser inte "
-"ska beröras.<br><br>Detta är bara en varning för"
-"att bekräfta att detta var det du ville skulle hända.<br>Om det var, tryck bara på "
-"<hilight>Verkställ</hilight> eller <hilight>OK</hilight> knapparna<br>och dina "
-"inställningar kommer att accepteras. Tryck <hilight>Avbryt</hilight> om du<br>inte är "
-"säker, då kommer enget att ändras."
+"<hilight>Matcha bara ett fönster</hilight> om<br>du bara vill att "
+"dennainstansen av detta fönster ska ändras, och<br>ytterligare instanser "
+"inte ska beröras.<br><br>Detta är bara en varning föratt bekräfta att detta "
+"var det du ville skulle hända.<br>Om det var, tryck bara på "
+"<hilight>Verkställ</hilight> eller <hilight>OK</hilight> knapparna<br>och "
+"dina inställningar kommer att accepteras. Tryck <hilight>Avbryt</hilight> om "
+"du<br>inte är säker, då kommer enget att ändras."
 
 #: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
@@ -645,10 +691,6 @@ msgstr "Fönsternamn och klass"
 #: src/bin/e_int_border_remember.c:460
 msgid "Title"
 msgstr "Titel"
-
-#: src/bin/e_int_border_remember.c:470
-msgid "Window Role"
-msgstr "Fönsterroll"
 
 #: src/bin/e_int_border_remember.c:479
 msgid "Window type"
@@ -782,7 +824,7 @@ msgstr "Kör kommando"
 msgid "Files"
 msgstr "Filer"
 
-#: src/bin/e_int_menus.c:155 src/bin/e_module.c:476
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:477
 msgid "Configuration"
 msgstr "Konfiguration"
 
@@ -814,11 +856,11 @@ msgstr "Ny skrivbords kolumn"
 msgid "Remove Column of Desktops"
 msgstr "Ta bort skrivbords kolumn"
 
-#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:983
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:981
 msgid "(No Windows)"
 msgstr "(Inga fönster)"
 
-#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:997
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:995
 msgid "No name!!"
 msgstr "Inget namn!!!"
 
@@ -878,8 +920,8 @@ msgstr ""
 "\t\tEx: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
 "+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tAnvänd konfigurationen CONF_PROFILE i stället för användarstandard "
-"eller bara \"default\".\n"
+"\t\tAnvänd konfigurationen CONF_PROFILE i stället för användarstandard eller "
+"bara \"default\".\n"
 "\t-good\n"
 "\t\tVar snäll.\n"
 "\t-evil\n"
@@ -940,8 +982,8 @@ msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
 msgstr ""
-"Enlightenment kan inte sätta igång xinerama wrapping.\""
-"Detta borde inte hända."
+"Enlightenment kan inte sätta igång xinerama wrapping.\"Detta borde inte "
+"hända."
 
 #: src/bin/e_main.c:336
 msgid ""
@@ -1115,60 +1157,57 @@ msgstr ""
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment startar. Vargod vänta."
 
-#: src/bin/e_module.c:110
+#: src/bin/e_module.c:111
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>No module named %s could be "
 "found in the<br>module search directories.<br>"
 msgstr ""
-"Det blev fel när modulen %s skulle laddas<br>"
-"Ingen modul med namnet %s kunde hittas i<br>"
-"sökvägarna för moduler.<br>"
+"Det blev fel när modulen %s skulle laddas<br>Ingen modul med namnet %s kunde "
+"hittas i<br>sökvägarna för moduler.<br>"
 
-#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+#: src/bin/e_module.c:115 src/bin/e_module.c:128 src/bin/e_module.c:152
 msgid "Error loading Module"
 msgstr "Fel vid öppnandet av modul"
 
-#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#: src/bin/e_module.c:122 src/bin/e_module.c:146
 #, c-format
 msgid ""
 "There was an error loading module named: %s<br>The full path to this module "
 "is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Det blev fel när modulen %s skulle laddas.<br>"
-"Den fulständiga sökvägen till denna modul är:<br> "
-"%s<br>Felet som raporterades är:<br>%s<br>"
+"Det blev fel när modulen %s skulle laddas.<br>Den fulständiga sökvägen till "
+"denna modul är:<br> %s<br>Felet som raporterades är:<br>%s<br>"
 
-#: src/bin/e_module.c:165
+#: src/bin/e_module.c:166
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Enlightenment is: "
 "%i.<br>"
 msgstr ""
-"Modul API Fel<br>Fel vid initsiering av modul: %s<br>"
-"Den kräver minst version %i av modul API<br>"
-"Versionen på API som raporteras av Enlightenment är: "
-"%i.<br>"
+"Modul API Fel<br>Fel vid initsiering av modul: %s<br>Den kräver minst "
+"version %i av modul API<br>Versionen på API som raporteras av Enlightenment "
+"är: %i.<br>"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:171
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s modul"
 
-#: src/bin/e_module.c:387
+#: src/bin/e_module.c:388
 msgid "(No Loaded Modules)"
 msgstr "(Inga moduler laddade)"
 
-#: src/bin/e_module.c:461
+#: src/bin/e_module.c:462
 msgid "About..."
 msgstr "Om..."
 
-#: src/bin/e_module.c:465
+#: src/bin/e_module.c:466
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: src/bin/e_module.c:538
+#: src/bin/e_module.c:539
 msgid "Would you like to unload this module?<br>"
 msgstr "Vill du stänga av denna modulen?<br>"
 
@@ -1390,9 +1429,9 @@ msgid ""
 "accurate as your BIOS or kernel drivers."
 msgstr ""
 "En enkel batterimätare som antingen använder<hilight>ACPI</hilight> eller "
-"<hilight>APM</hilight><br>på Linux för att övervaka ditt batteri och din AC"
-" nätdels <br>status. Detta fungerar under Linux och FreeBSD och är endast<br>"
-"lika exakt som ditt BIOS eller din kärnas drivrutiner."
+"<hilight>APM</hilight><br>på Linux för att övervaka ditt batteri och din AC "
+"nätdels <br>status. Detta fungerar under Linux och FreeBSD och är "
+"endast<br>lika exakt som ditt BIOS eller din kärnas drivrutiner."
 
 #: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
 #: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
@@ -1456,8 +1495,7 @@ msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
 msgstr ""
-"Batterinivå låg<br>"
-"Ditt batteri börjar ta slut. Du bör byta till nätdrift."
+"Batterinivå låg<br>Ditt batteri börjar ta slut. Du bör byta till nätdrift."
 
 #: src/modules/battery/e_mod_main.c:765 src/modules/cpufreq/e_mod_main.c:305
 #: src/modules/cpufreq/e_mod_main.c:333
@@ -1528,8 +1566,8 @@ msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
 msgstr ""
-"En enkel modul för att kotrollera frekvensen på din system CPU.<br>"
-"Det är speciellt användbart på Laptops för att spara ström."
+"En enkel modul för att kotrollera frekvensen på din system CPU.<br>Det är "
+"speciellt användbart på Laptops för att spara ström."
 
 #: src/modules/cpufreq/e_mod_main.c:221
 msgid "Restore Controller on Startup"
@@ -1548,16 +1586,16 @@ msgid ""
 "There was an error trying to set the cpu frequency<br>governor via the "
 "module's setfreq utility."
 msgstr ""
-"Fel vid försök att ställa CPU frekvens<br>"
-"governor via modulens setfreq verktyg."
+"Fel vid försök att ställa CPU frekvens<br>governor via modulens setfreq "
+"verktyg."
 
 #: src/modules/cpufreq/e_mod_main.c:331
 msgid ""
 "There was an error trying to set the cpu frequency<br>setting via the "
 "module's setfreq utility."
 msgstr ""
-"Fel vid försök att ställa CPU frekvensens<br>"
-"inställningar via modulens setfreq verktyg."
+"Fel vid försök att ställa CPU frekvensens<br>inställningar via modulens "
+"setfreq verktyg."
 
 #: src/modules/cpufreq/e_mod_main.c:456
 msgid "Check Fast (0.5 sec)"
@@ -1623,9 +1661,8 @@ msgid ""
 "desktop background - without special X-Server extensions<br>or hardware "
 "acceleration."
 msgstr ""
-"Detta är skuggkastinings modulen som gör skuggor på<br>"
-"skrivbordsbakgrunden - utan speciella X server tilllägg eller<br>"
-"hårdvaruaccelaretion."
+"Detta är skuggkastinings modulen som gör skuggor på<br>skrivbordsbakgrunden "
+"- utan speciella X server tilllägg eller<br>hårdvaruaccelaretion."
 
 #: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
@@ -1711,10 +1748,10 @@ msgid ""
 "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
 "<hilight>break often</hilight> and change as it improves."
 msgstr ""
-"Detta är IBar applikations startar modulen till Enlightenment.<br>"
-"Det är ett första exempel på hur moduler använder olika gränssnitt<br>"
-"i Enlightenment·0.17.0. Den är under kraftig utveckling så du kan<br>"
-"förvänta dig att den <hilight>går sönder ofta</hilight> och att den ändrar sig mycket."
+"Detta är IBar applikations startar modulen till Enlightenment.<br>Det är ett "
+"första exempel på hur moduler använder olika gränssnitt<br>i "
+"Enlightenment·0.17.0. Den är under kraftig utveckling så du kan<br>förvänta "
+"dig att den <hilight>går sönder ofta</hilight> och att den ändrar sig mycket."
 
 #: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
 #: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
@@ -1778,9 +1815,8 @@ msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
 msgstr ""
-"Du försökte att släppa en ikon av ett program<br>"
-"som inte har någon matchande applikations fil.<br>"
-"Ikonen kan inte läggas till i IBar."
+"Du försökte att släppa en ikon av ett program<br>som inte har någon "
+"matchande applikations fil.<br>Ikonen kan inte läggas till i IBar."
 
 #: src/modules/ibox/e_mod_main.c:151
 msgid "Enlightenment IBox Module"
@@ -1791,8 +1827,8 @@ msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
 msgstr ""
-"Detta är IBox applikation ikon modul till Enlightenment.<br>"
-"Den kommer att innehålla minimerade applikationer."
+"Detta är IBox applikation ikon modul till Enlightenment.<br>Den kommer att "
+"innehålla minimerade applikationer."
 
 #: src/modules/pager/e_mod_main.c:165
 msgid "Enlightenment Pager Module"
@@ -1876,8 +1912,8 @@ msgid ""
 "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 "resolution %dx%d in %d seconds."
 msgstr ""
-"Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>"
-"Återställer tidigare upplösning %dx%d om %d sekunder."
+"Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
+"tidigare upplösning %dx%d om %d sekunder."
 
 #: src/modules/randr/e_mod_main.c:390
 #, c-format
@@ -1885,8 +1921,8 @@ msgid ""
 "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 "resolution %dx%d NOW!"
 msgstr ""
-"Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>"
-"Återställer tidigare upplösning %dx%d NU!"
+"Behålla den nya upplösningen <hilight>%dx%d</hilight>?<br><br>Återställer "
+"tidigare upplösning %dx%d NU!"
 
 #: src/modules/start/e_mod_main.c:78
 msgid "Enlightenment Start Module"
@@ -1906,9 +1942,9 @@ msgid ""
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
 "generate a lot of heat."
 msgstr ""
-"En modul för att mäta <hilight>ACPI temperatur sensorer</hilight> på Linux.<br>"
-"Det är speciellt användbart på moderna Laptops med snabba<br>processorer"
-"som alstrar mycket värme."
+"En modul för att mäta <hilight>ACPI temperatur sensorer</hilight> på Linux."
+"<br>Det är speciellt användbart på moderna Laptops med "
+"snabba<br>processorersom alstrar mycket värme."
 
 #: src/modules/temperature/e_mod_main.c:188
 #: src/modules/temperature/e_mod_main.c:798
@@ -2000,7 +2036,7 @@ msgid ""
 "of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
 "unless you are working on the module system."
 msgstr ""
-"Denna modul är väldigt enkel och är endast till för att testa grundgränssnittet<br>"
-"på Enlightenment 0.17.0 modulsystem. Var snäll och ignorera denna modul<br>"
-"om du inte jobbar med modulsystemet."
+"Denna modul är väldigt enkel och är endast till för att testa "
+"grundgränssnittet<br>på Enlightenment 0.17.0 modulsystem. Var snäll och "
+"ignorera denna modul<br>om du inte jobbar med modulsystemet."
 
