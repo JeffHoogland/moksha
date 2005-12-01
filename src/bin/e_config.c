@@ -438,7 +438,7 @@ e_config_init(void)
 	e_config->focus_setting = E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED;
 	e_config->pass_click_on = 1;
 	e_config->always_click_to_raise = 0;
-	e_config->always_click_to_focus = 1;
+	e_config->always_click_to_focus = 0;
 	e_config->use_auto_raise = 0;
 	e_config->auto_raise_delay = 0.5;
 	e_config->use_resist = 1;

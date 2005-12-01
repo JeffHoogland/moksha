@@ -92,7 +92,10 @@ e_focus_event_mouse_down(E_Border* bd)
    else if (e_config->always_click_to_focus)
      {
 	if (!bd->lock_focus_out)
-	  e_border_focus_set(bd, 1, 1);
+	  {
+	     if (!bd->focused)
+	       e_border_focus_set(bd, 1, 1);
+	  }
      }
 }
 
