@@ -137,8 +137,16 @@ void
 e_intl_language_set(const char *lang)
 {
    if (_e_intl_language) free(_e_intl_language);
-   /* NULL lang means set everything back to the original environemtn defaults */
-   if (!lang)
+   if (lang)
+     {
+	e_util_env_set("LANGUAGE", _e_intl_language);
+	/* FIXME: maybe we should set these anyway? */
+	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
+	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
+	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
+     }
+   /* NULL lang means set everything back to the original environment defaults */
+   else
      {
 	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
 	e_util_env_set("LANGUAGE", _e_intl_orig_language);
@@ -149,23 +157,11 @@ e_intl_language_set(const char *lang)
    if (!lang) lang = getenv("LANGUAGE");
    if (!lang) lang = getenv("LC_ALL");
    if (!lang) lang = getenv("LANG");
-   if (lang)
-     {
-	_e_intl_language = strdup(lang);
-	e_util_env_set("LANGUAGE", _e_intl_language);
-	/* FIXME: maybe we should set these anyway? */
-	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
-	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
-	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
-     }
-   else
-     {
-	_e_intl_language = NULL;
-     }
+   _e_intl_language = (lang ? strdup (lang) : NULL);
 
    if (setlocale(LC_ALL, _e_intl_language) == NULL)
      {
-	perror("setlocale() :");
+	perror("setlocale()");
 	if (_e_intl_language)
 	  printf("An error occured when trying to use the locale: %s\nDetails:\n",
 		 _e_intl_language);
