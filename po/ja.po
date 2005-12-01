@@ -414,7 +414,7 @@ msgstr "仮想デスクトップを横に狭める"
 
 #: src/bin/e_int_menus.c:589
 msgid "Configuration Panel"
-msgstr "設定パンネル"
+msgstr "設定パネル"
 
 #: src/bin/e_int_menus.c:647 src/bin/e_int_menus.c:919
 msgid "(No Windows)"
