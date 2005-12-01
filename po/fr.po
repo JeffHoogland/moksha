@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-04-12 06:59+0900\n"
-"PO-Revision-Date: 2005-10-15 21:00+0100\n"
+"PO-Revision-Date: 2005-11-19 21:00+0100\n"
 "Last-Translator: Maxime BRUNEL <maxtoo@gentoofr.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1299,10 +1299,6 @@ msgstr ""
 "récente était lancée. Ce n'est pas saint et par précaution votre\n"
 "configuration a été remise à zéro. Désolé pour les désagréments.\n"
 
-#: src/bin/e_int_menus.c:148
-msgid "File Manager"
-msgstr "Gestionnaire de fichiers"
-
 #: src/bin/e_int_menus.c:813
 msgid "About This Theme"
 msgstr "A propos de ce thème"
@@ -1459,10 +1455,6 @@ msgstr "24 Heures"
 msgid "Digital Display"
 msgstr "Affichage Numérique"
 
-#: src/bin/e_int_menus.c:612
-msgid "Focus Settings"
-msgstr "Paramètres du Focus"
-
 #: src/bin/e_about.c:55
 msgid ""
 "Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br>"
@@ -1517,3 +1509,251 @@ msgstr ""
 "Vous avez demandé à sortir d'Enlightenment.<br>"
 "<br>"
 "Etes-vous sur de vouloir quitter?"
+
+#: src/bin/e_int_menus.c:149
+msgid "Files"
+msgstr "Fichiers"
+
+#: src/bin/e_fileman_smart.c:906
+msgid "Could not delete  <br><b>%s</b>"
+msgstr "Impossible de supprimer <br><b>%s</b>"
+
+#: src/bin/e_fileman_smart.c:905
+msgid "Error"
+msgstr "Erreur"
+
+#: src/bin/e_fileman_smart.c:1002
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: src/bin/e_fileman_smart.c:1003
+msgid " Are you sure you want to delete <br><b>%s</b> ?"
+msgstr " Etes-vous sûr de vouloir supprimer <br><b>%s</b> ?"
+
+#: src/bin/e_fileman_smart.c:1216
+msgid "General"
+msgstr "Général"
+
+#: src/bin/e_fileman_smart.c:1225
+msgid "File:"
+msgstr "Fichier:"
+
+#: src/bin/e_fileman_smart.c:1234
+msgid "Size:"
+msgstr "Taille:"
+
+#: src/bin/e_fileman_smart.c:1247
+msgid "An Image"
+msgstr "Une Image"
+
+#: src/bin/e_fileman_smart.c:1252
+msgid "Protect this file"
+msgstr "Protéger ce fichier"
+
+#: src/bin/e_fileman_smart.c:1258
+msgid "Let others see this file"
+msgstr "Laisser les autres voir ce fichier"
+
+#: src/bin/e_fileman_smart.c:1262
+msgid "Let others modify this file"
+msgstr "Laisser les autres modifier ce fichier"
+
+#: src/bin/e_fileman_smart.c:1266
+msgid "Dont let others see or modify this file"
+msgstr "Ne pas laisser les autres voir ou modifier ce fichier"
+
+#: src/bin/e_fileman_smart.c:1270
+msgid "Custom settings"
+msgstr "Paramètres habituels"
+
+#: src/bin/e_fileman_smart.c:1307
+msgid "File Info:"
+msgstr "Info Fichier:"
+
+#: src/bin/e_fileman_smart.c:1308
+msgid "Owner:"
+msgstr "Propriétaire:"
+
+#: src/bin/e_fileman_smart.c:1313
+msgid "Group:"
+msgstr "Groupe:"
+
+#: src/bin/e_fileman_smart.c:1318
+msgid "Last Access:"
+msgstr "Dernier Accès:"
+
+#: src/bin/e_fileman_smart.c:1323
+msgid "Last Modified:"
+msgstr "Dernière Modification:"
+
+#: src/bin/e_fileman_smart.c:1331
+msgid "Me"
+msgstr "Moi"
+
+#: src/bin/e_fileman_smart.c:1340
+msgid "My Group"
+msgstr "Mon Groupe"
+
+#: src/bin/e_fileman_smart.c:1349
+msgid "Everyone"
+msgstr "Tout le monde"
+
+#: src/bin/e_fileman_smart.c:1381
+msgid "Properties"
+msgstr "Propriétés"
+
+#: src/bin/e_fileman_smart.c:1902
+msgid "Arrange Icons"
+msgstr "Trier les Icones"
+
+#: src/bin/e_fileman_smart.c:1912
+msgid "By Name"
+msgstr "Par Nom"
+
+#: src/bin/e_fileman_smart.c:1923
+msgid "By Mod Time"
+msgstr "Par Date"
+
+#: src/bin/e_fileman_smart.c:1934
+msgid "New"
+msgstr "Nouveau"
+
+#: src/bin/e_fileman_smart.c:1944
+msgid "Directory"
+msgstr "Répertoire"
+
+#: src/bin/e_fileman_smart.c:1952
+msgid "View"
+msgstr "Voir"
+
+#: src/bin/e_fileman_smart.c:1962
+msgid "Name Only"
+msgstr "Nom Seulement"
+
+#: src/bin/e_fileman_smart.c:1971
+msgid "Details"
+msgstr "Détails"
+
+#: src/bin/e_fileman_smart.c:1981
+msgid "Refresh"
+msgstr "Rafraichir"
+
+#: src/bin/e_fileman_smart.c:2188
+msgid "Open"
+msgstr "Ouvrir"
+
+#: src/bin/e_fileman_smart.c:2199
+msgid "Copy"
+msgstr "Copier"
+
+#: src/bin/e_fileman_smart.c:2207
+msgid "Cut"
+msgstr "Couper"
+
+#: src/bin/e_fileman_smart.c:2218
+msgid "Rename"
+msgstr "Renommer"
+
+#: src/bin/e_fileman_smart.c:2226
+msgid "Delete"
+msgstr "Supprimer"
+
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "Paramètres Avancés"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "Simples Paramètres"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "Appliquer"
+
+#: src/bin/e_config_dialog.c:115
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/bin/e_configure.c:61
+msgid "Focus Settings"
+msgstr "Paramètres du Focus"
+
+#: src/bin/e_configure.c:62
+msgid "Window Manipulation"
+msgstr "Manipulation de la Fenêtre"
+
+#: src/bin/e_configure.c:63
+msgid "Window Display"
+msgstr "Affichage de la Fenêtre"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click Window to Focus"
+msgstr "Cliquer pour Focaliser la fenêtre"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Window under the Mouse"
+msgstr "Fenêtre sous la Souris"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Most recent Window under the Mouse"
+msgstr "La plupart des fenêtres récentes sous la Souris"
+
+#: src/bin/e_int_config_focus.c:164
+msgid "Focus"
+msgstr "Focus"
+
+#: src/bin/e_int_config_focus.c:166
+msgid "Click to focus"
+msgstr "Cliquer pour focaliser"
+
+#: src/bin/e_int_config_focus.c:168
+msgid "Pointer focus"
+msgstr "Pointer pour focaliser"
+
+#: src/bin/e_int_config_focus.c:170
+msgid "Sloppy focus"
+msgstr "Focus vague"
+
+#: src/bin/e_int_config_focus.c:174
+msgid "New Window Focus"
+msgstr "Focus pour la Nouvelle Fenêtre" 
+
+#: src/bin/e_int_config_focus.c:176
+msgid "No new windows get focus"
+msgstr "La nouvelle fenêtre n'obtient pas le focus"
+
+#: src/bin/e_int_config_focus.c:178
+msgid "All new windows get focus"
+msgstr "Toutes les nouvelles fenêtres obtiennent le focus"
+
+#: src/bin/e_int_config_focus.c:180
+msgid "Only new dialogs get focus"
+msgstr "Seulement les nouvelles boites de dialogues obtiennent le focus"
+
+#: src/bin/e_int_config_focus.c:182
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "Seulement les nouvelles boites de dialogues obtiennent le focus si le parent a le focus"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Other Settings"
+msgstr "Autres Paramètres"
+
+#: src/bin/e_int_config_focus.c:187
+msgid "Always pass on caught click events to programs"
+msgstr "Toujours transmettre le clic au programme"
+
+#: src/bin/e_int_config_focus.c:189
+msgid "A click on a window always raises it"
+msgstr "Un clic sur une fenêtre la met toujours au premier plan"
+
+#: src/bin/e_int_config_focus.c:191
+msgid "A click in a window always focuses it"
+msgstr "Un clic dans une fenêtre la focalise toujours"
+
+#: src/bin/e_int_config_window_display.c:136
+msgid "Display"
+msgstr "Affichage"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "Afficher la géometrie de la fenêtre quand elle bouge ou quand elle est redimensionnée"
