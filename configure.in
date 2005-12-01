@@ -283,6 +283,7 @@ src/lib/Makefile
 src/bin/Makefile
 src/modules/Makefile
 src/modules/test/Makefile
+src/modules/gadget_test/Makefile
 src/modules/ibar/Makefile
 src/modules/dropshadow/Makefile
 src/modules/clock/Makefile
