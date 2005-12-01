@@ -493,37 +493,39 @@ _e_drag_update(int x, int y)
    leave_ev->x = x;
    leave_ev->y = y;
 
-   for (l = _drop_handlers; l; l = l->next)
+   if ((_drag_current) && (_drag_current->types))
      {
-	E_Drop_Handler *h;
-
-	h = l->data;
-
-	if (!h->active)
-	  continue;
-	
-	if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
+	for (l = _drop_handlers; l; l = l->next)
 	  {
-	     if (!h->entered)
+	     E_Drop_Handler *h;
+	     
+	     h = l->data;
+	     
+	     if (!h->active)
+	       continue;
+	     
+	     if (E_INSIDE(x, y, h->x, h->y, h->w, h->h))
 	       {
-		  if (h->cb.enter)
-		    h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
-		  h->entered = 1;
+		  if (!h->entered)
+		    {
+		       if (h->cb.enter)
+			 h->cb.enter(h->cb.data, _drag_current->types[0], enter_ev);
+		       h->entered = 1;
+		    }
+		  if (h->cb.move)
+		    h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
 	       }
-	     if (h->cb.move)
-	       h->cb.move(h->cb.data, _drag_current->types[0], move_ev);
-	  }
-	else
-	  {
-	     if (h->entered)
+	     else
 	       {
-		  if (h->cb.leave)
-		    h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
-		  h->entered = 0;
+		  if (h->entered)
+		    {
+		       if (h->cb.leave)
+			 h->cb.leave(h->cb.data, _drag_current->types[0], leave_ev);
+		       h->entered = 0;
+		    }
 	       }
 	  }
      }
-
    free(enter_ev);
    free(move_ev);
    free(leave_ev);
@@ -902,7 +904,6 @@ _e_dnd_cb_event_dnd_position(void *data, int type, void *event)
    else
      {
 	_e_drag_update(ev->position.x, ev->position.y);
-
 	ecore_x_dnd_send_status(1, 0, rect, ECORE_X_DND_ACTION_PRIVATE);
      }
    return 1;
