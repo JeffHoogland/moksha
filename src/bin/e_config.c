@@ -763,6 +763,26 @@ e_config_init(void)
 	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 
+	     // sndev : start
+	     eb = E_NEW( E_Config_Binding_Key, 1 );
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("F10");
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = strdup( "window_maximized_toggle" );
+	     eb->params = strdup( "vertical" );
+	     e_config->key_bindings = evas_list_append( e_config->key_bindings, eb );
+
+	     eb = E_NEW( E_Config_Binding_Key, 1 );
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = strdup("F10");
+	     eb->modifiers = E_BINDING_MODIFIER_CTRL;
+	     eb->any_mod = 0;
+	     eb->action = strdup( "window_maximized_toggle" );
+	     eb->params = strdup( "horizontal" );
+	     e_config->key_bindings = evas_list_append( e_config->key_bindings, eb );
+	     // sndev : end
+
 	     eb = E_NEW(E_Config_Binding_Key, 1);
 	     eb->context = E_BINDING_CONTEXT_ANY;
 	     eb->key = strdup("r");

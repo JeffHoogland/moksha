@@ -1010,7 +1010,60 @@ e_hints_window_size_get(E_Border *bd)
 void
 e_hints_window_maximized_set(E_Border *bd, int on)
 {
-   if ((!bd->client.netwm.state.maximized_v) && (on))
+
+  if( on )
+  {
+    if( bd->maximized == E_MAXIMIZE_VERTICAL )
+    {
+      if( !bd->client.netwm.state.maximized_v )
+      {
+	bd->client.netwm.update.state = 1;
+	bd->client.netwm.state.maximized_v = 1;
+	bd->changed = 1;
+      }
+    }
+    else if( bd->maximized == E_MAXIMIZE_HORIZONTAL )
+    {
+      if( !bd->client.netwm.state.maximized_h )
+      {
+	bd->client.netwm.update.state = 1;
+	bd->client.netwm.state.maximized_h = 1;
+	bd->changed = 1;
+      }
+    }
+    else
+    {
+      if( !bd->client.netwm.state.maximized_v )
+      {
+	bd->client.netwm.update.state = 1;
+	bd->client.netwm.state.maximized_v = 1;
+	bd->changed = 1;
+      }
+      if( !bd->client.netwm.state.maximized_h )
+      {
+	bd->client.netwm.update.state = 1;
+	bd->client.netwm.state.maximized_h = 1;
+	bd->changed = 1;
+      }
+    }
+  }
+  else
+  {
+    if( bd->client.netwm.state.maximized_v )
+    {
+      bd->client.netwm.update.state = 1;
+      bd->client.netwm.state.maximized_v = 0;
+      bd->changed = 1;
+    }
+    if( bd->client.netwm.state.maximized_h )
+    {
+      bd->client.netwm.update.state = 1;
+      bd->client.netwm.state.maximized_h = 0;
+      bd->changed = 1;
+    }
+  }
+
+   /*if ((!bd->client.netwm.state.maximized_v) && (on))
      {
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_v = 1;
@@ -1033,7 +1086,7 @@ e_hints_window_maximized_set(E_Border *bd, int on)
 	bd->client.netwm.update.state = 1;
 	bd->client.netwm.state.maximized_h = 0;
 	bd->changed = 1;
-     }
+     }*/
 }
 
 void

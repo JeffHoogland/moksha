@@ -47,7 +47,9 @@ typedef enum _E_Maximize
    E_MAXIMIZE_FULLSCREEN,
    E_MAXIMIZE_SMART,
    E_MAXIMIZE_EXPAND,
-   E_MAXIMIZE_FILL
+   E_MAXIMIZE_FILL,
+   E_MAXIMIZE_VERTICAL,
+   E_MAXIMIZE_HORIZONTAL
 } E_Maximize;
 
 typedef enum _E_Fullscreen
@@ -358,6 +360,7 @@ struct _E_Border
    E_Config_Dialog *border_remember_dialog;
    E_Config_Dialog *border_border_dialog;
    E_Menu *border_stacking_menu;
+   E_Menu *border_maximize_menu;
    Evas_List *pending_move_resize;
    
    struct {
