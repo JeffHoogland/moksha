@@ -8,6 +8,11 @@ Some of the things (in very short form) that need to be done to E17...
   BUGS / FIXES
 -------------------------------------------------------------------------------
 
+* BUG: if you iconify a window and while iconified the window unmaps
+  (rhythmbox does this a lot apparently) e doesnt realise and still thinks
+  its iconified.
+* BUG: if app changes map state hint with XSetWMHints instead of callling
+  XMapWindow e wont de-iconify the window
 * BUG: in multihead dnd from pager to pager is pretty screwed especially at the
   top of the screen (if the pager is there)
 * BUG: if iconified window quits qhile iconified and ibox is being used then
