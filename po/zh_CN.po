@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-11-04 11:02+0800\n"
-"PO-Revision-Date: 2005-11-04 11:16+0800\n"
+"PO-Revision-Date: 2005-12-01 17:24+0800\n"
 "Last-Translator: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "Language-Team: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -511,7 +511,7 @@ msgstr "文件信息："
 
 #: src/bin/e_fileman_smart.c:1246
 msgid "Permissions:"
-msgstr ""
+msgstr "权限："
 
 #: src/bin/e_fileman_smart.c:1249 src/bin/e_fileman_smart.c:1258
 #: src/bin/e_fileman_smart.c:1267
@@ -1235,7 +1235,7 @@ msgstr "Enlightenment IBox 模块"
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
-msgstr ""
+msgstr "这是 Enlightenment 的 IBox 最小化应用程序模块。<br>它会显示最小化了的应用程序。"
 
 #: src/modules/test/e_mod_main.c:21
 msgid "Module Config Menu Item 1"
@@ -1434,11 +1434,11 @@ msgstr "弹出速度"
 
 #: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
 msgid "Fix Aspect (Keep Height)"
-msgstr ""
+msgstr "修正外观（保持高度）"
 
 #: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
 msgid "Fix Aspect (Keep Width)"
-msgstr ""
+msgstr "修正外观（保持宽度）"
 
 #: src/modules/randr/e_mod_main.c:84
 msgid "Enlightenment Randr Module"
