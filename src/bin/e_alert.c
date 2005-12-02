@@ -19,12 +19,18 @@ static Display     *dd = NULL;
 static char        *title = NULL, *str1 = NULL, *str2 = NULL, *str3 = NULL;
 static Font         font = 0;
 static XFontStruct *fs = NULL;
-   
+static GC           gc = 0;
+static Window       win = 0, b1 = 0, b2 = 0, b3 = 0;
+static int          ww = 600, hh = 440;   
 
 /* externally accessible functions */
 int
-e_alert_init(char *disp)
+e_alert_init(const char *disp)
 {
+   XGCValues            gcv;
+   int                  wid, hih, mask;
+   XSetWindowAttributes att;
+   
    dd = XOpenDisplay(disp);
    if (!dd) return 0;
    font = XLoadFont(dd, "fixed");
@@ -36,49 +42,6 @@ e_alert_init(char *disp)
    str1 = "(F1) Ignore";
    str2 = "(F2) Restart";
    str3 = "(F3) Exit";
-   return 1;
-}
-
-int
-e_alert_shutdown(void)
-{
-   XFreeFont(dd, fs);
-   XCloseDisplay(dd);
-   title = NULL;
-   str1 = NULL;
-   str2 = NULL;
-   str3 = NULL;
-   dd = NULL;
-   font = 0;
-   fs = NULL;
-   return 1;
-}
-
-void
-e_alert_show(char *text)
-{
-   int                  wid, hih, w, i, j, k, mask;
-   XGCValues            gcv;
-   GC                   gc;
-   char                 line[1024];
-   XEvent               ev;
-   XSetWindowAttributes att;
-   int                  fw, fh, ww, hh, mh;
-   KeyCode              key;
-   int                  button;
-   Window               win = 0, b1 = 0, b2 = 0, b3 = 0;
-
-   if (!text) return;
-
-   if ((!dd) || (!fs))
-     {
-	fprintf(stderr, text);
-	fflush(stderr);
-	exit(-1);
-     }
-   
-   ww = 600;
-   hh = 440;
    
    wid = DisplayWidth(dd, DefaultScreen(dd));
    hih = DisplayHeight(dd, DefaultScreen(dd));
@@ -106,24 +69,60 @@ e_alert_show(char *text)
    XSetForeground(dd, gc, att.border_pixel);
    XSelectInput(dd, win, KeyPressMask | KeyReleaseMask | ExposureMask);
 
+   return 1;
+}
+
+int
+e_alert_shutdown(void)
+{
+   XDestroyWindow(dd, win);
+   XFreeGC(dd, gc);
+   XFreeFont(dd, fs);
+   XCloseDisplay(dd);
+   title = NULL;
+   str1 = NULL;
+   str2 = NULL;
+   str3 = NULL;
+   dd = NULL;
+   font = 0;
+   fs = NULL;
+   gc = 0;
+   return 1;
+}
+
+void
+e_alert_show(const char *text)
+{
+   int                  w, i, j, k;
+   char                 line[1024];
+   XEvent               ev;
+   int                  fw, fh, mh;
+   KeyCode              key;
+   int                  button;
+
+   if (!text) return;
+
+   if ((!dd) || (!fs))
+     {
+	fprintf(stderr, text);
+	fflush(stderr);
+	exit(-1);
+     }
+   
    fh = fs->ascent + fs->descent;
    mh = ((ww - 20) / 3) - 20;
 
    /* fixed size... */
    w = 5 + (((ww - 20 - mh) * 0) / 4);
    XMoveResizeWindow(dd, b1, w, hh - 15 - fh, mh + 10, fh + 10);
-   XSelectInput(dd, b1,
-		ButtonPressMask | ButtonReleaseMask | ExposureMask);
+   XSelectInput(dd, b1, ButtonPressMask | ButtonReleaseMask | ExposureMask);
    w = 5 + (((ww - 20 - mh) * 1) / 2);
    XMoveResizeWindow(dd, b2, w, hh - 15 - fh, mh + 10, fh + 10);
-   XSelectInput(dd, b2,
-		ButtonPressMask | ButtonReleaseMask | ExposureMask);
+   XSelectInput(dd, b2, ButtonPressMask | ButtonReleaseMask | ExposureMask);
    w = 5 + (((ww - 20 - mh) * 2) / 2);
    XMoveResizeWindow(dd, b3, w, hh - 15 - fh, mh + 10, fh + 10);
-   XSelectInput(dd, b3,
-		ButtonPressMask | ButtonReleaseMask | ExposureMask);
+   XSelectInput(dd, b3, ButtonPressMask | ButtonReleaseMask | ExposureMask);
    
-   XSync(dd, False);
    XMapWindow(dd, win);
    XGrabPointer(dd, win, True, ButtonPressMask | ButtonReleaseMask,
 		GrabModeAsync, GrabModeAsync, None, None, CurrentTime);
@@ -212,7 +211,6 @@ e_alert_show(char *text)
 	  }
      }
    XDestroyWindow(dd, win);
-   XFreeGC(dd, gc);
    XSync(dd, False);
    
    switch (button)

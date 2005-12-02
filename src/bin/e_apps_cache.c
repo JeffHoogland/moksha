@@ -4,14 +4,7 @@
 #include "e.h"
 
 #define NEWD(str, typ) \
-   eet_data_descriptor_new(str, sizeof(typ), \
-			      (void *(*) (void *))evas_list_next, \
-			      (void *(*) (void *, void *))evas_list_append, \
-			      (void *(*) (void *))evas_list_data, \
-			      (void *(*) (void *))evas_list_free, \
-			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
-			      (void *(*) (void *, const char *, void *))evas_hash_add, \
-			      (void  (*) (void *))evas_hash_free)
+     { eddc.name = str; eddc.size = sizeof(typ); }
 
 #define FREED(eed) \
    if (eed) \
@@ -31,7 +24,24 @@ static Eet_Data_Descriptor *_e_app_cache_edd = NULL;
 int
 e_app_cache_init(void)
 {
-   _e_app_cache_edd = NEWD("E_App_Cache", E_App_Cache);
+   Eet_Data_Descriptor_Class eddc;
+   
+   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
+   eddc.func.mem_alloc = NULL;
+   eddc.func.mem_free = NULL;
+   eddc.func.str_alloc = evas_stringshare_add;
+   eddc.func.str_free = evas_stringshare_del;
+   eddc.func.list_next = evas_list_next;
+   eddc.func.list_append = evas_list_append;
+   eddc.func.list_data = evas_list_data;
+   eddc.func.list_free = evas_list_free;
+   eddc.func.hash_foreach = evas_hash_foreach;
+   eddc.func.hash_add = evas_hash_add;
+   eddc.func.hash_free = evas_hash_free;
+   
+   NEWD("E_App_Cache", E_App_Cache);
+   _e_app_cache_edd = eet_data_descriptor2_new(&eddc);
+   
    NEWI("nm", name, EET_T_STRING);
    NEWI("gn", generic, EET_T_STRING);
    NEWI("cm", comment, EET_T_STRING);
@@ -113,7 +123,7 @@ e_app_cache_generate(E_App *a)
 	     if ((!ac2->is_link) && (!ac2->is_dir))
 	       ac2->file_mod_time = ecore_file_mod_time(buf);
 	     ac->subapps = evas_list_append(ac->subapps, ac2);
-	     ac->subapps_hash = evas_hash_add(ac->subapps_hash, ac2->file, ac2);
+	     ac->subapps_hash = evas_hash_direct_add(ac->subapps_hash, ac2->file, ac2);
 	  }
      }
    return ac;
@@ -123,16 +133,16 @@ void
 e_app_cache_free(E_App_Cache *ac)
 {
    if (!ac) return;
-   E_FREE(ac->name);
-   E_FREE(ac->generic);
-   E_FREE(ac->comment);
-   E_FREE(ac->exe);
-   E_FREE(ac->file);
-   E_FREE(ac->win_name);
-   E_FREE(ac->win_class);
-   E_FREE(ac->win_title);
-   E_FREE(ac->win_role);
-   E_FREE(ac->icon_class);
+   if (ac->name) evas_stringshare_del(ac->name);
+   if (ac->generic) evas_stringshare_del(ac->generic);
+   if (ac->comment) evas_stringshare_del(ac->comment);
+   if (ac->exe) evas_stringshare_del(ac->exe);
+   if (ac->file) evas_stringshare_del(ac->file);
+   if (ac->win_name) evas_stringshare_del(ac->win_name);
+   if (ac->win_class) evas_stringshare_del(ac->win_class);
+   if (ac->win_title) evas_stringshare_del(ac->win_title);
+   if (ac->win_role) evas_stringshare_del(ac->win_role);
+   if (ac->icon_class) evas_stringshare_del(ac->icon_class);
    while (ac->subapps)
      {
 	E_App_Cache *ac2;
@@ -161,17 +171,15 @@ e_app_cache_save(E_App_Cache *ac, char *path)
    return ret;
 }
 
-
-
 static void
 _e_eapp_cache_fill(E_App_Cache *ac, E_App *a)
 {
-#define IF_DUP(x) if (a->x) ac->x = strdup(a->x)
+#define IF_DUP(x) if (a->x) ac->x = evas_stringshare_add(a->x)
    IF_DUP(name);
    IF_DUP(generic);
    IF_DUP(comment);
    IF_DUP(exe);
-   ac->file = strdup(ecore_file_get_file(a->path));
+   ac->file = evas_stringshare_add(ecore_file_get_file(a->path));
    IF_DUP(win_name);
    IF_DUP(win_class);
    IF_DUP(win_title);

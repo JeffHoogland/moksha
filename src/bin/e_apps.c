@@ -123,11 +123,11 @@ e_app_init(void)
    e_app_cache_init();
    home = e_user_homedir_get();
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/trash", home);
-   _e_apps_path_trash = strdup(buf);
+   _e_apps_path_trash = evas_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/.e/e/applications/all", home);
-   _e_apps_path_all = strdup(buf);
+   _e_apps_path_all = evas_stringshare_add(buf);
    free(home);
-   _e_apps_repositories = evas_list_append(_e_apps_repositories, strdup(buf));
+   _e_apps_repositories = evas_list_append(_e_apps_repositories, evas_stringshare_add(buf));
    _e_apps_exit_handler = ecore_event_handler_add(ECORE_EVENT_EXE_EXIT, _e_apps_cb_exit, NULL);
    _e_apps_border_add_handler = ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_app_cb_event_border_add, NULL);
    _e_apps_all = e_app_new(buf, 1);
@@ -145,7 +145,7 @@ e_app_shutdown(void)
      }
    while (_e_apps_repositories)
      {
-	free(_e_apps_repositories->data);
+	evas_stringshare_del(_e_apps_repositories->data);
 	_e_apps_repositories = evas_list_remove_list(_e_apps_repositories, _e_apps_repositories);
      }
    if (_e_apps_exit_handler)
@@ -158,8 +158,8 @@ e_app_shutdown(void)
 	ecore_event_handler_del(_e_apps_border_add_handler);
 	_e_apps_border_add_handler = NULL;
      }
-   free(_e_apps_path_trash);
-   free(_e_apps_path_all);
+   evas_stringshare_del(_e_apps_path_trash);
+   evas_stringshare_del(_e_apps_path_all);
      {
 	Evas_List *l;
 	for (l = _e_apps_list; l; l = l->next)
@@ -235,7 +235,7 @@ e_app_new(const char *path, int scan_subdirs)
 	     /* no image for now */
 	     a->image = NULL;
 	     /* record the path */
-	     a->path = strdup(path);
+	     a->path = evas_stringshare_add(path);
 	     
 	     if (ecore_file_is_dir(a->path))
 	       {
@@ -243,7 +243,7 @@ e_app_new(const char *path, int scan_subdirs)
 		  if (ecore_file_exists(buf))
 		    e_app_fields_fill(a, buf);
 		  else
-		    a->name = strdup(ecore_file_get_file(a->path));
+		    a->name = evas_stringshare_add(ecore_file_get_file(a->path));
 		  if (scan_subdirs) e_app_subdir_scan(a, scan_subdirs);
 		  
 		  a->monitor = ecore_file_monitor_add(a->path, _e_app_cb_monitor, a);
@@ -272,7 +272,7 @@ e_app_new(const char *path, int scan_subdirs)
 
 error:
    if (a->monitor) ecore_file_monitor_del(a->monitor);
-   if (a->path) free(a->path);
+   if (a->path) evas_stringshare_del(a->path);
    e_app_fields_empty(a);
    free(a);
    return NULL;
@@ -285,8 +285,7 @@ e_app_empty_new(const char *path)
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    a->image = NULL;
-   if (path)
-     a->path = strdup(path);   
+   if (path) a->path = evas_stringshare_add(path);   
    return a;      
 }
 
@@ -469,8 +468,8 @@ e_app_prepend_relative(E_App *add, E_App *before)
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", before->parent->path, ecore_file_get_file(add->path));
 	ecore_file_mv(add->path, buf);
-	free(add->path);
-	add->path = strdup(buf);
+	evas_stringshare_del(add->path);
+	add->path = evas_stringshare_add(buf);
      }
 
    _e_app_save_order(before->parent);
@@ -495,8 +494,8 @@ e_app_append(E_App *add, E_App *parent)
 	if (ecore_file_exists(buf))
 	  snprintf(buf, sizeof(buf), "%s/%s", parent->path, ecore_file_get_file(add->path));
 	ecore_file_mv(add->path, buf);
-	free(add->path);
-	add->path = strdup(buf);
+	evas_stringshare_del(add->path);
+	add->path = evas_stringshare_add(buf);
      }
 
    _e_app_save_order(parent);
@@ -628,8 +627,8 @@ e_app_remove(E_App *a)
 	/* Move to trash */
 	snprintf(buf, sizeof(buf), "%s/%s", _e_apps_path_trash, ecore_file_get_file(a->path));
 	ecore_file_mv(a->path, buf);
-	free(a->path);
-	a->path = strdup(buf);
+	evas_stringshare_del(a->path);
+	a->path = evas_stringshare_add(buf);
      }
    _e_app_save_order(a->parent);
    _e_app_change(a, E_APP_DEL);
@@ -867,6 +866,15 @@ e_app_fields_fill(E_App *a, const char *path)
    ef = eet_open(path, EET_FILE_MODE_READ);
    if (!ef) return;
 
+#define STORE(member) \
+   if (v) \
+     { \
+	str = alloca(size + 1); \
+	memcpy(str, v, size); \
+	str[size] = 0; \
+	a->member = evas_stringshare_add(str); \
+	free(v); \
+     }
    if (lang)
      {
 	snprintf(buf, sizeof(buf), "app/info/name[%s]", lang);
@@ -875,14 +883,7 @@ e_app_fields_fill(E_App *a, const char *path)
      }
    else
      v = eet_read(ef, "app/info/name", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->name = str;
-	free(v);
-     }
+   STORE(name);
 
    if (lang)
      {
@@ -892,15 +893,7 @@ e_app_fields_fill(E_App *a, const char *path)
      }
    else
      v = eet_read(ef, "app/info/generic", &size);
-
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->generic = str;
-	free(v);
-     }
+   STORE(generic);
 
    if (lang)
      {
@@ -910,70 +903,20 @@ e_app_fields_fill(E_App *a, const char *path)
      }
    else
      v = eet_read(ef, "app/info/comment", &size);
-
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->comment = str;
-	free(v);
-     }
+   STORE(comment);
 
    v = eet_read(ef, "app/info/exe", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->exe = str;
-	free(v);
-     }
+   STORE(exe);
    v = eet_read(ef, "app/icon/class", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->icon_class = str;
-	free(v);
-     }
+   STORE(icon_class);
    v = eet_read(ef, "app/window/name", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->win_name = str;
-	free(v);
-     }
+   STORE(win_name);
    v = eet_read(ef, "app/window/class", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->win_class = str;
-	free(v);
-     }
+   STORE(win_class);
    v = eet_read(ef, "app/window/title", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->win_title = str;
-	free(v);
-     }
+   STORE(win_title);
    v = eet_read(ef, "app/window/role", &size);
-   if (v)
-     {
-	str = malloc(size + 1);
-	memcpy(str, v, size);
-	str[size] = 0;
-	a->win_role = str;
-	free(v);
-     }
+   STORE(win_role);
    v = eet_read(ef, "app/info/startup_notify", &size);
    if (v)
      {
@@ -1105,15 +1048,24 @@ e_app_fields_save(E_App *a)
 void
 e_app_fields_empty(E_App *a)
 {
-   E_FREE(a->name);
-   E_FREE(a->generic);
-   E_FREE(a->comment);
-   E_FREE(a->exe);
-   E_FREE(a->icon_class);
-   E_FREE(a->win_name);
-   E_FREE(a->win_class);
-   E_FREE(a->win_title);
-   E_FREE(a->win_role);
+   if (a->name) evas_stringshare_del(a->name);
+   if (a->generic) evas_stringshare_del(a->generic);
+   if (a->comment) evas_stringshare_del(a->comment);
+   if (a->exe) evas_stringshare_del(a->exe);
+   if (a->icon_class) evas_stringshare_del(a->icon_class);
+   if (a->win_name) evas_stringshare_del(a->win_name);
+   if (a->win_class) evas_stringshare_del(a->win_class);
+   if (a->win_title) evas_stringshare_del(a->win_title);
+   if (a->win_role) evas_stringshare_del(a->win_role);
+   a->name = NULL;
+   a->generic = NULL;
+   a->comment = NULL;
+   a->exe = NULL;
+   a->icon_class = NULL;
+   a->win_name = NULL;
+   a->win_class = NULL;
+   a->win_title = NULL;
+   a->win_role = NULL;
 }
 
 Ecore_List *
@@ -1358,7 +1310,7 @@ _e_app_free(E_App *a)
 	_e_apps = evas_hash_del(_e_apps, a->path, a);
 	_e_apps_list = evas_list_remove(_e_apps_list, a);
 	e_app_fields_empty(a);
-	E_FREE(a->path);
+	if (a->path) evas_stringshare_del(a->path);
 	free(a);
      }
 }
@@ -1460,7 +1412,7 @@ _e_app_cb_monitor(void *data, Ecore_File_Monitor *em,
 	else if (event == ECORE_FILE_EVENT_DELETED_FILE)
 	  {
 	     e_app_fields_empty(app);
-	     app->name = strdup(ecore_file_get_file(app->path));
+	     app->name = evas_stringshare_add(ecore_file_get_file(app->path));
 	  }
 	else
 	  {
@@ -1856,7 +1808,7 @@ _e_app_cb_expire_timer(void *data)
 static void
 _e_app_cache_copy(E_App_Cache *ac, E_App *a)
 {
-#define IF_DUP(x) if ((ac->x) && (ac->x[0] != 0)) a->x = strdup(ac->x)
+#define IF_DUP(x) if ((ac->x) && (ac->x[0] != 0)) a->x = evas_stringshare_add(ac->x)
    IF_DUP(name);
    IF_DUP(generic);
    IF_DUP(comment);
@@ -1891,7 +1843,7 @@ _e_app_cb_scan_cache_timer(void *data)
 	ecore_list_destroy(sc->files);
 	e_app_cache_free(sc->cache);
 	ecore_timer_del(sc->timer);
-	free(sc->path);
+	evas_stringshare_del(sc->path);
 	free(sc);
 	printf("Cache scan finish.\n");
 	return 0;
@@ -1942,7 +1894,7 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
    
    a = E_OBJECT_ALLOC(E_App, E_APP_TYPE, _e_app_free);
    _e_app_cache_copy(ac, a);
-   a->path = strdup(path);
+   a->path = evas_stringshare_add(path);
    a->scanned = 1;
    for (l = ac->subapps; l; l = l->next)
      {
@@ -1965,10 +1917,10 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
 		  _e_app_cache_copy(ac2, a2);
 		  if (ac2->is_dir)
 		    {
-		       E_FREE(a2->exe);
+		       if (a2->exe) evas_stringshare_del(a2->exe);
 		    }
 		  a2->parent = a;
-		  a2->path = strdup(buf);
+		  a2->path = evas_stringshare_add(buf);
 		  a->subapps = evas_list_append(a->subapps, a2);
 		  _e_apps = evas_hash_add(_e_apps, a2->path, a2);
 		  _e_apps_list = evas_list_prepend(_e_apps_list, a2);
@@ -2009,7 +1961,7 @@ _e_app_cache_new(E_App_Cache *ac, char *path, int scan_subdirs)
    sc = calloc(1, sizeof(E_App_Scan_Cache));
    if (sc)
      {
-	sc->path = strdup(path);
+	sc->path = evas_stringshare_add(path);
 	sc->cache = ac;
 	sc->app = a;
 	sc->files = e_app_dir_file_list_get(a);

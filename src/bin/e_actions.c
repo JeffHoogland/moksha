@@ -1412,7 +1412,7 @@ e_action_name_list(void)
 }
 
 E_Action *
-e_action_add(char *name)
+e_action_add(const char *name)
 {
    E_Action *act;
    
@@ -1421,15 +1421,15 @@ e_action_add(char *name)
      {
 	act = E_OBJECT_ALLOC(E_Action, E_ACTION_TYPE, _e_action_free);
 	if (!act) return NULL;
-	act->name = strdup(name);
-	actions = evas_hash_add(actions, name, act);
+	act->name = name;
+	actions = evas_hash_direct_add(actions, act->name, act);
 	action_names = evas_list_append(action_names, name);
      }
    return act;
 }
 
 E_Action *
-e_action_find(char *name)
+e_action_find(const char *name)
 {
    E_Action *act;
    
@@ -1444,7 +1444,6 @@ _e_action_free(E_Action *act)
 {
    actions = evas_hash_del(actions, act->name, act);
    action_names = evas_list_remove(action_names, act->name);
-   E_FREE(act->name);
    free(act);
 }
 

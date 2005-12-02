@@ -10,4 +10,5 @@ temperature \
 cpufreq \
 ibox \
 start \
-randr
+randr \
+gadget_test
