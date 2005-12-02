@@ -6,8 +6,6 @@
 
 /* TODO List:
  * 
- * * add more language names to the language name list list in e_intl_language_name_get()
- * * as we get translations add languages to the simplified lang list (C and en are currently the same, ja is a test translation - incomplete)
  */
 
 static Ecore_Exe *_e_intl_input_method_exec = NULL;
@@ -151,13 +149,23 @@ e_intl_post_shutdown(void)
    return 1;
 }
 
+/*
+ * TODO 
+ * - Set the env variables only after the locale has been validated
+ * - Add error dialogs explaining any errors while setting the locale
+ *      * Locale aliases need to be configured
+ *      * Locale is invalid
+ *      * Message files are not found for this locale, then we have (en_US, POSIX, C)
+ * - Add support of compound locales i.e. (en_US;zh_CN;C) ==Defer==
+ * - Add Configuration for to-be-set environment variables
+ */
 void
 e_intl_language_set(const char *lang)
 {
    char *alias_locale;
 
    if (_e_intl_language) free(_e_intl_language);
-   /* NULL lang means set everything back to the original environemtn defaults */
+   /* NULL lang means set everything back to the original environment defaults */
    if (!lang)
      {
 	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
