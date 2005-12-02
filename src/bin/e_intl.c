@@ -25,20 +25,38 @@ static char *_e_intl_orig_gtk_im_module = NULL;
 static char *_e_intl_input_method = NULL;
 
 static Eet_Data_Descriptor *_e_intl_input_method_config_edd = NULL;
+static int loc_mask;
 
 #define E_EXE_STOP(EXE) if (EXE != NULL) { ecore_exe_terminate(EXE); ecore_exe_free(EXE); EXE = NULL; }
 #define E_EXE_IS_VALID(EXE) (!((EXE == NULL) || (EXE[0] == 0)))
 
-static Evas_Hash *_e_intl_language_path_scan(E_Path *path);
-static void _e_intl_language_hash_free(Evas_Hash *language_hash);
-static char *_e_intl_language_hash_find(Evas_Hash *language_hash, char *language);
-static int _e_intl_language_list_find(Evas_List *language_list, char *language);
-static Evas_List *_e_intl_language_system_locales_get(void);
-Evas_Bool _e_intl_cb_free_language_hash(Evas_Hash *hash, const char *key, void *data, void *fdata);
-static Evas_List *_e_intl_language_dir_scan(const char *dir);
-static int _e_intl_cb_exit(void *data, int type, void *event);
-static Evas_List *_e_intl_imc_path_scan(E_Path *path);
-static Evas_List *_e_intl_imc_dir_scan(const char *dir);
+#define E_LOC_CODESET	1 << 0
+#define E_LOC_REGION	1 << 1
+#define E_LOC_MODIFIER	1 << 2
+#define E_LOC_LANG	1 << 3
+
+#define E_LOC_ALL	E_LOC_LANG | E_LOC_REGION | E_LOC_CODESET | E_LOC_MODIFIER
+#define E_LOC_SIGNIFICANT E_LOC_LANG | E_LOC_REGION | E_LOC_CODESET
+
+/* Language Setting and Listing */
+static char		*_e_intl_language_path_find(char *language);
+static Evas_List 	*_e_intl_language_dir_scan(const char *dir);
+static int 		 _e_intl_language_list_find(Evas_List *language_list, char *language);
+
+/* Locale Validation and Discovery */
+static char		*_e_intl_locale_canonic_get(char *locale, int ret_mask);
+static char		*_e_intl_locale_alias_get(char *language); 
+static Evas_Hash	*_e_intl_locale_alias_hash_get(void);
+static Evas_List	*_e_intl_locale_system_locales_get(void);
+static Evas_List	*_e_intl_locale_search_order_get(char *locale);
+static int		 _e_intl_locale_validate(char *locale);
+static void 		 _e_intl_locale_hash_free(Evas_Hash *language_hash);
+Evas_Bool 		 _e_intl_locale_hash_free_cb(Evas_Hash *hash, const char *key, void *data, void *fdata);
+
+/* Input Method Configuration and Management */
+static int 		 _e_intl_cb_exit(void *data, int type, void *event);
+static Evas_List 	*_e_intl_imc_path_scan(E_Path *path);
+static Evas_List 	*_e_intl_imc_dir_scan(const char *dir);
 static E_Input_Method_Config *_e_intl_imc_find(Evas_List *imc_list, char *name);
 
 
@@ -136,17 +154,11 @@ e_intl_post_shutdown(void)
 void
 e_intl_language_set(const char *lang)
 {
+   char *alias_locale;
+
    if (_e_intl_language) free(_e_intl_language);
-   if (lang)
-     {
-	e_util_env_set("LANGUAGE", _e_intl_language);
-	/* FIXME: maybe we should set these anyway? */
-	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
-	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
-	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
-     }
-   /* NULL lang means set everything back to the original environment defaults */
-   else
+   /* NULL lang means set everything back to the original environemtn defaults */
+   if (!lang)
      {
 	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
 	e_util_env_set("LANGUAGE", _e_intl_orig_language);
@@ -157,31 +169,54 @@ e_intl_language_set(const char *lang)
    if (!lang) lang = getenv("LANGUAGE");
    if (!lang) lang = getenv("LC_ALL");
    if (!lang) lang = getenv("LANG");
-   _e_intl_language = (lang ? strdup (lang) : NULL);
-
-   if (setlocale(LC_ALL, _e_intl_language) == NULL)
+   if (lang)
      {
-	perror("setlocale()");
-	if (_e_intl_language)
-	  printf("An error occured when trying to use the locale: %s\nDetails:\n",
-		 _e_intl_language);
-	else
-	  printf("An error occured trying to use the default locale\n");
+	_e_intl_language = strdup(lang);
+	e_util_env_set("LANGUAGE", _e_intl_language);
+	/* FIXME: maybe we should set these anyway? */
+	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
+	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
+	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
      }
-  
-   if (_e_intl_language) 
-     { 
-	Evas_Hash *language_hash;
-	char *locale_path;
-   
-	language_hash = _e_intl_language_path_scan(path_messages);
-	locale_path = _e_intl_language_hash_find(language_hash, _e_intl_language);
-	bindtextdomain(PACKAGE, locale_path);
-	_e_intl_language_hash_free(language_hash);
-	textdomain(PACKAGE);
-//   XSetLocaleModifiers("");
-	bind_textdomain_codeset(PACKAGE, "UTF-8");
+   else
+     {
+	_e_intl_language = NULL;
      }
+
+   alias_locale = _e_intl_locale_alias_get(_e_intl_language);
+   if (!_e_intl_locale_validate(alias_locale))
+     {
+	fprintf(stderr, "Locale %s is NO GOOD. Please" 
+	       "install this locale or don't" 
+               "use it!\n", alias_locale);
+     }
+   else
+     {
+    	setlocale(LC_ALL, _e_intl_language);
+        if (_e_intl_language)
+	  {
+             char *locale_path;
+             
+             locale_path = _e_intl_language_path_find(alias_locale);
+             if (locale_path == NULL)
+	       {
+		  fprintf(stderr, "The eMonkeys can not find the" 
+			 " eTranslation for your eLocale(%s). "
+			 "Please make sure your messages "
+			 "path is in order. If this locale"
+			 "is an alias make sure you have your"
+			 "locale.aliases file in the right place\n", alias_locale);
+	       }
+	     else
+	       {
+		  bindtextdomain(PACKAGE, locale_path);
+		  textdomain(PACKAGE);
+		  bind_textdomain_codeset(PACKAGE, "UTF-8");
+		  free(locale_path);
+               } 
+	  }
+     }
+   free(alias_locale);
 }
 
 const char *
@@ -403,71 +438,16 @@ _e_intl_cb_exit(void *data, int type, void *event)
    return 1;
 }
 
-/* 
- * Scan the path for languages. Return a hash of languages found in 
- * the path. The hash is a Evas_Hash<String, String> the keys of the 
- * hash are the languages (e.i. zh_CN) and the path is the direcory 
- * where this locale was found. The directory is used to send to the locale
- * function bindtextdomain().  
- * Example Hash:
- *	en -> ~/e/e/locale
- *      zh_CN -> ~/my_messages  
- *
- * @path E_Path to scan
- * @return hash of languages to path
- */
-static Evas_Hash *
-_e_intl_language_path_scan(E_Path *path)
-{
-   Evas_List *next;
-   Evas_List *dir_list;
-   Evas_Hash *all_languages;
-   
-   if (!path) return NULL;
-
-   all_languages = NULL;
-   dir_list = e_path_dir_list_get(path);
-   for (next = dir_list ; next ; next = next->next)
-     {
-	E_Path_Dir *epd;        
-	Evas_List *dir_languages;
-	        
-	epd = next->data;		        
-	dir_languages = _e_intl_language_dir_scan(epd->dir);
-	while (dir_languages)
-	  {
-	     char *language;
-
-	     language = dir_languages->data;
-	     dir_languages = evas_list_remove_list(dir_languages, dir_languages);
-
-	     if (evas_hash_find(all_languages, language))
-	       {
-		  free(language);
-	       }
-	     else
-	       {
-		  all_languages = evas_hash_add(all_languages, language, strdup(epd->dir));
-		  free(language);
-	       }
-	  }
-     }
-   
-   e_path_dir_list_free(dir_list);  
-
-   return all_languages;
-}
-
 static void
-_e_intl_language_hash_free(Evas_Hash *language_hash)
+_e_intl_locale_hash_free(Evas_Hash *locale_hash)
 {
-   if(!language_hash) return;
-   evas_hash_foreach(language_hash, _e_intl_cb_free_language_hash, NULL);
-   evas_hash_free(language_hash);
+   if(!locale_hash) return;
+   evas_hash_foreach(locale_hash, _e_intl_locale_hash_free_cb, NULL);
+   evas_hash_free(locale_hash);
 }
 
 Evas_Bool
-_e_intl_cb_free_language_hash(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
+_e_intl_locale_hash_free_cb(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    free(data);
    return 1;
@@ -475,73 +455,65 @@ _e_intl_cb_free_language_hash(Evas_Hash *hash __UNUSED__, const char *key __UNUS
 
 
 /* 
- * get the directory associated with the language.  
+ * get the directory associated with the language. Language Must be valid alias
+ * i.e. Already validated and already de-aliased.
+ *
+ * NULL means:
+ *  1) The user does not have an enlightenment translation for this locale
+ *  2) The user does not have their locale.aliases configured correctly
+ * 
+ * @return NULL if not found.    
  */
 static char *
-_e_intl_language_hash_find(Evas_Hash *language_hash, char *language)
+_e_intl_language_path_find(char *language)
 {
-   Evas_List	*l;
-   Evas_List	*all_languages;
-   char		*best_language;
-   int		 best_chars;
    char		*directory;
-   
-   if (!language_hash) return NULL;
-   if (!language) return NULL;
+   Evas_List	*dir_list;
+   Evas_List	*search_list;
+   Evas_List	*next_dir;
+   Evas_List	*next_search;
+   int		 found;
 
-   best_language = NULL;
-   best_chars = 0;
-   all_languages = e_intl_language_list();
+   search_list = _e_intl_locale_search_order_get(language); 
+
+   if (search_list == NULL) return NULL;
+
+   directory = NULL;
+   found = 0;
+   dir_list = e_path_dir_list_get(path_messages);
    
-   /* Do a best match:
-    * If language is ja_JP.UTF-8 we should match ja 
-    * If language is zh we should match the first in the list of zh_CN and zh_TW
-    */
-   for ( l = all_languages ; l ; l = l->next )
+   /* delete dir list as we go ? */
+   for (next_dir = dir_list ; next_dir ; next_dir = next_dir->next)
      {
-	char	*list_lang;
-	int	 cmp_ret;
+	E_Path_Dir *epd;
+	epd = next_dir->data;
 	
-	list_lang = l->data;	
-	cmp_ret = strncmp(list_lang, language, 2);
-        if ( cmp_ret == 0 )
-	  {
-	     int list_lang_len;
-	     int language_len;
-	     int compare_len;
-	     
-	     if (best_language == NULL) 
-	       {
-		  best_language = list_lang;
-		  best_chars = 2;
-		  continue;
-	       }
-	     
-	     list_lang_len = strlen(list_lang);
-	     language_len = strlen(language);
-	     compare_len = list_lang_len < language_len ?	list_lang_len : 
-								language_len;
-	     if ( (compare_len > best_chars ) && 
-		   !strncmp(list_lang, language, compare_len)
-		)
-	       {
-		  best_language = list_lang;
-		  best_chars = compare_len;
-	       }
-	  }
-     }
-  
-   directory = evas_hash_find(language_hash, best_language);
-   
-   while (all_languages)
-     {
-	char *lang;
+	for (next_search = search_list ; next_search && !found ; next_search = next_search->next)
+	   {
+		char message_path[PATH_MAX];
+		char *search_locale;
+		
+		search_locale = next_search->data;
+		snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo",
+			epd->dir, search_locale, PACKAGE);
+		if (ecore_file_exists(message_path) && !ecore_file_is_dir(message_path))
+		  {
+		     directory = strdup(epd->dir);
+		  }
+	   }
 
-	lang = all_languages->data;
-	all_languages = evas_list_remove_list(all_languages, all_languages);
-	free(lang);
      }
    
+   e_path_dir_list_free(dir_list);
+
+   while (search_list)
+     {
+	char *data;
+	data = search_list->data;
+	free(data);
+	search_list = evas_list_remove_list(search_list, search_list);
+     }
+
    return directory;
 }
 
@@ -564,64 +536,280 @@ _e_intl_language_dir_scan(const char *dir)
 	  {
 	     char file_path[PATH_MAX];
 	     
-	     snprintf(file_path, sizeof(file_path),"%s/%s", dir, file);
-	     if (ecore_file_is_dir(file_path))
-	       {
-		  /* look for LC_MESSAGES */
-		  Ecore_List *level_one_files;
-		  char *level_one_file;
-		  
-		  level_one_files = ecore_file_ls(file_path);
-		  if (!level_one_files) continue;
-		  
-		  ecore_list_goto_first(level_one_files);
-		  if (level_one_files)
-		    {
-		       while ((level_one_file = ecore_list_next(level_one_files)))
-			 {
-			    char level_one_file_path[PATH_MAX];
+	     snprintf(file_path, sizeof(file_path),"%s/%s/LC_MESSAGES/%s.mo", 
+		   dir, file, PACKAGE);
+	     if (ecore_file_exists(file_path) && !ecore_file_is_dir(file_path))
+	       languages = evas_list_append(languages, strdup(file));
 
-			    snprintf(level_one_file_path, sizeof(level_one_file_path),"%s/%s", file_path, level_one_file);
-			    if (  !strcmp(level_one_file, "LC_MESSAGES") && 
-				  ecore_file_is_dir(level_one_file_path))
-			      {
-				 /* Find any enlightenment.mo files */
-				 Ecore_List *level_two_files;
-				 char *level_two_file;
-				 
-				 level_two_files = ecore_file_ls(level_one_file_path);
-				 if (!level_two_files) continue;
-				 
-				 ecore_list_goto_first(level_two_files);
-				 if (level_two_files)
-				   {
-				      while ((level_two_file = ecore_list_next(level_two_files)))
-					{
-					   char level_two_file_path[PATH_MAX];
-
-					   snprintf(level_two_file_path, sizeof(level_two_file_path),"%s/%s", level_one_file_path, level_two_file);
-					   if (  !strcmp(level_two_file, PACKAGE".mo") &&
-						 !ecore_file_is_dir(level_two_file_path))
-					     {
-						languages = evas_list_append(languages, strdup(file));
-						break;
-					     }
-					}
-				      ecore_list_destroy(level_two_files);
-				   }
-			      }			    
-			 }
-		       ecore_list_destroy(level_one_files);
-		    }
-	       }
 	  }
 	ecore_list_destroy(files);
      }
    return languages;
 }
 
+/* get the alias for a locale 
+ * 
+ * return pointer to allocated alias string. never returns NULL
+ * String will be the same if its a valid locale already or there 
+ * is no alias. 
+ */
+static char *
+_e_intl_locale_alias_get(char *language)
+{
+   Evas_Hash *alias_hash;
+   char *canonic;
+   char *alias;
+    
+   if (language == NULL || !strncmp(language, "POSIX", strlen("POSIX")))
+	return strdup("C");
+   
+   canonic = _e_intl_locale_canonic_get(language, E_LOC_ALL );
+   
+   alias_hash = _e_intl_locale_alias_hash_get();
+   if (alias_hash == NULL) 
+     {
+	if (canonic == NULL)
+	  return strdup(language);
+	else 
+	  return canonic;
+     }
+
+   if (canonic == NULL) /* not not a locale */
+     {
+	char *lower_language;
+	int i;
+	
+	lower_language = (char *) malloc(strlen(language) + 1);
+	for (i = 0; i < strlen(language); i++)
+	     lower_language[i] = tolower(language[i]);
+	lower_language[i] = 0;     
+	
+	alias = (char *) evas_hash_find(alias_hash, lower_language);
+	free(lower_language);
+     }
+   else
+     {
+	alias = (char *) evas_hash_find(alias_hash, canonic);
+     }
+   
+   _e_intl_locale_hash_free(alias_hash);
+   
+   if (alias) 
+     {
+	alias = strdup(alias);
+	if (canonic) free(canonic);
+     }
+   else if (canonic) 
+     {
+	alias = canonic;
+     }
+   else 
+     {
+	alias = strdup(language);
+     }
+   
+   return alias;
+}
+
+static Evas_Hash *
+_e_intl_locale_alias_hash_get(void)
+{
+   Evas_List *next;
+   Evas_List *dir_list;
+   Evas_Hash *alias_hash; 
+     
+   dir_list = e_path_dir_list_get(path_messages);
+   alias_hash = NULL;
+   
+   for (next = dir_list ; next ; next = next->next)
+     {
+	char buf[4096];
+	E_Path_Dir *epd;
+	FILE *f;       	
+   
+	epd = next->data;
+	
+	snprintf(buf, sizeof(buf), "%s/locale.alias", epd->dir);
+	f = fopen(buf, "r");
+	if (f)
+	  {
+	     char alias[4096], locale[4096];
+	     
+	     /* read font alias lines */
+	     while (fscanf(f, "%4090s %[^\n]\n", alias, locale) == 2)
+	       {
+		  /* skip comments */
+		  if ((alias[0] == '!') || (alias[0] == '#'))
+		    continue;
+
+		  /* skip dupes */
+		  if (evas_hash_find(alias_hash, alias))
+		    continue;
+		  
+		  alias_hash = evas_hash_add(alias_hash, alias, strdup(locale));
+	       }
+	     fclose (f);
+	  }
+     }
+   e_path_dir_list_free(dir_list);
+   
+   return alias_hash;
+}
+
+/* return parts of the locale that are requested in the mask 
+ * return null if the locale looks to be invalid (Does not have 
+ * ll_DD)
+ * 
+ * the returned string needs to be freed
+ */
+static char *
+_e_intl_locale_canonic_get(char *locale, int ret_mask)
+{
+   char *clean_locale;
+   int   clean_e_intl_locale_size;
+   char  language[4];
+   char  territory[4];
+   char  codeset[32];
+   char  modifier[32];
+
+   int   state = 0; /* start out looking for the language */
+   int   locale_idx;
+   int   tmp_idx = 0;
+  
+   loc_mask = 0; 
+   /* Seperators are _ . @ */
+
+   for ( locale_idx = 0; locale_idx < strlen(locale); locale_idx++ )
+     {
+	char locale_char;
+	locale_char = locale[locale_idx];
+	
+	/* we have finished scanning the locale string */
+	if(locale_char == 0)
+	  break;
+	
+	/* scan this character based on the current start */
+	switch(state)
+	  {
+	   case 0: /* Gathering Language */
+	      if (tmp_idx == 2 && locale_char == '_')
+		{
+		   state++;
+		   language[tmp_idx] = 0;
+		   tmp_idx = 0;
+		}
+	      else if (tmp_idx < 2 && islower(locale_char))
+		{
+		   language[tmp_idx++] = locale_char;
+		}
+	      else
+		{
+		   return NULL;
+		}
+	      break;
+	   case 1: /* Gathering Territory */
+	      if (tmp_idx == 2 && locale_char == '.')
+		{
+		   state++;
+		   territory[tmp_idx] = 0;
+		   tmp_idx = 0;
+		}
+	      else if(tmp_idx == 2 && locale_char == '@')
+		{
+		   state += 2;
+		   territory[tmp_idx] = 0;
+		   codeset[0] = 0;
+		   tmp_idx = 0;
+		}
+	      else if(tmp_idx < 2 && isupper(locale_char))
+		{
+		   territory[tmp_idx++] = locale_char;
+		}
+	      else 
+		{
+		   return NULL;
+		}
+	      break;
+	   case 2: /* Gathering Codeset */
+	      if (locale_char == '@')
+		{
+		   state++;
+		   codeset[tmp_idx] = 0;
+		   tmp_idx = 0;
+		}
+	      else if (isalnum(locale_char))
+		{
+		   codeset[tmp_idx++] = tolower(locale_char);
+		}
+	     break;
+	   case 3: /* Gathering modifier */
+	     modifier[tmp_idx++] = locale_char;
+	  }
+     }
+
+   /* set end-of-string \0 */
+   switch (state)
+     {
+      case 0:
+	 language[tmp_idx] = 0;
+	 tmp_idx = 0;
+      case 1:
+	 territory[tmp_idx] = 0;
+	 tmp_idx = 0;
+      case 2:
+	 codeset[tmp_idx] = 0;
+	 tmp_idx = 0;
+      case 3:
+	 modifier[tmp_idx] = 0;
+     }
+
+   /* Construct the clean locale string */
+
+   /* determine the size */
+   clean_e_intl_locale_size =	strlen(language) + 1;
+   
+   if ((ret_mask & E_LOC_REGION) && territory[0] != 0)
+     clean_e_intl_locale_size += strlen(territory) + 1;
+   
+   if ((ret_mask & E_LOC_CODESET) && codeset[0] != 0)
+     clean_e_intl_locale_size += strlen(codeset) + 1;
+	
+   if ((ret_mask & E_LOC_MODIFIER) && (modifier[0] != 0))
+     clean_e_intl_locale_size += strlen(modifier) + 1;     
+
+   /* Allocate memory */
+   clean_locale = (char *) malloc(clean_e_intl_locale_size);
+   clean_locale[0] = 0;
+   
+   /* Put the parts of the string together */
+   strcat(clean_locale, language);
+   loc_mask |= E_LOC_LANG;
+   
+   if ((ret_mask & E_LOC_REGION) && territory[0] != 0)
+     {
+	loc_mask |= E_LOC_REGION;
+	strcat(clean_locale, "_");
+	strcat(clean_locale, territory);
+     }	
+   if ((ret_mask & E_LOC_CODESET) && codeset[0] != 0)	  
+     {
+	loc_mask |= E_LOC_CODESET;
+	strcat(clean_locale, ".");
+	strcat(clean_locale, codeset);	  
+     }	
+   if ((ret_mask & E_LOC_MODIFIER) && (modifier[0] != 0))     
+     {	       
+	loc_mask |= E_LOC_MODIFIER;
+	strcat(clean_locale, "@");
+	strcat(clean_locale, modifier);     
+     }
+
+   return clean_locale;
+	 
+}
+
 static Evas_List *
-_e_intl_language_system_locales_get(void)
+_e_intl_locale_system_locales_get(void)
 {
    Evas_List	*locales;
    FILE		*output;
@@ -639,6 +827,65 @@ _e_intl_language_system_locales_get(void)
 	pclose(output);
      }
    return locales;
+}
+
+/*
+ must be an un aliased locale;
+ */
+static int
+_e_intl_locale_validate(char *locale)
+{
+   Evas_List *all_locales;
+   char *search_locale;
+   int found;
+   
+   found = 0;
+   search_locale = _e_intl_locale_canonic_get(locale, E_LOC_SIGNIFICANT );
+   if ( search_locale == NULL )
+     search_locale = strdup(locale); 
+     /* If this validates their is probably an alias issue */
+   
+   all_locales = _e_intl_locale_system_locales_get();
+
+   while(all_locales)
+     {
+	char *test_locale;
+	test_locale = all_locales->data;
+
+	if (found == 0)
+	  {
+	     if (!strcmp(test_locale, search_locale)) found = 1;
+	  }
+	
+	all_locales = evas_list_remove_list(all_locales, all_locales);
+	free(test_locale);
+     }
+   free(search_locale);
+   return found; 
+}
+
+/* 
+ *  arg local must be an already validated and unaliased locale
+ *  
+ */
+static Evas_List *
+_e_intl_locale_search_order_get(char *locale)
+{
+   Evas_List *search_list;
+   char *masked_locale;
+   int mask;
+   
+   search_list = NULL;
+   for ( mask = E_LOC_ALL; mask >= E_LOC_LANG; mask-- )
+       {
+	  masked_locale = _e_intl_locale_canonic_get(locale, mask);
+	  
+	  if (loc_mask == mask) 
+	    search_list = evas_list_append(search_list, masked_locale);
+	  else
+	    free(masked_locale);
+       } 
+   return search_list;
 }
 
 static Evas_List *
