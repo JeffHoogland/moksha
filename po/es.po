@@ -4,43 +4,51 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-04-025 12:27+0100\n"
-"PO-Revision-Date: 2005-10-07 00:23+0100\n"
-"Last-Translator: Joan Ribas Lekerika <joan.ribas@realtech,com>\n"
+"POT-Creation-Date: 2005-11-29 23:48+0000\n"
+"PO-Revision-Date: 2005-12-02 17:26-0000\n"
+"Last-Translator: Guillermo Movia <guillermo.movia@gmail.com>\n"
 "Language-Team: PON-E TEAM <http://pon-e.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_actions.c:1193
 msgid "Are you sure you want to exit?"
 msgstr "¿Está seguro de querer salir?"
 
 #: src/bin/e_actions.c:1195
-msgid ""
-"You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
-msgstr ""
-"Eligió salir de Enlightenment.<br><br>¿Está seguro de querer salir?"
+msgid "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+msgstr "Eligió salir de Enlightenment.<br><br>¿Está seguro de querer salir?"
 
-#: src/bin/e_actions.c:1200 src/bin/e_module.c:539
+#: src/bin/e_actions.c:1200
+#: src/bin/e_module.c:544
 #: src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "Si"
 
-#: src/bin/e_actions.c:1202 src/bin/e_module.c:540
+#: src/bin/e_actions.c:1202
+#: src/bin/e_module.c:545
 #: src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "No"
 
-#: src/bin/e_apps.c:356 src/bin/e_apps.c:1532 src/bin/e_utils.c:222
-#: src/bin/e_fileman_file.c:352 src/bin/e_fileman_file.c:401
+#: src/bin/e_apps.c:413
+#: src/bin/e_apps.c:1787
+#: src/bin/e_utils.c:223
+#: src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405
 msgid "Run Error"
 msgstr "Error de ejecución"
 
-#: src/bin/e_apps.c:357 src/bin/e_utils.c:223 src/bin/e_fileman_file.c:353
-#: src/bin/e_fileman_file.c:402
+#: src/bin/e_apps.c:414
+#: src/bin/e_utils.c:224
+#: src/bin/e_fileman_file.c:355
+#: src/bin/e_fileman_file.c:406
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -54,7 +62,7 @@ msgstr ""
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1533
+#: src/bin/e_apps.c:1788
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -69,97 +77,7 @@ msgstr ""
 "\n"
 "No se pudo encontrar el comando\n"
 
-#: src/bin/e_border.c:5770
-msgid "Always On Top"
-msgstr "Siempre arriba"
-
-#: src/bin/e_border.c:5780 src/modules/clock/e_mod_main.c:349
-#: src/modules/pager/e_mod_main.c:458
-msgid "Normal"
-msgstr "Normal"
-
-#: src/bin/e_border.c:5790
-msgid "Always Below"
-msgstr "Siempre debajo"
-
-#: src/bin/e_border.c:5807 src/bin/e_int_border_locks.c:65
-msgid "Window Locks"
-msgstr "Bloquear ventana"
-
-#: src/bin/e_border.c:5814
-msgid "Remember"
-msgstr "Recordar"
-
-#: src/bin/e_border.c:5824
-msgid "Send to Desktop"
-msgstr "Enviar al escritorio"
-
-#: src/bin/e_border.c:5835 src/bin/e_int_border_locks.c:319
-#: src/bin/e_int_border_locks.c:338 src/bin/e_int_border_remember.c:466
-msgid "Stacking"
-msgstr "Apilamiento"
-
-#: src/bin/e_border.c:5845
-msgid "Shaded"
-msgstr "Enrollar"
-
-#: src/bin/e_border.c:5858
-msgid "Maximized"
-msgstr "Maximizar"
-
-#: src/bin/e_border.c:5871
-msgid "Sticky"
-msgstr "Escritorio fijo"
-
-#: src/bin/e_border.c:5884
-msgid "Borderless"
-msgstr "Sin borde"
-
-#: src/bin/e_border.c:5897
-msgid "Fullscreen"
-msgstr "Pantalla completa"
-
-#: src/bin/e_border.c:5911
-msgid "Skip Window List"
-msgstr "Omitir de la lista de ventanas"
-
-#: src/bin/e_border.c:5935
-msgid "Edit Icon"
-msgstr "Editar ícono"
-
-#: src/bin/e_border.c:5962
-msgid "Create Icon"
-msgstr "Crear ícono"
-
-#: src/bin/e_border.c:5973
-msgid "Kill"
-msgstr "Matar"
-
-#: src/bin/e_border.c:5986
-msgid "Iconify"
-msgstr "Minimizar"
-
-#: src/bin/e_border.c:5997
-msgid "Close"
-msgstr "Cerrar"
-
-#: src/bin/e_border.c:6087
-msgid "Icon Edit Error"
-msgstr "Error al editar ícono"
-
-#: src/bin/e_border.c:6088
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"Error cargando el editor de iconos\n"
-"\n"
-"por favor instala e_util_eapp_edit\n"
-"o comprueba que esta en tu PATH\n"
-
-#: src/bin/e_config.c:373
+#: src/bin/e_config.c:377
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -178,7 +96,7 @@ msgstr ""
 "configuración no es compatible. Ahora puedes reconfigurarlo\n"
 "a tu gusto. Lo sentimos por las molestias.\n"
 
-#: src/bin/e_config.c:387
+#: src/bin/e_config.c:391
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -194,19 +112,23 @@ msgstr ""
 "y como precaución tu configuración se ha reestablecido a los\n"
 "valores por defecto. Lo sentimos por las molestias\n"
 
-#: src/bin/e_config.c:1972
+#: src/bin/e_config.c:2002
 msgid "Configuration Upgraded"
 msgstr "Configuración actualizada"
 
-#: src/bin/e_container.c:115
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
-msgstr "Contenedor"
+msgstr "Contenedor %d"
 
-#: src/bin/e_error.c:196 src/bin/e_error.c:205 src/bin/e_module.c:399
-#: src/bin/e_config_dialog.c:113 src/bin/e_int_border_remember.c:236
-#: src/bin/e_int_border_remember.c:310 src/bin/e_int_border_remember.c:352
-#: src/modules/ibar/e_mod_main.c:1682
+#: src/bin/e_error.c:196
+#: src/bin/e_error.c:205
+#: src/bin/e_module.c:404
+#: src/bin/e_config_dialog.c:113
+#: src/bin/e_int_border_remember.c:245
+#: src/bin/e_int_border_remember.c:325
+#: src/bin/e_int_border_remember.c:367
+#: src/modules/ibar/e_mod_main.c:1692
 msgid "OK"
 msgstr "Ok"
 
@@ -259,119 +181,130 @@ msgstr "¡X informa que no hay ventanas raíz y %i pantallas!\n"
 msgid "Disable this splash screen in the future?"
 msgstr "¿Quiere deshabilitar esta pantalla en el futuro?"
 
-#: src/bin/e_int_menus.c:83
+#: src/bin/e_int_menus.c:82
 msgid "Favorite Applications"
 msgstr "Aplicaciones favoritas"
 
-#: src/bin/e_int_menus.c:93
+#: src/bin/e_int_menus.c:92
 msgid "Modules"
 msgstr "Módulos"
 
-#: src/bin/e_int_menus.c:100
+#: src/bin/e_int_menus.c:99
 msgid "Desktops"
 msgstr "Escritorios"
 
-#: src/bin/e_int_menus.c:107
+#: src/bin/e_int_menus.c:106
 msgid "Windows"
 msgstr "Ventanas"
 
-#: src/bin/e_int_menus.c:114
+#: src/bin/e_int_menus.c:113
 msgid "Lost Windows"
 msgstr "Ventanas perdidas"
 
-#: src/bin/e_int_menus.c:121
+#: src/bin/e_int_menus.c:120
 msgid "Gadgets"
 msgstr "Dispositivos"
 
-#: src/bin/e_int_menus.c:128
+#: src/bin/e_int_menus.c:127
 msgid "Themes"
 msgstr "Temas"
 
-#: src/bin/e_int_menus.c:136 src/bin/e_about.c:41
+#: src/bin/e_int_menus.c:135
+#: src/bin/e_about.c:41
 msgid "About Enlightenment"
 msgstr "Acerca de Enlightenment"
 
-#: src/bin/e_int_menus.c:143
+#: src/bin/e_int_menus.c:142
 msgid "Run Command"
 msgstr "Ejecutar"
 
-#: src/bin/e_int_menus.c:149
+#: src/bin/e_int_menus.c:148
 msgid "Files"
 msgstr "Archivos"
 
-#: src/bin/e_int_menus.c:156 src/bin/e_module.c:472
+#: src/bin/e_int_menus.c:155
+#: src/bin/e_module.c:477
 msgid "Configuration"
 msgstr "Configuración"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:163
 msgid "Restart Enlightenment"
 msgstr "Reiniciar Enlightenment"
 
-#: src/bin/e_int_menus.c:169
+#: src/bin/e_int_menus.c:168
 msgid "Exit Enlightenment"
 msgstr "Salir de Enlightenment"
 
-#: src/bin/e_int_menus.c:466
+#: src/bin/e_int_menus.c:465
 msgid "(No Applications)"
 msgstr "(Sin aplicaciones)"
 
-#: src/bin/e_int_menus.c:548
+#: src/bin/e_int_menus.c:547
 msgid "New Row of Desktops"
 msgstr "Nueva línea de escritorios"
 
-#: src/bin/e_int_menus.c:552
+#: src/bin/e_int_menus.c:551
 msgid "Remove Row of Desktops"
 msgstr "Borrar línea de escritorios"
 
-#: src/bin/e_int_menus.c:556
+#: src/bin/e_int_menus.c:555
 msgid "New Column of Desktops"
 msgstr "Nueva columna de escritorios"
 
-#: src/bin/e_int_menus.c:560
+#: src/bin/e_int_menus.c:559
 msgid "Remove Column of Desktops"
 msgstr "Borrar columna de escritorios"
 
-#: src/bin/e_int_menus.c:622
+#: src/bin/e_int_menus.c:631
+#: src/bin/e_configure.c:58
 msgid "Configuration Panel"
 msgstr "Panel de configuración"
 
-#: src/bin/e_int_menus.c:626 src/bin/e_int_config_focus.c:44
-msgid "Focus Settings"
-msgstr "Opciones de foco"
+#: src/bin/e_int_menus.c:635
+#: src/bin/e_eap_editor.c:74
+msgid "Eap Editor"
+msgstr "Editor de íconos"
 
-#: src/bin/e_int_menus.c:690 src/bin/e_int_menus.c:968
+#: src/bin/e_int_menus.c:693
+#: src/bin/e_int_menus.c:981
 msgid "(No Windows)"
 msgstr "(Sin ventanas)"
 
-#: src/bin/e_int_menus.c:705 src/bin/e_int_menus.c:982
+#: src/bin/e_int_menus.c:708
+#: src/bin/e_int_menus.c:995
 msgid "No name!!"
 msgstr "¡¡Sin nombre!!"
 
-#: src/bin/e_int_menus.c:721
+#: src/bin/e_int_menus.c:724
 msgid "Cleanup Windows"
 msgstr "Reordenar ventanas"
 
-#: src/bin/e_int_menus.c:800 src/modules/battery/e_mod_main.c:586
-#: src/modules/clock/e_mod_main.c:328 src/modules/cpufreq/e_mod_main.c:954
-#: src/modules/ibar/e_mod_main.c:647 src/modules/ibox/e_mod_main.c:454
-#: src/modules/pager/e_mod_main.c:621 src/modules/start/e_mod_main.c:230
+#: src/bin/e_int_menus.c:803
+#: src/modules/battery/e_mod_main.c:589
+#: src/modules/clock/e_mod_main.c:328
+#: src/modules/cpufreq/e_mod_main.c:947
+#: src/modules/ibar/e_mod_main.c:647
+#: src/modules/ibox/e_mod_main.c:454
+#: src/modules/pager/e_mod_main.c:621
+#: src/modules/start/e_mod_main.c:230
 #: src/modules/temperature/e_mod_main.c:922
 msgid "Edit Mode"
 msgstr "Modo de edición"
 
-#: src/bin/e_int_menus.c:806
+#: src/bin/e_int_menus.c:809
 msgid "(Unused)"
 msgstr "(Sin usar)"
 
-#: src/bin/e_int_menus.c:838 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:841
+#: src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "Acerca del tema"
 
-#: src/bin/e_intl.c:358
+#: src/bin/e_intl.c:292
 msgid "Input Method Error"
 msgstr "Error en el método de entrada"
 
-#: src/bin/e_intl.c:359
+#: src/bin/e_intl.c:293
 msgid ""
 "Error starting the input method executable\n"
 "\n"
@@ -387,7 +320,7 @@ msgstr ""
 "de que el ejecutable de la configuración\n"
 "está en su PATH\n"
 
-#: src/bin/e_main.c:191
+#: src/bin/e_main.c:195
 #, c-format
 msgid ""
 "Options:\n"
@@ -399,11 +332,9 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
-"+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUse the configuration profile CONF_PROFILE instead of the the user "
-"selected default or just \"default\".\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the the user selected default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -423,8 +354,7 @@ msgstr ""
 "\t\tEJ: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUsar el perfil de la configuración CONF_PROFILE en lugar del del usuario "
-"elija el predeterminado o sólo \"default\".\n"
+"\t\tUsar el perfil de la configuración CONF_PROFILE en lugar del del usuario elija el predeterminado o sólo \"default\".\n"
 "\t-good\n"
 "\t\tSea bueno.\n"
 "\t-devil\n"
@@ -432,15 +362,15 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tSer psicótico.\n"
 
-#: src/bin/e_main.c:259
+#: src/bin/e_main.c:264
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Enlightenment no puede iniciar Ecore!\n"
 "Quizá no tiene la memoria suficiente"
-#: src/bin/e_main.c:268
 
+#: src/bin/e_main.c:277
 msgid ""
 "Enlightenment cannot initialize the File system.\n"
 "Perhaps you are out of memory?"
@@ -448,7 +378,7 @@ msgstr ""
 "Enlightenment no uede iniciar el sistema de archivos.\n"
 "Quizá no tiene la memoria suficiente"
 
-#: src/bin/e_main.c:279
+#: src/bin/e_main.c:288
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -456,7 +386,7 @@ msgstr ""
 "Enlightenment no puede elegir un manejador de la señal de salida.\n"
 "Quizá no tiene la memoria suficiente"
 
-#: src/bin/e_main.c:285
+#: src/bin/e_main.c:294
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -464,7 +394,7 @@ msgstr ""
 "Enlightenment no puede iniciar el manejador de la señal HUP.\n"
 "Quizá no tiene la memoria suficiente"
 
-#: src/bin/e_main.c:296
+#: src/bin/e_main.c:305
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -472,7 +402,7 @@ msgstr ""
 "Enlightenment no puede iniciar la conexion con las X.\n"
 "¿Tienes establecida la variable DISPLAY?"
 
-#: src/bin/e_main.c:304
+#: src/bin/e_main.c:313
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -480,7 +410,7 @@ msgstr ""
 "Enlightenment no puede iniciar su sistema de alertas de emergencia.\n"
 "¿Tienes establecida la variable DISPLAY?"
 
-#: src/bin/e_main.c:311
+#: src/bin/e_main.c:320
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -488,7 +418,7 @@ msgstr ""
 "Enlightenment no puede iniciar xinerama.\n"
 "Esto no deberia ocurrir."
 
-#: src/bin/e_main.c:327
+#: src/bin/e_main.c:336
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -496,7 +426,7 @@ msgstr ""
 "Enlightenment no puede iniciar el sistema de conexiones.\n"
 "Quizá no haya memoria suficiente"
 
-#: src/bin/e_main.c:335
+#: src/bin/e_main.c:344
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -504,7 +434,7 @@ msgstr ""
 "Enlightenment no puede iniciar el sistema IPC.\n"
 "Quizá no haya memoria suficiente"
 
-#: src/bin/e_main.c:343
+#: src/bin/e_main.c:352
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -512,7 +442,7 @@ msgstr ""
 "Enlightenment no puede iniciar el sistema Evas.\n"
 "Quizá no haya memoria suficiente"
 
-#: src/bin/e_main.c:349
+#: src/bin/e_main.c:358
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -523,15 +453,15 @@ msgstr ""
 "de Evas y Ecore y comprueba que soportan el renderizado por\n"
 "software de X11."
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:368
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment no puede iniciar el sistema de miniaturas.\n"
 
-#: src/bin/e_main.c:368
+#: src/bin/e_main.c:377
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment no puede inicializar el manejador de archivos.\n"
 
-#: src/bin/e_main.c:380
+#: src/bin/e_main.c:388
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -539,11 +469,11 @@ msgstr ""
 "Enlightenment no puede crear carpetas en su directorio home.\n"
 "Quizá no tenga un directorio home o el disco esté lleno"
 
-#: src/bin/e_main.c:388
+#: src/bin/e_main.c:396
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment no puede iniciar su sistema de configuración"
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:403
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -551,31 +481,31 @@ msgstr ""
 "Enlightenment no puede establecer caminos para encontrar archivos.\n"
 "Quizá no tenga memoria suficiente"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:411
 msgid "Enlightenment cannot set up its intl system."
 msgstr "Enlightenment no puede iniciar su sistema internacional"
 
-#: src/bin/e_main.c:410
+#: src/bin/e_main.c:418
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment no puede iniciar su sistema de acciones"
 
-#: src/bin/e_main.c:417
+#: src/bin/e_main.c:425
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment no puede iniciar su sistema de asignaciones de teclas"
 
-#: src/bin/e_main.c:424
+#: src/bin/e_main.c:432
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment no puede iniciar su sitema de ventanas emergentes"
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:443
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment no puede iniciar su sistema de fuentes"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:453
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment no puede iniciar su sistema de temas"
 
-#: src/bin/e_main.c:454
+#: src/bin/e_main.c:462
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -583,7 +513,7 @@ msgstr ""
 "Enlightenment no puede iniciar su pantalla de inicio.\n"
 "Quizá no tenga memoria suficiente"
 
-#: src/bin/e_main.c:463
+#: src/bin/e_main.c:471
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -591,15 +521,15 @@ msgstr ""
 "Enlightenment falló para iniciar su sistema de manejo de ventanas para todas sus pantallas.\n"
 "Quizás haya otro manejador de ventanas ejecutándose\n"
 
-#: src/bin/e_main.c:470
+#: src/bin/e_main.c:478
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment no puede iniciar su sistema de aplicaciones"
 
-#: src/bin/e_main.c:477
+#: src/bin/e_main.c:485
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment no puede iniciar su sistema de recuerdos"
 
-#: src/bin/e_main.c:493
+#: src/bin/e_main.c:501
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -618,31 +548,31 @@ msgstr ""
 "Si usas AFS, entonces quizá quieras hacer un enlace simbólico desde\n"
 " ~/.ecore to /tmp/my_directory/ecore hacia donde se puedan crear los sockets."
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:517
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment no puede iniciar sus sistema de mensajes"
 
-#: src/bin/e_main.c:516
+#: src/bin/e_main.c:524
 msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment no puede iniciar su sistema de dnd"
 
-#: src/bin/e_main.c:523
+#: src/bin/e_main.c:531
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment no puede iniciar su sistema de manejo de agarres"
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:538
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment no puede iniciar su sistema de módulos"
 
-#: src/bin/e_main.c:537
+#: src/bin/e_main.c:545
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment no puede iniciar su sistema de lista de ventanas"
 
-#: src/bin/e_main.c:543
+#: src/bin/e_main.c:551
 msgid "Enlightenment IPC setup error!"
 msgstr "¡Error en la configuración IPC de Enlightenment!"
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:552
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -656,33 +586,30 @@ msgstr ""
 "borrando todos los ficheros en ~/.ecore/enlightenment-* y volver\n"
 "a ejecutarlo."
 
-#: src/bin/e_main.c:560 src/bin/e_about.c:50
+#: src/bin/e_main.c:568
+#: src/bin/e_about.c:50
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_main.c:562
+#: src/bin/e_main.c:570
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment se está iniciando. Espere por favor."
 
-#: src/bin/e_module.c:110
+#: src/bin/e_module.c:111
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>No module named %s could be "
-"found in the<br>module search directories.<br>"
-msgstr ""
-"Ocurrió un error cargando el módulo: %s<br>"
-"No se pudo encontrar ningún módulo llamado %s en<br>"
-"los directorios de búsqueda de módulos.<br>"
+msgid "There was an error loading module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
+msgstr "Ocurrió un error cargando el módulo: %s<br>No se pudo encontrar ningún módulo llamado %s en<br>los directorios de búsqueda de módulos.<br>"
 
-#: src/bin/e_module.c:114 src/bin/e_module.c:127 src/bin/e_module.c:151
+#: src/bin/e_module.c:115
+#: src/bin/e_module.c:128
+#: src/bin/e_module.c:152
 msgid "Error loading Module"
 msgstr "Error cargando un Módulo"
 
-#: src/bin/e_module.c:121 src/bin/e_module.c:145
+#: src/bin/e_module.c:122
+#: src/bin/e_module.c:146
 #, c-format
-msgid ""
-"There was an error loading module named: %s<br>The full path to this module "
-"is:<br>%s<br>The error reported was:<br>%s<br>"
+msgid "There was an error loading module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
 "Ha ocurrido un error cargando el módulo: %s\n"
 "El path completo de este módulo es:\n"
@@ -690,35 +617,29 @@ msgstr ""
 "El error producido fué:\n"
 "%s"
 
-#: src/bin/e_module.c:165
+#: src/bin/e_module.c:166
 #, c-format
-msgid ""
-"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
-"%i.<br>"
-msgstr ""
-"Error en el API del módulo<br>hubo un error iniciando el módulo: %s<br>Necesita una versión mínima"
-"del API del módulo: %i.<br>La advertencia de Enlightenment para el API del módulo es: "
-"%i.<br>"
+msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
+msgstr "Error en el API del módulo<br>hubo un error iniciando el módulo: %s<br>Necesita una versión mínimadel API del módulo: %i.<br>La advertencia de Enlightenment para el API del módulo es: %i.<br>"
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:171
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Módulo %s de Enlightenment"
 
-#: src/bin/e_module.c:383
+#: src/bin/e_module.c:388
 msgid "(No Loaded Modules)"
 msgstr "(No hay módulos cargados)"
 
-#: src/bin/e_module.c:457
+#: src/bin/e_module.c:462
 msgid "About..."
 msgstr "Acerca..."
 
-#: src/bin/e_module.c:461
+#: src/bin/e_module.c:466
 msgid "Enabled"
 msgstr "Disponible"
 
-#: src/bin/e_module.c:534
+#: src/bin/e_module.c:539
 msgid "Would you like to unload this module?<br>"
 msgstr "¿Quiere deshabilitar este módulo?"
 
@@ -727,14 +648,13 @@ msgstr "¿Quiere deshabilitar este módulo?"
 msgid "Starting %s"
 msgstr "Iniciando %s"
 
-#: src/bin/e_utils.c:268
+#: src/bin/e_utils.c:269
 msgid "Cannot exit - immortal windows."
 msgstr "No se puede salir - ventanas inmortales"
 
-#: src/bin/e_utils.c:269
+#: src/bin/e_utils.c:270
 msgid ""
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means\n"
+"Some windows are left still around with the Lifespan lock enabled. This means\n"
 "that Enlightenment will not allow itself to exit until these windows have\n"
 "been closed or have the lifespan lock removed.\n"
 msgstr ""
@@ -747,109 +667,125 @@ msgid "Select a window"
 msgstr "Elija una ventana"
 
 #: src/bin/e_about.c:55
-msgid ""
-"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>This software is provided as-is with no explicit or implied "
-"warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
-"is not stable. Many features are incomplete or even non-existant yet and may "
-"have many bugs. You have been <hilight>WARNED!</hilight>"
-msgstr ""
-"Copyright © 1999-2005, por el Equipo de Desarrollo de Enlightenment.<br><br>Esperamos que disfrutes utilizando este software tanto como nosotros nos hemos divertido escribiéndolo.<br><br>Este software se distribuye as-is sin garantías implícitas o explícitas. Este software está controlado por las condiciones de licencia, por favor lee los ficheros de licencia COPYING y COPYING-PLAIN que están en el sistema.<br><br>Enlightenment se encuentra bajo<hilight>INTENSO DESARROLLO</hilight> y no es estable. Muchas características están incompletas o no existen aún y otras tienen fallos. Estas <hilight>¡AVISADO!</hilight>"
+msgid "Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many features are incomplete or even non-existant yet and may have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr "Copyright © 1999-2005, por el Equipo de Desarrollo de Enlightenment.<br><br>Esperamos que disfrutes utilizando este software tanto como nosotros nos hemos divertido escribiéndolo.<br><br>Este software se distribuye as-is sin garantías implícitas o explícitas. Este software está controlado por las condiciones de licencia, por favor lee los ficheros de licencia COPYING y COPYING-PLAIN que están en el sistema.<br><br>Enlightenment se encuentra bajo<hilight>INTENSO DESARROLLO</hilight> y no es estable. Muchas características están incompletas o no existen aún y otras tienen fallos. Estas <hilight>¡AVISADO!</hilight>"
 
 #: src/bin/e_about.c:80
 msgid "<title>The Team</title>"
 msgstr "<title>El equipo</title>"
 
-#: src/bin/e_configure.c:38
+#: src/bin/e_configure.c:44
 msgid "Enlightenment Configuration"
 msgstr "Configuración de Enlightenment"
 
-#: src/bin/e_fileman_smart.c:1076
+#: src/bin/e_configure.c:61
+#: src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "Opciones de foco"
+
+#: src/bin/e_configure.c:62
+#: src/bin/e_int_config_desks.c:45
+msgid "Desktop Settings"
+msgstr "Opciones de escritorio"
+
+#: src/bin/e_configure.c:63
+#: src/bin/e_int_config_window_manipulation.c:48
+msgid "Window Manipulation"
+msgstr "Manejo de ventanas"
+
+#: src/bin/e_configure.c:64
+#: src/bin/e_int_config_window_display.c:49
+msgid "Window Display"
+msgstr "Mostrado de ventanas"
+
+#: src/bin/e_fileman_smart.c:1243
+#: src/bin/e_eap_editor.c:272
 msgid "General"
 msgstr "General"
 
-#: src/bin/e_fileman_smart.c:1078
+#: src/bin/e_fileman_smart.c:1252
 #, c-format
 msgid "File:"
 msgstr "Archivo:"
 
-#: src/bin/e_fileman_smart.c:1087
+#: src/bin/e_fileman_smart.c:1261
 #, c-format
 msgid "Size:"
 msgstr "Tamaño"
 
-#: src/bin/e_fileman_smart.c:1096
+#: src/bin/e_fileman_smart.c:1270
 #, c-format
 msgid "Type:"
 msgstr "Tipo"
 
-#: src/bin/e_fileman_smart.c:1105
+#: src/bin/e_fileman_smart.c:1279
 msgid "Protect this file"
 msgstr "Proteger el archivo"
 
-#: src/bin/e_fileman_smart.c:1111
+#: src/bin/e_fileman_smart.c:1285
 msgid "Let others see this file"
 msgstr "Permitir a otros ver este archivo"
 
-#: src/bin/e_fileman_smart.c:1115
+#: src/bin/e_fileman_smart.c:1289
 msgid "Let others modify this file"
 msgstr "Permitir a otros modificar este archivo"
 
-#: src/bin/e_fileman_smart.c:1119
+#: src/bin/e_fileman_smart.c:1293
 msgid "Dont let others see or modify this file"
 msgstr "No dejar que otros vean o modifiquen este archivo"
 
-#: src/bin/e_fileman_smart.c:1123
+#: src/bin/e_fileman_smart.c:1297
 msgid "Custom settings"
 msgstr "Configuraciones personalizadas"
 
-#: src/bin/e_fileman_smart.c:1162
+#: src/bin/e_fileman_smart.c:1334
 msgid "File Info:"
 msgstr "Información del archivo"
 
-#: src/bin/e_fileman_smart.c:1185
+#: src/bin/e_fileman_smart.c:1357
 msgid "Permissions:"
 msgstr "Permisos: "
 
-#: src/bin/e_fileman_smart.c:1188 src/bin/e_fileman_smart.c:1197
-#: src/bin/e_fileman_smart.c:1206
+#: src/bin/e_fileman_smart.c:1360
+#: src/bin/e_fileman_smart.c:1369
+#: src/bin/e_fileman_smart.c:1378
 msgid "r"
 msgstr "l"
 
-#: src/bin/e_fileman_smart.c:1190 src/bin/e_fileman_smart.c:1199
-#: src/bin/e_fileman_smart.c:1208
+#: src/bin/e_fileman_smart.c:1362
+#: src/bin/e_fileman_smart.c:1371
+#: src/bin/e_fileman_smart.c:1380
 msgid "w"
 msgstr "e"
 
-#: src/bin/e_fileman_smart.c:1192 src/bin/e_fileman_smart.c:1201
-#: src/bin/e_fileman_smart.c:1210
+#: src/bin/e_fileman_smart.c:1364
+#: src/bin/e_fileman_smart.c:1373
+#: src/bin/e_fileman_smart.c:1382
 msgid "x"
 msgstr "x"
 
-#: src/bin/e_fileman_smart.c:1236 src/bin/e_fileman_smart.c:2006
+#: src/bin/e_fileman_smart.c:1408
+#: src/bin/e_fileman_smart.c:2289
 msgid "Properties"
 msgstr "Propiedades"
 
-#: src/bin/e_fileman_smart.c:1957
+#: src/bin/e_fileman_smart.c:2240
 msgid "Open"
 msgstr "Abrir"
 
-#: src/bin/e_fileman_smart.c:1968
+#: src/bin/e_fileman_smart.c:2251
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/bin/e_fileman_smart.c:1976
+#: src/bin/e_fileman_smart.c:2259
 msgid "Cut"
 msgstr "Cortar"
 
-#: src/bin/e_fileman_smart.c:1987
+#: src/bin/e_fileman_smart.c:2270
 msgid "Rename"
 msgstr "Renombrar"
 
-#: src/bin/e_fileman_smart.c:1995
+#: src/bin/e_fileman_smart.c:2278
 msgid "Delete"
 msgstr "Borrar"
 
@@ -869,155 +805,174 @@ msgstr "Aplicar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/bin/e_int_config_focus.c:143
+#: src/bin/e_int_config_focus.c:144
 msgid "Click Window to Focus"
 msgstr "Elegir ventana para enfocar"
 
-#: src/bin/e_int_config_focus.c:145
+#: src/bin/e_int_config_focus.c:146
 msgid "Window under the Mouse"
 msgstr "Ventana bajo el mouse"
 
-#: src/bin/e_int_config_focus.c:147
+#: src/bin/e_int_config_focus.c:148
 msgid "Most recent Window under the Mouse"
 msgstr "La ventana más reciente bajo el mouse"
 
-#: src/bin/e_int_config_focus.c:163
+#: src/bin/e_int_config_focus.c:164
 msgid "Focus"
 msgstr "Foco"
 
-#: src/bin/e_int_config_focus.c:165
+#: src/bin/e_int_config_focus.c:166
 msgid "Click to focus"
 msgstr "Elegir para hacer foco"
 
-#: src/bin/e_int_config_focus.c:167
+#: src/bin/e_int_config_focus.c:168
 msgid "Pointer focus"
 msgstr "Puntero del foco"
 
-#: src/bin/e_int_config_focus.c:169
+#: src/bin/e_int_config_focus.c:170
 msgid "Sloppy focus"
 msgstr "Foco descuidado"
 
-#: src/bin/e_int_config_focus.c:173
+#: src/bin/e_int_config_focus.c:174
 msgid "New Window Focus"
 msgstr "Foco en ventanas nuevas"
 
-#: src/bin/e_int_config_focus.c:175
+#: src/bin/e_int_config_focus.c:176
 msgid "No new windows get focus"
 msgstr "Ninguna ventana nueva obtiene el foco"
 
-#: src/bin/e_int_config_focus.c:177
+#: src/bin/e_int_config_focus.c:178
 msgid "All new windows get focus"
 msgstr "Todas las ventanas nuevas obtienen el foco"
 
-#: src/bin/e_int_config_focus.c:179
+#: src/bin/e_int_config_focus.c:180
 msgid "Only new dialogs get focus"
 msgstr "Sólo los diálogos nuevos obtienen el foco"
 
-#: src/bin/e_int_config_focus.c:181
+#: src/bin/e_int_config_focus.c:182
 msgid "Only new dialogs get focus if the parent has focus"
 msgstr "Los diálogos nuevos obtienen el foco solamente si su padre tiene el foco"
 
-#: src/bin/e_int_config_focus.c:185
+#: src/bin/e_int_config_focus.c:186
 msgid "Other Settings"
 msgstr "Otras configuraciones"
 
-#: src/bin/e_int_config_focus.c:186
+#: src/bin/e_int_config_focus.c:187
 msgid "Always pass on caught click events to programs"
 msgstr "Pasar siempre los clics tomados a los programas"
 
-#: src/bin/e_int_config_focus.c:188
+#: src/bin/e_int_config_focus.c:189
 msgid "A click on a window always raises it"
 msgstr "Un clic en una ventana siempre la levanta"
 
-#: src/bin/e_int_config_focus.c:190
+#: src/bin/e_int_config_focus.c:191
 msgid "A click in a window always focuses it"
 msgstr "Un clic en una ventana siempre le da el foco"
 
-#: src/bin/e_int_border_locks.c:289
+#: src/bin/e_int_border_locks.c:65
+#: src/bin/e_int_border_menu.c:78
+msgid "Window Locks"
+msgstr "Bloquear ventana"
+
+#: src/bin/e_int_border_locks.c:293
 msgid "Generic Locks"
 msgstr "Bloqueos genéricos"
 
-#: src/bin/e_int_border_locks.c:290
+#: src/bin/e_int_border_locks.c:294
 msgid "Lock the Window so it does only what I tell it to"
 msgstr "Bloquear la ventana para que haga solamente lo que le indico"
 
-#: src/bin/e_int_border_locks.c:292
+#: src/bin/e_int_border_locks.c:296
 msgid "Protect this window from me accidentally changing it"
 msgstr "Proteger a esta ventana ante un cambio accidental que le haga"
 
-#: src/bin/e_int_border_locks.c:294
-msgid ""
-"Protect this window from being accidentally closed because it is important"
-msgstr ""
-"Proteger esta ventana de ser cerrada accidentalmente porque es importante"
+#: src/bin/e_int_border_locks.c:298
+msgid "Protect this window from being accidentally closed because it is important"
+msgstr "Proteger esta ventana de ser cerrada accidentalmente porque es importante"
 
-#: src/bin/e_int_border_locks.c:296
+#: src/bin/e_int_border_locks.c:300
 msgid "Do not allow the border to change on this window"
 msgstr "No permitir que cambie el borde de esta ventana"
 
-#: src/bin/e_int_border_locks.c:299
+#: src/bin/e_int_border_locks.c:303
 msgid "Remember these Locks for this window next time it appears"
 msgstr "Recordar los bloqueos para esta ventana la próxima vez que aparezca"
 
-#: src/bin/e_int_border_locks.c:314
+#: src/bin/e_int_border_locks.c:318
 msgid "Lock program changing:"
 msgstr "Cambiando el bloqueo del programa:"
 
-#: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
-#: src/bin/e_int_border_remember.c:462
+#: src/bin/e_int_border_locks.c:319
+#: src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:494
 msgid "Position"
 msgstr "Posición"
 
-#: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:464 src/modules/ibar/e_mod_main.c:279
-#: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
+#: src/bin/e_int_border_locks.c:321
+#: src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_remember.c:496
+#: src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:932
+#: src/modules/ibox/e_mod_main.c:242
 #: src/modules/ibox/e_mod_main.c:696
 msgid "Size"
 msgstr "Tamaño"
 
-#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_locks.c:323
+#: src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_menu.c:113
+msgid "Stacking"
+msgstr "Apilamiento"
+
+#: src/bin/e_int_border_locks.c:325
+#: src/bin/e_int_border_locks.c:344
 msgid "Iconified state"
 msgstr "Estado minimizado"
 
-#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_remember.c:472
+#: src/bin/e_int_border_locks.c:327
+#: src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_remember.c:504
 msgid "Stickiness"
 msgstr "Fijación"
 
-#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
-#: src/bin/e_int_border_remember.c:476
+#: src/bin/e_int_border_locks.c:329
+#: src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_remember.c:508
 msgid "Shaded state"
 msgstr "Estado de fijación"
 
-#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_locks.c:331
+#: src/bin/e_int_border_locks.c:350
 msgid "Maximized state"
 msgstr "Estado maximizado"
 
-#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_locks.c:333
+#: src/bin/e_int_border_locks.c:352
 msgid "Fullscreen state"
 msgstr "Estado de pantalla completa"
 
-#: src/bin/e_int_border_locks.c:333
+#: src/bin/e_int_border_locks.c:337
 msgid "Lock me from changing:"
 msgstr "Bloquearme de cambios:"
 
-#: src/bin/e_int_border_locks.c:350
+#: src/bin/e_int_border_locks.c:354
 msgid "The border style"
 msgstr "El estilo del borde"
 
-#: src/bin/e_int_border_locks.c:354
+#: src/bin/e_int_border_locks.c:358
 msgid "Stop me from:"
 msgstr "Detenerme de:"
 
-#: src/bin/e_int_border_locks.c:355
+#: src/bin/e_int_border_locks.c:359
 msgid "Closing the window"
 msgstr "Cerrando la ventana"
 
-#: src/bin/e_int_border_locks.c:357
+#: src/bin/e_int_border_locks.c:361
 msgid "Exiting my login with this window open"
 msgstr "Saliendo al login con esta ventana abierta"
 
-#: src/bin/e_int_border_locks.c:361
+#: src/bin/e_int_border_locks.c:365
 msgid "Remember these Locks"
 msgstr "Recordar estos bloqueos"
 
@@ -1025,264 +980,546 @@ msgstr "Recordar estos bloqueos"
 msgid "Window Remember"
 msgstr "Recordar ventana"
 
-#: src/bin/e_int_border_remember.c:219
+#: src/bin/e_int_border_remember.c:228
 msgid "Window properties are not a unique match"
 msgstr "Las propiedades de la ventana no son únicas"
 
-#: src/bin/e_int_border_remember.c:222
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>This is just a warning in "
-"case you did not intend this to happen.<br>If you did, simply press "
-"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
-"sure and nothing will be affected."
-msgstr ""
-"Está tratando de pedirle a Enlightenment que recuerde aplicar las<br>propiedades (como "
-"el tamaño, lugar, estilo del borde, etc.) para<br>una ventana que <hilight>no tiene "
-"propiedades únicas</hilight>.<br><br>Esto significa que comparte las propiedades <br>del nombre/clase, "
-"tiempo, rol, etc. <br>con más de una ventana más en la pantalla y que las propiedades<br>recordadas para esta ventana se aplicarán a las otras "
-"ventanas<br>que igualen estas propiedades.<br><br>Esto es sólo un aviso en "
-"caso de que usted no quiera que pase.<br>Si lo quiere, simplemente presione "
-"los botones <hilight>Aplicar</hilight> o <hilight>Ok</hilight><br>y su configuración "
-"será aceptada. Presione <hilight>Cancelar</hilight> si no<br>está "
-"seguro y nada será afectado."
+#: src/bin/e_int_border_remember.c:231
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "Está tratando de pedirle a Enlightenment que recuerde aplicar las<br>propiedades (como el tamaño, lugar, estilo del borde, etc.) para<br>una ventana que <hilight>no tiene propiedades únicas</hilight>.<br><br>Esto significa que comparte las propiedades <br>del nombre/clase, tiempo, rol, etc. <br>con más de una ventana más en la pantalla y que las propiedades<br>recordadas para esta ventana se aplicarán a las otras ventanas<br>que igualen estas propiedades.<br><br>Esto es sólo un aviso en caso de que usted no quiera que pase.<br>Si lo quiere, simplemente presione los botones <hilight>Aplicar</hilight> o <hilight>Ok</hilight><br>y su configuración será aceptada. Presione <hilight>Cancelar</hilight> si no<br>está seguro y nada será afectado."
 
-#: src/bin/e_int_border_remember.c:301 src/bin/e_int_border_remember.c:331
+#: src/bin/e_int_border_remember.c:316
+#: src/bin/e_int_border_remember.c:346
 msgid "No match properties set"
 msgstr "No hay propiedades similares"
 
-#: src/bin/e_int_border_remember.c:304
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window <hilight>without "
-"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
-"way of remembering this window."
-msgstr ""
-"Usted le está pidiendo a Enlightenment que recuerde aplicar<br>a una ventana propiedades (como "
-"el tamaño, lugar, <br>estilo de borde, etc.) <hilight>sin "
-"especificar como recordarlo</hilight>.<br><br>Debe especificar al menos una forma de "
-"recordar para esta ventana."
+#: src/bin/e_int_border_remember.c:319
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
+msgstr "Usted le está pidiendo a Enlightenment que recuerde aplicar<br>a una ventana propiedades (como el tamaño, lugar, <br>estilo de borde, etc.) <hilight>sin especificar como recordarlo</hilight>.<br><br>Debe especificar al menos una forma de recordar para esta ventana."
 
-#: src/bin/e_int_border_remember.c:334
-msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
-"as size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>You may wish to enable the "
-"<hilight>Match only one window</hilight> option if<br>you only intend one "
-"instance of this window to be modified, with<br>additional instances not "
-"being modified.<br><br>This is just a warning in case you did not intend "
-"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
-"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
-"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
-"affected."
-msgstr ""
-"Le está pidiendo a Enlightenment que recuerde aplicar a una ventana<br>propiedades (como "
-"el tamaño, lugar, estilo del borde, etc.)<br>que <hilight>no tienen propiedades únicas</hilight> "
-"<br><br>Esto significa que comprate el Nombre/clase, "
-"tiempo, rol, etc., con más de una ventana en la "
-"pantalla y que las propiedades<br>recordadas para esta ventana se aplicarán a todas las otras "
-"ventanas<br>que compartan estas propiedades.<br><br>Quizá quiera habilitar la  "
-"opción <hilight>Coincidir sólo una ventana</hilight> si<br>quiere que sólo una "
-"instancia de esta ventana sea modificada, sin que <br>las otras instancias sean modificadas"
-".<br><br>Esta es sólo una advertencia en caso de que no quiera que esto ocurra "
-".<br>Si lo quiere, simplemente oprima el botón <hilight>Aplicar</hilight> u "
-"<hilight>Ok</hilight><br>y su configuración serán aceptadas. Oprima "
-"<hilight>Cancelar</hilight> si<br>no está seguro y nada será afectado."
+#: src/bin/e_int_border_remember.c:349
+msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>You may wish to enable the <hilight>Match only one window</hilight> option if<br>you only intend one instance of this window to be modified, with<br>additional instances not being modified.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "Le está pidiendo a Enlightenment que recuerde aplicar a una ventana<br>propiedades (como el tamaño, lugar, estilo del borde, etc.)<br>que <hilight>no tienen propiedades únicas</hilight> <br><br>Esto significa que comprate el Nombre/clase, tiempo, rol, etc., con más de una ventana en la pantalla y que las propiedades<br>recordadas para esta ventana se aplicarán a todas las otras ventanas<br>que compartan estas propiedades.<br><br>Quizá quiera habilitar la  opción <hilight>Coincidir sólo una ventana</hilight> si<br>quiere que sólo una instancia de esta ventana sea modificada, sin que <br>las otras instancias sean modificadas.<br><br>Esta es sólo una advertencia en caso de que no quiera que esto ocurra .<br>Si lo quiere, simplemente oprima el botón <hilight>Aplicar</hilight> u <hilight>Ok</hilight><br>y su configuración serán aceptadas. Oprima <hilight>Cancelar</hilight> si<br>no está seguro y nada será afectado."
 
-#: src/bin/e_int_border_remember.c:407
+#: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
 msgstr "Nada"
 
-#: src/bin/e_int_border_remember.c:409
+#: src/bin/e_int_border_remember.c:424
 msgid "Size and Position"
 msgstr "Tamaño y posición"
 
-#: src/bin/e_int_border_remember.c:411 src/bin/e_int_border_remember.c:468
+#: src/bin/e_int_border_remember.c:426
+#: src/bin/e_int_border_remember.c:500
 msgid "Locks"
 msgstr "Bloqueos"
 
-#: src/bin/e_int_border_remember.c:413
+#: src/bin/e_int_border_remember.c:428
 msgid "Size, Position and Locks"
 msgstr "Tamaño, posición y bloqueos"
 
-#: src/bin/e_int_border_remember.c:415
+#: src/bin/e_int_border_remember.c:430
 msgid "Everything"
 msgstr "Todo"
 
-#: src/bin/e_int_border_remember.c:429
+#: src/bin/e_int_border_remember.c:444
 msgid "Remember using"
 msgstr "Recordar usos"
 
-#: src/bin/e_int_border_remember.c:430
+#: src/bin/e_int_border_remember.c:450
 msgid "Window name and class"
 msgstr "Nombre y clase de la ventana"
 
-#: src/bin/e_int_border_remember.c:434
+#: src/bin/e_int_border_remember.c:460
 msgid "Title"
 msgstr "Título"
 
-#: src/bin/e_int_border_remember.c:442
+#: src/bin/e_int_border_remember.c:470
+#: src/bin/e_eap_editor.c:321
 msgid "Window Role"
 msgstr "Rol de la ventana"
 
-#: src/bin/e_int_border_remember.c:449
+#: src/bin/e_int_border_remember.c:479
 msgid "Window type"
 msgstr "Tipo de ventana"
 
-#: src/bin/e_int_border_remember.c:454
+#: src/bin/e_int_border_remember.c:486
 msgid "Transience"
 msgstr "Tiempo"
 
-#: src/bin/e_int_border_remember.c:458
+#: src/bin/e_int_border_remember.c:490
 msgid "Match only one window"
 msgstr "Coincidir sólo una ventana"
 
-#: src/bin/e_int_border_remember.c:461
+#: src/bin/e_int_border_remember.c:493
 msgid "Properties to remember"
 msgstr "Propiedades para recordar"
 
-#: src/bin/e_int_border_remember.c:470
+#: src/bin/e_int_border_remember.c:502
 msgid "Border style"
 msgstr "Estilo del borde"
 
-#: src/bin/e_int_border_remember.c:474
+#: src/bin/e_int_border_remember.c:506
 msgid "Virtual Desktop"
 msgstr "Escritorios virtuales"
 
-#: src/bin/e_int_border_remember.c:478
+#: src/bin/e_int_border_remember.c:510
 msgid "Screen zone"
 msgstr "Zona de la pantalla"
 
-#: src/bin/e_int_border_remember.c:480
+#: src/bin/e_int_border_remember.c:512
 msgid "Window list skip"
 msgstr "Omitir de la lista de ventanas"
 
-#: src/modules/battery/e_mod_main.c:122
+#: src/bin/e_eap_editor.c:210
+#: src/bin/e_eap_editor.c:332
+msgid "Icon"
+msgstr "ícono"
+
+#: src/bin/e_eap_editor.c:231
+msgid "Basic Info"
+msgstr "Información básica"
+
+#: src/bin/e_eap_editor.c:233
+msgid "App name"
+msgstr "Nombre del programa"
+
+#: src/bin/e_eap_editor.c:243
+msgid "Executable"
+msgstr "Ejecutable"
+
+#: src/bin/e_eap_editor.c:275
+msgid "Generic Info"
+msgstr "Información genérica"
+
+#: src/bin/e_eap_editor.c:284
+msgid "Comment"
+msgstr "Comentario"
+
+#: src/bin/e_eap_editor.c:296
+msgid "Window"
+msgstr "Ventana"
+
+#: src/bin/e_eap_editor.c:298
+msgid "Window Name"
+msgstr "Nombre de la ventana"
+
+#: src/bin/e_eap_editor.c:307
+msgid "Window Class"
+msgstr "Clase de la ventana"
+
+#: src/bin/e_eap_editor.c:314
+msgid "Window Title"
+msgstr "Título de la ventana"
+
+#: src/bin/e_eap_editor.c:334
+msgid "Icon Class"
+msgstr "Clase del ícono"
+
+#: src/bin/e_eap_editor.c:343
+msgid "Path"
+msgstr "Ruta"
+
+#: src/bin/e_eap_editor.c:356
+msgid "Misc"
+msgstr "Misc"
+
+#: src/bin/e_eap_editor.c:358
+msgid "Startup Notify"
+msgstr "Notificar inicio"
+
+#: src/bin/e_eap_editor.c:362
+msgid "Wait Exit"
+msgstr "Esperar salida"
+
+#: src/bin/e_int_border_menu.c:41
+msgid "Always On Top"
+msgstr "Siempre arriba"
+
+#: src/bin/e_int_border_menu.c:51
+#: src/modules/clock/e_mod_main.c:349
+#: src/modules/pager/e_mod_main.c:458
+msgid "Normal"
+msgstr "Normal"
+
+#: src/bin/e_int_border_menu.c:61
+msgid "Always Below"
+msgstr "Siempre debajo"
+
+#: src/bin/e_int_border_menu.c:85
+msgid "Remember"
+msgstr "Recordar"
+
+#: src/bin/e_int_border_menu.c:92
+msgid "Borders"
+msgstr "Bordes"
+
+#: src/bin/e_int_border_menu.c:102
+msgid "Send to Desktop"
+msgstr "Enviar al escritorio"
+
+#: src/bin/e_int_border_menu.c:123
+msgid "Shaded"
+msgstr "Enrollar"
+
+#: src/bin/e_int_border_menu.c:136
+msgid "Maximized"
+msgstr "Maximizar"
+
+#: src/bin/e_int_border_menu.c:149
+msgid "Sticky"
+msgstr "Escritorio fijo"
+
+#: src/bin/e_int_border_menu.c:162
+msgid "Borderless"
+msgstr "Sin borde"
+
+#: src/bin/e_int_border_menu.c:175
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:191
+msgid "Fullscreen"
+msgstr "Pantalla completa"
+
+#: src/bin/e_int_border_menu.c:189
+msgid "Skip Window List"
+msgstr "Omitir de la lista de ventanas"
+
+#: src/bin/e_int_border_menu.c:205
+msgid "Edit Icon"
+msgstr "Editar ícono"
+
+#: src/bin/e_int_border_menu.c:212
+msgid "Create Icon"
+msgstr "Crear ícono"
+
+#: src/bin/e_int_border_menu.c:222
+msgid "Kill"
+msgstr "Matar"
+
+#: src/bin/e_int_border_menu.c:235
+msgid "Iconify"
+msgstr "Minimizar"
+
+#: src/bin/e_int_border_menu.c:246
+msgid "Close"
+msgstr "Cerrar"
+
+#: src/bin/e_int_border_border.c:46
+msgid "Window Border Selection"
+msgstr "Selección del borde de la ventana"
+
+#: src/bin/e_int_border_border.c:196
+msgid "Remember this Border for this window next time it appears"
+msgstr "Recordar los bordes para esta ventana la próxima vez que aparezca"
+
+#: src/bin/e_int_config_window_display.c:136
+msgid "Display"
+msgstr "Mostrar"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "Mostrar información de la ventana cuando se mueve o cambia de tamaño"
+
+#: src/bin/e_int_config_window_display.c:139
+msgid "Animate the shading and unshading of windows"
+msgstr "Animar el sombreado de la ventana"
+
+#: src/bin/e_int_config_window_display.c:143
+#: src/bin/e_int_config_window_display.c:197
+msgid "Automatic New Window Placement"
+msgstr "Lugar automático para una nueva ventana"
+
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:199
+msgid "Smart Placement"
+msgstr "Emplazamiento inteligente"
+
+#: src/bin/e_int_config_window_display.c:147
+#: src/bin/e_int_config_window_display.c:201
+msgid "Place at mouse pointer"
+msgstr "Colocar en el puntero del mouse"
+
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
+msgid "Place manually with the mouse"
+msgstr "Colocar manualmente con el mouse"
+
+#: src/bin/e_int_config_window_display.c:167
+msgid "Window Move Geometry"
+msgstr "Geometría del movimiento de la ventana"
+
+#: src/bin/e_int_config_window_display.c:168
+#: src/bin/e_int_config_window_display.c:175
+msgid "Display information"
+msgstr "Mostrar información"
+
+#: src/bin/e_int_config_window_display.c:170
+msgid "Follow the window as it moves"
+msgstr "Seguir a la ventana cuando se mueve"
+
+#: src/bin/e_int_config_window_display.c:174
+msgid "Window Resize Geometry"
+msgstr "Geometría del cambio de tamaño de la ventana"
+
+#: src/bin/e_int_config_window_display.c:177
+msgid "Follow the window as it resizes"
+msgstr "Seguir la ventana mientras cambia de tamaño"
+
+#: src/bin/e_int_config_window_display.c:181
+msgid "Window Shading"
+msgstr "Sombreado de la ventana"
+
+#: src/bin/e_int_config_window_display.c:182
+msgid "Animate shading and unshading of windows"
+msgstr "Animar el sombreado de la ventana"
+
+#: src/bin/e_int_config_window_display.c:184
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr "%4.0f pixels/sec"
+
+#: src/bin/e_int_config_window_display.c:187
+msgid "Linear"
+msgstr "Linear"
+
+#: src/bin/e_int_config_window_display.c:189
+msgid "Smooth accelerate and decelerate"
+msgstr "Aceleración y desaceleración lenta"
+
+#: src/bin/e_int_config_window_display.c:191
+msgid "Accelerate"
+msgstr "Acelerar"
+
+#: src/bin/e_int_config_window_display.c:193
+msgid "Decelerate"
+msgstr "Desacelerar"
+
+#: src/bin/e_int_config_window_manipulation.c:130
+msgid "Miscellaneous Options"
+msgstr "Opciones varias"
+
+#: src/bin/e_int_config_window_manipulation.c:131
+#: src/bin/e_int_config_window_manipulation.c:164
+msgid "Automatically raise windows on mouse over"
+msgstr "Subir automáticamente la ventana cuando el mouse pasa por arriba"
+
+#: src/bin/e_int_config_window_manipulation.c:133
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr "Resistir los límites cuando se mueve o cambia de tamaño una ventana"
+
+#: src/bin/e_int_config_window_manipulation.c:137
+#: src/bin/e_int_config_window_manipulation.c:189
+msgid "Maximize Policy"
+msgstr "Política de maximizado"
+
+#: src/bin/e_int_config_window_manipulation.c:141
+#: src/bin/e_int_config_window_manipulation.c:193
+msgid "Smart expansion"
+msgstr "Expansión inteligente"
+
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Expand the window"
+msgstr "Expandir la ventana"
+
+#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:197
+msgid "Fill available space"
+msgstr "Llenar el espacio disponible"
+
+#: src/bin/e_int_config_window_manipulation.c:163
+msgid "Autoraise"
+msgstr "Autoesconder"
+
+#: src/bin/e_int_config_window_manipulation.c:166
+msgid "Delay before raising:"
+msgstr "Retrasar antes de subir:"
+
+#: src/bin/e_int_config_window_manipulation.c:168
+#: src/bin/e_int_config_desks.c:202
+#, c-format
+msgid "%1.1f sec"
+msgstr "%1.f seg"
+
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Resistance"
+msgstr "Resistencia"
+
+#: src/bin/e_int_config_window_manipulation.c:173
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr "Resistir mover o cambiar el tamaño de una ventana sobre un obstáculo"
+
+#: src/bin/e_int_config_window_manipulation.c:175
+msgid "Resistance between windows:"
+msgstr "Resistencia entre ventanas:"
+
+#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:181
+#: src/bin/e_int_config_window_manipulation.c:185
+#, c-format
+msgid "%2.0f pixels"
+msgstr "%2.0f píxels"
+
+#: src/bin/e_int_config_window_manipulation.c:179
+msgid "Resistance at the edge of the screen:"
+msgstr "Resistencia en el borde de la pantalla:"
+
+#: src/bin/e_int_config_window_manipulation.c:183
+msgid "Resistance to desktop gadgets:"
+msgstr "Resistencia a los dispositivos del escritorio:"
+
+#: src/bin/e_int_config_background.c:47
+msgid "Background Settings"
+msgstr "Opciones del fondo de pantalla"
+
+#: src/bin/e_int_config_desks.c:157
+#: src/bin/e_int_config_desks.c:186
+msgid "Number of Desktops"
+msgstr "Número de escritorios"
+
+#: src/bin/e_int_config_desks.c:160
+#: src/bin/e_int_config_desks.c:162
+#: src/bin/e_int_config_desks.c:189
+#: src/bin/e_int_config_desks.c:191
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/bin/e_int_config_desks.c:167
+#: src/bin/e_int_config_desks.c:196
+msgid "Desktop Mouse Flip"
+msgstr "Cambio de escritorio con el mouse"
+
+#: src/bin/e_int_config_desks.c:168
+#: src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "Cambiar de escritorios cuando el mouse llegue al borde de la pantalla"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "Tiempo para que el mouse esté en el borde antes de cambiar de escritorio"
+
+#: src/modules/battery/e_mod_main.c:125
 msgid "Enlightenment Battery Module"
 msgstr "Módulo de batería de Enlightenmen"
 
-#: src/modules/battery/e_mod_main.c:123
-msgid ""
-"A basic battery meter that uses either<hilight>ACPI</hilight> or "
-"<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-"adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as "
-"accurate as your BIOS or kernel drivers."
+#: src/modules/battery/e_mod_main.c:126
+msgid "A basic battery meter that uses either<hilight>ACPI</hilight> or <hilight>APM</hilight><br>on Linux to monitor your battery and AC power adaptor<br>status. This will work under Linux and FreeBSD and is only<br>as accurate as your BIOS or kernel drivers."
 msgstr ""
 "Un medidor básico de bateria que usa <hilight>ACPI</hilight> o <hilight>APM</hilight> en<br>Linux para monitorizar su bateria y el estado del\n"
 "adaptador de corriente alterna. Ésto sólo funcionará\n"
 "bajo Linux y tiene la misma precisión que su BIOS o\n"
 "los drivers del kernel."
 
-#: src/modules/battery/e_mod_main.c:215 src/modules/battery/e_mod_main.c:494
-#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:548
+#: src/modules/battery/e_mod_main.c:218
+#: src/modules/battery/e_mod_main.c:497
+#: src/modules/cpufreq/e_mod_main.c:215
+#: src/modules/cpufreq/e_mod_main.c:548
 msgid "Set Poll Time"
 msgstr "Establecer tiempo de refresco"
 
-#: src/modules/battery/e_mod_main.c:219 src/modules/battery/e_mod_main.c:498
+#: src/modules/battery/e_mod_main.c:222
+#: src/modules/battery/e_mod_main.c:501
 msgid "Set Alarm"
 msgstr "Establecer alarma"
 
-#: src/modules/battery/e_mod_main.c:401
+#: src/modules/battery/e_mod_main.c:404
 msgid "Disable"
 msgstr "Deshabilitar"
 
-#: src/modules/battery/e_mod_main.c:408
+#: src/modules/battery/e_mod_main.c:411
 msgid "10 mins"
 msgstr "10 min"
 
-#: src/modules/battery/e_mod_main.c:415
+#: src/modules/battery/e_mod_main.c:418
 msgid "20 mins"
 msgstr "20 min"
 
-#: src/modules/battery/e_mod_main.c:422
+#: src/modules/battery/e_mod_main.c:425
 msgid "30 mins"
 msgstr "30 min"
 
-#: src/modules/battery/e_mod_main.c:429
+#: src/modules/battery/e_mod_main.c:432
 msgid "40 mins"
 msgstr "40 min"
 
-#: src/modules/battery/e_mod_main.c:436
+#: src/modules/battery/e_mod_main.c:439
 msgid "50 mins"
 msgstr "50 min"
 
-#: src/modules/battery/e_mod_main.c:443
+#: src/modules/battery/e_mod_main.c:446
 msgid "1 hour"
 msgstr "1 hora"
 
-#: src/modules/battery/e_mod_main.c:455
+#: src/modules/battery/e_mod_main.c:458
 msgid "Check Fast (1 sec)"
 msgstr "Chequeo rápido (1 seg.)"
 
-#: src/modules/battery/e_mod_main.c:462
+#: src/modules/battery/e_mod_main.c:465
 msgid "Check Medium (5 sec)"
 msgstr "Chequeo medio (5 seg.)"
 
-#: src/modules/battery/e_mod_main.c:469
+#: src/modules/battery/e_mod_main.c:472
 msgid "Check Normal (10 sec)"
 msgstr "Chequeo normal (10 seg.)"
 
-#: src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:479
 msgid "Check Slow (30 sec)"
 msgstr "Chequeop lento (30 seg.)"
 
-#: src/modules/battery/e_mod_main.c:483
+#: src/modules/battery/e_mod_main.c:486
 msgid "Check Very Slow (60 sec)"
 msgstr "Chequeo muy lento (60 seg.)"
 
-#: src/modules/battery/e_mod_main.c:759
-msgid ""
-"Battery Running Low<br>Your battery is running low.<br>You may wish to "
-"switch to an AC source."
-msgstr ""
-"La batería está baja<br>Su batería está baja.<br>Quizá quiera cambiar a "
-"una fuente AC."
+#: src/modules/battery/e_mod_main.c:762
+msgid "Battery Running Low<br>Your battery is running low.<br>You may wish to switch to an AC source."
+msgstr "La batería está baja<br>Su batería está baja.<br>Quizá quiera cambiar a una fuente AC."
 
-#: src/modules/battery/e_mod_main.c:762 src/modules/cpufreq/e_mod_main.c:305
+#: src/modules/battery/e_mod_main.c:765
+#: src/modules/cpufreq/e_mod_main.c:305
 #: src/modules/cpufreq/e_mod_main.c:333
 msgid "Ok"
 msgstr "Ok"
 
-#: src/modules/battery/e_mod_main.c:824
+#: src/modules/battery/e_mod_main.c:827
 msgid "NO INFO"
 msgstr "Sin información"
 
-#: src/modules/battery/e_mod_main.c:970 src/modules/battery/e_mod_main.c:1231
-#: src/modules/battery/e_mod_main.c:1380
+#: src/modules/battery/e_mod_main.c:1002
+#: src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:1412
 msgid "NO BAT"
 msgstr "Sin Batería"
 
-#: src/modules/battery/e_mod_main.c:994 src/modules/battery/e_mod_main.c:1405
+#: src/modules/battery/e_mod_main.c:1026
+#: src/modules/battery/e_mod_main.c:1437
 msgid "BAD DRIVER"
 msgstr "Mal driver"
 
-#: src/modules/battery/e_mod_main.c:1018 src/modules/battery/e_mod_main.c:1262
-#: src/modules/battery/e_mod_main.c:1429
+#: src/modules/battery/e_mod_main.c:1050
+#: src/modules/battery/e_mod_main.c:1294
+#: src/modules/battery/e_mod_main.c:1461
 msgid "FULL"
 msgstr "Llena"
 
-#: src/modules/battery/e_mod_main.c:1079 src/modules/battery/e_mod_main.c:1489
+#: src/modules/battery/e_mod_main.c:1111
+#: src/modules/battery/e_mod_main.c:1522
 msgid "High"
 msgstr "Alta"
 
-#: src/modules/battery/e_mod_main.c:1083 src/modules/battery/e_mod_main.c:1493
+#: src/modules/battery/e_mod_main.c:1115
+#: src/modules/battery/e_mod_main.c:1526
 msgid "Low"
 msgstr "Baja"
 
-#: src/modules/battery/e_mod_main.c:1087 src/modules/battery/e_mod_main.c:1497
+#: src/modules/battery/e_mod_main.c:1119
+#: src/modules/battery/e_mod_main.c:1530
 msgid "Danger"
 msgstr "Peligro"
 
-#: src/modules/battery/e_mod_main.c:1091 src/modules/battery/e_mod_main.c:1501
-#: src/modules/battery/e_mod_main.c:1665
+#: src/modules/battery/e_mod_main.c:1123
+#: src/modules/battery/e_mod_main.c:1534
+#: src/modules/battery/e_mod_main.c:1701
 msgid "Charging"
 msgstr "Cargando"
 
@@ -1311,40 +1548,30 @@ msgid "CPU Frequency Controller Module"
 msgstr "Módulo de control de la frecuencia del CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:115
-msgid ""
-"A simple module to control the frequency of the system CPU.<br>This is "
-"especially useful to save power on laptops."
-msgstr ""
-"Un módulo simple para controlar la frecuencia del CPU del sistema.<br>"
-"Es especialmente útil para guardar batería en laptops."
+msgid "A simple module to control the frequency of the system CPU.<br>This is especially useful to save power on laptops."
+msgstr "Un módulo simple para controlar la frecuencia del CPU del sistema.<br>Es especialmente útil para guardar batería en laptops."
 
 #: src/modules/cpufreq/e_mod_main.c:221
 msgid "Restore Controller on Startup"
 msgstr "Restaurar el controlador al inicio"
 
-#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:560
+#: src/modules/cpufreq/e_mod_main.c:228
+#: src/modules/cpufreq/e_mod_main.c:560
 msgid "Set Controller"
 msgstr "Establecer controlador"
 
-#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:567
+#: src/modules/cpufreq/e_mod_main.c:236
+#: src/modules/cpufreq/e_mod_main.c:567
 msgid "Set Speed"
 msgstr "Establecer velocidad"
 
 #: src/modules/cpufreq/e_mod_main.c:303
-msgid ""
-"There was an error trying to set the cpu frequency<br>governor via the "
-"module's setfreq utility."
-msgstr ""
-"Hubo un error al tratar de establecer la frecuencia del cpu<br>a través de la"
-"utilidad de establecer frecuencias del módulo"
+msgid "There was an error trying to set the cpu frequency<br>governor via the module's setfreq utility."
+msgstr "Hubo un error al tratar de establecer la frecuencia del cpu<br>a través de lautilidad de establecer frecuencias del módulo"
 
 #: src/modules/cpufreq/e_mod_main.c:331
-msgid ""
-"There was an error trying to set the cpu frequency<br>setting via the "
-"module's setfreq utility."
-msgstr ""
-"Hubo un error al tratar de establecer la configuración de la frecuencia<br>del cpu a través de la"
-"utilidad de establecer frecuencias del módulo"
+msgid "There was an error trying to set the cpu frequency<br>setting via the module's setfreq utility."
+msgstr "Hubo un error al tratar de establecer la configuración de la frecuencia<br>del cpu a través de lautilidad de establecer frecuencias del módulo"
 
 #: src/modules/cpufreq/e_mod_main.c:456
 msgid "Check Fast (0.5 sec)"
@@ -1405,13 +1632,8 @@ msgid "Enlightenment Dropshadow Module"
 msgstr "Módulo de sombra de Enlightenment"
 
 #: src/modules/dropshadow/e_mod_main.c:188
-msgid ""
-"This is the dropshadow module that allows dropshadows to be cast<br>on the "
-"desktop background - without special X-Server extensions<br>or hardware "
-"acceleration."
-msgstr ""
-"Este es el módulo dropshadow que permite dibujar sombras arrojadas<br>en "
-"el fondo del escritorio - sin extensiones X-Server especiales<br>o aceleración por hardware."
+msgid "This is the dropshadow module that allows dropshadows to be cast<br>on the desktop background - without special X-Server extensions<br>or hardware acceleration."
+msgstr "Este es el módulo dropshadow que permite dibujar sombras arrojadas<br>en el fondo del escritorio - sin extensiones X-Server especiales<br>o aceleración por hardware."
 
 #: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
@@ -1421,7 +1643,8 @@ msgstr "Muy difusa"
 msgid "Fuzzy"
 msgstr "Difusa"
 
-#: src/modules/dropshadow/e_mod_main.c:316 src/modules/ibar/e_mod_main.c:878
+#: src/modules/dropshadow/e_mod_main.c:316
+#: src/modules/ibar/e_mod_main.c:878
 #: src/modules/ibox/e_mod_main.c:642
 msgid "Medium"
 msgstr "Medio"
@@ -1491,89 +1714,91 @@ msgid "Enlightenment IBar Module"
 msgstr "Módulo IBar de Enlightenment"
 
 #: src/modules/ibar/e_mod_main.c:166
-msgid ""
-"This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
-"a first example module and is being used to flesh out several<br>interfaces "
-"in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
-"<hilight>break often</hilight> and change as it improves."
-msgstr ""
-"Este es el módulo lanzador de aplicaciones IBar para Enlightenment.<br>Este es un módulo de ejemplo y esta bajo desarrollo intensivo,<br>es muy probable <hilight>que falle a menudo</hilight> a medida que se mejora."
-#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
-#: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
+msgid "This is the IBar Application Launcher bar module for Enlightenment.<br>It is a first example module and is being used to flesh out several<br>interfaces in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to <hilight>break often</hilight> and change as it improves."
+msgstr "Este es el módulo lanzador de aplicaciones IBar para Enlightenment.<br>Este es un módulo de ejemplo y esta bajo desarrollo intensivo,<br>es muy probable <hilight>que falle a menudo</hilight> a medida que se mejora."
+
+#: src/modules/ibar/e_mod_main.c:275
+#: src/modules/ibar/e_mod_main.c:928
+#: src/modules/ibox/e_mod_main.c:238
+#: src/modules/ibox/e_mod_main.c:692
 msgid "Options"
 msgstr "Opciones"
 
-#: src/modules/ibar/e_mod_main.c:835 src/modules/ibox/e_mod_main.c:599
+#: src/modules/ibar/e_mod_main.c:835
+#: src/modules/ibox/e_mod_main.c:599
 msgid "Auto fit icons"
 msgstr "Encajar íconos automáticamente"
 
-#: src/modules/ibar/e_mod_main.c:841 src/modules/ibox/e_mod_main.c:605
+#: src/modules/ibar/e_mod_main.c:841
+#: src/modules/ibox/e_mod_main.c:605
 msgid "Follower"
 msgstr "Seguidor"
 
-#: src/modules/ibar/e_mod_main.c:850 src/modules/ibox/e_mod_main.c:614
+#: src/modules/ibar/e_mod_main.c:850
+#: src/modules/ibox/e_mod_main.c:614
 msgid "Microscopic"
 msgstr "Microscópico"
 
-#: src/modules/ibar/e_mod_main.c:857 src/modules/ibox/e_mod_main.c:621
+#: src/modules/ibar/e_mod_main.c:857
+#: src/modules/ibox/e_mod_main.c:621
 msgid "Tiny"
 msgstr "Pequeño"
 
-#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:628
+#: src/modules/ibar/e_mod_main.c:864
+#: src/modules/ibox/e_mod_main.c:628
 msgid "Very Small"
 msgstr "Muy chico"
 
-#: src/modules/ibar/e_mod_main.c:871 src/modules/ibox/e_mod_main.c:635
+#: src/modules/ibar/e_mod_main.c:871
+#: src/modules/ibox/e_mod_main.c:635
 msgid "Small"
 msgstr "Chico"
 
-#: src/modules/ibar/e_mod_main.c:885 src/modules/ibox/e_mod_main.c:649
+#: src/modules/ibar/e_mod_main.c:885
+#: src/modules/ibox/e_mod_main.c:649
 msgid "Large"
 msgstr "ancho"
 
-#: src/modules/ibar/e_mod_main.c:892 src/modules/ibox/e_mod_main.c:656
+#: src/modules/ibar/e_mod_main.c:892
+#: src/modules/ibox/e_mod_main.c:656
 msgid "Very Large"
 msgstr "Muy ancho"
 
-#: src/modules/ibar/e_mod_main.c:899 src/modules/ibox/e_mod_main.c:663
+#: src/modules/ibar/e_mod_main.c:899
+#: src/modules/ibox/e_mod_main.c:663
 msgid "Extremely Large"
 msgstr "Extremadamente ancho"
 
-#: src/modules/ibar/e_mod_main.c:906 src/modules/ibox/e_mod_main.c:670
+#: src/modules/ibar/e_mod_main.c:906
+#: src/modules/ibox/e_mod_main.c:670
 msgid "Huge"
 msgstr "Grande"
 
-#: src/modules/ibar/e_mod_main.c:913 src/modules/ibox/e_mod_main.c:677
+#: src/modules/ibar/e_mod_main.c:913
+#: src/modules/ibox/e_mod_main.c:677
 msgid "Enormous"
 msgstr "Enorme"
 
-#: src/modules/ibar/e_mod_main.c:920 src/modules/ibox/e_mod_main.c:684
+#: src/modules/ibar/e_mod_main.c:920
+#: src/modules/ibox/e_mod_main.c:684
 msgid "Gigantic"
 msgstr "Gigantesco"
 
-#: src/modules/ibar/e_mod_main.c:1675
+#: src/modules/ibar/e_mod_main.c:1685
 msgid "Cannot add icon"
 msgstr "No se puede agregar el ícono"
 
-#: src/modules/ibar/e_mod_main.c:1677
-msgid ""
-"You tried to drop an icon of an application that<br>does not have a matching "
-"application file.<br><br>The icon cannot be added to IBar."
-msgstr ""
-"Trató de añadir el ícono de una aplicación que<br>no tiene una aplicación que la acompañe."
-"<br><br>El ícono no puede ser añadido a IBar."
+#: src/modules/ibar/e_mod_main.c:1687
+msgid "You tried to drop an icon of an application that<br>does not have a matching application file.<br><br>The icon cannot be added to IBar."
+msgstr "Trató de añadir el ícono de una aplicación que<br>no tiene una aplicación que la acompañe.<br><br>El ícono no puede ser añadido a IBar."
 
 #: src/modules/ibox/e_mod_main.c:151
 msgid "Enlightenment IBox Module"
 msgstr "Módulo IBox de Enlightenment"
 
 #: src/modules/ibox/e_mod_main.c:152
-msgid ""
-"This is the IBox Iconified Application module for Enlightenment.<br>It will "
-"hold minimized applications"
-msgstr ""
-"Este es el módulo IBox Iconified Application para Enlightenment,<br> contendrá las aplicaciones "
-"que estén minimizadas"
+msgid "This is the IBox Iconified Application module for Enlightenment.<br>It will hold minimized applications"
+msgstr "Este es el módulo IBox Iconified Application para Enlightenment,<br> contendrá las aplicaciones que estén minimizadas"
 
 #: src/modules/pager/e_mod_main.c:165
 msgid "Enlightenment Pager Module"
@@ -1611,23 +1836,28 @@ msgstr "Rápido"
 msgid "Very Fast"
 msgstr "Muy rápido"
 
-#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
+#: src/modules/pager/e_mod_main.c:480
+#: src/modules/pager/e_mod_main.c:626
 msgid "Desktop Name"
 msgstr "Nombre del escritorio"
 
-#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
+#: src/modules/pager/e_mod_main.c:484
+#: src/modules/pager/e_mod_main.c:630
 msgid "Enable Popup"
 msgstr "Permitir ventana emergente"
 
-#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
+#: src/modules/pager/e_mod_main.c:490
+#: src/modules/pager/e_mod_main.c:636
 msgid "Popup Speed"
 msgstr "Velocidad de la emergente"
 
-#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
+#: src/modules/pager/e_mod_main.c:494
+#: src/modules/pager/e_mod_main.c:640
 msgid "Fix Aspect (Keep Height)"
 msgstr "Fijar proporción (Mantener altura)"
 
-#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
+#: src/modules/pager/e_mod_main.c:498
+#: src/modules/pager/e_mod_main.c:644
 msgid "Fix Aspect (Keep Width)"
 msgstr "Fijar proporción (Mantener ancho)"
 
@@ -1644,12 +1874,9 @@ msgid "Enlightenment Temperature Module"
 msgstr "Módulo de temperatura de Enlightenment"
 
 #: src/modules/temperature/e_mod_main.c:96
-msgid ""
-"A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-"<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
-"generate a lot of heat."
-msgstr ""
-"Un módulo para medir el sensor térmico <hilight>ACPI </hilight>en Linux.<br>Es especialmente útil en portatiles modernos con procesadores<br>rápidos que generan mucho calor."
+msgid "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux.<br>It is especially useful for modern Laptops with high speed<br>CPUs that generate a lot of heat."
+msgstr "Un módulo para medir el sensor térmico <hilight>ACPI </hilight>en Linux.<br>Es especialmente útil en portatiles modernos con procesadores<br>rápidos que generan mucho calor."
+
 #: src/modules/temperature/e_mod_main.c:188
 #: src/modules/temperature/e_mod_main.c:798
 msgid "Check Interval"
@@ -1735,14 +1962,8 @@ msgid "Enlightenment Test Module"
 msgstr "Módulo Test de Enlightenment"
 
 #: src/modules/test/e_mod_main.c:63
-msgid ""
-"This module is VERY simple and is only used to test the basic<br>interface "
-"of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
-"unless you are working on the module system."
-msgstr ""
-"Este módulo es MUY simple y solamente es usado para probar la interface<br>básica "
-"del sistema de módulos de Enlightenment 0.17.0. Por favor<br>ignore este módulo "
-"salvo que este trabajando en el sistema de módulos."
+msgid "This module is VERY simple and is only used to test the basic<br>interface of the Enlightenment 0.17.0 module system. Please<br>ignore this module unless you are working on the module system."
+msgstr "Este módulo es MUY simple y solamente es usado para probar la interface<br>básica del sistema de módulos de Enlightenment 0.17.0. Por favor<br>ignore este módulo salvo que este trabajando en el sistema de módulos."
 
 #: src/modules/randr/e_mod_main.c:84
 msgid "Enlightenment Randr Module"
@@ -1764,19 +1985,27 @@ msgstr "Resolución"
 msgid "Resolution change"
 msgstr "Cambiar resolución"
 
-#: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
+#: src/modules/randr/e_mod_main.c:311
+#: src/modules/randr/e_mod_main.c:381
 #, c-format
-msgid ""
-"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-"resolution %dx%d in %d seconds."
-msgstr "¿Mantener la nueva resolución <hilight>%dx%d</hilight>?<br><br>Restaurando la "
-"vieja resolución %dx%d en %d segundos."
+msgid "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old resolution %dx%d in %d seconds."
+msgstr "¿Mantener la nueva resolución <hilight>%dx%d</hilight>?<br><br>Restaurando la vieja resolución %dx%d en %d segundos."
 
 #: src/modules/randr/e_mod_main.c:390
 #, c-format
-msgid ""
-"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-"resolution %dx%d NOW!"
-msgstr ""
-"¿Mantener la nueva resolución <hilight>%dx%d</hilight>?<br><br>¡Restaurando la "
-"resolución %dx%d AHORA!"
+msgid "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old resolution %dx%d NOW!"
+msgstr "¿Mantener la nueva resolución <hilight>%dx%d</hilight>?<br><br>¡Restaurando la resolución %dx%d AHORA!"
+
+#~ msgid "Icon Edit Error"
+#~ msgstr "Error al editar ícono"
+#~ msgid ""
+#~ "Error starting icon editor\n"
+#~ "\n"
+#~ "please install e_util_eapp_edit\n"
+#~ "or make sure it is in your PATH\n"
+#~ msgstr ""
+#~ "Error cargando el editor de iconos\n"
+#~ "\n"
+#~ "por favor instala e_util_eapp_edit\n"
+#~ "o comprueba que esta en tu PATH\n"
+
