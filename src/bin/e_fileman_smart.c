@@ -835,7 +835,7 @@ _e_fm_smart_show(Evas_Object *object)
    
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   
+  
    evas_object_show(sd->edje_obj);
    evas_object_show(sd->clip_obj);
 }
@@ -1453,7 +1453,7 @@ static void
 _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
 {
    Evas_List              *l;
-   Ecore_List             *list;
+   Evas_List             *list;
    Ecore_Sheap            *heap;
    char                   *f;
    int                     type;
@@ -1468,28 +1468,28 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
    if (!(dir2 = opendir(dir))) return;
    
    type = E_FM_FILE_TYPE_NORMAL;   
-   list = ecore_list_new();
-   ecore_list_set_free_cb(list, free);
-   /* TODO: use sorting function here */
-   heap = ecore_sheap_new(ECORE_COMPARE_CB(strcasecmp), ecore_list_nodes(list));
+   list = NULL;
    while(dp = readdir(dir2))
      {
 	if ((!strcmp(dp->d_name, ".") || (!strcmp (dp->d_name, "..")))) continue;
 	if ((dp->d_name[0] == '.') && (!(type & E_FM_FILE_TYPE_HIDDEN))) continue;
 	f = strdup(dp->d_name);
-	ecore_list_append(list, f);	  
+	list = evas_list_append(list, f);	  
      }   
    closedir(dir2);
    
-   heap = ecore_sheap_new(ECORE_COMPARE_CB(strcasecmp), ecore_list_nodes(list));
-   while ((f = ecore_list_remove_first(list)))     
-     ecore_sheap_insert(heap, f);     
+   heap = ecore_sheap_new(ECORE_COMPARE_CB(strcasecmp), evas_list_count(list));
+   while (list)
+     {  
+	f = list->data;
+	ecore_sheap_insert(heap, f);
+	list = evas_list_remove_list(list, list);	
+     }
    
-   while ((f = ecore_sheap_extract(heap)))     
+   while ((f = ecore_sheap_extract(heap)))
      sd->files_raw = evas_list_append(sd->files_raw, f);     
 
    ecore_sheap_destroy(heap);
-   
    if (sd->dir) free (sd->dir);
    sd->dir = strdup(dir);
 
