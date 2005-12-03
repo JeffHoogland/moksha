@@ -1052,25 +1052,22 @@ ACT_FN_GO(app)
 	     E_App *a = NULL;
 	     char *p, *p2;
 	     
-	     p2 = strdup(params);
-	     if (p2)
+	     p2 = alloca(strlen(params) + 1);
+	     strcpy(p2, params);
+	     p = strchr(p2, ' ');
+	     if (p)
 	       {
-		  p = strchr(p2, ' ');
-		  if (p)
-		    {
-		       *p = 0;
-		       if (!strcmp(p2, "file:"))
-			 a = e_app_file_find(p + 1);
-		       else if (!strcmp(p2, "name:"))
-			 a = e_app_name_find(p + 1);
-		       else if (!strcmp(p2, "generic:"))
-			 a = e_app_generic_find(p + 1);
-		       else if (!strcmp(p2, "exe:"))
-			 a = e_app_exe_find(p + 1);
-		       if (a)
-			 e_zone_app_exec(zone, a);
-		    }
-		  free(p2);
+		  *p = 0;
+		  if (!strcmp(p2, "file:"))
+		    a = e_app_file_find(p + 1);
+		  else if (!strcmp(p2, "name:"))
+		    a = e_app_name_find(p + 1);
+		  else if (!strcmp(p2, "generic:"))
+		    a = e_app_generic_find(p + 1);
+		  else if (!strcmp(p2, "exe:"))
+		    a = e_app_exe_find(p + 1);
+		  if (a)
+		    e_zone_app_exec(zone, a);
 	       }
 	  }
      }

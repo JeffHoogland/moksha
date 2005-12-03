@@ -56,8 +56,10 @@ e_msg_send(char *name, char *info, int val, E_Object *obj)
    E_Msg_Event *ev;
    
    ev = calloc(1, sizeof(E_Msg_Event));
-   if (name) ev->name = strdup(name);
-   if (info) ev->info = strdup(info);
+   /* FIXME: probably better todup the strings but merge with a single
+    * malloc for the event struct */
+   if (name) ev->name = evas_stringshare_add(name);
+   if (info) ev->info = evas_stringshare_add(info);
    ev->val = val;
    ev->obj = obj;
    if (ev->obj) e_object_ref(ev->obj);
@@ -128,7 +130,7 @@ _e_msg_event_free(void *data, void *ev)
    E_Msg_Event *e;
 
    e = ev;
-   if (e->name) free(e->name);
-   if (e->info) free(e->info);
+   if (e->name) evas_stringshare_del(e->name);
+   if (e->info) evas_stringshare_del(e->info);
    if (e->obj) e_object_unref(e->obj);
 }

@@ -379,8 +379,8 @@ e_gadman_client_domain_set(E_Gadman_Client *gmc, char *domain, int instance)
 {
    E_OBJECT_CHECK(gmc);
    E_OBJECT_TYPE_CHECK(gmc, E_GADMAN_CLIENT_TYPE);
-   if (gmc->domain) free(gmc->domain);
-   gmc->domain = strdup(domain);
+   if (gmc->domain) evas_stringshare_del(gmc->domain);
+   gmc->domain = evas_stringshare_add(domain);
    gmc->instance = instance;
 }
 
@@ -730,7 +730,7 @@ _e_gadman_client_free(E_Gadman_Client *gmc)
    if (gmc->control_object) evas_object_del(gmc->control_object);
    if (gmc->event_object) evas_object_del(gmc->event_object);
    gmc->gadman->clients = evas_list_remove(gmc->gadman->clients, gmc);
-   if (gmc->domain) free(gmc->domain);
+   if (gmc->domain) evas_stringshare_del(gmc->domain);
    _e_gadman_config_free(gmc->config);
    free(gmc);
 }

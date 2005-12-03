@@ -34,7 +34,7 @@ e_gadget_new(E_Module *module,
    e_object_ref(E_OBJECT(gad->module));
 
    if(!name) return NULL;
-   gad->name = strdup(name);
+   gad->name = evas_stringshare_add(name);
 
    gad->funcs.face_init = func_face_init;
    gad->funcs.face_free = func_face_free;
@@ -187,7 +187,7 @@ _e_gadget_free(E_Gadget *gad)
    gad->module->config_menu = NULL;
    e_object_unref(E_OBJECT(gad->module));
    e_object_del(E_OBJECT(gad->menu));
-   free(gad->name);
+   if (gad->name) evas_stringshare_del(gad->name);
    free(gad);
   
 }

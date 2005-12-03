@@ -324,10 +324,10 @@ e_menu_title_set(E_Menu *m, char *title)
      return;
    if (m->header.title)
      {
-	free(m->header.title);
+	evas_stringshare_del(m->header.title);
 	m->header.title = NULL;
      }
-   if (title) m->header.title = strdup(title);
+   if (title) m->header.title = evas_stringshare_add(title);
    else m->header.title = NULL;
    m->changed = 1;
 }
@@ -421,11 +421,11 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
    if (((mi->icon) && (icon) && (!strcmp(icon, mi->icon))) ||
        ((!mi->icon) && (!icon))) 
      return;
-   if (mi->icon) free(mi->icon);
-   if (mi->icon_key) free(mi->icon_key);
+   if (mi->icon) evas_stringshare_del(mi->icon);
+   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
    mi->icon = NULL;
    mi->icon_key = NULL;
-   if (icon) mi->icon = strdup(icon);
+   if (icon) mi->icon = evas_stringshare_add(icon);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -439,12 +439,12 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
        ((!mi->icon) && (!icon)) || 
        ((key) && (mi->icon_key) && (!strcmp(key, mi->icon_key))))
      return;
-   if (mi->icon) free(mi->icon);
-   if (mi->icon_key) free(mi->icon_key);
+   if (mi->icon) evas_stringshare_del(mi->icon);
+   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
    mi->icon = NULL;
    mi->icon_key = NULL;
-   if (icon) mi->icon = strdup(icon);
-   if (key) mi->icon_key = strdup(key);
+   if (icon) mi->icon = evas_stringshare_add(icon);
+   if (key) mi->icon_key = evas_stringshare_add(key);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -457,9 +457,9 @@ e_menu_item_label_set(E_Menu_Item *mi, const char *label)
    if (((mi->label) && (label) && (!strcmp(label, mi->label))) ||
        ((!mi->label) && (!label))) 
      return;
-   if (mi->label) free(mi->label);
+   if (mi->label) evas_stringshare_del(mi->label);
    mi->label = NULL;
-   if (label) mi->label = strdup(label);
+   if (label) mi->label = evas_stringshare_add(label);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
@@ -863,6 +863,8 @@ _e_menu_free(E_Menu *m)
 	m->in_active_list = 0;
 	e_object_unref(E_OBJECT(m));
      }
+   if (m->header.title) evas_stringshare_del(m->header.title);
+   if (m->header.icon_file) evas_stringshare_del(m->header.icon_file);
    free(m);
 }
 
@@ -876,9 +878,9 @@ _e_menu_item_free(E_Menu_Item *mi)
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = evas_list_remove(mi->menu->items, mi);
-   if (mi->icon) free(mi->icon);
-   if (mi->icon_key) free(mi->icon_key);
-   if (mi->label) free(mi->label);
+   if (mi->icon) evas_stringshare_del(mi->icon);
+   if (mi->icon_key) evas_stringshare_del(mi->icon_key);
+   if (mi->label) evas_stringshare_del(mi->label);
    free(mi);
 }
 

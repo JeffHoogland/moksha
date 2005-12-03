@@ -47,7 +47,6 @@ _e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
    
    e = event;
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
-   printf("E-IPC: client %p connected to server!\n", e->client);
    return 1;
 }
 
@@ -58,7 +57,6 @@ _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    
    e = event;
    if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) return 1;
-   printf("E-IPC: client %p disconnected from server!\n", e->client);
    /* delete client sruct */
    ecore_ipc_client_del(e->client);
    return 1;
@@ -79,12 +77,6 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       default:
 	break;
      }
-   printf("E-IPC: client sent: [%i] [%i] (%i) \"%p\"\n", e->major, e->minor, e->size, e->data);
-   /* ecore_ipc_client_send(e->client, 1, 2, 7, 77, 0, "ABC", 4); */
-   /* we can disconnect a client like this: */
-   /* ecore_ipc_client_del(e->client); */
-   /* or we can end a server by: */
-   /* ecore_ipc_server_del(ecore_ipc_client_server_get(e->client)); */
    return 1;
 }  
 

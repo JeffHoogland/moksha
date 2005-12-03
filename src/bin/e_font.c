@@ -116,7 +116,7 @@ e_font_available_list_free(Evas_List *available)
      {
 	efa = available->data;
 	available = evas_list_remove_list(available, available);
-	E_FREE(efa->name);
+	if (efa->name) evas_stringshare_del(efa->name);
 	E_FREE(efa);	
      }
 }
@@ -145,7 +145,7 @@ e_font_fallback_append(const char *font)
    e_font_fallback_remove (font);
    
    eff = E_NEW(E_Font_Fallback, 1);
-   eff->name = strdup(font);
+   eff->name = evas_stringshare_add(font);
    e_config->font_fallbacks = evas_list_append(e_config->font_fallbacks, eff);
 }
 
@@ -175,7 +175,7 @@ e_font_fallback_remove(const char *font)
 	  {
 	     e_config->font_fallbacks = evas_list_remove_list(
 					e_config->font_fallbacks, next);
-	     E_FREE(eff->name);
+	     if (eff->name) evas_stringshare_del(eff->name);
 	     E_FREE(eff);
 	     break;
 	  }
@@ -200,8 +200,8 @@ e_font_default_set(const char *text_class, const char *font, int size)
 	efd = evas_list_data(next);
 	if (!strcmp(efd->text_class, text_class))
 	  {
-	     E_FREE(efd->font);
-	     efd->font = strdup(font);
+	     if (efd->font) evas_stringshare_del(efd->font);
+	     efd->font = evas_stringshare_add(font);
 	     efd->size = size;
 	     /* move to the front of the list */
 	     e_config->font_defaults = evas_list_remove_list(
@@ -214,8 +214,8 @@ e_font_default_set(const char *text_class, const char *font, int size)
 
    /* the text class doesnt exist */
    efd = E_NEW(E_Font_Default, 1);
-   efd->text_class = strdup(text_class);
-   efd->font = strdup(font);
+   efd->text_class = evas_stringshare_add(text_class);
+   efd->font = evas_stringshare_add(font);
    efd->size = size;
    
    e_config->font_defaults = evas_list_prepend(e_config->font_defaults, efd);
@@ -265,8 +265,8 @@ e_font_default_remove(const char *text_class)
 	  {
 	     e_config->font_defaults = evas_list_remove_list(
 					e_config->font_defaults, next);
-	     E_FREE(efd->text_class);
-	     E_FREE(efd->font);
+	     if (efd->text_class) evas_stringshare_del(efd->text_class);
+	     if (efd->font) evas_stringshare_del(efd->font);
 	     E_FREE(efd);
 	     return;
 	  }
@@ -359,7 +359,7 @@ _e_font_font_dir_available_get(Evas_List *available_fonts, const char *font_dir)
 	       }
 	        
 	     efa = malloc(sizeof(E_Font_Available));
-	     efa->name = strdup(fname);
+	     efa->name = evas_stringshare_add(fname);
 	     available_fonts = evas_list_append(available_fonts, efa);
 	  }
 	fclose (f);

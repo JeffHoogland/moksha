@@ -515,22 +515,21 @@ _e_intl_language_path_find(char *language)
 	
 	for (next_search = search_list ; next_search && !found ; next_search = next_search->next)
 	   {
-		char message_path[PATH_MAX];
-		char *search_locale;
-		
-		search_locale = next_search->data;
-		snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo",
-			epd->dir, search_locale, PACKAGE);
-		if (ecore_file_exists(message_path) && !ecore_file_is_dir(message_path))
-		  {
-		     directory = strdup(epd->dir);
-		  }
+	      char message_path[PATH_MAX];
+	      char *search_locale;
+	      
+	      search_locale = next_search->data;
+	      snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo",
+		       epd->dir, search_locale, PACKAGE);
+	      if (ecore_file_exists(message_path) && !ecore_file_is_dir(message_path))
+		{
+		   directory = strdup(epd->dir);
+		}
 	   }
-
      }
    
    e_path_dir_list_free(dir_list);
-
+   
    while (search_list)
      {
 	char *data;
@@ -586,7 +585,7 @@ _e_intl_locale_alias_get(char *language)
    char *alias;
     
    if (language == NULL || !strncmp(language, "POSIX", strlen("POSIX")))
-	return strdup("C");
+     return strdup("C");
    
    canonic = _e_intl_locale_canonic_get(language, E_LOC_ALL );
    

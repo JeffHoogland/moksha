@@ -186,7 +186,7 @@ e_module_new(char *name)
 init_done:
 
    _e_modules = evas_list_append(_e_modules, m);
-   m->name = strdup(name);
+   m->name = evas_stringshare_add(name);
    s = modpath ? ecore_file_get_dir(modpath) : NULL;
    if (s)
      {
@@ -438,7 +438,7 @@ _e_module_free(E_Module *m)
 	m->func.save(m);
 	m->func.shutdown(m);
      }
-   if (m->name) free(m->name);
+   if (m->name) evas_stringshare_del(m->name);
    if (m->dir) free(m->dir);
    if (m->handle) dlclose(m->handle);
    _e_modules = evas_list_remove(_e_modules, m);
