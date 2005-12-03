@@ -188,11 +188,12 @@ e_intl_language_set(const char *lang)
    if (lang)
      {
 	_e_intl_language = strdup(lang);
-	e_util_env_set("LANGUAGE", _e_intl_language);
 	/* Only set env vars is a non NULL locale was passed */
 	if (set_envars)
 	  {
 	     /* FIXME: maybe we should set these anyway? */
+	     if (getenv("LANGUAGE"))
+	       e_util_env_set("LANGUAGE", _e_intl_language);
 	     if (getenv("LANG"))        
 	       e_util_env_set("LANG", _e_intl_language);
 	     if (getenv("LC_ALL"))
