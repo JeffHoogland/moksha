@@ -163,28 +163,43 @@ void
 e_intl_language_set(const char *lang)
 {
    char *alias_locale;
-
+   int set_envars;
+   
    if (_e_intl_language) free(_e_intl_language);
-   /* NULL lang means set everything back to the original environment defaults */
+   set_envars = 1;
+   /* NULL lang means set everything back to the original environment 
+    * defaults 
+    */
    if (!lang)
      {
 	e_util_env_set("LC_MESSAGES", _e_intl_orig_lc_messages);
 	e_util_env_set("LANGUAGE", _e_intl_orig_language);
 	e_util_env_set("LC_ALL", _e_intl_orig_lc_all);
 	e_util_env_set("LANG", _e_intl_orig_lang);
+	
+	lang = getenv("LC_MESSAGES");
+	if (!lang) lang = getenv("LANGUAGE");
+	if (!lang) lang = getenv("LC_ALL");
+	if (!lang) lang = getenv("LANG");
+	
+	set_envars = 0;
      }
-   if (!lang) lang = getenv("LC_MESSAGES");
-   if (!lang) lang = getenv("LANGUAGE");
-   if (!lang) lang = getenv("LC_ALL");
-   if (!lang) lang = getenv("LANG");
+    
    if (lang)
      {
 	_e_intl_language = strdup(lang);
 	e_util_env_set("LANGUAGE", _e_intl_language);
-	/* FIXME: maybe we should set these anyway? */
-	if (getenv("LANG"))        e_util_env_set("LANG", _e_intl_language);
-	if (getenv("LC_ALL"))      e_util_env_set("LC_ALL", _e_intl_language);
-	if (getenv("LC_MESSAGES")) e_util_env_set("LC_MESSAGES", _e_intl_language);
+	/* Only set env vars is a non NULL locale was passed */
+	if (set_envars)
+	  {
+	     /* FIXME: maybe we should set these anyway? */
+	     if (getenv("LANG"))        
+	       e_util_env_set("LANG", _e_intl_language);
+	     if (getenv("LC_ALL"))
+	       e_util_env_set("LC_ALL", _e_intl_language);
+	     if (getenv("LC_MESSAGES"))
+	       e_util_env_set("LC_MESSAGES", _e_intl_language);
+	  }
      }
    else
      {
