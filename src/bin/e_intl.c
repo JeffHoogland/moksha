@@ -210,8 +210,8 @@ e_intl_language_set(const char *lang)
    alias_locale = _e_intl_locale_alias_get(_e_intl_language);
    if (!_e_intl_locale_validate(alias_locale))
      {
-	fprintf(stderr, "Locale %s is NO GOOD. Please" 
-	       "install this locale or don't" 
+	fprintf(stderr, "Locale %s is NO GOOD. Please "
+	       "install this locale or don't "
                "use it!\n", alias_locale);
      }
    else
@@ -224,11 +224,11 @@ e_intl_language_set(const char *lang)
              locale_path = _e_intl_language_path_find(alias_locale);
              if (locale_path == NULL)
 	       {
-		  fprintf(stderr, "The eMonkeys can not find the" 
+		  fprintf(stderr, "The eMonkeys can not find the "
 			 " eTranslation for your eLocale(%s). "
 			 "Please make sure your messages "
-			 "path is in order. If this locale"
-			 "is an alias make sure you have your"
+			 "path is in order. If this locale "
+			 "is an alias make sure you have your "
 			 "locale.aliases file in the right place\n", alias_locale);
 	       }
 	     else
