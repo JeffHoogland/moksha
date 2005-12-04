@@ -439,11 +439,11 @@ e_intl_input_method_config_free (E_Input_Method_Config *imc)
 {
    if (imc != NULL)
      {
-	E_FREE(imc->e_im_name);
-	E_FREE(imc->gtk_im_module);
-	E_FREE(imc->qt_im_module);
-	E_FREE(imc->xmodifiers);
-	E_FREE(imc->e_im_exec);
+	if (imc->e_im_name) evas_stringshare_del(imc->e_im_name);
+	if (imc->gtk_im_module) evas_stringshare_del(imc->gtk_im_module);
+	if (imc->qt_im_module) evas_stringshare_del(imc->qt_im_module);
+	if (imc->xmodifiers) evas_stringshare_del(imc->xmodifiers);
+	if (imc->e_im_exec) evas_stringshare_del(imc->e_im_exec);
 	E_FREE(imc);
      }
 }
