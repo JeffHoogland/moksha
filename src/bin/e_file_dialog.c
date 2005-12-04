@@ -46,11 +46,11 @@ e_file_dialog_new(E_Container *con)
    
    ol = e_widget_list_add(evas, 0, 1);
    
-   list = e_widget_framelist_add(evas, "Places", 0);
+   list = e_widget_framelist_add(evas, _("Places"), 0);
    e_widget_framelist_content_align_set(list, 0.5, 0.0);
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Home"), "fileman/home", NULL, NULL, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Desktop"), "fileman/desktop", NULL, NULL, NULL));
-   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup("Icons"), "fileman/folder", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup(_("Home")), "fileman/home", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup(_("Desktop")), "fileman/desktop", NULL, NULL, NULL));
+   e_widget_framelist_object_append(list, e_widget_button_add(evas, strdup(_("Icons")), "fileman/folder", NULL, NULL, NULL));
    e_widget_list_object_append(ol, list, 1, 0, 0.0);
    
    fm = e_widget_fileman_add(evas, &(dia->file));
@@ -60,8 +60,8 @@ e_file_dialog_new(E_Container *con)
    e_widget_min_size_get(ol, &w, &h);
    e_dialog_content_set(dia->dia, ol, w, h);
    
-   e_dialog_button_add(dia->dia, "Ok", NULL, _e_file_dialog_button1_click, dia);
-   e_dialog_button_add(dia->dia, "Cancel", NULL, _e_file_dialog_button2_click, dia);
+   e_dialog_button_add(dia->dia, _("Ok"), NULL, _e_file_dialog_button1_click, dia);
+   e_dialog_button_add(dia->dia, _("Cancel"), NULL, _e_file_dialog_button2_click, dia);
    
    return dia;
 }

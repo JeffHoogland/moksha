@@ -928,10 +928,10 @@ _e_fm_file_delete(E_Fm_Icon *icon)
        char text[PATH_MAX + 256];
 
        dia = e_dialog_new(icon->sd->win->container);
-       e_dialog_button_add(dia, "Ok", NULL, NULL, NULL);
+       e_dialog_button_add(dia, _("Ok"), NULL, NULL, NULL);
        e_dialog_button_focus_num(dia, 1);
-       e_dialog_title_set(dia, "Error");
-       snprintf(text, PATH_MAX + 256, "Could not delete  <br><b>%s</b>", icon->file->path);
+       e_dialog_title_set(dia, _("Error"));
+       snprintf(text, PATH_MAX + 256, _("Could not delete  <br><b>%s</b>"), icon->file->path);
        e_dialog_text_set(dia, text);
        e_dialog_show(dia);
        return;
@@ -1023,11 +1023,11 @@ _e_fm_file_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi)
    icon = data;
 
    dia = e_dialog_new(icon->sd->win->container);
-   e_dialog_button_add(dia, "Yes", NULL, _e_fm_file_delete_yes_cb, icon);
-   e_dialog_button_add(dia, "No", NULL, NULL, NULL);
+   e_dialog_button_add(dia, _("Yes"), NULL, _e_fm_file_delete_yes_cb, icon);
+   e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
    e_dialog_button_focus_num(dia, 1);
-   e_dialog_title_set(dia, "Confirm");
-   snprintf(text, PATH_MAX + 256, " Are you sure you want to delete <br><b>%s</b> ?", icon->file->name);
+   e_dialog_title_set(dia, _("Confirm"));
+   snprintf(text, PATH_MAX + 256, _(" Are you sure you want to delete <br><b>%s</b> ?"), icon->file->name);
    e_dialog_text_set(dia, text);
    e_dialog_show(dia);
 }
@@ -1332,22 +1332,22 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_frametable_add(evas, _("File Info:"), 0);
-   ob = e_widget_label_add(evas, "Owner:");
+   ob = e_widget_label_add(evas, _("Owner:"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, strdup(usr->pw_name));
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_label_add(evas, "Group:");
+   ob = e_widget_label_add(evas, _("Group:"));
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, strdup(grp->gr_name));
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_label_add(evas, "Last Access:");
+   ob = e_widget_label_add(evas, _("Last Access:"));
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, lastaccess);
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_label_add(evas, "Last Modified:");
+   ob = e_widget_label_add(evas, _("Last Modified:"));
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
    ob = e_widget_label_add(evas, lastmod);
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
@@ -1355,7 +1355,7 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_frametable_add(evas, _("Permissions:"), 0);
-   ob = e_widget_label_add(evas, "Me");
+   ob = e_widget_label_add(evas, _("Me"));
    e_widget_frametable_object_append(of, ob, 0, 0, 3, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("r"), &(cfdata->user.r));
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
@@ -1364,7 +1364,7 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    ob = e_widget_check_add(evas, _("x"), &(cfdata->user.x));
    e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_label_add(evas, "My Group");
+   ob = e_widget_label_add(evas, _("My Group"));
    e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("r"), &(cfdata->group.r));
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
@@ -1373,7 +1373,7 @@ _e_fm_icon_prop_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *
    ob = e_widget_check_add(evas, _("x"), &(cfdata->group.x));
    e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_label_add(evas, "Everyone");
+   ob = e_widget_label_add(evas, _("Everyone"));
    e_widget_frametable_object_append(of, ob, 0, 4, 3, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("r"), &(cfdata->world.r));
    e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
@@ -1953,7 +1953,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
        /*- Arrange -*/
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "Arrange Icons");
+       e_menu_item_label_set(mi, _("Arrange Icons"));
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/arrange"),
@@ -1963,7 +1963,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
        e_menu_item_submenu_set(mi, mn);
 
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "By Name");
+       e_menu_item_label_set(mi, _("By Name"));
        e_menu_item_radio_set(mi, 1);
        e_menu_item_radio_group_set(mi, 2);
        if (sd->arrange == E_FILEMAN_CANVAS_ARRANGE_NAME) e_menu_item_toggle_set(mi, 1);
@@ -1974,7 +1974,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/arrange_name");
 
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "By Mod Time");
+       e_menu_item_label_set(mi, _("By Mod Time"));
        e_menu_item_radio_set(mi, 1);
        e_menu_item_radio_group_set(mi, 2);
        if (sd->arrange == E_FILEMAN_CANVAS_ARRANGE_MODTIME) e_menu_item_toggle_set(mi, 1);
@@ -1985,7 +1985,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/arrange_time");
        /*- New -*/
        mi = e_menu_item_new(sd->menu);
-       e_menu_item_label_set(mi, "New");
+       e_menu_item_label_set(mi, _("New"));
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/new"),
@@ -1995,7 +1995,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
        e_menu_item_submenu_set(mi, mn);
 
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "Directory");
+       e_menu_item_label_set(mi, _("Directory"));
        e_menu_item_callback_set(mi, _e_fm_menu_new_dir_cb, sd);
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2003,7 +2003,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/new_dir");
        /*- View -*/
        mi = e_menu_item_new(sd->menu);
-       e_menu_item_label_set(mi, "View");
+       e_menu_item_label_set(mi, _("View"));
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/view"),
@@ -2013,7 +2013,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
        e_menu_item_submenu_set(mi, mn);
 
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "Name Only");
+       e_menu_item_label_set(mi, _("Name Only"));
        e_menu_item_radio_set(mi, 1);
        e_menu_item_radio_group_set(mi, 2);
        e_menu_item_icon_edje_set(mi,
@@ -2022,7 +2022,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/view_name");
 
        mi = e_menu_item_new(mn);
-       e_menu_item_label_set(mi, "Details");
+       e_menu_item_label_set(mi, _("Details"));
        e_menu_item_radio_set(mi, 1);
        e_menu_item_radio_group_set(mi, 2);
        e_menu_item_icon_edje_set(mi,
@@ -2032,7 +2032,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
        /*- Refresh -*/
        mi = e_menu_item_new(sd->menu);
-       e_menu_item_label_set(mi, "Refresh");
+       e_menu_item_label_set(mi, _("Refresh"));
        e_menu_item_callback_set(mi, _e_fm_menu_refresh_cb, sd);
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
@@ -2040,7 +2040,7 @@ _e_fm_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 				 "fileman/button/refresh");
        /*- Properties -*/
        mi = e_menu_item_new(sd->menu);
-       e_menu_item_label_set(mi, "Properties");
+       e_menu_item_label_set(mi, _("Properties"));
        e_menu_item_icon_edje_set(mi,
 				 (char *)e_theme_edje_file_get("base/theme/fileman",
 							       "fileman/button/properties"),
