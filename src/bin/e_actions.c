@@ -700,11 +700,43 @@ ACT_FN_GO(window_desk_move_by)
      {
 	E_Desk *desk;
 	int dx, dy;
+	int to_x = 0, to_y = 0;
 
 	e_desk_xy_get(bd->desk, &dx, &dy);
-	desk = e_desk_at_xy_get(bd->zone, dx + x, dy + y);
+	
+	to_x = dx + x; to_y = dy + y;
+	while( ( desk = e_desk_at_xy_get(bd->zone, to_x , to_y ) ) == NULL )
+	  {
+	     // here we are out of our desktop range
+	     while( to_x >= bd->zone->desk_x_count )
+	       {
+		  to_x -= bd->zone->desk_x_count;
+		  to_y ++;
+	       }
+	     while( to_x < 0 )
+	       {
+		  to_x += bd->zone->desk_x_count;
+		  to_y --;
+	       }
+	     
+	     while( to_y >= bd->zone->desk_y_count )
+	       {
+		  to_y -= bd->zone->desk_y_count;
+	       }
+	     while( to_y < 0 )
+	       {
+		  to_y += bd->zone->desk_y_count;
+	       }
+	  }
+	
 	if (desk)
-	  e_border_desk_set(bd, desk);
+	  {
+	     // switch desktop. Quite usefull from the interface point of view.
+	     e_zone_desk_flip_by( bd->zone, to_x - dx , to_y - dy );
+	     // send the border to the required desktop.
+	     e_border_desk_set(bd, desk);
+	     e_border_focus_set( bd, 1, 1);
+	  }
      }
 }
 
