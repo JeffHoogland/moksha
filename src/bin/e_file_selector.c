@@ -118,6 +118,7 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas *evas;
+   char *home;
    
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
@@ -136,6 +137,12 @@ _e_smart_add(Evas_Object *obj)
    evas_object_smart_member_add(sd->frame, obj);      
       
    sd->files = e_fm_add(evas);
+   
+   /* temp fix until this is handled properly */
+   home = e_user_homedir_get();
+   e_fm_dir_set(sd->files, home);
+   E_FREE(home);
+   
    e_fm_selector_enable(sd->files, _e_file_selector_selected_cb, sd);
    evas_object_smart_member_add(sd->files, obj);
 
