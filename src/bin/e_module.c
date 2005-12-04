@@ -56,7 +56,7 @@ e_module_init(void)
 	  }
 	else
 	  {
-	     E_FREE(em->name);
+	     if (em->name) evas_stringshare_del(em->name);
 	     E_FREE(em);
 	     e_config->modules = evas_list_remove_list(e_config->modules, pl);
 	     e_config_save_queue();
@@ -105,7 +105,7 @@ e_module_new(char *name)
 	modpath = e_path_find(path_modules, buf);
      }
    else
-     modpath = strdup(name);
+     modpath = evas_stringshare_add(name);
    if (!modpath)
      {
 	snprintf(body, sizeof(body), _("There was an error loading module named: %s<br>"
@@ -187,11 +187,21 @@ init_done:
 
    _e_modules = evas_list_append(_e_modules, m);
    m->name = evas_stringshare_add(name);
-   s = modpath ? ecore_file_get_dir(modpath) : NULL;
-   if (s)
+   if (modpath)
      {
-	m->dir = ecore_file_get_dir(s);
-	free(s);
+	s =  ecore_file_get_dir(modpath);
+	if (s)
+	  {
+	     char *s2;
+	     
+	     s2 = ecore_file_get_dir(s);
+	     free(s);
+	     if (s2)
+	       {
+		  m->dir = evas_stringshare_add(s2);
+		  free(s2);
+	       }
+	  }
      }
    if (m->func.info)
      m->func.info(m);
@@ -211,12 +221,12 @@ init_done:
 	E_Config_Module *em;
 	
 	em = E_NEW(E_Config_Module, 1);
-	em->name = strdup(m->name);
+	em->name = evas_stringshare_add(m->name);
 	em->enabled = 0;
 	e_config->modules = evas_list_append(e_config->modules, em);
 	e_config_save_queue();
      }
-   free(modpath);
+   if (modpath) evas_stringshare_del(modpath);
    return m;
 }
 
@@ -422,7 +432,7 @@ _e_module_free(E_Module *m)
 	if (!strcmp(em->name, m->name))
 	  {
 	     e_config->modules = evas_list_remove(e_config->modules, em);
-	     E_FREE(em->name);
+	     if (em->name) evas_stringshare_del(em->name);
 	     E_FREE(em);
 	     /* FIXME
 	      * This is crap, a job is added, but doesn't run because
@@ -439,7 +449,7 @@ _e_module_free(E_Module *m)
 	m->func.shutdown(m);
      }
    if (m->name) evas_stringshare_del(m->name);
-   if (m->dir) free(m->dir);
+   if (m->dir) evas_stringshare_del(m->dir);
    if (m->handle) dlclose(m->handle);
    _e_modules = evas_list_remove(_e_modules, m);
    if (m->icon_file) free(m->icon_file);

@@ -45,7 +45,12 @@ static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Eva
 static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data);
 static void           _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data);
 
-#define IFDUP(src, dst) if(src) dst = strdup(src); else dst = NULL
+#define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL
+
+/* FIXME: this eap editor is half-done. first advanced mode needs to ALSO
+ * cover basic config - image saving is broken, makign new icons is broken
+ * along with e_apps.c etc. all in all - this is not usable.
+ */
 
 /* externally accessible functions */
 
@@ -109,7 +114,20 @@ _e_eap_edit_create_data(E_Config_Dialog *cfd)
 
 static void
 _e_eap_edit_free_data(E_Config_Dialog *cfd, void *data)
-{    
+{
+   E_App_Edit_CFData *cfdata;
+   
+   cfdata = data;
+   E_FREE(cfdata->name);
+   E_FREE(cfdata->exe);
+   E_FREE(cfdata->generic);
+   E_FREE(cfdata->comment);
+   E_FREE(cfdata->wname);
+   E_FREE(cfdata->wclass);
+   E_FREE(cfdata->wtitle);
+   E_FREE(cfdata->wrole);
+   E_FREE(cfdata->path);
+   E_FREE(cfdata->image);
    free(data);
 }
 
@@ -124,23 +142,23 @@ _e_eap_edit_basic_apply_data(E_Config_Dialog *cfd, void *data)
    editor = cfdata->editor;
    eap = editor->eap;
    
-   if(!(cfdata->path))
+   if (!(cfdata->path))
      return -1;
    
-   E_FREE(eap->name);
-   E_FREE(eap->exe);
-   E_FREE(eap->image);
+   if (eap->name) evas_stringshare_del(eap->name);
+   if (eap->exe) evas_stringshare_del(eap->exe);
+   if (eap->image) evas_stringshare_del(eap->image);
    
-   IFDUP(cfdata->name, eap->name);
-   IFDUP(cfdata->exe, eap->exe);
-   IFDUP(cfdata->image, eap->image);
+   if (cfdata->name) eap->name = evas_stringshare_add(cfdata->name);
+   if (cfdata->exe) eap->exe = evas_stringshare_add(cfdata->exe);
+   if (cfdata->image) eap->image = evas_stringshare_add(cfdata->image);
    
    eap->startup_notify = cfdata->startup_notify;
    eap->wait_exit = cfdata->wait_exit;
    
    e_app_fields_save(eap);
    
-    return 1;
+   return 1;
 }
 
 static int
@@ -154,39 +172,44 @@ _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void *data)
    editor = cfdata->editor;
    eap = editor->eap;
    
-   if(!(cfdata->path))
+   if (!(cfdata->path))
      return -1;
-
-   E_FREE(eap->generic);
-   E_FREE(eap->comment);
-   E_FREE(eap->win_name);
-   E_FREE(eap->win_class);   
-   E_FREE(eap->win_title);
-   E_FREE(eap->win_role);
-   E_FREE(eap->icon_class);
-   E_FREE(eap->path);
    
-   if(cfdata->startup_notify)
+   if (eap->name) evas_stringshare_del(eap->name);
+   if (eap->exe) evas_stringshare_del(eap->exe);
+   if (eap->image) evas_stringshare_del(eap->image);
+   
+   if (eap->generic) evas_stringshare_del(eap->generic);
+   if (eap->comment) evas_stringshare_del(eap->comment);
+   if (eap->win_name) evas_stringshare_del(eap->win_name);
+   if (eap->win_class) evas_stringshare_del(eap->win_class);   
+   if (eap->win_title) evas_stringshare_del(eap->win_title);
+   if (eap->win_role) evas_stringshare_del(eap->win_role);
+   if (eap->icon_class) evas_stringshare_del(eap->icon_class);
+   if (eap->path) evas_stringshare_del(eap->path);
+   
+   if (cfdata->startup_notify)
      eap->startup_notify = 1;   
    else eap->startup_notify = 0;
-   if(cfdata->wait_exit)
+   if (cfdata->wait_exit)
      eap->wait_exit = 1;
    else eap->wait_exit = 0;
 
    
-   IFDUP(cfdata->generic, eap->generic);
-   IFDUP(cfdata->comment, eap->comment);
-   IFDUP(cfdata->wname, eap->win_name);
-   IFDUP(cfdata->wclass, eap->win_class);
-   IFDUP(cfdata->wtitle, eap->win_title);
-   IFDUP(cfdata->wrole, eap->win_role);
-   IFDUP(cfdata->iclass, eap->icon_class);
-   IFDUP(cfdata->path, eap->path);
-
-
+   if (cfdata->name) eap->name = evas_stringshare_add(cfdata->name);
+   if (cfdata->exe) eap->exe = evas_stringshare_add(cfdata->exe);
+   if (cfdata->image) eap->image = evas_stringshare_add(cfdata->image);
+   
+   if (cfdata->generic) eap->generic = evas_stringshare_add(cfdata->generic);
+   if (cfdata->comment) eap->comment = evas_stringshare_add(cfdata->comment);
+   if (cfdata->wname) eap->win_name = evas_stringshare_add(cfdata->wname);
+   if (cfdata->wclass) eap->win_class = evas_stringshare_add(cfdata->wclass);
+   if (cfdata->wtitle) eap->win_title = evas_stringshare_add(cfdata->wtitle);
+   if (cfdata->wrole) eap->win_role = evas_stringshare_add(cfdata->wrole);
+   if (cfdata->iclass) eap->icon_class = evas_stringshare_add(cfdata->iclass);
+   if (cfdata->path) eap->path = evas_stringshare_add(cfdata->path);
    
    e_app_fields_save(eap);
-   
    return 1;
 }
 

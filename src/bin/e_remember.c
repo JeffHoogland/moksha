@@ -151,23 +151,23 @@ e_remember_find(E_Border *bd)
 void
 e_remember_update(E_Remember *rem, E_Border *bd)
 {
-   E_FREE(rem->name);
-   E_FREE(rem->class);
-   E_FREE(rem->title);
-   E_FREE(rem->role);
-   E_FREE(rem->prop.border);
-   E_FREE(rem->prop.command);
+   if (rem->name) evas_stringshare_del(rem->name);
+   if (rem->class) evas_stringshare_del(rem->class);
+   if (rem->title) evas_stringshare_del(rem->title);
+   if (rem->role) evas_stringshare_del(rem->role);
+   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
+   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
    
    if (bd->client.icccm.name)
-     rem->name = strdup(bd->client.icccm.name);
+     rem->name = evas_stringshare_add(bd->client.icccm.name);
    if (bd->client.icccm.class)
-     rem->class = strdup(bd->client.icccm.class);
+     rem->class = evas_stringshare_add(bd->client.icccm.class);
    if (bd->client.netwm.name)
-     rem->title = strdup(bd->client.netwm.name);
+     rem->title = evas_stringshare_add(bd->client.netwm.name);
    else if (bd->client.icccm.title)
-     rem->title = strdup(bd->client.icccm.title);
+     rem->title = evas_stringshare_add(bd->client.icccm.title);
    if (bd->client.icccm.window_role)
-     rem->role = strdup(bd->client.icccm.window_role);
+     rem->role = evas_stringshare_add(bd->client.icccm.window_role);
 
    rem->type = bd->client.netwm.type;
    
@@ -212,9 +212,9 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_focus_out = bd->lock_focus_out;
    rem->prop.lock_life = bd->lock_life;
 
-   E_FREE(rem->prop.border);
+   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
    if (bd->client.border.name)
-     rem->prop.border = strdup(bd->client.border.name);
+     rem->prop.border = evas_stringshare_add(bd->client.border.name);
    
    rem->prop.sticky = bd->sticky;
    
@@ -231,7 +231,7 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    
    rem->prop.head = bd->zone->container->manager->num;
 /* FIXME: e17 doesn't fetch WM_COMMAND property yet
-   E_FREE(rem->prop.command);
+   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
  */
    
    e_config_save_queue();
@@ -242,11 +242,11 @@ static void
 _e_remember_free(E_Remember *rem)
 {
    e_config->remembers = evas_list_remove(e_config->remembers, rem);
-   E_FREE(rem->name);
-   E_FREE(rem->class);
-   E_FREE(rem->title);
-   E_FREE(rem->role);
-   E_FREE(rem->prop.border);
-   E_FREE(rem->prop.command);
+   if (rem->name) evas_stringshare_del(rem->name);
+   if (rem->class) evas_stringshare_del(rem->class);
+   if (rem->title) evas_stringshare_del(rem->title);
+   if (rem->role) evas_stringshare_del(rem->role);
+   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
+   if (rem->prop.command) evas_stringshare_del(rem->prop.command);
    free(rem);
 }

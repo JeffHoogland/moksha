@@ -147,7 +147,7 @@ e_bg_add(int container, int zone, int desk_x, int desk_y, char *file)
    cfbg->zone = zone;
    cfbg->desk_x = desk_x;
    cfbg->desk_y = desk_y;
-   cfbg->file = strdup(file);
+   cfbg->file = evas_stringshare_add(file);
    e_config->desktop_backgrounds = evas_list_append(e_config->desktop_backgrounds, cfbg);
 }
 
@@ -165,7 +165,7 @@ e_bg_del(int container, int zone, int desk_x, int desk_y)
 	    (cfbg->desk_x == desk_x) && (cfbg->desk_y == desk_y))
 	  {
 	     e_config->desktop_backgrounds = evas_list_remove_list(e_config->desktop_backgrounds, l);
-	     E_FREE(cfbg->file);
+	     if (cfbg->file) evas_stringshare_del(cfbg->file);
 	     free(cfbg);
 	     break;
 	  }

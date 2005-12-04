@@ -157,7 +157,7 @@ e_font_fallback_prepend(const char *font)
    e_font_fallback_remove (font);
    
    eff = E_NEW(E_Font_Fallback, 1);
-   eff->name = strdup(font);
+   eff->name = evas_stringshare_add(font);
    e_config->font_fallbacks = evas_list_prepend(e_config->font_fallbacks, eff);
 }
 

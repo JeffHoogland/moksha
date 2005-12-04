@@ -261,7 +261,7 @@ e_path_find(E_Path *ep, const char *file)
 
    if (!file) return NULL;
    str = evas_hash_find(ep->hash, file);
-   if (str) return strdup(str);
+   if (str) return evas_stringshare_add(str);
    /* Look in the default dir list */
    for (l = ep->default_dir_list; l; l = l->next)
      {
@@ -282,7 +282,7 @@ e_path_find(E_Path *ep, const char *file)
 		    _e_path_cache_free(ep);
 		  ep->hash = evas_hash_add(ep->hash, file,
 					   evas_stringshare_add(buf));
-		  return strdup(buf);
+		  return evas_stringshare_add(buf);
 	       }
 	     if (rp) free(rp);
 	  }
@@ -307,7 +307,7 @@ e_path_find(E_Path *ep, const char *file)
 		    _e_path_cache_free(ep);
 		  ep->hash = evas_hash_add(ep->hash, file, 
 					   evas_stringshare_add(buf));
-		  return strdup(buf);
+		  return evas_stringshare_add(buf);
 	       }
 	     if (rp) free(rp);
 	  }

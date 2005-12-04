@@ -4,14 +4,7 @@
 #ifdef E_TYPEDEFS
 
 #define E_CONFIG_DD_NEW(str, typ) \
-   eet_data_descriptor_new(str, sizeof(typ), \
-			      (void *(*) (void *))evas_list_next, \
-			      (void *(*) (void *, void *))evas_list_append, \
-			      (void *(*) (void *))evas_list_data, \
-			      (void *(*) (void *))evas_list_free, \
-			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
-			      (void *(*) (void *, const char *, void *))evas_hash_add, \
-			      (void  (*) (void *))evas_hash_free)
+   e_config_descriptor_new(str, sizeof(typ))
 #define E_CONFIG_DD_FREE(eed) if (eed) { eet_data_descriptor_free((eed)); (eed) = NULL; }
 #define E_CONFIG_VAL(edd, type, member, dtype) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, type, #member, member, dtype)
 #define E_CONFIG_SUB(edd, type, member, eddtype) EET_DATA_DESCRIPTOR_ADD_SUB(edd, type, #member, member, eddtype)
@@ -269,6 +262,8 @@ struct _E_Config_Desktop_Name
 
 EAPI int        e_config_init(void);
 EAPI int        e_config_shutdown(void);
+
+EAPI E_Config_DD *e_config_descriptor_new(const char *name, int size);
 
 EAPI int        e_config_save(void);
 EAPI void       e_config_save_flush(void);

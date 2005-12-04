@@ -107,17 +107,17 @@ e_theme_shutdown(void)
      }
    while (categories)
      {
-	free(categories->data);
+	evas_stringshare_del(categories->data);
 	categories = evas_list_remove_list(categories, categories);
      }
    while (transitions)
      {
-	free(transitions->data);
+	evas_stringshare_del(transitions->data);
 	transitions = evas_list_remove_list(transitions, transitions);
      }
    while (borders)
      {
-	free(borders->data);
+	evas_stringshare_del(borders->data);
 	borders = evas_list_remove_list(borders, borders);
      }
    return 1;
@@ -277,12 +277,12 @@ e_theme_file_set(char *category, char *file)
    if (res)
      {
 	mappings = evas_hash_del(mappings, category, res);
-	E_FREE(res->file);
-	E_FREE(res->cache);
+	if (res->file) evas_stringshare_del(res->file);
+	if (res->cache) evas_stringshare_del(res->cache);
 	free(res);
      }
    res = calloc(1, sizeof(E_Theme_Result));
-   res->file = strdup(file);
+   res->file = evas_stringshare_add(file);
    mappings = evas_hash_add(mappings, category, res);
 }
 
@@ -303,16 +303,16 @@ e_theme_config_set(const char *category, const char *file)
 	ect = evas_list_data(next);
 	if (!strcmp(ect->category, category))
 	  {
-	     E_FREE(ect->file);
-	     ect->file = strdup(file);
+	     if (ect->file) evas_stringshare_del(ect->file);
+	     ect->file = evas_stringshare_add(file);
 	     return 1;
 	  }
      }
 
    /* the text class doesnt exist */
    ect = E_NEW(E_Config_Theme, 1);
-   ect->category = strdup(category);
-   ect->file = strdup(file);
+   ect->category = evas_stringshare_add(category);
+   ect->file = evas_stringshare_add(file);
    
    e_config->themes = evas_list_append(e_config->themes, ect);
    return 1;
@@ -353,9 +353,9 @@ e_theme_config_remove(const char *category)
 	  {
 	     e_config->themes = evas_list_remove_list(
 					e_config->themes, next);
-	     E_FREE(ect->category);
-	     E_FREE(ect->file);
-	     E_FREE(ect);
+	     if (ect->category) evas_stringshare_del(ect->category);
+	     if (ect->file) evas_stringshare_del(ect->file);
+	     free(ect);
 	     return 1;
 	  }
     }
@@ -433,8 +433,8 @@ _e_theme_mappings_free_cb(Evas_Hash *hash, const char *key, void *data, void *fd
    E_Theme_Result *res;
    
    res = data;
-   E_FREE(res->file);
-   E_FREE(res->cache);
+   if (res->file) evas_stringshare_del(res->file);
+   if (res->cache) evas_stringshare_del(res->cache);
    free(res);
    return 1;
 }
@@ -450,7 +450,7 @@ _e_theme_category_register(const char *category)
 	  return;
      }
 
-   categories = evas_list_append(categories, strdup(category));
+   categories = evas_list_append(categories, evas_stringshare_add(category));
 }
 
 static Evas_List *
@@ -462,7 +462,7 @@ _e_theme_collection_item_register(Evas_List *list, const char *name)
      {
 	if (!strcmp(name, l->data)) return list;
      }
-   list = evas_list_append(list, strdup(name));
+   list = evas_list_append(list, evas_stringshare_add(name));
    return list;
 }
 
@@ -475,60 +475,57 @@ _e_theme_collection_items_find(const char *base, const char *collname)
    int collname_len;
    
    collname_len = strlen(collname);
-   category = strdup(base);
-   if (category)
+   category = alloca(strlen(base) + 1);
+   strcpy(category, base);
+   do
      {
-	do
+	res = evas_hash_find(mappings, category);
+	if (res)
 	  {
-	     res = evas_hash_find(mappings, category);
-	     if (res)
+	     char *str;
+	     
+	     /* if found check cached path */
+	     str = res->cache;
+	     if (!str)
 	       {
-		  char *str;
-
-		  /* if found check cached path */
-		  str = res->cache;
-		  if (!str)
+		  /* no cached path */
+		  str = res->file;
+		  /* if its not an absolute path find it */
+		  if (str[0] != '/') str = e_path_find(path_themes, str);
+		  /* save cached value */
+		  if (str) res->cache = str;
+	       }
+	     if (str)
+	       {
+		  Evas_List *coll, *l;
+		  
+		  coll = edje_file_collection_list(str);
+		  if (coll)
 		    {
-		       /* no cached path */
-		       str = res->file;
-		       /* if its not an absolute path find it */
-		       if (str[0] != '/') str = e_path_find(path_themes, str);
-		       /* save cached value */
-		       if (str) res->cache = str;
-		    }
-		  if (str)
-		    {
-		       Evas_List *coll, *l;
-		       
-		       coll = edje_file_collection_list(str);
-		       if (coll)
+		       for (l = coll; l; l = l->next)
 			 {
-			    for (l = coll; l; l = l->next)
+			    if (!strncmp(l->data, collname, collname_len))
 			      {
-				 if (!strncmp(l->data, collname, collname_len))
+				 char *trans;
+				 
+				 trans = strdup(l->data);
+				 p = trans + collname_len + 1;
+				 if (*p)
 				   {
-				      char *trans;
-				      
-				      trans = strdup(l->data);
-				      p = trans + collname_len + 1;
-				      if (*p)
-					{
-					   p2 = strchr(p, '/');
-					   if (p2) *p2 = 0;
-					   list = _e_theme_collection_item_register(list, p);
-					}
-				      free(trans);
+				      p2 = strchr(p, '/');
+				      if (p2) *p2 = 0;
+				      list = _e_theme_collection_item_register(list, p);
 				   }
+				 free(trans);
 			      }
-			    edje_file_collection_list_free(coll);
 			 }
+		       edje_file_collection_list_free(coll);
 		    }
 	       }
-	     p = strrchr(category, '/');
-	     if (p) *p = 0;
 	  }
-	while (p);
-	free(category);
+	p = strrchr(category, '/');
+	if (p) *p = 0;
      }
+   while (p);
    return list;
 }

@@ -82,7 +82,7 @@ e_zone_new(E_Container *con, int num, int x, int y, int w, int h)
    
 
    snprintf(name, sizeof(name), "Zone %d", zone->num);
-   zone->name = strdup(name);
+   zone->name = evas_stringshare_add(name);
 
    con->zones = evas_list_append(con->zones, zone);
    
@@ -141,9 +141,8 @@ e_zone_name_set(E_Zone *zone, const char *name)
 {
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
-   if (zone->name)
-      free(zone->name);
-   zone->name = strdup(name);
+   if (zone->name) evas_stringshare_del(zone->name);
+   zone->name = evas_stringshare_add(name);
 }
 
 void
@@ -678,7 +677,7 @@ _e_zone_free(E_Zone *zone)
    zone->handlers = NULL;
 
    con = zone->container;
-   if (zone->name) free(zone->name);
+   if (zone->name) evas_stringshare_del(zone->name);
    con->zones = evas_list_remove(con->zones, zone);
    evas_object_del(zone->bg_event_object);
    evas_object_del(zone->bg_clip_object);

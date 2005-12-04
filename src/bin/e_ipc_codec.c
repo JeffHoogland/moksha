@@ -25,49 +25,59 @@ static Eet_Data_Descriptor *_e_ipc_3int_4str_list_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_edd = NULL;
 static Eet_Data_Descriptor *_e_ipc_3int_3str_list_edd = NULL;
 
+#define E_IPC_DD_NEW(str, typ) \
+   eet_data_descriptor_new(str, sizeof(typ), \
+			      (void *(*) (void *))evas_list_next, \
+			      (void *(*) (void *, void *))evas_list_append, \
+			      (void *(*) (void *))evas_list_data, \
+			      (void *(*) (void *))evas_list_free, \
+			      (void  (*) (void *, int (*) (void *, const char *, void *, void *), void *))evas_hash_foreach, \
+			      (void *(*) (void *, const char *, void *))evas_hash_add, \
+			      (void  (*) (void *))evas_hash_free)
+
 /* externally accessible functions */
 int
 e_ipc_codec_init(void)
 {
-   _e_ipc_int_edd = E_CONFIG_DD_NEW("int", E_Ipc_Int);
+   _e_ipc_int_edd = E_IPC_DD_NEW("int", E_Ipc_Int);
    E_CONFIG_VAL(_e_ipc_int_edd, E_Ipc_Int, val, INT);
 
-   _e_ipc_double_edd = E_CONFIG_DD_NEW("double", E_Ipc_Double);
+   _e_ipc_double_edd = E_IPC_DD_NEW("double", E_Ipc_Double);
    E_CONFIG_VAL(_e_ipc_double_edd, E_Ipc_Double, val, DOUBLE);
    
-   _e_ipc_2int_edd = E_CONFIG_DD_NEW("2int", E_Ipc_2Int);
+   _e_ipc_2int_edd = E_IPC_DD_NEW("2int", E_Ipc_2Int);
    E_CONFIG_VAL(_e_ipc_2int_edd, E_Ipc_2Int, val1, INT);
    E_CONFIG_VAL(_e_ipc_2int_edd, E_Ipc_2Int, val2, INT);
 
-   _e_ipc_str_edd = E_CONFIG_DD_NEW("str", E_Ipc_Str);
+   _e_ipc_str_edd = E_IPC_DD_NEW("str", E_Ipc_Str);
    E_CONFIG_VAL(_e_ipc_str_edd, E_Ipc_Str, str, STR);
 
-   _e_ipc_str_list_edd = E_CONFIG_DD_NEW("str_list", E_Ipc_List);
+   _e_ipc_str_list_edd = E_IPC_DD_NEW("str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_str_list_edd, E_Ipc_List, list, _e_ipc_str_edd);
 
-   _e_ipc_2str_edd = E_CONFIG_DD_NEW("2str", E_Ipc_2Str);
+   _e_ipc_2str_edd = E_IPC_DD_NEW("2str", E_Ipc_2Str);
    E_CONFIG_VAL(_e_ipc_2str_edd, E_Ipc_2Str, str1, STR);
    E_CONFIG_VAL(_e_ipc_2str_edd, E_Ipc_2Str, str2, STR);
    
-   _e_ipc_2str_list_edd = E_CONFIG_DD_NEW("2str_list", E_Ipc_List);
+   _e_ipc_2str_list_edd = E_IPC_DD_NEW("2str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_2str_list_edd, E_Ipc_List, list, _e_ipc_2str_edd);
 
-   _e_ipc_str_int_edd = E_CONFIG_DD_NEW("str_int", E_Ipc_Str_Int);
+   _e_ipc_str_int_edd = E_IPC_DD_NEW("str_int", E_Ipc_Str_Int);
    E_CONFIG_VAL(_e_ipc_str_int_edd, E_Ipc_Str_Int, str, STR);
    E_CONFIG_VAL(_e_ipc_str_int_edd, E_Ipc_Str_Int, val, INT);
    
-   _e_ipc_str_int_list_edd = E_CONFIG_DD_NEW("str_int_list", E_Ipc_List);
+   _e_ipc_str_int_list_edd = E_IPC_DD_NEW("str_int_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_str_int_list_edd, E_Ipc_List, list, _e_ipc_str_int_edd);
 
-   _e_ipc_2str_int_edd = E_CONFIG_DD_NEW("2str_int", E_Ipc_2Str_Int);
+   _e_ipc_2str_int_edd = E_IPC_DD_NEW("2str_int", E_Ipc_2Str_Int);
    E_CONFIG_VAL(_e_ipc_2str_int_edd, E_Ipc_2Str_Int, str1, STR);
    E_CONFIG_VAL(_e_ipc_2str_int_edd, E_Ipc_2Str_Int, str2, STR);
    E_CONFIG_VAL(_e_ipc_2str_int_edd, E_Ipc_2Str_Int, val, INT);
    
-   _e_ipc_2str_int_list_edd = E_CONFIG_DD_NEW("2str_int_list", E_Ipc_List);
+   _e_ipc_2str_int_list_edd = E_IPC_DD_NEW("2str_int_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_2str_int_list_edd, E_Ipc_List, list, _e_ipc_2str_int_edd);
    
-   _e_ipc_4int_2str_edd = E_CONFIG_DD_NEW("4int_2str", E_Ipc_4Int_2Str);
+   _e_ipc_4int_2str_edd = E_IPC_DD_NEW("4int_2str", E_Ipc_4Int_2Str);
    E_CONFIG_VAL(_e_ipc_4int_2str_edd, E_Ipc_4Int_2Str, val1, INT);
    E_CONFIG_VAL(_e_ipc_4int_2str_edd, E_Ipc_4Int_2Str, val2, INT);
    E_CONFIG_VAL(_e_ipc_4int_2str_edd, E_Ipc_4Int_2Str, val3, INT);
@@ -75,10 +85,10 @@ e_ipc_codec_init(void)
    E_CONFIG_VAL(_e_ipc_4int_2str_edd, E_Ipc_4Int_2Str, str1, STR);
    E_CONFIG_VAL(_e_ipc_4int_2str_edd, E_Ipc_4Int_2Str, str2, STR);
 
-   _e_ipc_4int_2str_list_edd = E_CONFIG_DD_NEW("4int_2str_list", E_Ipc_List);
+   _e_ipc_4int_2str_list_edd = E_IPC_DD_NEW("4int_2str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_4int_2str_list_edd, E_Ipc_List, list, _e_ipc_4int_2str_edd);
 
-   _e_ipc_5int_2str_edd = E_CONFIG_DD_NEW("5int_2str", E_Ipc_5Int_2Str);
+   _e_ipc_5int_2str_edd = E_IPC_DD_NEW("5int_2str", E_Ipc_5Int_2Str);
    E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val1, INT);
    E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val2, INT);
    E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, val3, INT);
@@ -87,10 +97,10 @@ e_ipc_codec_init(void)
    E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, str1, STR);
    E_CONFIG_VAL(_e_ipc_5int_2str_edd, E_Ipc_5Int_2Str, str2, STR);
 
-   _e_ipc_5int_2str_list_edd = E_CONFIG_DD_NEW("5int_2str_list", E_Ipc_List);
+   _e_ipc_5int_2str_list_edd = E_IPC_DD_NEW("5int_2str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_5int_2str_list_edd, E_Ipc_List, list, _e_ipc_5int_2str_edd);
 
-   _e_ipc_3int_4str_edd = E_CONFIG_DD_NEW("3int_4str", E_Ipc_3Int_4Str);
+   _e_ipc_3int_4str_edd = E_IPC_DD_NEW("3int_4str", E_Ipc_3Int_4Str);
    E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val1, INT);
    E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val2, INT);
    E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, val3, INT);
@@ -99,10 +109,10 @@ e_ipc_codec_init(void)
    E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str3, STR);
    E_CONFIG_VAL(_e_ipc_3int_4str_edd, E_Ipc_3Int_4Str, str4, STR);
 
-   _e_ipc_3int_4str_list_edd = E_CONFIG_DD_NEW("3int_4str_list", E_Ipc_List);
+   _e_ipc_3int_4str_list_edd = E_IPC_DD_NEW("3int_4str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_3int_4str_list_edd, E_Ipc_List, list, _e_ipc_3int_4str_edd);
 
-   _e_ipc_3int_3str_edd = E_CONFIG_DD_NEW("3int_3str", E_Ipc_3Int_3Str);
+   _e_ipc_3int_3str_edd = E_IPC_DD_NEW("3int_3str", E_Ipc_3Int_3Str);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, val1, INT);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, val2, INT);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, val3, INT);
@@ -110,7 +120,7 @@ e_ipc_codec_init(void)
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, str2, STR);
    E_CONFIG_VAL(_e_ipc_3int_3str_edd, E_Ipc_3Int_3Str, str3, STR);
 
-   _e_ipc_3int_3str_list_edd = E_CONFIG_DD_NEW("3int_3str_list", E_Ipc_List);
+   _e_ipc_3int_3str_list_edd = E_IPC_DD_NEW("3int_3str_list", E_Ipc_List);
    E_CONFIG_LIST(_e_ipc_3int_3str_list_edd, E_Ipc_List, list, _e_ipc_3int_3str_edd);
    return 1;
 }

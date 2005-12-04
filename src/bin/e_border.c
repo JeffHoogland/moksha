@@ -2858,7 +2858,7 @@ _e_border_free(E_Border *bd)
 	  free(bd->client.netwm.icons[i].data);
 	free(bd->client.netwm.icons);
      }
-   if (bd->client.border.name) free(bd->client.border.name);
+   if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
    if (bd->client.icccm.title) free(bd->client.icccm.title);
    if (bd->client.icccm.name) free(bd->client.icccm.name);
    if (bd->client.icccm.class) free(bd->client.icccm.class);
@@ -4583,14 +4583,14 @@ _e_border_eval(E_Border *bd)
 	  {
 	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
 	       {
-		  if (bd->client.border.name) free(bd->client.border.name);
-		  bd->client.border.name = strdup("borderless");
+		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+		  bd->client.border.name = evas_stringshare_add("borderless");
 		  bd->client.border.changed = 1;
 	       }
-	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	     else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
 	       {
-		  if (bd->client.border.name) free(bd->client.border.name);
-		  bd->client.border.name = strdup("borderless");
+		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+		  bd->client.border.name = evas_stringshare_add("borderless");
 		  bd->client.border.changed = 1;
 		  
 		  if (!bd->client.netwm.state.skip_pager)
@@ -4742,11 +4742,11 @@ _e_border_eval(E_Border *bd)
 	     if (((!bd->lock_border) || (!bd->client.border.name))
 		 && (!bd->shaded))
 	       {
-		  if (bd->client.border.name) free(bd->client.border.name);
+		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
 		  if (bd->client.mwm.borderless)
-		    bd->client.border.name = strdup("borderless");
+		    bd->client.border.name = evas_stringshare_add("borderless");
 		  else
-		    bd->client.border.name = strdup("default");
+		    bd->client.border.name = evas_stringshare_add("default");
 //	     if (bd->client.mwm.borderless)
 //	       printf("client %s borderless\n", bd->client.icccm.title);
 		  bd->client.border.changed = 1;
@@ -4895,9 +4895,10 @@ _e_border_eval(E_Border *bd)
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_BORDER)
 	       {
-		  E_FREE(bd->client.border.name);
+		  if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
+		  bd->client.border.name = NULL;
 		  if (rem->prop.border)
-		    bd->client.border.name = strdup(rem->prop.border);
+		    bd->client.border.name = evas_stringshare_add(rem->prop.border);
 		  bd->client.border.changed = 1;
 	       }
 	     if (rem->apply & E_REMEMBER_APPLY_STICKY)
@@ -4953,9 +4954,7 @@ _e_border_eval(E_Border *bd)
 	int ok;
 	
 	if (!bd->client.border.name)
-	  {
-	     bd->client.border.name = strdup("default");
-	  }
+	  bd->client.border.name = evas_stringshare_add("default");
 	if (bd->bg_object)
 	  {
 	     bd->w -= (bd->client_inset.l + bd->client_inset.r);

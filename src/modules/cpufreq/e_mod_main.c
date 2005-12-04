@@ -276,8 +276,9 @@ _cpufreq_free(Cpufreq *e)
 
    _cpufreq_status_free(e->status);
 
-   free(e->set_exe_path);
    evas_list_free(e->conf->faces);
+   free(e->set_exe_path);
+   if (e->conf->governor) evas_stringshare_del(e->conf->governor);
    free(e->conf);
    free(e);
 }
@@ -405,9 +406,8 @@ _cpufreq_menu_restore_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    e->conf->restore_governor = e_menu_item_toggle_get(mi);
    if ((!e->conf->governor) || strcmp(e->status->cur_governor, e->conf->governor))
      {
-	if (e->conf->governor)
-	  free(e->conf->governor);
-	e->conf->governor = strdup(e->status->cur_governor);
+	if (e->conf->governor) evas_stringshare_del(e->conf->governor);
+	e->conf->governor = evas_stringshare_add(e->status->cur_governor);
      }
    e_config_save_queue();
 }
@@ -423,9 +423,8 @@ _cpufreq_menu_governor(void *data, E_Menu *m, E_Menu_Item *mi)
    if (governor)
      {
 	_cpufreq_set_governor(e, governor);
-	if (e->conf->governor)
-	  free(e->conf->governor);
-	e->conf->governor = strdup(governor);
+	if (e->conf->governor) evas_stringshare_del(e->conf->governor);
+	e->conf->governor = evas_stringshare_add(governor);
      }
    e_config_save_queue();
 }

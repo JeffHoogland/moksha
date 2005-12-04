@@ -90,8 +90,8 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    /* Actually take our cfdata settings and apply them in real life */
    printf("file: %s\n", cfdata->file);
    //e_bg_add(cfd->con, z, 0, 0, cfdata->file);
-   E_FREE(e_config->desktop_default_background);
-   e_config->desktop_default_background = strdup(cfdata->file);      
+   if (e_config->desktop_default_background) evas_stringshare_del(e_config->desktop_default_background);
+   e_config->desktop_default_background = evas_stringshare_add(cfdata->file);
    e_bg_update();   
    return 1; /* Apply was OK */
 }
@@ -167,7 +167,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		    continue;
 		  
 		  /* minimum theme requirements */
-		  if(edje_object_file_set(o, fullbg, "desktop/background"))
+		  if (edje_object_file_set(o, fullbg, "desktop/background"))
 		    {
 		       Evas_Object *o = NULL;
 		       char *noext, *ext;
@@ -194,14 +194,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       cb_data->cfd = cfd;
 		       cb_data->file = strdup(fullbg);
 		       e_widget_ilist_append(il, o, noext, _e_config_bg_cb_standard, cb_data, fullbg);
-		       if(!strcmp(e_config->desktop_default_background, fullbg))
+		       
+		       if (!strcmp(e_config->desktop_default_background, fullbg))
 			 {
 			    e_widget_ilist_select_set(il, i);
 			    bg = edje_object_add(evas);
 			    edje_object_file_set(bg, e_config->desktop_default_background, "desktop/background");
 			    im = e_widget_image_add_from_object(evas, bg, 160, 120);
 			 }
-			 
+		       
+		       free(noext);
 		       i++;
 		    }
 	       }
@@ -216,7 +218,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_min_size_set(il, 240, 320);
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
    fr = e_widget_framelist_add(evas, "Preview", 0);
-   if(im == NULL)
+   if (im == NULL)
      {
 	bg = edje_object_add(evas);
 	e_theme_edje_object_set(bg, "base/theme/background", "desktop/background");

@@ -193,15 +193,15 @@ e_pointer_type_push(E_Pointer *p, void *obj, const char *type)
 	  }
      }
 
-   if (p->type) free(p->type);
-   p->type = strdup(type);
+   if (p->type) evas_stringshare_del(p->type);
+   p->type = evas_stringshare_add(type);
    p->obj = obj;
 
    stack = E_NEW(E_Pointer_Stack, 1);
    if (stack)
      {
 	stack->obj = p->obj;
-	stack->type = strdup(p->type);
+	stack->type = evas_stringshare_add(p->type);
 	stack->e_cursor = p->e_cursor;
 	p->stack = evas_list_prepend(p->stack, stack);
      }
@@ -257,8 +257,8 @@ e_pointer_type_pop(E_Pointer *p, void *obj, const char *type)
 	  }
      }
 
-   if (p->type) free(p->type);
-   p->type = strdup(stack->type);
+   if (p->type) evas_stringshare_del(p->type);
+   p->type = evas_stringshare_add(stack->type);
    p->obj = stack->obj;
 
    /* try the default cursor next time */
@@ -326,13 +326,13 @@ _e_pointer_free(E_Pointer *p)
 	E_Pointer_Stack *stack;
 
 	stack = p->stack->data;
-	free(stack->type);
+	if (stack->type) evas_stringshare_del(stack->type);
 	free(stack);
 
 	p->stack = evas_list_remove_list(p->stack, p->stack);
      }
 
-   if (p->type) free(p->type);
+   if (p->type) evas_stringshare_del(p->type);
    free(p);
 }
 

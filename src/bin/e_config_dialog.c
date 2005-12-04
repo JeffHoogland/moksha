@@ -43,8 +43,8 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
 static void
 _e_config_dialog_free(E_Config_Dialog *cfd)
 {
-   evas_stringshare_del(cfd->title);
-   evas_stringshare_del(cfd->icon);
+   if (cfd->title) evas_stringshare_del(cfd->title);
+   if (cfd->icon) evas_stringshare_del(cfd->icon);
    if (cfd->cfdata)
      {
 	cfd->view.free_cfdata(cfd, cfd->cfdata);

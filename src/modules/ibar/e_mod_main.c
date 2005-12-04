@@ -206,7 +206,7 @@ _ibar_new()
    if (!ib->conf)
      {
 	ib->conf = E_NEW(Config, 1);
-	ib->conf->appdir = strdup("bar");
+	ib->conf->appdir = evas_stringshare_add("bar");
 	ib->conf->follower = 1;
 	ib->conf->follow_speed = 0.9;
 	ib->conf->autoscroll_speed = 0.95;
@@ -304,7 +304,7 @@ _ibar_free(IBar *ib)
    if (ib->apps)
      e_object_unref(E_OBJECT(ib->apps));
 
-   E_FREE(ib->conf->appdir);
+   if (ib->conf->appdir) evas_stringshare_del(ib->conf->appdir);
    e_app_change_callback_del(_ibar_app_change, ib);
    e_object_del(E_OBJECT(ib->config_menu_options));
    e_object_del(E_OBJECT(ib->config_menu_size));

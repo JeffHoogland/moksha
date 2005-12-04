@@ -101,7 +101,7 @@ e_desk_name_add(int container, int zone, int desk_x, int desk_y, char *name)
    cfname->zone = zone;
    cfname->desk_x = desk_x;
    cfname->desk_y = desk_y;
-   cfname->name = strdup(name);
+   cfname->name = evas_stringshare_add(name);
    e_config->desktop_names = evas_list_append(e_config->desktop_names, cfname);
 }
 
@@ -119,7 +119,7 @@ e_desk_name_del(int container, int zone, int desk_x, int desk_y)
 	    (cfname->desk_x == desk_x) && (cfname->desk_y == desk_y))
 	  {
 	     e_config->desktop_names = evas_list_remove_list(e_config->desktop_names, l);
-	     E_FREE(cfname->name);
+	     if (cfname->name) evas_stringshare_del(cfname->name);
 	     free(cfname);
 	     break;
 	  }

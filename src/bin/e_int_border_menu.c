@@ -512,13 +512,14 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    
    bd = data;
    a = bd->app;
-   if (!a)
+   if ((!a) && (bd->client.icccm.class))
      {
 	static char buf[PATH_MAX];
 	char *name, *homedir, *p;
 	int instance;
 
-	name = strdup(bd->client.icccm.class);
+	name = alloca(strlen(bd->client.icccm.class) + 1);
+	strcpy(name, bd->client.icccm.class);
 	p = name;
 	while (*p)
 	  {
@@ -536,17 +537,16 @@ _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 	     instance++;
 	  }
 	free(homedir);
-	free(name);
 	a = e_app_empty_new(buf);
 	if (a)
 	  {
-	     a->win_name = strdup(bd->client.icccm.name);
-	     a->win_class = strdup(bd->client.icccm.class);
+	     if (bd->client.icccm.name) a->win_name = evas_stringshare_add(bd->client.icccm.name);
+	     if (bd->client.icccm.class) a->win_class = evas_stringshare_add(bd->client.icccm.class);
 	     if (bd->client.icccm.window_role)
-	       a->win_role = strdup(bd->client.icccm.window_role);
-	     a->icon_class = strdup(bd->client.icccm.class);
-	     a->name = strdup(bd->client.icccm.class);
-	     a->exe = strdup(bd->client.icccm.name);
+	       a->win_role = evas_stringshare_add(bd->client.icccm.window_role);
+	     if (bd->client.icccm.class) a->icon_class = evas_stringshare_add(bd->client.icccm.class);
+	     if (bd->client.icccm.class) a->name = evas_stringshare_add(bd->client.icccm.class);
+	     if (bd->client.icccm.name) a->exe = evas_stringshare_add(bd->client.icccm.name);
 	     if (bd->client.netwm.startup_id > 0)
 	       a->startup_notify = 1;
 	  }
@@ -618,12 +618,12 @@ _e_border_menu_cb_borderless(void *data, E_Menu *m, E_Menu_Item *mi)
    
    if ((!bd->lock_border) && (!bd->shaded))
      {
-	if (bd->client.border.name) free(bd->client.border.name);
+	if (bd->client.border.name) evas_stringshare_del(bd->client.border.name);
 	toggle = e_menu_item_toggle_get(mi);
 	if (toggle)
-	  bd->client.border.name = strdup("borderless");
+	  bd->client.border.name = evas_stringshare_add("borderless");
 	else
-	  bd->client.border.name = strdup("default");
+	  bd->client.border.name = evas_stringshare_add("default");
 	bd->client.border.changed = 1;
 	bd->changed = 1;
      }

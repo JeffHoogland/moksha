@@ -158,9 +158,9 @@ e_slider_value_format_display_set(Evas_Object *obj, const char *format)
    
    API_ENTRY return;
    if (((sd->format) && (!format)) || ((!sd->format) && (format))) changed = 1;
-   E_FREE(sd->format);
+   if (sd->format) evas_stringshare_del(sd->format);
    sd->format = NULL;
-   if (format) sd->format = strdup(format);
+   if (format) sd->format = evas_stringshare_add(format);
    if (changed)
      {
 	if (sd->format)
@@ -454,7 +454,7 @@ _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_del(sd->edje_obj);
-   E_FREE(sd->format);
+   if (sd->format) evas_stringshare_del(sd->format);
    if (sd->set_timer) ecore_timer_del(sd->set_timer);
    free(sd);
 }
