@@ -20,3 +20,4 @@ stamp-h.in
 ltmain.sh
 config.guess
 config.sub
+enlightenment.spec
