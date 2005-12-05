@@ -21,6 +21,8 @@ struct _E_Widget_Data
    
    void (*select_func) (Evas_Object *obj, char *file, void *data);
    void  *select_data;
+   void (*hilite_func) (Evas_Object *obj, char *file, void *data);
+   void  *hilite_data;      
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -31,6 +33,7 @@ static void _e_wid_disable_hook(Evas_Object *obj);
 static void _e_wid_signal_cb1(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_select_cb(E_File_Dialog *dia, char *file, void *data);
+static void _e_wid_hilite_cb(E_File_Dialog *dia, char *file, void *data);
     
 /* local subsystem functions */
 
@@ -53,6 +56,8 @@ e_widget_iconsel_add(Evas *evas, Evas_Object *icon, Evas_Coord minw, Evas_Coord 
    wd->valptr = file;
    wd->select_func = NULL;
    wd->select_data = NULL;
+   wd->hilite_func = NULL;
+   wd->hilite_data = NULL;   
    wd->obj = obj;
    e_widget_data_set(obj, wd);
    
@@ -108,7 +113,9 @@ e_widget_iconsel_add_from_file(Evas *evas, char *icon, Evas_Coord minw, Evas_Coo
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->valptr = file;
    wd->select_func = NULL;
-   wd->select_data = NULL;   
+   wd->select_data = NULL;
+   wd->hilite_func = NULL;
+   wd->hilite_data = NULL;   
    wd->obj = obj;
    e_widget_data_set(obj, wd);
    
@@ -152,6 +159,16 @@ e_widget_iconsel_select_callback_add(Evas_Object *obj, void (*func)(Evas_Object 
    wd->select_data = data;     
 }
 
+void
+e_widget_iconsel_hilite_callback_add(Evas_Object *obj, void (*func)(Evas_Object *obj, char *file, void *data), void *data)
+{    
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   wd->hilite_func = func;
+   wd->hilite_data = data;     
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
@@ -191,6 +208,7 @@ _e_wid_activate_hook(Evas_Object *obj)
    if (!dia) return;
    e_file_dialog_title_set(dia, "Select File");
    e_file_dialog_select_callback_add(dia, _e_wid_select_cb, wd);
+   e_file_dialog_hilite_callback_add(dia, _e_wid_hilite_cb, wd);   
    e_file_dialog_show(dia);
 }
 
@@ -264,4 +282,27 @@ _e_wid_select_cb(E_File_Dialog *dia, char *file, void *data)
    E_FREE(*(wd->valptr));
    *(wd->valptr) = strdup(file);
    e_object_del(E_OBJECT(dia));
+}
+
+static void
+_e_wid_hilite_cb(E_File_Dialog *dia, char *file, void *data)
+{
+   E_Widget_Data *wd;
+   char *ext;
+   
+   wd = data;
+   
+   ext = strrchr(file, '.');
+   if (!ext) return;
+   if ((strcasecmp(ext, ".png")) &&
+       (strcasecmp(ext, ".jpg")) &&
+       (strcasecmp(ext, ".jpeg")))
+     return;   
+   
+   if (wd->hilite_func)
+     wd->hilite_func(wd->obj, file, wd->select_data);
+      
+   //e_icon_file_set(wd->o_icon, file);
+   E_FREE(*(wd->valptr));
+   *(wd->valptr) = strdup(file);
 }

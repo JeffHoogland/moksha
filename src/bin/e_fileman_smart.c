@@ -180,6 +180,7 @@ struct _E_Fm_Smart_Data
    int is_selector;
    void (*selector_func) (Evas_Object *object, char *file, void *data);
    void  *selector_data;
+   void (*selector_hilite_func) (Evas_Object *object, char *file, void *data);
    
    Evas_Coord x, y, w, h;
 
@@ -301,6 +302,7 @@ static int                 _e_fm_files_sort_modtime_cb (void *d1, void *d2);
 static int                 _e_fm_files_sort_layout_name_cb    (void *d1, void *d2);
 
 static void                _e_fm_selector_send_file (E_Fm_Icon *icon);
+static void                _e_fm_selector_send_hilite_file (E_Fm_Icon *icon);
 
 static char               *_e_fm_dir_meta_dir_id(char *dir);
 static int                 _e_fm_dir_meta_load(E_Fm_Smart_Data *sd);
@@ -548,7 +550,7 @@ e_fm_thaw(Evas_Object *object)
 }
 
 void
-e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void *data)
+e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char *file, void *data), void (*hilite_func)(Evas_Object *object, char *file, void *data), void *data)
 {
    E_Fm_Smart_Data *sd;        
    
@@ -558,6 +560,7 @@ e_fm_selector_enable(Evas_Object *object, void (*func)(Evas_Object *object, char
    sd->is_selector = 1;
    sd->selector_func = func;
    sd->selector_data = data;
+   sd->selector_hilite_func = hilite_func;
 }
 
 /* This isnt working yet */
@@ -2195,6 +2198,9 @@ _e_fm_icon_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info
 	 }
        else
 	 {
+	    if(icon->sd->is_selector && icon->file->type == E_FM_FILE_TYPE_FILE)
+	      _e_fm_selector_send_hilite_file(icon);
+	    
 	    if(icon->sd->win)
 	      {
 		 icon->sd->drag.start = 1;
@@ -3225,6 +3231,12 @@ static void
 _e_fm_selector_send_file(E_Fm_Icon *icon)
 {
    icon->sd->selector_func(icon->sd->object, strdup(icon->file->path), icon->sd->selector_data);
+}
+
+static void
+_e_fm_selector_send_hilite_file(E_Fm_Icon *icon)
+{
+   icon->sd->selector_hilite_func(icon->sd->object, strdup(icon->file->path), icon->sd->selector_data);
 }
 
 static char *

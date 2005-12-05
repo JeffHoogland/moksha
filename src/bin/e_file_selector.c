@@ -25,6 +25,7 @@ struct _E_Smart_Data
    Evas_Coord     x, y, w, h; /* coords */
 
    void         (*func) (Evas_Object *obj, char *file, void *data); /* selection cb */
+   void         (*func_hilite) (Evas_Object *obj, char *file, void *data); /* selection cb */   
    void          *func_data; /* selection cb data */
 }; 
 
@@ -40,6 +41,7 @@ static void _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_init(void);
 static void _e_file_selector_selected_cb(Evas_Object *obj, char *file, void *data);
+static void _e_file_selector_hilited_cb(Evas_Object *obj, char *file, void *data);
 static void _e_file_selector_scroll_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
 static void _e_file_selector_scroll_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
 static void _e_file_selector_scroll_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y);
@@ -80,10 +82,11 @@ e_file_selector_view_get(Evas_Object *obj)
 }
 
 void
-e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data)
+e_file_selector_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void (*func_hilite) (Evas_Object *obj, char *file, void *data), void *data)
 {
    API_ENTRY return;
    sd->func = func;
+   sd->func_hilite = func_hilite;
    sd->func_data = data;
 }
 
@@ -128,6 +131,7 @@ _e_smart_add(Evas_Object *obj)
    sd->h = 0;
    sd->parent = obj;
    sd->func = NULL;
+   sd->func_hilite = NULL;   
    sd->func_data = NULL;
    sd->view = E_FILE_SELECTOR_ICONVIEW;
    
@@ -143,7 +147,7 @@ _e_smart_add(Evas_Object *obj)
    e_fm_dir_set(sd->files, home);
    E_FREE(home);
    
-   e_fm_selector_enable(sd->files, _e_file_selector_selected_cb, sd);
+   e_fm_selector_enable(sd->files, _e_file_selector_selected_cb, _e_file_selector_hilited_cb, sd);
    evas_object_smart_member_add(sd->files, obj);
 
    e_scrollframe_extern_pan_set(sd->frame, sd->files,
@@ -229,6 +233,15 @@ _e_file_selector_selected_cb(Evas_Object *obj, char *file, void *data)
    sd = data;
    if(sd->func)
      sd->func(sd->parent, file, sd->func_data);
+}
+
+_e_file_selector_hilited_cb(Evas_Object *obj, char *file, void *data)
+{
+   E_Smart_Data *sd;
+   
+   sd = data;
+   if(sd->func_hilite)
+     sd->func_hilite(sd->parent, file, sd->func_data);
 }
 
 /* never need to touch this */

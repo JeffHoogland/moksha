@@ -10,6 +10,7 @@ static void _e_file_dialog_button1_click(void *data, E_Dialog *dia);
 static void _e_file_dialog_button2_click(void *data, E_Dialog *dia);    
 static void _e_file_dialog_free(E_File_Dialog *dia);
 static void _e_file_dialog_file_select_cb(Evas_Object *obj, char *file, void *data);
+static void _e_file_dialog_file_hilite_cb(Evas_Object *obj, char *file, void *data);
 
 E_File_Dialog *
 e_file_dialog_new(E_Container *con)
@@ -41,6 +42,7 @@ e_file_dialog_new(E_Container *con)
    dia->con = con;
    dia->file = NULL;
    dia->select_func = NULL;
+   dia->hilite_func = NULL;   
    dia->select_data = NULL;
    evas = dia->dia->win->evas;
    
@@ -55,6 +57,7 @@ e_file_dialog_new(E_Container *con)
    
    fm = e_widget_fileman_add(evas, &(dia->file));
    e_widget_fileman_select_callback_add(fm, _e_file_dialog_file_select_cb, dia);
+   e_widget_fileman_hilite_callback_add(fm, _e_file_dialog_file_hilite_cb, dia);
    e_widget_list_object_append(ol, fm, 1, 1, 0.0);
    
    e_widget_min_size_get(ol, &w, &h);
@@ -86,6 +89,13 @@ e_file_dialog_select_callback_add(E_File_Dialog *dia, void (*func)(E_File_Dialog
    dia->select_data = data;
 }
 
+void
+e_file_dialog_hilite_callback_add(E_File_Dialog *dia, void (*func)(E_File_Dialog *dia, char *file, void *data), void *data)
+{    
+   dia->hilite_func = func;
+   dia->hilite_data = data;
+}
+
 /* local subsystem functions */
 
 static void
@@ -96,7 +106,7 @@ _e_file_dialog_button1_click(void *data, E_Dialog *edia)
    dia = data;
    if(dia->select_func && dia->file)
      dia->select_func(dia, dia->file, dia->select_data);
-   _e_file_dialog_free(dia);   
+   _e_file_dialog_free(dia);
 }
 
 static void
@@ -114,8 +124,20 @@ _e_file_dialog_file_select_cb(Evas_Object *obj, char *file, void *data)
    if(dia->select_func)
      dia->select_func(dia, file, dia->select_data);
    
-   printf("e_file_dialog: %s\n", file);
+   printf("e_file_dialog (select) : %s\n", file);
    
+}
+
+static void
+_e_file_dialog_file_hilite_cb(Evas_Object *obj, char *file, void *data)
+{
+   E_File_Dialog *dia;
+   
+   dia = data;
+   if(dia->hilite_func)
+     dia->hilite_func(dia, file, dia->hilite_data);
+   
+   printf("e_file_dialog (hilite) : %s\n", file);   
 }
 
 static void
@@ -123,5 +145,5 @@ _e_file_dialog_free(E_File_Dialog *dia)
 {
    e_object_unref(E_OBJECT(dia->dia));
    E_FREE(dia->file);
-   free(dia);
+   //free(dia);
 }

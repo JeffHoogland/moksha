@@ -16,11 +16,14 @@ struct _E_Widget_Data
    char **valptr;
    void (*select_func) (Evas_Object *obj, char *file, void *data);
    void  *select_data;
+   void (*hilite_func) (Evas_Object *obj, char *file, void *data);
+   void  *hilite_data;   
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data);
+static void _e_wid_fileman_hilited_cb(Evas_Object *obj, char *file, void *data);
         
 /* local subsystem functions */
 
@@ -49,13 +52,36 @@ _e_wid_fileman_selected_cb(Evas_Object *obj, char *file, void *data)
 /* this is crashing, see why */
 #if 0
    E_FREE(*(wd->valptr));
-   *(wd->valptr) = strdup(file);
-#endif
+#endif   
+   if(wd->valptr)
+     *(wd->valptr) = strdup(file);
+
 
    if (wd->select_func)
      wd->select_func(wd->wid, file, wd->select_data);
 
-   printf("e_widget_fileman: %s\n", file);
+   printf("e_widget_fileman (selected) : %s\n", file);
+}
+
+static void
+_e_wid_fileman_hilited_cb(Evas_Object *obj, char *file, void *data)
+{
+   E_Widget_Data *wd;
+   
+   wd = data;
+
+/* this is crashing, see why */
+#if 0
+   E_FREE(*(wd->valptr));
+#endif
+   if(wd->valptr)
+     *(wd->valptr) = strdup(file);
+
+
+   if (wd->hilite_func)
+     wd->hilite_func(wd->wid, file, wd->select_data);
+
+   printf("e_widget_fileman (hilited): %s\n", file);
 }
 
 /* externally accessible functions */
@@ -76,7 +102,7 @@ e_widget_fileman_add(Evas *evas, char **val)
    e_widget_data_set(obj, wd);
    
    wd->o_fm = e_file_selector_add(evas);
-   e_file_selector_callback_add(wd->o_fm, _e_wid_fileman_selected_cb, wd);
+   e_file_selector_callback_add(wd->o_fm, _e_wid_fileman_selected_cb, _e_wid_fileman_hilited_cb, wd);
    evas_object_show(wd->o_fm);   
    evas_object_resize(wd->o_fm, 300, 200);
    e_widget_min_size_set(obj, 300, 200);
@@ -97,4 +123,14 @@ e_widget_fileman_select_callback_add(Evas_Object *obj, void (*func) (Evas_Object
    wd = e_widget_data_get(obj);
    wd->select_func = func;
    wd->select_data = data;
+}
+
+void
+e_widget_fileman_hilite_callback_add(Evas_Object *obj, void (*func) (Evas_Object *obj, char *file, void *data), void *data)
+{
+   E_Widget_Data *wd;   
+   
+   wd = e_widget_data_get(obj);
+   wd->hilite_func = func;
+   wd->hilite_data = data;
 }

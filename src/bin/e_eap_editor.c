@@ -44,6 +44,7 @@ static int            _e_eap_edit_advanced_apply_data(E_Config_Dialog *cfd, void
 static Evas_Object   *_e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data);
 static Evas_Object   *_e_eap_edit_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data);
 static void           _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data);
+static void           _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data);
 
 #define IFDUP(src, dst) if (src) dst = strdup(src); else dst = NULL
 
@@ -242,6 +243,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    editor->img_widget = e_widget_iconsel_add(evas, editor->img, 48, 48, 
 					     &(cfdata->image));
    e_widget_iconsel_select_callback_add(editor->img_widget, _e_eap_edit_select_cb, editor);
+   e_widget_iconsel_hilite_callback_add(editor->img_widget, _e_eap_edit_hilite_cb, editor);
    e_widget_frametable_object_append(o, editor->img_widget,
 				0, 0, 1, 1,
 				1, 1, 1, 1);
@@ -398,5 +400,15 @@ _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data)
    
    editor = data;
    printf("selected: %s\n", file);
+   
+}
+
+void
+_e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data)
+{
+   E_App_Edit *editor;
+   
+//   editor = data;
+   printf("hilited: %s\n", file);
    
 }

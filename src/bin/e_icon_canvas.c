@@ -643,6 +643,8 @@ _e_icon_canvas_tile_hide(E_Icon_Canvas_Tile *t)
 void
 _e_icon_canvas_tile_pack(E_Icon_Canvas_Tile *t, E_Icon_Canvas_Item *li)
 {   
+   if(!t)
+     return;
    t->items = evas_list_append(t->items, li);
    li->tile = t;
    if(t->visible)     

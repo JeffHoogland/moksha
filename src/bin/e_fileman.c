@@ -152,7 +152,7 @@ e_fileman_selector_enable(E_Fileman *fileman, void (*func)(E_Fileman *fileman, c
 {   
    fileman->selector.func = func;
    fileman->selector.data = data;
-   e_fm_selector_enable(fileman->smart, _e_fileman_selector_cb, fileman);
+   e_fm_selector_enable(fileman->smart, _e_fileman_selector_cb, NULL, fileman);
 }
 
 void
