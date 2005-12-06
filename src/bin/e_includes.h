@@ -102,3 +102,4 @@
 #include "e_int_config_window_display.h"
 #include "e_int_config_background.h"
 #include "e_deskpreview.h"
+#include "e_exebuf.h"

@@ -121,7 +121,8 @@ e_widget_slider.h \
 e_int_config_window_manipulation.h \
 e_int_config_window_display.h \
 e_int_config_background.h \
-e_deskpreview.h
+e_deskpreview.h \
+e_exebuf.h
 
 enlightenment_src = \
 e_user.c \
@@ -224,6 +225,7 @@ e_int_config_window_manipulation.c \
 e_int_config_window_display.c \
 e_int_config_background.c \
 e_deskpreview.c \
+e_exebuf.c \
 $(ENLIGHTENMENTHEADERS)
 
 enlightenment_SOURCES = \
