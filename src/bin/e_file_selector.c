@@ -235,6 +235,7 @@ _e_file_selector_selected_cb(Evas_Object *obj, char *file, void *data)
      sd->func(sd->parent, file, sd->func_data);
 }
 
+static void
 _e_file_selector_hilited_cb(Evas_Object *obj, char *file, void *data)
 {
    E_Smart_Data *sd;

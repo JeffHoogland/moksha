@@ -399,8 +399,7 @@ _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data)
    E_App_Edit *editor;
    
    editor = data;
-   printf("selected: %s\n", file);
-   
+   printf("selected: %s\n", file);  
 }
 
 void
@@ -408,7 +407,6 @@ _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data)
 {
    E_App_Edit *editor;
    
-//   editor = data;
-   printf("hilited: %s\n", file);
-   
+   editor = data;
+   printf("hilited: %s\n", file);   
 }
