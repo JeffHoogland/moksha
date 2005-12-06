@@ -857,6 +857,31 @@ break;
 #endif
 #undef HDL
 /****************************************************************************/
+#define HDL E_IPC_EAP_EDIT_START
+#if (TYPE == E_REMOTE_OPTIONS)
+   OP("-start-eap-edit", 1, "Starts the Eap editor on the eap 'OPT1'", 0, HDL)
+#elif (TYPE == E_REMOTE_OUT)
+     REQ_STRING(params[0], HDL);
+#elif (TYPE == E_WM_IN)
+   STRING(s, HDL);
+   E_App *a;
+   if(ecore_file_exists(s))
+     {
+	a = e_app_new(s, 0);
+	if(a)
+	  e_eap_edit_show(e_container_current_get(e_manager_current_get()), a);
+     }
+   else
+    {
+       a = e_app_empty_new(s);
+       if(a)
+	 e_eap_edit_show(e_container_current_get(e_manager_current_get()), a);
+    }
+   END_STRING(s);
+#elif (TYPE == E_REMOTE_IN)
+#endif
+#undef HDL
+/****************************************************************************/
 #define HDL E_IPC_OP_MODULE_LOAD
 #if (TYPE == E_REMOTE_OPTIONS)
    OP("-module-load", 1, "Loads the module named 'OPT1' into memory", 0, HDL)

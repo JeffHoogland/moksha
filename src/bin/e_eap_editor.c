@@ -68,6 +68,7 @@ e_eap_edit_show(E_Container *con, E_App *a)
    if (!editor) return;
    
    editor->eap = a;
+   editor->img = NULL;
    
    /* methods */
    v.create_cfdata           = _e_eap_edit_create_data;
@@ -95,6 +96,7 @@ _e_eap_edit_fill_data(E_App_Edit_CFData *cfdata)
    IFDUP(cfdata->editor->eap->win_class, cfdata->wclass);
    IFDUP(cfdata->editor->eap->win_title, cfdata->wtitle);
    IFDUP(cfdata->editor->eap->win_role, cfdata->wrole);
+   IFDUP(cfdata->editor->eap->icon_class, cfdata->iclass);   
    IFDUP(cfdata->editor->eap->path, cfdata->path);
    cfdata->startup_notify = cfdata->editor->eap->startup_notify;
    cfdata->wait_exit = cfdata->editor->eap->wait_exit;
@@ -127,6 +129,7 @@ _e_eap_edit_free_data(E_Config_Dialog *cfd, void *data)
    E_FREE(cfdata->wclass);
    E_FREE(cfdata->wtitle);
    E_FREE(cfdata->wrole);
+   E_FREE(cfdata->iclass);   
    E_FREE(cfdata->path);
    E_FREE(cfdata->image);
    free(data);
@@ -233,10 +236,19 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    
    o = e_widget_frametable_add(evas, _("Icon"), 0);
    
-   editor->img = e_icon_add(evas);
-   if(eap->path)
-     {      
-	e_icon_file_key_set(editor->img, eap->path, "images/0");
+   if(!editor->img)
+     {
+	editor->img = e_icon_add(evas);   
+	if(eap->path)
+	  {      
+	     e_icon_file_key_set(editor->img, eap->path, "images/0");
+	     e_icon_fill_inside_set(editor->img, 1);	
+	  }
+     }
+   else
+     {
+        editor->img = e_icon_add(evas);
+	e_icon_file_set(editor->img, cfdata->image);
 	e_icon_fill_inside_set(editor->img, 1);	
      }
    
@@ -408,5 +420,5 @@ _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data)
    E_App_Edit *editor;
    
    editor = data;
-   printf("hilited: %s\n", file);   
+   printf("hilited: %s\n", file);
 }

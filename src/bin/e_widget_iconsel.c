@@ -300,7 +300,7 @@ _e_wid_hilite_cb(E_File_Dialog *dia, char *file, void *data)
      return;   
    
    if (wd->hilite_func)
-     wd->hilite_func(wd->obj, file, wd->select_data);
+     wd->hilite_func(wd->obj, file, wd->hilite_data);
       
    //e_icon_file_set(wd->o_icon, file);
    E_FREE(*(wd->valptr));
