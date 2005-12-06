@@ -61,6 +61,9 @@ AC_SUBST(fnmatch_libs)
 #  AC_DEFINE(HAVE_VALGRIND, 1, [Valgrind support])
 #fi
 
+AC_SUBST(VALGRIND_CFLAGS)
+AC_SUBST(VALGRIND_LIBS)
+
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
