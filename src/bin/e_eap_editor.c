@@ -9,6 +9,7 @@ struct _E_App_Edit
 
    Evas_Object *img;
    Evas_Object *img_widget;
+   int          img_set;
    
    E_App_Edit_CFData *cfdata;
 };
@@ -236,7 +237,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
    
    o = e_widget_frametable_add(evas, _("Icon"), 0);
    
-   if(!editor->img)
+   if(!editor->img || editor->img_set != 1)
      {
 	editor->img = e_icon_add(evas);   
 	if(eap->path)
@@ -245,7 +246,7 @@ _e_eap_edit_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, void *data)
 	     e_icon_fill_inside_set(editor->img, 1);	
 	  }
      }
-   else
+   else if(editor->img_set)
      {
         editor->img = e_icon_add(evas);
 	e_icon_file_set(editor->img, cfdata->image);
@@ -411,7 +412,8 @@ _e_eap_edit_select_cb(Evas_Object *obj, char *file, void *data)
    E_App_Edit *editor;
    
    editor = data;
-   printf("selected: %s\n", file);  
+   editor->img_set = 1;
+   printf("selected: %s\n", file);
 }
 
 void
@@ -420,5 +422,6 @@ _e_eap_edit_hilite_cb(Evas_Object *obj, char *file, void *data)
    E_App_Edit *editor;
    
    editor = data;
+   editor->img_set = 1;   
    printf("hilited: %s\n", file);
 }
