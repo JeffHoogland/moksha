@@ -21,11 +21,11 @@ typedef struct _E_Language_Pack E_Language_Pack;
 
 struct _E_Language_Pack
 {
-   int version;
-   char *e_lp_name;
-   char *lang;
-   char *input_method;
-   char *font_fallbacks;
+   int		 language_pack_version;
+   char		*language_pack_name;
+   char		*language;
+   char		*input_method;
+   Evas_List	*font_fallbacks;
 };
 
 struct _E_Input_Method_Config

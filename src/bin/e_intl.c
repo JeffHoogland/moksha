@@ -225,7 +225,7 @@ e_intl_language_set(const char *lang)
              if (locale_path == NULL)
 	       {
 		  fprintf(stderr, "The eMonkeys can not find the "
-			 " eTranslation for your eLocale(%s). "
+			 "eTranslation for your eLocale(%s). "
 			 "Please make sure your messages "
 			 "path is in order. If this locale "
 			 "is an alias make sure you have your "
@@ -507,25 +507,45 @@ _e_intl_language_path_find(char *language)
    found = 0;
    dir_list = e_path_dir_list_get(path_messages);
    
-   /* delete dir list as we go ? */
+   /* For each directory in the path */
    for (next_dir = dir_list ; next_dir ; next_dir = next_dir->next)
      {
 	E_Path_Dir *epd;
+	Ecore_List *files;
 	epd = next_dir->data;
 	
-	for (next_search = search_list ; next_search && !found ; next_search = next_search->next)
-	   {
-	      char message_path[PATH_MAX];
-	      char *search_locale;
-	      
-	      search_locale = next_search->data;
-	      snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo",
-		       epd->dir, search_locale, PACKAGE);
-	      if (ecore_file_exists(message_path) && !ecore_file_is_dir(message_path))
-		{
-		   directory = strdup(epd->dir);
-		}
-	   }
+	/* For each directory in the locale path */
+	files = ecore_file_ls(epd->dir);
+	if (files)
+	  {
+	     char *file;
+	     
+	     ecore_list_goto_first(files);
+	     while (file = ecore_list_next(files))
+	       {
+		  /* Match canonicalized locale against each possible search */
+		  for (next_search = search_list ; next_search && !found ; next_search = next_search->next)
+		    {
+		       char *clean_file;
+		       char *search_locale;
+		       
+		       search_locale = next_search->data;
+		       clean_file = _e_intl_locale_canonic_get(file, E_LOC_ALL);
+		       /* Match directory with the search locale */
+		       if (clean_file && !strcmp(clean_file, search_locale))
+			 {
+			    char message_path[PATH_MAX];
+			    snprintf(message_path, sizeof(message_path), "%s/%s/LC_MESSAGES/%s.mo", epd->dir, search_locale, PACKAGE);
+			    if (ecore_file_exists(message_path) && !ecore_file_is_dir(message_path))
+			      {
+				 directory = strdup(epd->dir);
+			      }
+			    free(clean_file);
+			 }
+		    } 
+	       }
+	     ecore_list_destroy(files);
+	  }
      }
    
    e_path_dir_list_free(dir_list);
@@ -878,7 +898,19 @@ _e_intl_locale_validate(char *locale)
 
 	if (found == 0)
 	  {
-	     if (!strcmp(test_locale, search_locale)) found = 1;
+	     char *clean_test_locale;
+	     
+	     /* FOR BSD, need to canonicalize the locale from "locale -a" */ 
+	     clean_test_locale = _e_intl_locale_canonic_get(test_locale, E_LOC_ALL);
+	     if (clean_test_locale)
+	       {
+		  if (!strcmp(clean_test_locale, search_locale)) found = 1;
+		  free(clean_test_locale);
+	       }
+	     else
+	       {
+		  if (!strcmp(test_locale, search_locale)) found = 1;
+	       }
 	  }
 	
 	all_locales = evas_list_remove_list(all_locales, all_locales);
