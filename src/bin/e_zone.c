@@ -556,19 +556,17 @@ e_zone_flip_win_restore(void)
 }
 
 int
-e_zone_app_exec(E_Zone *zone, E_App *a)
+e_zone_exec(E_Zone *zone, char *exe)
 {
-   int ret;
+   int ret = 0;
    char *p1, *p2;
    char *penv_display;
-   /*char *penv_ld_preload;
-   char *penv_ld_preload_path;*/
    char buf[4096], buf2[32];
+   Ecore_Exe *ex;
    
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
    
-   if (!a) return 0;
    if (startup_id == 0)
      {
 	p1 = getenv("E_STARTUP_ID");
@@ -578,10 +576,6 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if (penv_display) penv_display = strdup(penv_display);
-   /*penv_ld_preload = getenv("LD_PRELOAD");
-   if (penv_ld_preload) penv_ld_preload = strdup(penv_ld_preload);
-   penv_ld_preload_path = getenv("LD_PRELOAD_PATH");
-   if (penv_ld_preload_path) penv_ld_preload_path = strdup(penv_ld_preload_path);*/
    
    /* set env vars */
    p1 = strrchr(penv_display, ':');
@@ -605,21 +599,78 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
    else
      strcpy(buf, penv_display);
    e_util_env_set("DISPLAY", buf);
-/*   
-   snprintf(buf, sizeof(buf), "%i %i", zone->desk_x_current, zone->desk_y_current);
-   e_util_env_set("E_DESK", buf);
-   snprintf(buf, sizeof(buf), "%i", zone->num);
-   e_util_env_set("E_ZONE", buf);
-   snprintf(buf, sizeof(buf), "%i", zone->container->num);
-   e_util_env_set("E_CONTAINER", buf);
-   snprintf(buf, sizeof(buf), "%i", zone->container->manager->num);
-   e_util_env_set("E_MANAGER", buf);
-   snprintf(buf, sizeof(buf), "%i", startup_id);
-   e_util_env_set("E_LAUNCH_ID", buf);
-   snprintf(buf, sizeof(buf), "%s/enlightenment/preload", e_prefix_lib_get());
-   e_util_env_set("LD_PRELOAD_PATH", buf);
-   snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_hack.so", e_prefix_lib_get());
- */
+   snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
+   e_util_env_set("DESKTOP_STARTUP_ID", buf);
+   /* execute */
+   ex = ecore_exe_run(exe, NULL);
+   if (!ex)
+     {
+	e_error_dialog_show(_("Run Error"),
+			    _("Enlightenment was unable fork a child process:\n"
+			      "\n"
+			      "%s\n"
+			      "\n"),
+			    exe);
+	ret = 0;
+     }
+   else
+     {
+	ecore_exe_free(ex);
+	ret = 1;
+     }
+   /* reset env vars */
+   if (penv_display)
+     {
+	e_util_env_set("DISPLAY", penv_display);
+	free(penv_display);
+     }
+   return ret;
+}
+
+int
+e_zone_app_exec(E_Zone *zone, E_App *a)
+{
+   int ret;
+   char *p1, *p2;
+   char *penv_display;
+   char buf[4096], buf2[32];
+   
+   E_OBJECT_CHECK_RETURN(zone, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
+   
+   if (!a) return 0;
+   if (startup_id == 0)
+     {
+	p1 = getenv("E_STARTUP_ID");
+	if (p1) startup_id = atoi(p1);
+     }
+   if (++startup_id < 1) startup_id = 1;
+   /* save previous env vars we need to save */
+   penv_display = getenv("DISPLAY");
+   if (penv_display) penv_display = strdup(penv_display);
+   
+   /* set env vars */
+   p1 = strrchr(penv_display, ':');
+   p2 = strrchr(penv_display, '.');
+   if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
+     {
+	/* yes it could overflow... but who will overflow DISPLAY eh? why? to
+	 * "exploit" your own applications running as you?
+	 */
+	strcpy(buf, penv_display);
+	buf[p2 - penv_display + 1] = 0;
+	snprintf(buf2, sizeof(buf2), "%i", zone->container->manager->num);
+	strcat(buf, buf2);
+     }
+   else if (p1) /* "blah:x */
+     {
+	strcpy(buf, penv_display);
+	snprintf(buf2, sizeof(buf2), ".%i", zone->container->manager->num);
+	strcat(buf, buf2);
+     }
+   else
+     strcpy(buf, penv_display);
+   e_util_env_set("DISPLAY", buf);
    snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
    /* execute */
@@ -631,18 +682,6 @@ e_zone_app_exec(E_Zone *zone, E_App *a)
 	e_util_env_set("DISPLAY", penv_display);
 	free(penv_display);
      }
-/*   
-   if (penv_ld_preload)
-     {
-	e_util_env_set("LD_PRELOAD", penv_ld_preload);
-	free(penv_ld_preload);
-     }
-   if (penv_ld_preload_path)
-     {
-	e_util_env_set("LD_PRELOAD_PATH", penv_ld_preload_path);
-	free(penv_ld_preload_path);
-     }
- */
    return ret;
 }
 

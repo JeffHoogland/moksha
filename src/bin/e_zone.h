@@ -90,6 +90,7 @@ EAPI void       e_zone_desk_linear_flip_to(E_Zone *zone, int x);
 EAPI void       e_zone_flip_win_disable(void);
 EAPI void       e_zone_flip_win_restore(void);
 
+EAPI int        e_zone_exec(E_Zone *zone, char *exe);
 EAPI int        e_zone_app_exec(E_Zone *zone, E_App *a);
 
 extern EAPI int E_EVENT_ZONE_DESK_COUNT_SET;

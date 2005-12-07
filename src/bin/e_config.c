@@ -1017,6 +1017,15 @@ e_config_init(void)
 	     eb->params = NULL;
 	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
 	     
+	     eb = E_NEW(E_Config_Binding_Key, 1);
+	     eb->context = E_BINDING_CONTEXT_ANY;
+	     eb->key = evas_stringshare_add("grave");
+	     eb->modifiers = E_BINDING_MODIFIER_ALT;
+	     eb->any_mod = 0;
+	     eb->action = evas_stringshare_add("exebuf");
+	     eb->params = NULL;
+	     e_config->key_bindings = evas_list_append(e_config->key_bindings, eb);
+	     
    /* need to support fullscreen anyway for this - ie netwm and the border
     * system need to handle this as well as possibly using xrandr/xvidmode
     */

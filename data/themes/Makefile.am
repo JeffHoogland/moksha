@@ -48,7 +48,8 @@ default_label.edc \
 default_button.edc \
 default_scrollframe.edc \
 default_ilist.edc \
-default_slider.edc
+default_slider.edc \
+default_exebuf.edc
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \

@@ -1,6 +1,6 @@
 images {
    image: "e17_brushed.png" COMP;
-   image: "e17_"SM"reflection_shadow_overlay.png" LOSSY 70;
+   image: "e17_"SM"reflection_shadow_overlay.png" LOSSY 90;
 }
 group {
    name: "desktop/background";

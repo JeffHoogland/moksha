@@ -57,5 +57,6 @@ collections {
 #include "default_scrollframe.edc"
 #include "default_ilist.edc"
 #include "default_slider.edc"
+#include "default_exebuf.edc"
 }
 

@@ -1,0 +1,236 @@
+images {
+   image: "e17_menu_bg.png" COMP;
+   image: "e17_winlist_top.png" COMP;
+   image: "e17_winlist_bottom.png" COMP;
+   image: "e17_ibar_bg_h.png" COMP;
+   image: "e17_ibar_over_v.png" COMP;
+   image: "e17_gadman_overlay.png" COMP;
+   image: "e17_pager_window.png" COMP;
+   image: "e17_pager_window_shaded.png" COMP;
+   image: "e17_pager_desk.png" COMP;
+}
+
+group {
+   name: "widgets/exebuf/main";
+   parts {
+      part {
+	 name:          "base";
+	 mouse_events:  0;
+	 type:          RECT;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    0;
+	       to_y:     "base2";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    color: 221 221 221 255;
+	 }
+      }
+      part {
+	 name:          "base2";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    max:      99999 48;
+	    align:    0.5   0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_menu_bg.png";
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "base3";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   0    0;
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -1   -1;
+	    }
+	    image {
+	       normal: "e17_menu_bg_border.png";
+	       border: 1 1 1 1;
+	       middle: 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name:          "top";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  0.0;
+	       offset:   1    1;
+	    }
+	    rel2 {
+	       relative: 1.0  0.0;
+	       offset:   -2   16;
+	       to_y:     "label";
+	    }
+	    image {
+	       normal: "e17_winlist_top.png";
+	       border: 0 0 0 19;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+      part {
+	 name: "icon_swallow";
+	 type: SWALLOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    aspect: 1.0 1.0;
+	    align: 0.0 0.5;
+	    min: 24 24;
+	    fixed: 1 1;
+	    aspect_preference: VERTICAL;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   16   16;
+	    }
+	    rel2 {
+	       relative: 0.0 1.0;
+	       offset:   16  -17;
+	    }
+	 }
+      }
+      part {      
+	 name:          "icon_overlay";
+	 mouse_events:  1;
+	 description {
+	    state: "default" 0.0;
+	    rel1 {
+	       to: "icon_swallow";
+	       relative: 0.0  0.0;
+	       offset:   -8    -8;
+	    }
+	    rel2 {
+	       to: "icon_swallow";
+	       relative: 1.0  1.0;
+	       offset:   7    7;
+	    }
+	    image {
+	       normal: "e17_gadman_overlay.png";
+	       border: 15 15 15 15;
+	    }
+	 }
+      }
+      part {
+	 name: "label";
+	 type: TEXT;
+         effect: SHADOW;
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 255;
+	    rel1 {
+	       relative: 1.0 0.0;
+	       offset:   16   24;
+	       to_x:     "icon_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -17  -25;
+	    }
+            color: 0 0 0 255;
+	    color3: 255 255 255 128;
+	    text {
+	       text: "COMMAND";
+	       font: "Edje-Vera-Bold";
+	       size: 16;
+	       align: 0.0 0.5;
+	       min: 0 1;
+	       text_class: "exebuf_text";
+	    }
+	 }
+      }
+      part {
+	 name:          "bottom";
+	 mouse_events:  0;
+	 description {
+	    state:    "default" 0.0;
+	    rel1 {
+	       relative: 0.0  1.0;
+	       offset:   1    -3;
+	       to_y:     "label";
+	    }
+	    rel2 {
+	       relative: 1.0  1.0;
+	       offset:   -2   -2;
+	    }
+	    image {
+	       normal: "e17_winlist_bottom.png";
+	       border: 0 0 4 0;
+	    }
+	    fill {
+	       smooth: 0;
+	    }
+	 }
+      }
+   }
+/*      
+      part {
+	 name: "list_swallow";
+	 type: SWALLOW;
+	 clip_to: "list_clip";
+	 description {
+	    state: "default" 0.0;
+	    color: 0 0 0 0;
+	    rel1 {
+	       relative: 0.0 1.0;
+	       offset:   16   16;
+	       to_y:    "title";
+	    }
+	    rel2 {
+	       relative: 1.0 0.0;
+	       offset:   -17  -17;
+	       to_y: "icon_swallow";
+	    }
+	 }
+      }
+      part {
+	 name: "list_clip";
+	 type: RECT;
+	 description {
+	    state: "default" 0.0;
+	    color: 255 255 255 255;
+	    rel1 {
+	       relative: 0.0 0.0;
+	       offset:   0   0;
+	       to_y: "list_swallow";
+	    }
+	    rel2 {
+	       relative: 1.0 1.0;
+	       offset:   -1  -1;
+	       to_y: "list_swallow";
+	    }
+	 }
+      }
+ */
+}

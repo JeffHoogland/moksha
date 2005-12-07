@@ -704,26 +704,27 @@ ACT_FN_GO(window_desk_move_by)
 
 	e_desk_xy_get(bd->desk, &dx, &dy);
 	
-	to_x = dx + x; to_y = dy + y;
-	while( ( desk = e_desk_at_xy_get(bd->zone, to_x , to_y ) ) == NULL )
+	to_x = dx + x;
+	to_y = dy + y;
+	while ((desk = e_desk_at_xy_get(bd->zone, to_x, to_y )) == NULL)
 	  {
 	     // here we are out of our desktop range
-	     while( to_x >= bd->zone->desk_x_count )
+	     while (to_x >= bd->zone->desk_x_count)
 	       {
 		  to_x -= bd->zone->desk_x_count;
-		  to_y ++;
+		  to_y++;
 	       }
-	     while( to_x < 0 )
+	     while (to_x < 0)
 	       {
 		  to_x += bd->zone->desk_x_count;
-		  to_y --;
+		  to_y--;
 	       }
 	     
-	     while( to_y >= bd->zone->desk_y_count )
+	     while (to_y >= bd->zone->desk_y_count)
 	       {
 		  to_y -= bd->zone->desk_y_count;
 	       }
-	     while( to_y < 0 )
+	     while (to_y < 0)
 	       {
 		  to_y += bd->zone->desk_y_count;
 	       }
@@ -732,10 +733,10 @@ ACT_FN_GO(window_desk_move_by)
 	if (desk)
 	  {
 	     // switch desktop. Quite usefull from the interface point of view.
-	     e_zone_desk_flip_by( bd->zone, to_x - dx , to_y - dy );
+	     e_zone_desk_flip_by(bd->zone, to_x - dx, to_y - dy);
 	     // send the border to the required desktop.
 	     e_border_desk_set(bd, desk);
-	     e_border_focus_set( bd, 1, 1);
+	     e_border_focus_set(bd, 1, 1);
 	  }
      }
 }
@@ -1325,6 +1326,16 @@ ACT_FN_GO(pointer_resize_pop)
    e_pointer_type_pop(man->pointer, obj, params);
 }
 
+/***************************************************************************/
+ACT_FN_GO(exebuf)
+{
+   E_Zone *zone;
+   
+   zone = _e_actions_zone_get(obj);
+   if (zone)
+     e_exebuf_show(zone);
+}
+
 /* local subsystem globals */
 static Evas_Hash *actions = NULL;
 static Evas_List *action_names = NULL;
@@ -1417,6 +1428,8 @@ e_actions_init(void)
 
    ACT_GO(pointer_resize_push);
    ACT_GO(pointer_resize_pop);
+   
+   ACT_GO(exebuf);
    
    return 1;
 }
