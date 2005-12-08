@@ -157,6 +157,12 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    if (rem->role) evas_stringshare_del(rem->role);
    if (rem->prop.border) evas_stringshare_del(rem->prop.border);
    if (rem->prop.command) evas_stringshare_del(rem->prop.command);
+   rem->name = NULL;
+   rem->class = NULL;
+   rem->title = NULL;
+   rem->role = NULL;
+   rem->prop.border = NULL;
+   rem->prop.command = NULL;
    
    if (bd->client.icccm.name)
      rem->name = evas_stringshare_add(bd->client.icccm.name);
@@ -212,7 +218,6 @@ e_remember_update(E_Remember *rem, E_Border *bd)
    rem->prop.lock_focus_out = bd->lock_focus_out;
    rem->prop.lock_life = bd->lock_life;
 
-   if (rem->prop.border) evas_stringshare_del(rem->prop.border);
    if (bd->client.border.name)
      rem->prop.border = evas_stringshare_add(bd->client.border.name);
    
