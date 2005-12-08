@@ -153,6 +153,7 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 	eet_file = _e_thumb_file_id(file);
 	if(!eet_file)
 	  {
+	     eet_close(ef);	     
 	     if(w) *w = -1;
 	     if(h) *h = -1;
 	     return;
@@ -160,6 +161,7 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 	ef = eet_open(eet_file, EET_FILE_MODE_READ);
 	if (!ef)
 	  {
+	     eet_close(ef);	     
 	     if(w) *w = -1;
 	     if(h) *h = -1;
 	     return;
@@ -170,6 +172,7 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 	ef = eet_open(file, EET_FILE_MODE_READ);
 	if (!ef)
 	  {
+	     eet_close(ef);	     
 	     if(w) *w = -1;
 	     if(h) *h = -1;
 	     return;
@@ -178,10 +181,12 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
    if(!eet_data_image_header_read(ef, "/thumbnail/data/", w, h, NULL, NULL, 
 				  NULL, NULL))
      {
+	eet_close(ef);	
 	if(w) *w = -1;
 	if(h) *h = -1;
 	return;
      }      
+   eet_close(ef);
 }
 
 /* return true if the saved thumb exists OR if its an eap */
