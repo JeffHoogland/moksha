@@ -178,7 +178,7 @@ e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
 	     return;
 	  }
      }
-   if(!eet_data_image_header_read(ef, "/thumbnail/data/", w, h, NULL, NULL, 
+   if(!eet_data_image_header_read(ef, "/thumbnail/data", w, h, NULL, NULL,
 				  NULL, NULL))
      {
 	eet_close(ef);	
