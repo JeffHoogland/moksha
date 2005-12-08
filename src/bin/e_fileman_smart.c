@@ -1768,9 +1768,13 @@ _e_fm_dir_monitor_cb(void *data, Ecore_File_Monitor *ecore_file_monitor,
 static void
 _e_fm_file_free(E_Fm_Icon *icon)
 {
-   e_icon_canvas_unpack(icon->icon_obj);
-   evas_object_del(icon->icon_obj);
-   e_object_del(E_OBJECT(icon->file));
+   if(icon->icon_obj)
+     {
+	e_icon_canvas_unpack(icon->icon_obj);
+	evas_object_del(icon->icon_obj);
+     }
+   if(icon->file)
+     e_object_del(E_OBJECT(icon->file));
    /*
     if (file->menu)
     e_object_del(E_OBJECT(file->menu));

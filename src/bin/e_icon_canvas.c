@@ -334,6 +334,7 @@ void
 e_icon_canvas_reset(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   int i, j;
    
    if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
      return;
@@ -343,15 +344,34 @@ e_icon_canvas_reset(Evas_Object *obj)
    sd->mw = 0;
    sd->mh = 0;
 
-#if 0   
    while (sd->items)
-    {
-       Evas_Object *child;
-       
-       child = sd->items->data;
-       e_icon_canvas_unpack(child);
-    }
-#endif   
+     {
+	E_Icon_Canvas_Item *li;
+	
+	li = sd->items->data;
+	if(li->obj)
+	  e_icon_canvas_unpack(li->obj);
+	else
+	  sd->items = evas_list_remove(sd->items, li);
+	//free(li);
+     }   
+   
+   for(i = 0; i < TILE_NUM; i++)
+     {
+	for(j = 0; j < TILE_NUM; j++)
+	  {
+	     if(sd->tiles[i][j])
+	       {
+		  E_Icon_Canvas_Tile *t;
+		  
+		  t = sd->tiles[i][j];
+		  while(t->items)		    
+		    t->items = evas_list_remove(t->items, t->items->data);
+		  free(sd->tiles[i][j]);
+		  sd->tiles[i][j] = NULL;
+	       }
+	  }
+     }
 }
 
 void
