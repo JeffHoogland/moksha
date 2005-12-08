@@ -138,6 +138,52 @@ e_thumb_file_get(char *file)
    return strdup(thumb);   
 }
 
+/* return the width and height of a thumb, if from_eet is set, then we
+ * assume that the file being passed is the thumb's eet
+ */
+void
+e_thumb_geometry_get(char *file, int *w, int *h, int from_eet)
+{
+   Eet_File *ef;   
+   
+   if(!from_eet)
+     {
+	char *eet_file;
+	
+	eet_file = _e_thumb_file_id(file);
+	if(!eet_file)
+	  {
+	     if(w) *w = -1;
+	     if(h) *h = -1;
+	     return;
+	  }
+	ef = eet_open(eet_file, EET_FILE_MODE_READ);
+	if (!ef)
+	  {
+	     if(w) *w = -1;
+	     if(h) *h = -1;
+	     return;
+	  }
+     }
+   else
+     {
+	ef = eet_open(file, EET_FILE_MODE_READ);
+	if (!ef)
+	  {
+	     if(w) *w = -1;
+	     if(h) *h = -1;
+	     return;
+	  }
+     }
+   if(!eet_data_image_header_read(ef, "/thumbnail/data/", w, h, NULL, NULL, 
+				  NULL, NULL))
+     {
+	if(w) *w = -1;
+	if(h) *h = -1;
+	return;
+     }      
+}
+
 /* return true if the saved thumb exists OR if its an eap */
 int
 e_thumb_exists(char *file)
