@@ -1438,11 +1438,9 @@ int
 e_actions_shutdown(void)
 {
    action_names = evas_list_free(action_names);
-   if (actions)
+   while (actions)
      {
 	evas_hash_foreach(actions, _e_actions_cb_free, NULL);
-	evas_hash_free(actions);
-	actions = NULL;
      }
    return 1;
 }
@@ -1494,5 +1492,5 @@ _e_actions_cb_free(Evas_Hash *hash __UNUSED__, const char *key __UNUSED__,
 		   void *data, void *fdata __UNUSED__)
 {
    e_object_del(E_OBJECT(data));
-   return 1;
+   return 0;
 }
