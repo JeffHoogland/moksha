@@ -1,43 +1,72 @@
 # This is the Japanese locale definition for Enlightenment DR 17
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#   David Stevenson <david.35472@gmail.com>
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-09-23 11:44+0900\n"
+"POT-Creation-Date: 2005-12-08 00:16+0900\n"
 "PO-Revision-Date: 2005-09-23 13:00+0700\n"
-"Last-Translator: David Stevenson <david.35472@gmail.com>\n"
+"Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_actions.c:1121
+#: src/bin/e_about.c:41 src/bin/e_int_menus.c:135
+msgid "About Enlightenment"
+msgstr "Enlightenment について"
+
+#: src/bin/e_about.c:50 src/bin/e_main.c:568
+msgid "Enlightenment"
+msgstr "Enlightenment"
+
+#: src/bin/e_about.c:55
+msgid ""
+"Copyright &copy; 1999-2005, by the Enlightenment Development Team.<br><br>We "
+"hope you enjoy using this software as much as we enjoyed writing it."
+"<br><br>This software is provided as-is with no explicit or implied "
+"warranty. This software is governed by licensing conditions, so please see "
+"the COPYING and COPYING-PLAIN licence files installed on your system."
+"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</hilight> and it "
+"is not stable. Many features are incomplete or even non-existant yet and may "
+"have many bugs. You have been <hilight>WARNED!</hilight>"
+msgstr ""
+
+#: src/bin/e_about.c:80
+msgid "<title>The Team</title>"
+msgstr ""
+
+#: src/bin/e_actions.c:1265
 msgid "Are you sure you want to exit?"
 msgstr "本当に終了しますか"
 
-#: src/bin/e_actions.c:1123
+#: src/bin/e_actions.c:1267
 msgid ""
 "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
 msgstr ""
 "Enlightenment を終了しようとしています.<br><br>本当に終了しますか."
 
-#: src/bin/e_actions.c:1128
+#: src/bin/e_actions.c:1272 src/bin/e_fileman_smart.c:1029
+#: src/bin/e_module.c:554 src/modules/randr/e_mod_main.c:317
 msgid "Yes"
 msgstr "はい"
 
-#: src/bin/e_actions.c:1129
+#: src/bin/e_actions.c:1274 src/bin/e_fileman_smart.c:1030
+#: src/bin/e_module.c:555 src/modules/randr/e_mod_main.c:318
 msgid "No"
 msgstr "いいえ"
 
-#: src/bin/e_apps.c:282 src/bin/e_apps.c:1071 src/bin/e_utils.c:200
+#: src/bin/e_apps.c:412 src/bin/e_apps.c:1739 src/bin/e_fileman_file.c:354
+#: src/bin/e_fileman_file.c:405 src/bin/e_utils.c:223
 msgid "Run Error"
 msgstr "実行エラー"
 
-#: src/bin/e_apps.c:283 src/bin/e_utils.c:201
+#: src/bin/e_apps.c:413 src/bin/e_fileman_file.c:355
+#: src/bin/e_fileman_file.c:406 src/bin/e_utils.c:224
 #, c-format
 msgid ""
 "Enlightenment was unable fork a child process:\n"
@@ -45,12 +74,12 @@ msgid ""
 "%s\n"
 "\n"
 msgstr ""
-"Enlightenment で子プロセスが fork できませんでした.\n"
+"以下の子プロセスが Enlightenment で fork できませんでした.\n"
 "\n"
 "%s\n"
 "\n"
 
-#: src/bin/e_apps.c:1072
+#: src/bin/e_apps.c:1740
 #, c-format
 msgid ""
 "Enlightenment was unable run the program:\n"
@@ -59,208 +88,13 @@ msgid ""
 "\n"
 "The command was not found\n"
 msgstr ""
-"Enlightenment でプログラムが実行できませんでした.\n"
+"以下のコマンドが Enlightenment で実行できませんでした.\n"
 "\n"
 "%s\n"
 "\n"
 "コマンドが見つかりませんでした.\n"
 
-#: src/bin/e_border.c:6108 src/bin/e_border.c:6121
-msgid "Position"
-msgstr "位置"
-
-#: src/bin/e_border.c:6109 src/bin/e_border.c:6122
-#: src/modules/ibar/e_mod_main.c:288 src/modules/ibar/e_mod_main.c:949
-#: src/modules/ibox/e_mod_main.c:690
-msgid "Size"
-msgstr "サイズ"
-
-#: src/bin/e_border.c:6110 src/bin/e_border.c:6123 src/bin/e_border.c:6326
-msgid "Stacking"
-msgstr "積み重ね順"
-
-#: src/bin/e_border.c:6111 src/bin/e_border.c:6124 src/bin/e_border.c:6262
-msgid "Iconify"
-msgstr "アイコン化"
-
-#: src/bin/e_border.c:6113 src/bin/e_border.c:6126 src/bin/e_border.c:6315
-msgid "Sticky"
-msgstr "常時表示"
-
-#: src/bin/e_border.c:6114 src/bin/e_border.c:6127
-msgid "Shade"
-msgstr "シェード"
-
-#: src/bin/e_border.c:6115 src/bin/e_border.c:6128
-msgid "Maximize"
-msgstr "最大化"
-
-#: src/bin/e_border.c:6116 src/bin/e_border.c:6129 src/bin/e_border.c:6348
-msgid "Fullscreen"
-msgstr "全面表示"
-
-#: src/bin/e_border.c:6135
-msgid "User"
-msgstr "ユーザー"
-
-#: src/bin/e_border.c:6143
-msgid "Application"
-msgstr "アプリケーション"
-
-#: src/bin/e_border.c:6153
-msgid "Border"
-msgstr "ボーダー"
-
-#: src/bin/e_border.c:6154 src/bin/e_border.c:6251
-msgid "Close"
-msgstr "閉じる"
-
-#: src/bin/e_border.c:6157
-msgid "Lifespan"
-msgstr "寿命"
-
-#: src/bin/e_border.c:6171
-msgid "Remember This Window"
-msgstr "このウィンドウを覚える"
-
-#: src/bin/e_border.c:6178
-msgid "Remember This Instance Only"
-msgstr "このインスタンスだけを覚える"
-
-#: src/bin/e_border.c:6181
-msgid "Match by Name"
-msgstr "Nameで比較する"
-
-#: src/bin/e_border.c:6182
-msgid "Match by Class"
-msgstr "Classで比較する"
-
-#: src/bin/e_border.c:6183
-msgid "Match by Title"
-msgstr "Titleで比較する"
-
-#: src/bin/e_border.c:6184
-msgid "Match by Role"
-msgstr "Roleで比較する"
-
-#: src/bin/e_border.c:6185
-msgid "Match by Window Type"
-msgstr "Window Typeで比較する"
-
-#: src/bin/e_border.c:6186
-msgid "Match by Transient Status"
-msgstr "Transient Statusで比較する"
-
-#: src/bin/e_border.c:6189
-msgid "Remember Position"
-msgstr "位置を覚える"
-
-#: src/bin/e_border.c:6190
-msgid "Remember Size"
-msgstr "サイズを覚える"
-
-#: src/bin/e_border.c:6191
-msgid "Remember Stacking"
-msgstr "積み重ね順を覚える"
-
-#: src/bin/e_border.c:6192
-msgid "Remember Locks"
-msgstr "ロックを覚える"
-
-#: src/bin/e_border.c:6193
-msgid "Remember Border"
-msgstr "ボーダーを覚える"
-
-#: src/bin/e_border.c:6194
-msgid "Remember Stickiness"
-msgstr "常時表示の設定を覚える"
-
-#: src/bin/e_border.c:6195
-msgid "Remember Desktop"
-msgstr "デスクトップを覚える"
-
-#: src/bin/e_border.c:6196
-msgid "Remember Shaded State"
-msgstr "シェードの設定を覚える"
-
-#: src/bin/e_border.c:6197
-msgid "Remember Zone"
-msgstr "ゾーンを覚える"
-
-#: src/bin/e_border.c:6198
-msgid "Remember Skip Window List"
-msgstr "ウィンドウリストスキップの設定を覚える"
-
-#: src/bin/e_border.c:6212
-msgid "Always On Top"
-msgstr "常に一番手前に"
-
-#: src/bin/e_border.c:6222 src/modules/clock/e_mod_main.c:341
-#: src/modules/pager/e_mod_main.c:464
-msgid "Normal"
-msgstr "普通"
-
-#: src/bin/e_border.c:6232
-msgid "Always Below"
-msgstr "常に一番奥に"
-
-#: src/bin/e_border.c:6276
-msgid "Kill"
-msgstr "強制終了"
-
-#: src/bin/e_border.c:6289
-msgid "Shaded"
-msgstr "シェード"
-
-#: src/bin/e_border.c:6302
-msgid "Maximized"
-msgstr "最大化"
-
-#: src/bin/e_border.c:6335
-msgid "Borderless"
-msgstr "ボーダー無し"
-
-#: src/bin/e_border.c:6362
-msgid "Skip Window List"
-msgstr "ウィンドウリストをスキップする"
-
-#: src/bin/e_border.c:6376
-msgid "Locks"
-msgstr "ロック"
-
-#: src/bin/e_border.c:6383
-msgid "Remember"
-msgstr "記憶"
-
-#: src/bin/e_border.c:6393
-msgid "Send To"
-msgstr "移送先"
-
-#: src/bin/e_border.c:6415
-msgid "Edit Icon"
-msgstr "アイコン編集"
-
-#: src/bin/e_border.c:6441
-msgid "Create Icon"
-msgstr "アイコン作成"
-
-#: src/bin/e_border.c:6529
-msgid "Icon Edit Error"
-msgstr "アイコン編集エラー"
-
-#: src/bin/e_border.c:6530
-msgid ""
-"Error starting icon editor\n"
-"\n"
-"please install e_util_eapp_edit\n"
-"or make sure it is in your PATH\n"
-msgstr ""
-"アイコンエディターが起動できません\n"
-"\n"
-"e_util_eapp_edit がインストールされていること, \n"
-"およびそれが PATH 上にあることを確認して下さい\n"
-
-#: src/bin/e_config.c:352
+#: src/bin/e_config.c:377
 msgid ""
 "Configuration data needed upgrading. Your old configuration\n"
 "has been wiped and a new set of defaults initialized. This\n"
@@ -278,7 +112,7 @@ msgstr ""
 "追加すれば更新されます. これで好きなように設定できます.\n"
 "ちょっと面倒ですが, よろしくお願いします.\n"
 
-#: src/bin/e_config.c:366
+#: src/bin/e_config.c:391
 msgid ""
 "Your configuration is NEWER than Enlightenment. This is very\n"
 "strange. This should not happen unless you downgraded\n"
@@ -293,169 +127,1100 @@ msgstr ""
 "これではまずいので, 念のためデフォルトの設定に置き換えました.\n"
 "ご不便をおかけしますが, よろしくお願いします.\n"
 
-#: src/bin/e_config.c:1889
+#: src/bin/e_config.c:2044
 msgid "Configuration Upgraded"
 msgstr "設定をアップグレードしました"
 
-#: src/bin/e_container.c:129
+#: src/bin/e_config_dialog.c:86
+msgid "Advanced Settings"
+msgstr "詳細設定"
+
+#: src/bin/e_config_dialog.c:101
+msgid "Basic Settings"
+msgstr "基本設定"
+
+#: src/bin/e_config_dialog.c:113 src/bin/e_error.c:196 src/bin/e_error.c:205
+#: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
+#: src/bin/e_int_border_remember.c:367 src/bin/e_module.c:414
+#: src/modules/ibar/e_mod_main.c:1692
+msgid "OK"
+msgstr "了解"
+
+#: src/bin/e_config_dialog.c:114
+msgid "Apply"
+msgstr "適用"
+
+#: src/bin/e_config_dialog.c:115 src/bin/e_file_dialog.c:67
+msgid "Cancel"
+msgstr "取消"
+
+#: src/bin/e_configure.c:44
+#, fuzzy
+msgid "Enlightenment Configuration"
+msgstr "Enlightenment の設定"
+
+#: src/bin/e_configure.c:58 src/bin/e_int_menus.c:631
+msgid "Configuration Panel"
+msgstr "設定パネル"
+
+#: src/bin/e_configure.c:61 src/bin/e_int_config_focus.c:44
+msgid "Focus Settings"
+msgstr "フォーカスの設定"
+
+#: src/bin/e_configure.c:62 src/bin/e_int_config_desks.c:45
+#, fuzzy
+msgid "Desktop Settings"
+msgstr "仮想デスクトップの設定"
+
+#: src/bin/e_configure.c:63 src/bin/e_int_config_window_manipulation.c:48
+msgid "Window Manipulation"
+msgstr "ウィンドウ動作の設定"
+
+#: src/bin/e_configure.c:64 src/bin/e_int_config_window_display.c:49
+#, fuzzy
+msgid "Window Display"
+msgstr "ウィンドウ表示の設定"
+
+#: src/bin/e_container.c:118
 #, c-format
 msgid "Container %d"
 msgstr "コンテナ %d"
 
-#: src/bin/e_error.c:208 src/bin/e_error.c:217
-msgid "OK"
-msgstr "了解"
+#: src/bin/e_eap_editor.c:81 src/bin/e_int_menus.c:635
+#, fuzzy
+msgid "Eap Editor"
+msgstr "EAP エディタ"
 
-#: src/bin/e_error.c:364
+#: src/bin/e_eap_editor.c:237 src/bin/e_eap_editor.c:369
+#, fuzzy
+msgid "Icon"
+msgstr "アイコン"
+
+#: src/bin/e_eap_editor.c:268
+msgid "Basic Info"
+msgstr "基本情報"
+
+#: src/bin/e_eap_editor.c:270
+msgid "App name"
+msgstr "アプリケーション名"
+
+#: src/bin/e_eap_editor.c:280
+msgid "Executable"
+msgstr "実行ファイル名"
+
+#: src/bin/e_eap_editor.c:309 src/bin/e_fileman_smart.c:1246
+msgid "General"
+msgstr "一般"
+
+#: src/bin/e_eap_editor.c:312
+msgid "Generic Info"
+msgstr "一般情報"
+
+#: src/bin/e_eap_editor.c:321
+msgid "Comment"
+msgstr "注釈"
+
+#: src/bin/e_eap_editor.c:333
+#, fuzzy
+msgid "Window"
+msgstr "ウィンドウ"
+
+#: src/bin/e_eap_editor.c:335
+#, fuzzy
+msgid "Window Name"
+msgstr "ウィンドウ名"
+
+#: src/bin/e_eap_editor.c:344
+#, fuzzy
+msgid "Window Class"
+msgstr "ウィンドウクラス"
+
+#: src/bin/e_eap_editor.c:351
+#, fuzzy
+msgid "Window Title"
+msgstr "ウィンドウタイトル"
+
+#: src/bin/e_eap_editor.c:358 src/bin/e_int_border_remember.c:470
+#, fuzzy
+msgid "Window Role"
+msgstr "ウィンドウ役割"
+
+#: src/bin/e_eap_editor.c:371
+msgid "Icon Class"
+msgstr "アイコンクラス"
+
+#: src/bin/e_eap_editor.c:380
+msgid "Path"
+msgstr "パス"
+
+#: src/bin/e_eap_editor.c:393
+msgid "Misc"
+msgstr "その他"
+
+#: src/bin/e_eap_editor.c:395
+msgid "Startup Notify"
+msgstr ""
+
+#: src/bin/e_eap_editor.c:399
+msgid "Wait Exit"
+msgstr ""
+
+#: src/bin/e_error.c:352
 msgid "Enlightenment: Error!"
 msgstr "Enlightenment: エラー!"
 
-#: src/bin/e_gadman.c:600
+#: src/bin/e_file_dialog.c:51
+msgid "Places"
+msgstr ""
+
+#: src/bin/e_file_dialog.c:53
+msgid "Home"
+msgstr "ホーム"
+
+#: src/bin/e_file_dialog.c:54
+#, fuzzy
+msgid "Desktop"
+msgstr "デスクトップ"
+
+#: src/bin/e_file_dialog.c:55
+#, fuzzy
+msgid "Icons"
+msgstr "アイコン"
+
+#: src/bin/e_file_dialog.c:66 src/bin/e_fileman_smart.c:934
+#: src/modules/battery/e_mod_main.c:765 src/modules/cpufreq/e_mod_main.c:306
+#: src/modules/cpufreq/e_mod_main.c:334
+msgid "Ok"
+msgstr "了解"
+
+#: src/bin/e_fileman_smart.c:936
+#, fuzzy
+msgid "Error"
+msgstr "エラー"
+
+#: src/bin/e_fileman_smart.c:937
+#, c-format
+msgid "Could not delete  <br><b>%s</b>"
+msgstr "以下が削除できません. <br><b>%s</b>"
+
+#: src/bin/e_fileman_smart.c:1032
+#, fuzzy
+msgid "Confirm"
+msgstr "確認"
+
+#: src/bin/e_fileman_smart.c:1033
+#, fuzzy, c-format
+msgid " Are you sure you want to delete <br><b>%s</b> ?"
+msgstr "以下を本当に削除しますか. <br><b>%s</b>"
+
+#: src/bin/e_fileman_smart.c:1255
+#, c-format
+msgid "File:"
+msgstr "ファイル"
+
+#: src/bin/e_fileman_smart.c:1264
+#, fuzzy, c-format
+msgid "Size:"
+msgstr "サイズ"
+
+#: src/bin/e_fileman_smart.c:1273
+#, c-format
+msgid "Type:"
+msgstr "タイプ"
+
+#: src/bin/e_fileman_smart.c:1282
+msgid "Protect this file"
+msgstr "このファイルを保護する"
+
+#: src/bin/e_fileman_smart.c:1288
+msgid "Let others see this file"
+msgstr "他でもこのファイルの閲覧を可能にする"
+
+#: src/bin/e_fileman_smart.c:1292
+msgid "Let others modify this file"
+msgstr "他でもこのファイルの変更を可能にする"
+
+#: src/bin/e_fileman_smart.c:1296
+msgid "Dont let others see or modify this file"
+msgstr "他ではこのファイルの閲覧と変更を禁止する"
+
+#: src/bin/e_fileman_smart.c:1300
+msgid "Custom settings"
+msgstr "カスタム設定"
+
+#: src/bin/e_fileman_smart.c:1337
+msgid "File Info:"
+msgstr "ファイル情報"
+
+#: src/bin/e_fileman_smart.c:1338
+msgid "Owner:"
+msgstr "所有者"
+
+#: src/bin/e_fileman_smart.c:1343
+msgid "Group:"
+msgstr "グループ"
+
+#: src/bin/e_fileman_smart.c:1348
+msgid "Last Access:"
+msgstr "最終アクセス日"
+
+#: src/bin/e_fileman_smart.c:1353
+msgid "Last Modified:"
+msgstr "最終更新日"
+
+#: src/bin/e_fileman_smart.c:1360
+msgid "Permissions:"
+msgstr "許可情報"
+
+#: src/bin/e_fileman_smart.c:1361
+msgid "Me"
+msgstr "所有者"
+
+#: src/bin/e_fileman_smart.c:1363 src/bin/e_fileman_smart.c:1372
+#: src/bin/e_fileman_smart.c:1381
+msgid "r"
+msgstr "r(読取)"
+
+#: src/bin/e_fileman_smart.c:1365 src/bin/e_fileman_smart.c:1374
+#: src/bin/e_fileman_smart.c:1383
+msgid "w"
+msgstr "w(書込)"
+
+#: src/bin/e_fileman_smart.c:1367 src/bin/e_fileman_smart.c:1376
+#: src/bin/e_fileman_smart.c:1385
+msgid "x"
+msgstr "x(実行)"
+
+#: src/bin/e_fileman_smart.c:1370
+msgid "My Group"
+msgstr "グループ"
+
+#: src/bin/e_fileman_smart.c:1379
+msgid "Everyone"
+msgstr "その他"
+
+#: src/bin/e_fileman_smart.c:1411 src/bin/e_fileman_smart.c:2046
+#: src/bin/e_fileman_smart.c:2295
+msgid "Properties"
+msgstr "プロパティ"
+
+#: src/bin/e_fileman_smart.c:1959
+#, fuzzy
+msgid "Arrange Icons"
+msgstr "アイコンの整頓"
+
+#: src/bin/e_fileman_smart.c:1969
+#, fuzzy
+msgid "By Name"
+msgstr "名前で"
+
+#: src/bin/e_fileman_smart.c:1980
+msgid "By Mod Time"
+msgstr "更新日で"
+
+#: src/bin/e_fileman_smart.c:1991
+msgid "New"
+msgstr "新規"
+
+#: src/bin/e_fileman_smart.c:2001
+msgid "Directory"
+msgstr "ディレクトリ"
+
+#: src/bin/e_fileman_smart.c:2009
+msgid "View"
+msgstr "閲覧"
+
+#: src/bin/e_fileman_smart.c:2019
+msgid "Name Only"
+msgstr "名前だけ"
+
+#: src/bin/e_fileman_smart.c:2028
+msgid "Details"
+msgstr "詳細"
+
+#: src/bin/e_fileman_smart.c:2038
+msgid "Refresh"
+msgstr "更新する"
+
+#: src/bin/e_fileman_smart.c:2246
+msgid "Open"
+msgstr "開く"
+
+#: src/bin/e_fileman_smart.c:2257
+msgid "Copy"
+msgstr "コピーする"
+
+#: src/bin/e_fileman_smart.c:2265
+msgid "Cut"
+msgstr "カットする"
+
+#: src/bin/e_fileman_smart.c:2276
+msgid "Rename"
+msgstr "名前を変える"
+
+#: src/bin/e_fileman_smart.c:2284
+msgid "Delete"
+msgstr "削除する"
+
+#: src/bin/e_gadget.c:152 src/bin/e_int_menus.c:803
+#: src/modules/battery/e_mod_main.c:589 src/modules/clock/e_mod_main.c:328
+#: src/modules/cpufreq/e_mod_main.c:946 src/modules/ibar/e_mod_main.c:647
+#: src/modules/ibox/e_mod_main.c:454 src/modules/pager/e_mod_main.c:621
+#: src/modules/start/e_mod_main.c:230 src/modules/temperature/e_mod_main.c:922
+msgid "Edit Mode"
+msgstr "編集モード"
+
+#: src/bin/e_gadman.c:626
 msgid "Automatic Width"
 msgstr "幅の自動設定"
 
-#: src/bin/e_gadman.c:611
+#: src/bin/e_gadman.c:637
 msgid "Half Screen Width"
 msgstr "画面の半分の幅"
 
-#: src/bin/e_gadman.c:617
+#: src/bin/e_gadman.c:643
 msgid "Full Screen Width"
 msgstr "画面一杯の幅"
 
-#: src/bin/e_gadman.c:629
+#: src/bin/e_gadman.c:655
 msgid "Center Horizontally"
 msgstr "水平に中央揃え"
 
-#: src/bin/e_gadman.c:647
+#: src/bin/e_gadman.c:673
 msgid "Automatic Height"
 msgstr "高さの自動設定"
 
-#: src/bin/e_gadman.c:658
+#: src/bin/e_gadman.c:684
 msgid "Half Screen Height"
 msgstr "画面の半分の高さ"
 
-#: src/bin/e_gadman.c:664
+#: src/bin/e_gadman.c:690
 msgid "Full Screen Height"
 msgstr "画面一杯の高さ"
 
-#: src/bin/e_gadman.c:675
+#: src/bin/e_gadman.c:702
 msgid "Center Vertically"
 msgstr "垂直に中央揃え"
 
-#: src/bin/e_gadman.c:687
+#: src/bin/e_gadman.c:714
 msgid "End Edit Mode"
 msgstr "編集モード終了"
 
 #: src/bin/e_init.c:38
 #, c-format
 msgid "X reports there are no root windows and %i screens!\n"
-msgstr "X からの報告では, ルートウィンドウとスクリーン %i がありません\n"
+msgstr "X から, ルートウィンドウとスクリーン %i が無いという通知が来てます.\n"
 
-#: src/bin/e_init.c:112
+#: src/bin/e_init.c:102
 msgid "Disable this splash screen in the future?"
 msgstr "今後この開始シーケンスをスキップする"
 
-#: src/bin/e_int_menus.c:81
+#: src/bin/e_int_border_border.c:46
+msgid "Window Border Selection"
+msgstr "ウィンドウボーダーの選択"
+
+#: src/bin/e_int_border_border.c:196
+msgid "Remember this Border for this window next time it appears"
+msgstr "このボーダーを記憶して, 次回このウィンドウが現れた時に適用する"
+
+#: src/bin/e_int_border_locks.c:65 src/bin/e_int_border_menu.c:129
+#, fuzzy
+msgid "Window Locks"
+msgstr "ウィンドウロック"
+
+#: src/bin/e_int_border_locks.c:293
+#, fuzzy
+msgid "Generic Locks"
+msgstr "一般的なロック"
+
+#: src/bin/e_int_border_locks.c:294
+msgid "Lock the Window so it does only what I tell it to"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:296
+msgid "Protect this window from me accidentally changing it"
+msgstr "状態が誤って変更されないようにこのウィンドウを保護する"
+
+#: src/bin/e_int_border_locks.c:298
+msgid ""
+"Protect this window from being accidentally closed because it is important"
+msgstr ""
+"重要なウィンドウなので誤って閉じられないようにこのウィンドウを保護する"
+
+#: src/bin/e_int_border_locks.c:300
+msgid "Do not allow the border to change on this window"
+msgstr "このウィンドウのボーダーの変更を禁止する"
+
+#: src/bin/e_int_border_locks.c:303
+msgid "Remember these Locks for this window next time it appears"
+msgstr "以上のロックを記憶して, 次回このウィンドウが現れた時に適用する"
+
+#: src/bin/e_int_border_locks.c:318
+msgid "Lock program changing:"
+msgstr ""
+
+#: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
+#: src/bin/e_int_border_remember.c:494
+msgid "Position"
+msgstr "位置"
+
+#: src/bin/e_int_border_locks.c:321 src/bin/e_int_border_locks.c:340
+#: src/bin/e_int_border_remember.c:496 src/modules/ibar/e_mod_main.c:279
+#: src/modules/ibar/e_mod_main.c:932 src/modules/ibox/e_mod_main.c:242
+#: src/modules/ibox/e_mod_main.c:696
+msgid "Size"
+msgstr "サイズ"
+
+#: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
+#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_remember.c:498
+msgid "Stacking"
+msgstr "積み重ね順"
+
+#: src/bin/e_int_border_locks.c:325 src/bin/e_int_border_locks.c:344
+msgid "Iconified state"
+msgstr "アイコン化"
+
+#: src/bin/e_int_border_locks.c:327 src/bin/e_int_border_locks.c:346
+#: src/bin/e_int_border_remember.c:504
+#, fuzzy
+msgid "Stickiness"
+msgstr "常時表示"
+
+#: src/bin/e_int_border_locks.c:329 src/bin/e_int_border_locks.c:348
+#: src/bin/e_int_border_remember.c:508
+#, fuzzy
+msgid "Shaded state"
+msgstr "シェード"
+
+#: src/bin/e_int_border_locks.c:331 src/bin/e_int_border_locks.c:350
+#, fuzzy
+msgid "Maximized state"
+msgstr "最大化"
+
+#: src/bin/e_int_border_locks.c:333 src/bin/e_int_border_locks.c:352
+#, fuzzy
+msgid "Fullscreen state"
+msgstr "全面表示"
+
+#: src/bin/e_int_border_locks.c:337
+msgid "Lock me from changing:"
+msgstr "以下の属性をロックする"
+
+#: src/bin/e_int_border_locks.c:354
+msgid "The border style"
+msgstr "ボーダースタイル"
+
+#: src/bin/e_int_border_locks.c:358
+msgid "Stop me from:"
+msgstr "以下の操作を禁止する"
+
+#: src/bin/e_int_border_locks.c:359
+#, fuzzy
+msgid "Closing the window"
+msgstr "ウィンドウを閉じる"
+
+#: src/bin/e_int_border_locks.c:361
+msgid "Exiting my login with this window open"
+msgstr "このウィンドウを開いたままログインを終了する"
+
+#: src/bin/e_int_border_locks.c:365
+#, fuzzy
+msgid "Remember these Locks"
+msgstr "以上のロックを記憶する"
+
+#: src/bin/e_int_border_menu.c:43
+msgid "Always On Top"
+msgstr "常に一番手前に"
+
+#: src/bin/e_int_border_menu.c:53 src/modules/clock/e_mod_main.c:349
+#: src/modules/pager/e_mod_main.c:458
+msgid "Normal"
+msgstr "普通"
+
+#: src/bin/e_int_border_menu.c:63
+msgid "Always Below"
+msgstr "常に一番奥に"
+
+#: src/bin/e_int_border_menu.c:82
+msgid "Maximized"
+msgstr "最大化"
+
+#: src/bin/e_int_border_menu.c:95
+#, fuzzy
+msgid "Maximized verticaly"
+msgstr "垂直に最大化"
+
+#: src/bin/e_int_border_menu.c:109
+#, fuzzy
+msgid "Maximized horizontaly"
+msgstr "水平に最大化"
+
+#: src/bin/e_int_border_menu.c:136
+msgid "Remember"
+msgstr "記憶"
+
+#: src/bin/e_int_border_menu.c:143
+#, fuzzy
+msgid "Borders"
+msgstr "ボーダー"
+
+#: src/bin/e_int_border_menu.c:153
+#, fuzzy
+msgid "Send to Desktop"
+msgstr "他のデスクトップへ移す"
+
+#: src/bin/e_int_border_menu.c:172
+msgid "Maximize"
+msgstr "最大化"
+
+#: src/bin/e_int_border_menu.c:182
+msgid "Shaded"
+msgstr "シェード"
+
+#: src/bin/e_int_border_menu.c:234
+msgid "Sticky"
+msgstr "常時表示"
+
+#: src/bin/e_int_border_menu.c:247
+msgid "Borderless"
+msgstr "ボーダー無し"
+
+#: src/bin/e_int_border_menu.c:260
+#: src/bin/e_int_config_window_manipulation.c:139
+#: src/bin/e_int_config_window_manipulation.c:191
+msgid "Fullscreen"
+msgstr "全面表示"
+
+#: src/bin/e_int_border_menu.c:274
+msgid "Skip Window List"
+msgstr "ウィンドウリストをスキップする"
+
+#: src/bin/e_int_border_menu.c:290
+msgid "Edit Icon"
+msgstr "アイコン編集"
+
+#: src/bin/e_int_border_menu.c:297
+msgid "Create Icon"
+msgstr "アイコン作成"
+
+#: src/bin/e_int_border_menu.c:307
+msgid "Kill"
+msgstr "強制終了"
+
+#: src/bin/e_int_border_menu.c:320
+msgid "Iconify"
+msgstr "アイコン化"
+
+#: src/bin/e_int_border_menu.c:331
+msgid "Close"
+msgstr "閉じる"
+
+#: src/bin/e_int_border_remember.c:67
+#, fuzzy
+msgid "Window Remember"
+msgstr "ウィンドウ属性の記憶"
+
+#: src/bin/e_int_border_remember.c:228
+msgid "Window properties are not a unique match"
+msgstr "ウィンドウのプロパティが一意ではありません."
+
+#: src/bin/e_int_border_remember.c:231
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>This is just a warning in "
+"case you did not intend this to happen.<br>If you did, simply press "
+"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
+"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
+"sure and nothing will be affected."
+msgstr ""
+"<hilight>プロパティが一意になっていない</hilight>ウィンドウに, サイズや位置, ボーダースタイルといった<br>"
+"プロパティを必ず適用するよう Enlightenment に要求しています. つまり, 名前やクラス,<br>"
+"トランジェンス, 役割などの一致するウィンドウがこの画面には他にもあるため, このウィン<br>"
+"ドウに関して記憶された内容は, そのプロパティが一致する他のすべてのウィンドウにも適用<br>"
+"されてしまうということです.<br>"
+"以上, そのようなことをするつもりの無いユーザーのために一言注意しておきます.<br>"
+"そうなってもよければ<hilight>適用</hilight>ボタンか<hilight>了解</hilight>ボタンを押して下さい. それで,ここで設定した内容が<br>"
+"適用されます.<br>"
+"よく分からなければ<hilight>取消</hilight>ボタンを押して下さい. そうすれば何も変更されません."
+
+#: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
+msgid "No match properties set"
+msgstr "一致するプロパティが設定されていません"
+
+#: src/bin/e_int_border_remember.c:319
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window <hilight>without "
+"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
+"way of remembering this window."
+msgstr ""
+"<hilight>記憶方法が指定されていない</hilight>ウィンドウに対して, サイズや位置, ボーダースタイルなどの<br>"
+"プロパティを必ず適用するよう Enlightenment に要求しています.<br>br>"
+"最低 1 種類は記憶方法を指定して下さい."
+
+#: src/bin/e_int_border_remember.c:349
+msgid ""
+"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"as size, location, border style etc.) to<br>a window that <hilight>does not "
+"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
+"Transience, Role etc. properties<br>with more than 1 other window on the "
+"screen and remembering<br>properties for this window will apply to all other "
+"windows<br>that match these properties.<br><br>You may wish to enable the "
+"<hilight>Match only one window</hilight> option if<br>you only intend one "
+"instance of this window to be modified, with<br>additional instances not "
+"being modified.<br><br>This is just a warning in case you did not intend "
+"this to happen.<br>If you did, simply press <hilight>Apply</hilight> or "
+"<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
+"<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
+"affected."
+msgstr ""
+"<hilight>プロパティが一意になっていない</hilight>ウィンドウに, サイズや位置, ボーダースタイルといった<br>"
+"プロパティを必ず適用するよう Enlightenment に要求しています. つまり, 名前やクラス,<br>"
+"トランジェンス, 役割などの一致するウィンドウがこの画面には他にもあるため, このウィン<br>"
+"ドウに関して記憶された内容は, そのプロパティが一致する他のすべてのウィンドウにも適用<br>"
+"されてしまうということです.<br><br>"
+"このウィンドウのインスタンス 1 つだけを対象にしたい場合は, <hilight>このウィンドウだけに適用する</hilight><br>"
+"オプションを有効にした方がいいかもしれません.<br>"
+"以上, 一言注意しておきます.<br>"
+"そうなってもよければ<hilight>適用</hilight>ボタンか<hilight>了解</hilight>ボタンを押して下さい. それで,ここで設定した内容が<br>"
+"適用されます.<br>"
+"よく分からなければ<hilight>取消</hilight>ボタンを押して下さい. そうすれば何も変更されません."
+
+#: src/bin/e_int_border_remember.c:422
+msgid "Nothing"
+msgstr "無し"
+
+#: src/bin/e_int_border_remember.c:424
+#, fuzzy
+msgid "Size and Position"
+msgstr "サイズと位置"
+
+#: src/bin/e_int_border_remember.c:426 src/bin/e_int_border_remember.c:500
+msgid "Locks"
+msgstr "ロック"
+
+#: src/bin/e_int_border_remember.c:428
+msgid "Size, Position and Locks"
+msgstr "サイズ, 位置, およびロック"
+
+#: src/bin/e_int_border_remember.c:430
+msgid "Everything"
+msgstr "すべて"
+
+#: src/bin/e_int_border_remember.c:444
+#, fuzzy
+msgid "Remember using"
+msgstr "記憶する基準は"
+
+#: src/bin/e_int_border_remember.c:450
+msgid "Window name and class"
+msgstr "ウィンドウの名前とクラス"
+
+#: src/bin/e_int_border_remember.c:460
+msgid "Title"
+msgstr "タイトル"
+
+#: src/bin/e_int_border_remember.c:479
+#, fuzzy
+msgid "Window type"
+msgstr "ウィンドウタイプ"
+
+#: src/bin/e_int_border_remember.c:486
+msgid "Transience"
+msgstr "一過性(トランジェンス)"
+
+#: src/bin/e_int_border_remember.c:490
+#, fuzzy
+msgid "Match only one window"
+msgstr "このウィンドウだけに適用する"
+
+#: src/bin/e_int_border_remember.c:493
+msgid "Properties to remember"
+msgstr "記憶するプロパティ"
+
+#: src/bin/e_int_border_remember.c:502
+#, fuzzy
+msgid "Border style"
+msgstr "ボーダースタイル"
+
+#: src/bin/e_int_border_remember.c:506
+#, fuzzy
+msgid "Virtual Desktop"
+msgstr "仮想デスクトップ"
+
+#: src/bin/e_int_border_remember.c:510
+msgid "Screen zone"
+msgstr ""
+
+#: src/bin/e_int_border_remember.c:512
+#, fuzzy
+msgid "Window list skip"
+msgstr "ウィンドウリストスキップ"
+
+#: src/bin/e_int_config_background.c:47
+msgid "Background Settings"
+msgstr "背景の設定内容"
+
+#: src/bin/e_int_config_desks.c:157 src/bin/e_int_config_desks.c:186
+#, fuzzy
+msgid "Number of Desktops"
+msgstr "デスクトップ数"
+
+#: src/bin/e_int_config_desks.c:160 src/bin/e_int_config_desks.c:162
+#: src/bin/e_int_config_desks.c:189 src/bin/e_int_config_desks.c:191
+#, c-format
+msgid "%1.0f"
+msgstr ""
+
+#: src/bin/e_int_config_desks.c:167 src/bin/e_int_config_desks.c:196
+#, fuzzy
+msgid "Desktop Mouse Flip"
+msgstr "デスクトップの切り替え"
+
+#: src/bin/e_int_config_desks.c:168 src/bin/e_int_config_desks.c:197
+msgid "Flip desktops when mouse at screen edge"
+msgstr "マウスが画面の端に達したらデスクトップを切り替える"
+
+#: src/bin/e_int_config_desks.c:200
+msgid "Time the mouse is at the edge before flipping:"
+msgstr "マウスが画面の端に達してからデスクトップが切り替わるまでの時間"
+
+#: src/bin/e_int_config_desks.c:202
+#: src/bin/e_int_config_window_manipulation.c:168
+#, c-format
+msgid "%1.1f sec"
+msgstr "%1.1f 秒"
+
+#: src/bin/e_int_config_focus.c:144
+msgid "Click Window to Focus"
+msgstr "ウィンドウをクリックしてフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:146
+msgid "Window under the Mouse"
+msgstr "マウスがあるウィンドウにフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:148
+msgid "Most recent Window under the Mouse"
+msgstr "最後にマウスがあったウィンドウにフォーカスを残す"
+
+#: src/bin/e_int_config_focus.c:164
+#, fuzzy
+msgid "Focus"
+msgstr "フォーカス"
+
+#: src/bin/e_int_config_focus.c:166
+msgid "Click to focus"
+msgstr "クリックしてフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:168
+msgid "Pointer focus"
+msgstr "ポインタのあるウィンドウにフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:170
+msgid "Sloppy focus"
+msgstr "最後にマウスがあったウィンドウにフォーカスを残す(スロッピモード)"
+
+#: src/bin/e_int_config_focus.c:174
+#, fuzzy
+msgid "New Window Focus"
+msgstr "新しいウィンドウに対するフォーカス"
+
+#: src/bin/e_int_config_focus.c:176
+msgid "No new windows get focus"
+msgstr "新しいウィンドウにはフォーカスを移さない"
+
+#: src/bin/e_int_config_focus.c:178
+msgid "All new windows get focus"
+msgstr "新しいウィンドウに必ずフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:180
+msgid "Only new dialogs get focus"
+msgstr "新しいダイアログだけにフォーカスを移す"
+
+#: src/bin/e_int_config_focus.c:182
+msgid "Only new dialogs get focus if the parent has focus"
+msgstr "新しいダイアログにフォーカスを移すのは, その親にフォーカスがある場合に限る"
+
+#: src/bin/e_int_config_focus.c:186
+msgid "Other Settings"
+msgstr "その他の設定"
+
+#: src/bin/e_int_config_focus.c:187
+msgid "Always pass on caught click events to programs"
+msgstr "捕捉されたクリックイベントは, 必ずプログラムに通知する"
+
+#: src/bin/e_int_config_focus.c:189
+msgid "A click on a window always raises it"
+msgstr "クリックされたウィンドウは必ず最前面に出す"
+
+#: src/bin/e_int_config_focus.c:191
+msgid "A click in a window always focuses it"
+msgstr "クリックされたウィンドウに必ずフォーカスを移す"
+
+#: src/bin/e_int_config_window_display.c:136
+#, fuzzy
+msgid "Display"
+msgstr "デジタル表示"
+
+#: src/bin/e_int_config_window_display.c:137
+msgid "Show window geometry information when moving or resizing"
+msgstr "移動やサイズ変更の際, ウィンドウのジオメトリ情報を表示する"
+
+#: src/bin/e_int_config_window_display.c:139
+#: src/bin/e_int_config_window_display.c:182
+msgid "Animate the shading and unshading of windows"
+msgstr "ウィンドウのシェーディング動作をアニメ化する"
+
+#: src/bin/e_int_config_window_display.c:143
+#: src/bin/e_int_config_window_display.c:197
+#, fuzzy
+msgid "Automatic New Window Placement"
+msgstr "新しいウィンドウの自動配置"
+
+#: src/bin/e_int_config_window_display.c:145
+#: src/bin/e_int_config_window_display.c:199
+msgid "Smart Placement"
+msgstr "賢く配置する"
+
+#: src/bin/e_int_config_window_display.c:147
+#: src/bin/e_int_config_window_display.c:201
+msgid "Place at mouse pointer"
+msgstr "マウスポインタの位置に配置する"
+
+#: src/bin/e_int_config_window_display.c:149
+#: src/bin/e_int_config_window_display.c:203
+msgid "Place manually with the mouse"
+msgstr "マウスを使い手作業で配置する"
+
+#: src/bin/e_int_config_window_display.c:167
+msgid "Window Move Geometry"
+msgstr "ウィンドウ移動情報"
+
+#: src/bin/e_int_config_window_display.c:168
+#: src/bin/e_int_config_window_display.c:175
+msgid "Display information"
+msgstr "情報を表示する"
+
+#: src/bin/e_int_config_window_display.c:170
+msgid "Follow the window as it moves"
+msgstr "ウィンドウの動きに従う"
+
+#: src/bin/e_int_config_window_display.c:174
+msgid "Window Resize Geometry"
+msgstr "ウィンドウサイズ変更情報"
+
+#: src/bin/e_int_config_window_display.c:177
+msgid "Follow the window as it resizes"
+msgstr "ウィンドウのサイズの変化に従う"
+
+#: src/bin/e_int_config_window_display.c:181
+msgid "Window Shading"
+msgstr "ウィンドウシェーディング"
+
+#: src/bin/e_int_config_window_display.c:184
+#, c-format
+msgid "%4.0f pixels/sec"
+msgstr "%4.0f ピクセル/秒"
+
+#: src/bin/e_int_config_window_display.c:187
+#, fuzzy
+msgid "Linear"
+msgstr "定速で動かす"
+
+#: src/bin/e_int_config_window_display.c:189
+msgid "Smooth accelerate and decelerate"
+msgstr "加速と減速を滑らかに"
+
+#: src/bin/e_int_config_window_display.c:191
+msgid "Accelerate"
+msgstr "次第に加速する"
+
+#: src/bin/e_int_config_window_display.c:193
+msgid "Decelerate"
+msgstr "次第に減速する"
+
+#: src/bin/e_int_config_window_manipulation.c:130
+msgid "Miscellaneous Options"
+msgstr "その他のオプション"
+
+#: src/bin/e_int_config_window_manipulation.c:131
+#: src/bin/e_int_config_window_manipulation.c:164
+msgid "Automatically raise windows on mouse over"
+msgstr "マウスが乗っているウィンドウを自動的に最前面に出す"
+
+#: src/bin/e_int_config_window_manipulation.c:133
+msgid "When moving or resizing windows, resist at the boundaries"
+msgstr "ウィンドウの移動やサイズ変更で境界をまたぐ時に抵抗をつける"
+
+#: src/bin/e_int_config_window_manipulation.c:137
+#: src/bin/e_int_config_window_manipulation.c:189
+#, fuzzy
+msgid "Maximize Policy"
+msgstr "最大化ポリシー"
+
+#: src/bin/e_int_config_window_manipulation.c:141
+#: src/bin/e_int_config_window_manipulation.c:193
+msgid "Smart expansion"
+msgstr "賢く広げる"
+
+#: src/bin/e_int_config_window_manipulation.c:143
+#: src/bin/e_int_config_window_manipulation.c:195
+msgid "Expand the window"
+msgstr "ウィンドウを広げる"
+
+#: src/bin/e_int_config_window_manipulation.c:145
+#: src/bin/e_int_config_window_manipulation.c:197
+msgid "Fill available space"
+msgstr "空きスペースまで広げる"
+
+#: src/bin/e_int_config_window_manipulation.c:163
+#, fuzzy
+msgid "Autoraise"
+msgstr "オートレイズ"
+
+#: src/bin/e_int_config_window_manipulation.c:166
+msgid "Delay before raising:"
+msgstr "最前面に出すまでの遅延時間"
+
+#: src/bin/e_int_config_window_manipulation.c:172
+msgid "Resistance"
+msgstr "抵抗値"
+
+#: src/bin/e_int_config_window_manipulation.c:173
+msgid "Resist moving or resizing a window over an obstacle"
+msgstr "ウィンドウの移動やサイズの変更で障害物に達した時に抵抗を付ける"
+
+#: src/bin/e_int_config_window_manipulation.c:175
+msgid "Resistance between windows:"
+msgstr "ウィンドウ間抵抗値"
+
+#: src/bin/e_int_config_window_manipulation.c:177
+#: src/bin/e_int_config_window_manipulation.c:181
+#: src/bin/e_int_config_window_manipulation.c:185
+#, c-format
+msgid "%2.0f pixels"
+msgstr "%2.0f ピクセル"
+
+#: src/bin/e_int_config_window_manipulation.c:179
+msgid "Resistance at the edge of the screen:"
+msgstr "画面のエッジ抵抗値"
+
+#: src/bin/e_int_config_window_manipulation.c:183
+msgid "Resistance to desktop gadgets:"
+msgstr "デスクトップガジェット抵抗値"
+
+#: src/bin/e_int_menus.c:82
 msgid "Favorite Applications"
 msgstr "お気に入りのアプリケーション"
 
-#: src/bin/e_int_menus.c:91
+#: src/bin/e_int_menus.c:92
 msgid "Modules"
 msgstr "モジュール"
 
-#: src/bin/e_int_menus.c:98
+#: src/bin/e_int_menus.c:99
 msgid "Desktops"
 msgstr "デスクトップ"
 
-#: src/bin/e_int_menus.c:105
+#: src/bin/e_int_menus.c:106
 msgid "Windows"
 msgstr "ウィンドウ"
 
-#: src/bin/e_int_menus.c:112
+#: src/bin/e_int_menus.c:113
 msgid "Lost Windows"
 msgstr "迷子なウィンドウ"
 
-#: src/bin/e_int_menus.c:119
+#: src/bin/e_int_menus.c:120
 msgid "Gadgets"
 msgstr "ガジェット"
 
-#: src/bin/e_int_menus.c:126
+#: src/bin/e_int_menus.c:127
 msgid "Themes"
 msgstr "テーマ"
 
-#: src/bin/e_int_menus.c:134 src/bin/e_about.c:41
-msgid "About Enlightenment"
-msgstr "Enlightenment について"
-
-#: src/bin/e_int_menus.c:141
+#: src/bin/e_int_menus.c:142
 msgid "Run Command"
 msgstr "コマンドの実行"
 
-#: src/bin/e_int_menus.c:149 src/bin/e_module.c:408
+#: src/bin/e_int_menus.c:148
+msgid "Files"
+msgstr "ファイル"
+
+#: src/bin/e_int_menus.c:155 src/bin/e_module.c:487
 msgid "Configuration"
 msgstr "設定"
 
-#: src/bin/e_int_menus.c:157
+#: src/bin/e_int_menus.c:163
 msgid "Restart Enlightenment"
 msgstr "Enlightenment 再起動"
 
-#: src/bin/e_int_menus.c:162
+#: src/bin/e_int_menus.c:168
 msgid "Exit Enlightenment"
 msgstr "Enlightenment 終了"
 
-#: src/bin/e_int_menus.c:433
+#: src/bin/e_int_menus.c:465
 msgid "(No Applications)"
 msgstr "(アプリケーション無し)"
 
-#: src/bin/e_int_menus.c:515
+#: src/bin/e_int_menus.c:547
 msgid "New Row of Desktops"
 msgstr "仮想デスクトップを縦に広げる"
 
-#: src/bin/e_int_menus.c:519
+#: src/bin/e_int_menus.c:551
 msgid "Remove Row of Desktops"
 msgstr "仮想デスクトップを縦に狭める"
 
-#: src/bin/e_int_menus.c:523
+#: src/bin/e_int_menus.c:555
 msgid "New Column of Desktops"
 msgstr "仮想デスクトップを横に広げる"
 
-#: src/bin/e_int_menus.c:527
+#: src/bin/e_int_menus.c:559
 msgid "Remove Column of Desktops"
 msgstr "仮想デスクトップを横に狭める"
 
-#: src/bin/e_int_menus.c:589
-msgid "Configuration Panel"
-msgstr "設定パネル"
-
-#: src/bin/e_int_menus.c:647 src/bin/e_int_menus.c:919
+#: src/bin/e_int_menus.c:693 src/bin/e_int_menus.c:980
 msgid "(No Windows)"
 msgstr "(ウインドウ無し)"
 
-#: src/bin/e_int_menus.c:662 src/bin/e_int_menus.c:933
+#: src/bin/e_int_menus.c:708 src/bin/e_int_menus.c:994
 msgid "No name!!"
 msgstr "名前無し"
 
-#: src/bin/e_int_menus.c:678
+#: src/bin/e_int_menus.c:724
 msgid "Cleanup Windows"
 msgstr "ウィンドウ整頓"
 
-#: src/bin/e_int_menus.c:751 src/modules/battery/e_mod_main.c:593
-#: src/modules/clock/e_mod_main.c:320 src/modules/cpufreq/e_mod_main.c:961
-#: src/modules/ibar/e_mod_main.c:666 src/modules/ibox/e_mod_main.c:454
-#: src/modules/pager/e_mod_main.c:628 src/modules/start/e_mod_main.c:237
-#: src/modules/temperature/e_mod_main.c:914
-msgid "Edit Mode"
-msgstr "編集モード"
-
-#: src/bin/e_int_menus.c:757
+#: src/bin/e_int_menus.c:809
 msgid "(Unused)"
 msgstr "(未使用)"
 
-#: src/bin/e_int_menus.c:789 src/bin/e_theme_about.c:41
+#: src/bin/e_int_menus.c:841 src/bin/e_theme_about.c:41
 msgid "About This Theme"
 msgstr "このテーマについて"
 
-#: src/bin/e_main.c:204
+#: src/bin/e_intl.c:348
+#, fuzzy
+msgid "Input Method Error"
+msgstr "インプットメソッドエラー"
+
+#: src/bin/e_intl.c:349
+msgid ""
+"Error starting the input method executable\n"
+"\n"
+"please make sure that your input\n"
+"method configuration is correct and\n"
+"that your configuration's\n"
+"executable is in your PATH\n"
+msgstr ""
+"インプットメソッドの起動時にエラーが発生しました.\n"
+"\n"
+"インプットメソッドの設定が正しいこと, およびその設定に\n"
+"対応する実行可能ファイルがパスにあることを確認して下さい.\n"
+
+#: src/bin/e_main.c:195
 #, c-format
 msgid ""
 "Options:\n"
@@ -500,7 +1265,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\t精神病様にしてて\n"
 
-#: src/bin/e_main.c:272
+#: src/bin/e_main.c:264
 msgid ""
 "Enlightenment cannot Initialize Ecore!\n"
 "Perhaps you are out of memory?"
@@ -508,7 +1273,15 @@ msgstr ""
 "Enlightenment で Ecore が初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:282
+#: src/bin/e_main.c:277
+msgid ""
+"Enlightenment cannot initialize the File system.\n"
+"Perhaps you are out of memory?"
+msgstr ""
+"Enlightenment でファイルシステムが初期化できません.\n"
+"メモリー不足かもしれません."
+
+#: src/bin/e_main.c:288
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -516,7 +1289,7 @@ msgstr ""
 "Enlightenment で終了シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:288
+#: src/bin/e_main.c:294
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -524,7 +1297,7 @@ msgstr ""
 "Enlightenment で HUP シグナルハンドラーが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:299
+#: src/bin/e_main.c:305
 msgid ""
 "Enlightenment cannot initialize its X connection.\n"
 "Have you set your DISPLAY variable?"
@@ -532,7 +1305,7 @@ msgstr ""
 "Enlightenment で X との接続が初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:307
+#: src/bin/e_main.c:313
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -540,7 +1313,7 @@ msgstr ""
 "Enlightenment で緊急アラートシステムが初期化できません.\n"
 "環境変数 DISPLAY の定義を確認してください."
 
-#: src/bin/e_main.c:314
+#: src/bin/e_main.c:320
 msgid ""
 "Enlightenment cannot setup xinerama wrapping.\n"
 "This should not happen."
@@ -548,7 +1321,7 @@ msgstr ""
 "Enlightenment で xinerama のラッピングが設定できません.\n"
 "そんなばかな..."
 
-#: src/bin/e_main.c:330
+#: src/bin/e_main.c:336
 msgid ""
 "Enlightenment cannot initialize the connections system.\n"
 "Perhaps you are out of memory?"
@@ -556,7 +1329,7 @@ msgstr ""
 "Enlightenment で接続システムが初期化できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:338
+#: src/bin/e_main.c:344
 msgid ""
 "Enlightenment cannot initialize the IPC system.\n"
 "Perhaps you are out of memory?"
@@ -564,7 +1337,7 @@ msgstr ""
 "Enlightenment で IPC システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:352
 msgid ""
 "Enlightenment cannot initialize the Evas system.\n"
 "Perhaps you are out of memory?"
@@ -572,7 +1345,7 @@ msgstr ""
 "Enlightenment で Evas システムが初期化できません.\n"
 "メモリー不足かも知れません."
 
-#: src/bin/e_main.c:352
+#: src/bin/e_main.c:358
 msgid ""
 "Enlightenment found ecore_evas doesnt support Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -583,15 +1356,17 @@ msgstr ""
 "と, それらでソフトウェア x11 レンダリングがサポートされていることを確認して\n"
 "ください."
 
-#: src/bin/e_main.c:361
-msgid ""
-"Enlightenment cannot initialize the File system.\n"
-"Perhaps you are out of memory?"
-msgstr ""
-"Enlightenment でファイルシステムが初期化できません.\n"
-"メモリー不足かもしれません."
+#: src/bin/e_main.c:368
+#, fuzzy
+msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgstr "Enlightenment でサムネイル処理システムが初期化できません.\n"
 
-#: src/bin/e_main.c:373
+#: src/bin/e_main.c:377
+#, fuzzy
+msgid "Enlightenment cannot initialize the File manager.\n"
+msgstr "Enlightenment でファイルマネージャが初期化できません.\n"
+
+#: src/bin/e_main.c:388
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -599,11 +1374,11 @@ msgstr ""
 "Enlightenment ではあなたのホームディレクトリにディレクトリが作成できません.\n"
 "ホームディレクトリはちゃんとありますか, ディスクが一杯になっていませんか."
 
-#: src/bin/e_main.c:381
+#: src/bin/e_main.c:396
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment で設定処理システムが初期化できません."
 
-#: src/bin/e_main.c:388
+#: src/bin/e_main.c:403
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -611,27 +1386,32 @@ msgstr ""
 "Enlightenment でファイル検索用のパスが設定できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:396
+#: src/bin/e_main.c:411
+#, fuzzy
+msgid "Enlightenment cannot set up its intl system."
+msgstr "Enlightenment で国際化システムが準備できません."
+
+#: src/bin/e_main.c:418
 msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment でアクションシステムが準備できません."
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:425
 msgid "Enlightenment cannot set up its bindings system."
 msgstr "Enlightenment でバインディングシステムが準備できません."
 
-#: src/bin/e_main.c:410
+#: src/bin/e_main.c:432
 msgid "Enlightenment cannot set up its popup system."
 msgstr "Enlightenment でポップアップシステムが準備できません."
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:443
 msgid "Enlightenment cannot set up its font system."
 msgstr "Enlightenment でフォントシステムが準備できません."
 
-#: src/bin/e_main.c:431
+#: src/bin/e_main.c:453
 msgid "Enlightenment cannot set up its theme system."
 msgstr "Enlightenment でテーマシステムが準備できません."
 
-#: src/bin/e_main.c:440
+#: src/bin/e_main.c:462
 msgid ""
 "Enlightenment cannot set up init screen.\n"
 "Perhaps you are out of memory?"
@@ -639,7 +1419,7 @@ msgstr ""
 "Enlightenment で初期スクリーンが準備できません.\n"
 "メモリー不足かもしれません."
 
-#: src/bin/e_main.c:449
+#: src/bin/e_main.c:471
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -647,15 +1427,15 @@ msgstr ""
 "Enlightenment でこのシステムのすべての画面に対するウィンドウ管理が\n"
 "準備できませんでした. 別のウィンドウマネージャが動いているかもしれません.\n"
 
-#: src/bin/e_main.c:456
+#: src/bin/e_main.c:478
 msgid "Enlightenment cannot set up its app system."
 msgstr "Enlightenment でアプリケーションシステムが準備できません."
 
-#: src/bin/e_main.c:463
+#: src/bin/e_main.c:485
 msgid "Enlightenment cannot setup remember settings."
 msgstr "Enlightenment で記憶機能の設定が準備できません."
 
-#: src/bin/e_main.c:479
+#: src/bin/e_main.c:501
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -671,34 +1451,35 @@ msgstr ""
 "すでに Enlightenment が動いていないかどうか再確認して下さい. 動いていなければ, \n"
 "~/.ecore/enlightenment-* にあるファイルをすべて削除してから再起動してみてください.\n"
 "\n"
-"AFS を使用している場合は, ~/.ecore からソケットができる /tmp/my_directory/ecore \n"
+"AFS を使用している場合は, ~/.ecore からソケットができる /tmp/my_directory/"
+"ecore \n"
 "へシンボリックリンクを作成した方がいい場合があります."
 
-#: src/bin/e_main.c:495
+#: src/bin/e_main.c:517
 msgid "Enlightenment cannot set up its msg system."
 msgstr "Enlightenment で msg システムが準備できません."
 
-#: src/bin/e_main.c:502
+#: src/bin/e_main.c:524
 msgid "Enlightenment cannot set up its dnd system."
-msgstr "Enlightenmentはdndシステムを初期化できません."
+msgstr "Enlightenment で dnd システムが準備できません."
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:531
 msgid "Enlightenment cannot set up its input grab handling system."
 msgstr "Enlightenment で入力グラブ処理システムが準備できません."
 
-#: src/bin/e_main.c:516
+#: src/bin/e_main.c:538
 msgid "Enlightenment cannot set up its module system."
 msgstr "Enlightenment でモジュールシステムが準備できません."
 
-#: src/bin/e_main.c:523
+#: src/bin/e_main.c:545
 msgid "Enlightenment cannot set up its window list system."
 msgstr "Enlightenment でウィンドウリストシステムが準備できません."
 
-#: src/bin/e_main.c:529
+#: src/bin/e_main.c:551
 msgid "Enlightenment IPC setup error!"
 msgstr "Enlightenment IPC 初期化エラー!"
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:552
 msgid ""
 "Enlightenment cannot set up the IPC socket.\n"
 "It likely is already in use by an existing copy of Enlightenment.\n"
@@ -711,106 +1492,36 @@ msgstr ""
 "すでに Enlightenment が動いていないかどうか再確認して下さい. 動いていなければ, \n"
 "~/.ecore/enlightenment-* にあるファイルをすべて削除してから再起動してみてください."
 
-#: src/bin/e_main.c:546 src/bin/e_about.c:50
-msgid "Enlightenment"
-msgstr "Enlightenment"
-
-#: src/bin/e_main.c:548
+#: src/bin/e_main.c:570
 msgid "Enlightenment Starting. Please wait."
 msgstr "Enlightenment を起動しています. しばらくお待ちください."
 
-#: src/bin/e_module.c:101 src/bin/e_module.c:112 src/bin/e_module.c:134
+#: src/bin/e_module.c:111
+#, fuzzy, c-format
+msgid ""
+"There was an error loading module named: %s<br>No module named %s could be "
+"found in the<br>module search directories.<br>"
+msgstr ""
+"モジュール %s のロード中にエラーが発生しました.<br>"
+"モジュール %s はモジュールの検索パスにありません.<br>"
+
+#: src/bin/e_module.c:115 src/bin/e_module.c:128 src/bin/e_module.c:152
 msgid "Error loading Module"
 msgstr "モジュールのロードエラー"
 
-#: src/bin/e_module.c:102
-#, c-format
+#: src/bin/e_module.c:122 src/bin/e_module.c:146
+#, fuzzy, c-format
 msgid ""
-"There was an error loading module named: %s\n"
-"No module named %s could be found in the\n"
-"module search directories\n"
+"There was an error loading module named: %s<br>The full path to this module "
+"is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"モジュール %s のロード中にエラーが発生しました.\n"
-"%s というモジュールはモジュールの検索パスにありません.\n"
+"モジュール %s のロード中にエラーが発生しました.<br>"
+"このモジュールのフルパスは以下のとおりです.<br>"
+"%s<br>"
+"そしてエラーの内容は以下のとおりです.<br>"
+"%s<br>"
 
-#: src/bin/e_module.c:113 src/bin/e_module.c:135
-#, c-format
-msgid ""
-"There was an error loading module named: %s\n"
-"The full path to this module is:\n"
-"%s\n"
-"The error reported was:\n"
-"%s"
-msgstr ""
-"モジュール %s のロード中にエラーが発生しました.\n"
-"このモジュールのフルパスは以下のとおりです.\n"
-"%s\n"
-"そしてエラーの内容は以下のとおりです.\n"
-"%s"
-
-#: src/bin/e_module.c:337
-msgid "(No Loaded Modules)"
-msgstr "(ロード済みモジュール無し)"
-
-#: src/bin/e_module.c:393
-msgid "About..."
-msgstr "情報"
-
-#: src/bin/e_module.c:397
-msgid "Enabled"
-msgstr "有効にする"
-
-#: src/bin/e_module.c:471 src/modules/battery/e_mod_main.c:769
-#: src/modules/cpufreq/e_mod_main.c:312 src/modules/cpufreq/e_mod_main.c:340
-msgid "Ok"
-msgstr "了解"
-
-#: src/bin/e_startup.c:68
-#, c-format
-msgid "Starting %s"
-msgstr "%s 起動中"
-
-#: src/bin/e_utils.c:246
-msgid "Cannot exit - immortal windows."
-msgstr "終了できません. 不死身のウィンドウです."
-
-#: src/bin/e_utils.c:247
-msgid ""
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means\n"
-"that Enlightenment will not allow itself to exit until these windows have\n"
-"been closed or have the lifespan lock removed.\n"
-msgstr ""
-"寿命がロックされて不死身のままになっているウィンドウが存在します.\n"
-"当該ウィンドウを閉じるか寿命のロックを解除するまで Enlightenment は\n"
-"終了できません.\n"
-
-#: src/bin/e_winlist.c:115
-msgid "Select a window"
-msgstr "ウィンドウの選択"
-
-#: src/bin/e_about.c:55
-msgid ""
-"Copyright © 1999-2005, by the Enlightenment Development Team.<br><br>We hope "
-"you enjoy using this software as much as we enjoyed writing it.<br><br>This "
-"software is provided as-is with no explicit or implied warranty. This "
-"software is governed by licensing conditions, so please see the COPYING and "
-"COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment "
-"is under <hilight>HEAVY DEVELOPMENT</hilight> and it is not stable. Many "
-"features are incomplete or even non-existant yet and may have many bugs. You "
-"have been <hilight>WARNED!</hilight>"
-msgstr ""
-
-#: src/bin/e_about.c:80
-msgid "<title>The Team</title>"
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:77 src/modules/clock/e_mod_main.c:50
-#: src/modules/cpufreq/e_mod_main.c:68 src/modules/dropshadow/e_mod_main.c:101
-#: src/modules/ibar/e_mod_main.c:122 src/modules/ibox/e_mod_main.c:104
-#: src/modules/pager/e_mod_main.c:116 src/modules/start/e_mod_main.c:33
-#: src/modules/temperature/e_mod_main.c:50 src/modules/test/e_mod_main.c:14
-#: src/modules/randr/e_mod_main.c:38
+#: src/bin/e_module.c:166
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -821,15 +1532,56 @@ msgstr ""
 "モジュール API が必要です. <br>Enlightenment で提供されているモジュール API "
 "のバージョンは %i です.<br>"
 
-#: src/modules/battery/e_mod_main.c:80 src/modules/battery/e_mod_main.c:120
-msgid "Battery"
-msgstr "バッテリ"
+#: src/bin/e_module.c:171
+#, fuzzy, c-format
+msgid "Enlightenment %s Module"
+msgstr "Enlightenment %s モジュール"
 
-#: src/modules/battery/e_mod_main.c:82 src/modules/battery/e_mod_main.c:129
+#: src/bin/e_module.c:398
+msgid "(No Loaded Modules)"
+msgstr "(ロード済みモジュール無し)"
+
+#: src/bin/e_module.c:472
+msgid "About..."
+msgstr "情報"
+
+#: src/bin/e_module.c:476
+msgid "Enabled"
+msgstr "有効にする"
+
+#: src/bin/e_module.c:549
+msgid "Would you like to unload this module?<br>"
+msgstr "このモジュールをアンロードしますか？<br>"
+
+#: src/bin/e_startup.c:68
+#, c-format
+msgid "Starting %s"
+msgstr "%s 起動中"
+
+#: src/bin/e_utils.c:269
+msgid "Cannot exit - immortal windows."
+msgstr "終了できません. 不死身のウィンドウです."
+
+#: src/bin/e_utils.c:270
+msgid ""
+"Some windows are left still around with the Lifespan lock enabled. This "
+"means\n"
+"that Enlightenment will not allow itself to exit until these windows have\n"
+"been closed or have the lifespan lock removed.\n"
+msgstr ""
+"寿命がロックされて不死身のままになっているウィンドウが存在します.\n"
+"当該ウィンドウを閉じるか寿命のロックを解除するまで Enlightenment は\n"
+"終了できません.\n"
+
+#: src/bin/e_winlist.c:122
+msgid "Select a window"
+msgstr "ウィンドウの選択"
+
+#: src/modules/battery/e_mod_main.c:125
 msgid "Enlightenment Battery Module"
 msgstr "Enlightenment バッテリモジュール"
 
-#: src/modules/battery/e_mod_main.c:130
+#: src/modules/battery/e_mod_main.c:126
 msgid ""
 "A basic battery meter that uses either<hilight>ACPI</hilight> or "
 "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
@@ -837,68 +1589,68 @@ msgid ""
 "accurate as your BIOS or kernel drivers."
 msgstr ""
 "簡単なバッテリメーターです. <br>Linuxの<hilight>ACPI</hilight> または "
-"<hilight>APM</hilight> を利用し, <br>バッテリと AC 電源アダプターの状況を"
-"監視します. <br>このモジュールは Linux と FreeBSD で動作しますが, <br>"
-"使用している BIOS やカーネルドライバと同じ精度しかありません."
+"<hilight>APM</hilight> を利用し, <br>バッテリと AC 電源アダプターの状況を監視"
+"します. <br>このモジュールは Linux と FreeBSD で動作しますが, <br>精度は, 使用"
+"している BIOS やカーネルドライバと同程度です."
 
-#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
-#: src/modules/cpufreq/e_mod_main.c:222 src/modules/cpufreq/e_mod_main.c:555
+#: src/modules/battery/e_mod_main.c:218 src/modules/battery/e_mod_main.c:497
+#: src/modules/cpufreq/e_mod_main.c:215 src/modules/cpufreq/e_mod_main.c:547
 msgid "Set Poll Time"
 msgstr "監視間隔"
 
-#: src/modules/battery/e_mod_main.c:226 src/modules/battery/e_mod_main.c:505
+#: src/modules/battery/e_mod_main.c:222 src/modules/battery/e_mod_main.c:501
 msgid "Set Alarm"
 msgstr "アラーム設定"
 
-#: src/modules/battery/e_mod_main.c:408
+#: src/modules/battery/e_mod_main.c:404
 msgid "Disable"
 msgstr "無効"
 
-#: src/modules/battery/e_mod_main.c:415
+#: src/modules/battery/e_mod_main.c:411
 msgid "10 mins"
 msgstr "10 分"
 
-#: src/modules/battery/e_mod_main.c:422
+#: src/modules/battery/e_mod_main.c:418
 msgid "20 mins"
 msgstr "20 分"
 
-#: src/modules/battery/e_mod_main.c:429
+#: src/modules/battery/e_mod_main.c:425
 msgid "30 mins"
 msgstr "30 分"
 
-#: src/modules/battery/e_mod_main.c:436
+#: src/modules/battery/e_mod_main.c:432
 msgid "40 mins"
 msgstr "40 分"
 
-#: src/modules/battery/e_mod_main.c:443
+#: src/modules/battery/e_mod_main.c:439
 msgid "50 mins"
 msgstr "50 分"
 
-#: src/modules/battery/e_mod_main.c:450
+#: src/modules/battery/e_mod_main.c:446
 msgid "1 hour"
 msgstr "1 時間"
 
-#: src/modules/battery/e_mod_main.c:462
+#: src/modules/battery/e_mod_main.c:458
 msgid "Check Fast (1 sec)"
 msgstr "1 秒ごと"
 
-#: src/modules/battery/e_mod_main.c:469
+#: src/modules/battery/e_mod_main.c:465
 msgid "Check Medium (5 sec)"
 msgstr "5 秒ごと"
 
-#: src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:472
 msgid "Check Normal (10 sec)"
 msgstr "10 秒ごと"
 
-#: src/modules/battery/e_mod_main.c:483
+#: src/modules/battery/e_mod_main.c:479
 msgid "Check Slow (30 sec)"
 msgstr "30 秒ごと"
 
-#: src/modules/battery/e_mod_main.c:490
+#: src/modules/battery/e_mod_main.c:486
 msgid "Check Very Slow (60 sec)"
 msgstr "60 秒ごと"
 
-#: src/modules/battery/e_mod_main.c:766
+#: src/modules/battery/e_mod_main.c:762
 msgid ""
 "Battery Running Low<br>Your battery is running low.<br>You may wish to "
 "switch to an AC source."
@@ -906,182 +1658,160 @@ msgstr ""
 "バッテリ容量低下<br>使用中のバッテリが切れかけています. <br>AC 電源に切り替え"
 "た方がいいかもしれません."
 
-#: src/modules/battery/e_mod_main.c:831
+#: src/modules/battery/e_mod_main.c:827
 msgid "NO INFO"
 msgstr "情報無し"
 
-#: src/modules/battery/e_mod_main.c:975 src/modules/battery/e_mod_main.c:1240
-#: src/modules/battery/e_mod_main.c:1389
+#: src/modules/battery/e_mod_main.c:1002 src/modules/battery/e_mod_main.c:1263
+#: src/modules/battery/e_mod_main.c:1412
 msgid "NO BAT"
 msgstr "バッテリ無し"
 
-#: src/modules/battery/e_mod_main.c:999 src/modules/battery/e_mod_main.c:1414
+#: src/modules/battery/e_mod_main.c:1026 src/modules/battery/e_mod_main.c:1437
 msgid "BAD DRIVER"
 msgstr "ドライバが変"
 
-#: src/modules/battery/e_mod_main.c:1023 src/modules/battery/e_mod_main.c:1271
-#: src/modules/battery/e_mod_main.c:1438
+#: src/modules/battery/e_mod_main.c:1050 src/modules/battery/e_mod_main.c:1294
+#: src/modules/battery/e_mod_main.c:1461
 msgid "FULL"
 msgstr "満タン"
 
-#: src/modules/battery/e_mod_main.c:1084 src/modules/battery/e_mod_main.c:1498
+#: src/modules/battery/e_mod_main.c:1111 src/modules/battery/e_mod_main.c:1522
 msgid "High"
 msgstr "高"
 
-#: src/modules/battery/e_mod_main.c:1088 src/modules/battery/e_mod_main.c:1502
+#: src/modules/battery/e_mod_main.c:1115 src/modules/battery/e_mod_main.c:1526
 msgid "Low"
 msgstr "低"
 
-#: src/modules/battery/e_mod_main.c:1092 src/modules/battery/e_mod_main.c:1506
+#: src/modules/battery/e_mod_main.c:1119 src/modules/battery/e_mod_main.c:1530
 msgid "Danger"
 msgstr "危険"
 
-#: src/modules/battery/e_mod_main.c:1096 src/modules/battery/e_mod_main.c:1510
-#: src/modules/battery/e_mod_main.c:1674
+#: src/modules/battery/e_mod_main.c:1123 src/modules/battery/e_mod_main.c:1534
+#: src/modules/battery/e_mod_main.c:1701
 msgid "Charging"
 msgstr "充電中"
 
-#: src/modules/clock/e_mod_main.c:53 src/modules/clock/e_mod_main.c:95
-msgid "Clock"
-msgstr "時計"
-
-#: src/modules/clock/e_mod_main.c:55 src/modules/clock/e_mod_main.c:104
+#: src/modules/clock/e_mod_main.c:96
 msgid "Enlightenment Clock Module"
 msgstr "Enlightenment 時計モジュール"
 
-#: src/modules/clock/e_mod_main.c:105
+#: src/modules/clock/e_mod_main.c:97
 msgid "A simple module to give E17 a clock."
 msgstr "E17 用のシンプルな時計モジュールです."
 
-#: src/modules/clock/e_mod_main.c:330
+#: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "デジタル表示無し"
 
-#: src/modules/clock/e_mod_main.c:352
+#: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"
 msgstr "24 時間表示"
 
-#: src/modules/clock/e_mod_main.c:364
+#: src/modules/clock/e_mod_main.c:372
 msgid "Digital Display"
 msgstr "デジタル表示"
 
-#: src/modules/cpufreq/e_mod_main.c:71
-msgid "Cpufreq"
-msgstr "Cpufreq"
-
-#: src/modules/cpufreq/e_mod_main.c:73
-msgid "Enlightenment Cpufreq Module"
-msgstr "Enlightenment Cpufreq モジュール"
-
-#: src/modules/cpufreq/e_mod_main.c:112
-msgid "CpuFreq"
-msgstr "CpuFreq"
-
-#: src/modules/cpufreq/e_mod_main.c:121
+#: src/modules/cpufreq/e_mod_main.c:114
 msgid "CPU Frequency Controller Module"
 msgstr "CPU 周波数コントローラモジュール"
 
-#: src/modules/cpufreq/e_mod_main.c:122
+#: src/modules/cpufreq/e_mod_main.c:115
 msgid ""
 "A simple module to control the frequency of the system CPU.<br>This is "
 "especially useful to save power on laptops."
 msgstr ""
-"システム CPU の周波数を制御する簡単なモジュールです. <br>省電源でラップトップを使"
-"う場合にとりわけ便利です."
+"システム CPU の周波数を制御する簡単なモジュールです. <br>省電源でラップトップ"
+"を使う場合にとりわけ便利です."
 
-#: src/modules/cpufreq/e_mod_main.c:228
+#: src/modules/cpufreq/e_mod_main.c:221
 msgid "Restore Controller on Startup"
 msgstr "起動時にコントローラを復帰する"
 
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:567
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:559
 msgid "Set Controller"
 msgstr "コントローラを設定する"
 
-#: src/modules/cpufreq/e_mod_main.c:243 src/modules/cpufreq/e_mod_main.c:574
+#: src/modules/cpufreq/e_mod_main.c:236 src/modules/cpufreq/e_mod_main.c:566
 msgid "Set Speed"
 msgstr "速度を設定する"
 
-#: src/modules/cpufreq/e_mod_main.c:310
+#: src/modules/cpufreq/e_mod_main.c:304
 msgid ""
 "There was an error trying to set the cpu frequency<br>governor via the "
 "module's setfreq utility."
 msgstr ""
-"このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で<br>"
-"エラーが起きました."
+"このモジュールの setfreq ユーティリティを使った CPU 周波数ガバナーの設定で"
+"<br>エラーが起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:338
+#: src/modules/cpufreq/e_mod_main.c:332
 msgid ""
 "There was an error trying to set the cpu frequency<br>setting via the "
 "module's setfreq utility."
 msgstr ""
-"このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>"
-"エラーが起きました."
+"このモジュールの setfreq ユーティリティを使った CPU 周波数設定で<br>エラーが"
+"起きました."
 
-#: src/modules/cpufreq/e_mod_main.c:463
+#: src/modules/cpufreq/e_mod_main.c:455
 msgid "Check Fast (0.5 sec)"
-msgstr "0.5 秒ごとに監視"
+msgstr "0.5 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:470
+#: src/modules/cpufreq/e_mod_main.c:462
 msgid "Check Medium (1 sec)"
 msgstr "1 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:477
+#: src/modules/cpufreq/e_mod_main.c:469
 msgid "Check Normal (2 sec)"
 msgstr "2 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:484
+#: src/modules/cpufreq/e_mod_main.c:476
 msgid "Check Slow (5 sec)"
 msgstr "5 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:491
+#: src/modules/cpufreq/e_mod_main.c:483
 msgid "Check Very Slow (30 sec)"
 msgstr "30 秒ごと"
 
-#: src/modules/cpufreq/e_mod_main.c:507
+#: src/modules/cpufreq/e_mod_main.c:499
 msgid "Manual"
 msgstr "手動"
 
-#: src/modules/cpufreq/e_mod_main.c:509
+#: src/modules/cpufreq/e_mod_main.c:501
 msgid "Automatic"
 msgstr "自動"
 
-#: src/modules/cpufreq/e_mod_main.c:511
+#: src/modules/cpufreq/e_mod_main.c:503
 msgid "Lower Power Automatic"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:513
+#: src/modules/cpufreq/e_mod_main.c:505
 msgid "Minimum Speed"
 msgstr "最低速度"
 
-#: src/modules/cpufreq/e_mod_main.c:515
+#: src/modules/cpufreq/e_mod_main.c:507
 msgid "Maximum Speed"
 msgstr "最高速度"
 
-#: src/modules/cpufreq/e_mod_main.c:537
+#: src/modules/cpufreq/e_mod_main.c:529
 #, c-format
 msgid "%i Mhz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:540
+#: src/modules/cpufreq/e_mod_main.c:532
 #, c-format
 msgid "%i.%i Ghz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:561
+#: src/modules/cpufreq/e_mod_main.c:553
 msgid "Restore Governor on Startup"
 msgstr "起動時にガバナー復帰"
 
-#: src/modules/dropshadow/e_mod_main.c:104
-#: src/modules/dropshadow/e_mod_main.c:184
-msgid "Dropshadow"
-msgstr "ドロップシャドウ"
-
-#: src/modules/dropshadow/e_mod_main.c:106
-#: src/modules/dropshadow/e_mod_main.c:193
+#: src/modules/dropshadow/e_mod_main.c:187
 msgid "Enlightenment Dropshadow Module"
 msgstr "Enlightenment ドロップシャドウ モジュール"
 
-#: src/modules/dropshadow/e_mod_main.c:194
+#: src/modules/dropshadow/e_mod_main.c:188
 msgid ""
 "This is the dropshadow module that allows dropshadows to be cast<br>on the "
 "desktop background - without special X-Server extensions<br>or hardware "
@@ -1091,382 +1821,484 @@ msgstr ""
 "モジュールです. 特別な X サーバーの拡張機能も要りませんし, ハードウェアの<br>"
 "アクセラレーションも不要です."
 
-#: src/modules/dropshadow/e_mod_main.c:304
+#: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
 msgstr "かなりぼんやりした影"
 
-#: src/modules/dropshadow/e_mod_main.c:313
+#: src/modules/dropshadow/e_mod_main.c:307
 msgid "Fuzzy"
 msgstr "ぼんやりした影"
 
-#: src/modules/dropshadow/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:895
-#: src/modules/ibox/e_mod_main.c:636
+#: src/modules/dropshadow/e_mod_main.c:316 src/modules/ibar/e_mod_main.c:878
+#: src/modules/ibox/e_mod_main.c:642
 msgid "Medium"
 msgstr "普通"
 
-#: src/modules/dropshadow/e_mod_main.c:331
+#: src/modules/dropshadow/e_mod_main.c:325
 msgid "Sharp"
 msgstr "くっきりとした影"
 
-#: src/modules/dropshadow/e_mod_main.c:340
+#: src/modules/dropshadow/e_mod_main.c:334
 msgid "Very Sharp"
 msgstr "かなりくっきりとした影"
 
-#: src/modules/dropshadow/e_mod_main.c:352
+#: src/modules/dropshadow/e_mod_main.c:346
 msgid "Very Dark"
 msgstr "かなり濃い影"
 
-#: src/modules/dropshadow/e_mod_main.c:361
+#: src/modules/dropshadow/e_mod_main.c:355
 msgid "Dark"
 msgstr "濃い影"
 
-#: src/modules/dropshadow/e_mod_main.c:370
+#: src/modules/dropshadow/e_mod_main.c:364
 msgid "Light"
 msgstr "薄い影"
 
-#: src/modules/dropshadow/e_mod_main.c:379
+#: src/modules/dropshadow/e_mod_main.c:373
 msgid "Very Light"
 msgstr "かなり薄い影"
 
-#: src/modules/dropshadow/e_mod_main.c:391
+#: src/modules/dropshadow/e_mod_main.c:385
 msgid "Very Far"
 msgstr "かなり遠い"
 
-#: src/modules/dropshadow/e_mod_main.c:400
+#: src/modules/dropshadow/e_mod_main.c:394
 msgid "Far"
 msgstr "遠い"
 
-#: src/modules/dropshadow/e_mod_main.c:409
+#: src/modules/dropshadow/e_mod_main.c:403
 msgid "Near"
 msgstr "近い"
 
-#: src/modules/dropshadow/e_mod_main.c:418
+#: src/modules/dropshadow/e_mod_main.c:412
 msgid "Very Near"
 msgstr "かなり近い"
 
-#: src/modules/dropshadow/e_mod_main.c:427
+#: src/modules/dropshadow/e_mod_main.c:421
 msgid "Extremely Near"
 msgstr "極めて近い"
 
-#: src/modules/dropshadow/e_mod_main.c:436
+#: src/modules/dropshadow/e_mod_main.c:430
 msgid "Immediately Underneath"
 msgstr "真下"
 
-#: src/modules/dropshadow/e_mod_main.c:448
+#: src/modules/dropshadow/e_mod_main.c:442
 msgid "High Quality"
 msgstr "高品質"
 
-#: src/modules/dropshadow/e_mod_main.c:458
+#: src/modules/dropshadow/e_mod_main.c:452
 msgid "Medium Quality"
 msgstr "中品質"
 
-#: src/modules/dropshadow/e_mod_main.c:468
+#: src/modules/dropshadow/e_mod_main.c:462
 msgid "Low Quality"
 msgstr "低品質"
 
-#: src/modules/ibar/e_mod_main.c:125 src/modules/ibar/e_mod_main.c:165
-msgid "IBar"
-msgstr "IBar"
+#: src/modules/gadget_test/e_mod_main.c:64 src/modules/test/e_mod_main.c:62
+msgid "Enlightenment Test Module"
+msgstr "Enlightenment テストモジュール"
 
-#: src/modules/ibar/e_mod_main.c:127 src/modules/ibar/e_mod_main.c:174
+#: src/modules/gadget_test/e_mod_main.c:64
+#, fuzzy
+msgid "Gadget test"
+msgstr "ガジェットテスト"
+
+#: src/modules/gadget_test/e_mod_main.c:97
+msgid "Test Menu Item"
+msgstr "テストメニュー項目"
+
+#: src/modules/gadget_test/e_mod_main.c:106
+msgid "Test Face Menu Item"
+msgstr ""
+
+#: src/modules/ibar/e_mod_main.c:165
 msgid "Enlightenment IBar Module"
 msgstr "Enlightenment IBar モジュール"
 
-#: src/modules/ibar/e_mod_main.c:175
+#: src/modules/ibar/e_mod_main.c:166
 msgid ""
 "This is the IBar Application Launcher bar module for Enlightenment.<br>It is "
 "a first example module and is being used to flesh out several<br>interfaces "
 "in Enlightenment 0.17.0. It is under heavy development,<br>so expect it to "
 "<hilight>break often</hilight> and change as it improves."
 msgstr ""
-"これは IBar という, Enlightenment 用アプリケーションランチャバーモジュールです.<br>"
-"最初のサンプルモジュールですが, ずっと使われてきたので, Enlightenment 0.17.0 <br>"
-"ではいくつかのインタフェースを取り込み大きくなっています. <br>まだ開発の真最中ですから"
-"<hilight>よく壊れる</hilight>でしょうし, 良くなるにつれて変化していくと思います."
+"これは IBar という, Enlightenment 用アプリケーションランチャバーモジュールで"
+"す.<br>最初のサンプルモジュールですが, ずっと使われてきたので, Enlightenment "
+"0.17.0 <br>ではいくつかのインタフェースを取り込み大きくなっています. <br>まだ"
+"開発の真最中ですから<hilight>よく壊れる</hilight>でしょうし, 良くなるにつれて"
+"変化していくと思います."
 
-#: src/modules/ibar/e_mod_main.c:284 src/modules/ibar/e_mod_main.c:945
-#: src/modules/ibox/e_mod_main.c:686
+#: src/modules/ibar/e_mod_main.c:275 src/modules/ibar/e_mod_main.c:928
+#: src/modules/ibox/e_mod_main.c:238 src/modules/ibox/e_mod_main.c:692
 msgid "Options"
 msgstr "オプション"
 
-#: src/modules/ibar/e_mod_main.c:852 src/modules/ibox/e_mod_main.c:599
+#: src/modules/ibar/e_mod_main.c:835 src/modules/ibox/e_mod_main.c:599
 msgid "Auto fit icons"
 msgstr "アイコンの自動調整"
 
-#: src/modules/ibar/e_mod_main.c:858
+#: src/modules/ibar/e_mod_main.c:841 src/modules/ibox/e_mod_main.c:605
 msgid "Follower"
 msgstr "追跡ランプ"
 
-#: src/modules/ibar/e_mod_main.c:867 src/modules/ibox/e_mod_main.c:608
+#: src/modules/ibar/e_mod_main.c:850 src/modules/ibox/e_mod_main.c:614
 msgid "Microscopic"
 msgstr "極めて小さい"
 
-#: src/modules/ibar/e_mod_main.c:874 src/modules/ibox/e_mod_main.c:615
+#: src/modules/ibar/e_mod_main.c:857 src/modules/ibox/e_mod_main.c:621
 msgid "Tiny"
 msgstr "とても小さい"
 
-#: src/modules/ibar/e_mod_main.c:881 src/modules/ibox/e_mod_main.c:622
+#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:628
 msgid "Very Small"
 msgstr "かなり小さい"
 
-#: src/modules/ibar/e_mod_main.c:888 src/modules/ibox/e_mod_main.c:629
+#: src/modules/ibar/e_mod_main.c:871 src/modules/ibox/e_mod_main.c:635
 msgid "Small"
 msgstr "小さい"
 
-#: src/modules/ibar/e_mod_main.c:902 src/modules/ibox/e_mod_main.c:643
+#: src/modules/ibar/e_mod_main.c:885 src/modules/ibox/e_mod_main.c:649
 msgid "Large"
 msgstr "大きい"
 
-#: src/modules/ibar/e_mod_main.c:909 src/modules/ibox/e_mod_main.c:650
+#: src/modules/ibar/e_mod_main.c:892 src/modules/ibox/e_mod_main.c:656
 msgid "Very Large"
 msgstr "かなり大きい"
 
-#: src/modules/ibar/e_mod_main.c:916 src/modules/ibox/e_mod_main.c:657
+#: src/modules/ibar/e_mod_main.c:899 src/modules/ibox/e_mod_main.c:663
 msgid "Extremely Large"
 msgstr "とても大きい"
 
-#: src/modules/ibar/e_mod_main.c:923 src/modules/ibox/e_mod_main.c:664
+#: src/modules/ibar/e_mod_main.c:906 src/modules/ibox/e_mod_main.c:670
 msgid "Huge"
 msgstr "極めて大きい"
 
-#: src/modules/ibar/e_mod_main.c:930 src/modules/ibox/e_mod_main.c:671
+#: src/modules/ibar/e_mod_main.c:913 src/modules/ibox/e_mod_main.c:677
 msgid "Enormous"
 msgstr "巨大"
 
-#: src/modules/ibar/e_mod_main.c:937 src/modules/ibox/e_mod_main.c:678
+#: src/modules/ibar/e_mod_main.c:920 src/modules/ibox/e_mod_main.c:684
 msgid "Gigantic"
 msgstr "超巨大"
 
-#: src/modules/ibox/e_mod_main.c:107 src/modules/ibox/e_mod_main.c:147
-msgid "IBox"
-msgstr ""
+#: src/modules/ibar/e_mod_main.c:1685
+msgid "Cannot add icon"
+msgstr "アイコンが追加できません"
 
-#: src/modules/ibox/e_mod_main.c:109 src/modules/ibox/e_mod_main.c:156
+#: src/modules/ibar/e_mod_main.c:1687
+msgid ""
+"You tried to drop an icon of an application that<br>does not have a matching "
+"application file.<br><br>The icon cannot be added to IBar."
+msgstr ""
+"アイコンをドロップしようとしましたが、そのアプリケーションに対応する"
+"プログラムファイルがありません. <br><br>そのアイコンは IBar に追加できません."
+
+#: src/modules/ibox/e_mod_main.c:151
 msgid "Enlightenment IBox Module"
 msgstr "Enlightenment IBox モジュール"
 
-#: src/modules/ibox/e_mod_main.c:157
+#: src/modules/ibox/e_mod_main.c:152
 msgid ""
 "This is the IBox Iconified Application module for Enlightenment.<br>It will "
 "hold minimized applications"
 msgstr ""
-"IBox は Enlightenment 用のアイコン化アプリケーションモジュールです. <br>最小"
-"化されたアプリケーションはここに格納されます."
+"IBox は Enlightenment 用のアイコン化アプリケーションモジュールです. <br>"
+"最小化されたアプリケーションはここに格納されます."
 
-#: src/modules/pager/e_mod_main.c:119 src/modules/pager/e_mod_main.c:162
-msgid "Pager"
-msgstr "ページャ"
-
-#: src/modules/pager/e_mod_main.c:121 src/modules/pager/e_mod_main.c:171
+#: src/modules/pager/e_mod_main.c:165
 msgid "Enlightenment Pager Module"
 msgstr "Enlightenment ページャモジュール"
 
-#: src/modules/pager/e_mod_main.c:172
+#: src/modules/pager/e_mod_main.c:166
 msgid "A pager module to navigate virtual desktops."
 msgstr "仮想デスクトップを切替えるためのページャモジュールです."
 
-#: src/modules/pager/e_mod_main.c:403
+#: src/modules/pager/e_mod_main.c:397
 msgid "None"
 msgstr "無し"
 
-#: src/modules/pager/e_mod_main.c:411
+#: src/modules/pager/e_mod_main.c:405
 msgid "Top"
 msgstr "上に"
 
-#: src/modules/pager/e_mod_main.c:419
+#: src/modules/pager/e_mod_main.c:413
 msgid "Bottom"
 msgstr "下に"
 
-#: src/modules/pager/e_mod_main.c:450
+#: src/modules/pager/e_mod_main.c:444
 msgid "Very Slow"
 msgstr "とても遅い"
 
-#: src/modules/pager/e_mod_main.c:457
+#: src/modules/pager/e_mod_main.c:451
 msgid "Slow"
 msgstr "遅い"
 
-#: src/modules/pager/e_mod_main.c:471
+#: src/modules/pager/e_mod_main.c:465
 msgid "Fast"
 msgstr "速い"
 
-#: src/modules/pager/e_mod_main.c:478
+#: src/modules/pager/e_mod_main.c:472
 msgid "Very Fast"
 msgstr "とても速い"
 
-#: src/modules/pager/e_mod_main.c:486 src/modules/pager/e_mod_main.c:633
+#: src/modules/pager/e_mod_main.c:480 src/modules/pager/e_mod_main.c:626
 msgid "Desktop Name"
 msgstr "デスクトップ名"
 
-#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:637
+#: src/modules/pager/e_mod_main.c:484 src/modules/pager/e_mod_main.c:630
 msgid "Enable Popup"
 msgstr "ポップアップを有効にする"
 
-#: src/modules/pager/e_mod_main.c:496
+#: src/modules/pager/e_mod_main.c:490 src/modules/pager/e_mod_main.c:636
 msgid "Popup Speed"
 msgstr "ポップアップの速度"
 
-#: src/modules/pager/e_mod_main.c:500 src/modules/pager/e_mod_main.c:647
+#: src/modules/pager/e_mod_main.c:494 src/modules/pager/e_mod_main.c:640
 msgid "Fix Aspect (Keep Height)"
 msgstr "幅を調整する(高さはそのまま)"
 
-#: src/modules/pager/e_mod_main.c:504 src/modules/pager/e_mod_main.c:651
+#: src/modules/pager/e_mod_main.c:498 src/modules/pager/e_mod_main.c:644
 msgid "Fix Aspect (Keep Width)"
 msgstr "高さを調整する(幅はそのまま)"
 
-#: src/modules/pager/e_mod_main.c:643
-msgid "Desktop Speed"
-msgstr "デスクトップ速度"
+#: src/modules/randr/e_mod_main.c:84
+msgid "Enlightenment Randr Module"
+msgstr "Enlightenment Randr モジュール"
 
-#: src/modules/start/e_mod_main.c:36 src/modules/start/e_mod_main.c:76
-msgid "Start"
-msgstr "スタート"
+#: src/modules/randr/e_mod_main.c:85
+msgid "Module to change screen resolution for E17"
+msgstr "解像度を変更するためのモジュールです."
 
-#: src/modules/start/e_mod_main.c:38 src/modules/start/e_mod_main.c:85
+#: src/modules/randr/e_mod_main.c:187
+msgid "Restore Resolution on Startup"
+msgstr "起動時に解像度復帰"
+
+#: src/modules/randr/e_mod_main.c:210
+msgid "Resolution"
+msgstr "解像度"
+
+#: src/modules/randr/e_mod_main.c:309
+#, fuzzy
+msgid "Resolution change"
+msgstr "解像度の変更"
+
+#: src/modules/randr/e_mod_main.c:311 src/modules/randr/e_mod_main.c:381
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d in %d seconds."
+msgstr ""
+"新しい解像度 <hilight>%dx%d</hilight> を適用しますか？<br><br>"
+"以前の解像度 %dx%d に戻るまで, あと %d 秒です."
+
+#: src/modules/randr/e_mod_main.c:390
+#, c-format
+msgid ""
+"Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
+"resolution %dx%d NOW!"
+msgstr ""
+"新しい解像度 <hilight>%dx%d</hilight> を適用しますか？<br><br>"
+"これで以前の解像度 %dx%d に戻します."
+
+#: src/modules/start/e_mod_main.c:78
 msgid "Enlightenment Start Module"
 msgstr "Enlightenment スタート モジュール"
 
-#: src/modules/start/e_mod_main.c:86
+#: src/modules/start/e_mod_main.c:79
 msgid "Experimental Button module for E17"
 msgstr "試験的な E17 用ボタンモジュールです."
 
-#: src/modules/temperature/e_mod_main.c:53
-#: src/modules/temperature/e_mod_main.c:93
-msgid "Temperature"
-msgstr "温度計"
-
-#: src/modules/temperature/e_mod_main.c:55
-#: src/modules/temperature/e_mod_main.c:102
+#: src/modules/temperature/e_mod_main.c:95
 msgid "Enlightenment Temperature Module"
 msgstr "Enlightenment 温度計モジュール"
 
-#: src/modules/temperature/e_mod_main.c:103
+#: src/modules/temperature/e_mod_main.c:96
 msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
 "generate a lot of heat."
 msgstr ""
-"Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大量に発熱"
-"する最近の高速ラップトップでは特に便利です."
+"Linux の <hilight>ACPI 温度センサー</hilight>を読みとるモジュールです. <br>大"
+"量に発熱する最近の高速ラップトップでは特に便利です."
 
-#: src/modules/temperature/e_mod_main.c:195
-#: src/modules/temperature/e_mod_main.c:790
+#: src/modules/temperature/e_mod_main.c:188
+#: src/modules/temperature/e_mod_main.c:798
 msgid "Check Interval"
 msgstr "監視間隔"
 
-#: src/modules/temperature/e_mod_main.c:199
-#: src/modules/temperature/e_mod_main.c:798
+#: src/modules/temperature/e_mod_main.c:192
+#: src/modules/temperature/e_mod_main.c:806
 msgid "Low Temperature"
 msgstr "低温"
 
-#: src/modules/temperature/e_mod_main.c:203
-#: src/modules/temperature/e_mod_main.c:802
+#: src/modules/temperature/e_mod_main.c:196
+#: src/modules/temperature/e_mod_main.c:810
 msgid "High Temperature"
 msgstr "高温"
 
-#: src/modules/temperature/e_mod_main.c:207
-#: src/modules/temperature/e_mod_main.c:794
+#: src/modules/temperature/e_mod_main.c:200
+#: src/modules/temperature/e_mod_main.c:802
 msgid "Unit"
 msgstr "単位"
 
-#: src/modules/temperature/e_mod_main.c:683
+#: src/modules/temperature/e_mod_main.c:676
 msgid "Fast (1 sec)"
 msgstr "1 秒ごと"
 
-#: src/modules/temperature/e_mod_main.c:690
+#: src/modules/temperature/e_mod_main.c:683
 msgid "Medium (5 sec)"
 msgstr "5 秒ごと"
 
-#: src/modules/temperature/e_mod_main.c:697
+#: src/modules/temperature/e_mod_main.c:690
 msgid "Normal (10 sec)"
 msgstr "10 秒ごと"
 
-#: src/modules/temperature/e_mod_main.c:704
+#: src/modules/temperature/e_mod_main.c:697
 msgid "Slow (30 sec)"
 msgstr "30 秒ごと"
 
-#: src/modules/temperature/e_mod_main.c:711
+#: src/modules/temperature/e_mod_main.c:704
 msgid "Very Slow (60 sec)"
 msgstr "60 秒ごと"
 
-#: src/modules/temperature/e_mod_main.c:722
+#: src/modules/temperature/e_mod_main.c:715
 msgid "Fahrenheit"
 msgstr "カ氏"
 
-#: src/modules/temperature/e_mod_main.c:729
+#: src/modules/temperature/e_mod_main.c:722
 msgid "Celcius"
 msgstr "セ氏"
 
-#: src/modules/temperature/e_mod_main.c:759
+#: src/modules/temperature/e_mod_main.c:758
 msgid "Temp1"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:766
+#: src/modules/temperature/e_mod_main.c:767
 msgid "Temp2"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:773
+#: src/modules/temperature/e_mod_main.c:776
 msgid "Temp3"
 msgstr ""
 
-#: src/modules/temperature/e_mod_main.c:808
+#: src/modules/temperature/e_mod_main.c:816
 msgid "Sensor"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:17
-msgid "Test"
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:19 src/modules/test/e_mod_main.c:70
-msgid "Enlightenment Test Module"
-msgstr "Enlightenment テストモジュール"
-
-#: src/modules/test/e_mod_main.c:28
+#: src/modules/test/e_mod_main.c:21
 msgid "Module Config Menu Item 1"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:30
+#: src/modules/test/e_mod_main.c:23
 msgid "Module Config Menu Item 2"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:32
+#: src/modules/test/e_mod_main.c:25
 msgid "Module Config Menu Item 3"
 msgstr ""
 
-#: src/modules/test/e_mod_main.c:36
+#: src/modules/test/e_mod_main.c:29
 msgid "Something Else"
 msgstr ""
 
 #: src/modules/test/e_mod_main.c:63
-msgid "Test!!!"
-msgstr ""
-
-#: src/modules/test/e_mod_main.c:71
 msgid ""
 "This module is VERY simple and is only used to test the basic<br>interface "
 "of the Enlightenment 0.17.0 module system. Please<br>ignore this module "
 "unless you are working on the module system."
 msgstr ""
 
-#: src/modules/randr/e_mod_main.c:41
-msgid "RandR"
-msgstr ""
+#~ msgid "Shade"
+#~ msgstr "シェード"
 
-#: src/modules/randr/e_mod_main.c:43 src/modules/randr/e_mod_main.c:94
-msgid "Enlightenment Randr Module"
-msgstr "Enlightenment Randr モジュール"
+#~ msgid "User"
+#~ msgstr "ユーザー"
 
-#: src/modules/randr/e_mod_main.c:83
-msgid "Randr"
-msgstr ""
+#~ msgid "Application"
+#~ msgstr "アプリケーション"
 
-#: src/modules/randr/e_mod_main.c:95
-msgid "Module to change screen resolution for E17"
-msgstr "解像度を変更するためのモジュールです."
+#~ msgid "Lifespan"
+#~ msgstr "寿命"
 
-#: src/modules/randr/e_mod_main.c:197
-msgid "Restore Resolution on Startup"
-msgstr "起動時に解像度復帰"
+#~ msgid "Remember This Window"
+#~ msgstr "このウィンドウを覚える"
 
-#: src/modules/randr/e_mod_main.c:220
-msgid "Resolution"
-msgstr "解像度"
+#~ msgid "Remember This Instance Only"
+#~ msgstr "このインスタンスだけを覚える"
+
+#~ msgid "Match by Class"
+#~ msgstr "Classで比較する"
+
+#~ msgid "Match by Title"
+#~ msgstr "Titleで比較する"
+
+#~ msgid "Match by Role"
+#~ msgstr "Roleで比較する"
+
+#~ msgid "Match by Transient Status"
+#~ msgstr "Transient Statusで比較する"
+
+#~ msgid "Remember Position"
+#~ msgstr "位置を覚える"
+
+#~ msgid "Remember Size"
+#~ msgstr "サイズを覚える"
+
+#~ msgid "Remember Border"
+#~ msgstr "ボーダーを覚える"
+
+#~ msgid "Remember Desktop"
+#~ msgstr "デスクトップを覚える"
+
+#~ msgid "Remember Shaded State"
+#~ msgstr "シェードの設定を覚える"
+
+#~ msgid "Remember Zone"
+#~ msgstr "ゾーンを覚える"
+
+#~ msgid "Remember Skip Window List"
+#~ msgstr "ウィンドウリストスキップの設定を覚える"
+
+#~ msgid "Send To"
+#~ msgstr "移送先"
+
+#~ msgid ""
+#~ "Error starting icon editor\n"
+#~ "\n"
+#~ "please install e_util_eapp_edit\n"
+#~ "or make sure it is in your PATH\n"
+#~ msgstr ""
+#~ "アイコンエディターが起動できません\n"
+#~ "\n"
+#~ "e_util_eapp_edit がインストールされていること, \n"
+#~ "およびそれが PATH 上にあることを確認して下さい\n"
+
+#~ msgid "Battery"
+#~ msgstr "バッテリ"
+
+#~ msgid "Clock"
+#~ msgstr "時計"
+
+#~ msgid "Cpufreq"
+#~ msgstr "Cpufreq"
+
+#~ msgid "Enlightenment Cpufreq Module"
+#~ msgstr "Enlightenment Cpufreq モジュール"
+
+#~ msgid "CpuFreq"
+#~ msgstr "CpuFreq"
+
+#~ msgid "Dropshadow"
+#~ msgstr "ドロップシャドウ"
+
+#~ msgid "IBar"
+#~ msgstr "IBar"
+
+#~ msgid "Pager"
+#~ msgstr "ページャ"
+
+#~ msgid "Start"
+#~ msgstr "スタート"
+
+#~ msgid "Temperature"
+#~ msgstr "温度計"
