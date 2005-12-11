@@ -574,8 +574,11 @@ e_border_hide(E_Border *bd, int manage)
 	if (bd->focused)
 	  {
 	     e_border_focus_set(bd, 0, 1);
-	     if (e_config->focus_revert_on_hide_or_close)
-	       e_desk_last_focused_focus(bd->desk);
+	     if (manage != 2)
+	       {
+		  if (e_config->focus_revert_on_hide_or_close)
+		    e_desk_last_focused_focus(bd->desk);
+	       }
 	  }
 	if (manage == 1)
 	  {
@@ -1126,8 +1129,11 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	     bd->changed = 1;
 	     return;
 	  }
-	if (!e_winlist_active_get())
-	  e_border_focus_latest_set(bd);
+	if (bd->visible)
+	  {
+	     if (!e_winlist_active_get())
+	       e_border_focus_latest_set(bd);
+	  }
 //	printf("EMIT 0x%x activeve\n", bd->client.win);
 	edje_object_signal_emit(bd->bg_object, "active", "");
 	if (bd->icon_object)
