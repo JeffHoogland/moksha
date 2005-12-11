@@ -105,6 +105,17 @@ e_dialog_button_disable_num_set(E_Dialog *dia, int button, int disabled)
    return 1;
 }
 
+int
+e_dialog_button_disable_num_get(E_Dialog *dia, int button)
+{
+   Evas_Object *o;
+   int ret = 0;
+   
+   o = evas_list_nth(dia->buttons, button);
+   if (o) ret = e_widget_disabled_get(o);
+   return ret;
+}
+
 void
 e_dialog_title_set(E_Dialog *dia, char *title)
 {
