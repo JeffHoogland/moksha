@@ -1839,6 +1839,10 @@ _ibar_bar_cb_follower(void *data, E_Menu *m, E_Menu_Item *mi)
 	     evas_object_layer_set(o, 2);
 	     e_theme_edje_object_set(o, "base/theme/modules/ibar",
 				     "modules/ibar/follower");
+
+	     edje_object_signal_emit(o, "set_orientation", _ibar_main_orientation[e_gadman_client_edge_get(ibb->gmc)]);
+	     edje_object_message_signal_process(o);
+
 	     evas_object_show(o);
 	  }
      }
