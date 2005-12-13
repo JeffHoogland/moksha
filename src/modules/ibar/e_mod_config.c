@@ -185,7 +185,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
    of = e_widget_framelist_add(evas, _("Advanced Settings"), 0);
    ob = e_widget_label_add(evas, _("Follow Speed:"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 1.0, 0.01, 0,  &(cfdata->follow_speed), NULL,200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 0.99, 0.01, 0,  &(cfdata->follow_speed), NULL,200);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Autoscroll Speed:"));
@@ -214,6 +214,7 @@ static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 
    ib->conf->iconsize = cfdata->iconsize;
 
+   printf("Data Speed: %f\n", cfdata->follow_speed);
    ib->conf->follow_speed = cfdata->follow_speed;
    ib->conf->autoscroll_speed = cfdata->autoscroll_speed;
 
