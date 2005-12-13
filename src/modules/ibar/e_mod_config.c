@@ -190,7 +190,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
 
    ob = e_widget_label_add(evas, _("Autoscroll Speed:"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 1.0, 0.01, 0,  &(cfdata->autoscroll_speed), NULL,200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 0.99, 0.01, 0,  &(cfdata->autoscroll_speed), NULL,200);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
