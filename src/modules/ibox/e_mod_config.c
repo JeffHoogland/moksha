@@ -5,17 +5,10 @@
 typedef struct _cfdata CFData;
 typedef struct _Cfg_File_Data Cfg_File_Data;
 
-#define ICONSIZE_MICROSCOPIC 8
-#define ICONSIZE_TINY 12
-#define ICONSIZE_VERYSMALL 16
 #define ICONSIZE_SMALL 24
 #define ICONSIZE_MEDIUM 32
 #define ICONSIZE_LARGE 40
 #define ICONSIZE_VERYLARGE 48
-#define ICONSIZE_EXTLARGE 56
-#define ICONSIZE_HUGE 64
-#define ICONSIZE_ENORMOUS 96
-#define ICONSIZE_GIGANTIC 128
 
 struct _cfdata
 {
@@ -86,7 +79,8 @@ static void _fill_data(CFData *cfdata)
    cfdata->iconsize = ib->conf->iconsize;
    if (cfdata->iconsize <=24) cfdata->icon_method = ICONSIZE_SMALL;
    if ((cfdata->iconsize > 24) && (cfdata->iconsize <=32)) cfdata->icon_method = ICONSIZE_MEDIUM;
-   if (cfdata->iconsize > 32) cfdata->icon_method = ICONSIZE_LARGE;
+   if ((cfdata->iconsize > 32) && (cfdata->iconsize <=40)) cfdata->icon_method = ICONSIZE_LARGE;
+   if (cfdata->iconsize > 40) cfdata->icon_method = ICONSIZE_VERYLARGE;
 
    cfdata->follow_speed = ib->conf->follow_speed;
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
@@ -128,6 +122,9 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Large"), ICONSIZE_LARGE, rg);
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_radio_add(evas, _("Very Large"), ICONSIZE_VERYLARGE, rg);
+   e_widget_framelist_object_append(of, ob);
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    return o;
@@ -151,7 +148,8 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    if (cfdata->icon_method == ICONSIZE_SMALL) ib->conf->iconsize = 24;
    if (cfdata->icon_method == ICONSIZE_MEDIUM) ib->conf->iconsize = 32;
    if (cfdata->icon_method == ICONSIZE_LARGE) ib->conf->iconsize = 40;
-
+   if (cfdata->icon_method == ICONSIZE_VERYLARGE) ib->conf->iconsize = 48;
+   
    e_border_button_bindings_grab_all();
    e_config_save_queue();
 
