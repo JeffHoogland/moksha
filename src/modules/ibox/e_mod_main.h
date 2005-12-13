@@ -54,6 +54,7 @@ struct _IBox_Box
 
    Ecore_Event_Handler *ev_handler_border_iconify;
    Ecore_Event_Handler *ev_handler_border_uniconify;
+   Ecore_Event_Handler *ev_handler_border_remove;
    
    double          align, align_req;
    double          follow, follow_req;

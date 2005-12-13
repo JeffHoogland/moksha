@@ -67,6 +67,7 @@ static int     _ibox_box_cb_animator(void *data);
 
 static int     _ibox_box_cb_event_border_iconify(void *data, int type, void *event);
 static int     _ibox_box_cb_event_border_uniconify(void *data, int type, void *event);
+static int     _ibox_box_cb_event_border_remove(void *data, int type, void *event);
 
 static void    _ibox_icon_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _ibox_icon_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
@@ -335,7 +336,9 @@ _ibox_box_new(IBox *ib, E_Container *con)
       ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _ibox_box_cb_event_border_iconify, ibb);
    ibb->ev_handler_border_uniconify = 
       ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _ibox_box_cb_event_border_uniconify, ibb);
- 
+   ibb->ev_handler_border_remove = 
+      ecore_event_handler_add(E_EVENT_BORDER_REMOVE, _ibox_box_cb_event_border_remove, ibb);
+
    bl = e_container_border_list_first(ibb->con);
    while ((bd = e_container_border_list_next(bl)))
      {
@@ -411,6 +414,8 @@ _ibox_box_free(IBox_Box *ibb)
 
    ecore_event_handler_del(ibb->ev_handler_border_iconify);
    ecore_event_handler_del(ibb->ev_handler_border_uniconify);
+   ecore_event_handler_del(ibb->ev_handler_border_remove);
+   
    while (ibb->icons)
      _ibox_icon_free(ibb->icons->data);
 
@@ -1187,6 +1192,24 @@ static int
 _ibox_box_cb_event_border_uniconify(void *data, int type, void *event)
 {
    E_Event_Border_Uniconify *ev;
+   IBox_Box *ibb;
+   IBox_Icon *ic;
+
+   ev = event;
+   ibb = data;
+
+   ic = _ibox_icon_find(ibb, ev->border);
+   if (ic)
+     _ibox_icon_free(ic);
+   _ibox_box_frame_resize(ibb);
+
+   return 1;
+}
+
+static int
+_ibox_box_cb_event_border_remove(void *data, int type, void *event)
+{
+   E_Event_Border_Remove *ev;
    IBox_Box *ibb;
    IBox_Icon *ic;
 
