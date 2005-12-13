@@ -3292,6 +3292,11 @@ _e_fm_dir_meta_load(E_Fm_Smart_Data *sd)
    Eet_File *ef;
    char buf[PATH_MAX];
    char *hash;  
+
+   /*******
+    * DISABLE FOR NOW
+    *******/
+   return 0;
    
    if (!sd->dir) return 0;
    
