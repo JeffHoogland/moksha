@@ -848,6 +848,96 @@ e_app_exe_find(char *exe)
    return NULL;
 }
 
+
+
+Evas_List *
+e_app_name_glob_list(char *name)
+{
+   Evas_List *l, *list = NULL;
+   
+   if (!name) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->name)
+	  {
+	     if (e_util_glob_case_match(a->name, name))
+	       list = evas_list_append(list, a);
+	  }
+     }
+   return list;
+}
+
+Evas_List *
+e_app_generic_glob_list(char *generic)
+{
+   Evas_List *l, *list = NULL;
+   
+   if (!generic) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->generic)
+	  {
+	     if (e_util_glob_case_match(a->generic, generic))
+	       list = evas_list_append(list, a);
+	  }
+     }
+   return list;
+}
+
+Evas_List *
+e_app_exe_glob_list(char *exe)
+{
+   Evas_List *l, *list = NULL;
+   
+   if (!exe) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->exe)
+	  {
+	     if (e_util_glob_match(a->exe, exe))
+	       list = evas_list_append(list, a);
+	  }
+     }
+   return list;
+}
+
+Evas_List *
+e_app_comment_glob_list(char *comment)
+{
+   Evas_List *l, *list = NULL;
+   
+   if (!comment) return NULL;
+
+   for (l = _e_apps_list; l; l = l->next)
+     {
+	E_App *a;
+	
+	a = l->data;
+	if (a->comment)
+	  {
+	     if (e_util_glob_case_match(a->comment, comment))
+	       list = evas_list_append(list, a);
+	  }
+     }
+   return list;
+}
+
+
+
+
+
 void
 e_app_fields_fill(E_App *a, const char *path)
 {

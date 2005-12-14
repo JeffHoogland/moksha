@@ -101,6 +101,11 @@ EAPI E_App      *e_app_name_find                         (char *name);
 EAPI E_App      *e_app_generic_find                      (char *generic);
 EAPI E_App      *e_app_exe_find                          (char *exe);
 
+EAPI Evas_List  *e_app_name_glob_list                    (char *name);
+EAPI Evas_List  *e_app_generic_glob_list                 (char *generic);
+EAPI Evas_List  *e_app_exe_glob_list                     (char *exe);
+EAPI Evas_List  *e_app_comment_glob_list                 (char *comment);
+    
 EAPI void        e_app_fields_fill                       (E_App *a, const char *path);
 EAPI void        e_app_fields_save                       (E_App *a);
 EAPI E_App      *e_app_raw_new                           (void);

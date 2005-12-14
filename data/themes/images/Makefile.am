@@ -412,4 +412,5 @@ e17_ilist_bg0.png \
 e17_ilist_bg1.png \
 e17_slider_bt0.png \
 e17_slider_bt1.png \
-e17_slider_bt_glow.png
+e17_slider_bt_glow.png \
+e17_entry_cursor.png

@@ -156,6 +156,27 @@ e_util_glob_match(const char *str, const char *glob)
    return 0;
 }
 
+int
+e_util_glob_case_match(const char *str, const char *glob)
+{
+   char *tstr, *tglob, *p, *tp;
+   
+   if (glob[0] == 0)
+     {
+	if (str[0] == 0) return 1;
+	return 0;
+     }
+   if (!strcmp(glob, "*")) return 1;
+   tstr = alloca(strlen(str) + 1);
+   for (tp = tstr, p = str; *p != 0; p++, tp++) *tp = tolower(*p);
+   *tp = 0;
+   tglob = alloca(strlen(glob) + 1);
+   for (tp = tglob, p = glob; *p != 0; p++, tp++) *tp = tolower(*p);
+   *tp = 0;
+   if (!fnmatch(tglob, tstr, 0)) return 1;
+   return 0;
+}
+
 E_Container *
 e_util_container_number_get(int num)
 {

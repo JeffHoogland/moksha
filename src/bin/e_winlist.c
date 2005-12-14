@@ -514,6 +514,7 @@ _e_winlist_activate(void)
    if (!win_selected) return;
    ww = win_selected->data;
    edje_object_signal_emit(ww->bg_object, "active", "");
+   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "active", "");
    ok = 0;
 
    if ((ww->border->iconic) &&
@@ -608,6 +609,7 @@ _e_winlist_deactivate(void)
      }
    edje_object_part_text_set(bg_object, "title_text", "");
    edje_object_signal_emit(ww->bg_object, "passive", "");
+   if (ww->icon_object) edje_object_signal_emit(ww->icon_object, "passive", "");
    if (!ww->border->lock_focus_in)
      e_border_focus_set(ww->border, 0, 0);
 }
@@ -636,6 +638,7 @@ _e_winlist_show_active(void)
      }
    else
      {
+	scroll_align = scroll_align_to;
 	e_box_align_set(list_object, 0.5, scroll_align);
      }
 }
