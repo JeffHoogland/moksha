@@ -62,6 +62,8 @@ static void          _battery_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_It
 static int           _battery_int_get(char *buf);
 static char         *_battery_string_get(char *buf);
 
+static void          _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
+
 static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
@@ -194,6 +196,7 @@ _battery_new()
 	     ef = _battery_face_new(con);
 	     if (ef)
 	       {
+		  ef->battery = e;
 		  e->faces = evas_list_append(e->faces, ef);
 
 		  /* Config */
@@ -214,13 +217,9 @@ _battery_new()
 		  _battery_face_menu_new(ef);
 
 		  /* Add main menu to face menu */
-		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, _("Set Poll Time"));
-		  e_menu_item_submenu_set(mi, e->config_menu_poll);
-
-		  mi = e_menu_item_new(ef->menu);
-		  e_menu_item_label_set(mi, _("Set Alarm"));
-		  e_menu_item_submenu_set(mi, e->config_menu_alarm);
+		  mi = e_menu_item_new(e->config_menu);
+		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, ef);
 
 		  mi = e_menu_item_new(e->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -251,74 +250,12 @@ _battery_shutdown(Battery *e)
    evas_list_free(e->faces);
 
    e_object_del(E_OBJECT(e->config_menu));
-   e_object_del(E_OBJECT(e->config_menu_poll));
-   e_object_del(E_OBJECT(e->config_menu_alarm));
 
    ecore_timer_del(e->battery_check_timer);
 
    evas_list_free(e->conf->faces);
    free(e->conf);
    free(e);
-}
-
-static void
-_battery_menu_alarm_10(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 10;
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_alarm_20(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 20;
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_alarm_30(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 30;
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_alarm_40(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 40;
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_alarm_50(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 50;
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_alarm_60(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 60;
-   e_config_save_queue();
 }
 
 static void
@@ -332,175 +269,12 @@ _battery_menu_alarm_disable(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
-_battery_menu_fast(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->poll_time = 1.0;
-   ecore_timer_del(e->battery_check_timer);
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->poll_time = 5.0;
-   ecore_timer_del(e->battery_check_timer);
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_normal(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->poll_time = 10.0;
-   ecore_timer_del(e->battery_check_timer);
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_slow(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->poll_time = 30.0;
-   ecore_timer_del(e->battery_check_timer);
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-   e_config_save_queue();
-}
-
-static void
-_battery_menu_very_slow(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->poll_time = 60.0;
-   ecore_timer_del(e->battery_check_timer);
-   e->battery_check_timer = ecore_timer_add(e->conf->poll_time, _battery_cb_check, e);
-   e_config_save_queue();
-}
-
-static void
 _battery_config_menu_new(Battery *e)
 {
    E_Menu *mn;
-   E_Menu_Item *mi;
 
    /* Alarm */
    mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Disable"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_disable, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("10 mins"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 10) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_10, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("20 mins"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 20) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_20, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("30 mins"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 30) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_30, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("40 mins"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 40) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_40, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("50 mins"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 50) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_50, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("1 hour"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->alarm == 60) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_alarm_60, e);
-
-   e->config_menu_alarm = mn;
-
-   /* Check interval */
-   mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Check Fast (1 sec)"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->poll_time == 1.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_fast, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Check Medium (5 sec)"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->poll_time == 5.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_medium, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Check Normal (10 sec)"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->poll_time == 10.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_normal, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Check Slow (30 sec)"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->poll_time == 30.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_slow, e);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Check Very Slow (60 sec)"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (e->conf->poll_time == 60.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _battery_menu_very_slow, e);
-
-   e->config_menu_poll = mn;
-
-   mn = e_menu_new();
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Set Poll Time"));
-   e_menu_item_submenu_set(mi, e->config_menu_poll);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Set Alarm"));
-   e_menu_item_submenu_set(mi, e->config_menu_alarm);
-
    e->config_menu = mn;
 }
 
@@ -583,6 +357,11 @@ _battery_face_menu_new(Battery_Face *face)
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _battery_face_cb_menu_enabled, face);
     */
+
+   /* Config */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, face);
    
    /* Edit */
    mi = e_menu_item_new(mn);
@@ -1788,4 +1567,24 @@ _battery_string_get(char *buf)
    while ((*q != ' ') && (*q != '\n')) q++;
    if (q) *q = 0;
    return strdup(p);
+}
+
+static void 
+_battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi) 
+{
+   Battery_Face *face;
+   
+   face = data;
+   if (!face) return;
+   e_int_config_battery(face->con, face->battery);
+}
+
+void 
+_battery_face_cb_config_updated(Battery *bat) 
+{
+   /* Call all functions needed to update battery */
+   
+   /* Update Poll Time */
+   ecore_timer_del(bat->battery_check_timer);
+   bat->battery_check_timer = ecore_timer_add(bat->conf->poll_time, _battery_cb_check, bat);   
 }

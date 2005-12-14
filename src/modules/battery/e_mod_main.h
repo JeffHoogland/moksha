@@ -47,6 +47,7 @@ struct _Battery
 
 struct _Battery_Face
 {
+	Battery *battery;
    E_Container *con;
 
    E_Menu      *menu;
@@ -93,5 +94,7 @@ EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
+
+EAPI void	_battery_face_cb_config_updated(Battery *bat);
 
 #endif
