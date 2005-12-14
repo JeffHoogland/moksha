@@ -31,8 +31,6 @@ struct _Config_Face
 struct _Battery
 {
    E_Menu      *config_menu;
-   E_Menu      *config_menu_poll;
-   E_Menu      *config_menu_alarm;
    Evas_List   *faces;
 
    Config      *conf;
@@ -47,7 +45,7 @@ struct _Battery
 
 struct _Battery_Face
 {
-	Battery *battery;
+   Battery *battery;
    E_Container *con;
 
    E_Menu      *menu;
