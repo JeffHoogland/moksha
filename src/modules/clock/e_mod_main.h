@@ -32,7 +32,6 @@ struct _Clock_Face
 {
    E_Container *con;
    E_Menu      *menu;
-   E_Menu      *digital_menu;
    Config_Face *conf;
    
    struct {
