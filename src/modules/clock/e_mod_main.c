@@ -22,9 +22,7 @@ static void    _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gad
 static void    _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _clock_face_cb_digital_none(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi);
-static void    _clock_face_cb_digital_24hour(void *data, E_Menu *m, E_Menu_Item *mi);
+static void    _clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static int _clock_count;
 
@@ -32,23 +30,23 @@ static E_Config_DD *conf_edd;
 static E_Config_DD *conf_face_edd;
 
 const int
-	DIGITAL_STYLE_NONE = 0,
-	DIGITAL_STYLE_NORMAL = 1,
-	DIGITAL_STYLE_24HOUR = 2
-;
+  DIGITAL_STYLE_NONE = 0,
+  DIGITAL_STYLE_NORMAL = 1,
+  DIGITAL_STYLE_24HOUR = 2
+  ;
 
 /* public module routines. all modules must have these */
-E_Module_Api e_modapi = 
+E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-   "Clock"
+     "Clock"
 };
 
 void *
 e_modapi_init(E_Module *module)
 {
    Clock *clock;
-   
+
    /* actually init clock */
    clock = _clock_new();
    module->config_menu = clock->config_menu;
@@ -84,7 +82,7 @@ int
 e_modapi_info(E_Module *module)
 {
    char buf[4096];
-   
+
    snprintf(buf, sizeof(buf), "%s/module_icon.png", e_module_dir_get(module));
    module->icon_file = strdup(buf);
    return 1;
@@ -93,8 +91,8 @@ e_modapi_info(E_Module *module)
 int
 e_modapi_about(E_Module *module)
 {
-   e_module_dialog_show(_("Enlightenment Clock Module"), 
-		       _("A simple module to give E17 a clock."));
+   e_module_dialog_show(_("Enlightenment Clock Module"),
+			_("A simple module to give E17 a clock."));
    return 1;
 }
 
@@ -105,7 +103,7 @@ _clock_new()
    Clock *clock;
    Evas_List *managers, *l, *l2, *cl;
    E_Menu_Item *mi;
-  
+
    _clock_count = 0;
    clock = E_NEW(Clock, 1);
    if (!clock) return NULL;
@@ -138,13 +136,13 @@ _clock_new()
    for (l = managers; l; l = l->next)
      {
 	E_Manager *man;
-	
+
 	man = l->data;
 	for (l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
 	     Clock_Face *face;
-	     
+
 	     con = l2->data;
 	     face = _clock_face_new(con);
 	     if (face)
@@ -167,6 +165,10 @@ _clock_new()
 		  /* Menu */
 		  /* This menu must be initialized after conf */
 		  _clock_face_menu_new(face);
+
+		  mi = e_menu_item_new(clock->config_menu);
+		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
 
 		  mi = e_menu_item_new(clock->config_menu);
 		  e_menu_item_label_set(mi, con->name);
@@ -216,10 +218,10 @@ _clock_face_new(E_Container *con)
 
    face = E_NEW(Clock_Face, 1);
    if (!face) return NULL;
-   
+
    face->con = con;
    e_object_ref(E_OBJECT(con));
-   
+
    evas_event_freeze(con->bg_evas);
    o = edje_object_add(con->bg_evas);
    face->clock_object = o;
@@ -227,7 +229,7 @@ _clock_face_new(E_Container *con)
    e_theme_edje_object_set(o, "base/theme/modules/clock",
 			   "modules/clock/main");
    evas_object_show(o);
-   
+
    o = evas_object_rectangle_add(con->bg_evas);
    face->event_object = o;
    evas_object_layer_set(o, 2);
@@ -322,56 +324,16 @@ _clock_face_menu_new(Clock_Face *face)
    if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
    e_menu_item_callback_set(mi, _clock_face_cb_menu_enabled, face);
     */
-   
+
+   /* Config */
+   mi = e_menu_item_new(mn);
+   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
+
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
    e_menu_item_callback_set(mi, _clock_face_cb_menu_edit, face);
-
-   /*
-    * Create a Digital submenu
-    */
-   smn = e_menu_new();
-
-   /* Hide digital time */
-   mi = e_menu_item_new(smn);
-   e_menu_item_label_set(mi, _("No Digital Display"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (face->conf->digitalStyle == DIGITAL_STYLE_NONE) {
-      e_menu_item_toggle_set(mi, 1);
-      _clock_face_cb_digital_none(face, smn, mi);
-   }
-   e_menu_item_callback_set(mi, _clock_face_cb_digital_none, face);
-
-   /* Show normal time */
-   mi = e_menu_item_new(smn);
-   e_menu_item_label_set(mi, _("Normal"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (face->conf->digitalStyle == DIGITAL_STYLE_NORMAL) {
-      e_menu_item_toggle_set(mi, 1);
-      _clock_face_cb_digital_normal(face, smn, mi);
-   }
-   e_menu_item_callback_set(mi, _clock_face_cb_digital_normal, face);
-
-   /* Show 24hour time */
-   mi = e_menu_item_new(smn);
-   e_menu_item_label_set(mi, _("24 Hour"));
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (face->conf->digitalStyle == DIGITAL_STYLE_24HOUR) {
-      e_menu_item_toggle_set(mi, 1);
-      _clock_face_cb_digital_24hour(face, smn, mi);
-   }
-   e_menu_item_callback_set(mi, _clock_face_cb_digital_24hour, face);
-
-   face->digital_menu = smn;
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Digital Display"));
-   e_menu_item_submenu_set(mi, face->digital_menu);
-
 
 }
 
@@ -385,22 +347,22 @@ _clock_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change chan
    switch (change)
      {
       case E_GADMAN_CHANGE_MOVE_RESIZE:
-	 e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
-	 evas_object_move(face->clock_object, x, y);
-	 evas_object_move(face->event_object, x, y);
-	 evas_object_resize(face->clock_object, w, h);
-	 evas_object_resize(face->event_object, w, h);
-	 break;
+	e_gadman_client_geometry_get(face->gmc, &x, &y, &w, &h);
+	evas_object_move(face->clock_object, x, y);
+	evas_object_move(face->event_object, x, y);
+	evas_object_resize(face->clock_object, w, h);
+	evas_object_resize(face->event_object, w, h);
+	break;
       case E_GADMAN_CHANGE_RAISE:
-	 evas_object_raise(face->clock_object);
-	 evas_object_raise(face->event_object);
-	 break;
+	evas_object_raise(face->clock_object);
+	evas_object_raise(face->event_object);
+	break;
       case E_GADMAN_CHANGE_EDGE:
       case E_GADMAN_CHANGE_ZONE:
 	 /* FIXME
 	  * Must we do something here?
 	  */
-	 break;
+	break;
      }
 }
 
@@ -409,7 +371,7 @@ _clock_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_inf
 {
    Clock_Face *face;
    Evas_Event_Mouse_Down *ev;
-   
+
    face = data;
    ev = event_info;
    if (ev->button == 3)
@@ -430,70 +392,13 @@ _clock_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
    face = data;
    enabled = e_menu_item_toggle_get(mi);
    if ((face->conf->enabled) && (!enabled))
-     {  
+     {
 	_clock_face_disable(face);
      }
    else if ((!face->conf->enabled) && (enabled))
-     { 
+     {
 	_clock_face_enable(face);
      }
-}
-
-static void
-_clock_face_cb_digital_none(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-	Clock_Face *face;
-	char buf[2];
-
-	face = data;
-
-	memset(buf, 0, sizeof(buf));
-
-	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_NONE);
-
-	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
-
-	face->conf->digitalStyle = DIGITAL_STYLE_NONE;
-
-	e_config_save_queue();
-}
-
-static void
-_clock_face_cb_digital_normal(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-	Clock_Face *face;
-	char buf[2];
-
-	face = data;
-
-	memset(buf, 0, sizeof(buf));
-
-	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_NORMAL);
-
-	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
-
-	face->conf->digitalStyle = DIGITAL_STYLE_NORMAL;
-
-	e_config_save_queue();
-}
-
-static void
-_clock_face_cb_digital_24hour(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-	Clock_Face *face;
-	char buf[2];
-
-	face = data;
-
-	memset(buf, 0, sizeof(buf));
-
-	snprintf(buf, sizeof(buf), "%i", DIGITAL_STYLE_24HOUR);
-
-	edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
-
-	face->conf->digitalStyle = DIGITAL_STYLE_24HOUR;
-
-	e_config_save_queue();
 }
 
 static void
@@ -505,3 +410,29 @@ _clock_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
    e_gadman_mode_set(face->gmc->gadman, E_GADMAN_MODE_EDIT);
 }
 
+static void
+_clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   Clock_Face *face;
+   E_Config_Dialog *cfd;
+
+   face = data;
+   if (!face) return;
+   e_int_config_clock(face->con, face);
+}
+
+void
+_clock_face_cb_config_updated(void *data)
+{
+   Clock_Face *face;
+   char buf[2];
+
+   face = data;
+
+   memset(buf, 0, sizeof(buf));
+
+   snprintf(buf, sizeof(buf), "%i", face->conf->digitalStyle);
+
+   edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
+
+}

@@ -17,9 +17,7 @@ struct _Config
 struct _Config_Face
 {
    unsigned char enabled;
-   int
-      digitalStyle
-   ;
+   int digitalStyle;
 };
 
 struct _Clock
@@ -54,5 +52,7 @@ EAPI int   e_modapi_shutdown (E_Module *module);
 EAPI int   e_modapi_save     (E_Module *module);
 EAPI int   e_modapi_info     (E_Module *module);
 EAPI int   e_modapi_about    (E_Module *module);
+
+EAPI void  _clock_face_cb_config_updated(void *data);
 
 #endif
