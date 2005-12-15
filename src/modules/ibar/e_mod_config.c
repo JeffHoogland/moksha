@@ -12,8 +12,6 @@ typedef struct _Cfg_File_Data Cfg_File_Data;
 
 struct _cfdata
 {
-   IBar *ibar;
-
    /* Basic Config */
    int method;
    int icon_method;
