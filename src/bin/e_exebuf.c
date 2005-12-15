@@ -16,9 +16,14 @@ struct _E_Exebuf_Exe
    char        *file;
 };
 
+static void _e_exebuf_exe_free(E_Exebuf_Exe *exe);
 static void _e_exebuf_matches_clear(void);
 static void _e_exebuf_update(void);
 static void _e_exebuf_exec(void);
+static void _e_exebuf_exe_sel(E_Exebuf_Exe *exe);
+static void _e_exebuf_exe_desel(E_Exebuf_Exe *exe);
+static void _e_exebuf_exe_scroll_to(int i);
+static void _e_exebuf_eap_scroll_to(int i);
 static void _e_exebuf_next(void);
 static void _e_exebuf_prev(void);
 static void _e_exebuf_complete(void);
@@ -183,8 +188,8 @@ e_exebuf_hide(void)
 {
    if (!exebuf) return;
    
-   _e_exebuf_matches_clear();
    evas_event_freeze(exebuf->evas);
+   _e_exebuf_matches_clear();
    e_popup_hide(exebuf);
    if (exe_scroll_timer) ecore_timer_del(exe_scroll_timer);
    exe_scroll_timer = NULL;
@@ -192,12 +197,20 @@ e_exebuf_hide(void)
    eap_scroll_timer = NULL;
    if (animator) ecore_animator_del(animator);
    animator = NULL;
+   exe_scroll_to = 0;
+   exe_scroll_align_to = 0.0;
+   exe_scroll_align = 0.0;
+   eap_scroll_to = 0;
+   eap_scroll_align_to = 0.0;
+   eap_scroll_align = 0.0;
    evas_object_del(eap_list_object);
    eap_list_object = NULL;
    evas_object_del(exe_list_object);
    exe_list_object = NULL;
    evas_object_del(bg_object);
    bg_object = NULL;
+   if (icon_object) evas_object_del(icon_object);
+   icon_object = NULL;
    evas_event_thaw(exebuf->evas);
    e_object_del(E_OBJECT(exebuf));
    exebuf = NULL;
@@ -223,6 +236,15 @@ e_exebuf_hide(void)
 /* local subsystem functions */
 
 static void
+_e_exebuf_exe_free(E_Exebuf_Exe *exe)
+{
+   if (exe->app) e_object_unref(E_OBJECT(exe->app));
+   evas_object_del(exe->bg_object);
+   if (exe->icon_object) evas_object_del(exe->icon_object);
+   free(exe);
+}
+
+static void
 _e_exebuf_matches_clear(void)
 {
    while (eap_matches)
@@ -236,34 +258,19 @@ _e_exebuf_matches_clear(void)
 	exe_matches = evas_list_remove_list(exe_matches, exe_matches);
      }
    
+   e_box_freeze(eap_list_object);
    e_box_freeze(exe_list_object);
    while (exes)
      {
-        E_Exebuf_Exe *exe;
-	
-	exe = exes->data;
-	if (exe->app) e_object_unref(E_OBJECT(exe->app));
-	evas_object_del(exe->bg_object);
-	if (exe->icon_object)
-	  evas_object_del(exe->icon_object);
-	free(exe);
+	_e_exebuf_exe_free((E_Exebuf_Exe *)(exes->data));
 	exes = evas_list_remove_list(exes, exes);
      }
-   e_box_thaw(exe_list_object);
-   
-   e_box_freeze(eap_list_object);
    while (eaps)
      {
-        E_Exebuf_Exe *exe;
-	
-	exe = eaps->data;
-	if (exe->app) e_object_unref(E_OBJECT(exe->app));
-	evas_object_del(exe->bg_object);
-	if (exe->icon_object)
-	  evas_object_del(exe->icon_object);
-	free(exe);
+	_e_exebuf_exe_free((E_Exebuf_Exe *)(eaps->data));
 	eaps = evas_list_remove_list(eaps, eaps);
      }
+   e_box_thaw(exe_list_object);
    e_box_thaw(eap_list_object);
    
    e_box_align_set(eap_list_object, 0.5, 0.0);
@@ -311,11 +318,81 @@ _e_exebuf_exec(void)
 }
 
 static void
+_e_exebuf_exe_sel(E_Exebuf_Exe *exe)
+{
+   edje_object_signal_emit(exe->bg_object, "active", "");
+   if (exe->icon_object)
+     edje_object_signal_emit(exe->icon_object, "active", "");
+}
+
+static void
+_e_exebuf_exe_desel(E_Exebuf_Exe *exe)
+{
+   edje_object_signal_emit(exe->bg_object, "passive", "");
+   if (exe->icon_object)
+     edje_object_signal_emit(exe->icon_object, "passive", "");
+}
+
+static void
+_e_exebuf_exe_scroll_to(int i)
+{
+   int n;
+   
+   n = evas_list_count(exes);
+   if (n > 1)
+     {
+	exe_scroll_align_to = (double)i / (double)(n - 1);
+	if (e_config->winlist_scroll_animate)
+	  {	
+	     exe_scroll_to = 1;
+	     if (!exe_scroll_timer)
+	       exe_scroll_timer = ecore_timer_add(0.01, _e_exebuf_exe_scroll_timer, NULL);
+	     if (!animator)
+	       animator = ecore_animator_add(_e_exebuf_animator, NULL);
+	  }
+	else
+	  {
+	     exe_scroll_align = exe_scroll_align_to;
+	     e_box_align_set(exe_list_object, 0.5, 1.0 - exe_scroll_align);
+	  }
+     }
+   else
+     e_box_align_set(exe_list_object, 0.5, 1.0);
+}
+
+static void
+_e_exebuf_eap_scroll_to(int i)
+{
+   int n;
+   
+   n = evas_list_count(eaps);
+   if (n > 1)
+     {
+	eap_scroll_align_to = (double)i / (double)(n - 1);
+	if (e_config->winlist_scroll_animate)
+	  {	
+	     eap_scroll_to = 1;
+	     if (!eap_scroll_timer)
+	       eap_scroll_timer = ecore_timer_add(0.01, _e_exebuf_eap_scroll_timer, NULL);
+	     if (!animator)
+	       animator = ecore_animator_add(_e_exebuf_animator, NULL);
+	  }
+	else
+	  {
+	     eap_scroll_align = eap_scroll_align_to;
+	     e_box_align_set(eap_list_object, 0.5, eap_scroll_align);
+	  }
+     }
+   else
+     e_box_align_set(eap_list_object, 0.5, 0.0);
+}
+
+static void
 _e_exebuf_next(void)
 {
    E_Exebuf_Exe *exe;
    Evas_List *l;
-   int i, n;
+   int i;
    
    if (which_list == NO_LIST)
      {
@@ -325,10 +402,8 @@ _e_exebuf_next(void)
 	     which_list = EXE_LIST;
 	     if (exe_sel)
 	       {
-		  edje_object_signal_emit(exe_sel->bg_object, "active", "");
-		  if (exe_sel->icon_object)
-		    edje_object_signal_emit(exe_sel->icon_object, "active", "");
-		  e_box_align_set(exe_list_object, 0.5, 1.0);
+		  _e_exebuf_exe_sel(exe_sel);
+		  _e_exebuf_exe_scroll_to(0);
 	       }
 	  }
      }
@@ -338,37 +413,16 @@ _e_exebuf_next(void)
 	  {
 	     if (exe_sel)
 	       {
-		  n = evas_list_count(exes);
 		  for (i = 0, l = exes; l; l = l->next, i++)
 		    {
 		       if (l->data == exe_sel)
 			 {
 			    if (l->next)
 			      {
-				 edje_object_signal_emit(exe_sel->bg_object, "passive", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "passive", "");
+				 _e_exebuf_exe_desel(exe_sel);
 				 exe_sel = l->next->data;
-				 edje_object_signal_emit(exe_sel->bg_object, "active", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "active", "");
-				 if (n > 1)
-				   {
-				      exe_scroll_align_to = (double)(i + 1) / (double)(n - 1);
-				      if (e_config->winlist_scroll_animate)
-					{	
-					   exe_scroll_to = 1;
-					   if (!exe_scroll_timer)
-					     exe_scroll_timer = ecore_timer_add(0.01, _e_exebuf_exe_scroll_timer, NULL);
-					   if (!animator)
-					     animator = ecore_animator_add(_e_exebuf_animator, NULL);
-					}
-				      else
-					{
-					   exe_scroll_align = exe_scroll_align_to;
-					   e_box_align_set(exe_list_object, 0.5, exe_scroll_align);
-					}
-				   }
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_exe_scroll_to(i + 1);
 			      }
 			    break;
 			 }
@@ -379,37 +433,21 @@ _e_exebuf_next(void)
 	  {
 	     if (exe_sel)
 	       {
-		  n = evas_list_count(eaps);
 		  for (i = 0, l = eaps; l; l = l->next, i++)
 		    {
 		       if (l->data == exe_sel)
 			 {
+			    _e_exebuf_exe_desel(exe_sel);
 			    if (l->prev)
 			      {
-				 edje_object_signal_emit(exe_sel->bg_object, "passive", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "passive", "");
 				 exe_sel = l->prev->data;
-				 edje_object_signal_emit(exe_sel->bg_object, "active", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "active", "");
-				 if (n > 1)
-				   {
-				      eap_scroll_align_to = (double)(i - 1) / (double)(n - 1);
-				      if (e_config->winlist_scroll_animate)
-					{	
-					   eap_scroll_to = 1;
-					   if (!eap_scroll_timer)
-					     eap_scroll_timer = ecore_timer_add(0.01, _e_exebuf_eap_scroll_timer, NULL);
-					   if (!animator)
-					     animator = ecore_animator_add(_e_exebuf_animator, NULL);
-					}
-				      else
-					{
-					   eap_scroll_align = eap_scroll_align_to;
-					   e_box_align_set(eap_list_object, 0.5, eap_scroll_align);
-					}
-				   }
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_eap_scroll_to(i - 1);
+			      }
+			    else
+			      {
+				 exe_sel = NULL;
+				 which_list = NO_LIST;
 			      }
 			    break;
 			 }
@@ -424,7 +462,7 @@ _e_exebuf_prev(void)
 {
    E_Exebuf_Exe *exe;
    Evas_List *l;
-   int i, n;
+   int i;
 
    if (which_list == NO_LIST)
      {
@@ -434,10 +472,8 @@ _e_exebuf_prev(void)
 	     which_list = EAP_LIST;
 	     if (exe_sel)
 	       {
-		  edje_object_signal_emit(exe_sel->bg_object, "active", "");
-		  if (exe_sel->icon_object)
-		    edje_object_signal_emit(exe_sel->icon_object, "active", "");
-		  e_box_align_set(eap_list_object, 0.5, 0.0);
+		  _e_exebuf_exe_sel(exe_sel);
+		  _e_exebuf_eap_scroll_to(0);
 	       }
 	  }
      }
@@ -447,37 +483,21 @@ _e_exebuf_prev(void)
 	  {
 	     if (exe_sel)
 	       {
-		  n = evas_list_count(exes);
 		  for (i = 0, l = exes; l; l = l->next, i++)
 		    {
 		       if (l->data == exe_sel)
 			 {
+			    _e_exebuf_exe_desel(exe_sel);
 			    if (l->prev)
 			      {
-				 edje_object_signal_emit(exe_sel->bg_object, "passive", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "passive", "");
 				 exe_sel = l->prev->data;
-				 edje_object_signal_emit(exe_sel->bg_object, "active", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "active", "");
-				 if (n > 1)
-				   {
-				      exe_scroll_align_to = (double)(i - 1) / (double)(n - 1);
-				      if (e_config->winlist_scroll_animate)
-					{	
-					   exe_scroll_to = 1;
-					   if (!exe_scroll_timer)
-					     exe_scroll_timer = ecore_timer_add(0.01, _e_exebuf_exe_scroll_timer, NULL);
-					   if (!animator)
-					     animator = ecore_animator_add(_e_exebuf_animator, NULL);
-					}
-				      else
-					{
-					   exe_scroll_align = exe_scroll_align_to;
-					   e_box_align_set(exe_list_object, 0.5, exe_scroll_align);
-					}
-				   }
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_exe_scroll_to(i - 1);
+			      }
+			    else
+			      {
+				 exe_sel = NULL;
+				 which_list = NO_LIST;
 			      }
 			    break;
 			 }
@@ -488,37 +508,16 @@ _e_exebuf_prev(void)
 	  {
 	     if (exe_sel)
 	       {
-		  n = evas_list_count(eaps);
 		  for (i = 0, l = eaps; l; l = l->next, i++)
 		    {
 		       if (l->data == exe_sel)
 			 {
 			    if (l->next)
 			      {
-				 edje_object_signal_emit(exe_sel->bg_object, "passive", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "passive", "");
+				 _e_exebuf_exe_desel(exe_sel);
 				 exe_sel = l->next->data;
-				 edje_object_signal_emit(exe_sel->bg_object, "active", "");
-				 if (exe_sel->icon_object)
-				   edje_object_signal_emit(exe_sel->icon_object, "active", "");
-				 if (n > 1)
-				   {
-				      eap_scroll_align_to = (double)(i + 1) / (double)(n - 1);
-				      if (e_config->winlist_scroll_animate)
-					{	
-					   eap_scroll_to = 1;
-					   if (!eap_scroll_timer)
-					     eap_scroll_timer = ecore_timer_add(0.01, _e_exebuf_eap_scroll_timer, NULL);
-					   if (!animator)
-					     animator = ecore_animator_add(_e_exebuf_animator, NULL);
-					}
-				      else
-					{
-					   eap_scroll_align = eap_scroll_align_to;
-					   e_box_align_set(eap_list_object, 0.5, eap_scroll_align);
-					}
-				   }
+				 _e_exebuf_exe_sel(exe_sel);
+				 _e_exebuf_eap_scroll_to(i + 1);
 			      }
 			    break;
 			 }
@@ -618,17 +617,6 @@ _e_exebuf_matches_update(void)
    Evas_List *l, *list;
    int i, max;
    
-   /* how to match:
-    * 
-    * eap_matches (above the exebuf)
-    * match cmd_buf* for all eap->exe fields
-    * match cmd_buf* for all eap->name fields
-    * match *cmd_buf* for all eap->generic fields
-    * match *cmd_buf* for all eap->comment fields
-    * 
-    * exe_matches (below the exebuf)
-    * match cmd_buf* for all executables in $PATH (exclude duplicates in eap_matches)
-    */
    _e_exebuf_matches_clear();
    if (strlen(cmd_buf) == 0) return;
    
@@ -728,7 +716,10 @@ _e_exebuf_matches_update(void)
      }
    if (added) evas_hash_free(added);
    added = NULL;
-   
+
+   /* FIXME: sort eap matches with most recently selected matches at the
+    * start and then from shortest to longest string
+    */
    max = 20;
    e_box_freeze(eap_list_object);
    for (i = 0, l = eap_matches; l && (i < max); l = l->next, i++)
@@ -768,8 +759,9 @@ _e_exebuf_matches_update(void)
 			       );
      }
    e_box_thaw(eap_list_object);
-   /* FIXME: sort exe_matches and eap_matches in order of most recently used
-    * first, then shortest completions first
+   
+   /* FIXME: sort eap matches with most recently selected matches at the
+    * start and then from shortest to longest string
     */
    max = 20;
    e_box_freeze(exe_list_object);
