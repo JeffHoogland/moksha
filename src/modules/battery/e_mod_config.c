@@ -7,8 +7,6 @@ typedef struct _Cfg_File_Data Cfg_File_Data;
 
 struct _cfdata 
 {
-   Battery *bat;
-   
    double poll_time;
    int alarm_time;
    int poll_method;
