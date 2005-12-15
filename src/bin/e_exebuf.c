@@ -630,6 +630,7 @@ _e_exebuf_matches_update(void)
 	  {
 	     if (!evas_hash_find(added, a->exe))
 	       {
+		  e_object_ref(E_OBJECT(a));
 		  eap_matches = evas_list_append(eap_matches, a);
 		  added = evas_hash_direct_add(added, a->exe, a->exe);
 	       }
@@ -647,6 +648,7 @@ _e_exebuf_matches_update(void)
 	  {
 	     if (!evas_hash_find(added, a->exe))
 	       {
+		  e_object_ref(E_OBJECT(a));
 		  eap_matches = evas_list_append(eap_matches, a);
 		  added = evas_hash_direct_add(added, a->exe, a->exe);
 	       }
@@ -665,6 +667,7 @@ _e_exebuf_matches_update(void)
 	  {
 	     if (!evas_hash_find(added, a->exe))
 	       {
+		  e_object_ref(E_OBJECT(a));
 		  eap_matches = evas_list_append(eap_matches, a);
 		  added = evas_hash_direct_add(added, a->exe, a->exe);
 	       }
@@ -683,6 +686,7 @@ _e_exebuf_matches_update(void)
 	  {
 	     if (!evas_hash_find(added, a->exe))
 	       {
+		  e_object_ref(E_OBJECT(a));
 		  eap_matches = evas_list_append(eap_matches, a);
 		  added = evas_hash_direct_add(added, a->exe, a->exe);
 	       }
@@ -730,8 +734,6 @@ _e_exebuf_matches_update(void)
 	exe = calloc(1, sizeof(E_Exebuf_Exe));
         eaps = evas_list_append(eaps, exe);
 	exe->app = l->data;
-	/* no this is not a mistake - reference it twice */
-	e_object_ref(E_OBJECT(exe->app));
 	e_object_ref(E_OBJECT(exe->app));
 	o = edje_object_add(exebuf->evas);
         exe->bg_object = o;
