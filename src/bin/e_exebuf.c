@@ -142,19 +142,19 @@ e_exebuf_show(E_Zone *zone)
    o = bg_object;
    edje_object_size_min_calc(o, &mw, &mh);
    
-   w = (double)zone->w * e_config->winlist_pos_size_w;
-   if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
-   else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
+   w = (double)zone->w * e_config->exebuf_pos_size_w;
+   if (w > e_config->exebuf_pos_max_w) w = e_config->exebuf_pos_max_w;
+   else if (w < e_config->exebuf_pos_min_w) w = e_config->exebuf_pos_min_w;
    if (w < mw) w = mw;
    if (w > zone->w) w = zone->w;
-   x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
+   x = (double)(zone->w - w) * e_config->exebuf_pos_align_x;
    
-   h = (double)zone->h * e_config->winlist_pos_size_h;
-   if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
-   else if (h < e_config->winlist_pos_min_h) h = e_config->winlist_pos_min_h;
+   h = (double)zone->h * e_config->exebuf_pos_size_h;
+   if (h > e_config->exebuf_pos_max_h) h = e_config->exebuf_pos_max_h;
+   else if (h < e_config->exebuf_pos_min_h) h = e_config->exebuf_pos_min_h;
    if (h < mh) h = mh;
    if (h > zone->h) h = zone->h;
-   y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
+   y = (double)(zone->h - h) * e_config->exebuf_pos_align_y;
    
    e_popup_move_resize(exebuf, x, y, w, h);
    evas_object_move(o, 0, 0);
@@ -342,7 +342,7 @@ _e_exebuf_exe_scroll_to(int i)
    if (n > 1)
      {
 	exe_scroll_align_to = (double)i / (double)(n - 1);
-	if (e_config->winlist_scroll_animate)
+	if (e_config->exebuf_scroll_animate)
 	  {	
 	     exe_scroll_to = 1;
 	     if (!exe_scroll_timer)
@@ -369,7 +369,7 @@ _e_exebuf_eap_scroll_to(int i)
    if (n > 1)
      {
 	eap_scroll_align_to = (double)i / (double)(n - 1);
-	if (e_config->winlist_scroll_animate)
+	if (e_config->exebuf_scroll_animate)
 	  {	
 	     eap_scroll_to = 1;
 	     if (!eap_scroll_timer)
@@ -620,7 +620,7 @@ _e_exebuf_matches_update(void)
    _e_exebuf_matches_clear();
    if (strlen(cmd_buf) == 0) return;
    
-   snprintf(buf, sizeof(buf), "%s*", cmd_buf);
+   snprintf(buf, sizeof(buf), "*%s*", cmd_buf);
    list = e_app_name_glob_list(buf);
    for (l = list; l; l = l->next)
      {
@@ -720,7 +720,7 @@ _e_exebuf_matches_update(void)
    /* FIXME: sort eap matches with most recently selected matches at the
     * start and then from shortest to longest string
     */
-   max = 20;
+   max = e_config->exebuf_max_eap_list;
    e_box_freeze(eap_list_object);
    for (i = 0, l = eap_matches; l && (i < max); l = l->next, i++)
      {
@@ -763,7 +763,7 @@ _e_exebuf_matches_update(void)
    /* FIXME: sort eap matches with most recently selected matches at the
     * start and then from shortest to longest string
     */
-   max = 20;
+   max = e_config->exebuf_max_exe_list;
    e_box_freeze(exe_list_object);
    for (i = 0, l = exe_matches; l && (i < max); l = l->next, i++)
      {
@@ -904,7 +904,7 @@ _e_exebuf_exe_scroll_timer(void *data)
      {
 	double spd;
 
-	spd = e_config->winlist_scroll_speed;
+	spd = e_config->exebuf_scroll_speed;
 	exe_scroll_align = (exe_scroll_align * (1.0 - spd)) + (exe_scroll_align_to * spd);
 	return 1;
      }
@@ -919,7 +919,7 @@ _e_exebuf_eap_scroll_timer(void *data)
      {
 	double spd;
 
-	spd = e_config->winlist_scroll_speed;
+	spd = e_config->exebuf_scroll_speed;
 	eap_scroll_align = (eap_scroll_align * (1.0 - spd)) + (eap_scroll_align_to * spd);
 	return 1;
      }

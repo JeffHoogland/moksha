@@ -366,6 +366,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, input_method, STR); /**/
    E_CONFIG_LIST(D, T, path_append_input_methods, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_messages, _e_config_path_append_edd); /**/
+   E_CONFIG_VAL(D, T, exebuf_max_exe_list, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_max_eap_list, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_scroll_animate, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_scroll_speed, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_align_x, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_align_y, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_size_w, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_size_h, DOUBLE); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_min_w, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_min_h, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_max_w, INT); /**/
+   E_CONFIG_VAL(D, T, exebuf_pos_max_h, INT); /**/
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
@@ -498,6 +510,18 @@ e_config_init(void)
 	e_config->menu_eap_comment_show = 0;
 	e_config->fullscreen_policy = E_FULLSCREEN_RESIZE;
 	e_config->input_method = NULL;	
+	e_config->exebuf_max_exe_list = 20;
+	e_config->exebuf_max_eap_list = 20;
+	e_config->exebuf_scroll_animate = 1;
+	e_config->exebuf_scroll_speed = 0.1;
+	e_config->exebuf_pos_align_x = 0.5;
+	e_config->exebuf_pos_align_y = 0.5;
+	e_config->exebuf_pos_size_w = 0.75;
+	e_config->exebuf_pos_size_h = 0.25;
+	e_config->exebuf_pos_min_w = 200;
+	e_config->exebuf_pos_min_h = 160;
+	e_config->exebuf_pos_max_w = 400;
+	e_config->exebuf_pos_max_h = 320;
 	
 	  {
 	     E_Config_Module *em;
