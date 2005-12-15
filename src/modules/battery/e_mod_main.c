@@ -3,6 +3,7 @@
  */
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_mod_config.h"
 
 #ifdef __FreeBSD__
 # include <sys/types.h>
