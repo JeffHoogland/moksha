@@ -263,7 +263,7 @@ _ibar_new()
 		  _ibar_bar_menu_new(ibb);
 
 		  mi = e_menu_item_new(ib->config_menu);
-		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_label_set(mi, _("Configuration"));
 		  e_menu_item_callback_set(mi, _ibar_bar_cb_menu_configure, ibb);
 
 		  mi = e_menu_item_new(ib->config_menu);
@@ -629,7 +629,7 @@ _ibar_bar_menu_new(IBar_Bar *ibb)
 
    /* Config */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_label_set(mi, _("Configuration"));
    e_menu_item_callback_set(mi, _ibar_bar_cb_menu_configure, ibb);
 
    /* Edit */

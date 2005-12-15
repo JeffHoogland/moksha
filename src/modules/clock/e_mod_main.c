@@ -167,7 +167,7 @@ _clock_new()
 		  _clock_face_menu_new(face);
 
 		  mi = e_menu_item_new(clock->config_menu);
-		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_label_set(mi, _("Configuration"));
 		  e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
 
 		  mi = e_menu_item_new(clock->config_menu);
@@ -327,7 +327,7 @@ _clock_face_menu_new(Clock_Face *face)
 
    /* Config */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_label_set(mi, _("Configuration"));
    e_menu_item_callback_set(mi, _clock_face_cb_menu_configure, face);
 
    /* Edit */

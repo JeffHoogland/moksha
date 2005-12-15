@@ -218,7 +218,7 @@ _battery_new()
 
 		  /* Add main menu to face menu */
 		  mi = e_menu_item_new(e->config_menu);
-		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_label_set(mi, _("Configuration"));
 		  e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, ef);
 
 		  mi = e_menu_item_new(e->config_menu);
@@ -360,7 +360,7 @@ _battery_face_menu_new(Battery_Face *face)
 
    /* Config */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_label_set(mi, _("Configuration"));
    e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, face);
    
    /* Edit */

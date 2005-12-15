@@ -226,7 +226,7 @@ _ibox_new()
 
 		  /* Add main menu to box menu */
 		  mi = e_menu_item_new(ib->config_menu);
-		  e_menu_item_label_set(mi, _("Config Dialog"));
+		  e_menu_item_label_set(mi, _("Configuration"));
 		  e_menu_item_callback_set(mi, _ibox_box_cb_menu_configure, ibb);
 
 		  mi = e_menu_item_new(ib->config_menu);
@@ -440,7 +440,7 @@ _ibox_box_menu_new(IBox_Box *ibb)
 
    /* Config */
    mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Config Dialog"));
+   e_menu_item_label_set(mi, _("Configuration"));
    e_menu_item_callback_set(mi, _ibox_box_cb_menu_configure, ibb);
 
    /* Edit */
