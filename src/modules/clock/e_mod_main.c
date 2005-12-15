@@ -104,7 +104,7 @@ _clock_new()
    Clock *clock;
    Evas_List *managers, *l, *l2, *cl;
    E_Menu_Item *mi;
-
+   
    _clock_count = 0;
    clock = E_NEW(Clock, 1);
    if (!clock) return NULL;
@@ -162,6 +162,8 @@ _clock_new()
 		       face->conf = cl->data;
 		       cl = cl->next;
 		    }
+
+			_clock_face_cb_config_updated(face);
 
 		  /* Menu */
 		  /* This menu must be initialized after conf */
@@ -230,7 +232,7 @@ _clock_face_new(E_Container *con)
    e_theme_edje_object_set(o, "base/theme/modules/clock",
 			   "modules/clock/main");
    evas_object_show(o);
-
+   
    o = evas_object_rectangle_add(con->bg_evas);
    face->event_object = o;
    evas_object_layer_set(o, 2);
@@ -431,9 +433,6 @@ _clock_face_cb_config_updated(void *data)
    face = data;
 
    memset(buf, 0, sizeof(buf));
-
    snprintf(buf, sizeof(buf), "%i", face->conf->digitalStyle);
-
    edje_object_part_text_set(face->clock_object, "digitalStyle", buf);
-
 }
