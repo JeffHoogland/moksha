@@ -307,7 +307,7 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
    char *p, *c;
    
    if ((!list) || (!list[0])) return 0;
-   buf = malloc(strlen(list) + 1);
+   buf = alloca(strlen(list) + 1);
    p = list;
    while (p)
      {
@@ -316,31 +316,17 @@ e_util_edje_icon_list_set(Evas_Object *obj, char *list)
 	  {
 	     strncpy(buf, p, c - p);
 	     buf[c - p] = 0;
-	     if (e_util_edje_icon_set(obj, buf))
-	       {
-		  free(buf);
-		  return 1;
-	       }
+	     if (e_util_edje_icon_set(obj, buf)) return 1;
 	     p = c + 1;
-	     if (!*p)
-	       {
-		  free(buf);
-		  return 0;
-	       }
+	     if (!*p) return 0;
 	  }
 	else
 	  {
 	     strcpy(buf, p);
-	     if (e_util_edje_icon_set(obj, buf))
-	       {
-		  free(buf);
-		  return 1;
-	       }
-	     free(buf);
+	     if (e_util_edje_icon_set(obj, buf)) return 1;
 	     return 0;
 	  }
      }
-   free(buf);
    return 0;
 }
 
@@ -351,7 +337,7 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
    char *p, *c;
    
    if ((!list) || (!list[0])) return 0;
-   buf = malloc(strlen(list) + 1);
+   buf = alloca(strlen(list) + 1);
    p = list;
    while (p)
      {
@@ -360,29 +346,17 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, char *list)
 	  {
 	     strncpy(buf, p, c - p);
 	     buf[c - p] = 0;
-	     if (e_util_menu_item_edje_icon_set(mi, buf))
-	       {
-		  free(buf);
-		  return 1;
-	       }
+	     if (e_util_menu_item_edje_icon_set(mi, buf)) return 1;
 	     p = c + 1;
-	     if (!*p)
-	       {
-		  free(buf);
-		  return 0;
-	       }
+	     if (!*p) return 0;
 	  }
 	else
 	  {
 	     strcpy(buf, p);
-	     if (e_util_menu_item_edje_icon_set(mi, buf))
-	       {
-		  free(buf);
-		  return 1;
-	       }
+	     if (e_util_menu_item_edje_icon_set(mi, buf)) return 1;
+	     return 0;
 	  }
      }
-   free(buf);
    return 0;
 }
 

@@ -293,8 +293,7 @@ _e_exebuf_update(void)
    if (!a) a = e_app_generic_find(cmd_buf);
    if (a)
      {
-	o = edje_object_add(exebuf->evas);
-	edje_object_file_set(o, a->path, "icon");
+	o = e_app_icon_add(exebuf->evas, a);
 	icon_object = o;
 	edje_object_part_swallow(bg_object, "icon_swallow", o);
 	evas_object_show(o);
@@ -742,8 +741,7 @@ _e_exebuf_matches_update(void)
 	evas_object_show(o);
 	if (edje_object_part_exists(exe->bg_object, "icon_swallow"))
 	  {
-	     o = edje_object_add(exebuf->evas);
-	     edje_object_file_set(o, exe->app->path, "icon");
+	     o = e_app_icon_add(exebuf->evas, exe->app);
 	     exe->icon_object = o;
 	     edje_object_part_swallow(exe->bg_object, "icon_swallow", o);
 	     evas_object_show(o);
@@ -787,8 +785,7 @@ _e_exebuf_matches_update(void)
 	     a = e_app_exe_find(exe->file);
 	     if (a)
 	       {
-		  o = edje_object_add(exebuf->evas);
-		  edje_object_file_set(o, a->path, "icon");
+		  o = e_app_icon_add(exebuf->evas, a);
 		  exe->icon_object = o;
 		  edje_object_part_swallow(exe->bg_object, "icon_swallow", o);
 		  evas_object_show(o);

@@ -106,12 +106,13 @@ EAPI Evas_List  *e_app_generic_glob_list                 (char *generic);
 EAPI Evas_List  *e_app_exe_glob_list                     (char *exe);
 EAPI Evas_List  *e_app_comment_glob_list                 (char *comment);
     
-EAPI void        e_app_fields_fill                       (E_App *a, const char *path);
-EAPI void        e_app_fields_save                       (E_App *a);
-EAPI E_App      *e_app_raw_new                           (void);
-EAPI Ecore_List *e_app_dir_file_list_get                 (E_App *a);
-EAPI void        e_app_fields_empty                      (E_App *a);
-EAPI int         e_app_valid_exe_get                     (E_App *a);
-    
+EAPI void         e_app_fields_fill                       (E_App *a, const char *path);
+EAPI void         e_app_fields_save                       (E_App *a);
+EAPI E_App       *e_app_raw_new                           (void);
+EAPI Ecore_List  *e_app_dir_file_list_get                 (E_App *a);
+EAPI void         e_app_fields_empty                      (E_App *a);
+EAPI int          e_app_valid_exe_get                     (E_App *a);
+EAPI Evas_Object *e_app_icon_add                          (Evas *evas, E_App *a);
+
 #endif
 #endif

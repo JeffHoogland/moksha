@@ -443,7 +443,9 @@ _e_int_menus_apps_scan(E_Menu *m)
 		  e_menu_item_label_set(mi, label);
 		  if (a->exe)
 		    {
-		       e_menu_item_icon_edje_set(mi, a->path, "icon");
+		       if (!((a->icon_class) && 
+			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
+			 e_menu_item_icon_edje_set(mi, a->path, "icon");
 		       e_menu_item_callback_set(mi, _e_int_menus_apps_run, a);
 		       app_count++;
 		    }
@@ -452,7 +454,9 @@ _e_int_menus_apps_scan(E_Menu *m)
 		       char buf[4096];
 		       
 		       snprintf(buf, sizeof(buf), "%s/.directory.eap", a->path);
-		       e_menu_item_icon_edje_set(mi, buf, "icon");
+		       if (!((a->icon_class) && 
+			     (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
+			 e_menu_item_icon_edje_set(mi, buf, "icon");
 		       e_menu_item_submenu_set(mi, e_int_menus_apps_new(a->path));
 		       app_count++;
 		    }
@@ -711,11 +715,13 @@ _e_int_menus_clients_pre_cb(void *data, E_Menu *m)
 //	e_object_breadcrumb_add(E_OBJECT(bd), "clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_clients_item_cb, bd);
 	if (!bd->iconic) e_menu_item_toggle_set(mi, 1);
-	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-						    bd->client.icccm.class,
-						    title,
-						    bd->client.icccm.window_role);
-	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
+	a = bd->app;
+	if (a)
+	  {
+	     if (!((a->icon_class) && 
+		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
+	       e_menu_item_icon_edje_set(mi, a->path, "icon");
+	  }
      }
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -996,11 +1002,13 @@ _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m)
 	e_object_ref(E_OBJECT(bd));
 //	e_object_breadcrumb_add(E_OBJECT(bd), "lost_clients_menu");
 	e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
-	a = e_app_window_name_class_title_role_find(bd->client.icccm.name,
-						    bd->client.icccm.class,
-						    title,
-						    bd->client.icccm.window_role);
-	if (a) e_menu_item_icon_edje_set(mi, a->path, "icon");
+	a = bd->app;
+	if (a)
+	  {
+	     if (!((a->icon_class) && 
+		   (e_util_menu_item_edje_icon_list_set(mi, a->icon_class))))
+	       e_menu_item_icon_edje_set(mi, a->path, "icon");
+	  }
      }
    e_object_free_attach_func_set(E_OBJECT(m), _e_int_menus_lost_clients_free_hook);
    e_object_data_set(E_OBJECT(m), borders);

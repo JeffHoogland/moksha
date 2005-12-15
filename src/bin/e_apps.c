@@ -1242,6 +1242,17 @@ e_app_valid_exe_get(E_App *a)
    return ok;
 }
 
+EAPI Evas_Object *
+e_app_icon_add(Evas *evas, E_App *a)
+{
+   Evas_Object *o;
+   
+   o = edje_object_add(evas);
+   if (!e_util_edje_icon_list_set(o, a->icon_class))
+     edje_object_file_set(o, a->path, "icon");
+   return o;
+}
+
 
 /* local subsystem functions */
 
