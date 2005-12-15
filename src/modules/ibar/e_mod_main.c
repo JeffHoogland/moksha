@@ -1652,11 +1652,7 @@ _ibar_bar_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	edje_object_part_swallow(ibb->bar_object, "items", ibb->box_object);
 
 	evas_object_move(ibb->bar_object, ibb->x, ibb->y);
-	if (ibb->overlay_object)
-	  evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
 	evas_object_resize(ibb->bar_object, ibb->w, ibb->h);
-	if (ibb->overlay_object)
-	  evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
 
 	_ibar_bar_follower_reset(ibb);
 	_ibar_bar_timer_handle(ibb);
