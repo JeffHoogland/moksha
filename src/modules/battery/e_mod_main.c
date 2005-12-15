@@ -260,16 +260,6 @@ _battery_shutdown(Battery *e)
 }
 
 static void
-_battery_menu_alarm_disable(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Battery *e;
-
-   e = data;
-   e->conf->alarm = 0;
-   e_config_save_queue();
-}
-
-static void
 _battery_config_menu_new(Battery *e)
 {
    E_Menu *mn;
