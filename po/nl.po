@@ -1,17 +1,19 @@
 # translation of nl.po to Nederlands
-# This file is put in the public domain.
+# Nederlands translation of enlightenment.po to .
+# Copyright (C) 2005 Free Software Foundation, Inc.
 #
+# aboe <niels.abspoel@wanadoo.nl>, 2005.
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-12-16 02:17+0100\n"
-"PO-Revision-Date: 2005-12-16 02:42+0100\n"
+"POT-Creation-Date: 2005-12-16 10:36+0100\n"
+"PO-Revision-Date: 2005-12-16 10:48+0100\n"
 "Last-Translator: Niels Abspoel <niels.abspoel@wanadoo.nl>\n"
 "Language-Team: Nederlands <nl@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11\n"
 
@@ -373,7 +375,7 @@ msgstr "Je probeert Enlightenment het toepassen van<br>eigenschappen (zoals grot
 #: src/bin/e_module.c:414 src/bin/e_error.c:196 src/bin/e_error.c:205
 #: src/modules/ibar/e_mod_main.c:1588
 msgid "OK"
-msgstr "OK "
+msgstr "OK"
 
 #: src/bin/e_int_border_remember.c:316 src/bin/e_int_border_remember.c:346
 msgid "No match properties set"
@@ -1362,7 +1364,7 @@ msgstr "Verticaal Centreren"
 
 #: src/bin/e_gadman.c:714
 msgid "End Edit Mode"
-msgstr "Bewerkmodus beÃ«indigen"
+msgstr "Bewerkmodus beëindigen"
 
 #: src/bin/e_about.c:55
 msgid ""
@@ -1966,7 +1968,10 @@ msgid ""
 "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
 "<br>It is especially useful for modern Laptops with high speed<br>CPUs that "
 "generate a lot of heat."
-msgstr "Een module om de<hilight> ACPI Thermosensor</hilight> te meten in Linux.<br>Het is in bijzonder handig voor moderne Laptops met snelle<br>Processoren die veel warmte afgeven."
+msgstr ""
+"Een module om de<hilight> ACPI Thermosensor</hilight> te meten in Linux."
+"<br>Het is in bijzonder handig voor moderne Laptops met snelle<br>Processoren die "
+"veel warmte afgeven."
 
 #: src/modules/dropshadow/e_mod_main.c:187
 msgid "Enlightenment Dropshadow Module"
@@ -1977,7 +1982,9 @@ msgid ""
 "This is the dropshadow module that allows dropshadows to be cast<br>on the "
 "desktop background - without special X-Server extensions<br>or hardware "
 "acceleration."
-msgstr "Dit is de schaduw module dat schaduwen toestaat op het<br> bureaublad-achtergrond - zonder speciale X-server uitbreidingen<br>of hardware versnelling."
+msgstr ""
+"Dit is de schaduw module dat schaduwen toestaat op het<br> bureaublad-achtergrond"
+"zonder speciale X-server uitbreidingen<br>of hardware versnelling."
 
 #: src/modules/dropshadow/e_mod_main.c:298
 msgid "Very Fuzzy"
@@ -2080,7 +2087,7 @@ msgstr "1 Uur"
 #: src/modules/battery/e_mod_config.c:180
 #, c-format
 msgid "%1.0f minutes"
-msgstr "%1.van minuten"
+msgstr "%1.0f van minuten"
 
 #: src/modules/battery/e_mod_main.c:128
 msgid "Enlightenment Battery Module"
