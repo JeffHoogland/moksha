@@ -68,7 +68,6 @@ struct _Pager
    Ecore_Event_Handler *ev_handler_zone_desk_count_set;
    Ecore_Event_Handler *ev_handler_desk_show;
    Ecore_Event_Handler *ev_handler_desk_name_change;
-   Ecore_Event_Handler *ev_handler_container_resize;
 };
 
 struct _Pager_Face
@@ -147,5 +146,7 @@ EAPI int   e_modapi_shutdown (E_Module *module);
 EAPI int   e_modapi_save     (E_Module *module);
 EAPI int   e_modapi_info     (E_Module *module);
 EAPI int   e_modapi_about    (E_Module *module);
+
+EAPI void  _pager_cb_config_updated(void *data);
 
 #endif
