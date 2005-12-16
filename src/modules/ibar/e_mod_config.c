@@ -107,7 +107,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_check_add(evas, _("Follower"), &(cfdata->follower));
+   ob = e_widget_check_add(evas, _("Show Follower"), &(cfdata->follower));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Auto Fit Icons"), &(cfdata->method));
    e_widget_framelist_object_append(of, ob);
@@ -166,7 +166,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
-   ob = e_widget_check_add(evas, _("Follower"), &(cfdata->follower));
+   ob = e_widget_check_add(evas, _("Show Follower"), &(cfdata->follower));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Auto Fit Icons"), &(cfdata->method));
    e_widget_framelist_object_append(of, ob);
@@ -181,7 +181,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
 
 	/* Advanced Options */
    of = e_widget_framelist_add(evas, _("Advanced Settings"), 0);
-   ob = e_widget_label_add(evas, _("Follow Speed:"));
+   ob = e_widget_label_add(evas, _("Follower Speed:"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 0.99, 0.01, 0,  &(cfdata->follow_speed), NULL,200);
    e_widget_framelist_object_append(of, ob);

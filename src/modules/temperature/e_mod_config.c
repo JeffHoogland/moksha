@@ -157,7 +157,7 @@ static Evas_Object
 
    _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Units"), 0);
+   of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
    ob = e_widget_radio_add(evas, _("Celcius"), 0, rg);
    e_widget_framelist_object_append(of, ob);
@@ -177,7 +177,7 @@ static Evas_Object
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Low Temp"), 0);
+   of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
    rg = e_widget_radio_group_new(&(cfdata->low_method));
    ob = e_widget_radio_add(evas, _("40 F"), 40, rg);
    e_widget_framelist_object_append(of, ob);
@@ -187,7 +187,7 @@ static Evas_Object
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("High Temp"), 0);
+   of = e_widget_framelist_add(evas, _("High Temperature"), 0);
    rg = e_widget_radio_group_new(&(cfdata->high_method));
    ob = e_widget_radio_add(evas, _("60 F"), 60, rg);
    e_widget_framelist_object_append(of, ob);
@@ -257,7 +257,7 @@ static Evas_Object
    _fill_data(cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Units"), 0);
+   of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
    ob = e_widget_radio_add(evas, _("Celcius"), 0, rg);
    e_widget_framelist_object_append(of, ob);

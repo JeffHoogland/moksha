@@ -79,9 +79,9 @@ static Evas_Object
    rg = e_widget_radio_group_new(&(cfdata->digital_style));
    ob = e_widget_radio_add(evas, _("No Digital Display"), 0, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("Normal"), 1, rg);
+   ob = e_widget_radio_add(evas, _("12 Hour Display"), 1, rg);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("24 Hour"), 2, rg);
+   ob = e_widget_radio_add(evas, _("24 Hour Display"), 2, rg);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
