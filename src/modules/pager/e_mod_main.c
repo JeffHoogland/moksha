@@ -83,13 +83,9 @@ static void        _pager_face_cb_drop(void *data, const char *type, void *drop)
 static void        _pager_face_deskname_position_change(Pager_Face *face);
 static int         _pager_popup_cb_timeout(void *data);
 
-static void        _pager_menu_cb_popup_enable(void *data, E_Menu *m, E_Menu_Item *mi);
-
 static void        _pager_menu_cb_aspect_keep_height(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_menu_cb_aspect_keep_width(void *data, E_Menu *m, E_Menu_Item *mi);
-
 static void        _pager_menu_cb_configure(void *data, E_Menu *m, E_Menu_Item *mi);
-
 
 static int         _pager_count;
 
