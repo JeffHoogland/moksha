@@ -2,7 +2,9 @@
 # This file is put in the public domain.
 #
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
-"Project-Id-Version: nl\n"
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-12-16 02:17+0100\n"
 "PO-Revision-Date: 2005-12-16 02:42+0100\n"
