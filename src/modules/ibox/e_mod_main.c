@@ -1135,11 +1135,7 @@ _ibox_box_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change
 	edje_object_part_swallow(ibb->box_object, "items", ibb->item_object);
 
 	evas_object_move(ibb->box_object, ibb->x, ibb->y);
-	if (ibb->overlay_object)
-	  evas_object_move(ibb->overlay_object, ibb->x, ibb->y);
 	evas_object_resize(ibb->box_object, ibb->w, ibb->h);
-	if (ibb->overlay_object)
-	  evas_object_resize(ibb->overlay_object, ibb->w, ibb->h);
 
 	_ibox_box_follower_reset(ibb);
 	_ibox_box_timer_handle(ibb);
