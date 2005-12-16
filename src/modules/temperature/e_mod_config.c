@@ -77,11 +77,11 @@ _fill_data(CFData *cfdata)
      {
 	cfdata->poll_method = 1; //Fast
      }
-   else if ((p > 5) && (p <=10)) 
+   else if ((p > 5) && (p <= 10)) 
      {
 	cfdata->poll_method = 10; //Normal
      }
-   else if ((p > 10) && (p <=30)) 
+   else if ((p > 10) && (p <= 30)) 
      {
 	cfdata->poll_method = 30; //Slow
      }
@@ -222,7 +222,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      {
 	t->conf->low = (30 + (50 * t->conf->units));		
      }
-   else if (cfdata->low_method == 120) 
+   else if (cfdata->low_method == 100) 
      {
 	t->conf->low = (50 + (70 * t->conf->units));		
      }
@@ -313,12 +313,12 @@ static Evas_Object
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 100, 10, 0, NULL, &(cfdata->low_temp), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 100, 5, 0, NULL, &(cfdata->low_temp), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("High Temperature"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 220, 10, 0, NULL, &(cfdata->high_temp), 200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 220, 5, 0, NULL, &(cfdata->high_temp), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
       
