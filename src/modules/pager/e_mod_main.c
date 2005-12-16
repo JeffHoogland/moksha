@@ -320,9 +320,6 @@ _pager_new(void)
    pager->ev_handler_desk_name_change =
       ecore_event_handler_add(E_EVENT_DESK_NAME_CHANGE,
 			      _pager_cb_event_desk_name_change, pager);
-   pager->ev_handler_container_resize =
-      ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE,
-			      _pager_cb_event_container_resize, pager);
    return pager;
 }
 
@@ -373,8 +370,6 @@ _pager_free(Pager *pager)
      ecore_event_handler_del(pager->ev_handler_desk_show);
    if (pager->ev_handler_desk_name_change)
      ecore_event_handler_del(pager->ev_handler_desk_name_change);
-   if (pager->ev_handler_container_resize)
-     ecore_event_handler_del(pager->ev_handler_container_resize);
 
    evas_list_free(pager->conf->faces);
    free(pager->conf);
@@ -1734,59 +1729,6 @@ _pager_cb_event_desk_name_change(void *data, int type, void *event)
      }
    return 1;
 }
-
-static int
-_pager_cb_event_container_resize(void *data, int type, void *event)
-{
-   E_Event_Container_Resize *ev;
-   Pager             *pager;
-   Evas_List         *l, *l2;
-   Evas_Coord                w, h, lw, lh, dw, dh, padw, padh;
-
-   pager = data;
-   ev = event;
-   for (l = pager->faces; l; l = l->next)
-     {
-	Pager_Face *face;
-
-	face = l->data;
-	if (face->zone->container != ev->container) continue;
-
-	evas_object_geometry_get(face->table_object, NULL, NULL, &lw, &lh);
-	if (face->xnum > 0) dw = lw / face->xnum;
-	else dw = 0;
-	if (face->ynum > 0) dh = lh / face->ynum;
-	else dh = 0;
-
-	for (l2 = face->desks; l2; l2 = l2->next)
-	  {
-	     Pager_Desk *pd;
-
-	     pd = l2->data;
-	     e_layout_virtual_size_set(pd->layout_object,
-				       face->zone->w,
-				       face->zone->h);
-	  }
-	w = face->fw;
-	h = face->fh;
-	evas_object_geometry_get(face->table_object, NULL, NULL, &lw, &lh);
-	padw = w - lw;
-	padh = h - lh;
-
-	if ((face->xnum * face->zone->w) > (face->ynum * face->zone->h))
-	  {
-	     w = (face->xnum * ((face->zone->w * dh) / face->zone->h)) + padw;
-	  }
-	else
-	  {
-	     h = (face->ynum * ((face->zone->h * dw) / face->zone->w)) + padh;
-	  }
-	e_gadman_client_resize(face->gmc, w, h);
-     }
-   return 1;
-}
-
-/*****/
 
 static void
 _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
