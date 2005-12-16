@@ -51,7 +51,6 @@ static int         _pager_cb_event_border_icon_change(void *data, int type, void
 static int         _pager_cb_event_zone_desk_count_set(void *data, int type, void *event);
 static int         _pager_cb_event_desk_show(void *data, int type, void *event);
 static int         _pager_cb_event_desk_name_change(void *data, int type, void *event);
-static int         _pager_cb_event_container_resize(void *data, int type, void *event);
 
 static void        _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
 static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
