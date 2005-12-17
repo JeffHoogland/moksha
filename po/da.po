@@ -1053,7 +1053,7 @@ msgstr "Starter %s"
 msgid "Always On Top"
 msgstr "Altid øverst"
 
-#: src/bin/e_int_border_menu.c:51 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_int_border_menu.c:51
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normal"
@@ -1592,6 +1592,10 @@ msgstr "Et simpelt modul for at give E17 et ur."
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "Intet digitalur"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 timer"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

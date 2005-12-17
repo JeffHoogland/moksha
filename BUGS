@@ -1,0 +1,151 @@
+From: Matias Grana <matiasg@dm.uba.ar>
+To: Enlightenment users list <enlightenment-users@lists.sourceforge.net>
+Subject: [e-users] bug in e17?
+Date: Fri, 4 Nov 2005 16:41:49 -0300
+Sender: enlightenment-users-admin@lists.sourceforge.net
+
+hi;
+I think I've found a bug, which I can reproduce as follows:
+
+open konqueror (maybe other kde applications work too, i don't know).
+open a web page on it.
+open the 'print...'  dialog
+tell it to print it to a file
+click on the folder icon, to browse for the file to print it to
+select a file and press save
+click AGAIN on the folder icon.
+
+The browser opens, but it does as an iconized window.
+
+I just recompiled code from cvs to be sure it wasn't fixed. If I can be
+of more help on this, tell me so.
+
+Matias
+
+
+
+
+
+
+
+
+From: roland <raw@morphius.apk.net>
+To: enlightenment-users@lists.sourceforge.net
+Subject: [e-users] segfaults.
+Date: Sun, 11 Dec 2005 10:15:58 -0500
+Reply-To: raw@morphius.apk.net
+Sender: enlightenment-users-admin@lists.sourceforge.net
+
+Hi all Anyone have any idea about a bug causing segfaults
+when an iconified window exits ? I see this a lot and also
+saw mention of this in the E todo list. Will this be fixed?
+I can reproduce this quite reliably by for example
+iconifying an xterm and sending it a kill sig after it goes
+into iconbox. Is there a workaround? Sometimes I have a ssh
+session open and iconified and if for some reason this
+session dies, E segfaults. Havent seen any other big problems
+so far. Quite impressed actually with E17 .
+
+
+
+
+
+
+
+
+From: David Sharp <whereami@gmail.com>
+To: The Rasterman Carsten Haitzler <raster@rasterman.com>,
+enlightenment-devel <enlightenment-devel@lists.sourceforge.net>
+Subject: Re: [E-devel] background changing
+Date: Thu, 1 Dec 2005 03:13:21 -0800
+
+On 10/7/05, The Rasterman Carsten Haitzler <raster@rasterman.com> wrote:
+> On Fri, 7 Oct 2005 11:42:10 -0700 David Sharp <whereami@gmail.com> babbled:
+>
+> > On 10/7/05, The Rasterman Carsten Haitzler <raster@rasterman.com> wrote:
+> > > On Fri, 7 Oct 2005 08:06:57 -0500 Chad Kittel <vertigo@wi.rr.com>
+babbled:
+> > > > The pager not showing its pop-up is still an issue.  Looking back at
+> > > > the -commits ML, I didn't see any commits related to that so I assume
+it
+> > > > just hasn't been looked at yet.
+> > > >
+> > > > Once again. thank you.
+> > >
+> > > it should work - try enabling it? etc.? rm -rf your .e dir and start e?
+>
+> > no, it doesn't.. the pager popup shows when switching in the first
+> > zone, but not the second, even after nuking my .e/e/config.
+>
+> oh... multiple ZONES! xinerama! aha!
+
+a little reminder, in case this didn't make your todo list / email
+queue, this doesn't seem to have gone away. or, maybe it went away,
+and came back.. i don't recall.
+
+>
+> > also.. i thought it was nice that the bg only changed on the one
+> > monitor.. for me, the problem was that e wouldn't remember that
+> > setting, and whenever e restarted, you would get the same bg on both
+> > zones again.
+
+
+
+
+
+
+
+
+
+
+From: Kim Woelders <kim@woelders.dk>
+To: enlightenment-devel@lists.sourceforge.net
+Subject: Re: [E-devel] Re: bugs with iconification/deiconification in e17.
+Date: Fri, 02 Dec 2005 19:14:46 +0100
+Sender: enlightenment-devel-admin@lists.sourceforge.net
+
+Carsten Haitzler (The Rasterman) wrote:
+> On Fri, 02 Dec 2005 09:19:20 +0200 <vkojouharov@gmail.com>
+> babbled:
+> 
+> 
+>>On Thu, 2005-12-01 at 18:26 +0100, Kim Woelders wrote:
+>>
+>>>Carsten Haitzler (The Rasterman) wrote:
+>>>
+>>>>On Wed, 30 Nov 2005 19:44:37 +0200
+>>>><vkojouharov@gmail.com> babbled:
+>>>
+>>>...
+>>>
+>>>>>The other app is with deiconifying a window. Some programs (actually,
+>>>>>only alltray comes to mind right now) use xlib to do the whole
+>>>>>iconification thing. For the alltray instance, it seems to use
+>>>>>XSetWMHints, set the state to NormalState, and basically that's it. And
+>>>>>it seems to work for a lot of window managers too, so that must be a
+>>>>>proper way to do it. But that doesn't work for e17, and the window stays
+>>>>>iconified.
+>>>>
+>>>>
+>>>>e waits for a map request. it doesnt respond to a change in hints for a
+>>>>map. we can make it do so though :) i will write these down in the TODO.
+>>>>
+>>>
+>>>I don't think a client can deiconify by changing a hint. e16 doesn't but
+>>>does work with alltray. The normal way is to map the client window. In
+>>>some cases clients send a _NET_ACTIVE_WINDOW message, but IIRC always to
+>>>deiconify some other client as in tasklist and pager type 
+>>
+>>I'm just curious here, what does alltray use to deiconify a window? cuz
+>>that's the only relevant thing I could find in the code
+> 
+> 
+> it prbably SHOULD use XMapWindow() or XMapRaised()
+> 
+After having taken a peek at what is does in e16.8 on "alltray xterm",
+the short version is that it uses XMapWindow() to map the client (which
+actually is an alltray window containing the reparented real client)
+first time. After that, when having been iconified, it sends a
+_NET_ACTIVE_WINDOW client message to deiconify.
+
+/Kim

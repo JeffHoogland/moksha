@@ -632,7 +632,7 @@ msgstr "以上のロックを記憶する"
 msgid "Always On Top"
 msgstr "常に一番手前に"
 
-#: src/bin/e_int_border_menu.c:53 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_int_border_menu.c:53
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "普通"
@@ -1704,6 +1704,10 @@ msgstr "E17 用のシンプルな時計モジュールです."
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "デジタル表示無し"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 時間表示"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

@@ -190,6 +190,10 @@ msgstr "Eine einfache Uhr für E17."
 msgid "No Digital Display"
 msgstr "Keine Digitale Uhr"
 
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 Stunden"
+
 #: src/modules/clock/e_mod_main.c:352
 msgid "24 Hour"
 msgstr "24 Stunden"

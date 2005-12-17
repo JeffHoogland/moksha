@@ -705,7 +705,7 @@ msgstr "Zapamätať Vynechanie zo Zoznamu Okien"
 msgid "Always On Top"
 msgstr "Vždy Navrchu"
 
-#: src/bin/e_border.c:5784 src/modules/clock/e_mod_main.c:341
+#: src/bin/e_border.c:5784
 #: src/modules/desktopname/e_mod_main.c:149
 msgid "Normal"
 msgstr "Normálne"
@@ -1090,6 +1090,10 @@ msgstr "Jednoduchý modul, ktorý pridá do E17 hodiny."
 #: src/modules/clock/e_mod_main.c:330
 msgid "No Digital Display"
 msgstr "Žiaden Digitálny Displej"
+
+#: src/modules/clock/e_mod_main.c:341
+msgid "12 Hour"
+msgstr "12 Hodín"
 
 #: src/modules/clock/e_mod_main.c:352
 msgid "24 Hour"

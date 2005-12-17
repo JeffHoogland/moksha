@@ -412,7 +412,7 @@ msgstr "Zapamiętaj Listę Omijanych Okien"
 msgid "Always On Top"
 msgstr "Zawsze na wierzchu"
 
-#: src/bin/e_border.c:6311 src/modules/pager/e_mod_main.c:458
+#: src/bin/e_border.c:6311
 #: src/modules/clock/e_mod_main.c:349
 msgid "Normal"
 msgstr "Normalny"
@@ -1056,6 +1056,10 @@ msgstr "Prosty moduł zegara dla E17."
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "Bez Wyświetlacza Cyfrowego"
+
+#: src/modules/pager/e_mod_main.c:458
+msgid "12 Hour"
+msgstr "12 godzinny"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

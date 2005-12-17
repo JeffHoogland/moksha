@@ -603,7 +603,7 @@ msgstr "Kom ihåg dessa Lås"
 msgid "Always On Top"
 msgstr "Alltid överst"
 
-#: src/bin/e_int_border_menu.c:53 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_int_border_menu.c:53
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normal"
@@ -1660,6 +1660,10 @@ msgstr "En enkel klock modul till E17"
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "Ingen digital visning"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 timmar"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

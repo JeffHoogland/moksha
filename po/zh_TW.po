@@ -922,7 +922,7 @@ msgstr "啟動 %s"
 msgid "Always On Top"
 msgstr "總是置於頂端"
 
-#: src/bin/e_int_border_menu.c:50 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_int_border_menu.c:50
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "正常"
@@ -1388,6 +1388,10 @@ msgstr "一個提供E17時鐘的簡單模組。"
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "無數字時間顯示"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12小時"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

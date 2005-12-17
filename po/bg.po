@@ -200,7 +200,7 @@ msgstr "Запомняне на списък за пропускане на пр
 msgid "Always On Top"
 msgstr "Винаги отгоре"
 
-#: src/bin/e_border.c:5686 src/modules/clock/e_mod_main.c:341
+#: src/bin/e_border.c:5686
 msgid "Normal"
 msgstr "Нормално"
 
@@ -856,6 +856,10 @@ msgstr "Прост модул за часовник в E17"
 #: src/modules/clock/e_mod_main.c:330
 msgid "No Digital Display"
 msgstr "Няма цифрово лице"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 часа"
 
 #: src/modules/clock/e_mod_main.c:352
 msgid "24 Hour"

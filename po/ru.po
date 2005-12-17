@@ -289,7 +289,7 @@ msgstr "Запомнить Список Пропуска Окон"
 msgid "Always On Top"
 msgstr "Всегда Поверху"
 
-#: src/bin/e_border.c:6303 src/modules/pager/e_mod_main.c:458
+#: src/bin/e_border.c:6303
 #: src/modules/clock/e_mod_main.c:349
 msgid "Normal"
 msgstr "Нормально"
@@ -1341,6 +1341,11 @@ msgstr "Простой модуль часов в E17"
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "Нет Цифрового Показа"
+
+#: src/modules/pager/e_mod_main.c:458
+#, fuzzy
+msgid "12 Hour"
+msgstr "12 Час"
 
 #: src/modules/clock/e_mod_main.c:360
 #, fuzzy

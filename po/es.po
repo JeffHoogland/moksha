@@ -1137,7 +1137,6 @@ msgid "Always On Top"
 msgstr "Siempre arriba"
 
 #: src/bin/e_int_border_menu.c:51
-#: src/modules/clock/e_mod_main.c:349
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normal"
@@ -1534,6 +1533,10 @@ msgstr "Un módulo simple para darle un reloj a E17"
 #: src/modules/clock/e_mod_main.c:338
 msgid "No Digital Display"
 msgstr "Sin visor digital"
+
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 horas"
 
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"

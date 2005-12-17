@@ -193,7 +193,7 @@ msgstr "Husk å hoppe over vindu"
 msgid "Always On Top"
 msgstr "Alltid på toppen"
 
-#: src/bin/e_border.c:6285 src/modules/clock/e_mod_main.c:349
+#: src/bin/e_border.c:6285
 #: src/modules/pager/e_mod_main.c:458
 msgid "Normal"
 msgstr "Normal"
@@ -954,9 +954,13 @@ msgstr "En enkel klokkemodul for E17."
 msgid "No Digital Display"
 msgstr "Fjern digital klokke"
 
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12-timers"
+
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"
-msgstr "24 timer"
+msgstr "24-timers"
 
 #: src/modules/clock/e_mod_main.c:372
 msgid "Digital Display"

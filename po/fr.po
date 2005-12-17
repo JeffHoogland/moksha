@@ -1447,6 +1447,10 @@ msgstr "Restorer l'ancienne résolution %dx%d MAINTENANT!"
 msgid "No Digital Display"
 msgstr "Aucun Affichage Numérique"
 
+#: src/modules/clock/e_mod_main.c:349
+msgid "12 Hour"
+msgstr "12 Heures"
+
 #: src/modules/clock/e_mod_main.c:360
 msgid "24 Hour"
 msgstr "24 Heures"

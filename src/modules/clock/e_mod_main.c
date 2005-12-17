@@ -32,7 +32,7 @@ static E_Config_DD *conf_face_edd;
 
 const int
   DIGITAL_STYLE_NONE = 0,
-  DIGITAL_STYLE_NORMAL = 1,
+  DIGITAL_STYLE_12HOUR = 1,
   DIGITAL_STYLE_24HOUR = 2
   ;
 
