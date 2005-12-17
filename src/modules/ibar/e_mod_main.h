@@ -34,8 +34,6 @@ struct _IBar
    E_App       *apps;
    Evas_List   *bars;
    E_Menu      *config_menu;
-   E_Menu      *config_menu_options;
-   E_Menu      *config_menu_size;
 
    Config      *conf;
 };

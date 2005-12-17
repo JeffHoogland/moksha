@@ -94,32 +94,6 @@ static void    _ibar_bar_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *m
 static void    _ibar_drag_cb_intercept_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Coord y);
 static void    _ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Coord h);
 
-/* PROTOTYPES - same all the time */
-typedef struct _CFData CFData;
-
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
-static void _ibar_config_dialog(IBar *ib);
-
-
-/* Actual config data we will be playing with whil the dialog is active */
-struct _CFData
-{
-   /*- BASIC -*/
-   //int mode;
-   /*- ADVANCED -*/
-   int follower;
-   double follow_speed;
-   int iconsize;
-   int autofit;
-   double autoscroll_speed;
-};
-
-
 /* Config Updated Function Protos */
 static void    _ibar_bar_cb_width_auto(void *data);
 static void    _ibar_bar_cb_follower(void *data);
@@ -192,9 +166,11 @@ int
 e_modapi_config(E_Module *m)
 {
    IBar *ib;
+   E_Container *con;
    
    ib = m->data;
-   if (ib) _ibar_config_dialog(ib);
+   con = e_container_current_get(e_manager_current_get());
+   if (ib) e_int_config_ibar(con, ib);
    return 1;
 }
 
@@ -653,15 +629,6 @@ _ibar_bar_menu_new(IBar_Bar *ibb)
 
    mn = e_menu_new();
    ibb->menu = mn;
-
-   /* Enabled */
-   /*
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
-   e_menu_item_check_set(mi, 1);
-   if (ibb->conf->enabled) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ibar_bar_cb_menu_enabled, ibb);
-    */
 
    /* Config */
    mi = e_menu_item_new(mn);
@@ -1817,25 +1784,6 @@ _ibar_bar_cb_iconsize_change(void *data)
      }
 }
 
-/*
-static void
-_ibar_bar_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   IBar_Bar *ibb;
-   unsigned char enabled;
-
-   ibb = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((ibb->conf->enabled) && (!enabled))
-     {
-	_ibar_bar_disable(ibb);
-     }
-   else if ((!ibb->conf->enabled) && (enabled))
-     {
-	_ibar_bar_enable(ibb);
-     }
-}
-
 static void
 _ibar_bar_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi)
 {
@@ -1858,266 +1806,3 @@ _ibar_drag_cb_intercept_resize(void *data, Evas_Object *o, Evas_Coord w, Evas_Co
    evas_object_resize(o, w, h);
    evas_object_resize(data, w, h);
 }
-*/
-
-
-/* Config dialog info */
-static void
-_ibar_config_dialog(IBar *ib)
-{
-   E_Config_Dialog *cfd;
-   E_Config_Dialog_View v;
-   E_Manager *man;
-   E_Container *con;
-   //IBar *ib;
-   //ib = ibb->ibar;
-   man = e_manager_current_get();
-   //if (!man) return NULL;
-   con = e_container_current_get(man);
-   
-   /* methods */
-   v.create_cfdata           = _create_data;
-   v.free_cfdata             = _free_data;
-   v.basic.apply_cfdata      = _basic_apply_data;
-   v.basic.create_widgets    = _basic_create_widgets;
-   v.advanced.apply_cfdata   = _advanced_apply_data;
-   v.advanced.create_widgets = _advanced_create_widgets;
-   cfd = e_config_dialog_new(con, _("IBar Configuration"), NULL, 0, &v, ib);
-   //ib->conf_diag = cfd;
-}
-
-/**--CREATE--**/
-static void
-_fill_data(IBar *ib,CFData *cfdata)
-{
-   cfdata->autofit  = (ib->conf->width == IBAR_WIDTH_AUTO);
-   cfdata->autoscroll_speed = ib->conf->autoscroll_speed; 
-   cfdata->follower = ib->conf->follower;
-   cfdata->follow_speed = ib->conf->follow_speed;
-   cfdata->iconsize = ib->conf->iconsize;
-}
-
-static void *
-_create_data(E_Config_Dialog *cfd)
-{
-   /* Create cfdata - cfdata is a temporary block of config data that this
-    * dialog will be dealing with while configuring. it will be applied to
-    * the running systems/config in the apply methods
-    */
-   CFData *cfdata;
-   IBar *ib;
-   ib = cfd->data;
-   
-   cfdata = E_NEW(CFData, 1);
-   _fill_data(ib,cfdata);
-   return cfdata;
-}
-
-static void
-_free_data(E_Config_Dialog *cfd, CFData *cfdata)
-{
-   /* Free the cfdata */
-
-   free(cfdata);
-}
-
-/**--APPLY--**/
-static int
-_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
-{
-   IBar *ib;
-   IBar_Bar *ibb;
-   Evas_List *l;
-   ib = cfd->data;
-   
-/* Follower */
-   if ((cfdata->follower) && (!ib->conf->follower))
-     {
-	ib->conf->follower = 1;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     Evas_Object *o;
-
-	     ibb = l->data;
-	     if (ibb->overlay_object) continue;
-	     o = edje_object_add(ibb->evas);
-	     ibb->overlay_object = o;
-	     evas_object_layer_set(o, 2);
-	     e_theme_edje_object_set(o, "base/theme/modules/ibar",
-				     "modules/ibar/follower");
-	     evas_object_show(o);
-	     _ibar_bar_follower_reset(ibb);
-	  }
-     }
-   else if (!(cfdata->follower) && (ib->conf->follower))
-     {
-	ib->conf->follower = 0;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     if (!ibb->overlay_object) continue;
-	     evas_object_del(ibb->overlay_object);
-	     ibb->overlay_object = NULL;
-	  }
-     }
-   
-/* Auto fit */
-if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED))
-     {
-	ib->conf->width = IBAR_WIDTH_AUTO;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     _ibar_bar_update_policy(ibb);
-	     _ibar_bar_frame_resize(ibb);
-	  }
-     }
-   else if (!(cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_AUTO))
-     {
-	ib->conf->width = IBAR_WIDTH_FIXED;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     _ibar_bar_update_policy(ibb);
-	     _ibar_bar_frame_resize(ibb);
-	  }
-     }
-   return 1;
-}
-
-static int
-_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
-{
-   IBar *ib;
-   IBar_Bar *ibb;
-   Evas_List *l;
-   ib = cfd->data;
-   
-/* Follower */
-   if ((cfdata->follower) && (!ib->conf->follower))
-     {
-	ib->conf->follower = 1;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     Evas_Object *o;
-
-	     ibb = l->data;
-	     if (ibb->overlay_object) continue;
-	     o = edje_object_add(ibb->evas);
-	     ibb->overlay_object = o;
-	     evas_object_layer_set(o, 2);
-	     e_theme_edje_object_set(o, "base/theme/modules/ibar",
-				     "modules/ibar/follower");
-	     evas_object_show(o);
-	  }
-     }
-   else if (!(cfdata->follower) && (ib->conf->follower))
-     {
-	ib->conf->follower = 0;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     if (!ibb->overlay_object) continue;
-	     evas_object_del(ibb->overlay_object);
-	     ibb->overlay_object = NULL;
-	  }
-     }
-   
-   /* Auto fit */
-   if ((cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_FIXED))
-     {
-	ib->conf->width = IBAR_WIDTH_AUTO;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     _ibar_bar_update_policy(ibb);
-	     _ibar_bar_frame_resize(ibb);
-	  }
-     }
-   else if (!(cfdata->autofit) && (ib->conf->width == IBAR_WIDTH_AUTO))
-     {
-	ib->conf->width = IBAR_WIDTH_FIXED;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     _ibar_bar_update_policy(ibb);
-	     _ibar_bar_frame_resize(ibb);
-	  }
-     }
-
-/* Icon size */   
-   if (cfdata->iconsize != ib->conf->iconsize)
-     {
-	ib->conf->iconsize = cfdata->iconsize;
-	for (l = ib->bars; l; l = l->next)
-	  {
-	     ibb = l->data;
-	     _ibar_bar_cb_iconsize_change(ibb);
-	  }
-     }
-   
-   e_config_save_queue();
-   return 1;
-}
-
-/**--GUI--**/
-static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
-{
-   /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob;
-   E_Radio_Group *rg;
-   IBar *ib;
-   ib = cfd->data;
-   
-   _fill_data(ib,cfdata);
-   o = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Follower"), &(cfdata->follower));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Auto fit"), &(cfdata->autofit));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   return o;
-}
-
-static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
-{
-   /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of,*oo;
-   E_Radio_Group *rg;
-   IBar *ib;
-   ib = cfd->data;
-   
-   _fill_data(ib,cfdata);
-   
-   o = e_widget_list_add(evas, 0, 0);
-   
-   of = e_widget_framelist_add(evas, _("Follower"), 0);
-   ob = e_widget_check_add(evas, _("Visible"), &(cfdata->follower));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Follow speed"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f px/s"), 0.0, 1.0, 0.01,0, &(cfdata->follow_speed), NULL, 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   
-   of = e_widget_framelist_add(evas, _("Icon size"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%3.0f px"), 8.0, 128.0, 1.0,0, NULL, &(cfdata->iconsize), 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-   
-   of = e_widget_framelist_add(evas, _("Width"), 0);
-   ob = e_widget_check_add(evas, _("Auto fit"), &(cfdata->autofit));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_label_add(evas, _("Autoscroll speed"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f px/s"), 0.0, 1.0, 0.01,0, &(cfdata->autoscroll_speed), NULL, 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
-
-   return o;
-}
-
