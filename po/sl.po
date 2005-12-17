@@ -754,7 +754,7 @@ msgstr "Zapomni si Seznam Preskočenih Oken"
 msgid "Always On Top"
 msgstr "Vedno na Vrhu"
 
-#: src/bin/e_border.c:6345 src/modules/clock/e_mod_main.c:341
+#: src/bin/e_border.c:6345
 #: src/modules/pager/e_mod_main.c:460
 msgid "Normal"
 msgstr "Normalno"
@@ -1157,6 +1157,11 @@ msgstr "Modul, ki na vaše E17 namizje pričara uro."
 #: src/modules/clock/e_mod_main.c:330
 msgid "No Digital Display"
 msgstr "Brez digitalnega prikaza"
+
+#: src/modules/clock/e_mod_main.c:341
+#, fuzzy
+msgid "12 Hour"
+msgstr "12 ur"
 
 #: src/modules/clock/e_mod_main.c:352
 #, fuzzy
