@@ -660,7 +660,7 @@ _ibox_box_frame_resize(IBox_Box *ibb)
 	         (e_gadman_client_edge_get(ibb->gmc) == E_GADMAN_EDGE_BOTTOM))
 	  {
 	     /* w is the width of the box */
-	     e_gadman_client_resize(ibb->gmc, bw, bh); //ibb->w
+	     e_gadman_client_resize(ibb->gmc, ibb->w, bh);
 	  }
      }
 }
