@@ -72,9 +72,9 @@ struct _E_Config
    Evas_List  *desktop_backgrounds;
    char       *desktop_default_name;
    Evas_List  *desktop_names;
-   double      menus_scroll_speed;
-   double      menus_fast_mouse_move_threshhold;
-   double      menus_click_drag_timeout;
+   double      menus_scroll_speed; // GUI
+   double      menus_fast_mouse_move_threshhold; // GUI
+   double      menus_click_drag_timeout; // GUI
    int         border_shade_animate; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
@@ -169,8 +169,8 @@ struct _E_Config
    int         focus_revert_on_hide_or_close;
    int         use_e_cursor;
    int         cursor_size;
-   int         menu_autoscroll_margin;
-   int         menu_autoscroll_cursor_margin;
+   int         menu_autoscroll_margin; // GUI
+   int         menu_autoscroll_cursor_margin; // GUI
    char	      *input_method;
    struct {
 	int    move;
@@ -182,9 +182,9 @@ struct _E_Config
 	int    iconify;
    } transient;
    int         modal_windows;
-   int         menu_eap_name_show;
-   int         menu_eap_generic_show;
-   int         menu_eap_comment_show;
+   int         menu_eap_name_show; // GUI
+   int         menu_eap_generic_show; // GUI
+   int         menu_eap_comment_show; // GUI
    int         fullscreen_policy;
    int         exebuf_max_exe_list;
    int         exebuf_max_eap_list;
