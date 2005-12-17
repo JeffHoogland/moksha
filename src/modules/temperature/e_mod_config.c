@@ -27,8 +27,6 @@ struct _Cfg_File_Data
    char *file;
 };
 
-Temperature *t = NULL;
-
 /* Protos */
 static Evas_Object   *_create_widgets(E_Config_Dialog *cfd, Evas *evas, Config *cfdata);
 static void          *_create_data(E_Config_Dialog *cfd);
@@ -44,8 +42,6 @@ e_int_config_temperature(E_Container *con, Temperature *temp)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
    
-   t = temp;
-   
    v.create_cfdata = _create_data;
    v.free_cfdata = _free_data;
    v.basic.apply_cfdata = _basic_apply_data;
@@ -57,7 +53,7 @@ e_int_config_temperature(E_Container *con, Temperature *temp)
 }
 
 static void
-_fill_data(CFData *cfdata) 
+_fill_data(Temperature *t, CFData *cfdata) 
 {
    double p;
    
@@ -154,8 +150,11 @@ static Evas_Object
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-
-   _fill_data(cfdata);
+   Temperature *t;
+   
+   t = cfd->data;
+   _fill_data(t, cfdata);
+   
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
@@ -203,6 +202,9 @@ static Evas_Object
 static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Temperature *t;
+   
+   t = cfd->data;
    e_border_button_bindings_ungrab_all();
    if (cfdata->unit_method == 0) 
      {
@@ -253,8 +255,10 @@ static Evas_Object
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
-
-   _fill_data(cfdata);
+   Temperature *t;
+   
+   t = cfd->data;
+   _fill_data(t, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
@@ -328,6 +332,10 @@ static Evas_Object
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Temperature *t;
+   
+   t = cfd->data;
+   
    e_border_button_bindings_ungrab_all();
    if (cfdata->unit_method == 0) 
      {

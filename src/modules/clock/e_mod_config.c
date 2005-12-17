@@ -23,15 +23,11 @@ static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-Clock_Face *clk = NULL;
-
 void 
 e_int_config_clock(E_Container *con, Clock_Face *c) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
-   
-   clk = c;
    
    /* Dialog Methods */
    v.create_cfdata = _create_data;
@@ -46,7 +42,7 @@ e_int_config_clock(E_Container *con, Clock_Face *c)
 }
 
 static void 
-_fill_data(CFData *cfdata) 
+_fill_data(Clock_Face *clk, CFData *cfdata) 
 {
    cfdata->digital_style = clk->conf->digitalStyle;
 }
@@ -71,8 +67,10 @@ static Evas_Object
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+   Clock_Face *c;
    
-   _fill_data(cfdata);
+   c = cfd->data;
+   _fill_data(c, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -90,6 +88,9 @@ static Evas_Object
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   Clock_Face *clk;
+   
+   clk = cfd->data;
    e_border_button_bindings_ungrab_all();
    clk->conf->digitalStyle = cfdata->digital_style;
    e_border_button_bindings_grab_all();

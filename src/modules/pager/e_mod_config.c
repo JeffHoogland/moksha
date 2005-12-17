@@ -28,15 +28,11 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-Pager *p = NULL;
-
 void 
 e_int_config_pager(E_Container *con, Pager *pager)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
-   
-   p = pager;
    
    v.create_cfdata = _create_data;
    v.free_cfdata = _free_data;
@@ -49,7 +45,7 @@ e_int_config_pager(E_Container *con, Pager *pager)
 }
 
 static void 
-_fill_data(CFData *cfdata) 
+_fill_data(Pager *p, CFData *cfdata) 
 {
    /* Name Pos, Show Popup, popup_speed */
    cfdata->name_pos = p->conf->deskname_pos;
@@ -87,8 +83,10 @@ static Evas_Object
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+   Pager *p;
    
-   _fill_data(cfdata);
+   p = cfd->data;
+   _fill_data(p, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -119,6 +117,9 @@ static Evas_Object
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   Pager *p;
+   
+   p = cfd->data;
    e_border_button_bindings_ungrab_all();
    p->conf->popup = cfdata->show_popup;
    
@@ -136,8 +137,10 @@ static Evas_Object
 {
    Evas_Object *o, *of, *ob;
    E_Radio_Group *rg;
+   Pager *p;
    
-   _fill_data(cfdata);
+   p = cfd->data;
+   _fill_data(p, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
@@ -174,6 +177,9 @@ static Evas_Object
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
+   Pager *p;
+   
+   p = cfd->data;
    e_border_button_bindings_ungrab_all();
    p->conf->popup = cfdata->show_popup;
    

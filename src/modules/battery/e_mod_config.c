@@ -27,15 +27,11 @@ static int           _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int           _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-Battery *b = NULL;
-
 void
 e_int_config_battery(E_Container *con, Battery *bat) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
-   
-   b = bat;
    
    v.create_cfdata = _create_data;
    v.free_cfdata = _free_data;
@@ -44,11 +40,11 @@ e_int_config_battery(E_Container *con, Battery *bat)
    v.advanced.apply_cfdata = _advanced_apply_data;
    v.advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Battery Module"), NULL, 0, &v, bat);
+   cfd = e_config_dialog_new(con, _("Battery Configuration"), NULL, 0, &v, bat);
 }
 
 static void
-_fill_data(CFData *cfdata) 
+_fill_data(Battery *b, CFData *cfdata) 
 {
    cfdata->alarm_time = b->conf->alarm;
    cfdata->poll_time = b->conf->poll_time;
@@ -66,7 +62,11 @@ static void
 *_create_data(E_Config_Dialog *cfd) 
 {
    CFData *cfdata;
+   Battery *b;
+   
+   b = cfd->data;
    cfdata = E_NEW(CFData, 1);
+   _fill_data(b, cfdata);
    return cfdata;
 }
 
@@ -79,9 +79,11 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 static Evas_Object
 *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
+   Battery *b;
    Evas_Object *o, *of, *ob;
    
-   _fill_data(cfdata);
+   b = cfd->data;
+   _fill_data(b, cfdata);
    
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Basic Settings"), 0);
@@ -94,6 +96,9 @@ static Evas_Object
 static int 
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Battery *b;
+   
+   b = cfd->data;
    e_border_button_bindings_ungrab_all();
    b->conf->poll_time = 10.0;   
    e_border_button_bindings_grab_all();
@@ -107,9 +112,11 @@ static Evas_Object
 *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
    Evas_Object *o, *of, *ob, *ot;
+   Battery *b;
    
    /* Use Sliders for both cfg options */
-   _fill_data(cfdata);
+   b = cfd->data;
+   _fill_data(b, cfdata);
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("Advanced Settings"), 1);
@@ -136,6 +143,9 @@ static Evas_Object
 static int 
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata) 
 {
+   Battery *b;
+   
+   b = cfd->data;
    e_border_button_bindings_ungrab_all();
    
    b->conf->poll_time = cfdata->poll_time;
