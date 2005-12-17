@@ -32,6 +32,7 @@ e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_
 	cfd->icon_size = icon_size;
      }
    cfd->data = data;
+   cfd->hide_buttons = 0;
    
    _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
    
@@ -69,6 +70,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    pdia = cfd->dia;
    cfd->dia = e_dialog_new(cfd->con);
    cfd->dia->data = cfd;
+   cfd->view_dirty=0;
    e_object_del_attach_func_set(E_OBJECT(cfd->dia), _e_config_dialog_cb_dialog_del);
    e_dialog_title_set(cfd->dia, cfd->title);
    if (cfd->icon) e_dialog_icon_set(cfd->dia, cfd->icon, cfd->icon_size);
@@ -110,11 +112,15 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    e_widget_on_change_hook_set(o, _e_config_dialog_cb_changed, cfd);
    e_dialog_content_set(cfd->dia, o, mw, mh);
    
+   if(!cfd->hide_buttons)
+     {
    e_dialog_button_add(cfd->dia, _("OK"), NULL, _e_config_dialog_cb_ok, cfd);
    e_dialog_button_add(cfd->dia, _("Apply"), NULL, _e_config_dialog_cb_apply, cfd);
-   e_dialog_button_add(cfd->dia, _("Cancel"), NULL, NULL, NULL);
+   //e_dialog_button_add(cfd->dia, _("Cancel"), NULL, NULL, NULL);
    e_dialog_button_disable_num_set(cfd->dia, 0, 1);
    e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+     }
+   e_dialog_button_add(cfd->dia, _("Cancel"), NULL, NULL, NULL);
    e_win_centered_set(cfd->dia->win, 1);
    e_dialog_show(cfd->dia);
    cfd->view_type = type;
@@ -164,8 +170,11 @@ _e_config_dialog_cb_apply(void *data, E_Dialog *dia)
      ok = cfd->view.advanced.apply_cfdata(cfd, cfd->cfdata);
    if (ok)
      {
+	_e_config_dialog_go(cfd, cfd->view_type);
+	/*
 	e_dialog_button_disable_num_set(cfd->dia, 0, 1);
 	e_dialog_button_disable_num_set(cfd->dia, 1, 1);
+	*/
      }
 }
 
@@ -193,6 +202,14 @@ _e_config_dialog_cb_changed(void *data, Evas_Object *obj)
    E_Config_Dialog *cfd;
    
    cfd = data;
+
+   if(cfd->view_dirty)
+     {
+       _e_config_dialog_go(cfd, cfd->view_type);
+     }
+   else if(!cfd->hide_buttons)
+     {
    e_dialog_button_disable_num_set(cfd->dia, 0, 0);
    e_dialog_button_disable_num_set(cfd->dia, 1, 0);
+     }
 }

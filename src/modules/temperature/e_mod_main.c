@@ -101,6 +101,21 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
+int
+e_modapi_config(E_Module *m)
+{
+   Temperature *e;
+   Temperature_Face *face;
+   
+   e = m->data;
+   if (!e) return 0;
+   if (!e->faces) return 0;
+   face = e->faces->data;
+   if (!face) return 0;
+   e_int_config_temperature(face->con, face->temp);
+   return 1;
+}
+
 /* module private routines */
 static Temperature *
 _temperature_new()

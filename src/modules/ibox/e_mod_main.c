@@ -146,6 +146,21 @@ e_modapi_about(E_Module *m)
    return 1;
 }
 
+int
+e_modapi_config(E_Module *m)
+{
+   IBox *e;
+   IBox_Box *face;
+   
+   e = m->data;
+   if (!e) return 0;
+   if (!e->boxes) return 0;
+   face = e->boxes->data;
+   if (!face) return 0;
+   e_int_config_ibox(face->con, face->ibox);
+   return 1;
+}
+
 /* module private routines */
 static IBox *
 _ibox_new()

@@ -526,15 +526,15 @@ e_config_init(void)
 	  {
 	     E_Config_Module *em;
 
-	     em = E_NEW(E_Config_Module, 1);
+	     /*em = E_NEW(E_Config_Module, 1);
 	     em->name = evas_stringshare_add("start");
 	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
+	     e_config->modules = evas_list_append(e_config->modules, em);*/
 	     em = E_NEW(E_Config_Module, 1);
 	     em->name = evas_stringshare_add("ibar");
 	     em->enabled = 1;
 	     e_config->modules = evas_list_append(e_config->modules, em);
-	     em = E_NEW(E_Config_Module, 1);
+	    /* em = E_NEW(E_Config_Module, 1);
 	     em->name = evas_stringshare_add("ibox");
 	     em->enabled = 0;
 	     e_config->modules = evas_list_append(e_config->modules, em);
@@ -565,7 +565,7 @@ e_config_init(void)
 	     em = E_NEW(E_Config_Module, 1);
 	     em->name = evas_stringshare_add("randr");
 	     em->enabled = 1;
-	     e_config->modules = evas_list_append(e_config->modules, em);
+	     e_config->modules = evas_list_append(e_config->modules, em);*/
 	  }
 	  {
 	     E_Font_Fallback* eff;

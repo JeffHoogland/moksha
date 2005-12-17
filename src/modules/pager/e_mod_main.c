@@ -155,6 +155,21 @@ e_modapi_about(E_Module *module)
    return 1;
 }
 
+int
+e_modapi_config(E_Module *m)
+{
+   Pager *e;
+   Pager_Face *face;
+   
+   e = m->data;
+   if (!e) return 0;
+   if (!e->faces) return 0;
+   face = e->faces->data;
+   if (!face) return 0;
+   e_int_config_pager(e_container_current_get(e_manager_current_get()), e);
+   return 1;
+}
+
 /* module private routines */
 static Pager *
 _pager_new(void)

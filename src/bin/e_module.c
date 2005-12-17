@@ -135,6 +135,8 @@ e_module_new(char *name)
    m->func.save = dlsym(m->handle, "e_modapi_save");
    m->func.info = dlsym(m->handle, "e_modapi_info");
    m->func.about = dlsym(m->handle, "e_modapi_about");
+   m->func.config = dlsym(m->handle, "e_modapi_config");
+
    if ((!m->func.init) ||
        (!m->func.shutdown) ||
        (!m->func.save) ||
@@ -156,6 +158,8 @@ e_module_new(char *name)
 	m->func.save = NULL;
 	m->func.info = NULL;
 	m->func.about = NULL;
+	m->func.config = NULL;
+
 	dlclose(m->handle);
 	m->handle = NULL;
 	m->error = 1;
@@ -177,6 +181,7 @@ e_module_new(char *name)
 	m->func.save = NULL;
 	m->func.info = NULL;
 	m->func.about = NULL;
+	m->func.config = NULL;
 	dlclose(m->handle);
 	m->handle = NULL;
 	m->error = 1;

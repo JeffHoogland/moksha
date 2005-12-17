@@ -97,6 +97,21 @@ e_modapi_about(E_Module *module)
    return 1;
 }
 
+int
+e_modapi_config(E_Module *m)
+{
+   Clock *e;
+   Clock_Face *face;
+   
+   e = m->data;
+   if (!e) return 0;
+   if (!e->faces) return 0;
+   face = e->faces->data;
+   if (!face) return 0;
+   e_int_config_clock(face->con, face);
+   return 1;
+}
+
 /* module private routines */
 static Clock *
 _clock_new()

@@ -41,6 +41,8 @@ struct _E_Config_Dialog
    int                          icon_size;
    E_Dialog                    *dia;
    void                        *data;
+   int                          view_dirty;
+   int                          hide_buttons;
 };
 
 EAPI E_Config_Dialog *e_config_dialog_new(E_Container *con, char *title, char *icon, int icon_size, E_Config_Dialog_View *view, void *data);

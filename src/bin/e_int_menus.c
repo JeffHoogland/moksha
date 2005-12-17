@@ -12,7 +12,7 @@ struct _Main_Data
    E_Menu *apps;
    E_Menu *desktops;
    E_Menu *clients;
-   E_Menu *modules;
+   //E_Menu *modules;
    E_Menu *gadgets;
    E_Menu *themes;
    E_Menu *config;
@@ -85,13 +85,14 @@ e_int_menus_main_new(void)
   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
-   
+   /*
    subm = e_module_menu_new();
    dat->modules = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Modules"));
    e_util_menu_item_edje_icon_set(mi, "enlightenment/modules");
    e_menu_item_submenu_set(mi, subm);
+   */
 
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
@@ -345,7 +346,7 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat)
      {
 	e_object_del(E_OBJECT(dat->apps));
-	e_object_del(E_OBJECT(dat->modules));
+/*	e_object_del(E_OBJECT(dat->modules));*/
 	e_object_del(E_OBJECT(dat->desktops));
 	e_object_del(E_OBJECT(dat->clients));
 	e_object_del(E_OBJECT(dat->gadgets));

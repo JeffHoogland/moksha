@@ -18,8 +18,8 @@ typedef struct _Status       Status;
 
 struct _Config
 {
-   double poll_time;
-   int alarm;
+   double     poll_time;
+   int        alarm;
    Evas_List *faces;
 };
 
@@ -30,17 +30,17 @@ struct _Config_Face
 
 struct _Battery
 {
-   E_Menu      *config_menu;
-   Evas_List   *faces;
+   E_Menu       *config_menu;
+   Evas_List    *faces;
 
-   Config      *conf;
-   int alarm_triggered;
+   Config       *conf;
+   int           alarm_triggered;
 
-   int                  battery_check_mode;
-   Ecore_Timer         *battery_check_timer;
-   int                  battery_prev_drain;
-   int                  battery_prev_ac;
-   int                  battery_prev_battery;
+   int           battery_check_mode;
+   Ecore_Timer  *battery_check_timer;
+   int           battery_prev_drain;
+   int           battery_prev_ac;
+   int           battery_prev_battery;
 };
 
 struct _Battery_Face
