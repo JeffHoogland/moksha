@@ -73,13 +73,11 @@ static void _fill_data(CFData *cfdata)
      {
 	cfdata->method = 0;
      }
-
    cfdata->iconsize = ib->conf->iconsize;
    if (cfdata->iconsize <=24) cfdata->icon_method = ICONSIZE_SMALL;
    if ((cfdata->iconsize > 24) && (cfdata->iconsize <=32)) cfdata->icon_method = ICONSIZE_MEDIUM;
    if ((cfdata->iconsize > 32) && (cfdata->iconsize <=40)) cfdata->icon_method = ICONSIZE_LARGE;
    if (cfdata->iconsize > 40) cfdata->icon_method = ICONSIZE_VERYLARGE;
-
    cfdata->follow_speed = ib->conf->follow_speed;
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
 }
@@ -113,7 +111,6 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
 
    of = e_widget_framelist_add(evas, _("Icon Size"), 0);
    rg = e_widget_radio_group_new(&(cfdata->icon_method));
-
    ob = e_widget_radio_add(evas, _("Small"), ICONSIZE_SMALL, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Medium"), ICONSIZE_MEDIUM, rg);
@@ -124,7 +121,6 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-
    return o;
 }
 
@@ -132,7 +128,6 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    e_border_button_bindings_ungrab_all();
    ib->conf->follower = cfdata->follower;
-
    if (cfdata->method == 0)
      {
 	cfdata->width = IBOX_WIDTH_FIXED;
@@ -142,7 +137,6 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	cfdata->width = IBOX_WIDTH_AUTO;
      }
    ib->conf->width = cfdata->width;
-
    if (cfdata->icon_method == ICONSIZE_SMALL) ib->conf->iconsize = 24;
    if (cfdata->icon_method == ICONSIZE_MEDIUM) ib->conf->iconsize = 32;
    if (cfdata->icon_method == ICONSIZE_LARGE) ib->conf->iconsize = 40;
@@ -178,14 +172,13 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
 
 	/* Advanced Options */
    of = e_widget_framelist_add(evas, _("Advanced Settings"), 0);
-   ob = e_widget_label_add(evas, _("Follower Speed:"));
+   ob = e_widget_label_add(evas, _("Follow Speed:"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 0.99, 0.01, 0,  &(cfdata->follow_speed), NULL,200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f pixels/sec"), 0.01, 0.99, 0.01, 0,  &(cfdata->follow_speed), NULL,200);
    e_widget_framelist_object_append(of, ob);
-
    ob = e_widget_label_add(evas, _("Autoscroll Speed:"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.01, 0.99, 0.01, 0,  &(cfdata->autoscroll_speed), NULL,200);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f pixels/sec"), 0.01, 0.99, 0.01, 0,  &(cfdata->autoscroll_speed), NULL,200);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -196,7 +189,6 @@ static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    e_border_button_bindings_ungrab_all();
    ib->conf->follower = cfdata->follower;
-
    if (cfdata->method == 0)
      {
 	cfdata->width = IBOX_WIDTH_FIXED;
@@ -206,9 +198,7 @@ static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 	cfdata->width = IBOX_WIDTH_AUTO;
      }
    ib->conf->width = cfdata->width;
-
    ib->conf->iconsize = cfdata->iconsize;
-
    ib->conf->follow_speed = cfdata->follow_speed;
    ib->conf->autoscroll_speed = cfdata->autoscroll_speed;
 
