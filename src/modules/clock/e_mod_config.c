@@ -38,7 +38,7 @@ e_int_config_clock(E_Container *con, Clock_Face *c)
    v.advanced.create_widgets = NULL;
 
    /* Create The Dialog */
-   cfd = e_config_dialog_new(con, _("Clock Module"), NULL, 0, &v, c);   
+   cfd = e_config_dialog_new(con, _("Clock Configuration"), NULL, 0, &v, c);   
 }
 
 static void 

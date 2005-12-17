@@ -41,7 +41,7 @@ e_int_config_pager(E_Container *con, Pager *pager)
    v.advanced.apply_cfdata = _advanced_apply_data;
    v.advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Pager Module"), NULL, 0, &v, pager);
+   cfd = e_config_dialog_new(con, _("Pager Configuration"), NULL, 0, &v, pager);
 }
 
 static void 

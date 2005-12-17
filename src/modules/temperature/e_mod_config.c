@@ -49,7 +49,7 @@ e_int_config_temperature(E_Container *con, Temperature *temp)
    v.advanced.apply_cfdata = _advanced_apply_data;
    v.advanced.create_widgets = _advanced_create_widgets;
    
-   cfd = e_config_dialog_new(con, _("Temperature Module"), NULL, 0, &v, temp);
+   cfd = e_config_dialog_new(con, _("Temperature Configuration"), NULL, 0, &v, temp);
 }
 
 static void
