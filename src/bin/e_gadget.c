@@ -11,37 +11,55 @@ static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_face_menu_init(E_Gadget_Face *face);
 static void _e_gadget_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-
+/**
+ * Create a new gadget. Takes an E_Gadget_Api struct.
+ * The module and name fields of the api struct are required. The rest are
+ * optional, however in order to be useful, at least func_face_init and
+ * func_face_free should be defined. The possible fields api fields are:
+ *
+ * E_Module *module - the module that contains this gadget
+ * char *name - a unique name for this module
+ * void (*func_face_init) (void *data, E_Gadget_Face *gadget_face) - 
+ *    A function that initializes the gadget's face. All evas objects should 
+ *    be drawn on gadget_face->evas.
+ * void (*func_face_free) (void *data, E_Gadget_Face *gadget_face) -
+ *    A function that frees all memory allocated in func_face_init
+ * void (*func_change) (void *data, E_Gadget_Face *gadget_face,
+ *			E_Gadman_Client *gmc, E_Gadman_Change change) -
+ *    A function that is called whenever the gadget is resized.
+ * void (*func_menu_init) (void *data, E_Gadget *gadget) -
+ *    A function that initializes the gadget's main menu. 
+ * void (*func_face_menu_init) (void *data, E_Gadget_Face *gadget_face) -
+ *    A function that initializes the gadget's face menu. This is displayed
+ *    when the user right clicks on the gadget's face.
+ * void *data - a pointer to some data to be passed to all callbacks.
+ * 
+ */
 E_Gadget *
-e_gadget_new(E_Module *module,
-	     const char *name,
-	     void (*func_face_init) (void *data, E_Gadget_Face *gadget_face),
-	     void (*func_face_free) (void *data, E_Gadget_Face *gadget_face),
-	     void (*func_change) (void *data, E_Gadget_Face *gadget_face, E_Gadman_Client *gmc, E_Gadman_Change change),
-	     void (*func_menu_init) (void *data, E_Gadget *gadget),
-	     void (*func_face_menu_init) (void *data, E_Gadget_Face *gadget_face),
-	     void *data)
+e_gadget_new(E_Gadget_Api *api)
 {
    E_Gadget *gad;
    Evas_List *managers, *l = NULL, *l2 = NULL;
    char buf[1024];
    int gadget_count = 0;
 
+   if (!api || !api->module || !api->name) return NULL;
+
    gad = E_OBJECT_ALLOC(E_Gadget, E_GADGET_TYPE, _e_gadget_free);
    if (!gad) return NULL;
 
-   gad->module = module;
+
+   gad->module = api->module;
    e_object_ref(E_OBJECT(gad->module));
 
-   if(!name) return NULL;
-   gad->name = evas_stringshare_add(name);
+   gad->name = evas_stringshare_add(api->name);
 
-   gad->funcs.face_init = func_face_init;
-   gad->funcs.face_free = func_face_free;
-   gad->funcs.change = func_change;
-   gad->funcs.menu_init = func_menu_init;
-   gad->funcs.face_menu_init = func_face_menu_init;
-   gad->data = data;
+   gad->funcs.face_init = api->func_face_init;
+   gad->funcs.face_free = api->func_face_free;
+   gad->funcs.change = api->func_change;
+   gad->funcs.menu_init = api->func_menu_init;
+   gad->funcs.face_menu_init = api->func_face_menu_init;
+   gad->data = api->data;
 
 
    /* get all desktop evases, and call init function on them */

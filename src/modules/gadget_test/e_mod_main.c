@@ -20,18 +20,29 @@ static void _test_face_menu_init(void *data, E_Gadget_Face *face);
 void *
 e_modapi_init(E_Module *m)
 {
+   E_Gadget_Api *api = NULL;
    E_Gadget *gad = NULL;
-   
+  
    Test *t = E_NEW(Test, 1);
+   if (!t) return;
+   api = E_NEW(E_Gadget_Api, 1);
+   if (!api) return;
 
-   gad = e_gadget_new(m,
-	 "test_gadget",
-	 _test_face_init,
-	 _test_face_free,
-	 _test_face_change,
-	 _test_menu_init,
-	 _test_face_menu_init,
-	 t);
+   /*
+    * set up gadget -- only module and name are required, but the gadget would
+    * be pretty useless without func_face_*
+    */
+   
+   api->module = m;
+   api->name = "test_gadget";
+   api->func_face_init = _test_face_init;
+   api->func_face_free = _test_face_free;
+   api->func_change = _test_face_change;
+   api->func_menu_init = _test_menu_init;
+   api->func_face_menu_init = _test_face_menu_init;
+   api->data = t;
+
+   gad = e_gadget_new(api);
 
    return gad;
 }
