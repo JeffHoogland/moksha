@@ -455,6 +455,34 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
    E_OBJECT_CHECK(zone);
    E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    if (bd->zone == zone) return;
+
+   /* if the window does not lie in the new zone, move it so that it does */
+   if (!E_INTERSECTS(bd->x, bd->y, bd->w, bd->h, zone->x, zone->y, zone->w, zone->h))
+     {
+	int x, y;
+	/* first guess -- get offset from old zone, and apply to new zone */
+	x = zone->x + (bd->x - bd->zone->x);
+	y = zone->y + (bd->y - bd->zone->y);
+
+	/* keep window from hanging off bottom and left */
+	if (x + bd->w > zone->x + zone->w) x += (zone->x + zone->w) - (x + bd->w);
+	if (y + bd->h > zone->y + zone->h) y += (zone->y + zone->h) - (y + bd->h);
+
+	/* make sure to and left are on screen (if the window is larger than the zone, it will hang off the bottom / right) */
+	if (x < zone->x) x = zone->x;
+	if (y < zone->y) y = zone->y;
+
+	if (!E_INTERSECTS(x, y, bd->w, bd->h, zone->x, zone->y, zone->w, zone->h))	
+	  {
+	     /* still not in zone at all, so just move it to closest edge */
+	     if (x < zone->x) x = zone->x;
+	     if (x >= zone->x + zone->w) x = zone->x + zone->w - bd->w;
+	     if (y < zone->y) y = zone->y;
+	     if (y >= zone->y + zone->h) y = zone->y + zone->h - bd->h;
+	  }
+	e_border_move(bd, x, y);
+     }
+
    bd->zone = zone;
 
    if (bd->desk->zone != bd->zone)
@@ -462,12 +490,14 @@ e_border_zone_set(E_Border *bd, E_Zone *zone)
 	e_border_desk_set(bd, e_desk_current_get(bd->zone));
      }
 
+
    ev = calloc(1, sizeof(E_Event_Border_Zone_Set));
    ev->border = bd;
    e_object_ref(E_OBJECT(bd));
 //   e_object_breadcrumb_add(E_OBJECT(bd), "border_zone_set_event");
    ev->zone = zone;
    e_object_ref(E_OBJECT(zone));
+
    ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
 
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE, &bd->zone->num, 1);
@@ -1148,8 +1178,8 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	  edje_object_signal_emit(bd->icon_object, "passive", "");
 	e_focus_event_focus_out(bd);
 	/* FIXME: Sometimes we should leave the window fullscreen! */
-	if (bd->fullscreen)
-	  e_border_unfullscreen(bd);
+//	if (bd->fullscreen)
+//	  e_border_unfullscreen(bd);
 	if (bd->raise_timer)
 	  {
 	     ecore_timer_del(bd->raise_timer);
@@ -1198,7 +1228,7 @@ e_border_focus_set(E_Border *bd, int focus, int set)
 	       edje_object_signal_emit(focused->icon_object, "passive", "");
 	     e_focus_event_focus_out(focused);
 	     /* FIXME: Sometimes we should leave the window fullscreen! */
-	     if (focused->fullscreen) e_border_unfullscreen(focused);
+//	     if (focused->fullscreen) e_border_unfullscreen(focused);
 	     focused->focused = 0;
 //		  e_border_focus_set(focused, 0, 0);
 	     if (focused->raise_timer)
