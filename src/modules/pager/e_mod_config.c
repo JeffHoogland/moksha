@@ -29,7 +29,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
 void 
-e_int_config_pager(E_Container *con, Pager *pager)
+_config_pager_module(E_Container *con, Pager *pager)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;

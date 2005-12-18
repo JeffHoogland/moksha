@@ -166,7 +166,7 @@ e_modapi_config(E_Module *m)
    if (!e->faces) return 0;
    face = e->faces->data;
    if (!face) return 0;
-   e_int_config_pager(e_container_current_get(e_manager_current_get()), e);
+   _config_pager_module(e_container_current_get(e_manager_current_get()), e);
    return 1;
 }
 
@@ -2141,7 +2141,7 @@ _pager_menu_cb_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    
    p = data;
    if (!p) return;
-   e_int_config_pager(e_container_current_get(e_manager_current_get()), p);
+   _config_pager_module(e_container_current_get(e_manager_current_get()), p);
 }
 
 void 

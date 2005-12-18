@@ -170,7 +170,7 @@ e_modapi_config(E_Module *m)
    
    ib = m->data;
    con = e_container_current_get(e_manager_current_get());
-   if (ib) e_int_config_ibar(con, ib);
+   if (ib) _config_ibar_module(con, ib);
    return 1;
 }
 
@@ -648,7 +648,7 @@ _ibar_bar_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 
    ibb = data;
    if (!ibb) return;
-   e_int_config_ibar(ibb->con, ibb->ibar);
+   _config_ibar_module(ibb->con, ibb->ibar);
 }
 
 static void

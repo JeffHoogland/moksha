@@ -157,7 +157,7 @@ e_modapi_config(E_Module *m)
    if (!e->boxes) return 0;
    face = e->boxes->data;
    if (!face) return 0;
-   e_int_config_ibox(face->con, face->ibox);
+   _config_ibox_module(face->con, face->ibox);
    return 1;
 }
 
@@ -473,7 +473,7 @@ _ibox_box_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 
    ibb = (IBox_Box *)data;
    if (!ibb) return;
-   e_int_config_ibox(ibb->con, ibb->ibox);
+   _config_ibox_module(ibb->con, ibb->ibox);
 }
 
 static void

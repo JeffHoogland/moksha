@@ -29,7 +29,8 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
-void e_int_config_ibox(E_Container *con, IBox *ibox)
+void 
+_config_ibox_module(E_Container *con, IBox *ibox)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;
@@ -46,7 +47,8 @@ void e_int_config_ibox(E_Container *con, IBox *ibox)
    cfd = e_config_dialog_new(con, _("IBox Configuration"), NULL, 0, &v, ibox);
 }
 
-static void _fill_data(IBox *ib, CFData *cfdata)
+static void 
+_fill_data(IBox *ib, CFData *cfdata)
 {
    cfdata->autofit = (ib->conf->width == IBOX_WIDTH_AUTO);
    cfdata->follower = ib->conf->follower;
@@ -55,7 +57,8 @@ static void _fill_data(IBox *ib, CFData *cfdata)
    cfdata->autoscroll_speed = ib->conf->autoscroll_speed;
 }
 
-static void *_create_data(E_Config_Dialog *cfd)
+static void 
+*_create_data(E_Config_Dialog *cfd)
 {
    CFData *cfdata;
    IBox *ib;
@@ -66,12 +69,14 @@ static void *_create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
-static void _free_data(E_Config_Dialog *cfd, CFData *cfdata)
+static void 
+_free_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    free(cfdata);
 }
 
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object 
+*_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *ob;
    IBox *ib;
@@ -87,7 +92,8 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
    return o;
 }
 
-static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+static int 
+_basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    IBox *ib;
    Evas_List *l;
@@ -118,7 +124,8 @@ static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    return 1;
 }
 
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
+static Evas_Object 
+*_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 {
    Evas_Object *o, *of, *ob;
    IBox *ib;
@@ -153,7 +160,8 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, C
    return o;
 }
 
-static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
+static int 
+_advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
    IBox *ib;
    

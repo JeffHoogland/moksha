@@ -28,7 +28,7 @@ static Evas_Object   *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 static int           _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
 void
-e_int_config_battery(E_Container *con, Battery *bat) 
+_config_battery_module(E_Container *con, Battery *bat) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;

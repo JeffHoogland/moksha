@@ -24,7 +24,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFDa
 static int _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 
 void 
-e_int_config_clock(E_Container *con, Clock_Face *c) 
+_config_clock_module(E_Container *con, Clock_Face *c) 
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View v;

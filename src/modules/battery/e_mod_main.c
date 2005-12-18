@@ -145,7 +145,7 @@ e_modapi_config(E_Module *m)
    if (!e->faces) return 0;
    face = e->faces->data;
    if (!face) return 0;
-   e_int_config_battery(face->con, face->battery);
+   _config_battery_module(face->con, face->battery);
    return 1;
 }
 
@@ -1582,7 +1582,7 @@ _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    
    face = data;
    if (!face) return;
-   e_int_config_battery(face->con, face->battery);
+   _config_battery_module(face->con, face->battery);
 }
 
 void 

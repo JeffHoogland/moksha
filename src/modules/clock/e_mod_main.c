@@ -108,7 +108,7 @@ e_modapi_config(E_Module *m)
    if (!e->faces) return 0;
    face = e->faces->data;
    if (!face) return 0;
-   e_int_config_clock(face->con, face);
+   _config_clock_module(face->con, face);
    return 1;
 }
 
@@ -436,7 +436,7 @@ _clock_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 
    face = data;
    if (!face) return;
-   e_int_config_clock(face->con, face);
+   _config_clock_module(face->con, face);
 }
 
 void

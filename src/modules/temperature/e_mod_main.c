@@ -112,7 +112,7 @@ e_modapi_config(E_Module *m)
    if (!e->faces) return 0;
    face = e->faces->data;
    if (!face) return 0;
-   e_int_config_temperature(face->con, face->temp);
+   _config_temperature_module(face->con, face->temp);
    return 1;
 }
 
@@ -627,7 +627,7 @@ _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
    
    tf = data;
    if (!tf) return;
-   e_int_config_temperature(tf->con, tf->temp);
+   _config_temperature_module(tf->con, tf->temp);
 }
 
 void 
