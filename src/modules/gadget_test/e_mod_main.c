@@ -35,6 +35,7 @@ e_modapi_init(E_Module *m)
    
    api->module = m;
    api->name = "test_gadget";
+   api->per_zone = 1;
    api->func_face_init = _test_face_init;
    api->func_face_free = _test_face_free;
    api->func_change = _test_face_change;
@@ -88,9 +89,11 @@ _test_face_init(void *data, E_Gadget_Face *face)
 static void
 _test_face_free(void *data, E_Gadget_Face *face)
 {
+   /* really, this should be done in a gadget_free callback, but that doesn't exist yet... */ 
    Test *t;
    t = data;
    if (t) free(t);
+   face->gad->data = NULL;
 }
 
 static void

@@ -3,6 +3,7 @@
  */
 #include "e.h"
 
+E_Gadget_Face *_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone);
 static void _e_gadget_menu_init(E_Gadget *gad);
 static void _e_gadget_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_gadget_free(E_Gadget *gad);
@@ -39,9 +40,7 @@ E_Gadget *
 e_gadget_new(E_Gadget_Api *api)
 {
    E_Gadget *gad;
-   Evas_List *managers, *l = NULL, *l2 = NULL;
-   char buf[1024];
-   int gadget_count = 0;
+   Evas_List *managers, *l = NULL, *l2 = NULL, *l3 = NULL;
 
    if (!api || !api->module || !api->name) return NULL;
 
@@ -72,71 +71,98 @@ e_gadget_new(E_Gadget_Api *api)
 	for(l2 = man->containers; l2; l2 = l2->next)
 	  {
 	     E_Container *con;
-	     E_Gadget_Face *face;
-	     E_Gadget_Change *change;
-	     Evas_Object *o;
 
 	     con = l2->data;
-	     face = E_NEW(E_Gadget_Face, 1);
-	     if (!face) continue;
-
-	     face->gad = gad;
-	     face->con = con;
-	     e_object_ref(E_OBJECT(con));
-	     face->evas = con->bg_evas;
-	     
-	     evas_event_freeze(face->evas);
-
-	     /* create an event object */
-	     
-	     o = evas_object_rectangle_add(con->bg_evas);
-	     face->event_obj = o;
-	     evas_object_layer_set(o, 2);
-	     evas_object_repeat_events_set(o, 1);
-	     evas_object_color_set(o, 0, 0, 0, 0);
-	     evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_gadget_cb_mouse_down, face);
-	     evas_object_show(o);
 	
-	     /* create a gadman client */
-	     snprintf(buf, sizeof(buf), "module.%s", gad->name);
-	     face->gmc = e_gadman_client_new(con->gadman);
-	     e_gadman_client_domain_set(face->gmc, buf, gadget_count++);
-
-	     /* call the user init */
-	     if (gad->funcs.face_init) (gad->funcs.face_init)(gad->data, face);
-
-	     _e_gadget_face_menu_init(face);
-
-	     change = E_NEW(E_Gadget_Change, 1);
-	     if (change)
+	     if (api->per_zone) 
 	       {
-		  printf("set change func\n");
-		  change->gadget = gad;
-		  change->face = face;
+		  for(l3 = con->zones; l3; l3 = l3->next)
+		    {
+		       E_Zone *zone;
+
+		       zone = l3->data;
+		       _e_gadget_face_new(gad, con, zone);
+		    }
+	       } 
+	     else 
+	       {
+		  _e_gadget_face_new(gad, con, NULL);
 	       }
-
-	     /* set up some gadman defaults */
-	     e_gadman_client_policy_set(face->gmc,
-					E_GADMAN_POLICY_ANYWHERE |
-					E_GADMAN_POLICY_HMOVE |
-					E_GADMAN_POLICY_VMOVE |
-					E_GADMAN_POLICY_HSIZE |
-					E_GADMAN_POLICY_VSIZE );
-	     e_gadman_client_min_size_set(face->gmc, 4, 4);
-	     e_gadman_client_max_size_set(face->gmc, 128, 128);
-	     e_gadman_client_auto_size_set(face->gmc, 40, 40);
-	     e_gadman_client_align_set(face->gmc, 1.0, 1.0);
-	     e_gadman_client_resize(face->gmc, 40, 40);
-	     e_gadman_client_change_func_set(face->gmc, _e_gadget_face_cb_gmc_change, change);
-	     e_gadman_client_load(face->gmc);
-	     evas_event_thaw(face->evas);
-
-	     gad->faces = evas_list_append(gad->faces, face);
 	  }
      }
    _e_gadget_menu_init(gad);
 
    return gad;
+}
+
+E_Gadget_Face *
+_e_gadget_face_new(E_Gadget *gad, E_Container *con, E_Zone *zone)
+{
+   E_Gadget_Face *face;
+   E_Gadget_Change *change;
+   Evas_Object *o;
+   char buf[1024];
+
+   face = E_NEW(E_Gadget_Face, 1);
+   if (!face) return NULL; 
+
+   face->gad = gad;
+   face->con = con;
+   if (zone) face->zone = zone;
+   else face->zone = (E_Zone *)evas_list_data(con->zones);
+   e_object_ref(E_OBJECT(con));
+   face->evas = con->bg_evas;
+
+   evas_event_freeze(face->evas);
+
+   /* create an event object */
+
+   o = evas_object_rectangle_add(con->bg_evas);
+   face->event_obj = o;
+   evas_object_layer_set(o, 2);
+   evas_object_repeat_events_set(o, 1);
+   evas_object_color_set(o, 0, 0, 0, 0);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_gadget_cb_mouse_down, face);
+   evas_object_show(o);
+
+   /* create a gadman client */
+   snprintf(buf, sizeof(buf), "module.%s", gad->name);
+   face->gmc = e_gadman_client_new(con->gadman);
+   e_gadman_client_zone_set(face->gmc, face->zone);
+   e_gadman_client_domain_set(face->gmc, buf, evas_list_count(gad->faces));
+
+   /* call the user init */
+   if (gad->funcs.face_init) (gad->funcs.face_init)(gad->data, face);
+
+   _e_gadget_face_menu_init(face);
+
+   change = E_NEW(E_Gadget_Change, 1);
+   if (change)
+     {
+	printf("set change func\n");
+	change->gadget = gad;
+	change->face = face;
+     }
+
+   /* set up some gadman defaults */
+   e_gadman_client_policy_set(face->gmc,
+	 E_GADMAN_POLICY_ANYWHERE |
+	 E_GADMAN_POLICY_HMOVE |
+	 E_GADMAN_POLICY_VMOVE |
+	 E_GADMAN_POLICY_HSIZE |
+	 E_GADMAN_POLICY_VSIZE );
+   e_gadman_client_min_size_set(face->gmc, 4, 4);
+   e_gadman_client_max_size_set(face->gmc, 128, 128);
+   e_gadman_client_auto_size_set(face->gmc, 40, 40);
+   e_gadman_client_align_set(face->gmc, 1.0, 1.0);
+   e_gadman_client_resize(face->gmc, 40, 40);
+   e_gadman_client_change_func_set(face->gmc, _e_gadget_face_cb_gmc_change, change);
+   e_gadman_client_load(face->gmc);
+   evas_event_thaw(face->evas);
+
+   gad->faces = evas_list_append(gad->faces, face);
+
+   return face;
 }
 
 void
