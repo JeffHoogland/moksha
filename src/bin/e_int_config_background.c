@@ -108,11 +108,9 @@ void
 _e_config_bg_cb_standard(void *data)
 {
    E_Cfg_Bg_Data *d;
-   char *thumb;
    
    d = data;
    e_widget_image_object_set(d->cfd->data, e_thumb_evas_object_get(d->file, d->cfd->dia->win->evas, 160, 120, 1));
-   free(thumb);
 }
 
 
@@ -195,7 +193,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       cb_data->file = strdup(fullbg);
 		       e_widget_ilist_append(il, o, noext, _e_config_bg_cb_standard, cb_data, fullbg);
 		       
-		       if (!strcmp(e_config->desktop_default_background, fullbg))
+		       if ((e_config->desktop_default_background) && !(strcmp(e_config->desktop_default_background, fullbg)))
 			 {
 			    e_widget_ilist_select_set(il, i);
 			    bg = edje_object_add(evas);
@@ -213,7 +211,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	     ecore_list_destroy(bgs);
 	  }
      }
-   cfd->data = im;
    e_widget_ilist_go(il);   
    e_widget_min_size_set(il, 240, 320);
    e_widget_table_object_append(o, il, 0, 0, 1, 2, 1, 1, 1, 1);
@@ -224,6 +221,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	e_theme_edje_object_set(bg, "base/theme/background", "desktop/background");
 	im = e_widget_image_add_from_object(evas, bg, 160, 120);
      }
+   cfd->data = im;
    e_widget_min_size_set(fr, 180, 150);
    e_widget_table_object_append(o, fr, 1, 0, 1, 1, 1, 1, 1, 1);   
    e_widget_framelist_object_append(fr, im);   
