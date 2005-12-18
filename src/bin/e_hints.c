@@ -340,6 +340,11 @@ e_hints_active_window_set(E_Manager *man, E_Border *bd)
 void
 e_hints_window_init(E_Border *bd)
 {
+   E_Remember *rem = NULL;
+
+   if (bd->remember)
+     rem = bd->remember;
+
    if (bd->client.icccm.state == ECORE_X_WINDOW_STATE_HINT_NONE)
      {
 	if (bd->client.netwm.state.hidden)
@@ -348,21 +353,29 @@ e_hints_window_init(E_Border *bd)
 	  bd->client.icccm.state = ECORE_X_WINDOW_STATE_HINT_NORMAL;
      }
 
-   if (!bd->lock_client_stacking)
+   if ((rem) && (rem->prop.layer))
      {
-	if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
-	  e_border_layer_set(bd, 0);
-	else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-	  e_border_layer_set(bd, 50);
-	else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-	  e_border_layer_set(bd, 150);
-	else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
-	  e_border_layer_set(bd, 150);
-	else
-	  e_border_layer_set(bd, 100);
+	bd->layer = rem->prop.layer;
+	e_border_layer_set(bd, bd->layer);
      }
    else
-     e_border_raise(bd);
+     {
+	if (!bd->lock_client_stacking)
+	  {
+	     if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+	       e_border_layer_set(bd, 0);
+	     else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
+	       e_border_layer_set(bd, 50);
+	     else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
+	       e_border_layer_set(bd, 150);
+	     else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+	       e_border_layer_set(bd, 150);
+	     else
+	       e_border_layer_set(bd, 100);
+	  }
+	else
+	  e_border_raise(bd);
+     }
 
    if ((bd->parent) && (e_config->transient.layer))
      e_border_layer_set(bd, bd->parent->layer);

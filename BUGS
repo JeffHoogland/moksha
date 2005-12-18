@@ -149,3 +149,32 @@ first time. After that, when having been iconified, it sends a
 _NET_ACTIVE_WINDOW client message to deiconify.
 
 /Kim
+
+
+
+
+
+
+
+
+
+
+
+dj2 raster, heres an interesting bug for you
+dj2 i have twinview setup on my box
+dj2 i can move the mouse between the 2 heads and e17 sees tehm as 2 heads
+dj2 (2 pages etc)
+dj2 if i try to drag a window between the 2 heads (say from left to right)
+the mouse will lmove as expected
+dj2 but when the window hits the right edge of the left monitor it will
+appear again off the left edge of the left monitor
+dj2 tho the mouse is now on the right monitor
+raster xdpyinfo
+raster see how many screens u have
+raster screen #0:...
+raster is there a screen #1 ?
+dj2 number of screens: 2
+dj2 yea screen #0 and screen #1
+
+NB: in multihead if the mouse exits a screen during move or resize - either
+disallow it (warp back to previous position ) or limit resize/move
