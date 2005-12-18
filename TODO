@@ -14,7 +14,10 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: if app changes map state hint with XSetWMHints instead of callling
   XMapWindow e wont de-iconify the window
 * BUG: in multihead dnd from pager to pager is pretty screwed especially at the
-  top of the screen (if the pager is there)
+  top of the screen (if the pager is there). The zone and desk props are changed
+  but the window doesn't move. E.g. drag from zone 0, desk 0 to zone 1, desk 0.
+  The window visually is on zone 0 still. However, it only shows while desk 0
+  is selected on zone 1. So, its as if it just isn't 'moved' into the new zone.
 * BUG: dnd to ibar is broken if u did an icon that isn't IN the ibar yet
   (from a window border) to either the very start or end of the ibar.
 * BUG: race condition on winlist activate via keypress and the key grab thus
@@ -31,6 +34,7 @@ Some of the things (in very short form) that need to be done to E17...
   a big xev (xev -g 1280x1024) that wont fit it gets placed offscreen to the
   right of zone 2
 * BUG: if you alt-click on a module to move it, and the mouse happens to be right where a resize handle for a neighboring module is, it will resize that instead. We should probably just go to edit mode for the single module instead of _all_ modules.
+* BUG: the last desktop module enabled can not be moved with alt-drag. Disable and reenable a desktop module to test.
 ]]]
 
 [[[
