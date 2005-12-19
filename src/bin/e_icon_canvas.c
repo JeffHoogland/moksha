@@ -108,7 +108,7 @@ e_icon_canvas_thaw(Evas_Object *obj)
      return -1;
          
    sd->frozen--;
-   //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
+   if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
    return sd->frozen;
 }
 
@@ -138,7 +138,7 @@ e_icon_canvas_width_fix(Evas_Object *obj, Evas_Coord w)
    sd->vw = w;
    sd->vh = 0;
    sd->changed = 1;
-   //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
+   if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
 void
@@ -155,7 +155,7 @@ e_icon_canvas_height_fix(Evas_Object *obj, Evas_Coord h)
    sd->vw = 0;
    sd->vh = h;
    sd->changed = 1;
-   //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);   
+   if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
 void
@@ -318,7 +318,7 @@ e_icon_canvas_spacing_set(Evas_Object *obj, Evas_Coord xs, Evas_Coord ys)
    
    sd->changed = 1;
    
-   //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
+   if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
 void         
@@ -342,9 +342,9 @@ e_icon_canvas_reset(Evas_Object *obj)
    
    if ((!obj) || !(sd = evas_object_smart_data_get(obj)))
      return;
-   
-   sd->xc = sd->x + sd->xs;
-   sd->yc = sd->y + sd->ys;
+
+   sd->xc = sd->viewport.x + sd->xs;
+   sd->yc = sd->viewport.y + sd->ys;
    sd->mw = 0;
    sd->mh = 0;
 
@@ -376,6 +376,9 @@ e_icon_canvas_reset(Evas_Object *obj)
 	       }
 	  }
      }
+   
+   sd->x = sd->viewport.x;
+   sd->y = sd->viewport.y;
 }
 
 void
@@ -412,7 +415,7 @@ e_icon_canvas_viewport_set(Evas_Object *obj, Evas_Object *viewport)
    sd->viewport.obj = viewport;
    evas_object_geometry_get(sd->viewport.obj, &(sd->viewport.x), &(sd->viewport.y),
 			    &(sd->viewport.w), &(sd->viewport.h));
-   //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
+   if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
 }
 
 Evas_Object *
@@ -481,87 +484,37 @@ _e_icon_canvas_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_
 static void
 _e_icon_canvas_reconfigure(E_Smart_Data *sd)
 {
-   Evas_Coord x, y, w, h, maxw, maxh;
-   Evas_List *l;
+   int i, j;
 
-   _e_icon_canvas_smart_resize(sd->obj, sd->w, sd->h);
+   if(!sd->changed) return;
    
-   return;
-   
-   if (!sd->changed) return;
-   
-   x = sd->x + sd->xs;
-   y = sd->y + sd->ys;
-   w = sd->vw;
-   h = sd->vh;   
-   maxw = 0;
-   maxh = 0;
-
-#if 0   
-   while(sd->xlist.list)
-     sd->xlist.list = evas_list_remove_list(sd->xlist.list, sd->xlist.list);
-   while(sd->xlist.list)
-     sd->ylist.list = evas_list_remove_list(sd->ylist.list, sd->ylist.list);   
-   
-   if (sd->fixed == 0)
-    {
-       for (l = sd->items; l; l = l->next)
-	{
-	   E_Icon_Canvas_Item *li;
-	   Evas_Object *obj;
-	   
-	   obj = l->data;
-	   li = evas_object_data_get(obj, "e_icon_canvas_data");
-	   
-	   if(li->h > maxh) maxh = li->h;
-
-	   if(x > sd->x + w || x + li->w > sd->x + w)
-	    {
-	       x = sd->x + sd->xs;
-	       y += maxh + sd->ys;
-	       maxh = 0;
-	    }
-	   
-	   li->x = x;
-	   li->y = y;
-	   
-	   _e_icon_canvas_pack(sd, obj);
-	   	   
-	   x += li->w + sd->xs;	   
-	}       
-       sd->vh = y - sd->y;
-    }
-   else
-    {
-       for (l = sd->items; l; l = l->next)
-	{
-	   E_Icon_Canvas_Item *li;
-	   Evas_Object *obj;
-	   
-	   obj = l->data;
-	   li = evas_object_data_get(obj, "e_icon_canvas_data");
-	   
-	   if(li->w > maxw) maxw = li->w;	   
-	   
-	   if(y > sd->y + h || y + li->h > sd->y + h)
-	    {
-	       y = sd->y + sd->ys;
-	       x += maxw + sd->xs;
-	       maxw = 0;
-	    }
-	   
-	   li->x = x;
-	   li->y = y;
-	   
-	   _e_icon_canvas_pack(sd, obj);
-	   
-	   y += li->h + sd->ys;	   
-	}       
-       sd->vw = x - sd->x;
-    }
-#endif   
-   sd->xc = x;
-   sd->yc = y;      
+   for(i = 0; i < TILE_NUM; i++)
+     {
+	for(j = 0; j < TILE_NUM; j++)
+	  {
+	     if(sd->tiles[i][j])
+	       {
+		  E_Icon_Canvas_Tile *t;
+		  
+		  t = sd->tiles[i][j];
+		  
+		  if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,
+				  sd->viewport.w, sd->viewport.h,
+				  t->x, t->y, t->w, t->h))
+		    {
+		       if(t->visible == 1)
+			 continue;
+		       _e_icon_canvas_tile_show(t);		       
+		    }
+		  else
+		    {
+		       if(!t->visible)
+			 continue;
+		       _e_icon_canvas_tile_hide(t);		       
+		    }
+	       }
+	  }
+     }   
    
    sd->changed = 0;
 }
@@ -594,6 +547,9 @@ _e_icon_canvas_tile_add(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y)
 {
    int tx, ty;
    E_Icon_Canvas_Tile *tile;
+
+   if(x < 0 || y < 0)
+     return NULL;
    
    if(x == 0)
      tx = 0;
@@ -623,7 +579,7 @@ _e_icon_canvas_tile_add(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y)
      {
 	_e_icon_canvas_tile_show(tile);
      }
-   
+      
    return tile;
 }
 
@@ -658,8 +614,8 @@ _e_icon_canvas_tile_show(E_Icon_Canvas_Tile *t)
    
    if(t->visible == 1) return;   
    t->visible = 1;
-   for(l = t->items; l; l = l->next)     
-     _e_icon_canvas_icon_show(l->data);     
+   for(l = t->items; l; l = l->next)
+     _e_icon_canvas_icon_show(l->data);
 }
 
 static void
@@ -757,8 +713,7 @@ _e_icon_canvas_smart_show(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
-   sd = evas_object_smart_data_get(obj);
-   
+   sd = evas_object_smart_data_get(obj);   
    evas_object_show(sd->clip);
 }
 
@@ -768,7 +723,6 @@ _e_icon_canvas_smart_hide(Evas_Object *obj)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
-   
    evas_object_hide(sd->clip);
 }
    
@@ -852,7 +806,7 @@ _e_icon_canvas_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    
    dx = x - sd->x;
    dy = y - sd->y;   
-   
+      
    for(i = 0; i < TILE_NUM; i++)
      {
 	for(j = 0; j < TILE_NUM; j++)
@@ -906,33 +860,8 @@ _e_icon_canvas_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 			      &(sd->viewport.x), &(sd->viewport.y),
 			      &(sd->viewport.w), &(sd->viewport.h));
    
-   for(i = 0; i < TILE_NUM; i++)
-     {
-	for(j = 0; j < TILE_NUM; j++)
-	  {
-	     if(sd->tiles[i][j])
-	       {
-		  E_Icon_Canvas_Tile *t;
-		  
-		  t = sd->tiles[i][j];
-		  
-		  if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,
-				  sd->viewport.w, sd->viewport.h,
-				  t->x, t->y, t->w, t->h))
-		    {
-		       if(t->visible == 1)
-			 continue;
-		       _e_icon_canvas_tile_show(t);		       
-		    }
-		  else
-		    {
-		       if(!t->visible)
-			 continue;
-		       _e_icon_canvas_tile_hide(t);		       
-		    }
-	       }
-	  }
-     }   
+   sd->changed = 1;
+   _e_icon_canvas_reconfigure(sd);   
 }
  
 static void

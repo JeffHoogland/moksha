@@ -1529,7 +1529,7 @@ _e_fm_dir_set(E_Fm_Smart_Data *sd, const char *dir)
        _e_fm_file_free(sd->files->data);
        sd->files = evas_list_remove_list(sd->files, sd->files);
     }
-   e_icon_canvas_reset(sd->layout);   
+   e_icon_canvas_reset(sd->layout);
 
    /* Get new files */
    if (sd->monitor) ecore_file_monitor_del(sd->monitor);
