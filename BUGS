@@ -178,3 +178,21 @@ dj2 yea screen #0 and screen #1
 
 NB: in multihead if the mouse exits a screen during move or resize - either
 disallow it (warp back to previous position ) or limit resize/move
+
+
+
+From: adi <adiroiban@gmail.com>
+To: enlightenment-devel@lists.sourceforge.net
+Subject: [E-devel] Segfault if window resize and move geometry settings are
+changed
+Date: Sun, 18 Dec 2005 17:38:33 +0200
+Sender: enlightenment-devel-admin@lists.sourceforge.net
+
+I discovered that if i try to change the default settings for window
+resize and move geometry from the configuration panel and then resize
+a window e17 crash.
+
+i build e17 from cvs 2 hours ago.
+
+bye
+adi
