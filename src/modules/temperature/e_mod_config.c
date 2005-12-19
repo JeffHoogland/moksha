@@ -1,6 +1,20 @@
+/*
+ * vim:ts=8:sw=3:sts=8:noexpandtab:cino=>5n-3f0^-2{2
+ */
 #include "e.h"
 #include "e_mod_main.h"
 #include "config.h"
+
+/* celsius */
+#define TEMP_LOW_LOW	32
+#define TEMP_LOW_MID	43
+#define TEMP_LOW_HIGH	55
+#define TEMP_HIGH_LOW	43
+#define TEMP_HIGH_MID	65
+#define TEMP_HIGH_HIGH	93
+
+#define FAR_2_CEL(x) (x - 32) / 1.8
+#define CEL_2_FAR(x) (x * 1.8) + 32
 
 typedef struct _cfdata CFData;
 typedef struct _Cfg_File_Data Cfg_File_Data;
@@ -87,33 +101,37 @@ _fill_data(Temperature *t, CFData *cfdata)
      }
    
    p = t->conf->low;
+   if (cfdata->units == FAHRENHEIT)
+     p = FAR_2_CEL(p - 1); // -1 so the conversion doesn't make mid go hi
    cfdata->low_temp = p;
-   if ((p >= 0) && (p <= 40)) 
+   if ((p >= 0) && (p <= TEMP_LOW_LOW)) 
      {
-	cfdata->low_method = 40;
+	cfdata->low_method = TEMP_LOW_LOW;
      }
-   else if ((p > 40) && (p <= 80)) 
+   else if ((p > TEMP_LOW_LOW) && (p <= TEMP_LOW_MID)) 
      {
-	cfdata->low_method = 80;
+	cfdata->low_method = TEMP_LOW_MID;
      }
-   else if (p > 80) 
+   else if (p > TEMP_LOW_MID) 
      {
-	cfdata->low_method = 100;
+	cfdata->low_method = TEMP_LOW_HIGH;
      }
 
    p = t->conf->high;
+   if (cfdata->units == FAHRENHEIT)
+     p = FAR_2_CEL(p - 1);
    cfdata->high_temp = p;
-   if ((p >= 0) && (p <= 60)) 
+   if ((p >= 0) && (p <= TEMP_HIGH_LOW)) 
      {
-	cfdata->high_method = 60;
+	cfdata->high_method = TEMP_HIGH_LOW;
      }
-   else if ((p > 60) && (p <= 140)) 
+   else if ((p > TEMP_HIGH_LOW) && (p <= TEMP_HIGH_MID)) 
      {
-	cfdata->high_method = 140;
+	cfdata->high_method = TEMP_HIGH_MID;
      }
-   else if (p > 140) 
+   else if (p > TEMP_HIGH_MID) 
      {
-	cfdata->high_method = 220;
+	cfdata->high_method = TEMP_HIGH_HIGH;
      }
    
    if (!strcmp(t->conf->sensor_name, "temp1")) 
@@ -158,7 +176,7 @@ static Evas_Object
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
-   ob = e_widget_radio_add(evas, _("Celcius"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Celsius"), 0, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Fahrenheit"), 1, rg);
    e_widget_framelist_object_append(of, ob);
@@ -176,26 +194,56 @@ static Evas_Object
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->low_method));
-   ob = e_widget_radio_add(evas, _("40 F"), 40, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("80 F"), 80, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("100 F"), 100, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("High Temperature"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->high_method));
-   ob = e_widget_radio_add(evas, _("60 F"), 60, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("140 F"), 140, rg);
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_radio_add(evas, _("220 F"), 220, rg);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
    
+   if (cfdata->units == FAHRENHEIT)
+     {
+	of = e_widget_framelist_add(evas, _("High Temperature"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->high_method));
+
+	ob = e_widget_radio_add(evas, _("200 F"), TEMP_HIGH_HIGH, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("150 F"), TEMP_HIGH_MID, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("110 F"), TEMP_HIGH_LOW, rg);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	
+	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->low_method));
+
+	ob = e_widget_radio_add(evas, _("130 F"), TEMP_LOW_HIGH, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("110 F"), TEMP_LOW_MID, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("90 F"), TEMP_LOW_LOW, rg);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+     }
+   else
+     {
+	of = e_widget_framelist_add(evas, _("High Temperature"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->high_method));
+
+	ob = e_widget_radio_add(evas, _("93 C"), TEMP_HIGH_HIGH, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("65 C"), TEMP_HIGH_MID, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("43 C"), TEMP_HIGH_LOW, rg);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	
+	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
+	rg = e_widget_radio_group_new(&(cfdata->low_method));
+
+	ob = e_widget_radio_add(evas, _("55 C"), TEMP_LOW_HIGH, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("43 C"), TEMP_LOW_MID, rg);
+	e_widget_framelist_object_append(of, ob);
+	ob = e_widget_radio_add(evas, _("32 C"), TEMP_LOW_LOW, rg);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+     }
+
    return o;
 }
 
@@ -216,30 +264,16 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
      }
    
    t->conf->poll_time = (double)cfdata->poll_method;
-   if (cfdata->low_method == 40) 
+
+   if (t->conf->units == FAHRENHEIT)
      {
-	t->conf->low = (10 + (30 * t->conf->units));	
+	t->conf->low = CEL_2_FAR(cfdata->low_method);
+	t->conf->high = CEL_2_FAR(cfdata->high_method);
      }
-   else if (cfdata->low_method == 80) 
+   else
      {
-	t->conf->low = (30 + (50 * t->conf->units));		
-     }
-   else if (cfdata->low_method == 100) 
-     {
-	t->conf->low = (50 + (70 * t->conf->units));		
-     }
-   
-   if (cfdata->high_method == 60) 
-     {
-	t->conf->high = (20 + (40 * t->conf->units));
-     }
-    else if (cfdata->high_method == 140) 
-     {
-	t->conf->high = (60 + (80 * t->conf->units));
-     }
-    else if (cfdata->high_method == 220) 
-     {
-	t->conf->high = (100 + (140 * t->conf->units));
+	t->conf->low = cfdata->low_method;
+	t->conf->high = cfdata->high_method;
      }
 
    e_border_button_bindings_grab_all();
@@ -263,7 +297,7 @@ static Evas_Object
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Display Units"), 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
-   ob = e_widget_radio_add(evas, _("Celcius"), 0, rg);
+   ob = e_widget_radio_add(evas, _("Celsius"), 0, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(evas, _("Fahrenheit"), 1, rg);
    e_widget_framelist_object_append(of, ob);
@@ -316,16 +350,45 @@ static Evas_Object
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 100, 5, 0, NULL, &(cfdata->low_temp), 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   cfdata->low_temp = t->conf->low;
+   cfdata->high_temp = t->conf->high;
 
-   of = e_widget_framelist_add(evas, _("High Temperature"), 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 220, 5, 0, NULL, &(cfdata->high_temp), 200);
-   e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
-      
+   if (t->conf->units == FAHRENHEIT)
+     {
+	/* round-off to closest 5 */
+	if (cfdata->high_temp % 5 > 3)
+	  cfdata->high_temp += 5 - (cfdata->high_temp % 5);
+	else
+	  cfdata->high_temp -= (cfdata->high_temp % 5);
+
+	if (cfdata->low_temp % 5 > 3)
+	  cfdata->low_temp += 5 - (cfdata->low_temp % 5);
+	else
+	  cfdata->low_temp -= (cfdata->low_temp % 5);
+
+	of = e_widget_framelist_add(evas, _("High Temperature"), 0);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 230, 5, 0, NULL, &(cfdata->high_temp), 200);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	
+	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f F"), 0, 200, 5, 0, NULL, &(cfdata->low_temp), 200);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+     }
+   else
+     {
+	of = e_widget_framelist_add(evas, _("High Temperature"), 0);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 110, 1, 0, NULL, &(cfdata->high_temp), 200);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+	
+	of = e_widget_framelist_add(evas, _("Low Temperature"), 0);
+	ob = e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 95, 1, 0, NULL, &(cfdata->low_temp), 200);
+	e_widget_framelist_object_append(of, ob);
+	e_widget_list_object_append(o, of, 1, 1, 0.5);
+     }
+   
    return o;
 }
 
@@ -337,6 +400,22 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    t = cfd->data;
    
    e_border_button_bindings_ungrab_all();
+
+   /* Check if Display Units has been toggled */
+   if (cfdata->unit_method != t->conf->units)
+     {
+	if (cfdata->unit_method == 0)
+	  {
+	     cfdata->high_temp = FAR_2_CEL(cfdata->high_temp);
+	     cfdata->low_temp = FAR_2_CEL(cfdata->low_temp);
+	  }
+	else
+	  {
+	     cfdata->high_temp = CEL_2_FAR(cfdata->high_temp);
+	     cfdata->low_temp = CEL_2_FAR(cfdata->low_temp);
+	  }
+     }
+
    if (cfdata->unit_method == 0) 
      {
 	t->conf->units = CELCIUS;	
@@ -348,55 +427,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    
    t->conf->poll_time = cfdata->poll_time;
 
-   if (cfdata->low_temp <= 40) 
-     {
-	t->conf->low = (10 + (30 * t->conf->units));	
-     }
-   else if (cfdata->low_temp <= 80) 
-     {
-	t->conf->low = (30 + (50 * t->conf->units));		
-     }
-   else if (cfdata->low_temp <= 120) 
-     {
-	t->conf->low = (50 + (70 * t->conf->units));		
-     }
-   
-   if (cfdata->high_temp <= 60) 
-     {
-	t->conf->high = (20 + (40 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 80) 
-     {
-	t->conf->high = (30 + (50 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 100) 
-     {
-	t->conf->high = (40 + (60 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 120) 
-     {
-	t->conf->high = (50 + (70 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 140) 
-     {
-	t->conf->high = (60 + (80 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 160) 
-     {
-	t->conf->high = (70 + (90 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 180) 
-     {
-	t->conf->high = (80 + (100 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 200) 
-     {
-	t->conf->high = (90 + (120 * t->conf->units));
-     }
-    else if (cfdata->high_temp <= 220) 
-     {
-	t->conf->high = (100 + (140 * t->conf->units));
-     }
+   t->conf->low = cfdata->low_temp;
+   t->conf->high = cfdata->high_temp;
 
    switch (cfdata->sensor) 
      {
