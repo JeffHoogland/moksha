@@ -42,6 +42,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    /* smart code here */
    evas_object_image_file_set(sd->obj, file, NULL);
    _e_icon_smart_reconfigure(sd);
@@ -53,6 +54,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    /* smart code here */
    evas_object_image_file_set(sd->obj, file, key);
    _e_icon_smart_reconfigure(sd);
@@ -64,6 +66,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    /* smart code here */
    if (sd->obj) evas_object_del(sd->obj);
    sd->obj = edje_object_add(evas_object_evas_get(obj));
@@ -77,6 +80,7 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    /* smart code here */
    if (sd->obj) evas_object_del(sd->obj);
    sd->obj = o;
@@ -90,6 +94,7 @@ e_icon_file_get(Evas_Object *obj)
    char *file;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      {
 	edje_object_file_get(sd->obj, (const char **)&file, NULL);
@@ -105,6 +110,7 @@ e_icon_smooth_scale_set(Evas_Object *obj, int smooth)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return;
    evas_object_image_smooth_scale_set(sd->obj, smooth);
@@ -116,6 +122,7 @@ e_icon_smooth_scale_get(Evas_Object *obj)
    E_Smart_Data *sd;
 
    sd = evas_object_smart_data_get(obj);   
+   if (!sd) return 0;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return 0;   
    return evas_object_image_smooth_scale_get(sd->obj);
@@ -127,6 +134,7 @@ e_icon_alpha_set(Evas_Object *obj, int alpha)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return;   
    evas_object_image_alpha_set(sd->obj, alpha);
@@ -138,6 +146,7 @@ e_icon_alpha_get(Evas_Object *obj)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return 0;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return 0;   
    return evas_object_image_alpha_get(sd->obj);
@@ -149,6 +158,7 @@ e_icon_size_get(Evas_Object *obj, int *w, int *h)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    return evas_object_image_size_get(sd->obj, w, h);
 }
 
@@ -168,6 +178,7 @@ e_icon_fill_inside_set(Evas_Object *obj, int fill_inside)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    if (((sd->fill_inside) && (fill_inside)) ||
        ((!sd->fill_inside) && (!fill_inside))) return;
    sd->fill_inside = fill_inside;
@@ -180,6 +191,7 @@ e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return;   
    evas_object_image_size_set(sd->obj, w, h);
@@ -192,6 +204,7 @@ e_icon_data_get(Evas_Object *obj, int *w, int *h)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return NULL;   
    evas_object_image_size_get(sd->obj, w, h);

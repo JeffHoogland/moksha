@@ -325,7 +325,7 @@ _e_thumb_etheme_create(char *file, Evas_Coord w, Evas_Coord h, int *ww, int *hh,
    evas_object_move(clock, (w * 0.9), (h * 0.9));
    evas_object_resize(clock, w * 0.1, h * 0.1);
    /* start */
-   evas_object_move(start, (w * 0.9), (h * 0.9));
+   evas_object_move(start, 0.1, (h * 0.9));
    evas_object_resize(start, w * 0.1, h * 0.1);   
    /* pager */
    evas_object_move(pager[0], (w * 0.3), (h * 0.9));
@@ -593,12 +593,15 @@ _e_thumb_cb_exe_exit(void *data, int type, void *event)
 				      t->w,
 				      t->h,
 				      1);
-	data = e_icon_data_get(tmp, &w, &h);
-	e_icon_data_set(t->obj, data, w, h);
-	evas_object_del(tmp);
-	if(t->cb)
-	  t->cb(t->obj, t->data);
-	free(t);
+	if (tmp && t)
+	  {
+	     data = e_icon_data_get(tmp, &w, &h);
+	     e_icon_data_set(t->obj, data, w, h);
+	     evas_object_del(tmp);
+	     if(t->cb)
+	       t->cb(t->obj, t->data);
+	     free(t);
+	  }
      }
    
    pid = -1;
