@@ -109,7 +109,6 @@ e_icon_canvas_thaw(Evas_Object *obj)
          
    sd->frozen--;
    //if (sd->frozen <= 0) _e_icon_canvas_reconfigure(sd);
-   
    return sd->frozen;
 }
 
@@ -485,6 +484,8 @@ _e_icon_canvas_reconfigure(E_Smart_Data *sd)
    Evas_Coord x, y, w, h, maxw, maxh;
    Evas_List *l;
 
+   _e_icon_canvas_smart_resize(sd->obj, sd->w, sd->h);
+   
    return;
    
    if (!sd->changed) return;
@@ -616,6 +617,13 @@ _e_icon_canvas_tile_add(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y)
    tile->items = NULL;
    sd->tiles[tx][ty] = tile;
 
+   if(E_INTERSECTS(sd->viewport.x, sd->viewport.y,
+		   sd->viewport.w, sd->viewport.h,
+		   tile->x, tile->y, tile->w, tile->h))
+     {
+	_e_icon_canvas_tile_show(tile);
+     }
+   
    return tile;
 }
 
@@ -861,17 +869,12 @@ _e_icon_canvas_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 				  sd->viewport.w, sd->viewport.h,
 				  t->x, t->y, t->w, t->h))
 		    {
-		       Evas_List *l;
-		       Evas_Coord ox, oy;
-		       
 		       if(t->visible == 1 && !sd->xy_frozen)
 			 continue;
 		       _e_icon_canvas_tile_show(t);
 		    }
 		  else
 		    {
-		       Evas_List *l;
-		       
 		       if(!t->visible)
 			 continue;
 		       _e_icon_canvas_tile_hide(t);
@@ -917,24 +920,15 @@ _e_icon_canvas_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 				  sd->viewport.w, sd->viewport.h,
 				  t->x, t->y, t->w, t->h))
 		    {
-		       Evas_List *l;
-		       Evas_Coord ox, oy, dx, dy;
-
 		       if(t->visible == 1)
 			 continue;
-		       t->visible = 1;		       
-		       for(l = t->items; l; l = l->next)
-			 _e_icon_canvas_icon_show(l->data);
+		       _e_icon_canvas_tile_show(t);		       
 		    }
 		  else
 		    {
-		       Evas_List *l;
-		       
 		       if(!t->visible)
 			 continue;
-		       t->visible = 0;
-		       for(l = t->items; l; l = l->next)
-			 _e_icon_canvas_icon_hide(l->data);
+		       _e_icon_canvas_tile_hide(t);		       
 		    }
 	       }
 	  }
