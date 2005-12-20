@@ -1,7 +1,7 @@
 Summary: The Enlightenment window manager
 Name: @PACKAGE@
 Version: @VERSION@
-Release: 1.20051219
+Release: 0.%(date '+%Y%m%d')
 License: BSD
 Group: User Interface/Desktops
 URL: http://www.enlightenment.org/
