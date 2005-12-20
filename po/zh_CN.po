@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2005-11-04 11:02+0800\n"
-"PO-Revision-Date: 2005-12-01 17:24+0800\n"
+"PO-Revision-Date: 2005-12-20 15:32+0800\n"
 "Last-Translator: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "Language-Team: Emfox Zhou <EmfoxZhou@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -344,7 +344,7 @@ msgid ""
 "<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
-msgstr ""
+msgstr "你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>这只是个警告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: src/bin/e_int_border_remember.c:245 src/bin/e_int_border_remember.c:325
 #: src/bin/e_int_border_remember.c:367 src/bin/e_config_dialog.c:113
@@ -363,7 +363,7 @@ msgid ""
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
-msgstr ""
+msgstr "你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，却<hilight>不指定如何记住它</hilight>。<br><br>你必须指定至少一种记住这个窗口的方法。"
 
 #: src/bin/e_int_border_remember.c:349
 msgid ""
@@ -380,7 +380,7 @@ msgid ""
 "<hilight>OK</hilight> buttons<br>and your settings will be accepted. Press "
 "<hilight>Cancel</hilight> if you<br>are not sure and nothing will be "
 "affected."
-msgstr ""
+msgstr "你正试着让 Enlightenment 记住把某些属性（诸如大小、位置、边框样式等）<br>应用到一个窗口，而这个窗口<hilight>并没有单一的属性</hilight>。<br><br>这意味着它是跟其它一个或多个窗口共享名字／类、Transience、角色等属性的，<br>记住这个窗口的这些属性也会应用到匹配的那些窗口。<br><br>你可能需要启用<hilight>只匹配一个窗口</hilight>选项，如果你只是想要仅仅这个窗口的实例被修改，而保留其它窗口不变。<br><br>这只是个警告，如果你不想这个操作发生的话。<br>如果这是你所要做的，按一下<hilight>应用</hilight>或者<hilight>OK</hilight>按钮，你的操作就会生效。<br>如果你不想，按下<hilight>取消</hilight>，那就什么都不会发生。"
 
 #: src/bin/e_int_border_remember.c:422
 msgid "Nothing"
@@ -516,17 +516,17 @@ msgstr "权限："
 #: src/bin/e_fileman_smart.c:1249 src/bin/e_fileman_smart.c:1258
 #: src/bin/e_fileman_smart.c:1267
 msgid "r"
-msgstr ""
+msgstr "可读"
 
 #: src/bin/e_fileman_smart.c:1251 src/bin/e_fileman_smart.c:1260
 #: src/bin/e_fileman_smart.c:1269
 msgid "w"
-msgstr ""
+msgstr "可写"
 
 #: src/bin/e_fileman_smart.c:1253 src/bin/e_fileman_smart.c:1262
 #: src/bin/e_fileman_smart.c:1271
 msgid "x"
-msgstr ""
+msgstr "可执行"
 
 #: src/bin/e_fileman_smart.c:1297 src/bin/e_fileman_smart.c:2097
 msgid "Properties"
@@ -1225,7 +1225,7 @@ msgstr "不能加入图标"
 msgid ""
 "You tried to drop an icon of an application that<br>does not have a matching "
 "application file.<br><br>The icon cannot be added to IBar."
-msgstr ""
+msgstr "你试着将一个没有 application 文件的应用程序图标拖放进来。<br><br>这个图标无法被加入到 IBar。"
 
 #: src/modules/ibox/e_mod_main.c:151
 msgid "Enlightenment IBox Module"
@@ -1469,14 +1469,14 @@ msgstr "分辨率改变"
 msgid ""
 "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 "resolution %dx%d in %d seconds."
-msgstr ""
+msgstr "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>将会恢复旧的分辨率 %dx%d （%d秒之内）。"
 
 #: src/modules/randr/e_mod_main.c:390
 #, c-format
 msgid ""
 "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
 "resolution %dx%d NOW!"
-msgstr ""
+msgstr "保持使用新的分辨率 <hilight>%dx%d</hilight> 吗？<br><br>现在要立即恢复旧的分辨率 %dx%d 了！"
 
 #: src/modules/start/e_mod_main.c:78
 msgid "Enlightenment Start Module"
