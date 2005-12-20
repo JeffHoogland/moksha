@@ -30,7 +30,7 @@ struct _CFData
    Evas_Object *mod_name;
    struct
      {
-      Evas_Object *configure, *enable, *disable;
+      Evas_Object *configure, *enable, *disable, *about;
       Evas_Object *load, *unload, *loaded, *unloaded;
      } gui;
 };
@@ -116,7 +116,7 @@ _e_config_mod_cb_standard(void *data)
 	 {
 	    e_widget_disabled_set( cfdata->gui.enable, 1);
 	    e_widget_disabled_set( cfdata->gui.disable, 0);
-	    if(m->func.config)
+	    if(m->func.config) 
 	      e_widget_disabled_set( cfdata->gui.configure, 0);
 	    else
 	      e_widget_disabled_set( cfdata->gui.configure, 1);
@@ -127,6 +127,11 @@ _e_config_mod_cb_standard(void *data)
 	    e_widget_disabled_set( cfdata->gui.enable, 0);
 	    e_widget_disabled_set( cfdata->gui.disable, 1);
 	 }
+
+       if(m->func.about) 
+	 e_widget_disabled_set( cfdata->gui.about, 0);
+       else
+	 e_widget_disabled_set( cfdata->gui.about, 1);
      }
    else /* Load / Unload menu */
      {
@@ -228,6 +233,23 @@ _module_configure(void *data, void *data2)
      printf("Can't run config no module!!!\n");// Debug!!    
 }
 
+void *
+_module_about(void *data, void *data2)
+{
+   E_Config_Dialog *cfd;
+   CFData *cfdata;
+   E_Module *m;
+   
+   cfd = data;
+   m = cfd->data;
+   cfdata = cfd->cfdata;
+   if(m->func.about)
+   {
+      m->func.about(m);
+   }
+   else   
+     printf("Can't run about no module!!!\n");// Debug!!    
+}
 
 
 /**--CREATE--**/
@@ -347,6 +369,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    cfdata->gui.configure=ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 32, 32, 1, 1);
+   
+   ob = e_widget_button_add(evas, "About", NULL, _module_about, cfd, NULL);
+   cfdata->gui.about=ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 32, 32, 1, 1);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
