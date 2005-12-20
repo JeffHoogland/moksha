@@ -188,6 +188,7 @@ _module_enable(void *data, void *data2)/* this enables and disables :) */
    
    cfd = data;
    m = cfd->data;
+   cfdata = cfd->cfdata;
 
    if(m->enabled)
      {
