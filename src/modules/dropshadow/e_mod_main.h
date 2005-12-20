@@ -105,4 +105,6 @@ EAPI int   e_modapi_save     (E_Module *m);
 EAPI int   e_modapi_info     (E_Module *m);
 EAPI int   e_modapi_about    (E_Module *m);
 
+EAPI void _dropshadow_cb_config_updated(void *data);
+
 #endif

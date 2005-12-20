@@ -17,22 +17,7 @@
 /* module private routines */
 static Dropshadow *_ds_init(E_Module *m);
 static void        _ds_shutdown(Dropshadow *ds);
-static E_Menu     *_ds_config_menu_new(Dropshadow *ds);
-static void        _ds_menu_very_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_sharp(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_very_sharp(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_very_dark(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_dark(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_light(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_very_light(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_very_far(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_far(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_close(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_very_close(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_extremely_close(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _ds_menu_under(void *data, E_Menu *m, E_Menu_Item *mi);
+//static E_Menu     *_ds_config_menu_new(Dropshadow *ds);
 static void        _ds_menu_high_quality(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_medium_quality(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _ds_menu_low_quality(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -102,7 +87,7 @@ e_modapi_init(E_Module *m)
    Dropshadow *ds;
    
    ds = _ds_init(m);
-   m->config_menu = _ds_config_menu_new(ds);
+   //m->config_menu = _ds_config_menu_new(ds);
 #if 0
      {
 	Shpix *sh;
@@ -148,16 +133,7 @@ e_modapi_shutdown(E_Module *m)
    Dropshadow *ds;
    
    ds = m->data;
-   if (ds)
-     {
-	if (m->config_menu)
-	  {
-	     e_menu_deactivate(m->config_menu);
-	     e_object_del(E_OBJECT(m->config_menu));
-	     m->config_menu = NULL;
-	  }
-	_ds_shutdown(ds);
-     }
+   if (ds) _ds_shutdown(ds);
    return 1;
 }
 
@@ -188,6 +164,19 @@ e_modapi_about(E_Module *m)
 			_("This is the dropshadow module that allows dropshadows to be cast<br>"
 			  "on the desktop background - without special X-Server extensions<br>"
 			  "or hardware acceleration."));
+   return 1;
+}
+
+int
+e_modapi_config(E_Module *m) 
+{
+   Dropshadow *ds;
+   E_Container *con;
+   
+   ds = m->data;
+   if (!ds) return 0;
+   con = e_container_current_get(e_manager_current_get());
+   _config_dropshadow_module(con, ds);
    return 1;
 }
 
@@ -285,6 +274,7 @@ _ds_shutdown(Dropshadow *ds)
    free(ds);
 }
 
+/*
 static E_Menu *
 _ds_config_menu_new(Dropshadow *ds)
 {
@@ -294,150 +284,6 @@ _ds_config_menu_new(Dropshadow *ds)
    
    mn = e_menu_new();
      
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Fuzzy"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_fuzzy.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf->blur_size == 80) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_fuzzy, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Fuzzy"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_fuzzy.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf->blur_size == 40) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_fuzzy, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Medium"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_medium.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf->blur_size == 20) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_medium, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Sharp"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_sharp.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf->blur_size == 10) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_sharp, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Sharp"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_sharp.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 1);
-   if (ds->conf->blur_size == 5) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_sharp, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Dark"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_dark.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf->shadow_darkness == 1.0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_dark, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Dark"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_dark.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf->shadow_darkness == 0.75) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_dark, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Light"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_light.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf->shadow_darkness == 0.5) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_light, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Light"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_light.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 2);
-   if (ds->conf->shadow_darkness == 0.25) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_light, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Far"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_far.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 32) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_far, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Far"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_very_far.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 16) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_far, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Near"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_far.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 8) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_close, ds);
-
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Very Near"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_close.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 4) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_very_close, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Extremely Near"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_underneath.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 2) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_extremely_close, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, _("Immediately Underneath"));
-   snprintf(buf, sizeof(buf), "%s/menu_icon_underneath.png", e_module_dir_get(ds->module));
-   e_menu_item_icon_file_set(mi, buf);
-   e_menu_item_radio_set(mi, 1);
-   e_menu_item_radio_group_set(mi, 3);
-   if (ds->conf->shadow_x == 0) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ds_menu_under, ds);
-   
-   mi = e_menu_item_new(mn);
-   e_menu_item_separator_set(mi, 1);
-   
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("High Quality"));
    snprintf(buf, sizeof(buf), "%s/menu_icon_hi_quality.png", e_module_dir_get(ds->module));
@@ -466,144 +312,8 @@ _ds_config_menu_new(Dropshadow *ds)
    e_menu_item_radio_group_set(mi, 4);
    if (ds->conf->quality == 4) e_menu_item_toggle_set(mi, 1);
    else e_menu_item_toggle_set(mi, 0);
-   e_menu_item_callback_set(mi, _ds_menu_low_quality, ds);
-   
+   e_menu_item_callback_set(mi, _ds_menu_low_quality, ds);   
    return mn;
-}
-
-static void
-_ds_menu_very_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_blur_set(ds, 80);
-}
-
-static void
-_ds_menu_fuzzy(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_blur_set(ds, 40);
-}
-
-static void
-_ds_menu_medium(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_blur_set(ds, 20);
-}
-
-static void
-_ds_menu_sharp(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_blur_set(ds, 10);
-}
-
-static void
-_ds_menu_very_sharp(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_blur_set(ds, 5);
-}
-
-static void
-_ds_menu_very_dark(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_darkness_set(ds, 1.0);
-}
-
-static void
-_ds_menu_dark(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_darkness_set(ds, 0.75);
-}
-
-static void
-_ds_menu_light(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_darkness_set(ds, 0.5);
-}
-
-static void
-_ds_menu_very_light(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_darkness_set(ds, 0.25);
-}
-
-static void
-_ds_menu_very_far(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 32, 32);
-}
-
-static void
-_ds_menu_far(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 16, 16);
-}
-
-static void
-_ds_menu_close(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 8, 8);
-}
-
-static void
-_ds_menu_very_close(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 4, 4);
-}
-
-static void
-_ds_menu_extremely_close(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 2, 2);
-}
-
-static void
-_ds_menu_under(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Dropshadow *ds;
-   
-   ds = data;
-   _ds_config_shadow_xy_set(ds, 0, 0);
 }
 
 static void
@@ -632,6 +342,7 @@ _ds_menu_low_quality(void *data, E_Menu *m, E_Menu_Item *mi)
    ds = data;
    _ds_config_quality_set(ds, 4);
 }
+*/
 
 static void
 _ds_container_shapes_add(Dropshadow *ds, E_Container *con)
@@ -1406,8 +1117,8 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
    
    if (v < 0.0) v = 0.0;
    else if (v > 1.0) v = 1.0;
-   if (ds->conf->shadow_darkness == v) return;
-   ds->conf->shadow_darkness = v;
+   //if (ds->conf->shadow_darkness == v) return;
+   //ds->conf->shadow_darkness = v;
    for (l = ds->shadows; l; l = l->next)
      {
 	Shadow *sh;
@@ -1434,7 +1145,7 @@ _ds_config_darkness_set(Dropshadow *ds, double v)
 				     255 * ds->conf->shadow_darkness);
 	  }
      }
-   e_config_save_queue();
+   //e_config_save_queue();
 }
 
 static void
@@ -1442,9 +1153,9 @@ _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y)
 {
    Evas_List *l;
    
-   if ((ds->conf->shadow_x == x) && (ds->conf->shadow_y == y)) return;
-   ds->conf->shadow_x = x;
-   ds->conf->shadow_y = y;
+   //if ((ds->conf->shadow_x == x) && (ds->conf->shadow_y == y)) return;
+   //ds->conf->shadow_x = x;
+   //ds->conf->shadow_y = y;
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
    if (ds->conf->shadow_y >= ds->conf->blur_size)
@@ -1466,8 +1177,8 @@ _ds_config_blur_set(Dropshadow *ds, int blur)
    Evas_List *l;
    
    if (blur < 0) blur = 0;
-   if (ds->conf->blur_size == blur) return;
-   ds->conf->blur_size = blur;
+   //if (ds->conf->blur_size == blur) return;
+   //ds->conf->blur_size = blur;
    
    if (ds->conf->shadow_x >= ds->conf->blur_size)
      ds->conf->shadow_x = ds->conf->blur_size - 1;
@@ -2578,4 +2289,18 @@ _tilebuf_free_render_rects(Evas_List *rects)
 	rects = evas_list_remove_list(rects, rects);
 	free(r);
      }
+}
+
+void
+_dropshadow_cb_config_updated(void *data) 
+{
+   Dropshadow *ds;
+   
+   ds = data;
+   if (!ds) return;
+
+   _ds_config_quality_set(ds, ds->conf->quality);
+   _ds_config_darkness_set(ds, ds->conf->shadow_darkness);
+   _ds_config_shadow_xy_set(ds, ds->conf->shadow_x, ds->conf->shadow_y);
+   _ds_config_blur_set(ds, ds->conf->blur_size);   
 }
