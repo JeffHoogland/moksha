@@ -28,11 +28,10 @@ struct _CFData
    Evas_List *mods, *umods;
    E_Module *cur_mod;
    Evas_Object *mod_name;
-   struct
-     {
+   struct {
       Evas_Object *configure, *enable, *disable, *about;
       Evas_Object *load, *unload, *loaded, *unloaded;
-     } gui;
+   } gui;
 };
 
 struct _E_Cfg_Mod_Data
@@ -63,37 +62,41 @@ e_int_config_modules(E_Container *con)
 }
 
 /* FIXME : redo this to setup list of loaded and unloaded modules in one pass (easy):)*/
+/* FIXME: this leaks ecore list of files - also same fn dealing with 2 lists is a bit evil */
 void 
-_e_config_module_list(Evas_List **b,char *dir,int loaded)
+_e_config_module_list(Evas_List **b, char *dir, int loaded)
 {
-  Evas_List *l; 
-  l = *b;
+   Evas_List *l; 
    char fullpath[PATH_MAX];
+   
+   l = *b;
    if ((ecore_file_exists(dir)) && (ecore_file_is_dir(dir)))
-    {
-      Ecore_List *mods;
-      mods = ecore_file_ls(dir);
-      if (mods)
-      {	     	     
-        char *mod;
-	int i = 0;
-	while ((mod = ecore_list_next(mods)))
-	{
-	  snprintf(fullpath, sizeof(fullpath), "%s/%s", dir, mod);
-	  if (ecore_file_is_dir(fullpath))
-	  {
-	     E_Module *m;
-	     m = e_module_find(mod);
+     {
+	Ecore_List *mods;
+	
+	mods = ecore_file_ls(dir);
+	if (mods)
+	  {	     	     
+	     char *mod;
+	     int i = 0;
 	     
-	     if(!m && !loaded)
-	       l = evas_list_append(l,mod);
-	     else if(m && loaded)
-	       l = evas_list_append(l,m);
-	  }
-	}
-      }     
-    }
-   *b=l;
+	     while ((mod = ecore_list_next(mods)))
+	       {
+		  snprintf(fullpath, sizeof(fullpath), "%s/%s", dir, mod);
+		  if (ecore_file_is_dir(fullpath))
+		    {
+		       E_Module *m;
+		       
+		       m = e_module_find(mod);		       
+		       if ((!m) && (!loaded))
+			 l = evas_list_append(l, mod);
+		       else if ((m) && (loaded))
+			 l = evas_list_append(l, m);
+		    }
+	       }
+	  }     
+     }
+   *b = l;
 }
 
 void
@@ -108,34 +111,34 @@ _e_config_mod_cb_standard(void *data)
    cfd = d->cfd;
    cfdata = cfd->cfdata;
    
-   if(cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
-     {	
-       m = d->mod;
-       cfd->data=m; 
-       if(m->enabled)
-	 {
-	    e_widget_disabled_set( cfdata->gui.enable, 1);
-	    e_widget_disabled_set( cfdata->gui.disable, 0);
-	    if(m->func.config) 
-	      e_widget_disabled_set( cfdata->gui.configure, 0);
-	    else
-	      e_widget_disabled_set( cfdata->gui.configure, 1);
-	 }
-       else
-	 {
-	    e_widget_disabled_set( cfdata->gui.configure, 1);
-	    e_widget_disabled_set( cfdata->gui.enable, 0);
-	    e_widget_disabled_set( cfdata->gui.disable, 1);
-	 }
-
-       if(m->func.about) 
-	 e_widget_disabled_set( cfdata->gui.about, 0);
-       else
-	 e_widget_disabled_set( cfdata->gui.about, 1);
-     }
-   else /* Load / Unload menu */
+   m = d->mod;
+   cfd->data = m;
+   
+   if (m->enabled)
      {
-	if(!d->loaded)/* unloaded module was clicked */
+	e_widget_disabled_set(cfdata->gui.enable, 1);
+	e_widget_disabled_set(cfdata->gui.disable, 0);
+	if (m->func.config) 
+	  e_widget_disabled_set(cfdata->gui.configure, 0);
+	else
+	  e_widget_disabled_set(cfdata->gui.configure, 1);
+     }
+   else
+     {
+	e_widget_disabled_set(cfdata->gui.configure, 1);
+	e_widget_disabled_set(cfdata->gui.enable, 0);
+	e_widget_disabled_set(cfdata->gui.disable, 1);
+     }
+   
+   if (m->func.about) 
+     e_widget_disabled_set(cfdata->gui.about, 0);
+   else
+     e_widget_disabled_set(cfdata->gui.about, 1);
+   
+   /* Load / Unload menu */
+   if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED)
+     {
+	if (!d->loaded)/* unloaded module was clicked */
 	  {
 	     cfd->data=d->mod_name;
 	     e_widget_disabled_set(cfdata->gui.load, 0);
@@ -158,33 +161,36 @@ _module_load(void *data, void *data2)
    E_Config_Dialog *cfd;
    CFData *cfdata;
    Evas_Object *ob;
-
-   cfd = data;   
-   cfdata = cfd->cfdata;
-   e_module_new(cfd->data);
    
-   cfd->view_dirty=1;
+   cfd = data;   
+   d = cfd->data;   
+   cfdata = cfd->cfdata;
+   e_module_new(d->mod_name);
+   
+   cfd->view_dirty = 1;
 }
 
 void *
 _module_unload(void *data, void *data2)
 {
+   E_Cfg_Mod_Data *d;
    E_Module *m;
    E_Config_Dialog *cfd;
    CFData *cfdata;
    
    cfd = data;
-   m = cfd->data;
+   d = cfd->data;
+   m = d->mod;
    cfdata = cfd->cfdata;
     
    e_module_disable(m);
    e_object_del(E_OBJECT(m));
    e_config_save_queue();
-   cfd->view_dirty=1;
+   cfd->view_dirty = 1;
 }
 
 void *
-_module_enable(void *data, void *data2)/* this enables and disables :) */
+_module_enable(void *data, void *data2) /* this enables and disables :) */
 {
    E_Config_Dialog *cfd;
    CFData *cfdata;
@@ -192,43 +198,60 @@ _module_enable(void *data, void *data2)/* this enables and disables :) */
    E_Cfg_Mod_Data *d;
    
    cfd = data;
-   m = cfd->data;
+   d = cfd->data;
+   
+   if (!d->loaded)
+     {
+	m = e_module_new(d->mod_name);
+	cfd->view_dirty = 1;
+     }
+   else
+     {
+	m = d->mod;
+     }
    cfdata = cfd->cfdata;
 
-   if(m->enabled)
+   if (m->enabled)
      {
 	e_module_save(m);
 	e_module_disable(m);
 	
-	e_widget_disabled_set( cfdata->gui.configure, 1);
-	e_widget_disabled_set( cfdata->gui.enable, 0);
-	e_widget_disabled_set( cfdata->gui.disable, 1);
+	e_widget_disabled_set(cfdata->gui.configure, 1);
+	e_widget_disabled_set(cfdata->gui.enable, 0);
+	e_widget_disabled_set(cfdata->gui.disable, 1);
      }
    else
      {
 	e_module_enable(m);
-	
-	if(m->func.config)
-	  e_widget_disabled_set( cfdata->gui.configure, 0);
-	e_widget_disabled_set( cfdata->gui.enable, 1);
-	e_widget_disabled_set( cfdata->gui.disable, 0);
+	if (m->func.config)
+	  e_widget_disabled_set(cfdata->gui.configure, 0);
+	e_widget_disabled_set(cfdata->gui.enable, 1);
+	e_widget_disabled_set(cfdata->gui.disable, 0);
      }
+
+   /* this forces a redraw of the window so that the buttons update their
+    * state properly... probably fix this with a better method that doesn't
+    * unselect the current selection
+    */
+   cfd->view_dirty = 1;
 }
 
 void *
 _module_configure(void *data, void *data2)
 {
+   E_Cfg_Mod_Data *d;
    E_Config_Dialog *cfd;
    CFData *cfdata;
    E_Module *m;
    
    cfd = data;
-   m = cfd->data;
+   d = cfd->data;
+   m = d->mod;
    cfdata = cfd->cfdata;
-   if(m->func.config)
-   {
-      m->func.config(m);
-   }
+   if (m->func.config)
+     {
+	m->func.config(m);
+     }
    else   
      printf("Can't run config no module!!!\n");// Debug!!    
 }
@@ -243,10 +266,10 @@ _module_about(void *data, void *data2)
    cfd = data;
    m = cfd->data;
    cfdata = cfd->cfdata;
-   if(m->func.about)
-   {
-      m->func.about(m);
-   }
+   if (m->func.about)
+     {
+	m->func.about(m);
+     }
    else   
      printf("Can't run about no module!!!\n");// Debug!!    
 }
@@ -256,29 +279,30 @@ _module_about(void *data, void *data2)
 static void
 _fill_data(CFData *cfdata)
 {
-  char buf[4096];
-  char fullpath[PATH_MAX];
-  Evas_List *l=NULL;
-  
-  cfdata->umods = NULL;
-  
-  cfdata->mods= NULL;
+   char buf[4096];
+   char fullpath[PATH_MAX];
+   Evas_List *l = NULL;
+   
+   cfdata->umods = NULL;
+   cfdata->mods = NULL;
    //e_module_list();
-  
-  /* We could use e_module_list() but this method gives us alphabetical order */
-  for(l = e_path_dir_list_get(path_modules);l;l = l->next)
-    {
-       E_Path_Dir *epd;
-       epd = l->data;
-       _e_config_module_list(&(cfdata->mods),epd->dir,1);
-    }
-  
-  for(l = e_path_dir_list_get(path_modules);l;l = l->next)
-    {
-       E_Path_Dir *epd;
-       epd = l->data;
-       _e_config_module_list(&(cfdata->umods),epd->dir,0);
-    }
+   
+   /* We could use e_module_list() but this method gives us alphabetical order */
+   for (l = e_path_dir_list_get(path_modules); l; l = l->next)
+     {
+	E_Path_Dir *epd;
+	
+	epd = l->data;
+	_e_config_module_list(&(cfdata->mods), epd->dir, 1);
+     }
+   
+   for (l = e_path_dir_list_get(path_modules); l; l = l->next)
+     {
+	E_Path_Dir *epd;
+	
+	epd = l->data;
+	_e_config_module_list(&(cfdata->umods), epd->dir, 0);
+     }
 }
 
 static void *
@@ -292,7 +316,6 @@ _create_data(E_Config_Dialog *cfd)
    
    cfdata = E_NEW(CFData, 1);
    _fill_data(cfdata);
-   
    return cfdata;
 }
 
@@ -307,13 +330,13 @@ _free_data(E_Config_Dialog *cfd, CFData *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
- return 1; /* Apply was OK */
+   return 1; /* Apply was OK */
 }
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 {
- return 1; /* Apply was OK */
+   return 1; /* Apply was OK */
 }
 
 /**--GUI--**/
@@ -331,19 +354,21 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    
    o = e_widget_list_add(evas, 0, 1);
    of = e_widget_framelist_add(evas, "Modules", 1); 
-   ob = e_widget_ilist_add(evas,16,16,NULL);
-   for(l = cfdata->mods;l;l = l->next)
+   ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   for(l = cfdata->mods; l; l = l->next)
      {
 	E_Cfg_Mod_Data *cb_data;
+	
 	m = l->data;
 	sob = e_icon_add(evas);
 	if (m->icon_file)
-	  e_icon_file_set(sob,m->icon_file);
+	  e_icon_file_set(sob, m->icon_file);
 	/*else if (mod->edje_icon_file)
 	 * {
 	 *  if (mod->edje_icon_key)
 	 */
 	cb_data = E_NEW(E_Cfg_Mod_Data, 1);
+	cb_data->loaded = 1;
 	cb_data->cfd = cfd;
 	cb_data->mod = m;
 	e_widget_ilist_append(ob, sob, m->name, _e_config_mod_cb_standard, cb_data, m->name);
@@ -394,14 +419,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    o = e_widget_list_add(evas, 0, 1);
    
    of = e_widget_framelist_add(evas, "Loaded", 1);
-   ob = e_widget_ilist_add(evas,16,16,NULL);
-   for(l = cfdata->mods;l;l = l->next)
+   ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   for(l = cfdata->mods; l; l = l->next)
    {
       E_Cfg_Mod_Data *cb_data;
+      
       m = l->data;
       sob = e_icon_add(evas);
       if (m->icon_file)
-	e_icon_file_set(sob,m->icon_file);
+	e_icon_file_set(sob, m->icon_file);
       cb_data = E_NEW(E_Cfg_Mod_Data, 1);
       cb_data->cfd = cfd;
       cb_data->loaded = 1;
@@ -414,38 +440,53 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_list_add(evas, 0, 0);
+   of = e_widget_frametable_add(evas, "Actions", 1);
    ob = e_widget_button_add(evas, "Load", NULL, _module_load, cfd, NULL);
    cfdata->gui.load = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_list_object_append(of, ob, 1, 1, 0.5);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 32, 32, 1, 1);
+   
+   ob = e_widget_button_add(evas, "Enable", NULL, _module_enable, cfd, NULL);
+   cfdata->gui.enable = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 32, 32, 1, 1);
+   
+   ob = e_widget_button_add(evas, "Disable", NULL, _module_enable, cfd, NULL);
+   cfdata->gui.disable = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 32, 32, 1, 1);
    
    ob = e_widget_button_add(evas, "Unload", NULL, _module_unload, cfd, NULL);   
    cfdata->gui.unload = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_list_object_append(of, ob, 1, 1, 0.5);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 32, 32, 1, 1);
+   
+   ob = e_widget_button_add(evas, "Configure", NULL, _module_configure, cfd, NULL);
+   cfdata->gui.configure = ob;
+   e_widget_disabled_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 32, 32, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);  
 
    of = e_widget_framelist_add(evas, "Unloaded", 1);
-   ob = e_widget_ilist_add(evas,16,16,NULL);
-   for(l = cfdata->umods;l;l = l->next)
-   {
-     char *mod;
-     char *icon;
-     char buf[PATH_MAX];
-     E_Cfg_Mod_Data *cb_data;
-     
-     mod = l->data;
-     sob = e_icon_add(evas);
-     snprintf(buf, sizeof(buf), "%s/module_icon.png", mod);
-     icon = e_path_find(path_modules, buf);
-     e_icon_file_set(sob,icon);
-     cb_data = E_NEW(CFData,1);
-     cb_data->cfd = cfd;
-     cb_data->loaded = 0;
-     cb_data->mod_name = strdup(mod);
-     e_widget_ilist_append(ob, sob, mod, _e_config_mod_cb_standard, cb_data, mod);
-   }
+   ob = e_widget_ilist_add(evas, 16, 16, NULL);
+   for (l = cfdata->umods; l; l = l->next)
+     {
+	char *mod;
+	char *icon;
+	char buf[PATH_MAX];
+	E_Cfg_Mod_Data *cb_data;
+	
+	mod = l->data;
+	sob = e_icon_add(evas);
+	snprintf(buf, sizeof(buf), "%s/module_icon.png", mod);
+	icon = e_path_find(path_modules, buf);
+	e_icon_file_set(sob,icon);
+	cb_data = E_NEW(CFData,1);
+	cb_data->cfd = cfd;
+	cb_data->loaded = 0;
+	cb_data->mod_name = strdup(mod);
+	e_widget_ilist_append(ob, sob, mod, _e_config_mod_cb_standard, cb_data, mod);
+     }
    cfdata->gui.unloaded = ob;
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 120, 120);
