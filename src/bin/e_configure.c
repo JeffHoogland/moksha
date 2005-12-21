@@ -12,7 +12,8 @@ static void _e_configure_free(E_Configure *app);
 static void _e_configure_cb_del_req(E_Win *win);
 static void _e_configure_cb_resize(E_Win *win);
 static void _e_configure_cb_standard(void *data);
-    
+static void _e_configure_cb_close(void *data, void *data2);
+
 E_Configure *
 e_configure_show(E_Container *con)
 {
@@ -70,12 +71,15 @@ e_configure_show(E_Container *con)
    /* FIXME: we should have a way for modules to hook in here and add their
     * own entries
     */
+   eco->close = e_widget_button_add(eco->evas, _("Close"), NULL, _e_configure_cb_close, eco, NULL);
+   edje_object_part_swallow(eco->edje, "button", eco->close);
 
    edje_object_size_min_calc(eco->edje, &ew, &eh);
    e_win_resize(eco->win, ew, eh);
    e_win_size_min_set(eco->win, ew, eh);
-		
+
    evas_object_show(eco->ilist);
+   evas_object_show(eco->close);
    evas_object_show(eco->edje);
    
    e_win_show(eco->win);
@@ -143,4 +147,13 @@ _e_configure_cb_standard(void *data)
    
    ecocb = data;
    ecocb->func(ecocb->eco->con);
+}
+
+static void
+_e_configure_cb_close(void *data, void *data2) 
+{
+   E_Configure *eco;
+   
+   eco = data;
+   if (eco) e_object_del(E_OBJECT(eco));
 }

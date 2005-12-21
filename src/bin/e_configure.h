@@ -17,6 +17,7 @@ struct _E_Configure
    Evas        *evas;
    Evas_Object *edje;
    Evas_Object *ilist;
+   Evas_Object *close;
    
    Evas_List *cblist;
 };
