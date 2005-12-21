@@ -14,10 +14,13 @@ static int _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
 
-void _e_config_module_list(Evas_List **b,char *dir, int loaded);
-void _e_config_mod_cb_standard(void *data);
-void *_module_load(void *data, void *data2);
-void *_module_unload(void *data, void *data2);
+static void _e_config_module_list(Evas_List **b,char *dir, int loaded);
+static void _e_config_mod_cb_standard(void *data);
+static void _module_load(void *data, void *data2);
+static void _module_unload(void *data, void *data2);
+static void _module_enable(void *data, void *data2);
+static void _module_configure(void *data, void *data2);
+static void _module_about(void *data, void *data2);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _CFData
@@ -63,7 +66,7 @@ e_int_config_modules(E_Container *con)
 
 /* FIXME : redo this to setup list of loaded and unloaded modules in one pass (easy):)*/
 /* FIXME: this leaks ecore list of files - also same fn dealing with 2 lists is a bit evil */
-void 
+static void 
 _e_config_module_list(Evas_List **b, char *dir, int loaded)
 {
    Evas_List *l; 
@@ -99,7 +102,7 @@ _e_config_module_list(Evas_List **b, char *dir, int loaded)
    *b = l;
 }
 
-void
+static void
 _e_config_mod_cb_standard(void *data)
 {
    E_Cfg_Mod_Data *d;
@@ -154,7 +157,7 @@ _e_config_mod_cb_standard(void *data)
      }
 }
 
-void *
+static void
 _module_load(void *data, void *data2)
 {
    E_Cfg_Mod_Data *d;
@@ -170,7 +173,7 @@ _module_load(void *data, void *data2)
    cfd->view_dirty = 1;
 }
 
-void *
+static void
 _module_unload(void *data, void *data2)
 {
    E_Cfg_Mod_Data *d;
@@ -189,7 +192,7 @@ _module_unload(void *data, void *data2)
    cfd->view_dirty = 1;
 }
 
-void *
+static void
 _module_enable(void *data, void *data2) /* this enables and disables :) */
 {
    E_Config_Dialog *cfd;
@@ -236,7 +239,7 @@ _module_enable(void *data, void *data2) /* this enables and disables :) */
    cfd->view_dirty = 1;
 }
 
-void *
+static void
 _module_configure(void *data, void *data2)
 {
    E_Cfg_Mod_Data *d;
@@ -245,8 +248,9 @@ _module_configure(void *data, void *data2)
    E_Module *m;
    
    cfd = data;
-   d = cfd->data;
-   m = d->mod;
+   m = cfd->data;
+//   d = cfd->data;
+//   m = d->mod;
    cfdata = cfd->cfdata;
    if (m->func.config)
      {
@@ -256,7 +260,7 @@ _module_configure(void *data, void *data2)
      printf("Can't run config no module!!!\n");// Debug!!    
 }
 
-void *
+static void
 _module_about(void *data, void *data2)
 {
    E_Config_Dialog *cfd;
