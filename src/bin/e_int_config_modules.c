@@ -355,7 +355,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    o = e_widget_list_add(evas, 0, 1);
    of = e_widget_framelist_add(evas, "Modules", 1); 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
-   for(l = cfdata->mods; l; l = l->next)
+   for (l = cfdata->mods; l; l = l->next)
      {
 	E_Cfg_Mod_Data *cb_data;
 	
@@ -420,20 +420,20 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    
    of = e_widget_framelist_add(evas, "Loaded", 1);
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
-   for(l = cfdata->mods; l; l = l->next)
-   {
-      E_Cfg_Mod_Data *cb_data;
-      
-      m = l->data;
-      sob = e_icon_add(evas);
-      if (m->icon_file)
-	e_icon_file_set(sob, m->icon_file);
-      cb_data = E_NEW(E_Cfg_Mod_Data, 1);
-      cb_data->cfd = cfd;
-      cb_data->loaded = 1;
-      cb_data->mod = m;
-      e_widget_ilist_append(ob, sob, m->name, _e_config_mod_cb_standard, cb_data, m->name);
-   }
+   for (l = cfdata->mods; l; l = l->next)
+     {
+	E_Cfg_Mod_Data *cb_data;
+	
+	m = l->data;
+	sob = e_icon_add(evas);
+	if (m->icon_file)
+	  e_icon_file_set(sob, m->icon_file);
+	cb_data = E_NEW(E_Cfg_Mod_Data, 1);
+	cb_data->cfd = cfd;
+	cb_data->loaded = 1;
+	cb_data->mod = m;
+	e_widget_ilist_append(ob, sob, m->name, _e_config_mod_cb_standard, cb_data, m->name);
+     }
    cfdata->gui.loaded = ob;
    e_widget_ilist_go(ob);
    e_widget_min_size_set(ob, 120, 120);
