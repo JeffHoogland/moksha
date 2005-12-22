@@ -184,7 +184,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	if (!strcmp(cfdata->border->client.border.name, (char *)l->data))
 	  sel = n;
      }
-   e_widget_ilist_select_set(oi, sel);
+   e_widget_ilist_selected_set(oi, sel);
    
    e_widget_min_size_get(oi, &wmw, &wmh);
    e_widget_min_size_set(oi, wmw, 250);

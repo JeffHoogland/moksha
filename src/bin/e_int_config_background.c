@@ -196,7 +196,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       
 		       if ((e_config->desktop_default_background) && !(strcmp(e_config->desktop_default_background, fullbg)))
 			 {
-			    e_widget_ilist_select_set(il, i);
+			    e_widget_ilist_selected_set(il, i);
 			    bg = edje_object_add(evas);
 			    edje_object_file_set(bg, e_config->desktop_default_background, "desktop/background");
 			    im = e_widget_image_add_from_object(evas, bg, 160, 120);

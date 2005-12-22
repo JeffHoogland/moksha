@@ -90,12 +90,30 @@ e_widget_ilist_append(Evas_Object *obj, Evas_Object *icon, char *label, void (*f
 }
 
 void
-e_widget_ilist_select_set(Evas_Object *obj, int n)
+e_widget_ilist_selected_set(Evas_Object *obj, int n)
 {
    E_Widget_Data *wd;
    
    wd = e_widget_data_get(obj);
-   e_ilist_select_set(wd->o_ilist, n);
+   e_ilist_selected_set(wd->o_ilist, n);
+}
+
+int
+e_widget_ilist_selected_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_get(wd->o_ilist);
+}
+
+const char *
+e_widget_ilist_selected_label_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_label_get(wd->o_ilist);
 }
 
 void
@@ -114,6 +132,24 @@ e_widget_ilist_go(Evas_Object *obj)
    
    wd = e_widget_data_get(obj);
    wd->o_widget = obj;
+}
+
+void
+e_widget_ilist_remove_num(Evas_Object *obj, int n)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_remove_num(wd->o_ilist, n);
+}
+
+void
+e_widget_ilist_remove_label(Evas_Object *obj, char *label)
+{
+   E_Widget_Data *wd;
+   
+   wd = e_widget_data_get(obj);
+   e_ilist_remove_label(wd->o_ilist, label);
 }
 
 static void

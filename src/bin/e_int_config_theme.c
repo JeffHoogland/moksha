@@ -206,7 +206,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 		       
 		       if (!(strcmp(themefile, cfdata->current_theme)))
 			 {
-			    e_widget_ilist_select_set(il, i);
+			    e_widget_ilist_selected_set(il, i);
 			    im = e_widget_image_add_from_object(evas, theme, 320, 240);
 			    e_widget_image_object_set(im, e_thumb_evas_object_get(fulltheme, evas, 160, 120, 1));
 			 }
