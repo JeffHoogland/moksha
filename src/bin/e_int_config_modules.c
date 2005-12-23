@@ -5,7 +5,6 @@
 
 /* PROTOTYPES - same all the time */
 typedef struct _CFData CFData;
-typedef struct _E_Widget_Data E_Widget_Data;
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
