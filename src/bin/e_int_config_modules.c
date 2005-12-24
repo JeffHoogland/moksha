@@ -399,6 +399,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	E_Path_Dir *epd;
 	
 	epd = l->data;
+	printf("Dir: %s\n", epd->dir);
 	if ((ecore_file_exists(epd->dir)) && (ecore_file_is_dir(epd->dir))) 
 	  {
 	     modules = ecore_file_ls(epd->dir);
@@ -416,11 +417,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 			    if (m) 
 			      {
 				 loaded = 0;
-				 for (l = e_config->modules; l; l = l->next) 
+				 for (l2 = e_config->modules; l2; l2 = l2->next) 
 				   {
 				      E_Config_Module *em;
 	
-				      em = l->data;
+				      em = l2->data;
 				      if (!strcmp(m->name, em->name)) 
 					{
 					   loaded = 1;
