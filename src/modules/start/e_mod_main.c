@@ -9,7 +9,6 @@ static Start *_start_new(void);
 static Start_Face *_start_face_new(E_Container *con);
 static void _start_free(Start *e);
 static void _start_face_free(Start_Face *face);
-static void _start_face_enable(Start_Face *e);
 static void _start_face_disable(Start_Face *e);
 static void _start_config_menu_new(Start *e);
 static void _start_face_menu_new(Start_Face *face);
@@ -278,15 +277,6 @@ _start_face_disable(Start_Face *e)
    e->conf->enabled = 0;
    evas_object_hide(e->button_object);
    evas_object_hide(e->event_object);
-   e_config_save_queue();
-}
-
-static void
-_start_face_enable(Start_Face *e)
-{
-   e->conf->enabled = 1;
-   evas_object_show(e->button_object);
-   evas_object_show(e->event_object);
    e_config_save_queue();
 }
 

@@ -54,7 +54,6 @@ static int         _pager_cb_event_desk_show(void *data, int type, void *event);
 static int         _pager_cb_event_desk_name_change(void *data, int type, void *event);
 
 static void        _pager_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void        _pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _pager_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static void        _pager_desk_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -509,14 +508,6 @@ _pager_face_menu_new(Pager_Face *face)
 
    mn = e_menu_new();
    face->menu = mn;
-
-   /*
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
-   e_menu_item_check_set(mi, 1);
-   if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _pager_face_cb_menu_enabled, face);
-    */
 
    /* Config */
    mi = e_menu_item_new(mn);
@@ -1624,20 +1615,6 @@ _pager_cb_event_desk_name_change(void *data, int type, void *event)
 	  }
      }
    return 1;
-}
-
-static void
-_pager_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Pager_Face *face;
-   unsigned char enabled;
-
-   face = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((face->conf->enabled) && (!enabled))
-     _pager_face_disable(face);
-   else if ((!face->conf->enabled) && (enabled))
-     _pager_face_enable(face);
 }
 
 static void

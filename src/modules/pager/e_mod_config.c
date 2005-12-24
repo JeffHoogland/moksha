@@ -20,7 +20,6 @@ struct _Cfg_File_Data
 };
 
 /* Protos */
-static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, Config *cfdata);
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
@@ -130,6 +129,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config_save_queue();
    
    _pager_cb_config_updated(p);
+   return 1;
 }
 
 static Evas_Object 
@@ -191,4 +191,5 @@ _advanced_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
    e_config_save_queue();
 
    _pager_cb_config_updated(p);
+   return 1;
 }

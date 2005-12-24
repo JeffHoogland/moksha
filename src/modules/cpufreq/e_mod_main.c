@@ -43,7 +43,6 @@ static void          _cpufreq_face_menu_new(Cpufreq_Face *face);
 static void          _cpufreq_face_enable(Cpufreq_Face *face);
 static void          _cpufreq_face_disable(Cpufreq_Face *face);
 static void          _cpufreq_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change change);
-static void          _cpufreq_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _cpufreq_face_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _cpufreq_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _cpufreq_face_update_available(Cpufreq_Face *face);
@@ -932,15 +931,7 @@ _cpufreq_face_menu_new(Cpufreq_Face *face)
 
    mn = e_menu_new();
    face->menu = mn;
-
-   /* Enabled */
-   /*mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
-   e_menu_item_check_set(mi, 1);
-   if (face->conf->enabled) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _cpufreq_face_cb_menu_enabled, face);
-   */
-
+   
    /* Edit */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Edit Mode"));
@@ -988,24 +979,6 @@ _cpufreq_face_cb_gmc_change(void *data, E_Gadman_Client *gmc, E_Gadman_Change ch
       case E_GADMAN_CHANGE_EDGE:
       case E_GADMAN_CHANGE_ZONE:
 	 break;
-     }
-}
-
-static void
-_cpufreq_face_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   Cpufreq_Face *face;
-   unsigned char enabled;
-
-   face = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((face->conf->enabled) && (!enabled))
-     {
-	_cpufreq_face_disable(face);
-     }
-   else if ((!face->conf->enabled) && (enabled))
-     {
-	_cpufreq_face_enable(face);
      }
 }
 

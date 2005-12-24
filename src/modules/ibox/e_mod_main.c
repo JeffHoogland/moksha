@@ -76,7 +76,6 @@ static void    _ibox_icon_cb_mouse_in(void *data, Evas *e, Evas_Object *obj, voi
 static void    _ibox_icon_cb_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void    _ibox_icon_cb_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static void    _ibox_box_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibox_box_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void    _ibox_box_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -445,15 +444,6 @@ _ibox_box_menu_new(IBox_Box *ibb)
    mn = e_menu_new();
    ibb->menu = mn;
 
-   /* Enabled */
-   /*
-   mi = e_menu_item_new(mn);
-   e_menu_item_label_set(mi, "Enabled");
-   e_menu_item_check_set(mi, 1);
-   if (ibb->conf->enabled) e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _ibox_box_cb_menu_enabled, ibb);
-    */
-
    /* Config */
    mi = e_menu_item_new(mn);
    e_menu_item_label_set(mi, _("Configuration"));
@@ -469,7 +459,6 @@ static void
 _ibox_box_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    IBox_Box *ibb;
-   E_Config_Dialog *cfd;
 
    ibb = (IBox_Box *)data;
    if (!ibb) return;
@@ -1218,24 +1207,6 @@ _ibox_box_cb_iconsize_change(void *data)
 	  }
 	e_box_thaw(ibb->item_object);
 	_ibox_box_frame_resize(ibb);
-     }
-}
-
-static void
-_ibox_box_cb_menu_enabled(void *data, E_Menu *m, E_Menu_Item *mi)
-{
-   IBox_Box *ibb;
-   unsigned char enabled;
-
-   ibb = data;
-   enabled = e_menu_item_toggle_get(mi);
-   if ((ibb->conf->enabled) && (!enabled))
-     {
-	_ibox_box_disable(ibb);
-     }
-   else if ((!ibb->conf->enabled) && (enabled))
-     {
-	_ibox_box_enable(ibb);
      }
 }
 

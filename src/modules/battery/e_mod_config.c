@@ -19,7 +19,6 @@ struct _Cfg_File_Data
 };
 
 /* Protos */
-static Evas_Object   *_create_widgets(E_Config_Dialog *cfd, Evas *evas, Config *cfdata);
 static void          *_create_data(E_Config_Dialog *cfd);
 static void          _free_data(E_Config_Dialog *cfd, CFData *cfdata);
 static Evas_Object   *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata);
@@ -111,7 +110,7 @@ _basic_apply_data(E_Config_Dialog *cfd, CFData *cfdata)
 static Evas_Object
 *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata) 
 {
-   Evas_Object *o, *of, *ob, *ot;
+   Evas_Object *o, *of, *ob;
    Battery *b;
    
    /* Use Sliders for both cfg options */
