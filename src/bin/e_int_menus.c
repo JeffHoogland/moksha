@@ -903,8 +903,6 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  
 		  while ((theme = ecore_list_next(themes)))
 		    {
-		       char *ext;		      
-		       
 		       snprintf(fulltheme, sizeof(fulltheme), "%s/%s", buf, theme);
 		       if (ecore_file_is_dir(fulltheme))
 			 continue;
