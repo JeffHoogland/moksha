@@ -877,7 +877,7 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		  Ecore_Evas *eebuf;
 		  Evas *evasbuf;
 		  Evas_List *l;
-		  
+	  
 		  for (l = e_config->themes; l; l = l->next)
 		    {
 		       E_Config_Theme *et;
@@ -886,11 +886,11 @@ _e_int_menus_themes_pre_cb(void *data, E_Menu *m)
 		       if (!strcmp(et->category, "theme"))
 			 deftheme = et->file;
 		    }		  		  
-		  
+
 		  mi = e_menu_item_new(m);
 		  e_menu_item_radio_set(mi, 1);
 		  e_menu_item_radio_group_set(mi, 1);
-		  if (((deftheme) && (!strcmp("default.edj", deftheme))) ||
+		  if (((deftheme) && (!strcmp("default", deftheme))) ||
 		      (!deftheme))
 		    e_menu_item_toggle_set(mi, 1);
 		  e_menu_item_label_set(mi, "default");
