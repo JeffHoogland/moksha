@@ -266,7 +266,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    o = e_widget_list_add(evas, 0, 1);
    of = e_widget_framelist_add(evas, "Modules", 1); 
    ilist = e_widget_ilist_add(evas, 16, 16, NULL);
-   e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);
+   e_widget_on_change_hook_set(ilist, _ilist_cb_change, cfdata);   
    
    /* Loaded Modules */
    for (l = e_config->modules; l; l = l->next) 
@@ -322,11 +322,10 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of, *oc, *ilist, *ilist2;
    E_Radio_Group *rg;
-   Evas_List *l, *l2;
+   Evas_List *l;
    E_Module *m;
    Ecore_List *modules;
    char full_path[PATH_MAX];
-   int loaded;
    char *icon;
    char buf[PATH_MAX];
      
@@ -399,13 +398,14 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 	E_Path_Dir *epd;
 	
 	epd = l->data;
-	printf("Dir: %s\n", epd->dir);
-	if ((ecore_file_exists(epd->dir)) && (ecore_file_is_dir(epd->dir))) 
+	if (ecore_file_is_dir(epd->dir)) 
 	  {
 	     modules = ecore_file_ls(epd->dir);
 	     if (modules) 
 	       {
 		  char *mod;
+		  
+		  ecore_list_goto_first(modules);
 		  while ((mod = ecore_list_next(modules))) 
 		    {
 		       snprintf(full_path, sizeof(full_path), "%s/%s", epd->dir, mod);
@@ -414,22 +414,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
 			 {
 			    E_Module *m;
 			    m = e_module_find(mod);
-			    if (m) 
-			      {
-				 loaded = 0;
-				 for (l2 = e_config->modules; l2; l2 = l2->next) 
-				   {
-				      E_Config_Module *em;
-	
-				      em = l2->data;
-				      if (!strcmp(m->name, em->name)) 
-					{
-					   loaded = 1;
-					   break; 
-					}
-				   }
-			      }
-			    if ((!m) || (!loaded)) 
+			    if (!m) 
 			      {
 				 oc = e_icon_add(evas);
 				 icon = e_path_find(path_modules, buf);
@@ -443,6 +428,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, CFData *cfdata)
      }
 
    ecore_list_destroy(modules);
+   ecore_list_destroy(l);
    
    e_widget_ilist_go(ilist2);
    e_widget_min_size_set(ilist2, 120, 120);
