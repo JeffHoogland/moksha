@@ -11,8 +11,6 @@ Some of the things (in very short form) that need to be done to E17...
 * BUG: mouse pointer changes are buggy - white box for x curosrs the first
   time that cursor is used. also sometimes forgets what cursor to use and
   was being used etc.
-* BUG: advanced modules settings dialog has broken load, module click in
-  unloaded list etc. etc.
 * BUG: if you iconify a window and while iconified the window unmaps
   (rhythmbox does this a lot apparently) e doesnt realise and still thinks
   its iconified.
