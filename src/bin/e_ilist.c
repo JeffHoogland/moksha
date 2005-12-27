@@ -262,22 +262,24 @@ void
 e_ilist_remove_label(Evas_Object *obj, char *label)
 {
    E_Smart_Item *si;
+   Evas_List *l;
+   int i;
    char *t;
    
    API_ENTRY return;
    if (!sd->items) return;
    if (!label) return;
-   while (sd->items) 
-     {	   
-	si = sd->items->data;
+   for (i = 0, l = sd->items; l; l = l->next, i++) 
+     {
+	si = l->data;
 	if (si) 
 	  {
 	     t = edje_object_part_text_get(si->base_obj, "label");
 	     if (!strcmp(t, label)) 
 	       {
-		  sd->items = evas_list_remove(sd->items, si);
 		  if (si->icon_obj) evas_object_del(si->icon_obj);
 		  evas_object_del(si->base_obj);
+		  sd->items = evas_list_remove(sd->items, si);
 		  free(si);
 		  break;
 	       }
