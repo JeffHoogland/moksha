@@ -274,7 +274,7 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
 	si = l->data;
 	if (si) 
 	  {
-	     t = edje_object_part_text_get(si->base_obj, "label");
+	     t = strdup(edje_object_part_text_get(si->base_obj, "label"));
 	     if (!strcmp(t, label)) 
 	       {
 		  if (si->icon_obj) evas_object_del(si->icon_obj);
@@ -284,7 +284,8 @@ e_ilist_remove_label(Evas_Object *obj, char *label)
 		  break;
 	       }
 	  }
-     }   
+     }
+   free(t);
 }
 
 /* local subsystem functions */
